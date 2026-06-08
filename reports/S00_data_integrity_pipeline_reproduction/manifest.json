@@ -1,0 +1,20 @@
+{
+  "config": "configs/s00_reproduction.yaml",
+  "count_match_passed": true,
+  "selected_pulse_table": "data/processed/s00_selected_b_pulses.csv.gz",
+  "artifacts": [
+    "REPORT.md",
+    "count_match_table.csv",
+    "counts_by_group.csv",
+    "counts_by_run.csv",
+    "fig_amplitude_distributions.png",
+    "fig_counts_by_group_stave.png",
+    "fig_counts_by_run.png",
+    "fig_ml_reliability.png",
+    "input_sha256.csv",
+    "manifest.json",
+    "ml_benchmark.csv",
+    "ml_cv_scan.csv",
+    "sorted_even_channel_crosscheck.csv"
+  ]
+}

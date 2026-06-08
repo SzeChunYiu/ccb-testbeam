@@ -4,10 +4,15 @@ A running list of everything not yet settled. Each maps to one or more studies i
 [studies/STUDIES.md](../studies/STUDIES.md).
 
 ## Reproduction gaps (must close first)
-- The selected-pulse table (640,737 records) and all figures must be **reproduced from raw
-  ROOT** by an independent script and shown to match. (S00)
-- The **two notes disagree**: run splits (single vs pooled calibration; run 61 vs 64),
-  stave spacing (2 cm vs 4 cm), per-stave resolutions. Reconcile. (S00, S04)
+- The selected-pulse table count gate is **closed**: S00 reproduced 640,737 B-stave records
+  exactly from raw `HRDv` using even physical-stave channels and `A>1000 ADC`.
+- The raw-count gate follows the newer split with Sample II calibration run 64. The older run
+  61 calibration choice still matters for timing-calibration comparisons, not for selected-pulse
+  counting. (S03, S04)
+- The **two notes still disagree** on stave spacing (2 cm vs 4 cm) and per-stave resolutions.
+  Reconcile in timing studies where geometry enters. (S02, S04)
+- Sorted `hrdMax` amplitudes are not an exact proxy for the raw `HRDv` S00 gate count; document
+  or reconcile that derived-branch semantic before downstream workers use sorted counts. (S00a)
 - The amplitude-adaptive **template + q_template were never evaluated on the full dataset** —
   the notes use an old small subset. (S01)
 

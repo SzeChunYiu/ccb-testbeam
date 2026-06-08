@@ -64,10 +64,14 @@ Reproducing those scripts and confirming the 640,737 count is **Study S00** (see
 
 ## Integrity
 
-> TODO (Study S00): record `sha256` for every archive and every extracted ROOT file here, so
-> downstream results are pinned to an exact input set.
+Study S00 recorded the full checksum manifest for the raw archives and the B-stack ROOT inputs
+used by the reproduction gate in
+`reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv`.
 
 | File | sha256 |
 |---|---|
-| `CCB Data.zip` | _pending_ |
-| `root.zip.tar` | _pending_ |
+| `data/raw/CCB Data.zip` | `01365d81479efbfc6fe4f975ee460be1db554ae21891ec7fa594ed8906e009eb` |
+| `data/raw/CCB Data/root.zip` | `19ba847cfbeb46d2944cf8d5c304afb52da6fcad991d1d402a6fd3e9a432efc1` |
+| `data/raw/CCB Data/sorted-a.zip` | `5504642819482198bc7f2cc4198fc91a4f7bcfdc538304c8759c090cf7578e7c` |
+| `data/raw/CCB Data/sorted-b.zip` | `f77835459bb1d797b8da74e6ac2fc88eab2402dd84b29965dc4f1dadcee1db94` |
+| `data/raw/root.zip.tar` | `5fdfa62223a4219c61d2bf15dd5480bcb144435f80f546f807452b298d019b68` |

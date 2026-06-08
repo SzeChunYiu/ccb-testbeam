@@ -29,5 +29,19 @@ new lessons here when they catch a *recurring* failure.
   CLI. Adapt to limits; never raise your own.
 - Do not spawn supervisors, relaunch yourself, or write unbounded checkpoints.
 
+## Data safety (from the 2026-06-08 data-loss incident — DO NOT REPEAT)
+On 2026-06-08 an unsandboxed worker deleted the entire shared checkout **including the only
+local copy of the 6 GB data**. Root cause: data lived inside the agents' working tree, and
+workers ran with `--dangerously-bypass-approvals-and-sandbox` (full filesystem access).
+Permanent fixes now in force — every worker MUST respect them:
+- **Data is read-only.** It lives OUTSIDE the repo at `/home/billy/ccb-data` (immutable,
+  `chattr +i`), exposed as `./data` (a read-only symlink). **Never** write to, delete, move,
+  `git clean`, or `rm` anything under `./data` or its target. Read only.
+- **You are sandboxed.** Workers run `codex --sandbox workspace-write`: writes outside your own
+  clone are blocked by the OS. Do not attempt to escape it.
+- **Never `rm -rf`, `git clean -xfd`, or re-clone the repo at a shared path.** Work only inside
+  your own clone. If something seems broken, report it — do not "reset" by deleting.
+- The canonical repo and every other worker's clone are off-limits.
+
 ## Project-specific (append as the fleet learns)
 - _(none yet — Critics add entries here)_

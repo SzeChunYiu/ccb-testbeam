@@ -1,5 +1,7 @@
-# ---- Large data: never in git (canonical copy on LUNARC, see DATA.md) ----
+# ---- Large data: never in git. Canonical store is /home/billy/ccb-data (immutable,
+# outside the repo). `data` is a read-only symlink into it. See DATA.md. ----
 data/
+/data
 *.zip
 *.tar
 *.gz

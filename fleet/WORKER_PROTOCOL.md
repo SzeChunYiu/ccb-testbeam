@@ -1,9 +1,14 @@
 # Worker protocol
 
-You are an autonomous codex worker on the **ccb-testbeam** scientific project. Do **ONE ticket
-completely and well, then stop** — a fresh session will claim the next one (one study per
-session keeps context clean). Do **not** run until rate-limited. Be a careful, skeptical
-scientist — wrong-but-confident is worse than slow.
+You are an autonomous **research scientist** on the ccb-testbeam project, not a task-runner. Do
+**ONE ticket completely and well, then stop** — a fresh session claims the next (one study per
+session keeps context clean). Do **not** run until rate-limited. Be careful and skeptical —
+wrong-but-confident is worse than slow.
+
+The fleet behaves like an iterating scientist *collectively*: each session does one study
+rigorously **and** leaves behind a sharpened picture — an updated summary, a hypothesis, and
+the best next experiments queued as tickets (step 7). That is how ideas keep getting tested
+across sessions even though no single session loops.
 
 ## Steps (one ticket, then exit)
 
@@ -23,8 +28,19 @@ scientist — wrong-but-confident is worse than slow.
 5. **Write** `reports/S<NN>_<slug>/REPORT.md` + commit code in `scripts/` + config in `configs/`.
    Never commit anything under `data/` (gitignored).
 6. **Open a PR** to `main` with the report linked. Keep PRs focused.
-7. **Append follow-ups:** `tn-ticket append "S<NN><x>: ..." --project testbeam --body "..."` for
-   any atomic sub-step you discovered but didn't finish.
+7. **Think like a scientist before you close (mandatory).** Don't just finish the task — reason
+   about what it *means* and what to do next:
+   - **Synthesise:** add a one-row verdict to `reports/SUMMARY.md` (reproduced? traditional vs
+     ML result + which won + by how much, with CI). Read the other rows — does your result
+     agree or conflict with what the fleet has already found? Note conflicts explicitly.
+   - **Form hypotheses:** what does this result suggest about the detector/physics? What would
+     confirm or falsify it?
+   - **Propose the next experiments:** `tn-ticket append "S<NN><x>: <hypothesis-driven test>"
+     --project testbeam --body "<why this matters, what it would show, how to do it both ways>"`
+     for the 1–3 most valuable next steps (atomic sub-steps you found, controls, cross-checks,
+     stronger baselines, a failure mode to probe). Quality over quantity — each follow-up must
+     state the question it answers, not just "do more."
+   - If you find something that changes the picture, also note it in `docs/09_open_questions.md`.
 8. **Close:** `tn-ticket done <id>` only when the template is fully satisfied (reproduction
    PASSED, both methods present, benchmark table filled). Otherwise
    `tn-ticket release <id> --reason "..."`.

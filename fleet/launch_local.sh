@@ -19,8 +19,11 @@ DATA=/home/billy/ccb-data/extracted
 WK="$HOME/.tb-workers"
 PROMPTS="$HOME/.tb-prompts"
 N="${1:-5}"
-# sandboxed codex: confine writes to the clone, keep network for git/gh/tn-ticket
-SANDBOXED_CODEX='codex --sandbox workspace-write --ask-for-approval never -c sandbox_workspace_write.network_access=true'
+# sandboxed codex: confine writes to the clone, keep network for git/gh/tn-ticket.
+# --add-dir grants a few NARROW tooling paths (tn-ticket state, caches) that are NOT the
+# data store or the canonical repo — so deletion of data/repo stays impossible while the
+# bookkeeping tools (tn-ticket, matplotlib, torch) can write their state/caches.
+SANDBOXED_CODEX='codex --sandbox workspace-write --ask-for-approval never -c sandbox_workspace_write.network_access=true --add-dir /home/billy/.config/tn --add-dir /home/billy/.cache --add-dir /home/billy/.config/gh'
 mkdir -p "$WK" "$PROMPTS"
 
 [ -d "$DATA" ] || { echo "ERROR: data store $DATA missing — run data setup first"; exit 1; }

@@ -19,15 +19,17 @@ across sessions even though no single session loops.
 3. **Check the gate.** If your ticket says "Requires S00 done" and S00 is not yet `factory:done`
    on the queue, `tn-ticket release <id>` it and instead pick up / contribute to S00. Phase 1+
    results are meaningless until reproduction passes.
-4. **Isolate (mandatory at scale).** Do NOT work in the shared checkout — many workers run at
-   once and would clobber each other's branch. Create your own worktree and work there:
+4. **You are already isolated and sandboxed.** You run inside your **own full clone** of the
+   repo (the launcher put you here) under an OS sandbox: **you can only write inside this clone**
+   — attempts to write/delete anything outside are blocked by policy, and that is intended. Just
+   make a branch here and work:
    ```bash
-   git worktree add ~/.tb-worktrees/<your-label> -b study/<ticket-id>-<slug> origin/main
-   cd ~/.tb-worktrees/<your-label>
+   git checkout -B work-<ticket-id> origin/main
    ```
-   **Data is not in your worktree** — read it by ABSOLUTE path
-   (`/home/billy/Desktop/test_beam/data/...` on the laptop, the LUNARC mirror on the cluster),
-   never relative.
+   Do NOT create git worktrees (they share `.git` outside the sandbox and will fail). Do NOT
+   `rm`/`git clean`/`re-clone` anything — work only inside this clone.
+   **Data is READ-ONLY at `./data`** (a symlink to the immutable external store). Read it freely;
+   never write to, delete, or move it.
 5. **Do the study** following `studies/STUDY_TEMPLATE.md` exactly:
    - **Reproduce first** from raw ROOT; show the match table; pin the input sha256.
    - **Traditional method** with full uncertainties + χ²/ndf + full distributions.
@@ -80,4 +82,5 @@ across sessions even though no single session loops.
 
 ## Compute
 - Python 3.7 (anaconda): uproot 5, numpy, pandas, scikit-learn 1.0, torch 1.13+cu117.
-- Data: `/home/billy/Desktop/test_beam/data/extracted/` (laptop) or the LUNARC mirror.
+- Data (READ-ONLY): `./data/` in your clone (symlink to the immutable store
+  `/home/billy/ccb-data/extracted/`): `root/root/*.root` (raw), `sorted-a/`, `sorted-b/`.

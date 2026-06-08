@@ -42,11 +42,36 @@ Traditional vs ML on the **same held-out data** with the **same metric**. One ta
 
 Verdict: does ML beat the strong baseline? By how much? Is it worth the complexity?
 
-## 5. Systematics & caveats
-What could bias this; what is assumed; where statistics are thin; leakage/circularity checks.
+## 5. Falsification (mandatory — guards against p-hacking)
+- **Pre-registration:** state the metric and significance level you committed to **before**
+  looking at the result (copy it from the ticket — it must predate the analysis).
+- **Falsification test:** the one explicit test that would have shown your claim is wrong.
+- **Result:** p-value / e-value **with multiple-comparison correction**. If you tried N cuts/
+  models, say N and correct for it. A metric chosen *after* seeing the data is rejected.
 
-## 6. Findings & next steps
-Bullet conclusions (quantitative). New tickets to cut (so the orchestrator can append them).
+## 6. Threats to validity (mandatory — the four classic failure modes)
+Address each explicitly, even if to say "not applicable, because…":
+- **Benchmark/selection:** is the comparison fair, the baseline strong (not a strawman)?
+- **Data leakage:** split by **run** (never event-level shuffle); no label-defining variable in
+  the features; calibration built only on calibration runs.
+- **Metric misuse:** is the metric the right one; are you reporting full distributions, not just
+  a core σ; χ²/ndf shown?
+- **Post-hoc selection:** were cuts/bins/models chosen before or after seeing the outcome?
 
-## 7. Reproducibility
+## 7. Provenance manifest (mandatory)
+Commit a machine-readable `manifest.json` next to this report containing: input file sha256s,
+git commit, container/env id, **every command run**, random seeds, and output file sha256s. The
+orchestrator's acceptance check re-runs the manifest to confirm the headline number reproduces.
+
+## 8. Findings & next steps (think like a scientist)
+Quantitative conclusions. A hypothesis this suggests. For each queued follow-up ticket, give an
+**expected-information-gain** justification (which open question it resolves and why this is the
+most informative next step), not just "do more".
+
+## 9. Reproducibility
 Exact commands to regenerate every number/figure. List output artifacts written.
+
+---
+*A study is accepted only after a passing **Scientific Critic** review (see
+[fleet/CRITIC_PROTOCOL.md](../fleet/CRITIC_PROTOCOL.md)). Check [fleet/LESSONS.md](../fleet/LESSONS.md)
+before you start — it lists recurring mistakes to avoid.*

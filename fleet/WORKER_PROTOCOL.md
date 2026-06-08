@@ -48,10 +48,18 @@ across sessions even though no single session loops.
    one. (`csup` auto-respawns a new session on goal completion.)
 
 ## Hard rules
+- **Read [LESSONS.md](LESSONS.md) first** — don't repeat the fleet's known mistakes.
 - Reproduce before extending. A mismatch is a finding — report it, don't paper over it.
 - Both methods, always; benchmark fairly (strong baseline, not a strawman).
 - Atomic: one cut/fit/feature per step, each validated with a plot/number.
-- Pin provenance: input checksum + git commit + config in every report.
+- **Pre-register** your metric and cuts in the ticket before looking at results (anti-p-hacking).
+- **Provenance manifest** (`manifest.json`: input hashes, commit, commands, seeds, output hashes)
+  is required — every number must trace to a committed artifact. No manifest → not accepted.
+- A study is accepted only after a passing **Scientific Critic** review ([CRITIC_PROTOCOL.md](CRITIC_PROTOCOL.md)).
+- **Safety / self-modification guard:** never edit orchestration/launcher/quota files
+  (`codex-supervisor*`, `.codex-supervisor.toml`, `codex-prompts*`, `~/.config/csup/*`, the
+  `tn-ticket` CLI). Adapt to limits; never raise your own. Don't spawn supervisors or relaunch
+  yourself.
 - Heavy training (`[G]`/`[C]` studies) → note it needs LUNARC; don't melt the 6 GB laptop GPU.
 - If you're unsure whether a result is real, default to skeptical and say so.
 

@@ -1,0 +1,125 @@
+{
+  "study": "P02",
+  "n_pulses": 60000,
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65,
+    50
+  ],
+  "device": "cuda",
+  "stave_counts": {
+    "B2": 40572,
+    "B4": 10977,
+    "B6": 5992,
+    "B8": 2459
+  },
+  "benchmark_pca_vs_ae": [
+    {
+      "latent_dim": 2,
+      "pca_recon_mse": 0.02622012275261164,
+      "ae_recon_mse": 0.01294014509767294,
+      "ae_better_pct": 50.64803769317196
+    },
+    {
+      "latent_dim": 3,
+      "pca_recon_mse": 0.014161341490710752,
+      "ae_recon_mse": 0.008405380882322788,
+      "ae_better_pct": 40.64558864118653
+    },
+    {
+      "latent_dim": 4,
+      "pca_recon_mse": 0.00879726522692759,
+      "ae_recon_mse": 0.005272348877042532,
+      "ae_better_pct": 40.068319630691875
+    },
+    {
+      "latent_dim": 8,
+      "pca_recon_mse": 0.0016574037492657152,
+      "ae_recon_mse": 0.0029155737720429897,
+      "ae_better_pct": -75.91210188432876
+    }
+  ],
+  "clusters_k5": [
+    {
+      "cluster": 0,
+      "n": 8025,
+      "median_amp_adc": 2897.0,
+      "median_late_frac": 0.1194867351569914,
+      "median_peak_sample": 5.0,
+      "stave_composition": {
+        "B2": 4185,
+        "B4": 2179,
+        "B6": 1220,
+        "B8": 441
+      }
+    },
+    {
+      "cluster": 1,
+      "n": 1845,
+      "median_amp_adc": 1635.5,
+      "median_late_frac": -4125700.062227754,
+      "median_peak_sample": 3.0,
+      "stave_composition": {
+        "B2": 1007,
+        "B4": 508,
+        "B6": 234,
+        "B8": 96
+      }
+    },
+    {
+      "cluster": 2,
+      "n": 24201,
+      "median_amp_adc": 4416.5,
+      "median_late_frac": 0.3780896871654573,
+      "median_peak_sample": 7.0,
+      "stave_composition": {
+        "B2": 16821,
+        "B4": 4321,
+        "B6": 1762,
+        "B8": 1297
+      }
+    },
+    {
+      "cluster": 3,
+      "n": 25137,
+      "median_amp_adc": 2682.5,
+      "median_late_frac": 0.2732646631977629,
+      "median_peak_sample": 8.0,
+      "stave_composition": {
+        "B2": 18038,
+        "B4": 3811,
+        "B6": 2700,
+        "B8": 588
+      }
+    },
+    {
+      "cluster": 4,
+      "n": 792,
+      "median_amp_adc": 1209.75,
+      "median_late_frac": -9906683.890684182,
+      "median_peak_sample": 3.0,
+      "stave_composition": {
+        "B2": 521,
+        "B4": 158,
+        "B6": 76,
+        "B8": 37
+      }
+    }
+  ],
+  "pca_explained_var_ratio_8": [
+    0.6390840805518265,
+    0.1549104057353172,
+    0.09474308919324417,
+    0.04214432162432811,
+    0.027667805919750314,
+    0.015374126725609377,
+    0.008135927576570928,
+    0.004918400097737406
+  ],
+  "runtime_sec": 21.9
+}

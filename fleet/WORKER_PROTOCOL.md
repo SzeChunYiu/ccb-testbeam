@@ -19,28 +19,43 @@ across sessions even though no single session loops.
 3. **Check the gate.** If your ticket says "Requires S00 done" and S00 is not yet `factory:done`
    on the queue, `tn-ticket release <id>` it and instead pick up / contribute to S00. Phase 1+
    results are meaningless until reproduction passes.
-4. **Do the study** on a fresh branch `study/S<NN>-<slug>`, following
-   `studies/STUDY_TEMPLATE.md` exactly:
+4. **Isolate (mandatory at scale).** Do NOT work in the shared checkout — many workers run at
+   once and would clobber each other's branch. Create your own worktree and work there:
+   ```bash
+   git worktree add ~/.tb-worktrees/<your-label> -b study/<ticket-id>-<slug> origin/main
+   cd ~/.tb-worktrees/<your-label>
+   ```
+   **Data is not in your worktree** — read it by ABSOLUTE path
+   (`/home/billy/Desktop/test_beam/data/...` on the laptop, the LUNARC mirror on the cluster),
+   never relative.
+5. **Do the study** following `studies/STUDY_TEMPLATE.md` exactly:
    - **Reproduce first** from raw ROOT; show the match table; pin the input sha256.
    - **Traditional method** with full uncertainties + χ²/ndf + full distributions.
    - **ML method** with split-by-run, hyperparameter CV, calibration, bootstrap CIs.
    - **Head-to-head benchmark** on the same held-out data, same metric.
-5. **Write** `reports/S<NN>_<slug>/REPORT.md` + commit code in `scripts/` + config in `configs/`.
-   Never commit anything under `data/` (gitignored).
-6. **Open a PR** to `main` with the report linked. Keep PRs focused.
+6. **Write only files you own (conflict-free rule).** A worker writes ONLY:
+   - its own `reports/<ticket-id>__<slug>/` directory (REPORT.md, figures, `manifest.json`, and
+     the machine-readable **`result.json`** — schema in [SCALING.md](SCALING.md)), and
+   - **new, name-spaced** code: `scripts/s<NN>_*.py`, `configs/s<NN>_*.yaml` (prefix every new
+     file with the study id so two studies never collide on a path).
+   **Never edit a shared file** (`SUMMARY.md`, `STUDIES.md`, `docs/*`, `DATA.md`) — the
+   Integrator regenerates those from every study's `result.json`. Never commit under `data/`.
+   Then **open a PR** to `main`. Because you touched only your own dir + name-spaced files, it
+   auto-merges without conflict.
 7. **Think like a scientist before you close (mandatory).** Don't just finish the task — reason
-   about what it *means* and what to do next:
-   - **Synthesise:** add a one-row verdict to `reports/SUMMARY.md` (reproduced? traditional vs
-     ML result + which won + by how much, with CI). Read the other rows — does your result
-     agree or conflict with what the fleet has already found? Note conflicts explicitly.
-   - **Form hypotheses:** what does this result suggest about the detector/physics? What would
+   about what it *means* and what to do next. Put ALL of this in your own files (never shared
+   files — the Integrator aggregates):
+   - **Synthesise** the verdict into your `result.json` (reproduced? traditional vs ML + which
+     won + by how much, with CI) and a prose paragraph in your REPORT.md. The Integrator rolls
+     these into `SUMMARY.md`; read the current `SUMMARY.md` to see if your result agrees or
+     conflicts with the fleet, and state any conflict in your report.
+   - **Form a hypothesis:** what does this suggest about the detector/physics, and what would
      confirm or falsify it?
-   - **Propose the next experiments:** `tn-ticket append "S<NN><x>: <hypothesis-driven test>"
-     --project testbeam --body "<why this matters, what it would show, how to do it both ways>"`
-     for the 1–3 most valuable next steps (atomic sub-steps you found, controls, cross-checks,
-     stronger baselines, a failure mode to probe). Quality over quantity — each follow-up must
-     state the question it answers, not just "do more."
-   - If you find something that changes the picture, also note it in `docs/09_open_questions.md`.
+   - **Propose the next experiments** in your `result.json` `next_tickets` field AND post them:
+     `tn-ticket append "S<NN><x>: <hypothesis-driven test>" --project testbeam --body "..."`.
+     Each must state the question it answers and its expected information gain — not "do more."
+   - **Verify queue bookkeeping stuck** (state is lossy at scale): after `tn-ticket done`/
+     `append`, re-list and confirm; retry once if it didn't take.
 8. **Close:** `tn-ticket done <id>` only when the template is fully satisfied (reproduction
    PASSED, both methods present, benchmark table filled). Otherwise
    `tn-ticket release <id> --reason "..."`.

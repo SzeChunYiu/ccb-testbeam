@@ -1,0 +1,63 @@
+study_id: S01b
+title: selected-pulse table manifest and regeneration hook
+
+raw_root_dir: data/root/root
+sorted_b_dir: data/sorted-b
+output_dir: reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest
+pulse_table_path: reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+duplicate_readout_channels:
+  B2_odd: 1
+  B4_odd: 3
+  B6_odd: 5
+  B8_odd: 7
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_pulses: 640737
+  groups:
+    sample_i_calib:
+      events: 239559
+      pulses: 248745
+    sample_i_analysis:
+      events: 243133
+      pulses: 252266
+      staves:
+        B2: 241422
+        B4: 6451
+        B6: 3094
+        B8: 1299
+    sample_ii_calib:
+      events: 12103
+      pulses: 14630
+    sample_ii_analysis:
+      events: 89807
+      pulses: 125096
+      staves:
+        B2: 88213
+        B4: 21229
+        B6: 11148
+        B8: 4506
+
+ml_check:
+  random_seed: 1729
+  max_train_per_class: 60000
+  max_test_per_class: 30000
+  heldout_runs: [57, 65]
+  cv_folds: 3
+  regularization_c: [0.01, 0.1, 1.0, 10.0]

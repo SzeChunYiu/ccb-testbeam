@@ -1,0 +1,34 @@
+{
+  "study": "S01b",
+  "ticket": "1780917628.449525.085b2dc0",
+  "worker": "testbeam-laptop-3",
+  "title": "Persist the S00 selected-pulse table manifest and regeneration hook",
+  "reproduced": true,
+  "repro_tolerance": "0 count delta; 640737 selected rows reproduced from raw ROOT",
+  "traditional": {
+    "metric": "selected_b_stave_pulses",
+    "value": 640737,
+    "ci": [640737, 640737],
+    "artifact": "s00_selected_b_pulses.csv.gz",
+    "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f"
+  },
+  "ml": {
+    "metric": "heldout_selection_accuracy",
+    "value": 0.9997962717734542,
+    "ci": [0.9994906794336356, 1.0],
+    "artifact": "ml_benchmark.csv"
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "preregistered_metric": "exact selected-row count and selected-table sha256 from raw ROOT regeneration",
+    "result": "passed: row count is 640737 and every S00 match-table delta is zero",
+    "n_tries": 1
+  },
+  "input_sha256": "reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/input_sha256.csv",
+  "git_commit": "e96dcd095081b209d4018a07fc8a2c07b0ad362d",
+  "critic": "pending",
+  "next_tickets": [
+    "S01c: publish or document the canonical non-git processed-data location for s00_selected_b_pulses.csv.gz",
+    "S01d: add downstream consumers that validate the selected-table sha256 before S01/S02 analysis"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "study": "S01b",
+  "ticket": "1780917628.449525.085b2dc0",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "e96dcd095081b209d4018a07fc8a2c07b0ad362d",
+  "date": "2026-06-08",
+  "config": "reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s01b_s00_reproduction_local.yaml",
+  "commands": [
+    "python scripts/01_build_pulse_table_from_root.py --config reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s01b_s00_reproduction_local.yaml",
+    "gzip -cd reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz | wc -l",
+    "sha256sum reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/* | sort"
+  ],
+  "random_seeds": {
+    "ml_check": 1729
+  },
+  "environment": {
+    "python": "system python in sandbox",
+    "data_root": "data -> /home/billy/ccb-data/extracted",
+    "notes": "Matplotlib used a sandbox temp cache because ~/.config/matplotlib was not writable."
+  },
+  "inputs": {
+    "raw_root_dir": "data/root/root",
+    "sorted_b_dir": "data/sorted-b",
+    "input_sha256_table": "input_sha256.csv"
+  },
+  "selected_pulse_table": {
+    "path": "reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+    "data_rows": 640737,
+    "header_rows": 1,
+    "bytes": 9246625,
+    "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f"
+  },
+  "count_match_passed": true,
+  "canonical_data_path_status": {
+    "path": "data/processed/s00_selected_b_pulses.csv.gz",
+    "exists_in_this_sandbox": false,
+    "recommendation": "Publish this non-git artifact to the read-only mirror or require downstream workers to regenerate and validate the sha256."
+  },
+  "output_sha256": {
+    "REPORT.md": "3d7debbd2bb3e44f0488a50058f859c192c07e84501e29fa711a6a300133334e",
+    "count_match_table.csv": "b6227057386a9dc110b8b7c9ee2047ff4725be3c9c62da3fb65129c12a183dcf",
+    "counts_by_group.csv": "5f471827a94a55b0a8b3968d71d9f57955f82bdf8277d7d09439b370b862a890",
+    "counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "fig_amplitude_distributions.png": "b3a93749918ca7d1619d531384b4403e92e56dd86741330b5b51d8d2127660e1",
+    "fig_counts_by_group_stave.png": "ea73e156c0404ab06902ec74e515e1da29582d04b4624248ddcfcbff3e408ab3",
+    "fig_counts_by_run.png": "70f4873bb5efb897aba6cbfe318900aefb1529e4a0dd48f10fa45f544e2bc809",
+    "fig_ml_reliability.png": "aa61b270ecf389376d72d2e7e0a352634283900c39983f5ec1043c1539d5db27",
+    "input_sha256.csv": "4da926aeeb55a1264f0805fb77d2fc23b8a60933287b5e65b3f5a113b430d9d6",
+    "ml_benchmark.csv": "8dfff3698b8ef0b02379573892e586d9f868325dcfa9b361ddb6a5c0cd6ee232",
+    "ml_cv_scan.csv": "798b378758cc9cb17215e51b58eeed47bb2b7d35a261d72831abb50c4b2300ef",
+    "regenerate_s00_selected_table.sh": "e455ddd340259e5e1b1cac333519808714315c8ceb3b5f0538eea253ea43afe0",
+    "result.json": "02693ffe5979f6d3e5433f2ca4b1468d6f692f470cd66332a72bda5d91d68577",
+    "s00_selected_b_pulses.csv.gz": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+    "s01b_s00_reproduction_local.yaml": "ecb7b31620049a22596624a9ff537b1ac413cf90396dc0bd311803a66c68009d",
+    "sorted_even_channel_crosscheck.csv": "a84946233e45599f686ac8ac970380882bc81109cef86803572dce6cb8fb8c3b"
+  }
+}

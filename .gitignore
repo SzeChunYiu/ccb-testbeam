@@ -1,0 +1,48 @@
+# ---- Large data: never in git (canonical copy on LUNARC, see DATA.md) ----
+data/
+*.zip
+*.tar
+*.gz
+*.root
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.parquet
+*.feather
+
+# ---- Source PDFs (provenance only; tracked separately if needed) ----
+*.pdf
+
+# ---- ML artifacts ----
+*.pt
+*.pth
+*.ckpt
+*.pkl
+*.joblib
+checkpoints/
+runs/
+wandb/
+mlruns/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Editors / OS ----
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# ---- Scratch ----
+scratch/
+tmp/
+*.log

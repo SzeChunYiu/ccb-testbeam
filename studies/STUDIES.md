@@ -1,0 +1,182 @@
+# Master study plan
+
+This is the prioritised list of everything we can study on the CCB test-beam data. It is the
+source from which `tn-ticket`s (`project:testbeam`) are cut. Each study becomes one or more
+tickets; each ticket produces a report in `reports/` following
+[`STUDY_TEMPLATE.md`](STUDY_TEMPLATE.md).
+
+## Governing principles (non-negotiable)
+
+1. **Reproduce before you extend.** No new result is trusted until the corresponding number in
+   the existing notes is reproduced **from the raw ROOT files** by an independent script and
+   shown to match (state the tolerance). If it does not match, that discrepancy *is* the
+   finding — stop and report it.
+2. **Both methods, always.** Every quantity is studied with a **traditional (non-ML) method**
+   *and* an **ML method**, reported as a **fair head-to-head benchmark** on the same held-out
+   data with the same metric. ML must beat a *strong* baseline to be adopted — not a strawman.
+3. **Atomic decomposition.** Break every result into the smallest verifiable steps (one cut,
+   one fit, one correction, one feature) and understand each before combining. Each step gets
+   its own validation plot/number.
+4. **Honest uncertainty.** Report statistical *and* systematic uncertainties, χ²/ndf, bootstrap
+   CIs (especially for small classes), and full distributions — not just a core σ.
+5. **Provenance.** Pin every result to an input checksum, a git commit, and a config file.
+
+## Phases
+
+- **Phase 0 — Foundation & reproduction** (S00–S01): data integrity + reproduce the pipeline.
+  **Gate: nothing in Phase 1+ starts until S00 reproduces the headline counts.**
+- **Phase 1 — Atomic understanding** (S02–S07, S10–S13, S18): reproduce + dissect every existing
+  result, traditional vs ML, to the finest level.
+- **Phase 2 — Extension** (S08–S09, S14–S17): new methods (deep learning, simulation, PID,
+  energy calibration) that go beyond the notes.
+
+Difficulty/where: **[L]** laptop-fine, **[G]** needs LUNARC GPU, **[C]** CPU-heavy → LUNARC node.
+
+---
+
+## Phase 0 — Foundation & reproduction
+
+### S00 — Data integrity & pipeline reproduction  [L]  (gate; no deps)
+- **Reproduce:** rebuild the selected-pulse table from raw ROOT; confirm **640,737** B-stave
+  pulses (A>1000 ADC), per-run and per-stave counts (Tables 1–4), and regenerate ≥3 headline
+  figures. Reconcile the **two notes' discrepancies** (calib split run 61 vs 64; stave spacing
+  2 cm vs 4 cm). Record sha256 of every archive + ROOT file in `DATA.md`; mirror to LUNARC.
+- **Deliverable:** `scripts/01_build_pulse_table_from_root.py`, a `configs/` cut definition,
+  a reproduction report with a count-match table, checksums.
+
+### S01 — Amplitude-adaptive template & q_template on the full dataset  [C]  (dep: S00)
+- **Reproduce/Complete:** build s_i(j;A) per stave/amplitude bin from pooled calibration;
+  evaluate **q_template for every selected pulse** (the notes never did this on the full set).
+- **Traditional vs ML:** template = median-combine (traditional). ML cross-check = a small
+  autoencoder/PCA basis of pulse shapes; compare reconstruction residuals.
+- **Deliverable:** template library, per-pulse q_template column, distributions per stave/sample.
+
+---
+
+## Phase 1 — Atomic understanding
+
+### S02 — Timing pickoff: CFD vs OF vs template  [L]  (dep: S00)
+- **Atomic steps:** scan CFD fraction (10–50%), OF fit window, template-phase fit.
+- **Traditional:** CFD20, CFD@best-fraction, leading-edge, OF, full-template fit — all on the
+  *same* pulses.
+- **ML:** a regressor (then S08 CNN) predicting sub-sample time from the waveform.
+- **Benchmark:** single-stave timing resolution (from same-particle residuals) per method, with
+  CIs. Question answered: *which pickoff is actually best, and does ML beat OF?*
+
+### S03 — Timewalk correction: closure & held-out-run  [L]  (dep: S00, S02)
+- **Reproduce:** the analytic f_i(A,x) timewalk; show before/after residual-vs-amplitude flatness.
+- **Atomic:** held-out-run closure test; per-feature ablation of x_i.
+- **Traditional vs ML:** analytic/polynomial timewalk **vs** the App. A.4 ridge residual
+  correction (with α scanned, CV). Benchmark on held-out runs by residual RMS + bias-vs-amplitude.
+
+### S04 — Same-particle timing resolution  [L]  (dep: S00, S03)
+- **Reproduce:** per-stave σ (Table 19: B6≈0.68–0.75 ns, …), combined σ_comb≈0.54 ns (Table 40);
+  reconcile vs the older v41 note.
+- **Atomic / rigour:** report **narrow-core σ, robust width, AND full RMS** together; supply the
+  missing **χ²/ndf**; tail fractions; bootstrap CIs.
+- **Both methods:** variance-decomposition (traditional) vs an ML per-event resolution estimate;
+  benchmark calibration of the predicted σ (pull distribution should be unit-width).
+
+### S05 — Stave-error independence & two-ended projection  [L]  (dep: S04)
+- **Atomic:** test σ_ij²=σ_i²+σ_j² independence assumption (look for correlated clock/electronics
+  via cross-correlations); decompose correlated vs uncorrelated timing components.
+- **Deliverable:** a defensible two-ended √2 projection with the correlated fraction quantified.
+
+### S06 — Resolution vs amplitude/energy + absolute time scale  [L]  (dep: S04)
+- **Atomic:** σ(A) per stave; map onto reconstructed energy (needs S14 for MeV).
+- **Both methods:** parametric σ(A) fit (traditional) vs ML σ-prediction; validate the absolute
+  TOF/time scale against an independent handle.
+
+### S07 — ML rigour pass (cross-cutting)  [L]  (dep: S00; applies to A.2, A.4, B, H, I)
+- **Atomic:** add probability **calibration** (isotonic/logistic) + reliability diagrams;
+  **scan all hyperparameters** with CV; report PR curves + bootstrap CIs for imbalanced classes;
+  build the **fair traditional baseline** (cuts on Δt_B / q_template / D_t) for every classifier.
+- **Deliverable:** a "ML-vs-baseline scoreboard" table reused by S03/S08/S09/S11/S12/S13.
+
+### S10 — Pile-up rate model & current-dependent excess  [L]  (dep: S00)
+- **Reproduce:** occupancy model, R_max≈4.2 MHz (Table 47); current ratio 1.29; 9.2% excess.
+- **Atomic:** test the **τ_eff=90 ns** assumption against a measured shaping/live time; isolate
+  the genuine beam-pile-up component from the current-independent baseline rigorously.
+- **Both methods:** analytic Poisson model (traditional) vs ML pile-up score scaling.
+
+### S11 — Pile-up recovery: constrained two-pulse fit vs ML  [L→C]  (dep: S01, S02)
+- **Build the missing traditional method:** the constrained **two-pulse template fit** (App. B.5
+  recommendation, never implemented).
+- **ML:** App. B injection-trained recovery (and later S08 CNN).
+- **Benchmark:** on injected pile-up, recovered-time RMS and charge bias vs true, as a function
+  of pulse separation and amplitude ratio. *When is ML worth it over the fit?*
+
+### S12 — Timing-control-region classifier rigour  [L]  (dep: S07)
+- **Reproduce:** App. I (D_t<3 ns vs D_t>50 ns; AUC 0.958 / AP 0.614).
+- **Atomic:** **bootstrap** the 72-event positive class; quantify label self-referentiality;
+  cross-check with the independent curvature C_t/σ_C.
+- **Both methods:** a plain **D_t cut** (traditional) vs the shape-only RF; benchmark tail
+  rejection at fixed efficiency.
+
+### S13 — Current-scaling & weak supervision (CWoLa)  [L]  (dep: S07, S10)
+- **Reproduce:** App. H weak current classifier (AUC 0.676), run-transfer folds.
+- **Both methods:** the raw multi-stave/downstream-fraction current comparison (1.56% vs 2.68%)
+  and f(I)=f₀+kI fit (traditional) **vs** the CWoLa classifier. Does ML add information beyond
+  the simple rate comparison?
+
+### S18 — A-stack independent reproduction (Sample III/IV)  [L]  (dep: S00)
+- **Reproduce:** A1–A3 residual robust width 1.43 ns / core σ 1.41 ns (Tables 25–26); a smaller,
+  cleaner warm-up for the atomic-reproduction methodology. Cross-check the B-stack timing scale.
+
+---
+
+## Phase 2 — Extension (beyond the notes)
+
+### S08 — Waveform-level deep model (1D CNN/autoencoder)  [G]  (dep: S02, S11)
+- Train a 1-D CNN for sub-sample time + pile-up/dropout flags directly from the 18-sample
+  waveform; autoencoder for denoising/recovery (cf. NEDA/HPGe literature).
+- **Benchmark:** vs OF/template timing (S02) and vs the two-pulse fit (S11). LUNARC GPU.
+
+### S09 — Event-level GNN over the 4-stave graph  [G]  (dep: S04, S07)
+- Graph = {B2,B4,B6,B8} nodes with pulse features + edges; predict clean-timing probability and
+  a calibrated event time + per-event σ.
+- **Benchmark:** vs the RF clean-timing classifier (App. A) and the inverse-variance combined
+  time (S04). This is the natural home for the user's "basic ML ideas" — make them rigorous.
+
+### S14 — Energy calibration (PSTAR/GEANT4 + Birks)  [C]  (dep: S00)
+- Replace the 2-parameter power-law range model with **PSTAR/GEANT4** range-energy; model
+  **Birks quenching**; propagate systematics. Enables MeV-scale σ(E) in S06.
+
+### S15 — Event-by-event ΔE–E particle ID (p vs d)  [L]  (dep: S14)
+- **Traditional:** ΔE–E band cuts / penetration-depth logic.
+- **ML:** classifier on the amplitude vector + shape. **Benchmark** purity/efficiency — and
+  honestly assess that there is **no truth label** without S17.
+
+### S16 — Pedestal/baseline validation  [L]  (dep: S00)
+- Validate the adaptive positivity-constrained pedestal against an **independent** pedestal
+  estimate (forced-trigger / pre-trigger samples / empty waveforms). The "0% below tolerance"
+  is true by construction and is **not** a validation — provide a real one.
+
+### S17 — GEANT4 simulation of the CCB setup (stretch)  [C/G]  (dep: S00, S14)
+- Build a GEANT4 model of target + stacks to generate **truth-labelled** waveforms. This is the
+  only route to validate every data-driven/weak-label method against ground truth, and to turn
+  "proxies" into calibrated probabilities. Large effort; leverages the user's existing Geant4
+  repos.
+
+---
+
+## Dependency sketch
+
+```
+S00 ─┬─ S01 ─ S11 ─ S08
+     ├─ S02 ─ S03 ─ S04 ─┬─ S05
+     │                   ├─ S06 ── (S14)
+     │                   └─ S09
+     ├─ S07 ─┬─ S12
+     │       └─ S13
+     ├─ S10 ─ S13
+     ├─ S18
+     ├─ S16
+     └─ S14 ─ S15 ─ (S17)
+```
+
+## Ticket cutting
+Phase 0 (S00, S01) ships first and is the **gate**. Each study may split into atomic sub-tickets
+(e.g. S04a reproduce counts, S04b χ²/full-RMS, S04c bootstrap CIs). Keep tickets small enough to
+finish in one agent session. The orchestrator (Claude) maintains this file as the single source
+of truth and synthesises `reports/` into a rolling summary.

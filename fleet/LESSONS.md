@@ -44,4 +44,4 @@ Permanent fixes now in force — every worker MUST respect them:
 - The canonical repo and every other worker's clone are off-limits.
 
 ## Project-specific (append as the fleet learns)
-- _(none yet — Critics add entries here)_
+- **A benchmark that looks perfect is usually leaking.** (P07) Clipping at `C=frac*A` let the ML read amplitude off `max=frac*A` (res68~0.002). Make the truth INDEPENDENT of the inputs; fixed-ceiling clipping fixed it. When ML hugely beats everything, hunt for leakage before celebrating.

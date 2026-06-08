@@ -160,6 +160,80 @@ Difficulty/where: **[L]** laptop-fine, **[G]** needs LUNARC GPU, **[C]** CPU-hea
 
 ---
 
+## ML Pulse-Characterisation Program (P-series)
+
+A dedicated, comprehensive programme to characterise the pulse **with ML, each benchmarked
+against a strong traditional method** (the governing rules still apply: reproduce-first where a
+report number exists, both methods, atomic, falsification, provenance). Inputs are the 18-sample
+waveforms (~640k pulses, 4 B-staves, no MC truth). Most models are tiny (18-dim input) and run
+on the **laptop GPU**; only the largest sweeps need LUNARC. All depend on S00; representation
+work depends on S01.
+
+### P01 — Self-supervised waveform representation  [L/G]  (dep: S00)
+Pretrain on ALL ~640k waveforms with **masked-sample modelling** (predict held-out samples) and
+a **denoising autoencoder/VAE** → a learned latent embedding of pulse shape. *Traditional
+baseline:* PCA / the hand-crafted shape vector (tail, late, area/peak, plateau, q_template).
+*Benchmark:* downstream usefulness (linear-probe on P03/P05 tasks) and reconstruction error.
+This embedding feeds P02–P08.
+
+### P02 — Unsupervised pulse-type discovery  [L]  (dep: P01)
+Cluster the latent space (HDBSCAN/GMM) to discover pulse classes (clean / late / overlap /
+dropout / saturated / glitch) **without labels**. *Traditional:* cuts on shape variables.
+*Benchmark:* cluster purity vs the data-driven topology labels (Δt_B classes, D_t, jagged flag);
+do the clusters recover known physics and surface anything new?
+
+### P03 — Deep timing regression + per-pulse uncertainty  [L/G]  (dep: S02)
+1-D CNN (and a small transformer) predicting sub-sample time **and a calibrated σ** from the
+waveform. *Traditional:* CFD/OF/template (S02). *Benchmark:* single-stave resolution from
+same-particle residuals, and pull-width of the predicted σ. Extends/realises S08.
+
+### P04 — Amplitude / deposited-charge regression  [L]  (dep: S00)
+ML estimate of true amplitude/charge from the waveform, robust to shape change. *Traditional:*
+peak / integral / template-fit amplitude. *Benchmark:* resolution & bias vs amplitude, esp. the
+non-linear high-amplitude B2 regime.
+
+### P05 — Pile-up detection & two-pulse decomposition (deep)  [L/G]  (dep: S11, P01)
+CNN classifier (pile-up vs clean) **and** a decomposition head predicting the two constituent
+pulses' (t, A). *Traditional:* the constrained two-pulse template fit (S11) and the injection
+classifiers (App. B). *Benchmark on injected pile-up:* recovered-time RMS and charge bias vs
+separation & amplitude ratio — *when does deep decomposition beat the fit?* Core user interest.
+
+### P06 — Dropout / jagged detection & recovery  [L]  (dep: P01)
+CNN to flag dropout/jagged pulses and reconstruct the intact waveform (autoencoder inpainting).
+*Traditional:* the rule-based jagged mask (§3) + interpolation. *Benchmark:* recovered timing on
+injected dropouts, split by leading-edge-preserved vs destroyed (honest "unrecoverable" class).
+
+### P07 — Saturation recovery for high-amplitude B2  [L]  (dep: S01)
+~30–40% of Sample-I B2 pulses exceed 7000 ADC. Reconstruct true amplitude from the unsaturated
+rising edge. *Traditional:* template/rising-edge extrapolation. *ML:* regression from the
+unsaturated samples. *Benchmark:* on pulses artificially clipped from clean ones.
+
+### P08 — Pulse-shape discrimination for particle ID (p vs d)  [L/G]  (dep: S15, P01)
+Different dE/dx (proton vs deuteron) → different ionisation quenching → different pulse shape.
+Test whether the **waveform alone** carries PID information. *Traditional:* charge-comparison PSD
+(tail/total), ΔE–E band cuts. *ML:* classifier on the waveform/latent. *Benchmark:* purity vs
+efficiency — and be explicit there is **no truth label** without S17 (GEANT4).
+
+### P09 — Anomaly / glitch detection  [L]  (dep: P01)
+Autoencoder reconstruction-error and isolation-forest to surface rare/pathological pulses
+(electronics glitches, double-peaks, baseline excursions) for inspection. *Traditional:* outlier
+cuts on shape vars. *Benchmark:* flagged-set precision by manual/curated review.
+
+### P10 — Conditional generative pulse templates  [L]  (dep: S01)
+Learn the amplitude-adaptive template family with a conditional model (cVAE/normalising flow over
+log A, stave). *Traditional:* the median-combine amplitude-binned template (S01). *Benchmark:*
+template-match quality q_template and timing-fit residuals using learned vs empirical templates.
+
+### P11 — Learned baseline/pedestal estimation  [L]  (dep: S16)
+ML pedestal from pre-trigger samples vs the adaptive positivity-constrained pedestal (S16).
+*Benchmark:* against an independent forced-trigger pedestal sample; bias on low-amplitude pulses.
+
+> All P-series outputs feed the event-level GNN (S09) and the timing/pile-up results (S04/S10–13).
+> P-series models are small; default to the **laptop GPU**, escalate only P01/P03/P05/P08 sweeps
+> to LUNARC. Data is **read-only** at `./data` for every one of these.
+
+---
+
 ## Dependency sketch
 
 ```

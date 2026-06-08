@@ -1,7 +1,11 @@
 # Rolling summary / scoreboard
 
-| Study | Status | Reproduced? | Traditional | ML | ML beats baseline? | Report |
-|---|---|---|---|---|---|---|
-| S00 | passed | yes: 640,737/640,737 B-stave pulses, all checked group/stave counts delta 0 | Deterministic raw `HRDv` even-channel `A>1000 ADC` threshold exactly reproduces counts | Calibrated logistic sanity check on held-out runs 57/65: accuracy 0.999796 [0.999491, 1.000000] | No; threshold wins by 0.020 percentage points and is exact | [REPORT.md](S00_data_integrity_pipeline_reproduction/REPORT.md) |
+Maintained by the orchestrator/Integrator. One row per study as results land.
 
-_Updated by the orchestrator after each wave._
+| Study | Status | Reproduced? | Traditional | ML | ML beats baseline? | Report/PR |
+|---|---|---|---|---|---|---|
+| S00 | ✅ done | ✅ 640,737 exact | per-stave counts | run-split sanity | — (foundation) | reports/S00_… (PR #1) |
+| S01b | ✅ merged | ✅ raw-ROOT re-deriv | selection rule | run-split check | — | reports/…s01b… (PR #2) |
+
+_Fleet: 5 sandboxed laptop workers, deep queue (~35 tickets: S03–S16 + P01–P11). Keeper auto-merges
+conflict-free PRs, reaps stale claims, guards data/repo. LUNARC down for a few days → laptop only._

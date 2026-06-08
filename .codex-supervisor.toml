@@ -1,0 +1,34 @@
+schema_version = 1
+
+[project]
+name = "testbeam"
+description = "CCB test-beam analysis — same-particle timing resolution & pile-up of HRD scintillator stacks (190 MeV p+CD2), traditional + ML benchmarked"
+
+# Autonomous scientific swarm. Every host below is an independent worker that follows
+# fleet/WORKER_PROTOCOL.md: claim a tn-ticket (project:testbeam) -> reproduce-first ->
+# traditional AND ML -> fair benchmark -> reports/ + PR -> done. tn-ticket is the only
+# shared state. Phase 0 (S00) is the reproduction gate.
+
+# ---- Laptop "billy" (UP): 16 cores, 31 GB RAM, RTX A3000 6 GB. 6 panes for [L] studies. ----
+[hosts."laptop-tb-1"]
+disabled = false
+ssh = "local"
+session = "testbeam-1"
+prompts = "codex-prompts.txt"
+tasks_dir = "codex-tasks"
+role = "team"
+project_dir = "/home/billy/Desktop/test_beam"
+sync_policy = "git-only"
+
+# ---- LUNARC slot (DOWN until `ssh lunarc` socket re-established): [C] CPU-heavy + [G] GPU ----
+# Enable after the socket is up and data is mirrored to
+# /projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data/ . Used for S08/S09/S14/S17.
+[hosts."lunarc-tb-gpu"]
+disabled = true
+ssh = "lunarc"
+session = "testbeam-lunarc-gpu"
+prompts = "codex-prompts.txt"
+tasks_dir = "codex-tasks"
+role = "team"
+project_dir = "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/test_beam"
+sync_policy = "git-only"

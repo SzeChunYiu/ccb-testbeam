@@ -30,14 +30,40 @@ tn-ticket done <id>
   S14, S17). Book a node, run a worker set there; raw data mirrored to
   `/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data/`.
 
-### Launching
+### Launching (do this in a fresh session)
+
+Project discovery: `csup` finds a project by name under `~/Desktop/projects/<name>`. This repo
+lives at `~/Desktop/test_beam`, so a symlink makes it discoverable:
 ```bash
-# local fleet (example): N sessions, W workers each, scoped to this project
-csup station testbeam --sessions=6 --workers=1 --host=billy --apply
-csup status testbeam
-# LUNARC fleet (after `ssh lunarc` socket is up and data is mirrored)
-csup station testbeam --sessions=4 --workers=1 --host=lunarc --apply
+ln -sfn /home/billy/Desktop/test_beam /home/billy/Desktop/projects/testbeam   # already created
+csup ls | grep testbeam        # -> testbeam  /home/billy/Desktop/projects/testbeam
 ```
+
+**Option A — direct local supervisor** (laptop-only, no shared hosts.toml edits; recommended
+for the first wave):
+```bash
+cd /home/billy/Desktop/test_beam
+CODEX_SUPERVISOR_SESSION=testbeam CODEX_SUPERVISOR_PROMPTS=codex-prompts.txt \
+  ~/codex-supervisor.sh start --no-attach
+tmux attach -t testbeam        # watch the panes
+```
+
+**Option B — `csup station`** (multi-host, needs a `[hosts."..."]` stanza for testbeam in
+`~/.config/csup/hosts.toml` mapping to ssh="local"; the `--host=laptop` match currently errors
+"no matching SLURM host stanza" until that stanza is added):
+```bash
+csup station testbeam --sessions=6 --workers=1 --host=laptop --dry-run   # then --apply
+csup status testbeam
+```
+
+**LUNARC** (after `ssh lunarc` socket is up + data mirrored): set `disabled = false` on the
+`lunarc-tb-gpu` host in `.codex-supervisor.toml`, then `csup station testbeam --host=lunarc`.
+
+### Recommended ramp (scientific)
+1. Launch **one** worker on the **S00 gate**. Verify the reproduction passes (counts match).
+2. Only then scale to **6 panes** for the Phase 1 wave. Don't parallelise on an unreproduced
+   pipeline.
+3. Each worker does **one ticket, then stops**; `csup` respawns a fresh session for the next.
 
 ## Rules for workers (enforced by the template)
 1. **Reproduce before extending** — match the report number from raw ROOT first (state tolerance).

@@ -1,10 +1,11 @@
-# Worker protocol (read me every iteration)
+# Worker protocol
 
-You are an autonomous codex worker on the **ccb-testbeam** scientific project. Loop the
-following until rate-limited. Be a careful, skeptical scientist — wrong-but-confident is worse
-than slow.
+You are an autonomous codex worker on the **ccb-testbeam** scientific project. Do **ONE ticket
+completely and well, then stop** — a fresh session will claim the next one (one study per
+session keeps context clean). Do **not** run until rate-limited. Be a careful, skeptical
+scientist — wrong-but-confident is worse than slow.
 
-## Loop
+## Steps (one ticket, then exit)
 
 1. **Sync & orient.** `git pull`. Read `studies/STUDIES.md`, `docs/`, and `reports/SUMMARY.md`.
 2. **Claim one ticket:** `tn-ticket claim <your-label> --project testbeam` (your label is your
@@ -27,6 +28,8 @@ than slow.
 8. **Close:** `tn-ticket done <id>` only when the template is fully satisfied (reproduction
    PASSED, both methods present, benchmark table filled). Otherwise
    `tn-ticket release <id> --reason "..."`.
+9. **Stop.** Do not claim a second ticket — exit cleanly so a fresh session starts on the next
+   one. (`csup` auto-respawns a new session on goal completion.)
 
 ## Hard rules
 - Reproduce before extending. A mismatch is a finding — report it, don't paper over it.

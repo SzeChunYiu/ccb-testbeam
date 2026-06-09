@@ -33,6 +33,27 @@ log(){ echo "[$(date '+%F %T' 2>/dev/null||echo ?)] keeper: $*" | tee -a "$LOG";
 controller_alive(){ pgrep -f "run_pane.sh $1\b" >/dev/null 2>&1; }   # $1 = N or "planner"
 start_controller(){ nohup bash "$REPO/fleet/run_pane.sh" "$1" >/dev/null 2>&1 & }
 
+QDIR="$HOME/.config/tn/tickets/$PROJECT"
+rescue_misfiled(){  # a worker that release --reason's an UN-ATTEMPTED ticket (accidental claim,
+                    # duplicate, "not started") lands it in failed/. Requeue it ONCE (guarded so a
+                    # genuinely-failing ticket can't loop forever).
+  local f id reason rescued=0
+  for f in "$QDIR/failed/"*; do
+    [ -f "$f" ] || continue
+    case "$f" in *.lease) continue;; esac
+    grep -q '^rescued=1' "$f" 2>/dev/null && continue
+    reason="$(sed -n 's/^reason=//p' "$f" | head -1)"
+    printf '%s' "$reason" | grep -qiE 'accidental|not started|not-started|continuing|did not start|never started' || continue
+    id="$(basename "$f")"
+    sed -i -e 's/^retries=.*/retries=0/' -e '/^reason=/d' "$f" 2>/dev/null
+    printf 'rescued=1\n' >> "$f"
+    mkdir -p "$QDIR/queue/rescued" 2>/dev/null
+    mv "$f" "$QDIR/queue/rescued/$id" 2>/dev/null && rescued=$((rescued+1))
+  done
+  [ "$rescued" -gt 0 ] && log "rescued $rescued mis-filed ticket(s) back to queue"
+  return 0
+}
+
 reap_orphans(){   # kill any bwrap jail whose owning tmux pane is gone (prevents pile-up/overload)
   local pid args clone base sess killed=0
   for pid in $(pgrep -f -- '--bind /home/billy/.tb-workers/' 2>/dev/null); do
@@ -69,8 +90,9 @@ cycle(){
   controller_alive planner || { dead="$dead tbp"; start_controller planner; }
   # (3) reap orphan jails
   reap_orphans
-  # (4) reap stale local claims
+  # (4) reap stale local claims + rescue mis-filed (un-attempted) tickets
   "$TN" ticket reaper "$PROJECT" --stale-min "$STALE_MIN" >/dev/null 2>&1
+  rescue_misfiled
   # (5) auto-merge conflict-free PRs + mark ticket done
   merged=0
   for pr in $(gh pr list --repo "$GH" --state open --json number -q '.[].number' 2>/dev/null); do

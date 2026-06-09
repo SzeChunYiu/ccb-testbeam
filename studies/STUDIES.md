@@ -258,11 +258,24 @@ of truth and synthesises `reports/` into a rolling summary.
 ## Newly cut atomic directions (2026-06-09)
 
 The latest reports deepen the pulse programme but also narrow the next questions. S02/S07 found
-ML gains for timing residual correction and current/topology classification; S10 and S18 show
-strong traditional baselines still win or tie when the physics control is tight; S16 shows the
-baseline estimator is much better than a naive pretrigger median but still biased; P01 shows
-representation learning needs leakage-controlled downstream value beyond reconstruction; P02/P07
-expose high-value pulse-shape and saturation follow-ups.
+ML gains for timing residual correction and current/topology classification, but S00b turns
+selector/baseline semantics into a measurable systematic and S02b/S03a now show that analytic or
+template timewalk closure must be tested across leave-one-run-out splits before adopting a ridge
+correction. S07b proves the D_t timing-control labels are self-referential; S07c shows shape RF can
+beat q_template-only on weak clean-timing labels, but the historical App.A table must be recovered
+or retired before that label family is trusted. S10 and S18 show strong traditional baselines still
+win or tie when the physics control is tight; S16 shows the baseline estimator is much better than
+a naive pretrigger median but still biased; P01 shows representation learning needs
+leakage-controlled downstream value beyond reconstruction; P04 is a strong duplicate-readout
+amplitude/charge closure, not an absolute energy calibration; P10a says conditional templates need
+explicit timewalk terms before their timing gain can be trusted. P02/P07 expose high-value
+pulse-shape and saturation follow-ups.
+
+Live queue decision: `tn-ticket list --project testbeam` reports `open=26 claimed=4 done=18
+failed=7`, so no new tickets were appended in this cycle. The exact legacy positional command
+`tn-ticket list testbeam` reports the default queue (`open=3 claimed=0 done=0 failed=6`) because
+the shim does not treat the positional argument as a project; for testbeam steering, use
+`--project testbeam`.
 
 Ready queue additions:
 

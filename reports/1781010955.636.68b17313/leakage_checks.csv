@@ -1,0 +1,8 @@
+check,value,flag,note
+heldout_runs_excluded_from_training,1.0,False,Every ML score is predicted for a source run held out from fitting.
+identifier_and_label_features_excluded,1.0,False,"Features exclude run, event number, current, group, downstream label, and odd charge samples."
+row_split_current_auc,0.6758825873227593,False,Random row split is an optimistic leakage stress test.
+run_heldout_current_auc,0.6462197286807578,False,Flagged if current is nearly identified under run holdout.
+row_minus_run_current_auc,0.029662858642001466,False,Large row/run gap would indicate run-local leakage sensitivity.
+injection_score_downstream_auc,0.677755885248519,False,Flagged if synthetic pile-up score nearly recovers the downstream label.
+charge_residual_current_auc,0.4151710236233477,False,Flagged if charge residual alone nearly identifies beam current.

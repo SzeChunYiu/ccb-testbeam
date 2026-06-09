@@ -1,0 +1,8 @@
+tier,check,value,pass,interpretation
+raw_loose500,not_triggered,,True,ML sorted-A delta CI was not wholly below zero; primary tier checked separately
+sorted_any_clean1000,run_split_event_overlap,0.0,True,all model folds are grouped by held-out run
+sorted_any_clean1000,features_exclude_forbidden_columns,1.0,True,"feature lists exclude run/event ids, A_sorted_evt, raw times, and target residuals"
+sorted_any_clean1000,actual_ml_b_plus_sorted_a_sigma68,9.991406356063296,True,nominal run-held-out ML residual width
+sorted_any_clean1000,runwise_shuffled_sorted_a_sigma68,9.34827750405357,True,sorted A controls lose event matching but preserve run marginals
+sorted_any_clean1000,intentional_target_echo_sigma68,0.0,True,positive leakage sentinel; should be unrealistically small
+sorted_both_clean1000,not_modeled_low_statistics,180.0,True,tier has too few rows or runs for grouped held-out model

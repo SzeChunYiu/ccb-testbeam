@@ -1,0 +1,40 @@
+{
+  "ticket": "1781004956.668.7d00443a",
+  "study": "P07b",
+  "worker": "testbeam-laptop-3",
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "split": "by run, leave-one-run-out",
+  "raw_pulses_b2_selected": 88213,
+  "reproduction": {
+    "p07_reported_ml_res68_c4000": 0.03243177807776981,
+    "reproduced_ml_res68_c4000": 0.03243177807776981,
+    "absolute_delta": 0.0,
+    "clean_train_after_cap": 40000,
+    "clean_test": 39413
+  },
+  "artificial_clip": {
+    "traditional_res68": 0.14802267807303351,
+    "traditional_bias": 0.0164504026470666,
+    "ml_res68": 0.029762872258461665,
+    "ml_bias": -0.00048153690476404864
+  },
+  "natural": {
+    "observed_timing_tail_fraction": 0.038359285985567794,
+    "observed_q_template_shift": 0.0,
+    "traditional_timing_tail_fraction": 0.038359285985567794,
+    "traditional_q_template_shift": 0.0009668986537815066,
+    "ml_timing_tail_fraction": 0.03285225977971895,
+    "ml_q_template_shift": -0.0896770876224819,
+    "n_natural_saturated": 5266
+  },
+  "leakage_flags": 0,
+  "runtime_sec": 151.9
+}

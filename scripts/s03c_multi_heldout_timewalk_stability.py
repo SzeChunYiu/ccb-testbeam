@@ -25,11 +25,13 @@ from sklearn.preprocessing import StandardScaler
 
 import s02_timing_pickoff as s02
 import s03a_analytic_timewalk as s03a
+import s03b_amp_binned_monotonic_timewalk as s03b
 
 
 S03A_EXPECTED = {
     "base_sigma68_ns": 2.889152765080617,
     "analytic_sigma68_ns": 1.494640076269676,
+    "binned_sigma68_ns": 1.5695763825403084,
     "ml_template_sigma68_ns": 1.3915306248207993,
 }
 
@@ -115,7 +117,7 @@ def run_one_fold(
     heldout_run: int,
     all_runs: List[int],
     rng: np.random.Generator,
-) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     train_runs = [run for run in all_runs if run != heldout_run]
     config = fold_config(base_config, train_runs, [heldout_run])
     pulses, _, best_method = prepare_fold_pulses(pulses_all, config)
@@ -123,9 +125,13 @@ def run_one_fold(
         raise RuntimeError("Expected train-selected base method %s, got %s" % (config["timing"]["base_method"], best_method))
 
     analytic_pulses, analytic_cv, coef, best_candidate, best_alpha = s03a.run_analytic(pulses, config, best_method)
+    binned_pulses, binned_cv, binned_models, binned_best = s03b.scan_binned_candidates(pulses, config, best_method)
     ml_template_pulses, ml_template_cv, ml_template_cal = s02.run_ml(pulses, config, best_method, 2.0)
 
     combined = analytic_pulses.copy()
+    combined["t_binned_timewalk_ns"] = binned_pulses["t_binned_timewalk_ns"].to_numpy(dtype=float)
+    combined["binned_target_residual_ns"] = binned_pulses["binned_target_residual_ns"].to_numpy(dtype=float)
+    combined["binned_pred_residual_ns"] = binned_pulses["binned_pred_residual_ns"].to_numpy(dtype=float)
     combined["t_ml_template_ridge_ns"] = ml_template_pulses["t_ml_ridge_ns"].to_numpy(dtype=float)
     combined["ml_template_target_residual_ns"] = ml_template_pulses["ml_target_residual_ns"].to_numpy(dtype=float)
     combined["ml_template_pred_residual_ns"] = ml_template_pulses["ml_pred_residual_ns"].to_numpy(dtype=float)
@@ -137,12 +143,16 @@ def run_one_fold(
         [
             (best_method, "template_phase_base"),
             ("analytic_timewalk", "analytic_timewalk"),
+            ("binned_timewalk", "s03b_binned_timewalk"),
             ("ml_template_ridge", "ml_ridge_on_template_phase"),
         ],
     )
     benchmark["train_runs"] = ",".join(str(run) for run in train_runs)
     benchmark["analytic_candidate"] = best_candidate
     benchmark["analytic_alpha"] = best_alpha
+    benchmark["binned_mode"] = str(binned_best["mode"])
+    benchmark["binned_direction"] = str(binned_best["direction"])
+    benchmark["binned_n_bins"] = int(binned_best["n_bins"])
 
     leakage = s03a.run_negative_controls(pulses, config, best_method, best_candidate, best_alpha)
     leakage["heldout_run"] = heldout_run
@@ -151,6 +161,14 @@ def run_one_fold(
             leakage,
             pd.DataFrame(
                 [
+                    {
+                        "check": "s03b_binned_shuffled_target",
+                        "heldout_sigma68_ns": s03b.run_shuffled_binned_control(pulses, config, best_method, binned_best),
+                        "n_pair_residuals": int(
+                            benchmark[benchmark["method"] == "s03b_binned_timewalk"]["n_pair_residuals"].iloc[0]
+                        ),
+                        "heldout_run": heldout_run,
+                    },
                     {
                         "check": "ml_ridge_shuffled_target",
                         "heldout_sigma68_ns": run_ml_shuffled_control(pulses, config, best_method),
@@ -173,17 +191,22 @@ def run_one_fold(
 
     analytic_cv["heldout_run"] = heldout_run
     coef["heldout_run"] = heldout_run
+    binned_cv["heldout_run"] = heldout_run
+    binned_table = s03b.binned_model_table(binned_models)
+    binned_table["heldout_run"] = heldout_run
     ml_template_cv["heldout_run"] = heldout_run
     ml_template_cal["heldout_run"] = heldout_run
-    return benchmark, residuals, leakage, analytic_cv, coef
+    return benchmark, residuals, leakage, analytic_cv, coef, binned_cv, binned_table
 
 
 def run_s03a_reproduction(pulses_all: pd.DataFrame, config: dict, rng: np.random.Generator) -> Tuple[pd.DataFrame, pd.DataFrame]:
     s03a_config = fold_config(config, [58, 59, 60, 61, 62, 63], [65])
     pulses, _, best_method = prepare_fold_pulses(pulses_all, s03a_config)
     analytic_pulses, _, _, _, _ = s03a.run_analytic(pulses, s03a_config, best_method)
+    binned_pulses, _, _, _ = s03b.scan_binned_candidates(pulses, s03a_config, best_method)
     ml_template_pulses, _, _ = s02.run_ml(pulses, s03a_config, best_method, 2.0)
     combined = analytic_pulses.copy()
+    combined["t_binned_timewalk_ns"] = binned_pulses["t_binned_timewalk_ns"].to_numpy(dtype=float)
     combined["t_ml_template_ridge_ns"] = ml_template_pulses["t_ml_ridge_ns"].to_numpy(dtype=float)
     bench, _ = bootstrap_rows_for_fold(
         combined,
@@ -192,12 +215,14 @@ def run_s03a_reproduction(pulses_all: pd.DataFrame, config: dict, rng: np.random
         [
             (best_method, "template_phase_base"),
             ("analytic_timewalk", "analytic_timewalk"),
+            ("binned_timewalk", "s03b_binned_timewalk"),
             ("ml_template_ridge", "ml_ridge_on_template_phase"),
         ],
     )
     expected = {
         "template_phase_base": S03A_EXPECTED["base_sigma68_ns"],
         "analytic_timewalk": S03A_EXPECTED["analytic_sigma68_ns"],
+        "s03b_binned_timewalk": S03A_EXPECTED["binned_sigma68_ns"],
         "ml_ridge_on_template_phase": S03A_EXPECTED["ml_template_sigma68_ns"],
     }
     repro = bench[["method", "value", "ci_low", "ci_high", "n_pair_residuals"]].copy()
@@ -234,7 +259,7 @@ def run_level_bootstrap(residuals: pd.DataFrame, rng: np.random.Generator, n_boo
 
 
 def plot_outputs(out_dir: Path, per_run: pd.DataFrame, pooled: pd.DataFrame) -> None:
-    order = ["template_phase_base", "analytic_timewalk", "ml_ridge_on_template_phase"]
+    order = ["template_phase_base", "analytic_timewalk", "s03b_binned_timewalk", "ml_ridge_on_template_phase"]
     fig, ax = plt.subplots(figsize=(8.4, 4.8))
     for method in order:
         sub = per_run[per_run["method"] == method].sort_values("heldout_run")
@@ -297,6 +322,7 @@ def write_report(
 ) -> None:
     base = pooled[pooled["method"] == "template_phase_base"].iloc[0]
     analytic = pooled[pooled["method"] == "analytic_timewalk"].iloc[0]
+    binned = pooled[pooled["method"] == "s03b_binned_timewalk"].iloc[0]
     ml = pooled[pooled["method"] == "ml_ridge_on_template_phase"].iloc[0]
     leak_summary = leakage.pivot_table(
         index="check",
@@ -316,7 +342,7 @@ def write_report(
         "",
         "## 0. Question",
         "",
-        "Does the S03a analytic over-closure survive leave-one-run-out evaluation across Sample-II analysis runs instead of only held-out run 65?",
+        "Does the S03a amp-only analytic advantage over the S03b binned monotonic timewalk method survive leave-one-run-out evaluation across Sample-II analysis runs instead of only held-out run 65?",
         "",
         "## 1. Raw-ROOT reproduction gate",
         "",
@@ -330,9 +356,9 @@ def write_report(
         "",
         "## 2. Leave-one-run-out results",
         "",
-        "For each held-out run, templates and residual-correction models were trained only on the other Sample-II analysis runs. The traditional model is the S03a analytic timewalk Ridge scan; the ML model is the waveform-feature Ridge residual corrector on template phase.",
+        "For each held-out run, templates and residual-correction models were trained only on the other Sample-II analysis runs. Traditional comparators are the S03a analytic timewalk Ridge scan and the S03b per-stave amplitude-binned timewalk scan; the ML model is the waveform-feature Ridge residual corrector on template phase.",
         "",
-        per_run[["heldout_run", "method", "value", "ci_low", "ci_high", "n_pair_residuals", "analytic_candidate", "analytic_alpha"]]
+        per_run[["heldout_run", "method", "value", "ci_low", "ci_high", "n_pair_residuals", "analytic_candidate", "analytic_alpha", "binned_mode", "binned_direction", "binned_n_bins"]]
         .sort_values(["heldout_run", "method"])
         .to_markdown(index=False),
         "",
@@ -350,6 +376,7 @@ def write_report(
         "",
         f"The pooled template-phase baseline is `{base['value']:.3f} ns` with run-bootstrap CI `[{base['ci_low']:.3f}, {base['ci_high']:.3f}] ns`.",
         f"The analytic correction is `{analytic['value']:.3f} ns` with CI `[{analytic['ci_low']:.3f}, {analytic['ci_high']:.3f}] ns`, a gain of `{base['value'] - analytic['value']:.3f} ns`.",
+        f"The S03b binned correction is `{binned['value']:.3f} ns` with CI `[{binned['ci_low']:.3f}, {binned['ci_high']:.3f}] ns`; analytic is `{binned['value'] - analytic['value']:.3f} ns` narrower.",
         f"The ML Ridge correction is `{ml['value']:.3f} ns` with CI `[{ml['ci_low']:.3f}, {ml['ci_high']:.3f}] ns`, a gain of `{base['value'] - ml['value']:.3f} ns`.",
         "",
         f"Conclusion: `{result['verdict']}`.",
@@ -362,7 +389,7 @@ def write_report(
         f"{sys.executable} scripts/s03c_multi_heldout_timewalk_stability.py --config {config_path}",
         "```",
         "",
-        "Artifacts: `reproduction_match_table.csv`, `s03a_run65_reproduction.csv`, `per_run_benchmark.csv`, `pooled_run_bootstrap.csv`, `pairwise_residuals.csv`, `leakage_checks.csv`, `analytic_cv_scan.csv`, `analytic_coefficients.csv`, figures, `result.json`, and `manifest.json`.",
+        "Artifacts: `reproduction_match_table.csv`, `s03a_run65_reproduction.csv`, `per_run_benchmark.csv`, `pooled_run_bootstrap.csv`, `pairwise_residuals.csv`, `leakage_checks.csv`, `analytic_cv_scan.csv`, `analytic_coefficients.csv`, `binned_cv_scan.csv`, `binned_model_table.csv`, figures, `result.json`, and `manifest.json`.",
         "",
     ]
     (out_dir / "REPORT.md").write_text("\n".join(lines), encoding="utf-8")
@@ -396,19 +423,27 @@ def main() -> int:
     leakage_parts = []
     cv_parts = []
     coef_parts = []
+    binned_cv_parts = []
+    binned_table_parts = []
     for heldout_run in all_runs:
-        bench, residuals, leakage, analytic_cv, coef = run_one_fold(pulses_all, config, heldout_run, all_runs, rng)
+        bench, residuals, leakage, analytic_cv, coef, binned_cv, binned_table = run_one_fold(
+            pulses_all, config, heldout_run, all_runs, rng
+        )
         per_run_parts.append(bench)
         residual_parts.append(residuals)
         leakage_parts.append(leakage)
         cv_parts.append(analytic_cv)
         coef_parts.append(coef)
+        binned_cv_parts.append(binned_cv)
+        binned_table_parts.append(binned_table)
 
     per_run = pd.concat(per_run_parts, ignore_index=True)
     residuals = pd.concat(residual_parts, ignore_index=True)
     leakage = pd.concat(leakage_parts, ignore_index=True)
     analytic_cv = pd.concat(cv_parts, ignore_index=True)
     coefficients = pd.concat(coef_parts, ignore_index=True)
+    binned_cv = pd.concat(binned_cv_parts, ignore_index=True)
+    binned_table = pd.concat(binned_table_parts, ignore_index=True)
     pooled = run_level_bootstrap(residuals, rng, int(config["analytic"]["bootstrap_samples"]))
 
     per_run.to_csv(out_dir / "per_run_benchmark.csv", index=False)
@@ -416,25 +451,36 @@ def main() -> int:
     leakage.to_csv(out_dir / "leakage_checks.csv", index=False)
     analytic_cv.to_csv(out_dir / "analytic_cv_scan.csv", index=False)
     coefficients.to_csv(out_dir / "analytic_coefficients.csv", index=False)
+    binned_cv.to_csv(out_dir / "binned_cv_scan.csv", index=False)
+    binned_table.to_csv(out_dir / "binned_model_table.csv", index=False)
     pooled.to_csv(out_dir / "pooled_run_bootstrap.csv", index=False)
     plot_outputs(out_dir, per_run, pooled)
 
     input_hashes = {str(s02.raw_file(config, run)): sha256_file(s02.raw_file(config, run)) for run in s02.configured_runs(config)}
     base = pooled[pooled["method"] == "template_phase_base"].iloc[0]
     analytic = pooled[pooled["method"] == "analytic_timewalk"].iloc[0]
+    binned = pooled[pooled["method"] == "s03b_binned_timewalk"].iloc[0]
     ml = pooled[pooled["method"] == "ml_ridge_on_template_phase"].iloc[0]
     analytic_gain = float(base["value"] - analytic["value"])
+    binned_gain = float(base["value"] - binned["value"])
     ml_gain = float(base["value"] - ml["value"])
     s03a_gain = S03A_EXPECTED["base_sigma68_ns"] - S03A_EXPECTED["analytic_sigma68_ns"]
     leakage_event_overlap = int(
         leakage[leakage["check"] == "train_heldout_event_id_overlap"]["heldout_sigma68_ns"].sum()
     )
-    shuffled_badges = leakage[leakage["check"].isin(["analytic_timewalk_shuffled_target", "ml_ridge_shuffled_target"])]
+    shuffled_badges = leakage[
+        leakage["check"].isin(
+            ["analytic_timewalk_shuffled_target", "s03b_binned_shuffled_target", "ml_ridge_shuffled_target"]
+        )
+    ]
     shuffled_min = float(shuffled_badges["heldout_sigma68_ns"].min())
 
     verdict = (
         "analytic_closure_stable_across_sample_ii_runs"
-        if analytic_gain > 0.0 and abs(analytic_gain - s03a_gain) < 0.75 and leakage_event_overlap == 0
+        if analytic_gain > 0.0
+        and float(binned["value"] - analytic["value"]) > 0.0
+        and abs(analytic_gain - s03a_gain) < 0.75
+        and leakage_event_overlap == 0
         else "analytic_closure_not_stable_across_sample_ii_runs"
     )
     result = {
@@ -459,6 +505,15 @@ def main() -> int:
             "value": float(analytic["value"]),
             "ci": [float(analytic["ci_low"]), float(analytic["ci_high"])],
             "gain_vs_template_phase_ns": analytic_gain,
+            "delta_vs_s03b_binned_timewalk_ns": float(analytic["value"] - binned["value"]),
+        },
+        "s03b_binned": {
+            "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+            "method": "per_stave_amplitude_binned_timewalk",
+            "value": float(binned["value"]),
+            "ci": [float(binned["ci_low"]), float(binned["ci_high"])],
+            "gain_vs_template_phase_ns": binned_gain,
+            "delta_vs_s03a_analytic_timewalk_ns": float(binned["value"] - analytic["value"]),
         },
         "ml": {
             "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",

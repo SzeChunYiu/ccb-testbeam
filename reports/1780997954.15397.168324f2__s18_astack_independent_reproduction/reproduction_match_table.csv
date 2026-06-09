@@ -1,0 +1,9 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+sample_iii_analysis events_with_selected,7168.0,7168.0,0.0,0.0,True
+sample_iii_analysis selected_pulses,9682.0,9682.0,0.0,0.0,True
+sample_iv_analysis events_with_selected,767.0,767.0,0.0,0.0,True
+sample_iv_analysis selected_pulses,894.0,894.0,0.0,0.0,True
+sample_iii_analysis robust_width_ns,1.43,1.3890588377372115,-0.04094116226278843,0.05,True
+sample_iii_analysis core_sigma_ns,1.41,1.4509206888041475,0.040920688804147565,0.1,True
+sample_iv_analysis robust_width_ns,1.61,1.7936260637768346,0.18362606377683455,0.25,True
+sample_iv_analysis core_sigma_ns,1.6,1.9921763970438024,0.39217639704380236,0.55,True

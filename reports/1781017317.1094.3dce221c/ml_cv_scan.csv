@@ -1,0 +1,2 @@
+learning_rate,max_leaf_nodes,cv_mae_adc,cv_width68_adc
+0.08,15,38.54335431809469,12.400955038594114

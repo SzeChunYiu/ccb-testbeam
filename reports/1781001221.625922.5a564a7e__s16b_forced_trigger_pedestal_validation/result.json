@@ -1,0 +1,112 @@
+{
+  "ticket": "1781001221.625922.5a564a7e",
+  "study": "S16b",
+  "worker": "testbeam-laptop-2",
+  "raw_reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "expected_selected_b_stave_pulses": 640737,
+    "forced_random_tagged_entries": 0,
+    "true_forced_random_sample_available": false
+  },
+  "proxy_dataset": {
+    "quiet_event_max_amplitude_adc": 80.0,
+    "quiet_proxy_events": 386967,
+    "quiet_proxy_stave_records": 1547868,
+    "heldout_target_records": 1883784,
+    "heldout_runs": [
+      57,
+      65
+    ]
+  },
+  "primary_metric": "heldout quiet-proxy sample MAE with run bootstrap CI",
+  "best_method": {
+    "method": "ml_pretrigger_hgbr_calibrated",
+    "n_records": 1883784,
+    "mean_bias_adc": -1.8856279278476251,
+    "mean_bias_ci_low_adc": -3.3663644235416803,
+    "mean_bias_ci_high_adc": -0.9125743891502495,
+    "mae_adc": 15.63574792407998,
+    "mae_ci_low_adc": 14.776401358289379,
+    "mae_ci_high_adc": 16.743725437665542,
+    "rmse_adc": 36.07884685488501,
+    "rmse_ci_low_adc": 21.235674484167564,
+    "rmse_ci_high_adc": 55.47817920216876,
+    "median_bias_adc": 1.8900648431317677,
+    "q05_adc": -38.685863872766504,
+    "q95_adc": 23.576414589736487
+  },
+  "adaptive_method": {
+    "method": "adaptive_pc_excluding_target",
+    "n_records": 1883784,
+    "mean_bias_adc": -6.631467832830091,
+    "mean_bias_ci_low_adc": -9.7229844375,
+    "mean_bias_ci_high_adc": -4.9569139374999995,
+    "mae_adc": 17.176515460371252,
+    "mae_ci_low_adc": 15.413105750000001,
+    "mae_ci_high_adc": 20.166010375000003,
+    "rmse_adc": 66.45403253754138,
+    "rmse_ci_low_adc": 32.68124878872081,
+    "rmse_ci_high_adc": 97.22924546026738,
+    "median_bias_adc": -1.0,
+    "q05_adc": -43.0,
+    "q95_adc": 22.0
+  },
+  "ml_method": {
+    "method": "ml_pretrigger_hgbr_calibrated",
+    "n_records": 1883784,
+    "mean_bias_adc": -1.8856279278476251,
+    "mean_bias_ci_low_adc": -3.3663644235416803,
+    "mean_bias_ci_high_adc": -0.9125743891502495,
+    "mae_adc": 15.63574792407998,
+    "mae_ci_low_adc": 14.776401358289379,
+    "mae_ci_high_adc": 16.743725437665542,
+    "rmse_adc": 36.07884685488501,
+    "rmse_ci_low_adc": 21.235674484167564,
+    "rmse_ci_high_adc": 55.47817920216876,
+    "median_bias_adc": 1.8900648431317677,
+    "q05_adc": -38.685863872766504,
+    "q95_adc": 23.576414589736487
+  },
+  "ml_meta": {
+    "best": {
+      "max_leaf_nodes": 15.0,
+      "learning_rate": 0.1,
+      "l2_regularization": 0.1,
+      "cv_mae_adc": 15.903433510793912,
+      "cv_mae_std_adc": 1.244156582803603
+    },
+    "feature_columns": [
+      "stave_idx",
+      "target_sample",
+      "seed_median4_adc",
+      "pre_mean4_adc",
+      "pre_std4_adc",
+      "pre_min4_adc",
+      "pre_max4_adc",
+      "pre_slope03_adc"
+    ],
+    "n_train_cv": 60000,
+    "n_core_train": 55180,
+    "n_calibration": 4820,
+    "calibration_slope": 1.0115615658144117,
+    "calibration_intercept": -81.88832369888405
+  },
+  "leakage_checks": [
+    {
+      "check": "shuffled_training_target",
+      "mae_adc": 80.87090653312299,
+      "interpretation": "should be no better than simple pedestal baselines"
+    },
+    {
+      "check": "intentional_target_feature_oracle",
+      "mae_adc": 3.106418662787096,
+      "interpretation": "very low error confirms direct target leakage would be obvious and is excluded from the real model"
+    },
+    {
+      "check": "real_feature_exclusion",
+      "mae_adc": null,
+      "interpretation": "real ML features exclude run, eventno, evt, target_adc, and any post-trigger target sample value"
+    }
+  ],
+  "conclusion": "No true forced/random-trigger pedestal entries are present in the current raw ROOT mirror; the quiet-event benchmark is a proxy only."
+}

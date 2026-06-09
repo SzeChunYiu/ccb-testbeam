@@ -1,7 +1,7 @@
 {
   "study": "P02d",
   "ticket": "1781015988.1952.109d4b1d",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-1",
   "title": "early-peak topology versus timing tails",
   "reproduced": true,
   "reproduction": [
@@ -107,8 +107,6 @@
     "forbidden_shape_features": []
   },
   "input_sha256": "253ac5984fdd8736c737a16955b6ccd2d54a4de12cb6bdc037853c1317120535",
-  "git_commit": "0cb9c504382eddb134aaf5066eb69c338c506bff",
-  "next_tickets": [
-    "P02e: repeat early-peak versus timing-tail validation on all-three-downstream events only to remove missing-stave topology from the target population."
-  ]
+  "git_commit": "c353d371b1cd49681eb61ebd298c59d518fbc1ec",
+  "next_tickets": []
 }

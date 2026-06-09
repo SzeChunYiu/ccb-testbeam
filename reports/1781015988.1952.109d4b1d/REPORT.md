@@ -1,7 +1,7 @@
 # P02d: early-peak topology versus timing tails
 
 - **Ticket:** 1781015988.1952.109d4b1d
-- **Worker:** testbeam-laptop-2
+- **Worker:** testbeam-laptop-1
 - **Date:** 2026-06-09
 - **Input:** raw B-stack `HRDv` ROOT in `data/root/root`
 - **Runs:** P02 sample 58, 59, 60, 61, 62, 63, 65, 50; timing benchmark 58, 59, 60, 61, 62, 63, 65

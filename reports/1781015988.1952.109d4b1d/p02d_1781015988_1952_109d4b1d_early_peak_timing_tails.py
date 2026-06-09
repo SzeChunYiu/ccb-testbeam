@@ -703,9 +703,7 @@ def main() -> int:
         },
         "input_sha256": hashlib.sha256("".join(input_hashes.values()).encode("ascii")).hexdigest(),
         "git_commit": git_commit(),
-        "next_tickets": [
-            "P02e: repeat early-peak versus timing-tail validation on all-three-downstream events only to remove missing-stave topology from the target population."
-        ],
+        "next_tickets": [],
     }
 
     write_report(out_dir, config, reproduction, run_counts, scoreboard, leakage, association, result)

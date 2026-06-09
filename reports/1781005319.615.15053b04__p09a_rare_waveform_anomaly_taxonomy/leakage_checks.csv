@@ -1,0 +1,5 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,must be zero
+model_features_include_run_event_or_stave_id,0.0,True,"ids used only for split/balanced gallery, not score features"
+top_gallery_waveform_hash_seen_in_train,0.0,True,rounded normalized waveform hash overlap at 1e-3 precision
+ml_curated_precision_minus_random_mean,0.7032421875,True,positive indicates ranker beats balanced random triage

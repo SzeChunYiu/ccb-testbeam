@@ -1,0 +1,51 @@
+{
+  "study": "S00a",
+  "ticket": "1780997954.15097.28a25ecb",
+  "worker": "testbeam-laptop-2",
+  "title": "sorted hrdMax vs raw HRDv selection semantics",
+  "reproduced": true,
+  "repro_tolerance": "0 pulses",
+  "traditional": {
+    "metric": "sorted_hrdMax_overcount_pulses",
+    "value": 65636,
+    "ci": [
+      65636,
+      65636
+    ],
+    "raw_selected_pulses": 640737,
+    "sorted_selected_pulses": 706373,
+    "formula_mismatches": 0
+  },
+  "ml": {
+    "metric": "heldout_raw_gate_false_positive_rate",
+    "value": 0.005246843757565655,
+    "ci": [
+      0.004944933539639403,
+      0.005557709364895709
+    ],
+    "accuracy": 0.9942689504791415
+  },
+  "baseline": {
+    "metric": "heldout_sorted_proxy_false_positive_rate",
+    "value": 0.01610566714689972,
+    "ci": [
+      0.01567391059044574,
+      0.016547790042416084
+    ],
+    "accuracy": 0.9854464336948413
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "preregistered_metric": "raw-gate selection agreement at fixed A>1000 ADC",
+    "p_value": 2.3283064365386963e-10,
+    "n_tries": 1,
+    "deterministic_identity_mismatches": 0
+  },
+  "input_sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+  "git_commit": "696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b",
+  "critic": "pending",
+  "next_tickets": [
+    "S00b: downstream sensitivity to baseline estimator",
+    "S16b: independent pedestal estimator closure"
+  ]
+}

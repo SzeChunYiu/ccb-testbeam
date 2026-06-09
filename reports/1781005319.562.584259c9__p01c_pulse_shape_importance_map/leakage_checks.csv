@@ -1,0 +1,6 @@
+check,value,detail
+run_overlap,0.0,must be zero
+topology_nuisance_only_bacc,0.5025864304115286,"uses only log amplitude, amplitude bin, and stave one-hot"
+topology_label_shuffle_bacc,0.4599505159211867,AE latent probe trained after shuffling train topology labels
+amplitude_nuisance_only_res68,0.1095697326050433,odd-channel amplitude using only even amplitude and stave controls
+feature_audit,0.0,"no run id, event id, event order, or held-out target columns in probes"

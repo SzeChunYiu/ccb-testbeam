@@ -1,0 +1,272 @@
+{
+  "study": "S05f",
+  "ticket": "1781017203.1538.0ce44cf7",
+  "worker": "testbeam-laptop-1",
+  "title": "B2-local covariance confound matched audit",
+  "reproduced": true,
+  "primary_metric": {
+    "name": "matched B2-containing minus downstream signed off-diagonal covariance",
+    "method": "ml_with_b2_local/winsor_mad",
+    "value_ns2": 3.552141977069544,
+    "ci_ns2": [
+      1.8645900425190027,
+      6.349188163854574
+    ],
+    "inferred_correlated_fraction": 0.9024630237970503,
+    "fraction_ci": [
+      0.812134502529748,
+      0.9423325851055936
+    ]
+  },
+  "ablation": {
+    "ml_no_b2_local_delta_ns2": 8.896822115451565,
+    "ml_with_minus_without_b2_local_delta_ns2": -5.344680138382021
+  },
+  "residual_metrics": [
+    {
+      "method": "raw_pair_median",
+      "subset": "all",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 2.0818359213706255,
+      "sigma68_ci_low_ns": 1.8102478015966903,
+      "sigma68_ci_high_ns": 9.923823268033644,
+      "full_rms_ns": 20.675023326611615,
+      "full_rms_ci_low_ns": 16.072127242652563,
+      "full_rms_ci_high_ns": 28.90197142153736
+    },
+    {
+      "method": "raw_pair_median",
+      "subset": "B2_containing",
+      "n_pair_rows": 43956,
+      "n_runs": 21,
+      "sigma68_ns": 3.512344883482385,
+      "sigma68_ci_low_ns": 1.9034854483095625,
+      "sigma68_ci_high_ns": 21.393282481552905,
+      "full_rms_ns": 24.816974776203015,
+      "full_rms_ci_low_ns": 19.25289887672353,
+      "full_rms_ci_high_ns": 35.656121219478294
+    },
+    {
+      "method": "raw_pair_median",
+      "subset": "downstream_only",
+      "n_pair_rows": 21528,
+      "n_runs": 21,
+      "sigma68_ns": 1.7325646285801632,
+      "sigma68_ci_low_ns": 1.699925885741203,
+      "sigma68_ci_high_ns": 1.756378224433956,
+      "full_rms_ns": 6.536663382985358,
+      "full_rms_ci_low_ns": 5.76787492685901,
+      "full_rms_ci_high_ns": 7.305218409001512
+    },
+    {
+      "method": "traditional_saturation_ridge",
+      "subset": "all",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 6.624902145269459,
+      "sigma68_ci_low_ns": 6.129773980651661,
+      "sigma68_ci_high_ns": 7.978775738214494,
+      "full_rms_ns": 11.57731637216358,
+      "full_rms_ci_low_ns": 10.491573322816894,
+      "full_rms_ci_high_ns": 13.903442783970474
+    },
+    {
+      "method": "traditional_saturation_ridge",
+      "subset": "B2_containing",
+      "n_pair_rows": 43956,
+      "n_runs": 21,
+      "sigma68_ns": 7.049946425152314,
+      "sigma68_ci_low_ns": 6.307538716688287,
+      "sigma68_ci_high_ns": 8.941134161863854,
+      "full_rms_ns": 13.06787619264359,
+      "full_rms_ci_low_ns": 11.624158754181376,
+      "full_rms_ci_high_ns": 15.437636526003368
+    },
+    {
+      "method": "traditional_saturation_ridge",
+      "subset": "downstream_only",
+      "n_pair_rows": 21528,
+      "n_runs": 21,
+      "sigma68_ns": 5.662865804080518,
+      "sigma68_ci_low_ns": 5.151610363616665,
+      "sigma68_ci_high_ns": 6.511325466085126,
+      "full_rms_ns": 7.78700969180015,
+      "full_rms_ci_low_ns": 7.113102915700118,
+      "full_rms_ci_high_ns": 8.620134173640459
+    },
+    {
+      "method": "ml_with_b2_local",
+      "subset": "all",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 1.3580828742946385,
+      "sigma68_ci_low_ns": 1.2217283019471996,
+      "sigma68_ci_high_ns": 1.9287919114825574,
+      "full_rms_ns": 5.568794543506944,
+      "full_rms_ci_low_ns": 5.058223543423197,
+      "full_rms_ci_high_ns": 6.871356197636128
+    },
+    {
+      "method": "ml_with_b2_local",
+      "subset": "B2_containing",
+      "n_pair_rows": 43956,
+      "n_runs": 21,
+      "sigma68_ns": 1.6195655758530956,
+      "sigma68_ci_low_ns": 1.3698415627347387,
+      "sigma68_ci_high_ns": 2.5716661648058228,
+      "full_rms_ns": 6.193198645536785,
+      "full_rms_ci_low_ns": 5.516007061268712,
+      "full_rms_ci_high_ns": 7.316215054098166
+    },
+    {
+      "method": "ml_with_b2_local",
+      "subset": "downstream_only",
+      "n_pair_rows": 21528,
+      "n_runs": 21,
+      "sigma68_ns": 1.031107566432707,
+      "sigma68_ci_low_ns": 0.9960418029940273,
+      "sigma68_ci_high_ns": 1.0954739397657314,
+      "full_rms_ns": 4.0068449520347205,
+      "full_rms_ci_low_ns": 3.1144034642394813,
+      "full_rms_ci_high_ns": 5.242666050619836
+    },
+    {
+      "method": "ml_no_b2_local",
+      "subset": "all",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 1.8497113216304941,
+      "sigma68_ci_low_ns": 1.6357364058837074,
+      "sigma68_ci_high_ns": 2.658631546251683,
+      "full_rms_ns": 8.115288582935479,
+      "full_rms_ci_low_ns": 7.130634017787306,
+      "full_rms_ci_high_ns": 10.24560181645685
+    },
+    {
+      "method": "ml_no_b2_local",
+      "subset": "B2_containing",
+      "n_pair_rows": 43956,
+      "n_runs": 21,
+      "sigma68_ns": 2.4969097047973667,
+      "sigma68_ci_low_ns": 2.0642720826482597,
+      "sigma68_ci_high_ns": 4.087494892775105,
+      "full_rms_ns": 9.367349911175118,
+      "full_rms_ci_low_ns": 8.153471681733047,
+      "full_rms_ci_high_ns": 11.55375709061343
+    },
+    {
+      "method": "ml_no_b2_local",
+      "subset": "downstream_only",
+      "n_pair_rows": 21528,
+      "n_runs": 21,
+      "sigma68_ns": 1.1695868233234812,
+      "sigma68_ci_low_ns": 1.124859565313948,
+      "sigma68_ci_high_ns": 1.2658673736139765,
+      "full_rms_ns": 4.613471224255094,
+      "full_rms_ci_low_ns": 3.7257065561644556,
+      "full_rms_ci_high_ns": 5.791600161610731
+    },
+    {
+      "method": "ml_shuffled_run_control",
+      "subset": "all",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 4.630166440540069,
+      "sigma68_ci_low_ns": 4.1095882764423735,
+      "sigma68_ci_high_ns": 9.694929496598498,
+      "full_rms_ns": 20.91963253348136,
+      "full_rms_ci_low_ns": 16.50042626230679,
+      "full_rms_ci_high_ns": 29.67759264479446
+    },
+    {
+      "method": "ml_shuffled_run_control",
+      "subset": "B2_containing",
+      "n_pair_rows": 43956,
+      "n_runs": 21,
+      "sigma68_ns": 5.4698088941854355,
+      "sigma68_ci_low_ns": 4.1880784098389165,
+      "sigma68_ci_high_ns": 20.559353311106808,
+      "full_rms_ns": 25.242071926135623,
+      "full_rms_ci_low_ns": 19.78792530991517,
+      "full_rms_ci_high_ns": 35.30185734988186
+    },
+    {
+      "method": "ml_shuffled_run_control",
+      "subset": "downstream_only",
+      "n_pair_rows": 21528,
+      "n_runs": 21,
+      "sigma68_ns": 3.5666339537250398,
+      "sigma68_ci_low_ns": 3.4654331998485297,
+      "sigma68_ci_high_ns": 3.655748151021569,
+      "full_rms_ns": 7.184195678494225,
+      "full_rms_ci_low_ns": 6.394843517685163,
+      "full_rms_ci_high_ns": 7.994281486220524
+    },
+    {
+      "method": "downstream_only_control",
+      "subset": "all",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 3.315836977965338,
+      "sigma68_ci_low_ns": 3.0835403345611123,
+      "sigma68_ci_high_ns": 8.055212370077811,
+      "full_rms_ns": 13.653571544049742,
+      "full_rms_ci_low_ns": 10.956796238652217,
+      "full_rms_ci_high_ns": 18.55655469625875
+    },
+    {
+      "method": "downstream_only_control",
+      "subset": "B2_containing",
+      "n_pair_rows": 43956,
+      "n_runs": 21,
+      "sigma68_ns": 4.279415883582398,
+      "sigma68_ci_low_ns": 3.4444048579979496,
+      "sigma68_ci_high_ns": 14.392184608607005,
+      "full_rms_ns": 16.505083346969897,
+      "full_rms_ci_low_ns": 13.392068175973465,
+      "full_rms_ci_high_ns": 21.679063114100693
+    },
+    {
+      "method": "downstream_only_control",
+      "subset": "downstream_only",
+      "n_pair_rows": 21528,
+      "n_runs": 21,
+      "sigma68_ns": 1.1696981391400596,
+      "sigma68_ci_low_ns": 1.1290642612901078,
+      "sigma68_ci_high_ns": 1.2689688010307223,
+      "full_rms_ns": 5.119557090279167,
+      "full_rms_ci_low_ns": 4.302988645564801,
+      "full_rms_ci_high_ns": 6.4395142940622625
+    }
+  ],
+  "leakage": [
+    {
+      "check": "run_split_event_overlap",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "all fitted predictions are leave-one-run-held-out"
+    },
+    {
+      "check": "features_exclude_forbidden_columns",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "ML feature lists exclude run/event ids, raw times, residual targets, and pair residuals"
+    },
+    {
+      "check": "shuffled_run_control_sigma68_worse_than_nominal",
+      "value": 3.272083566245431,
+      "pass": true,
+      "interpretation": "targets sampled from other train runs should not reproduce nominal ML width"
+    },
+    {
+      "check": "downstream_only_control_not_better_on_b2",
+      "value": 2.659850307729302,
+      "pass": true,
+      "interpretation": "a model trained only on downstream pairs should not outperform the B2-local model on B2-containing pairs"
+    }
+  ],
+  "finding": "Matched run/local-stratum covariance is far smaller than the raw S05c B2 covariance; the residual positive B2-minus-downstream interval is treated as B2-local unless it survives no-B2 and shuffled-run controls.",
+  "input_sha256": "reports/1781017203.1538.0ce44cf7/input_sha256.csv",
+  "git_commit": "49db8fd4eb0ed115711508277a4b995a7ceb3da0"
+}

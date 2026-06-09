@@ -1,0 +1,17 @@
+taxon,metric,value,ci_low,ci_high,n_strata,matched_low_n,matched_high_n,bootstrap_unit,n_bootstrap
+ALL,downstream_high_minus_low,0.004782531866214911,0.0034630347329439974,0.006634054653223397,21,5675,228185,run_within_current_group,300
+ALL,topology_odds_ratio,1.505265075335906,1.365373751222313,1.6996851878028563,21,5675,228185,run_within_current_group,300
+ALL,p04_duplicate_charge_log_shift,0.0423809953856682,0.024194134780471544,0.05486375083132473,21,5675,228185,run_within_current_group,300
+ALL,stratum_heterogeneity,0.008984341336004868,0.007565144062540629,0.02012872193412202,21,5675,228185,run_within_current_group,300
+unassigned_common,downstream_high_minus_low,0.004771670626259384,0.0034781381464815543,0.006814766295571616,18,5565,223524,run_within_current_group,300
+unassigned_common,topology_odds_ratio,1.503585881502725,1.3584511228069236,1.7207009499059567,18,5565,223524,run_within_current_group,300
+unassigned_common,p04_duplicate_charge_log_shift,0.0428060423061703,0.022615945249789323,0.05152310970471744,18,5565,223524,run_within_current_group,300
+unassigned_common,stratum_heterogeneity,0.008964790523725,0.007517496973658572,0.02004776939799804,18,5565,223524,run_within_current_group,300
+novel_early_pretrigger,downstream_high_minus_low,0.0023701812571502077,-0.0017466322007770158,0.015562841574206102,2,98,4119,run_within_current_group,300
+novel_early_pretrigger,topology_odds_ratio,1.157609657332426,0.8986824462714051,4.11401954485797,2,98,4119,run_within_current_group,300
+novel_early_pretrigger,p04_duplicate_charge_log_shift,-0.008603394295161753,-0.056111194605097885,0.24910283083935372,2,98,4119,run_within_current_group,300
+novel_early_pretrigger,stratum_heterogeneity,0.005456178708274944,0.0027515033345273357,0.010019177518714171,2,98,4119,run_within_current_group,300
+baseline_excursion,downstream_high_minus_low,0.02952029520295203,0.016456162249906245,0.04473317403424928,1,12,542,run_within_current_group,300
+baseline_excursion,topology_odds_ratio,1.7583168768038888,1.41733930945436,2.166648659788515,1,12,542,run_within_current_group,300
+baseline_excursion,p04_duplicate_charge_log_shift,0.2616380017296027,0.17866971205520046,0.3969868814947492,1,12,542,run_within_current_group,300
+baseline_excursion,stratum_heterogeneity,0.0,0.0,0.0,1,12,542,run_within_current_group,300

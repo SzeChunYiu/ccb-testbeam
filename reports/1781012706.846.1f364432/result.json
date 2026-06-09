@@ -1,0 +1,343 @@
+{
+  "study": "S10f",
+  "ticket": "1781012706.846.1f364432",
+  "worker": "testbeam-laptop-1",
+  "title": "anomaly-stratified pile-up excess closure",
+  "reproduced": true,
+  "repro_tolerance": "S10/S10c topology fractions within 0.0015 absolute",
+  "split": "leave-one-run-out ML predictions; run-block bootstrap CIs within current group",
+  "traditional": [
+    {
+      "taxon": "ALL",
+      "metric": "downstream_high_minus_low",
+      "value": 0.004782531866214911,
+      "ci_low": 0.0034630347329439974,
+      "ci_high": 0.006634054653223397,
+      "n_strata": 21,
+      "matched_low_n": 5675,
+      "matched_high_n": 228185,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "ALL",
+      "metric": "topology_odds_ratio",
+      "value": 1.505265075335906,
+      "ci_low": 1.365373751222313,
+      "ci_high": 1.6996851878028563,
+      "n_strata": 21,
+      "matched_low_n": 5675,
+      "matched_high_n": 228185,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "ALL",
+      "metric": "p04_duplicate_charge_log_shift",
+      "value": 0.0423809953856682,
+      "ci_low": 0.024194134780471544,
+      "ci_high": 0.05486375083132473,
+      "n_strata": 21,
+      "matched_low_n": 5675,
+      "matched_high_n": 228185,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "ALL",
+      "metric": "stratum_heterogeneity",
+      "value": 0.008984341336004868,
+      "ci_low": 0.007565144062540629,
+      "ci_high": 0.02012872193412202,
+      "n_strata": 21,
+      "matched_low_n": 5675,
+      "matched_high_n": 228185,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "unassigned_common",
+      "metric": "downstream_high_minus_low",
+      "value": 0.004771670626259384,
+      "ci_low": 0.0034781381464815543,
+      "ci_high": 0.006814766295571616,
+      "n_strata": 18,
+      "matched_low_n": 5565,
+      "matched_high_n": 223524,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "unassigned_common",
+      "metric": "topology_odds_ratio",
+      "value": 1.503585881502725,
+      "ci_low": 1.3584511228069236,
+      "ci_high": 1.7207009499059567,
+      "n_strata": 18,
+      "matched_low_n": 5565,
+      "matched_high_n": 223524,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "unassigned_common",
+      "metric": "p04_duplicate_charge_log_shift",
+      "value": 0.0428060423061703,
+      "ci_low": 0.022615945249789323,
+      "ci_high": 0.05152310970471744,
+      "n_strata": 18,
+      "matched_low_n": 5565,
+      "matched_high_n": 223524,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "unassigned_common",
+      "metric": "stratum_heterogeneity",
+      "value": 0.008964790523725,
+      "ci_low": 0.007517496973658572,
+      "ci_high": 0.02004776939799804,
+      "n_strata": 18,
+      "matched_low_n": 5565,
+      "matched_high_n": 223524,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "novel_early_pretrigger",
+      "metric": "downstream_high_minus_low",
+      "value": 0.0023701812571502077,
+      "ci_low": -0.0017466322007770158,
+      "ci_high": 0.015562841574206102,
+      "n_strata": 2,
+      "matched_low_n": 98,
+      "matched_high_n": 4119,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "novel_early_pretrigger",
+      "metric": "topology_odds_ratio",
+      "value": 1.157609657332426,
+      "ci_low": 0.8986824462714051,
+      "ci_high": 4.11401954485797,
+      "n_strata": 2,
+      "matched_low_n": 98,
+      "matched_high_n": 4119,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "novel_early_pretrigger",
+      "metric": "p04_duplicate_charge_log_shift",
+      "value": -0.008603394295161753,
+      "ci_low": -0.056111194605097885,
+      "ci_high": 0.24910283083935372,
+      "n_strata": 2,
+      "matched_low_n": 98,
+      "matched_high_n": 4119,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "novel_early_pretrigger",
+      "metric": "stratum_heterogeneity",
+      "value": 0.005456178708274944,
+      "ci_low": 0.0027515033345273357,
+      "ci_high": 0.010019177518714171,
+      "n_strata": 2,
+      "matched_low_n": 98,
+      "matched_high_n": 4119,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "baseline_excursion",
+      "metric": "downstream_high_minus_low",
+      "value": 0.02952029520295203,
+      "ci_low": 0.016456162249906245,
+      "ci_high": 0.04473317403424928,
+      "n_strata": 1,
+      "matched_low_n": 12,
+      "matched_high_n": 542,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "baseline_excursion",
+      "metric": "topology_odds_ratio",
+      "value": 1.7583168768038888,
+      "ci_low": 1.41733930945436,
+      "ci_high": 2.166648659788515,
+      "n_strata": 1,
+      "matched_low_n": 12,
+      "matched_high_n": 542,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "baseline_excursion",
+      "metric": "p04_duplicate_charge_log_shift",
+      "value": 0.2616380017296027,
+      "ci_low": 0.17866971205520046,
+      "ci_high": 0.3969868814947492,
+      "n_strata": 1,
+      "matched_low_n": 12,
+      "matched_high_n": 542,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    },
+    {
+      "taxon": "baseline_excursion",
+      "metric": "stratum_heterogeneity",
+      "value": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_strata": 1,
+      "matched_low_n": 12,
+      "matched_high_n": 542,
+      "bootstrap_unit": "run_within_current_group",
+      "n_bootstrap": 300
+    }
+  ],
+  "ml": {
+    "summary": [
+      {
+        "taxon": "ALL",
+        "metric": "ml_current_score_high_minus_low",
+        "value": 0.022177390686863016,
+        "ci_low": 0.014563306783565315,
+        "ci_high": 0.03845196009667955,
+        "n_strata": 21,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      },
+      {
+        "taxon": "ALL",
+        "metric": "ml_pileup_score_high_minus_low",
+        "value": -0.016189935500779608,
+        "ci_low": -0.029053365440170835,
+        "ci_high": -0.0007812926710871434,
+        "n_strata": 21,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      },
+      {
+        "taxon": "unassigned_common",
+        "metric": "ml_current_score_high_minus_low",
+        "value": 0.019068238853665702,
+        "ci_low": 0.010142557831237282,
+        "ci_high": 0.039366467372452064,
+        "n_strata": 18,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      },
+      {
+        "taxon": "unassigned_common",
+        "metric": "ml_pileup_score_high_minus_low",
+        "value": -0.01658996901832081,
+        "ci_low": -0.02924902820386288,
+        "ci_high": -0.005004803307729598,
+        "n_strata": 18,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      },
+      {
+        "taxon": "novel_early_pretrigger",
+        "metric": "ml_current_score_high_minus_low",
+        "value": 0.21882564225076145,
+        "ci_low": -0.03955696612114331,
+        "ci_high": 0.2776137557921731,
+        "n_strata": 2,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      },
+      {
+        "taxon": "novel_early_pretrigger",
+        "metric": "ml_pileup_score_high_minus_low",
+        "value": -0.0012111512120170234,
+        "ci_low": -0.05532840293165348,
+        "ci_high": 0.01738019389019048,
+        "n_strata": 2,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      },
+      {
+        "taxon": "baseline_excursion",
+        "metric": "ml_current_score_high_minus_low",
+        "value": -0.14191416777305343,
+        "ci_low": -0.18556579674002163,
+        "ci_high": -0.013023047911332774,
+        "n_strata": 1,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      },
+      {
+        "taxon": "baseline_excursion",
+        "metric": "ml_pileup_score_high_minus_low",
+        "value": 0.04699886990072477,
+        "ci_low": -0.02085729530210713,
+        "ci_high": 0.07367586120053099,
+        "n_strata": 1,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 300
+      }
+    ],
+    "adoption": {
+      "mean_brier_improvement": -0.027622342630924543,
+      "mean_log_loss_improvement": -0.11369968263658731,
+      "adopted": false
+    },
+    "p02_latent_artifact": {
+      "artifact": "reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/p02c_regenerated_p01b_release_latents.npz",
+      "sha256": "22a14c885b764ad99a76ae5de64aa266d5d4b6b8261189b845fffaf5ff2fc17e",
+      "matched_rows": 243133,
+      "missing_rows": 0
+    }
+  },
+  "leakage_flags": 0,
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "upstream_artifacts": {
+    "p09a_thresholds": {
+      "path": "reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy/feature_thresholds.csv",
+      "sha256": "cba48e8b09e7cdd4da69bd2bdaf3887bfcdec84c22aeff8f0391fff77944e1f5"
+    },
+    "p09a_config": {
+      "path": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+      "sha256": "279c6fc889ae527de652cc2011b9c4f274cbd5189b24d75a3402a7a82e2a3e2b"
+    },
+    "p02c_latents": {
+      "artifact": "reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/p02c_regenerated_p01b_release_latents.npz",
+      "sha256": "22a14c885b764ad99a76ae5de64aa266d5d4b6b8261189b845fffaf5ff2fc17e",
+      "matched_rows": 243133,
+      "missing_rows": 0
+    },
+    "s10e_source_used_as_method_reference": {
+      "path": "reports/1781010955.636.68b17313/s10e_charge_energy_transfer.py",
+      "sha256": "706ad1a998ce01ce9afd1b31b5c2734003418c335ce646f515c97881395f47eb"
+    }
+  },
+  "ml_adopted": false,
+  "conclusion": "The S10c excess is not isolated to a single P09a rare waveform class. The taxonomy/control matched traditional excess is 0.00478 [0.00346, 0.00663] per selected event with topology odds ratio 1.505 [1.365, 1.700]. The largest rare-class traditional excess is baseline_excursion at 0.02952 [0.01646, 0.04473]. The LORO ML current-score delta is 0.02218 [0.01456, 0.03845], but the downstream-score adoption check has weighted Brier improvement -0.027622 and log-loss improvement -0.113700; ML adopted=False. The physics-facing result remains the traditional matched P09a-stratified excess.",
+  "git_commit": "d523ae421ef3dbd3dfe1eea4062afd0cf4533c67",
+  "follow_up_tickets": [
+    "S10g: re-run anomaly-stratified excess with human-adjudicated P09b rare-class labels and compare to deterministic P09a labels.",
+    "P02d: publish run-heldout P01/P02 latent-distance artifact keyed by event id for downstream leakage-safe studies."
+  ],
+  "runtime_sec": 75.99
+}

@@ -1,0 +1,9 @@
+taxon,metric,value,ci_low,ci_high,n_strata,bootstrap_unit,n_bootstrap
+ALL,ml_current_score_high_minus_low,0.022177390686863016,0.014563306783565315,0.03845196009667955,21,run_within_current_group,300
+ALL,ml_pileup_score_high_minus_low,-0.016189935500779608,-0.029053365440170835,-0.0007812926710871434,21,run_within_current_group,300
+unassigned_common,ml_current_score_high_minus_low,0.019068238853665702,0.010142557831237282,0.039366467372452064,18,run_within_current_group,300
+unassigned_common,ml_pileup_score_high_minus_low,-0.01658996901832081,-0.02924902820386288,-0.005004803307729598,18,run_within_current_group,300
+novel_early_pretrigger,ml_current_score_high_minus_low,0.21882564225076145,-0.03955696612114331,0.2776137557921731,2,run_within_current_group,300
+novel_early_pretrigger,ml_pileup_score_high_minus_low,-0.0012111512120170234,-0.05532840293165348,0.01738019389019048,2,run_within_current_group,300
+baseline_excursion,ml_current_score_high_minus_low,-0.14191416777305343,-0.18556579674002163,-0.013023047911332774,1,run_within_current_group,300
+baseline_excursion,ml_pileup_score_high_minus_low,0.04699886990072477,-0.02085729530210713,0.07367586120053099,1,run_within_current_group,300

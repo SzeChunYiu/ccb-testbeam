@@ -1,0 +1,5 @@
+feature_set,C,cv_auc
+shape_only,0.01,0.9939534332545792
+shape_only,0.1,0.9957361265732972
+shape_only,1.0,0.9964020112589861
+shape_only,10.0,0.996526360370715

@@ -1,0 +1,66 @@
+{
+  "study": "S10f",
+  "ticket": "1781012706.846.1f364432",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "d523ae421ef3dbd3dfe1eea4062afd0cf4533c67",
+  "python": "3.13.12",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "random_seed": 1012706,
+  "command": "uv run --with uproot --with numpy --with pandas --with scikit-learn --with tabulate python reports/1781012706.846.1f364432/s10f_anomaly_stratified_pileup_excess.py",
+  "inputs": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "upstream_artifacts": {
+    "p09a_thresholds": {
+      "path": "reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy/feature_thresholds.csv",
+      "sha256": "cba48e8b09e7cdd4da69bd2bdaf3887bfcdec84c22aeff8f0391fff77944e1f5"
+    },
+    "p09a_config": {
+      "path": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+      "sha256": "279c6fc889ae527de652cc2011b9c4f274cbd5189b24d75a3402a7a82e2a3e2b"
+    },
+    "p02c_latents": {
+      "artifact": "reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/p02c_regenerated_p01b_release_latents.npz",
+      "sha256": "22a14c885b764ad99a76ae5de64aa266d5d4b6b8261189b845fffaf5ff2fc17e",
+      "matched_rows": 243133,
+      "missing_rows": 0
+    },
+    "s10e_source_used_as_method_reference": {
+      "path": "reports/1781010955.636.68b17313/s10e_charge_energy_transfer.py",
+      "sha256": "706ad1a998ce01ce9afd1b31b5c2734003418c335ce646f515c97881395f47eb"
+    }
+  },
+  "outputs": {
+    "REPORT.md": "11c785bea7d26acfd0be9bcd795f35f94696954e654bd0ed8f084ba923526a28",
+    "input_sha256.csv": "38eae021ba6d54d37249d3893bb51eb0ba0bd7872a21ebbe793d19dc05566fa0",
+    "leakage_checks.csv": "9a3ae9b9c7749f0677b5732280ddb9c5cf1acf78d6c045deaabd374f51ab9928",
+    "matched_strata.csv": "c2b4bf1752aa6ac76e227769299ac497c1f85de1860bc584ec5aa604e4669098",
+    "ml_adoption_check.csv": "bf8257fc2f6668a3f41a3432269a7b47baac6b0a5636c01bb1376c2a8c5ee275",
+    "ml_loro_folds.csv": "3d36668c2ad71e7c13d11424596f5ed15328d52151ba15b4dee7d0496a1900b6",
+    "ml_run_stratum_summary.csv": "64e9770fdea39cc13c6f63ec7e93d23d0709a56c93a4aebb963ecfe61dbf07ff",
+    "ml_score_by_event.csv": "dacdf07a4c785764655099a0d10ab2c2f6d8f0e897a56c26a68e5adae23f10ad",
+    "ml_taxon_summary.csv": "aeed1fbb1731ceef5e7c3b79253db65a618611accbbb262dc2f647ac4dd36c98",
+    "p09a_thresholds_used.csv": "e32a854d18dea0d1243a3e68ae7acd83cc4b74b23e4cb0af03a2a724200a65ca",
+    "reproduction_match_table.csv": "ef799441807b75bc181ee0d41aab5ea8471e0d221d641548a2239ceb19f5bb25",
+    "result.json": "ce232346213dfad9c2bfaefad3464625c96bf03c948b0248329fda9b71d79a96",
+    "run_counts.csv": "38af1cbd4bfe0af84ca04328ee9d399e9c2ab0aa285e9f6e92a86c445379f156",
+    "s10f_anomaly_stratified_pileup_excess.py": "d37365884ccae6ecdf87abbdca021ee17223ef43919870ca516b0adb7123e77a",
+    "taxonomy_counts_by_current.csv": "a90267fb6a8482082bfdd8897c848c551c2f212cba1f3b12c301bb0ee1141c7b",
+    "topology_by_group.csv": "f43be7edd894e7ae6f9d153c54c458090ad91eead26a412aaae48167af550915",
+    "traditional_run_stratum_summary.csv": "9fa570017e9378f0c5469816d799d534f9b0754a8bcd431ad6e65f0c123762e4",
+    "traditional_taxon_summary.csv": "14d0721c1348804fb630902d3cba97a5c27e268841f6d2211927ae80b7861340"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "study_id": "P02d",
+  "ticket_id": "1781015988.1952.109d4b1d",
+  "worker": "testbeam-laptop-2",
+  "title": "early-peak topology versus timing tails",
+  "script_name": "p02d_1781015988_1952_109d4b1d_early_peak_timing_tails.py",
+  "config_name": "p02d_1781015988_1952_109d4b1d_config.json",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781015988.1952.109d4b1d",
+  "p02_runs": [58, 59, 60, 61, 62, 63, 65, 50],
+  "benchmark_runs": [58, 59, 60, 61, 62, 63, 65],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "downstream_staves": ["B4", "B6", "B8"],
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "amplitude_cut_adc": 1000.0,
+  "cfd_fraction": 0.2,
+  "min_downstream_staves": 2,
+  "clean_dt_max_ns": 3.0,
+  "gross_dt_min_ns": 51.0,
+  "documented_gross_dt_min_ns": 50.0,
+  "expected_s07_guarded_gross_events": 72,
+  "p02_sample_size": 60000,
+  "expected_p02_early_peak_rate": 0.044,
+  "random_seed": 20260609,
+  "bootstrap_replicates": 1000,
+  "fixed_clean_efficiency": 0.95,
+  "rf_params": {
+    "n_estimators": 500,
+    "max_depth": 5,
+    "min_samples_leaf": 8
+  }
+}

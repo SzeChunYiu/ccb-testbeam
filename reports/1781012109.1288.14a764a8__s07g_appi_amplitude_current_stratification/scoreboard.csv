@@ -1,0 +1,4 @@
+method,roc_auc,roc_auc_ci_low,roc_auc_ci_high,average_precision,ap_ci_low,ap_ci_high,brier,notes
+curvature-only traditional,1.0,0.9999999999999999,1.0,1.0,0.9999999999999998,1.0000000000000002,0.003999756397041198,Pre-registered |C_t| only; all benchmark rows have B4/B6/B8 selected.
+shape-only RF,0.9927775160935782,0.9804878048780488,1.0,0.9278097429996162,0.7662216080065978,1.0,0.007483500143949977,"Best params={'n_estimators': 500, 'max_depth': 7, 'min_samples_leaf': 8}; normalized shape only; 143 features."
+amplitude-only RF control,0.779282461924949,0.7144602673985619,0.8822409410036354,0.24915311713462246,0.10629700249364812,0.3453046972596174,0.032623533315422115,Absolute log-amplitude controls only; 5 features.

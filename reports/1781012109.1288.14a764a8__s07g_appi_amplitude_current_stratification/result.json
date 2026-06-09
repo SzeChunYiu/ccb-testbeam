@@ -1,0 +1,93 @@
+{
+  "study": "S07g",
+  "ticket": "1781012109.1288.14a764a8",
+  "worker": "testbeam-laptop-4",
+  "title": "all-three App.I amplitude/current stratification",
+  "reproduced": true,
+  "repro_tolerance": "exact parent App.I guarded gross D_t count match before all-three restriction",
+  "traditional": {
+    "metric": "run-held-out ROC AUC on all-three App.I D_t extreme labels",
+    "method": "curvature-only traditional",
+    "value": 1.0,
+    "ci": [
+      0.9999999999999999,
+      1.0
+    ]
+  },
+  "ml": {
+    "metric": "run-held-out ROC AUC on all-three App.I D_t extreme labels",
+    "method": "shape-only RF",
+    "value": 0.9927775160935782,
+    "ci": [
+      0.9804878048780488,
+      1.0
+    ],
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 7,
+      "min_samples_leaf": 8
+    }
+  },
+  "amplitude_control": {
+    "metric": "run-held-out ROC AUC on all-three App.I D_t extreme labels",
+    "method": "amplitude-only RF control",
+    "value": 0.779282461924949,
+    "ci": [
+      0.7144602673985619,
+      0.8822409410036354
+    ]
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "missing_stave_topology_removed": [
+      3
+    ],
+    "amplitude_only_auc": 0.779282461924949,
+    "shuffle_auc": 0.5320301460197833,
+    "leaky_dt_auc": 1.0,
+    "max_clean_abs_c_t_ns": 5.435510435926048,
+    "min_gross_abs_c_t_ns": 51.994553212352244,
+    "forbidden_shape_features": []
+  },
+  "details": {
+    "n_parent_control": 10156,
+    "n_parent_clean": 2155,
+    "n_parent_gross_documented_dt_gt_50": 74,
+    "n_parent_gross_guarded_dt_gt_51": 72,
+    "n_all_three_control": 3774,
+    "n_all_three_gross_guarded": 22,
+    "n_extreme_events": 601,
+    "n_clean": 579,
+    "n_gross": 22,
+    "shape_feature_count": 143,
+    "amplitude_feature_count": 5,
+    "max_clean_abs_c_t_ns": 5.435510435926048,
+    "min_gross_abs_c_t_ns": 51.994553212352244,
+    "amplitude_strata": [
+      "high_event_max_amp",
+      "low_event_max_amp",
+      "mid_event_max_amp"
+    ],
+    "current_run_families": {
+      "low_all_three_rate_edge": [
+        58,
+        65
+      ],
+      "mid_all_three_rate": [
+        59,
+        63
+      ],
+      "high_all_three_rate": [
+        60,
+        61,
+        62
+      ]
+    }
+  },
+  "input_sha256": "122dfe2e7f3693596b8287ea689aa2e46548839ae00f4791384953648132efee",
+  "git_commit": "6ac8483ea154a20c5d72d81728aa8ae8d6cef163",
+  "next_tickets": [
+    "S07h: replace App.I D_t extremes with an independent A-stack or duplicate-readout timing-tail target in the high-amplitude all-three subset",
+    "S13d: charge/amplitude-matched current-family null for Sample-II timing-tail waveform scores"
+  ]
+}

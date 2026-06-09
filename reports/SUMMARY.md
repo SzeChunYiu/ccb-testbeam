@@ -326,6 +326,22 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   tracks the fixed morphology scorecard but remains algorithmic taxonomy rather than human truth.
   This pass adds S16n to propagate those source classes into timing, charge, pile-up, saturation,
   dropout/anomaly, PID, and energy support risk before baseline-lowering outputs are reused.
+- Queue health for this steering pass: the exact requested command `tn-ticket list testbeam`
+  still reports `open=10 claimed=0 done=0 failed=11`, below the 18-ready trigger, while the
+  correctly addressed local `testbeam` project store now reports `open=191 claimed=4 done=161
+  failed=7` after appends. The discrepancy is the known shim positional-argument behavior, but
+  the mission trigger was satisfied by appending four ready, non-duplicate `project:testbeam`
+  tickets: S16o no-proxy pedestal width tradeoff audit (`1781043990.570.2c97138c`), P02h
+  hand-latent morphology consensus failures (`1781043998.641.6ef93138`), S05j anomaly-tail
+  covariance coverage stress (`1781044006.709.301620de`), and P06c time-local pull coverage atlas
+  (`1781044013.777.0e401db7`).
+- The newest readable result layer adds four steering constraints: S16e no-proxy pedestal
+  estimation lowers ML MAE but widens the core distribution, so baseline corrections need
+  downstream width/tail audits; P02e and P01f keep train-only latents weaker than hand/PCA
+  morphology after domain controls, so morphology consumers need consensus-failure sentinels;
+  S05f's B2-local covariance gain still needs pathology-axis interval coverage before two-ended
+  projection; and P01d/P06a-style sample-phase artifacts require local timing-pull calibration
+  before per-event sigma estimates feed pile-up, dropout, PID, or energy work.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

@@ -1221,3 +1221,45 @@ Active ready queue highlights:
   Metric: per-class timing sigma68/full RMS/tail fraction, charge res68/bias, pile-up enrichment,
   support drift, calibration/ECE, and ML-minus-traditional deltas with held-out run-block
   bootstrap CIs.
+- **S16o — No-proxy pedestal width tradeoff audit.** Decide whether the S16e no-proxy ML
+  estimator's lower MAE is usable once its wider width68 and downstream timing/charge effects are
+  counted. Traditional: freeze mean3, median3, stave-sample offset median3, and target-excluded
+  summaries, then stratify pedestal bias, width68, RMSE, induced S02/S03 timing shifts, and P04
+  charge shifts by target sample, stave, amplitude, peak phase, q_template, adaptive lowering,
+  anomaly taxon, and run family. ML: rerun the S16e HGB with feature-group ablations,
+  monotone/ridge alternatives, and shuffled-pretrigger, shuffled-target, amplitude-only, and
+  run-only sentinels. Metric: pedestal MAE, width68, RMSE, induced timing sigma68/tail fraction,
+  charge res68/bias, support drift, and ML-minus-traditional deltas with event-paired run-block
+  bootstrap CIs.
+- **P02h — Hand-latent morphology consensus failures.** Explain where P02e train-only AE
+  latents, forbidden all-data latent diagnostics, and traditional hand+PCA morphology disagree on
+  manual flags or peak-group pulse morphology. Traditional: freeze hand-shape variables, PCA
+  clusters, robust-template residuals, q_template, P09 anomaly taxa, S16 pretrigger summaries, and
+  P07 saturation flags, then build matched disagreement tables by run, stave, amplitude, peak
+  sample, topology, baseline, delayed peak, and saturation atoms. ML: compare train-only AE latent
+  probes, release-latent diagnostic probes, latent-plus-hand ensembles, and calibrated disagreement
+  classifiers with run-only, amplitude-only, topology-only, and shuffled-label sentinels. Metric:
+  disagreement rate, manual-flag and peak-group AMI/purity deltas, calibrated error probability,
+  taxon enrichment, downstream timing/charge risk delta, and ML-minus-traditional deltas with
+  stratified run-block bootstrap CIs.
+- **S05j — Anomaly-tail covariance coverage stress.** Stress-test whether S05f covariance
+  intervals remain calibrated outside the B2-topology support map, especially across anomaly taxa,
+  timing-tail atoms, baseline contamination, saturation boundary, and two-pulse scores.
+  Traditional: freeze raw pair-median, hierarchical covariance, downstream-only controls, and
+  saturation ridge corrections, then tabulate signed off-diagonal covariance, sigma68, full RMS,
+  and coverage by one frozen pathology axis at a time with matched downstream controls. ML: rerun
+  the S05f `ml_with_b2_local` and `ml_no_b2_local` residual models with pathology-axis ablations,
+  conformal interval calibration, and shuffled-axis/run-family sentinels. Metric: interval
+  coverage, width, B2-containing minus downstream covariance, correlated-fraction shift, residual
+  sigma68/full RMS, support loss, and ML-minus-traditional deltas with pair/event run-block
+  bootstrap CIs.
+- **P06c — Time-local pull coverage atlas.** Check whether per-pulse timing pull widths and
+  uncertainty estimates are locally calibrated across the 18-sample pulse phase, especially around
+  samples 3-6 where P01d found CFD and smoothing artifacts. Traditional: freeze S02/S03 analytic
+  timing, OF/template sample-window ablations, and S04 robust-width estimates, then compute pull
+  residuals by peak sample, leading-edge phase, sample-window mask, stave, amplitude, saturation,
+  q_template, baseline, anomaly, and run family. ML: recalibrate the P06a residual-uncertainty
+  model plus a constrained per-sample conformal/tail-risk model with sample-dropout ablations and
+  shuffled-target, run-only, amplitude-only, and topology-only sentinels. Metric: pull width,
+  nominal 68% and 95% coverage, sigma68/full RMS, >5 ns tail fraction, support count,
+  calibration ECE, and ML-minus-traditional deltas with event-paired run-block bootstrap CIs.

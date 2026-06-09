@@ -1,0 +1,7 @@
+check,value,flag
+forbidden_feature_overlap,,False
+row_split_advantage_rmse_ns,1.400996107182404,True
+group_split_r2_mean,-0.00975563240097339,False
+random_row_split_r2,-0.16454449401681215,False
+shuffled_target_r2,-0.0056270386069581235,False
+train_width_vs_heldout_ml_width_ns,-0.3856639260632313,False

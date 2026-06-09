@@ -1,0 +1,68 @@
+{
+  "study": "S16e",
+  "ticket": "1781007910.1647.505b465f",
+  "worker": "testbeam-laptop-2",
+  "title": "pre-trigger activity proxy in timing residual tails",
+  "reproduced_raw_root_first": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      65
+    ]
+  },
+  "traditional": {
+    "method": "linear_ridge_proxy_residual_correction_on_s02b_timewalk",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "value": 1.44512815649364,
+    "ci": [
+      1.1737171924967966,
+      1.6936276364301717
+    ],
+    "tail_frac_abs_gt5ns": 0.0,
+    "tail_ci": [
+      0.0,
+      0.010227272727272613
+    ],
+    "delta_vs_s02b_ns": -0.19028918551080332,
+    "tail_delta_vs_s02b": -0.005050505050505051
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_waveform_plus_pretrigger_proxy",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "value": 1.3874850381507104,
+    "ci": [
+      1.2472565276274126,
+      1.623865323927742
+    ],
+    "tail_frac_abs_gt5ns": 0.005050505050505051,
+    "tail_ci": [
+      0.0,
+      0.020202020202020204
+    ],
+    "delta_vs_s02b_ns": -0.24793230385373288,
+    "tail_delta_vs_s02b": 0.0
+  },
+  "s02b_baseline": {
+    "value": 1.6354173420044433,
+    "ci": [
+      1.491259325191034,
+      1.9099084855659234
+    ],
+    "tail_frac_abs_gt5ns": 0.005050505050505051
+  },
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S16f: per-event pre-trigger contamination veto versus S02 timing tails with leave-one-run-out splits",
+    "S02d: leave-one-run-out S02b timing plus S16e proxy terms over all Sample-II analysis runs"
+  ],
+  "git_commit": "ceeea92ec3a0608cb2b9ece15211a16b46b2e10c"
+}

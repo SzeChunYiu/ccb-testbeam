@@ -86,20 +86,24 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` reports
-  `open=11 claimed=0 done=0 failed=8`, below the 18-ticket floor, because the shim treats
+  `open=11 claimed=0 done=0 failed=9`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
   again with `--project testbeam`; the project-aware testbeam queue remains deep, with live
-  post-append audits at 165 open and concurrent worker movement. The mission trigger
+  post-append audits at 170 open / 4 claimed and concurrent worker movement. The mission trigger
   still required new ready work. This pass appended four ready non-duplicate tickets:
-  S10l asymmetric-template failure atom map (`1781030650.532.4dd15543`),
+  S02i pretrigger-proxy timing transfer atom map (`1781032083.463.2d9c6a45`),
+  S16k pretrigger-veto support frontier (`1781032083.478.14791743`),
+  S10m overlap-secondary discordance audit (`1781032084.526.56a43973`), and
+  P04m pretrigger-mode charge-transfer abstention map (`1781032084.548.4ccc082b`). The previous pass
+  appended S10l asymmetric-template failure atom map (`1781030650.532.4dd15543`),
   S03j selector-specific timewalk support map (`1781030650.597.5d382001`),
   S16j pretrigger hidden-mode stability audit (`1781030650.662.4bb162cb`), and
-  P04l baseline-to-charge dropout coupling (`1781030650.727.08857c2c`). The previous pass
+  P04l baseline-to-charge dropout coupling (`1781030650.727.08857c2c`). The pass before that
   appended S03i q_template amplitude-matched tail-label isolation
   (`1781029233.703.5ff5517d`), S10k operational Rmax failure-definition frontier
   (`1781029239.771.51c16bca`), P04k selector-semantics charge-closure sensitivity
   (`1781029246.839.554f50f7`), and S16i pretrigger-baseline live-time coupling audit
-  (`1781029251.907.5de90a17`). The pass before that appended S07k raw-HRDv App.A
+  (`1781029251.907.5de90a17`). The earlier pass appended S07k raw-HRDv App.A
   label-definition sensitivity grid (`1781027683.937.4b432fbc`), S10h
   baseline-excursion pile-up excess decomposition (`1781027683.951.7bcc2f09`), and S14e
   range-energy abstention support envelope (`1781027683.1000.24e0133d`). The earlier pass
@@ -184,11 +188,11 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   closure keeps a positive current excess after P09a matching but identifies baseline_excursion as
   the largest rare-taxon excess, requiring pile-up/baseline decomposition. The P04b-propagated
   S14b energy preflight fails the 0.10 per-event threshold globally, so energy/PID work must move
-  through support/abstention maps rather than broad energy claims. The newest S00c/S03d/S10d/S10e
-  reports add four immediate atomic gaps: asymmetric two-pulse template failures need atom-level
-  decomposition, selector semantics need timewalk as well as charge-closure propagation, S16e's
-  pretrigger hidden mode needs run-family stability checks, and baseline/dropout atoms must be
-  tested against charge failure before energy or PID consumers reuse them.
+  through support/abstention maps rather than broad energy claims. The newest S02d/S16f/S10e/S10f
+  reports add four immediate atomic gaps: pretrigger proxy timing gains must be decomposed before
+  ML residuals transfer, pretrigger tail vetoes need support-preserving thresholds, overlap-score
+  and secondary-fraction pile-up diagnostics must be reconciled, and pretrigger hidden modes must
+  be tested as charge-transfer abstention variables before energy or PID consumers reuse them.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
@@ -214,7 +218,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   operational Rmax failure-definition frontier, P04k for selector-semantics charge closure, and
   S16i for pretrigger-baseline/live-time coupling. This pass adds S10l for asymmetric-template
   two-pulse failure atoms, S03j for selector-specific timewalk support, S16j for pretrigger
-  hidden-mode stability, and P04l for baseline/dropout coupling into charge closure.
+  hidden-mode stability, and P04l for baseline/dropout coupling into charge closure. This pass adds
+  S02i for pretrigger-proxy timing transfer atoms, S16k for support-preserving pretrigger veto
+  thresholds, S10m for overlap/secondary pile-up discordance, and P04m for pretrigger-mode
+  charge-transfer abstention before energy/PID reuse.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

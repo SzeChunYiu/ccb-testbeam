@@ -273,20 +273,24 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=11 claimed=0 done=0 failed=8`, which is below the 18-ready floor because the shim treats
+`open=11 claimed=0 done=0 failed=9`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with live post-append
-audits at 165 open and concurrent workers moving tickets, but the mission trigger still required a
+audits at 170 open / 4 claimed and concurrent workers moving tickets, but the mission trigger still required a
 small set of new ready studies. This pass appended four additional non-duplicate ready tickets
-under `project:testbeam`: S10l asymmetric-template failure atom map
+under `project:testbeam`: S02i pretrigger-proxy timing transfer atom map
+(`1781032083.463.2d9c6a45`), S16k pretrigger-veto support frontier
+(`1781032083.478.14791743`), S10m overlap-secondary discordance audit
+(`1781032084.526.56a43973`), and P04m pretrigger-mode charge-transfer abstention map
+(`1781032084.548.4ccc082b`). The previous pass appended S10l asymmetric-template failure atom map
 (`1781030650.532.4dd15543`), S03j selector-specific timewalk support map
 (`1781030650.597.5d382001`), S16j pretrigger hidden-mode stability audit
 (`1781030650.662.4bb162cb`), and P04l baseline-to-charge dropout coupling
-(`1781030650.727.08857c2c`). The previous pass appended S03i q_template amplitude-matched
+(`1781030650.727.08857c2c`). The pass before that appended S03i q_template amplitude-matched
 tail-label isolation (`1781029233.703.5ff5517d`), S10k operational Rmax failure-definition
 frontier (`1781029239.771.51c16bca`), P04k selector-semantics charge-closure sensitivity
 (`1781029246.839.554f50f7`), and S16i pretrigger-baseline live-time coupling audit
-(`1781029251.907.5de90a17`). The pass before that appended S07k raw-HRDv App.A label-definition
+(`1781029251.907.5de90a17`). The earlier pass appended S07k raw-HRDv App.A label-definition
 sensitivity grid (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up excess
 decomposition (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support envelope
 (`1781027683.1000.24e0133d`). The earlier pass appended P10h explicit-handle q-template
@@ -419,6 +423,10 @@ frontiers, propagate selector semantics into charge closure, and test whether pr
 spectra bias pile-up live-time handles. This pass extends that bridge to four smaller atoms:
 asymmetric-template two-pulse failures, selector-specific timewalk support, pretrigger hidden-mode
 stability, and baseline/dropout coupling into charge failure before energy or PID reuse.
+The freshest S02d/S16f/S10e/S10f results now split those atoms further: pretrigger proxy timing
+transfer must be mapped feature-by-feature, tail vetoes need support-preserving thresholds,
+ML overlap-score and secondary-fraction pile-up diagnostics must be reconciled, and pretrigger
+hidden modes must be treated as charge-transfer abstention candidates before energy or PID reuse.
 
 Completed since last steering cycle:
 
@@ -875,3 +883,32 @@ Active ready queue highlights:
   saturation-only, topology-only, and shuffled-target sentinels. Metric: charge fractional bias,
   res68, full RMS, catastrophic-error rate, timing-tail propagation, and ML-minus-traditional delta
   with stratified run-block bootstrap CIs.
+- **S02i — Pretrigger-proxy timing transfer atom map.** Locate which S16e pretrigger proxy atoms
+  improve S02b/S02d timing closure under leave-one-run-out transfer and where ML residual terms
+  transfer worse than frozen traditional corrections. Traditional: freeze S02b analytic/template
+  timewalk and add one pretrigger atom at a time in robust run-heldout regressions. ML:
+  run-family-heldout ridge/ExtraTrees residual learners on the same atoms with shuffled-pretrigger
+  and shuffled-target controls. Metric: per-run and per-stave sigma68, >5 ns tail fraction,
+  ML-minus-traditional delta, and composition drift with paired bootstrap CIs.
+- **S16k — Pretrigger-veto support frontier.** Find a pretrigger-contamination veto threshold
+  that captures timing tails without deleting charge, current, topology, or saturation support.
+  Traditional: hand-built pretrigger proxy thresholds plus q_template and baseline-excursion cuts
+  under fixed support constraints. ML: calibrated logistic/ExtraTrees pretrigger veto scores with
+  run-heldout folds and shuffled-pretrigger controls. Metric: tail-capture efficiency, precision,
+  veto fraction, support drift, calibration ECE, and support-constrained utility with bootstrap CIs.
+- **S10m — Overlap-secondary discordance audit.** Explain why the ML overlap score shows a
+  positive high-current excess while ML secondary fraction is near zero and the traditional
+  bounded two-pulse secondary fraction is positive. Traditional: frozen bounded two-pulse template
+  maps of secondary fraction, residual bias, and failure by separation, amplitude ratio, lowering,
+  and anomaly taxon. ML: separate run-heldout RF/MLP overlap and secondary-fraction regressors
+  with synthetic-to-real calibration and shuffled controls. Metric: high-minus-low secondary
+  fraction, overlap-score delta, discordance rate, charge bias, Brier/log-loss, and stratum-wise
+  paired bootstrap CIs.
+- **P04m — Pretrigger-mode charge-transfer abstention map.** Test whether S16 pretrigger hidden
+  modes define support where duplicate-readout charge closure remains excellent but P04b-style
+  external transfer or energy proxy fails. Traditional: peak, integral, adaptive-template, and
+  strong-Huber charge estimators split by frozen pretrigger-mode bins and matched
+  amplitude/saturation/run strata. ML: HGB/ExtraTrees charge-transfer models with and without
+  pretrigger-mode covariates plus conformal abstention under run-family holdout and shuffled-mode
+  controls. Metric: duplicate res68, external-proxy res68, bias, abstention coverage, support loss,
+  and ML-minus-traditional deltas with paired bootstrap CIs.

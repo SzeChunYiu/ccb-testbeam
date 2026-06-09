@@ -1,0 +1,106 @@
+{
+  "study": "S00d",
+  "ticket": "1781014251.574.7a497937",
+  "worker": "testbeam-laptop-1",
+  "title": "dynamic-selector pulse taxonomy audit",
+  "reproduced": true,
+  "reproduction": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "traditional": {
+    "method": "fixed waveform taxonomy cuts",
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "metric": "class fractions, enrichment odds, timing sigma68/full-RMS, charge proxy bias",
+    "top_dynamic_class": {
+      "taxonomy_class": "baseline_excursion",
+      "population": "dynamic_only",
+      "fraction": 0.9241672572643516,
+      "ci_low": 0.9185554406094235,
+      "ci_high": 0.9377415199656505,
+      "n": 8466
+    },
+    "largest_enrichment": {
+      "taxonomy_class": "low_median_amp_dynamic_only",
+      "odds_ratio_dynamic_vs_control": 487.79501927067895,
+      "ci_low": 194.69129379118974,
+      "ci_high": 1164.2209087951414
+    }
+  },
+  "ml": {
+    "method": "P01-style train-only denoising-AE embedding plus leakage-guarded logistic classifier",
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "auc": 0.9943275840189747,
+    "auc_ci": [
+      0.9916867498643533,
+      0.9960602972241188
+    ],
+    "average_precision": 0.990825130512079,
+    "average_precision_ci": [
+      0.9854211726546996,
+      0.9944235289303327
+    ],
+    "accuracy": 0.9693240264511389,
+    "adoption_valid": false,
+    "interpretation": "ML score is morphology telemetry only; the within-run shuffled-label control fails, so high AUC is treated as confounding/leakage risk.",
+    "leaky_selector_amplitude_auc": 0.9999604051456525,
+    "p01b_release": {
+      "status": "matched",
+      "path": "reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/p02c_regenerated_p01b_release_latents.npz",
+      "sha256": "22a14c885b764ad99a76ae5de64aa266d5d4b6b8261189b845fffaf5ff2fc17e",
+      "rows": 640737
+    },
+    "device": "cpu"
+  },
+  "leakage_hunt": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "note": "split key is run"
+    },
+    {
+      "check": "primary_excludes_selector_amplitudes",
+      "value": 1,
+      "pass": true,
+      "note": "median_amp, dynamic_amp, dynamic-minus-median, baseline excursion absent from primary features"
+    },
+    {
+      "check": "leaky_sentinel_auc_minus_primary_auc",
+      "value": 0.005632821126677845,
+      "pass": true,
+      "note": "large positive gap confirms direct selector variables are leakage"
+    },
+    {
+      "check": "within_run_shuffle_auc",
+      "value": 0.9509034582423359,
+      "pass": false,
+      "note": "shuffled-label morphology control"
+    },
+    {
+      "check": "p01b_release_controls_only_status",
+      "value": "matched",
+      "pass": true,
+      "note": "P01b release rows match S00 controls and have no dynamic-only rows"
+    }
+  ],
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "24b0ff389a05b53355914f34855544794688812f",
+  "runtime_s": 366.12311577796936,
+  "next_tickets": [
+    "S00e: rebuild P01b-compatible embeddings for dynamic-only selector-excess pulses with release-weight provenance.",
+    "S02f: rerun dynamic-only taxonomy classes through template/timewalk timing with class-conditioned run-heldout CIs."
+  ]
+}

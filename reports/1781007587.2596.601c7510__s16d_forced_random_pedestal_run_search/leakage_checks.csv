@@ -1,0 +1,4 @@
+check,value,interpretation
+shuffled_training_labels,0.4238296304296723,AUC should fall near 0.5 when quiet/pulse labels are destroyed.
+intentional_label_oracle,1.0,AUC near 1 confirms direct label leakage would be obvious and is not in real features.
+real_feature_exclusion,,"ML features exclude run, event id, trigger, post-trigger amplitudes, event_max, selected/quiet labels, and filenames."

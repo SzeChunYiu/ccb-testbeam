@@ -1301,3 +1301,38 @@ Active ready queue highlights:
   abstention, shuffled-rate, run-only, and topology-only controls. Metric: charge res68, signed
   bias, energy-ordering flip rate, support loss, conformal coverage, and ML-minus-traditional
   deltas with event/run-block bootstrap CIs.
+- **S11f — Two-pulse method-disagreement taxonomy.** Split real high-current two-pulse candidates
+  into traditional-only, ML-only, joint, and neither classes after S11e found partial agreement
+  rather than redundancy. Traditional: freeze bounded-fit delta-SSE, secondary-fraction,
+  support-count, and template-residual ranks from S11b/S11d/S11e, then match by run, amplitude,
+  lowering, topology, saturation, and anomaly class. ML: freeze the low-current synthetic-overlay
+  residual-shape score and recalibrate with leave-one-run-out isotonic/conformal layers plus
+  shuffled-current sentinels. Metric: candidate-rate excess, recovered delay/area stability,
+  topology-excess coverage, gallery precision/recall where available, and ML-minus-traditional
+  deltas with source-run bootstrap CIs.
+- **S05l — Saturation-covariance correction validity gate.** Re-test S05e's B2 covariance
+  reduction using only saturation features that survive duplicate-readout validation, because P07e
+  found the P07d ratio-transfer correction worsens high-amplitude B2 duplicate closure.
+  Traditional: rerun S05c/S05e covariance tables with raw, template-only, duplicate-safe, and
+  no-correction feature sets. ML: retrain the S05e ExtraTrees residual model only across those
+  feature sets with correction-knockout, shuffled-target, and downstream-only sentinels. Metric:
+  B2-minus-downstream covariance, correlated fraction, sigma68/full RMS, interval coverage,
+  support loss, and ML-minus-traditional deltas with pair/event run-block bootstrap CIs.
+- **P04p — Duplicate-readout charge harm labels.** Turn odd/even duplicate-readout closure into a
+  harm-label audit for charge and saturation corrections before energy or PID consumers reuse
+  them. Traditional: freeze raw peak/integral, Huber duplicate closure, adaptive-template, and
+  template-only saturation corrections, then label excess charge bias, res68, timing abs68, and
+  q_template shift on held-out odd duplicates. ML: train a leave-one-run-out harm
+  classifier/calibrator using only even-channel waveform, saturation, baseline, anomaly, and
+  support summaries with hash-overlap and shuffled-target sentinels. Metric: harm precision/recall,
+  accepted coverage, charge res68/bias, timing abs68/tail rate, calibration error, and
+  ML-minus-traditional deltas with run-block bootstrap CIs.
+- **P12c — Pulse-action decision matrix.** Convert the growing set of pulse atoms into concrete
+  downstream actions: correct, abstain, veto, or pass through for timing, amplitude, saturation,
+  pile-up, baseline, dropout, PID, and energy consumers. Traditional: freeze rule-based atoms from
+  S02/S03/S05/S10/S16/P04/P07/P09 and build matched raw/corrected/abstained/vetoed action tables.
+  ML: train a calibrated multi-output decision model using predeclared waveform/support summaries
+  with leave-one-run-out action-knockout, shuffled-target, and domain-sentinel controls. Metric:
+  action support fraction, timing width/tails, charge bias/res68, pile-up coverage, baseline harm,
+  covariance coverage, PID/energy proxy degradation, and ML-minus-traditional deltas with
+  run-block bootstrap CIs.

@@ -362,6 +362,26 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   tickets therefore target rate-residual covariance sieving, latent calibration, high-stat
   secondary support stability, and rate-conditioned charge vetoes before covariance, pile-up, PID,
   or energy consumers reuse these outputs.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` still reports
+  `open=10 claimed=0 done=0 failed=11`, below the 18-ready trigger, while the correctly addressed
+  local `testbeam` project store reports `open=189 claimed=3 done=173 failed=7` after this pass
+  under concurrent worker movement. The trigger was satisfied by appending four ready,
+  non-duplicate `project:testbeam` tickets: S11f two-pulse method-disagreement taxonomy
+  (`1781046807.583.64755f71`), S05l saturation-covariance correction validity gate
+  (`1781046818.654.2a8c6dd2`), P04p duplicate-readout charge harm labels
+  (`1781046824.725.569d120d`), and P12c pulse-action decision matrix
+  (`1781046830.796.418e6e1f`).
+- Fresh synthesis: P07e shows the P07d-style saturation ratio-transfer correction worsens
+  high-amplitude B2 duplicate-channel charge and timing closure even though artificial clipping
+  still looks recoverable, so saturation corrections now need harm labels and duplicate-safe
+  acceptance gates before charge, PID, or energy reuse. S05e shows explicit B2
+  saturation/recovery features can collapse much of the B2 covariance excess, but that covariance
+  win must be retested with only duplicate-validated saturation handles. S11d/S11e show real
+  high-current two-pulse support and candidate scoring are method-dependent: traditional and ML
+  candidates disagree, joint candidates are rare, and neither method alone accounts for the full
+  S10 topology excess. The new tickets therefore focus on method-disagreement taxonomy,
+  correction-valid covariance, charge-harm labels, and a pulse-action matrix that turns atom-level
+  diagnostics into correct/abstain/veto/pass decisions.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

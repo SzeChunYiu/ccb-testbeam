@@ -1,0 +1,9 @@
+scenario,check,value,pass
+sample_ii_only,train_eval_run_overlap,0.0,True
+sample_ii_only,train_eval_event_overlap,0.0,True
+sample_ii_only,model_inputs_exclude_run_event_target,1.0,True
+sample_ii_only,ml_shuffled_target_worse_than_real,1.1607354172158106,True
+pooled,train_eval_run_overlap,0.0,True
+pooled,train_eval_event_overlap,0.0,True
+pooled,model_inputs_exclude_run_event_target,1.0,True
+pooled,ml_shuffled_target_worse_than_real,1.2683248844930692,True

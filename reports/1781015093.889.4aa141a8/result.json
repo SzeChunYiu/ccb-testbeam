@@ -1,0 +1,184 @@
+{
+  "study": "P03c",
+  "ticket": "1781015093.889.4aa141a8",
+  "worker": "testbeam-laptop-2",
+  "title": "waveform-only 1D CNN versus P03b MLP timing with leave-one-run-out gates",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "metric": "held-out B4/B6/B8 pairwise sigma68 ns with event-paired bootstrap CI per held-out run",
+  "mean_sigma68_ns": {
+    "analytic_timewalk": 1.496403819440369,
+    "cfd20_reference": 3.141014822346903,
+    "cnn_waveform": 2.274493522936862,
+    "mlp_waveform": 1.8054683124483721,
+    "s02_ridge_cfd20": 1.9054928392097812
+  },
+  "cnn_best_run_count": 1,
+  "cnn_beats_p03b_mlp_run_count": 1,
+  "cnn_beats_analytic_run_count": 1,
+  "mlp_beats_analytic_run_count": 1,
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "mean_sigma68_ns": 1.496403819440369
+  },
+  "ml": {
+    "p03b_mlp": {
+      "method": "tiny_heteroskedastic_mlp_on_18_normalized_samples_plus_stave_one_hot",
+      "base_method": "cfd20",
+      "mean_sigma68_ns": 1.8054683124483721
+    },
+    "cnn": {
+      "method": "two_layer_1d_cnn_on_18_normalized_samples_plus_stave_one_hot",
+      "base_method": "cfd20",
+      "mean_sigma68_ns": 2.274493522936862
+    },
+    "per_run": [
+      {
+        "heldout_run": 58,
+        "best_method": "analytic_timewalk",
+        "best_sigma68_ns": 1.1874833645739167,
+        "cnn_minus_mlp_ns": 0.442881400441135,
+        "cnn_minus_analytic_ns": 1.1432238986671361,
+        "mlp_minus_analytic_ns": 0.7003424982260011
+      },
+      {
+        "heldout_run": 59,
+        "best_method": "analytic_timewalk",
+        "best_sigma68_ns": 1.4587081303487366,
+        "cnn_minus_mlp_ns": 0.5434756221274175,
+        "cnn_minus_analytic_ns": 0.7958488888815058,
+        "mlp_minus_analytic_ns": 0.25237326675408833
+      },
+      {
+        "heldout_run": 60,
+        "best_method": "analytic_timewalk",
+        "best_sigma68_ns": 1.3437044382667396,
+        "cnn_minus_mlp_ns": 0.5259577923654528,
+        "cnn_minus_analytic_ns": 0.7892089330239234,
+        "mlp_minus_analytic_ns": 0.26325114065847055
+      },
+      {
+        "heldout_run": 61,
+        "best_method": "cnn_waveform",
+        "best_sigma68_ns": 2.0345879715295294,
+        "cnn_minus_mlp_ns": -0.07908587269170919,
+        "cnn_minus_analytic_ns": -0.09537642201050422,
+        "mlp_minus_analytic_ns": -0.016290549318795033
+      },
+      {
+        "heldout_run": 62,
+        "best_method": "analytic_timewalk",
+        "best_sigma68_ns": 1.469004872429904,
+        "cnn_minus_mlp_ns": 0.7475128884479201,
+        "cnn_minus_analytic_ns": 1.0218201830772353,
+        "mlp_minus_analytic_ns": 0.27430729462931525
+      },
+      {
+        "heldout_run": 63,
+        "best_method": "analytic_timewalk",
+        "best_sigma68_ns": 1.391321460653578,
+        "cnn_minus_mlp_ns": 0.879993448276073,
+        "cnn_minus_analytic_ns": 1.136868391901373,
+        "mlp_minus_analytic_ns": 0.25687494362529995
+      },
+      {
+        "heldout_run": 65,
+        "best_method": "analytic_timewalk",
+        "best_sigma68_ns": 1.494640076269676,
+        "cnn_minus_mlp_ns": 0.22244119445314303,
+        "cnn_minus_analytic_ns": 0.6550340509347825,
+        "mlp_minus_analytic_ns": 0.4325928564816395
+      }
+    ]
+  },
+  "leakage": {
+    "max_event_id_overlap": 0,
+    "feature_audit": "normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, pair residual, or held-out target",
+    "shuffled_target_controls_all_worse_than_nominal": true,
+    "shuffled_target_controls": [
+      {
+        "heldout_run": 58,
+        "model": "mlp_waveform",
+        "value": 3.194754314725442
+      },
+      {
+        "heldout_run": 58,
+        "model": "cnn_waveform",
+        "value": 3.0792979967453746
+      },
+      {
+        "heldout_run": 59,
+        "model": "mlp_waveform",
+        "value": 3.162967927828788
+      },
+      {
+        "heldout_run": 59,
+        "model": "cnn_waveform",
+        "value": 3.1381705691690587
+      },
+      {
+        "heldout_run": 60,
+        "model": "mlp_waveform",
+        "value": 3.1437723801273894
+      },
+      {
+        "heldout_run": 60,
+        "model": "cnn_waveform",
+        "value": 3.1165670710364712
+      },
+      {
+        "heldout_run": 61,
+        "model": "mlp_waveform",
+        "value": 2.9114854232789504
+      },
+      {
+        "heldout_run": 61,
+        "model": "cnn_waveform",
+        "value": 2.9011289451907523
+      },
+      {
+        "heldout_run": 62,
+        "model": "mlp_waveform",
+        "value": 3.23318852406236
+      },
+      {
+        "heldout_run": 62,
+        "model": "cnn_waveform",
+        "value": 3.2059651201354664
+      },
+      {
+        "heldout_run": 63,
+        "model": "mlp_waveform",
+        "value": 3.480943734859196
+      },
+      {
+        "heldout_run": 63,
+        "model": "cnn_waveform",
+        "value": 3.3700301375240262
+      },
+      {
+        "heldout_run": 65,
+        "model": "mlp_waveform",
+        "value": 3.173789346474021
+      },
+      {
+        "heldout_run": 65,
+        "model": "cnn_waveform",
+        "value": 2.979738128396231
+      }
+    ]
+  },
+  "verdict": "cnn_does_not_beat_p03b_mlp_or_analytic_timewalk",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "0a1b41df315967d227fc4c59573e4038930bf854",
+  "next_tickets": []
+}

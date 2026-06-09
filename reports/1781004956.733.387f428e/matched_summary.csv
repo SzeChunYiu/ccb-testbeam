@@ -1,0 +1,2 @@
+metric,value,n_strata,matched_low_events,global_s10_frozen_excess,ci_low,ci_high
+matched_stratified_downstream_high_minus_low,0.0202483132962887,8,5739,0.010289747149522063,0.018748378130221333,0.028471456126386806

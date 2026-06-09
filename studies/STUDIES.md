@@ -254,3 +254,33 @@ Phase 0 (S00, S01) ships first and is the **gate**. Each study may split into at
 (e.g. S04a reproduce counts, S04b χ²/full-RMS, S04c bootstrap CIs). Keep tickets small enough to
 finish in one agent session. The orchestrator (Claude) maintains this file as the single source
 of truth and synthesises `reports/` into a rolling summary.
+
+## Newly cut atomic directions (2026-06-09)
+
+The latest reports deepen the pulse programme but also narrow the next questions. S02/S07 found
+ML gains for timing residual correction and current/topology classification; S10 and S18 show
+strong traditional baselines still win or tie when the physics control is tight; S16 shows the
+baseline estimator is much better than a naive pretrigger median but still biased; P02/P07 expose
+high-value pulse-shape and saturation follow-ups.
+
+Ready queue additions:
+
+- **P02b — Cluster topology stability across runs and staves.** Test whether P02 pulse clusters
+  are stable morphologies or run/stave artifacts. Traditional: shape cuts + PCA/GMM. ML: AE
+  latent HDBSCAN/GMM. Metric: held-out AMI and topology purity with paired bootstrap CIs.
+- **P03a — 18-sample CNN timing versus S02 ridge-corrected CFD.** Freeze the S02 best baseline
+  and test whether waveform-deep timing adds information. Traditional: S02 CFD/template plus
+  residual correction. ML: tiny 1D CNN/MLP with calibrated per-pulse σ. Metric: pairwise sigma68,
+  full RMS, and pull width with paired bootstrap CIs.
+- **P07b — Natural B2 saturation recovery impact on charge and timing tails.** Transfer the P07
+  artificial-clipping result to real saturated B2 pulses. Traditional: rising-edge/template
+  extrapolation. ML: P07 regressor. Metric: fractional amplitude bias/res68 plus q_template and
+  timing-tail shifts with run-stratified bootstrap CIs.
+- **S10c — Pile-up excess stratified by amplitude, baseline, and pulse topology.** Decide whether
+  the S10 high-current excess is beam pile-up or a detector-pathology subpopulation. Traditional:
+  Poisson/downstream excess in matched strata. ML: calibrated pile-up/current scores in the same
+  strata. Metric: high-minus-low excess and score deltas with stratified bootstrap CIs.
+- **S16d — Dropout and baseline-excursion recovery stress test.** Separate recoverable baseline
+  failures from veto-only pulse classes. Traditional: S16 baseline diagnostics, jagged/dropout
+  masks, interpolation. ML: denoising/inpainting regressor plus unrecoverable classifier. Metric:
+  detection AP, waveform MSE, and S02 timing residual recovery with bootstrap CIs.

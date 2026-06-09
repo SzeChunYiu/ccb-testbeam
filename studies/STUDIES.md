@@ -275,12 +275,12 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=8 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: project-aware queue audits during this pass observed a deep ready pool
-(`open=103 claimed=4 done=74 failed=10` while workers were active) after this pass appended three
-additional non-duplicate ready tickets under `project:testbeam`: S04c pathology-stratified
-timing-resolution tail table (`1781018820.3826.39cd42b6`), P04g dropout-injected amplitude charge
-recovery closure (`1781018820.3891.20547ebd`), and S14d anomaly-veto energy-ordering sensitivity
-(`1781018820.3955.63293f84`). The discrepancy is a shim/argument parsing issue, not a scientific
+with `--project testbeam`: project-aware queue audit now reports
+`open=113 claimed=3 done=80 failed=10` after this pass appended three additional non-duplicate
+ready tickets under `project:testbeam`: S03g HGB timewalk feature monotonicity audit
+(`1781020297.470.075250d8`), P07g saturation recovery acceptance rule from bias envelope
+(`1781020303.539.78bf7a44`), and P08b charge-current matched waveform PID leakage null
+(`1781020308.607.456c4f7e`). The discrepancy is a shim/argument parsing issue, not a scientific
 queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
@@ -356,6 +356,13 @@ claims veto-sensitive. P05a/S11b/S11c show that injected and real high-current t
 candidates still concentrate the next pile-up question in high-amplitude, large-lowering,
 broad-late strata; the ML methods improve time RMS, but only with explicit failure/abstention
 accounting.
+The newest S03d report moves timewalk from "analytic closure is stable" to a sharper question:
+HGB improves LORO sigma68 to 1.394 ns versus 1.551 ns for amp-only and 1.645 ns for monotone
+binned, with no immediate leakage flag, but the gain is not yet physically explained. S10e shows
+the high-current downstream excess remains after P04/P07 charge-energy stratification
+(0.00676/event with CIs excluding zero), while charge-residual ML is diagnostic rather than
+physics-facing. P07e finds the best retained-window saturation recovery is still non-adoptable
+(res68 0.0812, median bias 0.0292), so saturation use now needs calibrated accept/veto rules.
 
 Completed since last steering cycle:
 
@@ -431,6 +438,11 @@ Completed since last steering cycle:
   negative CFD delta is a pickoff artifact while sample 6 remains a robust smoothing point, and
   the compact CNN improves injected two-pulse RMS (10.01 ns vs 13.90 ns) but fails adoption
   because failure rate increases from 0.168 to 0.228.
+- **S03d/S10e/P07e — Fresh timewalk, charge-stratified pile-up, and saturation-ablation reports.**
+  Result: HGB timewalk residual correction now beats the analytic and monotone-binned LORO
+  baselines but needs monotonicity/feature-causality and transfer falsification; the current
+  excess survives charge-energy matching; and retained-window saturation recovery still needs an
+  acceptance rule before timing, PID, or energy consumers can use it.
 
 Active ready queue highlights:
 
@@ -586,3 +598,23 @@ Active ready queue highlights:
   ML: monotonic charge-energy surrogate using P04/P07 charge plus calibrated anomaly, pile-up, and
   baseline scores under leakage sentinels. Metric: depth-ordering violations, median charge-proxy
   shift, unsaturated-control res68, veto acceptance, and run/stave bootstrap CIs.
+- **S03g — HGB timewalk feature monotonicity audit.** Explain whether the S03d HGB gain is
+  physically meaningful residual structure or non-monotone/local overfit. Traditional: S03a
+  amp-only analytic closure plus physically signed shared-stave shrinkage and monotone residual
+  tables. ML: HGB residual corrector with amplitude-only, shape-only, stave-only, monotonic, and
+  shuffled-target controls. Metric: sigma68, full RMS, >5 ns tail fraction, bias-vs-amplitude
+  slope, and paired ML-minus-traditional bootstrap CIs.
+- **P07g — Saturation recovery acceptance rule from bias envelope.** Convert P07e's non-adoptable
+  retained-window recovery into a calibrated accept/veto rule. Traditional: rising-edge/template
+  retained-window estimators with fixed bias-envelope cuts on saturation depth, peak sample,
+  q_template shift, and odd-channel duplicate consistency. ML: conformal/isotonic error and
+  tail-risk predictor for frozen P07/P07e regressors. Metric: accepted-event res68, bias,
+  catastrophic error, q_template shift, timing-tail delta, calibration coverage, and acceptance
+  rate with run-block bootstrap CIs.
+- **P08b — Charge-current matched waveform PID leakage null.** Test whether PID-like waveform
+  signals survive after matching charge, current, depth proxy, run, saturation, pile-up, topology,
+  and stave. Traditional: tail/total, area/peak, q_template, penetration-depth, and DeltaE-like
+  cuts within matched P04/P07/S10 strata. ML: raw waveform and P01/P01b latent classifiers with
+  nuisance residualization and run-family sentinels. Metric: weak-label AUC/AP, purity at fixed
+  efficiency, calibration ECE, nuisance AUC after residualization, and ML-minus-traditional
+  bootstrap CIs; no PID adoption without S17 truth.

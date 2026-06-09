@@ -1,0 +1,230 @@
+{
+  "ticket_id": "1781010024.975.3e06183e",
+  "study_id": "P02c",
+  "title": "consume P01b embeddings with run-heldout guardrails",
+  "raw_root_dir": "data/root/root",
+  "p01b": {
+    "report_dir": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact",
+    "metadata_found": true,
+    "release_npz_status": "missing",
+    "release_embedding_source": "regenerated"
+  },
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "benchmark_rows": 42370,
+    "train_rows": 36794,
+    "heldout_rows": 5576
+  },
+  "metrics": [
+    {
+      "method": "traditional hand+PCA morphology",
+      "target": "manual_flag",
+      "metric": "adjusted_mutual_info",
+      "value": 0.49725146778802076,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.4643687641058492,
+      "ci_high": 0.5188526650943989
+    },
+    {
+      "method": "traditional hand+PCA morphology",
+      "target": "manual_flag",
+      "metric": "purity",
+      "value": 0.9148134863701578,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.9031279620853081,
+      "ci_high": 0.9284099472494348
+    },
+    {
+      "method": "traditional hand+PCA morphology",
+      "target": "peak_group",
+      "metric": "adjusted_mutual_info",
+      "value": 0.4660651951753491,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.4327700467331779,
+      "ci_high": 0.4993321749424142
+    },
+    {
+      "method": "traditional hand+PCA morphology",
+      "target": "peak_group",
+      "metric": "purity",
+      "value": 0.8430774748923959,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.825656642558051,
+      "ci_high": 0.8585961342828077
+    },
+    {
+      "method": "ML P01b train-only AE embedding",
+      "target": "manual_flag",
+      "metric": "adjusted_mutual_info",
+      "value": 0.47873273802472244,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.4561867720719803,
+      "ci_high": 0.5001174882728299
+    },
+    {
+      "method": "ML P01b train-only AE embedding",
+      "target": "manual_flag",
+      "metric": "purity",
+      "value": 0.9115853658536586,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.9063262009563725,
+      "ci_high": 0.9277721261444557
+    },
+    {
+      "method": "ML P01b train-only AE embedding",
+      "target": "peak_group",
+      "metric": "adjusted_mutual_info",
+      "value": 0.3912915698141318,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.3706491750322407,
+      "ci_high": 0.41421672435814444
+    },
+    {
+      "method": "ML P01b train-only AE embedding",
+      "target": "peak_group",
+      "metric": "purity",
+      "value": 0.8136657101865137,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "claim",
+      "ci_low": 0.7908141267181616,
+      "ci_high": 0.8346888594666162
+    },
+    {
+      "method": "forbidden all-data release embedding",
+      "target": "manual_flag",
+      "metric": "adjusted_mutual_info",
+      "value": 0.4734234608895512,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "forbidden_release_diagnostic",
+      "ci_low": 0.4552381489054905,
+      "ci_high": 0.5005869975778492
+    },
+    {
+      "method": "forbidden all-data release embedding",
+      "target": "manual_flag",
+      "metric": "purity",
+      "value": 0.9329268292682927,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "forbidden_release_diagnostic",
+      "ci_low": 0.9179146919431279,
+      "ci_high": 0.945905050122943
+    },
+    {
+      "method": "forbidden all-data release embedding",
+      "target": "peak_group",
+      "metric": "adjusted_mutual_info",
+      "value": 0.5224051606009654,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "forbidden_release_diagnostic",
+      "ci_low": 0.5074358802053525,
+      "ci_high": 0.5410433578366066
+    },
+    {
+      "method": "forbidden all-data release embedding",
+      "target": "peak_group",
+      "metric": "purity",
+      "value": 0.8651362984218077,
+      "selected_k": 8,
+      "train_rows": 36794,
+      "heldout_rows": 5576,
+      "benchmark_role": "forbidden_release_diagnostic",
+      "ci_low": 0.8446897601827179,
+      "ci_high": 0.887957181088314
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "must be zero"
+    },
+    {
+      "check": "benchmark_fit_uses_release_embedding",
+      "value": 0.0,
+      "pass": true,
+      "note": "release embedding row is diagnostic only"
+    },
+    {
+      "check": "train_test_rounded_waveform_hash_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "rounded normalized waveform hash at 1e-4 precision"
+    },
+    {
+      "check": "ml_cluster_run_ami",
+      "value": 0.017655669088126033,
+      "pass": true,
+      "note": "reported to catch run-label clustering"
+    },
+    {
+      "check": "ml_cluster_stave_ami",
+      "value": 0.03212935366530853,
+      "pass": true,
+      "note": "reported to catch stave-label clustering"
+    },
+    {
+      "check": "shuffled_manual_label_ami",
+      "value": -0.000594415667442169,
+      "pass": true,
+      "note": "evaluation-label shuffle null"
+    },
+    {
+      "check": "forbidden_release_minus_trainonly_manual_ami",
+      "value": -0.005309277135171264,
+      "pass": true,
+      "note": "large positive value would indicate all-data embedding optimism"
+    }
+  ],
+  "artifact": {
+    "release_embedding_source": "regenerated",
+    "release_npz_status": "missing",
+    "release_artifact_path": "reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/p02c_regenerated_p01b_release_latents.npz",
+    "release_artifact_sha256": "22a14c885b764ad99a76ae5de64aa266d5d4b6b8261189b845fffaf5ff2fc17e",
+    "release_artifact_rows": 640737,
+    "latent_dim": 4,
+    "p01b_metadata_rows": 640737,
+    "p01b_metadata_artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "no_benchmark_claim": "all-data release embedding is excluded from claim rows and appears only as forbidden diagnostic telemetry"
+  },
+  "runtime_sec": 86.4
+}

@@ -755,6 +755,12 @@ def main() -> int:
     )
     write_report(out_dir, ticket_body, command, repro, metrics, deltas, run_summary, fold_summary, leakage)
 
+    full_ml_delta_hi = float(deltas.loc[deltas["comparison"].eq("ml_full_minus_traditional"), "ci_high_ns"].iloc[0])
+    result_conclusion = (
+        "Full ML is a decisive leave-two-run-out improvement over the traditional A1-A3 log-amplitude correction."
+        if full_ml_delta_hi < 0.0
+        else "Full ML is not a decisive leave-two-run-out improvement over the traditional A1-A3 log-amplitude correction."
+    )
     result = {
         "study": STUDY,
         "ticket": TICKET_ID,
@@ -769,7 +775,7 @@ def main() -> int:
         "metrics": metrics.set_index("method")[["robust_width_ns", "robust_ci_low_ns", "robust_ci_high_ns", "core_sigma_ns"]].to_dict("index"),
         "paired_deltas": deltas.to_dict("records"),
         "leakage_flags": int(leakage["flag"].sum()),
-        "conclusion": "Full ML is not a decisive leave-two-run-out improvement over the traditional A1-A3 log-amplitude correction.",
+        "conclusion": result_conclusion,
         "input_sha256": str(out_dir / "input_sha256.csv"),
         "git_commit": git_head(),
     }

@@ -2,7 +2,7 @@
   "study": "S18d",
   "ticket": "1781014577.1213.12f7440a",
   "worker": "testbeam-laptop-1",
-  "git_commit": "9271db05600cb382bfa4071863dc9d3039d8ab82",
+  "git_commit": "4d7cb4949c03563f6c38d008c674f6b442443cc2",
   "config": "configs/s18d_1781014577_1213_12f7440a.json",
   "commands": [
     "/home/billy/anaconda3/bin/python scripts/s18d_1781014577_1213_12f7440a_leave_two_ablation.py --config configs/s18d_1781014577_1213_12f7440a.json"
@@ -49,21 +49,21 @@
     }
   },
   "output_sha256": {
-    "REPORT.md": "2fda2e27cf7f8c435bd9d291882f56d008f2fc50032fbb13d432d2bf836c7229",
+    "REPORT.md": "22af6bcbdae9d657fdc75b15f126e3c2d05fac27f79ffd55457da292065ebbee",
     "astack_sample_iv_pair_table.csv.gz": "c1b9892a995d7023433fd4638063c22755140a2edeb2f90a327a0a4b5f1ebc90",
-    "event_mean_predictions.csv": "8a7dca3922c5b603bc9b86ab7c0865eed639c3387a86b5abc150d1f5092e7398",
+    "event_mean_predictions.csv": "c28e4190e3a617679dc99ad058300bc8ee2bce0ceb211fcb59adef0c990d1d9c",
     "fig_method_widths.png": "f5acdd280096d0376b987ad825d113f63cad6105d7358ebc3a52ed38991b2367",
     "fig_width_by_run.png": "d5367d6421f2c5b7b890f1f6fa17ee4092f7c252c48dc7274f0a284dd0800e7f",
-    "heldout_pair_predictions.csv": "1ada5f880ff33a320558927063ea55fe3296d5ff18685e2712dedc50dfdaaf3e",
+    "heldout_pair_predictions.csv": "e96d0a6c64bf59435ac26e1759ad9f6538304985fd44a5d1e98073742dff84da",
     "input_sha256.csv": "5d846df38fd0e8e41895ac6b3b20917a243dee751b9f6bfb56370684d778c233",
-    "leakage_checks.csv": "391de854d9e1b3d4d2dc6d07382a43409ca6e3e847de09c80ba4b3a7eff0f115",
-    "leave_two_fold_summary.csv": "fba12bbecf66f2d1dd43969a8db6846e3b54e843cf8758698738a799a055dedf",
-    "method_delta_bootstrap.csv": "e102353aec4857d4d58059498915f9e1d564733e57e6abbc0a6a7c6af854edb4",
-    "method_metrics.csv": "39a64e89c39b973acb817e687c8aee5f9b2dcabbd5a4dfdf1511364dbd9cc534",
-    "ml_cv_scan.csv": "59b7a4c72bae8b966d832a094067ab3e149bb04cc8568cb448d7de9a724a9449",
+    "leakage_checks.csv": "95bfe311c542ca559b7a82e5d80e1ba3d8233326290bffb08bbe1b8b35147415",
+    "leave_two_fold_summary.csv": "80aeadee7b7756d8349b2762687c002b18f4456e47b6cbcff06f2dc552950eb8",
+    "method_delta_bootstrap.csv": "9b78aaf2c5bce9f75cbe11e580f79d39717eaae328eb0d57005fb675eec8fc16",
+    "method_metrics.csv": "68cf1529ee8389dabadf5d939e101f8da5e481d155cc59e14283332ab4a044cd",
+    "ml_cv_scan.csv": "69d4753beadd51dbab687457054e11901a6cb9f444cfffc860a7f96717d424e3",
     "reproduction_match_table.csv": "4c4fdb23887c3156435904dbf5ca04bedaf34cf78629e2e3079df2459d5b8717",
-    "result.json": "c1a27483ab59a22d6fdca1a0e2ec73267ec64f4b25793978d6107bfd5d8d6d35",
-    "run_heldout_summary.csv": "8a7563cae738dd98e03d0e19068b0cc695a86cf9f4b0e6d769c6da5cd4ee717b",
+    "result.json": "21702512a0bffc4c77e214b186a64b78ec765d0119254eae2c5aa27ff8dc69a3",
+    "run_heldout_summary.csv": "764eaaee2e2f244b50f32299f45b2137a14a46cb68b7a09b6d1ef7d9b5d08ed8",
     "train_run_manifest.csv": "2955f60dae9acc493629135991323bcdb0fff86b5eb887eb595b32f1b9b88013"
   },
   "random_seed": 18241

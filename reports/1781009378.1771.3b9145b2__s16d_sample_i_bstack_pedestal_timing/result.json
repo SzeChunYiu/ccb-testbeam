@@ -1,0 +1,23 @@
+{
+  "conclusion": "Adaptive lowering is not a strong explanation of the held-out Sample-I timing tails: traditional lowering correction changes sigma68 by 0.050 ns and ML by 0.180 ns versus raw CFD20. The high-lowering bin tail fraction is 0.130 versus 0.012 in the low-lowering bin.",
+  "heldout_events": 250,
+  "heldout_pair_residuals": 750,
+  "heldout_runs": [
+    54,
+    55,
+    56,
+    57
+  ],
+  "high_lowering_tail_fraction": 0.13043478260869565,
+  "leakage_checks_pass": true,
+  "low_lowering_tail_fraction": 0.012379642365887207,
+  "ml_gain_vs_raw_ns": 0.1801578443488836,
+  "ml_sigma68_ns": 2.9301140703144557,
+  "raw_reproduction_pass": true,
+  "raw_sigma68_ns": 3.1102719146633393,
+  "sample_i_selected_pulses": 252266,
+  "study": "S16d",
+  "ticket": "1781009378.1771.3b9145b2",
+  "traditional_gain_vs_raw_ns": 0.05020850446665248,
+  "traditional_sigma68_ns": 3.060063410196687
+}

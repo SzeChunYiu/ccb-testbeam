@@ -1,0 +1,27 @@
+{
+  "ticket": "1781010522.1343.1dda69d0",
+  "study": "P07d",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "fd7dc08394f68bcae4bb0002c58df4f20edd0260",
+  "config": "configs/p07d_saturation_tail_envelope.yaml",
+  "command": "/home/billy/anaconda3/bin/python scripts/p07d_saturation_tail_envelope.py --config configs/p07d_saturation_tail_envelope.yaml",
+  "random_seed": 20260609,
+  "runtime_sec": 9.72,
+  "inputs": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs": {
+    "REPORT.md": "2d467ad28e1743c5e67ec0440cd8dc63cb0abfdb2abae3c049b40578719ec118",
+    "pseudo_saturation_recovery_by_run.csv": "b37e77a07696f1fbd3e0b2ceb788b104c75054179738b4837e279d306cedfcda",
+    "real_saturated_metrics_by_run.csv": "f9d5f1bc9c1dcedf71deaa70eb388fab389d1ebba3b25a9c496c1128b5364357",
+    "reproduction_gate.csv": "510b9411e57f16a3045c458094fe105d25a97cc7ef54ab48c7298fefc82d72f1",
+    "result.json": "207728296baac20a23047e4c9e7b3d92b7f1c4a9f0c0c36fc2d9994d06e80a70",
+    "systematic_envelopes_by_run.csv": "11612300063107411e1c31b8eca8ab9cfbcdbb8a29399dfcbfe7f76e51ec6d0f"
+  }
+}

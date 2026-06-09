@@ -1,0 +1,9 @@
+check,value,pass
+split_by_run_heldout_runs_match_config,"54,55,56,57",True
+ml_features_exclude_run_event_and_residual,,True
+shuffled_target_not_better_than_actual_ml,0.34514670951594484,True
+intentional_oracle_is_obviously_leaky,2.568940518633896,True
+row_cv_not_much_better_than_run_cv,0.011936957676284665,True
+actual_ml_improvement_under_raw_one_ns,0.35029063309184894,True
+heldout_predictions_finite,750,True
+tail_classifier_shuffled_auc_not_too_high,0.6106594399277325,True

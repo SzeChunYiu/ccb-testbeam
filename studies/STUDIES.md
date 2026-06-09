@@ -273,16 +273,22 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=9 claimed=0 done=0 failed=11`, which is below the 18-ready floor because the shim treats
+`open=10 claimed=0 done=0 failed=11`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with this pass moving
-from 194 open / 4 claimed to a final audit at 198 open / 3 claimed, but the mission trigger still required a small
-set of new ready studies. This pass appended four additional non-duplicate ready tickets:
+from 193 open / 3 claimed to a final audit at 198 open / 2 claimed, but the mission trigger still
+required a small set of new ready studies. This pass appended five additional non-duplicate ready
+tickets: P05c real-current abstention transfer (`1781036493.3234.59a107e5`),
+S01g q-template quality covariate map (`1781036493.3261.7a6c05c5`),
+P04n B2 transfer saturation support frontier (`1781036493.3330.4f5f1b60`),
+S13d CWoLa topology calibration bridge (`1781036493.3324.58306cd1`), and
+S00g selector-edge waveform atom ledger (`1781036493.3495.3e8b1a02`). The previous pass appended
+four additional non-duplicate ready tickets:
 P03h stave-aware residual support map by pulse atoms (`1781035058.850.43a47da0`),
 S16l target-excluded pedestal estimator timing-risk audit (`1781035063.930.38bd04a3`),
 S18i A-stack residual-correction leakage-flag root cause audit (`1781035068.1008.20f6375e`),
 and P13a ADC quantization noise floor across pulse phase (`1781035073.1085.4d0e5a1e`). The
-previous pass appended four additional
+pass before that appended four additional
 non-duplicate ready tickets under `project:testbeam`: S00f dynamic-only baseline-excursion
 pile-up support map (`1781033578.541.73575b7f`), P09f delayed-peak pile-up charge-bias
 disentanglement (`1781033582.610.56930afd`), S14f saturation energy-ordering geometry stress map
@@ -447,10 +453,23 @@ stave-aware waveform timing gains need pulse-atom support maps beyond detector l
 estimators must be scored by induced timing tails, not only ADC RMSE; A-stack ML control transfers
 need leakage-flag root-cause tests before they constrain B-stack covariance; and sample-level
 ADC/electronics noise floors must be measured across pretrigger, rising edge, peak, and tail
-regions before further denoising, dropout, saturation, or pile-up models are trusted.
+regions before further denoising, dropout, saturation, or pile-up models are trusted. The newest
+P05b/S01f/P04e/S13b/S00c layer adds five transfer atoms: injection-trained two-pulse abstention
+must survive real high-current candidate windows; fold-local q_template should be treated as a
+support covariate unless it improves pair residuals; P04e's B2 externalization needs a saturation
+support frontier; S13b's CWoLa score needs calibration onto topology before pile-up interpretation;
+and selector-edge waveform atoms must be ledgered before they leak into baseline, pile-up, charge,
+PID, or energy claims.
 
 Completed since last steering cycle:
 
+- **P05b/S01f/P04e/S13b/S00c — Fresh abstention, q_template, charge-transfer, current, and
+  selector reports.** Result: P05b shows injected two-pulse abstention lowers risk only with
+  support/coverage tradeoffs; S01f says fold-local q_template does not securely improve timing
+  tails; P04e confirms duplicate-readout ML closure is strong while B2 transfer remains support
+  limited; S13b makes CWoLa a modest current-shape discriminator but leaves topology as the
+  physics-facing handle; and S00c reinforces that selector-edge morphology must be tracked before
+  downstream pulse claims reuse it.
 - **P03a — 18-sample CNN timing versus S02 ridge-corrected CFD.** Result: the waveform MLP loses
   to both frozen S02 ridge and analytic timewalk; keep P03b/P03c focused on run stability,
   waveform-only leakage audits, CNN-vs-MLP architecture, and analytic residual targets.
@@ -989,3 +1008,48 @@ Active ready queue highlights:
   held-out-run noise calibration and shuffled-sample controls. Metric: per-phase noise sigma/MAD,
   induced timing and charge uncertainty floors, dropout false-positive rate, and
   ML-minus-traditional denoising delta with run-block bootstrap CIs.
+- **P05c — Real-current abstention transfer.** Test whether P05b failure-aware abstention gates
+  trained on injected two-pulse recoveries transfer to real high-current S10e/S11b candidate
+  windows without deleting the high-amplitude, large-lowering, broad-late support where pile-up
+  physics lives. Traditional: freeze the bounded two-pulse template-fit quality cuts and compare
+  accepted real-candidate windows against matched low-current controls by separation, amplitude
+  ratio, baseline lowering, saturation, and anomaly taxon. ML: freeze the P05b isotonic failure
+  model, recalibrate only train-run intercepts, and include shuffled-current and amplitude-only
+  sentinels. Metric: accepted secondary fraction, time-residual proxy RMS, charge-bias proxy,
+  bad-recovery proxy rate, abstention rate, and risk-coverage delta with run-block bootstrap CIs.
+- **S01g — Q-template quality covariate map.** After S01f found fold-local q_template vetoes do
+  not securely improve S03b timing tails, decide whether q_template remains useful as an atomic
+  support covariate for amplitude, saturation, pile-up, baseline, dropout, PID, and energy maps.
+  Traditional: freeze fold-local templates and tabulate q_template distributions, residual slopes,
+  and support counts by stave, amplitude, peak sample, saturation boundary, baseline excursion,
+  delayed peak, and downstream topology. ML: run-heldout calibrated tree/monotone models using
+  q_template plus hand-shape atoms with q_template-shuffled and amplitude-only controls. Metric:
+  support count, timing sigma68 delta, charge-bias delta, pile-up-score delta, AP/Brier, and
+  ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **P04n — B2 transfer saturation support frontier.** Locate where P04e train-on-B4/B6/B8
+  holdout-B2 charge transfer is trustworthy once saturation depth, q_template shift, baseline
+  excursion, peak phase, and topology support are explicit. Traditional: freeze peak, integral,
+  strong-Huber, and adaptive-template charge estimators and build B2 residual support-frontier
+  tables with train-run quantile bands. ML: ExtraTrees/HGB charge-transfer models under
+  run-family holdout with saturation-boundary, q_template, and pretrigger knockouts plus
+  shuffled-target and B4/B6/B8-only sentinels. Metric: accepted B2 fraction, bias, res68, full RMS,
+  within-10pct and within-25pct rates, calibration coverage, and ML-minus-traditional deltas with
+  run-block bootstrap CIs.
+- **S13d — CWoLa topology calibration bridge.** Decide whether the S13b CWoLa waveform current
+  score calibrates onto the stronger downstream-topology current handle or is only a
+  nuisance-sensitive shape discriminator. Traditional: train-run downstream-fraction and
+  high-over-low topology ratios in matched amplitude, charge, saturation, baseline, anomaly, and
+  run-family strata. ML: freeze the S13b CWoLa RF score and calibrate it to topology excess with
+  isotonic/conformal maps, including shuffled-current, topology-only, and amplitude-only controls.
+  Metric: calibration slope/intercept, Brier/ECE to topology excess, high-over-low score ratio,
+  downstream excess delta, stratum heterogeneity, and ML-minus-traditional calibration error with
+  run-block bootstrap CIs.
+- **S00g — Selector-edge waveform atom ledger.** Explain the pulse atoms that produce S00c
+  honest-summary selector mistakes and the median/dynamic selector-edge population, then test
+  whether those atoms propagate into timing, amplitude, saturation, pile-up, baseline, dropout,
+  PID, or energy support. Traditional: enumerate selector-edge strata using raw first-four medians,
+  dynamic range, peak phase, baseline excursion, saturation count, q_template, and downstream
+  topology with exact S00 count reproduction. ML: leakage-guarded morphology classifier excluding
+  selector-rule amplitudes, with selector-feature, run-only, and shuffled-edge sentinels. Metric:
+  edge class fractions, timing sigma68 delta, charge-bias delta, secondary-fraction delta,
+  false-edge AUC/AP/Brier, and enrichment deltas with run-block bootstrap CIs.

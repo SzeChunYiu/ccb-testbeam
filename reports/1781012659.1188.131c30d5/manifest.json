@@ -1,0 +1,37 @@
+{
+  "command": "python scripts/s11b_1781012659_s07d_two_pulse_fit.py --config configs/s11b_1781012659_s07d_two_pulse_fit.json",
+  "config_sha256": "94223ee094719d945d646821b4e6da75d397b7669e553e9c4f4c5d730d1701a5",
+  "created_at_unix": 1781025940,
+  "git_commit": "42ba0f0536d7a872b99e034ab5e36e20cada4d12",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "output_sha256": {
+    "REPORT.md": "83b2ee7b1c32d770bcaf47484df0425431709ba48fd155fb2b23e56aee17dde0",
+    "dataset_counts_by_run.csv": "294abcf96d31adbc21df3129c03c44390a569b1280357d0dffc3253efc6d4ce9",
+    "fig_rf_score.png": "9fb48dd8254c8b390de2eb9854b6dd9d7f6f27603d6651a018c495c2ef326b30",
+    "fig_secondary_fraction.png": "60591f3f300d70c03eb74bc79c5bee6441d8f240a52b59164ffb7e94b70b5cb9",
+    "fig_traditional_score.png": "e419809abf9a5ab6c73411c0191b6ac8ad6961ffbb5bdee936e76b6133159091",
+    "fit_summary_by_class.csv": "ef3aabef9640eb5fc5806b6c9186f875f5956968dc0fab5b3aa94aa825640de3",
+    "input_sha256.csv": "2a8bf2b72f778c72f375ec693e106f0993ae45763681bfc222a9a167161d3a75",
+    "leakage_checks.csv": "f37910a756d0aefd48d22c6aaf15e3f05229794f8a5d5ac81e802b4280f570d0",
+    "oof_predictions.csv": "67fc07445e7a79c5d861b9f6aef2c68e270a0ca2f7145c5113ff625a70bf2442",
+    "reproduction_match_table.csv": "85c78aa79c0ce855fd48976cc4f91d6122f27d24db1f8962b73c236eb7894631",
+    "result.json": "a1e3731e88dddeca17f548f7c8a93ef6560ef6e3ca749afa7c620c9e148a7fa6",
+    "rf_cv_scan.csv": "59ff324a3f76f1a57e8d881a785c2b506d6d5582a9ffcfcc76062c89b26ada46",
+    "run_counts.csv": "a0fc28acdbda45841ae2a72c692fb7cf8c63db103f780eabb9575a62a3df4413",
+    "scoreboard.csv": "427fb66bf2d198448f8b74ccee9bca5a9c26ac8c37c922d67a36aa179a57b8cd",
+    "traditional_fold_choices.csv": "249b1b774759cc12ae4295b91d950c06a1bcc837952e4f7505432b5443cb70e0",
+    "two_pulse_fit_oof.csv": "857ceabb90b9e2a2189a61a3b336df616aebd051a1652cb8d7095c4ecefc525f"
+  },
+  "s07d_config_sha256": "9e9c618578f767ccaa204899b152e02d23bec43618224607e953c1d7bfae3caf",
+  "s07d_script_sha256": "923bcd4a801c1cc1d284508063e168f74dcab9053bb08a6bd635ea878575f6c8",
+  "study_id": "S11b",
+  "ticket_id": "1781012659.1188.131c30d5"
+}

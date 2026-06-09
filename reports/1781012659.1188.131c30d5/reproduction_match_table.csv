@@ -1,0 +1,5 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+"control events, B2 and >=2 downstream",,10156,,,True
+"clean events, D_t<3 ns",,2155,,,True
+"gross events, documented D_t>50 ns",,74,,,True
+"gross events, guarded D_t>51 ns",72.0,72,0.0,0.0,True

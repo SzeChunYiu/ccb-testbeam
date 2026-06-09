@@ -1,0 +1,8 @@
+probe,roc_auc,average_precision,notes
+constant all-three topology RF,0.5335217459569791,0.04305726086960337,Selected-stave flags and downstream count only; all benchmark rows have downstream_count unique=[3].
+absolute-amplitude-only RF,0.7749254200031402,0.270608119813243,Log amplitudes only; excluded from main RF.
+B2-only shape RF,0.8811430365834511,0.3971629374637342,Upstream B2 normalized shape only; tests whether the result survives away from D_t source waveforms.
+downstream-only shape RF,0.9953681896687078,0.9115846702798067,Downstream normalized shape only; high values are label-source self-reference risk because D_t is derived from these waveforms.
+shape RF with shuffled training labels,0.5781912388130005,0.05036495593182627,Run-held-out null/leakage sanity check.
+leaky D_t score,1.0,1.0,Forbidden label-defining ceiling; reported only as a leakage reference.
+forbidden feature audit,,,Forbidden columns in main RF: [].

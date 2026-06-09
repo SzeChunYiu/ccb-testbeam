@@ -273,19 +273,26 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=6 claimed=0 done=0 failed=6`, which is below the 18-ready floor. A project-aware
-`tn-ticket list --project testbeam` check during this steering pass remained well above the
-floor after this pass appended three more non-duplicate ready tickets under `project:testbeam`:
-P04f baseline-excursion charge-bias closure, S10f anomaly-stratified pile-up excess closure, and
-P08a penetration-depth weak-label PID null test.
-The discrepancy is a shim/argument parsing issue, not a scientific queue shortage, but the exact
-low-command gate was still honoured with project:testbeam tickets.
+`open=6 claimed=0 done=0 failed=6`, which is below the 18-ready floor because the shim treats
+`testbeam` as a positional default-queue argument. The required append path was still honoured
+with `--project testbeam`: project-aware `tn-ticket list --project testbeam` now reports
+`open=70 claimed=4 done=50 failed=9` after this pass appended five more non-duplicate ready
+tickets under `project:testbeam`: P05b failure-aware two-pulse abstention calibration, S16g
+quiet-run pseudo-pedestal calibration, S00d dynamic-selector pulse taxonomy audit, P09c
+delayed-peak dropout propagation audit, and S14c saturation-corrected charge proxy energy
+ordering. The discrepancy is a shim/argument parsing issue, not a scientific queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
 cross-check at 123.19 ns. The 90 ns value must therefore be treated as an occupancy assumption,
-not as the measured waveform live-time; S10c/S10d should now test threshold stability and
-two-pulse resolvability rather than repeat the same tail fit. P03a reproduced the frozen S02 ridge
+not as the measured waveform live-time; S10c confirms the threshold dependence, and S10d shows
+ML can improve two-pulse injected time RMS and resolvable delay only while increasing failure
+rate, so P05b must make recovery risk explicit. S16d found no true forced/random pedestal source
+in the current mirror; S16g should therefore calibrate quiet-run pseudo-pedestals as diagnostics,
+not as truth. S16e improved S02b timing closure with pre-trigger proxies, but the tail CIs still
+require leave-one-run-out veto validation before adoption. S02c shows selector semantics can move
+timing closure, while S03b q_template-only weak labels need pair-residual validation. P03a
+reproduced the frozen S02 ridge
 baseline at sigma68 1.846 ns, but the best analytic amp-only timewalk reached 1.495 ns while the
 tiny heteroskedastic MLP was 1.927 ns; P03b/P03c should separate waveform-only instability from
 wrong-target training. S18b found the leave-one-run-out traditional A-stack width at 1.471 ns and
@@ -311,7 +318,8 @@ curvature-only traditional labeling is effectively perfect, so shape RFs must mo
 targets. P04b/P04c split the charge story into a very strong duplicate-readout ML closure and a
 much weaker external charge-energy transfer. P09a turns anomaly detection into a usable taxonomy,
 making anomaly propagation the next atomic bridge across timing, charge, pile-up, baseline, and
-PID.
+PID. Saturation recovery now has enough P04/P07/S14 context for S14c to test energy ordering
+before any GEANT4 truth claim.
 
 Completed since last steering cycle:
 
@@ -349,6 +357,11 @@ Completed since last steering cycle:
   readout remains an ML-friendly closure but external charge-energy transfer is weaker; explicit
   timewalk beats conditional template timing; rare waveform taxonomy is ready for propagation
   studies rather than adoption claims.
+- **S02c/S03b/S10c/S10d/S16d/S16e — Newest selector, timing-tail, pile-up, and pedestal reports.**
+  Result: dynamic-selector semantics shift timing closure; q_template weak labels improve with ML
+  but need pair-residual proof; live-time thresholds remain above 90 ns; ML two-pulse recovery
+  needs abstention because failures rise; no true forced/random pedestal source is present; and
+  pre-trigger proxies improve timing closure without settling tail causality.
 
 Active ready queue highlights:
 
@@ -411,3 +424,34 @@ Active ready queue highlights:
   P01/P01b latent and raw-waveform classifier with leakage sentinels. Metric: weak-label AUC/AP,
   calibration error, purity at fixed efficiency, leakage deltas, and paired CIs; no PID adoption
   claim is allowed.
+- **P05b — Failure-aware two-pulse abstention calibration.** Turn S10d/S11a's ML time-RMS gain
+  into an operational recovery rule by calibrating when to abstain. Traditional: bounded two-pulse
+  fit quality cuts from chi2/ndf, covariance, separation, amplitude ratio, and residual shape. ML:
+  conformal/isotonic failure probabilities for the same recovery outputs. Metric: accepted-event
+  time RMS, charge bias/res68, abstention rate, bad-recovery rate, and risk-coverage AUC with
+  paired run-block bootstrap CIs.
+- **S16g — Quiet-run pseudo-pedestal calibration.** Since no true forced/random pedestal source is
+  present, test whether quiet beam-event strata can serve as calibrated pseudo-pedestals.
+  Traditional: frozen quiet-run/event thresholds from pre-trigger summaries, event maxima, and
+  adaptive-lowering diagnostics. ML: pre-trigger-only quiet-probability weighting. Metric:
+  pedestal bias/MAE, low-amplitude charge bias, timing-tail delta, and calibration ECE with
+  leave-one-run-out bootstrap CIs.
+- **S00d — Dynamic-selector pulse taxonomy audit.** Classify the dynamic-range-only population
+  from S00b/S02c into pulse-shape, baseline, saturation, timing, pile-up, and dropout classes.
+  Traditional: frozen cuts on peak sample, early/late fraction, q_template, baseline excursion,
+  saturation count, and timing span. ML: P01/P01b embeddings as morphology summaries under
+  leakage guards. Metric: class fractions, enrichment odds ratios, timing and charge deltas, and
+  AUC/AP with run-block bootstrap CIs.
+- **P09c — Delayed-peak dropout propagation audit.** Decide whether P09a delayed-peak and
+  broad-mismatch taxa should be recovered, corrected, downweighted, or vetoed. Traditional:
+  robust-template anomaly cuts propagated into S02/S03 timing, P04/P07 charge, and S16 baseline
+  tables. ML: AE/PCA reconstruction and latent-distance scores under held-out-run sentinels.
+  Metric: timing-tail enrichment, charge-bias delta, baseline-excursion rate, pile-up-score delta,
+  and recover/veto AP with stratified bootstrap CIs.
+- **S14c — Saturation-corrected charge proxy energy ordering.** Test whether P07/P07b saturation
+  recovery improves P04/P04b charge-proxy ordering before GEANT4 truth. Traditional: peak,
+  integral, adaptive-template charge and PSTAR geometry-order constraints with exclusion or
+  rising-edge correction. ML: frozen P07/P07b saturation regressor plus P04 duplicate-readout
+  charge model without depth/PID labels as features. Metric: depth-ordering violations,
+  unsaturated-control charge res68/bias, saturated-minus-unsaturated ordering delta, and geometry
+  envelope with run/stave bootstrap CIs.

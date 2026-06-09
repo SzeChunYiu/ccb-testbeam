@@ -12,8 +12,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S02 | ✅ done | ✅ S00 selection | template phase sigma68 2.889 ns | ridge-on-CFD20 sigma68 1.846 ns | **Yes** (Δ≈1.04 ns) | reports/1780997954.15157.07ef03cf__s02_timing_pickoff |
 | S02b | ✅ done | ✅ exact S02 reproduction | global template + train-only timewalk 1.635 ns | ridge-on-CFD20 1.846 ns | No; strong traditional closure wins on run 65 | reports/1781000705.514762.105c186b__s02b_template_timewalk_closure |
 | S02c | ✅ done | ✅ S02/S03 inputs reproduced | no-drift global timewalk 1.635 ns; binned drift model 3.404 ns | ridge-on-CFD20 1.846 ns | No; drift nuisance does not improve run-65 closure | reports/1781005800.1736.6e8916b8 |
+| S02c selector | ✅ done | ✅ median 640,737; dynamic 706,373 | dynamic gate worsens run-65 sigma68 by 0.170 ns | ridge residual model shifts by 0.027 ns | ML is less selector-sensitive, but gate semantics remain a systematic | reports/1781006678.1312.2d7d140a |
 | S03a | ✅ done | ✅ exact S02 reproduction | analytic amp-only timewalk 1.495 ns | ridge residual corrector 1.392 ns | Marginal; CIs overlap, needs leave-one-run-out stability | reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction |
 | S03b | ✅ done | ✅ S03a baselines exactly reproduced | monotonic amplitude-binned timewalk 1.570 ns | ridge residual corrector 1.392 ns | No for binned traditional vs S03a amp-only; ML remains better on run 65 | reports/1781005627.1825.6e067067 |
+| S03b q-template | ✅ done | ✅ S00 gate | q_template-only AUC 0.741; 13.7% tail rejection at 95% clean retention | q_template RF AUC 0.843; AP 0.304 | **Yes** for weak tail labels; requires pair-residual validation | reports/1781006575.2877.41492e09 |
 | S03c | ✅ done | ✅ S00 and S03a run-65 reproduction | LORO analytic timewalk 1.551 ns | LORO ridge residual 1.537 ns | Tie; analytic closure is stable across Sample-II runs | reports/1781005627.1877.378c7a87 |
 | S05a | ✅ done | ✅ A-stack/B-stack external-control inputs | CFD20 pair-median residual width 2.082 ns | ExtraTrees B+A width 1.664 ns | No secure A-control gain; shuffled-A control is similar | reports/1781001480.696013.4ac50583__s05a_astack_external_control |
 | S07 | ✅ done | ✅ S00 selection | low-current AUC 0.504 | calibrated RF AUC 0.768 | **Yes** (Δ=0.264, CI [0.250,0.280]) | reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard |
@@ -23,11 +25,15 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10 | ✅ done | ✅ Rmax/current excess reproduced | downstream high-low excess 0.0103/event | injection score Δ=0.036 diagnostic | No; ML is monitoring only | reports/1780997954.15277.548b01a3__s10_pileup_rate_model |
 | S10b | ✅ done | ✅ Rmax=4.222 MHz assumption and 6/6 topology checks | template tail live10 124.79 ns, CI [123.33,126.36] | ridge live10 123.19 ns, CI [120.72,125.55] | No adoption claim; 90 ns is an assumption, measured window implies Rmax≈3.05 MHz | reports/1781000867.546870.5c124aaf |
 | S10c | ✅ done | ✅ S10 topology fractions within 0.0015 | matched-stratified excess 0.02025/event | current-score Δ=0.02975, AUC 0.640 | ML diagnostic; excess is heterogeneous after matching | reports/1781004956.733.387f428e |
+| S10c threshold | ✅ done | ✅ live10 anchor exact | template tail 10% live time 124.79 ns; all thresholds above 90 ns | ridge live-time R²≈0.884 at 10% | No adoption claim; threshold scan confirms 90 ns is not measured waveform live-time | reports/1781007337.1308.7dc86005 |
+| S10d | ✅ done | ✅ S10b Rmax/live10 reproduced | bounded two-pulse resolvable delay 60 ns; time RMS 13.83 ns | compact MLP delay 20 ns; time RMS 9.41 ns | **Yes**, but failure rate rises 0.172→0.323 | reports/1781007337.1325.2241031c |
 | S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
 | S16 | ✅ done | ✅ S00 selection | pretrigger median MAE 341 ADC | adaptive/learned MAE 48.9 ADC | **Yes**, but adaptive remains biased | reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation |
 | S16b closure | ✅ done | ✅ 640,737 exact | line3 early-sample predictor MAE 169.34 ADC | ridge closure MAE 173.71 ADC | No; traditional remains preferred, ML is contamination diagnostic | reports/1781000826.539659.030b7796__s16b_independent_pedestal_estimator_closure |
 | S16b forced/proxy | ✅ done | ✅ 640,737 exact; 0 forced/random-tagged entries | adaptive proxy MAE 17.18 ADC | HGBR proxy MAE 15.64 ADC | Proxy only; true forced/random pedestal data absent | reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation |
 | S16c | ✅ done | ✅ S00/Sample-II counts and zero post-correction violations | lowering-nuisance ridge sigma68 3.251 ns | RF residual correction sigma68 2.921 ns | Weak/diagnostic; high-lowering events do not carry the timing tails | reports/1781001221.625989.53423f03__s16c_pedestal_timing_nuisance |
+| S16d | ✅ done | ✅ 640,737 exact; 0 forced/random entries | metadata + quiet-run scan finds no true forced/random source | pretrigger quiet-proxy AUC 0.646 | No true pedestal sample; use only as pseudo-pedestal diagnostic | reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search |
+| S16e | ✅ done | ✅ S02b baseline reproduced | pretrigger proxy correction sigma68 1.445 ns | waveform+pretrigger ridge sigma68 1.387 ns | Weak ML gain; both improve S02b but tail CIs overlap | reports/1781007910.1647.505b465f |
 | S18 | ✅ done | ✅ Sample III/IV A-stack | A1-A3 robust width 1.389 ns | ridge correction 1.383 ns | No; CIs overlap | reports/1780997954.15397.168324f2__s18_astack_independent_reproduction |
 | S18b | ✅ done | ✅ Sample-IV robust width 1.794 ns | LORO CFD20 period-polynomial width 1.471 ns | ridge residual correction width 1.935 ns | No; ML worse, broadening is calibration/low-stat sensitivity | reports/1781001480.695946.490c69d3 |
 | P01 | ✅ done | ✅ 640,737 selected pulses | PCA-4 recon MSE 0.0134; hand-shape probe bal-acc 0.353 | masked AE-4 recon MSE 0.0143; probe bal-acc 0.364 | Mixed: PCA wins recon, AE only slight probe gain | reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation |
@@ -48,18 +54,20 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 ## Current steering notes
 
-- Queue health: the exact requested command `tn-ticket list testbeam` now reports
+- Queue health: the exact requested command `tn-ticket list testbeam` still reports
   `open=6 claimed=0 done=0 failed=6`, below the 18-ticket floor, because the shim treats
-  `testbeam` as a positional default-queue argument. A project-aware
-  `tn-ticket list --project testbeam` check remained far above the floor after this pass appended
-  three ready tickets under
-  `project:testbeam`: P04f baseline-excursion charge-bias closure, S10f anomaly-stratified
-  pile-up excess closure, and P08a penetration-depth weak-label PID null test.
-- Newest reports sharpen the next claims: S00b turns selector/baseline semantics into a small but
+  `testbeam` as a positional argument for the default queue. The required append path was still
+  followed with `--project testbeam`; project-aware `tn-ticket list --project testbeam` now reports
+  `open=70 claimed=4 done=50 failed=9` after this pass appended five ready non-duplicate tickets:
+  P05b failure-aware two-pulse abstention calibration, S16g quiet-run pseudo-pedestal
+  calibration, S00d dynamic-selector pulse taxonomy audit, P09c delayed-peak dropout propagation
+  audit, and S14c saturation-corrected charge proxy energy ordering.
+- Newest reports sharpen the next claims: S00b/S02c turn selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
-  baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk; S03c says
-  analytic timewalk closure is stable across Sample-II leave-one-run-out splits; S03b says
-  monotonic amplitude-binned timewalk does not beat S03a amp-only on run 65; P01c maps
+  baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk and selector
+  semantics can move timing closure; S03c says analytic timewalk closure is stable across
+  Sample-II leave-one-run-out splits; S03b says monotonic amplitude-binned timewalk does not beat
+  S03a amp-only on run 65, while q_template-only tail cuts need pair-residual validation; P01c maps
   timing and saturation sensitivity to samples 3-6; S07b/S07e
   proves D_t labels are self-referential; S07c shows shape RF can beat q_template-only on weak
   clean-timing labels, but the historical App.A table must be recovered or retired; P10a says
@@ -69,7 +77,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   now need propagation into timing, pile-up, and charge; S16b shows early-sample
   baseline closure is still not true no-pulse pedestal validation because forced/random tags are
   absent; P04/P04c are strong duplicate-readout closures, while P04b warns that transfer to an
-  external charge-energy proxy is much weaker; P03a shows
+  external charge-energy proxy is much weaker; S10d shows ML can improve injected two-pulse
+  resolution only if its higher failure rate is controlled; S16d confirms no true forced/random
+  pedestal sample is present in the current mirror, and S16e says pre-trigger proxies improve
+  timing closure but do not remove the need for leave-one-run-out tail validation; P03a shows
   18-sample waveform-deep timing needs run-stability and residual-target tests before adoption;
   S18b says A-stack broadening is low-stat/calibration-definition sensitivity, not a clean
   period shift; S16c says adaptive-lowering features are not the primary S02 timing-tail source.
@@ -78,8 +89,9 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
   true-pedestal sourcing, and timing-tail propagation, S05b/S05c/S07d/S07e/S18c/S18d for
   covariance, control labels, and external timing checks, S14b for the smallest viable
-  energy-scale preflight, plus P04f/S10f/P08a for anomaly-to-charge, anomaly-to-pile-up, and
-  weak-label PID leakage audits.
+  energy-scale preflight, plus P04f/S10f/P08a/P05b/S16g/S00d/P09c/S14c for anomaly-to-charge,
+  anomaly-to-pile-up, weak-label PID leakage, failure-aware pile-up recovery, pseudo-pedestals,
+  selector taxonomy, delayed-peak/dropout propagation, and saturation-aware energy ordering.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

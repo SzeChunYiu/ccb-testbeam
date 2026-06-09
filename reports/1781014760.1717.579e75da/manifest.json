@@ -1,0 +1,106 @@
+{
+  "command": "/home/billy/anaconda3/bin/python reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources.py --config reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources_config.json",
+  "config": "reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources_config.json",
+  "git_commit": "bc1bdc39d0a2fd217d65a6062778dd1e3006f358",
+  "random_seed": 160601,
+  "environment": {
+    "python": "3.7.6",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "uproot": "5.0.9"
+  },
+  "inputs": "reports/1781014760.1717.579e75da/input_sha256.csv",
+  "outputs": [
+    {
+      "path": "reports/1781014760.1717.579e75da/REPORT.md",
+      "sha256": "be0e0a272020ab7f3315f529f10a3b8b5b090191ac66018f7ce083a682020002",
+      "bytes": 5209
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/archive_member_inventory.csv",
+      "sha256": "e80239ff819675311c5252c9c7ebe39724ae96dd06060531353af7815e8cfaff",
+      "bytes": 20013
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/filesystem_inventory.csv",
+      "sha256": "c0f910265900360b6a58205485f24c0d1b0e1f8788ca117ab248b22c3b274ce9",
+      "bytes": 20984
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/input_sha256.csv",
+      "sha256": "d01cdeb8b78a6e90d2af5de3084ba3b594387cb0edffb5f804592113ea0842b3",
+      "bytes": 15138
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/leakage_checks.csv",
+      "sha256": "dad848a2005f2d975ceba42678ded9b126666fa4dc6bbf20abb73c1f1758360b",
+      "bytes": 481
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/ml_cv_scan.csv",
+      "sha256": "3c864b91537e6c0f14605fa5669dca9c13c0ad31b8aa02e36129fedcce07b6fe",
+      "bytes": 229
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/ml_event_sample.csv.gz",
+      "sha256": "93131a6b62830561405c7c797aea0b7733aa8c0291f9fdb575ac35ce83c14674",
+      "bytes": 1468262
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/ml_heldout_summary.csv",
+      "sha256": "10db0780c206eccecc3ea44cb7d5e8b1b943e7abf83eeb28f736a1249997f294",
+      "bytes": 403
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/ml_run_scores.csv",
+      "sha256": "35b12fbecc31595a8acfd63b94f2222a95a4b7d74270142f128d2ce27c901956",
+      "bytes": 2868
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/reproduction_match_table.csv",
+      "sha256": "bf3b0d1e322020e859178bac6a7847963458ffb01d56736bc106290d2aa32b1e",
+      "bytes": 221
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/result.json",
+      "sha256": "9a1f9828bf20f6b4ba750c136bdcc189acce3c6a6ceddd69eea160df07bb7fea",
+      "bytes": 8529
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/root_trigger_audit.csv",
+      "sha256": "88b5eab0d5a0d1b5823f686b1e52eac4d7eff296e1de6dba6f09ad30792e0217",
+      "bytes": 6304
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/run_0000_0065_mapping.csv",
+      "sha256": "3666bfbfddd465791962047f9dca6efcbd3315f4c97a62f3d3a508bc369dd291",
+      "bytes": 4587
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/run_waveform_summary.csv",
+      "sha256": "ae0032319167b6ff05d6c359f0f47982a4aa19c25e5b05b6b1f04fb90340c4f9",
+      "bytes": 4647
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources.py",
+      "sha256": "95012b2d2fc2b699af98ae365993b59672c732f38d84dd83dcddd8d2e99a48ee",
+      "bytes": 38039
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources_config.json",
+      "sha256": "fb48cc9008b978c37ed17dfecc108e5404739062e6bca01f6edb202a6e833962",
+      "bytes": 1358
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/traditional_candidates.csv",
+      "sha256": "7ef5117b778aacb8e40170d0dfcc0d75f86a332c2912514fbd157c9e9e72e824",
+      "bytes": 7568
+    },
+    {
+      "path": "reports/1781014760.1717.579e75da/traditional_heldout_summary.csv",
+      "sha256": "d61ef01af67a73e6598692ec92963b2984f140b6cc05d83d846c7e48fe252a4d",
+      "bytes": 343
+    }
+  ],
+  "runtime_seconds": 21.888365745544434
+}

@@ -1,0 +1,363 @@
+{
+  "ticket_id": "1781009575.1631.563755ca",
+  "study_id": "P02c",
+  "title": "full-S01 q_template cluster stability",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "p02_reproduction": {
+    "p02_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65,
+      50
+    ],
+    "sample_size": 60000,
+    "expected_sample_size": 60000,
+    "early_peak_peak_le_3_rate": 0.04388333333333334,
+    "reported_early_peak_rate_approx": 0.044,
+    "absolute_delta": 0.00011666666666666076,
+    "passed": true
+  },
+  "s01_alignment": {
+    "s01_q_template": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+    "s01_rows": 640737,
+    "raw_selected_rows": 640737,
+    "exact_row_semantics_passed": true,
+    "checks": [
+      {
+        "field": "run",
+        "matches": true,
+        "max_abs_delta": 0.0
+      },
+      {
+        "field": "eventno",
+        "matches": true,
+        "max_abs_delta": 0.0
+      },
+      {
+        "field": "evt",
+        "matches": true,
+        "max_abs_delta": 0.0
+      },
+      {
+        "field": "stave",
+        "matches": true,
+        "max_abs_delta": 0.0
+      },
+      {
+        "field": "channel",
+        "matches": true,
+        "max_abs_delta": 0.0
+      },
+      {
+        "field": "amplitude_adc",
+        "matches": true,
+        "max_abs_delta": 0.0
+      },
+      {
+        "field": "peak_sample",
+        "matches": true,
+        "max_abs_delta": 0.0
+      },
+      {
+        "field": "area_adc_samples",
+        "matches": true,
+        "max_abs_delta": 0.0
+      }
+    ],
+    "q_template_rmse_median": 0.036436226257098844,
+    "q_template_rmse_p95": 0.31298541632941934
+  },
+  "analysis_sample_rows": 31407,
+  "split": {
+    "run_grouped_folds": 5,
+    "stave_heldout_folds": [
+      "B2",
+      "B4",
+      "B6",
+      "B8"
+    ],
+    "bootstrap_replicates": 120,
+    "bootstrap_units": {
+      "run_split": "run",
+      "stave_split": "stave"
+    }
+  },
+  "traditional": {
+    "method": "hand-crafted shape features + PCA4 + diagonal GMM",
+    "run_heldout_metrics": [
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "s01_q_template_bin",
+        "ami": 0.153935032423436,
+        "purity": 0.3958336004582117,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "peak_group",
+        "ami": 0.489704580998097,
+        "purity": 0.8002583383852562,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "downstream_topology",
+        "ami": 0.1083274483089951,
+        "purity": 0.6405402644927184,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "dt_label",
+        "ami": 0.09010564023782056,
+        "purity": 0.6770510662645444,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "manual_flag",
+        "ami": 0.6738269261687695,
+        "purity": 0.9375991050126882,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      }
+    ],
+    "stave_heldout_metrics": [
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "s01_q_template_bin",
+        "ami": 0.17130212073001574,
+        "purity": 0.4076696086571174,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "peak_group",
+        "ami": 0.508324973567589,
+        "purity": 0.823724083183095,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "downstream_topology",
+        "ami": 0.027739177149618592,
+        "purity": 0.8491182953855112,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "dt_label",
+        "ami": 0.07600492185141329,
+        "purity": 0.7239300081973364,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "manual_flag",
+        "ami": 0.6057399668787582,
+        "purity": 0.9296260850664688,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      }
+    ]
+  },
+  "ml": {
+    "method": "P02-style autoencoder latent + diagonal GMM",
+    "run_heldout_metrics": [
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "s01_q_template_bin",
+        "ami": 0.13357429676019128,
+        "purity": 0.39826761035335956,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "peak_group",
+        "ami": 0.44108069873999356,
+        "purity": 0.7986876799478304,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "downstream_topology",
+        "ami": 0.10522524106106927,
+        "purity": 0.6705262864294586,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "dt_label",
+        "ami": 0.09839494190497938,
+        "purity": 0.6767332583089621,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "manual_flag",
+        "ami": 0.46978098948276836,
+        "purity": 0.898249788636504,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      }
+    ],
+    "stave_heldout_metrics": [
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "s01_q_template_bin",
+        "ami": 0.15379882695957903,
+        "purity": 0.4240724557219372,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "peak_group",
+        "ami": 0.45649489971757473,
+        "purity": 0.7876333125588024,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "downstream_topology",
+        "ami": 0.03450778656363058,
+        "purity": 0.8493950200551063,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "dt_label",
+        "ami": 0.07939438760983367,
+        "purity": 0.7351279088793379,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "manual_flag",
+        "ami": 0.4105069319714448,
+        "purity": 0.8924130707472526,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      }
+    ]
+  },
+  "leakage_checks": [
+    {
+      "check": "cluster_vs_run",
+      "method": "traditional",
+      "ami": 0.18688719291333192,
+      "purity": 0.09943643136880313
+    },
+    {
+      "check": "cluster_vs_stave",
+      "method": "traditional",
+      "ami": 0.024739478866926252,
+      "purity": 0.36077944407297735
+    },
+    {
+      "check": "cluster_vs_s01_q_template_bin",
+      "method": "traditional",
+      "ami": 0.06074206198308596,
+      "purity": 0.32034259878371063
+    },
+    {
+      "check": "cluster_vs_run",
+      "method": "ml_autoencoder",
+      "ami": 0.19095880327251885,
+      "purity": 0.1112809246346356
+    },
+    {
+      "check": "cluster_vs_stave",
+      "method": "ml_autoencoder",
+      "ami": 0.00950985071467859,
+      "purity": 0.35186423408794215
+    },
+    {
+      "check": "cluster_vs_s01_q_template_bin",
+      "method": "ml_autoencoder",
+      "ami": 0.05147131314884134,
+      "purity": 0.3171267551819658
+    },
+    {
+      "check": "s01_q_template_bin_vs_run",
+      "method": "target",
+      "ami": 0.003256771182325105,
+      "purity": 0.043811889069315754
+    },
+    {
+      "check": "s01_q_template_bin_vs_stave",
+      "method": "target",
+      "ami": 0.0027450191940553838,
+      "purity": 0.3294488489827109
+    }
+  ],
+  "follow_up_tickets": [
+    "P02d: validate early-peak P02 topology against downstream timing tails in S07/S02 without using D_t as a training feature.",
+    "S01f: test whether S01 q_template run/stave structure predicts template-transfer failures after amplitude and peak-sample conditioning."
+  ],
+  "runtime_sec": 25.2
+}

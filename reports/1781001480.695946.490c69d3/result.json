@@ -1,0 +1,42 @@
+{
+  "study": "S18b",
+  "ticket": "1781001480.695946.490c69d3",
+  "worker": "testbeam-laptop-3",
+  "reproduced": true,
+  "primary_number_reproduced": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_robust_width_ns": 1.7936260637768346,
+    "sample_iv_core_sigma_ns": 1.9921763970438024
+  },
+  "traditional": {
+    "method": "CFD20 period-polynomial timewalk, leave-one-run-out",
+    "robust_width_ns": 1.4710826591392405,
+    "ci": [
+      1.2892497326443457,
+      1.6848853459790587
+    ],
+    "core_sigma_ns": 1.6380757209211636
+  },
+  "ml": {
+    "method": "Standardized Ridge residual correction, leave-one-run-out",
+    "robust_width_ns": 1.9353650384601555,
+    "ci": [
+      1.6865221497964424,
+      2.321629771278869
+    ],
+    "paired_delta_ml_minus_traditional_ci": [
+      0.10579480020227064,
+      0.899392337862345
+    ],
+    "paired_delta_p_value": 0.006
+  },
+  "diagnosis": {
+    "low_stat_width_ge_sample_iv_probability": 0.0,
+    "run_median_removed_width_ns": 1.4660866617759254,
+    "leakage_flags": 1,
+    "conclusion": "original broadening is residual timewalk/calibration-definition sensitivity amplified by low statistics; no clean run-period shift; ML is worse than the traditional run-held-out residual correction"
+  },
+  "input_sha256": "reports/1781001480.695946.490c69d3/input_sha256.csv",
+  "git_commit": "6e6cf93ab0275f73ffd7fd7d7828955b141cee90",
+  "critic": "pending"
+}

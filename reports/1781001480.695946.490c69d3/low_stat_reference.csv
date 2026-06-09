@@ -1,0 +1,2 @@
+source,target_n,median_width_ns,ci_low_ns,ci_high_ns,p_width_ge_sample_iv
+Sample III traditional residuals downsampled to Sample IV n,127,1.3837811405274123,1.1856147934082912,1.60483876676492,0.0

@@ -1,0 +1,5 @@
+heldout_run,failed_check,value,interpretation
+58,binned_selected_shuffled_target_sigma68_ns,3.0056738783721135,"shuffled-target control beat the production branch; treat this branch as unstable, not adoption-ready"
+60,forbidden_heldout_oracle_binned_sigma68_ns,2.2085620756701516,forbidden oracle did not improve this fold; not a production leakage failure
+61,binned_selected_shuffled_target_sigma68_ns,2.92561315961787,"shuffled-target control beat the production branch; treat this branch as unstable, not adoption-ready"
+63,forbidden_heldout_oracle_binned_sigma68_ns,3.671996823215058,forbidden oracle did not improve this fold; not a production leakage failure

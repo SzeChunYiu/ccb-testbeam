@@ -1,0 +1,30 @@
+{
+  "all_three_clean_events": 579,
+  "all_three_control_events": 3774,
+  "all_three_guarded_gross_events": 22,
+  "best_rf_params": {
+    "max_depth": 7,
+    "min_samples_leaf": 8,
+    "n_estimators": 500
+  },
+  "curvature_only_injected_auc": 0.49860697229754114,
+  "dataset_events": 1158,
+  "dataset_pairs": 579,
+  "direct_dt_curvature_injected_auc": 0.5305223552231033,
+  "elapsed_seconds": 76.69607949256897,
+  "expected_s07f_all_three_injected_rf_auc": 0.822118,
+  "fold_selected_traditional_injected_auc": 0.6059536273904444,
+  "forbidden_main_rf_columns": [],
+  "pair_split_violations": 0,
+  "parent_guarded_gross_events": 72,
+  "raw_reproduction_pass": true,
+  "rf_minus_curvature_auc": 0.3235105491273442,
+  "rf_minus_direct_dt_auc": 0.29159516620178205,
+  "rf_minus_fold_traditional_auc": 0.21616389403444092,
+  "s07f_rf_auc_delta": -4.785751146485495e-07,
+  "shape_feature_count": 72,
+  "shape_rf_injected_auc": 0.8221175214248854,
+  "study_id": "S07e",
+  "ticket_id": "1781012659.1186.11c940a0",
+  "title": "all-three-downstream injected timing-corruption curvature benchmark"
+}

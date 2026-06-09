@@ -1,0 +1,85 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s07e_all_three_injected_curvature_benchmark.py --config configs/s07e_1781012659_1186_11c940a0.json",
+  "created_utc": "2026-06-09T17:19:22Z",
+  "git_commit": "a1b7168f8d6831f954fea686c76435d07d8dcea6",
+  "inputs": [
+    {
+      "bytes": 9623179,
+      "path": "data/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "bytes": 12032616,
+      "path": "data/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "bytes": 10174098,
+      "path": "data/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "bytes": 10362658,
+      "path": "data/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "bytes": 10634393,
+      "path": "data/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "bytes": 10494181,
+      "path": "data/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "bytes": 10600278,
+      "path": "data/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    },
+    {
+      "bytes": 1665,
+      "path": "configs/s07e_1781012659_1186_11c940a0.json",
+      "sha256": "1d87753a581da4c346be6882b03c9c15b141fc7dbc3421c3bf047d39181811c1"
+    },
+    {
+      "bytes": 44475,
+      "path": "reports/1781006037.1502.693f2c73__s07d_injected_timing_corruption/s07d_injected_timing_corruption.py",
+      "sha256": "923bcd4a801c1cc1d284508063e168f74dcab9053bb08a6bd635ea878575f6c8"
+    },
+    {
+      "bytes": 26225,
+      "path": "scripts/s07f_independent_all_three_appi_validation.py",
+      "sha256": "08a25eaeaf8a027e78fc4aea646d53d7a3e47d57fb0fd2730787eb176ee2013d"
+    },
+    {
+      "bytes": 21786,
+      "path": "scripts/s07e_all_three_injected_curvature_benchmark.py",
+      "sha256": "37751587c9d481166b71e004235fc5b0f0005762e311a82951cbab5b58d4d4d0"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "b26473cc04e04c695b2757f97569a587602f2aa511d2c06100e050a49dfab702",
+    "dt_label_guardrail_oof_predictions.csv": "a8c206c0316cb45b2c1bd5b70a055abf9867e0f57496c08e1dfdd2cb8ad9bd38",
+    "dt_label_guardrail_rf_scan.csv": "cc6395a430a9fadcea302625699de03e9abe591e8843c8bfd4b9d049c0bbc078",
+    "dt_label_guardrail_scoreboard.csv": "3ce08f673078ef1c4e4e889904a73ca79c192f0328809a94d9af0f8ff8ab6769",
+    "fixed_efficiency.csv": "12d4738a64c2451cedfc5e9236912ff9aee07376ff57c286c2c322225c4b3425",
+    "injection_dataset_counts_by_run.csv": "961fca6c54d1f284d88cc83975c9c756ad5d7d987247635317454d237919e511",
+    "injection_oof_predictions.csv": "fa3aacc4f3796d0d80da0a20841084e5a1057ce36343f571310aec644facfcfb",
+    "injection_rf_cv_scan.csv": "aecad6406236bc4efba27c6b07badb8a5dc88a91cb06bda1ee96b968841557a2",
+    "injection_scoreboard.csv": "5cabc62c773f06341a54558e901420b40b7440edd55bbeff88f6158933dbc7fc",
+    "input_sha256.csv": "7744e98aca6c93222031397b218553f140a9b864898dd2c2940dec078ab21f6a",
+    "leakage_checks.csv": "e46008f405afdf969fbe955b979a5a79948bc73349d9d7855c1407eadd7fedb1",
+    "reproduction_match_table.csv": "d2700c9afd9600f98763778211b777be1ee0a18376149bd44c059fb1af44b61a",
+    "result.json": "c24f869ab4a8d9dd421f346a76e5b04699ce15a98c52835cae8020df339d75b3",
+    "run_counts.csv": "88f2966d7456e9ac42d941b8ff8efc5a88a6b1930bea166624b2bca558e1d827",
+    "traditional_candidate_scores.csv": "e2051341bfb8a7d5e73e6553cbc717499b1ff74c5bbf46a53ae35d9f198fa11f",
+    "traditional_fold_choices.csv": "6a98d6433a83ba20ca298e7ba6b31f95e46b7bddbc202b7bb6e41f29ff4691d1"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "study_id": "S07e",
+  "ticket_id": "1781012659.1186.11c940a0",
+  "worker": "testbeam-laptop-1"
+}

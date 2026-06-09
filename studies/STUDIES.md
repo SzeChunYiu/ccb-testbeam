@@ -277,11 +277,15 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with live post-append
 audits above 140 open and concurrent workers moving tickets, but the
-mission trigger still required a small set of new ready studies. This pass appended three
-additional non-duplicate ready tickets under `project:testbeam`: S07k raw-HRDv App.A
-label-definition sensitivity grid (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up
-excess decomposition (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support
-envelope (`1781027683.1000.24e0133d`). The previous pass appended P10h explicit-handle q-template
+mission trigger still required a small set of new ready studies. This pass appended four
+additional non-duplicate ready tickets under `project:testbeam`: S03i q_template amplitude-matched
+tail-label isolation (`1781029233.703.5ff5517d`), S10k operational Rmax failure-definition
+frontier (`1781029239.771.51c16bca`), P04k selector-semantics charge-closure sensitivity
+(`1781029246.839.554f50f7`), and S16i pretrigger-baseline live-time coupling audit
+(`1781029251.907.5de90a17`). The previous pass appended S07k raw-HRDv App.A label-definition
+sensitivity grid (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up excess
+decomposition (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support envelope
+(`1781027683.1000.24e0133d`). The pass before that appended P10h explicit-handle q-template
 support map (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
 (`1781026226.572.6e7c10a0`), and S04d timing-tail pathology interaction audit
 (`1781026226.608.7a105c91`). The prior pass appended S07i S07f score transfer from injected
@@ -404,7 +408,11 @@ after P09a taxonomy matching, but the largest rare-class excess is baseline_excu
 baseline contamination must now be decomposed in the same matched support. The P04b-propagated
 S14b range-energy preflight reproduces S00 exactly but fails the 0.10 per-event energy threshold
 once external charge uncertainty is included, so energy/PID work should use support and abstention
-maps rather than global energy claims.
+maps rather than global energy claims. The newest S00c selector-regression, S03d q_template-tail,
+S03d pair-veto, and S10d/S10e live-time reports now define the next atomic bridge: isolate
+q_template from amplitude nuisance, translate threshold-dependent live-time into failure-definition
+frontiers, propagate selector semantics into charge closure, and test whether pretrigger baseline
+spectra bias pile-up live-time handles.
 
 Completed since last steering cycle:
 
@@ -789,3 +797,40 @@ Active ready queue highlights:
   abstention using existing S14b/P04b artifacts plus shuffled-target sentinels. Metric: accepted
   fraction, combined energy-proxy res68, bias, depth-order violation rate, ML-minus-traditional
   delta, and held-out-run bootstrap CIs.
+- **S03i — q_template amplitude-matched tail-label isolation.** Test whether the S03d q_template
+  clean-tail signal survives matching on amplitude, stave, downstream topology, peak-sample phase,
+  saturation boundary, and run family, or whether it is mostly amplitude nuisance on downstream
+  waveforms. Traditional: frozen q_template and hand-shape threshold tables within matched
+  amplitude/topology strata, using S03a/S03d analytic residual tails as the target and preserving
+  run-heldout folds. ML: run-heldout q_template/shape RF with amplitude-residualized features,
+  topology-only, amplitude-only, shuffled-label, and downstream-only sentinels. Metric: tail
+  ROC-AUC/AP, fixed-efficiency tail rejection, pair-level sigma68/full-RMS delta, >5 ns tail
+  fraction delta, Brier/ECE, and ML-minus-traditional deltas with event-paired run-block bootstrap
+  CIs.
+- **S10k — Operational Rmax failure-definition frontier.** Decide which timing, amplitude, charge,
+  and combined failure definitions make the S10e operational Rmax stable enough for run planning,
+  and where threshold/live-time choices dominate. Traditional: recompute Poisson/downstream Rmax
+  using frozen S10e 5%, 10%, 20%, and noise-floor tau_eff definitions crossed with bounded
+  two-pulse timing and charge failure criteria. ML: calibrated compact MLP/Ridge operational score
+  from S10e under the same failure definitions, with run/current/event excluded and
+  shuffled-source controls. Metric: Rmax MHz, accepted-event timing RMS, charge bias/res68,
+  failure rate, definition sensitivity slope, and ML-minus-traditional deltas with held-out-run
+  bootstrap CIs.
+- **P04k — Selector-semantics charge-closure sensitivity.** Test whether median-first-four versus
+  dynamic-range selector semantics change P04/P04d duplicate-readout charge closure, especially
+  near saturation and baseline-excursion boundaries. Traditional: frozen peak, integral,
+  adaptive-template, and strong-Huber duplicate-readout charge estimators compared on S00c
+  median-selected, dynamic-only, and matched-control strata. ML: frozen ExtraTrees/HGB charge
+  regressor retrained only on train runs under each selector with selector-blind, selector-aware,
+  and shuffled-target sentinels. Metric: fractional bias, res68, full RMS, within-10pct and
+  within-25pct rates, saturation-boundary q_template shift, and selector delta with event-paired
+  run-block bootstrap CIs.
+- **S16i — Pretrigger-baseline live-time coupling audit.** Test whether S10 live-time tails and
+  two-pulse separability thresholds are shifted by pretrigger baseline spectra or adaptive-lowering
+  contamination before the main pulse. Traditional: stratify S10e threshold tau_eff,
+  empirical last-above times, and bounded two-pulse residuals by frozen S16 pretrigger mean, slope,
+  RMS, max-excursion, and adaptive-lowering bins. ML: run-heldout pretrigger-only
+  live-time/tail-risk regressor plus calibrated classifier, excluding post-trigger samples, run
+  IDs, current labels, and event IDs, with shuffled-pretrigger controls. Metric: tau_eff shift,
+  empirical-last-above shift, two-pulse time RMS, charge bias, downstream excess, calibration ECE,
+  and ML-minus-traditional deltas with run-block bootstrap CIs.

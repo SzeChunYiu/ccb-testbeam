@@ -90,11 +90,16 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `testbeam` as a positional argument for the default queue. The required append path was followed
   again with `--project testbeam`; the project-aware testbeam queue remains deep, with live
   post-append audits above 140 open and concurrent worker movement. The mission trigger
-  still required new ready work. This pass appended three ready
-  non-duplicate tickets: S07k raw-HRDv App.A label-definition sensitivity grid
-  (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up excess decomposition
-  (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support envelope
-  (`1781027683.1000.24e0133d`). The previous pass appended P10h explicit-handle q-template
+  still required new ready work. This pass appended four ready
+  non-duplicate tickets: S03i q_template amplitude-matched tail-label isolation
+  (`1781029233.703.5ff5517d`), S10k operational Rmax failure-definition frontier
+  (`1781029239.771.51c16bca`), P04k selector-semantics charge-closure sensitivity
+  (`1781029246.839.554f50f7`), and S16i pretrigger-baseline live-time coupling audit
+  (`1781029251.907.5de90a17`). The previous pass appended S07k raw-HRDv App.A
+  label-definition sensitivity grid (`1781027683.937.4b432fbc`), S10h
+  baseline-excursion pile-up excess decomposition (`1781027683.951.7bcc2f09`), and S14e
+  range-energy abstention support envelope (`1781027683.1000.24e0133d`). The pass before that
+  appended P10h explicit-handle q-template
   support map (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
   (`1781026226.572.6e7c10a0`), and S04d timing-tail pathology interaction audit
   (`1781026226.608.7a105c91`). The prior pass appended:
@@ -175,7 +180,11 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   closure keeps a positive current excess after P09a matching but identifies baseline_excursion as
   the largest rare-taxon excess, requiring pile-up/baseline decomposition. The P04b-propagated
   S14b energy preflight fails the 0.10 per-event threshold globally, so energy/PID work must move
-  through support/abstention maps rather than broad energy claims.
+  through support/abstention maps rather than broad energy claims. The newest S00c/S03d/S10d/S10e
+  reports add four immediate atomic gaps: selector semantics need charge-closure propagation,
+  q_template tail labels need amplitude-matched isolation, threshold-dependent Rmax needs a
+  failure-definition frontier, and pretrigger baseline spectra must be tested against live-time
+  tails before pile-up limits feed PID or energy.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
@@ -197,6 +206,9 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   for interaction tests among timing-tail pathology axes before composite vetoes feed PID or
   energy. This pass adds S07k for raw-HRDv App.A label-definition sensitivity, S10h for
   baseline-excursion pile-up excess decomposition, and S14e for range-energy abstention support.
+  This pass adds S03i for amplitude-matched q_template tail-label isolation, S10k for the
+  operational Rmax failure-definition frontier, P04k for selector-semantics charge closure, and
+  S16i for pretrigger-baseline/live-time coupling.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

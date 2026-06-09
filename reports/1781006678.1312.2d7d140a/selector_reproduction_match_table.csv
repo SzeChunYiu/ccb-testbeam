@@ -1,0 +1,5 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S00 median-first-four selected pulses,640737,640737,0,0,True
+S00a dynamic-range equivalent count,706373,706373,0,0,True
+Dynamic-only excess pulses,65636,65636,0,0,True
+Median-only pulses,0,0,0,0,True

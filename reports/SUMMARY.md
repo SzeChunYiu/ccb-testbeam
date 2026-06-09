@@ -83,17 +83,19 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` reports
-  `open=9 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
+  `open=9 claimed=0 done=0 failed=8`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
-  again with `--project testbeam`; the project-aware testbeam queue remains deep
-  (`queue=130` before this append pass; `queue=136` on the post-append audit, with concurrent
-  worker movement),
-  but the mission trigger still required new ready work. This pass appended three ready
-  non-duplicate tickets:
+  again with `--project testbeam`; the project-aware testbeam queue remains deep and currently
+  audits at `open=142 claimed=4 done=99 failed=11` after the append pass, with concurrent worker
+  movement. The mission trigger still required new ready work. This pass appended three ready
+  non-duplicate tickets: P10h explicit-handle q-template support map
+  (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
+  (`1781026226.572.6e7c10a0`), and S04d timing-tail pathology interaction audit
+  (`1781026226.608.7a105c91`). The previous pass appended:
   S07i S07f score transfer from injected corruption to real high-current strata
   (`1781024786.1471.167d1f38`), P04i duplicate-readout charge closure sample-causality map
   (`1781024791.1539.3ba15c1d`), and S03h HGB timewalk gain support map by amplitude and shape
-  atoms (`1781024797.1607.4a1b6480`). The previous pass appended:
+  atoms (`1781024797.1607.4a1b6480`). The earlier pass appended:
   P04h A-stack charge-transfer support map by B-stack topology
   (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
   (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
@@ -154,7 +156,14 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   S07g stratification keeps curvature as the D_t label ceiling while showing amplitude-only
   nuisance is non-negligible. The newest P04d report repairs the direct-template duplicate closure
   with a strong Huber traditional model (res68 0.0203) and an even stronger waveform ML closure
-  (res68 0.00270), but the A/B transfer reports still block any external energy claim.
+  (res68 0.00270), but the A/B transfer reports still block any external energy claim. The latest
+  P10c/P10d/P10e reports tighten template steering: run-64-only Sample-II explicit calibration
+  transfers better than pooled calibration, external B2-B8 timing closure favors a traditional
+  ridge explicit correction over waveform ExtraTrees, and the conditional-template
+  negative-control registry says simple conditional q-space failure persists under both family
+  holdouts. The newest all-three injected benchmark reproduces the S07f shape-RF injected AUC at
+  0.822, well above fold-selected traditional timing/template scores near 0.606, but still needs
+  amplitude and real-current support calibration.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
@@ -171,7 +180,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   pile-up, baseline, dropout/anomaly, timing-tail, and charge-error axes together before PID or
   energy consumers reuse them. This pass adds S07i for injection-to-real high-current score
   transfer, P04i for sample-causal charge-closure ablations, and S03h for an amplitude/shape
-  support map of the S03d HGB timewalk gain.
+  support map of the S03d HGB timewalk gain. This pass adds P10h for explicit-handle q-template
+  support regions, P04j for calibrated external charge-transfer uncertainty/abstention, and S04d
+  for interaction tests among timing-tail pathology axes before composite vetoes feed PID or
+  energy.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

@@ -273,19 +273,22 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=9 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
+`open=9 claimed=0 done=0 failed=8`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep (`open=136` on the
-post-append audit, with concurrent workers moving tickets), but the mission trigger still required a
-small set of new ready studies. This pass appended three additional non-duplicate ready tickets
-under `project:testbeam`: S07i S07f score transfer from injected corruption to real high-current
-strata (`1781024786.1471.167d1f38`), P04i duplicate-readout charge closure sample-causality map
-(`1781024791.1539.3ba15c1d`), and S03h HGB timewalk gain support map by amplitude and shape atoms
-(`1781024797.1607.4a1b6480`). The previous pass appended P04h A-stack charge-transfer support map
-by B-stack topology (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure
-autopsy (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology
-flags (`1781023340.632.43377364`). The discrepancy is a shim/argument parsing issue, not a
-scientific queue shortage.
+with `--project testbeam`: the project-aware testbeam queue remains deep (`open=142 claimed=4
+done=99 failed=11` on the post-append audit, with concurrent workers moving tickets), but the
+mission trigger still required a small set of new ready studies. This pass appended three
+additional non-duplicate ready tickets under `project:testbeam`: P10h explicit-handle q-template
+support map (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
+(`1781026226.572.6e7c10a0`), and S04d timing-tail pathology interaction audit
+(`1781026226.608.7a105c91`). The previous pass appended S07i S07f score transfer from injected
+corruption to real high-current strata (`1781024786.1471.167d1f38`), P04i duplicate-readout charge
+closure sample-causality map (`1781024791.1539.3ba15c1d`), and S03h HGB timewalk gain support map
+by amplitude and shape atoms (`1781024797.1607.4a1b6480`). The earlier pass appended P04h
+A-stack charge-transfer support map by B-stack topology (`1781023326.470.61534f82`), S02h
+binned-timewalk shuffled-target failure autopsy (`1781023333.541.66a8325e`), and P12a pulse-axis
+covariance atom table across pathology flags (`1781023340.632.43377364`). The discrepancy is a
+shim/argument parsing issue, not a scientific queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -383,7 +386,13 @@ truth into real high-current strata, not another D_t classifier. The latest P04d
 duplicate-readout direct-template pathology with a strong Huber traditional closure (res68 0.0203)
 and an even stronger waveform ExtraTrees closure (res68 0.00270), but external A/B transfer remains
 broad, so the charge programme now needs sample-causal ablations and support maps before feeding
-PID or energy.
+PID or energy. The freshest P10c/P10d/P10e reports split template steering into support-limited
+pieces: run-64-only Sample-II explicit calibration transfers better than pooled calibration,
+external B2-B8 timing closure favors a traditional ridge explicit correction over waveform
+ExtraTrees, and simple conditional templates still fail the q-space negative-control registry under
+both family holdouts. Learned or handle-based templates should therefore be mapped by support
+region and feature family before their q_template, live-time, saturation, PID, or energy outputs
+are trusted.
 
 Completed since last steering cycle:
 
@@ -716,3 +725,29 @@ Active ready queue highlights:
   stratum-specific calibration, monotonicity probes, and shuffled-target/run-family sentinels.
   Metric: support count, sigma68, full RMS, >5 ns tail fraction, bias-vs-amplitude slope,
   calibration coverage, and stratified run-block bootstrap CIs.
+- **P10h — Explicit-handle q-template support map.** Decide where explicit same-pulse handles
+  improve q_template or timing-transfer error beyond S01 empirical templates, and where they fail
+  the family-holdout negative-control registry. Traditional: frozen S01 amplitude-bin templates
+  plus train-only handle-binned median/residual tables with occupancy and fallback diagnostics.
+  ML: frozen ridge/ExtraTrees explicit-handle template predictors with grouped feature knockouts,
+  monotonic controls, shuffled-target sentinels, and family-label sentinels. Metric: per-stratum
+  q_template MSE, live10/tail residual, timing-fit sigma68/full RMS, fallback rate, and
+  ML-minus-traditional deltas with family-heldout run-block bootstrap CIs.
+- **P04j — Charge-transfer conformal uncertainty calibration.** Turn broad external A/B
+  charge-transfer point estimates into calibrated uncertainty and abstention regions before PID or
+  energy consumers reuse them. Traditional: frozen peak, integral, adaptive-template, strong-Huber,
+  and topology/support-stratified residual bands with train-run quantile intervals. ML: quantile
+  ExtraTrees/HGB or conformal residual calibration using B-stack waveform/charge summaries only,
+  with topology-only, shuffled-target, and run-family sentinels. Metric: interval coverage,
+  interval width, bias, res68, full RMS, within-25pct rate, abstention rate, and
+  ML-minus-traditional deltas with leave-one-run/family run-block bootstrap CIs.
+- **S04d — Timing-tail pathology interaction audit.** Test whether non-core timing tails are
+  additive in single pathology axes or driven by interactions among saturation boundary, pile-up
+  score, baseline/pretrigger contamination, dropout/delayed peak, anomaly taxon, peak-sample phase,
+  and charge proxy. Traditional: frozen S02/S03 analytic timing residuals with matched factorial
+  residual tables, robust variance components, and pair/run composition preservation. ML:
+  calibrated sparse interaction model or constrained tree tail-risk model using only frozen
+  pathology summaries, with shuffled-axis, additive-only, and run-family sentinels. Metric:
+  sigma68, full RMS, >5 ns tail fraction, interaction odds ratios, composition shift, calibration
+  ECE, and ML-minus-traditional/additive deltas with stratified event-paired run-block bootstrap
+  CIs.

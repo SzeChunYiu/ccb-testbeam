@@ -551,6 +551,8 @@ Can DAQ/run-log sources for true B-stack random or forced-trigger pedestal runs 
 
 ## Raw ROOT Reproduction First
 
+All study inputs are data mirror files under `{raw_root_dir}` and `{raw_archive_dir}`; no Monte Carlo inputs are used.
+
 | Quantity | Expected/report value | Reproduced from raw ROOT | Pass? |
 |---|---:|---:|---|
 | B-stack selected stave pulses, `A > 1000 ADC`, S00 runs | {expected_pulses} | {selected_pulses} | {pulse_pass} |
@@ -605,6 +607,8 @@ Primary artifacts: `result.json`, `manifest.json`, `input_sha256.csv`, `archive_
         ticket=config["ticket"],
         worker=config["worker"],
         commit=result["git_commit"],
+        raw_root_dir=config["raw_root_dir"],
+        raw_archive_dir=config["raw_archive_dir"],
         expected_pulses=config["expected_selected_pulses"],
         selected_pulses=root_cov["selected_b_stave_pulses"],
         pulse_pass="yes" if root_cov["selected_b_stave_pulses"] == config["expected_selected_pulses"] else "no",
@@ -699,6 +703,11 @@ def main() -> None:
         "ticket": config["ticket"],
         "study": config["study"],
         "worker": config["worker"],
+        "input_policy": {
+            "raw_root_dir": config["raw_root_dir"],
+            "raw_archive_dir": config["raw_archive_dir"],
+            "monte_carlo_used": False,
+        },
         "raw_reproduction": {
             "selected_b_stave_pulses": selected_pulses,
             "expected_selected_b_stave_pulses": int(config["expected_selected_pulses"]),

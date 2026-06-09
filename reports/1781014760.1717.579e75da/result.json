@@ -2,6 +2,11 @@
   "ticket": "1781014760.1717.579e75da",
   "study": "S16f",
   "worker": "testbeam-laptop-4",
+  "input_policy": {
+    "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+    "raw_archive_dir": "/home/billy/ccb-data/raw",
+    "monte_carlo_used": false
+  },
   "raw_reproduction": {
     "selected_b_stave_pulses": 640737,
     "expected_selected_b_stave_pulses": 640737,
@@ -256,5 +261,5 @@
     }
   ],
   "conclusion": "No DAQ/run-log source for true B-stack forced/random pedestal runs was found in the current mirror; raw ROOT has no non-beam trigger tags, so the inventory supports absent-from-mirror rather than never-recorded.",
-  "git_commit": "bc1bdc39d0a2fd217d65a6062778dd1e3006f358"
+  "git_commit": "3b86ab6928022d79f82342b65f2e728c2c8f6dca"
 }

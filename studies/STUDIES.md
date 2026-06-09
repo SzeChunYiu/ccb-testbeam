@@ -276,11 +276,10 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `open=6 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: project-aware `tn-ticket list --project testbeam` now reports
-`open=82 claimed=3 done=58 failed=10` after this pass appended four more non-duplicate ready
-tickets under `project:testbeam`: P03f early-peak sample-window timing residual ablation, P03g
-waveform timing residual negative-control registry, S16h matched lowering pile-up confound audit,
-and S18g A-stack robust-width transfer to B-stack covariance. The discrepancy is a shim/argument
-parsing issue, not a scientific queue shortage.
+`open=89 claimed=2 done=65 failed=10` after this pass appended three additional non-duplicate
+ready tickets under `project:testbeam`: P06a amplitude-binned timing resolution atom table, S05f
+B2-local covariance confound matched audit, and P01f domain-residualized waveform latent
+benchmark. The discrepancy is a shim/argument parsing issue, not a scientific queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -327,6 +326,16 @@ much weaker external charge-energy transfer. P09a turns anomaly detection into a
 making anomaly propagation the next atomic bridge across timing, charge, pile-up, baseline, and
 PID. Saturation recovery now has enough P04/P07/S14 context for S14c to test energy ordering
 before any GEANT4 truth claim.
+The newest P01b/P02c/P02d representation reports are a warning sign: P01b-downstream finds
+sample-epoch separability in waveform probes, P02c says train-only AE embeddings do not beat
+hand+PCA morphology on the guarded manual-flag target, and P02d's near-perfect RF timing-tail
+score is largely downstream D_t label-source self-reference. P01f therefore asks whether waveform
+latents can be domain-residualized before PID, timing, pile-up, or energy tasks consume them.
+S05c reduces held-out B-stack residual width with ExtraTrees, but the covariance decomposition
+remains B2/topology dominated; S05f now separates true common covariance from B2-local saturation,
+topology, and anomaly confounds. The missing atomic bridge from pulse amplitude to timing is also
+now explicit: P06a will tabulate timing resolution by amplitude, charge proxy, saturation,
+peak-sample, and anomaly strata with both traditional and ML uncertainty estimates.
 
 Completed since last steering cycle:
 
@@ -380,6 +389,14 @@ Completed since last steering cycle:
   pedestal entries are present, and Sample-I high-lowering events are tail-enriched despite weak
   correction gains; baseline studies must separate true pedestal bias from pile-up/topology and
   anomaly confounders.
+- **P01b/P02c/P02d — Downstream waveform probes and guarded embedding consumers.** Result:
+  waveform representations still carry sample-epoch, topology, and label-source signals; train-only
+  AE embeddings do not beat hand+PCA morphology on the guarded manual-flag target, and D_t-tail
+  RF gains remain self-referential unless independent timing labels are used.
+- **S05c — Hierarchical B-stack run/stave covariance model.** Result: waveform ExtraTrees reduce
+  held-out residual width relative to pair-median/hierarchical baselines, but the covariance
+  decomposition remains B2/topology dominated; covariance work now needs matched B2-local confound
+  separation before two-ended projections.
 
 Active ready queue highlights:
 
@@ -497,3 +514,22 @@ Active ready queue highlights:
   trimmed-likelihood A-stack priors. ML: ridge/ExtraTrees covariance predictor using A-stack robust
   summaries under run-heldout guards. Metric: B-stack robust width, inferred correlated fraction,
   covariance-interval coverage, and ML-minus-traditional delta with paired bootstrap CIs.
+- **P06a — Amplitude-binned timing resolution atom table.** Quantify timing resolution by
+  amplitude, charge proxy, peak sample, saturation flag, and anomaly class after the strongest
+  analytic timewalk closure. Traditional: frozen S02/S03 pickoff/timewalk with matched
+  stratum-wise pair residual tables. ML: leakage-audited per-pulse uncertainty/residual model using
+  waveform, latent, charge, and saturation summaries. Metric: sigma68, full RMS, pull width, tail
+  fraction, and ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **S05f — B2-local covariance confound matched audit.** Decide whether S05c's large B2 covariance
+  component is a true common timing mode or a local confound from B2 saturation, amplitude,
+  topology, and anomalies. Traditional: matched robust covariance tables within run, pair,
+  amplitude, saturation, topology, and P09 strata. ML: residual/covariance predictor with and
+  without B2-local features plus shuffled-run and downstream-only controls. Metric: B2-containing
+  minus downstream covariance, correlated fraction, held-out width delta, and interval coverage
+  with stratified run-block bootstrap CIs.
+- **P01f — Domain-residualized waveform latent benchmark.** Test whether P01/P01b latents retain
+  pulse-shape information after removing sample-epoch, run-family, topology, amplitude, and stave
+  domain signals. Traditional: hand-shape/PCA residual features after nuisance regression. ML:
+  adversarial or orthogonal nuisance-residualized AE latent compared with the frozen P01b latent and
+  shuffled controls. Metric: nuisance AUC reduction at fixed physics-proxy retention, reconstruction
+  MSE, and downstream target deltas with run-block bootstrap CIs.

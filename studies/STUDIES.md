@@ -1263,3 +1263,41 @@ Active ready queue highlights:
   shuffled-target, run-only, amplitude-only, and topology-only sentinels. Metric: pull width,
   nominal 68% and 95% coverage, sigma68/full RMS, >5 ns tail fraction, support count,
   calibration ECE, and ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **S05k — Rate-residual covariance atom sieve.** Decide whether residual A/B acceptance and
+  current-rate atoms still bias B-pair covariance intervals after S05e-rate showed run-level A/B
+  coincidence rate does not explain the large B2-local covariance. Traditional: freeze S05c/S05f
+  hierarchical pair-median covariance, match by run family, pair, topology, amplitude, saturation,
+  anomaly taxon, and A/B rate-residual quantile, then tabulate signed off-diagonal covariance and
+  downstream-only controls. ML: run-heldout ExtraTrees/GAM covariance predictors with and without
+  rate-residual features plus shuffled-rate, run-only, and topology-only sentinels. Metric:
+  interval coverage, interval width, B2-containing minus downstream covariance,
+  correlated-fraction shift, sigma68/full RMS, and ML-minus-traditional deltas with pair/event
+  run-block bootstrap CIs.
+- **P01j — Control-stratum latent calibration map.** Test whether the P01e control-stratum latent
+  lift for manual flags and peak groups is real pulse morphology beyond run, topology, amplitude,
+  and stave controls, or residual domain leakage. Traditional: freeze hand-shape variables, PCA
+  summaries, q_template, P09 taxa, and S16 baseline summaries within identical control strata and
+  compare observed, controls-only, and label-shuffle probes. ML: run-heldout calibrated RF/linear
+  probes on train-only latents with latent-only, latent-plus-domain-score, controls-only, and
+  permuted-within-stratum ablations. Metric: balanced accuracy, macro-F1, lift over controls-only,
+  ECE/Brier, downstream timing/charge risk delta, and ML-minus-traditional deltas with stratified
+  run-block bootstrap CIs.
+- **S10n — High-stat secondary support stability gate.** In the S10e high-stat dominant strata,
+  test whether the traditional secondary-fraction high-minus-low excess is stable under template,
+  threshold, and support choices, and why ML secondary-fraction and overlap-score diagnostics
+  disagree. Traditional: freeze S10b/S10d templates, scan secondary thresholds and
+  asymmetric-template variants inside the top high-amplitude, large-lowering, broad-late strata,
+  and require matched current/topology support. ML: run-heldout RF/MLP overlap and
+  secondary-fraction regressors with calibrated isotonic outputs, support-abstention rules, and
+  shuffled-current, amplitude-only, and topology-only sentinels. Metric: secondary-fraction delta,
+  overlap-score delta, threshold sensitivity slope, accepted-support fraction, timing-tail and
+  charge-bias delta, and ML-minus-traditional deltas with run-block bootstrap CIs.
+- **P04o — Rate-conditioned charge support veto.** Check whether sparse A/B coincidence-rate and
+  current-acceptance atoms induce charge-transfer bias that should veto P04/S14 energy or PID
+  consumers in low-support regions. Traditional: freeze P04/P04d duplicate-readout and P04b
+  external charge closures, then stratify charge residuals by A/B rate residual, run family,
+  topology, saturation depth, q_template, baseline taxon, and geometry support. ML: compare
+  HGB/ExtraTrees charge regressors with and without rate-residual features plus conformal
+  abstention, shuffled-rate, run-only, and topology-only controls. Metric: charge res68, signed
+  bias, energy-ordering flip rate, support loss, conformal coverage, and ML-minus-traditional
+  deltas with event/run-block bootstrap CIs.

@@ -28,6 +28,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S05c | ✅ done | ✅ S05-style B-stack residual inputs | pair-median/hierarchical covariance sigma68 2.082 ns; B2 off-diagonal dominates | ExtraTrees waveform residual sigma68 1.449 ns | ML reduces residual width, but covariance remains B2/topology dominated | reports/1781009478.9969.16fe02b4 |
 | S05d | ✅ done | ✅ S05c covariance inputs | static two-ended priors sigma68 2.147 ns; bias -0.870 ns | dynamic waveform weights sigma68 2.021 ns; bias -0.621 ns | Small ML gain; projection bias requires support frontier | reports/1781016280.4623.016f3ea3 |
 | S05e | ✅ done | ✅ S05c reproduction baseline | pair-median covariance sigma68 2.082 ns | saturation-feature ExtraTrees sigma68 1.352 ns | ML gain is useful, but B2 saturation/topology support must be bounded | reports/1781016280.4691.3d911c1d |
+| S05e rate | ✅ done | ✅ S05c covariance rows reproduced | run-rate ridge RMSE 10.43 pp | ExtraTrees rate RMSE 0.91 pp; weak covariance Spearman 0.29 | ML predicts sparse A/B acceptance, but it does not explain B2-local residual covariance | reports/1781017418.11875.10723959 |
 | S07 | ✅ done | ✅ S00 selection | low-current AUC 0.504 | calibrated RF AUC 0.768 | **Yes** (Δ=0.264, CI [0.250,0.280]) | reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard |
 | S07b | ✅ done | ✅ guarded gross D_t count match | D_t/curvature AUC 1.000 | shape-only RF AUC 0.9987 | No; D_t is label-defining | reports/1781000790.531071.5a66741c__s07b_timing_control_classifier |
 | S07c | ✅ done | ✅ S00 counts; App.A count mismatch | q_template-only AUC 0.717; span+q AUC 0.912 | clean-timing RF AUC 0.993 | **Yes** vs q_template-only, but weak-label drift remains | reports/1781000790.531136.203130b0__s07c_clean_timing_rf |
@@ -43,6 +44,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10d amplitude | ✅ done | ✅ S10c topology fractions within 0.0015 | matched two-pulse secondary fraction high-low 0.0316, CI [0.0189,0.0440] | RF secondary fraction Δ=0.0073; overlap score Δ=0.0245 | Diagnostic; largest excess is high-amp/large-lowering/broad-late | reports/1781010419.1206.6d667357 |
 | S10e | ✅ done | ✅ S10/S10c topology fractions within 0.0015 | charge-stratified downstream excess 0.00676/event; P04 log-charge shift 0.0476 | current/pile-up scores positive; charge-residual score negative | Traditional matched excess remains physics-facing; ML is pathology diagnostic | reports/1781010955.636.68b17313 |
 | S10e real candidates | ✅ done | ✅ S10/S10b/S10d anchors reproduced | two-pulse secondary fraction high-low 0.0351, CI [0.0170,0.0536] | overlap-score Δ=0.0213; secondary-fraction Δ=0.0047 | Diagnostic; overlap score and secondary fraction disagree by support | reports/1781013481.885.251f4b3c |
+| S10e high-stat | ✅ done | ✅ S10d traditional headline exact | dominant-stratum secondary fraction Δ=0.0330, CI [0.0192,0.0488] | secondary-fraction Δ=0.00668; overlap-score Δ=0.0238 | Traditional excess is stable at high stats; ML diagnostics still disagree by support | reports/1781017360.928.15a27ed1 |
 | S10f | ✅ done | ✅ S10/S10c topology fractions within 0.0015 | P09a-matched downstream excess 0.00478/event, CI [0.00346,0.00663] | current-score Δ=0.0222 but Brier/log-loss worse | No; traditional matched excess is physics-facing, baseline_excursion needs decomposition | reports/1781012706.846.1f364432 |
 | S10f amplitude templates | ✅ done | ✅ S10d and S10b anchors reproduced | amplitude-binned asymmetric fit time RMS 17.81 ns; failure 0.013 | compact MLP time RMS 9.28 ns; failure 0.277 | No adoption; ML lowers RMS but failure rate remains operational risk | reports/1781013481.902.5d6a5b89 |
 | S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
@@ -76,9 +78,11 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P01c sentinels | ✅ done | ✅ 640,737 exact | residual PCA+hand bal-acc 0.331 | residual AE-4 bal-acc 0.235 | No; repeated shuffle sentinels reject the ML representation claim | reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels |
 | P01d | ✅ done | ✅ 640,737 exact | train-chosen OF(5-13) sigma68 2.693 ns | ridge residual sigma68 1.974 ns; target shuffle 3.329 ns | Diagnostic; sample 5 is CFD artifact, sample 6 smoothing is robust | reports/1781010798.954.0e922a2d |
 | P01d epoch | ✅ done | ✅ split-by-run probe | hand/PCA balanced accuracy near null to 0.561 by epoch task | AE-6 balanced accuracy 0.495/0.567/0.503 across tasks | Mostly nuisance/domain diagnostic; residualization gate needed before reuse | reports/1781016667.1095.088d6bb4 |
+| P01d leakage | ✅ done | ✅ 640,737 exact | residual hand+PCA stave bal-acc best 0.303 | residual AE-6 no accepted family gain | No; run-family sentinels reject latent reuse without leakage controls | reports/1781017385.1145.1466621b |
 | P01d artifact | ⚠️ blocked | ✅ 640,737 exact; hashes preserved | canonical copy attempted to ccb-data/projects | no model refit | Blocked by read-only canonical paths; worker-local artifact index preserved | reports/1781016189.1003.2607526c |
 | P01e | ✅ done | ✅ prior P01c CFD20/latent reproduced | strict hand-shape ridge sigma68 1.962 ns | strict AE latent ridge sigma68 1.965 ns; shuffled target 2.056 ns | No; latent does not beat hand-shape and null controls remain strong | reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit |
 | P01e loader | ✅ done | ✅ 640,737 exact; NPZ key/hash join exact | hand-shape stave bal-acc 0.410 | P01b latent RF bal-acc 0.479 | Loader-safe smoke test only; latent still needs domain/support audits | reports/1781016189.1012.5eef5b75 |
+| P01e control null | ✅ done | ✅ 640,737 exact and latent key match | controls-only manual-flag bal-acc 0.387 | latent RF manual-flag bal-acc 0.968; lift 0.457 | Positive morphology lift after controls, but consumers need calibration and leakage sentinels | reports/1781017385.1212.733932fe |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
 | P02b | ✅ done | ✅ P02 early-peak rate 0.04388 vs ≈0.044 | hand/PCA GMM run-heldout AMI 0.357 on q_template bins | AE GMM AMI 0.377 | Small ML gain only for q_template-bin morphology; not broadly superior | reports/1781004956.538.5fc10cd7 |
 | P02c q-template | ✅ done | ✅ S01 q_template row semantics exact | hand/PCA GMM manual-flag AMI 0.674; q-template AMI 0.154 | AE/P01-style morphology is target-specific | Mixed; learned morphology is not a universal cluster win | reports/1781009575.1631.563755ca |
@@ -342,6 +346,22 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   S05f's B2-local covariance gain still needs pathology-axis interval coverage before two-ended
   projection; and P01d/P06a-style sample-phase artifacts require local timing-pull calibration
   before per-event sigma estimates feed pile-up, dropout, PID, or energy work.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` still reports
+  `open=10 claimed=0 done=0 failed=11`, below the 18-ready trigger, while the correctly addressed
+  local `testbeam` project store reports `open=190 claimed=4 done=166 failed=7` after this pass.
+  The mission trigger was satisfied by appending four ready, non-duplicate `project:testbeam`
+  tickets: S05k rate-residual covariance atom sieve (`1781045406.539.02891975`), P01j
+  control-stratum latent calibration map (`1781045406.537.56ee4cc0`), S10n high-stat secondary
+  support stability gate (`1781045406.664.645723ad`), and P04o rate-conditioned charge support
+  veto (`1781045406.731.183408e8`).
+- Fresh synthesis: S05e-rate shows ML can predict sparse A/B acceptance far better than a ridge
+  run-rate baseline, but that observable is not the missing B2-local covariance mechanism; P01d
+  leakage and P01e control-null reports keep latent morphology useful only behind calibrated
+  control-stratum sentinels; and S10e high-stat keeps the traditional secondary-fraction excess
+  stable while ML overlap and secondary-fraction diagnostics remain support-dependent. The new
+  tickets therefore target rate-residual covariance sieving, latent calibration, high-stat
+  secondary support stability, and rate-conditioned charge vetoes before covariance, pile-up, PID,
+  or energy consumers reuse these outputs.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

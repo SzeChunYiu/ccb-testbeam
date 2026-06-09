@@ -1,0 +1,6 @@
+requirement,mu_max,tau_eff_assumed_ns,report_Rmax_MHz,reproduced_Rmax_MHz,delta_MHz,source
+timing_lt_1ns,0.425,90.0,4.72,4.722222222222222,0.0022222222222225696,S10b raw ROOT rerun
+timing_lt_2ns,0.49,90.0,5.44,5.444444444444444,0.004444444444443363,S10b raw ROOT rerun
+peak_amp_lt_10pct,0.385,90.0,4.28,4.277777777777778,-0.0022222222222225696,S10b raw ROOT rerun
+charge_area_lt_20pct,0.445,90.0,4.94,4.944444444444445,0.004444444444444251,S10b raw ROOT rerun
+combined_dt1ns_area20pct,0.38,90.0,4.22,4.222222222222222,0.0022222222222225696,S10b raw ROOT rerun

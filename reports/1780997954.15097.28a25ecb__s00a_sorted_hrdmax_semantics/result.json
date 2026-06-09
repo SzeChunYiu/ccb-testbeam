@@ -1,0 +1,41 @@
+{
+  "study": "S00a",
+  "ticket": "1780997954.15097.28a25ecb",
+  "worker": "testbeam-laptop-2",
+  "title": "Reconcile sorted hrdMax vs raw HRDv selection semantics",
+  "reproduced": true,
+  "repro_tolerance": "0 count delta after deterministic sorted-waveform correction; raw gate total 640737",
+  "traditional": {
+    "metric": "heldout_selection_accuracy",
+    "value": 1.0,
+    "ci": [
+      1.0,
+      1.0
+    ],
+    "false_positive": 0,
+    "false_negative": 0
+  },
+  "ml": {
+    "metric": "heldout_selection_accuracy",
+    "value": 0.9998386124978481,
+    "ci": [
+      0.9997884030527343,
+      0.9998816491650887
+    ],
+    "false_positive": 16,
+    "false_negative": 29
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "preregistered_metric": "corrected sorted gate count delta vs raw HRDv gate",
+    "value": 0,
+    "n_tries": 1
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b",
+  "critic": "pending",
+  "next_tickets": [
+    "S00b: add an integrator regression that rejects sorted hrdMax as a raw-gate proxy",
+    "S01c: compute q_template using the corrected sorted-waveform amplitude semantics"
+  ]
+}

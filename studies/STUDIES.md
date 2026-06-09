@@ -260,8 +260,9 @@ of truth and synthesises `reports/` into a rolling summary.
 The latest reports deepen the pulse programme but also narrow the next questions. S02/S07 found
 ML gains for timing residual correction and current/topology classification; S10 and S18 show
 strong traditional baselines still win or tie when the physics control is tight; S16 shows the
-baseline estimator is much better than a naive pretrigger median but still biased; P02/P07 expose
-high-value pulse-shape and saturation follow-ups.
+baseline estimator is much better than a naive pretrigger median but still biased; P01 shows
+representation learning needs leakage-controlled downstream value beyond reconstruction; P02/P07
+expose high-value pulse-shape and saturation follow-ups.
 
 Ready queue additions:
 
@@ -284,3 +285,18 @@ Ready queue additions:
   failures from veto-only pulse classes. Traditional: S16 baseline diagnostics, jagged/dropout
   masks, interpolation. ML: denoising/inpainting regressor plus unrecoverable classifier. Metric:
   detection AP, waveform MSE, and S02 timing residual recovery with bootstrap CIs.
+- **S11a — Constrained two-pulse template-fit injection benchmark.** Build the missing strong
+  pile-up recovery baseline before deep decomposition. Traditional: bounded two-pulse S01 template
+  fit with S02 timing initialisation. ML: compact injection-trained overlap regressor/classifier.
+  Metric: recovered-time RMS, charge bias/res68, detection AP, and failure rate versus separation
+  and amplitude ratio with paired bootstrap CIs.
+- **P01c — Per-sample pulse-shape importance map.** Identify which of the 18 samples carry
+  independent shape, timing, amplitude, saturation, and baseline information after stave/amplitude
+  controls. Traditional: template/PCA leave-one-sample ablations. ML: masked-AE occlusion and
+  latent-probe importance. Metric: per-sample deltas in reconstruction MSE, timing sigma68,
+  amplitude res68, and topology-probe balanced accuracy with paired bootstrap CIs.
+- **P09a — Rare waveform anomaly taxonomy and precision audit.** Surface rare waveform classes
+  before they contaminate timing, charge, PID, or energy studies. Traditional: robust outlier cuts
+  on q_template, peak sample, late fraction, baseline residual, saturation count, and timing span.
+  ML: AE/PCA latent density and reconstruction-error models. Metric: top-k curated precision,
+  timing-tail/saturation/dropout enrichment, and run/stave duplicate-rate with bootstrap CIs.

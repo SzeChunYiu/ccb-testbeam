@@ -13,16 +13,20 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10 | ✅ done | ✅ Rmax/current excess reproduced | downstream high-low excess 0.0103/event | injection score Δ=0.036 diagnostic | No; ML is monitoring only | reports/1780997954.15277.548b01a3__s10_pileup_rate_model |
 | S16 | ✅ done | ✅ S00 selection | pretrigger median MAE 341 ADC | adaptive/learned MAE 48.9 ADC | **Yes**, but adaptive remains biased | reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation |
 | S18 | ✅ done | ✅ Sample III/IV A-stack | A1-A3 robust width 1.389 ns | ridge correction 1.383 ns | No; CIs overlap | reports/1780997954.15397.168324f2__s18_astack_independent_reproduction |
+| P01 | ✅ done | ✅ 640,737 selected pulses | PCA-4 recon MSE 0.0134; hand-shape probe bal-acc 0.353 | masked AE-4 recon MSE 0.0143; probe bal-acc 0.364 | Mixed: PCA wins recon, AE only slight probe gain | reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
 | P07 | ✅ merged | self-truth (clip) | template scale | GBR | **ML ~4% vs template 10–29% (3–7× better)** | reports/P07_saturation_recovery |
 
 ## Current steering notes
 
-- Queue health after replenishment: `open=19 claimed=2 done=10 failed=5` for `testbeam`.
+- Queue health after replenishment: `open=19 claimed=4 done=11 failed=7` for `testbeam`.
 - New ready tickets appended: P02b cluster stability, P03a waveform CNN timing, P07b natural
-  B2 saturation propagation, S10c stratified pile-up excess, S16d dropout/baseline recovery.
+  B2 saturation propagation, S10c stratified pile-up excess, S16d dropout/baseline recovery,
+  S11a constrained two-pulse recovery, P01c per-sample importance, and P09a anomaly taxonomy.
 - Near-term physics risk: S02/S07 show real ML gains, but S10 and S18 show that ML does not
-  automatically beat strong conventional baselines. Keep every new claim paired, run-held-out,
-  and bootstrap-CI based.
-- Atomic pulse priorities: timing shape, saturation transfer to real B2 pulses, baseline/dropout
-  nuisance propagation, pile-up stratification, and stable pulse taxonomy before PID/energy claims.
+  automatically beat strong conventional baselines, and P01 shows learned representations need
+  leakage-controlled downstream value beyond reconstruction. Keep every new claim paired,
+  run-held-out, and bootstrap-CI based.
+- Atomic pulse priorities: sample-level shape importance, timing shape, saturation transfer to
+  real B2 pulses, baseline/dropout nuisance propagation, two-pulse recovery, pile-up
+  stratification, and stable/anomalous pulse taxonomy before PID/energy claims.

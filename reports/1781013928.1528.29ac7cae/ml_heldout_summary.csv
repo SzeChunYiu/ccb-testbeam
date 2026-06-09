@@ -1,0 +1,2 @@
+method,heldout_runs,n_events,heldout_auc,heldout_auc_ci_low,heldout_auc_ci_high,heldout_average_precision,heldout_mean_quiet_probability,heldout_mean_quiet_probability_ci_low,heldout_mean_quiet_probability_ci_high
+pretrigger_only_logistic_hidden_mode_probe,"57,65",4000,0.6466074890937064,0.5858850296874907,0.6907719199169144,0.6447741724819311,0.4170722783162947,0.3902987056191431,0.44367788309268

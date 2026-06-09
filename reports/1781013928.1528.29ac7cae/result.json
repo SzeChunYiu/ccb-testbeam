@@ -1,0 +1,249 @@
+{
+  "ticket": "1781013928.1528.29ac7cae",
+  "study": "S16e",
+  "worker": "testbeam-laptop-3",
+  "raw_reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "expected_selected_b_stave_pulses": 640737,
+    "raw_root_file_count": 110,
+    "distinct_raw_root_runs": 57,
+    "non_beam_trigger_entries": 0,
+    "runs_requested": [
+      0,
+      65
+    ]
+  },
+  "external_source_search": {
+    "archive_members_scanned": 216,
+    "filesystem_files_scanned": 217,
+    "external_log_candidates": 0,
+    "non_root_documents": "bstack_astack_report_with_timing_label_pileup_ml.pdf",
+    "acquired_external_daq_source": false
+  },
+  "run_mapping": {
+    "rows": 132,
+    "a_stack_roots": 57,
+    "b_stack_roots": 53,
+    "runs_with_both_stacks": 53,
+    "runs_missing_b_stack": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      38
+    ]
+  },
+  "traditional_method": {
+    "method": "source inventory plus root trigger audit plus whole-run quiet waveform rule",
+    "candidate_runs": [],
+    "top_runs_by_score": [
+      {
+        "run": 60,
+        "entries": 36074,
+        "selected_b_stave_pulses": 17029,
+        "selected_events": 10140,
+        "quiet_proxy_events": 20189,
+        "selected_event_fraction": 0.2810888728724289,
+        "quiet_event_fraction": 0.5596551532960027,
+        "event_max_q05_adc": 23.5,
+        "event_max_median_adc": 68.5,
+        "event_max_q95_adc": 5091.174999999999,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.27171628042357376
+      },
+      {
+        "run": 61,
+        "entries": 36535,
+        "selected_b_stave_pulses": 18965,
+        "selected_events": 11287,
+        "quiet_proxy_events": 19690,
+        "selected_event_fraction": 0.3089366361023676,
+        "quiet_event_fraction": 0.5389352675516628,
+        "event_max_q05_adc": 24.0,
+        "event_max_median_adc": 71.5,
+        "event_max_q95_adc": 5101.5,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.22284863144929518
+      },
+      {
+        "run": 65,
+        "entries": 38424,
+        "selected_b_stave_pulses": 13038,
+        "selected_events": 11904,
+        "quiet_proxy_events": 20517,
+        "selected_event_fraction": 0.3098063710181137,
+        "quiet_event_fraction": 0.5339631480324797,
+        "event_max_q05_adc": 24.5,
+        "event_max_median_adc": 73.0,
+        "event_max_q95_adc": 5164.599999999991,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.21685677701436598
+      },
+      {
+        "run": 62,
+        "entries": 37584,
+        "selected_b_stave_pulses": 19089,
+        "selected_events": 11912,
+        "quiet_proxy_events": 19637,
+        "selected_event_fraction": 0.316943380161771,
+        "quiet_event_fraction": 0.5224829714772243,
+        "event_max_q05_adc": 25.0,
+        "event_max_median_adc": 75.0,
+        "event_max_q95_adc": 5127.424999999999,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.19803959131545334
+      },
+      {
+        "run": 59,
+        "entries": 42303,
+        "selected_b_stave_pulses": 21377,
+        "selected_events": 13863,
+        "quiet_proxy_events": 22021,
+        "selected_event_fraction": 0.32770725480462376,
+        "quiet_event_fraction": 0.5205540978181217,
+        "event_max_q05_adc": 24.0,
+        "event_max_median_adc": 75.0,
+        "event_max_q95_adc": 5361.950000000001,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.1853468430134979
+      }
+    ]
+  },
+  "ml_method": {
+    "method": "pretrigger-only logistic hidden-mode probe",
+    "heldout": {
+      "method": "pretrigger_only_logistic_hidden_mode_probe",
+      "heldout_runs": "57,65",
+      "n_events": 4000,
+      "heldout_auc": 0.6466074890937064,
+      "heldout_auc_ci_low": 0.5858850296874907,
+      "heldout_auc_ci_high": 0.6907719199169144,
+      "heldout_average_precision": 0.6447741724819311,
+      "heldout_mean_quiet_probability": 0.4170722783162947,
+      "heldout_mean_quiet_probability_ci_low": 0.3902987056191431,
+      "heldout_mean_quiet_probability_ci_high": 0.44367788309268
+    },
+    "top_runs_by_ml_quiet_probability": [
+      {
+        "run": 43,
+        "sampled_events": 11,
+        "sampled_quiet_fraction": 0.5454545454545454,
+        "ml_mean_quiet_probability": 0.4967266281446619,
+        "ml_p95_quiet_probability": 0.6738732649122898
+      },
+      {
+        "run": 25,
+        "sampled_events": 1000,
+        "sampled_quiet_fraction": 0.468,
+        "ml_mean_quiet_probability": 0.4905008786345035,
+        "ml_p95_quiet_probability": 0.7753874170348256
+      },
+      {
+        "run": 26,
+        "sampled_events": 3000,
+        "sampled_quiet_fraction": 0.37833333333333335,
+        "ml_mean_quiet_probability": 0.48783724788462707,
+        "ml_p95_quiet_probability": 0.7850020590148113
+      },
+      {
+        "run": 27,
+        "sampled_events": 2000,
+        "sampled_quiet_fraction": 0.3465,
+        "ml_mean_quiet_probability": 0.48716908404758563,
+        "ml_p95_quiet_probability": 0.786508034765377
+      },
+      {
+        "run": 58,
+        "sampled_events": 2000,
+        "sampled_quiet_fraction": 0.454,
+        "ml_mean_quiet_probability": 0.46005391511511784,
+        "ml_p95_quiet_probability": 0.6340343166258218
+      }
+    ]
+  },
+  "ml_meta": {
+    "best": {
+      "C": 10.0,
+      "cv_auc": 0.6965314745110529,
+      "cv_auc_std": 0.02126353293726922,
+      "cv_average_precision": 0.48057413335186966
+    },
+    "feature_columns": [
+      "pre_mean_adc",
+      "pre_std_adc",
+      "pre_range_adc",
+      "pre_slope03_adc",
+      "stave_seed_median_adc",
+      "stave_seed_iqr_adc"
+    ],
+    "n_train_cv": 89745,
+    "n_core_train": 84745,
+    "n_calibration": 5000,
+    "n_heldout": 4000,
+    "calibration_runs": [
+      56,
+      64
+    ],
+    "heldout_runs": [
+      57,
+      65
+    ]
+  },
+  "leakage_checks": [
+    {
+      "check": "shuffled_training_labels",
+      "value": 0.5916909443532897,
+      "interpretation": "AUC should be near chance if the signal is not leakage."
+    },
+    {
+      "check": "repeated_shuffled_training_labels_mean_auc",
+      "value": 0.5106643814300226,
+      "interpretation": "Thirty shuffled-label fits gave 2.5/50/97.5% quantiles 0.385/0.521/0.613."
+    },
+    {
+      "check": "intentional_label_oracle",
+      "value": 1.0,
+      "interpretation": "AUC near 1 shows direct label leakage would be visible."
+    },
+    {
+      "check": "real_feature_exclusion",
+      "value": null,
+      "interpretation": "ML excludes run id, file name, trigger, event id, event max, post-trigger samples, and quiet/pulse labels."
+    }
+  ],
+  "conclusion": "No external DAQ logbook/spreadsheet/acquisition script was found in the current mirror; raw ROOT has no non-beam trigger tags.",
+  "git_commit": "659d2f8b652412017196ea66ca7f1d2068a11cb2"
+}

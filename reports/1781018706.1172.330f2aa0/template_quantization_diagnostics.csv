@@ -1,0 +1,16 @@
+method,grid_step_samples,time_grid_step_ns,nominal_sigma68_quantum_ns,parabolic,finite_pulse_times,unique_shifts,median_abs_parabolic_correction_ns,p95_abs_parabolic_correction_ns,ablation_type,ablation
+template_phase_coarse_0p05_min,0.05,0.5,0.25,False,59613,61,0.0,0.0,base,base
+template_phase_fine_0p01_min,0.01,0.1,0.05,False,59613,301,0.0,0.0,base,base
+template_phase_fine_0p01_parabolic,0.01,0.1,0.05,True,59613,47302,0.018632347935353188,0.04680594856651106,base,base
+template_phase_coarse_0p05_min,0.05,0.5,0.25,False,59613,61,0.0,0.0,sample,5
+template_phase_fine_0p01_min,0.01,0.1,0.05,False,59613,296,0.0,0.0,sample,5
+template_phase_fine_0p01_parabolic,0.01,0.1,0.05,True,59613,48916,0.01962476284754272,0.046970154348559036,sample,5
+template_phase_coarse_0p05_min,0.05,0.5,0.25,False,59613,61,0.0,0.0,sample,7
+template_phase_fine_0p01_min,0.01,0.1,0.05,False,59613,301,0.0,0.0,sample,7
+template_phase_fine_0p01_parabolic,0.01,0.1,0.05,True,59613,47392,0.018640762094693793,0.046906398683698745,sample,7
+template_phase_coarse_0p05_min,0.05,0.5,0.25,False,59613,61,0.0,0.0,sample,8
+template_phase_fine_0p01_min,0.01,0.1,0.05,False,59613,301,0.0,0.0,sample,8
+template_phase_fine_0p01_parabolic,0.01,0.1,0.05,True,59613,48310,0.019313566067204347,0.046945431005649615,sample,8
+template_phase_coarse_0p05_min,0.05,0.5,0.25,False,59613,58,0.0,0.0,window,5-8
+template_phase_fine_0p01_min,0.01,0.1,0.05,False,59613,267,0.0,0.0,window,5-8
+template_phase_fine_0p01_parabolic,0.01,0.1,0.05,True,59613,53266,0.02191223764523215,0.04721016260913088,window,5-8

@@ -1,0 +1,7 @@
+check,pass,value,detail
+train_heldout_run_overlap,True,0,must be zero for split-by-run
+heldout_runs,True,"42,57,64,65",all benchmark residuals are from these runs
+ml_target_shuffle_sigma68_ns,True,3.217127669235257,shuffled train targets should not match the real ML residual timing
+ml_vs_cfd20_delta_ns,True,-1.2140895354320655,negative means ML improves over CFD20; target-shuffle is the leakage sentinel
+feature_audit,True,"waveform, amplitude, peak, area, width, stave only","no event id, run id, or pair residual labels are in ML features"
+too_good_result_trigger,True,1.242767000712149,"ML is strong, so the target-shuffle sentinel must degrade by >0.5 ns"

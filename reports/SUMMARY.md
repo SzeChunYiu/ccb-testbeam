@@ -80,7 +80,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
-  `open=8 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
+  `open=7 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
   again with `--project testbeam`; project-aware queue audit now reports
   `open=113 claimed=3 done=80 failed=10`. This pass appended three ready non-duplicate tickets:

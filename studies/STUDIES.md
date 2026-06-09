@@ -273,7 +273,7 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=8 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
+`open=7 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: project-aware queue audit now reports
 `open=113 claimed=3 done=80 failed=10` after this pass appended three additional non-duplicate

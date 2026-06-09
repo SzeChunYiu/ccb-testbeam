@@ -1,0 +1,78 @@
+{
+  "study": "S11e",
+  "ticket": "1781018533.1179.60a328c5",
+  "worker": "testbeam-laptop-2",
+  "title": "residual-pool conditioning for two-pulse closure",
+  "reproduced": true,
+  "s11a_anchor": {
+    "traditional_time_rms_ns": 13.300370096544516,
+    "ml_time_rms_ns": 10.674061400718234,
+    "pass": true
+  },
+  "s11c_source_reproduction": {
+    "traditional_time_rms_ns": 18.65027284819815,
+    "ml_time_rms_ns": 10.588533160846291,
+    "traditional_expected_time_rms_ns": 18.65027284819815,
+    "ml_expected_time_rms_ns": 10.588533160846291,
+    "pass": true
+  },
+  "traditional": {
+    "method": "amplitude_binned_asymmetric_s01_template_fit_with_conditioned_train_residuals",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 17.355293768001463,
+    "ci": [
+      17.156588608634305,
+      17.55240948502171
+    ],
+    "detection_ap": 0.7504766939993924,
+    "charge_fractional_bias": 0.0027713349905202924,
+    "charge_fractional_res68": 0.09102569648770528,
+    "failure_rate": 0.011666666666666667
+  },
+  "ml": {
+    "method": "compact_mlp_classifier_regressor_with_conditioned_train_residuals",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 9.07447277716587,
+    "ci": [
+      8.87605875940597,
+      9.26440732646218
+    ],
+    "detection_ap": 0.8352873421618621,
+    "charge_fractional_bias": 0.002856760844140143,
+    "charge_fractional_res68": 0.06581406752158375,
+    "failure_rate": 0.25166666666666665
+  },
+  "conditioning_effect": {
+    "gap_traditional_minus_ml_ns": 8.280820990835593,
+    "gap_ci": [
+      7.8921812821721264,
+      8.67635072561574
+    ],
+    "delta_gap_vs_s11c_source_ns": 0.2190813034837351,
+    "ml_still_beats_traditional": true
+  },
+  "falsification": {
+    "split": "by source run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "heldout_excluded_from_template_training": true,
+    "heldout_excluded_from_residual_pool_training": true,
+    "leakage_checks_pass": true,
+    "leakage_flags": 0,
+    "bootstrap_unit": "heldout source run",
+    "n_conditioned_exact_pools": 36
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "c8f3ecfcfe60cead2cb902e84ccd0c009794b0a4",
+  "next_tickets": [],
+  "runtime_sec": 238.72
+}

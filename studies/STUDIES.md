@@ -276,11 +276,13 @@ rather than a clean run-period shift. S16c finds adaptive-lowering features are 
 timing-tail source, so baseline work should move to Sample-I propagation, true no-pulse sourcing,
 and full-tail timing tables instead of another proxy-only pedestal benchmark.
 
-Live queue decision: `tn-ticket list --project testbeam` reports `open=35 claimed=2 done=26
-failed=8`, so no new tickets were appended in this cycle. The exact legacy positional command
-`tn-ticket list testbeam` reports the default queue (`open=5 claimed=0 done=0 failed=6`) because
-the shim does not treat the positional argument as a project; for testbeam steering, use
-`--project testbeam`.
+Live queue decision: the exact requested command `tn-ticket list testbeam` reports
+`open=5 claimed=0 done=0 failed=6`, which is below the 18-ready floor. The latest project-aware
+queue check reports `tn-ticket list --project testbeam` =
+`open=46 claimed=4 done=33 failed=8`; the
+discrepancy is a shim/argument parsing issue, not a scientific queue shortage. To satisfy the
+low exact-command gate while keeping work in the real testbeam queue, four new non-duplicate
+ready tickets were appended under `project:testbeam`.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -292,6 +294,15 @@ tiny heteroskedastic MLP was 1.927 ns; P03b/P03c should separate waveform-only i
 wrong-target training. S18b found the leave-one-run-out traditional A-stack width at 1.471 ns and
 the ridge residual correction worse at 1.935 ns. S16c found RF nuisance correction reduces tails
 diagnostically but high adaptive-lowering events do not explain the held-out S02 timing tails.
+S11a now provides the missing constrained two-pulse benchmark and shows ML can improve injected
+overlap time RMS while increasing failure rate, so the next pile-up step must optimize recovery
+and abstention together. P07b transfers saturation recovery to natural B2 pulses and improves a
+timing-tail proxy, but the q_template shift demands sample-level ablations and boundary controls
+before adoption. S10c shows the current excess is heterogeneous after amplitude/baseline/topology
+matching, making charge-energy proxy transfer the next rate-model test. P01a/P01b/P02b show
+representation artifacts are useful only under strict leakage sentinels; P02b finds small,
+target-specific cluster stability gains rather than a universal morphology win. S05a finds no
+secure A-stack external-control reduction, keeping B-stack covariance modeling as the safer path.
 
 Completed since last steering cycle:
 
@@ -304,12 +315,21 @@ Completed since last steering cycle:
 - **S16c — Pedestal-lowering nuisance propagation into timing residuals.** Result: adaptive
   lowering is a weak diagnostic, not the primary timing-tail mechanism; next baseline work should
   test Sample-I propagation, true forced/random sources, and full timing-tail tables.
+- **P01a/P01b — Controlled waveform probes and reusable embedding artifact.** Result: topology
+  sentinels dominate naive probe targets; the all-data embedding is released as a usable artifact
+  but carries no benchmark claim after refitting on all selected rows.
+- **P02b — Cluster topology stability across runs and staves.** Result: AE clusters give only a
+  small q_template-bin AMI gain and do not broadly beat hand/PCA morphology, so downstream uses
+  must stay target-specific and leakage-audited.
+- **P07b — Natural B2 saturation recovery impact on charge and timing tails.** Result: artificial
+  clipping remains a strong ML win, while natural saturated pulses need boundary and sample-window
+  audits before recovered charge can feed energy/PID.
+- **S10c/S11a/S05a — Stratified pile-up, two-pulse injection recovery, and A-stack controls.**
+  Result: pile-up excess is heterogeneous after matching; ML improves S11a injected time RMS but
+  raises failure rate; A-stack controls do not provide a secure B-stack covariance gain.
 
 Active ready queue highlights:
 
-- **P02b — Cluster topology stability across runs and staves.** Test whether P02 pulse clusters
-  are stable morphologies or run/stave artifacts. Traditional: shape cuts + PCA/GMM. ML: AE
-  latent HDBSCAN/GMM. Metric: held-out AMI and topology purity with paired bootstrap CIs.
 - **P03b — Leave-one-run-out waveform MLP timing stability.** Test whether the P03a failure is a
   run-transfer problem or a waveform-only information limit. Traditional: frozen S02/analytic
   timewalk per held-out run. ML: same 18-sample MLP with identical leakage guard. Metric: sigma68,
@@ -318,14 +338,6 @@ Active ready queue highlights:
   waveform model can learn only the residual left by analytic timewalk. Traditional: analytic
   amp-only/timewalk closure. ML: compact 1D CNN and MLP residual correctors. Metric: residual
   sigma68, full RMS, calibration pull width, and paired delta CIs.
-- **P07b — Natural B2 saturation recovery impact on charge and timing tails.** Transfer the P07
-  artificial-clipping result to real saturated B2 pulses. Traditional: rising-edge/template
-  extrapolation. ML: P07 regressor. Metric: fractional amplitude bias/res68 plus q_template and
-  timing-tail shifts with run-stratified bootstrap CIs.
-- **S10c — Pile-up excess stratified by amplitude, baseline, and pulse topology.** Decide whether
-  the S10 high-current excess is beam pile-up or a detector-pathology subpopulation. Traditional:
-  Poisson/downstream excess in matched strata. ML: calibrated pile-up/current scores in the same
-  strata. Metric: high-minus-low excess and score deltas with stratified bootstrap CIs.
 - **S10d — Two-pulse template resolvability live-time from raw pulses.** Convert S10b's measured
   tail window into an operational pile-up separability threshold. Traditional: constrained
   two-pulse template fits over injected separations and amplitude ratios. ML: calibrated
@@ -340,11 +352,6 @@ Active ready queue highlights:
   pre-trigger/baseline-lowering nuisance terms to the analytic timewalk model. ML: leakage-audited
   residual model using only pre-trigger summaries and pulse-shape diagnostics. Metric: sigma68,
   full RMS, and high-quantile tail reduction with paired run-block bootstrap CIs.
-- **S11a — Constrained two-pulse template-fit injection benchmark.** Build the missing strong
-  pile-up recovery baseline before deep decomposition. Traditional: bounded two-pulse S01 template
-  fit with S02 timing initialisation. ML: compact injection-trained overlap regressor/classifier.
-  Metric: recovered-time RMS, charge bias/res68, detection AP, and failure rate versus separation
-  and amplitude ratio with paired bootstrap CIs.
 - **P01c — Per-sample pulse-shape importance map.** Identify which of the 18 samples carry
   independent shape, timing, amplitude, saturation, and baseline information after stave/amplitude
   controls. Traditional: template/PCA leave-one-sample ablations. ML: masked-AE occlusion and
@@ -355,3 +362,19 @@ Active ready queue highlights:
   on q_template, peak sample, late fraction, baseline residual, saturation count, and timing span.
   ML: AE/PCA latent density and reconstruction-error models. Metric: top-k curated precision,
   timing-tail/saturation/dropout enrichment, and run/stave duplicate-rate with bootstrap CIs.
+- **P05a — CNN two-pulse decomposition against S11a injections.** Test whether a compact waveform
+  CNN can keep S11a's ML time-RMS gain while reducing the failure-rate regression. Traditional:
+  frozen bounded S01 two-pulse fit. ML: CNN detection plus two-pulse time/amplitude heads. Metric:
+  constituent time RMS, charge bias/res68, detection AP, and failure rate with paired bootstrap CIs.
+- **P07e — Leading-edge sample ablation for saturation recovery.** Identify which unsaturated B2
+  samples carry recoverable amplitude information. Traditional: rising-edge/template ablations.
+  ML: P07 regressor and masked-sample MLP under identical masks. Metric: amplitude res68/bias,
+  q_template shift, and timing-tail fraction with paired bootstrap CIs.
+- **S10e — Pile-up excess transfer to charge-energy proxies.** Replace binary downstream occupancy
+  with P04/P07 charge-energy proxy strata. Traditional: matched-stratum downstream and charge
+  excess. ML: pile-up/current plus charge-residual scores. Metric: high-minus-low excess, median
+  charge-proxy shift, score deltas, and stratum heterogeneity with stratified bootstrap CIs.
+- **S14b — Range-energy calibration preflight from P04 closure.** Restart energy calibration as a
+  minimal audit of table lookup, geometry assumptions, and charge-proxy uncertainty. Traditional:
+  PSTAR/range interpolation with geometry variants. ML: monotonic gradient-boosted surrogate.
+  Metric: depth-ordering violations, residual res68, geometry envelope, and ML delta CIs.

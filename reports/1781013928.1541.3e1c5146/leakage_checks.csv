@@ -1,0 +1,4 @@
+check,metric,value,interpretation
+shuffled_training_target,mae_adc,84.67428464374957,negative control; should be much worse than the real ML model
+intentional_target_feature_oracle,mae_adc,2.7270286860128534,positive control; direct target leakage would make the error suspiciously small
+real_feature_exclusion,n_excluded_leakage_columns,4.0,"real features exclude run, eventno, evt, and target_adc; split is by run"

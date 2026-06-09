@@ -1,0 +1,57 @@
+{
+  "study": "S11a",
+  "ticket": "1781005319.561.508a188d",
+  "worker": "testbeam-laptop-4",
+  "title": "constrained two-pulse template-fit injection benchmark",
+  "reproduced": true,
+  "traditional": {
+    "method": "bounded_two_pulse_s01_template_fit",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 13.300370096544516,
+    "ci": [
+      12.00287772499512,
+      14.561857934162386
+    ],
+    "detection_ap": 0.7668112839404098,
+    "charge_fractional_bias": -0.021809167547080895,
+    "charge_fractional_res68": 0.09820253477243165,
+    "failure_rate": 0.16833333333333333
+  },
+  "ml": {
+    "method": "compact_mlp_classifier_regressor",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 10.674061400718234,
+    "ci": [
+      9.616619044449227,
+      11.84410279883373
+    ],
+    "detection_ap": 0.8509910550508138,
+    "charge_fractional_bias": -0.013518602481818204,
+    "charge_fractional_res68": 0.0776729549119584,
+    "failure_rate": 0.295
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "split": "by source run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "leakage_checks_pass": true,
+    "n_template_fit_hypotheses": 81
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "a0daf8cf4af4b3d1c63cec68cd0ea38670ccf907",
+  "next_tickets": [
+    "S11b: validate two-pulse recovery on real high-current candidate windows using low-current templates",
+    "S11c: add amplitude-binned/asymmetric S01 templates to the constrained two-pulse fit and rerun the injection closure"
+  ],
+  "runtime_sec": 28.76
+}

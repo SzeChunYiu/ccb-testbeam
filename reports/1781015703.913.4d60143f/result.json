@@ -1,0 +1,75 @@
+{
+  "conclusion": "The elevated high-lowering tail rate is real on held-out runs but still behaves more like a proxy than a fixable pedestal-lowering error. Traditional correction improves sigma68 by -0.130 ns and RF correction by 0.336 ns, while the high-minus-low tail gap is 0.118. High-bin pairs have pretrigger medians 93.92x low-bin, late-window medians 0.55x low-bin, and tail-area-fraction medians 1.00x low-bin; the mechanism is most consistent with pileup/shape pathologies or residual timewalk correlated with lowering, not lowering propagation alone.",
+  "heldout_events": 250,
+  "heldout_pair_residuals": 750,
+  "heldout_runs": [
+    54,
+    55,
+    56,
+    57
+  ],
+  "high_lowering_tail_fraction": 0.13043478260869565,
+  "high_lowering_tail_fraction_ci": [
+    0.0,
+    0.3828754578754578
+  ],
+  "high_minus_low_tail_fraction": 0.11805514024280844,
+  "leakage_checks_pass": true,
+  "low_lowering_tail_fraction": 0.012379642365887207,
+  "low_lowering_tail_fraction_ci": [
+    0.0,
+    0.024664691413237922
+  ],
+  "matched_effective_pairs_high_low": [
+    7.0,
+    6.999999999999999
+  ],
+  "matched_full_rms_delta_high_minus_low_ci": [
+    -4.848536141141305,
+    0.6571322493765048
+  ],
+  "matched_full_rms_delta_high_minus_low_ns": -1.9031776978062294,
+  "matched_pileup_score_enrichment_ci": [
+    -1.436714690050254,
+    0.3365722277487254
+  ],
+  "matched_pileup_score_enrichment_high_minus_low": -0.2179618923408584,
+  "matched_sigma68_delta_high_minus_low_ci": [
+    -5.044298951207893,
+    0.6915601072886244
+  ],
+  "matched_sigma68_delta_high_minus_low_ns": -1.3139979853910004,
+  "matched_strata": 6,
+  "matched_tail_odds_ratio": 0.9999999999999999,
+  "matched_tail_odds_ratio_ci": [
+    0.04361904761904763,
+    10.818181818181818
+  ],
+  "ml_gain_vs_raw_ns": 0.3357607838712746,
+  "ml_sigma68_ns": 2.7745111307920647,
+  "raw_reproduction_pass": true,
+  "raw_sigma68_ns": 3.1102719146633393,
+  "rf_tail_classifier_heldout_auc": 0.8866305329719963,
+  "rf_tail_classifier_heldout_auc_ci": [
+    0.6169629092709145,
+    0.9991712916107457
+  ],
+  "rf_tail_classifier_heldout_ece": 0.04360995894740147,
+  "rf_tail_classifier_heldout_ece_ci": [
+    0.0351439528746181,
+    0.06185916206791862
+  ],
+  "rf_tail_classifier_shuffled_auc": 0.6061427280939476,
+  "sample_i_selected_pulses": 252266,
+  "study": "S16h",
+  "ticket": "1781015703.913.4d60143f",
+  "top_mechanism_features": "delta_positive_area_over_amp, delta_area_over_amp, delta_width20_samples, delta_late_abs_adc, s10_pileup_proxy_score",
+  "top_run_pair_high_bin": "run 56 B4-B8 (tail 0.400, n=5)",
+  "traditional_gain_vs_raw_ns": -0.12964655826683646,
+  "traditional_sigma68_ns": 3.2399184729301758,
+  "unmatched_tail_odds_ratio": 12.91270860077022,
+  "unmatched_tail_odds_ratio_ci": [
+    1.1055299539170507,
+    87.71999999999989
+  ]
+}

@@ -273,19 +273,23 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=10 claimed=0 done=0 failed=8`, which is below the 18-ready floor because the shim treats
+`open=11 claimed=0 done=0 failed=8`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with live post-append
-audits above 140 open and concurrent workers moving tickets, but the
-mission trigger still required a small set of new ready studies. This pass appended four
-additional non-duplicate ready tickets under `project:testbeam`: S03i q_template amplitude-matched
+audits at 165 open and concurrent workers moving tickets, but the mission trigger still required a
+small set of new ready studies. This pass appended four additional non-duplicate ready tickets
+under `project:testbeam`: S10l asymmetric-template failure atom map
+(`1781030650.532.4dd15543`), S03j selector-specific timewalk support map
+(`1781030650.597.5d382001`), S16j pretrigger hidden-mode stability audit
+(`1781030650.662.4bb162cb`), and P04l baseline-to-charge dropout coupling
+(`1781030650.727.08857c2c`). The previous pass appended S03i q_template amplitude-matched
 tail-label isolation (`1781029233.703.5ff5517d`), S10k operational Rmax failure-definition
 frontier (`1781029239.771.51c16bca`), P04k selector-semantics charge-closure sensitivity
 (`1781029246.839.554f50f7`), and S16i pretrigger-baseline live-time coupling audit
-(`1781029251.907.5de90a17`). The previous pass appended S07k raw-HRDv App.A label-definition
+(`1781029251.907.5de90a17`). The pass before that appended S07k raw-HRDv App.A label-definition
 sensitivity grid (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up excess
 decomposition (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support envelope
-(`1781027683.1000.24e0133d`). The pass before that appended P10h explicit-handle q-template
+(`1781027683.1000.24e0133d`). The earlier pass appended P10h explicit-handle q-template
 support map (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
 (`1781026226.572.6e7c10a0`), and S04d timing-tail pathology interaction audit
 (`1781026226.608.7a105c91`). The prior pass appended S07i S07f score transfer from injected
@@ -412,7 +416,9 @@ maps rather than global energy claims. The newest S00c selector-regression, S03d
 S03d pair-veto, and S10d/S10e live-time reports now define the next atomic bridge: isolate
 q_template from amplitude nuisance, translate threshold-dependent live-time into failure-definition
 frontiers, propagate selector semantics into charge closure, and test whether pretrigger baseline
-spectra bias pile-up live-time handles.
+spectra bias pile-up live-time handles. This pass extends that bridge to four smaller atoms:
+asymmetric-template two-pulse failures, selector-specific timewalk support, pretrigger hidden-mode
+stability, and baseline/dropout coupling into charge failure before energy or PID reuse.
 
 Completed since last steering cycle:
 
@@ -834,3 +840,38 @@ Active ready queue highlights:
   IDs, current labels, and event IDs, with shuffled-pretrigger controls. Metric: tau_eff shift,
   empirical-last-above shift, two-pulse time RMS, charge bias, downstream excess, calibration ECE,
   and ML-minus-traditional deltas with run-block bootstrap CIs.
+- **S10l — Asymmetric-template failure atom map.** Explain why S10f amplitude-binned/asymmetric
+  templates do not reduce the operational resolvable delay below 60 ns. Traditional: frozen S10f
+  asymmetric S01 template fit with chi2/ndf, residual-tail, charge-bias, and timing-bias failures
+  tabulated by separation, amplitude ratio, saturation boundary, baseline excursion, peak-sample
+  phase, and tail-shape strata. ML: run-heldout calibrated failure classifier/regressor using
+  waveform residual atoms plus P09/S16/P07 summaries, with amplitude-only, run-family, and
+  shuffled-source sentinels. Metric: per-stratum failure rate, time RMS, charge res68/bias,
+  bad-recovery odds ratio, and risk-coverage AUC with held-out-source-run bootstrap CIs.
+- **S03j — Selector-specific timewalk support map.** Test whether median-first-four and
+  dynamic-range selector semantics change the physical support of S03 analytic/HGB timewalk gains,
+  or only the selected amplitude/topology mixture. Traditional: freeze S03a amp-only and S03d
+  signed-prior coefficients, refit only on train runs for median-selected, dynamic-only, and
+  matched-control strata, and compare bias-vs-amplitude plus pair residual tables. ML:
+  run-heldout HGB residual corrector with selector-blind, selector-aware, amplitude-only,
+  topology-only, and shuffled-target sentinels. Metric: sigma68, full RMS, >5 ns tail fraction,
+  bias-vs-amplitude slope, support count, and ML-minus-traditional delta with event-paired
+  run-block bootstrap CIs.
+- **S16j — Pretrigger hidden-mode stability audit.** Decide whether the S16e pretrigger-only
+  hidden-mode signal is stable across runs and staves or is a quiet-proxy sampling artifact.
+  Traditional: frozen pretrigger mean/RMS/range/slope and adaptive-lowering tables across
+  run-family, stave, amplitude, and quiet-proxy strata with calibration-only thresholds. ML:
+  run-family-held-out calibrated logistic/ExtraTrees hidden-mode probe using only pretrigger
+  summaries, compared with shuffled-quiet labels, run-only, and amplitude-only sentinels. Metric:
+  held-out AUC/AP, calibration ECE, mean quiet-probability shift, timing-tail odds ratio,
+  charge-bias delta, and run-family bootstrap CIs.
+- **P04l — Baseline-to-charge dropout coupling.** Determine whether baseline excursion and
+  delayed/dropout waveform taxa cause charge-estimator failures directly or only through
+  saturation, amplitude, and peak-sample confounding. Traditional: frozen peak, integral,
+  adaptive-template, strong-Huber, and dropout-injected estimators compared in matched
+  baseline-excursion/delayed-peak/dropout strata with saturation, amplitude, peak-sample, run, and
+  topology controls. ML: run-heldout charge residual model using waveform atoms, P09 anomaly
+  scores, S16 pretrigger summaries, and P07 saturation summaries, with baseline-only,
+  saturation-only, topology-only, and shuffled-target sentinels. Metric: charge fractional bias,
+  res68, full RMS, catastrophic-error rate, timing-tail propagation, and ML-minus-traditional delta
+  with stratified run-block bootstrap CIs.

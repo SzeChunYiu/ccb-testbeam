@@ -1,0 +1,111 @@
+{
+  "command": "/home/billy/anaconda3/bin/python reports/1781007909.1585.0c094e3c/s16d_forced_random_pedestal_search.py --config reports/1781007909.1585.0c094e3c/s16d_config.json",
+  "config": "reports/1781007909.1585.0c094e3c/s16d_config.json",
+  "git_commit": "ceeea92ec3a0608cb2b9ece15211a16b46b2e10c",
+  "random_seed": 16026,
+  "environment": {
+    "python": "3.7.6",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "uproot": "5.0.9"
+  },
+  "inputs": "reports/1781007909.1585.0c094e3c/input_sha256.csv",
+  "outputs": [
+    {
+      "path": "reports/1781007909.1585.0c094e3c/REPORT.md",
+      "sha256": "42df4d384ee30ea3278558ffb5fc2674d39930f27aa98dafbdf49c7faa5c3bb6",
+      "bytes": 4908
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/fig_bias_by_run.png",
+      "sha256": "8d3fdc9ac99f22c8c70c7207520d16abf24ae29d6568376a9a409103276c1845",
+      "bytes": 45828
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/fig_heldout_residuals.png",
+      "sha256": "d7a9bc2f02010f77fcb3b00840415d9e9271af7f25cf55a9f8c21ef4dbb03630",
+      "bytes": 81113
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/fig_method_mae_ci.png",
+      "sha256": "6cc4e4c11375b6ec641a730d37c5ae228ceb4e2aaf64111fcdb600e9efd88981",
+      "bytes": 44484
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/fig_quiet_proxy_counts.png",
+      "sha256": "70bbafbc6c18eae8b7c256d32acf38a893f5aff796abf3e7f94954a14f67265c",
+      "bytes": 35840
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/heldout_benchmark.csv",
+      "sha256": "f380b3ad23bd8b80a4b79739fdc0a8714186ff36e10e2f18fcb9bda3b472139c",
+      "bytes": 1219
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/heldout_by_run.csv",
+      "sha256": "6cd3d68a3bf8e454b71fade7b6ccfc586e979e0ed9c08800f3ed4a62f307fe87",
+      "bytes": 929
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/heldout_residual_sample.csv.gz",
+      "sha256": "be66daab909a9c6c227dead3b5aac44d3986df0d10cdf6832bce575ef9a277ef",
+      "bytes": 1342537
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/input_sha256.csv",
+      "sha256": "97e6a1874fc932ca3e630ab505ff1d7d2ad2d994298aae5acfdc4b020a12f0e8",
+      "bytes": 14649
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/leakage_checks.csv",
+      "sha256": "e8c2ceffd802db98c4846786f948cbaf32c148dc88e0047a8877d38401ec6c3d",
+      "bytes": 397
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/mirror_file_audit.csv",
+      "sha256": "6ebdbd839cf963e511d63f2d9c093d71e8b8c9864290ce2f94eb8d89b791eebd",
+      "bytes": 16758
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/ml_cv_scan.csv",
+      "sha256": "4a39e04e5ce205ecaea59931d4d7103a5b18434ce3904296f8271bde60604029",
+      "bytes": 266
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/quiet_counts_by_run.csv",
+      "sha256": "04244b3045efdf9e88ec869f8849892b3725b15dcd77c836c9682fb55f15bf9e",
+      "bytes": 952
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/raw_reproduction_counts_by_run.csv",
+      "sha256": "87c915395ee657999381d554d16b5adafb48eec287ee53f8bcddc464802abe8d",
+      "bytes": 529
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/reproduction_match_table.csv",
+      "sha256": "eebf1ef1b1656bc037b6ab9fe9ceec355a35a5eb8e539041378f1ed017444fe5",
+      "bytes": 210
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/result.json",
+      "sha256": "6c67b96df4189ec260ca3d363f6acdcc191f87fa2f7e0d960f1bf4a4ab8bae5a",
+      "bytes": 3779
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/s16d_config.json",
+      "sha256": "7f37d28c198f568b43691b346d25cd76b10fd2bbe197d590f07021db51783dce",
+      "bytes": 1435
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/s16d_forced_random_pedestal_search.py",
+      "sha256": "9aec55b08bc53146f778e8a7623e81babb5ac4d9300d8d564e446d1671b27592",
+      "bytes": 37896
+    },
+    {
+      "path": "reports/1781007909.1585.0c094e3c/trigger_audit.csv",
+      "sha256": "a0fed58fe1cf02563ffa1b2b09d3ef8c01123d42d769d12daf4eda7f57ffdece",
+      "bytes": 6956
+    }
+  ],
+  "runtime_seconds": 269.98942613601685
+}

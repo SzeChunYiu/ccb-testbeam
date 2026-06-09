@@ -1,0 +1,149 @@
+{
+  "study": "P03e",
+  "ticket": "1781014997.939.20a36ed3",
+  "worker": "testbeam-laptop-4",
+  "title": "Stave-blind versus stave-aware waveform residual ablation",
+  "reproduced": true,
+  "p03c_reproduced_first": {
+    "method": "p03e_waveform_only",
+    "sigma68_ns": 1.4483561109028598,
+    "reported_p03c_sigma68_ns": 1.4483561109028598,
+    "delta_from_reported_ns": 0.0
+  },
+  "split_by_run": true,
+  "train_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "heldout_runs": [
+    65
+  ],
+  "metric": "heldout B4/B6/B8 pairwise sigma68 ns with event-paired bootstrap CI",
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "value": 1.494640076269676,
+    "ci": [
+      1.3066124782178583,
+      1.6656734816885292
+    ],
+    "full_rms_ns": 1.6991283591200679
+  },
+  "ml": {
+    "best_variant": "waveform_amp_shape_stave",
+    "best_sigma68_ns": 1.1302417481886804,
+    "best_ci": [
+      0.9215822267232872,
+      1.3101088974913762
+    ],
+    "variants": {
+      "waveform_only": {
+        "method": "p03e_waveform_only",
+        "hidden": 16,
+        "weight_decay": 0.01,
+        "n_features": 18,
+        "sigma68_ns": 1.4483561109028598,
+        "ci": [
+          1.3214490309755422,
+          1.6688176819016887
+        ],
+        "delta_vs_analytic_ns": -0.04628396536681634
+      },
+      "waveform_stave_onehot": {
+        "method": "p03e_waveform_stave_onehot",
+        "hidden": 32,
+        "weight_decay": 0.001,
+        "n_features": 21,
+        "sigma68_ns": 1.3480758429061046,
+        "ci": [
+          1.1993085453744214,
+          1.5669195280670247
+        ],
+        "delta_vs_analytic_ns": -0.1465642333635715
+      },
+      "waveform_amp_shape": {
+        "method": "p03e_waveform_amp_shape",
+        "hidden": 32,
+        "weight_decay": 0.001,
+        "n_features": 29,
+        "sigma68_ns": 1.3968349000183973,
+        "ci": [
+          1.2552045291040437,
+          1.5742412874355753
+        ],
+        "delta_vs_analytic_ns": -0.09780517625127882
+      },
+      "waveform_amp_shape_stave": {
+        "method": "p03e_waveform_amp_shape_stave",
+        "hidden": 32,
+        "weight_decay": 0.001,
+        "n_features": 32,
+        "sigma68_ns": 1.1302417481886804,
+        "ci": [
+          0.9215822267232872,
+          1.3101088974913762
+        ],
+        "delta_vs_analytic_ns": -0.3643983280809957
+      }
+    },
+    "stave_onehot_delta_vs_waveform_only_ns": -0.10028026799675516,
+    "amp_shape_delta_vs_waveform_only_ns": -0.05152121088446249
+  },
+  "leakage": {
+    "event_id_overlap": 0,
+    "detector_label_only_guardrail_sigma68_ns": 1.354302617747248,
+    "best_ml_minus_guardrail_ns": -0.22406086955856752,
+    "feature_audits": [
+      {
+        "variant": "waveform_only",
+        "value": 18.0,
+        "detail": "18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target"
+      },
+      {
+        "variant": "waveform_stave_onehot",
+        "value": 21.0,
+        "detail": "same as blind variants, except explicit downstream stave one-hot is intentionally included"
+      },
+      {
+        "variant": "waveform_amp_shape",
+        "value": 29.0,
+        "detail": "no run, event id, event order, stave id, other-stave time, or held-out target"
+      },
+      {
+        "variant": "waveform_amp_shape_stave",
+        "value": 32.0,
+        "detail": "same as blind variants, except explicit downstream stave one-hot is intentionally included"
+      }
+    ],
+    "shuffled_controls": [
+      {
+        "variant": "waveform_only",
+        "value": 1.4870642859880854
+      },
+      {
+        "variant": "waveform_stave_onehot",
+        "value": 1.4790461803628605
+      },
+      {
+        "variant": "waveform_amp_shape",
+        "value": 1.4580219152033438
+      },
+      {
+        "variant": "waveform_amp_shape_stave",
+        "value": 1.5020543000203341
+      }
+    ]
+  },
+  "verdict": "large_ml_gain_requires_followup_even_after_negative_controls",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "bc5e2fa88d836de18bcaa8f7e320f4d5bc9db9b8",
+  "next_tickets": [
+    "P03f: leave-one-heldout-run repetition of P03e feature ablations across each sample-II analysis run",
+    "P03g: detector-label permutation stress test for stave-aware residual timing models"
+  ]
+}

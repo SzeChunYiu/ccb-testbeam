@@ -1,0 +1,8 @@
+check,value,flag
+forbidden_feature_overlap,,False
+heldout_run_overlap,none; each analysis run excluded from its prediction fold,False
+group_split_r2_mean,0.15522810189030445,False
+row_split_r2,0.15854851253829372,False
+row_minus_group_rmse_ns,0.3909496235251848,False
+shuffled_target_r2,0.010591664619512886,False
+suspicious_ml_ci_dominates_traditional,False,False

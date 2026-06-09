@@ -1,0 +1,8 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,must be zero for by-run validation
+forbidden_feature_audit,0.0,True,"benchmark features exclude run, event_index, stave_index, artifact row ids, raw row ids, and z latents"
+release_embedding_benchmark_guard,1.0,True,"all-data release embeddings are loader-validated only, not used as benchmark features"
+artifact_absent_regenerate_path,1.0,True,absent ignored NPZ has exact regenerate command
+amplitude_only_balanced_accuracy,0.345163489677185,True,amplitude is a detector proxy but weaker than waveform ML
+event_index_only_balanced_accuracy,0.2613528986854876,True,event ordinal alone should not carry stave identity across held-out runs
+shuffled_label_balanced_accuracy,0.24103618228432505,True,label-shuffle null should stay near four-class chance

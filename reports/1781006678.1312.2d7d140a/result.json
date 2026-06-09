@@ -1,0 +1,92 @@
+{
+  "study": "S02c",
+  "ticket": "1781006678.1312.2d7d140a",
+  "worker": "testbeam-laptop-3",
+  "title": "template timing sensitivity to selector semantics",
+  "reproduced_raw_root_first": true,
+  "selector_reproduction": [
+    {
+      "quantity": "S00 median-first-four selected pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S00a dynamic-range equivalent count",
+      "report_value": 706373,
+      "reproduced": 706373,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "Dynamic-only excess pulses",
+      "report_value": 65636,
+      "reproduced": 65636,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "Median-only pulses",
+      "report_value": 0,
+      "reproduced": 0,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      65
+    ]
+  },
+  "traditional": {
+    "method": "global_template_phase_plus_train_only_polynomial_timewalk",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "median_first4_value": 1.6354173420044433,
+    "median_first4_ci": [
+      1.491259325191034,
+      1.9099084855659234
+    ],
+    "dynamic_range_value": 1.805804249672487,
+    "dynamic_range_ci": [
+      1.6617754601060488,
+      2.0321743367267078
+    ],
+    "dynamic_minus_median_ns": 0.17038690766804376
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_template_phase",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "median_first4_value": 1.3915306248207993,
+    "median_first4_ci": [
+      1.2759991898100034,
+      1.6197808923542618
+    ],
+    "dynamic_range_value": 1.4187365789831152,
+    "dynamic_range_ci": [
+      1.3241970700147816,
+      1.6114495017307637
+    ],
+    "dynamic_minus_median_ns": 0.02720595416231597
+  },
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S02d: leave-one-run-out selector-semantics timing over all Sample-II analysis runs",
+    "S00c: raw selector-count CI regression for median vs dynamic-range gates"
+  ],
+  "git_commit": "feb39f65d12d0cde8d6baff8c8e3a5ff75baf1a6"
+}

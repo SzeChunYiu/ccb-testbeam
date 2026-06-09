@@ -1,0 +1,13 @@
+selector,check,value,pass
+median_first4,train_heldout_run_overlap,0.0,True
+median_first4,train_heldout_event_id_overlap,0.0,True
+median_first4,normalized_waveform_exact_hash_overlap,0.0,True
+median_first4,features_exclude_run_event_other_stave_times,1.0,True
+median_first4,traditional_shuffled_target_sigma68_ns,2.9207846756912788,True
+median_first4,ml_shuffled_target_sigma68_ns,2.750963754913716,True
+dynamic_range,train_heldout_run_overlap,0.0,True
+dynamic_range,train_heldout_event_id_overlap,0.0,True
+dynamic_range,normalized_waveform_exact_hash_overlap,0.0,True
+dynamic_range,features_exclude_run_event_other_stave_times,1.0,True
+dynamic_range,traditional_shuffled_target_sigma68_ns,2.7536724135074575,True
+dynamic_range,ml_shuffled_target_sigma68_ns,2.6600046926281458,True

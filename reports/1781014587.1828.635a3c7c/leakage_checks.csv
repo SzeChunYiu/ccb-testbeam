@@ -1,0 +1,5 @@
+check,value,n,pass_count,all_pass
+propensity_train_auc,0.8927849692003367,33,33,True
+shuffled_domain_auc,0.46339111965067337,33,33,True
+train_heldout_run_overlap,0.0,33,33,True
+feature_exclusion_forbidden_columns,0.0,1,1,True

@@ -1,0 +1,42 @@
+{
+  "study": "S16f",
+  "ticket": "1781014587.1828.635a3c7c",
+  "worker": "testbeam-laptop-4",
+  "title": "quantify quiet-proxy selection bias in pedestal closure",
+  "data_root": "/home/billy/ccb-data",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781014587.1828.635a3c7c",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "downstream_stave_idx": [1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "primary_quiet_event_max_amplitude_adc": 80.0,
+  "quiet_cut_scan_adc": [40.0, 80.0, 120.0, 200.0],
+  "pretrigger_spread_bins_adc": [0.0, 5.0, 10.0, 20.0, 50.0, 1000000000.0],
+  "negative_tolerance_adc": {"floor": 25.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.35, "low_fraction": 0.05, "negative_adc": 50.0},
+  "max_quiet_stave_records_per_run": 2000,
+  "max_beam_pulses_per_run": 2000,
+  "random_seed": 164587,
+  "bootstrap_replicates": 250,
+  "bootstrap_max_records_per_run": 50000,
+  "timing": {
+    "cfd_fraction": 0.20,
+    "timing_shift_tail_ns": 0.50
+  },
+  "ml": {
+    "max_train_records_per_domain": 60000,
+    "propensity_clip_min": 0.05,
+    "propensity_clip_max": 20.0,
+    "logistic_c": 1.0
+  }
+}

@@ -1,0 +1,7 @@
+tier,check,sigma68_ns,interpretation,trigger
+loose500,actual_ml_b_plus_a,3.1147359254163987,nominal run-held-out ML residual width,primary_loose_tier
+loose500,runwise_shuffled_a_controls,3.018060362327999,A controls lose event matching but preserve run marginals,primary_loose_tier
+loose500,intentional_target_echo,0.0,positive leakage sentinel; should be unrealistically small,primary_loose_tier
+nominal1000,actual_ml_b_plus_a,2.6287295508485897,nominal run-held-out ML residual width,ml_a_control_ci_below_zero
+nominal1000,runwise_shuffled_a_controls,2.6640021177023288,A controls lose event matching but preserve run marginals,ml_a_control_ci_below_zero
+nominal1000,intentional_target_echo,0.0,positive leakage sentinel; should be unrealistically small,ml_a_control_ci_below_zero

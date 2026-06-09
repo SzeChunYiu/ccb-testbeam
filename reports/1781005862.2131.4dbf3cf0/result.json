@@ -1,0 +1,253 @@
+{
+  "study": "P04b",
+  "ticket_id": "1781005862.2131.4dbf3cf0",
+  "worker": "testbeam-laptop-2",
+  "raw_reproduction_first": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true,
+    "n_valid_rows": 640482,
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "benchmark": [
+      {
+        "target": "duplicate_odd_charge",
+        "method": "integral_calibrated",
+        "subset": "p04_heldout_runs_57_65",
+        "n": 26857,
+        "bias_median_frac": -0.09118454757895615,
+        "res68_abs_frac": 0.1954122908748589,
+        "full_rms_frac": 1.6637384425713868,
+        "within_10pct": 0.40332129426220353
+      },
+      {
+        "target": "duplicate_odd_charge",
+        "method": "ml_hgb",
+        "subset": "p04_heldout_runs_57_65",
+        "n": 26857,
+        "bias_median_frac": 0.0006793504828024706,
+        "res68_abs_frac": 0.015283547958006037,
+        "full_rms_frac": 0.04585526879364233,
+        "within_10pct": 0.9696168596641471
+      }
+    ],
+    "reference_charge_res68": {
+      "integral_calibrated": 0.1954122909,
+      "ml_hgb": 0.0150719202
+    }
+  },
+  "external_proxy": "Sample II penetrating B-stack downstream physical charge: B4+B6+B8 positive-lobe charge",
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "split": "leave-one-run-out by run",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 1000
+  },
+  "n_external_rows": 3774,
+  "counts_by_run": [
+    {
+      "run": 58,
+      "events_total": 34141,
+      "b2_selected": 15791,
+      "penetrating_rows": 72
+    },
+    {
+      "run": 59,
+      "events_total": 42303,
+      "b2_selected": 13565,
+      "penetrating_rows": 749
+    },
+    {
+      "run": 60,
+      "events_total": 36074,
+      "b2_selected": 9873,
+      "penetrating_rows": 802
+    },
+    {
+      "run": 61,
+      "events_total": 36535,
+      "b2_selected": 11015,
+      "penetrating_rows": 925
+    },
+    {
+      "run": 62,
+      "events_total": 37584,
+      "b2_selected": 11635,
+      "penetrating_rows": 798
+    },
+    {
+      "run": 63,
+      "events_total": 37030,
+      "b2_selected": 14566,
+      "penetrating_rows": 365
+    },
+    {
+      "run": 65,
+      "events_total": 38424,
+      "b2_selected": 11768,
+      "penetrating_rows": 63
+    }
+  ],
+  "external_summary": [
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "traditional_loglinear",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0208785719,
+      "res68_abs_frac": 0.2249517729,
+      "full_rms_frac": 0.3587593679,
+      "within_10pct": 0.3259141494,
+      "bias_ci95": [
+        -0.0781844513,
+        0.0454019028
+      ],
+      "res68_ci95": [
+        0.2081588064,
+        0.2383832443
+      ],
+      "full_rms_ci95": [
+        0.3041612843,
+        0.448003336
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "p04_duplicate_ml_transfer",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0426987104,
+      "res68_abs_frac": 0.2469705626,
+      "full_rms_frac": 0.5413305444,
+      "within_10pct": 0.2943826179,
+      "bias_ci95": [
+        -0.0970807352,
+        0.0348114857
+      ],
+      "res68_ci95": [
+        0.2288374197,
+        0.273081797
+      ],
+      "full_rms_ci95": [
+        0.4494842756,
+        0.6789776184
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "external_ml_hgb",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0177479059,
+      "res68_abs_frac": 0.2118857394,
+      "full_rms_frac": 0.2670531601,
+      "within_10pct": 0.3513513514,
+      "bias_ci95": [
+        -0.0580924849,
+        0.0290490751
+      ],
+      "res68_ci95": [
+        0.2018524485,
+        0.2289659755
+      ],
+      "full_rms_ci95": [
+        0.2413302576,
+        0.3081363574
+      ]
+    },
+    {
+      "target": "same_event_B2_duplicate_charge",
+      "method": "p04_duplicate_ml_b2_only",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": 0.0002423643,
+      "res68_abs_frac": 0.0212661242,
+      "full_rms_frac": 0.1836510609,
+      "within_10pct": 0.9443561208,
+      "bias_ci95": [
+        -0.0001479952,
+        0.0006948917
+      ],
+      "res68_ci95": [
+        0.0186331476,
+        0.0260219012
+      ],
+      "full_rms_ci95": [
+        0.0883997201,
+        0.2623037901
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "shuffled_external_ml",
+      "split": "negative_control",
+      "n": 3774,
+      "bias_median_frac": -0.0529666081,
+      "res68_abs_frac": 0.2811610227,
+      "full_rms_frac": 0.6124160426,
+      "within_10pct": 0.2652358241,
+      "bias_ci95": [
+        -0.1061279464,
+        0.0191892558
+      ],
+      "res68_ci95": [
+        0.268841789,
+        0.2979973328
+      ],
+      "full_rms_ci95": [
+        0.5250044873,
+        0.7255170529
+      ]
+    }
+  ],
+  "leakage_audit": {
+    "split": "leave-one-run-out; each prediction is from a model trained on other runs",
+    "features_exclude": [
+      "run",
+      "eventno",
+      "evt",
+      "downstream_charge",
+      "B4_charge",
+      "B6_charge",
+      "B8_charge"
+    ],
+    "run_overlap_train_heldout": 0,
+    "shuffled_external_ml_res68": 0.28116102270344523,
+    "duplicate_b2_loro_res68": 0.02126612424542261
+  },
+  "comparison_to_p04": {
+    "p04_duplicate_charge_ml_res68": 0.0150719202,
+    "p04_duplicate_charge_integral_res68": 0.1954122909,
+    "same_rows_duplicate_ml_b2_res68": 0.02126612424542261,
+    "best_external_method": "external_ml_hgb",
+    "best_external_res68": 0.21188573942856517,
+    "best_external_res68_ci95": [
+      0.20185244850112732,
+      0.22896597547782233
+    ],
+    "external_to_p04_ml_res68_ratio": 14.058310859990167
+  },
+  "next_tickets": [
+    {
+      "title": "P04c: A/B event-matched charge proxy cross-check",
+      "body": "Use event-matched HRDA physical charge where topology allows to test whether P04/P04b downstream-proxy conclusions transfer to the opposite stack."
+    },
+    {
+      "title": "S14b: range-energy calibration preflight from P04b uncertainty",
+      "body": "Propagate P04b external charge-proxy res68 into a minimal range-energy lookup preflight before any per-event energy claim."
+    }
+  ],
+  "finding": "The original P04 duplicate-readout ML charge closure reproduces at res68 0.01528 against the stored 0.01507 reference, but the best run-held-out external downstream-charge proxy is external_ml_hgb with res68 0.21189 [0.20185, 0.22897]. On the same external rows, B2 duplicate-readout ML closure is 0.02127; therefore most of the P04 one-percent-level result is same-event duplicate-readout closure, not demonstrated deposited-energy recovery.",
+  "runtime_sec": 26.9
+}

@@ -1,0 +1,25 @@
+{
+  "ticket_id": "1781010192.1271.5e804d02",
+  "script": "reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels/p01c_repeated_leakage_sentinels.py",
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    "REPORT.md",
+    "ae_training_loss.csv",
+    "input_sha256.csv",
+    "leakage_pass_rules.csv",
+    "manifest.json",
+    "p01c_repeated_leakage_sentinels.py",
+    "random_row_benchmark.csv",
+    "real_by_stratum.csv",
+    "repeated_shuffle_battery.csv",
+    "reproduction_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "run_heldout_benchmark.csv",
+    "shuffle_summary.csv"
+  ]
+}

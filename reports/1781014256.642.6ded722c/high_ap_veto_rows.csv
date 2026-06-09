@@ -1,0 +1,2 @@
+run,event_index,eventno,stave,taxon,prop_timing_tail,prop_charge_outlier,prop_baseline_excursion,prop_pileup_like,traditional_action_score,ml_action_score,charge_area_proxy,pileup_score,baseline_score,timing_score
+42,16371,783673,B2,novel_broad_template_mismatch,False,True,False,False,250.77566437339812,907.86474609375,-28.858556747436523,1.677884963508013,250.77566437339812,-1.5350195254129761

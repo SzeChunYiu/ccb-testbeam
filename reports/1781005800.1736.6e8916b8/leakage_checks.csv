@@ -1,0 +1,10 @@
+check,value,pass
+train_heldout_run_overlap,0.0,True
+train_heldout_event_id_overlap,0.0,True
+drift_basis_contains_run_one_hot,0.0,True
+drift_basis_uses_heldout_targets,0.0,True
+final_fit_train_rows_only,1.0,True
+normalized_waveform_exact_hash_overlap,0.0,True
+binned_selected_shuffled_target_sigma68_ns,3.963227162086864,True
+global_selected_shuffled_target_sigma68_ns,2.8650292343680914,True
+forbidden_heldout_oracle_binned_sigma68_ns,2.872990732862707,True

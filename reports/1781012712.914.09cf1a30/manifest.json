@@ -1,0 +1,88 @@
+{
+  "ticket_id": "1781012712.914.09cf1a30",
+  "script": "scripts/p08a_1781012712_914_09cf1a30_penetration_weak_pid.py",
+  "config": "configs/p08a_1781012712_914_09cf1a30.json",
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "p01b_embedding_diagnostic": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz",
+  "input_sha256_csv": "reports/1781012712.914.09cf1a30/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    {
+      "file": "REPORT.md",
+      "sha256": "662a0da1e08fd08b05f2467da5186ef4f61dffe152e04341a3d74ae1f59a3cfa",
+      "bytes": 4374
+    },
+    {
+      "file": "benchmark_balanced_counts.csv",
+      "sha256": "9c6dd5842e7ea38a0734cb994b285a1533222dca8e0a74a26fddb72b4962ecaf",
+      "bytes": 1601
+    },
+    {
+      "file": "heldout_run_label_counts.csv",
+      "sha256": "f2df80bb9ded94e52e33aef711ec28eb19d9b87071906a8966a755083cc9daad",
+      "bytes": 1555
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+      "bytes": 3565
+    },
+    {
+      "file": "leakage_checks.csv",
+      "sha256": "ab9d1d984c247f1255bfcfb7642b215212880c5bf41f8e887d37f0b2eaa1ef03",
+      "bytes": 888
+    },
+    {
+      "file": "ml_fixed_hgb_folds.csv",
+      "sha256": "4e4b96892826f7321ca5fefa56513ad257e94722134c108cbbecce7b3598cc1c",
+      "bytes": 1435
+    },
+    {
+      "file": "oof_prediction_preview.csv",
+      "sha256": "41ec409f074e7efcea310696e9969a1de5b7f66d27ee8f141bc51ff70f00db9a",
+      "bytes": 2252983
+    },
+    {
+      "file": "reproduction_counts_by_group.csv",
+      "sha256": "b56cfcd2bc7ffd01d7bcde923bc801c41fc0b21514d2ca074ddc019a9c70167e",
+      "bytes": 302
+    },
+    {
+      "file": "reproduction_counts_by_run.csv",
+      "sha256": "8f9ef8fa43bdc92e1201dc315610c07fbc10656fa99e5c1f68fc2c17dcf0f63d",
+      "bytes": 2259
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "f383906e6fd2f26e35bd34a7c496d2e0de07d4ade3d8ed80fa50b2ebe6a3255f",
+      "bytes": 329
+    },
+    {
+      "file": "result.json",
+      "sha256": "016fcd305ee6d94ae3abec92124e6631490b0b14d43adc4a6981e59400c36b22",
+      "bytes": 4759
+    },
+    {
+      "file": "scoreboard.csv",
+      "sha256": "64326b94eb00b06f81e5d3258a28ccf6bb631b9dc168fb4e44b95735e962186b",
+      "bytes": 2048
+    },
+    {
+      "file": "traditional_candidate_scan.csv",
+      "sha256": "1f319929e074be654a60a77cbcda8b1633b1003baa32bda50ffa69712d352d37",
+      "bytes": 13619
+    },
+    {
+      "file": "traditional_fold_choices.csv",
+      "sha256": "1ebc360bdb6be4730936abb379ae2327e62953d351a6ba8c869ab1ea8dd60b53",
+      "bytes": 1405
+    },
+    {
+      "file": "weak_label_counts_by_run.csv",
+      "sha256": "017e16a1a63942f6d98c2665709423b6cefe57ce0f941a9e0488cbe9b40692b9",
+      "bytes": 1661
+    }
+  ]
+}

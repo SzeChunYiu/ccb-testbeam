@@ -1,0 +1,263 @@
+{
+  "study": "S14c",
+  "ticket_id": "1781014263.712.4e9c774b",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "n_pulse_rows_after_valid_charge_cut": 640540,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "nominal_geometry": "center_4cm",
+  "nominal_metrics": [
+    {
+      "geometry": "center_4cm",
+      "method": "observed_even_charge",
+      "n": 332852,
+      "n_unsaturated_control": 226635,
+      "n_saturated": 106217,
+      "energy_proxy_bias_frac": -0.0122524912,
+      "energy_proxy_res68_frac": 0.0211892254,
+      "unsat_charge_bias_frac": -0.049602661,
+      "unsat_charge_res68_frac": 0.1399024494,
+      "depth_order_violation_rate": 0.0,
+      "sat_minus_unsat_log_charge_delta": 0.8247090227,
+      "energy_res68_ci95": [
+        0.0198116195,
+        0.0225089588
+      ],
+      "unsat_charge_res68_ci95": [
+        0.1061314271,
+        0.1748443883
+      ],
+      "unsat_charge_bias_ci95": [
+        -0.0680133428,
+        -0.0366386971
+      ],
+      "depth_violation_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "sat_minus_unsat_log_delta_ci95": [
+        0.7621722915,
+        0.9047631134
+      ]
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "traditional_saturated_excluded",
+      "n": 226635,
+      "n_unsaturated_control": 226635,
+      "n_saturated": 0,
+      "energy_proxy_bias_frac": -0.0158059578,
+      "energy_proxy_res68_frac": 0.0212946425,
+      "unsat_charge_bias_frac": -0.049602661,
+      "unsat_charge_res68_frac": 0.1399024494,
+      "depth_order_violation_rate": 0.0,
+      "sat_minus_unsat_log_charge_delta": null,
+      "energy_res68_ci95": [
+        0.0202678507,
+        0.0223703144
+      ],
+      "unsat_charge_res68_ci95": [
+        0.1094532758,
+        0.1728738902
+      ],
+      "unsat_charge_bias_ci95": [
+        -0.066828274,
+        -0.0350292217
+      ],
+      "depth_violation_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "sat_minus_unsat_log_delta_ci95": [
+        null,
+        null
+      ]
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "traditional_template_corrected",
+      "n": 332852,
+      "n_unsaturated_control": 226635,
+      "n_saturated": 106217,
+      "energy_proxy_bias_frac": -0.0162602141,
+      "energy_proxy_res68_frac": 0.0288937388,
+      "unsat_charge_bias_frac": -0.049602661,
+      "unsat_charge_res68_frac": 0.1399024494,
+      "depth_order_violation_rate": 0.0,
+      "sat_minus_unsat_log_charge_delta": 1.1202944034,
+      "energy_res68_ci95": [
+        0.0247777223,
+        0.0349596024
+      ],
+      "unsat_charge_res68_ci95": [
+        0.1094532758,
+        0.1728738902
+      ],
+      "unsat_charge_bias_ci95": [
+        -0.066828274,
+        -0.0350292217
+      ],
+      "depth_violation_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "sat_minus_unsat_log_delta_ci95": [
+        1.0509002705,
+        1.1832062865
+      ]
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "ml_p07_p04_corrected",
+      "n": 332852,
+      "n_unsaturated_control": 226635,
+      "n_saturated": 106217,
+      "energy_proxy_bias_frac": 0.0007923593,
+      "energy_proxy_res68_frac": 0.0145484521,
+      "unsat_charge_bias_frac": 0.0026164217,
+      "unsat_charge_res68_frac": 0.0663344325,
+      "depth_order_violation_rate": 0.0,
+      "sat_minus_unsat_log_charge_delta": 0.9192250013,
+      "energy_res68_ci95": [
+        0.0141655716,
+        0.0150051293
+      ],
+      "unsat_charge_res68_ci95": [
+        0.0579077954,
+        0.0768260801
+      ],
+      "unsat_charge_bias_ci95": [
+        -0.0020604513,
+        0.0057902807
+      ],
+      "depth_violation_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "sat_minus_unsat_log_delta_ci95": [
+        0.8541846719,
+        0.9950396187
+      ]
+    }
+  ],
+  "geometry_summary": [
+    {
+      "geometry": "center_2cm",
+      "observed_even_charge": 0.019103582,
+      "traditional_template_corrected": 0.0269262466,
+      "traditional_template_energy_ci95": [
+        0.0221468459,
+        0.0326242111
+      ],
+      "ml_p07_p04_corrected": 0.0133793445,
+      "ml_p07_p04_energy_ci95": [
+        0.0130897872,
+        0.0137451355
+      ],
+      "ml_minus_traditional_template_res68": -0.0135469021,
+      "traditional_template_minus_observed_res68": 0.0078226646
+    },
+    {
+      "geometry": "center_4cm",
+      "observed_even_charge": 0.0211892254,
+      "traditional_template_corrected": 0.0288937388,
+      "traditional_template_energy_ci95": [
+        0.0247777223,
+        0.0349596024
+      ],
+      "ml_p07_p04_corrected": 0.0145484521,
+      "ml_p07_p04_energy_ci95": [
+        0.0141655716,
+        0.0150051293
+      ],
+      "ml_minus_traditional_template_res68": -0.0143452868,
+      "traditional_template_minus_observed_res68": 0.0077045134
+    },
+    {
+      "geometry": "zero_4cm",
+      "observed_even_charge": 0.0663056805,
+      "traditional_template_corrected": 0.1006663299,
+      "traditional_template_energy_ci95": [
+        0.0903399279,
+        0.1100754398
+      ],
+      "ml_p07_p04_corrected": 0.0383460582,
+      "ml_p07_p04_energy_ci95": [
+        0.0339796729,
+        0.0480115806
+      ],
+      "ml_minus_traditional_template_res68": -0.0623202717,
+      "traditional_template_minus_observed_res68": 0.0343606493
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "ml_features_exclude_run_event_depth_pid_and_odd_samples",
+      "value": "true",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_p04_unsat_charge_res68",
+      "value": "0.507706",
+      "pass": true
+    },
+    {
+      "check": "observed_even_charge_energy_res68_nominal",
+      "value": "0.021189",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. On nominal 4 cm geometry, observed even charge gives energy-proxy res68 0.0212; the traditional rising-edge saturation correction gives 0.0289, and ML P07/P04 correction gives 0.0145 (ML - traditional -0.0143). Unsaturated-control charge res68 is 0.1399 for traditional and 0.0663 for ML. The saturation-minus-unsaturated log-charge delta is 1.1203 traditional versus 0.9192 ML. The correction changes internal ordering diagnostics, but this remains a charge-proxy/PSTAR-ordering study, not an absolute energy or PID calibration.",
+  "runtime_sec": 101.2
+}

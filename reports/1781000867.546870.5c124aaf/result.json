@@ -1,0 +1,89 @@
+{
+  "study": "S10b",
+  "ticket": "1781000867.546870.5c124aaf",
+  "worker": "testbeam-laptop-3",
+  "title": "Measured tau_eff with timing-template decay/live-time fit",
+  "reproduced": true,
+  "reproduction": {
+    "combined_Rmax_MHz": 4.222222222222222,
+    "assumed_tau_eff_ns": 90.0,
+    "topology_checks_passed": 6,
+    "topology_checks_total": 6
+  },
+  "traditional": {
+    "method": "run-held-out median waveform template exponential tail crossing",
+    "tau_eff_live10_ns": 124.79018394263471,
+    "tau_eff_live10_ci95_ns": [
+      123.33094981246663,
+      126.35875117626817
+    ],
+    "tau_eff_live20_ns": 101.86521002119034,
+    "tau_eff_live20_ci95_ns": [
+      100.92820069010037,
+      102.88379719732788
+    ],
+    "empirical_mean_live10_ns": 123.25552601769233,
+    "rescaled_Rmax_MHz": 3.045111305987686
+  },
+  "ml": {
+    "method": "run-held-out standardized Ridge regressor on pulse-shape features",
+    "tau_eff_live10_ns": 123.18700579477478,
+    "tau_eff_live10_ci95_ns": [
+      120.72334550528137,
+      125.54704640013487
+    ],
+    "mean_mae_ns": 4.440210511421909,
+    "mean_r2": 0.8765796654604856
+  },
+  "leakage": {
+    "flags": 0,
+    "checks": [
+      {
+        "check": "group_split_by_run_mean_r2",
+        "value": 0.8765796654604856,
+        "threshold": 0.9,
+        "flag": false,
+        "interpretation": "Flag if run-held-out R2 is implausibly high."
+      },
+      {
+        "check": "random_row_split_r2",
+        "value": 0.8820349720275455,
+        "threshold": 0.9,
+        "flag": false,
+        "interpretation": "Large row-split advantage would indicate event/run leakage risk."
+      },
+      {
+        "check": "shuffled_target_r2",
+        "value": -0.0003042573919178615,
+        "threshold": 0.1,
+        "flag": false,
+        "interpretation": "Shuffled labels should not predict held-out pulse live time."
+      },
+      {
+        "check": "forbidden_features_present",
+        "value": 0.0,
+        "threshold": 0.0,
+        "flag": false,
+        "interpretation": "Feature list excludes run, event id, current, and direct last-above-threshold width."
+      }
+    ]
+  },
+  "input_sha256": {
+    "hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "da9651c56ef6495ce9656d84b69b600daa6d8f86",
+  "runtime_sec": 28.2
+}

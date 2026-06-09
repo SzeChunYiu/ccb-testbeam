@@ -1,0 +1,5 @@
+check,value,threshold,flag,interpretation
+group_split_by_run_mean_r2,0.8765796654604856,0.9,False,Flag if run-held-out R2 is implausibly high.
+random_row_split_r2,0.8820349720275455,0.9,False,Large row-split advantage would indicate event/run leakage risk.
+shuffled_target_r2,-0.0003042573919178615,0.1,False,Shuffled labels should not predict held-out pulse live time.
+forbidden_features_present,0.0,0.0,False,"Feature list excludes run, event id, current, and direct last-above-threshold width."

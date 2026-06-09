@@ -1,0 +1,4 @@
+selection_method,n_rows,duplicate_run_event_rate,duplicate_run_stave_pulse_rate,max_run_stave_share
+ml_pca_ae_isolation,128,0.046875,0.0,0.0625
+traditional_robust_template,128,0.015625,0.0,0.0625
+cross_method_union,244,0.1328125,0.09375,0.06557377049180328

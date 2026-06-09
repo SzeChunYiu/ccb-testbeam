@@ -1,0 +1,21 @@
+{
+  "ticket_id": "1781011449.1304.37c054cc",
+  "study_id": "P09b",
+  "title": "manual waveform-gallery adjudication",
+  "output_dir": "reports/1781011449.1304.37c054cc__p09b_manual_waveform_gallery_adjudication",
+  "p09a_config": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+  "p09a_report_dir": "reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy",
+  "target_taxa": [
+    "novel_early_pretrigger",
+    "novel_delayed_peak",
+    "novel_broad_template_mismatch"
+  ],
+  "heldout_runs": [42, 57, 64, 65],
+  "bootstrap_replicates": 5000,
+  "random_seed": 9092,
+  "ml": {
+    "pca_components": 6,
+    "training_sample_rows": 120000,
+    "nearest_neighbors": 7
+  }
+}

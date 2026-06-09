@@ -1,0 +1,3 @@
+method,sigma68_ns,published_sigma68_ns,delta_ns,n_events,n_pair_residuals,uses_amplitude_bin_feature,timing_train_rows,timing_eval_rows
+prior P01c reproduced CFD20,3.1884502039551736,3.1884502039551736,0.0,408,1224,True,14646,1224
+prior P01c reproduced ML latent,1.9892219585180269,1.9892228263616547,-8.678436278497514e-07,408,1224,True,14646,1224

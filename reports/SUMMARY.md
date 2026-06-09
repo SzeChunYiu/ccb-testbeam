@@ -79,17 +79,16 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 ## Current steering notes
 
-- Queue health: the exact requested command `tn-ticket list testbeam` still reports
-  `open=7 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
+- Queue health: the exact requested command `tn-ticket list testbeam` reports
+  `open=9 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
-  again with `--project testbeam`; project-aware queue audits during this pass remained well above
-  the ready-ticket floor, with more than 100 open tickets even as workers claimed/completed work.
-  This pass appended four ready non-duplicate tickets:
-  S06a charge-proxy timing-resolution monotonicity after S14b
-  (`1781021805.1799.6d33505e`), P10f template tail-shape saturation and current transfer
-  (`1781021825.1891.293d03cc`), S13c charge-matched current weak-supervision null
-  (`1781021831.1960.52610a78`), and P11a pretrigger baseline spectrum atom table
-  (`1781021837.2028.5a294edc`).
+  again with `--project testbeam`; the project-aware testbeam queue remains deep
+  (`queue=125` before this append pass), but the mission trigger still required new ready work.
+  This pass appended three ready non-duplicate tickets:
+  P04h A-stack charge-transfer support map by B-stack topology
+  (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
+  (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
+  (`1781023340.632.43377364`).
 - Newest reports sharpen the next claims: S00b/S02c turn selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk and selector
@@ -133,7 +132,14 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   contamination/pathology while true forced/random pedestal data remain absent. The freshest S03d
   HGB result improves held-out timewalk residuals but now needs monotonicity and transfer
   falsification; S10e shows the current excess survives charge-energy stratification; P07e keeps
-  saturation recovery non-adoptable until acceptance rules bound bias and timing-tail risk.
+  saturation recovery non-adoptable until acceptance rules bound bias and timing-tail risk. The
+  freshest P04c A/B transfer report says external A-stack charge prediction is broad and
+  topology-limited (best res68 0.519 vs shuffled 0.521), so energy/PID consumers need support maps
+  before treating charge transfer as truth. The latest S02d/S02e drift reports say global timewalk
+  remains stable, current/rate drift adds no gain, and the binned branch can lose to shuffled-target
+  controls. The latest S02d anomaly-tail report shows a generic ML high-risk cut can reduce tails
+  only while removing about 24% of pairs and shifting composition, so tail cuts must be support- and
+  composition-preserving.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
@@ -145,6 +151,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   pass adds S06a for charge-proxy timing monotonicity, P10f for tail-shape/live-time transfer
   across saturation and current, S13c for charge-matched current weak-supervision nulls, and P11a
   for pretrigger baseline spectra before they feed dropout, pile-up, PID, or energy consumers.
+  This pass adds P04h for external charge-transfer support limits, S02h for binned-timewalk
+  null-control failure analysis, and P12a for a compact covariance atom table tying saturation,
+  pile-up, baseline, dropout/anomaly, timing-tail, and charge-error axes together before PID or
+  energy consumers reuse them.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

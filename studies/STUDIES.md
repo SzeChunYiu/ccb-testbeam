@@ -273,16 +273,14 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=7 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
+`open=9 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: project-aware queue audits during this pass remained well above the
-ready-ticket floor, with more than 100 open tickets even as workers claimed/completed work. This
-pass appended four additional non-duplicate ready tickets under `project:testbeam`: S06a
-charge-proxy timing-resolution monotonicity after
-S14b (`1781021805.1799.6d33505e`), P10f template tail-shape saturation and current transfer
-(`1781021825.1891.293d03cc`), S13c charge-matched current weak-supervision null
-(`1781021831.1960.52610a78`), and P11a pretrigger baseline spectrum atom table
-(`1781021837.2028.5a294edc`). The discrepancy is a shim/argument parsing issue, not a scientific
+with `--project testbeam`: the project-aware testbeam queue remains deep, but the mission trigger
+still required a small set of new ready studies. This pass appended three additional
+non-duplicate ready tickets under `project:testbeam`: P04h A-stack charge-transfer support map by
+B-stack topology (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
+(`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
+(`1781023340.632.43377364`). The discrepancy is a shim/argument parsing issue, not a scientific
 queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
@@ -365,6 +363,14 @@ the high-current downstream excess remains after P04/P07 charge-energy stratific
 (0.00676/event with CIs excluding zero), while charge-residual ML is diagnostic rather than
 physics-facing. P07e finds the best retained-window saturation recovery is still non-adoptable
 (res68 0.0812, median bias 0.0292), so saturation use now needs calibrated accept/veto rules.
+The freshest P04c A/B charge-transfer report makes the energy/PID risk more concrete: external
+A-stack charge prediction stays broad and topology-limited, with B-charge ridge res68 0.519 and
+waveform ExtraTrees res68 0.521, essentially at the shuffled-target sentinel. S02d/S02e now also
+make the timing-template risk concrete: global no-drift timewalk is stable, current/rate drift
+does not rescue binned branches, and binned selected branches can fail shuffled-target controls.
+The latest anomaly-tail closure finds the ML high-risk cut can reduce timing tails only by removing
+about 24% of pairs and shifting amplitude/pair composition, so pathology vetoes must be matched
+and composition-stable.
 
 Completed since last steering cycle:
 
@@ -645,3 +651,26 @@ Active ready queue highlights:
   timing, charge, anomaly, and pile-up outcomes. ML: pretrigger-only autoencoder or calibrated
   classifier/regressor under run-heldout folds. Metric: baseline-class fractions, timing-tail odds
   ratio, charge-bias delta, dropout/anomaly enrichment, calibration ECE, and bootstrap CIs.
+- **P04h — A-stack charge-transfer support map by B-stack topology.** Decide where the P04c
+  external A-stack charge proxy is identifiable rather than topology-limited. Traditional: frozen
+  B2 log-linear, peak, integral, adaptive-template, and matched topology/support tables with
+  leave-one-run-out rows. ML: calibrated ExtraTrees or quantile residual model using B-stack
+  waveform and charge summaries only, with shuffled-target and topology-only sentinels. Metric:
+  per-stratum bias, res68, full RMS, within-25pct rate, calibration coverage, and
+  ML-minus-traditional delta using run-block bootstrap CIs.
+- **S02h — Binned-timewalk shuffled-target failure autopsy.** Explain why selected
+  amplitude-binned template timewalk branches fail shuffled-target controls while global timewalk
+  stays stable and current/rate drift adds no gain. Traditional: frozen S02b global no-drift
+  timewalk plus binned-template decomposition by bin occupancy, amplitude range, stave, run, and
+  pair composition. ML: regularized residual learner with bin-dropout, shuffled-bin,
+  shuffled-target, and current-covariate sentinels under identical leave-one-run-out folds. Metric:
+  sigma68, full RMS, >5 ns tail fraction, bias-vs-amplitude slope, occupancy-weighted instability
+  score, and ML-minus-traditional deltas with run-block bootstrap CIs.
+- **P12a — Pulse-axis covariance atom table across pathology flags.** Measure which completed
+  pulse-pathology axes move together before downstream timing, amplitude, saturation, pile-up,
+  baseline, dropout, PID, or energy studies consume them. Traditional: matched contingency,
+  odds-ratio, robust covariance, and partial-correlation tables using frozen
+  S00/S02/S03/P04/P07/P09/S10/S16 outputs. ML: sparse graphical model or calibrated multi-label
+  classifier with leave-one-run-out nuisance residualization and shuffled-axis sentinels. Metric:
+  conditional odds ratios, partial correlations, mutual-information deltas, downstream sigma68 or
+  charge-bias deltas, calibration ECE, and stratified run-block bootstrap CIs.

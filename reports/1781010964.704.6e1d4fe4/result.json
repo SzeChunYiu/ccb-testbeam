@@ -1,0 +1,123 @@
+{
+  "study": "S14b",
+  "ticket_id": "1781010964.704.6e1d4fe4",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "invalid_event_rows_removed_after_reproduction": 196,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "nominal_geometry": "center_4cm",
+  "nominal_metrics": [
+    {
+      "geometry": "center_4cm",
+      "method": "pstar_depth_only",
+      "n": 332852,
+      "bias_median_frac": -0.0071590718,
+      "res68_abs_frac": 0.2614611447,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[]",
+      "depth_violation_ci95": "[]"
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "traditional_depth_charge_lookup",
+      "n": 332852,
+      "bias_median_frac": -0.0122524912,
+      "res68_abs_frac": 0.0211892254,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[0.019759173376975067, 0.022616709286844058]",
+      "depth_violation_ci95": "[0.0, 0.0]"
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "ml_monotonic_hgb",
+      "n": 332852,
+      "bias_median_frac": -0.0032981169,
+      "res68_abs_frac": 0.0250078102,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[0.022795672304338082, 0.02847725106827667]",
+      "depth_violation_ci95": "[0.0, 0.0]"
+    }
+  ],
+  "ml_minus_traditional_res68_ci95": [
+    0.0018782418546559696,
+    0.005814438356840856
+  ],
+  "geometry_systematic_envelope": {
+    "traditional_res68_min": 0.019103582006076602,
+    "traditional_res68_max": 0.06630568052994985,
+    "ml_res68_min": 0.02299936646873051,
+    "ml_res68_max": 0.05702182391930542,
+    "ml_minus_traditional_res68_min": -0.009283856610644431,
+    "ml_minus_traditional_res68_max": 0.0038957844626539076
+  },
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "features_exclude_run_event_and_odd_readout",
+      "value": "true",
+      "pass": true
+    },
+    {
+      "check": "depth_only_res68",
+      "value": "0.261461",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_ml_res68",
+      "value": "0.319485",
+      "pass": true
+    }
+  ],
+  "finding": "The nominal 4 cm geometry preflight reproduces S00 exactly and gives held-out odd-readout energy-proxy res68 0.0212 for the PSTAR/depth/even-charge lookup versus 0.0250 for monotonic HGB (ML - traditional 0.0038, run-block 95% CI 0.0019 to 0.0058). Across explicit geometry variants, traditional res68 spans 0.0191-0.0663 and ML spans 0.0230-0.0570. This passes as an internal charge/depth preflight, but it is not an absolute energy calibration: Birks quenching, material budget, and external particle truth remain unresolved.",
+  "runtime_sec": 95.0
+}

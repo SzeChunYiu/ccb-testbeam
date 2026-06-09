@@ -1,0 +1,8 @@
+check,value,unit
+q_calib_analysis_run_overlap,0.0,runs
+timing_train_heldout_run_overlap,0.0,runs
+timing_train_heldout_event_overlap,0.0,events
+explicit_shuffled_target_sigma68,3.6144498146416426,ns
+explicit_uses_run_or_event_features,0.0,bool
+explicit_final_fit_uses_heldout_rows,0.0,bool
+conditional_shuffled_q_mse,0.07424330538670298,mse

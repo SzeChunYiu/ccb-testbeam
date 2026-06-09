@@ -1,7 +1,7 @@
 {
   "study_id": "P02d",
   "ticket_id": "1781015988.1952.109d4b1d",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-1",
   "title": "early-peak topology versus timing tails",
   "script_name": "p02d_1781015988_1952_109d4b1d_early_peak_timing_tails.py",
   "config_name": "p02d_1781015988_1952_109d4b1d_config.json",

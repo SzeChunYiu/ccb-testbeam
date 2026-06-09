@@ -1,0 +1,10 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5,0.5,Same source event before corruption; should be chance.
+post-injection D_t/curvature,0.5199633132121021,0.5606671808841139,"Allowed diagnostic only; label is injected truth, not a timing threshold."
+topology-only RF,0.5013908193862006,0.5019964610579719,Present flags and downstream count only; excluded from main RF.
+absolute-amplitude-only RF,0.5881589784723382,0.6099894900840321,Injection can change peak height; excluded from main RF.
+B2-only shape RF,0.5,0.5,Upstream waveform is not injected; should be near chance.
+downstream-only aggregate shape RF,0.858462971237235,0.8721125066833251,Expected to be informative because corruption is injected downstream.
+shape RF with shuffled training labels,0.49136438757327966,0.5023663411326772,Run-heldout null sanity check.
+pair split violations,0.0,,Must be 0.
+forbidden main RF columns,0.0,,None.

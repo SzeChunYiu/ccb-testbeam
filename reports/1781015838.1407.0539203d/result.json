@@ -1,0 +1,146 @@
+{
+  "study": "S07h",
+  "ticket": "1781015838.1407.0539203d",
+  "worker": "testbeam-laptop-3",
+  "title": "non-D_t target for P02 morphology",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "P02 early-peak pulse rate, peak_sample<=3",
+      "report_value": 0.044,
+      "reproduced": 0.04388333333333334,
+      "delta": -0.00011666666666666076,
+      "tolerance": 0.002,
+      "pass": true,
+      "sample_size": 60000
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72.0,
+      "reproduced": 72.0,
+      "delta": 0.0,
+      "tolerance": 0.0,
+      "pass": true,
+      "sample_size": 10156
+    },
+    {
+      "quantity": "P02d transparent morphology ROC AUC",
+      "report_value": 0.692169373549884,
+      "reproduced": 0.692169373549884,
+      "delta": 0.0,
+      "tolerance": 1e-12,
+      "pass": true,
+      "sample_size": 2227
+    }
+  ],
+  "injected_dataset": {
+    "n_rows": 4310,
+    "n_pairs": 2155,
+    "n_clean": 2155,
+    "n_injected": 2155,
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "traditional": {
+    "method": "transparent P02 morphology",
+    "metric": "leave-one-run-out ROC AUC on injected non-D_t labels",
+    "value": 0.5276177453825076,
+    "ci": [
+      0.5200629832726745,
+      0.536720871245407
+    ]
+  },
+  "strong_traditional_reference": {
+    "method": "traditional timing/template reference",
+    "metric": "leave-one-run-out ROC AUC on injected non-D_t labels",
+    "value": 0.6124055103062537,
+    "ci": [
+      0.6034588010681938,
+      0.6260717104749326
+    ]
+  },
+  "ml": {
+    "method": "shape-only RF P02 morphology",
+    "metric": "leave-one-run-out ROC AUC on injected non-D_t labels",
+    "value": 0.8597877918400527,
+    "ci": [
+      0.8378920813473806,
+      0.8821544967397
+    ],
+    "feature_count": 72,
+    "params": {
+      "n_estimators": 500,
+      "max_depth": 7,
+      "min_samples_leaf": 8
+    }
+  },
+  "leakage_checks": [
+    {
+      "probe": "pre-injection D_t",
+      "roc_auc": 0.5,
+      "average_precision": 0.5,
+      "notes": "Same source event before corruption; should be chance."
+    },
+    {
+      "probe": "post-injection D_t/curvature",
+      "roc_auc": 0.5199633132121021,
+      "average_precision": 0.5606671808841139,
+      "notes": "Allowed diagnostic only; label is injected truth, not a timing threshold."
+    },
+    {
+      "probe": "topology-only RF",
+      "roc_auc": 0.5013908193862006,
+      "average_precision": 0.5019964610579719,
+      "notes": "Present flags and downstream count only; excluded from main RF."
+    },
+    {
+      "probe": "absolute-amplitude-only RF",
+      "roc_auc": 0.5881589784723382,
+      "average_precision": 0.6099894900840321,
+      "notes": "Injection can change peak height; excluded from main RF."
+    },
+    {
+      "probe": "B2-only shape RF",
+      "roc_auc": 0.5,
+      "average_precision": 0.5,
+      "notes": "Upstream waveform is not injected; should be near chance."
+    },
+    {
+      "probe": "downstream-only aggregate shape RF",
+      "roc_auc": 0.858462971237235,
+      "average_precision": 0.8721125066833251,
+      "notes": "Expected to be informative because corruption is injected downstream."
+    },
+    {
+      "probe": "shape RF with shuffled training labels",
+      "roc_auc": 0.49136438757327966,
+      "average_precision": 0.5023663411326772,
+      "notes": "Run-heldout null sanity check."
+    },
+    {
+      "probe": "pair split violations",
+      "roc_auc": 0.0,
+      "average_precision": null,
+      "notes": "Must be 0."
+    },
+    {
+      "probe": "forbidden main RF columns",
+      "roc_auc": 0.0,
+      "average_precision": null,
+      "notes": "None."
+    }
+  ],
+  "input_sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+  "git_commit": "20f125181699519924a58cd2c7b8396f3249c469",
+  "runtime_sec": 158.6,
+  "follow_up_ticket": "Skipped: open/done studies already cover all-three injected validation, two-pulse template fitting, and P02 early-peak timing-tail caution.",
+  "ml_beats_transparent_p02": true,
+  "ml_beats_strong_traditional_reference": true
+}

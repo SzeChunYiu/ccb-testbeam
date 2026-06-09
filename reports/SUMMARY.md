@@ -50,12 +50,11 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 - Queue health: the exact requested command `tn-ticket list testbeam` now reports
   `open=6 claimed=0 done=0 failed=6`, below the 18-ticket floor, because the shim treats
-  `testbeam` as a positional default-queue argument. A project-queue check during this steering
-  pass reported
-  `tn-ticket list --project testbeam` = `open=56 claimed=3 done=44 failed=11` after this pass
-  appended three ready tickets under `project:testbeam`: P04f baseline-excursion charge-bias
-  closure, S10f anomaly-stratified pile-up excess closure, and P08a penetration-depth weak-label
-  PID null test.
+  `testbeam` as a positional default-queue argument. A project-aware
+  `tn-ticket list --project testbeam` check remained well above the floor; the final audit observed
+  `open=60 claimed=2 done=45 failed=11` after this pass appended three ready tickets under
+  `project:testbeam`: P04f baseline-excursion charge-bias closure, S10f anomaly-stratified
+  pile-up excess closure, and P08a penetration-depth weak-label PID null test.
 - Newest reports sharpen the next claims: S00b turns selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk; S03c says

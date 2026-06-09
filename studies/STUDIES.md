@@ -276,7 +276,8 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `open=10 claimed=0 done=0 failed=11`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with recent live
-post-append audits observing 189-190 open, 2-3 claimed, and 159 done, but the mission trigger still required a small set of
+post-append audits observing at least 189 open and 159 done while claimed counts moved under
+concurrent worker activity, but the mission trigger still required a small set of
 new ready studies. This pass appended five additional non-duplicate ready tickets:
 P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
 S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),

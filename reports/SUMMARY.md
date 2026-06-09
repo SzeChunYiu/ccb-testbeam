@@ -114,8 +114,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=10 claimed=0 done=0 failed=11`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with recent live post-append audits observing 189-190 open,
-  2-3 claimed, and 159 done after concurrent worker movement.
+  testbeam queue remains deep, with recent live post-append audits observing at least 189 open
+  and 159 done while claimed counts moved under concurrent worker activity.
   The mission trigger still required new ready work. This pass appended five ready non-duplicate
   tickets: P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
   S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),

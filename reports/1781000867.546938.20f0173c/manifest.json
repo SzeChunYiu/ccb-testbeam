@@ -1,0 +1,172 @@
+{
+  "study": "S13b",
+  "ticket": "1781000867.546938.20f0173c",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "27379b139276ea7685e74910201b6c6c4392a26a",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "random_seed": 1313,
+  "config": "configs/s13b_1781000867_546938_20f0173c.json",
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/s13b_1781000867_546938_20f0173c_run_transfer_cwola.py --config configs/s13b_1781000867_546938_20f0173c.json"
+  ],
+  "inputs": [
+    {
+      "file": "data/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+      "bytes": 1227977
+    },
+    {
+      "file": "data/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+      "bytes": 13786671
+    },
+    {
+      "file": "data/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+      "bytes": 412227
+    },
+    {
+      "file": "data/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+      "bytes": 3098718
+    },
+    {
+      "file": "data/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+      "bytes": 8995827
+    },
+    {
+      "file": "data/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+      "bytes": 9203548
+    },
+    {
+      "file": "data/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+      "bytes": 13217424
+    },
+    {
+      "file": "data/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+      "bytes": 6036876
+    },
+    {
+      "file": "data/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+      "bytes": 2941826
+    },
+    {
+      "file": "data/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+      "bytes": 11713879
+    },
+    {
+      "file": "data/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+      "bytes": 11056922
+    },
+    {
+      "file": "data/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+      "bytes": 7153324
+    },
+    {
+      "file": "data/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+      "bytes": 15273160
+    },
+    {
+      "file": "data/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+      "bytes": 8881910
+    }
+  ],
+  "outputs": [
+    {
+      "file": "REPORT.md",
+      "sha256": "f37a60e8077bf95c082db5327106e0784461ef0aba97cbf90b84288e86e2e2a8",
+      "bytes": 5053
+    },
+    {
+      "file": "fig_run_block_score_ratios.png",
+      "sha256": "8a26b1b65c59dd510cad9e5eb4af51c527d24e4ac52dcc9bc815e1cba6ab4d1a",
+      "bytes": 54116
+    },
+    {
+      "file": "fig_score_distributions.png",
+      "sha256": "3903583ab091ee106cce019943013b1f96d9585df78861865712169726409745",
+      "bytes": 31396
+    },
+    {
+      "file": "heldout_run_block_metrics.csv",
+      "sha256": "15307ec1ebe3b411b12dd74028e32dc04ca631e6095eb7b7084606e8a1bf729f",
+      "bytes": 1453
+    },
+    {
+      "file": "heldout_scores_by_pulse.csv",
+      "sha256": "38a0992f428d1115c90db2b83c4e2a793e181c2366bb058fa5f37c3eda7137ad",
+      "bytes": 4025144
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "374c98ccefd751849605589550da99b37eb78f337c806d503cbe9eb549245112",
+      "bytes": 1520
+    },
+    {
+      "file": "leakage_checks.csv",
+      "sha256": "d0fedfa9045f99a2e12eace6b8d06e832f48fd53935686b7145f4b8f3f609693",
+      "bytes": 1156
+    },
+    {
+      "file": "plot_aggregate_snapshot.csv",
+      "sha256": "79f4c84f30c6592436455fe715d799a7d92a4d0bc56275f540aac5e5fb4d49e6",
+      "bytes": 789
+    },
+    {
+      "file": "pooled_run_bootstrap_metrics.csv",
+      "sha256": "79f4c84f30c6592436455fe715d799a7d92a4d0bc56275f540aac5e5fb4d49e6",
+      "bytes": 789
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "93ea126c1e6807f118e30aa508b173deb6ebc4059b6f92b79efd5f4b01a124a3",
+      "bytes": 347
+    },
+    {
+      "file": "result.json",
+      "sha256": "f5204017e01a14a89d6a665d7a3656762e34f509bdbc31a7bab08ba94d5fcc81",
+      "bytes": 4397
+    },
+    {
+      "file": "s10_reproduction_ml_benchmark.csv",
+      "sha256": "28ee4908116c908b7e6d94d40477ebe0c85822245f1b1e3c031e9116fefe2f0a",
+      "bytes": 211
+    },
+    {
+      "file": "s10_reproduction_ml_cv.csv",
+      "sha256": "874998dfbf50c6fdc92653369efec605f18191b5031aa8c6ed42794b0e700a52",
+      "bytes": 215
+    },
+    {
+      "file": "s10_reproduction_ml_score_by_group.csv",
+      "sha256": "4136df5bd3f60bdca8c84f5ae94e8eba0f9b3e1f477370322d411ee8571c3381",
+      "bytes": 231
+    },
+    {
+      "file": "selected_pulse_counts.csv",
+      "sha256": "208813dc81034f1d707a979fe25df8a5756c9d4a32d716c0094ee723f2272ed3",
+      "bytes": 1151
+    },
+    {
+      "file": "topology_by_run.csv",
+      "sha256": "a84ad4305c7ec50a4153d693335d5aebbb4e121a9fa043d3c077f2d3cf83b518",
+      "bytes": 1516
+    },
+    {
+      "file": "traditional_feature_choices.csv",
+      "sha256": "faa33e55984ad0e4f0f363cc890abb72475be976ca0f30132007dd5b0e16d36c",
+      "bytes": 119
+    }
+  ]
+}

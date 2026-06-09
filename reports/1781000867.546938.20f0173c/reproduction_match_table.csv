@@ -1,0 +1,4 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S10 low-current-trained ML score high/low mean ratio,1.297,1.2970757957724572,7.579577245730995e-05,0.005,True
+S10 low-current ML score mean,0.1213,0.12134916220396706,4.916220396705695e-05,0.002,True
+S10 high-current ML score mean,0.1574,0.15739906113203156,-9.388679684529944e-07,0.002,True

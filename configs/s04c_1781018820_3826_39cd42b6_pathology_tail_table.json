@@ -1,0 +1,73 @@
+{
+  "study": "S04c",
+  "ticket": "1781018820.3826.39cd42b6",
+  "worker": "testbeam-laptop-2",
+  "title": "pathology-stratified timing-resolution tail table",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781018820.3826.39cd42b6",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_analysis": {
+      "selected_pulses": 252266,
+      "B2": 241422,
+      "B4": 6451,
+      "B6": 3094,
+      "B8": 1299
+    },
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65],
+    "base_method": "cfd20",
+    "cfd_fractions": [0.20],
+    "tail_abs_residual_ns": 5.0,
+    "core_fit_range_ns": 5.0,
+    "core_fit_bins": 40
+  },
+  "pathology_thresholds": {
+    "large_lowering_adc": 800.0,
+    "medium_lowering_adc": 250.0,
+    "pretrigger_medium_adc": 75.0,
+    "pretrigger_large_adc": 250.0,
+    "late_abs_adc": 3000.0,
+    "tail_area_frac_mid": 0.5,
+    "tail_area_frac_high": 0.65,
+    "dropout_postpeak_adc": -80.0,
+    "saturation_width50_mid_samples": 8.0,
+    "saturation_width50_high_samples": 10.0,
+    "saturation_width20_high_samples": 13.0,
+    "peak_early": 4.5,
+    "peak_late": 6.5
+  },
+  "negative_tolerance_adc": {"floor": 25.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.35, "low_fraction": 0.05, "negative_adc": 50.0},
+  "traditional": {
+    "ridge_alpha": 2.0
+  },
+  "ml": {
+    "random_seed": 4043820,
+    "cv_folds": 5,
+    "bootstrap_samples": 400,
+    "random_forest": {"n_estimators": 160, "max_depth": 7, "min_samples_leaf": 12}
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "baseline": {
+    "ci": [
+      1.6311331200304982,
+      1.7411527971266607
+    ],
+    "core_chi2_ndf": 4.577686191912439,
+    "full_rms_ns": 5.789492463919804,
+    "method": "raw_cfd20_pair_centered",
+    "sigma68_ns": 1.681644797133409,
+    "tail_frac_abs_gt5ns": 0.015287099179716629
+  },
+  "conclusion": "The non-core timing tails are dominated by fixed morphology/pathology atoms rather than by a single correctable timing model. The strongest separator is s16_lowering_axis (large tail fraction 0.051 versus none 0.009). The conventional CFD20 S04 table gives sigma68 1.682 ns, the transparent Ridge stress test gives 2.003 ns, and ML gives 1.249 ns. S04 consumers should use the stratum table as a veto/uncertainty ledger, not replace the timing correction solely from this ML gain.",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "leakage_checks_pass": true,
+  "ml": {
+    "ci": [
+      1.2018385737186719,
+      1.3110548717824893
+    ],
+    "full_rms_ns": 4.012534589988875,
+    "gain_vs_raw_ns": 0.4327017523980037,
+    "method": "run-held-out RF pathology residual and calibrated tail model",
+    "sigma68_ns": 1.2489430447354053,
+    "tail_classifier_auc": 0.9622297163934934,
+    "tail_classifier_average_precision": 0.5841316039412974,
+    "tail_classifier_brier": 0.009161401177760355,
+    "tail_frac_abs_gt5ns": 0.014392244593586876
+  },
+  "next_tickets": [],
+  "pathology": {
+    "best_stratum": "none",
+    "best_tail_frac": 0.00857365549493375,
+    "tail_frac_range": 0.04232042978704699,
+    "top_axis": "s16_lowering_axis",
+    "worst_stratum": "large",
+    "worst_tail_frac": 0.05089408528198074
+  },
+  "raw_root_reproduction": {
+    "pass": true,
+    "total_selected_pulses": 640737
+  },
+  "reproduced": true,
+  "split": {
+    "bootstrap_unit": "run_then_event",
+    "folds": 5,
+    "runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "unit": "run"
+  },
+  "study": "S04c",
+  "ticket": "1781018820.3826.39cd42b6",
+  "title": "pathology-stratified timing-resolution tail table",
+  "traditional": {
+    "ci": [
+      1.6311331200304982,
+      1.7411527971266607
+    ],
+    "core_chi2_ndf": 4.577686191912439,
+    "full_rms_ns": 5.789492463919804,
+    "method": "conventional CFD20 pair-centered S04 pathology table",
+    "sigma68_ns": 1.681644797133409,
+    "tail_frac_abs_gt5ns": 0.015287099179716629
+  },
+  "traditional_ridge_stress_test": {
+    "ci": [
+      1.9383367720709936,
+      2.097661769509843
+    ],
+    "full_rms_ns": 5.277828773818127,
+    "gain_vs_conventional_cfd20_ns": -0.32169649543237,
+    "method": "run-held-out Ridge pathology residual correction",
+    "sigma68_ns": 2.003341292565779,
+    "tail_frac_abs_gt5ns": 0.0348993288590604
+  },
+  "worker": "testbeam-laptop-2"
+}

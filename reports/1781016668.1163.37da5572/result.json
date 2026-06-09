@@ -1,0 +1,53 @@
+{
+  "ticket_id": "1781016668.1163.37da5572",
+  "study_id": "P03d",
+  "title": "P01b epoch/domain score as timing nuisance diagnostic",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap": "run-block over held-out runs",
+    "bootstrap_samples": 600
+  },
+  "best_method": {
+    "method": "ml_extra_trees_no_score",
+    "sigma68_ns": 1.8966811751812036,
+    "ci_low": 1.7580562579414991,
+    "ci_high": 2.0938780165906166
+  },
+  "traditional": {
+    "no_score_sigma68_ns": 2.081201200309431,
+    "plus_score_sigma68_ns": 2.071504526210173,
+    "score_residualized_sigma68_ns": 2.0713231414027624,
+    "plus_score_delta_vs_no_score_ns": -0.009696674099258118,
+    "score_residualized_delta_vs_no_score_ns": -0.009878058906668485
+  },
+  "ml": {
+    "method": "ExtraTreesRegressor waveform residual correction",
+    "no_score_sigma68_ns": 1.8966811751812036,
+    "plus_score_sigma68_ns": 1.9016760465212732,
+    "score_residualized_sigma68_ns": 1.8979360054835233,
+    "plus_score_delta_vs_no_score_ns": 0.004994871340069595,
+    "score_residualized_delta_vs_no_score_ns": 0.0012548303023196539
+  },
+  "leakage_checks": {
+    "domain_score_trained_without_heldout_run": true,
+    "event_id_features_used": false,
+    "mean_heldout_score_proxy_r2": 0.40282824676138695,
+    "mean_abs_heldout_score_amp_corr": 0.392610153767797,
+    "mean_abs_residualized_score_amp_corr": 0.08654736962506303
+  },
+  "verdict": "The P01b epoch/domain score is mainly a nuisance diagnostic, not a timing improvement: traditional plus-score delta is -0.0097 ns and residualized-score delta is -0.0099 ns versus the traditional no-score baseline; ML plus-score delta is +0.0050 ns and residualized-score delta is +0.0013 ns versus ML no-score. Amplitude/topology proxies explain enough of the raw score that the residualized variants should be preferred for any downstream nuisance use.",
+  "runtime_sec": 38.4
+}

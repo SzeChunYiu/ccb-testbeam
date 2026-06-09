@@ -1,0 +1,18 @@
+target,check,value,threshold,flag,interpretation,source
+5pct,group_split_by_run_mean_r2,0.8840212513190387,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10c_ml_checks
+5pct,random_row_split_r2,0.8883453718758269,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10c_ml_checks
+5pct,shuffled_target_r2,-0.0018748168946005617,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10c_ml_checks
+10pct,group_split_by_run_mean_r2,0.8839928589969487,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10c_ml_checks
+10pct,random_row_split_r2,0.8885441250649111,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10c_ml_checks
+10pct,shuffled_target_r2,0.008243830951992548,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10c_ml_checks
+20pct,group_split_by_run_mean_r2,0.8895180479068567,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10c_ml_checks
+20pct,random_row_split_r2,0.8947901048140046,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10c_ml_checks
+20pct,shuffled_target_r2,-0.0021077243953662173,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10c_ml_checks
+noise_floor,group_split_by_run_mean_r2,0.8150978473339945,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10c_ml_checks
+noise_floor,random_row_split_r2,0.8231653605922478,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10c_ml_checks
+noise_floor,shuffled_target_r2,0.005048893948813249,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10c_ml_checks
+all,forbidden_features_present,0.0,0.0,False,"Feature list excludes run, event id, current, and direct last-above-threshold width.",s10c_ml_checks
+5pct,ml_template_agreement_too_good,16.30073168712012,1.0,False,Flag only if ML matches template nearly exactly with near-deterministic held-out R2.,s10d_followup
+10pct,ml_template_agreement_too_good,1.574976394140279,1.0,False,Flag only if ML matches template nearly exactly with near-deterministic held-out R2.,s10d_followup
+20pct,ml_template_agreement_too_good,17.31514434384077,1.0,False,Flag only if ML matches template nearly exactly with near-deterministic held-out R2.,s10d_followup
+noise_floor,ml_template_agreement_too_good,40.88435773823977,1.0,False,Flag only if ML matches template nearly exactly with near-deterministic held-out R2.,s10d_followup

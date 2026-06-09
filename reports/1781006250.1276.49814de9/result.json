@@ -1,0 +1,96 @@
+{
+  "study": "P10b",
+  "ticket": "1781006250.1276.49814de9",
+  "worker": "testbeam-laptop-2",
+  "title": "explicit timewalk terms for amplitude-bin phase templates",
+  "reproduced": true,
+  "repro_tolerance": "0 count delta versus S00/S01 selected-pulse gate from raw ROOT",
+  "n_selected_pulses": 640737,
+  "traditional": {
+    "method": "S01 empirical amplitude-bin template plus explicit train-run-only timewalk terms",
+    "q_metric": "analysis_run_mean_q_template_mse",
+    "q_value": 0.04441404042864997,
+    "q_ci": [
+      0.03422189526796054,
+      0.05534365052761954
+    ],
+    "timing_metric": "heldout_run_mean_pairwise_sigma68_ns",
+    "timing_value": 2.7555419378070574,
+    "timing_ci": [
+      2.6460900738974553,
+      2.8676905020076493
+    ],
+    "best": {
+      "score": 2.6485487615195904,
+      "feature_set": "amp_bin_by_stave",
+      "alpha": 100.0,
+      "train_pulses": 2460,
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        64
+      ]
+    }
+  },
+  "ml": {
+    "method": "conditional MLP template from stave and log amplitude",
+    "best": {
+      "hidden_dim": 16,
+      "depth": 2,
+      "device": "cpu",
+      "train_pulses": 120000,
+      "cv_pulses": 36000
+    },
+    "q_metric": "analysis_run_mean_q_template_mse",
+    "q_value": 0.07806195826389588,
+    "q_ci": [
+      0.06615815608703006,
+      0.09056882976707328
+    ],
+    "timing_metric": "heldout_run_mean_pairwise_sigma68_ns",
+    "timing_value": 3.57885789878986,
+    "timing_ci": [
+      3.4857438526485423,
+      3.6800952529796764
+    ]
+  },
+  "falsification": {
+    "q_delta_conditional_minus_empirical": 0.033647917835245914,
+    "q_delta_ci": [
+      0.027696870157837578,
+      0.04111340412274953
+    ],
+    "timing_delta_conditional_minus_explicit_timewalk_ns": 0.8233159609828026,
+    "timing_delta_conditional_minus_explicit_timewalk_ci_ns": [
+      0.6525023639819895,
+      0.9585973863557703
+    ],
+    "timing_delta_explicit_timewalk_minus_empirical_ns": -1.0750657940244117,
+    "timing_delta_explicit_timewalk_minus_empirical_ci_ns": [
+      -1.22536153373439,
+      -0.9141959996488168
+    ],
+    "explicit_shuffled_target_sigma68": 3.6144498146416426,
+    "conditional_shuffled_target_q_mse": 0.07424330538670298,
+    "run_overlap": 0,
+    "event_overlap": 0,
+    "n_explicit_candidates": 18
+  },
+  "explicit_timewalk_matches_or_beats_conditional": true,
+  "s01_q_template_advantage_preserved": true,
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "64449c7771e1465b32766ecd30967cc8dcf918ed",
+  "next_tickets": [
+    "P10c: train the explicit amplitude-bin phase correction on Sample-II run 64 only and compare against pooled calibration to isolate sample-transfer effects.",
+    "P10d: add an external held-out timing closure using B2/B4/B6/B8 all-hit events to check whether the explicit correction generalizes beyond B4-B8 residual targets."
+  ]
+}

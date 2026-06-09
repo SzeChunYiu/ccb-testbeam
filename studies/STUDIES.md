@@ -275,9 +275,17 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=10 claimed=0 done=0 failed=11`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep, with this pass moving
-from 193 open / 3 claimed to a final audit at 198 open / 2 claimed, but the mission trigger still
-required a small set of new ready studies. This pass appended five additional non-duplicate ready
+with `--project testbeam`: the project-aware testbeam queue remains deep, with a live post-append
+audit at 190 open / 5 claimed / 148 done, but the mission trigger still required a small set of
+new ready studies. This pass appended four additional non-duplicate ready tickets: P01g latent
+baseline-contamination atom map (`1781039488.1122.04bc6ecf`), S07l injected morphology
+operating-point support audit (`1781039488.1142.659b28c4`), P09g injected-morphology
+false-positive gallery (`1781039488.1166.6e40385a`), and S04f waveform timing pull-width
+calibration map (`1781039488.1240.043427d8`). The previous pass appended three additional
+non-duplicate ready tickets: P03i phase-local waveform architecture failure map
+(`1781038014.1254.657842ac`), S16m pseudo-pedestal charge live-time bias closure
+(`1781038019.1322.46921ff8`), and S18j A-stack ML transfer covariance gate
+(`1781038027.1393.695b00c5`). The pass before that appended five additional non-duplicate ready
 tickets: P05c real-current abstention transfer (`1781036493.3234.59a107e5`),
 S01g q-template quality covariate map (`1781036493.3261.7a6c05c5`),
 P04n B2 transfer saturation support frontier (`1781036493.3330.4f5f1b60`),
@@ -1081,3 +1089,40 @@ Active ready queue highlights:
   calibrations with waveform-only, run-only, pool-label, and shuffled-pool controls. Metric:
   B-stack covariance component, pair sigma68/full RMS/tail fraction, A-gate ECE/Brier,
   leakage-control gap, and ML-minus-traditional covariance delta with pair/run-block bootstrap CIs.
+- **P01g — Latent baseline-contamination atom map.** Decide whether loader-verified P01b latent
+  coordinates encode pretrigger baseline, adaptive-lowering, dropout/delayed-peak, or
+  saturation-boundary atoms after matching run, stave, amplitude, peak phase, and topology.
+  Traditional: freeze hand-shape, PCA, and explicit pretrigger/baseline summaries, then build
+  matched contingency and residual tables against S16, P09, P07, P04, and S03 outcomes. ML:
+  train run-heldout latent-only and latent-plus-hand classifiers/regressors with amplitude-only,
+  run-only, stave-only, and shuffled-atom sentinels. Metric: atom AUC/AP/Brier, timing sigma68
+  delta, charge-bias delta, support drift, and ML-minus-traditional deltas with event-paired
+  run-block bootstrap CIs.
+- **S07l — Injected morphology operating-point support audit.** Test whether the S07h injected
+  non-D_t morphology RF can be operated at fixed efficiency or fixed false-positive rate without
+  distorting real timing, charge, baseline, saturation, pile-up, or topology support. Traditional:
+  freeze S07h timing/template scores, transparent P02 morphology cuts, and q_template thresholds,
+  then scan operating points on identical injected folds and real matched support strata. ML:
+  calibrate the S07h RF score with isotonic/conformal maps plus amplitude-only, downstream-only,
+  and shuffled-label sentinels under leave-one-run-out folds. Metric: injected detection AP/AUC,
+  fixed-efficiency FPR, real-data support drift, timing sigma68/tail delta, charge-bias delta, and
+  ML-minus-traditional utility with run-block bootstrap CIs.
+- **P09g — Injected-morphology false-positive gallery.** Explain the waveform atoms behind S07h
+  and P02e morphology-score false positives and false negatives on clean, injected, and D_t-tail
+  samples. Traditional: rank failures with frozen robust-template residuals, q_template, P09
+  anomaly taxa, S16 pretrigger summaries, and S10/S11 two-pulse scores, then curate a bounded
+  waveform gallery by run/stave/atom. ML: compare RF explanation scores, latent nearest
+  neighbors, isolation/AE residuals, and counterfactual sample masks with shuffled-score and
+  run-heldout controls. Metric: curated precision by taxon, false-positive and false-negative
+  taxon enrichment, inter-reviewer agreement, recovery/veto action accuracy, and
+  ML-minus-traditional ranking precision with stratified bootstrap CIs.
+- **S04f — Waveform timing pull-width calibration map.** Determine whether P03g waveform timing
+  residual gains are accompanied by calibrated per-pulse uncertainty, or whether amplitude-only
+  and phase-scrambled controls explain the apparent pull-width improvement in specific pulse
+  atoms. Traditional: freeze S03 analytic timewalk residual quantile tables and S04 robust-width
+  estimators by run, stave, amplitude, q_template, saturation, baseline, anomaly, and peak-phase
+  strata. ML: train waveform MLP/CNN residual sigma and conformal uncertainty models with
+  amplitude-only, phase-scrambled, sample-permuted, run-only, and shuffled-target controls under
+  leave-one-run-out folds. Metric: pull sigma68/full RMS, ECE/coverage, interval width, tail
+  calibration, stratum-wise sigma68, and ML-minus-traditional calibration deltas with
+  event-paired run-block bootstrap CIs.

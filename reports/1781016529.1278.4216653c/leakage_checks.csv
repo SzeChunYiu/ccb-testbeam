@@ -1,0 +1,9 @@
+check,value,pass,note
+nonfinite_hand_feature_values,0.0,True,nan/inf replacements before traditional PCA
+fold_train_heldout_run_overlap_max,0.0,True,each leave-one-run-out fold uses disjoint run IDs
+train_test_rounded_waveform_hash_overlap_max,0.0,True,rounded normalized waveform hash at 1e-4 precision per fold
+forbidden_release_embedding_used_for_claims,0.0,True,release-style embedding rows are diagnostic only
+mean_shuffled_manual_label_ami,0.00041521681982564177,True,per-fold evaluation-label shuffle null
+forbidden_release_minus_trainonly_manual_ami,0.02685448437341703,True,large positive value would indicate all-data representation optimism
+mean_ml_cluster_run_ami,1.782810256599762e-15,True,degenerate for one held-out run; retained as telemetry
+mean_ml_cluster_stave_ami,0.03758327147501957,True,reported to catch stave-label clustering

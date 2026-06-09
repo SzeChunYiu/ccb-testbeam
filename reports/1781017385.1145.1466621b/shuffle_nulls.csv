@@ -1,0 +1,321 @@
+heldout_family,method,shuffle_rep,value
+sample_i_calib,traditional residual hand+PCA-6,0,0.23708541546235973
+sample_i_calib,traditional residual hand+PCA-6,1,0.24807547315072306
+sample_i_calib,traditional residual hand+PCA-6,2,0.23642578878828824
+sample_i_calib,traditional residual hand+PCA-6,3,0.2549901746504575
+sample_i_calib,traditional residual hand+PCA-6,4,0.29817006812423463
+sample_i_calib,traditional residual hand+PCA-6,5,0.23448641124590291
+sample_i_calib,traditional residual hand+PCA-6,6,0.22865918482805164
+sample_i_calib,traditional residual hand+PCA-6,7,0.2524906733523772
+sample_i_calib,traditional residual hand+PCA-6,8,0.2527534196495154
+sample_i_calib,traditional residual hand+PCA-6,9,0.2768170597388626
+sample_i_calib,traditional residual hand+PCA-6,10,0.2567467063842966
+sample_i_calib,traditional residual hand+PCA-6,11,0.2754010924191681
+sample_i_calib,traditional residual hand+PCA-6,12,0.2618009685974969
+sample_i_calib,traditional residual hand+PCA-6,13,0.24802017302628043
+sample_i_calib,traditional residual hand+PCA-6,14,0.24899354214972352
+sample_i_calib,traditional residual hand+PCA-6,15,0.20754712078230614
+sample_i_calib,traditional residual hand+PCA-6,16,0.24129152663718312
+sample_i_calib,traditional residual hand+PCA-6,17,0.2304598274258501
+sample_i_calib,traditional residual hand+PCA-6,18,0.2196135276000465
+sample_i_calib,traditional residual hand+PCA-6,19,0.23338652877073468
+sample_i_calib,traditional residual hand+PCA-6,20,0.2489031521842271
+sample_i_calib,traditional residual hand+PCA-6,21,0.26374994275600533
+sample_i_calib,traditional residual hand+PCA-6,22,0.29137985048256687
+sample_i_calib,traditional residual hand+PCA-6,23,0.27980386121416645
+sample_i_calib,traditional residual hand+PCA-6,24,0.2570777796956133
+sample_i_calib,traditional residual hand+PCA-6,25,0.23412783195258877
+sample_i_calib,traditional residual hand+PCA-6,26,0.19792005303704618
+sample_i_calib,traditional residual hand+PCA-6,27,0.2597131384573112
+sample_i_calib,traditional residual hand+PCA-6,28,0.26489293650825996
+sample_i_calib,traditional residual hand+PCA-6,29,0.24764132280975262
+sample_i_calib,traditional residual hand+PCA-6,30,0.2532948258317504
+sample_i_calib,traditional residual hand+PCA-6,31,0.27744127712128297
+sample_i_calib,traditional residual hand+PCA-6,32,0.25443124768234593
+sample_i_calib,traditional residual hand+PCA-6,33,0.2552652475686341
+sample_i_calib,traditional residual hand+PCA-6,34,0.2694806630756248
+sample_i_calib,traditional residual hand+PCA-6,35,0.2810260590672644
+sample_i_calib,traditional residual hand+PCA-6,36,0.2691581416775285
+sample_i_calib,traditional residual hand+PCA-6,37,0.21102995481217274
+sample_i_calib,traditional residual hand+PCA-6,38,0.24624566328228528
+sample_i_calib,traditional residual hand+PCA-6,39,0.2504347395175088
+sample_i_calib,ML residual masked-denoising AE-6,0,0.24471765224331454
+sample_i_calib,ML residual masked-denoising AE-6,1,0.28944489334085466
+sample_i_calib,ML residual masked-denoising AE-6,2,0.26667505824819016
+sample_i_calib,ML residual masked-denoising AE-6,3,0.2782533387317331
+sample_i_calib,ML residual masked-denoising AE-6,4,0.24697307533561957
+sample_i_calib,ML residual masked-denoising AE-6,5,0.23566505248304073
+sample_i_calib,ML residual masked-denoising AE-6,6,0.2650274671725095
+sample_i_calib,ML residual masked-denoising AE-6,7,0.2777145592241518
+sample_i_calib,ML residual masked-denoising AE-6,8,0.25812988672092624
+sample_i_calib,ML residual masked-denoising AE-6,9,0.21989843775317128
+sample_i_calib,ML residual masked-denoising AE-6,10,0.2721246523397561
+sample_i_calib,ML residual masked-denoising AE-6,11,0.304196630987164
+sample_i_calib,ML residual masked-denoising AE-6,12,0.24442983186371509
+sample_i_calib,ML residual masked-denoising AE-6,13,0.22145591198512668
+sample_i_calib,ML residual masked-denoising AE-6,14,0.2539750768379349
+sample_i_calib,ML residual masked-denoising AE-6,15,0.2705630499910835
+sample_i_calib,ML residual masked-denoising AE-6,16,0.22994134018670082
+sample_i_calib,ML residual masked-denoising AE-6,17,0.24219739563109952
+sample_i_calib,ML residual masked-denoising AE-6,18,0.2985633734196534
+sample_i_calib,ML residual masked-denoising AE-6,19,0.2550332982980681
+sample_i_calib,ML residual masked-denoising AE-6,20,0.23378776478500804
+sample_i_calib,ML residual masked-denoising AE-6,21,0.19942287623324426
+sample_i_calib,ML residual masked-denoising AE-6,22,0.2606745258790397
+sample_i_calib,ML residual masked-denoising AE-6,23,0.23671746003932567
+sample_i_calib,ML residual masked-denoising AE-6,24,0.24901764696522416
+sample_i_calib,ML residual masked-denoising AE-6,25,0.24242918942115457
+sample_i_calib,ML residual masked-denoising AE-6,26,0.2792609062908046
+sample_i_calib,ML residual masked-denoising AE-6,27,0.27626353432379025
+sample_i_calib,ML residual masked-denoising AE-6,28,0.2955081925373624
+sample_i_calib,ML residual masked-denoising AE-6,29,0.2569043825420176
+sample_i_calib,ML residual masked-denoising AE-6,30,0.327663907748683
+sample_i_calib,ML residual masked-denoising AE-6,31,0.2982836843554491
+sample_i_calib,ML residual masked-denoising AE-6,32,0.2730662658422755
+sample_i_calib,ML residual masked-denoising AE-6,33,0.2865130572581601
+sample_i_calib,ML residual masked-denoising AE-6,34,0.2668720692772645
+sample_i_calib,ML residual masked-denoising AE-6,35,0.2421392568351755
+sample_i_calib,ML residual masked-denoising AE-6,36,0.27377337592480583
+sample_i_calib,ML residual masked-denoising AE-6,37,0.20840062534698106
+sample_i_calib,ML residual masked-denoising AE-6,38,0.24062009896807512
+sample_i_calib,ML residual masked-denoising AE-6,39,0.2572935092683849
+sample_i_analysis,traditional residual hand+PCA-6,0,0.2498685654450939
+sample_i_analysis,traditional residual hand+PCA-6,1,0.2199278221385231
+sample_i_analysis,traditional residual hand+PCA-6,2,0.19912623722467906
+sample_i_analysis,traditional residual hand+PCA-6,3,0.21926991672078563
+sample_i_analysis,traditional residual hand+PCA-6,4,0.24452564031614474
+sample_i_analysis,traditional residual hand+PCA-6,5,0.251593140777723
+sample_i_analysis,traditional residual hand+PCA-6,6,0.3025747427466114
+sample_i_analysis,traditional residual hand+PCA-6,7,0.25296115028267846
+sample_i_analysis,traditional residual hand+PCA-6,8,0.27441134887312696
+sample_i_analysis,traditional residual hand+PCA-6,9,0.22751042484756906
+sample_i_analysis,traditional residual hand+PCA-6,10,0.23827453966182213
+sample_i_analysis,traditional residual hand+PCA-6,11,0.21872366357733908
+sample_i_analysis,traditional residual hand+PCA-6,12,0.23909152316633975
+sample_i_analysis,traditional residual hand+PCA-6,13,0.274442628542653
+sample_i_analysis,traditional residual hand+PCA-6,14,0.22863828252629415
+sample_i_analysis,traditional residual hand+PCA-6,15,0.21936727131426415
+sample_i_analysis,traditional residual hand+PCA-6,16,0.1825205087495589
+sample_i_analysis,traditional residual hand+PCA-6,17,0.23808055619938873
+sample_i_analysis,traditional residual hand+PCA-6,18,0.2589483483498821
+sample_i_analysis,traditional residual hand+PCA-6,19,0.23433071722299748
+sample_i_analysis,traditional residual hand+PCA-6,20,0.2475249829434768
+sample_i_analysis,traditional residual hand+PCA-6,21,0.32127954869541897
+sample_i_analysis,traditional residual hand+PCA-6,22,0.2777154323691877
+sample_i_analysis,traditional residual hand+PCA-6,23,0.25542397324199373
+sample_i_analysis,traditional residual hand+PCA-6,24,0.2613447419694594
+sample_i_analysis,traditional residual hand+PCA-6,25,0.2659336451982704
+sample_i_analysis,traditional residual hand+PCA-6,26,0.21854349716506621
+sample_i_analysis,traditional residual hand+PCA-6,27,0.23051420916879128
+sample_i_analysis,traditional residual hand+PCA-6,28,0.27001500453178207
+sample_i_analysis,traditional residual hand+PCA-6,29,0.21695681110101217
+sample_i_analysis,traditional residual hand+PCA-6,30,0.2708056408483478
+sample_i_analysis,traditional residual hand+PCA-6,31,0.28481566878942255
+sample_i_analysis,traditional residual hand+PCA-6,32,0.27126382215695377
+sample_i_analysis,traditional residual hand+PCA-6,33,0.2699151481997963
+sample_i_analysis,traditional residual hand+PCA-6,34,0.3335797773750229
+sample_i_analysis,traditional residual hand+PCA-6,35,0.21044306696063045
+sample_i_analysis,traditional residual hand+PCA-6,36,0.21287178496479048
+sample_i_analysis,traditional residual hand+PCA-6,37,0.2145220896767686
+sample_i_analysis,traditional residual hand+PCA-6,38,0.20088812196981587
+sample_i_analysis,traditional residual hand+PCA-6,39,0.30855059751698377
+sample_i_analysis,ML residual masked-denoising AE-6,0,0.33333729163921433
+sample_i_analysis,ML residual masked-denoising AE-6,1,0.17551155785310774
+sample_i_analysis,ML residual masked-denoising AE-6,2,0.2683445784919918
+sample_i_analysis,ML residual masked-denoising AE-6,3,0.2876419535089332
+sample_i_analysis,ML residual masked-denoising AE-6,4,0.26818375897725005
+sample_i_analysis,ML residual masked-denoising AE-6,5,0.23768478895329376
+sample_i_analysis,ML residual masked-denoising AE-6,6,0.31637748018503176
+sample_i_analysis,ML residual masked-denoising AE-6,7,0.23520427438273897
+sample_i_analysis,ML residual masked-denoising AE-6,8,0.28634330162067456
+sample_i_analysis,ML residual masked-denoising AE-6,9,0.23844977351450763
+sample_i_analysis,ML residual masked-denoising AE-6,10,0.23196818498419175
+sample_i_analysis,ML residual masked-denoising AE-6,11,0.21653172267896797
+sample_i_analysis,ML residual masked-denoising AE-6,12,0.2369819905635273
+sample_i_analysis,ML residual masked-denoising AE-6,13,0.2580972532099591
+sample_i_analysis,ML residual masked-denoising AE-6,14,0.2226527478664642
+sample_i_analysis,ML residual masked-denoising AE-6,15,0.28772378137547694
+sample_i_analysis,ML residual masked-denoising AE-6,16,0.2568128237447474
+sample_i_analysis,ML residual masked-denoising AE-6,17,0.24929716638622915
+sample_i_analysis,ML residual masked-denoising AE-6,18,0.33490403473615926
+sample_i_analysis,ML residual masked-denoising AE-6,19,0.2890962943414406
+sample_i_analysis,ML residual masked-denoising AE-6,20,0.27926025760811335
+sample_i_analysis,ML residual masked-denoising AE-6,21,0.2621837239183913
+sample_i_analysis,ML residual masked-denoising AE-6,22,0.3025853414801923
+sample_i_analysis,ML residual masked-denoising AE-6,23,0.20452614536657043
+sample_i_analysis,ML residual masked-denoising AE-6,24,0.28722443462729896
+sample_i_analysis,ML residual masked-denoising AE-6,25,0.2929625738557448
+sample_i_analysis,ML residual masked-denoising AE-6,26,0.2848473049051119
+sample_i_analysis,ML residual masked-denoising AE-6,27,0.28970821774734085
+sample_i_analysis,ML residual masked-denoising AE-6,28,0.18823687508442055
+sample_i_analysis,ML residual masked-denoising AE-6,29,0.24268122237367917
+sample_i_analysis,ML residual masked-denoising AE-6,30,0.3240407109530845
+sample_i_analysis,ML residual masked-denoising AE-6,31,0.27586648267968167
+sample_i_analysis,ML residual masked-denoising AE-6,32,0.22571322024682286
+sample_i_analysis,ML residual masked-denoising AE-6,33,0.23903947978249707
+sample_i_analysis,ML residual masked-denoising AE-6,34,0.2739835133881469
+sample_i_analysis,ML residual masked-denoising AE-6,35,0.27175276561000533
+sample_i_analysis,ML residual masked-denoising AE-6,36,0.21079355591579496
+sample_i_analysis,ML residual masked-denoising AE-6,37,0.22239623395604133
+sample_i_analysis,ML residual masked-denoising AE-6,38,0.24071709517230253
+sample_i_analysis,ML residual masked-denoising AE-6,39,0.27903221118409793
+sample_ii_analysis,traditional residual hand+PCA-6,0,0.22661638085625974
+sample_ii_analysis,traditional residual hand+PCA-6,1,0.26643515583102056
+sample_ii_analysis,traditional residual hand+PCA-6,2,0.24760854052442022
+sample_ii_analysis,traditional residual hand+PCA-6,3,0.2355056946491646
+sample_ii_analysis,traditional residual hand+PCA-6,4,0.2490527058088616
+sample_ii_analysis,traditional residual hand+PCA-6,5,0.28264512023021954
+sample_ii_analysis,traditional residual hand+PCA-6,6,0.24924585400985216
+sample_ii_analysis,traditional residual hand+PCA-6,7,0.25588422371838615
+sample_ii_analysis,traditional residual hand+PCA-6,8,0.27780793165577117
+sample_ii_analysis,traditional residual hand+PCA-6,9,0.26708724063077227
+sample_ii_analysis,traditional residual hand+PCA-6,10,0.23006876825471795
+sample_ii_analysis,traditional residual hand+PCA-6,11,0.2620690795326734
+sample_ii_analysis,traditional residual hand+PCA-6,12,0.2616514543670581
+sample_ii_analysis,traditional residual hand+PCA-6,13,0.24867458764447264
+sample_ii_analysis,traditional residual hand+PCA-6,14,0.3155824981672556
+sample_ii_analysis,traditional residual hand+PCA-6,15,0.23140579834546032
+sample_ii_analysis,traditional residual hand+PCA-6,16,0.2714046984726691
+sample_ii_analysis,traditional residual hand+PCA-6,17,0.20894892441035484
+sample_ii_analysis,traditional residual hand+PCA-6,18,0.22768665200297142
+sample_ii_analysis,traditional residual hand+PCA-6,19,0.27731352162600986
+sample_ii_analysis,traditional residual hand+PCA-6,20,0.25353808285384666
+sample_ii_analysis,traditional residual hand+PCA-6,21,0.2793645429857524
+sample_ii_analysis,traditional residual hand+PCA-6,22,0.2784416653897672
+sample_ii_analysis,traditional residual hand+PCA-6,23,0.2714951895752195
+sample_ii_analysis,traditional residual hand+PCA-6,24,0.24732940163945924
+sample_ii_analysis,traditional residual hand+PCA-6,25,0.21545816628997932
+sample_ii_analysis,traditional residual hand+PCA-6,26,0.2729501567481144
+sample_ii_analysis,traditional residual hand+PCA-6,27,0.2438628761569816
+sample_ii_analysis,traditional residual hand+PCA-6,28,0.20817848437250236
+sample_ii_analysis,traditional residual hand+PCA-6,29,0.26551303872054227
+sample_ii_analysis,traditional residual hand+PCA-6,30,0.2692697562788695
+sample_ii_analysis,traditional residual hand+PCA-6,31,0.18142856159350576
+sample_ii_analysis,traditional residual hand+PCA-6,32,0.23698619542209426
+sample_ii_analysis,traditional residual hand+PCA-6,33,0.2609474635346093
+sample_ii_analysis,traditional residual hand+PCA-6,34,0.2343681516874466
+sample_ii_analysis,traditional residual hand+PCA-6,35,0.1980097291336407
+sample_ii_analysis,traditional residual hand+PCA-6,36,0.1896655338372738
+sample_ii_analysis,traditional residual hand+PCA-6,37,0.24505082187090732
+sample_ii_analysis,traditional residual hand+PCA-6,38,0.20752314218189027
+sample_ii_analysis,traditional residual hand+PCA-6,39,0.2025974931737603
+sample_ii_analysis,ML residual masked-denoising AE-6,0,0.15740480106018437
+sample_ii_analysis,ML residual masked-denoising AE-6,1,0.24722660418871473
+sample_ii_analysis,ML residual masked-denoising AE-6,2,0.24432957841386863
+sample_ii_analysis,ML residual masked-denoising AE-6,3,0.23093245389436778
+sample_ii_analysis,ML residual masked-denoising AE-6,4,0.20174375979153406
+sample_ii_analysis,ML residual masked-denoising AE-6,5,0.2824613497764742
+sample_ii_analysis,ML residual masked-denoising AE-6,6,0.231474279661393
+sample_ii_analysis,ML residual masked-denoising AE-6,7,0.2283984476041801
+sample_ii_analysis,ML residual masked-denoising AE-6,8,0.3136898597568377
+sample_ii_analysis,ML residual masked-denoising AE-6,9,0.30121431222499406
+sample_ii_analysis,ML residual masked-denoising AE-6,10,0.24525636639615836
+sample_ii_analysis,ML residual masked-denoising AE-6,11,0.2440891179091264
+sample_ii_analysis,ML residual masked-denoising AE-6,12,0.18988254082182804
+sample_ii_analysis,ML residual masked-denoising AE-6,13,0.19926795968626965
+sample_ii_analysis,ML residual masked-denoising AE-6,14,0.19213060036025986
+sample_ii_analysis,ML residual masked-denoising AE-6,15,0.23954769404619125
+sample_ii_analysis,ML residual masked-denoising AE-6,16,0.2032039400171066
+sample_ii_analysis,ML residual masked-denoising AE-6,17,0.3087116165885466
+sample_ii_analysis,ML residual masked-denoising AE-6,18,0.2218917327560903
+sample_ii_analysis,ML residual masked-denoising AE-6,19,0.24333687210439242
+sample_ii_analysis,ML residual masked-denoising AE-6,20,0.24698555461068528
+sample_ii_analysis,ML residual masked-denoising AE-6,21,0.26098108416256377
+sample_ii_analysis,ML residual masked-denoising AE-6,22,0.30501303222173237
+sample_ii_analysis,ML residual masked-denoising AE-6,23,0.22135436550458903
+sample_ii_analysis,ML residual masked-denoising AE-6,24,0.2338704284957341
+sample_ii_analysis,ML residual masked-denoising AE-6,25,0.23508624806086226
+sample_ii_analysis,ML residual masked-denoising AE-6,26,0.2662925126213629
+sample_ii_analysis,ML residual masked-denoising AE-6,27,0.2457290664746738
+sample_ii_analysis,ML residual masked-denoising AE-6,28,0.2249051146693477
+sample_ii_analysis,ML residual masked-denoising AE-6,29,0.26896458247964056
+sample_ii_analysis,ML residual masked-denoising AE-6,30,0.2512787298144987
+sample_ii_analysis,ML residual masked-denoising AE-6,31,0.19838189624113003
+sample_ii_analysis,ML residual masked-denoising AE-6,32,0.23624083828862058
+sample_ii_analysis,ML residual masked-denoising AE-6,33,0.2749817034012347
+sample_ii_analysis,ML residual masked-denoising AE-6,34,0.31131152161832537
+sample_ii_analysis,ML residual masked-denoising AE-6,35,0.2966592207991983
+sample_ii_analysis,ML residual masked-denoising AE-6,36,0.3056414553987422
+sample_ii_analysis,ML residual masked-denoising AE-6,37,0.18395298846567207
+sample_ii_analysis,ML residual masked-denoising AE-6,38,0.2522976740926449
+sample_ii_analysis,ML residual masked-denoising AE-6,39,0.18958966915418815
+sample_ii_calib,traditional residual hand+PCA-6,0,0.23186083289404322
+sample_ii_calib,traditional residual hand+PCA-6,1,0.22749209277807064
+sample_ii_calib,traditional residual hand+PCA-6,2,0.3294280442804428
+sample_ii_calib,traditional residual hand+PCA-6,3,0.21421454928835004
+sample_ii_calib,traditional residual hand+PCA-6,4,0.21079467580390088
+sample_ii_calib,traditional residual hand+PCA-6,5,0.22415260938323667
+sample_ii_calib,traditional residual hand+PCA-6,6,0.23662756984712702
+sample_ii_calib,traditional residual hand+PCA-6,7,0.24945571955719556
+sample_ii_calib,traditional residual hand+PCA-6,8,0.325938323668951
+sample_ii_calib,traditional residual hand+PCA-6,9,0.23532156035846075
+sample_ii_calib,traditional residual hand+PCA-6,10,0.2616196626251977
+sample_ii_calib,traditional residual hand+PCA-6,11,0.19260938323668952
+sample_ii_calib,traditional residual hand+PCA-6,12,0.27986557722720085
+sample_ii_calib,traditional residual hand+PCA-6,13,0.31044016868740115
+sample_ii_calib,traditional residual hand+PCA-6,14,0.2876726410121244
+sample_ii_calib,traditional residual hand+PCA-6,15,0.2465023721665788
+sample_ii_calib,traditional residual hand+PCA-6,16,0.26227991565629943
+sample_ii_calib,traditional residual hand+PCA-6,17,0.24318002108592512
+sample_ii_calib,traditional residual hand+PCA-6,18,0.27221929362150765
+sample_ii_calib,traditional residual hand+PCA-6,19,0.26835661570901426
+sample_ii_calib,traditional residual hand+PCA-6,20,0.2181747496046389
+sample_ii_calib,traditional residual hand+PCA-6,21,0.2805521876647338
+sample_ii_calib,traditional residual hand+PCA-6,22,0.26192672641012127
+sample_ii_calib,traditional residual hand+PCA-6,23,0.27368344754876117
+sample_ii_calib,traditional residual hand+PCA-6,24,0.2244254085397997
+sample_ii_calib,traditional residual hand+PCA-6,25,0.2728479177648919
+sample_ii_calib,traditional residual hand+PCA-6,26,0.2605284659989457
+sample_ii_calib,traditional residual hand+PCA-6,27,0.23627306273062731
+sample_ii_calib,traditional residual hand+PCA-6,28,0.27079599367422247
+sample_ii_calib,traditional residual hand+PCA-6,29,0.24251581444385872
+sample_ii_calib,traditional residual hand+PCA-6,30,0.26865181866104376
+sample_ii_calib,traditional residual hand+PCA-6,31,0.3091565629942014
+sample_ii_calib,traditional residual hand+PCA-6,32,0.2946599894570374
+sample_ii_calib,traditional residual hand+PCA-6,33,0.38332366895097525
+sample_ii_calib,traditional residual hand+PCA-6,34,0.18490247759620454
+sample_ii_calib,traditional residual hand+PCA-6,35,0.2896929362150764
+sample_ii_calib,traditional residual hand+PCA-6,36,0.2599301528729573
+sample_ii_calib,traditional residual hand+PCA-6,37,0.26772140221402213
+sample_ii_calib,traditional residual hand+PCA-6,38,0.16198998418555613
+sample_ii_calib,traditional residual hand+PCA-6,39,0.2753795466526094
+sample_ii_calib,ML residual masked-denoising AE-6,0,0.27231286241433844
+sample_ii_calib,ML residual masked-denoising AE-6,1,0.22508434370057984
+sample_ii_calib,ML residual masked-denoising AE-6,2,0.2802793885081708
+sample_ii_calib,ML residual masked-denoising AE-6,3,0.279487348444913
+sample_ii_calib,ML residual masked-denoising AE-6,4,0.25359251449657355
+sample_ii_calib,ML residual masked-denoising AE-6,5,0.2566578808645229
+sample_ii_calib,ML residual masked-denoising AE-6,6,0.1767791249341065
+sample_ii_calib,ML residual masked-denoising AE-6,7,0.25132709541381126
+sample_ii_calib,ML residual masked-denoising AE-6,8,0.21528465998945703
+sample_ii_calib,ML residual masked-denoising AE-6,9,0.24163020558777015
+sample_ii_calib,ML residual masked-denoising AE-6,10,0.28091591987348447
+sample_ii_calib,ML residual masked-denoising AE-6,11,0.2511228255139694
+sample_ii_calib,ML residual masked-denoising AE-6,12,0.2840695835529784
+sample_ii_calib,ML residual masked-denoising AE-6,13,0.20680416447021613
+sample_ii_calib,ML residual masked-denoising AE-6,14,0.2281510279388508
+sample_ii_calib,ML residual masked-denoising AE-6,15,0.22288350026357406
+sample_ii_calib,ML residual masked-denoising AE-6,16,0.2431813389562467
+sample_ii_calib,ML residual masked-denoising AE-6,17,0.35996441750131786
+sample_ii_calib,ML residual masked-denoising AE-6,18,0.2014167105956774
+sample_ii_calib,ML residual masked-denoising AE-6,19,0.2143054823405377
+sample_ii_calib,ML residual masked-denoising AE-6,20,0.2829124934106484
+sample_ii_calib,ML residual masked-denoising AE-6,21,0.2506378492356352
+sample_ii_calib,ML residual masked-denoising AE-6,22,0.25462836056932
+sample_ii_calib,ML residual masked-denoising AE-6,23,0.2220374275171323
+sample_ii_calib,ML residual masked-denoising AE-6,24,0.2534739061676331
+sample_ii_calib,ML residual masked-denoising AE-6,25,0.28124406958355297
+sample_ii_calib,ML residual masked-denoising AE-6,26,0.2567171850289931
+sample_ii_calib,ML residual masked-denoising AE-6,27,0.2528835002635741
+sample_ii_calib,ML residual masked-denoising AE-6,28,0.30550079072219294
+sample_ii_calib,ML residual masked-denoising AE-6,29,0.2499934106483922
+sample_ii_calib,ML residual masked-denoising AE-6,30,0.23544148655772273
+sample_ii_calib,ML residual masked-denoising AE-6,31,0.28051792303637324
+sample_ii_calib,ML residual masked-denoising AE-6,32,0.30502503953610965
+sample_ii_calib,ML residual masked-denoising AE-6,33,0.2946916183447549
+sample_ii_calib,ML residual masked-denoising AE-6,34,0.24097258829731152
+sample_ii_calib,ML residual masked-denoising AE-6,35,0.23320901423299945
+sample_ii_calib,ML residual masked-denoising AE-6,36,0.23521876647337903
+sample_ii_calib,ML residual masked-denoising AE-6,37,0.22254217185028993
+sample_ii_calib,ML residual masked-denoising AE-6,38,0.2513521349499209
+sample_ii_calib,ML residual masked-denoising AE-6,39,0.21416183447548762

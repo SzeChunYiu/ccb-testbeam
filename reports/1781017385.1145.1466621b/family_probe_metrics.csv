@@ -1,0 +1,17 @@
+heldout_family,method,metric,value,ci_low,ci_high,train_rows,heldout_rows,heldout_runs,category
+sample_i_calib,traditional residual hand+PCA-6,balanced_accuracy,0.2563243461231941,0.24794950083118764,0.2657632812186425,39867,18190,11,main
+sample_i_calib,ML residual masked-denoising AE-6,balanced_accuracy,0.29455975632686826,0.27614463941264034,0.31709257139797575,39867,18190,11,main
+sample_i_calib,proxy amplitude+multiplicity,balanced_accuracy,0.6371859815181456,0.6274216739510374,0.6447527281033902,39867,18190,11,leakage_check
+sample_i_calib,event-order leakage probe,balanced_accuracy,0.24985386432862788,0.24482545332577924,0.25536410974149154,39867,18190,11,leakage_check
+sample_i_analysis,traditional residual hand+PCA-6,balanced_accuracy,0.30256151168813494,0.2940662269543525,0.31234567892311993,37832,20225,14,main
+sample_i_analysis,ML residual masked-denoising AE-6,balanced_accuracy,0.3004574406679806,0.28215021982990013,0.3213840743314732,37832,20225,14,main
+sample_i_analysis,proxy amplitude+multiplicity,balanced_accuracy,0.6280999084860954,0.6205707342490747,0.633856641533618,37832,20225,14,leakage_check
+sample_i_analysis,event-order leakage probe,balanced_accuracy,0.25294389446634236,0.24617663816093632,0.25991552912970933,37832,20225,14,leakage_check
+sample_ii_analysis,traditional residual hand+PCA-6,balanced_accuracy,0.27848737962245385,0.27063896508442464,0.28523881461843414,40786,17271,7,main
+sample_ii_analysis,ML residual masked-denoising AE-6,balanced_accuracy,0.25431748104777496,0.24109254038810768,0.26456794754709817,40786,17271,7,main
+sample_ii_analysis,proxy amplitude+multiplicity,balanced_accuracy,0.638749565029227,0.6067408147234563,0.6632418930537417,40786,17271,7,leakage_check
+sample_ii_analysis,event-order leakage probe,balanced_accuracy,0.24816709059475786,0.24452192318902047,0.2520001256604748,40786,17271,7,leakage_check
+sample_ii_calib,traditional residual hand+PCA-6,balanced_accuracy,0.2675777543489721,0.2675777543489721,0.2675777543489721,55686,2371,1,main
+sample_ii_calib,ML residual masked-denoising AE-6,balanced_accuracy,0.25474696889826043,0.25474696889826043,0.25474696889826043,55686,2371,1,main
+sample_ii_calib,proxy amplitude+multiplicity,balanced_accuracy,0.6813165524512388,0.6813165524512388,0.6813165524512388,55686,2371,1,leakage_check
+sample_ii_calib,event-order leakage probe,balanced_accuracy,0.24871244069583553,0.24871244069583553,0.24871244069583553,55686,2371,1,leakage_check

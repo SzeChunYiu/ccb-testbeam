@@ -1,0 +1,154 @@
+{
+  "ticket_id": "1781005204.1292.46e43fb0",
+  "study_id": "P01b",
+  "title": "reusable full-data waveform embedding artifact",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_pulses": 581124,
+    "heldout_pulses": 59613
+  },
+  "traditional": {
+    "method": "PCA-4 and hand-shape probe",
+    "reconstruction": {
+      "method": "traditional PCA-4",
+      "latent_dim": 4,
+      "full_recon_mse": 0.013371830806136131,
+      "ci_low": 0.009223619475960732,
+      "ci_high": 0.016964655369520187,
+      "masked_sample_mse": null,
+      "train_rows": 581124,
+      "heldout_rows": 59613
+    },
+    "linear_probe": {
+      "method": "traditional PCA-4",
+      "task": "stave linear probe",
+      "metric": "balanced_accuracy",
+      "value": 0.36028903079584024,
+      "ci_low": 0.3348153859858521,
+      "ci_high": 0.3699597742896059,
+      "macro_f1": 0.24865416092379264,
+      "train_rows": 100126,
+      "heldout_rows": 59613
+    }
+  },
+  "ml": {
+    "method": "masked denoising autoencoder",
+    "eval_device": "cpu",
+    "release_device": "cpu",
+    "epochs": 35,
+    "latent_dim": 4,
+    "heldout_reconstruction": {
+      "method": "ML masked-denoising AE-4",
+      "latent_dim": 4,
+      "full_recon_mse": 0.014276529662311077,
+      "ci_low": 0.009938066825270653,
+      "ci_high": 0.0177223589271307,
+      "masked_sample_mse": 0.019415110912587775,
+      "train_rows": 581124,
+      "heldout_rows": 59613
+    },
+    "linear_probe": {
+      "method": "ML masked-denoising AE-4",
+      "task": "stave linear probe",
+      "metric": "balanced_accuracy",
+      "value": 0.36355541155721083,
+      "ci_low": 0.34417964330495143,
+      "ci_high": 0.36809893377313957,
+      "macro_f1": 0.2752917722567409,
+      "train_rows": 100126,
+      "heldout_rows": 59613
+    }
+  },
+  "leakage_checks": [
+    {
+      "method": "leakage check: amplitude-only",
+      "task": "stave linear probe",
+      "metric": "balanced_accuracy",
+      "value": 0.35411915427380836,
+      "ci_low": 0.3281156905782203,
+      "ci_high": 0.3684418155416101,
+      "macro_f1": 0.21389738443606363,
+      "train_rows": 100126,
+      "heldout_rows": 59613
+    },
+    {
+      "method": "leakage check: AE label-shuffle",
+      "task": "stave linear probe",
+      "metric": "balanced_accuracy",
+      "value": 0.23911463225795518,
+      "ci_low": 0.2343089419210354,
+      "ci_high": 0.24753657203903037,
+      "macro_f1": 0.06717343686075805,
+      "train_rows": 100126,
+      "heldout_rows": 59613
+    }
+  ],
+  "artifact": {
+    "ticket_id": "1781005204.1292.46e43fb0",
+    "artifact": "p01b_embedding_latents.npz",
+    "rows": 640737,
+    "latent_dim": 4,
+    "key_columns": [
+      "run",
+      "event_index",
+      "stave_index"
+    ],
+    "value_columns": [
+      "amplitude_adc",
+      "z"
+    ],
+    "z_dtype": "float32",
+    "event_index_definition": "zero-based entry ordinal within each raw hrdb_run_NNNN.root file",
+    "artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "artifact_mib": 11.372,
+    "normalized_waveform_matrix_mib": 43.996,
+    "model_state_file": "p01b_autoencoder_state.pt",
+    "release_training_epochs": 35,
+    "release_final_training_loss": 0.01825320658979902,
+    "no_benchmark_claim": "release model was fit after held-out evaluation and on all selected rows"
+  },
+  "runtime_sec": 59.5
+}

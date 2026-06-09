@@ -1,0 +1,7 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5,0.5,Same value for raw/injected pair; should be near chance.
+topology-only RF,0.5010500589467111,0.5008870729477848,Selected-stave flags and downstream multiplicity only.
+absolute-amplitude-only RF,0.5951563568240912,0.6133074652202017,Excluded from main RF; injection can raise peak amplitude.
+shape RF with shuffled training labels,0.5238142559525412,0.5251810964604233,Null/leakage sanity check.
+pair split violations,0.0,,Count of pair ids appearing in both train and held-out folds; must be 0.
+forbidden main RF columns,0.0,,None.

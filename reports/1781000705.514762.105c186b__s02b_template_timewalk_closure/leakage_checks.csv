@@ -1,0 +1,9 @@
+check,value,pass
+train_heldout_run_overlap,0.0,True
+train_heldout_event_id_overlap,0.0,True
+ml_feature_contains_run_or_event_id,0.0,True
+ml_feature_contains_target_or_pair_residual,0.0,True
+normalized_waveform_exact_hash_overlap,0.0,True
+permuted_target_ml_sigma68_ns,3.0048720132639115,True
+cfd20_sigma68_ns,2.9933861916712807,True
+actual_ml_sigma68_ns,1.8461136615529075,True

@@ -1338,10 +1338,12 @@ Active ready queue highlights:
   run-block bootstrap CIs.
 - **S11g — Residual-pool two-pulse real-current transfer gate.** Test whether the S11e conditioned
   residual-pool gain on injected two-pulse recovery transfers to real high-current candidate
-  windows without inflating failure, charge bias, or support drift. Traditional: freeze the
-  conditioned amplitude-binned asymmetric S01 template fit, residual-pool ranks, bounded-fit
-  delta-SSE, secondary-fraction, and source-run holdout gates, then score high-minus-low candidate
-  strata matched by run, amplitude, lowering, topology, saturation, anomaly, and q_template. ML:
+  windows without inflating failure, charge bias, or support drift; include the newest P05b
+  threshold-utility result, where CNN thresholding lowers injected RMS and failure relative to a
+  template threshold, as an injection-only anchor. Traditional: freeze the conditioned
+  amplitude-binned asymmetric S01 template fit, residual-pool ranks, bounded-fit delta-SSE,
+  secondary-fraction, and source-run holdout gates, then score high-minus-low candidate strata
+  matched by run, amplitude, lowering, topology, saturation, anomaly, and q_template. ML:
   freeze the conditioned compact MLP classifier/regressor and recalibrate only isotonic/conformal
   abstention layers with shuffled-current, low-current overlay, amplitude-only, and topology-only
   sentinels. Metric: candidate-rate excess, accepted constituent time RMS proxy, charge fractional
@@ -1359,14 +1361,16 @@ Active ready queue highlights:
   gap, and ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
 - **S03k — Analytic comparator reuse gate for waveform consumers.** Require downstream
   waveform-latent, timing-uncertainty, pile-up, charge, PID, and energy consumers to beat the
-  exact-fold S03 analytic timewalk comparator, not just weaker CFD20 or S02 ridge baselines.
-  Traditional: publish a frozen exact-fold S03 analytic residual registry and matched residual
-  tables by run, stave, amplitude, peak phase, q_template, baseline, saturation, dropout/anomaly,
-  topology, and pile-up score. ML: evaluate representative frozen P01/P03/P06/P05/P04 consumer
-  models against the same folds with target-shuffle, event-shuffle, domain-score, amplitude-only,
-  and topology-only sentinels. Metric: consumer sigma68/full RMS/tail fraction, pull coverage,
-  charge/pile-up/PID proxy change after timing substitution, support loss, comparator margin, and
-  ML-minus-S03 deltas with event-paired run-block bootstrap CIs.
+  exact-fold S03 analytic timewalk comparator, not just weaker CFD20 or S02 ridge baselines; carry
+  forward the newest P01e quantization finding that samples 5/7/8 sign flips are CFD-only
+  artifacts. Traditional: publish a frozen exact-fold S03 analytic residual registry and matched
+  residual tables by run, stave, amplitude, peak phase, q_template, baseline, saturation,
+  dropout/anomaly, topology, and pile-up score. ML: evaluate representative frozen
+  P01/P03/P06/P05/P04 consumer models against the same folds with target-shuffle, event-shuffle,
+  domain-score, amplitude-only, and topology-only sentinels. Metric: consumer sigma68/full
+  RMS/tail fraction, pull coverage, charge/pile-up/PID proxy change after timing substitution,
+  support loss, comparator margin, and ML-minus-S03 deltas with event-paired run-block bootstrap
+  CIs.
 - **P07h — Boundary-shrinkage leakage triage.** Explain the P07 natural B2 boundary-shrinkage
   leakage flags and decide whether they are harmless event-hash/support artifacts or real
   saturation-boundary bias that should veto charge, timing, PID, and energy consumers.

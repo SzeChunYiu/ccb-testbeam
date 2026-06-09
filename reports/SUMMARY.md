@@ -84,6 +84,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P01d leakage | ✅ done | ✅ 640,737 exact | residual hand+PCA stave bal-acc best 0.303 | residual AE-6 no accepted family gain | No; run-family sentinels reject latent reuse without leakage controls | reports/1781017385.1145.1466621b |
 | P01d artifact | ⚠️ blocked | ✅ 640,737 exact; hashes preserved | canonical copy attempted to ccb-data/projects | no model refit | Blocked by read-only canonical paths; worker-local artifact index preserved | reports/1781016189.1003.2607526c |
 | P01e | ✅ done | ✅ prior P01c CFD20/latent reproduced | strict hand-shape ridge sigma68 1.962 ns | strict AE latent ridge sigma68 1.965 ns; shuffled target 2.056 ns | No; latent does not beat hand-shape and null controls remain strong | reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit |
+| P01e quantization | ✅ done | ✅ 640,737 exact; held-out runs 42/57/64/65 | template phase 2.523 ns; OF(5-13) 2.693 ns | ridge residual 1.974 ns; target shuffle 3.217 ns | Diagnostic; samples 5/7/8 sign flips are CFD-only artifacts | reports/1781018706.1172.330f2aa0 |
 | P01e loader | ✅ done | ✅ 640,737 exact; NPZ key/hash join exact | hand-shape stave bal-acc 0.410 | P01b latent RF bal-acc 0.479 | Loader-safe smoke test only; latent still needs domain/support audits | reports/1781016189.1012.5eef5b75 |
 | P01e control null | ✅ done | ✅ 640,737 exact and latent key match | controls-only manual-flag bal-acc 0.387 | latent RF manual-flag bal-acc 0.968; lift 0.457 | Positive morphology lift after controls, but consumers need calibration and leakage sentinels | reports/1781017385.1212.733932fe |
 | P01f timing-control | ✅ done | ✅ P01c/P01e controls reproduced | hand-shape timing sigma68 1.948 ns | AE latent 1.952 ns; event-block shuffle 2.023 ns | No; event-block controls recover too much timing gain | reports/1781018587.1208.05763e48 |
@@ -106,6 +107,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P04e | ✅ done | ✅ 640,737 exact; 640,482 valid duplicate rows | worst-family Huber res68 0.0458; B2 holdout Huber 0.1370 | worst-family ExtraTrees res68 0.0036; B2 holdout ExtraTrees 0.0168 | **Yes** for duplicate-readout closure; B2 externalization needs support frontier | reports/1781011912.1282.2f0f1825 |
 | P05a | ✅ done | ✅ S11a injection anchor reproduced | bounded two-pulse fit time RMS 13.90 ns; failure 0.168 | compact CNN time RMS 10.01 ns; failure 0.228 | No adoption; CNN improves RMS but failure-rate regression is clear | reports/1781010938.498.6bd050f4 |
 | P05b | ✅ done | ✅ S11a/S10d failure-aware injection benchmark | template quality cuts coverage 0.343, time RMS 7.42 ns, bad rate 0.092 | isotonic failure model coverage 0.728, time RMS 8.44 ns, bad rate 0.144 | Mixed; ML keeps more coverage, traditional is safer at accepted recovery | reports/1781014241.437.0e0024cb |
+| P05b threshold | ✅ done | ✅ P05a reproduced | template threshold RMS 13.61 ns; failure 0.183 | CNN threshold RMS 10.07 ns; failure 0.100 | **Yes** on injection threshold utility; real-current transfer still required | reports/1781018698.913.17f76add |
 | P07 | ✅ merged | self-truth (clip) | template scale | GBR | **ML ~4% vs template 10–29% (3–7× better)** | reports/P07_saturation_recovery |
 | P07b | ✅ done | ✅ P07 clip result exactly reproduced | artificial clip res68 0.148; natural timing tail 0.0384 | artificial clip res68 0.0298; natural tail 0.0329 but q_template shift -0.0897 | ML wins artificial closure; natural transfer needs boundary/systematic audits | reports/1781004956.668.7d00443a |
 | P07c | ✅ done | ✅ P07/P07b anchors reproduced | template-family artificial res68 0.148 | ratio-transfer res68 0.0393; boundary timing-tail delta ≈ -0.006 | ML wins artificial closure; boundary q_template/timing shifts require leakage controls | reports/1781010522.1275.6b5664c7 |
@@ -406,6 +408,12 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   the next pile-up question. P07 boundary-shrinkage calibration leaves traditional shrinkage ahead
   of ML and reports leakage flags, so saturation recovery needs boundary-leakage triage alongside
   the existing accept/veto work.
+- Rebase-landed newest reports add two constraints to the same steering layer: P05b threshold
+  utility shows the compact CNN can beat a bounded-template threshold on injected failure rate
+  (0.100 vs 0.183) and RMS (10.07 ns vs 13.61 ns), but it remains injection-only until real-current
+  transfer is proven; P01e template-phase quantization confirms the P01d samples 5/7/8 sign flips
+  are CFD-only artifacts, so sample-local timing claims must use template/OF/S03 analytic
+  comparators rather than CFD sign alone.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

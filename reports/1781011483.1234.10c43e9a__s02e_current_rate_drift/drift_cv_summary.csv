@@ -1,0 +1,7 @@
+method,base_method,drift_order,mean_cv_sigma68_ns,folds,total_pair_residuals
+s02e_binned_timewalk_drift0,s02b_template,0,3.102471137745423,3,11262
+s02e_binned_timewalk_drift1,s02b_template,1,3.5768271120887256,3,11262
+s02e_binned_timewalk_drift2,s02b_template,2,23.987645750246802,3,11262
+s02e_global_timewalk_drift0,template_phase,0,1.7465451989461027,3,11262
+s02e_global_timewalk_drift1,template_phase,1,2.724797167987514,3,11262
+s02e_global_timewalk_drift2,template_phase,2,21.6394001975769,3,11262

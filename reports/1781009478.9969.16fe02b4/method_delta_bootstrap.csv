@@ -1,0 +1,3 @@
+comparison,delta_ns,ci_low_ns,ci_high_ns,p_two_sided
+ml_minus_raw_pair_median_sigma68,-0.6329156421027431,-8.271423162422188,-0.4509051264045104,0.0
+ml_minus_ridge_nuisance_sigma68,-6.29615025618239,-7.656492455275239,-5.7835349461172845,0.0

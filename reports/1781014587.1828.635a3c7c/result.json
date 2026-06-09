@@ -1,0 +1,126 @@
+{
+  "conclusion": "The all-stave quiet proxy is biased relative to beam-trigger pre-trigger activity; inverse-propensity weighting is diagnostic but not direct pedestal truth.",
+  "git_commit": "1ad904281016e578b8407ba65795161e9cd19747",
+  "leakage_checks": [
+    {
+      "all_pass": true,
+      "check": "propensity_train_auc",
+      "n": 33,
+      "pass_count": 33,
+      "value": 0.8927849692003367
+    },
+    {
+      "all_pass": true,
+      "check": "shuffled_domain_auc",
+      "n": 33,
+      "pass_count": 33,
+      "value": 0.46339111965067337
+    },
+    {
+      "all_pass": true,
+      "check": "train_heldout_run_overlap",
+      "n": 33,
+      "pass_count": 33,
+      "value": 0.0
+    },
+    {
+      "all_pass": true,
+      "check": "feature_exclusion_forbidden_columns",
+      "n": 1,
+      "pass_count": 1,
+      "value": 0.0
+    }
+  ],
+  "next_tickets": [
+    {
+      "body": "Rerun the quiet-vs-beam proxy benchmark against direct no-pulse forced/random pedestal truth with the same run-held-out splits.",
+      "title": "S16g: acquire or mirror forced/random HRD pedestal ROOT"
+    },
+    {
+      "body": "Propagate quiet-proxy propensity scores into S02/S03 timing-tail models and test whether timing-tail deltas persist under held-out run controls.",
+      "title": "S16h: quiet-proxy propensity as a timing-tail nuisance"
+    }
+  ],
+  "primary_results": {
+    "best_method": {
+      "downstream_mean_abs_timing_delta_ns": 0.0,
+      "downstream_timing_shift_tail_ci_high": 0.0,
+      "downstream_timing_shift_tail_ci_low": 0.0,
+      "downstream_timing_shift_tail_fraction": 0.0,
+      "mae_adc": 215.25130629029016,
+      "mae_ci_high_adc": 247.85986439393938,
+      "mae_ci_low_adc": 179.0227998985763,
+      "mean_bias_adc": -35.58475041352977,
+      "mean_bias_ci_high_adc": -30.108120224050513,
+      "mean_bias_ci_low_adc": -40.341335176093494,
+      "method": "traditional_median3_no_proxy",
+      "n_records": 258748,
+      "n_runs": 33,
+      "rmse_adc": 791.5214054308018
+    },
+    "ml_inverse_propensity": {
+      "downstream_mean_abs_timing_delta_ns": 0.11880773764010069,
+      "downstream_timing_shift_tail_ci_high": 0.06912268366400215,
+      "downstream_timing_shift_tail_ci_low": 0.05883495459984626,
+      "downstream_timing_shift_tail_fraction": 0.06485457192995557,
+      "mae_adc": 219.57605066349046,
+      "mae_ci_high_adc": 251.58923188469103,
+      "mae_ci_low_adc": 184.98185935721688,
+      "mean_bias_adc": -26.25678619230092,
+      "mean_bias_ci_high_adc": -21.794968446605203,
+      "mean_bias_ci_low_adc": -30.671184921306224,
+      "method": "ml_inverse_propensity_quiet_offset",
+      "n_records": 258748,
+      "n_runs": 33,
+      "rmse_adc": 791.2064028912405
+    },
+    "shuffled_control": {
+      "downstream_mean_abs_timing_delta_ns": 0.07619852781377122,
+      "downstream_timing_shift_tail_ci_high": 0.029760933994275256,
+      "downstream_timing_shift_tail_ci_low": 0.018009671130395526,
+      "downstream_timing_shift_tail_fraction": 0.023330471462167306,
+      "mae_adc": 218.77779317939664,
+      "mae_ci_high_adc": 255.13339448321227,
+      "mae_ci_low_adc": 187.42785236128248,
+      "mean_bias_adc": -33.57023014597391,
+      "mean_bias_ci_high_adc": -28.775536220804508,
+      "mean_bias_ci_low_adc": -37.46116602213669,
+      "method": "ml_shuffled_domain_control",
+      "n_records": 258748,
+      "n_runs": 33,
+      "rmse_adc": 793.380595680246
+    },
+    "traditional_quiet_proxy": {
+      "downstream_mean_abs_timing_delta_ns": 0.07608741419930518,
+      "downstream_timing_shift_tail_ci_high": 0.028393488972066627,
+      "downstream_timing_shift_tail_ci_low": 0.018346118891838407,
+      "downstream_timing_shift_tail_fraction": 0.023405128970846244,
+      "mae_adc": 218.77439528962014,
+      "mae_ci_high_adc": 253.17835092536205,
+      "mae_ci_low_adc": 180.28499984115686,
+      "mean_bias_adc": -33.57176184031783,
+      "mean_bias_ci_high_adc": -28.37681005890371,
+      "mean_bias_ci_low_adc": -37.95127375094426,
+      "method": "traditional_quiet_offset_stratified",
+      "n_records": 258748,
+      "n_runs": 33,
+      "rmse_adc": 793.373279601155
+    }
+  },
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_b_stave_pulses": 640737,
+    "selected_pass": true
+  },
+  "runtime_sec": 158.402676820755,
+  "sampled_records": {
+    "base_records": 130687,
+    "beam_base_records": 64687,
+    "quiet_base_records": 66000,
+    "runs": 33,
+    "target_records": 522748
+  },
+  "study": "S16f",
+  "ticket": "1781014587.1828.635a3c7c",
+  "worker": "testbeam-laptop-4"
+}

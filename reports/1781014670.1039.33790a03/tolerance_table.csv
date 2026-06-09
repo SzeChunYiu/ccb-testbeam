@@ -1,0 +1,3 @@
+sample,standard_estimator,reference_traditional_width_ns,bootstrap_ci_low_ns,bootstrap_ci_high_ns,run_to_run_mad_ns,recommended_tolerance_ns,accept_low_ns,accept_high_ns,notes
+sample_iii,percentile68_ns,1.3942595669628464,1.331423425435608,1.4854219007173914,0.21234366516111722,0.21234366516111722,1.1819159018017291,1.6066032321239636,Use on run-held-out A1-A3 residuals; quote MAD/IQR as secondary cross-checks.
+sample_iv,percentile68_ns,1.6374830726048046,1.3110165257540374,1.7185983948534171,0.16467274091430356,0.20379093454968988,1.4336921380551146,1.8412740071544946,Use on run-held-out A1-A3 residuals; quote MAD/IQR as secondary cross-checks.

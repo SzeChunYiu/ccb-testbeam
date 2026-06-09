@@ -1,0 +1,48 @@
+{
+  "study": "S01",
+  "ticket": "1780997954.15037.36463764",
+  "worker": "testbeam-laptop-1",
+  "title": "Full-dataset amplitude-adaptive template and q_template",
+  "reproduced": true,
+  "repro_tolerance": "0 count delta versus S00 selected-pulse gate; exact S00 table sha256",
+  "n_selected_pulses": 640737,
+  "traditional": {
+    "metric": "analysis_run_reconstruction_mse",
+    "value": 0.04441398689507396,
+    "ci": [
+      0.03424874493784481,
+      0.05478188864687466
+    ],
+    "artifact": "q_template_per_pulse.csv.gz"
+  },
+  "ml": {
+    "metric": "analysis_run_reconstruction_mse",
+    "value": 0.0020780666853256876,
+    "ci": [
+      0.0017253265706434226,
+      0.0024191283002784033
+    ],
+    "best": {
+      "latent_dim": 8,
+      "hidden_dim": 32,
+      "device": "cpu"
+    }
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "preregistered_metric": "analysis-run mean MSE on CFD20-aligned amplitude-normalized waveforms",
+    "delta_ml_minus_traditional": -0.04233592020974827,
+    "delta_ci": [
+      -0.05242118914076885,
+      -0.032381001540877745
+    ],
+    "n_tries": 1
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b",
+  "critic": "pending",
+  "next_tickets": [
+    "S01e: validate q_template as a timing-tail predictor on S02/S03 held-out residuals",
+    "P10a: conditional generative template vs empirical amplitude-bin template"
+  ]
+}

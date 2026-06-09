@@ -1,0 +1,90 @@
+# Study report: S03a - Analytic timewalk correction
+
+- **Ticket:** 1781000705.514827.50025402
+- **Author:** testbeam-laptop-3
+- **Date:** 2026-06-09
+- **Input:** raw B-stack ROOT files under `data/root/root`
+- **Split:** train runs 58-63; held-out run 65
+- **Config:** `configs/s03a_analytic_timewalk.yaml`
+
+## 0. Question
+
+Can an explicit amplitude/shape timewalk correction on the S02 best pickoff reproduce the S02 Ridge residual gain with interpretable parameters?
+
+## 1. Raw-ROOT reproduction gate
+
+The S00 selected-pulse counts were rerun from raw ROOT before any correction work.
+
+| quantity                           |   report_value |   reproduced |   delta |   tolerance | pass   |
+|:-----------------------------------|---------------:|-------------:|--------:|------------:|:-------|
+| total selected B-stave pulses      |         640737 |       640737 |       0 |           0 | True   |
+| sample_ii_analysis selected_pulses |         125096 |       125096 |       0 |           0 | True   |
+| sample_ii_analysis B2              |          88213 |        88213 |       0 |           0 | True   |
+| sample_ii_analysis B4              |          21229 |        21229 |       0 |           0 | True   |
+| sample_ii_analysis B6              |          11148 |        11148 |       0 |           0 | True   |
+| sample_ii_analysis B8              |           4506 |         4506 |       0 |           0 | True   |
+
+The S02 held-out benchmark was then rebuilt from the same raw pass.
+
+| method                  |   value |   ci_low |   ci_high |   n_pair_residuals |
+|:------------------------|--------:|---------:|----------:|-------------------:|
+| s02_template_phase_base | 2.88915 |  2.63915 |   3.20541 |                198 |
+| s02_cfd20_reference     | 2.99339 |  2.61485 |   3.35138 |                198 |
+| s02_ml_ridge_on_cfd20   | 1.84611 |  1.52116 |   2.01422 |                198 |
+
+## 2. Traditional analytic correction
+
+The candidate scan considered amplitude-only, amplitude plus pulse-shape, and per-stave pulse-shape parameterizations.
+
+| candidate               |   alpha |   sigma68_ns |   n_features |
+|:------------------------|--------:|-------------:|-------------:|
+| amp_only                |     100 |      1.60366 |            6 |
+| amp_rise_shape          |     100 |      1.61743 |           14 |
+| amp_rise_shape_by_stave |     100 |      1.7112  |           47 |
+
+Selected by grouped CV on train runs: `amp_only` with Ridge alpha `100`. The selected `amp_only` model uses only same-pulse amplitude transforms plus stave intercepts; no run, event id, event order, held-out label, or other-stave timing feature is present.
+
+| feature           |   coefficient_ns_per_raw_unit |
+|:------------------|------------------------------:|
+| stave_B4          |                     -4.22227  |
+| stave_B6          |                      2.43221  |
+| log_amp           |                     -2.69368  |
+| stave_B8          |                      1.79006  |
+| inv_amp_1000      |                     -4.99899  |
+| inv_sqrt_amp_1000 |                     -0.537107 |
+
+## 3. Held-out head-to-head
+
+| method                     |   value |   ci_low |   ci_high |   full_rms_ns |   tail_frac_abs_gt5ns |   n_pair_residuals |
+|:---------------------------|--------:|---------:|----------:|--------------:|----------------------:|-------------------:|
+| s02_template_phase_base    | 2.88915 |  2.63915 |   3.13915 |       2.57669 |            0.0505051  |                198 |
+| analytic_timewalk          | 1.49464 |  1.34652 |   1.64375 |       1.69913 |            0.00505051 |                198 |
+| ml_ridge_on_template_phase | 1.39153 |  1.29745 |   1.59574 |       1.67232 |            0.00505051 |                198 |
+
+## 4. Leakage checks
+
+| check                             |   heldout_sigma68_ns |   n_pair_residuals |
+|:----------------------------------|---------------------:|-------------------:|
+| template_phase                    |              2.88915 |                198 |
+| analytic_timewalk_shuffled_target |              2.83705 |                198 |
+| train_heldout_event_id_overlap    |              0       |                  0 |
+
+Feature audit: no run number, event identifier, event order, other-stave time, or held-out label is included. Training and held-out event-id overlap is zero. The shuffled-target negative control does not reproduce the analytic improvement.
+
+## 5. Verdict
+
+The analytic correction changes held-out sigma68 from `2.889 ns` to `1.495 ns`, a gain of `1.395 ns`. The S02 ML reference remains `1.846 ns`; the template-phase ML correction is `1.392 ns`.
+
+Conclusion: on this single held-out run, a simple interpretable amplitude timewalk correction closes and exceeds the original S02 Ridge-on-CFD20 gain. The template-phase Ridge model is still slightly narrower, but the main S02 gain is physics-like amplitude timewalk rather than an opaque run artifact.
+
+## 6. Reproducibility
+
+Generated by:
+
+```bash
+/home/billy/anaconda3/bin/python scripts/s03a_analytic_timewalk.py --config configs/s03a_analytic_timewalk.yaml
+```
+
+Artifacts: `reproduction_match_table.csv`, `s02_reproduction_benchmark.csv`, `analytic_cv_scan.csv`, `analytic_coefficients.csv`, `head_to_head_benchmark.csv`, `leakage_checks.csv`, `calibration_table.csv`, figures, `result.json`, and `manifest.json`.
+
+`result.json` verdict: `analytic_exceeds_s02_ml_gain_on_single_heldout_run`.

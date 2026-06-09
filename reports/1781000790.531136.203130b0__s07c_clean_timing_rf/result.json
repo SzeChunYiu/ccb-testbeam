@@ -1,0 +1,102 @@
+{
+  "study": "S07c",
+  "ticket": "1781000790.531136.203130b0",
+  "worker": "testbeam-laptop-2",
+  "title": "clean-timing RF vs q_template/downstream-span baseline",
+  "s00_reproduced": true,
+  "app_a_reproduction": {
+    "documented": {
+      "labelled_events": 12147,
+      "clean": 10636,
+      "violating": 1511
+    },
+    "raw_cfd20_reproduced": {
+      "downstream_ge2_events": 15354,
+      "clean": 7583,
+      "violating": 2314,
+      "ambiguous": 5457,
+      "labelled_events": 9897
+    },
+    "matches_documented": false,
+    "note": "The ticket body has no numeric target; the documented App.A count in docs/07_ml_methods.md is not reproduced by raw HRDv CFD20 timing."
+  },
+  "traditional": {
+    "method": "traditional_span_q_template",
+    "roc_auc": 0.9123003041762775,
+    "roc_auc_ci_low": 0.8830170102622439,
+    "roc_auc_ci_high": 0.9290946756542092,
+    "average_precision": 0.9605694808479471,
+    "average_precision_ci_low": 0.9154076100886507,
+    "average_precision_ci_high": 0.9766331978833739,
+    "note": "Uses downstream span; overlaps weak-label definition",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "traditional_deleaked": {
+    "method": "traditional_q_template_only",
+    "roc_auc": 0.7170512362696387,
+    "roc_auc_ci_low": 0.6912384788762793,
+    "roc_auc_ci_high": 0.7402800880119584,
+    "average_precision": 0.8819347532942992,
+    "average_precision_ci_low": 0.8175738354751667,
+    "average_precision_ci_high": 0.907882388768608,
+    "note": "No timing-span feature",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "ml": {
+    "method": "rf_clean_timing",
+    "roc_auc": 0.9934725824756305,
+    "roc_auc_ci_low": 0.9913841725600907,
+    "roc_auc_ci_high": 0.9952618065356755,
+    "average_precision": 0.9977874576233497,
+    "average_precision_ci_low": 0.9958919888951137,
+    "average_precision_ci_high": 0.9985585759078093,
+    "note": "RF excludes timing spans, pair residuals, run, and sample",
+    "brier": 0.02684066097372348,
+    "brier_ci_low": 0.024411099858888265,
+    "brier_ci_high": 0.030259812052438308
+  },
+  "leaky_control": {
+    "method": "leaky_rf_control",
+    "roc_auc": 1.0,
+    "roc_auc_ci_low": 0.9999999999999999,
+    "roc_auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "average_precision_ci_low": 1.0,
+    "average_precision_ci_high": 1.0,
+    "note": "RF with forbidden label-defining timing spans",
+    "brier": 0.0023624259824182496,
+    "brier_ci_low": 0.002141585105792596,
+    "brier_ci_high": 0.002664287583802459
+  },
+  "rf_beats_q_template_only_auc_delta": {
+    "value": 0.2764213462059918,
+    "ci": [
+      0.25423554721884395,
+      0.3001357101014598
+    ]
+  },
+  "rf_beats_span_q_auc_delta": {
+    "value": 0.08117227829935303,
+    "ci": [
+      0.06376881239805489,
+      0.11021273059919809
+    ]
+  },
+  "best_rf_params": {
+    "n_estimators": 300,
+    "max_depth": 7,
+    "min_samples_leaf": 15
+  },
+  "rf_feature_count": 46,
+  "rf_forbidden_features_present": [],
+  "qtemplate_unmatched_events": 2,
+  "runtime_sec": 55.344,
+  "next_tickets": [
+    "S07d: recover the historical App.A 12,147-event table or retire that number; expected information gain: separates documentation drift from a detector result.",
+    "S03b: validate q_template-only clean-timing cuts against held-out downstream timing tails; expected information gain: tests whether shape quality adds independent timing rejection without span leakage."
+  ]
+}

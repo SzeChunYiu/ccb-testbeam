@@ -1,0 +1,189 @@
+{
+  "ticket_id": "1781016189.1012.5eef5b75",
+  "study_id": "P01e-loader",
+  "title": "downstream loader validation for P01b latents",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "artifact": {
+    "path": "artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz",
+    "bytes": 11923919,
+    "keys": [
+      "run",
+      "event_index",
+      "stave_index",
+      "amplitude_adc",
+      "z"
+    ],
+    "rows": 640737,
+    "z_shape": [
+      640737,
+      4
+    ],
+    "z_dtype": "float32",
+    "artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "expected_artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "metadata_artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "artifact_sha256_pass": true,
+    "key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "expected_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "metadata_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "key_sha256_pass": true
+  },
+  "join": {
+    "raw_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "raw_artifact_key_match": true,
+    "inner_join_rows": 640737,
+    "join_row_count_pass": true,
+    "raw_duplicate_keys": 0,
+    "artifact_duplicate_keys": 0,
+    "raw_duplicate_key_pass": true,
+    "artifact_duplicate_key_pass": true,
+    "row_order_equal": true,
+    "max_abs_amplitude_delta_adc": 0.0,
+    "amplitude_match_pass": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "benchmark_rows": 94116,
+    "train_rows": 82118,
+    "heldout_rows": 11998,
+    "max_per_run_stave": 1500
+  },
+  "traditional": [
+    {
+      "method": "traditional hand-shape logistic",
+      "role": "claim",
+      "target": "stave_index",
+      "metric": "balanced_accuracy",
+      "value": 0.4104211556673951,
+      "ci_low": 0.38991614613119296,
+      "ci_high": 0.4226696518992813,
+      "train_rows": 82118,
+      "heldout_rows": 11998
+    },
+    {
+      "method": "traditional hand-shape logistic",
+      "role": "claim",
+      "target": "stave_index",
+      "metric": "macro_f1",
+      "value": 0.3410032703274253,
+      "ci_low": 0.30069435266649974,
+      "ci_high": 0.3736602955618236,
+      "train_rows": 82118,
+      "heldout_rows": 11998
+    }
+  ],
+  "ml": [
+    {
+      "method": "ML P01b latent random forest",
+      "role": "claim",
+      "target": "stave_index",
+      "metric": "balanced_accuracy",
+      "value": 0.4789601020898573,
+      "ci_low": 0.44198491285787866,
+      "ci_high": 0.49219344655835245,
+      "train_rows": 82118,
+      "heldout_rows": 11998
+    },
+    {
+      "method": "ML P01b latent random forest",
+      "role": "claim",
+      "target": "stave_index",
+      "metric": "macro_f1",
+      "value": 0.4683435292198145,
+      "ci_low": 0.4369967209948702,
+      "ci_high": 0.47663064571645464,
+      "train_rows": 82118,
+      "heldout_rows": 11998
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "must be zero for by-run validation"
+    },
+    {
+      "check": "raw_artifact_key_order_equal",
+      "value": 1.0,
+      "pass": true,
+      "note": "raw recount key order matches NPZ key order"
+    },
+    {
+      "check": "forbidden_feature_audit",
+      "value": 0.0,
+      "pass": true,
+      "note": "claim feature matrices exclude run, event_index, stave_index, artifact_row, and raw_row"
+    },
+    {
+      "check": "amplitude_only_balanced_accuracy",
+      "value": 0.34492,
+      "pass": true,
+      "note": "amplitude can be a detector proxy but is weaker than the claim rows"
+    },
+    {
+      "check": "event_index_only_balanced_accuracy",
+      "value": 0.257516,
+      "pass": true,
+      "note": "event ordinal alone should not carry stave identity across held-out runs"
+    },
+    {
+      "check": "shuffled_label_balanced_accuracy",
+      "value": 0.252356,
+      "pass": true,
+      "note": "label-shuffle null should stay near four-class chance"
+    }
+  ],
+  "upstream_p01b_context": {
+    "ticket_id": "1781005204.1292.46e43fb0",
+    "rows": 640737,
+    "release_model_note": "release model was fit after held-out evaluation and on all selected rows"
+  },
+  "next_tickets": [],
+  "follow_up_ticket_status": "skipped: loader contract validation is complete and no non-duplicative follow-up was identified",
+  "runtime_sec": 27.3,
+  "git_commit": "fe3f7b589767a8726abf6a37c141b6d3ddccb31a",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35"
+}

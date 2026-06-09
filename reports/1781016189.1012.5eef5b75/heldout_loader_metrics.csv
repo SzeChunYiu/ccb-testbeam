@@ -1,0 +1,11 @@
+method,role,target,metric,value,ci_low,ci_high,train_rows,heldout_rows
+traditional hand-shape logistic,claim,stave_index,balanced_accuracy,0.4104211556673951,0.38991614613119296,0.4226696518992813,82118,11998
+traditional hand-shape logistic,claim,stave_index,macro_f1,0.3410032703274253,0.30069435266649974,0.3736602955618236,82118,11998
+ML P01b latent random forest,claim,stave_index,balanced_accuracy,0.4789601020898573,0.44198491285787866,0.49219344655835245,82118,11998
+ML P01b latent random forest,claim,stave_index,macro_f1,0.4683435292198145,0.4369967209948702,0.47663064571645464,82118,11998
+leakage check: amplitude-only logistic,leakage,stave_index,balanced_accuracy,0.34491998838244664,0.3215173442880651,0.36008182571625397,82118,11998
+leakage check: amplitude-only logistic,leakage,stave_index,macro_f1,0.2715970359744568,0.236983582208953,0.2903034129937642,82118,11998
+leakage check: event-index-only RF,leakage,stave_index,balanced_accuracy,0.2575164745285635,0.24849821678241907,0.2649438686059104,82118,11998
+leakage check: event-index-only RF,leakage,stave_index,macro_f1,0.2033082450499424,0.19275254329140423,0.21049434828525687,82118,11998
+leakage check: shuffled train labels,leakage,shuffled_train_stave_index,balanced_accuracy,0.25235605252261434,0.24033816707235187,0.26320249104251087,82118,11998
+leakage check: shuffled train labels,leakage,shuffled_train_stave_index,macro_f1,0.19028010771940987,0.18075486939397514,0.19999316478073004,82118,11998

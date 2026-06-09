@@ -1,0 +1,8 @@
+check,value,flag
+forbidden_feature_overlap,,False
+heldout_run_overlap,none; each analysis run was excluded from its own train fold,False
+row_split_advantage_rmse_ns,-0.43494160763198275,False
+group_split_r2_mean,0.05944239320776275,False
+random_row_split_r2,0.059373932836772836,False
+shuffled_target_r2,-0.00042317475324016307,False
+sample_iv_ml_minus_traditional_width_ci_ns,"[-0.0586715, 0.622073], p=0.085",False

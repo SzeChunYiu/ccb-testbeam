@@ -1,0 +1,37 @@
+{
+  "study": "S16b",
+  "ticket": "1781001221.625922.5a564a7e",
+  "worker": "testbeam-laptop-2",
+  "title": "forced-trigger pedestal validation",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "calibration_runs": [56, 64],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "validation_samples": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "quiet_event_max_amplitude_adc": 80.0,
+  "expected_forced_random_tagged_entries": 0,
+  "negative_tolerance_adc": {"floor": 25.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.35, "low_fraction": 0.05, "negative_adc": 50.0},
+  "random_seed": 16026,
+  "bootstrap_replicates": 400,
+  "bootstrap_max_records_per_run": 100000,
+  "ml": {
+    "max_train_records": 60000,
+    "cv_folds": 3,
+    "hyperparameters": {
+      "max_leaf_nodes": [7, 15],
+      "learning_rate": [0.06, 0.1],
+      "l2_regularization": [0.0, 0.1]
+    }
+  }
+}

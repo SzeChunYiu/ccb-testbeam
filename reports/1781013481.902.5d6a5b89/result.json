@@ -1,0 +1,92 @@
+{
+  "study": "S10f",
+  "ticket": "1781013481.902.5d6a5b89",
+  "worker": "testbeam-laptop-4",
+  "title": "amplitude-binned two-pulse templates for S10d resolvability",
+  "reproduced": true,
+  "s10d_anchor": {
+    "traditional_delay_ns": 60.0,
+    "ml_delay_ns": 20.0
+  },
+  "traditional": {
+    "method": "amplitude_binned_asymmetric_s01_template_fit",
+    "metric": "heldout_resolvable_delay_ns_for_abs_timing_bias_lt_1ns_and_abs_area_bias_lt_20pct",
+    "value": null,
+    "ci": [
+      50.0,
+      60.0
+    ],
+    "heldout_constituent_time_rms_ns": 17.814008806178173,
+    "detection_ap": 0.7222019804988418,
+    "charge_fractional_bias": -0.0036708604687271675,
+    "charge_fractional_res68": 0.11519680771425131,
+    "failure_rate": 0.013333333333333334
+  },
+  "ml": {
+    "method": "compact_mlp_classifier_regressor",
+    "metric": "heldout_resolvable_delay_ns_for_abs_timing_bias_lt_1ns_and_abs_area_bias_lt_20pct",
+    "value": null,
+    "ci": [
+      22.5,
+      60.0
+    ],
+    "heldout_constituent_time_rms_ns": 9.27571949279118,
+    "detection_ap": 0.8799601723802818,
+    "charge_fractional_bias": -0.01836394631145377,
+    "charge_fractional_res68": 0.06639211216620393,
+    "failure_rate": 0.27666666666666667
+  },
+  "traditional_reduces_below_60_ns": false,
+  "ml_beats_traditional_delay": false,
+  "falsification": {
+    "split": "by source run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "leakage_checks_pass": true,
+    "leakage_flags": 0,
+    "bootstrap_unit": "heldout source run",
+    "n_template_candidates": 36
+  },
+  "s10b_reproduction": [
+    {
+      "quantity": "S10 assumed tau_eff combined Rmax MHz",
+      "report_value": 4.222222222222222,
+      "reproduced": 4.222222222222222,
+      "delta": 0.0,
+      "tolerance": 0.05,
+      "pass": true
+    },
+    {
+      "quantity": "S10b measured traditional live10 ns",
+      "report_value": 124.79,
+      "reproduced": 124.79018394263471,
+      "delta": 0.0001839426347061135,
+      "tolerance": 1.0,
+      "pass": true
+    },
+    {
+      "quantity": "S10b measured-tau rescaled Rmax MHz",
+      "report_value": 3.05,
+      "reproduced": 3.045111305987686,
+      "delta": -0.004888694012313621,
+      "tolerance": 0.05,
+      "pass": true
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "f2ced6e9e94c406e5c9cadf4db3b6eebc5bd1c8b",
+  "next_tickets": [
+    "S10g: validate S10f amplitude-binned/asymmetric fit on real high-current windows with low-current residual controls",
+    "S10h: stress-test S10f with run-family residual pools and stricter synthetic-overlay realism checks"
+  ],
+  "runtime_sec": 169.56
+}

@@ -1,0 +1,52 @@
+{
+  "ticket_id": "1781017385.1212.733932fe",
+  "study_id": "P01e",
+  "title": "control-stratum permutation null for P01b latents",
+  "output_dir": "reports/1781017385.1212.733932fe",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "p01b_artifact_path": "artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz",
+  "p01b_metadata_path": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_metadata.json",
+  "p01b_result_path": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/result.json",
+  "expected_selected_pulses": 640737,
+  "expected_artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+  "expected_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 57, 64, 65],
+  "stratification": {
+    "amplitude_quantile_bins": 6,
+    "minimum_permutation_group_size": 2
+  },
+  "benchmark": {
+    "max_per_run_stave": 400,
+    "bootstrap_replicates": 300,
+    "permutation_replicates": 30,
+    "random_seed": 20260610
+  },
+  "traditional": {
+    "ridge_alpha": 1.0
+  },
+  "ml": {
+    "random_forest_estimators": 64,
+    "random_forest_max_depth": 10,
+    "random_forest_min_samples_leaf": 20
+  }
+}

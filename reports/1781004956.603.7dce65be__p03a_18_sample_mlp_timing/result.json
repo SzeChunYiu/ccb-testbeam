@@ -1,0 +1,70 @@
+{
+  "study": "P03a",
+  "ticket": "1781004956.603.7dce65be",
+  "worker": "testbeam-laptop-3",
+  "title": "18-sample MLP timing versus S02 ridge-corrected CFD",
+  "reproduced": true,
+  "split_by_run": true,
+  "train_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "heldout_runs": [
+    65
+  ],
+  "metric": "heldout B4/B6/B8 pairwise sigma68 ns with event-paired bootstrap CI",
+  "frozen_s02": {
+    "ridge_cfd20_sigma68_ns": 1.8461136615528861,
+    "ridge_cfd20_ci": [
+      1.4526139948629437,
+      2.0273490929282896
+    ],
+    "full_rms_ns": 1.7098037987509727
+  },
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "value": 1.494640076269676,
+    "ci": [
+      1.301862842105124,
+      1.6658085262504574
+    ],
+    "full_rms_ns": 1.6991283591200679,
+    "delta_vs_s02_ridge_ns": -0.35147358528321004
+  },
+  "ml": {
+    "method": "tiny_heteroskedastic_mlp_on_18_normalized_samples",
+    "base_method": "cfd20",
+    "hidden": 32,
+    "weight_decay": 0.001,
+    "value": 1.9272329327513156,
+    "ci": [
+      1.622671472365498,
+      2.260341063355349
+    ],
+    "full_rms_ns": 1.9786382482069755,
+    "delta_vs_s02_ridge_ns": 0.08111927119842943,
+    "delta_ci": [
+      -0.12877285902692193,
+      0.4444202303349212
+    ],
+    "pull_width_sigma68": 0.49769126810493
+  },
+  "leakage": {
+    "event_id_overlap": 0,
+    "shuffled_target_sigma68_ns": 3.173789346474021,
+    "feature_audit": "features are normalized 18-sample waveform plus stave one-hot; no run, event id, event order, other-stave time, or held-out target"
+  },
+  "verdict": "mlp_does_not_beat_frozen_s02_ridge_or_analytic_baseline",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "52967bbb141dcfa2382d1bad7286fa9ea13d0a63",
+  "next_tickets": [
+    "P03b: leave-one-run-out waveform MLP timing stability across runs 58-65",
+    "P03c: compare 1D CNN and MLP timing models with waveform-only inputs and analytic timewalk residual targets"
+  ]
+}

@@ -1,0 +1,8 @@
+check,value,detail
+run_overlap,0,must be zero for train/heldout split
+sample6_feature_excluded,1,ML sample-6 imputer uses normalized samples except sample 6 plus stave one-hot; amplitude is excluded
+target_shuffle_r2,-0.0791097236924746,held-out sample-6 imputer trained on shuffled train targets
+target_shuffle_mse_over_real_mse,3.520789873650166,large ratio is expected if local-shape prediction is real rather than leakage
+target_shuffle_timing_min_delta_ns,-1.0721610838389406,"bad shape model can still narrow timing, so timing deltas alone are not accepted as ML evidence"
+train_selected_of_window,of_5_13,optimal-filter window selected by train-run sigma68 before held-out evaluation
+p01d_non_cfd_negative_methods_reproduced,2,template-phase and train-selected OF both remain negative before derivative replacements

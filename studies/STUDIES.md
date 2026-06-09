@@ -1053,3 +1053,31 @@ Active ready queue highlights:
   selector-rule amplitudes, with selector-feature, run-only, and shuffled-edge sentinels. Metric:
   edge class fractions, timing sigma68 delta, charge-bias delta, secondary-fraction delta,
   false-edge AUC/AP/Brier, and enrichment deltas with run-block bootstrap CIs.
+- **P03i — Phase-local waveform architecture failure map.** Explain why the P03b/P03c waveform
+  MLP/CNN timing models fail to beat the strong analytic timewalk baseline except in isolated
+  runs. Traditional: freeze S03a analytic timewalk and P01d sample-window/OF-template ablations,
+  then tabulate residuals by sample phase, stave, amplitude, saturation, q_template,
+  baseline-excursion, delayed peak, and run family. ML: rerun frozen P03b/P03c learners with
+  phase-local masks, sample-dropout knockouts, architecture swaps, amplitude-only/stave-only
+  controls, and shuffled-target sentinels. Metric: ML-minus-traditional sigma68, full RMS,
+  tail fraction, calibration pull width, and per-atom risk ratio with event-paired run-block
+  bootstrap CIs.
+- **S16m — Pseudo-pedestal charge live-time bias closure.** Test whether S16g quiet-run
+  pseudo-pedestals introduce charge or live-time biases when reused by P04 charge transfer and
+  S10 pile-up/live-time measurements. Traditional: freeze mean3, median3, quietest, quietish, and
+  calibrated pretrigger pseudo-pedestal estimators, then propagate each into peak/integral/Huber
+  charge closure, q_template, empirical last-above time, and bounded two-pulse summaries on matched
+  run/stave/amplitude support. ML: train run-heldout pedestal-bias and downstream-risk models from
+  pretrigger summaries with target-excluded features plus shuffled-pretrigger, amplitude-only, and
+  run-only sentinels. Metric: pedestal bias/MAE, charge res68/bias, tau_eff shift,
+  secondary-fraction shift, timing-tail fraction, and ML-minus-traditional risk delta with
+  run-block bootstrap CIs.
+- **S18j — A-stack ML transfer covariance gate.** Decide whether the newest S18d/S18e A-stack
+  ML timing gains can be used as an external covariance gate for B-stack timing, or whether
+  calibration-pool and leakage-control failures make the transfer unsafe. Traditional: freeze
+  robust A1-A3 percentile/MAD/IQR width transfer, pair-residual variance decomposition, and
+  calibration-pool swaps, then score B-stack residual covariance before and after A-stack gate
+  strata. ML: freeze S18d/S18e ridge/ExtraTrees residual scores and build run-family-heldout gate
+  calibrations with waveform-only, run-only, pool-label, and shuffled-pool controls. Metric:
+  B-stack covariance component, pair sigma68/full RMS/tail fraction, A-gate ECE/Brier,
+  leakage-control gap, and ML-minus-traditional covariance delta with pair/run-block bootstrap CIs.

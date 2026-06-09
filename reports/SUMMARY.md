@@ -100,17 +100,21 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 ## Current steering notes
 
-- Queue health: the exact requested command `tn-ticket list testbeam` reports
-  `open=10 claimed=0 done=0 failed=11`, below the 18-ticket floor, because the shim treats
-  `testbeam` as a positional argument for the default queue. The required append path was followed
-  again with `--project testbeam`; the project-aware testbeam queue remains deep, with live
-  post-append audits now at 198 open / 2 claimed after this pass and concurrent worker movement.
-  The mission trigger still required new ready work. This pass appended five ready non-duplicate
-  tickets: P05c real-current abstention transfer (`1781036493.3234.59a107e5`),
+- Queue health: the exact requested command `tn-ticket list testbeam` still reports
+  `open=10 claimed=0 done=0 failed=11`, below the 18-ticket floor, because the legacy shim treats
+  `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
+  The required append path was followed again with `--project testbeam`; the project-aware
+  testbeam queue remains deep, with a live post-push audit at 192 open / 4 claimed / 143 done
+  after concurrent worker movement.
+  The mission trigger still required new ready work. This pass appended three ready non-duplicate
+  tickets: P03i phase-local waveform architecture failure map (`1781038014.1254.657842ac`),
+  S16m pseudo-pedestal charge live-time bias closure (`1781038019.1322.46921ff8`), and
+  S18j A-stack ML transfer covariance gate (`1781038027.1393.695b00c5`). The previous pass
+  appended five ready non-duplicate tickets: P05c real-current abstention transfer (`1781036493.3234.59a107e5`),
   S01g q-template quality covariate map (`1781036493.3261.7a6c05c5`), P04n B2 transfer
   saturation support frontier (`1781036493.3330.4f5f1b60`), S13d CWoLa topology calibration
   bridge (`1781036493.3324.58306cd1`), and S00g selector-edge waveform atom ledger
-  (`1781036493.3495.3e8b1a02`). The previous pass appended four ready non-duplicate tickets:
+  (`1781036493.3495.3e8b1a02`). The pass before that appended four ready non-duplicate tickets:
   P03h stave-aware residual support map by pulse atoms (`1781035058.850.43a47da0`),
   S16l target-excluded pedestal estimator timing-risk audit (`1781035063.930.38bd04a3`),
   S18i A-stack residual-correction leakage-flag root cause audit (`1781035068.1008.20f6375e`),
@@ -276,7 +280,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   denoising and recovery models feed timing, pile-up, PID, or energy. This pass adds P05c for
   real-current abstention transfer, S01g for q_template support-covariate mapping, P04n for B2
   saturation charge-transfer support, S13d for CWoLa-to-topology calibration, and S00g for
-  selector-edge pulse-atom bookkeeping.
+  selector-edge pulse-atom bookkeeping. This pass adds P03i for phase-local waveform architecture
+  failure analysis, S16m for pseudo-pedestal propagation into charge and live-time handles, and
+  S18j for A-stack ML transfer as a B-stack covariance gate before timing, pile-up, PID, or energy
+  consumers reuse those controls.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

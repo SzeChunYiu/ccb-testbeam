@@ -97,11 +97,16 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` reports
-  `open=10 claimed=0 done=0 failed=10`, below the 18-ticket floor, because the shim treats
+  `open=9 claimed=0 done=0 failed=11`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
   again with `--project testbeam`; the project-aware testbeam queue remains deep, with live
-  post-append audits at 179 open / 4 claimed and concurrent worker movement. The mission trigger
-  still required new ready work. This pass appended four ready non-duplicate tickets:
+  post-append audits now at 198 open / 3 claimed after this pass and concurrent worker movement.
+  The mission trigger still required new ready work. This pass appended four ready non-duplicate
+  tickets: P03h stave-aware residual support map by pulse atoms (`1781035058.850.43a47da0`),
+  S16l target-excluded pedestal estimator timing-risk audit (`1781035063.930.38bd04a3`),
+  S18i A-stack residual-correction leakage-flag root cause audit (`1781035068.1008.20f6375e`),
+  and P13a ADC quantization noise floor across pulse phase (`1781035073.1085.4d0e5a1e`). The
+  previous pass appended four ready non-duplicate tickets:
   S00f dynamic-only baseline-excursion pile-up support map (`1781033578.541.73575b7f`),
   P09f delayed-peak pile-up charge-bias disentanglement (`1781033582.610.56930afd`),
   S14f saturation energy-ordering geometry stress map (`1781033587.678.10103f5a`), and
@@ -213,6 +218,12 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   anomalies mix large pile-up-score shifts with charge bias; saturation-corrected charge improves
   internal energy ordering but remains geometry/support limited; and A-stack ML timing correction
   can degrade under late/mixed calibration pools before it can serve as a B-stack covariance control.
+  The newest P03d/P03e/S16f/S16g/S18e/S18f reports add four sharper control atoms: stave-aware
+  waveform timing gains need pulse-atom support maps beyond detector labels; target-excluded
+  pedestal estimators must be ranked by induced timing-tail risk, not only ADC RMSE; A-stack ML
+  controls need leakage-flag root-cause tests before they feed B-stack covariance; and an explicit
+  ADC/electronics noise-floor map is needed before denoising, dropout, saturation, or pile-up
+  corrections are interpreted as physics.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
@@ -244,7 +255,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   charge-transfer abstention before energy/PID reuse. This pass adds S00f for dynamic-only
   baseline-excursion pile-up support, P09f for delayed-peak pile-up/charge-bias disentanglement,
   S14f for saturation energy-ordering geometry stress, and S18h for A-stack late-pool ML
-  degradation atoms before independent timing controls feed covariance.
+  degradation atoms before independent timing controls feed covariance. This pass adds P03h for
+  stave-aware residual support atoms, S16l for target-excluded pedestal timing-risk scoring, S18i
+  for A-stack leakage-flag root causes, and P13a for phase-resolved ADC/noise floors before pulse
+  denoising and recovery models feed timing, pile-up, PID, or energy.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

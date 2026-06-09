@@ -273,11 +273,16 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=10 claimed=0 done=0 failed=10`, which is below the 18-ready floor because the shim treats
+`open=9 claimed=0 done=0 failed=11`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep, with live post-append
-audits at 179 open / 4 claimed and concurrent workers moving tickets, but the mission trigger
-still required a small set of new ready studies. This pass appended four additional
+with `--project testbeam`: the project-aware testbeam queue remains deep, with this pass moving
+from 194 open / 4 claimed to a final audit at 198 open / 3 claimed, but the mission trigger still required a small
+set of new ready studies. This pass appended four additional non-duplicate ready tickets:
+P03h stave-aware residual support map by pulse atoms (`1781035058.850.43a47da0`),
+S16l target-excluded pedestal estimator timing-risk audit (`1781035063.930.38bd04a3`),
+S18i A-stack residual-correction leakage-flag root cause audit (`1781035068.1008.20f6375e`),
+and P13a ADC quantization noise floor across pulse phase (`1781035073.1085.4d0e5a1e`). The
+previous pass appended four additional
 non-duplicate ready tickets under `project:testbeam`: S00f dynamic-only baseline-excursion
 pile-up support map (`1781033578.541.73575b7f`), P09f delayed-peak pile-up charge-bias
 disentanglement (`1781033582.610.56930afd`), S14f saturation energy-ordering geometry stress map
@@ -437,6 +442,12 @@ anomalies combine a large pile-up-score shift with charge bias; saturation-corre
 improves internal energy ordering but remains geometry/support limited; and A-stack ML residual
 correction can degrade under late/mixed Sample-III calibration pools, so independent timing
 controls need a pool-specific failure atom audit.
+The newest P03d/P03e/S16f/S16g/S18e/S18f layer adds four smaller atoms before broad adoption:
+stave-aware waveform timing gains need pulse-atom support maps beyond detector labels; pedestal
+estimators must be scored by induced timing tails, not only ADC RMSE; A-stack ML control transfers
+need leakage-flag root-cause tests before they constrain B-stack covariance; and sample-level
+ADC/electronics noise floors must be measured across pretrigger, rising edge, peak, and tail
+regions before further denoising, dropout, saturation, or pile-up models are trusted.
 
 Completed since last steering cycle:
 
@@ -945,3 +956,36 @@ Active ready queue highlights:
   pretrigger-mode covariates plus conformal abstention under run-family holdout and shuffled-mode
   controls. Metric: duplicate res68, external-proxy res68, bias, abstention coverage, support loss,
   and ML-minus-traditional deltas with paired bootstrap CIs.
+- **P03h — Stave-aware residual support map by pulse atoms.** Decide whether the P03e
+  stave-aware waveform timing gain lives in real pulse-shape support regions or in detector/run
+  identity leakage. Traditional: freeze the S03/P03 analytic timewalk and make matched residual
+  tables by stave, amplitude, peak-sample phase, q_template, saturation, anomaly, and run family.
+  ML: rerun P03e waveform_amp_shape_stave residual models with feature-group knockouts,
+  detector-label permutations, amplitude-only/stave-only controls, and shuffled-target sentinels.
+  Metric: held-out sigma68, full RMS, >5 ns tail fraction, pull width, and ML-minus-traditional
+  delta per support atom with event-paired run-block bootstrap CIs.
+- **S16l — Target-excluded pedestal estimator timing-risk audit.** Explain why S16g
+  target-excluded ML pedestal estimates reduce RMSE but can induce larger downstream timing tails
+  than traditional mean3. Traditional: frozen mean3, median3, and run-stratified target-excluded
+  estimators by target sample, stave, amplitude, pretrigger spectra, adaptive lowering, and
+  anomaly taxon. ML: leakage-guarded ridge/HGB target-excluded estimators with feature-group
+  ablations, timing-risk calibration, and shuffled-pretrigger/shuffled-target controls. Metric:
+  pedestal MAE/RMSE/bias, induced timing sigma68/full RMS/tail fractions, charge-bias delta, and
+  ML-minus-traditional risk delta with run-block bootstrap CIs.
+- **S18i — A-stack residual-correction leakage-flag root cause audit.** Test whether S18e/S18f
+  A-stack ML residual-correction gains and degradations are real pulse timing structure or
+  leakage/control-definition failures in small pool transfers. Traditional: robust
+  percentile68/MAD/IQR variance decomposition under fixed calibration-pool swaps,
+  run-family holdout, and explicit exclusion of target-derived timing handles. ML:
+  ridge/ExtraTrees residual corrections with leakage-feature knockouts, shuffled-pool labels,
+  run-only controls, and waveform-only controls. Metric: ML-minus-traditional robust-width delta,
+  full RMS, tail-fraction delta, leakage-control gap, and pool-transfer delta with pair/run-block
+  bootstrap CIs.
+- **P13a — ADC quantization noise floor across pulse phase.** Measure the per-sample
+  ADC/electronics noise floor limiting timing, amplitude, baseline, dropout recovery, and pile-up
+  separation across pretrigger, rising-edge, peak, and tail phases. Traditional: per-stave/run
+  quantization and noise estimates from pretrigger samples, duplicate readouts, adjacent-sample
+  differences, and unsaturated quiet tails. ML: denoising AE or probabilistic residual model with
+  held-out-run noise calibration and shuffled-sample controls. Metric: per-phase noise sigma/MAD,
+  induced timing and charge uncertainty floors, dropout false-positive rate, and
+  ML-minus-traditional denoising delta with run-block bootstrap CIs.

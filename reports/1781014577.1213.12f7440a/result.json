@@ -1,0 +1,92 @@
+{
+  "study": "S18d",
+  "ticket": "1781014577.1213.12f7440a",
+  "worker": "testbeam-laptop-1",
+  "reproduced": true,
+  "primary_number_reproduced": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_robust_width_ns": 1.7936260637768346,
+    "sample_iv_core_sigma_ns": 1.9921763970438024
+  },
+  "split": "leave-two-Sample-IV-analysis-runs-out; event-level residuals average six predictions, all with that run absent from training",
+  "metrics": {
+    "traditional": {
+      "robust_width_ns": 1.6337652966118013,
+      "robust_ci_low_ns": 1.3520002972884655,
+      "robust_ci_high_ns": 1.7261691683339824,
+      "core_sigma_ns": 1.8747279194024697
+    },
+    "ml_full": {
+      "robust_width_ns": 1.3840412051684736,
+      "robust_ci_low_ns": 1.084312088663872,
+      "robust_ci_high_ns": 1.4746557938186713,
+      "core_sigma_ns": 1.4322451812182286
+    },
+    "ml_no_peak": {
+      "robust_width_ns": 1.3544888954895817,
+      "robust_ci_low_ns": 1.1853757952169772,
+      "robust_ci_high_ns": 1.4512009913235269,
+      "core_sigma_ns": 1.925339865793944
+    },
+    "ml_no_tail": {
+      "robust_width_ns": 1.4131665285928758,
+      "robust_ci_low_ns": 1.1621288412180688,
+      "robust_ci_high_ns": 1.6326872513762158,
+      "core_sigma_ns": 1.9919660664646834
+    },
+    "ml_no_sample_iv_indicator": {
+      "robust_width_ns": 1.371235449509141,
+      "robust_ci_low_ns": 1.0800865195462668,
+      "robust_ci_high_ns": 1.4746400480598607,
+      "core_sigma_ns": 1.5565195517415806
+    }
+  },
+  "paired_deltas": [
+    {
+      "comparison": "ml_full_minus_traditional",
+      "ci_low_ns": -0.4517071608497642,
+      "ci_high_ns": -0.09229244984043505,
+      "p_value": 0.006
+    },
+    {
+      "comparison": "ml_no_peak_minus_traditional",
+      "ci_low_ns": -0.380921310270658,
+      "ci_high_ns": -0.06113618333820345,
+      "p_value": 0.016
+    },
+    {
+      "comparison": "ml_no_tail_minus_traditional",
+      "ci_low_ns": -0.36467382660737335,
+      "ci_high_ns": 0.0027775825798564712,
+      "p_value": 0.054
+    },
+    {
+      "comparison": "ml_no_sample_iv_indicator_minus_traditional",
+      "ci_low_ns": -0.4533958344058404,
+      "ci_high_ns": -0.11487690036078223,
+      "p_value": 0.006
+    },
+    {
+      "comparison": "ml_no_peak_minus_ml_full",
+      "ci_low_ns": -0.11689822700928461,
+      "ci_high_ns": 0.19287861986115679,
+      "p_value": 0.824
+    },
+    {
+      "comparison": "ml_no_tail_minus_ml_full",
+      "ci_low_ns": -0.07785945151564233,
+      "ci_high_ns": 0.28789286992219576,
+      "p_value": 0.222
+    },
+    {
+      "comparison": "ml_no_sample_iv_indicator_minus_ml_full",
+      "ci_low_ns": -0.015168304314238323,
+      "ci_high_ns": 0.009160595983925412,
+      "p_value": 0.576
+    }
+  ],
+  "leakage_flags": 0,
+  "conclusion": "Full ML is not a decisive leave-two-run-out improvement over the traditional A1-A3 log-amplitude correction.",
+  "input_sha256": "reports/1781014577.1213.12f7440a/input_sha256.csv",
+  "git_commit": "9271db05600cb382bfa4071863dc9d3039d8ab82"
+}

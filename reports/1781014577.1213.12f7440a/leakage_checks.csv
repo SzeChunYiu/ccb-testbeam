@@ -1,0 +1,14 @@
+scope,check,value,flag
+full,forbidden_feature_overlap,,False
+no_peak,forbidden_feature_overlap,,False
+no_tail,forbidden_feature_overlap,,False
+no_sample_iv_indicator,forbidden_feature_overlap,,False
+split,fold_train_test_run_overlap,False,False
+split,unexpected_event_prediction_multiplicity,6,False
+split,duplicate_event_within_fold,0,False
+full,shuffled_target_group_cv_r2_mean,-0.17687921360398126,False
+no_peak,shuffled_target_group_cv_r2_mean,-0.11277377106095295,False
+no_tail,shuffled_target_group_cv_r2_mean,-0.1917171658728588,False
+no_sample_iv_indicator,shuffled_target_group_cv_r2_mean,-0.14634584536282796,False
+ml_full,too_good_to_ignore_delta_ci_ns,"[-0.451707,-0.0922924]",False
+ml_full,sub_ns_width_suspicion,1.3840412051684736,False

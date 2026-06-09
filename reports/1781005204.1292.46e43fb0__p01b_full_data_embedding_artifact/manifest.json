@@ -1,0 +1,29 @@
+{
+  "ticket_id": "1781005204.1292.46e43fb0",
+  "script": "scripts/p01b_full_data_embedding_artifact.py",
+  "config": "configs/p01b_full_data_embedding_artifact.json",
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+  "artifacts": [
+    "REPORT.md",
+    "eval_ae_training_loss.csv",
+    "heldout_reconstruction_benchmark.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "linear_probe_benchmark.csv",
+    "p01b_autoencoder_state.pt",
+    "p01b_embedding_latents.npz",
+    "p01b_embedding_metadata.json",
+    "p01b_embedding_preview.csv",
+    "p01b_generation_config.json",
+    "release_ae_training_loss.csv",
+    "reproduction_counts_by_group.csv",
+    "reproduction_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "result.json"
+  ]
+}

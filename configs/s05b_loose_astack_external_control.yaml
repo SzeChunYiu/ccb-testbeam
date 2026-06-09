@@ -1,0 +1,66 @@
+study_id: S05b
+title: A-stack external-control covariance on loose pulse-quality tiers
+ticket: "1781009478.9902.7ea057ff"
+worker: testbeam-laptop-4
+
+raw_root_dir: data/root/root
+output_dir: reports/1781009478.9902.7ea057ff
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+sample_period_ns: 10.0
+cfd_fraction: 0.20
+tof_per_cm_ns: 0.078
+stave_spacing_cm: 2.0
+bootstrap_resamples: 200
+random_seed: 50502
+
+runs:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_b_pulses: 640737
+  sample_i_analysis_b_selected_pulses: 252266
+  sample_ii_analysis_b_selected_pulses: 125096
+  astack_sample_iii_analysis_events_with_selected: 7168
+  astack_sample_iii_analysis_selected_pulses: 9682
+  astack_sample_iv_analysis_events_with_selected: 767
+  astack_sample_iv_analysis_selected_pulses: 894
+
+threshold_tiers:
+  - {tier: loose500, amplitude_cut_adc: 500.0}
+  - {tier: loose750, amplitude_cut_adc: 750.0}
+  - {tier: nominal1000, amplitude_cut_adc: 1000.0}
+
+primary_leakage_tier: loose500
+model_tiers: [loose500, nominal1000]
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+traditional:
+  ridge_alphas: [0.01, 0.1, 1.0, 10.0, 100.0]
+
+ml:
+  n_estimators: 8
+  max_depth: 8
+  max_features: 0.8
+  min_samples_leaf: 40
+  max_train_rows_per_fold: 6000

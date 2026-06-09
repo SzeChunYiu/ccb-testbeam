@@ -1,0 +1,146 @@
+{
+  "ticket_id": "1781010192.1206.019d7d9e",
+  "study_id": "P01b-downstream",
+  "title": "waveform probes on non-stave downstream targets",
+  "raw_root_dir": "data/root/root",
+  "target": {
+    "name": "sample_epoch",
+    "negative_class": "sample_i",
+    "positive_class": "sample_ii",
+    "not_own_stave_label": true
+  },
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "balanced_train_rows": 117889,
+    "balanced_heldout_rows": 16187,
+    "max_per_run_stave": 2500,
+    "bootstrap": "500 stratified run-block replicates"
+  },
+  "traditional": {
+    "method": "hand-shape summaries and PCA-4 plus balanced logistic probes",
+    "hand_shape_probe": {
+      "method": "traditional hand-shape",
+      "metric": "balanced_accuracy",
+      "value": 0.6018008059955569,
+      "ci_low": 0.5758542427244744,
+      "ci_high": 0.6295666577884478,
+      "roc_auc": 0.6289442649011814,
+      "average_precision": 0.6369426629856447,
+      "train_rows": 117889,
+      "heldout_rows": 16187,
+      "category": "main"
+    },
+    "pca_probe": {
+      "method": "traditional PCA-4",
+      "metric": "balanced_accuracy",
+      "value": 0.6490773211586648,
+      "ci_low": 0.6406147845968646,
+      "ci_high": 0.6577278813772671,
+      "roc_auc": 0.6925444529942217,
+      "average_precision": 0.6938456583865164,
+      "train_rows": 117889,
+      "heldout_rows": 16187,
+      "category": "main"
+    },
+    "pca_reconstruction_mse": 0.011694811284542084
+  },
+  "ml": {
+    "method": "masked-denoising autoencoder latent-4 plus balanced logistic probe",
+    "device": "cpu",
+    "epochs": 25,
+    "probe": {
+      "method": "ML masked-denoising AE-4",
+      "metric": "balanced_accuracy",
+      "value": 0.6335506416336358,
+      "ci_low": 0.6180569975025023,
+      "ci_high": 0.648396350814209,
+      "roc_auc": 0.7075472564288025,
+      "average_precision": 0.7186966965446732,
+      "train_rows": 117889,
+      "heldout_rows": 16187,
+      "category": "main"
+    },
+    "reconstruction_mse": 0.028795085847377777,
+    "final_training_loss": 0.032176207622577405
+  },
+  "proxy_and_leakage_checks": [
+    {
+      "method": "proxy: amplitude+multiplicity",
+      "metric": "balanced_accuracy",
+      "value": 0.5910899686257074,
+      "ci_low": 0.533515919218509,
+      "ci_high": 0.6335814423611994,
+      "roc_auc": 0.6560749099607049,
+      "average_precision": 0.6752175324533709,
+      "train_rows": 117889,
+      "heldout_rows": 16187,
+      "category": "proxy"
+    },
+    {
+      "method": "leakage check: topology/stave composition",
+      "metric": "balanced_accuracy",
+      "value": 0.5931191161222266,
+      "ci_low": 0.5405194213795042,
+      "ci_high": 0.6323918305474068,
+      "roc_auc": 0.6583941774625253,
+      "average_precision": 0.6794932810494175,
+      "train_rows": 117889,
+      "heldout_rows": 16187,
+      "category": "leakage_check"
+    },
+    {
+      "method": "leakage check: AE label shuffle",
+      "metric": "balanced_accuracy",
+      "value": 0.4001167574780385,
+      "ci_low": 0.39263750088553934,
+      "ci_high": 0.408700883850335,
+      "roc_auc": 0.3553277514426706,
+      "average_precision": 0.46757736182192916,
+      "train_rows": 117889,
+      "heldout_rows": 16187,
+      "category": "leakage_check"
+    }
+  ],
+  "runtime_sec": 12.4
+}

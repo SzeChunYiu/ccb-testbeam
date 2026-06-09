@@ -273,16 +273,20 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=11 claimed=0 done=0 failed=9`, which is below the 18-ready floor because the shim treats
+`open=10 claimed=0 done=0 failed=10`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with live post-append
-audits at 170 open / 4 claimed and concurrent workers moving tickets, but the mission trigger still required a
-small set of new ready studies. This pass appended four additional non-duplicate ready tickets
-under `project:testbeam`: S02i pretrigger-proxy timing transfer atom map
-(`1781032083.463.2d9c6a45`), S16k pretrigger-veto support frontier
+audits at 179 open / 4 claimed and concurrent workers moving tickets, but the mission trigger
+still required a small set of new ready studies. This pass appended four additional
+non-duplicate ready tickets under `project:testbeam`: S00f dynamic-only baseline-excursion
+pile-up support map (`1781033578.541.73575b7f`), P09f delayed-peak pile-up charge-bias
+disentanglement (`1781033582.610.56930afd`), S14f saturation energy-ordering geometry stress map
+(`1781033587.678.10103f5a`), and S18h A-stack late-pool ML degradation atom audit
+(`1781033592.746.0bc755c5`). The previous pass appended S02i pretrigger-proxy timing transfer
+atom map (`1781032083.463.2d9c6a45`), S16k pretrigger-veto support frontier
 (`1781032083.478.14791743`), S10m overlap-secondary discordance audit
 (`1781032084.526.56a43973`), and P04m pretrigger-mode charge-transfer abstention map
-(`1781032084.548.4ccc082b`). The previous pass appended S10l asymmetric-template failure atom map
+(`1781032084.548.4ccc082b`). The pass before that appended S10l asymmetric-template failure atom map
 (`1781030650.532.4dd15543`), S03j selector-specific timewalk support map
 (`1781030650.597.5d382001`), S16j pretrigger hidden-mode stability audit
 (`1781030650.662.4bb162cb`), and P04l baseline-to-charge dropout coupling
@@ -427,6 +431,12 @@ The freshest S02d/S16f/S10e/S10f results now split those atoms further: pretrigg
 transfer must be mapped feature-by-feature, tail vetoes need support-preserving thresholds,
 ML overlap-score and secondary-fraction pile-up diagnostics must be reconciled, and pretrigger
 hidden modes must be treated as charge-transfer abstention candidates before energy or PID reuse.
+The newest S00d/P09c/S14c/S18e results split the next layer again: dynamic-only selector excess is
+overwhelmingly baseline-excursion-like and must be matched before pile-up use; delayed-peak
+anomalies combine a large pile-up-score shift with charge bias; saturation-corrected charge
+improves internal energy ordering but remains geometry/support limited; and A-stack ML residual
+correction can degrade under late/mixed Sample-III calibration pools, so independent timing
+controls need a pool-specific failure atom audit.
 
 Completed since last steering cycle:
 
@@ -608,6 +618,29 @@ Active ready queue highlights:
   charge model without depth/PID labels as features. Metric: depth-ordering violations,
   unsaturated-control charge res68/bias, saturated-minus-unsaturated ordering delta, and geometry
   envelope with run/stave bootstrap CIs.
+- **S00f — Dynamic-only baseline-excursion pile-up support map.** Decide whether the 65,636
+  dynamic-selector-only pulses are usable pile-up/baseline support or a selector artifact.
+  Traditional: frozen taxonomy cuts plus exact run/current/amplitude/topology matching. ML:
+  leakage-guarded morphology classifier excluding selector amplitudes and event ids. Metric:
+  secondary-fraction delta, timing-tail delta, and charge-bias delta with run-block bootstrap CIs.
+- **P09f — Delayed-peak pile-up charge-bias disentanglement.** Split delayed peaks into
+  overlap-like, charge-bias-like, and veto-only atoms before recovery decisions feed pile-up,
+  charge, energy, or PID. Traditional: constrained two-pulse refit plus frozen charge estimators
+  in matched controls. ML: compact latent/tail/pretrigger classifier-regressor with shuffled-target
+  and run-family controls. Metric: recovered secondary fraction, charge-bias delta, and abstention
+  precision/recall with run-block bootstrap CIs.
+- **S14f — Saturation energy-ordering geometry stress map.** Stress S14c under 2 cm, 4 cm, and
+  zero-offset geometry envelopes after support restrictions. Traditional: PSTAR/range lookup with
+  observed, saturated-excluded, and rising-edge/template-corrected charge. ML: P07/P04 corrected
+  charge with calibrated abstention from charge-transfer, saturation-knee, and anomaly scores.
+  Metric: depth-order violation, energy-proxy res68, and saturated-minus-unsaturated log-charge
+  delta with run-block bootstrap CIs.
+- **S18h — A-stack late-pool ML degradation atom audit.** Isolate why S18e ML residual correction
+  degrades for late or mixed Sample-III calibration pools before A-stack controls feed B-stack
+  covariance. Traditional: robust pair-residual variance decomposition with pool swaps. ML:
+  ridge/ExtraTrees residual correction under leave-one-run-family-out and leakage sentinels.
+  Metric: ML-minus-traditional robust-width delta, tail-fraction delta, and pool-transfer delta
+  with run-block bootstrap CIs.
 - **P03f — Early-peak sample-window timing residual ablation.** Test whether samples 3-6 carry
   stable post-analytic timing information or only run-specific artifacts. Traditional: fixed
   early-peak template/CFD ablations after analytic timewalk. ML: matched MLP/CNN residual

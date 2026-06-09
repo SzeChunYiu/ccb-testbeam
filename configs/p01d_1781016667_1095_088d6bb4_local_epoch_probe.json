@@ -1,0 +1,68 @@
+{
+  "ticket_id": "1781016667.1095.088d6bb4",
+  "study_id": "P01d",
+  "title": "time-local sample-epoch waveform probe",
+  "output_dir": "reports/1781016667.1095.088d6bb4",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "expected_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "local_tasks": [
+    {
+      "name": "adjacent_run_pair_side",
+      "description": "Classify the later run versus the earlier run inside adjacent available-run pairs; held out pairs include within-Sample-I, boundary, and within-Sample-II checks.",
+      "type": "adjacent_pairs",
+      "pairs": [[31, 32], [33, 34], [35, 36], [37, 39], [40, 41], [42, 44], [45, 46], [47, 48], [49, 50], [51, 52], [53, 54], [55, 56], [57, 58], [59, 60], [61, 62], [63, 64]],
+      "heldout_pairs": [[35, 36], [42, 44], [57, 58], [63, 64]]
+    },
+    {
+      "name": "sample_i_local_transition",
+      "description": "Within Sample I only, classify local calibration-era runs 31-42 versus analysis-era runs 44-57.",
+      "type": "run_sets",
+      "class0_name": "sample_i_calib_era",
+      "class0_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+      "class1_name": "sample_i_analysis_era",
+      "class1_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+      "heldout_runs": [40, 41, 42, 55, 56, 57]
+    },
+    {
+      "name": "sample_ii_adjacent_era",
+      "description": "Within Sample II only, classify early runs 58-61 versus later neighboring runs 62-65.",
+      "type": "run_sets",
+      "class0_name": "sample_ii_early",
+      "class0_runs": [58, 59, 60, 61],
+      "class1_name": "sample_ii_late",
+      "class1_runs": [62, 63, 64, 65],
+      "heldout_runs": [60, 61, 64, 65]
+    }
+  ],
+  "ml": {
+    "random_seed": 1781016667,
+    "latent_dim": 6,
+    "epochs": 24,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "mask_probability": 0.3,
+    "noise_sigma": 0.02,
+    "max_per_run_stave": 1500,
+    "bootstrap_replicates": 500
+  }
+}

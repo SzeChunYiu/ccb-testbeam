@@ -1126,3 +1126,44 @@ Active ready queue highlights:
   leave-one-run-out folds. Metric: pull sigma68/full RMS, ECE/coverage, interval width, tail
   calibration, stratum-wise sigma68, and ML-minus-traditional calibration deltas with
   event-paired run-block bootstrap CIs.
+- **P01h — Time-local latent residualization gate.** Decide whether loader-verified P01/P01d
+  latent waveform coordinates retain useful pulse-shape information after removing sample-epoch,
+  run-family, stave, amplitude, peak-phase, topology, q_template, saturation, baseline-excursion,
+  delayed-peak, and dropout atoms. Traditional: freeze hand-shape summaries, PCA, and matched
+  residual tables after exact S00/P01 loader reproduction, then score each atom with
+  run-family-held-out linear/logistic baselines and support counts. ML: latent-only and
+  latent-plus-hand residualized ridge/ExtraTrees probes with nuisance residualization plus
+  run-only, stave-only, amplitude-only, and shuffled-atom sentinels. Metric: atom AUC/AP/Brier,
+  residual balanced accuracy, timing sigma68 delta, charge-bias delta, support drift, and
+  ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **S05h — Saturation-aware covariance support frontier.** Locate where S05d/S05e saturation-aware
+  covariance gains remain valid after matching B2 saturation depth, q_template shift, amplitude,
+  topology, baseline lowering, pile-up candidates, and run family. Traditional: freeze S05c
+  pair-median hierarchical covariance and S05d static priors, then build support-frontier tables
+  and bias envelopes by pulse atom. ML: freeze S05e ExtraTrees/dynamic-weight models, refit only
+  calibration layers under leave-one-run-out folds, and run saturation-knockout, topology-only,
+  amplitude-only, and shuffled-target sentinels. Metric: accepted support fraction, downstream
+  projection sigma68/full RMS, median bias, covariance component error, tail fraction, calibration
+  coverage, and ML-minus-traditional deltas with paired run-block bootstrap CIs.
+- **S01h — Q-template run-stave leakage atom grid.** Explain which run, stave, amplitude,
+  peak-phase, saturation, baseline, delayed-peak, dropout, and topology atoms drive the S01f
+  q_template run-stave transfer leakage flags, and decide whether q_template is safe as a support
+  covariate rather than a veto. Traditional: freeze S01 empirical templates and conditional
+  q_external residual thresholds, then make atom-stratified residual/failure tables with exact
+  S00/S01 reproduction and run-held-out support counts. ML: freeze or rerun the S01f RF
+  q-structure model with feature-group knockouts, monotone/calibrated alternatives, and
+  shuffled-q, run-only, stave-only, and amplitude-only controls. Metric: held-out AUC/AP,
+  flagged-minus-all failure enrichment, q_template residual slope, support drift,
+  timing/charge/pile-up deltas, leakage-control gap, and ML-minus-traditional deltas with
+  run-block bootstrap CIs.
+- **P12b — Pulse-support tensor for PID energy consumers.** Publish a compact support tensor that
+  tells PID and energy consumers which combinations of shape, timing, amplitude, saturation,
+  pile-up, baseline, dropout/anomaly, q_template, covariance, and charge-transfer atoms are
+  populated and trustworthy now. Traditional: combine landed S00/S01/S03/S04/S05/S10/S16/P04/P07/
+  P09/S14 support tables into deterministic multidimensional occupancy, bias, and closure
+  summaries with minimum-count and exact-reproduction gates. ML: calibrated density/support and
+  failure-risk models over the same atoms with leave-run-family-out validation, conformal support
+  scores, and shuffled-axis controls. Metric: populated-cell count, minimum effective sample size,
+  charge/energy proxy res68 and bias, timing-tail and pile-up enrichment, PID weak-label stability,
+  support-score coverage/ECE, and ML-minus-traditional failure-risk deltas with stratified
+  bootstrap CIs.

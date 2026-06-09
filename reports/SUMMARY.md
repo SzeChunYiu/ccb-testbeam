@@ -12,6 +12,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S01 | ✅ report landed | ✅ 640,737 selected pulses | median amplitude-bin template MSE 0.0444 | AE/PCA basis MSE 0.00208 | **Yes** (Δ=-0.0423, CI [-0.0524,-0.0324]) | reports/1780997954.15037.36463764__s01_full_dataset_templates |
 | S01b | ✅ merged | ✅ raw-ROOT re-deriv | selection rule | run-split check | — | reports/…s01b… (PR #2) |
 | S01f | ✅ done | ✅ S00 and S03 run-65 references | fold-local q-template veto Δ=0.045 ns, CI [0.023,0.129] | fold-local RF veto Δ=0.025 ns, CI [-0.013,0.085] | No; fold-local q_template does not securely improve pair residual width | reports/1781012803.2987.06ed3d69 |
+| S01f transfer | ✅ done | ✅ reproduced | conditional q_external threshold AUC 0.672; failure enrichment 0.070 | q-structure RF AUC 0.759; failure enrichment 0.235 | Positive but not clean; run/stave leakage flags need atom grid | reports/1781015988.1972.6a842ea9 |
 | S02 | ✅ done | ✅ S00 selection | template phase sigma68 2.889 ns | ridge-on-CFD20 sigma68 1.846 ns | **Yes** (Δ≈1.04 ns) | reports/1780997954.15157.07ef03cf__s02_timing_pickoff |
 | S02b | ✅ done | ✅ exact S02 reproduction | global template + train-only timewalk 1.635 ns | ridge-on-CFD20 1.846 ns | No; strong traditional closure wins on run 65 | reports/1781000705.514762.105c186b__s02b_template_timewalk_closure |
 | S02c | ✅ done | ✅ S02/S03 inputs reproduced | no-drift global timewalk 1.635 ns; binned drift model 3.404 ns | ridge-on-CFD20 1.846 ns | No; drift nuisance does not improve run-65 closure | reports/1781005800.1736.6e8916b8 |
@@ -25,6 +26,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S03d | ✅ done | ✅ S03a/S03b LORO baselines reproduced | amp-only 1.551 ns; monotone-binned 1.645 ns | HGB residual 1.394 ns | ML gain is real in-fold; needs monotonicity/transfer audit before adoption | reports/1781010985.923.35c141ac |
 | S05a | ✅ done | ✅ A-stack/B-stack external-control inputs | CFD20 pair-median residual width 2.082 ns | ExtraTrees B+A width 1.664 ns | No secure A-control gain; shuffled-A control is similar | reports/1781001480.696013.4ac50583__s05a_astack_external_control |
 | S05c | ✅ done | ✅ S05-style B-stack residual inputs | pair-median/hierarchical covariance sigma68 2.082 ns; B2 off-diagonal dominates | ExtraTrees waveform residual sigma68 1.449 ns | ML reduces residual width, but covariance remains B2/topology dominated | reports/1781009478.9969.16fe02b4 |
+| S05d | ✅ done | ✅ S05c covariance inputs | static two-ended priors sigma68 2.147 ns; bias -0.870 ns | dynamic waveform weights sigma68 2.021 ns; bias -0.621 ns | Small ML gain; projection bias requires support frontier | reports/1781016280.4623.016f3ea3 |
+| S05e | ✅ done | ✅ S05c reproduction baseline | pair-median covariance sigma68 2.082 ns | saturation-feature ExtraTrees sigma68 1.352 ns | ML gain is useful, but B2 saturation/topology support must be bounded | reports/1781016280.4691.3d911c1d |
 | S07 | ✅ done | ✅ S00 selection | low-current AUC 0.504 | calibrated RF AUC 0.768 | **Yes** (Δ=0.264, CI [0.250,0.280]) | reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard |
 | S07b | ✅ done | ✅ guarded gross D_t count match | D_t/curvature AUC 1.000 | shape-only RF AUC 0.9987 | No; D_t is label-defining | reports/1781000790.531071.5a66741c__s07b_timing_control_classifier |
 | S07c | ✅ done | ✅ S00 counts; App.A count mismatch | q_template-only AUC 0.717; span+q AUC 0.912 | clean-timing RF AUC 0.993 | **Yes** vs q_template-only, but weak-label drift remains | reports/1781000790.531136.203130b0__s07c_clean_timing_rf |
@@ -69,8 +72,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P01b downstream | ✅ done | ✅ 640,737 exact | hand/PCA sample-epoch probe bal-acc 0.602/0.649 | AE-4 sample-epoch probe bal-acc 0.634 | No adoption; latent/domain drift needs residualization before downstream use | reports/1781010192.1206.019d7d9e__p01b_downstream_waveform_probes |
 | P01c | ✅ done | ✅ 640,737 exact | sample/window ablations: samples 3-5 dominate timing | AE occlusion/permutation probes find sample 5 highest | Diagnostic; use sample map to constrain P07e/P03c rather than claim ML adoption | reports/1781005319.562.584259c9__p01c_pulse_shape_importance_map |
 | P01c artifact | ✅ done | ✅ 640,737 exact recount | publish/verify non-git P01b latent artifact | artifact hashes and metadata verified | Infrastructure; enables downstream consumers, not a physics benchmark | reports/1781010024.910.7fbe14e8__p01c_publish_p01b_latent_artifact |
+| P01c loader | ✅ done | ✅ 640,737 exact; NPZ join checked | lightweight loader/hash checks | no model refit | Infrastructure; loader is safe but still carries no physics claim | reports/1781016530.1346.4e7f7ee0 |
 | P01c sentinels | ✅ done | ✅ 640,737 exact | residual PCA+hand bal-acc 0.331 | residual AE-4 bal-acc 0.235 | No; repeated shuffle sentinels reject the ML representation claim | reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels |
 | P01d | ✅ done | ✅ 640,737 exact | train-chosen OF(5-13) sigma68 2.693 ns | ridge residual sigma68 1.974 ns; target shuffle 3.329 ns | Diagnostic; sample 5 is CFD artifact, sample 6 smoothing is robust | reports/1781010798.954.0e922a2d |
+| P01d epoch | ✅ done | ✅ split-by-run probe | hand/PCA balanced accuracy near null to 0.561 by epoch task | AE-6 balanced accuracy 0.495/0.567/0.503 across tasks | Mostly nuisance/domain diagnostic; residualization gate needed before reuse | reports/1781016667.1095.088d6bb4 |
 | P01d artifact | ⚠️ blocked | ✅ 640,737 exact; hashes preserved | canonical copy attempted to ccb-data/projects | no model refit | Blocked by read-only canonical paths; worker-local artifact index preserved | reports/1781016189.1003.2607526c |
 | P01e | ✅ done | ✅ prior P01c CFD20/latent reproduced | strict hand-shape ridge sigma68 1.962 ns | strict AE latent ridge sigma68 1.965 ns; shuffled target 2.056 ns | No; latent does not beat hand-shape and null controls remain strong | reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit |
 | P01e loader | ✅ done | ✅ 640,737 exact; NPZ key/hash join exact | hand-shape stave bal-acc 0.410 | P01b latent RF bal-acc 0.479 | Loader-safe smoke test only; latent still needs domain/support audits | reports/1781016189.1012.5eef5b75 |
@@ -109,13 +114,17 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=10 claimed=0 done=0 failed=11`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with a live post-append audit at 190 open / 5 claimed / 148 done
+  testbeam queue remains deep, with a live post-append audit at 190 open / 4 claimed / 153 done
   after concurrent worker movement.
   The mission trigger still required new ready work. This pass appended four ready non-duplicate
-  tickets: P01g latent baseline-contamination atom map (`1781039488.1122.04bc6ecf`),
+  tickets: P01h time-local latent residualization gate (`1781040959.702.2d1212fb`),
+  S05h saturation-aware covariance support frontier (`1781040960.767.247d3910`),
+  S01h q-template run-stave leakage atom grid (`1781040960.832.1c8e6dee`), and
+  P12b pulse-support tensor for PID energy consumers (`1781040960.896.205a0b9d`). The previous
+  pass appended four ready non-duplicate tickets: P01g latent baseline-contamination atom map (`1781039488.1122.04bc6ecf`),
   S07l injected morphology operating-point support audit (`1781039488.1142.659b28c4`),
   P09g injected-morphology false-positive gallery (`1781039488.1166.6e40385a`), and
-  S04f waveform timing pull-width calibration map (`1781039488.1240.043427d8`). The previous pass
+  S04f waveform timing pull-width calibration map (`1781039488.1240.043427d8`). The pass before that
   appended three ready non-duplicate tickets: P03i phase-local waveform architecture failure map
   (`1781038014.1254.657842ac`), S16m pseudo-pedestal charge live-time bias closure
   (`1781038019.1322.46921ff8`), and S18j A-stack ML transfer covariance gate
@@ -296,7 +305,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   PID, or energy consumers reuse those controls. This pass adds P01g for latent baseline/support
   contamination, S07l for injected morphology operating points, P09g for false-positive waveform
   atoms, and S04f for waveform timing pull-width calibration before latent, morphology, or timing
-  ML is reused by pile-up, PID, or energy consumers.
+  ML is reused by pile-up, PID, or energy consumers. This pass adds P01h for time-local latent
+  residualization, S05h for saturation-aware covariance support, S01h for q_template run-stave
+  leakage atoms, and P12b for a pulse-support tensor before PID or energy consumers reuse
+  waveform, covariance, or charge outputs.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

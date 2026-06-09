@@ -1,0 +1,289 @@
+{
+  "ticket_id": "1781004956.538.5fc10cd7",
+  "study_id": "P02b",
+  "title": "cluster topology stability across runs and staves",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "p02_reproduction": {
+    "p02_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65,
+      50
+    ],
+    "sample_size": 60000,
+    "expected_sample_size": 60000,
+    "early_peak_peak_le_3_rate": 0.04388333333333334,
+    "reported_early_peak_rate_approx": 0.044,
+    "absolute_delta": 0.00011666666666666076,
+    "passed": true
+  },
+  "analysis_sample_rows": 31407,
+  "split": {
+    "run_grouped_folds": 5,
+    "stave_heldout_folds": [
+      "B2",
+      "B4",
+      "B6",
+      "B8"
+    ],
+    "bootstrap_replicates": 120,
+    "bootstrap_units": {
+      "run_split": "run",
+      "stave_split": "stave"
+    }
+  },
+  "traditional": {
+    "method": "hand-crafted shape features + PCA4 + diagonal GMM",
+    "run_heldout_metrics": [
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "q_template_bin",
+        "ami": 0.35723496404442123,
+        "purity": 0.5544799865202299,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "peak_group",
+        "ami": 0.5218172732020693,
+        "purity": 0.8482757103664057,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "downstream_topology",
+        "ami": 0.12379945234618474,
+        "purity": 0.6765569705724851,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "dt_label",
+        "ami": 0.1005437070172379,
+        "purity": 0.6837658103701877,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "traditional",
+        "target": "manual_flag",
+        "ami": 0.5375634098906168,
+        "purity": 0.9451585572403889,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      }
+    ],
+    "stave_heldout_metrics": [
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "q_template_bin",
+        "ami": 0.41569587959623683,
+        "purity": 0.7093854160841991,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "peak_group",
+        "ami": 0.4915983384545407,
+        "purity": 0.8516462571241105,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "downstream_topology",
+        "ami": 0.03167389946517506,
+        "purity": 0.8510215571451164,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "dt_label",
+        "ami": 0.0908626462138013,
+        "purity": 0.7374171611100933,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "traditional",
+        "target": "manual_flag",
+        "ami": 0.49991582430456827,
+        "purity": 0.932389906603246,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      }
+    ]
+  },
+  "ml": {
+    "method": "P02-style autoencoder latent + diagonal GMM",
+    "run_heldout_metrics": [
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "q_template_bin",
+        "ami": 0.37713717561576127,
+        "purity": 0.5695790498085971,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "peak_group",
+        "ami": 0.5240067011839894,
+        "purity": 0.8380049453041337,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "downstream_topology",
+        "ami": 0.12097033971552063,
+        "purity": 0.6732280986104212,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "dt_label",
+        "ami": 0.09976459563783616,
+        "purity": 0.6837498858306756,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      },
+      {
+        "split": "run",
+        "method": "ml_autoencoder",
+        "target": "manual_flag",
+        "ami": 0.49042539126924717,
+        "purity": 0.9162384874702345,
+        "rows": 31407,
+        "unit": "run",
+        "units": 33
+      }
+    ],
+    "stave_heldout_metrics": [
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "q_template_bin",
+        "ami": 0.35641813195320654,
+        "purity": 0.6728559487283197,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "peak_group",
+        "ami": 0.40897314315540195,
+        "purity": 0.7766582013866604,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "downstream_topology",
+        "ami": 0.02931637637322418,
+        "purity": 0.8507442297264249,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "dt_label",
+        "ami": 0.08677717544144883,
+        "purity": 0.7329809913866984,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      },
+      {
+        "split": "stave",
+        "method": "ml_autoencoder",
+        "target": "manual_flag",
+        "ami": 0.43468289839133534,
+        "purity": 0.8923692233456316,
+        "rows": 31407,
+        "unit": "stave",
+        "units": 4
+      }
+    ]
+  },
+  "leakage_checks": [
+    {
+      "check": "cluster_vs_run",
+      "method": "traditional",
+      "ami": 0.10776938092645744,
+      "purity": 0.07253160123539339
+    },
+    {
+      "check": "cluster_vs_stave",
+      "method": "traditional",
+      "ami": 0.0006785604409534769,
+      "purity": 0.31521635304231543
+    },
+    {
+      "check": "cluster_vs_run",
+      "method": "ml_autoencoder",
+      "ami": 0.10373642951080357,
+      "purity": 0.08039609004362085
+    },
+    {
+      "check": "cluster_vs_stave",
+      "method": "ml_autoencoder",
+      "ami": 0.0011396613552217241,
+      "purity": 0.31521635304231543
+    }
+  ],
+  "follow_up_tickets": [
+    "P02c: replace diagnostic q-template bins with the full S01 q_template_per_pulse table and repeat run/stave-held-out cluster stability.",
+    "P02d: validate early-peak P02 topology against downstream timing tails in S07/S02 without using D_t as a training feature."
+  ],
+  "runtime_sec": 12.2
+}

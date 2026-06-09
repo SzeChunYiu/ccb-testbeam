@@ -1,0 +1,4 @@
+quantity,documented,raw_cfd20,delta,matches
+labelled_events,12147,9897,-2250,False
+clean,10636,7583,-3053,False
+violating,1511,2314,803,False

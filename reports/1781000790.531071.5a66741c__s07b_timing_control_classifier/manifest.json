@@ -1,0 +1,39 @@
+{
+  "ticket": "1781000790.531071.5a66741c",
+  "study": "S07b",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "39762f8f205b46ce0b6fc63d74873e05240b22d6",
+  "config": "reports/1781000790.531071.5a66741c__s07b_timing_control_classifier/s07b_config.json",
+  "command": "reports/1781000790.531071.5a66741c__s07b_timing_control_classifier/s07b_timing_control_classifier.py --config reports/1781000790.531071.5a66741c__s07b_timing_control_classifier/s07b_config.json",
+  "environment_command": "uv run --with uproot --with numpy --with pandas --with scikit-learn --with matplotlib --with scipy --with pyyaml python",
+  "random_seed": 20260609,
+  "runtime_sec": 63.08,
+  "inputs": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs": {
+    "REPORT.md": "06da299288adde64a8241cbb441d3513c1efa4166cb5c6d1360e5bba2da77ed5",
+    "fig_dt_label_extremes.png": "5260a8bedba26311d66901e149081d5a9a03003fbb79132b389587a7ed3ebef6",
+    "fig_ml_reliability.png": "32a815cccc8f501a79ccb1faf67f61f9a7a9e0d826d13e6e2da44a4bce7cd753",
+    "fig_ml_score_distribution.png": "7f55008a0a3b263a848c1d017295bf416614ff45b1faa820ff90b1765ae13ee9",
+    "heldout_fixed_efficiency.csv": "4ed19feeb08b325c57fccdeb0936f6ae1c377888ccfa2761f1ac53d1705a47ca",
+    "input_sha256.csv": "4d7f4373b939694e8fc25a670546467788c25e0deb4f6ef639e94a382dd0725e",
+    "intermediate_events.csv": "211e00ad10775bdd8e53c5858ec746f9ccbcf128aff2c56b99688e7df1ad52b9",
+    "leakage_checks.csv": "fcf43295cda40c491c2306f46f47d6a9cb7fd7b683fd324c52c392409d62a336",
+    "ml_reliability.csv": "15fd45bc682dc01c53c813321825d7e634702f2932011f6c9657b37c6e9c78a2",
+    "oof_predictions.csv": "f1f10792cdbc825a9f4d9f3d8bd44128585fa1b5c12b3cd7ef7dbc7190a5bc34",
+    "reproduction_match_table.csv": "85c78aa79c0ce855fd48976cc4f91d6122f27d24db1f8962b73c236eb7894631",
+    "result.json": "452f6dc4b6a16f2626478e698471857d4173c37e61c2af16037cff3e914231f8",
+    "rf_cv_scan.csv": "e1342bb7c3c8a7e01bb2fa1cdabe914c9fe7c494b7684ca4622c36142333598b",
+    "run_counts.csv": "a0fc28acdbda45841ae2a72c692fb7cf8c63db103f780eabb9575a62a3df4413",
+    "s07b_config.json": "fc9cf2803e6d4e38678254401b127aab627eb4935ef7456600e86045f660287c",
+    "s07b_timing_control_classifier.py": "6bf3391d376f0adfcc53448d3a84a4a70d34dd3a1ddf1e93b03ce9560ae7f399",
+    "scoreboard.csv": "245cd65f298f16eef8ba022b9106ffe9735422d5da891d311b68cc4d301e554b"
+  }
+}

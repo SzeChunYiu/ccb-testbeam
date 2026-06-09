@@ -1,0 +1,6 @@
+probe,roc_auc,average_precision,notes
+topology-only RF,0.603393271461717,0.10678560512562424,B2/B4/B6/B8 present flags plus downstream count only.
+absolute-amplitude-only RF,0.8212490332559939,0.2819494183121338,Log amplitudes only; excluded from main RF.
+shape RF with shuffled training labels,0.5192639855632895,0.03861914903747344,Leakage/null sanity check.
+per-stave slot shape RF,0.998904356792988,0.9682484138115277,Old representation with present flags and zero-filled missing stave slots; not used for main claim.
+documented App.I headline,0.958,0.614,"Prior note value, not reproduced by the stricter run-held-out protocol."

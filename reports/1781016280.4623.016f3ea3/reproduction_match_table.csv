@@ -1,0 +1,9 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total_selected_b_pulses,640737.0,640737.0,0.0,0.0,True
+sample_i_analysis_b_selected_pulses,252266.0,252266.0,0.0,0.0,True
+sample_ii_analysis_b_selected_pulses,125096.0,125096.0,0.0,0.0,True
+s05c_event_level_pooled_var_B2,166.497359,166.49683479425633,-0.0005242057436589675,0.01,True
+s05c_event_level_pooled_var_B4,34.243591,34.24361594229799,2.4942297990548923e-05,0.01,True
+s05c_event_level_pooled_var_B6,35.067568,35.0676057732538,3.7773253801276496e-05,0.01,True
+s05c_event_level_pooled_var_B8,43.114082,43.11407731041274,-4.689587264294914e-06,0.01,True
+s05c_event_level_pooled_B2_variance_minus_downstream_mean_ns2,129.022278,129.02173511893483,-0.000542881065172196,0.01,True

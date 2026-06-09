@@ -1,0 +1,5 @@
+feature_set,C,cv_accuracy
+honest_raw_summaries,0.01,0.8990858154311292
+honest_raw_summaries,0.1,0.9350654916972236
+honest_raw_summaries,1.0,0.944791256284789
+honest_raw_summaries,10.0,0.9466327785286482

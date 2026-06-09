@@ -1,0 +1,5 @@
+quantity,expected,reproduced,delta,tolerance,pass
+median_first_four_selected,640737,640737,0,0,True
+dynamic_range_selected,706373,706373,0,0,True
+dynamic_only,65636,65636,0,0,True
+median_only,0,0,0,0,True

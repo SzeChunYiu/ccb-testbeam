@@ -64,7 +64,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=6 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was still
   followed with `--project testbeam`; project-aware `tn-ticket list --project testbeam` now reports
-  `open=80 claimed=3 done=58 failed=10` after this pass appended four ready non-duplicate tickets:
+  `open=82 claimed=3 done=58 failed=10` after this pass appended four ready non-duplicate tickets:
   P03f early-peak sample-window timing residual ablation, P03g waveform timing residual
   negative-control registry, S16h matched lowering pile-up confound audit, and S18g A-stack
   robust-width transfer to B-stack covariance.

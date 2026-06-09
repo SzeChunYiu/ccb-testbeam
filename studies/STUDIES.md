@@ -276,7 +276,7 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `open=6 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: project-aware `tn-ticket list --project testbeam` now reports
-`open=80 claimed=3 done=58 failed=10` after this pass appended four more non-duplicate ready
+`open=82 claimed=3 done=58 failed=10` after this pass appended four more non-duplicate ready
 tickets under `project:testbeam`: P03f early-peak sample-window timing residual ablation, P03g
 waveform timing residual negative-control registry, S16h matched lowering pile-up confound audit,
 and S18g A-stack robust-width transfer to B-stack covariance. The discrepancy is a shim/argument

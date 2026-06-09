@@ -1,0 +1,26 @@
+{
+  "ticket_id": "1781005204.1227.36547733",
+  "script": "reports/1781005204.1227.36547733__p01a_controlled_waveform_probes/p01a_controlled_waveform_probes.py",
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1781005204.1227.36547733__p01a_controlled_waveform_probes/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    "REPORT.md",
+    "ae_training_loss.csv",
+    "amplitude_stratified_metrics.csv",
+    "controlled_probe_benchmark.csv",
+    "fig_amplitude_strata.png",
+    "fig_controlled_probe_benchmark.png",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "p01a_controlled_waveform_probes.py",
+    "reproduction_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "residual_reconstruction_metrics.csv",
+    "result.json",
+    "topology_group_holdout_metrics.csv"
+  ]
+}

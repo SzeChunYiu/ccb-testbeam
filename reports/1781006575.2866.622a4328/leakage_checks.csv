@@ -1,0 +1,5 @@
+check,value,pass
+rf_forbidden_feature_intersection,,True
+leaky_control_auc_is_ceiling,0.9999999999999999,True
+historical_source_table_found,0,False
+definition_grid_exact_target_match,0,False

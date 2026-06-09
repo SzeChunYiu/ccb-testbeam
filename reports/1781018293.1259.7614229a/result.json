@@ -1,0 +1,447 @@
+{
+  "study": "P07e",
+  "ticket": "1781018293.1259.7614229a",
+  "worker": "testbeam-laptop-3",
+  "title": "leading-edge sample ablation for saturation recovery",
+  "reproduced": true,
+  "reproduction": {
+    "p07c_gate": [
+      {
+        "quantity": "P07 fixed-ceiling C=4000 ML res68",
+        "expected": 0.03243177807776981,
+        "reproduced": 0.03243177807776981,
+        "delta": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "P07c/P07b multi-ceiling artificial res68",
+        "expected": 0.03931517116488385,
+        "reproduced": 0.039315171164883894,
+        "delta": 4.163336342344337e-17,
+        "pass": true
+      },
+      {
+        "quantity": "P07c/P07b natural A>=7000 q_template shift",
+        "expected": -0.0896770876224819,
+        "reproduced": -0.0896733286909729,
+        "delta": 3.7589315090014175e-06,
+        "pass": true
+      },
+      {
+        "quantity": "P07c boundary 6500-7500 shape-only q_template shift",
+        "expected": "raw-root P07c recompute",
+        "reproduced": -0.08323295849868055,
+        "delta": "",
+        "pass": true
+      },
+      {
+        "quantity": "P07c application A>=7000 explicit-ceiling q_template shift",
+        "expected": "raw-root P07c recompute",
+        "reproduced": -0.0896733286909729,
+        "delta": "",
+        "pass": true
+      }
+    ],
+    "sample_ii_gate": [
+      {
+        "quantity": "sample_ii_analysis B2 selected pulses",
+        "expected": 88213,
+        "reproduced": 88213,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "B2 pulses >= 7000 ADC",
+        "expected": "data-derived",
+        "reproduced": 5351,
+        "delta": "",
+        "pass": true
+      }
+    ]
+  },
+  "split": "leave-one-run-out by run over Sample-II analysis runs",
+  "raw_root_dir": "data/root/root",
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "methods": [
+    "traditional_template",
+    "gbr_masked",
+    "mlp_masked"
+  ],
+  "retained_sample_windows": {
+    "s3": [
+      3
+    ],
+    "s4": [
+      4
+    ],
+    "s5": [
+      5
+    ],
+    "s6": [
+      6
+    ],
+    "s7": [
+      7
+    ],
+    "w2_4": [
+      2,
+      3,
+      4
+    ],
+    "w3_5": [
+      3,
+      4,
+      5
+    ],
+    "w4_6": [
+      4,
+      5,
+      6
+    ],
+    "w5_7": [
+      5,
+      6,
+      7
+    ],
+    "w3_7": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "w2_8": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "artificial_clip_ceiling_adc": 4000.0,
+  "natural_saturation_proxy_adc": 7000.0,
+  "headline": {
+    "best_window": "w2_8",
+    "best_method": "gbr_masked",
+    "best_res68_abs_frac": 0.08120972878215624,
+    "best_res68_abs_frac_ci95": [
+      0.07932581229244448,
+      0.08295661889138492
+    ],
+    "best_bias_median_frac": 0.029168391594658696,
+    "best_bias_median_frac_ci95": [
+      0.0240264131253684,
+      0.033155229339852106
+    ],
+    "best_tail_delta": 0.028075190575190572,
+    "best_tail_delta_ci95": [
+      -0.007593307593307611,
+      0.07877190377190375
+    ],
+    "any_adoptable": false
+  },
+  "adoption_screen": [
+    {
+      "window": "w2_8",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.08120972878215624,
+      "best_res68_abs_frac_ci95": [
+        0.07932581229244448,
+        0.08295661889138492
+      ],
+      "bias_median_frac": 0.029168391594658696,
+      "bias_median_frac_ci95": [
+        0.0240264131253684,
+        0.033155229339852106
+      ],
+      "frac_within10": 0.780679551738468,
+      "frac_within10_ci95": [
+        0.7723610837432571,
+        0.7880543739809774
+      ],
+      "tail_delta": 0.028075190575190572,
+      "tail_delta_ci95": [
+        -0.007593307593307611,
+        0.07877190377190375
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "w3_7",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.09575442489812465,
+      "best_res68_abs_frac_ci95": [
+        0.09411505348005499,
+        0.09713279786497006
+      ],
+      "bias_median_frac": 0.03254229025943558,
+      "bias_median_frac_ci95": [
+        0.02542207855988171,
+        0.03970140356715873
+      ],
+      "frac_within10": 0.7065128376596481,
+      "frac_within10_ci95": [
+        0.6975363657861466,
+        0.7187941135320742
+      ],
+      "tail_delta": 0.013568376068376067,
+      "tail_delta_ci95": [
+        -0.012698412698412717,
+        0.04189560439560442
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "w4_6",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.09694473393136552,
+      "best_res68_abs_frac_ci95": [
+        0.094117845993417,
+        0.09957148331683842
+      ],
+      "bias_median_frac": 0.029797614424734616,
+      "bias_median_frac_ci95": [
+        0.022358002239310427,
+        0.037843250020047216
+      ],
+      "frac_within10": 0.6982031872836366,
+      "frac_within10_ci95": [
+        0.6814166819142161,
+        0.715230915173917
+      ],
+      "tail_delta": 0.005846368346368346,
+      "tail_delta_ci95": [
+        -0.026769626769626798,
+        0.04189560439560442
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "w3_5",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.10716485451259018,
+      "best_res68_abs_frac_ci95": [
+        0.10060311519990857,
+        0.11285814997912366
+      ],
+      "bias_median_frac": 0.028279610186630295,
+      "bias_median_frac_ci95": [
+        0.019436561489198288,
+        0.03568751901510337
+      ],
+      "frac_within10": 0.6461518988214024,
+      "frac_within10_ci95": [
+        0.6167856603864816,
+        0.6779747756225879
+      ],
+      "tail_delta": -0.007844107844107844,
+      "tail_delta_ci95": [
+        -0.04105534105534108,
+        0.02524502524502527
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "w5_7",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.11118941247903028,
+      "best_res68_abs_frac_ci95": [
+        0.10895695593288784,
+        0.11323206494333199
+      ],
+      "bias_median_frac": 0.026282589852287826,
+      "bias_median_frac_ci95": [
+        0.018182392378032094,
+        0.0335054707081913
+      ],
+      "frac_within10": 0.623324056520808,
+      "frac_within10_ci95": [
+        0.6095905144611824,
+        0.6357385256896071
+      ],
+      "tail_delta": 0.021848084348084367,
+      "tail_delta_ci95": [
+        0.0019305019305019425,
+        0.045906964656964686
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "s6",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.13103407153135554,
+      "best_res68_abs_frac_ci95": [
+        0.12992095487626762,
+        0.13218735410788454
+      ],
+      "bias_median_frac": 0.014309586570634211,
+      "bias_median_frac_ci95": [
+        0.0058584762728699944,
+        0.020816191112866544
+      ],
+      "frac_within10": 0.5207215072305134,
+      "frac_within10_ci95": [
+        0.5160409800993676,
+        0.5246865021380119
+      ],
+      "tail_delta": 0.007921657921657934,
+      "tail_delta_ci95": [
+        -0.012698412698412717,
+        0.03389957264957266
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "s5",
+      "best_artificial_method": "mlp_masked",
+      "best_res68_abs_frac": 0.14003976624367123,
+      "best_res68_abs_frac_ci95": [
+        0.13382523210543004,
+        0.1452231795779677
+      ],
+      "bias_median_frac": 0.020342040986090718,
+      "bias_median_frac_ci95": [
+        -0.000316222682771525,
+        0.03774633963571624
+      ],
+      "frac_within10": 0.5076018451375706,
+      "frac_within10_ci95": [
+        0.4854211346916501,
+        0.5294225731686736
+      ],
+      "tail_delta": 0.010989010989010997,
+      "tail_delta_ci95": [
+        0.0,
+        0.032967032967032996
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "s7",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.14062456466007583,
+      "best_res68_abs_frac_ci95": [
+        0.13794326722784853,
+        0.14297761567856015
+      ],
+      "bias_median_frac": 0.013923016363935318,
+      "bias_median_frac_ci95": [
+        0.002530375769252872,
+        0.025279228426107535
+      ],
+      "frac_within10": 0.48849522911230536,
+      "frac_within10_ci95": [
+        0.47651392114054764,
+        0.5023403573997779
+      ],
+      "tail_delta": 0.006913506913506927,
+      "tail_delta_ci95": [
+        -0.01587301587301588,
+        0.033642708642708616
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "w2_4",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.1428724493491769,
+      "best_res68_abs_frac_ci95": [
+        0.1403780889163982,
+        0.14527322432423515
+      ],
+      "bias_median_frac": 0.02621154407910737,
+      "bias_median_frac_ci95": [
+        0.010644175912098918,
+        0.040922747666277653
+      ],
+      "frac_within10": 0.48095585983564637,
+      "frac_within10_ci95": [
+        0.47075380123803434,
+        0.4902567314275501
+      ],
+      "tail_delta": 0.0176814176814177,
+      "tail_delta_ci95": [
+        -0.004418704418704416,
+        0.042615995115995134
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "s4",
+      "best_artificial_method": "gbr_masked",
+      "best_res68_abs_frac": 0.1445335210250321,
+      "best_res68_abs_frac_ci95": [
+        0.14237336208999227,
+        0.14673012732058285
+      ],
+      "bias_median_frac": 0.01834869645452755,
+      "bias_median_frac_ci95": [
+        0.002520242818577549,
+        0.032313909395724906
+      ],
+      "frac_within10": 0.47109521886596245,
+      "frac_within10_ci95": [
+        0.46385237678991437,
+        0.47821436691670793
+      ],
+      "tail_delta": 0.016094116094116102,
+      "tail_delta_ci95": [
+        -0.009523809523809554,
+        0.04090354090354093
+      ],
+      "adoptable": false
+    },
+    {
+      "window": "s3",
+      "best_artificial_method": "mlp_masked",
+      "best_res68_abs_frac": 0.14525342799193292,
+      "best_res68_abs_frac_ci95": [
+        0.14218079412778778,
+        0.1482445076576693
+      ],
+      "bias_median_frac": 0.007866645651298246,
+      "bias_median_frac_ci95": [
+        -0.01420590973898781,
+        0.026333965133879447
+      ],
+      "frac_within10": 0.46836962826275,
+      "frac_within10_ci95": [
+        0.4559751369723107,
+        0.4797566548892432
+      ],
+      "tail_delta": -0.0031746031746031794,
+      "tail_delta_ci95": [
+        -0.009523809523809537,
+        0.0
+      ],
+      "adoptable": false
+    }
+  ],
+  "leakage_audit": {
+    "split_by_run": true,
+    "excluded_features": [
+      "run_id",
+      "event_id",
+      "downstream_timing",
+      "true_amplitude",
+      "heldout_labels"
+    ],
+    "shuffled_label_res68_abs_frac": 0.2668017004764871,
+    "real_to_shuffled_res68_ratio": 0.304382350776333,
+    "ml_too_good_to_be_true": false
+  },
+  "next_tickets": [],
+  "follow_up_ticket_status": "skipped: open ticket 1781019500.1759.55e62bed already covers P07f natural B2 saturation knees with odd-channel duplicates",
+  "git_commit": "5973b51e9f0f874615d687f6a5042b722eb1888c",
+  "runtime_sec": 398.36
+}

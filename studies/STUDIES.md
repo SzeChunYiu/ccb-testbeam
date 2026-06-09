@@ -273,15 +273,18 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=9 claimed=0 done=0 failed=8`, which is below the 18-ready floor because the shim treats
+`open=10 claimed=0 done=0 failed=8`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep (`open=142 claimed=4
-done=99 failed=11` on the post-append audit, with concurrent workers moving tickets), but the
+with `--project testbeam`: the project-aware testbeam queue remains deep (`open=147 claimed=3
+done=103 failed=12` on the post-append audit, with concurrent workers moving tickets), but the
 mission trigger still required a small set of new ready studies. This pass appended three
-additional non-duplicate ready tickets under `project:testbeam`: P10h explicit-handle q-template
+additional non-duplicate ready tickets under `project:testbeam`: S07k raw-HRDv App.A
+label-definition sensitivity grid (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up
+excess decomposition (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support
+envelope (`1781027683.1000.24e0133d`). The previous pass appended P10h explicit-handle q-template
 support map (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
 (`1781026226.572.6e7c10a0`), and S04d timing-tail pathology interaction audit
-(`1781026226.608.7a105c91`). The previous pass appended S07i S07f score transfer from injected
+(`1781026226.608.7a105c91`). The prior pass appended S07i S07f score transfer from injected
 corruption to real high-current strata (`1781024786.1471.167d1f38`), P04i duplicate-readout charge
 closure sample-causality map (`1781024791.1539.3ba15c1d`), and S03h HGB timewalk gain support map
 by amplitude and shape atoms (`1781024797.1607.4a1b6480`). The earlier pass appended P04h
@@ -393,6 +396,15 @@ ExtraTrees, and simple conditional templates still fail the q-space negative-con
 both family holdouts. Learned or handle-based templates should therefore be mapped by support
 region and feature family before their q_template, live-time, saturation, PID, or energy outputs
 are trusted.
+The latest App.A archive provenance search finds no byte-identifiable 12,147-row source table:
+raw HRDv CFD20 produces 9,897 labelled events, so the historical App.A weak label should be
+retired unless a source table is recovered or bounded through a raw-HRDv definition grid. The
+latest S10f anomaly-stratified closure shows the high-current downstream excess remains positive
+after P09a taxonomy matching, but the largest rare-class excess is baseline_excursion; pile-up and
+baseline contamination must now be decomposed in the same matched support. The P04b-propagated
+S14b range-energy preflight reproduces S00 exactly but fails the 0.10 per-event energy threshold
+once external charge uncertainty is included, so energy/PID work should use support and abstention
+maps rather than global energy claims.
 
 Completed since last steering cycle:
 
@@ -751,3 +763,29 @@ Active ready queue highlights:
   sigma68, full RMS, >5 ns tail fraction, interaction odds ratios, composition shift, calibration
   ECE, and ML-minus-traditional/additive deltas with stratified event-paired run-block bootstrap
   CIs.
+- **S07k — Raw-HRDv App.A label-definition sensitivity grid.** Bound whether any reproducible
+  raw-HRDv definition variant can explain the documented 12,147 App.A labelled events, or whether
+  all downstream clean-timing consumers must retire that count. Traditional: deterministic grid
+  over CFD fraction, downstream multiplicity, D_t/gross-tail thresholds, q_template quality, and
+  ambiguity handling with forbidden timing-span overlap recorded. ML: run-heldout shape RF for
+  each reproducible label definition, excluding run/event/timing-span features and including leaky
+  plus shuffled-label controls. Metric: labelled-count delta to 12,147, clean/violating
+  composition, q_template-only and RF ROC-AUC/AP/Brier, fixed-efficiency tail rejection, and
+  run-block bootstrap CIs.
+- **S10h — Baseline-excursion pile-up excess decomposition.** Decide whether S10f's
+  baseline_excursion downstream excess is true two-pulse pile-up or pretrigger/baseline
+  contamination. Traditional: matched high-low current strata within baseline_excursion split by
+  pretrigger level, adaptive lowering, peak sample, late fraction, saturation proxy, and
+  constrained two-pulse residual. ML: run-heldout classifier/regressor using P09a scores,
+  P01/P02 latent-distance atoms, and waveform summaries with run/current/event excluded, calibrated
+  against the same downstream topology target and shuffled controls. Metric: downstream
+  high-minus-low excess, topology odds ratio, two-pulse residual enrichment, Brier/log-loss
+  improvement over stratum rates, and run-block bootstrap CIs.
+- **S14e — Range-energy abstention support envelope.** Find whether any depth, charge,
+  saturation, or topology support clears the 10 percent res68 threshold after S14b propagates P04b
+  external charge uncertainty. Traditional: PSTAR depth plus per-depth monotonic charge lookup
+  under S14b geometry variants and ticket-local P04b uncertainty propagation, binned by support
+  strata. ML: monotonic HGB energy proxy with train-run calibration and uncertainty-ranked
+  abstention using existing S14b/P04b artifacts plus shuffled-target sentinels. Metric: accepted
+  fraction, combined energy-proxy res68, bias, depth-order violation rate, ML-minus-traditional
+  delta, and held-out-run bootstrap CIs.

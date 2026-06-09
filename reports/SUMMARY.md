@@ -26,6 +26,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S07e | ✅ done | ✅ guarded parent App.I count match | all-three curvature-only AUC 1.000 | shape-only RF AUC 0.993 | No; curvature/D_t target remains self-referential | reports/1781006037.1500.1d8044e2__s07e_all_three_downstream_curvature_rf |
 | S07f | ✅ done | ✅ all-three App.I counts and S07e RF reproduced | injected timing/template AUC 0.606 | shape-only RF AUC 0.822 | **Yes** for injected waveform-corruption truth; not yet a measured beam pile-up rate | reports/1781012109.1290.18206042 |
 | S07g | ✅ done | ✅ parent 72 gross and all-three 22 gross events | curvature-only AUC 1.000 | shape-only RF AUC 0.993; amplitude-only AUC 0.779 | No; D_t/curvature remains the label ceiling, shape is diagnostic by stratum | reports/1781012109.1288.14a764a8__s07g_appi_amplitude_current_stratification |
+| S07e archive | ✅ done | ❌ App.A 12,147 not recovered; raw CFD20 gives 9,897 | q_template-only AUC 0.717; span+q AUC 0.912 | clean-timing RF AUC 0.994 | Weak-label screen only; retire 12,147 unless byte source appears | reports/1781012847.2575.40cb6e31 |
 | S10 | ✅ done | ✅ Rmax/current excess reproduced | downstream high-low excess 0.0103/event | injection score Δ=0.036 diagnostic | No; ML is monitoring only | reports/1780997954.15277.548b01a3__s10_pileup_rate_model |
 | S10b | ✅ done | ✅ Rmax=4.222 MHz assumption and 6/6 topology checks | template tail live10 124.79 ns, CI [123.33,126.36] | ridge live10 123.19 ns, CI [120.72,125.55] | No adoption claim; 90 ns is an assumption, measured window implies Rmax≈3.05 MHz | reports/1781000867.546870.5c124aaf |
 | S10c | ✅ done | ✅ S10 topology fractions within 0.0015 | matched-stratified excess 0.02025/event | current-score Δ=0.02975, AUC 0.640 | ML diagnostic; excess is heterogeneous after matching | reports/1781004956.733.387f428e |
@@ -33,6 +34,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10d | ✅ done | ✅ S10b Rmax/live10 reproduced | bounded two-pulse resolvable delay 60 ns; time RMS 13.83 ns | compact MLP delay 20 ns; time RMS 9.41 ns | **Yes**, but failure rate rises 0.172→0.323 | reports/1781007337.1325.2241031c |
 | S10d amplitude | ✅ done | ✅ S10c topology fractions within 0.0015 | matched two-pulse secondary fraction high-low 0.0316, CI [0.0189,0.0440] | RF secondary fraction Δ=0.0073; overlap score Δ=0.0245 | Diagnostic; largest excess is high-amp/large-lowering/broad-late | reports/1781010419.1206.6d667357 |
 | S10e | ✅ done | ✅ S10/S10c topology fractions within 0.0015 | charge-stratified downstream excess 0.00676/event; P04 log-charge shift 0.0476 | current/pile-up scores positive; charge-residual score negative | Traditional matched excess remains physics-facing; ML is pathology diagnostic | reports/1781010955.636.68b17313 |
+| S10f | ✅ done | ✅ S10/S10c topology fractions within 0.0015 | P09a-matched downstream excess 0.00478/event, CI [0.00346,0.00663] | current-score Δ=0.0222 but Brier/log-loss worse | No; traditional matched excess is physics-facing, baseline_excursion needs decomposition | reports/1781012706.846.1f364432 |
 | S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
 | S11b | ✅ done | ✅ S10c topology fractions within 0.0015 | real high-current secondary fraction Δ=0.0181, CI [-0.0168,0.0541] | RF secondary fraction Δ=0.00437, CI [-0.00138,0.0121] | Diagnostic; largest traditional excess is high-amp/large-lowering/broad-late | reports/1781010611.1197.028b141a |
 | S11c | ✅ done | ✅ S11a anchor reproduced | amplitude-binned asymmetric template time RMS 17.83 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate remains high (0.295) | reports/1781010611.1262.2e354bed |
@@ -68,6 +70,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P03c | ✅ done | ✅ P03a reproduced first | analytic sigma68 1.495 ns | MLP residual 1.448 ns; CNN residual 1.497 ns | CNN adds nothing; MLP gain is small and control-sensitive | reports/1781009029.1288.7e78286e |
 | P04 | ✅ done | ✅ 640,737 exact | peak amp res68 0.1238; integral charge res68 0.1954 | HGB amp res68 0.0091; charge res68 0.0151 | **Yes** for duplicate-readout closure; not absolute energy | reports/1780997954.15577.6c203777 |
 | P04b | ✅ done | ✅ 640,737 exact; 640,482 valid duplicate rows | downstream charge-proxy res68 0.225 | external ML res68 0.212; duplicate-transfer ML 0.247 | Weak external gain only; duplicate closure does not transfer cleanly to energy proxy | reports/1781005862.2131.4dbf3cf0 |
+| S14b P04b uncertainty | ✅ done | ✅ S00 exact; P04b external proxy reproduced | PSTAR/depth-charge lookup res68 0.0212 before charge propagation | monotonic HGB res68 0.0250 before propagation | No per-event energy claim; propagated combined res68 0.246 traditional / 0.189 ML fails 0.10 threshold | reports/1781011754.1392.25ac6c9f |
 | P04c | ✅ done | ✅ 640,737 exact; held-out runs 57/65 | adaptive-template ridge amp res68 0.0858; direct template scale worse | HGB amp res68 0.0091 | **Yes** for duplicate-readout closure; traditional template pathology needs diagnosis | reports/1781005862.2197.53fd45c8__p04c_amplitude_adaptive_template |
 | P04d | ✅ done | ✅ 640,737 exact; held-out runs 57/65 | strong Huber duplicate closure res68 0.0203; direct template scale 0.577 | ExtraTrees duplicate closure res68 0.00270 | **Yes** for duplicate-readout waveform closure; still not external energy truth | reports/1781011912.1215.01fb264f |
 | P05a | ✅ done | ✅ S11a injection anchor reproduced | bounded two-pulse fit time RMS 13.90 ns; failure 0.168 | compact CNN time RMS 10.01 ns; failure 0.228 | No adoption; CNN improves RMS but failure-rate regression is clear | reports/1781010938.498.6bd050f4 |
@@ -83,15 +86,18 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` reports
-  `open=9 claimed=0 done=0 failed=8`, below the 18-ticket floor, because the shim treats
+  `open=10 claimed=0 done=0 failed=8`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
   again with `--project testbeam`; the project-aware testbeam queue remains deep and currently
-  audits at `open=142 claimed=4 done=99 failed=11` after the append pass, with concurrent worker
+  audits at `open=147 claimed=3 done=103 failed=12` after the append pass, with concurrent worker
   movement. The mission trigger still required new ready work. This pass appended three ready
-  non-duplicate tickets: P10h explicit-handle q-template support map
-  (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
+  non-duplicate tickets: S07k raw-HRDv App.A label-definition sensitivity grid
+  (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up excess decomposition
+  (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support envelope
+  (`1781027683.1000.24e0133d`). The previous pass appended P10h explicit-handle q-template
+  support map (`1781026226.557.2d8e79db`), P04j charge-transfer conformal uncertainty calibration
   (`1781026226.572.6e7c10a0`), and S04d timing-tail pathology interaction audit
-  (`1781026226.608.7a105c91`). The previous pass appended:
+  (`1781026226.608.7a105c91`). The prior pass appended:
   S07i S07f score transfer from injected corruption to real high-current strata
   (`1781024786.1471.167d1f38`), P04i duplicate-readout charge closure sample-causality map
   (`1781024791.1539.3ba15c1d`), and S03h HGB timewalk gain support map by amplitude and shape
@@ -163,7 +169,13 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   negative-control registry says simple conditional q-space failure persists under both family
   holdouts. The newest all-three injected benchmark reproduces the S07f shape-RF injected AUC at
   0.822, well above fold-selected traditional timing/template scores near 0.606, but still needs
-  amplitude and real-current support calibration.
+  amplitude and real-current support calibration. The latest App.A archive search fails to recover
+  the documented 12,147-event source table, so downstream clean-timing consumers need a raw-HRDv
+  label sensitivity bound or independent timing-tail gate. The latest S10f anomaly-stratified
+  closure keeps a positive current excess after P09a matching but identifies baseline_excursion as
+  the largest rare-taxon excess, requiring pile-up/baseline decomposition. The P04b-propagated
+  S14b energy preflight fails the 0.10 per-event threshold globally, so energy/PID work must move
+  through support/abstention maps rather than broad energy claims.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
@@ -183,7 +195,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   support map of the S03d HGB timewalk gain. This pass adds P10h for explicit-handle q-template
   support regions, P04j for calibrated external charge-transfer uncertainty/abstention, and S04d
   for interaction tests among timing-tail pathology axes before composite vetoes feed PID or
-  energy.
+  energy. This pass adds S07k for raw-HRDv App.A label-definition sensitivity, S10h for
+  baseline-excursion pile-up excess decomposition, and S14e for range-energy abstention support.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

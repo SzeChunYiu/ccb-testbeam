@@ -1,0 +1,28 @@
+{
+  "ticket_id": "1781010798.1019.19c63d1a",
+  "script": "scripts/p01e_strict_latent_timing_audit.py",
+  "config": "configs/p01e_strict_latent_timing_audit.json",
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    "REPORT.md",
+    "ae_training_loss.csv",
+    "fig_loro_sigma68.png",
+    "fig_train_run_only_calibration.png",
+    "frozen_s02_s03_baselines.csv",
+    "heldout_pair_residuals.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "loro_fold_summary.csv",
+    "loro_pooled_summary.csv",
+    "prior_p01c_reproduction.csv",
+    "reproduction_counts_by_group.csv",
+    "reproduction_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "train_run_only_calibration.csv"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "critic": "pending",
+  "falsification": {
+    "adaptive_not_worse_than_median_plus_5adc": false,
+    "adaptive_unbiased": false,
+    "n_tries": 1,
+    "preregistered_metric": "held-out pre-trigger residual MAE and mean bias, evaluated on runs 57 and 65"
+  },
+  "git_commit": "5eab4d9a2c2e25b77c2782f454c4a794837db321",
+  "input_sha256": "635f1749a367b025658732e6bbb53d5bf6145f580491c312abbb491afc4a7224",
+  "ml": {
+    "ci": [
+      43.8222837276402,
+      55.2857161187078
+    ],
+    "mean_bias_adc": -8.736624739108017,
+    "mean_bias_ci": [
+      -14.167454967287151,
+      -2.613111545551332
+    ],
+    "metric": "heldout_pretrigger_mae_adc",
+    "value": 48.87936732695419
+  },
+  "ml_beats_baseline": true,
+  "next_tickets": [
+    "S16b: forced-trigger pedestal validation",
+    "S16c: pedestal-lowering nuisance propagation into timing residuals"
+  ],
+  "repro_tolerance": "S00 count exact; adaptive zero-violation exact but constructed",
+  "reproduced": true,
+  "study": "S16",
+  "ticket": "1780997954.15337.77205a71",
+  "title": "Pedestal/baseline validation",
+  "traditional": {
+    "ci": [
+      300.4547105822919,
+      373.26554500132943
+    ],
+    "mean_bias_adc": -310.69262961978194,
+    "mean_bias_ci": [
+      -347.593492654879,
+      -277.33914497474075
+    ],
+    "metric": "heldout_pretrigger_mae_adc",
+    "value": 341.04271470353626
+  },
+  "worker": "testbeam-laptop-1"
+}

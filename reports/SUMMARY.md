@@ -16,7 +16,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S07b | ✅ done | ✅ guarded gross D_t count match | D_t/curvature AUC 1.000 | shape-only RF AUC 0.9987 | No; D_t is label-defining | reports/1781000790.531071.5a66741c__s07b_timing_control_classifier |
 | S07c | ✅ done | ✅ S00 counts; App.A count mismatch | q_template-only AUC 0.717; span+q AUC 0.912 | clean-timing RF AUC 0.993 | **Yes** vs q_template-only, but weak-label drift remains | reports/1781000790.531136.203130b0__s07c_clean_timing_rf |
 | S10 | ✅ done | ✅ Rmax/current excess reproduced | downstream high-low excess 0.0103/event | injection score Δ=0.036 diagnostic | No; ML is monitoring only | reports/1780997954.15277.548b01a3__s10_pileup_rate_model |
+| S10b | ✅ done | ✅ Rmax=4.222 MHz assumption and 6/6 topology checks | template tail live10 124.79 ns, CI [123.33,126.36] | ridge live10 123.19 ns, CI [120.72,125.55] | No adoption claim; 90 ns is an assumption, measured window implies Rmax≈3.05 MHz | reports/1781000867.546870.5c124aaf |
 | S16 | ✅ done | ✅ S00 selection | pretrigger median MAE 341 ADC | adaptive/learned MAE 48.9 ADC | **Yes**, but adaptive remains biased | reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation |
+| S16b closure | ✅ done | ✅ 640,737 exact | line3 early-sample predictor MAE 169.34 ADC | ridge closure MAE 173.71 ADC | No; traditional remains preferred, ML is contamination diagnostic | reports/1781000826.539659.030b7796__s16b_independent_pedestal_estimator_closure |
+| S16b forced/proxy | ✅ done | ✅ 640,737 exact; 0 forced/random-tagged entries | adaptive proxy MAE 17.18 ADC | HGBR proxy MAE 15.64 ADC | Proxy only; true forced/random pedestal data absent | reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation |
 | S18 | ✅ done | ✅ Sample III/IV A-stack | A1-A3 robust width 1.389 ns | ridge correction 1.383 ns | No; CIs overlap | reports/1780997954.15397.168324f2__s18_astack_independent_reproduction |
 | P01 | ✅ done | ✅ 640,737 selected pulses | PCA-4 recon MSE 0.0134; hand-shape probe bal-acc 0.353 | masked AE-4 recon MSE 0.0143; probe bal-acc 0.364 | Mixed: PCA wins recon, AE only slight probe gain | reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
@@ -26,21 +29,24 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 ## Current steering notes
 
-- Queue health: `tn-ticket list --project testbeam` reports `open=26 claimed=4 done=18 failed=7`;
+- Queue health: `tn-ticket list --project testbeam` reports `open=29 claimed=3 done=22 failed=7`;
   no tickets were appended in this cycle because the ready queue is above the 18-ticket floor.
   The legacy positional command `tn-ticket list testbeam` still reports the default queue
-  (`open=3 claimed=0 done=0 failed=6`), so use `--project testbeam` for steering.
+  (`open=4 claimed=0 done=0 failed=6`), so use `--project testbeam` for steering.
 - Newest reports sharpen the next claims: S00b turns selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S03a lowers sigma68 further but needs leave-one-run-out stability; S07b
   proves D_t labels are self-referential; S07c shows shape RF can beat q_template-only on weak
   clean-timing labels, but the historical App.A table must be recovered or retired; P10a says
-  conditional templates need explicit timewalk terms; P04 is a strong duplicate-readout closure,
-  not an energy calibration.
+  conditional templates need explicit timewalk terms; S10b shows the 90 ns pile-up live-time is
+  not a measured detector window for the present waveform definition; S16b shows early-sample
+  baseline closure is still not true no-pulse pedestal validation because forced/random tags are
+  absent; P04 is a strong duplicate-readout closure, not an energy calibration.
 - Active ready follow-ups already cover the requested atomic pulse axes: P01c/P02b/P03a for
   shape and timing, P04b/P04c/P07b/P10b/P10c for amplitude, charge, saturation, and template
-  phase, S10c/S11a for pile-up, S00c/S16c/S16d for selector, baseline, and dropout, and
-  S07d/S07e/S18b for control labels and external timing checks.
+  phase, S10c/S10d/S11a for pile-up and live-time, S00c/S16c/S16d/S16e for selector, baseline,
+  dropout, true-pedestal sourcing, and timing-tail propagation, and S07d/S07e/S18b for control
+  labels and external timing checks.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

@@ -271,11 +271,22 @@ amplitude/charge closure, not an absolute energy calibration; P10a says conditio
 explicit timewalk terms before their timing gain can be trusted. P02/P07 expose high-value
 pulse-shape and saturation follow-ups.
 
-Live queue decision: `tn-ticket list --project testbeam` reports `open=26 claimed=4 done=18
+Live queue decision: `tn-ticket list --project testbeam` reports `open=29 claimed=3 done=22
 failed=7`, so no new tickets were appended in this cycle. The exact legacy positional command
-`tn-ticket list testbeam` reports the default queue (`open=3 claimed=0 done=0 failed=6`) because
+`tn-ticket list testbeam` reports the default queue (`open=4 claimed=0 done=0 failed=6`) because
 the shim does not treat the positional argument as a project; for testbeam steering, use
 `--project testbeam`.
+
+Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
+template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
+cross-check at 123.19 ns. The 90 ns value must therefore be treated as an occupancy assumption,
+not as the measured waveform live-time; S10c/S10d should now test threshold stability and
+two-pulse resolvability rather than repeat the same tail fit. The S16b closure report found that
+the best traditional early-sample predictor (MAE 169.34 ADC) still beats the ridge closure
+estimator within CIs, while the forced-trigger validation report found zero true forced/random
+tagged entries and only a quiet-event proxy where ML reaches MAE 15.64 ADC. Baseline work should
+now split into true no-pulse data acquisition/search and timing-tail propagation of pre-trigger
+activity proxies; another proxy-only pedestal benchmark is lower value.
 
 Ready queue additions:
 
@@ -294,10 +305,20 @@ Ready queue additions:
   the S10 high-current excess is beam pile-up or a detector-pathology subpopulation. Traditional:
   Poisson/downstream excess in matched strata. ML: calibrated pile-up/current scores in the same
   strata. Metric: high-minus-low excess and score deltas with stratified bootstrap CIs.
+- **S10d — Two-pulse template resolvability live-time from raw pulses.** Convert S10b's measured
+  tail window into an operational pile-up separability threshold. Traditional: constrained
+  two-pulse template fits over injected separations and amplitude ratios. ML: calibrated
+  pile-up/recovery score on the same injections. Metric: minimum resolvable separation, recovered
+  charge bias, and time RMS with run-held-out bootstrap CIs.
 - **S16d — Dropout and baseline-excursion recovery stress test.** Separate recoverable baseline
   failures from veto-only pulse classes. Traditional: S16 baseline diagnostics, jagged/dropout
   masks, interpolation. ML: denoising/inpainting regressor plus unrecoverable classifier. Metric:
   detection AP, waveform MSE, and S02 timing residual recovery with bootstrap CIs.
+- **S16e — Pre-trigger activity proxy in timing residual tails.** Test whether early waveform
+  contamination explains the long timing tails seen by S02/S03/S04. Traditional: add fixed
+  pre-trigger/baseline-lowering nuisance terms to the analytic timewalk model. ML: leakage-audited
+  residual model using only pre-trigger summaries and pulse-shape diagnostics. Metric: sigma68,
+  full RMS, and high-quantile tail reduction with paired run-block bootstrap CIs.
 - **S11a — Constrained two-pulse template-fit injection benchmark.** Build the missing strong
   pile-up recovery baseline before deep decomposition. Traditional: bounded two-pulse S01 template
   fit with S02 timing initialisation. ML: compact injection-trained overlap regressor/classifier.

@@ -1,0 +1,106 @@
+{
+  "study": "S18e",
+  "ticket": "1781014670.1039.33790a03",
+  "worker": "testbeam-laptop-2",
+  "reproduced": true,
+  "primary_number_reproduced": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_percentile68_width_ns": 1.7936260637768346,
+    "sample_iv_binned_gaussian_core_sigma_ns": 1.9921763970438024
+  },
+  "recommended_standard_estimator": "percentile68_ns",
+  "traditional": {
+    "sample_iii": {
+      "percentile68_ns": 1.3942595669628464,
+      "percentile68_ns_ci_low": 1.331423425435608,
+      "percentile68_ns_ci_high": 1.4854219007173914,
+      "mad_sigma_ns": 1.4508390979243326,
+      "iqr_sigma_ns": 1.447118091740905,
+      "trimmed_normal_sigma_ns": 1.426320049781291,
+      "student_t_width68_ns": 1.3231502063747727,
+      "gaussian_core_sigma_ns": 1.4356860806139553
+    },
+    "sample_iv": {
+      "percentile68_ns": 1.6374830726048046,
+      "percentile68_ns_ci_low": 1.3110165257540374,
+      "percentile68_ns_ci_high": 1.7185983948534171,
+      "mad_sigma_ns": 1.6864236939598738,
+      "iqr_sigma_ns": 1.6371633498786715,
+      "trimmed_normal_sigma_ns": 1.632768154834905,
+      "student_t_width68_ns": 1.491426085294268,
+      "gaussian_core_sigma_ns": 2.001853609651194
+    }
+  },
+  "ml": {
+    "sample_iii": {
+      "percentile68_ns": 1.4612318358001253,
+      "percentile68_ns_ci_low": 1.4099554539975265,
+      "percentile68_ns_ci_high": 1.5128472946834184,
+      "mad_sigma_ns": 1.4919104578645088,
+      "iqr_sigma_ns": 1.4929932058642346,
+      "trimmed_normal_sigma_ns": 1.4780515461378974,
+      "student_t_width68_ns": 1.3786512720870339,
+      "gaussian_core_sigma_ns": 1.5323968124612117
+    },
+    "sample_iv": {
+      "percentile68_ns": 1.3836097234295424,
+      "percentile68_ns_ci_low": 1.0846583117786284,
+      "percentile68_ns_ci_high": 1.4909423114161389,
+      "mad_sigma_ns": 1.3510677547619199,
+      "iqr_sigma_ns": 1.3198641406465081,
+      "trimmed_normal_sigma_ns": 1.3592914076919673,
+      "student_t_width68_ns": 1.2385896478449516,
+      "gaussian_core_sigma_ns": 1.7341548236138375
+    }
+  },
+  "ml_minus_traditional": [
+    {
+      "sample": "sample_iii",
+      "comparison": "ml_minus_traditional",
+      "metric": "percentile68_ns",
+      "ci_low_ns": 0.004313039600183544,
+      "ci_high_ns": 0.11487434142184384,
+      "p_value": 0.03
+    },
+    {
+      "sample": "sample_iv",
+      "comparison": "ml_minus_traditional",
+      "metric": "percentile68_ns",
+      "ci_low_ns": -0.44365660493478964,
+      "ci_high_ns": -0.09786491706379485,
+      "p_value": 0.009
+    }
+  ],
+  "tolerance_table": [
+    {
+      "sample": "sample_iii",
+      "standard_estimator": "percentile68_ns",
+      "reference_traditional_width_ns": 1.3942595669628464,
+      "bootstrap_ci_low_ns": 1.331423425435608,
+      "bootstrap_ci_high_ns": 1.4854219007173914,
+      "run_to_run_mad_ns": 0.21234366516111722,
+      "recommended_tolerance_ns": 0.21234366516111722,
+      "accept_low_ns": 1.1819159018017291,
+      "accept_high_ns": 1.6066032321239636,
+      "notes": "Use on run-held-out A1-A3 residuals; quote MAD/IQR as secondary cross-checks."
+    },
+    {
+      "sample": "sample_iv",
+      "standard_estimator": "percentile68_ns",
+      "reference_traditional_width_ns": 1.6374830726048046,
+      "bootstrap_ci_low_ns": 1.3110165257540374,
+      "bootstrap_ci_high_ns": 1.7185983948534171,
+      "run_to_run_mad_ns": 0.16467274091430356,
+      "recommended_tolerance_ns": 0.20379093454968988,
+      "accept_low_ns": 1.4336921380551146,
+      "accept_high_ns": 1.8412740071544946,
+      "notes": "Use on run-held-out A1-A3 residuals; quote MAD/IQR as secondary cross-checks."
+    }
+  ],
+  "diagnosis": {
+    "leakage_flags": 2,
+    "conclusion": "Use unbinned percentile68_ns as the A-stack primary core-width estimator; keep MAD/IQR, trimmed-normal, and Student-t as diagnostics; do not use the Sample IV ML gain for standards because it is inconsistent across samples and has a shuffled-target control flag."
+  },
+  "input_sha256": "reports/1781014670.1039.33790a03/input_sha256.csv",
+  "git_commit": "8f2f92f7dffa890e60c89b5fed43a6399a1b168f"
+}

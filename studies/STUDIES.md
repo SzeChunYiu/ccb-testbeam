@@ -273,14 +273,14 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=6 claimed=0 done=0 failed=6`, which is below the 18-ready floor because the shim treats
+`open=6 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: project-aware `tn-ticket list --project testbeam` now reports
-`open=70 claimed=4 done=50 failed=9` after this pass appended five more non-duplicate ready
-tickets under `project:testbeam`: P05b failure-aware two-pulse abstention calibration, S16g
-quiet-run pseudo-pedestal calibration, S00d dynamic-selector pulse taxonomy audit, P09c
-delayed-peak dropout propagation audit, and S14c saturation-corrected charge proxy energy
-ordering. The discrepancy is a shim/argument parsing issue, not a scientific queue shortage.
+`open=80 claimed=3 done=58 failed=10` after this pass appended four more non-duplicate ready
+tickets under `project:testbeam`: P03f early-peak sample-window timing residual ablation, P03g
+waveform timing residual negative-control registry, S16h matched lowering pile-up confound audit,
+and S18g A-stack robust-width transfer to B-stack covariance. The discrepancy is a shim/argument
+parsing issue, not a scientific queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -294,10 +294,17 @@ require leave-one-run-out veto validation before adoption. S02c shows selector s
 timing closure, while S03b q_template-only weak labels need pair-residual validation. P03a
 reproduced the frozen S02 ridge
 baseline at sigma68 1.846 ns, but the best analytic amp-only timewalk reached 1.495 ns while the
-tiny heteroskedastic MLP was 1.927 ns; P03b/P03c should separate waveform-only instability from
-wrong-target training. S18b found the leave-one-run-out traditional A-stack width at 1.471 ns and
-the ridge residual correction worse at 1.935 ns. S16c found RF nuisance correction reduces tails
-diagnostically but high adaptive-lowering events do not explain the held-out S02 timing tails.
+tiny heteroskedastic MLP was 1.927 ns. P03b now shows the waveform MLP beats the weaker S02 ridge
+baseline on 6/7 held-out Sample-II runs but not the analytic baseline, and P03c shows a tiny MLP
+residual gain while the CNN matches the analytic result; P03f/P03g should therefore test
+sample-window causality and negative controls before any waveform timing adoption. S18b found the
+leave-one-run-out traditional A-stack width at 1.471 ns and the ridge residual correction worse at
+1.935 ns; S18c/S18d now show the broadening is calibration-pool and core-estimator sensitive, so
+S18g should transfer only robust widths into B-stack covariance. S16c found RF nuisance correction
+reduces tails diagnostically but high adaptive-lowering events do not explain the held-out S02
+timing tails; the newest Sample-I S16d result finds high-lowering events are tail-enriched
+(0.130 vs 0.012) while lowering corrections barely move sigma68, motivating S16h's matched
+pile-up/topology confound audit.
 S11a now provides the missing constrained two-pulse benchmark and shows ML can improve injected
 overlap time RMS while increasing failure rate, so the next pile-up step must optimize recovery
 and abstention together. P07b transfers saturation recovery to natural B2 pulses and improves a
@@ -362,17 +369,30 @@ Completed since last steering cycle:
   but need pair-residual proof; live-time thresholds remain above 90 ns; ML two-pulse recovery
   needs abstention because failures rise; no true forced/random pedestal source is present; and
   pre-trigger proxies improve timing closure without settling tail causality.
+- **P03b/P03c — Waveform timing residual stability and CNN-vs-MLP targets.** Result: waveform ML
+  often improves over the S02 ridge comparator but does not beat the strong analytic timewalk
+  baseline; CNN structure adds no clear advantage, so the next timing work is sample-window
+  ablation and negative-control falsification.
+- **S18c/S18d — A-stack calibration-pool and robust core-fit stability.** Result: Sample-IV
+  broadening is highly estimator and calibration-pool sensitive; binned Gaussian core fits should
+  not drive B-stack covariance conclusions without robust transfer checks.
+- **S16e tagged-random and S16d Sample-I lowering.** Result: no true tagged random/forced B-stack
+  pedestal entries are present, and Sample-I high-lowering events are tail-enriched despite weak
+  correction gains; baseline studies must separate true pedestal bias from pile-up/topology and
+  anomaly confounders.
 
 Active ready queue highlights:
 
-- **P03b — Leave-one-run-out waveform MLP timing stability.** Test whether the P03a failure is a
-  run-transfer problem or a waveform-only information limit. Traditional: frozen S02/analytic
-  timewalk per held-out run. ML: same 18-sample MLP with identical leakage guard. Metric: sigma68,
-  full RMS, pull width, and run-to-run spread with paired bootstrap CIs.
-- **P03c — CNN versus MLP timing with analytic residual targets.** Test whether a slightly richer
-  waveform model can learn only the residual left by analytic timewalk. Traditional: analytic
-  amp-only/timewalk closure. ML: compact 1D CNN and MLP residual correctors. Metric: residual
-  sigma68, full RMS, calibration pull width, and paired delta CIs.
+- **P03d — Leave-one-heldout-run analytic-residual CNN versus MLP.** Repeat P03c across all
+  Sample-II held-out runs to determine whether the small MLP residual gain is stable. Traditional:
+  analytic amp-only/timewalk closure in each fold. ML: matched MLP and tiny CNN residual
+  correctors. Metric: residual sigma68, full RMS, calibration pull width, and paired run-block
+  bootstrap CIs.
+- **P03e — Stave-blind versus stave-aware waveform residual ablation.** Test whether residual
+  timing gains come from waveform shape or stave/run-family identity. Traditional: analytic
+  timewalk with no residual learner. ML: waveform residual models with and without stave features
+  and matched negative controls. Metric: held-out sigma68, full RMS, pull width, and feature-ablation
+  deltas with bootstrap CIs.
 - **S10d — Two-pulse template resolvability live-time from raw pulses.** Convert S10b's measured
   tail window into an operational pile-up separability threshold. Traditional: constrained
   two-pulse template fits over injected separations and amplitude ratios. ML: calibrated
@@ -455,3 +475,25 @@ Active ready queue highlights:
   charge model without depth/PID labels as features. Metric: depth-ordering violations,
   unsaturated-control charge res68/bias, saturated-minus-unsaturated ordering delta, and geometry
   envelope with run/stave bootstrap CIs.
+- **P03f — Early-peak sample-window timing residual ablation.** Test whether samples 3-6 carry
+  stable post-analytic timing information or only run-specific artifacts. Traditional: fixed
+  early-peak template/CFD ablations after analytic timewalk. ML: matched MLP/CNN residual
+  correctors under identical sample masks. Metric: held-out pairwise sigma68, full RMS, tail
+  fraction, and ML-minus-traditional delta with event-paired run-block bootstrap CIs.
+- **P03g — Waveform timing residual negative-control registry.** Falsify waveform timing gains
+  against amplitude-only, phase-scrambled, sample-permuted, run-only, and shuffled-target controls.
+  Traditional: frozen analytic timewalk. ML: P03c residual learners under true and negative-control
+  features. Metric: per-run sigma68, full RMS, pull width, and true-control performance gap with
+  paired bootstrap and leave-one-run CIs.
+- **S16h — Matched lowering pile-up confound audit.** Separate adaptive-lowering pedestal effects
+  from pile-up, topology, saturation, and anomaly confounders. Traditional: matched residual tables
+  by run, pair, amplitude, peak sample, S10 proxies, P09 taxa, and saturation flags. ML:
+  leakage-audited tail/residual predictor using lowering plus pile-up/anomaly/saturation summaries.
+  Metric: tail odds ratio, sigma68/full-RMS deltas, pile-up-score enrichment, and calibration ECE
+  with stratified run-block bootstrap CIs.
+- **S18g — A-stack robust-width transfer to B-stack covariance.** Test whether robust A-stack
+  timing widths can constrain B-stack correlated covariance without binned Gaussian low-stat
+  artifacts. Traditional: hierarchical variance decomposition using Student-t, MAD/IQR, and
+  trimmed-likelihood A-stack priors. ML: ridge/ExtraTrees covariance predictor using A-stack robust
+  summaries under run-heldout guards. Metric: B-stack robust width, inferred correlated fraction,
+  covariance-interval coverage, and ML-minus-traditional delta with paired bootstrap CIs.

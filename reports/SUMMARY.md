@@ -34,8 +34,12 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S16c | ✅ done | ✅ S00/Sample-II counts and zero post-correction violations | lowering-nuisance ridge sigma68 3.251 ns | RF residual correction sigma68 2.921 ns | Weak/diagnostic; high-lowering events do not carry the timing tails | reports/1781001221.625989.53423f03__s16c_pedestal_timing_nuisance |
 | S16d | ✅ done | ✅ 640,737 exact; 0 forced/random entries | metadata + quiet-run scan finds no true forced/random source | pretrigger quiet-proxy AUC 0.646 | No true pedestal sample; use only as pseudo-pedestal diagnostic | reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search |
 | S16e | ✅ done | ✅ S02b baseline reproduced | pretrigger proxy correction sigma68 1.445 ns | waveform+pretrigger ridge sigma68 1.387 ns | Weak ML gain; both improve S02b but tail CIs overlap | reports/1781007910.1647.505b465f |
+| S16e tagged-random | ✅ done | ✅ 640,737 exact; 0 tagged-random B-stack entries | fallback mean3 MAE 241.6 ADC | fallback calibrated ridge MAE 197.3 ADC | No validation claim; primary tagged-random gate failed | reports/1781007587.2616.535e78de |
+| S16d Sample-I | ✅ done | ✅ 252,266 Sample-I pulses | lowering correction sigma68 3.060 ns | lowering ML sigma68 2.930 ns | Diagnostic; high-lowering tail is 13.0% vs 1.24%, but sigma68 gain is small | reports/1781009378.1771.3b9145b2__s16d_sample_i_bstack_pedestal_timing |
 | S18 | ✅ done | ✅ Sample III/IV A-stack | A1-A3 robust width 1.389 ns | ridge correction 1.383 ns | No; CIs overlap | reports/1780997954.15397.168324f2__s18_astack_independent_reproduction |
 | S18b | ✅ done | ✅ Sample-IV robust width 1.794 ns | LORO CFD20 period-polynomial width 1.471 ns | ridge residual correction width 1.935 ns | No; ML worse, broadening is calibration/low-stat sensitivity | reports/1781001480.695946.490c69d3 |
+| S18c | ✅ done | ✅ Sample-IV width reproduced | calibration-pool robust width 1.49-1.79 ns | ridge varies by pool | Mixed; Sample-IV broadening is calibration-pool sensitive | reports/1781008255.1458.3732667d |
+| S18d | ✅ done | ✅ historical A-stack numbers | Student-t scale 1.240 ns; binned sigma 2.077 ns | ridge cross-check only | No adoption; fit window/core estimator explains much of the excess | reports/1781008255.1472.46fb0e58 |
 | P01 | ✅ done | ✅ 640,737 selected pulses | PCA-4 recon MSE 0.0134; hand-shape probe bal-acc 0.353 | masked AE-4 recon MSE 0.0143; probe bal-acc 0.364 | Mixed: PCA wins recon, AE only slight probe gain | reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation |
 | P01a | ✅ done | ✅ 640,737 exact | residual hand-shape bal-acc 0.292 | residual AE bal-acc 0.276 | No; topology sentinels dominate, shape probes need stricter leakage controls | reports/1781005204.1227.36547733__p01a_controlled_waveform_probes |
 | P01b | ✅ done | ✅ 640,737 exact | PCA-4 recon MSE 0.01337 | masked AE-4 recon MSE 0.01428; artifact released | Mixed; artifact useful, no benchmark claim for all-data release | reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact |
@@ -43,6 +47,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
 | P02b | ✅ done | ✅ P02 early-peak rate 0.04388 vs ≈0.044 | hand/PCA GMM run-heldout AMI 0.357 on q_template bins | AE GMM AMI 0.377 | Small ML gain only for q_template-bin morphology; not broadly superior | reports/1781004956.538.5fc10cd7 |
 | P03a | ✅ done | ✅ frozen S02 baseline reproduced | analytic amp-only timewalk sigma68 1.495 ns | tiny 18-sample MLP sigma68 1.927 ns | No; waveform MLP loses to analytic and frozen S02 baselines | reports/1781004956.603.7dce65be__p03a_18_sample_mlp_timing |
+| P03b | ✅ done | ✅ P03a run-65 reproduction | LORO analytic timewalk mean sigma68 1.496 ns | waveform MLP mean sigma68 1.805 ns | No; ML beats S02 ridge on 6/7 runs but not analytic baseline | reports/1781009029.1279.4d6e17f9 |
+| P03c | ✅ done | ✅ P03a reproduced first | analytic sigma68 1.495 ns | MLP residual 1.448 ns; CNN residual 1.497 ns | CNN adds nothing; MLP gain is small and control-sensitive | reports/1781009029.1288.7e78286e |
 | P04 | ✅ done | ✅ 640,737 exact | peak amp res68 0.1238; integral charge res68 0.1954 | HGB amp res68 0.0091; charge res68 0.0151 | **Yes** for duplicate-readout closure; not absolute energy | reports/1780997954.15577.6c203777 |
 | P04b | ✅ done | ✅ 640,737 exact; 640,482 valid duplicate rows | downstream charge-proxy res68 0.225 | external ML res68 0.212; duplicate-transfer ML 0.247 | Weak external gain only; duplicate closure does not transfer cleanly to energy proxy | reports/1781005862.2131.4dbf3cf0 |
 | P04c | ✅ done | ✅ 640,737 exact; held-out runs 57/65 | adaptive-template ridge amp res68 0.0858; direct template scale worse | HGB amp res68 0.0091 | **Yes** for duplicate-readout closure; traditional template pathology needs diagnosis | reports/1781005862.2197.53fd45c8__p04c_amplitude_adaptive_template |
@@ -55,13 +61,13 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
-  `open=6 claimed=0 done=0 failed=6`, below the 18-ticket floor, because the shim treats
+  `open=6 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was still
   followed with `--project testbeam`; project-aware `tn-ticket list --project testbeam` now reports
-  `open=70 claimed=4 done=50 failed=9` after this pass appended five ready non-duplicate tickets:
-  P05b failure-aware two-pulse abstention calibration, S16g quiet-run pseudo-pedestal
-  calibration, S00d dynamic-selector pulse taxonomy audit, P09c delayed-peak dropout propagation
-  audit, and S14c saturation-corrected charge proxy energy ordering.
+  `open=80 claimed=3 done=58 failed=10` after this pass appended four ready non-duplicate tickets:
+  P03f early-peak sample-window timing residual ablation, P03g waveform timing residual
+  negative-control registry, S16h matched lowering pile-up confound audit, and S18g A-stack
+  robust-width transfer to B-stack covariance.
 - Newest reports sharpen the next claims: S00b/S02c turn selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk and selector
@@ -80,18 +86,22 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   external charge-energy proxy is much weaker; S10d shows ML can improve injected two-pulse
   resolution only if its higher failure rate is controlled; S16d confirms no true forced/random
   pedestal sample is present in the current mirror, and S16e says pre-trigger proxies improve
-  timing closure but do not remove the need for leave-one-run-out tail validation; P03a shows
-  18-sample waveform-deep timing needs run-stability and residual-target tests before adoption;
-  S18b says A-stack broadening is low-stat/calibration-definition sensitivity, not a clean
-  period shift; S16c says adaptive-lowering features are not the primary S02 timing-tail source.
-- Active ready follow-ups cover the requested atomic pulse axes: P03b/P03c for shape and
-  timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
+  timing closure but do not remove the need for leave-one-run-out tail validation; the tagged-random
+  S16e gate also fails with zero B-stack entries. P03b/P03c show waveform ML can beat the weaker
+  S02 ridge comparator but not the strong analytic timewalk baseline, and CNN structure adds no
+  clear residual gain. S18c/S18d say A-stack broadening is calibration-pool and core-estimator
+  sensitivity, not a clean period shift; S16d Sample-I says high adaptive-lowering events are
+  tail-enriched, but lowering corrections barely move sigma68.
+- Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
+  and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
   true-pedestal sourcing, and timing-tail propagation, S05b/S05c/S07d/S07e/S18c/S18d for
   covariance, control labels, and external timing checks, S14b for the smallest viable
   energy-scale preflight, plus P04f/S10f/P08a/P05b/S16g/S00d/P09c/S14c for anomaly-to-charge,
   anomaly-to-pile-up, weak-label PID leakage, failure-aware pile-up recovery, pseudo-pedestals,
-  selector taxonomy, delayed-peak/dropout propagation, and saturation-aware energy ordering.
+  selector taxonomy, delayed-peak/dropout propagation, and saturation-aware energy ordering. This
+  pass adds P03f/P03g for sample-atomic timing and falsification controls, S16h for
+  baseline-vs-pile-up confounding, and S18g for robust external timing covariance transfer.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

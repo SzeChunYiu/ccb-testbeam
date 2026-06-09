@@ -1,0 +1,63 @@
+{
+  "ticket_id": "1781017209.1606.4c562bce",
+  "study_id": "P01f",
+  "title": "domain-residualized waveform latent benchmark",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "artifact": {
+    "path": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz",
+    "rows": 640737,
+    "sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "sha256_matches_expected": true,
+    "key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "key_sha256_matches_expected": true,
+    "max_amplitude_delta_vs_raw": 0.0
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "max_rows_per_run_stave": 3000,
+    "train_rows": 133534,
+    "heldout_rows": 18187
+  },
+  "traditional": {
+    "method": "hand-shape plus PCA, linear nuisance residualization",
+    "physics_mean_balanced_accuracy": 0.7512558845863858,
+    "nuisance_mean_balanced_accuracy": 0.31606307722792704
+  },
+  "ml": {
+    "method": "frozen P01b AE latent, linear nuisance residualization",
+    "physics_mean_balanced_accuracy": 0.7051278787062097,
+    "nuisance_mean_balanced_accuracy": 0.32570215380513223
+  },
+  "frozen_p01b_latent_raw": {
+    "method": "frozen P01b AE latent without domain residualization",
+    "physics_mean_balanced_accuracy": 0.6868669084773258,
+    "nuisance_mean_balanced_accuracy": 0.5035715165904482
+  },
+  "comparisons": {
+    "ml_nuisance_bacc_drop_vs_frozen_p01b": 0.17786936278531595,
+    "traditional_nuisance_bacc_drop_vs_frozen_p01b": 0.18750843936252115,
+    "ml_physics_retention_fraction_vs_frozen_p01b": 1.0265858931381127,
+    "traditional_physics_retention_fraction_vs_frozen_p01b": 1.093743016753857
+  },
+  "leakage_checks": {
+    "label_shuffle_rows": 9,
+    "gaussian_noise_rows": 9,
+    "train_heldout_run_overlap": [],
+    "p01b_artifact_is_release_model": "audit input only; residualized benchmark uses supervised probes split by run"
+  },
+  "input_sha256": "input_sha256.csv",
+  "next_tickets": [],
+  "git_commit": "49e398f9e7bd5946487545e5aecfd077d7f25e6b",
+  "runtime_sec": 252.0
+}

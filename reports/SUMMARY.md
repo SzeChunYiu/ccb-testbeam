@@ -43,7 +43,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
   `open=5 claimed=0 done=0 failed=6`, below the 18-ticket floor, because the shim treats
-  `testbeam` as a positional default-queue argument. The latest project-queue check reports
+  `testbeam` as a positional default-queue argument. A project-queue check during this steering
+  pass reported
   `tn-ticket list --project testbeam` = `open=46 claimed=1 done=36 failed=8`.
   Four new ready tickets were appended under `project:testbeam`: P05a CNN two-pulse
   decomposition, P07e leading-edge saturation ablation, S10e charge-energy pile-up transfer,

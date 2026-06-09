@@ -277,8 +277,8 @@ timing-tail source, so baseline work should move to Sample-I propagation, true n
 and full-tail timing tables instead of another proxy-only pedestal benchmark.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` reports
-`open=5 claimed=0 done=0 failed=6`, which is below the 18-ready floor. The latest project-aware
-queue check reports `tn-ticket list --project testbeam` =
+`open=5 claimed=0 done=0 failed=6`, which is below the 18-ready floor. A project-aware queue
+check during this steering pass reported `tn-ticket list --project testbeam` =
 `open=46 claimed=1 done=36 failed=8`; the
 discrepancy is a shim/argument parsing issue, not a scientific queue shortage. To satisfy the
 low exact-command gate while keeping work in the real testbeam queue, four new non-duplicate

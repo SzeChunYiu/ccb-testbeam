@@ -1,0 +1,61 @@
+{
+  "study": "S03d",
+  "ticket": "1781012802.2919.286528b5",
+  "worker": "testbeam-laptop-2",
+  "title": "q_template veto on S03/S04-style pair-residual resolution tail tables",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "traditional": {
+    "residual_method": "S03b monotone decreasing amplitude-bin timewalk",
+    "no_veto_sigma68_ns": 1.6451494274970766,
+    "traditional_q_threshold_delta_ns": [
+      0.07891242850229863,
+      0.04599774684478554,
+      0.2278840961850892
+    ],
+    "ml_q_rf_delta_ns": [
+      -0.06504357230959235,
+      -0.07331318460984498,
+      0.09675790888315827
+    ]
+  },
+  "ml": {
+    "method": "RandomForest q_template veto score on S03b pair residual tails",
+    "delta_ns": [
+      -0.06504357230959235,
+      -0.07331318460984498,
+      0.09675790888315827
+    ]
+  },
+  "leakage": {
+    "features_exclude_run_event_timing_residuals": true,
+    "split_by_run": true,
+    "shuffled_ml_q_rf_control_included": true,
+    "flag": false
+  },
+  "verdict": "q_template_veto_has_weak_nonrobust_narrowing",
+  "conclusion": "The pair-level q_template veto does not produce a statistically secure residual-tail improvement. S03b no-veto sigma68 is 1.645 ns; traditional q-veto delta is 0.079 ns [0.046, 0.228], and ML q-veto delta is -0.065 ns [-0.073, 0.097]. Leakage flags: 0.",
+  "input_sha256": "8aa011d96bab3c7cdabc9817990721b3a876cafd6c0d7bd00bf5ea6527c5b875",
+  "git_commit": "a24076fd8d2b2c5fe36dc5029a3ff38ee111fa00",
+  "runtime_sec": 181.28,
+  "follow_up_tickets": [
+    "S04e: apply q_template vetoes to B2-containing full timing-resolution tail tables",
+    "P02f: learned shape-atom veto scores versus q_template for pair-level timing tails"
+  ]
+}

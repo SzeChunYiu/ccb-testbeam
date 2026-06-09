@@ -1,0 +1,8 @@
+check,value,pass
+all_rows_have_run_heldout_oof_predictions,13410,True
+ml_features_exclude_identifiers_and_labels,,True
+shuffled_regression_not_better_than_actual_ml,0.5043400118110113,True
+intentional_oracle_is_obviously_leaky,0.017593838208321555,True
+row_cv_not_much_better_than_run_cv,0.008396562459034529,True
+tail_classifier_shuffled_auc_near_random,0.2862991775961047,True
+actual_ml_improvement_under_one_ns,0.4327017523980037,True

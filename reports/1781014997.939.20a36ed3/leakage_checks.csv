@@ -1,0 +1,16 @@
+check,variant,value,detail
+train_heldout_event_id_overlap,all,0.0,must be zero
+detector_label_only_guardrail_sigma68_ns,stave_offset_only,1.354302617747248,"train-run mean analytic residual per stave, applied to held-out run with no waveform samples"
+split_policy,all,1.0,"all CV, tuning, and final scoring are grouped or split by run; held-out run is 65"
+feature_audit,waveform_only,18.0,"18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target"
+too_good_trigger_delta_vs_analytic_ns,waveform_only,-0.04628396536681634,negative values improve on analytic; shuffled-target control is required for every variant
+shuffled_target_negative_control_sigma68_ns,waveform_only,1.4870642859880854,same selected architecture trained with train residual targets shuffled within the run-split training pool
+feature_audit,waveform_stave_onehot,21.0,"same as blind variants, except explicit downstream stave one-hot is intentionally included"
+too_good_trigger_delta_vs_analytic_ns,waveform_stave_onehot,-0.1465642333635715,negative values improve on analytic; shuffled-target control is required for every variant
+shuffled_target_negative_control_sigma68_ns,waveform_stave_onehot,1.4790461803628605,same selected architecture trained with train residual targets shuffled within the run-split training pool
+feature_audit,waveform_amp_shape,29.0,"no run, event id, event order, stave id, other-stave time, or held-out target"
+too_good_trigger_delta_vs_analytic_ns,waveform_amp_shape,-0.09780517625127882,negative values improve on analytic; shuffled-target control is required for every variant
+shuffled_target_negative_control_sigma68_ns,waveform_amp_shape,1.4580219152033438,same selected architecture trained with train residual targets shuffled within the run-split training pool
+feature_audit,waveform_amp_shape_stave,32.0,"same as blind variants, except explicit downstream stave one-hot is intentionally included"
+too_good_trigger_delta_vs_analytic_ns,waveform_amp_shape_stave,-0.3643983280809957,negative values improve on analytic; shuffled-target control is required for every variant
+shuffled_target_negative_control_sigma68_ns,waveform_amp_shape_stave,1.5020543000203341,same selected architecture trained with train residual targets shuffled within the run-split training pool

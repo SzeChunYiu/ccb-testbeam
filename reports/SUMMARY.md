@@ -89,7 +89,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=10 claimed=0 done=0 failed=8`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
   again with `--project testbeam`; the project-aware testbeam queue remains deep, with live
-  post-append audits in the high 140s open and concurrent worker movement. The mission trigger
+  post-append audits above 140 open and concurrent worker movement. The mission trigger
   still required new ready work. This pass appended three ready
   non-duplicate tickets: S07k raw-HRDv App.A label-definition sensitivity grid
   (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up excess decomposition

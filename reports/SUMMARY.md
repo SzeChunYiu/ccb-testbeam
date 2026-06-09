@@ -114,13 +114,17 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=10 claimed=0 done=0 failed=11`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with a live post-append audit at 190 open / 4 claimed / 153 done
-  after concurrent worker movement.
+  testbeam queue remains deep, with recent live post-append audits observing 189-190 open,
+  2-3 claimed, and 159 done after concurrent worker movement.
   The mission trigger still required new ready work. This pass appended four ready non-duplicate
+  tickets: P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
+  S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),
+  P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`), and
+  P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`). The previous pass appended four ready non-duplicate
   tickets: P01h time-local latent residualization gate (`1781040959.702.2d1212fb`),
   S05h saturation-aware covariance support frontier (`1781040960.767.247d3910`),
   S01h q-template run-stave leakage atom grid (`1781040960.832.1c8e6dee`), and
-  P12b pulse-support tensor for PID energy consumers (`1781040960.896.205a0b9d`). The previous
+  P12b pulse-support tensor for PID energy consumers (`1781040960.896.205a0b9d`). The pass before that
   pass appended four ready non-duplicate tickets: P01g latent baseline-contamination atom map (`1781039488.1122.04bc6ecf`),
   S07l injected morphology operating-point support audit (`1781039488.1142.659b28c4`),
   P09g injected-morphology false-positive gallery (`1781039488.1166.6e40385a`), and
@@ -309,6 +313,13 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   residualization, S05h for saturation-aware covariance support, S01h for q_template run-stave
   leakage atoms, and P12b for a pulse-support tensor before PID or energy consumers reuse
   waveform, covariance, or charge outputs.
+- The newest P06a/S05f/P02d/P03d reports sharpen that support layer: traditional analytic timing
+  still beats the P06a ML residual model overall, S05f's B2-local covariance correction needs
+  interval-coverage calibration before two-ended projection, P02d's morphology RF must be split
+  away from downstream D_t label-source self-reference, and P03d/P01d epoch-domain scores are
+  nuisance diagnostics rather than timing improvements. This pass adds P06b for amplitude-stratified
+  timing bias/pull coverage, S05i for B2-topology covariance coverage calibration, P02g for
+  timing-tail label-source decomposition, and P01i for domain-score consumer leakage sentinels.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

@@ -275,9 +275,14 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=10 claimed=0 done=0 failed=11`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep, with a live post-append
-audit at 190 open / 5 claimed / 148 done, but the mission trigger still required a small set of
-new ready studies. This pass appended four additional non-duplicate ready tickets: P01g latent
+with `--project testbeam`: the project-aware testbeam queue remains deep, with recent live
+post-append audits observing 189-190 open, 2-3 claimed, and 159 done, but the mission trigger still required a small set of
+new ready studies. This pass appended four additional non-duplicate ready tickets:
+P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
+S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),
+P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`), and
+P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`). The previous pass
+appended four additional non-duplicate ready tickets: P01g latent
 baseline-contamination atom map (`1781039488.1122.04bc6ecf`), S07l injected morphology
 operating-point support audit (`1781039488.1142.659b28c4`), P09g injected-morphology
 false-positive gallery (`1781039488.1166.6e40385a`), and S04f waveform timing pull-width
@@ -1167,3 +1172,40 @@ Active ready queue highlights:
   charge/energy proxy res68 and bias, timing-tail and pile-up enrichment, PID weak-label stability,
   support-score coverage/ECE, and ML-minus-traditional failure-risk deltas with stratified
   bootstrap CIs.
+- **P06b — Amplitude-stratified timing bias ledger.** Determine which amplitude, charge-proxy,
+  peak-phase, saturation, q_template, baseline, dropout/anomaly, and topology atoms carry signed
+  timing bias or undercovered uncertainty after P06a showed traditional analytic timing still
+  beats the ML residual model overall. Traditional: freeze S02/S03 analytic timewalk plus S04
+  robust-width tables and build matched residual/bias strata with exact S00/S03 reproduction. ML:
+  recalibrate the P06a ridge residual and absolute-residual uncertainty with amplitude-only,
+  topology-only, run-only, and shuffled-target sentinels under leave-one-run-out folds. Metric:
+  per-atom median bias, sigma68/full RMS, tail fraction, pull coverage/ECE, support count, and
+  ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **S05i — Covariance coverage calibration by B2 topology.** Test whether S05f B2-local covariance
+  corrections provide calibrated interval coverage across B2-containing and downstream-only
+  topology after saturation, amplitude, baseline, pile-up, and anomaly matching. Traditional:
+  freeze S05c hierarchical pair-median covariance and S05h support-frontier strata, then compute
+  topology-matched covariance components and prediction intervals. ML: freeze the S05f B2-local
+  ExtraTrees residual model, refit only calibration/conformal layers, and compare B2-feature
+  knockouts, topology-only, saturation-only, and shuffled-run controls. Metric: coverage error,
+  interval width, signed off-diagonal covariance delta, inferred correlated fraction, sigma68/full
+  RMS, accepted support fraction, and ML-minus-traditional deltas with pair/run-block bootstrap CIs.
+- **P02g — Timing-tail label-source split for morphology RF.** Decompose the P02d morphology RF
+  signal into upstream pulse-shape information versus downstream D_t label-source self-reference
+  without losing early-peak and anomaly atoms. Traditional: freeze transparent P02 morphology,
+  q_template, early-peak, amplitude, and topology cuts, then score upstream-only, downstream-only,
+  and all-three matched strata against independent timing-tail definitions. ML: train shape
+  RF/ExtraTrees variants on upstream-only, downstream-only, all-stave, amplitude-only, and
+  phase-scrambled features with leave-one-run-out and shuffled-label controls. Metric: AUC/AP,
+  fixed-efficiency tail rejection, source-split enrichment, support drift, timing sigma68/tail
+  delta, and ML-minus-traditional deltas with stratified run-block bootstrap CIs.
+- **P01i — Domain-score consumer leakage sentinel.** Decide whether residualized P01d/P03d
+  epoch-domain scores still leak into downstream timing, charge, pile-up, PID, or energy consumers
+  after removing amplitude, topology, run family, peak phase, q_template, saturation, baseline,
+  dropout, and anomaly atoms. Traditional: freeze hand-shape/PCA and matched residual tables,
+  residualize the domain score by explicit nuisances, and test consumer metrics with and without
+  the residualized score. ML: compare latent-only, latent-plus-domain-score, and
+  nuisance-residualized ExtraTrees/ridge probes with run-only, amplitude-only, topology-only, and
+  shuffled-score controls. Metric: consumer sigma68/res68/AUC/AP changes, leakage-control gap,
+  support drift, score calibration/ECE, and ML-minus-traditional deltas with event-paired
+  run-block bootstrap CIs.

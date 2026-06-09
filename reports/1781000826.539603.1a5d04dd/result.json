@@ -1,0 +1,82 @@
+{
+  "study": "S00b",
+  "ticket": "1781000826.539603.1a5d04dd",
+  "worker": "testbeam-laptop-1",
+  "title": "downstream sensitivity to baseline estimator",
+  "reproduced": true,
+  "reproduction": {
+    "median_pulses": 640737,
+    "median_delta": 0,
+    "median_pass": true,
+    "dynamic_pulses": 706373,
+    "dynamic_delta_vs_s00a_sorted_hrdmax": 0,
+    "dynamic_pass": true,
+    "dynamic_note": "raw max-min count; S00a sorted hrdMax count is 706373",
+    "dynamic_only_pulses": 65636,
+    "dynamic_only_delta_vs_s00a_sorted_excess": 0,
+    "dynamic_only_pass": true,
+    "median_only_pulses": 0
+  },
+  "traditional": {
+    "metric": "heldout topology fractions and CFD20 downstream pair sigma68",
+    "heldout_runs": [
+      55,
+      57,
+      63,
+      65
+    ],
+    "dynamic_excess_fraction_full": 0.10243828591138017,
+    "heldout_downstream_fraction_delta": 0.015167950095216723,
+    "heldout_sigma68_delta": 0.006669826402157353,
+    "timing_hist_chi2_ndf": {
+      "timing_hist_chi2": 109.26850956581787,
+      "timing_hist_ndf": 3,
+      "timing_hist_chi2_ndf": 36.42283652193929
+    }
+  },
+  "ml": {
+    "metric": "heldout dynamic-only selector-shift classification",
+    "method": "shape-only logistic regression",
+    "heldout_runs": [
+      55,
+      57,
+      63,
+      65
+    ],
+    "auc": 0.9943017879647132,
+    "auc_ci": [
+      0.9898294215368626,
+      0.9965515032286646
+    ],
+    "average_precision": 0.9838952527273485,
+    "average_precision_ci": [
+      0.9715974079666263,
+      0.9908453711235344
+    ],
+    "accuracy": 0.9729468599033816,
+    "leakage_hunt": {
+      "leaky_amplitude_auc": 0.9999934690716236,
+      "within_run_shuffle_auc": 0.9620009714345725,
+      "global_label_shuffle_auc": 0.773844517958412,
+      "conclusion": "Direct amplitude features are definition leakage; shuffled controls remain elevated, so the shape-only ML result is treated as a failed leakage stress test rather than clean proof."
+    }
+  },
+  "ml_beats_baseline": null,
+  "falsification": {
+    "preregistered_metric": "exact count reproduction plus heldout run-block bootstrap CIs",
+    "n_tries": 2,
+    "p_value": null,
+    "multiple_comparison": "one deterministic selector comparison plus one primary shape-only ML model; leaky and shuffled models are controls"
+  },
+  "input_sha256": {
+    "aggregate_digest_of_file_sha256s": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+    "table": "input_sha256.csv"
+  },
+  "git_commit": "8fe8bbdbde5195345fcdf855e8404ea5bc262118",
+  "critic": "pending",
+  "next_tickets": [
+    "S00c: add a CI/integrator regression that recomputes median and dynamic-range selected counts from raw ROOT",
+    "S02c: rerun the strongest template/timewalk timing method under median-first-four and dynamic-range selectors"
+  ],
+  "runtime_s": 56.27810549736023
+}

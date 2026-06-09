@@ -52,6 +52,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P01c | ✅ done | ✅ 640,737 exact | sample/window ablations: samples 3-5 dominate timing | AE occlusion/permutation probes find sample 5 highest | Diagnostic; use sample map to constrain P07e/P03c rather than claim ML adoption | reports/1781005319.562.584259c9__p01c_pulse_shape_importance_map |
 | P01c artifact | ✅ done | ✅ 640,737 exact recount | publish/verify non-git P01b latent artifact | artifact hashes and metadata verified | Infrastructure; enables downstream consumers, not a physics benchmark | reports/1781010024.910.7fbe14e8__p01c_publish_p01b_latent_artifact |
 | P01c sentinels | ✅ done | ✅ 640,737 exact | residual PCA+hand bal-acc 0.331 | residual AE-4 bal-acc 0.235 | No; repeated shuffle sentinels reject the ML representation claim | reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels |
+| P01d | ✅ done | ✅ 640,737 exact | train-chosen OF(5-13) sigma68 2.693 ns | ridge residual sigma68 1.974 ns; target shuffle 3.329 ns | Diagnostic; sample 5 is CFD artifact, sample 6 smoothing is robust | reports/1781010798.954.0e922a2d |
 | P01e | ✅ done | ✅ prior P01c CFD20/latent reproduced | strict hand-shape ridge sigma68 1.962 ns | strict AE latent ridge sigma68 1.965 ns; shuffled target 2.056 ns | No; latent does not beat hand-shape and null controls remain strong | reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
 | P02b | ✅ done | ✅ P02 early-peak rate 0.04388 vs ≈0.044 | hand/PCA GMM run-heldout AMI 0.357 on q_template bins | AE GMM AMI 0.377 | Small ML gain only for q_template-bin morphology; not broadly superior | reports/1781004956.538.5fc10cd7 |
@@ -64,6 +65,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P04 | ✅ done | ✅ 640,737 exact | peak amp res68 0.1238; integral charge res68 0.1954 | HGB amp res68 0.0091; charge res68 0.0151 | **Yes** for duplicate-readout closure; not absolute energy | reports/1780997954.15577.6c203777 |
 | P04b | ✅ done | ✅ 640,737 exact; 640,482 valid duplicate rows | downstream charge-proxy res68 0.225 | external ML res68 0.212; duplicate-transfer ML 0.247 | Weak external gain only; duplicate closure does not transfer cleanly to energy proxy | reports/1781005862.2131.4dbf3cf0 |
 | P04c | ✅ done | ✅ 640,737 exact; held-out runs 57/65 | adaptive-template ridge amp res68 0.0858; direct template scale worse | HGB amp res68 0.0091 | **Yes** for duplicate-readout closure; traditional template pathology needs diagnosis | reports/1781005862.2197.53fd45c8__p04c_amplitude_adaptive_template |
+| P05a | ✅ done | ✅ S11a injection anchor reproduced | bounded two-pulse fit time RMS 13.90 ns; failure 0.168 | compact CNN time RMS 10.01 ns; failure 0.228 | No adoption; CNN improves RMS but failure-rate regression is clear | reports/1781010938.498.6bd050f4 |
 | P07 | ✅ merged | self-truth (clip) | template scale | GBR | **ML ~4% vs template 10–29% (3–7× better)** | reports/P07_saturation_recovery |
 | P07b | ✅ done | ✅ P07 clip result exactly reproduced | artificial clip res68 0.148; natural timing tail 0.0384 | artificial clip res68 0.0298; natural tail 0.0329 but q_template shift -0.0897 | ML wins artificial closure; natural transfer needs boundary/systematic audits | reports/1781004956.668.7d00443a |
 | P07c | ✅ done | ✅ P07/P07b anchors reproduced | template-family artificial res68 0.148 | ratio-transfer res68 0.0393; boundary timing-tail delta ≈ -0.006 | ML wins artificial closure; boundary q_template/timing shifts require leakage controls | reports/1781010522.1275.6b5664c7 |
@@ -114,10 +116,13 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   opportunity, but its decomposition remains B2/topology dominated even when ML reduces residual
   width. P01c/P01e now show that strict waveform-latent timing probes fail repeated shuffle and
   event-shuffled controls, so hand-shape and null floors must accompany any latent timing claim.
-  P07c/P07d keep saturation recovery useful but expose boundary q_template shifts and a run-65
-  timing-tail envelope. S11b/S11c confirm that real high-current two-pulse signatures concentrate
-  in high-amplitude/large-lowering/broad-late strata, while amplitude-binned asymmetric templates
-  do not close the ML gap. The newer S10d amplitude-stratified result moves pile-up from a binary
+  P01d narrows the sample-importance interpretation: sample 5's sign flip is a CFD interpolation
+  artifact, while sample 6 smoothing is robust across template/OF timing. P07c/P07d keep
+  saturation recovery useful but expose boundary q_template shifts and a run-65 timing-tail
+  envelope. P05a/S11b/S11c confirm that two-pulse ML improves time RMS but still needs
+  failure-aware operation, and real high-current signatures concentrate in
+  high-amplitude/large-lowering/broad-late strata while amplitude-binned asymmetric templates do
+  not close the ML gap. The newer S10d amplitude-stratified result moves pile-up from a binary
   occupancy excess into a high-amp/large-lowering/broad-late secondary-fraction diagnostic, and
   S16d strata show large adaptive lowering is strongly predictable from pre-trigger
   contamination/pathology while true forced/random pedestal data remain absent.

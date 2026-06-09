@@ -348,12 +348,14 @@ matched together before timing, covariance, PID, or energy claims are adopted.
 The newest P01c/P01e strict latent audits make the representation warning more concrete:
 residual AE latents do not beat hand-shape/PCA under repeated leakage sentinels, and strict AE
 timing sigma68 (1.965 ns) is indistinguishable from hand-shape (1.962 ns) while shuffled-target
-controls remain too strong. P07c/P07d keep saturation correction promising on artificial and
-pseudo-saturation closures, but boundary q_template shifts and a run-65 tail envelope make
-saturation-corrected timing and energy claims veto-sensitive. S11b/S11c show that real
-high-current two-pulse candidates and asymmetric template failures both concentrate the next
-pile-up question in high-amplitude, large-lowering, broad-late strata; the ML method still wins
-time RMS, but only with explicit failure/abstention accounting.
+controls remain too strong. P01d separates the sample-importance story into a CFD interpolation
+artifact at sample 5 and a more robust sample-6 smoothing effect visible in template/OF timing.
+P07c/P07d keep saturation correction promising on artificial and pseudo-saturation closures, but
+boundary q_template shifts and a run-65 tail envelope make saturation-corrected timing and energy
+claims veto-sensitive. P05a/S11b/S11c show that injected and real high-current two-pulse
+candidates still concentrate the next pile-up question in high-amplitude, large-lowering,
+broad-late strata; the ML methods improve time RMS, but only with explicit failure/abstention
+accounting.
 
 Completed since last steering cycle:
 
@@ -425,6 +427,10 @@ Completed since last steering cycle:
   artificial closure but boundary-dependent q_template and timing-tail shifts; and real
   high-current two-pulse diagnostics point to high-amplitude, large-lowering, broad-late strata
   where ML still needs failure-aware operation.
+- **P01d/P05a — Post-rebase sample-importance and CNN two-pulse reports.** Result: sample 5's
+  negative CFD delta is a pickoff artifact while sample 6 remains a robust smoothing point, and
+  the compact CNN improves injected two-pulse RMS (10.01 ns vs 13.90 ns) but fails adoption
+  because failure rate increases from 0.168 to 0.228.
 
 Active ready queue highlights:
 

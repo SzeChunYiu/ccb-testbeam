@@ -1,0 +1,43 @@
+heldout_run,model,alpha,cv_rmse_ns,note,n_estimators,max_features,min_samples_leaf
+44,traditional_ridge,10.0,,fixed conservative alpha,,,
+44,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+45,traditional_ridge,10.0,,fixed conservative alpha,,,
+45,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+46,traditional_ridge,10.0,,fixed conservative alpha,,,
+46,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+47,traditional_ridge,10.0,,fixed conservative alpha,,,
+47,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+48,traditional_ridge,10.0,,fixed conservative alpha,,,
+48,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+49,traditional_ridge,10.0,,fixed conservative alpha,,,
+49,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+50,traditional_ridge,10.0,,fixed conservative alpha,,,
+50,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+51,traditional_ridge,10.0,,fixed conservative alpha,,,
+51,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+52,traditional_ridge,10.0,,fixed conservative alpha,,,
+52,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+53,traditional_ridge,10.0,,fixed conservative alpha,,,
+53,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+54,traditional_ridge,10.0,,fixed conservative alpha,,,
+54,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+55,traditional_ridge,10.0,,fixed conservative alpha,,,
+55,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+56,traditional_ridge,10.0,,fixed conservative alpha,,,
+56,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+57,traditional_ridge,10.0,,fixed conservative alpha,,,
+57,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+58,traditional_ridge,10.0,,fixed conservative alpha,,,
+58,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+59,traditional_ridge,10.0,,fixed conservative alpha,,,
+59,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+60,traditional_ridge,10.0,,fixed conservative alpha,,,
+60,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+61,traditional_ridge,10.0,,fixed conservative alpha,,,
+61,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+62,traditional_ridge,10.0,,fixed conservative alpha,,,
+62,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+63,traditional_ridge,10.0,,fixed conservative alpha,,,
+63,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0
+65,traditional_ridge,10.0,,fixed conservative alpha,,,
+65,extra_trees_ml,,,fixed ExtraTrees waveform model,80.0,0.8,20.0

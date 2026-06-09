@@ -1,0 +1,8 @@
+check,value,flag,unit
+train_heldout_run_overlap,0,False,runs
+train_heldout_event_overlap,0,False,events
+b2_rows_used_in_target_fit,0,False,pulses
+run_or_event_id_features_used,0,False,bool
+traditional_shuffled_beats_real_external,0,False,bool
+ml_shuffled_beats_real_external,0,False,bool
+too_good_external_sigma68_lt_1ns,0,False,bool

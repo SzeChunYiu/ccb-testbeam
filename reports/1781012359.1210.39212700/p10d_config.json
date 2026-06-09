@@ -1,0 +1,52 @@
+{
+  "study_id": "P10d",
+  "title": "external B2-B8 timing closure for explicit correction",
+  "ticket_id": "1781012359.1210.39212700",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781012359.1210.39212700",
+  "random_seed": 20260609,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "timing": {
+    "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 64],
+    "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+    "target_staves": ["B4", "B6", "B8"],
+    "external_staves": ["B2", "B4", "B6", "B8"]
+  },
+  "expected_selected_pulses": 640737,
+  "p10b_reference": {
+    "ticket_id": "1781006250.1276.49814de9",
+    "traditional_timing_sigma68_ns": 2.7555419378070574,
+    "traditional_timing_ci_ns": [2.6460900738974553, 2.8676905020076493]
+  },
+  "traditional": {
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0],
+    "feature_sets": ["amp_poly", "amp_poly_by_stave", "amp_bin_by_stave"],
+    "amplitude_edges_adc": [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000]
+  },
+  "ml": {
+    "feature_sets": ["waveform_amp", "waveform_amp_stave"],
+    "n_estimators": [80],
+    "max_depth": [6, 10],
+    "min_samples_leaf": [4, 8]
+  },
+  "bootstrap_iterations": 4000
+}

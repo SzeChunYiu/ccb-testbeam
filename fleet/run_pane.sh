@@ -43,7 +43,18 @@ cap(){ tmux -S "$SOCK" capture-pane -t "$SESS" -p 2>/dev/null; }
 alive(){ tmux -S "$SOCK" has-session -t "$SESS" 2>/dev/null; }
 
 setup_clone(){
-  [ -d "$clone/.git" ] || { rm -rf "$clone" 2>/dev/null; git clone -q --depth 1 "$GH" "$clone" || return 1; }
+  [ -d "$clone/.git" ] || { rm -rf "$clone" 2>/dev/null; git clone -q "$GH" "$clone" || return 1; }
+  ln -sfn "$DATA" "$clone/data"
+}
+
+reset_clone(){  # start every ticket on a CLEAN, CURRENT main: drop old work branches + untracked,
+                # pull the latest merged studies so workers never redo completed work.
+  ( cd "$clone" 2>/dev/null || exit 0
+    git checkout -q main 2>/dev/null
+    git fetch -q origin main 2>/dev/null && git reset -q --hard origin/main 2>/dev/null
+    git for-each-ref --format='%(refname:short)' refs/heads/ 2>/dev/null \
+      | grep -vx main | xargs -r -n1 git branch -qD 2>/dev/null
+    git clean -fdq -e data 2>/dev/null )
   ln -sfn "$DATA" "$clone/data"
 }
 
@@ -115,6 +126,7 @@ setup_clone || { log "clone failed"; exit 1; }
 trap 'kill_codex; log "controller exiting; codex torn down"; exit 0' TERM INT
 log "controller start (clone=$clone, sock=$SOCK)"
 while :; do
+  reset_clone        # clean, current main before each ticket
   start_codex
   if ! wait_ready; then log "codex not ready; restart in 10s"; sleep 10; continue; fi
   if ! inject_goal; then log "goal injection failed; restart"; sleep 5; continue; fi

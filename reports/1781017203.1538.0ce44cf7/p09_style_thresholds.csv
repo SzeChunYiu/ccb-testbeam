@@ -1,0 +1,6 @@
+threshold,value
+B2_amp_edges,"1002,2737,3322,4213.5,7011.6,13789"
+B2_tail_q99,1.0150303640621192
+B2_recovery_tail_q99,5161.479999999994
+B2_post_peak_fall_q01,0.0
+B2_near_peak_count_q99,3.0

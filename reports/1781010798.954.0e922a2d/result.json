@@ -1,0 +1,212 @@
+{
+  "ticket_id": "1781010798.954.0e922a2d",
+  "study_id": "P01d",
+  "title": "validate P01c CFD ablation sign flips",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_pulses_total": 581124,
+    "heldout_pulses_total": 59613
+  },
+  "traditional": {
+    "methods": [
+      "template_phase",
+      "of_5_13"
+    ],
+    "best_optimal_filter_method": "of_5_13",
+    "selection": "best optimal-filter window chosen on train runs only"
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_cfd20",
+    "best_alpha": 100.0,
+    "feature_set": "18 normalized samples, log amplitude, peak, area, width, stave one-hot"
+  },
+  "heldout_baselines": [
+    {
+      "split": "heldout",
+      "method": "cfd20",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 3.1884502039551736,
+      "ci_low": 3.094675461843604,
+      "ci_high": 3.30807221841812,
+      "median_ns": -3.2236692969799066
+    },
+    {
+      "split": "heldout",
+      "method": "template_phase",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.5232181251049006,
+      "ci_low": 2.0232181251049006,
+      "ci_high": 2.7592832834720618,
+      "median_ns": -3.9906968836784387
+    },
+    {
+      "split": "heldout",
+      "method": "of_1_9",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 3.0530672073364196,
+      "ci_low": 3.017888069152825,
+      "ci_high": 3.070944881439205,
+      "median_ns": -3.4951373519897473
+    },
+    {
+      "split": "heldout",
+      "method": "of_2_10",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 3.071211092987055,
+      "ci_low": 3.0409107894897467,
+      "ci_high": 3.1017790527343756,
+      "median_ns": -3.492704120635988
+    },
+    {
+      "split": "heldout",
+      "method": "of_3_11",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.8544301033019983,
+      "ci_low": 2.77552280426025,
+      "ci_high": 2.945119312286373,
+      "median_ns": -3.5391575965881366
+    },
+    {
+      "split": "heldout",
+      "method": "of_4_12",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.760614327392577,
+      "ci_low": 2.586591243743893,
+      "ci_high": 2.943981149196625,
+      "median_ns": -3.5384401264190686
+    },
+    {
+      "split": "heldout",
+      "method": "of_5_13",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.693265431442259,
+      "ci_low": 2.48448474121094,
+      "ci_high": 2.81113862991333,
+      "median_ns": -3.0328318061828625
+    },
+    {
+      "split": "heldout",
+      "method": "ml_ridge_residual",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 1.974360668523108,
+      "ci_low": 1.8252974977630778,
+      "ci_high": 2.028003862662544,
+      "median_ns": 1.4374287283144938
+    },
+    {
+      "split": "heldout",
+      "method": "ml_target_shuffle",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 3.328531893637124,
+      "ci_low": 3.258329285715599,
+      "ci_high": 3.3988404395018534,
+      "median_ns": -3.4037277996114064
+    }
+  ],
+  "sign_flip_interpretation": [
+    {
+      "sample": 5,
+      "p01c_cfd_delta_ns": -2.0248881884598737,
+      "rerun_cfd20_delta_ns": -2.024884487011433,
+      "template_phase_delta_ns": 0.25,
+      "of_5_13_delta_ns": 0.2419295377349866,
+      "non_cfd_methods_negative": 0,
+      "interpretation": "likely_cfd_interpolation_artifact"
+    },
+    {
+      "sample": 6,
+      "p01c_cfd_delta_ns": -0.9299359135842327,
+      "rerun_cfd20_delta_ns": -0.9299347512936595,
+      "template_phase_delta_ns": -0.26393484163283887,
+      "of_5_13_delta_ns": -0.3602377548980691,
+      "non_cfd_methods_negative": 2,
+      "interpretation": "likely_real_smoothing_robustness"
+    },
+    {
+      "sample": 7,
+      "p01c_cfd_delta_ns": -0.22063951665163106,
+      "rerun_cfd20_delta_ns": -0.22064299160242173,
+      "template_phase_delta_ns": 3.552713678800501e-15,
+      "of_5_13_delta_ns": 0.09503231712341442,
+      "non_cfd_methods_negative": 0,
+      "interpretation": "likely_cfd_interpolation_artifact"
+    },
+    {
+      "sample": 8,
+      "p01c_cfd_delta_ns": -0.14953010608911432,
+      "rerun_cfd20_delta_ns": -0.14953069021463294,
+      "template_phase_delta_ns": 0.25,
+      "of_5_13_delta_ns": -0.004677200317381391,
+      "non_cfd_methods_negative": 1,
+      "interpretation": "mixed_template_of_response"
+    }
+  ],
+  "p01c_reference": {
+    "samples_of_interest": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "windows_of_interest": [
+      [
+        1,
+        4
+      ],
+      [
+        5,
+        8
+      ]
+    ],
+    "single_sample_cfd_delta_ns": {
+      "5": -2.0248881884598737,
+      "6": -0.9299359135842327,
+      "7": -0.22063951665163106,
+      "8": -0.14953010608911432
+    },
+    "window_cfd_delta_ns": {
+      "1-4": 13.204358009621497,
+      "5-8": -2.0478402391076083
+    }
+  },
+  "leakage_checks": [
+    {
+      "check": "run_overlap",
+      "value": 0,
+      "detail": "must be zero for train/heldout split"
+    },
+    {
+      "check": "feature_audit",
+      "value": 0,
+      "detail": "ML features contain waveform shape, amplitude, peak, area, width, and stave one-hot only"
+    },
+    {
+      "check": "ml_target_shuffle_sigma68_ns",
+      "value": 3.328531893637124,
+      "detail": "held-out timing after shuffling train residual targets"
+    },
+    {
+      "check": "ml_vs_cfd20_delta_ns",
+      "value": -1.2140895354320655,
+      "detail": "negative means ML improves over CFD20; target-shuffle check is the leakage sentinel"
+    },
+    {
+      "check": "train_selected_of_window",
+      "value": "of_5_13",
+      "detail": "optimal-filter window selected by train-run sigma68 before held-out evaluation"
+    }
+  ],
+  "runtime_sec": 58.9
+}

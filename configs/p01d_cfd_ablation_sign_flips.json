@@ -1,0 +1,67 @@
+{
+  "ticket_id": "1781010798.954.0e922a2d",
+  "study_id": "P01d",
+  "title": "validate P01c CFD ablation sign flips",
+  "worker": "testbeam-laptop-1",
+  "output_dir": "reports/1781010798.954.0e922a2d",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "amplitude_cut_adc": 1000.0,
+  "expected_total_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 57, 64, 65],
+  "timing_downstream_staves": ["B4", "B6", "B8"],
+  "amplitude_bins": 6,
+  "bootstrap_replicates": 500,
+  "random_seed": 190574,
+  "template_shift_grid": {
+    "min": -1.5,
+    "max": 1.5,
+    "step": 0.05
+  },
+  "optimal_filter_windows": [
+    [1, 9],
+    [2, 10],
+    [3, 11],
+    [4, 12],
+    [5, 13]
+  ],
+  "ml": {
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0],
+    "cv_folds": 4
+  },
+  "p01c_reference": {
+    "samples_of_interest": [5, 6, 7, 8],
+    "windows_of_interest": [[1, 4], [5, 8]],
+    "single_sample_cfd_delta_ns": {
+      "5": -2.0248881884598737,
+      "6": -0.9299359135842327,
+      "7": -0.22063951665163106,
+      "8": -0.14953010608911432
+    },
+    "window_cfd_delta_ns": {
+      "1-4": 13.204358009621497,
+      "5-8": -2.0478402391076083
+    }
+  }
+}

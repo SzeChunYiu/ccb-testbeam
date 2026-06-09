@@ -273,14 +273,15 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=6 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
+`open=8 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: project-aware queue audits during this pass observed a deep ready pool
-(`open=89 claimed=2 done=65 failed=10`, later `open=91 claimed=1 done=66 failed=10` as workers
-advanced) after this pass appended three additional non-duplicate ready tickets under
-`project:testbeam`: P06a amplitude-binned timing resolution atom table, S05f B2-local covariance
-confound matched audit, and P01f domain-residualized waveform latent benchmark. The discrepancy is
-a shim/argument parsing issue, not a scientific queue shortage.
+(`open=103 claimed=4 done=74 failed=10` while workers were active) after this pass appended three
+additional non-duplicate ready tickets under `project:testbeam`: S04c pathology-stratified
+timing-resolution tail table (`1781018820.3826.39cd42b6`), P04g dropout-injected amplitude charge
+recovery closure (`1781018820.3891.20547ebd`), and S14d anomaly-veto energy-ordering sensitivity
+(`1781018820.3955.63293f84`). The discrepancy is a shim/argument parsing issue, not a scientific
+queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -344,6 +345,15 @@ true forced/random entries and shows large adaptive lowering is predictable from
 contamination/pathology rather than a clean pedestal-bias truth label. These two reports tighten
 the P06a/S05f/S16h boundary: amplitude, pile-up, baseline lowering, and anomaly topology must be
 matched together before timing, covariance, PID, or energy claims are adopted.
+The newest P01c/P01e strict latent audits make the representation warning more concrete:
+residual AE latents do not beat hand-shape/PCA under repeated leakage sentinels, and strict AE
+timing sigma68 (1.965 ns) is indistinguishable from hand-shape (1.962 ns) while shuffled-target
+controls remain too strong. P07c/P07d keep saturation correction promising on artificial and
+pseudo-saturation closures, but boundary q_template shifts and a run-65 tail envelope make
+saturation-corrected timing and energy claims veto-sensitive. S11b/S11c show that real
+high-current two-pulse candidates and asymmetric template failures both concentrate the next
+pile-up question in high-amplitude, large-lowering, broad-late strata; the ML method still wins
+time RMS, but only with explicit failure/abstention accounting.
 
 Completed since last steering cycle:
 
@@ -410,6 +420,11 @@ Completed since last steering cycle:
   broad-late strata, while large lowering is a pre-trigger contamination/pathology diagnostic and
   not a true forced/random pedestal validation. Future pile-up, baseline, and timing studies must
   match these axes jointly.
+- **P01c/P01e/P07c/P07d/S11b/S11c — Latest strict latent, saturation, and two-pulse closures.**
+  Result: waveform latents fail stricter timing/null controls; saturation recovery has useful
+  artificial closure but boundary-dependent q_template and timing-tail shifts; and real
+  high-current two-pulse diagnostics point to high-amplitude, large-lowering, broad-late strata
+  where ML still needs failure-aware operation.
 
 Active ready queue highlights:
 
@@ -546,3 +561,22 @@ Active ready queue highlights:
   adversarial or orthogonal nuisance-residualized AE latent compared with the frozen P01b latent and
   shuffled controls. Metric: nuisance AUC reduction at fixed physics-proxy retention, reconstruction
   MSE, and downstream target deltas with run-block bootstrap CIs.
+- **S04c — Pathology-stratified timing-resolution tail table.** Freeze the strongest S02/S03
+  analytic baseline and ask which atomic pathology axis explains the non-core timing tails:
+  anomaly taxon, saturation boundary, lowering/pretrigger contamination, two-pulse score, dropout,
+  or peak-sample phase. Traditional: matched same-particle residual tables and variance components.
+  ML: calibrated per-event sigma/tail model using only waveform/pathology summaries. Metric:
+  sigma68, full RMS, >5 ns tail fraction, pull width, and ML-minus-traditional deltas with
+  event-paired run-block bootstrap CIs.
+- **P04g — Dropout-injected amplitude charge recovery closure.** Inject controlled leading-edge,
+  peak, and trailing-sample dropouts into clean pulses to test whether amplitude and charge
+  estimates remain usable for P04/P07/S14. Traditional: peak, integral, adaptive-template,
+  rising-edge, and interpolation estimators. ML: denoising/inpainting and direct charge residual
+  models with held-out-run guards. Metric: amplitude/charge bias, res68, full RMS, catastrophic
+  error rate, timing-tail propagation, and paired bootstrap CIs.
+- **S14d — Anomaly-veto energy-ordering sensitivity.** Test whether P09 anomaly, S10 pile-up,
+  S16 baseline-lowering, and P07 saturation-correction vetoes change S14/S15 pre-GEANT
+  depth-ordering conclusions. Traditional: PSTAR/range-order preflight under a frozen veto ladder.
+  ML: monotonic charge-energy surrogate using P04/P07 charge plus calibrated anomaly, pile-up, and
+  baseline scores under leakage sentinels. Metric: depth-ordering violations, median charge-proxy
+  shift, unsaturated-control res68, veto acceptance, and run/stave bootstrap CIs.

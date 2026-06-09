@@ -30,6 +30,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10d | ✅ done | ✅ S10b Rmax/live10 reproduced | bounded two-pulse resolvable delay 60 ns; time RMS 13.83 ns | compact MLP delay 20 ns; time RMS 9.41 ns | **Yes**, but failure rate rises 0.172→0.323 | reports/1781007337.1325.2241031c |
 | S10d amplitude | ✅ done | ✅ S10c topology fractions within 0.0015 | matched two-pulse secondary fraction high-low 0.0316, CI [0.0189,0.0440] | RF secondary fraction Δ=0.0073; overlap score Δ=0.0245 | Diagnostic; largest excess is high-amp/large-lowering/broad-late | reports/1781010419.1206.6d667357 |
 | S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
+| S11b | ✅ done | ✅ S10c topology fractions within 0.0015 | real high-current secondary fraction Δ=0.0181, CI [-0.0168,0.0541] | RF secondary fraction Δ=0.00437, CI [-0.00138,0.0121] | Diagnostic; largest traditional excess is high-amp/large-lowering/broad-late | reports/1781010611.1197.028b141a |
+| S11c | ✅ done | ✅ S11a anchor reproduced | amplitude-binned asymmetric template time RMS 17.83 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate remains high (0.295) | reports/1781010611.1262.2e354bed |
 | S16 | ✅ done | ✅ S00 selection | pretrigger median MAE 341 ADC | adaptive/learned MAE 48.9 ADC | **Yes**, but adaptive remains biased | reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation |
 | S16b closure | ✅ done | ✅ 640,737 exact | line3 early-sample predictor MAE 169.34 ADC | ridge closure MAE 173.71 ADC | No; traditional remains preferred, ML is contamination diagnostic | reports/1781000826.539659.030b7796__s16b_independent_pedestal_estimator_closure |
 | S16b forced/proxy | ✅ done | ✅ 640,737 exact; 0 forced/random-tagged entries | adaptive proxy MAE 17.18 ADC | HGBR proxy MAE 15.64 ADC | Proxy only; true forced/random pedestal data absent | reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation |
@@ -49,6 +51,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P01b downstream | ✅ done | ✅ 640,737 exact | hand/PCA sample-epoch probe bal-acc 0.602/0.649 | AE-4 sample-epoch probe bal-acc 0.634 | No adoption; latent/domain drift needs residualization before downstream use | reports/1781010192.1206.019d7d9e__p01b_downstream_waveform_probes |
 | P01c | ✅ done | ✅ 640,737 exact | sample/window ablations: samples 3-5 dominate timing | AE occlusion/permutation probes find sample 5 highest | Diagnostic; use sample map to constrain P07e/P03c rather than claim ML adoption | reports/1781005319.562.584259c9__p01c_pulse_shape_importance_map |
 | P01c artifact | ✅ done | ✅ 640,737 exact recount | publish/verify non-git P01b latent artifact | artifact hashes and metadata verified | Infrastructure; enables downstream consumers, not a physics benchmark | reports/1781010024.910.7fbe14e8__p01c_publish_p01b_latent_artifact |
+| P01c sentinels | ✅ done | ✅ 640,737 exact | residual PCA+hand bal-acc 0.331 | residual AE-4 bal-acc 0.235 | No; repeated shuffle sentinels reject the ML representation claim | reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels |
+| P01e | ✅ done | ✅ prior P01c CFD20/latent reproduced | strict hand-shape ridge sigma68 1.962 ns | strict AE latent ridge sigma68 1.965 ns; shuffled target 2.056 ns | No; latent does not beat hand-shape and null controls remain strong | reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
 | P02b | ✅ done | ✅ P02 early-peak rate 0.04388 vs ≈0.044 | hand/PCA GMM run-heldout AMI 0.357 on q_template bins | AE GMM AMI 0.377 | Small ML gain only for q_template-bin morphology; not broadly superior | reports/1781004956.538.5fc10cd7 |
 | P02c q-template | ✅ done | ✅ S01 q_template row semantics exact | hand/PCA GMM manual-flag AMI 0.674; q-template AMI 0.154 | AE/P01-style morphology is target-specific | Mixed; learned morphology is not a universal cluster win | reports/1781009575.1631.563755ca |
@@ -62,6 +66,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P04c | ✅ done | ✅ 640,737 exact; held-out runs 57/65 | adaptive-template ridge amp res68 0.0858; direct template scale worse | HGB amp res68 0.0091 | **Yes** for duplicate-readout closure; traditional template pathology needs diagnosis | reports/1781005862.2197.53fd45c8__p04c_amplitude_adaptive_template |
 | P07 | ✅ merged | self-truth (clip) | template scale | GBR | **ML ~4% vs template 10–29% (3–7× better)** | reports/P07_saturation_recovery |
 | P07b | ✅ done | ✅ P07 clip result exactly reproduced | artificial clip res68 0.148; natural timing tail 0.0384 | artificial clip res68 0.0298; natural tail 0.0329 but q_template shift -0.0897 | ML wins artificial closure; natural transfer needs boundary/systematic audits | reports/1781004956.668.7d00443a |
+| P07c | ✅ done | ✅ P07/P07b anchors reproduced | template-family artificial res68 0.148 | ratio-transfer res68 0.0393; boundary timing-tail delta ≈ -0.006 | ML wins artificial closure; boundary q_template/timing shifts require leakage controls | reports/1781010522.1275.6b5664c7 |
+| P07d | ✅ done | ✅ Sample-II B2 count reproduced | template pseudo-saturation res68 0.200 | ratio-transfer res68 0.0541; max tail envelope 0.0769 on run 65 | Diagnostic; saturation correction has a run-dependent timing-tail envelope | reports/1781010522.1343.1dda69d0 |
 | P09a | ✅ done | ✅ 640,737 exact | robust-template top-128 curated precision 0.898 | PCA/AE/isolation precision 0.883; higher novel precision 0.766 | Mixed; ML better for novel taxa, traditional slightly better curated precision | reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy |
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
 | P10b | ✅ done | ✅ 640,737 exact | explicit timewalk q MSE 0.0444; timing 2.756 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | No; explicit traditional timewalk beats conditional template | reports/1781006250.1276.49814de9 |
@@ -69,13 +75,14 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
-  `open=6 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
+  `open=8 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
   with `--project testbeam`; project-aware queue audits during this pass observed a deep ready
-  pool (`open=89 claimed=2 done=65 failed=10`, later `open=91 claimed=1 done=66 failed=10` as
-  workers advanced) after this pass appended three ready non-duplicate tickets: P06a
-  amplitude-binned timing resolution atom table, S05f B2-local covariance confound matched audit,
-  and P01f domain-residualized waveform latent benchmark.
+  pool (`open=103 claimed=4 done=74 failed=10` while workers were active) after this pass
+  appended three ready non-duplicate tickets: S04c pathology-stratified timing-resolution tail
+  table (`1781018820.3826.39cd42b6`), P04g dropout-injected amplitude charge recovery closure
+  (`1781018820.3891.20547ebd`), and S14d anomaly-veto energy-ordering sensitivity
+  (`1781018820.3955.63293f84`).
 - Newest reports sharpen the next claims: S00b/S02c turn selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk and selector
@@ -105,10 +112,15 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   train-only AE embeddings do not beat hand+PCA morphology for manual flags, and P02d's impressive
   RF timing-tail AUC is largely downstream D_t self-reference. S05c finds a real B-stack covariance
   opportunity, but its decomposition remains B2/topology dominated even when ML reduces residual
-  width. The newer S10d amplitude-stratified result moves pile-up from a binary occupancy excess
-  into a high-amp/large-lowering/broad-late secondary-fraction diagnostic, and S16d strata show
-  large adaptive lowering is strongly predictable from pre-trigger contamination/pathology while
-  true forced/random pedestal data remain absent.
+  width. P01c/P01e now show that strict waveform-latent timing probes fail repeated shuffle and
+  event-shuffled controls, so hand-shape and null floors must accompany any latent timing claim.
+  P07c/P07d keep saturation recovery useful but expose boundary q_template shifts and a run-65
+  timing-tail envelope. S11b/S11c confirm that real high-current two-pulse signatures concentrate
+  in high-amplitude/large-lowering/broad-late strata, while amplitude-binned asymmetric templates
+  do not close the ML gap. The newer S10d amplitude-stratified result moves pile-up from a binary
+  occupancy excess into a high-amp/large-lowering/broad-late secondary-fraction diagnostic, and
+  S16d strata show large adaptive lowering is strongly predictable from pre-trigger
+  contamination/pathology while true forced/random pedestal data remain absent.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
@@ -117,9 +129,9 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   energy-scale preflight, plus P04f/S10f/P08a/P05b/S16g/S00d/P09c/S14c for anomaly-to-charge,
   anomaly-to-pile-up, weak-label PID leakage, failure-aware pile-up recovery, pseudo-pedestals,
   selector taxonomy, delayed-peak/dropout propagation, and saturation-aware energy ordering. This
-  pass adds P06a for amplitude/charge/saturation-stratified timing resolution, S05f for matched
-  B2 covariance confound separation, and P01f for domain-residualized latents before PID, pile-up,
-  timing, or energy studies consume waveform embeddings.
+  pass adds S04c for pathology-stratified timing-resolution tails, P04g for dropout-injected
+  amplitude/charge recovery closure, and S14d for anomaly/pile-up/baseline/saturation veto
+  sensitivity in pre-GEANT energy ordering.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

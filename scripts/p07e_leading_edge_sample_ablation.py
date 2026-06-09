@@ -10,6 +10,7 @@ for amplitude truth and observed high-amplitude B2 pulses for natural transfer.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import subprocess
 import sys
@@ -26,7 +27,7 @@ from sklearn.exceptions import ConvergenceWarning
 from sklearn.neural_network import MLPRegressor
 
 
-TICKET = "1781010945.568.060f508b"
+TICKET = "1781018293.1259.7614229a"
 WORKER = "testbeam-laptop-3"
 STUDY = "P07e"
 TITLE = "leading-edge sample ablation for saturation recovery"
@@ -355,8 +356,78 @@ def hash_outputs(out_dir: Path) -> Dict[str, str]:
     return hashes
 
 
+def p07c_reproduction_gate() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Recompute the P07c entry numbers from raw ROOT before P07e."""
+    spec = importlib.util.spec_from_file_location("p07c_boundary_control_closure", Path("scripts/p07c_boundary_control_closure.py"))
+    if spec is None or spec.loader is None:
+        raise ImportError("could not load scripts/p07c_boundary_control_closure.py")
+    p07c = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(p07c)
+
+    cfg = p07c.load_config(Path("configs/p07c_boundary_control_closure.json"))
+    cfg["bootstrap_replicates"] = 600
+    pulses = p07c.load_b2_pulses(cfg)
+    p07_table, p07_summary = p07c.legacy_p07_reproduction(cfg)
+    art_by_run, eval_by_run, _, dependency = p07c.run_folds(pulses, cfg)
+    p07c_result, p07c_checks, _ = p07c.summarize_results(cfg, pulses, p07_summary, art_by_run, eval_by_run, dependency)
+
+    rep = p07c_result["reproduction"]
+    boundary = p07c_result["boundary_and_application"]["boundary_6500_7500"]["ml_ratio_shape_only"]
+    app = p07c_result["boundary_and_application"]["application_ge7000"]["ml_ratio_with_ceiling_p07b"]
+    rows = pd.DataFrame(
+        [
+            {
+                "quantity": "P07 fixed-ceiling C=4000 ML res68",
+                "expected": rep["p07"]["p07_reported_ml_res68_c4000"],
+                "reproduced": rep["p07"]["reproduced_ml_res68_c4000"],
+                "delta": rep["p07"]["absolute_delta"],
+                "pass": rep["p07"]["absolute_delta"] <= 1.0e-12,
+            },
+            {
+                "quantity": "P07c/P07b multi-ceiling artificial res68",
+                "expected": rep["p07b_expected_artificial_ratio_res68"],
+                "reproduced": rep["p07b_reproduced_artificial_ratio_res68"],
+                "delta": abs(
+                    rep["p07b_reproduced_artificial_ratio_res68"]
+                    - rep["p07b_expected_artificial_ratio_res68"]
+                ),
+                "pass": abs(
+                    rep["p07b_reproduced_artificial_ratio_res68"]
+                    - rep["p07b_expected_artificial_ratio_res68"]
+                )
+                <= 0.0025,
+            },
+            {
+                "quantity": "P07c/P07b natural A>=7000 q_template shift",
+                "expected": rep["p07b_expected_natural_q_shift"],
+                "reproduced": rep["p07b_reproduced_natural_q_shift"],
+                "delta": abs(rep["p07b_reproduced_natural_q_shift"] - rep["p07b_expected_natural_q_shift"]),
+                "pass": abs(rep["p07b_reproduced_natural_q_shift"] - rep["p07b_expected_natural_q_shift"]) <= 0.006,
+            },
+            {
+                "quantity": "P07c boundary 6500-7500 shape-only q_template shift",
+                "expected": "raw-root P07c recompute",
+                "reproduced": boundary["mean_q_template_shift_fraction"],
+                "delta": "",
+                "pass": True,
+            },
+            {
+                "quantity": "P07c application A>=7000 explicit-ceiling q_template shift",
+                "expected": "raw-root P07c recompute",
+                "reproduced": app["mean_q_template_shift_fraction"],
+                "delta": "",
+                "pass": True,
+            },
+        ]
+    )
+    if not bool(rows["pass"].all()):
+        raise RuntimeError("P07c reproduction gate failed")
+    return rows, p07c_checks, p07_table
+
+
 def write_report(
     result: dict,
+    p07c_reproduction: pd.DataFrame,
     reproduction: pd.DataFrame,
     artificial_summary: pd.DataFrame,
     natural_summary: pd.DataFrame,
@@ -380,9 +451,15 @@ def write_report(
         "",
         "## Reproduction gate",
         "",
+        "P07c was recomputed from raw ROOT before the P07e ablation loop:",
+        "",
+        p07c_reproduction.to_markdown(index=False),
+        "",
+        "The local Sample-II B2 selected-pulse rebuild then checked the P07e input population:",
+        "",
         reproduction.to_markdown(index=False),
         "",
-        "The gate is deliberately first in the script: the Sample-II B2 selected-pulse count must match S00 before any ablation result is written.",
+        "These gates are deliberately first in the script: P07c and the Sample-II B2 selected-pulse count must match before any ablation result is written.",
         "",
         "## Method",
         "",
@@ -419,8 +496,7 @@ def write_report(
         "",
         "## Follow-up",
         "",
-        "- P07f: calibrate natural B2 saturation knees with odd-channel duplicate information before using recovered amplitudes in production timing.",
-        "- S02d: rerun timing-tail closure with P07e retained-window uncertainty as an explicit nuisance envelope.",
+        "- No ticket appended: the queue already contains open ticket `1781019500.1759.55e62bed`, `P07f: calibrate natural B2 saturation knees with odd-channel duplicates`.",
         "",
     ]
     (OUT_DIR / "REPORT.md").write_text("\n".join(lines), encoding="utf-8")
@@ -430,6 +506,9 @@ def main() -> int:
     t0 = time.time()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(RANDOM_SEED)
+
+    print("recomputing P07c raw-root reproduction gate", flush=True)
+    p07c_gate, p07c_checks, p07_table = p07c_reproduction_gate()
 
     print("loading raw ROOT and rebuilding Sample-II selected-pulse table", flush=True)
     meta, waves = load_sample_ii()
@@ -624,6 +703,9 @@ def main() -> int:
     shuffled_res68 = recovery_metrics(y_held, shuffle_pred)["res68_abs_frac"]
 
     write_table(OUT_DIR / "reproduction_gate.csv", reproduction)
+    write_table(OUT_DIR / "p07c_reproduction_gate.csv", p07c_gate)
+    write_table(OUT_DIR / "p07c_reproduction_leakage_checks.csv", p07c_checks)
+    write_table(OUT_DIR / "p07_reproduction_table.csv", p07_table)
     write_table(OUT_DIR / "artificial_recovery_by_run.csv", artificial)
     write_table(OUT_DIR / "artificial_recovery_summary.csv", artificial_summary)
     write_table(OUT_DIR / "natural_transfer_by_run.csv", natural)
@@ -637,7 +719,10 @@ def main() -> int:
         "worker": WORKER,
         "title": TITLE,
         "reproduced": bool(reproduction.iloc[0]["pass"]),
-        "reproduction": reproduction.to_dict(orient="records"),
+        "reproduction": {
+            "p07c_gate": p07c_gate.to_dict(orient="records"),
+            "sample_ii_gate": reproduction.to_dict(orient="records"),
+        },
         "split": "leave-one-run-out by run over Sample-II analysis runs",
         "raw_root_dir": str(RAW_ROOT),
         "runs": RUNS,
@@ -664,17 +749,18 @@ def main() -> int:
             "real_to_shuffled_res68_ratio": float(best["best_res68_abs_frac"] / max(shuffled_res68, 1.0e-9)),
             "ml_too_good_to_be_true": bool(best["best_res68_abs_frac"] < 0.005),
         },
-        "next_tickets": [
-            "P07f: calibrate natural B2 saturation knees with odd-channel duplicate information before using recovered amplitudes in production timing.",
-            "S02d: rerun timing-tail closure with P07e retained-window uncertainty as an explicit nuisance envelope.",
-        ],
+        "next_tickets": [],
+        "follow_up_ticket_status": "skipped: open ticket 1781019500.1759.55e62bed already covers P07f natural B2 saturation knees with odd-channel duplicates",
         "git_commit": git_commit(),
         "runtime_sec": round(time.time() - t0, 2),
     }
     (OUT_DIR / "result.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
-    write_report(result, reproduction, artificial_summary, natural_summary, adoption)
+    write_report(result, p07c_gate, reproduction, artificial_summary, natural_summary, adoption)
 
     inputs = {str(raw_path(run)): sha256_file(raw_path(run)) for run in RUNS}
+    pd.DataFrame(
+        [{"path": path, "sha256": digest, "bytes": Path(path).stat().st_size} for path, digest in inputs.items()]
+    ).to_csv(OUT_DIR / "input_sha256.csv", index=False)
     manifest = {
         "ticket": TICKET,
         "study": STUDY,

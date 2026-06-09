@@ -1,0 +1,6 @@
+quantity,expected,reproduced,delta,pass
+P07 fixed-ceiling C=4000 ML res68,0.03243177807776981,0.03243177807776981,0.0,True
+P07c/P07b multi-ceiling artificial res68,0.03931517116488385,0.039315171164883894,4.163336342344337e-17,True
+P07c/P07b natural A>=7000 q_template shift,-0.0896770876224819,-0.0896733286909729,3.7589315090014175e-06,True
+P07c boundary 6500-7500 shape-only q_template shift,raw-root P07c recompute,-0.08323295849868055,,True
+P07c application A>=7000 explicit-ceiling q_template shift,raw-root P07c recompute,-0.0896733286909729,,True

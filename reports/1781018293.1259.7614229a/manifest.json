@@ -1,0 +1,33 @@
+{
+  "ticket": "1781018293.1259.7614229a",
+  "study": "P07e",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "5973b51e9f0f874615d687f6a5042b722eb1888c",
+  "command": "/home/billy/anaconda3/bin/python scripts/p07e_leading_edge_sample_ablation.py",
+  "random_seed": 20260609,
+  "inputs_sha256": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs_sha256": {
+    "REPORT.md": "2bc59303b63935f6164bc673f18df4fdd343a04918ea95f5cb6090a37eb36378",
+    "adoption_screen.csv": "6559afee6e49f54d50cf0bf04989dcc8a2ab3dfeed31ab8501aa06cbbd8e6ac3",
+    "artificial_recovery_by_run.csv": "d17b92e68ec9ca66b49869e07e330636d057acf033282d1bf565d2db1de8d43f",
+    "artificial_recovery_summary.csv": "3b6d70175199cb380707da26db70c9609990ada87a6a3d55c67c5a99f5f09d85",
+    "input_sha256.csv": "311faa4ac8d1ffe3fce791e6d85f703301ee7648fa1cf288a1dad9323e1f402f",
+    "natural_transfer_by_run.csv": "84cf81f654d6c7f95382e25dbc589d1013f9397238347358af0bc89ee3176373",
+    "natural_transfer_summary.csv": "ea86e97640e38dce91e61ec9902d0a29f09feb5ed5f4472225c5dd4835a2dcb1",
+    "oof_prediction_sample.csv": "8279c464b2e33ae9340204a5931b8753402d23651c1f1ad24a4aee8ce65fbdf1",
+    "p07_reproduction_table.csv": "9037fff86f1256265302fc81b4a2465694ac338649777f750aadc99b9479f304",
+    "p07c_reproduction_gate.csv": "565a55de6b4878ba4c954060e76bf81efc55cfe6c335e7545fcf1992edd2dc2d",
+    "p07c_reproduction_leakage_checks.csv": "fb15793bc1286e65e61a3a34840f77e7bdfca346e24ae06e2f2c388297f11ab4",
+    "reproduction_gate.csv": "8675175328d3a87acd78a90b9cbc73039cc491911280529cb751eec73a6a4b81",
+    "result.json": "37a40069220c437e1840d20649c173c6de8af579ac9c1f216980dc4b35c61479"
+  },
+  "runtime_sec": 398.36
+}

@@ -1,0 +1,4 @@
+check,sigma68_ns,interpretation
+actual_ml_b_plus_a,1.6641267807458826,nominal run-held-out ML residual width
+runwise_shuffled_a_controls,1.6684290513333795,A controls lose event matching but preserve run marginals
+intentional_target_echo,0.0,positive leakage sentinel; should be unrealistically small

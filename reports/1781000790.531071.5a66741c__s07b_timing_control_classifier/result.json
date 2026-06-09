@@ -1,0 +1,59 @@
+{
+  "study": "S07b",
+  "ticket": "1781000790.531071.5a66741c",
+  "worker": "testbeam-laptop-4",
+  "title": "timing-control classifier calibration with D_t labels",
+  "reproduced": true,
+  "repro_tolerance": "exact guarded gross D_t count match",
+  "traditional": {
+    "metric": "run-held-out ROC AUC on D_t extreme labels",
+    "method": "traditional D_t/curvature",
+    "value": 1.0,
+    "ci": [
+      0.9999999999999999,
+      1.0
+    ]
+  },
+  "ml": {
+    "metric": "run-held-out ROC AUC on D_t extreme labels",
+    "method": "shape-only RF",
+    "value": 0.9987174529517918,
+    "ci": [
+      0.9977930301349602,
+      0.9992516233041217
+    ],
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 7,
+      "min_samples_leaf": 8
+    }
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "label_self_reference": "traditional D_t is label-defining and reaches AUC/AP 1 by construction",
+    "topology_only_auc": 0.603393271461717,
+    "amplitude_only_auc": 0.8212490332559939,
+    "shuffle_auc": 0.5192639855632895,
+    "slot_shape_auc": 0.998904356792988
+  },
+  "ml_fixed_efficiency": {
+    "clean_efficiency_target": 0.95,
+    "gross_rejection_mean": 1.0,
+    "traditional_gross_rejection_mean": 1.0
+  },
+  "details": {
+    "n_control_events": 10156,
+    "n_extreme_events": 2227,
+    "n_clean": 2155,
+    "n_gross": 72,
+    "gross_documented_dt_gt_50": 74,
+    "gross_guarded_dt_gt_51": 72,
+    "feature_count": 72
+  },
+  "input_sha256": "122dfe2e7f3693596b8287ea689aa2e46548839ae00f4791384953648132efee",
+  "git_commit": "39762f8f205b46ce0b6fc63d74873e05240b22d6",
+  "next_tickets": [
+    "S07d: independent non-D_t App.I target using injected two-pulse timing corruption",
+    "S07e: all-three-downstream curvature-only timing-control RF audit"
+  ]
+}

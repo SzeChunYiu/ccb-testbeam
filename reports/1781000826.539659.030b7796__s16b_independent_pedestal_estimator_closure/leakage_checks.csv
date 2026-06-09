@@ -1,0 +1,5 @@
+check,pass,value
+train/test runs disjoint,True,"train=[31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 58, 59, 60, 61, 62, 63, 64] test=[57, 65]"
+excluded sample feature row-masked,True,holdout 0 w00_minus_seed NaN fraction=1.000; holdout 1 w01_minus_seed NaN fraction=1.000; holdout 2 w02_minus_seed NaN fraction=1.000; holdout 3 w03_minus_seed NaN fraction=1.000
+train/test event-key overlap,True,0
+shuffled-target ML held-out MAE larger than real ML,True,shuffled=508.63 real=173.71

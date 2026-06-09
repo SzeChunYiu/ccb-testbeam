@@ -1,0 +1,430 @@
+{
+  "study": "S10e",
+  "ticket": "1781013102.1102.52b37a0b",
+  "worker": "testbeam-laptop-1",
+  "title": "translate threshold-scan tau_eff into pile-up separability limits",
+  "reproduced": true,
+  "reproduction": {
+    "topology_checks_passed": 6,
+    "topology_checks_total": 6,
+    "s10b_live10_ns": 124.79018394263471,
+    "combined_10pct_Rmax_MHz": 3.045111305987686
+  },
+  "traditional_method": "run-held-out median waveform template exponential tail crossing plus bounded two-pulse template fit",
+  "ml_method": "run-held-out Ridge live-time regressor plus compact MLP two-pulse classifier/regressor",
+  "thresholds": {
+    "5pct": {
+      "label": "5%",
+      "traditional_tau_eff_ns": 141.0557117938371,
+      "traditional_tau_eff_ci95_ns": [
+        139.2598563585671,
+        142.98075985134827
+      ],
+      "ml_tau_eff_ns": 124.75498010671699,
+      "ml_tau_eff_ci95_ns": [
+        122.58264663452314,
+        126.79522914272805
+      ],
+      "combined_Rmax_MHz": 2.6939710215733546,
+      "combined_Rmax_ci95_MHz": [
+        2.6577002415924476,
+        2.7287117044094438
+      ],
+      "combined_Rmax_vs_90ns_ratio": 0.6380457682673735
+    },
+    "10pct": {
+      "label": "10%",
+      "traditional_tau_eff_ns": 124.79018394263471,
+      "traditional_tau_eff_ci95_ns": [
+        123.33381704737772,
+        126.29185469184856
+      ],
+      "ml_tau_eff_ns": 123.21520754849443,
+      "ml_tau_eff_ci95_ns": [
+        120.70371653447759,
+        125.69832998487682
+      ],
+      "combined_Rmax_MHz": 3.045111305987686,
+      "combined_Rmax_ci95_MHz": [
+        3.0089034714645524,
+        3.081068997110711
+      ],
+      "combined_Rmax_vs_90ns_ratio": 0.7212105724707678
+    },
+    "20pct": {
+      "label": "20%",
+      "traditional_tau_eff_ns": 101.86521002119034,
+      "traditional_tau_eff_ci95_ns": [
+        100.94179200771904,
+        102.86034408128886
+      ],
+      "ml_tau_eff_ns": 119.1803543650311,
+      "ml_tau_eff_ci95_ns": [
+        115.67543280633839,
+        122.46134962688893
+      ],
+      "combined_Rmax_MHz": 3.73041983539769,
+      "combined_Rmax_ci95_MHz": [
+        3.694329465782189,
+        3.7645458084491037
+      ],
+      "combined_Rmax_vs_90ns_ratio": 0.8835204873310318
+    },
+    "noise_floor": {
+      "label": "noise floor",
+      "traditional_tau_eff_ns": 161.18335762759685,
+      "traditional_tau_eff_ci95_ns": [
+        158.89151702827075,
+        163.58475111203617
+      ],
+      "ml_tau_eff_ns": 120.29899988935708,
+      "ml_tau_eff_ci95_ns": [
+        116.96681194888943,
+        123.29863601946481
+      ],
+      "combined_Rmax_MHz": 2.3575634953452456,
+      "combined_Rmax_ci95_MHz": [
+        2.322954905128932,
+        2.3915688332964216
+      ],
+      "combined_Rmax_vs_90ns_ratio": 0.5583703015291371
+    }
+  },
+  "rmax_requirements": [
+    {
+      "threshold": "5pct",
+      "label": "5%",
+      "requirement": "timing_lt_1ns",
+      "constraint_family": "timing",
+      "mu_max": 0.425,
+      "tau_eff_ns": 141.0557117938371,
+      "tau_eff_ci95_low_ns": 139.2598563585671,
+      "tau_eff_ci95_high_ns": 142.98075985134827,
+      "Rmax_MHz": 3.0129939057070407,
+      "Rmax_ci95_low_MHz": 2.972427901781027,
+      "Rmax_ci95_high_MHz": 3.0518486167737198,
+      "original_90ns_Rmax_MHz": 4.722222222222222,
+      "original_report_Rmax_MHz": 4.72,
+      "Rmax_vs_90ns_ratio": 0.6380457682673734
+    },
+    {
+      "threshold": "5pct",
+      "label": "5%",
+      "requirement": "peak_amp_lt_10pct",
+      "constraint_family": "amplitude",
+      "mu_max": 0.385,
+      "tau_eff_ns": 141.0557117938371,
+      "tau_eff_ci95_low_ns": 139.2598563585671,
+      "tau_eff_ci95_high_ns": 142.98075985134827,
+      "Rmax_MHz": 2.72941800869932,
+      "Rmax_ci95_low_MHz": 2.6926699816134008,
+      "Rmax_ci95_high_MHz": 2.764615805783252,
+      "original_90ns_Rmax_MHz": 4.277777777777778,
+      "original_report_Rmax_MHz": 4.28,
+      "Rmax_vs_90ns_ratio": 0.6380457682673735
+    },
+    {
+      "threshold": "5pct",
+      "label": "5%",
+      "requirement": "charge_area_lt_20pct",
+      "constraint_family": "charge",
+      "mu_max": 0.445,
+      "tau_eff_ns": 141.0557117938371,
+      "tau_eff_ci95_low_ns": 139.2598563585671,
+      "tau_eff_ci95_high_ns": 142.98075985134827,
+      "Rmax_MHz": 3.154781854210902,
+      "Rmax_ci95_low_MHz": 3.1123068618648397,
+      "Rmax_ci95_high_MHz": 3.195465022268954,
+      "original_90ns_Rmax_MHz": 4.944444444444445,
+      "original_report_Rmax_MHz": 4.94,
+      "Rmax_vs_90ns_ratio": 0.6380457682673734
+    },
+    {
+      "threshold": "5pct",
+      "label": "5%",
+      "requirement": "combined_dt1ns_area20pct",
+      "constraint_family": "combined",
+      "mu_max": 0.38,
+      "tau_eff_ns": 141.0557117938371,
+      "tau_eff_ci95_low_ns": 139.2598563585671,
+      "tau_eff_ci95_high_ns": 142.98075985134827,
+      "Rmax_MHz": 2.6939710215733546,
+      "Rmax_ci95_low_MHz": 2.6577002415924476,
+      "Rmax_ci95_high_MHz": 2.7287117044094438,
+      "original_90ns_Rmax_MHz": 4.222222222222222,
+      "original_report_Rmax_MHz": 4.22,
+      "Rmax_vs_90ns_ratio": 0.6380457682673735
+    },
+    {
+      "threshold": "10pct",
+      "label": "10%",
+      "requirement": "timing_lt_1ns",
+      "constraint_family": "timing",
+      "mu_max": 0.425,
+      "tau_eff_ns": 124.79018394263471,
+      "tau_eff_ci95_low_ns": 123.33381704737772,
+      "tau_eff_ci95_high_ns": 126.29185469184856,
+      "Rmax_MHz": 3.40571659222307,
+      "Rmax_ci95_low_MHz": 3.365220987822197,
+      "Rmax_ci95_high_MHz": 3.4459324309790844,
+      "original_90ns_Rmax_MHz": 4.722222222222222,
+      "original_report_Rmax_MHz": 4.72,
+      "Rmax_vs_90ns_ratio": 0.7212105724707678
+    },
+    {
+      "threshold": "10pct",
+      "label": "10%",
+      "requirement": "peak_amp_lt_10pct",
+      "constraint_family": "amplitude",
+      "mu_max": 0.385,
+      "tau_eff_ns": 124.79018394263471,
+      "tau_eff_ci95_low_ns": 123.33381704737772,
+      "tau_eff_ci95_high_ns": 126.29185469184856,
+      "Rmax_MHz": 3.08517856001384,
+      "Rmax_ci95_low_MHz": 3.0484943066154018,
+      "Rmax_ci95_high_MHz": 3.1216093786516415,
+      "original_90ns_Rmax_MHz": 4.277777777777778,
+      "original_report_Rmax_MHz": 4.28,
+      "Rmax_vs_90ns_ratio": 0.7212105724707678
+    },
+    {
+      "threshold": "10pct",
+      "label": "10%",
+      "requirement": "charge_area_lt_20pct",
+      "constraint_family": "charge",
+      "mu_max": 0.445,
+      "tau_eff_ns": 124.79018394263471,
+      "tau_eff_ci95_low_ns": 123.33381704737772,
+      "tau_eff_ci95_high_ns": 126.29185469184856,
+      "Rmax_MHz": 3.5659856083276855,
+      "Rmax_ci95_low_MHz": 3.5235843284255948,
+      "Rmax_ci95_high_MHz": 3.608093957142806,
+      "original_90ns_Rmax_MHz": 4.944444444444445,
+      "original_report_Rmax_MHz": 4.94,
+      "Rmax_vs_90ns_ratio": 0.7212105724707678
+    },
+    {
+      "threshold": "10pct",
+      "label": "10%",
+      "requirement": "combined_dt1ns_area20pct",
+      "constraint_family": "combined",
+      "mu_max": 0.38,
+      "tau_eff_ns": 124.79018394263471,
+      "tau_eff_ci95_low_ns": 123.33381704737772,
+      "tau_eff_ci95_high_ns": 126.29185469184856,
+      "Rmax_MHz": 3.045111305987686,
+      "Rmax_ci95_low_MHz": 3.0089034714645524,
+      "Rmax_ci95_high_MHz": 3.081068997110711,
+      "original_90ns_Rmax_MHz": 4.222222222222222,
+      "original_report_Rmax_MHz": 4.22,
+      "Rmax_vs_90ns_ratio": 0.7212105724707678
+    },
+    {
+      "threshold": "20pct",
+      "label": "20%",
+      "requirement": "timing_lt_1ns",
+      "constraint_family": "timing",
+      "mu_max": 0.425,
+      "tau_eff_ns": 101.86521002119034,
+      "tau_eff_ci95_low_ns": 100.94179200771904,
+      "tau_eff_ci95_high_ns": 102.86034408128886,
+      "Rmax_MHz": 4.172180079063206,
+      "Rmax_ci95_low_MHz": 4.131815849887974,
+      "Rmax_ci95_high_MHz": 4.210347285765445,
+      "original_90ns_Rmax_MHz": 4.722222222222222,
+      "original_report_Rmax_MHz": 4.72,
+      "Rmax_vs_90ns_ratio": 0.8835204873310318
+    },
+    {
+      "threshold": "20pct",
+      "label": "20%",
+      "requirement": "peak_amp_lt_10pct",
+      "constraint_family": "amplitude",
+      "mu_max": 0.385,
+      "tau_eff_ns": 101.86521002119034,
+      "tau_eff_ci95_low_ns": 100.94179200771904,
+      "tau_eff_ci95_high_ns": 102.86034408128886,
+      "Rmax_MHz": 3.7795043069160807,
+      "Rmax_ci95_low_MHz": 3.7429390640161646,
+      "Rmax_ci95_high_MHz": 3.8140793059286975,
+      "original_90ns_Rmax_MHz": 4.277777777777778,
+      "original_report_Rmax_MHz": 4.28,
+      "Rmax_vs_90ns_ratio": 0.8835204873310318
+    },
+    {
+      "threshold": "20pct",
+      "label": "20%",
+      "requirement": "charge_area_lt_20pct",
+      "constraint_family": "charge",
+      "mu_max": 0.445,
+      "tau_eff_ns": 101.86521002119034,
+      "tau_eff_ci95_low_ns": 100.94179200771904,
+      "tau_eff_ci95_high_ns": 102.86034408128886,
+      "Rmax_MHz": 4.3685179651367685,
+      "Rmax_ci95_low_MHz": 4.326254242823879,
+      "Rmax_ci95_high_MHz": 4.408481275683818,
+      "original_90ns_Rmax_MHz": 4.944444444444445,
+      "original_report_Rmax_MHz": 4.94,
+      "Rmax_vs_90ns_ratio": 0.8835204873310318
+    },
+    {
+      "threshold": "20pct",
+      "label": "20%",
+      "requirement": "combined_dt1ns_area20pct",
+      "constraint_family": "combined",
+      "mu_max": 0.38,
+      "tau_eff_ns": 101.86521002119034,
+      "tau_eff_ci95_low_ns": 100.94179200771904,
+      "tau_eff_ci95_high_ns": 102.86034408128886,
+      "Rmax_MHz": 3.73041983539769,
+      "Rmax_ci95_low_MHz": 3.694329465782189,
+      "Rmax_ci95_high_MHz": 3.7645458084491037,
+      "original_90ns_Rmax_MHz": 4.222222222222222,
+      "original_report_Rmax_MHz": 4.22,
+      "Rmax_vs_90ns_ratio": 0.8835204873310318
+    },
+    {
+      "threshold": "noise_floor",
+      "label": "noise floor",
+      "requirement": "timing_lt_1ns",
+      "constraint_family": "timing",
+      "mu_max": 0.425,
+      "tau_eff_ns": 161.18335762759685,
+      "tau_eff_ci95_low_ns": 158.89151702827075,
+      "tau_eff_ci95_high_ns": 163.58475111203617,
+      "Rmax_MHz": 2.6367486461098144,
+      "Rmax_ci95_low_MHz": 2.59804167020999,
+      "Rmax_ci95_high_MHz": 2.6747809319762608,
+      "original_90ns_Rmax_MHz": 4.722222222222222,
+      "original_report_Rmax_MHz": 4.72,
+      "Rmax_vs_90ns_ratio": 0.5583703015291371
+    },
+    {
+      "threshold": "noise_floor",
+      "label": "noise floor",
+      "requirement": "peak_amp_lt_10pct",
+      "constraint_family": "amplitude",
+      "mu_max": 0.385,
+      "tau_eff_ns": 161.18335762759685,
+      "tau_eff_ci95_low_ns": 158.89151702827075,
+      "tau_eff_ci95_high_ns": 163.58475111203617,
+      "Rmax_MHz": 2.38858406765242,
+      "Rmax_ci95_low_MHz": 2.35352010124905,
+      "Rmax_ci95_high_MHz": 2.423036844260848,
+      "original_90ns_Rmax_MHz": 4.277777777777778,
+      "original_report_Rmax_MHz": 4.28,
+      "Rmax_vs_90ns_ratio": 0.5583703015291371
+    },
+    {
+      "threshold": "noise_floor",
+      "label": "noise floor",
+      "requirement": "charge_area_lt_20pct",
+      "constraint_family": "charge",
+      "mu_max": 0.445,
+      "tau_eff_ns": 161.18335762759685,
+      "tau_eff_ci95_low_ns": 158.89151702827075,
+      "tau_eff_ci95_high_ns": 163.58475111203617,
+      "Rmax_MHz": 2.7608309353385114,
+      "Rmax_ci95_low_MHz": 2.72030245469046,
+      "Rmax_ci95_high_MHz": 2.8006529758339673,
+      "original_90ns_Rmax_MHz": 4.944444444444445,
+      "original_report_Rmax_MHz": 4.94,
+      "Rmax_vs_90ns_ratio": 0.5583703015291371
+    },
+    {
+      "threshold": "noise_floor",
+      "label": "noise floor",
+      "requirement": "combined_dt1ns_area20pct",
+      "constraint_family": "combined",
+      "mu_max": 0.38,
+      "tau_eff_ns": 161.18335762759685,
+      "tau_eff_ci95_low_ns": 158.89151702827075,
+      "tau_eff_ci95_high_ns": 163.58475111203617,
+      "Rmax_MHz": 2.3575634953452456,
+      "Rmax_ci95_low_MHz": 2.322954905128932,
+      "Rmax_ci95_high_MHz": 2.3915688332964216,
+      "original_90ns_Rmax_MHz": 4.222222222222222,
+      "original_report_Rmax_MHz": 4.22,
+      "Rmax_vs_90ns_ratio": 0.5583703015291371
+    }
+  ],
+  "operational": {
+    "split": "by source run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "traditional": {
+      "delay_ns": 60.0,
+      "delay_censored_low": true,
+      "ci_low_ns": 15.0,
+      "ci_high_ns": 60.0,
+      "detection_ap": 0.7522649170353508,
+      "time_rms_ns": 13.80607749892258,
+      "charge_bias": -0.022760772461040434,
+      "failure_rate": 0.17
+    },
+    "ml": {
+      "delay_ns": 40.0,
+      "delay_censored_low": false,
+      "ci_low_ns": 15.0,
+      "ci_high_ns": 60.0,
+      "detection_ap": 0.8482049795111897,
+      "time_rms_ns": 9.938514943830134,
+      "charge_bias": -0.005378444395950983,
+      "failure_rate": 0.3
+    }
+  },
+  "best_threshold_definition": {
+    "threshold": "20pct",
+    "label": "20%",
+    "mean_abs_difference_to_trad_and_ml_operational_ns": 51.865210021190336,
+    "combined_Rmax_MHz": 3.73041983539769,
+    "combined_Rmax_ci95_MHz": [
+      3.694329465782189,
+      3.7645458084491037
+    ]
+  },
+  "leakage": {
+    "threshold_flags": 0,
+    "operational_checks_passed": 4,
+    "operational_checks_total": 4,
+    "ml_too_good_caution": "ML operational delay is shorter than template fit but CI overlaps 60 ns and per-run stable delays are not all finite."
+  },
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "git_commit": "44aade6b86a327df4cc47ef7506122874d9251b1",
+  "runtime_sec": 67.77,
+  "follow_up_tickets": [
+    "S10i: replace synthetic operational matching with real high-current candidate pairs selected by pre-trigger quiet windows.",
+    "S10j: calibrate threshold tau_eff against amplitude-binned/asymmetric templates before using Rmax as a run-planning limit."
+  ]
+}

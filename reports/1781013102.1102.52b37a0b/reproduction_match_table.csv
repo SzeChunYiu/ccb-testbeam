@@ -1,0 +1,9 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+low_2nA multi_stave_per_selected_event,0.0156,0.015587529976019185,-1.2470023980814399e-05,0.0015,True
+low_2nA three_stave_per_selected_event,0.0041,0.0041109969167523125,1.099691675231218e-05,0.0015,True
+low_2nA downstream_per_selected_event,0.0231,0.023124357656731757,2.435765673175841e-05,0.0015,True
+high_20nA multi_stave_per_selected_event,0.0268,0.026806295960723994,6.295960723993327e-06,0.0015,True
+high_20nA three_stave_per_selected_event,0.0085,0.00853789586801239,3.789586801238899e-05,0.0015,True
+high_20nA downstream_per_selected_event,0.0334,0.03341410480625382,1.4104806253821545e-05,0.0015,True
+S10b measured traditional live10 ns,124.79018394263471,124.79018394263471,0.0,0.05,True
+S10 combined Rmax at 10pct measured tau MHz,3.045111305987686,3.045111305987686,0.0,0.02,True

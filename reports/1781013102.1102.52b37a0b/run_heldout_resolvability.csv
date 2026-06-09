@@ -1,0 +1,5 @@
+source_run,method,resolvable_delay_ns,n_positive
+63,constrained_template_fit,30.0,300
+65,constrained_template_fit,,300
+63,compact_mlp_classifier_regressor,40.0,300
+65,compact_mlp_classifier_regressor,,300

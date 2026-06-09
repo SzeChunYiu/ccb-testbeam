@@ -1,0 +1,6 @@
+quantity,value
+parent control events,10156.0
+clean events D_t<3 ns,2155.0
+tail events D_t>51 ns,72.0
+extreme benchmark events,2227.0
+benchmark tail fraction,0.032330489447687474

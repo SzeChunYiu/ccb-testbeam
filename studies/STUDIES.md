@@ -259,30 +259,27 @@ of truth and synthesises `reports/` into a rolling summary.
 
 The latest reports deepen the pulse programme but also narrow the next questions. S02/S07 found
 ML gains for timing residual correction and current/topology classification, but S00b turns
-selector/baseline semantics into a measurable systematic and S02b/S03a now show that analytic or
-template timewalk closure must be tested across leave-one-run-out splits before adopting a ridge
-correction. S07b proves the D_t timing-control labels are self-referential; S07c shows shape RF can
-beat q_template-only on weak clean-timing labels, but the historical App.A table must be recovered
-or retired before that label family is trusted. S10 and S18 show strong traditional baselines still
-win or tie when the physics control is tight; S16 shows the baseline estimator is much better than
-a naive pretrigger median but still biased; P01 shows representation learning needs
-leakage-controlled downstream value beyond reconstruction; P04 is a strong duplicate-readout
-amplitude/charge closure, not an absolute energy calibration; P10a says conditional templates need
-explicit timewalk terms before their timing gain can be trusted. P03a now shows a tiny 18-sample
-MLP does not beat either the frozen S02 ridge baseline or the analytic timewalk baseline; waveform
-timing work must test run stability and residual-target formulations before any adoption claim.
-S18b traces Sample-IV A-stack broadening to low-statistics/calibration-definition sensitivity
-rather than a clean run-period shift. S16c finds adaptive-lowering features are not the main S02
-timing-tail source, so baseline work should move to Sample-I propagation, true no-pulse sourcing,
-and full-tail timing tables instead of another proxy-only pedestal benchmark.
+selector/baseline semantics into a measurable systematic. S02b/S02c/S03c now show that analytic
+timewalk closure is stable across Sample-II leave-one-run-out splits, while per-run drift and
+monotonic binned variants do not improve the strong traditional baseline. S07b/S07e prove the D_t
+timing-control labels are self-referential; S07c remains useful only as a weak-label screen until
+the historical App.A table is recovered or retired. S10 and S18 show strong traditional baselines
+still win or tie when the physics control is tight; S16 shows the baseline estimator is much
+better than a naive pretrigger median but still biased. P09a adds rare early-pretrigger,
+baseline-excursion, delayed-peak, and broad-mismatch taxa that must now be propagated into timing,
+pile-up, charge, PID, and energy studies. P04/P04c are strong duplicate-readout amplitude/charge
+closures, but P04b shows that transfer to an external charge-energy proxy is much weaker. P10b
+shows explicit timewalk terms beat the conditional template, so learned templates need
+physics-aware phase structure before adoption.
 
-Live queue decision: the exact requested command `tn-ticket list testbeam` reports
-`open=5 claimed=0 done=0 failed=6`, which is below the 18-ready floor. A project-aware queue
+Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
+`open=6 claimed=0 done=0 failed=6`, which is below the 18-ready floor. A project-aware queue
 check during this steering pass reported `tn-ticket list --project testbeam` =
-`open=46 claimed=1 done=36 failed=8`; the
-discrepancy is a shim/argument parsing issue, not a scientific queue shortage. To satisfy the
-low exact-command gate while keeping work in the real testbeam queue, four new non-duplicate
-ready tickets were appended under `project:testbeam`.
+`open=56 claimed=3 done=44 failed=11` after this pass appended three more non-duplicate ready
+tickets under `project:testbeam`: P04f baseline-excursion charge-bias closure, S10f
+anomaly-stratified pile-up excess closure, and P08a penetration-depth weak-label PID null test.
+The discrepancy is a shim/argument parsing issue, not a scientific queue shortage, but the exact
+low-command gate was still honoured with project:testbeam tickets.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -307,7 +304,14 @@ S03b now shows per-stave monotonic amplitude-binned timewalk is worse than the S
 baseline on the held-out run, so timing work should move to physically signed priors and
 multi-run stability rather than finer unconstrained binning. P01c completes the sample-importance
 map: samples 3-5 dominate traditional timing sensitivity and sample 5 is the top combined
-importance point, giving P07e and P03c a concrete sample-window prior.
+importance point, giving P07e and P03c a concrete sample-window prior. S02c confirms run-drift
+terms are not the missing timewalk ingredient, while S03c confirms analytic closure stability
+across Sample-II runs. S07e repeats the App.I lesson in the all-three-downstream subset:
+curvature-only traditional labeling is effectively perfect, so shape RFs must move to independent
+targets. P04b/P04c split the charge story into a very strong duplicate-readout ML closure and a
+much weaker external charge-energy transfer. P09a turns anomaly detection into a usable taxonomy,
+making anomaly propagation the next atomic bridge across timing, charge, pile-up, baseline, and
+PID.
 
 Completed since last steering cycle:
 
@@ -335,6 +339,16 @@ Completed since last steering cycle:
 - **S03b/P01c — Monotonic amplitude-binned timewalk and per-sample pulse importance.** Result:
   monotonic binned timewalk does not improve on S03a amp-only, while the sample map localises
   timing/saturation leverage to the early peak window, especially samples 3-6.
+- **S02c/S03c — Drift nuisance and multi-run timewalk stability.** Result: explicit analytic
+  timewalk is stable across Sample-II leave-one-run-out splits; drift and binned variants should
+  be treated as diagnostics unless they beat the analytic baseline with paired CIs.
+- **S07e — All-three-downstream curvature-only timing-control audit.** Result: the traditional
+  curvature/D_t target reaches AUC 1.000 while shape RF is lower, so future control classifiers
+  need independent, non-D_t labels.
+- **P04b/P04c/P10b/P09a — Charge, template phase, and anomaly updates.** Result: duplicate
+  readout remains an ML-friendly closure but external charge-energy transfer is weaker; explicit
+  timewalk beats conditional template timing; rare waveform taxonomy is ready for propagation
+  studies rather than adoption claims.
 
 Active ready queue highlights:
 
@@ -381,3 +395,19 @@ Active ready queue highlights:
   minimal audit of table lookup, geometry assumptions, and charge-proxy uncertainty. Traditional:
   PSTAR/range interpolation with geometry variants. ML: monotonic gradient-boosted surrogate.
   Metric: depth-ordering violations, residual res68, geometry envelope, and ML delta CIs.
+- **P04f — Baseline-excursion charge-bias closure.** Test whether P09a baseline-excursion and
+  early-pretrigger taxa explain P04/P04c amplitude or charge bias. Traditional: frozen peak,
+  integral, adaptive-template, and robust baseline-corrected estimators in matched strata. ML:
+  leave-one-run-out charge residual model using waveform, P09a scores, and S16 summaries. Metric:
+  bias, res68, full RMS, high-bias tail fraction, and paired delta CIs.
+- **S10f — Anomaly-stratified pile-up excess closure.** Test whether the S10c current excess is
+  concentrated in delayed-peak, broad-mismatch, baseline-excursion, or early-pretrigger waveform
+  taxa. Traditional: matched Poisson/downstream excess by P09a stratum. ML: calibrated
+  pile-up/current score with taxonomy and latent-distance terms under leakage guards. Metric:
+  high-minus-low excess, topology odds ratio, score delta, and stratum heterogeneity with CIs.
+- **P08a — Penetration-depth weak-label PID null test.** Before S14/S15 truth labels exist, test
+  whether waveform shape adds stable PID-like information beyond charge, penetration depth, and
+  run/stave proxies. Traditional: tail/total, area/peak, q_template, and DeltaE-like cuts. ML:
+  P01/P01b latent and raw-waveform classifier with leakage sentinels. Metric: weak-label AUC/AP,
+  calibration error, purity at fixed efficiency, leakage deltas, and paired CIs; no PID adoption
+  claim is allowed.

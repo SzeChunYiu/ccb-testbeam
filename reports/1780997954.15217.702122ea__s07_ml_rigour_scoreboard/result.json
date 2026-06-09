@@ -1,0 +1,103 @@
+{
+  "study": "S07",
+  "ticket": "1780997954.15217.702122ea",
+  "worker": "testbeam-laptop-4",
+  "title": "ML rigour pass: current/topology proxy calibration scoreboard",
+  "reproduced": true,
+  "repro_tolerance": "exact selected-pulse count match",
+  "traditional": {
+    "metric": "low-current ROC AUC",
+    "value": 0.503996468956851,
+    "ci": [
+      0.49098672681702915,
+      0.5167705598546007
+    ]
+  },
+  "ml": {
+    "metric": "low-current ROC AUC",
+    "value": 0.7682546212172584,
+    "ci": [
+      0.7583642351110358,
+      0.7776050885150354
+    ]
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "preregistered_metric": "run-held-out low-current ROC AUC",
+    "traditional_baseline_tries": 12,
+    "ml_hyperparameter_tries": 4,
+    "n_tries": 16,
+    "ml_minus_traditional_auc": 0.2642581522604074,
+    "bootstrap_ci": [
+      0.25025487344848096,
+      0.279917285172643
+    ],
+    "p_value_one_sided": 0.0012484394506866417,
+    "p_value_bonferroni": 0.019975031210986267
+  },
+  "input_sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+  "git_commit": "696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b",
+  "critic": "pending",
+  "next_tickets": [
+    "S07b: timing-control classifier calibration with D_t labels and bootstrap CIs",
+    "S07c: event-level clean-timing RF vs q_template/downstream-span baseline"
+  ],
+  "details": {
+    "n_rows": 10519,
+    "n_evaluated": 10519,
+    "positive_low_current_fraction": 0.1946002471717844,
+    "feature_columns": [
+      "norm_s00",
+      "norm_s01",
+      "norm_s02",
+      "norm_s03",
+      "norm_s04",
+      "norm_s05",
+      "norm_s06",
+      "norm_s07",
+      "norm_s08",
+      "norm_s09",
+      "norm_s10",
+      "norm_s11",
+      "norm_s12",
+      "norm_s13",
+      "norm_s14",
+      "norm_s15",
+      "norm_s16",
+      "norm_s17",
+      "tail_fraction",
+      "late_fraction",
+      "area_over_peak",
+      "peak_sample",
+      "max_down_step",
+      "final_fraction"
+    ],
+    "best_rf_params": {
+      "n_estimators": 250,
+      "max_depth": 7,
+      "min_samples_leaf": 20
+    },
+    "ml_vs_traditional": {
+      "ml_minus_traditional_auc": 0.2642581522604074,
+      "bootstrap_ci": [
+        0.25025487344848096,
+        0.279917285172643
+      ],
+      "p_value_one_sided": 0.0012484394506866417,
+      "p_value_bonferroni": 0.019975031210986267
+    },
+    "folds": [
+      {
+        "name": "fold1",
+        "train_n": 5631,
+        "test_n": 4888
+      },
+      {
+        "name": "fold2",
+        "train_n": 4888,
+        "test_n": 5631
+      }
+    ]
+  },
+  "runtime_sec": 36.0
+}

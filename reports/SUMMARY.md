@@ -24,6 +24,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S03b q-template | ✅ done | ✅ S00 gate | q_template-only AUC 0.741; 13.7% tail rejection at 95% clean retention | q_template RF AUC 0.843; AP 0.304 | **Yes** for weak tail labels; requires pair-residual validation | reports/1781006575.2877.41492e09 |
 | S03c | ✅ done | ✅ S00 and S03a run-65 reproduction | LORO analytic timewalk 1.551 ns | LORO ridge residual 1.537 ns | Tie; analytic closure is stable across Sample-II runs | reports/1781005627.1877.378c7a87 |
 | S03d | ✅ done | ✅ S03a/S03b LORO baselines reproduced | amp-only 1.551 ns; monotone-binned 1.645 ns | HGB residual 1.394 ns | ML gain is real in-fold; needs monotonicity/transfer audit before adoption | reports/1781010985.923.35c141ac |
+| S03d exact-fold | ✅ done | ✅ exact P01e candidate folds reproduced | S03 analytic timewalk 1.494 ns | S02 ridge 1.897 ns; P01e AE 1.980 ns | No; S03 analytic is the comparator to beat on these folds | reports/1781018587.1274.0a8b49e5 |
 | S05a | ✅ done | ✅ A-stack/B-stack external-control inputs | CFD20 pair-median residual width 2.082 ns | ExtraTrees B+A width 1.664 ns | No secure A-control gain; shuffled-A control is similar | reports/1781001480.696013.4ac50583__s05a_astack_external_control |
 | S05c | ✅ done | ✅ S05-style B-stack residual inputs | pair-median/hierarchical covariance sigma68 2.082 ns; B2 off-diagonal dominates | ExtraTrees waveform residual sigma68 1.449 ns | ML reduces residual width, but covariance remains B2/topology dominated | reports/1781009478.9969.16fe02b4 |
 | S05d | ✅ done | ✅ S05c covariance inputs | static two-ended priors sigma68 2.147 ns; bias -0.870 ns | dynamic waveform weights sigma68 2.021 ns; bias -0.621 ns | Small ML gain; projection bias requires support frontier | reports/1781016280.4623.016f3ea3 |
@@ -50,6 +51,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
 | S11b | ✅ done | ✅ S10c topology fractions within 0.0015 | real high-current secondary fraction Δ=0.0181, CI [-0.0168,0.0541] | RF secondary fraction Δ=0.00437, CI [-0.00138,0.0121] | Diagnostic; largest traditional excess is high-amp/large-lowering/broad-late | reports/1781010611.1197.028b141a |
 | S11c | ✅ done | ✅ S11a anchor reproduced | amplitude-binned asymmetric template time RMS 17.83 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate remains high (0.295) | reports/1781010611.1262.2e354bed |
+| S11d real-current | ✅ done | ✅ S10c topology fractions within 0.0015 | traditional candidate excess 0.0105, CI [-0.0015,0.0236] | ML candidate excess 0.0242, CI [0.0173,0.0302] | Mixed; method-specific candidates overlap weakly and joint excess is small | reports/1781018533.1152.0dc47f07 |
+| S11e residual-pool | ✅ done | ✅ S11a/S11c anchors reproduced | conditioned template RMS 17.36 ns; failure 0.0117 | conditioned MLP RMS 9.07 ns; failure 0.252 | ML wins RMS/charge res68, but failure-rate transfer still gates adoption | reports/1781018533.1179.60a328c5 |
 | S13b | ✅ done | ✅ S10 score ratio 1.297 reproduced | downstream high/low topology ratio 1.445, CI [1.220,2.542] | CWoLa RF score ratio 1.220, AUC 0.668 | ML transfers modestly, but topology remains the physics-facing rate handle | reports/1781000867.546938.20f0173c |
 | S16 | ✅ done | ✅ S00 selection | pretrigger median MAE 341 ADC | adaptive/learned MAE 48.9 ADC | **Yes**, but adaptive remains biased | reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation |
 | S16b closure | ✅ done | ✅ 640,737 exact | line3 early-sample predictor MAE 169.34 ADC | ridge closure MAE 173.71 ADC | No; traditional remains preferred, ML is contamination diagnostic | reports/1781000826.539659.030b7796__s16b_independent_pedestal_estimator_closure |
@@ -83,6 +86,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P01e | ✅ done | ✅ prior P01c CFD20/latent reproduced | strict hand-shape ridge sigma68 1.962 ns | strict AE latent ridge sigma68 1.965 ns; shuffled target 2.056 ns | No; latent does not beat hand-shape and null controls remain strong | reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit |
 | P01e loader | ✅ done | ✅ 640,737 exact; NPZ key/hash join exact | hand-shape stave bal-acc 0.410 | P01b latent RF bal-acc 0.479 | Loader-safe smoke test only; latent still needs domain/support audits | reports/1781016189.1012.5eef5b75 |
 | P01e control null | ✅ done | ✅ 640,737 exact and latent key match | controls-only manual-flag bal-acc 0.387 | latent RF manual-flag bal-acc 0.968; lift 0.457 | Positive morphology lift after controls, but consumers need calibration and leakage sentinels | reports/1781017385.1212.733932fe |
+| P01f timing-control | ✅ done | ✅ P01c/P01e controls reproduced | hand-shape timing sigma68 1.948 ns | AE latent 1.952 ns; event-block shuffle 2.023 ns | No; event-block controls recover too much timing gain | reports/1781018587.1208.05763e48 |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
 | P02b | ✅ done | ✅ P02 early-peak rate 0.04388 vs ≈0.044 | hand/PCA GMM run-heldout AMI 0.357 on q_template bins | AE GMM AMI 0.377 | Small ML gain only for q_template-bin morphology; not broadly superior | reports/1781004956.538.5fc10cd7 |
 | P02c q-template | ✅ done | ✅ S01 q_template row semantics exact | hand/PCA GMM manual-flag AMI 0.674; q-template AMI 0.154 | AE/P01-style morphology is target-specific | Mixed; learned morphology is not a universal cluster win | reports/1781009575.1631.563755ca |
@@ -107,6 +111,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P07c | ✅ done | ✅ P07/P07b anchors reproduced | template-family artificial res68 0.148 | ratio-transfer res68 0.0393; boundary timing-tail delta ≈ -0.006 | ML wins artificial closure; boundary q_template/timing shifts require leakage controls | reports/1781010522.1275.6b5664c7 |
 | P07d | ✅ done | ✅ Sample-II B2 count reproduced | template pseudo-saturation res68 0.200 | ratio-transfer res68 0.0541; max tail envelope 0.0769 on run 65 | Diagnostic; saturation correction has a run-dependent timing-tail envelope | reports/1781010522.1343.1dda69d0 |
 | P07e | ✅ done | ✅ Sample-II B2 count and saturation proxy reproduced | retained-window/template ablations | best GBR window w2-8 res68 0.0812, bias 0.0292 | Not adoptable yet; needs calibrated accept/veto rule | reports/1781010945.568.060f508b |
+| P07e boundary | ✅ done | ✅ P07c/P07b gates and Sample-II B2 count reproduced | linear boundary shrink lift 0.0267 | ML boundary calibration lift 0.0220 with 3 leakage flags | No; traditional boundary shrink wins and leakage flags need triage | reports/1781018293.1193.5694364a |
 | P09a | ✅ done | ✅ 640,737 exact | robust-template top-128 curated precision 0.898 | PCA/AE/isolation precision 0.883; higher novel precision 0.766 | Mixed; ML better for novel taxa, traditional slightly better curated precision | reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy |
 | P09c | ✅ done | ✅ 640,737 exact | delayed-peak target AP 0.433; pile-up-score delta 14.66 | latent/isolation delayed-peak AP 0.789 | ML improves delayed-peak isolation; recovery/veto evidence is low-count | reports/1781014256.642.6ded722c |
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
@@ -382,6 +387,25 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   S10 topology excess. The new tickets therefore focus on method-disagreement taxonomy,
   correction-valid covariance, charge-harm labels, and a pulse-action matrix that turns atom-level
   diagnostics into correct/abstain/veto/pass decisions.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` still reports
+  `open=10 claimed=0 done=0 failed=11`, below the 18-ready trigger, while the correctly addressed
+  local `testbeam` project store reports `open=186 claimed=4 done=179 failed=7` after this pass
+  under concurrent worker movement. The trigger was satisfied by appending four ready,
+  non-duplicate `project:testbeam` tickets: S11g residual-pool two-pulse real-current transfer
+  gate (`1781048230.616.2d7e4b56`), P01k event-block timing leakage atomizer
+  (`1781048235.687.33ce5940`), S03k analytic comparator reuse gate for waveform consumers
+  (`1781048240.758.327a70d2`), and P07h boundary-shrinkage leakage triage
+  (`1781048246.829.592868b2`).
+- Fresh synthesis: the newest P01f timing-control diagnosis reproduces the suspicious
+  event-shuffled strength and shows AE latents do not beat hand-shape residual timing, so latent
+  reuse now needs an event-block atomizer before timing, pile-up, PID, or energy consumers inherit
+  those features. The exact-fold S03d reconciliation shows S03 analytic timewalk remains the
+  comparator to beat on the P01e candidate folds, so downstream waveform consumers need a reusable
+  analytic-comparator gate. S11e improves injected two-pulse RMS and charge res68 with conditioned
+  ML, but the high failure rate and S11d real-current method disagreement make transfer/abstention
+  the next pile-up question. P07 boundary-shrinkage calibration leaves traditional shrinkage ahead
+  of ML and reports leakage flags, so saturation recovery needs boundary-leakage triage alongside
+  the existing accept/veto work.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

@@ -1336,3 +1336,46 @@ Active ready queue highlights:
   action support fraction, timing width/tails, charge bias/res68, pile-up coverage, baseline harm,
   covariance coverage, PID/energy proxy degradation, and ML-minus-traditional deltas with
   run-block bootstrap CIs.
+- **S11g — Residual-pool two-pulse real-current transfer gate.** Test whether the S11e conditioned
+  residual-pool gain on injected two-pulse recovery transfers to real high-current candidate
+  windows without inflating failure, charge bias, or support drift. Traditional: freeze the
+  conditioned amplitude-binned asymmetric S01 template fit, residual-pool ranks, bounded-fit
+  delta-SSE, secondary-fraction, and source-run holdout gates, then score high-minus-low candidate
+  strata matched by run, amplitude, lowering, topology, saturation, anomaly, and q_template. ML:
+  freeze the conditioned compact MLP classifier/regressor and recalibrate only isotonic/conformal
+  abstention layers with shuffled-current, low-current overlay, amplitude-only, and topology-only
+  sentinels. Metric: candidate-rate excess, accepted constituent time RMS proxy, charge fractional
+  bias/res68, failure/abstention rate, support drift, topology-excess coverage, calibration ECE,
+  and ML-minus-traditional deltas with source-run and matched-stratum bootstrap CIs.
+- **P01k — Event-block timing leakage atomizer.** Locate which run, event-block, stave,
+  amplitude, peak-phase, q_template, baseline, saturation, dropout, anomaly, and topology
+  coordinates let event-block shuffled controls recover most of the P01f/P01e nominal timing gain.
+  Traditional: freeze hand-shape/PCA residual timing probes and explicit nuisance-matched tables,
+  then decompose nominal and event-block-shuffled sigma68 gains by one atom and paired atom
+  interactions. ML: run-heldout latent ridge/ExtraTrees probes with per-atom residualization,
+  adversarial domain-score removal, event-block/per-run-stave/per-run-stave-amplitude shuffles,
+  and amplitude-only, run-only, topology-only controls. Metric: sigma68/full RMS/tail fraction,
+  control-gain fraction, event-shuffle closeness, nuisance AUC, support count, leakage-control
+  gap, and ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **S03k — Analytic comparator reuse gate for waveform consumers.** Require downstream
+  waveform-latent, timing-uncertainty, pile-up, charge, PID, and energy consumers to beat the
+  exact-fold S03 analytic timewalk comparator, not just weaker CFD20 or S02 ridge baselines.
+  Traditional: publish a frozen exact-fold S03 analytic residual registry and matched residual
+  tables by run, stave, amplitude, peak phase, q_template, baseline, saturation, dropout/anomaly,
+  topology, and pile-up score. ML: evaluate representative frozen P01/P03/P06/P05/P04 consumer
+  models against the same folds with target-shuffle, event-shuffle, domain-score, amplitude-only,
+  and topology-only sentinels. Metric: consumer sigma68/full RMS/tail fraction, pull coverage,
+  charge/pile-up/PID proxy change after timing substitution, support loss, comparator margin, and
+  ML-minus-S03 deltas with event-paired run-block bootstrap CIs.
+- **P07h — Boundary-shrinkage leakage triage.** Explain the P07 natural B2 boundary-shrinkage
+  leakage flags and decide whether they are harmless event-hash/support artifacts or real
+  saturation-boundary bias that should veto charge, timing, PID, and energy consumers.
+  Traditional: freeze linear boundary shrink, retained-window template/rising-edge estimators,
+  odd/even duplicate checks, q_template and CFD20 shift tables, then isolate flagged boundary
+  cells by saturation depth, observed amplitude, run, stave, peak sample, baseline, anomaly, and
+  event-hash buckets. ML: rerun only calibration/diagnostic layers for boundary ML, isotonic
+  alpha, and conformal risk models with hash-block exclusion, shuffled-target, shuffled-hash,
+  amplitude-only, run-only, and saturation-only controls. Metric: leakage-flag rate,
+  amplitude/charge lift, res68, signed bias, q_template shift, CFD20/timing-tail delta,
+  calibration coverage/ECE, veto support loss, and ML-minus-traditional deltas with
+  run/stave/hash-block bootstrap CIs.

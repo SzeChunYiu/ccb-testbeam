@@ -1,0 +1,116 @@
+{
+  "study": "S16c",
+  "ticket": "1781001221.625989.53423f03",
+  "worker": "testbeam-laptop-1",
+  "title": "pedestal-lowering nuisance propagation into timing residuals",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "adaptive post-correction violations",
+      "report_value": 0,
+      "reproduced": 0,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "traditional": {
+    "method": "Ridge residual correction on adaptive-lowering nuisance features",
+    "metric": "heldout_pairwise_sigma68_ns",
+    "value": 3.251442982285886,
+    "ci": [
+      3.0091428339580446,
+      3.6168817168326077
+    ],
+    "tail_frac_abs_gt5ns": 0.06060606060606061
+  },
+  "ml": {
+    "method": "RandomForestRegressor residual correction on lowering/shape features",
+    "metric": "heldout_pairwise_sigma68_ns",
+    "value": 2.9205607740057142,
+    "ci": [
+      2.6549299235258967,
+      3.266335918598603
+    ],
+    "tail_frac_abs_gt5ns": 0.020202020202020204,
+    "best_hyperparameters": {
+      "n_estimators": 120.0,
+      "max_depth": 5.0,
+      "min_samples_leaf": 20.0,
+      "cv_sigma68_ns": 1.3197483032287816,
+      "cv_sigma68_std_ns": 0.02842145778687452
+    }
+  },
+  "raw_reference": {
+    "method": "S02 CFD20",
+    "value": 2.9933861916712807,
+    "ci": [
+      2.6586384459057943,
+      3.3695633953680146
+    ],
+    "tail_frac_abs_gt5ns": 0.06565656565656566
+  },
+  "lowering_tail_stratification": {
+    "threshold_adc": 902.967624999997,
+    "heldout_high_tail_fraction": 0.0,
+    "heldout_low_tail_fraction": 0.0663265306122449
+  },
+  "ml_beats_baseline": true,
+  "verdict": "Adaptive lowering does not explain the S02 held-out timing tails strongly: high-vs-low tail fractions are 0.000 vs 0.066, and sigma68 gains are -0.258 ns traditional and 0.073 ns ML.",
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "e1006f46a1f4c96682778a602dbb8d9a9deeb3df",
+  "critic": "pending",
+  "next_tickets": [
+    "S16d: repeat pedestal-lowering timing nuisance test on Sample-I B-stack residuals",
+    "S04b: add adaptive-lowering covariates to full timing-resolution tail tables"
+  ]
+}

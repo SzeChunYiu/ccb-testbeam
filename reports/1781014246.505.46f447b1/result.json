@@ -1,0 +1,101 @@
+{
+  "ticket": "1781014246.505.46f447b1",
+  "study": "S16g",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "904ea43c32e46a8f9f838566a68ab4e43fd37e68",
+  "runtime_sec": 105.40906310081482,
+  "reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "selected_pass": true,
+    "forced_random_tagged_entries": 0,
+    "forced_random_pass": true
+  },
+  "frozen_thresholds": {
+    "quietest": {
+      "event_max_adc": 80.0,
+      "pre_std_adc": 8.0,
+      "pre_range_adc": 25.0,
+      "adaptive_lowering_adc": 0.1
+    },
+    "quietish": {
+      "event_max_adc": 200.0,
+      "pre_std_adc": 16.0,
+      "pre_range_adc": 55.0,
+      "adaptive_lowering_adc": 200.0
+    },
+    "run_quiet_fraction_threshold": 0.005,
+    "low_amplitude_window_adc": [
+      1000.0,
+      3000.0
+    ]
+  },
+  "traditional_and_ml": [
+    {
+      "method": "traditional_quietish_calibrated_median",
+      "n": 70887,
+      "runs": 33,
+      "pedestal_bias_adc": -89.84264018790863,
+      "pedestal_mae_adc": 123.91051243528432,
+      "charge_bias_adc_sample": 808.5837616911402,
+      "charge_mae_adc_sample": 1115.1946119175755,
+      "timing_tail_delta_fraction": 0.003625488453454089,
+      "pedestal_bias_adc_ci_low": -102.86364165737875,
+      "pedestal_bias_adc_ci_high": -71.78161494162403,
+      "pedestal_mae_adc_ci_low": 103.39947072753361,
+      "pedestal_mae_adc_ci_high": 140.2699404770979,
+      "charge_bias_adc_sample_ci_low": 646.0345344746023,
+      "charge_bias_adc_sample_ci_high": 925.7727749163522,
+      "timing_tail_delta_fraction_ci_low": 0.0030980280085014236,
+      "timing_tail_delta_fraction_ci_high": 0.004212378682990877
+    },
+    {
+      "method": "traditional_quietest_calibrated_median",
+      "n": 70887,
+      "runs": 33,
+      "pedestal_bias_adc": -89.82110670856456,
+      "pedestal_mae_adc": 123.93332989476265,
+      "charge_bias_adc_sample": 808.3899603770803,
+      "charge_mae_adc_sample": 1115.3999690528601,
+      "timing_tail_delta_fraction": 0.003625488453454089,
+      "pedestal_bias_adc_ci_low": -103.97244411185757,
+      "pedestal_bias_adc_ci_high": -73.28053672060383,
+      "pedestal_mae_adc_ci_low": 103.76999154387158,
+      "pedestal_mae_adc_ci_high": 140.57338827553224,
+      "charge_bias_adc_sample_ci_low": 659.5248304854156,
+      "charge_bias_adc_sample_ci_high": 935.7519970067119,
+      "timing_tail_delta_fraction_ci_low": 0.0029499866107977907,
+      "timing_tail_delta_fraction_ci_high": 0.004172476785855397
+    },
+    {
+      "method": "ml_ipw_quiet_probability",
+      "n": 70887,
+      "runs": 33,
+      "pedestal_bias_adc": -89.8145920086742,
+      "pedestal_mae_adc": 123.94551115479688,
+      "charge_bias_adc_sample": 808.3313280782867,
+      "charge_mae_adc_sample": 1115.5096003932936,
+      "timing_tail_delta_fraction": 0.003625488453454089,
+      "pedestal_bias_adc_ci_low": -104.32113778155573,
+      "pedestal_bias_adc_ci_high": -73.88453013146068,
+      "pedestal_mae_adc_ci_low": 104.94114994442073,
+      "pedestal_mae_adc_ci_high": 139.6013056294957,
+      "charge_bias_adc_sample_ci_low": 664.9607711828343,
+      "charge_bias_adc_sample_ci_high": 938.8902400341772,
+      "timing_tail_delta_fraction_ci_low": 0.002997253104563208,
+      "timing_tail_delta_fraction_ci_high": 0.004325321811891496
+    }
+  ],
+  "ml": {
+    "mean_auc": 0.7210910834884269,
+    "mean_average_precision": 0.3163879838101887,
+    "mean_ece": 0.5797526354028579,
+    "ece_ci_low": 0.5574160089870116,
+    "ece_ci_high": 0.6021251639337035,
+    "auc_ci_low": 0.7141862434599389,
+    "auc_ci_high": 0.7288364661259347,
+    "average_precision_ci_low": 0.2772192403794061,
+    "average_precision_ci_high": 0.35537677732625894
+  },
+  "leakage_checks_pass": true,
+  "conclusion": "Quietest and quietish calibrated traditional medians are useful emergency pseudo-pedestals but are not zero-bias substitutes for true random/forced pedestal data."
+}

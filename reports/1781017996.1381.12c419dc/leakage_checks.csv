@@ -1,0 +1,9 @@
+check,value,flag,note
+s10c_gate_reproduced_first,1.0,False,Raw-ROOT topology reproduction is executed before candidate scoring.
+heldout_run_excluded_from_template_and_ml_training,1.0,False,S11b fold diagnostics record run-held-out scoring for every source run.
+identifier_features_excluded,1.0,False,ML features are waveform and one-pulse residual summaries; run/current/event ids are added only after scoring.
+synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics store synthetic training source runs.
+mean_synthetic_holdout_auc,0.9263863941796676,False,Near-perfect synthetic discrimination would trigger a leakage review.
+mean_shuffled_label_synthetic_auc,0.5024666309703479,False,Shuffled synthetic labels should not transfer to held-out overlays.
+actual_current_auc_from_ml_overlap_score,0.595569513638928,False,Flagged if the residual-shape ML score almost identifies current by itself.
+actual_current_auc_from_blinded_audit_score,0.48561329487576776,False,Flagged if the combined audit rank is too current-separable.

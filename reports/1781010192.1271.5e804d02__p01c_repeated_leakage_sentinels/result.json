@@ -1,0 +1,139 @@
+{
+  "ticket_id": "1781010192.1271.5e804d02",
+  "study_id": "P01c",
+  "title": "repeated leakage sentinels for waveform probes",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "official": "leave heldout runs out",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "balanced_train_rows": 82118,
+    "balanced_heldout_rows": 11998,
+    "max_per_run_stave": 1500,
+    "random_row_comparison": "supervised-probe sentinel only; not accepted as physics evidence"
+  },
+  "traditional": {
+    "method": "traditional residual PCA+hand",
+    "metric": "balanced_accuracy",
+    "value": 0.3310370845109638,
+    "ci_low": 0.3038938859779309,
+    "ci_high": 0.34898054965125147,
+    "ci_type": "heldout_run_block_bootstrap",
+    "macro_f1": 0.3120494940085528,
+    "train_rows": 82118,
+    "heldout_rows": 11998,
+    "category": "traditional"
+  },
+  "ml": {
+    "method": "ML residual masked-denoising AE-4",
+    "metric": "balanced_accuracy",
+    "value": 0.23532678068213056,
+    "ci_low": 0.22117297039089281,
+    "ci_high": 0.24629468877044586,
+    "ci_type": "heldout_run_block_bootstrap",
+    "macro_f1": 0.21147131475711406,
+    "train_rows": 82118,
+    "heldout_rows": 11998,
+    "category": "ml"
+  },
+  "proxy_and_leakage_sentinels": [
+    {
+      "method": "proxy amplitude+topology",
+      "metric": "balanced_accuracy",
+      "value": 0.6683521028476158,
+      "ci_low": 0.6367553264557572,
+      "ci_high": 0.6802177276622648,
+      "ci_type": "heldout_run_block_bootstrap",
+      "macro_f1": 0.6223424685643413,
+      "train_rows": 82118,
+      "heldout_rows": 11998,
+      "category": "proxy"
+    },
+    {
+      "method": "leakage target topology mask",
+      "metric": "balanced_accuracy",
+      "value": 0.8287131344584208,
+      "ci_low": 0.8047142693828074,
+      "ci_high": 0.8493517173750529,
+      "ci_type": "heldout_run_block_bootstrap",
+      "macro_f1": 0.7333478981096269,
+      "train_rows": 82118,
+      "heldout_rows": 11998,
+      "category": "leakage_sentinel"
+    }
+  ],
+  "shuffle_battery": {
+    "seeds": [
+      7001,
+      7002,
+      7003,
+      7004,
+      7005,
+      7006,
+      7007,
+      7008,
+      7009,
+      7010
+    ],
+    "modes": [
+      "global",
+      "within_run",
+      "within_topology",
+      "within_run_topology"
+    ],
+    "summary_csv": "reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels/shuffle_summary.csv",
+    "raw_csv": "reports/1781010192.1271.5e804d02__p01c_repeated_leakage_sentinels/repeated_shuffle_battery.csv"
+  },
+  "decision": {
+    "accepted_waveform_representation_improvement": false,
+    "pass_rule": "accept only if ML CI beats traditional CI, ML exceeds repeated shuffled-label p95+margin overall and in every heldout-run/topology stratum, and random-row gain is <= threshold",
+    "pass_margin": 0.02,
+    "max_random_row_gain": 0.05,
+    "failures": [
+      "ml_ci_beats_traditional_ci",
+      "ml_overall_above_repeated_shuffle_p95_plus_margin",
+      "ml_above_shuffle_in_every_run_and_topology"
+    ]
+  },
+  "runtime_sec": 234.3
+}

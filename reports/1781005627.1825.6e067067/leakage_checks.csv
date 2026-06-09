@@ -1,0 +1,5 @@
+check,heldout_sigma68_ns,n_pair_residuals
+template_phase,2.889152765080617,198
+monotone_binned_shuffled_target,2.891843568949091,198
+ml_hgb_shuffled_target,2.876955572927115,198
+train_heldout_event_id_overlap,0.0,0

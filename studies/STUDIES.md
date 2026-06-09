@@ -275,12 +275,14 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=7 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: project-aware queue audit now reports
-`open=113 claimed=3 done=80 failed=10` after this pass appended three additional non-duplicate
-ready tickets under `project:testbeam`: S03g HGB timewalk feature monotonicity audit
-(`1781020297.470.075250d8`), P07g saturation recovery acceptance rule from bias envelope
-(`1781020303.539.78bf7a44`), and P08b charge-current matched waveform PID leakage null
-(`1781020308.607.456c4f7e`). The discrepancy is a shim/argument parsing issue, not a scientific
+with `--project testbeam`: project-aware queue audits during this pass remained well above the
+ready-ticket floor, with more than 100 open tickets even as workers claimed/completed work. This
+pass appended four additional non-duplicate ready tickets under `project:testbeam`: S06a
+charge-proxy timing-resolution monotonicity after
+S14b (`1781021805.1799.6d33505e`), P10f template tail-shape saturation and current transfer
+(`1781021825.1891.293d03cc`), S13c charge-matched current weak-supervision null
+(`1781021831.1960.52610a78`), and P11a pretrigger baseline spectrum atom table
+(`1781021837.2028.5a294edc`). The discrepancy is a shim/argument parsing issue, not a scientific
 queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
@@ -618,3 +620,28 @@ Active ready queue highlights:
   nuisance residualization and run-family sentinels. Metric: weak-label AUC/AP, purity at fixed
   efficiency, calibration ECE, nuisance AUC after residualization, and ML-minus-traditional
   bootstrap CIs; no PID adoption without S17 truth.
+- **S06a — Charge-proxy timing-resolution monotonicity after S14b.** Test whether timing
+  resolution is monotonic with charge/energy proxy once saturation, anomaly, peak-sample phase,
+  pile-up, and baseline strata are matched. Traditional: frozen S02/S03 analytic timing residual
+  tables binned by P04/P07 charge proxy and S14b depth-order proxy with matched controls. ML:
+  leakage-audited per-pulse uncertainty/residual model using waveform, charge, saturation, and
+  anomaly summaries. Metric: sigma68, full RMS, >5 ns tail fraction, pull width, charge-proxy
+  monotonic slope, and ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **P10f — Template tail-shape saturation and current transfer.** Decide whether post-peak tail
+  constants and live-time handles transfer across amplitude, saturation boundary, and current
+  strata. Traditional: train-run S01/P10 amplitude-binned template tail descriptors and live10
+  tables. ML: conditional or monotonic tail-shape surrogate over log amplitude, stave, current,
+  and saturation flags with shuffled/family-holdout controls. Metric: tail residual MSE, live10,
+  q_template delta, two-pulse resolvability threshold, and ML-minus-traditional bootstrap CIs.
+- **S13c — Charge-matched current weak-supervision null.** Establish whether CWoLa/current
+  classifiers retain information after matching charge, topology, anomaly, baseline lowering,
+  run family, and stave. Traditional: frozen matched-stratum current-excess and Poisson/downstream
+  occupancy tables. ML: waveform/latent current classifier with nuisance residualization and
+  run-family sentinels. Metric: high-minus-low excess, AUC/AP, calibration ECE, nuisance AUC after
+  residualization, and stratified run-block bootstrap CIs.
+- **P11a — Pretrigger baseline spectrum atom table.** Decompose pretrigger baseline spectra
+  before baseline, dropout, pile-up, PID, or energy consumers use them. Traditional: frozen
+  pretrigger mean, slope, RMS, max-excursion, asymmetry, and adaptive-lowering tables against
+  timing, charge, anomaly, and pile-up outcomes. ML: pretrigger-only autoencoder or calibrated
+  classifier/regressor under run-heldout folds. Metric: baseline-class fractions, timing-tail odds
+  ratio, charge-bias delta, dropout/anomaly enrichment, calibration ECE, and bootstrap CIs.

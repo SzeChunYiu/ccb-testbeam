@@ -82,11 +82,14 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
   `open=7 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
-  again with `--project testbeam`; project-aware queue audit now reports
-  `open=113 claimed=3 done=80 failed=10`. This pass appended three ready non-duplicate tickets:
-  S03g HGB timewalk feature monotonicity audit (`1781020297.470.075250d8`), P07g saturation
-  recovery acceptance rule from bias envelope (`1781020303.539.78bf7a44`), and P08b
-  charge-current matched waveform PID leakage null (`1781020308.607.456c4f7e`).
+  again with `--project testbeam`; project-aware queue audits during this pass remained well above
+  the ready-ticket floor, with more than 100 open tickets even as workers claimed/completed work.
+  This pass appended four ready non-duplicate tickets:
+  S06a charge-proxy timing-resolution monotonicity after S14b
+  (`1781021805.1799.6d33505e`), P10f template tail-shape saturation and current transfer
+  (`1781021825.1891.293d03cc`), S13c charge-matched current weak-supervision null
+  (`1781021831.1960.52610a78`), and P11a pretrigger baseline spectrum atom table
+  (`1781021837.2028.5a294edc`).
 - Newest reports sharpen the next claims: S00b/S02c turn selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk and selector
@@ -139,8 +142,9 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   energy-scale preflight, plus P04f/S10f/P08a/P05b/S16g/S00d/P09c/S14c for anomaly-to-charge,
   anomaly-to-pile-up, weak-label PID leakage, failure-aware pile-up recovery, pseudo-pedestals,
   selector taxonomy, delayed-peak/dropout propagation, and saturation-aware energy ordering. This
-  pass adds S03g for HGB timewalk monotonicity/feature causality, P07g for saturation-recovery
-  accept/veto calibration, and P08b for charge-current matched waveform PID leakage control.
+  pass adds S06a for charge-proxy timing monotonicity, P10f for tail-shape/live-time transfer
+  across saturation and current, S13c for charge-matched current weak-supervision nulls, and P11a
+  for pretrigger baseline spectra before they feed dropout, pile-up, PID, or energy consumers.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

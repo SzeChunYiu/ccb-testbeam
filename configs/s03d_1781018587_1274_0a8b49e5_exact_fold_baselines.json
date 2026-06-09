@@ -1,0 +1,68 @@
+{
+  "ticket_id": "1781018587.1274.0a8b49e5",
+  "study_id": "S03d",
+  "title": "exact-fold S02/S03 baselines for P01e candidates",
+  "worker": "testbeam-laptop-4",
+  "output_dir": "reports/1781018587.1274.0a8b49e5",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "amplitude_cut_adc": 1000.0,
+  "expected_total_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_candidate_runs": [42, 57, 64, 65],
+  "timing_downstream_staves": ["B4", "B6", "B8"],
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "template_shift_grid": {
+      "min": -1.5,
+      "max": 1.5,
+      "step": 0.05
+    }
+  },
+  "ml": {
+    "random_seed": 3108587,
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0],
+    "cv_folds": 3
+  },
+  "analytic": {
+    "random_seed": 3108587,
+    "ridge_alphas": [0.0, 0.01, 0.1, 1.0, 10.0, 100.0],
+    "cv_folds": 3,
+    "candidate_models": ["amp_only", "amp_rise_shape", "amp_rise_shape_by_stave"]
+  },
+  "p01e": {
+    "random_seed": 110798,
+    "latent_dim": 4,
+    "ridge_alpha": 1.0,
+    "strict_ae": {
+      "epochs": 14,
+      "batch_size": 4096,
+      "learning_rate": 0.001,
+      "mask_probability": 0.3,
+      "noise_sigma": 0.02,
+      "max_unsup_per_run_stave": 3500
+    }
+  },
+  "bootstrap_replicates": 500,
+  "frozen_scope_note": "Prior P01e compared these exact candidate runs to S02/S03 baselines frozen on different run scopes; this study rebuilds those baselines on the same leave-one-run-out folds."
+}

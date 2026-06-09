@@ -1,0 +1,30 @@
+{
+  "ticket_id": "1781018587.1274.0a8b49e5",
+  "study": "S03d",
+  "script": "scripts/s03d_1781018587_1274_0a8b49e5_exact_fold_baselines.py",
+  "config": "configs/s03d_1781018587_1274_0a8b49e5_exact_fold_baselines.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/s03d_1781018587_1274_0a8b49e5_exact_fold_baselines.py --config configs/s03d_1781018587_1274_0a8b49e5_exact_fold_baselines.json",
+  "python": "3.7.6",
+  "git_commit": "52c9e90873ed1b98d9ffcb1fa7f3c0963bde9198",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1781018587.1274.0a8b49e5/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "a7bd1c61e5a9dc1dee8754f00511c0c2f878a6b0fb5d57d3b3e2170e62c540a5",
+    "cv_scan.csv": "3451288eb0bf92b711b211cab2dd426917432ffb50d622d881a1c01d61378db2",
+    "fold_model_choices.csv": "600ba05e1d5bc157525b29a8266eb2e484b10670d49de07ddea6f8f738bfc99b",
+    "head_to_head_exact_fold.csv": "7c48cf96c4ead16887cf23ef896380c35fcbabf8d51f98d481376a43594a28cd",
+    "heldout_pair_residuals.csv": "db0a1a2de24ae2e96a19182227e659023143f7929b6685509542f8d347f82492",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "leakage_checks.csv": "fb3eb1e4a7aa6040684646099de38f83ad6e785531672c985fdda023e1268f05",
+    "p01e_ae_training_loss.csv": "3edac1c6476e8e31917425ea745253e01632f314a5c2311a4612ad93bfd15947",
+    "per_run_metrics.csv": "9e9966f257ffa9482504beed1fa94fceb68fba256aa0abc20b4197670ab21226",
+    "pooled_metrics.csv": "bb96309d0286711f360e7f53be9fdeff82e2758b8836ec66d8a7e0c5b16d9592",
+    "reproduction_counts_by_group.csv": "b56cfcd2bc7ffd01d7bcde923bc801c41fc0b21514d2ca074ddc019a9c70167e",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "2deea6697dbc590ffb8994e69abae2fe8c13c6045558c358545d1f4220396c37",
+    "s03_analytic_coefficients.csv": "bdb8d46d8638f58995f01aa36f7a08a5572962bafa240251bf5c21ab82622ea0"
+  }
+}

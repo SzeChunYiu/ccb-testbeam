@@ -116,11 +116,12 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   The required append path was followed again with `--project testbeam`; the project-aware
   testbeam queue remains deep, with recent live post-append audits observing 189-190 open,
   2-3 claimed, and 159 done after concurrent worker movement.
-  The mission trigger still required new ready work. This pass appended four ready non-duplicate
+  The mission trigger still required new ready work. This pass appended five ready non-duplicate
   tickets: P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
   S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),
-  P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`), and
-  P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`). The previous pass appended four ready non-duplicate
+  P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`),
+  P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`), and
+  S16n large-lowering taxonomy propagation gate (`1781042563.1754.57ab2a20`). The previous pass appended four ready non-duplicate
   tickets: P01h time-local latent residualization gate (`1781040959.702.2d1212fb`),
   S05h saturation-aware covariance support frontier (`1781040960.767.247d3910`),
   S01h q-template run-stave leakage atom grid (`1781040960.832.1c8e6dee`), and
@@ -320,6 +321,11 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   nuisance diagnostics rather than timing improvements. This pass adds P06b for amplitude-stratified
   timing bias/pull coverage, S05i for B2-topology covariance coverage calibration, P02g for
   timing-tail label-source decomposition, and P01i for domain-score consumer leakage sentinels.
+- The newest S16f event-display audit reproduces S00 and classifies held-out large-lowering pulses
+  as mostly pre-trigger contamination with pile-up as the next largest source, while the RF transfer
+  tracks the fixed morphology scorecard but remains algorithmic taxonomy rather than human truth.
+  This pass adds S16n to propagate those source classes into timing, charge, pile-up, saturation,
+  dropout/anomaly, PID, and energy support risk before baseline-lowering outputs are reused.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

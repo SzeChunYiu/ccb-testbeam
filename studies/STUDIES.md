@@ -277,11 +277,12 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with recent live
 post-append audits observing 189-190 open, 2-3 claimed, and 159 done, but the mission trigger still required a small set of
-new ready studies. This pass appended four additional non-duplicate ready tickets:
+new ready studies. This pass appended five additional non-duplicate ready tickets:
 P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
 S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),
-P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`), and
-P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`). The previous pass
+P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`),
+P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`), and
+S16n large-lowering taxonomy propagation gate (`1781042563.1754.57ab2a20`). The previous pass
 appended four additional non-duplicate ready tickets: P01g latent
 baseline-contamination atom map (`1781039488.1122.04bc6ecf`), S07l injected morphology
 operating-point support audit (`1781039488.1142.659b28c4`), P09g injected-morphology
@@ -1209,3 +1210,13 @@ Active ready queue highlights:
   shuffled-score controls. Metric: consumer sigma68/res68/AUC/AP changes, leakage-control gap,
   support drift, score calibration/ECE, and ML-minus-traditional deltas with event-paired
   run-block bootstrap CIs.
+- **S16n — Large-lowering taxonomy propagation gate.** Propagate the S16f held-out
+  large-lowering taxonomy into downstream pulse risks after that audit found pre-trigger
+  contamination as the dominant source and pile-up as the next largest class. Traditional: freeze
+  the S16f fixed morphology scorecard, then build class-matched residual, charge-bias, pile-up,
+  q_template, and support tables with exact S00/S16 reproduction. ML: freeze the S16f run-split RF
+  taxonomy transfer, recalibrate class probabilities with conformal/isotonic layers, and compare
+  pretrigger-only, pile-up-only, amplitude-only, topology-only, and shuffled-label controls.
+  Metric: per-class timing sigma68/full RMS/tail fraction, charge res68/bias, pile-up enrichment,
+  support drift, calibration/ECE, and ML-minus-traditional deltas with held-out run-block
+  bootstrap CIs.

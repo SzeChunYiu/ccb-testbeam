@@ -1,0 +1,154 @@
+{
+  "study": "S02d plus S16e",
+  "ticket": "1781013969.1084.3b973f5f",
+  "worker": "testbeam-laptop-1",
+  "title": "LORO S02b timing plus S16e pre-trigger proxy terms",
+  "reproduced_raw_root_first": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "loro_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "folds": {
+      "58": {
+        "heldout_runs": [
+          58
+        ],
+        "train_runs": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          65
+        ]
+      },
+      "59": {
+        "heldout_runs": [
+          59
+        ],
+        "train_runs": [
+          58,
+          60,
+          61,
+          62,
+          63,
+          65
+        ]
+      },
+      "60": {
+        "heldout_runs": [
+          60
+        ],
+        "train_runs": [
+          58,
+          59,
+          61,
+          62,
+          63,
+          65
+        ]
+      },
+      "61": {
+        "heldout_runs": [
+          61
+        ],
+        "train_runs": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          65
+        ]
+      },
+      "62": {
+        "heldout_runs": [
+          62
+        ],
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          63,
+          65
+        ]
+      },
+      "63": {
+        "heldout_runs": [
+          63
+        ],
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          65
+        ]
+      },
+      "65": {
+        "heldout_runs": [
+          65
+        ],
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ]
+      }
+    }
+  },
+  "traditional": {
+    "n_runs": 7.0,
+    "mean_sigma68_ns": 1.3434991546492903,
+    "ci_low": 1.297670364308804,
+    "ci_high": 1.3894925799440467,
+    "mean_tail_frac_abs_gt5ns": 0.012227270635839619,
+    "tail_ci_low": 0.007251586072726323,
+    "tail_ci_high": 0.016614194462891342,
+    "min_run_sigma68_ns": 1.2316335399943017,
+    "max_run_sigma68_ns": 1.44512815649364
+  },
+  "ml": {
+    "n_runs": 7.0,
+    "mean_sigma68_ns": 1.4699599943059851,
+    "ci_low": 1.3324750980614863,
+    "ci_high": 1.669549644407725,
+    "mean_tail_frac_abs_gt5ns": 0.015181693144678461,
+    "tail_ci_low": 0.010804531686839055,
+    "tail_ci_high": 0.019558854602517866,
+    "min_run_sigma68_ns": 1.2475492062715132,
+    "max_run_sigma68_ns": 2.0177113353462577
+  },
+  "baseline": {
+    "n_runs": 7.0,
+    "mean_sigma68_ns": 1.6551640399789107,
+    "ci_low": 1.5320333346949127,
+    "ci_high": 1.8446360653280751,
+    "mean_tail_frac_abs_gt5ns": 0.015293753456599156,
+    "tail_ci_low": 0.010355996669738812,
+    "tail_ci_high": 0.02080600816758161,
+    "min_run_sigma68_ns": 1.4718970274976448,
+    "max_run_sigma68_ns": 2.188417727408664
+  },
+  "hard_leakage_checks_pass": true,
+  "all_leakage_checks_pass": true,
+  "leakage_failed_checks": [],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S16f: frozen pre-trigger contamination veto under Sample-II LORO timing splits",
+    "P03f: early-sample waveform ablation with shuffled-target and run-family controls"
+  ],
+  "git_commit": "e1ddb34f0d7cf9864b2cf167e3f9c735c0e1ad31"
+}

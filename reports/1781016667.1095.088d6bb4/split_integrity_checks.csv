@@ -1,0 +1,10 @@
+task,check,value,pass
+adjacent_run_pair_side,train_heldout_run_overlap,0,True
+adjacent_run_pair_side,heldout_unique_runs,8,True
+adjacent_run_pair_side,duplicate_key_overlap_train_heldout,0,True
+sample_i_local_transition,train_heldout_run_overlap,0,True
+sample_i_local_transition,heldout_unique_runs,6,True
+sample_i_local_transition,duplicate_key_overlap_train_heldout,0,True
+sample_ii_adjacent_era,train_heldout_run_overlap,0,True
+sample_ii_adjacent_era,heldout_unique_runs,4,True
+sample_ii_adjacent_era,duplicate_key_overlap_train_heldout,0,True

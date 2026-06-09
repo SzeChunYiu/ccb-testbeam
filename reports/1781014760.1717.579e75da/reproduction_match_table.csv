@@ -1,0 +1,5 @@
+quantity,expected,reproduced,pass
+"B-stack selected stave pulses, A>1000 ADC, S00 runs",640737,640737,True
+HRD raw ROOT file count,110,110,True
+distinct raw ROOT run ids,57,57,True
+ROOT entries with TRIGGER != 1,0,0,True

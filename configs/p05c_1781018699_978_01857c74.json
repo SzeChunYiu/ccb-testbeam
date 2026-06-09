@@ -1,0 +1,29 @@
+{
+  "study_id": "P05c",
+  "ticket_id": "1781018699.978.01857c74",
+  "worker": "testbeam-laptop-1",
+  "output_dir": "reports/1781018699.978.01857c74",
+  "random_seed": 11120,
+  "p05a_config": "configs/p05a_cnn_two_pulse_decomposition.json",
+  "p05a_expected_result": "reports/1781010938.498.6bd050f4/result.json",
+  "s11b_expected_result": "reports/1781010611.1197.028b141a/result.json",
+  "sample_per_run_stratum": 140,
+  "bootstrap_samples": 500,
+  "cnn": {
+    "synthetic_train_per_policy": 3200,
+    "synthetic_cal_per_run": 700,
+    "epochs": 180,
+    "batch_size": 128,
+    "channels": 10,
+    "learning_rate": 0.0015,
+    "weight_decay": 0.0001
+  },
+  "p05a_reproduction_tolerances": {
+    "traditional_time_rms_ns": 0.05,
+    "cnn_time_rms_ns": 0.05,
+    "cnn_detection_ap": 0.01
+  },
+  "s11b_reproduction_tolerances": {
+    "traditional_high_minus_low": 0.003
+  }
+}

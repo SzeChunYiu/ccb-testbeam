@@ -1,0 +1,10 @@
+check,value,flag,note
+heldout_run_excluded_from_template_and_cnn_training,1.0,False,High-current runs are never in CNN/template training; low-current controls leave their source run out.
+identifier_features_excluded,1.0,False,"CNN sees only 18 normalized waveform samples, not run, event number, current, or stratum."
+synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record raw source runs used to make low-current overlays.
+mean_cnn_synthetic_holdout_auc,0.9127579725197913,False,Near-perfect heldout overlay classification would be suspicious.
+mean_cnn_shuffled_label_synthetic_auc,0.4543186187680187,False,Shuffled-label CNN should not classify heldout overlays well.
+actual_current_auc_from_cnn_overlap_score,0.6338194163031473,False,Flagged if the CNN score nearly identifies beam current by itself.
+actual_current_auc_from_cnn_secondary_fraction,0.6364951173194124,False,Flagged if the CNN secondary estimate nearly identifies beam current by itself.
+cnn_score_source_run_eta2,0.01653952645635395,False,Run-level variance fraction of the real CNN overlap score.
+source_run_predictability_from_waveform_samples,0.101162176439514,False,Random-split sentinel accuracy for predicting source run from the same normalized samples.

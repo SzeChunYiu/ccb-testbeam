@@ -1,0 +1,7 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,must be zero for by-run validation
+raw_artifact_key_order_equal,1.0,True,raw recount key order matches NPZ key order
+forbidden_feature_audit,0.0,True,"claim feature matrices exclude run, event_index, stave_index, artifact_row, and raw_row"
+amplitude_only_balanced_accuracy,0.34492,True,amplitude can be a detector proxy but is weaker than the claim rows
+event_index_only_balanced_accuracy,0.257516,True,event ordinal alone should not carry stave identity across held-out runs
+shuffled_label_balanced_accuracy,0.252356,True,label-shuffle null should stay near four-class chance

@@ -1,0 +1,11 @@
+{
+  "release_embedding_source": "regenerated",
+  "release_npz_status": "missing",
+  "release_artifact_path": "reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/p02c_regenerated_p01b_release_latents.npz",
+  "release_artifact_sha256": "22a14c885b764ad99a76ae5de64aa266d5d4b6b8261189b845fffaf5ff2fc17e",
+  "release_artifact_rows": 640737,
+  "latent_dim": 4,
+  "p01b_metadata_rows": 640737,
+  "p01b_metadata_artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+  "no_benchmark_claim": "all-data release embedding is excluded from claim rows and appears only as forbidden diagnostic telemetry"
+}

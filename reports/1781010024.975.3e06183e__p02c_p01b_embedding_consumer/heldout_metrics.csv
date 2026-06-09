@@ -1,0 +1,13 @@
+method,target,metric,value,selected_k,train_rows,heldout_rows,benchmark_role,ci_low,ci_high
+traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.49725146778802076,8,36794,5576,claim,0.4643687641058492,0.5188526650943989
+traditional hand+PCA morphology,manual_flag,purity,0.9148134863701578,8,36794,5576,claim,0.9031279620853081,0.9284099472494348
+traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4660651951753491,8,36794,5576,claim,0.4327700467331779,0.4993321749424142
+traditional hand+PCA morphology,peak_group,purity,0.8430774748923959,8,36794,5576,claim,0.825656642558051,0.8585961342828077
+ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.47873273802472244,8,36794,5576,claim,0.4561867720719803,0.5001174882728299
+ML P01b train-only AE embedding,manual_flag,purity,0.9115853658536586,8,36794,5576,claim,0.9063262009563725,0.9277721261444557
+ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.3912915698141318,8,36794,5576,claim,0.3706491750322407,0.41421672435814444
+ML P01b train-only AE embedding,peak_group,purity,0.8136657101865137,8,36794,5576,claim,0.7908141267181616,0.8346888594666162
+forbidden all-data release embedding,manual_flag,adjusted_mutual_info,0.4734234608895512,8,36794,5576,forbidden_release_diagnostic,0.4552381489054905,0.5005869975778492
+forbidden all-data release embedding,manual_flag,purity,0.9329268292682927,8,36794,5576,forbidden_release_diagnostic,0.9179146919431279,0.945905050122943
+forbidden all-data release embedding,peak_group,adjusted_mutual_info,0.5224051606009654,8,36794,5576,forbidden_release_diagnostic,0.5074358802053525,0.5410433578366066
+forbidden all-data release embedding,peak_group,purity,0.8651362984218077,8,36794,5576,forbidden_release_diagnostic,0.8446897601827179,0.887957181088314

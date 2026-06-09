@@ -1,0 +1,8 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,must be zero
+benchmark_fit_uses_release_embedding,0.0,True,release embedding row is diagnostic only
+train_test_rounded_waveform_hash_overlap,0.0,True,rounded normalized waveform hash at 1e-4 precision
+ml_cluster_run_ami,0.017655669088126033,True,reported to catch run-label clustering
+ml_cluster_stave_ami,0.03212935366530853,True,reported to catch stave-label clustering
+shuffled_manual_label_ami,-0.000594415667442169,True,evaluation-label shuffle null
+forbidden_release_minus_trainonly_manual_ami,-0.005309277135171264,True,large positive value would indicate all-data embedding optimism

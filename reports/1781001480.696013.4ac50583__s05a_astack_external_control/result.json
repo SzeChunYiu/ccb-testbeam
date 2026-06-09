@@ -1,0 +1,57 @@
+{
+  "study": "S05a",
+  "ticket": "1781001480.696013.4ac50583",
+  "worker": "testbeam-laptop-2",
+  "title": "A-stack external control for B-stack correlated timing",
+  "reproduced": true,
+  "traditional": {
+    "method": "CFD20 pair-median residual baseline plus leave-run-out Ridge A-control test",
+    "metric": "heldout sigma68 residual width ns",
+    "value": 2.081917932503293,
+    "ci": [
+      1.766760240174596,
+      6.741671553927073
+    ],
+    "a_control_delta_vs_b_only_ci": [
+      -0.017282020802034826,
+      0.017109524534266857
+    ]
+  },
+  "ml": {
+    "method": "leave-run-out ExtraTrees B features plus A controls",
+    "metric": "heldout sigma68 residual width ns",
+    "value": 1.6641267807458826,
+    "ci": [
+      1.4893610261627102,
+      2.3547926954553815
+    ],
+    "a_control_delta_vs_ml_b_only_ci": [
+      -0.006612368960999919,
+      0.04204859922889803
+    ]
+  },
+  "finding": "A-stack controls do not provide a statistically secure reduction of B-stack pair residual width under run-held-out evaluation.",
+  "leakage": [
+    {
+      "check": "actual_ml_b_plus_a",
+      "sigma68_ns": 1.6641267807458826,
+      "interpretation": "nominal run-held-out ML residual width"
+    },
+    {
+      "check": "runwise_shuffled_a_controls",
+      "sigma68_ns": 1.6684290513333795,
+      "interpretation": "A controls lose event matching but preserve run marginals"
+    },
+    {
+      "check": "intentional_target_echo",
+      "sigma68_ns": 0.0,
+      "interpretation": "positive leakage sentinel; should be unrealistically small"
+    }
+  ],
+  "input_sha256": "reports/1781001480.696013.4ac50583__s05a_astack_external_control/input_sha256.csv",
+  "git_commit": "c2e1948502902d05b01adee271ff05b8fa931132",
+  "next_tickets": [
+    "S05b: repeat A-stack external-control covariance on sorted ROOT with looser pulse-quality tiers; expected information gain is separating low A/B coincidence statistics from a true null external-control result.",
+    "S05c: fit a hierarchical run/stave covariance model for B-stack pair residuals with B2-containing pairs separated; expected information gain is quantifying detector-local covariance without relying on A-stack coincidences."
+  ]
+}

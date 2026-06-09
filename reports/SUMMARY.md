@@ -28,12 +28,14 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10c | ✅ done | ✅ S10 topology fractions within 0.0015 | matched-stratified excess 0.02025/event | current-score Δ=0.02975, AUC 0.640 | ML diagnostic; excess is heterogeneous after matching | reports/1781004956.733.387f428e |
 | S10c threshold | ✅ done | ✅ live10 anchor exact | template tail 10% live time 124.79 ns; all thresholds above 90 ns | ridge live-time R²≈0.884 at 10% | No adoption claim; threshold scan confirms 90 ns is not measured waveform live-time | reports/1781007337.1308.7dc86005 |
 | S10d | ✅ done | ✅ S10b Rmax/live10 reproduced | bounded two-pulse resolvable delay 60 ns; time RMS 13.83 ns | compact MLP delay 20 ns; time RMS 9.41 ns | **Yes**, but failure rate rises 0.172→0.323 | reports/1781007337.1325.2241031c |
+| S10d amplitude | ✅ done | ✅ S10c topology fractions within 0.0015 | matched two-pulse secondary fraction high-low 0.0316, CI [0.0189,0.0440] | RF secondary fraction Δ=0.0073; overlap score Δ=0.0245 | Diagnostic; largest excess is high-amp/large-lowering/broad-late | reports/1781010419.1206.6d667357 |
 | S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
 | S16 | ✅ done | ✅ S00 selection | pretrigger median MAE 341 ADC | adaptive/learned MAE 48.9 ADC | **Yes**, but adaptive remains biased | reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation |
 | S16b closure | ✅ done | ✅ 640,737 exact | line3 early-sample predictor MAE 169.34 ADC | ridge closure MAE 173.71 ADC | No; traditional remains preferred, ML is contamination diagnostic | reports/1781000826.539659.030b7796__s16b_independent_pedestal_estimator_closure |
 | S16b forced/proxy | ✅ done | ✅ 640,737 exact; 0 forced/random-tagged entries | adaptive proxy MAE 17.18 ADC | HGBR proxy MAE 15.64 ADC | Proxy only; true forced/random pedestal data absent | reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation |
 | S16c | ✅ done | ✅ S00/Sample-II counts and zero post-correction violations | lowering-nuisance ridge sigma68 3.251 ns | RF residual correction sigma68 2.921 ns | Weak/diagnostic; high-lowering events do not carry the timing tails | reports/1781001221.625989.53423f03__s16c_pedestal_timing_nuisance |
 | S16d | ✅ done | ✅ 640,737 exact; 0 forced/random entries | metadata + quiet-run scan finds no true forced/random source | pretrigger quiet-proxy AUC 0.646 | No true pedestal sample; use only as pseudo-pedestal diagnostic | reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search |
+| S16d strata | ✅ done | ✅ 640,737 exact; 0 forced/random entries | large-lowering selected-pulse MAE 2363 ADC; quiet proxy large-lowering rare | pretrigger logistic AUC 0.997 for large-lowering stratum | Diagnostic; large lowering is contamination/pathology, not true pedestal truth | reports/1781010419.1274.000b7be0 |
 | S16e | ✅ done | ✅ S02b baseline reproduced | pretrigger proxy correction sigma68 1.445 ns | waveform+pretrigger ridge sigma68 1.387 ns | Weak ML gain; both improve S02b but tail CIs overlap | reports/1781007910.1647.505b465f |
 | S16e tagged-random | ✅ done | ✅ 640,737 exact; 0 tagged-random B-stack entries | fallback mean3 MAE 241.6 ADC | fallback calibrated ridge MAE 197.3 ADC | No validation claim; primary tagged-random gate failed | reports/1781007587.2616.535e78de |
 | S16d Sample-I | ✅ done | ✅ 252,266 Sample-I pulses | lowering correction sigma68 3.060 ns | lowering ML sigma68 2.930 ns | Diagnostic; high-lowering tail is 13.0% vs 1.24%, but sigma68 gain is small | reports/1781009378.1771.3b9145b2__s16d_sample_i_bstack_pedestal_timing |
@@ -69,10 +71,11 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
   `open=6 claimed=0 done=0 failed=7`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
-  with `--project testbeam`; project-aware `tn-ticket list --project testbeam` now reports
-  `open=89 claimed=2 done=65 failed=10` after this pass appended three ready non-duplicate
-  tickets: P06a amplitude-binned timing resolution atom table, S05f B2-local covariance confound
-  matched audit, and P01f domain-residualized waveform latent benchmark.
+  with `--project testbeam`; project-aware queue audits during this pass observed a deep ready
+  pool (`open=89 claimed=2 done=65 failed=10`, later `open=91 claimed=1 done=66 failed=10` as
+  workers advanced) after this pass appended three ready non-duplicate tickets: P06a
+  amplitude-binned timing resolution atom table, S05f B2-local covariance confound matched audit,
+  and P01f domain-residualized waveform latent benchmark.
 - Newest reports sharpen the next claims: S00b/S02c turn selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk and selector
@@ -102,7 +105,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   train-only AE embeddings do not beat hand+PCA morphology for manual flags, and P02d's impressive
   RF timing-tail AUC is largely downstream D_t self-reference. S05c finds a real B-stack covariance
   opportunity, but its decomposition remains B2/topology dominated even when ML reduces residual
-  width.
+  width. The newer S10d amplitude-stratified result moves pile-up from a binary occupancy excess
+  into a high-amp/large-lowering/broad-late secondary-fraction diagnostic, and S16d strata show
+  large adaptive lowering is strongly predictable from pre-trigger contamination/pathology while
+  true forced/random pedestal data remain absent.
 - Active ready follow-ups cover the requested atomic pulse axes: P03d/P03e/P03f/P03g for shape
   and timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,

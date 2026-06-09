@@ -275,11 +275,12 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=6 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: project-aware `tn-ticket list --project testbeam` now reports
-`open=89 claimed=2 done=65 failed=10` after this pass appended three additional non-duplicate
-ready tickets under `project:testbeam`: P06a amplitude-binned timing resolution atom table, S05f
-B2-local covariance confound matched audit, and P01f domain-residualized waveform latent
-benchmark. The discrepancy is a shim/argument parsing issue, not a scientific queue shortage.
+with `--project testbeam`: project-aware queue audits during this pass observed a deep ready pool
+(`open=89 claimed=2 done=65 failed=10`, later `open=91 claimed=1 done=66 failed=10` as workers
+advanced) after this pass appended three additional non-duplicate ready tickets under
+`project:testbeam`: P06a amplitude-binned timing resolution atom table, S05f B2-local covariance
+confound matched audit, and P01f domain-residualized waveform latent benchmark. The discrepancy is
+a shim/argument parsing issue, not a scientific queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -336,6 +337,13 @@ remains B2/topology dominated; S05f now separates true common covariance from B2
 topology, and anomaly confounds. The missing atomic bridge from pulse amplitude to timing is also
 now explicit: P06a will tabulate timing resolution by amplitude, charge proxy, saturation,
 peak-sample, and anomaly strata with both traditional and ML uncertainty estimates.
+The latest S10d amplitude-stratified result replaces the binary downstream pile-up excess with a
+matched two-pulse secondary-fraction diagnostic: the largest positive stratum is high-amplitude,
+large-lowering, broad-late waveform topology. The latest S16d strata validation still finds zero
+true forced/random entries and shows large adaptive lowering is predictable from pre-trigger
+contamination/pathology rather than a clean pedestal-bias truth label. These two reports tighten
+the P06a/S05f/S16h boundary: amplitude, pile-up, baseline lowering, and anomaly topology must be
+matched together before timing, covariance, PID, or energy claims are adopted.
 
 Completed since last steering cycle:
 
@@ -397,6 +405,11 @@ Completed since last steering cycle:
   held-out residual width relative to pair-median/hierarchical baselines, but the covariance
   decomposition remains B2/topology dominated; covariance work now needs matched B2-local confound
   separation before two-ended projections.
+- **S10d amplitude and S16d strata — Pile-up amplitude meets adaptive lowering.** Result: the
+  two-pulse secondary-fraction excess is concentrated in high-amplitude, large-lowering,
+  broad-late strata, while large lowering is a pre-trigger contamination/pathology diagnostic and
+  not a true forced/random pedestal validation. Future pile-up, baseline, and timing studies must
+  match these axes jointly.
 
 Active ready queue highlights:
 

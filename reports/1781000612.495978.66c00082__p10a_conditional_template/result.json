@@ -1,0 +1,70 @@
+{
+  "study": "P10a",
+  "ticket": "1781000612.495978.66c00082",
+  "worker": "testbeam-laptop-3",
+  "title": "conditional generative template vs empirical amplitude-bin template",
+  "reproduced": true,
+  "repro_tolerance": "0 count delta versus S00/S01 selected-pulse gate from raw ROOT",
+  "n_selected_pulses": 640737,
+  "traditional": {
+    "method": "S01 empirical median amplitude-bin template",
+    "q_metric": "analysis_run_mean_q_template_mse",
+    "q_value": 0.04441404042864997,
+    "q_ci": [
+      0.03422189526796054,
+      0.05534365052761954
+    ],
+    "timing_metric": "heldout_run_mean_pairwise_sigma68_ns",
+    "timing_value": 3.8306077318314697,
+    "timing_ci": [
+      3.7324931208935097,
+      3.9344079519673505
+    ]
+  },
+  "ml": {
+    "method": "conditional MLP template from stave and log amplitude",
+    "best": {
+      "hidden_dim": 16,
+      "depth": 2,
+      "device": "cpu",
+      "train_pulses": 120000,
+      "cv_pulses": 36000
+    },
+    "q_metric": "analysis_run_mean_q_template_mse",
+    "q_value": 0.07806195826389588,
+    "q_ci": [
+      0.06615815608703006,
+      0.09056882976707328
+    ],
+    "timing_metric": "heldout_run_mean_pairwise_sigma68_ns",
+    "timing_value": 3.57885789878986,
+    "timing_ci": [
+      3.4857438526485423,
+      3.6800952529796764
+    ]
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "q_delta_conditional_minus_empirical": 0.033647917835245914,
+    "q_delta_ci": [
+      0.027696870157837578,
+      0.04111340412274953
+    ],
+    "timing_delta_conditional_minus_empirical_ns": -0.2517498330416093,
+    "timing_delta_ci_ns": [
+      -0.37806953122349374,
+      -0.13308842670015908
+    ],
+    "shuffled_target_q_mse": 0.07424330538670298,
+    "shuffled_control_warning": true,
+    "run_overlap": "none",
+    "n_tries": 3
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "bd9702b70b7e47756fabe1fef4926857aefe8a0c",
+  "critic": "pending",
+  "next_tickets": [
+    "P10b: add explicit timewalk terms to the empirical amplitude-bin template phase metric and rerun P10a.",
+    "P10c: stress-test conditional templates with leave-one-run-family-out calibration and external timing closure."
+  ]
+}

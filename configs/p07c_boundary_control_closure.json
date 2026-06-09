@@ -1,0 +1,18 @@
+{
+  "ticket": "1781010522.1275.6b5664c7",
+  "worker": "testbeam-laptop-2",
+  "runs": [58, 59, 60, 61, 62, 63, 65],
+  "study": "P07c",
+  "raw_root": "data/root/root",
+  "baseline_samples": [0, 1, 2, 3],
+  "b2_channel": 0,
+  "amplitude_cut_adc": 1000.0,
+  "clean_unsaturated_max_adc": 6500.0,
+  "boundary_low_adc": 6500.0,
+  "natural_apply_adc": 7000.0,
+  "boundary_high_adc": 7500.0,
+  "artificial_ceiling_adc": 4000.0,
+  "multi_ceilings_adc": [2000.0, 2500.0, 3000.0, 3500.0, 4000.0, 4500.0, 5000.0, 5500.0],
+  "bootstrap_replicates": 5000,
+  "random_seed": 70702
+}

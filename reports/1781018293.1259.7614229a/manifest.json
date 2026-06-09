@@ -2,7 +2,7 @@
   "ticket": "1781018293.1259.7614229a",
   "study": "P07e",
   "worker": "testbeam-laptop-3",
-  "git_commit": "5973b51e9f0f874615d687f6a5042b722eb1888c",
+  "git_commit": "0c85e60b385e824f0fd61654a706b36bdd0b8791",
   "command": "/home/billy/anaconda3/bin/python scripts/p07e_leading_edge_sample_ablation.py",
   "random_seed": 20260609,
   "inputs_sha256": {
@@ -15,19 +15,23 @@
     "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
   },
   "outputs_sha256": {
-    "REPORT.md": "2bc59303b63935f6164bc673f18df4fdd343a04918ea95f5cb6090a37eb36378",
-    "adoption_screen.csv": "6559afee6e49f54d50cf0bf04989dcc8a2ab3dfeed31ab8501aa06cbbd8e6ac3",
-    "artificial_recovery_by_run.csv": "d17b92e68ec9ca66b49869e07e330636d057acf033282d1bf565d2db1de8d43f",
-    "artificial_recovery_summary.csv": "3b6d70175199cb380707da26db70c9609990ada87a6a3d55c67c5a99f5f09d85",
+    "REPORT.md": "bafa16f2665fec3ff6bd7cd20844e36a9503daf74de1fc30abe5bebd57462058",
+    "adoption_screen.csv": "84e10cc05b0ff3f2e7b16b1a5d0c8c74cbc828284fea82117dca822151bacbbf",
+    "artificial_recovery_by_run.csv": "248418dbef11a125060d49ee0d83a7e5bda8c4f81c6f59cc0264b185042e3e3d",
+    "artificial_recovery_summary.csv": "214968ee511063090fb90000119ca0fcafcf719d7af714542dbabc895f9418a6",
     "input_sha256.csv": "311faa4ac8d1ffe3fce791e6d85f703301ee7648fa1cf288a1dad9323e1f402f",
-    "natural_transfer_by_run.csv": "84cf81f654d6c7f95382e25dbc589d1013f9397238347358af0bc89ee3176373",
-    "natural_transfer_summary.csv": "ea86e97640e38dce91e61ec9902d0a29f09feb5ed5f4472225c5dd4835a2dcb1",
-    "oof_prediction_sample.csv": "8279c464b2e33ae9340204a5931b8753402d23651c1f1ad24a4aee8ce65fbdf1",
+    "leakage_probe_by_run.csv": "4824fe99478ef3d5a97b8f99db5f78381c9be21ecf41eda5c0ee42c44c7bf513",
+    "leakage_probe_summary.csv": "7a1cf49959d74906d39b73e78c7b548df5793fb130dd84529e0753b4028334e0",
+    "natural_transfer_by_run.csv": "661e2566309e8b37d57de8af7a65d6d73bdf61e506c2321e898251da698f465c",
+    "natural_transfer_summary.csv": "cdfdda5f8e7204f2b927c3fcb71065d999ead1dc9328c9b9f43ec26155b55c63",
+    "oof_prediction_sample.csv": "94435a283d3f0f35d0316867c17514b400c499865aa3d8263beeee8dca6e7008",
     "p07_reproduction_table.csv": "9037fff86f1256265302fc81b4a2465694ac338649777f750aadc99b9479f304",
     "p07c_reproduction_gate.csv": "565a55de6b4878ba4c954060e76bf81efc55cfe6c335e7545fcf1992edd2dc2d",
     "p07c_reproduction_leakage_checks.csv": "fb15793bc1286e65e61a3a34840f77e7bdfca346e24ae06e2f2c388297f11ab4",
+    "permutation_importance_by_run.csv": "dd42cd8e6e5f6cd74328109556fc40004242626cf57f0a4176c6c15dc08bd7b9",
+    "permutation_importance_summary.csv": "be03f719e30735a7030ac5f18079820a79d2a4346d4df726ac6e7970465a0e23",
     "reproduction_gate.csv": "8675175328d3a87acd78a90b9cbc73039cc491911280529cb751eec73a6a4b81",
-    "result.json": "37a40069220c437e1840d20649c173c6de8af579ac9c1f216980dc4b35c61479"
+    "result.json": "3093c4cabc9b6637f2d12fbb1f22530498400fdf3155c2912030174dd4319f0a"
   },
-  "runtime_sec": 398.36
+  "runtime_sec": 455.1
 }

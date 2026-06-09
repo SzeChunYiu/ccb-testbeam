@@ -279,7 +279,7 @@ and full-tail timing tables instead of another proxy-only pedestal benchmark.
 Live queue decision: the exact requested command `tn-ticket list testbeam` reports
 `open=5 claimed=0 done=0 failed=6`, which is below the 18-ready floor. The latest project-aware
 queue check reports `tn-ticket list --project testbeam` =
-`open=46 claimed=4 done=33 failed=8`; the
+`open=46 claimed=1 done=36 failed=8`; the
 discrepancy is a shim/argument parsing issue, not a scientific queue shortage. To satisfy the
 low exact-command gate while keeping work in the real testbeam queue, four new non-duplicate
 ready tickets were appended under `project:testbeam`.
@@ -303,6 +303,11 @@ matching, making charge-energy proxy transfer the next rate-model test. P01a/P01
 representation artifacts are useful only under strict leakage sentinels; P02b finds small,
 target-specific cluster stability gains rather than a universal morphology win. S05a finds no
 secure A-stack external-control reduction, keeping B-stack covariance modeling as the safer path.
+S03b now shows per-stave monotonic amplitude-binned timewalk is worse than the S03a amp-only
+baseline on the held-out run, so timing work should move to physically signed priors and
+multi-run stability rather than finer unconstrained binning. P01c completes the sample-importance
+map: samples 3-5 dominate traditional timing sensitivity and sample 5 is the top combined
+importance point, giving P07e and P03c a concrete sample-window prior.
 
 Completed since last steering cycle:
 
@@ -327,6 +332,9 @@ Completed since last steering cycle:
 - **S10c/S11a/S05a — Stratified pile-up, two-pulse injection recovery, and A-stack controls.**
   Result: pile-up excess is heterogeneous after matching; ML improves S11a injected time RMS but
   raises failure rate; A-stack controls do not provide a secure B-stack covariance gain.
+- **S03b/P01c — Monotonic amplitude-binned timewalk and per-sample pulse importance.** Result:
+  monotonic binned timewalk does not improve on S03a amp-only, while the sample map localises
+  timing/saturation leverage to the early peak window, especially samples 3-6.
 
 Active ready queue highlights:
 
@@ -352,11 +360,6 @@ Active ready queue highlights:
   pre-trigger/baseline-lowering nuisance terms to the analytic timewalk model. ML: leakage-audited
   residual model using only pre-trigger summaries and pulse-shape diagnostics. Metric: sigma68,
   full RMS, and high-quantile tail reduction with paired run-block bootstrap CIs.
-- **P01c — Per-sample pulse-shape importance map.** Identify which of the 18 samples carry
-  independent shape, timing, amplitude, saturation, and baseline information after stave/amplitude
-  controls. Traditional: template/PCA leave-one-sample ablations. ML: masked-AE occlusion and
-  latent-probe importance. Metric: per-sample deltas in reconstruction MSE, timing sigma68,
-  amplitude res68, and topology-probe balanced accuracy with paired bootstrap CIs.
 - **P09a — Rare waveform anomaly taxonomy and precision audit.** Surface rare waveform classes
   before they contaminate timing, charge, PID, or energy studies. Traditional: robust outlier cuts
   on q_template, peak sample, late fraction, baseline residual, saturation count, and timing span.

@@ -12,6 +12,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S02 | ✅ done | ✅ S00 selection | template phase sigma68 2.889 ns | ridge-on-CFD20 sigma68 1.846 ns | **Yes** (Δ≈1.04 ns) | reports/1780997954.15157.07ef03cf__s02_timing_pickoff |
 | S02b | ✅ done | ✅ exact S02 reproduction | global template + train-only timewalk 1.635 ns | ridge-on-CFD20 1.846 ns | No; strong traditional closure wins on run 65 | reports/1781000705.514762.105c186b__s02b_template_timewalk_closure |
 | S03a | ✅ done | ✅ exact S02 reproduction | analytic amp-only timewalk 1.495 ns | ridge residual corrector 1.392 ns | Marginal; CIs overlap, needs leave-one-run-out stability | reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction |
+| S03b | ✅ done | ✅ S03a baselines exactly reproduced | monotonic amplitude-binned timewalk 1.570 ns | ridge residual corrector 1.392 ns | No for binned traditional vs S03a amp-only; ML remains better on run 65 | reports/1781005627.1825.6e067067 |
 | S05a | ✅ done | ✅ A-stack/B-stack external-control inputs | CFD20 pair-median residual width 2.082 ns | ExtraTrees B+A width 1.664 ns | No secure A-control gain; shuffled-A control is similar | reports/1781001480.696013.4ac50583__s05a_astack_external_control |
 | S07 | ✅ done | ✅ S00 selection | low-current AUC 0.504 | calibrated RF AUC 0.768 | **Yes** (Δ=0.264, CI [0.250,0.280]) | reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard |
 | S07b | ✅ done | ✅ guarded gross D_t count match | D_t/curvature AUC 1.000 | shape-only RF AUC 0.9987 | No; D_t is label-defining | reports/1781000790.531071.5a66741c__s07b_timing_control_classifier |
@@ -29,6 +30,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P01 | ✅ done | ✅ 640,737 selected pulses | PCA-4 recon MSE 0.0134; hand-shape probe bal-acc 0.353 | masked AE-4 recon MSE 0.0143; probe bal-acc 0.364 | Mixed: PCA wins recon, AE only slight probe gain | reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation |
 | P01a | ✅ done | ✅ 640,737 exact | residual hand-shape bal-acc 0.292 | residual AE bal-acc 0.276 | No; topology sentinels dominate, shape probes need stricter leakage controls | reports/1781005204.1227.36547733__p01a_controlled_waveform_probes |
 | P01b | ✅ done | ✅ 640,737 exact | PCA-4 recon MSE 0.01337 | masked AE-4 recon MSE 0.01428; artifact released | Mixed; artifact useful, no benchmark claim for all-data release | reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact |
+| P01c | ✅ done | ✅ 640,737 exact | sample/window ablations: samples 3-5 dominate timing | AE occlusion/permutation probes find sample 5 highest | Diagnostic; use sample map to constrain P07e/P03c rather than claim ML adoption | reports/1781005319.562.584259c9__p01c_pulse_shape_importance_map |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
 | P02b | ✅ done | ✅ P02 early-peak rate 0.04388 vs ≈0.044 | hand/PCA GMM run-heldout AMI 0.357 on q_template bins | AE GMM AMI 0.377 | Small ML gain only for q_template-bin morphology; not broadly superior | reports/1781004956.538.5fc10cd7 |
 | P03a | ✅ done | ✅ frozen S02 baseline reproduced | analytic amp-only timewalk sigma68 1.495 ns | tiny 18-sample MLP sigma68 1.927 ns | No; waveform MLP loses to analytic and frozen S02 baselines | reports/1781004956.603.7dce65be__p03a_18_sample_mlp_timing |
@@ -42,13 +44,15 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
   `open=5 claimed=0 done=0 failed=6`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional default-queue argument. The latest project-queue check reports
-  `tn-ticket list --project testbeam` = `open=46 claimed=4 done=33 failed=8`.
+  `tn-ticket list --project testbeam` = `open=46 claimed=1 done=36 failed=8`.
   Four new ready tickets were appended under `project:testbeam`: P05a CNN two-pulse
   decomposition, P07e leading-edge saturation ablation, S10e charge-energy pile-up transfer,
   and S14b range-energy calibration preflight.
 - Newest reports sharpen the next claims: S00b turns selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
-  baseline on run 65; S03a lowers sigma68 further but needs leave-one-run-out stability; S07b
+  baseline on run 65; S03a lowers sigma68 further but needs leave-one-run-out stability; S03b
+  says monotonic amplitude-binned timewalk does not beat S03a amp-only on run 65; P01c maps
+  timing and saturation sensitivity to samples 3-6; S07b
   proves D_t labels are self-referential; S07c shows shape RF can beat q_template-only on weak
   clean-timing labels, but the historical App.A table must be recovered or retired; P10a says
   conditional templates need explicit timewalk terms; S10b shows the 90 ns pile-up live-time is
@@ -58,7 +62,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   18-sample waveform-deep timing needs run-stability and residual-target tests before adoption;
   S18b says A-stack broadening is low-stat/calibration-definition sensitivity, not a clean
   period shift; S16c says adaptive-lowering features are not the primary S02 timing-tail source.
-- Active ready follow-ups cover the requested atomic pulse axes: P01c/P03b/P03c for shape and
+- Active ready follow-ups cover the requested atomic pulse axes: P03b/P03c for shape and
   timing, P04b/P04c/P07e/P10b/P10c for amplitude, charge, saturation, and template phase,
   S10d/S10e/P05a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline, dropout,
   true-pedestal sourcing, and timing-tail propagation, S05b/S05c/S07d/S07e/S18c/S18d for

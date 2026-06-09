@@ -1,0 +1,66 @@
+{
+  "study": "P05a",
+  "ticket": "1781010938.498.6bd050f4",
+  "worker": "testbeam-laptop-2",
+  "title": "CNN two-pulse decomposition against S11a injections",
+  "reproduced": true,
+  "traditional": {
+    "method": "bounded_two_pulse_s01_template_fit",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 13.899264640601482,
+    "ci": [
+      13.742000911675119,
+      14.052920345741251
+    ],
+    "detection_ap": 0.7526723370081942,
+    "charge_fractional_bias": -0.026472370129020116,
+    "charge_fractional_res68": 0.09177470566406287,
+    "failure_rate": 0.16833333333333333
+  },
+  "ml": {
+    "method": "compact_18_sample_cnn",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 10.009265624734077,
+    "ci": [
+      9.875745487557458,
+      10.143885757889946
+    ],
+    "detection_ap": 0.8684145380015449,
+    "charge_fractional_bias": 0.011012849774587196,
+    "charge_fractional_res68": 0.07982517706341302,
+    "failure_rate": 0.22833333333333333
+  },
+  "s11a_reproduction": {
+    "traditional_time_rms_ns": 13.899264640601482,
+    "traditional_detection_ap": 0.7526723370081942,
+    "traditional_failure_rate": 0.16833333333333333,
+    "mlp_time_rms_ns": 9.312025876795074,
+    "mlp_detection_ap": 0.8385422453732178,
+    "mlp_failure_rate": 0.2733333333333333
+  },
+  "ml_beats_baseline": false,
+  "failure_rate_regression_clear": true,
+  "falsification": {
+    "split": "by source run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "leakage_checks_pass": true,
+    "n_template_fit_hypotheses": 81
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "277c27f443f339e89a52ddcc0c20145ebac5a4da",
+  "next_tickets": [
+    "P05b: calibrate the CNN two-pulse failure threshold against separation and amplitude ratio with run-block utility curves",
+    "P05c: validate CNN two-pulse decomposition on real high-current S11b candidate windows using low-current template controls"
+  ],
+  "runtime_sec": 46.34
+}

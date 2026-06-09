@@ -1,0 +1,61 @@
+study_id: S05d
+title: per-stave timing priors from B-stack covariance for two-ended projection
+ticket: "1781016280.4623.016f3ea3"
+worker: testbeam-laptop-3
+
+raw_root_dir: data/root/root
+output_dir: reports/1781016280.4623.016f3ea3
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+sample_period_ns: 10.0
+cfd_fraction: 0.20
+tof_per_cm_ns: 0.078
+stave_spacing_cm: 2.0
+bootstrap_resamples: 600
+random_seed: 50504
+
+runs:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_b_pulses: 640737
+  sample_i_analysis_b_selected_pulses: 252266
+  sample_ii_analysis_b_selected_pulses: 125096
+
+expected_s05c_raw_decomposition:
+  method: raw_pair_median
+  scope: event_level_pooled
+  var_B2: 166.497359
+  var_B4: 34.243591
+  var_B6: 35.067568
+  var_B8: 43.114082
+  B2_variance_minus_downstream_mean_ns2: 129.022278
+  tolerance_ns2: 0.01
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+projection:
+  target_staves: [B4, B6, B8]
+  downstream_staves: [B4, B6, B8]
+  min_other_staves: 2
+  min_prior_variance_ns2: 0.04
+  correlation_floor_source: run_median_level
+
+ml:
+  n_estimators: 120
+  max_features: 0.85
+  min_samples_leaf: 30
+  target_cap_ns: 20.0

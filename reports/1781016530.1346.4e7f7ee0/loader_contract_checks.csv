@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_reproduction_selected_pulses,640737,True,raw ROOT scan occurs before artifact loading
+raw_key_sha256_matches_expected,605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193,True,current raw selected key hash
+upstream_raw_manifest_matches_current,1,True,compares current ROOT sha256 by basename to P01b manifest
+artifact_present,0,True,ignored NPZ may be absent from checkout
+regenerate_command_recorded,/home/billy/anaconda3/bin/python scripts/p01b_full_data_embedding_artifact.py --config configs/p01b_full_data_embedding_artifact.json,True,exact path when ignored NPZ is absent

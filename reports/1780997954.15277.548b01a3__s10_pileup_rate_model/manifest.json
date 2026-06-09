@@ -1,0 +1,48 @@
+{
+  "study": "S10",
+  "ticket": "1780997954.15277.548b01a3",
+  "worker": "testbeam-laptop-5",
+  "git_commit": "696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "random_seed": 1010,
+  "inputs": {
+    "hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "commands": [
+    "python3 reports/1780997954.15277.548b01a3__s10_pileup_rate_model/s10_pileup_rate_model.py"
+  ],
+  "outputs": {
+    "PRE_REGISTRATION.md": "e3467e3c9421dafc9a0263e3bd794e1babdbfee7565937fcc5cba9bcc95d0db1",
+    "REPORT.md": "15c0355aba456fa50fae2d0675e5ef1682b7bbc2b4623e3bb9418f9703e749b3",
+    "current_excess_table.csv": "0c3690f5ed5500e500363fdbeefb5b05e2bc9037a671b81770360e73f1e4c80f",
+    "fig_current_excess.png": "b8430bbac81fdbe968e2043bbdae7e2ad6a6e431bd89d6619f249be1283dd0a0",
+    "fig_current_topology.png": "dae5b58b062c70768a26c07fe95c632fab97e957e12b0064f2011cf3af43d508",
+    "fig_ml_reliability.png": "302ed902997189b1c0aff9b0f14db7a8b289cd823280bc68876358003c7731af",
+    "fig_poisson_rmax.png": "5e017aecfd3d791566bd82fee3eff28bd91da6e448e94af9864e8ccdf1eafc47",
+    "fig_tau_width_handle.png": "d088068c81f3093832c27e350cf73277537e9d7d312912f8a9372b0f80dced89",
+    "ml_cv_scan.csv": "c880167b18e37209d4fdf2c2f6ed715aa6e183fe4e263ab14599af68cacbac4c",
+    "ml_injection_benchmark.csv": "710cda13faf54521c6b6c6b2c746d5772f513e0210753874915ab1efae4cf069",
+    "ml_reliability.csv": "a69f6b507afef8dd5c60cf5f8ada157c301868b3bbc6f87907c9da303fb47303",
+    "ml_score_by_run.csv": "75eeed96d653d37d3dff4dd20478b3ca83cd56943ac710d1b0ea00a153f164d2",
+    "poisson_rmax_table.csv": "f892ad3989e190bcfb62782997eb335d4aafb6d7520e65abae71b42dc68cb705",
+    "reproduction_match_table.csv": "ef799441807b75bc181ee0d41aab5ea8471e0d221d641548a2239ceb19f5bb25",
+    "result.json": "b11863d825db3e06ee46f3f1cbd642a026ccecbf46ddc08b42806546f9b07224",
+    "s10_pileup_rate_model.py": "9ee11f89ab10507b0f5b1d610f313566b25f85737fec132ba5b3b18b732bae1e",
+    "tau_width_handle.csv": "3806a38c53efc0a5e9b81b7b4be10379e143c0dab551f3dbcda2843398d0c166",
+    "topology_by_run.csv": "b71da763756179d7e9aaccd9134d9884ca231e9b6591ba0c88db6dc12935e791"
+  }
+}

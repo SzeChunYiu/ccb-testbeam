@@ -1,0 +1,6 @@
+check,value,unit
+train_heldout_event_id_overlap,0.0,events
+s03b_shuffled_target_sigma68,2.905653903414869,ns
+ml_shuffled_target_sigma68,2.8825097249583522,ns
+traditional_uses_run_or_event_features,0.0,bool
+final_binned_fit_uses_heldout_rows,0.0,bool

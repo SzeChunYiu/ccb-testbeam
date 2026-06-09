@@ -268,12 +268,17 @@ win or tie when the physics control is tight; S16 shows the baseline estimator i
 a naive pretrigger median but still biased; P01 shows representation learning needs
 leakage-controlled downstream value beyond reconstruction; P04 is a strong duplicate-readout
 amplitude/charge closure, not an absolute energy calibration; P10a says conditional templates need
-explicit timewalk terms before their timing gain can be trusted. P02/P07 expose high-value
-pulse-shape and saturation follow-ups.
+explicit timewalk terms before their timing gain can be trusted. P03a now shows a tiny 18-sample
+MLP does not beat either the frozen S02 ridge baseline or the analytic timewalk baseline; waveform
+timing work must test run stability and residual-target formulations before any adoption claim.
+S18b traces Sample-IV A-stack broadening to low-statistics/calibration-definition sensitivity
+rather than a clean run-period shift. S16c finds adaptive-lowering features are not the main S02
+timing-tail source, so baseline work should move to Sample-I propagation, true no-pulse sourcing,
+and full-tail timing tables instead of another proxy-only pedestal benchmark.
 
-Live queue decision: `tn-ticket list --project testbeam` reports `open=29 claimed=3 done=22
-failed=7`, so no new tickets were appended in this cycle. The exact legacy positional command
-`tn-ticket list testbeam` reports the default queue (`open=4 claimed=0 done=0 failed=6`) because
+Live queue decision: `tn-ticket list --project testbeam` reports `open=35 claimed=2 done=26
+failed=8`, so no new tickets were appended in this cycle. The exact legacy positional command
+`tn-ticket list testbeam` reports the default queue (`open=5 claimed=0 done=0 failed=6`) because
 the shim does not treat the positional argument as a project; for testbeam steering, use
 `--project testbeam`.
 
@@ -281,22 +286,38 @@ Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption bu
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
 cross-check at 123.19 ns. The 90 ns value must therefore be treated as an occupancy assumption,
 not as the measured waveform live-time; S10c/S10d should now test threshold stability and
-two-pulse resolvability rather than repeat the same tail fit. The S16b closure report found that
-the best traditional early-sample predictor (MAE 169.34 ADC) still beats the ridge closure
-estimator within CIs, while the forced-trigger validation report found zero true forced/random
-tagged entries and only a quiet-event proxy where ML reaches MAE 15.64 ADC. Baseline work should
-now split into true no-pulse data acquisition/search and timing-tail propagation of pre-trigger
-activity proxies; another proxy-only pedestal benchmark is lower value.
+two-pulse resolvability rather than repeat the same tail fit. P03a reproduced the frozen S02 ridge
+baseline at sigma68 1.846 ns, but the best analytic amp-only timewalk reached 1.495 ns while the
+tiny heteroskedastic MLP was 1.927 ns; P03b/P03c should separate waveform-only instability from
+wrong-target training. S18b found the leave-one-run-out traditional A-stack width at 1.471 ns and
+the ridge residual correction worse at 1.935 ns. S16c found RF nuisance correction reduces tails
+diagnostically but high adaptive-lowering events do not explain the held-out S02 timing tails.
 
-Ready queue additions:
+Completed since last steering cycle:
+
+- **P03a — 18-sample CNN timing versus S02 ridge-corrected CFD.** Result: the waveform MLP loses
+  to both frozen S02 ridge and analytic timewalk; keep P03b/P03c focused on run stability,
+  waveform-only leakage audits, CNN-vs-MLP architecture, and analytic residual targets.
+- **S18b — Quantify Sample IV A-stack timing broadening.** Result: broadening is consistent with
+  low-statistics/calibration-definition sensitivity; next A-stack work should probe calibration
+  pools, robust core fits, and B-stack covariance transfer.
+- **S16c — Pedestal-lowering nuisance propagation into timing residuals.** Result: adaptive
+  lowering is a weak diagnostic, not the primary timing-tail mechanism; next baseline work should
+  test Sample-I propagation, true forced/random sources, and full timing-tail tables.
+
+Active ready queue highlights:
 
 - **P02b — Cluster topology stability across runs and staves.** Test whether P02 pulse clusters
   are stable morphologies or run/stave artifacts. Traditional: shape cuts + PCA/GMM. ML: AE
   latent HDBSCAN/GMM. Metric: held-out AMI and topology purity with paired bootstrap CIs.
-- **P03a — 18-sample CNN timing versus S02 ridge-corrected CFD.** Freeze the S02 best baseline
-  and test whether waveform-deep timing adds information. Traditional: S02 CFD/template plus
-  residual correction. ML: tiny 1D CNN/MLP with calibrated per-pulse σ. Metric: pairwise sigma68,
-  full RMS, and pull width with paired bootstrap CIs.
+- **P03b — Leave-one-run-out waveform MLP timing stability.** Test whether the P03a failure is a
+  run-transfer problem or a waveform-only information limit. Traditional: frozen S02/analytic
+  timewalk per held-out run. ML: same 18-sample MLP with identical leakage guard. Metric: sigma68,
+  full RMS, pull width, and run-to-run spread with paired bootstrap CIs.
+- **P03c — CNN versus MLP timing with analytic residual targets.** Test whether a slightly richer
+  waveform model can learn only the residual left by analytic timewalk. Traditional: analytic
+  amp-only/timewalk closure. ML: compact 1D CNN and MLP residual correctors. Metric: residual
+  sigma68, full RMS, calibration pull width, and paired delta CIs.
 - **P07b — Natural B2 saturation recovery impact on charge and timing tails.** Transfer the P07
   artificial-clipping result to real saturated B2 pulses. Traditional: rising-edge/template
   extrapolation. ML: P07 regressor. Metric: fractional amplitude bias/res68 plus q_template and

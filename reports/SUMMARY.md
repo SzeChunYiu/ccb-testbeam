@@ -20,19 +20,22 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S16 | ✅ done | ✅ S00 selection | pretrigger median MAE 341 ADC | adaptive/learned MAE 48.9 ADC | **Yes**, but adaptive remains biased | reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation |
 | S16b closure | ✅ done | ✅ 640,737 exact | line3 early-sample predictor MAE 169.34 ADC | ridge closure MAE 173.71 ADC | No; traditional remains preferred, ML is contamination diagnostic | reports/1781000826.539659.030b7796__s16b_independent_pedestal_estimator_closure |
 | S16b forced/proxy | ✅ done | ✅ 640,737 exact; 0 forced/random-tagged entries | adaptive proxy MAE 17.18 ADC | HGBR proxy MAE 15.64 ADC | Proxy only; true forced/random pedestal data absent | reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation |
+| S16c | ✅ done | ✅ S00/Sample-II counts and zero post-correction violations | lowering-nuisance ridge sigma68 3.251 ns | RF residual correction sigma68 2.921 ns | Weak/diagnostic; high-lowering events do not carry the timing tails | reports/1781001221.625989.53423f03__s16c_pedestal_timing_nuisance |
 | S18 | ✅ done | ✅ Sample III/IV A-stack | A1-A3 robust width 1.389 ns | ridge correction 1.383 ns | No; CIs overlap | reports/1780997954.15397.168324f2__s18_astack_independent_reproduction |
+| S18b | ✅ done | ✅ Sample-IV robust width 1.794 ns | LORO CFD20 period-polynomial width 1.471 ns | ridge residual correction width 1.935 ns | No; ML worse, broadening is calibration/low-stat sensitivity | reports/1781001480.695946.490c69d3 |
 | P01 | ✅ done | ✅ 640,737 selected pulses | PCA-4 recon MSE 0.0134; hand-shape probe bal-acc 0.353 | masked AE-4 recon MSE 0.0143; probe bal-acc 0.364 | Mixed: PCA wins recon, AE only slight probe gain | reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation |
 | P02 | ✅ merged | selection=S00 | PCA (lin) | autoencoder | **AE 40–51% better @ dim≤4; PCA better @ dim8** | reports/P02_pulse_representation_discovery |
+| P03a | ✅ done | ✅ frozen S02 baseline reproduced | analytic amp-only timewalk sigma68 1.495 ns | tiny 18-sample MLP sigma68 1.927 ns | No; waveform MLP loses to analytic and frozen S02 baselines | reports/1781004956.603.7dce65be__p03a_18_sample_mlp_timing |
 | P04 | ✅ done | ✅ 640,737 exact | peak amp res68 0.1238; integral charge res68 0.1954 | HGB amp res68 0.0091; charge res68 0.0151 | **Yes** for duplicate-readout closure; not absolute energy | reports/1780997954.15577.6c203777 |
 | P07 | ✅ merged | self-truth (clip) | template scale | GBR | **ML ~4% vs template 10–29% (3–7× better)** | reports/P07_saturation_recovery |
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
 
 ## Current steering notes
 
-- Queue health: `tn-ticket list --project testbeam` reports `open=29 claimed=3 done=22 failed=7`;
+- Queue health: `tn-ticket list --project testbeam` reports `open=35 claimed=2 done=26 failed=8`;
   no tickets were appended in this cycle because the ready queue is above the 18-ticket floor.
   The legacy positional command `tn-ticket list testbeam` still reports the default queue
-  (`open=4 claimed=0 done=0 failed=6`), so use `--project testbeam` for steering.
+  (`open=5 claimed=0 done=0 failed=6`), so use `--project testbeam` for steering.
 - Newest reports sharpen the next claims: S00b turns selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S03a lowers sigma68 further but needs leave-one-run-out stability; S07b
@@ -41,12 +44,15 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   conditional templates need explicit timewalk terms; S10b shows the 90 ns pile-up live-time is
   not a measured detector window for the present waveform definition; S16b shows early-sample
   baseline closure is still not true no-pulse pedestal validation because forced/random tags are
-  absent; P04 is a strong duplicate-readout closure, not an energy calibration.
-- Active ready follow-ups already cover the requested atomic pulse axes: P01c/P02b/P03a for
+  absent; P04 is a strong duplicate-readout closure, not an energy calibration; P03a shows
+  18-sample waveform-deep timing needs run-stability and residual-target tests before adoption;
+  S18b says A-stack broadening is low-stat/calibration-definition sensitivity, not a clean
+  period shift; S16c says adaptive-lowering features are not the primary S02 timing-tail source.
+- Active ready follow-ups already cover the requested atomic pulse axes: P01c/P02b/P03b/P03c for
   shape and timing, P04b/P04c/P07b/P10b/P10c for amplitude, charge, saturation, and template
-  phase, S10c/S10d/S11a for pile-up and live-time, S00c/S16c/S16d/S16e for selector, baseline,
-  dropout, true-pedestal sourcing, and timing-tail propagation, and S07d/S07e/S18b for control
-  labels and external timing checks.
+  phase, S10c/S10d/S11a for pile-up and live-time, S00c/S16d/S16e/S04b for selector, baseline,
+  dropout, true-pedestal sourcing, and timing-tail propagation, and S05b/S05c/S07d/S07e/S18c/S18d
+  for covariance, control labels, and external timing checks.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

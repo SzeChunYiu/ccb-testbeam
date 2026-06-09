@@ -51,8 +51,8 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 - Queue health: the exact requested command `tn-ticket list testbeam` now reports
   `open=6 claimed=0 done=0 failed=6`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional default-queue argument. A project-aware
-  `tn-ticket list --project testbeam` check remained well above the floor; the final audit observed
-  `open=60 claimed=2 done=45 failed=11` after this pass appended three ready tickets under
+  `tn-ticket list --project testbeam` check remained far above the floor after this pass appended
+  three ready tickets under
   `project:testbeam`: P04f baseline-excursion charge-bias closure, S10f anomaly-stratified
   pile-up excess closure, and P08a penetration-depth weak-label PID null test.
 - Newest reports sharpen the next claims: S00b turns selector/baseline semantics into a small but

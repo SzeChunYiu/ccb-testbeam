@@ -275,10 +275,9 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=6 claimed=0 done=0 failed=6`, which is below the 18-ready floor. A project-aware
 `tn-ticket list --project testbeam` check during this steering pass remained well above the
-floor; the final audit observed `open=60 claimed=2 done=45 failed=11`
-after this pass appended three more non-duplicate ready tickets under `project:testbeam`: P04f
-baseline-excursion charge-bias closure, S10f anomaly-stratified pile-up excess closure, and P08a
-penetration-depth weak-label PID null test.
+floor after this pass appended three more non-duplicate ready tickets under `project:testbeam`:
+P04f baseline-excursion charge-bias closure, S10f anomaly-stratified pile-up excess closure, and
+P08a penetration-depth weak-label PID null test.
 The discrepancy is a shim/argument parsing issue, not a scientific queue shortage, but the exact
 low-command gate was still honoured with project:testbeam tickets.
 

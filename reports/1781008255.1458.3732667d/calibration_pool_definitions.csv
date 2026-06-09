@@ -1,0 +1,5 @@
+pool,description,uses_sample_iv_leave_one_analysis,fixed_sample_iv_runs,sample_iii_runs
+run64_only,Original S18 Sample IV run 64 calibration pool only.,False,64,
+sample_iii_only,"All available Sample III A-stack runs, no Sample IV calibration rows.",False,,"31,32,33,34,35,36,37,39,40,41,42,44,45,46,47,48,49,50,51,52,53,54,55,56,57"
+mixed_period,"Sample III plus run 64, testing whether adding pre-period statistics changes the run64 calibration.",False,64,"31,32,33,34,35,36,37,39,40,41,42,44,45,46,47,48,49,50,51,52,53,54,55,56,57"
+sample_iv_leave_one,Sample IV only: run 64 plus all non-held-out Sample IV analysis runs for each held-out run.,True,64,

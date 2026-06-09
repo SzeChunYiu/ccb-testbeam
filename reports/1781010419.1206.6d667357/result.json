@@ -1,0 +1,66 @@
+{
+  "study": "S10d",
+  "ticket": "1781010419.1206.6d667357",
+  "worker": "testbeam-laptop-1",
+  "title": "two-pulse template pile-up amplitude by stratum",
+  "reproduced": true,
+  "reproduction_gate": "S10c topology fractions from raw B-stack ROOT within 0.0015 absolute tolerance",
+  "split": "leave-one-source-run-out for templates and ML; run bootstrap CIs within current group",
+  "strata": {
+    "definition": "S10c amplitude bin x S16 adaptive lowering bin x P02 topology",
+    "n_matched_strata": 8,
+    "global_s10_downstream_high_minus_low": 0.010289747149522063,
+    "n_scored_events": 12617,
+    "sample_cap_per_run_stratum": 140
+  },
+  "traditional": {
+    "method": "bounded_two_pulse_template_fit",
+    "metric": "matched_stratified_secondary_fraction_high_minus_low",
+    "value": 0.03158538627349211,
+    "ci": [
+      0.018889965559131923,
+      0.0439563896813622
+    ]
+  },
+  "ml": {
+    "method": "run_heldout_random_forest_residual_diagnostic",
+    "secondary_fraction_high_minus_low": {
+      "value": 0.007285829435931546,
+      "ci": [
+        0.0034933143848864577,
+        0.011903635154727544
+      ]
+    },
+    "overlap_score_high_minus_low": {
+      "value": 0.024460770476721856,
+      "ci": [
+        0.0067795765338648775,
+        0.04181800245924334
+      ]
+    },
+    "mean_synthetic_holdout_auc": 0.9461274272270296,
+    "mean_shuffled_label_synthetic_auc": 0.5052974659839787,
+    "mean_secondary_fraction_mae_on_synthetic_holdout": 0.06711919333791673
+  },
+  "leakage_flags": 0,
+  "leakage_checks_pass": true,
+  "conclusion": "Replacing the S10c binary downstream label with a constrained two-pulse amplitude estimate gives a matched high-current minus low-current secondary fraction of 0.03159 [0.01889, 0.04396] from the traditional template fit. The ML residual diagnostic gives 0.00729 [0.00349, 0.01190] for secondary fraction and 0.02446 [0.00678, 0.04182] for overlap score. The largest traditional positive stratum is amp_ge_4500 / s16_large_lowering / p02_broad_late. Leakage probes do not flag identifier or source-run leakage, but the estimate remains a pulse-shape diagnostic rather than a truth-labelled pile-up decomposition.",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "73ea5dc8564bbc8794f4849ce68dba471da8edbb",
+  "runtime_sec": 377.69
+}

@@ -1,0 +1,95 @@
+{
+  "ticket_id": "1781010024.910.7fbe14e8",
+  "study_id": "P01c",
+  "title": "publish P01b latent artifact outside git",
+  "status": "passed",
+  "raw_root_recount": {
+    "raw_root_dir": "data/root/root",
+    "runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "passed": true
+  },
+  "upstream_p01b_method_context": {
+    "split": {
+      "heldout_runs": [42, 57, 64, 65],
+      "train_pulses": 581124,
+      "heldout_pulses": 59613
+    },
+    "traditional": {
+      "method": "PCA-4",
+      "heldout_reconstruction_mse": 0.013371830806136131,
+      "ci_low": 0.009223619475960732,
+      "ci_high": 0.016964655369520187
+    },
+    "ml": {
+      "method": "masked denoising AE-4",
+      "heldout_reconstruction_mse": 0.014276529662311077,
+      "ci_low": 0.009938066825270653,
+      "ci_high": 0.0177223589271307
+    },
+    "leakage_check": {
+      "method": "AE label-shuffle stave linear probe",
+      "balanced_accuracy": 0.23911463225795518,
+      "ci_low": 0.2343089419210354,
+      "ci_high": 0.24753657203903037
+    }
+  },
+  "published_location": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0",
+  "published_artifacts": {
+    "p01b_embedding_latents.npz": {
+      "sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+      "bytes": 11923919,
+      "rows": 640737,
+      "latent_shape": [640737, 4],
+      "z_dtype": "float32",
+      "key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+      "verified_against_metadata": true
+    },
+    "p01b_autoencoder_state.pt": {
+      "sha256": "20ca87b4df2a1d31ef99130423101772f6f293fe5fe0e0af3c859038d9d082d1",
+      "bytes": 13715,
+      "source_destination_hash_match": true
+    }
+  },
+  "storage_notes": [
+    "The binaries are not tracked by git because .npz and .pt are ignored.",
+    "The canonical /home/billy/ccb-data tree was mounted read-only in this worker.",
+    "Home-level artifact directory creation also failed as read-only; the selected path is the writable worker-local non-git store."
+  ],
+  "retrieval_note": "reports/1781010024.910.7fbe14e8__p01c_publish_p01b_latent_artifact/P01B_ARTIFACT_RETRIEVAL.md"
+}

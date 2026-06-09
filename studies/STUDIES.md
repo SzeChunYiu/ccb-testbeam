@@ -275,13 +275,17 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=9 claimed=0 done=0 failed=7`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep, but the mission trigger
-still required a small set of new ready studies. This pass appended three additional
-non-duplicate ready tickets under `project:testbeam`: P04h A-stack charge-transfer support map by
-B-stack topology (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
-(`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
-(`1781023340.632.43377364`). The discrepancy is a shim/argument parsing issue, not a scientific
-queue shortage.
+with `--project testbeam`: the project-aware testbeam queue remains deep (`open=136` on the
+post-append audit, with concurrent workers moving tickets), but the mission trigger still required a
+small set of new ready studies. This pass appended three additional non-duplicate ready tickets
+under `project:testbeam`: S07i S07f score transfer from injected corruption to real high-current
+strata (`1781024786.1471.167d1f38`), P04i duplicate-readout charge closure sample-causality map
+(`1781024791.1539.3ba15c1d`), and S03h HGB timewalk gain support map by amplitude and shape atoms
+(`1781024797.1607.4a1b6480`). The previous pass appended P04h A-stack charge-transfer support map
+by B-stack topology (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure
+autopsy (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology
+flags (`1781023340.632.43377364`). The discrepancy is a shim/argument parsing issue, not a
+scientific queue shortage.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -371,6 +375,15 @@ does not rescue binned branches, and binned selected branches can fail shuffled-
 The latest anomaly-tail closure finds the ML high-risk cut can reduce timing tails only by removing
 about 24% of pairs and shifting amplitude/pair composition, so pathology vetoes must be matched
 and composition-stable.
+The latest S07f/S07g reports refine the App.I story: the all-three shape RF is no longer only a
+D_t-label mirror because it reaches AUC 0.822 on injected two-pulse truth versus 0.606 for the
+traditional timing/template score, but curvature remains the ceiling on the original D_t label and
+amplitude nuisance is visible. That pushes the next question to calibrated transfer from injected
+truth into real high-current strata, not another D_t classifier. The latest P04d report repairs the
+duplicate-readout direct-template pathology with a strong Huber traditional closure (res68 0.0203)
+and an even stronger waveform ExtraTrees closure (res68 0.00270), but external A/B transfer remains
+broad, so the charge programme now needs sample-causal ablations and support maps before feeding
+PID or energy.
 
 Completed since last steering cycle:
 
@@ -408,6 +421,12 @@ Completed since last steering cycle:
   readout remains an ML-friendly closure but external charge-energy transfer is weaker; explicit
   timewalk beats conditional template timing; rare waveform taxonomy is ready for propagation
   studies rather than adoption claims.
+- **S07f/S07g — Independent all-three App.I validation and stratification.** Result: the shape RF
+  survives an injected non-D_t waveform-corruption target, but the original App.I label is still
+  curvature-defined and amplitude/current strata must be calibrated before real pile-up claims.
+- **P04d — Adaptive-template scale pathology.** Result: direct shifted-template scale variants
+  remain poor, strong Huber calibration closes duplicate readout to res68 0.0203, and waveform ML
+  reaches res68 0.00270; the result is duplicate-readout closure, not external energy truth.
 - **S02c/S03b/S10c/S10d/S16d/S16e — Newest selector, timing-tail, pile-up, and pedestal reports.**
   Result: dynamic-selector semantics shift timing closure; q_template weak labels improve with ML
   but need pair-residual proof; live-time thresholds remain above 90 ns; ML two-pulse recovery
@@ -674,3 +693,26 @@ Active ready queue highlights:
   classifier with leave-one-run-out nuisance residualization and shuffled-axis sentinels. Metric:
   conditional odds ratios, partial correlations, mutual-information deltas, downstream sigma68 or
   charge-bias deltas, calibration ECE, and stratified run-block bootstrap CIs.
+- **S07i — S07f score transfer from injected corruption to real high-current strata.** Calibrate
+  the S07f shape-only waveform-corruption score, learned on injected two-pulse truth, against real
+  high-current candidate strata matched on amplitude, baseline lowering, saturation, anomaly, and
+  run family. Traditional: S10/S11 one-pulse-vs-two-pulse template scores, curvature/timing
+  residuals, and matched high-minus-low excess tables. ML: frozen S07f RF with isotonic or
+  conformal calibration plus shuffled-current and amplitude-only sentinels. Metric: calibration
+  slope/intercept, score shift, candidate excess rate, template-fit agreement, Brier/ECE, and
+  ML-minus-traditional deltas with run-block bootstrap CIs.
+- **P04i — Duplicate-readout charge closure sample-causality map.** Identify which waveform
+  samples drive P04/P04d duplicate-readout charge closure and whether the ML gain survives ablation
+  of early-peak, post-peak tail, baseline, and saturation-boundary samples. Traditional: peak,
+  integral, adaptive-template scale, and strong Huber charge calibrator under frozen sample-window
+  ablations. ML: frozen ExtraTrees/HGB charge regressor with occlusion, permutation, grouped-window
+  retraining, and shuffled-target/stave-only sentinels. Metric: fractional bias, res68, full RMS,
+  within-10pct rate, sample-window performance delta, and paired run-block bootstrap CIs.
+- **S03h — HGB timewalk gain support map by amplitude and shape atoms.** Locate where the S03d
+  HGB residual gain over the signed analytic prior appears or fails across amplitude, stave,
+  peak-sample, q_template, saturation-boundary, pretrigger, and anomaly strata. Traditional:
+  frozen S03a amp-only, S03d signed inverse-amplitude prior, and heavy-tail analytic residual
+  tables in matched strata. ML: S03d HGB residual corrector with feature-group ablations,
+  stratum-specific calibration, monotonicity probes, and shuffled-target/run-family sentinels.
+  Metric: support count, sigma68, full RMS, >5 ns tail fraction, bias-vs-amplitude slope,
+  calibration coverage, and stratified run-block bootstrap CIs.

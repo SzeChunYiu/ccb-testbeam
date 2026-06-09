@@ -1,0 +1,6 @@
+check,value
+q_feature_forbidden_columns,none
+train_test_run_overlap_across_folds,0
+qtemplate_unmatched_events,0
+leaky_downstream_span_auc,1.0
+shuffled_label_auc,0.5089243612482282

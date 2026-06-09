@@ -1,0 +1,62 @@
+study_id: S18
+title: A-stack independent reproduction
+ticket: "1780997954.15397.168324f2"
+worker: testbeam-laptop-3
+
+raw_root_dir: data/root/root
+output_dir: reports/1780997954.15397.168324f2__s18_astack_independent_reproduction
+
+samples:
+  sample_iii_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_iii_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_iv_calib: [64]
+  sample_iv_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+cfd_fraction: 0.20
+bootstrap_resamples: 500
+random_seed: 1818
+gaussian_core_window_ns: 2.5
+gaussian_core_bins: 40
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+  expected_counts:
+    sample_iii_analysis:
+      events_with_selected: 7168
+      selected_pulses: 9682
+    sample_iv_analysis:
+      events_with_selected: 767
+      selected_pulses: 894
+  expected_timing:
+    sample_iii_analysis:
+      robust_width_ns: 1.43
+      core_sigma_ns: 1.41
+      within_abs_2ns: 0.843
+      tolerance_robust_width_ns: 0.05
+      tolerance_core_sigma_ns: 0.10
+    sample_iv_analysis:
+      robust_width_ns: 1.61
+      core_sigma_ns: 1.60
+      tolerance_robust_width_ns: 0.25
+      tolerance_core_sigma_ns: 0.55
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+  comparison_pairs:
+    - [B4, B6]
+    - [B6, B8]
+
+ml:
+  alphas: [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+  cv_folds: 5

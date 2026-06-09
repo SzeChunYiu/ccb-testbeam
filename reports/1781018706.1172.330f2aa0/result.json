@@ -1,0 +1,188 @@
+{
+  "ticket_id": "1781018706.1172.330f2aa0",
+  "study_id": "P01e",
+  "title": "template-phase quantization sensitivity for P01d sign flips",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_pulses_total": 581124,
+    "heldout_pulses_total": 59613,
+    "bootstrap_replicates": 500
+  },
+  "traditional": {
+    "methods": [
+      "template_phase_coarse_0p05_min",
+      "template_phase_fine_0p01_min",
+      "template_phase_fine_0p01_parabolic",
+      "of_5_13"
+    ],
+    "best_optimal_filter_method": "of_5_13",
+    "selection": "optimal-filter window selected on train runs only"
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_cfd20",
+    "best_alpha": 100.0,
+    "feature_set": "18 normalized samples, log amplitude, peak, area, width, stave one-hot"
+  },
+  "samples_of_interest": [
+    5,
+    7,
+    8
+  ],
+  "heldout_baselines": [
+    {
+      "split": "heldout",
+      "method": "cfd20",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 3.1884502039551736,
+      "ci_low": 3.0771167368888754,
+      "ci_high": 3.304804116487503,
+      "median_ns": -3.2236692969799066
+    },
+    {
+      "split": "heldout",
+      "method": "template_phase_coarse_0p05_min",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.5232181251049006,
+      "ci_low": 2.0232181251049006,
+      "ci_high": 2.7592832834720618,
+      "median_ns": -3.9906968836784387
+    },
+    {
+      "split": "heldout",
+      "method": "template_phase_fine_0p01_min",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.5592832834720616,
+      "ci_low": 2.0732181251049013,
+      "ci_high": 2.723218125104907,
+      "median_ns": -3.9906968836784387
+    },
+    {
+      "split": "heldout",
+      "method": "template_phase_fine_0p01_parabolic",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.5587279275018515,
+      "ci_low": 2.0472048765746536,
+      "ci_high": 2.7313786646708245,
+      "median_ns": -3.9906968836784387
+    },
+    {
+      "split": "heldout",
+      "method": "of_5_13",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.693265431442259,
+      "ci_low": 2.48448474121094,
+      "ci_high": 2.81113862991333,
+      "median_ns": -3.0328318061828625
+    },
+    {
+      "split": "heldout",
+      "method": "ml_ridge_residual",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 1.974360668523108,
+      "ci_low": 1.8252974977630778,
+      "ci_high": 2.0276205207622455,
+      "median_ns": 1.4374287283144938
+    },
+    {
+      "split": "heldout",
+      "method": "ml_target_shuffle",
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 3.217127669235257,
+      "ci_low": 3.0961000104044736,
+      "ci_high": 3.3224744704434244,
+      "median_ns": -3.2835409367757435
+    }
+  ],
+  "sign_flip_interpretation": [
+    {
+      "sample": 5,
+      "p01d_cfd_delta_ns": -2.024884487011433,
+      "rerun_cfd20_delta_ns": -2.024884487011433,
+      "p01d_coarse_template_delta_ns": 0.25,
+      "coarse_template_delta_ns": 0.25,
+      "fine_template_delta_ns": 0.2999999999999958,
+      "parabolic_template_delta_ns": 0.29041897609723843,
+      "of_5_13_delta_ns": 0.2419295377349866,
+      "ml_ridge_residual_delta_ns": 1.7837926012493204,
+      "non_cfd_methods_robust_negative": 0,
+      "interpretation": "cfd_only_artifact"
+    },
+    {
+      "sample": 7,
+      "p01d_cfd_delta_ns": -0.22064299160242173,
+      "rerun_cfd20_delta_ns": -0.22064299160242173,
+      "p01d_coarse_template_delta_ns": 3.552713678800501e-15,
+      "coarse_template_delta_ns": 3.552713678800501e-15,
+      "fine_template_delta_ns": 0.050000000000008704,
+      "parabolic_template_delta_ns": 0.054227025235642934,
+      "of_5_13_delta_ns": 0.09503231712341442,
+      "ml_ridge_residual_delta_ns": 1.333966370906776,
+      "non_cfd_methods_robust_negative": 0,
+      "interpretation": "cfd_only_artifact"
+    },
+    {
+      "sample": 8,
+      "p01d_cfd_delta_ns": -0.14953069021463294,
+      "rerun_cfd20_delta_ns": -0.14953069021463294,
+      "p01d_coarse_template_delta_ns": 0.25,
+      "coarse_template_delta_ns": 0.25,
+      "fine_template_delta_ns": 0.24999999999999867,
+      "parabolic_template_delta_ns": 0.23242281993947955,
+      "of_5_13_delta_ns": -0.004677200317381391,
+      "ml_ridge_residual_delta_ns": 1.1445069920982862,
+      "non_cfd_methods_robust_negative": 0,
+      "interpretation": "cfd_only_artifact"
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "pass": true,
+      "value": 0,
+      "detail": "must be zero for split-by-run"
+    },
+    {
+      "check": "heldout_runs",
+      "pass": true,
+      "value": "42,57,64,65",
+      "detail": "all benchmark residuals are from these runs"
+    },
+    {
+      "check": "ml_target_shuffle_sigma68_ns",
+      "pass": true,
+      "value": 3.217127669235257,
+      "detail": "shuffled train targets should not match the real ML residual timing"
+    },
+    {
+      "check": "ml_vs_cfd20_delta_ns",
+      "pass": true,
+      "value": -1.2140895354320655,
+      "detail": "negative means ML improves over CFD20; target-shuffle is the leakage sentinel"
+    },
+    {
+      "check": "feature_audit",
+      "pass": true,
+      "value": "waveform, amplitude, peak, area, width, stave only",
+      "detail": "no event id, run id, or pair residual labels are in ML features"
+    },
+    {
+      "check": "too_good_result_trigger",
+      "pass": true,
+      "value": 1.242767000712149,
+      "detail": "ML is strong, so the target-shuffle sentinel must degrade by >0.5 ns"
+    }
+  ],
+  "runtime_sec": 44.2
+}

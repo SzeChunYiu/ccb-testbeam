@@ -191,6 +191,14 @@ def masked_features(wave: np.ndarray, observed_amp: np.ndarray, window: List[int
     return np.hstack([vals, diffs, plateau, charge, np.log(safe)[:, None]])
 
 
+def masked_feature_names(window: List[int]) -> List[str]:
+    names = [f"sample_{i}_over_obs" for i in window]
+    names += [f"diff_{a}_{b}" for a, b in zip(window[:-1], window[1:])]
+    names += [f"plateau_sample_{i}" for i in window]
+    names += ["window_charge_over_obs", "log_observed_amp"]
+    return names
+
+
 def fixed_ceiling_samples(
     wave: np.ndarray,
     amp: np.ndarray,
@@ -241,6 +249,51 @@ def fit_mlp(x: np.ndarray, y: np.ndarray, observed: np.ndarray, window: List[int
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", ConvergenceWarning)
         model.fit(masked_features(x, observed, window), np.log(y / observed))
+    return model
+
+
+def permutation_importance_rows(
+    model,
+    x: np.ndarray,
+    y: np.ndarray,
+    observed: np.ndarray,
+    window: List[int],
+    rng: np.random.Generator,
+    held_run: int,
+    window_name: str,
+    method: str,
+) -> List[dict]:
+    features = masked_features(x, observed, window)
+    names = masked_feature_names(window)
+    baseline = recovery_metrics(y, observed * np.exp(model.predict(features)))["res68_abs_frac"]
+    rows = []
+    for col, name in enumerate(names):
+        permuted = features.copy()
+        permuted[:, col] = rng.permutation(permuted[:, col])
+        score = recovery_metrics(y, observed * np.exp(model.predict(permuted)))["res68_abs_frac"]
+        rows.append(
+            {
+                "run": int(held_run),
+                "window": window_name,
+                "method": method,
+                "feature": name,
+                "baseline_res68_abs_frac": float(baseline),
+                "permuted_res68_abs_frac": float(score),
+                "delta_res68_abs_frac": float(score - baseline),
+            }
+        )
+    return rows
+
+
+def fit_gbr_matrix(features: np.ndarray, target: np.ndarray, seed: int) -> GradientBoostingRegressor:
+    model = GradientBoostingRegressor(
+        n_estimators=120,
+        max_depth=3,
+        learning_rate=0.055,
+        subsample=0.75,
+        random_state=seed,
+    )
+    model.fit(features, target)
     return model
 
 
@@ -432,6 +485,8 @@ def write_report(
     artificial_summary: pd.DataFrame,
     natural_summary: pd.DataFrame,
     adoption: pd.DataFrame,
+    permutation_summary: pd.DataFrame,
+    leakage_probe_summary: pd.DataFrame,
 ) -> None:
     best = result["headline"]
     art_view = artificial_summary[
@@ -443,6 +498,12 @@ def write_report(
         & (natural_summary["window"].isin(["s5", "s6", "s7", "w4_6", "w5_7", "w3_7", "w2_8"]))
     ][["window", "method", "timing_tail_delta_vs_observed", "timing_tail_delta_vs_observed_ci95", "q_template_shift_vs_observed"]]
     adopt_view = adoption[["window", "best_artificial_method", "best_res68_abs_frac", "best_res68_abs_frac_ci95", "tail_delta_ci95", "adoptable"]]
+    perm_view = permutation_summary[
+        (permutation_summary["window"] == "w2_8") & (permutation_summary["method"] == "gbr_masked")
+    ].sort_values("delta_res68_abs_frac", ascending=False).head(10)[
+        ["feature", "delta_res68_abs_frac", "delta_res68_abs_frac_ci95"]
+    ]
+    leak_view = leakage_probe_summary[["window", "probe", "res68_abs_frac", "res68_abs_frac_ci95", "bias_median_frac"]]
 
     lines = [
         "# P07e: leading-edge sample ablation for saturation recovery",
@@ -483,11 +544,25 @@ def write_report(
         "",
         "A retained window is marked adoptable only when its best artificial recovery has a run-block 95% CI upper bound below 8% and its natural timing-tail delta has a 95% CI upper bound at or below zero.",
         "",
+        "## Permutation importance",
+        "",
+        "For the best broad window, features were permuted inside each held-out run after training on the other runs. Positive deltas mean the model relied on that feature.",
+        "",
+        perm_view.to_markdown(index=False),
+        "",
+        "## Ceiling and observed-amplitude probes",
+        "",
+        "The best-window GBR was retrained with feature subsets to test explicit ceiling/observed-amplitude dependence.",
+        "",
+        leak_view.to_markdown(index=False),
+        "",
         "## Leakage checks",
         "",
         f"- The split is leave-one-run-out over runs `{RUNS}`; run id, event id, downstream timing, and true amplitude are excluded from ML features.",
         f"- The best artificial score is `{best['best_window']}`/`{best['best_method']}` with res68 `{best['best_res68_abs_frac']:.4f}`, not a near-zero result.",
         f"- A shuffled-label check on that same window gave res68 `{result['leakage_audit']['shuffled_label_res68_abs_frac']:.4f}`; the real/shuffled ratio is `{result['leakage_audit']['real_to_shuffled_res68_ratio']:.3f}`.",
+        f"- The observed-amplitude-only probe on `w2_8` scored res68 `{result['leakage_audit']['observed_amp_only_res68_abs_frac']:.4f}`, worse than the full feature model.",
+        f"- Removing the explicit observed-amplitude feature scored res68 `{result['leakage_audit']['without_observed_amp_res68_abs_frac']:.4f}`.",
         f"- Too-good-to-be-true leakage flag: `{result['leakage_audit']['ml_too_good_to_be_true']}`.",
         "",
         "## Headline",
@@ -545,6 +620,8 @@ def main() -> int:
 
     artificial_rows = []
     natural_rows = []
+    permutation_rows = []
+    leakage_probe_rows = []
     oof_predictions = []
 
     for held_run in RUNS:
@@ -623,8 +700,41 @@ def main() -> int:
                     for i in pick
                 )
 
+            if window_name == "w2_8":
+                permutation_rows.extend(
+                    permutation_importance_rows(
+                        gbr, x_held, y_held, obs_held, window_idx, rng, held_run, window_name, "gbr_masked"
+                    )
+                )
+                permutation_rows.extend(
+                    permutation_importance_rows(
+                        mlp, x_held, y_held, obs_held, window_idx, rng, held_run, window_name, "mlp_masked"
+                    )
+                )
+                full_train = masked_features(x_train, obs_train, window_idx)
+                full_held = masked_features(x_held, obs_held, window_idx)
+                target = np.log(y_train / obs_train)
+                probe_specs = [
+                    ("full_features", np.arange(full_train.shape[1])),
+                    ("without_observed_amp", np.arange(full_train.shape[1] - 1)),
+                    ("observed_amp_only", np.asarray([full_train.shape[1] - 1])),
+                ]
+                for probe_name, cols in probe_specs:
+                    probe_model = fit_gbr_matrix(full_train[:, cols], target, RANDOM_SEED + 3000 + held_run + len(cols))
+                    probe_pred = obs_held * np.exp(probe_model.predict(full_held[:, cols]))
+                    leakage_probe_rows.append(
+                        {
+                            "run": int(held_run),
+                            "window": window_name,
+                            "probe": probe_name,
+                            **recovery_metrics(y_held, probe_pred),
+                        }
+                    )
+
     artificial = pd.DataFrame(artificial_rows)
     natural = pd.DataFrame(natural_rows)
+    permutation = pd.DataFrame(permutation_rows)
+    leakage_probe = pd.DataFrame(leakage_probe_rows)
     baseline_natural = natural[natural["method"] == "observed_saturated"][
         ["run", "timing_tail_frac_abs_gt5ns", "q_template_median"]
     ].rename(
@@ -649,6 +759,18 @@ def main() -> int:
         natural[natural["method"] != "observed_saturated"],
         ["window", "method"],
         ["timing_tail_frac_abs_gt5ns", "timing_tail_delta_vs_observed", "q_template_shift_vs_observed", "amp_ratio_median"],
+        rng,
+    )
+    permutation_summary = aggregate_run_metrics(
+        permutation,
+        ["window", "method", "feature"],
+        ["permuted_res68_abs_frac", "delta_res68_abs_frac"],
+        rng,
+    )
+    leakage_probe_summary = aggregate_run_metrics(
+        leakage_probe,
+        ["window", "probe"],
+        ["res68_abs_frac", "bias_median_frac", "frac_within10"],
         rng,
     )
 
@@ -701,6 +823,9 @@ def main() -> int:
         shuffle_model = fit_gbr(x_train, y_shuffle, obs_train, dict(WINDOWS)[best_window], RANDOM_SEED + 777)
     shuffle_pred = obs_held * np.exp(shuffle_model.predict(masked_features(x_held, obs_held, dict(WINDOWS)[best_window])))
     shuffled_res68 = recovery_metrics(y_held, shuffle_pred)["res68_abs_frac"]
+    probe_lookup = leakage_probe_summary[leakage_probe_summary["window"] == "w2_8"].set_index("probe")
+    observed_amp_only_res68 = float(probe_lookup.loc["observed_amp_only", "res68_abs_frac"])
+    without_observed_amp_res68 = float(probe_lookup.loc["without_observed_amp", "res68_abs_frac"])
 
     write_table(OUT_DIR / "reproduction_gate.csv", reproduction)
     write_table(OUT_DIR / "p07c_reproduction_gate.csv", p07c_gate)
@@ -710,6 +835,10 @@ def main() -> int:
     write_table(OUT_DIR / "artificial_recovery_summary.csv", artificial_summary)
     write_table(OUT_DIR / "natural_transfer_by_run.csv", natural)
     write_table(OUT_DIR / "natural_transfer_summary.csv", natural_summary)
+    write_table(OUT_DIR / "permutation_importance_by_run.csv", permutation)
+    write_table(OUT_DIR / "permutation_importance_summary.csv", permutation_summary)
+    write_table(OUT_DIR / "leakage_probe_by_run.csv", leakage_probe)
+    write_table(OUT_DIR / "leakage_probe_summary.csv", leakage_probe_summary)
     write_table(OUT_DIR / "adoption_screen.csv", adoption)
     write_table(OUT_DIR / "oof_prediction_sample.csv", pd.DataFrame(oof_predictions))
 
@@ -747,15 +876,33 @@ def main() -> int:
             "excluded_features": ["run_id", "event_id", "downstream_timing", "true_amplitude", "heldout_labels"],
             "shuffled_label_res68_abs_frac": float(shuffled_res68),
             "real_to_shuffled_res68_ratio": float(best["best_res68_abs_frac"] / max(shuffled_res68, 1.0e-9)),
+            "observed_amp_only_res68_abs_frac": observed_amp_only_res68,
+            "without_observed_amp_res68_abs_frac": without_observed_amp_res68,
             "ml_too_good_to_be_true": bool(best["best_res68_abs_frac"] < 0.005),
         },
+        "permutation_importance_top": permutation_summary[
+            (permutation_summary["window"] == "w2_8") & (permutation_summary["method"] == "gbr_masked")
+        ]
+        .sort_values("delta_res68_abs_frac", ascending=False)
+        .head(10)
+        .to_dict(orient="records"),
+        "leakage_probes": leakage_probe_summary.to_dict(orient="records"),
         "next_tickets": [],
         "follow_up_ticket_status": "skipped: open ticket 1781019500.1759.55e62bed already covers P07f natural B2 saturation knees with odd-channel duplicates",
         "git_commit": git_commit(),
         "runtime_sec": round(time.time() - t0, 2),
     }
     (OUT_DIR / "result.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
-    write_report(result, p07c_gate, reproduction, artificial_summary, natural_summary, adoption)
+    write_report(
+        result,
+        p07c_gate,
+        reproduction,
+        artificial_summary,
+        natural_summary,
+        adoption,
+        permutation_summary,
+        leakage_probe_summary,
+    )
 
     inputs = {str(raw_path(run)): sha256_file(raw_path(run)) for run in RUNS}
     pd.DataFrame(

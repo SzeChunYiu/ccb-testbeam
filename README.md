@@ -9,6 +9,10 @@ Monte Carlo)**.
 This repository holds the **code, documentation, study plans, and results**. The raw data
 (~6.4 GB) lives outside git — see [`DATA.md`](DATA.md).
 
+> **Start here:** [`PROJECT_REPORT.md`](PROJECT_REPORT.md) is the single human-readable status
+> report — the science, results so far (with numbers), current blockers, and what's next, all in
+> one place.
+
 > Status: research in progress. Results here are **not yet peer-reviewed**; treat all
 > numbers as preliminary.
 
@@ -24,6 +28,31 @@ This repository holds the **code, documentation, study plans, and results**. The
 | Selected pulses | ~640,737 (B-stack, A > 1000 ADC) |
 | Headline timing | downstream single-stave ≈ 0.68–1.0 ns (B6 best); combined 3-stave ≈ 0.54 ns; two-ended projection ≈ 0.6–1.0 ns |
 | Pile-up tolerance | R_max ≈ 4.2 MHz (|Δt|<1 ns & area<20% at >90% eff, τ_eff=90 ns) |
+
+## Findings so far
+
+Each study reproduces a report number first, then benchmarks a strong **traditional** method
+head-to-head against an **ML** method (split by run, bootstrap CIs). One row per completed study;
+full write-ups in `reports/<study>/REPORT.md`, live scoreboard in `reports/SUMMARY.md`.
+
+| Study | Question | Headline finding | ML vs traditional |
+|---|---|---|---|
+| **S00** | Can we rebuild the selected-pulse table from raw ROOT? | **640,737** pulses reproduced **exactly** (zero delta, all per-stave counts) | threshold is exact; ML adds nothing (correct) |
+| **S00a** | Is sorted `hrdMax` a valid count proxy? | No — it over-counts; the gate must stay pinned to raw `HRDv` | — |
+| **S01** | Amplitude-adaptive template & `q_template` on all 640k pulses | Pulse shape is low-dim; AE reconstructs far better than the median template | **ML wins** (recon MSE 0.0021 vs 0.044) |
+| **S02** | Best timing pickoff (CFD/OF/template)? | Single-stave σ68 from same-particle residuals | **ML wins**: ridge-on-CFD20 **1.85 ns** vs template **2.89 ns** (Δ≈1.04 ns) |
+| **S07** | Are the ML classifiers calibrated & fairly benchmarked? | Low-current/topology signal is real, not a strawman | **ML wins**: ROC AUC **0.77** vs 0.50 (p≈0.001) |
+| **S10** | Pile-up rate model & current-dependent excess | Poisson **R_max ≈ 4.2 MHz** reproduced; downstream high−low excess CI excludes zero | tie — ML score is diagnostic, not production-superior |
+| **S16** | Is the adaptive pedestal unbiased? | Adaptive pedestal is badly biased (−311 ADC); a learned pedestal fixes it | **ML wins**: MAE **49** vs **341 ADC** |
+| **S18** | Independent A-stack reproduction (Sample III/IV) | A1–A3 robust width **1.39 ns** reproduces the note's 1.43 ns | tie (ML Δ not significant, p≈0.52) |
+| **P02** | Unsupervised pulse-type discovery | Found a ~4% early-peak/low-area anomalous class with no labels | **AE beats PCA 40–51%** at low latent dim |
+| **P07** | Recover saturated high-amplitude B2 pulses | Recover true amplitude from the unsaturated rising edge | **ML wins**: ~4% error vs template 10–29% (3–7×) |
+
+_Recurring theme: ML clearly helps where the signal is in **waveform shape** (timing, saturation,
+pedestal, representation); it ties the analytic method where the physics is already a clean
+closed-form model (pile-up Poisson rate, A-stack residual width). Every ML "win" is checked for
+leakage (split by run; see `fleet/LESSONS.md`)._ The fleet runs autonomously — see
+[`fleet/FLEET_STANDARD.md`](fleet/FLEET_STANDARD.md).
 
 ## Repository layout
 

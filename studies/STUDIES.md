@@ -275,8 +275,8 @@ physics-aware phase structure before adoption.
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
 `open=10 claimed=0 done=0 failed=8`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep (`open=147 claimed=3
-done=103 failed=12` on the post-append audit, with concurrent workers moving tickets), but the
+with `--project testbeam`: the project-aware testbeam queue remains deep, with live post-append
+audits in the high 140s open and concurrent workers moving tickets, but the
 mission trigger still required a small set of new ready studies. This pass appended three
 additional non-duplicate ready tickets under `project:testbeam`: S07k raw-HRDv App.A
 label-definition sensitivity grid (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up

@@ -88,9 +88,9 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 - Queue health: the exact requested command `tn-ticket list testbeam` reports
   `open=10 claimed=0 done=0 failed=8`, below the 18-ticket floor, because the shim treats
   `testbeam` as a positional argument for the default queue. The required append path was followed
-  again with `--project testbeam`; the project-aware testbeam queue remains deep and currently
-  audits at `open=147 claimed=3 done=103 failed=12` after the append pass, with concurrent worker
-  movement. The mission trigger still required new ready work. This pass appended three ready
+  again with `--project testbeam`; the project-aware testbeam queue remains deep, with live
+  post-append audits in the high 140s open and concurrent worker movement. The mission trigger
+  still required new ready work. This pass appended three ready
   non-duplicate tickets: S07k raw-HRDv App.A label-definition sensitivity grid
   (`1781027683.937.4b432fbc`), S10h baseline-excursion pile-up excess decomposition
   (`1781027683.951.7bcc2f09`), and S14e range-energy abstention support envelope

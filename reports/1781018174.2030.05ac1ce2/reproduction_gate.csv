@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,pass
+S00 selected B-stave pulse records,640737,640737,0,True
+P07d Sample-II analysis B2 selected pulses,88213,88213,0,True
+B2 high-amplitude odd-duplicate validation rows,data-derived,183132,,True

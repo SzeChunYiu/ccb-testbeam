@@ -1,0 +1,247 @@
+{
+  "study": "P04",
+  "ticket_id": "1780997954.15577.6c203777",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "target_definition": "paired odd-channel inverted duplicate readout; features from even channel only",
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64
+  ],
+  "heldout_runs": [
+    57,
+    65
+  ],
+  "n_valid_rows": 640482,
+  "n_train_rows": 613625,
+  "n_heldout_rows": 26857,
+  "invalid_target_rows_removed_after_reproduction": 255,
+  "benchmark": [
+    {
+      "target": "amplitude",
+      "method": "peak_calibrated",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": -0.0666997729,
+      "res68_abs_frac": 0.1237824793,
+      "full_rms_frac": 0.5264294187,
+      "within_5pct": 0.2827568232,
+      "within_10pct": 0.5810775589,
+      "bias_ci95": [
+        -0.0676412348,
+        -0.0656336367
+      ],
+      "res68_ci95": [
+        0.1221378729,
+        0.1251004498
+      ],
+      "full_rms_ci95": [
+        0.488723815,
+        0.571697964
+      ]
+    },
+    {
+      "target": "amplitude",
+      "method": "template_fit_calibrated",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.242351109,
+      "res68_abs_frac": 0.5831795025,
+      "full_rms_frac": 0.9519875995,
+      "within_5pct": 0.088356853,
+      "within_10pct": 0.1684477045,
+      "bias_ci95": [
+        0.2351928052,
+        0.2489022792
+      ],
+      "res68_ci95": [
+        0.5726859062,
+        0.5939710507
+      ],
+      "full_rms_ci95": [
+        0.9307502604,
+        0.9725127931
+      ]
+    },
+    {
+      "target": "amplitude",
+      "method": "run_stave_blind_median",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.6270422535,
+      "res68_abs_frac": 1.2297198242,
+      "full_rms_frac": 2.9952762808,
+      "within_5pct": 0.059276911,
+      "within_10pct": 0.1168038128,
+      "bias_ci95": [
+        0.612163806,
+        0.6439683123
+      ],
+      "res68_ci95": [
+        1.2003952823,
+        1.260665362
+      ],
+      "full_rms_ci95": [
+        2.8548188046,
+        3.1311403544
+      ]
+    },
+    {
+      "target": "amplitude",
+      "method": "ml_hgb",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.0003780223,
+      "res68_abs_frac": 0.0091226185,
+      "full_rms_frac": 0.0345878465,
+      "within_5pct": 0.945675243,
+      "within_10pct": 0.9815690509,
+      "bias_ci95": [
+        0.0002706106,
+        0.0004945454
+      ],
+      "res68_ci95": [
+        0.0089548507,
+        0.0093127994
+      ],
+      "full_rms_ci95": [
+        0.0305965389,
+        0.0398606265
+      ]
+    },
+    {
+      "target": "charge",
+      "method": "integral_calibrated",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": -0.0911845476,
+      "res68_abs_frac": 0.1954122909,
+      "full_rms_frac": 1.6637384426,
+      "within_5pct": 0.2068362066,
+      "within_10pct": 0.4033212943,
+      "bias_ci95": [
+        -0.0929123331,
+        -0.0893965493
+      ],
+      "res68_ci95": [
+        0.1935967909,
+        0.1975445266
+      ],
+      "full_rms_ci95": [
+        1.3626197708,
+        2.0550213817
+      ]
+    },
+    {
+      "target": "charge",
+      "method": "template_fit_calibrated",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.098200397,
+      "res68_abs_frac": 0.5503396732,
+      "full_rms_frac": 2.5207309064,
+      "within_5pct": 0.089287709,
+      "within_10pct": 0.1878467439,
+      "bias_ci95": [
+        0.0887397571,
+        0.1067281967
+      ],
+      "res68_ci95": [
+        0.5363636123,
+        0.5642690338
+      ],
+      "full_rms_ci95": [
+        2.3855745778,
+        2.655316911
+      ]
+    },
+    {
+      "target": "charge",
+      "method": "run_stave_blind_median",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.7919977597,
+      "res68_abs_frac": 1.8979337673,
+      "full_rms_frac": 16.2951458556,
+      "within_5pct": 0.0664631195,
+      "within_10pct": 0.1283464274,
+      "bias_ci95": [
+        0.7669413071,
+        0.8199383771
+      ],
+      "res68_ci95": [
+        1.8576532321,
+        1.9396933362
+      ],
+      "full_rms_ci95": [
+        15.1052345955,
+        17.4812792813
+      ]
+    },
+    {
+      "target": "charge",
+      "method": "ml_hgb",
+      "subset": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.000598551,
+      "res68_abs_frac": 0.0150719202,
+      "full_rms_frac": 0.046773502,
+      "within_5pct": 0.9197974457,
+      "within_10pct": 0.9692445173,
+      "bias_ci95": [
+        0.0004386371,
+        0.0008064268
+      ],
+      "res68_ci95": [
+        0.0148430825,
+        0.0152958656
+      ],
+      "full_rms_ci95": [
+        0.0410317549,
+        0.052786311
+      ]
+    }
+  ],
+  "leakage_audit": {
+    "heldout_absent_from_train": true,
+    "no_identifier_or_target_features": true,
+    "invalid_target_rows_removed": 255,
+    "context_only_amp_res68": 1.2297198242166403,
+    "shuffled_target_amp_res68": 0.8130633511354515
+  },
+  "finding": "On independent odd-readout closure, ML amplitude res68 is 0.0091 versus the best traditional amplitude baseline at 0.1238; charge res68 is 0.0151 versus 0.1954. The duplicate readout is already very strongly predicted by calibrated peak/integral baselines, and the much smaller ML error is treated as a duplicate-readout closure result rather than an absolute true-energy calibration.",
+  "runtime_sec": 57.5
+}

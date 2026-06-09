@@ -1,0 +1,243 @@
+{
+  "study": "P03f",
+  "ticket": "1781015703.804.44f56714",
+  "worker": "testbeam-laptop-3",
+  "title": "early-peak sample-window timing residual ablation",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "metric": "heldout-run B4/B6/B8 pairwise sigma68, full RMS, p95 tail fraction; pooled CIs from event-paired run-block bootstrap",
+  "traditional": {
+    "baseline": "analytic_template_phase",
+    "analytic_template_phase_sigma68_ns": 1.5510917109777833,
+    "analytic_template_window_3_6_sigma68_ns": 1.6578722935458963,
+    "analytic_template_mask_no_3_6_sigma68_ns": 2.3292185857544956,
+    "analytic_cfd20_mask_no_3_6_sigma68_ns": 2.3332712419581734
+  },
+  "ml": {
+    "mlp_window_3_6_sigma68_ns": 1.2763891999485657,
+    "cnn_window_3_6_sigma68_ns": 1.228109156693335,
+    "mlp_no_window_3_6_sigma68_ns": 1.1547002474503736,
+    "cnn_no_window_3_6_sigma68_ns": 1.224671301994265,
+    "mlp_window_minus_traditional_ns": -0.2747025110292176,
+    "mlp_window_minus_traditional_ci": [
+      -0.6726139611368775,
+      -0.06447997539855937
+    ],
+    "cnn_window_minus_traditional_ns": -0.3229825542844482,
+    "cnn_window_minus_traditional_ci": [
+      -0.7131430439876485,
+      -0.0827976444612474
+    ]
+  },
+  "leakage": {
+    "max_event_id_overlap": 0,
+    "feature_audit": "same-pulse normalized samples after explicit masks plus stave one-hot only",
+    "shuffled_target_controls_all_worse_than_nominal": false,
+    "shuffled_target_failures": [
+      {
+        "heldout_run": 58,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "nominal_sigma68_ns": 1.2336666250979178,
+        "shuffled_sigma68_ns": 1.193056121127102
+      },
+      {
+        "heldout_run": 63,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "nominal_sigma68_ns": 1.4705867963079977,
+        "shuffled_sigma68_ns": 1.3555430570404197
+      },
+      {
+        "heldout_run": 65,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "nominal_sigma68_ns": 1.4860354309995727,
+        "shuffled_sigma68_ns": 1.4783506123286048
+      }
+    ],
+    "shuffled_target_controls": [
+      {
+        "heldout_run": 58,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "value": 1.193056121127102
+      },
+      {
+        "heldout_run": 58,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "value": 1.2787305988955824
+      },
+      {
+        "heldout_run": 58,
+        "model": "mlp",
+        "mask": "no_window_3_6",
+        "value": 1.179939496777097
+      },
+      {
+        "heldout_run": 58,
+        "model": "cnn",
+        "mask": "no_window_3_6",
+        "value": 1.2015941156787295
+      },
+      {
+        "heldout_run": 59,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "value": 1.471274536524057
+      },
+      {
+        "heldout_run": 59,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "value": 1.4368968914417772
+      },
+      {
+        "heldout_run": 59,
+        "model": "mlp",
+        "mask": "no_window_3_6",
+        "value": 1.4635216797801067
+      },
+      {
+        "heldout_run": 59,
+        "model": "cnn",
+        "mask": "no_window_3_6",
+        "value": 1.4656345797094468
+      },
+      {
+        "heldout_run": 60,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "value": 1.351010109503762
+      },
+      {
+        "heldout_run": 60,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "value": 1.319849701189071
+      },
+      {
+        "heldout_run": 60,
+        "model": "mlp",
+        "mask": "no_window_3_6",
+        "value": 1.3569834920875976
+      },
+      {
+        "heldout_run": 60,
+        "model": "cnn",
+        "mask": "no_window_3_6",
+        "value": 1.3210631391003764
+      },
+      {
+        "heldout_run": 61,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "value": 2.097364543763362
+      },
+      {
+        "heldout_run": 61,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "value": 2.1258525368125287
+      },
+      {
+        "heldout_run": 61,
+        "model": "mlp",
+        "mask": "no_window_3_6",
+        "value": 2.160421711739411
+      },
+      {
+        "heldout_run": 61,
+        "model": "cnn",
+        "mask": "no_window_3_6",
+        "value": 2.1357388711421406
+      },
+      {
+        "heldout_run": 62,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "value": 1.4562842058760401
+      },
+      {
+        "heldout_run": 62,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "value": 1.4581608444547591
+      },
+      {
+        "heldout_run": 62,
+        "model": "mlp",
+        "mask": "no_window_3_6",
+        "value": 1.4731516073632278
+      },
+      {
+        "heldout_run": 62,
+        "model": "cnn",
+        "mask": "no_window_3_6",
+        "value": 1.422939845769513
+      },
+      {
+        "heldout_run": 63,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "value": 1.3680713198083896
+      },
+      {
+        "heldout_run": 63,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "value": 1.3555430570404197
+      },
+      {
+        "heldout_run": 63,
+        "model": "mlp",
+        "mask": "no_window_3_6",
+        "value": 1.3841277238431278
+      },
+      {
+        "heldout_run": 63,
+        "model": "cnn",
+        "mask": "no_window_3_6",
+        "value": 1.4195796681709034
+      },
+      {
+        "heldout_run": 65,
+        "model": "mlp",
+        "mask": "window_3_6",
+        "value": 1.4783506123286048
+      },
+      {
+        "heldout_run": 65,
+        "model": "cnn",
+        "mask": "window_3_6",
+        "value": 1.5302901589228963
+      },
+      {
+        "heldout_run": 65,
+        "model": "mlp",
+        "mask": "no_window_3_6",
+        "value": 1.5357250856208164
+      },
+      {
+        "heldout_run": 65,
+        "model": "cnn",
+        "mask": "no_window_3_6",
+        "value": 1.4621746240712628
+      }
+    ]
+  },
+  "verdict": "ml_gain_not_window_specific_and_flagged_by_shuffled_controls",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "f2155b6644b5ed700ee6524440222b029c3c0ba6",
+  "next_tickets": []
+}

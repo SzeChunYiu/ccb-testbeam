@@ -1,0 +1,61 @@
+{
+  "study": "S10c",
+  "ticket": "1781004956.733.387f428e",
+  "worker": "testbeam-laptop-1",
+  "title": "Pile-up excess stratified by amplitude baseline and pulse topology",
+  "reproduced": true,
+  "repro_tolerance": "S10 topology fractions within 0.0015 absolute",
+  "split": "leave-one-run-out ML predictions; run bootstrap CIs within current group",
+  "traditional": {
+    "metric": "matched_stratified_downstream_high_minus_low_per_selected_event",
+    "value": 0.0202483132962887,
+    "ci": [
+      0.018748378130221333,
+      0.028471456126386806
+    ],
+    "n_strata": 8,
+    "frozen_s10_global_excess": 0.010289747149522063
+  },
+  "ml": {
+    "injection_pileup_score_high_minus_low": {
+      "value": 0.023631547549126258,
+      "ci": [
+        0.01650736856697061,
+        0.03494468916985714
+      ]
+    },
+    "weak_current_score_high_minus_low": {
+      "value": 0.02974927118996281,
+      "ci": [
+        0.024600731761356503,
+        0.03581941195973063
+      ],
+      "run_heldout_auc": 0.6396919261465122
+    },
+    "injection_score_downstream_auc": 0.697745747637033
+  },
+  "leakage_flags": 0,
+  "conclusion": "The S10 high-current downstream excess remains after matching on amplitude, S16 lowering, and P02 topology: 0.02025 per selected event with run-bootstrap CI [0.01875, 0.02847]. The largest positive stratum is amp_2500_4500 / s16_no_lowering / p02_broad_late, so the excess is heterogeneous and partly concentrated in pulse-pathology-like regions rather than being a uniform beam-current scale factor. ML scores support that interpretation as diagnostics, but they are not treated as truth labels.",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "ce451be56a86a2b92fa472cf25a718bce9d28916",
+  "next_tickets": [
+    "S10d: replace the binary downstream occupancy with a two-pulse template-fit pile-up amplitude per stratum",
+    "S16d: validate S16 adaptive-lowering strata against forced/random-trigger pedestal data if available"
+  ],
+  "runtime_sec": 239.45
+}

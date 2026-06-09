@@ -1,0 +1,49 @@
+{
+  "study": "S16f",
+  "ticket": "1781013969.1061.240425ea",
+  "worker": "testbeam-laptop-3",
+  "title": "pre-trigger contamination veto versus timing tails",
+  "reproduced_raw_root_first": true,
+  "split_by_run": {
+    "loro_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "tail_definition": {
+    "baseline": "S02b-style global-template timewalk closure rebuilt per fold",
+    "threshold_abs_centered_residual_ns": 5.0
+  },
+  "traditional": {
+    "method": "threshold_on_hand_built_pretrigger_proxy_score",
+    "pooled_tail_capture_efficiency": 0.2631578947368421,
+    "pooled_veto_fraction": 0.2527821939586645,
+    "pooled_precision": 0.031446540880503145,
+    "mean_fold_auc": 0.543120122530515
+  },
+  "ml": {
+    "method": "balanced_logistic_regression_on_b2_b4_b6_b8_pretrigger_proxy_terms",
+    "pooled_tail_capture_efficiency": 0.4298245614035088,
+    "pooled_veto_fraction": 0.26629570747217807,
+    "pooled_precision": 0.04875621890547264,
+    "mean_fold_auc": 0.6293040407084737
+  },
+  "shuffled_label_control": {
+    "pooled_tail_capture_efficiency": 0.3333333333333333,
+    "pooled_veto_fraction": 0.25410704822469526,
+    "pooled_precision": 0.03962460896767466,
+    "mean_fold_auc": 0.5190434115006459
+  },
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S16g: independent contamination label from pre-trigger waveform-shape clustering",
+    "S02e: lower-threshold Sample-II LORO tail labeling to increase veto statistics"
+  ],
+  "git_commit": "d7933a2151015bcc265299193a271eb9cc3d6e41"
+}

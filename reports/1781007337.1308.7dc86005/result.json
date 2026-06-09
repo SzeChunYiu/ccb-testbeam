@@ -1,0 +1,232 @@
+{
+  "study": "S10c",
+  "ticket": "1781007337.1308.7dc86005",
+  "worker": "testbeam-laptop-1",
+  "title": "Threshold-scan tau_eff stability for template live-time",
+  "reproduced": true,
+  "s10b_anchor_reported_live10_ns": 124.79018394263471,
+  "s10b_anchor_recomputed_live10_ns": 124.79018394263471,
+  "anchor_delta_ns": 0.0,
+  "reproduction": {
+    "combined_Rmax_MHz": 4.222222222222222,
+    "assumed_tau_eff_ns": 90.0,
+    "topology_checks_passed": 6,
+    "topology_checks_total": 6
+  },
+  "traditional_method": "run-held-out median waveform template exponential tail crossing",
+  "ml_method": "run-held-out standardized Ridge regressor on pulse-shape features",
+  "thresholds": {
+    "5pct": {
+      "target": "5pct",
+      "label": "5%",
+      "threshold_fraction": 0.05,
+      "traditional_template_mean_ns": 141.0557117938371,
+      "traditional_template_ci95_low_ns": 139.28981030804866,
+      "traditional_template_ci95_high_ns": 143.0064482474961,
+      "train_template_mean_ns": 140.69217746156406,
+      "train_template_ci95_low_ns": 139.3338365588028,
+      "train_template_ci95_high_ns": 142.0913528604109,
+      "empirical_mean_ns": 124.87810615613058,
+      "empirical_ci95_low_ns": 122.45116661746428,
+      "empirical_ci95_high_ns": 126.9794943168838,
+      "ml_pred_mean_ns": 124.75498010671699,
+      "ml_pred_ci95_low_ns": 122.58570534070678,
+      "ml_pred_ci95_high_ns": 126.68675316632154,
+      "ml_mean_mae_ns": 4.019799320644711,
+      "ml_mean_r2": 0.8840212513190387,
+      "rescaled_Rmax_MHz": 2.6939710215733546,
+      "above_90ns_ci_low": true
+    },
+    "10pct": {
+      "target": "10pct",
+      "label": "10%",
+      "threshold_fraction": 0.1,
+      "traditional_template_mean_ns": 124.79018394263471,
+      "traditional_template_ci95_low_ns": 123.31859604696439,
+      "traditional_template_ci95_high_ns": 126.32728819742027,
+      "train_template_mean_ns": 124.31276321429486,
+      "train_template_ci95_low_ns": 123.15179952528094,
+      "train_template_ci95_high_ns": 125.50853328870411,
+      "empirical_mean_ns": 123.25552601769233,
+      "empirical_ci95_low_ns": 120.53542596964655,
+      "empirical_ci95_high_ns": 125.69551318613851,
+      "ml_pred_mean_ns": 123.21520754849443,
+      "ml_pred_ci95_low_ns": 120.71178001656618,
+      "ml_pred_ci95_high_ns": 125.60601483864372,
+      "ml_mean_mae_ns": 4.16185060678477,
+      "ml_mean_r2": 0.8839928589969487,
+      "rescaled_Rmax_MHz": 3.045111305987686,
+      "above_90ns_ci_low": true
+    },
+    "20pct": {
+      "target": "20pct",
+      "label": "20%",
+      "threshold_fraction": 0.2,
+      "traditional_template_mean_ns": 101.86521002119034,
+      "traditional_template_ci95_low_ns": 100.89951608916716,
+      "traditional_template_ci95_high_ns": 102.83437417993805,
+      "train_template_mean_ns": 101.2272754328811,
+      "train_template_ci95_low_ns": 100.39715766582972,
+      "train_template_ci95_high_ns": 102.10674367445328,
+      "empirical_mean_ns": 119.0300244680748,
+      "empirical_ci95_low_ns": 115.32343772169574,
+      "empirical_ci95_high_ns": 122.71314184735245,
+      "ml_pred_mean_ns": 119.1803543650311,
+      "ml_pred_ci95_low_ns": 115.60026358182817,
+      "ml_pred_ci95_high_ns": 122.47838357418016,
+      "ml_mean_mae_ns": 4.228352460388814,
+      "ml_mean_r2": 0.8895180479068567,
+      "rescaled_Rmax_MHz": 3.73041983539769,
+      "above_90ns_ci_low": true
+    },
+    "noise_floor": {
+      "target": "noise_floor",
+      "label": "noise floor",
+      "threshold_fraction": 0.006727491100764061,
+      "traditional_template_mean_ns": 161.18335762759685,
+      "traditional_template_ci95_low_ns": 158.75714270350292,
+      "traditional_template_ci95_high_ns": 163.61004413343977,
+      "train_template_mean_ns": 160.96001262749732,
+      "train_template_ci95_low_ns": 159.325928558601,
+      "train_template_ci95_high_ns": 162.66788895584196,
+      "empirical_mean_ns": 120.37181019387364,
+      "empirical_ci95_low_ns": 116.50997606975383,
+      "empirical_ci95_high_ns": 123.74028562114542,
+      "ml_pred_mean_ns": 120.29899988935708,
+      "ml_pred_ci95_low_ns": 117.03327510304403,
+      "ml_pred_ci95_high_ns": 123.22192231903927,
+      "ml_mean_mae_ns": 7.151486322653677,
+      "ml_mean_r2": 0.8150978473339945,
+      "rescaled_Rmax_MHz": 2.3575634953452456,
+      "above_90ns_ci_low": true
+    }
+  },
+  "all_thresholds_above_90ns": true,
+  "leakage": {
+    "flags": 0,
+    "checks": [
+      {
+        "target": "5pct",
+        "check": "group_split_by_run_mean_r2",
+        "value": 0.8840212513190387,
+        "threshold": 0.97,
+        "flag": false,
+        "interpretation": "Flag only if run-held-out R2 is near-deterministic."
+      },
+      {
+        "target": "5pct",
+        "check": "random_row_split_r2",
+        "value": 0.8883453718758269,
+        "threshold": 0.9,
+        "flag": false,
+        "interpretation": "Large row-split advantage would indicate event/run leakage risk."
+      },
+      {
+        "target": "5pct",
+        "check": "shuffled_target_r2",
+        "value": -0.0018748168946005617,
+        "threshold": 0.1,
+        "flag": false,
+        "interpretation": "Shuffled labels should not predict held-out pulse live time."
+      },
+      {
+        "target": "10pct",
+        "check": "group_split_by_run_mean_r2",
+        "value": 0.8839928589969487,
+        "threshold": 0.97,
+        "flag": false,
+        "interpretation": "Flag only if run-held-out R2 is near-deterministic."
+      },
+      {
+        "target": "10pct",
+        "check": "random_row_split_r2",
+        "value": 0.8885441250649111,
+        "threshold": 0.9,
+        "flag": false,
+        "interpretation": "Large row-split advantage would indicate event/run leakage risk."
+      },
+      {
+        "target": "10pct",
+        "check": "shuffled_target_r2",
+        "value": 0.008243830951992548,
+        "threshold": 0.1,
+        "flag": false,
+        "interpretation": "Shuffled labels should not predict held-out pulse live time."
+      },
+      {
+        "target": "20pct",
+        "check": "group_split_by_run_mean_r2",
+        "value": 0.8895180479068567,
+        "threshold": 0.97,
+        "flag": false,
+        "interpretation": "Flag only if run-held-out R2 is near-deterministic."
+      },
+      {
+        "target": "20pct",
+        "check": "random_row_split_r2",
+        "value": 0.8947901048140046,
+        "threshold": 0.9,
+        "flag": false,
+        "interpretation": "Large row-split advantage would indicate event/run leakage risk."
+      },
+      {
+        "target": "20pct",
+        "check": "shuffled_target_r2",
+        "value": -0.0021077243953662173,
+        "threshold": 0.1,
+        "flag": false,
+        "interpretation": "Shuffled labels should not predict held-out pulse live time."
+      },
+      {
+        "target": "noise_floor",
+        "check": "group_split_by_run_mean_r2",
+        "value": 0.8150978473339945,
+        "threshold": 0.97,
+        "flag": false,
+        "interpretation": "Flag only if run-held-out R2 is near-deterministic."
+      },
+      {
+        "target": "noise_floor",
+        "check": "random_row_split_r2",
+        "value": 0.8231653605922478,
+        "threshold": 0.9,
+        "flag": false,
+        "interpretation": "Large row-split advantage would indicate event/run leakage risk."
+      },
+      {
+        "target": "noise_floor",
+        "check": "shuffled_target_r2",
+        "value": 0.005048893948813249,
+        "threshold": 0.1,
+        "flag": false,
+        "interpretation": "Shuffled labels should not predict held-out pulse live time."
+      },
+      {
+        "target": "all",
+        "check": "forbidden_features_present",
+        "value": 0.0,
+        "threshold": 0.0,
+        "flag": false,
+        "interpretation": "Feature list excludes run, event id, current, and direct last-above-threshold width."
+      }
+    ]
+  },
+  "input_sha256": {
+    "hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "feb39f65d12d0cde8d6baff8c8e3a5ff75baf1a6",
+  "runtime_sec": 26.25
+}

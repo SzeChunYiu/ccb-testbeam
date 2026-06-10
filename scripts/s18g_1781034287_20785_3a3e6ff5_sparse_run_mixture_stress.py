@@ -836,7 +836,7 @@ def write_report(
 
 ## Abstract
 
-S18d/S18f found that the Sample IV A1-A3 binned Gaussian core sigma can change sharply when individual sparse runs enter or leave the histogram. This study asks whether that behavior is primarily an occupancy/optimizer artifact rather than a stable detector-resolution change. The historical binned Gaussian number is first reproduced from raw `HRDv`; then a traditional log-amplitude CFD20 correction is benchmarked against ridge, gradient-boosted trees, MLP, 1D-CNN, and a new run-mixture attention CNN. The winner by the preregistered run-held-out robust-width endpoint is **{winner['method']}** with width **{winner['robust_width_ns']:.3f} ns** and CI **[{winner['robust_ci_low_ns']:.3f}, {winner['robust_ci_high_ns']:.3f}] ns**. The binned Gaussian endpoint is retained as a diagnostic because sparse histograms can hit optimizer bounds.
+S18d/S18f found that the Sample IV A1-A3 binned Gaussian core sigma can change sharply when individual sparse runs enter or leave the histogram. This study asks whether that behavior is primarily an occupancy/optimizer artifact rather than a stable detector-resolution change. The historical binned Gaussian number is first reproduced from raw `HRDv`; then a traditional log-amplitude CFD20 correction is benchmarked against ridge, gradient-boosted trees, MLP, 1D-CNN, and a new run-mixture attention CNN. The winner by the run-held-out robust-width endpoint is **{winner['method']}** with width **{winner['robust_width_ns']:.3f} ns** and CI **[{winner['robust_ci_low_ns']:.3f}, {winner['robust_ci_high_ns']:.3f}] ns**. The binned Gaussian endpoint is retained as a diagnostic because sparse histograms can hit optimizer bounds.
 
 ## Reproduction From Raw ROOT
 

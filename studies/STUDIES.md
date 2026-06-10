@@ -1413,3 +1413,35 @@ Active ready queue highlights:
   calibration, audited by shuffled-target and family-holdout sentinels. Metric: charge res68,
   signed bias, conformal coverage, abstention coverage, downstream range-energy proxy delta, and
   ML-minus-traditional deltas with run-family bootstrap CIs.
+- **P07i — Run-family saturation knee acceptance gate.** Decide whether natural B2 saturation
+  corrections can be accepted only inside duplicate-readout run-family knee support after P07f
+  split the duplicate-ratio knees into incompatible low- and high-knee families. Traditional:
+  per-run duplicate-ratio piecewise knees with odd-channel closure and transparent
+  accept/abstain bands. ML: run-held-out waveform knee/acceptance classifier calibrated against
+  duplicate labels with run/event IDs and duplicate targets excluded. Metric: accepted fraction,
+  charge res68, timing-tail delta, q_template shift, and harm rate versus no-correction with
+  run-block bootstrap CIs and shuffled-target sentinels.
+- **P04r — Dropout recovery timing-harm support map.** Map where dropout-injected recovery helps
+  amplitude/charge but harms timing phase, tail shape, or downstream support after P04g showed a
+  strong injected ML charge closure. Traditional: calibrated interpolation and rising-edge Huber
+  recovery stratified by dropout location, amplitude, stave, peak sample, and anomaly class. ML:
+  ExtraTrees inpainting and HGB residual correction under run-held-out folds with no target or
+  identifier leakage. Metric: amplitude/charge res68, time_abs68_samples, tail-bias median,
+  catastrophic rate, and support-atom harm label rate with stratified event bootstrap CIs.
+- **S14g — Veto-ladder energy acceptance calibration.** Treat P09/S10/S16/P07 veto ladders as
+  energy/PID support acceptances rather than energy-ordering improvements after S14d found large
+  acceptance loss and charge-scale shifts with little depth-ordering change. Traditional:
+  sequential transparent veto ladders from anomaly, pile-up, baseline/lowering, and saturation
+  thresholds with run-held-out charge-scale accounting. ML: calibrated support classifier using
+  the same pulse atoms while excluding depth/PID/run/event identifiers. Metric: acceptance,
+  charge-proxy log shift, energy-proxy res68, depth-order violation, and ML-minus-traditional
+  deltas by geometry and veto family with run-block bootstrap CIs.
+- **S04h — Saturation-nuisance timing-tail causal null.** Test whether retained-window saturation
+  corrections causally change same-particle timing tails or merely track saturated support and
+  unrelated pathology after S02d/P07e found non-adoptable recovery and only a small timing-tail
+  nuisance span. Traditional: matched saturated-event timing residual tables for observed,
+  template-retained-window, and duplicate-knee-abstained corrections with amplitude, lowering,
+  q_template, and anomaly matching. ML: run-held-out nuisance model predicting tail risk from
+  correction deltas and pulse atoms while excluding downstream timing labels from features.
+  Metric: tail fraction above 5 ns, sigma68, q95_abs, q_template shift, and matched tail delta
+  versus observed with paired event bootstrap CIs and composition-balance diagnostics.

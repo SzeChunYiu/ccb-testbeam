@@ -433,6 +433,26 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   These results also put charge and energy reuse on notice: pathology-tail atoms must be carried
   into P04/P07 charge uncertainty before PID or range-energy consumers treat corrected charge as a
   global truth variable.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=10 claimed=0 done=0 failed=12`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep under concurrent worker movement and reports
+  `open=186 claimed=4 done=187 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: P07i run-family saturation knee acceptance
+  gate (`1781051216.479.669827f2`), P04r dropout recovery timing-harm support map
+  (`1781051221.550.4fc60093`), S14g veto-ladder energy acceptance calibration
+  (`1781051226.621.082271da`), and S04h saturation-nuisance timing-tail causal null
+  (`1781051234.692.284d0372`).
+- Fresh synthesis: P07f finds natural B2 saturation knees are run-family dependent, with
+  duplicate-ratio families near 2752 ADC and 7240 ADC while the waveform ML knee sits near
+  8942 ADC; saturation recovery therefore needs duplicate-readout accept/abstain support before
+  timing, charge, PID, or energy reuse. S02d/P07e shows retained-window saturation corrections
+  barely move already-large saturated timing tails and remain non-adoptable, motivating a causal
+  timing-tail null rather than another production correction. P04g shows ML dropout recovery is a
+  strong injected charge closure, but its timing/tail support must be mapped before corrected
+  charge enters pile-up or energy consumers. S14d shows broad anomaly/pile-up/baseline/saturation
+  veto ladders mostly change acceptance and charge composition while coarse depth ordering stays
+  unchanged, so energy and PID work should consume calibrated support acceptances instead of
+  global energy-ordering claims.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

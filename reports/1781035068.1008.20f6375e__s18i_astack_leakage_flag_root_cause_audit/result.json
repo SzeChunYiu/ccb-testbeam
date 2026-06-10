@@ -1,0 +1,113 @@
+{
+  "study": "S18i",
+  "ticket": "1781035068.1008.20f6375e",
+  "worker": "testbeam-laptop-3",
+  "title": "A-stack residual-correction leakage-flag root cause audit",
+  "reproduced": true,
+  "traditional": {
+    "metric": "sample_iv_A1_A3_sigma68_ns",
+    "pool": "sample_iii_late",
+    "value": 1.456624277722887,
+    "ci": [
+      1.2548052495441677,
+      1.6435189095949323
+    ],
+    "pair_bootstrap_ci": [
+      1.2885374764158235,
+      1.727925085076226
+    ]
+  },
+  "ml": {
+    "metric": "sample_iv_A1_A3_sigma68_ns",
+    "method": "gradient_boosted_trees",
+    "pool": "sample_iii_mixed",
+    "value": 1.3702898462484696,
+    "ci": [
+      1.1740836958470309,
+      1.5666484067860849
+    ],
+    "pair_bootstrap_ci": [
+      1.1738488357988044,
+      1.5823656959589585
+    ]
+  },
+  "winner": "sample_iii_mixed::gradient_boosted_trees",
+  "winner_scope": "accepted_safe_methods_only",
+  "late_pool_best_ml": {
+    "method": "gradient_boosted_trees",
+    "value": 1.4352446682580107
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "preregistered_metric": "ML-minus-traditional held-out-run robust-width delta and tail-fraction delta with run-block 95% bootstrap CIs",
+    "n_tries": 20,
+    "late_pool_delta_ns": -0.02137960946487638
+  },
+  "leakage_control_summary": {
+    "n_suspicious_control_gaps": 8,
+    "most_negative_control_minus_safe_ns": -0.679492436505059,
+    "criterion": "control_minus_safe_ns < -0.10 flags a control that outperforms the accepted feature set enough to question leakage/control definition"
+  },
+  "shuffled_pool_summary": {
+    "n_repeats": 36,
+    "median_delta_vs_original_traditional_ns": 0.3715540406186466,
+    "min_delta_vs_original_traditional_ns": -0.1257944086609344
+  },
+  "failure_atoms": [
+    {
+      "atom": "run_family_calibration",
+      "diagnostic": "late-pool best ML minus late-pool traditional robust width",
+      "evidence": -0.02137960946487638,
+      "interpretation": "negative means the broad model sweep closes the S18e late-pool ridge degradation in point estimate",
+      "closes_degradation": true
+    },
+    {
+      "atom": "model_class",
+      "diagnostic": "best early-pool ML method and best late-pool ML method",
+      "evidence": "early=leakage_gated_cnn_new:1.454; late=gradient_boosted_trees:1.435",
+      "interpretation": "checks whether the S18e failure is ridge/model-class specific rather than a universal learned-correction failure",
+      "closes_degradation": true
+    },
+    {
+      "atom": "amplitude_shape_support",
+      "diagnostic": "late-pool best ML minus traditional after 1-99 percent train-support filter",
+      "evidence": -0.11185534863784174,
+      "interpretation": "support-filtered retained fraction=0.740; if this closes, support mismatch or support-sensitive model selection is sufficient",
+      "closes_degradation": true
+    },
+    {
+      "atom": "low_stat_core_fit",
+      "diagnostic": "late-pool best ML degradation in Gaussian core sigma and full RMS",
+      "evidence": "core_delta=-0.443; rms_delta=4.437",
+      "interpretation": "if only core sigma degrades, the atom is low-stat core fitting; if RMS also degrades, it is a distribution shift",
+      "closes_degradation": false
+    },
+    {
+      "atom": "leakage_sentinel",
+      "diagnostic": "forbidden-feature, row-split, shuffled-target, and run-id sentinel flags",
+      "evidence": 3,
+      "interpretation": "flags invalidate adoption but can explain suspicious row-split performance",
+      "closes_degradation": false
+    },
+    {
+      "atom": "covariate_shift",
+      "diagnostic": "max KS statistic for train-vs-Sample-IV features, early vs late",
+      "evidence": "early_max_ks=0.601; late_max_ks=0.574",
+      "interpretation": "larger late KS would identify support mismatch as the driver; similar KS shifts point to calibration-family labels",
+      "closes_degradation": false
+    },
+    {
+      "atom": "single_heldout_run",
+      "diagnostic": "largest per-run late-pool best-ML minus traditional gap",
+      "evidence": "run=62; gap=0.524",
+      "interpretation": "checks whether a single Sample-IV run creates the aggregate failure",
+      "closes_degradation": true
+    }
+  ],
+  "input_sha256": "reports/1781035068.1008.20f6375e__s18i_astack_leakage_flag_root_cause_audit/input_sha256.csv",
+  "git_commit": "519058bae1daccd194c7897d9b42dbfc82c0d585",
+  "critic": "pending",
+  "next_tickets": [
+    "S18j: A-stack monotone support-matched timewalk transfer with forbidden-control freeze"
+  ]
+}

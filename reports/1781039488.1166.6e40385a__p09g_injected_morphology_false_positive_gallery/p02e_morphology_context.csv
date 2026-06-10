@@ -1,0 +1,12 @@
+manual_flag,peak_group,rows
+nominal,nominal_6_9,24745
+late_peak,late_10_17,6766
+nominal,prepeak_4_5,5721
+nominal,late_10_17,2368
+early_low_area,early_0_3,1095
+large_negative_step,early_0_3,532
+early_low_area,prepeak_4_5,421
+early_peak_p02,early_0_3,382
+large_negative_step,nominal_6_9,224
+large_negative_step,prepeak_4_5,112
+large_negative_step,late_10_17,4

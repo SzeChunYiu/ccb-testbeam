@@ -1,0 +1,6 @@
+check,status,detail
+run_group_cv,pass,training CV grouped by run with 3 folds
+heldout_runs,pass,"runs 57,65 excluded from training"
+honest_ml_features,pass,"honest model excludes median_amp, run id, and event id"
+leakage_sentinel,expected_alarm,sentinel includes median_amp to show direct-rule leakage
+semantic_drift_alarm,pass,dynamic-range selector overcount is reported and not accepted

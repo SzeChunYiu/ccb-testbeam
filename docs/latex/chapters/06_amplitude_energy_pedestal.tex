@@ -1,2 +1,298 @@
-\chapter{Amplitude energy pedestal}
-\emph{(chapter pending --- to be written by the fleet.)}
+\chapter{Amplitude, Energy, Saturation, and Pedestal}
+
+\section{Scope and raw-data gate}
+
+This chapter collects the studies concerned with pulse height, integrated
+charge, saturation recovery, energy ordering, and baseline estimation.  The
+common starting point is the S00 B-stack selected-pulse population rebuilt from
+raw ROOT files, using the median of samples 0--3 as the local baseline and a
+baseline-subtracted even-channel peak threshold of 1000 ADC on B2/B4/B6/B8.
+The studies in this chapter repeatedly reproduce the same entry count,
+\[
+  N_{\mathrm{sel}}=640737,
+\]
+before fitting any calibration, regression, or closure model.  That raw
+reproduction gate matters because most targets in this chapter are proxy
+targets: an odd duplicate readout, an artificially clipped clean pulse, a
+downstream charge proxy, or a leave-one-pre-trigger-sample closure target.
+They are useful tests of method performance, but they are not direct
+per-event deposited-energy truth.
+
+The primary resolution metric for amplitude, charge, and energy-proxy rows is
+the 68th percentile absolute fractional residual,
+\[
+  r_{68}
+  = Q_{0.68}\left(\left|\frac{\hat{y}_i-y_i}{y_i}\right|\right),
+\]
+evaluated on held-out runs or leave-one-run-out folds.  Pedestal studies use
+the held-out mean absolute error,
+\[
+  \mathrm{MAE}
+  = \frac{1}{N}\sum_i |\hat{p}_i-p_i|,
+\]
+where \(p_i\) is an excluded pre-trigger sample.  The quoted intervals are
+bootstrap confidence intervals from the corresponding held-out records or
+run-blocks.  All method comparisons below are therefore conditional on the
+available beam-triggered mirror and on the chosen proxy target.
+
+\section{Duplicate-readout amplitude and charge closure}
+
+The P04 family tests whether the even-channel waveform can predict an
+independent odd-channel duplicate readout.  For an event \(i\), the closure
+target is
+\[
+  A_i^{\mathrm{odd}} = \max_t[-w^{\mathrm{odd}}_{it}],
+  \qquad
+  Q_i^{\mathrm{odd}} = \sum_t \max[-w^{\mathrm{odd}}_{it},0],
+\]
+while the model inputs are restricted to the even-channel waveform and derived
+even-channel summaries.  Run identifiers, event identifiers, and odd-channel
+samples are excluded.  This makes the task a strong electronic/readout closure
+benchmark, not an absolute energy calibration.
+
+The traditional baselines are per-stave log-linear calibrations of even peak
+or even positive-lobe integral to the odd duplicate readout, plus shifted
+template-scale fits.  The strongest traditional repair in P04d augments direct
+template diagnostics with peak, charge, and shape summaries in a Huber
+calibrator.  The ML methods are histogram-gradient-boosted trees or
+ExtraTrees regressors trained on the 18 waveform samples and non-forbidden
+shape summaries.  Held-out runs 57 and 65 are absent from training.
+
+\begin{table}[H]
+\centering
+\caption{Duplicate-readout closure on held-out runs.  Lower \(r_{68}\) is
+better.  The P04 rows use odd duplicate amplitude or charge as target; P04d is
+the strengthened amplitude closure benchmark.}
+\begin{tabular}{llccc}
+\toprule
+Study & Method & Target & \(r_{68}\) & 95\% CI \\
+\midrule
+P04 & peak calibrated & amplitude & 0.1238 & [0.1221, 0.1251] \\
+P04 & HGB regressor & amplitude & 0.0091 & [0.0090, 0.0093] \\
+P04 & integral calibrated & charge & 0.1954 & [0.1936, 0.1975] \\
+P04 & HGB regressor & charge & 0.0151 & [0.0148, 0.0153] \\
+P04d & strong Huber traditional & amplitude & 0.0203 & [0.0199, 0.0206] \\
+P04d & ExtraTrees regressor & amplitude & 0.0027 & [0.0026, 0.0028] \\
+\bottomrule
+\end{tabular}
+\label{tab:amplitude-closure}
+\end{table}
+
+The winner for duplicate-readout closure is the ML waveform model.  In the
+original P04 benchmark the HGB amplitude row improves \(r_{68}\) by
+0.1147 absolute fractional units relative to the peak baseline, and the charge
+row improves by 0.1803.  P04d shows that a much stronger traditional Huber
+calibrator closes much of the gap, but the ExtraTrees model remains lower by
+0.0176 in \(r_{68}\).  The direct shifted-template scale itself performs
+poorly: changing the fit window, adding a baseline nuisance, peak-normalising
+the template, or switching to Huber loss does not repair the direct-scale
+pathology.  The useful conventional repair is post-fit calibration with
+diagnostics, not the raw template scale.
+
+The leakage audits are also part of the result.  The duplicate target rows
+remove invalid odd targets after reproduction, enforce train/held-out run
+separation, check zero train/test event-key overlap, exclude forbidden odd
+samples, and compare to shuffled-target and stave-only sentinels.  The very
+small ML errors are therefore plausible as duplicate-readout closure, but they
+must not be promoted to a deposited-energy resolution without an external
+energy truth.
+
+\section{Saturation recovery}
+
+Saturation recovery asks whether an amplitude lost to clipping can be
+recovered from the surviving rising edge.  P07 constructs a leakage-free
+self-truth benchmark by taking clean unsaturated pulses with known amplitude,
+applying a constant artificial ADC ceiling \(C\), and asking methods to
+recover the original amplitude.  The constant ceiling is essential.  An earlier
+ceiling proportional to the true amplitude leaked the target through the
+clipped maximum; the corrected benchmark fixes \(C\), so the saturated maximum
+is no longer an amplitude label.
+
+The traditional method fits a mean clean-pulse template to the unclipped
+rising-edge samples.  The ML method is a gradient-boosted regressor on the
+clipped waveform.  The split is by run: runs 58--61 for training and
+62, 63, and 65 for testing.
+
+\begin{table}[H]
+\centering
+\caption{P07 artificial-saturation amplitude recovery on held-out runs.
+Entries are \(r_{68}(|\hat{A}-A|/A)\).}
+\begin{tabular}{ccccc}
+\toprule
+Ceiling \(C\) [ADC] & Test pulses & Naive ceiling & Template & GBR \\
+\midrule
+4000 & 8873 & 0.264 & 0.104 & 0.032 \\
+3000 & 20254 & 0.346 & 0.239 & 0.039 \\
+2500 & 27971 & 0.403 & 0.233 & 0.042 \\
+2000 & 33823 & 0.493 & 0.286 & 0.046 \\
+\bottomrule
+\end{tabular}
+\label{tab:saturation-recovery}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{\detokenize{../../reports/P07_saturation_recovery/fig_saturation_recovery.png}}
+\caption{P07 saturation recovery benchmark.  The ML regressor degrades
+slowly as the artificial ceiling is lowered, whereas the template extrapolation
+degrades rapidly.}
+\label{fig:saturation-recovery}
+\end{figure}
+
+The winner for the artificial saturation benchmark is ML: the GBR recovers
+amplitude at about 3--5\% \(r_{68}\), compared with 10--29\% for the template
+extrapolation.  The likely reason is that the rising edge is not a fixed
+linear scale copy of one template; it carries amplitude-dependent shape
+information that tree regressors exploit.  The systematics are nevertheless
+substantial.  The benchmark uses an ideal hard clip, real saturated pulses have
+no truth label, and natural high-B2 pulses may include late components or
+overlaps absent from the clean-pulse training population.  Later P07 boundary
+studies therefore keep the result as a strong recovery method under artificial
+truth, not as an unconditional production correction.
+
+\section{Energy proxy and range-ordering limits}
+
+The S14 studies propagate the charge and saturation results into range-energy
+preflight tests.  The geometry/PSTAR information is used only as a monotonic
+ordering envelope.  It supplies a physically motivated ordering check, not
+particle-identification truth and not an absolute per-event deposited energy.
+
+In S14c, the nominal 4 cm geometry comparison uses observed even charge,
+a traditional rising-edge saturation correction, and an ML P07/P04 corrected
+charge model.  The ML model excludes run, event, depth, PID, and odd samples.
+It reduces the internal energy-proxy \(r_{68}\) from 0.0289 for the traditional
+template-corrected row to 0.0145, with no depth-order violations in the tested
+envelope.  However, the external charge-propagated follow-up S14c topology
+study shows that downstream charge proxies do not reach the 10\% target:
+the best combined row is about 0.178 with a 95\% CI of [0.169, 0.198].
+
+\begin{table}[H]
+\centering
+\caption{Energy-related proxy rows.  The first block is the S14c internal
+ordering proxy at nominal 4 cm geometry; the second block is the downstream
+charge-propagated preflight.}
+\begin{tabular}{llccc}
+\toprule
+Study & Method & Quantity & \(r_{68}\) & 95\% CI \\
+\midrule
+S14c & observed even charge & energy proxy & 0.0212 & [0.0198, 0.0225] \\
+S14c & traditional template corrected & energy proxy & 0.0289 & [0.0248, 0.0350] \\
+S14c & ML P07/P04 corrected & energy proxy & 0.0145 & [0.0142, 0.0150] \\
+S14c topology & best ML charge-propagated row & combined proxy & 0.1781 & [0.1692, 0.1977] \\
+S14c topology & best traditional propagated row & combined proxy & 0.2015 & [0.1875, 0.2156] \\
+\bottomrule
+\end{tabular}
+\label{tab:energy-proxy}
+\end{table}
+
+The winner for internal charge/ordering diagnostics is again ML, but the
+physics conclusion is a limitation: the data-only analysis does not provide
+absolute energy resolution at the 10\% level.  The strong duplicate-readout
+closure and artificial saturation recovery do not survive unchanged when the
+target becomes downstream topology-conditioned charge.  The remaining spread
+is dominated by support and topology variability rather than by an obvious
+hidden B2 waveform regressor failure.
+
+\section{Pedestal and baseline validation}
+
+Pedestal studies test whether the adaptive positivity-constrained baseline is
+unbiased.  Because the current mirror contains no true forced/random pedestal
+sample, S16 and S16b use leave-one-pre-trigger-sample closure.  For each pulse
+and each early sample \(k\in\{0,1,2,3\}\), the estimator must predict
+\(w_k\) without seeing that sample.  The adaptive positivity correction lowers
+the leave-one-out median only enough to satisfy
+\[
+  \min_{t \in \mathcal{S}_{\mathrm{nonjagged}},\,t\ne k}
+  \left(w_t-\hat{p}_{-k}\right) \geq -\epsilon(A),
+  \qquad
+  \epsilon(A)=\max(25\ \mathrm{ADC},0.015A).
+\]
+That construction can guarantee non-negative corrected samples, but the
+guarantee is not an independent validation of the pedestal.
+
+S16 compares median/mean pre-trigger estimators, the adaptive positivity
+correction, and a calibrated histogram-gradient-boosted regressor.  S16b then
+strengthens the traditional set with a line-through-three early-sample
+predictor and calibrated low-sample estimators; its ML method is a regularized
+ridge closure model.
+
+\begin{table}[H]
+\centering
+\caption{Pedestal closure on held-out runs.  Lower MAE is better.  S16b is the
+leakage-aware follow-up with stronger traditional estimators.}
+\begin{tabular}{llcc}
+\toprule
+Study & Method & MAE [ADC] & 95\% CI [ADC] \\
+\midrule
+S16 & mean3 & 260.70 & [236.25, 287.99] \\
+S16 & median3 & 273.64 & [244.24, 302.67] \\
+S16 & adaptive positivity correction & 341.04 & [300.45, 373.27] \\
+S16 & calibrated HGBR & 48.88 & [43.82, 55.29] \\
+S16b & line3 predictor & 169.34 & [135.28, 200.24] \\
+S16b & calibrated ridge closure & 173.71 & [149.60, 198.53] \\
+S16b & calibrated low2 traditional & 211.42 & [167.23, 264.49] \\
+\bottomrule
+\end{tabular}
+\label{tab:pedestal-closure}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{\detokenize{../../reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/fig_heldout_residual_distributions.png}}
+\caption{S16 held-out pre-trigger residual distributions for simple,
+adaptive, and ML pedestal estimators.}
+\label{fig:pedestal-residuals}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{\detokenize{../../reports/1781000826.539659.030b7796__s16b_independent_pedestal_estimator_closure/fig_head_to_head.png}}
+\caption{S16b leakage-aware head-to-head pedestal closure.  The strengthened
+line3 traditional estimator and ridge ML closure are statistically tied in
+MAE on the held-out records.}
+\label{fig:pedestal-head-to-head}
+\end{figure}
+
+The raw S16 ML row is numerically the best leave-one-sample predictor, but the
+accepted pedestal conclusion is more conservative.  In the leakage-aware S16b
+benchmark, the best traditional method is the line3 predictor at
+169.34 ADC MAE, while calibrated ridge gives 173.71 ADC with a paired
+ML-minus-traditional delta of 4.38 ADC and CI [-15.61, 19.58].  Thus the
+accepted winner for an operational pedestal estimator is traditional or tied,
+not ML.  ML remains useful as a contamination diagnostic because later waveform
+samples can predict an early contaminated sample, but that predictive closure
+does not prove an unbiased zero-signal electronics pedestal.
+
+\section{Systematics and caveats}
+
+\begin{table}[H]
+\centering
+\caption{Dominant systematic limitations by topic.}
+\begin{tabular}{p{0.20\textwidth}p{0.35\textwidth}p{0.35\textwidth}}
+\toprule
+Topic & Main systematic & Consequence \\
+\midrule
+Duplicate amplitude/charge & Odd duplicate readout is an electronic closure target, not deposited-energy truth. & ML wins closure, but the result cannot by itself calibrate absolute energy. \\
+Template scale & Direct shifted-template scale is pathological under multiple windows and losses. & Strong traditional comparison must use calibrated diagnostics, not raw template scale. \\
+Saturation & Artificial hard clipping gives self-truth; real saturated pulses have no amplitude truth and may have overlaps. & ML is preferred for artificial recovery, while natural transfer needs boundary and timing-tail audits. \\
+Energy proxy & PSTAR/depth information supplies only monotonic ordering; downstream topology support is sparse. & Internal ordering improves with ML, but the 10\% absolute-energy preflight fails. \\
+Pedestal & No true forced/random pedestal sample is present in the current mirror. & Pre-trigger closure can diagnose contamination, but it is not a no-pulse pedestal measurement. \\
+\bottomrule
+\end{tabular}
+\label{tab:amplitude-systematics}
+\end{table}
+
+\section{Chapter verdict}
+
+The robust pattern is that waveform ML wins when the target is an independent
+shape-rich closure target: duplicate-readout amplitude/charge closure and
+artificial saturation recovery.  The strongest numbers are P04d ExtraTrees
+amplitude closure at \(r_{68}=0.0027\) versus 0.0203 for a calibrated Huber
+traditional method, and P07 GBR saturation recovery at 0.032--0.046 versus
+0.104--0.286 for template extrapolation.  The energy chapter is nevertheless
+bounded by truth availability.  The S14 proxy rows show improved internal
+ordering with ML, but downstream charge-propagated energy remains at about
+18--20\% and fails the 10\% target.  Pedestal validation is even more
+truth-limited: without forced/random triggers, the defensible operational
+conclusion is that strong traditional early-sample closure ties ML, while ML
+serves as a sensitive diagnostic for pre-trigger contamination.

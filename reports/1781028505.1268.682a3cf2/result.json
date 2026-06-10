@@ -1,0 +1,65 @@
+{
+  "study": "P02f",
+  "ticket": "1781028505.1268.682a3cf2",
+  "worker": "testbeam-laptop-4",
+  "title": "learned shape-atom veto scores versus q_template tails",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "traditional": {
+    "residual_method": "S03b monotone decreasing amplitude-bin timewalk",
+    "no_veto_sigma68_ns": 1.6451494274970766,
+    "traditional_q_hand_threshold_delta_ns": [
+      0.07891242850229863,
+      0.03957432291910333,
+      0.23473388766041492
+    ],
+    "ml_shape_rf_delta_ns": [
+      -0.08348605497082207,
+      -0.12884036551860234,
+      0.06232016567469345
+    ],
+    "ml_shape_iforest_delta_ns": [
+      0.04487236626927538,
+      0.0012451372767968076,
+      0.1883663559018627
+    ]
+  },
+  "ml": {
+    "method": "RandomForest and IsolationForest learned shape-atom veto scores on S03b pair residual tails",
+    "delta_ns": [
+      -0.08348605497082207,
+      -0.12884036551860234,
+      0.06232016567469345
+    ]
+  },
+  "leakage": {
+    "features_exclude_run_event_timing_residuals": true,
+    "features_exclude_scalar_q_template": true,
+    "split_by_run": true,
+    "shuffled_ml_shape_rf_control_included": true,
+    "topology_only_rf_control_included": true,
+    "flag": false
+  },
+  "verdict": "shape_atom_veto_has_weak_nonrobust_narrowing",
+  "conclusion": "The pair-level learned shape-atom veto benchmark does not produce a statistically secure residual-tail improvement. S03b no-veto sigma68 is 1.645 ns; traditional q/hand-shape delta is 0.079 ns [0.040, 0.235], RF shape delta is -0.083 ns [-0.129, 0.062], and IsolationForest delta is 0.045 ns [0.001, 0.188]. Leakage flags: 0.",
+  "input_sha256": "8aa011d96bab3c7cdabc9817990721b3a876cafd6c0d7bd00bf5ea6527c5b875",
+  "git_commit": "a331c6878cbabbdd4788e5fe3e3c63421b2eb4ed",
+  "runtime_sec": 284.37,
+  "follow_up_tickets": []
+}

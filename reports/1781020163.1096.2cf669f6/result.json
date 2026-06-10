@@ -1,0 +1,103 @@
+{
+  "study": "S03d",
+  "ticket": "1781020163.1096.2cf669f6",
+  "worker": "testbeam-laptop-2",
+  "title": "run-level hierarchical shrinkage for analytic timewalk coefficients vs S03b and ML",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6824285968099835,
+      2.9923192689627953
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only_global": {
+      "method": "global_amp_only_ridge_residual_on_template_phase",
+      "value": 1.5510917109777858,
+      "ci": [
+        1.369659370149606,
+        1.9414477515096686
+      ],
+      "gain_vs_template_phase_ns": 1.1903228191074298
+    },
+    "hierarchical_shrinkage": {
+      "method": "population_plus_run_deviation_amp_only_ridge",
+      "value": 1.2509990385255223,
+      "ci": [
+        1.082532699662592,
+        1.4847721258108004
+      ],
+      "gain_vs_template_phase_ns": 1.4904154915596932,
+      "delta_vs_global_s03a_ns": 0.30009267245226345,
+      "delta_vs_s03b_binned_timewalk_ns": 0.3941503889715543
+    },
+    "s03b_binned_timewalk": {
+      "method": "per_stave_monotone_decreasing_binned_timewalk",
+      "value": 1.6451494274970766,
+      "ci": [
+        1.3255856505466923,
+        1.9444633146125225
+      ],
+      "gain_vs_template_phase_ns": 1.096265102588139,
+      "delta_vs_global_s03a_ns": -0.09405771651929085
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.3939661218709831,
+    "ci": [
+      1.2371909703073152,
+      1.6476500841719346
+    ],
+    "gain_vs_template_phase_ns": 1.3474484082142324,
+    "gain_vs_hierarchical_shrinkage_ns": -0.14296708334546082,
+    "gain_vs_s03b_binned_timewalk_ns": 0.2511833056260935
+  },
+  "run61": {
+    "hierarchical_sigma68_ns": 1.6353703774060107,
+    "ci": [
+      1.552500086098891,
+      1.6733245727253372
+    ],
+    "n_pair_residuals": 2799,
+    "pair_count_rank_desc": 1,
+    "oracle_gain_ns": 0.07966104709135058,
+    "interpretation": "not_limited_statistics; oracle adaptation tests coefficient drift but remaining width indicates misspecification or run-specific pulse pathology"
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "hgb_features_exclude_run_event_order_cross_stave_time": true,
+    "hierarchical_heldout_run_deviation_zeroed": true,
+    "s03b_uses_train_run_rows_only": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.628094115754946,
+    "hierarchical_looks_too_good": false,
+    "leakage_flag": false,
+    "oracle_diagnostic_uses_heldout_labels": true
+  },
+  "verdict": "run61_degradation_not_limited_stats_partial_coefficient_drift_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "0d51754cf3ed9d3e958328990ddb8dc974840ee2",
+  "critic": "pending",
+  "next_tickets": []
+}

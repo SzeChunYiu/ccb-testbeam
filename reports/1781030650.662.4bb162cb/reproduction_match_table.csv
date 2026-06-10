@@ -1,0 +1,9 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S10/S16 selected B-stave pulses in runs 44-57,252266.0,252266.0,0.0,0.0,True
+low_2nA multi_stave_per_selected_event,0.0156,0.015587529976019185,-1.2470023980814399e-05,0.0015,True
+low_2nA three_stave_per_selected_event,0.0041,0.0041109969167523125,1.099691675231218e-05,0.0015,True
+low_2nA downstream_per_selected_event,0.0231,0.023124357656731757,2.435765673175841e-05,0.0015,True
+high_20nA multi_stave_per_selected_event,0.0268,0.026806295960723994,6.295960723993327e-06,0.0015,True
+high_20nA three_stave_per_selected_event,0.0085,0.00853789586801239,3.789586801238899e-05,0.0015,True
+high_20nA downstream_per_selected_event,0.0334,0.03341410480625382,1.4104806253821545e-05,0.0015,True
+S16i reproduced ML tail AUC,0.695783803321677,0.6900551668494614,-0.005728636472215554,0.03,True

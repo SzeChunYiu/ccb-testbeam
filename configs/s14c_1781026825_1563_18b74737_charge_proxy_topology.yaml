@@ -1,0 +1,43 @@
+study_id: S14c
+ticket_id: "1781026825.1563.18b74737"
+title: reduce P04b charge-proxy term for range-energy preflight
+worker: testbeam-laptop-1
+
+raw_root_dir: data/root/root
+output_dir: reports/1781026825.1563.18b74737
+
+amplitude_cut_adc: 1000.0
+expected_selected_pulses: 640737
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+
+p04_reference_result: reports/1780997954.15577.6c203777/result.json
+p04_reference_config: configs/p04_amplitude_charge_regression.yaml
+p04b_expected_result: reports/1781011754.1392.25ac6c9f/p04b_reproduction/result.json
+p04b_expected_external_res68: 0.2131744652334116
+p04b_expected_tolerance: 1.0e-9
+s14b_propagation_source: reports/1781011754.1392.25ac6c9f/p04b_uncertainty_propagation.csv
+s14b_method_metrics_source: reports/1781011754.1392.25ac6c9f/method_metrics.csv
+nominal_geometry: center_4cm
+energy_uncertainty_acceptance_res68: 0.10
+
+sample_ii_runs: [58, 59, 60, 61, 62, 63, 65]
+random_seed: 14625
+bootstrap_reps: 1000
+ml_max_train_rows: 120000
+min_rows: 120
+min_train_rows_per_fold: 80
+
+b2_channel: 0
+b2_duplicate_channel: 1
+downstream_channels:
+  B4: 2
+  B6: 4
+  B8: 6
+
+b2_amplitude_bins:
+  - [1000, 2000]
+  - [2000, 3000]
+  - [3000, 5000]
+  - [5000, 7000]
+  - [7000, 1000000000]

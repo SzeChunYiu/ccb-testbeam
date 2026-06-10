@@ -1,0 +1,4 @@
+heldout_run,method,value,reference_value,delta,pass
+65,template_phase_base,2.889152765080617,2.889152765080617,0.0,True
+65,s03a_amp_only,1.494640076269676,1.494640076269676,0.0,True
+65,s03b_monotone_binned,1.5695763825403084,1.5695763825403084,0.0,True

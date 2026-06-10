@@ -1,0 +1,114 @@
+study_id: S01g
+title: q-template quality covariate map
+ticket_id: "1781036493.3261.7a6c05c5"
+worker: testbeam-laptop-3
+raw_root_dir: data/root/root
+output_dir: reports/1781036493.3261.7a6c05c5__s01g_qtemplate_quality_covariate_map
+random_seed: 1781036493
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+tof_per_cm_ns: 0.078
+spacing_cm_values: [2.0]
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_pulses: 640737
+  sample_ii_analysis:
+    selected_pulses: 125096
+    B2: 88213
+    B4: 21229
+    B6: 11148
+    B8: 4506
+
+timing:
+  downstream_staves: [B4, B6, B8]
+  train_runs: [58, 59, 60, 61, 62, 63]
+  heldout_runs: [65]
+  loo_runs: [58, 59, 60, 61, 62, 63, 65]
+  leading_edge_threshold_adc: 500.0
+  cfd_fractions: [0.10, 0.20, 0.30, 0.40, 0.50]
+  of_windows:
+    - [1, 9]
+    - [2, 10]
+    - [3, 11]
+    - [4, 12]
+  template_shift_grid:
+    min: -1.5
+    max: 1.5
+    step: 0.05
+  base_method: template_phase
+
+analytic:
+  random_seed: 1781036493
+  bootstrap_samples: 250
+  ridge_alphas: [0.01, 0.1, 1.0, 10.0, 100.0]
+  cv_folds: 3
+  candidate_models: [amp_only]
+
+binned:
+  random_seed: 1781036493
+  bootstrap_samples: 250
+  cv_folds: 3
+  n_bins: [4, 6, 8, 10, 12]
+  modes: [monotonic]
+  monotonic_directions: [decreasing]
+
+hgb:
+  random_seed: 1781036493
+  bootstrap_samples: 250
+  cv_folds: 3
+  max_iter: [60]
+  learning_rate: [0.05]
+  max_leaf_nodes: [7, 15]
+  l2_regularization: [0.0, 0.1]
+  max_bins: 64
+
+q_template:
+  amplitude_edges_adc: [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000]
+  min_bin_pulses: 30
+  cfd_fraction: 0.2
+  aligned_relative_grid: [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  include_staves: [B4, B6, B8]
+
+benchmark:
+  bootstrap_samples: 600
+  minimum_keep_fraction: 0.88
+  threshold_quantiles: [0.80, 0.85, 0.88, 0.90, 0.925, 0.95, 0.975]
+  primary_label_abs_residual_gt_ns: 5.0
+  secondary_high_q_quantile: 0.90
+  calibration_bins: 8
+
+models:
+  ridge_alpha: 1.0
+  hgb_max_iter: 100
+  hgb_learning_rate: 0.05
+  hgb_max_leaf_nodes: 15
+  hgb_l2_regularization: 0.05
+  mlp_hidden: [48, 24]
+  mlp_alpha: 0.001
+  mlp_max_iter: 300
+  torch_epochs: 85
+  torch_lr: 0.003
+  torch_weight_decay: 0.0001
+  torch_batch_size: 2048
+  torch_channels: 12
+  attention_width: 16
+
+reference_numbers:
+  s03a_template_phase_sigma68_ns: 2.889152765080617
+  s03a_amp_only_sigma68_ns: 1.494640076269676
+  s03b_monotone_binned_sigma68_ns: 1.5695763825403084

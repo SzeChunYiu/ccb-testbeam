@@ -1,0 +1,79 @@
+{
+  "study": "S01g",
+  "ticket": "1781036493.3261.7a6c05c5",
+  "worker": "testbeam-laptop-3",
+  "title": "q-template quality covariate map",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "primary_metric": "kept_pairwise_sigma68_ns on S03b timing-tail risk map",
+  "winner": "q_token_attention",
+  "winner_family": "new_architecture",
+  "winner_value_ci": [
+    1.52642780869391,
+    1.3116633725262545,
+    1.8517565135411402
+  ],
+  "winner_delta_vs_no_cut_ci": [
+    -0.11872161880316656,
+    -0.20208168397465087,
+    0.0
+  ],
+  "traditional": {
+    "method": "traditional_q_threshold",
+    "value_ci": [
+      1.6997779197086116,
+      1.433713858276859,
+      2.0202633782303416
+    ],
+    "delta_vs_no_cut_ci": [
+      0.054628492211534985,
+      0.030861314610544976,
+      0.1480215471049528
+    ]
+  },
+  "models_benchmarked": [
+    "traditional_q_threshold",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "q_token_attention"
+  ],
+  "new_architecture": "q_token_attention",
+  "adoption": {
+    "secure_narrowing_vs_no_cut": false,
+    "clear_win_over_traditional": false
+  },
+  "leakage": {
+    "split_by_run": true,
+    "q_templates_train_run_only_per_fold": true,
+    "forbidden_feature_flags": false
+  },
+  "conclusion": "The point-estimate winner is q_token_attention: kept-pair sigma68 1.526 ns [1.312, 1.852], delta vs no-cut -0.119 ns [-0.202, 0.000]. The traditional q-threshold gives 1.700 ns [1.434, 2.020], while no-cut is 1.645 ns [1.322, 1.944]. Adoption status: diagnostic only; CI does not prove narrowing. Clear separation from traditional: 0.",
+  "hypothesis": "Hypothesis: q_template is best treated as a local support/risk atom, not a standalone timing-tail veto. If this is correct, future externally labeled PID/energy or injected-pileup studies should show high-q enrichment in failure modes but only weak standalone resolution gains after amplitude, topology, and run-family controls.",
+  "next_tickets": [
+    {
+      "title": "S01h external q-template support transfer",
+      "body": "Question: does the S01g q-template risk atom transfer to an externally labeled or injected support target rather than an S03b-defined timing-tail proxy? Compare the S01g winner and traditional q-threshold against ridge, gradient-boosted trees, MLP, 1D-CNN, and q-token attention on injected pile-up/dropout or calibrated charge-depth labels with identical run-block bootstrap CIs. Expected information gain: separates q_template as a general detector-quality covariate from a timing-residual self-reference."
+    }
+  ],
+  "input_sha256": "03ef86a59853dacd0071c9d59a9d3bddc7c31cc84ecd9528e158d45207be5f6b",
+  "git_commit": "5bb9076393e55c6bb124f5a11eebeb6d56ab2e0d",
+  "runtime_sec": 141.99
+}

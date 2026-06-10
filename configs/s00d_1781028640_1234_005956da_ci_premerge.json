@@ -1,0 +1,19 @@
+{
+  "study_id": "S00d",
+  "ticket_id": "1781028640.1234.005956da",
+  "worker": "testbeam-laptop-1",
+  "title": "wire S00c raw selector-count regression into CI",
+  "source_study": "S00c",
+  "source_config": "configs/s00c_1781013145_1122_4ccc6db4.json",
+  "output_dir": "reports/1781028640.1234.005956da",
+  "ci_workflow": ".github/workflows/s00c-selector-count-regression.yml",
+  "raw_root_env": "TESTBEAM_RAW_ROOT_DIR",
+  "guard_command": "python scripts/s00d_1781028640_1234_005956da_ci_premerge.py --guard-only",
+  "study_command": "/home/billy/anaconda3/bin/python scripts/s00d_1781028640_1234_005956da_ci_premerge.py --study",
+  "expected_counts": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  }
+}

@@ -1,0 +1,5 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+parent App.I guarded gross D_t>51 ns,72.0,72.0,0.0,0.0,True
+all-three control events,3774.0,3774.0,0.0,0.0,True
+all-three guarded gross D_t>51 ns,22.0,22.0,0.0,0.0,True
+S07f injected all-three shape RF ROC AUC,0.8221175214248854,0.8221175214248854,0.0,0.001,True

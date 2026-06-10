@@ -1,0 +1,54 @@
+{
+  "conclusion": "Verdict: `no_stable_positive_s07f_transfer`. S07f reproduces from raw ROOT at AUC 0.822118. On real matched current strata, the S07f RF high-minus-low score shift is 0.0114 [-0.0077, 0.0321], while the traditional timing/template shift is -0.1046 [-0.2184, 0.0128]. Leakage sentinels flagged 0 checks, so this is a calibrated transfer diagnostic rather than a truth-labelled pile-up rate.",
+  "leakage": {
+    "amplitude_only_shift": 0.011702610628331797,
+    "flagged_checks": 0,
+    "main_rf_forbidden_column_count": 0,
+    "shuffled_label_shift": -0.0019600191215109817
+  },
+  "matched_real_events": 340,
+  "ml": {
+    "candidate_excess_ci": [
+      -0.026737967914438502,
+      0.05555555555555555
+    ],
+    "candidate_excess_high_minus_low": 0.011764705882352941,
+    "current_family_auc": 0.5277162629757786,
+    "method": "S07f strict-shape RF trained/calibrated on injected folds",
+    "params": {
+      "max_depth": 7,
+      "min_samples_leaf": 8,
+      "n_estimators": 500
+    },
+    "score_shift_ci": [
+      -0.007747741882801544,
+      0.03209843615168553
+    ],
+    "score_shift_high_minus_low": 0.01136304518143047
+  },
+  "next_tickets": [],
+  "raw_reproduction_pass": true,
+  "runtime_sec": 192.1780607700348,
+  "s07f_shape_rf_auc_delta": 0.0,
+  "s07f_shape_rf_auc_expected": 0.8221175214248854,
+  "s07f_shape_rf_auc_reproduced": 0.8221175214248854,
+  "split": "six held-out low/high run-pair folds",
+  "study": "S07i",
+  "ticket": "1781024786.1471.167d1f38",
+  "title": "S07f score transfer from injected corruption to real high-current strata",
+  "traditional": {
+    "candidate_excess_ci": [
+      -0.09941520467836257,
+      -0.01162292358803987
+    ],
+    "candidate_excess_high_minus_low": -0.052941176470588235,
+    "method": "fold-local timing/template score selected on injected train runs",
+    "score_shift_ci": [
+      -0.2184268528818029,
+      0.012845215157353995
+    ],
+    "score_shift_high_minus_low": -0.1045751633986928
+  },
+  "verdict": "no_stable_positive_s07f_transfer",
+  "worker": "testbeam-laptop-4"
+}

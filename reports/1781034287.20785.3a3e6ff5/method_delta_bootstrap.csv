@@ -1,0 +1,6 @@
+comparison,robust_width_delta_ns,ci_low_ns,ci_high_ns,p_value
+ridge_minus_traditional_period_poly,-0.039227637773239676,-0.3218236744599799,0.48328108107704465,0.655
+gradient_boosted_trees_minus_traditional_period_poly,-0.5339136537527026,-1.0366086623010122,-0.010832640199711464,0.05
+mlp_minus_traditional_period_poly,-0.4541740877692684,-0.7315375581593335,-0.15866732308670747,0.01
+cnn_1d_minus_traditional_period_poly,-0.5555420402182963,-0.7526061869906764,-0.38160677990215586,0.0
+runmix_attention_cnn_new_minus_traditional_period_poly,-1.0018323285818864,-1.1685664640245774,-0.7759446395082893,0.0

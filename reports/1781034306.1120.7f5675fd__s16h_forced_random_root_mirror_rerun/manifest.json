@@ -1,0 +1,94 @@
+{
+  "ticket": "1781034306.1120.7f5675fd",
+  "command": "/home/billy/anaconda3/bin/python scripts/s16h_1781034306_1120_7f5675fd_forced_random_root_mirror_rerun.py --config configs/s16h_1781034306_1120_7f5675fd_forced_random_root_mirror_rerun.json",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "inputs": [
+    {
+      "path": "configs/s16h_1781034306_1120_7f5675fd_forced_random_root_mirror_rerun.json",
+      "sha256": "672e7c028e92a1de9344e293ea51447c96fad086a022ffefa8fa6ef42e7f4157",
+      "bytes": 2913
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/scripts/s16h_1781034306_1120_7f5675fd_forced_random_root_mirror_rerun.py",
+      "sha256": "4209d320fbbd17b3daf4a8644fc16f9e284c9ab01cd8ff58f626a87772bd3a41",
+      "bytes": 21893
+    },
+    {
+      "path": "scripts/s16f_1781031083_1784_78066bc6_pretrigger_veto_loro.py",
+      "sha256": "72e8295d11f8c201fad5192d1a478533ebc5bc7774c5eb43c835bf55b3718e96",
+      "bytes": 53708
+    },
+    {
+      "path": "scripts/s16g_1781031000_2375_3d7f6489_forced_random_root_acquisition.py",
+      "sha256": "9e41464014c9990fc7250f23df2082363f15178ad76912d0668086e23cb83f9c",
+      "bytes": 23038
+    },
+    {
+      "path": "/home/billy/ccb-data/raw/root.zip",
+      "sha256": "19ba847cfbeb46d2944cf8d5c304afb52da6fcad991d1d402a6fd3e9a432efc1",
+      "bytes": 809855166
+    },
+    {
+      "path": "/home/billy/ccb-data/raw/sorted-a.zip",
+      "sha256": "5504642819482198bc7f2cc4198fc91a4f7bcfdc538304c8759c090cf7578e7c",
+      "bytes": 2684983533
+    },
+    {
+      "path": "/home/billy/ccb-data/raw/sorted-b.zip",
+      "sha256": "f77835459bb1d797b8da74e6ac2fc88eab2402dd84b29965dc4f1dadcee1db94",
+      "bytes": 2874563960
+    },
+    {
+      "path": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/head_to_head_benchmark.csv",
+      "sha256": "48eb0d9bc5792bdd39d34c23eabd1068ff2f6a414ccbf11a8e4c3277f41560bd",
+      "bytes": 9158
+    },
+    {
+      "path": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/fold_metrics.csv",
+      "sha256": "b0b380f97f7544c470cfc7c68aec3772b2b5770ef168820be3b797ad4c128056",
+      "bytes": 30979
+    },
+    {
+      "path": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/leakage_checks.csv",
+      "sha256": "f3c653125e660fc503e4d24615fa42c003492e82b091de45e606356eeff4bcb4",
+      "bytes": 737
+    },
+    {
+      "path": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/result.json",
+      "sha256": "0ff85cc978c1e6e6fd817fe386f0448f83a786042de3f13ae0f6985dd6bad43c",
+      "bytes": 33961
+    }
+  ],
+  "artifacts": [
+    "REPORT.md",
+    "direct_method_identifiability.csv",
+    "direct_nonbeam_entries.csv",
+    "file_archive_inventory.csv",
+    "forced_random_candidate_inventory.csv",
+    "input_sha256.csv",
+    "manifest.json",
+    "proxy_context_benchmark.csv",
+    "proxy_context_fold_metrics.csv",
+    "proxy_context_leakage_checks.csv",
+    "raw_archive_member_inventory.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "root_trigger_branch_audit.csv"
+  ],
+  "sha256": {
+    "REPORT.md": "4605535564aef6db42cb218f5b68338bd5be53b27920909e429763b1cdd167bf",
+    "direct_method_identifiability.csv": "68c97794e07cadcdd5f115205828d4bde01c8fd841011cb62194f4eaf6ceb0b5",
+    "direct_nonbeam_entries.csv": "a10b05b9b8785600b6fcf6356b1c3386e0f7bfa96a71aad15249f03e6ca895d8",
+    "file_archive_inventory.csv": "cb95dfc91364d6325529df882620e09338de22514bcdb93b47cbe57d872f1731",
+    "forced_random_candidate_inventory.csv": "dd76cc11f470dba14ceff2573aa099fcdbdff0bbc68e78df3c694e7037f80dae",
+    "input_sha256.csv": "c4b5c208bd4ee5602233b68b2771d8d34eae9432fd9a8ff2c969995f5eebef63",
+    "proxy_context_benchmark.csv": "1b53cc64d3f04d1c6de0615ea2a541c142269be0617458ce11d9dd805a5d0f46",
+    "proxy_context_fold_metrics.csv": "553e8f04ea53016885d2eed3e7060d79e034cd5dc2266df7bc7173d7c886b0ca",
+    "proxy_context_leakage_checks.csv": "f3c653125e660fc503e4d24615fa42c003492e82b091de45e606356eeff4bcb4",
+    "raw_archive_member_inventory.csv": "4f4b6fe41479b0d420b302c6aa09722ee8626fae5082445edfdffd302d32824f",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "6d89dfd5a7f3ab59e0c8edca9840072a6d899548223120f540f510ed7220150d",
+    "root_trigger_branch_audit.csv": "ba48384f915dc81ceedbe1f50b7787a6789fec4315e532527e9edef1e6e5747d"
+  }
+}

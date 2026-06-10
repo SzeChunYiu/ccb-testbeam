@@ -1,0 +1,20 @@
+-- ROOT found.
+-- VGM :/home/billy/nnbar/simulation/GEANT4_Packages/install/vgm/include
+-- Geant4 :/home/billy/nnbar/simulation/GEANT4_Packages/install/geant4-11.2.2/include/Geant4
+-- Arrow found: 1
+-- Parquet found: 1
+-- Arrow libraries: arrow
+-- Parquet libraries: parquet;arrow
+-- Created organized build directory structure:
+--   macros/    - Geant4 macro files (.mac)
+--   configs/   - Configuration files (.config)
+--   geometry/  - Geometry files (.gdml)
+--   outputs/   - Simulation outputs (.root, .csv)
+--   logs/      - Log files
+-- Copied macro files to macros/
+-- Copied config files to configs/
+-- Copied geometry files to geometry/ and root directory
+-- Copied README.md to build directory
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/billy/.tb-workers/testbeam-laptop-3/reports/0000000004.1.g4truth/build

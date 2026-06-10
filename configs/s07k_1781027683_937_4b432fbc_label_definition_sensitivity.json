@@ -1,0 +1,76 @@
+{
+  "ticket": "1781027683.937.4b432fbc",
+  "worker": "testbeam-laptop-4",
+  "study": "S07k_raw_hrdv_appa_label_definition_sensitivity",
+  "seed": 770937,
+  "raw_root_dir": "data/root/root",
+  "qtemplate_path": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "target": {
+    "labelled_events": 12147,
+    "clean": 10636,
+    "violating": 1511
+  },
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "downstream_staves": ["B4", "B6", "B8"],
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_s00_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "grid": {
+    "cfd_fractions": [0.15, 0.20, 0.25],
+    "downstream_min_hits": [2, 3],
+    "timing_profiles": [
+      {
+        "name": "strict",
+        "clean_downstream_span_ns": 4.0,
+        "clean_all_span_ns": 8.0,
+        "violating_downstream_span_ns": 8.0,
+        "violating_b2_displacement_ns": 15.0
+      },
+      {
+        "name": "app_a",
+        "clean_downstream_span_ns": 5.0,
+        "clean_all_span_ns": 10.0,
+        "violating_downstream_span_ns": 10.0,
+        "violating_b2_displacement_ns": 20.0
+      },
+      {
+        "name": "loose",
+        "clean_downstream_span_ns": 6.0,
+        "clean_all_span_ns": 12.0,
+        "violating_downstream_span_ns": 12.0,
+        "violating_b2_displacement_ns": 25.0
+      }
+    ],
+    "qtemplate_quality": [
+      {"name": "none", "q_downstream_max_le": null},
+      {"name": "tight", "q_downstream_max_le": 0.06}
+    ],
+    "ambiguity_handling": ["exclude", "as_violating"]
+  },
+  "rf": {
+    "n_estimators": 80,
+    "max_depth": 7,
+    "min_samples_leaf": 15
+  },
+  "bootstrap_replicates": 500,
+  "fixed_clean_efficiency": 0.90
+}

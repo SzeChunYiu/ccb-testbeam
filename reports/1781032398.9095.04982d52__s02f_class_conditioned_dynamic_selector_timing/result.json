@@ -1,0 +1,89 @@
+{
+  "study": "S02f",
+  "ticket": "1781032398.9095.04982d52",
+  "worker": "testbeam-laptop-4",
+  "title": "class-conditioned dynamic selector timing",
+  "reproduced_raw_root_first": true,
+  "reproduction": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap": {
+      "event_bootstrap_samples": 500,
+      "run_bootstrap_samples": 5000
+    }
+  },
+  "traditional_method": "signed_physics_prior",
+  "methods": [
+    "signed_physics_prior",
+    "ridge_ml",
+    "gradient_boosted_trees_hgb",
+    "mlp_waveform",
+    "cnn_1d_waveform",
+    "hybrid_residual_ensemble"
+  ],
+  "winner": {
+    "method": "signed_physics_prior",
+    "sigma68_ns": 2.092831006437085,
+    "sigma68_ci": [
+      1.559173181390212,
+      2.642487094244731
+    ],
+    "full_rms_ns": 7.371167297474214,
+    "tail_frac_abs_gt5ns": 0.19345238095238096
+  },
+  "dynamic_class_winners": [
+    {
+      "taxonomy_class": "baseline_excursion",
+      "method": "signed_physics_prior",
+      "sigma68_ns": 2.084476566074529,
+      "sigma68_ci_low": 1.5928310064370859,
+      "sigma68_ci_high": 2.646896664896846,
+      "full_rms_ns": 7.265690494292812,
+      "tail_frac_abs_gt5ns": 0.19364599092284418,
+      "n_events": 661
+    },
+    {
+      "taxonomy_class": "large_downstream_timing_span",
+      "method": "gradient_boosted_trees_hgb",
+      "sigma68_ns": 2.0298166257738806,
+      "sigma68_ci_low": 0.8560970352937619,
+      "sigma68_ci_high": 13.05685906360838,
+      "full_rms_ns": 7.910648445570256,
+      "tail_frac_abs_gt5ns": 0.13333333333333333,
+      "n_events": 10
+    }
+  ],
+  "non_oracle_leakage_checks_pass": true,
+  "oracle_checks": [
+    {
+      "check": "forbidden_dynamic_class_pair_median_oracle",
+      "value": 1.750000000000098,
+      "baseline_value": 2.092831006437085,
+      "pass": false,
+      "note": "uses held-out class/pair residual medians; diagnostic upper bound only"
+    }
+  ],
+  "source_artifacts": {
+    "s00d_taxonomy": "reports/1781014251.574.7a497937",
+    "s03j_timing": "reports/1781030650.597.5d382001__s03j_selector_timewalk_support"
+  },
+  "input_sha256_table": "input_sha256.csv",
+  "git_commit": "62cd446f7454b0f87cd701a91b00c3b323c9585e",
+  "runtime_sec": 81.808,
+  "next_tickets": [],
+  "verdict": "dynamic_range_not_adopted_for_timing; strong_traditional_wins_dynamic_extra"
+}

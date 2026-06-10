@@ -1,0 +1,8 @@
+probe,roc_auc,average_precision,interpretation
+topology-only logistic,0.8091416293809207,0.7400551494677138,Direct P08a-style topology sentinel; high values would mean the calibrated label still leaks penetration topology.
+even-charge calibration-proxy logistic,0.985196964324116,0.982574819983445,Duplicate-readout control: uses only the allowed even-readout version of the odd calibrated label source; high values mean the weak label is mostly charge-scale closure.
+forbidden odd-energy-label logistic,0.9914590224015328,0.991923184468637,Ceiling probe using the duplicate odd-readout calibrated residual that defines the weak label.
+run-only logistic,0.5,0.5,Strict leave-one-run-out run-id sentinel; unseen held-out runs collapse to the intercept.
+group/event-order logistic,0.478026627355614,0.4780505010459936,Sample group plus event-order sentinel for run-family/rate-drift confounding.
+shuffled-label waveform HGB,0.4882469532898196,0.47467425055895435,Same waveform HGB pipeline with shuffled training labels; should fall near chance.
+ML-minus-traditional paired run bootstrap,0.00038855313693186844,,Positive values favor waveform/latent ML; CI is stored in result.json.

@@ -125,13 +125,17 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=11 claimed=0 done=0 failed=14`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with this live post-append audit observing `open=185 claimed=4
-  done=222 failed=7` while workers continue moving tickets.
+  testbeam queue remains deep, with this live post-append audit observing `open=181 claimed=4
+  done=238 failed=7` while workers continue moving tickets.
   The mission trigger still required new ready work. This pass appended four ready non-duplicate
-  tickets: S03p HGB transfer feature-leakage null grid (`1781062439.500.63591f99`),
+  tickets: S03r stave-only HGB leakage dissection (`1781066704.631.13c7784e`),
+  P10k minority-stave conditional-template failure map (`1781066704.689.2f5f3d2a`),
+  S04h B2-inclusive all-hit timing closure harm map (`1781066704.724.5080332a`), and
+  P06d peak-phase charge-timing coupling atlas (`1781066704.794.27df492e`). The previous pass
+  appended four ready non-duplicate tickets: S03p HGB transfer feature-leakage null grid (`1781062439.500.63591f99`),
   S05n pretrigger-atom covariance projection stress (`1781062443.571.1e7346af`),
   P04t A-stack topology lower-bound charge transfer (`1781062449.642.488b2d5f`), and
-  P12e cross-consumer pulse-atom harm ledger (`1781062454.713.242b3d71`). The previous pass
+  P12e cross-consumer pulse-atom harm ledger (`1781062454.713.242b3d71`). The pass before that
   appended four ready non-duplicate tickets: S02f binned-timewalk shuffled-control atom ledger (`1781059683.845.5a6958ad`),
   S13e residual CWoLa support-collapse atlas (`1781059683.869.4bca6f7e`),
   P10i live-time surrogate negative-control support map (`1781059684.922.5d6d340d`), and
@@ -194,7 +198,12 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
   (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
   (`1781023340.632.43377364`).
-- Newest reports sharpen the next claims: S02e says current/rate constrained drift does not rescue
+- Newest reports sharpen the next claims: P10e says explicit handles do not rescue q-space under
+  both family holdouts and exposes CFD/peak-sample run-family drift; P10g finds no supported
+  per-run or per-stave conditional-template ML win, with minority-stave failures dominating;
+  P10f says run64-only explicit timewalk does not improve B2-inclusive all-hit external timing
+  closure; S03h shows HGB timewalk gains in several atoms but raises a leakage flag because the
+  stave-only sentinel is nearly as strong as the full model. S02e says current/rate constrained drift does not rescue
   the unstable binned timewalk branch and leaves shuffled-target controls as a first-class failure
   mode; S13c says residualized CWoLa is diagnostic after charge/topology/anomaly/lowering matching;
   P10f says learned tail surrogates can improve q/tail MSE while still failing live-time transfer

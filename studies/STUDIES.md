@@ -1873,3 +1873,59 @@ calibration, and abstention atoms.
   under leave-one-run-out validation. Metric: external-charge res68, median bias, full RMS,
   within-10/25% coverage, real-minus-shuffled separation, accepted support fraction, and
   topology/run-block bootstrap CIs.
+
+Current steering pass (2026-06-10, P10e/P10g/P10f/S03h layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
+18-ready trigger. The correctly addressed local `testbeam` project queue remains deep after this
+pass (`open=181 claimed=4 done=238 failed=7`) under concurrent worker movement. The trigger was
+satisfied by appending four ready, non-duplicate `project:testbeam` tickets focused on the newest
+template-drift, HGB-leakage, B2-inclusive timing, and peak-phase coupling gaps: S03r stave-only
+HGB leakage dissection (`1781066704.631.13c7784e`), P10k minority-stave conditional-template
+failure map (`1781066704.689.2f5f3d2a`), S04h B2-inclusive all-hit timing closure harm map
+(`1781066704.724.5080332a`), and P06d peak-phase charge-timing coupling atlas
+(`1781066704.794.27df492e`). P10e shows explicit handles still fail to rescue q-space under both
+family holdouts while CFD and peak-sample distributions drift strongly between Sample-I and
+run64. P10g shows no supported per-run or per-stave conditional-template ML win, with the worst
+failures in minority B4/B6/B8 support. P10f shows run64-only explicit timewalk does not improve
+B2-inclusive all-hit external timing closure. S03h finds HGB timewalk gains in several support
+atoms, but the stave-only sentinel is nearly as strong as the full model and the report raises a
+leakage flag. The new tickets split those reports into smaller atoms before q_template, timing,
+charge, saturation, dropout, pile-up, PID, or energy consumers reuse the outputs.
+
+- **S03r — Stave-only HGB leakage dissection.** Decide whether the S03h HGB timewalk gain is a
+  real pulse-shape/timing improvement or a stave/support confound. Traditional: freeze S03a
+  amp-only, signed shared-shrinkage, and robust heavy-tail tables, then rerun leave-run-out atom
+  tables with stave labels blinded, single-stave-only fits, and matched amplitude, q_template,
+  pretrigger, and anomaly support. ML: HGB/ridge residual correction with feature-family
+  knockouts for stave, peak phase, pretrigger, q_template, saturation, and anomaly atoms plus
+  stave-only, run-only, shuffled-target, and support-excluded sentinels. Metric: sigma68, full
+  RMS, |residual|>5 ns tail fraction, bias-vs-log-amplitude slope, false-gain rate under
+  sentinels, and ML-minus-traditional deltas with held-out-run bootstrap CIs.
+- **P10k — Minority-stave conditional-template failure map.** Explain why P10g conditional
+  templates fail especially on B4/B6/B8 and whether the failure is support, peak phase,
+  saturation boundary, dropout/anomaly, or q_template drift rather than model class. Traditional:
+  freeze S01 empirical templates and per-stave/peak-phase/q_template residual tables, then compare
+  empirical, mean-template, and explicit-handle binned templates under family-heldout support.
+  ML: conditional ridge/ExtraTrees templates with per-feature dropout, density/support
+  calibration, and shuffled-template, run-family, stave-only, and amplitude-only sentinels.
+  Metric: residual MSE, q_template shift, timing-fit sigma68 shift, minority-stave false-support
+  rate, accepted support fraction, and ML-minus-empirical deltas with run-block bootstrap CIs.
+- **S04h — B2-inclusive all-hit timing closure harm map.** Test whether adding B2-inclusive
+  all-hit topology to external timing closure helps any supported atom or systematically harms
+  closure. Traditional: freeze S02b/S03a analytic timewalk and P10c empirical explicit-handle
+  corrections, then compare B2-excluded and B2-inclusive pairwise residuals by topology,
+  amplitude, peak phase, saturation, baseline, dropout/anomaly, and run family. ML: ridge/HGB
+  residual correction on train-run-only features with B2-blinded, topology-only, run-only,
+  shuffled-target, and target-stave-excluded controls. Metric: all-six pairwise sigma68,
+  downstream-only sigma68, full RMS, tail fraction, accepted topology support, B2-inclusion harm
+  delta, and ML-minus-traditional deltas with held-out-run bootstrap CIs.
+- **P06d — Peak-phase charge-timing coupling atlas.** Determine whether peak-sample and CFD-phase
+  shifts are a common atomic cause of timing residuals, charge bias, saturation-boundary errors,
+  and dropout/anomaly decisions. Traditional: freeze CFD/template timing, P04/P07 charge
+  estimators, q_template, and anomaly/dropout flags, then tabulate matched peak-phase bins with
+  amplitude, saturation, pretrigger, and run-family controls. ML: calibrated multi-output
+  HGB/ExtraTrees models for timing residual, charge residual, saturation harm, and anomaly/dropout
+  risk with peak-phase dropout and amplitude-only, run-only, topology-only, and shuffled-target
+  sentinels. Metric: sigma68/full-RMS timing delta, charge res68/bias delta, saturation-boundary
+  residual delta, dropout/anomaly enrichment, calibration ECE, and ML-minus-traditional deltas
+  with event-paired run-block bootstrap CIs.

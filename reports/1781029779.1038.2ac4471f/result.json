@@ -1,0 +1,363 @@
+{
+  "ticket": "1781029779.1038.2ac4471f",
+  "study": "S16f",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "expected_selected_b_stave_pulses": 640737,
+    "raw_root_file_count": 110,
+    "distinct_raw_root_runs": 57,
+    "non_beam_trigger_entries": 0,
+    "runs_requested": [
+      0,
+      65
+    ]
+  },
+  "external_source_search": {
+    "archive_members_scanned": 216,
+    "filesystem_files_scanned": 1911,
+    "source_roots": [
+      {
+        "label": "desktop_data_originals",
+        "path": "/home/billy/Desktop/test_beam/data",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": true,
+        "resolved_path": "/home/billy/ccb-data/extracted",
+        "file_count_depth5": 216,
+        "note": "Desktop path requested by ticket; symlink to /home/billy/ccb-data/extracted on this worker"
+      },
+      {
+        "label": "local_raw_archives",
+        "path": "/home/billy/ccb-data/raw",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "/home/billy/ccb-data/raw",
+        "file_count_depth5": 3,
+        "note": "local raw archive originals available on this worker"
+      },
+      {
+        "label": "local_extracted_mirror",
+        "path": "/home/billy/ccb-data/extracted",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "/home/billy/ccb-data/extracted",
+        "file_count_depth5": 216,
+        "note": "reduced/extracted mirror used by S16e"
+      },
+      {
+        "label": "local_collaboration_docs",
+        "path": "/home/billy/ccb-data/docs",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "/home/billy/ccb-data/docs",
+        "file_count_depth5": 1,
+        "note": "local CCB notes/docs"
+      },
+      {
+        "label": "repo_derived_docs",
+        "path": "/home/billy/Desktop/test_beam/docs",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "/home/billy/Desktop/test_beam/docs",
+        "file_count_depth5": 12,
+        "note": "derived repository documentation, not original DAQ provenance"
+      },
+      {
+        "label": "lunarc_canonical_archive",
+        "path": "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data",
+        "exists": false,
+        "is_dir": false,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "",
+        "file_count_depth5": 0,
+        "note": "canonical LUNARC location listed in DATA.md"
+      },
+      {
+        "label": "home_onedrive",
+        "path": "/home/billy/onedrive",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "/home/billy/onedrive",
+        "file_count_depth5": 103,
+        "note": "user home backup/collaboration sync area"
+      },
+      {
+        "label": "claude_backup",
+        "path": "/home/billy/claude-backup-20260504-112839",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "/home/billy/claude-backup-20260504-112839",
+        "file_count_depth5": 728,
+        "note": "user home backup tree"
+      },
+      {
+        "label": "claude_code_backups",
+        "path": "/home/billy/claude-code-backups",
+        "exists": true,
+        "is_dir": true,
+        "is_file": false,
+        "is_symlink": false,
+        "resolved_path": "/home/billy/claude-code-backups",
+        "file_count_depth5": 632,
+        "note": "user home backup tree"
+      }
+    ],
+    "external_log_candidates": 0,
+    "provenance_candidates": [],
+    "non_root_documents": "00_overview.md, 01_setup_and_detector.md, 02_data_and_runs.md, 03_pulse_reconstruction.md, 04_timing_calibration.md, 05_timing_resolution.md, 06_pileup.md, 07_ml_methods.md, 08_astack.md, 09_open_questions.md, bstack_astack_report_with_timing_label_pileup_ml.pdf, glossary.md, references.md",
+    "acquired_external_daq_source": false,
+    "lunarc_path_accessible": false
+  },
+  "run_mapping": {
+    "rows": 132,
+    "a_stack_roots": 57,
+    "b_stack_roots": 53,
+    "runs_with_both_stacks": 53,
+    "runs_missing_b_stack": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      38
+    ]
+  },
+  "traditional_method": {
+    "method": "source inventory plus root trigger audit plus whole-run quiet waveform rule",
+    "candidate_runs": [],
+    "heldout": {
+      "method": "traditional_source_inventory_waveform_rule",
+      "heldout_runs": "57,65",
+      "n_runs": 2,
+      "heldout_mean_source_score": 0.09995320630541848,
+      "heldout_mean_source_score_ci_low": -0.016950364403528997,
+      "heldout_mean_source_score_ci_high": 0.21685677701436598,
+      "heldout_candidate_fraction": 0.0,
+      "heldout_candidate_fraction_ci_low": 0.0,
+      "heldout_candidate_fraction_ci_high": 0.0
+    },
+    "top_runs_by_score": [
+      {
+        "run": 60,
+        "entries": 36074,
+        "selected_b_stave_pulses": 17029,
+        "selected_events": 10140,
+        "quiet_proxy_events": 20189,
+        "selected_event_fraction": 0.2810888728724289,
+        "quiet_event_fraction": 0.5596551532960027,
+        "event_max_q05_adc": 23.5,
+        "event_max_median_adc": 68.5,
+        "event_max_q95_adc": 5091.174999999999,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.27171628042357376
+      },
+      {
+        "run": 61,
+        "entries": 36535,
+        "selected_b_stave_pulses": 18965,
+        "selected_events": 11287,
+        "quiet_proxy_events": 19690,
+        "selected_event_fraction": 0.3089366361023676,
+        "quiet_event_fraction": 0.5389352675516628,
+        "event_max_q05_adc": 24.0,
+        "event_max_median_adc": 71.5,
+        "event_max_q95_adc": 5101.5,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.22284863144929518
+      },
+      {
+        "run": 65,
+        "entries": 38424,
+        "selected_b_stave_pulses": 13038,
+        "selected_events": 11904,
+        "quiet_proxy_events": 20517,
+        "selected_event_fraction": 0.3098063710181137,
+        "quiet_event_fraction": 0.5339631480324797,
+        "event_max_q05_adc": 24.5,
+        "event_max_median_adc": 73.0,
+        "event_max_q95_adc": 5164.599999999991,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.21685677701436598
+      },
+      {
+        "run": 62,
+        "entries": 37584,
+        "selected_b_stave_pulses": 19089,
+        "selected_events": 11912,
+        "quiet_proxy_events": 19637,
+        "selected_event_fraction": 0.316943380161771,
+        "quiet_event_fraction": 0.5224829714772243,
+        "event_max_q05_adc": 25.0,
+        "event_max_median_adc": 75.0,
+        "event_max_q95_adc": 5127.424999999999,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.19803959131545334
+      },
+      {
+        "run": 59,
+        "entries": 42303,
+        "selected_b_stave_pulses": 21377,
+        "selected_events": 13863,
+        "quiet_proxy_events": 22021,
+        "selected_event_fraction": 0.32770725480462376,
+        "quiet_event_fraction": 0.5205540978181217,
+        "event_max_q05_adc": 24.0,
+        "event_max_median_adc": 75.0,
+        "event_max_q95_adc": 5361.950000000001,
+        "non_beam_trigger_entries": 0,
+        "filename_token_hit": false,
+        "explicit_external_source_found": false,
+        "explicit_trigger_candidate": false,
+        "waveform_pedestal_candidate": false,
+        "traditional_candidate": false,
+        "traditional_source_score": 0.1853468430134979
+      }
+    ]
+  },
+  "ml_method": {
+    "method": "pretrigger-only logistic hidden-mode probe",
+    "heldout": {
+      "method": "pretrigger_only_logistic_hidden_mode_probe",
+      "heldout_runs": "57,65",
+      "n_events": 4000,
+      "heldout_auc": 0.6463464414851016,
+      "heldout_auc_ci_low": 0.5705249106831284,
+      "heldout_auc_ci_high": 0.7005541718519435,
+      "heldout_average_precision": 0.6526888619519059,
+      "heldout_mean_quiet_probability": 0.3992329283175917,
+      "heldout_mean_quiet_probability_ci_low": 0.3740325105690923,
+      "heldout_mean_quiet_probability_ci_high": 0.4227297503903795
+    },
+    "top_runs_by_ml_quiet_probability": [
+      {
+        "run": 26,
+        "sampled_events": 3000,
+        "sampled_quiet_fraction": 0.37033333333333335,
+        "ml_mean_quiet_probability": 0.4993260965695302,
+        "ml_p95_quiet_probability": 0.7684733220706512
+      },
+      {
+        "run": 25,
+        "sampled_events": 1000,
+        "sampled_quiet_fraction": 0.466,
+        "ml_mean_quiet_probability": 0.4964858848043736,
+        "ml_p95_quiet_probability": 0.7725676849170762
+      },
+      {
+        "run": 27,
+        "sampled_events": 2000,
+        "sampled_quiet_fraction": 0.361,
+        "ml_mean_quiet_probability": 0.4963481805923787,
+        "ml_p95_quiet_probability": 0.7680209163755528
+      },
+      {
+        "run": 43,
+        "sampled_events": 11,
+        "sampled_quiet_fraction": 0.5454545454545454,
+        "ml_mean_quiet_probability": 0.47203201722180166,
+        "ml_p95_quiet_probability": 0.6354217180331163
+      },
+      {
+        "run": 58,
+        "sampled_events": 2000,
+        "sampled_quiet_fraction": 0.485,
+        "ml_mean_quiet_probability": 0.43935635874554224,
+        "ml_p95_quiet_probability": 0.5995979710407191
+      }
+    ]
+  },
+  "ml_meta": {
+    "best": {
+      "C": 10.0,
+      "cv_auc": 0.6932421614259378,
+      "cv_auc_std": 0.024100744838199822,
+      "cv_average_precision": 0.47494287383805783
+    },
+    "feature_columns": [
+      "pre_mean_adc",
+      "pre_std_adc",
+      "pre_range_adc",
+      "pre_slope03_adc",
+      "stave_seed_median_adc",
+      "stave_seed_iqr_adc"
+    ],
+    "n_train_cv": 89745,
+    "n_core_train": 84745,
+    "n_calibration": 5000,
+    "n_heldout": 4000,
+    "calibration_runs": [
+      56,
+      64
+    ],
+    "heldout_runs": [
+      57,
+      65
+    ]
+  },
+  "leakage_checks": [
+    {
+      "check": "shuffled_training_labels",
+      "value": 0.42096107230156365,
+      "interpretation": "AUC should be near chance if the signal is not leakage."
+    },
+    {
+      "check": "repeated_shuffled_training_labels_mean_auc",
+      "value": 0.481057682599083,
+      "interpretation": "Thirty shuffled-label fits gave 2.5/50/97.5% quantiles 0.375/0.469/0.597."
+    },
+    {
+      "check": "intentional_label_oracle",
+      "value": 1.0,
+      "interpretation": "AUC near 1 shows direct label leakage would be visible."
+    },
+    {
+      "check": "real_feature_exclusion",
+      "value": null,
+      "interpretation": "ML excludes run id, file name, trigger, event id, event max, post-trigger samples, and quiet/pulse labels."
+    }
+  ],
+  "conclusion": "No original DAQ/logbook/trigger-mode/acquisition/operator source was recovered from accessible non-mirror roots; raw ROOT has no non-beam trigger tags, so the inventory supports absent-from-accessible-mirrors rather than never-recorded. LUNARC is not mounted here.",
+  "git_commit": "b5db501526ec495c03c62047b0f22cde66b0150e"
+}

@@ -1,0 +1,94 @@
+{
+  "study": "S18h",
+  "ticket": "1781033592.746.0bc755c5",
+  "worker": "testbeam-laptop-3",
+  "title": "A-stack late-pool ML degradation atom audit",
+  "reproduced": true,
+  "traditional": {
+    "metric": "sample_iv_A1_A3_sigma68_ns",
+    "pool": "sample_iii_late",
+    "value": 1.456624277722887,
+    "ci": [
+      1.2569893543986983,
+      1.647663670110957
+    ]
+  },
+  "ml": {
+    "metric": "sample_iv_A1_A3_sigma68_ns",
+    "method": "cnn1d",
+    "pool": "sample_iii_mixed",
+    "value": 1.1684431689301586,
+    "ci": [
+      1.0142474766807061,
+      1.5830520673091544
+    ]
+  },
+  "winner": "sample_iii_mixed::cnn1d",
+  "late_pool_best_ml": {
+    "method": "mlp",
+    "value": 1.3851062216682013
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "preregistered_metric": "ML-minus-traditional held-out-run robust-width delta and tail-fraction delta with run-block 95% bootstrap CIs",
+    "n_tries": 20,
+    "late_pool_delta_ns": -0.07151805605468575
+  },
+  "failure_atoms": [
+    {
+      "atom": "run_family_calibration",
+      "diagnostic": "late-pool best ML minus late-pool traditional robust width",
+      "evidence": -0.07151805605468575,
+      "interpretation": "negative means the broad model sweep closes the S18e late-pool ridge degradation in point estimate",
+      "closes_degradation": true
+    },
+    {
+      "atom": "model_class",
+      "diagnostic": "best early-pool ML method and best late-pool ML method",
+      "evidence": "early=ridge:1.465; late=mlp:1.385",
+      "interpretation": "checks whether the S18e failure is ridge/model-class specific rather than a universal learned-correction failure",
+      "closes_degradation": true
+    },
+    {
+      "atom": "amplitude_shape_support",
+      "diagnostic": "late-pool best ML minus traditional after 1-99 percent train-support filter",
+      "evidence": -0.14763322971957016,
+      "interpretation": "support-filtered retained fraction=0.740; if this closes, support mismatch or support-sensitive model selection is sufficient",
+      "closes_degradation": true
+    },
+    {
+      "atom": "low_stat_core_fit",
+      "diagnostic": "late-pool best ML degradation in Gaussian core sigma and full RMS",
+      "evidence": "core_delta=0.015; rms_delta=-0.094",
+      "interpretation": "if only core sigma degrades, the atom is low-stat core fitting; if RMS also degrades, it is a distribution shift",
+      "closes_degradation": false
+    },
+    {
+      "atom": "leakage_sentinel",
+      "diagnostic": "forbidden-feature, row-split, shuffled-target, and run-id sentinel flags",
+      "evidence": 5,
+      "interpretation": "flags invalidate adoption but can explain suspicious row-split performance",
+      "closes_degradation": false
+    },
+    {
+      "atom": "covariate_shift",
+      "diagnostic": "max KS statistic for train-vs-Sample-IV features, early vs late",
+      "evidence": "early_max_ks=0.601; late_max_ks=0.574",
+      "interpretation": "larger late KS would identify support mismatch as the driver; similar KS shifts point to calibration-family labels",
+      "closes_degradation": false
+    },
+    {
+      "atom": "single_heldout_run",
+      "diagnostic": "largest per-run late-pool best-ML minus traditional gap",
+      "evidence": "run=62; gap=0.222",
+      "interpretation": "checks whether a single Sample-IV run creates the aggregate failure",
+      "closes_degradation": false
+    }
+  ],
+  "input_sha256": "reports/1781033592.746.0bc755c5__s18h_a_stack_late_pool_ml_degradation_atom_audit/input_sha256.csv",
+  "git_commit": "401c619636ee31feead1a8d95773d7577f80f2a2",
+  "critic": "pending",
+  "next_tickets": [
+    "S18i: A-stack support-matched external timing transfer with predeclared monotone timewalk constraints"
+  ]
+}

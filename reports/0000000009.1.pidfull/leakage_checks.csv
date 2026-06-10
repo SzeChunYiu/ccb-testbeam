@@ -1,0 +1,3 @@
+check,value,threshold,pass
+identifier_only_group_heldout_balanced_accuracy,0.23036309523809523,0.45,True
+shuffled_label_ridge_balanced_accuracy,0.231625,0.4,True

@@ -1,0 +1,7 @@
+method,family,direct_truth_status,direct_metric,direct_value,direct_ci_low,direct_ci_high,proxy_context_metric,proxy_context_value,proxy_context_ci_low,proxy_context_ci_high
+deterministic_source_trigger_audit,traditional,not_identifiable_zero_truth_rows,forced/random pedestal residual,,,,post-veto timing-tail fraction,,,
+ridge,ml,not_identifiable_zero_truth_rows,forced/random pedestal residual,,,,post-veto timing-tail fraction,0.0086340706247574,0.0044465341054488,0.011961510268789
+gradient_boosted_trees,ml,not_identifiable_zero_truth_rows,forced/random pedestal residual,,,,post-veto timing-tail fraction,0.0081759781973914,0.0049474651357236,0.0108444972677194
+mlp,ml,not_identifiable_zero_truth_rows,forced/random pedestal residual,,,,post-veto timing-tail fraction,0.0087404098281052,0.0052823887256264,0.0114293337894466
+1d_cnn,nn,not_identifiable_zero_truth_rows,forced/random pedestal residual,,,,post-veto timing-tail fraction,0.0081801559041478,0.0040556724981587,0.0113013401883195
+siamese_cnn_meta,new_architecture,not_identifiable_zero_truth_rows,forced/random pedestal residual,,,,post-veto timing-tail fraction,0.0082572372255682,0.0045631532446914,0.0115760973170134

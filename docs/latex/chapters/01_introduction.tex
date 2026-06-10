@@ -1,2 +1,308 @@
-\chapter{Introduction}
-\emph{(chapter pending --- to be written by the fleet.)}
+\chapter{Introduction and experimental setup}
+
+\section{Physics context}
+
+This report summarises a data-driven analysis of a proton test-beam data set
+recorded at the Cyclotron Centre Bronowice (CCB) in Krakow.  A
+\SI{190}{MeV} proton beam impinged on a deuterated polyethylene target
+(CD$_2$) near the entrance of the detector system.  Charged reaction products
+then crossed trigger scintillators, a time projection chamber, and two HRD
+scintillator range stacks.  The detector was operated as a range telescope:
+penetration depth, pulse amplitude, pulse shape, and inter-stave timing jointly
+encode the sample-level particle topology.
+
+The analysis deliberately avoids per-event truth claims.  No Monte Carlo truth
+labels are available for the primary data set.  Consequently, particle identity
+and energy statements are interpreted at the sample or topology level, while
+per-pulse claims are tied to reproducible waveform observables and held-out-run
+closure tests.  The two physics questions are:
+\begin{enumerate}
+  \item how precisely the HRD staves timestamp the same charged particle, and
+  \item when overlapping pulses, baseline motion, and saturation corrupt the
+  timing or charge reconstruction.
+\end{enumerate}
+These questions are coupled: the same waveform features that sharpen timing
+also diagnose pile-up, saturation, and pedestal pathologies.
+
+\section{Detector layout}
+
+The HRD system contains two scintillator range stacks, denoted Stack A and
+Stack B, positioned approximately \SI{100}{cm} from the target.  The B-stack is
+the main analysis detector.  Its usable physical staves are B2, B4, B6, and
+B8, corresponding to the even raw waveform channel blocks.  The A-stack
+provides an independent cross-check through the usable A1 and A3 staves; A2
+and A4 are not used in the selected-pulse analysis.  Each stave is roughly
+\SI{1}{m} long and is read out at one end through a wavelength-shifting fibre.
+The propagation speed used in the reconstruction notes is
+$v_{\mathrm{WLS}}=\SI{17.0}{cm/ns}$.
+
+For a pulse on stave $i$, the nominal propagation-corrected time is written
+\begin{equation}
+  t'_{i,e}=t_{i,e}-\frac{x_i}{v},
+  \label{eq:intro-propagation}
+\end{equation}
+where $e$ indexes the event, $x_i$ is the stave depth coordinate, and the
+effective inverse velocity used by the run-held-out timing studies is
+$v^{-1}=0.078~\mathrm{ns/cm}$.  The B-stack geometry is treated as a systematic
+because the older notes and newer reports differ on whether the relevant
+centre-to-centre spacing is approximately \SI{2}{cm} or \SI{4}{cm}; count
+reproduction is unaffected, but timing-scale interpretations retain this
+geometry caveat.
+
+\begin{table}[H]
+\centering
+\caption{Experimental and reconstruction constants used by the introductory
+analysis narrative.  The values are fixed inputs or reproduced counts from the
+raw-ROOT studies; count uncertainties are therefore provenance/systematic
+rather than statistical for fixed files and algorithms.}
+\label{tab:intro-setup}
+\begin{tabular}{lll}
+\toprule
+Quantity & Value & Role in the analysis \\
+\midrule
+Beam kinetic energy & \SI{190}{MeV} protons & Incident beam at CCB \\
+Target & CD$_2$ & Deuterated polyethylene reaction target \\
+Typical current & \SI{20}{nA} & Main high-current condition \\
+Low-current reference & runs 46--47 at \SI{2}{nA} & Pile-up/current control \\
+Waveform length & 18 samples & Per-stave digitised pulse window \\
+Sample spacing & \SI{10}{ns} & Digitiser cadence \\
+B-stack staves & B2, B4, B6, B8 & Main timing and pile-up stack \\
+A-stack staves & A1, A3 & Independent timing cross-check \\
+Selection threshold & $A>1000$ ADC & Raw-HRDv pulse gate \\
+Selected B pulses & \num{640737} & Exact raw-ROOT reproduction \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Waveforms and pulse selection}
+
+The primitive object in the analysis is an 18-sample waveform $y_{e,i,k}$, with
+sample index $k=0,\ldots,17$.  The production B-stack pulse selection is a
+deterministic threshold on the pedestal-subtracted peak:
+\begin{align}
+  b_{e,i} &= \mathrm{median}\{y_{e,i,0},y_{e,i,1},y_{e,i,2},y_{e,i,3}\},\\
+  A_{e,i} &= \max_k\left(y_{e,i,k}-b_{e,i}\right),\\
+  \mathrm{selected}_{e,i} &\Longleftrightarrow A_{e,i}>1000~\mathrm{ADC}.
+  \label{eq:intro-selection}
+\end{align}
+Applying Eq.~\eqref{eq:intro-selection} to the even raw HRDv channel blocks
+reproduces the selected B-stave table exactly.  This exact reproduction is the
+first gate for all downstream studies because sorted or derived amplitude
+branches have different semantics and can silently change the population.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{../../reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/fig_counts_by_group_stave.png}
+\caption{Reproduced selected-pulse counts by sample group and B-stack stave
+from the raw HRDv waveform gate.  The B2-dominated Sample-I topology and the
+more penetrating Sample-II population define the analysis samples used later
+for timing and pile-up closure tests.}
+\label{fig:intro-counts}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Raw-ROOT selected-pulse reproduction by group and stave.  The table is
+included here because the rest of the report inherits these samples.  The
+reproduction deltas against the reference counts are exactly zero.}
+\label{tab:intro-samples}
+\begin{tabular}{lrrrrrr}
+\toprule
+Sample group & Events with pulse & Selected pulses & B2 & B4 & B6 & B8 \\
+\midrule
+Sample I calibration & 239559 & 248745 & 237882 & 6747 & 2940 & 1176 \\
+Sample I analysis & 243133 & 252266 & 241422 & 6451 & 3094 & 1299 \\
+Sample II calibration & 12103 & 14630 & 11907 & 1689 & 763 & 271 \\
+Sample II analysis & 89807 & 125096 & 88213 & 21229 & 11148 & 4506 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Sample I is deuteron-enriched and terminal-B2-like, making it sensitive to
+range-out and saturation effects.  Sample II is proton-enriched and more
+penetrating, and therefore supplies the cleanest B4/B6/B8 same-particle timing
+reference.  The A-stack samples use the same run periods where available, but
+with lower statistics and only two usable staves.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{../../reports/1780997954.15037.36463764__s01_full_dataset_templates/fig_template_library_examples.png}
+\caption{Examples from the amplitude-adaptive waveform template library.  The
+18-sample, one-ended-readout pulse shape motivates both the transparent
+template methods and the compact ML/NN models used in the benchmark chapters.}
+\label{fig:intro-template-library}
+\end{figure}
+
+\section{Traditional and machine-learning methods}
+
+All benchmark studies follow the same discipline: reproduce the relevant raw
+number first, split by run, train only on non-held-out runs, and quote
+bootstrap intervals on the held-out metric.  A model is treated as a physics
+candidate only when it beats a strong conventional method on the pre-registered
+metric and survives leakage checks such as forbidden-feature audits,
+event-overlap tests, and shuffled-target controls.
+
+The principal conventional methods are deterministic thresholding, empirical
+amplitude-binned templates, analytic amplitude timewalk corrections, bounded
+two-pulse template fits, and Poisson occupancy models.  The ML/NN comparators
+include ridge regression, calibrated logistic models, gradient-boosted trees,
+MLPs, 1D-CNNs, and a small architecture sweep with ResNet, TCN, attention, and
+GRU variants.  The same-particle residual target used by the timing studies is
+\begin{equation}
+  r_{i,e}=t'_{i,e,\mathrm{base}}
+  -\frac{1}{2}\sum_{j\ne i}t'_{j,e,\mathrm{base}},
+  \label{eq:intro-residual}
+\end{equation}
+where only same-pulse waveform and stave features are allowed into residual
+models.  For pile-up rate estimates, the reference occupancy model is
+\begin{equation}
+  \mu = R\,\tau_{\mathrm{eff}},
+  \qquad
+  R_{\max}=\frac{\mu_{\max}}{\tau_{\mathrm{eff}}},
+  \label{eq:intro-poisson}
+\end{equation}
+so any revision to the effective live-time directly rescales the admissible
+rate.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Representative head-to-head results that establish the methodological
+landscape for the report.  Intervals are 95\% bootstrap CIs from held-out runs
+where reported.  ``Winner'' names the metric winner, not necessarily a
+production recommendation.}
+\label{tab:intro-head-to-head}
+\begin{tabular}{p{0.14\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.30\textwidth}p{0.11\textwidth}}
+\toprule
+Task & Traditional method & ML/NN method & Held-out result & Winner \\
+\midrule
+Pulse gate &
+$A>1000$ ADC threshold &
+Calibrated logistic regression &
+1.000000 vs 0.999796 [0.999491, 1.000000] accuracy &
+Traditional \\
+Template reconstruction &
+Amplitude-bin mean template &
+Autoencoder, dim 8 &
+MSE 0.0444 [0.0342, 0.0548] vs 0.00208 [0.00173, 0.00242] &
+ML \\
+Timing pickoff &
+Template phase &
+Ridge on CFD20 &
+2.889 [2.639, 3.205] ns vs 1.846 [1.521, 2.014] ns &
+ML \\
+Timewalk closure &
+Analytic amplitude timewalk &
+Ridge residual corrector &
+1.495 [1.347, 1.644] ns vs 1.392 [1.297, 1.596] ns &
+Mixed \\
+A-stack check &
+A1--A3 traditional residual &
+Run-group ridge residual &
+1.389 [1.339, 1.453] ns vs 1.383 [1.337, 1.426] ns &
+Tie \\
+Pile-up rate &
+Poisson topology excess &
+Injection-trained score &
+0.0103 [0.00637, 0.0142] event$^{-1}$; ML diagnostic only &
+Traditional \\
+Live-time &
+Template exponential crossing &
+Ridge live-time regressor &
+124.79 [123.33, 126.36] ns vs 123.19 [120.72, 125.55] ns &
+Tie \\
+Saturation recovery &
+Rising-edge template scale &
+Gradient-boosted regressor &
+res68 0.104--0.286 vs 0.032--0.046 &
+ML \\
+Architecture timing &
+Analytic timewalk &
+MLP &
+1.495 [1.299, 1.666] ns vs 1.176 [1.024, 1.386] ns &
+MLP \\
+Two-pulse recovery &
+Constrained template fit &
+Gradient-boosted trees &
+13.874 [13.515, 14.222] ns vs 7.425 [7.402, 7.448] ns &
+GBTs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{../../reports/0000000006.1.nnarch__neural_architecture_sweep/fig_timing_architecture_sweep.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{../../reports/0000000006.1.nnarch__neural_architecture_sweep/fig_two_pulse_architecture_sweep.png}
+\caption{Architecture-sweep summaries for same-particle timing residual
+correction and injected two-pulse recovery.  The timing point estimate is best
+for the MLP, while the two-pulse recovery metric is best for gradient-boosted
+trees; adoption remains conditioned on failure-rate and leakage guards.}
+\label{fig:intro-architecture}
+\end{figure}
+
+\section{Headline physics orientation}
+
+The strongest timing baseline after calibration is not a neural network but an
+analytic amplitude/timewalk correction.  It reduces the run-65 pairwise
+sigma68 from the template-phase value of about \SI{2.89}{ns} to about
+\SI{1.50}{ns}.  Small ML residual correctors can improve the point estimate,
+but many such improvements are control-sensitive.  The stable interpretation
+is that the 18-sample waveform is low-dimensional and strongly constrained by
+amplitude and phase.
+
+Pile-up behaves differently.  The original rate estimate with
+$\tau_{\mathrm{eff}}=\SI{90}{ns}$ gives $R_{\max}\simeq\SI{4.22}{MHz}$, but a
+direct timing-template live-time measurement finds a 10\% crossing of
+$\SI{124.79}{ns}$ with 95\% CI [123.33, 126.36] ns.  Substituting this value
+into Eq.~\eqref{eq:intro-poisson} gives
+$R_{\max}\simeq\SI{3.05}{MHz}$, so the rate limit is materially lower than the
+assumption-based headline.  ML scores are useful monitoring variables for
+current-dependent waveform changes, but the physics-facing rate handle remains
+the transparent topology and live-time model.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{../../reports/1780997954.15277.548b01a3__s10_pileup_rate_model/fig_poisson_rmax.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{../../reports/1781000867.546870.5c124aaf/fig_tau_eff_by_run.png}
+\caption{Pile-up orientation figures: the Poisson occupancy relation used to
+quote $R_{\max}$, and the run-held-out live-time measurement that replaces the
+nominal \SI{90}{ns} assumption with a longer waveform recovery window.}
+\label{fig:intro-pileup}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{../../reports/P07_saturation_recovery/fig_saturation_recovery.png}
+\caption{Saturation-recovery closure on artificially clipped clean pulses.
+Gradient-boosted regression on the clipped waveform recovers amplitude more
+accurately than a rising-edge template scale, but the benchmark remains a
+self-truth closure rather than a direct truth label for naturally saturated
+B2 pulses.}
+\label{fig:intro-saturation}
+\end{figure}
+
+\section{Systematics and caveats}
+
+Several limitations shape the rest of the report.  First, all conclusions are
+conditioned on the raw-HRDv waveform gate in Eq.~\eqref{eq:intro-selection};
+sorted or derived branches can reproduce similar-looking quantities while
+selecting a different population.  Second, per-event energy and particle-ID
+truth are absent in the data-driven studies.  The range-energy relation
+$R(T)=aT^p$, with $a=1.913\times10^{-3}$ and $p=1.797$, is an interpretive
+scale anchored to stopping-power points, not a replacement for a calibrated
+GEANT4 truth model.  Third, the one-ended WLS readout and the B-stack spacing
+ambiguity propagate into timing-scale systematics.  Fourth, injected two-pulse
+and artificial-saturation benchmarks provide controlled truth, but their
+support need not cover all high-current or naturally saturated waveforms.
+
+Finally, ML superiority is not treated as transitive across tasks.  Gradient
+boosted trees and compact neural networks win several closure benchmarks where
+the signal is genuinely in waveform shape, such as saturation recovery and
+injected two-pulse timing.  They tie or lose when a physics-motivated analytic
+model already captures the dominant structure, as in timewalk and Poisson
+rate modelling.  This distinction is the organising principle for the
+chapters that follow.

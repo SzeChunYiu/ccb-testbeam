@@ -1,0 +1,53 @@
+{
+  "study": "S10h",
+  "ticket": "1781027683.951.7bcc2f09",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "694c73550c882cc43d114daca152f963d1523bf1",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "command": "/home/billy/anaconda3/bin/python scripts/s10h_1781027683_951_7bcc2f09_baseline_excursion_decomposition.py",
+  "random_seed": 1781027683,
+  "bootstrap_samples": 500,
+  "inputs": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "configs/p09a_rare_waveform_anomaly_taxonomy.json": "279c6fc889ae527de652cc2011b9c4f274cbd5189b24d75a3402a7a82e2a3e2b"
+  },
+  "code_inputs": {
+    "scripts/s10h_1781027683_951_7bcc2f09_baseline_excursion_decomposition.py": "8ae5753a719c8a39545460229300bfc688d735f68c61523ddfc144ecbae27d32",
+    "reports/1781010955.636.68b17313/s10e_charge_energy_transfer.py": "706ad1a998ce01ce9afd1b31b5c2734003418c335ce646f515c97881395f47eb",
+    "scripts/p09a_rare_waveform_anomaly_taxonomy.py": "1127f77546d788b39fa56de1267e6550f2c2ea26c94e8df04bedf2330ac6ff09",
+    "configs/p09a_rare_waveform_anomaly_taxonomy.json": "279c6fc889ae527de652cc2011b9c4f274cbd5189b24d75a3402a7a82e2a3e2b"
+  },
+  "outputs": {
+    "REPORT.md": "a8b129ece7aa61e10b3548c699666117469cbace663c08f86694da3f945ee72b",
+    "baseline_excursion_events.csv": "0979c63dd8ed09850fcac85d7189713dd93eaa7ff6d94bc31d50ac004dcd3d43",
+    "input_sha256.csv": "6ea162d9618987114db438ed5d80ac0925bb13a30fbdd332a531120fd954cf06",
+    "leakage_checks.csv": "95c206677edfa00cb1c382d57227161cf8267f38e688850ba71b8adbc7aeb7f2",
+    "ml_feature_manifest.csv": "bba895cb6b891d86d47f39a63f52a588713aa19a5fb96e6c9d9ad77209b935cd",
+    "ml_fold_diagnostics.csv": "2b5b0dba88c4ea36f9c5360931b4c255f2c3a9432e2c076c678493190aa91ac2",
+    "ml_heldout_scores.csv": "688682e2cb441eff22a0447dd77a87f185d0e6f11bc4f4ec84037ff4f0d6e88e",
+    "ml_summary.csv": "8377feef929136bd6a828802748a170c37d1588b3bd92522fc65e3da8347fbd0",
+    "p09a_thresholds_used.csv": "8efba28958be832f6389bb652933ef34567889bfd64771456e1269fdca85763a",
+    "result.json": "e32adf0f859b7e3bbbe6892bee615111eda943627aa4a199f770bdd8ae7282b0",
+    "run_counts.csv": "38af1cbd4bfe0af84ca04328ee9d399e9c2ab0aa285e9f6e92a86c445379f156",
+    "s10_topology_reproduction.csv": "ef799441807b75bc181ee0d41aab5ea8471e0d221d641548a2239ceb19f5bb25",
+    "s10f_reproduction_summary.csv": "17d9219af328e24de9de70d60ed1dfa76004e84c11f4d10c3e9a568f5913d426",
+    "topology_by_group.csv": "f43be7edd894e7ae6f9d153c54c458090ad91eead26a412aaae48167af550915",
+    "traditional_matched_strata.csv": "bc11fc9ac3bc323ede37871819c28d02dadd266cae5814740417339ce4100542",
+    "traditional_summary.csv": "0e7d741c60c006d938c60c5654561bd1a5cc2cecd609622e0590679b9d9af493"
+  },
+  "runtime_sec": 234.45
+}

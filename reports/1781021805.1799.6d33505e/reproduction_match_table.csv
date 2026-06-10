@@ -1,0 +1,12 @@
+quantity,reference,reproduced,delta,pass
+total selected B-stave pulses,640737.0,640737.0,0.0,True
+sample_ii_analysis selected_pulses,125096.0,125096.0,0.0,True
+sample_ii_analysis B2,88213.0,88213.0,0.0,True
+sample_ii_analysis B4,21229.0,21229.0,0.0,True
+sample_ii_analysis B6,11148.0,11148.0,0.0,True
+sample_ii_analysis B8,4506.0,4506.0,0.0,True
+S00 selected B-stave pulses from raw ROOT,640737.0,640737.0,0.0,True
+S14b valid event rows after charge cut,584406.0,584406.0,0.0,True
+S14b invalid event rows removed after raw reproduction,196.0,196.0,0.0,True
+S14b nominal traditional charge-depth res68 from raw ROOT,0.0211892254,0.021189225434905763,3.490576230835707e-11,True
+S14b nominal ML charge-depth res68 from raw ROOT,0.0250078102,0.025007810181733207,-1.8266794327148617e-11,True

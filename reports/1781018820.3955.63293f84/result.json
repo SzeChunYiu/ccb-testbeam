@@ -1,0 +1,308 @@
+{
+  "study": "S14d",
+  "ticket_id": "1781018820.3955.63293f84",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "n_pulse_rows_after_valid_charge_cut": 640540,
+  "nominal_geometry": "center_4cm",
+  "veto_thresholds": {
+    "anomaly_score": 1286.6561171745584,
+    "pileup_score": 5.765173533082009,
+    "baseline_score": 703.6624848239579,
+    "lowering_adc": 6371.795483398491,
+    "q_template_rmse": 2.3926341271400546
+  },
+  "primary_metrics": [
+    {
+      "veto_ladder": "p09_s10_s16_p07",
+      "charge_proxy": "traditional_peak_sum",
+      "n_heldout": 332852,
+      "n_kept": 159074,
+      "veto_acceptance": 0.4779121051,
+      "veto_induced_acceptance_loss": 0.5220878949,
+      "median_charge_proxy_shift_log": -0.264514658,
+      "unsaturated_control_res68_frac": 0.245028979,
+      "energy_proxy_res68_frac": 0.120807409,
+      "depth_ordering_violation_fraction": 0.0,
+      "energy_res68_ci95": [
+        0.0940067244,
+        0.1431410788
+      ],
+      "unsat_res68_ci95": [
+        0.2209276449,
+        0.2643327353
+      ],
+      "depth_violation_ci95": [
+        0.0,
+        0.0
+      ],
+      "acceptance_ci95": [
+        0.4318051825,
+        0.5288399604
+      ],
+      "charge_shift_ci95": [
+        -0.613015254,
+        -0.124715086
+      ]
+    },
+    {
+      "veto_ladder": "p09_s10_s16_p07",
+      "charge_proxy": "traditional_integral",
+      "n_heldout": 332852,
+      "n_kept": 159074,
+      "veto_acceptance": 0.4779121051,
+      "veto_induced_acceptance_loss": 0.5220878949,
+      "median_charge_proxy_shift_log": -0.1661736595,
+      "unsaturated_control_res68_frac": 0.1387880882,
+      "energy_proxy_res68_frac": 0.1139851919,
+      "depth_ordering_violation_fraction": 0.0,
+      "energy_res68_ci95": [
+        0.0945273774,
+        0.1422541084
+      ],
+      "unsat_res68_ci95": [
+        0.0964500526,
+        0.1662427435
+      ],
+      "depth_violation_ci95": [
+        0.0,
+        0.0
+      ],
+      "acceptance_ci95": [
+        0.4318051825,
+        0.5288399604
+      ],
+      "charge_shift_ci95": [
+        -0.4646597173,
+        -0.0613167498
+      ]
+    },
+    {
+      "veto_ladder": "p09_s10_s16_p07",
+      "charge_proxy": "traditional_adaptive_template",
+      "n_heldout": 332852,
+      "n_kept": 159074,
+      "veto_acceptance": 0.4779121051,
+      "veto_induced_acceptance_loss": 0.5220878949,
+      "median_charge_proxy_shift_log": -0.2181329589,
+      "unsaturated_control_res68_frac": 0.2348584559,
+      "energy_proxy_res68_frac": 0.1206568567,
+      "depth_ordering_violation_fraction": 0.0,
+      "energy_res68_ci95": [
+        0.0881426936,
+        0.1391888957
+      ],
+      "unsat_res68_ci95": [
+        0.1940525951,
+        0.2956089794
+      ],
+      "depth_violation_ci95": [
+        0.0,
+        0.0
+      ],
+      "acceptance_ci95": [
+        0.4280552871,
+        0.5377769874
+      ],
+      "charge_shift_ci95": [
+        -0.6014603055,
+        -0.1138132634
+      ]
+    },
+    {
+      "veto_ladder": "p09_s10_s16_p07",
+      "charge_proxy": "traditional_saturation_corrected",
+      "n_heldout": 332852,
+      "n_kept": 159074,
+      "veto_acceptance": 0.4779121051,
+      "veto_induced_acceptance_loss": 0.5220878949,
+      "median_charge_proxy_shift_log": -0.2181329589,
+      "unsaturated_control_res68_frac": 0.2348584559,
+      "energy_proxy_res68_frac": 0.1206568567,
+      "depth_ordering_violation_fraction": 0.0,
+      "energy_res68_ci95": [
+        0.0928392933,
+        0.1423216174
+      ],
+      "unsat_res68_ci95": [
+        0.1731009529,
+        0.2728337678
+      ],
+      "depth_violation_ci95": [
+        0.0,
+        0.0
+      ],
+      "acceptance_ci95": [
+        0.4333700215,
+        0.5249918891
+      ],
+      "charge_shift_ci95": [
+        -0.5042531702,
+        -0.094685244
+      ]
+    },
+    {
+      "veto_ladder": "p09_s10_s16_p07",
+      "charge_proxy": "ml_score_adjusted_monotonic",
+      "n_heldout": 332852,
+      "n_kept": 159074,
+      "veto_acceptance": 0.4779121051,
+      "veto_induced_acceptance_loss": 0.5220878949,
+      "median_charge_proxy_shift_log": -0.1694123372,
+      "unsaturated_control_res68_frac": 0.0249408545,
+      "energy_proxy_res68_frac": 0.1190232398,
+      "depth_ordering_violation_fraction": 0.0,
+      "energy_res68_ci95": [
+        0.10211333,
+        0.1385796082
+      ],
+      "unsat_res68_ci95": [
+        0.0206601305,
+        0.0320424364
+      ],
+      "depth_violation_ci95": [
+        0.0,
+        0.0
+      ],
+      "acceptance_ci95": [
+        0.4232064744,
+        0.5363412735
+      ],
+      "charge_shift_ci95": [
+        -0.5818236727,
+        -0.0442194369
+      ]
+    }
+  ],
+  "veto_counts": [
+    {
+      "veto": "P09 anomaly",
+      "pulse_count": 34084,
+      "heldout_event_acceptance_after_cumulative": 0.95001382
+    },
+    {
+      "veto": "S10 pileup",
+      "pulse_count": 80082,
+      "heldout_event_acceptance_after_cumulative": 0.8276861788
+    },
+    {
+      "veto": "S16 baseline/lowering",
+      "pulse_count": 5469,
+      "heldout_event_acceptance_after_cumulative": 0.824330333
+    },
+    {
+      "veto": "P07 saturation",
+      "pulse_count": 208015,
+      "heldout_event_acceptance_after_cumulative": 0.4779121051
+    }
+  ],
+  "ml_minus_traditional_deltas": [
+    {
+      "veto_ladder": "no_veto",
+      "traditional_reference_proxy": "traditional_integral",
+      "ml_minus_traditional_energy_res68_delta": -0.0125074985,
+      "ml_minus_traditional_ordering_violation_delta": 0.0,
+      "ordering_delta_ci95": "[0.0, 0.0]"
+    },
+    {
+      "veto_ladder": "p09",
+      "traditional_reference_proxy": "traditional_integral",
+      "ml_minus_traditional_energy_res68_delta": -0.0166826766,
+      "ml_minus_traditional_ordering_violation_delta": 0.0,
+      "ordering_delta_ci95": "[0.0, 0.0]"
+    },
+    {
+      "veto_ladder": "p09_s10",
+      "traditional_reference_proxy": "traditional_integral",
+      "ml_minus_traditional_energy_res68_delta": -0.0136470753,
+      "ml_minus_traditional_ordering_violation_delta": 0.0,
+      "ordering_delta_ci95": "[0.0, 0.0]"
+    },
+    {
+      "veto_ladder": "p09_s10_s16",
+      "traditional_reference_proxy": "traditional_integral",
+      "ml_minus_traditional_energy_res68_delta": -0.0143834014,
+      "ml_minus_traditional_ordering_violation_delta": 0.0,
+      "ordering_delta_ci95": "[0.0, 0.0]"
+    },
+    {
+      "veto_ladder": "p09_s10_s16_p07",
+      "traditional_reference_proxy": "traditional_integral",
+      "ml_minus_traditional_energy_res68_delta": 0.0050380479,
+      "ml_minus_traditional_ordering_violation_delta": 0.0,
+      "ordering_delta_ci95": "[0.0, 0.0]"
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "ml_features_exclude_run_event_depth_stave_pid_and_odd_samples",
+      "value": "true",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_ml_unsat_res68_not_too_good",
+      "value": "0.538645",
+      "pass": true
+    },
+    {
+      "check": "too_good_ml_unsat_res68_leakage_review",
+      "value": "0.024941",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed at 640,737 selected pulses. The full P09/S10/S16/P07 ladder keeps 0.478 of held-out events and shifts the best traditional proxy (traditional_integral) log charge median by -0.166. Its unsaturated-control res68 changes from 0.1399 without vetoes to 0.1388 after the full ladder. Depth-ordering violation stays 0.0000 traditional and 0.0000 ML; ML-minus-traditional energy res68 delta after the full ladder is 0.0050. Thus the vetoes mainly change acceptance and charge-scale composition, not the coarse depth ordering envelope.",
+  "runtime_sec": 989.4,
+  "best_traditional_full_ladder": "traditional_integral"
+}

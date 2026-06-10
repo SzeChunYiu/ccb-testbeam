@@ -1,0 +1,298 @@
+{
+  "ticket_id": "1781026939.1565.7fb34a7e",
+  "study_id": "P02d",
+  "title": "run-heldout latent-distance artifact keyed by event id",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "heldout_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "n_folds": 33,
+    "max_train_per_run_stave": 300,
+    "distance_k": 8
+  },
+  "artifact": {
+    "path": "reports/1781026939.1565.7fb34a7e/p02d_run_heldout_latent_distance_artifact.parquet",
+    "sha256": "7e554787e9427161becdf80779f1d6f1b4f9c0dd7909297ae773a5d3e4558d5a",
+    "rows": 640737,
+    "columns": [
+      "run",
+      "event_index",
+      "event_id",
+      "stave",
+      "stave_index",
+      "amplitude_adc",
+      "trad_cluster",
+      "trad_nearest_centroid_distance",
+      "ml_cluster",
+      "ml_nearest_centroid_distance",
+      "trad_z0",
+      "trad_z1",
+      "trad_z2",
+      "trad_z3",
+      "ml_z0",
+      "ml_z1",
+      "ml_z2",
+      "ml_z3"
+    ],
+    "format": "parquet",
+    "key_columns": [
+      "run",
+      "event_index",
+      "event_id",
+      "stave",
+      "stave_index"
+    ],
+    "distance_columns": [
+      "trad_nearest_centroid_distance",
+      "ml_nearest_centroid_distance"
+    ],
+    "latent_columns": [
+      "trad_z0",
+      "trad_z1",
+      "trad_z2",
+      "trad_z3",
+      "ml_z0",
+      "ml_z1",
+      "ml_z2",
+      "ml_z3"
+    ],
+    "all_data_latent_used": false
+  },
+  "metrics": [
+    {
+      "benchmark_role": "claim",
+      "method": "ML train-run-only AE latent distance",
+      "target": "manual_flag",
+      "metric": "adjusted_mutual_info",
+      "value": 0.30280192156981534,
+      "ci_low": 0.27376412605242484,
+      "ci_high": 0.32956797438285135,
+      "folds": 33,
+      "min_fold": 0.10652050343017648,
+      "max_fold": 0.4419181756201442
+    },
+    {
+      "benchmark_role": "claim",
+      "method": "ML train-run-only AE latent distance",
+      "target": "manual_flag",
+      "metric": "purity",
+      "value": 0.9461983270007602,
+      "ci_low": 0.9393113405478452,
+      "ci_high": 0.9541514737477905,
+      "folds": 33,
+      "min_fold": 0.9118264134275619,
+      "max_fold": 0.9856782321439563
+    },
+    {
+      "benchmark_role": "claim",
+      "method": "ML train-run-only AE latent distance",
+      "target": "peak_group",
+      "metric": "adjusted_mutual_info",
+      "value": 0.2487955751320483,
+      "ci_low": 0.2269083485002423,
+      "ci_high": 0.2738561562904415,
+      "folds": 33,
+      "min_fold": 0.12273810549666586,
+      "max_fold": 0.42357161673893123
+    },
+    {
+      "benchmark_role": "claim",
+      "method": "ML train-run-only AE latent distance",
+      "target": "peak_group",
+      "metric": "purity",
+      "value": 0.7956232687279355,
+      "ci_low": 0.7774817568425114,
+      "ci_high": 0.8164580238193516,
+      "folds": 33,
+      "min_fold": 0.6931353990236127,
+      "max_fold": 0.9633514093319826
+    },
+    {
+      "benchmark_role": "claim",
+      "method": "traditional train-run-only hand/PCA distance",
+      "target": "manual_flag",
+      "metric": "adjusted_mutual_info",
+      "value": 0.47597274261075617,
+      "ci_low": 0.44931045859774704,
+      "ci_high": 0.5052391122090139,
+      "folds": 33,
+      "min_fold": 0.31351930406399,
+      "max_fold": 0.7606068553381988
+    },
+    {
+      "benchmark_role": "claim",
+      "method": "traditional train-run-only hand/PCA distance",
+      "target": "manual_flag",
+      "metric": "purity",
+      "value": 0.9760092238076205,
+      "ci_low": 0.9721667635778368,
+      "ci_high": 0.980104399833571,
+      "folds": 33,
+      "min_fold": 0.9558403892033493,
+      "max_fold": 0.9941775836972343
+    },
+    {
+      "benchmark_role": "claim",
+      "method": "traditional train-run-only hand/PCA distance",
+      "target": "peak_group",
+      "metric": "adjusted_mutual_info",
+      "value": 0.25022921173762525,
+      "ci_low": 0.23128503096902542,
+      "ci_high": 0.26870197012159597,
+      "folds": 33,
+      "min_fold": 0.14164433087988598,
+      "max_fold": 0.35191780227442104
+    },
+    {
+      "benchmark_role": "claim",
+      "method": "traditional train-run-only hand/PCA distance",
+      "target": "peak_group",
+      "metric": "purity",
+      "value": 0.7919283748165739,
+      "ci_low": 0.7748642926526499,
+      "ci_high": 0.8111609112722472,
+      "folds": 33,
+      "min_fold": 0.701952774733486,
+      "max_fold": 0.9588820690066147
+    },
+    {
+      "benchmark_role": "forbidden_all_data_guard",
+      "method": "forbidden all-data AE latent distance",
+      "target": "manual_flag",
+      "metric": "adjusted_mutual_info",
+      "value": 0.38268668345799733,
+      "ci_low": 0.36381381075014957,
+      "ci_high": 0.4004713980181273,
+      "folds": 33,
+      "min_fold": 0.19447562034033286,
+      "max_fold": 0.42877062802065213
+    },
+    {
+      "benchmark_role": "forbidden_all_data_guard",
+      "method": "forbidden all-data AE latent distance",
+      "target": "manual_flag",
+      "metric": "purity",
+      "value": 0.9592178829495546,
+      "ci_low": 0.9526990303195265,
+      "ci_high": 0.9651167083739752,
+      "folds": 33,
+      "min_fold": 0.9371933267909716,
+      "max_fold": 0.9908898783265281
+    },
+    {
+      "benchmark_role": "forbidden_all_data_guard",
+      "method": "forbidden all-data AE latent distance",
+      "target": "peak_group",
+      "metric": "adjusted_mutual_info",
+      "value": 0.23590424381647823,
+      "ci_low": 0.21510498108257514,
+      "ci_high": 0.2557028341936509,
+      "folds": 33,
+      "min_fold": 0.12281333192614954,
+      "max_fold": 0.32464282977546044
+    },
+    {
+      "benchmark_role": "forbidden_all_data_guard",
+      "method": "forbidden all-data AE latent distance",
+      "target": "peak_group",
+      "metric": "purity",
+      "value": 0.7934476234923665,
+      "ci_low": 0.7744208945034384,
+      "ci_high": 0.8127850202814256,
+      "folds": 33,
+      "min_fold": 0.6987147554050015,
+      "max_fold": 0.9621595852452178
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "artifact_key_duplicate_rows",
+      "value": 0.0,
+      "pass": true,
+      "note": "key is run/event_index/event_id/stave_index"
+    },
+    {
+      "check": "artifact_missing_distance_or_latent_values",
+      "value": 0.0,
+      "pass": true,
+      "note": "every selected pulse should be filled by exactly one heldout fold"
+    },
+    {
+      "check": "fold_train_heldout_run_overlap_max",
+      "value": 0.0,
+      "pass": true,
+      "note": "each fold excludes the heldout run before fitting PCA/AE/KMeans"
+    },
+    {
+      "check": "train_test_rounded_waveform_hash_overlap_max",
+      "value": 0.0,
+      "pass": true,
+      "note": "rounded normalized waveform hash at 1e-4 precision per fold"
+    },
+    {
+      "check": "forbidden_all_data_minus_trainonly_manual_ami",
+      "value": 0.079884761888182,
+      "pass": false,
+      "note": "large positive value would indicate representation leakage optimism"
+    },
+    {
+      "check": "shuffled_manual_label_ami_abs_max",
+      "value": 0.006186053566196762,
+      "pass": true,
+      "note": "heldout-label shuffle null using ML clusters"
+    },
+    {
+      "check": "all_data_latent_used_in_published_artifact",
+      "value": 0.0,
+      "pass": true,
+      "note": "forbidden latent appears only in guard metrics, not artifact columns"
+    }
+  ],
+  "forbidden_guard": {
+    "role": "forbidden_release_diagnostic_only",
+    "fit_rows": 18673,
+    "rows_encoded": 640737,
+    "uses_all_runs": true,
+    "claim_allowed": false
+  },
+  "runtime_sec": 1806.4
+}

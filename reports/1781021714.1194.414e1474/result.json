@@ -1,0 +1,950 @@
+{
+  "ticket_id": "1781021714.1194.414e1474",
+  "study_id": "P09c",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "pass": true
+  },
+  "heldout_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "reviewer_agreement": {
+    "n_rows": 256,
+    "external_reviewer_agreement": 0.9609375,
+    "external_reviewer_kappa": 0.9140247178936056,
+    "traditional_vs_p09b_exact": 0.75,
+    "ml_vs_p09b_exact": 0.94921875
+  },
+  "comparison_to_p09b": [
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "n": 256,
+      "exact_agreement": 0.75,
+      "target_precision": 1.0,
+      "target_recall": 0.6557377049180327,
+      "target_f1": 0.7920792079207921,
+      "curated_precision": 0.9763779527559056,
+      "curated_recall": 1.0,
+      "curated_f1": 0.9880478087649402
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "n": 128,
+      "exact_agreement": 0.90625,
+      "target_precision": 1.0,
+      "target_recall": 0.8863636363636364,
+      "target_f1": 0.9397590361445783,
+      "curated_precision": 0.9841269841269841,
+      "curated_recall": 1.0,
+      "curated_f1": 0.9919999999999999
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "n": 128,
+      "exact_agreement": 0.59375,
+      "target_precision": 1.0,
+      "target_recall": 0.058823529411764705,
+      "target_f1": 0.1111111111111111,
+      "curated_precision": 0.96875,
+      "curated_recall": 1.0,
+      "curated_f1": 0.9841269841269841
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "n": 256,
+      "exact_agreement": 0.765625,
+      "target_precision": 1.0,
+      "target_recall": 0.639344262295082,
+      "target_f1": 0.78,
+      "curated_precision": 0.9761904761904762,
+      "curated_recall": 0.9919354838709677,
+      "curated_f1": 0.9840000000000001
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "n": 128,
+      "exact_agreement": 0.9140625,
+      "target_precision": 1.0,
+      "target_recall": 0.8863636363636364,
+      "target_f1": 0.9397590361445783,
+      "curated_precision": 0.9841269841269841,
+      "curated_recall": 1.0,
+      "curated_f1": 0.9919999999999999
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "n": 128,
+      "exact_agreement": 0.6171875,
+      "target_precision": 0.0,
+      "target_recall": 0.0,
+      "target_f1": 0.0,
+      "curated_precision": 0.9682539682539683,
+      "curated_recall": 0.9838709677419355,
+      "curated_f1": 0.976
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "n": 256,
+      "exact_agreement": 0.75,
+      "target_precision": 1.0,
+      "target_recall": 0.6721311475409836,
+      "target_f1": 0.8039215686274509,
+      "curated_precision": 0.9763779527559056,
+      "curated_recall": 1.0,
+      "curated_f1": 0.9880478087649402
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "n": 128,
+      "exact_agreement": 0.90625,
+      "target_precision": 1.0,
+      "target_recall": 0.8863636363636364,
+      "target_f1": 0.9397590361445783,
+      "curated_precision": 0.9841269841269841,
+      "curated_recall": 1.0,
+      "curated_f1": 0.9919999999999999
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "n": 128,
+      "exact_agreement": 0.59375,
+      "target_precision": 1.0,
+      "target_recall": 0.11764705882352941,
+      "target_f1": 0.21052631578947367,
+      "curated_precision": 0.96875,
+      "curated_recall": 1.0,
+      "curated_f1": 0.9841269841269841
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "n": 256,
+      "exact_agreement": 0.94921875,
+      "target_precision": 0.9333333333333333,
+      "target_recall": 0.9180327868852459,
+      "target_f1": 0.9256198347107439,
+      "curated_precision": 0.9878048780487805,
+      "curated_recall": 0.9798387096774194,
+      "curated_f1": 0.9838056680161943
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "n": 128,
+      "exact_agreement": 0.9453125,
+      "target_precision": 0.9545454545454546,
+      "target_recall": 0.9545454545454546,
+      "target_f1": 0.9545454545454546,
+      "curated_precision": 0.983739837398374,
+      "curated_recall": 0.9758064516129032,
+      "curated_f1": 0.979757085020243
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "n": 128,
+      "exact_agreement": 0.953125,
+      "target_precision": 0.875,
+      "target_recall": 0.8235294117647058,
+      "target_f1": 0.8484848484848485,
+      "curated_precision": 0.991869918699187,
+      "curated_recall": 0.9838709677419355,
+      "curated_f1": 0.9878542510121457
+    }
+  ],
+  "heldout_bootstrap_ci": [
+    {
+      "reviewer_or_method": "external_pair",
+      "selection_method": "all_gallery",
+      "metric": "cohen_kappa",
+      "ci_low": 0.8821827744904668,
+      "ci_high": 0.9471583872299436,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_pair",
+      "selection_method": "all_gallery",
+      "metric": "reviewer_agreement",
+      "ci_low": 0.9453125,
+      "ci_high": 0.9765625,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "metric": "curated_f1",
+      "ci_low": 0.9800796812749004,
+      "ci_high": 0.9960159362549801,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "metric": "curated_precision",
+      "ci_low": 0.9609375,
+      "ci_high": 0.9920634920634921,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "metric": "curated_recall",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "metric": "exact_agreement",
+      "ci_low": 0.703125,
+      "ci_high": 0.796875,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "metric": "target_f1",
+      "ci_low": 0.7460317460317459,
+      "ci_high": 0.8433734939759037,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "metric": "target_precision",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "all_gallery",
+      "metric": "target_recall",
+      "ci_low": 0.5949367088607594,
+      "ci_high": 0.7291666666666666,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_f1",
+      "ci_low": 0.9841269841269841,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_precision",
+      "ci_low": 0.96875,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_recall",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "exact_agreement",
+      "ci_low": 0.859375,
+      "ci_high": 0.953125,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_f1",
+      "ci_low": 0.8837209302325582,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_precision",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_recall",
+      "ci_low": 0.7916666666666666,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_f1",
+      "ci_low": 0.9718875502008032,
+      "ci_high": 0.996078431372549,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_precision",
+      "ci_low": 0.9453125,
+      "ci_high": 0.9921875,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_recall",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "metric": "exact_agreement",
+      "ci_low": 0.53125,
+      "ci_high": 0.640625,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_f1",
+      "ci_low": 0.0,
+      "ci_high": 0.2222222222222222,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_precision",
+      "ci_low": 0.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_alpha",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_recall",
+      "ci_low": 0.0,
+      "ci_high": 0.125,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "metric": "curated_f1",
+      "ci_low": 0.9718875502008032,
+      "ci_high": 0.9960159362549801,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "metric": "curated_precision",
+      "ci_low": 0.9603174603174603,
+      "ci_high": 0.9920634920634921,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "metric": "curated_recall",
+      "ci_low": 0.9758064516129032,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "metric": "exact_agreement",
+      "ci_low": 0.7109375,
+      "ci_high": 0.8203125,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "metric": "target_f1",
+      "ci_low": 0.7154471544715447,
+      "ci_high": 0.8433734939759037,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "metric": "target_precision",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "all_gallery",
+      "metric": "target_recall",
+      "ci_low": 0.5569620253164557,
+      "ci_high": 0.7291666666666666,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_f1",
+      "ci_low": 0.9841269841269841,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_precision",
+      "ci_low": 0.96875,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_recall",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "exact_agreement",
+      "ci_low": 0.859375,
+      "ci_high": 0.96875,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_f1",
+      "ci_low": 0.8837209302325582,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_precision",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_recall",
+      "ci_low": 0.7916666666666666,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_f1",
+      "ci_low": 0.959349593495935,
+      "ci_high": 0.9921259842519685,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_precision",
+      "ci_low": 0.9453125,
+      "ci_high": 0.9920634920634921,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_recall",
+      "ci_low": 0.9516129032258065,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "metric": "exact_agreement",
+      "ci_low": 0.5625,
+      "ci_high": 0.671875,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_f1",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_precision",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "external_reviewer_beta",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_recall",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "metric": "curated_f1",
+      "ci_low": 0.9672131147540985,
+      "ci_high": 0.9959514170040485,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "metric": "curated_precision",
+      "ci_low": 0.975609756097561,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "metric": "curated_recall",
+      "ci_low": 0.951417004048583,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "metric": "exact_agreement",
+      "ci_low": 0.8984375,
+      "ci_high": 0.98828125,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "metric": "target_f1",
+      "ci_low": 0.8787878787878788,
+      "ci_high": 0.9818181818181818,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "metric": "target_precision",
+      "ci_low": 0.8421052631578947,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "all_gallery",
+      "metric": "target_recall",
+      "ci_low": 0.84,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_f1",
+      "ci_low": 0.9672131147540983,
+      "ci_high": 0.9919999999999999,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_precision",
+      "ci_low": 0.952755905511811,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_recall",
+      "ci_low": 0.9512195121951219,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "exact_agreement",
+      "ci_low": 0.8984375,
+      "ci_high": 0.984375,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_f1",
+      "ci_low": 0.9166666666666666,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_precision",
+      "ci_low": 0.8723404255319149,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_recall",
+      "ci_low": 0.8846153846153846,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_f1",
+      "ci_low": 0.963265306122449,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_precision",
+      "ci_low": 0.9752066115702479,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_recall",
+      "ci_low": 0.9516129032258065,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "metric": "exact_agreement",
+      "ci_low": 0.8984375,
+      "ci_high": 0.9921875,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_f1",
+      "ci_low": 0.7777777777777778,
+      "ci_high": 0.9565217391304348,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_precision",
+      "ci_low": 0.75,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "ml_loro_random_forest",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_recall",
+      "ci_low": 0.7391304347826086,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "metric": "curated_f1",
+      "ci_low": 0.9800796812749004,
+      "ci_high": 0.9960159362549801,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "metric": "curated_precision",
+      "ci_low": 0.9609375,
+      "ci_high": 0.9920634920634921,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "metric": "curated_recall",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "metric": "exact_agreement",
+      "ci_low": 0.703125,
+      "ci_high": 0.796875,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "metric": "target_f1",
+      "ci_low": 0.7751937984496124,
+      "ci_high": 0.8433734939759037,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "metric": "target_precision",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "all_gallery",
+      "metric": "target_recall",
+      "ci_low": 0.6329113924050633,
+      "ci_high": 0.7291666666666666,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_f1",
+      "ci_low": 0.9841269841269841,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_precision",
+      "ci_low": 0.96875,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_recall",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "exact_agreement",
+      "ci_low": 0.859375,
+      "ci_high": 0.953125,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_f1",
+      "ci_low": 0.8837209302325582,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_precision",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_recall",
+      "ci_low": 0.7916666666666666,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_f1",
+      "ci_low": 0.9718875502008032,
+      "ci_high": 0.996078431372549,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_precision",
+      "ci_low": 0.9453125,
+      "ci_high": 0.9921875,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_recall",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "metric": "exact_agreement",
+      "ci_low": 0.53125,
+      "ci_high": 0.640625,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_f1",
+      "ci_low": 0.0,
+      "ci_high": 0.4,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_precision",
+      "ci_low": 0.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "reviewer_or_method": "traditional_fixed_morphology",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_recall",
+      "ci_low": 0.0,
+      "ci_high": 0.25,
+      "n_boot_valid": 5000
+    }
+  ],
+  "ml_loro_folds": [
+    {
+      "test_run": 42,
+      "n_train": 192,
+      "n_test": 64,
+      "train_runs": "57,64,65",
+      "test_run_in_train": false,
+      "classes_seen": "baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,pileup_or_long_tail,unassigned_common"
+    },
+    {
+      "test_run": 57,
+      "n_train": 192,
+      "n_test": 64,
+      "train_runs": "42,64,65",
+      "test_run_in_train": false,
+      "classes_seen": "baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,pileup_or_long_tail,unassigned_common"
+    },
+    {
+      "test_run": 64,
+      "n_train": 192,
+      "n_test": 64,
+      "train_runs": "42,57,65",
+      "test_run_in_train": false,
+      "classes_seen": "baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,pileup_or_long_tail,unassigned_common"
+    },
+    {
+      "test_run": 65,
+      "n_train": 192,
+      "n_test": 64,
+      "train_runs": "42,57,64",
+      "test_run_in_train": false,
+      "classes_seen": "baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,unassigned_common"
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_reproduction_before_gallery",
+      "value": 640737.0,
+      "pass": true,
+      "note": "script raises before gallery/P09b load if this fails"
+    },
+    {
+      "check": "p09a_taxon_absent_from_review_features",
+      "value": 0.0,
+      "pass": true,
+      "note": "review and ML feature columns exclude P09a taxon names"
+    },
+    {
+      "check": "identifier_absent_from_ml_features",
+      "value": 0.0,
+      "pass": true,
+      "note": "run/event/stave fields are split keys only"
+    },
+    {
+      "check": "ml_train_test_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "leave-one-run-out folds train only on other gallery runs"
+    },
+    {
+      "check": "duplicate_gallery_waveform_hashes_1e3",
+      "value": 12.0,
+      "pass": true,
+      "note": "duplicates are expected from cross-method gallery overlap; cross-run leakage is checked separately"
+    },
+    {
+      "check": "cross_run_duplicate_gallery_hashes_1e3",
+      "value": 0.0,
+      "pass": true,
+      "note": "same rounded waveform must not appear in more than one held-out run"
+    },
+    {
+      "check": "ml_loro_train_test_hash_overlap_1e3",
+      "value": 0.0,
+      "pass": true,
+      "note": "no rounded waveform hash crosses a leave-one-run-out ML fold"
+    },
+    {
+      "check": "traditional_exact_agreement_too_perfect",
+      "value": 0.75,
+      "pass": true,
+      "note": "near-perfect agreement would suggest copied P09b rubric"
+    },
+    {
+      "check": "ml_exact_agreement_too_perfect",
+      "value": 0.94921875,
+      "pass": true,
+      "note": "near-perfect LORO agreement would suggest leakage"
+    }
+  ],
+  "follow_up_tickets": [],
+  "runtime_sec": 289.9
+}

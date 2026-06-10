@@ -1,0 +1,88 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s16g_1781015168_1156_3a38609b_sample_transfer.py --config configs/s16g_1781015168_1156_3a38609b.json",
+  "config": "configs/s16g_1781015168_1156_3a38609b.json",
+  "git_commit": "4255147b7a930bbca3d63ef65b8c5b5760958798",
+  "input_sha256": "reports/1781015168.1156.3a38609b/input_sha256.csv",
+  "outputs": [
+    {
+      "bytes": 2162,
+      "path": "configs/s16g_1781015168_1156_3a38609b.json",
+      "sha256": "88111c06820f96dcc109f3e818a6c9f23c3f85c25dc5db6c3462a378cdf04cbc"
+    },
+    {
+      "bytes": 5132,
+      "path": "reports/1781015168.1156.3a38609b/REPORT.md",
+      "sha256": "4558c22b751021fa6ca3eb4ce0d5ea6c0f7cab797216ae3f4129214f198cd336"
+    },
+    {
+      "bytes": 11701373,
+      "path": "reports/1781015168.1156.3a38609b/downstream_pulse_features.csv",
+      "sha256": "ba4f28ed26c44afde60d8a4658b12adff847cd819d2dd7a604d4474646d56d81"
+    },
+    {
+      "bytes": 49693,
+      "path": "reports/1781015168.1156.3a38609b/fig_by_run_sigma68.png",
+      "sha256": "a1928ada0ed3ccf5f2f4a2e9021d08e64ac3234183f9d5d9042838604f79dd86"
+    },
+    {
+      "bytes": 30071,
+      "path": "reports/1781015168.1156.3a38609b/fig_lowering_by_sample.png",
+      "sha256": "1368ef6faa4961e6425001fd742a0fcb4bb597864b95189e1c82cb836d991e42"
+    },
+    {
+      "bytes": 67300,
+      "path": "reports/1781015168.1156.3a38609b/fig_transfer_sigma68.png",
+      "sha256": "c19c0e1fc442aa7429c9ec923fcae476060bef14d781b6747eb94ebf4fbe97a5"
+    },
+    {
+      "bytes": 4423,
+      "path": "reports/1781015168.1156.3a38609b/input_sha256.csv",
+      "sha256": "acaf6efda8022df9a1e6a164c27a7a9e8b3fc134e4ec37a21e5245bd1f1efb23"
+    },
+    {
+      "bytes": 376,
+      "path": "reports/1781015168.1156.3a38609b/leakage_checks.csv",
+      "sha256": "892d38318908eb9c3b52b9ba71de5144e41bb84a12c913b9684e821011c49934"
+    },
+    {
+      "bytes": 8588,
+      "path": "reports/1781015168.1156.3a38609b/leakage_fold_details.csv",
+      "sha256": "83087336f3094936f98cdcdbc252c4c5e689c3c9c1213e583b5acad6fa344868"
+    },
+    {
+      "bytes": 18492,
+      "path": "reports/1781015168.1156.3a38609b/method_by_run.csv",
+      "sha256": "f2e886529538f3bf6d3339f578ce6130fd9c9343d67dc5ef551cb0508cd97004"
+    },
+    {
+      "bytes": 2602,
+      "path": "reports/1781015168.1156.3a38609b/method_summary.csv",
+      "sha256": "47f8c8f8d946f7bf6811886b0887972f4fbe13a315701f38b3fcd559395e84f7"
+    },
+    {
+      "bytes": 4289070,
+      "path": "reports/1781015168.1156.3a38609b/pairwise_residuals.csv",
+      "sha256": "24e9a9276e58cce53450628d70fa072a5fb2cedd780cdf2bffc9e240507aaa6d"
+    },
+    {
+      "bytes": 335,
+      "path": "reports/1781015168.1156.3a38609b/reproduction_match_table.csv",
+      "sha256": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020"
+    },
+    {
+      "bytes": 10214,
+      "path": "reports/1781015168.1156.3a38609b/result.json",
+      "sha256": "0a956788afdc3c92dd2c2a80110ec93366198f155a9859b8ed448deadf700e39"
+    },
+    {
+      "bytes": 30315,
+      "path": "scripts/s16g_1781015168_1156_3a38609b_sample_transfer.py",
+      "sha256": "1f7a6672116927a084e3a1f8f525cfaf659f69d3893a8e490592524150ab69fc"
+    }
+  ],
+  "random_seed": 165168,
+  "script": "scripts/s16g_1781015168_1156_3a38609b_sample_transfer.py",
+  "study": "S16g",
+  "ticket": "1781015168.1156.3a38609b",
+  "worker": "testbeam-laptop-2"
+}

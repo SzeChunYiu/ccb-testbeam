@@ -1,0 +1,7 @@
+{
+  "rows": 640737,
+  "latent_dim": 4,
+  "epochs": 4,
+  "seed": 20269611,
+  "sha256": "ae9e95dc8c0c4aac5ca6446904875ae310cec6a5bb050beeedb33cdde4922058"
+}

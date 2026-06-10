@@ -1,0 +1,349 @@
+{
+  "study": "P04f",
+  "ticket_id": "1781024351.1905.535c46de",
+  "worker": "testbeam-laptop-1",
+  "raw_reproduction_first": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true,
+    "p04d_expected_peak_calibrated_res68": 0.1237824793,
+    "p04d_reproduced_peak_calibrated_res68": 0.1237824793094799,
+    "p04d_peak_calibrated_reproduction_pass": true
+  },
+  "target_definition": "paired odd-channel inverted duplicate readout amplitude; features from even channel only",
+  "split": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "bootstrap": {
+      "unit": "held-out run block",
+      "reps": 1000
+    }
+  },
+  "row_counts": {
+    "valid_rows": 640482,
+    "train_rows": 613625,
+    "heldout_rows": 26857,
+    "invalid_target_rows_removed_after_reproduction": 255
+  },
+  "methods": {
+    "traditional": "per-stave Huber/Ridge log calibrators on even waveform summaries plus train-only residual basis",
+    "ml": "ExtraTreesRegressor on even waveform samples, even summaries, residual basis, and stave one-hot"
+  },
+  "benchmark": [
+    {
+      "target": "odd_duplicate_amplitude",
+      "method": "peak_calibrated",
+      "split": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": -0.0666997729,
+      "res68_abs_frac": 0.1237824793,
+      "full_rms_frac": 0.5264294187,
+      "within_5pct": 0.2827568232,
+      "within_10pct": 0.5810775589,
+      "bias_ci95": [
+        -0.0677576747,
+        -0.0657064119
+      ],
+      "res68_ci95": [
+        0.1221650618,
+        0.1253278075
+      ],
+      "full_rms_ci95": [
+        0.4881305794,
+        0.5687942001
+      ],
+      "run_block_bias_ci95": [
+        -0.0862170898,
+        -0.0498184519
+      ],
+      "run_block_res68_ci95": [
+        0.1018091522,
+        0.1394391077
+      ],
+      "run_block_full_rms_ci95": [
+        0.4216722384,
+        0.6089623597
+      ]
+    },
+    {
+      "target": "odd_duplicate_amplitude",
+      "method": "residual_basis_huber",
+      "split": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": -2.01091e-05,
+      "res68_abs_frac": 0.0061023371,
+      "full_rms_frac": 0.248334594,
+      "within_5pct": 0.897866478,
+      "within_10pct": 0.9351007186,
+      "bias_ci95": [
+        -9.04991e-05,
+        4.90461e-05
+      ],
+      "res68_ci95": [
+        0.0059932368,
+        0.0062285344
+      ],
+      "full_rms_ci95": [
+        0.2173901714,
+        0.2799348609
+      ],
+      "run_block_bias_ci95": [
+        -0.0001958252,
+        0.0001453537
+      ],
+      "run_block_res68_ci95": [
+        0.0057883945,
+        0.0063972729
+      ],
+      "run_block_full_rms_ci95": [
+        0.123452626,
+        0.3247700132
+      ]
+    },
+    {
+      "target": "odd_duplicate_amplitude",
+      "method": "residual_basis_ridge",
+      "split": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.0031061402,
+      "res68_abs_frac": 0.0251152812,
+      "full_rms_frac": 0.178745225,
+      "within_5pct": 0.8439512976,
+      "within_10pct": 0.9181219049,
+      "bias_ci95": [
+        0.0028216142,
+        0.0034113579
+      ],
+      "res68_ci95": [
+        0.024623344,
+        0.0254511869
+      ],
+      "full_rms_ci95": [
+        0.1536615248,
+        0.2041597936
+      ],
+      "run_block_bias_ci95": [
+        0.0023588691,
+        0.0039662579
+      ],
+      "run_block_res68_ci95": [
+        0.0244977826,
+        0.0257020223
+      ],
+      "run_block_full_rms_ci95": [
+        0.085942917,
+        0.2347877252
+      ]
+    },
+    {
+      "target": "odd_duplicate_amplitude",
+      "method": "residual_basis_extra_trees",
+      "split": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": -9.32031e-05,
+      "res68_abs_frac": 0.0021781085,
+      "full_rms_frac": 0.0493442443,
+      "within_5pct": 0.9610902186,
+      "within_10pct": 0.9846222586,
+      "bias_ci95": [
+        -0.0001105089,
+        -7.54932e-05
+      ],
+      "res68_ci95": [
+        0.0021185152,
+        0.0022384987
+      ],
+      "full_rms_ci95": [
+        0.0342341604,
+        0.0673492155
+      ],
+      "run_block_bias_ci95": [
+        -0.0001095468,
+        -7.1048e-05
+      ],
+      "run_block_res68_ci95": [
+        0.0021111802,
+        0.0022672453
+      ],
+      "run_block_full_rms_ci95": [
+        0.0311551737,
+        0.0617763078
+      ]
+    },
+    {
+      "target": "odd_duplicate_amplitude",
+      "method": "shuffled_target_extra_trees",
+      "split": "heldout_runs_57_65",
+      "n": 26857,
+      "bias_median_frac": 0.3440575792,
+      "res68_abs_frac": 0.8028830995,
+      "full_rms_frac": 2.3277574398,
+      "within_5pct": 0.0578247757,
+      "within_10pct": 0.119000633,
+      "bias_ci95": [
+        0.3342346796,
+        0.3567470461
+      ],
+      "res68_ci95": [
+        0.7837246905,
+        0.8271962978
+      ],
+      "full_rms_ci95": [
+        2.2235918038,
+        2.4365791203
+      ],
+      "run_block_bias_ci95": [
+        0.1626448836,
+        0.5412100647
+      ],
+      "run_block_res68_ci95": [
+        0.5381894746,
+        1.1185693725
+      ],
+      "run_block_full_rms_ci95": [
+        2.0485822969,
+        2.563429384
+      ]
+    }
+  ],
+  "residual_mode_audit": [
+    {
+      "mode": "per-stave amp-bin PC1",
+      "feature": "resid_pc1",
+      "corr_with_abs_error_improvement": 0.1843927416,
+      "low20_median_improvement": 0.1499965287,
+      "high20_median_improvement": 0.0875100462,
+      "heldout_feature_p20": -0.6527870515,
+      "heldout_feature_p80": 0.1949056258
+    },
+    {
+      "mode": "per-stave amp-bin PC2",
+      "feature": "resid_pc2",
+      "corr_with_abs_error_improvement": 0.0996346892,
+      "low20_median_improvement": 0.0938740955,
+      "high20_median_improvement": 0.0871167379,
+      "heldout_feature_p20": -0.3432925021,
+      "heldout_feature_p80": 0.2710270449
+    },
+    {
+      "mode": "per-stave amp-bin PC3",
+      "feature": "resid_pc3",
+      "corr_with_abs_error_improvement": -0.1608450774,
+      "low20_median_improvement": 0.0878434939,
+      "high20_median_improvement": 0.1402793062,
+      "heldout_feature_p20": -0.1854574478,
+      "heldout_feature_p80": 0.22187579
+    },
+    {
+      "mode": "peak-sample anchoring error",
+      "feature": "peak_anchor_delta_sample",
+      "corr_with_abs_error_improvement": -0.3378636627,
+      "low20_median_improvement": 0.0871877019,
+      "high20_median_improvement": 0.0717598325,
+      "heldout_feature_p20": -1.0,
+      "heldout_feature_p80": 1.0
+    },
+    {
+      "mode": "tail residual mean",
+      "feature": "tail_resid_mean",
+      "corr_with_abs_error_improvement": -0.2698827731,
+      "low20_median_improvement": 0.1043023528,
+      "high20_median_improvement": 0.094955877,
+      "heldout_feature_p20": -0.0589882081,
+      "heldout_feature_p80": 0.0726074683
+    },
+    {
+      "mode": "baseline residual mean",
+      "feature": "baseline_resid_mean",
+      "corr_with_abs_error_improvement": 0.1746123736,
+      "low20_median_improvement": 0.0851649719,
+      "high20_median_improvement": 0.0705483371,
+      "heldout_feature_p20": -0.0006631757,
+      "heldout_feature_p80": 0.0047214008
+    },
+    {
+      "mode": "tail/baseline covariance proxy",
+      "feature": "baseline_tail_resid_product",
+      "corr_with_abs_error_improvement": -0.1506316201,
+      "low20_median_improvement": 0.0975908111,
+      "high20_median_improvement": 0.0971232706,
+      "heldout_feature_p20": -0.0001636276,
+      "heldout_feature_p80": 1.52889e-05
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_stave_key_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "check": "exact_even_waveform_hash_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "check": "features_exclude_run_event_odd_target",
+      "value": "even waveform, even summaries, train-only residual basis, stave one-hot",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_extra_trees_res68",
+      "value": 0.8028830995,
+      "pass": true
+    },
+    {
+      "check": "ml_to_shuffled_res68_ratio",
+      "value": 0.0027128588,
+      "pass": true
+    },
+    {
+      "check": "looks_too_good_triggered_extra_audit",
+      "value": true,
+      "pass": true
+    }
+  ],
+  "finding": "P04d peak_calibrated reproduces at res68=0.1238.  A train-only residual-basis Huber calibrator using per-stave amplitude-bin PCs, peak anchoring, and tail/baseline terms improves this to 0.0061 (ridge 0.0251), so the failed direct adaptive-template scale is mostly a calibratable residual-mode problem rather than a template-support problem.  The largest held-out mode association is peak-sample anchoring error (corr -0.338).  ExtraTrees reaches 0.0022; because that is duplicate-readout-level small, it is interpreted only after leakage checks: no run/key/hash overlap and shuffled-target res68=0.8029.",
+  "runtime_sec": 56.4
+}

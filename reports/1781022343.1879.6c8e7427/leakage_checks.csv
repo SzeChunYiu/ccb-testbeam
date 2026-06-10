@@ -1,0 +1,8 @@
+check,value,pass,note
+train_heldout_run_overlap_loro,0.0,True,each ML fold leaves out one run
+model_features_include_ids,0.0,True,none
+raw_source_index_join_missing,0.0,True,zero means every prior source index was found in fresh raw scan
+ml_selected_max_run_pair_share,0.312621359223301,True,guards against one run/pair stratum dominating the result
+charge_pair_matched_null_precision,0.341747572815534,True,matched random selection should underperform ML shape score
+ml_average_precision,0.7297497696380433,True,LORO score versus prior high-risk pair labels
+suspicious_result_triggered_extra_checks,0.0,True,triggered if precision >0.90 or enrichment >3

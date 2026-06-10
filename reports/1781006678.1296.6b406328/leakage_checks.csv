@@ -1,0 +1,6 @@
+check,status,detail
+run_group_cv,pass,training CV grouped by run with 3 folds
+heldout_runs,pass,"never trained on held-out runs 57,65"
+honest_ml_features,pass,"honest model excludes median_amp, the direct selector-rule feature"
+leakage_sentinel,expected_alarm,sentinel includes median_amp and demonstrates why too-good ML is leakage
+semantic_drift_alarm,pass,"dynamic-range selector is reported as an overcount comparator, not accepted semantics"

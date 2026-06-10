@@ -1,0 +1,6 @@
+probe,roc_auc,average_precision,interpretation
+charge/depth logistic,1.0,1.0,Forbidden ceiling: includes depth and presence fields used directly by the weak-label definition.
+run-only logistic,0.4476702541874817,0.30295608434929205,Strict leave-one-run-out run-id sentinel; unseen held-out runs collapse to the intercept.
+group/event-order logistic,0.6015231390501028,0.42559584261117755,Sample group plus event-order sentinel for run-family/rate-drift confounding.
+shuffled-label HGB,0.4887040100187335,0.3677015418480223,Same HGB pipeline with shuffled training labels; should fall near chance.
+ML-minus-traditional paired run bootstrap,-0.1521697135340142,,Positive values favor ML; CI is stored in result.json.

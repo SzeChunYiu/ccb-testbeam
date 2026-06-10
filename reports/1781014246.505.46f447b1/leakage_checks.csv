@@ -1,0 +1,6 @@
+check,value,pass_,note
+ml_feature_forbidden_column_overlap,0.0,True,ML features are pre-trigger only plus stave index; no run id or post-trigger pulse amplitude.
+loro_train_heldout_run_overlap,0.0,True,Each fold trains on all runs except the held-out run.
+ml_probability_too_good_auc,0.7210910834884269,True,"If this failed, probability labels would need a stronger leakage audit."
+quietest_stratum_not_empty,882366.0,True,
+pedestal_residual_exact_zero_fraction,0.003380967831431245,True,Guards against accidentally scoring the S16 adaptive baseline against itself.

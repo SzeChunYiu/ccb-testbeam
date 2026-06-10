@@ -1,0 +1,264 @@
+{
+  "study": "S02f",
+  "ticket": "1781022085.1728.44066def",
+  "worker": "testbeam-laptop-4",
+  "title": "run-64 calibration-source stress test for S02d",
+  "reproduced_raw_root_first": true,
+  "raw_root_reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split_by_run": {
+    "heldout_analysis_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "calibration_source_runs": [
+      64
+    ],
+    "folds": {
+      "58": {
+        "train_runs": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          65,
+          64
+        ],
+        "heldout_runs": [
+          58
+        ],
+        "calibration_source_runs": [
+          64
+        ],
+        "selected_binned": "s02f_binned_timewalk_drift0",
+        "selected_global": "s02f_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "59": {
+        "train_runs": [
+          58,
+          60,
+          61,
+          62,
+          63,
+          65,
+          64
+        ],
+        "heldout_runs": [
+          59
+        ],
+        "calibration_source_runs": [
+          64
+        ],
+        "selected_binned": "s02f_binned_timewalk_drift2",
+        "selected_global": "s02f_global_timewalk_drift2",
+        "best_traditional": "template_phase"
+      },
+      "60": {
+        "train_runs": [
+          58,
+          59,
+          61,
+          62,
+          63,
+          65,
+          64
+        ],
+        "heldout_runs": [
+          60
+        ],
+        "calibration_source_runs": [
+          64
+        ],
+        "selected_binned": "s02f_binned_timewalk_drift1",
+        "selected_global": "s02f_global_timewalk_drift1",
+        "best_traditional": "template_phase"
+      },
+      "61": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          65,
+          64
+        ],
+        "heldout_runs": [
+          61
+        ],
+        "calibration_source_runs": [
+          64
+        ],
+        "selected_binned": "s02f_binned_timewalk_drift0",
+        "selected_global": "s02f_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "62": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          63,
+          65,
+          64
+        ],
+        "heldout_runs": [
+          62
+        ],
+        "calibration_source_runs": [
+          64
+        ],
+        "selected_binned": "s02f_binned_timewalk_drift0",
+        "selected_global": "s02f_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "63": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          65,
+          64
+        ],
+        "heldout_runs": [
+          63
+        ],
+        "calibration_source_runs": [
+          64
+        ],
+        "selected_binned": "s02f_binned_timewalk_drift0",
+        "selected_global": "s02f_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "65": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ],
+        "heldout_runs": [
+          65
+        ],
+        "calibration_source_runs": [
+          64
+        ],
+        "selected_binned": "s02f_binned_timewalk_drift0",
+        "selected_global": "s02f_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      }
+    }
+  },
+  "traditional_method": "S02b global timewalk no drift",
+  "traditional": {
+    "method": "S02b global timewalk no drift",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.6461916347199816,
+    "ci_low": 1.5242802522748458,
+    "ci_high": 1.8365573741735999,
+    "min_run_sigma68_ns": 1.4588528843468975,
+    "max_run_sigma68_ns": 2.187490453226798
+  },
+  "ml_method": "S02 ML ridge",
+  "ml": {
+    "method": "S02 ML ridge",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.8869856415296753,
+    "ci_low": 1.8157152581852942,
+    "ci_high": 1.9964266192175646,
+    "min_run_sigma68_ns": 1.7814158256373596,
+    "max_run_sigma68_ns": 2.190797313595372
+  },
+  "leakage_checks_pass_excluding_forbidden_oracle": false,
+  "headline_method_leakage_checks_pass": true,
+  "leakage_hunt_failed_checks": [
+    {
+      "heldout_run": 58,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.423756291645798,
+      "interpretation": "shuffled-target control beat the production branch; treat this branch as unstable, not adoption-ready"
+    },
+    {
+      "heldout_run": 60,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 2.1735696560588957,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "heldout_run": 61,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 2.8596474503444274,
+      "interpretation": "shuffled-target control beat the production branch; treat this branch as unstable, not adoption-ready"
+    },
+    {
+      "heldout_run": 63,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 3.4060461283555457,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [],
+  "git_commit": "ec4fc8a8d717e45bb8b20ef7f0694c210e19ec89"
+}

@@ -1,0 +1,13 @@
+scenario,check,value,unit
+run64_only,train_heldout_run_overlap,0.0,count
+run64_only,train_heldout_event_id_overlap,0.0,count
+run64_only,model_features_include_run_event_order_or_cross_stave_time,0.0,bool
+run64_only,final_fit_uses_sample_ii_analysis_rows,0.0,bool
+run64_only,analytic_shuffled_target,2.089941588991626,heldout_sigma68_ns
+run64_only,ml_shuffled_target,2.3893220122446683,heldout_sigma68_ns
+sample_i_plus_run64,train_heldout_run_overlap,0.0,count
+sample_i_plus_run64,train_heldout_event_id_overlap,0.0,count
+sample_i_plus_run64,model_features_include_run_event_order_or_cross_stave_time,0.0,bool
+sample_i_plus_run64,final_fit_uses_sample_ii_analysis_rows,0.0,bool
+sample_i_plus_run64,analytic_shuffled_target,2.95940472731449,heldout_sigma68_ns
+sample_i_plus_run64,ml_shuffled_target,2.762289632415429,heldout_sigma68_ns

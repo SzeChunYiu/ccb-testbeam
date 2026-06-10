@@ -1,0 +1,117 @@
+{
+  "study": "S03e",
+  "ticket": "1781019517.3432.5852083f",
+  "worker": "testbeam-laptop-4",
+  "title": "blind Sample-I to Sample-II transfer for S03a/S03b/HGB timewalk corrections",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_reference_pass": true
+  },
+  "split": {
+    "train_sample": "Sample I",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_sample": "Sample II analysis",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.0459430282283897,
+    "ci": [
+      1.7959430282283897,
+      2.0459430282284004
+    ]
+  },
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "value": 1.4946665492512594,
+    "ci": [
+      1.3735020435525567,
+      1.6897088682838965
+    ],
+    "gain_vs_template_phase_ns": 0.5512764789771303,
+    "delta_vs_sample_ii_loro_s03a_ns": -0.05642516172652634
+  },
+  "traditional_binned": {
+    "method": "per_stave_monotonic_amplitude_binned_timewalk",
+    "mode": "monotonic",
+    "direction": "decreasing",
+    "n_bins": 4,
+    "value": 1.3979715141141966,
+    "ci": [
+      1.1479715141142037,
+      1.5
+    ],
+    "gain_vs_template_phase_ns": 0.6479715141141931,
+    "delta_vs_sample_ii_loro_s03b_ns": -0.24717791338287998
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.2211356311912955,
+    "ci": [
+      1.1095263328296179,
+      1.4145591828947572
+    ],
+    "gain_vs_template_phase_ns": 0.8248073970370942,
+    "delta_vs_sample_ii_loro_hgb_ns": -0.1728304906796876,
+    "cv_sigma68_ns": 0.8967281210107316,
+    "params": {
+      "max_iter": 30,
+      "learning_rate": 0.05,
+      "max_leaf_nodes": 3,
+      "l2_regularization": 0.1,
+      "max_bins": 32,
+      "random_state": 20260609
+    },
+    "max_train_rows": 10000
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_heldout_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "sample_ii_used_for_final_fit": false,
+    "shuffled_target_min_sigma68_ns": 1.7959430282283897,
+    "too_good_flag": true
+  },
+  "verdict": "blind_sample_i_transfer_matches_sample_ii_training",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "b59a7ae02008ba34b6167b5de747196e636d1eac",
+  "next_tickets": []
+}

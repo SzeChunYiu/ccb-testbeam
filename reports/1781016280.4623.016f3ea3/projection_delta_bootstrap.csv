@@ -1,0 +1,13 @@
+comparison,target_stave,paired_rows,delta_sigma68_ns,ci_low_ns,ci_high_ns,p_two_sided
+robust_nnls_twoend_prior_minus_equal_twoend_projection,all_downstream,28974,-0.5250537436336331,-6.79395335334987,-0.16142519301937544,0.0033333333333333335
+robust_nnls_twoend_prior_minus_equal_twoend_projection,B4,12089,-0.5009304395878513,-5.183968050149696,-0.04001663567458671,0.023333333333333334
+robust_nnls_twoend_prior_minus_equal_twoend_projection,B6,12190,-0.54815489027472,-6.516717993749578,-0.15927184632144312,0.0
+robust_nnls_twoend_prior_minus_equal_twoend_projection,B8,4695,-0.8190438980619783,-5.154901012555775,-0.42287449304507907,0.0
+s05c_covariance_twoend_prior_minus_equal_twoend_projection,all_downstream,28974,-0.37266153166727767,-4.757986575289383,-0.15459341206702729,0.0
+s05c_covariance_twoend_prior_minus_equal_twoend_projection,B4,12089,-0.2402827247512258,-4.36869336381608,0.03761565859143556,0.18
+s05c_covariance_twoend_prior_minus_equal_twoend_projection,B6,12190,-0.4966063704179251,-5.301799046178999,-0.277872100141183,0.0
+s05c_covariance_twoend_prior_minus_equal_twoend_projection,B8,4695,-0.3979559270231112,-4.014972493346874,-0.18110446444315714,0.0
+ml_dynamic_twoend_prior_minus_equal_twoend_projection,all_downstream,28974,-0.49888937202993766,-5.787752206094236,-0.2195873736068494,0.0
+ml_dynamic_twoend_prior_minus_equal_twoend_projection,B4,12089,-0.3250885944998878,-4.846580458810848,0.026570315060995907,0.09333333333333334
+ml_dynamic_twoend_prior_minus_equal_twoend_projection,B6,12190,-0.6563433660735525,-5.386547389832427,-0.35995458840457306,0.0
+ml_dynamic_twoend_prior_minus_equal_twoend_projection,B8,4695,-0.5533855598278883,-5.66045873967703,-0.26440222442940237,0.0

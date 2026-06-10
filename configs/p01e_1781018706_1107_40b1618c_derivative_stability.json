@@ -1,0 +1,60 @@
+{
+  "ticket_id": "1781018706.1107.40b1618c",
+  "study_id": "P01e",
+  "title": "derivative-stability check for sample-6 timing smoothing",
+  "worker": "testbeam-laptop-3",
+  "output_dir": "reports/1781018706.1107.40b1618c",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "amplitude_cut_adc": 1000.0,
+  "expected_total_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 57, 64, 65],
+  "timing_downstream_staves": ["B4", "B6", "B8"],
+  "amplitude_bins": 6,
+  "bootstrap_replicates": 500,
+  "random_seed": 19061106,
+  "template_shift_grid": {
+    "min": -1.5,
+    "max": 1.5,
+    "step": 0.05
+  },
+  "optimal_filter_windows": [
+    [1, 9],
+    [2, 10],
+    [3, 11],
+    [4, 12],
+    [5, 13]
+  ],
+  "ml": {
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0],
+    "cv_folds": 4
+  },
+  "p01d_reference": {
+    "ticket_id": "1781010798.954.0e922a2d",
+    "sample6_cfd20_delta_ns": -0.9299347512936595,
+    "sample6_template_phase_delta_ns": -0.26393484163283887,
+    "sample6_of_5_13_delta_ns": -0.3602377548980691,
+    "sample6_non_cfd_methods_negative": 2
+  }
+}

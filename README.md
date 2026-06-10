@@ -51,7 +51,11 @@ full write-ups in `reports/<study>/REPORT.md`, live scoreboard in `reports/SUMMA
 _Recurring theme: ML clearly helps where the signal is in **waveform shape** (timing, saturation,
 pedestal, representation); it ties the analytic method where the physics is already a clean
 closed-form model (pile-up Poisson rate, A-stack residual width). Every ML "win" is checked for
-leakage (split by run; see `fleet/LESSONS.md`)._ The fleet runs autonomously — see
+leakage (split by run; see `fleet/LESSONS.md`)._
+
+➡ **For the distilled physics conclusions across all ~230 studies, read
+[`FINDINGS_SYNTHESIS.md`](FINDINGS_SYNTHESIS.md)** (incl. the key revision that pile-up R_max is
+likely ~3 MHz, not 4.2 MHz). The fleet runs autonomously — see
 [`fleet/FLEET_STANDARD.md`](fleet/FLEET_STANDARD.md).
 
 ## Repository layout

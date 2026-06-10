@@ -1,0 +1,99 @@
+{
+  "study": "P05b",
+  "ticket": "1781018698.913.17f76add",
+  "worker": "testbeam-laptop-2",
+  "title": "CNN two-pulse threshold utility curves versus separation and amplitude ratio",
+  "reproduced": true,
+  "split": {
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ]
+  },
+  "traditional": {
+    "method": "bounded_template_fit_score_threshold",
+    "selected_threshold": -0.1,
+    "heldout_failure_rate": 0.18333333333333335,
+    "heldout_failure_rate_ci": [
+      0.18333333333333335,
+      0.18333333333333335
+    ],
+    "heldout_time_rms_ns": 13.606522445357095,
+    "heldout_time_rms_ci": [
+      13.562367439154393,
+      13.650534625331623
+    ]
+  },
+  "ml": {
+    "method": "compact_cnn_probability_threshold",
+    "selected_threshold": 0.25,
+    "heldout_failure_rate": 0.09999999999999998,
+    "heldout_failure_rate_ci": [
+      0.09999999999999998,
+      0.09999999999999998
+    ],
+    "heldout_time_rms_ns": 10.067977759004778,
+    "heldout_time_rms_ci": [
+      10.057924283351765,
+      10.078021205672897
+    ]
+  },
+  "p05a_reproduction": [
+    {
+      "method": "constrained_template_fit",
+      "detection_ap": 0.7526723370081942,
+      "detection_auc": 0.7092125,
+      "time_rms_ns": 13.899264640601482,
+      "time_sigma68_ns": 6.430899119230045,
+      "charge_fractional_bias": -0.026472370129020116,
+      "charge_fractional_res68": 0.09177470566406287,
+      "failure_rate": 0.16833333333333333,
+      "n_events": 1200,
+      "n_positive": 600,
+      "detection_ap_ci_low": 0.752276209962909,
+      "detection_ap_ci_high": 0.7539395720264053,
+      "time_rms_ns_ci_low": 13.742000911675119,
+      "time_rms_ns_ci_high": 14.052920345741251,
+      "charge_fractional_bias_ci_low": -0.034647426541306585,
+      "charge_fractional_bias_ci_high": -0.021202045098642437,
+      "charge_fractional_res68_ci_low": 0.08821614097522164,
+      "charge_fractional_res68_ci_high": 0.09624678073586693,
+      "failure_rate_ci_low": 0.16333333333333333,
+      "failure_rate_ci_high": 0.17333333333333334
+    },
+    {
+      "method": "compact_18_sample_cnn",
+      "detection_ap": 0.8684145380015449,
+      "detection_auc": 0.8542555555555557,
+      "time_rms_ns": 10.009265624734077,
+      "time_sigma68_ns": 8.232626046519629,
+      "charge_fractional_bias": 0.011012849774587196,
+      "charge_fractional_res68": 0.07982517706341302,
+      "failure_rate": 0.22833333333333333,
+      "n_events": 1200,
+      "n_positive": 600,
+      "detection_ap_ci_low": 0.8644689364063317,
+      "detection_ap_ci_high": 0.873897613698029,
+      "time_rms_ns_ci_low": 9.875745487557458,
+      "time_rms_ns_ci_high": 10.143885757889946,
+      "charge_fractional_bias_ci_low": 0.005454498008735868,
+      "charge_fractional_bias_ci_high": 0.013872458956218003,
+      "charge_fractional_res68_ci_low": 0.07490279608420944,
+      "charge_fractional_res68_ci_high": 0.08544771329987608,
+      "failure_rate_ci_low": 0.22,
+      "failure_rate_ci_high": 0.23666666666666666
+    }
+  ],
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "52c9e90873ed1b98d9ffcb1fa7f3c0963bde9198",
+  "next_tickets": [],
+  "runtime_sec": 141.22
+}

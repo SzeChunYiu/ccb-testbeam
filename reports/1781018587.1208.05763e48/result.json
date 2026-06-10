@@ -1,0 +1,521 @@
+{
+  "ticket_id": "1781018587.1208.05763e48",
+  "study_id": "P01f",
+  "title": "diagnose event-shuffled timing-control strength",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "data/root/root",
+  "heldout_candidate_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true,
+    "prior_p01c": [
+      {
+        "method": "prior P01c reproduced CFD20",
+        "sigma68_ns": 3.1884502039551736,
+        "published_sigma68_ns": 3.1884502039551736,
+        "delta_ns": 0.0,
+        "n_events": 408,
+        "n_pair_residuals": 1224,
+        "uses_amplitude_bin_feature": true,
+        "timing_train_rows": 14646,
+        "timing_eval_rows": 1224
+      },
+      {
+        "method": "prior P01c reproduced ML latent",
+        "sigma68_ns": 1.9892219585180269,
+        "published_sigma68_ns": 1.9892228263616547,
+        "delta_ns": -8.678436278497514e-07,
+        "n_events": 408,
+        "n_pair_residuals": 1224,
+        "uses_amplitude_bin_feature": true,
+        "timing_train_rows": 14646,
+        "timing_eval_rows": 1224
+      }
+    ],
+    "quoted_p01e_pooled": [
+      {
+        "method": "strict CFD20",
+        "sigma68_ns": 3.1884502039551736,
+        "ci_low": 3.0524470327988222,
+        "ci_high": 3.3032694318711755,
+        "delta_vs_cfd20_ns": 0.0,
+        "delta_ci_low": 0.0,
+        "delta_ci_high": 0.0,
+        "n_events": 408,
+        "n_pair_residuals": 1224,
+        "full_rms_ns": 5.677758856597346,
+        "heldout_run": "pooled"
+      },
+      {
+        "method": "strict traditional hand-shape ridge",
+        "sigma68_ns": 1.96163950630188,
+        "ci_low": 1.8654828884782806,
+        "ci_high": 2.0627225278738894,
+        "delta_vs_cfd20_ns": -1.2268106976532935,
+        "delta_ci_low": -1.3975931597535567,
+        "delta_ci_high": -1.062381305884986,
+        "n_events": 408,
+        "n_pair_residuals": 1224,
+        "full_rms_ns": 4.4592300527119315,
+        "heldout_run": "pooled"
+      },
+      {
+        "method": "strict ML AE latent ridge",
+        "sigma68_ns": 1.9650565696573254,
+        "ci_low": 1.8912473339568805,
+        "ci_high": 2.0537449481723336,
+        "delta_vs_cfd20_ns": -1.2233936342978482,
+        "delta_ci_low": -1.4022909293061512,
+        "delta_ci_high": -1.0507995799141525,
+        "n_events": 408,
+        "n_pair_residuals": 1224,
+        "full_rms_ns": 4.199419205517002,
+        "heldout_run": "pooled"
+      },
+      {
+        "method": "strict ML event-shuffled target",
+        "sigma68_ns": 2.055532479166984,
+        "ci_low": 1.9485859824531746,
+        "ci_high": 2.1729067179754367,
+        "delta_vs_cfd20_ns": -1.1329177247881899,
+        "delta_ci_low": -1.3177424368866661,
+        "delta_ci_high": -0.9545362962942544,
+        "n_events": 408,
+        "n_pair_residuals": 1224,
+        "full_rms_ns": 4.535989578040153,
+        "heldout_run": "pooled"
+      }
+    ]
+  },
+  "variant_seed_summary": [
+    {
+      "target_variant": "CFD20",
+      "diagnosis_family": "baseline",
+      "feature_family": "timing",
+      "seed_repeats": 1,
+      "sigma68_median_ns": 3.1668086478149546,
+      "sigma68_min_ns": 3.1668086478149546,
+      "sigma68_max_ns": 3.1668086478149546,
+      "delta_vs_cfd20_median_ns": 0.0,
+      "n_pair_residuals_total": 1224
+    },
+    {
+      "target_variant": "traditional_nominal",
+      "diagnosis_family": "nominal",
+      "feature_family": "traditional",
+      "seed_repeats": 1,
+      "sigma68_median_ns": 1.9484549658602595,
+      "sigma68_min_ns": 1.9484549658602595,
+      "sigma68_max_ns": 1.9484549658602595,
+      "delta_vs_cfd20_median_ns": -1.2183536819546947,
+      "n_pair_residuals_total": 1224
+    },
+    {
+      "target_variant": "ml_ae_nominal",
+      "diagnosis_family": "nominal",
+      "feature_family": "ml_ae",
+      "seed_repeats": 1,
+      "sigma68_median_ns": 1.952433535492819,
+      "sigma68_min_ns": 1.952433535492819,
+      "sigma68_max_ns": 1.952433535492819,
+      "delta_vs_cfd20_median_ns": -1.2143751123221354,
+      "n_pair_residuals_total": 1224
+    },
+    {
+      "target_variant": "traditional_event_block_shuffle",
+      "diagnosis_family": "event/block composition",
+      "feature_family": "traditional",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 2.0131738183925325,
+      "sigma68_min_ns": 1.7665800658512076,
+      "sigma68_max_ns": 2.1645854311132373,
+      "delta_vs_cfd20_median_ns": -1.098027133461238,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "ml_ae_event_block_shuffle",
+      "diagnosis_family": "event/block composition",
+      "feature_family": "ml_ae",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 2.0229235415203153,
+      "sigma68_min_ns": 1.7975980026102043,
+      "sigma68_max_ns": 2.1376804929971716,
+      "delta_vs_cfd20_median_ns": -1.1073476519980987,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "traditional_row_shuffle",
+      "diagnosis_family": "global row target distribution",
+      "feature_family": "traditional",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 3.1991413501121855,
+      "sigma68_min_ns": 2.8857877637147924,
+      "sigma68_max_ns": 3.400765703784822,
+      "delta_vs_cfd20_median_ns": 0.025983329610230532,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "ml_ae_row_shuffle",
+      "diagnosis_family": "global row target distribution",
+      "feature_family": "ml_ae",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 3.209793589761052,
+      "sigma68_min_ns": 2.8521717171645147,
+      "sigma68_max_ns": 3.398796132206917,
+      "delta_vs_cfd20_median_ns": 0.02209772077292227,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "traditional_same_event_permute",
+      "diagnosis_family": "same-event target algebra",
+      "feature_family": "traditional",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 3.1771039328724155,
+      "sigma68_min_ns": 2.9206614220786102,
+      "sigma68_max_ns": 3.4426480087709415,
+      "delta_vs_cfd20_median_ns": -0.0008965925787423057,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "ml_ae_same_event_permute",
+      "diagnosis_family": "same-event target algebra",
+      "feature_family": "ml_ae",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 3.1873992311498522,
+      "sigma68_min_ns": 2.8655800537937877,
+      "sigma68_max_ns": 3.400781376463773,
+      "delta_vs_cfd20_median_ns": -0.0055877909724433295,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "traditional_same_event_sign_flip",
+      "diagnosis_family": "same-event target algebra",
+      "feature_family": "traditional",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 3.1701063256905186,
+      "sigma68_min_ns": 2.8941518136286706,
+      "sigma68_max_ns": 3.4532956351140145,
+      "delta_vs_cfd20_median_ns": 0.02528751852799127,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "ml_ae_same_event_sign_flip",
+      "diagnosis_family": "same-event target algebra",
+      "feature_family": "ml_ae",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 3.2166584669081106,
+      "sigma68_min_ns": 2.904097929149863,
+      "sigma68_max_ns": 3.4334297594241754,
+      "delta_vs_cfd20_median_ns": 0.016188141780048237,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "traditional_per_run_stave_shuffle",
+      "diagnosis_family": "train-run/stave nuisance",
+      "feature_family": "traditional",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 2.017264388796093,
+      "sigma68_min_ns": 1.7787465044581903,
+      "sigma68_max_ns": 2.168603432493211,
+      "delta_vs_cfd20_median_ns": -1.113363591781707,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "ml_ae_per_run_stave_shuffle",
+      "diagnosis_family": "train-run/stave nuisance",
+      "feature_family": "ml_ae",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 2.009990490591007,
+      "sigma68_min_ns": 1.7850556518411644,
+      "sigma68_max_ns": 2.154151112485677,
+      "delta_vs_cfd20_median_ns": -1.0963307276757777,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "traditional_per_run_stave_amp_shuffle",
+      "diagnosis_family": "train-run/stave/amplitude nuisance",
+      "feature_family": "traditional",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 2.001138091080189,
+      "sigma68_min_ns": 1.7498474776744841,
+      "sigma68_max_ns": 2.100332030683755,
+      "delta_vs_cfd20_median_ns": -1.1730910021141179,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "ml_ae_per_run_stave_amp_shuffle",
+      "diagnosis_family": "train-run/stave/amplitude nuisance",
+      "feature_family": "ml_ae",
+      "seed_repeats": 28,
+      "sigma68_median_ns": 2.003071755673738,
+      "sigma68_min_ns": 1.7868686145544057,
+      "sigma68_max_ns": 2.1045158854293833,
+      "delta_vs_cfd20_median_ns": -1.1912825304546941,
+      "n_pair_residuals_total": 8568
+    },
+    {
+      "target_variant": "traditional_train_run_stave_mean",
+      "diagnosis_family": "train-run-only target",
+      "feature_family": "traditional",
+      "seed_repeats": 4,
+      "sigma68_median_ns": 2.0171657715466633,
+      "sigma68_min_ns": 1.8038364256000505,
+      "sigma68_max_ns": 2.1326329223811626,
+      "delta_vs_cfd20_median_ns": -1.111905727505382,
+      "n_pair_residuals_total": 1224
+    },
+    {
+      "target_variant": "ml_ae_train_run_stave_mean",
+      "diagnosis_family": "train-run-only target",
+      "feature_family": "ml_ae",
+      "seed_repeats": 4,
+      "sigma68_median_ns": 2.017271786847787,
+      "sigma68_min_ns": 1.8073661690950393,
+      "sigma68_max_ns": 2.1290955536067484,
+      "delta_vs_cfd20_median_ns": -1.1117997122042582,
+      "n_pair_residuals_total": 1224
+    }
+  ],
+  "interpretation_rules": [
+    {
+      "rule": "raw_count_reproduced",
+      "value": 640737.0,
+      "threshold": 640737.0,
+      "pass": true,
+      "interpretation": "raw ROOT selection gate passed before modelling"
+    },
+    {
+      "rule": "nominal_ml_beats_strong_traditional",
+      "value": 0.003417063355445338,
+      "threshold": 0.0,
+      "pass": false,
+      "interpretation": "latent timing claim should exceed a hand-shape residual model with separated CIs"
+    },
+    {
+      "rule": "event_shuffle_not_close_to_nominal",
+      "value": 0.09047590950965834,
+      "threshold": 0.2,
+      "pass": false,
+      "interpretation": "event-shuffled control should be clearly worse than the nominal ML probe"
+    },
+    {
+      "rule": "control_gain_fraction_below_limit",
+      "value": 1.1759115675849972,
+      "threshold": 0.6,
+      "pass": false,
+      "interpretation": "shuffled controls should not recover most of the nominal CFD20 gain"
+    },
+    {
+      "rule": "quoted_event_shuffle_strength_reproduced",
+      "value": 2.055532479166984,
+      "threshold": 2.055532479166984,
+      "pass": true,
+      "interpretation": "the suspicious P01e control is reproduced exactly before diagnosis"
+    }
+  ],
+  "leakage_checks": [
+    {
+      "heldout_run": 42,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 42,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 42,
+      "check": "amplitude_bin_feature_used",
+      "value": 0,
+      "pass": true,
+      "detail": "strict features are waveform shape or AE latent plus log amplitude and stave one-hot only"
+    },
+    {
+      "heldout_run": 42,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "no run id, event id, event order, amplitude-bin id, or held-out target columns"
+    },
+    {
+      "heldout_run": 57,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 57,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 57,
+      "check": "amplitude_bin_feature_used",
+      "value": 0,
+      "pass": true,
+      "detail": "strict features are waveform shape or AE latent plus log amplitude and stave one-hot only"
+    },
+    {
+      "heldout_run": 57,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "no run id, event id, event order, amplitude-bin id, or held-out target columns"
+    },
+    {
+      "heldout_run": 64,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 64,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 64,
+      "check": "amplitude_bin_feature_used",
+      "value": 0,
+      "pass": true,
+      "detail": "strict features are waveform shape or AE latent plus log amplitude and stave one-hot only"
+    },
+    {
+      "heldout_run": 64,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "no run id, event id, event order, amplitude-bin id, or held-out target columns"
+    },
+    {
+      "heldout_run": 65,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 65,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "must be zero"
+    },
+    {
+      "heldout_run": 65,
+      "check": "amplitude_bin_feature_used",
+      "value": 0,
+      "pass": true,
+      "detail": "strict features are waveform shape or AE latent plus log amplitude and stave one-hot only"
+    },
+    {
+      "heldout_run": 65,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "no run id, event id, event order, amplitude-bin id, or held-out target columns"
+    },
+    {
+      "heldout_run": 42,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "split is leave-one-run-out"
+    },
+    {
+      "heldout_run": 42,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "event ids are run-local and held-out run is excluded from training"
+    },
+    {
+      "heldout_run": 42,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "features exclude run id, event id, event order, other-stave time, and held-out target"
+    },
+    {
+      "heldout_run": 57,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "split is leave-one-run-out"
+    },
+    {
+      "heldout_run": 57,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "event ids are run-local and held-out run is excluded from training"
+    },
+    {
+      "heldout_run": 57,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "features exclude run id, event id, event order, other-stave time, and held-out target"
+    },
+    {
+      "heldout_run": 64,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "split is leave-one-run-out"
+    },
+    {
+      "heldout_run": 64,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "event ids are run-local and held-out run is excluded from training"
+    },
+    {
+      "heldout_run": 64,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "features exclude run id, event id, event order, other-stave time, and held-out target"
+    },
+    {
+      "heldout_run": 65,
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "split is leave-one-run-out"
+    },
+    {
+      "heldout_run": 65,
+      "check": "train_heldout_event_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "event ids are run-local and held-out run is excluded from training"
+    },
+    {
+      "heldout_run": 65,
+      "check": "feature_audit",
+      "value": 0,
+      "pass": true,
+      "detail": "features exclude run id, event id, event order, other-stave time, and held-out target"
+    }
+  ],
+  "runtime_sec": 170.0
+}

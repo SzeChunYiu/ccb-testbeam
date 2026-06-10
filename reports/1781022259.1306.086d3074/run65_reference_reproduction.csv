@@ -1,0 +1,4 @@
+method,value,ci_low,ci_high,n_pair_residuals,sample_ii_reference_value,delta_ns,pass
+analytic_timewalk,1.4946400762696816,,,198,1.494640076269676,5.551115123125783e-15,True
+s03b_binned_timewalk,1.5695763825403084,,,198,1.5695763825403084,0.0,True
+template_phase_base,2.889152765080617,,,198,2.889152765080617,0.0,True

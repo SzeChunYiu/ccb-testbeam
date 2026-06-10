@@ -1,0 +1,2 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S11b traditional matched secondary fraction high-minus-low,0.018064542090743305,0.018064542090743305,0.0,0.003,True

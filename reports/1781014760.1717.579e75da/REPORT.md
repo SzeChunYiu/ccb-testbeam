@@ -5,15 +5,13 @@
 - **Date:** 2026-06-09
 - **Config:** `s16f_inventory_daq_runlog_sources_config.json`
 - **Input checksums:** `input_sha256.csv`
-- **Git commit at runtime:** `3b86ab6928022d79f82342b65f2e728c2c8f6dca`
+- **Git commit at runtime:** `bc1bdc39d0a2fd217d65a6062778dd1e3006f358`
 
 ## Question
 
 Can DAQ/run-log sources for true B-stack random or forced-trigger pedestal runs be found, and can they distinguish whether the S16e gate failed because the sample was never recorded or only missing from this ROOT mirror?
 
 ## Raw ROOT Reproduction First
-
-All study inputs are data mirror files under `/home/billy/ccb-data/extracted/root/root` and `/home/billy/ccb-data/raw`; no Monte Carlo inputs are used.
 
 | Quantity | Expected/report value | Reproduced from raw ROOT | Pass? |
 |---|---:|---:|---|

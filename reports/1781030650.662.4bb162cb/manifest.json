@@ -1,0 +1,78 @@
+{
+  "ticket": "1781030650.662.4bb162cb",
+  "study": "S16j",
+  "created_utc": "2026-06-10T12:40:58Z",
+  "git_commit": "051fbdd424637692471673ffb6f3f0fb272b4f06",
+  "python": "3.7.6",
+  "script": "scripts/s16j_1781030650_662_4bb162cb_pretrigger_hidden_mode_stability.py",
+  "config": "configs/s16j_1781030650_662_4bb162cb_pretrigger_hidden_mode_stability.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/s16j_1781030650_662_4bb162cb_pretrigger_hidden_mode_stability.py --config configs/s16j_1781030650_662_4bb162cb_pretrigger_hidden_mode_stability.json",
+  "random_seed": 1781030650,
+  "output_hashes": [
+    {
+      "path": "reports/1781030650.662.4bb162cb/REPORT.md",
+      "sha256": "362b6d518ccba623424457695a6b1047d79a16127e92710200fba7fc6fcfbca3",
+      "bytes": 10879
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/fig_hidden_mode_diagnostics.png",
+      "sha256": "820fcb3e1c30810419e4f9b2c6a8d390782a09d1a8d1aa5c730419e569a65182",
+      "bytes": 90615
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/fig_method_auc_ci.png",
+      "sha256": "531bd94eb0d713a6eef9c37dd428bded2d01c34da5361202f8f698fa9ee06cb4",
+      "bytes": 46905
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/fig_run_stability_auc.png",
+      "sha256": "55f87e23df373d6c7f4f5244cae373a2b07903978ac721d49069f4f1e19a8f46",
+      "bytes": 139097
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/fold_metrics.csv",
+      "sha256": "cd49444f69dff914f96206f2d52d903aa5c8335641d0a07c240fc6673970d7ac",
+      "bytes": 10640
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/heldout_predictions_sample.csv",
+      "sha256": "8e144cf682fdb62a75d96d210816a78ba2137ab6cfb234da53a9101974844549",
+      "bytes": 3135955
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/input_sha256.csv",
+      "sha256": "374c98ccefd751849605589550da99b37eb78f337c806d503cbe9eb549245112",
+      "bytes": 1520
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/method_summary.csv",
+      "sha256": "740bd7f135d2aa7d7c649af53d26cb9c33c3d7a39270f8ebb989dddb3f2c3813",
+      "bytes": 2433
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/raw_run_counts.csv",
+      "sha256": "38af1cbd4bfe0af84ca04328ee9d399e9c2ab0aa285e9f6e92a86c445379f156",
+      "bytes": 773
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/reproduction_match_table.csv",
+      "sha256": "063d8fa8798bb181cb3c6f07edf791c3f22e8c57c41b686f2ffbdadb5a1038e5",
+      "bytes": 840
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/result.json",
+      "sha256": "587015217c3573520200755398842148ac060b81d8f799eccdf32319ee6970fd",
+      "bytes": 39421
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/sentinel_metrics.csv",
+      "sha256": "84cdb4a10f58af4f391382b7a331f9e339dc7731f5763672cb274b3603faee2b",
+      "bytes": 1750
+    },
+    {
+      "path": "reports/1781030650.662.4bb162cb/stability_by_run.csv",
+      "sha256": "6b82bb3a0b032c6dc0c6c8616d576c458df5b98fafff5165c82a81e1afc57fd6",
+      "bytes": 8472
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+check,value,pass,interpretation
+run_split_event_overlap,0.0,True,all fitted predictions are leave-one-run-held-out
+features_exclude_forbidden_columns,1.0,True,"ML feature lists exclude run/event ids, raw times, residual targets, and pair residuals"
+shuffled_run_control_sigma68_worse_than_nominal,3.272083566245431,True,targets sampled from other train runs should not reproduce nominal ML width
+downstream_only_control_not_better_on_b2,2.659850307729302,True,a model trained only on downstream pairs should not outperform the B2-local model on B2-containing pairs

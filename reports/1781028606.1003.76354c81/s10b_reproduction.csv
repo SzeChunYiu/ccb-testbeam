@@ -1,0 +1,4 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S10 assumed tau_eff combined Rmax MHz,4.222222222222222,4.222222222222222,0.0,0.05,True
+S10b measured traditional live10 ns,124.79,124.79018394263471,0.0001839426347061135,1.0,True
+S10b measured-tau rescaled Rmax MHz,3.05,3.045111305987686,-0.004888694012313621,0.05,True

@@ -1,0 +1,7 @@
+check,value,pass
+train_heldout_source_run_overlap,0.0,True
+event_id_overlap,0.0,True
+traditional_cuts_selected_on_train_only,1.0,True
+ml_threshold_selected_on_train_only,1.0,True
+ml_isotonic_loro_folds,5.0,True
+base_mlp_shuffled_train_labels_heldout_ap,0.49710932599544794,True

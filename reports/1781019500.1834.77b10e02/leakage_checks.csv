@@ -1,0 +1,22 @@
+run,check,value,pass,interpretation
+58,train_heldout_event_overlap,0.0,True,hard run split should imply no event overlap
+58,shuffled_target_res68,0.28166272501311995,True,shuffled target should be much worse than the real ML model
+58,ml_too_good_to_be_true,0.07029003786381217,True,near-zero amplitude recovery would trigger leakage suspicion
+59,train_heldout_event_overlap,0.0,True,hard run split should imply no event overlap
+59,shuffled_target_res68,0.26122904703720995,True,shuffled target should be much worse than the real ML model
+59,ml_too_good_to_be_true,0.08425371112891218,True,near-zero amplitude recovery would trigger leakage suspicion
+60,train_heldout_event_overlap,0.0,True,hard run split should imply no event overlap
+60,shuffled_target_res68,0.25633634583357867,True,shuffled target should be much worse than the real ML model
+60,ml_too_good_to_be_true,0.08872073015699575,True,near-zero amplitude recovery would trigger leakage suspicion
+61,train_heldout_event_overlap,0.0,True,hard run split should imply no event overlap
+61,shuffled_target_res68,0.23237263904946798,True,shuffled target should be much worse than the real ML model
+61,ml_too_good_to_be_true,0.08167519551602609,True,near-zero amplitude recovery would trigger leakage suspicion
+62,train_heldout_event_overlap,0.0,True,hard run split should imply no event overlap
+62,shuffled_target_res68,0.247726113016894,True,shuffled target should be much worse than the real ML model
+62,ml_too_good_to_be_true,0.08476948421110414,True,near-zero amplitude recovery would trigger leakage suspicion
+63,train_heldout_event_overlap,0.0,True,hard run split should imply no event overlap
+63,shuffled_target_res68,0.28053658859702246,True,shuffled target should be much worse than the real ML model
+63,ml_too_good_to_be_true,0.07808876252873222,True,near-zero amplitude recovery would trigger leakage suspicion
+65,train_heldout_event_overlap,0.0,True,hard run split should imply no event overlap
+65,shuffled_target_res68,0.25446415942401807,True,shuffled target should be much worse than the real ML model
+65,ml_too_good_to_be_true,0.08207342080596135,True,near-zero amplitude recovery would trigger leakage suspicion

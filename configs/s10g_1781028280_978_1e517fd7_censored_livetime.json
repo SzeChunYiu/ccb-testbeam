@@ -1,0 +1,36 @@
+{
+  "study_id": "S10g_censored_livetime",
+  "title": "censored live-time estimator for low-threshold pile-up windows",
+  "ticket_id": "1781028280.978.1e517fd7",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781028280.978.1e517fd7",
+  "source_s10c_ticket": "1781007337.1308.7dc86005",
+  "source_s10d_ticket": "1781013102.1034.262365d2",
+  "random_seed": 1781028280,
+  "bootstrap_samples": 5000,
+  "runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "reported_s10d": {
+    "live5_template_ns": 141.0557117938371,
+    "live10_template_ns": 124.79018394263471,
+    "live20_template_ns": 101.86521002119034,
+    "noise_floor_template_ns": 161.18335762759685,
+    "live5_empirical_ns": 124.87810615613058,
+    "live10_empirical_ns": 123.25552601769233,
+    "live20_empirical_ns": 119.0300244680748,
+    "noise_floor_empirical_ns": 120.37181019387364
+  },
+  "thresholds": [
+    {"key": "5pct", "label": "5%", "column": "live5_ns"},
+    {"key": "10pct", "label": "10%", "column": "live10_ns"},
+    {"key": "20pct", "label": "20%", "column": "live20_ns"},
+    {"key": "noise_floor", "label": "noise floor", "column": "live_noise_floor_ns"}
+  ],
+  "reproduction_tolerance_ns": 0.05,
+  "minimum_uncensored_train": 200,
+  "max_ml_train_uncensored": 12000,
+  "max_ml_eval_uncensored": 8000,
+  "ipcw_weight_cap": 20.0,
+  "weibull_mean_cap_ns": 5000.0,
+  "ml_prediction_cap_ns": 500.0
+}

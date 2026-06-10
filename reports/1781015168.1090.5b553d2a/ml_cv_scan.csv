@@ -1,0 +1,2 @@
+n_estimators,max_depth,min_samples_leaf,run_cv_sigma68_ns,run_cv_sigma68_std_ns,row_cv_sigma68_ns,row_minus_run_cv_sigma68_ns
+160,6,15,1.2430829150018756,0.08286965864319552,1.231145957325591,-0.011936957676284665

@@ -1,0 +1,8 @@
+heldout_run,heldout_stratum,stratum_basis,heldout_stratum_value,same_stratum_train_runs,train_runs,n_train_runs,expanded_to_min_train_runs
+58,low_rate,downstream_allhit_fraction,0.002138191617117249,63 65,59 63 65,3,True
+59,mid_rate,downstream_allhit_fraction,0.018036545871451197,62,60 61 62,3,True
+60,high_rate,downstream_allhit_fraction,0.02239840328214226,61,59 61 62,3,True
+61,high_rate,downstream_allhit_fraction,0.025537156151635418,60,59 60 62,3,True
+62,mid_rate,downstream_allhit_fraction,0.021471902937420177,59,59 60 61,3,True
+63,low_rate,downstream_allhit_fraction,0.009991898460707534,58 65,58 59 65,3,True
+65,low_rate,downstream_allhit_fraction,0.001717676452217364,58 63,58 59 63,3,True

@@ -1,0 +1,6 @@
+ablation,affected_rows,replaced_atoms
+baseline_s0_3_removed,640482,2561928
+early_peak_s4_6_removed,640482,1921446
+peak_core_s7_10_removed,640482,2561928
+post_peak_tail_s11_17_removed,640482,4483374
+saturation_boundary_atoms_removed,183300,692100

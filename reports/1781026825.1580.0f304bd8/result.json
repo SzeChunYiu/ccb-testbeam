@@ -1,0 +1,184 @@
+{
+  "study": "S14d",
+  "ticket_id": "1781026825.1580.0f304bd8",
+  "title": "external range-energy calibration requirements audit",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction": {
+    "quantity": "S00 selected B-stave pulse records",
+    "expected": 640737,
+    "reproduced": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "source_s14b_ticket": "1781011754.1392.25ac6c9f",
+  "s14b_nominal_metrics": [
+    {
+      "method": "traditional_depth_charge_lookup",
+      "n": 332852,
+      "res68_abs_frac": 0.0211892254,
+      "res68_ci95": "[0.019759173376975067, 0.022616709286844058]",
+      "combined_energy_proxy_res68": 0.2462373359,
+      "combined_energy_proxy_res68_ci95": "[0.22370987434311201, 0.2516689108488624]"
+    },
+    {
+      "method": "ml_monotonic_hgb",
+      "n": 332852,
+      "res68_abs_frac": 0.0250078102,
+      "res68_ci95": "[0.022795672304338082, 0.02847725106827667]",
+      "combined_energy_proxy_res68": 0.1885071235,
+      "combined_energy_proxy_res68_ci95": "[0.1656324364654218, 0.1980872051573958]"
+    }
+  ],
+  "s14b_ml_minus_traditional_res68_ci95": [
+    0.0018782418546559696,
+    0.005814438356840856
+  ],
+  "s14b_leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "features_exclude_run_event_and_odd_readout",
+      "value": "true",
+      "pass": true
+    },
+    {
+      "check": "depth_only_res68",
+      "value": "0.261461",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_ml_res68",
+      "value": "0.319485",
+      "pass": true
+    }
+  ],
+  "requirements_decision_table": [
+    {
+      "ingredient": "HRD raw pulse selection and B-stack penetration depth",
+      "raw_hrd_constraint": "yes",
+      "evidence": "Raw ROOT gate reproduces S00 selected B-stave pulse records exactly; depth order is B2/B4/B6/B8 hit depth.",
+      "traditional_or_ml_role": "Both methods can use even-readout charge/amplitude and penetration depth with run-held-out validation.",
+      "needed_for_per_event_proton_energy": "Keep as internal observable; not sufficient for absolute incident or stopping energy.",
+      "status": "available from raw HRD"
+    },
+    {
+      "ingredient": "Even-vs-odd duplicate readout closure",
+      "raw_hrd_constraint": "yes, internally",
+      "evidence": "S14b nominal held-out res68: traditional 0.021189, ML 0.025008; run-block CIs are [0.019759173376975067, 0.022616709286844058] and [0.022795672304338082, 0.02847725106827667].",
+      "traditional_or_ml_role": "Defines the strongest raw-only closure target; leakage checks exclude odd readout from features.",
+      "needed_for_per_event_proton_energy": "Useful quality gate, but duplicate readout is not external truth.",
+      "status": "available from raw HRD"
+    },
+    {
+      "ingredient": "External charge-proxy uncertainty from downstream stack",
+      "raw_hrd_constraint": "partial",
+      "evidence": "S14b propagated P04b charge term gives combined nominal res68 0.246237 traditional and 0.188507 ML, both above 0.10.",
+      "traditional_or_ml_role": "Stress-tests whether charge closure survives an externalized HRD proxy.",
+      "needed_for_per_event_proton_energy": "Must be replaced or anchored by calibrated light-yield/energy-deposit response.",
+      "status": "insufficient for per-event claim"
+    },
+    {
+      "ingredient": "Material budget before and inside the HRD stack",
+      "raw_hrd_constraint": "no",
+      "evidence": "Prior S14d material scan changes the raw-only proxy envelope; traditional res68 span 0.017251773416181122 to 0.02877029809629374, ML span 0.02079760407409461 to 0.03222012616130544.",
+      "traditional_or_ml_role": "Geometry/material variants can be propagated, not learned absolutely from HRD pulses.",
+      "needed_for_per_event_proton_energy": "Surveyed thicknesses, dead layers, support material, target-to-stack path length, and uncertainties.",
+      "status": "requires external detector survey or validated model"
+    },
+    {
+      "ingredient": "Stave geometry and stopping-depth convention",
+      "raw_hrd_constraint": "partial",
+      "evidence": "Raw data identify which stave fired last, but not the absolute front-face, center, active thickness, or inactive gap convention.",
+      "traditional_or_ml_role": "Sets PSTAR depth anchors and therefore the energy scale of both methods.",
+      "needed_for_per_event_proton_energy": "Coordinate convention tied to physical stave positions and active volumes.",
+      "status": "requires external geometry definition"
+    },
+    {
+      "ingredient": "PSTAR/range-energy table applicability",
+      "raw_hrd_constraint": "no",
+      "evidence": "S14b uses a configured plastic-scintillator PSTAR table only as a monotonic depth-order lookup.",
+      "traditional_or_ml_role": "Maps depth anchors to nominal proton CSDA energies; ML inherits this target.",
+      "needed_for_per_event_proton_energy": "Material-specific stopping powers and validation for the actual scintillator/support mixture.",
+      "status": "requires external reference and uncertainty"
+    },
+    {
+      "ingredient": "Birks/quenching and nonlinear scintillator response",
+      "raw_hrd_constraint": "no",
+      "evidence": "No Birks constant, quenching curve, or ADC-to-light-yield calibration is present in the raw HRD ROOT.",
+      "traditional_or_ml_role": "Unmodeled response can make charge ranks look good while absolute energy is biased.",
+      "needed_for_per_event_proton_energy": "Bench calibration or validated Birks/quenching model with uncertainty propagation.",
+      "status": "missing external calibration"
+    },
+    {
+      "ingredient": "Particle identity / proton truth",
+      "raw_hrd_constraint": "no",
+      "evidence": "The run condition is 190 MeV p on CD2, but HRD-only selected pulses do not label event-level proton, deuteron, fragment, or background species.",
+      "traditional_or_ml_role": "Neither method can convert a raw closure target into proton-only truth labels.",
+      "needed_for_per_event_proton_energy": "Independent PID, beamline tag, or validated stopping-depth truth sample.",
+      "status": "missing external truth"
+    },
+    {
+      "ingredient": "Stopping-depth validation",
+      "raw_hrd_constraint": "no",
+      "evidence": "Depth-order violation is zero by construction for the raw proxy, but no external range telescope or MC truth validates true stopping depth.",
+      "traditional_or_ml_role": "A leakage-free model may still predict the proxy rather than physical stopping depth.",
+      "needed_for_per_event_proton_energy": "External range/stopping validation or simulation validated against calibration data.",
+      "status": "missing external validation"
+    },
+    {
+      "ingredient": "Leakage controls",
+      "raw_hrd_constraint": "yes",
+      "evidence": "S14b reports no train/held-out run overlap, no event-key overlap, feature exclusion of run/event/odd readout, and shuffled-target ML res68 0.319485.",
+      "traditional_or_ml_role": "Required because raw-only closure is strong enough to make leakage plausible.",
+      "needed_for_per_event_proton_energy": "Keep these controls, then repeat them against external truth/calibration targets.",
+      "status": "available, but target remains proxy-only"
+    }
+  ],
+  "finding": "The raw HRD reproduction gate matches S14b/S00 exactly at 640,737 selected B-stave pulses. The S14b run-held-out proxy closure remains strong for the internal duplicate-readout target (traditional res68 0.0212, ML res68 0.0250), but the propagated external charge-proxy uncertainty gives combined nominal range-energy proxy res68 0.2462 traditional and 0.1885 ML, both failing the 0.10 preflight threshold. Raw HRD data can constrain pulse selection, penetration ordering, duplicate-readout closure, and leakage controls; a per-event proton energy claim still requires external material budget, stave geometry/active-depth convention, Birks/quenching or light-yield calibration, proton/PID truth, and stopping-depth validation.",
+  "runtime_sec": 8.037
+}

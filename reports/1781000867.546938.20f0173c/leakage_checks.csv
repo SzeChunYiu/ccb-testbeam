@@ -1,0 +1,11 @@
+fold,check,value,flag,note
+A_to_B,train_test_run_overlap,0.0,False,Run split must be disjoint.
+A_to_B,train_test_event_overlap,0.0,False,Event overlap should be zero because runs are disjoint.
+A_to_B,forbidden_columns_used,0.0,False,"RF/traditional features exclude run, eventno, current label, and topology labels."
+A_to_B,shuffled_label_auc,0.5341337094582838,False,Flagged if shuffled-label RF transfers current labels above weak-chance tolerance.
+A_to_B,cwola_auc_too_good,0.6685606186811194,False,"Flagged if CWoLa score nearly identifies held-out current, which would suggest leakage."
+B_to_A,train_test_run_overlap,0.0,False,Run split must be disjoint.
+B_to_A,train_test_event_overlap,0.0,False,Event overlap should be zero because runs are disjoint.
+B_to_A,forbidden_columns_used,0.0,False,"RF/traditional features exclude run, eventno, current label, and topology labels."
+B_to_A,shuffled_label_auc,0.5919752177250794,False,Flagged if shuffled-label RF transfers current labels above weak-chance tolerance.
+B_to_A,cwola_auc_too_good,0.673696520777484,False,"Flagged if CWoLa score nearly identifies held-out current, which would suggest leakage."

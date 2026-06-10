@@ -1,0 +1,239 @@
+{
+  "ticket_id": "1781027807.3536.50af30a5",
+  "worker": "testbeam-laptop-2",
+  "study_id": "P08c",
+  "title": "topology-matched B2 waveform PID null",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "b669f77964ce0115849d9a8ccdfddcee128fabb5",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "p08a_reproduction": {
+    "reported_ml_auc": 0.8478302864659858,
+    "reported_ml_auc_ci": [
+      0.8333689148937022,
+      0.8608507938845945
+    ],
+    "reported_traditional_auc": 1.0,
+    "reproduced_ml_auc": 0.8478302864659858,
+    "reproduced_ml_auc_ci": [
+      0.8333689148937022,
+      0.8608507938845945
+    ],
+    "reproduced_ml_average_precision": 0.7756276498560539,
+    "reproduced_traditional_auc": 1.0,
+    "evaluated_rows": 19606
+  },
+  "weak_label_definition": {
+    "positive_name": "penetrating_like",
+    "negative_name": "terminal_b2_like",
+    "positive_min_downstream_selected": 2,
+    "positive_min_downstream_charge_fraction": 0.12,
+    "negative_max_downstream_selected": 0,
+    "negative_max_downstream_charge_fraction": 0.08
+  },
+  "matching": {
+    "matched_rows_before_fold_skips": 254,
+    "matched_pairs": 127,
+    "covariate_balance": [
+      {
+        "covariate": "log_b2_amplitude",
+        "negative_mean": 7.851046126658522,
+        "positive_mean": 7.852727766112079,
+        "standardized_mean_difference": 0.004198074531091419
+      },
+      {
+        "covariate": "log_total_charge",
+        "negative_mean": 9.785053328266294,
+        "positive_mean": 9.779102956216166,
+        "standardized_mean_difference": -0.010944400008698703
+      },
+      {
+        "covariate": "event_fraction",
+        "negative_mean": 0.4907115384666836,
+        "positive_mean": 0.49155709217852495,
+        "standardized_mean_difference": 0.002728625485233514
+      }
+    ],
+    "settings": {
+      "random_seed": 8085,
+      "scope": "run_cell_nearest",
+      "amplitude_quantile_bins": 8,
+      "total_charge_quantile_bins": 8,
+      "event_order_bins": 6,
+      "max_pairs_per_cell": 250,
+      "max_pairs_per_run": 400,
+      "nearest_k": 50,
+      "max_pair_distance": 0.35,
+      "min_pairs_per_cell": 1
+    }
+  },
+  "traditional": {
+    "method": "train-fold B2 hand-shape logistic plus q-template projection",
+    "roc_auc": 0.9877130400317083,
+    "roc_auc_ci": [
+      0.9756561273925455,
+      0.9992771085443575
+    ],
+    "average_precision": 0.9836304319913944
+  },
+  "ml": {
+    "method": "histogram gradient boosting over normalized B2 waveform samples, hand-shape features, and train-only PCA latents after nuisance matching",
+    "roc_auc": 0.9895626899194081,
+    "roc_auc_ci": [
+      0.9724268703803858,
+      0.9992010622001515
+    ],
+    "average_precision": 0.9912540240569157
+  },
+  "ml_vs_traditional": {
+    "ml_minus_traditional_auc": 0.0018496498876997558,
+    "ci": [
+      -0.011905701924692211,
+      0.017685891883764262
+    ],
+    "bootstrap_valid": 400
+  },
+  "benchmark": {
+    "evaluated_rows": 174,
+    "evaluated_runs": [
+      32,
+      37,
+      42,
+      49,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "skipped_runs": [
+      31,
+      34,
+      35,
+      36,
+      39,
+      40,
+      41,
+      45,
+      48,
+      50,
+      51,
+      53,
+      54,
+      55,
+      56,
+      65
+    ],
+    "positive_fraction": 0.5,
+    "ml_vs_traditional": {
+      "ml_minus_traditional_auc": 0.0018496498876997558,
+      "ci": [
+        -0.011905701924692211,
+        0.017685891883764262
+      ],
+      "bootstrap_valid": 400
+    }
+  },
+  "input_file_count": 33,
+  "follow_up_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 42.1,
+  "leakage_hunt": [
+    {
+      "probe": "matched nuisance logistic",
+      "roc_auc": 0.5143347866296737,
+      "average_precision": 0.5186411320343542,
+      "value": null,
+      "interpretation": "Uses only matched run-family, B2-amplitude, total-charge, and event-order proxies; high AUC means matching did not remove nuisance information."
+    },
+    {
+      "probe": "run-only logistic",
+      "roc_auc": 0.5,
+      "average_precision": 0.5,
+      "value": null,
+      "interpretation": "Strict leave-one-run-out run-id sentinel; unseen held-out runs collapse to the intercept."
+    },
+    {
+      "probe": "match-cell logistic",
+      "roc_auc": 0.5,
+      "average_precision": 0.5,
+      "value": null,
+      "interpretation": "Uses only the exact matching cell; high AUC means residual cell imbalance remains."
+    },
+    {
+      "probe": "shuffled-label HGB",
+      "roc_auc": 0.49715946624388957,
+      "average_precision": 0.5210588527930784,
+      "value": null,
+      "interpretation": "Same ML pipeline with shuffled training labels; should stay near chance."
+    },
+    {
+      "probe": "matched covariate max abs SMD",
+      "roc_auc": null,
+      "average_precision": null,
+      "value": 0.010944400008698703,
+      "interpretation": "Post-match standardized mean-difference maximum across log B2 amplitude, log total charge, and event fraction."
+    },
+    {
+      "probe": "P08a waveform AUC reproduction",
+      "roc_auc": 0.8478302864659858,
+      "average_precision": 0.7756276498560539,
+      "value": 0.0,
+      "interpretation": "Raw ROOT reproduction of the upstream P08a waveform number before P08c matching."
+    },
+    {
+      "probe": "too-good trigger",
+      "roc_auc": null,
+      "average_precision": null,
+      "value": 1.0,
+      "interpretation": "Triggers when a waveform result exceeds the pre-set AUC threshold or nuisance-only AUC remains high; all leakage probes above are gating checks."
+    }
+  ],
+  "primary_interpretation": "P08a's B2 waveform AUC survives strict topology/charge/rate-proxy matching on a small calipered support island, with nuisance and shuffled controls near chance; this is support-limited weak-label separation, not a PID adoption claim."
+}

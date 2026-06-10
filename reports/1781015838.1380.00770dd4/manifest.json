@@ -1,0 +1,36 @@
+{
+  "ticket": "1781015838.1380.00770dd4",
+  "study": "P02e",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "20f125181699519924a58cd2c7b8396f3249c469",
+  "config": "reports/1781015838.1380.00770dd4/p02e_config.json",
+  "command": "reports/1781015838.1380.00770dd4/p02e_all_three_early_peak_timing_tails.py --config reports/1781015838.1380.00770dd4/p02e_config.json",
+  "environment_command": "uv run --with uproot --with numpy --with pandas --with scikit-learn python",
+  "random_seed": 20260609,
+  "runtime_sec": 28.73,
+  "inputs": {
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs": {
+    "REPORT.md": "4af26eae08bc7c425afe878b0b85a25de454c3ab44b7cf8e5beba0cf4a402050",
+    "association_table.csv": "7011e22ebb342509657d4986868b545d190b9d80ae94f79e98af845fe30cd247",
+    "fixed_efficiency.csv": "d7fe932241917eb565a6974743a93d6aaddae38e1afebacfdaf60c51a56b5dff",
+    "input_sha256.csv": "bdcbcf021cf8d00a8d378da12f3ec8ccd1e116648e7a755e47a2ab0576ad8c2c",
+    "leakage_checks.csv": "7b1d5637ad469a02d67a75cf06bfd780add8f36cc66abf1f0d5e499e072dfc52",
+    "oof_predictions.csv": "9cc25930b6a7fa232f8ab27cc6dfd528d8b04408dcc4c77918c70165add126a2",
+    "p02e_all_three_early_peak_timing_tails.py": "240c2cd10bc71e19d985e01d7b26cbedb8eeecaa86a998aef2455313194a8ee9",
+    "p02e_config.json": "4974ee8f6792db5531bd9091f6ac499a847fbf74ead87a4269f0cadecfc8eee7",
+    "reproduction_match_table.csv": "df8c3786327d05c916b448625bb013be00fc503cbbd82bd77cf5d1e313cf02fb",
+    "result.json": "4f29099a24f0e07ad4794de5b6c712cafd6f46c4c73d49fd01fec25365c98559",
+    "run_counts.csv": "f8b4c6483f45f51185b5882282422ac331949230d3976c8717fb97c93f2b3a68",
+    "scoreboard.csv": "bfaf8f5d187dbe6d978404ca8be2ecff04af40f64d157c58f2eadb90ded494d6",
+    "traditional_fold_choices.csv": "1be9a191ae389aec36cf4b410b6f2e23c301345edf1013219ae9602470505188"
+  }
+}

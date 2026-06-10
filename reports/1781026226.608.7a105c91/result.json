@@ -1,0 +1,111 @@
+{
+  "conclusion": "Single pathology axes miss measurable interaction structure, but the interactions are not a hidden timing-correction shortcut. The strongest pair is s16_lowering_axis x dropout_jagged_axis: observed double-positive tail fraction 0.0419 versus additive expectation 0.3022, delta -0.2603 with 95% CI [-0.4886, -0.1164]. Additive traditional tail AUC is 0.892; sparse-interaction ML AUC is 0.897; calibrated tree AUC is 0.895 with ECE 0.0030. Residual sigma68 is 1.682 ns raw, 2.158 ns additive traditional, and 1.367 ns ML. Use the pairwise interaction ledger for veto composition and uncertainty inflation rather than replacing the S04 timing baseline.",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "interactions": {
+    "n_pairs_tested": 21,
+    "n_supported_significant_delta_ci_excludes_zero": 4,
+    "top": {
+      "additive_expected11": 0.30222844598226106,
+      "axis_a": "s16_lowering_axis",
+      "axis_b": "dropout_jagged_axis",
+      "composition_shift": 0.06879270312079025,
+      "interaction_delta": -0.26027986682123266,
+      "interaction_delta_ci": [
+        -0.4885992341461542,
+        -0.11635902282530312
+      ],
+      "interaction_odds_ratio": 0.01866762296615266,
+      "log_interaction_or_ci": [
+        -6.136523989398069,
+        -1.2615586892749027
+      ],
+      "low_support": false,
+      "min_cell_n": 73,
+      "n11": 1478,
+      "tail_rate11": 0.04194857916102842
+    }
+  },
+  "leakage_checks_pass": true,
+  "metrics": {
+    "calibration_ece": {
+      "ml_calibrated_tree": 0.003042930792107431,
+      "ml_sparse_interaction_logit": 0.16149593632239914,
+      "traditional_additive_logit": 0.18538071327833489
+    },
+    "full_rms_ns": {
+      "ml_rf_interaction": 5.227970562629371,
+      "raw": 5.789492463919804,
+      "traditional_additive": 5.297795887235522
+    },
+    "sigma68_ns": {
+      "ml_rf_interaction": 1.3665443044736856,
+      "raw": 1.681644797133409,
+      "traditional_additive": 2.157811685605158
+    },
+    "tail_frac_abs_gt5ns": {
+      "ml_rf_interaction": 0.022818791946308724,
+      "raw": 0.015287099179716629,
+      "traditional_additive": 0.050857568978374346
+    }
+  },
+  "ml": {
+    "calibrated_tree_auc": 0.8952549385395406,
+    "calibrated_tree_average_precision": 0.3295375470954809,
+    "calibrated_tree_brier": 0.012138114663573864,
+    "calibrated_tree_ece": 0.003042930792107431,
+    "method": "sparse interaction logistic and calibrated constrained-depth tree tail-risk model",
+    "rf_residual_sigma68_ci": [
+      1.3204718979819514,
+      1.4236164453895348
+    ],
+    "rf_residual_sigma68_ns": 1.3665443044736856,
+    "sparse_interaction_auc": 0.8970644896149833
+  },
+  "next_tickets": [],
+  "raw_root_reproduction": {
+    "pass": true,
+    "total_selected_pulses": 640737
+  },
+  "reproduced": true,
+  "split": {
+    "bootstrap_unit": "run_then_event",
+    "folds": 5,
+    "runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "unit": "run"
+  },
+  "study": "S04d",
+  "ticket": "1781026226.608.7a105c91",
+  "title": "timing-tail pathology interaction audit",
+  "traditional": {
+    "method": "matched factorial additive table plus additive logistic/Ridge stress tests",
+    "sigma68_ci": [
+      2.0855927952586244,
+      2.259322028746377
+    ],
+    "sigma68_ns": 2.157811685605158,
+    "tail_auc": 0.8924073475494316
+  },
+  "worker": "testbeam-laptop-2"
+}

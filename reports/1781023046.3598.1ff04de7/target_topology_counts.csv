@@ -1,0 +1,4 @@
+topology,n,runs,median_target_charge,median_b2_charge,a_mult
+A1A3,1342,31,32295.5,41470.0,2.0
+A1_only,149,25,11564.0,50750.0,1.0
+A3_only,2564,32,15329.0,40653.0,1.0

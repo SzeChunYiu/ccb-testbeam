@@ -1,0 +1,4 @@
+stratum,amp_bin,baseline_bin,p02_topology,low_n,high_n,match_weight_raw,low_downstream_fraction,high_downstream_fraction,downstream_high_minus_low,match_weight
+amp_ge_4500|s16_no_lowering|p02_broad_late,amp_ge_4500,s16_no_lowering,p02_broad_late,1730,113036,1730,0.010404624277456647,0.017428076011182278,0.007023451733725631,0.4760594386351128
+amp_2500_4500|s16_no_lowering|p02_broad_late,amp_2500_4500,s16_no_lowering,p02_broad_late,1227,27434,1227,0.02526487367563162,0.08092148428956769,0.05565661061393607,0.3376444689047881
+amp_1000_2500|s16_no_lowering|p02_broad_late,amp_1000_2500,s16_no_lowering,p02_broad_late,677,11522,677,0.03988183161004431,0.04530463461204652,0.005422803002002208,0.18629609246009907

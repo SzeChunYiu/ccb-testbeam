@@ -1,0 +1,41 @@
+{
+  "ticket": "0000000009.1.pidfull",
+  "title": "full particle-species ID from waveform vs GEANT4 truth",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "geant4_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "fallback_geant4_root": "/home/billy/ccb-geant4/output_30k.root",
+  "output_dir": "reports/0000000009.1.pidfull",
+  "raw_expected_selected_pulses": 640737,
+  "raw_samples_per_channel": 18,
+  "raw_baseline_samples": [0, 1, 2, 3],
+  "raw_amplitude_cut_adc": 1000.0,
+  "raw_b_channels": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "raw_run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "sim_b_stack_layer_id1": 2,
+  "sim_layers": 8,
+  "sim_run_blocks": 4,
+  "dominant_truth_fraction_min": 0.6,
+  "min_b_edep": 0.000001,
+  "classes": {
+    "proton": 2212,
+    "deuteron": 1000010020,
+    "alpha": 1000020040,
+    "carbon12": 1000060120
+  },
+  "max_per_class": 1500,
+  "random_seed": 20260610,
+  "bootstrap_reps": 400,
+  "torch_epochs": 4,
+  "torch_batch_size": 256
+}

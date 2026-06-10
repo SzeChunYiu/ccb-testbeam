@@ -1,0 +1,91 @@
+task,method,run,class_name,heldout_rows,run_class_recall,positive_rate,mean_score
+adjacent_run_pair_side,traditional hand-shape,35,earlier_run_in_pair,2138,0.528999064546305,0.47100093545369504,0.49950809603741075
+adjacent_run_pair_side,traditional hand-shape,36,later_run_in_pair,2044,0.514187866927593,0.514187866927593,0.5010210705623136
+adjacent_run_pair_side,traditional hand-shape,42,earlier_run_in_pair,2635,0.4872865275142315,0.5127134724857685,0.501430706937068
+adjacent_run_pair_side,traditional hand-shape,44,later_run_in_pair,1654,0.5078597339782346,0.5078597339782346,0.5007819421829098
+adjacent_run_pair_side,traditional hand-shape,57,earlier_run_in_pair,2559,0.5525595935912466,0.44744040640875343,0.4989896485876164
+adjacent_run_pair_side,traditional hand-shape,58,later_run_in_pair,2490,0.3313253012048193,0.3313253012048193,0.49562756983881023
+adjacent_run_pair_side,traditional hand-shape,63,earlier_run_in_pair,4606,0.7179765523230569,0.2820234476769431,0.49311972106365476
+adjacent_run_pair_side,traditional hand-shape,64,later_run_in_pair,4034,0.26797223599405057,0.26797223599405057,0.4930025399546822
+adjacent_run_pair_side,traditional PCA-6,35,earlier_run_in_pair,2138,0.4560336763330215,0.5439663236669785,0.5008398943761599
+adjacent_run_pair_side,traditional PCA-6,36,later_run_in_pair,2044,0.5631115459882583,0.5631115459882583,0.5013740067536193
+adjacent_run_pair_side,traditional PCA-6,42,earlier_run_in_pair,2635,0.4330170777988615,0.5669829222011386,0.5014333661728805
+adjacent_run_pair_side,traditional PCA-6,44,later_run_in_pair,1654,0.5411124546553809,0.5411124546553809,0.5005863656186691
+adjacent_run_pair_side,traditional PCA-6,57,earlier_run_in_pair,2559,0.5013677217663149,0.49863227823368506,0.4996074370580271
+adjacent_run_pair_side,traditional PCA-6,58,later_run_in_pair,2490,0.3899598393574297,0.3899598393574297,0.496335313954814
+adjacent_run_pair_side,traditional PCA-6,63,earlier_run_in_pair,4606,0.7040816326530612,0.29591836734693877,0.49212995574382135
+adjacent_run_pair_side,traditional PCA-6,64,later_run_in_pair,4034,0.30565195835399106,0.30565195835399106,0.49262253789858046
+adjacent_run_pair_side,ML masked-denoising AE-6,35,earlier_run_in_pair,2138,0.5734331150608045,0.42656688493919553,0.4976048113209265
+adjacent_run_pair_side,ML masked-denoising AE-6,36,later_run_in_pair,2044,0.48043052837573386,0.48043052837573386,0.49932628590366984
+adjacent_run_pair_side,ML masked-denoising AE-6,42,earlier_run_in_pair,2635,0.4793168880455408,0.5206831119544592,0.5005021939691996
+adjacent_run_pair_side,ML masked-denoising AE-6,44,later_run_in_pair,1654,0.4860943168077388,0.4860943168077388,0.49817615034183454
+adjacent_run_pair_side,ML masked-denoising AE-6,57,earlier_run_in_pair,2559,0.5599843688940993,0.44001563110590075,0.49795108296219603
+adjacent_run_pair_side,ML masked-denoising AE-6,58,later_run_in_pair,2490,0.41204819277108434,0.41204819277108434,0.496496092299478
+adjacent_run_pair_side,ML masked-denoising AE-6,63,earlier_run_in_pair,4606,0.7127659574468085,0.2872340425531915,0.49459208524158926
+adjacent_run_pair_side,ML masked-denoising AE-6,64,later_run_in_pair,4034,0.28334159643034207,0.28334159643034207,0.49427550570057244
+adjacent_run_pair_side,proxy: amplitude+multiplicity,35,earlier_run_in_pair,2138,0.5594013096351731,0.44059869036482696,0.4949478513847561
+adjacent_run_pair_side,proxy: amplitude+multiplicity,36,later_run_in_pair,2044,0.487279843444227,0.487279843444227,0.49753347813894494
+adjacent_run_pair_side,proxy: amplitude+multiplicity,42,earlier_run_in_pair,2635,0.4633776091081594,0.5366223908918406,0.4989859162108529
+adjacent_run_pair_side,proxy: amplitude+multiplicity,44,later_run_in_pair,1654,0.4727932285368803,0.4727932285368803,0.4956017864407903
+adjacent_run_pair_side,proxy: amplitude+multiplicity,57,earlier_run_in_pair,2559,0.5642829230168034,0.43571707698319656,0.49513196013210686
+adjacent_run_pair_side,proxy: amplitude+multiplicity,58,later_run_in_pair,2490,0.4578313253012048,0.4578313253012048,0.49575601312250644
+adjacent_run_pair_side,proxy: amplitude+multiplicity,63,earlier_run_in_pair,4606,0.5890143291359097,0.4109856708640903,0.4952895797154323
+adjacent_run_pair_side,proxy: amplitude+multiplicity,64,later_run_in_pair,4034,0.3477937530986614,0.3477937530986614,0.4930322468237941
+adjacent_run_pair_side,leakage check: topology/stave composition,35,earlier_run_in_pair,2138,0.5701590271281571,0.42984097287184286,0.4943615639959763
+adjacent_run_pair_side,leakage check: topology/stave composition,36,later_run_in_pair,2044,0.4946183953033268,0.4946183953033268,0.4970413784447466
+adjacent_run_pair_side,leakage check: topology/stave composition,42,earlier_run_in_pair,2635,0.4573055028462998,0.5426944971537002,0.498481846179896
+adjacent_run_pair_side,leakage check: topology/stave composition,44,later_run_in_pair,1654,0.4703748488512696,0.4703748488512696,0.49455522905669125
+adjacent_run_pair_side,leakage check: topology/stave composition,57,earlier_run_in_pair,2559,0.5635013677217663,0.4364986322782337,0.494361060669904
+adjacent_run_pair_side,leakage check: topology/stave composition,58,later_run_in_pair,2490,0.4606425702811245,0.4606425702811245,0.49511457744658244
+adjacent_run_pair_side,leakage check: topology/stave composition,63,earlier_run_in_pair,4606,0.5629613547546678,0.4370386452453322,0.4951020056373001
+adjacent_run_pair_side,leakage check: topology/stave composition,64,later_run_in_pair,4034,0.3673772930094199,0.3673772930094199,0.49255136803273186
+sample_i_local_transition,traditional hand-shape,40,sample_i_calib_era,2633,0.68211165970376,0.31788834029624,0.4949869890660563
+sample_i_local_transition,traditional hand-shape,41,sample_i_calib_era,2683,0.6354826686544912,0.36451733134550873,0.49657320217962614
+sample_i_local_transition,traditional hand-shape,42,sample_i_calib_era,2635,0.6265654648956357,0.3734345351043643,0.4971061160227052
+sample_i_local_transition,traditional hand-shape,55,sample_i_analysis_era,2152,0.5845724907063197,0.5845724907063197,0.5052092164490506
+sample_i_local_transition,traditional hand-shape,56,sample_i_analysis_era,2918,0.49383139136394794,0.49383139136394794,0.5007874827309464
+sample_i_local_transition,traditional hand-shape,57,sample_i_analysis_era,2559,0.3212192262602579,0.3212192262602579,0.49534520342029675
+sample_i_local_transition,traditional PCA-6,40,sample_i_calib_era,2633,0.5738701101405241,0.42612988985947586,0.49521401584800184
+sample_i_local_transition,traditional PCA-6,41,sample_i_calib_era,2683,0.5437942601565412,0.4562057398434588,0.4961014534572587
+sample_i_local_transition,traditional PCA-6,42,sample_i_calib_era,2635,0.5294117647058824,0.47058823529411764,0.49665202787187174
+sample_i_local_transition,traditional PCA-6,55,sample_i_analysis_era,2152,0.695631970260223,0.695631970260223,0.5041747886357492
+sample_i_local_transition,traditional PCA-6,56,sample_i_analysis_era,2918,0.6038382453735435,0.6038382453735435,0.5006985395942795
+sample_i_local_transition,traditional PCA-6,57,sample_i_analysis_era,2559,0.43259085580304807,0.43259085580304807,0.4956259907236072
+sample_i_local_transition,ML masked-denoising AE-6,40,sample_i_calib_era,2633,0.6680592480060767,0.33194075199392326,0.49439675438050085
+sample_i_local_transition,ML masked-denoising AE-6,41,sample_i_calib_era,2683,0.6407007081625047,0.3592992918374953,0.4953817079544684
+sample_i_local_transition,ML masked-denoising AE-6,42,sample_i_calib_era,2635,0.6022770398481974,0.39772296015180264,0.49691036164154395
+sample_i_local_transition,ML masked-denoising AE-6,55,sample_i_analysis_era,2152,0.6440520446096655,0.6440520446096655,0.505973378810417
+sample_i_local_transition,ML masked-denoising AE-6,56,sample_i_analysis_era,2918,0.5452364633310487,0.5452364633310487,0.5027424825147007
+sample_i_local_transition,ML masked-denoising AE-6,57,sample_i_analysis_era,2559,0.31770222743259086,0.31770222743259086,0.49387977082776624
+sample_i_local_transition,proxy: amplitude+multiplicity,40,sample_i_calib_era,2633,0.4887960501329282,0.5112039498670717,0.49392105455752494
+sample_i_local_transition,proxy: amplitude+multiplicity,41,sample_i_calib_era,2683,0.48788669399925455,0.5121133060007454,0.49404237486887037
+sample_i_local_transition,proxy: amplitude+multiplicity,42,sample_i_calib_era,2635,0.47438330170777987,0.5256166982922201,0.49507194560925954
+sample_i_local_transition,proxy: amplitude+multiplicity,55,sample_i_analysis_era,2152,0.6914498141263941,0.6914498141263941,0.5053640084612926
+sample_i_local_transition,proxy: amplitude+multiplicity,56,sample_i_analysis_era,2918,0.54592186429061,0.54592186429061,0.4968220636150001
+sample_i_local_transition,proxy: amplitude+multiplicity,57,sample_i_analysis_era,2559,0.5205158264947245,0.5205158264947245,0.4941754882160099
+sample_i_local_transition,leakage check: topology/stave composition,40,sample_i_calib_era,2633,0.4151158374477782,0.5848841625522218,0.4934036510340983
+sample_i_local_transition,leakage check: topology/stave composition,41,sample_i_calib_era,2683,0.42079761461051063,0.5792023853894894,0.4936749705377053
+sample_i_local_transition,leakage check: topology/stave composition,42,sample_i_calib_era,2635,0.4174573055028463,0.5825426944971537,0.49455160978973073
+sample_i_local_transition,leakage check: topology/stave composition,55,sample_i_analysis_era,2152,0.7197955390334573,0.7197955390334573,0.505239132343215
+sample_i_local_transition,leakage check: topology/stave composition,56,sample_i_analysis_era,2918,0.5462645647703906,0.5462645647703906,0.4953541851174749
+sample_i_local_transition,leakage check: topology/stave composition,57,sample_i_analysis_era,2559,0.6096131301289566,0.6096131301289566,0.4946310655765739
+sample_ii_adjacent_era,traditional hand-shape,60,sample_ii_early,5427,0.425833793992998,0.5741662060070021,0.5009427855511579
+sample_ii_adjacent_era,traditional hand-shape,61,sample_ii_early,5559,0.40618816333873,0.59381183666127,0.5013971520437263
+sample_ii_adjacent_era,traditional hand-shape,64,sample_ii_late,4034,0.589241447694596,0.589241447694596,0.5007595500024242
+sample_ii_adjacent_era,traditional hand-shape,65,sample_ii_late,2770,0.5209386281588447,0.5209386281588447,0.495995673426684
+sample_ii_adjacent_era,traditional PCA-6,60,sample_ii_early,5427,0.48295559240832875,0.5170444075916713,0.5035724142754567
+sample_ii_adjacent_era,traditional PCA-6,61,sample_ii_early,5559,0.4475625112430293,0.5524374887569706,0.5050917958123488
+sample_ii_adjacent_era,traditional PCA-6,64,sample_ii_late,4034,0.49082796232027764,0.49082796232027764,0.4984903953261189
+sample_ii_adjacent_era,traditional PCA-6,65,sample_ii_late,2770,0.4050541516245487,0.4050541516245487,0.49068220593138345
+sample_ii_adjacent_era,ML masked-denoising AE-6,60,sample_ii_early,5427,0.6729316381057675,0.32706836189423255,0.5010906513119419
+sample_ii_adjacent_era,ML masked-denoising AE-6,61,sample_ii_early,5559,0.7022845835581939,0.2977154164418061,0.5002505325051673
+sample_ii_adjacent_era,ML masked-denoising AE-6,64,sample_ii_late,4034,0.31606346058502727,0.31606346058502727,0.5002296123095045
+sample_ii_adjacent_era,ML masked-denoising AE-6,65,sample_ii_late,2770,0.3231046931407942,0.3231046931407942,0.49786528345105735
+sample_ii_adjacent_era,proxy: amplitude+multiplicity,60,sample_ii_early,5427,0.22940851299060255,0.7705914870093975,0.5107126308127766
+sample_ii_adjacent_era,proxy: amplitude+multiplicity,61,sample_ii_early,5559,0.2095700665587336,0.7904299334412664,0.5129849567216076
+sample_ii_adjacent_era,proxy: amplitude+multiplicity,64,sample_ii_late,4034,0.6108081308874567,0.6108081308874567,0.4924416932305209
+sample_ii_adjacent_era,proxy: amplitude+multiplicity,65,sample_ii_late,2770,0.42707581227436825,0.42707581227436825,0.4720062199770854
+sample_ii_adjacent_era,leakage check: topology/stave composition,60,sample_ii_early,5427,0.22535470794177262,0.7746452920582274,0.5124463644550629
+sample_ii_adjacent_era,leakage check: topology/stave composition,61,sample_ii_early,5559,0.21262817053426875,0.7873718294657313,0.5137267860196341
+sample_ii_adjacent_era,leakage check: topology/stave composition,64,sample_ii_late,4034,0.6026276648487853,0.6026276648487853,0.4926244348113124
+sample_ii_adjacent_era,leakage check: topology/stave composition,65,sample_ii_late,2770,0.42057761732851984,0.42057761732851984,0.4722717880362075

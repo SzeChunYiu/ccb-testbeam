@@ -1,0 +1,5 @@
+check,value,pass,note
+shuffled_training_targets_mae_minus_real_mae,132.47846302054836,True,Shuffled targets must perform materially worse than real training.
+run_split_mae_minus_row_split_mae,-2.6242835355346834,True,A large row-split advantage would suggest run leakage or duplicate memorization.
+heldout_feature_duplicate_fraction,0.05525,True,Exact feature duplicates across train and held-out runs are rare enough to reject memorization.
+feature_exclusion,,True,"ML features exclude run, event number, trigger, filenames, selected-pulse amplitude, and target ADC."

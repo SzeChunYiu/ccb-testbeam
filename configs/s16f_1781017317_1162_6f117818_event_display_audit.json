@@ -1,0 +1,45 @@
+{
+  "study": "S16f",
+  "ticket": "1781017317.1162.6f117818",
+  "worker": "testbeam-laptop-2",
+  "title": "event-display audit of large-lowering selected pulses",
+  "raw_root_dir": "data/root/root",
+  "amplitude_cut_adc": 1000.0,
+  "large_lowering_adc": 200.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "analysis": {
+    "train_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53],
+    "heldout_runs": [54, 55, 56, 57],
+    "gallery_size": 48,
+    "gallery_seed": 1781017317
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_analysis": {
+      "selected_pulses": 252266,
+      "B2": 241422,
+      "B4": 6451,
+      "B6": 3094,
+      "B8": 1299
+    }
+  },
+  "negative_tolerance_adc": {"floor": 25.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.35, "low_fraction": 0.05, "negative_adc": 50.0},
+  "traditional": {
+    "score_margin_for_high_confidence": 0.75
+  },
+  "ml": {
+    "random_seed": 160731,
+    "bootstrap_samples": 800,
+    "cv_folds": 5,
+    "random_forest": {"n_estimators": 260, "max_depth": 7, "min_samples_leaf": 20}
+  }
+}

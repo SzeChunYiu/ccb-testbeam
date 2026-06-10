@@ -1,0 +1,47 @@
+{
+  "ticket": "1781020303.539.78bf7a44",
+  "worker": "testbeam-laptop-1",
+  "study": "P07g",
+  "title": "saturation recovery acceptance rule from bias envelope",
+  "raw_root": "data/root/root",
+  "runs": [58, 59, 60, 61, 62, 63, 65],
+  "expected_sample_ii_b2_selected": 88213,
+  "expected_p07e_best_res68": 0.08142854693675028,
+  "expected_p07e_best_bias": 0.028761577610479743,
+  "p07e_reproduction_tolerance_res68": 0.012,
+  "p07e_reproduction_tolerance_bias": 0.015,
+  "retained_window_name": "w2_8",
+  "retained_window_samples": [2, 3, 4, 5, 6, 7, 8],
+  "clean_min_amp_adc": 1500.0,
+  "clean_max_amp_adc": 6500.0,
+  "clean_min_peak_sample": 4,
+  "clean_max_peak_sample": 12,
+  "fixed_ceiling_adc": 4000.0,
+  "train_ceilings_adc": [2000.0, 2500.0, 3000.0, 4000.0],
+  "natural_saturation_proxy_adc": 7000.0,
+  "min_downstream_selected": 2,
+  "max_train_clean_per_split": 9000,
+  "max_held_artificial_per_run": 9000,
+  "bootstrap_reps": 2000,
+  "event_sample_rows": 5000,
+  "bootstrap_sample_rows": 5000,
+  "random_seed": 20260610,
+  "catastrophic_abs_frac": 0.20,
+  "bias_envelope_abs_frac": 0.10,
+  "acceptance_train_gates": {
+    "max_res68_abs_frac": 0.12,
+    "max_abs_bias_median_frac": 0.05,
+    "max_catastrophic_rate": 0.10,
+    "max_timing_tail_rate": 0.06
+  },
+  "traditional_grid": {
+    "max_lift": [0.10, 0.15, 0.20, 0.30, 0.45, 0.65, 0.90, 1.25],
+    "max_q_rmse": [0.10, 0.14, 0.18, 0.24, 0.32, 0.45],
+    "odd_charge_ratio_low": [0.02, 0.05, 0.10],
+    "odd_charge_ratio_high": [1.40, 1.80, 2.40, 3.20]
+  },
+  "ml_grid": {
+    "risk_upper_threshold": [0.07, 0.08, 0.09, 0.10, 0.12, 0.14, 0.16],
+    "cat_probability_threshold": [0.04, 0.06, 0.08, 0.10, 0.14]
+  }
+}

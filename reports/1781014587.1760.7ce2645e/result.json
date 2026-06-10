@@ -1,0 +1,123 @@
+{
+  "ticket": "1781014587.1760.7ce2645e",
+  "study": "S16e",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "495fb9e5eadf8a730a6963480ba6203127495bf1",
+  "runtime_sec": 223.65100121498108,
+  "reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "selected_pass": true,
+    "forced_random_tagged_entries": 0,
+    "forced_random_pass": true,
+    "true_forced_random_sample_available": false
+  },
+  "archive_scan": {
+    "rows_scanned": 437,
+    "forced_random_hits": 0,
+    "candidate_available": false
+  },
+  "no_proxy_dataset": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "sampled_rows": 396000,
+    "heldout_rows_per_method": 24000,
+    "uses_quiet_event_amplitude_proxy": false
+  },
+  "traditional": {
+    "best_method": "traditional_mean3",
+    "best_mae_adc": 36.51819444444444,
+    "summary": [
+      {
+        "method": "traditional_mean3",
+        "n": 24000,
+        "mean_bias_adc": 0.11397222222222114,
+        "mean_bias_ci_low_adc": -3.1159135416666808,
+        "mean_bias_ci_high_adc": 3.2546635416666616,
+        "mae_adc": 36.51819444444444,
+        "mae_ci_low_adc": 27.427722222222275,
+        "mae_ci_high_adc": 45.75613298611127,
+        "rmse_adc": 230.10327983079446,
+        "width68_adc": 10.0,
+        "width68_ci_low_adc": 9.66666666666697,
+        "width68_ci_high_adc": 10.33333333333394
+      },
+      {
+        "method": "traditional_stave_sample_offset_median3",
+        "n": 24000,
+        "mean_bias_adc": -1.6601666666666666,
+        "mean_bias_ci_low_adc": -5.260318750000001,
+        "mean_bias_ci_high_adc": 1.2463489583333334,
+        "mae_adc": 37.814166666666665,
+        "mae_ci_low_adc": 28.571196875,
+        "mae_ci_high_adc": 48.26906145833333,
+        "rmse_adc": 256.4822126711064,
+        "width68_adc": 11.0,
+        "width68_ci_low_adc": 10.0,
+        "width68_ci_high_adc": 11.0
+      },
+      {
+        "method": "traditional_median3",
+        "n": 24000,
+        "mean_bias_adc": -1.72425,
+        "mean_bias_ci_low_adc": -4.809639583333333,
+        "mean_bias_ci_high_adc": 0.9814927083333334,
+        "mae_adc": 37.81608333333333,
+        "mae_ci_low_adc": 28.474711458333335,
+        "mae_ci_high_adc": 47.51556875,
+        "rmse_adc": 256.5208599380045,
+        "width68_adc": 11.0,
+        "width68_ci_low_adc": 10.0,
+        "width68_ci_high_adc": 11.0
+      }
+    ]
+  },
+  "ml": {
+    "method": "ml_hist_gradient_boosting",
+    "best_hyperparameters": {
+      "learning_rate": 0.08,
+      "max_leaf_nodes": 15.0,
+      "cv_mae_adc": 27.02209177776557,
+      "cv_width68_adc": 12.124281832707311
+    },
+    "feature_columns": [
+      "stave_idx",
+      "target_sample",
+      "other0_adc",
+      "other1_adc",
+      "other2_adc",
+      "other_mean_adc",
+      "other_median_adc",
+      "other_range_adc",
+      "other_std_adc"
+    ],
+    "n_train": 60000,
+    "summary": {
+      "method": "ml_hist_gradient_boosting",
+      "n": 24000,
+      "mean_bias_adc": 2.7514900847717216,
+      "mean_bias_ci_low_adc": -0.6980620424031978,
+      "mean_bias_ci_high_adc": 5.442715479283426,
+      "mae_adc": 23.95436486544166,
+      "mae_ci_low_adc": 18.611349761142908,
+      "mae_ci_high_adc": 29.791037364709737,
+      "rmse_adc": 126.4622913882869,
+      "width68_adc": 12.269815315011328,
+      "width68_ci_low_adc": 12.090909286457258,
+      "width68_ci_high_adc": 12.63754858813877
+    }
+  },
+  "leakage_checks_pass": true,
+  "conclusion": "No true forced/random pedestal data is present locally; no-proxy held-out pre-trigger benchmark completed without amplitude-proxy selection.",
+  "next_tickets": [
+    {
+      "title": "S16f: acquire dedicated B-stack forced/random pedestal ROOT",
+      "body": "Take or ingest a non-beam-trigger B-stack pedestal run, record DAQ trigger code/run log provenance, and rerun S16e with true pedestal events instead of physics-event pre-trigger samples."
+    },
+    {
+      "title": "S16g: cross-mirror run-log inventory for CCB HRD data",
+      "body": "Search lab DAQ machines and external archives for HRD run logs covering runs 1-65, then add a versioned manifest linking trigger mode, beam state, stack, and ROOT file checksums."
+    }
+  ]
+}

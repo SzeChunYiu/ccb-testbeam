@@ -1,0 +1,5 @@
+quantity,expected,reproduced,delta,pass
+Sample-II B2 selected pulses,88213,88213.0,0,True
+P07e w2_8/gbr_masked res68_abs_frac,0.08142854693675028,0.07847091265073264,-0.0029576342860176408,True
+P07e w2_8/gbr_masked median_bias_frac,0.028761577610479743,0.02787571279714597,-0.000885864813333772,True
+Natural A_B2>=7000 with >=2 downstream selected events,data-derived,249.0,,True

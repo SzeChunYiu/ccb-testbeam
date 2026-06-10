@@ -1,0 +1,114 @@
+{
+  "ticket": "1781017317.1094.3dce221c",
+  "study": "S16e",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "787d9840775351a8c57e623a74299af2e390cfc9",
+  "runtime_sec": 23.902175188064575,
+  "reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "selected_pass": true,
+    "forced_random_tagged_entries": 0,
+    "forced_random_pass": true,
+    "true_forced_random_sample_available": false
+  },
+  "archive_scan": {
+    "rows_scanned": 437,
+    "forced_random_hits": 0,
+    "candidate_available": false
+  },
+  "no_proxy_dataset": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "sampled_rows": 82500,
+    "heldout_rows_per_method": 5000,
+    "uses_quiet_event_amplitude_proxy": false
+  },
+  "traditional": {
+    "best_method": "traditional_mean3",
+    "best_mae_adc": 35.89119999999999,
+    "summary": [
+      {
+        "method": "traditional_mean3",
+        "n": 5000,
+        "mean_bias_adc": 0.38840000000000036,
+        "mean_bias_ci_low_adc": -6.695234999999976,
+        "mean_bias_ci_high_adc": 7.511900000000017,
+        "mae_adc": 35.89119999999999,
+        "mae_ci_low_adc": 22.834373333333293,
+        "mae_ci_high_adc": 48.20591666666681,
+        "rmse_adc": 219.14095240785602,
+        "width68_adc": 10.33333333333303,
+        "width68_ci_low_adc": 9.991666666666674,
+        "width68_ci_high_adc": 11.0
+      },
+      {
+        "method": "traditional_stave_sample_offset_median3",
+        "n": 5000,
+        "mean_bias_adc": -1.7828,
+        "mean_bias_ci_low_adc": -10.06326,
+        "mean_bias_ci_high_adc": 6.230004999999997,
+        "mae_adc": 37.374,
+        "mae_ci_low_adc": 27.611765000000002,
+        "mae_ci_high_adc": 50.360265,
+        "rmse_adc": 247.1035944700117,
+        "width68_adc": 11.0,
+        "width68_ci_low_adc": 10.0,
+        "width68_ci_high_adc": 11.0
+      },
+      {
+        "method": "traditional_median3",
+        "n": 5000,
+        "mean_bias_adc": -1.9086,
+        "mean_bias_ci_low_adc": -9.28772,
+        "mean_bias_ci_high_adc": 5.380289999999991,
+        "mae_adc": 37.385,
+        "mae_ci_low_adc": 25.699025000000002,
+        "mae_ci_high_adc": 48.963454999999996,
+        "rmse_adc": 247.1506831874029,
+        "width68_adc": 11.0,
+        "width68_ci_low_adc": 10.0,
+        "width68_ci_high_adc": 11.0
+      }
+    ]
+  },
+  "ml": {
+    "method": "ml_hist_gradient_boosting",
+    "best_hyperparameters": {
+      "learning_rate": 0.08,
+      "max_leaf_nodes": 15.0,
+      "cv_mae_adc": 38.54335431809469,
+      "cv_width68_adc": 12.400955038594114
+    },
+    "feature_columns": [
+      "stave_idx",
+      "target_sample",
+      "other0_adc",
+      "other1_adc",
+      "other2_adc",
+      "other_mean_adc",
+      "other_median_adc",
+      "other_range_adc",
+      "other_std_adc"
+    ],
+    "n_train": 12000,
+    "summary": {
+      "method": "ml_hist_gradient_boosting",
+      "n": 5000,
+      "mean_bias_adc": 3.9666156560319292,
+      "mean_bias_ci_low_adc": -0.2087503639287981,
+      "mean_bias_ci_high_adc": 8.063930716694433,
+      "mae_adc": 32.143065784108025,
+      "mae_ci_low_adc": 24.26226286817656,
+      "mae_ci_high_adc": 40.771582978565625,
+      "rmse_adc": 161.65391139326456,
+      "width68_adc": 13.262164723133429,
+      "width68_ci_low_adc": 12.953712856917685,
+      "width68_ci_high_adc": 13.786368827485703
+    }
+  },
+  "leakage_checks_pass": true,
+  "conclusion": "No true forced/random pedestal data or external run-log candidate is present locally; no-proxy held-out pre-trigger benchmark completed without amplitude-proxy selection, but direct S16d forced/random truth remains not estimable.",
+  "next_tickets": []
+}

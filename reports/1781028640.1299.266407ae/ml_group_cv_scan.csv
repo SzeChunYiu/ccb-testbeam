@@ -1,0 +1,5 @@
+feature_set,C,group_cv_roc_auc
+honest_raw_summaries,0.01,0.9962203330911836
+honest_raw_summaries,0.1,0.9987314151729353
+honest_raw_summaries,1.0,0.9991926319314048
+honest_raw_summaries,10.0,0.9992172001164805

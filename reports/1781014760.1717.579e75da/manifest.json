@@ -1,7 +1,7 @@
 {
   "command": "/home/billy/anaconda3/bin/python reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources.py --config reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources_config.json",
   "config": "reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources_config.json",
-  "git_commit": "3b86ab6928022d79f82342b65f2e728c2c8f6dca",
+  "git_commit": "bc1bdc39d0a2fd217d65a6062778dd1e3006f358",
   "random_seed": 160601,
   "environment": {
     "python": "3.7.6",
@@ -13,8 +13,8 @@
   "outputs": [
     {
       "path": "reports/1781014760.1717.579e75da/REPORT.md",
-      "sha256": "a61c482c73204c8b45016b0defe03302d94c9f5e4a836001cd01573430d2b0de",
-      "bytes": 5362
+      "sha256": "be0e0a272020ab7f3315f529f10a3b8b5b090191ac66018f7ce083a682020002",
+      "bytes": 5209
     },
     {
       "path": "reports/1781014760.1717.579e75da/archive_member_inventory.csv",
@@ -43,7 +43,7 @@
     },
     {
       "path": "reports/1781014760.1717.579e75da/ml_event_sample.csv.gz",
-      "sha256": "1394e1c19a58d3bc8d24b80162bada675c4f0327541d830ee937e7a6eb6e3abb",
+      "sha256": "93131a6b62830561405c7c797aea0b7733aa8c0291f9fdb575ac35ce83c14674",
       "bytes": 1468262
     },
     {
@@ -63,8 +63,8 @@
     },
     {
       "path": "reports/1781014760.1717.579e75da/result.json",
-      "sha256": "a6ea098cae47fd0e37f878f3bea95ed3983992375d7dc81a5bd4bdd6fd553439",
-      "bytes": 8699
+      "sha256": "9a1f9828bf20f6b4ba750c136bdcc189acce3c6a6ceddd69eea160df07bb7fea",
+      "bytes": 8529
     },
     {
       "path": "reports/1781014760.1717.579e75da/root_trigger_audit.csv",
@@ -83,8 +83,8 @@
     },
     {
       "path": "reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources.py",
-      "sha256": "3a058b9cdfffbfa45502f9d067d82b6da171d27ad879a8d1da93f2dd35115d6a",
-      "bytes": 38441
+      "sha256": "95012b2d2fc2b699af98ae365993b59672c732f38d84dd83dcddd8d2e99a48ee",
+      "bytes": 38039
     },
     {
       "path": "reports/1781014760.1717.579e75da/s16f_inventory_daq_runlog_sources_config.json",
@@ -102,5 +102,5 @@
       "bytes": 343
     }
   ],
-  "runtime_seconds": 27.198031187057495
+  "runtime_seconds": 21.888365745544434
 }

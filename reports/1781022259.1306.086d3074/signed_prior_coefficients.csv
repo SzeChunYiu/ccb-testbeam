@@ -1,0 +1,7 @@
+feature,coefficient_ns_per_unit,lower_bound,upper_bound,at_positive_bound
+B4_intercept,-4.184415164563461,-inf,inf,False
+B6_intercept,1.8945288129137963,-inf,inf,False
+B8_intercept,0.20036014005556638,-inf,inf,False
+B4_sqrt_1000_over_amp_positive,0.28250572398503093,0.0,inf,False
+B6_sqrt_1000_over_amp_positive,1.5641429104415811e-18,0.0,inf,True
+B8_sqrt_1000_over_amp_positive,3.328462088872844,0.0,inf,False

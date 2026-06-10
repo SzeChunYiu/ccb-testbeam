@@ -1,0 +1,17 @@
+method,metric,ci_low,ci_high,n_boot_valid
+ml_pca_shape_rf,adjudicated_broad_precision,0.4625,0.6625,5000
+ml_pca_shape_rf,adjudicated_curated_precision,1.0,1.0,5000
+ml_pca_shape_rf,broad_width_share,0.275,0.3375,5000
+ml_pca_shape_rf,duplicate_run_event_rate,0.0,0.0375,5000
+ml_pca_shape_rf,p09a_broad_fraction,0.275,0.3375,5000
+ml_pca_shape_rf,p09a_strict_q_template_only_share,0.0,0.0,5000
+ml_pca_shape_rf,q_template_only_share,0.0,0.0,5000
+ml_pca_shape_rf,source_qtemplate_or_broad_fraction,0.275,0.3375,5000
+traditional_qtemplate_width,adjudicated_broad_precision,0.25,0.84,5000
+traditional_qtemplate_width,adjudicated_curated_precision,0.94,1.0,5000
+traditional_qtemplate_width,broad_width_share,0.88,1.0,5000
+traditional_qtemplate_width,duplicate_run_event_rate,0.0,0.0,5000
+traditional_qtemplate_width,p09a_broad_fraction,0.94,1.0,5000
+traditional_qtemplate_width,p09a_strict_q_template_only_share,0.0,0.06,5000
+traditional_qtemplate_width,q_template_only_share,0.0,0.12,5000
+traditional_qtemplate_width,source_qtemplate_or_broad_fraction,1.0,1.0,5000

@@ -1,0 +1,45 @@
+{
+  "ticket_id": "1781026939.1565.7fb34a7e",
+  "study_id": "P02d",
+  "worker": "testbeam-laptop-2",
+  "title": "run-heldout latent-distance artifact keyed by event id",
+  "output_dir": "reports/1781026939.1565.7fb34a7e",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_total_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "latent_dim": 4,
+  "distance_k": 8,
+  "max_train_per_run_stave": 300,
+  "bootstrap_replicates": 1000,
+  "random_seed": 20260610,
+  "forbidden_guard": {
+    "enabled": true,
+    "max_train_per_run_stave": 160
+  },
+  "ae": {
+    "epochs": 3,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "mask_probability": 0.3,
+    "noise_sigma": 0.02
+  }
+}

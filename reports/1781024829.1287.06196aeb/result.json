@@ -1,0 +1,137 @@
+{
+  "study": "P10c-followup",
+  "ticket": "1781024829.1287.06196aeb",
+  "worker": "testbeam-laptop-4",
+  "title": "run-family calibration mixture diagnostic",
+  "raw_reproduction_passed": true,
+  "reproduced_selected_b_stave_pulses": 640737,
+  "split": {
+    "train_scenarios": {
+      "run64_only": [
+        64
+      ],
+      "sample_i_plus_run64": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        64
+      ]
+    },
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "fixed_models": {
+    "analytic_candidate": "amp_only",
+    "analytic_alpha": 100.0,
+    "binned_n_bins": 4,
+    "binned_mode": "monotonic",
+    "binned_direction": "decreasing",
+    "ml_alpha": 100.0
+  },
+  "scenario_fit_meta": {
+    "run64_only": {
+      "analytic_candidate": "amp_only",
+      "analytic_alpha": 100.0,
+      "binned_n_bins": 4,
+      "binned_mode": "monotonic",
+      "binned_direction": "decreasing",
+      "ml_alpha": 100.0,
+      "train_rows_with_targets": {
+        "analytic": 630,
+        "binned": 630,
+        "ml": 630
+      }
+    },
+    "sample_i_plus_run64": {
+      "analytic_candidate": "amp_only",
+      "analytic_alpha": 100.0,
+      "binned_n_bins": 4,
+      "binned_mode": "monotonic",
+      "binned_direction": "decreasing",
+      "ml_alpha": 100.0,
+      "train_rows_with_targets": {
+        "analytic": 4410,
+        "binned": 4410,
+        "ml": 4410
+      }
+    }
+  },
+  "baseline": {
+    "run64_only_sigma68_ns": 2.3513126070469674,
+    "sample_i_plus_run64_sigma68_ns": 2.833693954847245,
+    "delta_mixed_minus_run64_ns": 0.48238134780027764,
+    "delta_ci": [
+      0.051719604403452024,
+      0.5517196044034449
+    ]
+  },
+  "traditional_analytic": {
+    "run64_only_sigma68_ns": 1.3469577928790726,
+    "sample_i_plus_run64_sigma68_ns": 1.9132895040466515,
+    "delta_mixed_minus_run64_ns": 0.566331711167579,
+    "delta_ci": [
+      0.4756626124868215,
+      0.6341343325353151
+    ]
+  },
+  "traditional_binned": {
+    "run64_only_sigma68_ns": 1.5506563035234961,
+    "sample_i_plus_run64_sigma68_ns": 1.7918469774236208,
+    "delta_mixed_minus_run64_ns": 0.2411906739001246,
+    "delta_ci": [
+      0.1508598022017189,
+      0.4008598022017118
+    ]
+  },
+  "ml": {
+    "run64_only_sigma68_ns": 1.2788453762222396,
+    "sample_i_plus_run64_sigma68_ns": 1.8773264078988565,
+    "delta_mixed_minus_run64_ns": 0.5984810316766169,
+    "delta_ci": [
+      0.46515405377425256,
+      0.6528521404446245
+    ]
+  },
+  "leakage": {
+    "train_heldout_run_overlap_max": 0.0,
+    "train_heldout_event_id_overlap_max": 0.0,
+    "features_exclude_forbidden_identifiers": true,
+    "shuffled_controls_written": true
+  },
+  "verdict": "pooled_sample_i_plus_run64_worsens_sample_ii_timing",
+  "interpretation": "The mixed calibration is worse than run64-only for the primary traditional/ML corrections; at least one primary CI excludes zero.",
+  "follow_up_ticket_appended": false,
+  "follow_up_skip_reason": "Skipped to avoid duplicating existing run-drift, topology-transfer, and support-map studies.",
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "b25428171bb653a2b86bf6ce7ec440456c1ec3f7"
+}

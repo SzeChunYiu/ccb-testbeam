@@ -1,0 +1,300 @@
+{
+  "study": "P10g",
+  "ticket_id": "1781025208.1047.4bc52d2c",
+  "worker": "testbeam-laptop-3",
+  "title": "per-run conditional-template residual audit",
+  "reproduction": {
+    "passed": true,
+    "selected_b_stave_pulses": 640737,
+    "analysis_selected_rows": 377362
+  },
+  "split": "P10e family-heldout by run; CIs bootstrap held-out run rows within each claimable subgroup",
+  "traditional": {
+    "method": "S01 empirical median amplitude-bin templates",
+    "metric": "CFD20-aligned normalized waveform residual MSE"
+  },
+  "ml": {
+    "method": "conditional ridge template",
+    "features": [
+      "log_amplitude",
+      "log_amplitude_squared",
+      "stave_one_hot",
+      "stave_log_amplitude_interactions"
+    ],
+    "excluded_features": [
+      "run",
+      "eventno",
+      "evt",
+      "event_order",
+      "target_labels",
+      "other_stave_information"
+    ],
+    "metric": "CFD20-aligned normalized waveform residual MSE"
+  },
+  "controls": [
+    "mean_template_mse",
+    "shuffled_conditional_mse",
+    "train_eval_run_overlap",
+    "train_eval_key_overlap",
+    "uses_run_or_event_features"
+  ],
+  "leakage_checks": [
+    {
+      "fold": "holdout_sample_i",
+      "train_group": "sample_ii_calib",
+      "eval_group": "sample_i_analysis",
+      "train_eval_run_overlap": "",
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "required_controls_present": true,
+      "n_train_runs": 1,
+      "n_eval_runs": 14
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "train_group": "sample_i_calib",
+      "eval_group": "sample_ii_analysis",
+      "train_eval_run_overlap": "",
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "required_controls_present": true,
+      "n_train_runs": 11,
+      "n_eval_runs": 7
+    }
+  ],
+  "global_summary": [
+    {
+      "fold": "holdout_sample_i",
+      "subgroup_type": "global",
+      "subgroup": "all",
+      "n_runs": 14,
+      "n_pulses": 252266,
+      "empirical_mse": 0.047782082970732505,
+      "conditional_mse": 0.06079685235915584,
+      "shuffled_conditional_mse": 0.07912054417756324,
+      "delta_conditional_minus_empirical": 0.013014769388423343,
+      "delta_conditional_minus_empirical_ci": [
+        0.010679917724669204,
+        0.015280949683401308
+      ],
+      "delta_conditional_minus_shuffled": -0.0183236918184074,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.019893688023460976,
+        -0.01674388397220774
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "subgroup_type": "global",
+      "subgroup": "all",
+      "n_runs": 7,
+      "n_pulses": 125096,
+      "empirical_mse": 0.038992194449586605,
+      "conditional_mse": 0.06829568234117922,
+      "shuffled_conditional_mse": 0.08657693412966282,
+      "delta_conditional_minus_empirical": 0.02930348789159262,
+      "delta_conditional_minus_empirical_ci": [
+        0.026338185718751603,
+        0.03231978157956401
+      ],
+      "delta_conditional_minus_shuffled": -0.01828125178848358,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.023590608272268592,
+        -0.011469454974835746
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    }
+  ],
+  "per_stave_summary": [
+    {
+      "fold": "holdout_sample_i",
+      "subgroup_type": "stave",
+      "subgroup": "B2",
+      "n_runs": 14,
+      "n_pulses": 241422,
+      "empirical_mse": 0.04937221555198694,
+      "conditional_mse": 0.056014428515540386,
+      "shuffled_conditional_mse": 0.07533012929035805,
+      "delta_conditional_minus_empirical": 0.006642212963553434,
+      "delta_conditional_minus_empirical_ci": [
+        0.005700868551813456,
+        0.007600555490767469
+      ],
+      "delta_conditional_minus_shuffled": -0.019315700774817663,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.021131570394549964,
+        -0.017584894414714166
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_i",
+      "subgroup_type": "stave",
+      "subgroup": "B4",
+      "n_runs": 14,
+      "n_pulses": 6451,
+      "empirical_mse": 0.02864030189220898,
+      "conditional_mse": 0.19507443459620274,
+      "shuffled_conditional_mse": 0.18825154591795598,
+      "delta_conditional_minus_empirical": 0.16643413270399376,
+      "delta_conditional_minus_empirical_ci": [
+        0.1530438108927845,
+        0.17957978601704344
+      ],
+      "delta_conditional_minus_shuffled": 0.006822888678246761,
+      "delta_conditional_minus_shuffled_ci": [
+        0.0021621975701750225,
+        0.012707549006588886
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_i",
+      "subgroup_type": "stave",
+      "subgroup": "B6",
+      "n_runs": 14,
+      "n_pulses": 3094,
+      "empirical_mse": 0.01790174017735387,
+      "conditional_mse": 0.12784071623120438,
+      "shuffled_conditional_mse": 0.1340736635909606,
+      "delta_conditional_minus_empirical": 0.10993897605385053,
+      "delta_conditional_minus_empirical_ci": [
+        0.08994055322127584,
+        0.12555991891310822
+      ],
+      "delta_conditional_minus_shuffled": -0.0062329473597562,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.008895267548481973,
+        -0.00407071701234026
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_i",
+      "subgroup_type": "stave",
+      "subgroup": "B8",
+      "n_runs": 14,
+      "n_pulses": 1299,
+      "empirical_mse": 0.02685198334103519,
+      "conditional_mse": 0.1567694852507768,
+      "shuffled_conditional_mse": 0.15392732232437284,
+      "delta_conditional_minus_empirical": 0.1299175019097416,
+      "delta_conditional_minus_empirical_ci": [
+        0.10075982704988641,
+        0.15835404307103085
+      ],
+      "delta_conditional_minus_shuffled": 0.002842162926403941,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.0006599641692634393,
+        0.006343332600075974
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "subgroup_type": "stave",
+      "subgroup": "B2",
+      "n_runs": 7,
+      "n_pulses": 88213,
+      "empirical_mse": 0.04439498739750796,
+      "conditional_mse": 0.06562407375467146,
+      "shuffled_conditional_mse": 0.08522354755350856,
+      "delta_conditional_minus_empirical": 0.021229086357163498,
+      "delta_conditional_minus_empirical_ci": [
+        0.018651373803276756,
+        0.02386686124452903
+      ],
+      "delta_conditional_minus_shuffled": -0.01959947379883711,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.02571042723594067,
+        -0.012745936500957952
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "subgroup_type": "stave",
+      "subgroup": "B4",
+      "n_runs": 7,
+      "n_pulses": 21229,
+      "empirical_mse": 0.034178814498520796,
+      "conditional_mse": 0.10220542651875787,
+      "shuffled_conditional_mse": 0.1217333924366711,
+      "delta_conditional_minus_empirical": 0.06802661202023708,
+      "delta_conditional_minus_empirical_ci": [
+        0.038626231950993725,
+        0.10639243531558858
+      ],
+      "delta_conditional_minus_shuffled": -0.019527965917913222,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.02488521296193385,
+        -0.01331890879401458
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "subgroup_type": "stave",
+      "subgroup": "B6",
+      "n_runs": 7,
+      "n_pulses": 11148,
+      "empirical_mse": 0.024344414946275202,
+      "conditional_mse": 0.09391032336776517,
+      "shuffled_conditional_mse": 0.10678760605181606,
+      "delta_conditional_minus_empirical": 0.06956590842148996,
+      "delta_conditional_minus_empirical_ci": [
+        0.043591570421643785,
+        0.10172553088426868
+      ],
+      "delta_conditional_minus_shuffled": -0.012877282684050891,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.018117856664571948,
+        -0.006454895424211604
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "subgroup_type": "stave",
+      "subgroup": "B8",
+      "n_runs": 7,
+      "n_pulses": 4506,
+      "empirical_mse": 0.025357182899834806,
+      "conditional_mse": 0.10529337977647306,
+      "shuffled_conditional_mse": 0.10743218559507639,
+      "delta_conditional_minus_empirical": 0.07993619687663826,
+      "delta_conditional_minus_empirical_ci": [
+        0.04885451770430407,
+        0.11448307628840511
+      ],
+      "delta_conditional_minus_shuffled": -0.00213880581860332,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.008346034789056586,
+        0.004935392474985116
+      ],
+      "ml_win_after_controls": false,
+      "ci_note": "run-block bootstrap over held-out runs"
+    }
+  ],
+  "supported_ml_wins_after_controls": 0,
+  "supported_ml_win_rows": [],
+  "point_scan": {
+    "per_run_ml_better_count": 0,
+    "run_stave_ml_better_count": 0,
+    "best_point_delta_conditional_minus_empirical": 0.0014224755205385225,
+    "point_rows_are_not_promoted_reason": "single held-out run or run-stave cell lacks a multi-run bootstrap CI"
+  },
+  "conclusion": "no supported per-run or per-stave ML win after P10e negative controls",
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "152ed196e72b90c02e8eb5a27b053d19f93caa5c"
+}

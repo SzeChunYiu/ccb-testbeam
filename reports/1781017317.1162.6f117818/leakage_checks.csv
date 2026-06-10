@@ -1,0 +1,8 @@
+check,value,pass
+split_by_run_train_heldout_disjoint,,True
+ml_features_exclude_ids_run_stave_and_labels,,True
+rounded_waveform_hash_train_heldout_overlap_zero,0,True
+shuffled_label_control_worse_than_actual,0.6215022680391955,True
+row_cv_not_substantially_better_than_run_cv,0.0012970022627084576,True
+run_cv_macro_f1_not_perfect,0.8746661285197306,True
+heldout_ml_confidence_finite,5250,True

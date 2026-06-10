@@ -1,0 +1,60 @@
+{
+  "study": "S16f",
+  "ticket": "1781031083.1784.78066bc6",
+  "worker": "testbeam-laptop-3",
+  "title": "frozen pre-trigger contamination veto under Sample-II LORO timing splits",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781031083.1784.78066bc6__s16f_pretrigger_veto_loro",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "loro_runs": [58, 59, 60, 61, 62, 63, 65],
+    "base_method": "cfd20",
+    "cfd_fraction": 0.20,
+    "tail_abs_residual_ns": 5.0
+  },
+  "veto": {
+    "min_train_efficiency": 0.85,
+    "threshold_quantiles": [0.70, 0.75, 0.80, 0.85, 0.90, 0.95],
+    "utility_tail_weight": 1.0,
+    "utility_veto_penalty": 0.35
+  },
+  "models": {
+    "random_seed": 16061083,
+    "bootstrap_samples": 100,
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0],
+    "gbt_max_iter": 60,
+    "gbt_learning_rate": 0.05,
+    "gbt_max_leaf_nodes": 15,
+    "mlp_hidden_layer_sizes": [24, 12],
+    "mlp_alpha": 0.001,
+    "mlp_max_iter": 180,
+    "nn_epochs": 25,
+    "nn_patience": 5,
+    "nn_batch_size": 256,
+    "nn_learning_rate": 0.001,
+    "nn_weight_decay": 0.0001
+  }
+}

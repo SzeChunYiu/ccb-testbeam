@@ -1,0 +1,103 @@
+{
+  "study": "S18f",
+  "ticket": "1781014670.1107.6b932bc2",
+  "worker": "testbeam-laptop-3",
+  "reproduced": true,
+  "historical_reproduction": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_binned_gaussian_sigma_ns": 1.9921759383821824,
+    "sample_iv_binned_gaussian_ci": [
+      1.5867925251055321,
+      4.999999999999999
+    ]
+  },
+  "traditional": {
+    "method": "CFD20 quadratic log-amplitude period-polynomial, run-held-out",
+    "sample_iv_binned_gaussian_sigma_ns": 2.0766680808704043,
+    "sample_iv_binned_gaussian_ci": [
+      1.4071711480667426,
+      4.999999999999053
+    ]
+  },
+  "ml": {
+    "method": "ExtraTrees waveform-shape residual correction, run-held-out",
+    "sample_iv_binned_gaussian_sigma_ns": 1.773234048414724,
+    "sample_iv_binned_gaussian_ci": [
+      1.410123302449385,
+      4.999999999999988
+    ]
+  },
+  "run_drivers": [
+    {
+      "run": 65,
+      "n_pairs": 27,
+      "delta_full_minus_exclude_ns": 0.18357622743357171,
+      "delta_ci": [
+        -2.5994471341878227,
+        2.397858264045564
+      ]
+    },
+    {
+      "run": 59,
+      "n_pairs": 11,
+      "delta_full_minus_exclude_ns": 0.1112932431685778,
+      "delta_ci": [
+        -2.6123958644086613,
+        2.4570076304341253
+      ]
+    },
+    {
+      "run": 61,
+      "n_pairs": 18,
+      "delta_full_minus_exclude_ns": -0.007222288132143984,
+      "delta_ci": [
+        -2.481444098884503,
+        2.713605109481748
+      ]
+    }
+  ],
+  "absolute_fit_instability_runs": [
+    {
+      "run": 63,
+      "n_pairs": 28,
+      "delta_full_minus_exclude_ns": -1.2332794211267595,
+      "abs_delta_ns": 1.2332794211267595,
+      "interpretation": "negative means removing the run makes the binned fit broader; positive means the run broadens when included"
+    },
+    {
+      "run": 62,
+      "n_pairs": 7,
+      "delta_full_minus_exclude_ns": -0.3371135079969372,
+      "abs_delta_ns": 0.3371135079969372,
+      "interpretation": "negative means removing the run makes the binned fit broader; positive means the run broadens when included"
+    },
+    {
+      "run": 58,
+      "n_pairs": 25,
+      "delta_full_minus_exclude_ns": -0.23582080869961675,
+      "abs_delta_ns": 0.23582080869961675,
+      "interpretation": "negative means removing the run makes the binned fit broader; positive means the run broadens when included"
+    }
+  ],
+  "diagnostic_summary": [
+    {
+      "diagnostic": "a3_amp_median",
+      "spearman_rho": 0.5714285714285715,
+      "p_value": 0.1802019889115274
+    },
+    {
+      "diagnostic": "tail_right_median",
+      "spearman_rho": 0.3214285714285715,
+      "p_value": 0.4820720382996776
+    },
+    {
+      "diagnostic": "log_amp_sum_median",
+      "spearman_rho": 0.28571428571428575,
+      "p_value": 0.5345092286010406
+    }
+  ],
+  "leakage_flags": 0,
+  "conclusion": "positive historical broadening drivers are runs 65 and 59, while run 63 has the largest absolute binned-fit effect because removing it makes the optimizer/window fit much broader; diagnostics are suggestive but not a clean detector-resolution class",
+  "input_sha256": "reports/1781014670.1107.6b932bc2/input_sha256.csv",
+  "git_commit": "4e75968c733723f315dbfd078591c6a8886af707"
+}

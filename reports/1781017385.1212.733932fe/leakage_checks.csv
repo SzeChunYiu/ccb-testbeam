@@ -1,0 +1,13 @@
+check,value,pass,note
+train_heldout_run_overlap,0,True,must be zero for split-by-run
+heldout_runs_match_config,"42,57,64,65",True,all benchmark rows are from configured held-out runs
+p01b_key_order_matches_raw_scan,True,True,prevents latent/waveform row offset leakage
+permutation_changed_latent_fraction,0.9948652879418545,True,should move almost all rows within control strata
+traditional_manual_flag_controls_only_vs_observed_delta,0.4279875614082439,True,large negative values would mean controls-only explains the result
+traditional_peak_group_controls_only_vs_observed_delta,0.3399879398477038,True,large negative values would mean controls-only explains the result
+ml_manual_flag_controls_only_vs_observed_delta,0.4441029573511489,True,large negative values would mean controls-only explains the result
+ml_peak_group_controls_only_vs_observed_delta,0.4729187085240747,True,large negative values would mean controls-only explains the result
+traditional_manual_flag_train_label_shuffle_score,0.23351738179334633,True,near-chance sanity check for too-good scores
+traditional_peak_group_train_label_shuffle_score,0.16831603092836583,True,near-chance sanity check for too-good scores
+ml_manual_flag_train_label_shuffle_score,0.19954566136552496,True,near-chance sanity check for too-good scores
+ml_peak_group_train_label_shuffle_score,0.20677296961518257,True,near-chance sanity check for too-good scores

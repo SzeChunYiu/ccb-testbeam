@@ -1,0 +1,2 @@
+method,roc_auc,roc_auc_ci_low,roc_auc_ci_high,average_precision,ap_ci_low,ap_ci_high,brier,notes
+S07g high-amplitude shape-only RF,1.0,0.9999999999999999,1.0,0.9999999999999999,0.9999999999999998,1.0,0.0002718467356610178,"Recomputed from raw ROOT using the S07g all-three OOF RF; params={'n_estimators': 500, 'max_depth': 7, 'min_samples_leaf': 8}."

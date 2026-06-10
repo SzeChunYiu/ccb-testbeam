@@ -1,0 +1,53 @@
+{
+  "study": "S16g",
+  "ticket": "1781014246.505.46f447b1",
+  "worker": "testbeam-laptop-4",
+  "title": "quiet-run pseudo-pedestal calibration",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "charge_samples": [4, 5, 6, 7, 8, 9, 10, 11, 12],
+  "amplitude_cut_adc": 1000.0,
+  "low_amplitude_window_adc": [1000.0, 3000.0],
+  "max_low_amplitude_score_records_per_run": 2500,
+  "expected_selected_pulses": 640737,
+  "expected_forced_random_tagged_entries": 0,
+  "quietest": {
+    "event_max_adc": 80.0,
+    "pre_std_adc": 8.0,
+    "pre_range_adc": 25.0,
+    "adaptive_lowering_adc": 0.1
+  },
+  "quietish": {
+    "event_max_adc": 200.0,
+    "pre_std_adc": 16.0,
+    "pre_range_adc": 55.0,
+    "adaptive_lowering_adc": 200.0
+  },
+  "run_quiet_fraction_threshold": 0.005,
+  "negative_tolerance_adc": {"floor": 25.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.35, "low_fraction": 0.05, "negative_adc": 50.0},
+  "lowering_bins_adc": [-0.1, 0.1, 200.0, 1000000000.0],
+  "lowering_labels": ["s16_no_lowering", "s16_mild_lowering", "s16_large_lowering"],
+  "timing_tail_delta_ns": 5.0,
+  "bootstrap_replicates": 300,
+  "random_seed": 164246,
+  "ml": {
+    "model": "gaussian_naive_bayes",
+    "cv_folds": 3,
+    "calibration_bins": 10,
+    "quiet_probability_floor": 0.03,
+    "max_train_records": 15000,
+    "hyperparameters": {
+      "C": [0.5]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "config": "configs/0000000014_1_truthpileup.yaml",
+  "elapsed_seconds": 33.12229323387146,
+  "git_commit": "89b5496ac3ca4ea2956d85d38c35c015acb111d4",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "script": "scripts/s20_0000000014_1_truthpileup.py",
+  "study_id": "S20",
+  "ticket_id": "0000000014.1.truthpileup",
+  "truth_root_used": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "worker": "testbeam-laptop-3"
+}

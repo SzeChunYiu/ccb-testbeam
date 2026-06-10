@@ -1,0 +1,2 @@
+quantity,report_value,reproduced,delta,tolerance,pass,diagnostic_delay_ns,boundary_ns
+S10f traditional sub-60 ns stable-recovery failure flag,1,1,0,0,True,,60.0

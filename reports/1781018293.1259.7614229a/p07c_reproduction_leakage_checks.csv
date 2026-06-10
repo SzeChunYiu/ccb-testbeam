@@ -1,0 +1,12 @@
+check,value,threshold,flag,interpretation
+p07_c4000_reproduction_delta,0.0,1e-12,False,Raw ROOT reproduction of the upstream P07 fixed-ceiling ML res68.
+p07b_artificial_ratio_reproduction_delta,4.163336342344337e-17,0.0025,False,Raw ROOT reproduction of the P07b multi-ceiling artificial res68.
+p07b_natural_q_shift_reproduction_delta,3.7589315090014175e-06,0.006,False,Raw ROOT reproduction of the P07b natural A>=7000 q_template shift.
+heldout_split_run_overlap,0.0,0.0,False,Every model is trained excluding the held-out run being evaluated.
+primary_ml_explicit_ceiling_feature_count,0.0,0.0,False,"Primary ML uses normalized waveform shape features, not log ceiling or raw observed amplitude."
+shape_ml_too_good_artificial_res68,0.04424826464641171,0.015,False,Implausibly tiny artificial-clip error would suggest leakage.
+shuffled_target_control_res68,0.2685142919825468,0.08849652929282342,False,Shuffled target should be much worse than the primary ML transfer.
+ceiling_only_control_res68,0.1464839227888715,0.08849652929282342,False,A ceiling-only model should not explain the artificial recovery.
+boundary_primary_q_shift_abs,0.08323295849868055,0.04,True,Boundary 6500-7500 control should preserve q_template within a few percent.
+boundary_primary_cfd_shift_abs_ns,0.4262503686687064,0.75,False,Boundary 6500-7500 control should not move CFD20 by more than about 1 ns.
+boundary_lift_observed_amp_dependency_r2,0.034768171587137256,0.5,False,Correction lift should not be mostly determined by observed amplitude inside the boundary control.

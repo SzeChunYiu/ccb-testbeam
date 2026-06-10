@@ -1,0 +1,44 @@
+{
+  "study": "S16e",
+  "ticket": "1781017317.1094.3dce221c",
+  "worker": "testbeam-laptop-4",
+  "title": "external forced/random HRD pedestal ingest audit",
+  "data_root": "/home/billy/ccb-data",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781017317.1094.3dce221c",
+  "search_roots": [
+    "data",
+    "/home/billy/ccb-data",
+    "/home/billy/Desktop/test_beam/data"
+  ],
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "random_seed": 173171,
+  "bootstrap_replicates": 120,
+  "no_proxy": {
+    "max_rows_per_run": 2500
+  },
+  "ml": {
+    "max_train_rows": 12000,
+    "cv_folds": 3,
+    "max_iter": 45,
+    "l2_regularization": 0.05,
+    "learning_rate": [0.08],
+    "max_leaf_nodes": [15]
+  },
+  "leakage": {
+    "min_shuffled_mae_gap_adc": 2.0,
+    "max_row_split_advantage_adc": 1.5,
+    "max_duplicate_fraction": 0.10
+  }
+}

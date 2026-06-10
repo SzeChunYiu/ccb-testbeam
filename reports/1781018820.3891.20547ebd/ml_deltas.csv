@@ -1,0 +1,6 @@
+comparison,metric,delta,delta_ci95
+ml_inpaint_et minus rising_edge_huber,amp_res68_abs_frac,-0.010354258720094316,"[-0.011716596261228885, -0.008893680595002581]"
+ml_inpaint_et minus rising_edge_huber,charge_res68_abs_frac,-0.006250600133010712,"[-0.007618244584015748, -0.005169676613766637]"
+ml_inpaint_et minus interpolation_calibrated,time_abs68_samples,0.021448921956495864,"[0.015902122330401246, 0.027885261581427612]"
+ml_residual_hgb minus rising_edge_huber,amp_res68_abs_frac,-0.014322202002547153,"[-0.015543156810682423, -0.012631397200513707]"
+ml_residual_hgb minus rising_edge_huber,charge_res68_abs_frac,-0.008280635262549144,"[-0.009254125227486431, -0.00743847341670726]"

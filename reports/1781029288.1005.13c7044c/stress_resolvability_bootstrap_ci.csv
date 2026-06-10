@@ -1,0 +1,3 @@
+method,metric,value,ci_low,ci_high,n_bootstrap,n_finite
+stress_amp_binned_template_fit,resolvable_delay_ns,,50.0,60.0,300,49
+stress_compact_mlp_classifier_regressor,resolvable_delay_ns,,10.0,60.0,300,121

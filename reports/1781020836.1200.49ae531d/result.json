@@ -1,0 +1,358 @@
+{
+  "study": "S03f",
+  "ticket": "1781020836.1200.49ae531d",
+  "worker": "testbeam-laptop-4",
+  "title": "Sample-I downstream topology stratification for blind timewalk transfer",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03e_all3_transfer_pass": true
+  },
+  "split": {
+    "train_sample": "Sample I topology strata",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_sample": "Sample II all-three downstream",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "support": [
+    {
+      "stratum": "all3_downstream",
+      "description": "Sample-I events with B4/B6/B8 all selected",
+      "train_runs": 25,
+      "train_events": 1260,
+      "train_pulses": 3780,
+      "events_downstream_2": 0,
+      "events_downstream_3": 1260,
+      "events_b2_selected": 1206,
+      "events_b2_terminal_like": 0,
+      "events_b2_penetrating_like": 1194,
+      "analytic_alpha": 100.0,
+      "binned_n_bins": 4,
+      "ml_alpha": 100.0
+    },
+    {
+      "stratum": "all3_b2_selected",
+      "description": "all-three downstream events with B2 selected",
+      "train_runs": 25,
+      "train_events": 1206,
+      "train_pulses": 3618,
+      "events_downstream_2": 0,
+      "events_downstream_3": 1206,
+      "events_b2_selected": 1206,
+      "events_b2_terminal_like": 0,
+      "events_b2_penetrating_like": 1194,
+      "analytic_alpha": 100.0,
+      "binned_n_bins": 6,
+      "ml_alpha": 100.0
+    },
+    {
+      "stratum": "all3_b2_not_selected",
+      "description": "all-three downstream events with B2 not selected",
+      "train_runs": 15,
+      "train_events": 54,
+      "train_pulses": 162,
+      "events_downstream_2": 0,
+      "events_downstream_3": 54,
+      "events_b2_selected": 0,
+      "events_b2_terminal_like": 0,
+      "events_b2_penetrating_like": 0,
+      "analytic_alpha": 100.0,
+      "binned_n_bins": 4,
+      "ml_alpha": 100.0
+    },
+    {
+      "stratum": "exactly2_downstream",
+      "description": "Sample-I events with exactly two selected downstream staves",
+      "train_runs": 24,
+      "train_events": 2986,
+      "train_pulses": 5972,
+      "events_downstream_2": 2986,
+      "events_downstream_3": 0,
+      "events_b2_selected": 2815,
+      "events_b2_terminal_like": 0,
+      "events_b2_penetrating_like": 2717,
+      "analytic_alpha": 10.0,
+      "binned_n_bins": 4,
+      "ml_alpha": 100.0
+    },
+    {
+      "stratum": "ge2_excluding_b2_terminal_like",
+      "description": "at least two selected downstream staves after excluding P08a terminal-B2-like events",
+      "train_runs": 25,
+      "train_events": 4246,
+      "train_pulses": 9752,
+      "events_downstream_2": 2986,
+      "events_downstream_3": 1260,
+      "events_b2_selected": 4021,
+      "events_b2_terminal_like": 0,
+      "events_b2_penetrating_like": 3911,
+      "analytic_alpha": 100.0,
+      "binned_n_bins": 8,
+      "ml_alpha": 100.0
+    },
+    {
+      "stratum": "b2_penetrating_ge2",
+      "description": "P08a penetrating-like Sample-I events with B2 plus at least two downstream staves",
+      "train_runs": 25,
+      "train_events": 3911,
+      "train_pulses": 9016,
+      "events_downstream_2": 2717,
+      "events_downstream_3": 1194,
+      "events_b2_selected": 3911,
+      "events_b2_terminal_like": 0,
+      "events_b2_penetrating_like": 3911,
+      "analytic_alpha": 100.0,
+      "binned_n_bins": 10,
+      "ml_alpha": 100.0
+    }
+  ],
+  "pooled": [
+    {
+      "stratum": "all3_downstream",
+      "method": "analytic_amp_only",
+      "value": 1.4946665492512594,
+      "ci_low": 1.37272489838039,
+      "ci_high": 1.7099178295803197,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_downstream",
+      "method": "monotonic_binned_timewalk",
+      "value": 1.3979715141141966,
+      "ci_low": 1.231788215980707,
+      "ci_high": 1.5,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_downstream",
+      "method": "template_phase_base",
+      "value": 2.0459430282283897,
+      "ci_low": 1.7959430282283897,
+      "ci_high": 2.0459430282284004,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_downstream",
+      "method": "waveform_ridge",
+      "value": 1.4740412476984908,
+      "ci_low": 1.4116639341359076,
+      "ci_high": 1.628444993864823,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_selected",
+      "method": "analytic_amp_only",
+      "value": 2.1787948575576674,
+      "ci_low": 2.0242243450470534,
+      "ci_high": 2.3568056600349228,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_selected",
+      "method": "monotonic_binned_timewalk",
+      "value": 2.197459403328356,
+      "ci_low": 2.0,
+      "ci_high": 2.324830856674243,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_selected",
+      "method": "template_phase_base",
+      "value": 3.3996617133484826,
+      "ci_low": 3.1496617133484897,
+      "ci_high": 3.399661713348486,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_selected",
+      "method": "waveform_ridge",
+      "value": 2.089725676256467,
+      "ci_low": 1.9339087657415066,
+      "ci_high": 2.341079416449695,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_not_selected",
+      "method": "analytic_amp_only",
+      "value": 1.5188743182935684,
+      "ci_low": 1.4908569488432553,
+      "ci_high": 1.5411738322910256,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_not_selected",
+      "method": "monotonic_binned_timewalk",
+      "value": 2.8118985996730856,
+      "ci_low": 2.8118985996730856,
+      "ci_high": 2.8118985996730856,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_not_selected",
+      "method": "template_phase_base",
+      "value": 5.623797199346193,
+      "ci_low": 5.623797199346193,
+      "ci_high": 5.623797199346193,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "all3_b2_not_selected",
+      "method": "waveform_ridge",
+      "value": 1.3904201732518262,
+      "ci_low": 1.3638892249475334,
+      "ci_high": 1.4284833148456582,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "exactly2_downstream",
+      "method": "analytic_amp_only",
+      "value": 12.044816703664686,
+      "ci_low": 11.954036147135014,
+      "ci_high": 12.151223259803292,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "exactly2_downstream",
+      "method": "monotonic_binned_timewalk",
+      "value": 13.224971651091717,
+      "ci_low": 13.208697946757976,
+      "ci_high": 13.458697946757976,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "exactly2_downstream",
+      "method": "template_phase_base",
+      "value": 10.445331062390633,
+      "ci_low": 9.66937125318969,
+      "ci_high": 10.929057358056905,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "exactly2_downstream",
+      "method": "waveform_ridge",
+      "value": 11.902214866517028,
+      "ci_low": 11.821476403935877,
+      "ci_high": 11.99219991670731,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "ge2_excluding_b2_terminal_like",
+      "method": "analytic_amp_only",
+      "value": 2.875525730557782,
+      "ci_low": 2.8635372368357035,
+      "ci_high": 2.8926088475756924,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "ge2_excluding_b2_terminal_like",
+      "method": "monotonic_binned_timewalk",
+      "value": 2.9799927541854743,
+      "ci_low": 2.9799927541854743,
+      "ci_high": 2.9799927541854743,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "ge2_excluding_b2_terminal_like",
+      "method": "template_phase_base",
+      "value": 2.6299118414996805,
+      "ci_low": 2.3799118414996805,
+      "ci_high": 2.8799118414996805,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "ge2_excluding_b2_terminal_like",
+      "method": "waveform_ridge",
+      "value": 2.8670525741904607,
+      "ci_low": 2.819206462942923,
+      "ci_high": 2.9273278973104495,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "b2_penetrating_ge2",
+      "method": "analytic_amp_only",
+      "value": 3.465982179969481,
+      "ci_low": 3.4238026902055454,
+      "ci_high": 3.5062054928432986,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "b2_penetrating_ge2",
+      "method": "monotonic_binned_timewalk",
+      "value": 3.8300299071193002,
+      "ci_low": 3.6241785058016625,
+      "ci_high": 3.883531765433002,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "b2_penetrating_ge2",
+      "method": "template_phase_base",
+      "value": 3.237056819038237,
+      "ci_low": 3.23705681903823,
+      "ci_high": 3.4870568190382265,
+      "n_pair_residuals": 11460
+    },
+    {
+      "stratum": "b2_penetrating_ge2",
+      "method": "waveform_ridge",
+      "value": 3.492740147518128,
+      "ci_low": 3.414989391169681,
+      "ci_high": 3.583893661519733,
+      "n_pair_residuals": 11460
+    }
+  ],
+  "leakage": {
+    "split_by_run": true,
+    "bad_split_or_feature_flags": 0,
+    "shuffled_target_min_sigma68_ns": 2.0239969239055178,
+    "too_good_flag": true,
+    "low_support_too_good_flags": [
+      {
+        "stratum": "all3_b2_not_selected",
+        "method": "waveform_ridge",
+        "value": 1.3904201732518262,
+        "all3_reference_value": 1.4740412476984908,
+        "train_events": 54
+      }
+    ]
+  },
+  "verdict": "rare_all3_penetrating_subset_drives_strong_transfer",
+  "summary": "The original all-three Sample-I subset reproduces the S03e result and remains the best transfer source: ML 1.474 ns versus exactly-two ML 11.902 ns; binned 1.398 ns versus exactly-two binned 13.225 ns. Adding exactly-two events through the ge2 terminal-excluded stratum weakens rather than improves the blind Sample-II result, so the strong transfer is consistent with the rare penetrating Sample-I topology rather than terminal-B2-like regimes. A too-good diagnostic was flagged but not promoted: all3_b2_not_selected waveform_ridge=1.390 ns from 54 events. Its train/event overlap checks are zero and shuffled-target controls are poor, but the support is below 100 events and the template baseline is unstable.",
+  "input_sha256": "ead0eec8010860d2500c84d476e9d395fca92e83c53a08998fcdf59d206334f3",
+  "git_commit": "17c2626a3977e2385a5025d0c7ab58dbb8e8c5e6",
+  "next_tickets": []
+}

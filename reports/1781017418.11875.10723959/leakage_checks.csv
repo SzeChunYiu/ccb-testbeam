@@ -1,0 +1,5 @@
+check,value,pass,interpretation
+run_split_overlap,0.0,True,each prediction holds out one complete run
+features_exclude_forbidden_columns,0.0,True,"rate-model features exclude run id, event id, A-stack counts, and label columns"
+shuffled_target_control_worse_than_ml,0.8854580112133543,True,ExtraTrees trained on shuffled run-rate targets should not match the nominal held-out model
+ml_not_suspiciously_perfect,0.9066652650920659,True,a near-zero held-out run-level rate error would imply leakage or a deterministic target

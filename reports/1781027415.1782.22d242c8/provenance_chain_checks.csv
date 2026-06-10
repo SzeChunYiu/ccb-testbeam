@@ -1,0 +1,6 @@
+check,value,pass,notes
+raw_hrdv_reproduces_12147_tuple,False,False,Current raw HRDv CFD20 pipeline should match all three App.A numbers if it generated the PDF value.
+pdf_artifact_contains_target_tuple,2,True,"PDF-era report text contains 12,147 / 10,636 / 1,511."
+byte_identical_pdf_copies,1,True,Downloaded and ccb-data PDF copies are byte-identical if this is positive.
+notebook_contains_target_tuple,0,False,A matching notebook would support a notebook-to-PDF chain.
+repo_docs_contain_target_tuple,3,True,Current Markdown/reports mirror the target tuple.

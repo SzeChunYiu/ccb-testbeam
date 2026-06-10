@@ -1,0 +1,8 @@
+check,value,flag,note
+heldout_run_excluded_from_template_and_ml_training,1.0,False,Low-current controls are scored only by templates and ML models excluding that source run; high-current runs are absent from low-current training.
+identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+low_current_only_template_and_ml_sources,1.0,False,Traditional templates and overlay ML models are derived from low-current raw pulses only.
+mean_synthetic_holdout_auc,0.7449940030557678,False,Very high synthetic AUC would be suspicious because held-out runs contain independent residuals.
+mean_shuffled_label_synthetic_auc,0.4567130888719124,False,Shuffled-label training should not classify held-out synthetic overlays well.
+actual_current_auc_from_ml_secondary_fraction,0.5710147130350194,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.
+actual_current_auc_from_traditional_secondary_fraction,0.4789275291828794,False,Flagged if the traditional amplitude estimate nearly identifies beam current by itself.

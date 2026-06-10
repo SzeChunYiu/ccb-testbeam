@@ -1,0 +1,27 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx,amsmath,amssymb,booktabs,hyperref,float,longtable}
+\usepackage[table]{xcolor}
+% siunitx is not installed on this TeX Live; lightweight shims so \SI/\si/\num/\SIrange compile.
+\providecommand{\SI}[2]{#1\,#2}
+\providecommand{\si}[1]{#1}
+\providecommand{\num}[1]{#1}
+\providecommand{\SIrange}[3]{#1--#2\,#3}
+\providecommand{\ang}[1]{#1\textdegree}
+\title{\textbf{CCB Test-Beam Analysis}\\\large Data-driven characterisation of HRD scintillator staves,\\with GEANT4 truth-aided studies}
+\author{HIBEAM / NNBAR --- autonomous analysis fleet}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+% Chapters are written one-per-file by the worker fleet and included here.
+\input{chapters/01_introduction}
+\input{chapters/02_data_reconstruction}
+\input{chapters/03_timing}
+\input{chapters/04_pileup}
+\input{chapters/05_pulseshape_ml}
+\input{chapters/06_amplitude_energy_pedestal}
+\input{chapters/07_geant4_truth}
+\input{chapters/08_methods_ml_algorithms}
+\input{chapters/09_conclusions}
+\end{document}

@@ -1,0 +1,204 @@
+{
+  "study": "S02g",
+  "ticket": "1781022115.1037.63125b2f",
+  "worker": "testbeam-laptop-3",
+  "title": "external scaler rate covariate audit for S02e Sample II LORO timing closure",
+  "reproduced_raw_root_first": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "loro_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "folds": {
+      "58": {
+        "train_runs": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "59": {
+        "train_runs": [
+          58,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "60": {
+        "train_runs": [
+          58,
+          59,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "61": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "62": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          63,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "63": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "65": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      }
+    }
+  },
+  "traditional": {
+    "method": "S02b global timewalk no covariate",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.6551640399789107,
+    "ci_low": 1.5334120562011022,
+    "ci_high": 1.8428460390457087,
+    "min_run_sigma68_ns": 1.4718970274976448,
+    "max_run_sigma68_ns": 2.188417727408664
+  },
+  "amplitude_binned_template_timewalk": {
+    "method": "S02b binned timewalk no covariate",
+    "n_runs": 7,
+    "mean_sigma68_ns": 3.1484944174882767,
+    "ci_low": 2.7792616663528804,
+    "ci_high": 3.4559289447098087,
+    "min_run_sigma68_ns": 2.127410063722653,
+    "max_run_sigma68_ns": 3.6379339992367563
+  },
+  "amplitude_binned_current_rate_selected_best": {
+    "method": "S02e binned current/rate selected power 0",
+    "n_runs": 7,
+    "mean_sigma68_ns": 3.1484944174882767,
+    "ci_low": 2.7541298646954893,
+    "ci_high": 3.4608452365345896,
+    "min_run_sigma68_ns": 2.127410063722653,
+    "max_run_sigma68_ns": 3.6379339992367563
+  },
+  "global_current_rate_selected_best": {
+    "method": "S02e global current/rate selected power 0",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.6551640399789107,
+    "ci_low": 1.530225641937389,
+    "ci_high": 1.844504973177003,
+    "min_run_sigma68_ns": 1.4718970274976448,
+    "max_run_sigma68_ns": 2.188417727408664
+  },
+  "ml": {
+    "method": "S02 ML ridge",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.9054928392097812,
+    "ci_low": 1.8237306443919148,
+    "ci_high": 2.0260844667709175,
+    "min_run_sigma68_ns": 1.7698393506968229,
+    "max_run_sigma68_ns": 2.2424329131323475
+  },
+  "leakage_checks_pass_excluding_forbidden_oracle": false,
+  "leakage_hunt_failed_checks": [
+    {
+      "heldout_run": 58,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.0056738783721135,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "heldout_run": 59,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 3.788652653111516,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "heldout_run": 60,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 2.2085620756701516,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "heldout_run": 61,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 2.92561315961787,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "heldout_run": 63,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 3.671996823215058,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [],
+  "git_commit": "ba2eab611b0a72b7f5f49eb46e916ec37d83df66",
+  "external_metadata_audit": {
+    "filesystem_files_scanned": 220,
+    "filesystem_external_metadata_candidates": 0,
+    "archive_members_scanned": 217,
+    "archive_external_metadata_candidates": 0,
+    "non_root_document_files_seen": 1,
+    "calibrated_external_covariates_available": 0
+  },
+  "calibrated_external_covariates_available": false,
+  "covariate_action": "used raw ROOT pre-timing trigger/event-density proxies; no external scaler, spill-clock, live-time, or detector-current file was available",
+  "runtime_sec_wrapper": 137.72
+}

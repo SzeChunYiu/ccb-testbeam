@@ -1,0 +1,4 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S10 downstream high-minus-low per selected event,0.010289747149522063,0.010289747149522063,0.0,1e-12,True
+S10 low-current downstream per selected event,0.023124357656731757,0.023124357656731757,0.0,0.0,True
+S10 high-current downstream per selected event,0.03341410480625382,0.03341410480625382,0.0,0.0,True

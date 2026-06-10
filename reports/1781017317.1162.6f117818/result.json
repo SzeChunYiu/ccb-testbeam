@@ -1,0 +1,153 @@
+{
+  "study": "S16f",
+  "ticket": "1781017317.1162.6f117818",
+  "worker": "testbeam-laptop-2",
+  "title": "event-display audit of large-lowering selected pulses",
+  "conclusion": "The blinded held-out gallery is dominated by pre trigger contamination (54.3%), with pile up next (32.9%). The RF transfer model closely follows the traditional taxonomy on held-out runs, so the classification is stable under run splitting, but it remains an algorithmic morphology audit rather than human truth labels.",
+  "raw_reproduction_pass": true,
+  "analysis": {
+    "train_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53
+    ],
+    "heldout_runs": [
+      54,
+      55,
+      56,
+      57
+    ],
+    "large_lowering_adc": 200.0,
+    "train_large_lowering_pulses": 10752,
+    "heldout_large_lowering_pulses": 5250,
+    "gallery_size": 48
+  },
+  "traditional": {
+    "method": "fixed morphology scorecard",
+    "category_fractions": {
+      "pre_trigger_contamination": {
+        "fraction": 0.5428571428571428,
+        "ci": [
+          0.45863451628719676,
+          0.6241524638755094
+        ],
+        "n": 2850
+      },
+      "post_trigger_undershoot": {
+        "fraction": 0.07542857142857143,
+        "ci": [
+          0.061792897828870354,
+          0.09058714397514854
+        ],
+        "n": 396
+      },
+      "pile_up": {
+        "fraction": 0.3293333333333333,
+        "ci": [
+          0.2645243500517546,
+          0.40221192096993175
+        ],
+        "n": 1729
+      },
+      "electronics_baseline_drift": {
+        "fraction": 0.05238095238095238,
+        "ci": [
+          0.039827347861819073,
+          0.06795047109566264
+        ],
+        "n": 275
+      }
+    }
+  },
+  "ml": {
+    "method": "run-split RandomForestClassifier trained on traditional morphology labels",
+    "agreement_metrics": [
+      {
+        "metric": "ml_vs_traditional_accuracy",
+        "value": 0.908952380952381,
+        "ci_low": 0.8837659461374912,
+        "ci_high": 0.9325722489811041
+      },
+      {
+        "metric": "ml_vs_traditional_balanced_accuracy",
+        "value": 0.9409327514590673,
+        "ci_low": 0.9245057039278342,
+        "ci_high": 0.9542579414233328
+      },
+      {
+        "metric": "ml_vs_traditional_macro_f1",
+        "value": 0.8714070299439575,
+        "ci_low": 0.8518884756181323,
+        "ci_high": 0.8901851980839717
+      },
+      {
+        "metric": "shuffled_label_accuracy",
+        "value": 0.2499047619047619,
+        "ci_low": 0.23468784862625944,
+        "ci_high": 0.27010385940294124
+      }
+    ],
+    "run_cv_macro_f1": 0.8746661285197306,
+    "top_features": [
+      {
+        "feature": "late_mean_seedcorr_adc",
+        "importance": 0.07195652412227659
+      },
+      {
+        "feature": "peak_sample",
+        "importance": 0.06891216238969432
+      },
+      {
+        "feature": "undershoot_samples",
+        "importance": 0.06597750255398872
+      },
+      {
+        "feature": "raw_baseline_slope_adc_per_sample",
+        "importance": 0.06435637761398588
+      },
+      {
+        "feature": "seed_minus_late_median_raw_adc",
+        "importance": 0.05721612006046401
+      },
+      {
+        "feature": "w_norm_06",
+        "importance": 0.046937166757268875
+      },
+      {
+        "feature": "w_norm_17",
+        "importance": 0.041385137780998824
+      },
+      {
+        "feature": "w_norm_15",
+        "importance": 0.0378983434862386
+      },
+      {
+        "feature": "pretrigger_max_seedcorr_adc",
+        "importance": 0.037751197386114745
+      },
+      {
+        "feature": "area_over_amp_samples",
+        "importance": 0.037619909179316256
+      },
+      {
+        "feature": "postpeak_negative_area_frac",
+        "importance": 0.03440198979290832
+      },
+      {
+        "feature": "adaptive_lowering_adc",
+        "importance": 0.03011676695176456
+      }
+    ]
+  },
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "49e398f9e7bd5946487545e5aecfd077d7f25e6b",
+  "next_tickets": []
+}

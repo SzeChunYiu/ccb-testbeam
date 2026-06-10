@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,tolerance,pass
+S00/S01 selected B-stave pulses,640737.0,640737.0,0.0,0.0,True
+analysis selected rows,377362.0,377362.0,0.0,0.0,True
+P10a calibration-only empirical q_template MSE,0.0444140404286,0.04441404045574024,2.7140241443124324e-11,5e-07,True

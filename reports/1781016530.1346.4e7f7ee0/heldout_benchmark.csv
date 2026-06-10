@@ -1,0 +1,11 @@
+method,role,target,metric,value,ci_low,ci_high,train_rows,heldout_rows
+traditional hand-shape logistic,claim,stave_index,balanced_accuracy,0.4112922406492302,0.3874793429713896,0.42688621376483277,71018,10498
+traditional hand-shape logistic,claim,stave_index,macro_f1,0.34925283741673135,0.3119581851324443,0.3782469004179686,71018,10498
+ML raw-waveform random forest,claim,stave_index,balanced_accuracy,0.6259458403975069,0.595666013619513,0.6401158796860464,71018,10498
+ML raw-waveform random forest,claim,stave_index,macro_f1,0.6240150398698032,0.5990925780918704,0.6394290536614389,71018,10498
+amplitude-only logistic,negative_control,stave_index,balanced_accuracy,0.345163489677185,0.31930001735362573,0.35944775272475854,71018,10498
+amplitude-only logistic,negative_control,stave_index,macro_f1,0.27760654854993033,0.24162289968478107,0.2953439103642894,71018,10498
+event-index-only logistic,negative_control,stave_index,balanced_accuracy,0.2613528986854876,0.248840461134397,0.2724857490636067,71018,10498
+event-index-only logistic,negative_control,stave_index,macro_f1,0.19775100163066822,0.1823614550078015,0.20867798530317247,71018,10498
+shuffled-label raw-waveform RF,negative_control,stave_index,balanced_accuracy,0.24103618228432505,0.235180445645885,0.24310325033279523,71018,10498
+shuffled-label raw-waveform RF,negative_control,stave_index,macro_f1,0.2296313011321644,0.22351130270736047,0.23557528008798093,71018,10498

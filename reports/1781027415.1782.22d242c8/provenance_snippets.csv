@@ -1,0 +1,69 @@
+path,kind,snippet_file,snippet_sha256,snippet
+/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf,pdf,reports/1781027415.1782.22d242c8/provenance_snippet_10cbb95f0c.txt,330c37e236ed7737db51be1ad08bf18859b318817db29a6ac96ea5ea3187f77c,"achine-learning extension outlined above. No Monte Carlo
+truth labels are used. The target is instead the internal timing-closure problem that is already central
+to the analysis: events whose corrected B-stack times are consistent with a common same-particle time
+are treated as a data-defined clean class, while events with large downstream inconsistency or large
+B2-to-downstream offsets are treated as a data-defined topology-violating class. These are weak labels,
+not particle-identification truth labels.
+
+A.1
+
+Weak labels and input variables
+
+For each analysis-run event, an event-level feature vector was built from the selected-pulse table. The
+variables were the B2, B4, B6 and B8 amplitudes, log-amplitudes, template-quality score, tail fraction,
+late fraction, area-over-peak ratio, quench proxy, hit-presence flags and hit mult"
+/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf,pdf,reports/1781027415.1782.22d242c8/provenance_snippet_532d9d674d.txt,330c37e236ed7737db51be1ad08bf18859b318817db29a6ac96ea5ea3187f77c,"achine-learning extension outlined above. No Monte Carlo
+truth labels are used. The target is instead the internal timing-closure problem that is already central
+to the analysis: events whose corrected B-stack times are consistent with a common same-particle time
+are treated as a data-defined clean class, while events with large downstream inconsistency or large
+B2-to-downstream offsets are treated as a data-defined topology-violating class. These are weak labels,
+not particle-identification truth labels.
+
+A.1
+
+Weak labels and input variables
+
+For each analysis-run event, an event-level feature vector was built from the selected-pulse table. The
+variables were the B2, B4, B6 and B8 amplitudes, log-amplitudes, template-quality score, tail fraction,
+late fraction, area-over-peak ratio, quench proxy, hit-presence flags and hit mult"
+/home/billy/.tb-workers/testbeam-laptop-3/docs/07_ml_methods.md,repo_text,reports/1781027415.1782.22d242c8/provenance_snippet_de2bca75f0.txt,6cb242d1e4bedb0879167757f5758784cb23061437ce26349d8070f03f98075f,"t with real soft spots
+flagged below for each.
+
+## A. Event-level clean-timing classifier (App. A)
+- **Model:** random forest. **Features:** B2/B4/B6/B8 amplitudes & log-amps, template quality,
+  tail/late fractions, quench proxy, hit flags & multiplicities. *Deliberately excludes* the
+  timing span / pair residuals / run / sample → guards against learning the label.
+- **Weak labels:** clean = ≥2 downstream staves & downstream span <5 ns & all-span <10 ns;
+  topology-violating = ≥2 downstream & (downstream span >10 ns OR B2 displaced >20 ns).
+- **Split by run** (not random). 12,147 events (10,636 clean : 1,511 violating, **~7:1**).
+- **Performance:** test ROC AUC 0.985, PR AUC 0.998, Brier 0.036; small train–test gap.
+- **Traditional baseline to beat:** simple cuts on Δt_B / downstream span / q_template.
+- ⚠ RF probabilities are"
+/home/billy/.tb-workers/testbeam-laptop-3/reports/1781006575.2866.622a4328/REPORT.md,repo_text,reports/1781027415.1782.22d242c8/provenance_snippet_bbda83bfd5.txt,3889c44337544b053e7646f9b9142421fbd0d662206423dd081acbfb09575924,"beam-laptop-4
+- **Date:** 2026-06-09
+- **Inputs:** raw B-stack ROOT, S01 q_template table, and App.A documentation; checksums in `input_sha256.csv`
+- **Command:** `/home/billy/anaconda3/bin/python reports/1781006575.2866.622a4328/s07d_app_a_label_recovery.py`
+- **Git commit at run:** `076f9e4f7ae6dba0efb7c7c7ef2cb28335ef0753`
+
+## 0. Question
+Can the source table or exact timing definition behind the documented App.A 12,147 labelled events be recovered from the repository and raw ROOT, or should that number be retired?
+
+## 1. Reproduction first
+The raw S00 selected-pulse gate still reproduces exactly:
+
+| quantity              |   report_value |   reproduced |   delta |   tolerance | pass   |
+|:----------------------|---------------:|-------------:|--------:|------------:|:-------|
+| total_selected_pulses |         640737 |"
+/home/billy/.tb-workers/testbeam-laptop-3/reports/1781012847.2575.40cb6e31/REPORT.md,repo_text,reports/1781027415.1782.22d242c8/provenance_snippet_20e2c9546a.txt,53df0a61e64d86424b3f477a4f9507264570bb38a201bc1cdc0a2d3cc1bc2319,"# S07e: archive provenance search for App.A training table
+
+- **Ticket:** `1781012847.2575.40cb6e31`
+- **Worker:** `testbeam-laptop-1`
+- **Question:** can the App.A 12,147 labelled-event table be recovered from external archives, old notebooks, or non-repo derived data?
+- **Inputs:** raw B-stack `HRDv` ROOT, mirrored/external filesystem candidates, S01 q_template artifact.
+
+## Raw-ROOT Reproduction First
+
+| quantity        | documented | raw_cfd20 | delta | matches |
+| --------------- | ---------- | --------- | ----- | ------- |
+| labelled_events | 12147      | 9897      | -2250"

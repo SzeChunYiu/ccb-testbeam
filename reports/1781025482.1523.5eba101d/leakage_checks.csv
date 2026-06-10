@@ -1,0 +1,10 @@
+check,value,pass
+train_heldout_run_overlap,0.0,True
+train_heldout_event_overlap,0.0,True
+b2_heldout_b2_rows_used_in_target_fit,0.0,True
+b2_included_b2_rows_used_in_target_fit,207.0,True
+run_event_or_target_features_used,0.0,True
+p10f_traditional_reproduction_abs_delta_ns,1.2972109124653741e-06,True
+p10f_ml_reproduction_abs_delta_ns,1.2699941320803987e-06,True
+b2_included_ml_shuffled_target_worse_than_real,1.013317725591994,True
+too_good_external_sigma68_lt_1ns,0.0,True

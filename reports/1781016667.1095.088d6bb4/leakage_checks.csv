@@ -1,0 +1,19 @@
+task,check,method,value,ci_low,ci_high,roc_auc,average_precision,pass
+adjacent_run_pair_side,proxy: amplitude+multiplicity,proxy: amplitude+multiplicity,0.4866971084117218,0.44157724389863756,0.5257974366230977,0.4822771177792363,0.4465784755876689,
+adjacent_run_pair_side,leakage check: topology/stave composition,leakage check: topology/stave composition,0.4866252245877817,0.4533304680333378,0.5216606147107086,0.48089855779677426,0.4480515236398358,
+adjacent_run_pair_side,leakage check: AE label shuffle,leakage check: AE label shuffle,0.47547870021328154,0.4047108485779298,0.5559899385494089,0.4797872061806059,0.44277697804883864,
+sample_i_local_transition,proxy: amplitude+multiplicity,proxy: amplitude+multiplicity,0.5310816946878673,0.5031782122862087,0.5875163993416037,0.562940885515208,0.5680221009625701,
+sample_i_local_transition,leakage check: topology/stave composition,leakage check: topology/stave composition,0.5171362875895105,0.48259596534556537,0.5684145640820828,0.5609766574100419,0.5537477227581813,
+sample_i_local_transition,leakage check: AE label shuffle,leakage check: AE label shuffle,0.5702075065590083,0.48445802591217635,0.6298919408432935,0.5631083155331781,0.5213748518618504,
+sample_ii_adjacent_era,proxy: amplitude+multiplicity,proxy: amplitude+multiplicity,0.37768916893105253,0.31832293941655093,0.4201083219390296,0.36737683512113595,0.32741059008206974,
+sample_ii_adjacent_era,leakage check: topology/stave composition,leakage check: topology/stave composition,0.37371381116450597,0.3166028939313943,0.41399118639527893,0.38054931063457065,0.3257517163970938,
+sample_ii_adjacent_era,leakage check: AE label shuffle,leakage check: AE label shuffle,0.5031411230133847,0.496404665930228,0.5098967601625359,0.5390471042563605,0.40529208122952365,
+adjacent_run_pair_side,train_heldout_run_overlap,,0.0,,,,,True
+adjacent_run_pair_side,heldout_unique_runs,,8.0,,,,,True
+adjacent_run_pair_side,duplicate_key_overlap_train_heldout,,0.0,,,,,True
+sample_i_local_transition,train_heldout_run_overlap,,0.0,,,,,True
+sample_i_local_transition,heldout_unique_runs,,6.0,,,,,True
+sample_i_local_transition,duplicate_key_overlap_train_heldout,,0.0,,,,,True
+sample_ii_adjacent_era,train_heldout_run_overlap,,0.0,,,,,True
+sample_ii_adjacent_era,heldout_unique_runs,,4.0,,,,,True
+sample_ii_adjacent_era,duplicate_key_overlap_train_heldout,,0.0,,,,,True

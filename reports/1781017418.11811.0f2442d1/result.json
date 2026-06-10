@@ -1,0 +1,131 @@
+{
+  "study": "S05d",
+  "ticket": "1781017418.11811.0f2442d1",
+  "worker": "testbeam-laptop-1",
+  "title": "sorted ROOT quality-variable A-control repeat",
+  "reproduced": true,
+  "primary_tier": "sorted_any_clean1000",
+  "tier_counts": [
+    {
+      "tier": "raw_loose500",
+      "n_pair_rows": 74176,
+      "n_runs": 21,
+      "n_unique_events": 32207,
+      "n_a_raw_any_pair_rows": 452,
+      "n_a_raw_both_pair_rows": 140
+    },
+    {
+      "tier": "sorted_any_trmax1000",
+      "n_pair_rows": 893,
+      "n_runs": 20,
+      "n_unique_events": 457,
+      "n_a_raw_any_pair_rows": 452,
+      "n_a_raw_both_pair_rows": 140
+    },
+    {
+      "tier": "sorted_any_clean1000",
+      "n_pair_rows": 794,
+      "n_runs": 20,
+      "n_unique_events": 406,
+      "n_a_raw_any_pair_rows": 452,
+      "n_a_raw_both_pair_rows": 140
+    },
+    {
+      "tier": "sorted_both_clean1000",
+      "n_pair_rows": 180,
+      "n_runs": 14,
+      "n_unique_events": 106,
+      "n_a_raw_any_pair_rows": 161,
+      "n_a_raw_both_pair_rows": 140
+    },
+    {
+      "tier": "sorted_any_trmax2000",
+      "n_pair_rows": 734,
+      "n_runs": 20,
+      "n_unique_events": 371,
+      "n_a_raw_any_pair_rows": 452,
+      "n_a_raw_both_pair_rows": 140
+    }
+  ],
+  "traditional": {
+    "method": "grouped-run-heldout Ridge using B pair features plus sorted A quality controls",
+    "metric": "heldout sigma68 residual width ns",
+    "value": 8.921977700209993,
+    "ci": [
+      7.872549071118078,
+      9.70285717207451
+    ],
+    "sorted_a_delta_vs_b_only_ci": [
+      -0.34683040750555794,
+      1.3911955152571829
+    ]
+  },
+  "ml": {
+    "method": "grouped-run-heldout bounded ExtraTrees using B pair features plus sorted A quality controls",
+    "metric": "heldout sigma68 residual width ns",
+    "value": 9.991406356063296,
+    "ci": [
+      5.793213931895696,
+      13.633831738492663
+    ],
+    "sorted_a_delta_vs_ml_b_only_ci": [
+      -2.1578836339325957,
+      2.2373347242089374
+    ]
+  },
+  "finding": "Sorted A quality cuts increase the chance of selected A controls relative to a raw loose B-pair table, but the run-held-out sorted-A deltas do not establish a robust event-level external-control improvement.",
+  "leakage": [
+    {
+      "tier": "raw_loose500",
+      "check": "not_triggered",
+      "value": null,
+      "pass": true,
+      "interpretation": "ML sorted-A delta CI was not wholly below zero; primary tier checked separately"
+    },
+    {
+      "tier": "sorted_any_clean1000",
+      "check": "run_split_event_overlap",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "all model folds are grouped by held-out run"
+    },
+    {
+      "tier": "sorted_any_clean1000",
+      "check": "features_exclude_forbidden_columns",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "feature lists exclude run/event ids, A_sorted_evt, raw times, and target residuals"
+    },
+    {
+      "tier": "sorted_any_clean1000",
+      "check": "actual_ml_b_plus_sorted_a_sigma68",
+      "value": 9.991406356063296,
+      "pass": true,
+      "interpretation": "nominal run-held-out ML residual width"
+    },
+    {
+      "tier": "sorted_any_clean1000",
+      "check": "runwise_shuffled_sorted_a_sigma68",
+      "value": 9.34827750405357,
+      "pass": true,
+      "interpretation": "sorted A controls lose event matching but preserve run marginals"
+    },
+    {
+      "tier": "sorted_any_clean1000",
+      "check": "intentional_target_echo_sigma68",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "positive leakage sentinel; should be unrealistically small"
+    },
+    {
+      "tier": "sorted_both_clean1000",
+      "check": "not_modeled_low_statistics",
+      "value": 180.0,
+      "pass": true,
+      "interpretation": "tier has too few rows or runs for grouped held-out model"
+    }
+  ],
+  "input_sha256": "reports/1781017418.11811.0f2442d1/input_sha256.csv",
+  "git_commit": "c31ce3bb303ebf67d5e2f752d2ce56b1645d25e5",
+  "next_tickets": []
+}

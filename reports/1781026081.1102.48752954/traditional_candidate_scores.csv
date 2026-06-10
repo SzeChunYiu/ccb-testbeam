@@ -1,0 +1,4 @@
+candidate,roc_auc,average_precision
+amplitude_binned_constrained_secondary_fraction,0.5816471702887042,0.5539643293760542
+template_residual_improvement,0.5816004435807302,0.5554953493237986
+pre_registered_threshold_prediction,0.5788863109048724,0.5461552039278257

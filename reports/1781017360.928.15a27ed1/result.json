@@ -1,0 +1,139 @@
+{
+  "study": "S10e",
+  "ticket": "1781017360.928.15a27ed1",
+  "worker": "testbeam-laptop-1",
+  "title": "validate S10d secondary-fraction estimates on high-stat strata",
+  "source_ticket": "1781010419.1206.6d667357",
+  "reproduced": true,
+  "reproduction_delta_vs_s10d_traditional": 0.0,
+  "split": "leave-one-source-run-out for templates and ML; run bootstrap CIs within current group",
+  "strata": {
+    "n_matched_strata_all": 8,
+    "n_dominant_strata": 3,
+    "dominant_weight_mass": 0.9489458093744556,
+    "global_s10_downstream_high_minus_low": 0.010289747149522063
+  },
+  "reproduce_capped_all": {
+    "label": "reproduce_capped_all",
+    "sample_cap_per_run_stratum": 140,
+    "n_scored_events": 12617,
+    "n_strata": 8,
+    "dominant_weight_mass": 1.0,
+    "traditional": {
+      "value": 0.03158538627349211,
+      "ci": [
+        0.018889965559131923,
+        0.0439563896813622
+      ]
+    },
+    "ml_secondary_fraction": {
+      "value": 0.007285829435931546,
+      "ci": [
+        0.0034933143848864577,
+        0.011903635154727544
+      ]
+    },
+    "ml_overlap_score": {
+      "value": 0.024460770476721856,
+      "ci": [
+        0.0067795765338648775,
+        0.04181800245924334
+      ]
+    },
+    "mean_synthetic_holdout_auc": 0.9461274272270296,
+    "mean_shuffled_label_synthetic_auc": 0.5052974659839787,
+    "mean_secondary_fraction_mae_on_synthetic_holdout": 0.06711919333791673,
+    "actual_current_auc_from_ml_secondary_fraction": 0.6027263553510842,
+    "leakage_flags": 0
+  },
+  "dominant_capped": {
+    "label": "dominant_capped",
+    "sample_cap_per_run_stratum": 140,
+    "n_scored_events": 5839,
+    "n_strata": 3,
+    "dominant_weight_mass": 0.9489458093744556,
+    "traditional": {
+      "value": 0.03538342708110987,
+      "ci": [
+        0.021386988080170085,
+        0.0500155790828227
+      ]
+    },
+    "ml_secondary_fraction": {
+      "value": 0.0031256103350392112,
+      "ci": [
+        0.0004497311003658872,
+        0.005990992385012412
+      ]
+    },
+    "ml_overlap_score": {
+      "value": 0.007032842719494658,
+      "ci": [
+        -0.00352821225724849,
+        0.01849969838752107
+      ]
+    },
+    "mean_synthetic_holdout_auc": 0.9827096220423929,
+    "mean_shuffled_label_synthetic_auc": 0.4841260340507822,
+    "mean_secondary_fraction_mae_on_synthetic_holdout": 0.04324265939936641,
+    "actual_current_auc_from_ml_secondary_fraction": 0.5044624232671793,
+    "leakage_flags": 0
+  },
+  "dominant_highstat": {
+    "label": "dominant_highstat",
+    "sample_cap_per_run_stratum": 700,
+    "n_scored_events": 26506,
+    "n_strata": 3,
+    "dominant_weight_mass": 0.9489458093744556,
+    "traditional": {
+      "value": 0.033010527958294324,
+      "ci": [
+        0.019186666642640134,
+        0.04875783610708715
+      ]
+    },
+    "ml_secondary_fraction": {
+      "value": 0.006682372566658994,
+      "ci": [
+        0.004376101006192507,
+        0.009384470808683073
+      ]
+    },
+    "ml_overlap_score": {
+      "value": 0.023844950995001307,
+      "ci": [
+        0.01179387207992492,
+        0.035114665942114334
+      ]
+    },
+    "mean_synthetic_holdout_auc": 0.9849874945565393,
+    "mean_shuffled_label_synthetic_auc": 0.5196478555304501,
+    "mean_secondary_fraction_mae_on_synthetic_holdout": 0.04138156484541403,
+    "actual_current_auc_from_ml_secondary_fraction": 0.50261524866248,
+    "leakage_flags": 0
+  },
+  "sampling_sensitivity": {
+    "traditional_highstat_minus_capped_dominant": -0.002372899122815547,
+    "traditional_highstat_minus_s10d_all_capped": 0.0014251416848022128
+  },
+  "leakage_checks_pass": true,
+  "conclusion": "The raw-ROOT capped reproduction matches S10d within +0.000000 on the traditional headline. On the top 3 strata covering 94.89% of the matched weight, increasing the per-run/stratum cap from 140 to 700 changes the traditional secondary-fraction high-minus-low by -0.00237. The high-stat traditional estimate is 0.03301 [0.01919, 0.04876], while the ML secondary-fraction diagnostic is 0.00668 [0.00438, 0.00938]. No leakage check flags, but the ML arm remains a synthetic-overlay diagnostic rather than a truth-labelled decomposition.",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "49e398f9e7bd5946487545e5aecfd077d7f25e6b",
+  "runtime_sec": 1016.7
+}

@@ -1,0 +1,2 @@
+metric,value,max_iter,learning_rate,max_leaf_nodes,l2_regularization,max_bins,random_state
+sample_i_cv_sigma68_ns,0.8967281210107316,30,0.05,3,0.1,32,20260609

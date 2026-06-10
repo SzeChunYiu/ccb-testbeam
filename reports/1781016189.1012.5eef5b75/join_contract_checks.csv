@@ -1,0 +1,8 @@
+check,value,pass
+raw_rows,640737.0,True
+artifact_rows,640737.0,True
+inner_join_rows,640737.0,True
+artifact_duplicate_keys,0.0,True
+raw_duplicate_keys,0.0,True
+row_order_equal,1.0,True
+max_abs_amplitude_delta_adc,0.0,True

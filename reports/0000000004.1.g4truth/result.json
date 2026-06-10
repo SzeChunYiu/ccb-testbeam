@@ -1,0 +1,90 @@
+{
+  "ticket_id": "0000000004.1.g4truth",
+  "study": "S17a",
+  "worker": "testbeam-laptop-3",
+  "title": "hibeam_g4 GEANT4 truth bridge feasibility and schema audit",
+  "reproduced": false,
+  "repro_tolerance": "exact provided macro should start beamOn and write output_krakow.root",
+  "raw_root_reproduction": {
+    "performed": false,
+    "reason": "This ticket is an external GEANT4 truth-generation bridge, not a raw CCB HRD reproduction study."
+  },
+  "build": {
+    "configured": true,
+    "compiled": true,
+    "geant4_version": "11.2.2",
+    "root_env": "conda nnbar_env",
+    "notes": [
+      "CMake required installed VGM at /home/billy/nnbar/simulation/GEANT4_Packages/install/vgm/lib/VGM-5.4.0.",
+      "A local symlinked source sandbox supplied the missing hibeam_g4_build/README.md expected by the upstream CMakeLists.txt."
+    ]
+  },
+  "provided_macro": {
+    "command": "../build/hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root",
+    "status": "aborted_before_beamOn",
+    "reason": "The current ScatteringGenerator registers /ElGen/E, /ElGen/TargetThickness, and /ElGen/Beamspot, but not /ElGen/CSFile. The provided macro line /ElGen/CSFile sigma_pd_cm_190.txt therefore triggers COMMAND NOT FOUND.",
+    "wall_time": "0:14.92",
+    "max_rss_kb": 681508,
+    "root_output_written": false
+  },
+  "patched_smoke_run": {
+    "macro_change": "removed unsupported /ElGen/CSFile line and reduced /run/beamOn to 100000",
+    "status": "completed",
+    "processed_events": 100000,
+    "root_tree": "hibeam",
+    "tree_entries": 100000,
+    "branches": 62,
+    "sci_bar_hits": 126574,
+    "wall_time": "0:45.05",
+    "max_rss_kb": 706312,
+    "root_sha256": "74387a04571cf92724fb97974b1214579996ed33cff0b128e6a96eb21fc3164a"
+  },
+  "traditional": {
+    "metric": "geant4_build_and_exact_macro_feasibility",
+    "value": 0,
+    "ci": null,
+    "interpretation": "Build succeeds, but the provided run macro is not compatible with this source revision."
+  },
+  "ml": {
+    "metric": "not_applicable",
+    "value": null,
+    "ci": null,
+    "interpretation": "No ML method was requested by the claimed GEANT4 infrastructure ticket."
+  },
+  "winner": {
+    "name": "not_applicable_exact_macro_incompatible",
+    "reason": "The correct decision is not to declare a physics/ML winner: the production truth run is blocked by a macro/source interface mismatch. The patched smoke run validates the schema only."
+  },
+  "validation": {
+    "deuteron_minus_proton_hit_edep_MeV": {
+      "value": 16.236556365391376,
+      "ci95": [
+        16.063068138239654,
+        16.411797592048014
+      ],
+      "interpretation": "Deuteron Sci_bar hits are more ionising per hit than proton hits."
+    },
+    "deuteron_minus_proton_event_total_edep_MeV": {
+      "value": -13.244933022993933,
+      "ci95": [
+        -14.11538966523228,
+        -12.423956488023027
+      ],
+      "interpretation": "Proton-tagged events have larger total Sci_bar deposit in this geometry because they produce more Sci_bar hits and penetrate more often."
+    },
+    "systematics": [
+      "The exact provided macro cannot consume sigma_pd_cm_190.txt in this source revision.",
+      "The patched run samples scattering angle uniformly and is not a production p-d cross-section truth sample.",
+      "GEANT4 warns that Mylar material fractional masses sum to 1.378.",
+      "No Birks quenching, optical photon transport, or ADC response is validated against HRD data."
+    ]
+  },
+  "critic": "pending",
+  "next_tickets": [
+    {
+      "title": "S17b: restore p-d cross-section sampling in hibeam_g4 ScatteringGenerator",
+      "appended_ticket_id": "1781084665.7580.5f232750",
+      "body": "Add or document a supported macro command for sigma_pd_cm_190.txt, rerun the 1M Krakow macro unmodified, and compare angular, range, and Sci_bar dE/dx distributions against S14/S15 action bands. Expected information gain: decides whether the GEANT4 bridge can become a production truth source instead of a schema-only smoke test."
+    }
+  ]
+}

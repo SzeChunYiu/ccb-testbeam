@@ -1,0 +1,16 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/pidfull_0000000009_1.py --config configs/0000000009_1_pidfull.json",
+  "config": "configs/0000000009_1_pidfull.json",
+  "git_commit": "a30354fb674df99d21f907d1e8554a38277a31a5",
+  "packages": {
+    "awkward": "2.2.4",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117",
+    "uproot": "5.0.9"
+  },
+  "python": "3.7.6",
+  "runtime_sec": 44.161165952682495,
+  "script": "scripts/pidfull_0000000009_1.py",
+  "ticket": "0000000009.1.pidfull"
+}

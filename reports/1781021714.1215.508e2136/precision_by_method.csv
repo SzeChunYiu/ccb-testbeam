@@ -1,0 +1,3 @@
+method,n_selected,p09a_broad_fraction,source_qtemplate_or_broad_fraction,adjudicated_broad_precision,adjudicated_curated_precision,q_template_only_share,p09a_strict_q_template_only_share,broad_width_share,duplicate_run_event_rate,max_run_stave_share
+ml_pca_shape_rf,160,0.30625,0.30625,0.5375,1.0,0.0,0.0,0.30625,0.0125,0.0625
+traditional_qtemplate_width,49,0.9795918367346939,1.0,0.5510204081632653,0.9795918367346939,0.04081632653061224,0.02040816326530612,0.9591836734693877,0.0,0.20408163265306123

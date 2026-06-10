@@ -1,0 +1,383 @@
+{
+  "ticket_id": "1781017385.1145.1466621b",
+  "study_id": "P01d",
+  "title": "run-family leakage sentinels for waveform probes",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "target": "stave_index",
+  "split": "held out whole run families; bootstrap resamples held-out runs",
+  "traditional": "residual hand-shape summaries plus PCA-6",
+  "ml": "residual masked-denoising AE-6",
+  "shuffle_margin": 0.03,
+  "best_main_probe": {
+    "heldout_family": "sample_i_analysis",
+    "method": "traditional residual hand+PCA-6",
+    "metric": "balanced_accuracy",
+    "value": 0.30256151168813494,
+    "ci_low": 0.2940662269543525,
+    "ci_high": 0.31234567892311993,
+    "train_rows": 37832,
+    "heldout_rows": 20225,
+    "heldout_runs": 14,
+    "category": "main"
+  },
+  "accepted_ml_gain_families": [],
+  "accepted_ml_gain_count": 0,
+  "family_splits": [
+    {
+      "heldout_family": "sample_i_calib",
+      "train_runs": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "heldout_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42
+      ],
+      "train_rows": 39867,
+      "heldout_rows": 18190,
+      "train_class_counts": {
+        "B2": 15375,
+        "B4": 11548,
+        "B6": 7902,
+        "B8": 5042
+      },
+      "heldout_class_counts": {
+        "B2": 7700,
+        "B4": 6374,
+        "B6": 2940,
+        "B8": 1176
+      },
+      "traditional_value": 0.2563243461231941,
+      "ml_value": 0.29455975632686826,
+      "ml_minus_traditional": 0.03823541020367416,
+      "traditional_shuffle_p95": 0.2815437486380295,
+      "ml_shuffle_p95": 0.2988450362980289,
+      "accepted_ml_gain": false,
+      "pca_reconstruction_mse": 0.00628977594897151,
+      "ae_reconstruction_mse": 0.06015802174806595,
+      "ae_final_training_loss": 0.057245709374547,
+      "ae_device": "cpu"
+    },
+    {
+      "heldout_family": "sample_i_analysis",
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "heldout_runs": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "train_rows": 37832,
+      "heldout_rows": 20225,
+      "train_class_counts": {
+        "B2": 13300,
+        "B4": 11865,
+        "B6": 7748,
+        "B8": 4919
+      },
+      "heldout_class_counts": {
+        "B2": 9775,
+        "B4": 6057,
+        "B6": 3094,
+        "B8": 1299
+      },
+      "traditional_value": 0.30256151168813494,
+      "ml_value": 0.3004574406679806,
+      "ml_minus_traditional": -0.0021040710201543633,
+      "traditional_shuffle_p95": 0.3091870450759055,
+      "ml_shuffle_p95": 0.32450553998739096,
+      "accepted_ml_gain": false,
+      "pca_reconstruction_mse": 0.005935843102633953,
+      "ae_reconstruction_mse": 0.05917771905660629,
+      "ae_final_training_loss": 0.052668123692274096,
+      "ae_device": "cpu"
+    },
+    {
+      "heldout_family": "sample_ii_analysis",
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        64
+      ],
+      "heldout_runs": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "train_rows": 40786,
+      "heldout_rows": 17271,
+      "train_class_counts": {
+        "B2": 18175,
+        "B4": 13131,
+        "B6": 6734,
+        "B8": 2746
+      },
+      "heldout_class_counts": {
+        "B2": 4900,
+        "B4": 4791,
+        "B6": 4108,
+        "B8": 3472
+      },
+      "traditional_value": 0.27848737962245385,
+      "ml_value": 0.25431748104777496,
+      "ml_minus_traditional": -0.024169898574678883,
+      "traditional_shuffle_p95": 0.27952857184797575,
+      "ml_shuffle_p95": 0.30884161184003556,
+      "accepted_ml_gain": false,
+      "pca_reconstruction_mse": 0.0036382037214934826,
+      "ae_reconstruction_mse": 0.04853449761867523,
+      "ae_final_training_loss": 0.055862488225102425,
+      "ae_device": "cpu"
+    },
+    {
+      "heldout_family": "sample_ii_calib",
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "heldout_runs": [
+        64
+      ],
+      "train_rows": 55686,
+      "heldout_rows": 2371,
+      "train_class_counts": {
+        "B2": 22375,
+        "B4": 17222,
+        "B6": 10142,
+        "B8": 5947
+      },
+      "heldout_class_counts": {
+        "B2": 700,
+        "B4": 700,
+        "B6": 700,
+        "B8": 271
+      },
+      "traditional_value": 0.2675777543489721,
+      "ml_value": 0.25474696889826043,
+      "ml_minus_traditional": -0.012830785450711646,
+      "traditional_shuffle_p95": 0.32611280969952555,
+      "ml_shuffle_p95": 0.3050488270954138,
+      "accepted_ml_gain": false,
+      "pca_reconstruction_mse": 0.0030932645313441753,
+      "ae_reconstruction_mse": 0.03193052485585213,
+      "ae_final_training_loss": 0.041674056223460605,
+      "ae_device": "cpu"
+    }
+  ],
+  "leakage_failures": [
+    {
+      "heldout_family": "sample_i_calib",
+      "check": "ml_shuffle_p95_margin_gate",
+      "value": -0.004285279971160627,
+      "pass": false,
+      "note": "ML score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_i_calib",
+      "check": "traditional_shuffle_p95_margin_gate",
+      "value": -0.0252194025148354,
+      "pass": false,
+      "note": "traditional score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_i_calib",
+      "check": "proxy_near_best_main",
+      "value": -0.3426262251912774,
+      "pass": false,
+      "note": "fails if amplitude/multiplicity proxy is within margin of the best main score"
+    },
+    {
+      "heldout_family": "sample_i_analysis",
+      "check": "ml_shuffle_p95_margin_gate",
+      "value": -0.024048099319410376,
+      "pass": false,
+      "note": "ML score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_i_analysis",
+      "check": "traditional_shuffle_p95_margin_gate",
+      "value": -0.006625533387770555,
+      "pass": false,
+      "note": "traditional score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_i_analysis",
+      "check": "proxy_near_best_main",
+      "value": -0.3255383967979605,
+      "pass": false,
+      "note": "fails if amplitude/multiplicity proxy is within margin of the best main score"
+    },
+    {
+      "heldout_family": "sample_ii_analysis",
+      "check": "ml_shuffle_p95_margin_gate",
+      "value": -0.054524130792260594,
+      "pass": false,
+      "note": "ML score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_ii_analysis",
+      "check": "traditional_shuffle_p95_margin_gate",
+      "value": -0.001041192225521903,
+      "pass": false,
+      "note": "traditional score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_ii_analysis",
+      "check": "proxy_near_best_main",
+      "value": -0.3602621854067731,
+      "pass": false,
+      "note": "fails if amplitude/multiplicity proxy is within margin of the best main score"
+    },
+    {
+      "heldout_family": "sample_ii_calib",
+      "check": "ml_shuffle_p95_margin_gate",
+      "value": -0.05030185819715338,
+      "pass": false,
+      "note": "ML score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_ii_calib",
+      "check": "traditional_shuffle_p95_margin_gate",
+      "value": -0.05853505535055348,
+      "pass": false,
+      "note": "traditional score must exceed label-shuffle p95 by margin 0.030"
+    },
+    {
+      "heldout_family": "sample_ii_calib",
+      "check": "proxy_near_best_main",
+      "value": -0.4137387981022667,
+      "pass": false,
+      "note": "fails if amplitude/multiplicity proxy is within margin of the best main score"
+    },
+    {
+      "heldout_family": "sample_ii_calib",
+      "check": "event_order_near_best_main",
+      "value": 0.01886531365313654,
+      "pass": false,
+      "note": "fails if event-order probe is within margin of the best main score"
+    }
+  ],
+  "no_monte_carlo": true,
+  "runtime_seconds": 703.4509966373444
+}

@@ -1,0 +1,3 @@
+method,resolvable_delay_ns,n_heldout_runs
+stress_amp_binned_template_fit,,2
+stress_compact_mlp_classifier_regressor,,2

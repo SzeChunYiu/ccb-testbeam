@@ -1,0 +1,296 @@
+{
+  "ticket_id": "1781018706.1107.40b1618c",
+  "study_id": "P01e",
+  "title": "derivative-stability check for sample-6 timing smoothing",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "p01d_sample6_reproduced": true,
+    "passed": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_pulses_total": 581124,
+    "heldout_pulses_total": 59613
+  },
+  "traditional": {
+    "methods": [
+      "control_stratum_mean",
+      "local_linear_bridge",
+      "ampbin_template_curvature"
+    ],
+    "timing_methods": [
+      "cfd20",
+      "template_phase",
+      "of_5_13"
+    ],
+    "best_optimal_filter_method": "of_5_13"
+  },
+  "ml": {
+    "method": "ridge_sample6_imputer",
+    "feature_set": "normalized samples except sample 6 plus stave one-hot; amplitude excluded",
+    "heldout_mean_mse": 0.0522065379470257,
+    "heldout_mean_mae": 0.09600407087168186,
+    "heldout_mean_r2": 0.7356176282108704,
+    "target_shuffle_mean_r2": -0.0791097236924746,
+    "timing_residual_reference": {
+      "method": "ridge_residual_corrector_on_cfd20",
+      "best_alpha": 100.0
+    }
+  },
+  "sample6_reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737.0,
+      "reproduced": 640737.0,
+      "delta": 0.0,
+      "tolerance": 0.0,
+      "pass": true,
+      "ci_low": null,
+      "ci_high": null
+    },
+    {
+      "quantity": "p01d_sample6_cfd20_delta_sigma68_ns",
+      "report_value": -0.9299347512936595,
+      "reproduced": -0.9299347512936595,
+      "delta": 0.0,
+      "tolerance": 0.02,
+      "pass": true,
+      "ci_low": -1.0763411161231984,
+      "ci_high": -0.65790676486492
+    },
+    {
+      "quantity": "p01d_sample6_template_phase_delta_sigma68_ns",
+      "report_value": -0.26393484163283887,
+      "reproduced": -0.26393484163283887,
+      "delta": 0.0,
+      "tolerance": 0.02,
+      "pass": true,
+      "ci_low": -0.5,
+      "ci_high": 0.23606515836715758
+    },
+    {
+      "quantity": "p01d_sample6_of_5_13_delta_sigma68_ns",
+      "report_value": -0.3602377548980691,
+      "reproduced": -0.3602377548980691,
+      "delta": 0.0,
+      "tolerance": 0.02,
+      "pass": true,
+      "ci_low": -0.4955465043640137,
+      "ci_high": -0.188863319091789
+    }
+  ],
+  "sample6_replacement_timing_deltas": [
+    {
+      "variant": "control_stratum_mean",
+      "method": "cfd20",
+      "base_sigma68_ns": 3.1884502039551736,
+      "variant_sigma68_ns": 2.258515452661514,
+      "delta_sigma68_ns": -0.9299347512936595,
+      "ci_low": -1.0820685119628912,
+      "ci_high": -0.65790676486492,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "control_stratum_mean",
+      "method": "template_phase",
+      "base_sigma68_ns": 2.5232181251049006,
+      "variant_sigma68_ns": 2.2592832834720618,
+      "delta_sigma68_ns": -0.26393484163283887,
+      "ci_low": -0.5,
+      "ci_high": 0.23606515836715758,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "control_stratum_mean",
+      "method": "of_5_13",
+      "base_sigma68_ns": 2.693265431442259,
+      "variant_sigma68_ns": 2.33302767654419,
+      "delta_sigma68_ns": -0.3602377548980691,
+      "ci_low": -0.4847794799804688,
+      "ci_high": -0.188863319091789,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "local_linear_bridge",
+      "method": "cfd20",
+      "base_sigma68_ns": 3.1884502039551736,
+      "variant_sigma68_ns": 3.0256833344697958,
+      "delta_sigma68_ns": -0.16276686948537789,
+      "ci_low": -0.28225023919343917,
+      "ci_high": -0.005340278148654676,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "local_linear_bridge",
+      "method": "template_phase",
+      "base_sigma68_ns": 2.5232181251049006,
+      "variant_sigma68_ns": 2.273218125104904,
+      "delta_sigma68_ns": -0.24999999999999645,
+      "ci_low": -0.4860651583671505,
+      "ci_high": 0.0,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "local_linear_bridge",
+      "method": "of_5_13",
+      "base_sigma68_ns": 2.693265431442259,
+      "variant_sigma68_ns": 2.541349915466306,
+      "delta_sigma68_ns": -0.15191551597595288,
+      "ci_low": -0.2688895225524903,
+      "ci_high": 0.03369665145874112,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ampbin_template_curvature",
+      "method": "cfd20",
+      "base_sigma68_ns": 3.1884502039551736,
+      "variant_sigma68_ns": 3.0231593698263164,
+      "delta_sigma68_ns": -0.16529083412885726,
+      "ci_low": -0.29044514161348234,
+      "ci_high": -0.01535825676917213,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ampbin_template_curvature",
+      "method": "template_phase",
+      "base_sigma68_ns": 2.5232181251049006,
+      "variant_sigma68_ns": 2.5092832834720595,
+      "delta_sigma68_ns": -0.013934841632841088,
+      "ci_low": -0.24999999999999645,
+      "ci_high": 3.552713678800501e-15,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ampbin_template_curvature",
+      "method": "of_5_13",
+      "base_sigma68_ns": 2.693265431442259,
+      "variant_sigma68_ns": 2.6073518753051728,
+      "delta_sigma68_ns": -0.08591355613708629,
+      "ci_low": -0.22760948455810537,
+      "ci_high": 0.16745124435424508,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ml_ridge_impute",
+      "method": "cfd20",
+      "base_sigma68_ns": 3.1884502039551736,
+      "variant_sigma68_ns": 3.0186339319264888,
+      "delta_sigma68_ns": -0.16981627202868488,
+      "ci_low": -0.2905764545750613,
+      "ci_high": -0.029560083270071758,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ml_ridge_impute",
+      "method": "template_phase",
+      "base_sigma68_ns": 2.5232181251049006,
+      "variant_sigma68_ns": 2.5092832834720618,
+      "delta_sigma68_ns": -0.013934841632838868,
+      "ci_low": -0.2499999999999929,
+      "ci_high": 0.013934841632838868,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ml_ridge_impute",
+      "method": "of_5_13",
+      "base_sigma68_ns": 2.693265431442259,
+      "variant_sigma68_ns": 2.789332812347412,
+      "delta_sigma68_ns": 0.09606738090515288,
+      "ci_low": -0.056254145336153305,
+      "ci_high": 0.3078496246337923,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ml_ridge_shuffle_impute",
+      "method": "cfd20",
+      "base_sigma68_ns": 3.1884502039551736,
+      "variant_sigma68_ns": 2.116289120116233,
+      "delta_sigma68_ns": -1.0721610838389406,
+      "ci_low": -1.2976027610301966,
+      "ci_high": -0.8971601724624527,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ml_ridge_shuffle_impute",
+      "method": "template_phase",
+      "base_sigma68_ns": 2.5232181251049006,
+      "variant_sigma68_ns": 2.023218125104904,
+      "delta_sigma68_ns": -0.49999999999999645,
+      "ci_low": -0.736065158367158,
+      "ci_high": 3.552713678800501e-15,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    },
+    {
+      "variant": "ml_ridge_shuffle_impute",
+      "method": "of_5_13",
+      "base_sigma68_ns": 2.693265431442259,
+      "variant_sigma68_ns": 1.9184991569519048,
+      "delta_sigma68_ns": -0.7747662744903543,
+      "ci_low": -0.8713594126701357,
+      "ci_high": -0.5397643772888099,
+      "n_pair_residuals": 1224,
+      "heldout_runs": "42,57,64,65"
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "run_overlap",
+      "value": 0,
+      "detail": "must be zero for train/heldout split"
+    },
+    {
+      "check": "sample6_feature_excluded",
+      "value": 1,
+      "detail": "ML sample-6 imputer uses normalized samples except sample 6 plus stave one-hot; amplitude is excluded"
+    },
+    {
+      "check": "target_shuffle_r2",
+      "value": -0.0791097236924746,
+      "detail": "held-out sample-6 imputer trained on shuffled train targets"
+    },
+    {
+      "check": "target_shuffle_mse_over_real_mse",
+      "value": 3.520789873650166,
+      "detail": "large ratio is expected if local-shape prediction is real rather than leakage"
+    },
+    {
+      "check": "target_shuffle_timing_min_delta_ns",
+      "value": -1.0721610838389406,
+      "detail": "bad shape model can still narrow timing, so timing deltas alone are not accepted as ML evidence"
+    },
+    {
+      "check": "train_selected_of_window",
+      "value": "of_5_13",
+      "detail": "optimal-filter window selected by train-run sigma68 before held-out evaluation"
+    },
+    {
+      "check": "p01d_non_cfd_negative_methods_reproduced",
+      "value": 2,
+      "detail": "template-phase and train-selected OF both remain negative before derivative replacements"
+    }
+  ],
+  "conclusion": "The original P01d sample-6 negative sign reproduces, but it is not stable to shape-aware replacement. Train-run local curvature and the no-sample-6 ML imputer remove most of the favorable OF/template response, while the target-shuffle timing artifact shows that timing narrowing alone can be produced by bad sample-6 smoothing. Sample 6 is therefore better interpreted as a local shape/tuning artifact of the control replacement than as a standalone smoothing robustness claim.",
+  "runtime_sec": 36.5
+}

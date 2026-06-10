@@ -1,0 +1,25 @@
+{
+  "study_id": "S10h_late_residual_taxonomy",
+  "title": "late-sample residual taxonomy for 20pct last-above inflation",
+  "ticket_id": "1781028280.1036.7e527107",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781028280.1036.7e527107",
+  "source_s10c_script": "reports/1781007337.1308.7dc86005/s10c_threshold_scan_tau_eff.py",
+  "source_s10d_result": "reports/1781013102.1034.262365d2/result.json",
+  "random_seed": 1781028280,
+  "bootstrap_samples": 1000,
+  "ml_train_cap_per_fold": 50000,
+  "ml_row_split_sample": 40000,
+  "runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "low_runs": [46, 47],
+  "high_runs": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "reported_s10d": {
+    "live20_template_ns": 101.86521002119034,
+    "live20_empirical_ns": 119.0300244680748,
+    "live20_inflation_ns": 17.164814446884463
+  },
+  "reproduction_tolerance_ns": 0.05,
+  "inflated_label_threshold_ns": 10.0,
+  "clean_label_threshold_ns": 5.0
+}

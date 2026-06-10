@@ -1,0 +1,65 @@
+study_id: S05e-rate
+title: Run-level A/B coincidence-rate model versus B covariance
+ticket: "1781017418.11875.10723959"
+worker: testbeam-laptop-4
+
+raw_root_dir: data/root/root
+output_dir: reports/1781017418.11875.10723959
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+sample_period_ns: 10.0
+cfd_fraction: 0.20
+tof_per_cm_ns: 0.078
+stave_spacing_cm: 2.0
+bootstrap_resamples: 500
+random_seed: 50507
+
+runs:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65]
+low_current_runs: [46, 47]
+high_current_nA: 20.0
+low_current_nA: 2.0
+
+expected_counts:
+  total_selected_b_pulses: 640737
+  sample_i_analysis_b_selected_pulses: 252266
+  sample_ii_analysis_b_selected_pulses: 125096
+  astack_sample_iii_analysis_events_with_selected: 7168
+  astack_sample_iii_analysis_selected_pulses: 9682
+  astack_sample_iv_analysis_events_with_selected: 767
+  astack_sample_iv_analysis_selected_pulses: 894
+
+expected_s05_covariance:
+  raw_b2_containing_mean_abs_cov_ns2: 1041.84
+  raw_downstream_mean_abs_cov_ns2: 15.99
+  tolerance_ns2: 0.05
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+traditional:
+  ridge_alphas: [0.01, 0.1, 1.0, 10.0, 100.0]
+
+ml:
+  n_estimators: 80
+  max_depths: [2, 3]
+  min_samples_leaf_values: [2, 4]
+  max_features: 0.9

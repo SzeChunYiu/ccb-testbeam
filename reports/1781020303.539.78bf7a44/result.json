@@ -1,0 +1,312 @@
+{
+  "ticket": "1781020303.539.78bf7a44",
+  "study": "P07g",
+  "worker": "testbeam-laptop-1",
+  "title": "saturation recovery acceptance rule from bias envelope",
+  "config_path": "configs/p07g_1781020303_539_78bf7a44_acceptance_rule.json",
+  "split": "leave-one-run-out by run over Sample-II analysis runs; all rules calibrated on non-held-out runs",
+  "raw_root": "data/root/root",
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "reproduction": [
+    {
+      "quantity": "Sample-II B2 selected pulses",
+      "expected": 88213,
+      "reproduced": 88213.0,
+      "delta": 0,
+      "pass": true
+    },
+    {
+      "quantity": "P07e w2_8/gbr_masked res68_abs_frac",
+      "expected": 0.08142854693675028,
+      "reproduced": 0.07847091265073264,
+      "delta": -0.0029576342860176408,
+      "pass": true
+    },
+    {
+      "quantity": "P07e w2_8/gbr_masked median_bias_frac",
+      "expected": 0.028761577610479743,
+      "reproduced": 0.02787571279714597,
+      "delta": -0.000885864813333772,
+      "pass": true
+    },
+    {
+      "quantity": "Natural A_B2>=7000 with >=2 downstream selected events",
+      "expected": "data-derived",
+      "reproduced": 249.0,
+      "delta": "",
+      "pass": true
+    }
+  ],
+  "summary": [
+    {
+      "n": 7625,
+      "amp_res68_abs_frac": 0.06661047948962413,
+      "amp_bias_median_frac": 0.03764923956638086,
+      "catastrophic_rate": 0.00839344262295082,
+      "q_template_shift_median": -0.5580175311494138,
+      "timing_tail_rate": 0.00013114754098360657,
+      "calibration_coverage": 0.9678688524590164,
+      "acceptance_rate": 0.4487405838041431,
+      "q_template_shift_natural": 0.00719852215027718,
+      "timing_tail_delta_natural": -0.012809802283486485,
+      "rule": "ml_conformal_risk",
+      "amp_res68_abs_frac_ci95": [
+        0.06246543479743603,
+        0.07283969652998146
+      ],
+      "amp_bias_median_frac_ci95": [
+        0.03245341284339115,
+        0.04384640867547799
+      ],
+      "catastrophic_rate_ci95": [
+        0.0028071629573775078,
+        0.014391380323789414
+      ],
+      "q_template_shift_median_ci95": [
+        -0.6133412517877745,
+        -0.514400185215143
+      ],
+      "timing_tail_rate_ci95": [
+        0.0,
+        0.00041140976412506856
+      ],
+      "calibration_coverage_ci95": [
+        0.9477338785717493,
+        0.9868020304568528
+      ],
+      "acceptance_rate_ci95": [
+        0.4017962308598351,
+        0.49414349750479
+      ],
+      "q_template_shift_natural_ci95": [
+        0.004008785748407505,
+        0.010632597188269794
+      ],
+      "timing_tail_delta_natural_ci95": [
+        -0.027868281815650226,
+        0.0
+      ]
+    },
+    {
+      "n": 8760,
+      "amp_res68_abs_frac": 0.09538722066421221,
+      "amp_bias_median_frac": -0.004270671711130412,
+      "catastrophic_rate": 0.006621004566210046,
+      "q_template_shift_median": -0.3552666402188396,
+      "timing_tail_rate": 0.0005707762557077625,
+      "calibration_coverage": 0.7091324200913242,
+      "acceptance_rate": 0.5155367231638418,
+      "q_template_shift_natural": 0.0,
+      "timing_tail_delta_natural": 0.0,
+      "rule": "traditional_envelope",
+      "amp_res68_abs_frac_ci95": [
+        0.09322043009998941,
+        0.09665471060079311
+      ],
+      "amp_bias_median_frac_ci95": [
+        -0.017112721243353293,
+        0.004700487840592003
+      ],
+      "catastrophic_rate_ci95": [
+        0.005272819232805554,
+        0.00815581253804017
+      ],
+      "q_template_shift_median_ci95": [
+        -0.45189855384740635,
+        -0.18172140791227243
+      ],
+      "timing_tail_rate_ci95": [
+        0.0001828141035289896,
+        0.0010382643939689492
+      ],
+      "calibration_coverage_ci95": [
+        0.7013453835883743,
+        0.7176014618398584
+      ],
+      "acceptance_rate_ci95": [
+        0.44539584789808917,
+        0.5987279315150802
+      ],
+      "q_template_shift_natural_ci95": [
+        0.0,
+        0.0
+      ],
+      "timing_tail_delta_natural_ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "run": 58,
+      "rule": "traditional_envelope",
+      "max_lift": 0.3,
+      "max_q_rmse": 0.24,
+      "odd_low": 0.02,
+      "odd_high": 1.4,
+      "risk_upper_threshold": null,
+      "cat_probability_threshold": null,
+      "conformal_q90": null
+    },
+    {
+      "run": 58,
+      "rule": "ml_conformal_risk",
+      "max_lift": null,
+      "max_q_rmse": null,
+      "odd_low": null,
+      "odd_high": null,
+      "risk_upper_threshold": 0.16,
+      "cat_probability_threshold": 0.08,
+      "conformal_q90": 0.0941386579044482
+    },
+    {
+      "run": 59,
+      "rule": "traditional_envelope",
+      "max_lift": 0.45,
+      "max_q_rmse": 0.18,
+      "odd_low": 0.02,
+      "odd_high": 1.4,
+      "risk_upper_threshold": null,
+      "cat_probability_threshold": null,
+      "conformal_q90": null
+    },
+    {
+      "run": 59,
+      "rule": "ml_conformal_risk",
+      "max_lift": null,
+      "max_q_rmse": null,
+      "odd_low": null,
+      "odd_high": null,
+      "risk_upper_threshold": 0.16,
+      "cat_probability_threshold": 0.1,
+      "conformal_q90": 0.08804008315182899
+    },
+    {
+      "run": 60,
+      "rule": "traditional_envelope",
+      "max_lift": 0.45,
+      "max_q_rmse": 0.18,
+      "odd_low": 0.02,
+      "odd_high": 1.4,
+      "risk_upper_threshold": null,
+      "cat_probability_threshold": null,
+      "conformal_q90": null
+    },
+    {
+      "run": 60,
+      "rule": "ml_conformal_risk",
+      "max_lift": null,
+      "max_q_rmse": null,
+      "odd_low": null,
+      "odd_high": null,
+      "risk_upper_threshold": 0.16,
+      "cat_probability_threshold": 0.14,
+      "conformal_q90": 0.08767086959845362
+    },
+    {
+      "run": 61,
+      "rule": "traditional_envelope",
+      "max_lift": 0.45,
+      "max_q_rmse": 0.18,
+      "odd_low": 0.02,
+      "odd_high": 1.4,
+      "risk_upper_threshold": null,
+      "cat_probability_threshold": null,
+      "conformal_q90": null
+    },
+    {
+      "run": 61,
+      "rule": "ml_conformal_risk",
+      "max_lift": null,
+      "max_q_rmse": null,
+      "odd_low": null,
+      "odd_high": null,
+      "risk_upper_threshold": 0.16,
+      "cat_probability_threshold": 0.1,
+      "conformal_q90": 0.08909705856805816
+    },
+    {
+      "run": 62,
+      "rule": "traditional_envelope",
+      "max_lift": 0.45,
+      "max_q_rmse": 0.18,
+      "odd_low": 0.02,
+      "odd_high": 1.8,
+      "risk_upper_threshold": null,
+      "cat_probability_threshold": null,
+      "conformal_q90": null
+    },
+    {
+      "run": 62,
+      "rule": "ml_conformal_risk",
+      "max_lift": null,
+      "max_q_rmse": null,
+      "odd_low": null,
+      "odd_high": null,
+      "risk_upper_threshold": 0.16,
+      "cat_probability_threshold": 0.1,
+      "conformal_q90": 0.08692255802337061
+    },
+    {
+      "run": 63,
+      "rule": "traditional_envelope",
+      "max_lift": 0.45,
+      "max_q_rmse": 0.18,
+      "odd_low": 0.02,
+      "odd_high": 1.8,
+      "risk_upper_threshold": null,
+      "cat_probability_threshold": null,
+      "conformal_q90": null
+    },
+    {
+      "run": 63,
+      "rule": "ml_conformal_risk",
+      "max_lift": null,
+      "max_q_rmse": null,
+      "odd_low": null,
+      "odd_high": null,
+      "risk_upper_threshold": 0.16,
+      "cat_probability_threshold": 0.08,
+      "conformal_q90": 0.08975805094593105
+    },
+    {
+      "run": 65,
+      "rule": "traditional_envelope",
+      "max_lift": 0.45,
+      "max_q_rmse": 0.18,
+      "odd_low": 0.02,
+      "odd_high": 1.4,
+      "risk_upper_threshold": null,
+      "cat_probability_threshold": null,
+      "conformal_q90": null
+    },
+    {
+      "run": 65,
+      "rule": "ml_conformal_risk",
+      "max_lift": null,
+      "max_q_rmse": null,
+      "odd_low": null,
+      "odd_high": null,
+      "risk_upper_threshold": 0.16,
+      "cat_probability_threshold": 0.1,
+      "conformal_q90": 0.09223598411951472
+    }
+  ],
+  "leakage_flags": 0,
+  "too_good_triggered": false,
+  "finding": "The ML conformal rule accepts 0.449 of held-out artificial rows with amplitude res68 0.0666, median bias 0.0376, catastrophic rate 0.0084, and natural timing-tail delta -0.0128. The traditional envelope accepts 0.516 with res68 0.0954. Preferred rule: ml_conformal_risk.",
+  "preferred_rule": "ml_conformal_risk",
+  "next_tickets": [],
+  "follow_up_ticket_status": "skipped: existing STUDIES.md already contains P07g/P14-style accept-veto and downstream saturation follow-ups; no clearly novel non-duplicate ticket appended",
+  "git_commit": "0282aba381ad24adce78c75470fc72df9f443025",
+  "runtime_sec": 80.6
+}

@@ -1,0 +1,1774 @@
+{
+  "ticket": "1781018293.1193.5694364a",
+  "study": "P07d",
+  "worker": "testbeam-laptop-1",
+  "title": "boundary-shrinkage calibration for natural B2 saturation transfer",
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "split": "by run, leave-one-run-out; calibration trained only on complete non-held-out runs",
+  "raw_pulses_b2_selected": 88213,
+  "reproduction": {
+    "p07c_expected_boundary_6500_7500_shape_only_q_shift": -0.08323295849868055,
+    "p07c_reproduced_boundary_6500_7500_shape_only_q_shift": -0.08209324637727163,
+    "absolute_delta": 0.0011397121214089256
+  },
+  "boundary_and_application": {
+    "boundary_6500_7500": {
+      "observed": {
+        "n": 3714,
+        "coverage": 0.0,
+        "mean_alpha": 0.0,
+        "mean_amplitude_lift_fraction": 0.0,
+        "mean_charge_lift_fraction": 0.0,
+        "mean_q_template_shift_fraction": 0.0,
+        "mean_abs_q_template_shift_fraction": 0.0,
+        "mean_cfd20_shift_ns": 0.0,
+        "median_abs_cfd20_shift_ns": 0.0,
+        "timing_tail_fraction": 0.033925686591276254,
+        "timing_tail_delta": 0.0,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "p07c_full_shape_transfer": {
+        "n": 3714,
+        "coverage": 1.0,
+        "mean_alpha": 1.0,
+        "mean_amplitude_lift_fraction": 0.09057884248782146,
+        "mean_charge_lift_fraction": 0.0003910854988817283,
+        "mean_q_template_shift_fraction": -0.08209324637727163,
+        "mean_abs_q_template_shift_fraction": 0.08209324637727163,
+        "mean_cfd20_shift_ns": 0.4203491620924861,
+        "median_abs_cfd20_shift_ns": 0.3201683918317877,
+        "timing_tail_fraction": 0.030156165858912225,
+        "timing_tail_delta": -0.0037695207323640285,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "traditional_fixed_shrink_025": {
+        "n": 3714,
+        "coverage": 1.0,
+        "mean_alpha": 0.25,
+        "mean_amplitude_lift_fraction": 0.02264471062195537,
+        "mean_charge_lift_fraction": 4.345033744970993e-06,
+        "mean_q_template_shift_fraction": -0.022086617753839376,
+        "mean_abs_q_template_shift_fraction": 0.022086617753839376,
+        "mean_cfd20_shift_ns": 0.1074695008198781,
+        "median_abs_cfd20_shift_ns": 0.08024928625344009,
+        "timing_tail_fraction": 0.03204092622509424,
+        "timing_tail_delta": -0.0018847603661820145,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "linear_boundary_shrink": {
+        "n": 3714,
+        "coverage": 1.0,
+        "mean_alpha": 0.26011039310716283,
+        "mean_amplitude_lift_fraction": 0.023532225137521293,
+        "mean_charge_lift_fraction": 4.777238404135716e-06,
+        "mean_q_template_shift_fraction": -0.022927717962950088,
+        "mean_abs_q_template_shift_fraction": 0.022927717962950088,
+        "mean_cfd20_shift_ns": 0.11191391166090564,
+        "median_abs_cfd20_shift_ns": 0.08338094461227982,
+        "timing_tail_fraction": 0.03204092622509424,
+        "timing_tail_delta": -0.0018847603661820145,
+        "alpha_observed_amp_r2": 1.3737245247798257e-30,
+        "alpha_event_hash_r2": 1.275346495319523e-32
+      },
+      "isotonic_boundary_calibration": {
+        "n": 3714,
+        "coverage": 0.9911147011308562,
+        "mean_alpha": 0.2699674797054623,
+        "mean_amplitude_lift_fraction": 0.02288149598596107,
+        "mean_charge_lift_fraction": 1.6762666460682038e-07,
+        "mean_q_template_shift_fraction": -0.02236193895638304,
+        "mean_abs_q_template_shift_fraction": 0.02236193895638304,
+        "mean_cfd20_shift_ns": 0.11014724219457318,
+        "median_abs_cfd20_shift_ns": 0.08537396663854879,
+        "timing_tail_fraction": 0.03204092622509424,
+        "timing_tail_delta": -0.0018847603661820145,
+        "alpha_observed_amp_r2": 0.0023514063141089107,
+        "alpha_event_hash_r2": 0.004028166718631251
+      },
+      "ml_boundary_calibration": {
+        "n": 3714,
+        "coverage": 0.9997307485191168,
+        "mean_alpha": 0.26997120875108765,
+        "mean_amplitude_lift_fraction": 0.02290488434214267,
+        "mean_charge_lift_fraction": 1.6851327335249414e-07,
+        "mean_q_template_shift_fraction": -0.022384913531812458,
+        "mean_abs_q_template_shift_fraction": 0.022384913531812458,
+        "mean_cfd20_shift_ns": 0.11022668222171374,
+        "median_abs_cfd20_shift_ns": 0.08530076436477091,
+        "timing_tail_fraction": 0.03204092622509424,
+        "timing_tail_delta": -0.0018847603661820145,
+        "alpha_observed_amp_r2": 0.0023912206494399054,
+        "alpha_event_hash_r2": 0.003933663701935147
+      },
+      "leak_observed_amp_only_control": {
+        "n": 3714,
+        "coverage": 1.0,
+        "mean_alpha": 0.2707541317519376,
+        "mean_amplitude_lift_fraction": 0.024483819020837124,
+        "mean_charge_lift_fraction": 5.088749725846721e-06,
+        "mean_q_template_shift_fraction": -0.0238338782979769,
+        "mean_abs_q_template_shift_fraction": 0.0238338782979769,
+        "mean_cfd20_shift_ns": 0.11622361495588811,
+        "median_abs_cfd20_shift_ns": 0.08649084416174407,
+        "timing_tail_fraction": 0.03204092622509424,
+        "timing_tail_delta": -0.0018847603661820145,
+        "alpha_observed_amp_r2": 0.11519835898934704,
+        "alpha_event_hash_r2": 0.0009824556739318037
+      },
+      "leak_run_event_amp_control": {
+        "n": 3714,
+        "coverage": 1.0,
+        "mean_alpha": 0.27153153141747705,
+        "mean_amplitude_lift_fraction": 0.024557418705043983,
+        "mean_charge_lift_fraction": 5.62891346083847e-06,
+        "mean_q_template_shift_fraction": -0.023903435212752094,
+        "mean_abs_q_template_shift_fraction": 0.023903435212752094,
+        "mean_cfd20_shift_ns": 0.1165692639121226,
+        "median_abs_cfd20_shift_ns": 0.0869849940804343,
+        "timing_tail_fraction": 0.03204092622509424,
+        "timing_tail_delta": -0.0018847603661820145,
+        "alpha_observed_amp_r2": 0.13502080713206538,
+        "alpha_event_hash_r2": 0.027193113958622506
+      },
+      "shuffled_target_ml_control": {
+        "n": 3714,
+        "coverage": 1.0,
+        "mean_alpha": 0.2704987214881205,
+        "mean_amplitude_lift_fraction": 0.02447339018694598,
+        "mean_charge_lift_fraction": 6.847541767428389e-06,
+        "mean_q_template_shift_fraction": -0.023820499527128374,
+        "mean_abs_q_template_shift_fraction": 0.023820499527128374,
+        "mean_cfd20_shift_ns": 0.1162811520806869,
+        "median_abs_cfd20_shift_ns": 0.08672754499816099,
+        "timing_tail_fraction": 0.03204092622509424,
+        "timing_tail_delta": -0.0018847603661820145,
+        "alpha_observed_amp_r2": 0.03187421795878123,
+        "alpha_event_hash_r2": 0.00035461212052225735
+      }
+    },
+    "application_ge7000": {
+      "observed": {
+        "n": 5266,
+        "coverage": 0.0,
+        "mean_alpha": 0.0,
+        "mean_amplitude_lift_fraction": 0.0,
+        "mean_charge_lift_fraction": 0.0,
+        "mean_q_template_shift_fraction": 0.0,
+        "mean_abs_q_template_shift_fraction": 0.0,
+        "mean_cfd20_shift_ns": 0.0,
+        "median_abs_cfd20_shift_ns": 0.0,
+        "timing_tail_fraction": 0.038359285985567794,
+        "timing_tail_delta": 0.0,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "p07c_full_shape_transfer": {
+        "n": 5266,
+        "coverage": 1.0,
+        "mean_alpha": 1.0,
+        "mean_amplitude_lift_fraction": 0.10232751898507872,
+        "mean_charge_lift_fraction": 0.005939004062512673,
+        "mean_q_template_shift_fraction": -0.08526340828617328,
+        "mean_abs_q_template_shift_fraction": 0.08526340828617328,
+        "mean_cfd20_shift_ns": 0.47117516939395426,
+        "median_abs_cfd20_shift_ns": 0.3171538207826742,
+        "timing_tail_fraction": 0.03361184960121534,
+        "timing_tail_delta": -0.004747436384352448,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "traditional_fixed_shrink_025": {
+        "n": 5266,
+        "coverage": 1.0,
+        "mean_alpha": 0.25,
+        "mean_amplitude_lift_fraction": 0.025581879746269687,
+        "mean_charge_lift_fraction": 0.0015290161367686925,
+        "mean_q_template_shift_fraction": -0.023250103135766604,
+        "mean_abs_q_template_shift_fraction": 0.023272424182545437,
+        "mean_cfd20_shift_ns": 0.12087595836188769,
+        "median_abs_cfd20_shift_ns": 0.07934700758471216,
+        "timing_tail_fraction": 0.03684010634257501,
+        "timing_tail_delta": -0.001519179642992785,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "linear_boundary_shrink": {
+        "n": 5266,
+        "coverage": 1.0,
+        "mean_alpha": 0.26146980630459704,
+        "mean_amplitude_lift_fraction": 0.02673808905366075,
+        "mean_charge_lift_fraction": 0.0015642436290588047,
+        "mean_q_template_shift_fraction": -0.024293665064875142,
+        "mean_abs_q_template_shift_fraction": 0.024313041650036993,
+        "mean_cfd20_shift_ns": 0.12647462767836498,
+        "median_abs_cfd20_shift_ns": 0.08277322606504732,
+        "timing_tail_fraction": 0.03684010634257501,
+        "timing_tail_delta": -0.001519179642992785,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "isotonic_boundary_calibration": {
+        "n": 5266,
+        "coverage": 0.9538549183440942,
+        "mean_alpha": 0.26541924474485945,
+        "mean_amplitude_lift_fraction": 0.02188997325298501,
+        "mean_charge_lift_fraction": 0.0014125403696895673,
+        "mean_q_template_shift_fraction": -0.02001507023726142,
+        "mean_abs_q_template_shift_fraction": 0.020025966219256536,
+        "mean_cfd20_shift_ns": 0.10444115586496291,
+        "median_abs_cfd20_shift_ns": 0.08325552098853274,
+        "timing_tail_fraction": 0.036650208887200914,
+        "timing_tail_delta": -0.0017090770983668809,
+        "alpha_observed_amp_r2": 0.019702407966634854,
+        "alpha_event_hash_r2": 0.0015279605149786865
+      },
+      "ml_boundary_calibration": {
+        "n": 5266,
+        "coverage": 0.9996202050892518,
+        "mean_alpha": 0.26550346591831875,
+        "mean_amplitude_lift_fraction": 0.021981268925304217,
+        "mean_charge_lift_fraction": 0.0014750341493331065,
+        "mean_q_template_shift_fraction": -0.020043092807658616,
+        "mean_abs_q_template_shift_fraction": 0.020160942018374577,
+        "mean_cfd20_shift_ns": 0.10484548984844963,
+        "median_abs_cfd20_shift_ns": 0.08312706130889118,
+        "timing_tail_fraction": 0.036650208887200914,
+        "timing_tail_delta": -0.0017090770983668809,
+        "alpha_observed_amp_r2": 0.01986781483262735,
+        "alpha_event_hash_r2": 0.0016747869405392111
+      },
+      "leak_observed_amp_only_control": {
+        "n": 5266,
+        "coverage": 1.0,
+        "mean_alpha": 0.27825410349670926,
+        "mean_amplitude_lift_fraction": 0.028556351665264098,
+        "mean_charge_lift_fraction": 0.0016272172890439778,
+        "mean_q_template_shift_fraction": -0.025916288056743512,
+        "mean_abs_q_template_shift_fraction": 0.02592700801362084,
+        "mean_cfd20_shift_ns": 0.13504738727297202,
+        "median_abs_cfd20_shift_ns": 0.0883813559153619,
+        "timing_tail_fraction": 0.03684010634257501,
+        "timing_tail_delta": -0.001519179642992785,
+        "alpha_observed_amp_r2": 0.2036076961752808,
+        "alpha_event_hash_r2": 0.002921573800259177
+      },
+      "leak_run_event_amp_control": {
+        "n": 5266,
+        "coverage": 1.0,
+        "mean_alpha": 0.2640887029426102,
+        "mean_amplitude_lift_fraction": 0.027109076906208215,
+        "mean_charge_lift_fraction": 0.0015710292002714082,
+        "mean_q_template_shift_fraction": -0.024623407976021257,
+        "mean_abs_q_template_shift_fraction": 0.02464247429291802,
+        "mean_cfd20_shift_ns": 0.1284132494640481,
+        "median_abs_cfd20_shift_ns": 0.08582282547393667,
+        "timing_tail_fraction": 0.03703000379794911,
+        "timing_tail_delta": -0.0013292821876186847,
+        "alpha_observed_amp_r2": 0.11835461065713349,
+        "alpha_event_hash_r2": 0.13571474496256355
+      },
+      "shuffled_target_ml_control": {
+        "n": 5266,
+        "coverage": 1.0,
+        "mean_alpha": 0.27124695538240207,
+        "mean_amplitude_lift_fraction": 0.027787530634897042,
+        "mean_charge_lift_fraction": 0.0016103151300250883,
+        "mean_q_template_shift_fraction": -0.02522123378122235,
+        "mean_abs_q_template_shift_fraction": 0.025235599009468684,
+        "mean_cfd20_shift_ns": 0.13110727097525712,
+        "median_abs_cfd20_shift_ns": 0.0862275216112818,
+        "timing_tail_fraction": 0.03684010634257501,
+        "timing_tail_delta": -0.001519179642992785,
+        "alpha_observed_amp_r2": 0.014046661719827507,
+        "alpha_event_hash_r2": 0.0016637743349110468
+      }
+    },
+    "application_ge7500": {
+      "observed": {
+        "n": 3677,
+        "coverage": 0.0,
+        "mean_alpha": 0.0,
+        "mean_amplitude_lift_fraction": 0.0,
+        "mean_charge_lift_fraction": 0.0,
+        "mean_q_template_shift_fraction": 0.0,
+        "mean_abs_q_template_shift_fraction": 0.0,
+        "mean_cfd20_shift_ns": 0.0,
+        "median_abs_cfd20_shift_ns": 0.0,
+        "timing_tail_fraction": 0.03753059559423443,
+        "timing_tail_delta": 0.0,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "p07c_full_shape_transfer": {
+        "n": 3677,
+        "coverage": 1.0,
+        "mean_alpha": 1.0,
+        "mean_amplitude_lift_fraction": 0.10653602012416995,
+        "mean_charge_lift_fraction": 0.008278111852975065,
+        "mean_q_template_shift_fraction": -0.08610117638512242,
+        "mean_abs_q_template_shift_fraction": 0.08610117638512242,
+        "mean_cfd20_shift_ns": 0.49215370848177376,
+        "median_abs_cfd20_shift_ns": 0.31528438967866046,
+        "timing_tail_fraction": 0.03181941800380745,
+        "timing_tail_delta": -0.0057111775904269795,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "traditional_fixed_shrink_025": {
+        "n": 3677,
+        "coverage": 1.0,
+        "mean_alpha": 0.25,
+        "mean_amplitude_lift_fraction": 0.026634005031042494,
+        "mean_charge_lift_fraction": 0.0021853852382091683,
+        "mean_q_template_shift_fraction": -0.023560922811257892,
+        "mean_abs_q_template_shift_fraction": 0.023592889804006686,
+        "mean_cfd20_shift_ns": 0.12644909381880565,
+        "median_abs_cfd20_shift_ns": 0.07887776471592312,
+        "timing_tail_fraction": 0.03589883056839815,
+        "timing_tail_delta": -0.0016317650258362807,
+        "alpha_observed_amp_r2": null,
+        "alpha_event_hash_r2": null
+      },
+      "linear_boundary_shrink": {
+        "n": 3677,
+        "coverage": 1.0,
+        "mean_alpha": 0.2618574925210781,
+        "mean_amplitude_lift_fraction": 0.02788243090706113,
+        "mean_charge_lift_fraction": 0.0022353995885751165,
+        "mean_q_template_shift_fraction": -0.024670906437796934,
+        "mean_abs_q_template_shift_fraction": 0.024698656532293074,
+        "mean_cfd20_shift_ns": 0.13238180664691754,
+        "median_abs_cfd20_shift_ns": 0.08240533079174928,
+        "timing_tail_fraction": 0.03589883056839815,
+        "timing_tail_delta": -0.0016317650258362807,
+        "alpha_observed_amp_r2": 1.1094846954164414e-32,
+        "alpha_event_hash_r2": 6.024387011326051e-32
+      },
+      "isotonic_boundary_calibration": {
+        "n": 3677,
+        "coverage": 0.9407125373946151,
+        "mean_alpha": 0.2638182552892353,
+        "mean_amplitude_lift_fraction": 0.021532500295528587,
+        "mean_charge_lift_fraction": 0.0020227944034139,
+        "mean_q_template_shift_fraction": -0.019070193628650912,
+        "mean_abs_q_template_shift_fraction": 0.019085798263186207,
+        "mean_cfd20_shift_ns": 0.10227654515703072,
+        "median_abs_cfd20_shift_ns": 0.08294486018271868,
+        "timing_tail_fraction": 0.03562686973075877,
+        "timing_tail_delta": -0.0019037258634756616,
+        "alpha_observed_amp_r2": 0.028655378305739245,
+        "alpha_event_hash_r2": 0.001668017945100546
+      },
+      "ml_boundary_calibration": {
+        "n": 3677,
+        "coverage": 0.9994560783247213,
+        "mean_alpha": 0.26392293045746723,
+        "mean_amplitude_lift_fraction": 0.02164885559804698,
+        "mean_charge_lift_fraction": 0.0021122937101144706,
+        "mean_q_template_shift_fraction": -0.019096120093975485,
+        "mean_abs_q_template_shift_fraction": 0.019264897342719092,
+        "mean_cfd20_shift_ns": 0.10281133594059955,
+        "median_abs_cfd20_shift_ns": 0.08288173797512109,
+        "timing_tail_fraction": 0.03562686973075877,
+        "timing_tail_delta": -0.0019037258634756616,
+        "alpha_observed_amp_r2": 0.029167100978977296,
+        "alpha_event_hash_r2": 0.00185772435369494
+      },
+      "leak_observed_amp_only_control": {
+        "n": 3677,
+        "coverage": 1.0,
+        "mean_alpha": 0.28212232710526997,
+        "mean_amplitude_lift_fraction": 0.030149972207733813,
+        "mean_charge_lift_fraction": 0.0023255618171442722,
+        "mean_q_template_shift_fraction": -0.026674501858857207,
+        "mean_abs_q_template_shift_fraction": 0.026689854399764467,
+        "mean_cfd20_shift_ns": 0.14319167418060977,
+        "median_abs_cfd20_shift_ns": 0.08935985214040235,
+        "timing_tail_fraction": 0.03589883056839815,
+        "timing_tail_delta": -0.0016317650258362807,
+        "alpha_observed_amp_r2": 4.912792093584627e-31,
+        "alpha_event_hash_r2": 2.9395904223543036e-32
+      },
+      "leak_run_event_amp_control": {
+        "n": 3677,
+        "coverage": 1.0,
+        "mean_alpha": 0.26162840585450853,
+        "mean_amplitude_lift_fraction": 0.028053956031754784,
+        "mean_charge_lift_fraction": 0.002244467063917609,
+        "mean_q_template_shift_fraction": -0.024801379548556986,
+        "mean_abs_q_template_shift_fraction": 0.024828685293669404,
+        "mean_cfd20_shift_ns": 0.13360815878750026,
+        "median_abs_cfd20_shift_ns": 0.0840675508805293,
+        "timing_tail_fraction": 0.03617079140603753,
+        "timing_tail_delta": -0.0013598041881969,
+        "alpha_observed_amp_r2": 0.0012200144710926932,
+        "alpha_event_hash_r2": 0.28309615793051485
+      },
+      "shuffled_target_ml_control": {
+        "n": 3677,
+        "coverage": 1.0,
+        "mean_alpha": 0.2716184128148277,
+        "mean_amplitude_lift_fraction": 0.02899819331307516,
+        "mean_charge_lift_fraction": 0.002300698104014331,
+        "mean_q_template_shift_fraction": -0.02563240370736271,
+        "mean_abs_q_template_shift_fraction": 0.025652976808245274,
+        "mean_cfd20_shift_ns": 0.1372368709875173,
+        "median_abs_cfd20_shift_ns": 0.0859592110830454,
+        "timing_tail_fraction": 0.03589883056839815,
+        "timing_tail_delta": -0.0016317650258362807,
+        "alpha_observed_amp_r2": 0.015629189139218756,
+        "alpha_event_hash_r2": 0.0033305093600663705
+      }
+    }
+  },
+  "training_alpha_summary": {
+    "linear_alpha_mean": 0.2571428571428572,
+    "linear_alpha_min": 0.25,
+    "linear_alpha_max": 0.3,
+    "target_alpha_mean": 0.26794700467601085,
+    "ml_alpha_train_mean": 0.26794494314744416,
+    "isotonic_alpha_train_mean": 0.26794700467601085
+  },
+  "traditional": {
+    "method": "linear_boundary_shrink",
+    "metric": "application_ge7000 mean amplitude lift with boundary q/timing gate",
+    "value": 0.02673808905366075,
+    "ci": [
+      0.023886393648779217,
+      0.029592487074811717
+    ]
+  },
+  "ml": {
+    "method": "ml_boundary_calibration",
+    "metric": "application_ge7000 mean amplitude lift with boundary q/timing gate",
+    "value": 0.021981268925304217,
+    "ci": [
+      0.020776063897942055,
+      0.022696705213834465
+    ]
+  },
+  "ml_beats_baseline": false,
+  "leakage_flags": 3,
+  "ci95_run_bootstrap": {
+    "boundary_6500_7500.observed.coverage": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.mean_alpha": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.mean_amplitude_lift_fraction": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.mean_charge_lift_fraction": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.mean_q_template_shift_fraction": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.mean_abs_q_template_shift_fraction": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.mean_cfd20_shift_ns": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.median_abs_cfd20_shift_ns": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.timing_tail_fraction": [
+      0.021644129257151718,
+      0.043644292548382736
+    ],
+    "boundary_6500_7500.observed.timing_tail_delta": [
+      0.0,
+      0.0
+    ],
+    "boundary_6500_7500.observed.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "boundary_6500_7500.observed.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.coverage": [
+      1.0,
+      1.0
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.mean_alpha": [
+      1.0,
+      1.0
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.mean_amplitude_lift_fraction": [
+      0.088471363944029,
+      0.09444502844805573
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.mean_charge_lift_fraction": [
+      0.00019601933429597387,
+      0.0006657249059725101
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.mean_q_template_shift_fraction": [
+      -0.08462942188336914,
+      -0.08040032245515127
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.mean_abs_q_template_shift_fraction": [
+      0.08033571313357367,
+      0.08476744220337516
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.mean_cfd20_shift_ns": [
+      0.40229897561812544,
+      0.44967303760402727
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.median_abs_cfd20_shift_ns": [
+      0.30672125482090984,
+      0.34527104248795637
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.timing_tail_fraction": [
+      0.01933524680582953,
+      0.03741609157174136
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.timing_tail_delta": [
+      -0.006621298510207838,
+      -0.00039277297721916686
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "boundary_6500_7500.p07c_full_shape_transfer.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.coverage": [
+      1.0,
+      1.0
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.mean_alpha": [
+      0.25,
+      0.25
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.mean_amplitude_lift_fraction": [
+      0.022118122229884064,
+      0.02352750764425173
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.mean_charge_lift_fraction": [
+      0.0,
+      1.5179746419422086e-05
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.mean_q_template_shift_fraction": [
+      -0.02289575613515451,
+      -0.021597890136770593
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.mean_abs_q_template_shift_fraction": [
+      0.02161388249894205,
+      0.022940611712533213
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.mean_cfd20_shift_ns": [
+      0.10292683202255277,
+      0.11437428312024944
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.median_abs_cfd20_shift_ns": [
+      0.07675375260673349,
+      0.0867570872320452
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.timing_tail_fraction": [
+      0.02077922077922078,
+      0.04036827195467422
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.timing_tail_delta": [
+      -0.003546099290780143,
+      0.0
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "boundary_6500_7500.traditional_fixed_shrink_025.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.coverage": [
+      1.0,
+      1.0
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.mean_alpha": [
+      0.25,
+      0.28105037940136823
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.mean_amplitude_lift_fraction": [
+      0.02236716355061416,
+      0.02511177967275598
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.mean_charge_lift_fraction": [
+      2.839927308053645e-07,
+      1.5019040705266756e-05
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.mean_q_template_shift_fraction": [
+      -0.024394855048340887,
+      -0.02184863667056782
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.mean_abs_q_template_shift_fraction": [
+      0.02182917595542608,
+      0.02444171905018555
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.mean_cfd20_shift_ns": [
+      0.10301321876400912,
+      0.12449799600712667
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.median_abs_cfd20_shift_ns": [
+      0.0777665633736283,
+      0.0905936573518224
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.timing_tail_fraction": [
+      0.020642201834862386,
+      0.040379469715397714
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.timing_tail_delta": [
+      -0.003562945368171023,
+      0.0
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.alpha_observed_amp_r2": [
+      1.3737245247798257e-30,
+      1.3737245247798257e-30
+    ],
+    "boundary_6500_7500.linear_boundary_shrink.alpha_event_hash_r2": [
+      1.275346495319523e-32,
+      1.275346495319523e-32
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.coverage": [
+      0.9821740650122335,
+      0.9958233890214797
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.mean_alpha": [
+      0.26256979141656267,
+      0.275698622073394
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.mean_amplitude_lift_fraction": [
+      0.022530232448491647,
+      0.023110542121992005
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.mean_charge_lift_fraction": [
+      0.0,
+      6.061980840795822e-07
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.mean_q_template_shift_fraction": [
+      -0.022580360196508893,
+      -0.022020883778789635
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.mean_abs_q_template_shift_fraction": [
+      0.022022399837251568,
+      0.0225824206790471
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.mean_cfd20_shift_ns": [
+      0.10608372179762163,
+      0.11525543689033234
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.median_abs_cfd20_shift_ns": [
+      0.08268231945570982,
+      0.0896387539815597
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.timing_tail_fraction": [
+      0.020425531914893616,
+      0.0405337361530715
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.timing_tail_delta": [
+      -0.003566475133742819,
+      0.0
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.alpha_observed_amp_r2": [
+      0.00016454115532246727,
+      0.006718919201563125
+    ],
+    "boundary_6500_7500.isotonic_boundary_calibration.alpha_event_hash_r2": [
+      0.0007642931140342708,
+      0.008706063595017195
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.coverage": [
+      0.9990202482037883,
+      1.0
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.mean_alpha": [
+      0.2625441753984323,
+      0.27575180274007766
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.mean_amplitude_lift_fraction": [
+      0.022558730418138676,
+      0.023128461199660607
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.mean_charge_lift_fraction": [
+      0.0,
+      6.094043789982115e-07
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.mean_q_template_shift_fraction": [
+      -0.022603440377210383,
+      -0.022044466247949254
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.mean_abs_q_template_shift_fraction": [
+      0.022047828966873507,
+      0.022603084243190217
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.mean_cfd20_shift_ns": [
+      0.10612442095433583,
+      0.11522949079318033
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.median_abs_cfd20_shift_ns": [
+      0.08253273174013655,
+      0.0895400899884475
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.timing_tail_fraction": [
+      0.020425531914893616,
+      0.04036827195467422
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.timing_tail_delta": [
+      -0.003566475133742819,
+      0.0
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.alpha_observed_amp_r2": [
+      0.000169507844142786,
+      0.0066977584985927945
+    ],
+    "boundary_6500_7500.ml_boundary_calibration.alpha_event_hash_r2": [
+      0.0006642311998034089,
+      0.008560193293471022
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.mean_alpha": [
+      0.26093931759441813,
+      0.27994015934448724
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.mean_amplitude_lift_fraction": [
+      0.023890469594052888,
+      0.0251494900522042
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.mean_charge_lift_fraction": [
+      2.7532509337603504e-07,
+      1.6297255202544705e-05
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.mean_q_template_shift_fraction": [
+      -0.02447462534243748,
+      -0.023291459648770416
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.mean_abs_q_template_shift_fraction": [
+      0.023301016355522383,
+      0.024445372431095614
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.mean_cfd20_shift_ns": [
+      0.10938178119965254,
+      0.12471300801082766
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.median_abs_cfd20_shift_ns": [
+      0.0823042020444767,
+      0.09219941000713813
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.timing_tail_fraction": [
+      0.020190995907230558,
+      0.040301088478844435
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.timing_tail_delta": [
+      -0.0035707573764330027,
+      0.0
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.alpha_observed_amp_r2": [
+      0.04912286145031239,
+      0.23986477553612437
+    ],
+    "boundary_6500_7500.leak_observed_amp_only_control.alpha_event_hash_r2": [
+      0.00044799090152383464,
+      0.0018389459867957734
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.mean_alpha": [
+      0.26223511369902747,
+      0.2791996603944299
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.mean_amplitude_lift_fraction": [
+      0.02403065625868107,
+      0.025216588053546565
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.mean_charge_lift_fraction": [
+      1.728664876053904e-07,
+      1.914258111883099e-05
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.mean_q_template_shift_fraction": [
+      -0.024488095874928527,
+      -0.023421202526965234
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.mean_abs_q_template_shift_fraction": [
+      0.02342059929515098,
+      0.02448642153035149
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.mean_cfd20_shift_ns": [
+      0.10997168359292904,
+      0.12471318898544956
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.median_abs_cfd20_shift_ns": [
+      0.08308857649034336,
+      0.09238085988817601
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.timing_tail_fraction": [
+      0.020559680182752713,
+      0.040379469715397714
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.timing_tail_delta": [
+      -0.0035792404056472476,
+      0.0
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.alpha_observed_amp_r2": [
+      0.042824479971998355,
+      0.328533215687325
+    ],
+    "boundary_6500_7500.leak_run_event_amp_control.alpha_event_hash_r2": [
+      0.007456549602449353,
+      0.06642807013247919
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.mean_alpha": [
+      0.26040173083921303,
+      0.2795682200804168
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.mean_amplitude_lift_fraction": [
+      0.023868931816605946,
+      0.025207104951493767
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.mean_charge_lift_fraction": [
+      4.5021677594406525e-07,
+      2.110163907542451e-05
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.mean_q_template_shift_fraction": [
+      -0.024464791497124393,
+      -0.02327086138810775
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.mean_abs_q_template_shift_fraction": [
+      0.023285515323888308,
+      0.02445918200499282
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.mean_cfd20_shift_ns": [
+      0.10919150294690455,
+      0.12445388213391162
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.median_abs_cfd20_shift_ns": [
+      0.08276113243576935,
+      0.09230845347163513
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.timing_tail_fraction": [
+      0.020425531914893616,
+      0.04030037546933667
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.timing_tail_delta": [
+      -0.0035792404056472476,
+      0.0
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.alpha_observed_amp_r2": [
+      0.009188975702516325,
+      0.045915363492248326
+    ],
+    "boundary_6500_7500.shuffled_target_ml_control.alpha_event_hash_r2": [
+      6.583056485060308e-05,
+      0.0007960454451768624
+    ],
+    "application_ge7000.observed.coverage": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.mean_alpha": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.mean_amplitude_lift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.mean_charge_lift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.mean_q_template_shift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.mean_abs_q_template_shift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.mean_cfd20_shift_ns": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.median_abs_cfd20_shift_ns": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.timing_tail_fraction": [
+      0.01759031586911292,
+      0.059144377283393224
+    ],
+    "application_ge7000.observed.timing_tail_delta": [
+      0.0,
+      0.0
+    ],
+    "application_ge7000.observed.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.observed.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.p07c_full_shape_transfer.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7000.p07c_full_shape_transfer.mean_alpha": [
+      1.0,
+      1.0
+    ],
+    "application_ge7000.p07c_full_shape_transfer.mean_amplitude_lift_fraction": [
+      0.0948406524740422,
+      0.11372453817996298
+    ],
+    "application_ge7000.p07c_full_shape_transfer.mean_charge_lift_fraction": [
+      0.0046509941693074494,
+      0.00762622210356543
+    ],
+    "application_ge7000.p07c_full_shape_transfer.mean_q_template_shift_fraction": [
+      -0.0923750023553361,
+      -0.08092013055866353
+    ],
+    "application_ge7000.p07c_full_shape_transfer.mean_abs_q_template_shift_fraction": [
+      0.08083754807346442,
+      0.09215294879292964
+    ],
+    "application_ge7000.p07c_full_shape_transfer.mean_cfd20_shift_ns": [
+      0.4219173810892294,
+      0.5357476834538966
+    ],
+    "application_ge7000.p07c_full_shape_transfer.median_abs_cfd20_shift_ns": [
+      0.2921745465451861,
+      0.3615862242974793
+    ],
+    "application_ge7000.p07c_full_shape_transfer.timing_tail_fraction": [
+      0.017299260035534177,
+      0.04827979471583349
+    ],
+    "application_ge7000.p07c_full_shape_transfer.timing_tail_delta": [
+      -0.011202411967172478,
+      0.0007015902712815731
+    ],
+    "application_ge7000.p07c_full_shape_transfer.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.p07c_full_shape_transfer.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.mean_alpha": [
+      0.25,
+      0.25
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.mean_amplitude_lift_fraction": [
+      0.023705991951109687,
+      0.02832078518794629
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.mean_charge_lift_fraction": [
+      0.0012253292325854395,
+      0.0018361177225516216
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.mean_q_template_shift_fraction": [
+      -0.025511742317307996,
+      -0.021787312364935706
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.mean_abs_q_template_shift_fraction": [
+      0.021799206664818025,
+      0.025618739639976393
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.mean_cfd20_shift_ns": [
+      0.10829612424783569,
+      0.13736258002850324
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.median_abs_cfd20_shift_ns": [
+      0.07279123939827263,
+      0.09054673303652588
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.timing_tail_fraction": [
+      0.01683427268081811,
+      0.05616708858821323
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.timing_tail_delta": [
+      -0.0035123664569003386,
+      0.0
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.traditional_fixed_shrink_025.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.linear_boundary_shrink.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7000.linear_boundary_shrink.mean_alpha": [
+      0.25,
+      0.2820537767557092
+    ],
+    "application_ge7000.linear_boundary_shrink.mean_amplitude_lift_fraction": [
+      0.023886393648779217,
+      0.029592487074811717
+    ],
+    "application_ge7000.linear_boundary_shrink.mean_charge_lift_fraction": [
+      0.0012386436291225117,
+      0.0018794122977969742
+    ],
+    "application_ge7000.linear_boundary_shrink.mean_q_template_shift_fraction": [
+      -0.026632182164657226,
+      -0.022025707485574413
+    ],
+    "application_ge7000.linear_boundary_shrink.mean_abs_q_template_shift_fraction": [
+      0.021988753456914898,
+      0.026574448034328634
+    ],
+    "application_ge7000.linear_boundary_shrink.mean_cfd20_shift_ns": [
+      0.10895950293307069,
+      0.1443237989345972
+    ],
+    "application_ge7000.linear_boundary_shrink.median_abs_cfd20_shift_ns": [
+      0.07410091495910581,
+      0.09236550341346239
+    ],
+    "application_ge7000.linear_boundary_shrink.timing_tail_fraction": [
+      0.017443370511284938,
+      0.0557415223402707
+    ],
+    "application_ge7000.linear_boundary_shrink.timing_tail_delta": [
+      -0.0035036496350364984,
+      0.0
+    ],
+    "application_ge7000.linear_boundary_shrink.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.linear_boundary_shrink.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "application_ge7000.isotonic_boundary_calibration.coverage": [
+      0.907103825136612,
+      0.981244221371021
+    ],
+    "application_ge7000.isotonic_boundary_calibration.mean_alpha": [
+      0.24744307513642153,
+      0.27550028893679773
+    ],
+    "application_ge7000.isotonic_boundary_calibration.mean_amplitude_lift_fraction": [
+      0.020669297944253213,
+      0.022650564006061934
+    ],
+    "application_ge7000.isotonic_boundary_calibration.mean_charge_lift_fraction": [
+      0.0011909317570928748,
+      0.0016441781647624184
+    ],
+    "application_ge7000.isotonic_boundary_calibration.mean_q_template_shift_fraction": [
+      -0.02091464163120967,
+      -0.018690136289644624
+    ],
+    "application_ge7000.isotonic_boundary_calibration.mean_abs_q_template_shift_fraction": [
+      0.01866691838477603,
+      0.020916937329712584
+    ],
+    "application_ge7000.isotonic_boundary_calibration.mean_cfd20_shift_ns": [
+      0.10158167281871304,
+      0.10710182260958356
+    ],
+    "application_ge7000.isotonic_boundary_calibration.median_abs_cfd20_shift_ns": [
+      0.0806090204307953,
+      0.08605921473280613
+    ],
+    "application_ge7000.isotonic_boundary_calibration.timing_tail_fraction": [
+      0.017508449322192223,
+      0.055305058312894166
+    ],
+    "application_ge7000.isotonic_boundary_calibration.timing_tail_delta": [
+      -0.003912108367316648,
+      0.0
+    ],
+    "application_ge7000.isotonic_boundary_calibration.alpha_observed_amp_r2": [
+      0.0036452615331749928,
+      0.04251471903679592
+    ],
+    "application_ge7000.isotonic_boundary_calibration.alpha_event_hash_r2": [
+      0.0005130806848579894,
+      0.0037471904490286125
+    ],
+    "application_ge7000.ml_boundary_calibration.coverage": [
+      0.9987533211352151,
+      1.0
+    ],
+    "application_ge7000.ml_boundary_calibration.mean_alpha": [
+      0.24757869033766502,
+      0.275535606804973
+    ],
+    "application_ge7000.ml_boundary_calibration.mean_amplitude_lift_fraction": [
+      0.020776063897942055,
+      0.022696705213834465
+    ],
+    "application_ge7000.ml_boundary_calibration.mean_charge_lift_fraction": [
+      0.0012470670648100026,
+      0.00171462315000975
+    ],
+    "application_ge7000.ml_boundary_calibration.mean_q_template_shift_fraction": [
+      -0.02091794099875154,
+      -0.018723146208154202
+    ],
+    "application_ge7000.ml_boundary_calibration.mean_abs_q_template_shift_fraction": [
+      0.018927675249341153,
+      0.020999873557590875
+    ],
+    "application_ge7000.ml_boundary_calibration.mean_cfd20_shift_ns": [
+      0.10232239120029221,
+      0.1075872098572543
+    ],
+    "application_ge7000.ml_boundary_calibration.median_abs_cfd20_shift_ns": [
+      0.08033382052650932,
+      0.08603809361440186
+    ],
+    "application_ge7000.ml_boundary_calibration.timing_tail_fraction": [
+      0.017336635549628502,
+      0.05547958585661262
+    ],
+    "application_ge7000.ml_boundary_calibration.timing_tail_delta": [
+      -0.003929559016154852,
+      0.0
+    ],
+    "application_ge7000.ml_boundary_calibration.alpha_observed_amp_r2": [
+      0.0030316633261159207,
+      0.04226916184144387
+    ],
+    "application_ge7000.ml_boundary_calibration.alpha_event_hash_r2": [
+      0.0005143631584237804,
+      0.00428969714208958
+    ],
+    "application_ge7000.leak_observed_amp_only_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7000.leak_observed_amp_only_control.mean_alpha": [
+      0.26720940882376987,
+      0.28910316349883874
+    ],
+    "application_ge7000.leak_observed_amp_only_control.mean_amplitude_lift_fraction": [
+      0.025878338416046684,
+      0.03233210217362483
+    ],
+    "application_ge7000.leak_observed_amp_only_control.mean_charge_lift_fraction": [
+      0.0013143643121770973,
+      0.0019714768187769323
+    ],
+    "application_ge7000.leak_observed_amp_only_control.mean_q_template_shift_fraction": [
+      -0.029193650587416818,
+      -0.02376404219626516
+    ],
+    "application_ge7000.leak_observed_amp_only_control.mean_abs_q_template_shift_fraction": [
+      0.02382217746928156,
+      0.028970434516088564
+    ],
+    "application_ge7000.leak_observed_amp_only_control.mean_cfd20_shift_ns": [
+      0.11776904215736674,
+      0.15733588803572504
+    ],
+    "application_ge7000.leak_observed_amp_only_control.median_abs_cfd20_shift_ns": [
+      0.07919046818729816,
+      0.10298525808688132
+    ],
+    "application_ge7000.leak_observed_amp_only_control.timing_tail_fraction": [
+      0.017484233485112268,
+      0.055846422338568937
+    ],
+    "application_ge7000.leak_observed_amp_only_control.timing_tail_delta": [
+      -0.00351957765068192,
+      0.0
+    ],
+    "application_ge7000.leak_observed_amp_only_control.alpha_observed_amp_r2": [
+      0.0858169773998621,
+      0.42054026589590615
+    ],
+    "application_ge7000.leak_observed_amp_only_control.alpha_event_hash_r2": [
+      0.0006024879680128975,
+      0.008097652926466916
+    ],
+    "application_ge7000.leak_run_event_amp_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7000.leak_run_event_amp_control.mean_alpha": [
+      0.25126386620464203,
+      0.27710469608061133
+    ],
+    "application_ge7000.leak_run_event_amp_control.mean_amplitude_lift_fraction": [
+      0.024095338734194643,
+      0.031028240157645756
+    ],
+    "application_ge7000.leak_run_event_amp_control.mean_charge_lift_fraction": [
+      0.0012469181833686754,
+      0.0019310911744159073
+    ],
+    "application_ge7000.leak_run_event_amp_control.mean_q_template_shift_fraction": [
+      -0.027869638134371703,
+      -0.02217708136451916
+    ],
+    "application_ge7000.leak_run_event_amp_control.mean_abs_q_template_shift_fraction": [
+      0.022232993765038046,
+      0.027821753200548454
+    ],
+    "application_ge7000.leak_run_event_amp_control.mean_cfd20_shift_ns": [
+      0.11062219685625294,
+      0.15123223657068102
+    ],
+    "application_ge7000.leak_run_event_amp_control.median_abs_cfd20_shift_ns": [
+      0.07744690711044169,
+      0.0989403154603171
+    ],
+    "application_ge7000.leak_run_event_amp_control.timing_tail_fraction": [
+      0.017589747161574285,
+      0.05626098847431139
+    ],
+    "application_ge7000.leak_run_event_amp_control.timing_tail_delta": [
+      -0.0030333670374115243,
+      0.0
+    ],
+    "application_ge7000.leak_run_event_amp_control.alpha_observed_amp_r2": [
+      0.04678980218742445,
+      0.18141124190501293
+    ],
+    "application_ge7000.leak_run_event_amp_control.alpha_event_hash_r2": [
+      0.08025800413857408,
+      0.21452552627741142
+    ],
+    "application_ge7000.shuffled_target_ml_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7000.shuffled_target_ml_control.mean_alpha": [
+      0.2595562428431995,
+      0.28232989024330185
+    ],
+    "application_ge7000.shuffled_target_ml_control.mean_amplitude_lift_fraction": [
+      0.0253426934310783,
+      0.030914282226539053
+    ],
+    "application_ge7000.shuffled_target_ml_control.mean_charge_lift_fraction": [
+      0.0012852984158456206,
+      0.0019681320223596636
+    ],
+    "application_ge7000.shuffled_target_ml_control.mean_q_template_shift_fraction": [
+      -0.02770343228829194,
+      -0.023246410140408045
+    ],
+    "application_ge7000.shuffled_target_ml_control.mean_abs_q_template_shift_fraction": [
+      0.023242278306529883,
+      0.02779245589847272
+    ],
+    "application_ge7000.shuffled_target_ml_control.mean_cfd20_shift_ns": [
+      0.1148285033448389,
+      0.15039032406589786
+    ],
+    "application_ge7000.shuffled_target_ml_control.median_abs_cfd20_shift_ns": [
+      0.07842357379537988,
+      0.09781367721253893
+    ],
+    "application_ge7000.shuffled_target_ml_control.timing_tail_fraction": [
+      0.01736370425690814,
+      0.055846422338568937
+    ],
+    "application_ge7000.shuffled_target_ml_control.timing_tail_delta": [
+      -0.0034843205574912914,
+      0.0
+    ],
+    "application_ge7000.shuffled_target_ml_control.alpha_observed_amp_r2": [
+      0.003316204265112126,
+      0.031982521539251324
+    ],
+    "application_ge7000.shuffled_target_ml_control.alpha_event_hash_r2": [
+      0.0005469043297137796,
+      0.0040268222827087785
+    ],
+    "application_ge7500.observed.coverage": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.mean_alpha": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.mean_amplitude_lift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.mean_charge_lift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.mean_q_template_shift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.mean_abs_q_template_shift_fraction": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.mean_cfd20_shift_ns": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.median_abs_cfd20_shift_ns": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.timing_tail_fraction": [
+      0.015811238141571395,
+      0.0623369092490577
+    ],
+    "application_ge7500.observed.timing_tail_delta": [
+      0.0,
+      0.0
+    ],
+    "application_ge7500.observed.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "application_ge7500.observed.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "application_ge7500.p07c_full_shape_transfer.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7500.p07c_full_shape_transfer.mean_alpha": [
+      1.0,
+      1.0
+    ],
+    "application_ge7500.p07c_full_shape_transfer.mean_amplitude_lift_fraction": [
+      0.09725632713346852,
+      0.11981033084976858
+    ],
+    "application_ge7500.p07c_full_shape_transfer.mean_charge_lift_fraction": [
+      0.0067051835462516324,
+      0.010244298045865574
+    ],
+    "application_ge7500.p07c_full_shape_transfer.mean_q_template_shift_fraction": [
+      -0.09435358548361654,
+      -0.08043117179615525
+    ],
+    "application_ge7500.p07c_full_shape_transfer.mean_abs_q_template_shift_fraction": [
+      0.08046806693536193,
+      0.09439381160424708
+    ],
+    "application_ge7500.p07c_full_shape_transfer.mean_cfd20_shift_ns": [
+      0.43049822943060817,
+      0.5671561868015444
+    ],
+    "application_ge7500.p07c_full_shape_transfer.median_abs_cfd20_shift_ns": [
+      0.28078981456686525,
+      0.37048709230338833
+    ],
+    "application_ge7500.p07c_full_shape_transfer.timing_tail_fraction": [
+      0.015976213869639468,
+      0.04872471416007036
+    ],
+    "application_ge7500.p07c_full_shape_transfer.timing_tail_delta": [
+      -0.013908755437359558,
+      0.0009492168960607501
+    ],
+    "application_ge7500.p07c_full_shape_transfer.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "application_ge7500.p07c_full_shape_transfer.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.mean_alpha": [
+      0.25,
+      0.25
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.mean_amplitude_lift_fraction": [
+      0.02425777533794334,
+      0.029796781856158555
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.mean_charge_lift_fraction": [
+      0.0018394858415128395,
+      0.0025689565556152945
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.mean_q_template_shift_fraction": [
+      -0.026352012968786268,
+      -0.02170625250527848
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.mean_abs_q_template_shift_fraction": [
+      0.02168875314648641,
+      0.02626849794650113
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.mean_cfd20_shift_ns": [
+      0.11122700255206358,
+      0.14705406882252398
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.median_abs_cfd20_shift_ns": [
+      0.07020350437937883,
+      0.09194247531045885
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.timing_tail_fraction": [
+      0.015954459606081314,
+      0.058695652173913045
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.timing_tail_delta": [
+      -0.0037833562639429798,
+      0.0
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.alpha_observed_amp_r2": [
+      null,
+      null
+    ],
+    "application_ge7500.traditional_fixed_shrink_025.alpha_event_hash_r2": [
+      null,
+      null
+    ],
+    "application_ge7500.linear_boundary_shrink.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7500.linear_boundary_shrink.mean_alpha": [
+      0.25,
+      0.28215339233038655
+    ],
+    "application_ge7500.linear_boundary_shrink.mean_amplitude_lift_fraction": [
+      0.024559462663639807,
+      0.031185186592129596
+    ],
+    "application_ge7500.linear_boundary_shrink.mean_charge_lift_fraction": [
+      0.0018337836678925037,
+      0.0026120942936845326
+    ],
+    "application_ge7500.linear_boundary_shrink.mean_q_template_shift_fraction": [
+      -0.027356849027775444,
+      -0.02195603570861753
+    ],
+    "application_ge7500.linear_boundary_shrink.mean_abs_q_template_shift_fraction": [
+      0.02202738044076991,
+      0.027371591057354504
+    ],
+    "application_ge7500.linear_boundary_shrink.mean_cfd20_shift_ns": [
+      0.11201812269390357,
+      0.15187609840346009
+    ],
+    "application_ge7500.linear_boundary_shrink.median_abs_cfd20_shift_ns": [
+      0.07133279035917318,
+      0.09464277531736916
+    ],
+    "application_ge7500.linear_boundary_shrink.timing_tail_fraction": [
+      0.0159547092125579,
+      0.058695652173913045
+    ],
+    "application_ge7500.linear_boundary_shrink.timing_tail_delta": [
+      -0.0039130434782608725,
+      0.0
+    ],
+    "application_ge7500.linear_boundary_shrink.alpha_observed_amp_r2": [
+      1.1094846954164414e-32,
+      1.1094846954164414e-32
+    ],
+    "application_ge7500.linear_boundary_shrink.alpha_event_hash_r2": [
+      6.024387011326051e-32,
+      6.024387011326051e-32
+    ],
+    "application_ge7500.isotonic_boundary_calibration.coverage": [
+      0.8791816422449544,
+      0.9768425291985502
+    ],
+    "application_ge7500.isotonic_boundary_calibration.mean_alpha": [
+      0.24278351742828944,
+      0.2772878908860734
+    ],
+    "application_ge7500.isotonic_boundary_calibration.mean_amplitude_lift_fraction": [
+      0.019848554650736934,
+      0.022479305984587104
+    ],
+    "application_ge7500.isotonic_boundary_calibration.mean_charge_lift_fraction": [
+      0.0017623220989493266,
+      0.0022857502449099712
+    ],
+    "application_ge7500.isotonic_boundary_calibration.mean_q_template_shift_fraction": [
+      -0.020202953750146333,
+      -0.017363226683341594
+    ],
+    "application_ge7500.isotonic_boundary_calibration.mean_abs_q_template_shift_fraction": [
+      0.017398520187654757,
+      0.020194083664857726
+    ],
+    "application_ge7500.isotonic_boundary_calibration.mean_cfd20_shift_ns": [
+      0.09803741133076709,
+      0.1049241454294782
+    ],
+    "application_ge7500.isotonic_boundary_calibration.median_abs_cfd20_shift_ns": [
+      0.07994547223857836,
+      0.08583608233756145
+    ],
+    "application_ge7500.isotonic_boundary_calibration.timing_tail_fraction": [
+      0.01581089199244535,
+      0.058043478260869565
+    ],
+    "application_ge7500.isotonic_boundary_calibration.timing_tail_delta": [
+      -0.004487179487179493,
+      0.0
+    ],
+    "application_ge7500.isotonic_boundary_calibration.alpha_observed_amp_r2": [
+      0.013011874750381278,
+      0.04329009152437896
+    ],
+    "application_ge7500.isotonic_boundary_calibration.alpha_event_hash_r2": [
+      0.0002609127519558927,
+      0.00509117236093312
+    ],
+    "application_ge7500.ml_boundary_calibration.coverage": [
+      0.9982817869415808,
+      1.0
+    ],
+    "application_ge7500.ml_boundary_calibration.mean_alpha": [
+      0.24240039613500697,
+      0.27696387435170045
+    ],
+    "application_ge7500.ml_boundary_calibration.mean_amplitude_lift_fraction": [
+      0.020150429585489085,
+      0.02259905173990623
+    ],
+    "application_ge7500.ml_boundary_calibration.mean_charge_lift_fraction": [
+      0.0018377965287047133,
+      0.0023934786056782373
+    ],
+    "application_ge7500.ml_boundary_calibration.mean_q_template_shift_fraction": [
+      -0.02017179176495488,
+      -0.01743766757127753
+    ],
+    "application_ge7500.ml_boundary_calibration.mean_abs_q_template_shift_fraction": [
+      0.017700180530545076,
+      0.020332703449808576
+    ],
+    "application_ge7500.ml_boundary_calibration.mean_cfd20_shift_ns": [
+      0.09912194585740791,
+      0.10524666103912919
+    ],
+    "application_ge7500.ml_boundary_calibration.median_abs_cfd20_shift_ns": [
+      0.07974543865518376,
+      0.0859863846740644
+    ],
+    "application_ge7500.ml_boundary_calibration.timing_tail_fraction": [
+      0.01581089199244535,
+      0.057503206498503635
+    ],
+    "application_ge7500.ml_boundary_calibration.timing_tail_delta": [
+      -0.0045632829771554955,
+      0.0
+    ],
+    "application_ge7500.ml_boundary_calibration.alpha_observed_amp_r2": [
+      0.013663041967819258,
+      0.04344961395497835
+    ],
+    "application_ge7500.ml_boundary_calibration.alpha_event_hash_r2": [
+      0.0002587583555787375,
+      0.0054450364496007085
+    ],
+    "application_ge7500.leak_observed_amp_only_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7500.leak_observed_amp_only_control.mean_alpha": [
+      0.2706764651619476,
+      0.2949061143149671
+    ],
+    "application_ge7500.leak_observed_amp_only_control.mean_amplitude_lift_fraction": [
+      0.026807954400204465,
+      0.034967644659012934
+    ],
+    "application_ge7500.leak_observed_amp_only_control.mean_charge_lift_fraction": [
+      0.0019343068657497128,
+      0.0027457567034900594
+    ],
+    "application_ge7500.leak_observed_amp_only_control.mean_q_template_shift_fraction": [
+      -0.03068778710671871,
+      -0.02394617494022545
+    ],
+    "application_ge7500.leak_observed_amp_only_control.mean_abs_q_template_shift_fraction": [
+      0.023892002432310332,
+      0.030790246744131083
+    ],
+    "application_ge7500.leak_observed_amp_only_control.mean_cfd20_shift_ns": [
+      0.12238589048263074,
+      0.1712441014879233
+    ],
+    "application_ge7500.leak_observed_amp_only_control.median_abs_cfd20_shift_ns": [
+      0.07725282912001777,
+      0.1076601358536584
+    ],
+    "application_ge7500.leak_observed_amp_only_control.timing_tail_fraction": [
+      0.015954459606081314,
+      0.058100185599064144
+    ],
+    "application_ge7500.leak_observed_amp_only_control.timing_tail_delta": [
+      -0.0038095238095238126,
+      0.0
+    ],
+    "application_ge7500.leak_observed_amp_only_control.alpha_observed_amp_r2": [
+      6.804625436389318e-32,
+      1.297192922677013e-30
+    ],
+    "application_ge7500.leak_observed_amp_only_control.alpha_event_hash_r2": [
+      2.9689837829429586e-33,
+      5.133443882467569e-32
+    ],
+    "application_ge7500.leak_run_event_amp_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7500.leak_run_event_amp_control.mean_alpha": [
+      0.2453176420043828,
+      0.27750434169421445
+    ],
+    "application_ge7500.leak_run_event_amp_control.mean_amplitude_lift_fraction": [
+      0.024030037630599934,
+      0.03308756904929108
+    ],
+    "application_ge7500.leak_run_event_amp_control.mean_charge_lift_fraction": [
+      0.0018335796219434008,
+      0.0026507000908823535
+    ],
+    "application_ge7500.leak_run_event_amp_control.mean_q_template_shift_fraction": [
+      -0.028852156259462892,
+      -0.021495880308516523
+    ],
+    "application_ge7500.leak_run_event_amp_control.mean_abs_q_template_shift_fraction": [
+      0.021492708558984122,
+      0.028909557543069567
+    ],
+    "application_ge7500.leak_run_event_amp_control.mean_cfd20_shift_ns": [
+      0.11007795651601046,
+      0.16177711957483368
+    ],
+    "application_ge7500.leak_run_event_amp_control.median_abs_cfd20_shift_ns": [
+      0.0707049267815999,
+      0.10215768410215875
+    ],
+    "application_ge7500.leak_run_event_amp_control.timing_tail_fraction": [
+      0.01549487297187756,
+      0.058773197354172774
+    ],
+    "application_ge7500.leak_run_event_amp_control.timing_tail_delta": [
+      -0.0032064985036340324,
+      0.0
+    ],
+    "application_ge7500.leak_run_event_amp_control.alpha_observed_amp_r2": [
+      0.0005734437088258995,
+      0.0017957843839319432
+    ],
+    "application_ge7500.leak_run_event_amp_control.alpha_event_hash_r2": [
+      0.16761410501074775,
+      0.41359991172257027
+    ],
+    "application_ge7500.shuffled_target_ml_control.coverage": [
+      1.0,
+      1.0
+    ],
+    "application_ge7500.shuffled_target_ml_control.mean_alpha": [
+      0.2594615553566021,
+      0.2826558881722159
+    ],
+    "application_ge7500.shuffled_target_ml_control.mean_amplitude_lift_fraction": [
+      0.025900802530612464,
+      0.032840272540680636
+    ],
+    "application_ge7500.shuffled_target_ml_control.mean_charge_lift_fraction": [
+      0.0018898087548568662,
+      0.002720007993079311
+    ],
+    "application_ge7500.shuffled_target_ml_control.mean_q_template_shift_fraction": [
+      -0.028782049167839614,
+      -0.02304726643762299
+    ],
+    "application_ge7500.shuffled_target_ml_control.mean_abs_q_template_shift_fraction": [
+      0.02314231417133475,
+      0.028913072092225205
+    ],
+    "application_ge7500.shuffled_target_ml_control.mean_cfd20_shift_ns": [
+      0.11786813275505094,
+      0.1609268934943003
+    ],
+    "application_ge7500.shuffled_target_ml_control.median_abs_cfd20_shift_ns": [
+      0.07484352249984187,
+      0.10018073630568299
+    ],
+    "application_ge7500.shuffled_target_ml_control.timing_tail_fraction": [
+      0.01590238883046187,
+      0.058695652173913045
+    ],
+    "application_ge7500.shuffled_target_ml_control.timing_tail_delta": [
+      -0.0038461538461538494,
+      0.0
+    ],
+    "application_ge7500.shuffled_target_ml_control.alpha_observed_amp_r2": [
+      0.0023616742086233922,
+      0.04483808987032863
+    ],
+    "application_ge7500.shuffled_target_ml_control.alpha_event_hash_r2": [
+      0.001110845194821109,
+      0.007930071378185015
+    ]
+  },
+  "critic": "pending",
+  "next_tickets": [],
+  "runtime_sec": 113.8,
+  "input_sha256": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "git_commit": "5973b51e9f0f874615d687f6a5042b722eb1888c"
+}

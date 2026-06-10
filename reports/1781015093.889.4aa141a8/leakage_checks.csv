@@ -1,0 +1,43 @@
+model,check,value,detail,heldout_run
+all,train_heldout_event_id_overlap,0.0,must be zero,58
+all,feature_audit,0.0,"inputs are normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, or held-out target",58
+mlp_waveform,shuffled_target_negative_control_sigma68_ns,3.194754314725442,same architecture trained with shuffled train residual targets,58
+mlp_waveform,nominal_mlp_sigma68_ns,1.8878258627999178,held-out run metric for comparison to shuffled control,58
+cnn_waveform,nominal_cnn_sigma68_ns,2.330707263241053,held-out run metric for comparison to shuffled control,58
+cnn_waveform,shuffled_target_negative_control_sigma68_ns,3.0792979967453746,same CNN trained with shuffled train residual targets,58
+all,train_heldout_event_id_overlap,0.0,must be zero,59
+all,feature_audit,0.0,"inputs are normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, or held-out target",59
+mlp_waveform,shuffled_target_negative_control_sigma68_ns,3.162967927828788,same architecture trained with shuffled train residual targets,59
+mlp_waveform,nominal_mlp_sigma68_ns,1.711081397102825,held-out run metric for comparison to shuffled control,59
+cnn_waveform,nominal_cnn_sigma68_ns,2.2545570192302424,held-out run metric for comparison to shuffled control,59
+cnn_waveform,shuffled_target_negative_control_sigma68_ns,3.1381705691690587,same CNN trained with shuffled train residual targets,59
+all,train_heldout_event_id_overlap,0.0,must be zero,60
+all,feature_audit,0.0,"inputs are normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, or held-out target",60
+mlp_waveform,shuffled_target_negative_control_sigma68_ns,3.1437723801273894,same architecture trained with shuffled train residual targets,60
+mlp_waveform,nominal_mlp_sigma68_ns,1.6069555789252101,held-out run metric for comparison to shuffled control,60
+cnn_waveform,nominal_cnn_sigma68_ns,2.132913371290663,held-out run metric for comparison to shuffled control,60
+cnn_waveform,shuffled_target_negative_control_sigma68_ns,3.1165670710364712,same CNN trained with shuffled train residual targets,60
+all,train_heldout_event_id_overlap,0.0,must be zero,61
+all,feature_audit,0.0,"inputs are normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, or held-out target",61
+mlp_waveform,shuffled_target_negative_control_sigma68_ns,2.9114854232789504,same architecture trained with shuffled train residual targets,61
+mlp_waveform,nominal_mlp_sigma68_ns,2.1136738442212386,held-out run metric for comparison to shuffled control,61
+cnn_waveform,nominal_cnn_sigma68_ns,2.0345879715295294,held-out run metric for comparison to shuffled control,61
+cnn_waveform,shuffled_target_negative_control_sigma68_ns,2.9011289451907523,same CNN trained with shuffled train residual targets,61
+all,train_heldout_event_id_overlap,0.0,must be zero,62
+all,feature_audit,0.0,"inputs are normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, or held-out target",62
+mlp_waveform,shuffled_target_negative_control_sigma68_ns,3.23318852406236,same architecture trained with shuffled train residual targets,62
+mlp_waveform,nominal_mlp_sigma68_ns,1.7433121670592193,held-out run metric for comparison to shuffled control,62
+cnn_waveform,nominal_cnn_sigma68_ns,2.4908250555071394,held-out run metric for comparison to shuffled control,62
+cnn_waveform,shuffled_target_negative_control_sigma68_ns,3.2059651201354664,same CNN trained with shuffled train residual targets,62
+all,train_heldout_event_id_overlap,0.0,must be zero,63
+all,feature_audit,0.0,"inputs are normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, or held-out target",63
+mlp_waveform,shuffled_target_negative_control_sigma68_ns,3.480943734859196,same architecture trained with shuffled train residual targets,63
+mlp_waveform,nominal_mlp_sigma68_ns,1.648196404278878,held-out run metric for comparison to shuffled control,63
+cnn_waveform,nominal_cnn_sigma68_ns,2.528189852554951,held-out run metric for comparison to shuffled control,63
+cnn_waveform,shuffled_target_negative_control_sigma68_ns,3.3700301375240262,same CNN trained with shuffled train residual targets,63
+all,train_heldout_event_id_overlap,0.0,must be zero,65
+all,feature_audit,0.0,"inputs are normalized same-pulse 18-sample waveform plus downstream stave one-hot only; no run id, event id, event order, amplitude scalar, other-stave timing, or held-out target",65
+mlp_waveform,shuffled_target_negative_control_sigma68_ns,3.173789346474021,same architecture trained with shuffled train residual targets,65
+mlp_waveform,nominal_mlp_sigma68_ns,1.9272329327513156,held-out run metric for comparison to shuffled control,65
+cnn_waveform,nominal_cnn_sigma68_ns,2.1496741272044586,held-out run metric for comparison to shuffled control,65
+cnn_waveform,shuffled_target_negative_control_sigma68_ns,2.979738128396231,same CNN trained with shuffled train residual targets,65

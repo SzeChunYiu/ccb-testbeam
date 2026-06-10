@@ -1,0 +1,152 @@
+{
+  "study": "S13d",
+  "ticket": "1781023657.1294.140a38e7",
+  "worker": "testbeam-laptop-1",
+  "title": "charge-matched Sample-II current-family timing-tail null",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "parent control events, B2 and >=2 downstream",
+      "report_value": 10156,
+      "reproduced": 10156,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "parent clean events, D_t<3 ns",
+      "report_value": 2155,
+      "reproduced": 2155,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "parent gross events, documented D_t>50 ns",
+      "report_value": 74,
+      "reproduced": 74,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "parent gross events, guarded D_t>51 ns",
+      "report_value": 72,
+      "reproduced": 72,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13d all-three control events",
+      "report_value": 3774,
+      "reproduced": 3774,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13d all-three guarded gross events",
+      "report_value": 22,
+      "reproduced": 22,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split": "six held-out run-pair folds: one low-edge run plus one high-rate run held out per fold",
+  "matching": {
+    "keys": [
+      "event_max_amp_bin",
+      "event_charge_bin",
+      "b2_amp_bin",
+      "b2_saturation_state"
+    ],
+    "matched_scored_events": 688,
+    "target_low_family": "low_all_three_rate_edge",
+    "target_high_family": "high_all_three_rate"
+  },
+  "traditional": {
+    "method": "train-fold calibrated curvature-only timing-tail score",
+    "metric": "high-rate minus low-edge matched timing-tail score",
+    "value": 0.008904324559444758,
+    "ci": [
+      -0.003187636912539124,
+      0.021745225875607673
+    ],
+    "current_family_auc": 0.4945494186046512
+  },
+  "ml": {
+    "method": "amplitude-normalized waveform random forest timing-tail score",
+    "metric": "high-rate minus low-edge matched timing-tail score",
+    "value": -0.0947727643274052,
+    "ci": [
+      -0.1099257242092783,
+      -0.07776696424662856
+    ],
+    "current_family_auc": 0.3893151703623581,
+    "current_family_auc_ci": [
+      0.38602079321337396,
+      0.39599632690541775
+    ]
+  },
+  "leakage": {
+    "flagged_checks": 0,
+    "shuffled_label_delta": 0.001158148204917586,
+    "forbidden_ml_columns": [
+      "run",
+      "eventno",
+      "event_key",
+      "run_family",
+      "is_target_low",
+      "is_target_high",
+      "d_t_ns",
+      "abs_c_t_ns",
+      "event_max_amp",
+      "b2_amp",
+      "event_charge"
+    ]
+  },
+  "verdict": "not_stable_positive_current_family_tail_signal",
+  "next_tickets": [],
+  "input_sha256": [
+    {
+      "file": "data/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+      "bytes": 9623179
+    },
+    {
+      "file": "data/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+      "bytes": 12032616
+    },
+    {
+      "file": "data/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+      "bytes": 10174098
+    },
+    {
+      "file": "data/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+      "bytes": 10362658
+    },
+    {
+      "file": "data/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+      "bytes": 10634393
+    },
+    {
+      "file": "data/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+      "bytes": 10494181
+    },
+    {
+      "file": "data/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+      "bytes": 10600278
+    }
+  ],
+  "git_commit": "8256d8923305eaba85739ca9468fa542ef66a5b7",
+  "critic": "pending",
+  "runtime_sec": 83.35
+}

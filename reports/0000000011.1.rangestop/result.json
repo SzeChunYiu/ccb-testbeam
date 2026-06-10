@@ -1,0 +1,354 @@
+{
+  "study": "S14h",
+  "ticket_id": "0000000011.1.rangestop",
+  "title": "Range and stopping-stave reconstruction from GEANT4 Sci_bar truth",
+  "worker": "testbeam-laptop-4",
+  "inputs": {
+    "geant4_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+    "tree": "hibeam",
+    "root_sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+    "root_bytes": 677221620
+  },
+  "raw_reproduction": {
+    "root_file": "/home/billy/ccb-geant4/output_krakow_1M.root",
+    "tree": "hibeam",
+    "expected_tree_entries": 1000000,
+    "tree_entries": 1000000,
+    "delta": 0,
+    "pass": true,
+    "sci_bar_hits": 1279440,
+    "positive_sci_bar_hits": 1279440,
+    "events_with_sci_bar": 242147,
+    "accepted_fraction": 0.242147
+  },
+  "split": {
+    "split_kind": "deterministic pseudo-runs because GEANT4 tree has no run branch",
+    "pseudo_run_size": 50000,
+    "train_pseudo_runs": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      16,
+      17,
+      18
+    ],
+    "heldout_pseudo_runs": [
+      4,
+      9,
+      14,
+      19
+    ],
+    "n_train": 193805,
+    "n_heldout": 48342
+  },
+  "target": {
+    "stop_layer_definition": "deepest Sci_bar_LayerID with Sci_bar_EDep > truth_min_edep_mev",
+    "truth_min_edep_mev": 0.0,
+    "layer_spacing_cm": 1.0,
+    "residual_range_cm": "(layer_max - true_stop_layer) * layer_spacing_cm"
+  },
+  "traditional": {
+    "method": "traditional_penetration_depth",
+    "visible_threshold_mev": 0.02,
+    "threshold_scan": [
+      {
+        "threshold_mev": 0.02,
+        "train_stop_mae_layers": 0.0032764893,
+        "train_exact_accuracy": 0.9978483527
+      },
+      {
+        "threshold_mev": 0.05,
+        "train_stop_mae_layers": 0.005443616,
+        "train_exact_accuracy": 0.9965893553
+      },
+      {
+        "threshold_mev": 0.1,
+        "train_stop_mae_layers": 0.0081989629,
+        "train_exact_accuracy": 0.9950414076
+      },
+      {
+        "threshold_mev": 0.2,
+        "train_stop_mae_layers": 0.0126260932,
+        "train_exact_accuracy": 0.9926782075
+      },
+      {
+        "threshold_mev": 0.35,
+        "train_stop_mae_layers": 0.0181987049,
+        "train_exact_accuracy": 0.9897216274
+      },
+      {
+        "threshold_mev": 0.5,
+        "train_stop_mae_layers": 0.0232862929,
+        "train_exact_accuracy": 0.9871623539
+      },
+      {
+        "threshold_mev": 0.8,
+        "train_stop_mae_layers": 0.030886716,
+        "train_exact_accuracy": 0.9831118908
+      },
+      {
+        "threshold_mev": 1.2,
+        "train_stop_mae_layers": 0.0386212946,
+        "train_exact_accuracy": 0.9785660845
+      },
+      {
+        "threshold_mev": 2.0,
+        "train_stop_mae_layers": 0.0496117231,
+        "train_exact_accuracy": 0.9713113697
+      }
+    ]
+  },
+  "winner": {
+    "method": "traditional_penetration_depth",
+    "family": "traditional_threshold_range",
+    "residual_mae_cm": 0.003309751354929461,
+    "residual_mae_cm_ci95": [
+      0.002884456897972639,
+      0.003900414937759336
+    ],
+    "residual_res68_cm": 0.0,
+    "stop_mae_layers": 0.003309751354929461,
+    "stop_exact_accuracy": 0.997993463241074,
+    "stop_exact_accuracy_ci95": [
+      0.9975311203319502,
+      0.9984010495674634
+    ]
+  },
+  "all_metrics": [
+    {
+      "method": "traditional_penetration_depth",
+      "family": "traditional_threshold_range",
+      "n_heldout": 48342,
+      "residual_mae_cm": 0.0033097514,
+      "residual_bias_cm": 0.0,
+      "residual_res68_cm": 0.0,
+      "stop_mae_layers": 0.0033097514,
+      "stop_exact_accuracy": 0.9979934632,
+      "residual_mae_cm_ci95": [
+        0.0028844569,
+        0.0039004149
+      ],
+      "residual_bias_cm_ci95": [
+        0.0,
+        0.0
+      ],
+      "residual_res68_cm_ci95": [
+        0.0,
+        0.0
+      ],
+      "stop_mae_layers_ci95": [
+        0.0028844569,
+        0.0039004149
+      ],
+      "stop_exact_accuracy_ci95": [
+        0.9975311203,
+        0.9984010496
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n_heldout": 48342,
+      "residual_mae_cm": 0.0044372532,
+      "residual_bias_cm": -0.0002890923,
+      "residual_res68_cm": 0.0040962604,
+      "stop_mae_layers": 0.0009308676,
+      "stop_exact_accuracy": 0.9993380497,
+      "residual_mae_cm_ci95": [
+        0.0040754552,
+        0.0047336209
+      ],
+      "residual_bias_cm_ci95": [
+        -0.0002890923,
+        -0.0002890923
+      ],
+      "residual_res68_cm_ci95": [
+        0.0040962604,
+        0.0040962604
+      ],
+      "stop_mae_layers_ci95": [
+        0.0005384138,
+        0.0011949893
+      ],
+      "stop_exact_accuracy_ci95": [
+        0.9991692282,
+        0.9995425815
+      ]
+    },
+    {
+      "method": "ordinal_cumulative_cnn",
+      "family": "neural_ordinal_waveform",
+      "n_heldout": 48342,
+      "residual_mae_cm": 0.0175025924,
+      "residual_bias_cm": -0.0035514832,
+      "residual_res68_cm": 0.0069340515,
+      "stop_mae_layers": 0.0067643043,
+      "stop_exact_accuracy": 0.9957180092,
+      "residual_mae_cm_ci95": [
+        0.0165845469,
+        0.0182779404
+      ],
+      "residual_bias_cm_ci95": [
+        -0.0035691261,
+        -0.0035283566
+      ],
+      "residual_res68_cm_ci95": [
+        0.0068984413,
+        0.0069802623
+      ],
+      "stop_mae_layers_ci95": [
+        0.005744734,
+        0.0076069079
+      ],
+      "stop_exact_accuracy_ci95": [
+        0.995186722,
+        0.9961701773
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n_heldout": 48342,
+      "residual_mae_cm": 0.031387471,
+      "residual_bias_cm": 0.0062199831,
+      "residual_res68_cm": 0.0259763336,
+      "stop_mae_layers": 0.005378346,
+      "stop_exact_accuracy": 0.9955318357,
+      "residual_mae_cm_ci95": [
+        0.0311203523,
+        0.0317787854
+      ],
+      "residual_bias_cm_ci95": [
+        0.00597592,
+        0.0064330816
+      ],
+      "residual_res68_cm_ci95": [
+        0.0258362198,
+        0.0261481988
+      ],
+      "stop_mae_layers_ci95": [
+        0.0050628306,
+        0.0057883817
+      ],
+      "stop_exact_accuracy_ci95": [
+        0.9953556537,
+        0.9956321081
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n_heldout": 48342,
+      "residual_mae_cm": 0.0362166942,
+      "residual_bias_cm": -0.0135095716,
+      "residual_res68_cm": 0.0317545366,
+      "stop_mae_layers": 0.008812213,
+      "stop_exact_accuracy": 0.9939803897,
+      "residual_mae_cm_ci95": [
+        0.0351857412,
+        0.0376393125
+      ],
+      "residual_bias_cm_ci95": [
+        -0.0136384964,
+        -0.0133332312
+      ],
+      "residual_res68_cm_ci95": [
+        0.0314116096,
+        0.0319514036
+      ],
+      "stop_mae_layers_ci95": [
+        0.0076388311,
+        0.0103414111
+      ],
+      "stop_exact_accuracy_ci95": [
+        0.9931676506,
+        0.9945882941
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n_heldout": 48342,
+      "residual_mae_cm": 0.0663833724,
+      "residual_bias_cm": -0.0004856586,
+      "residual_res68_cm": 0.0566185188,
+      "stop_mae_layers": 0.0151627984,
+      "stop_exact_accuracy": 0.9901328038,
+      "residual_mae_cm_ci95": [
+        0.0645688627,
+        0.0679111324
+      ],
+      "residual_bias_cm_ci95": [
+        -0.0008119583,
+        -0.0001592636
+      ],
+      "residual_res68_cm_ci95": [
+        0.0561836004,
+        0.0570623207
+      ],
+      "stop_mae_layers_ci95": [
+        0.0133982191,
+        0.0171357007
+      ],
+      "stop_exact_accuracy_ci95": [
+        0.989439834,
+        0.9906544001
+      ]
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_tree_entry_reproduction_exact",
+      "value": "1000000 of 1000000",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_pseudo_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "feature_names_exclude_truth_stop_and_pdg",
+      "value": "log_edep_layer_0,log_edep_layer_1,log_edep_layer_2,log_edep_layer_3,log_edep_layer_4,log_edep_layer_5,log_edep_layer_6,log_edep_layer_7,log_hits_layer_0,log_hits_layer_1,log_hits_layer_2,log_hits_layer_3,log_hits_layer_4,log_hits_layer_5,log_hits_layer_6,log_hits_layer_7,present_layer_0,present_layer_1,present_layer_2,present_layer_3,present_layer_4,present_layer_5,present_layer_6,present_layer_7,cumfrac_layer_0,cumfrac_layer_1,cumfrac_layer_2,cumfrac_layer_3,cumfrac_layer_4,cumfrac_layer_5,cumfrac_layer_6,cumfrac_layer_7,n_positive_hits,total_edep_mev,front_deltae_mev,residual_e_mev,z_centroid_cm,edep_centroid_layer,edep_spread_layer",
+      "pass": true
+    },
+    {
+      "check": "forbidden_deepest_positive_truth_sentinel_accuracy",
+      "value": "1.000000",
+      "pass": true
+    },
+    {
+      "check": "traditional_visible_threshold_mev",
+      "value": "0.02",
+      "pass": true
+    },
+    {
+      "check": "torch_mlp_status",
+      "value": "trained",
+      "pass": true
+    },
+    {
+      "check": "torch_1d_cnn_status",
+      "value": "trained",
+      "pass": true
+    },
+    {
+      "check": "torch_ordinal_cumulative_cnn_status",
+      "value": "trained",
+      "pass": true
+    }
+  ],
+  "next_tickets": [],
+  "finding": "The best held-out residual-range method is traditional_penetration_depth (traditional_threshold_range), with MAE=0.0033 cm and stop-layer exact accuracy=0.9980. The calibrated traditional penetration-depth threshold is 0.02 MeV and remains the direct physics baseline. The forbidden deepest-positive sentinel is exact by construction and is reported only as a leakage ceiling, not as a ranked method.",
+  "runtime_sec": 38.7
+}

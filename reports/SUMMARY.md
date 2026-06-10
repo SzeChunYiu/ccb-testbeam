@@ -488,6 +488,26 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   therefore tests conflict arbitration, PID weak-label stability under action bands, temporal
   subtyping of baseline excursions, and the S06 amplitude/energy timing curve after support and
   veto composition are controlled.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep under concurrent worker movement and reports
+  `open=184 claimed=4 done=202 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: P07k q-template-preserving saturation
+  acceptance calibration (`1781055400.476.79d6754f`), P08e conventional PID score decomposition
+  null (`1781055407.547.08364d02`), S05m correlated-floor projection coverage ledger
+  (`1781055412.618.60fe5c1e`), and P13b rare-atom bootstrap promotion threshold
+  (`1781055420.689.3cc21a6b`).
+- Fresh synthesis: the newest readable layer adds calibration and promotion gates rather than a
+  new production correction. P07g shows saturation acceptance can improve bias or coverage while
+  still moving q_template and accepted support, so saturation recovery now needs a
+  q_template-preserving acceptance calibration before timing, pile-up, PID, or energy reuse. P08b
+  shows conventional charge/depth PID-like scores can beat residualized waveform ML under
+  charge-current matching, so weak PID labels must be decomposed into physics-like and
+  support-leakage components before adoption. S05d estimates a correlated timing floor with no
+  leakage flag, but two-ended projections still need atom-wise coverage and tail calibration.
+  S03f also exposed a tempting 54-event topology diagnostic that is too sparse to promote, so the
+  programme now needs an explicit rare-atom bootstrap threshold before low-count strata steer
+  timing, saturation, pile-up, dropout, PID, or energy work.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

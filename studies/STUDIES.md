@@ -1526,3 +1526,49 @@ Active ready queue highlights:
   versus amplitude and energy proxy, monotonicity violation rate, pull 68/95% coverage, support
   loss, timing-tail delta, and ML-minus-traditional deltas with event-paired run-block bootstrap
   CIs.
+- **P07k — Q-template-preserving saturation acceptance calibration.** After P07g found that
+  conformal-risk and traditional-envelope saturation acceptors have different coverage,
+  q_template shifts, and accepted support, decide whether any acceptance rule preserves charge,
+  q_template, and timing-tail safety simultaneously. Traditional: freeze retained-window/template
+  envelopes and duplicate-ratio acceptance bands, then stratify accepted, abstained, and vetoed B2
+  pulses by run family, saturation depth, q_template shift, amplitude, lowering,
+  dropout/anomaly taxon, and topology. ML: freeze the P07g conformal-risk acceptor, recalibrate
+  only isotonic/conformal layers under leave-one-run-family-out folds, and compare
+  saturation-only, amplitude-only, run-family, and shuffled-target sentinels. Metric: accepted
+  support fraction, charge res68/bias, q_template median shift, timing >5 ns tail delta,
+  calibration coverage/ECE, catastrophic harm rate, and ML-minus-traditional deltas with paired
+  event/run-block bootstrap CIs.
+- **P08e — Conventional PID score decomposition null.** After P08b found the frozen conventional
+  charge-current matched PID-like score far ahead of residualized waveform ML, decompose whether
+  that apparent PID separation is physics-like pulse/DeltaE-E information or residual geometry,
+  depth, current, and charge-support leakage. Traditional: freeze tail/total, area/peak,
+  q_template, DeltaE-like amplitude vectors, PSTAR/depth-charge lookup, and
+  charge/current/depth matching, then remove one nuisance axis at a time. ML: train waveform,
+  hand-shape, PCA/latent, and adversarially residualized probes under leave-run-family-out folds
+  with charge-only, depth-only, current-only, action-only, and shuffled-label sentinels. Metric:
+  AUC/AP, purity at fixed efficiency, calibration ECE/Brier, nuisance-removal AUC loss, support
+  drift, charge/depth composition shift, and ML-minus-traditional deltas with stratified
+  run-block bootstrap CIs; no PID adoption without truth.
+- **S05m — Correlated-floor projection coverage ledger.** Turn the S05d correlated timing-floor
+  estimate into a coverage audit before it feeds two-ended timing, pile-up, PID, or energy
+  projections. Traditional: freeze template-phase end-difference widths, hierarchical pair
+  covariance, and transparent correlated-floor estimates, then ledger sigma68, full RMS, tail
+  fraction, and interval coverage by pair, B2 topology, amplitude, saturation, q_template,
+  lowering, anomaly, and run family. ML: freeze the S05d single-endpoint proxy and S05f/S05i
+  covariance calibrators, refit only conformal/coverage layers, and run B2-feature knockout,
+  topology-only, saturation-only, run-only, and shuffled-target controls. Metric:
+  correlated-floor sigma, two-ended projection sigma68/full RMS, 68/95% interval coverage,
+  interval width, tail coverage, support loss, and ML-minus-traditional deltas with pair/event
+  run-block bootstrap CIs.
+- **P13b — Rare-atom bootstrap promotion threshold.** Define minimum support, stability, and
+  control-passing criteria before rare pulse atoms such as the S03f 54-event topology,
+  saturation-boundary cells, delayed peaks, baseline excursions, or dropout subclasses can move
+  from diagnostic observations to steering variables. Traditional: freeze transparent atom
+  definitions from S03, S10, S16, P04, P07, P09, and P12, then compute effective sample size,
+  bootstrap stability, exact-binomial tail bounds, and composition-balance diagnostics per atom.
+  ML: calibrated density/support and harm-risk models over the same atoms with
+  leave-run-family-out validation plus run-only, amplitude-only, topology-only, and
+  shuffled-atom sentinels. Metric: promotion/pass/defer rate, effective sample size, CI width for
+  timing sigma68/tail, charge res68/bias, pile-up excess, q_template shift, support-score
+  coverage/ECE, false-promotion rate under controls, and ML-minus-traditional deltas with
+  stratified run-block bootstrap CIs.

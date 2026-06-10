@@ -586,10 +586,12 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   (`1781062443.571.1e7346af`), P04t A-stack topology lower-bound charge transfer
   (`1781062449.642.488b2d5f`), and P12e cross-consumer pulse-atom harm ledger
   (`1781062454.713.242b3d71`).
-- Fresh synthesis: the newest result layer adds a portability and harm-accounting gate. P04d
-  reproduces the A/B charge-transfer baseline but shows global A-stack charge prediction remains
-  topology-limited and close to shuffled controls, so energy/PID consumers need topology-specific
-  lower bounds. S02e/S02f/S02g keep binned/current-rate timing branches unstable under
+- Fresh synthesis: the newest result layer adds a portability and harm-accounting gate. S14d
+  reproduces the P04c A/B table and finds range-order structure is only a weak internal
+  diagnostic, with traditional selected-A charge res68 0.3541 [0.3431, 0.3688] and ML 0.3602
+  [0.3513, 0.3721], so energy/PID consumers need topology-specific support and lower bounds
+  rather than a global calibration. P04d likewise shows global A-stack charge prediction remains
+  topology-limited and close to shuffled controls. S02e/S02f/S02g keep binned/current-rate timing branches unstable under
   shuffled-target controls and missing external scaler metadata, while S03e shows a strong HGB
   Sample-I-to-Sample-II transfer with a too-good warning that must be feature-null tested before
   adoption. P11a maps pretrigger atoms to baseline, timing, charge, saturation-boundary, and

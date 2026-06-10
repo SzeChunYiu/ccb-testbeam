@@ -1740,7 +1740,10 @@ failed=7`) under concurrent worker movement. The trigger was satisfied by append
 non-duplicate `project:testbeam` tickets focused on the newest timing-transfer, pretrigger,
 covariance, A-stack charge, and consumer-harm gaps: S03p (`1781062439.500.63591f99`), S05n
 (`1781062443.571.1e7346af`), P04t (`1781062449.642.488b2d5f`), and P12e
-(`1781062454.713.242b3d71`).
+(`1781062454.713.242b3d71`). The newest S14d range-order preflight also reproduced the P04c A/B
+table but left selected-A charge broad (traditional res68 0.3541, ML 0.3602), so P04t's
+topology-specific lower bounds and S14i's material/PID uncertainty bridge remain the correct next
+energy/PID atoms rather than a global range-energy calibration claim.
 
 - **S03p — HGB transfer feature-leakage null grid.** Test whether the blind Sample-I to
   Sample-II HGB timewalk gain survives family-by-family feature removal, pretrigger exclusion,

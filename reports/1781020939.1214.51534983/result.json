@@ -1,0 +1,91 @@
+{
+  "study": "S03c",
+  "ticket": "1781020939.1214.51534983",
+  "worker": "testbeam-laptop-3",
+  "title": "ridge timewalk residual stability with train-only run-family covariates",
+  "follow_up_to": "1781011359.822.3751464b",
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03a_run65_reproduction_pass": true,
+    "s03c_prior_number_reproduced": true,
+    "s03c_reference": {
+      "ticket": "1781011359.822.3751464b",
+      "baseline_sigma68_ns": 2.7414145300852155,
+      "traditional_sigma68_ns": 1.5510917109777833,
+      "ml_sigma68_ns": 1.5369230041797883,
+      "ml_gain_vs_template_phase_ns": 1.2044915259054272
+    }
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6842165631742354,
+      2.9861718468144893
+    ]
+  },
+  "traditional": {
+    "method": "analytic_timewalk",
+    "value": 1.5510917109777833,
+    "ci": [
+      1.3700677384161764,
+      1.925182315396973
+    ],
+    "gain_vs_template_phase_ns": 1.1903228191074322
+  },
+  "traditional_family_summary_ridge": {
+    "method": "amp_rise_shape_by_stave_plus_train_only_run_family_summaries",
+    "value": 1.6761908579114628,
+    "ci": [
+      1.415091611321144,
+      1.947870749768385
+    ],
+    "gain_vs_template_phase_ns": 1.0652236721737527
+  },
+  "ml_no_family_reproduction": {
+    "method": "waveform_ridge_no_family",
+    "value": 1.5369230041797883,
+    "ci": [
+      1.344209629112886,
+      1.8090700691197572
+    ],
+    "delta_vs_s03c_reference_ns": 0.0
+  },
+  "ml": {
+    "method": "waveform_ridge_plus_train_only_run_family_summaries",
+    "value": 1.5116408133728951,
+    "ci": [
+      1.3284179500525608,
+      1.8135539920010437
+    ],
+    "gain_vs_template_phase_ns": 1.2297737167123204,
+    "delta_vs_no_family_ridge_ns": -0.0252821908068932
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "family_summaries_training_runs_only": true,
+    "inner_cv_summaries_training_folds_only": true,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "shuffled_target_min_sigma68_ns": 2.589321777940147,
+    "too_good_flag": false,
+    "leakage_pass": true
+  },
+  "verdict": "ridge_gain_persists_with_train_only_run_family_covariates_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "f4ba2082c3e0e6c2832688faca02590968229791",
+  "next_tickets": []
+}

@@ -126,12 +126,16 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
   testbeam queue remains deep, with this live post-append audit observing `open=187 claimed=4
-  done=208 failed=7` while workers continue moving tickets.
+  done=212 failed=7` while workers continue moving tickets.
   The mission trigger still required new ready work. This pass appended four ready non-duplicate
-  tickets: S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
+  tickets: S02f binned-timewalk shuffled-control atom ledger (`1781059683.845.5a6958ad`),
+  S13e residual CWoLa support-collapse atlas (`1781059683.869.4bca6f7e`),
+  P10i live-time surrogate negative-control support map (`1781059684.922.5d6d340d`), and
+  S06c charge-proxy timing pull-width calibration gate (`1781059684.1019.46485748`). The previous
+  pass appended four ready non-duplicate tickets: S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
   S14i material-budget PID label uncertainty bridge (`1781058292.529.4efe2d6e`),
   P09i broad-width reviewer-disagreement propagation (`1781058292.535.650c13f1`), and
-  P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The previous pass appended four ready non-duplicate
+  P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The pass before that appended four ready non-duplicate
   tickets: P01h time-local latent residualization gate (`1781040959.702.2d1212fb`),
   S05h saturation-aware covariance support frontier (`1781040960.767.247d3910`),
   S01h q-template run-stave leakage atom grid (`1781040960.832.1c8e6dee`), and
@@ -186,7 +190,13 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
   (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
   (`1781023340.632.43377364`).
-- Newest reports sharpen the next claims: S00b/S02c turn selector/baseline semantics into a small but
+- Newest reports sharpen the next claims: S02e says current/rate constrained drift does not rescue
+  the unstable binned timewalk branch and leaves shuffled-target controls as a first-class failure
+  mode; S13c says residualized CWoLa is diagnostic after charge/topology/anomaly/lowering matching;
+  P10f says learned tail surrogates can improve q/tail MSE while still failing live-time transfer
+  under shuffled controls; S06a says charge-aware timing does not monotonically improve after
+  matched controls and leaves pull widths undercovered; P09d turns broad-width anomaly precision
+  into an adjudication/systematics problem. S00b/S02c turn selector/baseline semantics into a small but
   real systematic; S02b shows a strong traditional timewalk closure can beat the S02 ridge
   baseline on run 65; S02c says per-run drift terms do not rescue binned timewalk and selector
   semantics can move timing closure; S03c says analytic timewalk closure is stable across

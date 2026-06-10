@@ -276,13 +276,18 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `open=11 claimed=0 done=0 failed=14`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with this live
-post-append audit observing `open=187 claimed=4 done=208 failed=7` while claimed counts moved
+post-append audit observing `open=187 claimed=4 done=212 failed=7` while claimed counts moved
 under concurrent worker activity, but the mission trigger still required a small set of
 new ready studies. This pass appended four additional non-duplicate ready tickets:
+S02f binned-timewalk shuffled-control atom ledger (`1781059683.845.5a6958ad`),
+S13e residual CWoLa support-collapse atlas (`1781059683.869.4bca6f7e`),
+P10i live-time surrogate negative-control support map (`1781059684.922.5d6d340d`), and
+S06c charge-proxy timing pull-width calibration gate (`1781059684.1019.46485748`). The previous
+pass appended four additional non-duplicate ready tickets:
 S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
 S14i material-budget PID label uncertainty bridge (`1781058292.529.4efe2d6e`),
 P09i broad-width reviewer-disagreement propagation (`1781058292.535.650c13f1`), and
-P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The previous pass
+P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The pass before that
 appended four additional non-duplicate ready tickets: P01g latent
 baseline-contamination atom map (`1781039488.1122.04bc6ecf`), S07l injected morphology
 operating-point support audit (`1781039488.1142.659b28c4`), P09g injected-morphology
@@ -333,6 +338,13 @@ A-stack charge-transfer support map by B-stack topology (`1781023326.470.61534f8
 binned-timewalk shuffled-target failure autopsy (`1781023333.541.66a8325e`), and P12a pulse-axis
 covariance atom table across pathology flags (`1781023340.632.43377364`). The discrepancy is a
 shim/argument parsing issue, not a scientific queue shortage.
+
+Newest steering update: S02e elevates shuffled-target binned timewalk failures from a side check
+to an atom-ledger requirement; S13c shows residual CWoLa is only diagnostic after charge,
+topology, anomaly, lowering, run-family, and stave matching; P10f blocks live-time transfer from
+learned tail surrogates until real-minus-shuffled support is mapped; S06a shows charge-aware
+timing uncertainty is undercovered even when sigma68 is competitive; and P09d makes broad-width
+anomaly propagation depend on reviewer/agreement uncertainty rather than a single truth label.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge

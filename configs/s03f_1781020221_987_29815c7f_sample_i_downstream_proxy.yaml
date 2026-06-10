@@ -1,0 +1,64 @@
+study_id: S03f
+title: Sample-I downstream sparse-topology validation of S03e single-stave proxy
+
+raw_root_dir: /home/billy/Desktop/test_beam/data/root/root
+output_dir: reports/1781020221.987.29815c7f
+ticket_id: "1781020221.987.29815c7f"
+worker: testbeam-laptop-3
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+tof_per_cm_ns: 0.078
+spacing_cm_values: [2.0]
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_pulses: 640737
+  sample_ii_analysis:
+    selected_pulses: 125096
+    B2: 88213
+    B4: 21229
+    B6: 11148
+    B8: 4506
+
+timing:
+  downstream_staves: [B4, B6, B8]
+  sample_i_downstream_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_reference_runs: [58, 59, 60, 61, 62, 63, 65]
+  loo_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  heldout_runs: [57]
+  train_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56]
+  cfd_fractions: [0.10, 0.20, 0.30, 0.40, 0.50]
+  template_shift_grid:
+    min: -1.5
+    max: 1.5
+    step: 0.05
+
+topology:
+  min_selected_downstream_staves: 2
+
+methods:
+  random_seed: 20260609
+  bootstrap_samples: 500
+  ml_model: hist_gradient_boosting_proxy
+  ml_max_iter: 160
+  ml_learning_rate: 0.06
+  ml_l2_regularization: 0.03
+
+reference_numbers:
+  s03e_sample_ii_traditional_template_phase_sigma68_ns: 2.7414145300852155
+  s03e_sample_ii_ml_single_stave_proxy_sigma68_ns: 2.8290554427248673
+  s03e_sample_ii_cfd20_base_sigma68_ns: 3.1502666141199165

@@ -1,0 +1,9 @@
+check,value,pass
+claim_command_ran_once_for_this_thread,1781042380.620.56983544,True
+loro_train_heldout_run_overlap_zero,0,True
+feature_audit_forbidden_overlap_zero,0,True
+primary_label_fold_local_template_phase_only,D_t(template_phase)>3 ns on held-out run,True
+independent_cfd20_label_reported,1,True
+phase_scrambled_and_shuffled_controls_present,1,True
+all_models_have_oof_scores,1,True
+rounded_waveform_hash_cross_run_duplicates_reported,0,True

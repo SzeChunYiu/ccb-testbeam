@@ -1,0 +1,32 @@
+{
+  "ticket": "1781042380.620.56983544",
+  "study_id": "P02g",
+  "worker": "testbeam-laptop-3",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-3/configs/p02g_1781042380_620_56983544_timing_tail_label_source_split.yaml",
+  "script": "/home/billy/.tb-workers/testbeam-laptop-3/scripts/p02g_1781042380_620_56983544_timing_tail_label_source_split.py",
+  "git_commit": "f2c619d9bb69959f00f27227c90926f50cb7d28d",
+  "runtime_sec": 318.66082310676575,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "result_summary": {
+    "winner": "ridge_all_stave",
+    "verdict": "downstream_label_source_diagnostic",
+    "reproduction_passed": true,
+    "leakage_passed": true
+  },
+  "outputs": {
+    "REPORT.md": "89f0191d8a0a39e683130a9ed8c273703782cf4f11f2c7542c715e584bc949c6",
+    "common_support_counts_by_run.csv": "6a216c3b65b3bdcf70cbaa9b1c9c8edb8931b9cc728f8f19c1451014749ac51d",
+    "feature_audit.csv": "288533d472154536d456eb9dd7b2d2a7f83aeda18ad00ff1116d447b816f066b",
+    "fig_average_precision_by_model.png": "267d89627c5b00b0b5ce2041a66eecc25f8bbbab051706739b4775aba0e3e039",
+    "fig_tail_fraction_by_run.png": "a7a82f15cf441b846454ba53acb4a5de13e0199e3457d6824e22bbba8d1575fb",
+    "heldout_fold_metrics.csv": "b4b4011a62c43a722c9e49bb099c0316b1837206e0d469a9fa8737b2a3b4a419",
+    "input_sha256.csv": "22b29191e460d7b6644755e2d45d15ea60dcc5944d653a755fe588a055e6bb24",
+    "leakage_checks.csv": "f0a61c07239cd9bc9eac8cdd4e5a113c18cbdfffe1ed8b6a43fc1377751e78c3",
+    "ml_minus_traditional_deltas.csv": "0699c0053562ea273155bbe66e36364b4230027f5e5562d67262b59d0fde64d1",
+    "oof_source_split_predictions.csv": "bdd236bd148fa53037ee4dc55b644a18258c8ed59a6d3a4383576c2478ee910f",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "ddb5d87facb76b3155715c51c1b6ee6e2dd9f7c336f4d17225e6ec12fb62872e",
+    "run_block_bootstrap_summary.csv": "9f376b776b4a36e6ba82e6a7ad8f906e112a0cff851025f3fd07e04790360ddc"
+  }
+}

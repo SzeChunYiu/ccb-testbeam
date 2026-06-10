@@ -1,0 +1,51 @@
+{
+  "ticket_id": "1781023340.632.43377364",
+  "study_id": "P12a",
+  "raw_reproduction_passed": true,
+  "raw_reproduced_selected_pulses": 640737,
+  "n_selected_pulses": 640737,
+  "n_runs": 33,
+  "axes": [
+    "saturation_boundary",
+    "high_amplitude",
+    "adaptive_lowering",
+    "early_pretrigger_activity",
+    "delayed_peak",
+    "broad_template_mismatch",
+    "pileup_score",
+    "timing_tail",
+    "charge_transfer_error"
+  ],
+  "top_axis_prevalence": [
+    {
+      "axis": "pileup_score",
+      "n": 359963,
+      "fraction": 0.561795245162992
+    },
+    {
+      "axis": "high_amplitude",
+      "n": 183303,
+      "fraction": 0.28608149677636846
+    },
+    {
+      "axis": "early_pretrigger_activity",
+      "n": 82028,
+      "fraction": 0.1280213254424202
+    },
+    {
+      "axis": "adaptive_lowering",
+      "n": 36057,
+      "fraction": 0.05627425917342061
+    },
+    {
+      "axis": "charge_transfer_error",
+      "n": 32333,
+      "fraction": 0.05046220212037076
+    }
+  ],
+  "max_abs_partial_correlation": 0.5159894251765382,
+  "max_ml_auc": 0.9831105487687757,
+  "max_shuffled_axis_auc": 0.4862870172207339,
+  "leakage_checks_passed": true,
+  "elapsed_seconds": 472.85809302330017
+}

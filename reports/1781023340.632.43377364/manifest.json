@@ -1,0 +1,28 @@
+{
+  "ticket_id": "1781023340.632.43377364",
+  "script": "scripts/p12a_1781023340_632_43377364_pulse_axis_covariance.py",
+  "config": "configs/p12a_1781023340_632_43377364_pulse_axis_covariance.json",
+  "git_commit": "68b7d464ac44c96d99ed927157bba1ea7d1a8ffb",
+  "raw_reproduction_passed": true,
+  "input_sha256": "reports/1781023340.632.43377364/input_sha256.csv",
+  "artifacts": [
+    "REPORT.md",
+    "axis_prevalence_by_run.csv",
+    "counts_by_group.csv",
+    "counts_by_run.csv",
+    "downstream_delta_ci.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "matched_pairwise_associations.csv",
+    "ml_multilabel_metrics.csv",
+    "ml_multilabel_predictions.csv.gz",
+    "partial_correlations.csv",
+    "pulse_axis_table.csv.gz",
+    "raw_count_match.csv",
+    "result.json",
+    "robust_covariance.csv",
+    "run_bootstrap_pairwise_ci.csv",
+    "sparse_graphical_edges.csv"
+  ]
+}

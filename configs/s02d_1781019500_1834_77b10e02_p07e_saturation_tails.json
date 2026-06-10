@@ -1,0 +1,45 @@
+{
+  "ticket_id": "1781019500.1834.77b10e02",
+  "study_id": "S02d/P07e",
+  "title": "P07e retained-window saturation nuisance in S02-style timing tails",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781019500.1834.77b10e02",
+  "p07e_reference_ticket": "1781010945.568.060f508b",
+  "expected_sample_ii_b2": 88213,
+  "expected_b2_ge7000": 5351,
+  "amplitude_cut_adc": 1000.0,
+  "saturation_proxy_adc": 7000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "timing_tail_abs_ns": 5.0,
+  "runs": [58, 59, 60, 61, 62, 63, 65],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "retained_window": {
+    "name": "w2_8",
+    "samples": [2, 3, 4, 5, 6, 7, 8]
+  },
+  "clean_b2_selection": {
+    "min_amp_adc": 1500.0,
+    "max_amp_adc": 6500.0,
+    "min_peak_sample": 4,
+    "max_peak_sample": 12
+  },
+  "natural_selection": {
+    "min_downstream_selected": 2
+  },
+  "artificial_fixed_ceiling_adc": 4000.0,
+  "train_ceilings_adc": [2000.0, 2500.0, 3000.0, 4000.0],
+  "max_train_clean_per_split": 9000,
+  "max_held_artificial_per_run": 9000,
+  "bootstrap_reps": 800,
+  "random_seed": 20260610
+}

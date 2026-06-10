@@ -1,0 +1,4 @@
+quantity,expected,reproduced,ci95,pass
+P07e w2_8 GBR res68_abs_frac,0.0812 from P07e headline,0.08141019174450627,"[0.07681413131694963, 0.08499288273772077]",True
+P07e w2_8 GBR bias_median_frac,0.0292 from P07e headline,0.029638615409160424,"[0.026174177674646474, 0.032878255611859766]",True
+P07e adoption screen,not adoptable,not adoptable,"[0.07681413131694963, 0.08499288273772077]",True

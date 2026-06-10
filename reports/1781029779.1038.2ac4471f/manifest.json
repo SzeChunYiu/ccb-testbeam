@@ -1,0 +1,116 @@
+{
+  "command": "/home/billy/anaconda3/bin/python reports/1781029779.1038.2ac4471f/s16f_1781029779_1038_2ac4471f_recover_daq_provenance.py --config reports/1781029779.1038.2ac4471f/s16f_1781029779_1038_2ac4471f_recover_daq_provenance_config.json",
+  "config": "reports/1781029779.1038.2ac4471f/s16f_1781029779_1038_2ac4471f_recover_daq_provenance_config.json",
+  "git_commit": "b5db501526ec495c03c62047b0f22cde66b0150e",
+  "random_seed": 160601,
+  "environment": {
+    "python": "3.7.6",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "uproot": "5.0.9"
+  },
+  "inputs": "reports/1781029779.1038.2ac4471f/input_sha256.csv",
+  "outputs": [
+    {
+      "path": "reports/1781029779.1038.2ac4471f/REPORT.md",
+      "sha256": "0805ca9b2884109998b336db5456391c5138c5d7961f26d6705d60d64c0219f7",
+      "bytes": 6796
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/archive_member_inventory.csv",
+      "sha256": "28814606249d25af18e81376c9ed8663d2cbb2e07c77594dd2e3b22533be34b9",
+      "bytes": 20246
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/filesystem_inventory.csv",
+      "sha256": "30d8e551145342653a702d76d93af662e357dc8fe86841a4b34010ed93ff667d",
+      "bytes": 572120
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/input_sha256.csv",
+      "sha256": "bb02190d8e1117127c8fab4237bd59f49e84ad8315ce377e35617d7e83d1f5b1",
+      "bytes": 24073
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/leakage_checks.csv",
+      "sha256": "dad848a2005f2d975ceba42678ded9b126666fa4dc6bbf20abb73c1f1758360b",
+      "bytes": 481
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/ml_cv_scan.csv",
+      "sha256": "3c864b91537e6c0f14605fa5669dca9c13c0ad31b8aa02e36129fedcce07b6fe",
+      "bytes": 229
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/ml_event_sample.csv.gz",
+      "sha256": "44dfeafd0f24b7ea788697fa5fe386cc27ff99dfa34cc3976cb735c6104637ec",
+      "bytes": 1468262
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/ml_heldout_summary.csv",
+      "sha256": "10db0780c206eccecc3ea44cb7d5e8b1b943e7abf83eeb28f736a1249997f294",
+      "bytes": 403
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/ml_run_scores.csv",
+      "sha256": "35b12fbecc31595a8acfd63b94f2222a95a4b7d74270142f128d2ce27c901956",
+      "bytes": 2868
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/provenance_candidates.csv",
+      "sha256": "a3d1a872d850f44ae526fd4af9063ea5c00559eefc1aec9aabd754daa399b490",
+      "bytes": 69
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/reproduction_match_table.csv",
+      "sha256": "bf3b0d1e322020e859178bac6a7847963458ffb01d56736bc106290d2aa32b1e",
+      "bytes": 221
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/result.json",
+      "sha256": "6831a828a2bf87c6cf79ece8e0c447b22a0188e589e6943e4dd62e5f1068c964",
+      "bytes": 12185
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/root_trigger_audit.csv",
+      "sha256": "88b5eab0d5a0d1b5823f686b1e52eac4d7eff296e1de6dba6f09ad30792e0217",
+      "bytes": 6304
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/run_0000_0065_mapping.csv",
+      "sha256": "3666bfbfddd465791962047f9dca6efcbd3315f4c97a62f3d3a508bc369dd291",
+      "bytes": 4587
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/run_waveform_summary.csv",
+      "sha256": "ae0032319167b6ff05d6c359f0f47982a4aa19c25e5b05b6b1f04fb90340c4f9",
+      "bytes": 4647
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/s16f_1781029779_1038_2ac4471f_recover_daq_provenance.py",
+      "sha256": "f0fc864329f4d8d1868fc02be8524b70ea5872e2ce28b7ae0c235ce325b9f927",
+      "bytes": 44980
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/s16f_1781029779_1038_2ac4471f_recover_daq_provenance_config.json",
+      "sha256": "ac46aae5fdd445eff212c788f1ae22214ffc2d3c96d1624a9939a3a93925a557",
+      "bytes": 2893
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/source_root_status.csv",
+      "sha256": "1fada9a8f212aa42b447348c7f3045cdc07d9e0d36a351232fa82e5fd361d824",
+      "bytes": 1432
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/traditional_candidates.csv",
+      "sha256": "7ef5117b778aacb8e40170d0dfcc0d75f86a332c2912514fbd157c9e9e72e824",
+      "bytes": 7568
+    },
+    {
+      "path": "reports/1781029779.1038.2ac4471f/traditional_heldout_summary.csv",
+      "sha256": "d61ef01af67a73e6598692ec92963b2984f140b6cc05d83d846c7e48fe252a4d",
+      "bytes": 343
+    }
+  ],
+  "runtime_seconds": 28.24112582206726
+}

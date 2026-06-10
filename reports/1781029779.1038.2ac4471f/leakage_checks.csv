@@ -1,0 +1,5 @@
+check,value,interpretation
+shuffled_training_labels,0.42096107230156365,AUC should be near chance if the signal is not leakage.
+repeated_shuffled_training_labels_mean_auc,0.481057682599083,Thirty shuffled-label fits gave 2.5/50/97.5% quantiles 0.375/0.469/0.597.
+intentional_label_oracle,1.0,AUC near 1 shows direct label leakage would be visible.
+real_feature_exclusion,,"ML excludes run id, file name, trigger, event id, event max, post-trigger samples, and quiet/pulse labels."

@@ -1,0 +1,15 @@
+# Macro file for hibeam_g4
+# 
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run_mcpl.mac
+#
+#
+# Initialize kernel
+/run/initialize
+
+/ElGen/E 190. MeV
+/ElGen/TargetThickness 2.3 mm
+/ElGen/Beamspot 10 mm
+/ElGen/CSFile sigma_pd_cm_190.txt
+
+/run/beamOn 1000000

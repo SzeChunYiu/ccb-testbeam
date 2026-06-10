@@ -1770,3 +1770,50 @@ energy/PID atoms rather than a global range-energy calibration claim.
   held-out-run outcomes with shuffled-label controls. Metric: per-consumer harm rate, net utility
   at fixed coverage, conflict rate, and ML-minus-rule utility deltas with event/run-block
   bootstrap CIs.
+
+Current steering pass (2026-06-10, S11e/S07g/S13d/P04h layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
+18-ready trigger. The correctly addressed local `testbeam` project queue remains deep after this
+pass (`open=183 claimed=2 done=230 failed=7`) under concurrent worker movement. The trigger was
+satisfied by appending four ready, non-duplicate `project:testbeam` tickets focused on the newest
+all-three pile-up, shape-localization, current-support, and A-stack charge-identifiability gaps:
+S11h all-three delay-scale recovery frontier (`1781063906.413.7e4c6b5c`), S07m
+charge-preserved shape-cue localization (`1781063920.486.09951fba`), S13f exactly-two
+current-family timing-tail null (`1781063920.513.7c742542`), and P04u A-stack shuffled-sentinel
+root cause (`1781063920.599.196428b2`). The newest S11e full bounded fit confirms that
+fit-output-only scoring remains interpretable but weak on the S07f all-three injected target
+(AUC 0.608 versus shape RF 0.826), while S07g shows the RF survives both peak and positive-charge
+preservation. S13d makes the all-three high-rate timing-tail contrast a null/support result after
+matching, and P04h shows A-stack charge transfer is indistinguishable from shuffled target at the
+global support level. The new tickets therefore split those reports into smaller pulse atoms:
+delay/scale recovery thresholds, charge-preserved sample cues, exactly-two topology support, and
+real-minus-shuffled A-stack charge identifiability.
+
+- **S11h — All-three delay-scale recovery frontier.** Locate the delay-by-secondary-scale cells
+  where S07f/S07g injected pile-up is actually recoverable, and where the shape RF beats the full
+  bounded two-pulse fit after peak and charge preservation. Traditional: train-run-only constrained
+  one-vs-two pulse template fits with fold-local secondary-fraction, fractional-SSE, delay, and
+  chi2/ndf thresholds. ML: leakage-audited shape-only RF with isotonic calibration and amplitude,
+  topology, shuffled-label, and pair-split sentinels. Metric: per-cell AUC, AP, fixed-95%-clean
+  rejection, recovered delay bias/RMS, and failure rate with run-block bootstrap CIs.
+- **S07m — Charge-preserved shape-cue localization.** Identify which normalized waveform samples
+  and shape atoms carry the all-three RF signal after peak and charge preservation. Traditional:
+  q_template residual windows, late/early charge ratios, derivative sign changes, and transparent
+  peak/tail cuts. ML: shape-only RF with grouped sample-window dropout/permutation and sparse
+  logistic probes, excluding timing, amplitudes, ids, topology, and injection parameters. Metric:
+  AUC/AP loss, fixed-efficiency rejection loss, and fold-stability rank correlations with
+  run-block bootstrap CIs and null-window controls.
+- **S13f — Exactly-two current-family timing-tail null.** Test whether S13d's all-three current
+  null is a topology-support artifact by repeating the matched high-rate versus low-edge contrast
+  on exactly-two-downstream rows. Traditional: calibrated curvature and transparent
+  timing/template tail scores. ML: amplitude-normalized waveform RF and residualized CWoLa probe
+  with run, current, timing-label, amplitude, and topology leakage excluded. Metric: high-minus-low
+  tail-score delta, current-family AUC, fixed-efficiency enrichment, and matched support with
+  held-out run-pair bootstrap CIs.
+- **P04u — A-stack shuffled-sentinel root cause.** Explain why P04h A-stack charge transfer tracks
+  shuffled target and search for any raw-ROOT support atom with real-versus-shuffled separation.
+  Traditional: B2 log-linear, peak/integral/topology ridge, and adaptive-template ridge baselines
+  stratified by run, topology, A stave, event matching, saturation, and anomaly. ML: ExtraTrees/RF
+  waveform regressors with target permutation, knockoff B-waveform controls, and conformal residual
+  calibration. Metric: real-minus-shuffled res68 delta, within-25% coverage, coverage68, and bias
+  by stratum with leave-one-run-out run-block bootstrap CIs.

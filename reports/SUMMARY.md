@@ -600,6 +600,27 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   timewalk-transfer, baseline/pretrigger, covariance, A-stack charge, and cross-consumer harm
   atoms, with each question preregistered against a traditional method, an ML method, and
   bootstrap-CI metrics.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep under concurrent worker movement and reports
+  `open=183 claimed=2 done=230 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: S11h all-three delay-scale recovery
+  frontier (`1781063906.413.7e4c6b5c`), S07m charge-preserved shape-cue localization
+  (`1781063920.486.09951fba`), S13f exactly-two current-family timing-tail null
+  (`1781063920.513.7c742542`), and P04u A-stack shuffled-sentinel root cause
+  (`1781063920.599.196428b2`).
+- Fresh synthesis: the newest landed reports sharpen the all-three pile-up and charge-transfer
+  gates rather than approving a global correction. S11e reproduces the S07f all-three injected
+  target and shows the full bounded two-pulse fit is interpretable but weak (AUC 0.608 [0.594,
+  0.622]) compared with the shape RF (0.826 [0.800, 0.851]); S07g shows that RF advantage survives
+  peak- and positive-charge-preserved injections, so the next atom is delay/scale and sample-cue
+  localization. S13d finds the charge-matched all-three high-rate timing-tail contrast is not a
+  stable positive signal, making exactly-two topology support the clean next null. P04h reproduces
+  the A-stack support map and finds real A-charge transfer essentially indistinguishable from
+  shuffled target, so external charge, PID, and energy consumers need a root-cause real-minus-
+  shuffled audit before using A-stack transfer as truth. S02h keeps binned timewalk in the
+  control-failure bucket, reinforcing that every new pulse claim remains paired with a strong
+  traditional comparator, leakage sentinels, and bootstrap CIs.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

@@ -1,0 +1,126 @@
+{
+  "study": "S03g",
+  "ticket": "1781020297.470.075250d8",
+  "worker": "testbeam-laptop-4",
+  "title": "HGB timewalk feature monotonicity audit",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "selected_count_pass": true,
+    "s03d_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "traditional": {
+    "s03a_amp_only": {
+      "sigma68_ns": 1.5510917109777858,
+      "ci": [
+        1.3669786161406465,
+        1.9544410233818794
+      ]
+    },
+    "signed_shared_shrinkage": {
+      "sigma68_ns": 1.5398525126313984,
+      "ci": [
+        1.2674122559525287,
+        1.9450040587816664
+      ]
+    },
+    "monotone_residual_table": {
+      "sigma68_ns": 1.6451494274970766,
+      "ci": [
+        1.3255856505466923,
+        1.9317030631174665
+      ]
+    }
+  },
+  "ml": {
+    "hgb_full_unconstrained": {
+      "sigma68_ns": 1.3939661218709831,
+      "ci": [
+        1.2413088210468894,
+        1.6538435423313407
+      ],
+      "full_rms_ns": 2.380006615418368,
+      "tail_frac_abs_gt5ns": 0.0156195462478185,
+      "bias_vs_log_amp_slope_ns": -0.8881684335662512
+    },
+    "full_monotone_log_amp": {
+      "sigma68_ns": 1.3725160896970068,
+      "ci": [
+        1.206705303020513,
+        1.600116778439646
+      ],
+      "full_rms_ns": 2.427077477685693,
+      "tail_frac_abs_gt5ns": 0.0150087260034904,
+      "bias_vs_log_amp_slope_ns": -0.7284716246624263
+    },
+    "amplitude_only": {
+      "sigma68_ns": 1.4364603523171167,
+      "ci": [
+        1.283211382703158,
+        1.7489628653988425
+      ],
+      "full_rms_ns": 2.548561674262194,
+      "tail_frac_abs_gt5ns": 0.01780104712041885,
+      "bias_vs_log_amp_slope_ns": -0.9775461208110462
+    },
+    "shape_only": {
+      "sigma68_ns": 1.359899558710798,
+      "ci": [
+        1.176404693625019,
+        1.6266349241009315
+      ],
+      "full_rms_ns": 2.4426434855632926,
+      "tail_frac_abs_gt5ns": 0.015706806282722512,
+      "bias_vs_log_amp_slope_ns": -0.5564719062578215
+    },
+    "stave_only": {
+      "sigma68_ns": 1.3718560659995056,
+      "ci": [
+        1.1218560659995056,
+        1.79879803939496
+      ],
+      "full_rms_ns": 2.638315391068688,
+      "tail_frac_abs_gt5ns": 0.020855148342059336,
+      "bias_vs_log_amp_slope_ns": 0.41983178283997613
+    }
+  },
+  "monotonicity": {
+    "monotone_log_amp_minus_full_sigma68_ns": -0.02145003217397634,
+    "best_log_amp_constraint_signs_by_fold": [
+      -1,
+      -1,
+      -1,
+      1,
+      -1,
+      -1,
+      1
+    ]
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.6538819224119017,
+    "stave_only_sigma68_ns": 1.3718560659995056,
+    "hgb_looks_too_good": false,
+    "leakage_flag": true
+  },
+  "paired_deltas_csv": "paired_deltas.csv",
+  "verdict": "hgb_gain_partly_nonmonotone_or_control_limited",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "599bdd872ceab1e72edc0afef2800beac13db7fb",
+  "next_tickets": []
+}

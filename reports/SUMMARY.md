@@ -125,14 +125,18 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=11 claimed=0 done=0 failed=14`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with this live post-append audit observing `open=187 claimed=4
-  done=212 failed=7` while workers continue moving tickets.
+  testbeam queue remains deep, with this live post-append audit observing `open=185 claimed=4
+  done=222 failed=7` while workers continue moving tickets.
   The mission trigger still required new ready work. This pass appended four ready non-duplicate
-  tickets: S02f binned-timewalk shuffled-control atom ledger (`1781059683.845.5a6958ad`),
+  tickets: S03p HGB transfer feature-leakage null grid (`1781062439.500.63591f99`),
+  S05n pretrigger-atom covariance projection stress (`1781062443.571.1e7346af`),
+  P04t A-stack topology lower-bound charge transfer (`1781062449.642.488b2d5f`), and
+  P12e cross-consumer pulse-atom harm ledger (`1781062454.713.242b3d71`). The previous pass
+  appended four ready non-duplicate tickets: S02f binned-timewalk shuffled-control atom ledger (`1781059683.845.5a6958ad`),
   S13e residual CWoLa support-collapse atlas (`1781059683.869.4bca6f7e`),
   P10i live-time surrogate negative-control support map (`1781059684.922.5d6d340d`), and
-  S06c charge-proxy timing pull-width calibration gate (`1781059684.1019.46485748`). The previous
-  pass appended four ready non-duplicate tickets: S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
+  S06c charge-proxy timing pull-width calibration gate (`1781059684.1019.46485748`). The pass
+  before that appended four ready non-duplicate tickets: S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
   S14i material-budget PID label uncertainty bridge (`1781058292.529.4efe2d6e`),
   P09i broad-width reviewer-disagreement propagation (`1781058292.535.650c13f1`), and
   P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The pass before that appended four ready non-duplicate
@@ -573,6 +577,27 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   they become pile-up templates. The new tickets deepen the pulse at rate, shape, baseline,
   charge, tail, and live-time atoms while keeping every claim paired with traditional and ML
   methods plus bootstrap CIs.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep under concurrent worker movement and reports
+  `open=185 claimed=4 done=222 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: S03p HGB transfer feature-leakage null
+  grid (`1781062439.500.63591f99`), S05n pretrigger-atom covariance projection stress
+  (`1781062443.571.1e7346af`), P04t A-stack topology lower-bound charge transfer
+  (`1781062449.642.488b2d5f`), and P12e cross-consumer pulse-atom harm ledger
+  (`1781062454.713.242b3d71`).
+- Fresh synthesis: the newest result layer adds a portability and harm-accounting gate. P04d
+  reproduces the A/B charge-transfer baseline but shows global A-stack charge prediction remains
+  topology-limited and close to shuffled controls, so energy/PID consumers need topology-specific
+  lower bounds. S02e/S02f/S02g keep binned/current-rate timing branches unstable under
+  shuffled-target controls and missing external scaler metadata, while S03e shows a strong HGB
+  Sample-I-to-Sample-II transfer with a too-good warning that must be feature-null tested before
+  adoption. P11a maps pretrigger atoms to baseline, timing, charge, saturation-boundary, and
+  dropout harms; S05 covariance and P12 action consumers now need those atoms propagated as
+  calibrated support, not as a single veto. The new tickets therefore deepen the pulse at
+  timewalk-transfer, baseline/pretrigger, covariance, A-stack charge, and cross-consumer harm
+  atoms, with each question preregistered against a traditional method, an ML method, and
+  bootstrap-CI metrics.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

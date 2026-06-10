@@ -276,18 +276,23 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `open=11 claimed=0 done=0 failed=14`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with this live
-post-append audit observing `open=187 claimed=4 done=212 failed=7` while claimed counts moved
+post-append audit observing `open=185 claimed=4 done=222 failed=7` while claimed counts moved
 under concurrent worker activity, but the mission trigger still required a small set of
 new ready studies. This pass appended four additional non-duplicate ready tickets:
+S03p HGB transfer feature-leakage null grid (`1781062439.500.63591f99`),
+S05n pretrigger-atom covariance projection stress (`1781062443.571.1e7346af`),
+P04t A-stack topology lower-bound charge transfer (`1781062449.642.488b2d5f`), and
+P12e cross-consumer pulse-atom harm ledger (`1781062454.713.242b3d71`). The previous pass appended
+four additional non-duplicate ready tickets:
 S02f binned-timewalk shuffled-control atom ledger (`1781059683.845.5a6958ad`),
 S13e residual CWoLa support-collapse atlas (`1781059683.869.4bca6f7e`),
 P10i live-time surrogate negative-control support map (`1781059684.922.5d6d340d`), and
-S06c charge-proxy timing pull-width calibration gate (`1781059684.1019.46485748`). The previous
-pass appended four additional non-duplicate ready tickets:
+S06c charge-proxy timing pull-width calibration gate (`1781059684.1019.46485748`). The pass before
+that appended four additional non-duplicate ready tickets:
 S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
 S14i material-budget PID label uncertainty bridge (`1781058292.529.4efe2d6e`),
 P09i broad-width reviewer-disagreement propagation (`1781058292.535.650c13f1`), and
-P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The pass before that
+P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The earlier pass
 appended four additional non-duplicate ready tickets: P01g latent
 baseline-contamination atom map (`1781039488.1122.04bc6ecf`), S07l injected morphology
 operating-point support audit (`1781039488.1142.659b28c4`), P09g injected-morphology
@@ -1727,3 +1732,38 @@ tail-shape, and charge-transfer gaps: S02j (`1781061044.485.7c697079`), S02k
   tail MSE, timing sigma68, live10/tau_eff delta, high-minus-low secondary-fraction delta,
   accepted support fraction, control false-pass rate, and ML-minus-traditional deltas with
   event-paired run-block bootstrap CIs.
+
+Current steering pass (2026-06-10): the exact requested `tn-ticket list testbeam` command still
+reports `open=11 claimed=0 done=0 failed=14`, below the 18-ready trigger. The correctly addressed
+local `testbeam` project queue remains deep after this pass (`open=185 claimed=4 done=222
+failed=7`) under concurrent worker movement. The trigger was satisfied by appending four ready,
+non-duplicate `project:testbeam` tickets focused on the newest timing-transfer, pretrigger,
+covariance, A-stack charge, and consumer-harm gaps: S03p (`1781062439.500.63591f99`), S05n
+(`1781062443.571.1e7346af`), P04t (`1781062449.642.488b2d5f`), and P12e
+(`1781062454.713.242b3d71`).
+
+- **S03p — HGB transfer feature-leakage null grid.** Test whether the blind Sample-I to
+  Sample-II HGB timewalk gain survives family-by-family feature removal, pretrigger exclusion,
+  and run-family sentinels. Traditional: signed inverse-amplitude and S03a analytic comparators
+  under identical exclusions. ML: HGB residual correction with feature-dropout, shuffled-target,
+  run-only, and pretrigger-free nulls. Metric: held-out sigma68, full RMS, tail fraction, and
+  ML-minus-traditional deltas with run-block bootstrap CIs.
+- **S05n — Pretrigger-atom covariance projection stress.** Decide whether the B-stack correlated
+  timing floor remains a common covariance term after P11a pretrigger atoms, saturation, topology,
+  and anomalies are conditioned out. Traditional: hierarchical covariance decomposition with
+  explicit atom strata. ML: calibrated ensemble variance model over waveform/pretrigger/topology
+  atoms under held-out run families. Metric: common-covariance fraction, projected two-ended
+  sigma68, pull width, and calibration deltas with run-block bootstrap CIs.
+- **P04t — A-stack topology lower-bound charge transfer.** Quantify the best achievable
+  A-charge transfer precision separately for A1-only, A3-only, and A1A3 topologies once support
+  atoms are fixed. Traditional: topology medians, log-charge ridge, and robust Huber transfer.
+  ML: topology-specific ExtraTrees/HGB waveform transfer with support abstention and shuffled
+  targets. Metric: fractional res68, median bias, RMS, within-10% coverage, and topology/run-block
+  bootstrap CIs.
+- **P12e — Cross-consumer pulse-atom harm ledger.** For each pulse atom and action band, measure
+  which downstream consumers are helped or harmed across timing, charge, saturation, pile-up,
+  baseline, PID, and energy. Traditional: deterministic q_template, amplitude, pretrigger,
+  saturation, dropout, and anomaly action rules. ML: calibrated multi-output harm predictor on
+  held-out-run outcomes with shuffled-label controls. Metric: per-consumer harm rate, net utility
+  at fixed coverage, conflict rate, and ML-minus-rule utility deltas with event/run-block
+  bootstrap CIs.

@@ -1,0 +1,6 @@
+check,value,flag
+forbidden_feature_overlap,,False
+heldout_run_overlap,Sample IV analysis runs excluded from training,False
+group_split_r2_mean,0.507123155293417,False
+row_split_advantage_rmse_ns,-1.003741795444006,False
+shuffled_target_group_r2_mean,-0.008904023717349264,False

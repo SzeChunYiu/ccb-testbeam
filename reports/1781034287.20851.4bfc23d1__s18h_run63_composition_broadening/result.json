@@ -1,0 +1,50 @@
+{
+  "study": "S18h",
+  "ticket": "1781034287.20851.4bfc23d1",
+  "worker": "testbeam-laptop-4",
+  "title": "test run-63 stabilizing composition versus detector broadening",
+  "reproduced": true,
+  "primary_metric": "held-out Sample IV A1-A3 median-centered sigma68_ns with run-block bootstrap CIs",
+  "winner": {
+    "pool": "sample_iii_mixed",
+    "method": "composition_gated_cnn",
+    "sigma68_ns": 1.1456665711016367,
+    "ci": [
+      0.8789521484311358,
+      1.4220074827698057
+    ]
+  },
+  "traditional_best": {
+    "pool": "sample_iii_late",
+    "sigma68_ns": 1.456624277722887,
+    "ci": [
+      1.273813381018061,
+      1.6522297311537382
+    ]
+  },
+  "ml_beats_traditional_securely": false,
+  "run63_diagnosis": {
+    "full_core_sigma_ns": 1.9921764037756304,
+    "exclude_run63_core_sigma_ns": 3.2254281857279934,
+    "delta_full_minus_exclude_ns": -1.233251781952363,
+    "observed_with_run63_sigma68_ns": 1.7936260637771233,
+    "observed_without_run63_sigma68_ns": 1.679947713573198,
+    "hierarchical_run63_sigma68_ns": 1.7535907053960507,
+    "hierarchical_run63_ci": [
+      1.387697290574548,
+      2.2159590444816994
+    ],
+    "interpretation": "run 63 stabilizes the binned Gaussian core mainly through central residual occupancy, with amplitude-shape balance as a secondary support descriptor; unbinned hierarchical widths do not identify it as a uniquely narrow detector state."
+  },
+  "systematics": {
+    "binned_core_sensitivity_ns": 1.233251781952363,
+    "pool_spread_best_traditional_ns": 0.33700178605423625,
+    "method_point_estimate_spread_ns": 1.5774170723132575
+  },
+  "next_tickets": [
+    "S18i: A-stack run-composition stress test with predeclared residual-bin occupancy targets"
+  ],
+  "input_sha256": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/input_sha256.csv",
+  "manifest": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/manifest.json",
+  "git_commit": "afedd5b0e9d2722fe8324b68b4dfe08d91dfc1a5"
+}

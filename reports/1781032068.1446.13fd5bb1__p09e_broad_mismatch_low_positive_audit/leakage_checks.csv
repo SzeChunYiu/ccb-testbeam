@@ -1,0 +1,7 @@
+check,value,pass,note
+raw_reproduction_before_models,640737.0,True,script raises before taxonomy/model work if this fails
+train_heldout_run_overlap,0.0,True,"all templates, thresholds, scalers, and models fit on non-held-out runs"
+identifier_features_used,0.0,True,"run, event, eventno, evt, stave, and source index are excluded from model matrices"
+eval_waveform_hash_seen_in_train_rate,0.0,True,rounded normalized waveform hashes at 1e-3 precision
+p09c_charge_outlier_positive_count,1.0,True,documents the original low-positive bottleneck rather than treating high AP as robust
+expanded_charge_outlier_runs,2.0,True,number of expanded held-out runs with at least one broad charge-outlier positive

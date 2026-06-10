@@ -414,6 +414,25 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   transfer is proven; P01e template-phase quantization confirms the P01d samples 5/7/8 sign flips
   are CFD-only artifacts, so sample-local timing claims must use template/OF/S03 analytic
   comparators rather than CFD sign alone.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` still reports
+  `open=10 claimed=0 done=0 failed=11`, below the 18-ready trigger, while the correctly addressed
+  local `testbeam` project store remained deep after this pass (`open=187`, with claimed/done
+  moving under concurrent workers from `claimed=3 done=183` to `claimed=2 done=184` during final
+  audit). The trigger was satisfied by appending four ready,
+  non-duplicate `project:testbeam` tickets: S04g lowering-axis pull calibration adoption gate
+  (`1781049810.1103.616476c3`), P01l sample-6 smoothing causality null atlas
+  (`1781049810.1116.3eb03e19`), P05d real-current overlap score calibration curve
+  (`1781049810.1139.0de95d68`), and P04q pathology-tail charge uncertainty propagation
+  (`1781049810.1208.59835a9a`).
+- Fresh synthesis: S04c shows the largest timing-tail separation is the S16 lowering axis, so the
+  next timing deliverable is calibrated pull/tail uncertainty rather than an unqualified ML timing
+  correction. P01e derivative stability shows sample-6 smoothing can manufacture timing narrowing
+  under bad controls, so sample-local waveform claims need cross-pickoff causality nulls. P05c
+  shows the injected CNN overlap ranking transfers to real high-current candidates only as a
+  diagnostic score, with secondary-fraction and overlap-score excesses disagreeing by support.
+  These results also put charge and energy reuse on notice: pathology-tail atoms must be carried
+  into P04/P07 charge uncertainty before PID or range-energy consumers treat corrected charge as a
+  global truth variable.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

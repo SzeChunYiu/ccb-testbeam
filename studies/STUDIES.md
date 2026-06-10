@@ -1383,3 +1383,33 @@ Active ready queue highlights:
   amplitude/charge lift, res68, signed bias, q_template shift, CFD20/timing-tail delta,
   calibration coverage/ECE, veto support loss, and ML-minus-traditional deltas with
   run/stave/hash-block bootstrap CIs.
+- **S04g — Lowering-axis pull calibration adoption gate.** Turn the newest S04c finding that
+  the S16 lowering axis dominates timing-tail strata into a calibrated uncertainty/veto gate
+  rather than a silent timing-model replacement. Traditional: stratified CFD20/S03 analytic pull
+  tables by lowering axis, amplitude, stave, and run with train-only isotonic bins. ML:
+  run-held-out RF/GBM tail-probability and sigma predictors using the same pulse atoms with no
+  event/run identifiers. Metric: pull width, tail-probability ECE, 95% acceptance tail coverage,
+  sigma68 delta, and ML-minus-traditional deltas with run-block bootstrap CIs.
+- **P01l — Sample-6 smoothing causality null atlas.** Test whether the P01d/P01e sample-6 timing
+  gain is causal waveform information or a replacement/quantization artifact across CFD,
+  template-phase, and OF pickoffs. Traditional: local-linear, amplitude-bin curvature, and
+  control-stratum sample-6 replacements on train-selected timing methods. ML: no-sample-6 ridge
+  and tree imputers plus waveform residual models with target, row, and event-block shuffles.
+  Metric: delta sigma68/full RMS, imputation MAE/R2, control-gain fraction, and
+  ML-minus-traditional deltas with held-out-run event-block bootstrap CIs.
+- **P05d — Real-current overlap score calibration curve.** Decide whether the P05b/P05c CNN
+  overlap score can become a calibrated real-current secondary-fraction estimator or must remain
+  only a support-dependent ranking diagnostic. Traditional: frozen constrained two-pulse template
+  fit and matched S10/S11 secondary-fraction estimator by amplitude, lowering, broad-late
+  topology, and current/run strata. ML: isotonic/Platt-calibrated compact CNN overlap probability
+  trained on injected overlays and low-current controls, applied leave-one-run-out to high-current
+  windows. Metric: calibration slope/intercept, Brier score, high-minus-low secondary fraction,
+  score/fraction discordance, accepted recovery RMS, and source-run bootstrap CIs.
+- **P04q — Pathology-tail charge uncertainty propagation.** Propagate S04c/P09/S16 pathology-tail
+  atoms into charge-closure uncertainty before energy and PID consumers reuse P04/P07 outputs.
+  Traditional: duplicate-readout Huber/template charge closure stratified by lowering axis,
+  anomaly taxon, saturation boundary, and run family with train-only abstention thresholds. ML:
+  ExtraTrees or quantile-regression charge models with pathology features and conformal residual
+  calibration, audited by shuffled-target and family-holdout sentinels. Metric: charge res68,
+  signed bias, conformal coverage, abstention coverage, downstream range-energy proxy delta, and
+  ML-minus-traditional deltas with run-family bootstrap CIs.

@@ -1,0 +1,743 @@
+{
+  "study": "P04m",
+  "ticket_id": "1781032084.548.4ccc082b",
+  "worker": "testbeam-laptop-4",
+  "title": "pretrigger-mode charge-transfer abstention map",
+  "runtime_sec": 180.64949417114258,
+  "reproduced": true,
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "invalid_target_rows_removed_after_reproduction": 255
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      64
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "held-out run",
+    "bootstrap_reps": 400
+  },
+  "primary_metric": "duplicate-readout charge res68_abs_frac; lower is better",
+  "best_traditional": {
+    "target": "duplicate_odd_charge",
+    "method": "traditional_dropout_cell_corrected",
+    "split": "run_heldout",
+    "n": 125078,
+    "bias_median_frac": -0.0029536599,
+    "res68_abs_frac": 0.0310563103,
+    "full_rms_frac": 1.038994779,
+    "catastrophic_rate": 0.1257055597,
+    "within_10pct": 0.80572123,
+    "bias_ci95": [
+      -0.0053957333,
+      -0.0012362259
+    ],
+    "res68_ci95": [
+      0.0253649533,
+      0.0367393087
+    ],
+    "full_rms_ci95": [
+      0.8061769785,
+      1.2076822704
+    ],
+    "catastrophic_rate_ci95": [
+      0.0870583091,
+      0.150670957
+    ]
+  },
+  "winner": {
+    "target": "duplicate_odd_charge",
+    "method": "ML_extratrees_without_pretrigger",
+    "split": "run_heldout",
+    "n": 125078,
+    "bias_median_frac": 0.0002955155,
+    "res68_abs_frac": 0.0073776275,
+    "full_rms_frac": 0.0813900528,
+    "catastrophic_rate": 0.0073154352,
+    "within_10pct": 0.9636306944,
+    "bias_ci95": [
+      6.33247e-05,
+      0.0005421006
+    ],
+    "res68_ci95": [
+      0.0052856927,
+      0.0091763431
+    ],
+    "full_rms_ci95": [
+      0.0618726689,
+      0.0954289671
+    ],
+    "catastrophic_rate_ci95": [
+      0.0051334148,
+      0.0089727167
+    ]
+  },
+  "external_winner": {
+    "target": "downstream_B4B6B8_charge_proxy",
+    "method": "external_extratrees_with_pretrigger",
+    "split": "leave_one_run_out",
+    "n": 3774,
+    "bias_median_frac": -0.0132384052,
+    "res68_abs_frac": 0.2097608407,
+    "full_rms_frac": 0.2727629099,
+    "catastrophic_rate": 0.2374138845,
+    "within_10pct": 0.3510863805,
+    "bias_ci95": [
+      -0.0581473635,
+      0.0355915569
+    ],
+    "res68_ci95": [
+      0.1993742191,
+      0.2255936566
+    ],
+    "full_rms_ci95": [
+      0.237294014,
+      0.3264783094
+    ],
+    "catastrophic_rate_ci95": [
+      0.2116124426,
+      0.2743366917
+    ]
+  },
+  "primary_methods": [
+    "traditional_peak_logcal",
+    "traditional_integral_logcal",
+    "traditional_adaptive_template",
+    "traditional_strong_huber_pretrigger",
+    "traditional_dropout_cell_corrected",
+    "ML_ridge_with_pretrigger",
+    "ML_hgb_with_pretrigger",
+    "ML_extratrees_with_pretrigger",
+    "ML_hgb_without_pretrigger",
+    "ML_extratrees_without_pretrigger",
+    "ML_mlp",
+    "NN_1d_cnn",
+    "NN_wave_atom_net",
+    "NN_pretrigger_gated_wave_net_new"
+  ],
+  "duplicate_benchmark": [
+    {
+      "target": "duplicate_odd_charge",
+      "method": "traditional_peak_logcal",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.232842455,
+      "res68_abs_frac": 0.3180228007,
+      "full_rms_frac": 1.9745550985,
+      "catastrophic_rate": 0.553270759,
+      "within_10pct": 0.0945090264,
+      "bias_ci95": [
+        -0.2356531269,
+        -0.2306772436
+      ],
+      "res68_ci95": [
+        0.2890638105,
+        0.3348977332
+      ],
+      "full_rms_ci95": [
+        1.6703100137,
+        2.1890189491
+      ],
+      "catastrophic_rate_ci95": [
+        0.5074193719,
+        0.583769342
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "traditional_integral_logcal",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.1073710348,
+      "res68_abs_frac": 0.186395451,
+      "full_rms_frac": 1.7501703027,
+      "catastrophic_rate": 0.2120196997,
+      "within_10pct": 0.305041654,
+      "bias_ci95": [
+        -0.1128585755,
+        -0.0974016224
+      ],
+      "res68_ci95": [
+        0.1653706022,
+        0.2006332192
+      ],
+      "full_rms_ci95": [
+        1.2963406766,
+        1.9941243874
+      ],
+      "catastrophic_rate_ci95": [
+        0.1568810989,
+        0.2400615574
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "traditional_adaptive_template",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.1383399169,
+      "res68_abs_frac": 0.5386905927,
+      "full_rms_frac": 2.7892575747,
+      "catastrophic_rate": 0.5602743888,
+      "within_10pct": 0.2024017013,
+      "bias_ci95": [
+        0.0805266424,
+        0.20392107
+      ],
+      "res68_ci95": [
+        0.4615396875,
+        0.6335739515
+      ],
+      "full_rms_ci95": [
+        2.2966391413,
+        3.0734878947
+      ],
+      "catastrophic_rate_ci95": [
+        0.488548613,
+        0.5994162429
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "traditional_strong_huber_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0251891382,
+      "res68_abs_frac": 0.1564649977,
+      "full_rms_frac": 0.6531567365,
+      "catastrophic_rate": 0.2322230928,
+      "within_10pct": 0.5851868434,
+      "bias_ci95": [
+        0.0134261433,
+        0.0359141108
+      ],
+      "res68_ci95": [
+        0.1224431278,
+        0.1822680515
+      ],
+      "full_rms_ci95": [
+        0.5104670449,
+        0.7678309007
+      ],
+      "catastrophic_rate_ci95": [
+        0.2012383118,
+        0.2583324765
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "traditional_dropout_cell_corrected",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.0029536599,
+      "res68_abs_frac": 0.0310563103,
+      "full_rms_frac": 1.038994779,
+      "catastrophic_rate": 0.1257055597,
+      "within_10pct": 0.80572123,
+      "bias_ci95": [
+        -0.0053957333,
+        -0.0012362259
+      ],
+      "res68_ci95": [
+        0.0253649533,
+        0.0367393087
+      ],
+      "full_rms_ci95": [
+        0.8061769785,
+        1.2076822704
+      ],
+      "catastrophic_rate_ci95": [
+        0.0870583091,
+        0.150670957
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_ridge_with_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0009170457,
+      "res68_abs_frac": 0.0249422313,
+      "full_rms_frac": 0.1687847823,
+      "catastrophic_rate": 0.0436847407,
+      "within_10pct": 0.8780201154,
+      "bias_ci95": [
+        -0.0009288014,
+        0.002956389
+      ],
+      "res68_ci95": [
+        0.0218629594,
+        0.0281339822
+      ],
+      "full_rms_ci95": [
+        0.1337135732,
+        0.1924663819
+      ],
+      "catastrophic_rate_ci95": [
+        0.0314713567,
+        0.0517259741
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_hgb_with_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0009034921,
+      "res68_abs_frac": 0.0161867161,
+      "full_rms_frac": 0.0472091833,
+      "catastrophic_rate": 0.0048689618,
+      "within_10pct": 0.9687714866,
+      "bias_ci95": [
+        0.0007527476,
+        0.0010885764
+      ],
+      "res68_ci95": [
+        0.0134494323,
+        0.0183961677
+      ],
+      "full_rms_ci95": [
+        0.0397685965,
+        0.0520790099
+      ],
+      "catastrophic_rate_ci95": [
+        0.0033146949,
+        0.0061591938
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_extratrees_with_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0003504076,
+      "res68_abs_frac": 0.0074428953,
+      "full_rms_frac": 0.0573659361,
+      "catastrophic_rate": 0.0059642783,
+      "within_10pct": 0.9674123347,
+      "bias_ci95": [
+        7.2268e-05,
+        0.0007143578
+      ],
+      "res68_ci95": [
+        0.0050447775,
+        0.0094250236
+      ],
+      "full_rms_ci95": [
+        0.0458422864,
+        0.0651138953
+      ],
+      "catastrophic_rate_ci95": [
+        0.0040720535,
+        0.0074406061
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_hgb_without_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.000960666,
+      "res68_abs_frac": 0.0163058522,
+      "full_rms_frac": 0.0494974584,
+      "catastrophic_rate": 0.0046690865,
+      "within_10pct": 0.9673483746,
+      "bias_ci95": [
+        0.0008512307,
+        0.0010912654
+      ],
+      "res68_ci95": [
+        0.0133418112,
+        0.01859225
+      ],
+      "full_rms_ci95": [
+        0.0405683546,
+        0.0560405488
+      ],
+      "catastrophic_rate_ci95": [
+        0.0030663024,
+        0.0059257737
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_extratrees_without_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0002955155,
+      "res68_abs_frac": 0.0073776275,
+      "full_rms_frac": 0.0813900528,
+      "catastrophic_rate": 0.0073154352,
+      "within_10pct": 0.9636306944,
+      "bias_ci95": [
+        6.33247e-05,
+        0.0005421006
+      ],
+      "res68_ci95": [
+        0.0052856927,
+        0.0091763431
+      ],
+      "full_rms_ci95": [
+        0.0618726689,
+        0.0954289671
+      ],
+      "catastrophic_rate_ci95": [
+        0.0051334148,
+        0.0089727167
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_mlp",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.002994678,
+      "res68_abs_frac": 0.0357687077,
+      "full_rms_frac": 0.1053604856,
+      "catastrophic_rate": 0.0246086442,
+      "within_10pct": 0.8998704808,
+      "bias_ci95": [
+        0.0005223817,
+        0.0053629738
+      ],
+      "res68_ci95": [
+        0.0289788143,
+        0.041470635
+      ],
+      "full_rms_ci95": [
+        0.0856830178,
+        0.1188616134
+      ],
+      "catastrophic_rate_ci95": [
+        0.0171070645,
+        0.0299895673
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "NN_1d_cnn",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.0254384372,
+      "res68_abs_frac": 0.3746889472,
+      "full_rms_frac": 1.6305214167,
+      "catastrophic_rate": 0.4564671645,
+      "within_10pct": 0.1846847567,
+      "bias_ci95": [
+        -0.0810018428,
+        0.0255939872
+      ],
+      "res68_ci95": [
+        0.3076525919,
+        0.4384879775
+      ],
+      "full_rms_ci95": [
+        1.372707054,
+        1.8045051754
+      ],
+      "catastrophic_rate_ci95": [
+        0.3957040599,
+        0.4960809271
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "NN_wave_atom_net",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0101244161,
+      "res68_abs_frac": 0.0464039518,
+      "full_rms_frac": 0.1523497701,
+      "catastrophic_rate": 0.041725963,
+      "within_10pct": 0.861886183,
+      "bias_ci95": [
+        0.0083210659,
+        0.0117416903
+      ],
+      "res68_ci95": [
+        0.0362616632,
+        0.0550861422
+      ],
+      "full_rms_ci95": [
+        0.1218808759,
+        0.1735084236
+      ],
+      "catastrophic_rate_ci95": [
+        0.0301931651,
+        0.0495265623
+      ]
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "NN_pretrigger_gated_wave_net_new",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0019533155,
+      "res68_abs_frac": 0.0533973368,
+      "full_rms_frac": 0.2225957662,
+      "catastrophic_rate": 0.0552855018,
+      "within_10pct": 0.8411791042,
+      "bias_ci95": [
+        0.000809837,
+        0.0029435535
+      ],
+      "res68_ci95": [
+        0.0412390158,
+        0.0629325733
+      ],
+      "full_rms_ci95": [
+        0.1821542196,
+        0.2532925606
+      ],
+      "catastrophic_rate_ci95": [
+        0.039111228,
+        0.0660167372
+      ]
+    }
+  ],
+  "external_summary": [
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "external_traditional_ridge",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0058711809,
+      "res68_abs_frac": 0.2197835987,
+      "full_rms_frac": 0.3161973777,
+      "catastrophic_rate": 0.2578166402,
+      "within_10pct": 0.337572867,
+      "bias_ci95": [
+        -0.0721022638,
+        0.0739871213
+      ],
+      "res68_ci95": [
+        0.2023011647,
+        0.2619237048
+      ],
+      "full_rms_ci95": [
+        0.270964688,
+        0.3846066879
+      ],
+      "catastrophic_rate_ci95": [
+        0.2202034119,
+        0.33258738
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "external_hgb_without_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0165153846,
+      "res68_abs_frac": 0.2128717553,
+      "full_rms_frac": 0.2667390368,
+      "catastrophic_rate": 0.2384737679,
+      "within_10pct": 0.3473767886,
+      "bias_ci95": [
+        -0.0629729087,
+        0.0342080024
+      ],
+      "res68_ci95": [
+        0.2050106666,
+        0.2305284923
+      ],
+      "full_rms_ci95": [
+        0.2421200941,
+        0.3119812624
+      ],
+      "catastrophic_rate_ci95": [
+        0.2166751648,
+        0.278206063
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "external_hgb_with_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0169130334,
+      "res68_abs_frac": 0.2120391209,
+      "full_rms_frac": 0.27088085,
+      "catastrophic_rate": 0.2374138845,
+      "within_10pct": 0.3351881293,
+      "bias_ci95": [
+        -0.0590822112,
+        0.029581577
+      ],
+      "res68_ci95": [
+        0.2028801017,
+        0.2260697623
+      ],
+      "full_rms_ci95": [
+        0.2451690189,
+        0.3094467543
+      ],
+      "catastrophic_rate_ci95": [
+        0.2136323984,
+        0.2747426568
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "external_extratrees_with_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0132384052,
+      "res68_abs_frac": 0.2097608407,
+      "full_rms_frac": 0.2727629099,
+      "catastrophic_rate": 0.2374138845,
+      "within_10pct": 0.3510863805,
+      "bias_ci95": [
+        -0.0581473635,
+        0.0355915569
+      ],
+      "res68_ci95": [
+        0.1993742191,
+        0.2255936566
+      ],
+      "full_rms_ci95": [
+        0.237294014,
+        0.3264783094
+      ],
+      "catastrophic_rate_ci95": [
+        0.2116124426,
+        0.2743366917
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "external_duplicate_transfer_hgb",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": 2.7538185324,
+      "res68_abs_frac": 3.8299914132,
+      "full_rms_frac": 3.5013243048,
+      "catastrophic_rate": 0.8404875464,
+      "within_10pct": 0.0728669846,
+      "bias_ci95": [
+        0.0846875075,
+        3.5446584044
+      ],
+      "res68_ci95": [
+        0.9327823795,
+        4.2931104798
+      ],
+      "full_rms_ci95": [
+        2.3817671059,
+        4.141801057
+      ],
+      "catastrophic_rate_ci95": [
+        0.5342623286,
+        0.9974399868
+      ]
+    }
+  ],
+  "pretrigger_mode_effects": [
+    {
+      "method": "ML_extratrees_without_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0516936223,
+      "delta_abs_frac_ci95": [
+        0.0440058113,
+        0.0588331974
+      ]
+    },
+    {
+      "method": "traditional_dropout_cell_corrected",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 1.357632082,
+      "delta_abs_frac_ci95": [
+        1.2517341506,
+        1.4596159939
+      ]
+    },
+    {
+      "method": "ML_hgb_with_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.042281798,
+      "delta_abs_frac_ci95": [
+        0.0348424958,
+        0.0508668768
+      ]
+    },
+    {
+      "method": "ML_hgb_without_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0420966512,
+      "delta_abs_frac_ci95": [
+        0.0348429558,
+        0.0487958508
+      ]
+    }
+  ],
+  "conformal_abstention": {
+    "conformal_abs_frac_threshold": 0.012777458893141084,
+    "nominal_coverage": 0.9,
+    "coverage_no_abstention": 0.780233134524057,
+    "coverage_after_pretrigger_abstention": 0.9192815604555367,
+    "support_loss": 0.20811013927309363,
+    "retained_res68_abs_frac": 0.004480077101625828
+  },
+  "finding": "Raw selected-pulse reproduction passes exactly (640737 vs 640737). The duplicate-readout winner is ML_extratrees_without_pretrigger with res68 0.0074 [0.0053, 0.0092], while the strongest traditional method is traditional_dropout_cell_corrected at 0.0311. The best external downstream-charge proxy is external_extratrees_with_pretrigger with res68 0.2098, much wider than duplicate closure, so pretrigger support should be treated as a nuisance/abstention map rather than evidence of external energy recovery.",
+  "hypothesis": "Pretrigger hidden modes mark electronics support boundaries: within the B-stack duplicate channel they mostly identify where ordinary charge estimators need abstention or correction, but they do not by themselves make same-event duplicate closure transfer to downstream charge. A forced/random pedestal or independently blinded energy proxy should confirm whether the high-pretrigger support loss is an electronics-only nuisance.",
+  "next_tickets": [
+    {
+      "title": "P04n: forced-random pedestal validation of P04m pretrigger abstention",
+      "appended_ticket_id": "1781101446.892.139c702a",
+      "body": "Question: do P04m high-pretrigger abstention regions correspond to independently measured forced/random pedestal disturbances, and do they predict external charge-proxy failure after amplitude, saturation, run, and topology matching? Expected information gain: distinguishes a useful electronics support veto from an overfit duplicate-readout nuisance map."
+    }
+  ],
+  "leakage_audit": {
+    "train_heldout_run_overlap": [],
+    "feature_exclusions": [
+      "eventno",
+      "evt",
+      "target_odd_pos_charge",
+      "target_odd_neg_amp",
+      "downstream_charge"
+    ]
+  }
+}

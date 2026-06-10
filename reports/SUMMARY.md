@@ -472,6 +472,22 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   instead of global correction. P04g confirms dropout recovery can be strong for injected charge
   closure, but timing-phase and tail harm must be calibrated before recovered charge feeds pile-up,
   PID, or energy studies.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep under concurrent worker movement and reports
+  `open=186 claimed=3 done=196 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: P12d consumer action conflict arbitration
+  (`1781054026.1869.66191fe9`), P08d PID weak-label action-band stability
+  (`1781054026.1934.7d3f4015`), P09h baseline-excursion temporal subtype ledger
+  (`1781054026.1999.7ad97cb0`), and S06b amplitude-energy timing support closure
+  (`1781054026.2063.38d35ceb`).
+- Fresh synthesis: the newest action-band layer needs a consumer-specific arbitration step. P07j
+  and P04s define saturation/dropout actions, S14g treats veto ladders as energy/PID support, and
+  P12c proposes a broad pulse-action matrix, but downstream consumers can still receive conflicting
+  instructions from timing, charge, pile-up, baseline, dropout, PID, and energy axes. The new batch
+  therefore tests conflict arbitration, PID weak-label stability under action bands, temporal
+  subtyping of baseline excursions, and the S06 amplitude/energy timing curve after support and
+  veto composition are controlled.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

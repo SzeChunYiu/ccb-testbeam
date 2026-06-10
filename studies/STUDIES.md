@@ -1486,3 +1486,43 @@ Active ready queue highlights:
   and topology-only sentinels. Metric: charge res68/bias, time_abs68_samples, q_template shift,
   tail-bias median, catastrophic harm rate, abstention support fraction, and ML-minus-traditional
   deltas with stratified event/run-block bootstrap CIs.
+- **P12d — Consumer action conflict arbitration.** Decide what to do when existing pulse-action
+  rules disagree across timing, charge, saturation, pile-up, baseline, dropout, PID, and energy
+  consumers. Traditional: freeze the transparent S02/S03/S05/S10/S14/S16/P04/P07/P09/P12c action
+  tables and build a deterministic precedence ladder by consumer, support count, and harm labels.
+  ML: train a run-held-out calibrated multi-task conflict classifier from predeclared pulse atoms,
+  with action-knockout, consumer-knockout, shuffled-target, and run-family sentinels. Metric:
+  conflict rate, harmful-conflict precision/recall, accepted support fraction, timing-tail delta,
+  charge res68/bias delta, PID weak-label drift, energy-proxy degradation, and ML-minus-traditional
+  deltas with event-paired run-block bootstrap CIs.
+- **P08d — PID weak-label action-band stability.** Test whether saturation, dropout, baseline,
+  anomaly, and energy veto/action bands preserve PID-like waveform weak labels or manufacture
+  apparent PID separation through support loss. Traditional: freeze penetration-depth, deltaE-E
+  charge bands, topology matching, and transparent P07j/S14g/P04s action bands, then evaluate weak
+  PID labels before and after each action band with matched charge/current/depth support. ML:
+  run-held-out waveform/latent PID probes with charge-only, depth-only, action-only,
+  shuffled-label, and run-family controls. Metric: weak-label AUC/AP, purity at fixed efficiency,
+  calibration ECE, support loss, charge/depth composition drift, action-band induced label shift,
+  and ML-minus-traditional deltas with stratified run-block bootstrap CIs; no PID adoption without
+  truth.
+- **P09h — Baseline-excursion temporal subtype ledger.** Split baseline-excursion anomaly taxa
+  into temporal subtypes before using them to explain pile-up residuals, dropout recovery harm,
+  charge bias, or timing tails. Traditional: split P09 baseline-excursion candidates by pretrigger
+  slope, early-sample offset, rising-edge distortion, peak phase, tail recovery, and downstream
+  topology using robust thresholds and matched support tables. ML: run-held-out calibrated subtype
+  model from 18-sample waveform atoms and pretrigger summaries, with taxon-knockout,
+  time-window-shuffle, amplitude-only, run-only, and topology-only sentinels. Metric: subtype
+  prevalence, current high-minus-low excess share, timing >5 ns tail enrichment, charge bias/res68,
+  dropout harm rate, pile-up secondary-fraction delta, and ML-minus-traditional deltas with matched
+  run-block bootstrap CIs.
+- **S06b — Amplitude-energy timing support closure.** After calibrated charge, saturation,
+  dropout, anomaly, and baseline action bands, test whether timing resolution is monotonic in
+  amplitude or energy proxy, or whether the apparent sigma(E) curve is support and veto
+  composition. Traditional: freeze S03 analytic timing and S04 robust-width estimators, then
+  tabulate sigma68, full RMS, pull width, and tail fractions in matched amplitude, P04/P07/S14
+  charge-energy, saturation-knee, dropout, baseline, and anomaly strata. ML: run-held-out calibrated
+  timing-uncertainty model with charge/support features, conformal intervals, and charge-only,
+  amplitude-only, action-only, shuffled-target, and run-family controls. Metric: sigma68/full RMS
+  versus amplitude and energy proxy, monotonicity violation rate, pull 68/95% coverage, support
+  loss, timing-tail delta, and ML-minus-traditional deltas with event-paired run-block bootstrap
+  CIs.

@@ -1,7 +1,3 @@
-# Rolling summary / scoreboard
-
-Maintained by the orchestrator/Integrator. One row per study as results land.
-
 | Study | Status | Reproduced? | Traditional | ML | ML beats baseline? | Report/PR |
 |---|---|---|---|---|---|---|
 | S00 | ✅ done | ✅ 640,737 exact | per-stave counts | run-split sanity | — (foundation) | reports/S00_… (PR #1) |
@@ -137,4 +133,3 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
 | P10b | ✅ done | ✅ 640,737 exact | explicit timewalk q MSE 0.0444; timing 2.756 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | No; explicit traditional timewalk beats conditional template | reports/1781006250.1276.49814de9 |
 | P10f q-tail validation | ✅ done | ✅ family holdout inputs and leakage checks | calibration amplitude-median loses to shape handles | no-tail ExtraTrees improves q_tail MSE in 2/2 folds but fires too-good controls | No promotion; physical handle and density/counterfactual audits required | reports/1781027860.942.36c33ff0 |
-

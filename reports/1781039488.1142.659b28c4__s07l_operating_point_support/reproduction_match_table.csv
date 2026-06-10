@@ -1,0 +1,5 @@
+quantity,report_value,reproduced,delta,tolerance,pass,sample_size
+"P02 early-peak pulse rate, peak_sample<=3",0.044,0.04388333333333334,-0.00011666666666666076,0.002,True,60000
+"S07 parent guarded gross events, D_t>51 ns",72.0,72.0,0.0,0.0,True,10156
+P02d transparent morphology ROC AUC,0.692169373549884,0.692169373549884,0.0,1e-12,True,2227
+S07h shape-only RF injected ROC AUC,0.8597877918400527,0.8601848611926077,0.00039706935255501286,0.025,True,4310

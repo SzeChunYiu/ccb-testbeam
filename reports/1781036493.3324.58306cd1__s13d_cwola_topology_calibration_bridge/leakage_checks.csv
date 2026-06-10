@@ -1,0 +1,7 @@
+fold,check,value,flag,note
+A_to_B,train_test_run_overlap,0,False,Run split must be disjoint.
+A_to_B,forbidden_columns_used,0,False,"Calibration features exclude run, event number, current labels, and downstream labels."
+A_to_B,b2_only_topology_target,17500,False,Only B2-selected events are modelled so selected downstream staves cannot trivially define the target.
+B_to_A,train_test_run_overlap,0,False,Run split must be disjoint.
+B_to_A,forbidden_columns_used,0,False,"Calibration features exclude run, event number, current labels, and downstream labels."
+B_to_A,b2_only_topology_target,15059,False,Only B2-selected events are modelled so selected downstream staves cannot trivially define the target.

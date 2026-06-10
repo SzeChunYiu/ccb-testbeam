@@ -1,0 +1,67 @@
+{
+  "study_id": "S13d",
+  "ticket": "1781036493.3324.58306cd1",
+  "worker": "testbeam-laptop-4",
+  "title": "CWoLa topology calibration bridge",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781036493.3324.58306cd1__s13d_cwola_topology_calibration_bridge",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "low_current_runs": [46, 47],
+  "high_current_runs": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "expected_s13b_topology_ratio": 1.4449743989548876,
+  "expected_s13b_events_with_selected": 243133,
+  "expected_s13b_selected_pulses": 252266,
+  "folds": [
+    {
+      "name": "A_to_B",
+      "train_low_runs": [46],
+      "train_high_runs": [44, 45, 48, 49, 50, 51],
+      "test_low_runs": [47],
+      "test_high_runs": [52, 53, 54, 55, 56, 57]
+    },
+    {
+      "name": "B_to_A",
+      "train_low_runs": [47],
+      "train_high_runs": [52, 53, 54, 55, 56, 57],
+      "test_low_runs": [46],
+      "test_high_runs": [44, 45, 48, 49, 50, 51]
+    }
+  ],
+  "feature_columns": [
+    "cwola_score",
+    "log_amp",
+    "peak_sample",
+    "area_over_peak",
+    "tail_fraction",
+    "late_fraction",
+    "early_fraction",
+    "post_peak_min_fraction",
+    "neg_step_count",
+    "width_10_samples",
+    "width_20_samples",
+    "final_fraction"
+  ],
+  "cwola_rf": {
+    "n_estimators": 300,
+    "max_depth": 5,
+    "min_samples_leaf": 40
+  },
+  "ridge_c_grid": [0.1, 1.0, 10.0],
+  "gbt_learning_rates": [0.03, 0.07],
+  "gbt_max_leaf_nodes": [15, 31],
+  "mlp_hidden_layers": [[32], [48, 16]],
+  "max_train_events_per_run": 1800,
+  "max_eval_events_per_run": 2500,
+  "torch_epochs": 8,
+  "torch_batch_size": 256,
+  "bootstrap_replicates": 1000,
+  "random_seed": 131304
+}

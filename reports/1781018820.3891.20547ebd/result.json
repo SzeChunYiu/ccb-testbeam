@@ -1,0 +1,314 @@
+{
+  "study": "P04g",
+  "ticket_id": "1781018820.3891.20547ebd",
+  "worker": "testbeam-laptop-4",
+  "title": "dropout-injected amplitude charge recovery closure",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "n_clean_pulses_sampled": 20179,
+    "n_injected_rows": 80716,
+    "n_train_rows": 75604,
+    "n_heldout_rows": 5112,
+    "strata": "run x stave x amplitude bin x peak region"
+  },
+  "methods": [
+    "adaptive_template",
+    "integral_calibrated",
+    "interpolation_calibrated",
+    "ml_inpaint_et",
+    "ml_residual_hgb",
+    "peak_calibrated",
+    "rising_edge_huber"
+  ],
+  "heldout_summary": [
+    {
+      "method": "peak_calibrated",
+      "n": 5112,
+      "amp_bias_median_frac": 0.0029012753,
+      "amp_res68_abs_frac": 0.1786976354,
+      "amp_full_rms_frac": 0.2222885882,
+      "amp_catastrophic_rate": 0.2803208138,
+      "charge_bias_median_frac": -0.0017011815,
+      "charge_res68_abs_frac": 0.1256541063,
+      "charge_full_rms_frac": 0.2198895821,
+      "charge_catastrophic_rate": 0.1762519562,
+      "time_abs68_samples": 0.0601769912,
+      "time_bias_median_samples": -0.0014035088,
+      "tail_bias_median_frac": -0.0122945889,
+      "amp_res68_abs_frac_ci95": [
+        0.1683383621,
+        0.1889704015
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.1183571246,
+        0.1323540647
+      ],
+      "time_abs68_samples_ci95": [
+        0.0549677282,
+        0.0642211055
+      ]
+    },
+    {
+      "method": "integral_calibrated",
+      "n": 5112,
+      "amp_bias_median_frac": 0.0277615646,
+      "amp_res68_abs_frac": 0.3450388626,
+      "amp_full_rms_frac": 0.376974153,
+      "amp_catastrophic_rate": 0.5451877934,
+      "charge_bias_median_frac": -0.0017011815,
+      "charge_res68_abs_frac": 0.1256541063,
+      "charge_full_rms_frac": 0.2198895821,
+      "charge_catastrophic_rate": 0.1762519562,
+      "time_abs68_samples": 0.0601769912,
+      "time_bias_median_samples": -0.0014035088,
+      "tail_bias_median_frac": -0.0122945889,
+      "amp_res68_abs_frac_ci95": [
+        0.3279035694,
+        0.3612959898
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.1183571246,
+        0.1323540647
+      ],
+      "time_abs68_samples_ci95": [
+        0.0549677282,
+        0.0642211055
+      ]
+    },
+    {
+      "method": "interpolation_calibrated",
+      "n": 5112,
+      "amp_bias_median_frac": 0.0029009914,
+      "amp_res68_abs_frac": 0.1786973088,
+      "amp_full_rms_frac": 0.2222886748,
+      "amp_catastrophic_rate": 0.2803208138,
+      "charge_bias_median_frac": -0.0070368701,
+      "charge_res68_abs_frac": 0.1038399376,
+      "charge_full_rms_frac": 0.163899601,
+      "charge_catastrophic_rate": 0.1085680751,
+      "time_abs68_samples": 0.0517263429,
+      "time_bias_median_samples": -0.0116000162,
+      "tail_bias_median_frac": 0.0001599211,
+      "amp_res68_abs_frac_ci95": [
+        0.1683381397,
+        0.1889702534
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0993869068,
+        0.1086095929
+      ],
+      "time_abs68_samples_ci95": [
+        0.0467363465,
+        0.0552043472
+      ]
+    },
+    {
+      "method": "adaptive_template",
+      "n": 5112,
+      "amp_bias_median_frac": -0.0330209109,
+      "amp_res68_abs_frac": 0.4327030942,
+      "amp_full_rms_frac": 0.5944533627,
+      "amp_catastrophic_rate": 0.6330203443,
+      "charge_bias_median_frac": 0.016398462,
+      "charge_res68_abs_frac": 0.3764357599,
+      "charge_full_rms_frac": 0.5396287958,
+      "charge_catastrophic_rate": 0.6279342723,
+      "time_abs68_samples": 3.3752230037,
+      "time_bias_median_samples": -0.1695934656,
+      "tail_bias_median_frac": 0.0656286962,
+      "amp_res68_abs_frac_ci95": [
+        0.4078872821,
+        0.4509989843
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.3627543388,
+        0.3934316104
+      ],
+      "time_abs68_samples_ci95": [
+        3.1713190681,
+        3.7087185936
+      ]
+    },
+    {
+      "method": "rising_edge_huber",
+      "n": 5112,
+      "amp_bias_median_frac": -0.0001014298,
+      "amp_res68_abs_frac": 0.0348414814,
+      "amp_full_rms_frac": 0.1699827645,
+      "amp_catastrophic_rate": 0.0729655712,
+      "charge_bias_median_frac": 0.0001260812,
+      "charge_res68_abs_frac": 0.023681484,
+      "charge_full_rms_frac": 0.1543505923,
+      "charge_catastrophic_rate": 0.0715962441,
+      "time_abs68_samples": 0.0601769912,
+      "time_bias_median_samples": -0.0014035088,
+      "tail_bias_median_frac": -0.0122945889,
+      "amp_res68_abs_frac_ci95": [
+        0.0333615043,
+        0.0361326296
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0224803542,
+        0.0252874959
+      ],
+      "time_abs68_samples_ci95": [
+        0.0549677282,
+        0.0642211055
+      ]
+    },
+    {
+      "method": "ml_inpaint_et",
+      "n": 5112,
+      "amp_bias_median_frac": -0.0011407088,
+      "amp_res68_abs_frac": 0.0244872227,
+      "amp_full_rms_frac": 0.0781953828,
+      "amp_catastrophic_rate": 0.0291471049,
+      "charge_bias_median_frac": 0.0002358192,
+      "charge_res68_abs_frac": 0.0174308839,
+      "charge_full_rms_frac": 0.0666438443,
+      "charge_catastrophic_rate": 0.0258215962,
+      "time_abs68_samples": 0.0731752649,
+      "time_bias_median_samples": -0.011747106,
+      "tail_bias_median_frac": 0.0007670518,
+      "amp_res68_abs_frac_ci95": [
+        0.0231640189,
+        0.0257613317
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0163377858,
+        0.0184660952
+      ],
+      "time_abs68_samples_ci95": [
+        0.068253262,
+        0.0783618504
+      ]
+    },
+    {
+      "method": "ml_residual_hgb",
+      "n": 5112,
+      "amp_bias_median_frac": 0.0015636765,
+      "amp_res68_abs_frac": 0.0205192794,
+      "amp_full_rms_frac": 0.0685468054,
+      "amp_catastrophic_rate": 0.017801252,
+      "charge_bias_median_frac": 0.0007596205,
+      "charge_res68_abs_frac": 0.0154008488,
+      "charge_full_rms_frac": 0.0712159629,
+      "charge_catastrophic_rate": 0.0203442879,
+      "time_abs68_samples": 0.0517263429,
+      "time_bias_median_samples": -0.0116000162,
+      "tail_bias_median_frac": 0.0001599211,
+      "amp_res68_abs_frac_ci95": [
+        0.0194706406,
+        0.0214719429
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0144162016,
+        0.0164628897
+      ],
+      "time_abs68_samples_ci95": [
+        0.0467363465,
+        0.0552043472
+      ]
+    }
+  ],
+  "ml_minus_best_traditional_deltas": [
+    {
+      "comparison": "ml_inpaint_et minus rising_edge_huber",
+      "metric": "amp_res68_abs_frac",
+      "delta": -0.0103542587,
+      "delta_ci95": [
+        -0.0117165963,
+        -0.0088936806
+      ]
+    },
+    {
+      "comparison": "ml_inpaint_et minus rising_edge_huber",
+      "metric": "charge_res68_abs_frac",
+      "delta": -0.0062506001,
+      "delta_ci95": [
+        -0.0076182446,
+        -0.0051696766
+      ]
+    },
+    {
+      "comparison": "ml_inpaint_et minus interpolation_calibrated",
+      "metric": "time_abs68_samples",
+      "delta": 0.021448922,
+      "delta_ci95": [
+        0.0159021223,
+        0.0278852616
+      ]
+    },
+    {
+      "comparison": "ml_residual_hgb minus rising_edge_huber",
+      "metric": "amp_res68_abs_frac",
+      "delta": -0.014322202,
+      "delta_ci95": [
+        -0.0155431568,
+        -0.0126313972
+      ]
+    },
+    {
+      "comparison": "ml_residual_hgb minus rising_edge_huber",
+      "metric": "charge_res68_abs_frac",
+      "delta": -0.0082806353,
+      "delta_ci95": [
+        -0.0092541252,
+        -0.0074384734
+      ]
+    }
+  ],
+  "leakage_audit": {
+    "heldout_absent_from_train": true,
+    "no_identifier_or_target_features": true,
+    "train_eval_block_overlap": 0,
+    "exact_corrupt_wave_hash_overlap": 0,
+    "shuffled_label_charge_res68": 0.05158449086278395,
+    "too_good_triggered": false
+  },
+  "finding": "On 5112 held-out injected dropout rows, best amplitude recovery is ml_residual_hgb with res68 0.0205; best charge recovery is ml_residual_hgb with res68 0.0154. The simple interpolation baseline has charge res68 0.1038, so the preferred correction should be judged against interpolation rather than raw peak loss. Leakage sentinels show no held-out run or event-block overlap, and shuffled-label ML is far worse than the fitted ML residual.",
+  "git_commit": "de83b5e7eb84502876382aa007712fc431864365",
+  "runtime_sec": 263.53
+}

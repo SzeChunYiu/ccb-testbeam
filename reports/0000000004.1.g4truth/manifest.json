@@ -1,0 +1,70 @@
+{
+  "ticket_id": "0000000004.1.g4truth",
+  "study": "S17a",
+  "worker": "testbeam-laptop-3",
+  "git_commit_at_execution": "878ce92758857e3bb1f49867c10133dd8651d6bc",
+  "git_branch": "work-0000000004.1.g4truth",
+  "environment": {
+    "os": "local laptop workspace",
+    "conda_env": "/home/billy/anaconda3/envs/nnbar_env",
+    "python_packages": {
+      "uproot": "5.7.0",
+      "awkward": "2.8.12",
+      "pandas": "3.0.0",
+      "numpy": "1.26.4"
+    },
+    "geant4": "/home/billy/nnbar/simulation/GEANT4_Packages/install/geant4-11.2.2",
+    "vgm": "/home/billy/nnbar/simulation/GEANT4_Packages/install/vgm/lib/VGM-5.4.0",
+    "root": "conda nnbar_env ROOT/root-config"
+  },
+  "random_seeds": [
+    1700041
+  ],
+  "input_sha256_csv": "reports/0000000004.1.g4truth/input_sha256.csv",
+  "commands": [
+    "tn-ticket claim testbeam-laptop-3 --project testbeam",
+    "git pull --ff-only",
+    "git checkout -B work-0000000004.1.g4truth origin/main",
+    "cmake -S reports/0000000004.1.g4truth/hibeam_g4-main -B reports/0000000004.1.g4truth/build -DVGM_DIR=/home/billy/nnbar/simulation/GEANT4_Packages/install/vgm/lib/VGM-5.4.0 -DGeant4_DIR=/home/billy/nnbar/simulation/GEANT4_Packages/install/geant4-11.2.2/lib/cmake/Geant4",
+    "cmake --build reports/0000000004.1.g4truth/build --parallel 4",
+    "../build/hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root",
+    "sed '/\\/ElGen\\/CSFile/d; s#/run/beamOn 1000000#/run/beamOn 100000#' run_krakow.mac > run_krakow_no_csfile_100k.mac",
+    "../build/hibeam_g4 -c krakow.config -m run_krakow_no_csfile_100k.mac output_krakow_no_csfile_100k.root",
+    "python scripts/s17a_0000000004_1_g4truth_schema_validation.py --root reports/0000000004.1.g4truth/run/output_krakow_no_csfile_100k.root --report-dir reports/0000000004.1.g4truth --original-log reports/0000000004.1.g4truth/logs/hibeam_run.full.log --patched-log reports/0000000004.1.g4truth/logs/hibeam_run_no_csfile_100k.full.log",
+    "tn-ticket append \"S17b: restore p-d cross-section sampling in hibeam_g4 ScatteringGenerator\" --project testbeam --body \"...\" -> 1781084665.7580.5f232750"
+  ],
+  "appended_ticket_id": "1781084665.7580.5f232750",
+  "large_uncommitted_outputs": [
+    {
+      "path": "reports/0000000004.1.g4truth/run/output_krakow_no_csfile_100k.root",
+      "sha256": "74387a04571cf92724fb97974b1214579996ed33cff0b128e6a96eb21fc3164a",
+      "size_bytes": 66590915,
+      "reason": "diagnostic ROOT output; too large and reproducible from commands"
+    },
+    {
+      "path": "reports/0000000004.1.g4truth/logs/hibeam_run.full.log",
+      "reason": "verbose full GEANT4 run log ignored; compact feasibility table committed"
+    },
+    {
+      "path": "reports/0000000004.1.g4truth/logs/hibeam_run_no_csfile_100k.full.log",
+      "reason": "verbose full GEANT4 run log ignored; compact feasibility table committed"
+    }
+  ],
+  "output_sha256": {
+    "reports/0000000004.1.g4truth/.gitignore": "e57d20de2d685b6074e38d321e450414e16a6c74feecbe16c64b6324f26db6e1",
+    "reports/0000000004.1.g4truth/REPORT.md": "cf7493c3e1f55bbafb7532ee7f0c5e49c98131d802ffffee5a60902905bf1d6a",
+    "reports/0000000004.1.g4truth/result.json": "2e6890cae408769beaea7bcb7d2cf81999c6961c3377cf4771af1ab08b32de19",
+    "reports/0000000004.1.g4truth/input_sha256.csv": "ea4472483d19f4efcda30c760b495c5ed92c63d1a60c875c2e9385929826c0e1",
+    "reports/0000000004.1.g4truth/truth_schema.csv": "29ba84782c331f80d173822b4a7413dae3e465d9426b5a51bc762d2691bf23b9",
+    "reports/0000000004.1.g4truth/primary_truth_summary.csv": "9c8be2cd0b6275c33a1999cce03f419bf52afcf7c230d3047074e78bc9d4f54d",
+    "reports/0000000004.1.g4truth/sci_bar_pid_summary.csv": "8baa5e30c92c971de6fe51876bd930e5197e4a438ff3b7ba3f953a996956f6f0",
+    "reports/0000000004.1.g4truth/sci_bar_layer_pid_summary.csv": "df3f6dec548f544a0594299cff515cf0bbd6d52ef7a73a2a805605ec5f39de48",
+    "reports/0000000004.1.g4truth/event_pid_edep_summary.csv": "1342488a4e616096d5a59447a59b7a85f6f242a84e0a8baf44bba1b9efb0d150",
+    "reports/0000000004.1.g4truth/validation_metrics.csv": "f8ff086f84d6e1a11af7f0a37c001e91395f3af6c4b46517bb2aec7dd34f610c",
+    "reports/0000000004.1.g4truth/run_feasibility.csv": "9c24f5cbcf27f9b1651b7221cc78208edf324926934240292d57022085d73bc4",
+    "reports/0000000004.1.g4truth/validation_metadata.json": "56e1115b67731a8236bb88069d618e3930e80f6974eba0089ed578605836ceaf",
+    "reports/0000000004.1.g4truth/logs/cmake_configure.log": "dcbbfe2f6ded0d8bda62bf594166b9ce2c00a5ce7e726f0496cd324ac7ea83a4",
+    "reports/0000000004.1.g4truth/logs/cmake_build.log": "eebea80fb86768d02f81d7c4b5608c25c13377b02f0eaf0d86f3b10a1fce9139",
+    "scripts/s17a_0000000004_1_g4truth_schema_validation.py": "6656599747f5d6390839e60ab0fd3bf45f57516551c0f2f953cc571819aff270"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "root_file": "reports/0000000004.1.g4truth/run/output_krakow_no_csfile_100k.root",
+  "root_sha256": "74387a04571cf92724fb97974b1214579996ed33cff0b128e6a96eb21fc3164a",
+  "tree": "hibeam",
+  "tree_entries": 100000,
+  "n_branches": 62,
+  "n_sci_bar_hits": 126574,
+  "seed": 1700041,
+  "n_boot": 2000
+}

@@ -1,0 +1,8 @@
+check,value,flag,note
+raw_count_matches_documented_appa,False,False,Flag true would mean the unrecovered App.A tuple reproduced exactly; it does not.
+ml_forbidden_feature_intersection,,False,ML excludes run/event identifiers and timing-tail label-defining columns.
+leaky_timing_control_near_ceiling,0.9999999430104026,True,Expected leakage ceiling when timing spans and B2 displacement are supplied.
+ml_too_good_vs_qtemplate,0.33364269186488316,True,Would trigger extra suspicion if non-timing ML nearly recovers clean labels.
+shape_no_q_ablation_near_full_ml,-0.009655462549798877,True,"If true, high ML performance survives without q_template and is likely same-waveform timing-tail proxy information."
+q_amp_ablation_vs_qtemplate,0.3047592810693892,True,"Checks whether amplitude/hit-count structure, not q_template alone, carries most of the ML gain."
+qtemplate_unmatched_candidate_events,2,False,Events with no S01 q_template match before median fill.

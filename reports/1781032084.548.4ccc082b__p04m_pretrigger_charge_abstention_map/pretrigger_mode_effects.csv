@@ -1,0 +1,5 @@
+method,contrast,matched_controls,n_cells,delta_abs_frac,delta_abs_frac_ci95
+ML_extratrees_without_pretrigger,high_pretrigger_minus_quiet_reference,run+stave+amp_bin+peak_bin+is_saturated,177,0.05169362230249028,"[0.0440058113051316, 0.05883319741495225]"
+traditional_dropout_cell_corrected,high_pretrigger_minus_quiet_reference,run+stave+amp_bin+peak_bin+is_saturated,177,1.3576320819990801,"[1.2517341506439645, 1.4596159938769548]"
+ML_hgb_with_pretrigger,high_pretrigger_minus_quiet_reference,run+stave+amp_bin+peak_bin+is_saturated,177,0.04228179801138332,"[0.03484249581417634, 0.05086687676669042]"
+ML_hgb_without_pretrigger,high_pretrigger_minus_quiet_reference,run+stave+amp_bin+peak_bin+is_saturated,177,0.042096651248311155,"[0.03484295584798306, 0.0487958508324434]"

@@ -1,0 +1,198 @@
+{
+  "study": "P04m",
+  "ticket": "1781032084.548.4ccc082b",
+  "created_utc": "2026-06-10T14:23:33Z",
+  "git_commit": "a26cd415c436ac6dc27486f6206403f5462e4a8b",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "script": "scripts/p04m_1781032084_548_4ccc082b_pretrigger_charge_abstention_map.py",
+  "config": "configs/p04m_1781032084_548_4ccc082b_pretrigger_charge_abstention_map.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p04m_1781032084_548_4ccc082b_pretrigger_charge_abstention_map.py --config configs/p04m_1781032084_548_4ccc082b_pretrigger_charge_abstention_map.json",
+  "random_seed": 1781032084,
+  "inputs": [
+    {
+      "path": "data/root/root/hrdb_run_0031.root",
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0032.root",
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0033.root",
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0034.root",
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0035.root",
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0036.root",
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0037.root",
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0039.root",
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0040.root",
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0041.root",
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0042.root",
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0064.root",
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/REPORT.md",
+      "sha256": "649cebfef5b6af213eb7c3919ffd43080404f5e260959a00940c98e089de56b5",
+      "bytes": 16385
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/duplicate_benchmark.csv",
+      "sha256": "222cc8bd59db70887e51764dfea74f91b86a6835776f5b8f9d8ce8b7647e2384",
+      "bytes": 5036
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/duplicate_benchmark_by_run.csv",
+      "sha256": "242bc2eba0eb8c739e8213c751cccce6123315975381db1b7585d313c29bb667",
+      "bytes": 15374
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/external_counts_by_run.csv",
+      "sha256": "1315ac85601f4867f25ecdba27689cf120a9613be0956d9c7fcdab8ed1cf4c87",
+      "bytes": 176
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/external_predictions.csv",
+      "sha256": "b41edae63f47665516ec8658c3521d7e5d54514242d414f2b06a741d5b9cbd9b",
+      "bytes": 800074
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/external_pretrigger_modes.csv",
+      "sha256": "f0384d4091fc3bf4fe20e3668be8ab1842a0d87ea9827708acb1f1e01df8af37",
+      "bytes": 1614
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/external_summary.csv",
+      "sha256": "38211647a917c0632b266773fe2268e87d410800f22c3db6c6c15254c668967d",
+      "bytes": 1959
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/pretrigger_mode_effects.csv",
+      "sha256": "8efca0f56ce206e21eb6873b2ee151d4f965ebdf4e4414417b4a2acd2132de00",
+      "bytes": 777
+    },
+    {
+      "path": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map/result.json",
+      "sha256": "f82e66b5c2561a45bb4b4ff11c95a5f3d209590e24d84992aceaa6f617afd7a3",
+      "bytes": 19168
+    }
+  ]
+}

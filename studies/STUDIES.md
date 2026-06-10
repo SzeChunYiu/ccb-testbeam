@@ -2042,3 +2042,60 @@ reuse any of those outputs.
   proxy-leakage sentinels. Metric: energy-proxy res68, median bias, geometry/material sensitivity
   span, support-abstention fraction, false-accept rate under missing-ingredient controls, and
   ML-minus-traditional deltas with run-block bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, S07j/S04d/S14d/P04j/P05b/P10h layer): the exact requested
+`tn-ticket list testbeam` command reported `open=11 claimed=0 done=0 failed=14` before ticket
+cutting and `open=12 claimed=0 done=0 failed=14` after, still below the 18-ready trigger. The
+project-aware `testbeam` store remains deep after this pass (`open=183 claimed=4 done=250
+failed=7`) under concurrent worker movement. The trigger was satisfied by appending four ready,
+non-duplicate `project:testbeam` tickets: P06e dropout-phase timing irrecoverability frontier
+(`1781070978.431.052370d7`), P11f overlapping-pulse baseline-reset confusion map
+(`1781070978.435.149f11f5`), P07f saturation onset sample-window causal veto
+(`1781070978.481.06412dbf`), and S15b pulse-shape PID null-label stability audit
+(`1781070978.487.042a7300`). This S15b title is distinct from the earlier raw-HRD PID proxy
+falsification ledger: the new ticket is specifically the null-label stability audit for
+waveform/charge-shape PID weak labels.
+
+Fresh synthesis: S07j retires the historical App.A 12,147-row weak label unless a byte source is
+found; raw HRDv CFD20 gives 9,897 labelled events instead, while shape RFs remain strong only as
+sentinel-audited diagnostics. S04d finds calibrated pathology interactions can predict timing
+tails but still need support-preserving veto transfer before use. S14d reproduces S00/S14b exactly
+and shows raw HRD can support internal depth/charge ordering, but per-event energy remains blocked
+by external material, geometry, Birks/light-yield, PID truth, and stopping-depth validation. P04j
+shows charge-transfer conformal intervals are broad and support-limited; P05b shows two-pulse
+abstention trades coverage, timing RMS, and bad-recovery rate; P10h keeps explicit template
+handles support-qualified rather than globally adopted. The new tickets therefore isolate four
+next atoms before pulse-shape, timing, amplitude, saturation, pile-up, baseline, dropout, PID, or
+energy consumers reuse these outputs.
+
+- **P06e — Dropout-phase timing irrecoverability frontier.** Find the 18-sample phase locations
+  where dropout or jagged corruptions cannot be repaired for timing after matching amplitude,
+  stave, peak sample, saturation, and anomaly taxon. Traditional: injected dropout masks repaired
+  with rule-based jagged masks, interpolation, and template refits. ML: existing P06/P04g-style
+  inpainting or denoising models with sample-location shuffles and amplitude/run sentinels.
+  Metric: timing sigma68/RMS delta, bad-tail fraction, abstention coverage, and
+  ML-minus-traditional harm by dropout phase with event-block bootstrap 95% CIs.
+- **P11f — Overlapping-pulse baseline-reset confusion map.** Decide whether high-current
+  two-pulse candidates are separable from baseline-reset or pretrigger contamination after
+  matching amplitude, lowering, broad-late anomaly, saturation, run family, and topology.
+  Traditional: frozen S10/S11 two-pulse template fits plus S16 lowering/pretrigger diagnostics
+  and P09 taxa in matched contingency tables. ML: calibrated RF/HGB overlap classifiers with
+  baseline-reset features held out/included and shuffled-current, pretrigger-only, and
+  topology-only controls. Metric: secondary-fraction excess, overlap-score delta,
+  baseline-reset enrichment, calibration ECE, and template-vs-ML disagreement with matched-block
+  bootstrap 95% CIs.
+- **P07f — Saturation onset sample-window causal veto.** Identify which rising-edge, peak, and
+  early-tail windows drive saturation-recovery gains and boundary timing harms near B2 saturation
+  onset. Traditional: template/rising-edge extrapolation with sequential sample-window exclusion
+  and boundary shrink rules. ML: frozen GBR/ExtraTrees saturation recovery with grouped
+  sample-window dropout/permutation, monotone boundary calibration, and run/stave/amplitude-only
+  sentinels. Metric: artificial-clip res68, natural-boundary q_template shift, timing-tail delta,
+  charge-bias delta, coverage, and ML-minus-traditional deltas with run-block bootstrap 95% CIs.
+- **S15b — Pulse-shape PID null-label stability audit.** Before external PID truth exists, test
+  whether waveform or charge-shape PID weak labels survive null relabellings, geometry/depth-only
+  baselines, and matched saturation, dropout, baseline, and anomaly support. Traditional:
+  penetration-depth and DeltaE-E-style band cuts matched across pulse-support strata. ML:
+  waveform/latent classifiers with geometry-label, depth-only, run-only, topology-only,
+  amplitude-only, and shuffled-target sentinels. Metric: purity-efficiency envelope against weak
+  labels, null-label AUC/AP, calibration ECE, support-collapse fraction, and
+  ML-minus-traditional lift with stratified bootstrap 95% CIs.

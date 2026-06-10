@@ -694,3 +694,24 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   cells where width, coverage, and real-minus-shuffled separation are all acceptable before
   charge feeds saturation, pile-up, PID, or energy consumers. P10h remains a support-qualified
   template result rather than a global template adoption.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reported
+  `open=11 claimed=0 done=0 failed=14` before ticket cutting and `open=12 claimed=0 done=0
+  failed=14` after, still below the 18-ready trigger. The project-aware `testbeam` queue remains
+  deep after this pass (`open=183 claimed=4 done=250 failed=7`) under concurrent worker movement.
+  The trigger was satisfied by appending four ready, non-duplicate `project:testbeam` tickets:
+  P06e dropout-phase timing irrecoverability frontier (`1781070978.431.052370d7`), P11f
+  overlapping-pulse baseline-reset confusion map (`1781070978.435.149f11f5`), P07f saturation
+  onset sample-window causal veto (`1781070978.481.06412dbf`), and S15b pulse-shape PID
+  null-label stability audit (`1781070978.487.042a7300`). The new S15b title is distinct from
+  the earlier raw-HRD PID proxy falsification ledger; this pass targets null-label stability for
+  waveform/charge-shape PID weak labels.
+- Fresh synthesis: S07j makes the App.A 12,147-row weak label a provenance problem rather than a
+  raw-HRD truth table, because raw CFD20 gives 9,897 labelled events while no notebook/source table
+  reproduces the PDF tuple. S04d shows timing-tail pathology interactions are real but still need
+  support-preserving veto transfer. S14d keeps raw HRD useful for depth/charge ordering but blocks
+  per-event energy without material, geometry, Birks/light-yield, PID truth, and stopping-depth
+  validation. P04j says charge intervals are calibrated mainly by being broad and support-limited;
+  P05b says two-pulse abstention is a coverage/risk trade; P10h keeps explicit template handles
+  support-qualified. The new tickets deepen the pulse at dropout phase, saturation onset,
+  baseline-reset versus overlap, and PID null-label atoms before timing, charge, pile-up,
+  baseline, dropout, PID, or energy consumers reuse those outputs.

@@ -1,0 +1,362 @@
+{
+  "study": "S14c",
+  "ticket_id": "1781020357.1325.151278fa",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "d415d9df3fa60cd109f6f284721210bcf5c2b0f2",
+  "command": "/home/billy/anaconda3/bin/python scripts/s14c_1781020357_1325_151278fa_external_proxy_validation.py --config configs/s14c_1781020357_1325_151278fa_external_proxy_validation.yaml",
+  "config": "configs/s14c_1781020357_1325_151278fa_external_proxy_validation.yaml",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4"
+  },
+  "random_seed": 1416,
+  "inputs": [
+    {
+      "path": "data/root/root/hrda_run_0031.root",
+      "bytes": 9888079,
+      "sha256": "9dc9ae16d4e5cc1e09c9aa3c43523f424d8baa17b635e4a62e116252dfd1e89a"
+    },
+    {
+      "path": "data/root/root/hrda_run_0032.root",
+      "bytes": 10365191,
+      "sha256": "75b51295806f2fe960d70047b5f9a7301469abf9bc61d3da97f39017b3c6658c"
+    },
+    {
+      "path": "data/root/root/hrda_run_0033.root",
+      "bytes": 13980468,
+      "sha256": "980b6b0fddcc7321c7bba3eed2695c560b8dc0870851b5c842211531ef741c09"
+    },
+    {
+      "path": "data/root/root/hrda_run_0034.root",
+      "bytes": 9685894,
+      "sha256": "bf862dc62e0a341f09561ea2682203208ae9431186960ac30a4e7636a454d80c"
+    },
+    {
+      "path": "data/root/root/hrda_run_0035.root",
+      "bytes": 6906038,
+      "sha256": "6218ea5cc30f54aa9bb3ab7a2f66e78655ab5e5bbc220a42cf0b446ee8278e65"
+    },
+    {
+      "path": "data/root/root/hrda_run_0036.root",
+      "bytes": 5406671,
+      "sha256": "f3856daa9d9a0dce258790ec130a553e3b10f8da41752896d0fb9727b8f303e5"
+    },
+    {
+      "path": "data/root/root/hrda_run_0037.root",
+      "bytes": 12558688,
+      "sha256": "1a0ebd9202bacb568de7ba7cd994b769e8c37e3e03c64af5ab19dfa22ad4fa4a"
+    },
+    {
+      "path": "data/root/root/hrda_run_0039.root",
+      "bytes": 7551093,
+      "sha256": "d6d168608e742109ba75fddbb5dd533ddf14de06298c36dfa7b32a144a7a2f78"
+    },
+    {
+      "path": "data/root/root/hrda_run_0040.root",
+      "bytes": 8132296,
+      "sha256": "1494136cc886313efb6407b4e6593a91bbb5aab4fb9e41fee61e6fd9d9d0dd8c"
+    },
+    {
+      "path": "data/root/root/hrda_run_0041.root",
+      "bytes": 8476807,
+      "sha256": "a73d5176faac86db5729413a872bfa8893dc99a8f04703f20820917fd96527ca"
+    },
+    {
+      "path": "data/root/root/hrda_run_0042.root",
+      "bytes": 8439631,
+      "sha256": "4231c6f44238a88e523bb6478ccdaf50ea8df54b0860ac5d6c07b111fe65903b"
+    },
+    {
+      "path": "data/root/root/hrda_run_0044.root",
+      "bytes": 1072439,
+      "sha256": "8b9a0c63e5ebff7df6b49fe1c34fb2f058671bfd4fa4507e1e864b52e31813ad"
+    },
+    {
+      "path": "data/root/root/hrda_run_0045.root",
+      "bytes": 11978439,
+      "sha256": "0667f58a0c2408419fe2838feca49c211d681153295fbff131ba357ab7b17dbb"
+    },
+    {
+      "path": "data/root/root/hrda_run_0046.root",
+      "bytes": 363504,
+      "sha256": "d723c69ee87a20b8966c6186726c37cd827538b71d6b80cae051f20a77d625b5"
+    },
+    {
+      "path": "data/root/root/hrda_run_0047.root",
+      "bytes": 2725102,
+      "sha256": "95c0b24c9978ea91c22606d309b6dd37aa4450b943b95cf14f6c5c73a21bd32b"
+    },
+    {
+      "path": "data/root/root/hrda_run_0048.root",
+      "bytes": 7883395,
+      "sha256": "a0865b8b7247be879b2f3a1c542aa392587fafe3ebb1059379def5296aef2a38"
+    },
+    {
+      "path": "data/root/root/hrda_run_0049.root",
+      "bytes": 8041307,
+      "sha256": "f4517dbb6f46f61e4b0ff3c3f207a86e9dc8a03e27ab74511a0f02f159654574"
+    },
+    {
+      "path": "data/root/root/hrda_run_0050.root",
+      "bytes": 10925423,
+      "sha256": "73be3ab5d4b080192c83fdf0600c5c5f4c48a6cafed7c1b2cb16b0c23690f7f9"
+    },
+    {
+      "path": "data/root/root/hrda_run_0051.root",
+      "bytes": 5005769,
+      "sha256": "d08c3f5b1aa00d62377ddc5249612a79f523e3ab1379dc88cee13e35f2f2acd6"
+    },
+    {
+      "path": "data/root/root/hrda_run_0052.root",
+      "bytes": 2440882,
+      "sha256": "8700c89383ef567249b3b1cdb2cbc19f33cc33509a19b24165c528f72e4e9f9a"
+    },
+    {
+      "path": "data/root/root/hrda_run_0053.root",
+      "bytes": 9656826,
+      "sha256": "c93ca01697382bcb2680a433a48c41105943981e1a221c7f5349a8412e8ea874"
+    },
+    {
+      "path": "data/root/root/hrda_run_0054.root",
+      "bytes": 9124046,
+      "sha256": "36da35ade12ad942230e501b98394153b8983d53e0d922036535ec88f2d1830d"
+    },
+    {
+      "path": "data/root/root/hrda_run_0055.root",
+      "bytes": 5958441,
+      "sha256": "78451352fa3339abdd5db3e1c5b9a57ef7693bb87884aff4a4085135bb376227"
+    },
+    {
+      "path": "data/root/root/hrda_run_0056.root",
+      "bytes": 12667291,
+      "sha256": "76c7845d73fe994b35a3023e4450cfe16753bbdd723fec2e8dba15e84ec0ee6a"
+    },
+    {
+      "path": "data/root/root/hrda_run_0057.root",
+      "bytes": 7791169,
+      "sha256": "3fd411067fb6e9fa329a05463eadf54e663f9c6899c0f2570ca39bf083a78190"
+    },
+    {
+      "path": "data/root/root/hrda_run_0058.root",
+      "bytes": 8355851,
+      "sha256": "b679601ccf351cf91477684967398a8e477ad35f820c9f1a5212af2fa581bbdc"
+    },
+    {
+      "path": "data/root/root/hrda_run_0059.root",
+      "bytes": 10400361,
+      "sha256": "36228849be7d5b89f1c77aa572549b24b680eea0e5c770c371d38db0ee390422"
+    },
+    {
+      "path": "data/root/root/hrda_run_0060.root",
+      "bytes": 8889565,
+      "sha256": "d46e6ad595bc4cdb27118e7059b9a984b31b282fb5b3cdfcb6523155d1f20f5e"
+    },
+    {
+      "path": "data/root/root/hrda_run_0061.root",
+      "bytes": 8999644,
+      "sha256": "c7e195bfbc689c254c6b33b2647f8fd113bf2f19b253018134b22d766fcb94b6"
+    },
+    {
+      "path": "data/root/root/hrda_run_0062.root",
+      "bytes": 9250458,
+      "sha256": "02835d41621b6e7197eb1a57a5ccc17b14f08d25948f37473cee0bc209f2caac"
+    },
+    {
+      "path": "data/root/root/hrda_run_0063.root",
+      "bytes": 9118926,
+      "sha256": "ae19cf734aab1a2ab2d5cf2cf2315542cb8204f1333ada4aeb70d98b6ba6741b"
+    },
+    {
+      "path": "data/root/root/hrda_run_0064.root",
+      "bytes": 8852963,
+      "sha256": "58ce89dc72c8af359b6751b43e6dfbaf7eee84a6df0c5e101cb97975a33fc371"
+    },
+    {
+      "path": "data/root/root/hrda_run_0065.root",
+      "bytes": 9464668,
+      "sha256": "b4ae3f1e9adc613f05ca88688e8da194770399c975ed08b60831943825f259a2"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0031.root",
+      "bytes": 11638901,
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0032.root",
+      "bytes": 12157812,
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0033.root",
+      "bytes": 16781109,
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0034.root",
+      "bytes": 11697434,
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0035.root",
+      "bytes": 7793651,
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0036.root",
+      "bytes": 6167361,
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0037.root",
+      "bytes": 14369738,
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0039.root",
+      "bytes": 8625385,
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0040.root",
+      "bytes": 9266489,
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0041.root",
+      "bytes": 9691925,
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0042.root",
+      "bytes": 9767653,
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0044.root",
+      "bytes": 1227977,
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0045.root",
+      "bytes": 13786671,
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0046.root",
+      "bytes": 412227,
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0047.root",
+      "bytes": 3098718,
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0048.root",
+      "bytes": 8995827,
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0049.root",
+      "bytes": 9203548,
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0050.root",
+      "bytes": 13217424,
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0051.root",
+      "bytes": 6036876,
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0052.root",
+      "bytes": 2941826,
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0053.root",
+      "bytes": 11713879,
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0054.root",
+      "bytes": 11056922,
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0055.root",
+      "bytes": 7153324,
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0056.root",
+      "bytes": 15273160,
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0057.root",
+      "bytes": 8881910,
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0058.root",
+      "bytes": 9623179,
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0059.root",
+      "bytes": 12032616,
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0060.root",
+      "bytes": 10174098,
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0061.root",
+      "bytes": 10362658,
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0062.root",
+      "bytes": 10634393,
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0063.root",
+      "bytes": 10494181,
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0064.root",
+      "bytes": 10006223,
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0065.root",
+      "bytes": 10600278,
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "db8427d97f14a8abf0d67802f557803d092df1103704e79a46757eef7e272e93",
+    "result.json": "8a5e109b6c07edf2b00ef43f94697ef988acedb93eb11b82839e668cffc03efd",
+    "input_sha256.csv": "f597d3cfa99d814796cbc708386175e54d722695dedb70f418c10a27946ccc29",
+    "reproduction_match_table.csv": "2c70f0ef2fcbd4201715796c57a245f881033ba2d6e842747badbb3cd30248d5",
+    "traditional_external_closure.csv": "cf92be1126d5a7b4731d5ed708800acb8e3dc6c2bf9564b7992f6d3139590884",
+    "traditional_strata_summary.csv": "715e4d975a4f2aedd6f828998f5b29349d41c746730c2708633b049d81ec29fe",
+    "ml_external_surrogate.csv": "5bf1e4255e8bc766e021cd58d4b2003fbf0c7fcfd65e88b944a18f6762f5273c",
+    "ml_run_heldout_summary.csv": "fc89d0d33fe6f504499efd1259c4d59d17f62865f0eda60c44de89af3b590d69",
+    "ml_permutation_importance.csv": "9d4d99611bcd224091d4d977751013c92b52998eefb5180bb92b42aac570d524",
+    "leakage_checks.csv": "9bd0b07791df2aa3b07d804cdd632b6f7c674bd4c8bc63365d36fdddc4d81852",
+    "bstack_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "astack_counts_by_run.csv": "16bbd0656324e0ce46372be6ae58f91d5ef4a5858544e0bff95727b70546f882"
+  }
+}

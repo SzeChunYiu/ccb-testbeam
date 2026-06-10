@@ -1,0 +1,5 @@
+check,value,pass
+rf_forbidden_feature_intersection,,True
+leaky_control_auc_is_ceiling,1.0,True
+qtemplate_unmatched_events,2,True
+raw_count_matches_pdf_tuple,False,False

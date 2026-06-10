@@ -1,0 +1,40 @@
+{
+  "ticket": "1781027415.1782.22d242c8",
+  "worker": "testbeam-laptop-3",
+  "seed": 87415,
+  "raw_root_dir": "data/root/root",
+  "qtemplate_path": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "s07c_helper": "reports/1781000790.531136.203130b0__s07c_clean_timing_rf/s07c_clean_timing_rf.py",
+  "document_paths": [
+    "docs/07_ml_methods.md",
+    "reports/1781006575.2866.622a4328/REPORT.md",
+    "reports/1781012847.2575.40cb6e31/REPORT.md"
+  ],
+  "pdf_paths": [
+    "/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf",
+    "/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf"
+  ],
+  "notebook_search_roots": [
+    "/home/billy/ccb-data",
+    "/home/billy/Desktop/test_beam",
+    "/home/billy/Downloads",
+    "/home/billy/.tb-workers"
+  ],
+  "name_tokens": [
+    "app",
+    "appendix",
+    "s07",
+    "clean",
+    "timing",
+    "label",
+    "bstack",
+    "astack",
+    "pileup",
+    "ml"
+  ],
+  "target": {
+    "labelled_events": 12147,
+    "clean": 10636,
+    "violating": 1511
+  }
+}

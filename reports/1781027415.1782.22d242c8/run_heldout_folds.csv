@@ -1,0 +1,6 @@
+fold,test_runs,train_n,test_n,test_clean,test_violating,traditional_selected_columns,qonly_selected_columns
+1,"31,44,52,58,61",7920,1977,1751,226,downstream_span_ns+q_downstream_max+q_all_max,q_downstream_mean
+2,"32,35,49,50,53,59",7914,1983,1425,558,downstream_span_ns+q_downstream_max+q_all_max,q_downstream_mean
+3,"34,39,42,47,51,62,65",7910,1987,1551,436,downstream_span_ns+q_downstream_max+q_all_max,q_downstream_mean
+4,"36,40,41,45,54,60",7922,1975,1603,372,downstream_span_ns+q_downstream_max+q_all_max,q_downstream_mean
+5,"33,37,48,55,56,57,63,64",7922,1975,1253,722,downstream_span_ns+q_downstream_max+q_all_max,q_downstream_mean

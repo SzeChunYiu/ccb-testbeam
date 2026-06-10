@@ -1,0 +1,7 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S10f amp_binned_asymmetric_template_fit value,,,,1.0,True
+S10f amp_binned_asymmetric_template_fit ci_low,50.0,50.0,0.0,1.0,True
+S10f amp_binned_asymmetric_template_fit ci_high,60.0,60.0,0.0,1.0,True
+S10f compact_mlp_classifier_regressor value,,,,1.0,True
+S10f compact_mlp_classifier_regressor ci_low,22.5,22.5,0.0,1.0,True
+S10f compact_mlp_classifier_regressor ci_high,60.0,60.0,0.0,1.0,True

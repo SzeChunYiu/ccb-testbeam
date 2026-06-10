@@ -1,0 +1,53 @@
+{
+  "study": "S16g",
+  "ticket": "1781031385.1538.624e2188",
+  "worker": "testbeam-laptop-4",
+  "title": "independent pre-trigger contamination labels",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781031385.1538.624e2188__s16g_independent_pretrigger_contamination_labels",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "calibration_runs": [56, 64],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "expected_non_beam_trigger_entries": 0,
+  "negative_tolerance_adc": {"floor": 10.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.45, "low_fraction": 0.10, "negative_adc": 80.0},
+  "random_seed": 16178385,
+  "cluster": {
+    "n_clusters": 4,
+    "train_max_records": 180000,
+    "feature_columns": [
+      "pre0_seedcorr_adc",
+      "pre1_seedcorr_adc",
+      "pre2_seedcorr_adc",
+      "pre3_seedcorr_adc",
+      "pretrigger_mean_seedcorr_adc",
+      "pretrigger_max_seedcorr_adc",
+      "pretrigger_min_seedcorr_adc",
+      "pretrigger_absmax_adc",
+      "pretrigger_ptp_adc",
+      "pretrigger_slope_adc_per_sample"
+    ]
+  },
+  "model_train_max_records": 160000,
+  "bootstrap_replicates": 500,
+  "torch_epochs": 14,
+  "torch_batch_size": 2048,
+  "pre_registered": {
+    "primary_metric": "held-out average precision for the independent pretrigger-contamination cluster label on runs 57 and 65",
+    "split": "fit clusterer and train models without runs 56, 57, 64, and 65; calibrate probabilities on runs 56 and 64; evaluate only runs 57 and 65",
+    "traditional_method": "S16f pre-trigger morphology score with a train-run F1-optimized threshold",
+    "ml_methods": ["ridge_logistic", "hist_gradient_boosted_trees", "mlp", "1d_cnn", "score_residual_net"],
+    "forbidden_features": ["timing residuals", "pair residuals", "run id", "event id", "cluster labels as features"],
+    "win_rule": "highest held-out average precision, with run-block bootstrap CIs"
+  }
+}

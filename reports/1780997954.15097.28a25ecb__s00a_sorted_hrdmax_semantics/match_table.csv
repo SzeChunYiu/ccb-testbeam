@@ -1,0 +1,4 @@
+Quantity,Report value,Reproduced,Delta,Tolerance,Pass
+raw HRDv selected B-stave pulses,640737,640737,0,0,True
+sorted hrdMax equals max(HRDv)-min(HRDv) for even channels,0,0,0,0,True
+sorted hrdMaxTS equals raw argmax sample for even channels,0,0,0,0,True

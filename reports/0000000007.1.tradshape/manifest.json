@@ -1,0 +1,71 @@
+{
+  "ticket_id": "0000000007.1.tradshape",
+  "generated_at_unix": 1781086287.117243,
+  "artifacts": [
+    {
+      "path": "reports/0000000007.1.tradshape/REPORT.md",
+      "sha256": "ceb17af5f6b1e2345276fa4b4dac3e145f9dcba2c309b4abae08b50946c3307f",
+      "bytes": 9531
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/benchmark_sample_labels.csv",
+      "sha256": "8ea3aeee37195a0a222071dae10350c1aa832e31d3bc02b449d4d83916bd28a5",
+      "bytes": 4388472
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/heldout_per_run_metrics.csv",
+      "sha256": "a9dfdb064ed5e4e9cc2a9fd9ab3f456f4f91106c1af81e0893f98f435deb16d5",
+      "bytes": 35193
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/heldout_predictions.csv.gz",
+      "sha256": "8dc507aa05cd21e56cf128b490ea15fa1f72366ff11729eb7c95c223bb418d0f",
+      "bytes": 6343499
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/label_counts.csv",
+      "sha256": "b3e69ef30a2a7fa1f971901ad58c9418621033e9a7552afa5f396193101b18ff",
+      "bytes": 148
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/method_summary_all.csv",
+      "sha256": "53ffbc6c779430bad44671fd539eeabee63e2ddab9c13ee90627a698fb69b615",
+      "bytes": 8287
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/primary_auc_ci.png",
+      "sha256": "0492846afcde414480429bcba84384b55702ecafe6ef20f506565a05548cb071",
+      "bytes": 40781
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/primary_method_summary.csv",
+      "sha256": "22033a38a09472dbab31927f5a5539dd8f7e050782815425df761d642242e7c7",
+      "bytes": 815
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/result.json",
+      "sha256": "b2a75204294290ad79b9df88e2cbb9471841f54cb6459f11dbe435bc7d065af7",
+      "bytes": 2719
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/traditional_feature_families.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/0000000007.1.tradshape/traditional_method_summary.csv",
+      "sha256": "899ea0cfda4990ac108732323e2707b8c174d7ef186bcdabb2300578cc1c6c59",
+      "bytes": 7734
+    }
+  ]
+}

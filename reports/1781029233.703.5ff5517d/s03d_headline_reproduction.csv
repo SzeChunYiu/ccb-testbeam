@@ -1,0 +1,3 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S03d traditional q_template ROC-AUC,0.712233,0.7122325341582884,-4.6584171164987254e-07,0.003,True
+S03d q_template RF ROC-AUC,0.898047,0.899819541118845,0.0017725411188449502,0.003,True

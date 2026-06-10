@@ -1,0 +1,57 @@
+study_id: S20
+ticket_id: "0000000014.1.truthpileup"
+title: GEANT4 truth validation of B-stack pile-up multiplicity
+worker: testbeam-laptop-3
+
+raw_root_dir: data/root/root
+truth_root: /home/billy/ccb-geant4/output_krakow_1M.root
+fallback_truth_root: /home/billy/ccb-geant4/output_30k.root
+output_dir: reports/0000000014.1.truthpileup
+
+amplitude_cut_adc: 1000.0
+expected_selected_pulses: 640737
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+truth_b_layers: [0, 2, 4, 6]
+truth_downstream_layers: [2, 4, 6]
+truth_overlap_windows_ns: [20.0, 60.0, 90.0, 124.79018394263471]
+primary_truth_label_tau_ns: 90.0
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+current_groups:
+  low_2nA: [46, 47]
+  high_20nA: [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+
+reported_s10:
+  low_2nA_downstream_per_selected_event: 0.0231
+  high_20nA_downstream_per_selected_event: 0.0334
+  low_2nA_multi_stave_per_selected_event: 0.0156
+  high_20nA_multi_stave_per_selected_event: 0.0268
+  tolerance_abs: 0.0015
+
+rmax:
+  occupancy_tolerance: 0.38
+  note_tau_eff_ns: 90.0
+  measured_live10_ns: 124.79018394263471
+
+random_seed: 1401
+bootstrap_reps: 250
+truth_step_size: 100000
+truth_pseudo_runs: 3
+max_train_events_per_fold: 5000
+max_test_events_per_fold: 20000
+nn_epochs: 1
+nn_batch_size: 1024

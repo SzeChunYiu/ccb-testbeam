@@ -1,0 +1,7 @@
+check,value,threshold,flag,note
+ml_split_by_run,1.0,1.0,False,Every ML prediction is made for a held-out run.
+forbidden_feature_count,0.0,0.0,False,No run/event/current/direct-target columns in feature matrix.
+run_heldout_auc,0.9981132226069291,0.985,False,High AUC is expected because the target is late waveform shape; flag only with row-split advantage.
+random_row_split_auc,0.9986112941566967,1.0981132226069292,False,Large row-split advantage would suggest run or event leakage.
+shuffled_target_loro_auc,0.43369316845612416,0.6,False,Shuffled labels should not predict true held-out inflation labels.
+ml_score_current_auc,0.604949451826156,0.9,False,Flags if the ML score nearly identifies current group.

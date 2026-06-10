@@ -1,0 +1,48 @@
+{
+  "study_id": "P04l",
+  "ticket_id": "1781030650.727.08857c2c",
+  "title": "baseline-to-charge dropout coupling",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781030650.727.08857c2c",
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+  "random_seed": 4051,
+  "ml_max_train_rows": 120000,
+  "nn_max_train_rows": 90000,
+  "bootstrap_reps": 600,
+  "nn_epochs": 5,
+  "nn_batch_size": 1024,
+  "saturation_raw_adc": 4090.0,
+  "catastrophic_abs_frac": 0.25,
+  "atom_quantile": 0.95,
+  "template_bins": [1000, 1500, 2000, 3000, 4000, 5500, 7000, 9000, 1000000000],
+  "template_shift_grid": [-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5],
+  "amplitude_bins": [1000, 1500, 2000, 3000, 4000, 5500, 7000, 9000, 1000000000],
+  "min_matched_cell": 8,
+  "next_ticket": {
+    "title": "P04m: external A-stack validation of baseline/dropout charge coupling",
+    "body": "Repeat the P04l atom-matched charge residual analysis on event-matched HRDA/HRDB rows with A-stack physical charge as the target, preserving the same run-held-out split, atom definitions, and run-block bootstrap intervals."
+  }
+}

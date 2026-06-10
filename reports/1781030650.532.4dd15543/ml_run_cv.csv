@@ -1,0 +1,18 @@
+method,heldout_train_run,ap,auc,note
+ridge_logistic_plus_ridge_regression,58,0.8048425763109214,0.8056656804733727,
+ridge_logistic_plus_ridge_regression,59,0.857974030876845,0.8438461538461539,
+ridge_logistic_plus_ridge_regression,60,0.8377152596396923,0.8373816568047336,
+ridge_logistic_plus_ridge_regression,61,0.8797460705814284,0.8764792899408284,
+ridge_logistic_plus_ridge_regression,62,0.8625339784949464,0.8461982248520711,
+hist_gradient_boosted_trees,58,0.8624138511548215,0.8545266272189349,
+hist_gradient_boosted_trees,59,0.8809597884609255,0.8703402366863906,
+hist_gradient_boosted_trees,60,0.8684053021872075,0.8572337278106508,
+hist_gradient_boosted_trees,61,0.9085028580338195,0.8953106508875739,
+hist_gradient_boosted_trees,62,0.9054338948243544,0.8899999999999999,
+compact_mlp_classifier_regressor,58,0.8184577840231875,0.8196745562130178,
+compact_mlp_classifier_regressor,59,0.8687435377073041,0.8582988165680474,
+compact_mlp_classifier_regressor,60,0.8562877586477091,0.8444970414201183,
+compact_mlp_classifier_regressor,61,0.8947617779327923,0.8923372781065086,
+compact_mlp_classifier_regressor,62,0.8679644586745958,0.8545414201183432,
+one_dimensional_cnn,-1,,,torch model not cross-validated to control runtime
+attention_waveform_encoder,-1,,,torch model not cross-validated to control runtime

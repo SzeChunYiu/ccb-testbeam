@@ -1,0 +1,21 @@
+{
+  "config": "configs/s02e_1781031385_1605_02365a7d_lower_threshold_tail_labels.yaml",
+  "git_commit": "977989610fe120acfbf08633f164b1ee31b0fe79",
+  "outputs": {
+    "REPORT.md": "569d7ca8b0123ebb0bb6432011f7cfb8faa10b4f5f19162e29f73c1f9f647608",
+    "allhit_pulse_counts_by_run_stave.csv": "5e93bad5db7e07a6c6a56390a0dcc6fd8527f9346413bb18ac98908e8f405070",
+    "fig_model_average_precision.png": "01ac0a630044aa63110498add086de9b80a2ba1c99015da09efa505a899531e2",
+    "fig_tail_fraction_by_run.png": "97d3ffdeed7d5916b9ec64c2f8299c02d70780a5e42fa9af326782db86ada08d",
+    "fold_model_choices.csv": "b72bde7f9bb3786c55a0e43fe49c1a5582e3f7691280421075811a1493e1c535",
+    "heldout_fold_metrics.csv": "bd908d48fb9274612bc0361aec81e317f1de0a6e155a6fead59a01fc87409831",
+    "input_sha256.csv": "22b29191e460d7b6644755e2d45d15ea60dcc5944d653a755fe588a055e6bb24",
+    "leakage_checks.csv": "fb7cea759dddef00784f4083cf31a670327e25cdab7e073c2aa49e7529a5803a",
+    "oof_tail_predictions.csv": "b9f18a15926765310f035a96c8e0329ed2f47176b4ba652414af1a8a328ede3f",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "4129d8b60711bd692d07cc8ab9f59c97db7ef6bcd09b5e2c3c8887b6a9fddf29",
+    "run_block_bootstrap_summary.csv": "9fe37db1613183435b0cc23e47dd1d2d4ce96960b59a5895a38239fbf1ec9878"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "script": "scripts/s02e_1781031385_1605_02365a7d_lower_threshold_tail_labels.py"
+}

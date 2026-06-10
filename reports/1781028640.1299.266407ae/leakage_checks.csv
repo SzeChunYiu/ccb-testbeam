@@ -1,0 +1,5 @@
+check,value,pass,notes
+train_test_run_overlap,0.0,True,"Split is by run; heldout runs are 57,65."
+honest_feature_excludes_threshold_variable,1.0,True,"Honest ML features exclude median_amp, run, evt, event order, and labels."
+leaky_sentinel_accuracy,0.9968623935454953,True,Including median_amp should nearly reproduce the deterministic threshold; ROC AUC was 0.999980.
+shuffled_label_accuracy,0.20129986553115195,True,Randomized training labels should not reproduce the gate.

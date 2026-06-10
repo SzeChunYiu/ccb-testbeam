@@ -1,0 +1,2 @@
+method,heldout_runs,n_runs,heldout_mean_source_score,heldout_mean_source_score_ci_low,heldout_mean_source_score_ci_high,heldout_candidate_fraction,heldout_candidate_fraction_ci_low,heldout_candidate_fraction_ci_high
+traditional_source_inventory_waveform_rule,"57,65",2,0.09995320630541848,-0.016950364403528997,0.21685677701436598,0.0,0.0,0.0

@@ -1,0 +1,27 @@
+target,check,value,threshold,flag,interpretation,source
+5pct,group_split_by_run_mean_r2,0.8840212513190387,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10d_direct_ml_reproduction
+5pct,random_row_split_r2,0.8883453718758269,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10d_direct_ml_reproduction
+5pct,shuffled_target_r2,-0.0018748168946005617,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10d_direct_ml_reproduction
+10pct,group_split_by_run_mean_r2,0.8839928589969487,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10d_direct_ml_reproduction
+10pct,random_row_split_r2,0.8885441250649111,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10d_direct_ml_reproduction
+10pct,shuffled_target_r2,0.008243830951992548,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10d_direct_ml_reproduction
+20pct,group_split_by_run_mean_r2,0.8895180479068567,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10d_direct_ml_reproduction
+20pct,random_row_split_r2,0.8947901048140046,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10d_direct_ml_reproduction
+20pct,shuffled_target_r2,-0.0021077243953662173,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10d_direct_ml_reproduction
+noise_floor,group_split_by_run_mean_r2,0.8150978473339945,0.97,False,Flag only if run-held-out R2 is near-deterministic.,s10d_direct_ml_reproduction
+noise_floor,random_row_split_r2,0.8231653605922478,0.9,False,Large row-split advantage would indicate event/run leakage risk.,s10d_direct_ml_reproduction
+noise_floor,shuffled_target_r2,0.005048893948813249,0.1,False,Shuffled labels should not predict held-out pulse live time.,s10d_direct_ml_reproduction
+all,forbidden_features_present,0.0,0.0,False,"Feature list excludes run, event id, current, and direct last-above-threshold width.",s10d_direct_ml_reproduction
+all,forbidden_features_present,0.0,0.0,False,"Feature builder excludes run, event id, current, observed live-time, censor flags, and template crossing.",s10g_censored_ml
+5pct,random_row_split_mae_advantage_ns,-11.140989578522266,5.0,False,Large row-split advantage would indicate event/run leakage risk.,s10g_censored_ml
+5pct,shuffled_uncensored_target_r2,-0.6918446316010469,0.1,False,Shuffled uncensored crossing times should not be predictable.,s10g_censored_ml
+5pct,mean_runheldout_r2_too_good,-0.22832591922275705,0.97,False,Flag if the run-held-out survival target is nearly deterministic.,s10g_censored_ml
+10pct,random_row_split_mae_advantage_ns,-131.17720221737855,5.0,False,Large row-split advantage would indicate event/run leakage risk.,s10g_censored_ml
+10pct,shuffled_uncensored_target_r2,-1.1299184945629932,0.1,False,Shuffled uncensored crossing times should not be predictable.,s10g_censored_ml
+10pct,mean_runheldout_r2_too_good,-4.127914178031173,0.97,False,Flag if the run-held-out survival target is nearly deterministic.,s10g_censored_ml
+20pct,random_row_split_mae_advantage_ns,-186.10694628856513,5.0,False,Large row-split advantage would indicate event/run leakage risk.,s10g_censored_ml
+20pct,shuffled_uncensored_target_r2,-1.2249405765107384,0.1,False,Shuffled uncensored crossing times should not be predictable.,s10g_censored_ml
+20pct,mean_runheldout_r2_too_good,-8.440090523348148,0.97,False,Flag if the run-held-out survival target is nearly deterministic.,s10g_censored_ml
+noise_floor,random_row_split_mae_advantage_ns,-484083.36209591804,5.0,False,Large row-split advantage would indicate event/run leakage risk.,s10g_censored_ml
+noise_floor,shuffled_uncensored_target_r2,-0.6190679156655894,0.1,False,Shuffled uncensored crossing times should not be predictable.,s10g_censored_ml
+noise_floor,mean_runheldout_r2_too_good,-3.4154672866110256,0.97,False,Flag if the run-held-out survival target is nearly deterministic.,s10g_censored_ml

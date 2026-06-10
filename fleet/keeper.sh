@@ -86,7 +86,9 @@ cycle(){
   fi
   # (2) ensure controllers alive
   dead=""
-  for n in $(seq 1 "$N_WORKERS"); do controller_alive "$n" || { dead="$dead tb$n"; start_controller "$n"; }; done
+  # stagger launches (sleep after each) so 5 sessions don't all make their first model call at once
+  # and trip a rate limit / "usage limit" burst.
+  for n in $(seq 1 "$N_WORKERS"); do controller_alive "$n" || { dead="$dead tb$n"; start_controller "$n"; sleep 25; }; done
   controller_alive planner || { dead="$dead tbp"; start_controller planner; }
   # (3) reap orphan jails
   reap_orphans

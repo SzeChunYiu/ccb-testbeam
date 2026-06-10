@@ -1,0 +1,10 @@
+label,path,exists,is_dir,is_file,is_symlink,resolved_path,file_count_depth5,note
+desktop_data_originals,/home/billy/Desktop/test_beam/data,True,True,False,True,/home/billy/ccb-data/extracted,216,Desktop path requested by ticket; symlink to /home/billy/ccb-data/extracted on this worker
+local_raw_archives,/home/billy/ccb-data/raw,True,True,False,False,/home/billy/ccb-data/raw,3,local raw archive originals available on this worker
+local_extracted_mirror,/home/billy/ccb-data/extracted,True,True,False,False,/home/billy/ccb-data/extracted,216,reduced/extracted mirror used by S16e
+local_collaboration_docs,/home/billy/ccb-data/docs,True,True,False,False,/home/billy/ccb-data/docs,1,local CCB notes/docs
+repo_derived_docs,/home/billy/Desktop/test_beam/docs,True,True,False,False,/home/billy/Desktop/test_beam/docs,12,"derived repository documentation, not original DAQ provenance"
+lunarc_canonical_archive,/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data,False,False,False,False,,0,canonical LUNARC location listed in DATA.md
+home_onedrive,/home/billy/onedrive,True,True,False,False,/home/billy/onedrive,103,user home backup/collaboration sync area
+claude_backup,/home/billy/claude-backup-20260504-112839,True,True,False,False,/home/billy/claude-backup-20260504-112839,728,user home backup tree
+claude_code_backups,/home/billy/claude-code-backups,True,True,False,False,/home/billy/claude-code-backups,632,user home backup tree

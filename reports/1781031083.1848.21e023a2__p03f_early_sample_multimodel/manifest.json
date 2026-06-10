@@ -1,0 +1,22 @@
+{
+  "study": "P03f",
+  "ticket": "1781031083.1848.21e023a2",
+  "worker": "testbeam-laptop-4",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-4/configs/p03f_1781031083_1848_21e023a2_early_sample_multimodel.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p03f_1781031083_1848_21e023a2_early_sample_multimodel.py --config configs/p03f_1781031083_1848_21e023a2_early_sample_multimodel.json",
+  "elapsed_s": 247.57158946990967,
+  "git_commit": "9ff8212c79ac901fb5ee8383249ee1efdc472662",
+  "outputs": {
+    "REPORT.md": "4a05f1dd0e75ac898f6ef2afa17777d2dd6dc7912ea3c6dd065f827c33b85f1b",
+    "fig_pooled_benchmark.png": "1fdbb549ebcf96593ea525d8263795497108a67483a80e3da908c0d528df42f8",
+    "fig_residual_distributions.png": "c3049d8862e45b37ffb60d4e8761a33c211e14150d92fe790fc9e7fb3f5f79b2",
+    "heldout_run_summary.csv": "dbc5bea3dc2a3982ec2d36f04115b58d857007d93966cb9802c81261cc64823a",
+    "input_sha256.csv": "54ffe78258dd00839e9ea3c1ccfe7fd98cf2ad263e3d399c8e18c0f3ced439f7",
+    "leakage_checks.csv": "795b6e6d56497c20740df44ca2a14a5cd1b0abcd594233a7f3cfaca972a4b8b2",
+    "model_diagnostics.csv": "0f2d1203369a94705be0d544a5a7eb2eda37eb5b96d3d3be8bfcce03cc982158",
+    "pairwise_residuals.csv": "dfb978064e7eacb724cf245f5a35010d63f14980e622b8feb1cb7710ab3f90b9",
+    "pooled_run_block_summary.csv": "956ba6bda2d48ac17c82db1e96c0af6c2d81384db6c6765b0134df4dd32b3dfa",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "d252c079a15f7e2e3ae836f4101e709cf0bd2fdbc25156ea84bfd318849c1c99"
+  }
+}

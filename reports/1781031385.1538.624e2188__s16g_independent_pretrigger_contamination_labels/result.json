@@ -1,0 +1,229 @@
+{
+  "study": "S16g",
+  "ticket": "1781031385.1538.624e2188",
+  "worker": "testbeam-laptop-4",
+  "title": "independent pre-trigger contamination labels",
+  "git_commit": "79448e5335661047d6d244a8213876db925ffcbf",
+  "reproduced": true,
+  "traditional": {
+    "metric": "heldout_average_precision",
+    "method": "traditional_s16f_pretrigger_score",
+    "value": 0.3173593537529327,
+    "ci": [
+      0.2395137336923751,
+      0.4548112657762921
+    ]
+  },
+  "ml": {
+    "metric": "heldout_average_precision",
+    "method": "hist_gradient_boosted_trees",
+    "value": 0.9992932498413089,
+    "ci": [
+      0.9980799099252781,
+      0.9999054466369908
+    ]
+  },
+  "winner": {
+    "method": "hist_gradient_boosted_trees",
+    "family": "ml",
+    "n": 26871,
+    "positive_fraction": 0.024040787466041456,
+    "average_precision": 0.9992932498413089,
+    "roc_auc": 0.9999822918480523,
+    "balanced_accuracy": 0.989049692025724,
+    "f1": 0.984423676012461,
+    "ap_ci_low": 0.9980799099252781,
+    "ap_ci_high": 0.9999054466369908
+  },
+  "winner_delta_vs_traditional": {
+    "method": "hist_gradient_boosted_trees",
+    "delta_ap_vs_traditional": 0.6819338960883761,
+    "ci_low": 0.544238786841794,
+    "ci_high": 0.7562651440391515
+  },
+  "ml_beats_traditional": true,
+  "reproduction": {
+    "passed": true,
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "non_beam_selected_entries": 0
+  },
+  "label": {
+    "definition": "train-run MiniBatchKMeans on raw pretrigger shape features; highest anomaly-index cluster is positive",
+    "cluster_table": [
+      {
+        "cluster": 2,
+        "train_n": 2528,
+        "train_fraction": 0.014044444444444444,
+        "anomaly_index": 79.15466666666666,
+        "median_pretrigger_absmax_adc": 3794.25,
+        "median_pretrigger_ptp_adc": 5686.5,
+        "median_pretrigger_slope_adc_per_sample": 1875.9,
+        "median_s16f_pretrigger_score": 8.9,
+        "chosen_as_contamination": true
+      },
+      {
+        "cluster": 1,
+        "train_n": 5609,
+        "train_fraction": 0.03116111111111111,
+        "anomaly_index": 50.28311111111111,
+        "median_pretrigger_absmax_adc": 2165.0,
+        "median_pretrigger_ptp_adc": 3332.0,
+        "median_pretrigger_slope_adc_per_sample": 1145.1,
+        "median_s16f_pretrigger_score": 7.123571428571429,
+        "chosen_as_contamination": false
+      },
+      {
+        "cluster": 0,
+        "train_n": 10569,
+        "train_fraction": 0.05871666666666667,
+        "anomaly_index": 23.544444444444444,
+        "median_pretrigger_absmax_adc": 1280.5,
+        "median_pretrigger_ptp_adc": 1580.0,
+        "median_pretrigger_slope_adc_per_sample": 345.8,
+        "median_s16f_pretrigger_score": 4.782857142857143,
+        "chosen_as_contamination": false
+      },
+      {
+        "cluster": 3,
+        "train_n": 161294,
+        "train_fraction": 0.8960777777777778,
+        "anomaly_index": 0.3,
+        "median_pretrigger_absmax_adc": 16.0,
+        "median_pretrigger_ptp_adc": 24.0,
+        "median_pretrigger_slope_adc_per_sample": 3.8,
+        "median_s16f_pretrigger_score": 0.158,
+        "chosen_as_contamination": false
+      }
+    ],
+    "heldout_n": 26871,
+    "heldout_positive_fraction": 0.024040787466041456,
+    "total_positive_fraction": 0.014489564361040489
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "calibration_runs": [
+      56,
+      64
+    ],
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "bootstrap": "500 run-block replicates"
+  },
+  "forbidden_features": [
+    "timing residuals",
+    "pair residuals",
+    "run id",
+    "event id",
+    "cluster labels as features"
+  ],
+  "method_table": [
+    {
+      "method": "hist_gradient_boosted_trees",
+      "family": "ml",
+      "n": 26871,
+      "positive_fraction": 0.024040787466041456,
+      "average_precision": 0.9992932498413089,
+      "roc_auc": 0.9999822918480523,
+      "balanced_accuracy": 0.989049692025724,
+      "f1": 0.984423676012461,
+      "ap_ci_low": 0.9980799099252781,
+      "ap_ci_high": 0.9999054466369908
+    },
+    {
+      "method": "mlp",
+      "family": "ml",
+      "n": 26871,
+      "positive_fraction": 0.024040787466041456,
+      "average_precision": 0.9990445401612227,
+      "roc_auc": 0.9999761530220437,
+      "balanced_accuracy": 0.9889924946949328,
+      "f1": 0.982128982128982,
+      "ap_ci_low": 0.9978556324515033,
+      "ap_ci_high": 0.9997791425244171
+    },
+    {
+      "method": "one_dimensional_cnn",
+      "family": "ml",
+      "n": 26871,
+      "positive_fraction": 0.024040787466041456,
+      "average_precision": 0.9867988934703313,
+      "roc_auc": 0.999797330200958,
+      "balanced_accuracy": 0.9841769398542619,
+      "f1": 0.9705426356589146,
+      "ap_ci_low": 0.96952833639547,
+      "ap_ci_high": 0.9992025320007768
+    },
+    {
+      "method": "ridge_logistic",
+      "family": "ml",
+      "n": 26871,
+      "positive_fraction": 0.024040787466041456,
+      "average_precision": 0.9833266563055766,
+      "roc_auc": 0.9997915750515749,
+      "balanced_accuracy": 0.9827052153458845,
+      "f1": 0.97196261682243,
+      "ap_ci_low": 0.9598285623641892,
+      "ap_ci_high": 0.9996182922851109
+    },
+    {
+      "method": "score_residual_net",
+      "family": "new_architecture",
+      "n": 26871,
+      "positive_fraction": 0.024040787466041456,
+      "average_precision": 0.978603227612922,
+      "roc_auc": 0.9997737193316943,
+      "balanced_accuracy": 0.9873301124172513,
+      "f1": 0.975987606506584,
+      "ap_ci_low": 0.9470235168596809,
+      "ap_ci_high": 0.9998035108848652
+    },
+    {
+      "method": "traditional_s16f_pretrigger_score",
+      "family": "traditional",
+      "n": 26871,
+      "positive_fraction": 0.024040787466041456,
+      "average_precision": 0.3173593537529327,
+      "roc_auc": 0.8819777939774575,
+      "balanced_accuracy": 0.5,
+      "f1": 0.0,
+      "ap_ci_low": 0.2395137336923751,
+      "ap_ci_high": 0.4548112657762921
+    }
+  ],
+  "conclusion": "hist_gradient_boosted_trees wins the held-out validation with AP 0.999; traditional S16f score AP is 0.317.",
+  "next_tickets": [],
+  "runtime_seconds": 187.1594524383545
+}

@@ -1,0 +1,330 @@
+{
+  "study": "S10h_late_residual_taxonomy",
+  "ticket": "1781028280.1036.7e527107",
+  "worker": "testbeam-laptop-3",
+  "title": "late-sample residual taxonomy for 20pct last-above inflation",
+  "reproduced_first": true,
+  "reproduction": {
+    "template_live20_ns": 101.86521002119034,
+    "empirical_live20_ns": 119.0300244680748,
+    "inflation_ns": 17.164814446884463,
+    "n_pulses": 252266,
+    "n_run_stave_fits": 46
+  },
+  "traditional_method": {
+    "description": "rule-based late residual taxonomy with run-block bootstrap CIs",
+    "taxonomy_thresholds": {
+      "amp_q80": 8051.5,
+      "amp_q95": 8987.5,
+      "tail_area_q70": 4.150920789812732,
+      "noise_q85": 0.004146350451552605
+    },
+    "top_positive_inflation_taxa": [
+      {
+        "late_residual_taxon": "final_sample_censored_tail",
+        "n_pulses": 183100,
+        "pulse_fraction": 0.725821157032656,
+        "pulse_fraction_ci_low": 0.6268866730457819,
+        "pulse_fraction_ci_high": 0.7917182233336709,
+        "mean_inflation20_ns": 28.577485327081497,
+        "mean_inflation20_ci_low_ns": 27.609843162903452,
+        "mean_inflation20_ci_high_ns": 29.75166459711035,
+        "mean_live20_ns": 131.42419698023124,
+        "mean_template_cross20_ns": 102.84671165348101,
+        "share_positive_inflation": 0.8984691941637566,
+        "share_positive_inflation_ci_low": 0.8700007189575205,
+        "share_positive_inflation_ci_high": 0.9234602189359814,
+        "inflated_label_rate": 0.9985636264336428,
+        "final_sample_censored_rate": 1.0,
+        "downstream_event_rate": 0.02942654287274713
+      },
+      {
+        "late_residual_taxon": "high_amplitude_late_tail",
+        "n_pulses": 12627,
+        "pulse_fraction": 0.05005430775451309,
+        "pulse_fraction_ci_low": 0.03290299667820331,
+        "pulse_fraction_ci_high": 0.0661778882557664,
+        "mean_inflation20_ns": 29.91961443197697,
+        "mean_inflation20_ci_low_ns": 28.815899812752107,
+        "mean_inflation20_ci_high_ns": 31.66563365564059,
+        "mean_live20_ns": 132.6451151036317,
+        "mean_template_cross20_ns": 102.72550067164948,
+        "share_positive_inflation": 0.0648704647468068,
+        "share_positive_inflation_ci_low": 0.045387852021462415,
+        "share_positive_inflation_ci_high": 0.08271301323851145,
+        "inflated_label_rate": 0.9999208046250099,
+        "final_sample_censored_rate": 1.0,
+        "downstream_event_rate": 0.038092975370238376
+      },
+      {
+        "late_residual_taxon": "late_rebound_peak",
+        "n_pulses": 6982,
+        "pulse_fraction": 0.027677134453315152,
+        "pulse_fraction_ci_low": 0.01901713043571142,
+        "pulse_fraction_ci_high": 0.04134761900216737,
+        "mean_inflation20_ns": 16.029069659361994,
+        "mean_inflation20_ci_low_ns": 15.407083684996449,
+        "mean_inflation20_ci_high_ns": 16.509100702188572,
+        "mean_live20_ns": 117.74136317787858,
+        "mean_template_cross20_ns": 101.71229351851616,
+        "share_positive_inflation": 0.019216708265687693,
+        "share_positive_inflation_ci_low": 0.012096366240675614,
+        "share_positive_inflation_ci_high": 0.03231029690205972,
+        "inflated_label_rate": 0.7472071039816671,
+        "final_sample_censored_rate": 0.0,
+        "downstream_event_rate": 0.06989401317674018
+      },
+      {
+        "late_residual_taxon": "baseline_noise_residual",
+        "n_pulses": 2169,
+        "pulse_fraction": 0.008598067119627694,
+        "pulse_fraction_ci_low": 0.005322697923717822,
+        "pulse_fraction_ci_high": 0.013005334068401066,
+        "mean_inflation20_ns": 24.239763097935963,
+        "mean_inflation20_ci_low_ns": 23.494562704533433,
+        "mean_inflation20_ci_high_ns": 24.799156856939923,
+        "mean_live20_ns": 125.91593308251515,
+        "mean_template_cross20_ns": 101.67616998457765,
+        "share_positive_inflation": 0.009027734106619943,
+        "share_positive_inflation_ci_low": 0.005099481609779925,
+        "share_positive_inflation_ci_high": 0.015362086226660679,
+        "inflated_label_rate": 0.9469801751959428,
+        "final_sample_censored_rate": 0.0,
+        "downstream_event_rate": 0.18994928538497002
+      }
+    ]
+  },
+  "ml_method": {
+    "description": "leave-one-run-out standardized L2 logistic classifier for inflation20_ns > threshold",
+    "target": "inflation20_ns > 10.0 ns",
+    "run_heldout_auc_mean": 0.9981132226069291,
+    "run_heldout_auc_ci": [
+      0.9974357687263273,
+      0.998714201377561
+    ],
+    "folds": [
+      {
+        "heldout_run": 44,
+        "n_train_fit": 50000,
+        "n_test": 2038,
+        "test_positive_rate": 0.6310107948969578,
+        "pred_positive_mean": 0.5948151376904159,
+        "auc": 0.9954367410079084,
+        "average_precision": 0.997068892846418,
+        "brier": 0.03262845290817201,
+        "log_loss": 0.11529004465862741
+      },
+      {
+        "heldout_run": 45,
+        "n_train_fit": 50000,
+        "n_test": 24333,
+        "test_positive_rate": 0.657913122097563,
+        "pred_positive_mean": 0.6285054265480923,
+        "auc": 0.9975788036576854,
+        "average_precision": 0.9984057121489087,
+        "brier": 0.02333061353721361,
+        "log_loss": 0.08274628290419543
+      },
+      {
+        "heldout_run": 46,
+        "n_train_fit": 50000,
+        "n_test": 687,
+        "test_positive_rate": 0.6739446870451238,
+        "pred_positive_mean": 0.656964163052813,
+        "auc": 0.9971555846960815,
+        "average_precision": 0.9984939071661479,
+        "brier": 0.017257739237758377,
+        "log_loss": 0.06484979045000618
+      },
+      {
+        "heldout_run": 47,
+        "n_train_fit": 50000,
+        "n_test": 5276,
+        "test_positive_rate": 0.6829037149355572,
+        "pred_positive_mean": 0.6701756623485782,
+        "auc": 0.9978426691312396,
+        "average_precision": 0.9989979892925895,
+        "brier": 0.016404905567096832,
+        "log_loss": 0.058388131306757025
+      },
+      {
+        "heldout_run": 48,
+        "n_train_fit": 50000,
+        "n_test": 14000,
+        "test_positive_rate": 0.5959285714285715,
+        "pred_positive_mean": 0.5641829895796987,
+        "auc": 0.9974630665832619,
+        "average_precision": 0.9984001825522523,
+        "brier": 0.02447580993775105,
+        "log_loss": 0.08536409380511746
+      },
+      {
+        "heldout_run": 49,
+        "n_train_fit": 50000,
+        "n_test": 14815,
+        "test_positive_rate": 0.5999325008437395,
+        "pred_positive_mean": 0.5697026565281488,
+        "auc": 0.9967021883561733,
+        "average_precision": 0.9972780408934204,
+        "brier": 0.02457363066109725,
+        "log_loss": 0.09095580260157497
+      },
+      {
+        "heldout_run": 50,
+        "n_train_fit": 50000,
+        "n_test": 35217,
+        "test_positive_rate": 0.8946247550898714,
+        "pred_positive_mean": 0.886855637470963,
+        "auc": 0.9995230962324732,
+        "average_precision": 0.9999446196712056,
+        "brier": 0.006406792421046624,
+        "log_loss": 0.022418063618861686
+      },
+      {
+        "heldout_run": 51,
+        "n_train_fit": 50000,
+        "n_test": 14740,
+        "test_positive_rate": 0.86078697421981,
+        "pred_positive_mean": 0.8500923520054823,
+        "auc": 0.9991543175052666,
+        "average_precision": 0.9998640384223048,
+        "brier": 0.009072134658355947,
+        "log_loss": 0.03218774282161722
+      },
+      {
+        "heldout_run": 52,
+        "n_train_fit": 50000,
+        "n_test": 7152,
+        "test_positive_rate": 0.8597595078299777,
+        "pred_positive_mean": 0.8559928268166845,
+        "auc": 0.9980671094538793,
+        "average_precision": 0.9996747307366383,
+        "brier": 0.009014701189648089,
+        "log_loss": 0.03732080643215268
+      },
+      {
+        "heldout_run": 53,
+        "n_train_fit": 50000,
+        "n_test": 32200,
+        "test_positive_rate": 0.9040372670807454,
+        "pred_positive_mean": 0.8976813138423909,
+        "auc": 0.9993479370182734,
+        "average_precision": 0.9999321106601844,
+        "brier": 0.005966788461266141,
+        "log_loss": 0.02287491954385812
+      },
+      {
+        "heldout_run": 54,
+        "n_train_fit": 50000,
+        "n_test": 30440,
+        "test_positive_rate": 0.9029566360052562,
+        "pred_positive_mean": 0.8999599313381031,
+        "auc": 0.9993792740722414,
+        "average_precision": 0.999929451817848,
+        "brier": 0.004522977511606779,
+        "log_loss": 0.016818749873650785
+      },
+      {
+        "heldout_run": 55,
+        "n_train_fit": 50000,
+        "n_test": 17387,
+        "test_positive_rate": 0.8596077529188474,
+        "pred_positive_mean": 0.8476590808320904,
+        "auc": 0.9989104844078036,
+        "average_precision": 0.9998155896499236,
+        "brier": 0.00983837121081203,
+        "log_loss": 0.03674929742236164
+      },
+      {
+        "heldout_run": 56,
+        "n_train_fit": 50000,
+        "n_test": 40148,
+        "test_positive_rate": 0.8786489987047923,
+        "pred_positive_mean": 0.8746875266785701,
+        "auc": 0.9994508644568908,
+        "average_precision": 0.9999256448034828,
+        "brier": 0.005630449105905117,
+        "log_loss": 0.020393931433024485
+      },
+      {
+        "heldout_run": 57,
+        "n_train_fit": 50000,
+        "n_test": 13833,
+        "test_positive_rate": 0.5969782404395286,
+        "pred_positive_mean": 0.5612383063514499,
+        "auc": 0.9975729799178293,
+        "average_precision": 0.9985170105475372,
+        "brier": 0.025926135293886814,
+        "log_loss": 0.09200457462023358
+      }
+    ]
+  },
+  "leakage_flags": 0,
+  "leakage_checks": [
+    {
+      "check": "ml_split_by_run",
+      "value": 1.0,
+      "threshold": 1.0,
+      "flag": false,
+      "note": "Every ML prediction is made for a held-out run."
+    },
+    {
+      "check": "forbidden_feature_count",
+      "value": 0.0,
+      "threshold": 0.0,
+      "flag": false,
+      "note": "No run/event/current/direct-target columns in feature matrix."
+    },
+    {
+      "check": "run_heldout_auc",
+      "value": 0.9981132226069291,
+      "threshold": 0.985,
+      "flag": false,
+      "note": "High AUC is expected because the target is late waveform shape; flag only with row-split advantage."
+    },
+    {
+      "check": "random_row_split_auc",
+      "value": 0.9986112941566967,
+      "threshold": 1.0981132226069292,
+      "flag": false,
+      "note": "Large row-split advantage would suggest run or event leakage."
+    },
+    {
+      "check": "shuffled_target_loro_auc",
+      "value": 0.43369316845612416,
+      "threshold": 0.6,
+      "flag": false,
+      "note": "Shuffled labels should not predict true held-out inflation labels."
+    },
+    {
+      "check": "ml_score_current_auc",
+      "value": 0.604949451826156,
+      "threshold": 0.9,
+      "flag": false,
+      "note": "Flags if the ML score nearly identifies current group."
+    }
+  ],
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "code_inputs": {
+    "scripts/s10h_1781028280_1036_7e527107_late_residual_taxonomy.py": "7ae86ba8b84c8ec4998ef35ed0d4b24481fda3c2ab78d72f009fcbc5bad974a7",
+    "reports/1781007337.1308.7dc86005/s10c_threshold_scan_tau_eff.py": "aa7cebc0f607fa928ec10a5a7cd345436f26788ac7a120b6d7c0ea10a555bbe6",
+    "configs/s10h_1781028280_1036_7e527107_late_residual_taxonomy.json": "dfab51ecb7363c8620c6ede642a248d9145c0c71312ef093d97609457362bb64"
+  },
+  "git_commit": "1bcc3c90f2a70b1d0be64a1e857f24a1c7dcebc9",
+  "runtime_sec": 121.97
+}

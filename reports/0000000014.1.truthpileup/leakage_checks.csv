@@ -1,0 +1,7 @@
+check,value,flag,note
+raw_reproduction_exact,True,False,Total selected B-stave pulses must reproduce 640737 exactly.
+reported_downstream_low_reproduced,2.435765673175841e-05,False,Raw S10 low-current downstream rate within configured tolerance.
+reported_downstream_high_reproduced,1.4104806253821545e-05,False,Raw S10 high-current downstream rate within configured tolerance.
+truth_features_exclude_pdg_trackid,True,False,PDG and TrackID define labels only; model inputs are hit summaries and layer tensors.
+heldout_blocks_excluded_from_training,True,False,Every model is trained with the scored pseudo-run block held out.
+simulation_has_real_run_branch,False,False,"No run/current branch exists; pseudo-runs are a documented limitation, not a hidden run split."

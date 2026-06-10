@@ -1,0 +1,4 @@
+quantity,reference_value,reproduced,delta,tolerance,pass
+hibeam tree entries,30000,30000,0,0,True
+Sci_bar truth hits,,37666,,descriptive,True
+primary p/d tracks with Sci_bar deposit,,8957,,descriptive,True

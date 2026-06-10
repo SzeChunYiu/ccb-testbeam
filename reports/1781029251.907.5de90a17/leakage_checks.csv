@@ -1,0 +1,29 @@
+heldout_run,check,value,flag,note
+44,shuffled_pretrigger_control,0.5244317059609938,False,pretrigger features independently permuted in training before scoring held-out run
+44,ml_minus_traditional_auc,0.02407322205109863,False,large pretrigger-only gain triggers leakage review
+45,shuffled_pretrigger_control,0.49240206314494783,False,pretrigger features independently permuted in training before scoring held-out run
+45,ml_minus_traditional_auc,0.04951009445222265,False,large pretrigger-only gain triggers leakage review
+46,shuffled_pretrigger_control,0.5895349688088835,False,pretrigger features independently permuted in training before scoring held-out run
+46,ml_minus_traditional_auc,0.08536853081609141,False,large pretrigger-only gain triggers leakage review
+47,shuffled_pretrigger_control,0.606786510928975,False,pretrigger features independently permuted in training before scoring held-out run
+47,ml_minus_traditional_auc,0.06249492493760289,False,large pretrigger-only gain triggers leakage review
+48,shuffled_pretrigger_control,0.5419931056205303,False,pretrigger features independently permuted in training before scoring held-out run
+48,ml_minus_traditional_auc,0.061210019167335705,False,large pretrigger-only gain triggers leakage review
+49,shuffled_pretrigger_control,0.5349762914804295,False,pretrigger features independently permuted in training before scoring held-out run
+49,ml_minus_traditional_auc,0.06010667548757931,False,large pretrigger-only gain triggers leakage review
+50,shuffled_pretrigger_control,0.5380073631656289,False,pretrigger features independently permuted in training before scoring held-out run
+50,ml_minus_traditional_auc,0.0582013708711856,False,large pretrigger-only gain triggers leakage review
+51,shuffled_pretrigger_control,0.4213515950094351,False,pretrigger features independently permuted in training before scoring held-out run
+51,ml_minus_traditional_auc,0.05694153981338512,False,large pretrigger-only gain triggers leakage review
+52,shuffled_pretrigger_control,0.44945158143684955,False,pretrigger features independently permuted in training before scoring held-out run
+52,ml_minus_traditional_auc,0.0831459615190756,False,large pretrigger-only gain triggers leakage review
+53,shuffled_pretrigger_control,0.34381168301472315,False,pretrigger features independently permuted in training before scoring held-out run
+53,ml_minus_traditional_auc,0.0741878848095564,False,large pretrigger-only gain triggers leakage review
+54,shuffled_pretrigger_control,0.5636113368271343,False,pretrigger features independently permuted in training before scoring held-out run
+54,ml_minus_traditional_auc,0.05571731215157549,False,large pretrigger-only gain triggers leakage review
+55,shuffled_pretrigger_control,0.6771195459875735,False,pretrigger features independently permuted in training before scoring held-out run
+55,ml_minus_traditional_auc,0.05394148256620512,False,large pretrigger-only gain triggers leakage review
+56,shuffled_pretrigger_control,0.6230996991149842,False,pretrigger features independently permuted in training before scoring held-out run
+56,ml_minus_traditional_auc,0.06812232824621689,False,large pretrigger-only gain triggers leakage review
+57,shuffled_pretrigger_control,0.5179670510552574,False,pretrigger features independently permuted in training before scoring held-out run
+57,ml_minus_traditional_auc,0.05314978702557105,False,large pretrigger-only gain triggers leakage review

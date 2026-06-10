@@ -1,0 +1,5 @@
+stave,nominal_layer_id,alternative_layer_id,nominal_hits,alternative_hits,nominal_median_edep_mev,alternative_median_edep_mev,interpretation
+B2,0,1,371089,288230,18.61489486694336,14.994556427001953,even LayerID matches even B-stack channel convention; odd layer retained as mapping systematic
+B4,2,3,175489,143580,14.900776863098145,16.181568145751953,even LayerID matches even B-stack channel convention; odd layer retained as mapping systematic
+B6,4,5,100797,95953,17.951007843017578,22.203346252441406,even LayerID matches even B-stack channel convention; odd layer retained as mapping systematic
+B8,6,7,69737,34565,19.762296676635742,22.9581298828125,even LayerID matches even B-stack channel convention; odd layer retained as mapping systematic

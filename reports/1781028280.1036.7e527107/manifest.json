@@ -1,0 +1,50 @@
+{
+  "study": "S10h_late_residual_taxonomy",
+  "ticket": "1781028280.1036.7e527107",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "1bcc3c90f2a70b1d0be64a1e857f24a1c7dcebc9",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "command": "/home/billy/anaconda3/bin/python scripts/s10h_1781028280_1036_7e527107_late_residual_taxonomy.py --config configs/s10h_1781028280_1036_7e527107_late_residual_taxonomy.json",
+  "random_seed": 1781028280,
+  "bootstrap_samples": 1000,
+  "inputs": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "code_inputs": {
+    "scripts/s10h_1781028280_1036_7e527107_late_residual_taxonomy.py": "7ae86ba8b84c8ec4998ef35ed0d4b24481fda3c2ab78d72f009fcbc5bad974a7",
+    "reports/1781007337.1308.7dc86005/s10c_threshold_scan_tau_eff.py": "aa7cebc0f607fa928ec10a5a7cd345436f26788ac7a120b6d7c0ea10a555bbe6",
+    "configs/s10h_1781028280_1036_7e527107_late_residual_taxonomy.json": "dfab51ecb7363c8620c6ede642a248d9145c0c71312ef093d97609457362bb64"
+  },
+  "outputs": {
+    "REPORT.md": "7a3b407bca9ab71d8c0361387d8fa898080c4ba63b0d0e607c7b64423557b2ac",
+    "current_taxonomy_contrast.csv": "7420c2d15671204339a240fec9c737b4ff87b3bc02356e52eeae4c4c9be04377",
+    "input_sha256.csv": "38eae021ba6d54d37249d3893bb51eb0ba0bd7872a21ebbe793d19dc05566fa0",
+    "ml_feature_manifest.csv": "9a105fc99c32a8c94f563fd6d8cf244366118ab561d0f33eb65b266fcaf46ae0",
+    "ml_fold_diagnostics.csv": "472b7f80279f2a20be8c37c8f15b56abbde4706e057832571b41f6418cf495f6",
+    "ml_leakage_checks.csv": "5ce05ebcdf81260ecd614f19f71935e2f0674c6a8e6fdbaf6f5a9b77d6315d68",
+    "ml_scores.csv.gz": "9c361bea2d47c9d485531c46633e088e45e99b1d833b4a8eae7de2f9f6767865",
+    "ml_summary.csv": "f695ae86d3d1f334c03f3ec9f8f32ac521ea6e56f8f25866016278eb72cfc5cc",
+    "pulse_taxonomy_assignments.csv.gz": "3edec3e21a9779d82e371d0d3ff139674b3a06f239456349508f9a1eca856db3",
+    "reproduction_match_table.csv": "4ee1f1100a43d48364df8b5c353acd73fcda131d2e54fc896a7e9b6e918021c6",
+    "result.json": "5331ac0fa9631f7019f4c3edcf0d7438ab1c191741fbdf89926c42c2863b2f7d",
+    "s10d_heldout_reproduction_by_run.csv": "7af0304a85456aa59c2c5f656b6ce14f40d579d5d1341a45eeeaff44d39755ea",
+    "s10d_template_fit_by_run_stave.csv": "61a6e32e0a7a4946f9b2da85d8c88d556800d73cbce85690c7197195fc5692f0",
+    "taxonomy_strata_by_run.csv": "62e154010e273ec1b799b54224de510ee24e46ec7dd96bd64cc019eaf30ba43f",
+    "taxonomy_summary.csv": "b6497e61618a34f30d54eb3dcda51d10ea9e1602259904044743efa909c5302a"
+  },
+  "runtime_sec": 121.97
+}

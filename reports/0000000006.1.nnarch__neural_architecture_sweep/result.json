@@ -1,0 +1,39 @@
+{
+  "ml": {
+    "timing_best_ci": [
+      1.024271333418154,
+      1.3858794345208996
+    ],
+    "timing_best_model": "mlp",
+    "timing_best_sigma68_ns": 1.176102265836601,
+    "two_pulse_best_ci": [
+      7.401898122331996,
+      7.447579583019128
+    ],
+    "two_pulse_best_model": "gradient_boosted_trees",
+    "two_pulse_best_time_rms_ns": 7.42493042604152
+  },
+  "next_tickets": [
+    {
+      "body": "Question: is the S19a winning architecture limited by training support rather than architecture capacity? Run source-run-held-out augmentation and shallow ensembling only for the S19a winner, with the same analytic/template baselines and bootstrap guard metrics. Expected information gain: separates model-capacity gains from synthetic-support artifacts before any production adoption.",
+      "title": "S19b: support-preserving augmentation and ensemble check for the architecture-sweep winner"
+    }
+  ],
+  "reproduced": true,
+  "runtime_seconds": 178.81542205810547,
+  "scientific_summary": "Timing point-estimate winner is mlp at 1.176 ns versus analytic_timewalk 1.495 ns. Two-pulse point-estimate winner is gradient_boosted_trees at 7.425 ns versus constrained_template_fit 13.874 ns. The winner named here is the held-out metric winner; adoption remains conditional on the failure-rate and leakage guards documented in REPORT.md.",
+  "study": "S19a",
+  "ticket": "0000000006.1.nnarch",
+  "traditional": {
+    "timing_baseline": "analytic_timewalk",
+    "timing_sigma68_ns": 1.494640076269676,
+    "two_pulse_baseline": "constrained_template_fit",
+    "two_pulse_time_rms_ns": 13.874073189715473
+  },
+  "winner": {
+    "overall": "gradient_boosted_trees",
+    "timing": "mlp",
+    "two_pulse": "gradient_boosted_trees"
+  },
+  "worker": "testbeam-laptop-4"
+}

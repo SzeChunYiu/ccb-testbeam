@@ -2220,3 +2220,230 @@ the waveform model within CIs and the surviving support islands are small.
   latents after nuisance matching with shuffled-label, charge-only, and topology-only sentinels.
   Metric: ROC AUC, AP, fixed-purity efficiency, calibration slope, and waveform-minus-charge
   residual lift per island with run-family bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, S10i/S10g/S10h/S04e/P02f/P10f layer): the exact requested
+`tn-ticket list testbeam` command initially reported `open=11 claimed=0 done=0 failed=14`, below
+the 18-ready trigger. A probe of `tn-ticket append --help` created an accidental default-queue
+`grocery` ticket; it was immediately moved to failed cleanup, so the same positional command now
+reports `open=11 claimed=0 done=0 failed=15`. The project-aware `testbeam` store remains deep
+after this pass (`open=182 claimed=3 done=270 failed=7`) under concurrent worker movement. The
+trigger was satisfied by appending four ready, non-duplicate `project:testbeam` tickets:
+S10p final-sample censoring live-time bound (`1781078145.745.604d188d`), S04k B2 q-veto
+external-pair transfer gate (`1781078146.810.71e65869`), P10n no-tail q-gain peak-phase
+counterfactual (`1781078146.875.034f6846`), and S10p quiet-tau method-disagreement closure
+(`1781078146.939.6c7536da`).
+
+Fresh synthesis: S10i makes the pile-up live-time problem operational by showing a near-null
+traditional quiet-candidate current excess at the template resolvability tau while the ML tau
+score remains strongly current-positive. S10g/S10h say low-threshold live-time estimates are
+right-censored and dominated by final-sample and late-tail taxa, so tau_eff/Rmax must be bounded
+as an acquisition-window problem before pile-up, baseline, energy, or PID claims inherit it.
+S04e shows q_template/shape vetoes can make B2-containing timing tails look excellent, but the
+retention and support-transfer risk must be audited before covariance or consumer studies reuse
+the veto. P02f says learned shape-atom vetoes are not yet a secure timing-tail improvement, and
+P10f says no-tail q_template gains still fire too-good controls. The new tickets therefore deepen
+the pulse at final-sample censoring, B2 timing-tail support transfer, q-template physical handles,
+and operational tau disagreement.
+
+- **S10p — Final-sample censoring live-time bound.** Decide whether 20% live-time inflation is
+  driven by final-sample acquisition-window censoring rather than detector recovery after
+  conditioning on peak phase, stave, amplitude, and topology. Traditional: Kaplan-Meier and
+  template-extrapolated lower/upper bounds split by peak-phase and final-sample taxon, with
+  S10b/S10g anchors reproduced first. ML: run-held-out monotone survival/AFT model using
+  early-shape, amplitude, stave, and peak-phase features while excluding final-sample target
+  leakage. Metric: live20_ns bound width, uncensored-holdout coverage, and high-minus-low
+  downstream excess shift with source-run bootstrap 95% CIs.
+- **S04k — B2 q-veto external-pair transfer gate.** Test whether the S04e q_template/shape veto
+  that cleans B2-containing residual tails transfers to B2-excluded pair families without changing
+  amplitude, saturation, or pathology support. Traditional: fixed q_template and hand-shape veto
+  thresholds trained on B2-containing folds and applied unchanged to B4-B6/B4-B8/B6-B8 pairs at
+  matched retention. ML: calibrated run-held-out RF/logistic veto trained without pair residuals,
+  with topology-only and shuffled-label sentinels. Metric: paired delta in sigma68, full RMS,
+  abs>5 ns tail fraction, retention, and support-distance shift with run-block bootstrap 95% CIs.
+- **P10n — No-tail q-gain peak-phase counterfactual.** Determine whether P10f no-tail conditional
+  q_template gains are physically carried by peak-phase/rising-edge information or by another
+  target-proximal artifact. Traditional: peak-phase-binned empirical templates plus explicit
+  timewalk handles under the same family holdouts. ML: no-tail ExtraTrees/MLP conditional template
+  with peak-phase counterfactual swaps, rising-edge ablations, and shuffled-phase controls.
+  Metric: q_template MSE, q_tail MSE, timing residual delta, and too-good trigger rate with
+  family/run bootstrap 95% CIs.
+- **S10p — Quiet-tau method-disagreement closure.** Localize why S10i's traditional quiet
+  template-tau excess is near null while the ML tau score is current-positive. Traditional:
+  bounded two-pulse template score and delay gates at S10d template/ml/90 ns/S10b tau definitions,
+  stratified by S10h late-residual taxa. ML: calibrated RF residual pile-up score with score-only,
+  tau-gated, and abstained operating points plus shuffled-current controls. Metric: high-minus-low
+  candidate-rate delta, method-overlap Jaccard, support-shift energy distance, and calibration
+  Brier delta with source-run bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, S01d/S04e/S10h/S10i/P06 layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=15`, below the
+18-ready trigger. The project-aware `testbeam` queue reports `open=185 claimed=0 done=275
+failed=7` after this pass. The trigger was satisfied by appending four ready, non-duplicate
+`project:testbeam` tickets: S01i selected-table byte-vs-content consumer sentinel
+(`1781079699.541.0a2d19ff`), S04l q-veto retention-response calibration ladder
+(`1781079699.606.68323fbc`), S10q acquisition-window tau placebo scan
+(`1781079699.634.377d0f69`), and P06f selected-threshold dropout boundary recoverability null
+(`1781079699.645.330a744c`).
+
+Fresh synthesis: S01d closes the selected-pulse table reproduction at the byte/content/hash level
+but exposes a packaging-versus-content distinction that downstream consumers must handle
+explicitly. S04e shows B2 q_template/shape vetoes can remove timing tails, but a single retention
+point is not a calibrated consumer rule. S10h/S10i keep tau_eff/Rmax in the acquisition-window
+and method-disagreement layer, so placebo scans are needed before pile-up, baseline, PID, or
+energy consumers inherit tau claims. The dropout/recovery path also has to be tied back to the
+deterministic S01d selection boundary so repaired waveforms do not manufacture selected rows.
+
+- **S01i — Selected-table byte-vs-content consumer sentinel.** Decide which downstream timing,
+  template, charge, and q_template consumers change when gated on the exact S01d
+  decompressed-content hash versus byte-level gzip hash and versus a regenerated same-row table.
+  Traditional: strict manifest joins, content-hash checks, row-count/run-stave comparisons, and
+  deterministic replays of the smallest S01/S02/S04/P04 consumers. ML: run-heldout anomaly
+  classifier on consumer deltas, waveform support summaries, and table-provenance features with
+  shuffled-hash and stale-table controls. Metric: consumer headline delta, hash mismatch rate,
+  support-shift energy distance, false alarm rate, and ML-minus-traditional stale-consumer lift
+  with run-block bootstrap 95% CIs.
+- **S04l — Q-veto retention-response calibration ladder.** Test whether S04e q_template/shape
+  veto gains remain beneficial across a retention ladder or concentrate at one support-changing
+  operating point. Traditional: q_template and hand-shape thresholds scanned at fixed retention
+  on run folds for B2-containing and B2-excluded pairs, with amplitude, saturation, baseline, and
+  topology balance tables. ML: calibrated RF/logistic veto scores using waveform and q_template
+  summaries with pair-residual labels excluded, plus topology-only and shuffled-label sentinels.
+  Metric: sigma68, full RMS, abs>5 ns tail fraction, retained fraction, support-distance shift,
+  and ML-minus-traditional deltas at each retention with run-block bootstrap 95% CIs.
+- **S10q — Acquisition-window tau placebo scan.** Test whether S10h/S10i live-time and tau
+  conclusions survive placebo acquisition-window definitions that preserve peak phase and
+  final-sample censoring but break true current dependence. Traditional: Kaplan-Meier and
+  template-extrapolated tau bounds over real and placebo final-sample windows stratified by
+  current, run family, peak phase, amplitude, stave, and late-tail taxon. ML: run-heldout monotone
+  survival/AFT model with early-shape and support features, excluding final-sample leakage and
+  evaluated against shuffled-current and phase-shifted placebo controls. Metric: live10/live20
+  bound width, Rmax shift, high-minus-low candidate-rate delta, placebo rejection rate, and
+  ML-minus-traditional calibration error with source-run bootstrap 95% CIs.
+- **P06f — Selected-threshold dropout boundary recoverability null.** Test whether dropout or
+  jagged-waveform recovery near the S01d selected-pulse threshold restores charge/timing without
+  biasing the deterministic selected/not-selected boundary. Traditional: rule-based jagged/dropout
+  masks, local interpolation, and threshold-margin scans around median-baseline max>1000 ADC with
+  S01d hash/count anchors. ML: train-run-only inpainting autoencoder or small CNN recovery model
+  with threshold-margin, shuffled-dropout, and amplitude-only controls. Metric: selection flip
+  rate, recovered charge bias, timing sigma68/tail delta, threshold-margin calibration, and
+  ML-minus-traditional recovery lift with run-block bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, selector/pretrigger/overlay externalization layer): the exact
+requested `tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=15`,
+below the 18-ready trigger. The project-aware `testbeam` queue reports `open=181 claimed=2
+done=281 failed=7` after this pass, with concurrent worker movement. The trigger was satisfied
+by appending four ready, non-duplicate `project:testbeam` tickets: S02l dynamic-only timing
+quarantine boundary (`1781081167.631.051f65df`), P04x dynamic-only charge externalization null
+(`1781081173.700.0ebd3bf2`), S16p pretrigger tau sign-inversion falsifier
+(`1781081181.768.455d705f`), and S10r overlay-to-real pileup backprojection
+(`1781081189.836.1e03033f`).
+
+Fresh synthesis: S02e turns dynamic-range selection into a timing harm atom rather than a timing
+improvement, and P04k shows dynamic-only rows can be learned for duplicate-readout charge closure
+while remaining a high-baseline, selector-induced population. S16i proves pretrigger spectra
+couple strongly to tau/live-time observables but produce a downstream-current sign that is
+nuisance-like rather than physics-facing. S10h stress overlays keep two-pulse method ranking
+useful but do not by themselves prove measured beam pile-up. The new tickets therefore isolate
+dynamic-only timing, dynamic-only charge externalization, pretrigger tau sign stability, and
+overlay-to-real candidate transfer before timing, pile-up, baseline, dropout, PID, or energy
+consumers reuse these atoms.
+
+- **S02l — Dynamic-only timing quarantine boundary.** Test whether dynamic-only selector pulses
+  can be safely quarantined or abstained without losing legitimate timing support. Traditional:
+  reproduce S00c/S02e counts, then compare median-first timing, dynamic-only exclusion, and
+  matched dynamic-only abstention using analytic/template timewalk refits with amplitude, stave,
+  run-rate, baseline-excursion, saturation, q_template, and anomaly balance tables. ML:
+  run-heldout calibrated logistic/HGB selector-risk and timing-tail model using pre-label waveform
+  summaries while excluding pair residuals, event ids, and target timing labels, with
+  shuffled-selector and amplitude-only controls. Metric: paired sigma68, full RMS, abs>5 ns tail
+  fraction, retained fraction, support-shift energy distance, and ML-minus-traditional quarantine
+  lift with run-block bootstrap 95% CIs.
+- **P04x — Dynamic-only charge externalization null.** Test whether P04k's strong dynamic-only
+  duplicate-readout ML charge closure survives any externalization test, or is only an
+  electronics-closure result inside a selector-induced population. Traditional: reproduce P04k
+  anchors, then apply integral, peak, adaptive-template, and robust Huber/ridge charge estimators
+  to dynamic-only, matched-control, and median-selected rows under held-out runs and B2/non-B2
+  support splits. ML: run-heldout HGB/ExtraTrees charge models trained separately on
+  median-selected and dynamic-selector rows, with target-stave exclusion, shuffled-target
+  sentinels, and conformal abstention before any external proxy comparison. Metric: duplicate and
+  external charge res68, median bias, full RMS, within-10/25% coverage, accepted support fraction,
+  real-minus-shuffled separation, and dynamic-only minus matched-control deltas with
+  run/stave-block bootstrap 95% CIs.
+- **S16p — Pretrigger tau sign-inversion falsifier.** Determine why S16i's pretrigger-only model
+  captures live-time/tail structure while predicting the downstream-current excess with the
+  opposite sign. Traditional: reproduce S16i/S10 topology anchors, stratify tau/live-time and
+  downstream excess by frozen pretrigger RMS/slope/excursion bins, then perform current-family
+  swaps matched on run, amplitude, stave, peak phase, topology, and late-tail taxon. ML:
+  run-heldout calibrated pretrigger-only classifier/regressor with isotonic and monotone variants,
+  current-shuffled, feature-permuted, and sign-flip placebo controls excluding post-trigger
+  samples and event ids. Metric: tau_eff/live10/live20 shift, downstream high-minus-low excess
+  sign and magnitude, Brier/log-loss calibration delta, sign-stability under swaps, and
+  ML-minus-traditional discrimination with heldout-run bootstrap 95% CIs.
+- **S10r — Overlay-to-real pileup backprojection.** Test whether S10h stress-overlay traditional
+  and ML scores backproject onto the same real high-current pulse atoms, or are only ranking
+  methods on synthetic overlays. Traditional: reproduce S10d/S10f/S10h anchors, apply the
+  amplitude-binned asymmetric two-pulse fit to real high-current and matched low-current windows,
+  and tabulate candidate support by amplitude ratio, delay, baseline excursion, saturation
+  boundary, peak phase, and anomaly taxon. ML: apply the S10h compact MLP score/regressor under
+  run-family holdout with calibration, abstention, shuffled-current, and overlay-family placebo
+  controls; compare to traditional fit scores without event-id or source-run leakage. Metric:
+  high-minus-low candidate-rate delta, traditional/ML candidate-overlap Jaccard, support-shift
+  energy distance, timing/charge residual proxy, failure/abstention rate, and overlay-to-real
+  calibration error with source-run bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, gallery/pedestal/selector calibration layer): the exact
+requested `tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=15`,
+below the 18-ready trigger. The project-aware `testbeam` queue reports `open=189 claimed=0
+done=281 failed=7` after this pass. The trigger was satisfied by appending four ready,
+non-duplicate `project:testbeam` tickets: S10s gallery-label pileup calibration null
+(`1781082165.714.10aa4794`), S16q pedestal-source absence uncertainty envelope
+(`1781082165.699.670063cf`), P04y high-baseline charge feature knockout atlas
+(`1781082165.846.28806f20`), and S02m selector-risk timing label calibration ledger
+(`1781082165.853.2753471a`).
+
+Fresh synthesis: S10f's hand-gallery scan and S10g's real-window validation say high-current
+candidate windows are mostly broad/late detector-shape support, not a clean two-pulse beam
+pile-up sample, while S10h still makes synthetic overlays useful for comparing recovery methods.
+S16f/S16g find no accessible forced/random pedestal source, so quiet-run pretrigger handles need
+an uncertainty envelope instead of truth-language. P04k shows dynamic-only charge closure is
+learnable but lives inside a high-baseline selector-induced support island, and S02e shows the
+same dynamic selector worsens timing. The next layer therefore converts those observations into
+calibration objects: gallery-label truth ceilings, absent-pedestal uncertainty, charge-feature
+knockouts, and selector-risk timing labels.
+
+- **S10s — Gallery-label pileup calibration null.** Decide whether S10f hand-gallery
+  two-pulse/artifact labels provide a calibrated truth ceiling for S10g/S10r high-current
+  pile-up candidate-rate claims, or only a morphology diagnostic. Traditional: blinded
+  stratified hand-gallery label table plus amplitude-binned asymmetric two-pulse template fit and
+  matched low-current control rates. ML panel: ridge/logistic regression on transparent pulse
+  atoms, ExtraTrees or random forest tree ensemble, and compact MLP neural net trained under
+  source-run holdout with shuffled-current and overlay-family placebo controls. Metric:
+  high-minus-low two-pulse-like fraction, candidate-rate delta, AP/Brier calibration,
+  method-overlap Jaccard, and support-shift distance with source-run bootstrap 95% CIs.
+- **S16q — Pedestal-source absence uncertainty envelope.** Quantify how large an uncertainty
+  envelope must be assigned to baseline/pedestal corrections when S16f/S16g find no accessible
+  forced/random pedestal source. Traditional: source-inventory/root-trigger audit plus quiet-run
+  pretrigger envelope propagated through adaptive pedestal, template timing, and P04 charge
+  estimators. ML panel: ridge/linear pedestal-bias regressor, ExtraTrees tree ensemble, and
+  compact MLP neural net using only pretrigger atoms under run-family holdout with
+  shuffled-pretrigger and run-only controls. Metric: pedestal bias envelope, induced
+  sigma68/full-RMS/tail-fraction shift, charge res68/bias shift, accepted-support fraction, and
+  ML-minus-traditional uncertainty reduction with heldout-run bootstrap 95% CIs.
+- **P04y — High-baseline charge feature knockout atlas.** Identify which waveform atoms carry
+  P04k's dynamic-only high-baseline duplicate-readout charge closure, and test whether they remain
+  causal after removing selector, baseline, saturation, and peak-phase handles. Traditional:
+  robust Huber/ridge charge estimator with hand-coded peak, integral, adaptive-template,
+  baseline, saturation, and phase atoms removed one family at a time. ML panel: ridge/linear
+  regression, ExtraTrees or HGB tree ensemble, and compact MLP neural net trained on held-out
+  runs with selector-blind, target-stave-excluded, shuffled-target, and amplitude-only sentinels.
+  Metric: duplicate-charge res68, bias, full RMS, within-10/25% coverage, feature-knockout delta,
+  and dynamic-only minus matched-control lift with run/stave-block bootstrap 95% CIs.
+- **S02m — Selector-risk timing label calibration ledger.** Convert S00c/S02e selector-risk
+  atoms into calibrated timing-risk labels that downstream S03/S04/S10 consumers can use without
+  importing selector leakage. Traditional: deterministic median-first-four selector,
+  analytic/template timewalk residual tables, q_template and baseline-excursion cuts, and matched
+  abstention ladders. ML panel: ridge/logistic calibration model, ExtraTrees or random forest
+  tree ensemble, and compact MLP neural net on pre-label waveform atoms under run-heldout splits
+  with shuffled-selector, run-only, and amplitude-only controls. Metric: timing-tail
+  precision/recall, calibrated risk Brier/ECE, sigma68/full-RMS/tail delta at fixed retention,
+  support-shift distance, and ML-minus-traditional lift with run-block bootstrap 95% CIs.

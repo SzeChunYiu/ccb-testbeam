@@ -1,0 +1,5 @@
+source_run,method,resolvable_delay_ns,n_positive
+63,amp_binned_asymmetric_template_fit,,300
+65,amp_binned_asymmetric_template_fit,,300
+63,compact_mlp_classifier_regressor,,300
+65,compact_mlp_classifier_regressor,,300

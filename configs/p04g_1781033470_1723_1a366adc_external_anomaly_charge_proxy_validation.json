@@ -1,0 +1,38 @@
+{
+  "study_id": "P04g_external_anomaly_charge_proxy_validation",
+  "ticket_id": "1781033470.1723.1a366adc",
+  "title": "external charge-proxy validation of P04f anomaly bias",
+  "worker": "testbeam-laptop-3",
+  "output_dir": "reports/1781033470.1723.1a366adc__p04g_external_anomaly_charge_proxy_validation",
+  "p09a_reference_config": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+  "p04b_reference_config": "configs/p04b_external_charge_validation.yaml",
+  "p04b_reference_result": "reports/1781005862.2131.4dbf3cf0/result.json",
+  "p04c_reference_config": "configs/p04c_ab_event_matched_charge_transfer.yaml",
+  "p04c_reference_result": "reports/1781011754.1327.31d87446/result.json",
+  "random_seed": 4047,
+  "bootstrap_reps": 400,
+  "bootstrap_max_rows_per_run": 3000,
+  "ml_max_train_rows": 60000,
+  "high_bias_abs_frac": 0.25,
+  "amplitude_bins": [1000, 2000, 3000, 5000, 7000, 1000000000],
+  "saturation_count_threshold": 1,
+  "models": {
+    "ridge_alpha": 6.0,
+    "hgb_max_iter": 180,
+    "hgb_learning_rate": 0.055,
+    "hgb_max_leaf_nodes": 31,
+    "mlp_hidden_layer_sizes": [48, 24],
+    "mlp_alpha": 0.0008,
+    "mlp_learning_rate_init": 0.001,
+    "mlp_max_iter": 180,
+    "torch_epochs": 30,
+    "torch_batch_size": 384,
+    "torch_learning_rate": 0.001,
+    "torch_weight_decay": 0.0001,
+    "torch_patience": 6
+  },
+  "novel_ticket": {
+    "title": "P04n: independent calibration-pulse validation for external charge-proxy anomaly bias",
+    "body": "Use calibration/forced-trigger or scaler-backed charge references, rather than same-event B/A charge transfer, to test whether the P04f baseline-excursion and early-pretrigger bias persists against a detector-external charge scale."
+  }
+}

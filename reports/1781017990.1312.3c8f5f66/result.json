@@ -1,0 +1,311 @@
+{
+  "study": "S11d",
+  "ticket": "1781017990.1312.3c8f5f66",
+  "worker": "testbeam-laptop-2",
+  "title": "low-current downstream-template support sensitivity for S11b",
+  "reproduced": true,
+  "reproduction_gate": "S11b/S10c topology fractions from raw B-stack ROOT within 0.0015 absolute tolerance",
+  "split": "source-run held out; high-current scored from low-current-only support; run bootstrap CIs within current group",
+  "strata": {
+    "definition": "S10c amplitude bin x S16 adaptive lowering bin x P02 topology",
+    "n_matched_strata": 8,
+    "global_s10_downstream_high_minus_low": 0.010289747149522063,
+    "n_sample_events": 12617,
+    "sample_cap_per_run_stratum": 140
+  },
+  "baseline": {
+    "traditional": {
+      "value": 0.018064542090743305,
+      "ci": [
+        -0.016794538194931638,
+        0.05413747947109698
+      ],
+      "delta_vs_reported_s11b": 0.0
+    },
+    "ml": {
+      "secondary_fraction": {
+        "value": 0.0043737587882012145,
+        "ci": [
+          -0.0013766294483757362,
+          0.01205911471112745
+        ],
+        "delta_vs_reported_s11b": 0.0
+      },
+      "overlap_score": {
+        "value": 0.020072234318152398,
+        "ci": [
+          -0.011426394048944787,
+          0.05185798927007656
+        ],
+        "delta_vs_reported_s11b": 0.0
+      }
+    }
+  },
+  "traditional_support_sensitivity": [
+    {
+      "policy": "baseline_all_low_support",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.018064542090743305,
+      "ci_low": -0.016794538194931638,
+      "ci_high": 0.05413747947109698,
+      "delta_vs_baseline": 0.0,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_100",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.019353949457299038,
+      "ci_low": -0.017399225923905116,
+      "ci_high": 0.057725574765789704,
+      "delta_vs_baseline": 0.001289407366555733,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_250",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.019353949457299038,
+      "ci_low": -0.017038912688089037,
+      "ci_high": 0.05536404800955888,
+      "delta_vs_baseline": 0.001289407366555733,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_500",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.019353949457299038,
+      "ci_low": -0.018917987583852495,
+      "ci_high": 0.05667398410545683,
+      "delta_vs_baseline": 0.001289407366555733,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_1000",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.019353949457299038,
+      "ci_low": -0.01736983873921029,
+      "ci_high": 0.05738670712467842,
+      "delta_vs_baseline": 0.001289407366555733,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B4_to_B2",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.018173099319215957,
+      "ci_low": -0.01977089329562617,
+      "ci_high": 0.05630333991959604,
+      "delta_vs_baseline": 0.0001085572284726527,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B6_to_B2",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.019001330356829785,
+      "ci_low": -0.016718505187210797,
+      "ci_high": 0.05413633924700719,
+      "delta_vs_baseline": 0.0009367882660864801,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B8_to_B2",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.018308603962739877,
+      "ci_low": -0.017829183947344035,
+      "ci_high": 0.05410684155239359,
+      "delta_vs_baseline": 0.00024406187199657245,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "high_only_run46_support",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.03540931857929475,
+      "ci_low": -0.0015086697291621794,
+      "ci_high": 0.0717952253368681,
+      "delta_vs_baseline": 0.01734477648855145,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "high_only_run47_support",
+      "method_metric": "trad_secondary_fraction",
+      "value": 0.0156943439586301,
+      "ci_low": -0.02055994883609587,
+      "ci_high": 0.05179773302470306,
+      "delta_vs_baseline": -0.0023701981321132062,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    }
+  ],
+  "ml_support_sensitivity": [
+    {
+      "policy": "baseline_all_low_support",
+      "method_metric": "ml_secondary_fraction",
+      "value": 0.0043737587882012145,
+      "ci_low": -0.0013766294483757362,
+      "ci_high": 0.01205911471112745,
+      "delta_vs_baseline": 0.0,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "baseline_all_low_support",
+      "method_metric": "ml_overlap_score",
+      "value": 0.020072234318152398,
+      "ci_low": -0.011426394048944787,
+      "ci_high": 0.05185798927007656,
+      "delta_vs_baseline": 0.0,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_500",
+      "method_metric": "ml_secondary_fraction",
+      "value": 0.006260914603801605,
+      "ci_low": 0.00025883233232683176,
+      "ci_high": 0.013812237228654751,
+      "delta_vs_baseline": 0.0018871558156003908,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_500",
+      "method_metric": "ml_overlap_score",
+      "value": 0.02377917830828751,
+      "ci_low": -0.003518543798189011,
+      "ci_high": 0.053017856295946124,
+      "delta_vs_baseline": 0.0037069439901351135,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_1000",
+      "method_metric": "ml_secondary_fraction",
+      "value": 0.007098990350052401,
+      "ci_low": 0.00067368081420866,
+      "ci_high": 0.015326033349442443,
+      "delta_vs_baseline": 0.002725231561851186,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "min_downstream_1000",
+      "method_metric": "ml_overlap_score",
+      "value": 0.0214194585242039,
+      "ci_low": -0.005793971823045379,
+      "ci_high": 0.050342376434757634,
+      "delta_vs_baseline": 0.0013472242060515033,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B4_to_B2",
+      "method_metric": "ml_secondary_fraction",
+      "value": 0.005871728287301807,
+      "ci_low": -0.0013485853515853726,
+      "ci_high": 0.013760127115071965,
+      "delta_vs_baseline": 0.0014979694991005925,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B4_to_B2",
+      "method_metric": "ml_overlap_score",
+      "value": 0.01955177770927535,
+      "ci_low": -0.011241065817648523,
+      "ci_high": 0.0507049241584534,
+      "delta_vs_baseline": -0.0005204566088770485,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B6_to_B2",
+      "method_metric": "ml_secondary_fraction",
+      "value": 0.005840172899427195,
+      "ci_low": -0.0002552123329631388,
+      "ci_high": 0.01340269331462046,
+      "delta_vs_baseline": 0.0014664141112259808,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B6_to_B2",
+      "method_metric": "ml_overlap_score",
+      "value": 0.016785559249512753,
+      "ci_low": -0.010555260384235921,
+      "ci_high": 0.047062523249958764,
+      "delta_vs_baseline": -0.0032866750686396454,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B8_to_B2",
+      "method_metric": "ml_secondary_fraction",
+      "value": 0.007778362188880159,
+      "ci_low": 0.0015852160346879617,
+      "ci_high": 0.013902760388399731,
+      "delta_vs_baseline": 0.003404603400678945,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    },
+    {
+      "policy": "ablate_B8_to_B2",
+      "method_metric": "ml_overlap_score",
+      "value": 0.018500850036446158,
+      "ci_low": -0.011728522331814857,
+      "ci_high": 0.04993333902514987,
+      "delta_vs_baseline": -0.0015713842817062403,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 600,
+      "n_scored_events": 12617
+    }
+  ],
+  "leakage_flags": 0,
+  "leakage_checks_pass": true,
+  "conclusion": "The S11b baseline is support-sensitive but not dominated by a single downstream low-current template. Traditional support policies shift matched high-minus-low secondary fraction by up to 0.01734; the ML secondary-fraction diagnostic shifts by up to 0.00340 across the selected support-stress policies. Minimum-count fallbacks and B4/B6/B8 deterministic ablations remain inside the broad run-bootstrap uncertainty, so sparse runs 46/47 downstream support is a systematic to report rather than a clear sign reversal.",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "fe34b5088fce60707caf6882d5fabad19df63edf",
+  "runtime_sec": 1447.85
+}

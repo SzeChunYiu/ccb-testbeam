@@ -1,0 +1,238 @@
+{
+  "study": "P10d",
+  "ticket": "1781012359.1210.39212700",
+  "worker": "testbeam-laptop-3",
+  "title": "external B2-B8 timing closure for explicit correction",
+  "reproduced": true,
+  "reproduction": {
+    "quantity": "S00/P10 selected B-stave pulses from raw ROOT",
+    "expected": 640737,
+    "reproduced": 640737,
+    "delta": 0,
+    "tolerance": 0
+  },
+  "population": {
+    "all_hit_definition": "B2/B4/B6/B8 all have baseline-subtracted amplitude > 1000 ADC",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "train_all_hit_events": 782,
+    "heldout_all_hit_events": 3774,
+    "target_train_pulses": 2346
+  },
+  "reference": {
+    "ticket_id": "1781006250.1276.49814de9",
+    "traditional_timing_sigma68_ns": 2.7555419378070574,
+    "traditional_timing_ci_ns": [
+      2.6460900738974553,
+      2.8676905020076493
+    ]
+  },
+  "traditional": {
+    "method": "Ridge explicit timewalk residual correction trained on B4/B6/B8 target pulses only",
+    "best": {
+      "score": 1.543536572961795,
+      "feature_set": "amp_poly",
+      "alpha": 1000.0,
+      "train_pulses": 2346,
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        64
+      ]
+    },
+    "external_metric": "heldout_run_mean_all_six_B2_B4_B6_B8_pairwise_sigma68_ns",
+    "external_value": 2.8438229953410845,
+    "external_ci": [
+      2.679364342893627,
+      3.0231567360388962
+    ],
+    "downstream_value": 1.6434370286739726,
+    "downstream_ci": [
+      1.590534055767958,
+      1.692868695046209
+    ]
+  },
+  "ml": {
+    "method": "ExtraTreesRegressor residual correction trained on normalized waveform features for B4/B6/B8 target pulses only",
+    "best": {
+      "score": 2.155360079312935,
+      "feature_set": "waveform_amp_stave",
+      "n_estimators": 80,
+      "max_depth": 6,
+      "min_samples_leaf": 4,
+      "train_pulses": 2346,
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        64
+      ]
+    },
+    "external_metric": "heldout_run_mean_all_six_B2_B4_B6_B8_pairwise_sigma68_ns",
+    "external_value": 3.411294716526625,
+    "external_ci": [
+      3.0747273451965937,
+      3.781738363052697
+    ],
+    "downstream_value": 2.0479649975586804,
+    "downstream_ci": [
+      1.9519419125405904,
+      2.1405090863019884
+    ]
+  },
+  "baseline": {
+    "method": "CFD20 pickoff, no residual correction",
+    "external_value": 3.3561452320866914,
+    "external_ci": [
+      3.0773479773114154,
+      3.6201735233365406
+    ],
+    "downstream_value": 3.130169729672237,
+    "downstream_ci": [
+      3.027959058223057,
+      3.236793725013796
+    ]
+  },
+  "falsification": {
+    "traditional_minus_baseline_external_ns": -0.5123222367456072,
+    "traditional_minus_baseline_external_ci": [
+      -0.6584530971858982,
+      -0.32521308081424055
+    ],
+    "ml_minus_baseline_external_ns": 0.055149484439933616,
+    "ml_minus_baseline_external_ci": [
+      -0.14171917195680012,
+      0.28298725451123186
+    ],
+    "ml_minus_traditional_external_ns": 0.5674717211855408,
+    "ml_minus_traditional_external_ci": [
+      0.3840015521901242,
+      0.7820867440208792
+    ],
+    "traditional_shuffled_external_sigma68_ns": 3.4990583408054543,
+    "traditional_shuffled_external_ci": [
+      3.219178886135938,
+      3.761206593310889
+    ],
+    "ml_shuffled_external_sigma68_ns": 3.6439067409774153,
+    "ml_shuffled_external_ci": [
+      3.2974493347731273,
+      3.989575442780686
+    ],
+    "leakage_flags": 0
+  },
+  "summary": {
+    "bootstrap_unit": "heldout_run",
+    "n_bootstrap": 4000,
+    "baseline_external_sigma68_ns": 3.3561452320866914,
+    "baseline_external_sigma68_ns_ci": [
+      3.0773479773114154,
+      3.6201735233365406
+    ],
+    "traditional_external_sigma68_ns": 2.8438229953410845,
+    "traditional_external_sigma68_ns_ci": [
+      2.679364342893627,
+      3.0231567360388962
+    ],
+    "ml_external_sigma68_ns": 3.411294716526625,
+    "ml_external_sigma68_ns_ci": [
+      3.0747273451965937,
+      3.781738363052697
+    ],
+    "traditional_shuffled_external_sigma68_ns": 3.4990583408054543,
+    "traditional_shuffled_external_sigma68_ns_ci": [
+      3.219178886135938,
+      3.761206593310889
+    ],
+    "ml_shuffled_external_sigma68_ns": 3.6439067409774153,
+    "ml_shuffled_external_sigma68_ns_ci": [
+      3.2974493347731273,
+      3.989575442780686
+    ],
+    "baseline_downstream_sigma68_ns": 3.130169729672237,
+    "baseline_downstream_sigma68_ns_ci": [
+      3.027959058223057,
+      3.236793725013796
+    ],
+    "traditional_downstream_sigma68_ns": 1.6434370286739726,
+    "traditional_downstream_sigma68_ns_ci": [
+      1.590534055767958,
+      1.692868695046209
+    ],
+    "ml_downstream_sigma68_ns": 2.0479649975586804,
+    "ml_downstream_sigma68_ns_ci": [
+      1.9519419125405904,
+      2.1405090863019884
+    ],
+    "traditional_minus_baseline_external_ns": -0.5123222367456072,
+    "traditional_minus_baseline_external_ns_ci": [
+      -0.6584530971858982,
+      -0.32521308081424055
+    ],
+    "ml_minus_baseline_external_ns": 0.055149484439933616,
+    "ml_minus_baseline_external_ns_ci": [
+      -0.14171917195680012,
+      0.28298725451123186
+    ],
+    "ml_minus_traditional_external_ns": 0.5674717211855408,
+    "ml_minus_traditional_external_ns_ci": [
+      0.3840015521901242,
+      0.7820867440208792
+    ],
+    "traditional_minus_baseline_downstream_ns": -1.486732700998265,
+    "traditional_minus_baseline_downstream_ns_ci": [
+      -1.604576794978574,
+      -1.3508533498491786
+    ],
+    "ml_minus_traditional_downstream_ns": 0.4045279688847076,
+    "ml_minus_traditional_downstream_ns_ci": [
+      0.29879529641035835,
+      0.5177417802290828
+    ]
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "41c2556a71c7f0be7299f8bb046ec890773df984",
+  "elapsed_sec": 14.784406900405884,
+  "next_tickets": [
+    "P10e: fit an explicit correction with B2 included as a train target and compare B2-held-out versus B2-trained external closure.",
+    "P10f: repeat P10d with forced equal all-hit event counts per held-out run to separate run weighting from high-current topology effects."
+  ]
+}

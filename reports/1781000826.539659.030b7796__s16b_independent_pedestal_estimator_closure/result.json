@@ -1,0 +1,64 @@
+{
+  "falsification": {
+    "leakage_checks_pass": true,
+    "n_ml_grid_points": 5,
+    "n_traditional_methods": 6,
+    "paired_ml_minus_traditional_mae_adc": {
+      "delta_mae_adc": 4.375903299550624,
+      "delta_mae_ci_high_adc": 19.5813122756492,
+      "delta_mae_ci_low_adc": -15.610102000137386,
+      "ml_method": "ml_ridge_calibrated",
+      "n_pairs": 981,
+      "traditional_method": "line3_predict"
+    },
+    "traditional_bias_ci_includes_zero": true
+  },
+  "git_commit": "bbe447eca2a2c8f5f3fb123fa4db21573dc0fdf9",
+  "input_sha256": "635f1749a367b025658732e6bbb53d5bf6145f580491c312abbb491afc4a7224",
+  "ml": {
+    "best_params": {
+      "alpha": 1000.0
+    },
+    "ci": [
+      149.59800558162942,
+      198.53361787373242
+    ],
+    "mean_bias_adc": -3.0064798851437917,
+    "mean_bias_ci": [
+      -28.63880216987033,
+      26.75990546718306
+    ],
+    "method": "ml_ridge_calibrated",
+    "metric": "heldout_excluded_pretrigger_mae_adc",
+    "value": 173.71447909684204
+  },
+  "ml_beats_baseline": false,
+  "next_tickets": [
+    "S16d: forced/random-trigger HRD pedestal event search and closure",
+    "S16e: pre-trigger activity proxy in timing residual tails"
+  ],
+  "reproduced": true,
+  "reproduction": {
+    "expected": 640737,
+    "quantity": "selected B-stave pulses",
+    "reproduced": 640737
+  },
+  "study": "S16b",
+  "ticket": "1781000826.539659.030b7796",
+  "title": "Independent pedestal estimator closure",
+  "traditional": {
+    "ci": [
+      135.28483447405466,
+      200.23860370855783
+    ],
+    "mean_bias_adc": -28.627154021649428,
+    "mean_bias_ci": [
+      -63.363502985291966,
+      5.289843939614573
+    ],
+    "method": "line3_predict",
+    "metric": "heldout_excluded_pretrigger_mae_adc",
+    "value": 169.3385757972914
+  },
+  "worker": "testbeam-laptop-4"
+}

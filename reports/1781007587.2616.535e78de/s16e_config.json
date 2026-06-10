@@ -1,0 +1,42 @@
+{
+  "study": "S16e",
+  "ticket": "1781007587.2616.535e78de",
+  "worker": "testbeam-laptop-4",
+  "title": "tagged random-trigger pedestal validation",
+  "raw_root_dir": "data/root/root",
+  "sorted_b_dir": "data/sorted-b",
+  "prior_s16_script": "reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/run_s16_analysis.py",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "calibration_runs": [56, 64],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "expected_tagged_random_bstack_entries_min": 1,
+  "tag_tokens": ["force", "forced", "random", "ped", "pedestal", "pulser"],
+  "tag_branch_tokens": ["trigger", "random", "forced", "force", "pedestal", "pulser"],
+  "negative_tolerance_adc": {"floor": 25.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.35, "low_fraction": 0.05, "negative_adc": 50.0},
+  "amplitude_bins": [1000.0, 3000.0, 7000.0, 20000.0],
+  "pre_registered": {
+    "metric": "adaptive_pc_excluding_target mean bias against held-out no-pulse samples by run",
+    "primary_claim_test": "tagged random-trigger B-stack validation is possible only if at least one tagged random/forced pedestal entry exists; adaptive is unbiased if the run-bootstrap mean-bias CI includes 0 ADC",
+    "traditional_methods": ["median3", "mean3", "adaptive_pc_excluding_target"],
+    "ml_method": "run-split ridge regressor predicting the held-out pedestal sample, with alpha CV and calibration on runs 56 and 64",
+    "significance_level": 0.05
+  },
+  "ml": {
+    "random_seed": 16016,
+    "max_records": 24000,
+    "cv_folds": 3,
+    "bootstrap_replicates": 400,
+    "ridge_alpha": [0.1, 1.0, 10.0, 100.0]
+  }
+}

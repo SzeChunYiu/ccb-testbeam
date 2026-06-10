@@ -1,0 +1,10 @@
+check,value,flag,note
+heldout_run_excluded_from_template_and_ml_training,1.0,False,Every scored quiet-pretrigger row is from the held-out source run for both templates and ML.
+identifier_features_excluded,1.0,False,"Imported S10e ML features exclude run, eventno, current/group, downstream, and stratum labels."
+synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics list source runs used for synthetic overlays.
+mean_synthetic_holdout_auc,0.9855579218584228,False,Flag near-perfect synthetic classification.
+mean_shuffled_label_synthetic_auc,0.5169766650353657,False,Shuffled labels should not classify held-out synthetic overlays.
+traditional_current_auc_from_score,0.4985508116655658,False,Flag if a candidate score almost directly identifies beam current.
+ml_current_auc_from_score,0.5324245881622931,False,Flag if a candidate score almost directly identifies beam current.
+s10_assumed_tau_eff_above_fit_support,90.0,False,"Not leakage: this tau is above the real two-pulse fit grid, so zero survival is an extrapolation boundary."
+s10b_measured_live10_above_fit_support,124.79018394263471,False,"Not leakage: this tau is above the real two-pulse fit grid, so zero survival is an extrapolation boundary."

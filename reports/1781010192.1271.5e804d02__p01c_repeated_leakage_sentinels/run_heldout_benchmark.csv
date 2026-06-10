@@ -1,0 +1,5 @@
+method,metric,value,ci_low,ci_high,ci_type,macro_f1,train_rows,heldout_rows,category
+traditional residual PCA+hand,balanced_accuracy,0.3310370845109638,0.3038938859779309,0.34898054965125147,heldout_run_block_bootstrap,0.3120494940085528,82118,11998,traditional
+ML residual masked-denoising AE-4,balanced_accuracy,0.23532678068213056,0.22117297039089281,0.24629468877044586,heldout_run_block_bootstrap,0.21147131475711406,82118,11998,ml
+proxy amplitude+topology,balanced_accuracy,0.6683521028476158,0.6367553264557572,0.6802177276622648,heldout_run_block_bootstrap,0.6223424685643413,82118,11998,proxy
+leakage target topology mask,balanced_accuracy,0.8287131344584208,0.8047142693828074,0.8493517173750529,heldout_run_block_bootstrap,0.7333478981096269,82118,11998,leakage_sentinel

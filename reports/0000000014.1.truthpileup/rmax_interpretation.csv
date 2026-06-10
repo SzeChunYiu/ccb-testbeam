@@ -1,0 +1,5 @@
+definition,tau_ns,occupancy_tolerance,rmax_mhz,basis
+note_assumed_tau,90.0,0.38,4.222222222222222,S10 occupancy tolerance divided by effective live window
+raw_measured_live10_tau,124.79018394263471,0.38,3.045111305987686,S10 occupancy tolerance divided by effective live window
+data_high_minus_low_downstream_equivalent,124.79018394263471,0.010289747149522063,0.08288354301988282,Poisson rate that would yield the observed fraction in measured live10 window
+truth_intrinsic_pd_overlap_90ns_equivalent,124.79018394263471,0.078071,0.6513898956640364,Poisson rate that would yield the observed fraction in measured live10 window

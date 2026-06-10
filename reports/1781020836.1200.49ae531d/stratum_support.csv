@@ -1,0 +1,7 @@
+stratum,description,train_runs,train_events,train_pulses,events_downstream_2,events_downstream_3,events_b2_selected,events_b2_terminal_like,events_b2_penetrating_like,analytic_alpha,binned_n_bins,ml_alpha
+all3_downstream,Sample-I events with B4/B6/B8 all selected,25,1260,3780,0,1260,1206,0,1194,100.0,4,100.0
+all3_b2_selected,all-three downstream events with B2 selected,25,1206,3618,0,1206,1206,0,1194,100.0,6,100.0
+all3_b2_not_selected,all-three downstream events with B2 not selected,15,54,162,0,54,0,0,0,100.0,4,100.0
+exactly2_downstream,Sample-I events with exactly two selected downstream staves,24,2986,5972,2986,0,2815,0,2717,10.0,4,100.0
+ge2_excluding_b2_terminal_like,at least two selected downstream staves after excluding P08a terminal-B2-like events,25,4246,9752,2986,1260,4021,0,3911,100.0,8,100.0
+b2_penetrating_ge2,P08a penetrating-like Sample-I events with B2 plus at least two downstream staves,25,3911,9016,2717,1194,3911,0,3911,100.0,10,100.0

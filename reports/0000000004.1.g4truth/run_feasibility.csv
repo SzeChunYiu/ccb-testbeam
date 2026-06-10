@@ -1,0 +1,3 @@
+log,exists,command_not_found,processed_events,elapsed,max_rss_kb,run_kind,root_output,root_exists
+reports/0000000004.1.g4truth/logs/hibeam_run.full.log,True,True,0,0:14.92,681508,provided_macro_1M,output_krakow.root,False
+reports/0000000004.1.g4truth/logs/hibeam_run_no_csfile_100k.full.log,True,False,100000,0:45.05,706312,patched_no_csfile_100k,reports/0000000004.1.g4truth/run/output_krakow_no_csfile_100k.root,True

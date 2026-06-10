@@ -1,0 +1,33 @@
+heldout_family,check,value,pass,note
+sample_i_calib,train_heldout_run_overlap,0.0,True,must be zero
+sample_i_calib,duplicate_key_overlap_train_heldout,0.0,True,run-heldout split makes overlap impossible unless duplicated metadata exists
+sample_i_calib,ml_shuffle_p95_margin_gate,-0.004285279971160627,False,ML score must exceed label-shuffle p95 by margin 0.030
+sample_i_calib,traditional_shuffle_p95_margin_gate,-0.0252194025148354,False,traditional score must exceed label-shuffle p95 by margin 0.030
+sample_i_calib,proxy_near_best_main,-0.3426262251912774,False,fails if amplitude/multiplicity proxy is within margin of the best main score
+sample_i_calib,event_order_near_best_main,0.04470589199824038,True,fails if event-order probe is within margin of the best main score
+sample_i_calib,too_good_leakage_hunt_triggered,0.29455975632686826,True,triggered=False
+sample_i_calib,accepted_ml_gain,0.03823541020367416,False,accepted only if ML beats traditional and ML clears shuffle p95 plus margin
+sample_i_analysis,train_heldout_run_overlap,0.0,True,must be zero
+sample_i_analysis,duplicate_key_overlap_train_heldout,0.0,True,run-heldout split makes overlap impossible unless duplicated metadata exists
+sample_i_analysis,ml_shuffle_p95_margin_gate,-0.024048099319410376,False,ML score must exceed label-shuffle p95 by margin 0.030
+sample_i_analysis,traditional_shuffle_p95_margin_gate,-0.006625533387770555,False,traditional score must exceed label-shuffle p95 by margin 0.030
+sample_i_analysis,proxy_near_best_main,-0.3255383967979605,False,fails if amplitude/multiplicity proxy is within margin of the best main score
+sample_i_analysis,event_order_near_best_main,0.04961761722179259,True,fails if event-order probe is within margin of the best main score
+sample_i_analysis,too_good_leakage_hunt_triggered,0.30256151168813494,True,triggered=False
+sample_i_analysis,accepted_ml_gain,-0.0021040710201543633,False,accepted only if ML beats traditional and ML clears shuffle p95 plus margin
+sample_ii_analysis,train_heldout_run_overlap,0.0,True,must be zero
+sample_ii_analysis,duplicate_key_overlap_train_heldout,0.0,True,run-heldout split makes overlap impossible unless duplicated metadata exists
+sample_ii_analysis,ml_shuffle_p95_margin_gate,-0.054524130792260594,False,ML score must exceed label-shuffle p95 by margin 0.030
+sample_ii_analysis,traditional_shuffle_p95_margin_gate,-0.001041192225521903,False,traditional score must exceed label-shuffle p95 by margin 0.030
+sample_ii_analysis,proxy_near_best_main,-0.3602621854067731,False,fails if amplitude/multiplicity proxy is within margin of the best main score
+sample_ii_analysis,event_order_near_best_main,0.030320289027695985,True,fails if event-order probe is within margin of the best main score
+sample_ii_analysis,too_good_leakage_hunt_triggered,0.27848737962245385,True,triggered=False
+sample_ii_analysis,accepted_ml_gain,-0.024169898574678883,False,accepted only if ML beats traditional and ML clears shuffle p95 plus margin
+sample_ii_calib,train_heldout_run_overlap,0.0,True,must be zero
+sample_ii_calib,duplicate_key_overlap_train_heldout,0.0,True,run-heldout split makes overlap impossible unless duplicated metadata exists
+sample_ii_calib,ml_shuffle_p95_margin_gate,-0.05030185819715338,False,ML score must exceed label-shuffle p95 by margin 0.030
+sample_ii_calib,traditional_shuffle_p95_margin_gate,-0.05853505535055348,False,traditional score must exceed label-shuffle p95 by margin 0.030
+sample_ii_calib,proxy_near_best_main,-0.4137387981022667,False,fails if amplitude/multiplicity proxy is within margin of the best main score
+sample_ii_calib,event_order_near_best_main,0.01886531365313654,False,fails if event-order probe is within margin of the best main score
+sample_ii_calib,too_good_leakage_hunt_triggered,0.2675777543489721,True,triggered=False
+sample_ii_calib,accepted_ml_gain,-0.012830785450711646,False,accepted only if ML beats traditional and ML clears shuffle p95 plus margin

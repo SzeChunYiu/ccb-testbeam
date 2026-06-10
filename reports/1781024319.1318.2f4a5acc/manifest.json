@@ -1,0 +1,90 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s07g_1781024319_1318_2f4a5acc_amp_preserving_appi_control.py --config configs/s07g_1781024319_1318_2f4a5acc.json",
+  "created_utc": "2026-06-10T03:49:13Z",
+  "git_commit": "8256d8923305eaba85739ca9468fa542ef66a5b7",
+  "inputs": [
+    {
+      "bytes": 9623179,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "bytes": 12032616,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "bytes": 10174098,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "bytes": 10362658,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "bytes": 10634393,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "bytes": 10494181,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "bytes": 10600278,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    },
+    {
+      "bytes": 1687,
+      "path": "configs/s07g_1781024319_1318_2f4a5acc.json",
+      "sha256": "91a74434cb99e8f5ca9dcd042127ce00a424ad07ba731f6c448240ec48190cc9"
+    },
+    {
+      "bytes": 26225,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/scripts/s07f_independent_all_three_appi_validation.py",
+      "sha256": "08a25eaeaf8a027e78fc4aea646d53d7a3e47d57fb0fd2730787eb176ee2013d"
+    },
+    {
+      "bytes": 44475,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/reports/1781006037.1502.693f2c73__s07d_injected_timing_corruption/s07d_injected_timing_corruption.py",
+      "sha256": "923bcd4a801c1cc1d284508063e168f74dcab9053bb08a6bd635ea878575f6c8"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "ecad74a0a573e5b22964e1d02d8a88ae272a7c16c174e3b551fc2286e328bfb0",
+    "charge_preserved_dataset_counts_by_run.csv": "961fca6c54d1f284d88cc83975c9c756ad5d7d987247635317454d237919e511",
+    "charge_preserved_leakage_checks.csv": "6ff71bfc95c50dd955e4d3f69d9a23e1deae9000d9a5189acdee375c2d9b556e",
+    "charge_preserved_oof_predictions.csv": "d4e747316c41c2e6568f85b9887c683e7f65d7faddeeeb609a2226b8825e9356",
+    "charge_preserved_rf_cv_scan.csv": "4ba2fa6c43ac877b0175c92207515a4f6faccf74c420b24e1bb2b05cd5f1a73a",
+    "charge_preserved_scoreboard.csv": "8df3aa769164019596bdf6fbcf9d883b8b97338b22bd046683a21e478554344b",
+    "charge_preserved_traditional_fold_choices.csv": "9595359d6578df26c84b0b5e76ae665b1d2ec57867c50f73e33a3ffde8a80620",
+    "input_sha256.csv": "0721ad5f364ea7dc93ce873e90b0a4e01e4562eb68d5c50c3106a299bec6067c",
+    "peak_preserved_dataset_counts_by_run.csv": "961fca6c54d1f284d88cc83975c9c756ad5d7d987247635317454d237919e511",
+    "peak_preserved_leakage_checks.csv": "8b28f707ec15d253091db2ef926d48fa527db8f7ae21b75a0fc6f7b090e2b6e5",
+    "peak_preserved_oof_predictions.csv": "1ed1debb1f9dfef214f2d2c518af98fea109d9ea86fb9a20e89afb2fc15797dc",
+    "peak_preserved_rf_cv_scan.csv": "e7ab8a4feafc562e60722b9dea7cc54824e9584a13391d7f9b466468b81fb4ef",
+    "peak_preserved_scoreboard.csv": "96e235662021d59f41f1397d0da4e6d81277f3132b1cd468e427cb4c6d2d1f07",
+    "peak_preserved_traditional_fold_choices.csv": "d359874e75e4d63c92e93b3d8a97d5132f2714306b42c27c3972b5301afd3dde",
+    "reproduction_match_table.csv": "ea5b32942b4c892419c093ef20b8b3ae77ed85818131f941f16dbcdc7740e36a",
+    "result.json": "bfbfb8fd5f16a07a86c025769931794060ee707e95c4e2c5c83e95e392d0f0b0",
+    "run_counts.csv": "88f2966d7456e9ac42d941b8ff8efc5a88a6b1930bea166624b2bca558e1d827",
+    "s07e_oof_predictions.csv": "a8c206c0316cb45b2c1bd5b70a055abf9867e0f57496c08e1dfdd2cb8ad9bd38",
+    "s07e_reproduction_scoreboard.csv": "3ce08f673078ef1c4e4e889904a73ca79c192f0328809a94d9af0f8ff8ab6769",
+    "s07e_rf_cv_scan.csv": "cc6395a430a9fadcea302625699de03e9abe591e8843c8bfd4b9d049c0bbc078",
+    "s07f_reproduction_dataset_counts_by_run.csv": "961fca6c54d1f284d88cc83975c9c756ad5d7d987247635317454d237919e511",
+    "s07f_reproduction_leakage_checks.csv": "e46008f405afdf969fbe955b979a5a79948bc73349d9d7855c1407eadd7fedb1",
+    "s07f_reproduction_oof_predictions.csv": "f88af0fcecf0869dbd324b9241507b2e5c2cc110b3bbd9d3ca36266480cc3029",
+    "s07f_reproduction_rf_cv_scan.csv": "aecad6406236bc4efba27c6b07badb8a5dc88a91cb06bda1ee96b968841557a2",
+    "s07f_reproduction_scoreboard.csv": "e30c3692c8e916770e96b82988d520f82ab651024f3197d6d7c344f4fd0c4a70",
+    "s07f_reproduction_traditional_fold_choices.csv": "6a98d6433a83ba20ca298e7ba6b31f95e46b7bddbc202b7bb6e41f29ff4691d1"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "study_id": "S07g",
+  "ticket_id": "1781024319.1318.2f4a5acc",
+  "worker": "testbeam-laptop-2"
+}

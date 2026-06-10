@@ -1,0 +1,14 @@
+method,heldout_auc,heldout_average_precision,heldout_ece,heldout_tail_rate,shuffled_target_heldout_auc,shuffled_target_heldout_ece,run_cv_auc_mean,run_cv_average_precision_mean,heldout_ece_ci_low,heldout_ece_ci_high,heldout_auc_ci_low,heldout_auc_ci_high,heldout_average_precision_ci_low,heldout_average_precision_ci_high,feature,importance
+rf_tail_classifier,0.8866305329719963,0.4233737581022127,0.04360995894740147,0.016,0.6061427280939476,0.10301653000776385,0.9106202932817404,0.6397186508002111,0.0351439528746181,0.06185916206791862,0.6169629092709145,0.9991712916107457,0.07027535676438336,0.9,,
+top_importance,,,,,,,,,,,,,,,num__delta_positive_area_over_amp,0.1155223415613842
+top_importance,,,,,,,,,,,,,,,num__delta_area_over_amp,0.0919307302199417
+top_importance,,,,,,,,,,,,,,,num__delta_width20_samples,0.07504138129419662
+top_importance,,,,,,,,,,,,,,,num__delta_late_abs_adc,0.0701808343089425
+top_importance,,,,,,,,,,,,,,,num__s10_pileup_proxy_score,0.0598459850291724
+top_importance,,,,,,,,,,,,,,,num__max_lowering_adc,0.044471269450510185
+top_importance,,,,,,,,,,,,,,,num__abs_delta_lowering_adc,0.041285961550632015
+top_importance,,,,,,,,,,,,,,,num__max_pretrigger_ptp_adc,0.03843042410449953
+top_importance,,,,,,,,,,,,,,,num__mean_positive_area_over_amp,0.03475534538704071
+top_importance,,,,,,,,,,,,,,,num__max_tail_area_frac,0.032851528848397336
+top_importance,,,,,,,,,,,,,,,num__max_width20_samples,0.03152628835326325
+top_importance,,,,,,,,,,,,,,,num__mean_area_over_amp,0.03021865537738447

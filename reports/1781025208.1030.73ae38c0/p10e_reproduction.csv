@@ -1,0 +1,8 @@
+quantity,expected,observed,pass
+P10e selected B-stave pulses,640737,640737,True
+P10e analysis selected rows,377362,377362,True
+P10e required registry controls,5,5,True
+P10e registry status,pass,pass,True
+P10e family-heldout folds,2,2,True
+holdout_sample_i conditional-minus-empirical delta,positive no q-space win,0.013014769388423343,True
+holdout_sample_ii conditional-minus-empirical delta,positive no q-space win,0.029225251206238367,True

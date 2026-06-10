@@ -1,0 +1,1518 @@
+{
+  "study": "P04f",
+  "ticket_id": "1781012700.777.722653c1",
+  "worker": "testbeam-laptop-3",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "n_valid_rows": 640482,
+  "invalid_target_rows_removed": 255,
+  "run_split": "leave-one-run-out",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 200
+  },
+  "primary_metrics": [
+    {
+      "stratum": "all_valid",
+      "method": "peak_charge_calibrated",
+      "n": 640482,
+      "bias_median_frac": -0.085887713,
+      "res68_abs_frac": 0.2355852041,
+      "full_rms_frac": 2.0433774137,
+      "high_bias_tail_fraction": 0.2658076261,
+      "within_10pct": 0.2941144326,
+      "bias_ci95": [
+        -0.1663299026,
+        -0.0722298822
+      ],
+      "res68_ci95": [
+        0.2326562134,
+        0.2581449617
+      ],
+      "full_rms_ci95": [
+        1.9237478071,
+        2.4145869966
+      ],
+      "high_bias_tail_ci95": [
+        0.2537926051,
+        0.3547347554
+      ]
+    },
+    {
+      "stratum": "all_valid",
+      "method": "integral_calibrated",
+      "n": 640482,
+      "bias_median_frac": -0.0315952684,
+      "res68_abs_frac": 0.1196262199,
+      "full_rms_frac": 1.2898688798,
+      "high_bias_tail_fraction": 0.116975965,
+      "within_10pct": 0.6388969557,
+      "bias_ci95": [
+        -0.0581420754,
+        -0.0294159402
+      ],
+      "res68_ci95": [
+        0.1110206315,
+        0.1582517381
+      ],
+      "full_rms_ci95": [
+        1.1773046042,
+        1.5838247055
+      ],
+      "high_bias_tail_ci95": [
+        0.110465636,
+        0.1604319357
+      ]
+    },
+    {
+      "stratum": "all_valid",
+      "method": "robust_pretrigger_charge",
+      "n": 640482,
+      "bias_median_frac": -0.0315952054,
+      "res68_abs_frac": 0.1196258232,
+      "full_rms_frac": 1.2898693329,
+      "high_bias_tail_fraction": 0.1169744037,
+      "within_10pct": 0.6388953944,
+      "bias_ci95": [
+        -0.0579241133,
+        -0.0288816439
+      ],
+      "res68_ci95": [
+        0.1084304706,
+        0.1575153829
+      ],
+      "full_rms_ci95": [
+        1.2387664479,
+        1.5795719711
+      ],
+      "high_bias_tail_ci95": [
+        0.1103205213,
+        0.1617098458
+      ]
+    },
+    {
+      "stratum": "all_valid",
+      "method": "template_fit_calibrated",
+      "n": 640482,
+      "bias_median_frac": -0.1673502705,
+      "res68_abs_frac": 0.2504640616,
+      "full_rms_frac": 1.9421787041,
+      "high_bias_tail_fraction": 0.32167961,
+      "within_10pct": 0.1260535035,
+      "bias_ci95": [
+        -0.1738575135,
+        -0.0856929077
+      ],
+      "res68_ci95": [
+        0.2471967893,
+        0.3415469942
+      ],
+      "full_rms_ci95": [
+        1.9093600445,
+        2.3330827335
+      ],
+      "high_bias_tail_ci95": [
+        0.3086767263,
+        0.3965966704
+      ]
+    },
+    {
+      "stratum": "all_valid",
+      "method": "p04_frozen_mlp",
+      "n": 640482,
+      "bias_median_frac": -0.4033701824,
+      "res68_abs_frac": 0.9718054503,
+      "full_rms_frac": 1.217001049e+34,
+      "high_bias_tail_fraction": 0.8607892181,
+      "within_10pct": 0.0550304302,
+      "bias_ci95": [
+        -0.5359905748,
+        -0.3930790173
+      ],
+      "res68_ci95": [
+        0.966721717,
+        0.9824465725
+      ],
+      "full_rms_ci95": [
+        3.089203714e+18,
+        4.752641685e+34
+      ],
+      "high_bias_tail_ci95": [
+        0.855536925,
+        0.8853759702
+      ]
+    },
+    {
+      "stratum": "all_valid",
+      "method": "p04f_residual_mlp",
+      "n": 640482,
+      "bias_median_frac": -0.0005176951,
+      "res68_abs_frac": 0.0564024595,
+      "full_rms_frac": 75.6815932267,
+      "high_bias_tail_fraction": 0.0490771013,
+      "within_10pct": 0.8370477234,
+      "bias_ci95": [
+        -0.002031661,
+        0.0006624509
+      ],
+      "res68_ci95": [
+        0.0530186516,
+        0.0680339753
+      ],
+      "full_rms_ci95": [
+        0.2333963659,
+        20.6094802864
+      ],
+      "high_bias_tail_ci95": [
+        0.0447148955,
+        0.0659840044
+      ]
+    },
+    {
+      "stratum": "all_valid",
+      "method": "shuffled_residual_mlp",
+      "n": 640482,
+      "bias_median_frac": -0.0403955615,
+      "res68_abs_frac": 0.1673865948,
+      "full_rms_frac": 1640567384.7262287,
+      "high_bias_tail_fraction": 0.2092767634,
+      "within_10pct": 0.5062531031,
+      "bias_ci95": [
+        -0.0588371605,
+        -0.0355785466
+      ],
+      "res68_ci95": [
+        0.1598450687,
+        0.229386892
+      ],
+      "full_rms_ci95": [
+        10.5831335612,
+        56.1385220034
+      ],
+      "high_bias_tail_ci95": [
+        0.1919498942,
+        0.2913043434
+      ]
+    },
+    {
+      "stratum": "normal_matched_pool",
+      "method": "peak_charge_calibrated",
+      "n": 618487,
+      "bias_median_frac": -0.0976456221,
+      "res68_abs_frac": 0.2296726652,
+      "full_rms_frac": 0.4491748806,
+      "high_bias_tail_fraction": 0.239775452,
+      "within_10pct": 0.3045399499,
+      "bias_ci95": [
+        -0.1752161247,
+        -0.0841896012
+      ],
+      "res68_ci95": [
+        0.2263804079,
+        0.2503285107
+      ],
+      "full_rms_ci95": [
+        0.4391798324,
+        0.5265742561
+      ],
+      "high_bias_tail_ci95": [
+        0.2270477758,
+        0.3213762391
+      ]
+    },
+    {
+      "stratum": "normal_matched_pool",
+      "method": "integral_calibrated",
+      "n": 618487,
+      "bias_median_frac": -0.0330241485,
+      "res68_abs_frac": 0.1093093745,
+      "full_rms_frac": 0.4012823746,
+      "high_bias_tail_fraction": 0.0902913077,
+      "within_10pct": 0.6595627717,
+      "bias_ci95": [
+        -0.0607943261,
+        -0.0300435004
+      ],
+      "res68_ci95": [
+        0.0990297442,
+        0.1486470895
+      ],
+      "full_rms_ci95": [
+        0.3791058042,
+        0.4763606587
+      ],
+      "high_bias_tail_ci95": [
+        0.0834506923,
+        0.1229475277
+      ]
+    },
+    {
+      "stratum": "normal_matched_pool",
+      "method": "robust_pretrigger_charge",
+      "n": 618487,
+      "bias_median_frac": -0.0330235916,
+      "res68_abs_frac": 0.1093088176,
+      "full_rms_frac": 0.4012825024,
+      "high_bias_tail_fraction": 0.0902896908,
+      "within_10pct": 0.6595611549,
+      "bias_ci95": [
+        -0.0620635252,
+        -0.0321269042
+      ],
+      "res68_ci95": [
+        0.1023857917,
+        0.1499844868
+      ],
+      "full_rms_ci95": [
+        0.3806475188,
+        0.4812998823
+      ],
+      "high_bias_tail_ci95": [
+        0.0851886538,
+        0.1271960465
+      ]
+    },
+    {
+      "stratum": "normal_matched_pool",
+      "method": "template_fit_calibrated",
+      "n": 618487,
+      "bias_median_frac": -0.1680057436,
+      "res68_abs_frac": 0.2454645243,
+      "full_rms_frac": 0.869980144,
+      "high_bias_tail_fraction": 0.3012609804,
+      "within_10pct": 0.129119933,
+      "bias_ci95": [
+        -0.1713839709,
+        -0.0771844938
+      ],
+      "res68_ci95": [
+        0.2434515884,
+        0.2980713814
+      ],
+      "full_rms_ci95": [
+        0.8294341412,
+        1.0514087381
+      ],
+      "high_bias_tail_ci95": [
+        0.2923672496,
+        0.3769488176
+      ]
+    },
+    {
+      "stratum": "normal_matched_pool",
+      "method": "p04_frozen_mlp",
+      "n": 618487,
+      "bias_median_frac": -0.4329154311,
+      "res68_abs_frac": 0.9666374434,
+      "full_rms_frac": 5467791.210972049,
+      "high_bias_tail_fraction": 0.8588604126,
+      "within_10pct": 0.0558314079,
+      "bias_ci95": [
+        -0.5817824249,
+        -0.4267596694
+      ],
+      "res68_ci95": [
+        0.9635591634,
+        0.9803522417
+      ],
+      "full_rms_ci95": [
+        36848.5771683204,
+        602574.5419787341
+      ],
+      "high_bias_tail_ci95": [
+        0.8570419324,
+        0.8854865781
+      ]
+    },
+    {
+      "stratum": "normal_matched_pool",
+      "method": "p04f_residual_mlp",
+      "n": 618487,
+      "bias_median_frac": -0.000519908,
+      "res68_abs_frac": 0.053327907,
+      "full_rms_frac": 0.1244422917,
+      "high_bias_tail_fraction": 0.0320378601,
+      "within_10pct": 0.8597852501,
+      "bias_ci95": [
+        -0.0018948006,
+        0.0007184886
+      ],
+      "res68_ci95": [
+        0.0509656372,
+        0.0635591345
+      ],
+      "full_rms_ci95": [
+        0.109039613,
+        0.1334185994
+      ],
+      "high_bias_tail_ci95": [
+        0.0284966078,
+        0.0439594634
+      ]
+    },
+    {
+      "stratum": "normal_matched_pool",
+      "method": "shuffled_residual_mlp",
+      "n": 618487,
+      "bias_median_frac": -0.0436371577,
+      "res68_abs_frac": 0.1566480228,
+      "full_rms_frac": 1669068354.794125,
+      "high_bias_tail_fraction": 0.1852601591,
+      "within_10pct": 0.5226868148,
+      "bias_ci95": [
+        -0.0663411985,
+        -0.036446402
+      ],
+      "res68_ci95": [
+        0.1472490155,
+        0.2154056119
+      ],
+      "full_rms_ci95": [
+        0.7757781198,
+        37.0071534141
+      ],
+      "high_bias_tail_ci95": [
+        0.1654129823,
+        0.2692768422
+      ]
+    },
+    {
+      "stratum": "baseline_excursion",
+      "method": "peak_charge_calibrated",
+      "n": 4763,
+      "bias_median_frac": 11.346346353,
+      "res68_abs_frac": 13.5673371829,
+      "full_rms_frac": 14.1936152258,
+      "high_bias_tail_fraction": 0.9993701449,
+      "within_10pct": 0.0002099517,
+      "bias_ci95": [
+        11.0382334317,
+        11.7307378777
+      ],
+      "res68_ci95": [
+        13.3067502154,
+        13.8198453519
+      ],
+      "full_rms_ci95": [
+        13.331681453,
+        15.1554521475
+      ],
+      "high_bias_tail_ci95": [
+        0.9987507767,
+        1.0
+      ]
+    },
+    {
+      "stratum": "baseline_excursion",
+      "method": "integral_calibrated",
+      "n": 4763,
+      "bias_median_frac": 5.7262556207,
+      "res68_abs_frac": 7.0501727541,
+      "full_rms_frac": 10.1749310762,
+      "high_bias_tail_fraction": 0.9580096578,
+      "within_10pct": 0.0170060886,
+      "bias_ci95": [
+        5.5104096221,
+        5.9614560337
+      ],
+      "res68_ci95": [
+        6.8865516044,
+        7.2326921726
+      ],
+      "full_rms_ci95": [
+        9.1440081696,
+        11.2854788201
+      ],
+      "high_bias_tail_ci95": [
+        0.95066605,
+        0.9656060544
+      ]
+    },
+    {
+      "stratum": "baseline_excursion",
+      "method": "robust_pretrigger_charge",
+      "n": 4763,
+      "bias_median_frac": 5.7262503619,
+      "res68_abs_frac": 7.0501615581,
+      "full_rms_frac": 10.174937006,
+      "high_bias_tail_fraction": 0.9580096578,
+      "within_10pct": 0.0170060886,
+      "bias_ci95": [
+        5.5036307006,
+        5.9625801492
+      ],
+      "res68_ci95": [
+        6.8825226651,
+        7.2326763886
+      ],
+      "full_rms_ci95": [
+        9.0795780912,
+        11.4345998457
+      ],
+      "high_bias_tail_ci95": [
+        0.949907144,
+        0.965674007
+      ]
+    },
+    {
+      "stratum": "baseline_excursion",
+      "method": "template_fit_calibrated",
+      "n": 4763,
+      "bias_median_frac": 6.289887907,
+      "res68_abs_frac": 10.3430826352,
+      "full_rms_frac": 10.7604499809,
+      "high_bias_tail_fraction": 0.9976905312,
+      "within_10pct": 0.001469662,
+      "bias_ci95": [
+        5.4804159826,
+        7.2261853377
+      ],
+      "res68_ci95": [
+        9.8412081968,
+        10.9330366822
+      ],
+      "full_rms_ci95": [
+        10.3911723821,
+        11.10861423
+      ],
+      "high_bias_tail_ci95": [
+        0.9963417419,
+        0.9988247114
+      ]
+    },
+    {
+      "stratum": "baseline_excursion",
+      "method": "p04_frozen_mlp",
+      "n": 4763,
+      "bias_median_frac": 0.9976009755,
+      "res68_abs_frac": 3.0777801359,
+      "full_rms_frac": 1.411250557e+35,
+      "high_bias_tail_fraction": 0.9006928406,
+      "within_10pct": 0.0365315977,
+      "bias_ci95": [
+        0.6427972664,
+        1.7384483257
+      ],
+      "res68_ci95": [
+        2.2124167586,
+        4.9150865292
+      ],
+      "full_rms_ci95": [
+        2.77956915e+27,
+        2.549573521e+35
+      ],
+      "high_bias_tail_ci95": [
+        0.8793024511,
+        0.9199601312
+      ]
+    },
+    {
+      "stratum": "baseline_excursion",
+      "method": "p04f_residual_mlp",
+      "n": 4763,
+      "bias_median_frac": 0.0703154847,
+      "res68_abs_frac": 0.4533364467,
+      "full_rms_frac": 877.612093532,
+      "high_bias_tail_fraction": 0.5649800546,
+      "within_10pct": 0.1839176989,
+      "bias_ci95": [
+        0.0414468003,
+        0.0943742649
+      ],
+      "res68_ci95": [
+        0.4090798101,
+        0.5084486399
+      ],
+      "full_rms_ci95": [
+        34.5822594072,
+        1611.0784274382
+      ],
+      "high_bias_tail_ci95": [
+        0.5285934541,
+        0.6089403745
+      ]
+    },
+    {
+      "stratum": "baseline_excursion",
+      "method": "shuffled_residual_mlp",
+      "n": 4763,
+      "bias_median_frac": 5.8837136347,
+      "res68_abs_frac": 8.2840730802,
+      "full_rms_frac": 424465971.2888371,
+      "high_bias_tail_fraction": 0.9617887886,
+      "within_10pct": 0.0121771992,
+      "bias_ci95": [
+        5.3657088366,
+        6.4166465194
+      ],
+      "res68_ci95": [
+        7.6640352664,
+        9.1748818387
+      ],
+      "full_rms_ci95": [
+        530.8074270071,
+        763900191.9498515
+      ],
+      "high_bias_tail_ci95": [
+        0.9558925274,
+        0.9682215161
+      ]
+    },
+    {
+      "stratum": "novel_early_pretrigger",
+      "method": "peak_charge_calibrated",
+      "n": 17232,
+      "bias_median_frac": 5.4599139138,
+      "res68_abs_frac": 8.1033710409,
+      "full_rms_frac": 9.6055272011,
+      "high_bias_tail_fraction": 0.9973885794,
+      "within_10pct": 0.0011606314,
+      "bias_ci95": [
+        5.372083763,
+        5.5209566564
+      ],
+      "res68_ci95": [
+        7.9552010916,
+        8.3245765883
+      ],
+      "full_rms_ci95": [
+        9.1172874634,
+        10.1219287223
+      ],
+      "high_bias_tail_ci95": [
+        0.996488578,
+        0.9980982939
+      ]
+    },
+    {
+      "stratum": "novel_early_pretrigger",
+      "method": "integral_calibrated",
+      "n": 17232,
+      "bias_median_frac": 2.3223899223,
+      "res68_abs_frac": 4.532556273,
+      "full_rms_frac": 5.2386539503,
+      "high_bias_tail_fraction": 0.842270195,
+      "within_10pct": 0.0690575673,
+      "bias_ci95": [
+        1.0304225578,
+        3.1718358352
+      ],
+      "res68_ci95": [
+        3.8549680677,
+        5.0584163838
+      ],
+      "full_rms_ci95": [
+        4.8015986584,
+        5.6197303045
+      ],
+      "high_bias_tail_ci95": [
+        0.819576152,
+        0.8632213338
+      ]
+    },
+    {
+      "stratum": "novel_early_pretrigger",
+      "method": "robust_pretrigger_charge",
+      "n": 17232,
+      "bias_median_frac": 2.3224075171,
+      "res68_abs_frac": 4.5325401638,
+      "full_rms_frac": 5.238654562,
+      "high_bias_tail_fraction": 0.842270195,
+      "within_10pct": 0.0690575673,
+      "bias_ci95": [
+        1.0408589956,
+        3.1667987725
+      ],
+      "res68_ci95": [
+        3.9214874185,
+        5.0164742808
+      ],
+      "full_rms_ci95": [
+        4.8318667283,
+        5.6088375386
+      ],
+      "high_bias_tail_ci95": [
+        0.8213287806,
+        0.8623957563
+      ]
+    },
+    {
+      "stratum": "novel_early_pretrigger",
+      "method": "template_fit_calibrated",
+      "n": 17232,
+      "bias_median_frac": -0.1594803032,
+      "res68_abs_frac": 2.9565957902,
+      "full_rms_frac": 9.0017312799,
+      "high_bias_tail_fraction": 0.8676880223,
+      "within_10pct": 0.0504294336,
+      "bias_ci95": [
+        -0.272848986,
+        0.0059590864
+      ],
+      "res68_ci95": [
+        0.8620576254,
+        5.9368723119
+      ],
+      "full_rms_ci95": [
+        8.3886199052,
+        9.6932771767
+      ],
+      "high_bias_tail_ci95": [
+        0.8598907538,
+        0.8748501898
+      ]
+    },
+    {
+      "stratum": "novel_early_pretrigger",
+      "method": "p04_frozen_mlp",
+      "n": 17232,
+      "bias_median_frac": 4.3903443147,
+      "res68_abs_frac": 22.9540328822,
+      "full_rms_frac": 1747464363.1129427,
+      "high_bias_tail_fraction": 0.9189879294,
+      "within_10pct": 0.0313950789,
+      "bias_ci95": [
+        2.9389934979,
+        7.0948790051
+      ],
+      "res68_ci95": [
+        10.1012734748,
+        81.5917863335
+      ],
+      "full_rms_ci95": [
+        100268.7010343125,
+        3044265507.128308
+      ],
+      "high_bias_tail_ci95": [
+        0.9060876016,
+        0.9308004942
+      ]
+    },
+    {
+      "stratum": "novel_early_pretrigger",
+      "method": "p04f_residual_mlp",
+      "n": 17232,
+      "bias_median_frac": -0.0157479987,
+      "res68_abs_frac": 0.3740226833,
+      "full_rms_frac": 0.5179974451,
+      "high_bias_tail_fraction": 0.518047818,
+      "within_10pct": 0.2014856082,
+      "bias_ci95": [
+        -0.0333831975,
+        0.0015095301
+      ],
+      "res68_ci95": [
+        0.3552504638,
+        0.3956058377
+      ],
+      "full_rms_ci95": [
+        0.4865433154,
+        0.5646629483
+      ],
+      "high_bias_tail_ci95": [
+        0.4922822789,
+        0.5432154509
+      ]
+    },
+    {
+      "stratum": "novel_early_pretrigger",
+      "method": "shuffled_residual_mlp",
+      "n": 17232,
+      "bias_median_frac": 1.8550409202,
+      "res68_abs_frac": 4.9278114788,
+      "full_rms_frac": 108.968412075,
+      "high_bias_tail_fraction": 0.863277623,
+      "within_10pct": 0.0529828227,
+      "bias_ci95": [
+        0.9999248745,
+        2.9185682298
+      ],
+      "res68_ci95": [
+        3.9266875589,
+        5.7883132857
+      ],
+      "full_rms_ci95": [
+        6.6889702646,
+        189.7069185459
+      ],
+      "high_bias_tail_ci95": [
+        0.8346620123,
+        0.8872021486
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "peak_charge_calibrated",
+      "n": 4762,
+      "bias_median_frac": -0.2025446996,
+      "res68_abs_frac": 0.2469405568,
+      "full_rms_frac": 0.4985878145,
+      "high_bias_tail_fraction": 0.2977740445,
+      "within_10pct": 0.1577068459,
+      "bias_ci95": [
+        -0.2074230663,
+        -0.1991670901
+      ],
+      "res68_ci95": [
+        0.2448559127,
+        0.2487803591
+      ],
+      "full_rms_ci95": [
+        0.4476802019,
+        0.5344431635
+      ],
+      "high_bias_tail_ci95": [
+        0.2837657768,
+        0.3145460474
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "integral_calibrated",
+      "n": 4762,
+      "bias_median_frac": -0.0771847785,
+      "res68_abs_frac": 0.1501856065,
+      "full_rms_frac": 0.4532229086,
+      "high_bias_tail_fraction": 0.1087778244,
+      "within_10pct": 0.490550189,
+      "bias_ci95": [
+        -0.0834312279,
+        -0.0724372863
+      ],
+      "res68_ci95": [
+        0.1448228277,
+        0.1549805485
+      ],
+      "full_rms_ci95": [
+        0.4076811325,
+        0.4996419357
+      ],
+      "high_bias_tail_ci95": [
+        0.0938354448,
+        0.122291274
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "robust_pretrigger_charge",
+      "n": 4762,
+      "bias_median_frac": -0.0771817556,
+      "res68_abs_frac": 0.1501838042,
+      "full_rms_frac": 0.4532228599,
+      "high_bias_tail_fraction": 0.1087778244,
+      "within_10pct": 0.490550189,
+      "bias_ci95": [
+        -0.084463562,
+        -0.0728972357
+      ],
+      "res68_ci95": [
+        0.1455263862,
+        0.1566858546
+      ],
+      "full_rms_ci95": [
+        0.4041052737,
+        0.4966633893
+      ],
+      "high_bias_tail_ci95": [
+        0.0948771371,
+        0.1245445543
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "template_fit_calibrated",
+      "n": 4762,
+      "bias_median_frac": 0.0661596126,
+      "res68_abs_frac": 0.4205770876,
+      "full_rms_frac": 0.9117117629,
+      "high_bias_tail_fraction": 0.4166316674,
+      "within_10pct": 0.1982360353,
+      "bias_ci95": [
+        0.0393916405,
+        0.0991430299
+      ],
+      "res68_ci95": [
+        0.4009267057,
+        0.4399107592
+      ],
+      "full_rms_ci95": [
+        0.8457028291,
+        0.9641933666
+      ],
+      "high_bias_tail_ci95": [
+        0.3985248768,
+        0.4331756961
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "p04_frozen_mlp",
+      "n": 4762,
+      "bias_median_frac": -0.8055048388,
+      "res68_abs_frac": 0.9743523664,
+      "full_rms_frac": 4780.7527148021,
+      "high_bias_tail_fraction": 0.907601848,
+      "within_10pct": 0.0354892902,
+      "bias_ci95": [
+        -0.8411418918,
+        -0.750116008
+      ],
+      "res68_ci95": [
+        0.9678798887,
+        0.9790484135
+      ],
+      "full_rms_ci95": [
+        234.7190747884,
+        8365.984182382
+      ],
+      "high_bias_tail_ci95": [
+        0.8934333854,
+        0.9186431094
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "p04f_residual_mlp",
+      "n": 4762,
+      "bias_median_frac": 0.0008996148,
+      "res68_abs_frac": 0.0579509985,
+      "full_rms_frac": 0.1118998218,
+      "high_bias_tail_fraction": 0.0312893742,
+      "within_10pct": 0.8462830743,
+      "bias_ci95": [
+        -0.0018432943,
+        0.0041950798
+      ],
+      "res68_ci95": [
+        0.0522114671,
+        0.0645373452
+      ],
+      "full_rms_ci95": [
+        0.1009539789,
+        0.1215340747
+      ],
+      "high_bias_tail_ci95": [
+        0.0239548711,
+        0.0379267495
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "shuffled_residual_mlp",
+      "n": 4762,
+      "bias_median_frac": -0.0749074748,
+      "res68_abs_frac": 0.1929530876,
+      "full_rms_frac": 0.5018427178,
+      "high_bias_tail_fraction": 0.2167156657,
+      "within_10pct": 0.4050818984,
+      "bias_ci95": [
+        -0.0920084709,
+        -0.0629461684
+      ],
+      "res68_ci95": [
+        0.1690652189,
+        0.2160502699
+      ],
+      "full_rms_ci95": [
+        0.4301950284,
+        0.5650153986
+      ],
+      "high_bias_tail_ci95": [
+        0.167234429,
+        0.267468687
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "peak_charge_calibrated",
+      "n": 17232,
+      "bias_median_frac": -0.302064285,
+      "res68_abs_frac": 0.3926754687,
+      "full_rms_frac": 0.8503356579,
+      "high_bias_tail_fraction": 0.7743732591,
+      "within_10pct": 0.0300603528,
+      "bias_ci95": [
+        -0.3050402159,
+        -0.298793625
+      ],
+      "res68_ci95": [
+        0.3860947244,
+        0.4010203933
+      ],
+      "full_rms_ci95": [
+        0.7933845966,
+        0.9040872717
+      ],
+      "high_bias_tail_ci95": [
+        0.7648477889,
+        0.7851806103
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "integral_calibrated",
+      "n": 17232,
+      "bias_median_frac": -0.2063429428,
+      "res68_abs_frac": 0.2534515164,
+      "full_rms_frac": 0.7418913677,
+      "high_bias_tail_fraction": 0.3362349118,
+      "within_10pct": 0.0711467038,
+      "bias_ci95": [
+        -0.2098585289,
+        -0.2016229589
+      ],
+      "res68_ci95": [
+        0.2507083059,
+        0.2567605088
+      ],
+      "full_rms_ci95": [
+        0.6605817888,
+        0.8368300984
+      ],
+      "high_bias_tail_ci95": [
+        0.3240541971,
+        0.3500218308
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "robust_pretrigger_charge",
+      "n": 17232,
+      "bias_median_frac": -0.2063438211,
+      "res68_abs_frac": 0.2534507591,
+      "full_rms_frac": 0.7418914425,
+      "high_bias_tail_fraction": 0.3362349118,
+      "within_10pct": 0.0711467038,
+      "bias_ci95": [
+        -0.2096014556,
+        -0.2030429297
+      ],
+      "res68_ci95": [
+        0.2505374361,
+        0.2562491363
+      ],
+      "full_rms_ci95": [
+        0.6560708341,
+        0.8155482059
+      ],
+      "high_bias_tail_ci95": [
+        0.3224585948,
+        0.3488617979
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "template_fit_calibrated",
+      "n": 17232,
+      "bias_median_frac": 0.9303158575,
+      "res68_abs_frac": 1.1670668171,
+      "full_rms_frac": 2.2632033102,
+      "high_bias_tail_fraction": 0.8819637883,
+      "within_10pct": 0.0568129062,
+      "bias_ci95": [
+        0.9085836988,
+        0.9472031021
+      ],
+      "res68_ci95": [
+        1.1543707235,
+        1.1821142275
+      ],
+      "full_rms_ci95": [
+        2.1404839442,
+        2.3857898861
+      ],
+      "high_bias_tail_ci95": [
+        0.8649046657,
+        0.8946635119
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "p04_frozen_mlp",
+      "n": 17232,
+      "bias_median_frac": 0.1134652009,
+      "res68_abs_frac": 1.4813596045,
+      "full_rms_frac": 112812.7523487638,
+      "high_bias_tail_fraction": 0.8853876509,
+      "within_10pct": 0.0451485608,
+      "bias_ci95": [
+        -0.0440044276,
+        0.3359361745
+      ],
+      "res68_ci95": [
+        1.1066956986,
+        1.9983268328
+      ],
+      "full_rms_ci95": [
+        5958.5568900158,
+        169651.7229472006
+      ],
+      "high_bias_tail_ci95": [
+        0.8756795388,
+        0.8941371091
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "p04f_residual_mlp",
+      "n": 17232,
+      "bias_median_frac": -0.0035599022,
+      "res68_abs_frac": 0.0759400383,
+      "full_rms_frac": 0.2064397379,
+      "high_bias_tail_fraction": 0.0788649025,
+      "within_10pct": 0.7578342618,
+      "bias_ci95": [
+        -0.0079893094,
+        0.0011792336
+      ],
+      "res68_ci95": [
+        0.0669536743,
+        0.0883674581
+      ],
+      "full_rms_ci95": [
+        0.1872639333,
+        0.2256582615
+      ],
+      "high_bias_tail_ci95": [
+        0.0700140244,
+        0.0861798318
+      ]
+    },
+    {
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "shuffled_residual_mlp",
+      "n": 17232,
+      "bias_median_frac": -0.1822859531,
+      "res68_abs_frac": 0.3170624892,
+      "full_rms_frac": 1.0350250709,
+      "high_bias_tail_fraction": 0.4731313835,
+      "within_10pct": 0.1323700093,
+      "bias_ci95": [
+        -0.2062385905,
+        -0.1559484149
+      ],
+      "res68_ci95": [
+        0.2911206224,
+        0.3511282679
+      ],
+      "full_rms_ci95": [
+        0.771545359,
+        1.3303340123
+      ],
+      "high_bias_tail_ci95": [
+        0.4099546002,
+        0.5394781807
+      ]
+    }
+  ],
+  "stratum_deltas": [
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "peak_charge_calibrated",
+      "n_anomaly": 4763,
+      "n_control": 4762,
+      "delta_bias_median_frac": 11.5488910526,
+      "delta_res68_abs_frac": 13.320396626,
+      "delta_high_bias_tail_fraction": 0.7015961003,
+      "delta_bias_ci95": [
+        11.2677162467,
+        11.9633986592
+      ],
+      "delta_res68_ci95": [
+        13.1005932356,
+        13.6093352214
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.6835424796,
+        0.7158474625
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "integral_calibrated",
+      "n_anomaly": 4763,
+      "n_control": 4762,
+      "delta_bias_median_frac": 5.8034403992,
+      "delta_res68_abs_frac": 6.8999871476,
+      "delta_high_bias_tail_fraction": 0.8492318333,
+      "delta_bias_ci95": [
+        5.5655892133,
+        6.0148871716
+      ],
+      "delta_res68_ci95": [
+        6.7505626499,
+        7.0825029832
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.8324885935,
+        0.8653070701
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "robust_pretrigger_charge",
+      "n_anomaly": 4763,
+      "n_control": 4762,
+      "delta_bias_median_frac": 5.8034321175,
+      "delta_res68_abs_frac": 6.8999777539,
+      "delta_high_bias_tail_fraction": 0.8492318333,
+      "delta_bias_ci95": [
+        5.5897914763,
+        6.0389015682
+      ],
+      "delta_res68_ci95": [
+        6.7270430555,
+        7.0719133078
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.834032888,
+        0.8647614927
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "template_fit_calibrated",
+      "n_anomaly": 4763,
+      "n_control": 4762,
+      "delta_bias_median_frac": 6.2237282944,
+      "delta_res68_abs_frac": 9.9225055477,
+      "delta_high_bias_tail_fraction": 0.5810588638,
+      "delta_bias_ci95": [
+        5.4213431961,
+        7.2273197034
+      ],
+      "delta_res68_ci95": [
+        9.4341221077,
+        10.5616810017
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.5641445538,
+        0.5998394854
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "p04_frozen_mlp",
+      "n_anomaly": 4763,
+      "n_control": 4762,
+      "delta_bias_median_frac": 1.8031058143,
+      "delta_res68_abs_frac": 2.1034277695,
+      "delta_high_bias_tail_fraction": -0.0069090073,
+      "delta_bias_ci95": [
+        1.3631864822,
+        2.5720528636
+      ],
+      "delta_res68_ci95": [
+        1.1172651257,
+        3.909377718
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.0365741269,
+        0.0160975425
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "p04f_residual_mlp",
+      "n_anomaly": 4763,
+      "n_control": 4762,
+      "delta_bias_median_frac": 0.0694158699,
+      "delta_res68_abs_frac": 0.3953854482,
+      "delta_high_bias_tail_fraction": 0.5336906804,
+      "delta_bias_ci95": [
+        0.0430729915,
+        0.0929992074
+      ],
+      "delta_res68_ci95": [
+        0.3515515594,
+        0.4505445162
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.4976514931,
+        0.5780293193
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "shuffled_residual_mlp",
+      "n_anomaly": 4763,
+      "n_control": 4762,
+      "delta_bias_median_frac": 5.9586211094,
+      "delta_res68_abs_frac": 8.0911199926,
+      "delta_high_bias_tail_fraction": 0.7450731229,
+      "delta_bias_ci95": [
+        5.5486760646,
+        6.3925474068
+      ],
+      "delta_res68_ci95": [
+        7.4825312844,
+        8.8424171198
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.6982849285,
+        0.7801993972
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "best_traditional_same_stratum",
+      "method": "p04_frozen_mlp_minus_robust_pretrigger_charge",
+      "n_anomaly": 4763,
+      "n_control": 4763,
+      "delta_bias_median_frac": -4.7286493864,
+      "delta_res68_abs_frac": -3.9723814222,
+      "delta_high_bias_tail_fraction": -0.0573168171,
+      "delta_bias_ci95": [
+        null,
+        null
+      ],
+      "delta_res68_ci95": [
+        null,
+        null
+      ],
+      "delta_high_bias_tail_ci95": [
+        null,
+        null
+      ]
+    },
+    {
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "best_traditional_same_stratum",
+      "method": "p04f_residual_mlp_minus_robust_pretrigger_charge",
+      "n_anomaly": 4763,
+      "n_control": 4763,
+      "delta_bias_median_frac": -5.6559348772,
+      "delta_res68_abs_frac": -6.5968251114,
+      "delta_high_bias_tail_fraction": -0.3930296032,
+      "delta_bias_ci95": [
+        null,
+        null
+      ],
+      "delta_res68_ci95": [
+        null,
+        null
+      ],
+      "delta_high_bias_tail_ci95": [
+        null,
+        null
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "peak_charge_calibrated",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": 5.7619781988,
+      "delta_res68_abs_frac": 7.7106955722,
+      "delta_high_bias_tail_fraction": 0.2230153203,
+      "delta_bias_ci95": [
+        5.6765286674,
+        5.8258093052
+      ],
+      "delta_res68_ci95": [
+        7.5001613151,
+        7.9139413203
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.2131753296,
+        0.2316454008
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "integral_calibrated",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": 2.5287328651,
+      "delta_res68_abs_frac": 4.2791047566,
+      "delta_high_bias_tail_fraction": 0.5060352832,
+      "delta_bias_ci95": [
+        1.2680639203,
+        3.4515361795
+      ],
+      "delta_res68_ci95": [
+        3.6595273248,
+        4.8734443589
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.4860973191,
+        0.5274218864
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "robust_pretrigger_charge",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": 2.5287513382,
+      "delta_res68_abs_frac": 4.2790894047,
+      "delta_high_bias_tail_fraction": 0.5060352832,
+      "delta_bias_ci95": [
+        1.1899641918,
+        3.4045427196
+      ],
+      "delta_res68_ci95": [
+        3.5921982524,
+        4.7949706395
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.4832308931,
+        0.5295760499
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "template_fit_calibrated",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": -1.0897961607,
+      "delta_res68_abs_frac": 1.7895289731,
+      "delta_high_bias_tail_fraction": -0.014275766,
+      "delta_bias_ci95": [
+        -1.2013998192,
+        -0.9190227244
+      ],
+      "delta_res68_ci95": [
+        -0.2752449572,
+        4.6678056365
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.0251814273,
+        -0.0029031913
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "p04_frozen_mlp",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": 4.2768791138,
+      "delta_res68_abs_frac": 21.4726732777,
+      "delta_high_bias_tail_fraction": 0.0336002786,
+      "delta_bias_ci95": [
+        2.5985271358,
+        6.8561303749
+      ],
+      "delta_res68_ci95": [
+        7.5753638015,
+        69.3742828325
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.0118752518,
+        0.0506565518
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "p04f_residual_mlp",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": -0.0121880965,
+      "delta_res68_abs_frac": 0.298082645,
+      "delta_high_bias_tail_fraction": 0.4391829155,
+      "delta_bias_ci95": [
+        -0.031405612,
+        0.0083577313
+      ],
+      "delta_res68_ci95": [
+        0.2814475949,
+        0.3198935708
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.4149333922,
+        0.4622350542
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "shuffled_residual_mlp",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": 2.0373268733,
+      "delta_res68_abs_frac": 4.6107489897,
+      "delta_high_bias_tail_fraction": 0.3901462396,
+      "delta_bias_ci95": [
+        1.2941810288,
+        3.2356611902
+      ],
+      "delta_res68_ci95": [
+        3.7464004684,
+        5.3603628845
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.3348427147,
+        0.4597045901
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "best_traditional_same_stratum",
+      "method": "p04_frozen_mlp_minus_template_fit_calibrated",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": 4.5498246178,
+      "delta_res68_abs_frac": 19.997437092,
+      "delta_high_bias_tail_fraction": 0.0512999071,
+      "delta_bias_ci95": [
+        null,
+        null
+      ],
+      "delta_res68_ci95": [
+        null,
+        null
+      ],
+      "delta_high_bias_tail_ci95": [
+        null,
+        null
+      ]
+    },
+    {
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "best_traditional_same_stratum",
+      "method": "p04f_residual_mlp_minus_template_fit_calibrated",
+      "n_anomaly": 17232,
+      "n_control": 17232,
+      "delta_bias_median_frac": 0.1437323044,
+      "delta_res68_abs_frac": -2.582573107,
+      "delta_high_bias_tail_fraction": -0.3496402043,
+      "delta_bias_ci95": [
+        null,
+        null
+      ],
+      "delta_res68_ci95": [
+        null,
+        null
+      ],
+      "delta_high_bias_tail_ci95": [
+        null,
+        null
+      ]
+    }
+  ],
+  "leakage_audit": {
+    "train_heldout_overlap_total": 0,
+    "shuffled_residual_res68_all_valid": 0.16738659484716772,
+    "p04f_residual_res68_all_valid": 0.056402459545254906,
+    "p04_reference_charge_ml_res68": 0.0150719202
+  },
+  "finding": "Baseline-excursion rows do shift traditional robust-charge closure: matched-control res68 delta is 6.9000 and high-bias-tail delta is 0.8492. Early-pretrigger rows show res68 delta 4.2791. Across all valid rows the best traditional method is robust_pretrigger_charge at res68 0.1196; P04f residual MLP is 0.0564. Within baseline-excursion rows, P04f residual MLP minus best traditional res68 is -6.5968. The anomaly strata are therefore not harmless for traditional charge closure, but the ML gain remains a duplicate-readout electronics closure.",
+  "runtime_sec": 628.1
+}

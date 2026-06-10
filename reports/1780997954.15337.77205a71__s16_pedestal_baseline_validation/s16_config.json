@@ -1,0 +1,41 @@
+{
+  "study": "S16",
+  "ticket": "1780997954.15337.77205a71",
+  "worker": "testbeam-laptop-1",
+  "title": "Pedestal/baseline validation",
+  "raw_root_dir": "data/root/root",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "calibration_runs": [56, 64],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "negative_tolerance_adc": {"floor": 25.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.35, "low_fraction": 0.05, "negative_adc": 50.0},
+  "amplitude_bins": [1000.0, 3000.0, 7000.0, 20000.0],
+  "pre_registered": {
+    "metric": "held-out pre-trigger residual MAE and mean bias, evaluated on runs 57 and 65",
+    "primary_claim_test": "adaptive positivity-constrained pedestal is unbiased if the held-out mean residual CI includes 0 ADC and its MAE is not worse than the simple leave-one-out median by more than 5 ADC",
+    "traditional_methods": ["leave-one-out pre-trigger median", "leave-one-out pre-trigger mean", "adaptive positivity-constrained pedestal using the other pre-trigger samples"],
+    "ml_method": "run-split histogram-gradient-boosted regressor predicting the held-out pre-trigger sample, with hyperparameter CV and calibration on runs 56 and 64",
+    "significance_level": 0.05
+  },
+  "ml": {
+    "random_seed": 16016,
+    "max_records": 90000,
+    "cv_folds": 3,
+    "bootstrap_replicates": 400,
+    "hyperparameters": {
+      "max_leaf_nodes": [7, 15, 31],
+      "learning_rate": [0.04, 0.08],
+      "l2_regularization": [0.0, 0.1]
+    }
+  }
+}

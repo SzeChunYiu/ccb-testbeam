@@ -1,0 +1,8 @@
+heldout_run,traditional_base_method,analytic_candidate,analytic_alpha,mlp_hidden,mlp_weight_decay,mlp_n_features,cnn_channels,cnn_weight_decay,cnn_n_features
+58,template_phase,amp_only,100.0,32,0.001,21,8,0.001,21
+59,template_phase,amp_only,100.0,32,0.001,21,8,0.001,21
+60,template_phase,amp_only,100.0,32,0.001,21,8,0.001,21
+61,template_phase,amp_only,100.0,32,0.001,21,8,0.001,21
+62,template_phase,amp_only,100.0,32,0.001,21,8,0.001,21
+63,template_phase,amp_only,100.0,32,0.001,21,8,0.001,21
+65,template_phase,amp_only,100.0,32,0.001,21,8,0.001,21

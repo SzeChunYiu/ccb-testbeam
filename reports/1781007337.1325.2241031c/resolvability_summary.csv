@@ -1,0 +1,3 @@
+method,resolvable_delay_ns,n_heldout_runs
+constrained_template_fit,60.0,2
+compact_mlp_classifier_regressor,20.0,2

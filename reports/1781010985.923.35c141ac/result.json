@@ -1,0 +1,80 @@
+{
+  "study": "S03d",
+  "ticket": "1781010985.923.35c141ac",
+  "worker": "testbeam-laptop-2",
+  "title": "leave-one-run-out stability for S03a amp-only and S03b monotone-binned/HGB corrections",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.68944645179862,
+      2.992319268962799
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only": {
+      "method": "amp_only_ridge_residual_on_template_phase",
+      "value": 1.5510917109777858,
+      "ci": [
+        1.3685046513821135,
+        1.9252882940873983
+      ],
+      "gain_vs_template_phase_ns": 1.1903228191074298
+    },
+    "s03b_monotone_binned": {
+      "method": "per_stave_monotone_decreasing_binned_timewalk",
+      "value": 1.6451494274970766,
+      "ci": [
+        1.3217498254041793,
+        1.930548094627909
+      ],
+      "gain_vs_template_phase_ns": 1.096265102588139,
+      "delta_vs_s03a_amp_only_ns": -0.09405771651929085
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.3939661218709831,
+    "ci": [
+      1.2416456045732125,
+      1.6822828951298068
+    ],
+    "gain_vs_template_phase_ns": 1.3474484082142324,
+    "gain_vs_s03b_monotone_binned_ns": 0.2511833056260935
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.654429836335119,
+    "hgb_looks_too_good": false,
+    "leakage_flag": false
+  },
+  "verdict": "stable_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "5a5775794c42f635235dcfa9d7df639716d9b972",
+  "critic": "pending",
+  "next_tickets": [
+    "S03e: blind Sample-I to Sample-II transfer for S03a/S03b/HGB timewalk corrections",
+    "S03f: constrain S03b monotone bins with physically signed shared-stave shrinkage"
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "study": "S03f",
+  "ticket": "1781020980.5815.7557392d",
+  "worker": "testbeam-laptop-2",
+  "title": "robust heavy-tail analytic timewalk loss for run-61-like folds",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03d_run61_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6842165631742354,
+      2.9907208392164892
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only_global": {
+      "value": 1.5510917109777858,
+      "ci": [
+        1.3740229165969928,
+        1.9097956378306435
+      ]
+    },
+    "s03d_hierarchical_shrinkage": {
+      "value": 1.2509990385255223,
+      "ci": [
+        1.07216210814694,
+        1.4866019839880573
+      ]
+    },
+    "robust_huber_ridge": {
+      "value": 1.5472355411124823,
+      "ci": [
+        1.3407478633543826,
+        1.8961125700155104
+      ],
+      "delta_vs_s03d_hierarchical_ns": -0.29623650258696
+    },
+    "robust_trimmed_ridge": {
+      "value": 1.5451580825813411,
+      "ci": [
+        1.3491967595138303,
+        1.8838054861115658
+      ],
+      "delta_vs_s03d_hierarchical_ns": -0.29415904405581883
+    },
+    "best_robust_method": "robust_trimmed_ridge",
+    "best_robust": {
+      "value": 1.5451580825813411,
+      "ci": [
+        1.3491967595138303,
+        1.8838054861115658
+      ]
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_absolute_error_residual_corrector",
+    "value": 1.3436362736320098,
+    "ci": [
+      1.1423772571646662,
+      1.6858695449796444
+    ],
+    "delta_vs_s03d_hierarchical_ns": -0.09263723510648747
+  },
+  "run61": {
+    "s03d_hierarchical_sigma68_ns": 1.6353703774060107,
+    "best_robust_method": "robust_trimmed_ridge",
+    "best_robust_sigma68_ns": 2.13632017149636,
+    "best_robust_ci": [
+      2.000083077055769,
+      2.223256482658328
+    ],
+    "ml_hgb_absolute_error_sigma68_ns": 1.9248571322563934,
+    "n_pair_residuals": 2799,
+    "interpretation": "robust_loss_does_not_explain_run61_width"
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.6274229295821763,
+    "looks_too_good": false,
+    "leakage_flag": false
+  },
+  "verdict": "run61_not_primarily_heavy_tail_loss_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "d41ee8cf55c40426cf15cefde93ef8c671b5c7d1",
+  "critic": "pending",
+  "next_tickets": []
+}

@@ -1,0 +1,37 @@
+{
+  "critic": "pending",
+  "input_sha256": "input_sha256.csv",
+  "leakage_checks_passed": true,
+  "ml": {
+    "ci": [
+      0.9796028880866426,
+      0.9804096170970614
+    ],
+    "method": "logistic_honest_raw_summaries",
+    "metric": "heldout_selection_accuracy",
+    "value": 0.98000896458987
+  },
+  "ml_beats_baseline": false,
+  "reproduced": true,
+  "study": "S01d",
+  "ticket": "1781028640.1299.266407ae",
+  "traditional": {
+    "ci": [
+      640737,
+      640737
+    ],
+    "content_sha256": "6b5b965babbf658e0c42b366a186b82defd5cdb904be125ef78c4ee7b796bb8a",
+    "gzip_sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+    "metric": "selected_table_rows_and_sha256",
+    "value": 640737
+  },
+  "traditional_heldout": {
+    "ci": [
+      1.0,
+      1.0
+    ],
+    "metric": "heldout_selection_accuracy",
+    "value": 1.0
+  },
+  "worker": "testbeam-laptop-4"
+}

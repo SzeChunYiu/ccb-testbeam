@@ -1,0 +1,54 @@
+{
+  "study_id": "P07f",
+  "ticket_id": "1781019500.1759.55e62bed",
+  "title": "calibrate natural B2 saturation knees with odd-channel duplicates",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781019500.1759.55e62bed",
+  "amplitude_cut_adc": 1000.0,
+  "saturation_proxy_adc": 7000.0,
+  "expected_selected_pulses": 640737,
+  "expected_p07e_high_duplicate_rows": 183132,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "duplicate_selection": {
+    "min_b2_amp_adc": 1000.0,
+    "min_odd_charge": 100.0,
+    "min_odd_amp": 100.0,
+    "min_peak_sample": 3,
+    "max_peak_sample": 14
+  },
+  "traditional": {
+    "bins": 70,
+    "min_bin_rows": 30,
+    "min_run_rows": 400,
+    "grid_points": 80,
+    "min_post_to_pre_slope_ratio": 1.05,
+    "max_post_to_pre_slope_ratio": 3.0
+  },
+  "ml": {
+    "random_seed": 20260610,
+    "n_estimators": 120,
+    "max_depth": 10,
+    "min_samples_leaf": 25,
+    "max_train_rows": 120000,
+    "saturation_residual_frac": 0.08,
+    "probability_threshold": 0.5
+  },
+  "bootstrap_reps": 80
+}

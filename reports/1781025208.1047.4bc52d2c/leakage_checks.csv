@@ -1,0 +1,3 @@
+fold,train_group,eval_group,train_eval_run_overlap,train_eval_key_overlap,uses_run_or_event_features,required_controls_present,n_train_runs,n_eval_runs
+holdout_sample_i,sample_ii_calib,sample_i_analysis,,0,False,True,1,14
+holdout_sample_ii,sample_i_calib,sample_ii_analysis,,0,False,True,11,7

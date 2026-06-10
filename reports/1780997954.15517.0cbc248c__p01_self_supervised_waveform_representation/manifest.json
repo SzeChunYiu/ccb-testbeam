@@ -1,0 +1,25 @@
+{
+  "ticket_id": "1780997954.15517.0cbc248c",
+  "script": "scripts/p01_self_supervised_waveform_representation.py",
+  "config": "configs/p01_self_supervised_waveform_representation.json",
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    "REPORT.md",
+    "ae_training_loss.csv",
+    "fig_linear_probe.png",
+    "fig_reconstruction_head_to_head.png",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "linear_probe_benchmark.csv",
+    "manifest.json",
+    "reconstruction_benchmark.csv",
+    "reproduction_counts_by_group.csv",
+    "reproduction_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "result.json"
+  ]
+}

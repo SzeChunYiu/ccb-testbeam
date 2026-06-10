@@ -1,0 +1,93 @@
+{
+  "study": "S03d",
+  "ticket": "1781011277.910.1e815d8f",
+  "worker": "testbeam-laptop-2",
+  "title": "run-level hierarchical shrinkage for analytic timewalk coefficients",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6808109129566127,
+      2.9861718468144876
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only_global": {
+      "method": "global_amp_only_ridge_residual_on_template_phase",
+      "value": 1.5510917109777858,
+      "ci": [
+        1.3784319251624007,
+        1.880111706152104
+      ],
+      "gain_vs_template_phase_ns": 1.1903228191074298
+    },
+    "hierarchical_shrinkage": {
+      "method": "population_plus_run_deviation_amp_only_ridge",
+      "value": 1.2509990385255223,
+      "ci": [
+        1.0767294082963508,
+        1.4855325868217701
+      ],
+      "gain_vs_template_phase_ns": 1.4904154915596932,
+      "delta_vs_global_s03a_ns": 0.30009267245226345
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.3939661218709831,
+    "ci": [
+      1.2402236018382706,
+      1.6562701260169355
+    ],
+    "gain_vs_template_phase_ns": 1.3474484082142324,
+    "gain_vs_hierarchical_shrinkage_ns": -0.14296708334546082
+  },
+  "run61": {
+    "hierarchical_sigma68_ns": 1.6353703774060107,
+    "ci": [
+      1.5349844408260296,
+      1.6759739690001714
+    ],
+    "n_pair_residuals": 2799,
+    "pair_count_rank_desc": 1,
+    "oracle_gain_ns": 0.07966104709135058,
+    "interpretation": "not_limited_statistics; oracle adaptation tests coefficient drift but remaining width indicates misspecification or run-specific pulse pathology"
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "hgb_features_exclude_run_event_order_cross_stave_time": true,
+    "hierarchical_heldout_run_deviation_zeroed": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.628094115754946,
+    "hierarchical_looks_too_good": false,
+    "leakage_flag": false,
+    "oracle_diagnostic_uses_heldout_labels": true
+  },
+  "verdict": "run61_degradation_not_limited_stats_partial_coefficient_drift_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "81972e9d7c60336d7af287322cdd611415e7ba92",
+  "critic": "pending",
+  "next_tickets": [
+    "S03e: blind Sample-I to Sample-II transfer for S03a/S03d population coefficients",
+    "S03f: add robust heavy-tail analytic timewalk loss for run-61-like folds"
+  ]
+}

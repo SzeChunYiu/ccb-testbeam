@@ -1,0 +1,8 @@
+check,value,pass
+all_rows_have_run_heldout_predictions,13410,True
+features_exclude_identifiers_and_labels,,True
+shuffled_target_auc_near_random,0.32787469639179545,True
+axis_shuffled_control_weaker_than_tree,0.1417823994976034,True
+row_cv_not_materially_better_than_run_cv,0.033676269793589286,True
+ml_residual_gain_under_one_ns,0.3151004926597234,True
+tree_calibration_ece_under_0p03,0.003042930792107431,True

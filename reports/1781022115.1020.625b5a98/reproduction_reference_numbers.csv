@@ -1,0 +1,5 @@
+quantity,heldout_run,reproduced_sigma68_ns,reference_sigma68_ns,delta_ns,pass
+S02 global-template traditional template_phase,65,2.889152765080617,2.889152765080617,0.0,True
+S02 ML ridge,65,1.8461136615529075,1.8461136615528786,2.886579864025407e-14,True
+S02b binned-template timewalk,65,3.4037013456536833,3.4037013456536833,0.0,True
+S02b global-template timewalk,65,1.635417339803972,1.635417339803972,0.0,True

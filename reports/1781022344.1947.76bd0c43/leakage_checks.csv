@@ -1,0 +1,7 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,run-disjoint split
+train_heldout_event_id_overlap,0.0,True,event ids include run and raw event counters
+model_features_include_run_event_or_stave_id,0.0,True,none
+rounded_waveform_hash_overlap_train_heldout,0.0,True,normalized waveforms rounded to 1e-3
+stave_only_proxy_average_precision,0.046506153583415144,True,proxy should underperform full no-id model
+suspicious_result_triggered_extra_checks,0.0,True,triggered if selected cut reduces heldout tail rate by >50 pct or below 1 pct

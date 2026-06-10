@@ -1,0 +1,55 @@
+{
+  "study": "S02b",
+  "ticket": "1781000705.514762.105c186b",
+  "worker": "testbeam-laptop-2",
+  "title": "template alignment with amplitude-binned templates and timewalk closure",
+  "reproduced_raw_root_first": true,
+  "s02_reference_reproduced": {
+    "S02 global-template traditional template_phase": {
+      "value_sigma68_ns": 2.889152765080617,
+      "published_s02_value_ns": 2.889152765080617,
+      "delta_vs_published_ns": 0.0
+    },
+    "S02 ML ridge": {
+      "value_sigma68_ns": 1.8461136615529075,
+      "published_s02_value_ns": 1.8461136615528786,
+      "delta_vs_published_ns": 2.886579864025407e-14
+    }
+  },
+  "traditional": {
+    "method": "global_template_phase_plus_train_only_polynomial_timewalk",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "value": 1.635417339803972,
+    "ci": [
+      1.4661449413447352,
+      1.9074254671441928
+    ]
+  },
+  "amplitude_binned_template_timewalk": {
+    "method": "amplitude_binned_aligned_template_plus_polynomial_timewalk",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "value": 3.4037013456536833,
+    "ci": [
+      2.8839793342198248,
+      4.022313813479365
+    ]
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_cfd20",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "value": 1.8461136615529075,
+    "ci": [
+      1.4820146476836744,
+      2.035135703959928
+    ]
+  },
+  "ml_minus_traditional_sigma68_ns": 0.2106963217489355,
+  "traditional_erases_s02_ml_gain": false,
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S02c: per-run drift nuisance in amplitude-binned template/timewalk closure",
+    "S03b: analytic downstream-only timewalk model stress test on B4/B6/B8"
+  ],
+  "git_commit": "39762f8f205b46ce0b6fc63d74873e05240b22d6"
+}

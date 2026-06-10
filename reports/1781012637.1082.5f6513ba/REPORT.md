@@ -1,0 +1,60 @@
+# P10d: conditional template with explicit timewalk handles under family holdout
+
+- **Ticket ID:** 1781012637.1082.5f6513ba
+- **Worker:** testbeam-laptop-4
+- **Input:** raw B-stack ROOT under `data/root/root`
+- **Config:** `configs/p10d_1781012637_1082_5f6513ba.yaml`
+- **Git commit:** d37b109a690cc4cabb03d4f542611dfe85127aa2
+
+## Raw-ROOT reproduction gate
+
+The selected B-stave pulse table was rebuilt from raw `HRDv` waveforms before any modeling: median baseline over samples 0-3, B2/B4/B6/B8, and `A > 1000` ADC.
+
+| quantity                        |   expected |   reproduced |   delta | pass   |
+|:--------------------------------|-----------:|-------------:|--------:|:-------|
+| S00/S01 selected B-stave pulses |     640737 |       640737 |       0 | True   |
+| analysis selected rows          |     377362 |       377362 |       0 | True   |
+
+## Methods
+
+Split: the P10c leave-one-run-family-out split, so Sample I analysis runs are held out after training on run 64 only, and Sample II analysis runs are held out after training on Sample I calibration runs 31-42.
+
+Empirical-bin baseline: S01/P10c train-only median aligned templates per stave and amplitude bin.
+
+Strong traditional method: empirical templates additionally binned by train-quantile rise-width and tail-summary handles, with hierarchical fallback to the amplitude-bin template when a cell has fewer than the configured training pulses.
+
+ML method: multi-output ExtraTrees predicts the CFD20-aligned normalized waveform from same-pulse amplitude, train-centered CFD position, rise/width, tail summaries, monotonic amplitude/timewalk handles (`1/sqrt(A)`, `1/A`, log terms), stave one-hot terms, and interactions. Run number, event id, event order, other-stave observables, and held-out residual labels are excluded.
+
+Extended ridge is included as a parametric diagnostic using the same handle matrix.
+
+## Held-out q-template MSE
+
+Values are means of per-run MSEs; 95% CIs bootstrap held-out runs.
+
+| fold              |   empirical_mse | empirical_mse_ci                             |   handle_binned_mse | handle_binned_mse_ci                        |   ridge_handles_mse | ridge_handles_mse_ci                       |   extra_trees_mse | extra_trees_mse_ci                           |   shuffled_extra_trees_mse |   delta_extra_trees_mse_minus_empirical | delta_extra_trees_mse_minus_empirical_ci       |
+|:------------------|----------------:|:---------------------------------------------|--------------------:|:--------------------------------------------|--------------------:|:-------------------------------------------|------------------:|:---------------------------------------------|---------------------------:|----------------------------------------:|:-----------------------------------------------|
+| holdout_sample_i  |       0.0477821 | [0.033584337471470806, 0.062277572305694986] |           0.0597976 | [0.04833782590216384, 0.07141078434909606]  |           0.0251044 | [0.02070525229930668, 0.02965085941378238] |         0.016209  | [0.012550372123577846, 0.02013874494622243]  |                  0.0805686 |                             -0.0315731  | [-0.042755484381146666, -0.021086876501398448] |
+| holdout_sample_ii |       0.0389922 | [0.028944669072985048, 0.045920379497486605] |           0.0639939 | [0.056928349692986636, 0.06937584279733153] |           0.0429427 | [0.03882555540282498, 0.04677982455125946] |         0.0319112 | [0.029364361710794925, 0.034277478039270705] |                  0.0868083 |                             -0.00708096 | [-0.012741511336757994, 0.0011747366592150584] |
+
+## Leakage audit
+
+| fold              | train_eval_run_overlap   |   train_eval_key_overlap | uses_run_or_event_features   | uses_other_stave_features   |   feature_count | extra_trees_beats_empirical_ci   | shuffled_beats_real_ci   |
+|:------------------|:-------------------------|-------------------------:|:-----------------------------|:----------------------------|----------------:|:---------------------------------|:-------------------------|
+| holdout_sample_i  | []                       |                        0 | False                        | False                       |              94 | True                             | False                    |
+| holdout_sample_ii | []                       |                        0 | False                        | False                       |              94 | False                            | False                    |
+
+The same-pulse handles are intentionally aggressive, so the shuffled-target ExtraTrees control is reported beside the real model. No result is treated as a rescue unless it beats the empirical-bin baseline under the run-bootstrap CI and also separates from the shuffled-target control.
+
+## Finding
+
+Strong traditional handle bins rescue q-space under both family holdouts: `False`.
+ExtraTrees handle conditioning rescues q-space under both family holdouts: `False`.
+The answer is therefore based on the held-out run CIs above rather than on row-level scores.
+
+No Monte Carlo was used. `result.json`, `manifest.json`, `input_sha256.csv`, run-level CSVs, CV CSVs, leakage checks, and handle-bin counts are in this report directory.
+
+## Reproduce
+
+```bash
+/home/billy/anaconda3/bin/python scripts/p10d_1781012637_1082_5f6513ba.py --config configs/p10d_1781012637_1082_5f6513ba.yaml
+```

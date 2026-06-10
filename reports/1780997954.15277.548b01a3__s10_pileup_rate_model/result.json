@@ -1,0 +1,55 @@
+{
+  "study": "S10",
+  "ticket": "1780997954.15277.548b01a3",
+  "worker": "testbeam-laptop-5",
+  "title": "Pile-up rate model and current-dependent excess",
+  "reproduced": true,
+  "repro_tolerance": "current topology fractions within 0.15 percentage point; combined Rmax within 0.02 MHz",
+  "traditional": {
+    "metric": "downstream_high_minus_low_per_selected_event",
+    "value": 0.010289747149522063,
+    "ci": [
+      0.006367044044861144,
+      0.014212450254182982
+    ],
+    "excess_fraction_high": 0.3079462164012912,
+    "notes": "Analytic current fraction and Poisson occupancy model."
+  },
+  "ml": {
+    "metric": "ml_score_high_minus_low_mean",
+    "value": 0.036049898928064344,
+    "ci": null,
+    "excess_fraction_high": 0.2290350315229934,
+    "notes": "Injection-trained calibrated logistic score trained on low-current pulses and transferred to real high-current pulses."
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "preregistered_metric": "combined Rmax and downstream high-low excess",
+    "p_value": null,
+    "n_tries": 1,
+    "result": "Poisson Rmax reproduced; downstream high-low excess CI excludes zero. ML score is a diagnostic, not production-superior."
+  },
+  "input_sha256": {
+    "hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b",
+  "critic": "pending",
+  "next_tickets": [
+    "S10b: measure tau_eff with a timing-template decay/live-time fit",
+    "S13b: run-transfer CWoLa current classifier with multiple low/high-current runs"
+  ],
+  "runtime_sec": 6.17
+}

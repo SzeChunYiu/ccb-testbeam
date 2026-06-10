@@ -1,0 +1,192 @@
+{
+  "ticket": "1781010419.1274.000b7be0",
+  "study": "S16d",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "8dd38baebdff5b068a8c177c9e0d52bf97f778d0",
+  "runtime_sec": 99.23829483985901,
+  "reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "selected_pass": true,
+    "forced_random_tagged_entries": 0,
+    "forced_random_pass": true,
+    "true_forced_random_sample_available": false
+  },
+  "filesystem_scan": {
+    "files_scanned": 220,
+    "likely_runlog_or_metadata_files": 0,
+    "forced_random_name_hits": 0
+  },
+  "root_audit": {
+    "root_files_scanned": 110,
+    "populated_root_files": 102,
+    "non_beam_trigger_entries": 0,
+    "filename_forced_random_hits": 0
+  },
+  "traditional": {
+    "selected_heldout_summary": [
+      {
+        "method": "adaptive_pc",
+        "lowering_stratum": "s16_large_lowering",
+        "n": 10921,
+        "mean_bias_adc": -2186.389110429448,
+        "mae_adc": 2362.642830784727,
+        "rmse_adc": 3378.306768832775,
+        "median_bias_adc": -1440.665,
+        "q05_adc": -6666.145,
+        "q95_adc": 454.5050000000001,
+        "mean_bias_ci_low_adc": -2655.1961866081056,
+        "mean_bias_ci_high_adc": -1523.232693205043,
+        "mae_ci_low_adc": 1722.2630705750498,
+        "mae_ci_high_adc": 2808.0525089957023
+      },
+      {
+        "method": "adaptive_pc",
+        "lowering_stratum": "s16_mild_lowering",
+        "n": 3896,
+        "mean_bias_adc": -470.8971868583162,
+        "mae_adc": 521.6286396303902,
+        "rmse_adc": 1278.6744997049136,
+        "median_bias_adc": 2.0,
+        "q05_adc": -3189.0825,
+        "q95_adc": 96.05000000000018,
+        "mean_bias_ci_low_adc": -505.72068162859415,
+        "mean_bias_ci_high_adc": -420.073627401169,
+        "mae_ci_low_adc": 486.60099812499993,
+        "mae_ci_high_adc": 560.8459914741094
+      },
+      {
+        "method": "adaptive_pc",
+        "lowering_stratum": "s16_no_lowering",
+        "n": 92667,
+        "mean_bias_adc": -55.563105150700906,
+        "mae_adc": 64.68242108841336,
+        "rmse_adc": 402.45782011930777,
+        "median_bias_adc": 0.0,
+        "q05_adc": -125.0,
+        "q95_adc": 20.0,
+        "mean_bias_ci_low_adc": -65.12587126214935,
+        "mean_bias_ci_high_adc": -45.66759672247415,
+        "mae_ci_low_adc": 53.46701798682307,
+        "mae_ci_high_adc": 75.36184766397623
+      },
+      {
+        "method": "mean3",
+        "lowering_stratum": "not_applicable",
+        "n": 107484,
+        "mean_bias_adc": -2.2744983052041525e-14,
+        "mae_adc": 247.28183419547713,
+        "rmse_adc": 791.397217154484,
+        "median_bias_adc": 1.6666666666669698,
+        "q05_adc": -642.5166666666664,
+        "q95_adc": 706.6666666666669,
+        "mean_bias_ci_low_adc": -4.568460610496693,
+        "mean_bias_ci_high_adc": 4.271510424561538,
+        "mae_ci_low_adc": 214.57557052781502,
+        "mae_ci_high_adc": 279.55379180823724
+      },
+      {
+        "method": "median3",
+        "lowering_stratum": "not_applicable",
+        "n": 107484,
+        "mean_bias_adc": -35.32396449704142,
+        "mae_adc": 260.1327732499721,
+        "rmse_adc": 898.2806891107233,
+        "median_bias_adc": 0.0,
+        "q05_adc": -893.0,
+        "q95_adc": 404.0,
+        "mean_bias_ci_low_adc": -45.38748734909275,
+        "mean_bias_ci_high_adc": -25.957625546479523,
+        "mae_ci_low_adc": 233.35815117349287,
+        "mae_ci_high_adc": 286.07060268018506
+      }
+    ],
+    "quiet_proxy_heldout_summary": [
+      {
+        "lowering_stratum": "s16_large_lowering",
+        "n": 359,
+        "mean_bias_adc": -992.3175487465181,
+        "mae_adc": 992.8022284122562,
+        "rmse_adc": 1426.1441480156275,
+        "median_bias_adc": -513.0,
+        "q05_adc": -2970.1,
+        "q95_adc": -26.900000000000034,
+        "mean_bias_ci_low_adc": -1194.1198979591836,
+        "mean_bias_ci_high_adc": -284.8961538461539,
+        "mae_ci_low_adc": 278.4248076923077,
+        "mae_ci_high_adc": 1178.4876700680272
+      },
+      {
+        "lowering_stratum": "s16_mild_lowering",
+        "n": 24086,
+        "mean_bias_adc": -1.8602092501868306,
+        "mae_adc": 14.744125217968945,
+        "rmse_adc": 19.612188109555078,
+        "median_bias_adc": 2.0,
+        "q05_adc": -38.0,
+        "q95_adc": 23.0,
+        "mean_bias_ci_low_adc": -2.1079585196685326,
+        "mean_bias_ci_high_adc": -1.6046897353819582,
+        "mae_ci_low_adc": 14.55931377825619,
+        "mae_ci_high_adc": 14.884923435461394
+      },
+      {
+        "lowering_stratum": "s16_no_lowering",
+        "n": 47879,
+        "mean_bias_adc": -6.499133231688214,
+        "mae_adc": 13.308485975062135,
+        "rmse_adc": 18.663506896957152,
+        "median_bias_adc": -2.5,
+        "q05_adc": -41.0,
+        "q95_adc": 16.0,
+        "mean_bias_ci_low_adc": -6.679836450204545,
+        "mean_bias_ci_high_adc": -6.215587080894093,
+        "mae_ci_low_adc": 13.151008847791378,
+        "mae_ci_high_adc": 13.424901299327914
+      }
+    ]
+  },
+  "ml": {
+    "best": {
+      "C": 10.0,
+      "cv_auc": 0.9947405875461848,
+      "cv_auc_std": 0.0017302922634878997,
+      "cv_average_precision": 0.9934189963226895
+    },
+    "feature_columns": [
+      "stave_idx",
+      "log_amplitude_adc",
+      "peak_sample",
+      "pre0_over_amp",
+      "pre1_over_amp",
+      "pre2_over_amp",
+      "pre3_over_amp",
+      "pre_range_over_amp",
+      "pre_std_over_amp",
+      "pre_max_minus_seed_over_amp"
+    ],
+    "heldout": {
+      "method": "ml_pretrigger_logistic_large_lowering",
+      "heldout_runs": "57,65",
+      "n": 6559,
+      "positive_fraction": 0.4555572495807288,
+      "auc": 0.9970087575167655,
+      "auc_ci_low": 0.9943550447871455,
+      "auc_ci_high": 0.9994692990065517,
+      "average_precision": 0.9970386595307517,
+      "average_precision_ci_low": 0.995071096092962,
+      "average_precision_ci_high": 0.9992333779819844
+    }
+  },
+  "leakage_checks_pass": true,
+  "conclusion": "No true forced/random pedestal sample is present; available raw-data tests support interpreting S16 large lowering as pre-trigger contamination/pathology rather than a true pedestal-bias stratum.",
+  "next_tickets": [
+    {
+      "title": "S16e: ingest external forced/random HRD pedestal run log",
+      "body": "Add any external DAQ/run-log metadata or newly mirrored forced/random HRD ROOT files, then rerun S16d without quiet-proxy fallback and with the same by-run bootstrap CIs."
+    },
+    {
+      "title": "S16f: event-display audit of large-lowering selected pulses",
+      "body": "Create a blinded waveform gallery for held-out s16_large_lowering pulses and classify whether the lowering source is pre-trigger contamination, post-trigger undershoot, pile-up, or electronics baseline drift."
+    }
+  ]
+}

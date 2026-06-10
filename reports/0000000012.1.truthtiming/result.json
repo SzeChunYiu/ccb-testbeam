@@ -1,0 +1,446 @@
+{
+  "all_metrics": [
+    {
+      "bias_ns": 1.9576743840584704e-06,
+      "bias_ns_ci95": [
+        -1.5363707588463573e-05,
+        1.9763944624847697e-05
+      ],
+      "family": "ml_tree",
+      "mae_ns": 0.0009466149110294847,
+      "mae_ns_ci95": [
+        0.000936312505211481,
+        0.0009586629266376646
+      ],
+      "median_error_ns": 4.27511728935126e-05,
+      "method": "gradient_boosted_trees",
+      "n": 70094,
+      "p95_abs_ns": 0.003018162260543985,
+      "p95_abs_ns_ci95": [
+        0.002966074468409871,
+        0.003067322092820223
+      ],
+      "res68_abs_ns": 0.0008930386045432432,
+      "res68_abs_ns_ci95": [
+        0.0008888938597387196,
+        0.0008963682046685394
+      ],
+      "rms_ns": 0.001945508152670159
+    },
+    {
+      "bias_ns": -0.00010560941914974689,
+      "bias_ns_ci95": [
+        -0.00014065848423911077,
+        -7.643657125261673e-05
+      ],
+      "family": "neural_physics_residual",
+      "mae_ns": 0.0015645591716522014,
+      "mae_ns_ci95": [
+        0.0015383069285486114,
+        0.0015918071456208598
+      ],
+      "median_error_ns": -0.00017042123365207384,
+      "method": "physics_residual_mlp",
+      "n": 70094,
+      "p95_abs_ns": 0.004232716838931746,
+      "p95_abs_ns_ci95": [
+        0.004157294728504943,
+        0.0043089352369430345
+      ],
+      "res68_abs_ns": 0.0016035232384133354,
+      "res68_abs_ns_ci95": [
+        0.0015851072637591691,
+        0.0016161933205251367
+      ],
+      "rms_ns": 0.002939864393989636
+    },
+    {
+      "bias_ns": -0.0001267772327049848,
+      "bias_ns_ci95": [
+        -0.00016092198524572852,
+        -8.788360479144155e-05
+      ],
+      "family": "neural_sequence",
+      "mae_ns": 0.0023060214621621073,
+      "mae_ns_ci95": [
+        0.00228049924751229,
+        0.0023294419672071232
+      ],
+      "median_error_ns": 7.664501921933464e-05,
+      "method": "1d_cnn",
+      "n": 70094,
+      "p95_abs_ns": 0.006250450385923134,
+      "p95_abs_ns_ci95": [
+        0.006131590288121407,
+        0.006352705090614718
+      ],
+      "res68_abs_ns": 0.0023140478887295046,
+      "res68_abs_ns_ci95": [
+        0.0022959977747619375,
+        0.002327411805116223
+      ],
+      "rms_ns": 0.004446689861615858
+    },
+    {
+      "bias_ns": -0.0017819510537123533,
+      "bias_ns_ci95": [
+        -0.001800850100710489,
+        -0.0017580071067291939
+      ],
+      "family": "neural_tabular",
+      "mae_ns": 0.0025682143957888007,
+      "mae_ns_ci95": [
+        0.0025518917092577803,
+        0.002585249761089114
+      ],
+      "median_error_ns": -0.0012036764621665696,
+      "method": "mlp",
+      "n": 70094,
+      "p95_abs_ns": 0.008588667770039877,
+      "p95_abs_ns_ci95": [
+        0.008534740062501696,
+        0.008665227198731529
+      ],
+      "res68_abs_ns": 0.0024032863952946565,
+      "res68_abs_ns_ci95": [
+        0.00238386238784554,
+        0.0024235924131951955
+      ],
+      "rms_ns": 0.00404151399684885
+    },
+    {
+      "bias_ns": -1.60767877373031e-05,
+      "bias_ns_ci95": [
+        -3.129965396281079e-05,
+        -8.771877921533534e-07
+      ],
+      "family": "ml_linear",
+      "mae_ns": 0.002663980510242839,
+      "mae_ns_ci95": [
+        0.0026304683194175384,
+        0.0026975794375888418
+      ],
+      "median_error_ns": 0.00013046490230420038,
+      "method": "ridge",
+      "n": 70094,
+      "p95_abs_ns": 0.007303018292760346,
+      "p95_abs_ns_ci95": [
+        0.007183134427385567,
+        0.007427736276240683
+      ],
+      "res68_abs_ns": 0.0027615514128937146,
+      "res68_abs_ns_ci95": [
+        0.002743421077433776,
+        0.0027770722568598353
+      ],
+      "rms_ns": 0.005024561686861743
+    },
+    {
+      "bias_ns": -4.012689998262166e-05,
+      "bias_ns_ci95": [
+        -0.00011627108954987333,
+        3.1699535435085507e-05
+      ],
+      "family": "traditional_calibrated",
+      "mae_ns": 0.009039044148755627,
+      "mae_ns_ci95": [
+        0.009001358825495447,
+        0.009086096983406032
+      ],
+      "median_error_ns": -0.0020105209219682674,
+      "method": "calibrated_kinematic_tof",
+      "n": 70094,
+      "p95_abs_ns": 0.019009304146651376,
+      "p95_abs_ns_ci95": [
+        0.018974611483092152,
+        0.019041341727161886
+      ],
+      "res68_abs_ns": 0.010261259270035078,
+      "res68_abs_ns_ci95": [
+        0.010209459820082105,
+        0.010311550479251433
+      ],
+      "rms_ns": 0.01642417747168787
+    },
+    {
+      "bias_ns": 0.017460279487839684,
+      "bias_ns_ci95": [
+        0.017309479508894266,
+        0.01762946666681034
+      ],
+      "family": "traditional_relativistic",
+      "mae_ns": 0.017468898370315074,
+      "mae_ns_ci95": [
+        0.01731861109599224,
+        0.01763678219295567
+      ],
+      "median_error_ns": 0.012052188203515862,
+      "method": "truth_kinematic_tof",
+      "n": 70094,
+      "p95_abs_ns": 0.03793720994585245,
+      "p95_abs_ns_ci95": [
+        0.03750277662464677,
+        0.03827779693998588
+      ],
+      "res68_abs_ns": 0.003700182843692801,
+      "res68_abs_ns_ci95": [
+        0.003655419331796722,
+        0.0037536131277006776
+      ],
+      "rms_ns": 0.03189771647525019
+    },
+    {
+      "bias_ns": 7.001718528676537e-05,
+      "bias_ns_ci95": [
+        -0.00023094102449772584,
+        0.000298479623901189
+      ],
+      "family": "traditional_fixed_note",
+      "mae_ns": 0.03390781706744869,
+      "mae_ns_ci95": [
+        0.0338016120917753,
+        0.034018516679225626
+      ],
+      "median_error_ns": 0.011654485635365475,
+      "method": "nominal_4cm_notes",
+      "n": 70094,
+      "p95_abs_ns": 0.10325415211155688,
+      "p95_abs_ns_ci95": [
+        0.1024212728242667,
+        0.10384278386386663
+      ],
+      "res68_abs_ns": 0.036352649440908574,
+      "res68_abs_ns_ci95": [
+        0.036145724230569554,
+        0.036704827730933476
+      ],
+      "rms_ns": 0.045435549118621674
+    },
+    {
+      "bias_ns": -0.07168518941793554,
+      "bias_ns_ci95": [
+        -0.07198060621973172,
+        -0.0714589341592719
+      ],
+      "family": "traditional_fixed_energy",
+      "mae_ns": 0.07168518941793554,
+      "mae_ns_ci95": [
+        0.0714589341592719,
+        0.07198060621973172
+      ],
+      "median_error_ns": -0.06010072096785685,
+      "method": "4cm_190mev_tof",
+      "n": 70094,
+      "p95_abs_ns": 0.1750093587147792,
+      "p95_abs_ns_ci95": [
+        0.17415905755788397,
+        0.175555169065566
+      ],
+      "res68_abs_ns": 0.036352649440908574,
+      "res68_abs_ns_ci95": [
+        0.036145917585640286,
+        0.03670482773093347
+      ],
+      "rms_ns": 0.08487137681921832
+    },
+    {
+      "bias_ns": -0.15592998281471324,
+      "bias_ns_ci95": [
+        -0.15620868631234056,
+        -0.1556984363030909
+      ],
+      "family": "traditional_fixed_note",
+      "mae_ns": 0.15592998281471324,
+      "mae_ns_ci95": [
+        0.1556984363030909,
+        0.15620868631234056
+      ],
+      "median_error_ns": -0.14434551436463453,
+      "method": "nominal_2cm_notes",
+      "n": 70094,
+      "p95_abs_ns": 0.25925415211155683,
+      "p95_abs_ns_ci95": [
+        0.25840447261004595,
+        0.25984596973877194
+      ],
+      "res68_abs_ns": 0.03635264944090858,
+      "res68_abs_ns_ci95": [
+        0.036145917585640286,
+        0.03669221350878528
+      ],
+      "rms_ns": 0.16241472766316856
+    },
+    {
+      "bias_ns": 0.1594916813794887,
+      "bias_ns_ci95": [
+        0.15915977912102622,
+        0.1597179366381523
+      ],
+      "family": "traditional_fixed_energy",
+      "mae_ns": 0.15956277965950597,
+      "mae_ns_ci95": [
+        0.15924978235371792,
+        0.15978412729426755
+      ],
+      "median_error_ns": 0.17107614982956737,
+      "method": "4cm_40mev_tof",
+      "n": 70094,
+      "p95_abs_ns": 0.2096552994941515,
+      "p95_abs_ns_ci95": [
+        0.2096381932000332,
+        0.20966777976009937
+      ],
+      "res68_abs_ns": 0.03635264944090857,
+      "res68_abs_ns_ci95": [
+        0.03614688763848873,
+        0.03675933635583073
+      ],
+      "rms_ns": 0.16583721129638176
+    }
+  ],
+  "finding": "GEANT4 truth supports 4.026 cm analyzed-stave spacing and a median timing scale of 0.07433 ns/cm; winner=gradient_boosted_trees with MAE=0.00095 ns.",
+  "geant4_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "geometry_by_pair": [
+    {
+      "distance_ci95": [
+        4.025592185765055,
+        4.026173034590801
+      ],
+      "median_distance_cm": 4.025865223556806,
+      "median_tof_per_cm_ns": 0.07002289445915703,
+      "median_truth_dt_ns": 0.2803199189293828,
+      "n": 92523,
+      "pair": "0-2",
+      "tof_per_cm_ci95": [
+        0.06998949626222788,
+        0.07005310339765718
+      ],
+      "truth_dt_ci95": [
+        0.28017327996130836,
+        0.28047459177502265
+      ]
+    },
+    {
+      "distance_ci95": [
+        4.026023979652145,
+        4.026538598954171
+      ],
+      "median_distance_cm": 4.02625728172289,
+      "median_tof_per_cm_ns": 0.07773614588415713,
+      "median_truth_dt_ns": 0.3115662040523599,
+      "n": 84413,
+      "pair": "2-4",
+      "tof_per_cm_ci95": [
+        0.0776863798773382,
+        0.07778295547982353
+      ],
+      "truth_dt_ci95": [
+        0.3113114492959319,
+        0.31180748924425694
+      ]
+    },
+    {
+      "distance_ci95": [
+        4.024740771890063,
+        4.0253059164913845
+      ],
+      "median_distance_cm": 4.024990766652012,
+      "median_tof_per_cm_ns": 0.0903886749519962,
+      "median_truth_dt_ns": 0.3632032705561663,
+      "n": 59734,
+      "pair": "4-6",
+      "tof_per_cm_ci95": [
+        0.09025303128345923,
+        0.09056238749335356
+      ],
+      "truth_dt_ci95": [
+        0.3627546828000295,
+        0.3638317193301639
+      ]
+    }
+  ],
+  "geometry_summary": {
+    "median_4cm_truth_dt_ns": 0.29732243187899543,
+    "median_analyzed_spacing_cm": 4.0258025970520945,
+    "median_tof_per_cm_ns": 0.07433060796974886,
+    "nominal_2cm_offset_ns": 0.156,
+    "nominal_4cm_offset_ns": 0.312,
+    "notes_tof_per_cm_ns": 0.078,
+    "timing_scale_systematic_ns_per_cm": -0.0036693920302511424
+  },
+  "n_truth_pairs": 236670,
+  "next_tickets": [
+    {
+      "body": "Question: do HRD channel names B2/B4/B6/B8 map unambiguously to GEANT4 Sci_bar layer IDs 0/2/4/6 and construction coordinates? Expected information gain: converts the S12a natural even-layer mapping from an analysis convention into a documented detector-geometry contract, and would falsify or confirm whether the 4 cm timing/spacing correction can be applied to future raw-data timing studies without a hidden channel-map systematic.",
+      "expected_information_gain": "High: it attacks the dominant caveat in the GEANT4 timing-scale validation and determines whether the 4 cm correction is a detector fact or an analysis assumption.",
+      "title": "S12b: GEANT4 detector-map contract for HRD channel to Sci_bar layer mapping"
+    }
+  ],
+  "raw_reproduction": {
+    "delta": 0,
+    "pass": true,
+    "quantity": "S00 selected B-stave pulse records",
+    "report_value": 640737,
+    "reproduced": 640737,
+    "tolerance": 0
+  },
+  "runtime_sec": 314.501,
+  "split_blocks": {
+    "heldout": [
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "val": [
+      12,
+      13
+    ]
+  },
+  "study": "S12a",
+  "ticket_id": "0000000012.1.truthtiming",
+  "winner": {
+    "bias_ns": 1.9576743840584704e-06,
+    "bias_ns_ci95": [
+      -1.5363707588463573e-05,
+      1.9763944624847697e-05
+    ],
+    "family": "ml_tree",
+    "mae_ns": 0.0009466149110294847,
+    "mae_ns_ci95": [
+      0.000936312505211481,
+      0.0009586629266376646
+    ],
+    "median_error_ns": 4.27511728935126e-05,
+    "method": "gradient_boosted_trees",
+    "n": 70094,
+    "p95_abs_ns": 0.003018162260543985,
+    "p95_abs_ns_ci95": [
+      0.002966074468409871,
+      0.003067322092820223
+    ],
+    "res68_abs_ns": 0.0008930386045432432,
+    "res68_abs_ns_ci95": [
+      0.0008888938597387196,
+      0.0008963682046685394
+    ],
+    "rms_ns": 0.001945508152670159
+  },
+  "worker": "testbeam-laptop-4"
+}

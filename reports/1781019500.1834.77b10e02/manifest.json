@@ -1,0 +1,33 @@
+{
+  "ticket": "1781019500.1834.77b10e02",
+  "study": "S02d/P07e",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "60f908f6bae499792b16e17bb3033457bdbf6ebe",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-2/.venv/bin/python scripts/s02d_1781019500_1834_77b10e02_p07e_saturation_tails.py --config configs/s02d_1781019500_1834_77b10e02_p07e_saturation_tails.json",
+  "config": "configs/s02d_1781019500_1834_77b10e02_p07e_saturation_tails.json",
+  "random_seed": 20260610,
+  "inputs_sha256": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "config_sha256": "9e59f2a567dcde7eb85bc2bd9c5df409062a43f00e6e218a086d12bf71d33272",
+  "outputs_sha256": {
+    "REPORT.md": "21fd78b558432afa31b254758628f7c11d668fc0f7e5434bab340475a4744ae1",
+    "artificial_recovery_by_run.csv": "77771f8a4e3dafc41b18b98c6f301ae253c50bd27030a9d5b1ef9370e6968415",
+    "artificial_recovery_summary.csv": "74752bc9b2f58089514db1f969a373b38b1e71c39c2300298af918428d2bae37",
+    "input_sha256.csv": "001bdc229e9a73e0b1600d88216db267eb3f94ed51d26e1c5ceaf66b6bbe6f0e",
+    "leakage_checks.csv": "5401595664adf20693563b3f0dbaa341373259a879529216f9bc47bb016375eb",
+    "natural_timing_by_run.csv": "857d84dd5c774763bf821704f9355e8155c7b380fc9a606a69c01b6787d69f0a",
+    "natural_timing_summary.csv": "3a791da0ef855794ab2aad62a3dda80ea4e2825945e1b6c8b28caf99e7550c10",
+    "p07e_nuisance_envelope.csv": "a9bc3bc43564bb148d1c4a9845dbad380629f30323d9617896b76e04a239cbf4",
+    "p07e_w2_8_reproduction.csv": "494bfad4b3a1080d2403532f6976484651451ce2ac95f06c0fb5c6ffc8911b55",
+    "reproduction_gate.csv": "2cdd66db2fabdf8e6f7f72ce4d7b15d183e0a686fd7ef80a0052c8755195824a",
+    "result.json": "f2953f4ecb982978b0174f7fbbe576a315cd6f2ffa139a83611fe7462dedf1c5"
+  },
+  "runtime_sec": 23.34
+}

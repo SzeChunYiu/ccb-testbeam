@@ -1,0 +1,340 @@
+{
+  "study": "S02d",
+  "ticket": "1781013144.1054.325e4c97",
+  "worker": "testbeam-laptop-3",
+  "title": "leave-one-run-out selector-semantics timing over Sample II",
+  "reproduced_raw_root_first": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "loro_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "folds": {
+      "median_first4:58": {
+        "train_runs": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:59": {
+        "train_runs": [
+          58,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift2",
+        "selected_global": "s02d_global_timewalk_drift1",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:60": {
+        "train_runs": [
+          58,
+          59,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift1",
+        "selected_global": "s02d_global_timewalk_drift1",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:61": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:62": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:63": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:65": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:58": {
+        "train_runs": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:59": {
+        "train_runs": [
+          58,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift1",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:60": {
+        "train_runs": [
+          58,
+          59,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift1",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:61": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:62": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:63": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:65": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      }
+    }
+  },
+  "traditional_method": "S02b global timewalk no drift",
+  "traditional_by_selector": [
+    {
+      "selector": "dynamic_range",
+      "method": "S02b global timewalk no drift",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.8500523104013877,
+      "ci_low": 1.7286939957852552,
+      "ci_high": 2.023571017981067,
+      "min_run_sigma68_ns": 1.6156389184913906,
+      "max_run_sigma68_ns": 2.3180370606108154
+    },
+    {
+      "selector": "median_first4",
+      "method": "S02b global timewalk no drift",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.6551640399789107,
+      "ci_low": 1.5319739690756538,
+      "ci_high": 1.8435350315768406,
+      "min_run_sigma68_ns": 1.4718970274976448,
+      "max_run_sigma68_ns": 2.188417727408664
+    }
+  ],
+  "traditional_dynamic_minus_median": {
+    "method": "S02b global timewalk no drift",
+    "n_runs": 7,
+    "dynamic_minus_median_mean_ns": 0.19488827042247697,
+    "ci_low": 0.16119744360043864,
+    "ci_high": 0.22678996215815708,
+    "min_run_delta_ns": 0.12961933320215158,
+    "max_run_delta_ns": 0.2550083992667824
+  },
+  "ml_method": "S02 ML ridge",
+  "ml_by_selector": [
+    {
+      "selector": "dynamic_range",
+      "method": "S02 ML ridge",
+      "n_runs": 7,
+      "mean_sigma68_ns": 2.316115234463623,
+      "ci_low": 2.230934502870247,
+      "ci_high": 2.4253049510238878,
+      "min_run_sigma68_ns": 2.1839509552064427,
+      "max_run_sigma68_ns": 2.595122966157286
+    },
+    {
+      "selector": "median_first4",
+      "method": "S02 ML ridge",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.9054928392097812,
+      "ci_low": 1.823734017183286,
+      "ci_high": 2.0253926180749855,
+      "min_run_sigma68_ns": 1.7698393506968229,
+      "max_run_sigma68_ns": 2.2424329131323475
+    }
+  ],
+  "ml_dynamic_minus_median": {
+    "method": "S02 ML ridge",
+    "n_runs": 7,
+    "dynamic_minus_median_mean_ns": 0.41062239525384137,
+    "ci_low": 0.2548613575667273,
+    "ci_high": 0.5579951203049391,
+    "min_run_delta_ns": 0.034089570304974615,
+    "max_run_delta_ns": 0.7490093046044
+  },
+  "leakage_checks_pass_excluding_forbidden_oracle": false,
+  "reported_method_leakage_checks_pass": true,
+  "leakage_hunt_failed_non_oracle": [
+    {
+      "heldout_run": 58,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.0056738783721135,
+      "pass": false,
+      "selector": "median_first4"
+    },
+    {
+      "heldout_run": 61,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 2.92561315961787,
+      "pass": false,
+      "selector": "median_first4"
+    },
+    {
+      "heldout_run": 58,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.8046498308143297,
+      "pass": false,
+      "selector": "dynamic_range"
+    },
+    {
+      "heldout_run": 59,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 4.485507697919505,
+      "pass": false,
+      "selector": "dynamic_range"
+    },
+    {
+      "heldout_run": 60,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.2901047723224295,
+      "pass": false,
+      "selector": "dynamic_range"
+    },
+    {
+      "heldout_run": 61,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.636599192432638,
+      "pass": false,
+      "selector": "dynamic_range"
+    },
+    {
+      "heldout_run": 62,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.8758135023066105,
+      "pass": false,
+      "selector": "dynamic_range"
+    },
+    {
+      "heldout_run": 63,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 4.485583706760255,
+      "pass": false,
+      "selector": "dynamic_range"
+    },
+    {
+      "heldout_run": 65,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 4.478252349813846,
+      "pass": false,
+      "selector": "dynamic_range"
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S02e: constrain selector-semantics LORO by detector-current or trigger-rate strata before timing fits.",
+    "S00c: add a raw-ROOT CI gate that recomputes median-first-four and dynamic-range selected counts and fails on selector drift."
+  ],
+  "git_commit": "44aade6b86a327df4cc47ef7506122874d9251b1"
+}

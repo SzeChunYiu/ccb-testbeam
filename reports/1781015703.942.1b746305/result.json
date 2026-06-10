@@ -1,0 +1,97 @@
+{
+  "study": "S18g",
+  "ticket": "1781015703.942.1b746305",
+  "worker": "testbeam-laptop-4",
+  "reproduction_pass": true,
+  "primary_metrics": [
+    {
+      "method": "pair_median",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 2.090504189144874,
+      "sigma68_ci_low_ns": 1.8140373179051215,
+      "sigma68_ci_high_ns": 8.43445146497255,
+      "full_rms_ns": 20.680328523812705,
+      "correlated_fraction": 0.36641949668744095,
+      "mean_abs_pair_cov_ns2": 228.5346093364996,
+      "note": "B pair train-median centering"
+    },
+    {
+      "method": "traditional_a_prior_ridge",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 8.124260531155706,
+      "sigma68_ci_low_ns": 7.531643396932553,
+      "sigma68_ci_high_ns": 9.70740108010276,
+      "full_rms_ns": 11.64701344471265,
+      "correlated_fraction": 0.39753810203213263,
+      "mean_abs_pair_cov_ns2": 63.01286258185684,
+      "note": "Ridge timewalk residual model with A robust-width priors"
+    },
+    {
+      "method": "ml_extra_trees_a_prior",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 1.402690697963395,
+      "sigma68_ci_low_ns": 1.2606071858398167,
+      "sigma68_ci_high_ns": 1.7864117574714364,
+      "full_rms_ns": 5.286659993835671,
+      "correlated_fraction": 0.28692228983833573,
+      "mean_abs_pair_cov_ns2": 12.452105409244234,
+      "note": "ExtraTrees residual model with B shape plus A robust-width priors"
+    },
+    {
+      "method": "ml_shuffled_target_control",
+      "n_pair_rows": 65484,
+      "n_runs": 21,
+      "sigma68_ns": 4.249280597636638,
+      "sigma68_ci_low_ns": 3.746161777552603,
+      "sigma68_ci_high_ns": 7.532298133164579,
+      "full_rms_ns": 20.699554912387978,
+      "correlated_fraction": 0.3678396922959219,
+      "mean_abs_pair_cov_ns2": 230.06587596828342,
+      "note": "ExtraTrees trained on shuffled targets"
+    }
+  ],
+  "deltas": [
+    {
+      "comparison": "ml_minus_pair_median_sigma68",
+      "delta_ns": -0.687813491181479,
+      "ci_low_ns": -7.412725910896701,
+      "ci_high_ns": -0.5056241480948713,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "ml_minus_traditional_a_prior_ridge_sigma68",
+      "delta_ns": -6.72156983319231,
+      "ci_low_ns": -7.799845376926627,
+      "ci_high_ns": -6.2589850472388,
+      "p_two_sided": 0.0
+    }
+  ],
+  "covariance_interval_coverage": [
+    {
+      "method": "ml_extratrees_covariance",
+      "target": "correlated_fraction",
+      "coverage": 0.35
+    },
+    {
+      "method": "ml_extratrees_covariance",
+      "target": "sigma68",
+      "coverage": 0.42857142857142855
+    },
+    {
+      "method": "traditional_a_width_covariance",
+      "target": "correlated_fraction",
+      "coverage": 0.65
+    },
+    {
+      "method": "traditional_a_width_covariance",
+      "target": "sigma68",
+      "coverage": 0.7619047619047619
+    }
+  ],
+  "leakage_flags": 0,
+  "finding": "A-stack robust widths are weak external controls for B covariance; B pulse/topology features dominate held-out covariance behavior.",
+  "next_tickets": []
+}

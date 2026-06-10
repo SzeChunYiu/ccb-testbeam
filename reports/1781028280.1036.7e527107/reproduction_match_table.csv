@@ -1,0 +1,4 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S10d live20 template smooth crossing ns,101.86521002119034,101.86521002119034,0.0,0.05,True
+S10d live20 empirical last-above ns,119.0300244680748,119.0300244680748,0.0,0.05,True
+S10d live20 empirical-minus-template inflation ns,17.164814446884463,17.164814446884463,0.0,0.05,True

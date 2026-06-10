@@ -1,0 +1,161 @@
+{
+  "study": "S13c",
+  "ticket": "1781021831.1960.52610a78",
+  "worker": "testbeam-laptop-2",
+  "title": "charge-matched current weak-supervision null",
+  "reproduced": true,
+  "reproduction": {
+    "metric": "S10 downstream high_minus_low per selected event",
+    "value": 0.010289747149522063,
+    "expected": 0.010289747149522063,
+    "pass": true
+  },
+  "split": "leave-one-run-family-out, matched within held-out family, with stratified run-block bootstrap CIs",
+  "matching": {
+    "nuisance_keys": [
+      "charge_bin",
+      "topology_bin",
+      "anomaly_taxon",
+      "lowering_bin",
+      "run_family",
+      "stave"
+    ],
+    "charge_bins": 8,
+    "baseline_bins": 3,
+    "matched_scored_pulses": 8281
+  },
+  "traditional": {
+    "method": "frozen matched-stratum current-excess table",
+    "metric": "held-out high_minus_low score excess",
+    "value": -0.023299259443366416,
+    "ci": [
+      -0.21912630279452516,
+      0.05600264444448388
+    ],
+    "auc": 0.4496078432120407,
+    "ap": 0.6255575840069972,
+    "ece": 0.18076238981557002
+  },
+  "ml": {
+    "method": "residualized calibrated CWoLa random forest",
+    "metric": "held-out high_minus_low score excess",
+    "value": 0.0013804527039654735,
+    "ci": [
+      -0.1776067930993963,
+      0.07760938636749265
+    ],
+    "auc": 0.5264261651107786,
+    "auc_ci": [
+      0.08605332420074406,
+      0.7043647751609365
+    ],
+    "ap": 0.644351224086323,
+    "ap_ci": [
+      0.36353864865295,
+      0.847579617271864
+    ],
+    "ece": 0.1495144888838678,
+    "ml_minus_traditional_delta": 0.02467971214733189,
+    "ml_minus_traditional_ci": [
+      0.016336412240701405,
+      0.045493871925418324
+    ]
+  },
+  "ml_beats_baseline": false,
+  "leakage": {
+    "flagged_checks": 0,
+    "nuisance_auc_after_matching": 0.4952403210230264,
+    "shuffled_label_auc": 0.5006869148256129,
+    "forbidden_columns": [
+      "run",
+      "eventno",
+      "current_group",
+      "high_current",
+      "downstream_event",
+      "event_selected_count",
+      "charge_bin",
+      "topology_bin",
+      "anomaly_taxon",
+      "lowering_bin",
+      "run_family",
+      "stave"
+    ]
+  },
+  "interpretation": "Residualized CWoLa is diagnostic; after charge/topology/anomaly/lowering/run-family/stave matching it does not provide a stable useful gain over the frozen matched-stratum null.",
+  "input_sha256": [
+    {
+      "file": "data/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+      "bytes": 1227977
+    },
+    {
+      "file": "data/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+      "bytes": 13786671
+    },
+    {
+      "file": "data/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+      "bytes": 412227
+    },
+    {
+      "file": "data/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+      "bytes": 3098718
+    },
+    {
+      "file": "data/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+      "bytes": 8995827
+    },
+    {
+      "file": "data/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+      "bytes": 9203548
+    },
+    {
+      "file": "data/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+      "bytes": 13217424
+    },
+    {
+      "file": "data/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+      "bytes": 6036876
+    },
+    {
+      "file": "data/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+      "bytes": 2941826
+    },
+    {
+      "file": "data/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+      "bytes": 11713879
+    },
+    {
+      "file": "data/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+      "bytes": 11056922
+    },
+    {
+      "file": "data/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+      "bytes": 7153324
+    },
+    {
+      "file": "data/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+      "bytes": 15273160
+    },
+    {
+      "file": "data/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+      "bytes": 8881910
+    }
+  ],
+  "git_commit": "dd82f8c2151c161316f1f3f96aeb85cc29335b77",
+  "critic": "pending",
+  "next_tickets": [],
+  "runtime_sec": 110.09
+}

@@ -1,0 +1,453 @@
+{
+  "study": "S02e",
+  "ticket": "1781029327.1448.72f21509",
+  "worker": "testbeam-laptop-1",
+  "title": "selector-semantics LORO current/rate strata",
+  "reproduced_raw_root_first": true,
+  "selector_reproduction": [
+    {
+      "quantity": "S00 median-first-four selected pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S00a dynamic-range equivalent count",
+      "report_value": 706373,
+      "reproduced": 706373,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "Dynamic-only excess pulses",
+      "report_value": 65636,
+      "reproduced": 65636,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "Median-only pulses",
+      "report_value": 0,
+      "reproduced": 0,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split_by_run": {
+    "loro_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "folds": {
+      "median_first4:58": {
+        "stratum_train_runs": [
+          59,
+          63,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:59": {
+        "stratum_train_runs": [
+          60,
+          61,
+          62
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:60": {
+        "stratum_train_runs": [
+          59,
+          61,
+          62
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:61": {
+        "stratum_train_runs": [
+          59,
+          60,
+          62
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:62": {
+        "stratum_train_runs": [
+          59,
+          60,
+          61
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:63": {
+        "stratum_train_runs": [
+          58,
+          59,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "median_first4:65": {
+        "stratum_train_runs": [
+          58,
+          59,
+          63
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:58": {
+        "stratum_train_runs": [
+          59,
+          63,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:59": {
+        "stratum_train_runs": [
+          60,
+          61,
+          62
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:60": {
+        "stratum_train_runs": [
+          59,
+          61,
+          62
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:61": {
+        "stratum_train_runs": [
+          59,
+          60,
+          62
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:62": {
+        "stratum_train_runs": [
+          59,
+          60,
+          61
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:63": {
+        "stratum_train_runs": [
+          58,
+          59,
+          65
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "dynamic_range:65": {
+        "stratum_train_runs": [
+          58,
+          59,
+          63
+        ],
+        "selected_binned": "s02e_binned_timewalk_drift0",
+        "selected_global": "s02e_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      }
+    }
+  },
+  "strata": [
+    {
+      "heldout_run": 58,
+      "heldout_stratum": "low_rate",
+      "stratum_basis": "downstream_allhit_fraction",
+      "heldout_stratum_value": 0.002138191617117249,
+      "same_stratum_train_runs": "63 65",
+      "train_runs": "59 63 65",
+      "n_train_runs": 3,
+      "expanded_to_min_train_runs": true
+    },
+    {
+      "heldout_run": 59,
+      "heldout_stratum": "mid_rate",
+      "stratum_basis": "downstream_allhit_fraction",
+      "heldout_stratum_value": 0.018036545871451197,
+      "same_stratum_train_runs": "62",
+      "train_runs": "60 61 62",
+      "n_train_runs": 3,
+      "expanded_to_min_train_runs": true
+    },
+    {
+      "heldout_run": 60,
+      "heldout_stratum": "high_rate",
+      "stratum_basis": "downstream_allhit_fraction",
+      "heldout_stratum_value": 0.02239840328214226,
+      "same_stratum_train_runs": "61",
+      "train_runs": "59 61 62",
+      "n_train_runs": 3,
+      "expanded_to_min_train_runs": true
+    },
+    {
+      "heldout_run": 61,
+      "heldout_stratum": "high_rate",
+      "stratum_basis": "downstream_allhit_fraction",
+      "heldout_stratum_value": 0.025537156151635418,
+      "same_stratum_train_runs": "60",
+      "train_runs": "59 60 62",
+      "n_train_runs": 3,
+      "expanded_to_min_train_runs": true
+    },
+    {
+      "heldout_run": 62,
+      "heldout_stratum": "mid_rate",
+      "stratum_basis": "downstream_allhit_fraction",
+      "heldout_stratum_value": 0.021471902937420177,
+      "same_stratum_train_runs": "59",
+      "train_runs": "59 60 61",
+      "n_train_runs": 3,
+      "expanded_to_min_train_runs": true
+    },
+    {
+      "heldout_run": 63,
+      "heldout_stratum": "low_rate",
+      "stratum_basis": "downstream_allhit_fraction",
+      "heldout_stratum_value": 0.009991898460707534,
+      "same_stratum_train_runs": "58 65",
+      "train_runs": "58 59 65",
+      "n_train_runs": 3,
+      "expanded_to_min_train_runs": true
+    },
+    {
+      "heldout_run": 65,
+      "heldout_stratum": "low_rate",
+      "stratum_basis": "downstream_allhit_fraction",
+      "heldout_stratum_value": 0.001717676452217364,
+      "same_stratum_train_runs": "58 63",
+      "train_runs": "58 59 63",
+      "n_train_runs": 3,
+      "expanded_to_min_train_runs": true
+    }
+  ],
+  "traditional_method": "S02b global timewalk no covariate",
+  "traditional_by_selector": [
+    {
+      "selector": "dynamic_range",
+      "method": "S02b global timewalk no covariate",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.8160405565993014,
+      "ci_low": 1.6867438076686663,
+      "ci_high": 1.9881719351967342,
+      "min_run_sigma68_ns": 1.6343793555617763,
+      "max_run_sigma68_ns": 2.2527489420568907
+    },
+    {
+      "selector": "median_first4",
+      "method": "S02b global timewalk no covariate",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.6859757441267862,
+      "ci_low": 1.5432625776953643,
+      "ci_high": 1.8716207510141654,
+      "min_run_sigma68_ns": 1.4700876084210042,
+      "max_run_sigma68_ns": 2.1882829964081854
+    }
+  ],
+  "traditional_dynamic_minus_median": {
+    "method": "S02b global timewalk no covariate",
+    "n_runs": 7,
+    "dynamic_minus_median_mean_ns": 0.13006481247251506,
+    "ci_low": 0.08361831747232072,
+    "ci_high": 0.18159785900701478,
+    "min_run_delta_ns": 0.059965867212052215,
+    "max_run_delta_ns": 0.22514019702813082
+  },
+  "traditional_current_rate_method": "S02e global current/rate selected",
+  "traditional_current_rate_by_selector": [
+    {
+      "selector": "dynamic_range",
+      "method": "S02e global current/rate selected",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.8160405565993014,
+      "ci_low": 1.6865110763600168,
+      "ci_high": 1.9818766846652094,
+      "min_run_sigma68_ns": 1.6343793555617763,
+      "max_run_sigma68_ns": 2.2527489420568907
+    },
+    {
+      "selector": "median_first4",
+      "method": "S02e global current/rate selected",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.6859757441267862,
+      "ci_low": 1.537800069594081,
+      "ci_high": 1.8714281056079762,
+      "min_run_sigma68_ns": 1.4700876084210042,
+      "max_run_sigma68_ns": 2.1882829964081854
+    }
+  ],
+  "traditional_current_rate_dynamic_minus_median": {
+    "method": "S02e global current/rate selected",
+    "n_runs": 7,
+    "dynamic_minus_median_mean_ns": 0.13006481247251506,
+    "ci_low": 0.08398250179108628,
+    "ci_high": 0.18257616114717928,
+    "min_run_delta_ns": 0.059965867212052215,
+    "max_run_delta_ns": 0.22514019702813082
+  },
+  "ml_method": "S02 ML ridge",
+  "ml_by_selector": [
+    {
+      "selector": "dynamic_range",
+      "method": "S02 ML ridge",
+      "n_runs": 7,
+      "mean_sigma68_ns": 2.2954058635410144,
+      "ci_low": 2.2204264423012097,
+      "ci_high": 2.4107031935232692,
+      "min_run_sigma68_ns": 2.1927244507763715,
+      "max_run_sigma68_ns": 2.6067829471764536
+    },
+    {
+      "selector": "median_first4",
+      "method": "S02 ML ridge",
+      "n_runs": 7,
+      "mean_sigma68_ns": 1.868270519178765,
+      "ci_low": 1.7936923983641289,
+      "ci_high": 1.9876959762386734,
+      "min_run_sigma68_ns": 1.7704554183103534,
+      "max_run_sigma68_ns": 2.205928482351121
+    }
+  ],
+  "ml_dynamic_minus_median": {
+    "method": "S02 ML ridge",
+    "n_runs": 7,
+    "dynamic_minus_median_mean_ns": 0.42713534436224926,
+    "ci_low": 0.2763383441121821,
+    "ci_high": 0.5868377076971966,
+    "min_run_delta_ns": 0.07952012353496407,
+    "max_run_delta_ns": 0.8322953215707145
+  },
+  "leakage_checks_pass_excluding_forbidden_oracle": false,
+  "headline_leakage_checks_pass_excluding_binned_and_forbidden_oracle": true,
+  "leakage_hunt_failed_checks": [
+    {
+      "selector": "median_first4",
+      "heldout_run": 58,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 2.346779221060249,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "selector": "median_first4",
+      "heldout_run": 59,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 4.199273038855054,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "selector": "median_first4",
+      "heldout_run": 60,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 2.35491414403889,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "selector": "median_first4",
+      "heldout_run": 61,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.100034027238135,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "selector": "median_first4",
+      "heldout_run": 63,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 2.328908943797438,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "selector": "dynamic_range",
+      "heldout_run": 58,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.9376800972755834,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "selector": "dynamic_range",
+      "heldout_run": 59,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 4.440277393476561,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "selector": "dynamic_range",
+      "heldout_run": 60,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.4129477822333647,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "selector": "dynamic_range",
+      "heldout_run": 61,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.2581371695006194,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "selector": "dynamic_range",
+      "heldout_run": 62,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.934852931944544,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "selector": "dynamic_range",
+      "heldout_run": 63,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.9946529427247146,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    },
+    {
+      "selector": "dynamic_range",
+      "heldout_run": 65,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 4.027565710637491,
+      "interpretation": "shuffled-target control beat production; branch is unstable, not adoption-ready"
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [],
+  "git_commit": "92fe93609d98eb5a9ee04bc5437e16ad23e5b0aa"
+}

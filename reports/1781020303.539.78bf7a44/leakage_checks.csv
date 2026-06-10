@@ -1,0 +1,11 @@
+run,check,value,flag
+all,heldout_train_event_overlap,0.0,False
+all,primary_features_exclude_run_event_truth,1.0,False
+all,too_good_trigger,0.0,False
+58,shuffled_abs_error_risk_acceptance_rate,0.0,False
+59,shuffled_abs_error_risk_acceptance_rate,0.0,False
+60,shuffled_abs_error_risk_acceptance_rate,0.0,False
+61,shuffled_abs_error_risk_acceptance_rate,0.0,False
+62,shuffled_abs_error_risk_acceptance_rate,0.0,False
+63,shuffled_abs_error_risk_acceptance_rate,0.0,False
+65,shuffled_abs_error_risk_acceptance_rate,0.0,False

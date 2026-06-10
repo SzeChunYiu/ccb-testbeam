@@ -1,0 +1,11 @@
+selection_method,claimed_class,n_claimed,adjudicated_precision,reviewer_agreement
+ml_pca_ae_isolation,curated_any,128,0.96875,0.953125
+ml_pca_ae_isolation,target_any,98,0.41836734693877553,0.9897959183673469
+ml_pca_ae_isolation,novel_early_pretrigger,56,0.0,1.0
+ml_pca_ae_isolation,novel_delayed_peak,41,1.0,0.975609756097561
+ml_pca_ae_isolation,novel_broad_template_mismatch,1,0.0,1.0
+traditional_robust_template,curated_any,128,0.96875,0.7109375
+traditional_robust_template,target_any,67,0.19402985074626866,0.6716417910447762
+traditional_robust_template,novel_early_pretrigger,67,0.19402985074626866,0.6716417910447762
+traditional_robust_template,novel_delayed_peak,0,,
+traditional_robust_template,novel_broad_template_mismatch,0,,

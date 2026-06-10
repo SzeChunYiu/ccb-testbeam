@@ -1,0 +1,178 @@
+{
+  "study": "S05d",
+  "ticket": "1781016280.4623.016f3ea3",
+  "worker": "testbeam-laptop-3",
+  "title": "per-stave timing priors from B-stack covariance for two-ended projection",
+  "reproduced": true,
+  "traditional": {
+    "method": "S05c covariance-derived static two-ended per-stave priors",
+    "metric": "heldout downstream projection sigma68 ns",
+    "value": 2.1472504329314255,
+    "ci": [
+      1.9450041250936783,
+      3.571214475365783
+    ],
+    "median_bias_ns": -0.8702800450824597
+  },
+  "ml": {
+    "method": "own-stave waveform ExtraTrees dynamic reliability weights on top of S05c priors",
+    "metric": "heldout downstream projection sigma68 ns",
+    "value": 2.0210225925687655,
+    "ci": [
+      1.863575850384788,
+      2.5387290439728907
+    ],
+    "median_bias_ns": -0.6210206197954626
+  },
+  "deltas": [
+    {
+      "comparison": "robust_nnls_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "all_downstream",
+      "paired_rows": 28974,
+      "delta_sigma68_ns": -0.5250537436336331,
+      "ci_low_ns": -6.79395335334987,
+      "ci_high_ns": -0.16142519301937544,
+      "p_two_sided": 0.0033333333333333335
+    },
+    {
+      "comparison": "robust_nnls_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B4",
+      "paired_rows": 12089,
+      "delta_sigma68_ns": -0.5009304395878513,
+      "ci_low_ns": -5.183968050149696,
+      "ci_high_ns": -0.04001663567458671,
+      "p_two_sided": 0.023333333333333334
+    },
+    {
+      "comparison": "robust_nnls_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B6",
+      "paired_rows": 12190,
+      "delta_sigma68_ns": -0.54815489027472,
+      "ci_low_ns": -6.516717993749578,
+      "ci_high_ns": -0.15927184632144312,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "robust_nnls_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B8",
+      "paired_rows": 4695,
+      "delta_sigma68_ns": -0.8190438980619783,
+      "ci_low_ns": -5.154901012555775,
+      "ci_high_ns": -0.42287449304507907,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "s05c_covariance_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "all_downstream",
+      "paired_rows": 28974,
+      "delta_sigma68_ns": -0.37266153166727767,
+      "ci_low_ns": -4.757986575289383,
+      "ci_high_ns": -0.15459341206702729,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "s05c_covariance_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B4",
+      "paired_rows": 12089,
+      "delta_sigma68_ns": -0.2402827247512258,
+      "ci_low_ns": -4.36869336381608,
+      "ci_high_ns": 0.03761565859143556,
+      "p_two_sided": 0.18
+    },
+    {
+      "comparison": "s05c_covariance_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B6",
+      "paired_rows": 12190,
+      "delta_sigma68_ns": -0.4966063704179251,
+      "ci_low_ns": -5.301799046178999,
+      "ci_high_ns": -0.277872100141183,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "s05c_covariance_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B8",
+      "paired_rows": 4695,
+      "delta_sigma68_ns": -0.3979559270231112,
+      "ci_low_ns": -4.014972493346874,
+      "ci_high_ns": -0.18110446444315714,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "ml_dynamic_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "all_downstream",
+      "paired_rows": 28974,
+      "delta_sigma68_ns": -0.49888937202993766,
+      "ci_low_ns": -5.787752206094236,
+      "ci_high_ns": -0.2195873736068494,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "ml_dynamic_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B4",
+      "paired_rows": 12089,
+      "delta_sigma68_ns": -0.3250885944998878,
+      "ci_low_ns": -4.846580458810848,
+      "ci_high_ns": 0.026570315060995907,
+      "p_two_sided": 0.09333333333333334
+    },
+    {
+      "comparison": "ml_dynamic_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B6",
+      "paired_rows": 12190,
+      "delta_sigma68_ns": -0.6563433660735525,
+      "ci_low_ns": -5.386547389832427,
+      "ci_high_ns": -0.35995458840457306,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "ml_dynamic_twoend_prior_minus_equal_twoend_projection",
+      "target_stave": "B8",
+      "paired_rows": 4695,
+      "delta_sigma68_ns": -0.5533855598278883,
+      "ci_low_ns": -5.66045873967703,
+      "ci_high_ns": -0.26440222442940237,
+      "p_two_sided": 0.0
+    }
+  ],
+  "finding": "S05c covariance priors downweight B2 and improve pooled downstream self-consistency versus equal weights, but the gain is not uniform by target stave; the dynamic ML prior remains diagnostic because the bias gate fails.",
+  "leakage": [
+    {
+      "check": "raw_reproduction_gate",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "S00 counts and S05c raw covariance anchor were rebuilt before projection"
+    },
+    {
+      "check": "run_split_event_overlap",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "folds hold out whole runs; no train rows from the held-out run enter priors or ML reliability training"
+    },
+    {
+      "check": "ml_feature_policy",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "ML reliability inputs are own-stave waveform summaries only; no run, event, time, residual, or target-stave labels"
+    },
+    {
+      "check": "s05c_b2_downweighted",
+      "value": 4.498526894173612,
+      "pass": true,
+      "interpretation": "B2 two-ended prior variance is larger than the downstream mean, so B2 receives less projection weight"
+    },
+    {
+      "check": "best_method_not_unphysical_zero_width",
+      "value": 1.99485822096507,
+      "pass": true,
+      "interpretation": "guards against a target echo or accidental direct residual feature"
+    },
+    {
+      "check": "ml_downstream_bias_small_vs_sigma",
+      "value": 0.30728039462742046,
+      "pass": false,
+      "interpretation": "large residual-width gains are not accepted if they shift the downstream median strongly"
+    }
+  ],
+  "input_sha256": "reports/1781016280.4623.016f3ea3/input_sha256.csv",
+  "git_commit": "0b04381017fc97e02aedccf8112d22314d23d1c3"
+}

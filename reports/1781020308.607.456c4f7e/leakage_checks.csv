@@ -1,0 +1,7 @@
+probe,roc_auc,average_precision,interpretation
+matched-nuisance-only logistic,0.9892724039365037,0.9869291006623234,Failure probe: uses only matched charge/current/depth/topology/saturation/pile-up bins plus event-order nuisance variables; high AUC means coarse matching still leaks.
+forbidden downstream DeltaE logistic,0.9842788941001125,0.9829617284515038,Ceiling/leakage probe: includes downstream charge and penetration observables used to define the residual weak label.
+run-only logistic,0.5,0.5,Strict leave-one-run-out run-id sentinel; unseen held-out runs collapse to the intercept.
+group/event-order logistic,0.5006267482917168,0.49856939839091324,Sample group plus event-order sentinel for run-family/rate-drift confounding.
+shuffled-label HGB,0.495786325345234,0.49640078016933004,Same HGB pipeline with shuffled training labels; should fall near chance.
+ML-minus-traditional paired run bootstrap,-0.289880906919354,,Positive values favor ML; CI is stored in result.json.

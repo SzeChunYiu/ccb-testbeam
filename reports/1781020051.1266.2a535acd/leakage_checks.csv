@@ -1,0 +1,10 @@
+check,value,flag,note
+ml_heldout_runs_excluded_from_training,1.0,False,Each ML prediction is made by a model trained without that source run.
+identifier_current_and_downstream_excluded_from_features,1.0,False,"Feature matrices exclude run, event number, group/current, and downstream target."
+p09a_labels_are_deterministic_taxa_not_ml_truth,1.0,False,Only P09a rule labels and booleans enter the propagation; P09a anomaly scores are not used as labels.
+pred_downstream_base_current_auc,0.5807823504871816,False,Flags if a propagated score almost identifies beam current.
+pred_downstream_taxon_current_auc,0.5687491291323664,False,Flags if a propagated score almost identifies beam current.
+resid_log_p04_charge_base_current_auc,0.5703102978030022,False,Flags if a propagated score almost identifies beam current.
+resid_log_p04_charge_taxon_current_auc,0.5553793378682442,False,Flags if a propagated score almost identifies beam current.
+heldout_downstream_taxon_model_mean_auc,0.8829827041145676,False,Flags an implausibly strong downstream classifier under run holdout.
+curated_taxon_rate_high_minus_low,0.00890981278725278,False,Flags if deterministic taxa nearly encode current by prevalence alone.

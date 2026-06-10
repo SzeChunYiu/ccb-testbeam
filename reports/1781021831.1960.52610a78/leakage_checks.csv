@@ -1,0 +1,13 @@
+fold,check,value,flag,note
+holdout_family_B,train_test_run_overlap,0.0,False,Leave-one-run-family-out split must keep train/test runs disjoint.
+holdout_family_B,train_test_event_overlap,0.0,False,Event overlap must be zero.
+holdout_family_B,forbidden_columns_used,0.0,False,Current models use residualized numeric waveform/latent summaries only; identifiers and nuisance labels are excluded.
+holdout_family_B,cwola_auc_too_good,0.5946195648602651,False,Flag if residualized CWoLa nearly identifies current labels.
+holdout_family_B,nuisance_auc_after_matching,0.5,False,Flag if matched nuisance bins alone still classify current too well.
+holdout_family_B,shuffled_label_auc,0.49908224886343044,False,Flag if shuffled-label model transfers current information.
+holdout_family_A,train_test_run_overlap,0.0,False,Leave-one-run-family-out split must keep train/test runs disjoint.
+holdout_family_A,train_test_event_overlap,0.0,False,Event overlap must be zero.
+holdout_family_A,forbidden_columns_used,0.0,False,Current models use residualized numeric waveform/latent summaries only; identifiers and nuisance labels are excluded.
+holdout_family_A,cwola_auc_too_good,0.609532939677088,False,Flag if residualized CWoLa nearly identifies current labels.
+holdout_family_A,nuisance_auc_after_matching,0.5,False,Flag if matched nuisance bins alone still classify current too well.
+holdout_family_A,shuffled_label_auc,0.5191530921196074,False,Flag if shuffled-label model transfers current information.

@@ -1,0 +1,9 @@
+field,matches,max_abs_delta
+run,True,0.0
+eventno,True,0.0
+evt,True,0.0
+stave,True,0.0
+channel,True,0.0
+amplitude_adc,True,0.0
+peak_sample,True,0.0
+area_adc_samples,True,0.0

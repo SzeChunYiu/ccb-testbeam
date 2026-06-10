@@ -1,0 +1,6 @@
+quantity,expected,reproduced,delta,pass
+S00 selected B-stave pulse records,640737,640737,0,True
+A-stack sample_i_analysis events_with_selected,7168,7168,0,True
+A-stack sample_i_analysis selected_pulses,9682,9682,0,True
+A-stack sample_ii_analysis events_with_selected,767,767,0,True
+A-stack sample_ii_analysis selected_pulses,894,894,0,True

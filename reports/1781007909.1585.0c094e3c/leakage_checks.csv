@@ -1,0 +1,4 @@
+check,mae_adc,interpretation
+shuffled_training_target,80.87721319108086,should be no better than simple pedestal baselines
+intentional_target_feature_oracle,2.983099456346014,very low error confirms direct target leakage would be obvious and is excluded from the real model
+real_feature_exclusion,,"real ML features exclude run, eventno, evt, target_adc, and any post-trigger target sample value"

@@ -1,0 +1,24 @@
+{
+  "study": "S10e",
+  "ticket": "1781017360.928.15a27ed1",
+  "worker": "testbeam-laptop-1",
+  "source_ticket": "1781010419.1206.6d667357",
+  "source_script": "reports/1781010419.1206.6d667357/s10d_two_pulse_stratified_amplitude.py",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781017360.928.15a27ed1",
+  "random_seed": 11050,
+  "reproduce_random_seed": 11040,
+  "dominant_capped_random_seed": 11050,
+  "dominant_highstat_random_seed": 11051,
+  "reproduce_sample_cap_per_run_stratum": 140,
+  "dominant_strata_by_match_weight": 3,
+  "highstat_sample_cap_per_run_stratum": 700,
+  "bootstrap_samples": 600,
+  "s10d_reported_traditional_value": 0.03158538627349211,
+  "s10d_reported_traditional_ci": [
+    0.018889965559131923,
+    0.0439563896813622
+  ],
+  "s10d_reported_ml_secondary_value": 0.007285829435931546,
+  "s10d_reported_ml_overlap_value": 0.024460770476721856
+}

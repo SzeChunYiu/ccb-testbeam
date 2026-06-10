@@ -1,0 +1,9 @@
+method,metric,value,ci_low,ci_high,macro_f1,train_rows,heldout_rows,heldout_topology
+traditional residual PCA-4 probe-holdout topology=single,balanced_accuracy,0.25618884947954673,0.2457126385808498,0.26599159197166083,0.06662561863092832,39290,6085,single
+traditional residual PCA-4 probe-holdout topology=pair,balanced_accuracy,0.30810106643121593,0.2832240184789392,0.35236433297956954,0.23152301416771742,67348,2815,pair
+traditional residual PCA-4 probe-holdout topology=triple,balanced_accuracy,0.2531477764446577,0.22040299016241843,0.27120275270363886,0.10441271681036121,69047,1895,triple
+traditional residual PCA-4 probe-holdout topology=quad,balanced_accuracy,0.3163999015020931,0.2505081300813008,0.34420023750799306,0.2149515211272468,70669,1203,quad
+ML residual masked-denoising AE-4 probe-holdout topology=single,balanced_accuracy,0.24018865170070502,0.232879905604745,0.24855988850534735,0.06151504022727472,39290,6085,single
+ML residual masked-denoising AE-4 probe-holdout topology=pair,balanced_accuracy,0.25550840595462393,0.23429117641487218,0.27407464751125515,0.16651191927902093,67348,2815,pair
+ML residual masked-denoising AE-4 probe-holdout topology=triple,balanced_accuracy,0.219544284893542,0.20270319491068245,0.2501780385133165,0.14825053261498305,69047,1895,triple
+ML residual masked-denoising AE-4 probe-holdout topology=quad,balanced_accuracy,0.2995372650414512,0.2550813008130081,0.3171230376049653,0.18516629793994493,70669,1203,quad

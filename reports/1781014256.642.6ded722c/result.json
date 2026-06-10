@@ -1,0 +1,446 @@
+{
+  "ticket_id": "1781014256.642.6ded722c",
+  "study_id": "P09c",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "pass": true
+  },
+  "heldout_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "target_taxa": [
+    "novel_delayed_peak",
+    "novel_broad_template_mismatch"
+  ],
+  "metrics": [
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_delayed_peak",
+      "n_target": 1581,
+      "n_matched_normal": 6972,
+      "n_veto_positive": 365,
+      "timing_tail_enrichment": 0.0,
+      "charge_bias_delta": -4.819252967834473,
+      "baseline_excursion_rate": 0.0,
+      "pileup_score_delta": 14.656165965352722,
+      "target_stratum_ap": 0.43338042951105227,
+      "recover_veto_ap": 0.1422341198647524,
+      "recover_fraction": 0.7691334598355472,
+      "veto_fraction": 0.23086654016445288
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_broad_template_mismatch",
+      "n_target": 162,
+      "n_matched_normal": 6972,
+      "n_veto_positive": 1,
+      "timing_tail_enrichment": 0.0,
+      "charge_bias_delta": 2.1761391162872314,
+      "baseline_excursion_rate": 0.0,
+      "pileup_score_delta": 0.2168396774915149,
+      "target_stratum_ap": 0.052776429008459164,
+      "recover_veto_ap": 0.01694915254237288,
+      "recover_fraction": 0.9938271604938271,
+      "veto_fraction": 0.006172839506172839
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "combined_target_taxa",
+      "n_target": 1743,
+      "n_matched_normal": 6972,
+      "n_veto_positive": 366,
+      "timing_tail_enrichment": 0.0,
+      "charge_bias_delta": -4.514383316040039,
+      "baseline_excursion_rate": 0.0,
+      "pileup_score_delta": 14.57914321212365,
+      "target_stratum_ap": 0.4407745849036931,
+      "recover_veto_ap": 0.13451056780821802,
+      "recover_fraction": 0.7900172117039587,
+      "veto_fraction": 0.2099827882960413
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_delayed_peak",
+      "n_target": 1581,
+      "n_matched_normal": 6972,
+      "n_veto_positive": 365,
+      "timing_tail_enrichment": 0.0,
+      "charge_bias_delta": -4.819252967834473,
+      "baseline_excursion_rate": 0.0,
+      "pileup_score_delta": 14.656165965352722,
+      "target_stratum_ap": 0.7885397176342424,
+      "recover_veto_ap": 0.19528205660932318,
+      "recover_fraction": 0.7691334598355472,
+      "veto_fraction": 0.23086654016445288
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_broad_template_mismatch",
+      "n_target": 162,
+      "n_matched_normal": 6972,
+      "n_veto_positive": 1,
+      "timing_tail_enrichment": 0.0,
+      "charge_bias_delta": 2.1761391162872314,
+      "baseline_excursion_rate": 0.0,
+      "pileup_score_delta": 0.2168396774915149,
+      "target_stratum_ap": 0.06428240551995312,
+      "recover_veto_ap": 1.0,
+      "recover_fraction": 0.9938271604938271,
+      "veto_fraction": 0.006172839506172839
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "combined_target_taxa",
+      "n_target": 1743,
+      "n_matched_normal": 6972,
+      "n_veto_positive": 366,
+      "timing_tail_enrichment": 0.0,
+      "charge_bias_delta": -4.514383316040039,
+      "baseline_excursion_rate": 0.0,
+      "pileup_score_delta": 14.57914321212365,
+      "target_stratum_ap": 0.7723471292431235,
+      "recover_veto_ap": 0.19767327672957175,
+      "recover_fraction": 0.7900172117039587,
+      "veto_fraction": 0.2099827882960413
+    }
+  ],
+  "bootstrap_ci": [
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_delayed_peak",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_delayed_peak",
+      "metric": "charge_bias_delta",
+      "ci_low": -4.953449487686157,
+      "ci_high": -4.65216064453125
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_delayed_peak",
+      "metric": "baseline_excursion_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_delayed_peak",
+      "metric": "pileup_score_delta",
+      "ci_low": 14.599859688793229,
+      "ci_high": 14.701943006829968
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_delayed_peak",
+      "metric": "target_stratum_ap",
+      "ci_low": 0.4238880201326785,
+      "ci_high": 0.4507833252861796
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_delayed_peak",
+      "metric": "recover_veto_ap",
+      "ci_low": 0.13139871662826796,
+      "ci_high": 0.1543075324259026
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "charge_bias_delta",
+      "ci_low": 2.11159610748291,
+      "ci_high": 2.2198660373687744
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "baseline_excursion_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "pileup_score_delta",
+      "ci_low": -0.21703437592743613,
+      "ci_high": 0.6678027843342553
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "target_stratum_ap",
+      "ci_low": 0.02610534225912248,
+      "ci_high": 0.09700195988955436
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "recover_veto_ap",
+      "ci_low": 0.011904761904761904,
+      "ci_high": 0.06
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "combined_target_taxa",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "combined_target_taxa",
+      "metric": "charge_bias_delta",
+      "ci_low": -4.560689806938171,
+      "ci_high": -4.435710430145264
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "combined_target_taxa",
+      "metric": "baseline_excursion_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "combined_target_taxa",
+      "metric": "pileup_score_delta",
+      "ci_low": 14.47512071716078,
+      "ci_high": 14.645940949691214
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "combined_target_taxa",
+      "metric": "target_stratum_ap",
+      "ci_low": 0.4198968251276931,
+      "ci_high": 0.46808591567985913
+    },
+    {
+      "method": "traditional_p09a_frozen_template",
+      "taxon": "combined_target_taxa",
+      "metric": "recover_veto_ap",
+      "ci_low": 0.12299416724490683,
+      "ci_high": 0.1476928604780686
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_delayed_peak",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_delayed_peak",
+      "metric": "charge_bias_delta",
+      "ci_low": -4.953449487686157,
+      "ci_high": -4.65216064453125
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_delayed_peak",
+      "metric": "baseline_excursion_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_delayed_peak",
+      "metric": "pileup_score_delta",
+      "ci_low": 14.599859688793229,
+      "ci_high": 14.701943006829968
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_delayed_peak",
+      "metric": "target_stratum_ap",
+      "ci_low": 0.7505165730452381,
+      "ci_high": 0.8291529433961429
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_delayed_peak",
+      "metric": "recover_veto_ap",
+      "ci_low": 0.18579807113999985,
+      "ci_high": 0.20834654810997538
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "charge_bias_delta",
+      "ci_low": 2.11159610748291,
+      "ci_high": 2.2198660373687744
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "baseline_excursion_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "pileup_score_delta",
+      "ci_low": -0.21703437592743613,
+      "ci_high": 0.6678027843342553
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "target_stratum_ap",
+      "ci_low": 0.05207712537399855,
+      "ci_high": 0.08331174973078356
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "novel_broad_template_mismatch",
+      "metric": "recover_veto_ap",
+      "ci_low": 1.0,
+      "ci_high": 1.0
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "combined_target_taxa",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "combined_target_taxa",
+      "metric": "charge_bias_delta",
+      "ci_low": -4.560689806938171,
+      "ci_high": -4.435710430145264
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "combined_target_taxa",
+      "metric": "baseline_excursion_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "combined_target_taxa",
+      "metric": "pileup_score_delta",
+      "ci_low": 14.47512071716078,
+      "ci_high": 14.645940949691214
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "combined_target_taxa",
+      "metric": "target_stratum_ap",
+      "ci_low": 0.739620223479461,
+      "ci_high": 0.8064566610165799
+    },
+    {
+      "method": "ml_pca_ae_latent_isolation",
+      "taxon": "combined_target_taxa",
+      "metric": "recover_veto_ap",
+      "ci_low": 0.1913936295596967,
+      "ci_high": 0.20781639821170733
+    }
+  ],
+  "target_prevalence": [
+    {
+      "taxon": "unassigned_common",
+      "heldout_count": 54558,
+      "heldout_rate": 0.9152030597352926
+    },
+    {
+      "taxon": "novel_delayed_peak",
+      "heldout_count": 1581,
+      "heldout_rate": 0.0265210608424337
+    },
+    {
+      "taxon": "novel_broad_template_mismatch",
+      "heldout_count": 162,
+      "heldout_rate": 0.002717528055960948
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "must be zero"
+    },
+    {
+      "check": "model_features_include_run_event_or_stave_id",
+      "value": 0.0,
+      "pass": true,
+      "note": "ids used only for split, matching, and bootstrap strata"
+    },
+    {
+      "check": "audit_waveform_hash_seen_in_train_rate",
+      "value": 0.0,
+      "pass": true,
+      "note": "rounded normalized waveform hash overlap at 1e-3 precision"
+    },
+    {
+      "check": "ml_target_ap_too_good_sentinel",
+      "value": 0.7885397176342424,
+      "pass": true,
+      "note": "if >0.98, inspect leakage; current sentinel records whether result looked too good"
+    },
+    {
+      "check": "max_recover_veto_ap_too_good_sentinel",
+      "value": 1.0,
+      "pass": true,
+      "note": "high AP is treated as low-evidence when fewer than five veto positives support it"
+    },
+    {
+      "check": "min_veto_positives_for_high_recover_veto_ap",
+      "value": 1.0,
+      "pass": true,
+      "note": "documents the positive-count audit behind any perfect recover/veto AP"
+    },
+    {
+      "check": "heldout_runs_have_target_taxa",
+      "value": 4.0,
+      "pass": true,
+      "note": "run-bootstrap CIs need target rows in multiple held-out runs"
+    }
+  ],
+  "ml_model": {
+    "training_rows": 64771,
+    "device": "cpu",
+    "ae_final_loss": 0.019573788414752047,
+    "pca_explained_variance_ratio": [
+      0.5664069652557373,
+      0.21970047056674957,
+      0.09484677761793137,
+      0.04717628285288811,
+      0.023094359785318375,
+      0.01945176161825657
+    ],
+    "features": [
+      "pca_recon_mse",
+      "ae_recon_mse",
+      "latent_distance",
+      "isolation_anomaly_score"
+    ]
+  },
+  "runtime_sec": 255.4
+}

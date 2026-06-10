@@ -1,0 +1,89 @@
+{
+  "ticket_id": "1781016529.1278.4216653c",
+  "script": "scripts/p02e_1781016529_1278_4216653c_loro_embedding_consumer.py",
+  "config": "configs/p02e_1781016529_1278_4216653c_loro_embedding_consumer.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p02e_1781016529_1278_4216653c_loro_embedding_consumer.py --config configs/p02e_1781016529_1278_4216653c_loro_embedding_consumer.json",
+  "git_commit": "f4139ac0c66fb2e8d3d49858aab3c9d1dcb2fde9",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "input_sha256_csv": "reports/1781016529.1278.4216653c/input_sha256.csv",
+  "input_file_count": 36,
+  "reproduction_passed": true,
+  "output_sha256": [
+    {
+      "path": "reports/1781016529.1278.4216653c/REPORT.md",
+      "sha256": "67484dcef9d5987c07a131b2963dde1c61d7f2d357c0c5ecaed71e74c3f291f8",
+      "bytes": 4604
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/benchmark_sample_counts.csv",
+      "sha256": "44c904cec65baa7e49bce5aa0adae5cc2ca022fef6b92b3109e692c2af68b088",
+      "bytes": 1311
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/benchmark_sample_labels.csv",
+      "sha256": "92f9ed7782af3ca4b82a62c98b2d87b03f8cf4c9f481721b903669c9e6b04595",
+      "bytes": 5516652
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/forbidden_release_ae_loss.csv",
+      "sha256": "4cb4a90289fa75c5a140cf4a1b90410b72c750348b0183852f423d93d9343e6e",
+      "bytes": 110
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/input_sha256.csv",
+      "sha256": "65232df5dffc44be268363884a567e3f824c818c4777d93c941e9dd38114967b",
+      "bytes": 4018
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/leakage_checks.csv",
+      "sha256": "cb24c512b4a094d93c3ba68dff227c7d56d00632564a7a6a097ec2a713f0fc68",
+      "bytes": 850
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/loro_fold_metrics.csv",
+      "sha256": "12cc005cd95d49694334948d947b45eff7c1943d350449ff38208b425a693da6",
+      "bytes": 54242
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/loro_heldout_cluster_predictions.csv",
+      "sha256": "7f15e34c8b128e3a9339126eedd4f357707ba1a420d1799a3f1d8973438dcafe",
+      "bytes": 7635684
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/loro_summary_metrics.csv",
+      "sha256": "4e23f8462b1da9cc2e333d106575f38a18bfdb1d7c11d82efba9eb0d438f84b7",
+      "bytes": 2156
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/manifest.json",
+      "sha256": "d8e3d88c0b2f5d61f7cf56e8cd6a60a23e79366eed6e4c78c2e92ba8f7163bcc",
+      "bytes": 3413
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/p02e_forbidden_release_style_latents.json",
+      "sha256": "2d76147682abfdc5e2d6fd6e188c9ec38022ff058bd08944fca056aad47855bb",
+      "bytes": 155
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/reproduction_match_table.csv",
+      "sha256": "58bb811729390fe1312dfd648882096def92a735dad3391991ac38e15d3c4e5b",
+      "bytes": 98
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/result.json",
+      "sha256": "07ef3842b9de6bcc202d1ef82c3212320435566ef6a4a0c215b7efa562358433",
+      "bytes": 7176
+    },
+    {
+      "path": "reports/1781016529.1278.4216653c/train_only_ae_losses_by_fold.csv",
+      "sha256": "712b7e45c1febd7022f406a2a09dbc8618c1d9cae70e3918913d2132f99914bf",
+      "bytes": 3246
+    }
+  ]
+}

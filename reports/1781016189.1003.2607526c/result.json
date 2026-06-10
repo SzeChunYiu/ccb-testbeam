@@ -1,0 +1,63 @@
+{
+  "ticket_id": "1781016189.1003.2607526c",
+  "study_id": "P01d",
+  "title": "promote P01b artifact to canonical ccb-data archive",
+  "generated_at": "2026-06-09T20:57:26.429866+00:00",
+  "status": "blocked",
+  "upstream": {
+    "p01b_ticket_id": "1781005204.1292.46e43fb0",
+    "p01c_ticket_id": "1781010024.910.7fbe14e8",
+    "p01c_report_dir": "reports/1781010024.910.7fbe14e8__p01c_publish_p01b_latent_artifact"
+  },
+  "raw_root_recount": {
+    "raw_root_dir": "data/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "passed": true
+  },
+  "source_artifacts": [
+    {
+      "file": "p01b_embedding_latents.npz",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz",
+      "bytes": 11923919,
+      "sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+      "expected_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+      "matches_expected_sha256": true
+    },
+    {
+      "file": "p01b_autoencoder_state.pt",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_autoencoder_state.pt",
+      "bytes": 13715,
+      "sha256": "20ca87b4df2a1d31ef99130423101772f6f293fe5fe0e0af3c859038d9d082d1",
+      "expected_sha256": "20ca87b4df2a1d31ef99130423101772f6f293fe5fe0e0af3c859038d9d082d1",
+      "matches_expected_sha256": true
+    }
+  ],
+  "canonical_promotion": {
+    "status": "blocked",
+    "path": null,
+    "artifacts": []
+  },
+  "promotion_attempts": [
+    {
+      "target": "/home/billy/ccb-data/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0",
+      "parent_exists": false,
+      "target_exists": false,
+      "probe_dir": "/home/billy/ccb-data/artifacts/p01b_full_data_embedding_artifact",
+      "writable_probe": false,
+      "status": "failed",
+      "error": "[Errno 30] Read-only file system: '/home/billy/ccb-data/artifacts'"
+    },
+    {
+      "target": "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0",
+      "parent_exists": false,
+      "target_exists": false,
+      "probe_dir": "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data/artifacts/p01b_full_data_embedding_artifact",
+      "writable_probe": false,
+      "status": "failed",
+      "error": "[Errno 30] Read-only file system: '/projects'"
+    }
+  ],
+  "worker_local_fallback_path": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0",
+  "artifact_index": "reports/1781016189.1003.2607526c/P01D_ARTIFACT_INDEX.md"
+}

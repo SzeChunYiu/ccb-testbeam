@@ -1,0 +1,4 @@
+method,value,reference_value,delta,pass
+s02_template_phase_base,2.889152765080617,2.889152765080617,0.0,True
+s03a_amp_only_reference,1.494640076269676,1.494640076269676,0.0,True
+ml_ridge_on_template_phase,1.3915306248207993,1.3915306248207993,0.0,True

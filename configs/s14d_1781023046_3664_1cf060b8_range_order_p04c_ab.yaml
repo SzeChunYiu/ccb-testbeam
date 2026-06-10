@@ -1,0 +1,22 @@
+study_id: S14d
+ticket_id: "1781023046.3664.1cf060b8"
+title: range-order preflight using P04c A/B matched charge
+worker: testbeam-laptop-2
+
+p04c_config: configs/p04c_ab_event_matched_charge_transfer.yaml
+output_dir: reports/1781023046.3664.1cf060b8
+
+random_seed: 4146
+bootstrap_reps: 1000
+order_pair_reps: 200000
+
+traditional:
+  b2_quantile_bins: 5
+  bdown_positive_quantile_bins: 3
+
+ml:
+  cv_max_train_folds: 4
+  param_grid:
+    - {passes: 2, shrinkage: 0.60}
+    - {passes: 4, shrinkage: 0.50}
+    - {passes: 6, shrinkage: 0.35}

@@ -1,0 +1,7 @@
+probe,roc_auc,average_precision,notes
+missing-stave topology,,,Removed by construction: n_downstream unique=[3].
+curvature separation audit,1.0,1.0,Perfect because max clean |C_t|=5.436 ns and min gross |C_t|=51.995 ns.
+absolute-amplitude-only RF,0.7848955880043963,0.2677179290492211,Log amplitudes only; excluded from main RF.
+shape RF with shuffled training labels,0.5320301460197833,0.045104636187817196,Null/leakage sanity check under the same run-held-out folds.
+leaky D_t score,1.0,1.0,Forbidden label-defining ceiling; reported only to quantify self-reference.
+forbidden feature audit,,,Forbidden columns in main RF: [].

@@ -1,0 +1,6 @@
+check,value,flag,note
+a_stack_features_excluded_from_predictors,1.0,False,A-stack and A/B timing columns define the endpoint only; predictors are frozen B-stack waveform/candidate features.
+run_event_identifier_features_excluded,1.0,False,"run, eventno, group/current labels, and stratum strings are excluded from all ML feature matrices."
+outer_predictions_are_leave_one_run_out,1.0,False,Each prediction row is emitted in exactly one held-out source-run fold.
+endpoint_current_auc,0.491987880998703,False,Flags if the independent A-stack endpoint is nearly just a beam-current label.
+a_event_match_fraction,0.9995406522737712,False,Event-number join should retain almost all sampled B-stack windows.

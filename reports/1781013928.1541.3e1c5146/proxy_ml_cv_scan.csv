@@ -1,0 +1,2 @@
+max_leaf_nodes,learning_rate,l2_regularization,cv_mae_adc,cv_mae_std_adc
+7,0.1,0.0,20.600518448095798,1.689518484489304

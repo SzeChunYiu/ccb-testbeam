@@ -1,0 +1,106 @@
+{
+  "command": "/home/billy/anaconda3/bin/python3.7 reports/1781007587.2616.535e78de/s16e_tagged_random_pedestal.py --config reports/1781007587.2616.535e78de/s16e_config.json",
+  "config": "reports/1781007587.2616.535e78de/s16e_config.json",
+  "git_commit": "1b0991048977edbb36fff268733b5cbb6e3174ca",
+  "random_seed": 16016,
+  "environment": {
+    "python": "3.7.6",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "uproot": "5.0.9"
+  },
+  "inputs": "reports/1781007587.2616.535e78de/input_sha256.csv",
+  "outputs": [
+    {
+      "path": "reports/1781007587.2616.535e78de/REPORT.md",
+      "sha256": "18f333aafb76d0353ab4c2bd6c841df9a7f299c22b631f8f24d974898c0370f2",
+      "bytes": 6701
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fallback_heldout_benchmark.csv",
+      "sha256": "60218b41456f4618591d6362431d25def0faf330cbfa345643e5ea3bdfd17da6",
+      "bytes": 1081
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fallback_heldout_by_run.csv",
+      "sha256": "2524e88d1edf630999f7885ae920de657fb79eac89e3ce337cb5441d172d8eb8",
+      "bytes": 641
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fallback_residual_sample.csv.gz",
+      "sha256": "2bd022ba7b6dcbe234b5514b1fd6e8da7efb45ea145e5515c52bbf08c345e562",
+      "bytes": 63382
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fallback_run_counts.csv",
+      "sha256": "30780071c5cf68fea68ef0b7bdd74f89dde25f5bee638191abf489a8f7aeb190",
+      "bytes": 521
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fig_s16_fallback_bias_by_run.png",
+      "sha256": "eacf9695a2e7e0b34168fc9fbf26e36ad467bb78f6fc965ce52edc21763bb5d3",
+      "bytes": 43498
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fig_s16_fallback_mae_ci.png",
+      "sha256": "271f10b555fcd496a526f08502e6b338c588f0799d06396ad2fe845f66f0e120",
+      "bytes": 30918
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fig_s16_fallback_residuals.png",
+      "sha256": "f3126762e39e3717a8c5ed716c39bf9d55dd612228670d71cf78d4e33ef8e5d8",
+      "bytes": 55810
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/fig_tagged_random_audit.png",
+      "sha256": "5182267b622d13d43069a77488dee67008d08cb0ff34a348e0f1757d022555f0",
+      "bytes": 38852
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/input_sha256.csv",
+      "sha256": "6bfc2d57c3c2d22ce77519f8d263d8d57cb12133d4eec8e5473e4b7403d57484",
+      "bytes": 11789
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/leakage_checks.csv",
+      "sha256": "2dbc075e4b09d531b88d5b5b54b7c4d32f1a948e4776b6189e4c36cdba7bf8f1",
+      "bytes": 838
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/ml_cv_scan.csv",
+      "sha256": "23271c43cf5550d0fbb1af15e48216c6c14672c93655706ab60e852c9797d28f",
+      "bytes": 200
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/reproduction_match_table.csv",
+      "sha256": "0fb682b065d89f9c29adee345dd39b2c4069c85c87ae7e2630ac3fcf26e71d62",
+      "bytes": 163
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/result.json",
+      "sha256": "8ccfc7b7b1de37c82988abd499d39a3d9cabf6dbec3b7216617bb24d882b755a",
+      "bytes": 7533
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/s16e_config.json",
+      "sha256": "d611a74ef5611d9bf82b47ed05e510e68e74c6e31aace14d4c7e2a09268b5570",
+      "bytes": 2020
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/s16e_tagged_random_pedestal.py",
+      "sha256": "9bf8650112bf7a84eb806e50e0a2fd3d8446f9e0922b4cbc55338a1b6d43a911",
+      "bytes": 30323
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/sorted_b_tag_audit.csv",
+      "sha256": "63b69bac8f413af063a71c00d52959d70c78edfc426a7d8159a17a1fc5430caf",
+      "bytes": 10854
+    },
+    {
+      "path": "reports/1781007587.2616.535e78de/trigger_audit.csv",
+      "sha256": "41436879587c10b227ab5128548044edd6aa175e75965be10407db0a0954e833",
+      "bytes": 8800
+    }
+  ],
+  "runtime_seconds": 12.5807204246521
+}

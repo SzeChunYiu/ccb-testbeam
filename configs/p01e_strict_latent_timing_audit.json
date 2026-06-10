@@ -1,0 +1,89 @@
+{
+  "ticket_id": "1781010798.1019.19c63d1a",
+  "study_id": "P01e",
+  "title": "stricter leakage audit for latent timing probe",
+  "output_dir": "reports/1781010798.1019.19c63d1a__p01e_strict_latent_timing_audit",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "amplitude_cut_adc": 1000.0,
+  "expected_total_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_candidate_runs": [42, 57, 64, 65],
+  "timing_downstream_staves": ["B4", "B6", "B8"],
+  "random_seed": 110798,
+  "prior_p01c_random_seed": 190571,
+  "bootstrap_replicates": 500,
+  "latent_dim": 4,
+  "ridge_alpha": 1.0,
+  "strict_ae": {
+    "epochs": 14,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "mask_probability": 0.3,
+    "noise_sigma": 0.02,
+    "max_unsup_per_run_stave": 3500
+  },
+  "reproduction_ae": {
+    "epochs": 25,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "mask_probability": 0.3,
+    "noise_sigma": 0.02
+  },
+  "prior_p01c": {
+    "traditional_cfd20_sigma68_ns": 3.1884502039551736,
+    "ml_latent_sigma68_ns": 1.9892228263616547
+  },
+  "frozen_baselines": [
+    {
+      "method": "S02 global template",
+      "scope": "run65 only",
+      "sigma68_ns": 2.889152765080617,
+      "source": "reports/1781000705.514762.105c186b__s02b_template_timewalk_closure"
+    },
+    {
+      "method": "S02 ML ridge",
+      "scope": "run65 only",
+      "sigma68_ns": 1.8461136615528786,
+      "source": "configs/s02c_run_drift_timewalk.json"
+    },
+    {
+      "method": "S03 analytic timewalk",
+      "scope": "run65 only",
+      "sigma68_ns": 1.494640076269676,
+      "source": "configs/s03b_amp_binned_monotonic_timewalk.yaml"
+    },
+    {
+      "method": "S03c analytic timewalk",
+      "scope": "Sample-II leave-one-run-out pooled",
+      "sigma68_ns": 1.5510917109777833,
+      "source": "reports/1781005627.1877.378c7a87/pooled_run_bootstrap.csv"
+    }
+  ]
+}

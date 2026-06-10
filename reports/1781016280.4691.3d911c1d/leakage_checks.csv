@@ -1,0 +1,6 @@
+check,value,pass,interpretation
+run_split_event_overlap,0.0,True,train and held-out event ids are disjoint because whole runs are held out
+ml_features_exclude_forbidden_columns,1.0,True,"ML inputs exclude run, event, time_ns, raw residual, target residual, and pair-derived timing labels; saturation inputs are waveform-derived only"
+actual_ml_sigma68_ns,1.352185266517984,True,nominal leave-run-out ML residual width
+shuffled_train_target_ml_sigma68_ns,4.374554664750516,True,target permutation inside train folds should not reproduce the nominal ML width
+intentional_target_echo_sigma68_ns,0.0,True,positive leakage sentinel; a leaked target would be unrealistically narrow

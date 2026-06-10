@@ -1,0 +1,10 @@
+quantity,value,command
+raw_root_total_files,110,"find -L data/root/root -maxdepth 1 -type f -name '*.root' | wc -l"
+raw_root_b_stack_files,53,"find -L data/root/root -maxdepth 1 -type f -name 'hrdb_run_*.root' | wc -l"
+raw_root_a_stack_files,57,"find -L data/root/root -maxdepth 1 -type f -name 'hrda_run_*.root' | wc -l"
+sorted_b_root_files,53,"find -L data/sorted-b -maxdepth 1 -type f -name '*.root' | wc -l"
+sorted_a_root_files,53,"find -L data/sorted-a -maxdepth 1 -type f -name '*.root' | wc -l"
+first_b_raw_sha256,84f09fe5eabb8f0af30907c82be33dfae19cf1b78d2799ac7141da7e98649cf9,"sha256sum data/root/root/hrdb_run_0012.root"
+last_b_raw_sha256,fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb,"sha256sum data/root/root/hrdb_run_0065.root"
+first_b_raw_root_key,h101;1,"/home/billy/anaconda3/bin/python uproot.open('data/root/root/hrdb_run_0012.root').keys()[0]"
+second_b_raw_root_key,h101;1,"/home/billy/anaconda3/bin/python uproot.open('data/root/root/hrdb_run_0013.root').keys()[0]"

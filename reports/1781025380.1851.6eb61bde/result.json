@@ -1,0 +1,809 @@
+{
+  "conclusion": "Full same-pulse CFD/shape/tail ExtraTrees is tested against the amplitude empirical baseline, shuffled targets, and waveform-neighbor leakage checks before any gain is promoted. Here full_beats_empirical=False, full_beats_shuffled=True, hash_overlap_flag=False, exact_nn_flag=False. The full model separates from shuffled controls, but the cross-family empirical-baseline gain is not CI-stable in every fold; the amplitude-only ablation is the conservative reference for showing that target-proximal CFD/shape handles are doing the work.",
+  "decision_flags": {
+    "exact_nearest_neighbor_flag": false,
+    "full_aggressive_beats_empirical_all_folds": false,
+    "full_aggressive_beats_shuffled_all_folds": true,
+    "waveform_hash_overlap_flag": false
+  },
+  "folds": [
+    {
+      "delta_et_amp_monotone_mse_minus_empirical_amp_template": 0.013023551679672233,
+      "delta_et_amp_monotone_mse_minus_empirical_amp_template_ci": [
+        0.010502657269247819,
+        0.01569101397158097
+      ],
+      "delta_et_amp_monotone_mse_minus_shuffled": -0.02095917766231687,
+      "delta_et_amp_monotone_mse_minus_shuffled_ci": [
+        -0.022503185428896504,
+        -0.019381616227618498
+      ],
+      "delta_et_amp_monotone_shuffled_mse_minus_empirical_amp_template": 0.03398272934198911,
+      "delta_et_amp_monotone_shuffled_mse_minus_empirical_amp_template_ci": [
+        0.03014793804948564,
+        0.03779020235153311
+      ],
+      "delta_et_cfd_shape_no_tail_mse_minus_empirical_amp_template": -0.029050773736954093,
+      "delta_et_cfd_shape_no_tail_mse_minus_empirical_amp_template_ci": [
+        -0.03977977056078769,
+        -0.019001850920365184
+      ],
+      "delta_et_cfd_shape_no_tail_mse_minus_shuffled": -0.060391714141661904,
+      "delta_et_cfd_shape_no_tail_mse_minus_shuffled_ci": [
+        -0.07375124568602795,
+        -0.047895140886574046
+      ],
+      "delta_et_cfd_shape_no_tail_shuffled_mse_minus_empirical_amp_template": 0.031340940404707814,
+      "delta_et_cfd_shape_no_tail_shuffled_mse_minus_empirical_amp_template_ci": [
+        0.02786608162664774,
+        0.034763203762796305
+      ],
+      "delta_et_full_aggressive_mse_minus_empirical_amp_template": -0.031489655557545106,
+      "delta_et_full_aggressive_mse_minus_empirical_amp_template_ci": [
+        -0.042458756520374716,
+        -0.021032432316934368
+      ],
+      "delta_et_full_aggressive_mse_minus_shuffled": -0.062376158558759,
+      "delta_et_full_aggressive_mse_minus_shuffled_ci": [
+        -0.07736217193233282,
+        -0.04878880067932689
+      ],
+      "delta_et_full_aggressive_shuffled_mse_minus_empirical_amp_template": 0.03088650300121389,
+      "delta_et_full_aggressive_shuffled_mse_minus_empirical_amp_template_ci": [
+        0.02711868600204579,
+        0.03467667278092379
+      ],
+      "delta_ridge_amp_monotone_mse_minus_empirical_amp_template": 0.014918822923766003,
+      "delta_ridge_amp_monotone_mse_minus_empirical_amp_template_ci": [
+        0.012484429731075972,
+        0.017005565461102403
+      ],
+      "delta_ridge_cfd_shape_no_tail_mse_minus_empirical_amp_template": 0.005527152763227237,
+      "delta_ridge_cfd_shape_no_tail_mse_minus_empirical_amp_template_ci": [
+        0.0010009800953036186,
+        0.009964376734130587
+      ],
+      "delta_ridge_full_aggressive_mse_minus_empirical_amp_template": -0.022677228268545506,
+      "delta_ridge_full_aggressive_mse_minus_empirical_amp_template_ci": [
+        -0.03338046797980445,
+        -0.012180956383097494
+      ],
+      "delta_traditional_cfd_tail_binned_template_mse_minus_empirical_amp_template": 0.01201550333585595,
+      "delta_traditional_cfd_tail_binned_template_mse_minus_empirical_amp_template_ci": [
+        0.008890064709763463,
+        0.015058316326851806
+      ],
+      "empirical_amp_template_mse": 0.047782082970732505,
+      "empirical_amp_template_mse_ci": [
+        0.03388646597191048,
+        0.0635086733066598
+      ],
+      "et_amp_monotone_mse": 0.060805634650404734,
+      "et_amp_monotone_mse_ci": [
+        0.045358724989602334,
+        0.07878164122201307
+      ],
+      "et_amp_monotone_shuffled_mse": 0.08176481231272162,
+      "et_amp_monotone_shuffled_mse_ci": [
+        0.06529030522829794,
+        0.1011000737169506
+      ],
+      "et_cfd_shape_no_tail_mse": 0.01873130923377841,
+      "et_cfd_shape_no_tail_mse_ci": [
+        0.014662256073036466,
+        0.023457364335048515
+      ],
+      "et_cfd_shape_no_tail_shuffled_mse": 0.07912302337544032,
+      "et_cfd_shape_no_tail_shuffled_mse_ci": [
+        0.0630319460898869,
+        0.09790912609747023
+      ],
+      "et_full_aggressive_mse": 0.016292427413187396,
+      "et_full_aggressive_mse_ci": [
+        0.012627229177961007,
+        0.020582600201595833
+      ],
+      "et_full_aggressive_shuffled_mse": 0.07866858597194638,
+      "et_full_aggressive_shuffled_mse_ci": [
+        0.062058807278432354,
+        0.09811843541083694
+      ],
+      "eval_group": "sample_i_analysis",
+      "eval_pulses": 252266,
+      "eval_runs": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "feature_meta": {
+        "amp_monotone": {
+          "adds_centered_cfd20": false,
+          "columns": [
+            "log_amp",
+            "log_amp2",
+            "inv_sqrt_amp",
+            "inv_amp"
+          ],
+          "extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": false,
+            "target_nan_fill": [
+              -7.073904271237552e-05,
+              -0.00042176857823506,
+              0.013211183249950409,
+              0.20000000298023224,
+              0.6474338173866272,
+              0.9489568471908569,
+              0.9706180691719055,
+              0.9163837432861328,
+              0.8445971012115479,
+              0.7488343119621277,
+              0.6479401588439941,
+              0.5329892635345459,
+              0.406475305557251,
+              0.2867193818092346,
+              0.20521163940429688,
+              0.17493180930614471,
+              0.10302120447158813,
+              -0.01931789517402649
+            ],
+            "train_pulses": 14630
+          },
+          "feature_count": 24,
+          "shuffled_extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": true,
+            "target_nan_fill": [
+              -7.073904271237552e-05,
+              -0.00042176857823506,
+              0.013211183249950409,
+              0.20000000298023224,
+              0.6474338173866272,
+              0.9489568471908569,
+              0.9706180691719055,
+              0.9163837432861328,
+              0.8445971012115479,
+              0.7488343119621277,
+              0.6479401588439941,
+              0.5329892635345459,
+              0.406475305557251,
+              0.2867193818092346,
+              0.20521163940429688,
+              0.17493180930614471,
+              0.10302120447158813,
+              -0.01931789517402649
+            ],
+            "train_pulses": 14630
+          }
+        },
+        "cfd_shape_no_tail": {
+          "adds_centered_cfd20": true,
+          "columns": [
+            "log_amp",
+            "log_amp2",
+            "inv_sqrt_amp",
+            "inv_amp",
+            "peak_sample",
+            "cfd10",
+            "cfd20",
+            "cfd30",
+            "cfd50",
+            "rise_10_50",
+            "rise_20_50",
+            "width_half"
+          ],
+          "extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": false,
+            "target_nan_fill": [
+              -7.073904271237552e-05,
+              -0.00042176857823506,
+              0.013211183249950409,
+              0.20000000298023224,
+              0.6474338173866272,
+              0.9489568471908569,
+              0.9706180691719055,
+              0.9163837432861328,
+              0.8445971012115479,
+              0.7488343119621277,
+              0.6479401588439941,
+              0.5329892635345459,
+              0.406475305557251,
+              0.2867193818092346,
+              0.20521163940429688,
+              0.17493180930614471,
+              0.10302120447158813,
+              -0.01931789517402649
+            ],
+            "train_pulses": 14630
+          },
+          "feature_count": 69,
+          "shuffled_extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": true,
+            "target_nan_fill": [
+              -7.073904271237552e-05,
+              -0.00042176857823506,
+              0.013211183249950409,
+              0.20000000298023224,
+              0.6474338173866272,
+              0.9489568471908569,
+              0.9706180691719055,
+              0.9163837432861328,
+              0.8445971012115479,
+              0.7488343119621277,
+              0.6479401588439941,
+              0.5329892635345459,
+              0.406475305557251,
+              0.2867193818092346,
+              0.20521163940429688,
+              0.17493180930614471,
+              0.10302120447158813,
+              -0.01931789517402649
+            ],
+            "train_pulses": 14630
+          }
+        },
+        "full_aggressive": {
+          "adds_centered_cfd20": true,
+          "columns": [
+            "log_amp",
+            "log_amp2",
+            "inv_sqrt_amp",
+            "inv_amp",
+            "area_over_amp",
+            "peak_sample",
+            "cfd10",
+            "cfd20",
+            "cfd30",
+            "cfd50",
+            "rise_10_50",
+            "rise_20_50",
+            "width_half",
+            "tail_mean_8_17",
+            "tail_area_10_17",
+            "late_over_total",
+            "peak_to_area"
+          ],
+          "extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": false,
+            "target_nan_fill": [
+              -7.073904271237552e-05,
+              -0.00042176857823506,
+              0.013211183249950409,
+              0.20000000298023224,
+              0.6474338173866272,
+              0.9489568471908569,
+              0.9706180691719055,
+              0.9163837432861328,
+              0.8445971012115479,
+              0.7488343119621277,
+              0.6479401588439941,
+              0.5329892635345459,
+              0.406475305557251,
+              0.2867193818092346,
+              0.20521163940429688,
+              0.17493180930614471,
+              0.10302120447158813,
+              -0.01931789517402649
+            ],
+            "train_pulses": 14630
+          },
+          "feature_count": 94,
+          "shuffled_extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": true,
+            "target_nan_fill": [
+              -7.073904271237552e-05,
+              -0.00042176857823506,
+              0.013211183249950409,
+              0.20000000298023224,
+              0.6474338173866272,
+              0.9489568471908569,
+              0.9706180691719055,
+              0.9163837432861328,
+              0.8445971012115479,
+              0.7488343119621277,
+              0.6479401588439941,
+              0.5329892635345459,
+              0.406475305557251,
+              0.2867193818092346,
+              0.20521163940429688,
+              0.17493180930614471,
+              0.10302120447158813,
+              -0.01931789517402649
+            ],
+            "train_pulses": 14630
+          }
+        }
+      },
+      "fold": "holdout_sample_i",
+      "ridge_amp_monotone_mse": 0.0627009058944985,
+      "ridge_amp_monotone_mse_ci": [
+        0.04751074547964706,
+        0.08040590921446265
+      ],
+      "ridge_cfd_shape_no_tail_mse": 0.05330923573395974,
+      "ridge_cfd_shape_no_tail_mse_ci": [
+        0.04328359433210382,
+        0.06471775130386263
+      ],
+      "ridge_full_aggressive_mse": 0.025104854702187002,
+      "ridge_full_aggressive_mse_ci": [
+        0.02087586813017018,
+        0.02989415372767395
+      ],
+      "traditional_cfd_tail_binned_template_mse": 0.05979758630658844,
+      "traditional_cfd_tail_binned_template_mse_ci": [
+        0.04863482773717012,
+        0.07274267145530851
+      ],
+      "train_group": "sample_ii_calib",
+      "train_pulses": 14630,
+      "train_runs": [
+        64
+      ]
+    },
+    {
+      "delta_et_amp_monotone_mse_minus_empirical_amp_template": 0.03416383766696086,
+      "delta_et_amp_monotone_mse_minus_empirical_amp_template_ci": [
+        0.03068808222999423,
+        0.038642709383175385
+      ],
+      "delta_et_amp_monotone_mse_minus_shuffled": -0.01460105843608923,
+      "delta_et_amp_monotone_mse_minus_shuffled_ci": [
+        -0.02043965377274964,
+        -0.00824044832383633
+      ],
+      "delta_et_amp_monotone_shuffled_mse_minus_empirical_amp_template": 0.048764896103050084,
+      "delta_et_amp_monotone_shuffled_mse_minus_empirical_amp_template_ci": [
+        0.04288569150785722,
+        0.053903213934238
+      ],
+      "delta_et_cfd_shape_no_tail_mse_minus_empirical_amp_template": -0.00513387452518041,
+      "delta_et_cfd_shape_no_tail_mse_minus_empirical_amp_template_ci": [
+        -0.010208836029238463,
+        0.0024908514211976307
+      ],
+      "delta_et_cfd_shape_no_tail_mse_minus_shuffled": -0.052482380098162085,
+      "delta_et_cfd_shape_no_tail_mse_minus_shuffled_ci": [
+        -0.0612788548815684,
+        -0.03986142459895121
+      ],
+      "delta_et_cfd_shape_no_tail_shuffled_mse_minus_empirical_amp_template": 0.04734850557298168,
+      "delta_et_cfd_shape_no_tail_shuffled_mse_minus_empirical_amp_template_ci": [
+        0.04169967021643793,
+        0.05220741912593916
+      ],
+      "delta_et_full_aggressive_mse_minus_empirical_amp_template": -0.006782605039738055,
+      "delta_et_full_aggressive_mse_minus_empirical_amp_template_ci": [
+        -0.012201975800368406,
+        0.0010218893783297798
+      ],
+      "delta_et_full_aggressive_mse_minus_shuffled": -0.05442034740903452,
+      "delta_et_full_aggressive_mse_minus_shuffled_ci": [
+        -0.0636977520287962,
+        -0.040792052288034834
+      ],
+      "delta_et_full_aggressive_shuffled_mse_minus_empirical_amp_template": 0.04763774236929647,
+      "delta_et_full_aggressive_shuffled_mse_minus_empirical_amp_template_ci": [
+        0.04159787637123251,
+        0.05279442090649239
+      ],
+      "delta_ridge_amp_monotone_mse_minus_empirical_amp_template": 0.029386768987987828,
+      "delta_ridge_amp_monotone_mse_minus_empirical_amp_template_ci": [
+        0.026392318925041184,
+        0.03267163755404763
+      ],
+      "delta_ridge_cfd_shape_no_tail_mse_minus_empirical_amp_template": 0.03405102395094431,
+      "delta_ridge_cfd_shape_no_tail_mse_minus_empirical_amp_template_ci": [
+        0.02953636654457951,
+        0.03808079883356096
+      ],
+      "delta_ridge_full_aggressive_mse_minus_empirical_amp_template": 0.013216981815427976,
+      "delta_ridge_full_aggressive_mse_minus_empirical_amp_template_ci": [
+        0.008675690911894853,
+        0.018724843846712056
+      ],
+      "delta_traditional_cfd_tail_binned_template_mse_minus_empirical_amp_template": 0.02500168984543589,
+      "delta_traditional_cfd_tail_binned_template_mse_minus_empirical_amp_template_ci": [
+        0.022606909283116188,
+        0.02823344193135535
+      ],
+      "empirical_amp_template_mse": 0.038992194449586605,
+      "empirical_amp_template_mse_ci": [
+        0.029041496567139634,
+        0.04576358442350985
+      ],
+      "et_amp_monotone_mse": 0.07315603211654746,
+      "et_amp_monotone_mse_ci": [
+        0.0625346802173374,
+        0.08140557488264753
+      ],
+      "et_amp_monotone_shuffled_mse": 0.0877570905526367,
+      "et_amp_monotone_shuffled_mse_ci": [
+        0.07238382390695922,
+        0.09968063982166893
+      ],
+      "et_cfd_shape_no_tail_mse": 0.033858319924406195,
+      "et_cfd_shape_no_tail_mse_ci": [
+        0.030981690058192825,
+        0.03640078185598695
+      ],
+      "et_cfd_shape_no_tail_shuffled_mse": 0.08634070002256829,
+      "et_cfd_shape_no_tail_shuffled_mse_ci": [
+        0.07106738304016245,
+        0.09801987435179157
+      ],
+      "et_full_aggressive_mse": 0.03220958940984856,
+      "et_full_aggressive_mse_ci": [
+        0.02958653872719871,
+        0.03468988717553663
+      ],
+      "et_full_aggressive_shuffled_mse": 0.08662993681888309,
+      "et_full_aggressive_shuffled_mse_ci": [
+        0.07125503522589301,
+        0.0985328199314224
+      ],
+      "eval_group": "sample_ii_analysis",
+      "eval_pulses": 125096,
+      "eval_runs": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "feature_meta": {
+        "amp_monotone": {
+          "adds_centered_cfd20": false,
+          "columns": [
+            "log_amp",
+            "log_amp2",
+            "inv_sqrt_amp",
+            "inv_amp"
+          ],
+          "extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": false,
+            "target_nan_fill": [
+              -0.00011366361286491156,
+              -0.0002547513577155769,
+              0.011090838350355625,
+              0.20000000298023224,
+              0.7089943289756775,
+              0.9820206761360168,
+              0.8882366418838501,
+              0.7177200317382812,
+              0.6819517612457275,
+              0.6623104214668274,
+              0.618960976600647,
+              0.5361343622207642,
+              0.46019452810287476,
+              0.4125063121318817,
+              0.3959336280822754,
+              0.4165503978729248,
+              0.38811489939689636,
+              0.004503882490098476
+            ],
+            "train_pulses": 60000
+          },
+          "feature_count": 24,
+          "shuffled_extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": true,
+            "target_nan_fill": [
+              -0.00011044678103644401,
+              -0.00026912312023341656,
+              0.01119283214211464,
+              0.20000000298023224,
+              0.709193229675293,
+              0.9819849729537964,
+              0.8884266018867493,
+              0.7177917957305908,
+              0.6834648847579956,
+              0.6630887985229492,
+              0.6185815930366516,
+              0.5359855890274048,
+              0.46003180742263794,
+              0.4122926592826843,
+              0.3949428200721741,
+              0.41566818952560425,
+              0.3871346116065979,
+              -0.0008006265852600336
+            ],
+            "train_pulses": 60000
+          }
+        },
+        "cfd_shape_no_tail": {
+          "adds_centered_cfd20": true,
+          "columns": [
+            "log_amp",
+            "log_amp2",
+            "inv_sqrt_amp",
+            "inv_amp",
+            "peak_sample",
+            "cfd10",
+            "cfd20",
+            "cfd30",
+            "cfd50",
+            "rise_10_50",
+            "rise_20_50",
+            "width_half"
+          ],
+          "extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": false,
+            "target_nan_fill": [
+              -0.0001136832797783427,
+              -0.00025736840325407684,
+              0.011125517077744007,
+              0.20000000298023224,
+              0.7089179754257202,
+              0.9818552732467651,
+              0.8883137702941895,
+              0.7180655598640442,
+              0.6834938526153564,
+              0.6632111668586731,
+              0.6186535358428955,
+              0.5358268022537231,
+              0.45940372347831726,
+              0.41146066784858704,
+              0.3950191140174866,
+              0.4147965908050537,
+              0.387540727853775,
+              0.002314948011189699
+            ],
+            "train_pulses": 60000
+          },
+          "feature_count": 69,
+          "shuffled_extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": true,
+            "target_nan_fill": [
+              -0.00011248486407566816,
+              -0.0002615849953144789,
+              0.011200201697647572,
+              0.20000000298023224,
+              0.7089490294456482,
+              0.9818779230117798,
+              0.8886055946350098,
+              0.7183845043182373,
+              0.683921754360199,
+              0.6639693975448608,
+              0.6191685795783997,
+              0.535986065864563,
+              0.4591551125049591,
+              0.41031813621520996,
+              0.39269745349884033,
+              0.41415321826934814,
+              0.3879716694355011,
+              -0.012791730463504791
+            ],
+            "train_pulses": 60000
+          }
+        },
+        "full_aggressive": {
+          "adds_centered_cfd20": true,
+          "columns": [
+            "log_amp",
+            "log_amp2",
+            "inv_sqrt_amp",
+            "inv_amp",
+            "area_over_amp",
+            "peak_sample",
+            "cfd10",
+            "cfd20",
+            "cfd30",
+            "cfd50",
+            "rise_10_50",
+            "rise_20_50",
+            "width_half",
+            "tail_mean_8_17",
+            "tail_area_10_17",
+            "late_over_total",
+            "peak_to_area"
+          ],
+          "extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": false,
+            "target_nan_fill": [
+              -0.00011210970842512324,
+              -0.0002682371705304831,
+              0.01121184229850769,
+              0.20000000298023224,
+              0.7087964415550232,
+              0.9818987846374512,
+              0.8886135816574097,
+              0.7196005582809448,
+              0.6849611401557922,
+              0.664858341217041,
+              0.619796872138977,
+              0.5365846157073975,
+              0.4598645567893982,
+              0.41159865260124207,
+              0.39491549134254456,
+              0.4155355393886566,
+              0.3875420093536377,
+              0.004685607738792896
+            ],
+            "train_pulses": 60000
+          },
+          "feature_count": 94,
+          "shuffled_extra_trees": {
+            "max_depth": 18,
+            "min_samples_leaf": 8,
+            "n_estimators": 48,
+            "shuffled_target": true,
+            "target_nan_fill": [
+              -0.00010973670578096062,
+              -0.0002573646779637784,
+              0.011132586747407913,
+              0.20000000298023224,
+              0.7097482681274414,
+              0.981890082359314,
+              0.8877511620521545,
+              0.7169733047485352,
+              0.6816519498825073,
+              0.6614995002746582,
+              0.6178829073905945,
+              0.5353032350540161,
+              0.45915520191192627,
+              0.4116353988647461,
+              0.39508256316185,
+              0.4159126877784729,
+              0.3879336416721344,
+              0.005274527706205845
+            ],
+            "train_pulses": 60000
+          }
+        }
+      },
+      "fold": "holdout_sample_ii",
+      "ridge_amp_monotone_mse": 0.06837896343757444,
+      "ridge_amp_monotone_mse_ci": [
+        0.05816585676323124,
+        0.0761052499965346
+      ],
+      "ridge_cfd_shape_no_tail_mse": 0.07304321840053092,
+      "ridge_cfd_shape_no_tail_mse_ci": [
+        0.0650007973414335,
+        0.07986159249427244
+      ],
+      "ridge_full_aggressive_mse": 0.05220917626501459,
+      "ridge_full_aggressive_mse_ci": [
+        0.047039872974455596,
+        0.056725129992992195
+      ],
+      "traditional_cfd_tail_binned_template_mse": 0.0639938842950225,
+      "traditional_cfd_tail_binned_template_mse_ci": [
+        0.05706056241262586,
+        0.06952909076472896
+      ],
+      "train_group": "sample_i_calib",
+      "train_pulses": 248745,
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42
+      ]
+    }
+  ],
+  "git_commit": "59aaa135cc66d8c8436398a612a2ca572620b9fb",
+  "input_sha256": "input_sha256.csv",
+  "leakage": [
+    {
+      "fold": "holdout_sample_i",
+      "nn_distance_median": 0.04942530562023187,
+      "nn_distance_min": 0.007514782491860471,
+      "nn_distance_p01": 0.017712960648720372,
+      "nn_distance_p05": 0.023167714153482257,
+      "nn_distance_p95": 0.20127232444279577,
+      "nn_eval_indices_with_exact_like": [],
+      "nn_eval_sample": 16000,
+      "nn_exact_like_count": 0,
+      "nn_frac_dist_le_0.001": 0.0,
+      "nn_frac_dist_le_0.01": 0.0001875,
+      "nn_frac_dist_le_1e-06": 0.0,
+      "nn_nearest_train_indices_for_exact_like": [],
+      "nn_train_sample": 14630,
+      "target_proximal_features_ablated_in_amp_monotone": true,
+      "train_eval_key_overlap": 0,
+      "train_eval_run_overlap": [],
+      "uses_other_stave_features": false,
+      "uses_run_or_event_features": false,
+      "waveform_hash_overlap_count": 0,
+      "waveform_hash_overlap_frac_eval_unique": 0.0
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "nn_distance_median": 0.05247922367573006,
+      "nn_distance_min": 0.009124191425736864,
+      "nn_distance_p01": 0.01807730960394245,
+      "nn_distance_p05": 0.025049055799473707,
+      "nn_distance_p95": 0.3111692678770403,
+      "nn_eval_indices_with_exact_like": [],
+      "nn_eval_sample": 16000,
+      "nn_exact_like_count": 0,
+      "nn_frac_dist_le_0.001": 0.0,
+      "nn_frac_dist_le_0.01": 0.000125,
+      "nn_frac_dist_le_1e-06": 0.0,
+      "nn_nearest_train_indices_for_exact_like": [],
+      "nn_train_sample": 16000,
+      "target_proximal_features_ablated_in_amp_monotone": true,
+      "train_eval_key_overlap": 0,
+      "train_eval_run_overlap": [],
+      "uses_other_stave_features": false,
+      "uses_run_or_event_features": false,
+      "waveform_hash_overlap_count": 0,
+      "waveform_hash_overlap_frac_eval_unique": 0.0
+    }
+  ],
+  "ml": {
+    "method": "multi-output ExtraTrees q-template predictors under amp-only, CFD/shape, and full same-pulse handle ablations",
+    "shuffled_target_controls": [
+      "et_amp_monotone_shuffled",
+      "et_cfd_shape_no_tail_shuffled",
+      "et_full_aggressive_shuffled"
+    ]
+  },
+  "reproduction": {
+    "analysis_selected_rows": 377362,
+    "passed": true,
+    "selected_b_stave_pulses": 640737
+  },
+  "runtime_sec": 123.6,
+  "split": "P10d/P10c leave-one-run-family-out by run with held-out run bootstrap CIs",
+  "study": "P10f",
+  "ticket_id": "1781025380.1851.6eb61bde",
+  "title": "same-pulse handle leakage stress test",
+  "traditional": {
+    "amplitude_only": "train-only empirical median aligned templates by stave and amplitude bin",
+    "strong_method": "train-only empirical templates crossed with CFD rise and tail quantile bins"
+  },
+  "worker": "testbeam-laptop-3"
+}

@@ -1,0 +1,117 @@
+{
+  "study": "S03b",
+  "ticket": "1781006575.2877.41492e09",
+  "worker": "testbeam-laptop-2",
+  "title": "q_template-only clean-timing cuts",
+  "s00_reproduced": true,
+  "ticket_numeric_target": "none printed; S00 raw selected-pulse gate used as reproduction gate",
+  "label_definition": "tail if downstream CFD20 span >10 ns, clean if <5 ns; 5-10 ns excluded",
+  "label_counts_all_runs": {
+    "downstream_ge2_events": 15354,
+    "clean": 8958,
+    "tail": 243,
+    "ambiguous": 6153,
+    "labelled_events": 9201
+  },
+  "label_counts": {
+    "downstream_ge2_events": 12588,
+    "clean": 7389,
+    "tail": 190,
+    "ambiguous": 5009,
+    "labelled_events": 7579
+  },
+  "traditional": {
+    "method": "traditional_q_template_only",
+    "roc_auc": 0.7407974870183986,
+    "roc_auc_ci_low": 0.685843543096889,
+    "roc_auc_ci_high": 0.7706949142493407,
+    "average_precision": 0.08305520087514164,
+    "average_precision_ci_low": 0.0595398531991909,
+    "average_precision_ci_high": 0.126668594726926,
+    "note": "q_template-only standardized score plus fold-local clean-retention cuts",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "traditional_operational_cut": {
+    "traditional_cut_tail_rejection": 0.1368421052631579,
+    "traditional_cut_tail_rejection_ci": [
+      0.0684931506849315,
+      0.20323038306231583
+    ],
+    "traditional_cut_clean_retention": 0.9495195560969008,
+    "traditional_cut_clean_retention_ci": [
+      0.9408664393657801,
+      0.9591780846542833
+    ],
+    "ml_minus_traditional_auc_delta": 0.10173800314835002,
+    "ml_minus_traditional_auc_delta_ci": [
+      0.0748291479791636,
+      0.12062055178978133
+    ]
+  },
+  "ml": {
+    "method": "ml_q_template_rf",
+    "roc_auc": 0.8425354901667487,
+    "roc_auc_ci_low": 0.7801626175807644,
+    "roc_auc_ci_high": 0.8775227490883064,
+    "average_precision": 0.30365751331005403,
+    "average_precision_ci_low": 0.224493152067169,
+    "average_precision_ci_high": 0.39363048192359396,
+    "note": "random forest using q_template-only event summaries",
+    "brier": 0.10825605096989348,
+    "brier_ci_low": 0.10544117994626273,
+    "brier_ci_high": 0.11098862691493684
+  },
+  "leaky_control": {
+    "method": "leaky_downstream_span_control",
+    "roc_auc": 1.0,
+    "roc_auc_ci_low": 0.9999999999999999,
+    "roc_auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "average_precision_ci_low": 0.9999999999999998,
+    "average_precision_ci_high": 1.0000000000000002,
+    "note": "deliberate forbidden-feature control using downstream span",
+    "brier": 0.0196808755094201,
+    "brier_ci_low": 0.018007484086634613,
+    "brier_ci_high": 0.021257498931260416
+  },
+  "shuffled_control": {
+    "method": "shuffled_label_control",
+    "roc_auc": 0.5089243612482282,
+    "roc_auc_ci_low": 0.40012277809117114,
+    "roc_auc_ci_high": 0.6080509145751295,
+    "average_precision": 0.03309688856814824,
+    "average_precision_ci_low": 0.02203202173226731,
+    "average_precision_ci_high": 0.049344847943647054,
+    "note": "q_template RF trained on shuffled train labels",
+    "brier": 0.22299300772055528,
+    "brier_ci_low": 0.21986330328295678,
+    "brier_ci_high": 0.22637684307234698
+  },
+  "best_ml_params": {
+    "n_estimators": 300,
+    "max_depth": 5,
+    "min_samples_leaf": 20
+  },
+  "q_features": [
+    "q_B2",
+    "q_B4",
+    "q_B6",
+    "q_B8",
+    "q_downstream_mean",
+    "q_downstream_max",
+    "q_downstream_p90",
+    "q_downstream_std",
+    "q_all_mean",
+    "q_all_max"
+  ],
+  "forbidden_features_present": [],
+  "qtemplate_unmatched_events": 0,
+  "input_sha256": "input_sha256.csv",
+  "runtime_sec": 40.209,
+  "next_tickets": [
+    "S03d: test q_template veto thresholds on the S03/S04 pair-residual resolution tables with pair-level run bootstrap.",
+    "S01f: rebuild q_template with train-run-only templates per held-out fold to remove dependence on global S01 calibration artifacts."
+  ]
+}

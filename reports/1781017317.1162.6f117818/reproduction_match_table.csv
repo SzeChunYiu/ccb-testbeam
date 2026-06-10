@@ -1,0 +1,7 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total selected B-stave pulses,640737,640737,0,0,True
+sample_i_analysis selected_pulses,252266,252266,0,0,True
+sample_i_analysis B2,241422,241422,0,0,True
+sample_i_analysis B4,6451,6451,0,0,True
+sample_i_analysis B6,3094,3094,0,0,True
+sample_i_analysis B8,1299,1299,0,0,True

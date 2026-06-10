@@ -1,0 +1,15 @@
+run,n_pulses,n_events,selector
+58,219,73,median_first4
+59,2289,763,median_first4
+60,2424,808,median_first4
+61,2799,933,median_first4
+62,2421,807,median_first4
+63,1110,370,median_first4
+65,198,66,median_first4
+58,270,90,dynamic_range
+59,2700,900,dynamic_range
+60,2865,955,dynamic_range
+61,3225,1075,dynamic_range
+62,2823,941,dynamic_range
+63,1323,441,dynamic_range
+65,270,90,dynamic_range

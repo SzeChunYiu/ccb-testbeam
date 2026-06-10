@@ -1,0 +1,100 @@
+{
+  "ticket_id": "0000000008.1.usesim",
+  "worker": "testbeam-laptop-3",
+  "created_utc": "2026-06-10T10:57:25Z",
+  "git_commit": "a30354fb674df99d21f907d1e8554a38277a31a5",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "packages": {
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117",
+    "uproot": "5.0.9"
+  },
+  "random_seed": 80081,
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/usesim_0000000008_1_truth_pid_energy.py --config configs/0000000008_1_usesim_config.json"
+  ],
+  "input_sha256": [
+    {
+      "path": "/home/billy/ccb-geant4/output_30k.root",
+      "sha256": "f831db709cd7446e4a75c8883a8dd82be4a1b23e05bef3002f2991082214a84f",
+      "role": "GEANT4 truth ROOT"
+    },
+    {
+      "path": "configs/0000000008_1_usesim_config.json",
+      "sha256": "93235fbd9994e6ac780216693653c5a4c0543578434e56aeb3479e646c5d644f",
+      "role": "analysis config"
+    }
+  ],
+  "output_sha256": [
+    {
+      "path": "reports/0000000008.1.usesim/REPORT.md",
+      "sha256": "b18418d09fbfba89ae198e0cf913320d274d5a0fd3fa0d986bf32bf56a2e8478"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/energy_scale_validation.csv",
+      "sha256": "242ea276af49280ce763f9ac0da9bdab3a3c4318b08ab7936ab53b654297ef65"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/fig_layer_truth_profile.png",
+      "sha256": "345e9f1a3c758abd4e5dade3c3228330ccfc2acd8c1381ae3196ad868247612a"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/fig_pid_average_precision.png",
+      "sha256": "36fdcf0579481bc44c54640f81d58549b3854871119f6f1f5cf92a8f5dc0f1e2"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/fig_winner_reliability.png",
+      "sha256": "163ccfd193465acb28ae843dea80d4decf6a2198394ebd9ecca654bebec65011"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/input_sha256.csv",
+      "sha256": "258173f9ac14d087fe27e1536693b91ed6c0aac2b9d52515b05ebb6f1b802b79"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/layer_mapping_truth.csv",
+      "sha256": "04ebc6c5839329f3666ad5aeba98594dfd9e910da207d7d0d03335478deb062d"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/leakage_checks.csv",
+      "sha256": "339c7330d1fff0cfd322fa74e97d548c8d712e1ec9fb377960e8d3a9b9af81d6"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/pid_benchmark.csv",
+      "sha256": "33716b64279979a9687b4aa02151a8b5c07b48be10745df4d3cdbb782fb11094"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/pid_per_pseudo_run.csv",
+      "sha256": "bda4b3294e8fdf35e2bd2883994c66d6cff6fa0e76ec0e383e0a5e3ff751ed88"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/pid_predictions.csv",
+      "sha256": "9786b3f5401822e87d887bda96c07523669fc495c3258ceee01b43116b32d66e"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/pid_thresholds.csv",
+      "sha256": "10f4068d4074ce8602550e5ec3c0fc96c5d6e371e32927325b8bfb5a0c317c30"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/pid_track_dataset.csv",
+      "sha256": "7c9d785672f3dae0c3705a62d3afb9b32fde67d8b4827831b13050d2c56a9f2c"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/reproduction_match_table.csv",
+      "sha256": "c7b1362ac44d30431d1922ba7661da2c28669f3038f22b0be202fb35174e683b"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/result.json",
+      "sha256": "a961ffbfa5f79cf6d585f3e9a4ea1559424209f356bc4f8661ab9ee4f55abcb0"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/stave_mapping_data_vs_sim.csv",
+      "sha256": "c7b0422180c7e488353bd0f8ef2d75482a7a65687e47ec0f68d3a99824c1cb07"
+    },
+    {
+      "path": "reports/0000000008.1.usesim/winner_reliability.csv",
+      "sha256": "008ca5a2a73a7f2b09c130537293711e0150ba19c30c075fd800a319cbb19dba"
+    }
+  ]
+}

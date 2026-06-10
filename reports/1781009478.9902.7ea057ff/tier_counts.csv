@@ -1,0 +1,4 @@
+tier,amplitude_cut_adc,n_pair_rows,n_runs,n_unique_events,n_a_any_pair_rows,n_a_both_pair_rows,n_a_any_events,n_a_both_events
+loose500,500.0,74176,21,32207,614,158,307,94
+loose750,750.0,69081,21,29449,478,128,225,74
+nominal1000,1000.0,65457,21,27751,380,114,187,62

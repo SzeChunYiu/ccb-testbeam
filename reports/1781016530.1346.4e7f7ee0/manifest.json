@@ -1,0 +1,76 @@
+{
+  "artifact_present": false,
+  "config": "configs/p01c_1781016530_1346_4e7f7ee0_loader_checks.json",
+  "git_commit": "16f6a83d81eae43b9ace045c00bb49dc7dd0770b",
+  "input_file_count": 33,
+  "input_sha256_csv": "reports/1781016530.1346.4e7f7ee0/input_sha256.csv",
+  "leakage_all_passed": true,
+  "outputs": [
+    {
+      "bytes": 3501,
+      "path": "reports/1781016530.1346.4e7f7ee0/REPORT.md",
+      "sha256": "978fc28c946764fccf9aad76776d9e9221dc032844942ab019daf779f532557f"
+    },
+    {
+      "bytes": 10449043,
+      "path": "reports/1781016530.1346.4e7f7ee0/benchmark_sample_labels.csv",
+      "sha256": "d5f277eef530dda367fe9e70edf70d2e03bf7a07bcc2b342aed1b02c351c829a"
+    },
+    {
+      "bytes": 1436,
+      "path": "reports/1781016530.1346.4e7f7ee0/heldout_benchmark.csv",
+      "sha256": "04a0c5ab89ad0c368d4c0770dc18ee577e7366e24f87f579d2c6a158292f416f"
+    },
+    {
+      "bytes": 2845020,
+      "path": "reports/1781016530.1346.4e7f7ee0/heldout_predictions.csv",
+      "sha256": "9e22eceebd333395c352750ab2e2de1dcac3a31921eeb237d515b49bb028e1e5"
+    },
+    {
+      "bytes": 3565,
+      "path": "reports/1781016530.1346.4e7f7ee0/input_sha256.csv",
+      "sha256": "014b8823868eaf7189b8957fa5d22955bb6031a3c6e65578bd4d5425c7ef115a"
+    },
+    {
+      "bytes": 808,
+      "path": "reports/1781016530.1346.4e7f7ee0/leakage_checks.csv",
+      "sha256": "7dd90cd62723a99a9d2ac25ecd460d0421c9ec069fad87593691c8dc0d760a00"
+    },
+    {
+      "bytes": 616,
+      "path": "reports/1781016530.1346.4e7f7ee0/loader_contract_checks.csv",
+      "sha256": "dc8015ab0a3c124cfa5793d377c9a6d0cc4c70b2a49e1e30d75722518d6c72d8"
+    },
+    {
+      "bytes": 2776,
+      "path": "reports/1781016530.1346.4e7f7ee0/manifest.json",
+      "sha256": "3996e308b2474b96b5e9d3ca4fc371cdaf54c6435853d892a569ea52cd0086b9"
+    },
+    {
+      "bytes": 5904,
+      "path": "reports/1781016530.1346.4e7f7ee0/raw_manifest_compare.csv",
+      "sha256": "e1aba1d12f8ce3bfb5b2a3d78cee88373ba35795c4f0705a73117a5ddc0450cc"
+    },
+    {
+      "bytes": 98,
+      "path": "reports/1781016530.1346.4e7f7ee0/reproduction_match_table.csv",
+      "sha256": "58bb811729390fe1312dfd648882096def92a735dad3391991ac38e15d3c4e5b"
+    },
+    {
+      "bytes": 2325,
+      "path": "reports/1781016530.1346.4e7f7ee0/result.json",
+      "sha256": "2362066218f0e1a6f293ec997e90e3c30d3d7199941605caba9f05e714e34a7a"
+    },
+    {
+      "bytes": 1896,
+      "path": "reports/1781016530.1346.4e7f7ee0/row_counts_by_run_stave.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744"
+    }
+  ],
+  "raw_root_dir": "data/root/root",
+  "regenerate_command": "/home/billy/anaconda3/bin/python scripts/p01b_full_data_embedding_artifact.py --config configs/p01b_full_data_embedding_artifact.json",
+  "reproduction_passed": true,
+  "script": "scripts/p01c_1781016530_1346_4e7f7ee0_loader_checks.py",
+  "ticket_id": "1781016530.1346.4e7f7ee0",
+  "upstream_raw_manifest_match": true
+}

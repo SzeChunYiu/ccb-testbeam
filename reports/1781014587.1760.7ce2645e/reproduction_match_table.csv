@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,pass
+S00 selected B-stave pulses,640737,640737,0,True
+forced/random/non-beam ROOT entries,0,0,0,True
+forced/random/pedestal archive or filename hits,0,0,0,True

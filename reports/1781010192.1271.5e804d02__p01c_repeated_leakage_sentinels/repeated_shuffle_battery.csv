@@ -1,0 +1,721 @@
+method,base_method,shuffle_mode,seed,scope,metric,value,macro_f1,train_rows,heldout_rows,stratum
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7001,overall,balanced_accuracy,0.2726882858853612,0.2045108869451918,82118.0,11998,
+,traditional residual PCA+hand,global,7001,heldout_run,balanced_accuracy,0.24359688870986443,,,2635,42
+,traditional residual PCA+hand,global,7001,heldout_run,balanced_accuracy,0.2630518292682927,,,2559,57
+,traditional residual PCA+hand,global,7001,heldout_run,balanced_accuracy,0.28366742111719934,,,4034,64
+,traditional residual PCA+hand,global,7001,heldout_run,balanced_accuracy,0.30102106495804976,,,2770,65
+,traditional residual PCA+hand,global,7001,topology,balanced_accuracy,0.24458727385736667,,,6121,single
+,traditional residual PCA+hand,global,7001,topology,balanced_accuracy,0.22471634969127074,,,2764,pair
+,traditional residual PCA+hand,global,7001,topology,balanced_accuracy,0.2511795122098487,,,1920,triple
+,traditional residual PCA+hand,global,7001,topology,balanced_accuracy,0.27576389066183293,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7002,overall,balanced_accuracy,0.26147904695684593,0.2373773208566676,82118.0,11998,
+,traditional residual PCA+hand,global,7002,heldout_run,balanced_accuracy,0.23383439496955352,,,2635,42
+,traditional residual PCA+hand,global,7002,heldout_run,balanced_accuracy,0.25729985258643795,,,2559,57
+,traditional residual PCA+hand,global,7002,heldout_run,balanced_accuracy,0.27212420464309495,,,4034,64
+,traditional residual PCA+hand,global,7002,heldout_run,balanced_accuracy,0.30192434681085834,,,2770,65
+,traditional residual PCA+hand,global,7002,topology,balanced_accuracy,0.20784641745694016,,,6121,single
+,traditional residual PCA+hand,global,7002,topology,balanced_accuracy,0.2116635225364618,,,2764,pair
+,traditional residual PCA+hand,global,7002,topology,balanced_accuracy,0.1927091940788344,,,1920,triple
+,traditional residual PCA+hand,global,7002,topology,balanced_accuracy,0.22498819219280555,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7003,overall,balanced_accuracy,0.23365073905272876,0.16091128429008192,82118.0,11998,
+,traditional residual PCA+hand,global,7003,heldout_run,balanced_accuracy,0.18669166084308542,,,2635,42
+,traditional residual PCA+hand,global,7003,heldout_run,balanced_accuracy,0.172849124452783,,,2559,57
+,traditional residual PCA+hand,global,7003,heldout_run,balanced_accuracy,0.27530637623545307,,,4034,64
+,traditional residual PCA+hand,global,7003,heldout_run,balanced_accuracy,0.25571183600330993,,,2770,65
+,traditional residual PCA+hand,global,7003,topology,balanced_accuracy,0.14876630090303003,,,6121,single
+,traditional residual PCA+hand,global,7003,topology,balanced_accuracy,0.1774496654458841,,,2764,pair
+,traditional residual PCA+hand,global,7003,topology,balanced_accuracy,0.18720878716986897,,,1920,triple
+,traditional residual PCA+hand,global,7003,topology,balanced_accuracy,0.2870083005693278,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7004,overall,balanced_accuracy,0.24048753008039003,0.17947656488647143,82118.0,11998,
+,traditional residual PCA+hand,global,7004,heldout_run,balanced_accuracy,0.2510591915494814,,,2635,42
+,traditional residual PCA+hand,global,7004,heldout_run,balanced_accuracy,0.24000752702581973,,,2559,57
+,traditional residual PCA+hand,global,7004,heldout_run,balanced_accuracy,0.22941330831394813,,,4034,64
+,traditional residual PCA+hand,global,7004,heldout_run,balanced_accuracy,0.2514998686810641,,,2770,65
+,traditional residual PCA+hand,global,7004,topology,balanced_accuracy,0.21150054952231712,,,6121,single
+,traditional residual PCA+hand,global,7004,topology,balanced_accuracy,0.2200758252198283,,,2764,pair
+,traditional residual PCA+hand,global,7004,topology,balanced_accuracy,0.2549055902610698,,,1920,triple
+,traditional residual PCA+hand,global,7004,topology,balanced_accuracy,0.2254045237730518,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7005,overall,balanced_accuracy,0.2621431829228945,0.21946077929232358,82118.0,11998,
+,traditional residual PCA+hand,global,7005,heldout_run,balanced_accuracy,0.23815773130189902,,,2635,42
+,traditional residual PCA+hand,global,7005,heldout_run,balanced_accuracy,0.23749921826141338,,,2559,57
+,traditional residual PCA+hand,global,7005,heldout_run,balanced_accuracy,0.28348176502734884,,,4034,64
+,traditional residual PCA+hand,global,7005,heldout_run,balanced_accuracy,0.27935564266961943,,,2770,65
+,traditional residual PCA+hand,global,7005,topology,balanced_accuracy,0.2582158353783661,,,6121,single
+,traditional residual PCA+hand,global,7005,topology,balanced_accuracy,0.23450268387155948,,,2764,pair
+,traditional residual PCA+hand,global,7005,topology,balanced_accuracy,0.23960117182356608,,,1920,triple
+,traditional residual PCA+hand,global,7005,topology,balanced_accuracy,0.21526257478277888,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7006,overall,balanced_accuracy,0.19745291211022142,0.12718109572382058,82118.0,11998,
+,traditional residual PCA+hand,global,7006,heldout_run,balanced_accuracy,0.19958610865304882,,,2635,42
+,traditional residual PCA+hand,global,7006,heldout_run,balanced_accuracy,0.21762613910479764,,,2559,57
+,traditional residual PCA+hand,global,7006,heldout_run,balanced_accuracy,0.18684889468160737,,,4034,64
+,traditional residual PCA+hand,global,7006,heldout_run,balanced_accuracy,0.19729439989522501,,,2770,65
+,traditional residual PCA+hand,global,7006,topology,balanced_accuracy,0.24183248561870838,,,6121,single
+,traditional residual PCA+hand,global,7006,topology,balanced_accuracy,0.21977694050847307,,,2764,pair
+,traditional residual PCA+hand,global,7006,topology,balanced_accuracy,0.2100869173638651,,,1920,triple
+,traditional residual PCA+hand,global,7006,topology,balanced_accuracy,0.22147523658165047,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7007,overall,balanced_accuracy,0.25854297848445257,0.20872713623559538,82118.0,11998,
+,traditional residual PCA+hand,global,7007,heldout_run,balanced_accuracy,0.25734926968238314,,,2635,42
+,traditional residual PCA+hand,global,7007,heldout_run,balanced_accuracy,0.222185607075851,,,2559,57
+,traditional residual PCA+hand,global,7007,heldout_run,balanced_accuracy,0.2733600961763222,,,4034,64
+,traditional residual PCA+hand,global,7007,heldout_run,balanced_accuracy,0.26366089598734854,,,2770,65
+,traditional residual PCA+hand,global,7007,topology,balanced_accuracy,0.2794674287018685,,,6121,single
+,traditional residual PCA+hand,global,7007,topology,balanced_accuracy,0.24434605329863418,,,2764,pair
+,traditional residual PCA+hand,global,7007,topology,balanced_accuracy,0.22066945832763787,,,1920,triple
+,traditional residual PCA+hand,global,7007,topology,balanced_accuracy,0.21963997357604226,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7008,overall,balanced_accuracy,0.24984682081956658,0.17697636667136102,82118.0,11998,
+,traditional residual PCA+hand,global,7008,heldout_run,balanced_accuracy,0.21820262626775225,,,2635,42
+,traditional residual PCA+hand,global,7008,heldout_run,balanced_accuracy,0.23134953765746447,,,2559,57
+,traditional residual PCA+hand,global,7008,heldout_run,balanced_accuracy,0.263558401403149,,,4034,64
+,traditional residual PCA+hand,global,7008,heldout_run,balanced_accuracy,0.25859065418891647,,,2770,65
+,traditional residual PCA+hand,global,7008,topology,balanced_accuracy,0.22257807685695719,,,6121,single
+,traditional residual PCA+hand,global,7008,topology,balanced_accuracy,0.2250971027023306,,,2764,pair
+,traditional residual PCA+hand,global,7008,topology,balanced_accuracy,0.24227786242664892,,,1920,triple
+,traditional residual PCA+hand,global,7008,topology,balanced_accuracy,0.27693562936676114,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7009,overall,balanced_accuracy,0.2727442518908375,0.20891407286762814,82118.0,11998,
+,traditional residual PCA+hand,global,7009,heldout_run,balanced_accuracy,0.24814193785525168,,,2635,42
+,traditional residual PCA+hand,global,7009,heldout_run,balanced_accuracy,0.26158751005092473,,,2559,57
+,traditional residual PCA+hand,global,7009,heldout_run,balanced_accuracy,0.289203843506325,,,4034,64
+,traditional residual PCA+hand,global,7009,heldout_run,balanced_accuracy,0.2697662316332959,,,2770,65
+,traditional residual PCA+hand,global,7009,topology,balanced_accuracy,0.2249531944843735,,,6121,single
+,traditional residual PCA+hand,global,7009,topology,balanced_accuracy,0.2323987879906399,,,2764,pair
+,traditional residual PCA+hand,global,7009,topology,balanced_accuracy,0.2679667625559597,,,1920,triple
+,traditional residual PCA+hand,global,7009,topology,balanced_accuracy,0.30353577340073357,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,global,7010,overall,balanced_accuracy,0.2529137537094868,0.1558415138750002,82118.0,11998,
+,traditional residual PCA+hand,global,7010,heldout_run,balanced_accuracy,0.27353179164371594,,,2635,42
+,traditional residual PCA+hand,global,7010,heldout_run,balanced_accuracy,0.25139783793442333,,,2559,57
+,traditional residual PCA+hand,global,7010,heldout_run,balanced_accuracy,0.23389079489746403,,,4034,64
+,traditional residual PCA+hand,global,7010,heldout_run,balanced_accuracy,0.2737120420864933,,,2770,65
+,traditional residual PCA+hand,global,7010,topology,balanced_accuracy,0.29096117308390573,,,6121,single
+,traditional residual PCA+hand,global,7010,topology,balanced_accuracy,0.2729757509999361,,,2764,pair
+,traditional residual PCA+hand,global,7010,topology,balanced_accuracy,0.278317775290313,,,1920,triple
+,traditional residual PCA+hand,global,7010,topology,balanced_accuracy,0.27875054783970316,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7001,overall,balanced_accuracy,0.24635515738190059,0.1783517157223791,82118.0,11998,
+,traditional residual PCA+hand,within_run,7001,heldout_run,balanced_accuracy,0.27784765123778854,,,2635,42
+,traditional residual PCA+hand,within_run,7001,heldout_run,balanced_accuracy,0.2669203296703297,,,2559,57
+,traditional residual PCA+hand,within_run,7001,heldout_run,balanced_accuracy,0.2228372200432358,,,4034,64
+,traditional residual PCA+hand,within_run,7001,heldout_run,balanced_accuracy,0.19584509075539203,,,2770,65
+,traditional residual PCA+hand,within_run,7001,topology,balanced_accuracy,0.2682800113513517,,,6121,single
+,traditional residual PCA+hand,within_run,7001,topology,balanced_accuracy,0.2521218158945616,,,2764,pair
+,traditional residual PCA+hand,within_run,7001,topology,balanced_accuracy,0.20262117889133138,,,1920,triple
+,traditional residual PCA+hand,within_run,7001,topology,balanced_accuracy,0.2670561647391219,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7002,overall,balanced_accuracy,0.25398732406601193,0.1733541351117035,82118.0,11998,
+,traditional residual PCA+hand,within_run,7002,heldout_run,balanced_accuracy,0.2688064978127651,,,2635,42
+,traditional residual PCA+hand,within_run,7002,heldout_run,balanced_accuracy,0.2676599995532922,,,2559,57
+,traditional residual PCA+hand,within_run,7002,heldout_run,balanced_accuracy,0.2420745962964217,,,4034,64
+,traditional residual PCA+hand,within_run,7002,heldout_run,balanced_accuracy,0.19904763445570753,,,2770,65
+,traditional residual PCA+hand,within_run,7002,topology,balanced_accuracy,0.2612961362653332,,,6121,single
+,traditional residual PCA+hand,within_run,7002,topology,balanced_accuracy,0.25653161229851906,,,2764,pair
+,traditional residual PCA+hand,within_run,7002,topology,balanced_accuracy,0.21070860722492668,,,1920,triple
+,traditional residual PCA+hand,within_run,7002,topology,balanced_accuracy,0.2779383621826785,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7003,overall,balanced_accuracy,0.25931271795360716,0.1740573598801906,82118.0,11998,
+,traditional residual PCA+hand,within_run,7003,heldout_run,balanced_accuracy,0.29133394881803326,,,2635,42
+,traditional residual PCA+hand,within_run,7003,heldout_run,balanced_accuracy,0.2632387541320468,,,2559,57
+,traditional residual PCA+hand,within_run,7003,heldout_run,balanced_accuracy,0.24473224341024538,,,4034,64
+,traditional residual PCA+hand,within_run,7003,heldout_run,balanced_accuracy,0.20412789536367115,,,2770,65
+,traditional residual PCA+hand,within_run,7003,topology,balanced_accuracy,0.2610838325709518,,,6121,single
+,traditional residual PCA+hand,within_run,7003,topology,balanced_accuracy,0.24390705435595791,,,2764,pair
+,traditional residual PCA+hand,within_run,7003,topology,balanced_accuracy,0.2220881307611883,,,1920,triple
+,traditional residual PCA+hand,within_run,7003,topology,balanced_accuracy,0.28815969474158987,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7004,overall,balanced_accuracy,0.2504982248853022,0.19772304827805323,82118.0,11998,
+,traditional residual PCA+hand,within_run,7004,heldout_run,balanced_accuracy,0.29810626564481757,,,2635,42
+,traditional residual PCA+hand,within_run,7004,heldout_run,balanced_accuracy,0.268624877155365,,,2559,57
+,traditional residual PCA+hand,within_run,7004,heldout_run,balanced_accuracy,0.2231297791942533,,,4034,64
+,traditional residual PCA+hand,within_run,7004,heldout_run,balanced_accuracy,0.1920657163728099,,,2770,65
+,traditional residual PCA+hand,within_run,7004,topology,balanced_accuracy,0.2628451434792818,,,6121,single
+,traditional residual PCA+hand,within_run,7004,topology,balanced_accuracy,0.2474186608764764,,,2764,pair
+,traditional residual PCA+hand,within_run,7004,topology,balanced_accuracy,0.22235580943012245,,,1920,triple
+,traditional residual PCA+hand,within_run,7004,topology,balanced_accuracy,0.28254513560894245,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7005,overall,balanced_accuracy,0.24855406507939906,0.16115993016228844,82118.0,11998,
+,traditional residual PCA+hand,within_run,7005,heldout_run,balanced_accuracy,0.26825021329637255,,,2635,42
+,traditional residual PCA+hand,within_run,7005,heldout_run,balanced_accuracy,0.25490280755829536,,,2559,57
+,traditional residual PCA+hand,within_run,7005,heldout_run,balanced_accuracy,0.23912876358776697,,,4034,64
+,traditional residual PCA+hand,within_run,7005,heldout_run,balanced_accuracy,0.19179674630197124,,,2770,65
+,traditional residual PCA+hand,within_run,7005,topology,balanced_accuracy,0.23930001435676856,,,6121,single
+,traditional residual PCA+hand,within_run,7005,topology,balanced_accuracy,0.250885905333184,,,2764,pair
+,traditional residual PCA+hand,within_run,7005,topology,balanced_accuracy,0.2054999920603554,,,1920,triple
+,traditional residual PCA+hand,within_run,7005,topology,balanced_accuracy,0.2832988141132018,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7006,overall,balanced_accuracy,0.2569487625414206,0.1902728095734412,82118.0,11998,
+,traditional residual PCA+hand,within_run,7006,heldout_run,balanced_accuracy,0.2831726477753567,,,2635,42
+,traditional residual PCA+hand,within_run,7006,heldout_run,balanced_accuracy,0.2640518516036809,,,2559,57
+,traditional residual PCA+hand,within_run,7006,heldout_run,balanced_accuracy,0.24180204942940647,,,4034,64
+,traditional residual PCA+hand,within_run,7006,heldout_run,balanced_accuracy,0.20572442038448083,,,2770,65
+,traditional residual PCA+hand,within_run,7006,topology,balanced_accuracy,0.2550894994171168,,,6121,single
+,traditional residual PCA+hand,within_run,7006,topology,balanced_accuracy,0.2623276879090056,,,2764,pair
+,traditional residual PCA+hand,within_run,7006,topology,balanced_accuracy,0.2312191375729676,,,1920,triple
+,traditional residual PCA+hand,within_run,7006,topology,balanced_accuracy,0.27255317768303167,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7007,overall,balanced_accuracy,0.26454836844674523,0.1928636443773242,82118.0,11998,
+,traditional residual PCA+hand,within_run,7007,heldout_run,balanced_accuracy,0.29428996694743204,,,2635,42
+,traditional residual PCA+hand,within_run,7007,heldout_run,balanced_accuracy,0.27165991021173946,,,2559,57
+,traditional residual PCA+hand,within_run,7007,heldout_run,balanced_accuracy,0.24476496689606475,,,4034,64
+,traditional residual PCA+hand,within_run,7007,heldout_run,balanced_accuracy,0.22180400456219493,,,2770,65
+,traditional residual PCA+hand,within_run,7007,topology,balanced_accuracy,0.2595193563477487,,,6121,single
+,traditional residual PCA+hand,within_run,7007,topology,balanced_accuracy,0.2557173562471262,,,2764,pair
+,traditional residual PCA+hand,within_run,7007,topology,balanced_accuracy,0.2253816938394249,,,1920,triple
+,traditional residual PCA+hand,within_run,7007,topology,balanced_accuracy,0.27432621035342575,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7008,overall,balanced_accuracy,0.2510581875429231,0.17597924770264123,82118.0,11998,
+,traditional residual PCA+hand,within_run,7008,heldout_run,balanced_accuracy,0.2731517475501313,,,2635,42
+,traditional residual PCA+hand,within_run,7008,heldout_run,balanced_accuracy,0.2575419123559367,,,2559,57
+,traditional residual PCA+hand,within_run,7008,heldout_run,balanced_accuracy,0.24363041032114122,,,4034,64
+,traditional residual PCA+hand,within_run,7008,heldout_run,balanced_accuracy,0.18709695609710317,,,2770,65
+,traditional residual PCA+hand,within_run,7008,topology,balanced_accuracy,0.2655283800745558,,,6121,single
+,traditional residual PCA+hand,within_run,7008,topology,balanced_accuracy,0.24800162136992912,,,2764,pair
+,traditional residual PCA+hand,within_run,7008,topology,balanced_accuracy,0.21809962130945534,,,1920,triple
+,traditional residual PCA+hand,within_run,7008,topology,balanced_accuracy,0.29174139625724427,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7009,overall,balanced_accuracy,0.24780655169935567,0.19620073653262318,82118.0,11998,
+,traditional residual PCA+hand,within_run,7009,heldout_run,balanced_accuracy,0.2899107104910098,,,2635,42
+,traditional residual PCA+hand,within_run,7009,heldout_run,balanced_accuracy,0.2671341240060752,,,2559,57
+,traditional residual PCA+hand,within_run,7009,heldout_run,balanced_accuracy,0.2185175127635942,,,4034,64
+,traditional residual PCA+hand,within_run,7009,heldout_run,balanced_accuracy,0.19492661705262176,,,2770,65
+,traditional residual PCA+hand,within_run,7009,topology,balanced_accuracy,0.2656929125655042,,,6121,single
+,traditional residual PCA+hand,within_run,7009,topology,balanced_accuracy,0.2325232619943124,,,2764,pair
+,traditional residual PCA+hand,within_run,7009,topology,balanced_accuracy,0.23689607977824634,,,1920,triple
+,traditional residual PCA+hand,within_run,7009,topology,balanced_accuracy,0.2543843132749538,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run,7010,overall,balanced_accuracy,0.2692003037210837,0.19919430657558246,82118.0,11998,
+,traditional residual PCA+hand,within_run,7010,heldout_run,balanced_accuracy,0.30421463658914694,,,2635,42
+,traditional residual PCA+hand,within_run,7010,heldout_run,balanced_accuracy,0.29114633029572057,,,2559,57
+,traditional residual PCA+hand,within_run,7010,heldout_run,balanced_accuracy,0.243497112775846,,,4034,64
+,traditional residual PCA+hand,within_run,7010,heldout_run,balanced_accuracy,0.21863340445566898,,,2770,65
+,traditional residual PCA+hand,within_run,7010,topology,balanced_accuracy,0.2685907969143724,,,6121,single
+,traditional residual PCA+hand,within_run,7010,topology,balanced_accuracy,0.25403869925454986,,,2764,pair
+,traditional residual PCA+hand,within_run,7010,topology,balanced_accuracy,0.23149377781119806,,,1920,triple
+,traditional residual PCA+hand,within_run,7010,topology,balanced_accuracy,0.28706095700681666,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7001,overall,balanced_accuracy,0.33470793903942714,0.3164610869213925,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7001,heldout_run,balanced_accuracy,0.3507361251634744,,,2635,42
+,traditional residual PCA+hand,within_topology,7001,heldout_run,balanced_accuracy,0.3327648977039221,,,2559,57
+,traditional residual PCA+hand,within_topology,7001,heldout_run,balanced_accuracy,0.32661786516292424,,,4034,64
+,traditional residual PCA+hand,within_topology,7001,heldout_run,balanced_accuracy,0.2944822258944833,,,2770,65
+,traditional residual PCA+hand,within_topology,7001,topology,balanced_accuracy,0.28149450492098954,,,6121,single
+,traditional residual PCA+hand,within_topology,7001,topology,balanced_accuracy,0.2631281548669663,,,2764,pair
+,traditional residual PCA+hand,within_topology,7001,topology,balanced_accuracy,0.31941973102959187,,,1920,triple
+,traditional residual PCA+hand,within_topology,7001,topology,balanced_accuracy,0.24711506548546044,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7002,overall,balanced_accuracy,0.32954563547225246,0.31126253745307797,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7002,heldout_run,balanced_accuracy,0.34114980594523336,,,2635,42
+,traditional residual PCA+hand,within_topology,7002,heldout_run,balanced_accuracy,0.33026167024032876,,,2559,57
+,traditional residual PCA+hand,within_topology,7002,heldout_run,balanced_accuracy,0.3205764703322001,,,4034,64
+,traditional residual PCA+hand,within_topology,7002,heldout_run,balanced_accuracy,0.2928652688728948,,,2770,65
+,traditional residual PCA+hand,within_topology,7002,topology,balanced_accuracy,0.278595807984233,,,6121,single
+,traditional residual PCA+hand,within_topology,7002,topology,balanced_accuracy,0.25891216252131455,,,2764,pair
+,traditional residual PCA+hand,within_topology,7002,topology,balanced_accuracy,0.3028854575011479,,,1920,triple
+,traditional residual PCA+hand,within_topology,7002,topology,balanced_accuracy,0.2521730088420264,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7003,overall,balanced_accuracy,0.3310379173347553,0.31219344736439797,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7003,heldout_run,balanced_accuracy,0.33615730206607625,,,2635,42
+,traditional residual PCA+hand,within_topology,7003,heldout_run,balanced_accuracy,0.3305204927186634,,,2559,57
+,traditional residual PCA+hand,within_topology,7003,heldout_run,balanced_accuracy,0.32257543699290203,,,4034,64
+,traditional residual PCA+hand,within_topology,7003,heldout_run,balanced_accuracy,0.2946687880803028,,,2770,65
+,traditional residual PCA+hand,within_topology,7003,topology,balanced_accuracy,0.28652195839291406,,,6121,single
+,traditional residual PCA+hand,within_topology,7003,topology,balanced_accuracy,0.28109394785414576,,,2764,pair
+,traditional residual PCA+hand,within_topology,7003,topology,balanced_accuracy,0.332525426559368,,,1920,triple
+,traditional residual PCA+hand,within_topology,7003,topology,balanced_accuracy,0.24389757099577045,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7004,overall,balanced_accuracy,0.33631615147293387,0.3140891485142513,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7004,heldout_run,balanced_accuracy,0.34450381819008385,,,2635,42
+,traditional residual PCA+hand,within_topology,7004,heldout_run,balanced_accuracy,0.3348323729116412,,,2559,57
+,traditional residual PCA+hand,within_topology,7004,heldout_run,balanced_accuracy,0.3258372780778922,,,4034,64
+,traditional residual PCA+hand,within_topology,7004,heldout_run,balanced_accuracy,0.305079205453903,,,2770,65
+,traditional residual PCA+hand,within_topology,7004,topology,balanced_accuracy,0.28542732709046004,,,6121,single
+,traditional residual PCA+hand,within_topology,7004,topology,balanced_accuracy,0.27784675663428415,,,2764,pair
+,traditional residual PCA+hand,within_topology,7004,topology,balanced_accuracy,0.3317215135748052,,,1920,triple
+,traditional residual PCA+hand,within_topology,7004,topology,balanced_accuracy,0.24554029228045987,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7005,overall,balanced_accuracy,0.3330984716289356,0.3123976123629145,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7005,heldout_run,balanced_accuracy,0.34138674288598014,,,2635,42
+,traditional residual PCA+hand,within_topology,7005,heldout_run,balanced_accuracy,0.3333392633788975,,,2559,57
+,traditional residual PCA+hand,within_topology,7005,heldout_run,balanced_accuracy,0.32649728607377815,,,4034,64
+,traditional residual PCA+hand,within_topology,7005,heldout_run,balanced_accuracy,0.29464538039243704,,,2770,65
+,traditional residual PCA+hand,within_topology,7005,topology,balanced_accuracy,0.28147233058227766,,,6121,single
+,traditional residual PCA+hand,within_topology,7005,topology,balanced_accuracy,0.2677280137641053,,,2764,pair
+,traditional residual PCA+hand,within_topology,7005,topology,balanced_accuracy,0.3325653019210663,,,1920,triple
+,traditional residual PCA+hand,within_topology,7005,topology,balanced_accuracy,0.25594658722459085,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7006,overall,balanced_accuracy,0.3384959561756911,0.31635602900213056,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7006,heldout_run,balanced_accuracy,0.3446441131082207,,,2635,42
+,traditional residual PCA+hand,within_topology,7006,heldout_run,balanced_accuracy,0.32859099437148215,,,2559,57
+,traditional residual PCA+hand,within_topology,7006,heldout_run,balanced_accuracy,0.33534694326628717,,,4034,64
+,traditional residual PCA+hand,within_topology,7006,heldout_run,balanced_accuracy,0.30100169243844555,,,2770,65
+,traditional residual PCA+hand,within_topology,7006,topology,balanced_accuracy,0.29107323230906806,,,6121,single
+,traditional residual PCA+hand,within_topology,7006,topology,balanced_accuracy,0.27763370991083014,,,2764,pair
+,traditional residual PCA+hand,within_topology,7006,topology,balanced_accuracy,0.3208017372953398,,,1920,triple
+,traditional residual PCA+hand,within_topology,7006,topology,balanced_accuracy,0.24523778370650257,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7007,overall,balanced_accuracy,0.3393384992647048,0.3136164643977723,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7007,heldout_run,balanced_accuracy,0.34504038640386725,,,2635,42
+,traditional residual PCA+hand,within_topology,7007,heldout_run,balanced_accuracy,0.33507302555168406,,,2559,57
+,traditional residual PCA+hand,within_topology,7007,heldout_run,balanced_accuracy,0.33470670010107706,,,4034,64
+,traditional residual PCA+hand,within_topology,7007,heldout_run,balanced_accuracy,0.3020452649368286,,,2770,65
+,traditional residual PCA+hand,within_topology,7007,topology,balanced_accuracy,0.2771179872275562,,,6121,single
+,traditional residual PCA+hand,within_topology,7007,topology,balanced_accuracy,0.264398235924136,,,2764,pair
+,traditional residual PCA+hand,within_topology,7007,topology,balanced_accuracy,0.3151644240264558,,,1920,triple
+,traditional residual PCA+hand,within_topology,7007,topology,balanced_accuracy,0.2802060462355434,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7008,overall,balanced_accuracy,0.3338181053915715,0.31362881083710914,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7008,heldout_run,balanced_accuracy,0.34510961160501424,,,2635,42
+,traditional residual PCA+hand,within_topology,7008,heldout_run,balanced_accuracy,0.3268170508353435,,,2559,57
+,traditional residual PCA+hand,within_topology,7008,heldout_run,balanced_accuracy,0.3284448590160869,,,4034,64
+,traditional residual PCA+hand,within_topology,7008,heldout_run,balanced_accuracy,0.2961695057820603,,,2770,65
+,traditional residual PCA+hand,within_topology,7008,topology,balanced_accuracy,0.2783314744913245,,,6121,single
+,traditional residual PCA+hand,within_topology,7008,topology,balanced_accuracy,0.2596468413279004,,,2764,pair
+,traditional residual PCA+hand,within_topology,7008,topology,balanced_accuracy,0.31605901651142787,,,1920,triple
+,traditional residual PCA+hand,within_topology,7008,topology,balanced_accuracy,0.2490666779425907,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7009,overall,balanced_accuracy,0.3215978359711142,0.3048563477746148,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7009,heldout_run,balanced_accuracy,0.34304317097435477,,,2635,42
+,traditional residual PCA+hand,within_topology,7009,heldout_run,balanced_accuracy,0.32004945054945055,,,2559,57
+,traditional residual PCA+hand,within_topology,7009,heldout_run,balanced_accuracy,0.30617367918764377,,,4034,64
+,traditional residual PCA+hand,within_topology,7009,heldout_run,balanced_accuracy,0.2933328942028118,,,2770,65
+,traditional residual PCA+hand,within_topology,7009,topology,balanced_accuracy,0.2829041227487558,,,6121,single
+,traditional residual PCA+hand,within_topology,7009,topology,balanced_accuracy,0.24618468394347243,,,2764,pair
+,traditional residual PCA+hand,within_topology,7009,topology,balanced_accuracy,0.3227103269815828,,,1920,triple
+,traditional residual PCA+hand,within_topology,7009,topology,balanced_accuracy,0.25935476184397527,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_topology,7010,overall,balanced_accuracy,0.331027098650312,0.31125555621288176,82118.0,11998,
+,traditional residual PCA+hand,within_topology,7010,heldout_run,balanced_accuracy,0.33273819892225864,,,2635,42
+,traditional residual PCA+hand,within_topology,7010,heldout_run,balanced_accuracy,0.3306377088358796,,,2559,57
+,traditional residual PCA+hand,within_topology,7010,heldout_run,balanced_accuracy,0.32658815544905123,,,4034,64
+,traditional residual PCA+hand,within_topology,7010,heldout_run,balanced_accuracy,0.2944752502326096,,,2770,65
+,traditional residual PCA+hand,within_topology,7010,topology,balanced_accuracy,0.286011653891492,,,6121,single
+,traditional residual PCA+hand,within_topology,7010,topology,balanced_accuracy,0.26892724317563543,,,2764,pair
+,traditional residual PCA+hand,within_topology,7010,topology,balanced_accuracy,0.31319726268419673,,,1920,triple
+,traditional residual PCA+hand,within_topology,7010,topology,balanced_accuracy,0.25264837945824503,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7001,overall,balanced_accuracy,0.3245103716804276,0.3027349447202312,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7001,heldout_run,balanced_accuracy,0.3481820731667349,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7001,heldout_run,balanced_accuracy,0.3289057781649245,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7001,heldout_run,balanced_accuracy,0.313446864435879,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7001,heldout_run,balanced_accuracy,0.2828971033844217,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7001,topology,balanced_accuracy,0.28119020847785836,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7001,topology,balanced_accuracy,0.2449042184466552,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7001,topology,balanced_accuracy,0.2844636981843192,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7001,topology,balanced_accuracy,0.28351635434484757,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7002,overall,balanced_accuracy,0.3316294615769368,0.30915245178828005,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7002,heldout_run,balanced_accuracy,0.35564924948926935,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7002,heldout_run,balanced_accuracy,0.3264918587510051,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7002,heldout_run,balanced_accuracy,0.3220326533606096,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7002,heldout_run,balanced_accuracy,0.29438398847474984,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7002,topology,balanced_accuracy,0.28283486269386804,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7002,topology,balanced_accuracy,0.25438887510551017,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7002,topology,balanced_accuracy,0.2855609226449228,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7002,topology,balanced_accuracy,0.2895751689261065,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7003,overall,balanced_accuracy,0.3253462679933243,0.29913362969245444,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7003,heldout_run,balanced_accuracy,0.34368295595469556,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7003,heldout_run,balanced_accuracy,0.31848516930224247,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7003,heldout_run,balanced_accuracy,0.3192167384845539,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7003,heldout_run,balanced_accuracy,0.28733365690319135,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7003,topology,balanced_accuracy,0.284811210463767,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7003,topology,balanced_accuracy,0.2429559250389722,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7003,topology,balanced_accuracy,0.29712013467554643,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7003,topology,balanced_accuracy,0.28734524858093563,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7004,overall,balanced_accuracy,0.3253134283392152,0.3068095177067922,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7004,heldout_run,balanced_accuracy,0.34756428000272066,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7004,heldout_run,balanced_accuracy,0.31929376619315647,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7004,heldout_run,balanced_accuracy,0.3194571897684901,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7004,heldout_run,balanced_accuracy,0.2819716345845752,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7004,topology,balanced_accuracy,0.2795312254440904,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7004,topology,balanced_accuracy,0.2517106976654841,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7004,topology,balanced_accuracy,0.28738258084850343,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7004,topology,balanced_accuracy,0.28071824976384385,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7005,overall,balanced_accuracy,0.33291438674297047,0.30845962973257374,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7005,heldout_run,balanced_accuracy,0.36043227448115506,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7005,heldout_run,balanced_accuracy,0.32958892834807474,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7005,heldout_run,balanced_accuracy,0.32214891289804115,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7005,heldout_run,balanced_accuracy,0.293504122364035,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7005,topology,balanced_accuracy,0.27873626614256236,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7005,topology,balanced_accuracy,0.24952687202531992,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7005,topology,balanced_accuracy,0.28236257429494127,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7005,topology,balanced_accuracy,0.2946642274502796,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7006,overall,balanced_accuracy,0.33107753061964074,0.3095246167129866,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7006,heldout_run,balanced_accuracy,0.34985830178379557,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7006,heldout_run,balanced_accuracy,0.33807997185741084,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7006,heldout_run,balanced_accuracy,0.32437903884936625,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7006,heldout_run,balanced_accuracy,0.28111855981297384,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7006,topology,balanced_accuracy,0.28050489739254186,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7006,topology,balanced_accuracy,0.24739854140390136,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7006,topology,balanced_accuracy,0.2983359328479326,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7006,topology,balanced_accuracy,0.2926872175700171,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7007,overall,balanced_accuracy,0.3334694228377959,0.3102904554371808,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7007,heldout_run,balanced_accuracy,0.3551581365738172,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7007,heldout_run,balanced_accuracy,0.3386492785669615,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7007,heldout_run,balanced_accuracy,0.3241689574235192,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7007,heldout_run,balanced_accuracy,0.29020170886206714,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7007,topology,balanced_accuracy,0.28554227532115173,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7007,topology,balanced_accuracy,0.254546609424255,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7007,topology,balanced_accuracy,0.27968931011477954,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7007,topology,balanced_accuracy,0.29110672662054177,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7008,overall,balanced_accuracy,0.32890611232148154,0.3107742666830638,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7008,heldout_run,balanced_accuracy,0.3410496229032905,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7008,heldout_run,balanced_accuracy,0.32831940721879743,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7008,heldout_run,balanced_accuracy,0.3201565726666441,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7008,heldout_run,balanced_accuracy,0.294801268400847,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7008,topology,balanced_accuracy,0.28992638817436484,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7008,topology,balanced_accuracy,0.24962034180632026,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7008,topology,balanced_accuracy,0.31028796206422116,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7008,topology,balanced_accuracy,0.2775375881862357,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7009,overall,balanced_accuracy,0.3282832954063719,0.30777846328929126,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7009,heldout_run,balanced_accuracy,0.35408639199098113,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7009,heldout_run,balanced_accuracy,0.33474562226391497,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7009,heldout_run,balanced_accuracy,0.318186655575599,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7009,heldout_run,balanced_accuracy,0.27824289433237975,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7009,topology,balanced_accuracy,0.2876252536272949,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7009,topology,balanced_accuracy,0.25961372851989395,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7009,topology,balanced_accuracy,0.2930109740007404,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7009,topology,balanced_accuracy,0.28079896304049967,,,1193,quad
+traditional residual PCA+hand shuffled labels,traditional residual PCA+hand,within_run_topology,7010,overall,balanced_accuracy,0.32960274019195956,0.3087087560677733,82118.0,11998,
+,traditional residual PCA+hand,within_run_topology,7010,heldout_run,balanced_accuracy,0.3597744536670237,,,2635,42
+,traditional residual PCA+hand,within_run_topology,7010,heldout_run,balanced_accuracy,0.33681777673545965,,,2559,57
+,traditional residual PCA+hand,within_run_topology,7010,heldout_run,balanced_accuracy,0.3123640280242907,,,4034,64
+,traditional residual PCA+hand,within_run_topology,7010,heldout_run,balanced_accuracy,0.29184352070619474,,,2770,65
+,traditional residual PCA+hand,within_run_topology,7010,topology,balanced_accuracy,0.2928108335357973,,,6121,single
+,traditional residual PCA+hand,within_run_topology,7010,topology,balanced_accuracy,0.25213419781970625,,,2764,pair
+,traditional residual PCA+hand,within_run_topology,7010,topology,balanced_accuracy,0.2831590350384274,,,1920,triple
+,traditional residual PCA+hand,within_run_topology,7010,topology,balanced_accuracy,0.27978599147284844,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7001,overall,balanced_accuracy,0.3001716875295442,0.281687838367793,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7001,heldout_run,balanced_accuracy,0.28755932282234187,,,2635,42
+,ML residual masked-denoising AE-4,global,7001,heldout_run,balanced_accuracy,0.2968121928884124,,,2559,57
+,ML residual masked-denoising AE-4,global,7001,heldout_run,balanced_accuracy,0.3146041851047606,,,4034,64
+,ML residual masked-denoising AE-4,global,7001,heldout_run,balanced_accuracy,0.3073923137451005,,,2770,65
+,ML residual masked-denoising AE-4,global,7001,topology,balanced_accuracy,0.20967128044349853,,,6121,single
+,ML residual masked-denoising AE-4,global,7001,topology,balanced_accuracy,0.19202804014836627,,,2764,pair
+,ML residual masked-denoising AE-4,global,7001,topology,balanced_accuracy,0.201665030629249,,,1920,triple
+,ML residual masked-denoising AE-4,global,7001,topology,balanced_accuracy,0.2352286725471674,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7002,overall,balanced_accuracy,0.29154101831234797,0.26201188934516545,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7002,heldout_run,balanced_accuracy,0.26717065736162343,,,2635,42
+,ML residual masked-denoising AE-4,global,7002,heldout_run,balanced_accuracy,0.2817900808541053,,,2559,57
+,ML residual masked-denoising AE-4,global,7002,heldout_run,balanced_accuracy,0.30249629223028796,,,4034,64
+,ML residual masked-denoising AE-4,global,7002,heldout_run,balanced_accuracy,0.31940361487763,,,2770,65
+,ML residual masked-denoising AE-4,global,7002,topology,balanced_accuracy,0.23162512442657612,,,6121,single
+,ML residual masked-denoising AE-4,global,7002,topology,balanced_accuracy,0.20636936940680223,,,2764,pair
+,ML residual masked-denoising AE-4,global,7002,topology,balanced_accuracy,0.2470037264996542,,,1920,triple
+,ML residual masked-denoising AE-4,global,7002,topology,balanced_accuracy,0.21464931344515648,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7003,overall,balanced_accuracy,0.2515792074794905,0.11318672431219473,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7003,heldout_run,balanced_accuracy,0.2131448425976732,,,2635,42
+,ML residual masked-denoising AE-4,global,7003,heldout_run,balanced_accuracy,0.2207067475207719,,,2559,57
+,ML residual masked-denoising AE-4,global,7003,heldout_run,balanced_accuracy,0.2746524917018502,,,4034,64
+,ML residual masked-denoising AE-4,global,7003,heldout_run,balanced_accuracy,0.26795711508756526,,,2770,65
+,ML residual masked-denoising AE-4,global,7003,topology,balanced_accuracy,0.2296292194641209,,,6121,single
+,ML residual masked-denoising AE-4,global,7003,topology,balanced_accuracy,0.22032652900912386,,,2764,pair
+,ML residual masked-denoising AE-4,global,7003,topology,balanced_accuracy,0.23179408789658962,,,1920,triple
+,ML residual masked-denoising AE-4,global,7003,topology,balanced_accuracy,0.279119142902125,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7004,overall,balanced_accuracy,0.3127295582170572,0.27159017928437995,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7004,heldout_run,balanced_accuracy,0.3053998426840137,,,2635,42
+,ML residual masked-denoising AE-4,global,7004,heldout_run,balanced_accuracy,0.3125941994996873,,,2559,57
+,ML residual masked-denoising AE-4,global,7004,heldout_run,balanced_accuracy,0.31206566137745256,,,4034,64
+,ML residual masked-denoising AE-4,global,7004,heldout_run,balanced_accuracy,0.35838147695632827,,,2770,65
+,ML residual masked-denoising AE-4,global,7004,topology,balanced_accuracy,0.2579878729680674,,,6121,single
+,ML residual masked-denoising AE-4,global,7004,topology,balanced_accuracy,0.24498662577560834,,,2764,pair
+,ML residual masked-denoising AE-4,global,7004,topology,balanced_accuracy,0.2720528904176002,,,1920,triple
+,ML residual masked-denoising AE-4,global,7004,topology,balanced_accuracy,0.23096589458500344,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7005,overall,balanced_accuracy,0.24896010032484278,0.1753338978268637,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7005,heldout_run,balanced_accuracy,0.1927962357991839,,,2635,42
+,ML residual masked-denoising AE-4,global,7005,heldout_run,balanced_accuracy,0.2009266505851872,,,2559,57
+,ML residual masked-denoising AE-4,global,7005,heldout_run,balanced_accuracy,0.29624433799383865,,,4034,64
+,ML residual masked-denoising AE-4,global,7005,heldout_run,balanced_accuracy,0.28431643293647,,,2770,65
+,ML residual masked-denoising AE-4,global,7005,topology,balanced_accuracy,0.1610048921568016,,,6121,single
+,ML residual masked-denoising AE-4,global,7005,topology,balanced_accuracy,0.14839428286768624,,,2764,pair
+,ML residual masked-denoising AE-4,global,7005,topology,balanced_accuracy,0.18813522669367436,,,1920,triple
+,ML residual masked-denoising AE-4,global,7005,topology,balanced_accuracy,0.2109830424995958,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7006,overall,balanced_accuracy,0.23863188445377634,0.16215185312761607,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7006,heldout_run,balanced_accuracy,0.21807195180012978,,,2635,42
+,ML residual masked-denoising AE-4,global,7006,heldout_run,balanced_accuracy,0.21460685249709638,,,2559,57
+,ML residual masked-denoising AE-4,global,7006,heldout_run,balanced_accuracy,0.25431411177152397,,,4034,64
+,ML residual masked-denoising AE-4,global,7006,heldout_run,balanced_accuracy,0.24886786811236558,,,2770,65
+,ML residual masked-denoising AE-4,global,7006,topology,balanced_accuracy,0.22138998592345716,,,6121,single
+,ML residual masked-denoising AE-4,global,7006,topology,balanced_accuracy,0.2127363217781374,,,2764,pair
+,ML residual masked-denoising AE-4,global,7006,topology,balanced_accuracy,0.20760280257950775,,,1920,triple
+,ML residual masked-denoising AE-4,global,7006,topology,balanced_accuracy,0.24908954892048984,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7007,overall,balanced_accuracy,0.2503016861400256,0.17266001653169102,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7007,heldout_run,balanced_accuracy,0.2479366903592154,,,2635,42
+,ML residual masked-denoising AE-4,global,7007,heldout_run,balanced_accuracy,0.24862854015902797,,,2559,57
+,ML residual masked-denoising AE-4,global,7007,heldout_run,balanced_accuracy,0.25072662210894714,,,4034,64
+,ML residual masked-denoising AE-4,global,7007,heldout_run,balanced_accuracy,0.24742295833197636,,,2770,65
+,ML residual masked-denoising AE-4,global,7007,topology,balanced_accuracy,0.22902710745100074,,,6121,single
+,ML residual masked-denoising AE-4,global,7007,topology,balanced_accuracy,0.19630815501467563,,,2764,pair
+,ML residual masked-denoising AE-4,global,7007,topology,balanced_accuracy,0.23356855009853003,,,1920,triple
+,ML residual masked-denoising AE-4,global,7007,topology,balanced_accuracy,0.2613432072131873,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7008,overall,balanced_accuracy,0.2663429191871174,0.2359820850248469,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7008,heldout_run,balanced_accuracy,0.23296669792546593,,,2635,42
+,ML residual masked-denoising AE-4,global,7008,heldout_run,balanced_accuracy,0.23493073796122577,,,2559,57
+,ML residual masked-denoising AE-4,global,7008,heldout_run,balanced_accuracy,0.2935877604909732,,,4034,64
+,ML residual masked-denoising AE-4,global,7008,heldout_run,balanced_accuracy,0.28816978855550224,,,2770,65
+,ML residual masked-denoising AE-4,global,7008,topology,balanced_accuracy,0.18035329945249767,,,6121,single
+,ML residual masked-denoising AE-4,global,7008,topology,balanced_accuracy,0.21003734338578145,,,2764,pair
+,ML residual masked-denoising AE-4,global,7008,topology,balanced_accuracy,0.21379256608198466,,,1920,triple
+,ML residual masked-denoising AE-4,global,7008,topology,balanced_accuracy,0.299612203953807,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7009,overall,balanced_accuracy,0.25548367734405525,0.19346004050478313,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7009,heldout_run,balanced_accuracy,0.2838968743315216,,,2635,42
+,ML residual masked-denoising AE-4,global,7009,heldout_run,balanced_accuracy,0.23774404761904763,,,2559,57
+,ML residual masked-denoising AE-4,global,7009,heldout_run,balanced_accuracy,0.25530387913315566,,,4034,64
+,ML residual masked-denoising AE-4,global,7009,heldout_run,balanced_accuracy,0.21270845165169455,,,2770,65
+,ML residual masked-denoising AE-4,global,7009,topology,balanced_accuracy,0.27788615662443694,,,6121,single
+,ML residual masked-denoising AE-4,global,7009,topology,balanced_accuracy,0.254393628849384,,,2764,pair
+,ML residual masked-denoising AE-4,global,7009,topology,balanced_accuracy,0.2791857013327761,,,1920,triple
+,ML residual masked-denoising AE-4,global,7009,topology,balanced_accuracy,0.2647372869275873,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,global,7010,overall,balanced_accuracy,0.26039779849461936,0.16372719660261198,82118.0,11998,
+,ML residual masked-denoising AE-4,global,7010,heldout_run,balanced_accuracy,0.25756807510992563,,,2635,42
+,ML residual masked-denoising AE-4,global,7010,heldout_run,balanced_accuracy,0.2379049405878674,,,2559,57
+,ML residual masked-denoising AE-4,global,7010,heldout_run,balanced_accuracy,0.2608055903494815,,,4034,64
+,ML residual masked-denoising AE-4,global,7010,heldout_run,balanced_accuracy,0.2820060856696723,,,2770,65
+,ML residual masked-denoising AE-4,global,7010,topology,balanced_accuracy,0.2666611722555798,,,6121,single
+,ML residual masked-denoising AE-4,global,7010,topology,balanced_accuracy,0.2696814010054105,,,2764,pair
+,ML residual masked-denoising AE-4,global,7010,topology,balanced_accuracy,0.2868316610228082,,,1920,triple
+,ML residual masked-denoising AE-4,global,7010,topology,balanced_accuracy,0.3023065913094539,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7001,overall,balanced_accuracy,0.2401671610601399,0.1375187067290539,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7001,heldout_run,balanced_accuracy,0.2530853858593932,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7001,heldout_run,balanced_accuracy,0.2236820445814348,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7001,heldout_run,balanced_accuracy,0.24759965275930612,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7001,heldout_run,balanced_accuracy,0.19967746265902286,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7001,topology,balanced_accuracy,0.26127398949971514,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7001,topology,balanced_accuracy,0.27185754024163233,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7001,topology,balanced_accuracy,0.23142028511394547,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7001,topology,balanced_accuracy,0.24245284323487112,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7002,overall,balanced_accuracy,0.2384636693219128,0.1202179713482635,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7002,heldout_run,balanced_accuracy,0.25068569435942545,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7002,heldout_run,balanced_accuracy,0.22902863396765832,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7002,heldout_run,balanced_accuracy,0.24403722681394574,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7002,heldout_run,balanced_accuracy,0.19783835304343017,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7002,topology,balanced_accuracy,0.2592330061171337,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7002,topology,balanced_accuracy,0.2602942626980815,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7002,topology,balanced_accuracy,0.2320696746171531,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7002,topology,balanced_accuracy,0.24626963712800087,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7003,overall,balanced_accuracy,0.23781847918051865,0.13208231973810225,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7003,heldout_run,balanced_accuracy,0.2487556365394571,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7003,heldout_run,balanced_accuracy,0.21946607254534084,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7003,heldout_run,balanced_accuracy,0.24815944538213403,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7003,heldout_run,balanced_accuracy,0.1971520247804085,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7003,topology,balanced_accuracy,0.2673328292140812,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7003,topology,balanced_accuracy,0.2618514910360953,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7003,topology,balanced_accuracy,0.21076086899872243,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7003,topology,balanced_accuracy,0.24945029870560903,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7004,overall,balanced_accuracy,0.2443130947825372,0.1622860375574834,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7004,heldout_run,balanced_accuracy,0.2634156845870861,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7004,heldout_run,balanced_accuracy,0.2406910569105691,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7004,heldout_run,balanced_accuracy,0.24342460169686886,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7004,heldout_run,balanced_accuracy,0.20121978097402232,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7004,topology,balanced_accuracy,0.2581723266415915,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7004,topology,balanced_accuracy,0.2845384450165144,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7004,topology,balanced_accuracy,0.2575860441336868,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7004,topology,balanced_accuracy,0.2488141663900874,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7005,overall,balanced_accuracy,0.23562276645430255,0.14736123915731386,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7005,heldout_run,balanced_accuracy,0.24987684790779252,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7005,heldout_run,balanced_accuracy,0.22930051148038955,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7005,heldout_run,balanced_accuracy,0.23940793688408707,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7005,heldout_run,balanced_accuracy,0.1906478630206927,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7005,topology,balanced_accuracy,0.2562410442606991,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7005,topology,balanced_accuracy,0.2685594722311028,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7005,topology,balanced_accuracy,0.2506864696480895,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7005,topology,balanced_accuracy,0.22709923664122136,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7006,overall,balanced_accuracy,0.23075323364113187,0.1270164085662151,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7006,heldout_run,balanced_accuracy,0.2578947825998088,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7006,heldout_run,balanced_accuracy,0.22179068390958634,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7006,heldout_run,balanced_accuracy,0.2320135373896334,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7006,heldout_run,balanced_accuracy,0.18468540377771311,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7006,topology,balanced_accuracy,0.26239221015050773,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7006,topology,balanced_accuracy,0.2499044071863524,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7006,topology,balanced_accuracy,0.23210815095420584,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7006,topology,balanced_accuracy,0.2379999170262197,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7007,overall,balanced_accuracy,0.23969958013953746,0.13699126897346048,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7007,heldout_run,balanced_accuracy,0.24654503099625352,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7007,heldout_run,balanced_accuracy,0.2241637295631198,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7007,heldout_run,balanced_accuracy,0.25086718043458284,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7007,heldout_run,balanced_accuracy,0.19798572668222184,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7007,topology,balanced_accuracy,0.27042016325444657,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7007,topology,balanced_accuracy,0.2714780336002661,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7007,topology,balanced_accuracy,0.2021068378624866,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7007,topology,balanced_accuracy,0.25072256333665227,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7008,overall,balanced_accuracy,0.23977508560490063,0.14582641532732696,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7008,heldout_run,balanced_accuracy,0.2478058615358537,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7008,heldout_run,balanced_accuracy,0.23011384347359956,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7008,heldout_run,balanced_accuracy,0.24702014931027422,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7008,heldout_run,balanced_accuracy,0.19737260942631835,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7008,topology,balanced_accuracy,0.2626716567205418,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7008,topology,balanced_accuracy,0.26627929673808914,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7008,topology,balanced_accuracy,0.23898297592905435,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7008,topology,balanced_accuracy,0.23918575063613232,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7009,overall,balanced_accuracy,0.23259044153285258,0.12301323869328609,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7009,heldout_run,balanced_accuracy,0.25402424741885843,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7009,heldout_run,balanced_accuracy,0.21948255606182437,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7009,heldout_run,balanced_accuracy,0.23501053087201906,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7009,heldout_run,balanced_accuracy,0.19503809054563193,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7009,topology,balanced_accuracy,0.2536765394219126,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7009,topology,balanced_accuracy,0.2535362659167348,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7009,topology,balanced_accuracy,0.2340055153251177,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7009,topology,balanced_accuracy,0.24054444628830624,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run,7010,overall,balanced_accuracy,0.24815574927036257,0.16565105282125941,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run,7010,heldout_run,balanced_accuracy,0.262511364000788,,,2635,42
+,ML residual masked-denoising AE-4,within_run,7010,heldout_run,balanced_accuracy,0.24351682971500047,,,2559,57
+,ML residual masked-denoising AE-4,within_run,7010,heldout_run,balanced_accuracy,0.25447602765673794,,,4034,64
+,ML residual masked-denoising AE-4,within_run,7010,heldout_run,balanced_accuracy,0.19730521567296752,,,2770,65
+,ML residual masked-denoising AE-4,within_run,7010,topology,balanced_accuracy,0.28518904803084,,,6121,single
+,ML residual masked-denoising AE-4,within_run,7010,topology,balanced_accuracy,0.27543132973103646,,,2764,pair
+,ML residual masked-denoising AE-4,within_run,7010,topology,balanced_accuracy,0.22209642250420542,,,1920,triple
+,ML residual masked-denoising AE-4,within_run,7010,topology,balanced_accuracy,0.2494013654505689,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7001,overall,balanced_accuracy,0.2576681100794064,0.20467656521293462,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7001,heldout_run,balanced_accuracy,0.2701781751557037,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7001,heldout_run,balanced_accuracy,0.241037221924417,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7001,heldout_run,balanced_accuracy,0.26135739434065375,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7001,heldout_run,balanced_accuracy,0.23132913462922364,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7001,topology,balanced_accuracy,0.30183849435612825,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7001,topology,balanced_accuracy,0.22746408733162624,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7001,topology,balanced_accuracy,0.23377316851049443,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7001,topology,balanced_accuracy,0.2611410915945433,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7002,overall,balanced_accuracy,0.2607153190901233,0.20767934797538157,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7002,heldout_run,balanced_accuracy,0.2748493858015979,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7002,heldout_run,balanced_accuracy,0.24285267577950506,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7002,heldout_run,balanced_accuracy,0.26467969544701997,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7002,heldout_run,balanced_accuracy,0.23295215665963848,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7002,topology,balanced_accuracy,0.3101451685996293,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7002,topology,balanced_accuracy,0.23349035775927443,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7002,topology,balanced_accuracy,0.24003891990259912,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7002,topology,balanced_accuracy,0.28491121805509456,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7003,overall,balanced_accuracy,0.250784359531617,0.22150066245891376,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7003,heldout_run,balanced_accuracy,0.2673863446622693,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7003,heldout_run,balanced_accuracy,0.24519897480568212,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7003,heldout_run,balanced_accuracy,0.24433835816733004,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7003,heldout_run,balanced_accuracy,0.2293851099384622,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7003,topology,balanced_accuracy,0.30855814152019334,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7003,topology,balanced_accuracy,0.2363417554483909,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7003,topology,balanced_accuracy,0.25748570131883164,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7003,topology,balanced_accuracy,0.23386811530376916,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7004,overall,balanced_accuracy,0.2572248484593519,0.21433521376517778,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7004,heldout_run,balanced_accuracy,0.2767075744616667,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7004,heldout_run,balanced_accuracy,0.2487060104529617,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7004,heldout_run,balanced_accuracy,0.2536723298818833,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7004,heldout_run,balanced_accuracy,0.23214276539469392,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7004,topology,balanced_accuracy,0.3103546892371502,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7004,topology,balanced_accuracy,0.2222865493007795,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7004,topology,balanced_accuracy,0.2380599151118646,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7004,topology,balanced_accuracy,0.24636324857242548,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7005,overall,balanced_accuracy,0.2517002307293695,0.21922382467435958,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7005,heldout_run,balanced_accuracy,0.272845475456204,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7005,heldout_run,balanced_accuracy,0.24505283436076122,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7005,heldout_run,balanced_accuracy,0.24503674722199384,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7005,heldout_run,balanced_accuracy,0.22834963263965416,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7005,topology,balanced_accuracy,0.31649639702068216,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7005,topology,balanced_accuracy,0.22459357960369494,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7005,topology,balanced_accuracy,0.24793972322904356,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7005,topology,balanced_accuracy,0.2564345900669747,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7006,overall,balanced_accuracy,0.2570921217405929,0.2300425908086129,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7006,heldout_run,balanced_accuracy,0.27135917258980385,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7006,heldout_run,balanced_accuracy,0.24825502546234254,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7006,heldout_run,balanced_accuracy,0.25146925533475517,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7006,heldout_run,balanced_accuracy,0.24024922845747876,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7006,topology,balanced_accuracy,0.2970463559621421,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7006,topology,balanced_accuracy,0.22972988124690114,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7006,topology,balanced_accuracy,0.23989794567316908,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7006,topology,balanced_accuracy,0.2592759101585438,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7007,overall,balanced_accuracy,0.26241270231604535,0.21018951783175824,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7007,heldout_run,balanced_accuracy,0.27645096156929744,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7007,heldout_run,balanced_accuracy,0.24104271642991157,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7007,heldout_run,balanced_accuracy,0.26468002189196205,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7007,heldout_run,balanced_accuracy,0.24177576643859194,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7007,topology,balanced_accuracy,0.3068921129629062,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7007,topology,balanced_accuracy,0.23187953971415518,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7007,topology,balanced_accuracy,0.23810837025747425,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7007,topology,balanced_accuracy,0.273233323333929,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7008,overall,balanced_accuracy,0.2613297902023327,0.20303525717044363,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7008,heldout_run,balanced_accuracy,0.271842732117729,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7008,heldout_run,balanced_accuracy,0.24201091083713033,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7008,heldout_run,balanced_accuracy,0.26843253148783125,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7008,heldout_run,balanced_accuracy,0.2329570749915168,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7008,topology,balanced_accuracy,0.30598492965865176,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7008,topology,balanced_accuracy,0.2310839019150422,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7008,topology,balanced_accuracy,0.23078752485213347,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7008,topology,balanced_accuracy,0.25103225233390347,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7009,overall,balanced_accuracy,0.24660626807773828,0.221527269917986,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7009,heldout_run,balanced_accuracy,0.26541832678378674,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7009,heldout_run,balanced_accuracy,0.24238462655230947,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7009,heldout_run,balanced_accuracy,0.2390795163456222,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7009,heldout_run,balanced_accuracy,0.2243303805832872,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7009,topology,balanced_accuracy,0.31657145394083325,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7009,topology,balanced_accuracy,0.2413151619036977,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7009,topology,balanced_accuracy,0.2615405813189906,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7009,topology,balanced_accuracy,0.24316224246215118,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_topology,7010,overall,balanced_accuracy,0.25493268103346167,0.21229819825478533,82118.0,11998,
+,ML residual masked-denoising AE-4,within_topology,7010,heldout_run,balanced_accuracy,0.2757850118815154,,,2635,42
+,ML residual masked-denoising AE-4,within_topology,7010,heldout_run,balanced_accuracy,0.23726432815152326,,,2559,57
+,ML residual masked-denoising AE-4,within_topology,7010,heldout_run,balanced_accuracy,0.25373982902345404,,,4034,64
+,ML residual masked-denoising AE-4,within_topology,7010,heldout_run,balanced_accuracy,0.23236687604157802,,,2770,65
+,ML residual masked-denoising AE-4,within_topology,7010,topology,balanced_accuracy,0.30734315328547507,,,6121,single
+,ML residual masked-denoising AE-4,within_topology,7010,topology,balanced_accuracy,0.22609101932600884,,,2764,pair
+,ML residual masked-denoising AE-4,within_topology,7010,topology,balanced_accuracy,0.24201588247903627,,,1920,triple
+,ML residual masked-denoising AE-4,within_topology,7010,topology,balanced_accuracy,0.25337785727658774,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7001,overall,balanced_accuracy,0.26194874019977366,0.19849070053817683,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7001,heldout_run,balanced_accuracy,0.2808239748999243,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7001,heldout_run,balanced_accuracy,0.24688197980880905,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7001,heldout_run,balanced_accuracy,0.2636616023368622,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7001,heldout_run,balanced_accuracy,0.23106797873543716,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7001,topology,balanced_accuracy,0.2878302894507432,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7001,topology,balanced_accuracy,0.21629229787506954,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7001,topology,balanced_accuracy,0.2414004841980504,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7001,topology,balanced_accuracy,0.2798425040635877,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7002,overall,balanced_accuracy,0.2617211963200674,0.20310662808904564,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7002,heldout_run,balanced_accuracy,0.27886265281834904,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7002,heldout_run,balanced_accuracy,0.2563939850799607,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7002,heldout_run,balanced_accuracy,0.2621879790881788,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7002,heldout_run,balanced_accuracy,0.22556704654608437,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7002,topology,balanced_accuracy,0.2843242298724413,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7002,topology,balanced_accuracy,0.23081690964716323,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7002,topology,balanced_accuracy,0.2554195772305704,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7002,topology,balanced_accuracy,0.30090095696426594,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7003,overall,balanced_accuracy,0.2599598515247735,0.20399560590168098,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7003,heldout_run,balanced_accuracy,0.2819811611991961,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7003,heldout_run,balanced_accuracy,0.24370592111140893,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7003,heldout_run,balanced_accuracy,0.25920103849793413,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7003,heldout_run,balanced_accuracy,0.23477095351204613,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7003,topology,balanced_accuracy,0.29112979715757836,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7003,topology,balanced_accuracy,0.22068784171579342,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7003,topology,balanced_accuracy,0.25237766079627993,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7003,topology,balanced_accuracy,0.28023716140315047,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7004,overall,balanced_accuracy,0.2635984877112059,0.19824875757971677,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7004,heldout_run,balanced_accuracy,0.2849578600021638,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7004,heldout_run,balanced_accuracy,0.2484239591709104,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7004,heldout_run,balanced_accuracy,0.26445250024584127,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7004,heldout_run,balanced_accuracy,0.2323897047004825,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7004,topology,balanced_accuracy,0.28437035433894553,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7004,topology,balanced_accuracy,0.22418783042955248,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7004,topology,balanced_accuracy,0.24355799982729748,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7004,topology,balanced_accuracy,0.27448843473154794,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7005,overall,balanced_accuracy,0.26332090068283504,0.19864508159720473,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7005,heldout_run,balanced_accuracy,0.28420857654053544,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7005,heldout_run,balanced_accuracy,0.24712658581256142,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7005,heldout_run,balanced_accuracy,0.2650239852398524,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7005,heldout_run,balanced_accuracy,0.23189152810768013,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7005,topology,balanced_accuracy,0.2864808256321525,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7005,topology,balanced_accuracy,0.2190014435639584,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7005,topology,balanced_accuracy,0.24480650916119948,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7005,topology,balanced_accuracy,0.27470451228437454,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7006,overall,balanced_accuracy,0.26417516679347675,0.21802990966166216,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7006,heldout_run,balanced_accuracy,0.2730290335040057,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7006,heldout_run,balanced_accuracy,0.2494597739658715,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7006,heldout_run,balanced_accuracy,0.26714085817136024,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7006,heldout_run,balanced_accuracy,0.2381812966466747,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7006,topology,balanced_accuracy,0.2816206632510805,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7006,topology,balanced_accuracy,0.2218211977368018,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7006,topology,balanced_accuracy,0.24008533283391137,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7006,topology,balanced_accuracy,0.2895630685831482,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7007,overall,balanced_accuracy,0.26090503236035295,0.19952323494961824,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7007,heldout_run,balanced_accuracy,0.28505210633912237,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7007,heldout_run,balanced_accuracy,0.24390381265076386,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7007,heldout_run,balanced_accuracy,0.2612334137758153,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7007,heldout_run,balanced_accuracy,0.22967724239339443,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7007,topology,balanced_accuracy,0.29127562092665216,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7007,topology,balanced_accuracy,0.21562533478036078,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7007,topology,balanced_accuracy,0.24444038347455094,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7007,topology,balanced_accuracy,0.27598249465989255,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7008,overall,balanced_accuracy,0.25008376310603125,0.20275618150331862,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7008,heldout_run,balanced_accuracy,0.2699837440147505,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7008,heldout_run,balanced_accuracy,0.24129493880103633,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7008,heldout_run,balanced_accuracy,0.24786405301143444,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7008,heldout_run,balanced_accuracy,0.22312894661552582,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7008,topology,balanced_accuracy,0.2924053159189932,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7008,topology,balanced_accuracy,0.2199332543674025,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7008,topology,balanced_accuracy,0.26459666513835045,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7008,topology,balanced_accuracy,0.29413101453530427,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7009,overall,balanced_accuracy,0.2554321935648822,0.19795638223950923,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7009,heldout_run,balanced_accuracy,0.278409417497386,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7009,heldout_run,balanced_accuracy,0.24576153622799962,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7009,heldout_run,balanced_accuracy,0.254520006641744,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7009,heldout_run,balanced_accuracy,0.2222067073860423,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7009,topology,balanced_accuracy,0.2829101304411681,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7009,topology,balanced_accuracy,0.21841252124231775,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7009,topology,balanced_accuracy,0.2565236357991063,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7009,topology,balanced_accuracy,0.2811694196941459,,,1193,quad
+ML residual masked-denoising AE-4 shuffled labels,ML residual masked-denoising AE-4,within_run_topology,7010,overall,balanced_accuracy,0.26298036093498656,0.1974949755096796,82118.0,11998,
+,ML residual masked-denoising AE-4,within_run_topology,7010,heldout_run,balanced_accuracy,0.2860858487504057,,,2635,42
+,ML residual masked-denoising AE-4,within_run_topology,7010,heldout_run,balanced_accuracy,0.2478961069418386,,,2559,57
+,ML residual masked-denoising AE-4,within_run_topology,7010,heldout_run,balanced_accuracy,0.2626789667896679,,,4034,64
+,ML residual masked-denoising AE-4,within_run_topology,7010,heldout_run,balanced_accuracy,0.23194893111638956,,,2770,65
+,ML residual masked-denoising AE-4,within_run_topology,7010,topology,balanced_accuracy,0.28660500024181856,,,6121,single
+,ML residual masked-denoising AE-4,within_run_topology,7010,topology,balanced_accuracy,0.21591026757706622,,,2764,pair
+,ML residual masked-denoising AE-4,within_run_topology,7010,topology,balanced_accuracy,0.2462967449409299,,,1920,triple
+,ML residual masked-denoising AE-4,within_run_topology,7010,topology,balanced_accuracy,0.2696529515262921,,,1193,quad

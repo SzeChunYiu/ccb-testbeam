@@ -1,0 +1,23 @@
+{
+  "ticket": "1781027415.1845.71ed23e7",
+  "worker": "testbeam-laptop-4",
+  "seed": 184571,
+  "raw_root_dir": "data/root/root",
+  "qtemplate_path": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "s07c_helper": "reports/1781000790.531136.203130b0__s07c_clean_timing_rf/s07c_clean_timing_rf.py",
+  "output_dir": "reports/1781027415.1845.71ed23e7",
+  "target": {
+    "labelled_events": 12147,
+    "clean": 10636,
+    "violating": 1511
+  },
+  "tail_validation": {
+    "clean_downstream_span_ns": 5.0,
+    "clean_all_span_ns": 10.0,
+    "gross_downstream_span_ns": 10.0,
+    "gross_b2_displacement_ns": 20.0,
+    "min_adopted_retention": 0.55,
+    "retention_grid": [0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85]
+  },
+  "bootstrap_samples": 1000
+}

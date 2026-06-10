@@ -1,0 +1,33 @@
+{
+  "study": "S16d",
+  "ticket": "1781007587.2596.601c7510",
+  "worker": "testbeam-laptop-1",
+  "title": "locate true forced/random HRD pedestal runs",
+  "data_root": "/home/billy/ccb-data",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "s00_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
+  "heldout_runs": [57, 65],
+  "calibration_runs": [56, 64],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "quiet_event_max_amplitude_adc": 80.0,
+  "expected_selected_pulses": 640737,
+  "expected_forced_random_tagged_entries": 0,
+  "traditional_candidate_rule": {
+    "max_selected_event_fraction": 0.01,
+    "min_quiet_event_fraction": 0.90,
+    "max_event_max_median_adc": 120.0
+  },
+  "random_seed": 160401,
+  "bootstrap_replicates": 300,
+  "bootstrap_max_events_per_run": 60000,
+  "ml": {
+    "max_events_per_run": 1000,
+    "cv_folds": 3,
+    "hyperparameters": {
+      "C": [0.1, 1.0, 10.0]
+    }
+  }
+}

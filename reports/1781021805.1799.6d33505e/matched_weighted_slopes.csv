@@ -1,0 +1,4 @@
+method,metric,matched_slope_per_charge_quantile,n_matched_strata,n_pair_residuals
+ml_charge_ridge,sigma68_ns,0.32849925247075,7,10197
+template_phase_base,sigma68_ns,0.07437784400062257,7,10197
+traditional_hierarchical,sigma68_ns,0.30304088468703594,7,10197

@@ -1,0 +1,7 @@
+check,value,pass,interpretation
+raw_reproduction_gate,1.0,True,S00 counts and S05c raw covariance anchor were rebuilt before projection
+run_split_event_overlap,0.0,True,folds hold out whole runs; no train rows from the held-out run enter priors or ML reliability training
+ml_feature_policy,1.0,True,"ML reliability inputs are own-stave waveform summaries only; no run, event, time, residual, or target-stave labels"
+s05c_b2_downweighted,4.498526894173612,True,"B2 two-ended prior variance is larger than the downstream mean, so B2 receives less projection weight"
+best_method_not_unphysical_zero_width,1.99485822096507,True,guards against a target echo or accidental direct residual feature
+ml_downstream_bias_small_vs_sigma,0.30728039462742046,False,large residual-width gains are not accepted if they shift the downstream median strongly

@@ -1,0 +1,48 @@
+{
+  "study": "S16g",
+  "ticket": "1781029779.1072.02d438c1",
+  "worker": "testbeam-laptop-2",
+  "title": "canonical HRD trigger-mode run map",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "raw_archive_dir": "/home/billy/ccb-data/raw",
+  "filesystem_scan_roots": [
+    "/home/billy/ccb-data/extracted",
+    "/home/billy/ccb-data/docs"
+  ],
+  "prior_provenance": {
+    "s16e_report_dir": "reports/1781014587.1760.7ce2645e",
+    "s16f_report_dir": "reports/1781014760.1717.579e75da"
+  },
+  "run_min": 0,
+  "run_max": 65,
+  "beam_trigger_value": 1,
+  "s00_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
+  "heldout_runs": [57, 65],
+  "calibration_runs": [56, 64],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "quiet_event_max_amplitude_adc": 80.0,
+  "expected_selected_pulses": 640737,
+  "expected_non_beam_trigger_entries": 0,
+  "expected_raw_root_files": 110,
+  "expected_distinct_raw_root_runs": 57,
+  "traditional_candidate_rule": {
+    "max_selected_event_fraction": 0.01,
+    "min_quiet_event_fraction": 0.90,
+    "max_event_max_median_adc": 120.0
+  },
+  "random_seed": 160701,
+  "bootstrap_replicates": 300,
+  "bootstrap_max_events_per_run": 60000,
+  "ml": {
+    "max_events_per_run": 1000,
+    "cv_folds": 3,
+    "shuffle_repeats": 30,
+    "hyperparameters": {
+      "C": [0.1, 1.0, 10.0]
+    }
+  },
+  "out_dir": "reports/1781029779.1072.02d438c1"
+}

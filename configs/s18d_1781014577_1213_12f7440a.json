@@ -1,0 +1,35 @@
+{
+  "study": "S18d",
+  "ticket": "1781014577.1213.12f7440a",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781014577.1213.12f7440a",
+  "script_path": "scripts/s18d_1781014577_1213_12f7440a_leave_two_ablation.py",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "cfd_fraction": 0.20,
+  "random_seed": 18241,
+  "bootstrap_resamples": 1000,
+  "gaussian_core_bins": 40,
+  "sample_iv_calib_runs": [64],
+  "sample_iv_analysis_runs": [58, 59, 60, 61, 62, 63, 65],
+  "astack": {
+    "file_prefix": "hrda",
+    "staves": {
+      "A1": 0,
+      "A3": 4
+    }
+  },
+  "expected_reproduction": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_robust_width_ns": 1.7936257228944265,
+    "sample_iv_core_sigma_ns": 1.9921758801207758,
+    "robust_width_tolerance_ns": 0.001,
+    "core_sigma_tolerance_ns": 0.001
+  },
+  "ml": {
+    "variants": ["full", "no_peak", "no_tail", "no_sample_iv_indicator"],
+    "alphas": [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+  }
+}

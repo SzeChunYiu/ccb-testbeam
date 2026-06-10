@@ -1,0 +1,154 @@
+{
+  "study": "S18e",
+  "ticket": "1781014577.1276.72f87916",
+  "worker": "testbeam-laptop-4",
+  "reproduced": true,
+  "primary_number_reproduced": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_robust_width_ns": 1.7936260637768346,
+    "sample_iv_core_sigma_ns": 1.9921763970438024
+  },
+  "traditional_by_pool": {
+    "run64_only": {
+      "robust_width_ns": 1.7936260637771233,
+      "robust_ci_low_ns": 1.4107686183048416,
+      "robust_ci_high_ns": 2.0814770355569765,
+      "core_sigma_ns": 1.9921764037756304
+    },
+    "sample_iii_early": {
+      "robust_width_ns": 1.5577453031744033,
+      "robust_ci_low_ns": 1.2753934782947691,
+      "robust_ci_high_ns": 1.6852720572092628,
+      "core_sigma_ns": 1.7820620754804373
+    },
+    "sample_iii_late": {
+      "robust_width_ns": 1.456624277722906,
+      "robust_ci_low_ns": 1.2422810792312764,
+      "robust_ci_high_ns": 1.6393106408233284,
+      "core_sigma_ns": 2.037470751960155
+    },
+    "sample_iii_mixed": {
+      "robust_width_ns": 1.4921094019259362,
+      "robust_ci_low_ns": 1.2366040032353334,
+      "robust_ci_high_ns": 1.6693721537883304,
+      "core_sigma_ns": 1.6829195033413586
+    }
+  },
+  "ml_by_pool": {
+    "run64_only": {
+      "robust_width_ns": 1.601856094997725,
+      "robust_ci_low_ns": 1.2711124133932263,
+      "robust_ci_high_ns": 1.7090348620588274,
+      "core_sigma_ns": 2.1066489199689102
+    },
+    "sample_iii_early": {
+      "robust_width_ns": 1.459798952362646,
+      "robust_ci_low_ns": 1.2736260564806754,
+      "robust_ci_high_ns": 1.6411559165358218,
+      "core_sigma_ns": 2.015089525747467
+    },
+    "sample_iii_late": {
+      "robust_width_ns": 2.2618410648202767,
+      "robust_ci_low_ns": 1.9137066331040973,
+      "robust_ci_high_ns": 2.815234719098247,
+      "core_sigma_ns": 3.111960479475296
+    },
+    "sample_iii_mixed": {
+      "robust_width_ns": 1.8489252699130705,
+      "robust_ci_low_ns": 1.5835959087270097,
+      "robust_ci_high_ns": 2.2569967207059562,
+      "core_sigma_ns": 3.3212627568785864
+    }
+  },
+  "pool_delta_bootstrap": [
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "run64_only",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": -0.5501697131307232,
+      "ci_high_ns": 0.22512785968125978,
+      "p_value": 0.33
+    },
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "sample_iii_early",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": -0.20730014476867764,
+      "ci_high_ns": 0.10341644514972172,
+      "p_value": 0.434
+    },
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "sample_iii_late",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": 0.3791985831815375,
+      "ci_high_ns": 1.3729205719115982,
+      "p_value": 0.0
+    },
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "sample_iii_mixed",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": 0.07058395787125904,
+      "ci_high_ns": 0.84814385328505,
+      "p_value": 0.012
+    },
+    {
+      "comparison": "sample_iii_early_minus_run64_only",
+      "pool": "sample_iii_early",
+      "method": "traditional",
+      "ci_low_ns": -0.5420757422635598,
+      "ci_high_ns": 0.10466274624917754,
+      "p_value": 0.15
+    },
+    {
+      "comparison": "sample_iii_early_minus_run64_only",
+      "pool": "sample_iii_early",
+      "method": "ml",
+      "ci_low_ns": -0.22606774397207507,
+      "ci_high_ns": 0.026405310121332536,
+      "p_value": 0.098
+    },
+    {
+      "comparison": "sample_iii_late_minus_run64_only",
+      "pool": "sample_iii_late",
+      "method": "traditional",
+      "ci_low_ns": -0.5443721522068921,
+      "ci_high_ns": 0.06456480707059598,
+      "p_value": 0.1
+    },
+    {
+      "comparison": "sample_iii_late_minus_run64_only",
+      "pool": "sample_iii_late",
+      "method": "ml",
+      "ci_low_ns": 0.3315894805299497,
+      "ci_high_ns": 1.2866156036494594,
+      "p_value": 0.0
+    },
+    {
+      "comparison": "sample_iii_mixed_minus_run64_only",
+      "pool": "sample_iii_mixed",
+      "method": "traditional",
+      "ci_low_ns": -0.556585325969309,
+      "ci_high_ns": 0.1363618338442339,
+      "p_value": 0.152
+    },
+    {
+      "comparison": "sample_iii_mixed_minus_run64_only",
+      "pool": "sample_iii_mixed",
+      "method": "ml",
+      "ci_low_ns": 0.02281996039420218,
+      "ci_high_ns": 0.685738753988108,
+      "p_value": 0.034
+    }
+  ],
+  "diagnosis": {
+    "leakage_flags": 2,
+    "best_traditional_pool": "sample_iii_late",
+    "best_ml_pool": "sample_iii_early",
+    "conclusion": "Sample IV A1-A3 transfer is compared across run64-only, early Sample III, late Sample III, and mixed Sample III pools with identical run-held-out Sample IV pairs."
+  },
+  "input_sha256": "reports/1781014577.1276.72f87916/input_sha256.csv",
+  "train_run_manifest": "reports/1781014577.1276.72f87916/train_run_manifest.csv",
+  "git_commit": "2d61929040868051256a608af7fa73670baabe67"
+}

@@ -1,0 +1,36 @@
+{
+  "conclusion": "The elevated high-lowering tail rate is real on held-out runs but still behaves more like a proxy than a fixable pedestal-lowering error. Traditional correction improves sigma68 by -0.006 ns and RF correction by 0.350 ns, while the high-minus-low tail gap is 0.118. High-bin pairs have pretrigger medians 93.92x low-bin, late-window medians 0.55x low-bin, and tail-area-fraction medians 1.00x low-bin; the mechanism is most consistent with pileup/shape pathologies or residual timewalk correlated with lowering, not lowering propagation alone.",
+  "heldout_events": 250,
+  "heldout_pair_residuals": 750,
+  "heldout_runs": [
+    54,
+    55,
+    56,
+    57
+  ],
+  "high_lowering_tail_fraction": 0.13043478260869565,
+  "high_lowering_tail_fraction_ci": [
+    0.0,
+    0.37827380952380957
+  ],
+  "high_minus_low_tail_fraction": 0.11805514024280844,
+  "leakage_checks_pass": true,
+  "low_lowering_tail_fraction": 0.012379642365887207,
+  "low_lowering_tail_fraction_ci": [
+    0.0,
+    0.025951390316338606
+  ],
+  "ml_gain_vs_raw_ns": 0.35029063309184894,
+  "ml_sigma68_ns": 2.7599812815714904,
+  "raw_reproduction_pass": true,
+  "raw_sigma68_ns": 3.1102719146633393,
+  "rf_tail_classifier_heldout_auc": 0.9071815718157181,
+  "rf_tail_classifier_shuffled_auc": 0.6106594399277325,
+  "sample_i_selected_pulses": 252266,
+  "study": "S16f",
+  "ticket": "1781015168.1090.5b553d2a",
+  "top_mechanism_features": "delta_positive_area_over_amp, delta_width20_samples, delta_area_over_amp, delta_late_abs_adc, abs_delta_lowering_adc",
+  "top_run_pair_high_bin": "run 56 B4-B8 (tail 0.400, n=5)",
+  "traditional_gain_vs_raw_ns": -0.006046964739768512,
+  "traditional_sigma68_ns": 3.116318879403108
+}

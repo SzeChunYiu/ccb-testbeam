@@ -1,0 +1,299 @@
+{
+  "study": "S18g",
+  "ticket": "1781015703.942.1b746305",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "236449a4c852e6278b3d0048e89195b8311a0d86",
+  "config": "configs/s18g_1781015703_942_1b746305.yaml",
+  "command": "/home/billy/anaconda3/bin/python scripts/s18g_1781015703_942_1b746305_astack_to_bcov.py --config configs/s18g_1781015703_942_1b746305.yaml",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4"
+  },
+  "input_files": {
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0031.root": {
+      "sha256": "9dc9ae16d4e5cc1e09c9aa3c43523f424d8baa17b635e4a62e116252dfd1e89a",
+      "bytes": 9888079
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0032.root": {
+      "sha256": "75b51295806f2fe960d70047b5f9a7301469abf9bc61d3da97f39017b3c6658c",
+      "bytes": 10365191
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0033.root": {
+      "sha256": "980b6b0fddcc7321c7bba3eed2695c560b8dc0870851b5c842211531ef741c09",
+      "bytes": 13980468
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0034.root": {
+      "sha256": "bf862dc62e0a341f09561ea2682203208ae9431186960ac30a4e7636a454d80c",
+      "bytes": 9685894
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0035.root": {
+      "sha256": "6218ea5cc30f54aa9bb3ab7a2f66e78655ab5e5bbc220a42cf0b446ee8278e65",
+      "bytes": 6906038
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0036.root": {
+      "sha256": "f3856daa9d9a0dce258790ec130a553e3b10f8da41752896d0fb9727b8f303e5",
+      "bytes": 5406671
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0037.root": {
+      "sha256": "1a0ebd9202bacb568de7ba7cd994b769e8c37e3e03c64af5ab19dfa22ad4fa4a",
+      "bytes": 12558688
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0039.root": {
+      "sha256": "d6d168608e742109ba75fddbb5dd533ddf14de06298c36dfa7b32a144a7a2f78",
+      "bytes": 7551093
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0040.root": {
+      "sha256": "1494136cc886313efb6407b4e6593a91bbb5aab4fb9e41fee61e6fd9d9d0dd8c",
+      "bytes": 8132296
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0041.root": {
+      "sha256": "a73d5176faac86db5729413a872bfa8893dc99a8f04703f20820917fd96527ca",
+      "bytes": 8476807
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0042.root": {
+      "sha256": "4231c6f44238a88e523bb6478ccdaf50ea8df54b0860ac5d6c07b111fe65903b",
+      "bytes": 8439631
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0044.root": {
+      "sha256": "8b9a0c63e5ebff7df6b49fe1c34fb2f058671bfd4fa4507e1e864b52e31813ad",
+      "bytes": 1072439
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0045.root": {
+      "sha256": "0667f58a0c2408419fe2838feca49c211d681153295fbff131ba357ab7b17dbb",
+      "bytes": 11978439
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0046.root": {
+      "sha256": "d723c69ee87a20b8966c6186726c37cd827538b71d6b80cae051f20a77d625b5",
+      "bytes": 363504
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0047.root": {
+      "sha256": "95c0b24c9978ea91c22606d309b6dd37aa4450b943b95cf14f6c5c73a21bd32b",
+      "bytes": 2725102
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0048.root": {
+      "sha256": "a0865b8b7247be879b2f3a1c542aa392587fafe3ebb1059379def5296aef2a38",
+      "bytes": 7883395
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0049.root": {
+      "sha256": "f4517dbb6f46f61e4b0ff3c3f207a86e9dc8a03e27ab74511a0f02f159654574",
+      "bytes": 8041307
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0050.root": {
+      "sha256": "73be3ab5d4b080192c83fdf0600c5c5f4c48a6cafed7c1b2cb16b0c23690f7f9",
+      "bytes": 10925423
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0051.root": {
+      "sha256": "d08c3f5b1aa00d62377ddc5249612a79f523e3ab1379dc88cee13e35f2f2acd6",
+      "bytes": 5005769
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0052.root": {
+      "sha256": "8700c89383ef567249b3b1cdb2cbc19f33cc33509a19b24165c528f72e4e9f9a",
+      "bytes": 2440882
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0053.root": {
+      "sha256": "c93ca01697382bcb2680a433a48c41105943981e1a221c7f5349a8412e8ea874",
+      "bytes": 9656826
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0054.root": {
+      "sha256": "36da35ade12ad942230e501b98394153b8983d53e0d922036535ec88f2d1830d",
+      "bytes": 9124046
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0055.root": {
+      "sha256": "78451352fa3339abdd5db3e1c5b9a57ef7693bb87884aff4a4085135bb376227",
+      "bytes": 5958441
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0056.root": {
+      "sha256": "76c7845d73fe994b35a3023e4450cfe16753bbdd723fec2e8dba15e84ec0ee6a",
+      "bytes": 12667291
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0057.root": {
+      "sha256": "3fd411067fb6e9fa329a05463eadf54e663f9c6899c0f2570ca39bf083a78190",
+      "bytes": 7791169
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0058.root": {
+      "sha256": "b679601ccf351cf91477684967398a8e477ad35f820c9f1a5212af2fa581bbdc",
+      "bytes": 8355851
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0059.root": {
+      "sha256": "36228849be7d5b89f1c77aa572549b24b680eea0e5c770c371d38db0ee390422",
+      "bytes": 10400361
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0060.root": {
+      "sha256": "d46e6ad595bc4cdb27118e7059b9a984b31b282fb5b3cdfcb6523155d1f20f5e",
+      "bytes": 8889565
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0061.root": {
+      "sha256": "c7e195bfbc689c254c6b33b2647f8fd113bf2f19b253018134b22d766fcb94b6",
+      "bytes": 8999644
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0062.root": {
+      "sha256": "02835d41621b6e7197eb1a57a5ccc17b14f08d25948f37473cee0bc209f2caac",
+      "bytes": 9250458
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0063.root": {
+      "sha256": "ae19cf734aab1a2ab2d5cf2cf2315542cb8204f1333ada4aeb70d98b6ba6741b",
+      "bytes": 9118926
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0064.root": {
+      "sha256": "58ce89dc72c8af359b6751b43e6dfbaf7eee84a6df0c5e101cb97975a33fc371",
+      "bytes": 8852963
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrda_run_0065.root": {
+      "sha256": "b4ae3f1e9adc613f05ca88688e8da194770399c975ed08b60831943825f259a2",
+      "bytes": 9464668
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0031.root": {
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+      "bytes": 11638901
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0032.root": {
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff",
+      "bytes": 12157812
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0033.root": {
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973",
+      "bytes": 16781109
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0034.root": {
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51",
+      "bytes": 11697434
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0035.root": {
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea",
+      "bytes": 7793651
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0036.root": {
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee",
+      "bytes": 6167361
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0037.root": {
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3",
+      "bytes": 14369738
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0039.root": {
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568",
+      "bytes": 8625385
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0040.root": {
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17",
+      "bytes": 9266489
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0041.root": {
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010",
+      "bytes": 9691925
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0042.root": {
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898",
+      "bytes": 9767653
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0044.root": {
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+      "bytes": 1227977
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0045.root": {
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+      "bytes": 13786671
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0046.root": {
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+      "bytes": 412227
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0047.root": {
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+      "bytes": 3098718
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0048.root": {
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+      "bytes": 8995827
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0049.root": {
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+      "bytes": 9203548
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0050.root": {
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+      "bytes": 13217424
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0051.root": {
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+      "bytes": 6036876
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0052.root": {
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+      "bytes": 2941826
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0053.root": {
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+      "bytes": 11713879
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0054.root": {
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+      "bytes": 11056922
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0055.root": {
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+      "bytes": 7153324
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0056.root": {
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+      "bytes": 15273160
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0057.root": {
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+      "bytes": 8881910
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root": {
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+      "bytes": 9623179
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root": {
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+      "bytes": 12032616
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0060.root": {
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+      "bytes": 10174098
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0061.root": {
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+      "bytes": 10362658
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0062.root": {
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+      "bytes": 10634393
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0063.root": {
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+      "bytes": 10494181
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0064.root": {
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252",
+      "bytes": 10006223
+    },
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0065.root": {
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+      "bytes": 10600278
+    }
+  },
+  "output_sha256": {
+    "REPORT.md": "529d371c08c26b54f2bd6f87dbeb2c0e413f1c94f1a5fd2e90e9e43c2bca7d9d",
+    "astack_run_summaries.csv": "4fa2ae9f121c8a07098ff88c607721f6ca3d174d804b1f3ac261c16998a03c72",
+    "bstack_pair_table_preview.csv": "26c44f2951e73625f54c2b92191a5027cb65f5a011fbde8dea642c310368dd33",
+    "fig_astack_width_inputs.png": "81f90b4a728e7cc711b62854f827a818995ef292f33c848801255b48351b42fb",
+    "fig_method_sigma68.png": "8b5cbbbb07b42a3547a7db75b136599d710f633c168d506b70808ce60f9ad3c9",
+    "fold_summary.csv": "a19b319302e536bace518a6144d80a5a7fcafb0cf0f05b02474ef6e6d06a15de",
+    "heldout_pair_residuals.csv": "951afeb84472a24adc9bf25cf9c68044dce22c68b9a5eb2ec2ca7e9430a62997",
+    "input_sha256.csv": "a6e3d80a400b77ac927632e694cab9b0bf66f3f01c220ea3dc92b1d59fd8c290",
+    "leakage_checks.csv": "b0d47244231a4897de39d0594b3e7da0ddc3800719008b9767dd33ba55c4a271",
+    "method_delta_bootstrap.csv": "764a1796f8e9ef55ee1f359a17af513e5d725853dd7cc3496851706c8239203b",
+    "method_metrics.csv": "a75ff02d0737f333bc91b7a76b6e1498bd9708bce3952cbc31f002162041fcb7",
+    "reproduction_match_table.csv": "371f7472dc50dee4e8c2b44f156ceb27e40e78392f9af503bdcc919c9fc9a265",
+    "result.json": "e9859182fad4a3d3ca4e687dd7af1e197ecba6a34711126a71b71c1be2f2759b",
+    "run_covariance_targets.csv": "d4cc601f957bfc2a267f7bb15106e139ce4c6bb469b71dc8b1a8855e71604a54",
+    "run_level_covariance_predictions.csv": "e4ad5b46cbc5a35cf70e03ee5ef186ff2227282b067bc15b31cbe651546edbfa"
+  },
+  "random_seed": 185703
+}

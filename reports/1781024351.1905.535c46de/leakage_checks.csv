@@ -1,0 +1,8 @@
+check,value,pass
+train_heldout_run_overlap,0,True
+train_heldout_event_stave_key_overlap,0,True
+exact_even_waveform_hash_overlap,0,True
+features_exclude_run_event_odd_target,"even waveform, even summaries, train-only residual basis, stave one-hot",True
+shuffled_target_extra_trees_res68,0.8028830995191673,True
+ml_to_shuffled_res68_ratio,0.0027128588172485317,True
+looks_too_good_triggered_extra_audit,True,True

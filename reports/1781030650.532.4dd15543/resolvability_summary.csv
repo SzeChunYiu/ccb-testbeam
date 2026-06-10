@@ -1,0 +1,7 @@
+method,resolvable_delay_ns,criterion
+amplitude_binned_asymmetric_template_fit,,first separation with >=68% good recovery
+attention_waveform_encoder,,first separation with >=68% good recovery
+compact_mlp_classifier_regressor,,first separation with >=68% good recovery
+hist_gradient_boosted_trees,50.0,first separation with >=68% good recovery
+one_dimensional_cnn,,first separation with >=68% good recovery
+ridge_logistic_plus_ridge_regression,,first separation with >=68% good recovery

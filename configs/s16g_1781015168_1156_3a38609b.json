@@ -1,0 +1,64 @@
+{
+  "study": "S16g",
+  "ticket": "1781015168.1156.3a38609b",
+  "worker": "testbeam-laptop-2",
+  "title": "joint Sample-I/Sample-II pedestal-lowering timing transfer",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781015168.1156.3a38609b",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout_runs": [58, 59, 60, 61, 62, 63, 64, 65]
+  },
+  "transfer_eval_runs": {
+    "sample_i": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "transfer_train_runs": {
+    "sample_i": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii": [58, 59, 60, 61, 62, 63, 64, 65]
+  },
+  "lowering": {
+    "negative_tolerance_floor_adc": 25.0,
+    "negative_tolerance_fraction_of_amplitude": 0.015,
+    "jagged_high_fraction": 0.35,
+    "jagged_low_fraction": 0.05,
+    "jagged_negative_adc": 50.0
+  },
+  "traditional": {
+    "amplitude_bins_adc": [1000.0, 1500.0, 2500.0, 4500.0, 8000.0, 1000000000.0],
+    "lowering_bins_adc": [0.0, 0.5, 5.0, 20.0, 80.0, 1000000000.0]
+  },
+  "ml": {
+    "random_seed": 165168,
+    "n_estimators": 240,
+    "max_depth": 8,
+    "min_samples_leaf": 8,
+    "max_train_rows": 18000
+  },
+  "bootstrap_replicates": 500,
+  "bootstrap_max_residuals_per_run": 10000
+}

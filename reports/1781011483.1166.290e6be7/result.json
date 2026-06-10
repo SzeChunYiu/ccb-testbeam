@@ -1,0 +1,181 @@
+{
+  "study": "S02d",
+  "ticket": "1781011483.1166.290e6be7",
+  "worker": "testbeam-laptop-4",
+  "title": "leave-one-run-out run-drift nuisance scan over Sample II",
+  "reproduced_raw_root_first": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "loro_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "folds": {
+      "58": {
+        "train_runs": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "59": {
+        "train_runs": [
+          58,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift2",
+        "selected_global": "s02d_global_timewalk_drift1",
+        "best_traditional": "template_phase"
+      },
+      "60": {
+        "train_runs": [
+          58,
+          59,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift1",
+        "selected_global": "s02d_global_timewalk_drift1",
+        "best_traditional": "template_phase"
+      },
+      "61": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "62": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "63": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      },
+      "65": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0",
+        "best_traditional": "template_phase"
+      }
+    }
+  },
+  "traditional": {
+    "method": "S02b global timewalk no drift",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.6551640399789107,
+    "ci_low": 1.532108422563933,
+    "ci_high": 1.8427532847015318,
+    "min_run_sigma68_ns": 1.4718970274976448,
+    "max_run_sigma68_ns": 2.188417727408664
+  },
+  "amplitude_binned_template_timewalk": {
+    "method": "S02b binned timewalk no drift",
+    "n_runs": 7,
+    "mean_sigma68_ns": 3.1484944174882767,
+    "ci_low": 2.7508192937958458,
+    "ci_high": 3.4608452365345896,
+    "min_run_sigma68_ns": 2.127410063722653,
+    "max_run_sigma68_ns": 3.6379339992367563
+  },
+  "amplitude_binned_selected_drift_best": {
+    "method": "S02d binned selected drift",
+    "n_runs": 7,
+    "mean_sigma68_ns": 3.1810442555275737,
+    "ci_low": 2.774817893614686,
+    "ci_high": 3.5377579391445417,
+    "min_run_sigma68_ns": 2.13066211092533,
+    "max_run_sigma68_ns": 3.86253081830916
+  },
+  "ml": {
+    "method": "S02 ML ridge",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.9054928392097812,
+    "ci_low": 1.8241540652408392,
+    "ci_high": 2.0254024488689604,
+    "min_run_sigma68_ns": 1.7698393506968229,
+    "max_run_sigma68_ns": 2.2424329131323475
+  },
+  "leakage_checks_pass_excluding_forbidden_oracle": false,
+  "leakage_hunt_failed_checks": [
+    {
+      "heldout_run": 58,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.0056738783721135,
+      "interpretation": "shuffled-target control beat the production branch; treat this branch as unstable, not adoption-ready"
+    },
+    {
+      "heldout_run": 60,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 2.2085620756701516,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    },
+    {
+      "heldout_run": 61,
+      "failed_check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 2.92561315961787,
+      "interpretation": "shuffled-target control beat the production branch; treat this branch as unstable, not adoption-ready"
+    },
+    {
+      "heldout_run": 63,
+      "failed_check": "forbidden_heldout_oracle_binned_sigma68_ns",
+      "value": 3.671996823215058,
+      "interpretation": "forbidden oracle did not improve this fold; not a production leakage failure"
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S02e: constrain run drift with pre-timing detector-current or trigger-rate covariates and rerun Sample II LORO leakage controls.",
+    "S02f: repeat S02d with run 64 included only as a calibration-source stress test, never as a held-out analysis target."
+  ],
+  "git_commit": "32977f84d116bc5505c75b8743b7464d7d5df27b"
+}

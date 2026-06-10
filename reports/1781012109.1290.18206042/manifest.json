@@ -1,0 +1,68 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s07f_independent_all_three_appi_validation.py --config configs/s07f_1781012109_1290_18206042.json",
+  "created_utc": "2026-06-09T16:55:51Z",
+  "git_commit": "7c0a7fb654c0fbce94c35566acc44328c6093fd4",
+  "inputs": [
+    {
+      "bytes": 9623179,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "bytes": 12032616,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "bytes": 10174098,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "bytes": 10362658,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "bytes": 10634393,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "bytes": 10494181,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "bytes": 10600278,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    },
+    {
+      "bytes": 1578,
+      "path": "configs/s07f_1781012109_1290_18206042.json",
+      "sha256": "e9feebbf0592bd6c9dcc4877ee5c0479c46400ec68cc5c9c3fd45504182bf701"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "064c4cff1b033ca9e95eaa1d5c137465e79b9e37c2e36202318a0ea0713f35fe",
+    "injection_dataset_counts_by_run.csv": "961fca6c54d1f284d88cc83975c9c756ad5d7d987247635317454d237919e511",
+    "injection_oof_predictions.csv": "f88af0fcecf0869dbd324b9241507b2e5c2cc110b3bbd9d3ca36266480cc3029",
+    "injection_rf_cv_scan.csv": "aecad6406236bc4efba27c6b07badb8a5dc88a91cb06bda1ee96b968841557a2",
+    "injection_scoreboard.csv": "e30c3692c8e916770e96b82988d520f82ab651024f3197d6d7c344f4fd0c4a70",
+    "input_sha256.csv": "4588c7d7a96aa8ecaf3466352490ba33ac785b9f99571fbb6199e806f04ce02c",
+    "leakage_checks.csv": "e46008f405afdf969fbe955b979a5a79948bc73349d9d7855c1407eadd7fedb1",
+    "reproduction_match_table.csv": "8cffb5ea10d30d86fcdeabe5d5a08ff712409c9f60584b856100bed7d4d652f1",
+    "result.json": "83b9dd1c012cde20d5101fddee385480464220eeb67cbf3bd2fe36540bdf644c",
+    "run_counts.csv": "88f2966d7456e9ac42d941b8ff8efc5a88a6b1930bea166624b2bca558e1d827",
+    "s07e_oof_predictions.csv": "a8c206c0316cb45b2c1bd5b70a055abf9867e0f57496c08e1dfdd2cb8ad9bd38",
+    "s07e_reproduction_scoreboard.csv": "3ce08f673078ef1c4e4e889904a73ca79c192f0328809a94d9af0f8ff8ab6769",
+    "s07e_rf_cv_scan.csv": "cc6395a430a9fadcea302625699de03e9abe591e8843c8bfd4b9d049c0bbc078",
+    "traditional_fold_choices.csv": "6a98d6433a83ba20ca298e7ba6b31f95e46b7bddbc202b7bb6e41f29ff4691d1"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "study_id": "S07f",
+  "ticket_id": "1781012109.1290.18206042",
+  "worker": "testbeam-laptop-4"
+}

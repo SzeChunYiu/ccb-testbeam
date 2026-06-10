@@ -1,0 +1,89 @@
+{
+  "study": "S03f",
+  "ticket": "1781020939.1148.2ac43171",
+  "worker": "testbeam-laptop-4",
+  "title": "run-level hierarchical shrinkage for shared monotonic downstream-stave timewalk bins",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.68944645179862,
+      2.98939924344235
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only": {
+      "method": "amp_only_ridge_residual_on_template_phase",
+      "value": 1.5510917109777833,
+      "ci": [
+        1.3817091931335008,
+        1.9358044891563548
+      ]
+    },
+    "s03b_monotone_binned": {
+      "method": "per_stave_monotone_decreasing_binned_timewalk",
+      "value": 1.6451494274970766,
+      "ci": [
+        1.3217498254041793,
+        1.9406683502263722
+      ]
+    },
+    "runlevel_shared_bins": {
+      "method": "shared_decreasing_bins_with_train_run_shrinkage_population_deployment",
+      "value": 1.1672860387117052,
+      "ci": [
+        1.010227088532725,
+        1.2864404659775697
+      ],
+      "delta_vs_s03b_monotone_binned_ns": 0.4778633887853714
+    }
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_waveform_features",
+    "value": 1.5369230041797883,
+    "ci": [
+      1.3453954113457194,
+      1.823592053398017
+    ],
+    "gain_vs_runlevel_shared_bins_ns": -0.3696369654680831
+  },
+  "run61": {
+    "s03b_sigma68_ns": 2.101756513541144,
+    "runlevel_shared_sigma68_ns": 1.2614579347847759,
+    "delta_vs_s03b_ns": -0.8402985787563679,
+    "n_pair_residuals": 2799
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "heldout_run_curve_not_fit": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.6346522471056453,
+    "runlevel_shared_looks_too_good": true,
+    "leakage_flag": false
+  },
+  "verdict": "runlevel_shared_reduces_run61_without_leakage",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "f4ba2082c3e0e6c2832688faca02590968229791",
+  "critic": "pending",
+  "next_tickets": []
+}

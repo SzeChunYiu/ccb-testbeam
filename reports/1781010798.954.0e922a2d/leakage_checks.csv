@@ -1,0 +1,6 @@
+check,value,detail
+run_overlap,0,must be zero for train/heldout split
+feature_audit,0,"ML features contain waveform shape, amplitude, peak, area, width, and stave one-hot only"
+ml_target_shuffle_sigma68_ns,3.328531893637124,held-out timing after shuffling train residual targets
+ml_vs_cfd20_delta_ns,-1.2140895354320655,negative means ML improves over CFD20; target-shuffle check is the leakage sentinel
+train_selected_of_window,of_5_13,optimal-filter window selected by train-run sigma68 before held-out evaluation

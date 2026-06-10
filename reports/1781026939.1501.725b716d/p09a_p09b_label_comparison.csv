@@ -1,0 +1,10 @@
+scope,metric,value,numerator,denominator
+all_s10_events,n_events,243133.0,243133,243133
+all_s10_events,exact_label_match_rate,0.9765848321700469,237440,243133
+all_s10_events,target_any_match_rate,0.9766876565501187,237465,243133
+all_s10_events,p09a_target_rate,0.029728584766362445,7228,243133
+all_s10_events,p09b_target_rate,0.006440919167698338,1566,243133
+all_s10_events,p09b_review_agreement_rate,0.9617287657372714,233828,243133
+exact_gallery_ref_overlap,n_events,42.0,42,256
+exact_gallery_ref_overlap,script_p09b_matches_gallery_consensus,1.0,42,42
+exact_gallery_ref_overlap,p09a_matches_gallery_taxon,0.9523809523809523,40,42

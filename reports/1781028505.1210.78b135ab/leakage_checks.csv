@@ -1,0 +1,7 @@
+check,value,pass,interpretation
+run_split_event_overlap,0,True,whole runs are held out before q thresholds and RF models are fit
+ml_forbidden_feature_intersection,,True,"production ML excludes run, event, raw time, raw residual, target residual, and full-sample pair residual"
+qtemplate_join_missing_pair_rows,156.0,True,small unmatched S01 q_template support is median-filled and reported; threshold is <=0.5% of pair rows
+qtemplate_join_missing_pair_fraction,0.0023822613157412497,True,fraction of pair rows with at least one missing q_template side after run/EVT/stave aggregation
+shuffled_label_control_not_better_than_ml_b2_tail,0.1908548631023806,True,a shuffled-label RF should not reduce B2 tail fraction more than the nominal RF
+ml_not_unphysical_zero_width,1.2986692122908075,True,guards against accidental target echo leakage

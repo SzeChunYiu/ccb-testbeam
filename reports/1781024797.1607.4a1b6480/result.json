@@ -1,0 +1,247 @@
+{
+  "study": "S03h",
+  "ticket": "1781024797.1607.4a1b6480",
+  "worker": "testbeam-laptop-2",
+  "title": "HGB timewalk gain support map by amplitude and shape atoms",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "selected_count_pass": true,
+    "s03d_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "traditional": {
+    "s03a_amp_only": {
+      "sigma68_ns": 1.5510917109777858,
+      "ci": [
+        1.3739991213302907,
+        1.8635354134289022
+      ]
+    },
+    "signed_shared_shrinkage": {
+      "sigma68_ns": 1.5398525126313984,
+      "ci": [
+        1.2674122559525287,
+        1.9330251962309315
+      ]
+    },
+    "monotone_residual_table": {
+      "sigma68_ns": 1.6451494274970766,
+      "ci": [
+        1.3217498254041793,
+        1.931827166829759
+      ]
+    },
+    "robust_heavytail_table": {
+      "sigma68_ns": 1.576700611006782,
+      "ci": [
+        1.3255856505466923,
+        1.9072931989286115
+      ]
+    }
+  },
+  "ml": {
+    "hgb_full_unconstrained": {
+      "sigma68_ns": 1.3939661218709831,
+      "ci": [
+        1.2367639871557912,
+        1.6383419416464702
+      ],
+      "full_rms_ns": 2.380006615418368,
+      "tail_frac_abs_gt5ns": 0.0156195462478185,
+      "bias_vs_log_amp_slope_ns": -0.8881684335662512
+    },
+    "full_monotone_log_amp": {
+      "sigma68_ns": 1.3725160896970068,
+      "ci": [
+        1.2062491603945653,
+        1.6211500344882088
+      ],
+      "full_rms_ns": 2.427077477685693,
+      "tail_frac_abs_gt5ns": 0.0150087260034904,
+      "bias_vs_log_amp_slope_ns": -0.7284716246624263
+    },
+    "amplitude_only": {
+      "sigma68_ns": 1.4364603523171167,
+      "ci": [
+        1.2830695064441926,
+        1.7870232852719494
+      ],
+      "full_rms_ns": 2.548561674262194,
+      "tail_frac_abs_gt5ns": 0.01780104712041885,
+      "bias_vs_log_amp_slope_ns": -0.9775461208110462
+    },
+    "shape_only": {
+      "sigma68_ns": 1.359899558710798,
+      "ci": [
+        1.177146007928429,
+        1.661427672999044
+      ],
+      "full_rms_ns": 2.4426434855632926,
+      "tail_frac_abs_gt5ns": 0.015706806282722512,
+      "bias_vs_log_amp_slope_ns": -0.5564719062578215
+    },
+    "stave_only": {
+      "sigma68_ns": 1.3718560659995056,
+      "ci": [
+        1.121856065999508,
+        1.785653002325251
+      ],
+      "full_rms_ns": 2.638315391068688,
+      "tail_frac_abs_gt5ns": 0.020855148342059336,
+      "bias_vs_log_amp_slope_ns": 0.41983178283997613
+    }
+  },
+  "monotonicity": {
+    "monotone_log_amp_minus_full_sigma68_ns": -0.02145003217397634,
+    "best_log_amp_constraint_signs_by_fold": [
+      -1,
+      -1,
+      -1,
+      1,
+      -1,
+      -1,
+      1
+    ]
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.6538819224119017,
+    "stave_only_sigma68_ns": 1.3718560659995056,
+    "hgb_looks_too_good": false,
+    "leakage_flag": true
+  },
+  "paired_deltas_csv": "paired_deltas.csv",
+  "support_map": {
+    "strata": [
+      "amplitude_stratum",
+      "stave_stratum",
+      "peak_sample_stratum",
+      "q_template_stratum",
+      "saturation_boundary_stratum",
+      "pretrigger_stratum",
+      "anomaly_stratum"
+    ],
+    "min_pairs": 80,
+    "n_supported_rows": 260,
+    "n_supported_delta_rows": 520,
+    "n_supported_gain_strata_vs_signed": 20,
+    "n_unsupported_or_failing_strata_vs_signed": 26,
+    "best_gain_strata_vs_signed": [
+      {
+        "stratum_type": "amplitude_stratum",
+        "stratum_value": "amp[4000,7000)",
+        "support_count_pairs": 492,
+        "delta_ml_minus_traditional": -0.8539229016545575,
+        "ci_low": -0.9865457795654162,
+        "ci_high": -0.6233917667455299
+      },
+      {
+        "stratum_type": "anomaly_stratum",
+        "stratum_value": "broad_width",
+        "support_count_pairs": 252,
+        "delta_ml_minus_traditional": -0.7201466154256033,
+        "ci_low": -0.8459842644595419,
+        "ci_high": -0.41659758521192447
+      },
+      {
+        "stratum_type": "q_template_stratum",
+        "stratum_value": "q[0.1,0.16)",
+        "support_count_pairs": 3456,
+        "delta_ml_minus_traditional": -0.3541825481875688,
+        "ci_low": -0.4720587068289702,
+        "ci_high": -0.2676862474741332
+      },
+      {
+        "stratum_type": "peak_sample_stratum",
+        "stratum_value": "peak[8,12)",
+        "support_count_pairs": 6883,
+        "delta_ml_minus_traditional": -0.29853805375194364,
+        "ci_low": -0.387351736101589,
+        "ci_high": -0.23068548851074475
+      },
+      {
+        "stratum_type": "q_template_stratum",
+        "stratum_value": "q[0.06,0.1)",
+        "support_count_pairs": 2097,
+        "delta_ml_minus_traditional": -0.2782225517000776,
+        "ci_low": -0.4162226911625916,
+        "ci_high": -0.20511205784117664
+      },
+      {
+        "stratum_type": "pretrigger_stratum",
+        "stratum_value": "pre_rms[0,20)",
+        "support_count_pairs": 7607,
+        "delta_ml_minus_traditional": -0.2667383187942658,
+        "ci_low": -0.3762591028595715,
+        "ci_high": -0.1312501567154875
+      },
+      {
+        "stratum_type": "anomaly_stratum",
+        "stratum_value": "delayed_peak",
+        "support_count_pairs": 4549,
+        "delta_ml_minus_traditional": -0.24058381503357895,
+        "ci_low": -0.3687337396352469,
+        "ci_high": -0.02438680070358611
+      },
+      {
+        "stratum_type": "pretrigger_stratum",
+        "stratum_value": "pre_rms[60,99999)",
+        "support_count_pairs": 3132,
+        "delta_ml_minus_traditional": -0.20964187882362495,
+        "ci_low": -0.2614657554946021,
+        "ci_high": -0.16033495876918621
+      },
+      {
+        "stratum_type": "saturation_boundary_stratum",
+        "stratum_value": "near_or_clipped",
+        "support_count_pairs": 2145,
+        "delta_ml_minus_traditional": -0.20753686345718791,
+        "ci_low": -0.32282769358344476,
+        "ci_high": -0.056989284847736695
+      },
+      {
+        "stratum_type": "peak_sample_stratum",
+        "stratum_value": "peak[6,8)",
+        "support_count_pairs": 2155,
+        "delta_ml_minus_traditional": -0.20707003429780746,
+        "ci_low": -0.26171084649893733,
+        "ci_high": -0.10797161950556496
+      },
+      {
+        "stratum_type": "peak_sample_stratum",
+        "stratum_value": "peak[4,6)",
+        "support_count_pairs": 1474,
+        "delta_ml_minus_traditional": -0.20286999086118296,
+        "ci_low": -0.25167309459497866,
+        "ci_high": -0.15679269508693872
+      },
+      {
+        "stratum_type": "anomaly_stratum",
+        "stratum_value": "undershoot_area",
+        "support_count_pairs": 1351,
+        "delta_ml_minus_traditional": -0.19166692248516637,
+        "ci_low": -0.25160720023016836,
+        "ci_high": -0.15335967460773453
+      }
+    ]
+  },
+  "verdict": "hgb_gain_support_map_inconclusive_or_leakage_limited",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "9e500ef41cdc9b1406c5c0715fa1e7b9b2df38df",
+  "next_tickets": []
+}

@@ -1,0 +1,157 @@
+{
+  "study": "P03b",
+  "ticket": "1781009029.1279.4d6e17f9",
+  "worker": "testbeam-laptop-2",
+  "title": "Leave-one-run-out waveform MLP timing stability",
+  "reproduced": true,
+  "p03a_run65_reproduced": {
+    "analytic_timewalk": {
+      "sigma68_ns": 1.494640076269676,
+      "ci": [
+        1.301862842105124,
+        1.6658085262504574
+      ],
+      "full_rms_ns": 1.6991283591200679
+    },
+    "s02_ridge_cfd20": {
+      "sigma68_ns": 1.8461136615528861,
+      "ci": [
+        1.4526139948629437,
+        2.0273490929282896
+      ],
+      "full_rms_ns": 1.7098037987509727
+    },
+    "mlp_waveform": {
+      "sigma68_ns": 1.9272329327513156,
+      "ci": [
+        1.622671472365498,
+        2.260341063355349
+      ],
+      "full_rms_ns": 1.9786382482069755
+    },
+    "template_phase": {
+      "sigma68_ns": 2.889152765080617,
+      "ci": [
+        2.6391527650806132,
+        3.2771839114883825
+      ],
+      "full_rms_ns": 2.5766948897254753
+    },
+    "cfd20_reference": {
+      "sigma68_ns": 2.9933861916712807,
+      "ci": [
+        2.659534745024927,
+        3.360054546977972
+      ],
+      "full_rms_ns": 2.7426839288126446
+    }
+  },
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "metric": "heldout B4/B6/B8 pairwise sigma68 ns with event-paired bootstrap CI per held-out run",
+  "mean_sigma68_ns": {
+    "analytic_timewalk": 1.496403819440369,
+    "cfd20_reference": 3.141014822346903,
+    "mlp_waveform": 1.8054683124483721,
+    "s02_ridge_cfd20": 1.9054928392097812,
+    "template_phase": 2.8102293063017076
+  },
+  "mlp_best_run_count": 1,
+  "mlp_beats_s02_ridge_run_count": 6,
+  "mlp_beats_analytic_run_count": 1,
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "mean_sigma68_ns": 1.496403819440369
+  },
+  "ml": {
+    "method": "tiny_heteroskedastic_mlp_on_18_normalized_samples",
+    "base_method": "cfd20",
+    "mean_sigma68_ns": 1.8054683124483721,
+    "per_run": [
+      {
+        "heldout_run": 58,
+        "mlp_minus_s02_ridge_ns": -0.03180948729600508,
+        "mlp_minus_analytic_ns": 0.7003424982260011
+      },
+      {
+        "heldout_run": 59,
+        "mlp_minus_s02_ridge_ns": -0.1694060460647291,
+        "mlp_minus_analytic_ns": 0.25237326675408833
+      },
+      {
+        "heldout_run": 60,
+        "mlp_minus_s02_ridge_ns": -0.21297316850197778,
+        "mlp_minus_analytic_ns": 0.26325114065847055
+      },
+      {
+        "heldout_run": 61,
+        "mlp_minus_s02_ridge_ns": -0.1287590689111089,
+        "mlp_minus_analytic_ns": -0.016290549318795033
+      },
+      {
+        "heldout_run": 62,
+        "mlp_minus_s02_ridge_ns": -0.11670024133652879,
+        "mlp_minus_analytic_ns": 0.27430729462931525
+      },
+      {
+        "heldout_run": 63,
+        "mlp_minus_s02_ridge_ns": -0.12164294641794493,
+        "mlp_minus_analytic_ns": 0.25687494362529995
+      },
+      {
+        "heldout_run": 65,
+        "mlp_minus_s02_ridge_ns": 0.08111927119842943,
+        "mlp_minus_analytic_ns": 0.4325928564816395
+      }
+    ]
+  },
+  "leakage": {
+    "max_event_id_overlap": 0,
+    "feature_audit": "features are normalized 18-sample waveform plus stave one-hot; no run, event id, event order, other-stave time, or held-out target",
+    "shuffled_target_controls": [
+      {
+        "heldout_run": 58,
+        "value": 3.194754314725442
+      },
+      {
+        "heldout_run": 59,
+        "value": 3.162967927828788
+      },
+      {
+        "heldout_run": 60,
+        "value": 3.1437723801273894
+      },
+      {
+        "heldout_run": 61,
+        "value": 2.9114854232789504
+      },
+      {
+        "heldout_run": 62,
+        "value": 3.23318852406236
+      },
+      {
+        "heldout_run": 63,
+        "value": 3.480943734859196
+      },
+      {
+        "heldout_run": 65,
+        "value": 3.173789346474021
+      }
+    ]
+  },
+  "verdict": "mlp_often_beats_s02_ridge_but_not_traditional_baseline",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "bf46d93431c09b2f512b8e049fb5a188c4838e39",
+  "next_tickets": [
+    "P03c: waveform-only 1D CNN versus MLP timing with the same leave-one-run-out gates",
+    "P03d: per-stave waveform MLP calibration failure analysis for high-sigma folds"
+  ]
+}

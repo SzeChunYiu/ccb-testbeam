@@ -1,0 +1,70 @@
+{
+  "study": "S11c",
+  "ticket": "1781010611.1262.2e354bed",
+  "worker": "testbeam-laptop-4",
+  "title": "amplitude-binned asymmetric two-pulse template closure",
+  "reproduced": true,
+  "s11a_anchor": {
+    "traditional_time_rms_ns": 13.300370096544516,
+    "ml_time_rms_ns": 10.674061400718234,
+    "expected_traditional_time_rms_ns": 13.300370096544516,
+    "expected_ml_time_rms_ns": 10.674061400718234,
+    "tolerance_ns": 0.25,
+    "pass": true
+  },
+  "traditional": {
+    "method": "amplitude_binned_asymmetric_s01_template_fit",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 17.83089499264352,
+    "ci": [
+      17.279419083930964,
+      18.373013986984795
+    ],
+    "detection_ap": 0.7153773248837738,
+    "charge_fractional_bias": 0.005612408220655016,
+    "charge_fractional_res68": 0.1204789321937269,
+    "failure_rate": 0.016666666666666666
+  },
+  "ml": {
+    "method": "compact_mlp_classifier_regressor",
+    "metric": "heldout_constituent_time_rms_ns",
+    "value": 10.674061400718234,
+    "ci": [
+      10.162598397206974,
+      11.13788766529901
+    ],
+    "detection_ap": 0.8509910550508138,
+    "charge_fractional_bias": -0.013518602481818204,
+    "charge_fractional_res68": 0.0776729549119584,
+    "failure_rate": 0.295
+  },
+  "ml_beats_traditional": true,
+  "traditional_closes_s11a_ml_gap": false,
+  "traditional_improves_s11a_anchor": false,
+  "falsification": {
+    "split": "by source run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "leakage_checks_pass": true,
+    "leakage_flags": 0,
+    "bootstrap_unit": "heldout source run",
+    "n_shift_sep_hypotheses": 169,
+    "n_template_candidates": 36
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "a3fd5c798fe2d6f4c327e3c957dd8988886c6e3e",
+  "next_tickets": [
+    "S11d: validate S11c amplitude-binned templates on real high-current candidate windows with low-current controls",
+    "S11e: test run-family-specific residual pools for two-pulse closure without letting held-out runs enter template training"
+  ],
+  "runtime_sec": 84.73
+}

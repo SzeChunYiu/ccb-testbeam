@@ -1,0 +1,145 @@
+{
+  "study": "P07e",
+  "ticket_id": "1781018174.2030.05ac1ce2",
+  "worker": "testbeam-laptop-3",
+  "title": "duplicate-channel validation for saturation ratio transfer",
+  "split": "leave-one-run-out by run over all B-stack runs with high-amplitude B2 duplicate rows",
+  "raw_reproduction": [
+    {
+      "quantity": "S00 selected B-stave pulse records",
+      "expected": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "pass": true
+    },
+    {
+      "quantity": "P07d Sample-II analysis B2 selected pulses",
+      "expected": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "pass": true
+    },
+    {
+      "quantity": "B2 high-amplitude odd-duplicate validation rows",
+      "expected": "data-derived",
+      "reproduced": 183132,
+      "delta": "",
+      "pass": true
+    }
+  ],
+  "methods": [
+    "observed_raw",
+    "traditional_template",
+    "ml_ratio_transfer"
+  ],
+  "summary": [
+    {
+      "method": "ml_ratio_transfer",
+      "n": 183132,
+      "charge_bias_median_frac": 0.15494820708773843,
+      "charge_res68_abs_frac": 0.1763577793605039,
+      "time_bias_median_ns": 0.17840568130064227,
+      "time_abs68_ns": 0.22060530115013322,
+      "run_block_charge_res68_abs_frac_ci95": [
+        0.17304334869529975,
+        0.18060166173702746
+      ],
+      "run_block_time_abs68_ns_ci95": [
+        0.2137683276636733,
+        0.23466475255692154
+      ],
+      "run_block_charge_bias_median_frac_ci95": [
+        0.1525778552913315,
+        0.15802435221286845
+      ],
+      "run_block_time_bias_median_ns_ci95": [
+        0.17193704851629024,
+        0.18492282619839182
+      ]
+    },
+    {
+      "method": "observed_raw",
+      "n": 183132,
+      "charge_bias_median_frac": 0.10044838568778988,
+      "charge_res68_abs_frac": 0.12079374117700271,
+      "time_bias_median_ns": -0.042860771277489995,
+      "time_abs68_ns": 0.1484632927255882,
+      "run_block_charge_res68_abs_frac_ci95": [
+        0.11700387021774719,
+        0.12536373643016782
+      ],
+      "run_block_time_abs68_ns_ci95": [
+        0.11943029120390704,
+        0.1851321491324999
+      ],
+      "run_block_charge_bias_median_frac_ci95": [
+        0.09782159237209265,
+        0.10340914211350964
+      ],
+      "run_block_time_bias_median_ns_ci95": [
+        -0.06421228809703039,
+        -0.018923137962426152
+      ]
+    },
+    {
+      "method": "traditional_template",
+      "n": 183132,
+      "charge_bias_median_frac": 0.10044883262005211,
+      "charge_res68_abs_frac": 0.12077766801970549,
+      "time_bias_median_ns": -0.042604840759077334,
+      "time_abs68_ns": 0.14883919638445234,
+      "run_block_charge_res68_abs_frac_ci95": [
+        0.11616875861201786,
+        0.1248512145266728
+      ],
+      "run_block_time_abs68_ns_ci95": [
+        0.11498764643341562,
+        0.18108948870397104
+      ],
+      "run_block_charge_bias_median_frac_ci95": [
+        0.09724743354911794,
+        0.10321446400358855
+      ],
+      "run_block_time_bias_median_ns_ci95": [
+        -0.06309106375260613,
+        -0.015271620196904857
+      ]
+    }
+  ],
+  "pseudo_saturation_recovery_median_by_method": [
+    {
+      "method": "ml_ratio_transfer",
+      "res68_abs_frac": 0.03669062665507541,
+      "bias_median_frac": 7.074201727936969e-05,
+      "within10_frac": 0.9044776119402985
+    },
+    {
+      "method": "observed_raw",
+      "res68_abs_frac": 0.3548387096774194,
+      "bias_median_frac": -0.20000000000000007,
+      "within10_frac": 0.2621271194124581
+    },
+    {
+      "method": "traditional_template",
+      "res68_abs_frac": 0.2,
+      "bias_median_frac": -0.04761904761904773,
+      "within10_frac": 0.45347996216827696
+    }
+  ],
+  "leakage_audit": {
+    "exact_even_waveform_hash_overlap": 0,
+    "too_good_triggered": false,
+    "features_excluded": [
+      "run_id",
+      "event_id",
+      "odd_channel_samples",
+      "odd_charge",
+      "odd_time",
+      "downstream_channels",
+      "heldout_labels"
+    ]
+  },
+  "finding": "Against 183132 held-out high-amplitude B2 duplicate rows, the P07d-style corrections do not improve odd-channel charge closure: raw charge res68 is 0.1208, traditional is 0.1208, and ML is 0.1764. Timing closure is also worse after correction: raw abs68 is 0.148 ns, traditional is 0.149 ns, and ML is 0.221 ns. The duplicate readout therefore does not support applying the ratio-transfer correction to real high-amplitude B2 pulses as a closure improvement.",
+  "git_commit": "f20e1b0bceac4eeae4532c9e871a363d6dce08d7",
+  "runtime_sec": 219.64
+}

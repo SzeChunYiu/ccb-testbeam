@@ -1,0 +1,3 @@
+quantity,expected,reproduced,delta,pass
+selected_b_stave_pulses,640737,640737,0,True
+forced_random_tagged_entries,0,0,0,True

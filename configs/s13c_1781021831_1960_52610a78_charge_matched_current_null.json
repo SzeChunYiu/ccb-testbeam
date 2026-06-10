@@ -1,0 +1,52 @@
+{
+  "study_id": "S13c",
+  "ticket": "1781021831.1960.52610a78",
+  "worker": "testbeam-laptop-2",
+  "title": "charge-matched current weak-supervision null",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781021831.1960.52610a78",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "low_current_runs": [46, 47],
+  "high_current_runs": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "run_families": {
+    "A": [44, 45, 46, 48, 49, 50, 51],
+    "B": [47, 52, 53, 54, 55, 56, 57]
+  },
+  "expected_s10_ml_score_ratio": 1.297,
+  "expected_s10_low_score_mean": 0.1213,
+  "expected_s10_high_score_mean": 0.1574,
+  "expected_s10_downstream_high_minus_low": 0.010289747149522063,
+  "folds": [
+    {
+      "name": "holdout_family_B",
+      "train_family": "A",
+      "test_family": "B"
+    },
+    {
+      "name": "holdout_family_A",
+      "train_family": "B",
+      "test_family": "A"
+    }
+  ],
+  "charge_bins": 8,
+  "baseline_bins": 3,
+  "max_matched_per_stratum_group": 450,
+  "min_stratum_group_count": 3,
+  "max_train_pulses_per_group": 12000,
+  "max_eval_pulses_per_group": 16000,
+  "bootstrap_replicates": 1200,
+  "random_seed": 13131,
+  "rf": {
+    "n_estimators": 260,
+    "max_depth": 5,
+    "min_samples_leaf": 45
+  }
+}

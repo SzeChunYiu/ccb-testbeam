@@ -1,0 +1,101 @@
+{
+  "command": ".venv/bin/python reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/s16b_forced_trigger_pedestal_validation.py --config reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/s16b_config.json",
+  "config": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/s16b_config.json",
+  "git_commit": "e1006f46a1f4c96682778a602dbb8d9a9deeb3df",
+  "random_seed": 16026,
+  "environment": {
+    "python": "3.11.14",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "uproot": "5.7.4"
+  },
+  "inputs": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/input_sha256.csv",
+  "outputs": [
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/REPORT.md",
+      "sha256": "327e55a91e1a4ad00b9e1d3d5f2731b726f2f1d65aac598d1f05215847b0632d",
+      "bytes": 4472
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/fig_bias_by_run.png",
+      "sha256": "75307da6521fd1fd55c6fd4294c853210d6fea1c09cfe19eb6d780a41efd499c",
+      "bytes": 44051
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/fig_heldout_residuals.png",
+      "sha256": "8bae38b77cc2a7b14e9f016d161f8a8a889ca11f83aa9d453e6b47ef2107d5a5",
+      "bytes": 79334
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/fig_method_mae_ci.png",
+      "sha256": "df9311b938c120e6ea1531690e62ac65ee910a6a2bfe7810ecd4cec0d306e8af",
+      "bytes": 43131
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/fig_quiet_proxy_counts.png",
+      "sha256": "ec6c1c92840d3dca7f6e01d4f5c0e028707aeaab007dff240a83db56f2b35df7",
+      "bytes": 38103
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/heldout_benchmark.csv",
+      "sha256": "08f81b51453eb27482144a5b1cf4e4b5606ec06862c7a8906ce1498c8a4c3650",
+      "bytes": 1262
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/heldout_by_run.csv",
+      "sha256": "9592f89021559af5addd995a9d120c96ab2a9c0aecbef8e4a39f0622e0785183",
+      "bytes": 928
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/heldout_residual_sample.csv.gz",
+      "sha256": "b737bb886269faf56e891d2b18861ec78876f046e06c79ec3c02db2c3d096009",
+      "bytes": 1367433
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/input_sha256.csv",
+      "sha256": "97e6a1874fc932ca3e630ab505ff1d7d2ad2d994298aae5acfdc4b020a12f0e8",
+      "bytes": 14649
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/leakage_checks.csv",
+      "sha256": "d2b514e70ea17da3f5d1d48fb3ad9ac33dcb8967685f2db0deb31275d08abe56",
+      "bytes": 397
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/ml_cv_scan.csv",
+      "sha256": "eea44c9243085dbd2cbc580a089f23b5917674908b5def77e27a9bfc2edcdf93",
+      "bytes": 464
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/quiet_counts_by_run.csv",
+      "sha256": "04244b3045efdf9e88ec869f8849892b3725b15dcd77c836c9682fb55f15bf9e",
+      "bytes": 952
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/reproduction_match_table.csv",
+      "sha256": "a28bb5887275d040ead2516146ded5a2d3543dd504b0d4415b1048b38e255449",
+      "bytes": 134
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/result.json",
+      "sha256": "26cad0d92ba6085431922c91727bc21d7290154e4b5563caf4a827a0725a5193",
+      "bytes": 3704
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/s16b_config.json",
+      "sha256": "106cd477264fad5d57bbe7306cfd010d2ccf2d6bdf3841bcbaae81bc13a36d75",
+      "bytes": 1340
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/s16b_forced_trigger_pedestal_validation.py",
+      "sha256": "5093c5f3201b0822cb9c8e5e1b9c51107f8569d4928a60c3e2dc3cdf17b9fa70",
+      "bytes": 34125
+    },
+    {
+      "path": "reports/1781001221.625922.5a564a7e__s16b_forced_trigger_pedestal_validation/trigger_audit.csv",
+      "sha256": "d181f2fadd9c321991dc45a21a224c7e65bbf9d4f132ef2dbed64847789d2263",
+      "bytes": 4505
+    }
+  ],
+  "runtime_seconds": 83.23250317573547
+}

@@ -1,0 +1,6 @@
+check,value,pass,note
+train_heldout_run_overlap,0,True,split key is run
+primary_excludes_selector_amplitudes,1,True,"median_amp, dynamic_amp, dynamic-minus-median, baseline excursion absent from primary features"
+leaky_sentinel_auc_minus_primary_auc,0.005632821126677845,True,large positive gap confirms direct selector variables are leakage
+within_run_shuffle_auc,0.9509034582423359,False,shuffled-label morphology control
+p01b_release_controls_only_status,matched,True,P01b release rows match S00 controls and have no dynamic-only rows

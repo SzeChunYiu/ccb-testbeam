@@ -1,0 +1,7 @@
+check,value,flag,note
+heldout_runs_excluded_from_training,1.0,False,Every ML prediction is produced by a model trained with that run removed.
+identifier_features_excluded,1.0,False,"Feature list excludes run, event number, current, group, downstream label, and n-selected."
+row_split_current_auc,0.6652339727094922,False,Random row split is expected to be optimistic; compare with run-held-out weak-current AUC.
+run_heldout_current_auc,0.6396919261465122,False,Flagged if the current classifier is implausibly separable under run holdout.
+row_minus_run_current_auc,0.025542046562980092,False,Large row-split advantage would indicate run/row leakage sensitivity.
+injection_score_downstream_auc,0.697745747637033,False,Flagged if the synthetic pile-up score almost directly predicts the downstream occupancy label.

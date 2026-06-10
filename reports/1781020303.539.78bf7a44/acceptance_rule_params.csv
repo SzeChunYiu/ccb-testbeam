@@ -1,0 +1,15 @@
+run,rule,max_lift,max_q_rmse,odd_low,odd_high,risk_upper_threshold,cat_probability_threshold,conformal_q90
+58,traditional_envelope,0.3,0.24,0.02,1.4,,,
+58,ml_conformal_risk,,,,,0.16,0.08,0.0941386579044482
+59,traditional_envelope,0.45,0.18,0.02,1.4,,,
+59,ml_conformal_risk,,,,,0.16,0.1,0.08804008315182899
+60,traditional_envelope,0.45,0.18,0.02,1.4,,,
+60,ml_conformal_risk,,,,,0.16,0.14,0.08767086959845362
+61,traditional_envelope,0.45,0.18,0.02,1.4,,,
+61,ml_conformal_risk,,,,,0.16,0.1,0.08909705856805816
+62,traditional_envelope,0.45,0.18,0.02,1.8,,,
+62,ml_conformal_risk,,,,,0.16,0.1,0.08692255802337061
+63,traditional_envelope,0.45,0.18,0.02,1.8,,,
+63,ml_conformal_risk,,,,,0.16,0.08,0.08975805094593105
+65,traditional_envelope,0.45,0.18,0.02,1.4,,,
+65,ml_conformal_risk,,,,,0.16,0.1,0.09223598411951472

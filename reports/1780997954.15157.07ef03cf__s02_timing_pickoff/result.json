@@ -1,0 +1,42 @@
+{
+  "study": "S02",
+  "ticket": "1780997954.15157.07ef03cf",
+  "worker": "testbeam-laptop-3",
+  "title": "timing pickoff - CFD vs OF vs template",
+  "reproduced": true,
+  "repro_tolerance": "exact S00 selected-count reproduction",
+  "traditional": {
+    "metric": "heldout_pairwise_sigma68_ns",
+    "method": "template_phase",
+    "spacing_cm": 2.0,
+    "value": 2.889152765080617,
+    "ci": [
+      2.6391527650806132,
+      3.205407715356344
+    ]
+  },
+  "ml": {
+    "metric": "heldout_pairwise_sigma68_ns",
+    "method": "ridge_residual_corrector_on_cfd20",
+    "value": 1.8461136615528786,
+    "ci": [
+      1.521163828858516,
+      2.014224220587332
+    ]
+  },
+  "ml_beats_baseline": true,
+  "ml_delta_ns": 1.0430391035277382,
+  "falsification": {
+    "preregistered_metric": "heldout Sample-II B4/B6/B8 pairwise sigma68, run 65",
+    "p_value": null,
+    "n_tries": 27,
+    "multiple_comparison": "fixed candidate scan; CIs reported, no discovery p-value claimed"
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b",
+  "critic": "pending",
+  "next_tickets": [
+    "S02b: template alignment with amplitude-binned templates and timewalk closure",
+    "S03a: run-held-out analytic timewalk correction using S02 best pickoff"
+  ]
+}

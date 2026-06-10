@@ -1,0 +1,29 @@
+heldout_run,check,value,pass,detail
+42,train_heldout_run_overlap,0,True,must be zero
+42,train_heldout_event_overlap,0,True,must be zero
+42,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only
+42,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns"
+57,train_heldout_run_overlap,0,True,must be zero
+57,train_heldout_event_overlap,0,True,must be zero
+57,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only
+57,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns"
+64,train_heldout_run_overlap,0,True,must be zero
+64,train_heldout_event_overlap,0,True,must be zero
+64,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only
+64,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns"
+65,train_heldout_run_overlap,0,True,must be zero
+65,train_heldout_event_overlap,0,True,must be zero
+65,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only
+65,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns"
+42,train_heldout_run_overlap,0,True,split is leave-one-run-out
+42,train_heldout_event_overlap,0,True,event ids are run-local and held-out run is excluded from training
+42,feature_audit,0,True,"features exclude run id, event id, event order, other-stave time, and held-out target"
+57,train_heldout_run_overlap,0,True,split is leave-one-run-out
+57,train_heldout_event_overlap,0,True,event ids are run-local and held-out run is excluded from training
+57,feature_audit,0,True,"features exclude run id, event id, event order, other-stave time, and held-out target"
+64,train_heldout_run_overlap,0,True,split is leave-one-run-out
+64,train_heldout_event_overlap,0,True,event ids are run-local and held-out run is excluded from training
+64,feature_audit,0,True,"features exclude run id, event id, event order, other-stave time, and held-out target"
+65,train_heldout_run_overlap,0,True,split is leave-one-run-out
+65,train_heldout_event_overlap,0,True,event ids are run-local and held-out run is excluded from training
+65,feature_audit,0,True,"features exclude run id, event id, event order, other-stave time, and held-out target"

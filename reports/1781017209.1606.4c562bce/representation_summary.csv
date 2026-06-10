@@ -1,0 +1,11 @@
+representation,family,mean_balanced_accuracy,mean_auc,tasks
+traditional_hand_pca_raw,nuisance,0.5441327144227224,0.7877160205192641,5
+frozen_p01b_latent_raw,nuisance,0.5035715165904482,0.751086816054761,5
+ml_p01b_latent_residualized,nuisance,0.32570215380513223,0.47902618269231834,5
+ml_p01b_latent_residualized_label_shuffle,nuisance,0.3246462414848689,0.49372239220855574,5
+traditional_hand_pca_residualized,nuisance,0.31606307722792704,0.4873412590133924,5
+traditional_hand_pca_raw,physics_proxy,0.78836550670172,0.8327950233571566,4
+traditional_hand_pca_residualized,physics_proxy,0.7512558845863858,0.8226929628215713,4
+ml_p01b_latent_residualized,physics_proxy,0.7051278787062097,0.7586442535582612,4
+frozen_p01b_latent_raw,physics_proxy,0.6868669084773258,0.7159689204201958,4
+ml_p01b_latent_residualized_label_shuffle,physics_proxy,0.37162886560227826,0.3862565254519585,4

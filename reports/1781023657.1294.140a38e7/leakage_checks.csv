@@ -1,0 +1,31 @@
+fold,check,value,flag,note
+holdout_low58_high60,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low58_high60,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low58_high60,forbidden_columns_used,0.0,False,"ML excludes run, event id, current family, D_t, C_t, and absolute amplitudes."
+holdout_low58_high60,shuffled_label_current_auc,0.6282199154171473,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low58_high60,ml_current_auc_too_good,0.3902345251826221,False,Flag if timing-tail waveform score nearly identifies current family after matching.
+holdout_low58_high61,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low58_high61,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low58_high61,forbidden_columns_used,0.0,False,"ML excludes run, event id, current family, D_t, C_t, and absolute amplitudes."
+holdout_low58_high61,shuffled_label_current_auc,0.5458984375,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low58_high61,ml_current_auc_too_good,0.386962890625,False,Flag if timing-tail waveform score nearly identifies current family after matching.
+holdout_low58_high62,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low58_high62,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low58_high62,forbidden_columns_used,0.0,False,"ML excludes run, event id, current family, D_t, C_t, and absolute amplitudes."
+holdout_low58_high62,shuffled_label_current_auc,0.4580078125,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low58_high62,ml_current_auc_too_good,0.391357421875,False,Flag if timing-tail waveform score nearly identifies current family after matching.
+holdout_low65_high60,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low65_high60,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low65_high60,forbidden_columns_used,0.0,False,"ML excludes run, event id, current family, D_t, C_t, and absolute amplitudes."
+holdout_low65_high60,shuffled_label_current_auc,0.45851239669421484,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low65_high60,ml_current_auc_too_good,0.38776859504132233,False,Flag if timing-tail waveform score nearly identifies current family after matching.
+holdout_low65_high61,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low65_high61,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low65_high61,forbidden_columns_used,0.0,False,"ML excludes run, event id, current family, D_t, C_t, and absolute amplitudes."
+holdout_low65_high61,shuffled_label_current_auc,0.45851239669421484,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low65_high61,ml_current_auc_too_good,0.395702479338843,False,Flag if timing-tail waveform score nearly identifies current family after matching.
+holdout_low65_high62,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low65_high62,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low65_high62,forbidden_columns_used,0.0,False,"ML excludes run, event id, current family, D_t, C_t, and absolute amplitudes."
+holdout_low65_high62,shuffled_label_current_auc,0.4905785123966942,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low65_high62,ml_current_auc_too_good,0.4009917355371901,False,Flag if timing-tail waveform score nearly identifies current family after matching.

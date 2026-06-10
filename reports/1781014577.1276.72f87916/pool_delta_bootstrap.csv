@@ -1,0 +1,11 @@
+comparison,pool,method,ci_low_ns,ci_high_ns,p_value
+ml_minus_traditional,run64_only,ml_minus_traditional,-0.5501697131307232,0.22512785968125978,0.33
+ml_minus_traditional,sample_iii_early,ml_minus_traditional,-0.20730014476867764,0.10341644514972172,0.434
+ml_minus_traditional,sample_iii_late,ml_minus_traditional,0.3791985831815375,1.3729205719115982,0.0
+ml_minus_traditional,sample_iii_mixed,ml_minus_traditional,0.07058395787125904,0.84814385328505,0.012
+sample_iii_early_minus_run64_only,sample_iii_early,traditional,-0.5420757422635598,0.10466274624917754,0.15
+sample_iii_early_minus_run64_only,sample_iii_early,ml,-0.22606774397207507,0.026405310121332536,0.098
+sample_iii_late_minus_run64_only,sample_iii_late,traditional,-0.5443721522068921,0.06456480707059598,0.1
+sample_iii_late_minus_run64_only,sample_iii_late,ml,0.3315894805299497,1.2866156036494594,0.0
+sample_iii_mixed_minus_run64_only,sample_iii_mixed,traditional,-0.556585325969309,0.1363618338442339,0.152
+sample_iii_mixed_minus_run64_only,sample_iii_mixed,ml,0.02281996039420218,0.685738753988108,0.034

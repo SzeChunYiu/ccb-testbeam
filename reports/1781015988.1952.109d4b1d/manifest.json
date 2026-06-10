@@ -1,0 +1,36 @@
+{
+  "ticket": "1781015988.1952.109d4b1d",
+  "study": "P02d",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "c353d371b1cd49681eb61ebd298c59d518fbc1ec",
+  "config": "reports/1781015988.1952.109d4b1d/p02d_1781015988_1952_109d4b1d_config.json",
+  "command": "reports/1781015988.1952.109d4b1d/p02d_1781015988_1952_109d4b1d_early_peak_timing_tails.py --config reports/1781015988.1952.109d4b1d/p02d_1781015988_1952_109d4b1d_config.json",
+  "environment_command": "uv run --with uproot --with numpy --with pandas --with scikit-learn python",
+  "random_seed": 20260609,
+  "runtime_sec": 47.69,
+  "inputs": {
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs": {
+    "REPORT.md": "b47b88c03e70020c77cccccde45ca90db908229a92b3afd055bbe4756e2be03e",
+    "association_table.csv": "d99b0f01e3745b3120c10edba63367ea61ab661346c27cfdfa0a5ed67e6871f5",
+    "fixed_efficiency.csv": "5ebeaeb73c6ef9a995016c4ff3e922ac495c82b00b5275194c6dbb864536c179",
+    "input_sha256.csv": "bdcbcf021cf8d00a8d378da12f3ec8ccd1e116648e7a755e47a2ab0576ad8c2c",
+    "leakage_checks.csv": "8f0451d25c7aa4b4c03c5db059a2e4375201d66d5b118b06ff6ce94073a567f8",
+    "oof_predictions.csv": "e8e6ec06b41d60371003f23d33dd9d9d45fe4e448dbb2eaa1328ba6410e93ec3",
+    "p02d_1781015988_1952_109d4b1d_config.json": "71deab7f2c658f8f7bc60573fb76afda345903c31738be95215d3d5f3f3bdeb1",
+    "p02d_1781015988_1952_109d4b1d_early_peak_timing_tails.py": "c69c0c8a64a479ce678b98bdaad34e498f78688e012c1fe712093df5e856dcd2",
+    "reproduction_match_table.csv": "53cf8f727ca900e0d1c4fc69c7a53ab864cd0897bcb936215a55e50e90acf2f4",
+    "result.json": "48e568de5687c038886d2c08144a220f82e9853de678ec62903ad69379beb6b9",
+    "run_counts.csv": "a72dbb1bee7a6392c3faa84da13c65c93d91e1f558b5262723cd8d1da8b5ebbd",
+    "scoreboard.csv": "365ed2a613bbfd987a896d7553cc8eed841ee9daf4792454d767ae115f27c3b5",
+    "traditional_fold_choices.csv": "f3ec39769441b319a49f24d14f642bd6fe4fd082d8dc531a049f19b96681648e"
+  }
+}

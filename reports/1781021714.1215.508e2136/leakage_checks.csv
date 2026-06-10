@@ -1,0 +1,9 @@
+check,value,pass,note
+raw_reproduction_before_selector,640737.0,True,script raises before selector work if this fails
+p09b_prior_broad_claim_count,1.0,True,reproduces the single-example bottleneck from P09b artifacts
+train_heldout_run_overlap,0.0,True,models and templates train only on non-held-out runs
+gallery_rows_all_heldout,0.0,True,all gallery rows must come from held-out runs
+model_features_include_ids,0.0,True,"run, event, stave, and source_index are absent from ML features"
+gallery_waveform_hash_seen_in_train,0.0,True,rounded normalized waveform hashes at 1e-3 precision
+qwidth_ablation_ap_drop,0.08354251337871654,True,"large positive drop means strong result is q_template/width-driven, not identifier leakage"
+adjudication_equals_p09a_broad_rate,0.24880382775119617,True,monitors whether fixed adjudication simply copies the P09a broad label

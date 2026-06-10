@@ -1,0 +1,64 @@
+{
+  "artifact": {
+    "artifact_sha256": null,
+    "artifact_sha256_pass": null,
+    "key_sha256": null,
+    "key_sha256_pass": null,
+    "metadata_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "metadata_no_benchmark_claim": "release model was fit after held-out evaluation and on all selected rows",
+    "metadata_rows": 640737,
+    "path": "artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz",
+    "present": false,
+    "regenerate_command": "/home/billy/anaconda3/bin/python scripts/p01b_full_data_embedding_artifact.py --config configs/p01b_full_data_embedding_artifact.json",
+    "z_shape": null
+  },
+  "config": "configs/p01c_1781016530_1346_4e7f7ee0_loader_checks.json",
+  "git_commit": "16f6a83d81eae43b9ace045c00bb49dc7dd0770b",
+  "input_manifest": {
+    "input_file_count": 33,
+    "input_sha256_csv": "reports/1781016530.1346.4e7f7ee0/input_sha256.csv",
+    "upstream_raw_manifest_match": true
+  },
+  "join": {
+    "amplitude_match_pass": null,
+    "artifact_duplicate_key_pass": null,
+    "artifact_duplicate_keys": null,
+    "inner_join_rows": null,
+    "join_row_count_pass": null,
+    "max_abs_amplitude_delta_adc": null,
+    "raw_artifact_key_match": null,
+    "raw_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "row_order_equal": null
+  },
+  "leakage_all_passed": true,
+  "no_monte_carlo": true,
+  "primary_metrics": {
+    "ml_raw_waveform_random_forest_balanced_accuracy": 0.6259458403975069,
+    "traditional_hand_shape_logistic_balanced_accuracy": 0.4112922406492302
+  },
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "passed": true,
+    "raw_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "selected_pulses": 640737
+  },
+  "runtime_seconds": 50.66632151603699,
+  "script": "scripts/p01c_1781016530_1346_4e7f7ee0_loader_checks.py",
+  "split": {
+    "bootstrap_replicates": 500,
+    "heldout_rows": 10498,
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "sample_rows": 81516,
+    "train_rows": 71018
+  },
+  "study_id": "P01c-loader-checks",
+  "ticket_id": "1781016530.1346.4e7f7ee0",
+  "title": "publish lightweight P01b artifact loader checks"
+}

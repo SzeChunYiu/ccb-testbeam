@@ -1,0 +1,71 @@
+model,mask,check,value,detail,heldout_run
+all,all,train_heldout_event_id_overlap,0.0,must be zero,58
+all,all,feature_audit,0.0,"ML features are same-pulse normalized samples after explicit window masks plus stave one-hot; no run id, event id, event order, other-stave timing, pair residual, or held-out target",58
+mlp,window_3_6,nominal_sigma68_ns,1.2336666250979178,held-out run metric,58
+mlp,window_3_6,shuffled_target_negative_control_sigma68_ns,1.193056121127102,same architecture and mask trained with shuffled train residual targets,58
+cnn,window_3_6,nominal_sigma68_ns,0.7592387858464792,held-out run metric,58
+cnn,window_3_6,shuffled_target_negative_control_sigma68_ns,1.2787305988955824,same architecture and mask trained with shuffled train residual targets,58
+mlp,no_window_3_6,nominal_sigma68_ns,0.9166160202158583,held-out run metric,58
+mlp,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.179939496777097,same architecture and mask trained with shuffled train residual targets,58
+cnn,no_window_3_6,nominal_sigma68_ns,1.0601594217966306,held-out run metric,58
+cnn,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.2015941156787295,same architecture and mask trained with shuffled train residual targets,58
+all,all,train_heldout_event_id_overlap,0.0,must be zero,59
+all,all,feature_audit,0.0,"ML features are same-pulse normalized samples after explicit window masks plus stave one-hot; no run id, event id, event order, other-stave timing, pair residual, or held-out target",59
+mlp,window_3_6,nominal_sigma68_ns,1.287793208408195,held-out run metric,59
+mlp,window_3_6,shuffled_target_negative_control_sigma68_ns,1.471274536524057,same architecture and mask trained with shuffled train residual targets,59
+cnn,window_3_6,nominal_sigma68_ns,1.092210420085909,held-out run metric,59
+cnn,window_3_6,shuffled_target_negative_control_sigma68_ns,1.4368968914417772,same architecture and mask trained with shuffled train residual targets,59
+mlp,no_window_3_6,nominal_sigma68_ns,1.1611782227857508,held-out run metric,59
+mlp,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.4635216797801067,same architecture and mask trained with shuffled train residual targets,59
+cnn,no_window_3_6,nominal_sigma68_ns,1.2819629234741932,held-out run metric,59
+cnn,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.4656345797094468,same architecture and mask trained with shuffled train residual targets,59
+all,all,train_heldout_event_id_overlap,0.0,must be zero,60
+all,all,feature_audit,0.0,"ML features are same-pulse normalized samples after explicit window masks plus stave one-hot; no run id, event id, event order, other-stave timing, pair residual, or held-out target",60
+mlp,window_3_6,nominal_sigma68_ns,1.2691222811693272,held-out run metric,60
+mlp,window_3_6,shuffled_target_negative_control_sigma68_ns,1.351010109503762,same architecture and mask trained with shuffled train residual targets,60
+cnn,window_3_6,nominal_sigma68_ns,1.2537557907826171,held-out run metric,60
+cnn,window_3_6,shuffled_target_negative_control_sigma68_ns,1.319849701189071,same architecture and mask trained with shuffled train residual targets,60
+mlp,no_window_3_6,nominal_sigma68_ns,1.1211961967529014,held-out run metric,60
+mlp,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.3569834920875976,same architecture and mask trained with shuffled train residual targets,60
+cnn,no_window_3_6,nominal_sigma68_ns,0.9935506935218491,held-out run metric,60
+cnn,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.3210631391003764,same architecture and mask trained with shuffled train residual targets,60
+all,all,train_heldout_event_id_overlap,0.0,must be zero,61
+all,all,feature_audit,0.0,"ML features are same-pulse normalized samples after explicit window masks plus stave one-hot; no run id, event id, event order, other-stave timing, pair residual, or held-out target",61
+mlp,window_3_6,nominal_sigma68_ns,1.2814007499316626,held-out run metric,61
+mlp,window_3_6,shuffled_target_negative_control_sigma68_ns,2.097364543763362,same architecture and mask trained with shuffled train residual targets,61
+cnn,window_3_6,nominal_sigma68_ns,1.2846392876624324,held-out run metric,61
+cnn,window_3_6,shuffled_target_negative_control_sigma68_ns,2.1258525368125287,same architecture and mask trained with shuffled train residual targets,61
+mlp,no_window_3_6,nominal_sigma68_ns,1.1439557198516268,held-out run metric,61
+mlp,no_window_3_6,shuffled_target_negative_control_sigma68_ns,2.160421711739411,same architecture and mask trained with shuffled train residual targets,61
+cnn,no_window_3_6,nominal_sigma68_ns,1.2769598043620762,held-out run metric,61
+cnn,no_window_3_6,shuffled_target_negative_control_sigma68_ns,2.1357388711421406,same architecture and mask trained with shuffled train residual targets,61
+all,all,train_heldout_event_id_overlap,0.0,must be zero,62
+all,all,feature_audit,0.0,"ML features are same-pulse normalized samples after explicit window masks plus stave one-hot; no run id, event id, event order, other-stave timing, pair residual, or held-out target",62
+mlp,window_3_6,nominal_sigma68_ns,1.3270253016299045,held-out run metric,62
+mlp,window_3_6,shuffled_target_negative_control_sigma68_ns,1.4562842058760401,same architecture and mask trained with shuffled train residual targets,62
+cnn,window_3_6,nominal_sigma68_ns,1.2675148978355828,held-out run metric,62
+cnn,window_3_6,shuffled_target_negative_control_sigma68_ns,1.4581608444547591,same architecture and mask trained with shuffled train residual targets,62
+mlp,no_window_3_6,nominal_sigma68_ns,1.1997114543464342,held-out run metric,62
+mlp,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.4731516073632278,same architecture and mask trained with shuffled train residual targets,62
+cnn,no_window_3_6,nominal_sigma68_ns,1.3078892847899048,held-out run metric,62
+cnn,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.422939845769513,same architecture and mask trained with shuffled train residual targets,62
+all,all,train_heldout_event_id_overlap,0.0,must be zero,63
+all,all,feature_audit,0.0,"ML features are same-pulse normalized samples after explicit window masks plus stave one-hot; no run id, event id, event order, other-stave timing, pair residual, or held-out target",63
+mlp,window_3_6,nominal_sigma68_ns,1.2955991668659794,held-out run metric,63
+mlp,window_3_6,shuffled_target_negative_control_sigma68_ns,1.3680713198083896,same architecture and mask trained with shuffled train residual targets,63
+cnn,window_3_6,nominal_sigma68_ns,1.4705867963079977,held-out run metric,63
+cnn,window_3_6,shuffled_target_negative_control_sigma68_ns,1.3555430570404197,same architecture and mask trained with shuffled train residual targets,63
+mlp,no_window_3_6,nominal_sigma68_ns,1.1760328837487368,held-out run metric,63
+mlp,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.3841277238431278,same architecture and mask trained with shuffled train residual targets,63
+cnn,no_window_3_6,nominal_sigma68_ns,1.415336354526029,held-out run metric,63
+cnn,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.4195796681709034,same architecture and mask trained with shuffled train residual targets,63
+all,all,train_heldout_event_id_overlap,0.0,must be zero,65
+all,all,feature_audit,0.0,"ML features are same-pulse normalized samples after explicit window masks plus stave one-hot; no run id, event id, event order, other-stave timing, pair residual, or held-out target",65
+mlp,window_3_6,nominal_sigma68_ns,1.4860354309995727,held-out run metric,65
+mlp,window_3_6,shuffled_target_negative_control_sigma68_ns,1.4783506123286048,same architecture and mask trained with shuffled train residual targets,65
+cnn,window_3_6,nominal_sigma68_ns,1.3003306161175927,held-out run metric,65
+cnn,window_3_6,shuffled_target_negative_control_sigma68_ns,1.5302901589228963,same architecture and mask trained with shuffled train residual targets,65
+mlp,no_window_3_6,nominal_sigma68_ns,1.2785697459545133,held-out run metric,65
+mlp,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.5357250856208164,same architecture and mask trained with shuffled train residual targets,65
+cnn,no_window_3_6,nominal_sigma68_ns,1.3231474986584386,held-out run metric,65
+cnn,no_window_3_6,shuffled_target_negative_control_sigma68_ns,1.4621746240712628,same architecture and mask trained with shuffled train residual targets,65

@@ -1,0 +1,6 @@
+quantity,value
+all-three control events,3774.0
+clean events |C_t|<3 ns,728.0
+tail events |C_t|>51 ns,23.0
+extreme benchmark events,751.0
+benchmark tail fraction,0.03062583222370173

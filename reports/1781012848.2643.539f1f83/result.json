@@ -1,0 +1,167 @@
+{
+  "study": "S03d",
+  "ticket": "1781012848.2643.539f1f83",
+  "worker": "testbeam-laptop-1",
+  "title": "independent timing-tail validation of q_template clean cuts",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_calib selected pulses",
+      "report_value": 248745,
+      "reproduced": 248745,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_analysis selected pulses",
+      "report_value": 252266,
+      "reproduced": 252266,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_calib selected pulses",
+      "report_value": 14630,
+      "reproduced": 14630,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72,
+      "reproduced": 72,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "all-three downstream control events",
+      "report_value": 3774,
+      "reproduced": 3774,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "all-three downstream guarded gross events, D_t>51 ns",
+      "report_value": 22,
+      "reproduced": 22,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "traditional": {
+    "method": "traditional q_template score",
+    "metric": "leave-one-run-out ROC AUC for D_t>51 ns timing tails",
+    "value": 0.7122325341582884,
+    "ci": [
+      0.6176942900521918,
+      0.7517260655557306
+    ]
+  },
+  "ml": {
+    "method": "q_template-only RF",
+    "metric": "leave-one-run-out ROC AUC for D_t>51 ns timing tails",
+    "value": 0.8980471771075019,
+    "ci": [
+      0.8627372883466579,
+      0.9210227822168278
+    ],
+    "feature_columns": [
+      "q_b2",
+      "q_b4",
+      "q_b6",
+      "q_b8",
+      "q_mean",
+      "q_max",
+      "q_std",
+      "q_ds_mean",
+      "q_ds_max",
+      "q_ds_std",
+      "q_b2_minus_ds_mean",
+      "q_ds_span"
+    ],
+    "params": {
+      "n_estimators": 500,
+      "max_depth": 5,
+      "min_samples_leaf": 8
+    }
+  },
+  "ml_beats_traditional": true,
+  "details": {
+    "n_parent_control_events": 10156,
+    "n_clean_events": 2155,
+    "n_tail_events": 72,
+    "tail_fraction": 0.032330489447687474,
+    "template_bin_sources": {
+      "bin": 22,
+      "stave_fallback": 10
+    },
+    "fixed_clean_efficiency": 0.95,
+    "forbidden_main_features": []
+  },
+  "leakage_checks": [
+    {
+      "probe": "q-template RF with shuffled training labels",
+      "roc_auc": 0.5829788605310647,
+      "average_precision": 0.04302651840281019,
+      "notes": "Run-held-out null check; labels shuffled only inside training runs."
+    },
+    {
+      "probe": "B2-only q-template RF",
+      "roc_auc": 0.5525779840164992,
+      "average_precision": 0.03980008282465611,
+      "notes": "Upstream q_template only; away from downstream D_t source waveforms."
+    },
+    {
+      "probe": "downstream-only q-template RF",
+      "roc_auc": 0.8980794019077081,
+      "average_precision": 0.34877077277565244,
+      "notes": "Downstream q_template only; shares waveform provenance with D_t labels."
+    },
+    {
+      "probe": "absolute-amplitude-only RF",
+      "roc_auc": 0.8257959525650941,
+      "average_precision": 0.23963927827083237,
+      "notes": "Amplitude nuisance probe; excluded from main RF."
+    },
+    {
+      "probe": "leaky D_t score",
+      "roc_auc": 1.0,
+      "average_precision": 0.9999999999999998,
+      "notes": "Forbidden label-defining ceiling, reported only as a reference."
+    },
+    {
+      "probe": "forbidden feature audit",
+      "roc_auc": null,
+      "average_precision": null,
+      "notes": "Forbidden main-feature columns: []; main features: ['q_b2', 'q_b4', 'q_b6', 'q_b8', 'q_mean', 'q_max', 'q_std', 'q_ds_mean', 'q_ds_max', 'q_ds_std', 'q_b2_minus_ds_mean', 'q_ds_span']."
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "3645a1d883863c7a5345e7c44b183d2e90f65013",
+  "next_tickets": [
+    "S03e: all-three-downstream q_template clean-cut validation with curvature C_t as the primary held-out tail label.",
+    "P10f: compare q_template-tail validation using calibration-only median templates against conditional templates without downstream timing labels."
+  ]
+}

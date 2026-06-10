@@ -1,0 +1,3 @@
+group,runs,events_with_selected,selected_pulses,downstream_events,multi_stave_events,downstream_per_selected_event,multi_stave_per_selected_event
+low_2nA,46 47,5838,5963,135,91,0.023124357656731757,0.015587529976019185
+high_20nA,44 45 48 49 50 51 52 53 54 55 56 57,237295,246303,7929,6361,0.03341410480625382,0.026806295960723994

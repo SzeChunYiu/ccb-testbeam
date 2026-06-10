@@ -1,0 +1,219 @@
+{
+  "study": "S14b",
+  "ticket_id": "1781011754.1392.25ac6c9f",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "invalid_event_rows_removed_after_reproduction": 196,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "nominal_geometry": "center_4cm",
+  "nominal_metrics": [
+    {
+      "geometry": "center_4cm",
+      "method": "pstar_depth_only",
+      "n": 332852,
+      "bias_median_frac": -0.0071590718,
+      "res68_abs_frac": 0.2614611447,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[]",
+      "depth_violation_ci95": "[]"
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "traditional_depth_charge_lookup",
+      "n": 332852,
+      "bias_median_frac": -0.0122524912,
+      "res68_abs_frac": 0.0211892254,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[0.019759173376975067, 0.022616709286844058]",
+      "depth_violation_ci95": "[0.0, 0.0]"
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "ml_monotonic_hgb",
+      "n": 332852,
+      "bias_median_frac": -0.0032981169,
+      "res68_abs_frac": 0.0250078102,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[0.022795672304338082, 0.02847725106827667]",
+      "depth_violation_ci95": "[0.0, 0.0]"
+    }
+  ],
+  "p04b_external_charge_proxy": {
+    "source_result": "reports/1781011754.1392.25ac6c9f/p04b_reproduction/result.json",
+    "method": "external_ml_hgb",
+    "target": "downstream_B4B6B8_charge_proxy",
+    "res68_abs_frac": 0.2131744652334116,
+    "res68_ci95": [
+      0.20418351065467538,
+      0.23013743186034644
+    ]
+  },
+  "p04b_uncertainty_propagation": [
+    {
+      "geometry": "center_4cm",
+      "method": "traditional_depth_charge_lookup",
+      "n": 332852,
+      "p04b_external_charge_res68": 0.2131744652,
+      "model_energy_proxy_res68": 0.0211892254,
+      "model_energy_proxy_res68_ci95": "[0.019724752900479217, 0.022504731740052207]",
+      "p04b_charge_propagated_energy_res68": 0.2453239538,
+      "p04b_charge_propagated_energy_res68_ci95": "[0.22258279809144133, 0.2508867928760544]",
+      "combined_energy_proxy_res68": 0.2462373359,
+      "combined_energy_proxy_res68_ci95": "[0.22370987434311201, 0.2516689108488624]",
+      "acceptance_res68": 0.1,
+      "acceptable_for_s14_preflight": false
+    },
+    {
+      "geometry": "center_4cm",
+      "method": "ml_monotonic_hgb",
+      "n": 332852,
+      "p04b_external_charge_res68": 0.2131744652,
+      "model_energy_proxy_res68": 0.0250078102,
+      "model_energy_proxy_res68_ci95": "[0.022573102617833518, 0.028068043934188307]",
+      "p04b_charge_propagated_energy_res68": 0.1868409619,
+      "p04b_charge_propagated_energy_res68_ci95": "[0.16305900783406393, 0.19651027867125742]",
+      "combined_energy_proxy_res68": 0.1885071235,
+      "combined_energy_proxy_res68_ci95": "[0.1656324364654218, 0.1980872051573958]",
+      "acceptance_res68": 0.1,
+      "acceptable_for_s14_preflight": false
+    },
+    {
+      "geometry": "center_2cm",
+      "method": "traditional_depth_charge_lookup",
+      "n": 332852,
+      "p04b_external_charge_res68": 0.2131744652,
+      "model_energy_proxy_res68": 0.019103582,
+      "model_energy_proxy_res68_ci95": "[0.017923359236365625, 0.020160791151861344]",
+      "p04b_charge_propagated_energy_res68": 0.2286172494,
+      "p04b_charge_propagated_energy_res68_ci95": "[0.2060720549421563, 0.23402782845202094]",
+      "combined_energy_proxy_res68": 0.2294140222,
+      "combined_energy_proxy_res68_ci95": "[0.20704937960738362, 0.23472110901135912]",
+      "acceptance_res68": 0.1,
+      "acceptable_for_s14_preflight": false
+    },
+    {
+      "geometry": "center_2cm",
+      "method": "ml_monotonic_hgb",
+      "n": 332852,
+      "p04b_external_charge_res68": 0.2131744652,
+      "model_energy_proxy_res68": 0.0229993665,
+      "model_energy_proxy_res68_ci95": "[0.020648034180100295, 0.025684907439991665]",
+      "p04b_charge_propagated_energy_res68": 0.1727443824,
+      "p04b_charge_propagated_energy_res68_ci95": "[0.14953684502043213, 0.18355451139510387]",
+      "combined_energy_proxy_res68": 0.1742687365,
+      "combined_energy_proxy_res68_ci95": "[0.15187240440135835, 0.18492162796411962]",
+      "acceptance_res68": 0.1,
+      "acceptable_for_s14_preflight": false
+    },
+    {
+      "geometry": "zero_4cm",
+      "method": "traditional_depth_charge_lookup",
+      "n": 332852,
+      "p04b_external_charge_res68": 0.2131744652,
+      "model_energy_proxy_res68": 0.0663056805,
+      "model_energy_proxy_res68_ci95": "[0.054136081822395175, 0.08458228465532927]",
+      "p04b_charge_propagated_energy_res68": 0.4455371714,
+      "p04b_charge_propagated_energy_res68_ci95": "[0.4346207124438999, 0.4474947928026923]",
+      "combined_energy_proxy_res68": 0.4504440191,
+      "combined_energy_proxy_res68_ci95": "[0.44252715630149914, 0.45117180746869007]",
+      "acceptance_res68": 0.1,
+      "acceptable_for_s14_preflight": false
+    },
+    {
+      "geometry": "zero_4cm",
+      "method": "ml_monotonic_hgb",
+      "n": 332852,
+      "p04b_external_charge_res68": 0.2131744652,
+      "model_energy_proxy_res68": 0.0570218239,
+      "model_energy_proxy_res68_ci95": "[0.04997754302488135, 0.07099164326359227]",
+      "p04b_charge_propagated_energy_res68": 0.3769020804,
+      "p04b_charge_propagated_energy_res68_ci95": "[0.3612178586157268, 0.3843115145995048]",
+      "combined_energy_proxy_res68": 0.3811911156,
+      "combined_energy_proxy_res68_ci95": "[0.36809884920102703, 0.387612935251184]",
+      "acceptance_res68": 0.1,
+      "acceptable_for_s14_preflight": false
+    }
+  ],
+  "ml_minus_traditional_res68_ci95": [
+    0.0018782418546559696,
+    0.005814438356840856
+  ],
+  "geometry_systematic_envelope": {
+    "traditional_res68_min": 0.019103582006076602,
+    "traditional_res68_max": 0.06630568052994985,
+    "ml_res68_min": 0.02299936646873051,
+    "ml_res68_max": 0.05702182391930542,
+    "ml_minus_traditional_res68_min": -0.009283856610644431,
+    "ml_minus_traditional_res68_max": 0.0038957844626539076
+  },
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "features_exclude_run_event_and_odd_readout",
+      "value": "true",
+      "pass": true
+    },
+    {
+      "check": "depth_only_res68",
+      "value": "0.261461",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_ml_res68",
+      "value": "0.319485",
+      "pass": true
+    }
+  ],
+  "finding": "The nominal 4 cm geometry preflight reproduces S00 exactly and gives held-out odd-readout energy-proxy res68 0.0212 for the PSTAR/depth/even-charge lookup versus 0.0250 for monotonic HGB (ML - traditional 0.0038, run-block 95% CI 0.0019 to 0.0058). Propagating the ticket-local raw-root P04b external charge-proxy res68 0.2132 raises the combined nominal range-energy proxy res68 to 0.2462 for traditional and 0.1885 for ML against the preflight acceptance threshold 0.10. Across explicit geometry variants, traditional res68 spans 0.0191-0.0663 and ML spans 0.0230-0.0570. The propagated uncertainty fails the 0.10 S14-style preflight threshold for a per-event energy claim; the table remains useful as an internal charge/depth audit, but Birks quenching, material budget, and external particle truth remain unresolved.",
+  "runtime_sec": 981.0
+}

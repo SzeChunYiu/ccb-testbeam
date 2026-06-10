@@ -1,0 +1,6 @@
+check,value,pass
+train_heldout_run_overlap,[],True
+train_heldout_event_key_overlap,0,True
+features_exclude_run_event_and_odd_readout,true,True
+depth_only_res68,0.261461,True
+shuffled_target_ml_res68,0.319485,True

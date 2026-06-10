@@ -1,0 +1,55 @@
+{
+  "study_id": "P10c",
+  "title": "Sample-II-only explicit timewalk transfer check",
+  "ticket_id": "1781012359.1143.5d9c3b2a",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "random_seed": 20260609,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "cfd_fraction": 0.2,
+  "aligned_relative_grid": [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "scenario_train_runs": {
+    "sample_ii_only": [64],
+    "pooled": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 64]
+  },
+  "expected_selected_pulses": 640737,
+  "expected_sample_ii_analysis_pulses": 125096,
+  "expected_run64_selected_pulses": 14630,
+  "template_amplitude_edges_adc": [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000],
+  "template_min_bin_pulses": 30,
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+    "template_shift_grid": {
+      "min": -1.5,
+      "max": 1.5,
+      "step": 0.05
+    }
+  },
+  "explicit_timewalk": {
+    "traditional_min_bin_pulses": 20,
+    "cv_folds": 4,
+    "ml_ridge_alphas": [0.0, 0.01, 0.1, 1.0, 10.0, 100.0],
+    "ml_feature_sets": ["amp_poly", "amp_poly_by_stave", "amp_bin_by_stave"],
+    "single_run_default_feature_set": "amp_bin_by_stave",
+    "single_run_default_alpha": 100.0
+  },
+  "bootstrap_iterations": 4000
+}

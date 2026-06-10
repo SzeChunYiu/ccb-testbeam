@@ -1,0 +1,12 @@
+method,metric,value,ci_low,ci_high,n_bootstrap,bootstrap_unit
+traditional_pretrigger_strata,tau_eff_shift_5pct_ns,-60.54561634460702,-63.16181051067857,-57.72767041894034,500,heldout_run
+traditional_pretrigger_strata,empirical_last_above_shift_5pct_ns,-61.88491649036502,-64.73076323743989,-59.43055515807332,500,heldout_run
+traditional_pretrigger_strata,tau_eff_shift_10pct_ns,-60.099862172445974,-62.46083557998623,-57.55345923756282,500,heldout_run
+traditional_pretrigger_strata,empirical_last_above_shift_10pct_ns,-63.3528873568516,-65.7680097908319,-60.74423557386574,500,heldout_run
+traditional_pretrigger_strata,tau_eff_shift_20pct_ns,-60.76956337934407,-63.16415885622457,-58.340846721056685,500,heldout_run
+traditional_pretrigger_strata,empirical_last_above_shift_20pct_ns,-65.9467954968432,-68.37591530894137,-63.53361719405492,500,heldout_run
+traditional_pretrigger_strata,two_pulse_time_rms_shift_ns,-34.078895130389164,-39.79743885250952,-27.923657486402455,500,heldout_run
+traditional_pretrigger_strata,two_pulse_time_rms_ns,53.27287613602762,47.72415244979993,58.27970369966004,500,heldout_run
+traditional_pretrigger_strata,two_pulse_residual_shift,-0.21030940875409307,-0.23320040384937296,-0.1888490366305604,500,heldout_run
+traditional_pretrigger_strata,charge_bias_shift_area_over_peak,-9.210971752484365,-9.852951071275045,-8.563554773175566,500,heldout_run
+traditional_pretrigger_strata,downstream_excess_high_minus_low,0.018994568255125226,0.00889886810181595,0.029690836630514583,500,heldout_run

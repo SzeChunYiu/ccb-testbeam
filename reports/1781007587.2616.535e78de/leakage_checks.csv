@@ -1,0 +1,5 @@
+check,result
+tagged_random_gate,failed: 0 tagged B-stack candidates
+real_ml_feature_exclusion,"fallback ML excludes run, pulse_index/event IDs, and target_adc; feature_columns=stave_idx;holdout_sample;amplitude_adc;peak_sample;pre_mean3;pre_median3;pre_std3;pre_min3;pre_max3;w01_minus_seed;w02_minus_seed;w03_minus_seed;w04_minus_seed;w05_minus_seed;w06_minus_seed;w07_minus_seed;w08_minus_seed;w09_minus_seed;w10_minus_seed;w11_minus_seed;w12_minus_seed;w13_minus_seed;w14_minus_seed;w15_minus_seed;w16_minus_seed;w17_minus_seed;w00_minus_seed"
+shuffled_training_target_control,fallback shuffled-target ridge MAE 489.38 ADC; far worse than real ML means the real fallback signal is not explained by direct target leakage in the training labels
+proxy_guard,no quiet-event amplitude-selected proxy is promoted to tagged-random validation

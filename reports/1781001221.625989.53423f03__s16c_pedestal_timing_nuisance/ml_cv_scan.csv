@@ -1,0 +1,2 @@
+n_estimators,max_depth,min_samples_leaf,cv_sigma68_ns,cv_sigma68_std_ns
+120,5,20,1.3197483032287816,0.02842145778687452

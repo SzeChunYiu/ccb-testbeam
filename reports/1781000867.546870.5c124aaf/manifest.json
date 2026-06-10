@@ -1,0 +1,44 @@
+{
+  "study": "S10b",
+  "ticket": "1781000867.546870.5c124aaf",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "da9651c56ef6495ce9656d84b69b600daa6d8f86",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "random_seed": 10102,
+  "inputs": {
+    "hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "commands": [
+    "/home/billy/anaconda3/bin/python reports/1781000867.546870.5c124aaf/s10b_tau_eff_template_fit.py"
+  ],
+  "outputs": {
+    "REPORT.md": "e9571ef279bfc72481624149f27278fc797f9b18106d11f352e519a691ef419e",
+    "fig_ml_vs_traditional.png": "95cd9384b8b4b8d6e5275b5bf5768b1c6ae3eeb56599a740205d3c2a7e8288c7",
+    "fig_stave_template_crossings.png": "fd7de96fd9e7a39f7da4123522c8dcda8c6184a54c30657c0ee7cd0ef8638cef",
+    "fig_tau_eff_by_run.png": "08cba37bde5fb257e171a3794242511afeea1fc701f1ab95809fb90bdef205a3",
+    "heldout_run_summary.csv": "05539316a88b541322bcab8203375cd1796e7dea05c8a0cd1e881024235b7877",
+    "input_sha256.csv": "7c76a0150d381c8fc216e0a2f074320f9395dd483a860ca835384c0681852c2e",
+    "leakage_checks.csv": "bb34b62c2891d79e11c0cba53ed6fdb8dfa83729ebf118e8664b53384812433c",
+    "ml_heldout_by_run.csv": "dd244c805e925e4e1cbdb74f863f2f71fa6a71913e805cbe57a3634fc577001e",
+    "poisson_rmax_table.csv": "6b908b6c066574e771a39ed269b54c37692ed8e458be538e0604b1e765b18b59",
+    "reproduction_match_table.csv": "ef799441807b75bc181ee0d41aab5ea8471e0d221d641548a2239ceb19f5bb25",
+    "result.json": "16c13a49d48904f9cc54363f548d9d5c9a16d92187602ac0368c697559d8882e",
+    "s10b_tau_eff_template_fit.py": "975ad0e5fdd70b92ab113c35160e3dc6bf30f49600af739ba0c24d4ef689036f",
+    "template_fit_by_run_stave.csv": "fd5fa117a1fcfb241b8fb02841f93490592eae71fce0989146d08b2cde7360be",
+    "topology_by_run_group.csv": "3c89e5a0dc8a9ec4818f26a09524cc6c6c542b0b644f18d2458b883c86f82a54"
+  }
+}

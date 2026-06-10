@@ -1,0 +1,19 @@
+{
+  "study": "S10f",
+  "ticket": "1781030296.1752.37d47174",
+  "worker": "testbeam-laptop-4",
+  "title": "hand-scan waveform gallery for high-current S10e candidates above the S10d threshold",
+  "source_s10e_ticket": "1781013481.885.251f4b3c",
+  "source_s10e_scores": "reports/1781013481.885.251f4b3c/sampled_event_scores.csv",
+  "source_s10e_script": "reports/1781013481.885.251f4b3c/s10e_real_candidate_two_pulse_validation.py",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781030296.1752.37d47174",
+  "random_seed": 11060,
+  "bootstrap_samples": 1200,
+  "traditional_score_threshold": 0.015,
+  "traditional_delay_threshold_ns": 60.0,
+  "ml_score_threshold": 0.5,
+  "ml_delay_threshold_ns": 20.0,
+  "gallery_high_per_method": 24,
+  "gallery_low_controls": 24
+}

@@ -1,0 +1,9 @@
+method,estimator,primary_delta_ns2,delta_ci_low_ns2,delta_ci_high_ns2,interval_excludes_zero,n_shared_cells,coverage_note
+downstream_only_control,winsor_mad,42.80140070318965,18.56064762877282,107.11399720544604,True,56,run-block bootstrap interval over matched cells
+ml_no_b2_local,winsor_mad,8.896822115451565,6.804227486811792,12.88359427943808,True,56,run-block bootstrap interval over matched cells
+ml_shuffled_run_control,winsor_mad,130.97294575611204,57.05407165971481,430.9960529177024,True,56,run-block bootstrap interval over matched cells
+ml_with_b2_local,winsor_mad,3.552141977069544,1.8645900425190027,6.349188163854574,True,56,run-block bootstrap interval over matched cells
+raw_pair_median,median_centered,175.25177739414733,80.04901068117053,518.3697415705883,True,56,run-block bootstrap interval over matched cells
+raw_pair_median,pearson,159.75595182551527,79.44572799400902,448.7246243987255,True,56,run-block bootstrap interval over matched cells
+raw_pair_median,winsor_mad,11.817316088931118,5.557214552762352,27.61613967084345,True,56,run-block bootstrap interval over matched cells
+traditional_saturation_ridge,winsor_mad,18.446807119418303,10.497351092381846,36.327649398918446,True,56,run-block bootstrap interval over matched cells

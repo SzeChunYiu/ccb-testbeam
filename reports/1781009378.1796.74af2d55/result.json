@@ -1,0 +1,82 @@
+{
+  "study": "S04b",
+  "ticket": "1781009378.1796.74af2d55",
+  "worker": "testbeam-laptop-3",
+  "title": "adaptive-lowering covariates in full S04 timing-resolution tail tables",
+  "conclusion": "Adaptive lowering should enter S04 tail/systematic tables as a stratifying nuisance covariate, not as a correction. Large-lowering strata have weighted raw tail fraction 0.266 versus 0.131 elsewhere, while the ML residual correction gains only 0.257 ns and the Ridge nuisance correction worsens sigma68 by 3.614 ns.",
+  "raw_reproduction_pass": true,
+  "analysis_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "pair_residuals": 65484,
+  "traditional": {
+    "method": "CFD20 S04-style Gaussian-core/tail table stratified by adaptive lowering",
+    "sigma68_ns": 3.7243532003219624,
+    "ci": [
+      3.3453089934446956,
+      9.959669825105053
+    ],
+    "tail_frac_abs_gt5ns": 0.17613462830615112,
+    "full_rms_ns": 20.754596713777325,
+    "core_sigma_ns": 4.339227816728333,
+    "core_chi2_ndf": 123.65303356420554
+  },
+  "traditional_nuisance_stress_test": {
+    "method": "run-held-out Ridge residual correction on adaptive-lowering nuisance features",
+    "sigma68_ns": 7.338697305613021,
+    "ci": [
+      6.267387117048392,
+      9.044076385318228
+    ],
+    "tail_frac_abs_gt5ns": 0.42960112393867206,
+    "gain_vs_raw_ns": -3.6143441052910585
+  },
+  "ml": {
+    "method": "run-held-out RandomForestRegressor residual correction",
+    "sigma68_ns": 3.467579064294611,
+    "ci": [
+      3.272235150459906,
+      3.834199753836769
+    ],
+    "tail_frac_abs_gt5ns": 0.15773318673263698,
+    "gain_vs_raw_ns": 0.2567741360273512
+  },
+  "raw_reference": {
+    "method": "CFD20 S04-style pair residual table",
+    "sigma68_ns": 3.7243532003219624,
+    "ci": [
+      3.3453089934446956,
+      9.959669825105053
+    ],
+    "tail_frac_abs_gt5ns": 0.17613462830615112,
+    "full_rms_ns": 20.754596713777325,
+    "core_sigma_ns": 4.339227816728333,
+    "core_chi2_ndf": 123.65303356420554
+  },
+  "large_lowering_weighted_tail_fraction": 0.2660810005955926,
+  "nonlarge_lowering_weighted_tail_fraction": 0.1310407024230874,
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "27379b139276ea7685e74910201b6c6c4392a26a",
+  "next_tickets": []
+}

@@ -1,0 +1,8 @@
+heldout_run,candidate,sign,train_auc,train_median,train_iqr,n_train,n_test
+58,max_downstream_peak_sample,1,0.6081101877500769,6.0,3.0,1140,18
+59,max_downstream_peak_sample,1,0.6025461904519974,6.0,3.0,972,186
+60,max_downstream_peak_sample,1,0.6080938271604939,6.0,3.0,900,258
+61,max_downstream_peak_sample,1,0.6112130485379504,6.0,3.0,806,352
+62,max_downstream_peak_sample,1,0.6077073745342976,6.0,3.0,936,222
+63,max_downstream_peak_sample,1,0.6052850809588819,6.0,3.0,1044,114
+65,max_downstream_peak_sample,1,0.60682797731569,6.0,3.0,1150,8

@@ -1,0 +1,3 @@
+sample,comparison,metric,ci_low_ns,ci_high_ns,p_value
+sample_iii,ml_minus_traditional,percentile68_ns,0.004313039600183544,0.11487434142184384,0.03
+sample_iv,ml_minus_traditional,percentile68_ns,-0.44365660493478964,-0.09786491706379485,0.009

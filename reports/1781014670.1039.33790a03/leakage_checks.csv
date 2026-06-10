@@ -1,0 +1,13 @@
+sample,check,value,flag
+sample_iii,forbidden_feature_overlap,,False
+sample_iii,row_split_advantage_rmse_ns,0.7143084866988858,True
+sample_iii,group_split_r2_mean,0.09089135500224747,False
+sample_iii,random_row_split_r2,0.12228598119294276,False
+sample_iii,shuffled_target_r2,-0.0012680374162532537,False
+sample_iii,ml_width_minus_traditional_width_ns,0.06697226883727891,False
+sample_iv,forbidden_feature_overlap,,False
+sample_iv,row_split_advantage_rmse_ns,-0.09298365240646156,False
+sample_iv,group_split_r2_mean,0.21194514012545143,False
+sample_iv,random_row_split_r2,0.06754798043065513,False
+sample_iv,shuffled_target_r2,0.1076604385522908,True
+sample_iv,ml_width_minus_traditional_width_ns,-0.2538733491752623,False

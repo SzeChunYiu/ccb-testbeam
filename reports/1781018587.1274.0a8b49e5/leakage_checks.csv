@@ -1,0 +1,33 @@
+heldout_run,check,value,pass,detail,method_scope
+42,train_heldout_run_overlap,0,True,must be zero,P01e strict fold
+42,train_heldout_event_overlap,0,True,must be zero,P01e strict fold
+42,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only,P01e strict fold
+42,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns",P01e strict fold
+42,train_heldout_run_overlap,0,True,must be zero,S02/S03 exact fold
+42,train_heldout_event_overlap,0,True,must be zero,S02/S03 exact fold
+42,forbidden_feature_audit,0,True,"no run id, event id, event order, held-out label, or other-stave timing feature",S02/S03 exact fold
+42,template_train_excludes_heldout,0,True,must be zero,S02/S03 exact fold
+57,train_heldout_run_overlap,0,True,must be zero,P01e strict fold
+57,train_heldout_event_overlap,0,True,must be zero,P01e strict fold
+57,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only,P01e strict fold
+57,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns",P01e strict fold
+57,train_heldout_run_overlap,0,True,must be zero,S02/S03 exact fold
+57,train_heldout_event_overlap,0,True,must be zero,S02/S03 exact fold
+57,forbidden_feature_audit,0,True,"no run id, event id, event order, held-out label, or other-stave timing feature",S02/S03 exact fold
+57,template_train_excludes_heldout,0,True,must be zero,S02/S03 exact fold
+64,train_heldout_run_overlap,0,True,must be zero,P01e strict fold
+64,train_heldout_event_overlap,0,True,must be zero,P01e strict fold
+64,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only,P01e strict fold
+64,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns",P01e strict fold
+64,train_heldout_run_overlap,0,True,must be zero,S02/S03 exact fold
+64,train_heldout_event_overlap,0,True,must be zero,S02/S03 exact fold
+64,forbidden_feature_audit,0,True,"no run id, event id, event order, held-out label, or other-stave timing feature",S02/S03 exact fold
+64,template_train_excludes_heldout,0,True,must be zero,S02/S03 exact fold
+65,train_heldout_run_overlap,0,True,must be zero,P01e strict fold
+65,train_heldout_event_overlap,0,True,must be zero,P01e strict fold
+65,amplitude_bin_feature_used,0,True,strict features are waveform shape or AE latent plus log amplitude and stave one-hot only,P01e strict fold
+65,feature_audit,0,True,"no run id, event id, event order, amplitude-bin id, or held-out target columns",P01e strict fold
+65,train_heldout_run_overlap,0,True,must be zero,S02/S03 exact fold
+65,train_heldout_event_overlap,0,True,must be zero,S02/S03 exact fold
+65,forbidden_feature_audit,0,True,"no run id, event id, event order, held-out label, or other-stave timing feature",S02/S03 exact fold
+65,template_train_excludes_heldout,0,True,must be zero,S02/S03 exact fold

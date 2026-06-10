@@ -1,0 +1,49 @@
+study_id: S05e
+title: B2 covariance after saturation-correction features
+ticket: "1781018174.2098.54a7512c"
+worker: testbeam-laptop-1
+
+raw_root_dir: data/root/root
+output_dir: reports/1781018174.2098.54a7512c
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+sample_period_ns: 10.0
+cfd_fraction: 0.20
+tof_per_cm_ns: 0.078
+stave_spacing_cm: 2.0
+bootstrap_resamples: 500
+random_seed: 50505
+saturation_threshold_adc: 3800.0
+near_peak_fraction: 0.98
+
+runs:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_b_pulses: 640737
+  sample_i_analysis_b_selected_pulses: 252266
+  sample_ii_analysis_b_selected_pulses: 125096
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+traditional:
+  ridge_alphas: [0.1, 1.0, 10.0, 100.0, 1000.0]
+  fixed_alpha: 10.0
+
+ml:
+  n_estimators: 80
+  max_features: 0.8
+  min_samples_leaf: 20

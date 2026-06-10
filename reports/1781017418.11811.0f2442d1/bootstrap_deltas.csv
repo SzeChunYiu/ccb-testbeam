@@ -1,0 +1,7 @@
+tier,comparison,ci_low_ns,ci_high_ns,p_value
+raw_loose500,traditional_sorted_a_minus_b_only,-0.017211783715409455,0.03860665302075177,0.5133333333333333
+raw_loose500,ml_sorted_a_minus_ml_b_only,-0.004846609669492805,0.23686894569245703,0.08
+raw_loose500,ml_sorted_a_minus_traditional_sorted_a,-5.735032536168761,-4.873231020907255,0.0
+sorted_any_clean1000,traditional_sorted_a_minus_b_only,-0.34683040750555794,1.3911955152571829,0.11333333333333333
+sorted_any_clean1000,ml_sorted_a_minus_ml_b_only,-2.1578836339325957,2.2373347242089374,0.9266666666666666
+sorted_any_clean1000,ml_sorted_a_minus_traditional_sorted_a,-3.1342037154766733,4.6875741358999425,0.6933333333333334

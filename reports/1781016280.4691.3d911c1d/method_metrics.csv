@@ -1,0 +1,10 @@
+method,subset,n_pair_rows,n_runs,sigma68_ns,sigma68_ci_low_ns,sigma68_ci_high_ns,full_rms_ns,tail_frac_abs_gt5ns,note
+raw_pair_median,all,65484,21,2.0818359213706255,1.7858731282037037,11.223577288112136,20.675023326611615,0.14165292285138353,pair-median centered raw CFD20 residual
+raw_pair_median,B2_containing,43956,21,3.512344883482385,1.85917566116942,19.297947430671012,24.816974776203015,0.2026117026117026,pair-median centered raw CFD20 residual
+raw_pair_median,downstream_only,21528,21,1.7325646285801632,1.6890839855923245,1.7687849703006389,6.536663382985358,0.017186919360832404,pair-median centered raw CFD20 residual
+traditional_saturation_ridge,all,65484,21,6.624902145270017,6.161439357538824,7.9890872485618045,11.57731637216351,0.4194765133467717,leave-run-out Ridge residual correction with explicit B2 saturation features
+traditional_saturation_ridge,B2_containing,43956,21,7.049946425151923,6.344734876585766,9.425945602088852,13.067876192643517,0.43545818545818543,leave-run-out Ridge residual correction with explicit B2 saturation features
+traditional_saturation_ridge,downstream_only,21528,21,5.662865804078315,5.2006139194244705,6.479375484955559,7.787009691800087,0.36282980304719437,leave-run-out Ridge residual correction with explicit B2 saturation features
+ml_extra_trees_saturation,all,65484,21,1.352185266517984,1.2095936490405301,1.716202621042735,5.544206556116989,0.08489096573208722,leave-run-out ExtraTrees residual model with explicit saturation features
+ml_extra_trees_saturation,B2_containing,43956,21,1.6155216885146217,1.3642555971154122,2.438637752008869,6.180869606453867,0.11748111748111748,leave-run-out ExtraTrees residual model with explicit saturation features
+ml_extra_trees_saturation,downstream_only,21528,21,1.0349830693991555,1.002049136958647,1.114033590548149,3.941287398605253,0.018115942028985508,leave-run-out ExtraTrees residual model with explicit saturation features

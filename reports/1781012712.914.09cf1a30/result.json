@@ -1,0 +1,178 @@
+{
+  "ticket_id": "1781012712.914.09cf1a30",
+  "worker": "testbeam-laptop-4",
+  "study_id": "P08a",
+  "title": "penetration-depth weak-label PID null test",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "999791c5c2c33e38e9b88620f7445b5d510b6e32",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "weak_label_definition": {
+    "positive_name": "penetrating_like",
+    "negative_name": "terminal_b2_like",
+    "positive_min_downstream_selected": 2,
+    "positive_min_downstream_charge_fraction": 0.12,
+    "negative_max_downstream_selected": 0,
+    "negative_max_downstream_charge_fraction": 0.08
+  },
+  "traditional": {
+    "method": "best frozen conventional score among tail/total, area/peak, q_template, DeltaE-like amplitude vector",
+    "roc_auc": 1.0,
+    "roc_auc_ci": [
+      1.0,
+      1.0
+    ],
+    "average_precision": 1.0
+  },
+  "ml": {
+    "method": "histogram gradient boosting over raw normalized B2 waveform samples, hand shape features, and train-only PCA latents",
+    "roc_auc": 0.8478302864659858,
+    "roc_auc_ci": [
+      0.8333689148937022,
+      0.8608507938845945
+    ],
+    "average_precision": 0.7756276498560539
+  },
+  "ml_vs_traditional": {
+    "ml_minus_traditional_auc": -0.1521697135340142,
+    "ci": [
+      -0.16584405661461418,
+      -0.13878824627461914
+    ],
+    "bootstrap_valid": 300
+  },
+  "leakage_hunt": [
+    {
+      "probe": "charge/depth logistic",
+      "roc_auc": 1.0,
+      "average_precision": 1.0,
+      "interpretation": "Forbidden ceiling: includes depth and presence fields used directly by the weak-label definition."
+    },
+    {
+      "probe": "run-only logistic",
+      "roc_auc": 0.4476702541874817,
+      "average_precision": 0.30295608434929205,
+      "interpretation": "Strict leave-one-run-out run-id sentinel; unseen held-out runs collapse to the intercept."
+    },
+    {
+      "probe": "group/event-order logistic",
+      "roc_auc": 0.6015231390501028,
+      "average_precision": 0.42559584261117755,
+      "interpretation": "Sample group plus event-order sentinel for run-family/rate-drift confounding."
+    },
+    {
+      "probe": "shuffled-label HGB",
+      "roc_auc": 0.4887040100187335,
+      "average_precision": 0.3677015418480223,
+      "interpretation": "Same HGB pipeline with shuffled training labels; should fall near chance."
+    },
+    {
+      "probe": "ML-minus-traditional paired run bootstrap",
+      "roc_auc": -0.1521697135340142,
+      "average_precision": null,
+      "interpretation": "Positive values favor ML; CI is stored in result.json."
+    },
+    {
+      "probe": "all-data P01b latent logistic",
+      "roc_auc": 0.7028650960549515,
+      "average_precision": 0.5798663382702542,
+      "interpretation": "Diagnostic only; P01b release encoder was fit on all selected pulses and is not used for the main claim."
+    }
+  ],
+  "benchmark": {
+    "benchmark_rows_after_balancing": 20007,
+    "evaluated_rows": 19606,
+    "evaluated_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "skipped_runs": [
+      46
+    ],
+    "positive_fraction": 0.3471386310313169,
+    "ml_vs_traditional": {
+      "ml_minus_traditional_auc": -0.1521697135340142,
+      "ci": [
+        -0.16584405661461418,
+        -0.13878824627461914
+      ],
+      "bootstrap_valid": 300
+    },
+    "p01b_embedding_used_as_diagnostic": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz"
+  },
+  "input_file_count": 33,
+  "runtime_sec": 43.5
+}

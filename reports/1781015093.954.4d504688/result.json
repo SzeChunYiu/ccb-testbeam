@@ -1,0 +1,51 @@
+{
+  "study": "P03d",
+  "ticket": "1781015093.954.4d504688",
+  "worker": "testbeam-laptop-3",
+  "title": "per-stave waveform MLP calibration failure analysis",
+  "reproduced_raw_root_counts": true,
+  "p03b_reproduction_agrees": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": "P03b analytic_timewalk_on_template_phase",
+  "ml_method": "P03b fixed tiny heteroskedastic MLP on normalized 18-sample waveform plus stave one-hot",
+  "metric": "held-out B4/B6/B8 pairwise sigma68 ns plus per-stave held-out target-error bootstrap CIs",
+  "worst_mlp_instability_run": {
+    "heldout_run": 61,
+    "mlp_sigma68_ns": 2.1136738442212386,
+    "worst_stave_by_error_sigma68": "B4",
+    "worst_mlp_pair": "B4-B6"
+  },
+  "weakest_vs_analytic_run": {
+    "heldout_run": 58,
+    "mlp_minus_analytic_ns": 0.7003424982260007,
+    "worst_stave_by_error_sigma68": "B6",
+    "worst_mlp_pair": "B4-B6"
+  },
+  "highest_predicted_sigma_run": {
+    "heldout_run": 58,
+    "p03b_pred_sigma_median_ns": 2.530600547790528,
+    "worst_stave_by_error_sigma68": "B6"
+  },
+  "correlations": {
+    "mlp_sigma_vs_stave_error_range": 0.12880481218736264,
+    "mlp_sigma_vs_pair_sigma_range": 0.2872229466169861,
+    "mlp_minus_analytic_vs_stave_error_range": 0.8614692114139534
+  },
+  "leakage": {
+    "p03b_max_event_id_overlap": 0.0,
+    "feature_audit": "normalized same-pulse 18-sample waveform plus stave one-hot; no run, event id, event order, other-stave time, or held-out target",
+    "shuffled_target_controls_all_worse_than_nominal": true
+  },
+  "verdict": "stave_asymmetry_does_not_explain_mlp_instability",
+  "input_sha256": "983ab64ad15bebf2fa358613f5956fccec1afd8bd7ad72537996915dfc6d7d03",
+  "git_commit": "ebeb5a05ee258228c14e2adbe22ba603adf26443"
+}

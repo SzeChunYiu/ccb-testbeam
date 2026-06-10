@@ -1,0 +1,15 @@
+method,heldout_run,roc_auc,average_precision,n_clean,n_injected
+fold-selected traditional timing/template,58,0.53125,0.5178571428571428,4,4
+fold-selected traditional timing/template,59,0.61625,0.6856203493379853,20,20
+fold-selected traditional timing/template,60,0.6748849441157134,0.6798649225023738,39,39
+fold-selected traditional timing/template,61,0.6730864197530865,0.7397669076967783,45,45
+fold-selected traditional timing/template,62,0.6577503429355281,0.7355861868323714,27,27
+fold-selected traditional timing/template,63,0.5982986767485822,0.6620548065164098,23,23
+fold-selected traditional timing/template,65,0.5,0.5,1,1
+high-amplitude all-three shape-only RF,58,0.625,0.6220238095238095,4,4
+high-amplitude all-three shape-only RF,59,0.82,0.828014439202881,20,20
+high-amplitude all-three shape-only RF,60,0.777120315581854,0.8153290125225383,39,39
+high-amplitude all-three shape-only RF,61,0.7790123456790125,0.79093988594216,45,45
+high-amplitude all-three shape-only RF,62,0.8943758573388203,0.9117105363932421,27,27
+high-amplitude all-three shape-only RF,63,0.771266540642722,0.791588904353064,23,23
+high-amplitude all-three shape-only RF,65,1.0,1.0,1,1

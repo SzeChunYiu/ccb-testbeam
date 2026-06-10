@@ -1,0 +1,5 @@
+check,value,pass_,note
+shuffled_training_labels_auc,0.3483818593706479,True,
+intentional_lowering_oracle_auc,0.9999786319739895,True,
+row_split_minus_run_split_auc,-0.0020238113928291446,True,
+real_feature_exclusion,,True,"features exclude run, event id, trigger, lowering value, stratum label, target residuals, and filenames"

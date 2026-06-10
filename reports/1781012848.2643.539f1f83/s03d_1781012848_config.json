@@ -1,0 +1,75 @@
+{
+  "study_id": "S03d",
+  "ticket_id": "1781012848.2643.539f1f83",
+  "worker": "testbeam-laptop-1",
+  "title": "independent timing-tail validation of q_template clean cuts",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781012848.2643.539f1f83",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "benchmark_runs": [58, 59, 60, 61, 62, 63, 65],
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_calib_pulses": 248745,
+    "sample_i_analysis_pulses": 252266,
+    "sample_ii_calib_pulses": 14630,
+    "sample_ii_analysis_pulses": 125096
+  },
+  "min_downstream_staves": 2,
+  "clean_dt_max_ns": 3.0,
+  "gross_dt_min_ns": 51.0,
+  "documented_gross_dt_min_ns": 50.0,
+  "expected_s07_guarded_gross_events": 72,
+  "expected_all_three_control_events": 3774,
+  "expected_all_three_gross_events": 22,
+  "template_amplitude_edges_adc": [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000],
+  "template_min_bin_pulses": 30,
+  "aligned_relative_grid": [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "traditional_candidates": [
+    "q_mean",
+    "q_max",
+    "q_std",
+    "q_ds_mean",
+    "q_ds_max",
+    "q_ds_std",
+    "q_b2_minus_ds_mean",
+    "q_ds_span"
+  ],
+  "q_feature_columns": [
+    "q_b2",
+    "q_b4",
+    "q_b6",
+    "q_b8",
+    "q_mean",
+    "q_max",
+    "q_std",
+    "q_ds_mean",
+    "q_ds_max",
+    "q_ds_std",
+    "q_b2_minus_ds_mean",
+    "q_ds_span"
+  ],
+  "rf_params": {
+    "n_estimators": 500,
+    "max_depth": 5,
+    "min_samples_leaf": 8
+  },
+  "fixed_clean_efficiency": 0.95,
+  "bootstrap_replicates": 1000,
+  "random_seed": 20260609
+}

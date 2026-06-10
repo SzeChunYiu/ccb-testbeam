@@ -1,0 +1,30 @@
+{
+  "study_id": "S10d_followup",
+  "title": "reconcile template-fit and empirical live-time thresholds",
+  "ticket_id": "1781013102.1034.262365d2",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781013102.1034.262365d2",
+  "source_s10c_ticket": "1781007337.1308.7dc86005",
+  "random_seed": 2026060919,
+  "bootstrap_samples": 5000,
+  "runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "reported_s10c": {
+    "live10_template_ns": 124.79018394263471,
+    "live20_template_ns": 101.86521002119034,
+    "noise_floor_template_ns": 161.18335762759685,
+    "live20_empirical_ns": 119.0300244680748,
+    "noise_floor_empirical_ns": 120.37181019387364
+  },
+  "thresholds": [
+    {"key": "5pct", "label": "5%", "column": "live5_ns"},
+    {"key": "10pct", "label": "10%", "column": "live10_ns"},
+    {"key": "20pct", "label": "20%", "column": "live20_ns"},
+    {"key": "noise_floor", "label": "noise floor", "column": "live_noise_floor_ns"}
+  ],
+  "interpretation_rules": {
+    "large_template_empirical_delta_ns": 10.0,
+    "high_censoring_fraction": 0.25,
+    "extrapolation_margin_ns": 5.0
+  }
+}

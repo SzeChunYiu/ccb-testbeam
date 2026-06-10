@@ -1,0 +1,3 @@
+Quantity,Report value,Reproduced,delta,Tolerance,Pass?
+S00 selected B-stave pulses,640737,640737,0,0,True
+S00 selected-table sha256,648c32d0109f,648c32d0109f,0,exact,True

@@ -1,0 +1,219 @@
+{
+  "study": "S16e",
+  "ticket": "1781007587.2616.535e78de",
+  "worker": "testbeam-laptop-4",
+  "title": "tagged random-trigger pedestal validation",
+  "raw_reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "expected_selected_b_stave_pulses": 640737,
+    "raw_hrd_entries": 3302310,
+    "raw_nonbeam_trigger_entries": 0,
+    "tagged_random_bstack_entries": 0,
+    "sorted_b_files_with_tag_like_branch": 0,
+    "true_tagged_random_sample_available": false
+  },
+  "primary_gate_passed": false,
+  "primary_tagged_random_result": null,
+  "fallback_s16_pretrigger_benchmark": {
+    "metric": "heldout_pretrigger_mae_adc_with_run_bootstrap_ci",
+    "benchmark": [
+      {
+        "method": "ml_ridge_calibrated",
+        "n": 962,
+        "mean_bias_adc": -15.528299509018,
+        "mean_bias_ci_low_adc": -49.57081624446388,
+        "mean_bias_ci_high_adc": 22.668114815580907,
+        "mae_adc": 197.28352020191932,
+        "mae_ci_low_adc": 149.12977855133173,
+        "mae_ci_high_adc": 244.9001693751069,
+        "rmse_adc": 460.8532668655186,
+        "rmse_ci_low_adc": 336.05157549238703,
+        "rmse_ci_high_adc": 575.833641225901,
+        "median_bias_adc": 11.399203836545894,
+        "q05_adc": -483.70516843671226,
+        "q95_adc": 359.8649675235653
+      },
+      {
+        "method": "mean3",
+        "n": 962,
+        "mean_bias_adc": 1.7325017325017225,
+        "mean_bias_ci_low_adc": -48.61811978889384,
+        "mean_bias_ci_high_adc": 53.49576082171271,
+        "mae_adc": 241.62647262647263,
+        "mae_ci_low_adc": 146.42698884089273,
+        "mae_ci_high_adc": 342.92298764195044,
+        "rmse_adc": 752.4825318437371,
+        "rmse_ci_low_adc": 520.9950170977897,
+        "rmse_ci_high_adc": 945.4786581561319,
+        "median_bias_adc": 2.33333333333303,
+        "q05_adc": -661.0333333333333,
+        "q95_adc": 757.9
+      },
+      {
+        "method": "median3",
+        "n": 962,
+        "mean_bias_adc": -32.82744282744283,
+        "mean_bias_ci_low_adc": -86.35853028952071,
+        "mean_bias_ci_high_adc": 25.51911999675026,
+        "mae_adc": 260.2681912681913,
+        "mae_ci_low_adc": 165.71800755939526,
+        "mae_ci_high_adc": 349.46209919839674,
+        "rmse_adc": 866.0366182306751,
+        "rmse_ci_low_adc": 647.0212654635918,
+        "rmse_ci_high_adc": 1052.0941076618287,
+        "median_bias_adc": 0.0,
+        "q05_adc": -909.8999999999999,
+        "q95_adc": 520.1999999999975
+      },
+      {
+        "method": "adaptive_pc",
+        "n": 962,
+        "mean_bias_adc": -267.0227338877339,
+        "mean_bias_ci_low_adc": -423.07850463426854,
+        "mean_bias_ci_high_adc": -136.03009327753782,
+        "mae_adc": 293.02101871101877,
+        "mae_ci_low_adc": 154.60047894168466,
+        "mae_ci_high_adc": 464.30732489979954,
+        "rmse_adc": 1160.3186636552095,
+        "rmse_ci_low_adc": 643.521528901767,
+        "rmse_ci_high_adc": 1659.3202404728327,
+        "median_bias_adc": -1.0,
+        "q05_adc": -1809.4999999999998,
+        "q95_adc": 32.0
+      }
+    ],
+    "by_run": [
+      {
+        "method": "adaptive_pc",
+        "run": 57,
+        "n": 499,
+        "mean_bias_adc": -361.87435871743486,
+        "mae_adc": 395.15660320641274,
+        "rmse_adc": 1452.5979735397589
+      },
+      {
+        "method": "adaptive_pc",
+        "run": 65,
+        "n": 463,
+        "mean_bias_adc": -164.79603671706263,
+        "mae_adc": 182.94400647948163,
+        "rmse_adc": 723.3652284643227
+      },
+      {
+        "method": "mean3",
+        "run": 57,
+        "n": 499,
+        "mean_bias_adc": 14.99599198396792,
+        "mae_adc": 306.5430861723447,
+        "rmse_adc": 874.8080031108746
+      },
+      {
+        "method": "mean3",
+        "run": 65,
+        "n": 463,
+        "mean_bias_adc": -12.56227501799855,
+        "mae_adc": 171.662347012239,
+        "rmse_adc": 593.0373370854029
+      },
+      {
+        "method": "median3",
+        "run": 57,
+        "n": 499,
+        "mean_bias_adc": -15.438877755511022,
+        "mae_adc": 320.44889779559117,
+        "rmse_adc": 978.0175215941124
+      },
+      {
+        "method": "median3",
+        "run": 65,
+        "n": 463,
+        "mean_bias_adc": -51.56803455723542,
+        "mae_adc": 195.40820734341253,
+        "rmse_adc": 726.2675193888423
+      },
+      {
+        "method": "ml_ridge_calibrated",
+        "run": 57,
+        "n": 499,
+        "mean_bias_adc": 0.6868313235185185,
+        "mae_adc": 229.87053521443463,
+        "rmse_adc": 523.0017174331737
+      },
+      {
+        "method": "ml_ridge_calibrated",
+        "run": 65,
+        "n": 463,
+        "mean_bias_adc": -33.004218052075714,
+        "mae_adc": 162.16274160311775,
+        "rmse_adc": 382.7354320887716
+      }
+    ],
+    "adaptive_unbiased_on_fallback": false
+  },
+  "ml_meta": {
+    "best": {
+      "alpha": 100.0,
+      "cv_mae_adc": 173.18638012247075,
+      "cv_mae_std_adc": 5.216573145287647
+    },
+    "calibration_intercept": -82.7617991085699,
+    "calibration_slope": 1.0098340130359662,
+    "n_train_cv": 23038,
+    "n_core_train": 21014,
+    "n_calibration": 2024,
+    "n_test": 962,
+    "feature_columns": [
+      "stave_idx",
+      "holdout_sample",
+      "amplitude_adc",
+      "peak_sample",
+      "pre_mean3",
+      "pre_median3",
+      "pre_std3",
+      "pre_min3",
+      "pre_max3",
+      "w01_minus_seed",
+      "w02_minus_seed",
+      "w03_minus_seed",
+      "w04_minus_seed",
+      "w05_minus_seed",
+      "w06_minus_seed",
+      "w07_minus_seed",
+      "w08_minus_seed",
+      "w09_minus_seed",
+      "w10_minus_seed",
+      "w11_minus_seed",
+      "w12_minus_seed",
+      "w13_minus_seed",
+      "w14_minus_seed",
+      "w15_minus_seed",
+      "w16_minus_seed",
+      "w17_minus_seed",
+      "w00_minus_seed"
+    ],
+    "model": "StandardScaler + Ridge + linear calibration"
+  },
+  "leakage_checks": [
+    {
+      "check": "tagged_random_gate",
+      "result": "failed: 0 tagged B-stack candidates"
+    },
+    {
+      "check": "real_ml_feature_exclusion",
+      "result": "fallback ML excludes run, pulse_index/event IDs, and target_adc; feature_columns=stave_idx;holdout_sample;amplitude_adc;peak_sample;pre_mean3;pre_median3;pre_std3;pre_min3;pre_max3;w01_minus_seed;w02_minus_seed;w03_minus_seed;w04_minus_seed;w05_minus_seed;w06_minus_seed;w07_minus_seed;w08_minus_seed;w09_minus_seed;w10_minus_seed;w11_minus_seed;w12_minus_seed;w13_minus_seed;w14_minus_seed;w15_minus_seed;w16_minus_seed;w17_minus_seed;w00_minus_seed"
+    },
+    {
+      "check": "shuffled_training_target_control",
+      "result": "fallback shuffled-target ridge MAE 489.38 ADC; far worse than real ML means the real fallback signal is not explained by direct target leakage in the training labels"
+    },
+    {
+      "check": "proxy_guard",
+      "result": "no quiet-event amplitude-selected proxy is promoted to tagged-random validation"
+    }
+  ],
+  "conclusion": "No true tagged random/forced B-stack pedestal entries are present; S16e cannot validate adaptive_pc_excluding_target on random-trigger no-pulse samples.",
+  "followup_tickets": [
+    "S16f: inventory DAQ/run-log sources for true B-stack random or forced-trigger pedestal runs. Expected information gain: resolves whether the S16e gate failed because the sample was never recorded or only missing from this ROOT mirror.",
+    "S16g: rerun S16e immediately after tagged random-trigger ROOT is added, with no quiet-event amplitude selection. Expected information gain: directly confirms or falsifies adaptive pedestal zero-bias on true no-pulse samples."
+  ]
+}

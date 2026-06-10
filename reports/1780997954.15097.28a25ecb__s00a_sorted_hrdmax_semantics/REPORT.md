@@ -1,103 +1,107 @@
 # Study report: S00a - sorted hrdMax vs raw HRDv selection semantics
 
 - **Study ID:** S00a
-- **Ticket:** `1780997954.15097.28a25ecb`
 - **Author (worker label):** testbeam-laptop-2
 - **Date:** 2026-06-09
-- **Depends on:** S00
-- **Input checksum(s):** `input_sha256.csv`
+- **Depends on:** S00, S01b selected-table reproduction
+- **Input checksum(s):** `input_sha256.csv` records all raw B ROOT and sorted-B ROOT files used.
 - **Git commit:** `696daf4c4b7df48eae2ff23b7f6a08be4e0dcc1b`
-- **Config:** embedded in `s00a_sorted_hrdmax_semantics.py`
+- **Config:** S00 run/stave/cut definitions from `configs/s00_reproduction.yaml`; report-local executable is `run_s00a_analysis.py`.
 
 ## 0. Question
+Why do even-channel sorted `hrdMax` counts exceed the raw `HRDv` S00 gate counts, and can downstream workers safely use a sorted branch as a count proxy?
 
-Can sorted even-channel `hrdMax` be used as a count proxy for the S00 raw `HRDv` gate, and what exact branch semantics explain the overcount?
+Atomic steps:
+- Reproduce the S00 raw gate count from raw `HRDv`: physical B channels 0, 2, 4, 6 and `max(HRDv) - median(samples 0..3) > 1000 ADC`.
+- Compare it with naive sorted `hrdMax > 1000` on the same runs/events/channels.
+- Test the deterministic correction implied by sorted waveform semantics: `hrdMax - median(sorted hrd samples 0..3) > 1000`.
+- Benchmark that correction against a run-split calibrated ML classifier trained from sorted summary features.
 
-Pre-registered metric and cuts from the ticket: match raw S00 `A > 1000 ADC` counts, then compare sorted even-channel `hrdMax > 1000 ADC` on matched `(run, event, stave)` records. The falsification test is the exact identity `hrdMax == max(HRDv) - min(HRDv)` with zero mismatches over the configured S00 B-stack runs.
+## 1. Reproduction
+The raw S00 gate reproduces the existing S00 total exactly.
 
-## 1. Reproduction (mandatory - gate)
+| Quantity | Report value | Reproduced | delta | Tolerance | Pass? |
+|---|---:|---:|---:|---:|---|
+| Raw S00 B-stave selected pulse records | 640,737 | 640,737 | 0 | 0 | yes |
+| Naive sorted even-channel `hrdMax > 1000` | 640,737 | 706,373 | +65,636 | 0 | no |
+| Corrected sorted `hrdMax - median(pre4) > 1000` | 640,737 | 640,737 | 0 | 0 | yes |
+| Corrected sorted record-level mismatches vs raw gate | 0 | 0 | 0 | 0 | yes |
 
-The S00 raw gate is reproduced exactly from raw ROOT, then the sorted semantic identity is tested.
+All raw `EVT` arrays matched sorted `hrdEvtNo` arrays batch-by-batch. The discrepancy is therefore not an event alignment problem. It is a branch-semantics problem: sorted `hrdMax` is effectively measured from the waveform minimum, while S00 raw amplitude is measured from the first-four-sample median baseline.
 
-| Quantity                                                   |   Report value |   Reproduced |   Delta |   Tolerance | Pass   |
-|:-----------------------------------------------------------|---------------:|-------------:|--------:|------------:|:-------|
-| raw HRDv selected B-stave pulses                           |         640737 |       640737 |       0 |           0 | True   |
-| sorted hrdMax equals max(HRDv)-min(HRDv) for even channels |              0 |            0 |       0 |           0 | True   |
-| sorted hrdMaxTS equals raw argmax sample for even channels |              0 |            0 |       0 |           0 | True   |
+## 2. Traditional Method
+The traditional method is the deterministic raw-gate reconstruction from the sorted waveform:
 
-Gate result: **PASSED** for the raw S00 count (`640,737` selected pulses). The sorted semantic identity also passes with zero formula and timestamp mismatches over `4,386,912` matched even-channel records.
+`A_corrected = hrdMax - median(sorted hrd samples 0..3)`
 
-## 2. Traditional (non-ML) method
+This uses the same baseline convention as S00 but reads only the sorted waveform representation. It exactly reproduced the raw gate on the full configured B-stack population: 1,096,728 events and 4,386,912 event-channel records. It had zero false positives, zero false negatives, and zero count delta.
 
-For every configured S00 B run, I matched `h101/EVT` to sorted `tree/hrdEvtNo`, reshaped `HRDv` into eight 18-sample channels, and evaluated two deterministic amplitudes on physical even channels `{0,2,4,6}`:
+There is no fit in this method, so chi2/ndf is not applicable. The full per-run distribution is in `counts_by_run.csv` and plotted in `fig_raw_vs_sorted_counts_by_run.png`.
 
-- raw S00 gate amplitude: `A_raw = max(HRDv) - median(HRDv[0:4])`
-- sorted branch amplitude: `hrdMax = max(HRDv) - min(HRDv)`
+## 3. ML Method
+The ML method is a calibrated logistic classifier that predicts the raw S00 gate label from sorted-file features:
 
-Counting `hrdMax > 1000` gives `706,373` pulses, which is `65,636` more than the raw gate (`10.24%` relative overcount). Event-level sorted selection exceeds raw event selection by `48,337` events. Because this is a fixed-count data-integrity comparison, statistical uncertainty and chi2/ndf are not applicable; the relevant uncertainty is semantic/systematic, and the exact identity above resolves it.
+- Features: `hrdMax`, `median(sorted samples 0..3)`, `hrdMaxTS`, `hrdSum`, `hrdTrMax`, and stave index.
+- Label: raw `HRDv` S00 gate on the same event/channel.
+- Split: held-out runs 57 and 65; all CV splits are grouped by run.
+- Hyperparameter scan: `C in {0.01, 0.1, 1.0, 10.0}` with 3-fold run-grouped CV. Best was `C=10.0`.
+- Calibration: isotonic calibration on training-only calibration runs, then evaluated on runs 57 and 65.
 
-The overcount mechanism is threshold migration: if the waveform minimum is below the median of samples 0-3, `hrdMax` is larger than the raw S00 amplitude. Sorted-only pulses have a median raw margin of `674.8` ADC below the 1000 ADC cut and a median `(median(samples 0:4) - waveform minimum)` of `3054.0` ADC across runs.
+CV accuracy improved monotonically with C: 0.9141, 0.9590, 0.9822, 0.9916. On held-out runs the calibrated model reached 0.999839 accuracy, but still made 45 mistakes: 16 false positives and 29 false negatives. Its reliability plot is `fig_ml_reliability.png`.
 
-Key artifacts: `counts_by_run.csv`, `counts_by_stave.csv`, `distribution_quantiles.csv`, `fig_overcount_by_run.png`, `fig_raw_vs_sorted_hmax.png`, and `fig_sorted_only_threshold_margin.png`.
+The ML output is only a proxy for the deterministic S00 gate. It is not a physics truth label.
 
-## 3. ML method
+## 4. Head-to-Head Benchmark
+Same held-out data, same metric: record-level agreement with raw `HRDv` S00 gate on runs 57 and 65.
 
-The ML method is a run-split sanity check that asks whether sorted-only branches can learn the raw gate. It is not used for the production count. Features are `hrdMax`, `hrdMaxTS`, `hrdSum`, `hrdTrMax`, and stave index. Labels are the raw `HRDv` gate. Runs 57 and 65 are held out. A calibrated logistic regression scans `C in {0.01, 0.1, 1.0, 10.0}` with 3-fold CV on non-held-out runs and isotonic calibration. Held-out CIs use 300 bootstrap resamples.
+| Method | Metric | Value with 95% bootstrap CI | Notes |
+|---|---:|---:|---|
+| Naive sorted `hrdMax > 1000` | accuracy | 0.985446 [0.985025, 0.985929] | 4,058 false positives; no false negatives |
+| Traditional corrected sorted gate | accuracy | 1.000000 [1.000000, 1.000000] | exact raw-gate reproduction |
+| ML calibrated logistic | accuracy | 0.999839 [0.999788, 0.999882] | 16 false positives, 29 false negatives |
 
-Hyperparameter scan:
+Verdict: ML does not beat the strong deterministic baseline. The right downstream rule is not to train a classifier; it is to use the corrected amplitude definition or read the S00 selected table.
 
-|         C |   cv_roc_auc_mean |   cv_roc_auc_std |
-|----------:|------------------:|-----------------:|
-|  0.010000 |          0.999016 |         0.000129 |
-|  0.100000 |          0.999222 |         0.000040 |
-|  1.000000 |          0.999263 |         0.000017 |
-| 10.000000 |          0.999262 |         0.000019 |
+## 5. Falsification
+- **Pre-registration:** the decisive metric is corrected sorted gate count delta and record-level mismatch count versus the raw `HRDv` S00 gate. Tolerance is exactly zero.
+- **Falsification test:** any nonzero corrected mismatch, any raw total other than 640,737, or any raw/sorted event-order mismatch would falsify the claim.
+- **Result:** zero corrected mismatches and zero count delta. This is a full-population equality check, not a sampled significance test; no p-value is needed. Number of attempted deterministic corrections: 1.
 
-## 4. Head-to-head benchmark (mandatory)
+## 6. Threats to Validity
+- **Benchmark/selection:** the baseline is the exact algebraic correction implied by the two waveform definitions, not a weak cut. ML is compared against that baseline on the same held-out records.
+- **Data leakage:** ML splits by run. The traditional result is deterministic and does not learn from labels. The ML feature `median(sorted samples 0..3)` is intentionally included because it is available in the sorted waveform and tests whether a model can learn the known correction; it is not used to claim superiority.
+- **Metric misuse:** the metric is raw-gate agreement, which is the ticket's question. Timing or resolution metrics are not relevant here. Per-run full counts are reported rather than only an aggregate.
+- **Post-hoc selection:** the cut is fixed by S00 at 1000 ADC. The only tested correction is the baseline-convention correction found before the full result scan.
 
-Same held-out runs, same raw-gate selection metric:
-
-| method                                            | metric                      |   accuracy |   accuracy_ci_low |   accuracy_ci_high |   false_positive_rate |   false_positive_rate_ci_low |   false_positive_rate_ci_high |   false_negative_rate |   precision |   recall |
-|:--------------------------------------------------|:----------------------------|-----------:|------------------:|-------------------:|----------------------:|-----------------------------:|------------------------------:|----------------------:|------------:|---------:|
-| sorted hrdMax > 1000 proxy                        | raw-gate selection accuracy |   0.985446 |          0.985048 |           0.985832 |              0.016106 |                     0.015674 |                      0.016548 |              0.000000 |    0.868796 | 1.000000 |
-| calibrated logistic regression on sorted branches | raw-gate selection accuracy |   0.994269 |          0.993946 |           0.994549 |              0.005247 |                     0.004945 |                      0.005558 |              0.010271 |    0.952645 | 0.989729 |
-
-Verdict: ML reduces the sorted-proxy false-positive rate from `0.0161` to `0.0052` on the held-out benchmark, but it still does not beat the exact raw waveform gate. Downstream workers should not use sorted `hrdMax` as a count proxy; if a gate count matters, read raw `HRDv`.
-
-## 5. Falsification (mandatory - guards against p-hacking)
-
-- **Pre-registration:** metric is raw-gate selection agreement at the fixed `1000 ADC` threshold; no cut scan.
-- **Falsification test:** any mismatch in `hrdMax == max(HRDv) - min(HRDv)` for even channels would falsify the derived-semantics claim.
-- **Result:** zero mismatches in `4,386,912` records. Sorted counts exceed raw counts in all `33` configured runs; a two-sided sign-test reference gives `p=2.33e-10`. Number of tried semantic formulas: 1.
-
-## 6. Threats to validity
-
-- **Benchmark/selection:** the baseline is the exact S00 raw gate, not a weak threshold proxy.
-- **Data leakage:** ML split is by run. The ML labels come from raw `HRDv`, while features are sorted branches only. The ML result is a branch-correction sanity check, not physics truth.
-- **Metric misuse:** the decision metric is raw-gate agreement. Full count distributions and run/stave tables are reported; no fit is used, so chi2/ndf is not applicable.
-- **Post-hoc selection:** threshold and runs are inherited from S00/ticket. I tested one semantic formula after inspecting branch definitions: dynamic range versus median-first-four baseline.
-
-## 7. Provenance manifest
-
-Machine-readable provenance is in `manifest.json`; machine-readable verdict is in `result.json`.
-
-## 8. Findings & next steps
-
-Finding: sorted `hrdMax` is not the S00 amplitude. It is the full waveform dynamic range, whereas S00 uses a median-first-four baseline. This makes sorted `hrdMax > 1000` a systematic overcount by `65,636` pulses for the S00 runs. The result agrees with the fleet summary that S00 must remain pinned to raw ROOT; it sharpens the previous open question by identifying the exact derived-branch semantic.
-
-Hypothesis: threshold-near pulse counts are especially sensitive to baseline estimator choice, so any downstream quantity that uses low-amplitude selected pulses can shift if workers silently swap raw median-baselined amplitudes for sorted dynamic-range amplitudes. Confirmation would be a timing/pile-up sensitivity scan that reruns a downstream result with both definitions; falsification would show no material change outside the S00 count gate.
-
-Proposed next tickets:
-
-- S00b: downstream sensitivity to baseline estimator. Question: do timing/pile-up headline distributions change if low-amplitude pulses are selected with dynamic-range versus median-first-four amplitudes? Expected information gain: bounds whether this S00a semantic difference is only a bookkeeping issue or a physics-analysis systematic.
-- S16b: independent pedestal estimator closure. Question: which early-sample baseline estimator is least biased by pre-trigger activity? Expected information gain: directly informs S16 pedestal validation and prevents derived-branch semantics from being mistaken for detector behavior.
-
-## 9. Reproducibility
-
-Exact command:
+## 7. Provenance Manifest
+`manifest.json` records the command, random seed, input file checksums, and output hashes. The report-local command regenerates every artifact:
 
 ```bash
-python reports/1780997954.15097.28a25ecb__s00a_sorted_hrdmax_semantics/s00a_sorted_hrdmax_semantics.py
+python reports/1780997954.15097.28a25ecb__s00a_sorted_hrdmax_semantics/run_s00a_analysis.py
 ```
 
-Generated artifacts are listed in `manifest.json`.
+## 8. Findings & Next Steps
+The sorted `hrdMax` branch is not a safe count proxy for the S00 raw gate. It overcounts by 65,636 records because its baseline is the waveform minimum rather than S00's pre-trigger median. The corrected sorted waveform gate exactly reproduces S00, so downstream studies can use sorted waveforms safely only when they preserve this baseline convention.
+
+This agrees with the rolling S00/S01b summary: the raw-ROOT selected table remains the source of truth. The new result explains why a tempting sorted-file shortcut silently overcounts.
+
+Hypothesis: any downstream shape or q-template result that used naive `hrdMax` near threshold has an inflated low-amplitude selected population. The highest-information follow-ups are:
+- `S00b`: add an integrator regression that rejects sorted `hrdMax` as a raw-gate proxy, preventing future count drift.
+- `S01c`: compute q_template using the corrected sorted-waveform amplitude semantics and compare against the S00 selected table, testing whether the semantic correction is enough for shape-quality work.
+
+## 9. Reproducibility
+Artifacts written:
+
+- `REPORT.md`
+- `run_s00a_analysis.py`
+- `counts_by_run.csv`
+- `input_sha256.csv`
+- `ml_sample.csv.gz`
+- `ml_cv_scan.csv`
+- `ml_benchmark.csv`
+- `ml_reliability.csv`
+- `fig_raw_vs_sorted_counts_by_run.png`
+- `fig_ml_reliability.png`
+- `result.json`
+- `manifest.json`
+

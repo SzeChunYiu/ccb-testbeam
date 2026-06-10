@@ -1,0 +1,106 @@
+{
+  "study": "S07d",
+  "ticket": "1781006575.2866.622a4328",
+  "worker": "testbeam-laptop-4",
+  "title": "recover historical App.A label table",
+  "documented_target": {
+    "labelled_events": 12147,
+    "clean": 10636,
+    "violating": 1511
+  },
+  "raw_cfd20_reproduced": {
+    "labelled_events": 9897,
+    "clean": 7583,
+    "violating": 2314,
+    "ambiguous": 5457,
+    "downstream_ge2_events": 15354
+  },
+  "raw_cfd20_matches_documented": false,
+  "source_table_found": false,
+  "definition_grid_exact_match_found": false,
+  "best_definition_scan": {
+    "baseline": "mean4",
+    "amp_cut_adc": 500.0,
+    "pickoff_kind": "cfd",
+    "pickoff_value": 0.1,
+    "events_total": 1096728,
+    "selected_pulses": 688328,
+    "downstream_ge2": 17431,
+    "clean": 9095,
+    "violating": 2927,
+    "ambiguous": 5409,
+    "labelled_events": 12022,
+    "scope": "doc_32_runs",
+    "delta_labelled": -125,
+    "delta_clean": -1541,
+    "delta_violating": 1416,
+    "target_l1_distance": 3082,
+    "target_exact_match": false
+  },
+  "traditional": {
+    "method": "traditional_span_q_template",
+    "roc_auc": 0.9124552019021761,
+    "roc_auc_ci_low": 0.8845645656268462,
+    "roc_auc_ci_high": 0.9284224755504522,
+    "average_precision": 0.9606239382654218,
+    "average_precision_ci_low": 0.9148843088847046,
+    "average_precision_ci_high": 0.9764620301583833,
+    "note": "Uses downstream span; overlaps weak-label definition",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "traditional_deleaked": {
+    "method": "traditional_q_template_only",
+    "roc_auc": 0.7169178521167816,
+    "roc_auc_ci_low": 0.6900920393639717,
+    "roc_auc_ci_high": 0.7397032772930457,
+    "average_precision": 0.8818900733465731,
+    "average_precision_ci_low": 0.8148550562582197,
+    "average_precision_ci_high": 0.908382241236416,
+    "note": "No timing-span feature",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "ml": {
+    "method": "rf_clean_timing",
+    "roc_auc": 0.9936175070219734,
+    "roc_auc_ci_low": 0.9915528299860639,
+    "roc_auc_ci_high": 0.9953078260501987,
+    "average_precision": 0.9978475374770022,
+    "average_precision_ci_low": 0.9960071934260497,
+    "average_precision_ci_high": 0.998577263679502,
+    "note": "RF excludes timing spans, pair residuals, run, and sample",
+    "brier": 0.026000284351047103,
+    "brier_ci_low": 0.0234819730219862,
+    "brier_ci_high": 0.029357968509903708
+  },
+  "leaky_control": {
+    "method": "leaky_rf_control",
+    "roc_auc": 0.9999999999999999,
+    "roc_auc_ci_low": 0.9999999999999999,
+    "roc_auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "average_precision_ci_low": 1.0,
+    "average_precision_ci_high": 1.0,
+    "note": "RF with forbidden label-defining timing spans",
+    "brier": 0.002335096906519338,
+    "brier_ci_low": 0.0020822429257881868,
+    "brier_ci_high": 0.0026333139188985666
+  },
+  "best_rf_params": {
+    "n_estimators": 300,
+    "max_depth": 7,
+    "min_samples_leaf": 15
+  },
+  "rf_feature_count": 46,
+  "rf_forbidden_features_present": [],
+  "qtemplate_unmatched_events": 2,
+  "verdict": "retire_12147_pending_source_table",
+  "runtime_sec": 190.182,
+  "next_tickets": [
+    "S07e: archive provenance search for the App.A training table outside this repo; expected information gain: determines whether 12,147 came from a lost derived table rather than raw HRDv.",
+    "S03d: independent timing-tail validation of q_template-only clean-timing cuts; expected information gain: replaces App.A weak labels with an external held-out timing-tail gate."
+  ]
+}

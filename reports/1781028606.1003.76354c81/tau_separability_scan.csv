@@ -1,0 +1,11 @@
+method,tau_definition,tau_ns,metric,low_value,high_value,high_minus_low,ci_low,ci_high,n_bootstrap,bootstrap_unit,candidate_survival_given_candidate_high,candidate_survival_given_candidate_low
+traditional,score_only_no_tau,0.0,quiet_candidate_rate_high_minus_low,0.8463704649898584,0.8496419398799696,0.003271474890111259,-0.018892156309863177,0.025167411724835446,600,source_run_within_current_group,,
+traditional,s10d_ml_resolvable_delay,20.0,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.8284377112136992,0.8148021660507903,-0.01363554516290899,-0.0404494503790023,0.012209334378709302,600,source_run_within_current_group,0.9559412550066756,0.9771754636233951
+traditional,s10d_template_resolvable_delay,60.0,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.0017002122808396887,0.003401243546400399,0.0017010312655607101,-0.0014268351809628636,0.0049399807047199725,600,source_run_within_current_group,0.0037828215398308857,0.0014265335235378032
+traditional,s10_assumed_tau_eff,90.0,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.0,0.0,0.0,0.0,0.0,600,source_run_within_current_group,0.0,0.0
+traditional,s10b_measured_live10,124.79018394263471,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.0,0.0,0.0,0.0,0.0,600,source_run_within_current_group,0.0,0.0
+ml,score_only_no_tau,0.0,quiet_candidate_rate_high_minus_low,0.03041469674479092,0.05499400503184214,0.024579308287051217,0.013521757148098648,0.03673702820996737,600,source_run_within_current_group,,
+ml,s10d_ml_resolvable_delay,20.0,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.004606297664910764,0.02387487879026129,0.019268581125350525,0.014295112135388003,0.024906439185470555,600,source_run_within_current_group,0.47478991596638653,0.15789473684210525
+ml,s10d_template_resolvable_delay,60.0,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.0,0.0016178224179049716,0.0016178224179049716,0.0005667374269465631,0.002871946005975311,600,source_run_within_current_group,0.025210084033613446,0.0
+ml,s10_assumed_tau_eff,90.0,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.0,0.0,0.0,0.0,0.0,600,source_run_within_current_group,0.0,0.0
+ml,s10b_measured_live10,124.79018394263471,quiet_candidate_rate_delay_ge_tau_high_minus_low,0.0,0.0,0.0,0.0,0.0,600,source_run_within_current_group,0.0,0.0

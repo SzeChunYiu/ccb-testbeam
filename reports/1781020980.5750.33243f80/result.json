@@ -1,0 +1,152 @@
+{
+  "study": "S03e",
+  "ticket": "1781020980.5750.33243f80",
+  "worker": "testbeam-laptop-2",
+  "title": "blind Sample-I-analysis to Sample-II transfer for S03a/S03d population coefficients",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "counts": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected_pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis B2",
+        "report_value": 88213,
+        "reproduced": 88213,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis B4",
+        "report_value": 21229,
+        "reproduced": 21229,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis B6",
+        "report_value": 11148,
+        "reproduced": 11148,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis B8",
+        "report_value": 4506,
+        "reproduced": 4506,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      }
+    ]
+  },
+  "split": {
+    "train_sample": "Sample I analysis",
+    "train_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_sample": "Sample II analysis",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.5000000000000036,
+    "ci": [
+      2.359067938531375,
+      2.6090679385313607
+    ]
+  },
+  "traditional": {
+    "s03a_global_population": {
+      "candidate": "amp_only",
+      "alpha": 100.0,
+      "value": 1.722539772521084,
+      "ci": [
+        1.6813819518476765,
+        1.9462393152907567
+      ],
+      "gain_vs_template_phase_ns": 0.7774602274789195
+    },
+    "s03d_hierarchical_population": {
+      "alpha_global": 10.0,
+      "alpha_dev": 1.0,
+      "cv_sigma68_ns": 0.48378934243810234,
+      "value": 1.1432391811791112,
+      "ci": [
+        1.024300492181835,
+        1.243142067517064
+      ],
+      "gain_vs_s03a_ns": 0.5793005913419729,
+      "gain_vs_template_phase_ns": 1.3567608188208924
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector",
+    "cv_sigma68_ns": 1.361280176265734,
+    "params": {
+      "max_iter": 60,
+      "learning_rate": 0.05,
+      "max_leaf_nodes": 15,
+      "l2_regularization": 0.0,
+      "max_bins": 64,
+      "random_state": 20260610
+    },
+    "value": 1.6733087657804793,
+    "ci": [
+      1.5721216965647888,
+      1.7983214801233696
+    ],
+    "gain_vs_template_phase_ns": 0.8266912342195243
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_heldout_overlap_total": 0.0,
+    "forbidden_run_event_current_feature_count": 0.0,
+    "sample_ii_used_for_final_fit": false,
+    "shuffled_target_min_sigma68_ns": 2.526940152998553,
+    "too_good_flag": false
+  },
+  "verdict": "sample_i_analysis_population_transfer_supported_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "72ed010eced11165c441248e4f770438d46e736c",
+  "next_tickets": []
+}

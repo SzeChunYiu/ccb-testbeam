@@ -1,0 +1,4 @@
+method,roc_auc,roc_auc_ci_low,roc_auc_ci_high,average_precision,ap_ci_low,ap_ci_high,brier,notes
+traditional D_t/curvature,1.0,0.9999999999999999,1.0,1.0,0.9999999999999998,1.0000000000000002,0.0,Label-defining timing-span comparator; leakage ceiling.
+curvature-only cross-check,0.6563225058004641,0.6139877550904839,0.680933496958181,0.3315026235368737,0.24447474692245533,0.3786468925184365,0.24773968670314864,Independent only for all-three-downstream events; missing curvature imputed.
+shape-only RF,0.9987174529517918,0.9977930301349602,0.9992516233041217,0.9647692114442399,0.9236846115514756,0.9804352648751129,0.006118330364716417,"Best params={'n_estimators': 500, 'max_depth': 7, 'min_samples_leaf': 8}; strict aggregate shape; excludes D_t, C_t, run id, event id, absolute amplitudes, present flags."

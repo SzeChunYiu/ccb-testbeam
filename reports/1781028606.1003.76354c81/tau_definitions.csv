@@ -1,0 +1,5 @@
+tau_definition,tau_ns,source,reproduced_anchor,rmax_mhz
+s10d_ml_resolvable_delay,20.0,S10d raw-pulse injected benchmark headline,True,
+s10d_template_resolvable_delay,60.0,S10d raw-pulse injected benchmark headline,True,
+s10_assumed_tau_eff,90.0,S10 assumed live window used for combined Rmax,True,4.222222222222222
+s10b_measured_live10,124.79018394263471,S10b measured 10pct template live-time reproduced from raw ROOT,True,3.045111305987686

@@ -1,0 +1,5 @@
+feature,quantile,threshold,direction,selected_fraction_train,precision_train_high_risk,tail_precision_train,score,selected_rule,heldout_run,method_name
+f_q_template_rmse_absdiff,0.9,0.17595443427562715,high,0.10044150110375276,0.6153846153846154,0.18681318681318682,0.3964974043616428,True,42,trad_q_template_rmse_absdiff_high_q0.90
+f_q_template_rmse_absdiff,0.9,0.17611002922058105,high,0.10049153468050245,0.6086956521739131,0.1956521739130435,0.39723185239712205,True,57,trad_q_template_rmse_absdiff_high_q0.90
+f_q_template_rmse_absdiff,0.9,0.11901494860649109,high,0.10081008100810081,0.44642857142857145,0.11607142857142858,0.26122500642921437,True,64,trad_q_template_rmse_absdiff_high_q0.90
+f_q_template_rmse_absdiff,0.9,0.1444378972053528,high,0.1,0.5955056179775281,0.20224719101123595,0.40238764044943826,True,65,trad_q_template_rmse_absdiff_high_q0.90

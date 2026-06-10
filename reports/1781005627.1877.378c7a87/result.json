@@ -1,0 +1,71 @@
+{
+  "study": "S03c",
+  "ticket": "1781005627.1877.378c7a87",
+  "worker": "testbeam-laptop-2",
+  "title": "multi-heldout-run timing correction stability with leave-one-run-out intervals",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03a_run65_reproduction_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "s03a_reference": {
+    "base_sigma68_ns": 2.889152765080617,
+    "analytic_sigma68_ns": 1.494640076269676,
+    "ml_template_sigma68_ns": 1.3915306248207993
+  },
+  "traditional": {
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "method": "analytic_timewalk_on_template_phase",
+    "value": 1.5510917109777833,
+    "ci": [
+      1.3674322130216197,
+      1.903435937962398
+    ],
+    "gain_vs_template_phase_ns": 1.1903228191074322
+  },
+  "ml": {
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "method": "ridge_residual_corrector_on_template_phase",
+    "value": 1.5369230041797883,
+    "ci": [
+      1.3352459932446745,
+      1.8191201782590218
+    ],
+    "gain_vs_template_phase_ns": 1.2044915259054272
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6808109129566127,
+      2.9861718468144858
+    ]
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "shuffled_target_min_sigma68_ns": 2.460127310112868
+  },
+  "verdict": "analytic_closure_stable_across_sample_ii_runs",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "3d4a211dd0468e4499a1806f1212e31203b4a6b7",
+  "critic": "pending",
+  "next_tickets": [
+    "S03d: run-level hierarchical shrinkage for analytic timewalk coefficients",
+    "S03e: blind sample-I to sample-II transfer of analytic timewalk correction"
+  ]
+}

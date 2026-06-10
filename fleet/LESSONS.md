@@ -37,8 +37,12 @@ Permanent fixes now in force — every worker MUST respect them:
 - **Data is read-only.** It lives OUTSIDE the repo at `/home/billy/ccb-data` (immutable,
   `chattr +i`), exposed as `./data` (a read-only symlink). **Never** write to, delete, move,
   `git clean`, or `rm` anything under `./data` or its target. Read only.
-- **You are sandboxed.** Workers run `codex --sandbox workspace-write`: writes outside your own
-  clone are blocked by the OS. Do not attempt to escape it.
+- **You are sandboxed (via bubblewrap, not codex).** Workers run codex inside an external
+  `bwrap` jail (`~/.tb-bwrap-codex.sh`) because codex 0.129-alpha's own `--sandbox workspace-write`
+  is broken on this kernel (5.15): it grants write only to the cwd, not `.git` or `--add-dir`
+  roots, so workers could not commit/PR/claim. The bwrap jail makes your clone (incl. `.git`) +
+  the tn-ticket queue writable and everything else (canonical repo, data, other clones) read-only.
+  Writes outside your clone are blocked by the OS. Do not attempt to escape it.
 - **Never `rm -rf`, `git clean -xfd`, or re-clone the repo at a shared path.** Work only inside
   your own clone. If something seems broken, report it — do not "reset" by deleting.
 - The canonical repo and every other worker's clone are off-limits.

@@ -1,0 +1,8 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total_selected_b_pulses,640737,640737,0,0,True
+sample_i_analysis_b_selected_pulses,252266,252266,0,0,True
+sample_ii_analysis_b_selected_pulses,125096,125096,0,0,True
+astack_sample_iii_analysis_events_with_selected,7168,7168,0,0,True
+astack_sample_iii_analysis_selected_pulses,9682,9682,0,0,True
+astack_sample_iv_analysis_events_with_selected,767,767,0,0,True
+astack_sample_iv_analysis_selected_pulses,894,894,0,0,True

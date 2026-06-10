@@ -1,0 +1,25 @@
+{
+  "ticket_id": "1781017385.1145.1466621b",
+  "study_id": "P01d",
+  "script": "scripts/p01d_1781017385_1145_1466621b_run_family_leakage_sentinels.py",
+  "config": "configs/p01d_1781017385_1145_1466621b_run_family_leakage_sentinels.json",
+  "python": "3.7.6",
+  "git_commit": "69cab21b12af5d353a7a8aeaa416a69b9fb8dcd3",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1781017385.1145.1466621b/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "input_sha256.csv",
+    "reproduction_match_table.csv",
+    "reproduction_counts_by_run.csv",
+    "family_probe_metrics.csv",
+    "shuffle_nulls.csv",
+    "leakage_checks.csv",
+    "family_splits.csv",
+    "heldout_by_run_metrics.csv"
+  ]
+}

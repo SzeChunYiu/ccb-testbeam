@@ -19,11 +19,16 @@ DATA=/home/billy/ccb-data/extracted
 WK="$HOME/.tb-workers"
 PROMPTS="$HOME/.tb-prompts"
 N="${1:-5}"
-# sandboxed codex: confine writes to the clone, keep network for git/gh/tn-ticket.
-# --add-dir grants a few NARROW tooling paths (tn-ticket state, caches) that are NOT the
-# data store or the canonical repo — so deletion of data/repo stays impossible while the
-# bookkeeping tools (tn-ticket, matplotlib, torch) can write their state/caches.
-SANDBOXED_CODEX='codex --sandbox workspace-write --ask-for-approval never -c sandbox_workspace_write.network_access=true --add-dir /home/billy/.config/tn --add-dir /home/billy/.cache --add-dir /home/billy/.config/gh'
+# Sandboxed codex via EXTERNAL bubblewrap jail (~/.tb-bwrap-codex.sh).
+# codex 0.129-alpha's internal Landlock sandbox is broken on this kernel (5.15): it grants write
+# ONLY to the workspace cwd — not .git, not any --add-dir root — so workers could not commit, PR,
+# or claim tickets. The bwrap wrapper bypasses that broken sandbox and confines codex itself:
+#   rw = this clone (incl .git) + tn-ticket queue + caches + gh config + CODEX_HOME
+#   ro = canonical repo, immutable data store, all other clones.
+# Proven: git commit + ticket claim work; data/repo/other-clone writes are EROFS. See the wrapper
+# header and fleet/LESSONS.md. (Old broken line kept for reference:)
+#   codex --sandbox workspace-write --ask-for-approval never -c sandbox_workspace_write.network_access=true --add-dir /home/billy/.config/tn --add-dir /home/billy/.cache --add-dir /home/billy/.config/gh
+SANDBOXED_CODEX="$HOME/.tb-bwrap-codex.sh"
 mkdir -p "$WK" "$PROMPTS"
 
 [ -d "$DATA" ] || { echo "ERROR: data store $DATA missing — run data setup first"; exit 1; }
@@ -36,8 +41,15 @@ for n in $(seq 1 "$N"); do
   git clone -q --depth 1 "$GH" "$clone" || { echo "[$label] clone failed"; continue; }
   ln -sfn "$DATA" "$clone/data"          # read-only data (immutable + outside sandbox)
 
-  printf '/goal You are %s, fully sandboxed in your own clone (this dir; you cannot write outside it). Read fleet/WORKER_PROTOCOL.md + fleet/SCALING.md, then tn-ticket claim %s --project testbeam; reproduce-first, traditional AND ML, data is read-only at ./data, write only your reports/<id> dir, open a PR. One ticket, then stop.\n' \
-    "$label" "$label" > "$PROMPTS/$label.txt"
+  # SHORT, SELF-CONTAINED, SLASH-FREE prompt. Rules learned the hard way:
+  #  * Only the leading /goal may contain a slash — codex's TUI slash-menu EATS any other "/"
+  #    (a path like fleet/X.md injected mid-prompt loses its slash, and a long blob injected
+  #    before the composer is ready mis-resolves /goal -> /model). So NO paths, NO extra slashes.
+  #  * Keep it short and don't tell the worker to read long docs — reading docs/ wastes turns and
+  #    can freeze the pane. The worker is a capable agent; the essentials are inline here.
+  #  * Keep /goal — it drives the auto-cycle (Pursuing goal -> auto-resend -> next ticket).
+  printf '/goal Take ONE ccb-testbeam study: run "tn-ticket claim %s --project testbeam". Reproduce its number from raw ROOT, then a traditional AND an ML method split by run with held-out CIs, write a short report, run "tn-ticket done <id>", open a PR, then stop.\n' \
+    "$label" > "$PROMPTS/$label.txt"
 
   ( cd "$clone" && CODEX_SUPERVISOR_SESSION="tb$n" "$HOME/codex-supervisor.sh" stop >/dev/null 2>&1 )
   rm -f "$HOME/.codex-supervisor/run/tb$n.disabled"

@@ -1,0 +1,7 @@
+check,value,pass
+train_heldout_run_overlap,0.0,True
+train_heldout_event_overlap,0.0,True
+b2_rows_used_in_target_fit,0.0,True
+run_event_or_target_features_used,0.0,True
+ml_shuffled_target_worse_than_real_external,0.16843208916376204,True
+too_good_external_sigma68_lt_1ns,0.0,True

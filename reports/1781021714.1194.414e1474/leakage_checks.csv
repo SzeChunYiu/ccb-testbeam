@@ -1,0 +1,10 @@
+check,value,pass,note
+raw_reproduction_before_gallery,640737.0,True,script raises before gallery/P09b load if this fails
+p09a_taxon_absent_from_review_features,0.0,True,review and ML feature columns exclude P09a taxon names
+identifier_absent_from_ml_features,0.0,True,run/event/stave fields are split keys only
+ml_train_test_run_overlap,0.0,True,leave-one-run-out folds train only on other gallery runs
+duplicate_gallery_waveform_hashes_1e3,12.0,True,duplicates are expected from cross-method gallery overlap; cross-run leakage is checked separately
+cross_run_duplicate_gallery_hashes_1e3,0.0,True,same rounded waveform must not appear in more than one held-out run
+ml_loro_train_test_hash_overlap_1e3,0.0,True,no rounded waveform hash crosses a leave-one-run-out ML fold
+traditional_exact_agreement_too_perfect,0.75,True,near-perfect agreement would suggest copied P09b rubric
+ml_exact_agreement_too_perfect,0.94921875,True,near-perfect LORO agreement would suggest leakage

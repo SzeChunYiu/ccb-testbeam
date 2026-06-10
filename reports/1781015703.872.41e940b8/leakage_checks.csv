@@ -1,0 +1,22 @@
+heldout_run,check,value,detail
+58,train_heldout_event_id_overlap,0.0,must be zero
+58,feature_audit,0.0,"true waveform uses same-pulse normalized samples plus stave; controls use amplitude-only, phase-scrambled, row-sample-permuted, run-only, or shuffled targets; no event id, event order, pair residual, other-stave time, or held-out target feature"
+58,analytic_candidate,0.0,"amp_only, alpha=100.0"
+59,train_heldout_event_id_overlap,0.0,must be zero
+59,feature_audit,0.0,"true waveform uses same-pulse normalized samples plus stave; controls use amplitude-only, phase-scrambled, row-sample-permuted, run-only, or shuffled targets; no event id, event order, pair residual, other-stave time, or held-out target feature"
+59,analytic_candidate,0.0,"amp_only, alpha=100.0"
+60,train_heldout_event_id_overlap,0.0,must be zero
+60,feature_audit,0.0,"true waveform uses same-pulse normalized samples plus stave; controls use amplitude-only, phase-scrambled, row-sample-permuted, run-only, or shuffled targets; no event id, event order, pair residual, other-stave time, or held-out target feature"
+60,analytic_candidate,0.0,"amp_only, alpha=100.0"
+61,train_heldout_event_id_overlap,0.0,must be zero
+61,feature_audit,0.0,"true waveform uses same-pulse normalized samples plus stave; controls use amplitude-only, phase-scrambled, row-sample-permuted, run-only, or shuffled targets; no event id, event order, pair residual, other-stave time, or held-out target feature"
+61,analytic_candidate,0.0,"amp_only, alpha=100.0"
+62,train_heldout_event_id_overlap,0.0,must be zero
+62,feature_audit,0.0,"true waveform uses same-pulse normalized samples plus stave; controls use amplitude-only, phase-scrambled, row-sample-permuted, run-only, or shuffled targets; no event id, event order, pair residual, other-stave time, or held-out target feature"
+62,analytic_candidate,0.0,"amp_only, alpha=100.0"
+63,train_heldout_event_id_overlap,0.0,must be zero
+63,feature_audit,0.0,"true waveform uses same-pulse normalized samples plus stave; controls use amplitude-only, phase-scrambled, row-sample-permuted, run-only, or shuffled targets; no event id, event order, pair residual, other-stave time, or held-out target feature"
+63,analytic_candidate,0.0,"amp_only, alpha=100.0"
+65,train_heldout_event_id_overlap,0.0,must be zero
+65,feature_audit,0.0,"true waveform uses same-pulse normalized samples plus stave; controls use amplitude-only, phase-scrambled, row-sample-permuted, run-only, or shuffled targets; no event id, event order, pair residual, other-stave time, or held-out target feature"
+65,analytic_candidate,0.0,"amp_only, alpha=100.0"

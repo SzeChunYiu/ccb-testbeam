@@ -1,0 +1,11 @@
+split,method,target,ami,purity,rows,unit,units
+stave,traditional,s01_q_template_bin,0.17130212073001574,0.4076696086571174,31407,stave,4
+stave,traditional,peak_group,0.508324973567589,0.823724083183095,31407,stave,4
+stave,traditional,downstream_topology,0.027739177149618592,0.8491182953855112,31407,stave,4
+stave,traditional,dt_label,0.07600492185141329,0.7239300081973364,31407,stave,4
+stave,traditional,manual_flag,0.6057399668787582,0.9296260850664688,31407,stave,4
+stave,ml_autoencoder,s01_q_template_bin,0.15379882695957903,0.4240724557219372,31407,stave,4
+stave,ml_autoencoder,peak_group,0.45649489971757473,0.7876333125588024,31407,stave,4
+stave,ml_autoencoder,downstream_topology,0.03450778656363058,0.8493950200551063,31407,stave,4
+stave,ml_autoencoder,dt_label,0.07939438760983367,0.7351279088793379,31407,stave,4
+stave,ml_autoencoder,manual_flag,0.4105069319714448,0.8924130707472526,31407,stave,4

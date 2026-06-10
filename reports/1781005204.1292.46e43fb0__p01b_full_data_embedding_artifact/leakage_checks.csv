@@ -1,0 +1,3 @@
+method,task,metric,value,ci_low,ci_high,macro_f1,train_rows,heldout_rows
+leakage check: amplitude-only,stave linear probe,balanced_accuracy,0.35411915427380836,0.3281156905782203,0.3684418155416101,0.21389738443606363,100126,59613
+leakage check: AE label-shuffle,stave linear probe,balanced_accuracy,0.23911463225795518,0.2343089419210354,0.24753657203903037,0.06717343686075805,100126,59613

@@ -1,0 +1,3 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total selected B-stave pulses,640737,640737,0,0,True
+adaptive post-correction violations,0,0,0,0,True

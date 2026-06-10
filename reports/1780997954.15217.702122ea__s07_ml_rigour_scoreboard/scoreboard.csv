@@ -1,0 +1,3 @@
+method,metric,value,ci_low,ci_high,average_precision,average_precision_ci_low,average_precision_ci_high,brier_isotonic,notes
+traditional single-shape-variable score,low-current ROC AUC,0.503996468956851,0.49098672681702915,0.5167705598546007,0.19498650848837135,0.1858755487008997,0.2044127809882453,0.20349882009249265,Best one-dimensional waveform-shape score selected inside each training fold.
+calibrated random forest waveform-shape model,low-current ROC AUC,0.7682546212172584,0.7583642351110358,0.7776050885150354,0.39030499770758176,0.37060876023711176,0.41146188239735765,0.14506462359036246,"Run-held-out OOF; best RF params={'n_estimators': 250, 'max_depth': 7, 'min_samples_leaf': 20}."

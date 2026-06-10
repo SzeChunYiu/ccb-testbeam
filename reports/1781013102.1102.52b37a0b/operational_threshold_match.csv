@@ -1,0 +1,13 @@
+threshold,label,tau_eff_ns,source,operational_delay_ns,operational_ci95_low_ns,operational_ci95_high_ns,operational_delay_censored_low,abs_difference_ns
+20pct,20%,101.86521002119034,compact_mlp_classifier_regressor,40.0,15.0,60.0,False,61.865210021190336
+10pct,10%,124.79018394263471,compact_mlp_classifier_regressor,40.0,15.0,60.0,False,84.79018394263471
+5pct,5%,141.0557117938371,compact_mlp_classifier_regressor,40.0,15.0,60.0,False,101.0557117938371
+noise_floor,noise floor,161.18335762759685,compact_mlp_classifier_regressor,40.0,15.0,60.0,False,121.18335762759685
+20pct,20%,101.86521002119034,constrained_template_fit,60.0,15.0,60.0,True,41.865210021190336
+10pct,10%,124.79018394263471,constrained_template_fit,60.0,15.0,60.0,True,64.79018394263471
+5pct,5%,141.0557117938371,constrained_template_fit,60.0,15.0,60.0,True,81.0557117938371
+noise_floor,noise floor,161.18335762759685,constrained_template_fit,60.0,15.0,60.0,True,101.18335762759685
+20pct,20%,101.86521002119034,original_90ns_assumption,90.0,90.0,90.0,False,11.865210021190336
+10pct,10%,124.79018394263471,original_90ns_assumption,90.0,90.0,90.0,False,34.79018394263471
+5pct,5%,141.0557117938371,original_90ns_assumption,90.0,90.0,90.0,False,51.055711793837105
+noise_floor,noise floor,161.18335762759685,original_90ns_assumption,90.0,90.0,90.0,False,71.18335762759685

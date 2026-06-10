@@ -1,0 +1,47 @@
+{
+  "study_id": "S13d",
+  "ticket": "1781023657.1294.140a38e7",
+  "worker": "testbeam-laptop-1",
+  "title": "charge-matched Sample-II current-family timing-tail null",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781023657.1294.140a38e7",
+  "runs": [58, 59, 60, 61, 62, 63, 65],
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "downstream_staves": ["B4", "B6", "B8"],
+  "clean_dt_max_ns": 3.0,
+  "gross_dt_min_ns": 51.0,
+  "documented_gross_dt_min_ns": 50.0,
+  "expected_parent_control_events": 10156,
+  "expected_parent_clean_events": 2155,
+  "expected_parent_gross_events_documented": 74,
+  "expected_parent_gross_events_guarded": 72,
+  "expected_all_three_events": 3774,
+  "expected_all_three_gross_events_guarded": 22,
+  "current_run_families": {
+    "low_all_three_rate_edge": [58, 65],
+    "mid_all_three_rate": [59, 63],
+    "high_all_three_rate": [60, 61, 62]
+  },
+  "target_low_family": "low_all_three_rate_edge",
+  "target_high_family": "high_all_three_rate",
+  "charge_bins": 6,
+  "event_amp_bins": 6,
+  "max_matched_per_stratum_family": 250,
+  "bootstrap_replicates": 1200,
+  "random_seed": 13213,
+  "rf": {
+    "n_estimators": 420,
+    "max_depth": 6,
+    "min_samples_leaf": 10
+  }
+}

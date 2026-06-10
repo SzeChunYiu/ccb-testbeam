@@ -1,0 +1,433 @@
+{
+  "study": "P04j",
+  "ticket_id": "1781026226.572.6e7c10a0",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction_first": {
+    "b_s00_expected_selected_pulses": 640737,
+    "b_s00_reproduced_selected_pulses": 640737,
+    "b_s00_delta": 0,
+    "b_s00_pass": true,
+    "astack_analysis_counts": [
+      {
+        "sample": "sample_iii_analysis",
+        "events_total": 388848,
+        "events_with_selected": 7168,
+        "selected_pulses": 9682,
+        "A1": 2799,
+        "A3": 6883
+      },
+      {
+        "sample": "sample_iv_analysis",
+        "events_total": 262189,
+        "events_with_selected": 767,
+        "selected_pulses": 894,
+        "A1": 167,
+        "A3": 727
+      }
+    ],
+    "ab_rows_expected": 4055,
+    "ab_rows_reproduced": 4055,
+    "p04c_reproduction_summary": [
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "b2_loglinear",
+        "split": "leave_one_run_out",
+        "n": 4055,
+        "bias_median_frac": -0.0476347628,
+        "res68_abs_frac": 0.5202846095,
+        "full_rms_frac": 0.8452595804,
+        "within_10pct": 0.1398273736,
+        "within_25pct": 0.344512947,
+        "bias_ci95": [
+          -0.0690972587,
+          -0.0231608904
+        ],
+        "res68_ci95": [
+          0.5066403115,
+          0.5393543003
+        ],
+        "full_rms_ci95": [
+          0.7338369976,
+          0.9917976779
+        ]
+      },
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "charge_transfer_ridge",
+        "split": "leave_one_run_out",
+        "n": 4055,
+        "bias_median_frac": -0.0474201293,
+        "res68_abs_frac": 0.5192709758,
+        "full_rms_frac": 0.8427617028,
+        "within_10pct": 0.1388409371,
+        "within_25pct": 0.3435265105,
+        "bias_ci95": [
+          -0.071282415,
+          -0.0208015981
+        ],
+        "res68_ci95": [
+          0.5071629086,
+          0.5385599846
+        ],
+        "full_rms_ci95": [
+          0.742925121,
+          0.9929524961
+        ]
+      },
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "b_waveform_extra_trees",
+        "split": "leave_one_run_out",
+        "n": 4055,
+        "bias_median_frac": -0.0476379193,
+        "res68_abs_frac": 0.5202407212,
+        "full_rms_frac": 0.8448973657,
+        "within_10pct": 0.1390875462,
+        "within_25pct": 0.3430332922,
+        "bias_ci95": [
+          -0.0675857248,
+          -0.0228116709
+        ],
+        "res68_ci95": [
+          0.5070093776,
+          0.5356503022
+        ],
+        "full_rms_ci95": [
+          0.7378771897,
+          0.9946479218
+        ]
+      },
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "shuffled_target_extra_trees",
+        "split": "negative_control",
+        "n": 4055,
+        "bias_median_frac": -0.0443198032,
+        "res68_abs_frac": 0.5170648358,
+        "full_rms_frac": 0.8376676894,
+        "within_10pct": 0.140567201,
+        "within_25pct": 0.3474722565,
+        "bias_ci95": [
+          -0.0616664548,
+          -0.0213808688
+        ],
+        "res68_ci95": [
+          0.5011881097,
+          0.5368597763
+        ],
+        "full_rms_ci95": [
+          0.7191922389,
+          0.9918827517
+        ]
+      }
+    ]
+  },
+  "row_definition": {
+    "match_key": "(run, EVT)",
+    "required_source_topology": "B2 amplitude > 1000 ADC",
+    "required_target_topology": "A1 or A3 amplitude > 1000 ADC",
+    "target": "sum positive-lobe charge over selected A1/A3 staves",
+    "features": "B-stack even-channel waveforms and charge summaries only"
+  },
+  "n_ab_rows": 4055,
+  "runs_with_rows": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "split": "held-out by run; nested train-run conformal calibration",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 800
+  },
+  "method_metrics": [
+    {
+      "method": "frozen_peak_loglinear",
+      "n": 4055,
+      "bias_median_frac": -0.0541560714,
+      "res68_abs_frac": 0.5191059742,
+      "full_rms_frac": 0.8398197121,
+      "within_25pct_rate": 0.3450061652,
+      "coverage68": 0.6799013564,
+      "mean_width68_frac": 1.0422714105,
+      "coverage90": 0.8993834772,
+      "mean_width90_frac": 2.167838392,
+      "abstention_threshold_width90_frac": 1.0,
+      "abstention_rate": 0.6345252774,
+      "retained_n": 1482.0,
+      "retained_coverage90": 0.883265857,
+      "retained_res68_abs_frac": 0.5092384384,
+      "retained_within_25pct_rate": 0.350877193,
+      "method_family": "traditional"
+    },
+    {
+      "method": "integral_topology_ridge",
+      "n": 4055,
+      "bias_median_frac": -0.0550207935,
+      "res68_abs_frac": 0.5184080783,
+      "full_rms_frac": 0.8378767094,
+      "within_25pct_rate": 0.3442663379,
+      "coverage68": 0.681134402,
+      "mean_width68_frac": 1.04559822,
+      "coverage90": 0.9011097411,
+      "mean_width90_frac": 2.164717351,
+      "abstention_threshold_width90_frac": 1.0,
+      "abstention_rate": 0.6049321825,
+      "retained_n": 1602.0,
+      "retained_coverage90": 0.8870162297,
+      "retained_res68_abs_frac": 0.5045344392,
+      "retained_within_25pct_rate": 0.3489388265,
+      "method_family": "traditional"
+    },
+    {
+      "method": "adaptive_template_ridge",
+      "n": 4055,
+      "bias_median_frac": -0.0554263129,
+      "res68_abs_frac": 0.5248974467,
+      "full_rms_frac": 0.849628924,
+      "within_25pct_rate": 0.3395807645,
+      "coverage68": 0.6838471023,
+      "mean_width68_frac": 1.0569276462,
+      "coverage90": 0.8991368681,
+      "mean_width90_frac": 2.180548873,
+      "abstention_threshold_width90_frac": 1.0,
+      "abstention_rate": 0.6165228113,
+      "retained_n": 1555.0,
+      "retained_coverage90": 0.8778135048,
+      "retained_res68_abs_frac": 0.5201803972,
+      "retained_within_25pct_rate": 0.3466237942,
+      "method_family": "traditional"
+    },
+    {
+      "method": "support_huber",
+      "n": 4055,
+      "bias_median_frac": -0.0280468032,
+      "res68_abs_frac": 0.5260580377,
+      "full_rms_frac": 0.8802613217,
+      "within_25pct_rate": 0.3383477189,
+      "coverage68": 0.6845869297,
+      "mean_width68_frac": 1.0623212808,
+      "coverage90": 0.8969173859,
+      "mean_width90_frac": 2.2946218057,
+      "abstention_threshold_width90_frac": 1.0,
+      "abstention_rate": 0.7839704069,
+      "retained_n": 876.0,
+      "retained_coverage90": 0.8652968037,
+      "retained_res68_abs_frac": 0.5096790824,
+      "retained_within_25pct_rate": 0.3447488584,
+      "method_family": "traditional"
+    },
+    {
+      "method": "b_waveform_extra_trees",
+      "n": 4055,
+      "bias_median_frac": -0.0543869605,
+      "res68_abs_frac": 0.5180266058,
+      "full_rms_frac": 0.845652578,
+      "within_25pct_rate": 0.3442663379,
+      "coverage68": 0.6818742293,
+      "mean_width68_frac": 1.0470492799,
+      "coverage90": 0.8983970407,
+      "mean_width90_frac": 2.1552744078,
+      "abstention_threshold_width90_frac": 1.0,
+      "abstention_rate": 0.6069050555,
+      "retained_n": 1594.0,
+      "retained_coverage90": 0.8808030113,
+      "retained_res68_abs_frac": 0.5021002535,
+      "retained_within_25pct_rate": 0.3506900878,
+      "method_family": "ml"
+    },
+    {
+      "method": "topology_only_sentinel",
+      "n": 4055,
+      "bias_median_frac": -0.0534165051,
+      "res68_abs_frac": 0.5191053434,
+      "full_rms_frac": 0.8404766058,
+      "within_25pct_rate": 0.3398273736,
+      "coverage68": null,
+      "mean_width68_frac": null,
+      "coverage90": null,
+      "mean_width90_frac": null,
+      "abstention_threshold_width90_frac": null,
+      "abstention_rate": null,
+      "retained_n": null,
+      "retained_coverage90": null,
+      "retained_res68_abs_frac": null,
+      "retained_within_25pct_rate": null,
+      "method_family": "sentinel"
+    },
+    {
+      "method": "run_family_sentinel",
+      "n": 4055,
+      "bias_median_frac": -0.0040286716,
+      "res68_abs_frac": 0.5207429086,
+      "full_rms_frac": 0.8942757556,
+      "within_25pct_rate": 0.3516646116,
+      "coverage68": null,
+      "mean_width68_frac": null,
+      "coverage90": null,
+      "mean_width90_frac": null,
+      "abstention_threshold_width90_frac": null,
+      "abstention_rate": null,
+      "retained_n": null,
+      "retained_coverage90": null,
+      "retained_res68_abs_frac": null,
+      "retained_within_25pct_rate": null,
+      "method_family": "sentinel"
+    },
+    {
+      "method": "shuffled_target_extra_trees",
+      "n": 4055,
+      "bias_median_frac": -0.0580817433,
+      "res68_abs_frac": 0.5219967466,
+      "full_rms_frac": 0.8536244317,
+      "within_25pct_rate": 0.348458693,
+      "coverage68": null,
+      "mean_width68_frac": null,
+      "coverage90": null,
+      "mean_width90_frac": null,
+      "abstention_threshold_width90_frac": null,
+      "abstention_rate": null,
+      "retained_n": null,
+      "retained_coverage90": null,
+      "retained_res68_abs_frac": null,
+      "retained_within_25pct_rate": null,
+      "method_family": "sentinel"
+    }
+  ],
+  "ml_minus_traditional_ci": [
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "bias_median_frac",
+      "ci95_low": -0.0050857891,
+      "ci95_high": 0.0067690789,
+      "point_delta": 0.0010393524
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "res68_abs_frac",
+      "ci95_low": -0.0114826856,
+      "ci95_high": -0.0008411907,
+      "point_delta": -0.0068708409
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "full_rms_frac",
+      "ci95_low": -0.0153822562,
+      "ci95_high": 0.0072920163,
+      "point_delta": -0.003976346
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "within_25pct_rate",
+      "ci95_low": -0.0012332292,
+      "ci95_high": 0.0110947027,
+      "point_delta": 0.0046855734
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "coverage68",
+      "ci95_low": -0.0088210498,
+      "ci95_high": 0.0041252025,
+      "point_delta": -0.001972873
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "mean_width68_frac",
+      "ci95_low": -0.0133640859,
+      "ci95_high": -0.0062550042,
+      "point_delta": -0.0098783663
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "coverage90",
+      "ci95_low": -0.0046953016,
+      "ci95_high": 0.0028595753,
+      "point_delta": -0.0007398274
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "mean_width90_frac",
+      "ci95_low": -0.054386125,
+      "ci95_high": 0.0012993459,
+      "point_delta": -0.0252744653
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "abstention_rate",
+      "ci95_low": -0.1062620169,
+      "ci95_high": 0.0936614524,
+      "point_delta": -0.0096177559
+    },
+    {
+      "delta": "ml_minus_adaptive_template",
+      "metric": "retained_coverage90",
+      "ci95_low": -0.0106754636,
+      "ci95_high": 0.0112486338,
+      "point_delta": 0.0029895065
+    }
+  ],
+  "support_call_counts": [
+    {
+      "support_call": "support_only_or_broad",
+      "n": 16
+    },
+    {
+      "support_call": "low_support",
+      "n": 8
+    },
+    {
+      "support_call": "calibrated_candidate",
+      "n": 3
+    }
+  ],
+  "leakage_audit": {
+    "split": "held-out run; calibration residuals from separate train-run blocks",
+    "features_exclude": [
+      "run",
+      "evt",
+      "target_a_charge",
+      "A1_charge",
+      "A3_charge",
+      "A1_selected",
+      "A3_selected"
+    ],
+    "train_heldout_run_overlap": 0,
+    "topology_only_res68": 0.5191053433534122,
+    "run_family_res68": 0.5207429086192598,
+    "shuffled_target_res68": 0.521996746630176,
+    "ml_res68": 0.5180266058015456,
+    "too_good_flag": false
+  },
+  "finding": "Conformal calibration gives high nominal coverage only by admitting very broad intervals. The global adaptive-template traditional model has res68 0.5249, 90% coverage 0.899, and mean 90% width 2.181 of charge. The ML waveform ExtraTrees model has res68 0.5180, coverage 0.898, and width 2.155. Candidate calibrated strata are ['B2_only|1000_2000|all_B_amp_lt7000|dropout_like|downstream_none', '1000_2000', 'B2_only|1000_2000|all_B_amp_lt7000|late_tail_high|downstream_none'], but these are support-limited.",
+  "next_tickets": [],
+  "runtime_sec": 182.7
+}

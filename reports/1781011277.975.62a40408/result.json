@@ -1,0 +1,109 @@
+{
+  "study": "S03e",
+  "ticket": "1781011277.975.62a40408",
+  "worker": "testbeam-laptop-3",
+  "title": "blind Sample-I to Sample-II transfer of analytic timewalk correction",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03c_reference_reproduction_pass": true
+  },
+  "split": {
+    "train_sample": "Sample I",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_sample": "Sample II analysis",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.0459430282283897,
+    "ci": [
+      1.7959430282283897,
+      2.1783760029080512
+    ]
+  },
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "value": 1.4946665492512594,
+    "ci": [
+      1.3741492866498017,
+      1.6842872180507926
+    ],
+    "gain_vs_template_phase_ns": 0.5512764789771303,
+    "delta_vs_s03c_sample_ii_trained_ns": -0.0564251617265239
+  },
+  "traditional_binned": {
+    "method": "per_stave_monotonic_amplitude_binned_timewalk",
+    "mode": "monotonic",
+    "direction": "decreasing",
+    "n_bins": 4,
+    "value": 1.3979715141141966,
+    "ci": [
+      1.2317882159807034,
+      1.5
+    ],
+    "gain_vs_template_phase_ns": 0.6479715141141931
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_template_phase",
+    "value": 1.4740412476984908,
+    "ci": [
+      1.4083361794009557,
+      1.6344674081041557
+    ],
+    "gain_vs_template_phase_ns": 0.5719017805298989,
+    "delta_vs_s03c_sample_ii_trained_ns": -0.06288175648129757
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_heldout_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "sample_ii_used_for_final_fit": false,
+    "shuffled_target_min_sigma68_ns": 1.7959430282283897,
+    "too_good_flag": false
+  },
+  "verdict": "blind_sample_i_transfer_matches_sample_ii_training",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "a1cc4ddfd57c13fc75a797693d8cc86686def1c2",
+  "next_tickets": [
+    "S03f: Sample-I downstream-only topology stratification for blind timewalk transfer",
+    "S03g: include Sample-II calibration run 64 as a pure transfer diagnostic"
+  ]
+}

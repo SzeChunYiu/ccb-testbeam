@@ -1,0 +1,26 @@
+study_id: S14e
+ticket_id: "1781027683.1000.24e0133d"
+title: range-energy abstention support envelope
+worker: testbeam-laptop-4
+
+output_dir: reports/1781027683.1000.24e0133d
+raw_root_dir: data/root/root
+expected_selected_pulses: 640737
+
+s14b_reference_script: reports/1781011754.1392.25ac6c9f/s14b_1781011754_1392_25ac6c9f_range_energy_preflight.py
+s14b_reference_config: reports/1781011754.1392.25ac6c9f/s14b_1781011754_1392_25ac6c9f_config.yaml
+s14b_reference_result: reports/1781011754.1392.25ac6c9f/result.json
+p04b_reference_result: reports/1781011754.1392.25ac6c9f/p04b_reproduction/result.json
+p04b_uncertainty_table: reports/1781011754.1392.25ac6c9f/p04b_uncertainty_propagation.csv
+
+energy_uncertainty_acceptance_res68: 0.10
+uncertainty_thresholds: [0.05, 0.075, 0.10, 0.125, 0.15, 0.20, 0.25, 0.30, 0.40, 1.00]
+charge_bins_adc: [0.0, 8000.0, 16000.0, 32000.0, 1000000000.0]
+charge_bin_labels: [q_lt_8k, q_8k_16k, q_16k_32k, q_ge_32k]
+min_support_rows: 500
+min_support_runs: 3
+
+random_seed: 1416
+bootstrap_reps: 120
+ml_max_train_rows: 10000
+shuffled_max_train_rows: 10000

@@ -1,0 +1,2 @@
+expected_selected_pulses,reproduced_selected_pulses,delta,pass,expected_p04_charge_hgb_res68,ticket_local_p04_charge_hgb_res68,p04_charge_hgb_reference_delta
+640737,640737,0,True,0.0150719202,0.3836559897965422,0.3685840695965422

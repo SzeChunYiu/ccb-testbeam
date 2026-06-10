@@ -1,0 +1,307 @@
+{
+  "study": "S02d/P07e",
+  "ticket": "1781019500.1834.77b10e02",
+  "worker": "testbeam-laptop-2",
+  "title": "P07e retained-window saturation nuisance in S02-style timing tails",
+  "reproduced": true,
+  "raw_root_dir": "data/root/root",
+  "split": "leave-one-run-out by run over Sample-II analysis runs",
+  "methods": [
+    "observed_saturated",
+    "traditional_template",
+    "ml_corrected"
+  ],
+  "p07e_nuisance": {
+    "retained_window": {
+      "name": "w2_8",
+      "samples": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "artificial_res68_abs_frac": 0.08141019174450627,
+    "artificial_res68_abs_frac_ci95": [
+      0.07681413131694963,
+      0.08499288273772077
+    ],
+    "bias_median_frac": 0.029638615409160424,
+    "bias_median_frac_ci95": [
+      0.026174177674646474,
+      0.032878255611859766
+    ],
+    "adoptable": false
+  },
+  "timing_summary": [
+    {
+      "method": "observed_saturated",
+      "family": "observed",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        14.989285714285716,
+        58.57857142857142
+      ],
+      "timing_tail_frac_abs_gt5ns": 0.6979816354816355,
+      "timing_tail_frac_abs_gt5ns_ci95": [
+        0.5829022704022704,
+        0.8251279266904264
+      ],
+      "tail_delta_vs_observed": 0.0,
+      "tail_delta_vs_observed_ci95": [
+        0.0,
+        0.0
+      ],
+      "timing_sigma68_ns": 19.37500324801181,
+      "timing_sigma68_ns_ci95": [
+        13.264528711323967,
+        26.19540235684005
+      ],
+      "sigma68_delta_vs_observed_ns": 0.0,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        0.0,
+        0.0
+      ],
+      "timing_q95_abs_ns": 57.767997150073654,
+      "timing_q95_abs_ns_ci95": [
+        45.06087808590128,
+        69.13535378377485
+      ],
+      "q_template_median": 0.21842032851879023,
+      "q_template_median_ci95": [
+        0.20439407084908334,
+        0.23687423727123091
+      ],
+      "amp_ratio_median": 1.0,
+      "amp_ratio_median_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "method": "traditional_template",
+      "family": "traditional",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        14.125,
+        58.87142857142855
+      ],
+      "timing_tail_frac_abs_gt5ns": 0.6979816354816355,
+      "timing_tail_frac_abs_gt5ns_ci95": [
+        0.5882854523479523,
+        0.8194960585585584
+      ],
+      "tail_delta_vs_observed": 0.0,
+      "tail_delta_vs_observed_ci95": [
+        0.0,
+        0.0
+      ],
+      "timing_sigma68_ns": 19.374212509358507,
+      "timing_sigma68_ns_ci95": [
+        13.250899872034484,
+        25.961191597854604
+      ],
+      "sigma68_delta_vs_observed_ns": -0.000790738653303131,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        -0.015423567238045674,
+        0.01305135127813628
+      ],
+      "timing_q95_abs_ns": 57.74387890425562,
+      "timing_q95_abs_ns_ci95": [
+        42.41298227050203,
+        67.92435944380212
+      ],
+      "q_template_median": 0.21842032851879023,
+      "q_template_median_ci95": [
+        0.20325498505470233,
+        0.2347775177069245
+      ],
+      "amp_ratio_median": 1.0,
+      "amp_ratio_median_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "method": "ml_corrected",
+      "family": "ml",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        14.135714285714286,
+        58.57857142857142
+      ],
+      "timing_tail_frac_abs_gt5ns": 0.6974090849090848,
+      "timing_tail_frac_abs_gt5ns_ci95": [
+        0.5789938186813186,
+        0.8120648120648121
+      ],
+      "tail_delta_vs_observed": -0.0005725505725505675,
+      "tail_delta_vs_observed_ci95": [
+        -0.03060918060918064,
+        0.030929280929280965
+      ],
+      "timing_sigma68_ns": 19.58211218987574,
+      "timing_sigma68_ns_ci95": [
+        13.635738955242829,
+        25.696000882290978
+      ],
+      "sigma68_delta_vs_observed_ns": 0.20710894186393677,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        -0.005719273358662128,
+        0.4962681026059056
+      ],
+      "timing_q95_abs_ns": 58.3662230817178,
+      "timing_q95_abs_ns_ci95": [
+        45.8322166876664,
+        69.0297198930348
+      ],
+      "q_template_median": 0.22206349393685457,
+      "q_template_median_ci95": [
+        0.20863689118267084,
+        0.23785112569858682
+      ],
+      "amp_ratio_median": 1.1266327617437233,
+      "amp_ratio_median_ci95": [
+        1.1161442408257976,
+        1.1374454300105108
+      ]
+    },
+    {
+      "method": "ml_p07e_nuisance_low",
+      "family": "ml_nuisance",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        15.417857142857144,
+        60.71785714285714
+      ],
+      "timing_tail_frac_abs_gt5ns": 0.700583688083688,
+      "timing_tail_frac_abs_gt5ns_ci95": [
+        0.5986263736263736,
+        0.8339170214170214
+      ],
+      "tail_delta_vs_observed": 0.002602052602052612,
+      "tail_delta_vs_observed_ci95": [
+        -0.020646181896181916,
+        0.030929280929280965
+      ],
+      "timing_sigma68_ns": 19.522850979579918,
+      "timing_sigma68_ns_ci95": [
+        13.374546271475948,
+        26.833127714119623
+      ],
+      "sigma68_delta_vs_observed_ns": 0.14784773156810996,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        -0.009680876978394386,
+        0.34093099731117893
+      ],
+      "timing_q95_abs_ns": 58.15883543531216,
+      "timing_q95_abs_ns_ci95": [
+        43.57644130881115,
+        68.75555017431714
+      ],
+      "q_template_median": 0.2188956662874379,
+      "q_template_median_ci95": [
+        0.20409308275525853,
+        0.23632707038442155
+      ],
+      "amp_ratio_median": 1.0603656816163223,
+      "amp_ratio_median_ci95": [
+        1.0507777232257958,
+        1.0698451676495444
+      ]
+    },
+    {
+      "method": "ml_p07e_nuisance_high",
+      "family": "ml_nuisance",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        15.417857142857144,
+        58.42857142857143
+      ],
+      "timing_tail_frac_abs_gt5ns": 0.7112068112068111,
+      "timing_tail_frac_abs_gt5ns_ci95": [
+        0.6040020377520376,
+        0.8296905834405834
+      ],
+      "tail_delta_vs_observed": 0.013225175725175722,
+      "tail_delta_vs_observed_ci95": [
+        -0.01145431145431148,
+        0.04189560439560442
+      ],
+      "timing_sigma68_ns": 19.755070315098145,
+      "timing_sigma68_ns_ci95": [
+        13.766443182035895,
+        26.83549012432758
+      ],
+      "sigma68_delta_vs_observed_ns": 0.38006706708633636,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        -0.06277727171629155,
+        0.8626883419896475
+      ],
+      "timing_q95_abs_ns": 59.30063467611652,
+      "timing_q95_abs_ns_ci95": [
+        45.55901524158969,
+        69.55884194987796
+      ],
+      "q_template_median": 0.2366831988977514,
+      "q_template_median_ci95": [
+        0.22471370856815734,
+        0.24986028919360712
+      ],
+      "amp_ratio_median": 1.2594302478723876,
+      "amp_ratio_median_ci95": [
+        1.2488600513677797,
+        1.2711258521208442
+      ]
+    }
+  ],
+  "nuisance_envelope": [
+    {
+      "quantity": "ML timing-tail nuisance span",
+      "low": 0.700583688083688,
+      "high": 0.7112068112068111,
+      "span": 0.01062312312312308
+    },
+    {
+      "quantity": "ML sigma68 nuisance span ns",
+      "low": 19.522850979579918,
+      "high": 19.755070315098145,
+      "span": 0.23221933551822715
+    },
+    {
+      "quantity": "P07e artificial res68 CI used",
+      "low": 0.07681413131694963,
+      "high": 0.08499288273772077,
+      "span": 0.008178751420771138
+    }
+  ],
+  "leakage_audit": {
+    "pass": true,
+    "split_by_run": true,
+    "features_excluded": [
+      "run_id",
+      "event_id",
+      "downstream_timing",
+      "true_amplitude",
+      "heldout_labels"
+    ],
+    "too_good_to_be_true": false
+  },
+  "headline_text": "Observed saturated B2 events have tail fraction 0.6980; the train-run retained-window template branch gives 0.6980 (delta +0.0000), and the P07e-style ML correction gives 0.6974 (delta -0.0006). The explicit P07e ML nuisance span is 0.0106 in tail fraction, and the failed P07e adoption screen prevents treating the ML correction as production timing.",
+  "follow_up_text": "No follow-up ticket appended: existing done reports and the study registry already cover P07e duplicate-channel validation and P07g-style saturation acceptance rules, so a new ticket would duplicate existing work.",
+  "git_commit": "60f908f6bae499792b16e17bb3033457bdbf6ebe",
+  "runtime_sec": 23.34
+}

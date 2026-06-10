@@ -1,0 +1,9 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+parent guarded gross D_t>51 ns,72.0,72.0,0.0,0.0,True
+parent documented gross D_t>50 ns,,74.0,,,True
+all-three control events,3774.0,3774.0,0.0,0.0,True
+all-three guarded gross D_t>51 ns,22.0,22.0,0.0,0.0,True
+S07g high-amplitude D_t-extreme events,169.0,169.0,0.0,0.0,True
+S07g high-amplitude clean events,159.0,159.0,0.0,0.0,True
+S07g high-amplitude guarded gross events,10.0,10.0,0.0,0.0,True
+S07g high-amplitude shape RF ROC AUC,1.0,1.0,0.0,0.0,True

@@ -1,0 +1,13 @@
+selector,heldout_run,failed_check,value,interpretation
+median_first4,58,forbidden_heldout_oracle_binned_sigma68_ns,2.346779221060249,forbidden oracle did not improve this fold; not a production leakage failure
+median_first4,59,forbidden_heldout_oracle_binned_sigma68_ns,4.199273038855054,forbidden oracle did not improve this fold; not a production leakage failure
+median_first4,60,forbidden_heldout_oracle_binned_sigma68_ns,2.35491414403889,forbidden oracle did not improve this fold; not a production leakage failure
+median_first4,61,binned_selected_shuffled_target_sigma68_ns,3.100034027238135,"shuffled-target control beat production; branch is unstable, not adoption-ready"
+median_first4,63,forbidden_heldout_oracle_binned_sigma68_ns,2.328908943797438,forbidden oracle did not improve this fold; not a production leakage failure
+dynamic_range,58,binned_selected_shuffled_target_sigma68_ns,3.9376800972755834,"shuffled-target control beat production; branch is unstable, not adoption-ready"
+dynamic_range,59,binned_selected_shuffled_target_sigma68_ns,4.440277393476561,"shuffled-target control beat production; branch is unstable, not adoption-ready"
+dynamic_range,60,binned_selected_shuffled_target_sigma68_ns,3.4129477822333647,"shuffled-target control beat production; branch is unstable, not adoption-ready"
+dynamic_range,61,binned_selected_shuffled_target_sigma68_ns,3.2581371695006194,"shuffled-target control beat production; branch is unstable, not adoption-ready"
+dynamic_range,62,binned_selected_shuffled_target_sigma68_ns,3.934852931944544,"shuffled-target control beat production; branch is unstable, not adoption-ready"
+dynamic_range,63,binned_selected_shuffled_target_sigma68_ns,3.9946529427247146,"shuffled-target control beat production; branch is unstable, not adoption-ready"
+dynamic_range,65,binned_selected_shuffled_target_sigma68_ns,4.027565710637491,"shuffled-target control beat production; branch is unstable, not adoption-ready"

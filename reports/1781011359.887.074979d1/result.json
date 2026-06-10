@@ -1,0 +1,89 @@
+{
+  "study": "S03d",
+  "ticket": "1781011359.887.074979d1",
+  "worker": "testbeam-laptop-3",
+  "title": "physically signed per-stave amplitude timewalk prior versus isotonic fit",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6808109129566127,
+      2.9861718468144893
+    ]
+  },
+  "traditional": {
+    "signed_physics_prior": {
+      "method": "per_stave_nonnegative_inverse_amplitude_prior",
+      "value": 1.6043573218297749,
+      "ci": [
+        1.3966317566122275,
+        1.9426488117190455
+      ],
+      "gain_vs_template_phase_ns": 1.1370572082554407,
+      "delta_vs_s03b_isotonic_ns": 0.04079210566730174,
+      "competitive_with_isotonic_by_ci": true
+    },
+    "s03b_isotonic_decreasing": {
+      "method": "per_stave_monotone_decreasing_binned_timewalk",
+      "value": 1.6451494274970766,
+      "ci": [
+        1.3160611700178284,
+        1.9245382914957236
+      ]
+    }
+  },
+  "comparators": {
+    "s03a_amp_only_ridge": {
+      "value": 1.5510917109777833,
+      "ci": [
+        1.3676650686166307,
+        1.9314834043370597
+      ]
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.3929711020483486,
+    "ci": [
+      1.2532557455846498,
+      1.6545451680841285
+    ],
+    "gain_vs_template_phase_ns": 1.348443428036867,
+    "gain_vs_signed_prior_ns": 0.21138621978142624
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.654429836335119,
+    "hgb_looks_too_good": false,
+    "leakage_flag": false
+  },
+  "verdict": "signed_prior_competitive_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "c0e321dc6d0b7b1c8c3b291067e131111b19d18c",
+  "critic": "pending",
+  "next_tickets": [
+    "S03e: blind Sample-I to Sample-II transfer of signed timewalk priors",
+    "S03f: shared hierarchical signed-prior shrinkage across downstream staves"
+  ]
+}

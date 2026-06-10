@@ -1,0 +1,520 @@
+{
+  "study": "P04c",
+  "ticket_id": "1781011754.1327.31d87446",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction_first": {
+    "b_s00_expected_selected_pulses": 640737,
+    "b_s00_reproduced_selected_pulses": 640737,
+    "b_s00_delta": 0,
+    "b_s00_pass": true,
+    "astack_analysis_counts": [
+      {
+        "sample": "sample_iii_analysis",
+        "events_total": 388848,
+        "events_with_selected": 7168,
+        "selected_pulses": 9682,
+        "A1": 2799,
+        "A3": 6883
+      },
+      {
+        "sample": "sample_iv_analysis",
+        "events_total": 262189,
+        "events_with_selected": 767,
+        "selected_pulses": 894,
+        "A1": 167,
+        "A3": 727
+      }
+    ]
+  },
+  "row_definition": {
+    "match_key": "(run, EVT)",
+    "required_source_topology": "B2 amplitude > 1000 ADC",
+    "required_target_topology": "A1 or A3 amplitude > 1000 ADC",
+    "target": "sum positive-lobe charge over selected A1/A3 staves",
+    "features": "B-stack even-channel waveforms and charge summaries only"
+  },
+  "runs_with_rows": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "n_ab_rows": 4055,
+  "split": "leave-one-run-out by run",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 1000
+  },
+  "topology_counts_by_run": [
+    {
+      "run": 31,
+      "matched_events": 16383,
+      "a_any_selected": 359,
+      "a_pair_selected": 111,
+      "b2_selected": 11294,
+      "ab_rows_b2_and_a_any": 229,
+      "ab_rows_a_pair": 80,
+      "ab_rows_b2_a_any_downstream_any": 0
+    },
+    {
+      "run": 32,
+      "matched_events": 16383,
+      "a_any_selected": 304,
+      "a_pair_selected": 105,
+      "b2_selected": 11564,
+      "ab_rows_b2_and_a_any": 207,
+      "ab_rows_a_pair": 72,
+      "ab_rows_b2_a_any_downstream_any": 4
+    },
+    {
+      "run": 33,
+      "matched_events": 16383,
+      "a_any_selected": 8,
+      "a_pair_selected": 1,
+      "b2_selected": 13656,
+      "ab_rows_b2_and_a_any": 8,
+      "ab_rows_a_pair": 1,
+      "ab_rows_b2_a_any_downstream_any": 1
+    },
+    {
+      "run": 34,
+      "matched_events": 16383,
+      "a_any_selected": 22,
+      "a_pair_selected": 8,
+      "b2_selected": 13830,
+      "ab_rows_b2_and_a_any": 16,
+      "ab_rows_a_pair": 5,
+      "ab_rows_b2_a_any_downstream_any": 0
+    },
+    {
+      "run": 35,
+      "matched_events": 16288,
+      "a_any_selected": 610,
+      "a_pair_selected": 200,
+      "b2_selected": 6130,
+      "ab_rows_b2_and_a_any": 221,
+      "ab_rows_a_pair": 67,
+      "ab_rows_b2_a_any_downstream_any": 8
+    },
+    {
+      "run": 36,
+      "matched_events": 16268,
+      "a_any_selected": 626,
+      "a_pair_selected": 213,
+      "b2_selected": 7216,
+      "ab_rows_b2_and_a_any": 295,
+      "ab_rows_a_pair": 97,
+      "ab_rows_b2_a_any_downstream_any": 11
+    },
+    {
+      "run": 37,
+      "matched_events": 16383,
+      "a_any_selected": 660,
+      "a_pair_selected": 225,
+      "b2_selected": 7036,
+      "ab_rows_b2_and_a_any": 292,
+      "ab_rows_a_pair": 104,
+      "ab_rows_b2_a_any_downstream_any": 10
+    },
+    {
+      "run": 39,
+      "matched_events": 16377,
+      "a_any_selected": 700,
+      "a_pair_selected": 257,
+      "b2_selected": 7238,
+      "ab_rows_b2_and_a_any": 324,
+      "ab_rows_a_pair": 120,
+      "ab_rows_b2_a_any_downstream_any": 16
+    },
+    {
+      "run": 40,
+      "matched_events": 16350,
+      "a_any_selected": 651,
+      "a_pair_selected": 221,
+      "b2_selected": 6854,
+      "ab_rows_b2_and_a_any": 265,
+      "ab_rows_a_pair": 83,
+      "ab_rows_b2_a_any_downstream_any": 9
+    },
+    {
+      "run": 41,
+      "matched_events": 16381,
+      "a_any_selected": 652,
+      "a_pair_selected": 242,
+      "b2_selected": 7197,
+      "ab_rows_b2_and_a_any": 295,
+      "ab_rows_a_pair": 113,
+      "ab_rows_b2_a_any_downstream_any": 14
+    },
+    {
+      "run": 42,
+      "matched_events": 16383,
+      "a_any_selected": 578,
+      "a_pair_selected": 189,
+      "b2_selected": 8114,
+      "ab_rows_b2_and_a_any": 279,
+      "ab_rows_a_pair": 92,
+      "ab_rows_b2_a_any_downstream_any": 11
+    },
+    {
+      "run": 44,
+      "matched_events": 1376,
+      "a_any_selected": 60,
+      "a_pair_selected": 22,
+      "b2_selected": 602,
+      "ab_rows_b2_and_a_any": 30,
+      "ab_rows_a_pair": 11,
+      "ab_rows_b2_a_any_downstream_any": 2
+    },
+    {
+      "run": 45,
+      "matched_events": 16383,
+      "a_any_selected": 635,
+      "a_pair_selected": 202,
+      "b2_selected": 7597,
+      "ab_rows_b2_and_a_any": 302,
+      "ab_rows_a_pair": 91,
+      "ab_rows_b2_a_any_downstream_any": 15
+    },
+    {
+      "run": 46,
+      "matched_events": 0,
+      "a_any_selected": 0,
+      "a_pair_selected": 0,
+      "b2_selected": 0,
+      "ab_rows_b2_and_a_any": 0,
+      "ab_rows_a_pair": 0,
+      "ab_rows_b2_a_any_downstream_any": 0
+    },
+    {
+      "run": 47,
+      "matched_events": 5558,
+      "a_any_selected": 191,
+      "a_pair_selected": 53,
+      "b2_selected": 2653,
+      "ab_rows_b2_and_a_any": 92,
+      "ab_rows_a_pair": 30,
+      "ab_rows_b2_a_any_downstream_any": 3
+    },
+    {
+      "run": 48,
+      "matched_events": 16352,
+      "a_any_selected": 688,
+      "a_pair_selected": 264,
+      "b2_selected": 6294,
+      "ab_rows_b2_and_a_any": 260,
+      "ab_rows_a_pair": 98,
+      "ab_rows_b2_a_any_downstream_any": 10
+    },
+    {
+      "run": 49,
+      "matched_events": 16319,
+      "a_any_selected": 665,
+      "a_pair_selected": 247,
+      "b2_selected": 7235,
+      "ab_rows_b2_and_a_any": 288,
+      "ab_rows_a_pair": 103,
+      "ab_rows_b2_a_any_downstream_any": 14
+    },
+    {
+      "run": 50,
+      "matched_events": 16383,
+      "a_any_selected": 79,
+      "a_pair_selected": 21,
+      "b2_selected": 12260,
+      "ab_rows_b2_and_a_any": 61,
+      "ab_rows_a_pair": 15,
+      "ab_rows_b2_a_any_downstream_any": 1
+    },
+    {
+      "run": 51,
+      "matched_events": 16160,
+      "a_any_selected": 43,
+      "a_pair_selected": 4,
+      "b2_selected": 11154,
+      "ab_rows_b2_and_a_any": 25,
+      "ab_rows_a_pair": 2,
+      "ab_rows_b2_a_any_downstream_any": 0
+    },
+    {
+      "run": 52,
+      "matched_events": 2499,
+      "a_any_selected": 6,
+      "a_pair_selected": 2,
+      "b2_selected": 1743,
+      "ab_rows_b2_and_a_any": 6,
+      "ab_rows_a_pair": 2,
+      "ab_rows_b2_a_any_downstream_any": 0
+    },
+    {
+      "run": 53,
+      "matched_events": 16383,
+      "a_any_selected": 19,
+      "a_pair_selected": 3,
+      "b2_selected": 12830,
+      "ab_rows_b2_and_a_any": 17,
+      "ab_rows_a_pair": 3,
+      "ab_rows_b2_a_any_downstream_any": 0
+    },
+    {
+      "run": 54,
+      "matched_events": 16383,
+      "a_any_selected": 24,
+      "a_pair_selected": 1,
+      "b2_selected": 12890,
+      "ab_rows_b2_and_a_any": 18,
+      "ab_rows_a_pair": 1,
+      "ab_rows_b2_a_any_downstream_any": 0
+    },
+    {
+      "run": 55,
+      "matched_events": 16268,
+      "a_any_selected": 37,
+      "a_pair_selected": 4,
+      "b2_selected": 11113,
+      "ab_rows_b2_and_a_any": 27,
+      "ab_rows_a_pair": 2,
+      "ab_rows_b2_a_any_downstream_any": 1
+    },
+    {
+      "run": 56,
+      "matched_events": 16383,
+      "a_any_selected": 89,
+      "a_pair_selected": 27,
+      "b2_selected": 12118,
+      "ab_rows_b2_and_a_any": 68,
+      "ab_rows_a_pair": 20,
+      "ab_rows_b2_a_any_downstream_any": 1
+    },
+    {
+      "run": 57,
+      "matched_events": 16290,
+      "a_any_selected": 660,
+      "a_pair_selected": 247,
+      "b2_selected": 6619,
+      "ab_rows_b2_and_a_any": 276,
+      "ab_rows_a_pair": 110,
+      "ab_rows_b2_a_any_downstream_any": 16
+    },
+    {
+      "run": 58,
+      "matched_events": 16382,
+      "a_any_selected": 72,
+      "a_pair_selected": 14,
+      "b2_selected": 7427,
+      "ab_rows_b2_and_a_any": 34,
+      "ab_rows_a_pair": 6,
+      "ab_rows_b2_a_any_downstream_any": 4
+    },
+    {
+      "run": 59,
+      "matched_events": 16383,
+      "a_any_selected": 22,
+      "a_pair_selected": 5,
+      "b2_selected": 5175,
+      "ab_rows_b2_and_a_any": 9,
+      "ab_rows_a_pair": 2,
+      "ab_rows_b2_a_any_downstream_any": 4
+    },
+    {
+      "run": 60,
+      "matched_events": 16383,
+      "a_any_selected": 42,
+      "a_pair_selected": 9,
+      "b2_selected": 4665,
+      "ab_rows_b2_and_a_any": 10,
+      "ab_rows_a_pair": 1,
+      "ab_rows_b2_a_any_downstream_any": 2
+    },
+    {
+      "run": 61,
+      "matched_events": 16383,
+      "a_any_selected": 16,
+      "a_pair_selected": 1,
+      "b2_selected": 4749,
+      "ab_rows_b2_and_a_any": 6,
+      "ab_rows_a_pair": 0,
+      "ab_rows_b2_a_any_downstream_any": 3
+    },
+    {
+      "run": 62,
+      "matched_events": 16383,
+      "a_any_selected": 21,
+      "a_pair_selected": 4,
+      "b2_selected": 4863,
+      "ab_rows_b2_and_a_any": 8,
+      "ab_rows_a_pair": 1,
+      "ab_rows_b2_a_any_downstream_any": 2
+    },
+    {
+      "run": 63,
+      "matched_events": 16381,
+      "a_any_selected": 86,
+      "a_pair_selected": 13,
+      "b2_selected": 6401,
+      "ab_rows_b2_and_a_any": 39,
+      "ab_rows_a_pair": 7,
+      "ab_rows_b2_a_any_downstream_any": 2
+    },
+    {
+      "run": 64,
+      "matched_events": 16383,
+      "a_any_selected": 92,
+      "a_pair_selected": 8,
+      "b2_selected": 6239,
+      "ab_rows_b2_and_a_any": 35,
+      "ab_rows_a_pair": 2,
+      "ab_rows_b2_a_any_downstream_any": 2
+    },
+    {
+      "run": 65,
+      "matched_events": 16381,
+      "a_any_selected": 66,
+      "a_pair_selected": 14,
+      "b2_selected": 4874,
+      "ab_rows_b2_and_a_any": 13,
+      "ab_rows_a_pair": 1,
+      "ab_rows_b2_a_any_downstream_any": 0
+    }
+  ],
+  "summary": [
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "b2_loglinear",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0476347628,
+      "res68_abs_frac": 0.5202846095,
+      "full_rms_frac": 0.8452595804,
+      "within_10pct": 0.1398273736,
+      "within_25pct": 0.344512947,
+      "bias_ci95": [
+        -0.0670459169,
+        -0.0230494553
+      ],
+      "res68_ci95": [
+        0.5045081707,
+        0.5378712615
+      ],
+      "full_rms_ci95": [
+        0.7484900933,
+        1.0047248211
+      ]
+    },
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "charge_transfer_ridge",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0474201293,
+      "res68_abs_frac": 0.5192709758,
+      "full_rms_frac": 0.8427617028,
+      "within_10pct": 0.1388409371,
+      "within_25pct": 0.3435265105,
+      "bias_ci95": [
+        -0.0708273828,
+        -0.0207477168
+      ],
+      "res68_ci95": [
+        0.505770223,
+        0.5383365929
+      ],
+      "full_rms_ci95": [
+        0.7297036429,
+        0.9863180013
+      ]
+    },
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "b_waveform_extra_trees",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.047688459,
+      "res68_abs_frac": 0.5209401397,
+      "full_rms_frac": 0.8450488802,
+      "within_10pct": 0.1408138101,
+      "within_25pct": 0.3450061652,
+      "bias_ci95": [
+        -0.0697027352,
+        -0.024935251
+      ],
+      "res68_ci95": [
+        0.5080138395,
+        0.5371296566
+      ],
+      "full_rms_ci95": [
+        0.7476957581,
+        0.9931515856
+      ]
+    },
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "shuffled_target_extra_trees",
+      "split": "negative_control",
+      "n": 4055,
+      "bias_median_frac": -0.0487090479,
+      "res68_abs_frac": 0.5210411563,
+      "full_rms_frac": 0.8479531303,
+      "within_10pct": 0.1437731196,
+      "within_25pct": 0.3447595561,
+      "bias_ci95": [
+        -0.0694387342,
+        -0.0217434939
+      ],
+      "res68_ci95": [
+        0.5089559536,
+        0.5362243978
+      ],
+      "full_rms_ci95": [
+        0.7389373781,
+        0.983715599
+      ]
+    }
+  ],
+  "leakage_audit": {
+    "split": "leave-one-run-out; every prediction is made by a model trained on other runs",
+    "features_exclude": [
+      "run",
+      "evt",
+      "target_a_charge",
+      "A1_charge",
+      "A3_charge",
+      "A1_selected",
+      "A3_selected"
+    ],
+    "train_heldout_run_overlap": 0,
+    "row_key": "(run, EVT)",
+    "shuffled_target_res68": 0.5210411563476081,
+    "ml_res68": 0.5209401397036141
+  },
+  "finding": "The opposite-stack A-charge target does not reproduce the one-percent P04 duplicate-readout closure: B2-only log-linear transfer has res68 0.5203, the strong traditional B-charge ridge has 0.5193 [0.5058, 0.5383], and waveform ExtraTrees has 0.5209 [0.5080, 0.5371]. The best method is charge_transfer_ridge at 0.5193, while the shuffled-target sentinel is 0.5210. This supports the P04b conclusion: duplicate-readout closure is strong, but transfer to an external charge-energy proxy is broad and topology-limited.",
+  "runtime_sec": 150.7
+}

@@ -1,0 +1,3 @@
+representation,heldout_residual_reconstruction_mse,train_rows,heldout_rows
+traditional residual PCA-4,0.010898035950958729,82118,11998
+ML residual masked-denoising AE-4,0.029306048527359962,82118,11998

@@ -1,0 +1,60 @@
+{
+  "study": "S03a",
+  "ticket": "1781000705.514827.50025402",
+  "worker": "testbeam-laptop-3",
+  "title": "run-held-out analytic timewalk correction using S02 best pickoff",
+  "reproduced": true,
+  "s02_reproduction": {
+    "base_method": "template_phase",
+    "template_phase_sigma68_ns": 2.889152765080617,
+    "s02_ml_ridge_on_cfd20_sigma68_ns": 1.8461136615528861,
+    "s02_ml_gain_ns": 1.0430391035277307
+  },
+  "traditional": {
+    "metric": "heldout_pairwise_sigma68_ns",
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "value": 1.494640076269676,
+    "ci": [
+      1.3465222319920906,
+      1.643752816710253
+    ],
+    "gain_vs_template_phase_ns": 1.3945126888109407,
+    "fraction_of_s02_ml_gain_closed": 1.3369706697423598
+  },
+  "ml": {
+    "metric": "heldout_pairwise_sigma68_ns",
+    "method": "ridge_residual_corrector_on_template_phase",
+    "value": 1.3915306248207993,
+    "ci": [
+      1.297450084249719,
+      1.5957417825093732
+    ],
+    "gain_vs_template_phase_ns": 1.4976221402598175
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      65
+    ],
+    "event_id_overlap": 0,
+    "shuffled_target_sigma68_ns": 2.8370451757196617
+  },
+  "verdict": "analytic_exceeds_s02_ml_gain_on_single_heldout_run",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "39762f8f205b46ce0b6fc63d74873e05240b22d6",
+  "critic": "pending",
+  "next_tickets": [
+    "S03b: amplitude-binned analytic template timewalk with per-stave monotonic constraints",
+    "S03c: multi-heldout-run timing correction stability with leave-one-run-out intervals"
+  ]
+}

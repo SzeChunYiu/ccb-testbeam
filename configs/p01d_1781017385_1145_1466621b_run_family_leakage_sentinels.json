@@ -1,0 +1,54 @@
+{
+  "ticket_id": "1781017385.1145.1466621b",
+  "study_id": "P01d",
+  "title": "run-family leakage sentinels for waveform probes",
+  "output_dir": "reports/1781017385.1145.1466621b",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "expected_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "analysis": {
+    "target": "stave_index",
+    "heldout_family_order": [
+      "sample_i_calib",
+      "sample_i_analysis",
+      "sample_ii_analysis",
+      "sample_ii_calib"
+    ],
+    "latent_dim": 6,
+    "max_per_run_stave": 700,
+    "bootstrap_replicates": 500,
+    "shuffle_replicates": 40,
+    "shuffle_margin": 0.03,
+    "too_good_balanced_accuracy": 0.70,
+    "proxy_near_margin": 0.03,
+    "random_seed": 1781017385
+  },
+  "ml": {
+    "latent_dim": 6,
+    "epochs": 16,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "mask_probability": 0.3,
+    "noise_sigma": 0.02,
+    "random_seed": 1781017385
+  }
+}

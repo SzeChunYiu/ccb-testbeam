@@ -1,0 +1,31 @@
+{
+  "best_rf_params": {
+    "max_depth": 7,
+    "min_samples_leaf": 10,
+    "n_estimators": 500
+  },
+  "dataset_events": 4310,
+  "dataset_pairs": 2155,
+  "direct_dt_auc": 0.5095635892731883,
+  "elapsed_seconds": 151.06844115257263,
+  "forbidden_main_rf_columns": [],
+  "median_fit_clean_secondary_fraction": 0.10102613308546109,
+  "median_fit_injected_secondary_fraction": 0.1827455508005072,
+  "pair_split_violations": 0,
+  "raw_reproduction_pass": true,
+  "reproduced_guarded_gross_events": 72,
+  "rf_minus_traditional_auc": 0.24080275192317024,
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "shape_rf_auc": 0.856356393430268,
+  "study_id": "S11b",
+  "ticket_id": "1781012659.1188.131c30d5",
+  "traditional_auc": 0.6155536415070978
+}

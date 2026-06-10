@@ -1,0 +1,4 @@
+method,top_k,curated_precision,novel_precision,known_precision,physics_tail_only_rate,timing_tail_rate,timing_tail_enrichment,curated_enrichment,novel_enrichment,saturation_or_dropout_rate,duplicate_event_rate,max_run_stave_share
+traditional_robust_template,128,0.8984375,0.5546875,0.375,0.0,0.0,0.0,10.595164132047477,7.979388498431467,0.0,0.015625,0.0625
+ml_pca_ae_isolation,128,0.8828125,0.765625,0.1171875,0.0,0.0,0.0,10.41090040801187,11.013803842905405,0.03125,0.046875,0.0625
+balanced_random,128,0.1795703125,0.16375,0.015859375,0.0,0.0,0.0,2.1176508484792285,2.355605393339767,0.000546875,0.0165625,0.0625

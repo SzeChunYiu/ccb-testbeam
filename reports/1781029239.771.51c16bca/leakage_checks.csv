@@ -1,0 +1,5 @@
+source,check,value,flag,note
+s10e_highstat,leakage_flags,0.0,False,S10e high-stat leakage table
+s10g_censored,leakage_flags,0.0,False,S10g censored ML leakage table
+s10i_real_pair,leakage_flags,0.0,False,S10i real-pair leakage table
+s10k_frontier,live_time_dominates_all_crossed_definitions,1.0,False,Not leakage: explains why ML-minus-traditional Rmax deltas are zero in many rows.

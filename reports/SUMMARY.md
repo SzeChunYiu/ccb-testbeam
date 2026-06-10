@@ -200,10 +200,13 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   (`1781023340.632.43377364`).
 - Newest reports sharpen the next claims: P10e says explicit handles do not rescue q-space under
   both family holdouts and exposes CFD/peak-sample run-family drift; P10g finds no supported
-  per-run or per-stave conditional-template ML win, with minority-stave failures dominating;
-  P10f says run64-only explicit timewalk does not improve B2-inclusive all-hit external timing
-  closure; S03h shows HGB timewalk gains in several atoms but raises a leakage flag because the
-  stave-only sentinel is nearly as strong as the full model. S02e says current/rate constrained drift does not rescue
+  per-run or per-stave conditional-template ML win, with minority-stave failures dominating; the
+  newest P10f same-pulse leakage stress test separates full CFD/shape/tail ExtraTrees from
+  shuffled controls without hash or exact-nearest-neighbor overlap, but the cross-family
+  empirical-template gain is not CI-stable in every fold; the paired P10f run64-only external
+  closure says explicit timewalk still does not improve B2-inclusive all-hit timing closure; S03h
+  shows HGB timewalk gains in several atoms but raises a leakage flag because the stave-only
+  sentinel is nearly as strong as the full model. S02e says current/rate constrained drift does not rescue
   the unstable binned timewalk branch and leaves shuffled-target controls as a first-class failure
   mode; S13c says residualized CWoLa is diagnostic after charge/topology/anomaly/lowering matching;
   P10f says learned tail surrogates can improve q/tail MSE while still failing live-time transfer

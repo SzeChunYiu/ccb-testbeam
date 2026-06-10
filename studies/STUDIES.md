@@ -1886,11 +1886,15 @@ failure map (`1781066704.689.2f5f3d2a`), S04h B2-inclusive all-hit timing closur
 (`1781066704.794.27df492e`). P10e shows explicit handles still fail to rescue q-space under both
 family holdouts while CFD and peak-sample distributions drift strongly between Sample-I and
 run64. P10g shows no supported per-run or per-stave conditional-template ML win, with the worst
-failures in minority B4/B6/B8 support. P10f shows run64-only explicit timewalk does not improve
-B2-inclusive all-hit external timing closure. S03h finds HGB timewalk gains in several support
-atoms, but the stave-only sentinel is nearly as strong as the full model and the report raises a
-leakage flag. The new tickets split those reports into smaller atoms before q_template, timing,
-charge, saturation, dropout, pile-up, PID, or energy consumers reuse the outputs.
+failures in minority B4/B6/B8 support. The newest P10f same-pulse leakage stress test separates
+full CFD/shape/tail ExtraTrees from shuffled controls without hash or exact-nearest-neighbor
+overlap, but the cross-family empirical-template gain is not CI-stable in every fold and the
+amplitude-only ablation remains the conservative reference. The paired P10f run64-only external
+closure still does not improve B2-inclusive all-hit timing closure. S03h finds HGB timewalk gains
+in several support atoms, but the stave-only sentinel is nearly as strong as the full model and
+the report raises a leakage flag. The new tickets split those reports into smaller atoms before
+q_template, timing, charge, saturation, dropout, pile-up, PID, or energy consumers reuse the
+outputs.
 
 - **S03r — Stave-only HGB leakage dissection.** Decide whether the S03h HGB timewalk gain is a
   real pulse-shape/timing improvement or a stave/support confound. Traditional: freeze S03a
@@ -1902,10 +1906,11 @@ charge, saturation, dropout, pile-up, PID, or energy consumers reuse the outputs
   RMS, |residual|>5 ns tail fraction, bias-vs-log-amplitude slope, false-gain rate under
   sentinels, and ML-minus-traditional deltas with held-out-run bootstrap CIs.
 - **P10k — Minority-stave conditional-template failure map.** Explain why P10g conditional
-  templates fail especially on B4/B6/B8 and whether the failure is support, peak phase,
-  saturation boundary, dropout/anomaly, or q_template drift rather than model class. Traditional:
-  freeze S01 empirical templates and per-stave/peak-phase/q_template residual tables, then compare
-  empirical, mean-template, and explicit-handle binned templates under family-heldout support.
+  templates fail especially on B4/B6/B8 and whether the P10f same-pulse handle gains are support,
+  peak phase, saturation boundary, dropout/anomaly, or q_template drift rather than a portable
+  model class. Traditional: freeze S01 empirical templates and per-stave/peak-phase/q_template
+  residual tables, then compare empirical, mean-template, and explicit-handle binned templates
+  under family-heldout support.
   ML: conditional ridge/ExtraTrees templates with per-feature dropout, density/support
   calibration, and shuffled-template, run-family, stave-only, and amplitude-only sentinels.
   Metric: residual MSE, q_template shift, timing-fit sigma68 shift, minority-stave false-support

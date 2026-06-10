@@ -1,0 +1,27 @@
+{
+  "ticket_id": "0000000001.1.audit01",
+  "study_type": "program_audit",
+  "sources": [
+    "reports/SUMMARY.md",
+    "FINDINGS_SYNTHESIS.md"
+  ],
+  "raw_root_reproduction": {
+    "performed": false,
+    "reason": "Claimed ticket explicitly requested a program-audit meta-study with no raw-ROOT reproduction."
+  },
+  "winner": {
+    "name": "not_applicable_program_audit",
+    "reason": "This audit ranks coverage gaps and next directions rather than running a traditional-vs-ML benchmark."
+  },
+  "top_next_direction": {
+    "title": "S17a GEANT4 energy+PID truth bridge",
+    "expected_information_gain": "Converts the largest missing truth handle, absolute energy and p/d PID, into a falsifiable calibration layer.",
+    "appended_ticket_id": "1781083265.459.750722a1"
+  },
+  "next_tickets": [
+    {
+      "title": "S17a GEANT4 energy+PID truth bridge",
+      "body": "Connect /home/billy/ccb-geant4 to selected pulse support, propagate material-budget uncertainty, and benchmark charge/depth/PID action bands against simulated p/d truth. Expected information gain: separates support leakage from real per-event energy and p/d PID information."
+    }
+  ]
+}

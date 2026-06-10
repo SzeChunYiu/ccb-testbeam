@@ -122,17 +122,16 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
-  `open=10 claimed=0 done=0 failed=11`, below the 18-ticket floor, because the legacy shim treats
+  `open=11 claimed=0 done=0 failed=14`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with recent live post-append audits observing at least 189 open
-  and 159 done while claimed counts moved under concurrent worker activity.
-  The mission trigger still required new ready work. This pass appended five ready non-duplicate
-  tickets: P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
-  S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),
-  P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`),
-  P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`), and
-  S16n large-lowering taxonomy propagation gate (`1781042563.1754.57ab2a20`). The previous pass appended four ready non-duplicate
+  testbeam queue remains deep, with this live post-append audit observing `open=187 claimed=4
+  done=208 failed=7` while workers continue moving tickets.
+  The mission trigger still required new ready work. This pass appended four ready non-duplicate
+  tickets: S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
+  S14i material-budget PID label uncertainty bridge (`1781058292.529.4efe2d6e`),
+  P09i broad-width reviewer-disagreement propagation (`1781058292.535.650c13f1`), and
+  P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The previous pass appended four ready non-duplicate
   tickets: P01h time-local latent residualization gate (`1781040959.702.2d1212fb`),
   S05h saturation-aware covariance support frontier (`1781040960.767.247d3910`),
   S01h q-template run-stave leakage atom grid (`1781040960.832.1c8e6dee`), and
@@ -529,6 +528,23 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   support-calibrated abstention. The new tickets therefore bridge timing transfer, coefficient
   atoms, sparse energy support, and the S06 sigma(A/E) closure after timing/saturation/dropout/
   baseline/action-band gates are applied.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep and reports `open=187 claimed=4 done=208 failed=7`
+  after this pass. The trigger was satisfied by appending four ready, non-duplicate
+  `project:testbeam` tickets: S03o run-61 heavy-tail support exclusion gate
+  (`1781058292.515.16756522`), S14i material-budget PID label uncertainty bridge
+  (`1781058292.529.4efe2d6e`), P09i broad-width reviewer-disagreement propagation
+  (`1781058292.535.650c13f1`), and P05e baseline-overlap negative-control lattice
+  (`1781058292.614.2d602ee2`).
+- Fresh synthesis: the newest readable layer makes the next risk a support-and-label problem.
+  S03e/S03f/S03g show strong timewalk transfer and shrinkage signals, but run-61-like heavy tails
+  and run-64 behavior need blinded exclusion/action gates before corrected times become a shared
+  input. S14c/S14d keep energy and PID useful only inside geometry- and A-stack-supported bands.
+  P09c/P09d show broad-width anomaly adjudication is reliable enough to propagate but not yet a
+  universal veto, and P05/S10/S11/S16 jointly show baseline motion can masquerade as overlap.
+  The new tickets therefore deepen PULSE atoms around heavy-tail timing support, material-budget
+  PID label uncertainty, broad anomaly propagation, and baseline-overlap false positives.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

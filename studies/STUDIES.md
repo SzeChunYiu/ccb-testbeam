@@ -273,17 +273,16 @@ shows explicit timewalk terms beat the conditional template, so learned template
 physics-aware phase structure before adoption.
 
 Live queue decision: the exact requested command `tn-ticket list testbeam` now reports
-`open=10 claimed=0 done=0 failed=11`, which is below the 18-ready floor because the shim treats
+`open=11 claimed=0 done=0 failed=14`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
-with `--project testbeam`: the project-aware testbeam queue remains deep, with recent live
-post-append audits observing at least 189 open and 159 done while claimed counts moved under
-concurrent worker activity, but the mission trigger still required a small set of
-new ready studies. This pass appended five additional non-duplicate ready tickets:
-P06b amplitude-stratified timing bias ledger (`1781042379.490.2f714bdc`),
-S05i covariance coverage calibration by B2 topology (`1781042380.555.680a7339`),
-P02g timing-tail label-source split for morphology RF (`1781042380.620.56983544`),
-P01i domain-score consumer leakage sentinel (`1781042380.684.5b13726c`), and
-S16n large-lowering taxonomy propagation gate (`1781042563.1754.57ab2a20`). The previous pass
+with `--project testbeam`: the project-aware testbeam queue remains deep, with this live
+post-append audit observing `open=187 claimed=4 done=208 failed=7` while claimed counts moved
+under concurrent worker activity, but the mission trigger still required a small set of
+new ready studies. This pass appended four additional non-duplicate ready tickets:
+S03o run-61 heavy-tail support exclusion gate (`1781058292.515.16756522`),
+S14i material-budget PID label uncertainty bridge (`1781058292.529.4efe2d6e`),
+P09i broad-width reviewer-disagreement propagation (`1781058292.535.650c13f1`), and
+P05e baseline-overlap negative-control lattice (`1781058292.614.2d602ee2`). The previous pass
 appended four additional non-duplicate ready tickets: P01g latent
 baseline-contamination atom map (`1781039488.1122.04bc6ecf`), S07l injected morphology
 operating-point support audit (`1781039488.1142.659b28c4`), P09g injected-morphology
@@ -1621,3 +1620,44 @@ S03m (`1781056870.436.378a461c`), S03n (`1781056877.507.6c6921d4`), S14h
   sigma68(A/E), full RMS, tail fraction, pull width, coverage, accepted-support composition,
   bias slope, control false-closure rate, and ML-minus-traditional deltas with run-block and
   atom-stratified bootstrap CIs.
+
+Current steering pass (2026-06-10): the exact requested `tn-ticket list testbeam` command still
+reports `open=11 claimed=0 done=0 failed=14`, below the 18-ready trigger, while the correctly
+addressed local `testbeam` project queue remains deep (`open=187 claimed=4 done=208 failed=7`)
+after appending this batch. Four more ready, non-duplicate `project:testbeam` tickets were cut to
+turn the newest timing, geometry/PID, anomaly, and overlap reports into atom-level support gates:
+S03o (`1781058292.515.16756522`), S14i (`1781058292.529.4efe2d6e`), P09i
+(`1781058292.535.650c13f1`), and P05e (`1781058292.614.2d602ee2`).
+
+- **S03o — Run-61 heavy-tail support exclusion gate.** Decide whether the run-61-like
+  heavy-tail timewalk gain survives when candidate support atoms are excluded from training and
+  tested as a blinded transfer set. Traditional: freeze analytic amp-only timewalk plus
+  run-level hierarchical shrinkage, then reuse coefficients under leave-support-family-out
+  deployment with no waveform features. ML: leakage-audited HGB residual corrector with
+  feature-family ablations trained without candidate heavy-tail atoms and calibrated on untouched
+  runs. Metric: sigma68, full RMS, 95th-percentile absolute residual, coefficient drift, and
+  tail-fraction delta on the excluded support with run-block bootstrap CIs.
+- **S14i — Material-budget PID label uncertainty bridge.** Quantify how much S14d
+  material-budget and geometry envelopes destabilize weak PID/action labels for P08 consumers.
+  Traditional: PSTAR/range-energy lookup over geometry/material variants with conservative
+  PID/action bands and abstention regions. ML: monotonic gradient-boosted or quantile surrogate
+  using charge, depth, topology, and geometry nuisance draws while preserving held-out-run
+  calibration. Metric: PID band purity/efficiency proxy, abstention fraction, action-band flip
+  rate, and energy-ordering violation rate with material-budget plus run-block bootstrap CIs.
+- **P09i — Broad-width reviewer-disagreement propagation.** Test whether broad-width anomaly
+  cases where P09c/P09d reviewers or methods disagree produce measurable timing, charge,
+  pile-up, or baseline biases downstream. Traditional: q_template/width/tail-fraction cuts
+  stratified by held-out run, stave, amplitude, and reviewer agreement. ML: PCA/AE/isolation/RF
+  broad-mismatch score calibrated on held-out runs with reviewer-disagreement as a nuisance label.
+  Metric: curated broad precision, reviewer-disagreement rate, timing sigma68 shift, charge-res68
+  shift, pile-up excess shift, and baseline-lowering enrichment at fixed coverage with stratified
+  bootstrap CIs.
+- **P05e — Baseline-overlap negative-control lattice.** Determine when baseline excursions and
+  pretrigger contamination mimic two-pulse overlap in P05/S10/S11 candidates and whether recovery
+  models reject those false positives without losing true injected overlap. Traditional:
+  constrained two-pulse template fit plus matched pretrigger-lowering and baseline-excursion
+  controls at fixed amplitude and topology. ML: calibrated overlap/CNN score with
+  baseline-excursion nuisance calibration and residualized pretrigger controls. Metric:
+  injected-overlap AP, real-candidate secondary-fraction delta, false-positive rate on baseline
+  controls, recovered-time RMS, and charge-bias/res68 at fixed coverage with stratified run-block
+  bootstrap CIs.

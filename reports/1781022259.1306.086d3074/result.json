@@ -1,0 +1,148 @@
+{
+  "study": "S03e",
+  "ticket": "1781022259.1306.086d3074",
+  "worker": "testbeam-laptop-2",
+  "title": "blind Sample-I to Sample-II transfer of signed S03d timewalk prior",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_reference_pass": true
+  },
+  "split": {
+    "train_sample": "Sample I",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_sample": "Sample II analysis",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.0459430282283897,
+    "ci": [
+      1.7959430282283932,
+      2.045943028228397
+    ]
+  },
+  "traditional": {
+    "signed_physics_prior": {
+      "method": "per_stave_nonnegative_inverse_amplitude_prior",
+      "candidate": "inv_sqrt_amp",
+      "cv_sigma68_ns": 1.4022278257427665,
+      "value": 1.5866849131088911,
+      "ci": [
+        1.4390540814281694,
+        1.7584781587264602
+      ],
+      "gain_vs_template_phase_ns": 0.45925811511949854,
+      "delta_vs_s03a_ridge_ns": -0.09201836385761508,
+      "delta_vs_s03b_isotonic_ns": -0.18871339899469453,
+      "competitive_with_s03b_by_ci": false
+    },
+    "s03a_ridge": {
+      "method": "analytic_timewalk_on_template_phase",
+      "candidate": "amp_only",
+      "alpha": 100.0,
+      "value": 1.494666549251276,
+      "ci": [
+        1.3751468575713872,
+        1.6964140362080518
+      ],
+      "gain_vs_template_phase_ns": 0.5512764789771136,
+      "delta_vs_sample_ii_loro_s03a_ns": -0.05642516172650969
+    },
+    "s03b_isotonic": {
+      "method": "per_stave_monotonic_amplitude_binned_timewalk",
+      "mode": "monotonic",
+      "direction": "decreasing",
+      "n_bins": 4,
+      "value": 1.3979715141141966,
+      "ci": [
+        1.231788215980707,
+        1.5
+      ],
+      "gain_vs_template_phase_ns": 0.6479715141141931,
+      "delta_vs_sample_ii_loro_s03b_ns": -0.24717791338287998
+    }
+  },
+  "legacy_keys": {
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "value": 1.494666549251276,
+    "ci": [
+      1.3751468575713872,
+      1.6964140362080518
+    ],
+    "gain_vs_template_phase_ns": 0.5512764789771136,
+    "delta_vs_sample_ii_loro_s03a_ns": -0.05642516172650969
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.2212029850289687,
+    "ci": [
+      1.1147191012678164,
+      1.4107414142432972
+    ],
+    "gain_vs_template_phase_ns": 0.824740043199421,
+    "delta_vs_sample_ii_loro_hgb_ns": -0.1727631368420144,
+    "cv_sigma68_ns": 0.8988248440805453,
+    "params": {
+      "max_iter": 30,
+      "learning_rate": 0.05,
+      "max_leaf_nodes": 3,
+      "l2_regularization": 0.1,
+      "max_bins": 32,
+      "random_state": 20260610
+    },
+    "max_train_rows": 10000
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_heldout_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "sample_ii_used_for_final_fit": false,
+    "shuffled_target_min_sigma68_ns": 1.7742319253716055,
+    "too_good_flag": true,
+    "leakage_flag": false
+  },
+  "verdict": "signed_prior_transfer_has_gap_or_leakage_concern",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "ba2eab611b0a72b7f5f49eb46e916ec37d83df66",
+  "next_tickets": [
+    "S03f: Sample-I downstream-only topology stratification for blind timewalk transfer"
+  ]
+}

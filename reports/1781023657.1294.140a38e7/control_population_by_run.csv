@@ -1,0 +1,15 @@
+run,run_family,all_three,events
+58,low_all_three_rate_edge,0,129
+58,low_all_three_rate_edge,1,72
+59,mid_all_three_rate,0,1412
+59,mid_all_three_rate,1,749
+60,high_all_three_rate,0,1223
+60,high_all_three_rate,1,802
+61,high_all_three_rate,0,1394
+61,high_all_three_rate,1,925
+62,high_all_three_rate,0,1356
+62,high_all_three_rate,1,798
+63,mid_all_three_rate,0,680
+63,mid_all_three_rate,1,365
+65,low_all_three_rate_edge,0,188
+65,low_all_three_rate_edge,1,63

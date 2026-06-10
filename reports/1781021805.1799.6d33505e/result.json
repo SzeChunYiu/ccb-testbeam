@@ -1,0 +1,184 @@
+{
+  "study": "S06a",
+  "ticket_id": "1781021805.1799.6d33505e",
+  "worker": "testbeam-laptop-4",
+  "title": "charge-proxy timing-resolution monotonicity after S14b",
+  "raw_reproduction_pass": true,
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run_event_pairs"
+  },
+  "pooled": [
+    {
+      "method": "ml_charge_ridge",
+      "n_pair_residuals": 11460,
+      "median_ns": 1.1479738025,
+      "sigma68_ns": 1.3757802963,
+      "full_rms_ns": 2.5064270694,
+      "tail_frac_abs_gt5ns": 0.0162303665,
+      "pull_width": 2.0881853447
+    },
+    {
+      "method": "template_phase_base",
+      "n_pair_residuals": 11460,
+      "median_ns": -3.7226235857,
+      "sigma68_ns": 2.7414145301,
+      "full_rms_ns": 3.3083729783,
+      "tail_frac_abs_gt5ns": 0.0813263525,
+      "pull_width": 1.2068123744
+    },
+    {
+      "method": "traditional_hierarchical",
+      "n_pair_residuals": 11460,
+      "median_ns": 0.9416285135,
+      "sigma68_ns": 1.2509990385,
+      "full_rms_ns": 2.5038844897,
+      "tail_frac_abs_gt5ns": 0.0153577661,
+      "pull_width": 2.0015079249
+    }
+  ],
+  "bootstrap_summary": [
+    {
+      "method": "ml_charge_ridge",
+      "sigma68_ns_ci95": [
+        1.2006072967,
+        1.6512958893
+      ],
+      "full_rms_ns_ci95": [
+        2.3223588801,
+        2.6829416105
+      ],
+      "tail_frac_abs_gt5ns_ci95": [
+        0.0116364888,
+        0.0208649261
+      ],
+      "pull_width_ci95": [
+        1.8084776686,
+        2.2805500291
+      ],
+      "one_axis_sigma68_slope_ci95": [
+        0.2202690812,
+        0.7149988683
+      ],
+      "matched_sigma68_slope_ci95": [
+        0.0846439439,
+        0.481652236
+      ]
+    },
+    {
+      "method": "template_phase_base",
+      "sigma68_ns_ci95": [
+        2.6824285968,
+        2.992319269
+      ],
+      "full_rms_ns_ci95": [
+        3.2491176328,
+        3.3522148352
+      ],
+      "tail_frac_abs_gt5ns_ci95": [
+        0.055634127,
+        0.0923253486
+      ],
+      "pull_width_ci95": [
+        1.117033025,
+        1.2315744563
+      ],
+      "one_axis_sigma68_slope_ci95": [
+        -0.0328857647,
+        0.2656447598
+      ],
+      "matched_sigma68_slope_ci95": [
+        0.0055258615,
+        0.2073297417
+      ]
+    },
+    {
+      "method": "traditional_hierarchical",
+      "sigma68_ns_ci95": [
+        1.0820899063,
+        1.4820126773
+      ],
+      "full_rms_ns_ci95": [
+        2.3277351737,
+        2.6768367098
+      ],
+      "tail_frac_abs_gt5ns_ci95": [
+        0.0116359467,
+        0.0201692079
+      ],
+      "pull_width_ci95": [
+        1.7997393325,
+        2.1764507904
+      ],
+      "one_axis_sigma68_slope_ci95": [
+        0.2642765074,
+        0.8476727127
+      ],
+      "matched_sigma68_slope_ci95": [
+        0.0910107441,
+        0.4818028791
+      ]
+    }
+  ],
+  "ml_minus_traditional_delta_summary": [
+    {
+      "comparison": "ml_charge_ridge_minus_traditional_hierarchical",
+      "sigma68_ns_ci95": [
+        0.0718727463,
+        0.1975560331
+      ],
+      "full_rms_ns_ci95": [
+        -0.0234573496,
+        0.0183260146
+      ],
+      "tail_frac_abs_gt5ns_ci95": [
+        -0.0004911977,
+        0.0023279876
+      ],
+      "pull_width_ci95": [
+        -0.3377624791,
+        0.4415175727
+      ],
+      "one_axis_sigma68_slope_ci95": [
+        -0.1669548638,
+        -0.0309748934
+      ],
+      "matched_sigma68_slope_ci95": [
+        -0.0913903813,
+        0.0507010744
+      ]
+    }
+  ],
+  "charge_slopes": {
+    "one_axis_sigma68_ns_per_quantile": {
+      "traditional_hierarchical": 0.6117469120983349,
+      "ml_charge_ridge": 0.4728594443389086
+    },
+    "matched_sigma68_ns_per_quantile": {
+      "traditional_hierarchical": 0.30304088468703594,
+      "ml_charge_ridge": 0.32849925247075
+    }
+  },
+  "leakage": {
+    "leakage_flag": false,
+    "too_good": false,
+    "shuffled_target_min_sigma68_ns": 2.6888214915576136,
+    "train_heldout_event_overlap_total": 0.0,
+    "features_exclude_run_event_cross_stave_target": true
+  },
+  "finding": "Raw ROOT reproduction passed before modeling. Pooled held-out sigma68 is 2.741 ns for template phase, 1.251 ns for S03d hierarchical traditional timing, and 1.376 ns for charge-aware Ridge ML (ML - traditional +0.125 ns). The one-axis sigma68 slope versus charge quantile is +0.612 ns for traditional and +0.473 ns for ML; matched-stratum slopes are +0.303 ns and +0.328 ns. Thus charge proxy timing resolution does_not_consistently_improve with increasing charge after the matched controls. The strongest shuffled-target ML sentinel is 2.689 ns, with leakage_flag=False and too_good=False.",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "898513daa29a6bf907a8e2be49dcd6be9dfee442",
+  "critic": "pending",
+  "next_tickets": [],
+  "runtime_sec": 385.25
+}

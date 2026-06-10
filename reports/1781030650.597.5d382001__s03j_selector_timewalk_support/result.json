@@ -1,0 +1,86 @@
+{
+  "study": "S03j",
+  "ticket": "1781030650.597.5d382001",
+  "worker": "testbeam-laptop-3",
+  "title": "selector-specific timewalk support map with traditional and ML comparators",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_median_first_four_pass": true,
+    "s00a_dynamic_range_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "methods": [
+    "template_phase_base",
+    "s03a_amp_only_ridge",
+    "signed_physics_prior",
+    "ridge_ml",
+    "gradient_boosted_trees_hgb",
+    "mlp_waveform",
+    "cnn_1d_waveform",
+    "hybrid_residual_ensemble"
+  ],
+  "traditional_method": "signed_physics_prior",
+  "winners": [
+    {
+      "stratum": "dynamic_only",
+      "method": "signed_physics_prior",
+      "sigma68_ns": 2.092831006437085,
+      "ci_low": 1.567870252237943,
+      "ci_high": 2.5335988096254756,
+      "beats_traditional_ns": 0.0
+    },
+    {
+      "stratum": "matched_control",
+      "method": "hybrid_residual_ensemble",
+      "sigma68_ns": 1.2060131929489455,
+      "ci_low": 0.9704470263754099,
+      "ci_high": 1.4217191880783033,
+      "beats_traditional_ns": 0.3561508868954302
+    },
+    {
+      "stratum": "median_selected",
+      "method": "hybrid_residual_ensemble",
+      "sigma68_ns": 1.1754402593096285,
+      "ci_low": 1.1351278023325857,
+      "ci_high": 1.2276287396133045,
+      "beats_traditional_ns": 0.4289170625201464
+    }
+  ],
+  "global_winner": {
+    "stratum": "median_selected",
+    "method": "hybrid_residual_ensemble",
+    "sigma68_ns": 1.1754402593096285,
+    "ci": [
+      1.1351278023325857,
+      1.2276287396133045
+    ]
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0.0,
+    "hgb_shuffled_target_min_sigma68_ns": 1.7089587161061384,
+    "leakage_flag": false
+  },
+  "support": {
+    "dynamic_only": 672,
+    "matched_control": 87,
+    "median_selected": 3820
+  },
+  "skipped_folds": [],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "051fbdd424637692471673ffb6f3f0fb272b4f06",
+  "verdict": "selector_support_ml_winner_no_leakage_flag",
+  "next_ticket": "S03k: topology-matched selector-aware HGB/NN transfer with explicit dynamic-only overlap weights"
+}

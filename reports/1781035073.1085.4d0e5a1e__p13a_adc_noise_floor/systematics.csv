@@ -1,0 +1,25 @@
+quantity,value,unit,definition
+sample_00_sigma_adc,60.31436568031311,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_01_sigma_adc,62.67154296169281,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_02_sigma_adc,57.65886169509887,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_03_sigma_adc,73.22989160957336,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_04_sigma_adc,61.08843746109009,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_05_sigma_adc,79.09164308509827,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_06_sigma_adc,58.95977329101562,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_07_sigma_adc,49.55965145730972,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_08_sigma_adc,65.37375571289063,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_09_sigma_adc,49.70890671386719,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_10_sigma_adc,48.639939807128904,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_11_sigma_adc,55.74400447998047,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_12_sigma_adc,55.751515209960935,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_13_sigma_adc,60.355864160156244,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_14_sigma_adc,51.86145477905273,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_15_sigma_adc,47.763062081909176,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_16_sigma_adc,48.792179136657715,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+sample_17_sigma_adc,73.61151078186035,ADC,1.4826*MAD of held-out masked-sample residuals for the winning denoiser
+rising_edge_timing_floor_ns,0.5339545957333279,ns,rising-edge residual sigma divided by median held-out rising-edge slope
+median_rising_edge_slope_adc_per_ns,121.25,ADC/ns,median of max positive first difference over samples 4-9 divided by 10 ns
+integrated_charge_noise_floor_adc_sample,252.80755574791982,ADC sample,quadrature sum of per-sample winning residual sigmas
+relative_charge_noise_floor,0.011303713648465004,fraction,charge noise floor divided by median absolute held-out pulse area
+dropout_false_positive_rate_z_lt_minus_3,0.009077380952380953,fraction,fraction of held-out normal samples whose negative denoising residual exceeds the per-sample threshold
+ideal_adc_quantization_sigma,0.2886751345948129,ADC,"1/sqrt(12) for unit-spaced ADC bins; lower bound, not fit from data"

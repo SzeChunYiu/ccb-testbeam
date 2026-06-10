@@ -1,0 +1,8 @@
+method,alpha,cv_mae_adc,max_iter,learning_rate,max_leaf_nodes,l2_regularization
+ridge,1.0,35.45781326293945,,,,
+ridge,0.01,60.714831034342446,,,,
+ridge,0.1,60.806915283203125,,,,
+ridge,10.0,111.11458333333333,,,,
+ridge,100.0,171.8420613606771,,,,
+gradient_boosted_trees,,148.89760533286656,60.0,0.05,15.0,0.01
+gradient_boosted_trees,,162.89684297587613,45.0,0.06,15.0,0.0

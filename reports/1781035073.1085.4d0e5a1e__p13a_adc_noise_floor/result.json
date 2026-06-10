@@ -1,0 +1,246 @@
+{
+  "study": "P13a",
+  "ticket": "1781035073.1085.4d0e5a1e",
+  "worker": "testbeam-laptop-3",
+  "title": "ADC quantization and electronics noise floor across pulse phase",
+  "reproduced": true,
+  "repro_tolerance": "exact selected-pulse count match",
+  "traditional": {
+    "method": "traditional_template_smoother",
+    "metric": "heldout_masked_sample_mae_adc",
+    "value": 156.1694793701172,
+    "ci": [
+      147.75293502807617,
+      163.2898853302002
+    ]
+  },
+  "ml": {
+    "method": "ridge",
+    "metric": "heldout_masked_sample_mae_adc",
+    "value": 57.956607818603516,
+    "ci": [
+      54.759315967559814,
+      61.48723764419556
+    ]
+  },
+  "winner": {
+    "method": "ridge",
+    "metric": "heldout_masked_sample_mae_adc",
+    "value": 57.956607818603516,
+    "ci": [
+      54.759315967559814,
+      61.48723764419556
+    ]
+  },
+  "winner_delta_vs_traditional": {
+    "method": "ridge",
+    "delta_mae_vs_traditional_adc": -98.21287155151367,
+    "ci_low_adc": -103.92876281738282,
+    "ci_high_adc": -92.4840633392334
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "preregistered_metric": "heldout masked-sample MAE and phase robust sigma with run-block bootstrap CIs",
+    "p_value": null,
+    "n_tries": 6,
+    "note": "benchmark ranking using paired run-block bootstrap deltas rather than a single null-hypothesis p-value"
+  },
+  "input_sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+  "git_commit": "9342bdb1f91a70bf517dbcb384ace4db597edf69",
+  "critic": "pending",
+  "next_tickets": [
+    {
+      "title": "P13b: heteroscedastic sample-noise weighting in timing residual fits",
+      "body": "Use P13a per-sample noise/covariance estimates as heteroscedastic weights in S02/P03 timing residual correction, comparing unweighted CFD/template/ridge/HGB/MLP/CNN fits against noise-weighted variants with leave-run-out CIs. Expected information gain: tests whether sample-level electronics noise explains residual timing tails or whether shape/pile-up systematics dominate."
+    }
+  ],
+  "noise_floor_by_phase": [
+    {
+      "method": "ridge",
+      "phase": "peak",
+      "n_rows": 3360,
+      "noise_sigma_adc": 60.88068772888183,
+      "noise_sigma_ci_low_adc": 57.00975251220703,
+      "noise_sigma_ci_high_adc": 67.8936915875244,
+      "mae_adc": 59.044288635253906
+    },
+    {
+      "method": "ridge",
+      "phase": "pretrigger",
+      "n_rows": 4480,
+      "noise_sigma_adc": 67.37359502792359,
+      "noise_sigma_ci_low_adc": 62.96843623592376,
+      "noise_sigma_ci_high_adc": 71.65843339611054,
+      "mae_adc": 61.589229583740234
+    },
+    {
+      "method": "ridge",
+      "phase": "rising_edge",
+      "n_rows": 4480,
+      "noise_sigma_adc": 64.74199473266602,
+      "noise_sigma_ci_low_adc": 60.841496464218196,
+      "noise_sigma_ci_high_adc": 68.34308901803969,
+      "mae_adc": 60.40550994873047
+    },
+    {
+      "method": "ridge",
+      "phase": "tail",
+      "n_rows": 7840,
+      "noise_sigma_adc": 56.07558511047363,
+      "noise_sigma_ci_low_adc": 52.931109415283196,
+      "noise_sigma_ci_high_adc": 59.97317889404297,
+      "mae_adc": 54.015323638916016
+    }
+  ],
+  "systematics": [
+    {
+      "quantity": "sample_00_sigma_adc",
+      "value": 60.31436568031311,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_01_sigma_adc",
+      "value": 62.67154296169281,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_02_sigma_adc",
+      "value": 57.65886169509887,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_03_sigma_adc",
+      "value": 73.22989160957336,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_04_sigma_adc",
+      "value": 61.08843746109009,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_05_sigma_adc",
+      "value": 79.09164308509827,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_06_sigma_adc",
+      "value": 58.95977329101562,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_07_sigma_adc",
+      "value": 49.55965145730972,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_08_sigma_adc",
+      "value": 65.37375571289063,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_09_sigma_adc",
+      "value": 49.70890671386719,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_10_sigma_adc",
+      "value": 48.639939807128904,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_11_sigma_adc",
+      "value": 55.74400447998047,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_12_sigma_adc",
+      "value": 55.751515209960935,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_13_sigma_adc",
+      "value": 60.355864160156244,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_14_sigma_adc",
+      "value": 51.86145477905273,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_15_sigma_adc",
+      "value": 47.763062081909176,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_16_sigma_adc",
+      "value": 48.792179136657715,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "sample_17_sigma_adc",
+      "value": 73.61151078186035,
+      "unit": "ADC",
+      "definition": "1.4826*MAD of held-out masked-sample residuals for the winning denoiser"
+    },
+    {
+      "quantity": "rising_edge_timing_floor_ns",
+      "value": 0.5339545957333279,
+      "unit": "ns",
+      "definition": "rising-edge residual sigma divided by median held-out rising-edge slope"
+    },
+    {
+      "quantity": "median_rising_edge_slope_adc_per_ns",
+      "value": 121.25,
+      "unit": "ADC/ns",
+      "definition": "median of max positive first difference over samples 4-9 divided by 10 ns"
+    },
+    {
+      "quantity": "integrated_charge_noise_floor_adc_sample",
+      "value": 252.80755574791982,
+      "unit": "ADC sample",
+      "definition": "quadrature sum of per-sample winning residual sigmas"
+    },
+    {
+      "quantity": "relative_charge_noise_floor",
+      "value": 0.011303713648465004,
+      "unit": "fraction",
+      "definition": "charge noise floor divided by median absolute held-out pulse area"
+    },
+    {
+      "quantity": "dropout_false_positive_rate_z_lt_minus_3",
+      "value": 0.009077380952380953,
+      "unit": "fraction",
+      "definition": "fraction of held-out normal samples whose negative denoising residual exceeds the per-sample threshold"
+    },
+    {
+      "quantity": "ideal_adc_quantization_sigma",
+      "value": 0.2886751345948129,
+      "unit": "ADC",
+      "definition": "1/sqrt(12) for unit-spaced ADC bins; lower bound, not fit from data"
+    }
+  ],
+  "artifacts": {
+    "report": "reports/1781035073.1085.4d0e5a1e__p13a_adc_noise_floor/REPORT.md",
+    "metrics": "reports/1781035073.1085.4d0e5a1e__p13a_adc_noise_floor/heldout_method_metrics.csv",
+    "phase_noise": "reports/1781035073.1085.4d0e5a1e__p13a_adc_noise_floor/phase_noise_floor.csv"
+  }
+}

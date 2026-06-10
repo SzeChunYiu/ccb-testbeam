@@ -1,0 +1,96 @@
+{
+  "study": "S00f",
+  "ticket": "1781033578.541.73575b7f",
+  "worker": "testbeam-laptop-3",
+  "title": "dynamic-only baseline-excursion pile-up support map",
+  "reproduced_raw_root_first": true,
+  "reproduction": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "bootstrap_samples": 300
+  },
+  "traditional_method": "exact_run_current_amplitude_topology_matched_fixed_secondary_rubric",
+  "methods": [
+    "new_shape_residual_fusion",
+    "mlp",
+    "gradient_boosted_trees",
+    "ridge",
+    "cnn_1d",
+    "traditional_fixed_secondary_score",
+    "shuffled_label_fusion_control"
+  ],
+  "winner": {
+    "method": "new_shape_residual_fusion",
+    "roc_auc": 0.99930725,
+    "roc_auc_ci": [
+      0.9989915,
+      0.999713
+    ],
+    "average_precision": 0.9993049051289943,
+    "balanced_accuracy": 0.987
+  },
+  "physics_verdict": {
+    "verdict": "selector_artifact_region",
+    "matched_coverage": 0.9774417492538298,
+    "matched_rows": 118550,
+    "matched_dynamic_rows": 59275,
+    "matched_control_rows": 59275,
+    "dynamic_baseline_excursion_total": 60643,
+    "secondary_delta": -0.10117250105440743,
+    "secondary_delta_ci": [
+      -0.10682675010280471,
+      -0.094738173627309
+    ],
+    "timing_tail_delta": -0.03758751581611136,
+    "timing_tail_delta_ci": [
+      -0.04960033381105708,
+      -0.027943212265509443
+    ],
+    "charge_area_delta": -51005.0,
+    "charge_area_delta_ci": [
+      -52412.925,
+      -49011.7125
+    ],
+    "baseline_excursion_delta": 873.0,
+    "baseline_excursion_delta_ci": [
+      834.0,
+      944.6249999999999
+    ]
+  },
+  "non_oracle_leakage_checks_pass": true,
+  "input_sha256_table": "input_sha256.csv",
+  "git_commit": "b370ca800e72c860981c2c6c1de48f13aff9a214",
+  "runtime_sec": 70.243,
+  "next_tickets": [
+    {
+      "title": "S00g: dynamic-only topology proxy replacement with joined P02 latent labels",
+      "body": "Replace the S00f raw multiplicity topology proxy with a joined P02 latent/topology label for every dynamic-only row, then rerun the same exact run/current/amplitude/topology matching and pile-up proxy deltas to test whether the selector-artifact verdict is invariant to the topology definition."
+    }
+  ],
+  "finding": "Baseline-excursion dynamic-only pulses reproduce at 65636; exact matched deltas favor selector_artifact_region. Predictive benchmark winner: new_shape_residual_fusion.",
+  "output_files": [
+    "fig_model_auc.png",
+    "fig_support_summary.png",
+    "heldout_model_scores.csv.gz",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "matched_pulse_table.csv.gz",
+    "matched_strata_summary.csv",
+    "matched_support_summary.csv",
+    "model_benchmark.csv",
+    "primary_delta_metrics.csv",
+    "reproduction_match_table.csv",
+    "selector_counts_by_run.csv"
+  ]
+}

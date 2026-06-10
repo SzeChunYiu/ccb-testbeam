@@ -1,0 +1,57 @@
+{
+  "study_id": "S00f",
+  "ticket_id": "1781033578.541.73575b7f",
+  "worker": "testbeam-laptop-3",
+  "title": "dynamic-only baseline-excursion pile-up support map",
+  "output_dir": "reports/1781033578.541.73575b7f__s00f_dynamic_baseline_pileup_support",
+  "raw_root_dir": "data/root/root",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "downstream_staves": ["B4", "B6", "B8"],
+  "stave_position_cm": {
+    "B2": 0.0,
+    "B4": 2.0,
+    "B6": 4.0,
+    "B8": 6.0
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "current_nA_by_run": {
+    "46": 2.0,
+    "47": 2.0
+  },
+  "default_current_nA": 20.0,
+  "expected_counts": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "heldout_runs": [42, 57, 64, 65],
+  "baseline_excursion_adc": 250.0,
+  "timing_tail_span_ns": 5.0,
+  "match_amplitude_edges_adc": [1000, 1500, 2000, 3000, 4500, 7000, 12000, 20000, 1000000000.0],
+  "bootstrap_samples": 300,
+  "random_seed": 20260610,
+  "ml": {
+    "max_rows_per_run_class": 500,
+    "mlp_max_iter": 80,
+    "cnn_epochs": 5,
+    "cnn_batch_size": 2048,
+    "cnn_learning_rate": 0.001
+  },
+  "append_followup": true
+}

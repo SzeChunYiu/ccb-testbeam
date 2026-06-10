@@ -1,0 +1,106 @@
+{
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. GEANT4 truth primary label truth_pd_overlap_90p0_ns has rate 0.078071 [0.077763, 0.078240], while the real-data downstream high-minus-low excess is 0.010290 [0.003902, 0.022813]. The held-out truth-classification winner is gradient_boosted_trees. Truth validates intrinsic multiplicity/topology but does not contain current or live-time information; the operational Rmax remains 3.045 MHz from the measured raw waveform live10 window, not the 4.22 MHz 90 ns assumption.",
+  "method_summary": [
+    {
+      "average_precision": 0.9831388193105115,
+      "average_precision_ci95_high": 0.9850000150924714,
+      "average_precision_ci95_low": 0.9825292516600598,
+      "brier": 0.008524648664647536,
+      "brier_ci95_high": 0.008865969342864568,
+      "brier_ci95_low": 0.008317327619961049,
+      "method": "gradient_boosted_trees",
+      "rank_by_average_precision": 1,
+      "roc_auc": 0.9986446600026663,
+      "roc_auc_ci95_high": 0.9987422886697105,
+      "roc_auc_ci95_low": 0.9986180049595825
+    },
+    {
+      "average_precision": 0.9402656885552972,
+      "average_precision_ci95_high": 0.946692650920476,
+      "average_precision_ci95_low": 0.9303517779549128,
+      "brier": 0.01746692826788552,
+      "brier_ci95_high": 0.018178401858125387,
+      "brier_ci95_low": 0.015829011476482503,
+      "method": "ridge",
+      "rank_by_average_precision": 2,
+      "roc_auc": 0.9904425014322222,
+      "roc_auc_ci95_high": 0.9917642449716656,
+      "roc_auc_ci95_low": 0.9894274695952611
+    },
+    {
+      "average_precision": 0.9162376142410176,
+      "average_precision_ci95_high": 0.940407228047449,
+      "average_precision_ci95_low": 0.897240592492784,
+      "brier": 0.013842516514546824,
+      "brier_ci95_high": 0.017795615242007026,
+      "brier_ci95_low": 0.010821885298587115,
+      "method": "mlp",
+      "rank_by_average_precision": 3,
+      "roc_auc": 0.9913161610236035,
+      "roc_auc_ci95_high": 0.9925173121350331,
+      "roc_auc_ci95_low": 0.9909063723085113
+    },
+    {
+      "average_precision": 0.2666271265696952,
+      "average_precision_ci95_high": 0.27387523782775486,
+      "average_precision_ci95_low": 0.26224716888648936,
+      "brier": 0.12210779933414999,
+      "brier_ci95_high": 0.12419562990081504,
+      "brier_ci95_low": 0.1199931345008194,
+      "method": "traditional_topology",
+      "rank_by_average_precision": 4,
+      "roc_auc": 0.8704377374382518,
+      "roc_auc_ci95_high": 0.8725136638474681,
+      "roc_auc_ci95_low": 0.8672969128566806
+    },
+    {
+      "average_precision": 0.05343591474693107,
+      "average_precision_ci95_high": 0.05375015494827395,
+      "average_precision_ci95_low": 0.04358136569080541,
+      "brier": 0.19970381288681008,
+      "brier_ci95_high": 0.214630237206135,
+      "brier_ci95_low": 0.17961181052573477,
+      "method": "deepsets_layer_pool",
+      "rank_by_average_precision": 5,
+      "roc_auc": 0.3085220935564026,
+      "roc_auc_ci95_high": 0.3085220935564026,
+      "roc_auc_ci95_low": 0.1075730421585358
+    },
+    {
+      "average_precision": 0.04320453673371195,
+      "average_precision_ci95_high": 0.04587617882685285,
+      "average_precision_ci95_low": 0.04167678643498443,
+      "brier": 0.23565871874638245,
+      "brier_ci95_high": 0.23811642643732114,
+      "brier_ci95_low": 0.23442116049196368,
+      "method": "cnn_1d",
+      "rank_by_average_precision": 6,
+      "roc_auc": 0.07803887353323441,
+      "roc_auc_ci95_high": 0.10463253213173908,
+      "roc_auc_ci95_low": 0.03306482826018964
+    }
+  ],
+  "primary_truth_label": "truth_pd_overlap_90p0_ns",
+  "raw_downstream_high_minus_low": {
+    "ci95": [
+      0.003901776128906376,
+      0.02281301490647384
+    ],
+    "value": 0.010289747149522063
+  },
+  "raw_reproduction_pass": true,
+  "raw_selected_pulses": 640737,
+  "recommended_rmax_mhz": 3.045111305987686,
+  "rmax_basis": "S10 occupancy tolerance 0.38 divided by raw measured live10 tau=124.79018394263471 ns; GEANT4 truth has no DAQ live-time/current branch and does not restore the 90 ns assumption.",
+  "ticket_id": "0000000014.1.truthpileup",
+  "truth_pd_overlap_90ns_rate": {
+    "ci95": [
+      0.07776307776307777,
+      0.07824016111627037
+    ],
+    "value": 0.078071
+  },
+  "truth_root_used": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "winner": "gradient_boosted_trees",
+  "winner_metric": "held-out block-bootstrap average_precision"
+}

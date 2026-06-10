@@ -1,0 +1,9 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5,0.5,Same source event before injection; should be chance.
+topology-only RF,0.5,0.5,All rows are all-three by construction; excluded from main RF.
+absolute-amplitude-only RF,0.5537953403741941,0.544653359155832,Injection can change peak height; excluded from main RF.
+B2-only shape RF,0.5,0.5,Upstream waveform is not injected; should be near chance.
+downstream-only aggregate shape RF,0.7968237015940824,0.7981778526599717,Expected to be informative because injection is downstream.
+shape RF with shuffled training labels,0.5481784739527709,0.527473119769099,Run-held-out null sanity check.
+pair split violations,0.0,,Must be 0.
+forbidden main RF columns,0.0,,None.

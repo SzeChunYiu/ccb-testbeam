@@ -1,0 +1,15 @@
+method,heldout_run,threshold,clean_acceptance,injected_rejection,n_clean_test,n_injected_test
+fold-selected traditional timing/template,58,0.771062190077469,1.0,0.0,4,4
+fold-selected traditional timing/template,59,0.8001373413832558,1.0,0.2,20,20
+fold-selected traditional timing/template,60,0.7999354930105147,0.9743589743589743,0.07692307692307693,39,39
+fold-selected traditional timing/template,61,0.5632970292380083,0.7777777777777778,0.4888888888888889,45,45
+fold-selected traditional timing/template,62,0.8015502799924432,1.0,0.37037037037037035,27,27
+fold-selected traditional timing/template,63,0.769014229037448,0.9565217391304348,0.21739130434782608,23,23
+fold-selected traditional timing/template,65,0.7649183069574048,1.0,0.0,1,1
+high-amplitude all-three shape-only RF,58,0.6394275742612795,1.0,0.0,4,4
+high-amplitude all-three shape-only RF,59,0.6279312493985021,0.9,0.4,20,20
+high-amplitude all-three shape-only RF,60,0.6540685932256785,1.0,0.2564102564102564,39,39
+high-amplitude all-three shape-only RF,61,0.6180282489513212,0.8222222222222222,0.5777777777777777,45,45
+high-amplitude all-three shape-only RF,62,0.6519919462983399,1.0,0.3333333333333333,27,27
+high-amplitude all-three shape-only RF,63,0.6385977969309639,0.9565217391304348,0.391304347826087,23,23
+high-amplitude all-three shape-only RF,65,0.636938242270332,1.0,0.0,1,1

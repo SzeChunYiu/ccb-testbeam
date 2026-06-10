@@ -1,0 +1,110 @@
+{
+  "study": "S16o",
+  "ticket": "1781043990.570.2c97138c",
+  "title": "no-proxy pedestal width tradeoff audit",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "data_root": "/home/billy/ccb-data",
+  "search_roots": [
+    "data",
+    "/home/billy/ccb-data",
+    "/home/billy/Desktop/test_beam/data"
+  ],
+  "output_dir": "reports/1781043990.570.2c97138c__s16o_no_proxy_pedestal_width_tradeoff",
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "pretrigger_samples": [0, 1, 2, 3],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "downstream_staves": ["B4", "B6", "B8"],
+  "analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65],
+  "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+  "run_groups": {
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65],
+    "sample_ii_calib": [64]
+  },
+  "expected_selected_pulses": 640737,
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "no_proxy": {
+    "max_rows_per_run": 2500
+  },
+  "s16e_reference": {
+    "heldout_runs": [57, 65],
+    "random_seed": 173171,
+    "bootstrap_replicates": 120,
+    "max_rows_per_run": 2500,
+    "max_train_rows": 12000,
+    "expected_hgb_mae_adc": 32.143065784108025,
+    "expected_hgb_width68_adc": 13.262164723133429,
+    "expected_mean3_mae_adc": 35.89119999999999,
+    "expected_mean3_width68_adc": 10.33333333333303
+  },
+  "ml": {
+    "cv_folds": 3,
+    "l2_regularization": 0.05,
+    "learning_rate": [0.08],
+    "max_iter": 45,
+    "max_leaf_nodes": [15],
+    "max_train_rows": 12000
+  },
+  "leakage": {
+    "max_duplicate_fraction": 0.1,
+    "max_row_split_advantage_adc": 1.5,
+    "min_shuffled_mae_gap_adc": 2.0
+  },
+  "adaptive": {
+    "negative_tolerance_floor_adc": 25.0,
+    "negative_tolerance_fraction_of_amplitude": 0.015
+  },
+  "bootstrap_replicates": 250,
+  "random_seed": 1043990,
+  "primary_metric": "timing_tail_gt5_fraction",
+  "pre_registered": {
+    "reproduction": "reproduce S16e no-proxy raw-ROOT count and HGB-vs-mean3 MAE/width68 tradeoff before the new benchmark",
+    "split": "leave one Sample-II analysis run out; train on all other analysis runs",
+    "traditional_methods": ["mean3", "median3", "line3", "run_stratified_target_excluded"],
+    "ml_methods": ["ridge", "gradient_boosted_trees", "mlp", "one_dimensional_cnn", "target_masked_residual_cnn"],
+    "win_rule": "lowest held-out >5 ns downstream timing-shift tail fraction, then >0.5 ns tail fraction, then pedestal width68, then pedestal RMSE"
+  },
+  "models": {
+    "random_seed": 1043990,
+    "max_train_target_rows": 55000,
+    "ridge_alphas": [0.1, 1.0, 10.0, 100.0, 1000.0],
+    "hgb_learning_rates": [0.04, 0.08],
+    "hgb_max_leaf_nodes": [15, 31],
+    "hgb_max_iter": 90,
+    "mlp_hidden_layer_sizes": [48, 24],
+    "mlp_alpha": 0.0005,
+    "mlp_max_iter": 120,
+    "torch_epochs": 12,
+    "torch_batch_size": 1024,
+    "torch_learning_rate": 0.0015,
+    "torch_weight_decay": 0.0001
+  },
+  "next_tickets": [
+    {
+      "title": "S16p: target-excluded pedestal adoption rule on true forced/random mirror if acquired",
+      "body": "If dedicated B-stack forced/random or random-trigger ROOT becomes available, rerun the S16o width/tail adoption rule against no-pulse truth, preserving leave-one-run-out splits and paired bootstrap CIs for timing, charge, pile-up, PID, and energy endpoints."
+    }
+  ]
+}

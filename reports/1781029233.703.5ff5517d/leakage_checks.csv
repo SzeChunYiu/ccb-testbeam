@@ -1,0 +1,9 @@
+check,value,flag,detail
+train_heldout_run_overlap,0.0,False,Leave-one-run-out folds use disjoint run ids.
+main_feature_forbidden_columns,0.0,False,"Main columns exclude run/event id, D_t, pair residuals, and absolute amplitude: ['q_b2', 'q_b4', 'q_b6', 'q_b8', 'q_mean', 'q_max', 'q_std', 'q_ds_mean', 'q_ds_max', 'q_ds_std', 'q_b2_minus_ds_mean', 'q_ds_span', 'peak_ds_mean', 'peak_ds_max', 'high_amp_boundary', 'near_adc_boundary']"
+matched_rows_fraction,0.7916479568926807,False,Rows retained after train/heldout matched-stratum support.
+shuffled_label_auc,0.36260805372323957,False,Labels shuffled inside training runs.
+amplitude_only_auc,0.8517014740551996,False,Amplitude nuisance sentinel.
+topology_only_auc,0.565135855975996,False,Topology-only sentinel.
+downstream_only_auc,0.8759436096492272,False,Expected to remain strong if downstream waveform quality drives the label.
+leaky_dt_auc,0.9999999999999999,False,Forbidden label-defining ceiling.

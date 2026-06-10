@@ -276,7 +276,7 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `open=11 claimed=0 done=0 failed=14`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with this live
-post-append audit observing `open=183 claimed=3 done=260 failed=7` while claimed counts moved
+post-append audit observing `open=182 claimed=4 done=260 failed=7` while claimed counts moved
 under concurrent worker activity, but the mission trigger still required a small set of
 new ready studies. This steering pass appended four additional non-duplicate ready tickets:
 S03s upstream q-template curvature leakage gate (`1781075115.415.5d145e93`),
@@ -352,9 +352,10 @@ shim/argument parsing issue, not a scientific queue shortage.
 Newest steering update: S03e says q_template-only ML can beat a traditional q_template score on
 all-three curvature tails, but downstream q_template features remain too close to the label
 source, so an upstream-only leakage gate is now required. P08b upgrades the PID weak label with
-duplicate-readout range-energy residuals and collapses the old perfect topology proxy, but
-waveform ML only ties the calibrated charge-depth baseline; any PID waveform claim must therefore
-be a charge-residual null test. S07k finds no raw-HRDv definition that reproduces the archived
+duplicate-readout range-energy residuals and collapses the old perfect topology proxy, while P08c
+shows topology-matched waveform separation survives only on a tiny support island and still ties
+the hand-shape/q_template baseline within CIs; any PID waveform claim must therefore be a
+charge-residual null test. S07k finds no raw-HRDv definition that reproduces the archived
 App.A 12,147/10,636/1,511 tuple, so App.A conclusions now need definition-ensemble uncertainty.
 S10h shows baseline_excursion does not by itself carry a clean downstream/two-pulse excess under
 the current decomposition, motivating current-swap falsifiers. S14c and P08b together keep

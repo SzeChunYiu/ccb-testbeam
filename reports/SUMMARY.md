@@ -119,6 +119,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P07e | ✅ done | ✅ Sample-II B2 count and saturation proxy reproduced | retained-window/template ablations | best GBR window w2-8 res68 0.0812, bias 0.0292 | Not adoptable yet; needs calibrated accept/veto rule | reports/1781010945.568.060f508b |
 | P07e boundary | ✅ done | ✅ P07c/P07b gates and Sample-II B2 count reproduced | linear boundary shrink lift 0.0267 | ML boundary calibration lift 0.0220 with 3 leakage flags | No; traditional boundary shrink wins and leakage flags need triage | reports/1781018293.1193.5694364a |
 | P08b calibrated PID | ✅ done | ✅ 640,737 exact and calibrated rows built | calibrated charge-depth logistic AUC 0.9856 | waveform/PCA/HGB AUC 0.9859 | Tie; waveform has no secure residual PID gain beyond charge-depth | reports/1781027807.3490.5cdd4b0b |
+| P08c topology-matched PID | ✅ done | ✅ P08a waveform AUC reproduced | hand-shape/q-template logistic AUC 0.988 | waveform/PCA/HGB AUC 0.990 | Tie; support-limited weak-label separation, not PID adoption | reports/1781027807.3536.50af30a5 |
 | P09a | ✅ done | ✅ 640,737 exact | robust-template top-128 curated precision 0.898 | PCA/AE/isolation precision 0.883; higher novel precision 0.766 | Mixed; ML better for novel taxa, traditional slightly better curated precision | reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy |
 | P09c | ✅ done | ✅ 640,737 exact | delayed-peak target AP 0.433; pile-up-score delta 14.66 | latent/isolation delayed-peak AP 0.789 | ML improves delayed-peak isolation; recovery/veto evidence is low-count | reports/1781014256.642.6ded722c |
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
@@ -130,7 +131,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   `open=11 claimed=0 done=0 failed=14`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
   The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with this live post-append audit observing `open=183 claimed=3
+  testbeam queue remains deep, with this live post-append audit observing `open=182 claimed=4
   done=260 failed=7` while workers continue moving tickets.
   The mission trigger still required new ready work. This pass appended four ready non-duplicate
   tickets: S03s upstream q-template curvature leakage gate (`1781075115.415.5d145e93`),
@@ -209,10 +210,12 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   (`1781023340.632.43377364`).
 - Newest reports sharpen the next claims: S03e shows q_template ML gains on all-three curvature
   tails, but downstream q_template is too close to the label source; P08b shows calibrated
-  charge-depth explains the new PID weak label as well as waveform ML; S07k retires any single
-  historical App.A tuple unless the missing table is recovered; S10h leaves baseline_excursion
-  near-null for clean pile-up excess; and S14c external charge-energy closure remains above the
-  0.10 preflight threshold. P10e says explicit handles do not rescue q-space under
+  charge-depth explains the new PID weak label as well as waveform ML, while P08c says topology-
+  matched B2 waveform separation survives only on a tiny support island and does not beat the
+  hand-shape/q-template baseline with CI separation; S07k retires any single historical App.A
+  tuple unless the missing table is recovered; S10h leaves baseline_excursion near-null for clean
+  pile-up excess; and S14c external charge-energy closure remains above the 0.10 preflight
+  threshold. P10e says explicit handles do not rescue q-space under
   both family holdouts and exposes CFD/peak-sample run-family drift; P10g finds no supported
   per-run or per-stave conditional-template ML win, with minority-stave failures dominating; the
   newest P10f same-pulse leakage stress test separates full CFD/shape/tail ExtraTrees from

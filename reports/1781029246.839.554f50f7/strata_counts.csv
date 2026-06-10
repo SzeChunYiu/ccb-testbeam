@@ -1,0 +1,4 @@
+stratum,n_rows,n_runs,median_dynamic_amp,median_baseline_excursion,sat_boundary_frac
+median_selected,26860,2,3698.0,9.0,0.09903201787043932
+dynamic_only,3715,2,3200.0,2853.5,0.0
+matched_control,3715,2,3834.0,2429.0,0.013728129205921938

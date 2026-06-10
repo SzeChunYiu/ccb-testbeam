@@ -1,0 +1,87 @@
+{
+  "ticket": "1781034869.1093.1ffd40cb",
+  "config": "configs/p03f_1781034869_1093_1ffd40cb_b46_pair_asymmetry_closure.json",
+  "script": "scripts/p03f_1781034869_1093_1ffd40cb_b46_pair_asymmetry_closure.py",
+  "outputs": {
+    "REPORT.md": "3ff28ee6c84a46fd30bbc0df60c9f4991b1ee40398e963c15364296af295f12e",
+    "asymmetry_diagnosis.csv": "05bd1ad5c45a9f7a226fc32e3b85763e55e6ff3e3f9f979592ba42a832b107cd",
+    "fig_asymmetry_covariates.png": "0f4d31e5f7212fd8a62c8ea5fde1962421557f8d09a16454e43a226d278b10f5",
+    "fig_loro_closure.png": "0fc04268e92b77107571aeeb5a930de268e5e9a761f4530c44a06b64aa6a7ae6",
+    "fig_pooled_closure.png": "d1bd974469a9f328842021ca0dbf9716e9167ff8d37a6d26aff552c6a4d0058f",
+    "heldout_predictions.csv": "ecd79ef896d7dbbd1e73162293cc029335e7c61b1cb22640a4a29dc223331a2b",
+    "heldout_run_metrics.csv": "3b700537aee24e1b83717871eab85296944c9015b4a675c525088eab538e036f",
+    "input_sha256.csv": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+    "leakage_checks.csv": "217b90edccaa7dd5ad6162832de459f56a8d3f956a52f74382abf30d68900eea",
+    "pooled_run_block_summary.csv": "cbdae634eb01f7753a709de41683f9a902af2793142d8c234c6400926c2ab3a3",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "d5f3849383a0030a0dfd7a827c967feae9c1cdaa60b80af391aa3bbe0087f888",
+    "ridge_cv.csv": "0b9bd73c1ef3a9304ad51c09c1702dfb3740a010957d850b40e4d460b1aa816a",
+    "winner_by_run.csv": "733bfd1b628c314e92ff6a6728fedb84301eb3d62c701690cf2103cb3350e1b8"
+  },
+  "result": {
+    "study": "P03f",
+    "ticket": "1781034869.1093.1ffd40cb",
+    "worker": "testbeam-laptop-3",
+    "title": "B4-B6 pair asymmetry closure",
+    "reproduced_raw_root_counts": true,
+    "split_by_run": true,
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "primary_metric": "B4-B6 closure_score_ns = sqrt(median_residual_ns^2 + sigma68_ns^2), pooled with run-block bootstrap",
+    "winner": {
+      "method": "geometry_offset_median",
+      "closure_score_ns": 1.2499999999999964,
+      "closure_ci": [
+        0.9999999999999964,
+        1.2500000000000036
+      ],
+      "median_ns": 0.0,
+      "sigma68_ns": 1.2499999999999964
+    },
+    "baseline": {
+      "template_phase_nominal_closure_score_ns": 4.684416769785856,
+      "template_phase_nominal_median_ns": -4.524984349437304,
+      "template_phase_nominal_sigma68_ns": 1.211724849294761
+    },
+    "traditional": {
+      "geometry_offset_median_closure_score_ns": 1.2499999999999964,
+      "template_phase_bias_table_closure_score_ns": 1.2499999999999964
+    },
+    "ml": {
+      "best_ml_method": "ridge_waveform",
+      "best_ml_closure_score_ns": 2.357203599174525,
+      "ridge_waveform_closure_score_ns": 2.357203599174525,
+      "gradient_boosted_trees_closure_score_ns": 2.394457222631027,
+      "mlp_waveform_closure_score_ns": 4.678759797260265,
+      "cnn_1d_pair_closure_score_ns": 2.507712610109517,
+      "sample_attention_closure_score_ns": 2.4869649484167042
+    },
+    "diagnosis": {
+      "mean_template_shift_diff_corr": 0.9999999999999999,
+      "mean_log_amp_diff_corr": 0.11261865182805794,
+      "mean_waveform_sse_diff_corr": -0.08647875094372175
+    },
+    "leakage": {
+      "max_event_id_overlap": 0,
+      "feature_audit": "per-stave normalized waveform, pulse-shape scalars, and stave one-hot; no run id, event id, event order, other-stave waveform, or held-out target"
+    },
+    "verdict": "traditional_offset_or_template_bias_wins",
+    "interpretation": "The constant geometry offset arm is the direct TOF-shift test.  If it removes most of the median but a waveform method wins the closure score, the residual B4-B6 signature is not just a fixed geometry offset; it contains transferable waveform-calibration structure.  If the geometry or template table wins, the evidence favors a low-dimensional offset/template-bias explanation over a learned per-stave waveform mismatch.",
+    "input_sha256": "0dae9e1335082f73411ee570e58622e0b7ecb6211f6be3010eb724af15a937c4",
+    "git_commit": "3068cf320cf2a389b91e415721b565d83d491123",
+    "runtime_sec": 279.07,
+    "next_tickets": [
+      {
+        "title": "P03k: B-stack geometry-offset matrix from run-held-out pair closures",
+        "body": "Fit a single train-run B2/B4/B6/B8 stave-position offset matrix from all raw ROOT pair residuals, then test on held-out runs whether one geometry model closes every pair better than per-stave ridge, gradient-boosted trees, MLP, 1D-CNN, and sample-attention corrections with run-block bootstrap CIs. This would confirm or falsify the P03f interpretation that B4-B6 is mostly a fixed geometry/TOF offset rather than a waveform-calibration mismatch."
+      }
+    ]
+  }
+}

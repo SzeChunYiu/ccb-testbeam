@@ -1,0 +1,15 @@
+heldout_run,check,value,detail
+58,train_heldout_event_id_overlap,0,must be zero
+58,feature_audit,0,"features are same-event B4/B6 normalized waveforms plus pulse-shape scalars; no run id, event id, event order, or held-out target is used"
+59,train_heldout_event_id_overlap,0,must be zero
+59,feature_audit,0,"features are same-event B4/B6 normalized waveforms plus pulse-shape scalars; no run id, event id, event order, or held-out target is used"
+60,train_heldout_event_id_overlap,0,must be zero
+60,feature_audit,0,"features are same-event B4/B6 normalized waveforms plus pulse-shape scalars; no run id, event id, event order, or held-out target is used"
+61,train_heldout_event_id_overlap,0,must be zero
+61,feature_audit,0,"features are same-event B4/B6 normalized waveforms plus pulse-shape scalars; no run id, event id, event order, or held-out target is used"
+62,train_heldout_event_id_overlap,0,must be zero
+62,feature_audit,0,"features are same-event B4/B6 normalized waveforms plus pulse-shape scalars; no run id, event id, event order, or held-out target is used"
+63,train_heldout_event_id_overlap,0,must be zero
+63,feature_audit,0,"features are same-event B4/B6 normalized waveforms plus pulse-shape scalars; no run id, event id, event order, or held-out target is used"
+65,train_heldout_event_id_overlap,0,must be zero
+65,feature_audit,0,"features are same-event B4/B6 normalized waveforms plus pulse-shape scalars; no run id, event id, event order, or held-out target is used"

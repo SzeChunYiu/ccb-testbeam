@@ -1,0 +1,7 @@
+check,value,pass,note
+raw_root_reproduction_gate,True,True,S00 selected-pulse count reproduced from raw HRDv
+methods_present,"traditional,ridge,gradient_boosted_trees,extra_trees,mlp,cnn1d,score_gated_cnn",True,"traditional, ridge, gradient-boosted trees, ExtraTrees, MLP, 1D-CNN, and new score-gated CNN"
+score_variants_present,"no_score,plus_score,score_residualized,shuffled_score_control",True,"no-score, raw score, residualized score, and shuffled score control"
+max_residualized_score_gain,0.03511480583195997,False,positive means the residualized score improves a consumer metric over no-score
+max_shuffled_score_gain,0.011043833896571265,True,null score control for post-selection gains
+forbidden_feature_audit,0,True,"main models exclude run id, event id, event order, and held-out labels"

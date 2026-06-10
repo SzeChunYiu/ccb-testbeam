@@ -1,0 +1,69 @@
+{
+  "ticket_id": "1781042380.684.5b13726c",
+  "study_id": "P01i",
+  "title": "domain-score consumer leakage sentinel",
+  "worker": "testbeam-laptop-4",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_samples": 500
+  },
+  "consumers": [
+    "charge",
+    "energy",
+    "pid",
+    "pileup",
+    "timing"
+  ],
+  "methods": [
+    "traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "extra_trees",
+    "mlp",
+    "cnn1d",
+    "score_gated_cnn"
+  ],
+  "domain_variants": [
+    "no_score",
+    "plus_score",
+    "score_residualized",
+    "shuffled_score_control"
+  ],
+  "winner": {
+    "consumer": "timing",
+    "method": "extra_trees",
+    "variant": "no_score",
+    "primary_metric": "sigma68",
+    "value": 1.156081096505242,
+    "ci": [
+      1.106643870135253,
+      1.2016522076985559
+    ]
+  },
+  "winner_name": "extra_trees / no_score",
+  "leakage_verdict": "residualized_score_leakage_flag_not_adopted",
+  "max_residualized_score_gain": 0.03511480583195997,
+  "max_shuffled_score_gain": 0.011043833896571265,
+  "verdict": "The residualized domain score is not adopted as a consumer feature. The largest residualized-score gain is 0.03511, larger than the largest shuffled-score gain of 0.01104; this flags a remaining consumer-leakage pathway in weak proxy models rather than proving that the epoch score is a safe physics covariate.",
+  "next_tickets": [
+    {
+      "title": "P01j external-truth consumer sentinel for P01/P03 domain scores",
+      "body": "Question: do P01/P03 domain-score leakage conclusions change when PID and energy consumers use external TPC/Geant4 truth or independently calibrated labels instead of waveform-derived proxies? Reuse P01i folds and report score/no-score deltas with run-block CIs."
+    }
+  ],
+  "runtime_sec": 594.6
+}

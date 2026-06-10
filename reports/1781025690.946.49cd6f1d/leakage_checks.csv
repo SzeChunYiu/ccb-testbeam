@@ -1,0 +1,8 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5000000000000001,0.5,Same for clean/injected pairs; should be chance.
+topology-only RF,0.5,0.5,Constant all-three topology; should be chance.
+absolute-amplitude-only RF,0.5649890675663181,0.5713198703285447,Excluded from main RF; injection changes peak height.
+shape RF with shuffled training labels,0.49051428673700415,0.4787643656301096,Null/leakage sanity check.
+per-stave slot shape RF,0.8519855864885263,0.8567992988698113,Permissive shape representation; not main claim.
+pair split violations,0.0,,Must be 0.
+forbidden main RF columns,0.0,,None.

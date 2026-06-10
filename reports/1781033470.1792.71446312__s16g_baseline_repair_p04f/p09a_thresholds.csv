@@ -1,0 +1,14 @@
+threshold,value
+amplitude_adc_q995,9505.5
+amplitude_adc_q999,9605.5
+saturation_count_q995,2.0
+post_peak_min_q001,-4.558568531036377
+baseline_mad_q995,1975.5
+abs_baseline_slope_q995,6414.520000000019
+late_fraction_q999,0.9993422055244446
+timing_span_dup_q990,18.0
+secondary_peak_q999,0.9993728585243226
+undershoot_area_q001,-39.31713714599609
+width_half_q995,12.0
+q_template_rmse_q995,2.244226436614993
+q_template_rmse_q999,3.013716638565089

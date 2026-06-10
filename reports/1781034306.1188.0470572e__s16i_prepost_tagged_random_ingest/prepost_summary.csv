@@ -1,0 +1,9 @@
+check,value
+raw_root_reproduction_pass,True
+input_hashes_identical_to_s16g_pre_ingest,True
+post_ingest_tagged_random_visible,False
+strict_forced_random_root_archive_candidates,0
+direct_nonbeam_bstack_rows,0
+root_non_beam_trigger_entries,0
+proxy_loro_rows_available,6
+leakage_checks_pass,True

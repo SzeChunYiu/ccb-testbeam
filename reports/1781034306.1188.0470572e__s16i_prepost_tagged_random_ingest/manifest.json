@@ -1,0 +1,25 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s16i_1781034306_1188_0470572e_prepost_tagged_random_ingest.py --config configs/s16i_1781034306_1188_0470572e_prepost_tagged_random_ingest.json",
+  "config": "configs/s16i_1781034306_1188_0470572e_prepost_tagged_random_ingest.json",
+  "git_commit": "dcbb6a346363e6d1f5ea625254f62bffc9757d69",
+  "input_hashes_identical": true,
+  "output_dir": "reports/1781034306.1188.0470572e__s16i_prepost_tagged_random_ingest",
+  "output_sha256": {
+    "REPORT.md": "b751b4a71a70c494b9b23701070d5c7f0b56fd3ec41016e4c4d05597eff9a316",
+    "artifact_sha256.csv": "5de1807fbd1decd5249799917a6aee33874110c8399b79a2c0d2bb17487b6f7c",
+    "direct_nonbeam_entries.csv": "a10b05b9b8785600b6fcf6356b1c3386e0f7bfa96a71aad15249f03e6ca895d8",
+    "file_archive_inventory.csv": "cb95dfc91364d6325529df882620e09338de22514bcdb93b47cbe57d872f1731",
+    "hash_comparison.csv": "573b67f3fb7334a3fc500b572ae9d063fdb3ad578bbe732bc2ea4aca68984926",
+    "input_sha256.csv": "b88eca032bd5a740687c8a4649ee46a8cfa47655b16a1b631b1980bc931e08f6",
+    "leakage_checks.csv": "f3c653125e660fc503e4d24615fa42c003492e82b091de45e606356eeff4bcb4",
+    "method_continuity.csv": "9334c751d4d8e36229079c00ded76552d39f66c0e81b7cbe13c4e130cfc39be4",
+    "pedestal_preingest_context.csv": "37aa59d68cff386040ce5eccc4a95525053e8b6c2e75471a6de24b51e59473a6",
+    "prepost_summary.csv": "b9cbf3288ccbb084c3fc2d94a91f5f8f8784244d0980839610be1966cf896d9d",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "c3b45d9ce6a2c29d8545b589d49798a14611e622fe10ffe197bcbf91318e7520",
+    "root_trigger_branch_audit.csv": "ba48384f915dc81ceedbe1f50b7787a6789fec4315e532527e9edef1e6e5747d"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "runtime_seconds": 6.191605567932129
+}

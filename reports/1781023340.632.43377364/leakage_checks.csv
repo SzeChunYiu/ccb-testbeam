@@ -1,0 +1,7 @@
+check,value,pass
+raw_reproduction_before_analysis,640737.0,True
+leave_one_run_out_axis_assignment,33.0,True
+ml_features_exclude_run_event_target_scores,1.0,True
+max_shuffled_axis_auc,0.4862870172207339,True
+max_nominal_auc,0.9831105487687757,True
+input_files_hashed,41.0,True

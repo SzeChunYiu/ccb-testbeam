@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,tolerance,pass
+sample_iv_A1_A3_pairs,127.0,127.0,0.0,0.0,True
+sample_iv_run64_ols_robust_width_ns,1.7936257228944266,1.7936260637771233,3.4088269673659966e-07,0.001,True
+sample_iv_run64_ols_core_sigma_ns,1.9921758801207758,1.9921764037756304,5.236548545894948e-07,0.001,True

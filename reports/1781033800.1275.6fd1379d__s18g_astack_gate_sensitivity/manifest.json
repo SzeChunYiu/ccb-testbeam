@@ -1,0 +1,33 @@
+{
+  "study": "S18g",
+  "ticket": "1781033800.1275.6fd1379d",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "740e2e69da75d83e2c8fb40b3385adcd82b44616",
+  "config": "configs/s18g_1781033800_1275_6fd1379d.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/s18g_1781033800_1275_6fd1379d_astack_gate_sensitivity.py --config configs/s18g_1781033800_1275_6fd1379d.json",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "output_sha256": {
+    "REPORT.md": "a18a55900ce2ff3e9bae837e98580be017ee8d4b37f23b1ac7d5196df4f4cb60",
+    "astack_counts.csv": "4a74e0f451bb430ea99e3af4c8adff6f704edd56e9ed29ac76b2f22e4088e504",
+    "fig_gate_method_sensitivity.png": "4c35918f2db5e00102b8974109043aff6e96be9a765be435f992ecb4e4c81e95",
+    "fig_primary_winner_residuals.png": "324f2af14ccaa81213c82b2c2773ba357df1ba6c9072a94de8cf4ecc8bae18b1",
+    "fig_raw_gate_sensitivity.png": "1bf73d5968bc97803f712948865663ff7e8e1c9f428f26f9061129553392a5c7",
+    "heldout_predictions.csv.gz": "2e787587c7939ca9e3576e76a015fc3ac3a68eaa258be6ea6134ad715cd9b204",
+    "input_sha256.csv": "b6fd8608bd885ebb4a343073831b9d5f1ec9ee945972065ee09ada5d987d3315",
+    "leakage_checks.csv": "d3e75ceb9bfe1820ef07a8dea730645541243b9481a451b1be485dd5516acbed",
+    "method_delta_bootstrap.csv": "6ecf2eb7d3a3e82fdead531eb89673bb2745a475be3f3761a06b92647ce91d99",
+    "method_metrics.csv": "3e5ed9379a752070457db7655c2fd26da9ba7d3f53bd279611f07714eec6eea8",
+    "per_run_metrics.csv": "a8a0e429889cb65c75903f16cbe66be2bb477570f583c2e4911ab67de014146b",
+    "raw_gate_metrics.csv": "eaf4ea4df775f4913ac6894cec87f606b3ecb11493b165a2356c3fc54cb134a3",
+    "reproduction_match_table.csv": "1a4ef6831cf06b0d535215369d8308e9dd9a3bd3a61f95e5944d30f73eaea3a5",
+    "result.json": "4749ada8acb00caa3296aed2e8dfec206ea37da9b3371f31037553398b94b4fb",
+    "ridge_cv_scan.csv": "56ead36138ee803ffc0c74f1f6478cf5042e52b2286c0009c16d62cfb6288992"
+  }
+}

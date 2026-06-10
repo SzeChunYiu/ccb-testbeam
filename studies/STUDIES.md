@@ -2169,3 +2169,54 @@ latent-neighbor, raw depth-charge, and PID-null atoms.
   charge-only, topology-only, and phase-scrambled controls. Metric: matched pseudo-PID AUC/AP,
   fixed-efficiency purity proxy, balance residuals, Brier calibration, and null-control lift with
   run-block bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, P02f/P10f/S14e/P08c layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
+18-ready trigger. The project-aware `testbeam` store remains deep after this pass
+(`open=184 claimed=4 done=263 failed=7`) under concurrent worker movement, but the trigger was
+satisfied by appending four ready, non-duplicate `project:testbeam` tickets: P02h shape-atom
+veto sign-stability atlas (`1781076693.711.60747b33`), P10m q-tail too-good trigger density
+audit (`1781076701.782.04915369`), S14l energy support envelope transfer veto
+(`1781076707.853.723329c2`), and P08f PID support-island bootstrap ledger
+(`1781076713.924.3a47146c`).
+
+Fresh synthesis: P02f says learned shape-atom vetoes do not yet give a statistically secure
+timing-tail narrowing, so the next atom is sign stability by stave pair, amplitude, q_template,
+baseline, saturation, and run family. P10f shows conditional q-tail ML can beat amplitude-median
+templates but still fires too-good controls, so support-density and nearest-neighbor diagnostics
+must precede any template promotion. S14e exposes a small proxy energy support envelope under
+abstention, but it remains support-limited and must transfer across topology, saturation,
+q_template, and charge-uncertainty cells before PID or energy consumers use it. P08b/P08c keep
+waveform PID at charge-residual/null-test status because calibrated charge-depth baselines tie
+the waveform model within CIs and the surviving support islands are small.
+
+- **P02h — Shape-atom veto sign-stability atlas.** Decide whether P02f's learned veto deltas are
+  stable or support-composition artifacts across stave pair, amplitude atom, q_template decile,
+  baseline-excursion flag, saturation flag, and held-out run family. Traditional: train-fold
+  hand-shape plus q_template threshold vetoes at fixed retention. ML: run-held-out RF/ExtraTrees
+  and isolation-score vetoes on normalized samples, hand-shape variables, and train-only PCA
+  latents with shuffled-label and topology-only controls. Metric: per-atom delta in S03b
+  pair-residual sigma68 and tail fraction, ML-minus-traditional delta, and sign-consistency rate
+  with run-block bootstrap 95% CIs.
+- **P10m — Q-tail too-good trigger density audit.** Test whether P10f no-tail conditional q-tail
+  gains survive support-density, nearest-neighbor, phase-atom, and calibration-family controls.
+  Traditional: amplitude-median and shape-handle median templates binned by log amplitude, stave,
+  phase atom, and support-density quantile. ML: no-tail ExtraTrees/HGB conditional templates with
+  leave-density-bin-out, nearest-neighbor-distance, shuffled-target, and leakage controls. Metric:
+  q_template MSE, q_tail MSE, live-time surrogate error, and ML-minus-baseline deltas per density
+  atom with run-block bootstrap 95% CIs and a promotion veto if too-good controls remain active.
+- **S14l — Energy support envelope transfer veto.** Decide which S14e low-res68 energy-support
+  cells transfer across run family, B-stave topology, saturation, q_template quality, and P04b
+  charge-uncertainty bands. Traditional: PSTAR/depth-charge lookup with uncertainty-ranked
+  abstention and fixed geometry. ML: monotonic HGB or constrained isotonic regressor over
+  charge-depth, saturation, topology, and waveform-quality atoms with shuffled-target sentinels.
+  Metric: combined energy-proxy res68, bias median fraction, accepted fraction, depth-order
+  violation rate, and ML-minus-traditional deltas with run-block bootstrap 95% CIs.
+- **P08f — PID support-island bootstrap ledger.** Test whether topology-matched B2 waveform PID
+  support islands remain stable under charge-residual matching, run-family bootstraps,
+  saturation/q_template strata, and alternate calibrated weak-label definitions. Traditional:
+  logistic/isotonic charge-depth residual, tail/total, q_template, saturation, and topology cuts.
+  ML: HGB/ExtraTrees over normalized waveform samples, hand-shape features, and train-only PCA
+  latents after nuisance matching with shuffled-label, charge-only, and topology-only sentinels.
+  Metric: ROC AUC, AP, fixed-purity efficiency, calibration slope, and waveform-minus-charge
+  residual lift per island with run-family bootstrap 95% CIs.

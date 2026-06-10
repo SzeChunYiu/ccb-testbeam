@@ -753,3 +753,20 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   P08d deliberately stay in raw monotonicity and depth-matched PID-null territory. These tickets
   keep the pulse programme atomic across shape, timing, amplitude, saturation, pile-up, baseline,
   dropout, PID, and energy before any global correction or label is promoted.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` still reports
+  `open=11 claimed=0 done=0 failed=14`, below the 18-ready trigger. The project-aware
+  `testbeam` queue remains deep after this pass (`open=184 claimed=4 done=263 failed=7`) under
+  concurrent worker movement. The trigger was satisfied by appending four ready, non-duplicate
+  `project:testbeam` tickets: P02h shape-atom veto sign-stability atlas
+  (`1781076693.711.60747b33`), P10m q-tail too-good trigger density audit
+  (`1781076701.782.04915369`), S14l energy support envelope transfer veto
+  (`1781076707.853.723329c2`), and P08f PID support-island bootstrap ledger
+  (`1781076713.924.3a47146c`).
+- Fresh synthesis: P02f shows learned shape-atom vetoes do not yet produce a statistically secure
+  pair-residual-tail improvement, so P02h decomposes sign stability at the smallest useful pulse
+  atoms. P10f shows q-tail ML gains but also too-good controls, so P10m turns support density and
+  nearest-neighbor distance into promotion gates for learned templates. S14e finds a small
+  low-res68 proxy energy envelope under abstention, so S14l tests transfer and veto rules before
+  energy/PID consumers use it. P08b/P08c show calibrated charge-depth explains weak PID labels as
+  well as waveform ML within CIs, so P08f records only support-island residual lifts that survive
+  charge, topology, run-family, saturation, and q_template sentinels.

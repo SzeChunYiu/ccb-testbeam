@@ -1,0 +1,64 @@
+{
+  "study": "S16i",
+  "ticket": "1781034306.1188.0470572e",
+  "worker": "testbeam-laptop-3",
+  "title": "pre/post tagged-random ingest adaptive pedestal comparison",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781034306.1188.0470572e__s16i_prepost_tagged_random_ingest",
+  "search_roots": [
+    "data",
+    "/home/billy/ccb-data",
+    "/home/billy/Desktop/test_beam/data",
+    "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data"
+  ],
+  "tag_tokens": ["random", "forced", "force", "pedestal", "ped", "empty", "nopulse", "no_pulse", "noise", "dark", "pulser"],
+  "tag_branch_tokens": ["random", "forced", "force", "pedestal", "ped", "empty", "nopulse", "no_pulse", "tag", "spill", "scaler", "mode", "trigger_type"],
+  "non_beam_trigger_value": 1,
+  "expected_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "pretrigger_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "pre_ingest_proxy": {
+    "study": "S16g",
+    "report_dir": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark",
+    "input_sha256_csv": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/input_sha256.csv",
+    "head_to_head_benchmark_csv": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/head_to_head_benchmark.csv",
+    "fold_metrics_csv": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/fold_metrics.csv",
+    "leakage_checks_csv": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/leakage_checks.csv",
+    "result_json": "reports/1781033528.1397.05213c6c__s16g_forced_random_truth_benchmark/result.json"
+  },
+  "pre_ingest_pedestal": {
+    "study": "S16",
+    "report_dir": "reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation",
+    "heldout_benchmark_csv": "reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/heldout_benchmark.csv",
+    "result_json": "reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/result.json"
+  },
+  "bootstrap_replicates": 500,
+  "random_seed": 1643061188,
+  "pre_registered": {
+    "primary_gate": "post-ingest direct tagged-random pedestal truth requires strict forced/random ROOT/archive candidates or non-beam B-stack ROOT entries",
+    "hash_rule": "if current raw ROOT hashes equal the S16g pre-ingest hashes, any method-score change cannot be attributed to data ingest",
+    "loro_protocol": "reuse only the frozen S16g Sample-II leave-one-run-out scores when benchmark artifact hashes and raw input hashes are identical",
+    "methods": ["traditional_quantile", "ridge", "gradient_boosted_trees", "mlp", "1d_cnn", "siamese_cnn_meta"],
+    "win_rule": "direct adaptive-pedestal winner is none when post-ingest tagged-random truth rows are zero; proxy continuity winner is the lowest held-out post-veto tail fraction under the frozen LORO benchmark"
+  },
+  "next_tickets": []
+}

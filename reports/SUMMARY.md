@@ -134,6 +134,23 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 ## Current steering notes
 
+- Queue health (2026-06-10 latest pass): the exact requested command
+  `tn-ticket list testbeam` still reports `open=11 claimed=0 done=0 failed=15`, below the
+  18-ticket trigger. The project-aware `testbeam` queue remains deep after this pass
+  (`open=181 claimed=2 done=281 failed=7`) under concurrent worker movement. The trigger was
+  satisfied by appending four ready, non-duplicate `project:testbeam` tickets: S02l dynamic-only
+  timing quarantine boundary (`1781081167.631.051f65df`), P04x dynamic-only charge
+  externalization null (`1781081173.700.0ebd3bf2`), S16p pretrigger tau sign-inversion falsifier
+  (`1781081181.768.455d705f`), and S10r overlay-to-real pileup backprojection
+  (`1781081189.836.1e03033f`).
+- Fresh synthesis: S02e turns dynamic-range selection into a timing harm atom, while P04k shows
+  dynamic-only rows can support duplicate-readout charge closure only inside a distinct
+  high-baseline selector population. S16i proves pretrigger spectra couple to tau/live-time but
+  sign-flip the downstream-current interpretation, so they remain nuisance handles. S10h keeps
+  stress overlays useful for method ranking but not as proof of measured beam pile-up. The new
+  tickets therefore isolate dynamic-only timing, dynamic-only charge externalization, pretrigger
+  tau sign stability, and overlay-to-real candidate transfer before timing, pile-up, baseline,
+  dropout, PID, or energy consumers reuse these pulse atoms.
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
   `open=11 claimed=0 done=0 failed=15`, below the 18-ticket floor. The required append path was
   followed with `--project testbeam`; the project-aware testbeam queue remains deep, with this live

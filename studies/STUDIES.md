@@ -2327,3 +2327,66 @@ deterministic S01d selection boundary so repaired waveforms do not manufacture s
   with threshold-margin, shuffled-dropout, and amplitude-only controls. Metric: selection flip
   rate, recovered charge bias, timing sigma68/tail delta, threshold-margin calibration, and
   ML-minus-traditional recovery lift with run-block bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, selector/pretrigger/overlay externalization layer): the exact
+requested `tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=15`,
+below the 18-ready trigger. The project-aware `testbeam` queue reports `open=181 claimed=2
+done=281 failed=7` after this pass, with concurrent worker movement. The trigger was satisfied
+by appending four ready, non-duplicate `project:testbeam` tickets: S02l dynamic-only timing
+quarantine boundary (`1781081167.631.051f65df`), P04x dynamic-only charge externalization null
+(`1781081173.700.0ebd3bf2`), S16p pretrigger tau sign-inversion falsifier
+(`1781081181.768.455d705f`), and S10r overlay-to-real pileup backprojection
+(`1781081189.836.1e03033f`).
+
+Fresh synthesis: S02e turns dynamic-range selection into a timing harm atom rather than a timing
+improvement, and P04k shows dynamic-only rows can be learned for duplicate-readout charge closure
+while remaining a high-baseline, selector-induced population. S16i proves pretrigger spectra
+couple strongly to tau/live-time observables but produce a downstream-current sign that is
+nuisance-like rather than physics-facing. S10h stress overlays keep two-pulse method ranking
+useful but do not by themselves prove measured beam pile-up. The new tickets therefore isolate
+dynamic-only timing, dynamic-only charge externalization, pretrigger tau sign stability, and
+overlay-to-real candidate transfer before timing, pile-up, baseline, dropout, PID, or energy
+consumers reuse these atoms.
+
+- **S02l — Dynamic-only timing quarantine boundary.** Test whether dynamic-only selector pulses
+  can be safely quarantined or abstained without losing legitimate timing support. Traditional:
+  reproduce S00c/S02e counts, then compare median-first timing, dynamic-only exclusion, and
+  matched dynamic-only abstention using analytic/template timewalk refits with amplitude, stave,
+  run-rate, baseline-excursion, saturation, q_template, and anomaly balance tables. ML:
+  run-heldout calibrated logistic/HGB selector-risk and timing-tail model using pre-label waveform
+  summaries while excluding pair residuals, event ids, and target timing labels, with
+  shuffled-selector and amplitude-only controls. Metric: paired sigma68, full RMS, abs>5 ns tail
+  fraction, retained fraction, support-shift energy distance, and ML-minus-traditional quarantine
+  lift with run-block bootstrap 95% CIs.
+- **P04x — Dynamic-only charge externalization null.** Test whether P04k's strong dynamic-only
+  duplicate-readout ML charge closure survives any externalization test, or is only an
+  electronics-closure result inside a selector-induced population. Traditional: reproduce P04k
+  anchors, then apply integral, peak, adaptive-template, and robust Huber/ridge charge estimators
+  to dynamic-only, matched-control, and median-selected rows under held-out runs and B2/non-B2
+  support splits. ML: run-heldout HGB/ExtraTrees charge models trained separately on
+  median-selected and dynamic-selector rows, with target-stave exclusion, shuffled-target
+  sentinels, and conformal abstention before any external proxy comparison. Metric: duplicate and
+  external charge res68, median bias, full RMS, within-10/25% coverage, accepted support fraction,
+  real-minus-shuffled separation, and dynamic-only minus matched-control deltas with
+  run/stave-block bootstrap 95% CIs.
+- **S16p — Pretrigger tau sign-inversion falsifier.** Determine why S16i's pretrigger-only model
+  captures live-time/tail structure while predicting the downstream-current excess with the
+  opposite sign. Traditional: reproduce S16i/S10 topology anchors, stratify tau/live-time and
+  downstream excess by frozen pretrigger RMS/slope/excursion bins, then perform current-family
+  swaps matched on run, amplitude, stave, peak phase, topology, and late-tail taxon. ML:
+  run-heldout calibrated pretrigger-only classifier/regressor with isotonic and monotone variants,
+  current-shuffled, feature-permuted, and sign-flip placebo controls excluding post-trigger
+  samples and event ids. Metric: tau_eff/live10/live20 shift, downstream high-minus-low excess
+  sign and magnitude, Brier/log-loss calibration delta, sign-stability under swaps, and
+  ML-minus-traditional discrimination with heldout-run bootstrap 95% CIs.
+- **S10r — Overlay-to-real pileup backprojection.** Test whether S10h stress-overlay traditional
+  and ML scores backproject onto the same real high-current pulse atoms, or are only ranking
+  methods on synthetic overlays. Traditional: reproduce S10d/S10f/S10h anchors, apply the
+  amplitude-binned asymmetric two-pulse fit to real high-current and matched low-current windows,
+  and tabulate candidate support by amplitude ratio, delay, baseline excursion, saturation
+  boundary, peak phase, and anomaly taxon. ML: apply the S10h compact MLP score/regressor under
+  run-family holdout with calibration, abstention, shuffled-current, and overlay-family placebo
+  controls; compare to traditional fit scores without event-id or source-run leakage. Metric:
+  high-minus-low candidate-rate delta, traditional/ML candidate-overlap Jaccard, support-shift
+  energy distance, timing/charge residual proxy, failure/abstention rate, and overlay-to-real
+  calibration error with source-run bootstrap 95% CIs.

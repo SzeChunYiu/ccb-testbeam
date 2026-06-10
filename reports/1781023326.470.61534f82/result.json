@@ -1,0 +1,337 @@
+{
+  "study": "P04h",
+  "ticket_id": "1781023326.470.61534f82",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction_first": {
+    "b_s00_expected_selected_pulses": 640737,
+    "b_s00_reproduced_selected_pulses": 640737,
+    "b_s00_delta": 0,
+    "b_s00_pass": true,
+    "astack_analysis_counts": [
+      {
+        "sample": "sample_iii_analysis",
+        "events_total": 388848,
+        "events_with_selected": 7168,
+        "selected_pulses": 9682,
+        "A1": 2799,
+        "A3": 6883
+      },
+      {
+        "sample": "sample_iv_analysis",
+        "events_total": 262189,
+        "events_with_selected": 767,
+        "selected_pulses": 894,
+        "A1": 167,
+        "A3": 727
+      }
+    ],
+    "p04c_reproduction_summary": [
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "b2_loglinear",
+        "split": "leave_one_run_out",
+        "n": 4055,
+        "bias_median_frac": -0.0476347628,
+        "res68_abs_frac": 0.5202846095,
+        "full_rms_frac": 0.8452595804,
+        "within_10pct": 0.1398273736,
+        "within_25pct": 0.344512947,
+        "bias_ci95": [
+          -0.065865883,
+          -0.0245680959
+        ],
+        "res68_ci95": [
+          0.5043523407,
+          0.539428778
+        ],
+        "full_rms_ci95": [
+          0.7387504555,
+          1.0072125005
+        ]
+      },
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "charge_transfer_ridge",
+        "split": "leave_one_run_out",
+        "n": 4055,
+        "bias_median_frac": -0.0474201293,
+        "res68_abs_frac": 0.5192709758,
+        "full_rms_frac": 0.8427617028,
+        "within_10pct": 0.1388409371,
+        "within_25pct": 0.3435265105,
+        "bias_ci95": [
+          -0.0671372987,
+          -0.0186003186
+        ],
+        "res68_ci95": [
+          0.5084359089,
+          0.5380162678
+        ],
+        "full_rms_ci95": [
+          0.7442900765,
+          0.9859469152
+        ]
+      },
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "b_waveform_extra_trees",
+        "split": "leave_one_run_out",
+        "n": 4055,
+        "bias_median_frac": -0.0478150747,
+        "res68_abs_frac": 0.5196663156,
+        "full_rms_frac": 0.844483282,
+        "within_10pct": 0.1398273736,
+        "within_25pct": 0.3447595561,
+        "bias_ci95": [
+          -0.0692353473,
+          -0.0246004205
+        ],
+        "res68_ci95": [
+          0.5054087328,
+          0.5375818574
+        ],
+        "full_rms_ci95": [
+          0.7446974292,
+          0.9693898115
+        ]
+      },
+      {
+        "target": "selected_A1A3_physical_charge",
+        "method": "shuffled_target_extra_trees",
+        "split": "negative_control",
+        "n": 4055,
+        "bias_median_frac": -0.0460104456,
+        "res68_abs_frac": 0.5182032451,
+        "full_rms_frac": 0.8412608589,
+        "within_10pct": 0.1410604192,
+        "within_25pct": 0.3415536375,
+        "bias_ci95": [
+          -0.0731999635,
+          -0.0210335226
+        ],
+        "res68_ci95": [
+          0.5024461739,
+          0.5366310633
+        ],
+        "full_rms_ci95": [
+          0.7283327697,
+          0.9872048572
+        ]
+      }
+    ]
+  },
+  "row_definition": {
+    "match_key": "(run, EVT)",
+    "required_source_topology": "B2 amplitude > 1000 ADC",
+    "required_target_topology": "A1 or A3 amplitude > 1000 ADC",
+    "target": "sum positive-lobe charge over selected A1/A3 staves",
+    "features": "B-stack even-channel waveforms and charge summaries only"
+  },
+  "n_ab_rows": 4055,
+  "runs_with_rows": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "split": "leave-one-run-out by run",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 300
+  },
+  "head_to_head": [
+    {
+      "target": "selected_A1A3_charge",
+      "method": "b2_loglinear",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0476347628,
+      "res68_abs_frac": 0.5202846095,
+      "full_rms_frac": 0.8452595922,
+      "within_25pct": 0.344512947,
+      "bias_ci95": [
+        -0.065865883,
+        -0.0245680959
+      ],
+      "res68_ci95": [
+        0.5043523407,
+        0.539428778
+      ],
+      "full_rms_ci95": [
+        0.7387504672,
+        1.0072125184
+      ],
+      "calibration_coverage68": 0.6784217016
+    },
+    {
+      "target": "selected_A1A3_charge",
+      "method": "peak_integral_topology_ridge",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0478953929,
+      "res68_abs_frac": 0.5267430372,
+      "full_rms_frac": 0.8481538643,
+      "within_25pct": 0.3437731196,
+      "bias_ci95": [
+        -0.0628570547,
+        -0.0142910106
+      ],
+      "res68_ci95": [
+        0.5124923384,
+        0.5408191975
+      ],
+      "full_rms_ci95": [
+        0.7471114506,
+        0.9952052221
+      ],
+      "calibration_coverage68": 0.6715166461
+    },
+    {
+      "target": "selected_A1A3_charge",
+      "method": "adaptive_template_ridge",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0469556393,
+      "res68_abs_frac": 0.5262002713,
+      "full_rms_frac": 0.8484433927,
+      "within_25pct": 0.3435265105,
+      "bias_ci95": [
+        -0.0656114222,
+        -0.0167341329
+      ],
+      "res68_ci95": [
+        0.5123154771,
+        0.5383269445
+      ],
+      "full_rms_ci95": [
+        0.7450906414,
+        0.9763378013
+      ],
+      "calibration_coverage68": 0.671270037
+    },
+    {
+      "target": "selected_A1A3_charge",
+      "method": "b_waveform_extra_trees",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0474265164,
+      "res68_abs_frac": 0.51912284,
+      "full_rms_frac": 0.8439225,
+      "within_25pct": 0.3462392109,
+      "bias_ci95": [
+        -0.069596863,
+        -0.0255455416
+      ],
+      "res68_ci95": [
+        0.5060907882,
+        0.5382634985
+      ],
+      "full_rms_ci95": [
+        0.7297614709,
+        0.9917526469
+      ],
+      "calibration_coverage68": 0.6729963009
+    },
+    {
+      "target": "selected_A1A3_charge",
+      "method": "topology_only_sentinel",
+      "split": "negative_control",
+      "n": 4055,
+      "bias_median_frac": -0.045928859,
+      "res68_abs_frac": 0.5206824346,
+      "full_rms_frac": 0.8433899484,
+      "within_25pct": 0.3442663379,
+      "bias_ci95": [
+        -0.0682291747,
+        -0.0220914325
+      ],
+      "res68_ci95": [
+        0.5069475801,
+        0.5360931372
+      ],
+      "full_rms_ci95": [
+        0.7378015623,
+        0.9773786533
+      ],
+      "calibration_coverage68": null
+    },
+    {
+      "target": "selected_A1A3_charge",
+      "method": "shuffled_target_extra_trees",
+      "split": "negative_control",
+      "n": 4055,
+      "bias_median_frac": -0.0437130534,
+      "res68_abs_frac": 0.5173225909,
+      "full_rms_frac": 0.8383295489,
+      "within_25pct": 0.3442663379,
+      "bias_ci95": [
+        -0.0662759503,
+        -0.019344999
+      ],
+      "res68_ci95": [
+        0.5032804452,
+        0.53265044
+      ],
+      "full_rms_ci95": [
+        0.7426373168,
+        0.997553922
+      ],
+      "calibration_coverage68": null
+    }
+  ],
+  "support_call_counts": [
+    {
+      "support_call": "support_only_or_weak",
+      "n": 27
+    }
+  ],
+  "support_map_csv": "p04h_support_map.csv",
+  "leakage_audit": {
+    "split": "leave-one-run-out by run",
+    "features_exclude": [
+      "run",
+      "evt",
+      "target_a_charge",
+      "A1_charge",
+      "A3_charge",
+      "A1_selected",
+      "A3_selected"
+    ],
+    "train_heldout_run_overlap": 0,
+    "topology_only_res68": 0.5206824346204807,
+    "shuffled_target_res68": 0.5173225909316197,
+    "ml_res68": 0.5191228400275192,
+    "too_good_flag": false
+  },
+  "finding": "No B-stack topology, amplitude, saturation, anomaly, or downstream-coincidence stratum passes the preregistered identifiability criteria with both strong run support and a clear real-versus-shuffled separation. The P04c number reproduces at about 0.52 res68, and P04h gives traditional 0.5262, ML 0.5191, and shuffled 0.5173. The A-stack charge proxy is therefore topology-limited noise for this raw ROOT mirror rather than a physics-facing charge transfer.",
+  "next_tickets": [],
+  "runtime_sec": 260.4
+}

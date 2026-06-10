@@ -507,7 +507,10 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   leakage flag, but two-ended projections still need atom-wise coverage and tail calibration.
   S03f also exposed a tempting 54-event topology diagnostic that is too sparse to promote, so the
   programme now needs an explicit rare-atom bootstrap threshold before low-count strata steer
-  timing, saturation, pile-up, dropout, PID, or energy work.
+  timing, saturation, pile-up, dropout, PID, or energy work. Rebase-landed S03c/S14c payloads add
+  the same caution: train-only run-family summaries leave only a small ridge timing gain over the
+  analytic comparator, and externalized S14c energy-proxy ordering is monotonic but sparse, so
+  neither timing ML nor energy/PID consumers should bypass the existing support gates.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

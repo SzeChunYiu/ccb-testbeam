@@ -973,8 +973,8 @@ def main() -> int:
         "finding": "Injected morphology failures are dominated by delayed-tail, dropout, and template-mismatch atoms; learned morphology improves ranking, but the transparent atom rubric remains the auditable physical explanation.",
         "next_tickets": [
             {
-                "title": "P09h real-vs-injected morphology atom transfer",
-                "body": "Test whether P09g delayed-tail/dropout/template-mismatch atoms transfer from injected S07h rows to real high-current and raw D_t-tail galleries with reviewer-blinded labels. Expected information gain: separates injected-intervention artifacts from robust real-beam morphology atoms before using the ranking for veto/recovery policy."
+                "title": "P09j injected-failure atom reviewer calibration",
+                "body": "Test whether the P09g autonomous atom labels for injected false positives/negatives survive blinded visual reviewer calibration on the bounded failure gallery and D_t-tail gallery. Expected information gain: converts the moderate autonomous-rubric agreement observed in P09g into a calibrated uncertainty on which atoms can safely drive veto/recovery triage."
             }
         ],
         "git_commit": git_commit(),

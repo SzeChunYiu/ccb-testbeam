@@ -2,13 +2,13 @@
   "ticket": "1781039488.1166.6e40385a",
   "study": "P09g",
   "worker": "testbeam-laptop-3",
-  "git_commit": "eb78a19b3a174fef7672e689ab8d5989b625d079",
+  "git_commit": "c97f1b071c9dafd11f6ff3d53e8f5d72d6e98c66",
   "config": "configs/p09g_1781039488_1166_6e40385a.json",
   "command": "scripts/p09g_1781039488_1166_6e40385a_injected_morphology_false_positive_gallery.py --config configs/p09g_1781039488_1166_6e40385a.json",
   "environment_command": "uv run --with uproot --with numpy --with pandas --with scikit-learn --with torch --with matplotlib python",
   "python": "3.13.12",
   "random_seed": 2026061003,
-  "runtime_sec": 120.5,
+  "runtime_sec": 106.2,
   "inputs": [
     {
       "path": "data/root/root/hrdb_run_0050.root",
@@ -66,7 +66,7 @@
     "p02e_claim_metrics_context.csv": "0e56c39a24b35ab328de0bc5e533370f25582ec803cfdcea4e0cfb8bac306df0",
     "p02e_morphology_context.csv": "0409b9820fbe128dd7aa55416ed1b132a59b0f53712b6b559ef021c7c7abc5a9",
     "reproduction_match_table.csv": "4c9f8b9c2e9cc4d972d27d72770e1b8bb48344ee2abe05359e5ee3367f5eb55a",
-    "result.json": "5a8eaad09cd40a37a5da7914f04912dd1e0211c8ac0034f401e870af813a822b",
+    "result.json": "b37441ebd400cd06e33b25158d9c92e2fd99da57d84002e97dc0ba0babbf4504",
     "taxon_enrichment.csv": "165fad10b4608f6ea177496ca8383fc65ee8cab1fc2839441e5c9051fb8be3a2",
     "taxon_summary.csv": "b7ad1193cafd94bf640d84139d97faca2799d3ea193ab339da3c4e1f0b53259a"
   }

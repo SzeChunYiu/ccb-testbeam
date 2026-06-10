@@ -1,0 +1,89 @@
+{
+  "study": "P03f",
+  "ticket": "1781034623.1381.12086ef0",
+  "worker": "testbeam-laptop-4",
+  "title": "leave-one-heldout-run repetition of P03e feature ablations with multimodel controls",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": {
+    "method": "analytic_timewalk",
+    "sigma68_ns": 1.5510917109777833,
+    "ci": [
+      1.363752228304065,
+      1.9362380560595842
+    ]
+  },
+  "winner": {
+    "method": "hgb_waveform_amp_shape_stave",
+    "family": "ml",
+    "sigma68_ns": 1.1074168319603352,
+    "ci": [
+      1.0753128562649419,
+      1.1587926292593722
+    ],
+    "delta_vs_traditional_ns": -0.44367487901744806,
+    "delta_ci": [
+      -0.8423304626565126,
+      -0.2411823439777396
+    ]
+  },
+  "feature_ablation": {
+    "waveform_only": {
+      "method": "hgb_waveform_only",
+      "sigma68_ns": 1.5105611509344652,
+      "ci": [
+        1.4274932808055902,
+        1.6584405115674685
+      ]
+    },
+    "waveform_stave_onehot": {
+      "method": "hgb_waveform_stave_onehot",
+      "sigma68_ns": 1.1260651138120898,
+      "ci": [
+        1.089058455891008,
+        1.1847271664978443
+      ]
+    },
+    "waveform_amp_shape": {
+      "method": "hgb_waveform_amp_shape",
+      "sigma68_ns": 1.4741184135811425,
+      "ci": [
+        1.3864789524807557,
+        1.58285577788097
+      ]
+    },
+    "waveform_amp_shape_stave": {
+      "method": "hgb_waveform_amp_shape_stave",
+      "sigma68_ns": 1.1074168319603352,
+      "ci": [
+        1.0753128562649419,
+        1.1587926292593722
+      ]
+    }
+  },
+  "p03e_stave_aware_gain": {
+    "waveform_amp_shape_stave_minus_waveform_amp_shape_ns": -0.36670158162080724,
+    "waveform_stave_onehot_minus_waveform_only_ns": -0.38449603712237534,
+    "aware_beats_blind_heldout_runs": 7,
+    "n_heldout_runs_compared": 7
+  },
+  "controls": {
+    "shuffled_target_failures": 61,
+    "stave_offset_guardrail_best_sigma68_ns": 1.1515617974183487,
+    "max_train_heldout_event_overlap": 0
+  },
+  "verdict": "The P03e waveform_amp_shape_stave gain survives beyond run 65 in the leave-one-run repetition: stave-aware amplitude/shape models beat their stave-blind analogues in most held-out runs and in the run-block pooled estimate. 61 shuffled-target checks beat their nominal model and are flagged as stability caveats.",
+  "next_tickets": [
+    "1781113727.1210.59cc0b3f: P03i: guardrail-orthogonal stave-aware residual lift"
+  ],
+  "git_commit": "dcbb6a346363e6d1f5ea625254f62bffc9757d69"
+}

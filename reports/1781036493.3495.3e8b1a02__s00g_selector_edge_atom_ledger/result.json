@@ -1,0 +1,112 @@
+{
+  "study": "S00g",
+  "ticket": "1781036493.3495.3e8b1a02",
+  "worker": "testbeam-laptop-4",
+  "title": "selector-edge waveform atom ledger",
+  "reproduced_raw_root_first": true,
+  "reproduction": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "bootstrap_samples": 100
+  },
+  "traditional_method": "exact_run_current_amplitude_topology_matched_fixed_secondary_rubric",
+  "methods": [
+    "new_shape_residual_fusion",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge",
+    "cnn_1d",
+    "traditional_fixed_secondary_score",
+    "shuffled_label_fusion_control"
+  ],
+  "winner": {
+    "method": "new_shape_residual_fusion",
+    "roc_auc": 0.98933125,
+    "roc_auc_ci": [
+      0.9815415625,
+      0.99539484375
+    ],
+    "average_precision": 0.9910930893188813,
+    "balanced_accuracy": 0.9475
+  },
+  "s00c_honest_mistakes": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "cv_selected_c": 10.0,
+    "cv_accuracy": 0.9467250132303534,
+    "heldout_records": 278832,
+    "false_positive": 556,
+    "false_negative": 78,
+    "accuracy": 0.9977262294141275
+  },
+  "physics_verdict": {
+    "verdict": "selector_systematic_atom",
+    "matched_coverage": 0.9540937153145411,
+    "matched_rows": 373064,
+    "matched_edge_rows": 186532,
+    "matched_control_rows": 186532,
+    "selector_edge_total": 195507,
+    "secondary_delta": -0.06501833465571591,
+    "secondary_delta_ci": [
+      -0.07083300689979334,
+      -0.05974675456901733
+    ],
+    "timing_tail_delta": -0.03031651405656939,
+    "timing_tail_delta_ci": [
+      -0.042583197667954584,
+      -0.020496783942324792
+    ],
+    "charge_area_delta": -27976.0,
+    "charge_area_delta_ci": [
+      -30117.4,
+      -22333.275000000005
+    ],
+    "baseline_excursion_delta": 803.0,
+    "baseline_excursion_delta_ci": [
+      673.275,
+      933.3
+    ]
+  },
+  "non_oracle_leakage_checks_pass": true,
+  "input_sha256_table": "input_sha256.csv",
+  "git_commit": "91265df8bfa31a340164a1f485bc6e1cde998a03",
+  "runtime_sec": 106.936,
+  "next_tickets": [
+    {
+      "title": "S00h: selector-edge atom ledger with joined calibrated PID-energy support",
+      "body": "Join calibrated PID and energy-support labels onto the S00g selector-edge atom table, then rerun the same run/current/stave/amplitude/topology matching to replace the raw topology, PID, and energy proxies with calibrated downstream quantities."
+    }
+  ],
+  "finding": "Selector-edge atoms reproduce raw anchors at median=640737 and dynamic_only=65636; exact matched deltas favor selector_systematic_atom. Predictive benchmark winner: new_shape_residual_fusion.",
+  "output_files": [
+    "atom_propagation_ledger.csv",
+    "fig_model_auc.png",
+    "fig_support_summary.png",
+    "heldout_model_scores.csv.gz",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "matched_pulse_table.csv.gz",
+    "matched_strata_summary.csv",
+    "matched_support_summary.csv",
+    "model_benchmark.csv",
+    "primary_delta_metrics.csv",
+    "reproduction_match_table.csv",
+    "s00c_mistake_atom_ledger.csv",
+    "selector_atom_ledger.csv",
+    "selector_counts_by_run.csv",
+    "selector_edge_table.csv.gz"
+  ]
+}

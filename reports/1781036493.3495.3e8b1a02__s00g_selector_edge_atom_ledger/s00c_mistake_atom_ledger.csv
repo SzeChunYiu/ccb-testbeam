@@ -1,0 +1,6 @@
+mistake_type,primary_atom,dynamic_selected,median_selected,n,runs,median_amp_adc,dynamic_amp_adc,baseline_excursion_adc,mean_honest_prob
+false_negative,median_threshold_edge,1,1,64,2,1055.0,2080.5,1310.5,0.2663978928993441
+false_negative,baseline_excursion,1,1,14,2,1216.75,4245.5,2751.5,0.12360432711722723
+false_positive,dynamic_threshold_edge,0,0,316,2,951.75,959.5,14.0,0.7044359547693486
+false_positive,dynamic_only,1,0,237,2,924.5,4412.0,3635.0,0.7890255252333425
+false_positive,non_edge_shape,0,0,3,2,821.5,839.0,9.0,0.5510934314148136

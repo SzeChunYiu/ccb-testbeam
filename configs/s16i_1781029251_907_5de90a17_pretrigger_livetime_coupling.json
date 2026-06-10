@@ -1,0 +1,39 @@
+{
+  "study_id": "S16i",
+  "ticket_id": "1781029251.907.5de90a17",
+  "worker": "testbeam-laptop-2",
+  "title": "pretrigger-baseline live-time coupling audit",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781029251.907.5de90a17",
+  "random_seed": 1781029251,
+  "bootstrap_samples": 500,
+  "runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "low_runs": [46, 47],
+  "high_runs": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "baseline_samples": [0, 1, 2, 3],
+  "sample_period_ns": 10.0,
+  "thresholds": [
+    {"key": "5pct", "label": "5%", "fraction": 0.05, "s10d_tau_eff_ns": 141.0557117938371, "s10d_empirical_ns": 124.87810615613058},
+    {"key": "10pct", "label": "10%", "fraction": 0.10, "s10d_tau_eff_ns": 124.79018394263471, "s10d_empirical_ns": 123.25552601769233},
+    {"key": "20pct", "label": "20%", "fraction": 0.20, "s10d_tau_eff_ns": 101.86521002119034, "s10d_empirical_ns": 119.0300244680748}
+  ],
+  "expected_topology": {
+    "low_2nA": {
+      "multi_stave_per_selected_event": 0.0156,
+      "three_stave_per_selected_event": 0.0041,
+      "downstream_per_selected_event": 0.0231
+    },
+    "high_20nA": {
+      "multi_stave_per_selected_event": 0.0268,
+      "three_stave_per_selected_event": 0.0085,
+      "downstream_per_selected_event": 0.0334
+    }
+  },
+  "topology_tolerance": 0.0015,
+  "min_stratum_n": 20,
+  "ml_max_train_rows": 80000,
+  "ml_tail_target": "20pct",
+  "ml_tail_risk_quantile": 0.90,
+  "leakage_auc_flag": 0.70,
+  "ml_delta_auc_flag": 0.25
+}

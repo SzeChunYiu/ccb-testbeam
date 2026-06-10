@@ -2274,3 +2274,56 @@ and operational tau disagreement.
   tau-gated, and abstained operating points plus shuffled-current controls. Metric: high-minus-low
   candidate-rate delta, method-overlap Jaccard, support-shift energy distance, and calibration
   Brier delta with source-run bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, S01d/S04e/S10h/S10i/P06 layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=15`, below the
+18-ready trigger. The project-aware `testbeam` queue reports `open=185 claimed=0 done=275
+failed=7` after this pass. The trigger was satisfied by appending four ready, non-duplicate
+`project:testbeam` tickets: S01i selected-table byte-vs-content consumer sentinel
+(`1781079699.541.0a2d19ff`), S04l q-veto retention-response calibration ladder
+(`1781079699.606.68323fbc`), S10q acquisition-window tau placebo scan
+(`1781079699.634.377d0f69`), and P06f selected-threshold dropout boundary recoverability null
+(`1781079699.645.330a744c`).
+
+Fresh synthesis: S01d closes the selected-pulse table reproduction at the byte/content/hash level
+but exposes a packaging-versus-content distinction that downstream consumers must handle
+explicitly. S04e shows B2 q_template/shape vetoes can remove timing tails, but a single retention
+point is not a calibrated consumer rule. S10h/S10i keep tau_eff/Rmax in the acquisition-window
+and method-disagreement layer, so placebo scans are needed before pile-up, baseline, PID, or
+energy consumers inherit tau claims. The dropout/recovery path also has to be tied back to the
+deterministic S01d selection boundary so repaired waveforms do not manufacture selected rows.
+
+- **S01i — Selected-table byte-vs-content consumer sentinel.** Decide which downstream timing,
+  template, charge, and q_template consumers change when gated on the exact S01d
+  decompressed-content hash versus byte-level gzip hash and versus a regenerated same-row table.
+  Traditional: strict manifest joins, content-hash checks, row-count/run-stave comparisons, and
+  deterministic replays of the smallest S01/S02/S04/P04 consumers. ML: run-heldout anomaly
+  classifier on consumer deltas, waveform support summaries, and table-provenance features with
+  shuffled-hash and stale-table controls. Metric: consumer headline delta, hash mismatch rate,
+  support-shift energy distance, false alarm rate, and ML-minus-traditional stale-consumer lift
+  with run-block bootstrap 95% CIs.
+- **S04l — Q-veto retention-response calibration ladder.** Test whether S04e q_template/shape
+  veto gains remain beneficial across a retention ladder or concentrate at one support-changing
+  operating point. Traditional: q_template and hand-shape thresholds scanned at fixed retention
+  on run folds for B2-containing and B2-excluded pairs, with amplitude, saturation, baseline, and
+  topology balance tables. ML: calibrated RF/logistic veto scores using waveform and q_template
+  summaries with pair-residual labels excluded, plus topology-only and shuffled-label sentinels.
+  Metric: sigma68, full RMS, abs>5 ns tail fraction, retained fraction, support-distance shift,
+  and ML-minus-traditional deltas at each retention with run-block bootstrap 95% CIs.
+- **S10q — Acquisition-window tau placebo scan.** Test whether S10h/S10i live-time and tau
+  conclusions survive placebo acquisition-window definitions that preserve peak phase and
+  final-sample censoring but break true current dependence. Traditional: Kaplan-Meier and
+  template-extrapolated tau bounds over real and placebo final-sample windows stratified by
+  current, run family, peak phase, amplitude, stave, and late-tail taxon. ML: run-heldout monotone
+  survival/AFT model with early-shape and support features, excluding final-sample leakage and
+  evaluated against shuffled-current and phase-shifted placebo controls. Metric: live10/live20
+  bound width, Rmax shift, high-minus-low candidate-rate delta, placebo rejection rate, and
+  ML-minus-traditional calibration error with source-run bootstrap 95% CIs.
+- **P06f — Selected-threshold dropout boundary recoverability null.** Test whether dropout or
+  jagged-waveform recovery near the S01d selected-pulse threshold restores charge/timing without
+  biasing the deterministic selected/not-selected boundary. Traditional: rule-based jagged/dropout
+  masks, local interpolation, and threshold-margin scans around median-baseline max>1000 ADC with
+  S01d hash/count anchors. ML: train-run-only inpainting autoencoder or small CNN recovery model
+  with threshold-margin, shuffled-dropout, and amplitude-only controls. Metric: selection flip
+  rate, recovered charge bias, timing sigma68/tail delta, threshold-margin calibration, and
+  ML-minus-traditional recovery lift with run-block bootstrap 95% CIs.

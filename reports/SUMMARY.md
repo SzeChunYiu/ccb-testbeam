@@ -11,6 +11,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S00d | ✅ done | ✅ dynamic-only 65,636; median-only 0 | dynamic-only taxonomy: baseline_excursion fraction 0.924 | embedding classifier AUC 0.994 but shuffle control fails | Diagnostic only; dynamic-only excess is morphology/confound support | reports/1781014251.574.7a497937 |
 | S01 | ✅ report landed | ✅ 640,737 selected pulses | median amplitude-bin template MSE 0.0444 | AE/PCA basis MSE 0.00208 | **Yes** (Δ=-0.0423, CI [-0.0524,-0.0324]) | reports/1780997954.15037.36463764__s01_full_dataset_templates |
 | S01b | ✅ merged | ✅ raw-ROOT re-deriv | selection rule | run-split check | — | reports/…s01b… (PR #2) |
+| S01d | ✅ done | ✅ 640,737 exact; gzip/content sha match | deterministic median-first-four gate heldout accuracy 1.000 | honest raw-summary logistic accuracy 0.980 | No; exact selected-table rule is the production gate | reports/1781028640.1299.266407ae |
 | S01f | ✅ done | ✅ S00 and S03 run-65 references | fold-local q-template veto Δ=0.045 ns, CI [0.023,0.129] | fold-local RF veto Δ=0.025 ns, CI [-0.013,0.085] | No; fold-local q_template does not securely improve pair residual width | reports/1781012803.2987.06ed3d69 |
 | S01f transfer | ✅ done | ✅ reproduced | conditional q_external threshold AUC 0.672; failure enrichment 0.070 | q-structure RF AUC 0.759; failure enrichment 0.235 | Positive but not clean; run/stave leakage flags need atom grid | reports/1781015988.1972.6a842ea9 |
 | S02 | ✅ done | ✅ S00 selection | template phase sigma68 2.889 ns | ridge-on-CFD20 sigma68 1.846 ns | **Yes** (Δ≈1.04 ns) | reports/1780997954.15157.07ef03cf__s02_timing_pickoff |
@@ -134,18 +135,19 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
-  `open=11 claimed=0 done=0 failed=15`, below the 18-ticket floor, because the legacy shim treats
-  `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
-  It initially reported `failed=14`; an accidental `tn-ticket append --help` probe created a
-  default-queue `grocery` ticket and was immediately failed as cleanup, accounting for the +1
-  default failed count. The required append path was followed again with `--project testbeam`; the
-  project-aware testbeam queue remains deep, with this live post-append audit observing
-  `open=182 claimed=3 done=270 failed=7` while workers continue moving tickets.
-  The mission trigger still required new ready work. This pass appended four ready non-duplicate
-  tickets: S10p final-sample censoring live-time bound (`1781078145.745.604d188d`),
+  `open=11 claimed=0 done=0 failed=15`, below the 18-ticket floor. The required append path was
+  followed with `--project testbeam`; the project-aware testbeam queue remains deep, with this live
+  post-append audit observing `open=185 claimed=0 done=275 failed=7` while workers continue moving
+  tickets. The mission trigger still required new ready work. This pass appended four ready
+  non-duplicate tickets: S01i selected-table byte-vs-content consumer sentinel
+  (`1781079699.541.0a2d19ff`), S04l q-veto retention-response calibration ladder
+  (`1781079699.606.68323fbc`), S10q acquisition-window tau placebo scan
+  (`1781079699.634.377d0f69`), and P06f selected-threshold dropout boundary recoverability null
+  (`1781079699.645.330a744c`). The previous pass appended four ready non-duplicate tickets:
+  S10p final-sample censoring live-time bound (`1781078145.745.604d188d`),
   S04k B2 q-veto external-pair transfer gate (`1781078146.810.71e65869`),
   P10n no-tail q-gain peak-phase counterfactual (`1781078146.875.034f6846`), and
-  S10p quiet-tau method-disagreement closure (`1781078146.939.6c7536da`). The previous pass
+  S10p quiet-tau method-disagreement closure (`1781078146.939.6c7536da`). The pass before that
   appended four ready non-duplicate tickets: S03s upstream q-template curvature leakage gate (`1781075115.415.5d145e93`),
   P08c charge-residual waveform PID null (`1781075123.485.458a1740`),
   S07m AppA definition-ensemble propagation (`1781075129.553.3f0644b1`), and
@@ -220,16 +222,16 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
   (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
   (`1781023340.632.43377364`).
-- Latest synthesis: S10i exposes a method disagreement rather than an adoptable pile-up rate:
-  template-tau quiet candidates are near null while the ML tau score is current-positive. S10g
-  and S10h show that low-threshold live-time estimates are heavily right-censored and that
-  final-sample/late-tail taxa dominate the inflation, so tau_eff/Rmax work now needs explicit
-  acquisition-window bounds. S04e makes q_template/shape vetoes powerful for B2 timing tails but
-  retention and external-pair support transfer must be measured before covariance, PID, or energy
-  consumers reuse the veto. P02f keeps learned shape-atom vetoes non-adopted, and P10f keeps
-  no-tail conditional q gains behind too-good controls. The new tickets target those exact atoms:
-  final-sample censoring, B2 q-veto transfer, q-template peak-phase physicality, and quiet-tau
-  method disagreement.
+- Latest synthesis: S01d closes selected-pulse-table reproduction at the exact content/hash
+  level, while showing that byte-level gzip details and content-level physics guards must be kept
+  separate for downstream consumers. S04e makes q_template/shape vetoes powerful for B2 timing
+  tails, but retention response needs calibration before covariance, PID, or energy consumers
+  reuse the veto. S10h/S10i keep tau_eff/Rmax in the acquisition-window and method-disagreement
+  layer, so a placebo tau scan is the next falsification gate. Dropout and jagged-waveform
+  recovery now need an explicit selected-threshold boundary null so charge/timing repairs do not
+  manufacture selected rows or support-biased PID/energy labels. The new tickets target those
+  exact atoms: selected-table byte-vs-content sentinels, q-veto retention calibration,
+  acquisition-window tau placebos, and selected-threshold dropout recoverability.
 - Newest reports sharpen the next claims: S03e shows q_template ML gains on all-three curvature
   tails, but downstream q_template is too close to the label source; P08b shows calibrated
   charge-depth explains the new PID weak label as well as waveform ML, while P08c says topology-

@@ -1,0 +1,5 @@
+comparison,metric,delta,delta_ci95
+ml_et_tail_surrogate minus traditional_empirical_template,q_template_mse,-0.02771440029113948,"[-0.03045337787083414, -0.02521630793092528]"
+ml_et_tail_surrogate minus traditional_empirical_template,tail_mse,-0.039565995704488946,"[-0.04454995836695658, -0.03489757071592539]"
+ml_et_tail_surrogate minus traditional_empirical_template,live10_abs_error_ns,-0.4512247261259204,"[-0.7665909446077757, -0.1577398017819926]"
+ml_et_tail_surrogate minus traditional_empirical_template,live20_abs_error_ns,3.9059433411139097,"[3.536235478373989, 4.252802533304211]"

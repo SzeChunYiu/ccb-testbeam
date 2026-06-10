@@ -1992,7 +1992,7 @@ shape RF cues are interpreted as pulse morphology.
 Current steering pass (2026-06-10, S14d/S04d/P04j/P10h layer): the exact requested
 `tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
 18-ready trigger. The project-aware `testbeam` queue remains deep after this pass
-(`open=180 claimed=4 done=249 failed=7`) under concurrent worker movement. The trigger was
+(`open=179 claimed=5 done=249 failed=7`) under concurrent worker movement. The trigger was
 satisfied by appending four ready, non-duplicate `project:testbeam` tickets focused on raw-only
 PID falsification, pathology-interaction veto calibration, retained charge-interval support, and
 energy-claim red-team controls: S15b raw-HRD PID proxy falsification ledger

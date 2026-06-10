@@ -677,7 +677,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   artifacts before timing, PID, or energy consumers inherit them.
 - Current steering pass: the exact requested command `tn-ticket list testbeam` reports
   `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The project-aware
-  `testbeam` queue remains deep after this pass (`open=180 claimed=4 done=249 failed=7`) under
+  `testbeam` queue remains deep after this pass (`open=179 claimed=5 done=249 failed=7`) under
   concurrent worker movement. The trigger was satisfied by appending four ready, non-duplicate
   `project:testbeam` tickets: S15b raw-HRD PID proxy falsification ledger
   (`1781069565.648.74687e98`), S04j pathology-interaction calibrated veto transfer

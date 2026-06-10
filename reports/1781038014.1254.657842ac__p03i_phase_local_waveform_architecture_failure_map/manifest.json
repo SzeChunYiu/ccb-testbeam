@@ -1,0 +1,27 @@
+{
+  "study": "P03i",
+  "ticket": "1781038014.1254.657842ac",
+  "worker": "testbeam-laptop-3",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-3/configs/p03i_1781038014_1254_657842ac_phase_local_failure_map.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p03i_1781038014_1254_657842ac_phase_local_failure_map.py --config configs/p03i_1781038014_1254_657842ac_phase_local_failure_map.json",
+  "elapsed_s": 1679.024913072586,
+  "git_commit": "17cec27e840c59eaa100bd57439e704fc4a0b792",
+  "outputs": {
+    "REPORT.md": "b5825e14a256129ed9f022f92fe793ba130a05328f18ad09f59f3154640c0d06",
+    "atom_counts.csv": "4263a8947cc687f21a35f716b58974ca2465849168957268e1f651e458a57f2e",
+    "atom_failure_map.csv": "22b9b80eb871b98f07c85258afbd2ca3a95766231e679c8477b829a0ee8f6df4",
+    "event_atoms.csv": "20f90d99a8584997cd107108e268ce0524d51bd46fa2be1e07c1e2c7452caa6d",
+    "fig_atom_winner_deltas.png": "eef5df7a01f3a170c40af7606f70aa45418a2322cbce4647fb25a228aa6787c0",
+    "fig_pooled_benchmark.png": "9f00986c8cf3ddf4fe0bfc2884db1cbe0a37aad0f108940ffe30f303067852ac",
+    "fig_residual_distributions.png": "efd9d88df1d187edda8453e82990f4f21166b34e83790d765c07339bcf50706f",
+    "heldout_run_summary.csv": "5af00e8242d5efc271babd6311dc37358a846ed46e0d0d0e89e32ebf844c467b",
+    "input_sha256.csv": "54ffe78258dd00839e9ea3c1ccfe7fd98cf2ad263e3d399c8e18c0f3ced439f7",
+    "leakage_checks.csv": "e52c25e417cf28747b77a889933a3f10cb3823742389d4acce4140edad77639e",
+    "model_diagnostics.csv": "0f2d1203369a94705be0d544a5a7eb2eda37eb5b96d3d3be8bfcce03cc982158",
+    "pairwise_residuals.csv": "abb24a9f8c32c9d2dc9ddd213740a4e795b436d76cd4b6a59fb8a7d090a6f456",
+    "per_atom_winners.csv": "9332fa211a375506982bba53d690a705d9ef5ad93ef45647fb6d91bada0a22ca",
+    "pooled_run_block_summary.csv": "ed9e66c96dd3879e38bf14e5208dac58c8a96fb9854b411acfdafd077ccb28a5",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "09a9019f1c6d428b4351283ea202741c00293defa4fd8de1cbd43f79abf45f45"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "study": "P03i",
+  "ticket": "1781038014.1254.657842ac",
+  "worker": "testbeam-laptop-3",
+  "title": "phase-local waveform architecture failure map",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": {
+    "method": "s02b_global_template_timewalk",
+    "sigma68_ns": 1.6923582499801066,
+    "ci": [
+      1.520510997910522,
+      1.9524158608282671
+    ]
+  },
+  "winner": {
+    "method": "hgb_no_samples_0_3",
+    "family": "ml",
+    "sigma68_ns": 1.1706765959085075,
+    "ci": [
+      1.141403124550574,
+      1.2143084869609315
+    ],
+    "delta_vs_traditional_ns": -0.5216816540715992,
+    "delta_ci": [
+      -0.7751397527075891,
+      -0.31792506243661617
+    ]
+  },
+  "architecture_findings": {
+    "best_full": {
+      "method": "hgb_full",
+      "sigma68_ns": 1.1748920307678556
+    },
+    "best_no_samples_0_3": {
+      "method": "hgb_no_samples_0_3",
+      "sigma68_ns": 1.1706765959085075
+    },
+    "best_only_samples_0_3": {
+      "method": "hgb_only_samples_0_3",
+      "sigma68_ns": 1.2005752086342878
+    },
+    "new_architecture": "early_late_gated",
+    "new_architecture_best_sigma68_ns": 1.405613418038484
+  },
+  "failure_map": {
+    "n_atom_rows": 396,
+    "worst_traditional_atom": {
+      "atom_type": "saturation_atom",
+      "atom_value": "amp_top5_proxy",
+      "traditional_sigma68_ns": 1.9834333939458026,
+      "best_method": "hgb_full",
+      "best_sigma68_ns": 1.2420240188114895
+    }
+  },
+  "controls": {
+    "shuffled_target_failures": 12,
+    "run_family_control_best_sigma68_ns": 1.2089532275674904,
+    "max_train_heldout_event_overlap": 0
+  },
+  "verdict": "The pooled winner is hgb_no_samples_0_3; its gain over the fold-local traditional method is -0.522 ns. The best no-samples-0-3 model (hgb_no_samples_0_3) is within -0.004 ns of the best full-waveform model, while the best only-samples-0-3 model is 1.201 ns, so early baseline samples are not necessary for the main gain. The highest traditional-width atom is saturation_atom=amp_top5_proxy, identifying the strongest failure-map target. 12 shuffled-target checks beat their nominal fold model and are retained as caveats.",
+  "next_tickets": [
+    "P03j: blinded q-template and baseline residual veto for waveform timing learners"
+  ],
+  "git_commit": "17cec27e840c59eaa100bd57439e704fc4a0b792"
+}

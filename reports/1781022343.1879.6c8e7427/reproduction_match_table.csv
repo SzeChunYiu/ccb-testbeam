@@ -1,0 +1,11 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+raw total selected B-stave pulses,640737.0,640737.0,0.0,0.0,True
+raw sample_ii_analysis selected_pulses,125096.0,125096.0,0.0,0.0,True
+raw sample_ii_analysis B2,88213.0,88213.0,0.0,0.0,True
+raw sample_ii_analysis B4,21229.0,21229.0,0.0,0.0,True
+raw sample_ii_analysis B6,11148.0,11148.0,0.0,0.0,True
+raw sample_ii_analysis B8,4506.0,4506.0,0.0,0.0,True
+prior heldout pair rows,2178.0,2178.0,0.0,0.0,True
+prior ML high-risk pair rows,515.0,515.0,0.0,0.0,True
+prior baseline tail rate,0.048668503213957756,0.048668503213957756,0.0,1e-12,True
+prior exclude-ML tail rate,0.02826217678893566,0.02826217678893566,0.0,1e-12,True

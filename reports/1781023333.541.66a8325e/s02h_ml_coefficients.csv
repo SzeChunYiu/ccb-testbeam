@@ -1,0 +1,1016 @@
+feature,coefficient,heldout_run,variant,alpha
+intercept,0.0,58,S02h ML binned residual,10.0
+B4_intercept,-2.01605030683531,58,S02h ML binned residual,10.0
+B4_log_amp,-1.3404543033263283,58,S02h ML binned residual,10.0
+B4_log_amp2,-0.6353433579317945,58,S02h ML binned residual,10.0
+B4_inv_amp,-3.8090852871648067,58,S02h ML binned residual,10.0
+B4_peak_sample,0.579717685730953,58,S02h ML binned residual,10.0
+B4_area_over_amp,3.081988403195914,58,S02h ML binned residual,10.0
+B4_template_sse,0.7214286330354271,58,S02h ML binned residual,10.0
+B6_intercept,-0.4138914211984415,58,S02h ML binned residual,10.0
+B6_log_amp,-0.32682186770485017,58,S02h ML binned residual,10.0
+B6_log_amp2,-0.11458888751691396,58,S02h ML binned residual,10.0
+B6_inv_amp,1.4957878593787894,58,S02h ML binned residual,10.0
+B6_peak_sample,-0.7496918437272959,58,S02h ML binned residual,10.0
+B6_area_over_amp,0.09702750443368063,58,S02h ML binned residual,10.0
+B6_template_sse,0.4981714773745934,58,S02h ML binned residual,10.0
+B8_intercept,2.4299417280520634,58,S02h ML binned residual,10.0
+B8_log_amp,0.7522061688614105,58,S02h ML binned residual,10.0
+B8_log_amp2,-1.226857766120725,58,S02h ML binned residual,10.0
+B8_inv_amp,0.5381347058006141,58,S02h ML binned residual,10.0
+B8_peak_sample,-0.8783977271625221,58,S02h ML binned residual,10.0
+B8_area_over_amp,-2.1666589477038256,58,S02h ML binned residual,10.0
+B8_template_sse,0.045265523768328764,58,S02h ML binned residual,10.0
+bin_0,-0.2012303679250948,58,S02h ML binned residual,10.0
+bin_1,0.4542257399654583,58,S02h ML binned residual,10.0
+bin_2,0.11472602849434935,58,S02h ML binned residual,10.0
+bin_3,-0.36752035867475474,58,S02h ML binned residual,10.0
+bin_missing,0.0,58,S02h ML binned residual,10.0
+intercept,0.0,58,S02h ML bin-dropout,1.0
+B4_intercept,-2.498729859713866,58,S02h ML bin-dropout,1.0
+B4_log_amp,-4.481858781635403,58,S02h ML bin-dropout,1.0
+B4_log_amp2,-7.725720317815797,58,S02h ML bin-dropout,1.0
+B4_inv_amp,-5.926374871578336,58,S02h ML bin-dropout,1.0
+B4_peak_sample,0.5496271481816178,58,S02h ML bin-dropout,1.0
+B4_area_over_amp,3.1178030126648393,58,S02h ML bin-dropout,1.0
+B4_template_sse,0.7501801478762035,58,S02h ML bin-dropout,1.0
+B6_intercept,-1.0844960750875543,58,S02h ML bin-dropout,1.0
+B6_log_amp,-3.496671026078749,58,S02h ML bin-dropout,1.0
+B6_log_amp2,-6.161478415844732,58,S02h ML bin-dropout,1.0
+B6_inv_amp,-0.41508472574376215,58,S02h ML bin-dropout,1.0
+B6_peak_sample,-0.7873200403712621,58,S02h ML bin-dropout,1.0
+B6_area_over_amp,-0.8020939157461341,58,S02h ML bin-dropout,1.0
+B6_template_sse,0.26699246434212304,58,S02h ML bin-dropout,1.0
+B8_intercept,3.5832259352096965,58,S02h ML bin-dropout,1.0
+B8_log_amp,-2.872160763696243,58,S02h ML bin-dropout,1.0
+B8_log_amp2,-10.443193329499467,58,S02h ML bin-dropout,1.0
+B8_inv_amp,-1.7362919938225738,58,S02h ML bin-dropout,1.0
+B8_peak_sample,-0.6470612818065188,58,S02h ML bin-dropout,1.0
+B8_area_over_amp,-1.3636013979475514,58,S02h ML bin-dropout,1.0
+B8_template_sse,0.18676265871255288,58,S02h ML bin-dropout,1.0
+intercept,0.0,58,S02h ML shuffled-bin,0.1
+B4_intercept,-3.3019836376015554,58,S02h ML shuffled-bin,0.1
+B4_log_amp,-3.4432242925955436,58,S02h ML shuffled-bin,0.1
+B4_log_amp2,-10.115833655576322,58,S02h ML shuffled-bin,0.1
+B4_inv_amp,-6.379820944981184,58,S02h ML shuffled-bin,0.1
+B4_peak_sample,0.537175557596311,58,S02h ML shuffled-bin,0.1
+B4_area_over_amp,3.2052222047059566,58,S02h ML shuffled-bin,0.1
+B4_template_sse,0.7976782245972578,58,S02h ML shuffled-bin,0.1
+B6_intercept,-0.4770686017932238,58,S02h ML shuffled-bin,0.1
+B6_log_amp,-4.880536816286181,58,S02h ML shuffled-bin,0.1
+B6_log_amp2,-7.62145114323877,58,S02h ML shuffled-bin,0.1
+B6_inv_amp,-0.8991035387321547,58,S02h ML shuffled-bin,0.1
+B6_peak_sample,-0.771157363330241,58,S02h ML shuffled-bin,0.1
+B6_area_over_amp,-0.6266235189954141,58,S02h ML shuffled-bin,0.1
+B6_template_sse,0.30660036328962176,58,S02h ML shuffled-bin,0.1
+B8_intercept,3.779052243721133,58,S02h ML shuffled-bin,0.1
+B8_log_amp,-4.223514797462281,58,S02h ML shuffled-bin,0.1
+B8_log_amp2,-11.356974638123537,58,S02h ML shuffled-bin,0.1
+B8_inv_amp,-2.1041027302119715,58,S02h ML shuffled-bin,0.1
+B8_peak_sample,-0.6689878589607081,58,S02h ML shuffled-bin,0.1
+B8_area_over_amp,-1.4355063287742926,58,S02h ML shuffled-bin,0.1
+B8_template_sse,0.17241179337966261,58,S02h ML shuffled-bin,0.1
+bin_0,-0.005484928107388149,58,S02h ML shuffled-bin,0.1
+bin_1,0.003956966805004873,58,S02h ML shuffled-bin,0.1
+bin_2,-0.030596406172175575,58,S02h ML shuffled-bin,0.1
+bin_3,0.0321168625803675,58,S02h ML shuffled-bin,0.1
+bin_missing,0.0,58,S02h ML shuffled-bin,0.1
+intercept,0.0,58,S02h ML shuffled-target,1.0
+B4_intercept,0.8630371470360167,58,S02h ML shuffled-target,1.0
+B4_log_amp,0.26696486543714953,58,S02h ML shuffled-target,1.0
+B4_log_amp2,-0.4063115008716607,58,S02h ML shuffled-target,1.0
+B4_inv_amp,-0.19334151106371822,58,S02h ML shuffled-target,1.0
+B4_peak_sample,0.11072055708353484,58,S02h ML shuffled-target,1.0
+B4_area_over_amp,-0.09500336202783725,58,S02h ML shuffled-target,1.0
+B4_template_sse,0.001364647364489355,58,S02h ML shuffled-target,1.0
+B6_intercept,0.005662755200495521,58,S02h ML shuffled-target,1.0
+B6_log_amp,0.05728235338192798,58,S02h ML shuffled-target,1.0
+B6_log_amp2,0.4096423193478673,58,S02h ML shuffled-target,1.0
+B6_inv_amp,-0.14164408141293452,58,S02h ML shuffled-target,1.0
+B6_peak_sample,0.17336728391306666,58,S02h ML shuffled-target,1.0
+B6_area_over_amp,0.0014168455230463345,58,S02h ML shuffled-target,1.0
+B6_template_sse,0.13411828509841914,58,S02h ML shuffled-target,1.0
+B8_intercept,-0.8686999022416588,58,S02h ML shuffled-target,1.0
+B8_log_amp,0.07445454653262465,58,S02h ML shuffled-target,1.0
+B8_log_amp2,0.9008863346947934,58,S02h ML shuffled-target,1.0
+B8_inv_amp,0.33545097158693016,58,S02h ML shuffled-target,1.0
+B8_peak_sample,0.008525921841745413,58,S02h ML shuffled-target,1.0
+B8_area_over_amp,0.13464140235356772,58,S02h ML shuffled-target,1.0
+B8_template_sse,0.022823232112738696,58,S02h ML shuffled-target,1.0
+bin_0,0.019715499980365238,58,S02h ML shuffled-target,1.0
+bin_1,0.015249336015892623,58,S02h ML shuffled-target,1.0
+bin_2,0.03910050321261417,58,S02h ML shuffled-target,1.0
+bin_3,-0.07403768666420232,58,S02h ML shuffled-target,1.0
+bin_missing,0.0,58,S02h ML shuffled-target,1.0
+intercept,0.0,58,S02h ML bin+current/rate,100.0
+B4_intercept,-0.9928663804097451,58,S02h ML bin+current/rate,100.0
+B4_log_amp,-0.5882674954760141,58,S02h ML bin+current/rate,100.0
+B4_log_amp2,-0.1846401562118166,58,S02h ML bin+current/rate,100.0
+B4_inv_amp,-3.639420824594452,58,S02h ML bin+current/rate,100.0
+B4_peak_sample,0.6172741434531581,58,S02h ML bin+current/rate,100.0
+B4_area_over_amp,2.0040880855682577,58,S02h ML bin+current/rate,100.0
+B4_template_sse,0.28964185956205374,58,S02h ML bin+current/rate,100.0
+B6_intercept,0.27298186896260385,58,S02h ML bin+current/rate,100.0
+B6_log_amp,0.14636883873056453,58,S02h ML bin+current/rate,100.0
+B6_log_amp2,0.03363854804438127,58,S02h ML bin+current/rate,100.0
+B6_inv_amp,1.4768507053888913,58,S02h ML bin+current/rate,100.0
+B6_peak_sample,-0.6883194910990299,58,S02h ML bin+current/rate,100.0
+B6_area_over_amp,0.04587357075377558,58,S02h ML bin+current/rate,100.0
+B6_template_sse,0.48863514303769084,58,S02h ML bin+current/rate,100.0
+B8_intercept,0.7198845114483023,58,S02h ML bin+current/rate,100.0
+B8_log_amp,0.4515619242471198,58,S02h ML bin+current/rate,100.0
+B8_log_amp2,0.148982267106242,58,S02h ML bin+current/rate,100.0
+B8_inv_amp,0.9513531684284967,58,S02h ML bin+current/rate,100.0
+B8_peak_sample,-0.5951353209605675,58,S02h ML bin+current/rate,100.0
+B8_area_over_amp,-0.91817771857864,58,S02h ML bin+current/rate,100.0
+B8_template_sse,0.30643487963190874,58,S02h ML bin+current/rate,100.0
+bin_0,-0.192523846509547,58,S02h ML bin+current/rate,100.0
+bin_1,0.4459357707236048,58,S02h ML bin+current/rate,100.0
+bin_2,0.0949965217720875,58,S02h ML bin+current/rate,100.0
+bin_3,-0.34821286538393004,58,S02h ML bin+current/rate,100.0
+bin_missing,0.0,58,S02h ML bin+current/rate,100.0
+B4_current_nA_z,0.0,58,S02h ML bin+current/rate,100.0
+B4_trigger_entry_density_z,-0.07033923436724107,58,S02h ML bin+current/rate,100.0
+B4_entries_per_eventno_z,-0.07033923436724127,58,S02h ML bin+current/rate,100.0
+B4_selected_multiplicity_per_event_z,-0.07587637156868329,58,S02h ML bin+current/rate,100.0
+B4_downstream_allhit_fraction_z,0.035611004454105505,58,S02h ML bin+current/rate,100.0
+B6_current_nA_z,0.0,58,S02h ML bin+current/rate,100.0
+B6_trigger_entry_density_z,0.03262349874182978,58,S02h ML bin+current/rate,100.0
+B6_entries_per_eventno_z,0.03262349874182909,58,S02h ML bin+current/rate,100.0
+B6_selected_multiplicity_per_event_z,-0.005497089953411985,58,S02h ML bin+current/rate,100.0
+B6_downstream_allhit_fraction_z,0.009028975941422613,58,S02h ML bin+current/rate,100.0
+B8_current_nA_z,0.0,58,S02h ML bin+current/rate,100.0
+B8_trigger_entry_density_z,0.035654589089153435,58,S02h ML bin+current/rate,100.0
+B8_entries_per_eventno_z,0.035654589089154864,58,S02h ML bin+current/rate,100.0
+B8_selected_multiplicity_per_event_z,0.09522168923475456,58,S02h ML bin+current/rate,100.0
+B8_downstream_allhit_fraction_z,-0.09915649254992899,58,S02h ML bin+current/rate,100.0
+intercept,0.0,59,S02h ML binned residual,10.0
+B4_intercept,-2.285492105559015,59,S02h ML binned residual,10.0
+B4_log_amp,-1.3187331323478912,59,S02h ML binned residual,10.0
+B4_log_amp2,-0.3020510204657886,59,S02h ML binned residual,10.0
+B4_inv_amp,-4.646767870300993,59,S02h ML binned residual,10.0
+B4_peak_sample,0.3197089589897308,59,S02h ML binned residual,10.0
+B4_area_over_amp,3.261753629620225,59,S02h ML binned residual,10.0
+B4_template_sse,0.7973542557969324,59,S02h ML binned residual,10.0
+B6_intercept,-0.543405248352348,59,S02h ML binned residual,10.0
+B6_log_amp,-0.624313820291816,59,S02h ML binned residual,10.0
+B6_log_amp2,-0.5926085001842424,59,S02h ML binned residual,10.0
+B6_inv_amp,1.88569536978593,59,S02h ML binned residual,10.0
+B6_peak_sample,-0.8864103898024092,59,S02h ML binned residual,10.0
+B6_area_over_amp,0.23829118653872483,59,S02h ML binned residual,10.0
+B6_template_sse,0.6027605973303262,59,S02h ML binned residual,10.0
+B8_intercept,2.828897353912894,59,S02h ML binned residual,10.0
+B8_log_amp,0.9838879927594346,59,S02h ML binned residual,10.0
+B8_log_amp2,-1.2033353026405655,59,S02h ML binned residual,10.0
+B8_inv_amp,0.6060358296381697,59,S02h ML binned residual,10.0
+B8_peak_sample,-1.1648123003044004,59,S02h ML binned residual,10.0
+B8_area_over_amp,-3.0972956443488444,59,S02h ML binned residual,10.0
+B8_template_sse,-0.0720796141414427,59,S02h ML binned residual,10.0
+bin_0,-0.3272576610488174,59,S02h ML binned residual,10.0
+bin_1,0.5379781439971155,59,S02h ML binned residual,10.0
+bin_2,0.16579518715269306,59,S02h ML binned residual,10.0
+bin_3,-0.3764703703110789,59,S02h ML binned residual,10.0
+bin_missing,0.0,59,S02h ML binned residual,10.0
+intercept,0.0,59,S02h ML bin-dropout,0.1
+B4_intercept,-5.62631932736624,59,S02h ML bin-dropout,0.1
+B4_log_amp,-2.5885833291025455,59,S02h ML bin-dropout,0.1
+B4_log_amp2,-9.14796937898501,59,S02h ML bin-dropout,0.1
+B4_inv_amp,-7.18135039211656,59,S02h ML bin-dropout,0.1
+B4_peak_sample,0.2781537400731015,59,S02h ML bin-dropout,0.1
+B4_area_over_amp,3.325657194134519,59,S02h ML bin-dropout,0.1
+B4_template_sse,0.861227796586757,59,S02h ML bin-dropout,0.1
+B6_intercept,0.4118506096905646,59,S02h ML bin-dropout,0.1
+B6_log_amp,-5.248910155425778,59,S02h ML bin-dropout,0.1
+B6_log_amp2,-9.197374018952402,59,S02h ML bin-dropout,0.1
+B6_inv_amp,-0.9512706817520182,59,S02h ML bin-dropout,0.1
+B6_peak_sample,-0.863815575211392,59,S02h ML bin-dropout,0.1
+B6_area_over_amp,-0.5566487840379347,59,S02h ML bin-dropout,0.1
+B6_template_sse,0.3820643972391317,59,S02h ML bin-dropout,0.1
+B8_intercept,5.214468721327696,59,S02h ML bin-dropout,0.1
+B8_log_amp,-3.4977747063778204,59,S02h ML bin-dropout,0.1
+B8_log_amp2,-13.217504705237243,59,S02h ML bin-dropout,0.1
+B8_inv_amp,-2.4911475782329497,59,S02h ML bin-dropout,0.1
+B8_peak_sample,-0.9387890517757768,59,S02h ML bin-dropout,0.1
+B8_area_over_amp,-2.2436385794913685,59,S02h ML bin-dropout,0.1
+B8_template_sse,0.08727009433047567,59,S02h ML bin-dropout,0.1
+intercept,0.0,59,S02h ML shuffled-bin,1.0
+B4_intercept,-3.6782058267765017,59,S02h ML shuffled-bin,1.0
+B4_log_amp,-4.544353555999692,59,S02h ML shuffled-bin,1.0
+B4_log_amp2,-6.777014791219947,59,S02h ML shuffled-bin,1.0
+B4_inv_amp,-6.845494248946307,59,S02h ML shuffled-bin,1.0
+B4_peak_sample,0.2911005372432898,59,S02h ML shuffled-bin,1.0
+B4_area_over_amp,3.250576213987725,59,S02h ML shuffled-bin,1.0
+B4_template_sse,0.8193781029574936,59,S02h ML shuffled-bin,1.0
+B6_intercept,-1.010478506563132,59,S02h ML shuffled-bin,1.0
+B6_log_amp,-3.830095001454174,59,S02h ML shuffled-bin,1.0
+B6_log_amp2,-6.953859482073373,59,S02h ML shuffled-bin,1.0
+B6_inv_amp,-0.29815765672748934,59,S02h ML shuffled-bin,1.0
+B6_peak_sample,-0.8810087783273808,59,S02h ML shuffled-bin,1.0
+B6_area_over_amp,-0.7790003329648898,59,S02h ML shuffled-bin,1.0
+B6_template_sse,0.3284520231151835,59,S02h ML shuffled-bin,1.0
+B8_intercept,4.68868433365776,59,S02h ML shuffled-bin,1.0
+B8_log_amp,-2.6630804620145763,59,S02h ML shuffled-bin,1.0
+B8_log_amp2,-11.491211301435577,59,S02h ML shuffled-bin,1.0
+B8_inv_amp,-2.004570458393842,59,S02h ML shuffled-bin,1.0
+B8_peak_sample,-0.9069941912985132,59,S02h ML shuffled-bin,1.0
+B8_area_over_amp,-2.140213316256354,59,S02h ML shuffled-bin,1.0
+B8_template_sse,0.11038160658015259,59,S02h ML shuffled-bin,1.0
+bin_0,0.003993272363390816,59,S02h ML shuffled-bin,1.0
+bin_1,-0.018492572595124643,59,S02h ML shuffled-bin,1.0
+bin_2,-0.007368976414586098,59,S02h ML shuffled-bin,1.0
+bin_3,0.02185942399098414,59,S02h ML shuffled-bin,1.0
+bin_missing,0.0,59,S02h ML shuffled-bin,1.0
+intercept,0.0,59,S02h ML shuffled-target,100.0
+B4_intercept,0.02875846741280677,59,S02h ML shuffled-target,100.0
+B4_log_amp,-0.06292174297043386,59,S02h ML shuffled-target,100.0
+B4_log_amp2,-0.17231886930952728,59,S02h ML shuffled-target,100.0
+B4_inv_amp,0.23636232513618596,59,S02h ML shuffled-target,100.0
+B4_peak_sample,0.08301780264410136,59,S02h ML shuffled-target,100.0
+B4_area_over_amp,-0.3178305339945079,59,S02h ML shuffled-target,100.0
+B4_template_sse,-0.17761493009495155,59,S02h ML shuffled-target,100.0
+B6_intercept,-0.0630350473089217,59,S02h ML shuffled-target,100.0
+B6_log_amp,-0.15738821469757738,59,S02h ML shuffled-target,100.0
+B6_log_amp2,-0.26357378646488877,59,S02h ML shuffled-target,100.0
+B6_inv_amp,0.32432431507582143,59,S02h ML shuffled-target,100.0
+B6_peak_sample,-0.16596001982520142,59,S02h ML shuffled-target,100.0
+B6_area_over_amp,0.1367648794754689,59,S02h ML shuffled-target,100.0
+B6_template_sse,-0.006183319355381369,59,S02h ML shuffled-target,100.0
+B8_intercept,0.034276579896103054,59,S02h ML shuffled-target,100.0
+B8_log_amp,0.17098415102085954,59,S02h ML shuffled-target,100.0
+B8_log_amp2,0.33070250549799146,59,S02h ML shuffled-target,100.0
+B8_inv_amp,-0.11014280605599541,59,S02h ML shuffled-target,100.0
+B8_peak_sample,0.08701880205440023,59,S02h ML shuffled-target,100.0
+B8_area_over_amp,-0.8040919264958869,59,S02h ML shuffled-target,100.0
+B8_template_sse,-0.0929461245519733,59,S02h ML shuffled-target,100.0
+bin_0,-0.0620848596136211,59,S02h ML shuffled-target,100.0
+bin_1,-0.04998956458512408,59,S02h ML shuffled-target,100.0
+bin_2,0.045686467027885556,59,S02h ML shuffled-target,100.0
+bin_3,0.06633859898624322,59,S02h ML shuffled-target,100.0
+bin_missing,0.0,59,S02h ML shuffled-target,100.0
+intercept,0.0,59,S02h ML bin+current/rate,100.0
+B4_intercept,-1.0455400701676831,59,S02h ML bin+current/rate,100.0
+B4_log_amp,-0.5390078795203005,59,S02h ML bin+current/rate,100.0
+B4_log_amp2,-0.03426793604399115,59,S02h ML bin+current/rate,100.0
+B4_inv_amp,-4.34939323190747,59,S02h ML bin+current/rate,100.0
+B4_peak_sample,0.46008741415762655,59,S02h ML bin+current/rate,100.0
+B4_area_over_amp,2.192047868106276,59,S02h ML bin+current/rate,100.0
+B4_template_sse,0.32771623216654266,59,S02h ML bin+current/rate,100.0
+B6_intercept,0.21699529256938693,59,S02h ML bin+current/rate,100.0
+B6_log_amp,0.031162096765799483,59,S02h ML bin+current/rate,100.0
+B6_log_amp2,-0.1403394854667466,59,S02h ML bin+current/rate,100.0
+B6_inv_amp,1.8416775262164011,59,S02h ML bin+current/rate,100.0
+B6_peak_sample,-0.8270063987316554,59,S02h ML bin+current/rate,100.0
+B6_area_over_amp,0.012321150770813867,59,S02h ML bin+current/rate,100.0
+B6_template_sse,0.5543552059930993,59,S02h ML bin+current/rate,100.0
+B8_intercept,0.8285447775979784,59,S02h ML bin+current/rate,100.0
+B8_log_amp,0.5415554772972714,59,S02h ML bin+current/rate,100.0
+B8_log_amp2,0.21815891781818994,59,S02h ML bin+current/rate,100.0
+B8_inv_amp,1.0753904301627222,59,S02h ML bin+current/rate,100.0
+B8_peak_sample,-0.7720109749120535,59,S02h ML bin+current/rate,100.0
+B8_area_over_amp,-1.2677781008389215,59,S02h ML bin+current/rate,100.0
+B8_template_sse,0.3278052372154644,59,S02h ML bin+current/rate,100.0
+bin_0,-0.31163488873622724,59,S02h ML bin+current/rate,100.0
+bin_1,0.5211203835283051,59,S02h ML bin+current/rate,100.0
+bin_2,0.13739091481610866,59,S02h ML bin+current/rate,100.0
+bin_3,-0.3468413304636929,59,S02h ML bin+current/rate,100.0
+bin_missing,0.0,59,S02h ML bin+current/rate,100.0
+B4_current_nA_z,0.0,59,S02h ML bin+current/rate,100.0
+B4_trigger_entry_density_z,0.017204570159258577,59,S02h ML bin+current/rate,100.0
+B4_entries_per_eventno_z,0.017204570159258737,59,S02h ML bin+current/rate,100.0
+B4_selected_multiplicity_per_event_z,-0.02688479247971658,59,S02h ML bin+current/rate,100.0
+B4_downstream_allhit_fraction_z,0.06375519916218503,59,S02h ML bin+current/rate,100.0
+B6_current_nA_z,0.0,59,S02h ML bin+current/rate,100.0
+B6_trigger_entry_density_z,0.008330473624994898,59,S02h ML bin+current/rate,100.0
+B6_entries_per_eventno_z,0.008330473624995362,59,S02h ML bin+current/rate,100.0
+B6_selected_multiplicity_per_event_z,-0.011435346813584074,59,S02h ML bin+current/rate,100.0
+B6_downstream_allhit_fraction_z,-0.041048954769095765,59,S02h ML bin+current/rate,100.0
+B8_current_nA_z,0.0,59,S02h ML bin+current/rate,100.0
+B8_trigger_entry_density_z,0.027661827148246707,59,S02h ML bin+current/rate,100.0
+B8_entries_per_eventno_z,0.027661827148245926,59,S02h ML bin+current/rate,100.0
+B8_selected_multiplicity_per_event_z,0.07733409019969718,59,S02h ML bin+current/rate,100.0
+B8_downstream_allhit_fraction_z,-0.1775594354491491,59,S02h ML bin+current/rate,100.0
+intercept,0.0,60,S02h ML binned residual,10.0
+B4_intercept,-1.9378583895693735,60,S02h ML binned residual,10.0
+B4_log_amp,-1.2407443799235505,60,S02h ML binned residual,10.0
+B4_log_amp2,-0.4040830874301961,60,S02h ML binned residual,10.0
+B4_inv_amp,-2.742140617030434,60,S02h ML binned residual,10.0
+B4_peak_sample,0.6817981936843182,60,S02h ML binned residual,10.0
+B4_area_over_amp,2.713176124488886,60,S02h ML binned residual,10.0
+B4_template_sse,0.6273452366758476,60,S02h ML binned residual,10.0
+B6_intercept,0.12297526985309404,60,S02h ML binned residual,10.0
+B6_log_amp,0.2275563335171232,60,S02h ML binned residual,10.0
+B6_log_amp2,0.38848373384165075,60,S02h ML binned residual,10.0
+B6_inv_amp,0.6127679467642704,60,S02h ML binned residual,10.0
+B6_peak_sample,-0.4057770810759077,60,S02h ML binned residual,10.0
+B6_area_over_amp,-0.43040688335275074,60,S02h ML binned residual,10.0
+B6_template_sse,0.1742458756198201,60,S02h ML binned residual,10.0
+B8_intercept,1.8148831197112436,60,S02h ML binned residual,10.0
+B8_log_amp,0.45822803627426734,60,S02h ML binned residual,10.0
+B8_log_amp2,-1.1656376997950009,60,S02h ML binned residual,10.0
+B8_inv_amp,0.36207981374662623,60,S02h ML binned residual,10.0
+B8_peak_sample,-0.4670849338875635,60,S02h ML binned residual,10.0
+B8_area_over_amp,-1.0611017250227692,60,S02h ML binned residual,10.0
+B8_template_sse,0.12219683332269486,60,S02h ML binned residual,10.0
+bin_0,0.06156172812866176,60,S02h ML binned residual,10.0
+bin_1,0.30068085373410075,60,S02h ML binned residual,10.0
+bin_2,-0.007411194051236469,60,S02h ML binned residual,10.0
+bin_3,-0.3548666559598138,60,S02h ML binned residual,10.0
+bin_missing,0.0,60,S02h ML binned residual,10.0
+intercept,0.0,60,S02h ML bin-dropout,0.1
+B4_intercept,-5.896487725667456,60,S02h ML bin-dropout,0.1
+B4_log_amp,-5.578701209733837,60,S02h ML bin-dropout,0.1
+B4_log_amp2,-3.5206365488677,60,S02h ML bin-dropout,0.1
+B4_inv_amp,-3.5293999943563428,60,S02h ML bin-dropout,0.1
+B4_peak_sample,0.6809953588855947,60,S02h ML bin-dropout,0.1
+B4_area_over_amp,2.8755893618477772,60,S02h ML bin-dropout,0.1
+B4_template_sse,0.660214942269524,60,S02h ML bin-dropout,0.1
+B6_intercept,0.6042217874833247,60,S02h ML bin-dropout,0.1
+B6_log_amp,-3.4177990450441147,60,S02h ML bin-dropout,0.1
+B6_log_amp2,-6.431259027421325,60,S02h ML bin-dropout,0.1
+B6_inv_amp,-1.046150706355508,60,S02h ML bin-dropout,0.1
+B6_peak_sample,-0.4388443939893499,60,S02h ML bin-dropout,0.1
+B6_area_over_amp,-0.8236903013735006,60,S02h ML bin-dropout,0.1
+B6_template_sse,0.06949999223197323,60,S02h ML bin-dropout,0.1
+B8_intercept,5.292265932971117,60,S02h ML bin-dropout,0.1
+B8_log_amp,-3.125916161014532,60,S02h ML bin-dropout,0.1
+B8_log_amp2,-11.036143663023568,60,S02h ML bin-dropout,0.1
+B8_inv_amp,-1.8851645568093776,60,S02h ML bin-dropout,0.1
+B8_peak_sample,-0.43133457742745174,60,S02h ML bin-dropout,0.1
+B8_area_over_amp,-1.0975166586723752,60,S02h ML bin-dropout,0.1
+B8_template_sse,0.10216215900745258,60,S02h ML bin-dropout,0.1
+intercept,0.0,60,S02h ML shuffled-bin,1.0
+B4_intercept,-4.325077422200051,60,S02h ML shuffled-bin,1.0
+B4_log_amp,-4.280187934602327,60,S02h ML shuffled-bin,1.0
+B4_log_amp2,-4.040897041213439,60,S02h ML shuffled-bin,1.0
+B4_inv_amp,-3.509602026610974,60,S02h ML shuffled-bin,1.0
+B4_peak_sample,0.680636449482504,60,S02h ML shuffled-bin,1.0
+B4_area_over_amp,2.8256831588229625,60,S02h ML shuffled-bin,1.0
+B4_template_sse,0.6420644147163003,60,S02h ML shuffled-bin,1.0
+B6_intercept,-0.19341065425437165,60,S02h ML shuffled-bin,1.0
+B6_log_amp,-2.312549511941504,60,S02h ML shuffled-bin,1.0
+B6_log_amp2,-4.72707191427282,60,S02h ML shuffled-bin,1.0
+B6_inv_amp,-0.5277669467980983,60,S02h ML shuffled-bin,1.0
+B6_peak_sample,-0.45177751417905027,60,S02h ML shuffled-bin,1.0
+B6_area_over_amp,-0.9833353993615931,60,S02h ML shuffled-bin,1.0
+B6_template_sse,0.031564893380460736,60,S02h ML shuffled-bin,1.0
+B8_intercept,4.518488076024474,60,S02h ML shuffled-bin,1.0
+B8_log_amp,-1.9637910541554477,60,S02h ML shuffled-bin,1.0
+B8_log_amp2,-9.620805570141451,60,S02h ML shuffled-bin,1.0
+B8_inv_amp,-1.4277404977774792,60,S02h ML shuffled-bin,1.0
+B8_peak_sample,-0.40716706921231394,60,S02h ML shuffled-bin,1.0
+B8_area_over_amp,-1.0168086657703872,60,S02h ML shuffled-bin,1.0
+B8_template_sse,0.11824737232563712,60,S02h ML shuffled-bin,1.0
+bin_0,-0.01655485596357316,60,S02h ML shuffled-bin,1.0
+bin_1,0.005067883197716937,60,S02h ML shuffled-bin,1.0
+bin_2,0.01051661203080103,60,S02h ML shuffled-bin,1.0
+bin_3,0.0009671696163138153,60,S02h ML shuffled-bin,1.0
+bin_missing,0.0,60,S02h ML shuffled-bin,1.0
+intercept,0.0,60,S02h ML shuffled-target,0.01
+B4_intercept,1.5406273776747264,60,S02h ML shuffled-target,0.01
+B4_log_amp,-3.52927228596832,60,S02h ML shuffled-target,0.01
+B4_log_amp2,-0.06678186247329769,60,S02h ML shuffled-target,0.01
+B4_inv_amp,-0.6871679011236296,60,S02h ML shuffled-target,0.01
+B4_peak_sample,-0.08029582403206285,60,S02h ML shuffled-target,0.01
+B4_area_over_amp,0.1367965718404992,60,S02h ML shuffled-target,0.01
+B4_template_sse,0.03435826784743628,60,S02h ML shuffled-target,0.01
+B6_intercept,-0.11135086966693006,60,S02h ML shuffled-target,0.01
+B6_log_amp,-4.0693857752502405,60,S02h ML shuffled-target,0.01
+B6_log_amp2,1.2689950089382933,60,S02h ML shuffled-target,0.01
+B6_inv_amp,0.031640199090164786,60,S02h ML shuffled-target,0.01
+B6_peak_sample,-0.037521227827791055,60,S02h ML shuffled-target,0.01
+B6_area_over_amp,0.27119288844091316,60,S02h ML shuffled-target,0.01
+B6_template_sse,0.029532269204781834,60,S02h ML shuffled-target,0.01
+B8_intercept,-1.4292765126367044,60,S02h ML shuffled-target,0.01
+B8_log_amp,-1.437439096939904,60,S02h ML shuffled-target,0.01
+B8_log_amp2,0.5826285943589187,60,S02h ML shuffled-target,0.01
+B8_inv_amp,-0.0033012323364048682,60,S02h ML shuffled-target,0.01
+B8_peak_sample,-0.060222068679277624,60,S02h ML shuffled-target,0.01
+B8_area_over_amp,-0.27061399791094615,60,S02h ML shuffled-target,0.01
+B8_template_sse,-0.07904494905391918,60,S02h ML shuffled-target,0.01
+bin_0,0.028808456948974617,60,S02h ML shuffled-target,0.01
+bin_1,-0.07043247603643682,60,S02h ML shuffled-target,0.01
+bin_2,0.013750530460008159,60,S02h ML shuffled-target,0.01
+bin_3,0.02788813066591758,60,S02h ML shuffled-target,0.01
+bin_missing,0.0,60,S02h ML shuffled-target,0.01
+intercept,0.0,60,S02h ML bin+current/rate,100.0
+B4_intercept,-0.8881489183086956,60,S02h ML bin+current/rate,100.0
+B4_log_amp,-0.5817677171580405,60,S02h ML bin+current/rate,100.0
+B4_log_amp2,-0.26039808071182596,60,S02h ML bin+current/rate,100.0
+B4_inv_amp,-2.599242060779721,60,S02h ML bin+current/rate,100.0
+B4_peak_sample,0.7239543961424113,60,S02h ML bin+current/rate,100.0
+B4_area_over_amp,1.5352085420156505,60,S02h ML bin+current/rate,100.0
+B4_template_sse,0.1609306721703722,60,S02h ML bin+current/rate,100.0
+B6_intercept,0.3874779620131903,60,S02h ML bin+current/rate,100.0
+B6_log_amp,0.3481175491026421,60,S02h ML bin+current/rate,100.0
+B6_log_amp2,0.3116055765971752,60,S02h ML bin+current/rate,100.0
+B6_inv_amp,0.6984014054446037,60,S02h ML bin+current/rate,100.0
+B6_peak_sample,-0.3293582904493628,60,S02h ML bin+current/rate,100.0
+B6_area_over_amp,-0.06079835648809151,60,S02h ML bin+current/rate,100.0
+B6_template_sse,0.2595103536922326,60,S02h ML bin+current/rate,100.0
+B8_intercept,0.5006709562955002,60,S02h ML bin+current/rate,100.0
+B8_log_amp,0.27454905211109726,60,S02h ML bin+current/rate,100.0
+B8_log_amp2,0.016278557976547252,60,S02h ML bin+current/rate,100.0
+B8_inv_amp,0.7231088046347053,60,S02h ML bin+current/rate,100.0
+B8_peak_sample,-0.3015400472775763,60,S02h ML bin+current/rate,100.0
+B8_area_over_amp,-0.38455439423779914,60,S02h ML bin+current/rate,100.0
+B8_template_sse,0.2647371096809191,60,S02h ML bin+current/rate,100.0
+bin_0,0.03284339426991068,60,S02h ML bin+current/rate,100.0
+bin_1,0.2992834584077098,60,S02h ML bin+current/rate,100.0
+bin_2,-0.006895405544237397,60,S02h ML bin+current/rate,100.0
+bin_3,-0.325270748012937,60,S02h ML bin+current/rate,100.0
+bin_missing,0.0,60,S02h ML bin+current/rate,100.0
+B4_current_nA_z,0.0,60,S02h ML bin+current/rate,100.0
+B4_trigger_entry_density_z,-0.004697129544503445,60,S02h ML bin+current/rate,100.0
+B4_entries_per_eventno_z,-0.0046971295445025025,60,S02h ML bin+current/rate,100.0
+B4_selected_multiplicity_per_event_z,-0.11740999096095794,60,S02h ML bin+current/rate,100.0
+B4_downstream_allhit_fraction_z,0.20644840456233574,60,S02h ML bin+current/rate,100.0
+B6_current_nA_z,0.0,60,S02h ML bin+current/rate,100.0
+B6_trigger_entry_density_z,0.015396410400328388,60,S02h ML bin+current/rate,100.0
+B6_entries_per_eventno_z,0.015396410400328627,60,S02h ML bin+current/rate,100.0
+B6_selected_multiplicity_per_event_z,0.05054608061574636,60,S02h ML bin+current/rate,100.0
+B6_downstream_allhit_fraction_z,-0.0720487874232365,60,S02h ML bin+current/rate,100.0
+B8_current_nA_z,0.0,60,S02h ML bin+current/rate,100.0
+B8_trigger_entry_density_z,0.016661268716157022,60,S02h ML bin+current/rate,100.0
+B8_entries_per_eventno_z,0.016661268716156898,60,S02h ML bin+current/rate,100.0
+B8_selected_multiplicity_per_event_z,0.0843399531510333,60,S02h ML bin+current/rate,100.0
+B8_downstream_allhit_fraction_z,-0.13029911186073073,60,S02h ML bin+current/rate,100.0
+intercept,0.0,61,S02h ML binned residual,1.0
+B4_intercept,-3.827499575372122,61,S02h ML binned residual,1.0
+B4_log_amp,-2.7181289015011654,61,S02h ML binned residual,1.0
+B4_log_amp2,-1.7006951505282266,61,S02h ML binned residual,1.0
+B4_inv_amp,-3.5045431284064037,61,S02h ML binned residual,1.0
+B4_peak_sample,0.6575824650725558,61,S02h ML binned residual,1.0
+B4_area_over_amp,3.647561478376373,61,S02h ML binned residual,1.0
+B4_template_sse,0.9399171857562484,61,S02h ML binned residual,1.0
+B6_intercept,-1.6931132985532256,61,S02h ML binned residual,1.0
+B6_log_amp,-1.2829202193409728,61,S02h ML binned residual,1.0
+B6_log_amp2,-0.4140856074584087,61,S02h ML binned residual,1.0
+B6_inv_amp,1.190237354524783,61,S02h ML binned residual,1.0
+B6_peak_sample,-0.7760721143373135,61,S02h ML binned residual,1.0
+B6_area_over_amp,-0.38163130052644945,61,S02h ML binned residual,1.0
+B6_template_sse,0.3061272681739584,61,S02h ML binned residual,1.0
+B8_intercept,5.520612873907152,61,S02h ML binned residual,1.0
+B8_log_amp,0.3911373571771579,61,S02h ML binned residual,1.0
+B8_log_amp2,-5.3795945608576705,61,S02h ML binned residual,1.0
+B8_inv_amp,-0.39966481923080677,61,S02h ML binned residual,1.0
+B8_peak_sample,-1.1330223615895578,61,S02h ML binned residual,1.0
+B8_area_over_amp,-2.996275428320168,61,S02h ML binned residual,1.0
+B8_template_sse,-0.16556927340266892,61,S02h ML binned residual,1.0
+bin_0,-0.25108332739948086,61,S02h ML binned residual,1.0
+bin_1,0.392711512320025,61,S02h ML binned residual,1.0
+bin_2,0.1311208358675725,61,S02h ML binned residual,1.0
+bin_3,-0.2725054934455991,61,S02h ML binned residual,1.0
+bin_missing,0.0,61,S02h ML binned residual,1.0
+intercept,0.0,61,S02h ML bin-dropout,1.0
+B4_intercept,-2.7234271077145724,61,S02h ML bin-dropout,1.0
+B4_log_amp,-4.826998451836594,61,S02h ML bin-dropout,1.0
+B4_log_amp2,-7.91177290602797,61,S02h ML bin-dropout,1.0
+B4_inv_amp,-5.477635572250772,61,S02h ML bin-dropout,1.0
+B4_peak_sample,0.6489891368110589,61,S02h ML bin-dropout,1.0
+B4_area_over_amp,3.529369641870778,61,S02h ML bin-dropout,1.0
+B4_template_sse,0.9161774366496351,61,S02h ML bin-dropout,1.0
+B6_intercept,-0.9403990842476226,61,S02h ML bin-dropout,1.0
+B6_log_amp,-3.1969291466122325,61,S02h ML bin-dropout,1.0
+B6_log_amp2,-5.82485499586176,61,S02h ML bin-dropout,1.0
+B6_inv_amp,-0.6049657837387594,61,S02h ML bin-dropout,1.0
+B6_peak_sample,-0.8172082024601307,61,S02h ML bin-dropout,1.0
+B6_area_over_amp,-1.2101827816571806,61,S02h ML bin-dropout,1.0
+B6_template_sse,0.09468101286541986,61,S02h ML bin-dropout,1.0
+B8_intercept,3.6638261920564106,61,S02h ML bin-dropout,1.0
+B8_log_amp,-2.6270422268556697,61,S02h ML bin-dropout,1.0
+B8_log_amp2,-10.042844496722429,61,S02h ML bin-dropout,1.0
+B8_inv_amp,-1.690933606032144,61,S02h ML bin-dropout,1.0
+B8_peak_sample,-0.8190675049772962,61,S02h ML bin-dropout,1.0
+B8_area_over_amp,-1.8134931027511578,61,S02h ML bin-dropout,1.0
+B8_template_sse,0.06391471934533233,61,S02h ML bin-dropout,1.0
+intercept,0.0,61,S02h ML shuffled-bin,1.0
+B4_intercept,-2.7229935282111386,61,S02h ML shuffled-bin,1.0
+B4_log_amp,-4.826824511465624,61,S02h ML shuffled-bin,1.0
+B4_log_amp2,-7.910440252865512,61,S02h ML shuffled-bin,1.0
+B4_inv_amp,-5.478052172721174,61,S02h ML shuffled-bin,1.0
+B4_peak_sample,0.650502449738488,61,S02h ML shuffled-bin,1.0
+B4_area_over_amp,3.527196441945093,61,S02h ML shuffled-bin,1.0
+B4_template_sse,0.9146549131724356,61,S02h ML shuffled-bin,1.0
+B6_intercept,-0.938286672146124,61,S02h ML shuffled-bin,1.0
+B6_log_amp,-3.1975692407000333,61,S02h ML shuffled-bin,1.0
+B6_log_amp2,-5.828906404675781,61,S02h ML shuffled-bin,1.0
+B6_inv_amp,-0.6054230796200132,61,S02h ML shuffled-bin,1.0
+B6_peak_sample,-0.816983821426483,61,S02h ML shuffled-bin,1.0
+B6_area_over_amp,-1.2069506625336148,61,S02h ML shuffled-bin,1.0
+B6_template_sse,0.09569234747317967,61,S02h ML shuffled-bin,1.0
+B8_intercept,3.661280200451606,61,S02h ML shuffled-bin,1.0
+B8_log_amp,-2.627695452841788,61,S02h ML shuffled-bin,1.0
+B8_log_amp2,-10.042055536229691,61,S02h ML shuffled-bin,1.0
+B8_inv_amp,-1.689974677984059,61,S02h ML shuffled-bin,1.0
+B8_peak_sample,-0.8187350885400904,61,S02h ML shuffled-bin,1.0
+B8_area_over_amp,-1.8111654781045328,61,S02h ML shuffled-bin,1.0
+B8_template_sse,0.06374634532325199,61,S02h ML shuffled-bin,1.0
+bin_0,0.0162690849504913,61,S02h ML shuffled-bin,1.0
+bin_1,0.010695622744787367,61,S02h ML shuffled-bin,1.0
+bin_2,-0.017880075884268355,61,S02h ML shuffled-bin,1.0
+bin_3,-0.009081045496057902,61,S02h ML shuffled-bin,1.0
+bin_missing,0.0,61,S02h ML shuffled-bin,1.0
+intercept,0.0,61,S02h ML shuffled-target,100.0
+B4_intercept,-0.042682089828035966,61,S02h ML shuffled-target,100.0
+B4_log_amp,-0.06166432411302116,61,S02h ML shuffled-target,100.0
+B4_log_amp2,-0.08629613310206322,61,S02h ML shuffled-target,100.0
+B4_inv_amp,-0.013650642666426696,61,S02h ML shuffled-target,100.0
+B4_peak_sample,-0.06191658291521454,61,S02h ML shuffled-target,100.0
+B4_area_over_amp,-0.03894789029636877,61,S02h ML shuffled-target,100.0
+B4_template_sse,0.08963422983085217,61,S02h ML shuffled-target,100.0
+B6_intercept,-0.003080276840149523,61,S02h ML shuffled-target,100.0
+B6_log_amp,-0.0270725959489312,61,S02h ML shuffled-target,100.0
+B6_log_amp2,-0.0495314430897421,61,S02h ML shuffled-target,100.0
+B6_inv_amp,0.21927998139490298,61,S02h ML shuffled-target,100.0
+B6_peak_sample,-0.07077697117883387,61,S02h ML shuffled-target,100.0
+B6_area_over_amp,-0.3124645267238446,61,S02h ML shuffled-target,100.0
+B6_template_sse,-0.1347846908181652,61,S02h ML shuffled-target,100.0
+B8_intercept,0.04576236666815274,61,S02h ML shuffled-target,100.0
+B8_log_amp,0.031343184188593505,61,S02h ML shuffled-target,100.0
+B8_log_amp2,0.016666011534637724,61,S02h ML shuffled-target,100.0
+B8_inv_amp,0.05375108548154936,61,S02h ML shuffled-target,100.0
+B8_peak_sample,-0.18504873707084896,61,S02h ML shuffled-target,100.0
+B8_area_over_amp,-0.19897376938758465,61,S02h ML shuffled-target,100.0
+B8_template_sse,-0.1258845068682119,61,S02h ML shuffled-target,100.0
+bin_0,-0.05554134860761904,61,S02h ML shuffled-target,100.0
+bin_1,-0.05635310110994598,61,S02h ML shuffled-target,100.0
+bin_2,0.03358800307782059,61,S02h ML shuffled-target,100.0
+bin_3,0.07827354155300323,61,S02h ML shuffled-target,100.0
+bin_missing,0.0,61,S02h ML shuffled-target,100.0
+intercept,0.0,61,S02h ML bin+current/rate,10.0
+B4_intercept,-2.031581017645784,61,S02h ML bin+current/rate,10.0
+B4_log_amp,-1.5978204201520718,61,S02h ML bin+current/rate,10.0
+B4_log_amp2,-1.1567881357855936,61,S02h ML bin+current/rate,10.0
+B4_inv_amp,-3.5327637374683643,61,S02h ML bin+current/rate,10.0
+B4_peak_sample,0.6677147883901305,61,S02h ML bin+current/rate,10.0
+B4_area_over_amp,3.35746890266959,61,S02h ML bin+current/rate,10.0
+B4_template_sse,0.8474830305487825,61,S02h ML bin+current/rate,10.0
+B6_intercept,-0.10686114224733383,61,S02h ML bin+current/rate,10.0
+B6_log_amp,-0.13377629935642013,61,S02h ML bin+current/rate,10.0
+B6_log_amp2,-0.10096206960071478,61,S02h ML bin+current/rate,10.0
+B6_inv_amp,1.2269561300251561,61,S02h ML bin+current/rate,10.0
+B6_peak_sample,-0.7549111035344134,61,S02h ML bin+current/rate,10.0
+B6_area_over_amp,-0.3120303231940168,61,S02h ML bin+current/rate,10.0
+B6_template_sse,0.31672479019049665,61,S02h ML bin+current/rate,10.0
+B8_intercept,2.1384421598877403,61,S02h ML bin+current/rate,10.0
+B8_log_amp,0.7644346590726565,61,S02h ML bin+current/rate,10.0
+B8_log_amp2,-0.8602764548509414,61,S02h ML bin+current/rate,10.0
+B8_inv_amp,0.5833460673866352,61,S02h ML bin+current/rate,10.0
+B8_peak_sample,-0.9935273998070617,61,S02h ML bin+current/rate,10.0
+B8_area_over_amp,-2.3433978580576067,61,S02h ML bin+current/rate,10.0
+B8_template_sse,-0.029264949179666704,61,S02h ML bin+current/rate,10.0
+bin_0,-0.17010384921991054,61,S02h ML bin+current/rate,10.0
+bin_1,0.42032062600042086,61,S02h ML bin+current/rate,10.0
+bin_2,0.10696027433840179,61,S02h ML bin+current/rate,10.0
+bin_3,-0.3569115042560402,61,S02h ML bin+current/rate,10.0
+bin_missing,0.0,61,S02h ML bin+current/rate,10.0
+B4_current_nA_z,0.0,61,S02h ML bin+current/rate,10.0
+B4_trigger_entry_density_z,0.04701914822468027,61,S02h ML bin+current/rate,10.0
+B4_entries_per_eventno_z,0.04701914822468705,61,S02h ML bin+current/rate,10.0
+B4_selected_multiplicity_per_event_z,-0.02145251436536149,61,S02h ML bin+current/rate,10.0
+B4_downstream_allhit_fraction_z,-0.03121331724320449,61,S02h ML bin+current/rate,10.0
+B6_current_nA_z,0.0,61,S02h ML bin+current/rate,10.0
+B6_trigger_entry_density_z,-0.019316316364765464,61,S02h ML bin+current/rate,10.0
+B6_entries_per_eventno_z,-0.019316316364769184,61,S02h ML bin+current/rate,10.0
+B6_selected_multiplicity_per_event_z,-0.03528510108744698,61,S02h ML bin+current/rate,10.0
+B6_downstream_allhit_fraction_z,0.06266945513141131,61,S02h ML bin+current/rate,10.0
+B8_current_nA_z,0.0,61,S02h ML bin+current/rate,10.0
+B8_trigger_entry_density_z,0.006436660270544054,61,S02h ML bin+current/rate,10.0
+B8_entries_per_eventno_z,0.0064366602705414775,61,S02h ML bin+current/rate,10.0
+B8_selected_multiplicity_per_event_z,0.05565556324173362,61,S02h ML bin+current/rate,10.0
+B8_downstream_allhit_fraction_z,-0.08043628863439882,61,S02h ML bin+current/rate,10.0
+intercept,0.0,62,S02h ML binned residual,1.0
+B4_intercept,-3.239448788374084,62,S02h ML binned residual,1.0
+B4_log_amp,-1.6594147534191708,62,S02h ML binned residual,1.0
+B4_log_amp2,-0.2209453006379225,62,S02h ML binned residual,1.0
+B4_inv_amp,-3.006098450845034,62,S02h ML binned residual,1.0
+B4_peak_sample,0.6612378834800571,62,S02h ML binned residual,1.0
+B4_area_over_amp,2.880383772402242,62,S02h ML binned residual,1.0
+B4_template_sse,0.5365770131725834,62,S02h ML binned residual,1.0
+B6_intercept,-1.1183583834115585,62,S02h ML binned residual,1.0
+B6_log_amp,-0.7049832561188458,62,S02h ML binned residual,1.0
+B6_log_amp2,0.12464037920621741,62,S02h ML binned residual,1.0
+B6_inv_amp,1.3573917221258105,62,S02h ML binned residual,1.0
+B6_peak_sample,-0.6389950531910213,62,S02h ML binned residual,1.0
+B6_area_over_amp,0.21357681499415487,62,S02h ML binned residual,1.0
+B6_template_sse,0.4898237556883402,62,S02h ML binned residual,1.0
+B8_intercept,4.357807171804373,62,S02h ML binned residual,1.0
+B8_log_amp,0.49498315415542143,62,S02h ML binned residual,1.0
+B8_log_amp2,-3.7614502180684948,62,S02h ML binned residual,1.0
+B8_inv_amp,0.08099642564161981,62,S02h ML binned residual,1.0
+B8_peak_sample,-0.8500724181766844,62,S02h ML binned residual,1.0
+B8_area_over_amp,-1.683288967351348,62,S02h ML binned residual,1.0
+B8_template_sse,0.22071956318507732,62,S02h ML binned residual,1.0
+bin_0,-0.18299259063573187,62,S02h ML binned residual,1.0
+bin_1,0.40154244002336165,62,S02h ML binned residual,1.0
+bin_2,0.10047310865176738,62,S02h ML binned residual,1.0
+bin_3,-0.3187929729727396,62,S02h ML binned residual,1.0
+bin_missing,0.0,62,S02h ML binned residual,1.0
+intercept,0.0,62,S02h ML bin-dropout,0.01
+B4_intercept,-9.219485336880362,62,S02h ML bin-dropout,0.01
+B4_log_amp,9.402730946912872,62,S02h ML bin-dropout,0.01
+B4_log_amp2,-15.297848980375855,62,S02h ML bin-dropout,0.01
+B4_inv_amp,-5.358171546121663,62,S02h ML bin-dropout,0.01
+B4_peak_sample,0.6326861077118195,62,S02h ML bin-dropout,0.01
+B4_area_over_amp,2.842070518334993,62,S02h ML bin-dropout,0.01
+B4_template_sse,0.559332720704676,62,S02h ML bin-dropout,0.01
+B6_intercept,3.3644058518503077,62,S02h ML bin-dropout,0.01
+B6_log_amp,-5.565951867556504,62,S02h ML bin-dropout,0.01
+B6_log_amp2,-8.583171974820344,62,S02h ML bin-dropout,0.01
+B6_inv_amp,-1.3667854863149531,62,S02h ML bin-dropout,0.01
+B6_peak_sample,-0.6506075616037938,62,S02h ML bin-dropout,0.01
+B6_area_over_amp,-0.32142446802711905,62,S02h ML bin-dropout,0.01
+B6_template_sse,0.34734631500656626,62,S02h ML bin-dropout,0.01
+B8_intercept,5.855079489863488,62,S02h ML bin-dropout,0.01
+B8_log_amp,-9.62899181116474,62,S02h ML bin-dropout,0.01
+B8_log_amp2,-7.193817785127941,62,S02h ML bin-dropout,0.01
+B8_inv_amp,-1.635459584905367,62,S02h ML bin-dropout,0.01
+B8_peak_sample,-0.5665434303440373,62,S02h ML bin-dropout,0.01
+B8_area_over_amp,-0.6124175335808936,62,S02h ML bin-dropout,0.01
+B8_template_sse,0.40884785785322564,62,S02h ML bin-dropout,0.01
+intercept,0.0,62,S02h ML shuffled-bin,0.1
+B4_intercept,-2.924777098543828,62,S02h ML shuffled-bin,0.1
+B4_log_amp,-3.549767667532466,62,S02h ML shuffled-bin,0.1
+B4_log_amp2,-9.296465517648091,62,S02h ML shuffled-bin,0.1
+B4_inv_amp,-5.496211883794044,62,S02h ML shuffled-bin,0.1
+B4_peak_sample,0.6288954407884471,62,S02h ML shuffled-bin,0.1
+B4_area_over_amp,2.8579831103733144,62,S02h ML shuffled-bin,0.1
+B4_template_sse,0.5654960302645383,62,S02h ML shuffled-bin,0.1
+B6_intercept,0.9935996762583468,62,S02h ML shuffled-bin,0.1
+B6_log_amp,-3.7815087420966744,62,S02h ML shuffled-bin,0.1
+B6_log_amp2,-8.874818627043236,62,S02h ML shuffled-bin,0.1
+B6_inv_amp,-1.2285569151020903,62,S02h ML shuffled-bin,0.1
+B6_peak_sample,-0.6573664425293236,62,S02h ML shuffled-bin,0.1
+B6_area_over_amp,-0.3505349133407714,62,S02h ML shuffled-bin,0.1
+B6_template_sse,0.34104149730732214,62,S02h ML shuffled-bin,0.1
+B8_intercept,1.9311774243050883,62,S02h ML shuffled-bin,0.1
+B8_log_amp,-4.214078878527738,62,S02h ML shuffled-bin,0.1
+B8_log_amp2,-9.54100986104075,62,S02h ML shuffled-bin,0.1
+B8_inv_amp,-1.5406044426134555,62,S02h ML shuffled-bin,0.1
+B8_peak_sample,-0.569401830862973,62,S02h ML shuffled-bin,0.1
+B8_area_over_amp,-0.6276518051043365,62,S02h ML shuffled-bin,0.1
+B8_template_sse,0.4054218847754893,62,S02h ML shuffled-bin,0.1
+bin_0,0.034064042672495465,62,S02h ML shuffled-bin,0.1
+bin_1,0.014926118034687985,62,S02h ML shuffled-bin,0.1
+bin_2,-0.06438333266560103,62,S02h ML shuffled-bin,0.1
+bin_3,0.015409757293149353,62,S02h ML shuffled-bin,0.1
+bin_missing,0.0,62,S02h ML shuffled-bin,0.1
+intercept,0.0,62,S02h ML shuffled-target,0.1
+B4_intercept,3.421769924297696,62,S02h ML shuffled-target,0.1
+B4_log_amp,2.36542334625629,62,S02h ML shuffled-target,0.1
+B4_log_amp2,0.05191103179771089,62,S02h ML shuffled-target,0.1
+B4_inv_amp,0.05464362011824577,62,S02h ML shuffled-target,0.1
+B4_peak_sample,0.002501517616626804,62,S02h ML shuffled-target,0.1
+B4_area_over_amp,-0.21821621875437358,62,S02h ML shuffled-target,0.1
+B4_template_sse,-0.026914326678231855,62,S02h ML shuffled-target,0.1
+B6_intercept,-3.1444905291230865,62,S02h ML shuffled-target,0.1
+B6_log_amp,0.8784279501026142,62,S02h ML shuffled-target,0.1
+B6_log_amp2,6.7143230664176885,62,S02h ML shuffled-target,0.1
+B6_inv_amp,1.5263766445937765,62,S02h ML shuffled-target,0.1
+B6_peak_sample,0.09074136498637163,62,S02h ML shuffled-target,0.1
+B6_area_over_amp,-0.1806946581178923,62,S02h ML shuffled-target,0.1
+B6_template_sse,-0.14492147971465585,62,S02h ML shuffled-target,0.1
+B8_intercept,-0.2772793963782336,62,S02h ML shuffled-target,0.1
+B8_log_amp,1.0441674086395447,62,S02h ML shuffled-target,0.1
+B8_log_amp2,3.7084492569551593,62,S02h ML shuffled-target,0.1
+B8_inv_amp,0.8416900343946495,62,S02h ML shuffled-target,0.1
+B8_peak_sample,0.04727657882566669,62,S02h ML shuffled-target,0.1
+B8_area_over_amp,0.46785863621318613,62,S02h ML shuffled-target,0.1
+B8_template_sse,0.16416133090321425,62,S02h ML shuffled-target,0.1
+bin_0,0.027277861181844706,62,S02h ML shuffled-target,0.1
+bin_1,0.06237235582436192,62,S02h ML shuffled-target,0.1
+bin_2,0.01602986072288206,62,S02h ML shuffled-target,0.1
+bin_3,-0.10561966064105648,62,S02h ML shuffled-target,0.1
+bin_missing,0.0,62,S02h ML shuffled-target,0.1
+intercept,0.0,62,S02h ML bin+current/rate,100.0
+B4_intercept,-0.8804265771828022,62,S02h ML bin+current/rate,100.0
+B4_log_amp,-0.5581802642162161,62,S02h ML bin+current/rate,100.0
+B4_log_amp2,-0.2368825817454824,62,S02h ML bin+current/rate,100.0
+B4_inv_amp,-2.994579426832058,62,S02h ML bin+current/rate,100.0
+B4_peak_sample,0.7216315422767517,62,S02h ML bin+current/rate,100.0
+B4_area_over_amp,1.6673892947647149,62,S02h ML bin+current/rate,100.0
+B4_template_sse,0.0698899345313947,62,S02h ML bin+current/rate,100.0
+B6_intercept,0.3468405303760644,62,S02h ML bin+current/rate,100.0
+B6_log_amp,0.23897169708674385,62,S02h ML bin+current/rate,100.0
+B6_log_amp2,0.13819114340596053,62,S02h ML bin+current/rate,100.0
+B6_inv_amp,1.2670386607694575,62,S02h ML bin+current/rate,100.0
+B6_peak_sample,-0.566565171707756,62,S02h ML bin+current/rate,100.0
+B6_area_over_amp,0.16123110585771921,62,S02h ML bin+current/rate,100.0
+B6_template_sse,0.47549396803553223,62,S02h ML bin+current/rate,100.0
+B8_intercept,0.5335860468072039,62,S02h ML bin+current/rate,100.0
+B8_log_amp,0.33447647659486274,62,S02h ML bin+current/rate,100.0
+B8_log_amp2,0.11687052742307014,62,S02h ML bin+current/rate,100.0
+B8_inv_amp,0.9833899171411564,62,S02h ML bin+current/rate,100.0
+B8_peak_sample,-0.5403515545160688,62,S02h ML bin+current/rate,100.0
+B8_area_over_amp,-0.37567156901296206,62,S02h ML bin+current/rate,100.0
+B8_template_sse,0.4899515016285958,62,S02h ML bin+current/rate,100.0
+bin_0,-0.13971859701642556,62,S02h ML bin+current/rate,100.0
+bin_1,0.4052068562553815,62,S02h ML bin+current/rate,100.0
+bin_2,0.07213241903545317,62,S02h ML bin+current/rate,100.0
+bin_3,-0.3373730307526639,62,S02h ML bin+current/rate,100.0
+bin_missing,0.0,62,S02h ML bin+current/rate,100.0
+B4_current_nA_z,0.0,62,S02h ML bin+current/rate,100.0
+B4_trigger_entry_density_z,0.004658176055571727,62,S02h ML bin+current/rate,100.0
+B4_entries_per_eventno_z,0.004658176055572378,62,S02h ML bin+current/rate,100.0
+B4_selected_multiplicity_per_event_z,-0.011666616591903078,62,S02h ML bin+current/rate,100.0
+B4_downstream_allhit_fraction_z,0.12096215328425447,62,S02h ML bin+current/rate,100.0
+B6_current_nA_z,0.0,62,S02h ML bin+current/rate,100.0
+B6_trigger_entry_density_z,0.010881929880312642,62,S02h ML bin+current/rate,100.0
+B6_entries_per_eventno_z,0.010881929880312549,62,S02h ML bin+current/rate,100.0
+B6_selected_multiplicity_per_event_z,-0.04407038083285613,62,S02h ML bin+current/rate,100.0
+B6_downstream_allhit_fraction_z,-0.014612090781494698,62,S02h ML bin+current/rate,100.0
+B8_current_nA_z,0.0,62,S02h ML bin+current/rate,100.0
+B8_trigger_entry_density_z,0.0296797706713055,62,S02h ML bin+current/rate,100.0
+B8_entries_per_eventno_z,0.02967977067130529,62,S02h ML bin+current/rate,100.0
+B8_selected_multiplicity_per_event_z,0.0558322682486926,62,S02h ML bin+current/rate,100.0
+B8_downstream_allhit_fraction_z,-0.13235515357618804,62,S02h ML bin+current/rate,100.0
+intercept,0.0,63,S02h ML binned residual,10.0
+B4_intercept,-2.0190932335623715,63,S02h ML binned residual,10.0
+B4_log_amp,-1.269291201204714,63,S02h ML binned residual,10.0
+B4_log_amp2,-0.43262231112441624,63,S02h ML binned residual,10.0
+B4_inv_amp,-3.377785999805262,63,S02h ML binned residual,10.0
+B4_peak_sample,0.5205315847013183,63,S02h ML binned residual,10.0
+B4_area_over_amp,2.9077002760473563,63,S02h ML binned residual,10.0
+B4_template_sse,0.6410192677177817,63,S02h ML binned residual,10.0
+B6_intercept,-0.0718922780486803,63,S02h ML binned residual,10.0
+B6_log_amp,-0.08869751178419066,63,S02h ML binned residual,10.0
+B6_log_amp2,-0.03867527425587772,63,S02h ML binned residual,10.0
+B6_inv_amp,1.1657728719720666,63,S02h ML binned residual,10.0
+B6_peak_sample,-0.6577230783148967,63,S02h ML binned residual,10.0
+B6_area_over_amp,-0.12590006570512927,63,S02h ML binned residual,10.0
+B6_template_sse,0.42412699317153424,63,S02h ML binned residual,10.0
+B8_intercept,2.090985511630432,63,S02h ML binned residual,10.0
+B8_log_amp,0.6508181863135862,63,S02h ML binned residual,10.0
+B8_log_amp2,-1.0501243677615018,63,S02h ML binned residual,10.0
+B8_inv_amp,0.46227661054165037,63,S02h ML binned residual,10.0
+B8_peak_sample,-0.6752829874954445,63,S02h ML binned residual,10.0
+B8_area_over_amp,-1.8210724041044763,63,S02h ML binned residual,10.0
+B8_template_sse,0.04011186705129468,63,S02h ML binned residual,10.0
+bin_0,-0.1022488737093332,63,S02h ML binned residual,10.0
+bin_1,0.403259868888711,63,S02h ML binned residual,10.0
+bin_2,0.073631450665424,63,S02h ML binned residual,10.0
+bin_3,-0.37446563009422856,63,S02h ML binned residual,10.0
+bin_missing,0.0,63,S02h ML binned residual,10.0
+intercept,0.0,63,S02h ML bin-dropout,1.0
+B4_intercept,-3.5100712307222475,63,S02h ML bin-dropout,1.0
+B4_log_amp,-4.40333622255914,63,S02h ML bin-dropout,1.0
+B4_log_amp2,-5.928213393930826,63,S02h ML bin-dropout,1.0
+B4_inv_amp,-4.924671336294641,63,S02h ML bin-dropout,1.0
+B4_peak_sample,0.4974003714380702,63,S02h ML bin-dropout,1.0
+B4_area_over_amp,2.9176836571578137,63,S02h ML bin-dropout,1.0
+B4_template_sse,0.6450155468507494,63,S02h ML bin-dropout,1.0
+B6_intercept,-0.039262668513559806,63,S02h ML bin-dropout,1.0
+B6_log_amp,-2.9225747564385274,63,S02h ML bin-dropout,1.0
+B6_log_amp2,-6.262811246892678,63,S02h ML bin-dropout,1.0
+B6_inv_amp,-0.5723443150784928,63,S02h ML bin-dropout,1.0
+B6_peak_sample,-0.6901803885300908,63,S02h ML bin-dropout,1.0
+B6_area_over_amp,-0.9592375261494894,63,S02h ML bin-dropout,1.0
+B6_template_sse,0.21815590096441353,63,S02h ML bin-dropout,1.0
+B8_intercept,3.549333899521526,63,S02h ML bin-dropout,1.0
+B8_log_amp,-2.5841434735468436,63,S02h ML bin-dropout,1.0
+B8_log_amp2,-9.77967677718065,63,S02h ML bin-dropout,1.0
+B8_inv_amp,-1.574466364172491,63,S02h ML bin-dropout,1.0
+B8_peak_sample,-0.5019827767034616,63,S02h ML bin-dropout,1.0
+B8_area_over_amp,-1.2524763768436193,63,S02h ML bin-dropout,1.0
+B8_template_sse,0.13770848497208632,63,S02h ML bin-dropout,1.0
+intercept,0.0,63,S02h ML shuffled-bin,0.1
+B4_intercept,-4.904628608544528,63,S02h ML shuffled-bin,0.1
+B4_log_amp,-4.260968790914218,63,S02h ML shuffled-bin,0.1
+B4_log_amp2,-7.012236059974852,63,S02h ML shuffled-bin,0.1
+B4_inv_amp,-5.165763374195979,63,S02h ML shuffled-bin,0.1
+B4_peak_sample,0.4921787017888621,63,S02h ML shuffled-bin,0.1
+B4_area_over_amp,2.9843470524737747,63,S02h ML shuffled-bin,0.1
+B4_template_sse,0.6785073772975052,63,S02h ML shuffled-bin,0.1
+B6_intercept,1.1616795221059915,63,S02h ML shuffled-bin,0.1
+B6_log_amp,-4.05332626531953,63,S02h ML shuffled-bin,0.1
+B6_log_amp2,-8.477469818588496,63,S02h ML shuffled-bin,0.1
+B6_inv_amp,-1.1955150109595245,63,S02h ML shuffled-bin,0.1
+B6_peak_sample,-0.6716981769148007,63,S02h ML shuffled-bin,0.1
+B6_area_over_amp,-0.7514862082510436,63,S02h ML shuffled-bin,0.1
+B6_template_sse,0.26708981396216425,63,S02h ML shuffled-bin,0.1
+B8_intercept,3.7429490894872584,63,S02h ML shuffled-bin,0.1
+B8_log_amp,-3.8879094552471463,63,S02h ML shuffled-bin,0.1
+B8_log_amp2,-10.741129731061042,63,S02h ML shuffled-bin,0.1
+B8_inv_amp,-1.9428381266738106,63,S02h ML shuffled-bin,0.1
+B8_peak_sample,-0.5225899009514562,63,S02h ML shuffled-bin,0.1
+B8_area_over_amp,-1.3243518589848813,63,S02h ML shuffled-bin,0.1
+B8_template_sse,0.12320248298865055,63,S02h ML shuffled-bin,0.1
+bin_0,0.03852170242361633,63,S02h ML shuffled-bin,0.1
+bin_1,-0.015877125805129316,63,S02h ML shuffled-bin,0.1
+bin_2,-0.02667763346382014,63,S02h ML shuffled-bin,0.1
+bin_3,0.004019661948799125,63,S02h ML shuffled-bin,0.1
+bin_missing,0.0,63,S02h ML shuffled-bin,0.1
+intercept,0.0,63,S02h ML shuffled-target,10.0
+B4_intercept,0.3485564910898902,63,S02h ML shuffled-target,10.0
+B4_log_amp,0.32287208602472484,63,S02h ML shuffled-target,10.0
+B4_log_amp2,0.2718325672934371,63,S02h ML shuffled-target,10.0
+B4_inv_amp,-0.2798564639981519,63,S02h ML shuffled-target,10.0
+B4_peak_sample,-0.06193017799477492,63,S02h ML shuffled-target,10.0
+B4_area_over_amp,-0.3333629944069052,63,S02h ML shuffled-target,10.0
+B4_template_sse,-0.17404395734286326,63,S02h ML shuffled-target,10.0
+B6_intercept,-0.3749339020493892,63,S02h ML shuffled-target,10.0
+B6_log_amp,-0.23679126166672615,63,S02h ML shuffled-target,10.0
+B6_log_amp2,-0.036719237406677464,63,S02h ML shuffled-target,10.0
+B6_inv_amp,0.16472271533850194,63,S02h ML shuffled-target,10.0
+B6_peak_sample,-0.21522138656783668,63,S02h ML shuffled-target,10.0
+B6_area_over_amp,0.9531895535122619,63,S02h ML shuffled-target,10.0
+B6_template_sse,0.2393493538281979,63,S02h ML shuffled-target,10.0
+B8_intercept,0.026377410958388258,63,S02h ML shuffled-target,10.0
+B8_log_amp,0.03428573974932948,63,S02h ML shuffled-target,10.0
+B8_log_amp2,0.03887387356092029,63,S02h ML shuffled-target,10.0
+B8_inv_amp,0.13901842788897284,63,S02h ML shuffled-target,10.0
+B8_peak_sample,-0.06949880680409475,63,S02h ML shuffled-target,10.0
+B8_area_over_amp,0.051869886707373525,63,S02h ML shuffled-target,10.0
+B8_template_sse,0.040703133515966786,63,S02h ML shuffled-target,10.0
+bin_0,-0.029811637087754906,63,S02h ML shuffled-target,10.0
+bin_1,0.043130958413434665,63,S02h ML shuffled-target,10.0
+bin_2,-0.008070705991496016,63,S02h ML shuffled-target,10.0
+bin_3,-0.005244829695545756,63,S02h ML shuffled-target,10.0
+bin_missing,0.0,63,S02h ML shuffled-target,10.0
+intercept,0.0,63,S02h ML bin+current/rate,100.0
+B4_intercept,-0.9722691288049943,63,S02h ML bin+current/rate,100.0
+B4_log_amp,-0.6035810787133719,63,S02h ML bin+current/rate,100.0
+B4_log_amp2,-0.22837712233772944,63,S02h ML bin+current/rate,100.0
+B4_inv_amp,-3.22401216142203,63,S02h ML bin+current/rate,100.0
+B4_peak_sample,0.5896353139482037,63,S02h ML bin+current/rate,100.0
+B4_area_over_amp,1.8633878169076374,63,S02h ML bin+current/rate,100.0
+B4_template_sse,0.21585078724887963,63,S02h ML bin+current/rate,100.0
+B6_intercept,0.34451590116862785,63,S02h ML bin+current/rate,100.0
+B6_log_amp,0.23407209425238165,63,S02h ML bin+current/rate,100.0
+B6_log_amp2,0.12945631778395955,63,S02h ML bin+current/rate,100.0
+B6_inv_amp,1.218616599453665,63,S02h ML bin+current/rate,100.0
+B6_peak_sample,-0.5893066774246462,63,S02h ML bin+current/rate,100.0
+B6_area_over_amp,-0.03055986298547289,63,S02h ML bin+current/rate,100.0
+B6_template_sse,0.4437590647920496,63,S02h ML bin+current/rate,100.0
+B8_intercept,0.6277532276379192,63,S02h ML bin+current/rate,100.0
+B8_log_amp,0.3970142825449103,63,S02h ML bin+current/rate,100.0
+B8_log_amp2,0.13661564088071537,63,S02h ML bin+current/rate,100.0
+B8_inv_amp,0.827493941791012,63,S02h ML bin+current/rate,100.0
+B8_peak_sample,-0.43977512544394626,63,S02h ML bin+current/rate,100.0
+B8_area_over_amp,-0.7519898350643592,63,S02h ML bin+current/rate,100.0
+B8_template_sse,0.26539259991749325,63,S02h ML bin+current/rate,100.0
+bin_0,-0.10483711377342743,63,S02h ML bin+current/rate,100.0
+bin_1,0.3953550977847123,63,S02h ML bin+current/rate,100.0
+bin_2,0.06065813836918618,63,S02h ML bin+current/rate,100.0
+bin_3,-0.3510113788996178,63,S02h ML bin+current/rate,100.0
+bin_missing,0.0,63,S02h ML bin+current/rate,100.0
+B4_current_nA_z,0.0,63,S02h ML bin+current/rate,100.0
+B4_trigger_entry_density_z,-0.004262477787590878,63,S02h ML bin+current/rate,100.0
+B4_entries_per_eventno_z,-0.004262477787591568,63,S02h ML bin+current/rate,100.0
+B4_selected_multiplicity_per_event_z,-0.05666871335122198,63,S02h ML bin+current/rate,100.0
+B4_downstream_allhit_fraction_z,0.14251996613548942,63,S02h ML bin+current/rate,100.0
+B6_current_nA_z,0.0,63,S02h ML bin+current/rate,100.0
+B6_trigger_entry_density_z,-0.0001409455307648881,63,S02h ML bin+current/rate,100.0
+B6_entries_per_eventno_z,-0.00014094553076487358,63,S02h ML bin+current/rate,100.0
+B6_selected_multiplicity_per_event_z,-0.03926627687017106,63,S02h ML bin+current/rate,100.0
+B6_downstream_allhit_fraction_z,0.008936425335127852,63,S02h ML bin+current/rate,100.0
+B8_current_nA_z,0.0,63,S02h ML bin+current/rate,100.0
+B8_trigger_entry_density_z,0.041784867873271445,63,S02h ML bin+current/rate,100.0
+B8_entries_per_eventno_z,0.041784867873271146,63,S02h ML bin+current/rate,100.0
+B8_selected_multiplicity_per_event_z,0.10002211016095539,63,S02h ML bin+current/rate,100.0
+B8_downstream_allhit_fraction_z,-0.18750023788435236,63,S02h ML bin+current/rate,100.0
+intercept,0.0,65,S02h ML binned residual,1.0
+B4_intercept,-3.689052841561723,65,S02h ML binned residual,1.0
+B4_log_amp,-2.086487630205554,65,S02h ML binned residual,1.0
+B4_log_amp2,-0.7898502343851053,65,S02h ML binned residual,1.0
+B4_inv_amp,-3.8569867240239963,65,S02h ML binned residual,1.0
+B4_peak_sample,0.5093508055175583,65,S02h ML binned residual,1.0
+B4_area_over_amp,3.2695665470830035,65,S02h ML binned residual,1.0
+B4_template_sse,0.7545695964842234,65,S02h ML binned residual,1.0
+B6_intercept,-2.5525307479856587,65,S02h ML binned residual,1.0
+B6_log_amp,-1.4167539349252924,65,S02h ML binned residual,1.0
+B6_log_amp2,0.5978730927319157,65,S02h ML binned residual,1.0
+B6_inv_amp,1.7561939412864518,65,S02h ML binned residual,1.0
+B6_peak_sample,-0.7396478209423069,65,S02h ML binned residual,1.0
+B6_area_over_amp,-0.09414154662755163,65,S02h ML binned residual,1.0
+B6_template_sse,0.4537335515299262,65,S02h ML binned residual,1.0
+B8_intercept,6.241583589524776,65,S02h ML binned residual,1.0
+B8_log_amp,0.5685881883552961,65,S02h ML binned residual,1.0
+B8_log_amp2,-5.698680491751074,65,S02h ML binned residual,1.0
+B8_inv_amp,-0.3772503801687992,65,S02h ML binned residual,1.0
+B8_peak_sample,-1.0283870056778686,65,S02h ML binned residual,1.0
+B8_area_over_amp,-2.8107766542863923,65,S02h ML binned residual,1.0
+B8_template_sse,-0.051734984424613516,65,S02h ML binned residual,1.0
+bin_0,-0.28325615341207344,65,S02h ML binned residual,1.0
+bin_1,0.43980448449958937,65,S02h ML binned residual,1.0
+bin_2,0.13755696785699095,65,S02h ML binned residual,1.0
+bin_3,-0.2936939283360385,65,S02h ML binned residual,1.0
+bin_missing,0.0,65,S02h ML binned residual,1.0
+intercept,0.0,65,S02h ML bin-dropout,0.01
+B4_intercept,-11.69800162604994,65,S02h ML bin-dropout,0.01
+B4_log_amp,14.17660895742424,65,S02h ML bin-dropout,0.01
+B4_log_amp2,-19.10420752832782,65,S02h ML bin-dropout,0.01
+B4_inv_amp,-6.558325772740628,65,S02h ML bin-dropout,0.01
+B4_peak_sample,0.45529379274100135,65,S02h ML bin-dropout,0.01
+B4_area_over_amp,3.2666862888923003,65,S02h ML bin-dropout,0.01
+B4_template_sse,0.8087014593574171,65,S02h ML bin-dropout,0.01
+B6_intercept,3.3705931861188896,65,S02h ML bin-dropout,0.01
+B6_log_amp,-11.396140992707762,65,S02h ML bin-dropout,0.01
+B6_log_amp2,-4.685545911610917,65,S02h ML bin-dropout,0.01
+B6_inv_amp,-0.9709547239607249,65,S02h ML bin-dropout,0.01
+B6_peak_sample,-0.750985946801367,65,S02h ML bin-dropout,0.01
+B6_area_over_amp,-0.7294741688675825,65,S02h ML bin-dropout,0.01
+B6_template_sse,0.28271835659158256,65,S02h ML bin-dropout,0.01
+B8_intercept,8.327408466127762,65,S02h ML bin-dropout,0.01
+B8_log_amp,-11.199167514549517,65,S02h ML bin-dropout,0.01
+B8_log_amp2,-8.589018164379539,65,S02h ML bin-dropout,0.01
+B8_inv_amp,-2.250244144270524,65,S02h ML bin-dropout,0.01
+B8_peak_sample,-0.6913333661734073,65,S02h ML bin-dropout,0.01
+B8_area_over_amp,-1.5099743917112765,65,S02h ML bin-dropout,0.01
+B8_template_sse,0.19590824655996023,65,S02h ML bin-dropout,0.01
+intercept,0.0,65,S02h ML shuffled-bin,0.01
+B4_intercept,-11.626819886337294,65,S02h ML shuffled-bin,0.01
+B4_log_amp,14.03876725196289,65,S02h ML shuffled-bin,0.01
+B4_log_amp2,-19.02159309889474,65,S02h ML shuffled-bin,0.01
+B4_inv_amp,-6.550623532380225,65,S02h ML shuffled-bin,0.01
+B4_peak_sample,0.45131944745611774,65,S02h ML shuffled-bin,0.01
+B4_area_over_amp,3.2809893724636154,65,S02h ML shuffled-bin,0.01
+B4_template_sse,0.8135944596745125,65,S02h ML shuffled-bin,0.01
+B6_intercept,3.3469376191365634,65,S02h ML shuffled-bin,0.01
+B6_log_amp,-11.308312699563707,65,S02h ML shuffled-bin,0.01
+B6_log_amp2,-4.717975643353027,65,S02h ML shuffled-bin,0.01
+B6_inv_amp,-0.9676114958409933,65,S02h ML shuffled-bin,0.01
+B6_peak_sample,-0.7508288320470791,65,S02h ML shuffled-bin,0.01
+B6_area_over_amp,-0.7303750938468015,65,S02h ML shuffled-bin,0.01
+B6_template_sse,0.28262019027547003,65,S02h ML shuffled-bin,0.01
+B8_intercept,8.27988229314801,65,S02h ML shuffled-bin,0.01
+B8_log_amp,-11.140254709316094,65,S02h ML shuffled-bin,0.01
+B8_log_amp2,-8.571435527558362,65,S02h ML shuffled-bin,0.01
+B8_inv_amp,-2.23904949392378,65,S02h ML shuffled-bin,0.01
+B8_peak_sample,-0.6920457200431936,65,S02h ML shuffled-bin,0.01
+B8_area_over_amp,-1.5141662370597966,65,S02h ML shuffled-bin,0.01
+B8_template_sse,0.19535500213957083,65,S02h ML shuffled-bin,0.01
+bin_0,-0.01143723123490273,65,S02h ML shuffled-bin,0.01
+bin_1,0.056617643576615743,65,S02h ML shuffled-bin,0.01
+bin_2,-0.03328923003104109,65,S02h ML shuffled-bin,0.01
+bin_3,-0.011892970291202919,65,S02h ML shuffled-bin,0.01
+bin_missing,0.0,65,S02h ML shuffled-bin,0.01
+intercept,0.0,65,S02h ML shuffled-target,100.0
+B4_intercept,0.001655400070128523,65,S02h ML shuffled-target,100.0
+B4_log_amp,-0.08514222589420847,65,S02h ML shuffled-target,100.0
+B4_log_amp2,-0.1898812016628398,65,S02h ML shuffled-target,100.0
+B4_inv_amp,0.1921004479552388,65,S02h ML shuffled-target,100.0
+B4_peak_sample,0.11143344995636957,65,S02h ML shuffled-target,100.0
+B4_area_over_amp,0.10890792101841515,65,S02h ML shuffled-target,100.0
+B4_template_sse,0.041312826845717784,65,S02h ML shuffled-target,100.0
+B6_intercept,0.0036237499271915647,65,S02h ML shuffled-target,100.0
+B6_log_amp,0.00941239200383396,65,S02h ML shuffled-target,100.0
+B6_log_amp2,0.025124410485181672,65,S02h ML shuffled-target,100.0
+B6_inv_amp,0.18776046960006726,65,S02h ML shuffled-target,100.0
+B6_peak_sample,-0.12899635730581824,65,S02h ML shuffled-target,100.0
+B6_area_over_amp,-0.038572637913449684,65,S02h ML shuffled-target,100.0
+B6_template_sse,-0.07418681698512844,65,S02h ML shuffled-target,100.0
+B8_intercept,-0.005279149997384857,65,S02h ML shuffled-target,100.0
+B8_log_amp,-0.03721242110322705,65,S02h ML shuffled-target,100.0
+B8_log_amp2,-0.07587607276979255,65,S02h ML shuffled-target,100.0
+B8_inv_amp,-0.028347605510505275,65,S02h ML shuffled-target,100.0
+B8_peak_sample,0.08144153197728059,65,S02h ML shuffled-target,100.0
+B8_area_over_amp,0.14784801236483705,65,S02h ML shuffled-target,100.0
+B8_template_sse,0.016877702016669317,65,S02h ML shuffled-target,100.0
+bin_0,-0.028010320936599817,65,S02h ML shuffled-target,100.0
+bin_1,-0.032288354717917064,65,S02h ML shuffled-target,100.0
+bin_2,0.0596160323362728,65,S02h ML shuffled-target,100.0
+bin_3,0.0007134865384351203,65,S02h ML shuffled-target,100.0
+bin_missing,0.0,65,S02h ML shuffled-target,100.0
+intercept,0.0,65,S02h ML bin+current/rate,100.0
+B4_intercept,-1.0002642756741627,65,S02h ML bin+current/rate,100.0
+B4_log_amp,-0.5864025891963451,65,S02h ML bin+current/rate,100.0
+B4_log_amp2,-0.17662099761166772,65,S02h ML bin+current/rate,100.0
+B4_inv_amp,-3.7874322580692605,65,S02h ML bin+current/rate,100.0
+B4_peak_sample,0.5792400896754328,65,S02h ML bin+current/rate,100.0
+B4_area_over_amp,2.0567196088660933,65,S02h ML bin+current/rate,100.0
+B4_template_sse,0.2874643644655421,65,S02h ML bin+current/rate,100.0
+B6_intercept,0.271309973019803,65,S02h ML bin+current/rate,100.0
+B6_log_amp,0.1405215575668545,65,S02h ML bin+current/rate,100.0
+B6_log_amp2,0.023994356429519713,65,S02h ML bin+current/rate,100.0
+B6_inv_amp,1.522137656850277,65,S02h ML bin+current/rate,100.0
+B6_peak_sample,-0.6622894749740713,65,S02h ML bin+current/rate,100.0
+B6_area_over_amp,-0.02439880703667964,65,S02h ML bin+current/rate,100.0
+B6_template_sse,0.4706509083018498,65,S02h ML bin+current/rate,100.0
+B8_intercept,0.7289543026541603,65,S02h ML bin+current/rate,100.0
+B8_log_amp,0.44961219784927003,65,S02h ML bin+current/rate,100.0
+B8_log_amp2,0.13511721645109045,65,S02h ML bin+current/rate,100.0
+B8_inv_amp,0.9975666256597868,65,S02h ML bin+current/rate,100.0
+B8_peak_sample,-0.6089733442397612,65,S02h ML bin+current/rate,100.0
+B8_area_over_amp,-0.9455653220938645,65,S02h ML bin+current/rate,100.0
+B8_template_sse,0.3400459804986688,65,S02h ML bin+current/rate,100.0
+bin_0,-0.20046703966395552,65,S02h ML bin+current/rate,100.0
+bin_1,0.45229308828089,65,S02h ML bin+current/rate,100.0
+bin_2,0.09468378065085203,65,S02h ML bin+current/rate,100.0
+bin_3,-0.3460728653332765,65,S02h ML bin+current/rate,100.0
+bin_missing,0.0,65,S02h ML bin+current/rate,100.0
+B4_current_nA_z,0.0,65,S02h ML bin+current/rate,100.0
+B4_trigger_entry_density_z,-0.01235988497182181,65,S02h ML bin+current/rate,100.0
+B4_entries_per_eventno_z,-0.012359884971821574,65,S02h ML bin+current/rate,100.0
+B4_selected_multiplicity_per_event_z,0.09053009159337598,65,S02h ML bin+current/rate,100.0
+B4_downstream_allhit_fraction_z,0.12288303044574801,65,S02h ML bin+current/rate,100.0
+B6_current_nA_z,0.0,65,S02h ML bin+current/rate,100.0
+B6_trigger_entry_density_z,0.02083181542382295,65,S02h ML bin+current/rate,100.0
+B6_entries_per_eventno_z,0.020831815423823428,65,S02h ML bin+current/rate,100.0
+B6_selected_multiplicity_per_event_z,-0.06977508029074145,65,S02h ML bin+current/rate,100.0
+B6_downstream_allhit_fraction_z,-0.038612745411343304,65,S02h ML bin+current/rate,100.0
+B8_current_nA_z,0.0,65,S02h ML bin+current/rate,100.0
+B8_trigger_entry_density_z,0.04163694434145532,65,S02h ML bin+current/rate,100.0
+B8_entries_per_eventno_z,0.04163694434145673,65,S02h ML bin+current/rate,100.0
+B8_selected_multiplicity_per_event_z,0.005903640446888306,65,S02h ML bin+current/rate,100.0
+B8_downstream_allhit_fraction_z,-0.13967599023308622,65,S02h ML bin+current/rate,100.0

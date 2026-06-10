@@ -1,0 +1,220 @@
+{
+  "study": "S02h",
+  "ticket": "1781023333.541.66a8325e",
+  "worker": "testbeam-laptop-1",
+  "title": "binned-timewalk shuffled-target failure autopsy",
+  "reproduced_raw_root_first": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "loro_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "folds": {
+      "58": {
+        "train_runs": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0"
+      },
+      "59": {
+        "train_runs": [
+          58,
+          60,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift2",
+        "selected_global": "s02d_global_timewalk_drift1"
+      },
+      "60": {
+        "train_runs": [
+          58,
+          59,
+          61,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift1",
+        "selected_global": "s02d_global_timewalk_drift1"
+      },
+      "61": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0"
+      },
+      "62": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          63,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0"
+      },
+      "63": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          65
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0"
+      },
+      "65": {
+        "train_runs": [
+          58,
+          59,
+          60,
+          61,
+          62,
+          63
+        ],
+        "selected_binned": "s02d_binned_timewalk_drift0",
+        "selected_global": "s02d_global_timewalk_drift0"
+      }
+    }
+  },
+  "traditional_method": "S02b global timewalk no drift",
+  "traditional": {
+    "method": "S02b global timewalk no drift",
+    "n_runs": 7,
+    "mean_sigma68_ns": 1.6551640399789107,
+    "ci_low": 1.5321084225639328,
+    "ci_high": 1.8474939684975191,
+    "min_run_sigma68_ns": 1.4718970274976448,
+    "max_run_sigma68_ns": 2.188417727408664
+  },
+  "binned_no_drift": {
+    "method": "S02b binned timewalk no drift",
+    "n_runs": 7,
+    "mean_sigma68_ns": 3.1484944174882767,
+    "ci_low": 2.7788313637797866,
+    "ci_high": 3.4608452365345905,
+    "min_run_sigma68_ns": 2.127410063722653,
+    "max_run_sigma68_ns": 3.6379339992367563
+  },
+  "ml_method": "S02h ML binned residual",
+  "ml": {
+    "method": "S02h ML binned residual",
+    "n_runs": 7,
+    "mean_sigma68_ns": 2.9999826745478413,
+    "ci_low": 2.651793775632468,
+    "ci_high": 3.2998930203806633,
+    "min_run_sigma68_ns": 2.045066580862256,
+    "max_run_sigma68_ns": 3.4882435913030196
+  },
+  "ml_sentinels": [
+    {
+      "method": "S02h ML shuffled-bin",
+      "n_runs": 7,
+      "mean_sigma68_ns": 3.1387365335866115,
+      "ci_low": 2.757055477683176,
+      "ci_high": 3.4560469549091652,
+      "min_run_sigma68_ns": 2.1037190326451483,
+      "max_run_sigma68_ns": 3.642465444102452
+    },
+    {
+      "method": "S02h ML bin-dropout",
+      "n_runs": 7,
+      "mean_sigma68_ns": 3.15229083581916,
+      "ci_low": 2.753215043363718,
+      "ci_high": 3.463751668673759,
+      "min_run_sigma68_ns": 2.1279333145696757,
+      "max_run_sigma68_ns": 3.6497937575570165
+    },
+    {
+      "method": "S02h ML shuffled-target",
+      "n_runs": 7,
+      "mean_sigma68_ns": 3.796986911857778,
+      "ci_low": 3.2990668852043257,
+      "ci_high": 4.340141744355479,
+      "min_run_sigma68_ns": 2.966064025117423,
+      "max_run_sigma68_ns": 5.011524597159532
+    },
+    {
+      "method": "S02h ML bin+current/rate",
+      "n_runs": 7,
+      "mean_sigma68_ns": 5.030757990490632,
+      "ci_low": 2.8019805972872627,
+      "ci_high": 8.753584239049552,
+      "min_run_sigma68_ns": 2.022498142144574,
+      "max_run_sigma68_ns": 15.777092224118633
+    }
+  ],
+  "current_rate_sentinel": [
+    {
+      "method": "S02h binned current/rate selected 0",
+      "n_runs": 7,
+      "mean_sigma68_ns": 3.1484944174882767,
+      "ci_low": 2.765166084069627,
+      "ci_high": 3.4608452365345896,
+      "min_run_sigma68_ns": 2.127410063722653,
+      "max_run_sigma68_ns": 3.6379339992367563
+    }
+  ],
+  "leakage_checks_pass_excluding_forbidden_oracle": false,
+  "failed_non_oracle_leakage_checks": [
+    {
+      "heldout_run": 58,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 3.0056738783721135,
+      "pass": false
+    },
+    {
+      "heldout_run": 58,
+      "check": "ml_binned_residual_shuffled_target_not_better",
+      "value": 3.050132220749839,
+      "pass": false
+    },
+    {
+      "heldout_run": 58,
+      "check": "s02d_binned_shuffled_target_margin_ns",
+      "value": -0.6291707690578168,
+      "pass": false
+    },
+    {
+      "heldout_run": 61,
+      "check": "binned_selected_shuffled_target_sigma68_ns",
+      "value": 2.92561315961787,
+      "pass": false
+    },
+    {
+      "heldout_run": 61,
+      "check": "s02d_binned_shuffled_target_margin_ns",
+      "value": -0.14342800095368835,
+      "pass": false
+    }
+  ],
+  "autopsy_conclusion": "binned branch is underconstrained/composition-sensitive; true bin labels and current/rate covariates do not produce robust held-out gain",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [],
+  "git_commit": "7684f0da8d9c03fc3f718701c3d3ade31f372918"
+}

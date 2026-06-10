@@ -1,0 +1,80 @@
+{
+  "study_id": "S02g",
+  "ticket_id": "1781022115.1037.63125b2f",
+  "worker": "testbeam-laptop-3",
+  "title": "external scaler rate covariate audit for S02e Sample II LORO timing closure",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781022115.1037.63125b2f",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "loro_runs": [58, 59, 60, 61, 62, 63, 65],
+    "train_runs": [58, 59, 60, 61, 62, 63],
+    "heldout_runs": [65],
+    "leading_edge_threshold_adc": 500.0,
+    "cfd_fractions": [0.10, 0.20, 0.30, 0.40, 0.50],
+    "of_windows": [[1, 9], [2, 10], [3, 11], [4, 12]],
+    "template_shift_grid": {"min": -1.5, "max": 1.5, "step": 0.05}
+  },
+  "s02_reference": {
+    "traditional_template_phase_sigma68_ns": 2.889152765080617,
+    "ml_ridge_sigma68_ns": 1.8461136615528786
+  },
+  "s02b_reference": {
+    "binned_template_timewalk_sigma68_ns": 3.4037013456536833,
+    "global_template_timewalk_sigma68_ns": 1.635417339803972
+  },
+  "binned_template": {
+    "n_amplitude_bins": 4,
+    "min_bin_pulses": 30,
+    "template_shift_grid": {"min": -1.2, "max": 1.2, "step": 0.04}
+  },
+  "timewalk": {
+    "ridge_alpha": 0.001,
+    "drift_orders": [0, 1, 2],
+    "features": ["log_amp", "log_amp2", "inv_amp", "peak_sample", "area_over_amp", "template_sse", "current_nA_z", "trigger_entry_density_z", "entries_per_eventno_z", "selected_multiplicity_per_event_z", "downstream_allhit_fraction_z"],
+    "run_covariates": ["current_nA", "trigger_entry_density", "entries_per_eventno", "selected_multiplicity_per_event", "downstream_allhit_fraction"]
+  },
+  "run_covariates": {
+    "default_current_nA": 20.0,
+    "current_nA_by_run": {
+      "46": 2.0,
+      "47": 2.0
+    },
+    "derive_from_raw_before_timing_labels": true
+  },
+  "external_metadata_audit": {
+    "roots": ["data", "/home/billy/ccb-data/raw", "/home/billy/ccb-data/docs"],
+    "tokens": ["scaler", "spill", "clock", "daq", "live", "livetime", "current", "rate", "runlog", "run_log", "metadata", "logbook"]
+  },
+  "ml": {
+    "random_seed": 20260610,
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0],
+    "cv_folds": 3,
+    "bootstrap_samples": 800,
+    "run_bootstrap_samples": 2000,
+    "permutation_seed": 20260610
+  }
+}

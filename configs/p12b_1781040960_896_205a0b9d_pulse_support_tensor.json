@@ -1,0 +1,68 @@
+{
+  "ticket_id": "1781040960.896.205a0b9d",
+  "study_id": "P12b",
+  "title": "pulse-support tensor for PID energy consumers",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781040960.896.205a0b9d__p12b_pulse_support_tensor",
+  "amplitude_cut_adc": 1000.0,
+  "high_amplitude_adc": 7000.0,
+  "adaptive_lowering_adc": 500.0,
+  "early_pretrigger_exc_adc": 500.0,
+  "delayed_peak_sample": 13,
+  "broad_width035_samples": 10,
+  "broad_width050_quantile": 0.995,
+  "pileup_secondary_rel": 0.62,
+  "pileup_secondary_min_sep": 4,
+  "pileup_late_fraction": 0.40,
+  "timing_tail_abs_ns": 5.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "groups": {
+      "sample_i_calib": {"events": 239559, "pulses": 248745},
+      "sample_i_analysis": {
+        "events": 243133,
+        "pulses": 252266,
+        "staves": {"B2": 241422, "B4": 6451, "B6": 3094, "B8": 1299}
+      },
+      "sample_ii_calib": {"events": 12103, "pulses": 14630},
+      "sample_ii_analysis": {
+        "events": 89807,
+        "pulses": 125096,
+        "staves": {"B2": 88213, "B4": 21229, "B6": 11148, "B8": 4506}
+      }
+    }
+  },
+  "benchmark": {
+    "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+    "train_cap": 30000,
+    "bootstrap_reps": 250,
+    "random_seed": 120896,
+    "cnn_epochs": 3,
+    "cnn_batch_size": 768
+  },
+  "ml": {
+    "random_seed": 120896,
+    "bootstrap_samples": 400,
+    "max_train_rows_per_target": 60000,
+    "max_graphical_rows": 120000
+  },
+  "novel_ticket": "P12c: freeze the P12b support tensor and test whether PID/energy consumers improve calibration when unsupported or high-risk cells are abstained rather than reweighted"
+}

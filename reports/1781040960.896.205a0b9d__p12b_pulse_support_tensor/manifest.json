@@ -1,0 +1,24 @@
+{
+  "ticket_id": "1781040960.896.205a0b9d",
+  "script": "scripts/p12b_1781040960_896_205a0b9d_pulse_support_tensor.py",
+  "config": "configs/p12b_1781040960_896_205a0b9d_pulse_support_tensor.json",
+  "git_commit": "861719863049fec53b47ee9f2b17f3f74040e0ba",
+  "raw_reproduction_passed": true,
+  "input_sha256_rows": 35,
+  "artifacts": [
+    "REPORT.md",
+    "counts_by_group.csv",
+    "counts_by_run.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "method_by_run.csv",
+    "method_metrics.csv",
+    "pulse_support_atoms.csv.gz",
+    "raw_count_match.csv",
+    "result.json",
+    "support_tensor.csv",
+    "support_tensor_by_run.csv",
+    "support_tensor_ci.csv"
+  ]
+}

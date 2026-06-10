@@ -1,0 +1,322 @@
+{
+  "study": "P12b",
+  "ticket": "1781040960.896.205a0b9d",
+  "worker": "testbeam-laptop-3",
+  "title": "pulse-support tensor for PID energy consumers",
+  "raw_reproduction": {
+    "source": "/home/billy/ccb-data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train": "all configured B-stack runs except heldout_runs",
+    "evaluate": "heldout Sample-II analysis runs",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_reps": 250,
+    "train_cap": 30000
+  },
+  "methods_benchmarked": [
+    "empirical_bayes_support",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "tensor_prior_residual_cnn_new_arch"
+  ],
+  "primary_metric": "minimum held-out Brier score for charge-transfer failure risk",
+  "winner": {
+    "method": "mlp",
+    "family": "nn",
+    "brier": 0.01694002621604303,
+    "brier_ci95": [
+      0.01174991772058091,
+      0.020424904315331036
+    ],
+    "auc": 0.9904390056470055,
+    "ece": 0.0031860603117175646
+  },
+  "best_traditional": {
+    "n": 125096,
+    "event_rate": 0.07488648717784742,
+    "auc": 0.8980722122741827,
+    "average_precision": 0.48646568925288236,
+    "brier": 0.05173043625684506,
+    "ece": 0.01700894247931313,
+    "support_coverage_at_risk10": 0.8668462620707297,
+    "failure_rate_at_risk10": 0.028633609679174468,
+    "auc_ci95": [
+      0.880639653450252,
+      0.9178406518659825
+    ],
+    "average_precision_ci95": [
+      0.4607375697901828,
+      0.5205285565367794
+    ],
+    "brier_ci95": [
+      0.03810941785510169,
+      0.06348238580968425
+    ],
+    "ece_ci95": [
+      0.010621038175984638,
+      0.02601991302876508
+    ],
+    "support_coverage_at_risk10_ci95": [
+      0.8413373870437361,
+      0.9011467169948612
+    ],
+    "failure_rate_at_risk10_ci95": [
+      0.020751042336475675,
+      0.03758077209414898
+    ],
+    "method": "empirical_bayes_support",
+    "family": "traditional",
+    "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+  },
+  "summary": [
+    {
+      "n": 125096,
+      "event_rate": 0.07488648717784742,
+      "auc": 0.9904390056470055,
+      "average_precision": 0.9224994456044711,
+      "brier": 0.01694002621604303,
+      "ece": 0.0031860603117175646,
+      "support_coverage_at_risk10": 0.8826101554006524,
+      "failure_rate_at_risk10": 0.00403945259077447,
+      "auc_ci95": [
+        0.987996183628281,
+        0.9930296956379074
+      ],
+      "average_precision_ci95": [
+        0.910964385976701,
+        0.9324559645627238
+      ],
+      "brier_ci95": [
+        0.01174991772058091,
+        0.020424904315331036
+      ],
+      "ece_ci95": [
+        0.00212040409498573,
+        0.005222242107887179
+      ],
+      "support_coverage_at_risk10_ci95": [
+        0.8578301123277958,
+        0.9181614168126295
+      ],
+      "failure_rate_at_risk10_ci95": [
+        0.00275874869541708,
+        0.005295956168528332
+      ],
+      "method": "mlp",
+      "family": "nn",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "event_rate": 0.07488648717784742,
+      "auc": 0.9889302667896265,
+      "average_precision": 0.9044208062966713,
+      "brier": 0.019820644629292006,
+      "ece": 0.007866396751589799,
+      "support_coverage_at_risk10": 0.8855998593080514,
+      "failure_rate_at_risk10": 0.004197319131651397,
+      "auc_ci95": [
+        0.9859989981602924,
+        0.9919704419679637
+      ],
+      "average_precision_ci95": [
+        0.8903516908671252,
+        0.918283334415269
+      ],
+      "brier_ci95": [
+        0.015057454698973361,
+        0.023450907700940046
+      ],
+      "ece_ci95": [
+        0.004976696861564045,
+        0.010987966156557262
+      ],
+      "support_coverage_at_risk10_ci95": [
+        0.8626030293983113,
+        0.9126358794335713
+      ],
+      "failure_rate_at_risk10_ci95": [
+        0.002949376982293048,
+        0.0055396106900253
+      ],
+      "method": "gradient_boosted_trees",
+      "family": "ml",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "event_rate": 0.07488648717784742,
+      "auc": 0.8980722122741827,
+      "average_precision": 0.48646568925288236,
+      "brier": 0.05173043625684506,
+      "ece": 0.01700894247931313,
+      "support_coverage_at_risk10": 0.8668462620707297,
+      "failure_rate_at_risk10": 0.028633609679174468,
+      "auc_ci95": [
+        0.880639653450252,
+        0.9178406518659825
+      ],
+      "average_precision_ci95": [
+        0.4607375697901828,
+        0.5205285565367794
+      ],
+      "brier_ci95": [
+        0.03810941785510169,
+        0.06348238580968425
+      ],
+      "ece_ci95": [
+        0.010621038175984638,
+        0.02601991302876508
+      ],
+      "support_coverage_at_risk10_ci95": [
+        0.8413373870437361,
+        0.9011467169948612
+      ],
+      "failure_rate_at_risk10_ci95": [
+        0.020751042336475675,
+        0.03758077209414898
+      ],
+      "method": "empirical_bayes_support",
+      "family": "traditional",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "event_rate": 0.07488648717784742,
+      "auc": 0.9131213954467632,
+      "average_precision": 0.4677328722526749,
+      "brier": 0.13997512453891298,
+      "ece": 0.24537587641333897,
+      "support_coverage_at_risk10": 0.34728528490119587,
+      "failure_rate_at_risk10": 0.0012659976061136175,
+      "auc_ci95": [
+        0.8955629288056827,
+        0.931880182109943
+      ],
+      "average_precision_ci95": [
+        0.44496998872128984,
+        0.5029909708732242
+      ],
+      "brier_ci95": [
+        0.11585315061246913,
+        0.16079498850030438
+      ],
+      "ece_ci95": [
+        0.21678916902539805,
+        0.2689444024892904
+      ],
+      "support_coverage_at_risk10_ci95": [
+        0.2821132602264961,
+        0.4236060433956594
+      ],
+      "failure_rate_at_risk10_ci95": [
+        0.0005425980450210116,
+        0.0025043042729691657
+      ],
+      "method": "tensor_prior_residual_cnn_new_arch",
+      "family": "new_architecture",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "event_rate": 0.07488648717784742,
+      "auc": 0.9205511791585157,
+      "average_precision": 0.5303486949560768,
+      "brier": 0.14342240815214402,
+      "ece": 0.2278439685831741,
+      "support_coverage_at_risk10": 0.46282055381467035,
+      "failure_rate_at_risk10": 0.0038343955645370226,
+      "auc_ci95": [
+        0.9061013186910235,
+        0.9384957628784459
+      ],
+      "average_precision_ci95": [
+        0.5123520314766595,
+        0.5598477666556226
+      ],
+      "brier_ci95": [
+        0.11730960290841635,
+        0.1618012754180305
+      ],
+      "ece_ci95": [
+        0.203018602441926,
+        0.24769728620180564
+      ],
+      "support_coverage_at_risk10_ci95": [
+        0.41032672867579284,
+        0.5352904354898183
+      ],
+      "failure_rate_at_risk10_ci95": [
+        0.0016235344894124611,
+        0.007072510858854113
+      ],
+      "method": "ridge",
+      "family": "ml",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "event_rate": 0.07488648717784742,
+      "auc": 0.8504852764832832,
+      "average_precision": 0.3557550565000943,
+      "brier": 0.19757016817816025,
+      "ece": 0.3424294525991571,
+      "support_coverage_at_risk10": 0.0,
+      "failure_rate_at_risk10": null,
+      "auc_ci95": [
+        0.8277875066755642,
+        0.871992268292501
+      ],
+      "average_precision_ci95": [
+        0.3350783558265367,
+        0.3793685597192591
+      ],
+      "brier_ci95": [
+        0.16878323512032528,
+        0.2261228883705027
+      ],
+      "ece_ci95": [
+        0.3164598977834937,
+        0.36571355437891223
+      ],
+      "support_coverage_at_risk10_ci95": [
+        0.0,
+        0.0
+      ],
+      "failure_rate_at_risk10_ci95": [
+        null,
+        null
+      ],
+      "method": "1d_cnn",
+      "family": "nn",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    }
+  ],
+  "support_tensor": {
+    "populated_cells": 1510,
+    "top_cell_n": 80115,
+    "top_cell_n_runs": 33,
+    "top_cell_charge_failure_rate": 0.0
+  },
+  "leakage_checks_passed": true,
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "861719863049fec53b47ee9f2b17f3f74040e0ba",
+  "next_tickets": [
+    "P12c: freeze the P12b support tensor and test whether PID/energy consumers improve calibration when unsupported or high-risk cells are abstained rather than reweighted"
+  ],
+  "runtime_sec": 432.6073753833771
+}

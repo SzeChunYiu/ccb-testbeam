@@ -1,0 +1,7 @@
+quantity,value
+filesystem_files_scanned,220
+filesystem_external_metadata_candidates,0
+archive_members_scanned,217
+archive_external_metadata_candidates,0
+non_root_document_files_seen,1
+calibrated_external_covariates_available,0

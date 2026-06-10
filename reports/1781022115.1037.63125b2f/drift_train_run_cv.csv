@@ -1,0 +1,127 @@
+method,base_method,drift_order,fold,heldout_runs,sigma68_ns,n_pair_residuals,heldout_run
+s02e_binned_timewalk_drift0,s02b_template,0,0,61 65,3.2374293502495077,2997,58
+s02e_binned_timewalk_drift0,s02b_template,0,1,60 63,2.822657314804678,3534,58
+s02e_binned_timewalk_drift0,s02b_template,0,2,59 62,3.1948464631869604,4710,58
+s02e_binned_timewalk_drift1,s02b_template,1,0,61 65,4.079566285357727,2997,58
+s02e_binned_timewalk_drift1,s02b_template,1,1,60 63,2.890213489474,3534,58
+s02e_binned_timewalk_drift1,s02b_template,1,2,59 62,3.5642388684436965,4710,58
+s02e_binned_timewalk_drift2,s02b_template,2,0,61 65,356.05836432112096,2997,58
+s02e_binned_timewalk_drift2,s02b_template,2,1,60 63,38.795254753983876,3534,58
+s02e_binned_timewalk_drift2,s02b_template,2,2,59 62,14.623560790077876,4710,58
+s02e_global_timewalk_drift0,template_phase,0,0,61 65,2.1563360964592846,2997,58
+s02e_global_timewalk_drift0,template_phase,0,1,60 63,1.5203552617821816,3534,58
+s02e_global_timewalk_drift0,template_phase,0,2,59 62,1.5754128675005348,4710,58
+s02e_global_timewalk_drift1,template_phase,1,0,61 65,2.3442879758279536,2997,58
+s02e_global_timewalk_drift1,template_phase,1,1,60 63,1.5962808315886707,3534,58
+s02e_global_timewalk_drift1,template_phase,1,2,59 62,2.01044098519242,4710,58
+s02e_global_timewalk_drift2,template_phase,2,0,61 65,454.04601635657673,2997,58
+s02e_global_timewalk_drift2,template_phase,2,1,60 63,35.77598101561262,3534,58
+s02e_global_timewalk_drift2,template_phase,2,2,59 62,9.362810331811177,4710,58
+s02e_binned_timewalk_drift0,s02b_template,0,0,61,3.553774649220059,2799,59
+s02e_binned_timewalk_drift0,s02b_template,0,1,58 60 65,3.08016261393861,2841,59
+s02e_binned_timewalk_drift0,s02b_template,0,2,62 63,3.522400211240499,3531,59
+s02e_binned_timewalk_drift1,s02b_template,1,0,61,3.67797876344591,2799,59
+s02e_binned_timewalk_drift1,s02b_template,1,1,58 60 65,59.36264057929391,2841,59
+s02e_binned_timewalk_drift1,s02b_template,1,2,62 63,3.290345943871757,3531,59
+s02e_binned_timewalk_drift2,s02b_template,2,0,61,23.985571661051782,2799,59
+s02e_binned_timewalk_drift2,s02b_template,2,1,58 60 65,53.69267311135981,2841,59
+s02e_binned_timewalk_drift2,s02b_template,2,2,62 63,59.849772275806686,3531,59
+s02e_global_timewalk_drift0,template_phase,0,0,61,2.1733432773420076,2799,59
+s02e_global_timewalk_drift0,template_phase,0,1,58 60 65,1.549232619809651,2841,59
+s02e_global_timewalk_drift0,template_phase,0,2,62 63,1.5567295670693553,3531,59
+s02e_global_timewalk_drift1,template_phase,1,0,61,2.1854963612769573,2799,59
+s02e_global_timewalk_drift1,template_phase,1,1,58 60 65,26.82495902719566,2841,59
+s02e_global_timewalk_drift1,template_phase,1,2,62 63,2.3253780671113553,3531,59
+s02e_global_timewalk_drift2,template_phase,2,0,61,9.319212935686366,2799,59
+s02e_global_timewalk_drift2,template_phase,2,1,58 60 65,24.17215299784829,2841,59
+s02e_global_timewalk_drift2,template_phase,2,2,62 63,20.062603350257735,3531,59
+s02e_binned_timewalk_drift0,s02b_template,0,0,61,2.5974945267322473,2799,60
+s02e_binned_timewalk_drift0,s02b_template,0,1,58 62 65,2.5201326453277324,2838,60
+s02e_binned_timewalk_drift0,s02b_template,0,2,59 63,2.5561614691970775,3399,60
+s02e_binned_timewalk_drift1,s02b_template,1,0,61,2.6580910938137894,2799,60
+s02e_binned_timewalk_drift1,s02b_template,1,1,58 62 65,3.7108509368398073,2838,60
+s02e_binned_timewalk_drift1,s02b_template,1,2,59 63,3.5279677258188515,3399,60
+s02e_binned_timewalk_drift2,s02b_template,2,0,61,2.9285326590506844,2799,60
+s02e_binned_timewalk_drift2,s02b_template,2,1,58 62 65,4.51365586637458,2838,60
+s02e_binned_timewalk_drift2,s02b_template,2,2,59 63,2.812686657939827,3399,60
+s02e_global_timewalk_drift0,template_phase,0,0,61,2.1340041308986883,2799,60
+s02e_global_timewalk_drift0,template_phase,0,1,58 62 65,1.5760326037972803,2838,60
+s02e_global_timewalk_drift0,template_phase,0,2,59 63,1.491698646169502,3399,60
+s02e_global_timewalk_drift1,template_phase,1,0,61,2.113717947734037,2799,60
+s02e_global_timewalk_drift1,template_phase,1,1,58 62 65,2.318407611836978,2838,60
+s02e_global_timewalk_drift1,template_phase,1,2,59 63,3.1489517398323823,3399,60
+s02e_global_timewalk_drift2,template_phase,2,0,61,3.2657637448850876,2799,60
+s02e_global_timewalk_drift2,template_phase,2,1,58 62 65,2.2981497443527394,2838,60
+s02e_global_timewalk_drift2,template_phase,2,2,59 63,11.269005973994155,3399,60
+s02e_binned_timewalk_drift0,s02b_template,0,0,60 65,2.554751093412143,2622,61
+s02e_binned_timewalk_drift0,s02b_template,0,1,58 62,3.066963364656707,2640,61
+s02e_binned_timewalk_drift0,s02b_template,0,2,59 63,3.1952712553696565,3399,61
+s02e_binned_timewalk_drift1,s02b_template,1,0,60 65,2.8216340707543264,2622,61
+s02e_binned_timewalk_drift1,s02b_template,1,1,58 62,3.3448688446633486,2640,61
+s02e_binned_timewalk_drift1,s02b_template,1,2,59 63,2.824937585820682,3399,61
+s02e_binned_timewalk_drift2,s02b_template,2,0,60 65,40.445215117844874,2622,61
+s02e_binned_timewalk_drift2,s02b_template,2,1,58 62,6.570890440024987,2640,61
+s02e_binned_timewalk_drift2,s02b_template,2,2,59 63,8.23491686784267,3399,61
+s02e_global_timewalk_drift0,template_phase,0,0,60 65,1.629935599714853,2622,61
+s02e_global_timewalk_drift0,template_phase,0,1,58 62,1.7454933797191943,2640,61
+s02e_global_timewalk_drift0,template_phase,0,2,59 63,1.6856971126483604,3399,61
+s02e_global_timewalk_drift1,template_phase,1,0,60 65,1.899963646829422,2622,61
+s02e_global_timewalk_drift1,template_phase,1,1,58 62,1.9256721161972754,2640,61
+s02e_global_timewalk_drift1,template_phase,1,2,59 63,1.5241442858037535,3399,61
+s02e_global_timewalk_drift2,template_phase,2,0,60 65,57.53484767546185,2622,61
+s02e_global_timewalk_drift2,template_phase,2,1,58 62,1.9556483045532786,2640,61
+s02e_global_timewalk_drift2,template_phase,2,2,59 63,32.31008541031723,3399,61
+s02e_binned_timewalk_drift0,s02b_template,0,0,61,3.0400514006219668,2799,62
+s02e_binned_timewalk_drift0,s02b_template,0,1,58 60 65,2.6256903728320182,2841,62
+s02e_binned_timewalk_drift0,s02b_template,0,2,59 63,3.015546131692646,3399,62
+s02e_binned_timewalk_drift1,s02b_template,1,0,61,3.150505460013396,2799,62
+s02e_binned_timewalk_drift1,s02b_template,1,1,58 60 65,24.080387679961742,2841,62
+s02e_binned_timewalk_drift1,s02b_template,1,2,59 63,2.846873920006768,3399,62
+s02e_binned_timewalk_drift2,s02b_template,2,0,61,31.114406937808077,2799,62
+s02e_binned_timewalk_drift2,s02b_template,2,1,58 60 65,21.90610134222772,2841,62
+s02e_binned_timewalk_drift2,s02b_template,2,2,59 63,20.013898040346792,3399,62
+s02e_global_timewalk_drift0,template_phase,0,0,61,2.1824845032803486,2799,62
+s02e_global_timewalk_drift0,template_phase,0,1,58 60 65,1.486307405519341,2841,62
+s02e_global_timewalk_drift0,template_phase,0,2,59 63,1.520125549496024,3399,62
+s02e_global_timewalk_drift1,template_phase,1,0,61,2.211487278263264,2799,62
+s02e_global_timewalk_drift1,template_phase,1,1,58 60 65,18.079476973491918,2841,62
+s02e_global_timewalk_drift1,template_phase,1,2,59 63,2.2969809046324774,3399,62
+s02e_global_timewalk_drift2,template_phase,2,0,61,25.418650672121505,2799,62
+s02e_global_timewalk_drift2,template_phase,2,1,58 60 65,16.05266302489124,2841,62
+s02e_global_timewalk_drift2,template_phase,2,2,59 63,15.263304133975572,3399,62
+s02e_binned_timewalk_drift0,s02b_template,0,0,61,3.059964313829758,2799,63
+s02e_binned_timewalk_drift0,s02b_template,0,1,58 60 65,2.6519772843619105,2841,63
+s02e_binned_timewalk_drift0,s02b_template,0,2,59 62,2.984689809268179,4710,63
+s02e_binned_timewalk_drift1,s02b_template,1,0,61,3.1961045944656394,2799,63
+s02e_binned_timewalk_drift1,s02b_template,1,1,58 60 65,27.7357125219906,2841,63
+s02e_binned_timewalk_drift1,s02b_template,1,2,59 62,2.440619900813,4710,63
+s02e_binned_timewalk_drift2,s02b_template,2,0,61,3.3124985066299173,2799,63
+s02e_binned_timewalk_drift2,s02b_template,2,1,58 60 65,30.269797251430298,2841,63
+s02e_binned_timewalk_drift2,s02b_template,2,2,59 62,14.991271437479085,4710,63
+s02e_global_timewalk_drift0,template_phase,0,0,61,2.1931134876812424,2799,63
+s02e_global_timewalk_drift0,template_phase,0,1,58 60 65,1.5065238601233104,2841,63
+s02e_global_timewalk_drift0,template_phase,0,2,59 62,1.5200048069192897,4710,63
+s02e_global_timewalk_drift1,template_phase,1,0,61,2.2180813251825358,2799,63
+s02e_global_timewalk_drift1,template_phase,1,1,58 60 65,36.399991762838624,2841,63
+s02e_global_timewalk_drift1,template_phase,1,2,59 62,1.3720620415891611,4710,63
+s02e_global_timewalk_drift2,template_phase,2,0,61,10.250000053073677,2799,63
+s02e_global_timewalk_drift2,template_phase,2,1,58 60 65,38.52077261524695,2841,63
+s02e_global_timewalk_drift2,template_phase,2,2,59 62,17.16303120972902,4710,63
+s02e_binned_timewalk_drift0,s02b_template,0,0,58 61,3.253623595719543,3018,65
+s02e_binned_timewalk_drift0,s02b_template,0,1,60 63,2.8549264428838295,3534,65
+s02e_binned_timewalk_drift0,s02b_template,0,2,59 62,3.1988633746328956,4710,65
+s02e_binned_timewalk_drift1,s02b_template,1,0,58 61,3.7686186839689855,3018,65
+s02e_binned_timewalk_drift1,s02b_template,1,1,60 63,3.8054643301087214,3534,65
+s02e_binned_timewalk_drift1,s02b_template,1,2,59 62,3.1563983221884704,4710,65
+s02e_binned_timewalk_drift2,s02b_template,2,0,58 61,11.526299720625474,3018,65
+s02e_binned_timewalk_drift2,s02b_template,2,1,60 63,39.90390706059723,3534,65
+s02e_binned_timewalk_drift2,s02b_template,2,2,59 62,20.532730469517706,4710,65
+s02e_global_timewalk_drift0,template_phase,0,0,58 61,2.136501171234445,3018,65
+s02e_global_timewalk_drift0,template_phase,0,1,60 63,1.5224610797242768,3534,65
+s02e_global_timewalk_drift0,template_phase,0,2,59 62,1.5806733458795863,4710,65
+s02e_global_timewalk_drift1,template_phase,1,0,58 61,2.5027951563578705,3018,65
+s02e_global_timewalk_drift1,template_phase,1,1,60 63,4.130166150473745,3534,65
+s02e_global_timewalk_drift1,template_phase,1,2,59 62,1.5414301971309263,4710,65
+s02e_global_timewalk_drift2,template_phase,2,0,58 61,15.778707295826658,3018,65
+s02e_global_timewalk_drift2,template_phase,2,1,60 63,35.62051983088828,3534,65
+s02e_global_timewalk_drift2,template_phase,2,2,59 62,13.518973466015767,4710,65

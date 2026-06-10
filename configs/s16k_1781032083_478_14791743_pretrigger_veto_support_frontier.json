@@ -1,0 +1,64 @@
+{
+  "study": "S16k",
+  "ticket": "1781032083.478.14791743",
+  "worker": "testbeam-laptop-3",
+  "title": "pretrigger-veto support frontier",
+  "date": "2026-06-10",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781032083.478.14791743",
+  "source_s16f_config": "configs/s16f_1781031083_1784_78066bc6_pretrigger_veto_loro.json",
+  "source_s16f_report_dir": "reports/1781031083.1784.78066bc6__s16f_pretrigger_veto_loro",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "loro_runs": [58, 59, 60, 61, 62, 63, 65],
+    "base_method": "cfd20",
+    "cfd_fraction": 0.20,
+    "tail_abs_residual_ns": 5.0
+  },
+  "frontier": {
+    "threshold_quantiles": [0.70, 0.75, 0.80, 0.85, 0.90, 0.95],
+    "min_timing_efficiency": 0.85,
+    "max_support_drift": 0.04,
+    "support_drift_penalty": 0.25,
+    "efficiency_penalty": 0.05,
+    "charge_bins_adc": [0.0, 1500.0, 2500.0, 4000.0, 7000.0, 1000000000.0],
+    "current_proxy_quantiles": [0.0, 0.25, 0.50, 0.75, 1.0],
+    "saturation_proxy_adc": 7000.0,
+    "late_peak_proxy_sample": 14.0
+  },
+  "methods": [
+    "traditional_quantile",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "siamese_cnn_meta"
+  ],
+  "models": {
+    "random_seed": 1781032083,
+    "bootstrap_samples": 400
+  }
+}

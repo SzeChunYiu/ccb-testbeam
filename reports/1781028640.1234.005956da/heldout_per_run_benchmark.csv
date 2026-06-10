@@ -1,0 +1,9 @@
+method,heldout_run,n_test_records,accuracy,false_positive,false_negative
+ML leakage sentinel with median_amp,57,125136,0.9998561565017261,18,0
+ML leakage sentinel with median_amp,65,153696,0.9997332396418905,41,0
+ML logistic honest raw summaries,57,125136,0.9977464518603759,234,48
+ML logistic honest raw summaries,65,153696,0.9977162710805746,320,31
+dynamic-range selector,57,125136,0.9763537271448663,2959,0
+dynamic-range selector,65,153696,0.9928495211326255,1099,0
+traditional median-first-four gate,57,125136,1.0,0,0
+traditional median-first-four gate,65,153696,1.0,0,0

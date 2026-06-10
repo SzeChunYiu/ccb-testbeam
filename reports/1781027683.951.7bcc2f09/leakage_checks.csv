@@ -1,0 +1,8 @@
+check,value,flag,note
+ml_split_by_run,1.0,False,Every prediction is made for a held-out run; run/current/event identifiers are excluded from features.
+mean_brier_improvement_vs_stratum_rates,-9.103980528372397e-05,False,Large improvement would be suspicious for this rare taxon.
+mean_log_loss_improvement_vs_stratum_rates,0.011932603987480599,False,Large improvement would trigger leakage review.
+shuffled_target_brier_minus_ml_brier,0.000693937284698843,False,Shuffled target should not beat the real held-out model.
+ml_pred_downstream_current_auc,0.5571816912791125,False,Flags if a score nearly identifies beam current.
+ml_resid_downstream_current_auc,0.4389243993828521,False,Flags if a score nearly identifies beam current.
+ml_shuffled_target_pred_current_auc,0.5504224524281831,False,Flags if a score nearly identifies beam current.

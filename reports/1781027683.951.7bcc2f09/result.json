@@ -1,0 +1,393 @@
+{
+  "study": "S10h",
+  "ticket": "1781027683.951.7bcc2f09",
+  "worker": "testbeam-laptop-3",
+  "title": "baseline-excursion pile-up excess decomposition",
+  "reproduced": true,
+  "reproduction": {
+    "s10f_base_downstream_excess": 0.006762658473460766,
+    "s10f_taxon_stratified_downstream_excess": 0.004122451926345003,
+    "s10f_fractional_attenuation_by_taxa": 0.39040956414950323,
+    "baseline_excursion_n_low": 39,
+    "baseline_excursion_n_high": 1745,
+    "baseline_excursion_downstream_rate_low": 0.02564102564102564,
+    "baseline_excursion_downstream_rate_high": 0.026934097421203437,
+    "baseline_excursion_downstream_rate_high_minus_low": 0.0012930717801777972
+  },
+  "split": "leave-one-run-out ML; run-block bootstrap CIs within current group",
+  "traditional": [
+    {
+      "method": "baseline_excursion_traditional",
+      "metric": "downstream_high_minus_low",
+      "value": -0.002252830770723433,
+      "ci_low": -0.011327579534122821,
+      "ci_high": 0.025932528518270426,
+      "n_strata": 3,
+      "n_events": 1784,
+      "n_bootstrap": 500,
+      "bootstrap_unit": "run_within_current_group"
+    },
+    {
+      "method": "baseline_excursion_traditional",
+      "metric": "two_pulse_residual_enrichment",
+      "value": -0.0012372710120638003,
+      "ci_low": -0.0019262253322767486,
+      "ci_high": 0.0010791560973828637,
+      "n_strata": 3,
+      "n_events": 1784,
+      "n_bootstrap": 500,
+      "bootstrap_unit": "run_within_current_group"
+    },
+    {
+      "method": "baseline_excursion_traditional",
+      "metric": "baseline_mad_high_minus_low",
+      "value": 16.158243815104168,
+      "ci_low": -14.56754404703776,
+      "ci_high": 40.06348944769965,
+      "n_strata": 3,
+      "n_events": 1784,
+      "n_bootstrap": 500,
+      "bootstrap_unit": "run_within_current_group"
+    },
+    {
+      "method": "baseline_excursion_traditional",
+      "metric": "late_fraction_high_minus_low",
+      "value": 0.0011731208974702489,
+      "ci_low": -0.023940351124878766,
+      "ci_high": 0.005320193694205955,
+      "n_strata": 3,
+      "n_events": 1784,
+      "n_bootstrap": 500,
+      "bootstrap_unit": "run_within_current_group"
+    },
+    {
+      "method": "baseline_excursion_traditional",
+      "metric": "topology_odds_ratio",
+      "value": 0.3997856511574978,
+      "ci_low": 0.26971493015562964,
+      "ci_high": 0.5667809932427226,
+      "n_strata": 3,
+      "n_events": 1784,
+      "n_bootstrap": 500,
+      "bootstrap_unit": "run_within_current_group"
+    }
+  ],
+  "ml": {
+    "summary": [
+      {
+        "metric": "observed_downstream_high_minus_low",
+        "value": -0.002252830770723433,
+        "ci_low": -0.010636147407119285,
+        "ci_high": 0.02658176498606133,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      },
+      {
+        "metric": "stratum_rate_pred_high_minus_low",
+        "value": 0.00013984128276654022,
+        "ci_low": -0.001207200296468395,
+        "ci_high": 0.0012292928887125119,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      },
+      {
+        "metric": "ml_pred_downstream_high_minus_low",
+        "value": 0.006440882350584985,
+        "ci_low": -0.010454882039388949,
+        "ci_high": 0.012119316964843325,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      },
+      {
+        "metric": "stratum_resid_downstream_high_minus_low",
+        "value": -0.002392672053489972,
+        "ci_low": -0.011778287138231931,
+        "ci_high": 0.028301368388906456,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      },
+      {
+        "metric": "ml_resid_downstream_high_minus_low",
+        "value": -0.008693713121308413,
+        "ci_low": -0.019851579312403396,
+        "ci_high": 0.03394860708177444,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      },
+      {
+        "metric": "two_pulse_residual_enrichment",
+        "value": -0.0012372710120638003,
+        "ci_low": -0.001995409302625146,
+        "ci_high": 0.0011706354966948102,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      },
+      {
+        "metric": "ml_pred_two_pulse_enrichment",
+        "value": -0.0010548438984139916,
+        "ci_low": -0.0016648772505002403,
+        "ci_high": 0.0011115995386885259,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      },
+      {
+        "metric": "ml_resid_two_pulse_enrichment",
+        "value": -0.0001824271136498085,
+        "ci_low": -0.00022550309965820272,
+        "ci_high": 6.277593881254249e-06,
+        "n_bootstrap": 500,
+        "bootstrap_unit": "heldout_run_within_current_group"
+      }
+    ],
+    "fold_diagnostics": [
+      {
+        "heldout_run": 44,
+        "n_train_baseline_excursion": 1749,
+        "n_test_baseline_excursion": 35,
+        "positive_rate_train": 0.0274442538593482,
+        "positive_rate_test": 0.0,
+        "ml_auc": null,
+        "stratum_brier": 0.004783824444078386,
+        "ml_brier": 0.0028071083332309246,
+        "stratum_log_loss": 0.0434981404687305,
+        "ml_log_loss": 0.027664558509354245,
+        "shuffled_brier": 0.0053676567617252395
+      },
+      {
+        "heldout_run": 45,
+        "n_train_baseline_excursion": 1349,
+        "n_test_baseline_excursion": 435,
+        "positive_rate_train": 0.02742772424017791,
+        "positive_rate_test": 0.02528735632183908,
+        "ml_auc": 0.6634862778730704,
+        "stratum_brier": 0.024989910657319668,
+        "ml_brier": 0.025167847355036355,
+        "stratum_log_loss": 0.15429268182946657,
+        "ml_log_loss": 0.12346740552511606,
+        "shuffled_brier": 0.026868890135257104
+      },
+      {
+        "heldout_run": 46,
+        "n_train_baseline_excursion": 1780,
+        "n_test_baseline_excursion": 4,
+        "positive_rate_train": 0.02696629213483146,
+        "positive_rate_test": 0.0,
+        "ml_auc": null,
+        "stratum_brier": 0.0006808890095191663,
+        "ml_brier": 0.0013790672581702344,
+        "stratum_log_loss": 0.02598918626202984,
+        "ml_log_loss": 0.02603886620916489,
+        "shuffled_brier": 6.198051551015484e-05
+      },
+      {
+        "heldout_run": 47,
+        "n_train_baseline_excursion": 1749,
+        "n_test_baseline_excursion": 35,
+        "positive_rate_train": 0.026872498570611778,
+        "positive_rate_test": 0.02857142857142857,
+        "ml_auc": 0.9705882352941176,
+        "stratum_brier": 0.028095960364152784,
+        "ml_brier": 0.026971391614270472,
+        "stratum_log_loss": 0.1348676558080472,
+        "ml_log_loss": 0.09861408817064514,
+        "shuffled_brier": 0.0284970285162359
+      },
+      {
+        "heldout_run": 48,
+        "n_train_baseline_excursion": 1553,
+        "n_test_baseline_excursion": 231,
+        "positive_rate_train": 0.026400515132002575,
+        "positive_rate_test": 0.030303030303030304,
+        "ml_auc": 0.5599489795918368,
+        "stratum_brier": 0.03398492566798809,
+        "ml_brier": 0.031436035021923193,
+        "stratum_log_loss": 0.18723215052681902,
+        "ml_log_loss": 0.15873705431252055,
+        "shuffled_brier": 0.030149199950559164
+      },
+      {
+        "heldout_run": 49,
+        "n_train_baseline_excursion": 1524,
+        "n_test_baseline_excursion": 260,
+        "positive_rate_train": 0.027559055118110236,
+        "positive_rate_test": 0.023076923076923078,
+        "ml_auc": 0.770997375328084,
+        "stratum_brier": 0.02286226268530255,
+        "ml_brier": 0.025553023983854967,
+        "stratum_log_loss": 0.1383649272327455,
+        "ml_log_loss": 0.11134518831788319,
+        "shuffled_brier": 0.02372072018688056
+      },
+      {
+        "heldout_run": 50,
+        "n_train_baseline_excursion": 1675,
+        "n_test_baseline_excursion": 109,
+        "positive_rate_train": 0.026865671641791045,
+        "positive_rate_test": 0.027522935779816515,
+        "ml_auc": 0.8867924528301887,
+        "stratum_brier": 0.026398884390747807,
+        "ml_brier": 0.02314029077420615,
+        "stratum_log_loss": 0.11921400420969211,
+        "ml_log_loss": 0.09452703449320941,
+        "shuffled_brier": 0.0260533755932153
+      },
+      {
+        "heldout_run": 51,
+        "n_train_baseline_excursion": 1702,
+        "n_test_baseline_excursion": 82,
+        "positive_rate_train": 0.025851938895417155,
+        "positive_rate_test": 0.04878048780487805,
+        "ml_auc": 0.5849358974358975,
+        "stratum_brier": 0.04559067327753128,
+        "ml_brier": 0.049708787240839304,
+        "stratum_log_loss": 0.18387705851292116,
+        "ml_log_loss": 0.23362094739570194,
+        "shuffled_brier": 0.048150664525117376
+      },
+      {
+        "heldout_run": 52,
+        "n_train_baseline_excursion": 1745,
+        "n_test_baseline_excursion": 39,
+        "positive_rate_train": 0.026934097421203437,
+        "positive_rate_test": 0.02564102564102564,
+        "ml_auc": 0.9736842105263158,
+        "stratum_brier": 0.025721653737410418,
+        "ml_brier": 0.022862499075132374,
+        "stratum_log_loss": 0.12560476811282234,
+        "ml_log_loss": 0.08180195740212998,
+        "shuffled_brier": 0.02858424263997224
+      },
+      {
+        "heldout_run": 53,
+        "n_train_baseline_excursion": 1701,
+        "n_test_baseline_excursion": 83,
+        "positive_rate_train": 0.027630805408583186,
+        "positive_rate_test": 0.012048192771084338,
+        "ml_auc": 0.9390243902439024,
+        "stratum_brier": 0.01235770527903807,
+        "ml_brier": 0.011583246820239142,
+        "stratum_log_loss": 0.07067541431656138,
+        "ml_log_loss": 0.051631205638469166,
+        "shuffled_brier": 0.012566720437006377
+      },
+      {
+        "heldout_run": 54,
+        "n_train_baseline_excursion": 1727,
+        "n_test_baseline_excursion": 57,
+        "positive_rate_train": 0.027793862188766647,
+        "positive_rate_test": 0.0,
+        "ml_auc": null,
+        "stratum_brier": 0.0010763582141940853,
+        "ml_brier": 0.007751228000518229,
+        "stratum_log_loss": 0.028697310375023984,
+        "ml_log_loss": 0.028695760568112846,
+        "shuffled_brier": 0.0031847720615518415
+      },
+      {
+        "heldout_run": 55,
+        "n_train_baseline_excursion": 1695,
+        "n_test_baseline_excursion": 89,
+        "positive_rate_train": 0.027728613569321534,
+        "positive_rate_test": 0.011235955056179775,
+        "ml_auc": 0.9318181818181818,
+        "stratum_brier": 0.0116345913749763,
+        "ml_brier": 0.010897989607864585,
+        "stratum_log_loss": 0.06937564418438923,
+        "ml_log_loss": 0.046941498913370655,
+        "shuffled_brier": 0.012788661441480635
+      },
+      {
+        "heldout_run": 56,
+        "n_train_baseline_excursion": 1665,
+        "n_test_baseline_excursion": 119,
+        "positive_rate_train": 0.026426426426426425,
+        "positive_rate_test": 0.03361344537815126,
+        "ml_auc": 0.6347826086956522,
+        "stratum_brier": 0.032949625631580624,
+        "ml_brier": 0.02874807942495504,
+        "stratum_log_loss": 0.1437742063642952,
+        "ml_log_loss": 0.13752938795716366,
+        "shuffled_brier": 0.034546101025872286
+      },
+      {
+        "heldout_run": 57,
+        "n_train_baseline_excursion": 1578,
+        "n_test_baseline_excursion": 206,
+        "positive_rate_train": 0.024714828897338403,
+        "positive_rate_test": 0.043689320388349516,
+        "ml_auc": 0.6153412295544276,
+        "stratum_brier": 0.04180491336634382,
+        "ml_brier": 0.04620014086391421,
+        "stratum_log_loss": 0.18309892929012545,
+        "ml_log_loss": 0.22089066825609932,
+        "shuffled_brier": 0.04338184356955481
+      }
+    ],
+    "brier_improvement_over_stratum_rates": -9.103980528372397e-05,
+    "log_loss_improvement_over_stratum_rates": 0.011932603987480599
+  },
+  "leakage_checks": [
+    {
+      "check": "ml_split_by_run",
+      "value": 1.0,
+      "flag": false,
+      "note": "Every prediction is made for a held-out run; run/current/event identifiers are excluded from features."
+    },
+    {
+      "check": "mean_brier_improvement_vs_stratum_rates",
+      "value": -9.103980528372397e-05,
+      "flag": false,
+      "note": "Large improvement would be suspicious for this rare taxon."
+    },
+    {
+      "check": "mean_log_loss_improvement_vs_stratum_rates",
+      "value": 0.011932603987480599,
+      "flag": false,
+      "note": "Large improvement would trigger leakage review."
+    },
+    {
+      "check": "shuffled_target_brier_minus_ml_brier",
+      "value": 0.000693937284698843,
+      "flag": false,
+      "note": "Shuffled target should not beat the real held-out model."
+    },
+    {
+      "check": "ml_pred_downstream_current_auc",
+      "value": 0.5571816912791125,
+      "flag": false,
+      "note": "Flags if a score nearly identifies beam current."
+    },
+    {
+      "check": "ml_resid_downstream_current_auc",
+      "value": 0.4389243993828521,
+      "flag": false,
+      "note": "Flags if a score nearly identifies beam current."
+    },
+    {
+      "check": "ml_shuffled_target_pred_current_auc",
+      "value": 0.5504224524281831,
+      "flag": false,
+      "note": "Flags if a score nearly identifies beam current."
+    }
+  ],
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "configs/p09a_rare_waveform_anomaly_taxonomy.json": "279c6fc889ae527de652cc2011b9c4f274cbd5189b24d75a3402a7a82e2a3e2b"
+  },
+  "conclusion": "The baseline-excursion downstream excess is weak after direct decomposition and is more consistent with pretrigger/baseline contamination than a clean two-pulse pile-up signature. Matched traditional strata leave downstream high-minus-low -0.002253 [-0.011328, 0.025933], while two-pulse residual enrichment is -0.001237 and baseline-MAD high-minus-low is 16.158. Run-held-out ML improves only modestly over stratum rates (Brier -0.00009, log-loss +0.01193) and leaves residual downstream high-minus-low -0.008694 [-0.019852, 0.033949]. Leakage flags: 0.",
+  "git_commit": "694c73550c882cc43d114daca152f963d1523bf1",
+  "runtime_sec": 234.43
+}

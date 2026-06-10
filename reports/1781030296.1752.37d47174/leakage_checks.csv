@@ -1,0 +1,5 @@
+check,value,flag,note
+s10e_scores_match_raw_root_events,1.0,False,run/event/stave/amplitude in score table match freshly loaded raw ROOT event table
+morphology_features_exclude_identifiers_and_scores,1.0,False,rubric uses normalized waveform shape only after blinded IDs are assigned
+current_auc_from_morphology_two_pulse_like,0.5040706244974538,False,flagged if morphology label nearly identifies current group
+current_auc_from_blind_shape_score,0.48831998793889037,False,flagged if blind shape score nearly identifies current group

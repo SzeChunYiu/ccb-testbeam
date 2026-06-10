@@ -1,0 +1,65 @@
+{
+  "study_id": "P10f",
+  "title": "conditional-template q_template tail validation",
+  "ticket_id": "1781027860.942.36c33ff0",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781027860.942.36c33ff0",
+  "random_seed": 20260610,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "aligned_relative_grid": [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "tail_rel_min": 2,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "calibration_folds": [
+    {
+      "name": "sample_i_analysis_from_sample_i_calib",
+      "train_group": "sample_i_calib",
+      "eval_group": "sample_i_analysis"
+    },
+    {
+      "name": "sample_ii_analysis_from_run64_calib",
+      "train_group": "sample_ii_calib",
+      "eval_group": "sample_ii_analysis"
+    }
+  ],
+  "expected_selected_pulses": 640737,
+  "expected_analysis_rows": 377362,
+  "expected_p10a_empirical_q_mse": 0.0444140404286,
+  "expected_p10a_empirical_tolerance": 0.0000005,
+  "template_amplitude_edges_adc": [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000],
+  "template_min_bin_pulses": 30,
+  "handle_bins": {
+    "rise_quantiles": [0.3333333333, 0.6666666667],
+    "tail_quantiles": [0.3333333333, 0.6666666667],
+    "min_cell_pulses": 50
+  },
+  "extra_trees": {
+    "train_max_pulses": 50000,
+    "n_estimators": 72,
+    "max_depth": 18,
+    "min_samples_leaf": 8,
+    "max_features": 0.8,
+    "n_jobs": -1
+  },
+  "bootstrap_iterations": 2500,
+  "nearest_neighbor": {
+    "train_max": 10000,
+    "eval_max": 10000,
+    "distance_thresholds": [0.000001, 0.001, 0.01]
+  }
+}

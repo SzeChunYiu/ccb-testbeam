@@ -1934,3 +1934,57 @@ outputs.
   sentinels. Metric: sigma68/full-RMS timing delta, charge res68/bias delta, saturation-boundary
   residual delta, dropout/anomaly enrichment, calibration ECE, and ML-minus-traditional deltas
   with event-paired run-block bootstrap CIs.
+
+Current steering pass (2026-06-10, P10h/P05b/S11d/S07j/P12a layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
+18-ready trigger. The project-aware `testbeam` queue remains deep after this pass
+(`open=179 claimed=3 done=247 failed=7`) under concurrent worker movement. The trigger was
+satisfied by appending four ready, non-duplicate `project:testbeam` tickets focused on
+tail-handle phase drift, two-pulse risk coverage, joint pulse-axis stability, and normalized
+shape-cue nulls: P10l tail-handle phase-drift null (`1781068158.1584.4e8d411c`), P05f
+two-pulse risk-coverage sideband map (`1781068159.1612.2426717d`), P12f joint pulse-axis
+prevalence bootstrap (`1781068159.1620.18d0289d`), and S07n normalized shape-cue charge null
+(`1781068159.1658.5f900b07`). P10h/P10e/P10f show explicit handles can separate from shuffled
+controls while still failing portable cross-family claims; P05b/S11d/S11e keep pile-up recovery
+coverage and charge bias method-dependent; P12a shows joint pulse axes are common enough to need
+bootstrap promotion rules; and S07j/S07m require a stricter charge-normalization null before
+shape RF cues are interpreted as pulse morphology.
+
+- **P10l — Tail-handle phase-drift null.** Decide whether P10h/P10e explicit tail and CFD handle
+  failures are caused by phase-distribution drift between run families or by intrinsic
+  conditional-template instability after amplitude and q_template support are matched.
+  Traditional: freeze S01 empirical templates plus explicit CFD/peak-phase/tail residual tables,
+  then match by amplitude, stave, q_template, saturation, anomaly, and run family while scanning
+  one handle family at a time. ML: ridge/ExtraTrees conditional template residual models with
+  handle dropout, phase-shuffled, run-family-only, amplitude-only, and shuffled-target sentinels.
+  Metric: q_template MSE, tail MSE, timing sigma68/full RMS, live10 shift, accepted support
+  fraction, false-pass rate under sentinels, and ML-minus-traditional deltas with run-block
+  bootstrap 95% CIs.
+- **P05f — Two-pulse risk-coverage sideband map.** Locate where P05b/P05c/S11i two-pulse
+  abstention scores trade coverage for recovery quality across secondary-amplitude sidebands,
+  delay cells, baseline state, and saturation support. Traditional: frozen bounded template fit
+  with chi2, fractional-SSE, recovered-delay, and secondary-scale thresholds, tabulated by
+  injected and real high-current sidebands. ML: calibrated CNN/RF/isotonic failure scores using
+  the same cells with amplitude-only, topology-only, baseline-only, shuffled-label, and
+  real-current transfer controls. Metric: accepted coverage, bad-recovery rate, recovered-time
+  RMS, charge fractional bias/res68, sideband calibration ECE, fixed-risk support fraction, and
+  ML-minus-traditional deltas with run-block bootstrap 95% CIs.
+- **P12f — Joint pulse-axis prevalence bootstrap.** Determine which joint combinations of P12a
+  pulse axes are common and stable enough to steer downstream timing, charge, saturation,
+  pile-up, baseline, dropout, PID, or energy decisions, rather than being rare coincidental
+  overlaps. Traditional: freeze transparent P12a axes and compute joint prevalence, effective
+  sample size, partial correlations, and atom-wise outcome deltas with exact-binomial and
+  stratified bootstrap uncertainty. ML: calibrated density/support and multi-output harm models
+  over the same joint axes with run-family holdout, axis-knockout, run-only, amplitude-only,
+  topology-only, and shuffled-axis sentinels. Metric: joint prevalence, effective sample size,
+  timing tail enrichment, charge error enrichment, pile-up score delta, support coverage/ECE,
+  false-promotion rate, and ML-minus-traditional deltas with run-block bootstrap 95% CIs.
+- **S07n — Normalized shape-cue charge null.** Test whether the S07j/S07m all-three injected
+  pile-up shape cues remain after stricter residual charge normalization or vanish as
+  amplitude-renormalization artifacts. Traditional: q_template-window, early/late ratio,
+  derivative-sign, and peak-tail cuts evaluated under peak-preserved, positive-charge-preserved,
+  area-preserved, and charge-pair-matched injections. ML: shape-only RF/logistic probes with
+  grouped sample-window dropout and permutation, excluding timing, amplitude, topology, ids, and
+  injection parameters, plus charge-null and shuffled-label controls. Metric: AUC/AP,
+  fixed-95%-clean rejection, charge-null AUC loss, sample-window rank stability, support drift,
+  and ML-minus-traditional deltas with run-block bootstrap 95% CIs.

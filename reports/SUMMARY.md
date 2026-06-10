@@ -655,3 +655,23 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   external A/B charge transfer broad or shuffled-like, so P04w asks whether any narrow conformal
   support frontier is safe for energy/PID labels. These keep the pulse programme at the atomic
   level across shape, timing, amplitude, saturation, pile-up, baseline, dropout, PID, and energy.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The project-aware
+  `testbeam` queue remains deep after this pass (`open=179 claimed=3 done=247 failed=7`) under
+  concurrent worker movement. The trigger was satisfied by appending four ready, non-duplicate
+  `project:testbeam` tickets: P10l tail-handle phase-drift null
+  (`1781068158.1584.4e8d411c`), P05f two-pulse risk-coverage sideband map
+  (`1781068159.1612.2426717d`), P12f joint pulse-axis prevalence bootstrap
+  (`1781068159.1620.18d0289d`), and S07n normalized shape-cue charge null
+  (`1781068159.1658.5f900b07`).
+- Fresh synthesis: the newest readable reports make the next pulse questions about portability
+  and null controls rather than production corrections. P10h/P10e/P10f separate explicit
+  tail/CFD/phase handles from shuffled controls, but family drift and CI-instability still block a
+  portable learned template claim, so P10l tests phase drift as the atomic failure mode. P05b and
+  S11d/S11e show two-pulse ML and fit abstention trade coverage, timing RMS, and charge bias in
+  sideband-dependent ways, so P05f maps the risk-coverage frontier before pile-up recovery is
+  reused. P12a shows large joint prevalence among pile-up, high-amplitude, pretrigger, lowering,
+  and charge-error axes; P12f promotes only stable joint atoms with bootstrap support. S07j/S07m
+  keep shape RF signal after peak and charge preservation, but S07n adds stricter normalized
+  charge nulls so all-three pile-up shape cues are not mistaken for amplitude-renormalization
+  artifacts before timing, PID, or energy consumers inherit them.

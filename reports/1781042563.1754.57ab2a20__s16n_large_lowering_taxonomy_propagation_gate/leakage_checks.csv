@@ -1,0 +1,6 @@
+check,value,pass
+raw_root_reproduction_before_modeling,see reproduction_match_table.csv,True
+feature_names_exclude_identifiers_labels_and_taxonomy_label,,True
+leave_one_run_out_scores_complete,1,True
+isotonic_calibration_fold_local,fit on non-heldout run scores only,True
+forbidden_feature_policy,event id; taxonomy class label as a model feature; run id; event order; dt_span_ns; tail label,True

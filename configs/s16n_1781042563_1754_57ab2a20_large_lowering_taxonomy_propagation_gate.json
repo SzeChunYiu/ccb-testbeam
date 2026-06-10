@@ -1,0 +1,78 @@
+{
+  "study": "S16n",
+  "ticket": "1781042563.1754.57ab2a20",
+  "worker": "testbeam-laptop-3",
+  "title": "large-lowering taxonomy propagation gate",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781042563.1754.57ab2a20__s16n_large_lowering_taxonomy_propagation_gate",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "negative_tolerance_adc": {"floor": 10.0, "fraction_of_amplitude": 0.015},
+  "jagged_mask": {"high_fraction": 0.45, "low_fraction": 0.10, "negative_adc": 80.0},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "loro_runs": [58, 59, 60, 61, 62, 63, 65],
+    "leading_edge_threshold_adc": 500.0,
+    "cfd_fractions": [0.2],
+    "template_shift_grid": {"min": -2.0, "max": 2.0, "step": 0.05},
+    "of_windows": [[3, 11]]
+  },
+  "tail_threshold_ns": 3.0,
+  "pair_tail_threshold_ns": 5.0,
+  "taxonomy_thresholds": {
+    "large_lowering_adc": 500.0,
+    "mild_lowering_adc": 150.0,
+    "pretrigger_abs_adc": 150.0,
+    "pretrigger_ptp_adc": 250.0,
+    "secondary_peak_frac": 0.30,
+    "tail_area_frac": 0.45,
+    "high_amplitude_adc": 4500.0,
+    "charge_balance": 0.28,
+    "dropout_min_post_frac": -0.25
+  },
+  "target_clean_acceptance": 0.90,
+  "ml": {
+    "random_seed": 161042563,
+    "bootstrap_samples": 300,
+    "sklearn_max_iter": 220,
+    "ridge_C": [0.1, 1.0, 10.0],
+    "hgb_learning_rates": [0.03, 0.07],
+    "mlp_hidden": [32, 64],
+    "torch_epochs": 16,
+    "torch_batch_size": 512,
+    "torch_lr": 0.001,
+    "torch_weight_decay": 0.0001,
+    "cnn_channels": [16],
+    "tcn_channels": [16]
+  },
+  "pre_registered": {
+    "primary_metric": "held-out run-block average precision for any downstream |pair residual| > 5 ns timing-tail propagation",
+    "split": "leave-one-run-out over Sample-II analysis runs; all thresholds, isotonic calibrators, and models fit without the held-out run",
+    "traditional_method": "frozen S16f morphology scorecard and large-lowering taxonomy classes",
+    "ml_methods": ["ridge", "gradient_boosted_trees", "mlp", "1d_cnn", "dilated_tcn_new_architecture"],
+    "controls": ["pretrigger_only", "pileup_only", "amplitude_only", "topology_only", "shuffled_label"],
+    "forbidden_features": ["run id", "event id", "event order", "dt_span_ns", "tail label", "taxonomy class label as a model feature"],
+    "win_rule": "highest held-out average precision, with nonparametric bootstrap confidence intervals over held-out run blocks"
+  }
+}

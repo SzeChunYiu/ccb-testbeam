@@ -1,0 +1,82 @@
+{
+  "study": "S18g",
+  "ticket": "1781032542.1057.75a00912",
+  "worker": "testbeam-laptop-3",
+  "title": "constrained timewalk transfer ranking",
+  "reproduced": true,
+  "winner": {
+    "pool": "sample_iii_mixed",
+    "method": "gated_residual_cnn_new",
+    "n_pairs": 127,
+    "median_ns": -0.07886907449040592,
+    "robust_width_ns": 0.2734316709072187,
+    "full_rms_ns": 0.33463808278283513,
+    "within_abs_2ns": 1.0,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 0.21513885904621752,
+    "robust_ci_high_ns": 0.3309931374689575,
+    "core_sigma_ns": 0.26648198425297465,
+    "core_sigma_err_ns": 0.024725834030075708,
+    "core_mean_ns": -0.0026455219524435846,
+    "chi2_ndf": 8661.665309621907
+  },
+  "best_traditional": {
+    "pool": "sample_iii_mixed",
+    "method": "constrained_monotone_timewalk",
+    "n_pairs": 127,
+    "median_ns": 0.09140440352265511,
+    "robust_width_ns": 1.5178248372481482,
+    "full_rms_ns": 1.4745552393190424,
+    "within_abs_2ns": 0.8346456692913385,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 1.2492308774415402,
+    "robust_ci_high_ns": 1.7196698775668118,
+    "core_sigma_ns": 3.872301509883971,
+    "core_sigma_err_ns": 4.021550764477781,
+    "core_mean_ns": -0.014583004849277836,
+    "chi2_ndf": 1.5850773081333158
+  },
+  "best_ml": {
+    "pool": "sample_iii_mixed",
+    "method": "gated_residual_cnn_new",
+    "n_pairs": 127,
+    "median_ns": -0.07886907449040592,
+    "robust_width_ns": 0.2734316709072187,
+    "full_rms_ns": 0.33463808278283513,
+    "within_abs_2ns": 1.0,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 0.21513885904621752,
+    "robust_ci_high_ns": 0.3309931374689575,
+    "core_sigma_ns": 0.26648198425297465,
+    "core_sigma_err_ns": 0.024725834030075708,
+    "core_mean_ns": -0.0026455219524435846,
+    "chi2_ndf": 8661.665309621907
+  },
+  "winner_name": "sample_iii_mixed / gated_residual_cnn_new",
+  "primary_metric": "Sample IV A1-A3 robust residual width, bootstrap over held-out runs",
+  "methods_benchmarked": [
+    "constrained_monotone_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "gated_residual_cnn_new"
+  ],
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_heldout_pairs": 127,
+  "torch_available": true,
+  "leakage_flags": 0,
+  "input_sha256": "reports/1781032542.1057.75a00912/input_sha256.csv",
+  "git_commit": "f49eb89b42e9d5671f4c56e93548442094b6aba4",
+  "next_tickets": [
+    "S18h: audit the waveform atom that makes late/mixed Sample-III ML transfer degrade under A1-A3 residual correction; expected information gain is separating support mismatch from model leakage."
+  ]
+}

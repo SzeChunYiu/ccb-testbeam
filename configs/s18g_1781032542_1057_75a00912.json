@@ -1,0 +1,71 @@
+{
+  "study": "S18g",
+  "ticket": "1781032542.1057.75a00912",
+  "worker": "testbeam-laptop-3",
+  "title": "constrained timewalk transfer ranking",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781032542.1057.75a00912",
+  "script_path": "scripts/s18g_1781032542_1057_75a00912_constrained_timewalk_transfer.py",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "cfd_fraction": 0.20,
+  "random_seed": 18254,
+  "bootstrap_resamples": 1000,
+  "gaussian_core_bins": 40,
+  "gaussian_core_window_ns": 2.5,
+  "sample_iii_calib_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+  "sample_iii_analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "sample_iv_calib_runs": [64],
+  "sample_iv_analysis_runs": [58, 59, 60, 61, 62, 63, 65],
+  "calibration_pools": {
+    "sample_iii_early": {
+      "description": "Early Sample III calibration-period A-stack runs only.",
+      "runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+    },
+    "sample_iii_late": {
+      "description": "Late Sample III analysis-period A-stack runs only.",
+      "runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+    },
+    "sample_iii_mixed": {
+      "description": "All available Sample III A-stack runs, combining early and late run families.",
+      "runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+    }
+  },
+  "astack": {
+    "file_prefix": "hrda",
+    "staves": {
+      "A1": 0,
+      "A3": 4
+    }
+  },
+  "expected_reproduction": {
+    "sample_iv_A1_A3_pairs": 127,
+    "sample_iv_run64_ols_robust_width_ns": 1.7936257228944265,
+    "sample_iv_run64_ols_core_sigma_ns": 1.9921758801207758,
+    "robust_width_tolerance_ns": 0.001,
+    "core_sigma_tolerance_ns": 0.001
+  },
+  "ridge": {
+    "alphas": [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+  },
+  "gbt": {
+    "max_iter": 120,
+    "learning_rate": 0.04,
+    "max_leaf_nodes": 15,
+    "l2_regularization": 0.02
+  },
+  "mlp": {
+    "hidden_layer_sizes": [48, 24],
+    "alpha": 0.001,
+    "max_iter": 450,
+    "early_stopping": true
+  },
+  "nn": {
+    "epochs": 70,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "max_train_rows": 8000
+  }
+}

@@ -1,0 +1,16 @@
+pool,comparison,ci_low_ns,ci_high_ns,p_value
+sample_iii_early,ridge_minus_constrained_monotone_timewalk,-0.5598194592115592,0.26345250384307606,0.374
+sample_iii_early,gradient_boosted_trees_minus_constrained_monotone_timewalk,-0.8927878732959736,-0.41054827008955047,0.0
+sample_iii_early,mlp_minus_constrained_monotone_timewalk,-0.6316942576718632,0.10733403091899635,0.15
+sample_iii_early,cnn_1d_minus_constrained_monotone_timewalk,-0.8940789250455599,-0.13429041407894227,0.02
+sample_iii_early,gated_residual_cnn_new_minus_constrained_monotone_timewalk,-1.3384604520197159,-0.9070925140784478,0.0
+sample_iii_late,ridge_minus_constrained_monotone_timewalk,-0.2629374861564488,0.6719760127845229,0.95
+sample_iii_late,gradient_boosted_trees_minus_constrained_monotone_timewalk,-1.029961734362852,-0.2304803409928851,0.03
+sample_iii_late,mlp_minus_constrained_monotone_timewalk,-0.41576766903924534,0.6823135292442056,0.914
+sample_iii_late,cnn_1d_minus_constrained_monotone_timewalk,-0.1417674045330639,0.41531751783634513,0.59
+sample_iii_late,gated_residual_cnn_new_minus_constrained_monotone_timewalk,-1.2663728896782787,-0.7834160815482324,0.0
+sample_iii_mixed,ridge_minus_constrained_monotone_timewalk,-0.2886156050204911,0.8059552697911307,0.838
+sample_iii_mixed,gradient_boosted_trees_minus_constrained_monotone_timewalk,-1.0235850634494796,-0.2560990441519625,0.002
+sample_iii_mixed,mlp_minus_constrained_monotone_timewalk,-0.3708829198446179,0.9657589411709964,0.59
+sample_iii_mixed,cnn_1d_minus_constrained_monotone_timewalk,-1.0254598627677982,-0.34088843318378614,0.0
+sample_iii_mixed,gated_residual_cnn_new_minus_constrained_monotone_timewalk,-1.4807066855016964,-0.950833458691101,0.0

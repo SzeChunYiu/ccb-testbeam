@@ -1,0 +1,10 @@
+check,value,flag,note
+ridge_current_auc_from_overlap_score,0.5198084878389154,False,Flags near-perfect current identification on real windows.
+gradient_boosted_trees_current_auc_from_overlap_score,0.5076474033094098,False,Flags near-perfect current identification on real windows.
+mlp_current_auc_from_overlap_score,0.5081177731259968,False,Flags near-perfect current identification on real windows.
+cnn_1d_current_auc_from_overlap_score,0.5613287480063796,False,Flags near-perfect current identification on real windows.
+residual_cnn_current_auc_from_overlap_score,0.5536377342503987,False,Flags near-perfect current identification on real windows.
+raw_root_s10_topology_reproduction_required,1.0,False,Script aborts before scoring unless all S10 documented topology fractions reproduce.
+model_training_current_source,1.0,False,ML/NN training uses only synthetic overlays made from low-current runs 46/47; high-current real runs are scored only after training.
+identifier_features_excluded,1.0,False,"Model features exclude run, event number, current group, downstream label, and matched-stratum labels."
+best_model_brier,0.16075621075662067,False,Extremely small Brier would indicate an unrealistic synthetic classification shortcut.

@@ -1,0 +1,143 @@
+{
+  "study": "P03e",
+  "ticket": "1781034869.1025.674d291b",
+  "worker": "testbeam-laptop-4",
+  "title": "waveform residual target run-shift audit",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_pass": true,
+    "selected_pulses": 640737
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "winner": {
+    "method": "hierarchical_shrinkage",
+    "value": 1.2509990385254304,
+    "ci": [
+      1.075780325361316,
+      1.488849346529585
+    ]
+  },
+  "best_traditional": {
+    "method": "hierarchical_shrinkage",
+    "value": 1.2509990385254304,
+    "ci": [
+      1.075780325361316,
+      1.488849346529585
+    ]
+  },
+  "best_ml": {
+    "method": "gradient_boosted_trees",
+    "value": 1.2820393859185533,
+    "ci": [
+      1.1326269091287235,
+      1.5640924633799969
+    ]
+  },
+  "methods": {
+    "cnn1d": {
+      "value": 1.6004967618855084,
+      "ci": [
+        1.4924074134764176,
+        1.7299885559524204
+      ],
+      "tail_frac_abs_gt5ns": 0.01387434554973822
+    },
+    "gradient_boosted_trees": {
+      "value": 1.2820393859185533,
+      "ci": [
+        1.1326269091287235,
+        1.5640924633799969
+      ],
+      "tail_frac_abs_gt5ns": 0.01300174520069808
+    },
+    "hierarchical_shrinkage": {
+      "value": 1.2509990385254304,
+      "ci": [
+        1.075780325361316,
+        1.488849346529585
+      ],
+      "tail_frac_abs_gt5ns": 0.015357766143106457
+    },
+    "mlp": {
+      "value": 1.60663403066357,
+      "ci": [
+        1.4942816979964197,
+        1.7547943524049596
+      ],
+      "tail_frac_abs_gt5ns": 0.014310645724258289
+    },
+    "ridge": {
+      "value": 1.5872198297381546,
+      "ci": [
+        1.4377044384774795,
+        1.8502220377883454
+      ],
+      "tail_frac_abs_gt5ns": 0.016666666666666666
+    },
+    "s03a_amp_only_global": {
+      "value": 1.5510917109777833,
+      "ci": [
+        1.3643204505022433,
+        1.915130594843311
+      ],
+      "tail_frac_abs_gt5ns": 0.019109947643979056
+    },
+    "shape_gated_cnn_new": {
+      "value": 1.5829813047711068,
+      "ci": [
+        1.4668529597088815,
+        1.729724766528016
+      ],
+      "tail_frac_abs_gt5ns": 0.014659685863874346
+    },
+    "template_phase_base": {
+      "value": 2.7414145300852155,
+      "ci": [
+        2.68944645179862,
+        2.986325532368197
+      ],
+      "tail_frac_abs_gt5ns": 0.08132635253054102
+    }
+  },
+  "run61": {
+    "winner": "hierarchical_shrinkage",
+    "winner_value": 1.6353703774060238,
+    "hierarchical_value": 1.6353703774060238,
+    "n_pair_residuals": 2799,
+    "interpretation": "large-statistics held-out fold with measurable target and waveform-covariate shift"
+  },
+  "fleet_summary_consistency": {
+    "status": "agrees",
+    "note": "P03e supports the current synthesis that strong analytic amplitude timewalk remains the timing baseline to beat; waveform MLP/CNN variants do not win under leave-one-run-out controls."
+  },
+  "hypothesis": "Run-61 residual instability is dominated by low-dimensional amplitude/run-coefficient shift plus sparse peak-sample strata, not by a missing waveform representation that generic neural nets can learn from Sample-II alone.",
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "standardization_fit_on_train_runs_only": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.675460002039589,
+    "leakage_flag": false
+  },
+  "verdict": "winner_hierarchical_shrinkage_run_shift_audit_no_event_leakage",
+  "next_tickets": [
+    "P03g: blinded Sample-I to Sample-II morphology-gated residual transfer with frozen architecture and no Sample-II hyperparameter selection"
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "f62b08077bec6ffef6f3c0486579fbf7672a0eb1",
+  "runtime_sec": 431.33
+}

@@ -1,0 +1,5 @@
+check,value,pass,detail
+train_heldout_run_overlap,0,True,Run-heldout split has no shared run ids.
+latent_raw_key_alignment,0.0,True,"P01b latent rows match the raw ROOT recount by run, event, stave, and amplitude."
+winner_nuisance_penalty_applied,0.6433169493271762,True,Winner is ranked by physics accuracy penalized by nuisance predictability.
+primary_task_winner,residual_fusion_mlp_new_arch,True,Primary target ranking is reported separately from the aggregate winner.

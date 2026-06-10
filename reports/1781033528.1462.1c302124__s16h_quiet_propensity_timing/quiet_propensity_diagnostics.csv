@@ -1,0 +1,190 @@
+quantity,value,heldout_run,model
+quiet_proxy_model,standardized_logistic_regression,58,
+train_quiet_atom_fraction,0.7468196779645939,58,
+all_quiet_atom_fraction,0.7481675392670157,58,
+mean_quiet_propensity,0.740627504789403,58,
+p05_quiet_propensity,0.0001,58,
+p95_quiet_propensity,0.9956314782981031,58,
+threshold_rms_hi_adc,63.136756330999454,58,
+threshold_exc_hi_adc,1763.5,58,
+threshold_abs_slope_hi_adc,132.0,58,
+threshold_abs_asym_hi_adc,69.5,58,
+threshold_lower_hi_adc,280.5,58,
+n_features,35,58,feature_matrix
+n_train_pulses,11241,58,feature_matrix
+train_median_abs_error_alpha_0.01,0.6975583753301358,58,ridge
+train_median_abs_error_alpha_0.1,0.6978554872622844,58,ridge
+train_median_abs_error_alpha_1.0,0.6974466329142794,58,ridge
+train_median_abs_error_alpha_10.0,0.6919279798314832,58,ridge
+selected_alpha,10.0,58,ridge
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.5075890932999494,58,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.5031078510345264,58,hgb
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.4655532904715072,58,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.467124404692397,58,hgb
+selected_params,"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",58,hgb
+hidden,32,58,mlp
+channels,6,58,cnn
+tab_features,"log_amp,peak_sample,area_over_amp,quiet_propensity,quiet_logit,event_mean_quiet_propensity,event_min_quiet_propensity,pre_rms_adc,pre_max_exc_adc,adaptive_lowering_adc,stave_B4,stave_B6,stave_B8",58,quiet_gated_cnn
+feature_names_sha256,f72a50ce323167c54cff282f8ac2281c61b52134acb639c7d50af74d92f2333d,58,feature_matrix
+quiet_proxy_model,standardized_logistic_regression,59,
+train_quiet_atom_fraction,0.7465925198996838,59,
+all_quiet_atom_fraction,0.7465095986038395,59,
+mean_quiet_propensity,0.7377459815988682,59,
+p05_quiet_propensity,0.0001,59,
+p95_quiet_propensity,0.9940004163645135,59,
+threshold_rms_hi_adc,60.256727354774995,59,
+threshold_exc_hi_adc,1795.5,59,
+threshold_abs_slope_hi_adc,126.0,59,
+threshold_abs_asym_hi_adc,67.75,59,
+threshold_lower_hi_adc,298.0,59,
+n_features,35,59,feature_matrix
+n_train_pulses,9171,59,feature_matrix
+train_median_abs_error_alpha_0.01,0.677314992909787,59,ridge
+train_median_abs_error_alpha_0.1,0.6764630111361658,59,ridge
+train_median_abs_error_alpha_1.0,0.6757690106578593,59,ridge
+train_median_abs_error_alpha_10.0,0.6693590734539265,59,ridge
+selected_alpha,10.0,59,ridge
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.5012163555640337,59,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.49881710166444115,59,hgb
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.45601453023855365,59,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.46275443483302725,59,hgb
+selected_params,"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",59,hgb
+hidden,32,59,mlp
+channels,6,59,cnn
+tab_features,"log_amp,peak_sample,area_over_amp,quiet_propensity,quiet_logit,event_mean_quiet_propensity,event_min_quiet_propensity,pre_rms_adc,pre_max_exc_adc,adaptive_lowering_adc,stave_B4,stave_B6,stave_B8",59,quiet_gated_cnn
+feature_names_sha256,f72a50ce323167c54cff282f8ac2281c61b52134acb639c7d50af74d92f2333d,59,feature_matrix
+quiet_proxy_model,standardized_logistic_regression,60,
+train_quiet_atom_fraction,0.7464586100044267,60,
+all_quiet_atom_fraction,0.7403141361256544,60,
+mean_quiet_propensity,0.7303052906099666,60,
+p05_quiet_propensity,0.0001,60,
+p95_quiet_propensity,0.9924421408551823,60,
+threshold_rms_hi_adc,51.73248225111337,60,
+threshold_exc_hi_adc,1689.125,60,
+threshold_abs_slope_hi_adc,105.25,60,
+threshold_abs_asym_hi_adc,58.0,60,
+threshold_lower_hi_adc,259.5,60,
+n_features,35,60,feature_matrix
+n_train_pulses,9036,60,feature_matrix
+train_median_abs_error_alpha_0.01,0.7018356876557741,60,ridge
+train_median_abs_error_alpha_0.1,0.7043164994398383,60,ridge
+train_median_abs_error_alpha_1.0,0.7039967769128284,60,ridge
+train_median_abs_error_alpha_10.0,0.6968567825432543,60,ridge
+selected_alpha,10.0,60,ridge
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.5095265007620888,60,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.48707022086859086,60,hgb
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.48060341403144413,60,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.4751269735646684,60,hgb
+selected_params,"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",60,hgb
+hidden,32,60,mlp
+channels,6,60,cnn
+tab_features,"log_amp,peak_sample,area_over_amp,quiet_propensity,quiet_logit,event_mean_quiet_propensity,event_min_quiet_propensity,pre_rms_adc,pre_max_exc_adc,adaptive_lowering_adc,stave_B4,stave_B6,stave_B8",60,quiet_gated_cnn
+feature_names_sha256,f72a50ce323167c54cff282f8ac2281c61b52134acb639c7d50af74d92f2333d,60,feature_matrix
+quiet_proxy_model,standardized_logistic_regression,61,
+train_quiet_atom_fraction,0.7469114420967555,61,
+all_quiet_atom_fraction,0.7481675392670157,61,
+mean_quiet_propensity,0.7398084017733032,61,
+p05_quiet_propensity,0.0001,61,
+p95_quiet_propensity,0.9943056562563405,61,
+threshold_rms_hi_adc,63.136756330999454,61,
+threshold_exc_hi_adc,1765.0,61,
+threshold_abs_slope_hi_adc,132.0,61,
+threshold_abs_asym_hi_adc,69.5,61,
+threshold_lower_hi_adc,278.0,61,
+n_features,35,61,feature_matrix
+n_train_pulses,8661,61,feature_matrix
+train_median_abs_error_alpha_0.01,0.6517086191215986,61,ridge
+train_median_abs_error_alpha_0.1,0.649139165403104,61,ridge
+train_median_abs_error_alpha_1.0,0.6469610740442762,61,ridge
+train_median_abs_error_alpha_10.0,0.6395830280013239,61,ridge
+selected_alpha,10.0,61,ridge
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.4825885852727656,61,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.4740910584313429,61,hgb
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.4268105811124432,61,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.43255253749067357,61,hgb
+selected_params,"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",61,hgb
+hidden,32,61,mlp
+channels,6,61,cnn
+tab_features,"log_amp,peak_sample,area_over_amp,quiet_propensity,quiet_logit,event_mean_quiet_propensity,event_min_quiet_propensity,pre_rms_adc,pre_max_exc_adc,adaptive_lowering_adc,stave_B4,stave_B6,stave_B8",61,quiet_gated_cnn
+feature_names_sha256,f72a50ce323167c54cff282f8ac2281c61b52134acb639c7d50af74d92f2333d,61,feature_matrix
+quiet_proxy_model,standardized_logistic_regression,62,
+train_quiet_atom_fraction,0.7465427591547737,62,
+all_quiet_atom_fraction,0.7452879581151832,62,
+mean_quiet_propensity,0.7367026591002983,62,
+p05_quiet_propensity,0.0001,62,
+p95_quiet_propensity,0.9938982303001128,62,
+threshold_rms_hi_adc,59.08282525690389,62,
+threshold_exc_hi_adc,1759.750000000001,62,
+threshold_abs_slope_hi_adc,123.0,62,
+threshold_abs_asym_hi_adc,65.75,62,
+threshold_lower_hi_adc,280.0999999999999,62,
+n_features,35,62,feature_matrix
+n_train_pulses,9039,62,feature_matrix
+train_median_abs_error_alpha_0.01,0.6889442104603973,62,ridge
+train_median_abs_error_alpha_0.1,0.6905588225155501,62,ridge
+train_median_abs_error_alpha_1.0,0.6938745775710247,62,ridge
+train_median_abs_error_alpha_10.0,0.6921571172783161,62,ridge
+selected_alpha,0.01,62,ridge
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.5082528456932685,62,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.5110466879758482,62,hgb
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.4574512595906164,62,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.46128385417272266,62,hgb
+selected_params,"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",62,hgb
+hidden,32,62,mlp
+channels,6,62,cnn
+tab_features,"log_amp,peak_sample,area_over_amp,quiet_propensity,quiet_logit,event_mean_quiet_propensity,event_min_quiet_propensity,pre_rms_adc,pre_max_exc_adc,adaptive_lowering_adc,stave_B4,stave_B6,stave_B8",62,quiet_gated_cnn
+feature_names_sha256,f72a50ce323167c54cff282f8ac2281c61b52134acb639c7d50af74d92f2333d,62,feature_matrix
+quiet_proxy_model,standardized_logistic_regression,63,
+train_quiet_atom_fraction,0.7469565217391304,63,
+all_quiet_atom_fraction,0.7479057591623036,63,
+mean_quiet_propensity,0.7401600340310016,63,
+p05_quiet_propensity,0.0001,63,
+p95_quiet_propensity,0.9951388867599972,63,
+threshold_rms_hi_adc,62.44894966974098,63,
+threshold_exc_hi_adc,1781.7749999999996,63,
+threshold_abs_slope_hi_adc,132.0,63,
+threshold_abs_asym_hi_adc,69.0,63,
+threshold_lower_hi_adc,292.5,63,
+n_features,35,63,feature_matrix
+n_train_pulses,10350,63,feature_matrix
+train_median_abs_error_alpha_0.01,0.7059631317087417,63,ridge
+train_median_abs_error_alpha_0.1,0.7057582901205832,63,ridge
+train_median_abs_error_alpha_1.0,0.7017061400844775,63,ridge
+train_median_abs_error_alpha_10.0,0.6983687619014166,63,ridge
+selected_alpha,10.0,63,ridge
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.503963002558133,63,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.5050211233340229,63,hgb
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.46312432460198016,63,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.4542820063502806,63,hgb
+selected_params,"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",63,hgb
+hidden,32,63,mlp
+channels,6,63,cnn
+tab_features,"log_amp,peak_sample,area_over_amp,quiet_propensity,quiet_logit,event_mean_quiet_propensity,event_min_quiet_propensity,pre_rms_adc,pre_max_exc_adc,adaptive_lowering_adc,stave_B4,stave_B6,stave_B8",63,quiet_gated_cnn
+feature_names_sha256,f72a50ce323167c54cff282f8ac2281c61b52134acb639c7d50af74d92f2333d,63,feature_matrix
+quiet_proxy_model,standardized_logistic_regression,65,
+train_quiet_atom_fraction,0.746847806783875,65,
+all_quiet_atom_fraction,0.7492146596858639,65,
+mean_quiet_propensity,0.7419339302445217,65,
+p05_quiet_propensity,0.0001,65,
+p95_quiet_propensity,0.9958196727352279,65,
+threshold_rms_hi_adc,64.45249556313611,65,
+threshold_exc_hi_adc,1773.9249999999984,65,
+threshold_abs_slope_hi_adc,134.75,65,
+threshold_abs_asym_hi_adc,71.375,65,
+threshold_lower_hi_adc,292.2499999999991,65,
+n_features,35,65,feature_matrix
+n_train_pulses,11262,65,feature_matrix
+train_median_abs_error_alpha_0.01,0.6992509039376881,65,ridge
+train_median_abs_error_alpha_0.1,0.6984037154125926,65,ridge
+train_median_abs_error_alpha_1.0,0.6970710965631313,65,ridge
+train_median_abs_error_alpha_10.0,0.689372847438849,65,ridge
+selected_alpha,10.0,65,ridge
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.496232890225326,65,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 7, ""random_state"": 20260610}",0.4945081066096848,65,hgb
+"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.46224393226435323,65,hgb
+"{""l2_regularization"": 0.05, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",0.463241187606903,65,hgb
+selected_params,"{""l2_regularization"": 0.0, ""learning_rate"": 0.05, ""max_bins"": 64, ""max_iter"": 100, ""max_leaf_nodes"": 15, ""random_state"": 20260610}",65,hgb
+hidden,32,65,mlp
+channels,6,65,cnn
+tab_features,"log_amp,peak_sample,area_over_amp,quiet_propensity,quiet_logit,event_mean_quiet_propensity,event_min_quiet_propensity,pre_rms_adc,pre_max_exc_adc,adaptive_lowering_adc,stave_B4,stave_B6,stave_B8",65,quiet_gated_cnn
+feature_names_sha256,f72a50ce323167c54cff282f8ac2281c61b52134acb639c7d50af74d92f2333d,65,feature_matrix

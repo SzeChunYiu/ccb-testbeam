@@ -1,0 +1,231 @@
+{
+  "study": "S16h",
+  "ticket": "1781033528.1462.1c302124",
+  "worker": "testbeam-laptop-4",
+  "title": "quiet-proxy propensity as a timing-tail nuisance",
+  "git_commit": "8a27e1fdeaf324e9b8a22b9dd9f93883c7ba0886",
+  "reproduced": true,
+  "raw_root_reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run",
+    "run_bootstrap_samples": 2000
+  },
+  "methods": [
+    "template_phase_base",
+    "signed_physics_prior",
+    "ridge_quiet_propensity",
+    "gradient_boosted_trees_quiet_propensity",
+    "mlp_quiet_propensity",
+    "one_dimensional_cnn_quiet_propensity",
+    "quiet_gated_residual_cnn"
+  ],
+  "traditional_method": "signed_physics_prior",
+  "winner": {
+    "method": "one_dimensional_cnn_quiet_propensity",
+    "metric": "pooled_heldout_pairwise_sigma68_ns",
+    "value": 1.4312607558970705,
+    "ci": [
+      1.327785446259327,
+      1.5859703814563206
+    ]
+  },
+  "traditional": {
+    "method": "signed_physics_prior",
+    "metric": "pooled_heldout_pairwise_sigma68_ns",
+    "value": 1.6043573218297749,
+    "ci": [
+      1.3827752327879035,
+      1.9473951194674797
+    ]
+  },
+  "winner_beats_traditional": true,
+  "method_table": [
+    {
+      "method": "one_dimensional_cnn_quiet_propensity",
+      "bootstrap_unit": "heldout_run",
+      "n_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 1.4312607558970705,
+      "sigma68_ci_low": 1.327785446259327,
+      "sigma68_ci_high": 1.5859703814563206,
+      "full_rms_ns": 2.525034085232861,
+      "full_rms_ci_low": 2.385926895344396,
+      "full_rms_ci_high": 2.663919459343332,
+      "tail_frac_abs_gt5ns": 0.016841186736474695,
+      "tail_ci_low": 0.013086056644880174,
+      "tail_ci_high": 0.021855184153974833,
+      "delta_sigma68_vs_traditional_ns": -0.1730965659327044
+    },
+    {
+      "method": "gradient_boosted_trees_quiet_propensity",
+      "bootstrap_unit": "heldout_run",
+      "n_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 1.5108135156488487,
+      "sigma68_ci_low": 1.3578993167823215,
+      "sigma68_ci_high": 1.7584905359464407,
+      "full_rms_ns": 2.169116802086039,
+      "full_rms_ci_low": 1.9692063326033011,
+      "full_rms_ci_high": 2.3574748309277105,
+      "tail_frac_abs_gt5ns": 0.017975567190226877,
+      "tail_ci_low": 0.01313542300920331,
+      "tail_ci_high": 0.021144278606965175,
+      "delta_sigma68_vs_traditional_ns": -0.09354380618092617
+    },
+    {
+      "method": "quiet_gated_residual_cnn",
+      "bootstrap_unit": "heldout_run",
+      "n_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 1.574228964570884,
+      "sigma68_ci_low": 1.4409861464267235,
+      "sigma68_ci_high": 1.7241207988552638,
+      "full_rms_ns": 2.591180885985442,
+      "full_rms_ci_low": 2.4185879382739546,
+      "full_rms_ci_high": 2.7418824038743157,
+      "tail_frac_abs_gt5ns": 0.017015706806282723,
+      "tail_ci_low": 0.012765012765012766,
+      "tail_ci_high": 0.02136404231740015,
+      "delta_sigma68_vs_traditional_ns": -0.030128357258890848
+    },
+    {
+      "method": "signed_physics_prior",
+      "bootstrap_unit": "heldout_run",
+      "n_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 1.6043573218297749,
+      "sigma68_ci_low": 1.3827752327879035,
+      "sigma68_ci_high": 1.9473951194674797,
+      "full_rms_ns": 2.6873182100623105,
+      "full_rms_ci_low": 2.4639030210908355,
+      "full_rms_ci_high": 2.896281254120843,
+      "tail_frac_abs_gt5ns": 0.020593368237347295,
+      "tail_ci_low": 0.014646242818998763,
+      "tail_ci_high": 0.02838921282798833,
+      "delta_sigma68_vs_traditional_ns": 0.0
+    },
+    {
+      "method": "ridge_quiet_propensity",
+      "bootstrap_unit": "heldout_run",
+      "n_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 1.692713584317018,
+      "sigma68_ci_low": 1.4744847441318611,
+      "sigma68_ci_high": 1.9563333059023673,
+      "full_rms_ns": 2.543150837590615,
+      "full_rms_ci_low": 2.3464872888550103,
+      "full_rms_ci_high": 2.7341520925353673,
+      "tail_frac_abs_gt5ns": 0.017277486910994764,
+      "tail_ci_low": 0.01376597836774828,
+      "tail_ci_high": 0.021623091853113636,
+      "delta_sigma68_vs_traditional_ns": 0.08835626248724315
+    },
+    {
+      "method": "mlp_quiet_propensity",
+      "bootstrap_unit": "heldout_run",
+      "n_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 1.837110145491511,
+      "sigma68_ci_low": 1.551251906993335,
+      "sigma68_ci_high": 2.2603030676646774,
+      "full_rms_ns": 2.6978466976818547,
+      "full_rms_ci_low": 2.4264414327625783,
+      "full_rms_ci_high": 2.9772093757205065,
+      "tail_frac_abs_gt5ns": 0.020331588132635255,
+      "tail_ci_low": 0.01238543472875898,
+      "tail_ci_high": 0.029714285714285714,
+      "delta_sigma68_vs_traditional_ns": 0.23275282366173622
+    },
+    {
+      "method": "template_phase_base",
+      "bootstrap_unit": "heldout_run",
+      "n_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 2.7414145300852155,
+      "sigma68_ci_low": 2.6808109129566127,
+      "sigma68_ci_high": 2.9923192689627967,
+      "full_rms_ns": 3.308372978304417,
+      "full_rms_ci_low": 3.24042896395781,
+      "full_rms_ci_high": 3.357018933658413,
+      "tail_frac_abs_gt5ns": 0.08132635253054102,
+      "tail_ci_low": 0.05507193849572215,
+      "tail_ci_high": 0.09320407957184691,
+      "delta_sigma68_vs_traditional_ns": 1.1370572082554407
+    }
+  ],
+  "quiet_proxy": {
+    "train_fold_mean_quiet_atom_fraction": 0.7467327625204626,
+    "fold_mean_quiet_propensity": 0.738183400306766,
+    "low_quiet_propensity_quantile": 0.25
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0.0,
+    "leakage_flag": false
+  },
+  "conclusion": "The winner is one_dimensional_cnn_quiet_propensity with pooled sigma68 1.431 ns (95% CI 1.328--1.586); the signed-prior traditional comparator is 1.604 ns (95% CI 1.383--1.947).",
+  "next_ticket": {
+    "title": "S16s: support-matched quiet-propensity intervention curves",
+    "body": "Build amplitude/topology-matched quiet-propensity strata and estimate timing-tail intervention curves with run-block bootstrap CIs. Expected information gain: separates pretrigger quiet-proxy support from amplitude/topology confounding before proposing any operational veto."
+  },
+  "runtime_seconds": 112.01375031471252
+}

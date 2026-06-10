@@ -1,0 +1,5 @@
+method,description
+repair_median_sample,median samples 0-3
+repair_robust_pretrigger,drop largest pretrigger outlier
+repair_slope_corrected,linear pretrigger trend
+repair_train_run_template_pedestal,train-run cell pedestal template

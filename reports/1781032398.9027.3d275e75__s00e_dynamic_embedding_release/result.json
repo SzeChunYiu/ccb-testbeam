@@ -1,0 +1,176 @@
+{
+  "study": "S00e",
+  "ticket": "1781032398.9027.3d275e75",
+  "worker": "testbeam-laptop-3",
+  "title": "P01b-compatible dynamic-only embedding release",
+  "raw_root_dir": "data/root/root",
+  "reproduced": true,
+  "reproduction": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "cv_validation_runs": [
+      41,
+      56,
+      63
+    ],
+    "benchmark_train_rows": 141932,
+    "benchmark_test_rows": 68079,
+    "benchmark_test_dynamic_only_rows": 8466
+  },
+  "traditional": {
+    "method": "ridge_hand_shape",
+    "metric": "held-out dynamic-only ROC AUC",
+    "value": 0.982994557354976,
+    "ci": [
+      0.977611330558804,
+      0.986846211159952
+    ],
+    "average_precision": 0.8108561448222702
+  },
+  "ml": {
+    "methods": [
+      {
+        "method": "new_ae_latent_shape_fusion_hgb",
+        "roc_auc": 0.998381221608725,
+        "roc_auc_ci_low": 0.9965396919730252,
+        "roc_auc_ci_high": 0.999023024975227,
+        "average_precision": 0.9921002754525912,
+        "average_precision_ci_low": 0.9790355758779087,
+        "average_precision_ci_high": 0.9958382869095755,
+        "balanced_accuracy": 0.9835864340588576,
+        "balanced_accuracy_ci_low": 0.9742558408779112,
+        "balanced_accuracy_ci_high": 0.9865457807319313,
+        "brier": 0.01062706359861538,
+        "ece_10bin": 0.016358705092600317
+      },
+      {
+        "method": "gradient_boosted_trees_hgb",
+        "roc_auc": 0.9980599352000419,
+        "roc_auc_ci_low": 0.9961145985215236,
+        "roc_auc_ci_high": 0.9987483426441786,
+        "average_precision": 0.990228568752276,
+        "average_precision_ci_low": 0.9768594602420169,
+        "average_precision_ci_high": 0.9944729747008746,
+        "balanced_accuracy": 0.9810153591301741,
+        "balanced_accuracy_ci_low": 0.9727147345390132,
+        "balanced_accuracy_ci_high": 0.9829009656958603,
+        "brier": 0.012665677903515754,
+        "ece_10bin": 0.018325355586891384
+      },
+      {
+        "method": "mlp_waveform",
+        "roc_auc": 0.9953375090262978,
+        "roc_auc_ci_low": 0.9925484923890232,
+        "roc_auc_ci_high": 0.9966248489001194,
+        "average_precision": 0.9761258853317024,
+        "average_precision_ci_low": 0.958902129136701,
+        "average_precision_ci_high": 0.9840543985394845,
+        "balanced_accuracy": 0.9722756963135113,
+        "balanced_accuracy_ci_low": 0.9654869586900259,
+        "balanced_accuracy_ci_high": 0.9743782711859925,
+        "brier": 0.023555611490941306,
+        "ece_10bin": 0.031559496828865836
+      },
+      {
+        "method": "cnn_1d_waveform",
+        "roc_auc": 0.9942740131284378,
+        "roc_auc_ci_low": 0.9914472454565088,
+        "roc_auc_ci_high": 0.9953839713218625,
+        "average_precision": 0.9685795081113519,
+        "average_precision_ci_low": 0.9423521544452045,
+        "average_precision_ci_high": 0.9785193203730839,
+        "balanced_accuracy": 0.9678563814325052,
+        "balanced_accuracy_ci_low": 0.9549218985737344,
+        "balanced_accuracy_ci_high": 0.9707686782087737,
+        "brier": 0.024872119762819105,
+        "ece_10bin": 0.036453473881839935
+      },
+      {
+        "method": "ridge_hand_shape",
+        "roc_auc": 0.982994557354976,
+        "roc_auc_ci_low": 0.977611330558804,
+        "roc_auc_ci_high": 0.986846211159952,
+        "average_precision": 0.8108561448222702,
+        "average_precision_ci_low": 0.8017538280646173,
+        "average_precision_ci_high": 0.8465803051019475,
+        "balanced_accuracy": 0.9657712217818633,
+        "balanced_accuracy_ci_low": 0.9606922056180711,
+        "balanced_accuracy_ci_high": 0.9675853260294365,
+        "brier": 0.10095129928830678,
+        "ece_10bin": 0.262606587958041
+      }
+    ],
+    "metric": "held-out dynamic-only ROC AUC",
+    "winner": "new_ae_latent_shape_fusion_hgb",
+    "value": 0.998381221608725,
+    "ci": [
+      0.9965396919730252,
+      0.999023024975227
+    ]
+  },
+  "winner": {
+    "method": "new_ae_latent_shape_fusion_hgb",
+    "metric": "roc_auc",
+    "value": 0.998381221608725,
+    "ci": [
+      0.9965396919730252,
+      0.999023024975227
+    ],
+    "auc_lift_vs_ridge": 0.015386664253749016
+  },
+  "ml_beats_baseline": true,
+  "artifact": {
+    "artifact": "s00e_dynamic_embedding_latents.npz",
+    "rows": 706373,
+    "s00_rows": 640737,
+    "dynamic_only_rows": 65636,
+    "latent_dim": 4,
+    "key_columns": [
+      "run",
+      "event_index",
+      "stave_index",
+      "dynamic_only"
+    ],
+    "value_columns": [
+      "amplitude_adc",
+      "s00_selected",
+      "z"
+    ],
+    "amplitude_adc_definition": "baseline-subtracted median-first-four peak amplitude, preserving P01b convention",
+    "artifact_sha256": "de03b77e3b55e33016d2ab81ba17f3dbd30c89d433388a81905b6f533c07cb6a",
+    "key_sha256": "cf64f723b5752c1486c5694724362d1c06323302f0a60d72fa0a1a373426355a",
+    "artifact_mib": 12.714,
+    "release_final_training_loss": 2.6478928630751684,
+    "eval_heldout_reconstruction_mse": 10.64669418334961,
+    "release_model_state": "s00e_autoencoder_state.pt",
+    "no_benchmark_claim": "release model fit on all dynamic-selected rows after held-out evaluation was frozen"
+  },
+  "model_choices": {
+    "ridge_alpha": 100.0,
+    "hgb_max_leaf_nodes": 31,
+    "fusion_max_leaf_nodes": 31,
+    "mlp_hidden": 64,
+    "cnn_channels": 8,
+    "train_rows": 141932,
+    "test_rows": 68079,
+    "test_positive_rows": 8466
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "62cd446f7454b0f87cd701a91b00c3b323c9585e",
+  "runtime_s": 151.2,
+  "critic": "pending",
+  "next_tickets": [
+    "S00g: external stability of dynamic-selected release latents against calibration-run drift"
+  ],
+  "finding": "Dynamic-only selector-excess rows are separable from S00 controls in non-selector waveform morphology; treat the release latent as provenance-aware telemetry, not as a clean-pulse truth label."
+}

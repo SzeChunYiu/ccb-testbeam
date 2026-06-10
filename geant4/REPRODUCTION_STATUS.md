@@ -1,55 +1,33 @@
-# GEANT4 simulation — reproduction status (CCB / Krakow test beam)
+# GEANT4 simulation — BUILT & RUN (CCB / Krakow test beam)
 
-This folder holds the GEANT4 setup for the CCB test beam, provided by a colleague (the HIBEAM
-`hibeam_g4` framework). Goal: generate **truth-labelled** events (particle type p/d, true energy,
-hit positions/times) to compare against the real beam data — the one thing the data-only analysis
-cannot provide (energy scale, p-vs-d PID, real pile-up truth).
+**Status (2026-06-10): SUCCESS.** The colleague's HIBEAM `hibeam_g4` GEANT4 sim was reproduced
+(built from the official GitHub source) and run on billy, producing truth-labelled events.
 
-## What's here
-- `configs/krakow.config`, `configs/krakow.geoconf` — detector/geometry config (Wasa geometry,
-  detectors TARGET, ProtoTPC, Sci_bar).
-- `macros/run_krakow.mac` — 190 MeV protons, 2.3 mm CD₂ target, 10 mm beamspot, p-d elastic
-  generator (`/ElGen`) using `sigma_pd_cm_190.txt`, `beamOn 1000000`, `WriteTree 1` (truth tree).
-- `data/dedx_p_in_CD2.txt` — proton dE/dx (stopping power) in CD₂.
-- `data/sigma_pd_cm_190.txt` — p-d elastic differential cross-section at 190 MeV.
-- `geometry/krakow_109_8-38deg_4-71deg.root` — the test-setup geometry (TGeo).
-- `setup_and_run.sh` — the build+run recipe (env, cmake, make, run).
-- `readme_krakow_hg4.txt` — the colleague's original instructions.
+## How (the key was the environment)
+Build/run the OFFICIAL GitHub source (`HIBEAM-NNBAR/hibeam_g4`) in the **conda env `nnbar_env`**
+(its compiler + ROOT 6.32 + GEANT4 11.2.2 + VGM 5.4.0). See `setup_and_run.sh`. The earlier
+failures were entirely environment: the **system gcc-13** rejected GEANT4's `G4VAnalysisManager`
+struct/class tag (cascading 1000s of errors), and the **system ROOT 6.24** crashed at runtime
+(`libCling` mismatch). With `nnbar_env` it builds with 0 errors and runs cleanly.
+Run: `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root` → truth tree `hibeam`.
 
-## Reproduction attempt on this machine (2026-06-10) — HONEST STATUS
+## Truth output (tree `hibeam`)
+Per event: primary (PDG, Ekin, momentum) + per-detector hits TARGET / ProtoTPC / **Sci_bar**
+(the scintillator staves) with `LayerID` (depth), `PDG` (true particle), `EDep`, time, position,
+momentum. This is the **truth the data lacks**: per-stave energy AND particle identity.
 
-**Local stack available:** GEANT4 11.2.2, ROOT 6.24/02, VGM 5.4.0, Arrow/Parquet 19, cmake 3.28 —
-plus a prebuilt `hibeam_g4` binary at
-`/home/billy/nnbar/simulation/HIBEAM/Detector_simulation/hibeam_g4_build/hibeam_g4`.
+## First sim-vs-data comparison (30k events) — see `results/sim_vs_data.png`
+- **Range-telescope confirmed:** Sci_bar hits fall with depth (layer 0→7), as the data's
+  B2≫B4>B6>B8.
+- **PID truth (new!):** deuterons stop early (layers 0–1: d-fraction ≈0.38) while protons dominate
+  deep layers (layers 4–7: p-fraction ≈0.9). This is the ΔE–E proton/deuteron separation that the
+  data could only infer at sample level — now per-event truth (enables S15 PID).
+- **Quantitative gap to resolve:** the simulated penetration falls more gently than the data's
+  selected-pulse counts (data drops ~40× B2→B4; sim ~1.3× layer0→1). Expected, because the data's
+  `A>1000 ADC` selection keeps stopping/Bragg-peak pulses, and the Sci_bar `LayerID`↔B-stave
+  mapping + exact geometry/energy still need pinning. This is the next study (for the workers).
 
-**Result: the sim could NOT be cleanly built or run on this laptop — it needs the stack the
-colleague built `hibeam_g4` against (most likely LUNARC).** Two blocking incompatibilities:
-
-1. **Rebuilding `hibeam_g4-main` from source fails (~1356 compile errors).** cmake configures fine
-   (finds GEANT4, ROOT, VGM, Arrow, Parquet), but compilation collides with this machine's **very
-   new Arrow 19** and current GEANT4/ROOT headers: e.g. `operator<<` ambiguity between CLHEP and
-   `arrow::`, `arrow::Status/Result/DataType` not found in scope, `G4VAnalysisManager not declared`,
-   incomplete `TPCTrackManager`/`TString`/`G4Track`. The source was written for an **older Arrow**.
-   Porting it to Arrow 19 is a real task, not a quick fix.
-
-2. **The prebuilt binary is an older `hibeam_g4` version** that does not match the colleague's 2026
-   `krakow.config`/macro: it parses the config and **loads the Krakow geometry ("Activating geometry
-   Wasa")** but reports "unknown parsing" on several config lines and then aborts in event generation
-   (`std::logic_error: basic_string null`) — its generator predates the `/ElGen` p-d elastic
-   generator the macro uses. ROOT 6.24 also throws `TList` errors reading the geometry (writer
-   version skew).
-
-## How to actually run it (recommended)
-Run on the **matching stack** — the LUNARC environment where `hibeam_g4` was built — using
-`setup_and_run.sh` (adjust the GEANT4/ROOT/VGM/Arrow paths). That produces `output_krakow.root`
-with the truth tree. Then compare to the data-driven results (energy ordering per stave, ΔE–E
-proton/deuteron separation, penetration/topology).
-
-Alternatively, port `hibeam_g4-main` to Arrow 19 on this laptop (fix the `arrow::` namespace and
-GEANT4/CLHEP includes across `src/`), then `setup_and_run.sh` builds and runs locally.
-
-## Near-term science without the full transport (already in flight)
-The **dE/dx table is directly usable now**: ticket **S14g** anchors the energy calibration with the
-real `dedx_p_in_CD2.txt` proton stopping power (replacing the empirical power-law range model), and
-`sigma_pd_cm_190.txt` informs the p/d mix for PID (S15). These give a first simulation-input-vs-data
-comparison while the full GEANT4 transport awaits the matching stack.
+## For the workers
+The truth output is at `/home/billy/ccb-geant4/output_30k.root` (read-only, jail-visible).
+Workers should USE it (not rebuild the sim): supervised p/d PID, energy-scale validation vs the
+data-driven S14 calibration, and reconciling the penetration/selection mapping.

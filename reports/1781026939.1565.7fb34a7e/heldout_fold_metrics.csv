@@ -1,0 +1,397 @@
+benchmark_role,heldout_run,method,target,metric,value,heldout_rows
+claim,31,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5071072129427717,27871
+claim,31,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9880520971619245,27871
+claim,31,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.20307269022967228,27871
+claim,31,traditional train-run-only hand/PCA distance,peak_group,purity,0.7263105019554376,27871
+claim,31,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.41206613553609656,27871
+claim,31,ML train-run-only AE latent distance,manual_flag,purity,0.9381435901115855,27871
+claim,31,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.20809591288972773,27871
+claim,31,ML train-run-only AE latent distance,peak_group,purity,0.717735280398981,27871
+claim,32,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.510144883935647,28240
+claim,32,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9860481586402267,28240
+claim,32,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.20382250131019264,28240
+claim,32,traditional train-run-only hand/PCA distance,peak_group,purity,0.720998583569405,28240
+claim,32,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3459228175520097,28240
+claim,32,ML train-run-only AE latent distance,manual_flag,purity,0.9492917847025496,28240
+claim,32,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.20592475764768686,28240
+claim,32,ML train-run-only AE latent distance,peak_group,purity,0.7268059490084986,28240
+claim,33,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.3521057205906321,48737
+claim,33,traditional train-run-only hand/PCA distance,manual_flag,purity,0.994111250179535,48737
+claim,33,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.1696585805741787,48737
+claim,33,traditional train-run-only hand/PCA distance,peak_group,purity,0.8814863450766358,48737
+claim,33,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.10652050343017648,48737
+claim,33,ML train-run-only AE latent distance,manual_flag,purity,0.9856782321439563,48737
+claim,33,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.12410187128799081,48737
+claim,33,ML train-run-only AE latent distance,peak_group,purity,0.8816299731210374,48737
+claim,34,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.37269141741214146,34118
+claim,34,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9937862711765051,34118
+claim,34,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.14164433087988598,34118
+claim,34,traditional train-run-only hand/PCA distance,peak_group,purity,0.8488481153643238,34118
+claim,34,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.33138626648813296,34118
+claim,34,ML train-run-only AE latent distance,manual_flag,purity,0.9840846474001993,34118
+claim,34,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.12273810549666586,34118
+claim,34,ML train-run-only AE latent distance,peak_group,purity,0.8420188756668034,34118
+claim,35,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.7606068553381988,11667
+claim,35,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9755721265106712,11667
+claim,35,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.35191780227442104,11667
+claim,35,traditional train-run-only hand/PCA distance,peak_group,purity,0.7936058969743721,11667
+claim,35,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.23810559372674153,11667
+claim,35,ML train-run-only AE latent distance,manual_flag,purity,0.9328019199451444,11667
+claim,35,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.29614729265438444,11667
+claim,35,ML train-run-only AE latent distance,peak_group,purity,0.7983200479986287,11667
+claim,36,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.47850983606476055,10391
+claim,36,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9771918005966702,10391
+claim,36,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.2554921279127678,10391
+claim,36,traditional train-run-only hand/PCA distance,peak_group,purity,0.7727841401212587,10391
+claim,36,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.2296199620951554,10391
+claim,36,ML train-run-only AE latent distance,manual_flag,purity,0.9338850928688288,10391
+claim,36,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.20981912278366707,10391
+claim,36,ML train-run-only AE latent distance,peak_group,purity,0.7639303243191223,10391
+claim,37,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5133353916644351,24537
+claim,37,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9702082569181236,24537
+claim,37,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.28819347185932065,24537
+claim,37,traditional train-run-only hand/PCA distance,peak_group,purity,0.7704283327220116,24537
+claim,37,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3356009065004518,24537
+claim,37,ML train-run-only AE latent distance,manual_flag,purity,0.9282715898439092,24537
+claim,37,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.25128118360875373,24537
+claim,37,ML train-run-only AE latent distance,peak_group,purity,0.7507030199290867,24537
+claim,39,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.50640726591567,14218
+claim,39,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9641299760866507,14218
+claim,39,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.29993215329358297,14218
+claim,39,traditional train-run-only hand/PCA distance,peak_group,purity,0.7771135180756787,14218
+claim,39,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.36642375403304606,14218
+claim,39,ML train-run-only AE latent distance,manual_flag,purity,0.9438036292024194,14218
+claim,39,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.26886631936256605,14218
+claim,39,ML train-run-only AE latent distance,peak_group,purity,0.7786608524405683,14218
+claim,40,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.49421367884730566,14708
+claim,40,traditional train-run-only hand/PCA distance,manual_flag,purity,0.961381561055208,14708
+claim,40,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.3059726213200068,14708
+claim,40,traditional train-run-only hand/PCA distance,peak_group,purity,0.7871906445471852,14708
+claim,40,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.39114142988396533,14708
+claim,40,ML train-run-only AE latent distance,manual_flag,purity,0.9263666032091379,14708
+claim,40,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.36636356527691677,14708
+claim,40,ML train-run-only AE latent distance,peak_group,purity,0.7990209409844983,14708
+claim,41,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5013063676163133,16146
+claim,41,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9663693794128577,16146
+claim,41,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.29437890498738367,16146
+claim,41,traditional train-run-only hand/PCA distance,peak_group,purity,0.7813080639167596,16146
+claim,41,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3598701944955996,16146
+claim,41,ML train-run-only AE latent distance,manual_flag,purity,0.9204137247615508,16146
+claim,41,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.26226121735604113,16146
+claim,41,ML train-run-only AE latent distance,peak_group,purity,0.7785829307568438,16146
+claim,42,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5135755671738182,18112
+claim,42,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9684187279151943,18112
+claim,42,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.2692330994430712,18112
+claim,42,traditional train-run-only hand/PCA distance,peak_group,purity,0.7565150176678446,18112
+claim,42,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3327273184647053,18112
+claim,42,ML train-run-only AE latent distance,manual_flag,purity,0.9118264134275619,18112
+claim,42,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.28719619583817,18112
+claim,42,ML train-run-only AE latent distance,peak_group,purity,0.7697106890459364,18112
+claim,44,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5241598733584132,2038
+claim,44,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9739941118743867,2038
+claim,44,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.3128536995387056,2038
+claim,44,traditional train-run-only hand/PCA distance,peak_group,purity,0.802747791952895,2038
+claim,44,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.31026375911497095,2038
+claim,44,ML train-run-only AE latent distance,manual_flag,purity,0.9249263984298332,2038
+claim,44,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.24742525966796017,2038
+claim,44,ML train-run-only AE latent distance,peak_group,purity,0.7850834151128557,2038
+claim,45,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5194571926636359,24333
+claim,45,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9684790202605515,24333
+claim,45,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.29716052187803654,24333
+claim,45,traditional train-run-only hand/PCA distance,peak_group,purity,0.7673118809846711,24333
+claim,45,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.41175632632452996,24333
+claim,45,ML train-run-only AE latent distance,manual_flag,purity,0.9332182632638804,24333
+claim,45,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.2908903803843791,24333
+claim,45,ML train-run-only AE latent distance,peak_group,purity,0.7627090782065508,24333
+claim,46,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.46451702834633013,687
+claim,46,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9941775836972343,687
+claim,46,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.26785254465058844,687
+claim,46,traditional train-run-only hand/PCA distance,peak_group,purity,0.7656477438136827,687
+claim,46,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3486907125407966,687
+claim,46,ML train-run-only AE latent distance,manual_flag,purity,0.9650655021834061,687
+claim,46,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.26140744710712543,687
+claim,46,ML train-run-only AE latent distance,peak_group,purity,0.7729257641921398,687
+claim,47,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.43863947319958163,5276
+claim,47,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9895754359363154,5276
+claim,47,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.23266864358932612,5276
+claim,47,traditional train-run-only hand/PCA distance,peak_group,purity,0.7697119029567855,5276
+claim,47,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.231548544013747,5276
+claim,47,ML train-run-only AE latent distance,manual_flag,purity,0.9584912812736922,5276
+claim,47,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.24272562586874222,5276
+claim,47,ML train-run-only AE latent distance,peak_group,purity,0.7676269901440486,5276
+claim,48,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.49900614619789185,14000
+claim,48,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9703571428571428,14000
+claim,48,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.29459136530797736,14000
+claim,48,traditional train-run-only hand/PCA distance,peak_group,purity,0.7922142857142858,14000
+claim,48,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.2491595596256357,14000
+claim,48,ML train-run-only AE latent distance,manual_flag,purity,0.916,14000
+claim,48,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.18599210133284705,14000
+claim,48,ML train-run-only AE latent distance,peak_group,purity,0.7656428571428572,14000
+claim,49,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5029784614061008,14815
+claim,49,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9694903813702329,14815
+claim,49,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.29150610534552207,14815
+claim,49,traditional train-run-only hand/PCA distance,peak_group,purity,0.7920350995612555,14815
+claim,49,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3594224801468932,14815
+claim,49,ML train-run-only AE latent distance,manual_flag,purity,0.9380357745528181,14815
+claim,49,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.3081366803658754,14815
+claim,49,ML train-run-only AE latent distance,peak_group,purity,0.8178872764090449,14815
+claim,50,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.4769969606302117,35217
+claim,50,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9903739671181532,35217
+claim,50,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.16870858044983267,35217
+claim,50,traditional train-run-only hand/PCA distance,peak_group,purity,0.7349859442882699,35217
+claim,50,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.15940568242283645,35217
+claim,50,ML train-run-only AE latent distance,manual_flag,purity,0.9545390010506289,35217
+claim,50,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.17088805638423432,35217
+claim,50,ML train-run-only AE latent distance,peak_group,purity,0.7301303347814976,35217
+claim,51,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.4298697694097033,14740
+claim,51,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9776797829036635,14740
+claim,51,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.20118323401343002,14740
+claim,51,traditional train-run-only hand/PCA distance,peak_group,purity,0.7301899592944369,14740
+claim,51,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3365504560661634,14740
+claim,51,ML train-run-only AE latent distance,manual_flag,purity,0.9694708276797829,14740
+claim,51,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.17083475486731706,14740
+claim,51,ML train-run-only AE latent distance,peak_group,purity,0.7330393487109905,14740
+claim,52,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.482706915625737,7152
+claim,52,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9867170022371364,7152
+claim,52,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.1944227787042195,7152
+claim,52,traditional train-run-only hand/PCA distance,peak_group,purity,0.7321029082774049,7152
+claim,52,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.2298332217322574,7152
+claim,52,ML train-run-only AE latent distance,manual_flag,purity,0.9526006711409396,7152
+claim,52,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.30559624420616277,7152
+claim,52,ML train-run-only AE latent distance,peak_group,purity,0.7309843400447428,7152
+claim,53,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.41475156262749147,32200
+claim,53,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9895962732919255,32200
+claim,53,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.19889140511927114,32200
+claim,53,traditional train-run-only hand/PCA distance,peak_group,purity,0.8091304347826087,32200
+claim,53,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.2569054309562834,32200
+claim,53,ML train-run-only AE latent distance,manual_flag,purity,0.9814596273291926,32200
+claim,53,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.18121916578618297,32200
+claim,53,ML train-run-only AE latent distance,peak_group,purity,0.8151242236024845,32200
+claim,54,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.4081590515856169,30440
+claim,54,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9904402102496714,30440
+claim,54,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.19015477999005215,30440
+claim,54,traditional train-run-only hand/PCA distance,peak_group,purity,0.810676741130092,30440
+claim,54,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.1939531634165217,30440
+claim,54,ML train-run-only AE latent distance,manual_flag,purity,0.9774638633377135,30440
+claim,54,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.12331683182655175,30440
+claim,54,ML train-run-only AE latent distance,peak_group,purity,0.807095926412615,30440
+claim,55,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.4856091748647877,17387
+claim,55,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9875194110542359,17387
+claim,55,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.2222024279457137,17387
+claim,55,traditional train-run-only hand/PCA distance,peak_group,purity,0.737677575199862,17387
+claim,55,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.29059759410177777,17387
+claim,55,ML train-run-only AE latent distance,manual_flag,purity,0.957842065911313,17387
+claim,55,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.18729062544523412,17387
+claim,55,ML train-run-only AE latent distance,peak_group,purity,0.7319836659573244,17387
+claim,56,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.47933419826636925,40148
+claim,56,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9898625087177444,40148
+claim,56,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.17018030724061756,40148
+claim,56,traditional train-run-only hand/PCA distance,peak_group,purity,0.701952774733486,40148
+claim,56,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.43405622425223256,40148
+claim,56,ML train-run-only AE latent distance,manual_flag,purity,0.9688651987645711,40148
+claim,56,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.18088075168623355,40148
+claim,56,ML train-run-only AE latent distance,peak_group,purity,0.6931353990236127,40148
+claim,57,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.5050872856477862,13833
+claim,57,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9697101134967108,13833
+claim,57,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.3010686968924139,13833
+claim,57,traditional train-run-only hand/PCA distance,peak_group,purity,0.7990313019590833,13833
+claim,57,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.29026211075991604,13833
+claim,57,ML train-run-only AE latent distance,manual_flag,purity,0.9296609556856792,13833
+claim,57,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.35193561389279454,13833
+claim,57,ML train-run-only AE latent distance,peak_group,purity,0.8525988578038025,13833
+claim,58,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.31351930406399,16781
+claim,58,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9858768845718372,16781
+claim,58,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.21543946353391608,16781
+claim,58,traditional train-run-only hand/PCA distance,peak_group,purity,0.9588820690066147,16781
+claim,58,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.241084727700859,16781
+claim,58,ML train-run-only AE latent distance,manual_flag,purity,0.9743757821345569,16781
+claim,58,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.278653038267853,16781
+claim,58,ML train-run-only AE latent distance,peak_group,purity,0.9633514093319826,16781
+claim,59,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.6880011584032352,21377
+claim,59,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9558403892033493,21377
+claim,59,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.3346625187923724,21377
+claim,59,traditional train-run-only hand/PCA distance,peak_group,purity,0.8128362258502129,21377
+claim,59,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.35349158682063403,21377
+claim,59,ML train-run-only AE latent distance,manual_flag,purity,0.9378303784441222,21377
+claim,59,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.42357161673893123,21377
+claim,59,ML train-run-only AE latent distance,peak_group,purity,0.8715909622491462,21377
+claim,60,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.45510493447041506,17029
+claim,60,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9573081214398966,17029
+claim,60,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.28773097205447434,17029
+claim,60,traditional train-run-only hand/PCA distance,peak_group,purity,0.7939397498385108,17029
+claim,60,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.3753810027440909,17029
+claim,60,ML train-run-only AE latent distance,manual_flag,purity,0.9463855775441893,17029
+claim,60,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.3700722397544227,17029
+claim,60,ML train-run-only AE latent distance,peak_group,purity,0.8338129073932703,17029
+claim,61,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.42757479551004324,18965
+claim,61,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9584497759029792,18965
+claim,61,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.24709693217496143,18965
+claim,61,traditional train-run-only hand/PCA distance,peak_group,purity,0.7917215924070656,18965
+claim,61,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.27489301661607235,18965
+claim,61,ML train-run-only AE latent distance,manual_flag,purity,0.9185868705510151,18965
+claim,61,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.29925871752084865,18965
+claim,61,ML train-run-only AE latent distance,peak_group,purity,0.8166622726074347,18965
+claim,62,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.44514655689681226,19089
+claim,62,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9606055843679606,19089
+claim,62,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.263915011269815,19089
+claim,62,traditional train-run-only hand/PCA distance,peak_group,purity,0.8097333542878097,19089
+claim,62,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.27734148013947396,19089
+claim,62,ML train-run-only AE latent distance,manual_flag,purity,0.941956100371942,19089
+claim,62,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.2333434763212178,19089
+claim,62,ML train-run-only AE latent distance,peak_group,purity,0.8108334642988109,19089
+claim,63,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.4147224352546251,18817
+claim,63,traditional train-run-only hand/PCA distance,manual_flag,purity,0.967741935483871,18817
+claim,63,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.23603588703465156,18817
+claim,63,traditional train-run-only hand/PCA distance,peak_group,purity,0.8572567359302758,18817
+claim,63,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.23066586397805178,18817
+claim,63,ML train-run-only AE latent distance,manual_flag,purity,0.9321889780517617,18817
+claim,63,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.21770622868642758,18817
+claim,63,ML train-run-only AE latent distance,peak_group,purity,0.8476377743529787,18817
+claim,64,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.4031154256800185,14630
+claim,64,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9595352016404648,14630
+claim,64,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.25774577239263696,14630
+claim,64,traditional train-run-only hand/PCA distance,peak_group,purity,0.8613123718386876,14630
+claim,64,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.24589741050393527,14630
+claim,64,ML train-run-only AE latent distance,manual_flag,purity,0.9252221462747778,14630
+claim,64,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.2529635977793773,14630
+claim,64,ML train-run-only AE latent distance,peak_group,purity,0.8475051264524949,14630
+claim,65,traditional train-run-only hand/PCA distance,manual_flag,adjusted_mutual_info,0.4186386045444634,13038
+claim,65,traditional train-run-only hand/PCA distance,manual_flag,purity,0.9697039423224421,13038
+claim,65,traditional train-run-only hand/PCA distance,peak_group,adjusted_mutual_info,0.28817405533861434,13038
+claim,65,traditional train-run-only hand/PCA distance,peak_group,purity,0.8859487651480289,13038
+claim,65,ML train-run-only AE latent distance,manual_flag,adjusted_mutual_info,0.4419181756201442,13038
+claim,65,ML train-run-only AE latent distance,manual_flag,purity,0.9657922994324283,13038
+claim,65,ML train-run-only AE latent distance,peak_group,adjusted_mutual_info,0.32334998126430436,13038
+claim,65,ML train-run-only AE latent distance,peak_group,purity,0.8910875901211842,13038
+forbidden_all_data_guard,31,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4198704154408856,27871
+forbidden_all_data_guard,31,forbidden all-data AE latent distance,manual_flag,purity,0.9705069785798859,27871
+forbidden_all_data_guard,31,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.18119294006466516,27871
+forbidden_all_data_guard,31,forbidden all-data AE latent distance,peak_group,purity,0.7216820350902372,27871
+forbidden_all_data_guard,32,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.42437931268688917,28240
+forbidden_all_data_guard,32,forbidden all-data AE latent distance,manual_flag,purity,0.9683073654390935,28240
+forbidden_all_data_guard,32,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.18197394204327272,28240
+forbidden_all_data_guard,32,forbidden all-data AE latent distance,peak_group,purity,0.7201133144475921,28240
+forbidden_all_data_guard,33,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.19447562034033286,48737
+forbidden_all_data_guard,33,forbidden all-data AE latent distance,manual_flag,purity,0.9908898783265281,48737
+forbidden_all_data_guard,33,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.12854547989875997,48737
+forbidden_all_data_guard,33,forbidden all-data AE latent distance,peak_group,purity,0.8824096682192174,48737
+forbidden_all_data_guard,34,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.26693448845986745,34118
+forbidden_all_data_guard,34,forbidden all-data AE latent distance,manual_flag,purity,0.9902104460988335,34118
+forbidden_all_data_guard,34,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.12281333192614954,34118
+forbidden_all_data_guard,34,forbidden all-data AE latent distance,peak_group,purity,0.8499032768626531,34118
+forbidden_all_data_guard,35,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.3884615668266764,11667
+forbidden_all_data_guard,35,forbidden all-data AE latent distance,manual_flag,purity,0.9579154881289106,11667
+forbidden_all_data_guard,35,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2536326624317841,11667
+forbidden_all_data_guard,35,forbidden all-data AE latent distance,peak_group,purity,0.795920116568098,11667
+forbidden_all_data_guard,36,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.40391485441521724,10391
+forbidden_all_data_guard,36,forbidden all-data AE latent distance,manual_flag,purity,0.958233086324704,10391
+forbidden_all_data_guard,36,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2338526108851088,10391
+forbidden_all_data_guard,36,forbidden all-data AE latent distance,peak_group,purity,0.7692233663747474,10391
+forbidden_all_data_guard,37,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4220486692307936,24537
+forbidden_all_data_guard,37,forbidden all-data AE latent distance,manual_flag,purity,0.9425357623181319,24537
+forbidden_all_data_guard,37,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2709783176700682,24537
+forbidden_all_data_guard,37,forbidden all-data AE latent distance,peak_group,purity,0.7673717243346783,24537
+forbidden_all_data_guard,39,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4214435786355544,14218
+forbidden_all_data_guard,39,forbidden all-data AE latent distance,manual_flag,purity,0.9390209593473062,14218
+forbidden_all_data_guard,39,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2807777312273149,14218
+forbidden_all_data_guard,39,forbidden all-data AE latent distance,peak_group,purity,0.7757771838514559,14218
+forbidden_all_data_guard,40,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.41305129235962834,14708
+forbidden_all_data_guard,40,forbidden all-data AE latent distance,manual_flag,purity,0.937720968180582,14708
+forbidden_all_data_guard,40,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.29194650951157797,14708
+forbidden_all_data_guard,40,forbidden all-data AE latent distance,peak_group,purity,0.788618438944792,14708
+forbidden_all_data_guard,41,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4154787733312324,16146
+forbidden_all_data_guard,41,forbidden all-data AE latent distance,manual_flag,purity,0.9433915520872043,16146
+forbidden_all_data_guard,41,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.28501008466000993,16146
+forbidden_all_data_guard,41,forbidden all-data AE latent distance,peak_group,purity,0.7833519137866964,16146
+forbidden_all_data_guard,42,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4252644874813092,18112
+forbidden_all_data_guard,42,forbidden all-data AE latent distance,manual_flag,purity,0.9453953180212014,18112
+forbidden_all_data_guard,42,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.25148149458002333,18112
+forbidden_all_data_guard,42,forbidden all-data AE latent distance,peak_group,purity,0.7530366607773852,18112
+forbidden_all_data_guard,44,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4162203716995641,2038
+forbidden_all_data_guard,44,forbidden all-data AE latent distance,manual_flag,purity,0.9371933267909716,2038
+forbidden_all_data_guard,44,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.30646348121829325,2038
+forbidden_all_data_guard,44,forbidden all-data AE latent distance,peak_group,purity,0.7968596663395485,2038
+forbidden_all_data_guard,45,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.42877062802065213,24333
+forbidden_all_data_guard,45,forbidden all-data AE latent distance,manual_flag,purity,0.9398758887108043,24333
+forbidden_all_data_guard,45,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2677848187088985,24333
+forbidden_all_data_guard,45,forbidden all-data AE latent distance,peak_group,purity,0.7580240825216784,24333
+forbidden_all_data_guard,46,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.38794258407126614,687
+forbidden_all_data_guard,46,forbidden all-data AE latent distance,manual_flag,purity,0.9796215429403202,687
+forbidden_all_data_guard,46,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.1761822629768238,687
+forbidden_all_data_guard,46,forbidden all-data AE latent distance,peak_group,purity,0.7641921397379913,687
+forbidden_all_data_guard,47,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.38533057627007916,5276
+forbidden_all_data_guard,47,forbidden all-data AE latent distance,manual_flag,purity,0.9761182714177407,5276
+forbidden_all_data_guard,47,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.1593353712691361,5276
+forbidden_all_data_guard,47,forbidden all-data AE latent distance,peak_group,purity,0.763267626990144,5276
+forbidden_all_data_guard,48,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4169546161102969,14000
+forbidden_all_data_guard,48,forbidden all-data AE latent distance,manual_flag,purity,0.9454285714285714,14000
+forbidden_all_data_guard,48,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2831772723884974,14000
+forbidden_all_data_guard,48,forbidden all-data AE latent distance,peak_group,purity,0.7916428571428571,14000
+forbidden_all_data_guard,49,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.41406911426291726,14815
+forbidden_all_data_guard,49,forbidden all-data AE latent distance,manual_flag,purity,0.9446506918663516,14815
+forbidden_all_data_guard,49,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2815600112220592,14815
+forbidden_all_data_guard,49,forbidden all-data AE latent distance,peak_group,purity,0.7931825852176848,14815
+forbidden_all_data_guard,50,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4103946236285591,35217
+forbidden_all_data_guard,50,forbidden all-data AE latent distance,manual_flag,purity,0.978504699434932,35217
+forbidden_all_data_guard,50,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.15341840863881143,35217
+forbidden_all_data_guard,50,forbidden all-data AE latent distance,peak_group,purity,0.7316068943975921,35217
+forbidden_all_data_guard,51,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.40308004398942704,14740
+forbidden_all_data_guard,51,forbidden all-data AE latent distance,manual_flag,purity,0.9726594301221166,14740
+forbidden_all_data_guard,51,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.19197008589454384,14740
+forbidden_all_data_guard,51,forbidden all-data AE latent distance,peak_group,purity,0.7312075983717775,14740
+forbidden_all_data_guard,52,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4037527113589368,7152
+forbidden_all_data_guard,52,forbidden all-data AE latent distance,manual_flag,purity,0.9739932885906041,7152
+forbidden_all_data_guard,52,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.18041142533898655,7152
+forbidden_all_data_guard,52,forbidden all-data AE latent distance,peak_group,purity,0.7340604026845637,7152
+forbidden_all_data_guard,53,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.3052386007155391,32200
+forbidden_all_data_guard,53,forbidden all-data AE latent distance,manual_flag,purity,0.9841925465838509,32200
+forbidden_all_data_guard,53,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.17390251305553378,32200
+forbidden_all_data_guard,53,forbidden all-data AE latent distance,peak_group,purity,0.8081677018633541,32200
+forbidden_all_data_guard,54,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.2897688430386852,30440
+forbidden_all_data_guard,54,forbidden all-data AE latent distance,manual_flag,purity,0.9840341655716163,30440
+forbidden_all_data_guard,54,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.1651161654326497,30440
+forbidden_all_data_guard,54,forbidden all-data AE latent distance,peak_group,purity,0.8105124835742444,30440
+forbidden_all_data_guard,55,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.39022855218960145,17387
+forbidden_all_data_guard,55,forbidden all-data AE latent distance,manual_flag,purity,0.9717029964916317,17387
+forbidden_all_data_guard,55,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.19726394776235753,17387
+forbidden_all_data_guard,55,forbidden all-data AE latent distance,peak_group,purity,0.7303732673836775,17387
+forbidden_all_data_guard,56,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.3951311494239402,40148
+forbidden_all_data_guard,56,forbidden all-data AE latent distance,manual_flag,purity,0.975689947195377,40148
+forbidden_all_data_guard,56,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.15114167026380101,40148
+forbidden_all_data_guard,56,forbidden all-data AE latent distance,peak_group,purity,0.6987147554050015,40148
+forbidden_all_data_guard,57,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4229476439778481,13833
+forbidden_all_data_guard,57,forbidden all-data AE latent distance,manual_flag,purity,0.9405045904720596,13833
+forbidden_all_data_guard,57,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.294025131452034,13833
+forbidden_all_data_guard,57,forbidden all-data AE latent distance,peak_group,purity,0.7979469384804453,13833
+forbidden_all_data_guard,58,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.2805834216535444,16781
+forbidden_all_data_guard,58,forbidden all-data AE latent distance,manual_flag,purity,0.9789643048686014,16781
+forbidden_all_data_guard,58,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.24731124236116062,16781
+forbidden_all_data_guard,58,forbidden all-data AE latent distance,peak_group,purity,0.9621595852452178,16781
+forbidden_all_data_guard,59,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.37201271601579855,21377
+forbidden_all_data_guard,59,forbidden all-data AE latent distance,manual_flag,purity,0.9430696543013519,21377
+forbidden_all_data_guard,59,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.27061803079780555,21377
+forbidden_all_data_guard,59,forbidden all-data AE latent distance,peak_group,purity,0.8249520512700566,21377
+forbidden_all_data_guard,60,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.4114065812638663,17029
+forbidden_all_data_guard,60,forbidden all-data AE latent distance,manual_flag,purity,0.9406894121792236,17029
+forbidden_all_data_guard,60,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.3204081634525115,17029
+forbidden_all_data_guard,60,forbidden all-data AE latent distance,peak_group,purity,0.8158435609842034,17029
+forbidden_all_data_guard,61,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.38289276891950946,18965
+forbidden_all_data_guard,61,forbidden all-data AE latent distance,manual_flag,purity,0.9386237806485631,18965
+forbidden_all_data_guard,61,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.29216884899395096,18965
+forbidden_all_data_guard,61,forbidden all-data AE latent distance,peak_group,purity,0.8130239915634063,18965
+forbidden_all_data_guard,62,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.3887827041129134,19089
+forbidden_all_data_guard,62,forbidden all-data AE latent distance,manual_flag,purity,0.9471423332809471,19089
+forbidden_all_data_guard,62,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2967373871876129,19089
+forbidden_all_data_guard,62,forbidden all-data AE latent distance,peak_group,purity,0.8313688511708314,19089
+forbidden_all_data_guard,63,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.3581730103607478,18817
+forbidden_all_data_guard,63,forbidden all-data AE latent distance,manual_flag,purity,0.9504703193920391,18817
+forbidden_all_data_guard,63,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.2678394763146443,18817
+forbidden_all_data_guard,63,forbidden all-data AE latent distance,peak_group,purity,0.8591167561247808,18817
+forbidden_all_data_guard,64,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.3782554663037467,14630
+forbidden_all_data_guard,64,forbidden all-data AE latent distance,manual_flag,purity,0.9512645249487355,14630
+forbidden_all_data_guard,64,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.3011563965394752,14630
+forbidden_all_data_guard,64,forbidden all-data AE latent distance,peak_group,purity,0.8720437457279563,14630
+forbidden_all_data_guard,65,forbidden all-data AE latent distance,manual_flag,adjusted_mutual_info,0.391400767518088,13038
+forbidden_all_data_guard,65,forbidden all-data AE latent distance,manual_flag,purity,0.9556680472465102,13038
+forbidden_all_data_guard,65,forbidden all-data AE latent distance,peak_group,adjusted_mutual_info,0.32464282977546044,13038
+forbidden_all_data_guard,65,forbidden all-data AE latent distance,peak_group,purity,0.8880963337935266,13038

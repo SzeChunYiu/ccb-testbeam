@@ -1,0 +1,8 @@
+check,value,pass,note
+artifact_key_duplicate_rows,0.0,True,key is run/event_index/event_id/stave_index
+artifact_missing_distance_or_latent_values,0.0,True,every selected pulse should be filled by exactly one heldout fold
+fold_train_heldout_run_overlap_max,0.0,True,each fold excludes the heldout run before fitting PCA/AE/KMeans
+train_test_rounded_waveform_hash_overlap_max,0.0,True,rounded normalized waveform hash at 1e-4 precision per fold
+forbidden_all_data_minus_trainonly_manual_ami,0.079884761888182,False,large positive value would indicate representation leakage optimism
+shuffled_manual_label_ami_abs_max,0.006186053566196762,True,heldout-label shuffle null using ML clusters
+all_data_latent_used_in_published_artifact,0.0,True,"forbidden latent appears only in guard metrics, not artifact columns"

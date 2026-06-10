@@ -1,0 +1,22 @@
+heldout_run,model,policy,choice
+58,traditional_analytic_timewalk,none,"amp_only, alpha=100.0"
+58,ridge,real_stave_cv,alpha=100.0
+58,gradient_boosted_trees,real_stave_cv,"learning_rate=0.03, max_leaf_nodes=31"
+59,traditional_analytic_timewalk,none,"amp_only, alpha=100.0"
+59,ridge,real_stave_cv,alpha=100.0
+59,gradient_boosted_trees,real_stave_cv,"learning_rate=0.03, max_leaf_nodes=31"
+60,traditional_analytic_timewalk,none,"amp_only, alpha=100.0"
+60,ridge,real_stave_cv,alpha=100.0
+60,gradient_boosted_trees,real_stave_cv,"learning_rate=0.03, max_leaf_nodes=31"
+61,traditional_analytic_timewalk,none,"amp_only, alpha=100.0"
+61,ridge,real_stave_cv,alpha=100.0
+61,gradient_boosted_trees,real_stave_cv,"learning_rate=0.03, max_leaf_nodes=31"
+62,traditional_analytic_timewalk,none,"amp_only, alpha=100.0"
+62,ridge,real_stave_cv,alpha=100.0
+62,gradient_boosted_trees,real_stave_cv,"learning_rate=0.03, max_leaf_nodes=31"
+63,traditional_analytic_timewalk,none,"amp_only, alpha=100.0"
+63,ridge,real_stave_cv,alpha=100.0
+63,gradient_boosted_trees,real_stave_cv,"learning_rate=0.03, max_leaf_nodes=31"
+65,traditional_analytic_timewalk,none,"amp_only, alpha=100.0"
+65,ridge,real_stave_cv,alpha=100.0
+65,gradient_boosted_trees,real_stave_cv,"learning_rate=0.03, max_leaf_nodes=31"

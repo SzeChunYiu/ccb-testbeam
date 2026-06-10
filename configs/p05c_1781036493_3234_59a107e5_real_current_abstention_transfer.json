@@ -1,0 +1,19 @@
+{
+  "study": "P05c",
+  "ticket": "1781036493.3234.59a107e5",
+  "worker": "testbeam-laptop-4",
+  "title": "real-current abstention transfer from P05b to S10e/S11b candidate windows",
+  "source_script": "scripts/s11b_real_high_current_two_pulse_validation.py",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781036493.3234.59a107e5",
+  "random_seed": 506493,
+  "sample_cap_per_run_stratum": 90,
+  "synthetic_train_per_fold": 1600,
+  "synthetic_cal_per_fold": 500,
+  "bootstrap_samples": 500,
+  "target_bad_proxy_rate": 0.15,
+  "bad_fraction_error": 0.12,
+  "traditional_min_score": 0.015,
+  "traditional_min_secondary_fraction": 0.05,
+  "required_methods": ["traditional", "ridge", "gradient_boosted_trees", "mlp", "1d_cnn", "consensus_abstention_ensemble"]
+}

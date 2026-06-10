@@ -1,0 +1,66 @@
+{
+  "study": "P03f",
+  "ticket": "1781034869.1093.1ffd40cb",
+  "worker": "testbeam-laptop-3",
+  "title": "B4-B6 pair asymmetry closure",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "primary_metric": "B4-B6 closure_score_ns = sqrt(median_residual_ns^2 + sigma68_ns^2), pooled with run-block bootstrap",
+  "winner": {
+    "method": "geometry_offset_median",
+    "closure_score_ns": 1.2499999999999964,
+    "closure_ci": [
+      0.9999999999999964,
+      1.2500000000000036
+    ],
+    "median_ns": 0.0,
+    "sigma68_ns": 1.2499999999999964
+  },
+  "baseline": {
+    "template_phase_nominal_closure_score_ns": 4.684416769785856,
+    "template_phase_nominal_median_ns": -4.524984349437304,
+    "template_phase_nominal_sigma68_ns": 1.211724849294761
+  },
+  "traditional": {
+    "geometry_offset_median_closure_score_ns": 1.2499999999999964,
+    "template_phase_bias_table_closure_score_ns": 1.2499999999999964
+  },
+  "ml": {
+    "best_ml_method": "ridge_waveform",
+    "best_ml_closure_score_ns": 2.357203599174525,
+    "ridge_waveform_closure_score_ns": 2.357203599174525,
+    "gradient_boosted_trees_closure_score_ns": 2.394457222631027,
+    "mlp_waveform_closure_score_ns": 4.678759797260265,
+    "cnn_1d_pair_closure_score_ns": 2.507712610109517,
+    "sample_attention_closure_score_ns": 2.4869649484167042
+  },
+  "diagnosis": {
+    "mean_template_shift_diff_corr": 0.9999999999999999,
+    "mean_log_amp_diff_corr": 0.11261865182805794,
+    "mean_waveform_sse_diff_corr": -0.08647875094372175
+  },
+  "leakage": {
+    "max_event_id_overlap": 0,
+    "feature_audit": "per-stave normalized waveform, pulse-shape scalars, and stave one-hot; no run id, event id, event order, other-stave waveform, or held-out target"
+  },
+  "verdict": "traditional_offset_or_template_bias_wins",
+  "interpretation": "The constant geometry offset arm is the direct TOF-shift test.  If it removes most of the median but a waveform method wins the closure score, the residual B4-B6 signature is not just a fixed geometry offset; it contains transferable waveform-calibration structure.  If the geometry or template table wins, the evidence favors a low-dimensional offset/template-bias explanation over a learned per-stave waveform mismatch.",
+  "input_sha256": "0dae9e1335082f73411ee570e58622e0b7ecb6211f6be3010eb724af15a937c4",
+  "git_commit": "3068cf320cf2a389b91e415721b565d83d491123",
+  "runtime_sec": 279.07,
+  "next_tickets": [
+    {
+      "title": "P03k: B-stack geometry-offset matrix from run-held-out pair closures",
+      "body": "Fit a single train-run B2/B4/B6/B8 stave-position offset matrix from all raw ROOT pair residuals, then test on held-out runs whether one geometry model closes every pair better than per-stave ridge, gradient-boosted trees, MLP, 1D-CNN, and sample-attention corrections with run-block bootstrap CIs. This would confirm or falsify the P03f interpretation that B4-B6 is mostly a fixed geometry/TOF offset rather than a waveform-calibration mismatch."
+    }
+  ]
+}

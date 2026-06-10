@@ -1,0 +1,124 @@
+{
+  "study": "S14c",
+  "ticket_id": "1781026825.1563.18b74737",
+  "worker": "testbeam-laptop-1",
+  "raw_reproduction_first": {
+    "p04_duplicate_charge": {
+      "expected_selected_pulses": 640737,
+      "reproduced_selected_pulses": 640737,
+      "delta": 0,
+      "pass": true,
+      "n_valid_rows": 640482,
+      "heldout_runs": [
+        57,
+        65
+      ],
+      "benchmark": [
+        {
+          "target": "duplicate_odd_charge",
+          "method": "integral_calibrated",
+          "subset": "p04_heldout_runs_57_65",
+          "n": 26857,
+          "bias_median_frac": -0.09118454757895778,
+          "res68_abs_frac": 0.19541229087486034,
+          "full_rms_frac": 1.6637384425713841,
+          "within_10pct": 0.40332129426220353
+        },
+        {
+          "target": "duplicate_odd_charge",
+          "method": "ml_hgb",
+          "subset": "p04_heldout_runs_57_65",
+          "n": 26857,
+          "bias_median_frac": 0.0005985509781717457,
+          "res68_abs_frac": 0.015071920234387479,
+          "full_rms_frac": 0.04677350198446196,
+          "within_10pct": 0.9692445172580705
+        }
+      ],
+      "reference_charge_res68": {
+        "integral_calibrated": 0.1954122909,
+        "ml_hgb": 0.0150719202
+      }
+    },
+    "p04b_external_ml_res68": 0.2131744652334116,
+    "expected_p04b_external_ml_res68": 0.2131744652334116,
+    "delta": 0.0,
+    "pass": true,
+    "p04b_external_leakage": {
+      "split": "leave-one-run-out; each prediction is from a model trained on other runs",
+      "features_exclude": [
+        "run",
+        "eventno",
+        "evt",
+        "downstream_charge",
+        "B4_charge",
+        "B6_charge",
+        "B8_charge"
+      ],
+      "run_overlap_train_heldout": 0,
+      "shuffled_external_ml_res68": 0.2755973875342627,
+      "duplicate_b2_loro_res68": 0.021445355210364402
+    }
+  },
+  "p04b_reproduction_first": {
+    "reproduced_external_ml_res68": 0.2131744652334116,
+    "expected_external_ml_res68": 0.2131744652334116,
+    "delta": 0.0
+  },
+  "split": "leave-one-run-out by run",
+  "bootstrap": {
+    "unit": "held-out run block",
+    "reps": 1000
+  },
+  "n_b2_valid_rows": 88200,
+  "best_charge_proxy": {
+    "target": "B4B6",
+    "gate": "all_three",
+    "method": "ml_hgb",
+    "split": "leave_one_run_out",
+    "n": 3774,
+    "bias_median_frac": -0.004076414,
+    "res68_abs_frac": 0.2011515996,
+    "full_rms_frac": 0.2718978978,
+    "within_10pct": 0.3791732909,
+    "within_25pct": 0.768945416,
+    "bias_ci95": [
+      -0.051888683,
+      0.0484077015
+    ],
+    "res68_ci95": [
+      0.1909403978,
+      0.2237773529
+    ],
+    "full_rms_ci95": [
+      0.2376287292,
+      0.3178216065
+    ]
+  },
+  "best_energy_proxy": {
+    "target": "B4B6",
+    "gate": "all_three",
+    "charge_method": "ml_hgb",
+    "s14b_energy_method": "ml_monotonic_hgb",
+    "n_charge_rows": 3774,
+    "charge_res68_abs_frac": 0.2011515996,
+    "charge_res68_ci95": [
+      0.1909403978,
+      0.2237773529
+    ],
+    "model_energy_proxy_res68": 0.0250078102,
+    "charge_to_energy_sensitivity": 0.8764697109,
+    "charge_propagated_energy_res68": 0.1763032844,
+    "combined_energy_proxy_res68": 0.1780680731,
+    "combined_energy_proxy_res68_ci95": [
+      0.1692116316,
+      0.1977219378
+    ],
+    "acceptance_res68": 0.1,
+    "acceptable_for_s14_preflight": false
+  },
+  "acceptance_res68": 0.1,
+  "success": false,
+  "finding": "No downstream proxy/topology row reaches the 0.10 S14 threshold. The best charge row is B4B6 with gate all_three and method ml_hgb, res68 0.2012; after S14b charge propagation the best combined row is 0.1781 for B4B6 / all_three / ml_hgb into ml_monotonic_hgb. The all-three B4+B6+B8 baseline reproduces P04b at 0.2132. Single-stave and relaxed gates add support but do not provide a run-held-out charge proxy below the roughly 0.11 res68 needed for a 0.10 combined range-energy preflight; the limitation is topology-conditioned downstream charge variability, not a hidden B2 waveform model failure.",
+  "runtime_sec": 147.5
+}

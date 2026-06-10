@@ -1,0 +1,8 @@
+check,value,pass
+p04b_external_ml_reproduced_from_raw_root,0.213174465233,True
+p04b_expected_delta,0,True
+train_heldout_run_overlap,0,True
+features_exclude_run_event_and_downstream_targets,true,True
+best_real_charge_res68,0.201152,True
+best_shuffled_charge_res68,0.271198,True
+best_real_looks_too_good,False,True

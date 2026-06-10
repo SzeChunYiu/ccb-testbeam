@@ -1,0 +1,141 @@
+{
+  "study": "S18g",
+  "ticket": "1781033800.1275.6fd1379d",
+  "worker": "testbeam-laptop-3",
+  "title": "A-stack percentile68 gate sensitivity stress test",
+  "reproduced": true,
+  "primary_gate_label": "cfd0.20_cut1000",
+  "primary_gate": {
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "raw_standard_gate": {
+    "pool": "cfd0.20_cut1000",
+    "method": "raw_percentile68",
+    "n_pairs": 127,
+    "median_ns": 3.724376296008302,
+    "robust_width_ns": 1.6099706543209522,
+    "full_rms_ns": 1.4992425001417917,
+    "within_abs_2ns": 0.8267716535433071,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 1.285086791167178,
+    "robust_ci_high_ns": 1.7104919167734665,
+    "core_sigma_ns": 1.8749892887759023,
+    "core_sigma_err_ns": 0.4369641867809996,
+    "core_mean_ns": -0.05268347755626,
+    "chi2_ndf": 2.0220707908458113,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "winner": {
+    "pool": "cfd0.20_cut1000",
+    "method": "gated_residual_cnn_new",
+    "n_pairs": 127,
+    "median_ns": 0.5979810260096312,
+    "robust_width_ns": 0.68230915616933,
+    "full_rms_ns": 2.0526758723580034,
+    "within_abs_2ns": 0.889763779527559,
+    "tail_fraction_abs_gt_5ns": 0.06299212598425197,
+    "robust_ci_low_ns": 0.5134783878773141,
+    "robust_ci_high_ns": 1.5588906239065732,
+    "core_sigma_ns": 0.5864380940446517,
+    "core_sigma_err_ns": 0.055637969253893964,
+    "core_mean_ns": -0.1276066121262175,
+    "chi2_ndf": 82.67236323375572,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "best_traditional": {
+    "pool": "cfd0.20_cut1000",
+    "method": "constrained_monotone_timewalk",
+    "n_pairs": 127,
+    "median_ns": 0.09140440352265511,
+    "robust_width_ns": 1.5178248372481482,
+    "full_rms_ns": 1.4745552393190424,
+    "within_abs_2ns": 0.8346456692913385,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 1.2553593242626815,
+    "robust_ci_high_ns": 1.7196877906956594,
+    "core_sigma_ns": 3.872301509883971,
+    "core_sigma_err_ns": 4.021550764477781,
+    "core_mean_ns": -0.014583004849277836,
+    "chi2_ndf": 1.5850773081333158,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "best_ml": {
+    "pool": "cfd0.20_cut1000",
+    "method": "gated_residual_cnn_new",
+    "n_pairs": 127,
+    "median_ns": 0.5979810260096312,
+    "robust_width_ns": 0.68230915616933,
+    "full_rms_ns": 2.0526758723580034,
+    "within_abs_2ns": 0.889763779527559,
+    "tail_fraction_abs_gt_5ns": 0.06299212598425197,
+    "robust_ci_low_ns": 0.5134783878773141,
+    "robust_ci_high_ns": 1.5588906239065732,
+    "core_sigma_ns": 0.5864380940446517,
+    "core_sigma_err_ns": 0.055637969253893964,
+    "core_mean_ns": -0.1276066121262175,
+    "chi2_ndf": 82.67236323375572,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "overall_min_width_gate_method": {
+    "pool": "cfd0.40_cut1000",
+    "method": "mlp",
+    "n_pairs": 127,
+    "median_ns": -0.07852130613173358,
+    "robust_width_ns": 0.40987176435372596,
+    "full_rms_ns": 0.9191789733823016,
+    "within_abs_2ns": 0.9133858267716536,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 0.33363272500630736,
+    "robust_ci_high_ns": 0.8775277885972844,
+    "core_sigma_ns": 0.34866767320876774,
+    "core_sigma_err_ns": 0.0339448783733855,
+    "core_mean_ns": -0.025741032950813474,
+    "chi2_ndf": 34779471.09043095,
+    "cfd_fraction": 0.4,
+    "amplitude_cut_adc": 1000.0
+  },
+  "winner_name": "cfd0.20_cut1000 / gated_residual_cnn_new",
+  "primary_metric": "Standard-gate Sample IV A1-A3 percentile68 residual width, bootstrap over held-out runs",
+  "methods_benchmarked": [
+    "constrained_monotone_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "gated_residual_cnn_new"
+  ],
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_heldout_pairs": 127,
+  "gate_grid": {
+    "cfd_fractions": [
+      0.1,
+      0.2,
+      0.4
+    ],
+    "amplitude_cuts_adc": [
+      800.0,
+      1000.0,
+      1500.0
+    ]
+  },
+  "torch_available": true,
+  "leakage_flags": 0,
+  "input_sha256": "reports/1781033800.1275.6fd1379d__s18g_astack_gate_sensitivity/input_sha256.csv",
+  "git_commit": "740e2e69da75d83e2c8fb40b3385adcd82b44616",
+  "next_tickets": [
+    "S18h: isolate whether A-stack width drift follows low-amplitude support loss or CFD interpolation noise by fitting a fixed-efficiency gate with per-run amplitude quantiles; expected information gain is separating pulse-selection effects from timing-pickoff effects."
+  ]
+}

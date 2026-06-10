@@ -1,0 +1,37 @@
+{
+  "study": "S14h",
+  "ticket_id": "0000000011.1.rangestop",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "c405bcb1342229ee85fe80c0fa864e137cee6c83",
+  "command": "/home/billy/anaconda3/bin/python scripts/s14h_0000000011_1_rangestop.py --config configs/s14h_0000000011_1_rangestop.yaml",
+  "config": "configs/s14h_0000000011_1_rangestop.yaml",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "awkward": "2.2.4",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "inputs": [
+    {
+      "geant4_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+      "tree": "hibeam",
+      "root_sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+      "root_bytes": 677221620
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "63c20f574178c2d6c60913c7e8e9cac62aaed8ac3b23a9432249946667b0c36c",
+    "result.json": "dcfd932a90eb4bae021558979f6ee276b5bb59545c109a40033b4419af44344b",
+    "event_summary.csv.gz": "0b4ff36ebaeec8547ab851f2cab264d7225e70d3386516237258e89d180740c9",
+    "method_metrics.csv": "26906dd96d2c30b01d76ae67a864332120905bae9c77999d35b929d5538bf0d3",
+    "run_heldout_summary.csv": "b5e3f03b4e3dc17cd85dcf2b80e5e3bb431783a9d201efa7766d500cd8266f46",
+    "deltae_e_species_bands.csv": "05e4cda6610e97870dd32ba117c83337b6b00ba22d6f1ec9301ab94cfa4509a4",
+    "leakage_checks.csv": "524375513828b8941a0400cfe8f6f550673014b8c7f43c08033ceb0ec17e983b",
+    "traditional_threshold_scan.csv": "ba25dafe920770b580d8727d107d7f77e4d84a9bc1c9a73c8a078acf26f035e2",
+    "reproduction_match_table.csv": "c4d843934eac39f9f2a378fe0c8ec1d9e81a90f22bf025044edfc7f021cf49bc",
+    "deltae_e_truth_bands.png": "b404b745fe62ad10861c86285ac14ad11ffc26ee1aed1a9646e3d24929d44bf3"
+  }
+}

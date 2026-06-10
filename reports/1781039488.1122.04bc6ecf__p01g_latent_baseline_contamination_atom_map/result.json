@@ -1,0 +1,1624 @@
+{
+  "ticket_id": "1781039488.1122.04bc6ecf",
+  "study_id": "P01g",
+  "title": "latent baseline-contamination atom map",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "passed": true
+  },
+  "latent_join": {
+    "path": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz",
+    "sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "passed": true
+  },
+  "winner": {
+    "method": "gbt_latent_hand",
+    "mean_auc": 0.9897029916770835,
+    "traditional_mean_auc": 0.9789446369072863,
+    "mean_auc_delta_vs_traditional": 0.010758354769797251,
+    "guardrail_max_shuffled_label_auc": 0.7482349410012503,
+    "interpretation": "winner by mean run-heldout AUC across preregistered atom/outcome targets; high shuffled-label sentinels demote any latent gain to nuisance evidence"
+  },
+  "method_metrics": [
+    {
+      "target": "s16_baseline_excursion",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "auc",
+      "value": 0.999957470654153,
+      "ci_low": 0.9999347207137239,
+      "ci_high": 0.9999673896913599
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "ap",
+      "value": 0.999180986837704,
+      "ci_low": 0.9989618779993952,
+      "ci_high": 0.9993574806781523
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "brier",
+      "value": 0.003723772342704068,
+      "ci_low": 0.002619308067857332,
+      "ci_high": 0.004787964190467129
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "ridge_latent_logistic",
+      "metric": "auc",
+      "value": 0.9879893513150801,
+      "ci_low": 0.9864486421871556,
+      "ci_high": 0.9906040011656371
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "ridge_latent_logistic",
+      "metric": "ap",
+      "value": 0.7901331257667147,
+      "ci_low": 0.7681743990785884,
+      "ci_high": 0.8113510736945551
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "ridge_latent_logistic",
+      "metric": "brier",
+      "value": 0.03482406796206315,
+      "ci_low": 0.02924809041463503,
+      "ci_high": 0.04298264431305275
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "gbt_latent_hand",
+      "metric": "auc",
+      "value": 0.9999978863779246,
+      "ci_low": 0.9999963314958566,
+      "ci_high": 0.9999989527228693
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "gbt_latent_hand",
+      "metric": "ap",
+      "value": 0.9999604312690304,
+      "ci_low": 0.9999245033669047,
+      "ci_high": 0.9999867926675541
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "gbt_latent_hand",
+      "metric": "brier",
+      "value": 0.0006901961652170301,
+      "ci_low": 0.0005492815164069271,
+      "ci_high": 0.0008824762190454024
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "mlp_latent_hand",
+      "metric": "auc",
+      "value": 0.9999417352632883,
+      "ci_low": 0.9999245698556849,
+      "ci_high": 0.9999627685427745
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "mlp_latent_hand",
+      "metric": "ap",
+      "value": 0.9989022497876928,
+      "ci_low": 0.9986117970941316,
+      "ci_high": 0.9990821162613733
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "mlp_latent_hand",
+      "metric": "brier",
+      "value": 0.002765969716093442,
+      "ci_low": 0.0023630515848839786,
+      "ci_high": 0.0036500900967971505
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "cnn_waveform",
+      "metric": "auc",
+      "value": 0.7920699147646866,
+      "ci_low": 0.7619756446937895,
+      "ci_high": 0.8189644427858058
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "cnn_waveform",
+      "metric": "ap",
+      "value": 0.34612899041660317,
+      "ci_low": 0.3153078698215616,
+      "ci_high": 0.36795847395206516
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "cnn_waveform",
+      "metric": "brier",
+      "value": 0.17761086442660823,
+      "ci_low": 0.17104293136919918,
+      "ci_high": 0.1815069150313162
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "wave_latent_gate",
+      "metric": "auc",
+      "value": 0.9902455844931373,
+      "ci_low": 0.9884407434957796,
+      "ci_high": 0.9926032019166884
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "wave_latent_gate",
+      "metric": "ap",
+      "value": 0.7649575049344496,
+      "ci_low": 0.7406015764228098,
+      "ci_high": 0.786507184186543
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "wave_latent_gate",
+      "metric": "brier",
+      "value": 0.03257380362679922,
+      "ci_low": 0.02948782442486717,
+      "ci_high": 0.041472473364252006
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "ridge_latent_logistic_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.011968119339072825,
+      "ci_low": -0.014484812208310549,
+      "ci_high": -0.009741797630200999
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "gbt_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 4.0415723771669576e-05,
+      "ci_low": 3.888897008019754e-05,
+      "ci_high": 4.1399439677292094e-05
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "mlp_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": -1.5735390864635157e-05,
+      "ci_low": -3.788554841810399e-05,
+      "ci_high": -3.2523041350041026e-06
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "cnn_waveform_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.2078875558894664,
+      "ci_low": -0.23777761116740248,
+      "ci_high": -0.17994464055932924
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "method": "wave_latent_gate_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.009711886161015704,
+      "ci_low": -0.01129217814654071,
+      "ci_high": -0.00840987413261729
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "auc",
+      "value": 0.998219998357394,
+      "ci_low": 0.9979192384651484,
+      "ci_high": 0.998671862157913
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "ap",
+      "value": 0.9876783754585452,
+      "ci_low": 0.9847360895636033,
+      "ci_high": 0.9914207849404577
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "brier",
+      "value": 0.009272319439339696,
+      "ci_low": 0.008208323548081597,
+      "ci_high": 0.010631321965370972
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "ridge_latent_logistic",
+      "metric": "auc",
+      "value": 0.940818525564663,
+      "ci_low": 0.9329611745739248,
+      "ci_high": 0.9488163772824012
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "ridge_latent_logistic",
+      "metric": "ap",
+      "value": 0.8837912750722761,
+      "ci_low": 0.8505012949104757,
+      "ci_high": 0.9044273275851842
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "ridge_latent_logistic",
+      "metric": "brier",
+      "value": 0.04699464322818658,
+      "ci_low": 0.04393636283030925,
+      "ci_high": 0.0504893802059362
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "gbt_latent_hand",
+      "metric": "auc",
+      "value": 0.9999909479474988,
+      "ci_low": 0.9999862079368509,
+      "ci_high": 0.9999938209064148
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "gbt_latent_hand",
+      "metric": "ap",
+      "value": 0.9999214568129013,
+      "ci_low": 0.9998891296055774,
+      "ci_high": 0.9999573083708211
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "gbt_latent_hand",
+      "metric": "brier",
+      "value": 0.0012836525648772402,
+      "ci_low": 0.0011587200067499674,
+      "ci_high": 0.0014745549165702113
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "mlp_latent_hand",
+      "metric": "auc",
+      "value": 0.9987208638546934,
+      "ci_low": 0.998221232259429,
+      "ci_high": 0.9990076608300219
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "mlp_latent_hand",
+      "metric": "ap",
+      "value": 0.9921004473891621,
+      "ci_low": 0.9902963582475216,
+      "ci_high": 0.9941406367167276
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "mlp_latent_hand",
+      "metric": "brier",
+      "value": 0.0075848755052482005,
+      "ci_low": 0.006429290578507905,
+      "ci_high": 0.009144565228208583
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "cnn_waveform",
+      "metric": "auc",
+      "value": 0.8045137895103601,
+      "ci_low": 0.785922476674621,
+      "ci_high": 0.8271399349744872
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "cnn_waveform",
+      "metric": "ap",
+      "value": 0.6108724548838056,
+      "ci_low": 0.5851172469911947,
+      "ci_high": 0.6409951898599022
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "cnn_waveform",
+      "metric": "brier",
+      "value": 0.16572430165932955,
+      "ci_low": 0.16147241504915952,
+      "ci_high": 0.16913645836914082
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "wave_latent_gate",
+      "metric": "auc",
+      "value": 0.9549402520464113,
+      "ci_low": 0.9457563804275393,
+      "ci_high": 0.962285694859207
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "wave_latent_gate",
+      "metric": "ap",
+      "value": 0.9058126523343669,
+      "ci_low": 0.8743264372363481,
+      "ci_high": 0.9298276669997474
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "wave_latent_gate",
+      "metric": "brier",
+      "value": 0.05903723078545337,
+      "ci_low": 0.05167363519426485,
+      "ci_high": 0.06729517328129873
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "ridge_latent_logistic_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.05740147279273089,
+      "ci_low": -0.06916609328998213,
+      "ci_high": -0.05063837988347364
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "gbt_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.00177094959010482,
+      "ci_low": 0.0017674061083118309,
+      "ci_high": 0.0017749555716473076
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "mlp_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.0005008654972994409,
+      "ci_low": 8.438340042760117e-05,
+      "ci_high": 0.0009055817535794652
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "cnn_waveform_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.19370620884703382,
+      "ci_low": -0.22242908658185312,
+      "ci_high": -0.16709940359918418
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "method": "wave_latent_gate_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.043279746310982636,
+      "ci_low": -0.054081789455304397,
+      "ci_high": -0.034333113175660124
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "auc",
+      "value": 0.9990601835464197,
+      "ci_low": 0.9985310209018924,
+      "ci_high": 0.9993537424804748
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "ap",
+      "value": 0.9910403218052269,
+      "ci_low": 0.9881337901779865,
+      "ci_high": 0.9934069605460296
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "brier",
+      "value": 0.010334098784974769,
+      "ci_low": 0.005758680512245643,
+      "ci_high": 0.01351634535442163
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "ridge_latent_logistic",
+      "metric": "auc",
+      "value": 0.9561982621803174,
+      "ci_low": 0.9460740738863171,
+      "ci_high": 0.961838924434043
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "ridge_latent_logistic",
+      "metric": "ap",
+      "value": 0.8167686651316736,
+      "ci_low": 0.8071294082519247,
+      "ci_high": 0.8298201365163181
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "ridge_latent_logistic",
+      "metric": "brier",
+      "value": 0.06096740147892271,
+      "ci_low": 0.055505127861471326,
+      "ci_high": 0.07065911511596859
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "gbt_latent_hand",
+      "metric": "auc",
+      "value": 0.9999996130040554,
+      "ci_low": 0.999999224659349,
+      "ci_high": 0.9999998287355885
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "gbt_latent_hand",
+      "metric": "ap",
+      "value": 0.9999963395334154,
+      "ci_low": 0.9999926726510524,
+      "ci_high": 0.9999991387757231
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "gbt_latent_hand",
+      "metric": "brier",
+      "value": 0.00028374360311027546,
+      "ci_low": 0.00018430351927992548,
+      "ci_high": 0.000418997003933939
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "mlp_latent_hand",
+      "metric": "auc",
+      "value": 0.999820126843518,
+      "ci_low": 0.999740096691975,
+      "ci_high": 0.9998848726385583
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "mlp_latent_hand",
+      "metric": "ap",
+      "value": 0.9982111369273391,
+      "ci_low": 0.997651613546929,
+      "ci_high": 0.9985329764738416
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "mlp_latent_hand",
+      "metric": "brier",
+      "value": 0.003446256614321117,
+      "ci_low": 0.002701597537589775,
+      "ci_high": 0.004965309326634617
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "cnn_waveform",
+      "metric": "auc",
+      "value": 0.895123836703383,
+      "ci_low": 0.8696361364446313,
+      "ci_high": 0.9234012590783521
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "cnn_waveform",
+      "metric": "ap",
+      "value": 0.7073772026161194,
+      "ci_low": 0.6764856352939042,
+      "ci_high": 0.7295792455157702
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "cnn_waveform",
+      "metric": "brier",
+      "value": 0.1442975820262255,
+      "ci_low": 0.13798222995330045,
+      "ci_high": 0.14889265200891727
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "wave_latent_gate",
+      "metric": "auc",
+      "value": 0.9635402452994586,
+      "ci_low": 0.9519821842214868,
+      "ci_high": 0.9694758036282912
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "wave_latent_gate",
+      "metric": "ap",
+      "value": 0.816882320565598,
+      "ci_low": 0.7858295729889321,
+      "ci_high": 0.8354657491532778
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "wave_latent_gate",
+      "metric": "brier",
+      "value": 0.11242444655360413,
+      "ci_low": 0.09519338512153648,
+      "ci_high": 0.13001987116094157
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "ridge_latent_logistic_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.04286192136610223,
+      "ci_low": -0.047336558420595365,
+      "ci_high": -0.03883440931570703
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "gbt_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.0009394294576356987,
+      "ci_low": 0.0009391917948915474,
+      "ci_high": 0.0009396776994194944
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "mlp_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.0007599432970982756,
+      "ci_low": 0.0007003956890270224,
+      "ci_high": 0.0008019637824058234
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "cnn_waveform_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.10393634684303665,
+      "ci_low": -0.13094252817627572,
+      "ci_high": -0.0821809552268069
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "method": "wave_latent_gate_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.03551993824696109,
+      "ci_low": -0.04477307006740061,
+      "ci_high": -0.02862614787561657
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "auc",
+      "value": 0.9998333665116776,
+      "ci_low": 0.999776816594516,
+      "ci_high": 0.9998580273345614
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "ap",
+      "value": 0.9984723092814015,
+      "ci_low": 0.9975709153319907,
+      "ci_high": 0.998895122018429
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "brier",
+      "value": 0.011472356613820279,
+      "ci_low": 0.009043952356189853,
+      "ci_high": 0.01364851225581775
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "ridge_latent_logistic",
+      "metric": "auc",
+      "value": 0.944395049152353,
+      "ci_low": 0.9334398045687093,
+      "ci_high": 0.9527128948961637
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "ridge_latent_logistic",
+      "metric": "ap",
+      "value": 0.6165937270652403,
+      "ci_low": 0.5735090821105664,
+      "ci_high": 0.6694644272739807
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "ridge_latent_logistic",
+      "metric": "brier",
+      "value": 0.13404731103620915,
+      "ci_low": 0.0997714610649935,
+      "ci_high": 0.1631945942115261
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "gbt_latent_hand",
+      "metric": "auc",
+      "value": 0.9999981533780924,
+      "ci_low": 0.999995614824433,
+      "ci_high": 0.999999170733911
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "gbt_latent_hand",
+      "metric": "ap",
+      "value": 0.9999838692911881,
+      "ci_low": 0.999971353147472,
+      "ci_high": 0.9999970724764096
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "gbt_latent_hand",
+      "metric": "brier",
+      "value": 0.0006310092578522206,
+      "ci_low": 0.0004995253045663625,
+      "ci_high": 0.0007926712046424452
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "mlp_latent_hand",
+      "metric": "auc",
+      "value": 0.9997880865579881,
+      "ci_low": 0.9997316508509452,
+      "ci_high": 0.9998334753941669
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "mlp_latent_hand",
+      "metric": "ap",
+      "value": 0.9980860626891113,
+      "ci_low": 0.997358366796038,
+      "ci_high": 0.998512279603247
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "mlp_latent_hand",
+      "metric": "brier",
+      "value": 0.005779783370332114,
+      "ci_low": 0.003961755394837643,
+      "ci_high": 0.006857427232397465
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "cnn_waveform",
+      "metric": "auc",
+      "value": 0.8951573456892052,
+      "ci_low": 0.8668834028173703,
+      "ci_high": 0.9314302604110529
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "cnn_waveform",
+      "metric": "ap",
+      "value": 0.420082850614901,
+      "ci_low": 0.32548521859872787,
+      "ci_high": 0.5060304086469998
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "cnn_waveform",
+      "metric": "brier",
+      "value": 0.21982952506723882,
+      "ci_low": 0.21614709151869915,
+      "ci_high": 0.22587341196793717
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "wave_latent_gate",
+      "metric": "auc",
+      "value": 0.9804755096672695,
+      "ci_low": 0.9769642552194359,
+      "ci_high": 0.9856377788121792
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "wave_latent_gate",
+      "metric": "ap",
+      "value": 0.8673086258154932,
+      "ci_low": 0.8429011275155821,
+      "ci_high": 0.8994672847009196
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "wave_latent_gate",
+      "metric": "brier",
+      "value": 0.08146775438569416,
+      "ci_low": 0.06188215777722033,
+      "ci_high": 0.09698561714876146
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "ridge_latent_logistic_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.055438317359324696,
+      "ci_low": -0.06492049272527789,
+      "ci_high": -0.046439318760658654
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "gbt_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.0001647868664147456,
+      "ci_low": 0.00016385589188350203,
+      "ci_high": 0.00016611764872831447
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "mlp_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": -4.527995368952542e-05,
+      "ci_low": -9.183493192976844e-05,
+      "ci_high": 5.772588294483683e-06
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "cnn_waveform_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.1046760208224724,
+      "ci_low": -0.12661078809061288,
+      "ci_high": -0.07191843967662004
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "method": "wave_latent_gate_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.01935785684440816,
+      "ci_low": -0.023897013314880144,
+      "ci_high": -0.014807790540085408
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "auc",
+      "value": 0.9208579615063467,
+      "ci_low": 0.895346082874667,
+      "ci_high": 0.9365401304929574
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "ap",
+      "value": 0.15972457913436486,
+      "ci_low": 0.0792000065314115,
+      "ci_high": 0.21242853409922774
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "brier",
+      "value": 0.10842536671681643,
+      "ci_low": 0.08372384066009916,
+      "ci_high": 0.15735289362599084
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "ridge_latent_logistic",
+      "metric": "auc",
+      "value": 0.8301770294690277,
+      "ci_low": 0.7881510270257696,
+      "ci_high": 0.8576569397569556
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "ridge_latent_logistic",
+      "metric": "ap",
+      "value": 0.03791743016259132,
+      "ci_low": 0.015096430290387581,
+      "ci_high": 0.05028136588833491
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "ridge_latent_logistic",
+      "metric": "brier",
+      "value": 0.1767816153963837,
+      "ci_low": 0.13607769225364724,
+      "ci_high": 0.21340791232475054
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "gbt_latent_hand",
+      "metric": "auc",
+      "value": 0.9399306331822903,
+      "ci_low": 0.9086030487661132,
+      "ci_high": 0.9502404466361943
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "gbt_latent_hand",
+      "metric": "ap",
+      "value": 0.2476382642569089,
+      "ci_low": 0.17765153955202917,
+      "ci_high": 0.29434671797457346
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "gbt_latent_hand",
+      "metric": "brier",
+      "value": 0.10025766830928233,
+      "ci_low": 0.07891355844411824,
+      "ci_high": 0.13314968813975636
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "mlp_latent_hand",
+      "metric": "auc",
+      "value": 0.9339768380916434,
+      "ci_low": 0.9083473709640295,
+      "ci_high": 0.9439877242371187
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "mlp_latent_hand",
+      "metric": "ap",
+      "value": 0.18273599203462965,
+      "ci_low": 0.106091407938215,
+      "ci_high": 0.2375532811592797
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "mlp_latent_hand",
+      "metric": "brier",
+      "value": 0.07313435926790174,
+      "ci_low": 0.055558395393017705,
+      "ci_high": 0.09069228141630678
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "cnn_waveform",
+      "metric": "auc",
+      "value": 0.7898694252296031,
+      "ci_low": 0.7468219120221247,
+      "ci_high": 0.8435506230454458
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "cnn_waveform",
+      "metric": "ap",
+      "value": 0.02856839904312925,
+      "ci_low": 0.011913169711850151,
+      "ci_high": 0.042515958741168494
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "cnn_waveform",
+      "metric": "brier",
+      "value": 0.24430812072943148,
+      "ci_low": 0.24136247256616752,
+      "ci_high": 0.24614071396402012
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "wave_latent_gate",
+      "metric": "auc",
+      "value": 0.902498434625919,
+      "ci_low": 0.8703357387327062,
+      "ci_high": 0.9269428918229352
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "wave_latent_gate",
+      "metric": "ap",
+      "value": 0.08991113111848505,
+      "ci_low": 0.045020890259734006,
+      "ci_high": 0.10864472846189037
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "wave_latent_gate",
+      "metric": "brier",
+      "value": 0.13376625708430265,
+      "ci_low": 0.1006298124769653,
+      "ci_high": 0.16965398509855262
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "ridge_latent_logistic_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.09068093203731897,
+      "ci_low": -0.1368602802409774,
+      "ci_high": -0.0702444702561642
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "gbt_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.01907267167594362,
+      "ci_low": -0.004370357862948371,
+      "ci_high": 0.03055813579790656
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "mlp_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.013118876585296757,
+      "ci_low": -0.0074134763821738225,
+      "ci_high": 0.024337533082489315
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "cnn_waveform_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.13098853627674356,
+      "ci_low": -0.1884120130953051,
+      "ci_high": -0.09788991099416156
+    },
+    {
+      "target": "s03_timing_tail",
+      "method": "wave_latent_gate_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.018359526880427635,
+      "ci_low": -0.05070567823990135,
+      "ci_high": -0.0029297517293821462
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "auc",
+      "value": 0.9557388408677268,
+      "ci_low": 0.9466475439267584,
+      "ci_high": 0.9610169565142711
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "ap",
+      "value": 0.6875013127975789,
+      "ci_low": 0.6735224248151908,
+      "ci_high": 0.7030522279722589
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "traditional_hand_pca_logistic",
+      "metric": "brier",
+      "value": 0.07458515972524683,
+      "ci_low": 0.06250042207240568,
+      "ci_high": 0.08989982624958753
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "ridge_latent_logistic",
+      "metric": "auc",
+      "value": 0.7990897781797525,
+      "ci_low": 0.7854902015228173,
+      "ci_high": 0.8046615611194505
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "ridge_latent_logistic",
+      "metric": "ap",
+      "value": 0.42757987241784445,
+      "ci_low": 0.417036826872164,
+      "ci_high": 0.4448033028612175
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "ridge_latent_logistic",
+      "metric": "brier",
+      "value": 0.15687356795006324,
+      "ci_low": 0.14208949200282645,
+      "ci_high": 0.1688786701828788
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "gbt_latent_hand",
+      "metric": "auc",
+      "value": 0.9983007161726397,
+      "ci_low": 0.9970950319878812,
+      "ci_high": 0.9987878575770903
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "gbt_latent_hand",
+      "metric": "ap",
+      "value": 0.9844827912162184,
+      "ci_low": 0.9827924267864205,
+      "ci_high": 0.9876095154950522
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "gbt_latent_hand",
+      "metric": "brier",
+      "value": 0.016196575416382978,
+      "ci_low": 0.011861870412033742,
+      "ci_high": 0.0203436258034527
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "mlp_latent_hand",
+      "metric": "auc",
+      "value": 0.9965033866470557,
+      "ci_low": 0.9954965092626514,
+      "ci_high": 0.9975361874204817
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "mlp_latent_hand",
+      "metric": "ap",
+      "value": 0.965203997354233,
+      "ci_low": 0.9609529879721174,
+      "ci_high": 0.9700035324691201
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "mlp_latent_hand",
+      "metric": "brier",
+      "value": 0.01977978735159398,
+      "ci_low": 0.015849673345278033,
+      "ci_high": 0.023927702632177122
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "cnn_waveform",
+      "metric": "auc",
+      "value": 0.7408829715889896,
+      "ci_low": 0.7122601625360598,
+      "ci_high": 0.7664851697564845
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "cnn_waveform",
+      "metric": "ap",
+      "value": 0.47076176899740924,
+      "ci_low": 0.43356407008754544,
+      "ci_high": 0.4945226798028689
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "cnn_waveform",
+      "metric": "brier",
+      "value": 0.1915745183684294,
+      "ci_low": 0.18825156652432173,
+      "ci_high": 0.1965877101858165
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "wave_latent_gate",
+      "metric": "auc",
+      "value": 0.8779337026623779,
+      "ci_low": 0.8635438948004031,
+      "ci_high": 0.8907615603114525
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "wave_latent_gate",
+      "metric": "ap",
+      "value": 0.5379925203077474,
+      "ci_low": 0.516155908292463,
+      "ci_high": 0.5536800295448281
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "wave_latent_gate",
+      "metric": "brier",
+      "value": 0.12651483217975618,
+      "ci_low": 0.11448773300144109,
+      "ci_high": 0.1488611484675214
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "ridge_latent_logistic_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.1566490626879743,
+      "ci_low": -0.1692529403632328,
+      "ci_high": -0.14980035983663242
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "gbt_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.042561875304912955,
+      "ci_low": 0.04208171901479629,
+      "ci_high": 0.04300329976210615
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "mlp_latent_hand_minus_traditional",
+      "metric": "auc_delta",
+      "value": 0.040764545779328976,
+      "ci_low": 0.03987878512370624,
+      "ci_high": 0.041597853323708134
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "cnn_waveform_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.21485586927873712,
+      "ci_low": -0.23726488802433088,
+      "ci_high": -0.18639940482450634
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "method": "wave_latent_gate_minus_traditional",
+      "metric": "auc_delta",
+      "value": -0.07780513820534884,
+      "ci_low": -0.09061858943823875,
+      "ci_high": -0.06785468683576279
+    }
+  ],
+  "atom_support": [
+    {
+      "target": "s16_baseline_excursion",
+      "stratum": "B2",
+      "n_positive": 26927,
+      "n": 579424,
+      "rate": 0.046472013585906004
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "stratum": "B4",
+      "n_positive": 3161,
+      "n": 36116,
+      "rate": 0.08752353527522427
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "stratum": "B6",
+      "n_positive": 1297,
+      "n": 17945,
+      "rate": 0.07227640011145166
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "stratum": "B8",
+      "n_positive": 718,
+      "n": 7252,
+      "rate": 0.09900717043574186
+    },
+    {
+      "target": "s16_baseline_excursion",
+      "stratum": "all",
+      "n_positive": 32103,
+      "n": 640737,
+      "rate": 0.05010324048712654
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "stratum": "B2",
+      "n_positive": 53274,
+      "n": 579424,
+      "rate": 0.09194303308112885
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "stratum": "B4",
+      "n_positive": 6701,
+      "n": 36116,
+      "rate": 0.18554103444456752
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "stratum": "B6",
+      "n_positive": 2974,
+      "n": 17945,
+      "rate": 0.1657286152131513
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "stratum": "B8",
+      "n_positive": 1215,
+      "n": 7252,
+      "rate": 0.1675399889685604
+    },
+    {
+      "target": "s16_adaptive_lowering",
+      "stratum": "all",
+      "n_positive": 64164,
+      "n": 640737,
+      "rate": 0.10014093145861719
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "stratum": "B2",
+      "n_positive": 37433,
+      "n": 579424,
+      "rate": 0.06460381344231513
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "stratum": "B4",
+      "n_positive": 14008,
+      "n": 36116,
+      "rate": 0.3878613356960904
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "stratum": "B6",
+      "n_positive": 6839,
+      "n": 17945,
+      "rate": 0.38110894399554196
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "stratum": "B8",
+      "n_positive": 2898,
+      "n": 7252,
+      "rate": 0.3996138996138996
+    },
+    {
+      "target": "p09_dropout_delayed_peak",
+      "stratum": "all",
+      "n_positive": 61178,
+      "n": 640737,
+      "rate": 0.0954806730374553
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "stratum": "B2",
+      "n_positive": 64329,
+      "n": 579424,
+      "rate": 0.11102232561992599
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "stratum": "B4",
+      "n_positive": 32,
+      "n": 36116,
+      "rate": 0.0008860338907963229
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "stratum": "B6",
+      "n_positive": 2,
+      "n": 17945,
+      "rate": 0.00011145165784341042
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "stratum": "B8",
+      "n_positive": 1,
+      "n": 7252,
+      "rate": 0.0001378929950358522
+    },
+    {
+      "target": "p07_saturation_boundary",
+      "stratum": "all",
+      "n_positive": 64364,
+      "n": 640737,
+      "rate": 0.10045307200926433
+    },
+    {
+      "target": "s03_timing_tail",
+      "stratum": "B2",
+      "n_positive": 1861,
+      "n": 579424,
+      "rate": 0.0032118103495885567
+    },
+    {
+      "target": "s03_timing_tail",
+      "stratum": "B4",
+      "n_positive": 1888,
+      "n": 36116,
+      "rate": 0.052275999556983054
+    },
+    {
+      "target": "s03_timing_tail",
+      "stratum": "B6",
+      "n_positive": 1877,
+      "n": 17945,
+      "rate": 0.10459738088604068
+    },
+    {
+      "target": "s03_timing_tail",
+      "stratum": "B8",
+      "n_positive": 767,
+      "n": 7252,
+      "rate": 0.10576392719249862
+    },
+    {
+      "target": "s03_timing_tail",
+      "stratum": "all",
+      "n_positive": 6393,
+      "n": 640737,
+      "rate": 0.009977572701436002
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "stratum": "B2",
+      "n_positive": 48803,
+      "n": 579424,
+      "rate": 0.08422674932346606
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "stratum": "B4",
+      "n_positive": 10113,
+      "n": 36116,
+      "rate": 0.2800143980507254
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "stratum": "B6",
+      "n_positive": 3981,
+      "n": 17945,
+      "rate": 0.22184452493730844
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "stratum": "B8",
+      "n_positive": 1746,
+      "n": 7252,
+      "rate": 0.2407611693325979
+    },
+    {
+      "target": "p04_charge_bias_tail",
+      "stratum": "all",
+      "n_positive": 64643,
+      "n": 640737,
+      "rate": 0.1008885080774171
+    }
+  ],
+  "leakage_checks": [
+    {
+      "fold": 1,
+      "target": "s16_baseline_excursion",
+      "heldout_runs": "33,42,45,48,49,52",
+      "amplitude_only_auc": 0.7388911988604399,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5156481065956671,
+      "shuffled_label_auc": 0.4965443688644298
+    },
+    {
+      "fold": 1,
+      "target": "s16_adaptive_lowering",
+      "heldout_runs": "33,42,45,48,49,52",
+      "amplitude_only_auc": 0.7865573709952731,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.522641150210084,
+      "shuffled_label_auc": 0.5021751083245799
+    },
+    {
+      "fold": 1,
+      "target": "p09_dropout_delayed_peak",
+      "heldout_runs": "33,42,45,48,49,52",
+      "amplitude_only_auc": 0.8075838691568521,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.6223382502319388,
+      "shuffled_label_auc": 0.4718191296420397
+    },
+    {
+      "fold": 1,
+      "target": "p07_saturation_boundary",
+      "heldout_runs": "33,42,45,48,49,52",
+      "amplitude_only_auc": 0.9910112055369892,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5271748960028938,
+      "shuffled_label_auc": 0.42947252836712346
+    },
+    {
+      "fold": 1,
+      "target": "s03_timing_tail",
+      "heldout_runs": "33,42,45,48,49,52",
+      "amplitude_only_auc": 0.7428613199665832,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.8824366471734894,
+      "shuffled_label_auc": 0.6324255082149819
+    },
+    {
+      "fold": 1,
+      "target": "p04_charge_bias_tail",
+      "heldout_runs": "33,42,45,48,49,52",
+      "amplitude_only_auc": 0.7546371177812352,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5460795610522591,
+      "shuffled_label_auc": 0.41020010264651885
+    },
+    {
+      "fold": 2,
+      "target": "s16_baseline_excursion",
+      "heldout_runs": "35,37,39,44,56,58,63",
+      "amplitude_only_auc": 0.6932388412106956,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5122651813463073,
+      "shuffled_label_auc": 0.622250545677698
+    },
+    {
+      "fold": 2,
+      "target": "s16_adaptive_lowering",
+      "heldout_runs": "35,37,39,44,56,58,63",
+      "amplitude_only_auc": 0.7302197816159439,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5233441082461715,
+      "shuffled_label_auc": 0.3551436631793935
+    },
+    {
+      "fold": 2,
+      "target": "p09_dropout_delayed_peak",
+      "heldout_runs": "35,37,39,44,56,58,63",
+      "amplitude_only_auc": 0.7639686753337158,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.634385366927231,
+      "shuffled_label_auc": 0.6484614967513932
+    },
+    {
+      "fold": 2,
+      "target": "p07_saturation_boundary",
+      "heldout_runs": "35,37,39,44,56,58,63",
+      "amplitude_only_auc": 0.9899731857774889,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5425713898525467,
+      "shuffled_label_auc": 0.7482349410012503
+    },
+    {
+      "fold": 2,
+      "target": "s03_timing_tail",
+      "heldout_runs": "35,37,39,44,56,58,63",
+      "amplitude_only_auc": 0.6971280818559928,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.8285919874568207,
+      "shuffled_label_auc": 0.46233544419618144
+    },
+    {
+      "fold": 2,
+      "target": "p04_charge_bias_tail",
+      "heldout_runs": "35,37,39,44,56,58,63",
+      "amplitude_only_auc": 0.6811280586024167,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5507118294178441,
+      "shuffled_label_auc": 0.29817706649296716
+    },
+    {
+      "fold": 3,
+      "target": "s16_baseline_excursion",
+      "heldout_runs": "31,50,51,57,60,61",
+      "amplitude_only_auc": 0.7834071055256931,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5773182648599038,
+      "shuffled_label_auc": 0.4438953379659576
+    },
+    {
+      "fold": 3,
+      "target": "s16_adaptive_lowering",
+      "heldout_runs": "31,50,51,57,60,61",
+      "amplitude_only_auc": 0.7911450194577415,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.578466077444977,
+      "shuffled_label_auc": 0.3691817778034446
+    },
+    {
+      "fold": 3,
+      "target": "p09_dropout_delayed_peak",
+      "heldout_runs": "31,50,51,57,60,61",
+      "amplitude_only_auc": 0.8069215087749582,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.6824070151310994,
+      "shuffled_label_auc": 0.550902544227605
+    },
+    {
+      "fold": 3,
+      "target": "p07_saturation_boundary",
+      "heldout_runs": "31,50,51,57,60,61",
+      "amplitude_only_auc": 0.9891863010182478,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5847089911463167,
+      "shuffled_label_auc": 0.48302207353070853
+    },
+    {
+      "fold": 3,
+      "target": "s03_timing_tail",
+      "heldout_runs": "31,50,51,57,60,61",
+      "amplitude_only_auc": 0.7695185413099315,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.8106545644263699,
+      "shuffled_label_auc": 0.46695205479452057
+    },
+    {
+      "fold": 3,
+      "target": "p04_charge_bias_tail",
+      "heldout_runs": "31,50,51,57,60,61",
+      "amplitude_only_auc": 0.7270157722646239,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.6391993205366638,
+      "shuffled_label_auc": 0.7212029760670021
+    },
+    {
+      "fold": 4,
+      "target": "s16_baseline_excursion",
+      "heldout_runs": "32,34,36,41,47,59,64",
+      "amplitude_only_auc": 0.7172300970959599,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5252057961286939,
+      "shuffled_label_auc": 0.5271560129960811
+    },
+    {
+      "fold": 4,
+      "target": "s16_adaptive_lowering",
+      "heldout_runs": "32,34,36,41,47,59,64",
+      "amplitude_only_auc": 0.7566982227178738,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5443319930493122,
+      "shuffled_label_auc": 0.5074664198914862
+    },
+    {
+      "fold": 4,
+      "target": "p09_dropout_delayed_peak",
+      "heldout_runs": "32,34,36,41,47,59,64",
+      "amplitude_only_auc": 0.7894093383151818,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.6492661805101368,
+      "shuffled_label_auc": 0.46286713297353554
+    },
+    {
+      "fold": 4,
+      "target": "p07_saturation_boundary",
+      "heldout_runs": "32,34,36,41,47,59,64",
+      "amplitude_only_auc": 0.9906956260731401,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5602966761285596,
+      "shuffled_label_auc": 0.4797914655247108
+    },
+    {
+      "fold": 4,
+      "target": "s03_timing_tail",
+      "heldout_runs": "32,34,36,41,47,59,64",
+      "amplitude_only_auc": 0.7506633737751562,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.8038336810051311,
+      "shuffled_label_auc": 0.3915993302322608
+    },
+    {
+      "fold": 4,
+      "target": "p04_charge_bias_tail",
+      "heldout_runs": "32,34,36,41,47,59,64",
+      "amplitude_only_auc": 0.7133906741558245,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5680249947817846,
+      "shuffled_label_auc": 0.5552441466666416
+    },
+    {
+      "fold": 5,
+      "target": "s16_baseline_excursion",
+      "heldout_runs": "40,46,53,54,55,62,65",
+      "amplitude_only_auc": 0.7526716218345983,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.54673558823978,
+      "shuffled_label_auc": 0.5237433717850298
+    },
+    {
+      "fold": 5,
+      "target": "s16_adaptive_lowering",
+      "heldout_runs": "40,46,53,54,55,62,65",
+      "amplitude_only_auc": 0.7553857739702952,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5415514400778142,
+      "shuffled_label_auc": 0.5927485437847424
+    },
+    {
+      "fold": 5,
+      "target": "p09_dropout_delayed_peak",
+      "heldout_runs": "40,46,53,54,55,62,65",
+      "amplitude_only_auc": 0.8295198645659225,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.6930375700947173,
+      "shuffled_label_auc": 0.24661229300165438
+    },
+    {
+      "fold": 5,
+      "target": "p07_saturation_boundary",
+      "heldout_runs": "40,46,53,54,55,62,65",
+      "amplitude_only_auc": 0.994095154261565,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5537850424618757,
+      "shuffled_label_auc": 0.37230817336155275
+    },
+    {
+      "fold": 5,
+      "target": "s03_timing_tail",
+      "heldout_runs": "40,46,53,54,55,62,65",
+      "amplitude_only_auc": 0.7567810474855567,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.8056493426801596,
+      "shuffled_label_auc": 0.6816859351916871
+    },
+    {
+      "fold": 5,
+      "target": "p04_charge_bias_tail",
+      "heldout_runs": "40,46,53,54,55,62,65",
+      "amplitude_only_auc": 0.7425963287798378,
+      "run_only_auc": 0.5,
+      "stave_only_auc": 0.5838183522571975,
+      "shuffled_label_auc": 0.4598663596995718
+    }
+  ],
+  "next_tickets": [
+    {
+      "ticket_id": "1781126846.2155.5b7831ad",
+      "title": "P01h: time-local latent residualization gate",
+      "expected_information_gain": "Distinguishes removable nuisance contamination from irreducible latent leakage before timing, pile-up, PID, or charge consumers reuse the embedding.",
+      "status": "appended"
+    }
+  ],
+  "runtime_sec": 213.411,
+  "git_commit": "1bbc67bdfcfb3d61d423d4ca04ac5a0d908ccf3c"
+}

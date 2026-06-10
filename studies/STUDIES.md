@@ -2099,3 +2099,56 @@ energy consumers reuse these outputs.
   amplitude-only, and shuffled-target sentinels. Metric: purity-efficiency envelope against weak
   labels, null-label AUC/AP, calibration ECE, support-collapse fraction, and
   ML-minus-traditional lift with stratified bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, S07j/S03f/P02d/S10g/S14d layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
+18-ready trigger. The project-aware `testbeam` store remains deep after this pass
+(`open=185 claimed=4 done=253 failed=7`) under concurrent worker movement. The trigger was
+satisfied by appending four ready, non-duplicate `project:testbeam` tickets: S07o raw AppA
+ambiguous-event timing definition lattice (`1781072388.635.3a971559`), P02f latent-distance
+nearest-neighbor leakage audit (`1781072388.645.34b21955`), S14k quenching-free depth-charge
+monotonicity falsifier (`1781072388.662.19181f8a`), and P08d depth-matched pulse-shape PID null
+(`1781072388.710.65f565af`).
+
+Fresh synthesis: S07j/S03f now make the App.A 12,147-row label a boundary-definition and
+provenance problem: current raw HRDv CFD20 gives 9,897 labelled events, there are 5,457 ambiguous
+downstream-ge2 events, q_template-only is too weak, and shape RFs remain diagnostic unless the
+timing-definition boundary is reproduced without leakage. P02d provides a useful run-heldout
+latent-distance artifact, but consumers need a nearest-neighbor and event-key leakage audit before
+PID, anomaly, timing, or pile-up analyses use it. S10g keeps the current excess positive after
+P09 anomaly matching while showing taxonomy changes the downstream excess, and S14d says raw HRD
+can support only depth/charge monotonic structure until material, geometry, quenching, PID, and
+stopping-depth truth exist. The new tickets therefore deepen the pulse at App.A timing-definition,
+latent-neighbor, raw depth-charge, and PID-null atoms.
+
+- **S07o — Raw AppA ambiguous-event timing definition lattice.** Decide whether the 5,457
+  ambiguous raw HRDv downstream-ge2 events contain a reproducible timing-definition boundary that
+  explains the documented 12,147 App.A labelled-event tuple. Traditional: transparent CFD
+  fraction/window, downstream span, q_template, and curvature definition scans. ML: run-heldout
+  calibrated RF on waveform shape, q_template, amplitude, and topology summaries, excluding run,
+  event id, and label-defining timing spans, with q/shape ablations and shuffled-label controls.
+  Metric: labelled-count tuple recovery, clean/violating balance, external non-tail AUC/AP, and
+  timing-tail enrichment with run-block bootstrap 95% CIs.
+- **P02f — Latent-distance nearest-neighbor leakage audit.** Test whether P02d's keyed
+  run-heldout latent-distance artifact stays honest when consumed through nearest-neighbor and
+  exemplar joins. Traditional: hand/PCA distances with run-heldout centroids, exact-neighbor
+  duplicate checks, event-key overlap checks, and amplitude/stave-stratified null joins. ML:
+  train-run-only AE latent distances in a calibrated downstream consumer with forbidden all-data
+  latent and event-shuffled controls. Metric: manual-flag AMI/purity, peak-group AMI/purity,
+  downstream delta, neighbor duplicate rate, and leakage sentinel score with run-block bootstrap
+  95% CIs.
+- **S14k — Quenching-free depth-charge monotonicity falsifier.** Strip absolute-energy language
+  away and test only raw depth-charge monotonicity across penetration depth, saturation, anomaly,
+  and topology strata. Traditional: penetration-depth ordered charge/template/P04 duplicate
+  summaries, isotonic trend tests, and veto-ladder support tables. ML: monotonic HGB or
+  isotonic-calibrated ensemble under run-heldout splits, with shuffled-depth and topology-only
+  sentinels. Metric: Kendall/Spearman monotonicity, pairwise order violation rate, abstention
+  coverage, duplicate-proxy res68, and external-proxy failure rate with run-block bootstrap 95%
+  CIs.
+- **P08d — Depth-matched pulse-shape PID null.** Test whether waveform shape retains any
+  PID-like separation after matching penetration depth, charge, current, run family, saturation,
+  and anomaly taxa. Traditional: depth-matched DeltaE-E and tail/total PSD bands with propensity
+  weights and balance tables. ML: run-heldout calibrated waveform/latent classifier with
+  charge-only, topology-only, and phase-scrambled controls. Metric: matched pseudo-PID AUC/AP,
+  fixed-efficiency purity proxy, balance residuals, Brier calibration, and null-control lift with
+  run-block bootstrap 95% CIs.

@@ -715,3 +715,24 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   support-qualified. The new tickets deepen the pulse at dropout phase, saturation onset,
   baseline-reset versus overlap, and PID null-label atoms before timing, charge, pile-up,
   baseline, dropout, PID, or energy consumers reuse those outputs.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` still reports
+  `open=11 claimed=0 done=0 failed=14`, below the 18-ready trigger. The project-aware `testbeam`
+  queue remains deep after this pass (`open=185 claimed=4 done=253 failed=7`) under concurrent
+  worker movement. The trigger was satisfied by appending four ready, non-duplicate
+  `project:testbeam` tickets: S07o raw AppA ambiguous-event timing definition lattice
+  (`1781072388.635.3a971559`), P02f latent-distance nearest-neighbor leakage audit
+  (`1781072388.645.34b21955`), S14k quenching-free depth-charge monotonicity falsifier
+  (`1781072388.662.19181f8a`), and P08d depth-matched pulse-shape PID null
+  (`1781072388.710.65f565af`).
+- Fresh synthesis: the newest result layer turns several open questions into definition and
+  leakage audits. S07j/S03f say the App.A 12,147-row weak label is not reproduced by current raw
+  HRDv CFD20, which gives 9,897 labelled events plus 5,457 ambiguous downstream-ge2 events;
+  q_template-only is too weak while shape RFs remain diagnostic unless the timing-definition
+  boundary is recovered without leakage. P02d's run-heldout latent-distance artifact is useful but
+  needs nearest-neighbor/event-key leakage controls before downstream timing, anomaly, pile-up,
+  PID, or energy consumers use it. S10g keeps current-dependent downstream excess positive after
+  anomaly matching but shows taxonomy changes the excess support. S14d blocks per-event energy
+  without material, geometry, quenching/light-yield, PID, and stopping-depth truth, so S14k and
+  P08d deliberately stay in raw monotonicity and depth-matched PID-null territory. These tickets
+  keep the pulse programme atomic across shape, timing, amplitude, saturation, pile-up, baseline,
+  dropout, PID, and energy before any global correction or label is promoted.

@@ -1445,3 +1445,44 @@ Active ready queue highlights:
   correction deltas and pulse atoms while excluding downstream timing labels from features.
   Metric: tail fraction above 5 ns, sigma68, q95_abs, q_template shift, and matched tail delta
   versus observed with paired event bootstrap CIs and composition-balance diagnostics.
+- **S03l — Cross-sample timewalk residual atom ledger.** After the newest S03e blind
+  Sample-I/Sample-II transfer and S03d shrinkage reports, explain which pulse atoms carry the
+  remaining signed timewalk residual when the frozen S03 analytic comparator is applied without
+  refitting. Traditional: freeze the S03 analytic and hierarchical-shrinkage coefficients, then
+  tabulate residual bias, sigma68, full RMS, and >5 ns tails by sample family, run, stave,
+  amplitude, peak phase, q_template, lowering, saturation, dropout/anomaly, and topology with
+  matched downstream controls. ML: train only run-held-out calibration/diagnostic layers with
+  amplitude-only, run-only, topology-only, and shuffled-target sentinels. Metric: signed residual
+  bias, sigma68/full RMS, tail fraction, pull coverage, support count, and ML-minus-traditional
+  deltas with event-paired run-block bootstrap CIs.
+- **S10o — Anomaly-residual current excess truth split.** After S10f showed P09 anomaly taxa do
+  not explain away the matched high-minus-low current excess, split the residual into beam
+  pile-up, baseline pathology, charge support drift, and topology composition components.
+  Traditional: freeze S10e/S10f matched current strata, P09 taxa, P04/P07 charge strata, and
+  downstream topology controls, then decompose the residual excess one atom at a time under
+  support-preserving matching. ML: run-held-out calibrated classifiers/regressors with
+  taxon-knockout, charge-knockout, topology-only, amplitude-only, run-only, and shuffled-current
+  sentinels. Metric: high-minus-low excess, secondary-fraction delta, charge log-shift, topology
+  composition drift, accepted support fraction, and ML-minus-traditional deltas with matched
+  run-block bootstrap CIs.
+- **P07j — Saturation knee family action bands.** Convert the conflicting P07f natural B2 knee
+  families and retained-window timing-tail nuisance into per-run-family pass, correct, abstain,
+  or veto bands before saturation outputs feed timing, charge, PID, or energy. Traditional:
+  freeze duplicate-ratio piecewise knees, retained-window/template estimators, odd/even duplicate
+  closure, and S02/S04 timing-tail tables, then define transparent action bands by saturation
+  depth, peak sample, amplitude, q_template, lowering, and anomaly support. ML: calibrate a
+  run-held-out waveform knee/action classifier with duplicate targets, event IDs, and run IDs
+  excluded, plus shuffled-target, saturation-only, amplitude-only, and run-family holdout
+  sentinels. Metric: action support fraction, charge res68/bias, timing-tail delta, q_template
+  shift, harm rate versus no correction, calibration ECE, and ML-minus-traditional deltas with
+  run-block bootstrap CIs.
+- **P04s — Dropout recovery phase-harm abstention gate.** Locate where P04g dropout-injected
+  charge recovery creates timing-phase, tail-shape, q_template, or pile-up-score harm that should
+  force abstention before recovered charge feeds P04/P07/S14/PID consumers. Traditional: freeze
+  interpolation, rising-edge Huber, and template recovery baselines, then stratify injected and
+  real dropout/anomaly candidates by missing-sample location, peak phase, amplitude, stave,
+  q_template, lowering, saturation, and P09 taxon. ML: run-held-out ExtraTrees/HGB inpainting and
+  harm calibrators with feature knockouts, dropout-location shuffles, amplitude-only, run-only,
+  and topology-only sentinels. Metric: charge res68/bias, time_abs68_samples, q_template shift,
+  tail-bias median, catastrophic harm rate, abstention support fraction, and ML-minus-traditional
+  deltas with stratified event/run-block bootstrap CIs.

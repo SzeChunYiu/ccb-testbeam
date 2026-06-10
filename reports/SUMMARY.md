@@ -453,6 +453,25 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   veto ladders mostly change acceptance and charge composition while coarse depth ordering stays
   unchanged, so energy and PID work should consume calibrated support acceptances instead of
   global energy-ordering claims.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=13`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep under concurrent worker movement and reports
+  `open=185 claimed=4 done=192 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: S03l cross-sample timewalk residual atom
+  ledger (`1781052591.513.61ea58a7`), S10o anomaly-residual current excess truth split
+  (`1781052597.584.1a7d14cf`), P07j saturation knee family action bands
+  (`1781052602.655.4be6114e`), and P04s dropout recovery phase-harm abstention gate
+  (`1781052606.726.091b76e6`).
+- Fresh synthesis: the newest readable result layer adds a portability problem rather than a
+  single production correction. S03e/S03d timewalk transfer and shrinkage reports require a
+  cross-sample residual atom ledger before waveform timing consumers reuse the analytic
+  comparator. S10f keeps a positive current excess after anomaly and charge stratification, so
+  anomaly taxa must be split from beam pile-up, baseline, charge-support, and topology truth
+  components. P07f and S02d/P07e show natural saturation knees and timing-tail effects disagree
+  by run family and correction definition, which pushes saturation recovery toward action bands
+  instead of global correction. P04g confirms dropout recovery can be strong for injected charge
+  closure, but timing-phase and tail harm must be calibrated before recovered charge feeds pile-up,
+  PID, or energy studies.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

@@ -1,0 +1,202 @@
+{
+  "study": "P10f",
+  "ticket_id": "1781024829.1351.5f391cfe",
+  "worker": "testbeam-laptop-3",
+  "title": "run64-only explicit timewalk external B2-B8 closure",
+  "reproduction": {
+    "passed": true,
+    "rows": [
+      {
+        "quantity": "S00/P10 selected B-stave pulses",
+        "expected": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II analysis selected B-stave pulses",
+        "expected": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II calibration run 64 selected B-stave pulses",
+        "expected": 14630,
+        "reproduced": 14630,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "split": "train only on run 64; evaluate held-out Sample-II analysis runs 58-63 and 65; bootstrap by held-out run",
+  "traditional_method": "P10c empirical phase template plus stave-by-amplitude-bin median explicit timewalk correction",
+  "ml_method": "P10c ridge residual correction with same-pulse amplitude, area/amplitude, peak, amplitude-bin, and stave features",
+  "p10c_downstream_reproduction": {
+    "bootstrap_unit": "heldout_run",
+    "n_bootstrap": 4000,
+    "p10c_base_sigma68_ns": 2.7866083706417037,
+    "p10c_base_sigma68_ns_ci": [
+      2.691638398310633,
+      2.888967052071283
+    ],
+    "p10c_traditional_sigma68_ns": 2.052546786008745,
+    "p10c_traditional_sigma68_ns_ci": [
+      1.9154355527039317,
+      2.246041486437465
+    ],
+    "p10c_ml_sigma68_ns": 1.9889842894541165,
+    "p10c_ml_sigma68_ns_ci": [
+      1.8686936000881005,
+      2.132624181218802
+    ],
+    "p10c_ml_shuffled_sigma68_ns": 3.149719706669927,
+    "p10c_ml_shuffled_sigma68_ns_ci": [
+      3.0258275177751477,
+      3.276062492367502
+    ],
+    "p10c_traditional_minus_base_ns": -0.7340615846329586,
+    "p10c_traditional_minus_base_ns_ci": [
+      -0.9152737540287061,
+      -0.5085879559313559
+    ],
+    "p10c_ml_minus_base_ns": -0.7976240811875874,
+    "p10c_ml_minus_base_ns_ci": [
+      -1.006532873982281,
+      -0.5819688171883298
+    ],
+    "p10c_ml_minus_traditional_ns": -0.06356249655462896,
+    "p10c_ml_minus_traditional_ns_ci": [
+      -0.20181592245492905,
+      0.10746110644340494
+    ],
+    "p10c_ml_shuffled_minus_ml_ns": 1.1607354172158106,
+    "p10c_ml_shuffled_minus_ml_ns_ci": [
+      0.8936614936089561,
+      1.4101100891171208
+    ]
+  },
+  "external_b2_b4_b6_b8_closure": {
+    "bootstrap_unit": "heldout_run",
+    "n_bootstrap": 4000,
+    "external_base_sigma68_ns": 3.2723517367772947,
+    "external_base_sigma68_ns_ci": [
+      3.0441148036692973,
+      3.5009176890327565
+    ],
+    "external_traditional_sigma68_ns": 3.651263490311195,
+    "external_traditional_sigma68_ns_ci": [
+      3.424808803140246,
+      3.8593859183400325
+    ],
+    "external_ml_sigma68_ns": 3.6361628139544253,
+    "external_ml_sigma68_ns_ci": [
+      3.4090088311456195,
+      3.8573750315503603
+    ],
+    "external_ml_shuffled_sigma68_ns": 3.8045949031181876,
+    "external_ml_shuffled_sigma68_ns_ci": [
+      3.5149855283539826,
+      4.116686356069539
+    ],
+    "external_base_downstream_sigma68_ns": 2.7872431198615786,
+    "external_base_downstream_sigma68_ns_ci": [
+      2.6922219549595745,
+      2.8932597434585148
+    ],
+    "external_traditional_downstream_sigma68_ns": 2.00785473610494,
+    "external_traditional_downstream_sigma68_ns_ci": [
+      1.8549528751919655,
+      2.2157694539008164
+    ],
+    "external_ml_downstream_sigma68_ns": 1.9675868493928352,
+    "external_ml_downstream_sigma68_ns_ci": [
+      1.854327815793948,
+      2.104561900515764
+    ],
+    "external_traditional_minus_base_ns": 0.3789117535339001,
+    "external_traditional_minus_base_ns_ci": [
+      0.16782352984101656,
+      0.6512024123417446
+    ],
+    "external_ml_minus_base_ns": 0.3638110771771307,
+    "external_ml_minus_base_ns_ci": [
+      0.1354822747441583,
+      0.6128184247583005
+    ],
+    "external_ml_minus_traditional_ns": -0.015100676356769403,
+    "external_ml_minus_traditional_ns_ci": [
+      -0.07815741464536106,
+      0.05273958516939355
+    ],
+    "external_ml_shuffled_minus_ml_ns": 0.16843208916376204,
+    "external_ml_shuffled_minus_ml_ns_ci": [
+      -0.11661628115332023,
+      0.4170420100171891
+    ]
+  },
+  "external_population": {
+    "train_all_hit_events": 207,
+    "heldout_all_hit_events": 3774,
+    "train_target_pulses": 621,
+    "b2_is_fitted_target": false
+  },
+  "traditional": {
+    "external_metric": "heldout_run_mean_all_six_B2_B4_B6_B8_pairwise_sigma68_ns",
+    "external_value": 3.651263490311195,
+    "external_ci": [
+      3.424808803140246,
+      3.8593859183400325
+    ],
+    "fallback_bins": 15
+  },
+  "ml": {
+    "external_metric": "heldout_run_mean_all_six_B2_B4_B6_B8_pairwise_sigma68_ns",
+    "external_value": 3.6361628139544253,
+    "external_ci": [
+      3.4090088311456195,
+      3.8573750315503603
+    ],
+    "best": {
+      "feature_set": "amp_bin_by_stave",
+      "alpha": 100.0,
+      "selection": "predeclared_single_train_run_default"
+    }
+  },
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_overlap",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "b2_rows_used_in_target_fit",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "run_event_or_target_features_used",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "ml_shuffled_target_worse_than_real_external",
+      "value": 0.16843208916376204,
+      "pass": true
+    },
+    {
+      "check": "too_good_external_sigma68_lt_1ns",
+      "value": 0.0,
+      "pass": true
+    }
+  ],
+  "conclusion": "The run64-only correction does not give a resolved improvement on the B2-inclusive all-hit closure.",
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "8619515b20fbfeb3a66b29b4ede17cc7614d28bf",
+  "elapsed_sec": 45.14647340774536
+}

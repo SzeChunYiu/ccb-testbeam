@@ -1,0 +1,285 @@
+{
+  "study": "P10e",
+  "ticket_id": "1781025482.1523.5eba101d",
+  "worker": "testbeam-laptop-2",
+  "title": "B2-included explicit correction closure",
+  "reproduction": {
+    "passed": true,
+    "rows": [
+      {
+        "quantity": "S00/P10 selected B-stave pulses",
+        "expected": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II analysis selected B-stave pulses",
+        "expected": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II calibration run 64 selected B-stave pulses",
+        "expected": 14630,
+        "reproduced": 14630,
+        "delta": 0,
+        "pass": true
+      }
+    ],
+    "run64_all_hit_events": 207,
+    "heldout_all_hit_events": 3774,
+    "p10f_reference": {
+      "ticket_id": "1781024829.1351.5f391cfe",
+      "external_base_sigma68_ns": 3.2723528480529787,
+      "external_traditional_sigma68_ns": 3.6512647875221056,
+      "external_ml_sigma68_ns": 3.6361640839485645
+    }
+  },
+  "split": "train only on run 64; evaluate held-out Sample-II analysis runs 58-63 and 65; bootstrap by held-out run",
+  "traditional_method": "run64 empirical phase template plus stave-by-amplitude-bin median residual correction",
+  "ml_method": "ridge residual correction with same-pulse amplitude, area/amplitude, peak, amplitude-bin, and target-stave one-hot features",
+  "b2_heldout_external_closure": {
+    "bootstrap_unit": "heldout_run",
+    "n_bootstrap": 4000,
+    "b2_heldout_base_sigma68_ns": 3.2723517367772947,
+    "b2_heldout_base_sigma68_ns_ci": [
+      3.0441148036692973,
+      3.5126264923931583
+    ],
+    "b2_heldout_traditional_sigma68_ns": 3.651263490311193,
+    "b2_heldout_traditional_sigma68_ns_ci": [
+      3.4462149322207822,
+      3.860236049116666
+    ],
+    "b2_heldout_ml_sigma68_ns": 3.6361628139544324,
+    "b2_heldout_ml_sigma68_ns_ci": [
+      3.424738582618631,
+      3.8536412380816985
+    ],
+    "b2_heldout_ml_shuffled_sigma68_ns": 3.31312557242597,
+    "b2_heldout_ml_shuffled_sigma68_ns_ci": [
+      3.136046665646017,
+      3.503789002774829
+    ],
+    "b2_heldout_traditional_minus_base_ns": 0.3789117535338983,
+    "b2_heldout_traditional_minus_base_ns_ci": [
+      0.17491614742027106,
+      0.6465058519918118
+    ],
+    "b2_heldout_ml_minus_base_ns": 0.3638110771771378,
+    "b2_heldout_ml_minus_base_ns_ci": [
+      0.13714852255657353,
+      0.6147716396505182
+    ],
+    "b2_heldout_ml_minus_traditional_ns": -0.015100676356760458,
+    "b2_heldout_ml_minus_traditional_ns_ci": [
+      -0.07815958063028994,
+      0.05229140755203814
+    ],
+    "b2_heldout_ml_shuffled_minus_ml_ns": -0.32303724152846264,
+    "b2_heldout_ml_shuffled_minus_ml_ns_ci": [
+      -0.5679951021193572,
+      -0.08511521182682324
+    ]
+  },
+  "b2_included_external_closure": {
+    "bootstrap_unit": "heldout_run",
+    "n_bootstrap": 4000,
+    "b2_included_base_sigma68_ns": 3.2723517367772947,
+    "b2_included_base_sigma68_ns_ci": [
+      3.048203575815237,
+      3.512340151741295
+    ],
+    "b2_included_traditional_sigma68_ns": 2.3523852156111835,
+    "b2_included_traditional_sigma68_ns_ci": [
+      2.171946419553599,
+      2.541759343573092
+    ],
+    "b2_included_ml_sigma68_ns": 2.60597879978216,
+    "b2_included_ml_sigma68_ns_ci": [
+      2.4147351885229043,
+      2.8151465809090754
+    ],
+    "b2_included_ml_shuffled_sigma68_ns": 3.619296525374154,
+    "b2_included_ml_shuffled_sigma68_ns_ci": [
+      3.3820765829094794,
+      3.8611932931144417
+    ],
+    "b2_included_traditional_minus_base_ns": -0.919966521166111,
+    "b2_included_traditional_minus_base_ns_ci": [
+      -1.0131765411611966,
+      -0.8003815769045045
+    ],
+    "b2_included_ml_minus_base_ns": -0.6663729369951353,
+    "b2_included_ml_minus_base_ns_ci": [
+      -0.7725583711275189,
+      -0.5620809364792723
+    ],
+    "b2_included_ml_minus_traditional_ns": 0.2535935841709758,
+    "b2_included_ml_minus_traditional_ns_ci": [
+      0.1701858114726756,
+      0.3432984760616407
+    ],
+    "b2_included_ml_shuffled_minus_ml_ns": 1.013317725591994,
+    "b2_included_ml_shuffled_minus_ml_ns_ci": [
+      0.9198340540477038,
+      1.099891861481428
+    ]
+  },
+  "paired_b2_included_minus_heldout": {
+    "bootstrap_unit": "heldout_run",
+    "traditional_included_minus_heldout_ns": -1.2988782747000094,
+    "traditional_included_minus_heldout_ns_ci": [
+      -1.4915214986764436,
+      -1.1321913645625998
+    ],
+    "ml_included_minus_heldout_ns": -1.030184014172273,
+    "ml_included_minus_heldout_ns_ci": [
+      -1.2046730235258958,
+      -0.869532517852801
+    ],
+    "ml_included_minus_traditional_included_ns": 0.2535935841709758,
+    "ml_included_minus_traditional_included_ns_ci": [
+      0.17258970959567255,
+      0.34220785412628246
+    ]
+  },
+  "mode_meta": {
+    "b2_heldout": {
+      "mode": "b2_heldout",
+      "target_staves": [
+        "B4",
+        "B6",
+        "B8"
+      ],
+      "train_runs": [
+        64
+      ],
+      "train_target_pulses": 621,
+      "b2_train_target_pulses": 0,
+      "traditional_bin_fallbacks": 15,
+      "ml_best": {
+        "feature_set": "amp_bin_by_stave",
+        "alpha": 100.0,
+        "selection": "predeclared_single_train_run_default"
+      },
+      "population": "external_b2_b4_b6_b8_all_hit"
+    },
+    "b2_included": {
+      "mode": "b2_included",
+      "target_staves": [
+        "B2",
+        "B4",
+        "B6",
+        "B8"
+      ],
+      "train_runs": [
+        64
+      ],
+      "train_target_pulses": 828,
+      "b2_train_target_pulses": 207,
+      "traditional_bin_fallbacks": 19,
+      "ml_best": {
+        "feature_set": "amp_bin_by_stave",
+        "alpha": 100.0,
+        "selection": "predeclared_single_train_run_default"
+      },
+      "population": "external_b2_b4_b6_b8_all_hit"
+    }
+  },
+  "traditional": {
+    "external_metric": "heldout_run_mean_all_six_B2_B4_B6_B8_pairwise_sigma68_ns",
+    "b2_heldout_value": 3.651263490311193,
+    "b2_heldout_ci": [
+      3.4462149322207822,
+      3.860236049116666
+    ],
+    "b2_included_value": 2.3523852156111835,
+    "b2_included_ci": [
+      2.171946419553599,
+      2.541759343573092
+    ],
+    "included_minus_heldout": -1.2988782747000094,
+    "included_minus_heldout_ci": [
+      -1.4915214986764436,
+      -1.1321913645625998
+    ]
+  },
+  "ml": {
+    "external_metric": "heldout_run_mean_all_six_B2_B4_B6_B8_pairwise_sigma68_ns",
+    "b2_heldout_value": 3.6361628139544324,
+    "b2_heldout_ci": [
+      3.424738582618631,
+      3.8536412380816985
+    ],
+    "b2_included_value": 2.60597879978216,
+    "b2_included_ci": [
+      2.4147351885229043,
+      2.8151465809090754
+    ],
+    "included_minus_heldout": -1.030184014172273,
+    "included_minus_heldout_ci": [
+      -1.2046730235258958,
+      -0.869532517852801
+    ],
+    "shuffled_target_value": 3.619296525374154,
+    "shuffled_minus_real": 1.013317725591994,
+    "shuffled_minus_real_ci": [
+      0.9198340540477038,
+      1.099891861481428
+    ]
+  },
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_overlap",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "b2_heldout_b2_rows_used_in_target_fit",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "b2_included_b2_rows_used_in_target_fit",
+      "value": 207.0,
+      "pass": true
+    },
+    {
+      "check": "run_event_or_target_features_used",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "p10f_traditional_reproduction_abs_delta_ns",
+      "value": 1.2972109124653741e-06,
+      "pass": true
+    },
+    {
+      "check": "p10f_ml_reproduction_abs_delta_ns",
+      "value": 1.2699941320803987e-06,
+      "pass": true
+    },
+    {
+      "check": "b2_included_ml_shuffled_target_worse_than_real",
+      "value": 1.013317725591994,
+      "pass": true
+    },
+    {
+      "check": "too_good_external_sigma68_lt_1ns",
+      "value": 0.0,
+      "pass": true
+    }
+  ],
+  "conclusion": "Including B2 as a fitted target improves the external all-six-pair closure relative to the B2-held-out correction.",
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "59aaa135cc66d8c8436398a612a2ca572620b9fb",
+  "elapsed_sec": 76.70423150062561
+}

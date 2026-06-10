@@ -1,0 +1,221 @@
+{
+  "ticket_id": "1781027807.3490.5cdd4b0b",
+  "worker": "testbeam-laptop-1",
+  "study_id": "P08b",
+  "title": "calibration-backed PID weak-label upgrade",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "b542c0dac557edabee40e1e78dec370099807ff3",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "calibrated_label_definition": {
+    "weak_label": {
+      "positive_name": "high_calibrated_range_energy_residual",
+      "negative_name": "low_calibrated_range_energy_residual",
+      "within_run_depth_quantile": 0.25,
+      "min_atom_class_rows": 12,
+      "min_odd_total_charge": 100.0,
+      "min_even_total_charge": 100.0
+    },
+    "calibration": {
+      "calibration_groups": [
+        "sample_i_calib",
+        "sample_ii_calib"
+      ],
+      "calibration_rows": 249681,
+      "anchors_mev": {
+        "B2": 40.041411846408614,
+        "B4": 72.99642627825797,
+        "B6": 97.46806692646969,
+        "B8": 117.96480450815572
+      },
+      "label_source": "odd duplicate-readout PSTAR/depth charge quantile residual, thresholded within run/depth"
+    }
+  },
+  "calibrated_label_support": {
+    "n_atoms": 122,
+    "n_labeled_rows": 289626,
+    "atom_columns": [
+      "run",
+      "depth_idx"
+    ]
+  },
+  "traditional": {
+    "method": "leave-one-run-out logistic over calibrated even-readout charge-depth, topology, saturation, and range-energy variables",
+    "roc_auc": 0.985552736677294,
+    "roc_auc_ci": [
+      0.9771724737088623,
+      0.9922167077055629
+    ],
+    "average_precision": 0.9833750721618818
+  },
+  "ml": {
+    "method": "histogram gradient boosting over raw normalized B2 waveform samples, hand-shape features, and train-only PCA latents",
+    "roc_auc": 0.9859412898142259,
+    "roc_auc_ci": [
+      0.9782924860426851,
+      0.9925479806921873
+    ],
+    "average_precision": 0.9872860109822869
+  },
+  "ml_vs_traditional": {
+    "right_minus_left_auc": 0.00038855313693186844,
+    "ci": [
+      -0.0031236422288671486,
+      0.004083323766380595
+    ],
+    "bootstrap_valid": 400
+  },
+  "p08a_comparison": {
+    "p08a_traditional_topology_proxy_auc": 1.0,
+    "p08a_ml_waveform_auc": 0.8478302864659858,
+    "this_topology_only_auc": 0.8091416293809207,
+    "topology_auc_drop_vs_p08a_traditional": -0.1908583706190793,
+    "this_ml_auc_minus_p08a_ml_auc": 0.1381110033482401
+  },
+  "leakage_hunt": [
+    {
+      "probe": "topology-only logistic",
+      "roc_auc": 0.8091416293809207,
+      "average_precision": 0.7400551494677138,
+      "interpretation": "Direct P08a-style topology sentinel; high values would mean the calibrated label still leaks penetration topology."
+    },
+    {
+      "probe": "even-charge calibration-proxy logistic",
+      "roc_auc": 0.985196964324116,
+      "average_precision": 0.982574819983445,
+      "interpretation": "Duplicate-readout control: uses only the allowed even-readout version of the odd calibrated label source; high values mean the weak label is mostly charge-scale closure."
+    },
+    {
+      "probe": "forbidden odd-energy-label logistic",
+      "roc_auc": 0.9914590224015328,
+      "average_precision": 0.991923184468637,
+      "interpretation": "Ceiling probe using the duplicate odd-readout calibrated residual that defines the weak label."
+    },
+    {
+      "probe": "run-only logistic",
+      "roc_auc": 0.5,
+      "average_precision": 0.5,
+      "interpretation": "Strict leave-one-run-out run-id sentinel; unseen held-out runs collapse to the intercept."
+    },
+    {
+      "probe": "group/event-order logistic",
+      "roc_auc": 0.478026627355614,
+      "average_precision": 0.4780505010459936,
+      "interpretation": "Sample group plus event-order sentinel for run-family/rate-drift confounding."
+    },
+    {
+      "probe": "shuffled-label waveform HGB",
+      "roc_auc": 0.4882469532898196,
+      "average_precision": 0.47467425055895435,
+      "interpretation": "Same waveform HGB pipeline with shuffled training labels; should fall near chance."
+    },
+    {
+      "probe": "ML-minus-traditional paired run bootstrap",
+      "roc_auc": 0.00038855313693186844,
+      "average_precision": null,
+      "interpretation": "Positive values favor waveform/latent ML; CI is stored in result.json."
+    }
+  ],
+  "primary_interpretation": "Calibration-backed weak-label upgrade: P08a's perfect topology proxy collapses under a duplicate-readout range-energy residual label, and B2 waveform/latent ML does not beat the calibrated charge-depth baseline.",
+  "benchmark": {
+    "benchmark_rows_after_balancing": 29134,
+    "evaluated_rows": 29134,
+    "evaluated_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "skipped_runs": [],
+    "positive_fraction": 0.5,
+    "ml_vs_traditional": {
+      "right_minus_left_auc": 0.00038855313693186844,
+      "ci": [
+        -0.0031236422288671486,
+        0.004083323766380595
+      ],
+      "bootstrap_valid": 400
+    },
+    "topology_vs_p08a": {
+      "p08a_traditional_topology_proxy_auc": 1.0,
+      "p08a_ml_waveform_auc": 0.8478302864659858,
+      "this_topology_only_auc": 0.8091416293809207,
+      "topology_auc_drop_vs_p08a_traditional": -0.1908583706190793,
+      "this_ml_auc_minus_p08a_ml_auc": 0.1381110033482401
+    }
+  },
+  "input_file_count": 33,
+  "runtime_sec": 83.7
+}

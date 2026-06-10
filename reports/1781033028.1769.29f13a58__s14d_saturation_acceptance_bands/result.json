@@ -1,0 +1,974 @@
+{
+  "study": "S14d",
+  "ticket_id": "1781033028.1769.29f13a58",
+  "worker": "testbeam-laptop-3",
+  "title": "saturated charge correction acceptance bands",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "n_saturated_heldout_events": 106217,
+  "primary_metric": "held-out saturated event energy-proxy res68, run-bootstrap 95% CI",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "saturated_energy_res68": 0.0182769327627102,
+    "saturated_energy_res68_ci95": [
+      0.017167606514002735,
+      0.020763694131705136
+    ],
+    "saturated_charge_res68": 0.051136482071173724,
+    "all_heldout_energy_res68": 0.013137727206483428
+  },
+  "traditional_template_worsens_observed_nominal": false,
+  "traditional_worsening_geometries": [],
+  "accepted_band_count": 12,
+  "method_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": -0.0017659476,
+      "saturated_energy_res68": 0.0182769328,
+      "saturated_full_rms_frac": 0.0463367488,
+      "saturated_tail_gt10pct": 0.0374328027,
+      "saturated_tail_gt25pct": 0.0058182777,
+      "saturated_mae_proxy": 1.1353984324,
+      "saturated_charge_res68": 0.0511364821,
+      "all_heldout_energy_res68": 0.0131377272,
+      "unsaturated_energy_res68": 0.0107743012,
+      "saturated_bias_ci95": [
+        -0.0026639836,
+        -0.0012782131
+      ],
+      "saturated_energy_res68_ci95": [
+        0.0171676065,
+        0.0207636941
+      ],
+      "saturated_full_rms_ci95": [
+        0.0395161435,
+        0.058560996
+      ],
+      "saturated_mae_ci95": [
+        1.0156606708,
+        1.3697273224
+      ],
+      "traditional_worsens_observed": false
+    },
+    {
+      "method": "p07_p04_corrected",
+      "family": "ml_p07_p04_duplicate",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": 0.0,
+      "saturated_energy_res68": 0.0269614658,
+      "saturated_full_rms_frac": 0.0551787807,
+      "saturated_tail_gt10pct": 0.0223033978,
+      "saturated_tail_gt25pct": 0.008350829,
+      "saturated_mae_proxy": 1.3650487211,
+      "saturated_charge_res68": 0.5435255273,
+      "all_heldout_energy_res68": 0.0205226663,
+      "unsaturated_energy_res68": 0.017355436,
+      "saturated_bias_ci95": [
+        -0.0011039241,
+        0.0004364523
+      ],
+      "saturated_energy_res68_ci95": [
+        0.0263526618,
+        0.0281223909
+      ],
+      "saturated_full_rms_ci95": [
+        0.0453310667,
+        0.0676890957
+      ],
+      "saturated_mae_ci95": [
+        1.2716128712,
+        1.523866
+      ],
+      "traditional_worsens_observed": false
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": -0.0151358974,
+      "saturated_energy_res68": 0.045990123,
+      "saturated_full_rms_frac": 0.0779062149,
+      "saturated_tail_gt10pct": 0.1573665232,
+      "saturated_tail_gt25pct": 0.0078612651,
+      "saturated_mae_proxy": 2.4574375916,
+      "saturated_charge_res68": 0.1321434789,
+      "all_heldout_energy_res68": 0.0320307417,
+      "unsaturated_energy_res68": 0.0244251562,
+      "saturated_bias_ci95": [
+        -0.0168297519,
+        -0.0113552078
+      ],
+      "saturated_energy_res68_ci95": [
+        0.043590086,
+        0.0498328587
+      ],
+      "saturated_full_rms_ci95": [
+        0.0752387385,
+        0.0833241624
+      ],
+      "saturated_mae_ci95": [
+        2.3740407435,
+        2.5791371479
+      ],
+      "traditional_worsens_observed": false
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": -0.0069885697,
+      "saturated_energy_res68": 0.052322841,
+      "saturated_full_rms_frac": 0.0684214516,
+      "saturated_tail_gt10pct": 0.0433358125,
+      "saturated_tail_gt25pct": 0.0100548876,
+      "saturated_mae_proxy": 2.142683599,
+      "saturated_charge_res68": 0.0553437416,
+      "all_heldout_energy_res68": 0.0460759744,
+      "unsaturated_energy_res68": 0.0424054051,
+      "saturated_bias_ci95": [
+        -0.0127512539,
+        0.0
+      ],
+      "saturated_energy_res68_ci95": [
+        0.0510663062,
+        0.0548332402
+      ],
+      "saturated_full_rms_ci95": [
+        0.0588469252,
+        0.0868702207
+      ],
+      "saturated_mae_ci95": [
+        2.0124721317,
+        2.3839931554
+      ],
+      "traditional_worsens_observed": false
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": -0.0253769464,
+      "saturated_energy_res68": 0.1506472222,
+      "saturated_full_rms_frac": 0.1719000254,
+      "saturated_tail_gt10pct": 0.4816554789,
+      "saturated_tail_gt25pct": 0.1695773746,
+      "saturated_mae_proxy": 6.7415346681,
+      "saturated_charge_res68": 0.2781619783,
+      "all_heldout_energy_res68": 0.0989420157,
+      "unsaturated_energy_res68": 0.083186807,
+      "saturated_bias_ci95": [
+        -0.035519417,
+        -0.0160871084
+      ],
+      "saturated_energy_res68_ci95": [
+        0.1445460003,
+        0.1629584182
+      ],
+      "saturated_full_rms_ci95": [
+        0.1643451823,
+        0.1859818982
+      ],
+      "saturated_mae_ci95": [
+        6.4804469231,
+        7.1531308782
+      ],
+      "traditional_worsens_observed": false
+    },
+    {
+      "method": "observed_even_charge",
+      "family": "traditional_observed",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": -0.3767216037,
+      "saturated_energy_res68": 0.3978383019,
+      "saturated_full_rms_frac": 0.3697649917,
+      "saturated_tail_gt10pct": 0.9901898943,
+      "saturated_tail_gt25pct": 0.957615071,
+      "saturated_mae_proxy": 19.0379670384,
+      "saturated_charge_res68": 2.767588028e+298,
+      "all_heldout_energy_res68": 0.2985288231,
+      "unsaturated_energy_res68": 0.1950404228,
+      "saturated_bias_ci95": [
+        -0.3821040856,
+        -0.3693037892
+      ],
+      "saturated_energy_res68_ci95": [
+        0.3908199349,
+        0.4022536537
+      ],
+      "saturated_full_rms_ci95": [
+        0.3622878645,
+        0.373943493
+      ],
+      "saturated_mae_ci95": [
+        18.5153977293,
+        19.3480284251
+      ],
+      "traditional_worsens_observed": false
+    },
+    {
+      "method": "traditional_template_corrected",
+      "family": "traditional_rising_edge_template",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": -0.3767216037,
+      "saturated_energy_res68": 0.3978383019,
+      "saturated_full_rms_frac": 0.3698053777,
+      "saturated_tail_gt10pct": 0.9901145768,
+      "saturated_tail_gt25pct": 0.9589896156,
+      "saturated_mae_proxy": 19.0481408221,
+      "saturated_charge_res68": 1.79856763e+273,
+      "all_heldout_energy_res68": 0.2985763429,
+      "unsaturated_energy_res68": 0.1947479945,
+      "saturated_bias_ci95": [
+        -0.3815242066,
+        -0.3705758626
+      ],
+      "saturated_energy_res68_ci95": [
+        0.3916839163,
+        0.4019595915
+      ],
+      "saturated_full_rms_ci95": [
+        0.363161707,
+        0.3731679641
+      ],
+      "saturated_mae_ci95": [
+        18.6199163778,
+        19.3133804754
+      ],
+      "traditional_worsens_observed": false
+    },
+    {
+      "method": "template_residual_mlp",
+      "family": "neural_template_residual",
+      "n_saturated": 106217,
+      "n_heldout": 332852,
+      "n_unsaturated_control": 226635,
+      "saturated_bias_frac": -0.3767216037,
+      "saturated_energy_res68": 0.3978383019,
+      "saturated_full_rms_frac": 0.3698053777,
+      "saturated_tail_gt10pct": 0.9901145768,
+      "saturated_tail_gt25pct": 0.9589896156,
+      "saturated_mae_proxy": 19.0481408221,
+      "saturated_charge_res68": 0.9876797095,
+      "all_heldout_energy_res68": 0.2985763429,
+      "unsaturated_energy_res68": 0.1946265372,
+      "saturated_bias_ci95": [
+        -0.3823201684,
+        -0.369761807
+      ],
+      "saturated_energy_res68_ci95": [
+        0.3913502032,
+        0.4024740093
+      ],
+      "saturated_full_rms_ci95": [
+        0.3627883425,
+        0.3734834357
+      ],
+      "saturated_mae_ci95": [
+        18.5901497722,
+        19.3320888663
+      ],
+      "traditional_worsens_observed": false
+    }
+  ],
+  "acceptance_bands": [
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "observed_even_charge",
+      "n_saturated": 102060,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 194424,
+      "saturated_energy_res68": 0.3986310206,
+      "saturated_energy_res68_ci95": [
+        0.3930736066,
+        0.4025075285
+      ],
+      "matched_unsat_energy_res68": 0.244187664,
+      "matched_unsat_energy_res68_ci95": [
+        0.2368680448,
+        0.2502668551
+      ],
+      "sat_minus_unsat_res68": 0.1544433565,
+      "sat_minus_unsat_res68_ci95": [
+        0.1429228407,
+        0.163660216
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "traditional_template_corrected",
+      "n_saturated": 102060,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 194424,
+      "saturated_energy_res68": 0.3986310206,
+      "saturated_energy_res68_ci95": [
+        0.3933606535,
+        0.4029229279
+      ],
+      "matched_unsat_energy_res68": 0.2442164045,
+      "matched_unsat_energy_res68_ci95": [
+        0.2366491005,
+        0.2503073434
+      ],
+      "sat_minus_unsat_res68": 0.1544146161,
+      "sat_minus_unsat_res68_ci95": [
+        0.1430558401,
+        0.1624963997
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "p07_p04_corrected",
+      "n_saturated": 102060,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 194424,
+      "saturated_energy_res68": 0.0271001292,
+      "saturated_energy_res68_ci95": [
+        0.0265719762,
+        0.0282429714
+      ],
+      "matched_unsat_energy_res68": 0.0205501256,
+      "matched_unsat_energy_res68_ci95": [
+        0.0197926049,
+        0.0210283832
+      ],
+      "sat_minus_unsat_res68": 0.0065500036,
+      "sat_minus_unsat_res68_ci95": [
+        0.0056528049,
+        0.0078600886
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "gradient_boosted_trees",
+      "n_saturated": 102060,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 194424,
+      "saturated_energy_res68": 0.0183457637,
+      "saturated_energy_res68_ci95": [
+        0.0171481286,
+        0.0210714159
+      ],
+      "matched_unsat_energy_res68": 0.0135295791,
+      "matched_unsat_energy_res68_ci95": [
+        0.0132645157,
+        0.0138042688
+      ],
+      "sat_minus_unsat_res68": 0.0048161845,
+      "sat_minus_unsat_res68_ci95": [
+        0.0036187893,
+        0.0073136472
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B2",
+      "method": "observed_even_charge",
+      "n_saturated": 1564,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 13689,
+      "saturated_energy_res68": 0.2276756737,
+      "saturated_energy_res68_ci95": [
+        0.2259404032,
+        0.22967166
+      ],
+      "matched_unsat_energy_res68": 0.1469565509,
+      "matched_unsat_energy_res68_ci95": [
+        0.1284094408,
+        0.1537283046
+      ],
+      "sat_minus_unsat_res68": 0.0807191228,
+      "sat_minus_unsat_res68_ci95": [
+        0.0727000792,
+        0.1008575637
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B2",
+      "method": "traditional_template_corrected",
+      "n_saturated": 1564,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 13689,
+      "saturated_energy_res68": 0.2346073654,
+      "saturated_energy_res68_ci95": [
+        0.2336471986,
+        0.2370088461
+      ],
+      "matched_unsat_energy_res68": 0.1546127052,
+      "matched_unsat_energy_res68_ci95": [
+        0.1359943003,
+        0.1613236818
+      ],
+      "sat_minus_unsat_res68": 0.0799946602,
+      "sat_minus_unsat_res68_ci95": [
+        0.0728695709,
+        0.0986939137
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B2",
+      "method": "p07_p04_corrected",
+      "n_saturated": 1564,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 13689,
+      "saturated_energy_res68": 0.0262544876,
+      "saturated_energy_res68_ci95": [
+        0.024601637,
+        0.0275212224
+      ],
+      "matched_unsat_energy_res68": 0.0162035948,
+      "matched_unsat_energy_res68_ci95": [
+        0.0157712196,
+        0.017707247
+      ],
+      "sat_minus_unsat_res68": 0.0100508928,
+      "sat_minus_unsat_res68_ci95": [
+        0.0069519842,
+        0.0117024961
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B2",
+      "method": "gradient_boosted_trees",
+      "n_saturated": 1564,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 13689,
+      "saturated_energy_res68": 0.0154252724,
+      "saturated_energy_res68_ci95": [
+        0.0144194611,
+        0.0167700277
+      ],
+      "matched_unsat_energy_res68": 0.014705252,
+      "matched_unsat_energy_res68_ci95": [
+        0.0129961002,
+        0.015560994
+      ],
+      "sat_minus_unsat_res68": 0.0007200204,
+      "sat_minus_unsat_res68_ci95": [
+        -0.0005702818,
+        0.0035035996
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B4",
+      "method": "observed_even_charge",
+      "n_saturated": 73,
+      "n_runs": 16,
+      "matched_unsat_control_rows": 13054,
+      "saturated_energy_res68": 0.2262147897,
+      "saturated_energy_res68_ci95": [
+        0.2210251527,
+        0.2407244762
+      ],
+      "matched_unsat_energy_res68": 0.1594582693,
+      "matched_unsat_energy_res68_ci95": [
+        0.1235200871,
+        0.1594582693
+      ],
+      "sat_minus_unsat_res68": 0.0667565204,
+      "sat_minus_unsat_res68_ci95": [
+        0.0622556357,
+        0.1146305068
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B4",
+      "method": "traditional_template_corrected",
+      "n_saturated": 73,
+      "n_runs": 16,
+      "matched_unsat_control_rows": 13054,
+      "saturated_energy_res68": 0.233159593,
+      "saturated_energy_res68_ci95": [
+        0.2282655685,
+        0.2480369804
+      ],
+      "matched_unsat_energy_res68": 0.1670022194,
+      "matched_unsat_energy_res68_ci95": [
+        0.1339402709,
+        0.1670022194
+      ],
+      "sat_minus_unsat_res68": 0.0661573736,
+      "sat_minus_unsat_res68_ci95": [
+        0.0616875528,
+        0.1069395819
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B4",
+      "method": "p07_p04_corrected",
+      "n_saturated": 73,
+      "n_runs": 16,
+      "matched_unsat_control_rows": 13054,
+      "saturated_energy_res68": 0.0166742944,
+      "saturated_energy_res68_ci95": [
+        0.0126314804,
+        0.0261515864
+      ],
+      "matched_unsat_energy_res68": 0.0173505849,
+      "matched_unsat_energy_res68_ci95": [
+        0.0153933149,
+        0.0177800434
+      ],
+      "sat_minus_unsat_res68": -0.0006762905,
+      "sat_minus_unsat_res68_ci95": [
+        -0.0042729403,
+        0.0087792537
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B4",
+      "saturated_stave": "B4",
+      "method": "gradient_boosted_trees",
+      "n_saturated": 73,
+      "n_runs": 16,
+      "matched_unsat_control_rows": 13054,
+      "saturated_energy_res68": 0.0109847449,
+      "saturated_energy_res68_ci95": [
+        0.0074263569,
+        0.0165491265
+      ],
+      "matched_unsat_energy_res68": 0.0125684441,
+      "matched_unsat_energy_res68_ci95": [
+        0.0101013319,
+        0.0137532307
+      ],
+      "sat_minus_unsat_res68": -0.0015836992,
+      "sat_minus_unsat_res68_ci95": [
+        -0.0051646909,
+        0.0035389265
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B6",
+      "saturated_stave": "B2",
+      "method": "observed_even_charge",
+      "n_saturated": 703,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 8686,
+      "saturated_energy_res68": 0.1355498948,
+      "saturated_energy_res68_ci95": [
+        0.1332058669,
+        0.1370391263
+      ],
+      "matched_unsat_energy_res68": 0.0721255328,
+      "matched_unsat_energy_res68_ci95": [
+        0.0689031786,
+        0.081408024
+      ],
+      "sat_minus_unsat_res68": 0.0634243621,
+      "sat_minus_unsat_res68_ci95": [
+        0.0542610047,
+        0.0663762598
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B6",
+      "saturated_stave": "B2",
+      "method": "traditional_template_corrected",
+      "n_saturated": 703,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 8686,
+      "saturated_energy_res68": 0.1397762456,
+      "saturated_energy_res68_ci95": [
+        0.1375775716,
+        0.1411719171
+      ],
+      "matched_unsat_energy_res68": 0.0756982879,
+      "matched_unsat_energy_res68_ci95": [
+        0.0693205863,
+        0.0858748965
+      ],
+      "sat_minus_unsat_res68": 0.0640779578,
+      "sat_minus_unsat_res68_ci95": [
+        0.0541140327,
+        0.0697590791
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B6",
+      "saturated_stave": "B2",
+      "method": "p07_p04_corrected",
+      "n_saturated": 703,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 8686,
+      "saturated_energy_res68": 0.0110192425,
+      "saturated_energy_res68_ci95": [
+        0.0094480166,
+        0.0123201244
+      ],
+      "matched_unsat_energy_res68": 0.0098945798,
+      "matched_unsat_energy_res68_ci95": [
+        0.0078142972,
+        0.0112352781
+      ],
+      "sat_minus_unsat_res68": 0.0011246627,
+      "sat_minus_unsat_res68_ci95": [
+        -0.0016831718,
+        0.0044579682
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B6",
+      "saturated_stave": "B2",
+      "method": "gradient_boosted_trees",
+      "n_saturated": 703,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 8686,
+      "saturated_energy_res68": 0.0094421116,
+      "saturated_energy_res68_ci95": [
+        0.0086898485,
+        0.0103922299
+      ],
+      "matched_unsat_energy_res68": 0.0074045231,
+      "matched_unsat_energy_res68_ci95": [
+        0.0068097712,
+        0.0089370786
+      ],
+      "sat_minus_unsat_res68": 0.0020375885,
+      "sat_minus_unsat_res68_ci95": [
+        0.0003954031,
+        0.0029901824
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B8",
+      "saturated_stave": "B2",
+      "method": "observed_even_charge",
+      "n_saturated": 354,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 5412,
+      "saturated_energy_res68": 0.1015621947,
+      "saturated_energy_res68_ci95": [
+        0.0996036953,
+        0.1036616043
+      ],
+      "matched_unsat_energy_res68": 0.0612078408,
+      "matched_unsat_energy_res68_ci95": [
+        0.0507893994,
+        0.0652940981
+      ],
+      "sat_minus_unsat_res68": 0.0403543539,
+      "sat_minus_unsat_res68_ci95": [
+        0.0368458408,
+        0.0510167343
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B8",
+      "saturated_stave": "B2",
+      "method": "traditional_template_corrected",
+      "n_saturated": 354,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 5412,
+      "saturated_energy_res68": 0.1047967215,
+      "saturated_energy_res68_ci95": [
+        0.1029145083,
+        0.1069785165
+      ],
+      "matched_unsat_energy_res68": 0.0645876501,
+      "matched_unsat_energy_res68_ci95": [
+        0.0535335423,
+        0.0684586589
+      ],
+      "sat_minus_unsat_res68": 0.0402090714,
+      "sat_minus_unsat_res68_ci95": [
+        0.0365287589,
+        0.0521719975
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B8",
+      "saturated_stave": "B2",
+      "method": "p07_p04_corrected",
+      "n_saturated": 354,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 5412,
+      "saturated_energy_res68": 0.0093687163,
+      "saturated_energy_res68_ci95": [
+        0.0076520323,
+        0.0107578903
+      ],
+      "matched_unsat_energy_res68": 0.0067328462,
+      "matched_unsat_energy_res68_ci95": [
+        0.0060661089,
+        0.0084337191
+      ],
+      "sat_minus_unsat_res68": 0.0026358701,
+      "sat_minus_unsat_res68_ci95": [
+        -0.0001764114,
+        0.0044902216
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "high_20nA",
+      "depth_stave": "B8",
+      "saturated_stave": "B2",
+      "method": "gradient_boosted_trees",
+      "n_saturated": 354,
+      "n_runs": 19,
+      "matched_unsat_control_rows": 5412,
+      "saturated_energy_res68": 0.0077467473,
+      "saturated_energy_res68_ci95": [
+        0.0074106208,
+        0.0088301417
+      ],
+      "matched_unsat_energy_res68": 0.0063888267,
+      "matched_unsat_energy_res68_ci95": [
+        0.0059416119,
+        0.0077526766
+      ],
+      "sat_minus_unsat_res68": 0.0013579206,
+      "sat_minus_unsat_res68_ci95": [
+        0.0001870219,
+        0.002594791
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "low_2nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "observed_even_charge",
+      "n_saturated": 1389,
+      "n_runs": 2,
+      "matched_unsat_control_rows": 4312,
+      "saturated_energy_res68": 0.4072958495,
+      "saturated_energy_res68_ci95": [
+        0.4067193246,
+        0.4073356893
+      ],
+      "matched_unsat_energy_res68": 0.1828566514,
+      "matched_unsat_energy_res68_ci95": [
+        0.1756129948,
+        0.1828566514
+      ],
+      "sat_minus_unsat_res68": 0.2244391981,
+      "sat_minus_unsat_res68_ci95": [
+        0.2244391981,
+        0.2311063299
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "low_2nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "traditional_template_corrected",
+      "n_saturated": 1389,
+      "n_runs": 2,
+      "matched_unsat_control_rows": 4312,
+      "saturated_energy_res68": 0.4072958495,
+      "saturated_energy_res68_ci95": [
+        0.4067193246,
+        0.4073356893
+      ],
+      "matched_unsat_energy_res68": 0.1806356045,
+      "matched_unsat_energy_res68_ci95": [
+        0.1748750529,
+        0.1806356045
+      ],
+      "sat_minus_unsat_res68": 0.226660245,
+      "sat_minus_unsat_res68_ci95": [
+        0.226660245,
+        0.2318442717
+      ],
+      "accepted_with_margin": false
+    },
+    {
+      "current_family": "low_2nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "p07_p04_corrected",
+      "n_saturated": 1389,
+      "n_runs": 2,
+      "matched_unsat_control_rows": 4312,
+      "saturated_energy_res68": 0.0272525116,
+      "saturated_energy_res68_ci95": [
+        0.0267179238,
+        0.0313683556
+      ],
+      "matched_unsat_energy_res68": 0.0134288631,
+      "matched_unsat_energy_res68_ci95": [
+        0.0132556883,
+        0.0134288631
+      ],
+      "sat_minus_unsat_res68": 0.0138236484,
+      "sat_minus_unsat_res68_ci95": [
+        0.0132890606,
+        0.0181126673
+      ],
+      "accepted_with_margin": true
+    },
+    {
+      "current_family": "low_2nA",
+      "depth_stave": "B2",
+      "saturated_stave": "B2",
+      "method": "gradient_boosted_trees",
+      "n_saturated": 1389,
+      "n_runs": 2,
+      "matched_unsat_control_rows": 4312,
+      "saturated_energy_res68": 0.0235983683,
+      "saturated_energy_res68_ci95": [
+        0.0235983683,
+        0.0261071581
+      ],
+      "matched_unsat_energy_res68": 0.0089842294,
+      "matched_unsat_energy_res68_ci95": [
+        0.0089842294,
+        0.0090140869
+      ],
+      "sat_minus_unsat_res68": 0.0146141389,
+      "sat_minus_unsat_res68_ci95": [
+        0.0146141389,
+        0.0170930712
+      ],
+      "accepted_with_margin": true
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "raw_reproduction_exact",
+      "value": "640737 of 640737",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "ml_features_exclude_odd_charge_run_event_ids",
+      "value": "multiplicity,depth_idx,even_total_charge,even_max_amp,saturated_count,log_charge_stave_0,log_charge_stave_1,log_charge_stave_2,log_charge_stave_3,log_amp_stave_0,log_amp_stave_1,log_amp_stave_2,log_amp_stave_3,hit_stave_0,hit_stave_1,hit_stave_2,hit_stave_3,peak_stave_0,peak_stave_1,peak_stave_2,peak_stave_3,early_charge_fraction,late_charge_fraction",
+      "pass": true
+    },
+    {
+      "check": "cnn_status",
+      "value": "trained",
+      "pass": true
+    },
+    {
+      "check": "shuffled_p04_unsaturated_charge_res68",
+      "value": "0.514099",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. On saturated held-out events, the winner is gradient_boosted_trees with energy-proxy res68 0.01828 [0.017168, 0.020764]. The strong traditional rising-edge template has res68 0.39784, observed charge has 0.39784, so traditional template correction does not worsen the nominal saturated geometry proxy. Accepted current/depth/stave bands at margin 0.020: 12. Traditional-worsening geometries: []. The result is an odd-readout closure and range-order proxy; it does not establish absolute deposited-energy truth.",
+  "next_tickets": [
+    {
+      "title": "S14e: external A-stack validation of accepted saturation bands",
+      "body": "Use event-matched A-stack charge where topology supports it to test whether S14d accepted saturated B-stack correction bands transfer to an external detector handle. Expected information gain: separates duplicate-readout closure from detector-independent range-energy support before any production saturation correction."
+    }
+  ],
+  "runtime_sec": 88.9
+}

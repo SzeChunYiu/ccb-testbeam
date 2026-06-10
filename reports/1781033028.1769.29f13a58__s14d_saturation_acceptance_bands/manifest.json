@@ -1,0 +1,198 @@
+{
+  "study": "S14d",
+  "ticket_id": "1781033028.1769.29f13a58",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "61c0ee310497ecf73afa03367394e50309cca947",
+  "command": "/home/billy/anaconda3/bin/python scripts/s14d_1781033028_1769_29f13a58_saturation_acceptance_bands.py --config configs/s14d_1781033028_1769_29f13a58_saturation_acceptance_bands.yaml",
+  "config": "configs/s14d_1781033028_1769_29f13a58_saturation_acceptance_bands.yaml",
+  "random_seed": 1441,
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "inputs": [
+    {
+      "path": "data/root/root/hrdb_run_0031.root",
+      "bytes": 11638901,
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0032.root",
+      "bytes": 12157812,
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0033.root",
+      "bytes": 16781109,
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0034.root",
+      "bytes": 11697434,
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0035.root",
+      "bytes": 7793651,
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0036.root",
+      "bytes": 6167361,
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0037.root",
+      "bytes": 14369738,
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0039.root",
+      "bytes": 8625385,
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0040.root",
+      "bytes": 9266489,
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0041.root",
+      "bytes": 9691925,
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0042.root",
+      "bytes": 9767653,
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0044.root",
+      "bytes": 1227977,
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0045.root",
+      "bytes": 13786671,
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0046.root",
+      "bytes": 412227,
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0047.root",
+      "bytes": 3098718,
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0048.root",
+      "bytes": 8995827,
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0049.root",
+      "bytes": 9203548,
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0050.root",
+      "bytes": 13217424,
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0051.root",
+      "bytes": 6036876,
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0052.root",
+      "bytes": 2941826,
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0053.root",
+      "bytes": 11713879,
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0054.root",
+      "bytes": 11056922,
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0055.root",
+      "bytes": 7153324,
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0056.root",
+      "bytes": 15273160,
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0057.root",
+      "bytes": 8881910,
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0058.root",
+      "bytes": 9623179,
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0059.root",
+      "bytes": 12032616,
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0060.root",
+      "bytes": 10174098,
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0061.root",
+      "bytes": 10362658,
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0062.root",
+      "bytes": 10634393,
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0063.root",
+      "bytes": 10494181,
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0064.root",
+      "bytes": 10006223,
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0065.root",
+      "bytes": 10600278,
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "a503a0cc0c356b44f75c980d7198ab1281bd8a7d2af3f842b4f1e0b71a560b6d",
+    "result.json": "ef703684db60ea2da245df84f08a0948a6dc294fbddbe0a00ae4bed97dc5229d",
+    "manifest.json": "b45972c51f7d8644fb06f9eb088c93909f62bb17ca3731c7bf1c7db6cc1d711e",
+    "method_metrics.csv": "9c2047f79cd6e9d3e22fd71eba92ff92310adbe20eaec630bb242e7c299153bd",
+    "acceptance_bands.csv": "5b09276ffa33e0fb7e28bd41e8f633e80b45754ab44a5859452f043d76863d74",
+    "per_run_acceptance.csv": "fd9adf64c2b6e59923f0ae5d5e49c2fd5ccc7aac2257f3a021878192529dc8d7",
+    "geometry_systematics.csv": "6bf36299d04e315df3472a8ebc0bd9015b8c2d7235c3ca9140c43ea31004ef04",
+    "leakage_checks.csv": "c16b9809b668d4e6cf7bb818fb19756580f48c72e701ae11adeecaad196f61f3",
+    "counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "5b77c64dc91e886ea63b0d5edaa30d9a63bdd21446d56127aeea8aea55e89877",
+    "input_sha256.csv": "a9580ca4bc67fad73e95055fbcc7158fddfdf3aa0e342b5f0e2e0aab0c6ea3e4",
+    "fig_s14d_saturated_res68.png": "eff1d47827e4d9d661fdc07f25868afb99e9c644a3526bd770f606cc7e3ef142"
+  }
+}

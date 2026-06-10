@@ -1,0 +1,209 @@
+{
+  "study": "S16h",
+  "ticket": "1781031000.2442.5ff56e52",
+  "worker": "testbeam-laptop-4",
+  "title": "sorted ROOT baseline branches versus raw pretrigger pedestals",
+  "git_commit": "da916840857c78ecb6bd8f4910bed3baf86ec915",
+  "reproduced": true,
+  "repro_tolerance": "exact selected-pulse count and zero raw/sorted event mismatches",
+  "traditional": {
+    "metric": "heldout_raw_pretrigger_median_mae_adc",
+    "method": "traditional_calibrated_sorted_baseline",
+    "value": 190.2336347735477,
+    "ci": [
+      118.92207393772051,
+      257.44683004409745
+    ]
+  },
+  "ml": {
+    "metric": "heldout_raw_pretrigger_median_mae_adc",
+    "method": "hist_gradient_boosted_trees",
+    "value": 20.365871262254963,
+    "ci": [
+      15.218042815745806,
+      25.217847499194725
+    ]
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "preregistered_metric": "held-out raw pretrigger median MAE in ADC on runs 57 and 65",
+    "p_value": null,
+    "n_tries": 7,
+    "note": "benchmark ranking with paired run-block bootstrap deltas rather than a null-hypothesis p-value"
+  },
+  "input_sha256": "input_sha256.csv",
+  "critic": "pending",
+  "reproduction": {
+    "passed": true,
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "non_beam_selected_entries": 0
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "calibration_runs": [
+      56,
+      64
+    ],
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "bootstrap": "500 run-block replicates"
+  },
+  "traditional_baseline": {
+    "method": "traditional_calibrated_sorted_baseline",
+    "family": "traditional",
+    "n": 26871,
+    "mae_adc": 190.2336347735477,
+    "mae_ci_low_adc": 118.92207393772051,
+    "mae_ci_high_adc": 257.44683004409745,
+    "bias_adc": -121.31807524840906,
+    "rmse_adc": 886.8969076950555,
+    "q05_residual_adc": -708.5,
+    "q95_residual_adc": 7.5
+  },
+  "winner": {
+    "method": "hist_gradient_boosted_trees",
+    "family": "ml",
+    "n": 26871,
+    "mae_adc": 20.365871262254963,
+    "mae_ci_low_adc": 15.218042815745806,
+    "mae_ci_high_adc": 25.217847499194725,
+    "bias_adc": 0.14115192935930526,
+    "rmse_adc": 93.10736331548276,
+    "q05_residual_adc": -34.82941232371559,
+    "q95_residual_adc": 37.266496763118084
+  },
+  "winner_delta_vs_traditional": {
+    "method": "hist_gradient_boosted_trees",
+    "delta_mae_vs_traditional_adc": -169.86776351129262,
+    "ci_low_adc": -232.22898254490272,
+    "ci_high_adc": -103.70403112197471
+  },
+  "ml_beats_traditional": true,
+  "method_table": [
+    {
+      "method": "hist_gradient_boosted_trees",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 20.365871262254963,
+      "mae_ci_low_adc": 15.218042815745806,
+      "mae_ci_high_adc": 25.217847499194725,
+      "bias_adc": 0.14115192935930526,
+      "rmse_adc": 93.10736331548276,
+      "q05_residual_adc": -34.82941232371559,
+      "q95_residual_adc": 37.266496763118084
+    },
+    {
+      "method": "mlp",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 35.17265840839822,
+      "mae_ci_low_adc": 28.732020133567946,
+      "mae_ci_high_adc": 41.24314505823857,
+      "bias_adc": -2.0908586477586617,
+      "rmse_adc": 126.76063918116272,
+      "q05_residual_adc": -52.042797450706985,
+      "q95_residual_adc": 65.25680672631552
+    },
+    {
+      "method": "sorted_residual_net",
+      "family": "new_architecture",
+      "n": 26871,
+      "mae_adc": 86.29084628656939,
+      "mae_ci_low_adc": 40.241694724674986,
+      "mae_ci_high_adc": 129.69349488513654,
+      "bias_adc": -31.843867659227186,
+      "rmse_adc": 412.58203297723094,
+      "q05_residual_adc": -42.228759765625,
+      "q95_residual_adc": 61.568359375
+    },
+    {
+      "method": "one_dimensional_cnn",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 120.4032787183732,
+      "mae_ci_low_adc": 71.38261644597762,
+      "mae_ci_high_adc": 166.6066615498265,
+      "bias_adc": -21.12460468316796,
+      "rmse_adc": 469.0781199771216,
+      "q05_residual_adc": -86.899169921875,
+      "q95_residual_adc": 145.967529296875
+    },
+    {
+      "method": "ridge",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 169.7680373396079,
+      "mae_ci_low_adc": 157.9406489714932,
+      "mae_ci_high_adc": 180.9156907440374,
+      "bias_adc": 13.303434074136838,
+      "rmse_adc": 294.73821836045863,
+      "q05_residual_adc": -365.3927962430198,
+      "q95_residual_adc": 278.13669330286893
+    },
+    {
+      "method": "traditional_calibrated_sorted_baseline",
+      "family": "traditional",
+      "n": 26871,
+      "mae_adc": 190.2336347735477,
+      "mae_ci_low_adc": 118.92207393772051,
+      "mae_ci_high_adc": 257.44683004409745,
+      "bias_adc": -121.31807524840906,
+      "rmse_adc": 886.8969076950555,
+      "q05_residual_adc": -708.5,
+      "q95_residual_adc": 7.5
+    },
+    {
+      "method": "sorted_baseline_direct",
+      "family": "traditional",
+      "n": 26871,
+      "mae_adc": 332.9617989654274,
+      "mae_ci_low_adc": 202.24006749501459,
+      "mae_ci_high_adc": 456.17078724788547,
+      "bias_adc": -332.9617989654274,
+      "rmse_adc": 1226.8178090319684,
+      "q05_residual_adc": -2389.0,
+      "q95_residual_adc": -2.0
+    }
+  ],
+  "conclusion": "hist_gradient_boosted_trees wins the held-out benchmark with MAE 20.366 ADC; the calibrated sorted-baseline traditional method has MAE 190.234 ADC.",
+  "next_tickets": [
+    {
+      "title": "S16i: sorted-baseline residual as a timing-tail nuisance",
+      "body": "Use the S16h sorted-baseline residual proxy in S02/S04 timing fits, split by run with paired bootstrap CIs, to test whether pedestal recoverability explains residual timing tails beyond amplitude and peak-time controls. Expected information gain: connects sorted baseline metadata to the physics timing endpoint rather than only to pedestal reconstruction."
+    }
+  ],
+  "runtime_seconds": 211.3724982738495
+}

@@ -1,0 +1,36 @@
+{
+  "study": "S16h",
+  "ticket": "1781031000.2442.5ff56e52",
+  "worker": "testbeam-laptop-4",
+  "title": "sorted ROOT baseline branches versus raw pretrigger pedestals",
+  "raw_root_dir": "data/root/root",
+  "sorted_root_dir": "data/sorted-b",
+  "output_dir": "reports/1781031000.2442.5ff56e52__s16h_sorted_baseline_pretrigger_pedestals",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "calibration_runs": [56, 64],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "expected_non_beam_trigger_entries": 0,
+  "bootstrap_replicates": 500,
+  "random_seed": 16178103,
+  "max_train_records": 120000,
+  "torch_epochs": 22,
+  "torch_batch_size": 1024,
+  "pre_registered": {
+    "primary_metric": "held-out raw pretrigger median MAE in ADC on runs 57 and 65",
+    "split": "train on all configured non-held-out/non-calibration runs, calibrate residual means on runs 56 and 64, evaluate only runs 57 and 65",
+    "traditional_method": "sorted hrd.baseline plus train-run robust residual offsets by stave, peak bin, and amplitude bin",
+    "ml_methods": ["ridge", "hist_gradient_boosted_trees", "mlp", "1d_cnn", "sorted_residual_net"],
+    "significance_level": 0.05,
+    "win_rule": "lowest held-out MAE; quote paired run-block bootstrap CI for the winner minus the traditional calibrated baseline"
+  }
+}

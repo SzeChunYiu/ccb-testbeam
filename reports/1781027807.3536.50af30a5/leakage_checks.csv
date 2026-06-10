@@ -1,0 +1,8 @@
+probe,roc_auc,average_precision,value,interpretation
+matched nuisance logistic,0.5143347866296737,0.5186411320343542,,"Uses only matched run-family, B2-amplitude, total-charge, and event-order proxies; high AUC means matching did not remove nuisance information."
+run-only logistic,0.5,0.5,,Strict leave-one-run-out run-id sentinel; unseen held-out runs collapse to the intercept.
+match-cell logistic,0.5,0.5,,Uses only the exact matching cell; high AUC means residual cell imbalance remains.
+shuffled-label HGB,0.49715946624388957,0.5210588527930784,,Same ML pipeline with shuffled training labels; should stay near chance.
+matched covariate max abs SMD,,,0.010944400008698703,"Post-match standardized mean-difference maximum across log B2 amplitude, log total charge, and event fraction."
+P08a waveform AUC reproduction,0.8478302864659858,0.7756276498560539,0.0,Raw ROOT reproduction of the upstream P08a waveform number before P08c matching.
+too-good trigger,,,1.0,Triggers when a waveform result exceeds the pre-set AUC threshold or nuisance-only AUC remains high; all leakage probes above are gating checks.

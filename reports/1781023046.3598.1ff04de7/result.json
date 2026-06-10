@@ -1,0 +1,604 @@
+{
+  "study": "P04d",
+  "ticket_id": "1781023046.3598.1ff04de7",
+  "worker": "testbeam-laptop-3",
+  "raw_reproduction_first": {
+    "b_s00_expected_selected_pulses": 640737,
+    "b_s00_reproduced_selected_pulses": 640737,
+    "b_s00_delta": 0,
+    "astack_analysis_counts": [
+      {
+        "sample": "sample_iii_analysis",
+        "events_total": 388848,
+        "events_with_selected": 7168,
+        "selected_pulses": 9682,
+        "A1": 2799,
+        "A3": 6883
+      },
+      {
+        "sample": "sample_iv_analysis",
+        "events_total": 262189,
+        "events_with_selected": 767,
+        "selected_pulses": 894,
+        "A1": 167,
+        "A3": 727
+      }
+    ],
+    "p04c_expected_rows": 4055,
+    "p04c_reproduced_rows": 4055,
+    "p04c_expected_charge_transfer_ridge_res68": 0.519271,
+    "p04c_reproduced_charge_transfer_ridge_res68": 0.5192709757631775,
+    "p04c_reproduction_pass": true
+  },
+  "row_definition": {
+    "match_key": "(run, EVT)",
+    "source_gate": "B2 amplitude > 1000 ADC",
+    "topologies": {
+      "A1_only": "A1 amplitude > 1000 ADC and A3 <= 1000 ADC",
+      "A3_only": "A3 amplitude > 1000 ADC and A1 <= 1000 ADC",
+      "A1A3": "A1 and A3 both amplitude > 1000 ADC"
+    },
+    "target": "selected A-topology positive-lobe charge",
+    "features": "B-stack even-channel waveforms and charge summaries only"
+  },
+  "split": "leave-one-run-out by run",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 1000
+  },
+  "p04c_reproduction_summary": [
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "b2_loglinear",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0476347628,
+      "res68_abs_frac": 0.5202844853,
+      "full_rms_frac": 0.8452596443,
+      "within_10pct": 0.1398273736,
+      "within_25pct": 0.344512947,
+      "bias_ci95": [
+        -0.0686373876,
+        -0.0245090797
+      ],
+      "res68_ci95": [
+        0.5042018522,
+        0.5380028753
+      ],
+      "full_rms_ci95": [
+        0.7395938933,
+        0.9943110756
+      ]
+    },
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "charge_transfer_ridge",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.047421047,
+      "res68_abs_frac": 0.5192709758,
+      "full_rms_frac": 0.842761688,
+      "within_10pct": 0.1388409371,
+      "within_25pct": 0.3435265105,
+      "bias_ci95": [
+        -0.0707074975,
+        -0.022226998
+      ],
+      "res68_ci95": [
+        0.5055226567,
+        0.5380125225
+      ],
+      "full_rms_ci95": [
+        0.7363521783,
+        0.995102824
+      ]
+    },
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "b_waveform_extra_trees",
+      "split": "leave_one_run_out",
+      "n": 4055,
+      "bias_median_frac": -0.0484841773,
+      "res68_abs_frac": 0.5199652585,
+      "full_rms_frac": 0.8445285269,
+      "within_10pct": 0.1393341554,
+      "within_25pct": 0.3459926017,
+      "bias_ci95": [
+        -0.0671232947,
+        -0.0184683914
+      ],
+      "res68_ci95": [
+        0.5075438314,
+        0.5371825836
+      ],
+      "full_rms_ci95": [
+        0.7324591743,
+        0.991591573
+      ]
+    },
+    {
+      "target": "selected_A1A3_physical_charge",
+      "method": "shuffled_target_extra_trees",
+      "split": "negative_control",
+      "n": 4055,
+      "bias_median_frac": -0.0448441319,
+      "res68_abs_frac": 0.5240686528,
+      "full_rms_frac": 0.8539475275,
+      "within_10pct": 0.1410604192,
+      "within_25pct": 0.3447595561,
+      "bias_ci95": [
+        -0.0665106845,
+        -0.0157123146
+      ],
+      "res68_ci95": [
+        0.5085608353,
+        0.5388164221
+      ],
+      "full_rms_ci95": [
+        0.7455815275,
+        1.0086997817
+      ]
+    }
+  ],
+  "topology_counts": [
+    {
+      "topology": "A1A3",
+      "n": 1342,
+      "runs": 31,
+      "median_target_charge": 32295.5,
+      "median_b2_charge": 41470.0,
+      "a_mult": 2.0
+    },
+    {
+      "topology": "A1_only",
+      "n": 149,
+      "runs": 25,
+      "median_target_charge": 11564.0,
+      "median_b2_charge": 50750.0,
+      "a_mult": 1.0
+    },
+    {
+      "topology": "A3_only",
+      "n": 2564,
+      "runs": 32,
+      "median_target_charge": 15329.0,
+      "median_b2_charge": 40653.0,
+      "a_mult": 1.0
+    }
+  ],
+  "topology_summary": [
+    {
+      "topology": "A1A3",
+      "method": "a_mult_median",
+      "n": 1342,
+      "bias_median_frac": -0.0008685996,
+      "res68_abs_frac": 0.2636356565,
+      "full_rms_frac": 0.4074140111,
+      "within_10pct": 0.2868852459,
+      "within_25pct": 0.6467958271,
+      "bias_ci95": [
+        -0.0252674079,
+        0.0262323665
+      ],
+      "res68_ci95": [
+        0.2541017453,
+        0.2744938095
+      ],
+      "full_rms_ci95": [
+        0.3483433263,
+        0.4912054688
+      ]
+    },
+    {
+      "topology": "A1A3",
+      "method": "topology_median",
+      "n": 1342,
+      "bias_median_frac": -0.0008685996,
+      "res68_abs_frac": 0.2636356565,
+      "full_rms_frac": 0.4074140111,
+      "within_10pct": 0.2868852459,
+      "within_25pct": 0.6467958271,
+      "bias_ci95": [
+        -0.0238644644,
+        0.0270869677
+      ],
+      "res68_ci95": [
+        0.2540894692,
+        0.2730596659
+      ],
+      "full_rms_ci95": [
+        0.3459224097,
+        0.4814027256
+      ]
+    },
+    {
+      "topology": "A1A3",
+      "method": "topology_b_charge_ridge",
+      "n": 1342,
+      "bias_median_frac": -0.0209169739,
+      "res68_abs_frac": 0.2673864031,
+      "full_rms_frac": 0.3946081191,
+      "within_10pct": 0.2921013413,
+      "within_25pct": 0.6363636364,
+      "bias_ci95": [
+        -0.0403007129,
+        -0.0031186961
+      ],
+      "res68_ci95": [
+        0.2606110219,
+        0.2731938341
+      ],
+      "full_rms_ci95": [
+        0.3362640461,
+        0.4769904913
+      ]
+    },
+    {
+      "topology": "A1A3",
+      "method": "waveform_extra_trees",
+      "n": 1342,
+      "bias_median_frac": -0.0229949762,
+      "res68_abs_frac": 0.2698293315,
+      "full_rms_frac": 0.3960581713,
+      "within_10pct": 0.2846497765,
+      "within_25pct": 0.6326378539,
+      "bias_ci95": [
+        -0.0467587922,
+        -0.0037640107
+      ],
+      "res68_ci95": [
+        0.2606449588,
+        0.2784245276
+      ],
+      "full_rms_ci95": [
+        0.3377606689,
+        0.4772190339
+      ]
+    },
+    {
+      "topology": "A1A3",
+      "method": "waveform_hgb",
+      "n": 1342,
+      "bias_median_frac": -0.0247383971,
+      "res68_abs_frac": 0.2684971399,
+      "full_rms_frac": 0.3921385651,
+      "within_10pct": 0.2831594635,
+      "within_25pct": 0.6363636364,
+      "bias_ci95": [
+        -0.0493368297,
+        -0.0018776698
+      ],
+      "res68_ci95": [
+        0.2592201439,
+        0.2773134919
+      ],
+      "full_rms_ci95": [
+        0.3357284057,
+        0.4707613504
+      ]
+    },
+    {
+      "topology": "A1A3",
+      "method": "shuffled_target_extra_trees",
+      "n": 1342,
+      "bias_median_frac": -0.027440353,
+      "res68_abs_frac": 0.2716859911,
+      "full_rms_frac": 0.3942944289,
+      "within_10pct": 0.2861400894,
+      "within_25pct": 0.6445603577,
+      "bias_ci95": [
+        -0.0493448921,
+        -0.0034146353
+      ],
+      "res68_ci95": [
+        0.2557999586,
+        0.2806146116
+      ],
+      "full_rms_ci95": [
+        0.334289063,
+        0.4661309664
+      ]
+    },
+    {
+      "topology": "A1_only",
+      "method": "a_mult_median",
+      "n": 149,
+      "bias_median_frac": 0.2912919405,
+      "res68_abs_frac": 0.7249711,
+      "full_rms_frac": 1.9203320282,
+      "within_10pct": 0.2013422819,
+      "within_25pct": 0.3825503356,
+      "bias_ci95": [
+        0.1961361107,
+        0.4438311059
+      ],
+      "res68_ci95": [
+        0.5500777597,
+        0.9023620058
+      ],
+      "full_rms_ci95": [
+        1.2555829925,
+        2.4685870821
+      ]
+    },
+    {
+      "topology": "A1_only",
+      "method": "topology_median",
+      "n": 149,
+      "bias_median_frac": 0.0131874784,
+      "res68_abs_frac": 0.4906745484,
+      "full_rms_frac": 1.4172986734,
+      "within_10pct": 0.1543624161,
+      "within_25pct": 0.4161073826,
+      "bias_ci95": [
+        -0.1009699475,
+        0.12547106
+      ],
+      "res68_ci95": [
+        0.3847539888,
+        0.5840921264
+      ],
+      "full_rms_ci95": [
+        0.9037682148,
+        1.8888157917
+      ]
+    },
+    {
+      "topology": "A1_only",
+      "method": "topology_b_charge_ridge",
+      "n": 149,
+      "bias_median_frac": -0.0994345625,
+      "res68_abs_frac": 0.4855234764,
+      "full_rms_frac": 1.2554902731,
+      "within_10pct": 0.1275167785,
+      "within_25pct": 0.3154362416,
+      "bias_ci95": [
+        -0.2091725559,
+        0.0587991738
+      ],
+      "res68_ci95": [
+        0.3808816812,
+        0.590747097
+      ],
+      "full_rms_ci95": [
+        0.8531253516,
+        1.6697979055
+      ]
+    },
+    {
+      "topology": "A1_only",
+      "method": "waveform_extra_trees",
+      "n": 149,
+      "bias_median_frac": -0.087274066,
+      "res68_abs_frac": 0.4910160587,
+      "full_rms_frac": 1.250287961,
+      "within_10pct": 0.1476510067,
+      "within_25pct": 0.3020134228,
+      "bias_ci95": [
+        -0.1687511539,
+        0.0581938667
+      ],
+      "res68_ci95": [
+        0.4244629891,
+        0.5709959704
+      ],
+      "full_rms_ci95": [
+        0.7886660626,
+        1.7005662014
+      ]
+    },
+    {
+      "topology": "A1_only",
+      "method": "waveform_hgb",
+      "n": 149,
+      "bias_median_frac": -0.0508934535,
+      "res68_abs_frac": 0.4883773117,
+      "full_rms_frac": 1.2780653434,
+      "within_10pct": 0.1677852349,
+      "within_25pct": 0.4228187919,
+      "bias_ci95": [
+        -0.1403210407,
+        0.0611898837
+      ],
+      "res68_ci95": [
+        0.4571627163,
+        0.5742467208
+      ],
+      "full_rms_ci95": [
+        0.7833010781,
+        1.7199471016
+      ]
+    },
+    {
+      "topology": "A1_only",
+      "method": "shuffled_target_extra_trees",
+      "n": 149,
+      "bias_median_frac": -0.1238436128,
+      "res68_abs_frac": 0.4965308683,
+      "full_rms_frac": 1.3716808501,
+      "within_10pct": 0.0939597315,
+      "within_25pct": 0.355704698,
+      "bias_ci95": [
+        -0.173558976,
+        0.0787027866
+      ],
+      "res68_ci95": [
+        0.4217770015,
+        0.5603474142
+      ],
+      "full_rms_ci95": [
+        0.8565278305,
+        1.860705488
+      ]
+    },
+    {
+      "topology": "A3_only",
+      "method": "a_mult_median",
+      "n": 2564,
+      "bias_median_frac": -0.0201068524,
+      "res68_abs_frac": 0.3987342919,
+      "full_rms_frac": 0.5969462106,
+      "within_10pct": 0.155226209,
+      "within_25pct": 0.4188767551,
+      "bias_ci95": [
+        -0.0505188798,
+        0.0223621899
+      ],
+      "res68_ci95": [
+        0.3850998844,
+        0.4122031233
+      ],
+      "full_rms_ci95": [
+        0.5202137784,
+        0.7146496227
+      ]
+    },
+    {
+      "topology": "A3_only",
+      "method": "topology_median",
+      "n": 2564,
+      "bias_median_frac": 0.0024275108,
+      "res68_abs_frac": 0.3990838606,
+      "full_rms_frac": 0.6144047492,
+      "within_10pct": 0.1622464899,
+      "within_25pct": 0.4274570983,
+      "bias_ci95": [
+        -0.0275709437,
+        0.0373642831
+      ],
+      "res68_ci95": [
+        0.3851138801,
+        0.4145159451
+      ],
+      "full_rms_ci95": [
+        0.5400530254,
+        0.7437639365
+      ]
+    },
+    {
+      "topology": "A3_only",
+      "method": "topology_b_charge_ridge",
+      "n": 2564,
+      "bias_median_frac": -0.0536146379,
+      "res68_abs_frac": 0.3959986918,
+      "full_rms_frac": 0.5705185435,
+      "within_10pct": 0.153276131,
+      "within_25pct": 0.4067862715,
+      "bias_ci95": [
+        -0.0862036224,
+        -0.0217982409
+      ],
+      "res68_ci95": [
+        0.3857119973,
+        0.4091165628
+      ],
+      "full_rms_ci95": [
+        0.4958767144,
+        0.6852558232
+      ]
+    },
+    {
+      "topology": "A3_only",
+      "method": "waveform_extra_trees",
+      "n": 2564,
+      "bias_median_frac": -0.053487866,
+      "res68_abs_frac": 0.3933682403,
+      "full_rms_frac": 0.5683164338,
+      "within_10pct": 0.1560062402,
+      "within_25pct": 0.4075663027,
+      "bias_ci95": [
+        -0.0855917457,
+        -0.0204712253
+      ],
+      "res68_ci95": [
+        0.3823176115,
+        0.4049040376
+      ],
+      "full_rms_ci95": [
+        0.4932344113,
+        0.6774098395
+      ]
+    },
+    {
+      "topology": "A3_only",
+      "method": "waveform_hgb",
+      "n": 2564,
+      "bias_median_frac": -0.0578324107,
+      "res68_abs_frac": 0.3984860609,
+      "full_rms_frac": 0.5729469321,
+      "within_10pct": 0.1528861154,
+      "within_25pct": 0.4001560062,
+      "bias_ci95": [
+        -0.0846492142,
+        -0.0227413681
+      ],
+      "res68_ci95": [
+        0.3880845981,
+        0.4118881502
+      ],
+      "full_rms_ci95": [
+        0.4977338781,
+        0.6899465573
+      ]
+    },
+    {
+      "topology": "A3_only",
+      "method": "shuffled_target_extra_trees",
+      "n": 2564,
+      "bias_median_frac": -0.0496650944,
+      "res68_abs_frac": 0.3991873637,
+      "full_rms_frac": 0.5697261609,
+      "within_10pct": 0.1536661466,
+      "within_25pct": 0.3970358814,
+      "bias_ci95": [
+        -0.0790054574,
+        -0.0225071188
+      ],
+      "res68_ci95": [
+        0.3871798432,
+        0.4097529218
+      ],
+      "full_rms_ci95": [
+        0.4944103577,
+        0.6920182769
+      ]
+    }
+  ],
+  "leakage_checks": [
+    {
+      "topology": "A1A3",
+      "split": "leave-one-run-out",
+      "train_heldout_run_overlap": 0,
+      "features_exclude": "run, evt, A selected flags, A charge columns, target_charge",
+      "exact_b_waveform_hash_train_test_overlaps": 0,
+      "best_real_ml_res68": 0.2684971399,
+      "shuffled_target_extra_trees_res68": 0.2716859911,
+      "ml_to_shuffled_res68_ratio": 0.9882627324,
+      "looks_too_good": false
+    },
+    {
+      "topology": "A1_only",
+      "split": "leave-one-run-out",
+      "train_heldout_run_overlap": 0,
+      "features_exclude": "run, evt, A selected flags, A charge columns, target_charge",
+      "exact_b_waveform_hash_train_test_overlaps": 0,
+      "best_real_ml_res68": 0.4883773117,
+      "shuffled_target_extra_trees_res68": 0.4965308683,
+      "ml_to_shuffled_res68_ratio": 0.9835789534,
+      "looks_too_good": false
+    },
+    {
+      "topology": "A3_only",
+      "split": "leave-one-run-out",
+      "train_heldout_run_overlap": 0,
+      "features_exclude": "run, evt, A selected flags, A charge columns, target_charge",
+      "exact_b_waveform_hash_train_test_overlaps": 0,
+      "best_real_ml_res68": 0.3933682403,
+      "shuffled_target_extra_trees_res68": 0.3991873637,
+      "ml_to_shuffled_res68_ratio": 0.9854225761,
+      "looks_too_good": false
+    }
+  ],
+  "finding": "Topology mixing contributes to the broad P04c transfer, but the remaining widths are still far from a useful duplicate-readout-like closure. A1A3: best real `a_mult_median` res68 0.2636; ridge 0.2674 [0.2606, 0.2732], ExtraTrees 0.2698, shuffled 0.2717 A1_only: best real `topology_b_charge_ridge` res68 0.4855; ridge 0.4855 [0.3809, 0.5907], ExtraTrees 0.4910, shuffled 0.4965 A3_only: best real `waveform_extra_trees` res68 0.3934; ridge 0.3960 [0.3857, 0.4091], ExtraTrees 0.3934, shuffled 0.3992",
+  "runtime_sec": 333.4
+}

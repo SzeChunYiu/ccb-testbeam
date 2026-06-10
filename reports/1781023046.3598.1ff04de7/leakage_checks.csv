@@ -1,0 +1,4 @@
+topology,split,train_heldout_run_overlap,features_exclude,exact_b_waveform_hash_train_test_overlaps,best_real_ml_res68,shuffled_target_extra_trees_res68,ml_to_shuffled_res68_ratio,looks_too_good
+A1A3,leave-one-run-out,0,"run, evt, A selected flags, A charge columns, target_charge",0,0.26849713988895557,0.27168599108191727,0.9882627323541308,False
+A1_only,leave-one-run-out,0,"run, evt, A selected flags, A charge columns, target_charge",0,0.4883773117295142,0.4965308682606267,0.9835789533897966,False
+A3_only,leave-one-run-out,0,"run, evt, A selected flags, A charge columns, target_charge",0,0.3933682402848834,0.3991873636873863,0.9854225761337977,False

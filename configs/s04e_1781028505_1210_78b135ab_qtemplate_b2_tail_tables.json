@@ -1,0 +1,57 @@
+{
+  "study_id": "S04e",
+  "title": "q_template vetoes on B2-containing residual tails",
+  "ticket": "1781028505.1210.78b135ab",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "data/root/root",
+  "qtemplate_path": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "output_dir": "reports/1781028505.1210.78b135ab",
+  "random_seed": 85051210,
+  "bootstrap_resamples": 600,
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.20,
+  "tof_per_cm_ns": 0.078,
+  "stave_spacing_cm": 2.0,
+  "saturation_threshold_adc": 3800.0,
+  "near_peak_fraction": 0.98,
+  "tail_abs_ns": 5.0,
+  "retention_grid": [0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95],
+  "min_policy_train_rows": 150,
+  "bstack": {
+    "file_prefix": "hrdb",
+    "staves": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    }
+  },
+  "runs": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65],
+  "expected_counts": {
+    "total_selected_b_pulses": 640737,
+    "sample_i_analysis_b_selected_pulses": 252266,
+    "sample_ii_analysis_b_selected_pulses": 125096
+  },
+  "expected_pair_counts": {
+    "B2-B4": 26387,
+    "B2-B6": 12626,
+    "B2-B8": 4943,
+    "B4-B6": 12196,
+    "B4-B8": 4542,
+    "B6-B8": 4790
+  },
+  "ml": {
+    "n_estimators": 220,
+    "max_depth": 6,
+    "min_samples_leaf": 30
+  }
+}

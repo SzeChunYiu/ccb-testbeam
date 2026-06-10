@@ -1,0 +1,10 @@
+comparison,topology,delta_sigma68_ns,delta_tail_frac_abs_gt5ns,retention
+traditional_q_threshold_veto_minus_raw_no_veto,all,-0.4592587287787082,-0.06333119483829965,0.5499511331012156
+ml_rf_qtemplate_veto_minus_raw_no_veto,all,-0.7343579753797922,-0.1379887479752885,0.5646417445482866
+ml_rf_shuffled_label_control_minus_raw_no_veto,all,-0.06179024703262703,-0.008177950819696578,0.8412894752916743
+traditional_q_threshold_veto_minus_raw_no_veto,B2_containing,-1.8065739616012992,-0.08819750200624066,0.5519155519155519
+ml_rf_qtemplate_veto_minus_raw_no_veto,B2_containing,-2.2276100285711067,-0.1974116351314653,0.5627218127218128
+ml_rf_shuffled_label_control_minus_raw_no_veto,B2_containing,-0.36499453927735104,-0.006556772029084723,0.8171580671580672
+traditional_q_threshold_veto_minus_raw_no_veto,downstream_only,-0.2528896248460206,-0.01393070399919715,0.5459401709401709
+ml_rf_qtemplate_veto_minus_raw_no_veto,downstream_only,-0.32077817154764343,-0.01676558025662885,0.568561872909699
+ml_rf_shuffled_label_control_minus_raw_no_veto,downstream_only,-0.03024931308076484,-0.0008846455056507746,0.8905611296915644

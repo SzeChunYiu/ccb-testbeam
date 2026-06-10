@@ -1,0 +1,21 @@
+{
+  "ticket_id": "1781021714.1215.508e2136",
+  "study_id": "P09d",
+  "title": "enriched broad-template-mismatch gallery",
+  "output_dir": "reports/1781021714.1215.508e2136",
+  "p09a_config": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+  "p09a_report_dir": "reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy",
+  "p09b_report_dir": "reports/1781011449.1304.37c054cc__p09b_manual_waveform_gallery_adjudication",
+  "heldout_runs": [42, 57, 64, 65],
+  "target_taxon": "novel_broad_template_mismatch",
+  "top_k_per_run_stave": 10,
+  "bootstrap_replicates": 5000,
+  "random_seed": 9094,
+  "ml": {
+    "pca_components": 6,
+    "training_sample_rows": 120000,
+    "negative_to_positive_ratio": 8,
+    "random_forest_trees": 300,
+    "min_samples_leaf": 5
+  }
+}

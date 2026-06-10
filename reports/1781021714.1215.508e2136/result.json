@@ -1,0 +1,316 @@
+{
+  "ticket_id": "1781021714.1215.508e2136",
+  "study_id": "P09d",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "pass": true
+  },
+  "p09b_prior": {
+    "p09b_broad_claims": 1
+  },
+  "heldout_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "precision_by_method": [
+    {
+      "method": "ml_pca_shape_rf",
+      "n_selected": 160,
+      "p09a_broad_fraction": 0.30625,
+      "source_qtemplate_or_broad_fraction": 0.30625,
+      "adjudicated_broad_precision": 0.5375,
+      "adjudicated_curated_precision": 1.0,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 0.30625,
+      "duplicate_run_event_rate": 0.0125,
+      "max_run_stave_share": 0.0625
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "n_selected": 49,
+      "p09a_broad_fraction": 0.9795918367346939,
+      "source_qtemplate_or_broad_fraction": 1.0,
+      "adjudicated_broad_precision": 0.5510204081632653,
+      "adjudicated_curated_precision": 0.9795918367346939,
+      "q_template_only_share": 0.04081632653061224,
+      "p09a_strict_q_template_only_share": 0.02040816326530612,
+      "broad_width_share": 0.9591836734693877,
+      "duplicate_run_event_rate": 0.0,
+      "max_run_stave_share": 0.20408163265306123
+    }
+  ],
+  "heldout_run_bootstrap_ci": [
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "adjudicated_broad_precision",
+      "ci_low": 0.4625,
+      "ci_high": 0.6625,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "adjudicated_curated_precision",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "broad_width_share",
+      "ci_low": 0.275,
+      "ci_high": 0.3375,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "duplicate_run_event_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0375,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "p09a_broad_fraction",
+      "ci_low": 0.275,
+      "ci_high": 0.3375,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "p09a_strict_q_template_only_share",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "q_template_only_share",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "metric": "source_qtemplate_or_broad_fraction",
+      "ci_low": 0.275,
+      "ci_high": 0.3375,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "adjudicated_broad_precision",
+      "ci_low": 0.25,
+      "ci_high": 0.84,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "adjudicated_curated_precision",
+      "ci_low": 0.94,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "broad_width_share",
+      "ci_low": 0.88,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "duplicate_run_event_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "p09a_broad_fraction",
+      "ci_low": 0.94,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "p09a_strict_q_template_only_share",
+      "ci_low": 0.0,
+      "ci_high": 0.06,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "q_template_only_share",
+      "ci_low": 0.0,
+      "ci_high": 0.12,
+      "n_boot_valid": 5000
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "metric": "source_qtemplate_or_broad_fraction",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    }
+  ],
+  "per_run_precision": [
+    {
+      "method": "ml_pca_shape_rf",
+      "run": 42,
+      "n_selected": 40,
+      "p09a_broad_fraction": 0.325,
+      "adjudicated_broad_precision": 0.45,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 0.325
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "run": 57,
+      "n_selected": 40,
+      "p09a_broad_fraction": 0.275,
+      "adjudicated_broad_precision": 0.475,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 0.275
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "run": 64,
+      "n_selected": 40,
+      "p09a_broad_fraction": 0.35,
+      "adjudicated_broad_precision": 0.725,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 0.35
+    },
+    {
+      "method": "ml_pca_shape_rf",
+      "run": 65,
+      "n_selected": 40,
+      "p09a_broad_fraction": 0.275,
+      "adjudicated_broad_precision": 0.5,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 0.275
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "run": 42,
+      "n_selected": 13,
+      "p09a_broad_fraction": 0.9230769230769231,
+      "adjudicated_broad_precision": 0.3076923076923077,
+      "q_template_only_share": 0.15384615384615385,
+      "p09a_strict_q_template_only_share": 0.07692307692307693,
+      "broad_width_share": 0.8461538461538461
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "run": 57,
+      "n_selected": 11,
+      "p09a_broad_fraction": 1.0,
+      "adjudicated_broad_precision": 0.18181818181818182,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 1.0
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "run": 64,
+      "n_selected": 14,
+      "p09a_broad_fraction": 1.0,
+      "adjudicated_broad_precision": 0.9285714285714286,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 1.0
+    },
+    {
+      "method": "traditional_qtemplate_width",
+      "run": 65,
+      "n_selected": 11,
+      "p09a_broad_fraction": 1.0,
+      "adjudicated_broad_precision": 0.7272727272727273,
+      "q_template_only_share": 0.0,
+      "p09a_strict_q_template_only_share": 0.0,
+      "broad_width_share": 1.0
+    }
+  ],
+  "ml_model": {
+    "train_rows": 19224,
+    "train_positive_rows": 2136,
+    "heldout_positive_rows": 170,
+    "heldout_average_precision": 0.9999656002751977,
+    "heldout_roc_auc": 0.9999999010421254,
+    "pca_explained_variance_ratio": [
+      0.5751204490661621,
+      0.2146480530500412,
+      0.09261913597583771,
+      0.04695349931716919,
+      0.022894350811839104,
+      0.019175339490175247
+    ]
+  },
+  "ml_no_qwidth_ablation": {
+    "train_rows": 19224,
+    "train_positive_rows": 2136,
+    "heldout_positive_rows": 170,
+    "heldout_average_precision": 0.9164230868964811,
+    "heldout_roc_auc": 0.9996542411860695
+  },
+  "leakage_checks": [
+    {
+      "check": "raw_reproduction_before_selector",
+      "value": 640737.0,
+      "pass": true,
+      "note": "script raises before selector work if this fails"
+    },
+    {
+      "check": "p09b_prior_broad_claim_count",
+      "value": 1.0,
+      "pass": true,
+      "note": "reproduces the single-example bottleneck from P09b artifacts"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "models and templates train only on non-held-out runs"
+    },
+    {
+      "check": "gallery_rows_all_heldout",
+      "value": 0.0,
+      "pass": true,
+      "note": "all gallery rows must come from held-out runs"
+    },
+    {
+      "check": "model_features_include_ids",
+      "value": 0.0,
+      "pass": true,
+      "note": "run, event, stave, and source_index are absent from ML features"
+    },
+    {
+      "check": "gallery_waveform_hash_seen_in_train",
+      "value": 0.0,
+      "pass": true,
+      "note": "rounded normalized waveform hashes at 1e-3 precision"
+    },
+    {
+      "check": "qwidth_ablation_ap_drop",
+      "value": 0.08354251337871654,
+      "pass": true,
+      "note": "large positive drop means strong result is q_template/width-driven, not identifier leakage"
+    },
+    {
+      "check": "adjudication_equals_p09a_broad_rate",
+      "value": 0.24880382775119617,
+      "pass": true,
+      "note": "monitors whether fixed adjudication simply copies the P09a broad label"
+    }
+  ],
+  "follow_up_tickets": [],
+  "runtime_sec": 138.2
+}

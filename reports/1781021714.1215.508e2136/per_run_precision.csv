@@ -1,0 +1,9 @@
+method,run,n_selected,p09a_broad_fraction,adjudicated_broad_precision,q_template_only_share,p09a_strict_q_template_only_share,broad_width_share
+ml_pca_shape_rf,42,40,0.325,0.45,0.0,0.0,0.325
+ml_pca_shape_rf,57,40,0.275,0.475,0.0,0.0,0.275
+ml_pca_shape_rf,64,40,0.35,0.725,0.0,0.0,0.35
+ml_pca_shape_rf,65,40,0.275,0.5,0.0,0.0,0.275
+traditional_qtemplate_width,42,13,0.9230769230769231,0.3076923076923077,0.15384615384615385,0.07692307692307693,0.8461538461538461
+traditional_qtemplate_width,57,11,1.0,0.18181818181818182,0.0,0.0,1.0
+traditional_qtemplate_width,64,14,1.0,0.9285714285714286,0.0,0.0,1.0
+traditional_qtemplate_width,65,11,1.0,0.7272727272727273,0.0,0.0,1.0

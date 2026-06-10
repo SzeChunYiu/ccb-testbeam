@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,tolerance,pass
+sample_iv_A1_A3_pairs,127.0,127.0,0.0,0.0,True
+sample_iv_percentile68_ns,1.7936257228944266,1.793589512102762,-3.62107916644927e-05,0.001,True
+sample_iv_core_sigma_ns,1.9921758801207758,1.9921763995373574,5.194165815236573e-07,0.001,True

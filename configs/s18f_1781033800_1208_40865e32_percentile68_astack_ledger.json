@@ -1,0 +1,87 @@
+{
+  "study": "S18f",
+  "ticket": "1781033800.1208.40865e32",
+  "worker": "testbeam-laptop-4",
+  "output_dir": "reports/1781033800.1208.40865e32__s18f_percentile68_astack_ledger",
+  "script_path": "scripts/s18f_1781033800_1208_40865e32_percentile68_astack_ledger.py",
+  "base_s18e_script": "scripts/s18e_1781014577_1276_72f87916_run_family_transfer.py",
+  "raw_root_dir": "data/root/root",
+  "astack": {
+    "file_prefix": "hrda",
+    "staves": {
+      "A1": 0,
+      "A3": 4
+    }
+  },
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "cfd_fraction": 0.2,
+  "gaussian_core_bins": 40,
+  "bootstrap_resamples": 1000,
+  "random_seed": 18397,
+  "sample_iii_calib_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+  "sample_iii_analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "sample_iv_calib_runs": [64],
+  "sample_iv_analysis_runs": [58, 59, 60, 61, 62, 63, 65],
+  "calibration_pools": {
+    "run64_only": {
+      "description": "Original S18 Sample IV run 64 calibration pool only.",
+      "sample_iii": [],
+      "sample_iv_fixed": [64]
+    },
+    "sample_iii_early": {
+      "description": "Early Sample III calibration-period A-stack runs only.",
+      "sample_iii": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+      "sample_iv_fixed": []
+    },
+    "sample_iii_late": {
+      "description": "Late Sample III analysis-period A-stack runs only.",
+      "sample_iii": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+      "sample_iv_fixed": []
+    },
+    "sample_iii_mixed": {
+      "description": "All available Sample III A-stack runs, combining early and late run families.",
+      "sample_iii": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+      "sample_iv_fixed": []
+    }
+  },
+  "expected_reproduction": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_robust_width_ns": 1.7936257228944266,
+    "sample_iv_core_sigma_ns": 1.9921758801207758,
+    "robust_width_tolerance_ns": 0.001,
+    "core_sigma_tolerance_ns": 0.001
+  },
+  "ml": {
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0],
+    "gbt_grid": [
+      {"learning_rate": 0.04, "max_leaf_nodes": 7, "l2_regularization": 0.0, "max_iter": 140},
+      {"learning_rate": 0.03, "max_leaf_nodes": 15, "l2_regularization": 0.1, "max_iter": 160},
+      {"learning_rate": 0.02, "max_leaf_nodes": 31, "l2_regularization": 1.0, "max_iter": 180}
+    ],
+    "mlp_grid": [
+      {"hidden_layer_sizes": [24], "alpha": 0.001},
+      {"hidden_layer_sizes": [32, 16], "alpha": 0.01},
+      {"hidden_layer_sizes": [48, 24], "alpha": 0.1}
+    ],
+    "torch_grid": [
+      {"epochs": 30, "learning_rate": 0.001, "weight_decay": 0.0001, "hidden": 24},
+      {"epochs": 40, "learning_rate": 0.0007, "weight_decay": 0.001, "hidden": 32}
+    ],
+    "cv_folds": 4,
+    "single_run_fallback": {
+      "ridge_alpha": 1000.0,
+      "gbt_index": 0,
+      "mlp_index": 0,
+      "torch_index": 0
+    }
+  },
+  "prior_reports": {
+    "S18": "reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/result.json",
+    "S18b": "reports/1781001480.695946.490c69d3/result.json",
+    "S18c": "reports/1781008255.1458.3732667d/result.json",
+    "S18d": "reports/1781008255.1472.46fb0e58/result.json",
+    "S18e": "reports/1781014577.1276.72f87916/result.json"
+  }
+}

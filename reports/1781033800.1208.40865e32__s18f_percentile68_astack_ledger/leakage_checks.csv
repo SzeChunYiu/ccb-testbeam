@@ -1,0 +1,6 @@
+check,value,flag
+split_by_run,train pools disjoint from Sample IV analysis runs,False
+forbidden_feature_overlap,,False
+row_level_shuffle_used,False,False
+cnn_target_columns_used,False,False
+single_run_run64_pool,True,False

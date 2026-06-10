@@ -1,0 +1,82 @@
+{
+  "ticket": "1781030952.2114.13887066",
+  "worker": "testbeam-laptop-4",
+  "created_utc_date": "2026-06-10",
+  "purpose": "Audit and close malformed rescued queue item with title '--help' and empty body.",
+  "git_commit_at_audit_start": "bda0a0daace64360d90a3fc531da9e2052c19211",
+  "branch": "work-1781030952.2114.13887066",
+  "environment": {
+    "cwd": "/home/billy/.tb-workers/testbeam-laptop-4",
+    "system_python": "Python 2.7.18 at /usr/bin/python",
+    "system_python3": "Python 3.8.10 at /usr/bin/python3",
+    "project_python": "/home/billy/anaconda3/bin/python",
+    "root_reader_check": "uproot import succeeded under /home/billy/anaconda3/bin/python"
+  },
+  "commands": [
+    "tn-ticket claim testbeam-laptop-4 --project testbeam",
+    "tn-ticket list --project testbeam",
+    "sed -n '1,220p' /home/billy/.config/tn/tickets/testbeam/claimed/1781030952.2114.13887066",
+    "sed -n '1,80p' /home/billy/.config/tn/tickets/testbeam/claimed/1781030952.2114.13887066.lease",
+    "sha256sum /home/billy/.config/tn/tickets/testbeam/claimed/1781030952.2114.13887066 /home/billy/.config/tn/tickets/testbeam/claimed/1781030952.2114.13887066.lease",
+    "git checkout -B work-1781030952.2114.13887066 origin/main",
+    "find -L data/root/root -maxdepth 1 -type f -name '*.root' | wc -l",
+    "find -L data/root/root -maxdepth 1 -type f -name 'hrdb_run_*.root' | wc -l",
+    "find -L data/root/root -maxdepth 1 -type f -name 'hrda_run_*.root' | wc -l",
+    "find -L data/sorted-b -maxdepth 1 -type f -name '*.root' | wc -l",
+    "find -L data/sorted-a -maxdepth 1 -type f -name '*.root' | wc -l",
+    "sha256sum data/root/root/hrdb_run_0012.root data/root/root/hrdb_run_0065.root",
+    "/home/billy/anaconda3/bin/python - <<'PY'\nimport uproot, glob\nfor path in sorted(glob.glob('data/root/root/hrdb_run_*.root'))[:2]:\n    f=uproot.open(path)\n    print(path, list(f.keys())[:5])\nPY",
+    "sha256sum reports/1781030952.2114.13887066__invalid_help_ticket/REPORT.md reports/1781030952.2114.13887066__invalid_help_ticket/result.json reports/1781030952.2114.13887066__invalid_help_ticket/claimed_ticket.txt reports/1781030952.2114.13887066__invalid_help_ticket/raw_root_inventory.csv"
+  ],
+  "inputs": {
+    "claimed_ticket_file": {
+      "path": "/home/billy/.config/tn/tickets/testbeam/claimed/1781030952.2114.13887066",
+      "sha256": "39316d9a280ba5341a4fe6ec12c7e0f197e70c4765c623f0ec8be27d6ddb1ece"
+    },
+    "claimed_ticket_lease": {
+      "path": "/home/billy/.config/tn/tickets/testbeam/claimed/1781030952.2114.13887066.lease",
+      "sha256": "3efa28096f37af76cf4f3849d7e763a05d73bd32720694f5340bc94b282ee057"
+    },
+    "raw_root_sentinels": [
+      {
+        "path": "data/root/root/hrdb_run_0012.root",
+        "sha256": "84f09fe5eabb8f0af30907c82be33dfae19cf1b78d2799ac7141da7e98649cf9"
+      },
+      {
+        "path": "data/root/root/hrdb_run_0065.root",
+        "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+      }
+    ]
+  },
+  "raw_data_inventory": {
+    "raw_root_total_files": 110,
+    "raw_root_b_stack_files": 53,
+    "raw_root_a_stack_files": 57,
+    "sorted_b_root_files": 53,
+    "sorted_a_root_files": 53,
+    "checked_root_keys": [
+      {
+        "path": "data/root/root/hrdb_run_0012.root",
+        "keys_prefix": [
+          "h101;1"
+        ]
+      },
+      {
+        "path": "data/root/root/hrdb_run_0013.root",
+        "keys_prefix": [
+          "h101;1"
+        ]
+      }
+    ]
+  },
+  "random_seeds": [],
+  "outputs": {
+    "REPORT.md": "44aa6ddc7ec4e8620818afead00bc0b7df41ee81b6e0f42ea62069be22bcdd20",
+    "result.json": "9f77b1de53d68a85907267d3d57101d3084a4c024af3a82b0bafb4e2ca472d2e",
+    "claimed_ticket.txt": "39316d9a280ba5341a4fe6ec12c7e0f197e70c4765c623f0ec8be27d6ddb1ece",
+    "raw_root_inventory.csv": "bf0ddad4cea77bf9b2620caac874c0edc81c0617e56d88544cb974559b2153ac"
+  },
+  "benchmark_status": "not_run_invalid_ticket",
+  "queue_action_recommended": "done",
+  "next_tickets_appended": []
+}

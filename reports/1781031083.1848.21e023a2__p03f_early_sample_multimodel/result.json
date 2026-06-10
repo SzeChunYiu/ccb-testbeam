@@ -1,0 +1,63 @@
+{
+  "study": "P03f",
+  "ticket": "1781031083.1848.21e023a2",
+  "worker": "testbeam-laptop-4",
+  "title": "early-sample waveform ablation against S02b residuals with multimodel controls",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": {
+    "method": "s02b_global_template_timewalk",
+    "sigma68_ns": 1.6923582499801066,
+    "ci": [
+      1.5220783972539336,
+      2.001359233945447
+    ]
+  },
+  "winner": {
+    "method": "hgb_no_samples_0_3",
+    "family": "ml",
+    "sigma68_ns": 1.1706765959085075,
+    "ci": [
+      1.1350220629355572,
+      1.2167889413544808
+    ],
+    "delta_vs_traditional_ns": -0.5216816540715992,
+    "delta_ci": [
+      -0.8321343404333404,
+      -0.3245112811429654
+    ]
+  },
+  "early_sample_ablation": {
+    "best_full": {
+      "method": "hgb_full",
+      "sigma68_ns": 1.1748920307678556
+    },
+    "best_no_samples_0_3": {
+      "method": "hgb_no_samples_0_3",
+      "sigma68_ns": 1.1706765959085075
+    },
+    "best_only_samples_0_3": {
+      "method": "hgb_only_samples_0_3",
+      "sigma68_ns": 1.2005752086342878
+    }
+  },
+  "controls": {
+    "shuffled_target_failures": 6,
+    "run_family_control_best_sigma68_ns": 1.2089532275674904,
+    "max_train_heldout_event_overlap": 0
+  },
+  "verdict": "Samples 0-3 are not required for the best residual correction; gains persist when they are removed, so the early samples are mainly nuisance/run-structure diagnostics rather than a causal timing source. 6 shuffled-target checks beat their nominal model and are flagged as stability caveats.",
+  "next_tickets": [
+    "P03g: blinded pedestal-proxy residualization of samples 0-3 before repeating the P03f multimodel ablation"
+  ],
+  "git_commit": "9ff8212c79ac901fb5ee8383249ee1efdc472662"
+}

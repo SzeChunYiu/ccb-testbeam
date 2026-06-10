@@ -1,0 +1,75 @@
+{
+  "ticket_id": "1781026939.1565.7fb34a7e",
+  "script": "scripts/p02d_1781026939_1565_7fb34a7e_run_heldout_latent_distance_artifact.py",
+  "config": "configs/p02d_1781026939_1565_7fb34a7e_run_heldout_latent_distance_artifact.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p02d_1781026939_1565_7fb34a7e_run_heldout_latent_distance_artifact.py --config configs/p02d_1781026939_1565_7fb34a7e_run_heldout_latent_distance_artifact.json",
+  "git_commit": "294d27e65cec9b47ea5ff2dc93a9a9e436a0b41d",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "input_sha256_csv": "reports/1781026939.1565.7fb34a7e/input_sha256.csv",
+  "input_file_count": 34,
+  "reproduction_passed": true,
+  "artifact_sha256": "7e554787e9427161becdf80779f1d6f1b4f9c0dd7909297ae773a5d3e4558d5a",
+  "output_sha256": [
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/REPORT.md",
+      "sha256": "28408f0eb16686faaf1a0466269767e3ff562d55014c5886def734eb6f3012ab",
+      "bytes": 5040
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/fold_train_summary.csv",
+      "sha256": "4ead7de654353fd6b2ab51245fbba82425c3e5af4b21e7f4ed49c0cf33677f8b",
+      "bytes": 1435
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/forbidden_all_data_ae_loss.csv",
+      "sha256": "2f4dc4924d00ed5a7c7ba2d7d109f477219c75a30d0e3913be47bf9c0d2f0c2b",
+      "bytes": 86
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/heldout_fold_metrics.csv",
+      "sha256": "9236be11f8273d7620d899e31594a985a87c52c12738d97a029f06477aaacd8e",
+      "bytes": 41979
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/heldout_summary_metrics.csv",
+      "sha256": "b7575913d44c60b2e236a6eed3feb0863e52ee14f3ef74c6139c24e1beb22dfb",
+      "bytes": 2208
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/input_sha256.csv",
+      "sha256": "7174a0a9940543be9ebd7ca64f10ab2610e1018aa08b3038438926e1866a054d",
+      "bytes": 3715
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/leakage_checks.csv",
+      "sha256": "07a094eacb2f430a96f9977ebc671e1ed931040f52ae8f3c33de639488860b06",
+      "bytes": 809
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/p02d_artifact_preview.csv",
+      "sha256": "741e4b0d2265181251a6345a335a48913fc3c115acf2dab6f9758307cdec3130",
+      "bytes": 144558
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/p02d_run_heldout_latent_distance_artifact.parquet",
+      "sha256": "7e554787e9427161becdf80779f1d6f1b4f9c0dd7909297ae773a5d3e4558d5a",
+      "bytes": 38277741
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/reproduction_match_table.csv",
+      "sha256": "58bb811729390fe1312dfd648882096def92a735dad3391991ac38e15d3c4e5b",
+      "bytes": 98
+    },
+    {
+      "path": "reports/1781026939.1565.7fb34a7e/result.json",
+      "sha256": "536a37188d1b881e34e98d5fec0e4b3214071368ee98026cfc53f74643f964f4",
+      "bytes": 7939
+    }
+  ]
+}

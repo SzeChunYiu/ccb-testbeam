@@ -1,0 +1,22 @@
+heldout_run,check,value,detail
+58,train_heldout_event_id_overlap,0.0,must be zero
+58,feature_audit,24.0,"models use same-pulse normalized waveform and amplitude/shape features; label policies are no label, true stave, train-label permutation, and held-out-label permutation; no event id, event order, other-stave time, pair residual, or held-out target feature is used"
+58,traditional_analytic_choice,100.0,amp_only
+59,train_heldout_event_id_overlap,0.0,must be zero
+59,feature_audit,24.0,"models use same-pulse normalized waveform and amplitude/shape features; label policies are no label, true stave, train-label permutation, and held-out-label permutation; no event id, event order, other-stave time, pair residual, or held-out target feature is used"
+59,traditional_analytic_choice,100.0,amp_only
+60,train_heldout_event_id_overlap,0.0,must be zero
+60,feature_audit,24.0,"models use same-pulse normalized waveform and amplitude/shape features; label policies are no label, true stave, train-label permutation, and held-out-label permutation; no event id, event order, other-stave time, pair residual, or held-out target feature is used"
+60,traditional_analytic_choice,100.0,amp_only
+61,train_heldout_event_id_overlap,0.0,must be zero
+61,feature_audit,24.0,"models use same-pulse normalized waveform and amplitude/shape features; label policies are no label, true stave, train-label permutation, and held-out-label permutation; no event id, event order, other-stave time, pair residual, or held-out target feature is used"
+61,traditional_analytic_choice,100.0,amp_only
+62,train_heldout_event_id_overlap,0.0,must be zero
+62,feature_audit,24.0,"models use same-pulse normalized waveform and amplitude/shape features; label policies are no label, true stave, train-label permutation, and held-out-label permutation; no event id, event order, other-stave time, pair residual, or held-out target feature is used"
+62,traditional_analytic_choice,100.0,amp_only
+63,train_heldout_event_id_overlap,0.0,must be zero
+63,feature_audit,24.0,"models use same-pulse normalized waveform and amplitude/shape features; label policies are no label, true stave, train-label permutation, and held-out-label permutation; no event id, event order, other-stave time, pair residual, or held-out target feature is used"
+63,traditional_analytic_choice,100.0,amp_only
+65,train_heldout_event_id_overlap,0.0,must be zero
+65,feature_audit,24.0,"models use same-pulse normalized waveform and amplitude/shape features; label policies are no label, true stave, train-label permutation, and held-out-label permutation; no event id, event order, other-stave time, pair residual, or held-out target feature is used"
+65,traditional_analytic_choice,100.0,amp_only

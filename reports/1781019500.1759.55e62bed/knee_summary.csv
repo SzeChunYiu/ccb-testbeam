@@ -1,0 +1,3 @@
+method,runs,median_knee_adc,run_block_median_knee_adc_ci95,run_to_run_iqr_adc,min_knee_adc,max_knee_adc
+ml_waveform_classifier,32,8941.875,"[8807.15625, 9014.478125]",394.1875,7480.5,9379.5
+traditional_duplicate_piecewise,30,2916.1737974683547,"[2808.0, 6940.9991376582275]",4420.987974683545,2497.346835443038,7487.016202531646

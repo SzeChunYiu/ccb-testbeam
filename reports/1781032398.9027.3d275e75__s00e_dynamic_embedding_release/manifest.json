@@ -1,0 +1,114 @@
+{
+  "study": "S00e",
+  "ticket": "1781032398.9027.3d275e75",
+  "script": "scripts/s00e_1781032398_9027_3d275e75_dynamic_embedding_release.py",
+  "config": "configs/s00e_1781032398_9027_3d275e75_dynamic_embedding_release.json",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "git_commit": "62cd446f7454b0f87cd701a91b00c3b323c9585e",
+  "raw_root_dir": "data/root/root",
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/s00e_1781032398_9027_3d275e75_dynamic_embedding_release.py --config configs/s00e_1781032398_9027_3d275e75_dynamic_embedding_release.json"
+  ],
+  "random_seed": 20260610,
+  "input_sha256_csv": "input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "output_sha256": [
+    {
+      "file": "REPORT.md",
+      "sha256": "a12bb482a7d68271402ab39dde85ee1ec3c6ac7ef9bb7d1c86152da597f68456",
+      "bytes": 8253
+    },
+    {
+      "file": "eval_ae_training_loss.csv",
+      "sha256": "3bb125f24dee994a8f0911e38bba7f1e011e9a59242404ee28d772488ac76fca",
+      "bytes": 255
+    },
+    {
+      "file": "heldout_auc_benchmark.png",
+      "sha256": "be2a30f80a1a4469edd0faa4388497058e067a0b1bbb293c24708054795d13ef",
+      "bytes": 37008
+    },
+    {
+      "file": "heldout_latent_projection.png",
+      "sha256": "577884c645852f40e99cc83666327bdbb5dc7def44094915e9838f0917cf72e1",
+      "bytes": 37892
+    },
+    {
+      "file": "heldout_model_benchmark.csv",
+      "sha256": "9a6259bdec5738101fd86a82843e0228d7b7f03279e742443e24e19543c17830",
+      "bytes": 1357
+    },
+    {
+      "file": "heldout_score_preview.csv",
+      "sha256": "7ee81c1fe064b62adc9854148a91a1d007c93f078ecd3b4f5b34f139c95c51bb",
+      "bytes": 1782309
+    },
+    {
+      "file": "hyperparameter_cv.csv",
+      "sha256": "ab4fafab38d2f518ad42fea65078ffcc82af44331fe55d548d3d93fe6ca37e32",
+      "bytes": 718
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+      "bytes": 3565
+    },
+    {
+      "file": "release_ae_training_loss.csv",
+      "sha256": "cf0adc2bfd56ecd05ba61bd4deeff0689afe4b67565366708e9011d73e0da10d",
+      "bytes": 385
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "1298db9528a63fe7348dae77ba6cd41aa1a01f17bc0bda6fb88e7a2c0264cb59",
+      "bytes": 209
+    },
+    {
+      "file": "result.json",
+      "sha256": "3987783f2ea4ecf35b9494c1ff13bdae201e8d037f6a7f588985dd599d7f5549",
+      "bytes": 6027
+    },
+    {
+      "file": "s00e_autoencoder_state.pt",
+      "sha256": "0884a95299c06023f01f6f1531a1a34949392013fb8182073e95e6438e67e92b",
+      "bytes": 13715
+    },
+    {
+      "file": "s00e_dynamic_embedding_latents.npz",
+      "sha256": "de03b77e3b55e33016d2ab81ba17f3dbd30c89d433388a81905b6f533c07cb6a",
+      "bytes": 13331631
+    },
+    {
+      "file": "s00e_embedding_metadata.json",
+      "sha256": "4cfabbf235711600599fb18df73c97cd44594042e4eb33567dc4a79c80cd2496",
+      "bytes": 898
+    },
+    {
+      "file": "s00e_embedding_preview.csv",
+      "sha256": "14fe702dabf0bb6da6b2ea5385b8429d8c9e7e3b984631b68fc870244283b1e7",
+      "bytes": 2047
+    },
+    {
+      "file": "s00e_generation_config.json",
+      "sha256": "6808144427213456e78d3374e48ba32aa7887c0bee4436aafa17babe7a9380d2",
+      "bytes": 2506
+    },
+    {
+      "file": "selector_counts_by_run.csv",
+      "sha256": "cc5ef21eac54e4e48492fd872edb2e2323a87489e36c53773ad9555c57e7e66d",
+      "bytes": 1569
+    },
+    {
+      "file": "selector_counts_by_run.png",
+      "sha256": "6ade7fc7355287f71516d06e0a81a6fd673e33e6a8b0285e2f35847bcd6f36ba",
+      "bytes": 35756
+    },
+    {
+      "file": "template_summary.csv",
+      "sha256": "4870ea2c44f08263d7f82c6234c5ff3392a36cbc231d4b5b13dfdb2b315a07ec",
+      "bytes": 80
+    }
+  ]
+}

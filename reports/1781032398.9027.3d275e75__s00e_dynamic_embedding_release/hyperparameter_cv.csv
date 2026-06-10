@@ -1,0 +1,13 @@
+model,parameter,value,validation_auc
+ridge_hand_shape,alpha,0.1,0.9885504375023797
+ridge_hand_shape,alpha,1.0,0.9885515870410061
+ridge_hand_shape,alpha,10.0,0.9885613844159648
+ridge_hand_shape,alpha,100.0,0.9886153150581837
+gradient_boosted_trees_hgb,max_leaf_nodes,15.0,0.9980493832176798
+gradient_boosted_trees_hgb,max_leaf_nodes,31.0,0.9982988706662056
+new_ae_latent_shape_fusion_hgb,max_leaf_nodes,15.0,0.9982479153004311
+new_ae_latent_shape_fusion_hgb,max_leaf_nodes,31.0,0.9984622854709226
+mlp_waveform,hidden_or_channels,32.0,0.9951112902154068
+mlp_waveform,hidden_or_channels,64.0,0.9955139142409323
+cnn_waveform,hidden_or_channels,8.0,0.995155829202182
+cnn_waveform,hidden_or_channels,16.0,0.9948675579733366

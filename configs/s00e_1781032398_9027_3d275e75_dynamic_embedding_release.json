@@ -1,0 +1,64 @@
+{
+  "study_id": "S00e",
+  "ticket_id": "1781032398.9027.3d275e75",
+  "worker": "testbeam-laptop-3",
+  "title": "P01b-compatible dynamic-only embedding release",
+  "output_dir": "reports/1781032398.9027.3d275e75__s00e_dynamic_embedding_release",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "heldout_runs": [42, 57, 64, 65],
+  "cv_validation_runs": [41, 56, 63],
+  "latent_dim": 4,
+  "random_seed": 20260610,
+  "benchmark": {
+    "max_train_per_run_stave_label": 1800,
+    "bootstrap_replicates": 600
+  },
+  "autoencoder": {
+    "epochs_eval": 12,
+    "epochs_release": 18,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "mask_probability": 0.30,
+    "noise_sigma": 0.02
+  },
+  "models": {
+    "ridge_alpha": [0.1, 1.0, 10.0, 100.0],
+    "hgb_max_leaf_nodes": [15, 31],
+    "mlp_hidden": [32, 64],
+    "cnn_channels": [8, 16],
+    "nn_cv_epochs": 3,
+    "nn_final_epochs": 8,
+    "nn_batch_size": 2048,
+    "nn_learning_rate": 0.001
+  },
+  "next_ticket": {
+    "title": "S00g: external stability of dynamic-selected release latents against calibration-run drift",
+    "body": "Test whether the S00e dynamic-selected release latents remain stable when the release autoencoder is trained on Sample I only, Sample II only, and calibration-only controls. Expected information gain: separates genuine reusable morphology coordinates from release-weight artefacts induced by the dynamic-only selector mixture."
+  }
+}

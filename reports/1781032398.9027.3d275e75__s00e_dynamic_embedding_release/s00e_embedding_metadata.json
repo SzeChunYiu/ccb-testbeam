@@ -1,0 +1,26 @@
+{
+  "artifact": "s00e_dynamic_embedding_latents.npz",
+  "rows": 706373,
+  "s00_rows": 640737,
+  "dynamic_only_rows": 65636,
+  "latent_dim": 4,
+  "key_columns": [
+    "run",
+    "event_index",
+    "stave_index",
+    "dynamic_only"
+  ],
+  "value_columns": [
+    "amplitude_adc",
+    "s00_selected",
+    "z"
+  ],
+  "amplitude_adc_definition": "baseline-subtracted median-first-four peak amplitude, preserving P01b convention",
+  "artifact_sha256": "de03b77e3b55e33016d2ab81ba17f3dbd30c89d433388a81905b6f533c07cb6a",
+  "key_sha256": "cf64f723b5752c1486c5694724362d1c06323302f0a60d72fa0a1a373426355a",
+  "artifact_mib": 12.714,
+  "release_final_training_loss": 2.6478928630751684,
+  "eval_heldout_reconstruction_mse": 10.64669418334961,
+  "release_model_state": "s00e_autoencoder_state.pt",
+  "no_benchmark_claim": "release model fit on all dynamic-selected rows after held-out evaluation was frozen"
+}

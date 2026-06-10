@@ -1,0 +1,60 @@
+{
+  "study": "S18f",
+  "ticket": "1781032542.991.23310d17",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781032542.991.23310d17__s18f_adjacent_channel_transfer",
+  "script_path": "scripts/s18f_1781032542_991_23310d17_adjacent_channel_transfer.py",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "cfd_fraction": 0.20,
+  "random_seed": 18214,
+  "bootstrap_resamples": 1000,
+  "gaussian_core_bins": 40,
+  "sample_iii_late_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "sample_iv_analysis_runs": [58, 59, 60, 61, 62, 63, 65],
+  "sample_iv_calib_runs": [64],
+  "all_scan_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
+  "astack": {
+    "file_prefix": "hrda",
+    "channels": {
+      "A1": 0,
+      "A1_adjacent": 1,
+      "A3": 4,
+      "A3_adjacent": 5
+    }
+  },
+  "anchor_pair": {
+    "name": "anchor_A1_A3",
+    "left": "A1",
+    "right": "A3",
+    "expected_sample_iv_pairs": 127,
+    "expected_sample_iv_run64_traditional_width_ns": 1.7936257228944265,
+    "expected_sample_iv_run64_traditional_core_sigma_ns": 1.9921758801207758,
+    "width_tolerance_ns": 0.001,
+    "core_sigma_tolerance_ns": 0.001
+  },
+  "control_pairs": [
+    {"name": "control_A1_adjacent", "left": "A1", "right": "A1_adjacent"},
+    {"name": "control_A3_adjacent", "left": "A3", "right": "A3_adjacent"}
+  ],
+  "ml": {
+    "ridge_alphas": [0.1, 1.0, 10.0, 100.0, 1000.0],
+    "hgb_grid": [
+      {"learning_rate": 0.03, "max_leaf_nodes": 7, "l2_regularization": 0.0},
+      {"learning_rate": 0.05, "max_leaf_nodes": 7, "l2_regularization": 0.01},
+      {"learning_rate": 0.05, "max_leaf_nodes": 15, "l2_regularization": 0.1}
+    ],
+    "mlp_grid": [
+      {"hidden_layer_sizes": [16], "alpha": 0.001},
+      {"hidden_layer_sizes": [32, 16], "alpha": 0.01}
+    ],
+    "cnn_grid": [
+      {"channels": 4, "weight_decay": 0.0},
+      {"channels": 8, "weight_decay": 0.001}
+    ],
+    "torch_epochs": 90,
+    "torch_lr": 0.01
+  }
+}

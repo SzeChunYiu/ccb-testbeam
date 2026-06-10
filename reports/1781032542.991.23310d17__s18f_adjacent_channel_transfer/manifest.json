@@ -1,0 +1,127 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s18f_1781032542_991_23310d17_adjacent_channel_transfer.py --config configs/s18f_1781032542_991_23310d17_adjacent_channel_transfer.json",
+  "config": "configs/s18f_1781032542_991_23310d17_adjacent_channel_transfer.json",
+  "git_commit": "9aa581a3217e83d3c3259a5ed8488a200ce3c256",
+  "input_sha256": {
+    "data/root/root/hrda_run_0044.root": {
+      "bytes": 1072439,
+      "sha256": "8b9a0c63e5ebff7df6b49fe1c34fb2f058671bfd4fa4507e1e864b52e31813ad"
+    },
+    "data/root/root/hrda_run_0045.root": {
+      "bytes": 11978439,
+      "sha256": "0667f58a0c2408419fe2838feca49c211d681153295fbff131ba357ab7b17dbb"
+    },
+    "data/root/root/hrda_run_0046.root": {
+      "bytes": 363504,
+      "sha256": "d723c69ee87a20b8966c6186726c37cd827538b71d6b80cae051f20a77d625b5"
+    },
+    "data/root/root/hrda_run_0047.root": {
+      "bytes": 2725102,
+      "sha256": "95c0b24c9978ea91c22606d309b6dd37aa4450b943b95cf14f6c5c73a21bd32b"
+    },
+    "data/root/root/hrda_run_0048.root": {
+      "bytes": 7883395,
+      "sha256": "a0865b8b7247be879b2f3a1c542aa392587fafe3ebb1059379def5296aef2a38"
+    },
+    "data/root/root/hrda_run_0049.root": {
+      "bytes": 8041307,
+      "sha256": "f4517dbb6f46f61e4b0ff3c3f207a86e9dc8a03e27ab74511a0f02f159654574"
+    },
+    "data/root/root/hrda_run_0050.root": {
+      "bytes": 10925423,
+      "sha256": "73be3ab5d4b080192c83fdf0600c5c5f4c48a6cafed7c1b2cb16b0c23690f7f9"
+    },
+    "data/root/root/hrda_run_0051.root": {
+      "bytes": 5005769,
+      "sha256": "d08c3f5b1aa00d62377ddc5249612a79f523e3ab1379dc88cee13e35f2f2acd6"
+    },
+    "data/root/root/hrda_run_0052.root": {
+      "bytes": 2440882,
+      "sha256": "8700c89383ef567249b3b1cdb2cbc19f33cc33509a19b24165c528f72e4e9f9a"
+    },
+    "data/root/root/hrda_run_0053.root": {
+      "bytes": 9656826,
+      "sha256": "c93ca01697382bcb2680a433a48c41105943981e1a221c7f5349a8412e8ea874"
+    },
+    "data/root/root/hrda_run_0054.root": {
+      "bytes": 9124046,
+      "sha256": "36da35ade12ad942230e501b98394153b8983d53e0d922036535ec88f2d1830d"
+    },
+    "data/root/root/hrda_run_0055.root": {
+      "bytes": 5958441,
+      "sha256": "78451352fa3339abdd5db3e1c5b9a57ef7693bb87884aff4a4085135bb376227"
+    },
+    "data/root/root/hrda_run_0056.root": {
+      "bytes": 12667291,
+      "sha256": "76c7845d73fe994b35a3023e4450cfe16753bbdd723fec2e8dba15e84ec0ee6a"
+    },
+    "data/root/root/hrda_run_0057.root": {
+      "bytes": 7791169,
+      "sha256": "3fd411067fb6e9fa329a05463eadf54e663f9c6899c0f2570ca39bf083a78190"
+    },
+    "data/root/root/hrda_run_0058.root": {
+      "bytes": 8355851,
+      "sha256": "b679601ccf351cf91477684967398a8e477ad35f820c9f1a5212af2fa581bbdc"
+    },
+    "data/root/root/hrda_run_0059.root": {
+      "bytes": 10400361,
+      "sha256": "36228849be7d5b89f1c77aa572549b24b680eea0e5c770c371d38db0ee390422"
+    },
+    "data/root/root/hrda_run_0060.root": {
+      "bytes": 8889565,
+      "sha256": "d46e6ad595bc4cdb27118e7059b9a984b31b282fb5b3cdfcb6523155d1f20f5e"
+    },
+    "data/root/root/hrda_run_0061.root": {
+      "bytes": 8999644,
+      "sha256": "c7e195bfbc689c254c6b33b2647f8fd113bf2f19b253018134b22d766fcb94b6"
+    },
+    "data/root/root/hrda_run_0062.root": {
+      "bytes": 9250458,
+      "sha256": "02835d41621b6e7197eb1a57a5ccc17b14f08d25948f37473cee0bc209f2caac"
+    },
+    "data/root/root/hrda_run_0063.root": {
+      "bytes": 9118926,
+      "sha256": "ae19cf734aab1a2ab2d5cf2cf2315542cb8204f1333ada4aeb70d98b6ba6741b"
+    },
+    "data/root/root/hrda_run_0064.root": {
+      "bytes": 8852963,
+      "sha256": "58ce89dc72c8af359b6751b43e6dfbaf7eee84a6df0c5e101cb97975a33fc371"
+    },
+    "data/root/root/hrda_run_0065.root": {
+      "bytes": 9464668,
+      "sha256": "b4ae3f1e9adc613f05ca88688e8da194770399c975ed08b60831943825f259a2"
+    }
+  },
+  "outputs_sha256": {
+    "REPORT.md": "b28e1bc4b44cd8c64178500befb6041d55a2951b388ebb0227be97492d990e87",
+    "anchor_reproduction_predictions.csv": "9fbe1f9ecf52e25832b2a8bb9f29f02d24dc701beb7fe5bca618b7acd84eec0a",
+    "astack_adjacent_pair_table.csv.gz": "6a4c3f7b327b6f2a016668dc18b2cc1f56957daa12b6cb392152ee5092dbcd2f",
+    "channel_occupancy.csv": "53d3e8385ded17639c5f2548bb80001c9bce3b541b19b7b3a5453929fc13f4dc",
+    "fig_method_macro_width.png": "dfbdc0d066ac27a540ee866b84190f4a7e086d0384ba23646fc70e20e19fc22a",
+    "fig_winner_vs_traditional_residuals.png": "3db4f3e9545e1d6d8c8f01f78c096438738bbb0556e378cce3ea195e4a21b0c3",
+    "fit_metadata.csv": "a4789243faca53fbd017855b630e6cab40f83361703378f7d92975ff8eb21dfc",
+    "heldout_predictions.csv.gz": "c1ccb493ddcb1092460fcf3bd5eb44138b20405b449cc59a41da7f01fa5ef299",
+    "input_sha256.csv": "6be7fc0721a78677937c3b859e3145b1a8db1c6994a71bc9a81a187ecb61bad2",
+    "leakage_checks.csv": "7e0329d23a78b7ae95cb6d9d601b7871e55b6d6b44c0f97ac6c1e4a7cef48599",
+    "method_deltas_vs_traditional.csv": "156956ec7b837cd4c0256b232fbd4b50d628998d98b2c0ab83e96d6099f7f009",
+    "method_macro_metrics.csv": "d8b842c36537bc72b62bf757597abb63a28eb45247603d25c0d6aa64f84f79f7",
+    "method_pair_metrics.csv": "361f0f70d61adc699a34c3629fe5faaae10737f596e90d70b8845732e37d115b",
+    "ml_cv_scan.csv": "c63684105de1c47fd5b6b617cbd419d2916f5947624e873936cb39de38f5351a",
+    "reproduction_match_table.csv": "7dabafb06442195611686004b160b8550670ef8be57408b1903c26a783a1def1",
+    "result.json": "8737638eff9a7e6ad47589b95dcb2a879dfaed141cc77e55e3a5722c39ff0046",
+    "run_heldout_summary.csv": "3e29f62c46d4ff7c66d393a28c7f4c5b20b2f75941651c489cd6e784a6a18cd2",
+    "train_run_manifest.csv": "3a182f06d8664cb8b75a117445b95d9e35fb21d3fd27a3420da6f456393104c9"
+  },
+  "packages": {
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117",
+    "uproot": "5.0.9"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "random_seed": 18214,
+  "study": "S18f",
+  "ticket": "1781032542.991.23310d17",
+  "worker": "testbeam-laptop-4"
+}

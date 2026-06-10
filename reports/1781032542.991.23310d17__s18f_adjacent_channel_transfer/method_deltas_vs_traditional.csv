@@ -1,0 +1,7 @@
+method,baseline,delta_macro_width_ns,delta_ci_low_ns,delta_ci_high_ns,p_value
+gradient_boosted_trees,traditional_cfd20_poly,-16.657705694779324,-22.67575637203598,-9.110175829263031,0.0
+mlp_waveform,traditional_cfd20_poly,-15.438067576759302,-22.85475583375886,-8.039793237897287,0.0
+antisymmetric_shared_cnn,traditional_cfd20_poly,-13.619863495147303,-20.587087908056457,-5.430297493384797,0.0
+ridge_shape_waveform,traditional_cfd20_poly,-13.618310216278877,-22.186850419081402,-4.203390376197225,0.018
+cnn1d_waveform,traditional_cfd20_poly,-9.096409951177339,-13.752643033374861,-5.287765200710764,0.0
+traditional_cfd20_poly,traditional_cfd20_poly,0.0,0.0,0.0,1.0

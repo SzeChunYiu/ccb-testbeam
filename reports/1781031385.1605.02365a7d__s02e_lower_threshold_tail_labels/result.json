@@ -1,0 +1,30 @@
+{
+  "models": [
+    "cnn",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge",
+    "tcn",
+    "traditional_s16f_scorecard"
+  ],
+  "next_tickets": [],
+  "reproduced": true,
+  "runtime_seconds": 91.78431797027588,
+  "scientific_summary": "Lower-threshold D_t>3 ns labels produce 3537 tail events among 3820 downstream all-hit Sample-II events. The point-estimate winner is ridge by held-out average precision; fixed S16f-style scorecard remains the transparent veto baseline.",
+  "split": "leave-one-run-out over Sample-II runs [58, 59, 60, 61, 62, 63, 65]",
+  "study": "S02e",
+  "tail_threshold_ns": 3.0,
+  "ticket": "1781031385.1605.02365a7d",
+  "traditional": "S16f-style fixed pre-trigger/morphology scorecard at 90% train clean acceptance",
+  "winner": {
+    "average_precision": 0.9969016077814059,
+    "ci": [
+      0.9916596482856597,
+      0.9989155224418885
+    ],
+    "metric": "held-out average precision",
+    "model": "ridge",
+    "tail_rejection_at_90_clean": 0.9454339836019225
+  },
+  "worker": "testbeam-laptop-3"
+}

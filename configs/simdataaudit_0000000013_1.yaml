@@ -1,0 +1,72 @@
+study_id: S13sim
+ticket_id: "0000000013.1.simdataaudit"
+title: Systematic sim-vs-data distribution audit
+worker: testbeam-laptop-3
+
+raw_root_dir: /home/billy/ccb-data/extracted/root/root
+geant4_path_highstat: /home/billy/ccb-geant4/output_krakow_1M.root
+geant4_path_fallback: /home/billy/ccb-geant4/output_30k.root
+dedx_table: /home/billy/ccb-geant4/dedx_p_in_CD2.txt
+output_dir: reports/0000000013.1.simdataaudit
+
+amplitude_cut_adc: 1000.0
+expected_selected_pulses: 640737
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+saturation_adc: 7000.0
+clean_unsaturated_max_adc: 6500.0
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+duplicate_readout_channels:
+  B2: 1
+  B4: 3
+  B6: 5
+  B8: 7
+
+sim_layer_mapping:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+sim_layer_mapping_alternative:
+  B2: 1
+  B4: 3
+  B6: 5
+  B8: 7
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+heldout_groups: [sample_i_analysis, sample_ii_analysis]
+nominal_geometry: center_4cm
+geometry_variants:
+  center_4cm:
+    description: newer-note centre spacing, front face halfway before B2
+    stave_centers_cm: {B2: 2.0, B4: 6.0, B6: 10.0, B8: 14.0}
+  center_2cm:
+    description: older-note two cm spacing variant
+    stave_centers_cm: {B2: 1.0, B4: 3.0, B6: 5.0, B8: 7.0}
+  zero_4cm:
+    description: centre positions quoted as 0/4/8/12 cm in notes
+    stave_centers_cm: {B2: 0.5, B4: 4.0, B6: 8.0, B8: 12.0}
+
+beam_energy_mev: 190.0
+stave_thickness_cm: 1.0
+dedx_second_column_units: GeV/mm
+dedx_to_mev_per_cm: 10000.0
+
+random_seed: 1513
+bootstrap_reps: 250
+ml_max_train_events: 2500
+cnn_max_train_events: 14000
+cnn_epochs: 3
+mlp_max_iter: 22

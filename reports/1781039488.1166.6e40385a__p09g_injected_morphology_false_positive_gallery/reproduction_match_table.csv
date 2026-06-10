@@ -1,0 +1,6 @@
+quantity,expected,reproduced,delta,tolerance,pass,source,report_value,sample_size
+raw guarded D_t-tail events,72.0,72.0,0.0,0.0,True,raw ROOT P02d/S07h rebuild,,
+S07h shape-only RF ROC AUC,0.8597875662511796,0.8597877918400527,2.2558887313728349e-07,1e-06,True,prior S07h artifact after raw rebuild gate,,
+"P02 early-peak pulse rate, peak_sample<=3",,0.0438833333333333,-0.0001166666666666,0.002,True,,0.044,60000.0
+"S07 parent guarded gross events, D_t>51 ns",,72.0,0.0,0.0,True,,72.0,10156.0
+P02d transparent morphology ROC AUC,,0.692169373549884,0.0,1e-12,True,,0.692169373549884,2227.0

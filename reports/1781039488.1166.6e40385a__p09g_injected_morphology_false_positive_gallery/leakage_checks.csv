@@ -1,0 +1,7 @@
+check,value,pass,note
+forbidden_feature_columns,0.0,True,none
+train_heldout_run_overlap,0.0,True,leave-one-run-out splits use disjoint run ids
+pre_injection_Dt_auc,0.5,True,same source event before injection should be near chance
+isolation_forest_clean_residual_auc,0.5879834841543704,True,unsupervised clean-support residual diagnostic only
+shuffled_label_gbt_auc,0.5269580805443553,True,training-label shuffle null
+reviewer_kappa,0.4196585735390038,True,two autonomous morphology rubrics; moderate agreement threshold

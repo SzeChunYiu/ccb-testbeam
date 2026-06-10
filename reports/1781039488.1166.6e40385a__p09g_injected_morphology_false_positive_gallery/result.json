@@ -1,0 +1,285 @@
+{
+  "study": "P09g",
+  "ticket": "1781039488.1166.6e40385a",
+  "worker": "testbeam-laptop-3",
+  "title": "injected-morphology false-positive gallery",
+  "reproduced": true,
+  "winner": "mlp",
+  "winner_metric": "leave-one-run-out ROC AUC with run-block bootstrap CI",
+  "winner_row": {
+    "method": "mlp",
+    "roc_auc": 0.912053768013738,
+    "roc_auc_ci_low": 0.8972890430625299,
+    "roc_auc_ci_high": 0.9256586072285069,
+    "average_precision": 0.9118484708479694,
+    "average_precision_ci_low": 0.8959784090151344,
+    "average_precision_ci_high": 0.9265317932399226,
+    "precision_at_top10": 0.9721577726218097,
+    "precision_at_top10_ci_low": 0.9448567708333333,
+    "precision_at_top10_ci_high": 0.9855313328912467,
+    "action_balanced_accuracy": 0.808584686774942,
+    "action_precision": 0.9279279279279279,
+    "false_positive_count": 112,
+    "false_negative_count": 713
+  },
+  "traditional": {
+    "method": "traditional_atom_rubric",
+    "roc_auc": 0.57667303685919,
+    "roc_auc_ci_low": 0.5686287788969268,
+    "roc_auc_ci_high": 0.5820499270750419,
+    "average_precision": 0.5645200978822345,
+    "average_precision_ci_low": 0.5564911651526846,
+    "average_precision_ci_high": 0.5701237818973195,
+    "precision_at_top10": 0.6334106728538283,
+    "precision_at_top10_ci_low": 0.5767469183359014,
+    "precision_at_top10_ci_high": 0.6626192813562184,
+    "action_balanced_accuracy": 0.5053364269141531,
+    "action_precision": 0.5485232067510548,
+    "false_positive_count": 107,
+    "false_negative_count": 2025
+  },
+  "methods": [
+    {
+      "method": "mlp",
+      "roc_auc": 0.912053768013738,
+      "roc_auc_ci_low": 0.8972890430625299,
+      "roc_auc_ci_high": 0.9256586072285069,
+      "average_precision": 0.9118484708479694,
+      "average_precision_ci_low": 0.8959784090151344,
+      "average_precision_ci_high": 0.9265317932399226,
+      "precision_at_top10": 0.9721577726218097,
+      "precision_at_top10_ci_low": 0.9448567708333333,
+      "precision_at_top10_ci_high": 0.9855313328912467,
+      "action_balanced_accuracy": 0.808584686774942,
+      "action_precision": 0.9279279279279279,
+      "false_positive_count": 112,
+      "false_negative_count": 713
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "roc_auc": 0.9055404525169439,
+      "roc_auc_ci_low": 0.8869399199820981,
+      "roc_auc_ci_high": 0.9216448639693458,
+      "average_precision": 0.9093472150105806,
+      "average_precision_ci_low": 0.8925845283353103,
+      "average_precision_ci_high": 0.928141935872399,
+      "precision_at_top10": 0.9837587006960556,
+      "precision_at_top10_ci_low": 0.9700427482908842,
+      "precision_at_top10_ci_high": 0.9965172405408034,
+      "action_balanced_accuracy": 0.7765661252900232,
+      "action_precision": 0.915041782729805,
+      "false_positive_count": 122,
+      "false_negative_count": 841
+    },
+    {
+      "method": "ridge",
+      "roc_auc": 0.8142516459321386,
+      "roc_auc_ci_low": 0.799838528488682,
+      "roc_auc_ci_high": 0.8283677499644531,
+      "average_precision": 0.8110885194394647,
+      "average_precision_ci_low": 0.7860588560135274,
+      "average_precision_ci_high": 0.8339875427533989,
+      "precision_at_top10": 0.9211136890951276,
+      "precision_at_top10_ci_low": 0.8848579545454546,
+      "precision_at_top10_ci_high": 0.9519324079340252,
+      "action_balanced_accuracy": 0.6821345707656612,
+      "action_precision": 0.87776708373436,
+      "false_positive_count": 127,
+      "false_negative_count": 1243
+    },
+    {
+      "method": "atom_gated_cnn",
+      "roc_auc": 0.7871357281668381,
+      "roc_auc_ci_low": 0.767289342450186,
+      "roc_auc_ci_high": 0.80391927078432,
+      "average_precision": 0.7865778692317065,
+      "average_precision_ci_low": 0.7617966863309003,
+      "average_precision_ci_high": 0.811964028035205,
+      "precision_at_top10": 0.9048723897911833,
+      "precision_at_top10_ci_low": 0.8730554514619546,
+      "precision_at_top10_ci_high": 0.9348564425770308,
+      "action_balanced_accuracy": 0.671461716937355,
+      "action_precision": 0.8885383806519453,
+      "false_positive_count": 106,
+      "false_negative_count": 1310
+    },
+    {
+      "method": "cnn1d",
+      "roc_auc": 0.7826758038554917,
+      "roc_auc_ci_low": 0.7625866555929361,
+      "roc_auc_ci_high": 0.801060835680537,
+      "average_precision": 0.7784815322058286,
+      "average_precision_ci_low": 0.7528259525420482,
+      "average_precision_ci_high": 0.8033931786135353,
+      "precision_at_top10": 0.9095127610208816,
+      "precision_at_top10_ci_low": 0.8791768385718645,
+      "precision_at_top10_ci_high": 0.9288062928720549,
+      "action_balanced_accuracy": 0.6693735498839908,
+      "action_precision": 0.8842105263157894,
+      "false_positive_count": 110,
+      "false_negative_count": 1315
+    },
+    {
+      "method": "traditional_atom_rubric",
+      "roc_auc": 0.57667303685919,
+      "roc_auc_ci_low": 0.5686287788969268,
+      "roc_auc_ci_high": 0.5820499270750419,
+      "average_precision": 0.5645200978822345,
+      "average_precision_ci_low": 0.5564911651526846,
+      "average_precision_ci_high": 0.5701237818973195,
+      "precision_at_top10": 0.6334106728538283,
+      "precision_at_top10_ci_low": 0.5767469183359014,
+      "precision_at_top10_ci_high": 0.6626192813562184,
+      "action_balanced_accuracy": 0.5053364269141531,
+      "action_precision": 0.5485232067510548,
+      "false_positive_count": 107,
+      "false_negative_count": 2025
+    }
+  ],
+  "ml_minus_traditional": [
+    {
+      "method": "mlp",
+      "delta_roc_auc_vs_traditional": 0.33538073115454803,
+      "delta_roc_auc_ci_low": 0.321957465858391,
+      "delta_roc_auc_ci_high": 0.34901147194545523,
+      "delta_precision_at_top10": 0.33874709976798134,
+      "delta_precision_at_top10_ci_low": 0.3156053287936973,
+      "delta_precision_at_top10_ci_high": 0.39613558211888006
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "delta_roc_auc_vs_traditional": 0.3288674156577539,
+      "delta_roc_auc_ci_low": 0.3087363477543201,
+      "delta_roc_auc_ci_high": 0.3461029898059647,
+      "delta_precision_at_top10": 0.3503480278422273,
+      "delta_precision_at_top10_ci_low": 0.3290870488322718,
+      "delta_precision_at_top10_ci_high": 0.405112528132033
+    },
+    {
+      "method": "ridge",
+      "delta_roc_auc_vs_traditional": 0.2375786090729486,
+      "delta_roc_auc_ci_low": 0.22388617996972032,
+      "delta_roc_auc_ci_high": 0.252959800072392,
+      "delta_precision_at_top10": 0.28770301624129924,
+      "delta_precision_at_top10_ci_low": 0.2622773688950159,
+      "delta_precision_at_top10_ci_high": 0.35101741716227697
+    },
+    {
+      "method": "atom_gated_cnn",
+      "delta_roc_auc_vs_traditional": 0.21046269130764805,
+      "delta_roc_auc_ci_low": 0.18820457881234737,
+      "delta_roc_auc_ci_high": 0.22691338541591755,
+      "delta_precision_at_top10": 0.271461716937355,
+      "delta_precision_at_top10_ci_low": 0.2468172112283431,
+      "delta_precision_at_top10_ci_high": 0.3323795180722891
+    },
+    {
+      "method": "cnn1d",
+      "delta_roc_auc_vs_traditional": 0.2060027669963017,
+      "delta_roc_auc_ci_low": 0.18103980622872645,
+      "delta_roc_auc_ci_high": 0.22364546007469804,
+      "delta_precision_at_top10": 0.2761020881670533,
+      "delta_precision_at_top10_ci_low": 0.24703248792836716,
+      "delta_precision_at_top10_ci_high": 0.33597667697818295
+    }
+  ],
+  "split": {
+    "type": "leave-one-run-out",
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "n_rows": 4310,
+    "n_clean": 2155,
+    "n_injected": 2155,
+    "bootstrap_replicates": 500
+  },
+  "taxonomy": {
+    "reviewer_kappa": 0.4196585735390038,
+    "top_enriched_taxa": [
+      {
+        "taxon": "delayed_peak_or_tail",
+        "rows": 692,
+        "positive_fraction": 0.6430635838150289,
+        "enrichment_vs_base": 1.2861271670578036
+      },
+      {
+        "taxon": "dropout_step",
+        "rows": 61,
+        "positive_fraction": 0.5901639344262295,
+        "enrichment_vs_base": 1.1803278684918033
+      },
+      {
+        "taxon": "broad_or_saturated",
+        "rows": 623,
+        "positive_fraction": 0.5393258426966292,
+        "enrichment_vs_base": 1.0786516852359551
+      },
+      {
+        "taxon": "template_mismatch",
+        "rows": 958,
+        "positive_fraction": 0.5020876826722338,
+        "enrichment_vs_base": 1.004175365336117
+      },
+      {
+        "taxon": "early_pretrigger",
+        "rows": 1147,
+        "positive_fraction": 0.4803836094158675,
+        "enrichment_vs_base": 0.9607672189102007
+      }
+    ]
+  },
+  "dttail_gallery_rows": 44,
+  "leakage_checks": [
+    {
+      "check": "forbidden_feature_columns",
+      "value": 0.0,
+      "pass": true,
+      "note": "none"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "leave-one-run-out splits use disjoint run ids"
+    },
+    {
+      "check": "pre_injection_Dt_auc",
+      "value": 0.5,
+      "pass": true,
+      "note": "same source event before injection should be near chance"
+    },
+    {
+      "check": "isolation_forest_clean_residual_auc",
+      "value": 0.5879834841543704,
+      "pass": true,
+      "note": "unsupervised clean-support residual diagnostic only"
+    },
+    {
+      "check": "shuffled_label_gbt_auc",
+      "value": 0.5269580805443553,
+      "pass": true,
+      "note": "training-label shuffle null"
+    },
+    {
+      "check": "reviewer_kappa",
+      "value": 0.4196585735390038,
+      "pass": true,
+      "note": "two autonomous morphology rubrics; moderate agreement threshold"
+    }
+  ],
+  "finding": "Injected morphology failures are dominated by delayed-tail, dropout, and template-mismatch atoms; learned morphology improves ranking, but the transparent atom rubric remains the auditable physical explanation.",
+  "next_tickets": [
+    {
+      "title": "P09j injected-failure atom reviewer calibration",
+      "body": "Test whether the P09g autonomous atom labels for injected false positives/negatives survive blinded visual reviewer calibration on the bounded failure gallery and D_t-tail gallery. Expected information gain: converts the moderate autonomous-rubric agreement observed in P09g into a calibrated uncertainty on which atoms can safely drive veto/recovery triage."
+    }
+  ],
+  "git_commit": "c97f1b071c9dafd11f6ff3d53e8f5d72d6e98c66",
+  "runtime_sec": 106.2
+}

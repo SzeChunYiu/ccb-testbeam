@@ -1817,3 +1817,59 @@ real-minus-shuffled A-stack charge identifiability.
   waveform regressors with target permutation, knockoff B-waveform controls, and conformal residual
   calibration. Metric: real-minus-shuffled res68 delta, within-25% coverage, coverage68, and bias
   by stratum with leave-one-run-out run-block bootstrap CIs.
+
+Current steering pass (2026-06-10, P10c/P04f/S11e/S07g layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
+18-ready trigger. The correctly addressed local `testbeam` project queue remains deep after this
+pass (`open=183 claimed=4 done=232 failed=7`) under concurrent worker movement. The trigger was
+satisfied by appending four ready, non-duplicate `project:testbeam` tickets focused on the newest
+calibration portability, duplicate-charge tail, bounded-fit calibration, and external-charge
+abstention gaps: S03q run64-only calibration acceptance gate (`1781065299.451.065636a1`),
+P04v duplicate-closure tail-risk ledger (`1781065299.478.126968ef`), S11i bounded-fit score
+calibration audit (`1781065299.555.20535839`), and P04w external-charge abstention frontier
+(`1781065299.620.6b5f516e`). P10c-followup shows mixed Sample-I plus run64 calibration worsens
+Sample-II timing relative to run64-only for analytic, binned, and ML timewalk corrections.
+P04f shows duplicate-readout ML closure is extremely sharp in res68 but still needs rare-tail
+accounting before charge feeds saturation, PID, or energy. S11e/S07g show the bounded two-pulse
+fit remains interpretable but weak compared with the charge-preserved shape RF, while external
+charge transfer remains support-limited. The new tickets split these into acceptance, tail-risk,
+calibration, and abstention atoms.
+
+- **S03q — Run64-only calibration acceptance gate.** After P10c-followup showed Sample-I plus
+  run64 calibration worsens Sample-II timing relative to run64-only, identify the exact
+  run/stave/amplitude/shape atoms where run64-only timewalk calibration is acceptable versus
+  diagnostic-only. Traditional: freeze S03a/S02b analytic amp-only and monotone-binned timewalk
+  fits trained on run64-only calibration, then evaluate atom-stratified held-out sigma68, full
+  RMS, bias-vs-amplitude, and tail fraction with no waveform features. ML: leakage-audited
+  HGB/ridge residual correctors trained on the same run64-only rows with feature-family
+  knockouts, shuffled-target, run-only, and mixed-calibration sentinels. Metric:
+  ML-minus-traditional sigma68/full-RMS/tail deltas, accepted support fraction, false-accept rate
+  under shuffled/mixed controls, and per-atom run-block bootstrap CIs.
+- **P04v — Duplicate-closure tail-risk ledger.** Decide which pulse atoms drive the remaining
+  full-RMS and rare charge failures in the otherwise strong P04f duplicate-readout closure before
+  duplicate charge is reused by saturation, PID, or energy studies. Traditional: freeze peak,
+  integral, adaptive-template, Huber, ridge, and residual-basis duplicate calibrators, then
+  stratify high-error tails by run, stave, peak phase, saturation, q_template, dropout/anomaly,
+  and pretrigger atoms. ML: ExtraTrees/HGB residual and conformal tail-risk models on the same
+  even-waveform features with target permutation, atom knockouts, and run-family holdout. Metric:
+  charge res68, full RMS, >10% and >25% tail rates, conformal coverage, accepted support
+  fraction, and ML-minus-traditional tail-risk deltas with event/run-block bootstrap CIs.
+- **S11i — Bounded-fit score calibration audit.** Test whether the interpretable bounded
+  two-pulse fit outputs from S11e can be calibrated into reliable abstention or recovery scores
+  even though their raw injected AUC is weaker than the shape RF. Traditional: use train-run-only
+  constrained one-vs-two template fits and calibrate chi2/ndf, fractional SSE, recovered delay,
+  secondary scale, and residual-tail scores against injected truth under peak-preserved and
+  charge-preserved injections. ML: isotonic/logistic/ExtraTrees calibration layers over the same
+  fit-output variables plus shape RF residuals, with fit-output-only, shape-only, shuffled-label,
+  amplitude-only, and topology-only sentinels. Metric: calibrated AUC/AP, ECE, Brier score,
+  fixed-95%-clean rejection, recovered delay/charge bias at accepted coverage, and
+  ML-minus-traditional deltas with run-block bootstrap CIs.
+- **P04w — External-charge abstention frontier.** After P04e/P04h/P04u show external A/B charge
+  transfer is broad or shuffled-like, determine whether any abstention frontier lets B-stack
+  waveform charge safely support downstream energy/PID labels. Traditional: robust log-charge
+  ridge/Huber and topology medians with explicit support cuts on topology, saturation, peak
+  phase, anomaly, q_template, and run family. ML: ExtraTrees/HGB waveform transfer plus conformal
+  abstention and real-minus-shuffled sentinels, excluding target staves and event identifiers
+  under leave-one-run-out validation. Metric: external-charge res68, median bias, full RMS,
+  within-10/25% coverage, real-minus-shuffled separation, accepted support fraction, and
+  topology/run-block bootstrap CIs.

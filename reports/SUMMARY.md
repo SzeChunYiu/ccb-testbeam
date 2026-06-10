@@ -624,3 +624,22 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep under concurrent worker movement and reports
+  `open=183 claimed=4 done=232 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: S03q run64-only calibration acceptance gate
+  (`1781065299.451.065636a1`), P04v duplicate-closure tail-risk ledger
+  (`1781065299.478.126968ef`), S11i bounded-fit score calibration audit
+  (`1781065299.555.20535839`), and P04w external-charge abstention frontier
+  (`1781065299.620.6b5f516e`).
+- Fresh synthesis: P10c-followup sharpens calibration portability by showing Sample-I plus run64
+  training worsens Sample-II timing relative to run64-only for traditional and ML timewalk
+  corrections, so S03q turns that into an atom-level accept/diagnostic gate. P04f makes
+  duplicate-readout charge closure extremely sharp in res68 but leaves rare-tail/full-RMS risk,
+  so P04v records tail atoms before charge feeds saturation, PID, or energy consumers. S11e and
+  S07g show bounded-fit pile-up scores are interpretable but weaker than charge-preserved shape
+  RFs, so S11i calibrates the fit outputs before using them for abstention. P04e/P04h/P04u keep
+  external A/B charge transfer broad or shuffled-like, so P04w asks whether any narrow conformal
+  support frontier is safe for energy/PID labels. These keep the pulse programme at the atomic
+  level across shape, timing, amplitude, saturation, pile-up, baseline, dropout, PID, and energy.

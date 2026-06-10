@@ -1,0 +1,25 @@
+{
+  "study": "P03h",
+  "ticket": "1781035058.850.43a47da0",
+  "worker": "testbeam-laptop-4",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-4/configs/p03h_1781035058_850_43a47da0_support_map.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p03h_1781035058_850_43a47da0_support_map.py --config configs/p03h_1781035058_850_43a47da0_support_map.json",
+  "elapsed_s": 362.49062728881836,
+  "git_commit": "02495d7ea6f0b75fdbf1d987502cf1a2f385dcde",
+  "source_artifacts": {
+    "p03f_pooled": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781034623.1381.12086ef0__p03f_loro_feature_multimodel/pooled_run_block_summary.csv",
+    "p03f_pairwise": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781034623.1381.12086ef0__p03f_loro_feature_multimodel/pairwise_residuals.csv",
+    "p03g_label_gaps": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781034623.1447.4a243444/run_label_policy_gap_summary.csv"
+  },
+  "outputs": {
+    "REPORT.md": "a7b11eef256966b53075da7b3cb5361ba54aae5fe1afd29512dd586196528b49",
+    "benchmark_pooled_summary.csv": "0223d16eeb2c32b4ffe712036373ca94e16c720c9eb4f48839c05252f08fafb3",
+    "detector_label_policy_gaps.csv": "dcda61868c264cf3a39edac8105dbd42824077973f90018762c29d29cd6578a3",
+    "input_sha256.csv": "54ffe78258dd00839e9ea3c1ccfe7fd98cf2ad263e3d399c8e18c0f3ced439f7",
+    "nn_pull_calibration.csv": "3e4d284dcb189fcaa901376a7e9a391d6e159952fe27589a8acd9131295ec75c",
+    "pair_support_atoms.csv": "3ae7829b5e0748c3bbe20cc6eb2f7c52df86e59f6ecafc37d81625999fdafb81",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "1990b84ccdd89dbc03e81bbb374bae70c5c68f3397cbc3a254d8aec2cec7277c",
+    "support_atom_summary.csv": "6f0036f336c8dd7640105427d92cbd2c0ffd1735c11efc6d3327133d72ff176f"
+  }
+}

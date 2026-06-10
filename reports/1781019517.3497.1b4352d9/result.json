@@ -1,0 +1,91 @@
+{
+  "study": "S03f",
+  "ticket": "1781019517.3497.1b4352d9",
+  "worker": "testbeam-laptop-1",
+  "title": "physically signed shared-stave shrinkage for monotone timewalk bins",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6808109129566127,
+      2.9861718468144858
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only": {
+      "method": "amp_only_ridge_residual_on_template_phase",
+      "value": 1.5510917109777833,
+      "ci": [
+        1.3716311130185186,
+        1.925253207675348
+      ],
+      "gain_vs_template_phase_ns": 1.1903228191074322
+    },
+    "s03b_monotone_binned": {
+      "method": "per_stave_monotone_decreasing_binned_timewalk",
+      "value": 1.6451494274970766,
+      "ci": [
+        1.3217498254041793,
+        1.9444633146125216
+      ],
+      "gain_vs_template_phase_ns": 1.096265102588139,
+      "delta_vs_s03a_amp_only_ns": -0.09405771651929329
+    },
+    "phys_signed_shared_shrinkage": {
+      "method": "shared_decreasing_isotonic_bins_with_stave_shrinkage",
+      "value": 1.267267256610639,
+      "ci": [
+        1.0074884172865908,
+        1.583770531280779
+      ],
+      "gain_vs_template_phase_ns": 1.4741472734745764,
+      "delta_vs_s03a_amp_only_ns": 0.2838244543671442,
+      "delta_vs_s03b_monotone_binned_ns": 0.3778821708864375
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.3929711020483486,
+    "ci": [
+      1.2530994570899248,
+      1.6552127599981497
+    ],
+    "gain_vs_template_phase_ns": 1.348443428036867,
+    "gain_vs_phys_signed_shared_shrinkage_ns": -0.12570384543770952
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.6428031039120548,
+    "hgb_looks_too_good": false,
+    "leakage_flag": false,
+    "shared_shrinkage_looks_too_good": true
+  },
+  "verdict": "shared_shrinkage_beats_isotonic_no_leakage",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "b59a7ae02008ba34b6167b5de747196e636d1eac",
+  "critic": "pending",
+  "next_tickets": [
+    "S03g: monotonicity audit for HGB residual timewalk features versus shared-shrinkage bins"
+  ]
+}

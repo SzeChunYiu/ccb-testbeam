@@ -1,0 +1,8 @@
+run,current_run_family,raw_events,parent_control_events,all_three_events,all_three_rate
+58,low_all_three_rate_edge,34141,201,72,0.0021089013209923554
+59,mid_all_three_rate,42303,2161,749,0.017705600075644753
+60,high_all_three_rate,36074,2025,802,0.022232078505294673
+61,high_all_three_rate,36535,2319,925,0.02531818803886684
+62,high_all_three_rate,37584,2154,798,0.02123243933588761
+63,mid_all_three_rate,37030,1045,365,0.009856872805833108
+65,low_all_three_rate_edge,38424,251,63,0.0016396002498438476

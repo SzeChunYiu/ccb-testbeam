@@ -1,0 +1,70 @@
+{
+  "study": "S16l",
+  "ticket": "1781035063.930.38bd04a3",
+  "worker": "testbeam-laptop-4",
+  "title": "target-excluded pedestal estimator timing-risk audit",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781035063.930.38bd04a3__s16l_target_excluded_pedestal_timing_risk",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65],
+  "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "downstream_staves": ["B4", "B6", "B8"],
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.20,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "adaptive": {
+    "negative_tolerance_floor_adc": 25.0,
+    "negative_tolerance_fraction_of_amplitude": 0.015
+  },
+  "models": {
+    "random_seed": 165063930,
+    "max_train_target_rows": 60000,
+    "ridge_alphas": [0.1, 1.0, 10.0, 100.0, 1000.0],
+    "hgb_max_iter": 90,
+    "hgb_learning_rates": [0.04, 0.08],
+    "hgb_max_leaf_nodes": [15, 31],
+    "mlp_hidden_layer_sizes": [48, 24],
+    "mlp_alpha": 0.0005,
+    "mlp_max_iter": 120,
+    "torch_epochs": 14,
+    "torch_batch_size": 1024,
+    "torch_learning_rate": 0.0015,
+    "torch_weight_decay": 0.0001
+  },
+  "bootstrap_replicates": 300,
+  "primary_metric": "timing_tail_gt5_fraction",
+  "pre_registered": {
+    "reproduction": "exact S00 selected B-stave pulse count from raw h101/HRDv ROOT",
+    "split": "leave one Sample-II analysis run out; train on all other analysis runs",
+    "traditional_methods": ["mean3", "median3", "line3_predict", "run_stratified_target_excluded"],
+    "ml_methods": ["ridge", "gradient_boosted_trees", "mlp", "one_dimensional_cnn", "target_masked_residual_cnn"],
+    "win_rule": "lowest held-out >5 ns downstream pair timing-shift tail fraction, then >0.5 ns tail fraction, then sigma68; pedestal RMSE is diagnostic"
+  },
+  "next_tickets": [
+    {
+      "title": "S16m: support-preserving pedestal-imputation timing correction",
+      "body": "Use the S16l target-excluded predictions only as a nuisance feature, not a direct baseline replacement, and test a support-preserving timing correction split by run with paired bootstrap CIs. Expected information gain: separates useful contamination diagnosis from unsafe pedestal substitution."
+    }
+  ]
+}

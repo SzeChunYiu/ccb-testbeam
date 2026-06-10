@@ -1,0 +1,22 @@
+heldout_run,check,value,pass,detail
+58,train_heldout_run_overlap,0,True,
+58,train_heldout_event_id_overlap,0,True,
+58,feature_audit,33,True,"features are same-pulse waveform/shape/amplitude/stave/template-quality quantities; no event id, target residual, other-stave time, or held-out-run label is used"
+59,train_heldout_run_overlap,0,True,
+59,train_heldout_event_id_overlap,0,True,
+59,feature_audit,33,True,"features are same-pulse waveform/shape/amplitude/stave/template-quality quantities; no event id, target residual, other-stave time, or held-out-run label is used"
+60,train_heldout_run_overlap,0,True,
+60,train_heldout_event_id_overlap,0,True,
+60,feature_audit,33,True,"features are same-pulse waveform/shape/amplitude/stave/template-quality quantities; no event id, target residual, other-stave time, or held-out-run label is used"
+61,train_heldout_run_overlap,0,True,
+61,train_heldout_event_id_overlap,0,True,
+61,feature_audit,33,True,"features are same-pulse waveform/shape/amplitude/stave/template-quality quantities; no event id, target residual, other-stave time, or held-out-run label is used"
+62,train_heldout_run_overlap,0,True,
+62,train_heldout_event_id_overlap,0,True,
+62,feature_audit,33,True,"features are same-pulse waveform/shape/amplitude/stave/template-quality quantities; no event id, target residual, other-stave time, or held-out-run label is used"
+63,train_heldout_run_overlap,0,True,
+63,train_heldout_event_id_overlap,0,True,
+63,feature_audit,33,True,"features are same-pulse waveform/shape/amplitude/stave/template-quality quantities; no event id, target residual, other-stave time, or held-out-run label is used"
+65,train_heldout_run_overlap,0,True,
+65,train_heldout_event_id_overlap,0,True,
+65,feature_audit,33,True,"features are same-pulse waveform/shape/amplitude/stave/template-quality quantities; no event id, target residual, other-stave time, or held-out-run label is used"

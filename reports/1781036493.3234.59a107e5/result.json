@@ -1,0 +1,76 @@
+{
+  "study": "P05c",
+  "ticket": "1781036493.3234.59a107e5",
+  "worker": "testbeam-laptop-4",
+  "title": "real-current abstention transfer from P05b to S10e/S11b candidate windows",
+  "reproduced": true,
+  "reproduction_gate": "S10 topology fractions rebuilt from raw B-stack ROOT within +/-0.0015 absolute tolerance",
+  "raw_root_counts": {
+    "low_2nA_events_with_selected": 5838,
+    "high_20nA_events_with_selected": 237295,
+    "global_downstream_high_minus_low": 0.010289747149522063
+  },
+  "split": {
+    "policy": "source-run-held-out; high-current scored from low-current training only",
+    "low_current_runs": [
+      46,
+      47
+    ],
+    "high_current_runs": [
+      44,
+      45,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "bootstrap_unit": "source_run_within_current_group",
+    "bootstrap_samples": 500
+  },
+  "methods": [
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge_linear",
+    "traditional_template_fit"
+  ],
+  "winner": {
+    "method": "traditional_template_fit",
+    "selection_score": 1.28381626912814,
+    "coverage": 0.4376801568084861,
+    "abstention_rate": 0.5623198431915138,
+    "accepted_candidate_secondary_fraction": 0.5275521190178571,
+    "accepted_time_residual_proxy_rms_ns": 2.0841830430676636,
+    "bad_recovery_proxy_rate": 0.006322444678609062,
+    "high_amp_large_lowering_broad_late_retention": 0.25765054294175715,
+    "accepted_secondary_high_minus_low": -0.05983838450063014,
+    "accepted_secondary_high_minus_low_ci": [
+      -0.1009507744958735,
+      -0.027803556976096853
+    ],
+    "risk_coverage_score": 0.4349129482301395,
+    "risk_coverage_score_ci": [
+      0.4232673033246258,
+      0.44646834347560566
+    ],
+    "ml_minus_traditional_risk_coverage_delta": 0.0,
+    "ml_minus_traditional_risk_coverage_delta_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  "leakage_checks_pass": true,
+  "input_sha256": "5fca985a5dfc7e6703082488664d78e085500aae77d7a74b583b7af360739f1a",
+  "git_commit": "cd0f9177d414b2b8c1598c262764d3db6b02468e",
+  "runtime_sec": 228.83,
+  "next_tickets": [
+    "P05d truth-stress abstention: build an external blinded hand-scan of accepted/rejected high-current broad-late candidates to validate whether P05c support-retention proxies correspond to real recoverability."
+  ]
+}

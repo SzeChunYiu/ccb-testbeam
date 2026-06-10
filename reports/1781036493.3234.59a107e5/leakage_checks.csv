@@ -1,0 +1,10 @@
+check,value,pass,note
+raw_root_reproduction_pass,1.0,True,S10 topology fractions are rebuilt from raw ROOT before scoring.
+heldout_run_scoring_policy,1.0,True,Each row is scored in a source-run-held-out fold; high-current folds train only on low-current runs.
+identifier_features_excluded_from_ml,1.0,True,"Model features are waveform and template residual features; run, event number, group, and current are not model inputs."
+cnn_1d_dual_head_current_auc_from_prediction,0.27153566619020253,True,High AUC would suggest the score is mostly a current identifier rather than a transferable recovery proxy.
+consensus_abstention_ensemble_current_auc_from_prediction,0.4347055646037087,True,High AUC would suggest the score is mostly a current identifier rather than a transferable recovery proxy.
+gradient_boosted_trees_current_auc_from_prediction,0.5680103435116178,True,High AUC would suggest the score is mostly a current identifier rather than a transferable recovery proxy.
+mlp_current_auc_from_prediction,0.5217830369166735,True,High AUC would suggest the score is mostly a current identifier rather than a transferable recovery proxy.
+ridge_linear_current_auc_from_prediction,0.5839182865088799,True,High AUC would suggest the score is mostly a current identifier rather than a transferable recovery proxy.
+traditional_template_fit_current_auc_from_prediction,0.45374402409350145,True,High AUC would suggest the score is mostly a current identifier rather than a transferable recovery proxy.

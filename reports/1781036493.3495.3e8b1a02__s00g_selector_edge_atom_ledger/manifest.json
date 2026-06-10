@@ -1,0 +1,29 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s00g_1781036493_3495_3e8b1a02_selector_edge_atom_ledger.py",
+  "config": "configs/s00g_1781036493_3495_3e8b1a02_selector_edge_atom_ledger.json",
+  "script": "scripts/s00g_1781036493_3495_3e8b1a02_selector_edge_atom_ledger.py",
+  "git_commit": "91265df8bfa31a340164a1f485bc6e1cde998a03",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "runtime_sec": 106.936,
+  "outputs": {
+    "REPORT.md": "28a5be50e6b35f38e9b52ef93198c1bf2a7826da0ed301c28d199ea175ce6402",
+    "atom_propagation_ledger.csv": "257070b0a88ae299958f3507bc74ec34e4675607e6a44510cef062866e8f4572",
+    "fig_model_auc.png": "c456baed300e6a86a55514415fd5207adfe67eda250b6692e72a05fe6944242b",
+    "fig_support_summary.png": "a33c4763bba4cdfb807ca94bee238c49fe9dd7e7f48c8d034e386b2bb4a1163b",
+    "heldout_model_scores.csv.gz": "39c5179541d603c83453897ed1b0aaa37f29474da3137c9de530418504c443e5",
+    "input_sha256.csv": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+    "leakage_checks.csv": "5e0f1a314d26ce020c0cc018583118a185a454ff5730a9341a9d3861acc80aa4",
+    "matched_pulse_table.csv.gz": "71779ea0c00a7ce016a3642efa64ac08dad316ccf34836ba4e978ee15d48d67f",
+    "matched_strata_summary.csv": "1da1163f3b98e910f8746beb4dda86a1adaab0fdd93bf6294d69e3925c0dc1fe",
+    "matched_support_summary.csv": "6f6d4eb2cbb398c9d4beb0931696112c5829d9a816363bd88e3ebd04bb461db3",
+    "model_benchmark.csv": "72885f3d25942cc2e38a0abc0515ddb9d3068c14ee48c9d762e95fdd6a82570a",
+    "primary_delta_metrics.csv": "bd7526890c39c16c66d5ce4254135eef11ca658b5b03d47e1e16df3bc9693645",
+    "reproduction_match_table.csv": "9486d56356c2bb3ffe9f80b70f98fa1ce49d234e7e32e8a8e642a3b9b5a347ae",
+    "result.json": "2db710396ae14b98a4225257217efd31ab5fdf045ac6a8db296e82721a2bd6da",
+    "s00c_mistake_atom_ledger.csv": "149b935f32f2a9f735e91123970bb0076471eaafa22a834131ff42f296825fbf",
+    "selector_atom_ledger.csv": "b8cbcce0c4d7952f512da1b351865ec7f26d14fcc88af49525a58941e2ea781d",
+    "selector_counts_by_run.csv": "bbd513fd66ec57880d8807499d02425b91e87cae13b285bfdc5b11fce85b393a",
+    "selector_edge_table.csv.gz": "ea055a35db8bd299d1d87df8db3103658b9047d3a9eed88d0c253b6c5a01e9a2"
+  }
+}

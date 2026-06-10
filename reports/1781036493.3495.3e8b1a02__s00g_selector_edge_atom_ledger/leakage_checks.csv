@@ -1,0 +1,4 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,split unit is run
+forbidden_feature_columns_absent,0.0,True,"run,event,current,selector amplitudes,baseline excursion excluded from ML matrices"
+shuffled_label_fusion_control_auc_near_chance,0.4787624999999999,True,within-train shuffled labels should not identify held-out dynamic membership

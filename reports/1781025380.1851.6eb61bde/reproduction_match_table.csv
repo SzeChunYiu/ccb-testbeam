@@ -1,0 +1,3 @@
+quantity,expected,reproduced,delta,pass
+P10d/S00 selected B-stave pulses,640737,640737,0,True
+P10d analysis selected rows,377362,377362,0,True

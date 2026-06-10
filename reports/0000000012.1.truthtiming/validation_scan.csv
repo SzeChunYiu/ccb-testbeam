@@ -1,0 +1,11 @@
+method,param,val_mae_ns
+calibrated_kinematic_tof,affine_plus_pair_offsets,0.008997662076742685
+ridge,alpha=0.01,0.00266228992355503
+ridge,alpha=0.1,0.0026649936384584554
+ridge,alpha=1.0,0.0026926141554530145
+ridge,alpha=10.0,0.0029921074127274958
+ridge,alpha=100.0,0.004454221269420402
+gradient_boosted_trees,fixed_config,
+mlp,best_epoch,0.0016115682367283668
+1d_cnn,best_epoch,0.0014969949858198994
+physics_residual_mlp,best_epoch,0.001065427011246567

@@ -1,0 +1,29 @@
+{
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/s12a_0000000012_1_truthtiming.py --config configs/s12a_0000000012_1_truthtiming.yaml"
+  ],
+  "git_commit": "c405bcb1342229ee85fe80c0fa864e137cee6c83",
+  "inputs": {
+    "/home/billy/ccb-geant4/output_krakow_1M.root": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+    "configs/s12a_0000000012_1_truthtiming.yaml": "93bb2dba1c695cc227e749b55d35309ff7751258d8eacd9d8cce4b1c7e3a5a64",
+    "scripts/s12a_0000000012_1_truthtiming.py": "b11010affdcaf330a67fc088840e0ce5606c874c6db5fa6188a0607bbd771ee8"
+  },
+  "outputs": {
+    "REPORT.md": "824b972217284c2010d8ec6cc460cdde128f9d21bf786362129490a55912e789",
+    "figures/geometry_tof.png": "587fdb8a6888acf92b214e1b50b712c3b00f4e68bb2d044824bbb6eeed32b7c1",
+    "geometry_summary.csv": "3a471b5aa50aebb2691fff54218bf68447c18f7cd80414ef2101e52db63dcf7b",
+    "metrics.csv": "e4bfa2ae005843180cf6b5c014f6af93cb73e97e7a2955fe72365acbca4f9abc",
+    "predictions.parquet": "4abd1579644acdcb30442a30a2884d22c1dcfc132da530e554bbed4d27c3d760",
+    "result.json": "e099fcc34322aa974b1c9a9b0e1c8ee21348a5c5d67433ec0b60a772c9827b9a",
+    "run_counts.csv": "adf10141d0c82a39ab43880d26e15fd35c8021eeadda2c62d065fe69dcb3c244",
+    "truth_pairs.parquet": "945e6dd37717bf11d1ab234a475afb42fd0fe1c0eb410a728093d1721e9de3ff",
+    "validation_scan.csv": "20daac6356cfe9a6e61ccf3431b706bae1677b947a4db6077dbf4b741cd6c6e2"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "random_seed": 20260610,
+  "raw_root_dir": "data/root/root",
+  "study": "S12a",
+  "ticket_id": "0000000012.1.truthtiming",
+  "worker": "testbeam-laptop-4"
+}

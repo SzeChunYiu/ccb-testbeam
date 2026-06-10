@@ -1,0 +1,57 @@
+study_id: S12a
+ticket_id: "0000000012.1.truthtiming"
+title: "Timing-scale and geometry validation with GEANT4 truth"
+worker: testbeam-laptop-4
+
+raw_root_dir: data/root/root
+geant4_root: /home/billy/ccb-geant4/output_krakow_1M.root
+output_dir: reports/0000000012.1.truthtiming
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+tof_per_cm_ns_used_in_notes: 0.078
+expected_selected_pulses: 640737
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+truth:
+  tree: hibeam
+  stack_layer_id1: 1
+  selected_layer_ids: [0, 2, 4, 6]
+  adjacent_pairs: [[0, 2], [2, 4], [4, 6]]
+  particle_pdg: 2212
+  proton_mass_gev: 0.9382720813
+  c_cm_per_ns: 29.9792458
+  n_sim_blocks: 20
+  train_blocks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  val_blocks: [12, 13]
+  heldout_blocks: [14, 15, 16, 17, 18, 19]
+  max_pairs: 260000
+  random_seed: 20260610
+  bootstrap_samples: 400
+  batch_entries: 50000
+
+models:
+  ridge_alphas: [0.01, 0.1, 1.0, 10.0, 100.0]
+  gbt:
+    n_estimators: 250
+    max_depth: 3
+    learning_rate: 0.04
+    subsample: 0.75
+  torch:
+    epochs: 18
+    batch_size: 2048
+    learning_rate: 0.001
+    weight_decay: 0.0001

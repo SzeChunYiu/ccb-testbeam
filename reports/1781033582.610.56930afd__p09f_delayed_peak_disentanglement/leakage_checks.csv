@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_reproduction_before_modeling,640737,True,script raises before model fitting if selected-pulse count mismatches
+leave_one_run_train_test_overlap,0,True,held-out run never appears in the train sample
+identifier_columns_absent_from_features,0,True,run/event/stave identifiers are not in SCALAR_FEATURES and waveform columns are positional samples
+all_methods_same_eval_rows,1,True,head-to-head methods score the same delayed candidates
+finite_scores,1,True,non-finite classifier scores invalidate ranking metrics

@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,pass
+S00 selected B-stave pulse records,640737,640737,0,True
+P07e high-amplitude B2 duplicate rows,183132,183132,0,True
+P07f duplicate-proxy knee rows,data-derived,565387,,True

@@ -1,0 +1,96 @@
+{
+  "study": "P07f",
+  "ticket_id": "1781019500.1759.55e62bed",
+  "worker": "testbeam-laptop-1",
+  "title": "calibrate natural B2 saturation knees with odd-channel duplicates",
+  "raw_reproduction": [
+    {
+      "quantity": "S00 selected B-stave pulse records",
+      "expected": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "pass": true
+    },
+    {
+      "quantity": "P07e high-amplitude B2 duplicate rows",
+      "expected": 183132,
+      "reproduced": 183132,
+      "delta": 0,
+      "pass": true
+    },
+    {
+      "quantity": "P07f duplicate-proxy knee rows",
+      "expected": "data-derived",
+      "reproduced": 565387,
+      "delta": "",
+      "pass": true
+    }
+  ],
+  "split": "leave-one-run-out by run; event-bootstrap CIs within held-out runs; run-block bootstrap summary",
+  "methods": [
+    "traditional_duplicate_piecewise",
+    "ml_waveform_classifier"
+  ],
+  "summary": [
+    {
+      "method": "ml_waveform_classifier",
+      "runs": 32,
+      "median_knee_adc": 8941.875,
+      "run_block_median_knee_adc_ci95": [
+        8807.15625,
+        9014.478125
+      ],
+      "run_to_run_iqr_adc": 394.1875,
+      "min_knee_adc": 7480.5,
+      "max_knee_adc": 9379.5
+    },
+    {
+      "method": "traditional_duplicate_piecewise",
+      "runs": 30,
+      "median_knee_adc": 2916.1737974683547,
+      "run_block_median_knee_adc_ci95": [
+        2808.0,
+        6940.9991376582275
+      ],
+      "run_to_run_iqr_adc": 4420.987974683545,
+      "min_knee_adc": 2497.346835443038,
+      "max_knee_adc": 7487.016202531646
+    }
+  ],
+  "traditional_run_families": [
+    {
+      "family": "low-knee",
+      "runs": 18,
+      "median_knee_adc": 2752.018164556962,
+      "min_knee_adc": 2497.346835443038,
+      "max_knee_adc": 3035.6403797468347
+    },
+    {
+      "family": "high-knee",
+      "runs": 12,
+      "median_knee_adc": 7239.696392405063,
+      "min_knee_adc": 6827.131075949366,
+      "max_knee_adc": 7487.016202531646
+    }
+  ],
+  "leakage_audit": {
+    "split": "leave-one-run-out by run",
+    "ml_features_excluded": [
+      "run_id",
+      "event_id",
+      "odd_channel_samples",
+      "odd_amp",
+      "odd_charge",
+      "odd_peak",
+      "heldout_duplicate_labels"
+    ],
+    "max_exact_waveform_hash_overlap_train_heldout": 0,
+    "median_abs_ml_minus_traditional_knee_adc": 5089.444493670886,
+    "too_good_triggered": false,
+    "too_good_rule": "median absolute ML-traditional knee difference below 5 ADC or exact waveform overlap would trigger manual leakage review"
+  },
+  "global_duplicate_piecewise_knee_adc": 7394.518607594936,
+  "finding": "The duplicate-ratio method does not support a single natural B2 knee. It finds two run families: a low-knee family near 2752 ADC and a high-knee family near 7240 ADC; runs [42, 44, 46] have no stable constrained duplicate-ratio bend. The held-out waveform ML classifier instead places its median knee at 8942 ADC with CI [8807.15625, 9014.478125] (ML minus traditional median +6026 ADC), so it does not validate the duplicate-ratio knee calibration. For production timing/PID, recovered B2 amplitudes should therefore carry run-family systematics and should not be accepted above a fixed 7000 ADC proxy without a per-run duplicate-readout check.",
+  "git_commit": "60f908f6bae499792b16e17bb3033457bdbf6ebe",
+  "runtime_sec": 173.58
+}

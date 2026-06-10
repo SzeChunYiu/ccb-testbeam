@@ -1,0 +1,5 @@
+check,value,detail,heldout_run
+train_heldout_event_id_overlap,0.0,must be zero,65
+feature_audit,0.0,"features are normalized 18-sample waveform plus stave one-hot; no run, event id, event order, other-stave time, or held-out target",65
+shuffled_target_negative_control_sigma68_ns,3.173789346474021,same architecture trained with shuffled train residual targets,65
+nominal_mlp_sigma68_ns,1.9272329327513156,held-out run metric for comparison to shuffled control,65

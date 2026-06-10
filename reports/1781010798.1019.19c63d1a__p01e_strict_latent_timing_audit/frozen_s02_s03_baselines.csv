@@ -1,0 +1,5 @@
+method,scope,sigma68_ns,source
+S02 global template,run65 only,2.889152765080617,reports/1781000705.514762.105c186b__s02b_template_timewalk_closure
+S02 ML ridge,run65 only,1.8461136615528786,configs/s02c_run_drift_timewalk.json
+S03 analytic timewalk,run65 only,1.494640076269676,configs/s03b_amp_binned_monotonic_timewalk.yaml
+S03c analytic timewalk,Sample-II leave-one-run-out pooled,1.5510917109777833,reports/1781005627.1877.378c7a87/pooled_run_bootstrap.csv

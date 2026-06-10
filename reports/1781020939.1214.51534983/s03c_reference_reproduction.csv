@@ -1,0 +1,3 @@
+method,s03c_reference_value,reproduced_value,delta_ns,pass
+template_phase_base,2.7414145300852155,2.7414145300852155,0.0,True
+ml_ridge_no_family,1.5369230041797883,1.5369230041797883,0.0,True

@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,pass
+sample_ii_analysis B2 selected pulses,88213,88213.0,0,True
+B2 pulses >= 7000 ADC,data-derived,5351.0,,True
+B2 high-amplitude fraction,data-derived,0.06065999342500539,,True

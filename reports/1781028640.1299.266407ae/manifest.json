@@ -1,0 +1,40 @@
+{
+  "command": "/home/billy/anaconda3/bin/python3.7 scripts/s01d_1781028640_1299_266407ae_rebuild_selected_table.py",
+  "config": "configs/s01d_1781028640_1299_266407ae_rebuild_selected_table.yaml",
+  "count_match_passed": true,
+  "git_commit": "4ff461e9acbe9bba6ee65a94ac75fc8fc34734fc",
+  "input_sha256_rows": 39,
+  "output_sha256": {
+    "REPORT.md": "860816df699a4360bb3945249244eb748e02ab60ea191eed509fd719309b7892",
+    "count_match_table.csv": "3991fc58213590e458c96db68aeac68d8594fe29b550d53766c98c5f7ef24d13",
+    "counts_by_group.csv": "5f471827a94a55b0a8b3968d71d9f57955f82bdf8277d7d09439b370b862a890",
+    "counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "heldout_benchmark.csv": "0f400139a13340ccc17b41f31dafd79ca23b1e4833405ea983f80fef38333028",
+    "heldout_benchmark_by_run.csv": "53102d98e12f110a561bb2a5d0f9719656cd1b03f3d3bdfe38c4c2d57ff6844b",
+    "heldout_prediction_audit.csv": "40f949a1d5a1b103422e02be0dd492b4273f54004f6ca9a62e838939df60baec",
+    "input_sha256.csv": "a6b173f3a80b89123bd7296ff103799b1097efe4a9ad5432bfc283c5fbf84e66",
+    "leakage_checks.csv": "33c744986015e0f0dc3236e93fa8e9a2ec4fba9d70e399ce902d8f2ac82c42c0",
+    "ml_group_cv_scan.csv": "bdb98245e738a2dc14415441fab281cd55d3825d041886a3338af474eb55c461",
+    "ml_sample_by_run.csv": "c683a68fe6a815e03ab1bfda242eb2b7f9bd93811acf89acc107835c05609a6d",
+    "result.json": "21df1c20e5313a8754061c233d49ffb6df9fc2b63048ffd25d3bf7494bd9e189",
+    "run_stave_count_comparison.csv": "c0e4e46d6c47ebfea0f33e414bc11daf7f02d5e60ce01b8e650ae04b4ca23f77",
+    "s00_selected_b_pulses.csv.gz": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+    "table_hash_comparison.csv": "ac33080c7ad9c54474fcd5338924552294156c1f953412bac757ac331f69a5fb"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "reference_gzip_header": {
+    "flags": 8,
+    "fname": "s00_selected_b_pulses.csv",
+    "mtime": 1780919993,
+    "os": 255,
+    "xfl": 2
+  },
+  "run_stave_count_match_passed": true,
+  "runtime_s": 552.8726351261139,
+  "script": "scripts/s01d_1781028640_1299_266407ae_rebuild_selected_table.py",
+  "study": "S01d",
+  "table_hash_match_passed": true,
+  "ticket": "1781028640.1299.266407ae",
+  "worker": "testbeam-laptop-4"
+}

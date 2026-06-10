@@ -1,0 +1,59 @@
+{
+  "study_id": "S13b",
+  "ticket": "1781000867.546938.20f0173c",
+  "worker": "testbeam-laptop-2",
+  "title": "run-transfer CWoLa current classifier with multiple low/high-current runs",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781000867.546938.20f0173c",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "low_current_runs": [46, 47],
+  "high_current_runs": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "expected_s10_ml_score_ratio": 1.297,
+  "expected_s10_low_score_mean": 0.1213,
+  "expected_s10_high_score_mean": 0.1574,
+  "folds": [
+    {
+      "name": "A_to_B",
+      "train_low_runs": [46],
+      "train_high_runs": [44, 45, 48, 49, 50, 51],
+      "test_low_runs": [47],
+      "test_high_runs": [52, 53, 54, 55, 56, 57]
+    },
+    {
+      "name": "B_to_A",
+      "train_low_runs": [47],
+      "train_high_runs": [52, 53, 54, 55, 56, 57],
+      "test_low_runs": [46],
+      "test_high_runs": [44, 45, 48, 49, 50, 51]
+    }
+  ],
+  "traditional_candidate_features": [
+    "area_over_peak",
+    "tail_fraction",
+    "late_fraction",
+    "early_fraction",
+    "post_peak_min_fraction",
+    "neg_step_count",
+    "width_10_samples",
+    "width_20_samples",
+    "final_fraction",
+    "peak_sample"
+  ],
+  "rf": {
+    "n_estimators": 300,
+    "max_depth": 5,
+    "min_samples_leaf": 40
+  },
+  "max_train_pulses_per_run_stave": 900,
+  "max_eval_pulses_per_run_stave": 2500,
+  "bootstrap_replicates": 1200,
+  "random_seed": 1313
+}

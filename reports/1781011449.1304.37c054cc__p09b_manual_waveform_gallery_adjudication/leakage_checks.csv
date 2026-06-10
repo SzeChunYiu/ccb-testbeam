@@ -1,0 +1,7 @@
+check,value,pass,note
+raw_reproduction_before_gallery,640737.0,True,script raises before gallery load if this fails
+train_heldout_run_overlap,0.0,True,PCA/kNN exemplars are train-run only
+nearest_neighbor_uses_heldout_runs,0.0,True,all nearest exemplars must come from non-held-out runs
+gallery_waveform_hash_seen_in_train,0.0,True,rounded normalized waveform hashes at 1e-3 precision
+knn_exact_consensus_accuracy_too_perfect,0.42578125,True,perfect kNN agreement would trigger a leakage concern
+review_consensus_equals_p09a_taxon_rate,0.41796875,True,adjudication is not a verbatim copy of P09a labels

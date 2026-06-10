@@ -1,0 +1,164 @@
+{
+  "study": "S14d",
+  "ticket_id": "1781020357.1391.009a0721",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "invalid_event_rows_removed_after_reproduction": 196,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "nominal_geometry": "nominal_budget",
+  "n_material_budget_variants": 27,
+  "material_budget_axes": {
+    "nominal_first_center_cm": 2.0,
+    "nominal_spacing_cm": 4.0,
+    "nominal_active_thickness_cm": 1.0,
+    "nominal_dead_layer_cm": 0.0,
+    "nominal_pstar_density_g_cm3": 1.032,
+    "nominal_pstar_range_scale": 1.0,
+    "first_center_cm": [
+      1.5,
+      2.0,
+      2.5
+    ],
+    "spacing_cm": [
+      3.8,
+      4.0,
+      4.2
+    ],
+    "active_thickness_cm": [
+      0.8,
+      1.0,
+      1.2
+    ],
+    "dead_layer_cm": [
+      0.0,
+      0.1,
+      0.2
+    ],
+    "pstar_density_g_cm3": [
+      1.0,
+      1.032,
+      1.06
+    ],
+    "pstar_range_scale": [
+      0.97,
+      1.0,
+      1.03
+    ],
+    "one_at_a_time": true,
+    "include_corner_envelope": true
+  },
+  "nominal_metrics": [
+    {
+      "geometry": "nominal_budget",
+      "method": "pstar_depth_only",
+      "n": 332852,
+      "bias_median_frac": -0.0071590718,
+      "res68_abs_frac": 0.2614611447,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[]",
+      "depth_violation_ci95": "[]"
+    },
+    {
+      "geometry": "nominal_budget",
+      "method": "traditional_depth_charge_lookup",
+      "n": 332852,
+      "bias_median_frac": -0.0122524912,
+      "res68_abs_frac": 0.0211892254,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[0.019347728214226454, 0.021953897607786085]",
+      "depth_violation_ci95": "[0.0, 0.0]"
+    },
+    {
+      "geometry": "nominal_budget",
+      "method": "ml_monotonic_hgb",
+      "n": 332852,
+      "bias_median_frac": -0.003225716,
+      "res68_abs_frac": 0.0248338525,
+      "depth_order_violation_rate": 0.0,
+      "res68_ci95": "[0.023457684862562046, 0.029307484970070557]",
+      "depth_violation_ci95": "[0.0, 0.0]"
+    }
+  ],
+  "ml_minus_traditional_res68_ci95": [
+    0.003477540183745548,
+    0.0075633382762267665
+  ],
+  "geometry_systematic_envelope": {
+    "traditional_res68_min": 0.017251773416181122,
+    "traditional_res68_max": 0.02877029809629374,
+    "ml_res68_min": 0.02079760407409461,
+    "ml_res68_max": 0.03222012616130544,
+    "ml_minus_traditional_res68_min": 0.0030232484703339897,
+    "ml_minus_traditional_res68_max": 0.004781182832984211
+  },
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "features_exclude_run_event_and_odd_readout",
+      "value": "true",
+      "pass": true
+    },
+    {
+      "check": "depth_only_res68",
+      "value": "0.261461",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_ml_res68",
+      "value": "0.319485",
+      "pass": true
+    }
+  ],
+  "finding": "The nominal material-budget scan reproduces S00 exactly and gives held-out odd-readout energy-proxy res68 0.0212 for the PSTAR/depth/even-charge lookup versus 0.0248 for monotonic HGB (ML - traditional 0.0036, run-block 95% CI 0.0035 to 0.0076). Across explicit center/thickness/dead-layer/PSTAR variants, traditional res68 spans 0.0173-0.0288 and ML spans 0.0208-0.0322. This passes as an internal charge/depth preflight, but it is not an absolute energy calibration or PID claim: Birks quenching, GEANT4 transport, and external particle truth remain unresolved.",
+  "runtime_sec": 539.4
+}

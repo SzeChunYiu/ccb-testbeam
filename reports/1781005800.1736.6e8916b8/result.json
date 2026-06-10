@@ -1,0 +1,58 @@
+{
+  "study": "S02c",
+  "ticket": "1781005800.1736.6e8916b8",
+  "worker": "testbeam-laptop-3",
+  "title": "per-run drift nuisance in amplitude-binned template/timewalk closure",
+  "reproduced_raw_root_first": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": {
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      65
+    ]
+  },
+  "traditional": {
+    "method": "s02c_global_timewalk_drift0",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "value": 1.6354173420044433,
+    "ci": [
+      1.4623529170019922,
+      1.9105731755234447
+    ],
+    "delta_vs_no_drift_ns": 0.0
+  },
+  "amplitude_binned_template_timewalk": {
+    "selected_method": "s02c_binned_timewalk_drift0",
+    "no_drift_value": 3.403701345862392,
+    "selected_value": 3.403701345862392,
+    "selected_ci": [
+      2.9180697292304476,
+      4.024447130160139
+    ],
+    "delta_vs_no_drift_ns": 0.0,
+    "drift_improves": false
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_cfd20",
+    "metric": "heldout_run65_B4_B6_B8_pairwise_sigma68_ns",
+    "value": 1.8461136615528861,
+    "ci": [
+      1.46753941539111,
+      2.035135703959921
+    ]
+  },
+  "leakage_checks_pass_excluding_forbidden_oracle": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "next_tickets": [
+    "S02d: leave-one-run-out run-drift nuisance scan over all Sample II runs",
+    "S02e: drift constrained by current/rate covariates before timing labels"
+  ],
+  "git_commit": "d0ff2979ec25cb8e28bbaacb2260ba7d8ada3ecd"
+}

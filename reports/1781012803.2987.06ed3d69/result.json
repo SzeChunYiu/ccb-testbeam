@@ -1,0 +1,63 @@
+{
+  "study": "S01f",
+  "ticket": "1781012803.2987.06ed3d69",
+  "worker": "testbeam-laptop-1",
+  "title": "fold-local q_template templates for leakage audit",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "q_template": {
+    "template_source": "fold-local train-run-only S01-style median amplitude-bin templates",
+    "global_s01_q_template_read": false,
+    "staves": [
+      "B4",
+      "B6",
+      "B8"
+    ]
+  },
+  "traditional": {
+    "residual_method": "S03b monotone decreasing amplitude-bin timewalk",
+    "no_veto_sigma68_ns": 1.6451494274970766,
+    "traditional_q_threshold_delta_ns": [
+      0.04535431054777672,
+      0.022797611223202778,
+      0.1285054607777313
+    ]
+  },
+  "ml": {
+    "method": "RandomForest fold-local q_template veto score on S03b pair residual tails",
+    "delta_ns": [
+      0.025284610379017636,
+      -0.01296495814808929,
+      0.08462564026013232
+    ]
+  },
+  "leakage": {
+    "features_exclude_run_event_timing_residuals": true,
+    "split_by_run": true,
+    "q_templates_train_run_only_per_fold": true,
+    "shuffled_ml_q_rf_control_included": true,
+    "flag": false
+  },
+  "verdict": "fold_local_q_template_veto_does_not_improve_pair_residual_width",
+  "conclusion": "Fold-local q_template construction removes the global S01 calibration dependency and does not yield a statistically secure S03b timing-tail improvement. S03b no-veto sigma68 is 1.645 ns; traditional fold-local q-veto delta is 0.045 ns [0.023, 0.129], and ML fold-local q-veto delta is 0.025 ns [-0.013, 0.085]. Leakage flags: 0.",
+  "input_sha256": "ddaec121d3f48625a5c6dbd5886f644abbf040890cd41261faf1f7a2b70ad0ba",
+  "git_commit": "742eec34584ea979ae0255aa52820c7b0dd445cf",
+  "runtime_sec": 199.51,
+  "follow_up_tickets": []
+}

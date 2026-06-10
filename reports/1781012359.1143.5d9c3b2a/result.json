@@ -1,0 +1,233 @@
+{
+  "study": "P10c",
+  "ticket_id": "1781012359.1143.5d9c3b2a",
+  "worker": "testbeam-laptop-4",
+  "title": "Sample-II-only explicit timewalk transfer check",
+  "reproduction": {
+    "passed": true,
+    "rows": [
+      {
+        "quantity": "S00/S01 selected B-stave pulses",
+        "expected": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II analysis selected B-stave pulses",
+        "expected": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II calibration run 64 selected B-stave pulses",
+        "expected": 14630,
+        "reproduced": 14630,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "split": "train by calibration run set; evaluate held-out Sample-II analysis runs 58-63 and 65 with run bootstrap",
+  "traditional_method": "empirical phase template plus stave-by-amplitude-bin median explicit timewalk correction",
+  "ml_method": "ridge explicit residual correction on same-pulse amplitude, area/amplitude, peak, amplitude-bin, and stave features",
+  "scenario_summary": [
+    {
+      "sample_ii_only_base": 2.7866083706417037,
+      "sample_ii_only_base_ci": [
+        2.688633892631726,
+        2.8893761536456717
+      ],
+      "sample_ii_only_traditional": 2.052546786008745,
+      "sample_ii_only_traditional_ci": [
+        1.9099316741838022,
+        2.239664382401197
+      ],
+      "sample_ii_only_ml": 1.9889842894541165,
+      "sample_ii_only_ml_ci": [
+        1.8717260950243086,
+        2.132652322383055
+      ],
+      "sample_ii_only_ml_shuffled": 3.149719706669927,
+      "sample_ii_only_ml_shuffled_ci": [
+        3.0207509231737335,
+        3.283390451748755
+      ],
+      "delta_sample_ii_only_traditional_minus_sample_ii_only_base": -0.7340615846329586,
+      "delta_sample_ii_only_traditional_minus_sample_ii_only_base_ci": [
+        -0.9132164664861916,
+        -0.5078055949363981
+      ],
+      "delta_sample_ii_only_ml_minus_sample_ii_only_traditional": -0.06356249655462896,
+      "delta_sample_ii_only_ml_minus_sample_ii_only_traditional_ci": [
+        -0.20111300126201564,
+        0.09623727968098104
+      ],
+      "delta_sample_ii_only_ml_shuffled_minus_sample_ii_only_ml": 1.1607354172158106,
+      "delta_sample_ii_only_ml_shuffled_minus_sample_ii_only_ml_ci": [
+        0.8826956238573767,
+        1.4089875622284056
+      ],
+      "n_runs": 7,
+      "scenario": "sample_ii_only",
+      "train_runs": [
+        64
+      ],
+      "train_target_pulses": 630,
+      "ml_best": {
+        "feature_set": "amp_bin_by_stave",
+        "alpha": 100.0,
+        "selection": "predeclared_single_train_run_default"
+      },
+      "traditional_bin_fallbacks": 15
+    },
+    {
+      "pooled_base": 3.8306077318314697,
+      "pooled_base_ci": [
+        3.7238866817656886,
+        3.9361450737099006
+      ],
+      "pooled_traditional": 2.807632798135046,
+      "pooled_traditional_ci": [
+        2.6589608699454246,
+        2.9589590465898556
+      ],
+      "pooled_ml": 2.7555419378070574,
+      "pooled_ml_ci": [
+        2.639793186104933,
+        2.8734991073219187
+      ],
+      "pooled_ml_shuffled": 4.023866822300127,
+      "pooled_ml_shuffled_ci": [
+        3.9165514291543926,
+        4.131929692194004
+      ],
+      "delta_pooled_traditional_minus_pooled_base": -1.0229749336964233,
+      "delta_pooled_traditional_minus_pooled_base_ci": [
+        -1.189299032289917,
+        -0.8158248266592134
+      ],
+      "delta_pooled_ml_minus_pooled_traditional": -0.052090860327988535,
+      "delta_pooled_ml_minus_pooled_traditional_ci": [
+        -0.12676225088327017,
+        0.024784418182723224
+      ],
+      "delta_pooled_ml_shuffled_minus_pooled_ml": 1.2683248844930695,
+      "delta_pooled_ml_shuffled_minus_pooled_ml_ci": [
+        1.078686816518996,
+        1.4413373057775694
+      ],
+      "n_runs": 7,
+      "scenario": "pooled",
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        64
+      ],
+      "train_target_pulses": 2460,
+      "ml_best": {
+        "feature_set": "amp_bin_by_stave",
+        "alpha": 100.0,
+        "score": 2.6485487615195904,
+        "selection": "train_run_groupkfold"
+      },
+      "traditional_bin_fallbacks": 11
+    }
+  ],
+  "transfer": {
+    "sample_ii_only_traditional": 2.052546786008745,
+    "sample_ii_only_traditional_ci": [
+      1.9099316741838022,
+      2.239664382401197
+    ],
+    "pooled_traditional": 2.807632798135046,
+    "pooled_traditional_ci": [
+      2.6589608699454246,
+      2.9589590465898556
+    ],
+    "sample_ii_only_ml": 1.9889842894541165,
+    "sample_ii_only_ml_ci": [
+      1.8717260950243086,
+      2.132652322383055
+    ],
+    "pooled_ml": 2.7555419378070574,
+    "pooled_ml_ci": [
+      2.639793186104933,
+      2.8734991073219187
+    ],
+    "delta_sample_ii_only_traditional_minus_pooled_traditional": -0.7550860121263007,
+    "delta_sample_ii_only_traditional_minus_pooled_traditional_ci": [
+      -0.9078765194373353,
+      -0.611843146830802
+    ],
+    "delta_sample_ii_only_ml_minus_pooled_ml": -0.7665576483529412,
+    "delta_sample_ii_only_ml_minus_pooled_ml_ci": [
+      -0.8965830552453705,
+      -0.6109533358052959
+    ],
+    "n_runs": 7
+  },
+  "leakage_checks": [
+    {
+      "scenario": "sample_ii_only",
+      "check": "train_eval_run_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "scenario": "sample_ii_only",
+      "check": "train_eval_event_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "scenario": "sample_ii_only",
+      "check": "model_inputs_exclude_run_event_target",
+      "value": 1,
+      "pass": true
+    },
+    {
+      "scenario": "sample_ii_only",
+      "check": "ml_shuffled_target_worse_than_real",
+      "value": 1.1607354172158106,
+      "pass": true
+    },
+    {
+      "scenario": "pooled",
+      "check": "train_eval_run_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "scenario": "pooled",
+      "check": "train_eval_event_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "scenario": "pooled",
+      "check": "model_inputs_exclude_run_event_target",
+      "value": 1,
+      "pass": true
+    },
+    {
+      "scenario": "pooled",
+      "check": "ml_shuffled_target_worse_than_real",
+      "value": 1.2683248844930692,
+      "pass": true
+    }
+  ],
+  "conclusion": "Run-64-only Sample-II traditional explicit calibration is better than pooled calibration on held-out Sample-II timing.",
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "41c2556a71c7f0be7299f8bb046ec890773df984"
+}

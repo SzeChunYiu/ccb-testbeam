@@ -1,0 +1,151 @@
+{
+  "study": "S18c",
+  "ticket": "1781008255.1458.3732667d",
+  "worker": "testbeam-laptop-2",
+  "reproduced": true,
+  "primary_number_reproduced": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_robust_width_ns": 1.7936260637768346,
+    "sample_iv_core_sigma_ns": 1.9921763970438024
+  },
+  "traditional_by_pool": {
+    "run64_only": {
+      "robust_width_ns": 1.7936260637771233,
+      "robust_ci_low_ns": 1.4107686183048416,
+      "robust_ci_high_ns": 2.0814770355569765,
+      "core_sigma_ns": 1.9921764037756304
+    },
+    "sample_iii_only": {
+      "robust_width_ns": 1.4921094019259362,
+      "robust_ci_low_ns": 1.2831649044194147,
+      "robust_ci_high_ns": 1.6601494368425556,
+      "core_sigma_ns": 1.6829195033413586
+    },
+    "mixed_period": {
+      "robust_width_ns": 1.492269551137199,
+      "robust_ci_low_ns": 1.2722918972231765,
+      "robust_ci_high_ns": 1.6397144376849184,
+      "core_sigma_ns": 1.682919514216681
+    },
+    "sample_iv_leave_one": {
+      "robust_width_ns": 1.6374830726053549,
+      "robust_ci_low_ns": 1.3087784602136758,
+      "robust_ci_high_ns": 1.7216416500179978,
+      "core_sigma_ns": 2.001853623864903
+    }
+  },
+  "ml_by_pool": {
+    "run64_only": {
+      "robust_width_ns": 1.601856094997725,
+      "robust_ci_low_ns": 1.2711124133932263,
+      "robust_ci_high_ns": 1.7090348620588274,
+      "core_sigma_ns": 2.1066489199689102
+    },
+    "sample_iii_only": {
+      "robust_width_ns": 1.8489252699130705,
+      "robust_ci_low_ns": 1.6124773197907623,
+      "robust_ci_high_ns": 2.276796728249465,
+      "core_sigma_ns": 3.3212627568785864
+    },
+    "mixed_period": {
+      "robust_width_ns": 1.8293001898554575,
+      "robust_ci_low_ns": 1.5357265587868878,
+      "robust_ci_high_ns": 2.2312080003673618,
+      "core_sigma_ns": 3.421385821766705
+    },
+    "sample_iv_leave_one": {
+      "robust_width_ns": 1.3836097234295437,
+      "robust_ci_low_ns": 1.0741865355030773,
+      "robust_ci_high_ns": 1.456939125632936,
+      "core_sigma_ns": 1.7341548111097178
+    }
+  },
+  "pool_delta_bootstrap": [
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "run64_only",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": -0.5501697131307232,
+      "ci_high_ns": 0.22512785968125978,
+      "p_value": 0.33
+    },
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "sample_iii_only",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": 0.06332569636311484,
+      "ci_high_ns": 0.8497794745610493,
+      "p_value": 0.01
+    },
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "mixed_period",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": 0.04212199649248837,
+      "ci_high_ns": 0.8060944152302353,
+      "p_value": 0.02
+    },
+    {
+      "comparison": "ml_minus_traditional",
+      "pool": "sample_iv_leave_one",
+      "method": "ml_minus_traditional",
+      "ci_low_ns": -0.4427872948693543,
+      "ci_high_ns": -0.13252301414857204,
+      "p_value": 0.006
+    },
+    {
+      "comparison": "sample_iii_only_minus_run64_only",
+      "pool": "sample_iii_only",
+      "method": "traditional",
+      "ci_low_ns": -0.5605195823206557,
+      "ci_high_ns": 0.08847362410142166,
+      "p_value": 0.128
+    },
+    {
+      "comparison": "sample_iii_only_minus_run64_only",
+      "pool": "sample_iii_only",
+      "method": "ml",
+      "ci_low_ns": 0.046295223310963855,
+      "ci_high_ns": 0.6921878949106206,
+      "p_value": 0.016
+    },
+    {
+      "comparison": "mixed_period_minus_run64_only",
+      "pool": "mixed_period",
+      "method": "traditional",
+      "ci_low_ns": -0.5425324285625522,
+      "ci_high_ns": 0.08815093474292979,
+      "p_value": 0.12
+    },
+    {
+      "comparison": "mixed_period_minus_run64_only",
+      "pool": "mixed_period",
+      "method": "ml",
+      "ci_low_ns": 0.020163840456765225,
+      "ci_high_ns": 0.6502165431622675,
+      "p_value": 0.032
+    },
+    {
+      "comparison": "sample_iv_leave_one_minus_run64_only",
+      "pool": "sample_iv_leave_one",
+      "method": "traditional",
+      "ci_low_ns": -0.46678431055965247,
+      "ci_high_ns": 0.1909231171082654,
+      "p_value": 0.318
+    },
+    {
+      "comparison": "sample_iv_leave_one_minus_run64_only",
+      "pool": "sample_iv_leave_one",
+      "method": "ml",
+      "ci_low_ns": -0.4807294623307612,
+      "ci_high_ns": -0.04951998862541651,
+      "p_value": 0.018
+    }
+  ],
+  "diagnosis": {
+    "leakage_flags": 0,
+    "conclusion": "Sample IV A1-A3 broadening is calibration-pool sensitive; run64-only reproduces the original width, while same-period leave-one-run and mixed/Sample-III pools narrow or match it under run-held-out evaluation."
+  },
+  "input_sha256": "reports/1781008255.1458.3732667d/input_sha256.csv",
+  "git_commit": "fcaf8b123d9d62169f7e5b0cbb9771f907ec63e0"
+}

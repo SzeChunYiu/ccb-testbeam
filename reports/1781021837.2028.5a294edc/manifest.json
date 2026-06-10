@@ -1,0 +1,23 @@
+{
+  "ticket_id": "1781021837.2028.5a294edc",
+  "script": "scripts/p11a_1781021837_2028_5a294edc_pretrigger_atoms.py",
+  "config": "configs/p11a_1781021837_2028_5a294edc_pretrigger_atoms.json",
+  "git_commit": "138c8721d36655281a8bfdf4f7288f534714e0d0",
+  "raw_reproduction_passed": true,
+  "input_sha256": "reports/1781021837.2028.5a294edc/input_sha256.csv",
+  "artifacts": [
+    "REPORT.md",
+    "counts_by_group.csv",
+    "counts_by_run.csv",
+    "heldout_method_metrics.csv",
+    "heldout_predictions.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "pretrigger_atom_fold_table.csv",
+    "pretrigger_atom_summary.csv",
+    "raw_count_match.csv",
+    "result.json",
+    "selected_pulse_pretrigger_table.csv.gz"
+  ]
+}

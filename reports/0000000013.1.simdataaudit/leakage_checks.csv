@@ -1,0 +1,5 @@
+check,value,pass
+train_heldout_run_overlap,[],True
+ml_features_exclude_odd_charge_run_event_id,"multiplicity,depth_idx,even_total_charge,even_max_amp,saturated_count,log_charge_stave_0,log_charge_stave_1,log_charge_stave_2,log_charge_stave_3,log_amp_stave_0,log_amp_stave_1,log_amp_stave_2,log_amp_stave_3,hit_stave_0,hit_stave_1,hit_stave_2,hit_stave_3,peak_stave_0,peak_stave_1,peak_stave_2,peak_stave_3,early_charge_fraction,late_charge_fraction",True
+cnn_status,trained,True
+birks_kB_cm_per_MeV,0.0485,True

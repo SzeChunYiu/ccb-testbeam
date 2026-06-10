@@ -1,0 +1,30 @@
+{
+  "study_id": "P10f-linter",
+  "ticket_id": "1781025208.1030.73ae38c0",
+  "worker": "testbeam-laptop-4",
+  "title": "automatic conditional-template claim linter",
+  "output_dir": "reports/1781025208.1030.73ae38c0",
+  "ticket_body": "Question: can a lightweight report linter scan future P10/P-template result.json files and fail any claimed q-space conditional-template win unless mean-template, shuffled-target, run/key-overlap, and no-run/event-feature controls are present and clean? Expected information gain: makes the P10e registry enforceable at summary-building time. Use existing reports only; no Monte Carlo.",
+  "p10e_registry_result": "reports/1781012637.1148.71760dc3/result.json",
+  "p10e_registry_report": "reports/1781012637.1148.71760dc3/REPORT.md",
+  "required_controls": [
+    "mean_template",
+    "shuffled_target",
+    "train_eval_run_overlap",
+    "train_eval_key_overlap",
+    "no_run_event_features"
+  ],
+  "promoted_claim_caution_terms": [
+    "does not promote",
+    "not promote",
+    "diagnostic",
+    "no adoption",
+    "not adoptable",
+    "mixed",
+    "fails",
+    "failed",
+    "shuffled-live10 control is not worse"
+  ],
+  "random_seed": 20260610,
+  "bootstrap_iterations": 4000
+}

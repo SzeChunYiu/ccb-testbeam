@@ -1,0 +1,7 @@
+check,model,value,detail
+train_heldout_event_id_overlap,all,0.0,must be zero
+feature_audit,all,0.0,"18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target"
+shuffled_target_negative_control_sigma68_ns,mlp_analytic_residual,1.4870642859880854,same architecture trained with shuffled train residual targets
+nominal_sigma68_ns,mlp_analytic_residual,1.4483561109028598,held-out run metric for comparison to shuffled control
+shuffled_target_negative_control_sigma68_ns,cnn_analytic_residual,1.480980169416686,same architecture trained with shuffled train residual targets
+nominal_sigma68_ns,cnn_analytic_residual,1.4970452906166214,held-out run metric for comparison to shuffled control

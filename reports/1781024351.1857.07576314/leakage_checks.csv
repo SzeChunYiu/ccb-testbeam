@@ -1,0 +1,9 @@
+heldout_run,train_rows_duplicate_closure,train_rows_external_calibration,test_rows_external,train_heldout_run_overlap,exact_b2_waveform_hash_train_test_overlap,features_exclude,odd_duplicate_channels_used_as_features,downstream_target_used_as_feature,shuffled_external_res68,best_real_external_res68,best_to_shuffled_res68_ratio,looks_too_good
+58,563437,3702,72,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,,,,
+59,565664,3025,749,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,,,,
+60,569361,2972,802,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,,,,
+61,568212,2849,925,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,,,,
+62,567593,2976,798,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,,,,
+63,564663,3409,365,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,,,,
+65,567459,3711,63,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,,,,
+overall,579227,3774,3774,0,0,"run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",False,False,0.27189185524705445,0.2096359642675895,0.7710270102688579,False

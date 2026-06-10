@@ -1,0 +1,7 @@
+check,value,threshold,flag,interpretation
+p07_reproduction_delta,0.0,1e-12,False,The raw ROOT reproduction should exactly match the archived P07 C=4000 ML res68.
+heldout_split_by_run,7.0,7.0,False,Each benchmark and natural-transfer fold holds out a complete run.
+ml_too_good_artificial_res68,0.029762872258461665,0.015,False,"Flag implausibly tiny artificial-clip error, the failure mode caught in P07."
+shuffled_target_res68,0.14633824088313907,0.1,False,Shuffled labels should be at least 3x worse than the real ML transfer model.
+ml_vs_traditional_gap,0.11825980581457185,0.25,False,Very large ML advantage would trigger manual leakage review.
+forbidden_features_present,0.0,0.0,False,"ML features are the clipped 18-sample waveform only; no run, event id, or true amplitude feature."

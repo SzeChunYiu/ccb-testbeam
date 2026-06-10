@@ -1,0 +1,8 @@
+heldout_run,train_runs,analytic_candidate,analytic_alpha,mlp_hidden,cnn_channels,epochs,masks
+58,"59,60,61,62,63,65",amp_only,100.0,32,8,70,"window_3_6,no_window_3_6"
+59,"58,60,61,62,63,65",amp_only,100.0,32,8,70,"window_3_6,no_window_3_6"
+60,"58,59,61,62,63,65",amp_only,100.0,32,8,70,"window_3_6,no_window_3_6"
+61,"58,59,60,62,63,65",amp_only,100.0,32,8,70,"window_3_6,no_window_3_6"
+62,"58,59,60,61,63,65",amp_only,100.0,32,8,70,"window_3_6,no_window_3_6"
+63,"58,59,60,61,62,65",amp_only,100.0,32,8,70,"window_3_6,no_window_3_6"
+65,"58,59,60,61,62,63",amp_only,100.0,32,8,70,"window_3_6,no_window_3_6"

@@ -1,0 +1,116 @@
+{
+  "study": "S10k",
+  "ticket": "1781029239.771.51c16bca",
+  "worker": "testbeam-laptop-1",
+  "title": "S10k operational Rmax failure-definition frontier",
+  "reproduced_first": true,
+  "reproduction_gate": [
+    {
+      "quantity": "low_2nA multi_stave_per_selected_event",
+      "report_value": 0.0156,
+      "reproduced": 0.015587529976019185,
+      "delta": -1.2470023980814399e-05,
+      "tolerance": 0.0015,
+      "pass": true
+    },
+    {
+      "quantity": "low_2nA three_stave_per_selected_event",
+      "report_value": 0.0041,
+      "reproduced": 0.0041109969167523125,
+      "delta": 1.099691675231218e-05,
+      "tolerance": 0.0015,
+      "pass": true
+    },
+    {
+      "quantity": "low_2nA downstream_per_selected_event",
+      "report_value": 0.0231,
+      "reproduced": 0.023124357656731757,
+      "delta": 2.435765673175841e-05,
+      "tolerance": 0.0015,
+      "pass": true
+    },
+    {
+      "quantity": "high_20nA multi_stave_per_selected_event",
+      "report_value": 0.0268,
+      "reproduced": 0.026806295960723994,
+      "delta": 6.295960723993327e-06,
+      "tolerance": 0.0015,
+      "pass": true
+    },
+    {
+      "quantity": "high_20nA three_stave_per_selected_event",
+      "report_value": 0.0085,
+      "reproduced": 0.00853789586801239,
+      "delta": 3.789586801238899e-05,
+      "tolerance": 0.0015,
+      "pass": true
+    },
+    {
+      "quantity": "high_20nA downstream_per_selected_event",
+      "report_value": 0.0334,
+      "reproduced": 0.03341410480625382,
+      "delta": 1.4104806253821545e-05,
+      "tolerance": 0.0015,
+      "pass": true
+    }
+  ],
+  "s10e_anchor": {
+    "anchor": "S10e dominant high-stat traditional secondary fraction high-minus-low",
+    "value": 0.033010527958294324,
+    "ci95_low": 0.019186666642640134,
+    "ci95_high": 0.04875783610708715,
+    "reproduction_delta_vs_s10d_traditional": 0.0
+  },
+  "traditional_method": "bounded two-pulse template fit recovery frontier crossed with template/censored live-time tau definitions",
+  "ml_method": "compact MLP recovery frontier and ML-IPCW live-time tau definitions, with identifier/run/current/event excluded in source studies",
+  "frontier_rows": 96,
+  "best_rmax_mhz": 3.73041983539769,
+  "worst_rmax_mhz": 0.13413434833572646,
+  "template_tau_rmax_range_mhz": [
+    2.3575634953452456,
+    3.73041983539769
+  ],
+  "censored_tau_rmax_range_mhz": [
+    0.13413434833572646,
+    0.5500134815941982
+  ],
+  "ml_ipcw_tau_rmax_range_mhz": [
+    0.9367058515265033,
+    2.983264527444447
+  ],
+  "dominant_limit_counts": {
+    "live_time": 96
+  },
+  "leakage_flags": 0,
+  "follow_up_ticket_status": "skipped: threshold/live-time dominance and recovery-support follow-ups duplicate completed S10g/S10i lines",
+  "input_sha256": {
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "/home/billy/ccb-data/extracted/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "reports/1781017360.928.15a27ed1/result.json": "0343f2e46503956b605bf730f267ec120b63233e072c174344253ae2bc8fc84e",
+    "reports/1781017360.928.15a27ed1/dominant_highstat_method_summary.csv": "d8633806395da9a82e840e1359644dd9ac7fb4c557bdd77a837dae195006f126",
+    "reports/1781017360.928.15a27ed1/dominant_highstat_leakage_checks.csv": "7148bbf5b287976ff68f618e4961789c64350099bfc4535974888ff020c59dd1",
+    "reports/1781028280.978.1e517fd7/final_comparison.csv": "3a94292340cfa5da3236942bada94801737272448f8c1c507b53604008033211",
+    "reports/1781028280.978.1e517fd7/reproduction_match_table.csv": "d04b0bcdddc414f6232d980a9481c9fbf0fb66a93f9d67d7b9ed342f7ecb8269",
+    "reports/1781028280.978.1e517fd7/leakage_checks.csv": "366925c5e7eaa23fcee3a033c2ed526f5891d238aae15658df290e2e6a63f186",
+    "reports/1781028606.1003.76354c81/s10d_resolvability_by_delay.csv": "098e9981696e6dd2cfcd252ccda7796d9f4fa839c19b9ff64985c1423e51c09a",
+    "reports/1781028606.1003.76354c81/s10d_resolvability_bootstrap_ci.csv": "86bd520afa58ef85a44d5153302d1eae928950356598004a35ca97b3185df7c9",
+    "reports/1781028606.1003.76354c81/s10d_head_to_head_overall.csv": "bbb3c07d22e4910263c40b070ece4e52e7dfc53cbcd0c1b591b20e7e24a08607",
+    "reports/1781028606.1003.76354c81/s10d_headline_reproduction.csv": "7508bcd203478747dd9842f25742bb409c41cc82d171da9a87aec558c7f29bfa",
+    "reports/1781028606.1003.76354c81/tau_separability_scan.csv": "4f6db66577d8e452a3b7b5d5bab18842ba6b472d8233a6a00e1dcfc9261c3ea1",
+    "reports/1781028606.1003.76354c81/leakage_checks.csv": "40b86e186d0528555ccb6b9ea43b40613d762a25f5130fa9128d8ad1f136e265"
+  },
+  "git_commit": "f015169be26a8a37d0cf4bae07577ddfdf98347d",
+  "runtime_sec": 2.36
+}

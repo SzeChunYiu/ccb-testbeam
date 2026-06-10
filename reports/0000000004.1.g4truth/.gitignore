@@ -1,0 +1,6 @@
+/build/
+/run/
+/logs/*.full.log
+/hibeam_g4-main
+/hibeam_g4_build/
+/sci_bar_hit_sample.csv

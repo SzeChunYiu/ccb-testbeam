@@ -1,0 +1,9 @@
+check,value,flag,note
+s10c_gate_reproduced_first,1.0,False,Raw-ROOT topology reproduction is required before candidate scoring.
+heldout_run_excluded_from_template_and_ml_training,1.0,False,Each source run is scored with low-current training runs excluding that source run when applicable.
+identifier_features_excluded,1.0,False,"ML features exclude run, current, group, event number, candidate flag, and stratum labels."
+synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record synthetic training source runs.
+mean_synthetic_holdout_auc,0.9107630754074872,False,Near-perfect synthetic discrimination triggers leakage review.
+mean_shuffled_label_synthetic_auc,0.48272169821365424,False,Shuffled-label training should not classify held-out overlays.
+actual_current_auc_from_s11c_trad_score,0.4343767145034676,False,Flagged if S11c template score almost identifies beam current by itself.
+actual_current_auc_from_ml_overlap_score,0.5886943436439744,False,Flagged if ML score almost identifies beam current by itself.

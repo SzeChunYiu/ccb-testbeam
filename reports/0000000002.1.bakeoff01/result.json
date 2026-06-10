@@ -1,0 +1,65 @@
+{
+  "ml": {
+    "amplitude_best_ci": [
+      0.0033123805046862487,
+      0.003766294226174117
+    ],
+    "amplitude_best_model": "random_forest",
+    "amplitude_best_res68_abs_frac": 0.003495611604903711,
+    "anomaly_best_ci": [
+      0.8608843537414965,
+      0.8757596371882087
+    ],
+    "anomaly_best_model": "hist_gradient_boosting",
+    "anomaly_best_roc_auc": 0.8681292517006803,
+    "charge_best_ci": [
+      0.0067398385864294655,
+      0.007522084812436314
+    ],
+    "charge_best_model": "random_forest",
+    "charge_best_res68_abs_frac": 0.00710024264882134,
+    "timing_best_ci": [
+      0.8344677662812305,
+      1.4061653658765398
+    ],
+    "timing_best_model": "gradient_boosted_trees",
+    "timing_best_sigma68_ns": 1.1266331867345378,
+    "two_pulse_best_ci": [
+      6.800591529262874,
+      7.1791326168853145
+    ],
+    "two_pulse_best_model": "gradient_boosted_trees",
+    "two_pulse_best_time_rms_ns": 6.99597074762998
+  },
+  "next_tickets": [
+    {
+      "body": "Question: do external boosted-tree libraries or a tiny transformer change any BAKEOFF01 recommendation where tree/NN methods are close? Reuse the BAKEOFF01 raw ROOT gate, identical run splits, and bootstrap CIs; run only XGBoost/LightGBM and a compact transformer on tasks whose top two CI bands overlap. Expected information gain: determines whether the default algorithm table is stable before broad citation.",
+      "title": "BAKEOFF02: XGBoost/LightGBM and compact transformer near-tie audit"
+    }
+  ],
+  "reproduced": true,
+  "runtime_seconds": 706.2930092811584,
+  "scientific_summary": "Timing point-estimate winner is gradient_boosted_trees at 1.127 ns versus analytic_timewalk 1.495 ns. Duplicate-readout amplitude winner is random_forest at fractional res68 0.0035; charge winner is random_forest at 0.0071. Two-pulse point-estimate winner is gradient_boosted_trees at 6.996 ns versus constrained_template_fit 13.152 ns. Injected-truth anomaly winner is hist_gradient_boosting at ROC AUC 0.868. The winner named here is the held-out metric winner; adoption remains conditional on the failure-rate and leakage guards documented in REPORT.md.",
+  "study": "BAKEOFF01",
+  "ticket": "0000000002.1.bakeoff01",
+  "traditional": {
+    "amplitude_charge_baseline": "ridge_or_huber_linear_log_target",
+    "amplitude_res68_abs_frac": 0.017874936008769774,
+    "anomaly_baseline": "logistic",
+    "anomaly_roc_auc": 0.8390759637188209,
+    "charge_res68_abs_frac": 0.031537113714732494,
+    "timing_baseline": "analytic_timewalk",
+    "timing_sigma68_ns": 1.494640076269676,
+    "two_pulse_baseline": "constrained_template_fit",
+    "two_pulse_time_rms_ns": 13.152396463749497
+  },
+  "winner": {
+    "amplitude": "random_forest",
+    "anomaly": "hist_gradient_boosting",
+    "charge": "random_forest",
+    "overall": "hist_gradient_boosting",
+    "timing": "gradient_boosted_trees",
+    "two_pulse": "gradient_boosted_trees"
+  },
+  "worker": "testbeam-laptop-3"
+}

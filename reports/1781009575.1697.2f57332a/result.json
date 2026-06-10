@@ -1,0 +1,115 @@
+{
+  "study": "P02d",
+  "ticket": "1781009575.1697.2f57332a",
+  "worker": "testbeam-laptop-2",
+  "title": "early-peak topology versus timing tails",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "P02 early-peak pulse rate, peak_sample<=3",
+      "report_value": 0.044,
+      "reproduced": 0.04388333333333334,
+      "delta": -0.00011666666666666076,
+      "tolerance": 0.002,
+      "pass": true,
+      "sample_size": 60000
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72.0,
+      "reproduced": 72.0,
+      "delta": 0.0,
+      "tolerance": 0.0,
+      "pass": true,
+      "sample_size": 10156
+    }
+  ],
+  "traditional": {
+    "method": "transparent P02 morphology",
+    "metric": "leave-one-run-out ROC AUC on S07 D_t extreme timing-tail labels",
+    "value": 0.692169373549884,
+    "ci": [
+      0.6501207384361878,
+      0.7363636363636364
+    ]
+  },
+  "ml": {
+    "method": "shape-only RF morphology",
+    "metric": "leave-one-run-out ROC AUC on S07 D_t extreme timing-tail labels",
+    "value": 0.9990332559938128,
+    "ci": [
+      0.9983279599520599,
+      0.9994597098468554
+    ],
+    "feature_count": 93,
+    "params": {
+      "n_estimators": 500,
+      "max_depth": 5,
+      "min_samples_leaf": 8
+    }
+  },
+  "ml_beats_traditional": true,
+  "leakage_checks": [
+    {
+      "probe": "topology-only RF",
+      "roc_auc": 0.6071829079659705,
+      "average_precision": 0.1069661997526169,
+      "notes": "Selected-stave flags and downstream count only; excluded from main RF."
+    },
+    {
+      "probe": "absolute-amplitude-only RF",
+      "roc_auc": 0.819534673885022,
+      "average_precision": 0.2751840943405709,
+      "notes": "Log amplitudes only; excluded from main RF."
+    },
+    {
+      "probe": "B2-only shape RF",
+      "roc_auc": 0.8897267336942511,
+      "average_precision": 0.40756494455122116,
+      "notes": "Upstream B2 normalized shape only; tests whether the result survives away from D_t source waveforms."
+    },
+    {
+      "probe": "downstream-only shape RF",
+      "roc_auc": 0.9991557102345965,
+      "average_precision": 0.9760821551056411,
+      "notes": "Downstream normalized shape only; high values are label-source self-reference risk because D_t is derived from these waveforms."
+    },
+    {
+      "probe": "shape RF with shuffled training labels",
+      "roc_auc": 0.4842678525393142,
+      "average_precision": 0.037371791492967016,
+      "notes": "Run-held-out null/leakage sanity check."
+    },
+    {
+      "probe": "leaky D_t score",
+      "roc_auc": 1.0,
+      "average_precision": 1.0,
+      "notes": "Forbidden label-defining ceiling; reported only as a leakage reference."
+    },
+    {
+      "probe": "forbidden feature audit",
+      "roc_auc": null,
+      "average_precision": null,
+      "notes": "Forbidden columns in main RF: []."
+    }
+  ],
+  "details": {
+    "n_parent_control": 10156,
+    "n_parent_clean": 2155,
+    "n_parent_gross_dt_gt50": 74,
+    "n_parent_gross_dt_gt51": 72,
+    "n_extreme_events": 2227,
+    "n_clean": 2155,
+    "n_gross": 72,
+    "early_peak_auc": 0.450650940964166,
+    "early_peak_gross_enrichment": 0.5268199233716475,
+    "shape_feature_count": 93,
+    "forbidden_shape_features": []
+  },
+  "input_sha256": "253ac5984fdd8736c737a16955b6ccd2d54a4de12cb6bdc037853c1317120535",
+  "git_commit": "9408fca4cc21aaaf9ac0d055b3f1bcabe722b606",
+  "next_tickets": [
+    "P02e: repeat early-peak versus timing-tail validation on all-three-downstream events only to remove missing-stave topology from the target population.",
+    "S07h: define a non-D_t timing-tail target for P02 morphology using injected or independent timing corruption labels."
+  ]
+}

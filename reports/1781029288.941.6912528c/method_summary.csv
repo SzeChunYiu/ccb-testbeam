@@ -1,0 +1,6 @@
+method_metric,value,ci_low,ci_high,bootstrap_unit,n_bootstrap,n_scored_events
+trad_secondary_fraction,-0.03087596582798305,-0.05044900498113943,-0.009382988016783328,source_run_within_current_group,300,2177
+trad_candidate,-0.010466775857182451,-0.09733355840157983,0.07764948887727244,source_run_within_current_group,300,2177
+ml_secondary_fraction,0.00816767384239207,-0.022303815940867954,0.040023077874256546,source_run_within_current_group,300,2177
+ml_overlap_score,-0.0012218176178590391,-0.010055692962454867,0.01122874389518654,source_run_within_current_group,300,2177
+ml_candidate,0.023096261123261713,-0.023448481152349425,0.08017969158389963,source_run_within_current_group,300,2177

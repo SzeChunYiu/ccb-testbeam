@@ -1,0 +1,18 @@
+{
+  "ticket_id": "0000000008.1.usesim",
+  "worker": "testbeam-laptop-3",
+  "root_file": "/home/billy/ccb-geant4/output_30k.root",
+  "tree": "hibeam",
+  "report_dir": "reports/0000000008.1.usesim",
+  "positive_class": "deuteron",
+  "positive_pdg": 1000010020,
+  "negative_class": "proton",
+  "negative_pdg": 2212,
+  "primary_track_ids_only": true,
+  "n_pseudo_runs": 10,
+  "random_seed": 80081,
+  "n_bootstrap": 1000,
+  "torch_epochs": 24,
+  "torch_batch_size": 256,
+  "notes": "output_30k.root has no experimental run branch; contiguous event-id blocks are used as simulation-run analogues for held-out folds and bootstrap units."
+}

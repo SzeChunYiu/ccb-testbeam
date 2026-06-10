@@ -1,0 +1,2 @@
+heldout_run,train_runs,traditional_base_method,analytic_candidate,analytic_alpha,mlp_hidden,mlp_weight_decay,mlp_n_features
+60,"[58, 59, 61, 62, 63, 65]",template_phase,amp_only,100.0,32,0.001,21

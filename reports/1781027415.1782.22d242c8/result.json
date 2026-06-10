@@ -1,0 +1,129 @@
+{
+  "study": "S07j_pdf_notebook_provenance",
+  "ticket": "1781027415.1782.22d242c8",
+  "worker": "testbeam-laptop-3",
+  "documented_target": {
+    "labelled_events": 12147,
+    "clean": 10636,
+    "violating": 1511
+  },
+  "raw_cfd20_reproduced": {
+    "labelled_events": 9897,
+    "clean": 7583,
+    "violating": 2314,
+    "ambiguous": 5457,
+    "downstream_ge2_events": 15354
+  },
+  "raw_cfd20_matches_documented": false,
+  "best_rf_params": {
+    "n_estimators": 300,
+    "max_depth": 7,
+    "min_samples_leaf": 15
+  },
+  "rf_feature_count": 46,
+  "rf_forbidden_features_present": [],
+  "qtemplate_unmatched_events": 2,
+  "traditional": {
+    "method": "traditional_span_q_template",
+    "roc_auc": 0.9124552019021761,
+    "roc_auc_ci_low": 0.8840701589421043,
+    "roc_auc_ci_high": 0.9283725263800322,
+    "average_precision": 0.9606239382654218,
+    "average_precision_ci_low": 0.9180198682992352,
+    "average_precision_ci_high": 0.9774783348017363,
+    "note": "Uses downstream span; overlaps weak-label definition.",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "traditional_deleaked": {
+    "method": "traditional_q_template_only",
+    "roc_auc": 0.7169178521167816,
+    "roc_auc_ci_low": 0.6897266540137942,
+    "roc_auc_ci_high": 0.7394407950943994,
+    "average_precision": 0.8818900733465731,
+    "average_precision_ci_low": 0.821744576350166,
+    "average_precision_ci_high": 0.9104292841717244,
+    "note": "No timing-span feature.",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "ml": {
+    "method": "rf_clean_timing",
+    "roc_auc": 0.9936282210662959,
+    "roc_auc_ci_low": 0.9916587557842723,
+    "roc_auc_ci_high": 0.9953736768656275,
+    "average_precision": 0.997851533794181,
+    "average_precision_ci_low": 0.9960352857492687,
+    "average_precision_ci_high": 0.9986059772409809,
+    "note": "RF excludes timing spans, pair residuals, run, and sample.",
+    "brier": 0.02597740095089232,
+    "brier_ci_low": 0.02346300483662774,
+    "brier_ci_high": 0.029288476026291584
+  },
+  "leaky_control": {
+    "method": "leaky_rf_control",
+    "roc_auc": 1.0,
+    "roc_auc_ci_low": 0.9999999999999999,
+    "roc_auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "average_precision_ci_low": 0.9999999999999999,
+    "average_precision_ci_high": 1.0,
+    "note": "RF with forbidden label-defining timing spans.",
+    "brier": 0.002643036353464681,
+    "brier_ci_low": 0.0022625644000317593,
+    "brier_ci_high": 0.0030763791831636836
+  },
+  "provenance": {
+    "files_inventoried": 6,
+    "pdf_full_target_tuple_hits": 2,
+    "repo_text_full_target_tuple_hits": 3,
+    "notebook_full_target_tuple_hits": 0,
+    "byte_identical_pdf_pairs": 1,
+    "pdf_sha256": [
+      {
+        "path": "/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf",
+        "sha256": "54634a859300d764dfab90d3a4358429bfe5625f61c1318024e4b02e6044d962"
+      },
+      {
+        "path": "/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf",
+        "sha256": "54634a859300d764dfab90d3a4358429bfe5625f61c1318024e4b02e6044d962"
+      }
+    ],
+    "chain_checks": [
+      {
+        "check": "raw_hrdv_reproduces_12147_tuple",
+        "value": false,
+        "pass": false,
+        "notes": "Current raw HRDv CFD20 pipeline should match all three App.A numbers if it generated the PDF value."
+      },
+      {
+        "check": "pdf_artifact_contains_target_tuple",
+        "value": 2,
+        "pass": true,
+        "notes": "PDF-era report text contains 12,147 / 10,636 / 1,511."
+      },
+      {
+        "check": "byte_identical_pdf_copies",
+        "value": 1,
+        "pass": true,
+        "notes": "Downloaded and ccb-data PDF copies are byte-identical if this is positive."
+      },
+      {
+        "check": "notebook_contains_target_tuple",
+        "value": 0,
+        "pass": false,
+        "notes": "A matching notebook would support a notebook-to-PDF chain."
+      },
+      {
+        "check": "repo_docs_contain_target_tuple",
+        "value": 3,
+        "pass": true,
+        "notes": "Current Markdown/reports mirror the target tuple."
+      }
+    ]
+  },
+  "verdict": "pdf_doc_chain_not_raw_hrdv_no_notebook_source",
+  "follow_up_tickets": []
+}

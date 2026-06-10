@@ -1,0 +1,9 @@
+check,value,pass
+train_heldout_source_run_overlap,0.0,True
+event_id_overlap_train_heldout,0.0,True
+operating_threshold_selected_on_train_only,1.0,True
+p05a_train_heldout_source_run_overlap,0.0,True
+p05a_event_id_overlap,0.0,True
+p05a_heldout_cnn_ap,0.8684145380015449,True
+p05a_cnn_shuffled_train_labels_heldout_ap,0.47091118012059774,True
+p05a_source_run_predictability_train_random_split_accuracy,0.20742637644046094,True

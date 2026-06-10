@@ -1,0 +1,17 @@
+base_method,scope,stratum,metric,value,heldout_rows
+traditional residual PCA+hand,heldout_run,42,balanced_accuracy,0.34690693406155415,2635
+traditional residual PCA+hand,heldout_run,57,balanced_accuracy,0.35051122353256503,2559
+traditional residual PCA+hand,heldout_run,64,balanced_accuracy,0.31052599468982894,4034
+traditional residual PCA+hand,heldout_run,65,balanced_accuracy,0.2976995070812423,2770
+traditional residual PCA+hand,topology,pair,balanced_accuracy,0.24772423180429404,2764
+traditional residual PCA+hand,topology,quad,balanced_accuracy,0.3324020058379501,1193
+traditional residual PCA+hand,topology,single,balanced_accuracy,0.307603381535017,6121
+traditional residual PCA+hand,topology,triple,balanced_accuracy,0.32707408486749756,1920
+ML residual masked-denoising AE-4,heldout_run,42,balanced_accuracy,0.24174552130479232,2635
+ML residual masked-denoising AE-4,heldout_run,57,balanced_accuracy,0.23940465022782095,2559
+ML residual masked-denoising AE-4,heldout_run,64,balanced_accuracy,0.22783446500913238,4034
+ML residual masked-denoising AE-4,heldout_run,65,balanced_accuracy,0.21370422598343,2770
+ML residual masked-denoising AE-4,topology,pair,balanced_accuracy,0.33823795589059663,2764
+ML residual masked-denoising AE-4,topology,quad,balanced_accuracy,0.28813815347170807,1193
+ML residual masked-denoising AE-4,topology,single,balanced_accuracy,0.31772775621328914,6121
+ML residual masked-denoising AE-4,topology,triple,balanced_accuracy,0.32515877872996574,1920

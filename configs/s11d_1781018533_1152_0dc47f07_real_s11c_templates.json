@@ -1,0 +1,35 @@
+{
+  "study_id": "S11d",
+  "ticket_id": "1781018533.1152.0dc47f07",
+  "worker": "testbeam-laptop-4",
+  "title": "validate S11c templates on real high-current candidate windows",
+  "output_dir": "reports/1781018533.1152.0dc47f07",
+  "s11c_config": "configs/s11c_amp_binned_asymmetric_templates.json",
+  "random_seed": 2026061011,
+  "sample_per_run_stratum": 60,
+  "top_candidate_count": 160,
+  "candidate_threshold_quantile": 0.95,
+  "bootstrap_replicates": 600,
+  "template_shift_grid": {"min": -1.25, "max": 1.25, "step": 0.25},
+  "fit_separation_grid_samples": [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0],
+  "fit_ratio_bounds": [0.10, 2.25],
+  "baseline_bounds_adc": [-250.0, 250.0],
+  "amp_binned_templates": {
+    "quantiles": [0.0, 0.33, 0.66, 1.0],
+    "shape_quantiles": [0.33, 0.66],
+    "max_primary_candidates": 2,
+    "max_secondary_candidates": 2
+  },
+  "ml": {
+    "synthetic_train_per_fold": 2200,
+    "synthetic_cal_per_fold": 550
+  },
+  "closure_anchors": {
+    "s11a_traditional_time_rms_ns": 13.300370096544516,
+    "s11a_ml_time_rms_ns": 10.674061400718234,
+    "s11c_traditional_time_rms_ns": 17.83089499264352,
+    "s11c_ml_time_rms_ns": 10.674061400718234,
+    "s11c_traditional_detection_ap": 0.7153773248837738,
+    "s11c_ml_detection_ap": 0.8509910550508138
+  }
+}

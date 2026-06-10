@@ -1,0 +1,5 @@
+quantity,report_value,reproduced,delta,tolerance,pass,sample_size
+"P02 early-peak pulse rate, peak_sample<=3",0.044,0.04388333333333334,-0.00011666666666666076,0.002,True,60000
+"S07 parent guarded gross events, D_t>51 ns",72.0,72.0,0.0,0.0,True,10156
+all-three downstream control events,3774.0,3774.0,0.0,0.0,True,10156
+"all-three downstream guarded gross events, D_t>51 ns",22.0,22.0,0.0,0.0,True,3774

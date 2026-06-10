@@ -1,0 +1,64 @@
+{
+  "study_id": "P05b",
+  "title": "failure-aware two-pulse abstention calibration",
+  "ticket_id": "1781014241.437.0e0024cb",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781014241.437.0e0024cb",
+  "base_s11a_script": "scripts/s11a_two_pulse_template_ml.py",
+  "random_seed": 2026060906,
+  "amplitude_cut_adc": 1000.0,
+  "clean_min_amp_adc": 1500.0,
+  "clean_max_amp_adc": 12000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "s10_reproduction": {
+    "enabled": true,
+    "expected_ml_ap": {"low_2nA": 0.982, "high_20nA": 0.968},
+    "tolerance_abs": 0.006
+  },
+  "benchmark_runs": {
+    "train": [58, 59, 60, 61, 62],
+    "heldout": [63, 65]
+  },
+  "max_clean_pulses_per_run_stave": 220,
+  "injected_per_train_run": 260,
+  "clean_per_train_run": 260,
+  "injected_per_heldout_run": 300,
+  "clean_per_heldout_run": 300,
+  "template_reference_cfd_sample": 5.0,
+  "template_shift_grid": {"min": -1.25, "max": 0.75, "step": 0.25},
+  "fit_separation_grid_samples": [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0],
+  "injection_separation_grid_samples": [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0],
+  "injection_ratio_grid": [0.25, 0.5, 0.75, 1.0],
+  "fit_ratio_bounds": [0.15, 1.8],
+  "baseline_bounds_adc": [-250.0, 250.0],
+  "bad_recovery_time_rms_ns": 12.0,
+  "bad_recovery_abs_charge_bias": 0.20,
+  "target_bad_recovery_rate": 0.15,
+  "bootstrap_samples": 400,
+  "ml": {
+    "classifier_hidden": [32],
+    "regressor_hidden": [48, 24],
+    "max_iter": 500,
+    "bootstrap_samples": 400
+  }
+}

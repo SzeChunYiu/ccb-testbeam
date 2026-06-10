@@ -1,0 +1,13 @@
+t with real soft spots
+flagged below for each.
+
+## A. Event-level clean-timing classifier (App. A)
+- **Model:** random forest. **Features:** B2/B4/B6/B8 amplitudes & log-amps, template quality,
+  tail/late fractions, quench proxy, hit flags & multiplicities. *Deliberately excludes* the
+  timing span / pair residuals / run / sample → guards against learning the label.
+- **Weak labels:** clean = ≥2 downstream staves & downstream span <5 ns & all-span <10 ns;
+  topology-violating = ≥2 downstream & (downstream span >10 ns OR B2 displaced >20 ns).
+- **Split by run** (not random). 12,147 events (10,636 clean : 1,511 violating, **~7:1**).
+- **Performance:** test ROC AUC 0.985, PR AUC 0.998, Brier 0.036; small train–test gap.
+- **Traditional baseline to beat:** simple cuts on Δt_B / downstream span / q_template.
+- ⚠ RF probabilities are

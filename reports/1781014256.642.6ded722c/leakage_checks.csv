@@ -1,0 +1,8 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,must be zero
+model_features_include_run_event_or_stave_id,0.0,True,"ids used only for split, matching, and bootstrap strata"
+audit_waveform_hash_seen_in_train_rate,0.0,True,rounded normalized waveform hash overlap at 1e-3 precision
+ml_target_ap_too_good_sentinel,0.7885397176342424,True,"if >0.98, inspect leakage; current sentinel records whether result looked too good"
+max_recover_veto_ap_too_good_sentinel,1.0,True,high AP is treated as low-evidence when fewer than five veto positives support it
+min_veto_positives_for_high_recover_veto_ap,1.0,True,documents the positive-count audit behind any perfect recover/veto AP
+heldout_runs_have_target_taxa,4.0,True,run-bootstrap CIs need target rows in multiple held-out runs

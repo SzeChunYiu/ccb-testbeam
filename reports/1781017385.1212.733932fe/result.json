@@ -1,0 +1,298 @@
+{
+  "controls_only": [
+    {
+      "macro_f1": 0.1715138980783682,
+      "method": "traditional",
+      "observed_minus_controls": 0.4279875614082439,
+      "target": "manual_flag",
+      "value": 0.38739017522980135
+    },
+    {
+      "macro_f1": 0.3053146424133302,
+      "method": "traditional",
+      "observed_minus_controls": 0.3399879398477038,
+      "target": "peak_group",
+      "value": 0.4733889689288525
+    },
+    {
+      "macro_f1": 0.25626610249644355,
+      "method": "ml",
+      "observed_minus_controls": 0.4441029573511489,
+      "target": "manual_flag",
+      "value": 0.5234956888400438
+    },
+    {
+      "macro_f1": 0.33665456644641056,
+      "method": "ml",
+      "observed_minus_controls": 0.4729187085240747,
+      "target": "peak_group",
+      "value": 0.4787905741841556
+    }
+  ],
+  "label_shuffle_sentinel": [
+    {
+      "method": "traditional",
+      "target": "manual_flag",
+      "value": 0.23351738179334633
+    },
+    {
+      "method": "traditional",
+      "target": "peak_group",
+      "value": 0.16831603092836583
+    },
+    {
+      "method": "ml",
+      "target": "manual_flag",
+      "value": 0.19954566136552496
+    },
+    {
+      "method": "ml",
+      "target": "peak_group",
+      "value": 0.20677296961518257
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "note": "must be zero for split-by-run",
+      "pass": true,
+      "value": 0
+    },
+    {
+      "check": "heldout_runs_match_config",
+      "note": "all benchmark rows are from configured held-out runs",
+      "pass": true,
+      "value": "42,57,64,65"
+    },
+    {
+      "check": "p01b_key_order_matches_raw_scan",
+      "note": "prevents latent/waveform row offset leakage",
+      "pass": true,
+      "value": true
+    },
+    {
+      "check": "permutation_changed_latent_fraction",
+      "note": "should move almost all rows within control strata",
+      "pass": true,
+      "value": 0.9948652879418545
+    },
+    {
+      "check": "traditional_manual_flag_controls_only_vs_observed_delta",
+      "note": "large negative values would mean controls-only explains the result",
+      "pass": true,
+      "value": 0.4279875614082439
+    },
+    {
+      "check": "traditional_peak_group_controls_only_vs_observed_delta",
+      "note": "large negative values would mean controls-only explains the result",
+      "pass": true,
+      "value": 0.3399879398477038
+    },
+    {
+      "check": "ml_manual_flag_controls_only_vs_observed_delta",
+      "note": "large negative values would mean controls-only explains the result",
+      "pass": true,
+      "value": 0.4441029573511489
+    },
+    {
+      "check": "ml_peak_group_controls_only_vs_observed_delta",
+      "note": "large negative values would mean controls-only explains the result",
+      "pass": true,
+      "value": 0.4729187085240747
+    },
+    {
+      "check": "traditional_manual_flag_train_label_shuffle_score",
+      "note": "near-chance sanity check for too-good scores",
+      "pass": true,
+      "value": 0.23351738179334633
+    },
+    {
+      "check": "traditional_peak_group_train_label_shuffle_score",
+      "note": "near-chance sanity check for too-good scores",
+      "pass": true,
+      "value": 0.16831603092836583
+    },
+    {
+      "check": "ml_manual_flag_train_label_shuffle_score",
+      "note": "near-chance sanity check for too-good scores",
+      "pass": true,
+      "value": 0.19954566136552496
+    },
+    {
+      "check": "ml_peak_group_train_label_shuffle_score",
+      "note": "near-chance sanity check for too-good scores",
+      "pass": true,
+      "value": 0.20677296961518257
+    }
+  ],
+  "ml": [
+    {
+      "controls_only_balanced_accuracy": 0.5234956888400438,
+      "heldout_rows": 5126,
+      "lift": 0.45673466943786556,
+      "lift_ci_high": 0.5114316402074616,
+      "lift_ci_low": 0.41491165361679805,
+      "method": "ml",
+      "method_label": "ml random forest",
+      "metric": "balanced_accuracy",
+      "null_bootstrap_ci_high": 0.5520526758100137,
+      "null_bootstrap_ci_low": 0.45500730906325537,
+      "null_max": 0.5399448234428106,
+      "null_mean": 0.5099043391870363,
+      "null_median": 0.5108639767533272,
+      "null_p95": 0.528240094590738,
+      "observed_balanced_accuracy": 0.9675986461911927,
+      "observed_ci_high": 0.9796697825954342,
+      "observed_ci_low": 0.9435436556339458,
+      "observed_macro_f1": 0.8876280397222945,
+      "permutation_replicates": 30,
+      "target": "manual_flag",
+      "train_rows": 33784
+    },
+    {
+      "controls_only_balanced_accuracy": 0.4787905741841556,
+      "heldout_rows": 5126,
+      "lift": 0.4635038093009751,
+      "lift_ci_high": 0.5012034709235638,
+      "lift_ci_low": 0.4257721147234343,
+      "method": "ml",
+      "method_label": "ml random forest",
+      "metric": "balanced_accuracy",
+      "null_bootstrap_ci_high": 0.5385272091676722,
+      "null_bootstrap_ci_low": 0.43359201703785794,
+      "null_max": 0.49876811218933587,
+      "null_mean": 0.48850286682168814,
+      "null_median": 0.4882054734072552,
+      "null_p95": 0.4961955485071373,
+      "observed_balanced_accuracy": 0.9517092827082303,
+      "observed_ci_high": 0.9672400228179007,
+      "observed_ci_low": 0.9318412963174918,
+      "observed_macro_f1": 0.9208636816430955,
+      "permutation_replicates": 30,
+      "target": "peak_group",
+      "train_rows": 33784
+    }
+  ],
+  "null": {
+    "amplitude_quantile_bins": 6,
+    "fraction_rows_with_changed_latent": 0.9948652879418545,
+    "groups_permuted": 2598,
+    "groups_total": 3278,
+    "permutation_replicates": 30,
+    "rows_permuted_group_member": 640057,
+    "rows_with_changed_latent": 637447,
+    "strata": [
+      "run",
+      "topology_mask",
+      "amp_bin",
+      "stave_index"
+    ]
+  },
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "key_sha256_matches_expected": true,
+    "p01b_artifact_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "p01b_artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "p01b_artifact_sha256_matches_expected": true,
+    "passed": true,
+    "raw_and_artifact_keys_match": true,
+    "raw_scan_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "selected_pulses": 640737
+  },
+  "runtime_sec": 81.0,
+  "split": {
+    "bootstrap_replicates": 300,
+    "heldout_rows": 5126,
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "max_per_run_stave": 400,
+    "train_rows": 33784,
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ]
+  },
+  "study_id": "P01e",
+  "ticket_id": "1781017385.1212.733932fe",
+  "title": "control-stratum permutation null for P01b latents",
+  "traditional": [
+    {
+      "controls_only_balanced_accuracy": 0.38739017522980135,
+      "heldout_rows": 5126,
+      "lift": 0.42172960706416307,
+      "lift_ci_high": 0.48877536504856844,
+      "lift_ci_low": 0.36305887967881134,
+      "method": "traditional",
+      "method_label": "traditional ridge",
+      "metric": "balanced_accuracy",
+      "null_bootstrap_ci_high": 0.4602379264015762,
+      "null_bootstrap_ci_low": 0.3213797424098905,
+      "null_max": 0.40740486450154323,
+      "null_mean": 0.39420697053447845,
+      "null_median": 0.3936481295738822,
+      "null_p95": 0.405755674305078,
+      "observed_balanced_accuracy": 0.8153777366380452,
+      "observed_ci_high": 0.8531420895322043,
+      "observed_ci_low": 0.7783091318951433,
+      "observed_macro_f1": 0.7292284184494175,
+      "permutation_replicates": 30,
+      "target": "manual_flag",
+      "train_rows": 33784
+    },
+    {
+      "controls_only_balanced_accuracy": 0.4733889689288525,
+      "heldout_rows": 5126,
+      "lift": 0.33156973296791753,
+      "lift_ci_high": 0.35856853935160415,
+      "lift_ci_low": 0.30029661530165763,
+      "method": "traditional",
+      "method_label": "traditional ridge",
+      "metric": "balanced_accuracy",
+      "null_bootstrap_ci_high": 0.5309228590428504,
+      "null_bootstrap_ci_low": 0.42835914289624755,
+      "null_max": 0.49004738058355096,
+      "null_mean": 0.48187357011498394,
+      "null_median": 0.4818071758086388,
+      "null_p95": 0.48642719602221346,
+      "observed_balanced_accuracy": 0.8133769087765563,
+      "observed_ci_high": 0.8402140162493773,
+      "observed_ci_low": 0.7747242960085439,
+      "observed_macro_f1": 0.7825304082879385,
+      "permutation_replicates": 30,
+      "target": "peak_group",
+      "train_rows": 33784
+    }
+  ]
+}

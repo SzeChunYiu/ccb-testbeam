@@ -1,0 +1,115 @@
+{
+  "study": "S03g",
+  "ticket": "1781020836.1265.142a0291",
+  "worker": "testbeam-laptop-1",
+  "title": "Sample-II calibration run 64 pure transfer diagnostic for S03e",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03e_reference_reproduction_pass": true
+  },
+  "split": {
+    "train_sample": "Sample I",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "analysis_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "diagnostic_runs": [
+      64
+    ],
+    "bootstrap_unit": "heldout_run for analysis pool; pair bootstrap within single diagnostic run 64",
+    "run64_used_for_fit_or_selection": false
+  },
+  "baseline": {
+    "method": "template_phase",
+    "analysis_sigma68_ns": 2.0459430282283897,
+    "run64_sigma68_ns": 1.7959430282283932,
+    "delta_run64_minus_analysis_ns": -0.24999999999999645,
+    "delta_ci": [
+      -0.2551014242942968,
+      0.0480746984150387
+    ]
+  },
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "analysis_sigma68_ns": 1.4946665492512594,
+    "run64_sigma68_ns": 1.3329797211399408,
+    "delta_run64_minus_analysis_ns": -0.16168682811131863,
+    "delta_ci": [
+      -0.3892239587843603,
+      -0.012439257978183538
+    ]
+  },
+  "traditional_binned": {
+    "method": "per_stave_monotonic_amplitude_binned_timewalk",
+    "mode": "monotonic",
+    "direction": "decreasing",
+    "n_bins": 4,
+    "analysis_sigma68_ns": 1.3979715141141966,
+    "run64_sigma68_ns": 0.9347017690330941,
+    "delta_run64_minus_analysis_ns": -0.4632697450811025,
+    "delta_ci": [
+      -0.5838167018665104,
+      -0.10202848588579982
+    ]
+  },
+  "ml": {
+    "method": "ridge_residual_corrector_on_template_phase",
+    "analysis_sigma68_ns": 1.4740412476984908,
+    "run64_sigma68_ns": 1.3536972077783689,
+    "delta_run64_minus_analysis_ns": -0.12034403992012188,
+    "delta_ci": [
+      -0.2525330037256297,
+      -0.012194369329312463
+    ]
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_heldout_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "sample_ii_or_run64_used_for_final_fit": false,
+    "shuffled_target_min_sigma68_ns": 1.7742319253716055,
+    "too_good_flag": false
+  },
+  "verdict": "run64_exposes_transfer_drift",
+  "interpretation": "Run 64 differs from the analysis-run pool for at least one primary correction after the held-out contrast.",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "0d40b1d5c8acecee203cc489923002277e4540ca",
+  "follow_up_ticket_appended": false,
+  "follow_up_skip_reason": "Skipped to avoid duplicating existing S02/S03/P10 run-drift and topology-transfer studies.",
+  "next_tickets": []
+}

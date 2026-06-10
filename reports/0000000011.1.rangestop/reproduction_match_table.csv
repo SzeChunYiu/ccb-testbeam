@@ -1,0 +1,2 @@
+root_file,tree,expected_tree_entries,tree_entries,delta,pass,sci_bar_hits,positive_sci_bar_hits,events_with_sci_bar,accepted_fraction
+/home/billy/ccb-geant4/output_krakow_1M.root,hibeam,1000000,1000000,0,True,1279440,1279440,242147,0.242147

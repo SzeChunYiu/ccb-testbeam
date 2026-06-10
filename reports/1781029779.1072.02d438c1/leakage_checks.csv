@@ -1,0 +1,5 @@
+check,value,pass,interpretation
+shuffled_training_labels,0.4175939305990996,True,AUC should be near chance under shuffled labels.
+repeated_shuffled_training_labels_mean_auc,0.49495408933393936,True,Shuffle AUC 2.5/50/97.5% quantiles 0.388/0.487/0.630.
+intentional_label_oracle,1.0,True,Direct label leakage would be visible.
+real_feature_exclusion,,True,"ML excludes run id, file name, trigger, event id, event max, post-trigger samples, and labels."

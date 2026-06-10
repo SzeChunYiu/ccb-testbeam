@@ -1,0 +1,8 @@
+metric,value,ci_low,ci_high,interpretation
+root_tree_entries,100000,,,Recorded hibeam tree entries in patched 100k run.
+primary_proton_count,100000,,,One primary proton is stored per recorded tree entry.
+primary_deuteron_count,100000,,,One primary deuteron is stored per recorded tree entry.
+sci_bar_hits,126574,,,All Sci_bar truth hits in the patched run.
+deuteron_minus_proton_event_total_edep_MeV,-13.244933022993933,-14.11538966523228,-12.423956488023027,Positive means deuteron-tagged Sci_bar events are more ionising than proton-tagged events.
+deuteron_minus_proton_hit_edep_MeV,16.236556365391376,16.063068138239654,16.411797592048014,Positive means deuteron Sci_bar hits deposit more energy per hit than proton hits.
+fraction_tree_entries_with_sci_bar_hit,0.24004,,,Acceptance into the sensitive Sci_bar truth branches.

@@ -1,0 +1,94 @@
+{
+  "ticket_id": "0000000007.1.tradshape",
+  "study_id": "T07",
+  "worker": "testbeam-laptop-3",
+  "title": "traditional pulse-shape survey and ML/NN benchmark",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "a3e444407b76327f2656bb9cf8de0f0e228812e1",
+  "runtime_sec": 65.64983057975769,
+  "python": "3.7.6",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "train_rows": 25493,
+    "heldout_rows": 9745,
+    "bootstrap_replicates": 500
+  },
+  "label": {
+    "name": "P02-style anomalous morphology",
+    "definition": "peak<=3 or (peak<=4 and area_over_peak<3.0) or peak>=12 or max_fall_step<-0.75"
+  },
+  "label_counts": [
+    {
+      "split": "train",
+      "rows": 25493,
+      "positives": 6205,
+      "positive_fraction": 0.24340014906052643
+    },
+    {
+      "split": "heldout",
+      "rows": 9745,
+      "positives": 2077,
+      "positive_fraction": 0.21313494099538224
+    },
+    {
+      "split": "all",
+      "rows": 35238,
+      "positives": 8282,
+      "positive_fraction": 0.2350303649469323
+    }
+  ],
+  "best_traditional": {
+    "method": "traditional_fisher_gatti_all_features",
+    "n": 9745,
+    "positives": 2077,
+    "roc_auc": 0.9949637194410602,
+    "auc_ci_low": 0.9923579506643366,
+    "auc_ci_high": 0.9971993412470331,
+    "average_precision": 0.9803957887941274,
+    "role": "traditional_multivariate",
+    "family": "fisher_gatti_engineered_features"
+  },
+  "winner": {
+    "method": "ML_gradient_boosted_trees",
+    "n": 9745,
+    "positives": 2077,
+    "roc_auc": 0.9999994976905066,
+    "auc_ci_low": 0.9999973505547276,
+    "auc_ci_high": 1.0,
+    "average_precision": 0.9999981526574597,
+    "role": "ml_panel",
+    "family": null
+  },
+  "primary_methods": [
+    "traditional_fisher_gatti_all_features",
+    "ML_ridge_classifier",
+    "ML_gradient_boosted_trees",
+    "ML_mlp",
+    "NN_1d_cnn",
+    "NN_residual_squeeze_cnn_new"
+  ],
+  "verdict": "winner is ML_gradient_boosted_trees by held-out ROC AUC; best traditional is traditional_fisher_gatti_all_features",
+  "next_tickets": [
+    {
+      "appended_ticket_id": "1781086190.1117.230a08c4",
+      "title": "Validate the winning pulse-shape benchmark on an external timing-tail or injection label",
+      "body": "Use the T07 winning discriminator and best traditional baseline on a label not defined by peak location or sample-to-sample drop, such as downstream timing-tail events or controlled two-pulse/dropout injections, with the same run-block bootstrap CI protocol."
+    }
+  ]
+}

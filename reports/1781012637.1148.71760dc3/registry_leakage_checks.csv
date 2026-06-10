@@ -1,0 +1,3 @@
+fold,required_controls_present,missing_controls,train_eval_run_overlap,train_eval_key_overlap,uses_run_or_event_features,conditional_beats_empirical_ci,shuffled_beats_real_ci,too_good_claim_allowed,registry_pass
+holdout_sample_i,True,,,0,False,False,False,False,True
+holdout_sample_ii,True,,,0,False,False,False,False,True

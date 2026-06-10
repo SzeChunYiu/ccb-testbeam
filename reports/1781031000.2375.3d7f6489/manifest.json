@@ -1,0 +1,26 @@
+{
+  "ticket": "1781031000.2375.3d7f6489",
+  "command": "/home/billy/anaconda3/bin/python scripts/s16g_1781031000_2375_3d7f6489_forced_random_root_acquisition.py --config configs/s16g_1781031000_2375_3d7f6489_forced_random_root_acquisition.json",
+  "artifacts": [
+    "REPORT.md",
+    "direct_nonbeam_entries.csv",
+    "file_archive_inventory.csv",
+    "input_sha256.csv",
+    "manifest.json",
+    "reproduction_match_table.csv",
+    "result.json",
+    "root_trigger_branch_audit.csv",
+    "selected_count_by_run.csv"
+  ],
+  "sha256": {
+    "REPORT.md": "d40b7038478dae1eb73b82e7e9db046a33935b180b119982f49c5648b8b0d0d9",
+    "direct_nonbeam_entries.csv": "a10b05b9b8785600b6fcf6356b1c3386e0f7bfa96a71aad15249f03e6ca895d8",
+    "file_archive_inventory.csv": "cb95dfc91364d6325529df882620e09338de22514bcdb93b47cbe57d872f1731",
+    "input_sha256.csv": "6184329d66237008442d1a2e35f79e4f9977b7de4ebfbd233d58043de26f8e6a",
+    "manifest.json": "2ec7a9fcaf36e82b19fb07166dc993aafe7dcb9b5d408fdb468c8cbcd9b44977",
+    "reproduction_match_table.csv": "b1405415d9cb1542c777d7f3ee76bf2ef6d8c7e5ccdad9ad4a74073370320d3b",
+    "result.json": "1d9f7a8f7e3e565aade3c4b3292faedcd3345001b2a45b7d7155962b00f8e282",
+    "root_trigger_branch_audit.csv": "ba48384f915dc81ceedbe1f50b7787a6789fec4315e532527e9edef1e6e5747d",
+    "selected_count_by_run.csv": "87c915395ee657999381d554d16b5adafb48eec287ee53f8bcddc464802abe8d"
+  }
+}

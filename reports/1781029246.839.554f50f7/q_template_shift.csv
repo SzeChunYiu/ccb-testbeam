@@ -1,0 +1,4 @@
+subset,n_pairs,median_log_q_template_dynamic_minus_control,median_fractional_shift,ci95_log_shift,ci95_fractional_shift
+all_matched_pairs,3715,0.0,0.0,"[-2.3030346777749493, 0.0]","[-0.900044948373281, 0.0]"
+saturation_boundary,51,0.0,0.0,"[-3.9184880945839753, 0.0]","[-0.9801288847086306, 0.0]"
+baseline_boundary,3661,0.0,0.0,"[-2.430536182186318, 0.0]","[-0.9120103585463462, 0.0]"

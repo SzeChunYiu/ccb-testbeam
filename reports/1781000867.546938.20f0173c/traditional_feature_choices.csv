@@ -1,0 +1,3 @@
+feature,sign,train_auc,fold
+width_10_samples,-1.0,0.6438547870728798,A_to_B
+tail_fraction,1.0,0.655059629761481,B_to_A

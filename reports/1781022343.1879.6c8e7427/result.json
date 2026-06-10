@@ -1,0 +1,287 @@
+{
+  "ticket_id": "1781022343.1879.6c8e7427",
+  "study_id": "S02e",
+  "reproduction": {
+    "pass": true,
+    "rows": [
+      {
+        "quantity": "raw total selected B-stave pulses",
+        "report_value": 640737.0,
+        "reproduced": 640737.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "raw sample_ii_analysis selected_pulses",
+        "report_value": 125096.0,
+        "reproduced": 125096.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "raw sample_ii_analysis B2",
+        "report_value": 88213.0,
+        "reproduced": 88213.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "raw sample_ii_analysis B4",
+        "report_value": 21229.0,
+        "reproduced": 21229.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "raw sample_ii_analysis B6",
+        "report_value": 11148.0,
+        "reproduced": 11148.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "raw sample_ii_analysis B8",
+        "report_value": 4506.0,
+        "reproduced": 4506.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "prior heldout pair rows",
+        "report_value": 2178.0,
+        "reproduced": 2178.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "prior ML high-risk pair rows",
+        "report_value": 515.0,
+        "reproduced": 515.0,
+        "delta": 0.0,
+        "tolerance": 0.0,
+        "pass": true
+      },
+      {
+        "quantity": "prior baseline tail rate",
+        "report_value": 0.048668503213957756,
+        "reproduced": 0.048668503213957756,
+        "delta": 0.0,
+        "tolerance": 1e-12,
+        "pass": true
+      },
+      {
+        "quantity": "prior exclude-ML tail rate",
+        "report_value": 0.02826217678893566,
+        "reproduced": 0.02826217678893566,
+        "delta": 0.0,
+        "tolerance": 1e-12,
+        "pass": true
+      }
+    ]
+  },
+  "heldout_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "method_summary": [
+    {
+      "method": "prior_ml_high_risk_flag",
+      "n_pairs": 2178,
+      "n_selected": 515,
+      "selected_fraction": 0.236455463728191,
+      "high_risk_precision": 1.0,
+      "high_risk_enrichment": 4.229126213592233,
+      "tail_precision": 0.12815533980582525,
+      "tail_enrichment": 2.470109115903428,
+      "tail_rate_after_exclusion": 0.02826217678893566,
+      "kept_pair_fraction": 0.763544536271809,
+      "median_log_amp_delta_selected": -0.16769483116243578,
+      "max_pair_share_selected": 0.5631067961165048
+    },
+    {
+      "method": "trad_q_template_rmse_absdiff",
+      "n_pairs": 2178,
+      "n_selected": 233,
+      "selected_fraction": 0.10697887970615243,
+      "high_risk_precision": 0.5622317596566524,
+      "high_risk_enrichment": 2.3777490728780366,
+      "tail_precision": 0.18025751072961374,
+      "tail_enrichment": 3.474343879372555,
+      "tail_rate_after_exclusion": 0.03650385604113111,
+      "kept_pair_fraction": 0.8930211202938476,
+      "median_log_amp_delta_selected": -0.2995918531007282,
+      "max_pair_share_selected": 0.5364806866952789
+    },
+    {
+      "method": "loro_ml_shape_recover_highrisk",
+      "n_pairs": 2178,
+      "n_selected": 515,
+      "selected_fraction": 0.236455463728191,
+      "high_risk_precision": 0.6737864077669903,
+      "high_risk_enrichment": 2.849527759449524,
+      "tail_precision": 0.1087378640776699,
+      "tail_enrichment": 2.0958501589483634,
+      "tail_rate_after_exclusion": 0.034275405892964524,
+      "kept_pair_fraction": 0.763544536271809,
+      "median_log_amp_delta_selected": -0.25642879038775845,
+      "max_pair_share_selected": 0.5766990291262136
+    },
+    {
+      "method": "charge_pair_matched_null",
+      "n_pairs": 2178,
+      "n_selected": 515,
+      "selected_fraction": 0.236455463728191,
+      "high_risk_precision": 0.341747572815534,
+      "high_risk_enrichment": 1.445293618625695,
+      "tail_precision": 0.07766990291262135,
+      "tail_enrichment": 1.4970358278202593,
+      "tail_rate_after_exclusion": 0.043896572459410706,
+      "kept_pair_fraction": 0.763544536271809,
+      "median_log_amp_delta_selected": -0.169964722047391,
+      "max_pair_share_selected": 0.5631067961165048
+    }
+  ],
+  "ml_loro_folds": [
+    {
+      "heldout_run": 42,
+      "n": 366,
+      "positive_rate": 0.15846994535519127,
+      "average_precision": 0.6569208969303487,
+      "roc_auc": 0.8678907299596955
+    },
+    {
+      "heldout_run": 57,
+      "n": 347,
+      "positive_rate": 0.18155619596541786,
+      "average_precision": 0.7015927403164252,
+      "roc_auc": 0.8753632908562485
+    },
+    {
+      "heldout_run": 64,
+      "n": 1067,
+      "positive_rate": 0.2717900656044986,
+      "average_precision": 0.7994444311276973,
+      "roc_auc": 0.9067900412727998
+    },
+    {
+      "heldout_run": 65,
+      "n": 398,
+      "positive_rate": 0.2613065326633166,
+      "average_precision": 0.657232489785941,
+      "roc_auc": 0.8310439560439561
+    }
+  ],
+  "shape_atoms": [
+    {
+      "cluster": 0,
+      "n_pulses": 435,
+      "share": 0.5363748458692972,
+      "dominant_stave": "B6",
+      "dominant_taxon": "unassigned_common",
+      "median_amp_adc": 2037.5,
+      "median_late_fraction": 0.32994991540908813,
+      "median_width_half": 7.0,
+      "median_timing_span_dup": 18.0
+    },
+    {
+      "cluster": 2,
+      "n_pulses": 158,
+      "share": 0.19482120838471023,
+      "dominant_stave": "B4",
+      "dominant_taxon": "unassigned_common",
+      "median_amp_adc": 2070.25,
+      "median_late_fraction": 0.2066013216972351,
+      "median_width_half": 7.0,
+      "median_timing_span_dup": 18.0
+    },
+    {
+      "cluster": 4,
+      "n_pulses": 87,
+      "share": 0.10727496917385944,
+      "dominant_stave": "B6",
+      "dominant_taxon": "novel_delayed_peak",
+      "median_amp_adc": 1939.0,
+      "median_late_fraction": 0.9911051392555237,
+      "median_width_half": 2.0,
+      "median_timing_span_dup": 18.0
+    },
+    {
+      "cluster": 1,
+      "n_pulses": 70,
+      "share": 0.08631319358816276,
+      "dominant_stave": "B4",
+      "dominant_taxon": "novel_delayed_peak",
+      "median_amp_adc": 2588.75,
+      "median_late_fraction": 0.9710338115692139,
+      "median_width_half": 5.0,
+      "median_timing_span_dup": 18.0
+    },
+    {
+      "cluster": 3,
+      "n_pulses": 61,
+      "share": 0.0752157829839704,
+      "dominant_stave": "B4",
+      "dominant_taxon": "unassigned_common",
+      "median_amp_adc": 2516.5,
+      "median_late_fraction": 0.6118081212043762,
+      "median_width_half": 7.0,
+      "median_timing_span_dup": 18.0
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap_loro",
+      "value": 0.0,
+      "pass": true,
+      "note": "each ML fold leaves out one run"
+    },
+    {
+      "check": "model_features_include_ids",
+      "value": 0.0,
+      "pass": true,
+      "note": "none"
+    },
+    {
+      "check": "raw_source_index_join_missing",
+      "value": 0.0,
+      "pass": true,
+      "note": "zero means every prior source index was found in fresh raw scan"
+    },
+    {
+      "check": "ml_selected_max_run_pair_share",
+      "value": 0.312621359223301,
+      "pass": true,
+      "note": "guards against one run/pair stratum dominating the result"
+    },
+    {
+      "check": "charge_pair_matched_null_precision",
+      "value": 0.341747572815534,
+      "pass": true,
+      "note": "matched random selection should underperform ML shape score"
+    },
+    {
+      "check": "ml_average_precision",
+      "value": 0.7297497696380433,
+      "pass": true,
+      "note": "LORO score versus prior high-risk pair labels"
+    },
+    {
+      "check": "suspicious_result_triggered_extra_checks",
+      "value": 0.0,
+      "pass": true,
+      "note": "triggered if precision >0.90 or enrichment >3"
+    }
+  ],
+  "next_tickets": [],
+  "follow_up_ticket_status": "skipped: this audit supports existing tail-shape and gallery follow-up lines; no genuinely novel non-duplicative ticket identified",
+  "runtime_sec": 97.9
+}

@@ -1,0 +1,112 @@
+{
+  "curvature_only": {
+    "ci": [
+      0.46543073481341246,
+      0.522471445382229
+    ],
+    "value": 0.49325580475455877
+  },
+  "direct_dt_curvature_cross_check_auc": 0.5165539337842648,
+  "elapsed_seconds": 55.47737503051758,
+  "forbidden_main_rf_columns": [],
+  "independent_dataset": {
+    "n_clean": 159,
+    "n_injected": 159,
+    "n_pairs": 159,
+    "n_rows": 318,
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "leakage_checks": [
+    {
+      "average_precision": 0.5,
+      "notes": "Same source event before injection; should be chance.",
+      "probe": "pre-injection D_t",
+      "roc_auc": 0.5
+    },
+    {
+      "average_precision": 0.5,
+      "notes": "All rows are all-three by construction; excluded from main RF.",
+      "probe": "topology-only RF",
+      "roc_auc": 0.5
+    },
+    {
+      "average_precision": 0.544653359155832,
+      "notes": "Injection can change peak height; excluded from main RF.",
+      "probe": "absolute-amplitude-only RF",
+      "roc_auc": 0.5537953403741941
+    },
+    {
+      "average_precision": 0.5,
+      "notes": "Upstream waveform is not injected; should be near chance.",
+      "probe": "B2-only shape RF",
+      "roc_auc": 0.5
+    },
+    {
+      "average_precision": 0.7981778526599717,
+      "notes": "Expected to be informative because injection is downstream.",
+      "probe": "downstream-only aggregate shape RF",
+      "roc_auc": 0.7968237015940824
+    },
+    {
+      "average_precision": 0.527473119769099,
+      "notes": "Run-held-out null sanity check.",
+      "probe": "shape RF with shuffled training labels",
+      "roc_auc": 0.5481784739527709
+    },
+    {
+      "average_precision": null,
+      "notes": "Must be 0.",
+      "probe": "pair split violations",
+      "roc_auc": 0.0
+    },
+    {
+      "average_precision": null,
+      "notes": "None.",
+      "probe": "forbidden main RF columns",
+      "roc_auc": 0.0
+    }
+  ],
+  "ml": {
+    "ci": [
+      0.7603700590464656,
+      0.8408161358335561
+    ],
+    "feature_count": 72,
+    "method": "high-amplitude all-three shape-only RF",
+    "metric": "leave-one-run-out ROC AUC on injected duplicate-readout labels",
+    "params": {
+      "max_depth": 7,
+      "min_samples_leaf": 8,
+      "n_estimators": 500
+    },
+    "value": 0.7957557058660655
+  },
+  "pair_split_violations": 0,
+  "raw_reproduction_pass": true,
+  "rf_minus_curvature_auc": 0.3024999011115067,
+  "rf_minus_traditional_auc": 0.154602270479807,
+  "s07g_high_amp_expected_auc": 1.0,
+  "s07g_high_amp_extreme_events": 169,
+  "s07g_high_amp_reproduced_auc": 1.0,
+  "study": "S07h",
+  "ticket": "1781023657.1274.61c90efc",
+  "title": "independent high-amplitude all-three App.I RF target",
+  "traditional": {
+    "ci": [
+      0.6078083634131284,
+      0.660997418189149
+    ],
+    "method": "fold-selected traditional timing/template",
+    "metric": "leave-one-run-out ROC AUC on injected duplicate-readout labels",
+    "value": 0.6411534353862585
+  },
+  "worker": "testbeam-laptop-2"
+}

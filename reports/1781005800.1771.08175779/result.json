@@ -1,0 +1,75 @@
+{
+  "study": "S03b",
+  "ticket": "1781005800.1771.08175779",
+  "worker": "testbeam-laptop-4",
+  "title": "analytic downstream-only timewalk model stress test on B4/B6/B8",
+  "reproduced": true,
+  "s03a_reproduction": {
+    "s02_template_phase_base": {
+      "value": 2.889152765080617,
+      "reference": 2.889152765080617
+    },
+    "s03a_amp_only_reference": {
+      "value": 1.494640076269676,
+      "reference": 1.494640076269676
+    },
+    "ml_ridge_on_template_phase": {
+      "value": 1.3915306248207993,
+      "reference": 1.3915306248207993
+    }
+  },
+  "traditional": {
+    "metric": "heldout_pairwise_sigma68_ns",
+    "method": "per_stave_amplitude_binned_timewalk",
+    "mode": "monotonic",
+    "direction": "decreasing",
+    "n_bins": 10,
+    "cv_sigma68_ns": 1.5463842550268794,
+    "value": 1.5695763825403084,
+    "ci": [
+      1.3195763825403155,
+      1.8195763825403137
+    ],
+    "delta_vs_s03a_amp_only_ns": -0.0749363062706323,
+    "improves_s03a_amp_only": false
+  },
+  "baselines": {
+    "template_phase_sigma68_ns": 2.889152765080617,
+    "s03a_amp_only_sigma68_ns": 1.494640076269676
+  },
+  "ml": {
+    "metric": "heldout_pairwise_sigma68_ns",
+    "method": "ridge_residual_corrector_on_template_phase",
+    "value": 1.3915306248207993,
+    "ci": [
+      1.288574320940427,
+      1.6084849788071842
+    ],
+    "delta_vs_s03a_amp_only_ns": 0.10310945144887684
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      65
+    ],
+    "event_id_overlap": 0,
+    "s03b_shuffled_target_sigma68_ns": 2.905653903414869,
+    "ml_shuffled_target_sigma68_ns": 2.8825097249583522
+  },
+  "verdict": "s03b_binned_monotonic_does_not_improve_on_s03a_amp_only",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "d0ff2979ec25cb8e28bbaacb2260ba7d8ada3ecd",
+  "critic": "pending",
+  "next_tickets": [
+    "S03c: multi-heldout-run timing correction stability with leave-one-run-out intervals",
+    "S03d: physically signed per-stave amplitude timewalk prior versus isotonic fit"
+  ]
+}

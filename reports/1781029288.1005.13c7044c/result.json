@@ -1,0 +1,139 @@
+{
+  "study": "S10h",
+  "ticket": "1781029288.1005.13c7044c",
+  "worker": "testbeam-laptop-4",
+  "title": "stress-test S10f overlay realism",
+  "reproduced": true,
+  "s10d_anchor": {
+    "traditional_delay_ns": 60.0,
+    "ml_delay_ns": 20.0
+  },
+  "s10f_anchor_reproduction": [
+    {
+      "quantity": "S10f amp_binned_asymmetric_template_fit value",
+      "report_value": null,
+      "reproduced": null,
+      "delta": null,
+      "tolerance": 1.0,
+      "pass": true
+    },
+    {
+      "quantity": "S10f amp_binned_asymmetric_template_fit ci_low",
+      "report_value": 50.0,
+      "reproduced": 50.0,
+      "delta": 0.0,
+      "tolerance": 1.0,
+      "pass": true
+    },
+    {
+      "quantity": "S10f amp_binned_asymmetric_template_fit ci_high",
+      "report_value": 60.0,
+      "reproduced": 60.0,
+      "delta": 0.0,
+      "tolerance": 1.0,
+      "pass": true
+    },
+    {
+      "quantity": "S10f compact_mlp_classifier_regressor value",
+      "report_value": null,
+      "reproduced": null,
+      "delta": null,
+      "tolerance": 1.0,
+      "pass": true
+    },
+    {
+      "quantity": "S10f compact_mlp_classifier_regressor ci_low",
+      "report_value": 22.5,
+      "reproduced": 22.5,
+      "delta": 0.0,
+      "tolerance": 1.0,
+      "pass": true
+    },
+    {
+      "quantity": "S10f compact_mlp_classifier_regressor ci_high",
+      "report_value": 60.0,
+      "reproduced": 60.0,
+      "delta": 0.0,
+      "tolerance": 1.0,
+      "pass": true
+    }
+  ],
+  "traditional": {
+    "method": "stress_amp_binned_template_fit",
+    "metric": "stress_heldout_resolvable_delay_ns_for_abs_timing_bias_lt_1ns_and_abs_area_bias_lt_20pct",
+    "value": null,
+    "ci": [
+      50.0,
+      60.0
+    ],
+    "heldout_constituent_time_rms_ns": 17.599910082396146,
+    "detection_ap": 0.704982332328281,
+    "charge_fractional_bias": -0.007075245084425978,
+    "charge_fractional_res68": 0.12429098290126397,
+    "failure_rate": 0.028333333333333332
+  },
+  "ml": {
+    "method": "stress_compact_mlp_classifier_regressor",
+    "metric": "stress_heldout_resolvable_delay_ns_for_abs_timing_bias_lt_1ns_and_abs_area_bias_lt_20pct",
+    "value": null,
+    "ci": [
+      10.0,
+      60.0
+    ],
+    "heldout_constituent_time_rms_ns": 8.759740145201349,
+    "detection_ap": 0.8526149250304297,
+    "charge_fractional_bias": -0.00641542355516696,
+    "charge_fractional_res68": 0.08878120137690404,
+    "failure_rate": 0.2866666666666667
+  },
+  "stress_test": {
+    "split": "by source run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "heldout_template_families_absent_from_training": true,
+    "leakage_checks_pass": true,
+    "leakage_flags": 0,
+    "bootstrap_unit": "heldout source run",
+    "n_fit_template_candidates": 36,
+    "n_generation_family_rows": 16
+  },
+  "s10b_reproduction": [
+    {
+      "quantity": "S10 assumed tau_eff combined Rmax MHz",
+      "report_value": 4.222222222222222,
+      "reproduced": 4.222222222222222,
+      "delta": 0.0,
+      "tolerance": 0.05,
+      "pass": true
+    },
+    {
+      "quantity": "S10b measured traditional live10 ns",
+      "report_value": 124.79,
+      "reproduced": 124.79018394263471,
+      "delta": 0.0001839426347061135,
+      "tolerance": 1.0,
+      "pass": true
+    },
+    {
+      "quantity": "S10b measured-tau rescaled Rmax MHz",
+      "report_value": 3.05,
+      "reproduced": 3.045111305987686,
+      "delta": -0.004888694012313621,
+      "tolerance": 0.05,
+      "pass": true
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "1490395290fb8e8fa61b4aa9ca3bad208bb9ee8a",
+  "next_tickets": [],
+  "runtime_sec": 271.06
+}

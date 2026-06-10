@@ -1,0 +1,1095 @@
+{
+  "ci_clean_ml_tail_folds": [
+    "sample_i_analysis_from_sample_i_calib",
+    "sample_ii_analysis_from_run64_calib"
+  ],
+  "finding": "The no-tail ExtraTrees conditional q-tail scores beat the calibration-only amplitude-median baseline with CI-clean run-bootstrap deltas in 2 of 2 folds. The aggressive tail-handle ML arm fired the too-good trigger, consistent with target-proximal tail handles. The no-tail ablation also fired the too-good trigger, so the ML gain is not promoted.",
+  "git_commit": "1bcc3c90f2a70b1d0be64a1e857f24a1c7dcebc9",
+  "input_sha256": "input_sha256.csv",
+  "leakage_checks": [
+    {
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "ml_tail_too_good_triggered": true,
+      "nn_distance_median": 0.0318834467,
+      "nn_distance_min": 0.0077650896,
+      "nn_distance_p01": 0.0125364003,
+      "nn_distance_p95": 0.2020153843,
+      "nn_eval_sample": 10000,
+      "nn_exact_like_count": 0,
+      "nn_frac_dist_le_0.001": 0.0,
+      "nn_frac_dist_le_0.01": 0.002,
+      "nn_frac_dist_le_1e-06": 0.0,
+      "nn_train_sample": 10000,
+      "no_tail_ml_q_tail_mse": 0.0028874858,
+      "no_tail_ml_tail_too_good_triggered": true,
+      "no_tail_real_minus_shuffled_q_tail_mse": -0.0609634515,
+      "no_tail_shuffled_ml_q_tail_mse": 0.0638509372,
+      "real_minus_shuffled_q_tail_mse": -0.0620626055,
+      "real_ml_q_tail_mse": 0.0026774776,
+      "shuffled_ml_q_tail_mse": 0.0647400831,
+      "train_eval_key_overlap": 0,
+      "train_eval_run_overlap": [],
+      "uses_downstream_timing_labels": false,
+      "uses_other_stave_features": false,
+      "uses_run_or_event_features": false,
+      "waveform_hash_overlap_count": 0,
+      "waveform_hash_overlap_frac_eval_unique": 0.0
+    },
+    {
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "ml_tail_too_good_triggered": true,
+      "nn_distance_median": 0.0473772243,
+      "nn_distance_min": 0.009509772,
+      "nn_distance_p01": 0.0197338597,
+      "nn_distance_p95": 0.2512480602,
+      "nn_eval_sample": 10000,
+      "nn_exact_like_count": 0,
+      "nn_frac_dist_le_0.001": 0.0,
+      "nn_frac_dist_le_0.01": 0.0002,
+      "nn_frac_dist_le_1e-06": 0.0,
+      "nn_train_sample": 10000,
+      "no_tail_ml_q_tail_mse": 0.0037910104,
+      "no_tail_ml_tail_too_good_triggered": true,
+      "no_tail_real_minus_shuffled_q_tail_mse": -0.0624537572,
+      "no_tail_shuffled_ml_q_tail_mse": 0.0662447675,
+      "real_minus_shuffled_q_tail_mse": -0.061638012,
+      "real_ml_q_tail_mse": 0.0035814154,
+      "shuffled_ml_q_tail_mse": 0.0652194273,
+      "train_eval_key_overlap": 0,
+      "train_eval_run_overlap": [],
+      "uses_downstream_timing_labels": false,
+      "uses_other_stave_features": false,
+      "uses_run_or_event_features": false,
+      "waveform_hash_overlap_count": 0,
+      "waveform_hash_overlap_frac_eval_unique": 0.0
+    }
+  ],
+  "method_deltas": [
+    {
+      "comparison": "ml_extra_trees_conditional minus calibration_amp_median",
+      "delta": -0.0446639866,
+      "delta_ci95": [
+        -0.0593168842,
+        -0.0307836249
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_conditional minus calibration_amp_median",
+      "delta": -0.0524470936,
+      "delta_ci95": [
+        -0.0693798209,
+        -0.0364952255
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail minus calibration_amp_median",
+      "delta": -0.044501562,
+      "delta_ci95": [
+        -0.0597089576,
+        -0.0315369812
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail minus calibration_amp_median",
+      "delta": -0.0522412737,
+      "delta_ci95": [
+        -0.0683332644,
+        -0.0368239038
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail_shuffled minus calibration_amp_median",
+      "delta": 0.0153347297,
+      "delta_ci95": [
+        0.0114410148,
+        0.0193397734
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail_shuffled minus calibration_amp_median",
+      "delta": 0.0200692225,
+      "delta_ci95": [
+        0.0152947318,
+        0.0251373418
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_shuffled minus calibration_amp_median",
+      "delta": 0.0161833334,
+      "delta_ci95": [
+        0.0121170294,
+        0.0202524954
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_shuffled minus calibration_amp_median",
+      "delta": 0.0210276403,
+      "delta_ci95": [
+        0.0159865614,
+        0.0265521635
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "traditional_shape_handle_median minus calibration_amp_median",
+      "delta": -0.0238004933,
+      "delta_ci95": [
+        -0.031693324,
+        -0.0162416796
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "traditional_shape_handle_median minus calibration_amp_median",
+      "delta": -0.0272763258,
+      "delta_ci95": [
+        -0.0364821324,
+        -0.0180877224
+      ],
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_conditional minus calibration_amp_median",
+      "delta": -0.0351984546,
+      "delta_ci95": [
+        -0.0414590206,
+        -0.0259818586
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_conditional minus calibration_amp_median",
+      "delta": -0.0395125404,
+      "delta_ci95": [
+        -0.046213144,
+        -0.0296465904
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail minus calibration_amp_median",
+      "delta": -0.0350593736,
+      "delta_ci95": [
+        -0.0412753043,
+        -0.0256807821
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail minus calibration_amp_median",
+      "delta": -0.0393116054,
+      "delta_ci95": [
+        -0.0458213302,
+        -0.0293481384
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail_shuffled minus calibration_amp_median",
+      "delta": 0.0168531207,
+      "delta_ci95": [
+        0.015067003,
+        0.0185151819
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_no_tail_shuffled minus calibration_amp_median",
+      "delta": 0.0226468067,
+      "delta_ci95": [
+        0.0204700579,
+        0.0247169458
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_shuffled minus calibration_amp_median",
+      "delta": 0.016004425,
+      "delta_ci95": [
+        0.0146513685,
+        0.0173053757
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "ml_extra_trees_shuffled minus calibration_amp_median",
+      "delta": 0.0216741192,
+      "delta_ci95": [
+        0.019774915,
+        0.0234091954
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_tail_mse"
+    },
+    {
+      "comparison": "traditional_shape_handle_median minus calibration_amp_median",
+      "delta": -0.0145056918,
+      "delta_ci95": [
+        -0.017796778,
+        -0.0102749311
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_template_mse"
+    },
+    {
+      "comparison": "traditional_shape_handle_median minus calibration_amp_median",
+      "delta": -0.0154166883,
+      "delta_ci95": [
+        -0.0187866176,
+        -0.0106127732
+      ],
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "metric": "q_tail_mse"
+    }
+  ],
+  "method_summary": [
+    {
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "method": "calibration_amp_median",
+      "n_rows": 252266,
+      "n_runs": 14,
+      "q_tail_mse": 0.0554156236,
+      "q_tail_mse_ci95": [
+        0.03883123,
+        0.0728913247
+      ],
+      "q_template_mse": 0.0473488195,
+      "q_template_mse_ci95": [
+        0.0330320221,
+        0.0626131107
+      ]
+    },
+    {
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "method": "ml_extra_trees_conditional",
+      "n_rows": 252266,
+      "n_runs": 14,
+      "q_tail_mse": 0.00296853,
+      "q_tail_mse_ci95": [
+        0.0021013355,
+        0.0038509326
+      ],
+      "q_template_mse": 0.0026848329,
+      "q_template_mse_ci95": [
+        0.0018980367,
+        0.0034635991
+      ]
+    },
+    {
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "method": "ml_extra_trees_no_tail",
+      "n_rows": 252266,
+      "n_runs": 14,
+      "q_tail_mse": 0.0031743499,
+      "q_tail_mse_ci95": [
+        0.002260768,
+        0.0040305289
+      ],
+      "q_template_mse": 0.0028472575,
+      "q_template_mse_ci95": [
+        0.0020270079,
+        0.0036276605
+      ]
+    },
+    {
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "method": "ml_extra_trees_no_tail_shuffled",
+      "n_rows": 252266,
+      "n_runs": 14,
+      "q_tail_mse": 0.0754848461,
+      "q_tail_mse_ci95": [
+        0.0542751027,
+        0.0976481283
+      ],
+      "q_template_mse": 0.0626835492,
+      "q_template_mse_ci95": [
+        0.0446156865,
+        0.0816087655
+      ]
+    },
+    {
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "method": "ml_extra_trees_shuffled",
+      "n_rows": 252266,
+      "n_runs": 14,
+      "q_tail_mse": 0.0764432639,
+      "q_tail_mse_ci95": [
+        0.0551267326,
+        0.0992226068
+      ],
+      "q_template_mse": 0.063532153,
+      "q_template_mse_ci95": [
+        0.0452861847,
+        0.0828963524
+      ]
+    },
+    {
+      "fold": "sample_i_analysis_from_sample_i_calib",
+      "method": "traditional_shape_handle_median",
+      "n_rows": 252266,
+      "n_runs": 14,
+      "q_tail_mse": 0.0281392979,
+      "q_tail_mse_ci95": [
+        0.0204378427,
+        0.0362001117
+      ],
+      "q_template_mse": 0.0235483262,
+      "q_template_mse_ci95": [
+        0.0169525503,
+        0.0305053609
+      ]
+    },
+    {
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "method": "calibration_amp_median",
+      "n_rows": 125096,
+      "n_runs": 7,
+      "q_tail_mse": 0.0430087915,
+      "q_tail_mse_ci95": [
+        0.0321978471,
+        0.0499631493
+      ],
+      "q_template_mse": 0.0383188812,
+      "q_template_mse_ci95": [
+        0.028232632,
+        0.0448937528
+      ]
+    },
+    {
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "method": "ml_extra_trees_conditional",
+      "n_rows": 125096,
+      "n_runs": 7,
+      "q_tail_mse": 0.0034962511,
+      "q_tail_mse_ci95": [
+        0.0027859034,
+        0.0040995627
+      ],
+      "q_template_mse": 0.0031204266,
+      "q_template_mse_ci95": [
+        0.0024428564,
+        0.003712582
+      ]
+    },
+    {
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "method": "ml_extra_trees_no_tail",
+      "n_rows": 125096,
+      "n_runs": 7,
+      "q_tail_mse": 0.0036971861,
+      "q_tail_mse_ci95": [
+        0.0029399989,
+        0.0043542196
+      ],
+      "q_template_mse": 0.0032595076,
+      "q_template_mse_ci95": [
+        0.0025516901,
+        0.0038759233
+      ]
+    },
+    {
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "method": "ml_extra_trees_no_tail_shuffled",
+      "n_rows": 125096,
+      "n_runs": 7,
+      "q_tail_mse": 0.0656555982,
+      "q_tail_mse_ci95": [
+        0.0534148861,
+        0.0747532203
+      ],
+      "q_template_mse": 0.0551720019,
+      "q_template_mse_ci95": [
+        0.0438159139,
+        0.0634843159
+      ]
+    },
+    {
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "method": "ml_extra_trees_shuffled",
+      "n_rows": 125096,
+      "n_runs": 7,
+      "q_tail_mse": 0.0646829107,
+      "q_tail_mse_ci95": [
+        0.0525894879,
+        0.0732492705
+      ],
+      "q_template_mse": 0.0543233062,
+      "q_template_mse_ci95": [
+        0.0432024463,
+        0.0621004988
+      ]
+    },
+    {
+      "fold": "sample_ii_analysis_from_run64_calib",
+      "method": "traditional_shape_handle_median",
+      "n_rows": 125096,
+      "n_runs": 7,
+      "q_tail_mse": 0.0275921031,
+      "q_tail_mse_ci95": [
+        0.0214671119,
+        0.0317509711
+      ],
+      "q_template_mse": 0.0238131894,
+      "q_template_mse_ci95": [
+        0.0182517385,
+        0.0276845025
+      ]
+    }
+  ],
+  "methods": {
+    "calibration_amp_median": "median aligned template by stave and amplitude bin from calibration runs only",
+    "ml_extra_trees_conditional": "multi-output ExtraTrees conditional template from same-pulse local handles including tail summaries, without downstream timing labels",
+    "ml_extra_trees_no_tail": "multi-output ExtraTrees conditional template after removing same-pulse tail-summary handles",
+    "ml_extra_trees_no_tail_shuffled": "no-tail ExtraTrees fit after shuffling calibration targets",
+    "ml_extra_trees_shuffled": "same ExtraTrees fit after shuffling calibration targets",
+    "traditional_shape_handle_median": "median aligned template by stave, amplitude bin, rise bin, and tail-summary bin from calibration runs only"
+  },
+  "model_meta": {
+    "sample_i_analysis_from_sample_i_calib": {
+      "extra_trees": {
+        "candidate_train_pulses": 248745,
+        "feature_count": 94,
+        "feature_policy": "full_same_pulse_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": false,
+        "target_nan_fill": [
+          -0.00011259943130426109,
+          -0.0002553661761339754,
+          0.011171640828251839,
+          0.20000000298023224,
+          0.7096539735794067,
+          0.9818865060806274,
+          0.8878551125526428,
+          0.71757972240448,
+          0.6821118593215942,
+          0.66226726770401,
+          0.6182045936584473,
+          0.5351355075836182,
+          0.4588281214237213,
+          0.4116360545158386,
+          0.39506375789642334,
+          0.41615980863571167,
+          0.38768479228019714,
+          -0.01628393866121769
+        ],
+        "train_pulses": 50000
+      },
+      "feature_names": [
+        "log_amp",
+        "log_amp2",
+        "inv_sqrt_amp",
+        "inv_amp",
+        "area_over_amp",
+        "peak_sample",
+        "cfd10",
+        "cfd20",
+        "cfd30",
+        "cfd50",
+        "rise_10_50",
+        "rise_20_50",
+        "width_half",
+        "tail_mean_8_17",
+        "tail_area_10_17",
+        "late_over_total",
+        "peak_to_area",
+        "cfd20_minus_train_stave_median",
+        "stave_B2",
+        "stave_B4",
+        "stave_B6",
+        "stave_B8",
+        "log_amp:stave_B2",
+        "log_amp:stave_B4",
+        "log_amp:stave_B6",
+        "log_amp:stave_B8",
+        "log_amp2:stave_B2",
+        "log_amp2:stave_B4",
+        "log_amp2:stave_B6",
+        "log_amp2:stave_B8",
+        "inv_sqrt_amp:stave_B2",
+        "inv_sqrt_amp:stave_B4",
+        "inv_sqrt_amp:stave_B6",
+        "inv_sqrt_amp:stave_B8",
+        "inv_amp:stave_B2",
+        "inv_amp:stave_B4",
+        "inv_amp:stave_B6",
+        "inv_amp:stave_B8",
+        "area_over_amp:stave_B2",
+        "area_over_amp:stave_B4",
+        "area_over_amp:stave_B6",
+        "area_over_amp:stave_B8",
+        "peak_sample:stave_B2",
+        "peak_sample:stave_B4",
+        "peak_sample:stave_B6",
+        "peak_sample:stave_B8",
+        "cfd10:stave_B2",
+        "cfd10:stave_B4",
+        "cfd10:stave_B6",
+        "cfd10:stave_B8",
+        "cfd20:stave_B2",
+        "cfd20:stave_B4",
+        "cfd20:stave_B6",
+        "cfd20:stave_B8",
+        "cfd30:stave_B2",
+        "cfd30:stave_B4",
+        "cfd30:stave_B6",
+        "cfd30:stave_B8",
+        "cfd50:stave_B2",
+        "cfd50:stave_B4",
+        "cfd50:stave_B6",
+        "cfd50:stave_B8",
+        "rise_10_50:stave_B2",
+        "rise_10_50:stave_B4",
+        "rise_10_50:stave_B6",
+        "rise_10_50:stave_B8",
+        "rise_20_50:stave_B2",
+        "rise_20_50:stave_B4",
+        "rise_20_50:stave_B6",
+        "rise_20_50:stave_B8",
+        "width_half:stave_B2",
+        "width_half:stave_B4",
+        "width_half:stave_B6",
+        "width_half:stave_B8",
+        "tail_mean_8_17:stave_B2",
+        "tail_mean_8_17:stave_B4",
+        "tail_mean_8_17:stave_B6",
+        "tail_mean_8_17:stave_B8",
+        "tail_area_10_17:stave_B2",
+        "tail_area_10_17:stave_B4",
+        "tail_area_10_17:stave_B6",
+        "tail_area_10_17:stave_B8",
+        "late_over_total:stave_B2",
+        "late_over_total:stave_B4",
+        "late_over_total:stave_B6",
+        "late_over_total:stave_B8",
+        "peak_to_area:stave_B2",
+        "peak_to_area:stave_B4",
+        "peak_to_area:stave_B6",
+        "peak_to_area:stave_B8",
+        "cfd20_minus_train_stave_median:stave_B2",
+        "cfd20_minus_train_stave_median:stave_B4",
+        "cfd20_minus_train_stave_median:stave_B6",
+        "cfd20_minus_train_stave_median:stave_B8"
+      ],
+      "no_tail_extra_trees": {
+        "candidate_train_pulses": 248745,
+        "feature_count": 74,
+        "feature_policy": "no_tail_summary_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": false,
+        "target_nan_fill": [
+          -0.00011454450577730313,
+          -0.00026390585117042065,
+          0.011136427521705627,
+          0.20000000298023224,
+          0.7084836959838867,
+          0.9820523858070374,
+          0.8886574506759644,
+          0.7193117141723633,
+          0.6838630437850952,
+          0.6640989184379578,
+          0.619123101234436,
+          0.5361090302467346,
+          0.45955705642700195,
+          0.41154149174690247,
+          0.3949218988418579,
+          0.41498327255249023,
+          0.3880707621574402,
+          0.009406502358615398
+        ],
+        "train_pulses": 50000
+      },
+      "no_tail_feature_names": [
+        "log_amp",
+        "log_amp2",
+        "inv_sqrt_amp",
+        "inv_amp",
+        "area_over_amp",
+        "peak_sample",
+        "cfd10",
+        "cfd20",
+        "cfd30",
+        "cfd50",
+        "rise_10_50",
+        "rise_20_50",
+        "width_half",
+        "peak_to_area",
+        "stave_B2",
+        "stave_B4",
+        "stave_B6",
+        "stave_B8",
+        "log_amp:stave_B2",
+        "log_amp:stave_B4",
+        "log_amp:stave_B6",
+        "log_amp:stave_B8",
+        "log_amp2:stave_B2",
+        "log_amp2:stave_B4",
+        "log_amp2:stave_B6",
+        "log_amp2:stave_B8",
+        "inv_sqrt_amp:stave_B2",
+        "inv_sqrt_amp:stave_B4",
+        "inv_sqrt_amp:stave_B6",
+        "inv_sqrt_amp:stave_B8",
+        "inv_amp:stave_B2",
+        "inv_amp:stave_B4",
+        "inv_amp:stave_B6",
+        "inv_amp:stave_B8",
+        "area_over_amp:stave_B2",
+        "area_over_amp:stave_B4",
+        "area_over_amp:stave_B6",
+        "area_over_amp:stave_B8",
+        "peak_sample:stave_B2",
+        "peak_sample:stave_B4",
+        "peak_sample:stave_B6",
+        "peak_sample:stave_B8",
+        "cfd10:stave_B2",
+        "cfd10:stave_B4",
+        "cfd10:stave_B6",
+        "cfd10:stave_B8",
+        "cfd20:stave_B2",
+        "cfd20:stave_B4",
+        "cfd20:stave_B6",
+        "cfd20:stave_B8",
+        "cfd30:stave_B2",
+        "cfd30:stave_B4",
+        "cfd30:stave_B6",
+        "cfd30:stave_B8",
+        "cfd50:stave_B2",
+        "cfd50:stave_B4",
+        "cfd50:stave_B6",
+        "cfd50:stave_B8",
+        "rise_10_50:stave_B2",
+        "rise_10_50:stave_B4",
+        "rise_10_50:stave_B6",
+        "rise_10_50:stave_B8",
+        "rise_20_50:stave_B2",
+        "rise_20_50:stave_B4",
+        "rise_20_50:stave_B6",
+        "rise_20_50:stave_B8",
+        "width_half:stave_B2",
+        "width_half:stave_B4",
+        "width_half:stave_B6",
+        "width_half:stave_B8",
+        "peak_to_area:stave_B2",
+        "peak_to_area:stave_B4",
+        "peak_to_area:stave_B6",
+        "peak_to_area:stave_B8"
+      ],
+      "no_tail_shuffled_extra_trees": {
+        "candidate_train_pulses": 248745,
+        "feature_count": 74,
+        "feature_policy": "no_tail_summary_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": true,
+        "target_nan_fill": [
+          -0.0001165416106232442,
+          -0.00026263087056577206,
+          0.011147890239953995,
+          0.20000000298023224,
+          0.7092764973640442,
+          0.9819808006286621,
+          0.8882566690444946,
+          0.7173527479171753,
+          0.6819227933883667,
+          0.662025511264801,
+          0.6186088919639587,
+          0.5361089110374451,
+          0.4596806764602661,
+          0.41159841418266296,
+          0.3945501148700714,
+          0.41595926880836487,
+          0.3889225721359253,
+          0.0024263602681457996
+        ],
+        "train_pulses": 50000
+      },
+      "shuffled_extra_trees": {
+        "candidate_train_pulses": 248745,
+        "feature_count": 94,
+        "feature_policy": "full_same_pulse_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": true,
+        "target_nan_fill": [
+          -0.00011359782365616411,
+          -0.0002532467769924551,
+          0.011172924190759659,
+          0.20000000298023224,
+          0.7083597779273987,
+          0.9818788766860962,
+          0.8883587121963501,
+          0.7187600135803223,
+          0.6833785772323608,
+          0.6626419425010681,
+          0.6185926795005798,
+          0.5357975363731384,
+          0.4592129588127136,
+          0.4117608070373535,
+          0.3948933482170105,
+          0.415490984916687,
+          0.38719797134399414,
+          -0.009985741227865219
+        ],
+        "train_pulses": 50000
+      }
+    },
+    "sample_ii_analysis_from_run64_calib": {
+      "extra_trees": {
+        "candidate_train_pulses": 14630,
+        "feature_count": 94,
+        "feature_policy": "full_same_pulse_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": false,
+        "target_nan_fill": [
+          -7.073904271237552e-05,
+          -0.00042176857823506,
+          0.013211183249950409,
+          0.20000000298023224,
+          0.6474338173866272,
+          0.9489568471908569,
+          0.9706180691719055,
+          0.9163837432861328,
+          0.8445971012115479,
+          0.7488343119621277,
+          0.6479401588439941,
+          0.5329892635345459,
+          0.406475305557251,
+          0.2867193818092346,
+          0.20521163940429688,
+          0.17493180930614471,
+          0.10302120447158813,
+          -0.01931789517402649
+        ],
+        "train_pulses": 14630
+      },
+      "feature_names": [
+        "log_amp",
+        "log_amp2",
+        "inv_sqrt_amp",
+        "inv_amp",
+        "area_over_amp",
+        "peak_sample",
+        "cfd10",
+        "cfd20",
+        "cfd30",
+        "cfd50",
+        "rise_10_50",
+        "rise_20_50",
+        "width_half",
+        "tail_mean_8_17",
+        "tail_area_10_17",
+        "late_over_total",
+        "peak_to_area",
+        "cfd20_minus_train_stave_median",
+        "stave_B2",
+        "stave_B4",
+        "stave_B6",
+        "stave_B8",
+        "log_amp:stave_B2",
+        "log_amp:stave_B4",
+        "log_amp:stave_B6",
+        "log_amp:stave_B8",
+        "log_amp2:stave_B2",
+        "log_amp2:stave_B4",
+        "log_amp2:stave_B6",
+        "log_amp2:stave_B8",
+        "inv_sqrt_amp:stave_B2",
+        "inv_sqrt_amp:stave_B4",
+        "inv_sqrt_amp:stave_B6",
+        "inv_sqrt_amp:stave_B8",
+        "inv_amp:stave_B2",
+        "inv_amp:stave_B4",
+        "inv_amp:stave_B6",
+        "inv_amp:stave_B8",
+        "area_over_amp:stave_B2",
+        "area_over_amp:stave_B4",
+        "area_over_amp:stave_B6",
+        "area_over_amp:stave_B8",
+        "peak_sample:stave_B2",
+        "peak_sample:stave_B4",
+        "peak_sample:stave_B6",
+        "peak_sample:stave_B8",
+        "cfd10:stave_B2",
+        "cfd10:stave_B4",
+        "cfd10:stave_B6",
+        "cfd10:stave_B8",
+        "cfd20:stave_B2",
+        "cfd20:stave_B4",
+        "cfd20:stave_B6",
+        "cfd20:stave_B8",
+        "cfd30:stave_B2",
+        "cfd30:stave_B4",
+        "cfd30:stave_B6",
+        "cfd30:stave_B8",
+        "cfd50:stave_B2",
+        "cfd50:stave_B4",
+        "cfd50:stave_B6",
+        "cfd50:stave_B8",
+        "rise_10_50:stave_B2",
+        "rise_10_50:stave_B4",
+        "rise_10_50:stave_B6",
+        "rise_10_50:stave_B8",
+        "rise_20_50:stave_B2",
+        "rise_20_50:stave_B4",
+        "rise_20_50:stave_B6",
+        "rise_20_50:stave_B8",
+        "width_half:stave_B2",
+        "width_half:stave_B4",
+        "width_half:stave_B6",
+        "width_half:stave_B8",
+        "tail_mean_8_17:stave_B2",
+        "tail_mean_8_17:stave_B4",
+        "tail_mean_8_17:stave_B6",
+        "tail_mean_8_17:stave_B8",
+        "tail_area_10_17:stave_B2",
+        "tail_area_10_17:stave_B4",
+        "tail_area_10_17:stave_B6",
+        "tail_area_10_17:stave_B8",
+        "late_over_total:stave_B2",
+        "late_over_total:stave_B4",
+        "late_over_total:stave_B6",
+        "late_over_total:stave_B8",
+        "peak_to_area:stave_B2",
+        "peak_to_area:stave_B4",
+        "peak_to_area:stave_B6",
+        "peak_to_area:stave_B8",
+        "cfd20_minus_train_stave_median:stave_B2",
+        "cfd20_minus_train_stave_median:stave_B4",
+        "cfd20_minus_train_stave_median:stave_B6",
+        "cfd20_minus_train_stave_median:stave_B8"
+      ],
+      "no_tail_extra_trees": {
+        "candidate_train_pulses": 14630,
+        "feature_count": 74,
+        "feature_policy": "no_tail_summary_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": false,
+        "target_nan_fill": [
+          -7.073904271237552e-05,
+          -0.00042176857823506,
+          0.013211183249950409,
+          0.20000000298023224,
+          0.6474338173866272,
+          0.9489568471908569,
+          0.9706180691719055,
+          0.9163837432861328,
+          0.8445971012115479,
+          0.7488343119621277,
+          0.6479401588439941,
+          0.5329892635345459,
+          0.406475305557251,
+          0.2867193818092346,
+          0.20521163940429688,
+          0.17493180930614471,
+          0.10302120447158813,
+          -0.01931789517402649
+        ],
+        "train_pulses": 14630
+      },
+      "no_tail_feature_names": [
+        "log_amp",
+        "log_amp2",
+        "inv_sqrt_amp",
+        "inv_amp",
+        "area_over_amp",
+        "peak_sample",
+        "cfd10",
+        "cfd20",
+        "cfd30",
+        "cfd50",
+        "rise_10_50",
+        "rise_20_50",
+        "width_half",
+        "peak_to_area",
+        "stave_B2",
+        "stave_B4",
+        "stave_B6",
+        "stave_B8",
+        "log_amp:stave_B2",
+        "log_amp:stave_B4",
+        "log_amp:stave_B6",
+        "log_amp:stave_B8",
+        "log_amp2:stave_B2",
+        "log_amp2:stave_B4",
+        "log_amp2:stave_B6",
+        "log_amp2:stave_B8",
+        "inv_sqrt_amp:stave_B2",
+        "inv_sqrt_amp:stave_B4",
+        "inv_sqrt_amp:stave_B6",
+        "inv_sqrt_amp:stave_B8",
+        "inv_amp:stave_B2",
+        "inv_amp:stave_B4",
+        "inv_amp:stave_B6",
+        "inv_amp:stave_B8",
+        "area_over_amp:stave_B2",
+        "area_over_amp:stave_B4",
+        "area_over_amp:stave_B6",
+        "area_over_amp:stave_B8",
+        "peak_sample:stave_B2",
+        "peak_sample:stave_B4",
+        "peak_sample:stave_B6",
+        "peak_sample:stave_B8",
+        "cfd10:stave_B2",
+        "cfd10:stave_B4",
+        "cfd10:stave_B6",
+        "cfd10:stave_B8",
+        "cfd20:stave_B2",
+        "cfd20:stave_B4",
+        "cfd20:stave_B6",
+        "cfd20:stave_B8",
+        "cfd30:stave_B2",
+        "cfd30:stave_B4",
+        "cfd30:stave_B6",
+        "cfd30:stave_B8",
+        "cfd50:stave_B2",
+        "cfd50:stave_B4",
+        "cfd50:stave_B6",
+        "cfd50:stave_B8",
+        "rise_10_50:stave_B2",
+        "rise_10_50:stave_B4",
+        "rise_10_50:stave_B6",
+        "rise_10_50:stave_B8",
+        "rise_20_50:stave_B2",
+        "rise_20_50:stave_B4",
+        "rise_20_50:stave_B6",
+        "rise_20_50:stave_B8",
+        "width_half:stave_B2",
+        "width_half:stave_B4",
+        "width_half:stave_B6",
+        "width_half:stave_B8",
+        "peak_to_area:stave_B2",
+        "peak_to_area:stave_B4",
+        "peak_to_area:stave_B6",
+        "peak_to_area:stave_B8"
+      ],
+      "no_tail_shuffled_extra_trees": {
+        "candidate_train_pulses": 14630,
+        "feature_count": 74,
+        "feature_policy": "no_tail_summary_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": true,
+        "target_nan_fill": [
+          -7.073904271237552e-05,
+          -0.00042176857823506,
+          0.013211183249950409,
+          0.20000000298023224,
+          0.6474338173866272,
+          0.9489568471908569,
+          0.9706180691719055,
+          0.9163837432861328,
+          0.8445971012115479,
+          0.7488343119621277,
+          0.6479401588439941,
+          0.5329892635345459,
+          0.406475305557251,
+          0.2867193818092346,
+          0.20521163940429688,
+          0.17493180930614471,
+          0.10302120447158813,
+          -0.01931789517402649
+        ],
+        "train_pulses": 14630
+      },
+      "shuffled_extra_trees": {
+        "candidate_train_pulses": 14630,
+        "feature_count": 94,
+        "feature_policy": "full_same_pulse_handles",
+        "max_depth": 18,
+        "min_samples_leaf": 8,
+        "n_estimators": 72,
+        "shuffled_target": true,
+        "target_nan_fill": [
+          -7.073904271237552e-05,
+          -0.00042176857823506,
+          0.013211183249950409,
+          0.20000000298023224,
+          0.6474338173866272,
+          0.9489568471908569,
+          0.9706180691719055,
+          0.9163837432861328,
+          0.8445971012115479,
+          0.7488343119621277,
+          0.6479401588439941,
+          0.5329892635345459,
+          0.406475305557251,
+          0.2867193818092346,
+          0.20521163940429688,
+          0.17493180930614471,
+          0.10302120447158813,
+          -0.01931789517402649
+        ],
+        "train_pulses": 14630
+      }
+    }
+  },
+  "primary_metric": "q_tail_mse on aligned samples with relative index >= 2",
+  "raw_root_reproduced": true,
+  "reproduction": [
+    {
+      "delta": 0.0,
+      "expected": 640737.0,
+      "pass": true,
+      "quantity": "S00/S01 selected B-stave pulses",
+      "reproduced": 640737.0,
+      "tolerance": 0.0
+    },
+    {
+      "delta": 0.0,
+      "expected": 377362.0,
+      "pass": true,
+      "quantity": "analysis selected rows",
+      "reproduced": 377362.0,
+      "tolerance": 0.0
+    },
+    {
+      "delta": 0.0,
+      "expected": 0.0444140404,
+      "pass": true,
+      "quantity": "P10a calibration-only empirical q_template MSE",
+      "reproduced": 0.0444140405,
+      "tolerance": 5e-07
+    }
+  ],
+  "runtime_sec": 121.226,
+  "split": "calibration-only train groups; held-out analysis runs; run-bootstrap confidence intervals",
+  "study": "P10f",
+  "ticket_id": "1781027860.942.36c33ff0",
+  "title": "conditional-template q_template tail validation",
+  "worker": "testbeam-laptop-1"
+}

@@ -1,0 +1,7 @@
+check,value,flag,note
+heldout_run_excluded_from_template_and_ml_training,1.0,False,Each source run is scored only by templates and ML trained with that run removed.
+identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record the source runs used to generate synthetic ML training overlays.
+mean_synthetic_holdout_auc,0.9461274272270296,False,Very high synthetic AUC would be suspicious because held-out runs contain independent residuals.
+mean_shuffled_label_synthetic_auc,0.5052974659839787,False,Shuffled-label training should not classify held-out synthetic overlays well.
+actual_current_auc_from_ml_secondary_fraction,0.6027263553510842,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.

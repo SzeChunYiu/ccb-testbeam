@@ -1,0 +1,5 @@
+check,value,pass
+rf_forbidden_feature_intersection,,True
+leaky_control_auc_is_ceiling,1.0,True
+archive_plausible_label_table_found,0,False
+qtemplate_unmatched_events,2,True

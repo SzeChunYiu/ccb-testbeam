@@ -1,0 +1,37 @@
+policy,check,value,flag,note
+ablate_B4_to_B2,heldout_run_excluded_from_template_and_ml_training,1.0,False,Every scored source run uses low-current template and ML training with held-out low controls excluded.
+ablate_B4_to_B2,identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+ablate_B4_to_B2,actual_current_auc_from_ml_secondary_fraction,0.5942956465082279,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.
+ablate_B6_to_B2,heldout_run_excluded_from_template_and_ml_training,1.0,False,Every scored source run uses low-current template and ML training with held-out low controls excluded.
+ablate_B6_to_B2,identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+ablate_B6_to_B2,actual_current_auc_from_ml_secondary_fraction,0.5899096565040165,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.
+ablate_B8_to_B2,heldout_run_excluded_from_template_and_ml_training,1.0,False,Every scored source run uses low-current template and ML training with held-out low controls excluded.
+ablate_B8_to_B2,identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+ablate_B8_to_B2,actual_current_auc_from_ml_secondary_fraction,0.6274428102627668,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.
+baseline_all_low_support,heldout_run_excluded_from_template_and_ml_training,1.0,False,Every scored source run uses low-current template and ML training with held-out low controls excluded.
+baseline_all_low_support,identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+baseline_all_low_support,actual_current_auc_from_ml_secondary_fraction,0.5679536443310848,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.
+min_downstream_1000,heldout_run_excluded_from_template_and_ml_training,1.0,False,Every scored source run uses low-current template and ML training with held-out low controls excluded.
+min_downstream_1000,identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+min_downstream_1000,actual_current_auc_from_ml_secondary_fraction,0.6142579040626763,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.
+min_downstream_500,heldout_run_excluded_from_template_and_ml_training,1.0,False,Every scored source run uses low-current template and ML training with held-out low controls excluded.
+min_downstream_500,identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+min_downstream_500,actual_current_auc_from_ml_secondary_fraction,0.6339990306150827,False,Flagged if the ML amplitude estimate nearly identifies beam current by itself.
+ablate_B4_to_B2,synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record the source runs used for synthetic overlay training.
+ablate_B4_to_B2,mean_synthetic_holdout_auc,0.9267997950512471,False,Very high synthetic AUC would be suspicious under held-out source-run residuals.
+ablate_B4_to_B2,mean_shuffled_label_synthetic_auc,0.48680079210370747,False,Shuffled-label training should not classify held-out synthetic overlays well.
+ablate_B6_to_B2,synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record the source runs used for synthetic overlay training.
+ablate_B6_to_B2,mean_synthetic_holdout_auc,0.926978192147498,False,Very high synthetic AUC would be suspicious under held-out source-run residuals.
+ablate_B6_to_B2,mean_shuffled_label_synthetic_auc,0.5161718516022586,False,Shuffled-label training should not classify held-out synthetic overlays well.
+ablate_B8_to_B2,synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record the source runs used for synthetic overlay training.
+ablate_B8_to_B2,mean_synthetic_holdout_auc,0.9257079501486026,False,Very high synthetic AUC would be suspicious under held-out source-run residuals.
+ablate_B8_to_B2,mean_shuffled_label_synthetic_auc,0.5034431124299955,False,Shuffled-label training should not classify held-out synthetic overlays well.
+baseline_all_low_support,synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record the source runs used for synthetic overlay training.
+baseline_all_low_support,mean_synthetic_holdout_auc,0.9255214302553673,False,Very high synthetic AUC would be suspicious under held-out source-run residuals.
+baseline_all_low_support,mean_shuffled_label_synthetic_auc,0.5181068039698585,False,Shuffled-label training should not classify held-out synthetic overlays well.
+min_downstream_1000,synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record the source runs used for synthetic overlay training.
+min_downstream_1000,mean_synthetic_holdout_auc,0.9252543543159548,False,Very high synthetic AUC would be suspicious under held-out source-run residuals.
+min_downstream_1000,mean_shuffled_label_synthetic_auc,0.5017813985998957,False,Shuffled-label training should not classify held-out synthetic overlays well.
+min_downstream_500,synthetic_train_source_runs_exclude_heldout,1.0,False,Fold diagnostics record the source runs used for synthetic overlay training.
+min_downstream_500,mean_synthetic_holdout_auc,0.9275713983289279,False,Very high synthetic AUC would be suspicious under held-out source-run residuals.
+min_downstream_500,mean_shuffled_label_synthetic_auc,0.5070142515597895,False,Shuffled-label training should not classify held-out synthetic overlays well.

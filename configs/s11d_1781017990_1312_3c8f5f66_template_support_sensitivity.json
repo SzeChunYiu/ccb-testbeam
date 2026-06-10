@@ -1,0 +1,37 @@
+{
+  "study": "S11d",
+  "ticket": "1781017990.1312.3c8f5f66",
+  "worker": "testbeam-laptop-2",
+  "title": "low-current downstream-template support sensitivity for S11b",
+  "output_dir": "reports/1781017990.1312.3c8f5f66",
+  "raw_root_dir": "data/root/root",
+  "random_seed": 11120,
+  "bootstrap_samples": 600,
+  "sample_per_run_stratum": 140,
+  "synthetic_train_per_fold": 2800,
+  "synthetic_cal_per_fold": 700,
+  "source_s11b_ticket": "1781010611.1197.028b141a",
+  "reported_s11b_traditional_value": 0.018064542090743305,
+  "reported_s11b_ml_secondary_value": 0.0043737587882012145,
+  "reported_s11b_ml_overlap_value": 0.020072234318152398,
+  "traditional_policies": [
+    {"name": "baseline_all_low_support", "min_downstream_templates": 1, "drop_downstream_stave": null, "high_train_runs": [46, 47]},
+    {"name": "min_downstream_100", "min_downstream_templates": 100, "drop_downstream_stave": null, "high_train_runs": [46, 47]},
+    {"name": "min_downstream_250", "min_downstream_templates": 250, "drop_downstream_stave": null, "high_train_runs": [46, 47]},
+    {"name": "min_downstream_500", "min_downstream_templates": 500, "drop_downstream_stave": null, "high_train_runs": [46, 47]},
+    {"name": "min_downstream_1000", "min_downstream_templates": 1000, "drop_downstream_stave": null, "high_train_runs": [46, 47]},
+    {"name": "ablate_B4_to_B2", "min_downstream_templates": 1, "drop_downstream_stave": "B4", "high_train_runs": [46, 47]},
+    {"name": "ablate_B6_to_B2", "min_downstream_templates": 1, "drop_downstream_stave": "B6", "high_train_runs": [46, 47]},
+    {"name": "ablate_B8_to_B2", "min_downstream_templates": 1, "drop_downstream_stave": "B8", "high_train_runs": [46, 47]},
+    {"name": "high_only_run46_support", "min_downstream_templates": 1, "drop_downstream_stave": null, "high_train_runs": [46]},
+    {"name": "high_only_run47_support", "min_downstream_templates": 1, "drop_downstream_stave": null, "high_train_runs": [47]}
+  ],
+  "ml_policies": [
+    "baseline_all_low_support",
+    "min_downstream_500",
+    "min_downstream_1000",
+    "ablate_B4_to_B2",
+    "ablate_B6_to_B2",
+    "ablate_B8_to_B2"
+  ]
+}

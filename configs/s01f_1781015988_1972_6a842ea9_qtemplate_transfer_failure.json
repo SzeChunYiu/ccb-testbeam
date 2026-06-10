@@ -1,0 +1,31 @@
+{
+  "study": "S01f",
+  "ticket": "1781015988.1972.6a842ea9",
+  "worker": "testbeam-laptop-4",
+  "title": "q_template run-stave transfer failure test",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781015988.1972.6a842ea9",
+  "expected_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "template_amplitude_edges_adc": [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000, 1000000000],
+  "template_min_bin_pulses": 30,
+  "cfd_fraction": 0.2,
+  "aligned_relative_grid": [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "failure_delta_quantile": 0.9,
+  "traditional_threshold_quantiles": [0.70, 0.75, 0.80, 0.85, 0.90, 0.925, 0.95],
+  "rf_n_estimators": 90,
+  "rf_max_depth": 4,
+  "rf_min_samples_leaf": 80,
+  "ml_max_train_rows_per_fold": 60000,
+  "bootstrap_iterations": 1000,
+  "random_seed": 1781015988
+}

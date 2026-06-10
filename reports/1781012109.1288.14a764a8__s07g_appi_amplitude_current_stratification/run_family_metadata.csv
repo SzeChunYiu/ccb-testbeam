@@ -1,0 +1,8 @@
+run,current_nA,raw_events,all_three_events,all_three_rate,current_run_family
+58,20.0,34141,72,0.0021089013209923554,low_all_three_rate_edge
+59,20.0,42303,749,0.017705600075644753,mid_all_three_rate
+60,20.0,36074,802,0.022232078505294673,high_all_three_rate
+61,20.0,36535,925,0.02531818803886684,high_all_three_rate
+62,20.0,37584,798,0.02123243933588761,high_all_three_rate
+63,20.0,37030,365,0.009856872805833108,mid_all_three_rate
+65,20.0,38424,63,0.0016396002498438476,low_all_three_rate_edge

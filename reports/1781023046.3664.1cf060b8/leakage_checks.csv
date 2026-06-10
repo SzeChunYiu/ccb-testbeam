@@ -1,0 +1,6 @@
+check,value,pass
+train_heldout_run_overlap,0 by leave-one-run-out construction,True
+run_event_features_excluded,run and evt omitted from traditional and ML features,True
+p04c_reproduction_before_extension,"rows=4055, ridge_res68=0.519271",True
+shuffled_depth_control_res68,0.363569,True
+no_mc_truth_or_pid_labels,raw HRD charges/topology only,True

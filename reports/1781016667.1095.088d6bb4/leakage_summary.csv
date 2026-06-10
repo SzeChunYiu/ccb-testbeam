@@ -1,0 +1,4 @@
+task,best_main_method,best_main_value,best_proxy_method,best_proxy_value,label_shuffle_value,label_shuffle_near_main,proxy_near_main,interpretation
+adjacent_run_pair_side,ML masked-denoising AE-6,0.49522275774341695,proxy: amplitude+multiplicity,0.4866971084117218,0.47547870021328154,True,True,unstable: label shuffle matches or exceeds main score
+sample_i_local_transition,ML masked-denoising AE-6,0.5669076795068312,proxy: amplitude+multiplicity,0.5310816946878673,0.5702075065590083,True,False,unstable: label shuffle matches or exceeds main score
+sample_ii_adjacent_era,ML masked-denoising AE-6,0.5033572470461845,proxy: amplitude+multiplicity,0.37768916893105253,0.5031411230133847,True,False,unstable: label shuffle matches or exceeds main score

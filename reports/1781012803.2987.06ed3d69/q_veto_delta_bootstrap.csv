@@ -1,0 +1,4 @@
+residual_method,veto_method,metric,value,ci_low,ci_high
+s03b_monotone_binned,ml_q_rf,veto_minus_no_veto_sigma68_ns,0.025284610379017636,-0.01296495814808929,0.08462564026013232
+s03b_monotone_binned,shuffled_ml_q_rf_control,veto_minus_no_veto_sigma68_ns,-0.056624847410025936,-0.12488078895092158,0.059389058415287195
+s03b_monotone_binned,traditional_q_threshold,veto_minus_no_veto_sigma68_ns,0.04535431054777672,0.022797611223202778,0.1285054607777313

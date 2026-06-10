@@ -1,0 +1,88 @@
+{
+  "study": "S07e_archive_provenance_search",
+  "ticket": "1781012847.2575.40cb6e31",
+  "worker": "testbeam-laptop-1",
+  "documented_target": {
+    "labelled_events": 12147,
+    "clean": 10636,
+    "violating": 1511
+  },
+  "raw_cfd20_reproduced": {
+    "labelled_events": 9897,
+    "clean": 7583,
+    "violating": 2314,
+    "ambiguous": 5457,
+    "downstream_ge2_events": 15354
+  },
+  "raw_cfd20_matches_documented": false,
+  "archive_table_candidates_scanned": 1905,
+  "archive_text_hits": 574,
+  "source_table_found": false,
+  "exact_12147_row_tables": 0,
+  "plausible_recovered_label_tables": 0,
+  "best_rf_params": {
+    "n_estimators": 300,
+    "max_depth": 7,
+    "min_samples_leaf": 15
+  },
+  "rf_feature_count": 46,
+  "rf_forbidden_features_present": [],
+  "qtemplate_unmatched_events": 2,
+  "traditional": {
+    "method": "traditional_span_q_template",
+    "roc_auc": 0.9124552019021761,
+    "roc_auc_ci_low": 0.8835558918110561,
+    "roc_auc_ci_high": 0.9289624103310608,
+    "average_precision": 0.9606239382654218,
+    "average_precision_ci_low": 0.9168825728736449,
+    "average_precision_ci_high": 0.9768043167075653,
+    "note": "Uses downstream span; overlaps weak-label definition.",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "traditional_deleaked": {
+    "method": "traditional_q_template_only",
+    "roc_auc": 0.7169178521167816,
+    "roc_auc_ci_low": 0.6901820428462827,
+    "roc_auc_ci_high": 0.7400956594992651,
+    "average_precision": 0.8818900733465731,
+    "average_precision_ci_low": 0.8225326284596296,
+    "average_precision_ci_high": 0.909616909729526,
+    "note": "No timing-span feature.",
+    "brier": null,
+    "brier_ci_low": null,
+    "brier_ci_high": null
+  },
+  "ml": {
+    "method": "rf_clean_timing",
+    "roc_auc": 0.9935388613774774,
+    "roc_auc_ci_low": 0.9915177429763289,
+    "roc_auc_ci_high": 0.9952289700517033,
+    "average_precision": 0.9978076135616774,
+    "average_precision_ci_low": 0.995905755189431,
+    "average_precision_ci_high": 0.998622392619629,
+    "note": "RF excludes timing spans, pair residuals, run, and sample.",
+    "brier": 0.026079409023539998,
+    "brier_ci_low": 0.023589496717546895,
+    "brier_ci_high": 0.02949052335039923
+  },
+  "leaky_control": {
+    "method": "leaky_rf_control",
+    "roc_auc": 1.0,
+    "roc_auc_ci_low": 0.9999999999999999,
+    "roc_auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "average_precision_ci_low": 1.0,
+    "average_precision_ci_high": 1.0,
+    "note": "RF with forbidden label-defining timing spans.",
+    "brier": 0.0024996926169972658,
+    "brier_ci_low": 0.0021720802039258604,
+    "brier_ci_high": 0.0030372051348087235
+  },
+  "verdict": "no_external_source_table_recovered_retire_12147",
+  "follow_up_tickets": [
+    "S07j: preserve and diff the PDF-era notebook/PDF provenance chain for App.A; expected information gain: determines whether the 12,147 value was copied from a pre-HRDv analysis note.",
+    "S03f: replace App.A clean-timing adoption with q_template-only and independent timing-tail gates; expected information gain: removes dependency on the unrecovered weak-label table."
+  ]
+}

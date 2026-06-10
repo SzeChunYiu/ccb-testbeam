@@ -1,0 +1,18 @@
+{
+  "study_id": "P04f",
+  "ticket_id": "1781024351.1905.535c46de",
+  "title": "adaptive-template residual basis diagnosis",
+  "worker": "testbeam-laptop-1",
+  "p04d_config": "configs/p04d_adaptive_template_scale_pathology.json",
+  "output_dir": "reports/1781024351.1905.535c46de",
+  "random_seed": 44351,
+  "bootstrap_reps": 1000,
+  "ml_max_train_rows": 80000,
+  "pca_max_train_rows_per_bin": 12000,
+  "residual_pc_components": 3,
+  "expected_selected_pulses": 640737,
+  "expected_peak_calibrated_res68": 0.1237824793,
+  "expected_peak_calibrated_tolerance": 0.001,
+  "amplitude_bins": [1000, 1500, 2000, 3000, 4000, 5500, 7000, 9000, 1000000000],
+  "heldout_runs": [57, 65]
+}

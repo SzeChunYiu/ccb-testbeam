@@ -1,19 +1,19 @@
-# Study report: S03b - amplitude-binned monotone analytic template timewalk
+# Study report: S03b - Amplitude-binned monotonic timewalk
 
 - **Ticket:** 1781005627.1825.6e067067
-- **Author:** testbeam-laptop-3
+- **Author:** testbeam-laptop-4
 - **Date:** 2026-06-09
 - **Input:** raw B-stack ROOT files under `data/root/root`
 - **Split:** train runs 58-63; held-out run 65
-- **Config:** `reports/1781005627.1825.6e067067/s03b_config.yaml`
+- **Config:** `configs/s03b_amp_binned_monotonic_timewalk.yaml`
 
 ## 0. Question
 
-Does an amplitude-binned, per-stave monotone analytic residual template improve on the S03a amplitude-only correction without adding leakage risk?
+Does an amplitude-binned or monotonic per-stave analytic timewalk closure improve on the S03a amp-only model without increasing leakage risk?
 
 ## 1. Raw-ROOT reproduction gate
 
-The S00 selected-pulse counts were rerun from raw ROOT before any correction work.
+The S00 selected-pulse counts were rerun from raw ROOT before any S03b modeling.
 
 | quantity                           |   report_value |   reproduced |   delta |   tolerance | pass   |
 |:-----------------------------------|---------------:|-------------:|--------:|------------:|:-------|
@@ -24,75 +24,77 @@ The S00 selected-pulse counts were rerun from raw ROOT before any correction wor
 | sample_ii_analysis B6              |          11148 |        11148 |       0 |           0 | True   |
 | sample_ii_analysis B8              |           4506 |         4506 |       0 |           0 | True   |
 
-The S03a/S02 held-out timing numbers were then rebuilt from the same raw pass.
+The S03a held-out numbers were then rebuilt in this run from the same raw-derived pulse table.
 
-| method                  |   value |   ci_low |   ci_high |   n_pair_residuals |
-|:------------------------|--------:|---------:|----------:|-------------------:|
-| s02_template_phase_base | 2.88915 |  2.63915 |   3.20541 |                198 |
-| s02_cfd20_reference     | 2.99339 |  2.61485 |   3.35138 |                198 |
-| s02_ml_ridge_on_cfd20   | 1.84611 |  1.52116 |   2.01422 |                198 |
-| s03a_amp_only_analytic  | 1.49464 |  1.34177 |   1.64319 |                198 |
+| method                     |   value |   reference_value |   delta | pass   |
+|:---------------------------|--------:|------------------:|--------:|:-------|
+| s02_template_phase_base    | 2.88915 |           2.88915 |       0 | True   |
+| s03a_amp_only_reference    | 1.49464 |           1.49464 |       0 | True   |
+| ml_ridge_on_template_phase | 1.39153 |           1.39153 |       0 | True   |
 
-## 2. Traditional method
+## 2. Traditional constrained scan
 
-The traditional method bins log-amplitude by stave on train runs, takes the median event-residual target in each bin, and projects those bin medians through a per-stave isotonic constraint. The bin count and monotone direction policy are selected only by grouped CV on train runs.
+The S03b traditional candidates fit per-stave median residual-vs-amplitude bins on train runs only. The monotonic variants pass those bin medians through isotonic regression, separately for each stave.
 
-|   n_bins | direction   |   sigma68_ns |
-|---------:|:------------|-------------:|
-|        8 | decreasing  |      1.58499 |
-|        8 | auto        |      1.58499 |
-|        4 | increasing  |      1.62602 |
-|        5 | increasing  |      1.63427 |
-|        6 | decreasing  |      1.64032 |
-|        6 | auto        |      1.64032 |
-|        6 | increasing  |      1.64814 |
-|        8 | increasing  |      1.65034 |
+| mode          | direction   |   n_bins |   sigma68_ns |
+|:--------------|:------------|---------:|-------------:|
+| monotonic     | decreasing  |       10 |      1.54638 |
+| unconstrained | none        |       10 |      1.54638 |
+| unconstrained | none        |       12 |      1.58352 |
+| monotonic     | decreasing  |       12 |      1.58352 |
+| monotonic     | decreasing  |        8 |      1.58542 |
+| unconstrained | none        |        8 |      1.58542 |
+| monotonic     | increasing  |        4 |      1.62599 |
+| monotonic     | decreasing  |        6 |      1.6403  |
 
-Selected setting: `8` bins with `decreasing` direction policy. The model uses only same-pulse amplitude and stave identity.
+Selected by grouped CV on train runs: mode `monotonic`, direction `decreasing`, bins `10`.
 
-| stave   | direction   |   n_bins |   correction_span_ns |
-|:--------|:------------|---------:|---------------------:|
-| B4      | decreasing  |        8 |          0           |
-| B6      | decreasing  |        8 |          6.66134e-15 |
-| B8      | decreasing  |        8 |          1.25        |
+| stave   | mode      | direction   |   n_bins |   min_fit_ns |   max_fit_ns |
+|:--------|:----------|:------------|---------:|-------------:|-------------:|
+| B4      | monotonic | decreasing  |       10 |   -4.1924    |     -4.1924  |
+| B6      | monotonic | decreasing  |       10 |    2.63915   |      2.63915 |
+| B8      | monotonic | decreasing  |       10 |    0.0532462 |      1.55325 |
 
-## 3. ML method
+## 3. Held-out head-to-head
 
-The ML method is a run-held-out histogram-gradient-boosted residual regressor using normalized 18-sample waveform shape, amplitude transforms, rise-time summaries, peak sample, area/amp, and stave one-hot features. It receives no run number, event id, event order, other-stave timing, or held-out label.
+| method                     |   value |   ci_low |   ci_high |   full_rms_ns |   tail_frac_abs_gt5ns |   n_pair_residuals |
+|:---------------------------|--------:|---------:|----------:|--------------:|----------------------:|-------------------:|
+| s02_template_phase_base    | 2.88915 |  2.63915 |   3.20541 |       2.57669 |            0.0505051  |                198 |
+| s03a_amp_only_reference    | 1.49464 |  1.33462 |   1.62481 |       1.69913 |            0.00505051 |                198 |
+| s03b_binned_timewalk       | 1.56958 |  1.31958 |   1.81958 |       1.83396 |            0.00505051 |                198 |
+| ml_ridge_on_template_phase | 1.39153 |  1.28857 |   1.60848 |       1.67232 |            0.00505051 |                198 |
 
-Selected ML model by grouped CV: `hgb_regularized`.
+|   run | method                     |   sigma68_ns |   full_rms_ns |   tail_frac_abs_gt5ns |   n_pair_residuals |
+|------:|:---------------------------|-------------:|--------------:|----------------------:|-------------------:|
+|    65 | s02_template_phase_base    |      2.88915 |       2.57669 |            0.0505051  |                198 |
+|    65 | s03a_amp_only_reference    |      1.49464 |       1.69913 |            0.00505051 |                198 |
+|    65 | s03b_binned_timewalk       |      1.56958 |       1.83396 |            0.00505051 |                198 |
+|    65 | ml_ridge_on_template_phase |      1.39153 |       1.67232 |            0.00505051 |                198 |
 
-## 4. Held-out head-to-head
+## 4. Leakage checks
 
-| method                   |   value |   ci_low |   ci_high |   full_rms_ns |   tail_frac_abs_gt5ns |   n_pair_residuals |
-|:-------------------------|--------:|---------:|----------:|--------------:|----------------------:|-------------------:|
-| s03a_template_phase_base | 2.88915 |  2.63915 |   3.13935 |       2.57669 |            0.0505051  |                198 |
-| monotone_binned_timewalk | 1.56958 |  1.33548 |   1.81958 |       1.83025 |            0.00505051 |                198 |
-| ml_hgb_waveform_residual | 1.47171 |  1.29394 |   1.68245 |       1.62149 |            0.00505051 |                198 |
+| check                                  |   value | unit   |
+|:---------------------------------------|--------:|:-------|
+| train_heldout_event_id_overlap         | 0       | events |
+| s03b_shuffled_target_sigma68           | 2.90565 | ns     |
+| ml_shuffled_target_sigma68             | 2.88251 | ns     |
+| traditional_uses_run_or_event_features | 0       | bool   |
+| final_binned_fit_uses_heldout_rows     | 0       | bool   |
 
-## 5. Leakage checks
+Feature audit: the traditional model uses only same-pulse amplitude and stave identity; the ML comparator uses same-pulse waveform/amplitude/shape plus stave identity. No run number, event id, event order, other-stave timing, or held-out labels are model inputs. Bin centers and isotonic fits are learned only from train runs inside each CV fold and from train runs for the final held-out evaluation.
 
-| check                           |   heldout_sigma68_ns |   n_pair_residuals |
-|:--------------------------------|---------------------:|-------------------:|
-| template_phase                  |              2.88915 |                198 |
-| monotone_binned_shuffled_target |              2.89184 |                198 |
-| ml_hgb_shuffled_target          |              2.87696 |                198 |
-| train_heldout_event_id_overlap  |              0       |                  0 |
+## 5. Verdict
 
-The split is by run. Training and held-out event-id overlap is zero. Shuffled-target controls for both the monotone template and ML regressor do not reproduce the nominal improvement.
+S03a amp-only changes held-out sigma68 from `2.889 ns` to `1.495 ns`. The selected S03b binned model gives `1.570 ns`, a delta of `-0.075 ns` versus S03a amp-only. The ML comparator gives `1.392 ns`.
 
-## 6. Verdict
+Conclusion: s03b_binned_monotonic_does_not_improve_on_s03a_amp_only.
 
-Template-phase starts at `2.889 ns`; the S03a amp-only reproduction is `1.495 ns`. The S03b monotone-binned analytic correction gives `1.570 ns` (gain `1.320 ns`), while ML gives `1.472 ns` (gain `1.417 ns`).
-
-Conclusion: `monotone_binned_does_not_improve_s03a_amp_only__ml_narrower_than_traditional`.
-
-## 7. Reproducibility
+## 6. Reproducibility
 
 Generated by:
 
 ```bash
-/home/billy/anaconda3/bin/python reports/1781005627.1825.6e067067/s03b_timewalk.py --config reports/1781005627.1825.6e067067/s03b_config.yaml
+/home/billy/anaconda3/bin/python scripts/s03b_amp_binned_monotonic_timewalk.py --config configs/s03b_amp_binned_monotonic_timewalk.yaml
 ```
 
-Artifacts: `reproduction_match_table.csv`, `s03a_reproduction_benchmark.csv`, `monotone_cv_scan.csv`, `monotone_bin_table.csv`, `ml_hgb_cv.csv`, `head_to_head_benchmark.csv`, `calibration_table.csv`, `leakage_checks.csv`, figures, `input_sha256.csv`, `result.json`, and `manifest.json`.
+Artifacts: `reproduction_match_table.csv`, `s03a_reproduction_benchmark.csv`, `binned_cv_scan.csv`, `binned_model_table.csv`, `head_to_head_benchmark.csv`, `heldout_by_run.csv`, `leakage_checks.csv`, figures, `result.json`, and `manifest.json`.

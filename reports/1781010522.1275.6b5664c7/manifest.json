@@ -1,0 +1,73 @@
+{
+  "ticket": "1781010522.1275.6b5664c7",
+  "study": "P07c",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "a71e0864ed0e1903f1f094898b13e3ae06b59124",
+  "command": "/home/billy/anaconda3/bin/python scripts/p07c_boundary_control_closure.py --config configs/p07c_boundary_control_closure.json",
+  "python": "3.7.6",
+  "config": {
+    "ticket": "1781010522.1275.6b5664c7",
+    "worker": "testbeam-laptop-2",
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "study": "P07c",
+    "raw_root": "data/root/root",
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "b2_channel": 0,
+    "amplitude_cut_adc": 1000.0,
+    "clean_unsaturated_max_adc": 6500.0,
+    "boundary_low_adc": 6500.0,
+    "natural_apply_adc": 7000.0,
+    "boundary_high_adc": 7500.0,
+    "artificial_ceiling_adc": 4000.0,
+    "multi_ceilings_adc": [
+      2000.0,
+      2500.0,
+      3000.0,
+      3500.0,
+      4000.0,
+      4500.0,
+      5000.0,
+      5500.0
+    ],
+    "bootstrap_replicates": 5000,
+    "random_seed": 70702,
+    "config_path": "configs/p07c_boundary_control_closure.json"
+  },
+  "inputs_sha256": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs_sha256": {
+    "REPORT.md": "b00a1e7d317568d80da9abce0b54d1656d16e0abded7cd8ded5d7c09804feb45",
+    "artificial_clip_by_run.csv": "b5689c19d6c19989cea7db5ea8a83b5dbcaa8a01eab7a19bb57dd8088402eda4",
+    "boundary_application_by_run.csv": "371d259837f168d5135af5ee49f525daa8d895d78832203666265adac99aba6e",
+    "boundary_application_predictions_sample.csv": "e5d845b760251f2b4f96f43842e79d24c5ec6bb8b8cb4066425e3156858d107e",
+    "fig_application_timing_tails.png": "3c2fda1b4de2e3cb32eba8a2bee48f65e5108171e602da0dfcc11450f6eca808",
+    "fig_artificial_clip_by_run.png": "c738e9bde31af37384b4b75aab2cb2bac563f767358839499efcecf987be891c",
+    "fig_boundary_q_shift_by_run.png": "90a6bd23211297a300a810d519ed99e5734d6bccf43be84f1f7735a614946b5a",
+    "input_sha256.csv": "311faa4ac8d1ffe3fce791e6d85f703301ee7648fa1cf288a1dad9323e1f402f",
+    "leakage_checks.csv": "fb15793bc1286e65e61a3a34840f77e7bdfca346e24ae06e2f2c388297f11ab4",
+    "observed_amp_dependency.csv": "ce15f9d55411b87dcda2b85ba1326e12b7f6a2e0fea93704a9aeb843423e7464",
+    "p07_reproduction_table.csv": "9037fff86f1256265302fc81b4a2465694ac338649777f750aadc99b9479f304",
+    "result.json": "81d0685688717f9bd4c52dca8c294df9c5b43d50a56d9068b870fb954660bf56"
+  },
+  "notes": "Raw ROOT only; no Monte Carlo; leave-one-run-out; primary ML excludes explicit ceiling and observed-amplitude features."
+}

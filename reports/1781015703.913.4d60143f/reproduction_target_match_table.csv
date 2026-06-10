@@ -1,0 +1,5 @@
+quantity,report_value,reproduced,tolerance,delta,pass
+s16d high_lowering_tail_fraction,0.13043478260869565,0.13043478260869565,0.0005,0.0,True
+s16d low_lowering_tail_fraction,0.012379642365887207,0.012379642365887207,0.0005,0.0,True
+s16d heldout_events,250.0,250.0,0.0,0.0,True
+s16d heldout_pair_residuals,750.0,750.0,0.0,0.0,True

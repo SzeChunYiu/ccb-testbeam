@@ -1,0 +1,403 @@
+{
+  "study": "S05e",
+  "ticket": "1781016280.4691.3d911c1d",
+  "worker": "testbeam-laptop-1",
+  "title": "B2 saturation features in covariance model",
+  "reproduced": true,
+  "traditional": {
+    "method": "pair-median centered CFD20 residuals plus hierarchical run/stave covariance matching (S05c reproduction baseline)",
+    "metric": "heldout sigma68 residual width ns",
+    "value": 2.0818359213706255,
+    "ci": [
+      1.7858731282037037,
+      11.223577288112136
+    ]
+  },
+  "strong_traditional": {
+    "method": "leave-run-out Ridge residual model with explicit B2 saturation-recovery features",
+    "metric": "heldout sigma68 residual width ns",
+    "value": 6.624902145270017,
+    "ci": [
+      6.161439357538824,
+      7.9890872485618045
+    ]
+  },
+  "ml": {
+    "method": "leave-run-out ExtraTrees residual model using waveform and saturation-recovery features",
+    "metric": "heldout sigma68 residual width ns",
+    "value": 1.352185266517984,
+    "ci": [
+      1.2095936490405301,
+      1.716202621042735
+    ]
+  },
+  "traditional_pair_covariance": {
+    "B2_containing_mean_abs_cov_ns2": 1041.840074907271,
+    "B2_containing_ci": [
+      738.3027300906163,
+      1319.607331416817
+    ],
+    "downstream_mean_abs_cov_ns2": 15.98821500999724,
+    "downstream_ci": [
+      5.192507798624283,
+      33.17671452516751
+    ]
+  },
+  "saturation_diagnostics": {
+    "b2_saturation_threshold_adc": 3800.0,
+    "raw_sigma68_b2_sat_gt0_ns": 30.76838978269434,
+    "raw_sigma68_b2_sat_eq0_ns": 1.5656648162361009,
+    "table": [
+      {
+        "method": "raw_pair_median",
+        "stratum": "all_B2_containing",
+        "n_pair_rows": 43956,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 3.5123448835,
+        "sigma68_ci_low_ns": 1.8618653954,
+        "sigma68_ci_high_ns": 19.8635129302,
+        "mean_abs_pair_cov_ns2": 1041.8400749073
+      },
+      {
+        "method": "raw_pair_median",
+        "stratum": "B2_sat_count_gt0",
+        "n_pair_rows": 11981,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 6.0,
+        "median_b2_sat_excess_adc": 1786.0,
+        "sigma68_ns": 30.7683897827,
+        "sigma68_ci_low_ns": 18.3162619231,
+        "sigma68_ci_high_ns": 41.6595627226,
+        "mean_abs_pair_cov_ns2": 1272.5787070683
+      },
+      {
+        "method": "raw_pair_median",
+        "stratum": "B2_sat_count_eq0",
+        "n_pair_rows": 31975,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 1.5656648162,
+        "sigma68_ci_low_ns": 1.465109888,
+        "sigma68_ci_high_ns": 1.8759025344,
+        "mean_abs_pair_cov_ns2": 531.7416068491
+      },
+      {
+        "method": "raw_pair_median",
+        "stratum": "B2_amp_top_decile",
+        "n_pair_rows": 4396,
+        "n_runs": 21,
+        "b2_amp_cut_adc": 6615.75,
+        "median_b2_sat_count": 8.0,
+        "median_b2_sat_excess_adc": 4342.75,
+        "sigma68_ns": 41.6906414536,
+        "sigma68_ci_low_ns": 26.9488437661,
+        "sigma68_ci_high_ns": 46.8680057543,
+        "mean_abs_pair_cov_ns2": 1210.0959340313
+      },
+      {
+        "method": "raw_pair_median",
+        "stratum": "B2_amp_lower_90pct",
+        "n_pair_rows": 39560,
+        "n_runs": 21,
+        "b2_amp_cut_adc": 6615.75,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 1.9677818718,
+        "sigma68_ci_low_ns": 1.6422301584,
+        "sigma68_ci_high_ns": 8.9502885029,
+        "mean_abs_pair_cov_ns2": 954.014036244
+      },
+      {
+        "method": "traditional_saturation_ridge",
+        "stratum": "all_B2_containing",
+        "n_pair_rows": 43956,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 7.0499464252,
+        "sigma68_ci_low_ns": 6.333240693,
+        "sigma68_ci_high_ns": 8.8017738251,
+        "mean_abs_pair_cov_ns2": 212.7829941058
+      },
+      {
+        "method": "traditional_saturation_ridge",
+        "stratum": "B2_sat_count_gt0",
+        "n_pair_rows": 11981,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 6.0,
+        "median_b2_sat_excess_adc": 1786.0,
+        "sigma68_ns": 11.5964774533,
+        "sigma68_ci_low_ns": 10.4310084381,
+        "sigma68_ci_high_ns": 12.5327337169,
+        "mean_abs_pair_cov_ns2": 182.4920491272
+      },
+      {
+        "method": "traditional_saturation_ridge",
+        "stratum": "B2_sat_count_eq0",
+        "n_pair_rows": 31975,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 5.6889138198,
+        "sigma68_ci_low_ns": 5.3707537365,
+        "sigma68_ci_high_ns": 6.7886065158,
+        "mean_abs_pair_cov_ns2": 248.8906755447
+      },
+      {
+        "method": "traditional_saturation_ridge",
+        "stratum": "B2_amp_top_decile",
+        "n_pair_rows": 4396,
+        "n_runs": 21,
+        "b2_amp_cut_adc": 6615.75,
+        "median_b2_sat_count": 8.0,
+        "median_b2_sat_excess_adc": 4342.75,
+        "sigma68_ns": 10.8135323238,
+        "sigma68_ci_low_ns": 10.0071221756,
+        "sigma68_ci_high_ns": 11.4609318263,
+        "mean_abs_pair_cov_ns2": 114.7950699549
+      },
+      {
+        "method": "traditional_saturation_ridge",
+        "stratum": "B2_amp_lower_90pct",
+        "n_pair_rows": 39560,
+        "n_runs": 21,
+        "b2_amp_cut_adc": 6615.75,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 6.621063853,
+        "sigma68_ci_low_ns": 6.0906068411,
+        "sigma68_ci_high_ns": 8.7436085098,
+        "mean_abs_pair_cov_ns2": 255.4952414437
+      },
+      {
+        "method": "ml_extra_trees_saturation",
+        "stratum": "all_B2_containing",
+        "n_pair_rows": 43956,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 1.6155216885,
+        "sigma68_ci_low_ns": 1.3648279367,
+        "sigma68_ci_high_ns": 2.4961250783,
+        "mean_abs_pair_cov_ns2": 25.1875223493
+      },
+      {
+        "method": "ml_extra_trees_saturation",
+        "stratum": "B2_sat_count_gt0",
+        "n_pair_rows": 11981,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 6.0,
+        "median_b2_sat_excess_adc": 1786.0,
+        "sigma68_ns": 3.5705165915,
+        "sigma68_ci_low_ns": 3.1257396525,
+        "sigma68_ci_high_ns": 3.9439946641,
+        "mean_abs_pair_cov_ns2": 22.1262703277
+      },
+      {
+        "method": "ml_extra_trees_saturation",
+        "stratum": "B2_sat_count_eq0",
+        "n_pair_rows": 31975,
+        "n_runs": 21,
+        "b2_amp_cut_adc": null,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 1.1924617714,
+        "sigma68_ci_low_ns": 1.1042788426,
+        "sigma68_ci_high_ns": 1.4223446914,
+        "mean_abs_pair_cov_ns2": 32.3369871942
+      },
+      {
+        "method": "ml_extra_trees_saturation",
+        "stratum": "B2_amp_top_decile",
+        "n_pair_rows": 4396,
+        "n_runs": 21,
+        "b2_amp_cut_adc": 6615.75,
+        "median_b2_sat_count": 8.0,
+        "median_b2_sat_excess_adc": 4342.75,
+        "sigma68_ns": 3.824607167,
+        "sigma68_ci_low_ns": 3.5597302727,
+        "sigma68_ci_high_ns": 4.0538392675,
+        "mean_abs_pair_cov_ns2": 28.7310613432
+      },
+      {
+        "method": "ml_extra_trees_saturation",
+        "stratum": "B2_amp_lower_90pct",
+        "n_pair_rows": 39560,
+        "n_runs": 21,
+        "b2_amp_cut_adc": 6615.75,
+        "median_b2_sat_count": 0.0,
+        "median_b2_sat_excess_adc": 0.0,
+        "sigma68_ns": 1.4161207598,
+        "sigma68_ci_low_ns": 1.2499566701,
+        "sigma68_ci_high_ns": 2.0056182574,
+        "mean_abs_pair_cov_ns2": 27.7989360051
+      }
+    ]
+  },
+  "stave_covariance_decomposition": [
+    {
+      "var_B2": 166.4968348881,
+      "cov_B2_B4": -100.6963357603,
+      "cov_B2_B6": -113.3208829652,
+      "cov_B2_B8": -118.9764513846,
+      "var_B4": 34.2436159979,
+      "cov_B4_B6": 21.323239203,
+      "cov_B4_B8": 10.8858644139,
+      "var_B6": 35.0676057439,
+      "cov_B6_B8": 21.8624322343,
+      "var_B8": 43.1140773095,
+      "offdiag_rmse_ns2": 10.4259284711,
+      "n_offdiag_covariances": 15,
+      "method": "raw_pair_median",
+      "scope": "event_level_pooled",
+      "B2_variance_minus_downstream_mean_ns2": 129.0217352043
+    },
+    {
+      "var_B2": 5.4060731223,
+      "cov_B2_B4": -3.333820119,
+      "cov_B2_B6": -3.8121480685,
+      "cov_B2_B8": -3.6661780625,
+      "var_B4": 0.786510008,
+      "cov_B4_B6": 0.9346203898,
+      "cov_B4_B8": 0.826179709,
+      "var_B6": 0.786240762,
+      "cov_B6_B8": 1.3050461553,
+      "var_B8": 0.7674760977,
+      "offdiag_rmse_ns2": 1.441297096,
+      "n_offdiag_covariances": 15,
+      "method": "raw_pair_median",
+      "scope": "run_median_level",
+      "B2_variance_minus_downstream_mean_ns2": 4.6259974998
+    },
+    {
+      "var_B2": 45.7503548603,
+      "cov_B2_B4": -30.9588988414,
+      "cov_B2_B6": -28.6657943357,
+      "cov_B2_B8": -31.8760166824,
+      "var_B4": 22.7248157424,
+      "cov_B4_B6": -1.6818046503,
+      "cov_B4_B8": -12.8089280797,
+      "var_B6": 16.1584981402,
+      "cov_B6_B8": -1.9693972873,
+      "var_B8": 23.3271710036,
+      "offdiag_rmse_ns2": 4.097761187,
+      "n_offdiag_covariances": 15,
+      "method": "traditional_saturation_ridge",
+      "scope": "event_level_pooled",
+      "B2_variance_minus_downstream_mean_ns2": 25.013526565
+    },
+    {
+      "var_B2": 0.6178821767,
+      "cov_B2_B4": -0.6805821187,
+      "cov_B2_B6": -0.4621697037,
+      "cov_B2_B8": -0.093012533,
+      "var_B4": 0.7642929512,
+      "cov_B4_B6": 0.2349221087,
+      "cov_B4_B8": -1.0829258956,
+      "var_B6": 0.0837495517,
+      "cov_B6_B8": 0.0597484927,
+      "var_B8": 0.5580949678,
+      "offdiag_rmse_ns2": 0.8719871818,
+      "n_offdiag_covariances": 15,
+      "method": "traditional_saturation_ridge",
+      "scope": "run_median_level",
+      "B2_variance_minus_downstream_mean_ns2": 0.1491696864
+    },
+    {
+      "var_B2": 7.6265469421,
+      "cov_B2_B4": -4.9912248245,
+      "cov_B2_B6": -5.1817035478,
+      "cov_B2_B8": -5.0801655263,
+      "var_B4": 5.1621615938,
+      "cov_B4_B6": -2.0317876424,
+      "cov_B4_B8": -3.3013107435,
+      "var_B6": 3.8110946017,
+      "cov_B6_B8": -0.4086980148,
+      "var_B8": 4.3950871373,
+      "offdiag_rmse_ns2": 1.1293013457,
+      "n_offdiag_covariances": 15,
+      "method": "ml_extra_trees_saturation",
+      "scope": "event_level_pooled",
+      "B2_variance_minus_downstream_mean_ns2": 3.1704324978
+    },
+    {
+      "var_B2": 0.0381514205,
+      "cov_B2_B4": -0.0392798054,
+      "cov_B2_B6": -0.0080306091,
+      "cov_B2_B8": -0.0289924265,
+      "var_B4": 0.0332282426,
+      "cov_B4_B6": -0.0205015086,
+      "cov_B4_B8": -0.0066751714,
+      "var_B6": 0.0135618227,
+      "cov_B6_B8": 0.0014084722,
+      "var_B8": 0.0171295628,
+      "offdiag_rmse_ns2": 0.0536152556,
+      "n_offdiag_covariances": 15,
+      "method": "ml_extra_trees_saturation",
+      "scope": "run_median_level",
+      "B2_variance_minus_downstream_mean_ns2": 0.0168448778
+    }
+  ],
+  "ml_minus_traditional_delta": [
+    {
+      "comparison": "ml_minus_raw_pair_median_sigma68",
+      "delta_ns": -0.7296506549,
+      "ci_low_ns": -8.6429922465,
+      "ci_high_ns": -0.5429215968,
+      "p_two_sided": 0.0
+    },
+    {
+      "comparison": "ml_minus_saturation_ridge_sigma68",
+      "delta_ns": -5.2727168788,
+      "ci_low_ns": -6.1118952617,
+      "ci_high_ns": -4.919735849,
+      "p_two_sided": 0.0
+    }
+  ],
+  "finding": "Raw CFD20 covariance is strongly B2/topology dominated. Explicit B2 saturation/recovery features help test high-amplitude pathology separately from irreducible detector-local covariance under leave-run-out evaluation.",
+  "leakage": [
+    {
+      "check": "run_split_event_overlap",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "train and held-out event ids are disjoint because whole runs are held out"
+    },
+    {
+      "check": "ml_features_exclude_forbidden_columns",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "ML inputs exclude run, event, time_ns, raw residual, target residual, and pair-derived timing labels; saturation inputs are waveform-derived only"
+    },
+    {
+      "check": "actual_ml_sigma68_ns",
+      "value": 1.3521852665,
+      "pass": true,
+      "interpretation": "nominal leave-run-out ML residual width"
+    },
+    {
+      "check": "shuffled_train_target_ml_sigma68_ns",
+      "value": 4.3745546648,
+      "pass": true,
+      "interpretation": "target permutation inside train folds should not reproduce the nominal ML width"
+    },
+    {
+      "check": "intentional_target_echo_sigma68_ns",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "positive leakage sentinel; a leaked target would be unrealistically narrow"
+    }
+  ],
+  "input_sha256": "reports/1781016280.4691.3d911c1d/input_sha256.csv",
+  "git_commit": "0b04381017fc97e02aedccf8112d22314d23d1c3"
+}

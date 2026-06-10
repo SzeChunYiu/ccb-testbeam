@@ -1,0 +1,24 @@
+{
+  "ticket_id": "1781005319.562.584259c9",
+  "script": "scripts/p01c_pulse_shape_importance_map.py",
+  "config": "configs/p01c_pulse_shape_importance_map.json",
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "input_sha256_csv": "reports/1781005319.562.584259c9__p01c_pulse_shape_importance_map/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    "REPORT.md",
+    "fig_sample_importance.png",
+    "fig_window_importance.png",
+    "heldout_baseline_metrics.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "reproduction_counts_by_group.csv",
+    "reproduction_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "sample_importance_table.csv",
+    "window_importance_table.csv"
+  ]
+}

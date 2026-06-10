@@ -1,0 +1,91 @@
+{
+  "study": "S03d",
+  "ticket": "1781011005.945.02b95315",
+  "worker": "testbeam-laptop-4",
+  "title": "physically signed per-stave inverse-amplitude timewalk prior versus isotonic S03b",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6808109129566127,
+      2.9861718468144893
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only": {
+      "method": "amp_only_ridge_residual_on_template_phase",
+      "value": 1.5510917109777833,
+      "ci": [
+        1.3606255727485472,
+        1.8495054152241253
+      ],
+      "gain_vs_template_phase_ns": 1.1903228191074322
+    },
+    "s03b_monotone_binned": {
+      "method": "per_stave_monotone_decreasing_binned_timewalk",
+      "value": 1.6451494274970766,
+      "ci": [
+        1.3255856505466923,
+        1.9395966680211603
+      ],
+      "gain_vs_template_phase_ns": 1.096265102588139,
+      "delta_vs_s03a_amp_only_ns": -0.09405771651929329
+    },
+    "phys_signed_inverse_amp": {
+      "method": "per_stave_nonnegative_inverse_amplitude_prior",
+      "value": 1.6043573218297749,
+      "ci": [
+        1.3708536978540387,
+        1.9686382838742726
+      ],
+      "gain_vs_template_phase_ns": 1.1370572082554407,
+      "delta_vs_s03a_amp_only_ns": -0.05326561085199155,
+      "delta_vs_s03b_monotone_binned_ns": 0.04079210566730174
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.3929711020483486,
+    "ci": [
+      1.2532557455846498,
+      1.6545451680841285
+    ],
+    "gain_vs_template_phase_ns": 1.348443428036867,
+    "gain_vs_phys_signed_inverse_amp_ns": 0.21138621978142624
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.5377944228547595,
+    "hgb_looks_too_good": false,
+    "leakage_flag": false
+  },
+  "verdict": "signed_prior_beats_isotonic_no_leakage",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "81972e9d7c60336d7af287322cdd611415e7ba92",
+  "critic": "pending",
+  "next_tickets": [
+    "S03e: blind Sample-I to Sample-II transfer for the physically signed inverse-amplitude prior",
+    "S03f: hierarchical shrinkage for signed per-stave inverse-amplitude scales"
+  ]
+}

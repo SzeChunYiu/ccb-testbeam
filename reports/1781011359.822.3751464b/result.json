@@ -1,0 +1,86 @@
+{
+  "study": "S03c",
+  "ticket": "1781011359.822.3751464b",
+  "worker": "testbeam-laptop-1",
+  "title": "multi-heldout-run timing correction stability with leave-one-run-out intervals",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03a_run65_reproduction_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "s03a_reference": {
+    "base_sigma68_ns": 2.889152765080617,
+    "analytic_sigma68_ns": 1.494640076269676,
+    "binned_sigma68_ns": 1.5695763825403084,
+    "ml_template_sigma68_ns": 1.3915306248207993
+  },
+  "traditional": {
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "method": "analytic_timewalk_on_template_phase",
+    "value": 1.5510917109777833,
+    "ci": [
+      1.3703984521184651,
+      1.9275611868355018
+    ],
+    "gain_vs_template_phase_ns": 1.1903228191074322,
+    "delta_vs_s03b_binned_timewalk_ns": -0.09405771651929329
+  },
+  "s03b_binned": {
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "method": "downstream_stave_monotonic_decreasing_amplitude_binned_timewalk",
+    "value": 1.6451494274970766,
+    "ci": [
+      1.3217498254041793,
+      1.9444633146125216
+    ],
+    "gain_vs_template_phase_ns": 1.096265102588139,
+    "delta_vs_s03a_analytic_timewalk_ns": 0.09405771651929329
+  },
+  "ml": {
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "method": "ridge_residual_corrector_on_template_phase",
+    "value": 1.5369230041797883,
+    "ci": [
+      1.345608054400737,
+      1.8177913670669286
+    ],
+    "gain_vs_template_phase_ns": 1.2044915259054272
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6842165631742354,
+      2.992319268962799
+    ]
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "shuffled_target_min_sigma68_ns": 2.460127310112868
+  },
+  "s03b_monotonic_stable_beyond_run65": true,
+  "ridge_gain_persists_under_run_bootstrap_ci": true,
+  "verdict": "s03b_monotonic_stable_and_ridge_gain_persists_no_leakage_flag",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "171c83edf2449a9a20c1822f40dab478a347d09d",
+  "critic": "pending",
+  "next_tickets": [
+    "S03d: run-level hierarchical shrinkage for analytic timewalk coefficients",
+    "S03e: blind sample-I to sample-II transfer of analytic timewalk correction"
+  ]
+}

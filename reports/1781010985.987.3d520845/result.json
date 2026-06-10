@@ -1,0 +1,73 @@
+{
+  "study": "S03e",
+  "ticket": "1781010985.987.3d520845",
+  "worker": "testbeam-laptop-3",
+  "title": "two-ended-safe timewalk closure using only single-stave waveform features",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "total_selected_b_stave_pulses": 640737
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "cfd20_base",
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "value": 3.1502666141199165,
+    "ci": [
+      3.0228203843166668,
+      3.2750363066697226
+    ]
+  },
+  "traditional": {
+    "method": "train_run_template_phase_single_stave",
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6808109129566127,
+      2.9889541537074105
+    ],
+    "gain_vs_cfd20_ns": 0.40885208403470097,
+    "uses_event_residual_target": false,
+    "uses_other_stave_timing_features": false
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_on_single_stave_proxy_target",
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "value": 2.8290554427248673,
+    "ci": [
+      2.6841894112848874,
+      2.963263470836069
+    ],
+    "gain_vs_cfd20_ns": 0.3212111713950492,
+    "proxy_target": "cfd20_minus_train_template_phase",
+    "uses_event_residual_target": false,
+    "uses_other_stave_timing_features": false
+  },
+  "leakage": {
+    "split_by_run": true,
+    "flag_count": 0,
+    "ml_shuffled_proxy_sigma68_ns": 4.118875454613034,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "event_residuals_used_only_for_final_scoring": true
+  },
+  "verdict": "single_stave_proxy_closure_supported",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "652da5ac4020e2c8a094a2dbd793dde989c65081",
+  "critic": "pending",
+  "next_tickets": [
+    "S03f: validate the S03e single-stave proxy on Sample-I downstream events despite sparse B4/B6/B8 topology",
+    "S05d: two-ended-safe correlated timing floor using only per-end single-stave waveform corrections"
+  ]
+}

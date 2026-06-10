@@ -1,0 +1,22 @@
+method,base_method,fold,heldout_runs,sigma68_ns,n_pair_residuals,heldout_run
+s16e_base_timewalk,template_phase,0,61 65,2.1563360964592846,2997,58
+s16e_base_timewalk,template_phase,1,60 63,1.5203552617821816,3534,58
+s16e_base_timewalk,template_phase,2,59 62,1.5754128675005348,4710,58
+s16e_base_timewalk,template_phase,0,61,2.1733432773420076,2799,59
+s16e_base_timewalk,template_phase,1,58 60 65,1.549232619809651,2841,59
+s16e_base_timewalk,template_phase,2,62 63,1.5567295670693553,3531,59
+s16e_base_timewalk,template_phase,0,61,2.1340041308986883,2799,60
+s16e_base_timewalk,template_phase,1,58 62 65,1.5760326037972803,2838,60
+s16e_base_timewalk,template_phase,2,59 63,1.491698646169502,3399,60
+s16e_base_timewalk,template_phase,0,60 65,1.629935599714853,2622,61
+s16e_base_timewalk,template_phase,1,58 62,1.7454933797191943,2640,61
+s16e_base_timewalk,template_phase,2,59 63,1.6856971126483604,3399,61
+s16e_base_timewalk,template_phase,0,61,2.1824845032803486,2799,62
+s16e_base_timewalk,template_phase,1,58 60 65,1.486307405519341,2841,62
+s16e_base_timewalk,template_phase,2,59 63,1.520125549496024,3399,62
+s16e_base_timewalk,template_phase,0,61,2.1931134876812424,2799,63
+s16e_base_timewalk,template_phase,1,58 60 65,1.5065238601233104,2841,63
+s16e_base_timewalk,template_phase,2,59 62,1.5200048069192897,4710,63
+s16e_base_timewalk,template_phase,0,58 61,2.136501171234445,3018,65
+s16e_base_timewalk,template_phase,1,60 63,1.5224610797242768,3534,65
+s16e_base_timewalk,template_phase,2,59 62,1.5806733458795863,4710,65

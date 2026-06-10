@@ -1,0 +1,397 @@
+heldout_run,method,target,metric,value,selected_k,cluster_model,gmm_fit_rows,train_rows,heldout_rows,benchmark_role
+31,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5626696553128014,8,diag GaussianMixture,12000,41139,1231,claim
+31,traditional hand+PCA morphology,manual_flag,purity,0.9626320064987814,8,diag GaussianMixture,12000,41139,1231,claim
+31,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4867178384000104,8,diag GaussianMixture,12000,41139,1231,claim
+31,traditional hand+PCA morphology,peak_group,purity,0.8115353371242892,8,diag GaussianMixture,12000,41139,1231,claim
+31,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.3576612585733977,8,diag GaussianMixture,12000,41139,1231,claim
+31,ML P01b train-only AE embedding,manual_flag,purity,0.7928513403736799,8,diag GaussianMixture,12000,41139,1231,claim
+31,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.26172120089250206,8,diag GaussianMixture,12000,41139,1231,claim
+31,ML P01b train-only AE embedding,peak_group,purity,0.5970755483346872,8,diag GaussianMixture,12000,41139,1231,claim
+31,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4912338207974873,8,diag GaussianMixture,12000,41139,1231,forbidden_release_diagnostic
+31,forbidden all-data release-style embedding,manual_flag,purity,0.958570268074736,8,diag GaussianMixture,12000,41139,1231,forbidden_release_diagnostic
+31,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.48268180214477807,8,diag GaussianMixture,12000,41139,1231,forbidden_release_diagnostic
+31,forbidden all-data release-style embedding,peak_group,purity,0.7969130787977254,8,diag GaussianMixture,12000,41139,1231,forbidden_release_diagnostic
+32,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5583237971436823,8,diag GaussianMixture,12000,41151,1219,claim
+32,traditional hand+PCA morphology,manual_flag,purity,0.9515996718621821,8,diag GaussianMixture,12000,41151,1219,claim
+32,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.47315941607347317,8,diag GaussianMixture,12000,41151,1219,claim
+32,traditional hand+PCA morphology,peak_group,purity,0.7858900738310091,8,diag GaussianMixture,12000,41151,1219,claim
+32,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.3378917693554977,8,diag GaussianMixture,12000,41151,1219,claim
+32,ML P01b train-only AE embedding,manual_flag,purity,0.8146021328958163,8,diag GaussianMixture,12000,41151,1219,claim
+32,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.21690369644841212,8,diag GaussianMixture,12000,41151,1219,claim
+32,ML P01b train-only AE embedding,peak_group,purity,0.601312551271534,8,diag GaussianMixture,12000,41151,1219,claim
+32,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.48661188703861663,8,diag GaussianMixture,12000,41151,1219,forbidden_release_diagnostic
+32,forbidden all-data release-style embedding,manual_flag,purity,0.940935192780968,8,diag GaussianMixture,12000,41151,1219,forbidden_release_diagnostic
+32,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5046502203641025,8,diag GaussianMixture,12000,41151,1219,forbidden_release_diagnostic
+32,forbidden all-data release-style embedding,peak_group,purity,0.8121410992616899,8,diag GaussianMixture,12000,41151,1219,forbidden_release_diagnostic
+33,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5501070706171919,8,diag GaussianMixture,12000,41016,1354,claim
+33,traditional hand+PCA morphology,manual_flag,purity,0.9564254062038404,8,diag GaussianMixture,12000,41016,1354,claim
+33,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5146492270412096,8,diag GaussianMixture,12000,41016,1354,claim
+33,traditional hand+PCA morphology,peak_group,purity,0.9032496307237814,8,diag GaussianMixture,12000,41016,1354,claim
+33,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.4220777060593233,4,diag GaussianMixture,12000,41016,1354,claim
+33,ML P01b train-only AE embedding,manual_flag,purity,0.8412112259970458,4,diag GaussianMixture,12000,41016,1354,claim
+33,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.27260158497547954,4,diag GaussianMixture,12000,41016,1354,claim
+33,ML P01b train-only AE embedding,peak_group,purity,0.7023633677991138,4,diag GaussianMixture,12000,41016,1354,claim
+33,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5389477967367838,8,diag GaussianMixture,12000,41016,1354,forbidden_release_diagnostic
+33,forbidden all-data release-style embedding,manual_flag,purity,0.9675036927621861,8,diag GaussianMixture,12000,41016,1354,forbidden_release_diagnostic
+33,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5378412297870535,8,diag GaussianMixture,12000,41016,1354,forbidden_release_diagnostic
+33,forbidden all-data release-style embedding,peak_group,purity,0.9039881831610044,8,diag GaussianMixture,12000,41016,1354,forbidden_release_diagnostic
+34,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5369253608511816,8,diag GaussianMixture,12000,41175,1195,claim
+34,traditional hand+PCA morphology,manual_flag,purity,0.9422594142259414,8,diag GaussianMixture,12000,41175,1195,claim
+34,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5033902240050148,8,diag GaussianMixture,12000,41175,1195,claim
+34,traditional hand+PCA morphology,peak_group,purity,0.8694560669456067,8,diag GaussianMixture,12000,41175,1195,claim
+34,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.23347067066778382,6,diag GaussianMixture,12000,41175,1195,claim
+34,ML P01b train-only AE embedding,manual_flag,purity,0.7472803347280335,6,diag GaussianMixture,12000,41175,1195,claim
+34,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.1365209745227582,6,diag GaussianMixture,12000,41175,1195,claim
+34,ML P01b train-only AE embedding,peak_group,purity,0.5857740585774058,6,diag GaussianMixture,12000,41175,1195,claim
+34,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4915075524569877,8,diag GaussianMixture,12000,41175,1195,forbidden_release_diagnostic
+34,forbidden all-data release-style embedding,manual_flag,purity,0.9355648535564853,8,diag GaussianMixture,12000,41175,1195,forbidden_release_diagnostic
+34,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5010054453014195,8,diag GaussianMixture,12000,41175,1195,forbidden_release_diagnostic
+34,forbidden all-data release-style embedding,peak_group,purity,0.8602510460251046,8,diag GaussianMixture,12000,41175,1195,forbidden_release_diagnostic
+35,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5422138513854502,8,diag GaussianMixture,12000,41282,1088,claim
+35,traditional hand+PCA morphology,manual_flag,purity,0.9494485294117647,8,diag GaussianMixture,12000,41282,1088,claim
+35,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4860524621110998,8,diag GaussianMixture,12000,41282,1088,claim
+35,traditional hand+PCA morphology,peak_group,purity,0.8262867647058824,8,diag GaussianMixture,12000,41282,1088,claim
+35,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.36246565278623594,5,diag GaussianMixture,12000,41282,1088,claim
+35,ML P01b train-only AE embedding,manual_flag,purity,0.8299632352941176,5,diag GaussianMixture,12000,41282,1088,claim
+35,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.2647962352645347,5,diag GaussianMixture,12000,41282,1088,claim
+35,ML P01b train-only AE embedding,peak_group,purity,0.6681985294117647,5,diag GaussianMixture,12000,41282,1088,claim
+35,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.46394527416080245,8,diag GaussianMixture,12000,41282,1088,forbidden_release_diagnostic
+35,forbidden all-data release-style embedding,manual_flag,purity,0.9485294117647058,8,diag GaussianMixture,12000,41282,1088,forbidden_release_diagnostic
+35,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5064124628443258,8,diag GaussianMixture,12000,41282,1088,forbidden_release_diagnostic
+35,forbidden all-data release-style embedding,peak_group,purity,0.8363970588235294,8,diag GaussianMixture,12000,41282,1088,forbidden_release_diagnostic
+36,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5057162724197898,8,diag GaussianMixture,12000,41376,994,claim
+36,traditional hand+PCA morphology,manual_flag,purity,0.9446680080482898,8,diag GaussianMixture,12000,41376,994,claim
+36,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4513855182911802,8,diag GaussianMixture,12000,41376,994,claim
+36,traditional hand+PCA morphology,peak_group,purity,0.7826961770623743,8,diag GaussianMixture,12000,41376,994,claim
+36,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.469850703729241,8,diag GaussianMixture,12000,41376,994,claim
+36,ML P01b train-only AE embedding,manual_flag,purity,0.9014084507042254,8,diag GaussianMixture,12000,41376,994,claim
+36,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.26470522046319467,8,diag GaussianMixture,12000,41376,994,claim
+36,ML P01b train-only AE embedding,peak_group,purity,0.6740442655935613,8,diag GaussianMixture,12000,41376,994,claim
+36,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.41450585859836897,8,diag GaussianMixture,12000,41376,994,forbidden_release_diagnostic
+36,forbidden all-data release-style embedding,manual_flag,purity,0.9456740442655935,8,diag GaussianMixture,12000,41376,994,forbidden_release_diagnostic
+36,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.45636144953061447,8,diag GaussianMixture,12000,41376,994,forbidden_release_diagnostic
+36,forbidden all-data release-style embedding,peak_group,purity,0.7977867203219315,8,diag GaussianMixture,12000,41376,994,forbidden_release_diagnostic
+37,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5491297314495652,8,diag GaussianMixture,12000,40886,1484,claim
+37,traditional hand+PCA morphology,manual_flag,purity,0.9272237196765498,8,diag GaussianMixture,12000,40886,1484,claim
+37,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5135636353511046,8,diag GaussianMixture,12000,40886,1484,claim
+37,traditional hand+PCA morphology,peak_group,purity,0.8274932614555256,8,diag GaussianMixture,12000,40886,1484,claim
+37,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.4112532169794378,4,diag GaussianMixture,12000,40886,1484,claim
+37,ML P01b train-only AE embedding,manual_flag,purity,0.8140161725067385,4,diag GaussianMixture,12000,40886,1484,claim
+37,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.27148280953554804,4,diag GaussianMixture,12000,40886,1484,claim
+37,ML P01b train-only AE embedding,peak_group,purity,0.6307277628032345,4,diag GaussianMixture,12000,40886,1484,claim
+37,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5120366371160597,8,diag GaussianMixture,12000,40886,1484,forbidden_release_diagnostic
+37,forbidden all-data release-style embedding,manual_flag,purity,0.9359838274932615,8,diag GaussianMixture,12000,40886,1484,forbidden_release_diagnostic
+37,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5268247293050766,8,diag GaussianMixture,12000,40886,1484,forbidden_release_diagnostic
+37,forbidden all-data release-style embedding,peak_group,purity,0.8355795148247979,8,diag GaussianMixture,12000,40886,1484,forbidden_release_diagnostic
+39,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5699189815481034,8,diag GaussianMixture,12000,41089,1281,claim
+39,traditional hand+PCA morphology,manual_flag,purity,0.9445745511319282,8,diag GaussianMixture,12000,41089,1281,claim
+39,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4968527250357982,8,diag GaussianMixture,12000,41089,1281,claim
+39,traditional hand+PCA morphology,peak_group,purity,0.8384074941451991,8,diag GaussianMixture,12000,41089,1281,claim
+39,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.6124635637677722,5,diag GaussianMixture,12000,41089,1281,claim
+39,ML P01b train-only AE embedding,manual_flag,purity,0.9008587041373927,5,diag GaussianMixture,12000,41089,1281,claim
+39,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.368659787114654,5,diag GaussianMixture,12000,41089,1281,claim
+39,ML P01b train-only AE embedding,peak_group,purity,0.7377049180327869,5,diag GaussianMixture,12000,41089,1281,claim
+39,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5200461798002105,8,diag GaussianMixture,12000,41089,1281,forbidden_release_diagnostic
+39,forbidden all-data release-style embedding,manual_flag,purity,0.9406713505074161,8,diag GaussianMixture,12000,41089,1281,forbidden_release_diagnostic
+39,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5519828570369079,8,diag GaussianMixture,12000,41089,1281,forbidden_release_diagnostic
+39,forbidden all-data release-style embedding,peak_group,purity,0.8587041373926619,8,diag GaussianMixture,12000,41089,1281,forbidden_release_diagnostic
+40,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5238380745034436,8,diag GaussianMixture,12000,41044,1326,claim
+40,traditional hand+PCA morphology,manual_flag,purity,0.916289592760181,8,diag GaussianMixture,12000,41044,1326,claim
+40,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5082131904702163,8,diag GaussianMixture,12000,41044,1326,claim
+40,traditional hand+PCA morphology,peak_group,purity,0.8227752639517345,8,diag GaussianMixture,12000,41044,1326,claim
+40,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.44359293285397994,4,diag GaussianMixture,12000,41044,1326,claim
+40,ML P01b train-only AE embedding,manual_flag,purity,0.8544494720965309,4,diag GaussianMixture,12000,41044,1326,claim
+40,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.27606829100099217,4,diag GaussianMixture,12000,41044,1326,claim
+40,ML P01b train-only AE embedding,peak_group,purity,0.6576168929110106,4,diag GaussianMixture,12000,41044,1326,claim
+40,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4777388366035617,8,diag GaussianMixture,12000,41044,1326,forbidden_release_diagnostic
+40,forbidden all-data release-style embedding,manual_flag,purity,0.9298642533936652,8,diag GaussianMixture,12000,41044,1326,forbidden_release_diagnostic
+40,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5127040371933204,8,diag GaussianMixture,12000,41044,1326,forbidden_release_diagnostic
+40,forbidden all-data release-style embedding,peak_group,purity,0.8288084464555053,8,diag GaussianMixture,12000,41044,1326,forbidden_release_diagnostic
+41,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5320482668793384,8,diag GaussianMixture,12000,41045,1325,claim
+41,traditional hand+PCA morphology,manual_flag,purity,0.9494339622641509,8,diag GaussianMixture,12000,41045,1325,claim
+41,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5139207827436699,8,diag GaussianMixture,12000,41045,1325,claim
+41,traditional hand+PCA morphology,peak_group,purity,0.8475471698113207,8,diag GaussianMixture,12000,41045,1325,claim
+41,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.4321265345460317,6,diag GaussianMixture,12000,41045,1325,claim
+41,ML P01b train-only AE embedding,manual_flag,purity,0.849811320754717,6,diag GaussianMixture,12000,41045,1325,claim
+41,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.2971048180520853,6,diag GaussianMixture,12000,41045,1325,claim
+41,ML P01b train-only AE embedding,peak_group,purity,0.6913207547169812,6,diag GaussianMixture,12000,41045,1325,claim
+41,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4903010448857022,8,diag GaussianMixture,12000,41045,1325,forbidden_release_diagnostic
+41,forbidden all-data release-style embedding,manual_flag,purity,0.9245283018867925,8,diag GaussianMixture,12000,41045,1325,forbidden_release_diagnostic
+41,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5438886498953228,8,diag GaussianMixture,12000,41045,1325,forbidden_release_diagnostic
+41,forbidden all-data release-style embedding,peak_group,purity,0.8603773584905661,8,diag GaussianMixture,12000,41045,1325,forbidden_release_diagnostic
+42,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5360908019002961,8,diag GaussianMixture,12000,41046,1324,claim
+42,traditional hand+PCA morphology,manual_flag,purity,0.9380664652567976,8,diag GaussianMixture,12000,41046,1324,claim
+42,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4871566446164195,8,diag GaussianMixture,12000,41046,1324,claim
+42,traditional hand+PCA morphology,peak_group,purity,0.823262839879154,8,diag GaussianMixture,12000,41046,1324,claim
+42,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.36698990686323274,4,diag GaussianMixture,12000,41046,1324,claim
+42,ML P01b train-only AE embedding,manual_flag,purity,0.8104229607250756,4,diag GaussianMixture,12000,41046,1324,claim
+42,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.23746671766088323,4,diag GaussianMixture,12000,41046,1324,claim
+42,ML P01b train-only AE embedding,peak_group,purity,0.6238670694864048,4,diag GaussianMixture,12000,41046,1324,claim
+42,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4782464092199014,8,diag GaussianMixture,12000,41046,1324,forbidden_release_diagnostic
+42,forbidden all-data release-style embedding,manual_flag,purity,0.9380664652567976,8,diag GaussianMixture,12000,41046,1324,forbidden_release_diagnostic
+42,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.49039599531021316,8,diag GaussianMixture,12000,41046,1324,forbidden_release_diagnostic
+42,forbidden all-data release-style embedding,peak_group,purity,0.8209969788519638,8,diag GaussianMixture,12000,41046,1324,forbidden_release_diagnostic
+44,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5359844940066237,8,diag GaussianMixture,12000,41766,604,claim
+44,traditional hand+PCA morphology,manual_flag,purity,0.9586092715231788,8,diag GaussianMixture,12000,41766,604,claim
+44,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4294618275846579,8,diag GaussianMixture,12000,41766,604,claim
+44,traditional hand+PCA morphology,peak_group,purity,0.8311258278145696,8,diag GaussianMixture,12000,41766,604,claim
+44,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.5842116771185788,5,diag GaussianMixture,12000,41766,604,claim
+44,ML P01b train-only AE embedding,manual_flag,purity,0.9271523178807947,5,diag GaussianMixture,12000,41766,604,claim
+44,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.39679994475448116,5,diag GaussianMixture,12000,41766,604,claim
+44,ML P01b train-only AE embedding,peak_group,purity,0.7781456953642384,5,diag GaussianMixture,12000,41766,604,claim
+44,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4208236347670841,8,diag GaussianMixture,12000,41766,604,forbidden_release_diagnostic
+44,forbidden all-data release-style embedding,manual_flag,purity,0.9486754966887417,8,diag GaussianMixture,12000,41766,604,forbidden_release_diagnostic
+44,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5153283272640312,8,diag GaussianMixture,12000,41766,604,forbidden_release_diagnostic
+44,forbidden all-data release-style embedding,peak_group,purity,0.8642384105960265,8,diag GaussianMixture,12000,41766,604,forbidden_release_diagnostic
+45,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5533347124919019,8,diag GaussianMixture,12000,40892,1478,claim
+45,traditional hand+PCA morphology,manual_flag,purity,0.9248985115020297,8,diag GaussianMixture,12000,40892,1478,claim
+45,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5032720310920082,8,diag GaussianMixture,12000,40892,1478,claim
+45,traditional hand+PCA morphology,peak_group,purity,0.8274695534506089,8,diag GaussianMixture,12000,40892,1478,claim
+45,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.5219667448708463,6,diag GaussianMixture,12000,40892,1478,claim
+45,ML P01b train-only AE embedding,manual_flag,purity,0.8694181326116374,6,diag GaussianMixture,12000,40892,1478,claim
+45,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.34662976195074713,6,diag GaussianMixture,12000,40892,1478,claim
+45,ML P01b train-only AE embedding,peak_group,purity,0.6847090663058186,6,diag GaussianMixture,12000,40892,1478,claim
+45,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4965443083692098,8,diag GaussianMixture,12000,40892,1478,forbidden_release_diagnostic
+45,forbidden all-data release-style embedding,manual_flag,purity,0.9282814614343707,8,diag GaussianMixture,12000,40892,1478,forbidden_release_diagnostic
+45,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.4937261108362193,8,diag GaussianMixture,12000,40892,1478,forbidden_release_diagnostic
+45,forbidden all-data release-style embedding,peak_group,purity,0.8247631935047361,8,diag GaussianMixture,12000,40892,1478,forbidden_release_diagnostic
+46,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.4232635182772148,8,diag GaussianMixture,12000,41908,462,claim
+46,traditional hand+PCA morphology,manual_flag,purity,0.9783549783549783,8,diag GaussianMixture,12000,41908,462,claim
+46,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.27217915876999504,8,diag GaussianMixture,12000,41908,462,claim
+46,traditional hand+PCA morphology,peak_group,purity,0.7402597402597403,8,diag GaussianMixture,12000,41908,462,claim
+46,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.5564313508266634,8,diag GaussianMixture,12000,41908,462,claim
+46,ML P01b train-only AE embedding,manual_flag,purity,0.961038961038961,8,diag GaussianMixture,12000,41908,462,claim
+46,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.3012974104081033,8,diag GaussianMixture,12000,41908,462,claim
+46,ML P01b train-only AE embedding,peak_group,purity,0.7575757575757576,8,diag GaussianMixture,12000,41908,462,claim
+46,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.2653136193090456,8,diag GaussianMixture,12000,41908,462,forbidden_release_diagnostic
+46,forbidden all-data release-style embedding,manual_flag,purity,0.9588744588744589,8,diag GaussianMixture,12000,41908,462,forbidden_release_diagnostic
+46,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.356945600098877,8,diag GaussianMixture,12000,41908,462,forbidden_release_diagnostic
+46,forbidden all-data release-style embedding,peak_group,purity,0.7575757575757576,8,diag GaussianMixture,12000,41908,462,forbidden_release_diagnostic
+47,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.4597452654147105,7,diag GaussianMixture,12000,41760,610,claim
+47,traditional hand+PCA morphology,manual_flag,purity,0.9573770491803278,7,diag GaussianMixture,12000,41760,610,claim
+47,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.3902904186810269,7,diag GaussianMixture,12000,41760,610,claim
+47,traditional hand+PCA morphology,peak_group,purity,0.7868852459016393,7,diag GaussianMixture,12000,41760,610,claim
+47,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.37393662801189526,5,diag GaussianMixture,12000,41760,610,claim
+47,ML P01b train-only AE embedding,manual_flag,purity,0.9147540983606557,5,diag GaussianMixture,12000,41760,610,claim
+47,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.24805827620385407,5,diag GaussianMixture,12000,41760,610,claim
+47,ML P01b train-only AE embedding,peak_group,purity,0.7442622950819672,5,diag GaussianMixture,12000,41760,610,claim
+47,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.3032755255381734,8,diag GaussianMixture,12000,41760,610,forbidden_release_diagnostic
+47,forbidden all-data release-style embedding,manual_flag,purity,0.9442622950819672,8,diag GaussianMixture,12000,41760,610,forbidden_release_diagnostic
+47,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.34961666617557935,8,diag GaussianMixture,12000,41760,610,forbidden_release_diagnostic
+47,forbidden all-data release-style embedding,peak_group,purity,0.8049180327868852,8,diag GaussianMixture,12000,41760,610,forbidden_release_diagnostic
+48,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5423863077413293,8,diag GaussianMixture,12000,41113,1257,claim
+48,traditional hand+PCA morphology,manual_flag,purity,0.9323786793953859,8,diag GaussianMixture,12000,41113,1257,claim
+48,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.49423636168307367,8,diag GaussianMixture,12000,41113,1257,claim
+48,traditional hand+PCA morphology,peak_group,purity,0.8273667462211615,8,diag GaussianMixture,12000,41113,1257,claim
+48,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.4030803578342357,6,diag GaussianMixture,12000,41113,1257,claim
+48,ML P01b train-only AE embedding,manual_flag,purity,0.8194112967382657,6,diag GaussianMixture,12000,41113,1257,claim
+48,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.25186130532519685,6,diag GaussianMixture,12000,41113,1257,claim
+48,ML P01b train-only AE embedding,peak_group,purity,0.6308671439936356,6,diag GaussianMixture,12000,41113,1257,claim
+48,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5219614649376934,8,diag GaussianMixture,12000,41113,1257,forbidden_release_diagnostic
+48,forbidden all-data release-style embedding,manual_flag,purity,0.9451073985680191,8,diag GaussianMixture,12000,41113,1257,forbidden_release_diagnostic
+48,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5264452230790554,8,diag GaussianMixture,12000,41113,1257,forbidden_release_diagnostic
+48,forbidden all-data release-style embedding,peak_group,purity,0.8385043754972156,8,diag GaussianMixture,12000,41113,1257,forbidden_release_diagnostic
+49,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5309042380707445,8,diag GaussianMixture,12000,41074,1296,claim
+49,traditional hand+PCA morphology,manual_flag,purity,0.9205246913580247,8,diag GaussianMixture,12000,41074,1296,claim
+49,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5052747078633958,8,diag GaussianMixture,12000,41074,1296,claim
+49,traditional hand+PCA morphology,peak_group,purity,0.8526234567901234,8,diag GaussianMixture,12000,41074,1296,claim
+49,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.5564396253928985,7,diag GaussianMixture,12000,41074,1296,claim
+49,ML P01b train-only AE embedding,manual_flag,purity,0.878858024691358,7,diag GaussianMixture,12000,41074,1296,claim
+49,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.3283601536468015,7,diag GaussianMixture,12000,41074,1296,claim
+49,ML P01b train-only AE embedding,peak_group,purity,0.7075617283950617,7,diag GaussianMixture,12000,41074,1296,claim
+49,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5607620657683687,8,diag GaussianMixture,12000,41074,1296,forbidden_release_diagnostic
+49,forbidden all-data release-style embedding,manual_flag,purity,0.9436728395061729,8,diag GaussianMixture,12000,41074,1296,forbidden_release_diagnostic
+49,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5799637710753852,8,diag GaussianMixture,12000,41074,1296,forbidden_release_diagnostic
+49,forbidden all-data release-style embedding,peak_group,purity,0.8688271604938271,8,diag GaussianMixture,12000,41074,1296,forbidden_release_diagnostic
+50,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.559800507754803,8,diag GaussianMixture,12000,41000,1370,claim
+50,traditional hand+PCA morphology,manual_flag,purity,0.9379562043795621,8,diag GaussianMixture,12000,41000,1370,claim
+50,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5362771361023058,8,diag GaussianMixture,12000,41000,1370,claim
+50,traditional hand+PCA morphology,peak_group,purity,0.8503649635036497,8,diag GaussianMixture,12000,41000,1370,claim
+50,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.6005558103222137,5,diag GaussianMixture,12000,41000,1370,claim
+50,ML P01b train-only AE embedding,manual_flag,purity,0.9021897810218978,5,diag GaussianMixture,12000,41000,1370,claim
+50,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.361624276928799,5,diag GaussianMixture,12000,41000,1370,claim
+50,ML P01b train-only AE embedding,peak_group,purity,0.7160583941605839,5,diag GaussianMixture,12000,41000,1370,claim
+50,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5240962604350327,8,diag GaussianMixture,12000,41000,1370,forbidden_release_diagnostic
+50,forbidden all-data release-style embedding,manual_flag,purity,0.9481751824817518,8,diag GaussianMixture,12000,41000,1370,forbidden_release_diagnostic
+50,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5336961653044181,8,diag GaussianMixture,12000,41000,1370,forbidden_release_diagnostic
+50,forbidden all-data release-style embedding,peak_group,purity,0.8532846715328467,8,diag GaussianMixture,12000,41000,1370,forbidden_release_diagnostic
+51,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5315901851890782,8,diag GaussianMixture,12000,41380,990,claim
+51,traditional hand+PCA morphology,manual_flag,purity,0.9272727272727272,8,diag GaussianMixture,12000,41380,990,claim
+51,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5173082014114531,8,diag GaussianMixture,12000,41380,990,claim
+51,traditional hand+PCA morphology,peak_group,purity,0.8353535353535354,8,diag GaussianMixture,12000,41380,990,claim
+51,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.6878941206398085,8,diag GaussianMixture,12000,41380,990,claim
+51,ML P01b train-only AE embedding,manual_flag,purity,0.9414141414141414,8,diag GaussianMixture,12000,41380,990,claim
+51,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.5695767098241076,8,diag GaussianMixture,12000,41380,990,claim
+51,ML P01b train-only AE embedding,peak_group,purity,0.8111111111111111,8,diag GaussianMixture,12000,41380,990,claim
+51,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4999831924551188,8,diag GaussianMixture,12000,41380,990,forbidden_release_diagnostic
+51,forbidden all-data release-style embedding,manual_flag,purity,0.9383838383838384,8,diag GaussianMixture,12000,41380,990,forbidden_release_diagnostic
+51,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.48952472836350075,8,diag GaussianMixture,12000,41380,990,forbidden_release_diagnostic
+51,forbidden all-data release-style embedding,peak_group,purity,0.8181818181818182,8,diag GaussianMixture,12000,41380,990,forbidden_release_diagnostic
+52,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.562398631466478,8,diag GaussianMixture,12000,41661,709,claim
+52,traditional hand+PCA morphology,manual_flag,purity,0.9703808180535967,8,diag GaussianMixture,12000,41661,709,claim
+52,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4868171957833759,8,diag GaussianMixture,12000,41661,709,claim
+52,traditional hand+PCA morphology,peak_group,purity,0.8011283497884344,8,diag GaussianMixture,12000,41661,709,claim
+52,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.4756785809506125,8,diag GaussianMixture,12000,41661,709,claim
+52,ML P01b train-only AE embedding,manual_flag,purity,0.9055007052186178,8,diag GaussianMixture,12000,41661,709,claim
+52,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.2894047794114027,8,diag GaussianMixture,12000,41661,709,claim
+52,ML P01b train-only AE embedding,peak_group,purity,0.68688293370945,8,diag GaussianMixture,12000,41661,709,claim
+52,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.4640802782739776,8,diag GaussianMixture,12000,41661,709,forbidden_release_diagnostic
+52,forbidden all-data release-style embedding,manual_flag,purity,0.9478138222849083,8,diag GaussianMixture,12000,41661,709,forbidden_release_diagnostic
+52,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.4598266756919136,8,diag GaussianMixture,12000,41661,709,forbidden_release_diagnostic
+52,forbidden all-data release-style embedding,peak_group,purity,0.7912552891396333,8,diag GaussianMixture,12000,41661,709,forbidden_release_diagnostic
+53,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5453415859343836,8,diag GaussianMixture,12000,41054,1316,claim
+53,traditional hand+PCA morphology,manual_flag,purity,0.9399696048632219,8,diag GaussianMixture,12000,41054,1316,claim
+53,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5046931731163129,8,diag GaussianMixture,12000,41054,1316,claim
+53,traditional hand+PCA morphology,peak_group,purity,0.8594224924012158,8,diag GaussianMixture,12000,41054,1316,claim
+53,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.499328155025332,8,diag GaussianMixture,12000,41054,1316,claim
+53,ML P01b train-only AE embedding,manual_flag,purity,0.8738601823708206,8,diag GaussianMixture,12000,41054,1316,claim
+53,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.31476211260853304,8,diag GaussianMixture,12000,41054,1316,claim
+53,ML P01b train-only AE embedding,peak_group,purity,0.7112462006079028,8,diag GaussianMixture,12000,41054,1316,claim
+53,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5047292696114902,8,diag GaussianMixture,12000,41054,1316,forbidden_release_diagnostic
+53,forbidden all-data release-style embedding,manual_flag,purity,0.9384498480243161,8,diag GaussianMixture,12000,41054,1316,forbidden_release_diagnostic
+53,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.4987473592411598,8,diag GaussianMixture,12000,41054,1316,forbidden_release_diagnostic
+53,forbidden all-data release-style embedding,peak_group,purity,0.85790273556231,8,diag GaussianMixture,12000,41054,1316,forbidden_release_diagnostic
+54,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5266348681091665,8,diag GaussianMixture,12000,41059,1311,claim
+54,traditional hand+PCA morphology,manual_flag,purity,0.9321128909229596,8,diag GaussianMixture,12000,41059,1311,claim
+54,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5150774954893759,8,diag GaussianMixture,12000,41059,1311,claim
+54,traditional hand+PCA morphology,peak_group,purity,0.8649885583524027,8,diag GaussianMixture,12000,41059,1311,claim
+54,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.4078392026353936,4,diag GaussianMixture,12000,41059,1311,claim
+54,ML P01b train-only AE embedding,manual_flag,purity,0.8443935926773455,4,diag GaussianMixture,12000,41059,1311,claim
+54,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.24286595073407516,4,diag GaussianMixture,12000,41059,1311,claim
+54,ML P01b train-only AE embedding,peak_group,purity,0.6758199847444699,4,diag GaussianMixture,12000,41059,1311,claim
+54,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.535312587366035,8,diag GaussianMixture,12000,41059,1311,forbidden_release_diagnostic
+54,forbidden all-data release-style embedding,manual_flag,purity,0.954233409610984,8,diag GaussianMixture,12000,41059,1311,forbidden_release_diagnostic
+54,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5264275393780651,8,diag GaussianMixture,12000,41059,1311,forbidden_release_diagnostic
+54,forbidden all-data release-style embedding,peak_group,purity,0.8665141113653699,8,diag GaussianMixture,12000,41059,1311,forbidden_release_diagnostic
+55,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5935375171737298,7,diag GaussianMixture,12000,41268,1102,claim
+55,traditional hand+PCA morphology,manual_flag,purity,0.9401088929219601,7,diag GaussianMixture,12000,41268,1102,claim
+55,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5620913497882403,7,diag GaussianMixture,12000,41268,1102,claim
+55,traditional hand+PCA morphology,peak_group,purity,0.8112522686025408,7,diag GaussianMixture,12000,41268,1102,claim
+55,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.45465785698021133,5,diag GaussianMixture,12000,41268,1102,claim
+55,ML P01b train-only AE embedding,manual_flag,purity,0.8738656987295825,5,diag GaussianMixture,12000,41268,1102,claim
+55,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.28993887097292714,5,diag GaussianMixture,12000,41268,1102,claim
+55,ML P01b train-only AE embedding,peak_group,purity,0.6833030852994555,5,diag GaussianMixture,12000,41268,1102,claim
+55,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5402321204444657,8,diag GaussianMixture,12000,41268,1102,forbidden_release_diagnostic
+55,forbidden all-data release-style embedding,manual_flag,purity,0.9618874773139746,8,diag GaussianMixture,12000,41268,1102,forbidden_release_diagnostic
+55,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5153091295317019,8,diag GaussianMixture,12000,41268,1102,forbidden_release_diagnostic
+55,forbidden all-data release-style embedding,peak_group,purity,0.8067150635208712,8,diag GaussianMixture,12000,41268,1102,forbidden_release_diagnostic
+56,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.52663091540502,8,diag GaussianMixture,12000,40877,1493,claim
+56,traditional hand+PCA morphology,manual_flag,purity,0.9256530475552579,8,diag GaussianMixture,12000,40877,1493,claim
+56,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4947691321387161,8,diag GaussianMixture,12000,40877,1493,claim
+56,traditional hand+PCA morphology,peak_group,purity,0.8365706630944407,8,diag GaussianMixture,12000,40877,1493,claim
+56,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.19867367892776666,5,diag GaussianMixture,12000,40877,1493,claim
+56,ML P01b train-only AE embedding,manual_flag,purity,0.7427997320830543,5,diag GaussianMixture,12000,40877,1493,claim
+56,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.1319969654568133,5,diag GaussianMixture,12000,40877,1493,claim
+56,ML P01b train-only AE embedding,peak_group,purity,0.5365036838580041,5,diag GaussianMixture,12000,40877,1493,claim
+56,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5118196623350176,8,diag GaussianMixture,12000,40877,1493,forbidden_release_diagnostic
+56,forbidden all-data release-style embedding,manual_flag,purity,0.9504353650368386,8,diag GaussianMixture,12000,40877,1493,forbidden_release_diagnostic
+56,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5208381114579018,8,diag GaussianMixture,12000,40877,1493,forbidden_release_diagnostic
+56,forbidden all-data release-style embedding,peak_group,purity,0.8379102478231748,8,diag GaussianMixture,12000,40877,1493,forbidden_release_diagnostic
+57,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.5357229079486316,8,diag GaussianMixture,12000,41067,1303,claim
+57,traditional hand+PCA morphology,manual_flag,purity,0.9286262471220261,8,diag GaussianMixture,12000,41067,1303,claim
+57,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5298432806158471,8,diag GaussianMixture,12000,41067,1303,claim
+57,traditional hand+PCA morphology,peak_group,purity,0.8557175748273216,8,diag GaussianMixture,12000,41067,1303,claim
+57,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.5227237292209503,4,diag GaussianMixture,12000,41067,1303,claim
+57,ML P01b train-only AE embedding,manual_flag,purity,0.8925556408288565,4,diag GaussianMixture,12000,41067,1303,claim
+57,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.3784683248887086,4,diag GaussianMixture,12000,41067,1303,claim
+57,ML P01b train-only AE embedding,peak_group,purity,0.7214121258633922,4,diag GaussianMixture,12000,41067,1303,claim
+57,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5012282029336271,8,diag GaussianMixture,12000,41067,1303,forbidden_release_diagnostic
+57,forbidden all-data release-style embedding,manual_flag,purity,0.9370683039140445,8,diag GaussianMixture,12000,41067,1303,forbidden_release_diagnostic
+57,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5564386685709144,8,diag GaussianMixture,12000,41067,1303,forbidden_release_diagnostic
+57,forbidden all-data release-style embedding,peak_group,purity,0.8572524942440521,8,diag GaussianMixture,12000,41067,1303,forbidden_release_diagnostic
+58,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.522211450917755,8,diag GaussianMixture,12000,41071,1299,claim
+58,traditional hand+PCA morphology,manual_flag,purity,0.9361046959199384,8,diag GaussianMixture,12000,41071,1299,claim
+58,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.5190673628925565,8,diag GaussianMixture,12000,41071,1299,claim
+58,traditional hand+PCA morphology,peak_group,purity,0.9091608929946112,8,diag GaussianMixture,12000,41071,1299,claim
+58,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.4915441325392022,4,diag GaussianMixture,12000,41071,1299,claim
+58,ML P01b train-only AE embedding,manual_flag,purity,0.8714395688991532,4,diag GaussianMixture,12000,41071,1299,claim
+58,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.3209575142314395,4,diag GaussianMixture,12000,41071,1299,claim
+58,ML P01b train-only AE embedding,peak_group,purity,0.7505773672055427,4,diag GaussianMixture,12000,41071,1299,claim
+58,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.52207529076859,8,diag GaussianMixture,12000,41071,1299,forbidden_release_diagnostic
+58,forbidden all-data release-style embedding,manual_flag,purity,0.9345650500384911,8,diag GaussianMixture,12000,41071,1299,forbidden_release_diagnostic
+58,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.565017607855284,8,diag GaussianMixture,12000,41071,1299,forbidden_release_diagnostic
+58,forbidden all-data release-style embedding,peak_group,purity,0.9091608929946112,8,diag GaussianMixture,12000,41071,1299,forbidden_release_diagnostic
+59,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.381963352750873,8,diag GaussianMixture,12000,40570,1800,claim
+59,traditional hand+PCA morphology,manual_flag,purity,0.9444444444444444,8,diag GaussianMixture,12000,40570,1800,claim
+59,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.37583676106247305,8,diag GaussianMixture,12000,40570,1800,claim
+59,traditional hand+PCA morphology,peak_group,purity,0.8561111111111112,8,diag GaussianMixture,12000,40570,1800,claim
+59,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.46651229144102024,8,diag GaussianMixture,12000,40570,1800,claim
+59,ML P01b train-only AE embedding,manual_flag,purity,0.9527777777777777,8,diag GaussianMixture,12000,40570,1800,claim
+59,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.38152719404538754,8,diag GaussianMixture,12000,40570,1800,claim
+59,ML P01b train-only AE embedding,peak_group,purity,0.8205555555555556,8,diag GaussianMixture,12000,40570,1800,claim
+59,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.3962946559779629,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+59,forbidden all-data release-style embedding,manual_flag,purity,0.9622222222222222,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+59,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.46358234648681107,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+59,forbidden all-data release-style embedding,peak_group,purity,0.8655555555555555,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+60,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.43950205694406297,8,diag GaussianMixture,12000,40570,1800,claim
+60,traditional hand+PCA morphology,manual_flag,purity,0.9611111111111111,8,diag GaussianMixture,12000,40570,1800,claim
+60,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.43897975282550133,8,diag GaussianMixture,12000,40570,1800,claim
+60,traditional hand+PCA morphology,peak_group,purity,0.8572222222222222,8,diag GaussianMixture,12000,40570,1800,claim
+60,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.581144714172997,5,diag GaussianMixture,12000,40570,1800,claim
+60,ML P01b train-only AE embedding,manual_flag,purity,0.9316666666666666,5,diag GaussianMixture,12000,40570,1800,claim
+60,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.30368423366905095,5,diag GaussianMixture,12000,40570,1800,claim
+60,ML P01b train-only AE embedding,peak_group,purity,0.7577777777777778,5,diag GaussianMixture,12000,40570,1800,claim
+60,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.44612981683837427,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+60,forbidden all-data release-style embedding,manual_flag,purity,0.9627777777777777,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+60,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.506713364749938,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+60,forbidden all-data release-style embedding,peak_group,purity,0.8611111111111112,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+61,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.43580565295495216,7,diag GaussianMixture,12000,40570,1800,claim
+61,traditional hand+PCA morphology,manual_flag,purity,0.9466666666666667,7,diag GaussianMixture,12000,40570,1800,claim
+61,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.38603578220900725,7,diag GaussianMixture,12000,40570,1800,claim
+61,traditional hand+PCA morphology,peak_group,purity,0.8361111111111111,7,diag GaussianMixture,12000,40570,1800,claim
+61,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.14273281611150615,4,diag GaussianMixture,12000,40570,1800,claim
+61,ML P01b train-only AE embedding,manual_flag,purity,0.8727777777777778,4,diag GaussianMixture,12000,40570,1800,claim
+61,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.07158854792970891,4,diag GaussianMixture,12000,40570,1800,claim
+61,ML P01b train-only AE embedding,peak_group,purity,0.6855555555555556,4,diag GaussianMixture,12000,40570,1800,claim
+61,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.3997169178689819,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+61,forbidden all-data release-style embedding,manual_flag,purity,0.955,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+61,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.43614464112476453,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+61,forbidden all-data release-style embedding,peak_group,purity,0.8422222222222222,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+62,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.4112565220266628,7,diag GaussianMixture,12000,40570,1800,claim
+62,traditional hand+PCA morphology,manual_flag,purity,0.9411111111111111,7,diag GaussianMixture,12000,40570,1800,claim
+62,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.40140066928997015,7,diag GaussianMixture,12000,40570,1800,claim
+62,traditional hand+PCA morphology,peak_group,purity,0.8538888888888889,7,diag GaussianMixture,12000,40570,1800,claim
+62,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.5256468664134757,4,diag GaussianMixture,12000,40570,1800,claim
+62,ML P01b train-only AE embedding,manual_flag,purity,0.9011111111111111,4,diag GaussianMixture,12000,40570,1800,claim
+62,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.23946499334697322,4,diag GaussianMixture,12000,40570,1800,claim
+62,ML P01b train-only AE embedding,peak_group,purity,0.7344444444444445,4,diag GaussianMixture,12000,40570,1800,claim
+62,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.40667644101502703,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+62,forbidden all-data release-style embedding,manual_flag,purity,0.9511111111111111,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+62,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.4682580022948097,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+62,forbidden all-data release-style embedding,peak_group,purity,0.8422222222222222,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+63,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.4385861721426004,8,diag GaussianMixture,12000,40570,1800,claim
+63,traditional hand+PCA morphology,manual_flag,purity,0.9444444444444444,8,diag GaussianMixture,12000,40570,1800,claim
+63,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.43465914831476443,8,diag GaussianMixture,12000,40570,1800,claim
+63,traditional hand+PCA morphology,peak_group,purity,0.8738888888888889,8,diag GaussianMixture,12000,40570,1800,claim
+63,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.345445386596556,7,diag GaussianMixture,12000,40570,1800,claim
+63,ML P01b train-only AE embedding,manual_flag,purity,0.8977777777777778,7,diag GaussianMixture,12000,40570,1800,claim
+63,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.22230900129949077,7,diag GaussianMixture,12000,40570,1800,claim
+63,ML P01b train-only AE embedding,peak_group,purity,0.7688888888888888,7,diag GaussianMixture,12000,40570,1800,claim
+63,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.46185262997785387,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+63,forbidden all-data release-style embedding,manual_flag,purity,0.9577777777777777,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+63,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.49974846373454834,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+63,forbidden all-data release-style embedding,peak_group,purity,0.8705555555555555,8,diag GaussianMixture,12000,40570,1800,forbidden_release_diagnostic
+64,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.47517938995844156,8,diag GaussianMixture,12000,40749,1621,claim
+64,traditional hand+PCA morphology,manual_flag,purity,0.9555829734731647,8,diag GaussianMixture,12000,40749,1621,claim
+64,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.4545916292384944,8,diag GaussianMixture,12000,40749,1621,claim
+64,traditional hand+PCA morphology,peak_group,purity,0.8852560148056755,8,diag GaussianMixture,12000,40749,1621,claim
+64,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.5274852566765208,5,diag GaussianMixture,12000,40749,1621,claim
+64,ML P01b train-only AE embedding,manual_flag,purity,0.9216533004318322,5,diag GaussianMixture,12000,40749,1621,claim
+64,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.30575491984562003,5,diag GaussianMixture,12000,40749,1621,claim
+64,ML P01b train-only AE embedding,peak_group,purity,0.7816162862430598,5,diag GaussianMixture,12000,40749,1621,claim
+64,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.45033755602992276,7,diag GaussianMixture,12000,40749,1621,forbidden_release_diagnostic
+64,forbidden all-data release-style embedding,manual_flag,purity,0.9315237507711289,7,diag GaussianMixture,12000,40749,1621,forbidden_release_diagnostic
+64,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5477010873176033,7,diag GaussianMixture,12000,40749,1621,forbidden_release_diagnostic
+64,forbidden all-data release-style embedding,peak_group,purity,0.8889574336829118,7,diag GaussianMixture,12000,40749,1621,forbidden_release_diagnostic
+65,traditional hand+PCA morphology,manual_flag,adjusted_mutual_info,0.4921336686953843,7,diag GaussianMixture,12000,41042,1328,claim
+65,traditional hand+PCA morphology,manual_flag,purity,0.9359939759036144,7,diag GaussianMixture,12000,41042,1328,claim
+65,traditional hand+PCA morphology,peak_group,adjusted_mutual_info,0.48512143665792234,7,diag GaussianMixture,12000,41042,1328,claim
+65,traditional hand+PCA morphology,peak_group,purity,0.8878012048192772,7,diag GaussianMixture,12000,41042,1328,claim
+65,ML P01b train-only AE embedding,manual_flag,adjusted_mutual_info,0.3387908909250991,7,diag GaussianMixture,12000,41042,1328,claim
+65,ML P01b train-only AE embedding,manual_flag,purity,0.8283132530120482,7,diag GaussianMixture,12000,41042,1328,claim
+65,ML P01b train-only AE embedding,peak_group,adjusted_mutual_info,0.1795760694324573,7,diag GaussianMixture,12000,41042,1328,claim
+65,ML P01b train-only AE embedding,peak_group,purity,0.6852409638554217,7,diag GaussianMixture,12000,41042,1328,claim
+65,forbidden all-data release-style embedding,manual_flag,adjusted_mutual_info,0.5003949757029429,8,diag GaussianMixture,12000,41042,1328,forbidden_release_diagnostic
+65,forbidden all-data release-style embedding,manual_flag,purity,0.9457831325301205,8,diag GaussianMixture,12000,41042,1328,forbidden_release_diagnostic
+65,forbidden all-data release-style embedding,peak_group,adjusted_mutual_info,0.5419698760847798,8,diag GaussianMixture,12000,41042,1328,forbidden_release_diagnostic
+65,forbidden all-data release-style embedding,peak_group,purity,0.8945783132530121,8,diag GaussianMixture,12000,41042,1328,forbidden_release_diagnostic

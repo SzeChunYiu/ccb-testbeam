@@ -1,0 +1,160 @@
+{
+  "study": "S03f",
+  "ticket": "1781020221.987.29815c7f",
+  "worker": "testbeam-laptop-3",
+  "title": "Sample-I downstream sparse-topology validation of S03e single-stave proxy",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "s03e_sample_ii_reference_pass": true,
+    "sample_ii_reference_checks": [
+      {
+        "method": "cfd20_base",
+        "value": 3.1502666141199165,
+        "report_value": 3.1502666141199165,
+        "delta_ns": 0.0,
+        "pass": true
+      },
+      {
+        "method": "ml_single_stave_proxy",
+        "value": 2.8290554427248673,
+        "report_value": 2.8290554427248673,
+        "delta_ns": 0.0,
+        "pass": true
+      },
+      {
+        "method": "traditional_template_phase",
+        "value": 2.7414145300852155,
+        "report_value": 2.7414145300852155,
+        "delta_ns": 0.0,
+        "pass": true
+      }
+    ]
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "bootstrap_unit": "heldout_run",
+    "sample": "Sample I analysis"
+  },
+  "topology": {
+    "min_selected_downstream_staves": 2,
+    "events_ge2_downstream": 2130,
+    "events_exactly_2_downstream": 1480,
+    "events_all_3_downstream": 650,
+    "fraction_exactly_2": 0.6948356807511737,
+    "pair_residuals": 3430
+  },
+  "baseline": {
+    "method": "cfd20_base",
+    "value": 2.837808846149073,
+    "ci": [
+      2.7530076572567785,
+      2.924432683165366
+    ]
+  },
+  "traditional": {
+    "method": "train_run_template_phase_single_stave",
+    "value": 2.6619907640122333,
+    "ci": [
+      2.1871939860804672,
+      2.7709839627116644
+    ],
+    "gain_vs_cfd20_ns": 0.17581808213683958,
+    "uses_event_residual_target": false,
+    "uses_other_stave_timing_features": false
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_on_single_stave_proxy_target",
+    "value": 2.513568247878959,
+    "ci": [
+      2.2137777462185624,
+      2.6499593995174195
+    ],
+    "gain_vs_cfd20_ns": 0.324240598270114,
+    "proxy_target": "cfd20_minus_train_template_phase",
+    "uses_event_residual_target": false,
+    "uses_other_stave_timing_features": false
+  },
+  "sample_ii_comparison": [
+    {
+      "method": "cfd20_base",
+      "sample_i_sparse_sigma68_ns": 2.837808846149073,
+      "sample_i_ci_low": 2.7530076572567785,
+      "sample_i_ci_high": 2.924432683165366,
+      "sample_ii_s03e_sigma68_ns": 3.1502666141199165,
+      "sample_ii_ci_low": 3.0246200862795556,
+      "sample_ii_ci_high": 3.272949602890979,
+      "delta_sample_i_minus_sample_ii_ns": -0.31245776797084357
+    },
+    {
+      "method": "ml_shuffled_proxy_control",
+      "sample_i_sparse_sigma68_ns": 8.44258672316349,
+      "sample_i_ci_low": 8.168028189152375,
+      "sample_i_ci_high": 8.733264292877195,
+      "sample_ii_s03e_sigma68_ns": 4.118875454613034,
+      "sample_ii_ci_low": 3.773708441298945,
+      "sample_ii_ci_high": 4.350188363200748,
+      "delta_sample_i_minus_sample_ii_ns": 4.323711268550456
+    },
+    {
+      "method": "ml_single_stave_proxy",
+      "sample_i_sparse_sigma68_ns": 2.513568247878959,
+      "sample_i_ci_low": 2.2137777462185624,
+      "sample_i_ci_high": 2.6499593995174195,
+      "sample_ii_s03e_sigma68_ns": 2.8290554427248673,
+      "sample_ii_ci_low": 2.6870854392111987,
+      "sample_ii_ci_high": 2.9632253010205285,
+      "delta_sample_i_minus_sample_ii_ns": -0.31548719484590837
+    },
+    {
+      "method": "traditional_amp_isotonic_proxy",
+      "sample_i_sparse_sigma68_ns": 5.147968065926602,
+      "sample_i_ci_low": 4.863707205763094,
+      "sample_i_ci_high": 5.425929962524248,
+      "sample_ii_s03e_sigma68_ns": 4.4471059487912195,
+      "sample_ii_ci_low": 4.2332796659878404,
+      "sample_ii_ci_high": 4.6037277126585625,
+      "delta_sample_i_minus_sample_ii_ns": 0.7008621171353822
+    },
+    {
+      "method": "traditional_template_phase",
+      "sample_i_sparse_sigma68_ns": 2.6619907640122333,
+      "sample_i_ci_low": 2.1871939860804672,
+      "sample_i_ci_high": 2.7709839627116644,
+      "sample_ii_s03e_sigma68_ns": 2.7414145300852155,
+      "sample_ii_ci_low": 2.68944645179862,
+      "sample_ii_ci_high": 2.992319268962799,
+      "delta_sample_i_minus_sample_ii_ns": -0.07942376607298218
+    }
+  ],
+  "leakage": {
+    "split_by_run": true,
+    "flag_count": 0,
+    "ml_shuffled_proxy_sigma68_ns": 8.44258672316349,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "event_residuals_used_only_for_final_scoring": true,
+    "too_good_flag": false
+  },
+  "verdict": "sample_i_sparse_proxy_supported_with_topology_caveat",
+  "input_sha256": "9aaf66aae13ed6e0e5e41d35cf5f0bb02fae691fd2398d8c5864c301777179e6",
+  "git_commit": "ee9d14af182800f03c7484a0f87ea4faabd640ad",
+  "follow_up_ticket_appended": false,
+  "follow_up_skip_reason": "Skipped: sparse downstream topology follow-ups duplicate this ticket or existing S03/S05 single-stave timing studies.",
+  "next_tickets": []
+}

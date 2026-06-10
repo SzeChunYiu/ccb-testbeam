@@ -1,0 +1,17 @@
+metric_family,selection_method,metric,ci_low,ci_high,n_boot_valid
+duplicate_rate,cross_method_union,duplicate_run_event_rate,0.09375,0.1875,5000
+duplicate_rate,cross_method_union,duplicate_run_stave_pulse_rate,0.0625,0.1328125,5000
+duplicate_rate,ml_pca_ae_isolation,duplicate_run_event_rate,0.0,0.09375,5000
+duplicate_rate,ml_pca_ae_isolation,duplicate_run_stave_pulse_rate,0.0,0.0,5000
+duplicate_rate,traditional_robust_template,duplicate_run_event_rate,0.0,0.046875,5000
+duplicate_rate,traditional_robust_template,duplicate_run_stave_pulse_rate,0.0,0.0,5000
+inter_reviewer,all_gallery,agreement_rate,0.828125,0.83984375,5000
+inter_reviewer,all_gallery,cohen_kappa,0.7137989778534923,0.7373869253007553,5000
+precision,ml_pca_ae_isolation,curated_any,0.9453125,0.9921875,5000
+precision,ml_pca_ae_isolation,novel_broad_template_mismatch,0.0,0.0,3371
+precision,ml_pca_ae_isolation,novel_delayed_peak,1.0,1.0,5000
+precision,ml_pca_ae_isolation,novel_early_pretrigger,0.0,0.0,5000
+precision,ml_pca_ae_isolation,target_any,0.35514018691588783,0.4945054945054945,5000
+precision,traditional_robust_template,curated_any,0.9453125,0.9921875,5000
+precision,traditional_robust_template,novel_early_pretrigger,0.13432835820895522,0.28125,5000
+precision,traditional_robust_template,target_any,0.13432835820895522,0.28125,5000

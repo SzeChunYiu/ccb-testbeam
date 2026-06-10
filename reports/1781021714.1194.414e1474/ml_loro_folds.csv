@@ -1,0 +1,5 @@
+test_run,n_train,n_test,train_runs,test_run_in_train,classes_seen
+42,192,64,"57,64,65",False,"baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,pileup_or_long_tail,unassigned_common"
+57,192,64,"42,64,65",False,"baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,pileup_or_long_tail,unassigned_common"
+64,192,64,"42,57,65",False,"baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,pileup_or_long_tail,unassigned_common"
+65,192,64,"42,57,64",False,"baseline_excursion,dropout,novel_broad_template_mismatch,novel_delayed_peak,novel_early_pretrigger,unassigned_common"

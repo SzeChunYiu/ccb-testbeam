@@ -1,0 +1,2 @@
+quantity,expected,reproduced,pass
+selected B-stave pulses,640737,640737,True

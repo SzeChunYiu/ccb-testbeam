@@ -1,0 +1,249 @@
+{
+  "study": "S14g",
+  "ticket_id": "0000000003.1.g4energy",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "n_pulse_rows_after_valid_charge_cut": 640540,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "geant4_anchor": {
+    "dedx_table": "/home/billy/ccb-geant4/dedx_p_in_CD2.txt",
+    "dedx_second_column_units": "GeV/mm",
+    "dedx_to_mev_per_cm": 10000.0,
+    "beam_energy_mev": 190.0,
+    "stave_thickness_cm": 1.0,
+    "nominal_geometry": "center_4cm",
+    "birks_fit": {
+      "kB_cm_per_MeV": 0.0485,
+      "alpha_adc_per_MeV": 15123.540571357118,
+      "median_abs_log_charge_error": 0.2600660389546121
+    }
+  },
+  "winner": {
+    "method": "geant4_birks_lookup",
+    "family": "traditional_geant4_birks",
+    "res68_frac": 0.0402476780185758,
+    "res68_ci95": [
+      0.038856418352992535,
+      0.0416112695450198
+    ],
+    "bias_frac": -0.023105417371831,
+    "mae_mev": 0.22820765571671336,
+    "mae_mev_ci95": [
+      0.20179490690897936,
+      0.2636144898755849
+    ]
+  },
+  "all_metrics": [
+    {
+      "method": "geant4_birks_lookup",
+      "family": "traditional_geant4_birks",
+      "n": 332852,
+      "bias_frac": -0.0231054174,
+      "res68_frac": 0.040247678,
+      "mae_mev": 0.2282076557,
+      "res68_ci95": [
+        0.0388564184,
+        0.0416112695
+      ],
+      "bias_ci95": [
+        -0.0266770121,
+        -0.0182345062
+      ],
+      "mae_mev_ci95": [
+        0.2017949069,
+        0.2636144899
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "bias_frac": -0.0167978973,
+      "res68_frac": 0.0580915061,
+      "mae_mev": 0.2142591479,
+      "res68_ci95": [
+        0.049973162,
+        0.0687029378
+      ],
+      "bias_ci95": [
+        -0.0203007498,
+        -0.0098806114
+      ],
+      "mae_mev_ci95": [
+        0.1885142069,
+        0.2465328926
+      ]
+    },
+    {
+      "method": "physics_residual_mlp",
+      "family": "neural_physics_residual",
+      "n": 332852,
+      "bias_frac": -0.0145969604,
+      "res68_frac": 0.058682585,
+      "mae_mev": 0.2219019299,
+      "res68_ci95": [
+        0.049038834,
+        0.0778925895
+      ],
+      "bias_ci95": [
+        -0.0209136107,
+        -0.0047850862
+      ],
+      "mae_mev_ci95": [
+        0.1929294175,
+        0.2713311701
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "bias_frac": -0.0236552039,
+      "res68_frac": 0.0966917384,
+      "mae_mev": 0.2973852297,
+      "res68_ci95": [
+        0.0887206568,
+        0.1172774571
+      ],
+      "bias_ci95": [
+        -0.0356708869,
+        0.0003975704
+      ],
+      "mae_mev_ci95": [
+        0.2732089442,
+        0.329539878
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "bias_frac": -6.5609e-05,
+      "res68_frac": 0.1077539773,
+      "mae_mev": 0.3397846618,
+      "res68_ci95": [
+        0.0909663117,
+        0.1531769469
+      ],
+      "bias_ci95": [
+        -0.0066085957,
+        0.0092172284
+      ],
+      "mae_mev_ci95": [
+        0.2988784015,
+        0.4070635901
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "bias_frac": 0.0205958663,
+      "res68_frac": 0.1832730998,
+      "mae_mev": 0.5376367509,
+      "res68_ci95": [
+        0.1427930343,
+        0.2443283244
+      ],
+      "bias_ci95": [
+        0.0043524792,
+        0.0294325143
+      ],
+      "mae_mev_ci95": [
+        0.4819908459,
+        0.6179530056
+      ]
+    },
+    {
+      "method": "old_power_law",
+      "family": "traditional_empirical",
+      "n": 332852,
+      "bias_frac": -0.2976044988,
+      "res68_frac": 0.462323774,
+      "mae_mev": 1.6560618503,
+      "res68_ci95": [
+        0.4441351423,
+        0.5669155015
+      ],
+      "bias_ci95": [
+        -0.3525215996,
+        -0.1297680872
+      ],
+      "mae_mev_ci95": [
+        1.5631289534,
+        1.7354074097
+      ]
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "raw_reproduction_exact",
+      "value": "640737 of 640737",
+      "pass": true
+    },
+    {
+      "check": "ml_features_exclude_odd_charge_run_event_id",
+      "value": "multiplicity,depth_idx,even_total_charge,even_max_amp,saturated_count,log_charge_stave_0,log_charge_stave_1,log_charge_stave_2,log_charge_stave_3,log_amp_stave_0,log_amp_stave_1,log_amp_stave_2,log_amp_stave_3,hit_stave_0,hit_stave_1,hit_stave_2,hit_stave_3,peak_stave_0,peak_stave_1,peak_stave_2,peak_stave_3,early_charge_fraction,late_charge_fraction",
+      "pass": true
+    },
+    {
+      "check": "cnn_status",
+      "value": "trained",
+      "pass": true
+    },
+    {
+      "check": "birks_kB_cm_per_MeV",
+      "value": "0.0485",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. The GEANT4/Birks traditional lookup achieved res68=0.04025; the old empirical power law achieved res68=0.46232. Across the ML/NN panel, the held-out winner is geant4_birks_lookup with res68=0.04025. The MeV scale is GEANT4/dE/dx anchored but remains conditional on the assumed B-stave thickness, geometry centers, and duplicate-readout closure target rather than external truth.",
+  "runtime_sec": 30.3
+}

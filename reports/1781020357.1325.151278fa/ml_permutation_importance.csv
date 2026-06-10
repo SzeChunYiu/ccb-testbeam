@@ -1,0 +1,10 @@
+feature,importance_mean,importance_std
+multiplicity,0.024330471305028956,0.0
+saturated_count,0.02273701224135051,0.0
+any_saturated,0.02267121632690482,0.0
+depth_idx,0.02019703362819509,0.0
+observed_energy_proxy,0.007482720363049567,0.0
+ml_energy_proxy,0.004860067478731808,0.0
+even_max_amp,0.0020629843768958855,0.0
+traditional_energy_proxy,0.001421155103995096,0.0
+even_total_charge,0.0007681025925019186,0.0

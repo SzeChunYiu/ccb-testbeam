@@ -1,0 +1,14 @@
+method,heldout_auc,heldout_average_precision,heldout_tail_rate,shuffled_target_heldout_auc,run_cv_auc_mean,run_cv_average_precision_mean,feature,importance
+rf_tail_classifier,0.9071815718157181,0.5058874399540517,0.016,0.6106594399277325,0.9203625739759039,0.6141734830585115,,
+top_importance,,,,,,,num__delta_positive_area_over_amp,0.11879493496138879
+top_importance,,,,,,,num__delta_width20_samples,0.11585122218156316
+top_importance,,,,,,,num__delta_area_over_amp,0.1059241045854313
+top_importance,,,,,,,num__delta_late_abs_adc,0.08142216999738909
+top_importance,,,,,,,num__abs_delta_lowering_adc,0.0695389603093595
+top_importance,,,,,,,num__max_width50_samples,0.05257833452509801
+top_importance,,,,,,,num__max_lowering_adc,0.04958230564047698
+top_importance,,,,,,,num__max_pretrigger_ptp_adc,0.03732361922572925
+top_importance,,,,,,,num__max_pretrigger_abs_adc,0.035675322530662815
+top_importance,,,,,,,num__sum_lowering_adc,0.03456848206271754
+top_importance,,,,,,,num__max_tail_area_frac,0.03355884491741444
+top_importance,,,,,,,num__mean_area_over_amp,0.03330809874875802

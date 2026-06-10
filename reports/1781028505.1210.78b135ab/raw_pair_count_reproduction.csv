@@ -1,0 +1,7 @@
+pair,n_pair_rows,report_value,delta,tolerance,pass
+B2-B4,26387,26387,0,0,True
+B2-B6,12626,12626,0,0,True
+B2-B8,4943,4943,0,0,True
+B4-B6,12196,12196,0,0,True
+B4-B8,4542,4542,0,0,True
+B6-B8,4790,4790,0,0,True

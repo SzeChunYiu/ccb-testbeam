@@ -1,0 +1,352 @@
+{
+  "study": "S03i",
+  "ticket": "1781029233.703.5ff5517d",
+  "worker": "testbeam-laptop-2",
+  "title": "q_template amplitude-matched tail-label isolation",
+  "raw_reproduction_pass": true,
+  "s03d_headline_reproduction_pass": true,
+  "s03d_headline_reproduction": [
+    {
+      "quantity": "S03d traditional q_template ROC-AUC",
+      "report_value": 0.712233,
+      "reproduced": 0.7122325341582884,
+      "delta": -4.6584171164987254e-07,
+      "tolerance": 0.003,
+      "pass": true
+    },
+    {
+      "quantity": "S03d q_template RF ROC-AUC",
+      "report_value": 0.898047,
+      "reproduced": 0.899819541118845,
+      "delta": 0.0017725411188449502,
+      "tolerance": 0.003,
+      "pass": true
+    }
+  ],
+  "matched_dataset": [
+    {
+      "quantity": "parent control events",
+      "value": 10156.0
+    },
+    {
+      "quantity": "clean events D_t<3 ns",
+      "value": 2155.0
+    },
+    {
+      "quantity": "tail events D_t>51 ns",
+      "value": 72.0
+    },
+    {
+      "quantity": "extreme benchmark events",
+      "value": 2227.0
+    },
+    {
+      "quantity": "matched benchmark events",
+      "value": 1763.0
+    },
+    {
+      "quantity": "matched tail events",
+      "value": 49.0
+    },
+    {
+      "quantity": "matched tail fraction",
+      "value": 0.027793533749290982
+    }
+  ],
+  "traditional": {
+    "method": "traditional_matched_q_hand",
+    "roc_auc": 0.8082537565784773,
+    "roc_auc_ci_low": 0.7500856653075242,
+    "roc_auc_ci_high": 0.8499835109225923,
+    "average_precision": 0.23177445626293755,
+    "ap_ci_low": 0.12355859647102062,
+    "ap_ci_high": 0.4496641287082879,
+    "brier": 0.026156744382677264,
+    "brier_ci_low": 0.02082868140640274,
+    "brier_ci_high": 0.03571356063684416,
+    "ece": 0.01811544531472957,
+    "ece_ci_low": 0.0077087726521639765,
+    "ece_ci_high": 0.03634959564693334
+  },
+  "ml": {
+    "method": "ml_qtemplate_shape_rf",
+    "roc_auc": 0.9614697687709856,
+    "roc_auc_ci_low": 0.9471552235324568,
+    "roc_auc_ci_high": 0.9836116264687693,
+    "average_precision": 0.577322485257456,
+    "ap_ci_low": 0.44406327231553705,
+    "ap_ci_high": 0.664527569094575,
+    "brier": 0.02795457140766318,
+    "brier_ci_low": 0.023842014832734026,
+    "brier_ci_high": 0.03297908440015013,
+    "ece": 0.05886566731825303,
+    "ece_ci_low": 0.046299381782022295,
+    "ece_ci_high": 0.07226363511862584
+  },
+  "amplitude_only": {
+    "method": "amplitude_only_rf",
+    "roc_auc": 0.8517014740551996,
+    "roc_auc_ci_low": 0.8394660105704392,
+    "roc_auc_ci_high": 0.8943654646324549,
+    "average_precision": 0.2836900177672842,
+    "ap_ci_low": 0.2345236782055476,
+    "ap_ci_high": 0.3896799673926699,
+    "brier": 0.04618679761654922,
+    "brier_ci_low": 0.04100902081545537,
+    "brier_ci_high": 0.05140478677573803,
+    "ece": 0.10590482631779292,
+    "ece_ci_low": 0.08557311547759737,
+    "ece_ci_high": 0.1279902444760658
+  },
+  "ml_minus_traditional": [
+    {
+      "delta": "ml_minus_traditional_roc_auc",
+      "value": 0.15321601219250824,
+      "ci_low": 0.11441774008745932,
+      "ci_high": 0.22153631434859633
+    },
+    {
+      "delta": "ml_minus_traditional_average_precision",
+      "value": 0.3455480289945184,
+      "ci_low": 0.21091933022752657,
+      "ci_high": 0.4868016582373953
+    },
+    {
+      "delta": "ml_minus_traditional_brier",
+      "value": 0.0017978270249859145,
+      "ci_low": -0.005141108805120725,
+      "ci_high": 0.0072389859249807065
+    },
+    {
+      "delta": "ml_minus_traditional_ece",
+      "value": 0.04075022200352346,
+      "ci_low": 0.034397166396723494,
+      "ci_high": 0.04395302069886839
+    }
+  ],
+  "fixed_clean_efficiency_summary": [
+    {
+      "method": "amplitude_only_rf",
+      "clean_efficiency": 0.9492415402567095,
+      "clean_efficiency_ci_low": 0.9325068870523416,
+      "clean_efficiency_ci_high": 0.964929371651242,
+      "tail_rejection": 0.5306122448979592,
+      "tail_rejection_ci_low": 0.4782091097308489,
+      "tail_rejection_ci_high": 0.6155405405405404,
+      "n_clean": 1714,
+      "n_tail": 49
+    },
+    {
+      "method": "downstream_only_q_rf",
+      "clean_efficiency": 0.9515752625437572,
+      "clean_efficiency_ci_low": 0.9397506925207756,
+      "clean_efficiency_ci_high": 0.96035734226689,
+      "tail_rejection": 0.4489795918367347,
+      "tail_rejection_ci_low": 0.37142857142857144,
+      "tail_rejection_ci_high": 0.5121951219512195,
+      "n_clean": 1714,
+      "n_tail": 49
+    },
+    {
+      "method": "ml_qtemplate_shape_rf",
+      "clean_efficiency": 0.9486581096849475,
+      "clean_efficiency_ci_low": 0.9355623100303951,
+      "clean_efficiency_ci_high": 0.9598080383923215,
+      "tail_rejection": 0.8367346938775511,
+      "tail_rejection_ci_low": 0.7878787878787878,
+      "tail_rejection_ci_high": 0.8863636363636364,
+      "n_clean": 1714,
+      "n_tail": 49
+    },
+    {
+      "method": "shuffled_label_q_rf",
+      "clean_efficiency": 0.9504084014002334,
+      "clean_efficiency_ci_low": 0.9220415030846887,
+      "clean_efficiency_ci_high": 0.9693128752501667,
+      "tail_rejection": 0.02040816326530612,
+      "tail_rejection_ci_low": 0.0,
+      "tail_rejection_ci_high": 0.08333333333333333,
+      "n_clean": 1714,
+      "n_tail": 49
+    },
+    {
+      "method": "topology_only_rf",
+      "clean_efficiency": 0.7777129521586931,
+      "clean_efficiency_ci_low": 0.47496554892053283,
+      "clean_efficiency_ci_high": 1.0,
+      "tail_rejection": 0.2653061224489796,
+      "tail_rejection_ci_low": 0.0,
+      "tail_rejection_ci_high": 0.5909090909090909,
+      "n_clean": 1714,
+      "n_tail": 49
+    },
+    {
+      "method": "traditional_matched_q_hand",
+      "clean_efficiency": 0.9469078179696616,
+      "clean_efficiency_ci_low": 0.9027027027027027,
+      "clean_efficiency_ci_high": 0.985543369890329,
+      "tail_rejection": 0.3673469387755102,
+      "tail_rejection_ci_low": 0.25,
+      "tail_rejection_ci_high": 0.4411764705882353,
+      "n_clean": 1714,
+      "n_tail": 49
+    }
+  ],
+  "pair_residual_deltas": [
+    {
+      "method": "traditional_matched_q_hand",
+      "base_sigma68_ns": 1.501598207569122,
+      "base_full_rms_ns": 12.05428039086015,
+      "base_tail_frac_abs_gt5ns": 0.020936429387133613,
+      "base_n_pair_values": 2627,
+      "kept_sigma68_ns": 1.4947310287952427,
+      "kept_full_rms_ns": 9.490037944930261,
+      "kept_tail_frac_abs_gt5ns": 0.013900245298446443,
+      "kept_n_pair_values": 2446,
+      "delta_sigma68_ns": -0.006867178773879434,
+      "delta_full_rms_ns": -2.5642424459298887,
+      "delta_tail_frac_abs_gt5ns": -0.00703618408868717,
+      "delta_sigma68_ns_ci_low": -0.02098463558197019,
+      "delta_sigma68_ns_ci_high": 0.015948451042177014,
+      "delta_full_rms_ns_ci_low": -4.033792099390869,
+      "delta_full_rms_ns_ci_high": -1.0380454815573206,
+      "delta_tail_frac_abs_gt5ns_ci_low": -0.011681671758363776,
+      "delta_tail_frac_abs_gt5ns_ci_high": -0.0025087528208875467
+    },
+    {
+      "method": "ml_qtemplate_shape_rf",
+      "base_sigma68_ns": 1.501598207569122,
+      "base_full_rms_ns": 12.05428039086015,
+      "base_tail_frac_abs_gt5ns": 0.020936429387133613,
+      "base_n_pair_values": 2627,
+      "kept_sigma68_ns": 1.4779239301681517,
+      "kept_full_rms_ns": 3.796293361722266,
+      "kept_tail_frac_abs_gt5ns": 0.0032626427406199023,
+      "kept_n_pair_values": 2452,
+      "delta_sigma68_ns": -0.02367427740097039,
+      "delta_full_rms_ns": -8.257987029137883,
+      "delta_tail_frac_abs_gt5ns": -0.01767378664651371,
+      "delta_sigma68_ns_ci_low": -0.033183389902115,
+      "delta_sigma68_ns_ci_high": -0.009372294510602465,
+      "delta_full_rms_ns_ci_low": -10.19060814240124,
+      "delta_full_rms_ns_ci_high": -6.844481420760636,
+      "delta_tail_frac_abs_gt5ns_ci_low": -0.023096209835893187,
+      "delta_tail_frac_abs_gt5ns_ci_high": -0.012443172660243333
+    },
+    {
+      "method": "amplitude_only_rf",
+      "base_sigma68_ns": 1.501598207569122,
+      "base_full_rms_ns": 12.05428039086015,
+      "base_tail_frac_abs_gt5ns": 0.020936429387133613,
+      "base_n_pair_values": 2627,
+      "kept_sigma68_ns": 1.469530156183243,
+      "kept_full_rms_ns": 9.154270205625265,
+      "kept_tail_frac_abs_gt5ns": 0.010922330097087379,
+      "kept_n_pair_values": 2472,
+      "delta_sigma68_ns": -0.03206805138587909,
+      "delta_full_rms_ns": -2.900010185234885,
+      "delta_tail_frac_abs_gt5ns": -0.010014099290046234,
+      "delta_sigma68_ns_ci_low": -0.052098706722259136,
+      "delta_sigma68_ns_ci_high": -0.021042929697036916,
+      "delta_full_rms_ns_ci_low": -3.799572414949724,
+      "delta_full_rms_ns_ci_high": -2.427959968459021,
+      "delta_tail_frac_abs_gt5ns_ci_low": -0.0132706034197408,
+      "delta_tail_frac_abs_gt5ns_ci_high": -0.007422796757976813
+    },
+    {
+      "method": "downstream_only_q_rf",
+      "base_sigma68_ns": 1.501598207569122,
+      "base_full_rms_ns": 12.05428039086015,
+      "base_tail_frac_abs_gt5ns": 0.020936429387133613,
+      "base_n_pair_values": 2627,
+      "kept_sigma68_ns": 1.4955545740127565,
+      "kept_full_rms_ns": 9.599735995276783,
+      "kept_tail_frac_abs_gt5ns": 0.01282051282051282,
+      "kept_n_pair_values": 2496,
+      "delta_sigma68_ns": -0.006043633556365613,
+      "delta_full_rms_ns": -2.4545443955833672,
+      "delta_tail_frac_abs_gt5ns": -0.008115916566620793,
+      "delta_sigma68_ns_ci_low": -0.014635934495926817,
+      "delta_sigma68_ns_ci_high": 0.005790676689148233,
+      "delta_full_rms_ns_ci_low": -3.0183508564834085,
+      "delta_full_rms_ns_ci_high": -1.8072370629102341,
+      "delta_tail_frac_abs_gt5ns_ci_low": -0.010044355627585533,
+      "delta_tail_frac_abs_gt5ns_ci_high": -0.0051013277428371764
+    },
+    {
+      "method": "shuffled_label_q_rf",
+      "base_sigma68_ns": 1.501598207569122,
+      "base_full_rms_ns": 12.05428039086015,
+      "base_tail_frac_abs_gt5ns": 0.020936429387133613,
+      "base_n_pair_values": 2627,
+      "kept_sigma68_ns": 1.5125998957633975,
+      "kept_full_rms_ns": 12.119795049760917,
+      "kept_tail_frac_abs_gt5ns": 0.021369212504946576,
+      "kept_n_pair_values": 2527,
+      "delta_sigma68_ns": 0.011001688194275383,
+      "delta_full_rms_ns": 0.06551465890076713,
+      "delta_tail_frac_abs_gt5ns": 0.00043278311781296333,
+      "delta_sigma68_ns_ci_low": 0.001739135551452442,
+      "delta_sigma68_ns_ci_high": 0.02037404422760014,
+      "delta_full_rms_ns_ci_low": -0.26386233978238505,
+      "delta_full_rms_ns_ci_high": 0.22622197563445573,
+      "delta_tail_frac_abs_gt5ns_ci_low": -0.0003037511352411773,
+      "delta_tail_frac_abs_gt5ns_ci_high": 0.0008669278402235294
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "flag": false,
+      "detail": "Leave-one-run-out folds use disjoint run ids."
+    },
+    {
+      "check": "main_feature_forbidden_columns",
+      "value": 0.0,
+      "flag": false,
+      "detail": "Main columns exclude run/event id, D_t, pair residuals, and absolute amplitude: ['q_b2', 'q_b4', 'q_b6', 'q_b8', 'q_mean', 'q_max', 'q_std', 'q_ds_mean', 'q_ds_max', 'q_ds_std', 'q_b2_minus_ds_mean', 'q_ds_span', 'peak_ds_mean', 'peak_ds_max', 'high_amp_boundary', 'near_adc_boundary']"
+    },
+    {
+      "check": "matched_rows_fraction",
+      "value": 0.7916479568926807,
+      "flag": false,
+      "detail": "Rows retained after train/heldout matched-stratum support."
+    },
+    {
+      "check": "shuffled_label_auc",
+      "value": 0.36260805372323957,
+      "flag": false,
+      "detail": "Labels shuffled inside training runs."
+    },
+    {
+      "check": "amplitude_only_auc",
+      "value": 0.8517014740551996,
+      "flag": false,
+      "detail": "Amplitude nuisance sentinel."
+    },
+    {
+      "check": "topology_only_auc",
+      "value": 0.565135855975996,
+      "flag": false,
+      "detail": "Topology-only sentinel."
+    },
+    {
+      "check": "downstream_only_auc",
+      "value": 0.8759436096492272,
+      "flag": false,
+      "detail": "Expected to remain strong if downstream waveform quality drives the label."
+    },
+    {
+      "check": "leaky_dt_auc",
+      "value": 0.9999999999999999,
+      "flag": false,
+      "detail": "Forbidden label-defining ceiling."
+    }
+  ],
+  "verdict": "q_template_signal_survives_matching",
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "0a0365c6816c1cfe722066a2951fd3c6c326800c",
+  "runtime_sec": 59.89,
+  "next_tickets": []
+}

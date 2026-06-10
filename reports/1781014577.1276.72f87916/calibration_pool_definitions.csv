@@ -1,0 +1,5 @@
+pool,description,uses_sample_iv_leave_one_analysis,fixed_sample_iv_runs,sample_iii_runs
+run64_only,Original S18 Sample IV run 64 calibration pool only.,False,64,
+sample_iii_early,Early Sample III calibration-period A-stack runs only.,False,,"31,32,33,34,35,36,37,39,40,41,42"
+sample_iii_late,Late Sample III analysis-period A-stack runs only.,False,,"44,45,46,47,48,49,50,51,52,53,54,55,56,57"
+sample_iii_mixed,"All available Sample III A-stack runs, combining early and late run families.",False,,"31,32,33,34,35,36,37,39,40,41,42,44,45,46,47,48,49,50,51,52,53,54,55,56,57"

@@ -1,0 +1,60 @@
+{
+  "study": "S05e-rate",
+  "ticket": "1781017418.11875.10723959",
+  "worker": "testbeam-laptop-4",
+  "title": "Run-level A/B coincidence-rate model versus B covariance",
+  "reproduced": true,
+  "primary_metric": {
+    "name": "held-out run A-any given B-any coincidence-rate RMSE",
+    "traditional_rmse_pp": 10.428213975356284,
+    "traditional_ci_pp": [
+      0.6280380248663536,
+      19.786994525755837
+    ],
+    "ml_rmse_pp": 0.906665265092066,
+    "ml_ci_pp": [
+      0.4853746285175864,
+      1.2948292099479115
+    ],
+    "ml_minus_traditional_rmse_delta_pp": -8.12875216747622,
+    "delta_ci_pp": [
+      -18.044161976697406,
+      0.0018197545597547
+    ]
+  },
+  "covariance_comparison": {
+    "ml_predicted_rate_vs_b2_cov_spearman": 0.2917293233082706,
+    "ci": [
+      -0.2546696111845308,
+      0.7396069458170477
+    ]
+  },
+  "finding": "Run-level A/B coincidence rate is mainly a sparse acceptance/current-target observable and does not explain the large B2-local residual covariance.",
+  "leakage": [
+    {
+      "check": "run_split_overlap",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "each prediction holds out one complete run"
+    },
+    {
+      "check": "features_exclude_forbidden_columns",
+      "value": 0.0,
+      "pass": true,
+      "interpretation": "rate-model features exclude run id, event id, A-stack counts, and label columns"
+    },
+    {
+      "check": "shuffled_target_control_worse_than_ml",
+      "value": 0.8854580112133543,
+      "pass": true,
+      "interpretation": "ExtraTrees trained on shuffled run-rate targets should not match the nominal held-out model"
+    },
+    {
+      "check": "ml_not_suspiciously_perfect",
+      "value": 0.906665265092066,
+      "pass": true,
+      "interpretation": "a near-zero held-out run-level rate error would imply leakage or a deterministic target"
+    }
+  ],
+  "git_commit": "e9a6f7b4ad39b23107c5e5b09b8206dd81aac8cf"
+}

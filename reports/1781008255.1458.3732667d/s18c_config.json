@@ -1,0 +1,64 @@
+{
+  "study": "S18c",
+  "ticket": "1781008255.1458.3732667d",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781008255.1458.3732667d",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "cfd_fraction": 0.20,
+  "random_seed": 18183,
+  "bootstrap_resamples": 1000,
+  "gaussian_core_bins": 40,
+  "sample_iii_calib_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+  "sample_iii_analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "sample_iii_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "sample_iv_calib_runs": [64],
+  "sample_iv_analysis_runs": [58, 59, 60, 61, 62, 63, 65],
+  "training_pool_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 64, 58, 59, 60, 61, 62, 63, 65],
+  "calibration_pools": {
+    "run64_only": {
+      "description": "Original S18 Sample IV run 64 calibration pool only.",
+      "sample_iii": [],
+      "sample_iv_fixed": [64],
+      "sample_iv_leave_one_analysis": false
+    },
+    "sample_iii_only": {
+      "description": "All available Sample III A-stack runs, no Sample IV calibration rows.",
+      "sample_iii": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+      "sample_iv_fixed": [],
+      "sample_iv_leave_one_analysis": false
+    },
+    "mixed_period": {
+      "description": "Sample III plus run 64, testing whether adding pre-period statistics changes the run64 calibration.",
+      "sample_iii": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+      "sample_iv_fixed": [64],
+      "sample_iv_leave_one_analysis": false
+    },
+    "sample_iv_leave_one": {
+      "description": "Sample IV only: run 64 plus all non-held-out Sample IV analysis runs for each held-out run.",
+      "sample_iii": [],
+      "sample_iv_fixed": [64],
+      "sample_iv_leave_one_analysis": true
+    }
+  },
+  "astack": {
+    "file_prefix": "hrda",
+    "staves": {
+      "A1": 0,
+      "A3": 4
+    }
+  },
+  "expected_reproduction": {
+    "sample_iv_n_pairs": 127,
+    "sample_iv_robust_width_ns": 1.7936257228944265,
+    "sample_iv_core_sigma_ns": 1.9921758801207758,
+    "robust_width_tolerance_ns": 0.001,
+    "core_sigma_tolerance_ns": 0.001
+  },
+  "fit_windows_ns": [1.5, 2.0, 2.5, 3.0],
+  "ml": {
+    "alphas": [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "command": "/home/billy/anaconda3/bin/python reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/s16d_forced_random_pedestal_run_search.py --config reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/s16d_config.json",
+  "config": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/s16d_config.json",
+  "git_commit": "6fb20b0b409b36d14664fac98e38296061685206",
+  "random_seed": 160401,
+  "environment": {
+    "python": "3.7.6",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "uproot": "5.0.9"
+  },
+  "inputs": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/input_sha256.csv",
+  "outputs": [
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/REPORT.md",
+      "sha256": "a0f2b954be0536bbc4ba8946727a91c32880866b39f091ccbabd3f887b5d010a",
+      "bytes": 4204
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/fig_run_candidate_scores.png",
+      "sha256": "a34a6fff19a904acafb77ae973b6953f333a57c8d46e16fca3028085b5779d9e",
+      "bytes": 70522
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/fig_traditional_run_fractions.png",
+      "sha256": "8d0dccde8f4b0db941d9fe6fa758ea4d52e8204222cab854528a27d72ace2cae",
+      "bytes": 79231
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/filesystem_runlog_scan.csv",
+      "sha256": "3d6bdc6728f1193f41dc4c2f8409b6bf35f0afb277e46c141fbf1066e370912c",
+      "bytes": 16378
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/input_sha256.csv",
+      "sha256": "97e6a1874fc932ca3e630ab505ff1d7d2ad2d994298aae5acfdc4b020a12f0e8",
+      "bytes": 14649
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/leakage_checks.csv",
+      "sha256": "3b33a67e9ce036c1078f9acf338daa49fa5b2dfb95726cd354594b6289e57804",
+      "bytes": 395
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/ml_cv_scan.csv",
+      "sha256": "839aa6c4e0140dcd7053bb2498b3670b65191fb2f132788268ea14ad9457986d",
+      "bytes": 232
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/ml_event_sample.csv.gz",
+      "sha256": "1efbb1b4f0ea0829e810e01c3c30bbf5eeed3f696adde4efa7c70a4f55c95253",
+      "bytes": 1466852
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/ml_heldout_summary.csv",
+      "sha256": "3812654f007a0a19e4002f4ed8003116b4e42d3149137da38675e535ee13d76c",
+      "bytes": 396
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/ml_run_scores.csv",
+      "sha256": "57acb618a8606fbbea8b91faa8dbba495fbd3d7fdc3e80f34b4a37a012fa211e",
+      "bytes": 2874
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/reproduction_match_table.csv",
+      "sha256": "a28bb5887275d040ead2516146ded5a2d3543dd504b0d4415b1048b38e255449",
+      "bytes": 134
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/result.json",
+      "sha256": "1314dc59ceb6f94ce78470eb9dd612a206d403be7e53dade5c66cd6814f4ade8",
+      "bytes": 5121
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/run_waveform_summary.csv",
+      "sha256": "352e85a1558b7f9e79f2c734662861555d745ba426986fa41b598de90e544de5",
+      "bytes": 6544
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/s16d_config.json",
+      "sha256": "f449157c86925a200ab806d2dadd65aac85413d4709d0c2f2258ca6fe0b24c93",
+      "bytes": 1113
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/s16d_forced_random_pedestal_run_search.py",
+      "sha256": "2f4ea9bac27f55cb66a54e6a2131c4a3906e9555d6ce61f92dd620d43b538c71",
+      "bytes": 31436
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/traditional_candidates.csv",
+      "sha256": "08f669c4c74fef065baee6817eadff8213af86d54101fc71a28cde222f88c2e2",
+      "bytes": 9129
+    },
+    {
+      "path": "reports/1781007587.2596.601c7510__s16d_forced_random_pedestal_run_search/trigger_audit.csv",
+      "sha256": "3a6697e7d5b434a872382c54499f26217084b1d716d192c589abb93e367453d7",
+      "bytes": 5391
+    }
+  ],
+  "runtime_seconds": 21.996036529541016
+}

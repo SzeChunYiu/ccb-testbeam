@@ -1,0 +1,5 @@
+quantity,observed_total,run_bootstrap_ci_low,run_bootstrap_ci_high
+median_first_four_selected,640737,530586.15,764202.325
+dynamic_range_selected,706373,584042.125,827534.625
+dynamic_only,65636,52204.5,79250.9
+median_only,0,0.0,0.0

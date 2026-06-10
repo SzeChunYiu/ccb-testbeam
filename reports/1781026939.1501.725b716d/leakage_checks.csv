@@ -1,0 +1,17 @@
+check,value,flag,note
+ml_heldout_runs_excluded_from_training,1.0,False,Each ML prediction is made by a model trained without that source run.
+identifier_current_and_downstream_excluded_from_features,1.0,False,"Feature matrices exclude run, event number, group/current, and downstream target."
+p09a_and_p09b_labels_are_not_ml_truth,1.0,False,P09a deterministic taxa and P09b fixed adjudication-rubric labels enter only as explanatory strata/features.
+pred_downstream_base_current_auc,0.5638378027399009,False,Flags if a propagated score almost identifies beam current.
+pred_downstream_p09a_current_auc,0.5501568455030595,False,Flags if a propagated score almost identifies beam current.
+pred_downstream_p09b_current_auc,0.5528930036009301,False,Flags if a propagated score almost identifies beam current.
+resid_log_p04_charge_base_current_auc,0.5711759128907077,False,Flags if a propagated score almost identifies beam current.
+resid_log_p04_charge_p09a_current_auc,0.5575635913744945,False,Flags if a propagated score almost identifies beam current.
+resid_log_p04_charge_p09b_current_auc,0.5612946797640106,False,Flags if a propagated score almost identifies beam current.
+heldout_downstream_p09a_model_mean_auc,0.8830639750701925,False,Flags an implausibly strong downstream classifier under run holdout.
+heldout_downstream_p09b_model_mean_auc,0.8827975632343434,False,Flags an implausibly strong downstream classifier under run holdout.
+p09a_curated_rate_high_minus_low,0.00890981278725278,False,Flags if label prevalence nearly encodes current.
+p09b_curated_rate_high_minus_low,0.00891824111486187,False,Flags if label prevalence nearly encodes current.
+p09a_exactly_equals_p09b_rate,0.9765848321700469,False,Flags if P09b adjudicated labels are effectively a copy of P09a.
+p09b_gallery_ref_overlap_rows,42.0,False,Only gallery pulses matching the S10 reference stave can be compared exactly.
+p09b_script_matches_gallery_consensus,1.0,False,Checks full-sample rubric reproduces stored P09b labels on exact overlap.

@@ -1,0 +1,431 @@
+{
+  "study": "S13sim",
+  "ticket_id": "0000000013.1.simdataaudit",
+  "worker": "testbeam-laptop-3",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "simulation": {
+    "path": "/home/billy/ccb-geant4/output_krakow_1M.root",
+    "tree": "hibeam",
+    "events": 1000000,
+    "mapped_layer_hits": 1279440,
+    "layer_mapping": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "alternative_layer_mapping": {
+      "B2": 1,
+      "B4": 3,
+      "B6": 5,
+      "B8": 7
+    }
+  },
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "winner": {
+    "method": "geant4_birks_lookup",
+    "family": "traditional_geant4_birks",
+    "res68_frac": 0.0402476780185758,
+    "res68_ci95": [
+      0.038896342752029654,
+      0.04142014485204257
+    ],
+    "bias_frac": -0.023105417371831,
+    "mae_mev": 0.22820765571671336,
+    "mae_mev_ci95": [
+      0.20529338400673086,
+      0.2613519711088781
+    ]
+  },
+  "all_metrics": [
+    {
+      "method": "geant4_birks_lookup",
+      "family": "traditional_geant4_birks",
+      "n": 332852,
+      "bias_frac": -0.0231054174,
+      "res68_frac": 0.040247678,
+      "mae_mev": 0.2282076557,
+      "res68_ci95": [
+        0.0388963428,
+        0.0414201449
+      ],
+      "bias_ci95": [
+        -0.0267206355,
+        -0.0183087592
+      ],
+      "mae_mev_ci95": [
+        0.205293384,
+        0.2613519711
+      ]
+    },
+    {
+      "method": "physics_residual_mlp",
+      "family": "neural_physics_residual_new_architecture",
+      "n": 332852,
+      "bias_frac": 0.005257956,
+      "res68_frac": 0.0525622588,
+      "mae_mev": 0.1991144365,
+      "res68_ci95": [
+        0.0461519149,
+        0.0649309627
+      ],
+      "bias_ci95": [
+        0.0002819001,
+        0.0100552912
+      ],
+      "mae_mev_ci95": [
+        0.1806241746,
+        0.2284108346
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "bias_frac": -0.0161148307,
+      "res68_frac": 0.0560193583,
+      "mae_mev": 0.2068907823,
+      "res68_ci95": [
+        0.0473647504,
+        0.0680587246
+      ],
+      "bias_ci95": [
+        -0.0208166355,
+        -0.0058722189
+      ],
+      "mae_mev_ci95": [
+        0.1832904377,
+        0.2349622217
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "bias_frac": -0.0024077719,
+      "res68_frac": 0.0664047725,
+      "mae_mev": 0.2300030407,
+      "res68_ci95": [
+        0.0493403744,
+        0.0963876919
+      ],
+      "bias_ci95": [
+        -0.0093031697,
+        0.0120202437
+      ],
+      "mae_mev_ci95": [
+        0.1920589791,
+        0.2818419151
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "bias_frac": -0.0200264635,
+      "res68_frac": 0.0966070416,
+      "mae_mev": 0.2979063116,
+      "res68_ci95": [
+        0.0858331856,
+        0.1207218807
+      ],
+      "bias_ci95": [
+        -0.0305756708,
+        0.0019529024
+      ],
+      "mae_mev_ci95": [
+        0.2708536496,
+        0.335111023
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "bias_frac": -0.0018721304,
+      "res68_frac": 0.1137528162,
+      "mae_mev": 0.3397317597,
+      "res68_ci95": [
+        0.0778744619,
+        0.1567998497
+      ],
+      "bias_ci95": [
+        -0.0100008053,
+        0.0141440858
+      ],
+      "mae_mev_ci95": [
+        0.3004974972,
+        0.3985195374
+      ]
+    },
+    {
+      "method": "old_power_law",
+      "family": "traditional_empirical",
+      "n": 332852,
+      "bias_frac": -0.2976345588,
+      "res68_frac": 0.4623746634,
+      "mae_mev": 1.6562913444,
+      "res68_ci95": [
+        0.4468228606,
+        0.547733974
+      ],
+      "bias_ci95": [
+        -0.3481452548,
+        -0.1365767745
+      ],
+      "mae_mev_ci95": [
+        1.5498205644,
+        1.7391144358
+      ]
+    }
+  ],
+  "key_observable_comparison": [
+    {
+      "observable": "pulse_amplitude",
+      "stave": "B2",
+      "units": "ADC vs MeV",
+      "data_n": 579229,
+      "sim_n": 371089,
+      "data_median": 5753.0,
+      "data_q16": 2842.5,
+      "data_q84": 8003.0,
+      "sim_median": 18.6148948669,
+      "sim_q16": 9.9370198822,
+      "sim_q84": 41.6933322144,
+      "quantile_distance": 1.0612003865,
+      "data_median_run_ci95": [
+        4694.325,
+        6229.7875
+      ]
+    },
+    {
+      "observable": "pulse_energy_estimate",
+      "stave": "B2",
+      "units": "MeV",
+      "data_n": 579229,
+      "sim_n": 371089,
+      "data_median": 3.910153347,
+      "data_q16": 1.5431876825,
+      "data_q84": 4.8633102465,
+      "sim_median": 18.6148948669,
+      "sim_q16": 9.9370198822,
+      "sim_q84": 41.6933322144,
+      "quantile_distance": 0.6098529858,
+      "data_median_run_ci95": [
+        3.3686140968,
+        4.177189073
+      ]
+    },
+    {
+      "observable": "pulse_amplitude",
+      "stave": "B4",
+      "units": "ADC vs MeV",
+      "data_n": 36115,
+      "sim_n": 175489,
+      "data_median": 2937.5,
+      "data_q16": 1889.0,
+      "data_q84": 4072.5,
+      "sim_median": 14.9007768631,
+      "sim_q16": 10.5884788132,
+      "sim_q84": 39.8428413391,
+      "quantile_distance": 1.3571323231,
+      "data_median_run_ci95": [
+        2878.5625,
+        2997.15
+      ]
+    },
+    {
+      "observable": "pulse_energy_estimate",
+      "stave": "B4",
+      "units": "MeV",
+      "data_n": 36115,
+      "sim_n": 175489,
+      "data_median": 1.6934251638,
+      "data_q16": 0.8120339604,
+      "data_q84": 2.8015827669,
+      "sim_median": 14.9007768631,
+      "sim_q16": 10.5884788132,
+      "sim_q84": 39.8428413391,
+      "quantile_distance": 0.6212036982,
+      "data_median_run_ci95": [
+        1.5869799915,
+        1.7692953209
+      ]
+    },
+    {
+      "observable": "pulse_amplitude",
+      "stave": "B6",
+      "units": "ADC vs MeV",
+      "data_n": 17944,
+      "sim_n": 100797,
+      "data_median": 2795.75,
+      "data_q16": 1740.5,
+      "data_q84": 3790.56,
+      "sim_median": 17.951007843,
+      "sim_q16": 12.964255867,
+      "sim_q84": 23.1491796112,
+      "quantile_distance": 1.3507651963,
+      "data_median_run_ci95": [
+        2713.0,
+        2869.94375
+      ]
+    },
+    {
+      "observable": "pulse_energy_estimate",
+      "stave": "B6",
+      "units": "MeV",
+      "data_n": 17944,
+      "sim_n": 100797,
+      "data_median": 1.5364784064,
+      "data_q16": 0.7772279929,
+      "data_q84": 2.5286408558,
+      "sim_median": 17.951007843,
+      "sim_q16": 12.964255867,
+      "sim_q84": 23.1491796112,
+      "quantile_distance": 1.50184658,
+      "data_median_run_ci95": [
+        1.4457561243,
+        1.600208119
+      ]
+    },
+    {
+      "observable": "pulse_amplitude",
+      "stave": "B8",
+      "units": "ADC vs MeV",
+      "data_n": 7252,
+      "sim_n": 69737,
+      "data_median": 3091.75,
+      "data_q16": 1788.66,
+      "data_q84": 4257.42,
+      "sim_median": 19.7622966766,
+      "sim_q16": 9.7404047394,
+      "sim_q84": 35.9575621033,
+      "quantile_distance": 1.237324582,
+      "data_median_run_ci95": [
+        2950.03125,
+        3167.4875
+      ]
+    },
+    {
+      "observable": "pulse_energy_estimate",
+      "stave": "B8",
+      "units": "MeV",
+      "data_n": 7252,
+      "sim_n": 69737,
+      "data_median": 1.9196122742,
+      "data_q16": 0.8028924882,
+      "data_q84": 3.0031398935,
+      "sim_median": 19.7622966766,
+      "sim_q16": 9.7404047394,
+      "sim_q84": 35.9575621033,
+      "quantile_distance": 0.7855881284,
+      "data_median_run_ci95": [
+        1.6604826787,
+        2.0471400187
+      ]
+    }
+  ],
+  "selected_fraction_by_depth": [
+    {
+      "stave": "B2",
+      "depth_idx": 0,
+      "data_fraction_reaching_or_selected": 1.0,
+      "sim_fraction_reaching": 1.0,
+      "data_n_events": 584406,
+      "sim_n_events_with_any_scibar_edep": 242095,
+      "ratio_data_to_sim": 1.0
+    },
+    {
+      "stave": "B4",
+      "depth_idx": 1,
+      "data_fraction_reaching_or_selected": 0.0695868968,
+      "sim_fraction_reaching": 0.6168198434,
+      "data_n_events": 584406,
+      "sim_n_events_with_any_scibar_edep": 242095,
+      "ratio_data_to_sim": 0.1128155936
+    },
+    {
+      "stave": "B6",
+      "depth_idx": 2,
+      "data_fraction_reaching_or_selected": 0.0333620805,
+      "sim_fraction_reaching": 0.3640389103,
+      "data_n_events": 584406,
+      "sim_n_events_with_any_scibar_edep": 242095,
+      "ratio_data_to_sim": 0.0916442708
+    },
+    {
+      "stave": "B8",
+      "depth_idx": 3,
+      "data_fraction_reaching_or_selected": 0.0124091813,
+      "sim_fraction_reaching": 0.2543505649,
+      "data_n_events": 584406,
+      "sim_n_events_with_any_scibar_edep": 242095,
+      "ratio_data_to_sim": 0.0487877088
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "ml_features_exclude_odd_charge_run_event_id",
+      "value": "multiplicity,depth_idx,even_total_charge,even_max_amp,saturated_count,log_charge_stave_0,log_charge_stave_1,log_charge_stave_2,log_charge_stave_3,log_amp_stave_0,log_amp_stave_1,log_amp_stave_2,log_amp_stave_3,hit_stave_0,hit_stave_1,hit_stave_2,hit_stave_3,peak_stave_0,peak_stave_1,peak_stave_2,peak_stave_3,early_charge_fraction,late_charge_fraction",
+      "pass": true
+    },
+    {
+      "check": "cnn_status",
+      "value": "trained",
+      "pass": true
+    },
+    {
+      "check": "birks_kB_cm_per_MeV",
+      "value": "0.0485",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. The nominal Sci_bar mapping is LayerID 0/2/4/6 -> B2/B4/B6/B8, with odd layers retained as a mapping systematic. The held-out benchmark winner is geant4_birks_lookup with res68=0.04025. The simulation penetration curve is gentler than the A>1000-selected real-data curve because the data table is threshold-conditioned and dominated by the first above-threshold B-stave response.",
+  "runtime_sec": 39.5
+}

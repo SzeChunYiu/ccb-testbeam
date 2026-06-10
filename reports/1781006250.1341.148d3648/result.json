@@ -1,0 +1,308 @@
+{
+  "study": "P10c",
+  "ticket_id": "1781006250.1341.148d3648",
+  "worker": "testbeam-laptop-3",
+  "title": "leave-one-run-family conditional template stress test",
+  "reproduction": {
+    "passed": true,
+    "selected_b_stave_pulses": 640737,
+    "analysis_selected_rows": 377362
+  },
+  "split": "leave-one-run-family-out by run",
+  "traditional": {
+    "method": "S01 empirical median amplitude-bin templates",
+    "metric": "run-bootstrap held-out q_template MSE"
+  },
+  "ml": {
+    "method": "conditional ridge template",
+    "metric": "run-bootstrap held-out q_template MSE"
+  },
+  "controls": [
+    "per-stave mean template",
+    "shuffled-target conditional ridge"
+  ],
+  "folds": [
+    {
+      "empirical_mse": 0.047782082970732505,
+      "empirical_mse_ci": [
+        0.03336586633695607,
+        0.0626292818741241
+      ],
+      "mean_template_mse": 0.08059617790230902,
+      "mean_template_mse_ci": [
+        0.0625991662346522,
+        0.09944266872380464
+      ],
+      "conditional_mse": 0.06079685235915584,
+      "conditional_mse_ci": [
+        0.04471182910711141,
+        0.07768520825916267
+      ],
+      "shuffled_conditional_mse": 0.07824324880109883,
+      "shuffled_conditional_mse_ci": [
+        0.06074515559234725,
+        0.09654749394237327
+      ],
+      "delta_conditional_minus_empirical": 0.013014769388423343,
+      "delta_conditional_minus_empirical_ci": [
+        0.010708263590122712,
+        0.015343943964221198
+      ],
+      "delta_conditional_minus_mean": -0.019799325543153185,
+      "delta_conditional_minus_mean_ci": [
+        -0.022022107642066323,
+        -0.01768415142850297
+      ],
+      "delta_conditional_minus_shuffled": -0.017446396441943002,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.01902180785349796,
+        -0.01587240615195023
+      ],
+      "fold": "holdout_sample_i",
+      "train_group": "sample_ii_calib",
+      "eval_group": "sample_i_analysis",
+      "train_runs": [
+        64
+      ],
+      "eval_runs": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "train_pulses": 14630,
+      "eval_pulses": 252266,
+      "conditional_meta": {
+        "method": "conditional ridge template from stave, log amplitude, and interactions",
+        "alpha": 1000.0,
+        "train_pulses": 14630,
+        "candidate_alphas": [
+          10.0,
+          30.0,
+          100.0,
+          300.0,
+          1000.0,
+          3000.0
+        ],
+        "target_nan_fill": [
+          -7.073904271237552e-05,
+          -0.00042176857823506,
+          0.013211183249950409,
+          0.20000000298023224,
+          0.6474338173866272,
+          0.9489568471908569,
+          0.9706180691719055,
+          0.9163837432861328,
+          0.8445971012115479,
+          0.7488343119621277,
+          0.6479401588439941,
+          0.5329892635345459,
+          0.406475305557251,
+          0.2867193818092346,
+          0.20521163940429688,
+          0.17493180930614471,
+          0.10302120447158813,
+          -0.01931789517402649
+        ]
+      },
+      "shuffled_meta": {
+        "method": "conditional ridge template from stave, log amplitude, and interactions",
+        "alpha": 1000.0,
+        "train_pulses": 14630,
+        "candidate_alphas": [
+          10.0,
+          30.0,
+          100.0,
+          300.0,
+          1000.0,
+          3000.0
+        ],
+        "target_nan_fill": [
+          -7.073904271237552e-05,
+          -0.00042176857823506,
+          0.013211183249950409,
+          0.20000000298023224,
+          0.6474338173866272,
+          0.9489568471908569,
+          0.9706180691719055,
+          0.9163837432861328,
+          0.8445971012115479,
+          0.7488343119621277,
+          0.6479401588439941,
+          0.5329892635345459,
+          0.406475305557251,
+          0.2867193818092346,
+          0.20521163940429688,
+          0.17493180930614471,
+          0.10302120447158813,
+          -0.01931789517402649
+        ]
+      },
+      "template_bins_train_min": 0,
+      "template_bins_train_fallbacks": 14
+    },
+    {
+      "empirical_mse": 0.038992194449586605,
+      "empirical_mse_ci": [
+        0.029072690988680344,
+        0.04583195299639763
+      ],
+      "mean_template_mse": 0.08964995356958542,
+      "mean_template_mse_ci": [
+        0.07517324249016823,
+        0.10024664695661359
+      ],
+      "conditional_mse": 0.06821744565582498,
+      "conditional_mse_ci": [
+        0.05835029804636898,
+        0.07573445142748281
+      ],
+      "shuffled_conditional_mse": 0.08666290842154432,
+      "shuffled_conditional_mse_ci": [
+        0.07135963959182752,
+        0.09843697704517866
+      ],
+      "delta_conditional_minus_empirical": 0.029225251206238367,
+      "delta_conditional_minus_empirical_ci": [
+        0.02631280186537388,
+        0.032329390318912264
+      ],
+      "delta_conditional_minus_mean": -0.021432507913760467,
+      "delta_conditional_minus_mean_ci": [
+        -0.02492325613542919,
+        -0.016661942560385258
+      ],
+      "delta_conditional_minus_shuffled": -0.018445462765719338,
+      "delta_conditional_minus_shuffled_ci": [
+        -0.02383561263847972,
+        -0.01220286243443223
+      ],
+      "fold": "holdout_sample_ii",
+      "train_group": "sample_i_calib",
+      "eval_group": "sample_ii_analysis",
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42
+      ],
+      "eval_runs": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "train_pulses": 248745,
+      "eval_pulses": 125096,
+      "conditional_meta": {
+        "method": "conditional ridge template from stave, log amplitude, and interactions",
+        "alpha": 10.0,
+        "train_pulses": 160000,
+        "candidate_alphas": [
+          10.0,
+          30.0,
+          100.0,
+          300.0,
+          1000.0,
+          3000.0
+        ],
+        "target_nan_fill": [
+          -0.00011274721327936277,
+          -0.00026226069894619286,
+          0.011130541563034058,
+          0.20000000298023224,
+          0.7093342542648315,
+          0.9819254875183105,
+          0.8883005976676941,
+          0.7177560925483704,
+          0.6827699542045593,
+          0.6626914739608765,
+          0.6186646819114685,
+          0.5357751846313477,
+          0.45924267172813416,
+          0.41143304109573364,
+          0.3948873281478882,
+          0.4157261848449707,
+          0.3882141411304474,
+          -0.0036776696797460318
+        ]
+      },
+      "shuffled_meta": {
+        "method": "conditional ridge template from stave, log amplitude, and interactions",
+        "alpha": 10.0,
+        "train_pulses": 160000,
+        "candidate_alphas": [
+          10.0,
+          30.0,
+          100.0,
+          300.0,
+          1000.0,
+          3000.0
+        ],
+        "target_nan_fill": [
+          -0.00011207284114789218,
+          -0.00026238750433549285,
+          0.011154000647366047,
+          0.20000000298023224,
+          0.7090526819229126,
+          0.9819480180740356,
+          0.888311505317688,
+          0.7184956073760986,
+          0.6838564872741699,
+          0.6636970043182373,
+          0.6192070245742798,
+          0.5363637208938599,
+          0.45968061685562134,
+          0.41185471415519714,
+          0.395149827003479,
+          0.41545942425727844,
+          0.3877764642238617,
+          -0.0015546790091320872
+        ]
+      },
+      "template_bins_train_min": 0,
+      "template_bins_train_fallbacks": 10
+    }
+  ],
+  "conclusion": "P10a q-space failure persists under leave-one-run-family-out calibration",
+  "leakage": [
+    {
+      "fold": "holdout_sample_i",
+      "train_eval_run_overlap": [],
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "conditional_beats_empirical_ci": false,
+      "shuffled_beats_real_ci": false
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "train_eval_run_overlap": [],
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "conditional_beats_empirical_ci": false,
+      "shuffled_beats_real_ci": false
+    }
+  ],
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "076f9e4f7ae6dba0efb7c7c7ef2cb28335ef0753"
+}

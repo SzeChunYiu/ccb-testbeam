@@ -1,0 +1,3 @@
+quantity,reproduced_sigma68_ns,reference_sigma68_ns,delta_ns,pass
+S02 global-template traditional template_phase,2.889152765080617,2.889152765080617,0.0,True
+S02b global-template timewalk,1.6354173420044433,1.635417339803972,2.200471360680467e-09,True

@@ -1,0 +1,4 @@
+method_metric,value,ci_low,ci_high,bootstrap_unit,n_bootstrap,n_scored_events
+trad_secondary_fraction,0.033010527958294324,0.019186666642640134,0.04875783610708715,source_run_within_current_group,600,26506
+ml_secondary_fraction,0.006682372566658994,0.004376101006192507,0.009384470808683073,source_run_within_current_group,600,26506
+ml_overlap_score,0.023844950995001307,0.01179387207992492,0.035114665942114334,source_run_within_current_group,600,26506

@@ -1,0 +1,83 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s16g_1781014767_tagged_random_rerun.py --config configs/s16g_1781014767_1817_342d2609.json",
+  "config": "configs/s16g_1781014767_1817_342d2609.json",
+  "git_commit": "d5ff1b2c9bec9f85739cb5ad3371f137e3502b12",
+  "input_sha256": "reports/1781014767.1817.342d2609/input_sha256.csv",
+  "outputs": [
+    {
+      "bytes": 1437,
+      "path": "configs/s16g_1781014767_1817_342d2609.json",
+      "sha256": "830d6ecc550af1a09a1a42dcd189fe60fb28725a139949e577c100efce11b8e2"
+    },
+    {
+      "bytes": 4364,
+      "path": "reports/1781014767.1817.342d2609/REPORT.md",
+      "sha256": "b4f4bfec713eed6cc0c5a3c971069ff529b423077daf4949f4fdf9b4b10cd3cd"
+    },
+    {
+      "bytes": 102220,
+      "path": "reports/1781014767.1817.342d2609/fig_bias_by_run.png",
+      "sha256": "7c2c3f38a7a3bf519025e21117db37eab32f8bde475a5a38690519431d737226"
+    },
+    {
+      "bytes": 49523,
+      "path": "reports/1781014767.1817.342d2609/fig_method_mae.png",
+      "sha256": "b6f4bbc5ea99cf81f46191bb2b2df953b63c79092d2c1b8ce104d2eb12fedea2"
+    },
+    {
+      "bytes": 27466,
+      "path": "reports/1781014767.1817.342d2609/fig_tagged_random_audit.png",
+      "sha256": "80a46f727a8565627f86cc79224281b4ef1ebc4f22ddc493d56c962b97ec0209"
+    },
+    {
+      "bytes": 4423,
+      "path": "reports/1781014767.1817.342d2609/input_sha256.csv",
+      "sha256": "acaf6efda8022df9a1e6a164c27a7a9e8b3fc134e4ec37a21e5245bd1f1efb23"
+    },
+    {
+      "bytes": 237,
+      "path": "reports/1781014767.1817.342d2609/leakage_checks.csv",
+      "sha256": "7b3f714dc22398480220aa2d829f5afea8873acf5b20ec4da099fabf9b8fafcf"
+    },
+    {
+      "bytes": 17475,
+      "path": "reports/1781014767.1817.342d2609/method_by_run.csv",
+      "sha256": "3efd0a397503303455d091168eb1c5984633d6f0a7d279e68579c72d913d4a3a"
+    },
+    {
+      "bytes": 1797,
+      "path": "reports/1781014767.1817.342d2609/method_summary.csv",
+      "sha256": "dda12ed0305984e3d9b31943c20c81dea5b1ac3b44dbdcd6a5889e14c27cfe83"
+    },
+    {
+      "bytes": 1691,
+      "path": "reports/1781014767.1817.342d2609/raw_trigger_audit.csv",
+      "sha256": "263acd8d0187baa27af50f5af376cc44a030c976421d466786f2b9b4985b1961"
+    },
+    {
+      "bytes": 168,
+      "path": "reports/1781014767.1817.342d2609/reproduction_match_table.csv",
+      "sha256": "3858f16a474efd238343d4c940e5106965d4a1d70474dd35938d692e5765bb4b"
+    },
+    {
+      "bytes": 5182,
+      "path": "reports/1781014767.1817.342d2609/result.json",
+      "sha256": "151ebba9bb68d7e67eab77d1f7aaf36e3aeecb8c64e3fbe0a96ddc67ed40abd4"
+    },
+    {
+      "bytes": 529,
+      "path": "reports/1781014767.1817.342d2609/run_counts.csv",
+      "sha256": "87c915395ee657999381d554d16b5adafb48eec287ee53f8bcddc464802abe8d"
+    },
+    {
+      "bytes": 34616,
+      "path": "scripts/s16g_1781014767_tagged_random_rerun.py",
+      "sha256": "945cee5a2ff45eb9e0cc0c8d5425889f740a97c7add024eb7c6194d4a8564b9b"
+    }
+  ],
+  "random_seed": 164767,
+  "script": "scripts/s16g_1781014767_tagged_random_rerun.py",
+  "study": "S16g",
+  "ticket": "1781014767.1817.342d2609",
+  "worker": "testbeam-laptop-1"
+}

@@ -1,0 +1,2 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+P03c strict waveform residual sigma68_ns,1.4483561109028598,1.4483561109028598,0.0,1e-06,True

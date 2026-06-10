@@ -1,0 +1,6 @@
+method,metric,value,ci_low,ci_high,n_strata,n_events,n_bootstrap,bootstrap_unit
+baseline_excursion_traditional,downstream_high_minus_low,-0.002252830770723433,-0.011327579534122821,0.025932528518270426,3,1784,500,run_within_current_group
+baseline_excursion_traditional,two_pulse_residual_enrichment,-0.0012372710120638003,-0.0019262253322767486,0.0010791560973828637,3,1784,500,run_within_current_group
+baseline_excursion_traditional,baseline_mad_high_minus_low,16.158243815104168,-14.56754404703776,40.06348944769965,3,1784,500,run_within_current_group
+baseline_excursion_traditional,late_fraction_high_minus_low,0.0011731208974702489,-0.023940351124878766,0.005320193694205955,3,1784,500,run_within_current_group
+baseline_excursion_traditional,topology_odds_ratio,0.3997856511574978,0.26971493015562964,0.5667809932427226,3,1784,500,run_within_current_group

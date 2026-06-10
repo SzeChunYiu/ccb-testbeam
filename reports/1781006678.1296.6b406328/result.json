@@ -1,0 +1,47 @@
+{
+  "study": "S00c",
+  "ticket": "1781006678.1296.6b406328",
+  "worker": "testbeam-laptop-1",
+  "title": "raw selector-count CI regression",
+  "reproduced": true,
+  "anchors": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "traditional": {
+    "method": "median-first-four raw HRDv selector",
+    "metric": "heldout_selection_accuracy",
+    "value": 1.0,
+    "ci": [
+      1.0,
+      1.0
+    ],
+    "false_positive": 0,
+    "false_negative": 0
+  },
+  "ml": {
+    "method": "run-held-out logistic on honest raw summaries",
+    "metric": "heldout_selection_accuracy",
+    "value": 0.9977298158030642,
+    "ci": [
+      0.9977162710805746,
+      0.9977464518603759
+    ],
+    "false_positive": 554,
+    "false_negative": 79
+  },
+  "leakage_hunt": {
+    "leaky_median_amp_accuracy": 0.9997884030527343,
+    "interpretation": "median_amp is a direct selector-rule feature, so near-perfect ML here is leakage, not generalization"
+  },
+  "falsification": {
+    "preregistered_metric": "exact anchor count deltas",
+    "failed_checks": 0,
+    "tolerance": 0
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "27379b139276ea7685e74910201b6c6c4392a26a",
+  "next_tickets": []
+}

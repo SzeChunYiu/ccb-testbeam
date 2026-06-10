@@ -1,0 +1,74 @@
+{
+  "study": "P05b",
+  "ticket": "1781026081.1129.27ef42b6",
+  "worker": "testbeam-laptop-2",
+  "title": "two-pulse abstention calibration for S07d-style injections",
+  "reproduced": true,
+  "bad_recovery_definition": {
+    "event_time_rms_ns_gt": 12.0,
+    "abs_charge_bias_gt": 0.2,
+    "base_fit_failed": true
+  },
+  "traditional": {
+    "method": "bounded_template_fit_train_quality_cuts",
+    "coverage": 0.355,
+    "accepted_time_rms_ns": 9.9032180905644,
+    "accepted_time_rms_ns_ci": [
+      8.657454336657757,
+      11.101177269472227
+    ],
+    "charge_fractional_bias": -0.03221596037462951,
+    "charge_fractional_res68": 0.0879419897357159,
+    "abstention_rate": 0.645,
+    "bad_recovery_rate": 0.15023474178403756,
+    "risk_coverage_auc": 0.1935493838745171,
+    "selected_cuts": {
+      "min_score": 0.5,
+      "max_log_chi2_ndf": 12.093116845145405,
+      "min_pred_sep_sample": 0.0,
+      "max_pred_amp_ratio": 1.5
+    }
+  },
+  "ml": {
+    "method": "s11a_mlp_isotonic_failure_probability",
+    "coverage": 0.6983333333333334,
+    "accepted_time_rms_ns": 9.682247362566063,
+    "accepted_time_rms_ns_ci": [
+      9.420455077610276,
+      9.945691980401879
+    ],
+    "charge_fractional_bias": -0.015100145420361186,
+    "charge_fractional_res68": 0.06612080282418618,
+    "abstention_rate": 0.3016666666666667,
+    "bad_recovery_rate": 0.18854415274463007,
+    "risk_coverage_auc": 0.1790315473521764,
+    "selected_failure_probability_threshold": 0.8571428571428571
+  },
+  "split": {
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ]
+  },
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "bcd596db8caf4e5f88ccbb0ac9dd197a9b1b9201",
+  "runtime_sec": 31.33,
+  "secondary_amplitude_sidebands": {
+    "path": "secondary_amplitude_sidebands.csv",
+    "ratio_values": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ]
+  },
+  "next_tickets": []
+}

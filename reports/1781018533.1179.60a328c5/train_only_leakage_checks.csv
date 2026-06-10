@@ -1,0 +1,10 @@
+check,value,pass
+train_heldout_source_run_overlap,0.0,True
+event_id_overlap,0.0,True
+heldout_ml_ap,0.8472443854395434,True
+shuffled_train_labels_heldout_ap,0.47563571162594015,True
+traditional_too_good_time_rms_lt_5ns,17.813934504336615,True
+traditional_too_good_detection_ap_gt_0p98,0.7382533768328432,True
+ml_too_good_time_rms_lt_5ns,9.844516270885634,True
+ml_too_good_detection_ap_gt_0p98,0.8472443854395434,True
+template_source_runs_exclude_heldout,0.0,True

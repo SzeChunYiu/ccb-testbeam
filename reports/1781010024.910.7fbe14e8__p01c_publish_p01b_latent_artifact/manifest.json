@@ -1,0 +1,44 @@
+{
+  "ticket_id": "1781010024.910.7fbe14e8",
+  "study_id": "P01c",
+  "title": "publish P01b latent artifact outside git",
+  "generated_at": "2026-06-09T16:40:54+02:00",
+  "upstream_ticket_id": "1781005204.1292.46e43fb0",
+  "upstream_report_dir": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact",
+  "input_sha256_csv": "reports/1781010024.910.7fbe14e8__p01c_publish_p01b_latent_artifact/input_sha256.csv",
+  "raw_root_recount": {
+    "raw_root_dir": "data/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "passed": true
+  },
+  "storage": {
+    "selected_location": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0",
+    "git_tracked": false,
+    "reason": "writable worker-local store; canonical ccb-data and home-level artifact paths were read-only in this worker"
+  },
+  "published_artifacts": [
+    {
+      "file": "p01b_embedding_latents.npz",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz",
+      "bytes": 11923919,
+      "sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+      "verified_against": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_metadata.json"
+    },
+    {
+      "file": "p01b_autoencoder_state.pt",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_autoencoder_state.pt",
+      "bytes": 13715,
+      "sha256": "20ca87b4df2a1d31ef99130423101772f6f293fe5fe0e0af3c859038d9d082d1",
+      "verified_against": "source and destination sha256 match"
+    }
+  ],
+  "retrieval_note": "reports/1781010024.910.7fbe14e8__p01c_publish_p01b_latent_artifact/P01B_ARTIFACT_RETRIEVAL.md",
+  "artifacts": [
+    "REPORT.md",
+    "P01B_ARTIFACT_RETRIEVAL.md",
+    "input_sha256.csv",
+    "manifest.json",
+    "result.json"
+  ]
+}

@@ -1,0 +1,5 @@
+check,value,pass,notes
+table_like_files_scanned,1905,True,Candidate table-like files with App.A/S07/label/training/timing names.
+exact_12147_row_tables,0,False,Any table with exactly the documented labelled-event row count.
+plausible_recovered_label_table,0,False,"Exact 12,147 rows plus label/run/event-like columns."
+semantic_text_hits,574,True,Mostly docs/notebooks/PDF text; table recovery requires a plausible table hit.

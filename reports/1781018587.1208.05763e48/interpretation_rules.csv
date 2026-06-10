@@ -1,0 +1,6 @@
+rule,value,threshold,pass,interpretation
+raw_count_reproduced,640737.0,640737.0,True,raw ROOT selection gate passed before modelling
+nominal_ml_beats_strong_traditional,0.003417063355445338,0.0,False,latent timing claim should exceed a hand-shape residual model with separated CIs
+event_shuffle_not_close_to_nominal,0.09047590950965834,0.2,False,event-shuffled control should be clearly worse than the nominal ML probe
+control_gain_fraction_below_limit,1.1759115675849972,0.6,False,shuffled controls should not recover most of the nominal CFD20 gain
+quoted_event_shuffle_strength_reproduced,2.055532479166984,2.055532479166984,True,the suspicious P01e control is reproduced exactly before diagnosis

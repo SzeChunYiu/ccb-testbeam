@@ -1,0 +1,60 @@
+{
+  "study_id": "S00d",
+  "ticket_id": "1781014251.574.7a497937",
+  "worker": "testbeam-laptop-1",
+  "title": "dynamic-selector pulse taxonomy audit",
+  "output_dir": "reports/1781014251.574.7a497937",
+  "raw_root_dir": "data/root/root",
+  "p01b_release_npz": "reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/p02c_regenerated_p01b_release_latents.npz",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "downstream_staves": ["B4", "B6", "B8"],
+  "stave_position_cm": {
+    "B2": 0.0,
+    "B4": 2.0,
+    "B6": 4.0,
+    "B8": 6.0
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "heldout_runs": [42, 57, 64, 65],
+  "traditional_cuts": {
+    "saturation_adc": 7000.0,
+    "baseline_excursion_adc": 250.0,
+    "early_peak_max_sample": 4,
+    "late_peak_min_sample": 10,
+    "late_fraction": 0.25,
+    "template_rmse": 0.35,
+    "timing_span_ns": 5.0
+  },
+  "ml": {
+    "random_seed": 20260609,
+    "max_controls_per_run_stave": 1200,
+    "max_dynamic_per_run_stave": 1200,
+    "ae_epochs": 12,
+    "ae_batch_size": 4096,
+    "ae_learning_rate": 0.001,
+    "ae_mask_probability": 0.25,
+    "regularization_c": [0.03, 0.1, 0.3, 1.0, 3.0],
+    "bootstrap_samples": 800
+  }
+}

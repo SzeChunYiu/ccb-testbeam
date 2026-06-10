@@ -1,0 +1,431 @@
+{
+  "study": "S14c",
+  "ticket_id": "1781020357.1325.151278fa",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "astack_reproduction_pass": true,
+  "n_matched_events": 584406,
+  "n_heldout_events": 332852,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_summary": [
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "observed_energy_proxy",
+      "target": "A_any_selected",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0090493357,
+      "high_minus_low_ci95": [
+        -0.0151156351,
+        -0.0033245764
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "observed_energy_proxy",
+      "target": "A_both_selected",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0033720425,
+      "high_minus_low_ci95": [
+        -0.0052872347,
+        -0.0009290277
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "observed_energy_proxy",
+      "target": "A_depth_idx",
+      "n": 3672,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0215029531,
+      "high_minus_low_ci95": [
+        -0.0399499406,
+        -0.0046033691
+      ],
+      "stratum_spearman": -0.8,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.395
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "observed_energy_proxy",
+      "target": "B_downstream_multiplicity",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": 0.4443668529,
+      "high_minus_low_ci95": [
+        0.286011939,
+        0.7634007851
+      ],
+      "stratum_spearman": 0.7745966692,
+      "stratum_spearman_ci95": [
+        0.7745966692,
+        0.7745966692
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "observed_energy_proxy",
+      "target": "B_downstream_all3",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": 0.0416201117,
+      "high_minus_low_ci95": [
+        0.0196465991,
+        0.0888632159
+      ],
+      "stratum_spearman": 0.7745966692,
+      "stratum_spearman_ci95": [
+        0.7745966692,
+        0.7745966692
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "observed_energy_proxy",
+      "target": "is_low_current_run",
+      "n": 243058,
+      "n_runs": 14,
+      "high_minus_low_target": -0.0312744919,
+      "high_minus_low_ci95": [
+        -0.1094230628,
+        0.0
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "traditional_energy_proxy",
+      "target": "A_any_selected",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0090007263,
+      "high_minus_low_ci95": [
+        -0.0154017044,
+        -0.0042615218
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "traditional_energy_proxy",
+      "target": "A_both_selected",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0033705463,
+      "high_minus_low_ci95": [
+        -0.0064217896,
+        -0.0010552079
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "traditional_energy_proxy",
+      "target": "A_depth_idx",
+      "n": 3672,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0159668841,
+      "high_minus_low_ci95": [
+        -0.0377954604,
+        0.0072563065
+      ],
+      "stratum_spearman": -0.8,
+      "stratum_spearman_ci95": [
+        -0.805,
+        0.01
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "traditional_energy_proxy",
+      "target": "B_downstream_multiplicity",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": 0.4576357325,
+      "high_minus_low_ci95": [
+        0.2403342233,
+        0.8029053347
+      ],
+      "stratum_spearman": 0.7745966692,
+      "stratum_spearman_ci95": [
+        0.7745966692,
+        0.7745966692
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "traditional_energy_proxy",
+      "target": "B_downstream_all3",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": 0.0428628963,
+      "high_minus_low_ci95": [
+        0.0193719265,
+        0.0842389995
+      ],
+      "stratum_spearman": 0.7745966692,
+      "stratum_spearman_ci95": [
+        0.7745966692,
+        0.7745966692
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "traditional_energy_proxy",
+      "target": "is_low_current_run",
+      "n": 243058,
+      "n_runs": 14,
+      "high_minus_low_target": -0.0310180545,
+      "high_minus_low_ci95": [
+        -0.1043742405,
+        0.0
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "ml_energy_proxy",
+      "target": "A_any_selected",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0092956893,
+      "high_minus_low_ci95": [
+        -0.0151174329,
+        -0.0039454786
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "ml_energy_proxy",
+      "target": "A_both_selected",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0034216421,
+      "high_minus_low_ci95": [
+        -0.0047768249,
+        -0.0009985082
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.79
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "ml_energy_proxy",
+      "target": "A_depth_idx",
+      "n": 3672,
+      "n_runs": 21,
+      "high_minus_low_target": -0.0178001628,
+      "high_minus_low_ci95": [
+        -0.0409557802,
+        0.0026714502
+      ],
+      "stratum_spearman": -0.8,
+      "stratum_spearman_ci95": [
+        -1.0,
+        0.01
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "ml_energy_proxy",
+      "target": "B_downstream_multiplicity",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": 0.4470600358,
+      "high_minus_low_ci95": [
+        0.1900722802,
+        0.8295404068
+      ],
+      "stratum_spearman": 0.7745966692,
+      "stratum_spearman_ci95": [
+        0.7745966692,
+        0.7745966692
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "ml_energy_proxy",
+      "target": "B_downstream_all3",
+      "n": 332852,
+      "n_runs": 21,
+      "high_minus_low_target": 0.0418723596,
+      "high_minus_low_ci95": [
+        0.0198056212,
+        0.0707885762
+      ],
+      "stratum_spearman": 0.7745966692,
+      "stratum_spearman_ci95": [
+        0.7745966692,
+        0.7745966692
+      ]
+    },
+    {
+      "method": "traditional_stratified_closure",
+      "proxy": "ml_energy_proxy",
+      "target": "is_low_current_run",
+      "n": 243058,
+      "n_runs": 14,
+      "high_minus_low_target": -0.0327971556,
+      "high_minus_low_ci95": [
+        -0.1110072114,
+        0.0
+      ],
+      "stratum_spearman": -1.0,
+      "stratum_spearman_ci95": [
+        -1.0,
+        -0.8
+      ]
+    }
+  ],
+  "ml_summary": [
+    {
+      "method": "ml_domain_residualized_ridge",
+      "target": "composite_external_score",
+      "n": 332852,
+      "n_runs": 21,
+      "rmse": 0.0489980463,
+      "rmse_ci95": [
+        0.0352849647,
+        0.0642253533
+      ],
+      "mae": 0.0158256393,
+      "mae_ci95": [
+        0.0122592801,
+        0.020904573
+      ],
+      "spearman_pred_target": 0.4590482019,
+      "spearman_ci95": [
+        0.3494335855,
+        0.5573899626
+      ]
+    },
+    {
+      "method": "shuffled_target_control",
+      "target": "composite_external_score",
+      "n": 332852,
+      "n_runs": 21,
+      "rmse": 0.0892545114,
+      "rmse_ci95": [
+        0.0701254068,
+        0.1069638588
+      ],
+      "mae": 0.041140131,
+      "mae_ci95": [
+        0.0332129355,
+        0.0560520697
+      ],
+      "spearman_pred_target": -0.01340624,
+      "spearman_ci95": [
+        -0.0357281226,
+        0.0108191973
+      ]
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_key_overlap",
+      "value": "0",
+      "pass": true
+    },
+    {
+      "check": "proxy_features_exclude_astack_run_event_odd_target_and_current",
+      "value": "true",
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_control_worse_rmse",
+      "value": "0.089255 > 0.048998",
+      "pass": true
+    },
+    {
+      "check": "heldout_astack_match_fraction",
+      "value": "0.011032",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 B-stack selected pulses and the A-stack S18 count anchors also reproduce exactly. On held-out runs, the traditional S14 energy-proxy strata show A-any high-minus-low -0.00900 with CI [-0.015401704355470254, -0.00426152180612825] and downstream-multiplicity high-minus-low 0.45764 with CI [0.24033422334115823, 0.802905334702733]. The domain-residualized ML surrogate for the composite external score has RMSE 0.04900 with CI [0.035284964718799196, 0.06422535331495642] and Spearman 0.45905; the shuffled-target control RMSE is 0.08925. The external handles support a monotonic topology/current association for the proxy, but A-stack coincidences are sparse, so this validates proxy ordering only and does not justify an absolute energy or PID claim.",
+  "runtime_sec": 55.5
+}

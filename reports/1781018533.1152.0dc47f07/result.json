@@ -1,0 +1,110 @@
+{
+  "study": "S11d",
+  "ticket": "1781018533.1152.0dc47f07",
+  "worker": "testbeam-laptop-4",
+  "title": "validate S11c templates on real high-current candidate windows",
+  "reproduced": true,
+  "reproduction_gate": "S10c raw-ROOT topology fractions within 0.0015 absolute tolerance",
+  "split": "source-run held out; low-current controls exclude held-out source run; high-current scored from low-current training only",
+  "s10c": {
+    "global_downstream_high_minus_low": 0.010289747149522063,
+    "matched_downstream_high_minus_low": 0.0202483132962887,
+    "n_matched_strata": 8,
+    "n_scored_events": 6064
+  },
+  "candidate_rates": {
+    "traditional_candidate": {
+      "low_rate": 0.034227798106522614,
+      "high_rate": 0.044686263629023684,
+      "high_minus_low": 0.01045846552250107,
+      "ci": [
+        -0.001451147981924208,
+        0.023635247365302314
+      ]
+    },
+    "ml_candidate": {
+      "low_rate": 0.036348279800971904,
+      "high_rate": 0.060522480576500566,
+      "high_minus_low": 0.024174200775528662,
+      "ci": [
+        0.01728678701132685,
+        0.030230944616399
+      ]
+    },
+    "joint_candidate": {
+      "low_rate": 0.001131149445315676,
+      "high_rate": 0.003130646328503097,
+      "high_minus_low": 0.001999496883187421,
+      "ci": [
+        -0.0003119225007037795,
+        0.004862012815245896
+      ]
+    },
+    "either_candidate": {
+      "low_rate": 0.06944492846217885,
+      "high_rate": 0.10207809787702112,
+      "high_minus_low": 0.03263316941484226,
+      "ci": [
+        0.020480361947799768,
+        0.04222928312052929
+      ]
+    }
+  },
+  "method_deltas": {
+    "trad_secondary_fraction": {
+      "value": -0.041489275610789,
+      "ci": [
+        -0.08531199246627272,
+        0.0011203679548083907
+      ]
+    },
+    "ml_secondary_fraction": {
+      "value": 0.009509106671053941,
+      "ci": [
+        0.0020393437988846523,
+        0.017590346907183113
+      ]
+    },
+    "ml_overlap_score": {
+      "value": 0.03242792326670583,
+      "ci": [
+        0.007787650719706023,
+        0.058403775628499646
+      ]
+    }
+  },
+  "closure_anchors": {
+    "s11a_traditional_time_rms_ns": 13.300370096544516,
+    "s11a_ml_time_rms_ns": 10.674061400718234,
+    "s11c_traditional_time_rms_ns": 17.83089499264352,
+    "s11c_ml_time_rms_ns": 10.674061400718234,
+    "s11c_traditional_detection_ap": 0.7153773248837738,
+    "s11c_ml_detection_ap": 0.8509910550508138
+  },
+  "ml": {
+    "method": "low-current synthetic-overlay residual-shape random forest",
+    "mean_synthetic_holdout_auc": 0.9107630754074872,
+    "mean_shuffled_label_synthetic_auc": 0.48272169821365424
+  },
+  "leakage_flags": 0,
+  "leakage_checks_pass": true,
+  "conclusion": "S11c rich-template scoring does not produce a stable real high-current excess by itself: traditional candidate-rate high-minus-low is 0.01046 [-0.00145, 0.02364], while ML is 0.02417 [0.01729, 0.03023]. The joint excess is 0.00200 [-0.00031, 0.00486] against a matched S10c downstream excess of 0.02025. Leakage sentinels flag 0 checks.",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "7bcac50874a10a94218304c07367242218fe5190",
+  "runtime_sec": 263.09
+}

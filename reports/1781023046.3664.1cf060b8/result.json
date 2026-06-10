@@ -1,0 +1,227 @@
+{
+  "study": "S14d",
+  "ticket_id": "1781023046.3664.1cf060b8",
+  "worker": "testbeam-laptop-2",
+  "title": "range-order preflight using P04c A/B matched charge",
+  "reproduced": true,
+  "p04c_reproduction": {
+    "b_s00_expected_selected_pulses": 640737,
+    "b_s00_reproduced_selected_pulses": 640737,
+    "b_s00_delta": 0,
+    "b_s00_pass": true,
+    "expected_n_ab_rows": 4055,
+    "reproduced_n_ab_rows": 4055,
+    "n_ab_rows_pass": true,
+    "expected_charge_transfer_ridge_res68": 0.519271,
+    "reproduced_charge_transfer_ridge_res68": 0.5192709757631775,
+    "charge_transfer_ridge_res68_delta": -2.423682254892867e-08,
+    "charge_transfer_ridge_res68_pass": true,
+    "p04c_shuffled_target_res68": 0.5210411563476088
+  },
+  "n_rows": 4055,
+  "runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "traditional": {
+    "metric": "selected_A_charge_res68_abs_frac",
+    "value": 0.3541172335960003,
+    "ci": [
+      0.3430545329926571,
+      0.36875415503257547
+    ],
+    "order_violation_rate": 0.4702441416511962,
+    "order_violation_ci": [
+      0.45769275079101707,
+      0.4788857864786577
+    ]
+  },
+  "ml": {
+    "metric": "selected_A_charge_res68_abs_frac",
+    "value": 0.36017303925384836,
+    "ci": [
+      0.35126690914146963,
+      0.3720718463007442
+    ],
+    "order_violation_rate": 0.4334724432301518,
+    "order_violation_ci": [
+      0.4191517910600394,
+      0.4405910325133501
+    ],
+    "chosen_hyperparameters": {
+      "passes": 2.0,
+      "shrinkage": 0.6,
+      "mean_fold_res68": 0.3823786025,
+      "median_fold_res68": 0.3963111576,
+      "n_folds": 4.0
+    }
+  },
+  "ml_beats_baseline": false,
+  "shuffled_depth_control": {
+    "method": "ml_shuffled_depth_control",
+    "split": "leave-one-run-out",
+    "n": 4055,
+    "bias_median_frac": -0.0796082882,
+    "res68_abs_frac": 0.363568846,
+    "full_rms_frac": 0.5567553369,
+    "within_25pct": 0.4651048089,
+    "chi2_ndf_unit_frac": 2.3450680736,
+    "target_a_order_violation_rate": 0.4943403591,
+    "prediction_order_violation_rate": 0.4522162952,
+    "res68_ci95_low": 0.3543401434,
+    "res68_ci95_high": 0.374971837,
+    "prediction_order_violation_ci95_low": 0.4372695096,
+    "prediction_order_violation_ci95_high": 0.4596497542
+  },
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "0 by leave-one-run-out construction",
+      "pass": true
+    },
+    {
+      "check": "run_event_features_excluded",
+      "value": "run and evt omitted from traditional and ML features",
+      "pass": true
+    },
+    {
+      "check": "p04c_reproduction_before_extension",
+      "value": "rows=4055, ridge_res68=0.519271",
+      "pass": true
+    },
+    {
+      "check": "shuffled_depth_control_res68",
+      "value": "0.363569",
+      "pass": true
+    },
+    {
+      "check": "no_mc_truth_or_pid_labels",
+      "value": "raw HRD charges/topology only",
+      "pass": true
+    }
+  ],
+  "by_sample": [
+    {
+      "sample": "sample_iii_analysis",
+      "method": "traditional_bins",
+      "n": 1470,
+      "bias_median_frac": -0.01070003,
+      "res68_abs_frac": 0.3586918717,
+      "full_rms_frac": 0.6440080607,
+      "within_25pct": 0.4829931973,
+      "chi2_ndf_unit_frac": 3.2235880407,
+      "prediction_order_violation_rate": 0.4633389396
+    },
+    {
+      "sample": "sample_iii_analysis",
+      "method": "ml_monotonic_residual",
+      "n": 1470,
+      "bias_median_frac": -0.0761412043,
+      "res68_abs_frac": 0.3653966968,
+      "full_rms_frac": 0.5921305067,
+      "within_25pct": 0.4639455782,
+      "chi2_ndf_unit_frac": 2.6260660139,
+      "prediction_order_violation_rate": 0.4268148593
+    },
+    {
+      "sample": "sample_iii_calibration",
+      "method": "traditional_bins",
+      "n": 2431,
+      "bias_median_frac": 0.0084027252,
+      "res68_abs_frac": 0.3485695113,
+      "full_rms_frac": 0.5713016961,
+      "within_25pct": 0.5026737968,
+      "chi2_ndf_unit_frac": 2.6862858946,
+      "prediction_order_violation_rate": 0.4709176626
+    },
+    {
+      "sample": "sample_iii_calibration",
+      "method": "ml_monotonic_residual",
+      "n": 2431,
+      "bias_median_frac": -0.0640839592,
+      "res68_abs_frac": 0.3538762845,
+      "full_rms_frac": 0.5218752782,
+      "within_25pct": 0.4767585356,
+      "chi2_ndf_unit_frac": 2.1748561199,
+      "prediction_order_violation_rate": 0.429734857
+    },
+    {
+      "sample": "sample_iv_analysis",
+      "method": "traditional_bins",
+      "n": 119,
+      "bias_median_frac": -0.0377122877,
+      "res68_abs_frac": 0.382754775,
+      "full_rms_frac": 0.8598431431,
+      "within_25pct": 0.4369747899,
+      "chi2_ndf_unit_frac": 5.0465807852,
+      "prediction_order_violation_rate": 0.4420062696
+    },
+    {
+      "sample": "sample_iv_analysis",
+      "method": "ml_monotonic_residual",
+      "n": 119,
+      "bias_median_frac": -0.102249973,
+      "res68_abs_frac": 0.3881302147,
+      "full_rms_frac": 0.7862397949,
+      "within_25pct": 0.3697478992,
+      "chi2_ndf_unit_frac": 4.1035066174,
+      "prediction_order_violation_rate": 0.416215446
+    },
+    {
+      "sample": "sample_iv_calibration",
+      "method": "traditional_bins",
+      "n": 35,
+      "bias_median_frac": -0.0335332933,
+      "res68_abs_frac": 0.4680205017,
+      "full_rms_frac": 0.7095480954,
+      "within_25pct": 0.3714285714,
+      "chi2_ndf_unit_frac": 2.2984439718,
+      "prediction_order_violation_rate": 0.3529411765
+    },
+    {
+      "sample": "sample_iv_calibration",
+      "method": "ml_monotonic_residual",
+      "n": 35,
+      "bias_median_frac": -0.0951455021,
+      "res68_abs_frac": 0.4222397486,
+      "full_rms_frac": 0.6357726268,
+      "within_25pct": 0.3142857143,
+      "chi2_ndf_unit_frac": 2.2671769747,
+      "prediction_order_violation_rate": 0.2991596639
+    }
+  ],
+  "finding": "The P04c raw-root table is reproduced first (640737 selected B pulses, 4055 A/B rows, charge-transfer ridge res68 0.5193). On that held-out-run table, the traditional depth/topology/B-charge bins give selected-A charge res68 0.3541 [0.3431, 0.3688] and prediction order-violation rate 0.4702. The monotonic residual ML model gives res68 0.3602 [0.3513, 0.3721] (ML-traditional delta +0.0061) and order-violation rate 0.4335; the shuffled-depth control is 0.3636. Simple range-order structure is therefore visible only as a weak internal ordering diagnostic, not as an external energy/PID calibration.",
+  "hypothesis": "A/B matched charge carries some topology-order information, but sparse downstream B coincidences and broad A-charge transfer dominate over a simple range proxy.",
+  "next_tickets": [],
+  "runtime_sec": 143.1
+}

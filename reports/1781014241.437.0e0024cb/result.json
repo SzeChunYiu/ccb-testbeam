@@ -1,0 +1,65 @@
+{
+  "study": "P05b",
+  "ticket": "1781014241.437.0e0024cb",
+  "worker": "testbeam-laptop-2",
+  "title": "failure-aware two-pulse abstention calibration",
+  "reproduced": true,
+  "bad_recovery_definition": {
+    "event_time_rms_ns_gt": 12.0,
+    "abs_charge_bias_gt": 0.2,
+    "base_fit_failed": true
+  },
+  "traditional": {
+    "method": "bounded_template_fit_train_quality_cuts",
+    "coverage": 0.3433333333333333,
+    "accepted_time_rms_ns": 7.424022821119746,
+    "accepted_time_rms_ns_ci": [
+      6.608008994537195,
+      8.260525824973444
+    ],
+    "charge_fractional_bias": -0.02830910457579012,
+    "charge_fractional_res68": 0.06961774051586676,
+    "abstention_rate": 0.6566666666666666,
+    "bad_recovery_rate": 0.09223300970873786,
+    "risk_coverage_auc": 0.19671533677165132,
+    "selected_cuts": {
+      "min_score": 0.65,
+      "max_log_chi2_ndf": 24.92297091484134,
+      "min_pred_sep_sample": 0.0,
+      "max_pred_amp_ratio": 1.5
+    }
+  },
+  "ml": {
+    "method": "s11a_mlp_isotonic_failure_probability",
+    "coverage": 0.7283333333333334,
+    "accepted_time_rms_ns": 8.438888928138194,
+    "accepted_time_rms_ns_ci": [
+      8.279926579283169,
+      8.588669781511607
+    ],
+    "charge_fractional_bias": -0.013720630299375185,
+    "charge_fractional_res68": 0.06382177406291148,
+    "abstention_rate": 0.27166666666666667,
+    "bad_recovery_rate": 0.14416475972540047,
+    "risk_coverage_auc": 0.1382365289241433,
+    "selected_failure_probability_threshold": 0.5
+  },
+  "split": {
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ]
+  },
+  "leakage_checks_pass": true,
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "143a7cf4396b444999e46066af313b1502c7e780",
+  "runtime_sec": 28.54,
+  "follow_up_ticket": "P05c: validate calibrated abstention gates on real high-current S11b candidate windows using low-current template controls"
+}

@@ -1,0 +1,14 @@
+method,metric,value,ci_low,ci_high,n_bootstrap,bootstrap_unit
+ml_pretrigger_only,traditional_tail_auc,0.6353430080420553,0.6166635641055014,0.6531881508240795,500,heldout_run
+ml_pretrigger_only,ml_tail_auc,0.695783803321677,0.6748828916786161,0.7123801917782228,500,heldout_run
+ml_pretrigger_only,ml_minus_traditional_auc,0.06044079527962156,0.05252633013860423,0.0675154456298634,500,heldout_run
+ml_pretrigger_only,ml_calibration_ece,0.20758854484820172,0.14478800971467445,0.2744376334561254,500,heldout_run
+ml_pretrigger_only,traditional_calibration_ece,0.1277193538590195,0.09577346429526935,0.15567981365563854,500,heldout_run
+ml_pretrigger_only,ml_minus_traditional_ece,0.07986919098918221,-0.018623561647791043,0.17442537756782467,500,heldout_run
+ml_pretrigger_only,mean_brier_improvement_vs_traditional,-0.029953049931917917,-0.06714661426662905,0.01031323766572127,500,heldout_run
+ml_pretrigger_only,mean_log_loss_improvement_vs_traditional,-0.06406529748711563,-0.1635001653831561,0.03577640412030374,500,heldout_run
+ml_pretrigger_only,ml_tail_resid_shift_ns,-11.70548709408055,-13.493411188875951,-9.673684168661739,500,heldout_run
+ml_pretrigger_only,ml_predicted_tau_shift_ns,-54.21222938160738,-55.85017147830692,-52.25706999890148,500,heldout_run
+ml_pretrigger_only,ml_predicted_downstream_excess,-0.01905041670528007,-0.03156149482773887,-0.005321170204667067,500,heldout_run
+ml_pretrigger_only,traditional_predicted_downstream_excess,-0.018233762832043032,-0.03401551444887926,-0.0021978856660632724,500,heldout_run
+ml_pretrigger_only,ml_minus_traditional_predicted_downstream_excess,-0.0008166538732372053,-0.0031486020846574437,0.001953004179138109,500,heldout_run

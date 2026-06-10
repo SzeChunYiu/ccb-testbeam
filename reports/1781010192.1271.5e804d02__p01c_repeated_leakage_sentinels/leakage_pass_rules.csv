@@ -1,0 +1,5 @@
+rule,value,detail
+ml_ci_beats_traditional_ci,False,ML low 0.221 > traditional high 0.349
+ml_overall_above_repeated_shuffle_p95_plus_margin,False,ML 0.235; shuffle p95 max 0.307; margin 0.02
+random_row_gain_not_suspicious,True,random-row 0.276 - run-heldout 0.235 <= 0.05
+ml_above_shuffle_in_every_run_and_topology,False,heldout_run=42 real 0.242 <= shuffle p95 0.297+0.02; heldout_run=57 real 0.239 <= shuffle p95 0.305+0.02; heldout_run=64 real 0.228 <= shuffle p95 0.313+0.02; heldout_run=65 real 0.214 <= shuffle p95 0.341+0.02; topology=quad real 0.288 <= shuffle p95 0.301+0.02; topology=single real 0.318 <= shuffle p95 0.317+0.02

@@ -1,0 +1,6 @@
+feature_set,C,cv_auc
+p01_style_ae_shape,0.03,0.9943393813807422
+p01_style_ae_shape,0.1,0.9951488006514334
+p01_style_ae_shape,0.3,0.9956861243032447
+p01_style_ae_shape,1.0,0.9960196446249082
+p01_style_ae_shape,3.0,0.9961566272389487

@@ -1,0 +1,159 @@
+{
+  "canonical_manifest_summary": {
+    "a_stack_roots": 57,
+    "b_stack_roots": 53,
+    "confidence_label_counts": {
+      "high_direct_root_empty": 8,
+      "high_direct_root_trigger": 102,
+      "high_for_absence_in_current_mirror": 22
+    },
+    "missing_b_stack_runs": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      38
+    ],
+    "root_status_counts": {
+      "empty_placeholder": 8,
+      "missing": 22,
+      "populated": 102
+    },
+    "rows": 132,
+    "runs": [
+      0,
+      65
+    ],
+    "runs_with_both_stacks": 53
+  },
+  "external_source_search": {
+    "archive_members_scanned": 216,
+    "external_log_candidates": 0,
+    "filesystem_files_scanned": 217,
+    "non_root_documents": [
+      "bstack_astack_report_with_timing_label_pileup_ml.pdf"
+    ]
+  },
+  "git_commit": "0da41b476b17cde831d72f9c1a1a8680613b0ee8",
+  "leakage_checks": [
+    {
+      "check": "shuffled_training_labels",
+      "interpretation": "AUC should be near chance under shuffled labels.",
+      "pass": true,
+      "value": 0.4175939305990996
+    },
+    {
+      "check": "repeated_shuffled_training_labels_mean_auc",
+      "interpretation": "Shuffle AUC 2.5/50/97.5% quantiles 0.388/0.487/0.630.",
+      "pass": true,
+      "value": 0.49495408933393936
+    },
+    {
+      "check": "intentional_label_oracle",
+      "interpretation": "Direct label leakage would be visible.",
+      "pass": true,
+      "value": 1.0
+    },
+    {
+      "check": "real_feature_exclusion",
+      "interpretation": "ML excludes run id, file name, trigger, event id, event max, post-trigger samples, and labels.",
+      "pass": true,
+      "value": null
+    }
+  ],
+  "ml_method": {
+    "best": {
+      "C": 10.0,
+      "cv_auc": 0.6911158609567069,
+      "cv_auc_std": 0.026728276718548095,
+      "cv_average_precision": 0.47430314736029794
+    },
+    "feature_columns": [
+      "pre_mean_adc",
+      "pre_std_adc",
+      "pre_range_adc",
+      "pre_slope03_adc",
+      "stave_seed_median_adc",
+      "stave_seed_iqr_adc"
+    ],
+    "heldout": {
+      "heldout_auc": 0.6450169775229595,
+      "heldout_auc_ci_high": 0.6809520553372616,
+      "heldout_auc_ci_low": 0.5844224612895714,
+      "heldout_average_precision": 0.6483125419651581,
+      "heldout_mean_quiet_probability": 0.40382131949834704,
+      "heldout_mean_quiet_probability_ci_high": 0.43068320441760666,
+      "heldout_mean_quiet_probability_ci_low": 0.3757629874534967,
+      "heldout_runs": "57,65",
+      "method": "pretrigger_only_logistic_hidden_mode_probe",
+      "n_events": 4000
+    },
+    "method": "pretrigger-only logistic hidden-mode probe"
+  },
+  "provenance_crosscheck": {
+    "s16e_non_beam_entries": 0,
+    "s16e_reproduction_rows": [
+      {
+        "delta": 0,
+        "expected": 640737,
+        "pass": true,
+        "quantity": "S00 selected B-stave pulses",
+        "reproduced": 640737
+      },
+      {
+        "delta": 0,
+        "expected": 0,
+        "pass": true,
+        "quantity": "forced/random/non-beam ROOT entries",
+        "reproduced": 0
+      },
+      {
+        "delta": 0,
+        "expected": 0,
+        "pass": true,
+        "quantity": "forced/random/pedestal archive or filename hits",
+        "reproduced": 0
+      }
+    ],
+    "s16e_trigger_rows": 110,
+    "s16f_mapping_all_match": true,
+    "s16f_mapping_compared_rows": 132,
+    "s16f_mapping_matching_rows": 132,
+    "s16f_mapping_rows": 132
+  },
+  "raw_reproduction": {
+    "distinct_raw_root_runs": 57,
+    "expected_non_beam_trigger_entries": 0,
+    "expected_selected_b_stave_pulses": 640737,
+    "non_beam_trigger_entries": 0,
+    "raw_root_file_count": 110,
+    "selected_b_stave_pulses": 640737
+  },
+  "runtime_sec": 21.725353717803955,
+  "study": "S16g",
+  "ticket": "1781029779.1072.02d438c1",
+  "traditional_method": {
+    "candidate_runs": [],
+    "heldout": {
+      "heldout_candidate_fraction": 0.0,
+      "heldout_candidate_fraction_ci_high": 0.0,
+      "heldout_candidate_fraction_ci_low": 0.0,
+      "heldout_mean_source_score": 0.09995320630541848,
+      "heldout_mean_source_score_ci_high": 0.21685677701436598,
+      "heldout_mean_source_score_ci_low": -0.016950364403528997,
+      "heldout_runs": "57,65",
+      "method": "traditional_source_inventory_waveform_rule",
+      "n_runs": 2
+    },
+    "method": "source inventory plus root trigger audit plus whole-run quiet waveform rule"
+  },
+  "worker": "testbeam-laptop-2"
+}

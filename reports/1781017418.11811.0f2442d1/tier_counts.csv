@@ -1,0 +1,6 @@
+tier,n_pair_rows,n_runs,n_unique_events,n_a_raw_any_pair_rows,n_a_raw_both_pair_rows
+raw_loose500,74176,21,32207,452,140
+sorted_any_trmax1000,893,20,457,452,140
+sorted_any_clean1000,794,20,406,452,140
+sorted_both_clean1000,180,14,106,161,140
+sorted_any_trmax2000,734,20,371,452,140

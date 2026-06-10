@@ -1,0 +1,7 @@
+probe,roc_auc,average_precision,notes
+q-template RF with shuffled training labels,0.5829788605310647,0.04302651840281019,Run-held-out null check; labels shuffled only inside training runs.
+B2-only q-template RF,0.5525779840164992,0.03980008282465611,Upstream q_template only; away from downstream D_t source waveforms.
+downstream-only q-template RF,0.8980794019077081,0.34877077277565244,Downstream q_template only; shares waveform provenance with D_t labels.
+absolute-amplitude-only RF,0.8257959525650941,0.23963927827083237,Amplitude nuisance probe; excluded from main RF.
+leaky D_t score,1.0,0.9999999999999998,"Forbidden label-defining ceiling, reported only as a reference."
+forbidden feature audit,,,"Forbidden main-feature columns: []; main features: ['q_b2', 'q_b4', 'q_b6', 'q_b8', 'q_mean', 'q_max', 'q_std', 'q_ds_mean', 'q_ds_max', 'q_ds_std', 'q_b2_minus_ds_mean', 'q_ds_span']."

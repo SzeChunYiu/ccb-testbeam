@@ -1,41 +1,51 @@
 {
   "study": "S03b",
   "ticket": "1781005627.1825.6e067067",
-  "worker": "testbeam-laptop-3",
-  "title": "amplitude-binned monotone analytic template timewalk closure",
+  "worker": "testbeam-laptop-4",
+  "title": "amplitude-binned analytic template timewalk with per-stave monotonic constraints",
   "reproduced": true,
   "s03a_reproduction": {
-    "base_method": "template_phase",
-    "template_phase_sigma68_ns": 2.889152765080617,
-    "s02_ml_ridge_on_cfd20_sigma68_ns": 1.8461136615528861,
-    "amp_only_candidate": "amp_only",
-    "amp_only_alpha": 100.0,
-    "amp_only_sigma68_ns": 1.494640076269676
+    "s02_template_phase_base": {
+      "value": 2.889152765080617,
+      "reference": 2.889152765080617
+    },
+    "s03a_amp_only_reference": {
+      "value": 1.494640076269676,
+      "reference": 1.494640076269676
+    },
+    "ml_ridge_on_template_phase": {
+      "value": 1.3915306248207993,
+      "reference": 1.3915306248207993
+    }
   },
   "traditional": {
     "metric": "heldout_pairwise_sigma68_ns",
-    "method": "amplitude_binned_per_stave_isotonic_template",
-    "n_bins": 8,
+    "method": "per_stave_amplitude_binned_timewalk",
+    "mode": "monotonic",
     "direction": "decreasing",
+    "n_bins": 10,
+    "cv_sigma68_ns": 1.5463842550268794,
     "value": 1.5695763825403084,
     "ci": [
-      1.3354763682415849,
-      1.819576382540312
+      1.3195763825403155,
+      1.8195763825403137
     ],
-    "gain_vs_template_phase_ns": 1.3195763825403084,
-    "delta_vs_s03a_amp_only_ns": -0.0749363062706323
+    "delta_vs_s03a_amp_only_ns": -0.0749363062706323,
+    "improves_s03a_amp_only": false
+  },
+  "baselines": {
+    "template_phase_sigma68_ns": 2.889152765080617,
+    "s03a_amp_only_sigma68_ns": 1.494640076269676
   },
   "ml": {
     "metric": "heldout_pairwise_sigma68_ns",
-    "method": "hist_gradient_boosted_waveform_residual",
-    "model": "hgb_regularized",
-    "value": 1.4717065664689215,
+    "method": "ridge_residual_corrector_on_template_phase",
+    "value": 1.3915306248207993,
     "ci": [
-      1.2939386448765953,
-      1.6824523898467496
+      1.288574320940427,
+      1.6084849788071842
     ],
-    "gain_vs_template_phase_ns": 1.4174461986116953,
-    "delta_vs_traditional_ns": 0.0978698160713869
+    "delta_vs_s03a_amp_only_ns": 0.10310945144887684
   },
   "leakage": {
     "split_by_run": true,
@@ -51,16 +61,15 @@
       65
     ],
     "event_id_overlap": 0,
-    "monotone_shuffled_target_sigma68_ns": 2.891843568949091,
-    "ml_shuffled_target_sigma68_ns": 2.876955572927115,
-    "feature_audit": "no run id, event id, event order, other-stave timing, or held-out label"
+    "s03b_shuffled_target_sigma68_ns": 2.905653903414869,
+    "ml_shuffled_target_sigma68_ns": 2.8825097249583522
   },
-  "verdict": "monotone_binned_does_not_improve_s03a_amp_only__ml_narrower_than_traditional",
+  "verdict": "s03b_binned_monotonic_does_not_improve_on_s03a_amp_only",
   "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
-  "git_commit": "60c901c338cf1f0dee3553f808f762274f53b1c6",
+  "git_commit": "3d4a211dd0468e4499a1806f1212e31203b4a6b7",
   "critic": "pending",
   "next_tickets": [
-    "S03d: leave-one-run-out stability for S03a/S03b across Sample-II analysis runs",
-    "S03e: two-ended-safe timewalk closure using only single-stave waveform features and no event residual target"
+    "S03c: multi-heldout-run timing correction stability with leave-one-run-out intervals",
+    "S03d: physically signed per-stave amplitude timewalk prior versus isotonic fit"
   ]
 }

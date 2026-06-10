@@ -1,0 +1,346 @@
+{
+  "ticket_id": "1781011449.1304.37c054cc",
+  "study_id": "P09b",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "pass": true
+  },
+  "heldout_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "inter_reviewer_agreement": {
+    "n_rows": 256,
+    "agreement_rate": 0.83203125,
+    "cohen_kappa": 0.7279691592942223,
+    "n_disagreements": 43
+  },
+  "precision_by_class_method": [
+    {
+      "selection_method": "ml_pca_ae_isolation",
+      "claimed_class": "curated_any",
+      "n_claimed": 128,
+      "adjudicated_precision": 0.96875,
+      "reviewer_agreement": 0.953125
+    },
+    {
+      "selection_method": "ml_pca_ae_isolation",
+      "claimed_class": "target_any",
+      "n_claimed": 98,
+      "adjudicated_precision": 0.41836734693877553,
+      "reviewer_agreement": 0.9897959183673469
+    },
+    {
+      "selection_method": "ml_pca_ae_isolation",
+      "claimed_class": "novel_early_pretrigger",
+      "n_claimed": 56,
+      "adjudicated_precision": 0.0,
+      "reviewer_agreement": 1.0
+    },
+    {
+      "selection_method": "ml_pca_ae_isolation",
+      "claimed_class": "novel_delayed_peak",
+      "n_claimed": 41,
+      "adjudicated_precision": 1.0,
+      "reviewer_agreement": 0.975609756097561
+    },
+    {
+      "selection_method": "ml_pca_ae_isolation",
+      "claimed_class": "novel_broad_template_mismatch",
+      "n_claimed": 1,
+      "adjudicated_precision": 0.0,
+      "reviewer_agreement": 1.0
+    },
+    {
+      "selection_method": "traditional_robust_template",
+      "claimed_class": "curated_any",
+      "n_claimed": 128,
+      "adjudicated_precision": 0.96875,
+      "reviewer_agreement": 0.7109375
+    },
+    {
+      "selection_method": "traditional_robust_template",
+      "claimed_class": "target_any",
+      "n_claimed": 67,
+      "adjudicated_precision": 0.19402985074626866,
+      "reviewer_agreement": 0.6716417910447762
+    },
+    {
+      "selection_method": "traditional_robust_template",
+      "claimed_class": "novel_early_pretrigger",
+      "n_claimed": 67,
+      "adjudicated_precision": 0.19402985074626866,
+      "reviewer_agreement": 0.6716417910447762
+    },
+    {
+      "selection_method": "traditional_robust_template",
+      "claimed_class": "novel_delayed_peak",
+      "n_claimed": 0,
+      "adjudicated_precision": NaN,
+      "reviewer_agreement": NaN
+    },
+    {
+      "selection_method": "traditional_robust_template",
+      "claimed_class": "novel_broad_template_mismatch",
+      "n_claimed": 0,
+      "adjudicated_precision": NaN,
+      "reviewer_agreement": NaN
+    }
+  ],
+  "bootstrap_ci": [
+    {
+      "metric_family": "duplicate_rate",
+      "selection_method": "cross_method_union",
+      "metric": "duplicate_run_event_rate",
+      "ci_low": 0.09375,
+      "ci_high": 0.1875,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "duplicate_rate",
+      "selection_method": "cross_method_union",
+      "metric": "duplicate_run_stave_pulse_rate",
+      "ci_low": 0.0625,
+      "ci_high": 0.1328125,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "duplicate_rate",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "duplicate_run_event_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.09375,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "duplicate_rate",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "duplicate_run_stave_pulse_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "duplicate_rate",
+      "selection_method": "traditional_robust_template",
+      "metric": "duplicate_run_event_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.046875,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "duplicate_rate",
+      "selection_method": "traditional_robust_template",
+      "metric": "duplicate_run_stave_pulse_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "inter_reviewer",
+      "selection_method": "all_gallery",
+      "metric": "agreement_rate",
+      "ci_low": 0.828125,
+      "ci_high": 0.83984375,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "inter_reviewer",
+      "selection_method": "all_gallery",
+      "metric": "cohen_kappa",
+      "ci_low": 0.7137989778534923,
+      "ci_high": 0.7373869253007553,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "curated_any",
+      "ci_low": 0.9453125,
+      "ci_high": 0.9921875,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "novel_broad_template_mismatch",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 3371
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "novel_delayed_peak",
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "novel_early_pretrigger",
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "ml_pca_ae_isolation",
+      "metric": "target_any",
+      "ci_low": 0.35514018691588783,
+      "ci_high": 0.4945054945054945,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "traditional_robust_template",
+      "metric": "curated_any",
+      "ci_low": 0.9453125,
+      "ci_high": 0.9921875,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "traditional_robust_template",
+      "metric": "novel_early_pretrigger",
+      "ci_low": 0.13432835820895522,
+      "ci_high": 0.28125,
+      "n_boot_valid": 5000
+    },
+    {
+      "metric_family": "precision",
+      "selection_method": "traditional_robust_template",
+      "metric": "target_any",
+      "ci_low": 0.13432835820895522,
+      "ci_high": 0.28125,
+      "n_boot_valid": 5000
+    }
+  ],
+  "duplicate_rates": [
+    {
+      "selection_method": "ml_pca_ae_isolation",
+      "n_rows": 128,
+      "duplicate_run_event_rate": 0.046875,
+      "duplicate_run_stave_pulse_rate": 0.0,
+      "max_run_stave_share": 0.0625
+    },
+    {
+      "selection_method": "traditional_robust_template",
+      "n_rows": 128,
+      "duplicate_run_event_rate": 0.015625,
+      "duplicate_run_stave_pulse_rate": 0.0,
+      "max_run_stave_share": 0.0625
+    },
+    {
+      "selection_method": "cross_method_union",
+      "n_rows": 244,
+      "duplicate_run_event_rate": 0.1328125,
+      "duplicate_run_stave_pulse_rate": 0.09375,
+      "max_run_stave_share": 0.06557377049180328
+    }
+  ],
+  "score_comparison": [
+    {
+      "label": "consensus_curated_any",
+      "score": "p09a_traditional_score",
+      "roc_auc": 0.7686491935483872,
+      "average_precision": 0.99135303273887,
+      "spearman": 0.16192402032891554
+    },
+    {
+      "label": "consensus_curated_any",
+      "score": "p09a_ml_score",
+      "roc_auc": 0.5625,
+      "average_precision": 0.9657540169687784,
+      "spearman": 0.037670879025864024
+    },
+    {
+      "label": "consensus_curated_any",
+      "score": "knn_target_any",
+      "roc_auc": 0.8225806451612903,
+      "average_precision": 0.9889112903225806,
+      "spearman": 0.23186944788008415
+    },
+    {
+      "label": "consensus_target_any",
+      "score": "p09a_traditional_score",
+      "roc_auc": 0.10037831021437578,
+      "average_precision": 0.13728955385436256,
+      "spearman": -0.5897747539763142
+    },
+    {
+      "label": "consensus_target_any",
+      "score": "p09a_ml_score",
+      "roc_auc": 0.30870113493064316,
+      "average_precision": 0.16945024073456272,
+      "spearman": -0.28232511889620343
+    },
+    {
+      "label": "consensus_target_any",
+      "score": "knn_target_any",
+      "roc_auc": 0.6708280790248004,
+      "average_precision": 0.3261142418032787,
+      "spearman": 0.3006601489233708
+    },
+    {
+      "label": "consensus_label",
+      "score": "knn_exact_label",
+      "roc_auc": NaN,
+      "average_precision": 0.42578125,
+      "spearman": NaN
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_reproduction_before_gallery",
+      "value": 640737.0,
+      "pass": true,
+      "note": "script raises before gallery load if this fails"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "PCA/kNN exemplars are train-run only"
+    },
+    {
+      "check": "nearest_neighbor_uses_heldout_runs",
+      "value": 0.0,
+      "pass": true,
+      "note": "all nearest exemplars must come from non-held-out runs"
+    },
+    {
+      "check": "gallery_waveform_hash_seen_in_train",
+      "value": 0.0,
+      "pass": true,
+      "note": "rounded normalized waveform hashes at 1e-3 precision"
+    },
+    {
+      "check": "knn_exact_consensus_accuracy_too_perfect",
+      "value": 0.42578125,
+      "pass": true,
+      "note": "perfect kNN agreement would trigger a leakage concern"
+    },
+    {
+      "check": "review_consensus_equals_p09a_taxon_rate",
+      "value": 0.41796875,
+      "pass": true,
+      "note": "adjudication is not a verbatim copy of P09a labels"
+    }
+  ],
+  "follow_up_tickets": [
+    {
+      "title": "P09c independent human gallery review",
+      "body": "Have two external reviewers label the P09a/P09b waveform gallery without access to P09a taxon names, then compare against P09b fixed-rubric labels with run-heldout bootstrap CIs."
+    },
+    {
+      "title": "P09d enrich broad-template-mismatch gallery",
+      "body": "Build a run-heldout gallery that oversamples q_template-only and broad pulses so novel_broad_template_mismatch precision is not driven by a single example."
+    }
+  ],
+  "runtime_sec": 139.0
+}

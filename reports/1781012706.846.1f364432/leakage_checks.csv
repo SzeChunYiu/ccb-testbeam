@@ -1,0 +1,7 @@
+check,value,flag,note
+heldout_runs_excluded_from_training,1.0,False,Every ML score is predicted for a source run held out from fitting.
+identifier_and_label_features_excluded,1.0,False,"Features are P09a labels/scores and P01/P02 latent distances only; run, event, group, and current are excluded."
+run_heldout_current_auc,0.633472509738324,False,Flagged if current is nearly identified under leave-one-run-out evaluation.
+run_heldout_pileup_auc,0.8059930513711205,False,Flagged if P09/latent features nearly recover the downstream label.
+row_split_current_auc,0.6679147276477195,False,Optimistic random row split stress test.
+row_minus_run_current_auc,0.0344422179093955,False,Large row/run gap suggests run-local leakage sensitivity.

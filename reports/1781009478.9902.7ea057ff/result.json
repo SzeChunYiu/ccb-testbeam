@@ -1,0 +1,120 @@
+{
+  "study": "S05b",
+  "ticket": "1781009478.9902.7ea057ff",
+  "worker": "testbeam-laptop-4",
+  "title": "A-stack external-control covariance on loose pulse-quality tiers",
+  "reproduced": true,
+  "primary_tier": "loose500",
+  "tier_counts": [
+    {
+      "tier": "loose500",
+      "amplitude_cut_adc": 500.0,
+      "n_pair_rows": 74176,
+      "n_runs": 21,
+      "n_unique_events": 32207,
+      "n_a_any_pair_rows": 614,
+      "n_a_both_pair_rows": 158,
+      "n_a_any_events": 307,
+      "n_a_both_events": 94
+    },
+    {
+      "tier": "loose750",
+      "amplitude_cut_adc": 750.0,
+      "n_pair_rows": 69081,
+      "n_runs": 21,
+      "n_unique_events": 29449,
+      "n_a_any_pair_rows": 478,
+      "n_a_both_pair_rows": 128,
+      "n_a_any_events": 225,
+      "n_a_both_events": 74
+    },
+    {
+      "tier": "nominal1000",
+      "amplitude_cut_adc": 1000.0,
+      "n_pair_rows": 65457,
+      "n_runs": 21,
+      "n_unique_events": 27751,
+      "n_a_any_pair_rows": 380,
+      "n_a_both_pair_rows": 114,
+      "n_a_any_events": 187,
+      "n_a_both_events": 62
+    }
+  ],
+  "traditional": {
+    "method": "grouped-run-heldout Ridge using B pair features plus event-matched A controls",
+    "metric": "A-any subset heldout sigma68 residual width ns",
+    "value": 9.131510914358863,
+    "ci": [
+      7.034345990738831,
+      10.999530757305072
+    ],
+    "a_control_delta_vs_b_only_ci": [
+      -0.021555016513593504,
+      0.01942123990480966
+    ]
+  },
+  "ml": {
+    "method": "grouped-run-heldout bounded ExtraTrees using B pair features plus event-matched A controls",
+    "metric": "A-any subset heldout sigma68 residual width ns",
+    "value": 5.079477067553238,
+    "ci": [
+      3.5880923702103398,
+      6.535382068456464
+    ],
+    "a_control_delta_vs_ml_b_only_ci": [
+      0.048153425569199215,
+      0.6154609988946108
+    ]
+  },
+  "finding": "Looser raw pulse-quality tiers increase A/B coincidence statistics, but A-stack controls still do not provide a statistically secure held-out reduction of B-stack pair residual width.",
+  "leakage": [
+    {
+      "tier": "loose500",
+      "check": "actual_ml_b_plus_a",
+      "sigma68_ns": 3.1147359254163987,
+      "interpretation": "nominal run-held-out ML residual width",
+      "trigger": "primary_loose_tier"
+    },
+    {
+      "tier": "loose500",
+      "check": "runwise_shuffled_a_controls",
+      "sigma68_ns": 3.018060362327999,
+      "interpretation": "A controls lose event matching but preserve run marginals",
+      "trigger": "primary_loose_tier"
+    },
+    {
+      "tier": "loose500",
+      "check": "intentional_target_echo",
+      "sigma68_ns": 0.0,
+      "interpretation": "positive leakage sentinel; should be unrealistically small",
+      "trigger": "primary_loose_tier"
+    },
+    {
+      "tier": "nominal1000",
+      "check": "actual_ml_b_plus_a",
+      "sigma68_ns": 2.6287295508485897,
+      "interpretation": "nominal run-held-out ML residual width",
+      "trigger": "ml_a_control_ci_below_zero"
+    },
+    {
+      "tier": "nominal1000",
+      "check": "runwise_shuffled_a_controls",
+      "sigma68_ns": 2.6640021177023288,
+      "interpretation": "A controls lose event matching but preserve run marginals",
+      "trigger": "ml_a_control_ci_below_zero"
+    },
+    {
+      "tier": "nominal1000",
+      "check": "intentional_target_echo",
+      "sigma68_ns": 0.0,
+      "interpretation": "positive leakage sentinel; should be unrealistically small",
+      "trigger": "ml_a_control_ci_below_zero"
+    }
+  ],
+  "input_sha256": "reports/1781009478.9902.7ea057ff/input_sha256.csv",
+  "git_commit": "86e93ac25967ce93cdc3987324c1fab0aee64558",
+  "next_tickets": [
+    "S05d: repeat the loose-tier A-control test with sorted ROOT quality variables such as hrdMaxTS and trap summaries to test whether sorted pulse-shape cuts isolate better A/B coincidences.",
+    "S05e: build a run-level A/B coincidence-rate model across current and target settings to separate beam-rate effects from detector-local B covariance."
+  ]
+}

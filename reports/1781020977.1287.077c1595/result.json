@@ -1,0 +1,96 @@
+{
+  "study": "S03f",
+  "ticket": "1781020977.1287.077c1595",
+  "worker": "testbeam-laptop-1",
+  "title": "hierarchical shrinkage for signed inverse-amplitude timewalk scales",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true,
+    "s03d_pooled_headline_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "baseline": {
+    "method": "template_phase",
+    "value": 2.7414145300852155,
+    "ci": [
+      2.6842165631742354,
+      2.992319268962799
+    ]
+  },
+  "traditional": {
+    "s03a_amp_only": {
+      "method": "amp_only_ridge_residual_on_template_phase",
+      "value": 1.551091710977783,
+      "ci": [
+        1.3662535652875234,
+        1.899387999128052
+      ]
+    },
+    "s03b_monotone_binned": {
+      "method": "per_stave_monotone_decreasing_binned_timewalk",
+      "value": 1.6451494274970766,
+      "ci": [
+        1.3217498254041793,
+        1.9446031599334903
+      ]
+    },
+    "phys_signed_inverse_amp": {
+      "method": "s03d_per_stave_nonnegative_inverse_amplitude_prior",
+      "value": 1.6043573218297749,
+      "ci": [
+        1.3852649690572272,
+        1.9483740627723467
+      ]
+    },
+    "hierarchical_signed_shrinkage": {
+      "method": "bounded_partial_pooling_inverse_amplitude_slopes",
+      "value": 1.5680885307447414,
+      "ci": [
+        1.3405856578944126,
+        1.922281044254794
+      ],
+      "gain_vs_template_phase_ns": 1.173325999340474,
+      "delta_vs_phys_signed_inverse_amp_ns": 0.03626879108503345,
+      "delta_vs_s03b_monotone_binned_ns": 0.07706089675233518,
+      "run61_value": 2.1303445697773515,
+      "run61_delta_vs_phys_signed_inverse_amp_ns": 0.03700178104183349
+    }
+  },
+  "ml": {
+    "method": "hist_gradient_boosting_residual_corrector_on_template_phase",
+    "value": 1.3941943679323168,
+    "ci": [
+      1.2564261511942043,
+      1.6578837795693178
+    ],
+    "gain_vs_template_phase_ns": 1.3472201621528987,
+    "gain_vs_hierarchical_signed_ns": 0.17389416281242465
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "final_models_use_heldout_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.540584195694325,
+    "hgb_looks_too_good": false,
+    "leakage_flag": false
+  },
+  "verdict": "hierarchical_shrinkage_improves_signed_prior_no_leakage",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "de620fda485c65acde03b72fc1b43355f609de0e",
+  "critic": "pending",
+  "next_tickets": []
+}

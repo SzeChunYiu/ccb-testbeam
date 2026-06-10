@@ -1,0 +1,28 @@
+study_id: S14h
+ticket_id: "0000000011.1.rangestop"
+title: Range and stopping-stave reconstruction from GEANT4 Sci_bar truth
+worker: testbeam-laptop-4
+
+geant4_root: /home/billy/ccb-geant4/output_krakow_1M.root
+fallback_geant4_root: /home/billy/ccb-geant4/output_30k.root
+tree: hibeam
+output_dir: reports/0000000011.1.rangestop
+
+expected_tree_entries: 1000000
+layer_min: 0
+layer_max: 7
+layer_spacing_cm: 1.0
+truth_min_edep_mev: 0.0
+visible_threshold_grid_mev: [0.02, 0.05, 0.1, 0.2, 0.35, 0.5, 0.8, 1.2, 2.0]
+
+pseudo_run_size: 50000
+heldout_pseudo_runs: [4, 9, 14, 19]
+
+random_seed: 171101
+bootstrap_reps: 400
+max_tree_train_rows: 90000
+max_torch_train_rows: 70000
+torch_epochs: 8
+torch_batch_size: 1024
+
+deltae_plot_max_points_per_species: 65000

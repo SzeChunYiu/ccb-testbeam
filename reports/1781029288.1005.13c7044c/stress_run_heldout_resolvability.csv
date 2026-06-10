@@ -1,0 +1,5 @@
+source_run,method,resolvable_delay_ns,n_positive
+63,stress_amp_binned_template_fit,,300
+65,stress_amp_binned_template_fit,,300
+63,stress_compact_mlp_classifier_regressor,50.0,300
+65,stress_compact_mlp_classifier_regressor,,300

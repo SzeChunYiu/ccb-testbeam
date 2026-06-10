@@ -1,0 +1,320 @@
+{
+  "study": "P04e",
+  "ticket_id": "1781024351.1857.07576314",
+  "worker": "testbeam-laptop-2",
+  "raw_reproduction_first": {
+    "s00_expected_selected_pulses": 640737,
+    "s00_reproduced_selected_pulses": 640737,
+    "s00_delta": 0,
+    "s00_pass": true,
+    "p04d_p04c_reproduction": {
+      "expected_p04c_rows": 4055,
+      "p04c_rows": 4055,
+      "expected_p04c_ridge_res68": 0.519271,
+      "p04c_ridge_res68": 0.5192709757631775
+    }
+  },
+  "row_definition": {
+    "source": "B2 even waveform selected above amplitude cut",
+    "duplicate_closure_label": "B2 odd inverted positive charge, used only as label",
+    "external_target": "Sample II rows with B2/B4/B6/B8 selected; B4+B6+B8 even positive charge",
+    "features": "B2 even waveform and B2 even summaries only"
+  },
+  "split": "leave-one-run-out by run",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 1000
+  },
+  "external_counts": {
+    "valid_duplicate_rows": 579227,
+    "external_rows": 3774,
+    "external_runs": 7
+  },
+  "summary": [
+    {
+      "target": "same_event_B2_odd_charge",
+      "method": "strong_traditional_huber",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": 0.0320328354,
+      "res68_abs_frac": 0.0684982525,
+      "full_rms_frac": 0.8995985313,
+      "within_10pct": 0.7119766826,
+      "within_25pct": 0.7893481717,
+      "bias_ci95": [
+        0.0300005779,
+        0.0331885001
+      ],
+      "res68_ci95": [
+        0.0600946836,
+        0.0965421782
+      ],
+      "full_rms_ci95": [
+        0.7985361993,
+        1.0248855345
+      ]
+    },
+    {
+      "target": "same_event_B2_odd_charge",
+      "method": "extra_trees_odd_closure",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": 0.0009406275,
+      "res68_abs_frac": 0.0119121031,
+      "full_rms_frac": 0.0684228386,
+      "within_10pct": 0.9589295178,
+      "within_25pct": 0.9899311076,
+      "bias_ci95": [
+        0.0005339353,
+        0.0016459747
+      ],
+      "res68_ci95": [
+        0.0100923808,
+        0.0153725046
+      ],
+      "full_rms_ci95": [
+        0.0408361179,
+        0.091545312
+      ]
+    },
+    {
+      "target": "external_downstream_charge",
+      "method": "huber_odd_closure_transfer",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0083803992,
+      "res68_abs_frac": 0.2444809742,
+      "full_rms_frac": 0.5524243946,
+      "within_10pct": 0.2980922099,
+      "within_25pct": 0.691308956,
+      "bias_ci95": [
+        -0.0671469344,
+        0.0872241424
+      ],
+      "res68_ci95": [
+        0.227357983,
+        0.2817459929
+      ],
+      "full_rms_ci95": [
+        0.460054092,
+        0.6856546723
+      ]
+    },
+    {
+      "target": "external_downstream_charge",
+      "method": "extra_trees_odd_closure_transfer",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0085614534,
+      "res68_abs_frac": 0.2407356627,
+      "full_rms_frac": 0.5627485511,
+      "within_10pct": 0.3081611023,
+      "within_25pct": 0.6979332273,
+      "bias_ci95": [
+        -0.0653094059,
+        0.0708701125
+      ],
+      "res68_ci95": [
+        0.2240833811,
+        0.2695656532
+      ],
+      "full_rms_ci95": [
+        0.4688548003,
+        0.7003838669
+      ]
+    },
+    {
+      "target": "external_downstream_charge",
+      "method": "direct_external_huber",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0079212377,
+      "res68_abs_frac": 0.225931089,
+      "full_rms_frac": 0.3780595416,
+      "within_10pct": 0.3245892952,
+      "within_25pct": 0.729199788,
+      "bias_ci95": [
+        -0.0622066105,
+        0.0665246211
+      ],
+      "res68_ci95": [
+        0.2121726791,
+        0.2456257244
+      ],
+      "full_rms_ci95": [
+        0.3078035732,
+        0.4845955384
+      ]
+    },
+    {
+      "target": "external_downstream_charge",
+      "method": "direct_external_extra_trees",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0124330374,
+      "res68_abs_frac": 0.2096359643,
+      "full_rms_frac": 0.2605656057,
+      "within_10pct": 0.3502914679,
+      "within_25pct": 0.7681505034,
+      "bias_ci95": [
+        -0.0554708097,
+        0.0397678551
+      ],
+      "res68_ci95": [
+        0.1982862251,
+        0.2281676094
+      ],
+      "full_rms_ci95": [
+        0.2342425025,
+        0.3125206585
+      ]
+    },
+    {
+      "target": "external_downstream_charge",
+      "method": "shuffled_external_extra_trees",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.0604796388,
+      "res68_abs_frac": 0.2718918552,
+      "full_rms_frac": 0.5872353515,
+      "within_10pct": 0.2750397456,
+      "within_25pct": 0.6385797562,
+      "bias_ci95": [
+        -0.1173090282,
+        0.0103187925
+      ],
+      "res68_ci95": [
+        0.2489738476,
+        0.2896152598
+      ],
+      "full_rms_ci95": [
+        0.5142067207,
+        0.6881630316
+      ]
+    }
+  ],
+  "leakage_checks": [
+    {
+      "heldout_run": 58,
+      "train_rows_duplicate_closure": 563437,
+      "train_rows_external_calibration": 3702,
+      "test_rows_external": 72,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": null,
+      "best_real_external_res68": null,
+      "best_to_shuffled_res68_ratio": null,
+      "looks_too_good": null
+    },
+    {
+      "heldout_run": 59,
+      "train_rows_duplicate_closure": 565664,
+      "train_rows_external_calibration": 3025,
+      "test_rows_external": 749,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": null,
+      "best_real_external_res68": null,
+      "best_to_shuffled_res68_ratio": null,
+      "looks_too_good": null
+    },
+    {
+      "heldout_run": 60,
+      "train_rows_duplicate_closure": 569361,
+      "train_rows_external_calibration": 2972,
+      "test_rows_external": 802,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": null,
+      "best_real_external_res68": null,
+      "best_to_shuffled_res68_ratio": null,
+      "looks_too_good": null
+    },
+    {
+      "heldout_run": 61,
+      "train_rows_duplicate_closure": 568212,
+      "train_rows_external_calibration": 2849,
+      "test_rows_external": 925,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": null,
+      "best_real_external_res68": null,
+      "best_to_shuffled_res68_ratio": null,
+      "looks_too_good": null
+    },
+    {
+      "heldout_run": 62,
+      "train_rows_duplicate_closure": 567593,
+      "train_rows_external_calibration": 2976,
+      "test_rows_external": 798,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": null,
+      "best_real_external_res68": null,
+      "best_to_shuffled_res68_ratio": null,
+      "looks_too_good": null
+    },
+    {
+      "heldout_run": 63,
+      "train_rows_duplicate_closure": 564663,
+      "train_rows_external_calibration": 3409,
+      "test_rows_external": 365,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": null,
+      "best_real_external_res68": null,
+      "best_to_shuffled_res68_ratio": null,
+      "looks_too_good": null
+    },
+    {
+      "heldout_run": 65,
+      "train_rows_duplicate_closure": 567459,
+      "train_rows_external_calibration": 3711,
+      "test_rows_external": 63,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": null,
+      "best_real_external_res68": null,
+      "best_to_shuffled_res68_ratio": null,
+      "looks_too_good": null
+    },
+    {
+      "heldout_run": "overall",
+      "train_rows_duplicate_closure": 579227,
+      "train_rows_external_calibration": 3774,
+      "test_rows_external": 3774,
+      "train_heldout_run_overlap": 0,
+      "exact_b2_waveform_hash_train_test_overlap": 0,
+      "features_exclude": "run,eventno,evt,all_odd_duplicate_channels,B4_charge,B6_charge,B8_charge,downstream_charge",
+      "odd_duplicate_channels_used_as_features": false,
+      "downstream_target_used_as_feature": false,
+      "shuffled_external_res68": 0.2718918552,
+      "best_real_external_res68": 0.2096359643,
+      "best_to_shuffled_res68_ratio": 0.7710270103,
+      "looks_too_good": false
+    }
+  ],
+  "finding": "The odd-readout closure still looks excellent on the penetrating rows: Huber duplicate-charge res68 0.0685 and ExtraTrees duplicate-charge res68 0.0119. Against the external B4+B6+B8 target, the closure transfers are much broader: Huber-transfer res68 0.2445 [0.227357982984056, 0.28174599290916114] and ExtraTrees-transfer res68 0.2407 [0.22408338113017384, 0.2695656531795641]. The best even-only external model is direct_external_extra_trees at res68 0.2096, while the shuffled-target sentinel is 0.2719. This validates the P04d/P04e caution: same-event duplicate-readout closure does not become a precise penetrating-charge measurement when odd duplicate channels are excluded from features.",
+  "runtime_sec": 181.9
+}

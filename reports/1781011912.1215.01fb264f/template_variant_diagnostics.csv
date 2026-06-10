@@ -1,0 +1,7 @@
+variant,fit_window,baseline_nuisance,peak_normalized_template,loss,median_scale_over_even_amp,median_shift,heldout_res68_abs_frac
+template_direct_whole_l2,0-17,False,False,l2,1.021500219605564,0.0,0.5771671772970117
+template_peaknorm_signal_window_l2,4-13,False,True,l2,1.0050497217527063,0.0,0.6012254609442244
+template_signal_window_l2,4-13,False,False,l2,1.0227639883088764,0.0,0.6070253446483762
+template_peak_window_l2,5-11,False,False,l2,1.0221798402336244,0.0,0.6171939076907791
+template_peaknorm_signal_baseline_huber,4-13,True,True,huber,1.0196454993656656,0.0,0.6637122888669297
+template_signal_window_baseline_l2,4-13,True,False,l2,1.047504230410632,0.0,0.7142920294827111

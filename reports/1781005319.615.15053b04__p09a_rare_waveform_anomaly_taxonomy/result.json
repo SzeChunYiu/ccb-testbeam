@@ -1,0 +1,298 @@
+{
+  "ticket_id": "1781005319.615.15053b04",
+  "study_id": "P09a",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "pass": true
+  },
+  "heldout_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "metrics": [
+    {
+      "method": "traditional_robust_template",
+      "top_k": 128,
+      "curated_precision": 0.8984375,
+      "novel_precision": 0.5546875,
+      "known_precision": 0.375,
+      "physics_tail_only_rate": 0.0,
+      "timing_tail_rate": 0.0,
+      "timing_tail_enrichment": 0.0,
+      "curated_enrichment": 10.595164132047477,
+      "novel_enrichment": 7.979388498431467,
+      "saturation_or_dropout_rate": 0.0,
+      "duplicate_event_rate": 0.015625,
+      "max_run_stave_share": 0.0625
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "top_k": 128,
+      "curated_precision": 0.8828125,
+      "novel_precision": 0.765625,
+      "known_precision": 0.1171875,
+      "physics_tail_only_rate": 0.0,
+      "timing_tail_rate": 0.0,
+      "timing_tail_enrichment": 0.0,
+      "curated_enrichment": 10.41090040801187,
+      "novel_enrichment": 11.013803842905405,
+      "saturation_or_dropout_rate": 0.03125,
+      "duplicate_event_rate": 0.046875,
+      "max_run_stave_share": 0.0625
+    },
+    {
+      "method": "balanced_random",
+      "top_k": 128,
+      "curated_precision": 0.1795703125,
+      "novel_precision": 0.16375,
+      "known_precision": 0.015859375,
+      "physics_tail_only_rate": 0.0,
+      "timing_tail_rate": 0.0,
+      "timing_tail_enrichment": 0.0,
+      "curated_enrichment": 2.1176508484792285,
+      "novel_enrichment": 2.355605393339767,
+      "saturation_or_dropout_rate": 0.000546875,
+      "duplicate_event_rate": 0.0165625,
+      "max_run_stave_share": 0.0625
+    }
+  ],
+  "bootstrap_ci": [
+    {
+      "method": "traditional_robust_template",
+      "metric": "curated_precision",
+      "ci_low": 0.8515625,
+      "ci_high": 0.9453125
+    },
+    {
+      "method": "traditional_robust_template",
+      "metric": "novel_precision",
+      "ci_low": 0.5078125,
+      "ci_high": 0.625
+    },
+    {
+      "method": "traditional_robust_template",
+      "metric": "physics_tail_only_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_robust_template",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "traditional_robust_template",
+      "metric": "curated_enrichment",
+      "ci_low": 9.197017815012234,
+      "ci_high": 11.928876917642308
+    },
+    {
+      "method": "traditional_robust_template",
+      "metric": "novel_enrichment",
+      "ci_low": 6.691770926840216,
+      "ci_high": 9.399274553571429
+    },
+    {
+      "method": "traditional_robust_template",
+      "metric": "duplicate_event_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.046875
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "metric": "curated_precision",
+      "ci_low": 0.796875,
+      "ci_high": 0.96875
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "metric": "novel_precision",
+      "ci_low": 0.703125,
+      "ci_high": 0.828125
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "metric": "physics_tail_only_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "metric": "curated_enrichment",
+      "ci_low": 9.910031030101642,
+      "ci_high": 10.993837246192893
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "metric": "novel_enrichment",
+      "ci_low": 9.998397203183085,
+      "ci_high": 12.127639450393355
+    },
+    {
+      "method": "ml_pca_ae_isolation",
+      "metric": "duplicate_event_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.09375
+    },
+    {
+      "method": "balanced_random",
+      "metric": "curated_precision",
+      "ci_low": 0.12480468750000001,
+      "ci_high": 0.2421875
+    },
+    {
+      "method": "balanced_random",
+      "metric": "novel_precision",
+      "ci_low": 0.109375,
+      "ci_high": 0.22675781250000004
+    },
+    {
+      "method": "balanced_random",
+      "metric": "physics_tail_only_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "balanced_random",
+      "metric": "timing_tail_enrichment",
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "method": "balanced_random",
+      "metric": "curated_enrichment",
+      "ci_low": 1.4718064957344212,
+      "ci_high": 2.8560877225519286
+    },
+    {
+      "method": "balanced_random",
+      "metric": "novel_enrichment",
+      "ci_low": 1.5734005489864864,
+      "ci_high": 3.261996495309484
+    },
+    {
+      "method": "balanced_random",
+      "metric": "duplicate_event_rate",
+      "ci_low": 0.0,
+      "ci_high": 0.04726562500000009
+    }
+  ],
+  "taxonomy_counts": [
+    {
+      "taxon": "unassigned_common",
+      "heldout_count": 54558,
+      "gallery_count": 28.0,
+      "heldout_rate": 0.9152030597352926,
+      "gallery_rate": 0.109375
+    },
+    {
+      "taxon": "novel_early_pretrigger",
+      "heldout_count": 2397,
+      "gallery_count": 123.0,
+      "heldout_rate": 0.04020935030949625,
+      "gallery_rate": 0.48046875
+    },
+    {
+      "taxon": "baseline_excursion",
+      "heldout_count": 732,
+      "gallery_count": 58.0,
+      "heldout_rate": 0.012279200845453173,
+      "gallery_rate": 0.2265625
+    },
+    {
+      "taxon": "novel_delayed_peak",
+      "heldout_count": 1581,
+      "gallery_count": 41.0,
+      "heldout_rate": 0.0265210608424337,
+      "gallery_rate": 0.16015625
+    },
+    {
+      "taxon": "novel_broad_template_mismatch",
+      "heldout_count": 162,
+      "gallery_count": 1.0,
+      "heldout_rate": 0.002717528055960948,
+      "gallery_rate": 0.00390625
+    },
+    {
+      "taxon": "pileup_or_long_tail",
+      "heldout_count": 93,
+      "gallery_count": 1.0,
+      "heldout_rate": 0.0015600624024961,
+      "gallery_rate": 0.00390625
+    },
+    {
+      "taxon": "dropout",
+      "heldout_count": 88,
+      "gallery_count": 4.0,
+      "heldout_rate": 0.0014761880797812558,
+      "gallery_rate": 0.015625
+    },
+    {
+      "taxon": "saturation",
+      "heldout_count": 2,
+      "gallery_count": 0.0,
+      "heldout_rate": 3.354972908593763e-05,
+      "gallery_rate": 0.0
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "must be zero"
+    },
+    {
+      "check": "model_features_include_run_event_or_stave_id",
+      "value": 0.0,
+      "pass": true,
+      "note": "ids used only for split/balanced gallery, not score features"
+    },
+    {
+      "check": "top_gallery_waveform_hash_seen_in_train",
+      "value": 0.0,
+      "pass": true,
+      "note": "rounded normalized waveform hash overlap at 1e-3 precision"
+    },
+    {
+      "check": "ml_curated_precision_minus_random_mean",
+      "value": 0.7032421875,
+      "pass": true,
+      "note": "positive indicates ranker beats balanced random triage"
+    }
+  ],
+  "ml_model": {
+    "training_rows": 64771,
+    "device": "cpu",
+    "ae_final_loss": 0.017370515846223164,
+    "pca_explained_variance_ratio": [
+      0.5721465945243835,
+      0.21577467024326324,
+      0.09414399415254593,
+      0.04655555635690689,
+      0.023101722821593285,
+      0.019549928605556488
+    ]
+  },
+  "follow_up_tickets": [
+    {
+      "title": "P09b manual waveform-gallery adjudication",
+      "body": "Manually review the P09a gallery_manifest.csv and gallery_waveforms.json taxonomy assignments, then estimate human-adjudicated precision for novel_early_pretrigger, novel_delayed_peak, and novel_broad_template_mismatch classes."
+    },
+    {
+      "title": "S02d anomaly-taxonomy timing-tail closure",
+      "body": "Inject the P09a anomaly labels into the S02/S03 timing pipeline and measure whether removing each class reduces held-out timing-tail rate without sculpting charge or stave composition."
+    }
+  ],
+  "runtime_sec": 127.0
+}

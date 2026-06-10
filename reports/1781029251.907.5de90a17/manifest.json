@@ -1,0 +1,22 @@
+{
+  "ticket": "1781029251.907.5de90a17",
+  "study": "S16i",
+  "created_utc": "2026-06-10T08:08:37Z",
+  "git_commit": "5ba0e8baed1b70d3abdcf49e90c35da5aee33721",
+  "python": "3.7.6",
+  "script": "scripts/s16i_1781029251_907_5de90a17_pretrigger_livetime_coupling.py",
+  "config": "configs/s16i_1781029251_907_5de90a17_pretrigger_livetime_coupling.json",
+  "artifacts": [
+    "REPORT.md",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "ml_fold_diagnostics.csv",
+    "ml_summary.csv",
+    "raw_run_counts.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "traditional_strata.csv",
+    "traditional_summary.csv"
+  ]
+}

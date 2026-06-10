@@ -1,0 +1,42 @@
+{
+  "ticket": "1781015838.1407.0539203d",
+  "study": "S07h",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "20f125181699519924a58cd2c7b8396f3249c469",
+  "config": "configs/s07h_1781015838_1407_0539203d.json",
+  "command": "scripts/s07h_1781015838_1407_0539203d_non_dt_p02_morphology.py --config configs/s07h_1781015838_1407_0539203d.json",
+  "environment_command": "uv run --with uproot --with numpy --with pandas --with scikit-learn --with matplotlib python",
+  "python": "3.13.12",
+  "random_seed": 2026060919,
+  "runtime_sec": 158.6,
+  "inputs": {
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs": {
+    "REPORT.md": "362657620e0f6eedb67cfa1d1fd67b9ac34d83be92d064c7e5e8176b77d68b7a",
+    "base_event_run_counts.csv": "a0fc28acdbda45841ae2a72c692fb7cf8c63db103f780eabb9575a62a3df4413",
+    "by_run_metrics.csv": "961460f3e01618a6c9a924072a419bd2dc66774929d1200b1783590ee61d2f86",
+    "fixed_efficiency.csv": "449e940bc0b50433e4be0ea0acab1e0065821b9d198f210acf2acd6778cc8561",
+    "injected_counts_by_run.csv": "294abcf96d31adbc21df3129c03c44390a569b1280357d0dffc3253efc6d4ce9",
+    "input_sha256.csv": "004354e751446a2fcf3c86686a83f3f16063dc4efc819fbda7ad4c4c36f88006",
+    "leakage_checks.csv": "e8dd5b2a9c250acfb65895dc0524f7c9d0a47d5abcbd277399977fbd2827664f",
+    "oof_predictions.csv": "cff10daf952e2db5253993005f31966e001f6f8afd47cbac0b6434e61b508346",
+    "p02d_raw_run_counts.csv": "a72dbb1bee7a6392c3faa84da13c65c93d91e1f558b5262723cd8d1da8b5ebbd",
+    "p02d_reproduction_fold_choices.csv": "f3ec39769441b319a49f24d14f642bd6fe4fd082d8dc531a049f19b96681648e",
+    "reproduction_match_table.csv": "093d01ea1da42a020476e2f5f664ea98c18a3ef0d910ebc37593a151b509d1eb",
+    "result.json": "3cfb67244cf4ac6e374a399a86a0fbaf108411b72e86c084efd48f174f98f036",
+    "rf_scan.csv": "8a40752ee1bb69feae3d845350b5e42ab32a9256663b1da42407f0a0ed6d4935",
+    "scoreboard.csv": "98973dc929f6cba597494d8c354f284f4de55430f72dd44971fadf05380a626a",
+    "traditional_reference_candidate_metrics.csv": "887553c041066d49d95fa1d9b3d23dd632a1fb201c212b06e40a78d0141219cd",
+    "traditional_reference_fold_choices.csv": "06d08b5acfe9adbab2e4e6aa4ff70e5ff0a31471b39b80487c9675bb21b05402",
+    "transparent_p02_candidate_metrics.csv": "b8536d452ab34d7eeca78931a94081527b9d67a11bd0e11c4be83b5120adb640",
+    "transparent_p02_fold_choices.csv": "f2a2725600e5f4ce5fc8ac135a5b55df23abe3eeecd266edfa6d9bdc047dc544"
+  }
+}

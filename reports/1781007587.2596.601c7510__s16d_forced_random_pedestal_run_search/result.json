@@ -1,0 +1,163 @@
+{
+  "ticket": "1781007587.2596.601c7510",
+  "study": "S16d",
+  "worker": "testbeam-laptop-1",
+  "raw_reproduction": {
+    "selected_b_stave_pulses": 640737,
+    "expected_selected_b_stave_pulses": 640737,
+    "forced_random_tagged_entries": 0,
+    "expected_forced_random_tagged_entries": 0,
+    "true_forced_random_sample_available": false
+  },
+  "filesystem_scan": {
+    "files_scanned": 220,
+    "likely_runlog_or_metadata_files": 0,
+    "forced_random_name_hits": 0
+  },
+  "root_audit": {
+    "root_files_scanned": 110,
+    "populated_root_files": 102,
+    "non_beam_trigger_entries": 0,
+    "filename_forced_random_hits": 0
+  },
+  "traditional_method": {
+    "method": "explicit metadata plus whole-run quiet-fraction rule",
+    "candidate_runs": [],
+    "top_runs_by_score": [
+      {
+        "run": 60,
+        "quiet_event_fraction": 0.5596551532960027,
+        "selected_event_fraction": 0.2810888728724289,
+        "event_max_median_adc": 68.5,
+        "traditional_pedestal_score": 0.27171628042357376
+      },
+      {
+        "run": 61,
+        "quiet_event_fraction": 0.5389352675516628,
+        "selected_event_fraction": 0.3089366361023676,
+        "event_max_median_adc": 71.5,
+        "traditional_pedestal_score": 0.22284863144929518
+      },
+      {
+        "run": 65,
+        "quiet_event_fraction": 0.5339631480324797,
+        "selected_event_fraction": 0.3098063710181137,
+        "event_max_median_adc": 73.0,
+        "traditional_pedestal_score": 0.21685677701436598
+      },
+      {
+        "run": 62,
+        "quiet_event_fraction": 0.5224829714772243,
+        "selected_event_fraction": 0.316943380161771,
+        "event_max_median_adc": 75.0,
+        "traditional_pedestal_score": 0.19803959131545334
+      },
+      {
+        "run": 59,
+        "quiet_event_fraction": 0.5205540978181217,
+        "selected_event_fraction": 0.32770725480462376,
+        "event_max_median_adc": 75.0,
+        "traditional_pedestal_score": 0.1853468430134979
+      }
+    ]
+  },
+  "ml_method": {
+    "method": "pretrigger-only logistic quiet-proxy classifier",
+    "heldout": {
+      "method": "ml_pretrigger_logistic_quiet_proxy",
+      "heldout_runs": "57,65",
+      "n_events": 4000,
+      "heldout_auc": 0.645749972998558,
+      "heldout_auc_ci_low": 0.5640703913934842,
+      "heldout_auc_ci_high": 0.7043537243921737,
+      "heldout_average_precision": 0.6447174867819375,
+      "heldout_mean_quiet_probability": 0.40876024583362214,
+      "heldout_mean_quiet_probability_ci_low": 0.38226571237439766,
+      "heldout_mean_quiet_probability_ci_high": 0.4328309194693497
+    },
+    "top_runs_by_ml_quiet_probability": [
+      {
+        "run": 27,
+        "sampled_events": 2000,
+        "sampled_quiet_fraction": 0.3715,
+        "ml_mean_quiet_probability": 0.5118906921865296,
+        "ml_p95_quiet_probability": 0.7805739873704114
+      },
+      {
+        "run": 25,
+        "sampled_events": 1000,
+        "sampled_quiet_fraction": 0.458,
+        "ml_mean_quiet_probability": 0.5061050650137499,
+        "ml_p95_quiet_probability": 0.7834902100895977
+      },
+      {
+        "run": 26,
+        "sampled_events": 3000,
+        "sampled_quiet_fraction": 0.367,
+        "ml_mean_quiet_probability": 0.49565891931140915,
+        "ml_p95_quiet_probability": 0.7799946432869094
+      },
+      {
+        "run": 43,
+        "sampled_events": 11,
+        "sampled_quiet_fraction": 0.5454545454545454,
+        "ml_mean_quiet_probability": 0.4808943377715197,
+        "ml_p95_quiet_probability": 0.6548445384888066
+      },
+      {
+        "run": 58,
+        "sampled_events": 2000,
+        "sampled_quiet_fraction": 0.4785,
+        "ml_mean_quiet_probability": 0.452011523090952,
+        "ml_p95_quiet_probability": 0.6180022584694406
+      }
+    ]
+  },
+  "ml_meta": {
+    "best": {
+      "C": 10.0,
+      "cv_auc": 0.6934749018775012,
+      "cv_auc_std": 0.026723983192205102,
+      "cv_average_precision": 0.47819243576490916
+    },
+    "feature_columns": [
+      "pre_mean_adc",
+      "pre_std_adc",
+      "pre_range_adc",
+      "pre_slope03_adc",
+      "stave_seed_median_adc",
+      "stave_seed_iqr_adc"
+    ],
+    "n_train_cv": 89745,
+    "n_core_train": 84745,
+    "n_calibration": 5000,
+    "n_heldout": 4000,
+    "calibration_runs": [
+      56,
+      64
+    ],
+    "heldout_runs": [
+      57,
+      65
+    ]
+  },
+  "leakage_checks": [
+    {
+      "check": "shuffled_training_labels",
+      "value": 0.4238296304296723,
+      "interpretation": "AUC should fall near 0.5 when quiet/pulse labels are destroyed."
+    },
+    {
+      "check": "intentional_label_oracle",
+      "value": 1.0,
+      "interpretation": "AUC near 1 confirms direct label leakage would be obvious and is not in real features."
+    },
+    {
+      "check": "real_feature_exclusion",
+      "value": null,
+      "interpretation": "ML features exclude run, event id, trigger, post-trigger amplitudes, event_max, selected/quiet labels, and filenames."
+    }
+  ],
+  "conclusion": "No true forced/random HRD pedestal ROOT or run-log inputs were located in the current data mirror.",
+  "git_commit": "6fb20b0b409b36d14664fac98e38296061685206"
+}

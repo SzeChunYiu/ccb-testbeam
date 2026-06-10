@@ -1,0 +1,48 @@
+{
+  "study": "INVALID-HELP-TICKET",
+  "ticket": "1781030952.2114.13887066",
+  "worker": "testbeam-laptop-4",
+  "title": "--help",
+  "reproduced": false,
+  "repro_tolerance": "not_applicable_empty_malformed_ticket",
+  "traditional": {
+    "metric": "not_applicable",
+    "value": null,
+    "ci": null,
+    "reason": "The claimed ticket has title '--help', an empty body, and no scientific target or reported number to reproduce."
+  },
+  "ml": {
+    "metric": "not_applicable",
+    "value": null,
+    "ci": null,
+    "models_requested_by_worker_goal": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "new_architecture_when_sensible"
+    ],
+    "reason": "No benchmark was run because no label, observable, run split, target metric, or pre-registered question exists in the claimed ticket."
+  },
+  "ml_beats_baseline": false,
+  "winner": {
+    "overall": "not_applicable_invalid_ticket",
+    "reason": "No valid head-to-head benchmark can be defined for an empty '--help' ticket."
+  },
+  "falsification": {
+    "preregistered_metric": "not_available_in_ticket",
+    "p_value": null,
+    "n_tries": 0,
+    "status": "not_applicable_invalid_ticket"
+  },
+  "input_sha256": {
+    "claimed_ticket": "39316d9a280ba5341a4fe6ec12c7e0f197e70c4765c623f0ec8be27d6ddb1ece",
+    "lease": "3efa28096f37af76cf4f3849d7e763a05d73bd32720694f5340bc94b282ee057",
+    "raw_b_first_hrdb_run_0012_root": "84f09fe5eabb8f0af30907c82be33dfae19cf1b78d2799ac7141da7e98649cf9",
+    "raw_b_last_hrdb_run_0065_root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "git_commit": "bda0a0daace64360d90a3fc531da9e2052c19211",
+  "critic": "not_requested_invalid_ticket",
+  "scientific_summary": "The claimed queue item is not a scientific study. It is a rescued malformed command artifact with title '--help' and an empty body. A raw ROOT preflight confirmed that the expected local data are readable, but there is no ticket-specific reported number, target observable, baseline, ML label, or run-held-out metric to reproduce or benchmark. The only defensible conclusion is queue hygiene: close the malformed ticket rather than release it to another worker.",
+  "next_tickets": []
+}

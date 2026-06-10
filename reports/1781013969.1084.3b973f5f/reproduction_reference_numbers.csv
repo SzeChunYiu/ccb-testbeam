@@ -1,0 +1,4 @@
+quantity,heldout_run,reproduced_sigma68_ns,reference_sigma68_ns,delta_ns,pass
+run65 S02b global template timewalk,65,1.6354173420044433,1.6354173420044433,0.0,True
+run65 traditional S16e proxy timewalk,65,1.44512815649364,1.44512815649364,0.0,True
+run65 ML waveform plus S16e proxy ridge,65,1.3874850381507104,1.3874850381507104,0.0,True

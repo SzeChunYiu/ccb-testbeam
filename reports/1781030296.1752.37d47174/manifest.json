@@ -1,0 +1,47 @@
+{
+  "study": "S10f",
+  "ticket": "1781030296.1752.37d47174",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "c9b521bb7816ddebcb915c00803fb9151232df94",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "command": "/home/billy/anaconda3/bin/python scripts/s10f_1781030296_1752_37d47174_waveform_gallery_scan.py",
+  "config": "configs/s10f_1781030296_1752_37d47174_waveform_gallery_scan.json",
+  "inputs": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "reports/1781013481.885.251f4b3c/sampled_event_scores.csv": "18f37b189806bb2add44bcb998e7d0f197fa4d21f81f3a6c1cf58c0a5d122464"
+  },
+  "code_inputs": {
+    "configs/s10f_1781030296_1752_37d47174_waveform_gallery_scan.json": "5840b41f16470d4576e7d765c47a4cf7d3694076d2cb92e88ff006f5d1d5e53b",
+    "scripts/s10f_1781030296_1752_37d47174_waveform_gallery_scan.py": "cc635d03dcd9a0900a4683bceaad578dbbed2dbb150fdb5b123db7a80152c832",
+    "reports/1781013481.885.251f4b3c/s10e_real_candidate_two_pulse_validation.py": "5a191ed65b71b3aa015789fe35f54673a58e07b693f974e0b49ce7824c71b67a"
+  },
+  "outputs": {
+    "REPORT.md": "d387828e92ce1bc17e61e5d86249e552d8e4611108c30db501df8474dee54a96",
+    "gallery_manifest.csv": "bf4459cf0151f024028f3bc90d9fdfed46611bc6d0340c9beea69000564f69ef",
+    "input_sha256.csv": "c7ea383fc5a45278a9839e938a61ed1517130b94cc045eb4d3652cdbae38dbce",
+    "leakage_checks.csv": "0a6f9a3f40f31b14690c16cef02e8b5170851cc6cb941716ad86138f256f0996",
+    "morphology_counts.csv": "dc2b21beba889459cc3ef72478821ae684ba4cefdb14e3947dbd79733b91fc37",
+    "morphology_scores.csv": "cf9ba85e86821e4c34f7fed3ab9c98e69e47a98b11195d9f43ea9a98679938ef",
+    "morphology_summary.csv": "ddbb8940bc3b88d70700535f58d41410c24d8e0bd3704191db2cfd56e7acccab",
+    "reproduction_match_table.csv": "ef799441807b75bc181ee0d41aab5ea8471e0d221d641548a2239ceb19f5bb25",
+    "result.json": "c9a9074a8d08a75d208f4dec5a715aac8e6ec79ea08c0ce43656170c0fde5c5f",
+    "run_counts.csv": "38af1cbd4bfe0af84ca04328ee9d399e9c2ab0aa285e9f6e92a86c445379f156",
+    "topology_by_group.csv": "f43be7edd894e7ae6f9d153c54c458090ad91eead26a412aaae48167af550915",
+    "waveform_gallery_blinded.png": "64c7ab1639b6846050bf05800401ab0e4793f74ca186f78c167e482105d26f76"
+  },
+  "runtime_sec": 70.23
+}

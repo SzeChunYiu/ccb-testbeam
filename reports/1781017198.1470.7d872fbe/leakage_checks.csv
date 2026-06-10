@@ -1,0 +1,4 @@
+check,value,pass,note
+train_heldout_event_id_overlap,0.0,True,"event_id includes run, EVENTNO, EVT, and loader offset"
+ml_forbidden_feature_audit,0.0,True,"ML feature matrix excludes run, event id, event order, labels, timing columns, pair residuals, and traditional residual target columns"
+ml_vs_traditional_pair_sigma68_delta_ns,0.44465614679395693,True,positive means ML is wider than the frozen S03 analytic method

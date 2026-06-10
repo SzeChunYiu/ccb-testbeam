@@ -1,0 +1,12 @@
+# S07e: archive provenance search for App.A training table
+
+- **Ticket:** `1781012847.2575.40cb6e31`
+- **Worker:** `testbeam-laptop-1`
+- **Question:** can the App.A 12,147 labelled-event table be recovered from external archives, old notebooks, or non-repo derived data?
+- **Inputs:** raw B-stack `HRDv` ROOT, mirrored/external filesystem candidates, S01 q_template artifact.
+
+## Raw-ROOT Reproduction First
+
+| quantity        | documented | raw_cfd20 | delta | matches |
+| --------------- | ---------- | --------- | ----- | ------- |
+| labelled_events | 12147      | 9897      | -2250

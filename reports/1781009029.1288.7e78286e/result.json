@@ -1,0 +1,88 @@
+{
+  "study": "P03c",
+  "ticket": "1781009029.1288.7e78286e",
+  "worker": "testbeam-laptop-3",
+  "title": "CNN versus MLP timing with analytic residual targets",
+  "reproduced": true,
+  "p03a_reproduced_first": {
+    "method": "p03a_mlp_waveform",
+    "sigma68_ns": 1.9272329327513156,
+    "ci": [
+      1.6075647920894325,
+      2.277237977848316
+    ],
+    "reported_p03a_sigma68_ns": 1.92723,
+    "delta_from_reported_ns": 2.932751315576354e-06,
+    "hidden": 32,
+    "weight_decay": 0.001
+  },
+  "split_by_run": true,
+  "train_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "heldout_runs": [
+    65
+  ],
+  "metric": "heldout B4/B6/B8 pairwise sigma68 ns with event-paired bootstrap CI",
+  "traditional": {
+    "method": "analytic_timewalk_on_template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "value": 1.494640076269676,
+    "ci": [
+      1.3066124782178583,
+      1.6656734816885292
+    ],
+    "full_rms_ns": 1.6991283591200679
+  },
+  "ml": {
+    "mlp": {
+      "method": "p03a_mlp_architecture_on_analytic_residual",
+      "size": 16,
+      "weight_decay": 0.01,
+      "value": 1.4483561109028598,
+      "ci": [
+        1.3214490309755422,
+        1.6688176819016887
+      ],
+      "delta_vs_analytic_ns": -0.04628396536681634
+    },
+    "cnn": {
+      "method": "tiny_1d_cnn_on_analytic_residual",
+      "channels": 4,
+      "weight_decay": 0.001,
+      "value": 1.4970452906166214,
+      "ci": [
+        1.307341823817979,
+        1.666558777567697
+      ],
+      "delta_vs_analytic_ns": 0.0024052143469452947
+    }
+  },
+  "leakage": {
+    "event_id_overlap": 0,
+    "feature_audit": "18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target",
+    "shuffled_controls": [
+      {
+        "model": "mlp_analytic_residual",
+        "value": 1.4870642859880854
+      },
+      {
+        "model": "cnn_analytic_residual",
+        "value": 1.480980169416686
+      }
+    ]
+  },
+  "verdict": "cnn_does_not_add_to_mlp_or_analytic_baseline",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "bf46d93431c09b2f512b8e049fb5a188c4838e39",
+  "next_tickets": [
+    "P03d: leave-one-heldout-run repetition of analytic-residual CNN versus MLP across all sample-II runs",
+    "P03e: waveform-only residual models with stave-blind versus stave-aware feature ablation after analytic timewalk correction"
+  ]
+}

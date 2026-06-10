@@ -1,0 +1,2 @@
+run_cv_ml_sigma68_ns,row_cv_ml_sigma68_ns,row_minus_run_cv_ml_sigma68_ns,tail_classifier_auc_mean,tail_classifier_ap_mean,tail_classifier_brier_mean,tail_classifier_shuffled_auc_mean
+1.2427184240427334,1.2343218615836988,-0.008396562459034529,0.9622297163934934,0.5841316039412974,0.009161401177760355,0.2862991775961047

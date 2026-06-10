@@ -1,0 +1,7 @@
+method,family,target,status,metric,value,ci_low,ci_high,notes
+deterministic_exact_event_join,traditional,h101-to-sorted dropped/misaligned entries on held-out B-stack runs,estimable,drop_or_mismatch_count,0.0,0.0,0.0,Exact ROOT event-number join; no supervised labels needed.
+ridge,ml,h101-to-sorted dropped/misaligned entries on held-out B-stack runs,not_identifiable,drop_or_mismatch_count,,,,All observed drop labels are zero; supervised training would be a constant-label exercise.
+hist_gradient_boosted_trees,ml,h101-to-sorted dropped/misaligned entries on held-out B-stack runs,not_identifiable,drop_or_mismatch_count,,,,All observed drop labels are zero; supervised training would be a constant-label exercise.
+mlp,ml,h101-to-sorted dropped/misaligned entries on held-out B-stack runs,not_identifiable,drop_or_mismatch_count,,,,All observed drop labels are zero; supervised training would be a constant-label exercise.
+one_dimensional_cnn,ml,h101-to-sorted dropped/misaligned entries on held-out B-stack runs,not_identifiable,drop_or_mismatch_count,,,,All observed drop labels are zero; supervised training would be a constant-label exercise.
+sorted_residual_net,new_architecture,h101-to-sorted dropped/misaligned entries on held-out B-stack runs,not_identifiable,drop_or_mismatch_count,,,,All observed drop labels are zero; supervised training would be a constant-label exercise.

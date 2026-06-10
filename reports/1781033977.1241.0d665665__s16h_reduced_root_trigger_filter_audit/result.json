@@ -1,0 +1,71 @@
+{
+  "study": "S16h",
+  "ticket": "1781033977.1241.0d665665",
+  "worker": "testbeam-laptop-4",
+  "title": "audit reduced-ROOT conversion for dropped non-beam trigger entries",
+  "git_commit": "740e2e69da75d83e2c8fb40b3385adcd82b44616",
+  "runtime_seconds": 11.123,
+  "reproduction": {
+    "passed": true,
+    "selected_b_stave_pulses_expected": 640737,
+    "selected_b_stave_pulses_reproduced": 640737,
+    "non_beam_h101_entries": 0,
+    "non_beam_selected_b_stave_pulses": 0,
+    "raw_to_sorted_entry_drop_count": 0,
+    "raw_to_sorted_evt_mismatch_count": 0,
+    "missing_zero_entry_sorted_placeholders": 4
+  },
+  "conversion_path_audit": {
+    "root_files_audited": 110,
+    "sorted_alignment_files_audited": 110,
+    "archive_members_audited": 217,
+    "source_like_archive_members": 0,
+    "conversion_source_files_in_search_roots": 0,
+    "missing_search_roots": [
+      "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data"
+    ],
+    "interpretation": "sorted conversion preserves the visible h101 stream; upstream h101 production cannot be proven because no converter source or DAQ-level input is present"
+  },
+  "winner": {
+    "method": "deterministic_exact_event_join",
+    "family": "traditional",
+    "metric": "heldout h101-to-sorted drop_or_mismatch_count",
+    "value": 0.0,
+    "ci": [
+      0.0,
+      0.0
+    ],
+    "reason": "only identifiable method for constant-zero conversion-drop labels"
+  },
+  "ml_methods": {
+    "drop_detection_status": "not_identifiable_constant_zero_labels",
+    "required_methods_recorded": [
+      "ridge",
+      "hist_gradient_boosted_trees",
+      "mlp",
+      "one_dimensional_cnn",
+      "sorted_residual_net"
+    ],
+    "auxiliary_reduced_metadata_winner": {
+      "method": "hist_gradient_boosted_trees",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 20.365871262254963,
+      "mae_ci_low_adc": 15.218042815745806,
+      "mae_ci_high_adc": 25.217847499194725,
+      "bias_adc": 0.1411519293593052,
+      "rmse_adc": 93.10736331548276,
+      "q05_residual_adc": -34.82941232371559,
+      "q95_residual_adc": 37.26649676311808
+    }
+  },
+  "verdict": "sorted_conversion_no_visible_drop_upstream_filter_unresolved",
+  "conclusion": "The sorted ROOT conversion did not drop any visible h101 entries, and the current reduced h101 mirror contains zero non-beam trigger entries. The available data do not include upstream DAQ inputs or converter source code, so filtering before root.zip remains unresolved rather than excluded.",
+  "next_tickets": [
+    {
+      "title": "S16i: recover HRD h101 converter provenance for trigger filtering",
+      "body": "Locate the original HRD raw-to-h101 converter source, job logs, or DAQ run manifest and test explicitly for TRIGGER==1 selection before root.zip production. Expected information gain: resolves the remaining upstream-filter ambiguity that cannot be decided from the already beam-only h101 mirror.",
+      "appended_ticket_id": "1781111822.1151.67af3b17"
+    }
+  ]
+}

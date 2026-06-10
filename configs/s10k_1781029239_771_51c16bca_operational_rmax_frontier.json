@@ -1,0 +1,76 @@
+{
+  "study_id": "S10k",
+  "ticket_id": "1781029239.771.51c16bca",
+  "worker": "testbeam-laptop-1",
+  "title": "S10k operational Rmax failure-definition frontier",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781029239.771.51c16bca",
+  "random_seed": 1781029239,
+  "bootstrap_samples": 5000,
+  "runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "low_runs": [46, 47],
+  "high_runs": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "amplitude_cut_adc": 1000.0,
+  "poisson_acceptance_constant_ns_mhz": 380.0,
+  "expected_topology": {
+    "low_2nA": {
+      "multi_stave_per_selected_event": 0.0156,
+      "three_stave_per_selected_event": 0.0041,
+      "downstream_per_selected_event": 0.0231
+    },
+    "high_20nA": {
+      "multi_stave_per_selected_event": 0.0268,
+      "three_stave_per_selected_event": 0.0085,
+      "downstream_per_selected_event": 0.0334
+    }
+  },
+  "topology_tolerance": 0.0015,
+  "s10e_report_dir": "reports/1781017360.928.15a27ed1",
+  "s10g_report_dir": "reports/1781028280.978.1e517fd7",
+  "s10i_report_dir": "reports/1781028606.1003.76354c81",
+  "failure_criteria": [
+    {
+      "key": "timing_bias1ns_charge_bias20pct",
+      "label": "|timing bias| <= 1 ns and |charge bias| <= 20%",
+      "max_abs_timing_bias_ns": 1.0,
+      "max_abs_area_bias_fraction": 0.20
+    },
+    {
+      "key": "timing_bias2ns_charge_bias20pct",
+      "label": "|timing bias| <= 2 ns and |charge bias| <= 20%",
+      "max_abs_timing_bias_ns": 2.0,
+      "max_abs_area_bias_fraction": 0.20
+    },
+    {
+      "key": "sigma68_8ns_charge_res68_12pct",
+      "label": "timing sigma68 <= 8 ns and charge res68 <= 12%",
+      "max_time_sigma68_ns": 8.0,
+      "max_area_res68_fraction": 0.12
+    },
+    {
+      "key": "combined_planning",
+      "label": "bias1/20 plus sigma68/res68 planning cut",
+      "max_abs_timing_bias_ns": 1.0,
+      "max_abs_area_bias_fraction": 0.20,
+      "max_time_sigma68_ns": 8.0,
+      "max_area_res68_fraction": 0.12
+    }
+  ],
+  "artifact_inputs": [
+    "reports/1781017360.928.15a27ed1/result.json",
+    "reports/1781017360.928.15a27ed1/dominant_highstat_method_summary.csv",
+    "reports/1781017360.928.15a27ed1/dominant_highstat_leakage_checks.csv",
+    "reports/1781028280.978.1e517fd7/final_comparison.csv",
+    "reports/1781028280.978.1e517fd7/reproduction_match_table.csv",
+    "reports/1781028280.978.1e517fd7/leakage_checks.csv",
+    "reports/1781028606.1003.76354c81/s10d_resolvability_by_delay.csv",
+    "reports/1781028606.1003.76354c81/s10d_resolvability_bootstrap_ci.csv",
+    "reports/1781028606.1003.76354c81/s10d_head_to_head_overall.csv",
+    "reports/1781028606.1003.76354c81/s10d_headline_reproduction.csv",
+    "reports/1781028606.1003.76354c81/tau_separability_scan.csv",
+    "reports/1781028606.1003.76354c81/leakage_checks.csv"
+  ]
+}

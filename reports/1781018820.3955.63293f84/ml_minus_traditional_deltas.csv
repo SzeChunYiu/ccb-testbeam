@@ -1,0 +1,6 @@
+veto_ladder,traditional_reference_proxy,ml_minus_traditional_energy_res68_delta,ml_minus_traditional_ordering_violation_delta,ordering_delta_ci95
+no_veto,traditional_integral,-0.012507498480911,0.0,"[0.0, 0.0]"
+p09,traditional_integral,-0.0166826765648837,0.0,"[0.0, 0.0]"
+p09_s10,traditional_integral,-0.013647075255162996,0.0,"[0.0, 0.0]"
+p09_s10_s16,traditional_integral,-0.0143834013902914,0.0,"[0.0, 0.0]"
+p09_s10_s16_p07,traditional_integral,0.005038047923821995,0.0,"[0.0, 0.0]"

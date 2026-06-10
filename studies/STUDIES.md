@@ -2390,3 +2390,60 @@ consumers reuse these atoms.
   high-minus-low candidate-rate delta, traditional/ML candidate-overlap Jaccard, support-shift
   energy distance, timing/charge residual proxy, failure/abstention rate, and overlay-to-real
   calibration error with source-run bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, gallery/pedestal/selector calibration layer): the exact
+requested `tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=15`,
+below the 18-ready trigger. The project-aware `testbeam` queue reports `open=189 claimed=0
+done=281 failed=7` after this pass. The trigger was satisfied by appending four ready,
+non-duplicate `project:testbeam` tickets: S10s gallery-label pileup calibration null
+(`1781082165.714.10aa4794`), S16q pedestal-source absence uncertainty envelope
+(`1781082165.699.670063cf`), P04y high-baseline charge feature knockout atlas
+(`1781082165.846.28806f20`), and S02m selector-risk timing label calibration ledger
+(`1781082165.853.2753471a`).
+
+Fresh synthesis: S10f's hand-gallery scan and S10g's real-window validation say high-current
+candidate windows are mostly broad/late detector-shape support, not a clean two-pulse beam
+pile-up sample, while S10h still makes synthetic overlays useful for comparing recovery methods.
+S16f/S16g find no accessible forced/random pedestal source, so quiet-run pretrigger handles need
+an uncertainty envelope instead of truth-language. P04k shows dynamic-only charge closure is
+learnable but lives inside a high-baseline selector-induced support island, and S02e shows the
+same dynamic selector worsens timing. The next layer therefore converts those observations into
+calibration objects: gallery-label truth ceilings, absent-pedestal uncertainty, charge-feature
+knockouts, and selector-risk timing labels.
+
+- **S10s — Gallery-label pileup calibration null.** Decide whether S10f hand-gallery
+  two-pulse/artifact labels provide a calibrated truth ceiling for S10g/S10r high-current
+  pile-up candidate-rate claims, or only a morphology diagnostic. Traditional: blinded
+  stratified hand-gallery label table plus amplitude-binned asymmetric two-pulse template fit and
+  matched low-current control rates. ML panel: ridge/logistic regression on transparent pulse
+  atoms, ExtraTrees or random forest tree ensemble, and compact MLP neural net trained under
+  source-run holdout with shuffled-current and overlay-family placebo controls. Metric:
+  high-minus-low two-pulse-like fraction, candidate-rate delta, AP/Brier calibration,
+  method-overlap Jaccard, and support-shift distance with source-run bootstrap 95% CIs.
+- **S16q — Pedestal-source absence uncertainty envelope.** Quantify how large an uncertainty
+  envelope must be assigned to baseline/pedestal corrections when S16f/S16g find no accessible
+  forced/random pedestal source. Traditional: source-inventory/root-trigger audit plus quiet-run
+  pretrigger envelope propagated through adaptive pedestal, template timing, and P04 charge
+  estimators. ML panel: ridge/linear pedestal-bias regressor, ExtraTrees tree ensemble, and
+  compact MLP neural net using only pretrigger atoms under run-family holdout with
+  shuffled-pretrigger and run-only controls. Metric: pedestal bias envelope, induced
+  sigma68/full-RMS/tail-fraction shift, charge res68/bias shift, accepted-support fraction, and
+  ML-minus-traditional uncertainty reduction with heldout-run bootstrap 95% CIs.
+- **P04y — High-baseline charge feature knockout atlas.** Identify which waveform atoms carry
+  P04k's dynamic-only high-baseline duplicate-readout charge closure, and test whether they remain
+  causal after removing selector, baseline, saturation, and peak-phase handles. Traditional:
+  robust Huber/ridge charge estimator with hand-coded peak, integral, adaptive-template,
+  baseline, saturation, and phase atoms removed one family at a time. ML panel: ridge/linear
+  regression, ExtraTrees or HGB tree ensemble, and compact MLP neural net trained on held-out
+  runs with selector-blind, target-stave-excluded, shuffled-target, and amplitude-only sentinels.
+  Metric: duplicate-charge res68, bias, full RMS, within-10/25% coverage, feature-knockout delta,
+  and dynamic-only minus matched-control lift with run/stave-block bootstrap 95% CIs.
+- **S02m — Selector-risk timing label calibration ledger.** Convert S00c/S02e selector-risk
+  atoms into calibrated timing-risk labels that downstream S03/S04/S10 consumers can use without
+  importing selector leakage. Traditional: deterministic median-first-four selector,
+  analytic/template timewalk residual tables, q_template and baseline-excursion cuts, and matched
+  abstention ladders. ML panel: ridge/logistic calibration model, ExtraTrees or random forest
+  tree ensemble, and compact MLP neural net on pre-label waveform atoms under run-heldout splits
+  with shuffled-selector, run-only, and amplitude-only controls. Metric: timing-tail
+  precision/recall, calibrated risk Brier/ECE, sigma68/full-RMS/tail delta at fixed retention,
+  support-shift distance, and ML-minus-traditional lift with run-block bootstrap 95% CIs.

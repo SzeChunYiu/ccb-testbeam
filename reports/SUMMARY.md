@@ -20,6 +20,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S02c selector | ✅ done | ✅ median 640,737; dynamic 706,373 | dynamic gate worsens run-65 sigma68 by 0.170 ns | ridge residual model shifts by 0.027 ns | ML is less selector-sensitive, but gate semantics remain a systematic | reports/1781006678.1312.2d7d140a |
 | S02d selector LORO | ✅ done | ✅ raw-root and references reproduced | median global timewalk 1.655 ns; dynamic 1.850 ns | median ridge 1.905 ns; dynamic 2.316 ns | No; dynamic selector worsens timing and binned branch fails shuffle controls | reports/1781013144.1054.325e4c97 |
 | S02d+S16e | ✅ done | ✅ references reproduced | pretrigger proxy terms improve LORO sigma68 to 1.343 ns | ML pretrigger residual 1.470 ns | No; traditional proxy terms win and ML has run sensitivity | reports/1781013969.1084.3b973f5f |
+| S02e selector strata | ✅ done | ✅ median/dynamic selector counts exact | dynamic selector worsens global timewalk by 0.130 ns | dynamic selector worsens ridge by 0.427 ns | No; dynamic-only is a timing-risk atom, not an adopted selector | reports/1781029327.1448.72f21509 |
 | S03a | ✅ done | ✅ exact S02 reproduction | analytic amp-only timewalk 1.495 ns | ridge residual corrector 1.392 ns | Marginal; CIs overlap, needs leave-one-run-out stability | reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction |
 | S03b | ✅ done | ✅ S03a baselines exactly reproduced | monotonic amplitude-binned timewalk 1.570 ns | ridge residual corrector 1.392 ns | No for binned traditional vs S03a amp-only; ML remains better on run 65 | reports/1781005627.1825.6e067067 |
 | S03b q-template | ✅ done | ✅ S00 gate | q_template-only AUC 0.741; 13.7% tail rejection at 95% clean retention | q_template RF AUC 0.843; AP 0.304 | **Yes** for weak tail labels; requires pair-residual validation | reports/1781006575.2877.41492e09 |
@@ -52,6 +53,9 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10e high-stat | ✅ done | ✅ S10d traditional headline exact | dominant-stratum secondary fraction Δ=0.0330, CI [0.0192,0.0488] | secondary-fraction Δ=0.00668; overlap-score Δ=0.0238 | Traditional excess is stable at high stats; ML diagnostics still disagree by support | reports/1781017360.928.15a27ed1 |
 | S10f | ✅ done | ✅ S10/S10c topology fractions within 0.0015 | P09a-matched downstream excess 0.00478/event, CI [0.00346,0.00663] | current-score Δ=0.0222 but Brier/log-loss worse | No; traditional matched excess is physics-facing, baseline_excursion needs decomposition | reports/1781012706.846.1f364432 |
 | S10f amplitude templates | ✅ done | ✅ S10d and S10b anchors reproduced | amplitude-binned asymmetric fit time RMS 17.81 ns; failure 0.013 | compact MLP time RMS 9.28 ns; failure 0.277 | No adoption; ML lowers RMS but failure rate remains operational risk | reports/1781013481.902.5d6a5b89 |
+| S10f waveform gallery | ✅ done | ✅ S10e candidate scores carried forward | traditional two-pulse-like fraction 0.043 vs 0.088 low-control | ML two-pulse-like fraction 0.092 vs 0.074 low-control | No; high-current candidates are mostly broad/late shape support, not clean double pulses | reports/1781030296.1752.37d47174 |
+| S10g real-window validation | ✅ done | ✅ S10/S10d/S10f anchors reproduced | secondary-fraction excess -0.0309, CI [-0.0504,-0.0094] | overlay MLP excess 0.0082, CI [-0.0223,0.0400] | No; low-current overlays remain diagnostic on real windows | reports/1781029288.941.6912528c |
+| S10h overlay realism | ✅ done | ✅ S10b/S10f anchors reproduced | stress template RMS 17.60 ns; failure 0.028 | stress MLP RMS 8.76 ns; failure 0.287 | Mixed; method ranking only, not measured pile-up truth | reports/1781029288.1005.13c7044c |
 | S10h baseline excursion | ✅ done | ✅ S10f decomposition reproduced | baseline_excursion downstream high-low near 0, wide CI | ML residual/enrichment near null under LORO | No; baseline_excursion needs current-swap falsification before pile-up reuse | reports/1781027683.951.7bcc2f09 |
 | S10g censored livetime | ✅ done | ✅ S10b live10 reproduced | template live10 124.79 ns; KM restricted mean 151.64 ns | IPCW ridge mean 179.05 ns | No; low-threshold windows are heavily censored and need acquisition-window bounds | reports/1781028280.978.1e517fd7 |
 | S10h late residual taxonomy | ✅ done | ✅ live20 inflation reproduced | final-sample censored tail is 72.6% of pulses and 89.8% of positive inflation | inflation classifier AUC 0.998 on derivative label | Diagnostic; final-sample censoring must be bounded before tau/Rmax adoption | reports/1781028280.1036.7e527107 |
@@ -72,6 +76,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S16e tagged-random | ✅ done | ✅ 640,737 exact; 0 tagged-random B-stack entries | fallback mean3 MAE 241.6 ADC | fallback calibrated ridge MAE 197.3 ADC | No validation claim; primary tagged-random gate failed | reports/1781007587.2616.535e78de |
 | S16f | ✅ done | ✅ 640,737 exact; no direct forced/random source | quiet-proxy adaptive MAE 18.19 ADC | quiet-proxy ExtraTrees MAE 18.24 ADC | No truth validation; direct pedestal sample remains absent | reports/1781013928.1541.3e1c5146 |
 | S16f timing veto | ✅ done | ✅ Sample-II LORO split | hand pretrigger veto captures 0.263 tails at 0.253 veto fraction | logistic captures 0.430 tails at 0.266 veto fraction | Diagnostic; veto is broad and needs support-preserving thresholds | reports/1781013969.1061.240425ea |
+| S16g trigger manifest | ✅ done | ✅ 640,737 exact; 0 forced/random trigger entries | source inventory finds no accessible forced/random pedestal source | pretrigger logistic hidden-mode AUC 0.645 | No; accessible mirrors support only pseudo-pedestal diagnostics | reports/1781029779.1072.02d438c1 |
 | S16d Sample-I | ✅ done | ✅ 252,266 Sample-I pulses | lowering correction sigma68 3.060 ns | lowering ML sigma68 2.930 ns | Diagnostic; high-lowering tail is 13.0% vs 1.24%, but sigma68 gain is small | reports/1781009378.1771.3b9145b2__s16d_sample_i_bstack_pedestal_timing |
 | S18 | ✅ done | ✅ Sample III/IV A-stack | A1-A3 robust width 1.389 ns | ridge correction 1.383 ns | No; CIs overlap | reports/1780997954.15397.168324f2__s18_astack_independent_reproduction |
 | S18b | ✅ done | ✅ Sample-IV robust width 1.794 ns | LORO CFD20 period-polynomial width 1.471 ns | ridge residual correction width 1.935 ns | No; ML worse, broadening is calibration/low-stat sensitivity | reports/1781001480.695946.490c69d3 |
@@ -115,6 +120,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P04c | ✅ done | ✅ 640,737 exact; held-out runs 57/65 | adaptive-template ridge amp res68 0.0858; direct template scale worse | HGB amp res68 0.0091 | **Yes** for duplicate-readout closure; traditional template pathology needs diagnosis | reports/1781005862.2197.53fd45c8__p04c_amplitude_adaptive_template |
 | P04d | ✅ done | ✅ 640,737 exact; held-out runs 57/65 | strong Huber duplicate closure res68 0.0203; direct template scale 0.577 | ExtraTrees duplicate closure res68 0.00270 | **Yes** for duplicate-readout waveform closure; still not external energy truth | reports/1781011912.1215.01fb264f |
 | P04e | ✅ done | ✅ 640,737 exact; 640,482 valid duplicate rows | worst-family Huber res68 0.0458; B2 holdout Huber 0.1370 | worst-family ExtraTrees res68 0.0036; B2 holdout ExtraTrees 0.0168 | **Yes** for duplicate-readout closure; B2 externalization needs support frontier | reports/1781011912.1282.2f0f1825 |
+| P04k selector charge | ✅ done | ✅ median/dynamic selector counts exact | dynamic-only Huber charge res68 0.686 | dynamic-selector HGB res68 0.0985 | Diagnostic; ML closure is inside a high-baseline selector population | reports/1781029246.839.554f50f7 |
 | P05a | ✅ done | ✅ S11a injection anchor reproduced | bounded two-pulse fit time RMS 13.90 ns; failure 0.168 | compact CNN time RMS 10.01 ns; failure 0.228 | No adoption; CNN improves RMS but failure-rate regression is clear | reports/1781010938.498.6bd050f4 |
 | P05b | ✅ done | ✅ S11a/S10d failure-aware injection benchmark | template quality cuts coverage 0.343, time RMS 7.42 ns, bad rate 0.092 | isotonic failure model coverage 0.728, time RMS 8.44 ns, bad rate 0.144 | Mixed; ML keeps more coverage, traditional is safer at accepted recovery | reports/1781014241.437.0e0024cb |
 | P05b threshold | ✅ done | ✅ P05a reproduced | template threshold RMS 13.61 ns; failure 0.183 | CNN threshold RMS 10.07 ns; failure 0.100 | **Yes** on injection threshold utility; real-current transfer still required | reports/1781018698.913.17f76add |
@@ -134,6 +140,25 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 
 ## Current steering notes
 
+- Queue health (2026-06-10 latest pass): the exact requested command
+  `tn-ticket list testbeam` still reports `open=11 claimed=0 done=0 failed=15`, below the
+  18-ticket trigger. The project-aware `testbeam` queue reports
+  `open=189 claimed=0 done=281 failed=7` after this pass. The trigger was satisfied by appending
+  four ready, non-duplicate `project:testbeam` tickets: S10s gallery-label pileup calibration null
+  (`1781082165.714.10aa4794`), S16q pedestal-source absence uncertainty envelope
+  (`1781082165.699.670063cf`), P04y high-baseline charge feature knockout atlas
+  (`1781082165.846.28806f20`), and S02m selector-risk timing label calibration ledger
+  (`1781082165.853.2753471a`).
+- Fresh synthesis: S10f/S10g/S10h now separate synthetic-overlay method ranking from real
+  high-current pile-up truth: real galleries are mostly broad/late morphology with only a small
+  two-pulse-like subset, and low-current overlays do not transfer cleanly to measured
+  high-current windows. S16f/S16g keep forced/random pedestal truth absent from accessible
+  mirrors, so baseline corrections need an explicit uncertainty envelope. P04k shows a strong
+  dynamic-only charge closure only inside a high-baseline selector population, and S02e makes
+  dynamic selection a timing-risk atom. The new tickets therefore calibrate gallery labels, bound
+  absent pedestal truth, identify charge feature carriers, and turn selector risk into a
+  calibrated timing handoff before pulse-shape, timing, amplitude, saturation, pile-up, baseline,
+  dropout, PID, or energy consumers reuse those atoms.
 - Queue health (2026-06-10 latest pass): the exact requested command
   `tn-ticket list testbeam` still reports `open=11 claimed=0 done=0 failed=15`, below the
   18-ticket trigger. The project-aware `testbeam` queue remains deep after this pass

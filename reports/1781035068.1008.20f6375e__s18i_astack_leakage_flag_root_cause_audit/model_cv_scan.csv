@@ -1,0 +1,114 @@
+method,feature_set,params,cv_rmse_ns,pool
+ridge,safe,"{""alpha"": 0.1}",0.9836093435037432,run64_only
+ridge,safe,"{""alpha"": 1.0}",1.0968982532458724,run64_only
+ridge,safe,"{""alpha"": 10.0}",1.1182824034228458,run64_only
+ridge,safe,"{""alpha"": 100.0}",1.1489115271776895,run64_only
+ridge,safe,"{""alpha"": 1000.0}",1.1962060404243289,run64_only
+gradient_boosted_trees,safe,fallback_ridge_small_pool,,run64_only
+mlp,safe,fallback_ridge_small_pool,,run64_only
+cnn1d,safe,fallback_ridge_small_pool,0.9836093435037432,run64_only
+leakage_gated_cnn_new,safe,fallback_ridge_small_pool,0.9836093435037432,run64_only
+ridge,safe_no_tail,"{""alpha"": 0.1}",1.0736888913075129,run64_only
+ridge,safe_no_tail,"{""alpha"": 1.0}",1.105420474588628,run64_only
+ridge,safe_no_tail,"{""alpha"": 10.0}",1.1180289192932842,run64_only
+ridge,safe_no_tail,"{""alpha"": 100.0}",1.1561650669322314,run64_only
+ridge,safe_no_tail,"{""alpha"": 1000.0}",1.1992926636637844,run64_only
+ridge,waveform_only,"{""alpha"": 0.1}",0.49514724785490827,run64_only
+ridge,waveform_only,"{""alpha"": 1.0}",0.7176330080403589,run64_only
+ridge,waveform_only,"{""alpha"": 10.0}",0.9466332741583164,run64_only
+ridge,waveform_only,"{""alpha"": 100.0}",1.1133727043173196,run64_only
+ridge,waveform_only,"{""alpha"": 1000.0}",1.1890831965666098,run64_only
+cnn1d,waveform_only,fallback_ridge_small_pool,0.49514724785490827,run64_only
+leakage_gated_cnn_new,waveform_only,fallback_ridge_small_pool,0.49514724785490827,run64_only
+ridge,run_only,"{""alpha"": 0.1}",1.2083862466376865,run64_only
+ridge,run_only,"{""alpha"": 1.0}",1.2083862466376865,run64_only
+ridge,run_only,"{""alpha"": 10.0}",1.2083862466376865,run64_only
+ridge,run_only,"{""alpha"": 100.0}",1.2083862466376865,run64_only
+ridge,run_only,"{""alpha"": 1000.0}",1.2083862466376865,run64_only
+ridge,safe,"{""alpha"": 100.0}",2.2375082121262952,sample_iii_early
+ridge,safe,"{""alpha"": 1000.0}",2.2376812467505074,sample_iii_early
+ridge,safe,"{""alpha"": 10.0}",2.2516252822043175,sample_iii_early
+ridge,safe,"{""alpha"": 1.0}",2.2552112799335604,sample_iii_early
+ridge,safe,"{""alpha"": 0.1}",2.2556157092939033,sample_iii_early
+gradient_boosted_trees,safe,"{""learning_rate"": 0.05, ""max_depth"": 2, ""n_estimators"": 60}",2.7862424649075583,sample_iii_early
+gradient_boosted_trees,safe,"{""learning_rate"": 0.05, ""max_depth"": 3, ""n_estimators"": 60}",3.128108354918921,sample_iii_early
+mlp,safe,"{""alpha"": 0.01, ""hidden_layer_sizes"": [16, 8]}",2.2251502431517864,sample_iii_early
+mlp,safe,"{""alpha"": 0.001, ""hidden_layer_sizes"": [32]}",2.2350154415250634,sample_iii_early
+mlp,safe,"{""alpha"": 0.001, ""hidden_layer_sizes"": [16]}",2.2850595026036804,sample_iii_early
+cnn1d,safe,trained,1.684135794597798,sample_iii_early
+leakage_gated_cnn_new,safe,trained,1.6784176535976734,sample_iii_early
+ridge,safe_no_tail,"{""alpha"": 1000.0}",2.2457234897104046,sample_iii_early
+ridge,safe_no_tail,"{""alpha"": 100.0}",2.253060655891547,sample_iii_early
+ridge,safe_no_tail,"{""alpha"": 10.0}",2.255204975819871,sample_iii_early
+ridge,safe_no_tail,"{""alpha"": 1.0}",2.255462798592372,sample_iii_early
+ridge,safe_no_tail,"{""alpha"": 0.1}",2.255489097506259,sample_iii_early
+ridge,waveform_only,"{""alpha"": 1000.0}",2.148287810011474,sample_iii_early
+ridge,waveform_only,"{""alpha"": 100.0}",2.2114488040423286,sample_iii_early
+ridge,waveform_only,"{""alpha"": 10.0}",2.4478938017514205,sample_iii_early
+ridge,waveform_only,"{""alpha"": 0.1}",2.605735427402037,sample_iii_early
+ridge,waveform_only,"{""alpha"": 1.0}",2.6114216313605167,sample_iii_early
+cnn1d,waveform_only,trained,1.018433288594327,sample_iii_early
+leakage_gated_cnn_new,waveform_only,trained,1.1476632414728303,sample_iii_early
+ridge,run_only,"{""alpha"": 1000.0}",2.317443619311469,sample_iii_early
+ridge,run_only,"{""alpha"": 100.0}",2.31751305412687,sample_iii_early
+ridge,run_only,"{""alpha"": 10.0}",2.3175264190291953,sample_iii_early
+ridge,run_only,"{""alpha"": 1.0}",2.31752785465921,sample_iii_early
+ridge,run_only,"{""alpha"": 0.1}",2.317527999264605,sample_iii_early
+ridge,safe,"{""alpha"": 100.0}",3.0608173499792435,sample_iii_late
+ridge,safe,"{""alpha"": 1000.0}",3.0611415343423123,sample_iii_late
+ridge,safe,"{""alpha"": 10.0}",3.0633352667424822,sample_iii_late
+ridge,safe,"{""alpha"": 1.0}",3.0659011677751207,sample_iii_late
+ridge,safe,"{""alpha"": 0.1}",3.066226050679851,sample_iii_late
+gradient_boosted_trees,safe,"{""learning_rate"": 0.05, ""max_depth"": 2, ""n_estimators"": 60}",2.446586834640496,sample_iii_late
+gradient_boosted_trees,safe,"{""learning_rate"": 0.05, ""max_depth"": 3, ""n_estimators"": 60}",2.489037301426932,sample_iii_late
+mlp,safe,"{""alpha"": 0.001, ""hidden_layer_sizes"": [32]}",2.92210670637915,sample_iii_late
+mlp,safe,"{""alpha"": 0.001, ""hidden_layer_sizes"": [16]}",3.003151386255809,sample_iii_late
+mlp,safe,"{""alpha"": 0.01, ""hidden_layer_sizes"": [16, 8]}",3.4100395565452843,sample_iii_late
+cnn1d,safe,trained,1.334334128366454,sample_iii_late
+leakage_gated_cnn_new,safe,trained,1.271374104542592,sample_iii_late
+ridge,safe_no_tail,"{""alpha"": 1000.0}",3.063722522341225,sample_iii_late
+ridge,safe_no_tail,"{""alpha"": 100.0}",3.0899238494977763,sample_iii_late
+ridge,safe_no_tail,"{""alpha"": 10.0}",3.0946275980816376,sample_iii_late
+ridge,safe_no_tail,"{""alpha"": 1.0}",3.095158613989021,sample_iii_late
+ridge,safe_no_tail,"{""alpha"": 0.1}",3.0952125101602896,sample_iii_late
+ridge,waveform_only,"{""alpha"": 100.0}",2.8106530762444537,sample_iii_late
+ridge,waveform_only,"{""alpha"": 1000.0}",2.8633220661150376,sample_iii_late
+ridge,waveform_only,"{""alpha"": 10.0}",2.88637267659418,sample_iii_late
+ridge,waveform_only,"{""alpha"": 1.0}",2.994139683458268,sample_iii_late
+ridge,waveform_only,"{""alpha"": 0.1}",3.060014104215173,sample_iii_late
+cnn1d,waveform_only,trained,1.2344167333143867,sample_iii_late
+leakage_gated_cnn_new,waveform_only,trained,1.3593983774467195,sample_iii_late
+ridge,run_only,"{""alpha"": 1000.0}",3.086492211804474,sample_iii_late
+ridge,run_only,"{""alpha"": 100.0}",3.0883622712198577,sample_iii_late
+ridge,run_only,"{""alpha"": 10.0}",3.0887539065585043,sample_iii_late
+ridge,run_only,"{""alpha"": 1.0}",3.088796723119324,sample_iii_late
+ridge,run_only,"{""alpha"": 0.1}",3.088801044019174,sample_iii_late
+ridge,safe,"{""alpha"": 100.0}",2.626184505046744,sample_iii_mixed
+ridge,safe,"{""alpha"": 10.0}",2.6314558099186596,sample_iii_mixed
+ridge,safe,"{""alpha"": 1000.0}",2.631512497610229,sample_iii_mixed
+ridge,safe,"{""alpha"": 1.0}",2.632631002463572,sample_iii_mixed
+ridge,safe,"{""alpha"": 0.1}",2.632759421663115,sample_iii_mixed
+gradient_boosted_trees,safe,"{""learning_rate"": 0.05, ""max_depth"": 3, ""n_estimators"": 60}",2.1708701019092267,sample_iii_mixed
+gradient_boosted_trees,safe,"{""learning_rate"": 0.05, ""max_depth"": 2, ""n_estimators"": 60}",2.2743907769491742,sample_iii_mixed
+mlp,safe,"{""alpha"": 0.001, ""hidden_layer_sizes"": [16]}",2.5676575504727346,sample_iii_mixed
+mlp,safe,"{""alpha"": 0.01, ""hidden_layer_sizes"": [16, 8]}",2.5680586862515065,sample_iii_mixed
+mlp,safe,"{""alpha"": 0.001, ""hidden_layer_sizes"": [32]}",2.574876011954479,sample_iii_mixed
+cnn1d,safe,trained,1.243589293772167,sample_iii_mixed
+leakage_gated_cnn_new,safe,trained,1.268229447170931,sample_iii_mixed
+ridge,safe_no_tail,"{""alpha"": 1000.0}",2.641859573808869,sample_iii_mixed
+ridge,safe_no_tail,"{""alpha"": 100.0}",2.6488529308758153,sample_iii_mixed
+ridge,safe_no_tail,"{""alpha"": 10.0}",2.6500399504245067,sample_iii_mixed
+ridge,safe_no_tail,"{""alpha"": 1.0}",2.6501693467366088,sample_iii_mixed
+ridge,safe_no_tail,"{""alpha"": 0.1}",2.6501824061287635,sample_iii_mixed
+ridge,waveform_only,"{""alpha"": 100.0}",2.377085946608259,sample_iii_mixed
+ridge,waveform_only,"{""alpha"": 10.0}",2.3994431740932343,sample_iii_mixed
+ridge,waveform_only,"{""alpha"": 1.0}",2.4219301421102206,sample_iii_mixed
+ridge,waveform_only,"{""alpha"": 0.1}",2.43050358331276,sample_iii_mixed
+ridge,waveform_only,"{""alpha"": 1000.0}",2.4520288185373698,sample_iii_mixed
+cnn1d,waveform_only,trained,1.2096413714007666,sample_iii_mixed
+leakage_gated_cnn_new,waveform_only,trained,1.2282264371644886,sample_iii_mixed
+ridge,run_only,"{""alpha"": 1000.0}",2.6876286907810987,sample_iii_mixed
+ridge,run_only,"{""alpha"": 100.0}",2.6876572688635165,sample_iii_mixed
+ridge,run_only,"{""alpha"": 10.0}",2.687660966656536,sample_iii_mixed
+ridge,run_only,"{""alpha"": 1.0}",2.6876613470485884,sample_iii_mixed
+ridge,run_only,"{""alpha"": 0.1}",2.6876613851966806,sample_iii_mixed

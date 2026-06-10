@@ -1,0 +1,8 @@
+atom,diagnostic,evidence,interpretation,closes_degradation
+run_family_calibration,late-pool best ML minus late-pool traditional robust width,-0.02137960946487638,negative means the broad model sweep closes the S18e late-pool ridge degradation in point estimate,True
+model_class,best early-pool ML method and best late-pool ML method,early=leakage_gated_cnn_new:1.454; late=gradient_boosted_trees:1.435,checks whether the S18e failure is ridge/model-class specific rather than a universal learned-correction failure,True
+amplitude_shape_support,late-pool best ML minus traditional after 1-99 percent train-support filter,-0.11185534863784174,"support-filtered retained fraction=0.740; if this closes, support mismatch or support-sensitive model selection is sufficient",True
+low_stat_core_fit,late-pool best ML degradation in Gaussian core sigma and full RMS,core_delta=-0.443; rms_delta=4.437,"if only core sigma degrades, the atom is low-stat core fitting; if RMS also degrades, it is a distribution shift",False
+leakage_sentinel,"forbidden-feature, row-split, shuffled-target, and run-id sentinel flags",3,flags invalidate adoption but can explain suspicious row-split performance,False
+covariate_shift,"max KS statistic for train-vs-Sample-IV features, early vs late",early_max_ks=0.601; late_max_ks=0.574,larger late KS would identify support mismatch as the driver; similar KS shifts point to calibration-family labels,False
+single_heldout_run,largest per-run late-pool best-ML minus traditional gap,run=62; gap=0.524,checks whether a single Sample-IV run creates the aggregate failure,True

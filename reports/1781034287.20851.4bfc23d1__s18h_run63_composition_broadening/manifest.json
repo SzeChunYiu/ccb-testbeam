@@ -1,0 +1,322 @@
+{
+  "study": "S18h",
+  "ticket": "1781034287.20851.4bfc23d1",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "afedd5b0e9d2722fe8324b68b4dfe08d91dfc1a5",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "command": "/home/billy/anaconda3/bin/python scripts/s18h_1781034287_20851_4bfc23d1_run63_composition_broadening.py --config configs/s18h_1781034287_20851_4bfc23d1_run63_composition_broadening.json",
+  "random_seed": 18463,
+  "inputs": [
+    {
+      "run": 31,
+      "file": "data/root/root/hrda_run_0031.root",
+      "sha256": "9dc9ae16d4e5cc1e09c9aa3c43523f424d8baa17b635e4a62e116252dfd1e89a",
+      "bytes": 9888079
+    },
+    {
+      "run": 32,
+      "file": "data/root/root/hrda_run_0032.root",
+      "sha256": "75b51295806f2fe960d70047b5f9a7301469abf9bc61d3da97f39017b3c6658c",
+      "bytes": 10365191
+    },
+    {
+      "run": 33,
+      "file": "data/root/root/hrda_run_0033.root",
+      "sha256": "980b6b0fddcc7321c7bba3eed2695c560b8dc0870851b5c842211531ef741c09",
+      "bytes": 13980468
+    },
+    {
+      "run": 34,
+      "file": "data/root/root/hrda_run_0034.root",
+      "sha256": "bf862dc62e0a341f09561ea2682203208ae9431186960ac30a4e7636a454d80c",
+      "bytes": 9685894
+    },
+    {
+      "run": 35,
+      "file": "data/root/root/hrda_run_0035.root",
+      "sha256": "6218ea5cc30f54aa9bb3ab7a2f66e78655ab5e5bbc220a42cf0b446ee8278e65",
+      "bytes": 6906038
+    },
+    {
+      "run": 36,
+      "file": "data/root/root/hrda_run_0036.root",
+      "sha256": "f3856daa9d9a0dce258790ec130a553e3b10f8da41752896d0fb9727b8f303e5",
+      "bytes": 5406671
+    },
+    {
+      "run": 37,
+      "file": "data/root/root/hrda_run_0037.root",
+      "sha256": "1a0ebd9202bacb568de7ba7cd994b769e8c37e3e03c64af5ab19dfa22ad4fa4a",
+      "bytes": 12558688
+    },
+    {
+      "run": 39,
+      "file": "data/root/root/hrda_run_0039.root",
+      "sha256": "d6d168608e742109ba75fddbb5dd533ddf14de06298c36dfa7b32a144a7a2f78",
+      "bytes": 7551093
+    },
+    {
+      "run": 40,
+      "file": "data/root/root/hrda_run_0040.root",
+      "sha256": "1494136cc886313efb6407b4e6593a91bbb5aab4fb9e41fee61e6fd9d9d0dd8c",
+      "bytes": 8132296
+    },
+    {
+      "run": 41,
+      "file": "data/root/root/hrda_run_0041.root",
+      "sha256": "a73d5176faac86db5729413a872bfa8893dc99a8f04703f20820917fd96527ca",
+      "bytes": 8476807
+    },
+    {
+      "run": 42,
+      "file": "data/root/root/hrda_run_0042.root",
+      "sha256": "4231c6f44238a88e523bb6478ccdaf50ea8df54b0860ac5d6c07b111fe65903b",
+      "bytes": 8439631
+    },
+    {
+      "run": 44,
+      "file": "data/root/root/hrda_run_0044.root",
+      "sha256": "8b9a0c63e5ebff7df6b49fe1c34fb2f058671bfd4fa4507e1e864b52e31813ad",
+      "bytes": 1072439
+    },
+    {
+      "run": 45,
+      "file": "data/root/root/hrda_run_0045.root",
+      "sha256": "0667f58a0c2408419fe2838feca49c211d681153295fbff131ba357ab7b17dbb",
+      "bytes": 11978439
+    },
+    {
+      "run": 46,
+      "file": "data/root/root/hrda_run_0046.root",
+      "sha256": "d723c69ee87a20b8966c6186726c37cd827538b71d6b80cae051f20a77d625b5",
+      "bytes": 363504
+    },
+    {
+      "run": 47,
+      "file": "data/root/root/hrda_run_0047.root",
+      "sha256": "95c0b24c9978ea91c22606d309b6dd37aa4450b943b95cf14f6c5c73a21bd32b",
+      "bytes": 2725102
+    },
+    {
+      "run": 48,
+      "file": "data/root/root/hrda_run_0048.root",
+      "sha256": "a0865b8b7247be879b2f3a1c542aa392587fafe3ebb1059379def5296aef2a38",
+      "bytes": 7883395
+    },
+    {
+      "run": 49,
+      "file": "data/root/root/hrda_run_0049.root",
+      "sha256": "f4517dbb6f46f61e4b0ff3c3f207a86e9dc8a03e27ab74511a0f02f159654574",
+      "bytes": 8041307
+    },
+    {
+      "run": 50,
+      "file": "data/root/root/hrda_run_0050.root",
+      "sha256": "73be3ab5d4b080192c83fdf0600c5c5f4c48a6cafed7c1b2cb16b0c23690f7f9",
+      "bytes": 10925423
+    },
+    {
+      "run": 51,
+      "file": "data/root/root/hrda_run_0051.root",
+      "sha256": "d08c3f5b1aa00d62377ddc5249612a79f523e3ab1379dc88cee13e35f2f2acd6",
+      "bytes": 5005769
+    },
+    {
+      "run": 52,
+      "file": "data/root/root/hrda_run_0052.root",
+      "sha256": "8700c89383ef567249b3b1cdb2cbc19f33cc33509a19b24165c528f72e4e9f9a",
+      "bytes": 2440882
+    },
+    {
+      "run": 53,
+      "file": "data/root/root/hrda_run_0053.root",
+      "sha256": "c93ca01697382bcb2680a433a48c41105943981e1a221c7f5349a8412e8ea874",
+      "bytes": 9656826
+    },
+    {
+      "run": 54,
+      "file": "data/root/root/hrda_run_0054.root",
+      "sha256": "36da35ade12ad942230e501b98394153b8983d53e0d922036535ec88f2d1830d",
+      "bytes": 9124046
+    },
+    {
+      "run": 55,
+      "file": "data/root/root/hrda_run_0055.root",
+      "sha256": "78451352fa3339abdd5db3e1c5b9a57ef7693bb87884aff4a4085135bb376227",
+      "bytes": 5958441
+    },
+    {
+      "run": 56,
+      "file": "data/root/root/hrda_run_0056.root",
+      "sha256": "76c7845d73fe994b35a3023e4450cfe16753bbdd723fec2e8dba15e84ec0ee6a",
+      "bytes": 12667291
+    },
+    {
+      "run": 57,
+      "file": "data/root/root/hrda_run_0057.root",
+      "sha256": "3fd411067fb6e9fa329a05463eadf54e663f9c6899c0f2570ca39bf083a78190",
+      "bytes": 7791169
+    },
+    {
+      "run": 58,
+      "file": "data/root/root/hrda_run_0058.root",
+      "sha256": "b679601ccf351cf91477684967398a8e477ad35f820c9f1a5212af2fa581bbdc",
+      "bytes": 8355851
+    },
+    {
+      "run": 59,
+      "file": "data/root/root/hrda_run_0059.root",
+      "sha256": "36228849be7d5b89f1c77aa572549b24b680eea0e5c770c371d38db0ee390422",
+      "bytes": 10400361
+    },
+    {
+      "run": 60,
+      "file": "data/root/root/hrda_run_0060.root",
+      "sha256": "d46e6ad595bc4cdb27118e7059b9a984b31b282fb5b3cdfcb6523155d1f20f5e",
+      "bytes": 8889565
+    },
+    {
+      "run": 61,
+      "file": "data/root/root/hrda_run_0061.root",
+      "sha256": "c7e195bfbc689c254c6b33b2647f8fd113bf2f19b253018134b22d766fcb94b6",
+      "bytes": 8999644
+    },
+    {
+      "run": 62,
+      "file": "data/root/root/hrda_run_0062.root",
+      "sha256": "02835d41621b6e7197eb1a57a5ccc17b14f08d25948f37473cee0bc209f2caac",
+      "bytes": 9250458
+    },
+    {
+      "run": 63,
+      "file": "data/root/root/hrda_run_0063.root",
+      "sha256": "ae19cf734aab1a2ab2d5cf2cf2315542cb8204f1333ada4aeb70d98b6ba6741b",
+      "bytes": 9118926
+    },
+    {
+      "run": 64,
+      "file": "data/root/root/hrda_run_0064.root",
+      "sha256": "58ce89dc72c8af359b6751b43e6dfbaf7eee84a6df0c5e101cb97975a33fc371",
+      "bytes": 8852963
+    },
+    {
+      "run": 65,
+      "file": "data/root/root/hrda_run_0065.root",
+      "sha256": "b4ae3f1e9adc613f05ca88688e8da194770399c975ed08b60831943825f259a2",
+      "bytes": 9464668
+    }
+  ],
+  "outputs": [
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/REPORT.md",
+      "sha256": "6b8dca2d9f5d23e001e9a60c1ba902f0b2597d5451a3a8ad0f3eafad2ff528b9",
+      "bytes": 31512
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/fig_hierarchical_run_widths.png",
+      "sha256": "2003c249e99486389bbb303141d862256a3dc1a46776c59b0c650cc37ad1d4b6",
+      "bytes": 41390
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/fig_method_widths.png",
+      "sha256": "c1f653453931f24de65ed8bf001f1205e490f1e54147fb717edb2d8cd32c0a71",
+      "bytes": 61913
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/fig_run63_synthetic_mixtures.png",
+      "sha256": "917e12c065a6cd25ccf72c06f037990486f496048e5754f12b9978256aa0f832",
+      "bytes": 92586
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/heldout_predictions.csv.gz",
+      "sha256": "09f83519db22f7d4fda71fb2808b5c4de7e55b3c849c218284ea4ef3c58ff0f0",
+      "bytes": 33580
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/hierarchical_run_widths.csv",
+      "sha256": "fcda06819ebcb2029b713735a5b6c1192e4ea4a0f8baf8df3a451b006171215b",
+      "bytes": 1313
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/historical_residuals.csv.gz",
+      "sha256": "51b955218af55c46a4a7b657a31fb002b93b9dcebcd5f257115e3f7a73402220",
+      "bytes": 7532
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/input_sha256.csv",
+      "sha256": "b6fd8608bd885ebb4a343073831b9d5f1ec9ee945972065ee09ada5d987d3315",
+      "bytes": 3658
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/leave_one_run_out_core.csv",
+      "sha256": "87a7224feefa2d78d6456972da14fce7d251a896643fbc014c1c02a2adbac062",
+      "bytes": 1130
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/method_deltas.csv",
+      "sha256": "9b96ae915aeeb001cfaf5376248b2d86f220328e9a118174aae17d23f15ee99a",
+      "bytes": 2292
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/method_metrics.csv",
+      "sha256": "215f4647b5a9a9dbcd49dfe6f310ca59577901b84a2ad4c5f85d99d2967d6aac",
+      "bytes": 5932
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/model_cv_scan.csv",
+      "sha256": "28dde37b913933bf70c2e9c60d36eb8c358137815bf9648e427b53ccc43869b6",
+      "bytes": 3778
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/pair_table_summary.csv.gz",
+      "sha256": "f0bf427497dc841aab42cef1aa82b7d4407f20fae2903b41a395cc46cd0a6126",
+      "bytes": 247323
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/reproduction_match_table.csv",
+      "sha256": "f02aaf7bd7d8b60667dd1cb49c699d46daadc13f4bd6bfc2517b20876e359855",
+      "bytes": 440
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/residual_occupancy.csv",
+      "sha256": "569fcff1b70b0374464017bc1f697f1a9ba589c14265ce71176c942917cad4e7",
+      "bytes": 1471
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/result.json",
+      "sha256": "7bfffde1b92a277a05d418122e82d84ba32d36621c30b2596fb9ac294627f55b",
+      "bytes": 1992
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/run63_composition.csv",
+      "sha256": "a4d42a1c5738c7f5321bd4200d440c021b83b5d86029041c3cc3f4ec64ee996b",
+      "bytes": 920
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/run_heldout_summary.csv",
+      "sha256": "a7bec55b6a2d68bd07b20983c6ec6dcf8962991c31af29684005e01c1d8398b3",
+      "bytes": 3899
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/support_diagnostics.csv",
+      "sha256": "77a3ff74fcb4d396d6ac0b0cba2aa624056d27df266c72268ead3761176a3c36",
+      "bytes": 2207
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/synthetic_mixture_samples.csv.gz",
+      "sha256": "d517eceab6b00afa4cccc6cc407329391797087005578b42cec31fa85f57da41",
+      "bytes": 73765
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/synthetic_mixture_summary.csv",
+      "sha256": "8af7e0127e876a88891f2d953471cd6fbdbed30459b68f74bb8ed557a84d5374",
+      "bytes": 1022
+    },
+    {
+      "file": "reports/1781034287.20851.4bfc23d1__s18h_run63_composition_broadening/train_pool_manifest.csv",
+      "sha256": "578ab5e3e73df133e82363d09b0accf45c5f0363e76870aa1d7aba993542477f",
+      "bytes": 478
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+quantity,expected,reproduced,delta,tolerance,pass
+sample_iv_A1_A3_pairs,127.0,127.0,0.0,0.0,True
+sample_iv_run63_pairs,28.0,28.0,0.0,0.0,True
+sample_iv_sigma68_ns,1.7936257228944266,1.7936260637771233,3.4088269673659966e-07,0.001,True
+sample_iv_core_sigma_ns,1.9921758801207758,1.9921764037756304,5.236548545894948e-07,0.002,True
+sample_iv_exclude_run63_core_sigma_ns,3.225455123688197,3.2254281857279934,-2.6937960203810007e-05,0.002,True

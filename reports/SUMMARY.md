@@ -511,6 +511,24 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   the same caution: train-only run-family summaries leave only a small ridge timing gain over the
   analytic comparator, and externalized S14c energy-proxy ordering is monotonic but sparse, so
   neither timing ML nor energy/PID consumers should bypass the existing support gates.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep and reports `open=187 claimed=3 done=205 failed=7`
+  after this pass. The trigger was satisfied by appending four ready, non-duplicate
+  `project:testbeam` tickets: S03m run-64 timewalk transfer action bands
+  (`1781056870.436.378a461c`), S03n hierarchical timewalk coefficient atom attribution
+  (`1781056877.507.6c6921d4`), S14h sparse A-stack energy-proxy support calibration
+  (`1781056885.578.73172123`), and S06c timewalk-energy support closure after action bands
+  (`1781056892.649.4cbb3cd2`).
+- Fresh synthesis: S03e/S03f/S03g sharpen timing from "which correction wins" into portability
+  and explanation gates. Sample-I-to-Sample-II transfer supports population/hierarchical
+  timewalk structure, run-level shared bins look strong but need atom attribution, and run 64
+  exposes a transfer difference that should become action bands before corrected times feed
+  waveform, pile-up, PID, or energy consumers. S14c validates monotonic external energy-proxy
+  ordering but only under sparse A-stack support, so the energy/PID path now needs
+  support-calibrated abstention. The new tickets therefore bridge timing transfer, coefficient
+  atoms, sparse energy support, and the S06 sigma(A/E) closure after timing/saturation/dropout/
+  baseline/action-band gates are applied.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

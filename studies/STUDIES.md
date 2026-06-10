@@ -1572,3 +1572,52 @@ Active ready queue highlights:
   timing sigma68/tail, charge res68/bias, pile-up excess, q_template shift, support-score
   coverage/ECE, false-promotion rate under controls, and ML-minus-traditional deltas with
   stratified run-block bootstrap CIs.
+
+Current steering pass (2026-06-10): the exact requested `tn-ticket list testbeam` command still
+reports `open=11 claimed=0 done=0 failed=14`, below the 18-ready trigger, while the correctly
+addressed local `testbeam` project queue remains deep (`open=187 claimed=3 done=205 failed=7`)
+after appending this batch. Four more ready, non-duplicate `project:testbeam` tickets were cut to
+turn the newest S03/S14 reports into support gates rather than premature production corrections:
+S03m (`1781056870.436.378a461c`), S03n (`1781056877.507.6c6921d4`), S14h
+(`1781056885.578.73172123`), and S06c (`1781056892.649.4cbb3cd2`).
+
+- **S03m — Run-64 timewalk transfer action bands.** Convert the S03g run-64 drift diagnostic
+  into explicit pass, abstain, or recalibrate bands for S03 timing corrections before waveform,
+  pile-up, PID, or energy consumers reuse corrected times. Traditional: freeze S03a analytic,
+  monotone-binned, S03e population, and S03f run-level shared-bin corrections and score per-run
+  and per-amplitude-bin sigma68, bias, bias-vs-amplitude slope, q_template shift, and tail
+  movement with run 64 held out. ML: train guarded ridge/HGB residual correctors with train-only
+  run-family summaries and calibrate action/support scores with run-family holdout, shuffled
+  target, run-label permutation, and amplitude-only sentinels. Metric: action coverage, sigma68
+  and tail deltas, run64-minus-analysis delta, bias slope, q_template shift, sentinel false-pass
+  rate, and ML-minus-traditional deltas with run-block bootstrap CIs.
+- **S03n — Hierarchical timewalk coefficient atom attribution.** Explain which stave, amplitude,
+  topology, and pulse-shape atoms drive the S03e/S03f hierarchical gains and whether those atoms
+  are physically plausible rather than support leakage. Traditional: frozen leave-one-atom and
+  grouped-coefficient ablations across analytic, monotone-binned, population, and run-level
+  shared-bin corrections with coefficient signs, monotonicity, support counts, and residual bias
+  per atom. ML: leakage-guarded ridge/HGB residual attribution with permutation/SHAP-style
+  rankings plus run-only, amplitude-only, topology-only, and shuffled-residual controls. Metric:
+  per-atom sigma68/tail/bias contribution, coefficient stability, monotonicity violation rate,
+  support-weighted attribution rank, control false-attribution rate, and ML-minus-traditional
+  deltas with run-block bootstrap CIs.
+- **S14h — Sparse A-stack energy-proxy support calibration.** Map where the S14c external energy
+  proxy is supported enough for ordering or PID covariates and where sparse A-stack coincidences
+  require abstention. Traditional: freeze observed, traditional, and ML energy proxies, tabulate
+  A-stack match fraction, A-depth support, downstream multiplicity, current, saturation, dropout,
+  and baseline-excursion strata, and derive transparent support thresholds from exact-binomial and
+  run-block uncertainty. ML: calibrated support/proxy-error models with domain-residualized
+  features, leave-run-family-out validation, and shuffled-target, charge-only, topology-only, and
+  current-only sentinels. Metric: support coverage, abstention rate, proxy Spearman/RMSE, A-depth
+  high-minus-low contrast, downstream contrast, PID-score stability, false-support rate, and
+  ML-minus-traditional deltas with stratified run-block bootstrap CIs.
+- **S06c — Timewalk-energy support closure after action bands.** Test whether sigma(A) or
+  sigma(E) remains stable after current timing, saturation, dropout, baseline, and energy-support
+  action bands. Traditional: combine frozen analytic/template timing corrections with transparent
+  charge-energy bins and the current veto ladder, then measure sigma68, RMS, tail fraction, and
+  bias-vs-amplitude/energy in run-held-out strata. ML: calibrated per-pulse timing-uncertainty
+  and support models over waveform, charge, and action-band features with leave-run-family-out
+  validation plus action-shuffle, energy-shuffle, and topology-only controls. Metric:
+  sigma68(A/E), full RMS, tail fraction, pull width, coverage, accepted-support composition,
+  bias slope, control false-closure rate, and ML-minus-traditional deltas with run-block and
+  atom-stratified bootstrap CIs.

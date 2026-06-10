@@ -1,2 +1,412 @@
 \chapter{Timing}
-\emph{(chapter pending --- to be written by the fleet.)}
+
+\section{Scope and observables}
+
+The timing program asks how much time resolution can be extracted from the
+eighteen-sample HRD waveform without using Monte Carlo truth or event labels that
+are algebraically derived from the quantity being predicted.  The central
+observable is a same-particle pair residual between two downstream B-stack
+staves,
+\begin{equation}
+  \Delta t_{ij,e} =
+  \left(t_{j,e} - x_j/v\right) -
+  \left(t_{i,e} - x_i/v\right),
+  \qquad v^{-1}=0.078~{\rm ns/cm},
+\end{equation}
+where the geometry term removes the expected time of flight for the stave
+spacing.  Resolution is quoted as the central 68 percent half-width,
+\begin{equation}
+  \sigma_{68}(\Delta t) =
+  \frac{Q_{84}(\Delta t)-Q_{16}(\Delta t)}{2},
+\end{equation}
+with bootstrap confidence intervals.  The quoted pair widths are deliberately
+not converted into a single detector number unless the covariance assumptions
+are under discussion: the S05 studies show that the pair residuals are not
+independent and that the B2-containing topology dominates much of the residual
+covariance.
+
+All headline comparisons are split by run.  In the initial B-stack timing
+benchmark the training runs were 58--63 and the held-out run was 65.  Later
+stability studies use leave-one-run-out folds across Sample-II analysis runs.
+The data gate was reproduced from raw ROOT before each timing study; for example,
+the S02 and S19a reproductions both recover the 640737 selected B-stave pulses
+and the Sample-II per-stave counts exactly.  This matters because the timing
+metrics are sensitive to selector semantics and to the sparse all-three
+downstream subset.
+
+\section{Pickoff and timewalk}
+
+The first benchmark compared conventional pickoffs--leading edge, constant
+fraction discriminator (CFD), optimum-filter windows, and template phase--against
+a run-split ridge residual corrector.  The strongest conventional pickoff in
+S02 was a template-phase estimator.  The ridge model used same-pulse waveform
+features only: normalized samples, log amplitude, peak sample, area over
+amplitude, and stave indicators.  Its target was the CFD20 residual relative to
+the other downstream staves in the same event; no held-out run identifiers,
+event identifiers, event order, or other-stave times were included as features.
+
+\begin{table}[H]
+\centering
+\caption{Initial held-out timing pickoff benchmark on run 65.  The interval is a
+bootstrap interval over the held-out same-particle pair residuals.}
+\begin{tabular}{lrrrr}
+\toprule
+Method & \(\sigma_{68}\) (ns) & 95\% CI (ns) & Full RMS (ns) & Tail \(>5\) ns \\
+\midrule
+Template phase & 2.889 & [2.639, 3.205] & 2.577 & 0.0505 \\
+CFD20 reference & 2.993 & [2.615, 3.351] & 2.743 & 0.0657 \\
+Ridge residual on CFD20 & 1.846 & [1.521, 2.014] & 1.710 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+On this first held-out test, the ridge correction narrowed the pairwise
+\(\sigma_{68}\) by about 1.04 ns relative to the best fixed traditional scan.
+That result established that the raw CFD/template times still contained
+waveform-dependent residual structure.  It did not by itself establish that the
+structure required a black-box model: the target is an inter-stave consistency
+proxy, and the held-out set contains only 66 all-three downstream events.
+
+The follow-up timewalk studies made that distinction explicit.  The analytic
+model writes the corrected time as
+\begin{equation}
+  t'_i =
+  t^{\rm phase}_i -
+  \left[
+    \beta_{0,i} + \beta_{1}\log A_i
+    + \beta_{2} A_i^{-1}
+    + \beta_{3} A_i^{-1/2}
+  \right],
+\end{equation}
+where \(A_i\) is the same-pulse amplitude and the stave intercepts absorb
+constant channel offsets.  The selected S03a family was the amplitude-only ridge
+form with \(\alpha=100\), trained only on runs 58--63.  It reduced the run-65
+template-phase width from 2.889 ns to 1.495 ns.  A ridge model on template-phase
+residuals reached a slightly narrower point estimate, 1.392 ns, but the
+interpretation changed: most of the S02 ridge gain was a physics-like amplitude
+timewalk correction that a transparent conventional model could represent.
+
+\begin{table}[H]
+\centering
+\caption{Timewalk correction on the S02 run-65 held-out split.}
+\begin{tabular}{lrrrr}
+\toprule
+Method & Class & \(\sigma_{68}\) (ns) & 95\% CI (ns) & Full RMS (ns) \\
+\midrule
+Template phase base & Traditional & 2.889 & [2.639, 3.139] & 2.577 \\
+Analytic amplitude timewalk & Traditional & 1.495 & [1.347, 1.644] & 1.699 \\
+Ridge on template residuals & ML & 1.392 & [1.297, 1.596] & 1.672 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The leave-one-run-out S03 comparisons are the stronger summary because they
+resample held-out runs rather than only events inside run 65.  The conventional
+amplitude-only timewalk remained stable, while a monotone-binned timewalk did
+not improve it.  Histogram-gradient-boosted residual correction gave the best
+pooled point estimate, but the reports classify it as control-sensitive: its
+apparent gain must be read together with shuffled-target sentinels, monotonicity
+audits, and later transfer checks.
+
+\begin{table}[H]
+\centering
+\caption{S03 leave-one-run-out pooled timewalk comparison.  Intervals resample
+held-out runs; all rows use 11460 pair residuals.}
+\begin{tabular}{lrrrr}
+\toprule
+Method & Class & \(\sigma_{68}\) (ns) & 95\% CI (ns) & Tail \(>5\) ns \\
+\midrule
+Template phase base & Traditional & 2.741 & [2.689, 2.992] & 0.0813 \\
+Analytic amplitude timewalk & Traditional & 1.551 & [1.369, 1.925] & 0.0191 \\
+Monotone-binned timewalk & Traditional & 1.645 & [1.322, 1.931] & 0.0195 \\
+HGB residual correction & ML & 1.394 & [1.242, 1.682] & 0.0156 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The practical winner for the conservative timing calibration is therefore the
+analytic amplitude timewalk, not because it has the smallest point estimate in
+every table, but because it is transparent, stable across run folds, and
+survives the strongest leakage interpretation.  The HGB result is scientifically
+useful evidence for residual nonlinear structure; it is not by itself a
+production timing replacement.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{../../reports/1781010985.923.35c141ac/fig_s03d_pooled_run_bootstrap.png}
+\caption{Run-bootstrap S03 comparison of analytic, binned, and HGB timewalk
+models.  The HGB point estimate is narrowest, but the analytic model is the
+stable conventional reference used for later neural timing studies.}
+\end{figure}
+
+\section{Deep timing models}
+
+The P03 studies tested whether the normalized waveform samples contain timing
+information beyond the analytic timewalk model.  P03a used a small
+heteroskedastic MLP with 18 normalized waveform samples plus a stave one-hot
+intercept.  P03b repeated the comparison in leave-one-run-out folds.  P03c
+added a two-layer one-dimensional CNN and trained both neural models on the
+residuals left by the analytic baseline.  These models explicitly excluded run
+number, event id, event order, other-stave timing, pair residuals, and held-out
+targets; shuffled-target controls were run as negative controls.
+
+The first P03 conclusion was negative for deep timing.  Across seven held-out
+runs, the MLP beat the earlier S02 ridge reference on several folds but did not
+beat the analytic timewalk baseline.  On the run-65 residual-target benchmark,
+the MLP point estimate was 1.448 ns and the CNN was 1.497 ns; the small
+MLP improvement over the analytic 1.495 ns had a paired delta interval that
+included zero.  The CNN added essentially nothing.
+
+\begin{table}[H]
+\centering
+\caption{Deep timing on the run-65 analytic-residual benchmark from P03c.}
+\begin{tabular}{lrrrr}
+\toprule
+Method & Class & \(\sigma_{68}\) (ns) & 95\% CI (ns) & \(\Delta\) vs analytic (ns) \\
+\midrule
+Analytic timewalk & Traditional & 1.495 & [1.307, 1.666] & 0.000 \\
+MLP residual & NN & 1.448 & [1.321, 1.669] & -0.046 \\
+1D-CNN residual & NN & 1.497 & [1.307, 1.667] & 0.002 \\
+S02 ridge-CFD20 & ML & 1.846 & [1.453, 2.025] & 0.351 \\
+P03a waveform MLP & NN & 1.927 & [1.608, 2.277] & 0.433 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The later S19a architecture sweep broadened the model family: ridge,
+gradient-boosted trees, MLP, 1D-CNN, residual CNN, TCN, attention, and GRU were
+trained as small laptop-safe residual models.  The pre-registered timing metric
+was again run-65 pairwise \(\sigma_{68}\), with bootstrap intervals over the
+held-out residuals.  In that screen the MLP was the point-estimate winner at
+1.176 ns, with a bootstrap interval below the analytic baseline interval.
+Gradient-boosted trees, GRU, ResNet, TCN, CNN, attention, and tabular ridge all
+also improved on the old S02 ridge reference.
+
+\begin{table}[H]
+\centering
+\caption{S19a run-65 architecture sweep for timing residual correction.  The
+ML/NN winner by point estimate is the MLP; the table also shows the conventional
+analytic baseline and the original S02 references.}
+\begin{tabular}{lrrrr}
+\toprule
+Method & Class & \(\sigma_{68}\) (ns) & 95\% CI (ns) & Full RMS (ns) \\
+\midrule
+MLP & NN & 1.176 & [1.024, 1.386] & 1.304 \\
+GRU & NN & 1.225 & [1.014, 1.462] & 1.308 \\
+Gradient-boosted trees & ML & 1.256 & [1.012, 1.438] & 1.242 \\
+ResNet & NN & 1.299 & [1.087, 1.497] & 1.346 \\
+TCN & NN & 1.341 & [1.054, 1.560] & 1.381 \\
+1D-CNN & NN & 1.363 & [1.030, 1.582] & 1.388 \\
+Attention & NN & 1.435 & [1.079, 1.632] & 1.423 \\
+Ridge residual & ML & 1.443 & [1.196, 1.635] & 1.412 \\
+Analytic timewalk & Traditional & 1.495 & [1.299, 1.666] & 1.699 \\
+S02 ridge-CFD20 & ML & 1.778 & [1.493, 2.070] & 1.716 \\
+Template phase & Traditional & 2.889 & [2.639, 3.277] & 2.577 \\
+CFD20 & Traditional & 2.993 & [2.688, 3.389] & 2.743 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The S19a result is a useful update, but it should be read as an architecture
+screen.  It has a stronger point-estimate ML winner than P03c, yet it still uses
+the same inter-stave residual proxy and the same sparse run-65 all-three
+held-out subset.  The adoption standard for timing remains stricter than a
+single held-out architecture sweep: a neural winner must keep its advantage
+under run-family transfer, event-block controls, and support-preserving
+augmentation tests.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{../../reports/0000000006.1.nnarch__neural_architecture_sweep/fig_timing_architecture_sweep.png}
+\caption{S19a architecture sweep for same-particle timing residual correction.
+Small neural and tabular models can reduce the run-65 residual proxy, but the
+chapter-level timing conclusion remains constrained by split stability and
+label-proxy systematics.}
+\end{figure}
+
+\section{Same-particle covariance and two-ended resolution}
+
+Same-particle timing resolution is not just a one-dimensional residual-width
+problem.  If pair residuals are written as
+\begin{equation}
+  \boldsymbol{\Delta t}_e = L \boldsymbol{\epsilon}_e,
+  \qquad
+  {\rm Cov}(\boldsymbol{\Delta t}) = L \Sigma_{\rm stave} L^{T},
+\end{equation}
+then off-diagonal pair covariances constrain the stave covariance matrix
+\(\Sigma_{\rm stave}\).  S05c used this relation to test whether the B-stack
+pair residuals behave like independent stave errors.  They do not.  The
+traditional pair-median residuals have much larger B2-containing covariance than
+downstream-only covariance, and the stave decomposition assigns the largest
+excess variance to B2.
+
+\begin{table}[H]
+\centering
+\caption{S05c leave-one-run-out residual widths by topology.  The ML row is an
+ExtraTrees residual model on waveform-only features; the conventional baseline
+is raw pair-median centering.}
+\begin{tabular}{llrrr}
+\toprule
+Method & Subset & Rows & \(\sigma_{68}\) (ns) & 95\% CI (ns) \\
+\midrule
+Pair median & All pairs & 65484 & 2.082 & [1.786, 7.533] \\
+Pair median & B2-containing & 43956 & 3.512 & [1.891, 19.901] \\
+Pair median & Downstream-only & 21528 & 1.733 & [1.694, 1.767] \\
+ExtraTrees & All pairs & 65484 & 1.449 & [1.314, 1.957] \\
+ExtraTrees & B2-containing & 43956 & 1.749 & [1.461, 2.712] \\
+ExtraTrees & Downstream-only & 21528 & 1.099 & [1.069, 1.167] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ML residual model reduces width, with a run-bootstrap
+\(\Delta\sigma_{68}=-0.633\) ns relative to the pair-median baseline and a
+95 percent interval of [-8.271, -0.451] ns.  However, the covariance result is
+the more important timing-systematics message.  In the raw pair-median baseline,
+the mean absolute covariance for B2-containing pair pairs is
+1042 ns\({}^2\) [748, 1312], whereas downstream-only pair pairs are
+16.0 ns\({}^2\) [4.76, 37.1].  ML reduces the covariance scale but does not turn
+the detector into an independent-stave system.  Timing resolutions quoted from
+pair residuals therefore need topology and covariance qualifiers.
+
+\begin{table}[H]
+\centering
+\caption{S04--S06 timing-resolution support studies.  These are not replacement
+global timing calibrations; they identify veto, topology, and charge-proxy
+systematics around the same-particle residual tables.}
+\small
+\begin{tabular}{@{}p{2.5cm}p{3.5cm}rp{2.8cm}p{3.1cm}@{}}
+\toprule
+Study & Method & \(\sigma_{68}\) (ns) & 95\% CI (ns) & Key caveat \\
+\midrule
+S04e B2 tails & Raw B2-containing & 3.526 & [1.859, 19.181] & Large B2 tails \\
+S04e B2 tails & Traditional q-threshold veto & 1.720 & [1.476, 6.845] & Retains 0.552 \\
+S04e B2 tails & RF q-template veto & 1.299 & [1.263, 1.325] & Support/veto map \\
+S06a charge proxy & Hierarchical traditional & 1.251 & [1.082, 1.482] & Charge slope positive \\
+S06a charge proxy & Charge-aware ridge & 1.376 & [1.201, 1.651] & Does not beat traditional \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+S04e shows that q-template policies are most useful as B2/topology pathology
+vetoes.  The RF q-template veto has the narrowest B2-containing point estimate
+and reduces the \(>5\) ns tail fraction to 0.0053, but it does so after rejecting
+about 44 percent of B2-containing pair rows; the correct use is therefore a
+support map, not a universal timing correction.  S06a asks whether better charge
+or depth proxy information monotonically improves timing resolution.  It does
+not: the charge-aware ridge model is broader than the hierarchical traditional
+timewalk by 0.125 ns, with a delta interval [0.072, 0.198] ns, and the matched
+charge slopes remain positive.  Higher charge is not a simple route to a
+narrower timing table after the matched controls.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{../../reports/1781009478.9969.16fe02b4/fig_pair_covariance_by_topology.png}
+\caption{S05c covariance by topology.  B2-containing residuals dominate the
+traditional covariance budget; waveform ML reduces the residual width but does
+not remove the topology interpretation.}
+\end{figure}
+
+S05a tested whether event-matched A-stack controls remove a common B-stack
+timing component.  They did not: adding A controls to the traditional ridge
+model had a bootstrap delta of approximately [-0.017, 0.017] ns, and the
+runwise-shuffled A-control check was essentially indistinguishable from the
+nominal A-control result.  S05d and S05e then converted the covariance picture
+into two-ended priors and saturation-aware variants.  These studies show useful
+ML narrowing in some projections, but the robust conclusion is that the B-pulse
+topology and local waveform state dominate the same-particle covariance.
+
+\section{A-stack cross-checks}
+
+The A-stack provides an independent timing telescope and a useful guard against
+overinterpreting B-stack-specific effects.  S18 reproduced the A1--A3 timing
+width from raw A-stack ROOT.  On Sample III, the conventional CFD20 polynomial
+timewalk model gave a robust width of 1.389 ns [1.339, 1.453], while a ridge
+timewalk model gave 1.383 ns [1.337, 1.426].  The difference is negligible.  On
+Sample IV, the robust width was broader, but the sample contains only 127 pairs
+and is sensitive to calibration pool and estimator choices.
+
+\begin{table}[H]
+\centering
+\caption{S18 A-stack independent reproduction.}
+\begin{tabular}{llrrr}
+\toprule
+Sample & Method & Pairs & Robust width (ns) & 95\% CI (ns) \\
+\midrule
+Sample III & Traditional CFD20 polynomial & 2514 & 1.389 & [1.339, 1.453] \\
+Sample III & Ridge timewalk & 2514 & 1.383 & [1.337, 1.426] \\
+Sample IV & Traditional CFD20 polynomial & 127 & 1.794 & [1.379, 2.220] \\
+Sample IV & Ridge timewalk & 127 & 1.559 & [1.334, 1.780] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{../../reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/fig_head_to_head.png}
+\caption{S18 A-stack head-to-head comparison.  The conventional and ridge
+corrections are statistically tied on Sample III; Sample IV is limited by low
+statistics and calibration-pool sensitivity.}
+\end{figure}
+
+S18d explains much of the apparent Sample-IV broadening.  The historical
+binned-Gaussian core-sigma excess is unstable under estimator and fit-window
+changes.  Under a run-held-out traditional correction, the Sample-IV
+binned-Gaussian width is 2.077 ns with an upper bootstrap bound at the fit limit,
+but the Student-\(t\) scale is 1.240 ns [1.058, 1.368] and the percentile-68
+width is 1.506 ns [1.296, 1.683].  Across robust unbinned estimators, the
+Sample-IV minus Sample-III excess is about 0.09 ns rather than the historical
+0.54 ns binned-core excess.  S18e further shows that the best traditional
+calibration pool, late Sample III, gives 1.457 ns [1.242, 1.639] on Sample IV,
+while the corresponding ML pool degrades to 2.262 ns.  The A-stack therefore
+supports the main timing message: transparent timewalk calibration is already
+near the measurable resolution floor, and many apparent improvements or
+broadenings are calibration-pool or estimator effects.
+
+\section{Systematics and caveats}
+
+Several systematic limits recur across the timing reports.  First, the main
+same-particle timing target is a residual proxy built from other staves, not an
+external time truth.  A model can reduce pair width by correcting a real timing
+effect, by learning correlated detector state, or by accidentally coupling to
+the proxy target.  This is why the reports require run splits, feature audits,
+and shuffled-target sentinels.
+
+Second, the all-three downstream subset is sparse on the most important held-out
+run: S02, S03a, P03c, and S19a each have 66 events and 198 pair residuals on run
+65.  Event-level bootstrap intervals quantify the finite held-out distribution,
+but they do not cover all model-selection uncertainty.  Leave-one-run-out and
+run-bootstrap summaries are consequently more reliable for production
+interpretation than a single run-65 point estimate.
+
+Third, a narrow Gaussian core is not a sufficient timing claim.  The reports
+quote \(\sigma_{68}\), full RMS, tail fractions, and core-fit diagnostics because
+template-phase residuals can have a narrow fitted core and broad structured
+tails.  The operational timing model must improve the robust width without
+creating tails or relying on a fit-window artifact.
+
+Finally, the B-stack covariance is topology-dependent.  B2-containing residuals
+carry much larger covariance than downstream-only residuals, and A-stack
+controls do not cleanly remove this component.  Any downstream physics use of
+the timing resolution should propagate a topology/covariance systematic rather
+than assuming \(\sigma^2_{ij}=\sigma_i^2+\sigma_j^2\) with independent staves.
+
+\section{Chapter conclusion}
+
+The timing studies identify three different ``winners,'' depending on the
+decision standard.  For the initial S02 pickoff benchmark, ridge residual
+correction on CFD20 wins over the best fixed traditional template-phase scan.
+For the conservative timing calibration, the analytic amplitude timewalk is the
+preferred traditional winner: it explains most of the ridge gain, transfers
+stably across run folds, and remains interpretable.  For the S19a architecture
+screen, a small MLP is the held-out point-estimate ML/NN winner, reaching
+1.176 ns on run 65 versus 1.495 ns for the analytic baseline, while the 1D-CNN,
+attention, TCN, GRU, ResNet, ridge, and gradient-boosted tree variants provide
+useful but not yet production-grade support.
+
+The physics conclusion is therefore not that deeper networks are unnecessary in
+all timing tasks, but that this short, phase-locked waveform is already well
+described by amplitude timewalk plus low-dimensional pulse-shape terms.  ML is a
+powerful residual diagnostic and can win point-estimate architecture screens;
+the adopted timing interpretation remains governed by run stability, leakage
+controls, covariance topology, and estimator robustness.

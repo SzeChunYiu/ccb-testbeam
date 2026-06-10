@@ -1,0 +1,25 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s00f_1781033578_541_73575b7f_dynamic_pileup_support.py",
+  "config": "configs/s00f_1781033578_541_73575b7f_dynamic_pileup_support.json",
+  "script": "scripts/s00f_1781033578_541_73575b7f_dynamic_pileup_support.py",
+  "git_commit": "b370ca800e72c860981c2c6c1de48f13aff9a214",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "runtime_sec": 70.243,
+  "outputs": {
+    "REPORT.md": "affac774085466e2748f74ccf87b9a278bf9525bbc636406cba41ecdd54bc5ac",
+    "fig_model_auc.png": "b757ece9973791e4ab4278876b3adc38fa9f744e129cb720d18de206995902cd",
+    "fig_support_summary.png": "aa8e2879dd81b1c363a8e7eccb6900d3f84397e0ca142cf3a25824c774af4ec0",
+    "heldout_model_scores.csv.gz": "fe0b10b79a9b033c53bbf7c90dcab7ff1f19e1f776b519eee62509d47d4c3e1b",
+    "input_sha256.csv": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+    "leakage_checks.csv": "ad480c0e8c931ec7e47ea1e888a386388c1f9737be0ffe43bcc9516010989a21",
+    "matched_pulse_table.csv.gz": "131b962c0ef71f98dbdb4ad0bdd40a3286a358b4e60b007c4d5e3f31c8b678b7",
+    "matched_strata_summary.csv": "92c954df8cb2de5610a75e912444b591c4ba4402419a529d2b88beb79aaf50ab",
+    "matched_support_summary.csv": "29830e6931c348f54fb470c02c2561a7d5017c4ff08fb54bd65f1a6be0379120",
+    "model_benchmark.csv": "f270fb0729536845057744a1976ca0a38a2a6d75691eb7f075b3e5fbea6a4cc8",
+    "primary_delta_metrics.csv": "e79e1313bf5dd2d6d9d5355a7f672b6177101382d30d6b1be73ec96eb44ec116",
+    "reproduction_match_table.csv": "9486d56356c2bb3ffe9f80b70f98fa1ce49d234e7e32e8a8e642a3b9b5a347ae",
+    "result.json": "c3344310b4da6483826a236e5cdb664de2dca361423479ee4434ba2cd1775368",
+    "selector_counts_by_run.csv": "bbd513fd66ec57880d8807499d02425b91e87cae13b285bfdc5b11fce85b393a"
+  }
+}

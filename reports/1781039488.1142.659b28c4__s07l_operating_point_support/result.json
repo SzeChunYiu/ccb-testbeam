@@ -1,0 +1,420 @@
+{
+  "study": "S07l",
+  "ticket": "1781039488.1142.659b28c4",
+  "worker": "testbeam-laptop-3",
+  "title": "injected morphology operating-point support audit",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "P02 early-peak pulse rate, peak_sample<=3",
+      "report_value": 0.044,
+      "reproduced": 0.04388333333333334,
+      "delta": -0.00011666666666666076,
+      "tolerance": 0.002,
+      "pass": true,
+      "sample_size": 60000
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72.0,
+      "reproduced": 72.0,
+      "delta": 0.0,
+      "tolerance": 0.0,
+      "pass": true,
+      "sample_size": 10156
+    },
+    {
+      "quantity": "P02d transparent morphology ROC AUC",
+      "report_value": 0.692169373549884,
+      "reproduced": 0.692169373549884,
+      "delta": 0.0,
+      "tolerance": 1e-12,
+      "pass": true,
+      "sample_size": 2227
+    },
+    {
+      "quantity": "S07h shape-only RF injected ROC AUC",
+      "report_value": 0.8597877918400527,
+      "reproduced": 0.8601848611926077,
+      "delta": 0.00039706935255501286,
+      "tolerance": 0.025,
+      "pass": true,
+      "sample_size": 4310
+    }
+  ],
+  "injected_dataset": {
+    "n_rows": 4310,
+    "n_pairs": 2155,
+    "n_clean": 2155,
+    "n_injected": 2155,
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "traditional": {
+    "method": "traditional timing/template reference",
+    "metric": "leave-one-run-out ROC AUC on injected non-D_t labels",
+    "value": 0.6124055103062537,
+    "ci": [
+      0.6039554716779623,
+      0.6274045424502748
+    ]
+  },
+  "ml_methods": [
+    {
+      "method": "gradient_boosted_trees",
+      "roc_auc": 0.9164468322198953,
+      "roc_auc_ci_low": 0.9029331350833825,
+      "roc_auc_ci_high": 0.9310057946704062,
+      "average_precision": 0.9205806094705957,
+      "ap_ci_low": 0.9044085184106432,
+      "ap_ci_high": 0.9372679733608914,
+      "brier": 0.11909213571545553,
+      "brier_ci_low": 0.10584728788693884,
+      "brier_ci_high": 0.13679276059490983,
+      "notes": "Histogram gradient-boosted trees on strict normalized morphology features."
+    },
+    {
+      "method": "mlp",
+      "roc_auc": 0.902994923584606,
+      "roc_auc_ci_low": 0.8740669020811932,
+      "roc_auc_ci_high": 0.9296251868015153,
+      "average_precision": 0.9082074823037196,
+      "ap_ci_low": 0.8826072498083539,
+      "ap_ci_high": 0.9313887014220356,
+      "brier": 0.12876124503650851,
+      "brier_ci_low": 0.10535125381383663,
+      "brier_ci_high": 0.15246584146227493,
+      "notes": "Small early-stopped dense neural network on strict normalized morphology features."
+    },
+    {
+      "method": "random_forest_s07h",
+      "roc_auc": 0.8601848611926077,
+      "roc_auc_ci_low": 0.8407192824346437,
+      "roc_auc_ci_high": 0.8812916453288311,
+      "average_precision": 0.8741819809288507,
+      "ap_ci_low": 0.8508536061889889,
+      "ap_ci_high": 0.8957740754289243,
+      "brier": 0.15537693627050497,
+      "brier_ci_low": 0.14122707307223156,
+      "brier_ci_high": 0.171267883172819,
+      "notes": "S07h random-forest continuity model; best params={'n_estimators': 500, 'max_depth': 7, 'min_samples_leaf': 8}."
+    },
+    {
+      "method": "ridge_logistic",
+      "roc_auc": 0.8184417611877628,
+      "roc_auc_ci_low": 0.8042670115979267,
+      "roc_auc_ci_high": 0.83240362539154,
+      "average_precision": 0.8199222043164599,
+      "ap_ci_low": 0.7995967801504856,
+      "ap_ci_high": 0.8425105810810923,
+      "brier": 0.17552716966996543,
+      "brier_ci_low": 0.16630456718272366,
+      "brier_ci_high": 0.18591968886508675,
+      "notes": "L2-regularized logistic regression on strict normalized morphology features."
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "roc_auc": 0.7870185884012252,
+      "roc_auc_ci_low": 0.7594128354318235,
+      "roc_auc_ci_high": 0.8137251757882213,
+      "average_precision": 0.782797111230295,
+      "ap_ci_low": 0.7520273554764583,
+      "ap_ci_high": 0.8136265745729331,
+      "brier": 0.18532279431910884,
+      "brier_ci_low": 0.1723045154658223,
+      "brier_ci_high": 0.19760388383414568,
+      "notes": "New residual dilated temporal CNN with non-sample morphology-stat fusion."
+    },
+    {
+      "method": "cnn_1d",
+      "roc_auc": 0.689398528216364,
+      "roc_auc_ci_low": 0.6707790366194315,
+      "roc_auc_ci_high": 0.7074262431404403,
+      "average_precision": 0.700149575181886,
+      "ap_ci_low": 0.6747731403037353,
+      "ap_ci_high": 0.7224717291166474,
+      "brier": 0.21796153552658326,
+      "brier_ci_low": 0.21103598588634656,
+      "brier_ci_high": 0.2250497534157071,
+      "notes": "Small 1D-CNN over B2/downstream mean/downstream std normalized waveforms."
+    },
+    {
+      "method": "traditional timing/template reference",
+      "roc_auc": 0.6124055103062537,
+      "roc_auc_ci_low": 0.6039554716779623,
+      "roc_auc_ci_high": 0.6274045424502748,
+      "average_precision": 0.5778323599886604,
+      "ap_ci_low": 0.5712376800912385,
+      "ap_ci_high": 0.5863593517756394,
+      "brier": 0.24016675596811177,
+      "brier_ci_low": 0.23740951578944572,
+      "brier_ci_high": 0.2424764814316261,
+      "notes": "Strong fold-local timing/template score; primary traditional comparator."
+    },
+    {
+      "method": "transparent P02 morphology",
+      "roc_auc": 0.5276177453825076,
+      "roc_auc_ci_low": 0.520173222004461,
+      "roc_auc_ci_high": 0.5368519435317731,
+      "average_precision": 0.5103673358250431,
+      "ap_ci_low": 0.5064734195865812,
+      "ap_ci_high": 0.515948257866897,
+      "brier": 0.24864564567257852,
+      "brier_ci_low": 0.2479257751032956,
+      "brier_ci_high": 0.24946665501822166,
+      "notes": "Train-fold-selected transparent P02 morphology cuts/scores only."
+    }
+  ],
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "metric": "leave-one-run-out ROC AUC on injected non-D_t labels",
+    "roc_auc": 0.9164468322198953,
+    "ci": [
+      0.9029331350833825,
+      0.9310057946704062
+    ],
+    "average_precision": 0.9205806094705957,
+    "ap_ci": [
+      0.9044085184106432,
+      0.9372679733608914
+    ],
+    "delta_auc_vs_traditional": 0.30404132191364164
+  },
+  "benchmark_winner": "gradient_boosted_trees",
+  "ml_beats_baseline": true,
+  "operating_point_summary": [
+    {
+      "method": "mlp",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9510059348294604,
+      "false_positive_rate_mean": 0.04899406517053966,
+      "injected_rejection_mean": 0.623795235075636,
+      "runs": 7
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9531983377942145,
+      "false_positive_rate_mean": 0.046801662205785535,
+      "injected_rejection_mean": 0.5948694781733593,
+      "runs": 7
+    },
+    {
+      "method": "random_forest_s07h",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9479373761741993,
+      "false_positive_rate_mean": 0.05206262382580075,
+      "injected_rejection_mean": 0.4972367278462734,
+      "runs": 7
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9440131115835142,
+      "false_positive_rate_mean": 0.0559868884164858,
+      "injected_rejection_mean": 0.4250156710985687,
+      "runs": 7
+    },
+    {
+      "method": "ridge_logistic",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9526634529075257,
+      "false_positive_rate_mean": 0.0473365470924743,
+      "injected_rejection_mean": 0.389498160618102,
+      "runs": 7
+    },
+    {
+      "method": "cnn_1d",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9526980892815116,
+      "false_positive_rate_mean": 0.04730191071848861,
+      "injected_rejection_mean": 0.28341845951137346,
+      "runs": 7
+    },
+    {
+      "method": "traditional timing/template reference",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9171180953025792,
+      "false_positive_rate_mean": 0.08288190469742082,
+      "injected_rejection_mean": 0.10860413571055896,
+      "runs": 7
+    },
+    {
+      "method": "transparent P02 morphology",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9565514255569763,
+      "false_positive_rate_mean": 0.04344857444302381,
+      "injected_rejection_mean": 0.03833817060801629,
+      "runs": 7
+    },
+    {
+      "method": "mlp",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9510059348294604,
+      "false_positive_rate_mean": 0.04899406517053966,
+      "injected_rejection_mean": 0.623795235075636,
+      "runs": 7
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9531983377942145,
+      "false_positive_rate_mean": 0.046801662205785535,
+      "injected_rejection_mean": 0.5948694781733593,
+      "runs": 7
+    },
+    {
+      "method": "random_forest_s07h",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9479373761741993,
+      "false_positive_rate_mean": 0.05206262382580075,
+      "injected_rejection_mean": 0.4972367278462734,
+      "runs": 7
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9440131115835142,
+      "false_positive_rate_mean": 0.0559868884164858,
+      "injected_rejection_mean": 0.4250156710985687,
+      "runs": 7
+    },
+    {
+      "method": "ridge_logistic",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9526634529075257,
+      "false_positive_rate_mean": 0.0473365470924743,
+      "injected_rejection_mean": 0.389498160618102,
+      "runs": 7
+    },
+    {
+      "method": "cnn_1d",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9526980892815116,
+      "false_positive_rate_mean": 0.04730191071848861,
+      "injected_rejection_mean": 0.28341845951137346,
+      "runs": 7
+    },
+    {
+      "method": "traditional timing/template reference",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9171180953025792,
+      "false_positive_rate_mean": 0.08288190469742082,
+      "injected_rejection_mean": 0.10860413571055896,
+      "runs": 7
+    },
+    {
+      "method": "transparent P02 morphology",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9565514255569763,
+      "false_positive_rate_mean": 0.04344857444302381,
+      "injected_rejection_mean": 0.03833817060801629,
+      "runs": 7
+    }
+  ],
+  "support_drift_summary": [
+    {
+      "method": "transparent P02 morphology",
+      "veto_fraction": 0.043448574443023816,
+      "timing_sigma68_delta_ns": -0.05052599590985597,
+      "charge_logamp_delta": 0.023019409369939785,
+      "baseline_final_fraction_delta": 0.04530625864813816,
+      "saturation_logamp_top10_delta": 0.008198700022008286,
+      "pileup_dt_mean_delta_ns": 0.04554556282151153,
+      "topology_n_downstream_delta": 0.0027479808822594392
+    },
+    {
+      "method": "traditional timing/template reference",
+      "veto_fraction": 0.08288190469742082,
+      "timing_sigma68_delta_ns": 0.00288746416147434,
+      "charge_logamp_delta": 0.005913819380941376,
+      "baseline_final_fraction_delta": -0.08002590329386772,
+      "saturation_logamp_top10_delta": 0.006796298814617707,
+      "pileup_dt_mean_delta_ns": -0.012924433469353838,
+      "topology_n_downstream_delta": 0.006215138600722029
+    },
+    {
+      "method": "random_forest_s07h",
+      "veto_fraction": 0.05206262382580075,
+      "timing_sigma68_delta_ns": -0.00743918259198909,
+      "charge_logamp_delta": -0.004096811328649507,
+      "baseline_final_fraction_delta": -0.008213265077406287,
+      "saturation_logamp_top10_delta": -0.0015005582853847407,
+      "pileup_dt_mean_delta_ns": -0.004379552518375978,
+      "topology_n_downstream_delta": 0.001126998343848091
+    },
+    {
+      "method": "ridge_logistic",
+      "veto_fraction": 0.047336547092474306,
+      "timing_sigma68_delta_ns": -0.0034375750585637277,
+      "charge_logamp_delta": 0.003221239499010764,
+      "baseline_final_fraction_delta": -0.0007941187158980843,
+      "saturation_logamp_top10_delta": 0.0011060907663850567,
+      "pileup_dt_mean_delta_ns": -0.0011158241601757965,
+      "topology_n_downstream_delta": 0.0028355496772282584
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "veto_fraction": 0.04680166220578554,
+      "timing_sigma68_delta_ns": -0.0077756168810348015,
+      "charge_logamp_delta": -0.005954226924848578,
+      "baseline_final_fraction_delta": -0.008150933244718826,
+      "saturation_logamp_top10_delta": 0.0003591534814148058,
+      "pileup_dt_mean_delta_ns": 0.0058527489421502975,
+      "topology_n_downstream_delta": 0.0004334909269556597
+    },
+    {
+      "method": "mlp",
+      "veto_fraction": 0.04899406517053966,
+      "timing_sigma68_delta_ns": -0.01633896363493159,
+      "charge_logamp_delta": -0.0011345852223494696,
+      "baseline_final_fraction_delta": -0.0026505837541574567,
+      "saturation_logamp_top10_delta": -0.0006765285833586031,
+      "pileup_dt_mean_delta_ns": 0.007373345565304731,
+      "topology_n_downstream_delta": 0.0014851198365392853
+    },
+    {
+      "method": "cnn_1d",
+      "veto_fraction": 0.04730191071848861,
+      "timing_sigma68_delta_ns": -0.005754170403237906,
+      "charge_logamp_delta": -0.02364744142919368,
+      "baseline_final_fraction_delta": -0.0015194281986750519,
+      "saturation_logamp_top10_delta": -0.0010658131974937324,
+      "pileup_dt_mean_delta_ns": 0.007892150850211348,
+      "topology_n_downstream_delta": -0.011522685078016728
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "veto_fraction": 0.0559868884164858,
+      "timing_sigma68_delta_ns": -0.014269830510321158,
+      "charge_logamp_delta": -0.007422590657368515,
+      "baseline_final_fraction_delta": -0.0090326595280887,
+      "saturation_logamp_top10_delta": -0.0016755989112076017,
+      "pileup_dt_mean_delta_ns": 0.008651965032587043,
+      "topology_n_downstream_delta": -0.001425532162228674
+    }
+  ],
+  "falsification": {
+    "preregistered_metric": "injected detection AP/AUC, fixed-efficiency FPR, support drift, ML-minus-traditional utility",
+    "n_model_families": 8,
+    "pair_split_violations": 0,
+    "forbidden_main_feature_columns": [],
+    "amplitude_only_auc": 0.5871586608599222,
+    "topology_only_auc": 0.5010658857348959,
+    "shuffled_label_auc": 0.5096178422812108
+  },
+  "input_sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+  "git_commit": "1bbc67bdfcfb3d61d423d4ca04ac5a0d908ccf3c",
+  "runtime_sec": 322.6,
+  "critic": "pending",
+  "next_tickets": [
+    "S07m: support-preserving injected-morphology calibration with run/amplitude/topology/baseline matching"
+  ]
+}

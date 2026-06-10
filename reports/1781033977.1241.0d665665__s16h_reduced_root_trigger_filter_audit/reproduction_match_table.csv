@@ -1,0 +1,6 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+selected B-stave pulses from raw HRDv,640737,640737,0,0,True
+non-beam trigger entries in visible h101 ROOT,0,0,0,0,True
+non-beam selected B-stave pulses,0,0,0,0,True
+raw h101 to sorted entry drops or insertions,0,0,0,0,True
+raw EVT to sorted hrdEvtNo mismatches,0,0,0,0,True

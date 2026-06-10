@@ -1,0 +1,56 @@
+{
+  "study": "S16h",
+  "ticket": "1781033977.1241.0d665665",
+  "worker": "testbeam-laptop-4",
+  "title": "audit reduced-ROOT conversion for dropped non-beam trigger entries",
+  "raw_root_dir": "data/root/root",
+  "sorted_dirs": {
+    "hrda": "data/sorted-a",
+    "hrdb": "data/sorted-b"
+  },
+  "raw_archives": [
+    "/home/billy/ccb-data/raw/root.zip",
+    "/home/billy/ccb-data/raw/sorted-a.zip",
+    "/home/billy/ccb-data/raw/sorted-b.zip"
+  ],
+  "search_roots": [
+    "data",
+    "/home/billy/ccb-data",
+    "/home/billy/Desktop/test_beam/data",
+    "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data"
+  ],
+  "prior_reduced_metadata_benchmark": {
+    "result_json": "reports/1781031000.2442.5ff56e52__s16h_sorted_baseline_pretrigger_pedestals/result.json",
+    "method_table_csv": "reports/1781031000.2442.5ff56e52__s16h_sorted_baseline_pretrigger_pedestals/heldout_method_metrics.csv",
+    "delta_table_csv": "reports/1781031000.2442.5ff56e52__s16h_sorted_baseline_pretrigger_pedestals/method_deltas_vs_traditional.csv"
+  },
+  "appended_next_ticket_id": "1781111822.1151.67af3b17",
+  "output_dir": "reports/1781033977.1241.0d665665__s16h_reduced_root_trigger_filter_audit",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "expected_non_beam_trigger_entries": 0,
+  "non_beam_trigger_value": 1,
+  "bootstrap_replicates": 500,
+  "random_seed": 16183977,
+  "source_suffixes": [".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".py", ".sh", ".json", ".yaml", ".yml", ".txt", ".md", ".mac", ".conf", ".config"],
+  "conversion_tokens": ["convert", "conversion", "sort", "sorted", "mirror", "h101", "trigger", "filter", "raw", "root"],
+  "tag_branch_tokens": ["random", "forced", "force", "pedestal", "ped", "empty", "nopulse", "no_pulse", "tag", "spill", "scaler", "mode", "trigger_type"],
+  "pre_registered": {
+    "primary_metric": "number of h101 TRIGGER!=1 entries visible in current reduced ROOT and number of raw h101 to sorted entry drops",
+    "split": "audit all visible ROOT files; benchmark CIs are run-block bootstrap over held-out runs 57 and 65 when labels are estimable",
+    "traditional_method": "deterministic ROOT metadata/event-number join plus archive source inventory",
+    "ml_methods": ["ridge", "hist_gradient_boosted_trees", "mlp", "one_dimensional_cnn", "sorted_residual_net"],
+    "significance_level": 0.05,
+    "win_rule": "for conversion-drop detection, a method must be estimable from non-constant labels; otherwise the deterministic audit is the only valid winner and ML methods are reported as not identifiable"
+  }
+}

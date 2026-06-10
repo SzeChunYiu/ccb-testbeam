@@ -1,0 +1,1611 @@
+{
+  "study": "S10g",
+  "ticket": "1781026939.1501.725b716d",
+  "worker": "testbeam-laptop-4",
+  "title": "P09b adjudicated anomaly-label propagation through S10e P04/P07 charge-stratified current excess",
+  "reproduced": true,
+  "reproduction": {
+    "s10e_uncorrected_downstream_reference": 0.006762658473460766,
+    "s10e_uncorrected_downstream_reproduced": 0.006762658473460766,
+    "s10e_uncorrected_delta": 0.0,
+    "s10e_p07_downstream_reference": 0.006762537116158371,
+    "s10e_p07_downstream_reproduced": 0.006762537116158371,
+    "s10e_p07_delta": 0.0
+  },
+  "split": "leave-one-run-out ML predictions; run-block bootstrap CIs within current group",
+  "traditional": {
+    "summary": [
+      {
+        "strata_definition": "uncorrected",
+        "metric": "downstream_high_minus_low",
+        "value": 0.006762658473460766,
+        "ci_low": 0.005409086155650991,
+        "ci_high": 0.008929345759049422,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected",
+        "metric": "integral_charge_median_log_shift",
+        "value": 0.030170483153793753,
+        "ci_low": 0.009103588422424582,
+        "ci_high": 0.038100034411725665,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected",
+        "metric": "template_charge_median_log_shift",
+        "value": 0.034639997561126394,
+        "ci_low": 0.009457606966505617,
+        "ci_high": 0.04337654355837248,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "value": 0.047643517262430234,
+        "ci_low": 0.021792001883220696,
+        "ci_high": 0.05672774451259835,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected",
+        "metric": "uncorrected_charge_median_log_shift",
+        "value": 0.047643517262430234,
+        "ci_low": 0.021735449553202946,
+        "ci_high": 0.05697297834204196,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected",
+        "metric": "downstream_high_minus_low",
+        "value": 0.006762537116158371,
+        "ci_low": 0.005357221387165886,
+        "ci_high": 0.00935485265247028,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected",
+        "metric": "integral_charge_median_log_shift",
+        "value": 0.030170483153793753,
+        "ci_low": 0.011610389967046763,
+        "ci_high": 0.0379112145956714,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected",
+        "metric": "template_charge_median_log_shift",
+        "value": 0.03463842803296372,
+        "ci_low": 0.008052791426965335,
+        "ci_high": 0.04342440676530357,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "value": 0.047643517262430234,
+        "ci_low": 0.021049218657037384,
+        "ci_high": 0.057173815531931904,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected",
+        "metric": "p07_corrected_charge_median_log_shift",
+        "value": 0.047611200196448,
+        "ci_low": 0.025007561345870476,
+        "ci_high": 0.057555205544634794,
+        "n_strata": 9,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09a_taxon",
+        "metric": "downstream_high_minus_low",
+        "value": 0.004122451926345003,
+        "ci_low": 0.0020907455747442133,
+        "ci_high": 0.006086996547786955,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09a_taxon",
+        "metric": "integral_charge_median_log_shift",
+        "value": 0.03363315210108103,
+        "ci_low": 0.011071421378987763,
+        "ci_high": 0.04142769660730694,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09a_taxon",
+        "metric": "template_charge_median_log_shift",
+        "value": 0.02911196831768051,
+        "ci_low": 0.0016556022923168137,
+        "ci_high": 0.03894163019018102,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09a_taxon",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "value": 0.04811280451520242,
+        "ci_low": 0.021632383962662535,
+        "ci_high": 0.06147832904131675,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09a_taxon",
+        "metric": "uncorrected_plus_p09a_taxon_charge_median_log_shift",
+        "value": 0.04811280451520242,
+        "ci_low": 0.02244366169272595,
+        "ci_high": 0.06071056481976339,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09a_taxon",
+        "metric": "downstream_high_minus_low",
+        "value": 0.004122373214408075,
+        "ci_low": 0.00201772648643095,
+        "ci_high": 0.006039025912295596,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09a_taxon",
+        "metric": "integral_charge_median_log_shift",
+        "value": 0.03363315210108103,
+        "ci_low": 0.013125873701109654,
+        "ci_high": 0.03977870144089008,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09a_taxon",
+        "metric": "template_charge_median_log_shift",
+        "value": 0.029111748326609205,
+        "ci_low": 0.00018943552433570154,
+        "ci_high": 0.03733406737602381,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09a_taxon",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "value": 0.04811280451520242,
+        "ci_low": 0.02275344566083835,
+        "ci_high": 0.06051419534005735,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09a_taxon",
+        "metric": "p07_corrected_plus_p09a_taxon_charge_median_log_shift",
+        "value": 0.0480778006993209,
+        "ci_low": 0.021998760264183983,
+        "ci_high": 0.059784469501972526,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09b_adjudicated",
+        "metric": "downstream_high_minus_low",
+        "value": 0.0040870384408380886,
+        "ci_low": 0.001999281092391663,
+        "ci_high": 0.006120944061584062,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09b_adjudicated",
+        "metric": "integral_charge_median_log_shift",
+        "value": 0.03364313736590535,
+        "ci_low": 0.00833727051221426,
+        "ci_high": 0.040558112492783384,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09b_adjudicated",
+        "metric": "template_charge_median_log_shift",
+        "value": 0.030992171735273594,
+        "ci_low": 0.006707116300352492,
+        "ci_high": 0.037950701871696836,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09b_adjudicated",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "value": 0.046975379889950535,
+        "ci_low": 0.021733687440795398,
+        "ci_high": 0.0581245802421427,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "uncorrected_plus_p09b_adjudicated",
+        "metric": "uncorrected_plus_p09b_adjudicated_charge_median_log_shift",
+        "value": 0.046975379889950535,
+        "ci_low": 0.024325145054821272,
+        "ci_high": 0.05813170783943911,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09b_adjudicated",
+        "metric": "downstream_high_minus_low",
+        "value": 0.004086959714992,
+        "ci_low": 0.0018985500251772367,
+        "ci_high": 0.006147839574340312,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09b_adjudicated",
+        "metric": "integral_charge_median_log_shift",
+        "value": 0.03364313736590535,
+        "ci_low": 0.008949550426869847,
+        "ci_high": 0.04061785527401653,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09b_adjudicated",
+        "metric": "template_charge_median_log_shift",
+        "value": 0.030991951705327748,
+        "ci_low": 0.007812878773378698,
+        "ci_high": 0.03942529366776854,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09b_adjudicated",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "value": 0.046975379889950535,
+        "ci_low": 0.02372570019342159,
+        "ci_high": 0.05803657376159165,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      },
+      {
+        "strata_definition": "p07_corrected_plus_p09b_adjudicated",
+        "metric": "p07_corrected_plus_p09b_adjudicated_charge_median_log_shift",
+        "value": 0.0469403698885564,
+        "ci_low": 0.023922441207969183,
+        "ci_high": 0.05829070837184197,
+        "n_strata": 11,
+        "bootstrap_unit": "run_within_current_group",
+        "n_bootstrap": 400
+      }
+    ],
+    "propagation_summary": [
+      {
+        "base_strata": "uncorrected",
+        "taxon_strata": "uncorrected_plus_p09a_taxon",
+        "metric": "downstream_high_minus_low",
+        "base_value": 0.006762658473460766,
+        "taxon_value": 0.004122451926345003,
+        "taxon_minus_base": -0.0026402065471157624,
+        "fractional_attenuation": 0.39040956414950323,
+        "base_ci_low": 0.005409086155650991,
+        "base_ci_high": 0.008929345759049422,
+        "taxon_ci_low": 0.0020907455747442133,
+        "taxon_ci_high": 0.006086996547786955,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      },
+      {
+        "base_strata": "p07_corrected",
+        "taxon_strata": "p07_corrected_plus_p09a_taxon",
+        "metric": "downstream_high_minus_low",
+        "base_value": 0.006762537116158371,
+        "taxon_value": 0.004122373214408075,
+        "taxon_minus_base": -0.002640163901750296,
+        "fractional_attenuation": 0.39041026413620744,
+        "base_ci_low": 0.005357221387165886,
+        "base_ci_high": 0.00935485265247028,
+        "taxon_ci_low": 0.00201772648643095,
+        "taxon_ci_high": 0.006039025912295596,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      },
+      {
+        "base_strata": "uncorrected",
+        "taxon_strata": "uncorrected_plus_p09b_adjudicated",
+        "metric": "downstream_high_minus_low",
+        "base_value": 0.006762658473460766,
+        "taxon_value": 0.0040870384408380886,
+        "taxon_minus_base": -0.002675620032622677,
+        "fractional_attenuation": 0.39564618605579804,
+        "base_ci_low": 0.005409086155650991,
+        "base_ci_high": 0.008929345759049422,
+        "taxon_ci_low": 0.001999281092391663,
+        "taxon_ci_high": 0.006120944061584062,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      },
+      {
+        "base_strata": "p07_corrected",
+        "taxon_strata": "p07_corrected_plus_p09b_adjudicated",
+        "metric": "downstream_high_minus_low",
+        "base_value": 0.006762537116158371,
+        "taxon_value": 0.004086959714992,
+        "taxon_minus_base": -0.002675577401166371,
+        "fractional_attenuation": 0.3956469820732459,
+        "base_ci_low": 0.005357221387165886,
+        "base_ci_high": 0.00935485265247028,
+        "taxon_ci_low": 0.0018985500251772367,
+        "taxon_ci_high": 0.006147839574340312,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      },
+      {
+        "base_strata": "uncorrected",
+        "taxon_strata": "uncorrected_plus_p09a_taxon",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "base_value": 0.047643517262430234,
+        "taxon_value": 0.04811280451520242,
+        "taxon_minus_base": 0.0004692872527721839,
+        "fractional_attenuation": -0.009849970777498517,
+        "base_ci_low": 0.021792001883220696,
+        "base_ci_high": 0.05672774451259835,
+        "taxon_ci_low": 0.021632383962662535,
+        "taxon_ci_high": 0.06147832904131675,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      },
+      {
+        "base_strata": "p07_corrected",
+        "taxon_strata": "p07_corrected_plus_p09a_taxon",
+        "metric": "p07_corrected_charge_median_log_shift",
+        "base_value": 0.047611200196448,
+        "taxon_value": 0.0480778006993209,
+        "taxon_minus_base": 0.0004666005028728937,
+        "fractional_attenuation": -0.009800225597079236,
+        "base_ci_low": 0.025007561345870476,
+        "base_ci_high": 0.057555205544634794,
+        "taxon_ci_low": 0.021998760264183983,
+        "taxon_ci_high": 0.059784469501972526,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      },
+      {
+        "base_strata": "uncorrected",
+        "taxon_strata": "uncorrected_plus_p09b_adjudicated",
+        "metric": "p04_duplicate_charge_median_log_shift",
+        "base_value": 0.047643517262430234,
+        "taxon_value": 0.046975379889950535,
+        "taxon_minus_base": -0.0006681373724796991,
+        "fractional_attenuation": 0.014023678579384932,
+        "base_ci_low": 0.021792001883220696,
+        "base_ci_high": 0.05672774451259835,
+        "taxon_ci_low": 0.021733687440795398,
+        "taxon_ci_high": 0.0581245802421427,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      },
+      {
+        "base_strata": "p07_corrected",
+        "taxon_strata": "p07_corrected_plus_p09b_adjudicated",
+        "metric": "p07_corrected_charge_median_log_shift",
+        "base_value": 0.047611200196448,
+        "taxon_value": 0.0469403698885564,
+        "taxon_minus_base": -0.0006708303078916053,
+        "fractional_attenuation": 0.014089758399781993,
+        "base_ci_low": 0.025007561345870476,
+        "base_ci_high": 0.057555205544634794,
+        "taxon_ci_low": 0.023922441207969183,
+        "taxon_ci_high": 0.05829070837184197,
+        "base_n_strata": 9,
+        "taxon_n_strata": 11
+      }
+    ]
+  },
+  "label_comparison": [
+    {
+      "scope": "all_s10_events",
+      "metric": "n_events",
+      "value": 243133.0,
+      "numerator": 243133,
+      "denominator": 243133
+    },
+    {
+      "scope": "all_s10_events",
+      "metric": "exact_label_match_rate",
+      "value": 0.9765848321700469,
+      "numerator": 237440,
+      "denominator": 243133
+    },
+    {
+      "scope": "all_s10_events",
+      "metric": "target_any_match_rate",
+      "value": 0.9766876565501187,
+      "numerator": 237465,
+      "denominator": 243133
+    },
+    {
+      "scope": "all_s10_events",
+      "metric": "p09a_target_rate",
+      "value": 0.029728584766362445,
+      "numerator": 7228,
+      "denominator": 243133
+    },
+    {
+      "scope": "all_s10_events",
+      "metric": "p09b_target_rate",
+      "value": 0.006440919167698338,
+      "numerator": 1566,
+      "denominator": 243133
+    },
+    {
+      "scope": "all_s10_events",
+      "metric": "p09b_review_agreement_rate",
+      "value": 0.9617287657372714,
+      "numerator": 233828,
+      "denominator": 243133
+    },
+    {
+      "scope": "exact_gallery_ref_overlap",
+      "metric": "n_events",
+      "value": 42.0,
+      "numerator": 42,
+      "denominator": 256
+    },
+    {
+      "scope": "exact_gallery_ref_overlap",
+      "metric": "script_p09b_matches_gallery_consensus",
+      "value": 1.0,
+      "numerator": 42,
+      "denominator": 42
+    },
+    {
+      "scope": "exact_gallery_ref_overlap",
+      "metric": "p09a_matches_gallery_taxon",
+      "value": 0.9523809523809523,
+      "numerator": 40,
+      "denominator": 42
+    }
+  ],
+  "ml": {
+    "summary": [
+      {
+        "metric": "observed_downstream_high_minus_low",
+        "value": 0.006762658473460766,
+        "ci_low": 0.005378169746598594,
+        "ci_high": 0.009241345678880245,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "predicted_downstream_base_high_minus_low",
+        "value": 0.007918391156708022,
+        "ci_low": 0.0014631092802369042,
+        "ci_high": 0.017770306726272177,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "residual_downstream_base_high_minus_low",
+        "value": -0.0011557326832472652,
+        "ci_low": -0.007895742629264443,
+        "ci_high": 0.005181007677258119,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "predicted_downstream_p09a_high_minus_low",
+        "value": 0.0010198883290695447,
+        "ci_low": -0.0061742215053727355,
+        "ci_high": 0.012252762917411154,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "residual_downstream_p09a_high_minus_low",
+        "value": 0.005742770144391207,
+        "ci_low": -0.003633085027269085,
+        "ci_high": 0.012562166061696892,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "predicted_downstream_p09b_high_minus_low",
+        "value": 0.0030704783915506914,
+        "ci_low": -0.00416286509460931,
+        "ci_high": 0.012488741148145069,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "residual_downstream_p09b_high_minus_low",
+        "value": 0.003692180081910071,
+        "ci_low": -0.004750185335490397,
+        "ci_high": 0.009226215853578,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "log_p04_charge_high_minus_low",
+        "value": 0.03576728321406004,
+        "ci_low": 0.018237593606070718,
+        "ci_high": 0.05092701129112338,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "predicted_log_p04_charge_base_high_minus_low",
+        "value": 0.016738410005215462,
+        "ci_low": 0.010434102153610327,
+        "ci_high": 0.026291244448037973,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "residual_log_p04_charge_base_high_minus_low",
+        "value": 0.019028873208844974,
+        "ci_low": 0.009517128873625574,
+        "ci_high": 0.026723807740325248,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "predicted_log_p04_charge_p09a_high_minus_low",
+        "value": 0.023915810223958764,
+        "ci_low": 0.014124433921605695,
+        "ci_high": 0.03475154687413502,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "residual_log_p04_charge_p09a_high_minus_low",
+        "value": 0.011851472990101381,
+        "ci_low": 0.003827549188245651,
+        "ci_high": 0.01833345466966877,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "predicted_log_p04_charge_p09b_high_minus_low",
+        "value": 0.02207397055636928,
+        "ci_low": 0.012964200034689401,
+        "ci_high": 0.03257206655167978,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      },
+      {
+        "metric": "residual_log_p04_charge_p09b_high_minus_low",
+        "value": 0.013693312657690254,
+        "ci_low": 0.004509296803602346,
+        "ci_high": 0.020204530274466698,
+        "n_strata": 9,
+        "n_bootstrap": 400,
+        "bootstrap_unit": "run_within_current_group"
+      }
+    ],
+    "fold_diagnostics": [
+      {
+        "heldout_run": 44,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 1912,
+        "auc": 0.8682368865678519
+      },
+      {
+        "heldout_run": 44,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 1912,
+        "auc": null
+      },
+      {
+        "heldout_run": 44,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 1912,
+        "auc": 0.8770543737040165
+      },
+      {
+        "heldout_run": 44,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 1912,
+        "auc": null
+      },
+      {
+        "heldout_run": 44,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 1912,
+        "auc": 0.8765647799708164
+      },
+      {
+        "heldout_run": 44,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 1912,
+        "auc": null
+      },
+      {
+        "heldout_run": 45,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 23013,
+        "auc": 0.8855916089048689
+      },
+      {
+        "heldout_run": 45,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 23013,
+        "auc": null
+      },
+      {
+        "heldout_run": 45,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 23013,
+        "auc": 0.8918525781707094
+      },
+      {
+        "heldout_run": 45,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 23013,
+        "auc": null
+      },
+      {
+        "heldout_run": 45,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 23013,
+        "auc": 0.8924819964289107
+      },
+      {
+        "heldout_run": 45,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 23013,
+        "auc": null
+      },
+      {
+        "heldout_run": 46,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 677,
+        "auc": 0.7433283358320838
+      },
+      {
+        "heldout_run": 46,
+        "model": "charge_base",
+        "n_train": 22000,
+        "n_test": 677,
+        "auc": null
+      },
+      {
+        "heldout_run": 46,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 677,
+        "auc": 0.7490254872563719
+      },
+      {
+        "heldout_run": 46,
+        "model": "charge_p09a",
+        "n_train": 22000,
+        "n_test": 677,
+        "auc": null
+      },
+      {
+        "heldout_run": 46,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 677,
+        "auc": 0.7482758620689655
+      },
+      {
+        "heldout_run": 46,
+        "model": "charge_p09b",
+        "n_train": 22000,
+        "n_test": 677,
+        "auc": null
+      },
+      {
+        "heldout_run": 47,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 5161,
+        "auc": 0.8774249404289118
+      },
+      {
+        "heldout_run": 47,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 5161,
+        "auc": null
+      },
+      {
+        "heldout_run": 47,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 5161,
+        "auc": 0.8807640984908657
+      },
+      {
+        "heldout_run": 47,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 5161,
+        "auc": null
+      },
+      {
+        "heldout_run": 47,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 5161,
+        "auc": 0.8835091342335186
+      },
+      {
+        "heldout_run": 47,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 5161,
+        "auc": null
+      },
+      {
+        "heldout_run": 48,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 13185,
+        "auc": 0.8929954279716487
+      },
+      {
+        "heldout_run": 48,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 13185,
+        "auc": null
+      },
+      {
+        "heldout_run": 48,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 13185,
+        "auc": 0.8994294133974876
+      },
+      {
+        "heldout_run": 48,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 13185,
+        "auc": null
+      },
+      {
+        "heldout_run": 48,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 13185,
+        "auc": 0.9000532731638645
+      },
+      {
+        "heldout_run": 48,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 13185,
+        "auc": null
+      },
+      {
+        "heldout_run": 49,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 13937,
+        "auc": 0.8838528828959452
+      },
+      {
+        "heldout_run": 49,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 13937,
+        "auc": null
+      },
+      {
+        "heldout_run": 49,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 13937,
+        "auc": 0.8919330005454408
+      },
+      {
+        "heldout_run": 49,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 13937,
+        "auc": null
+      },
+      {
+        "heldout_run": 49,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 13937,
+        "auc": 0.8921185293023981
+      },
+      {
+        "heldout_run": 49,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 13937,
+        "auc": null
+      },
+      {
+        "heldout_run": 50,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 34257,
+        "auc": 0.8700987886137643
+      },
+      {
+        "heldout_run": 50,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 34257,
+        "auc": null
+      },
+      {
+        "heldout_run": 50,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 34257,
+        "auc": 0.8762558384124721
+      },
+      {
+        "heldout_run": 50,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 34257,
+        "auc": null
+      },
+      {
+        "heldout_run": 50,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 34257,
+        "auc": 0.8783028014774648
+      },
+      {
+        "heldout_run": 50,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 34257,
+        "auc": null
+      },
+      {
+        "heldout_run": 51,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 14295,
+        "auc": 0.9004174163368118
+      },
+      {
+        "heldout_run": 51,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 14295,
+        "auc": null
+      },
+      {
+        "heldout_run": 51,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 14295,
+        "auc": 0.9029735516372797
+      },
+      {
+        "heldout_run": 51,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 14295,
+        "auc": null
+      },
+      {
+        "heldout_run": 51,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 14295,
+        "auc": 0.9036583303346528
+      },
+      {
+        "heldout_run": 51,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 14295,
+        "auc": null
+      },
+      {
+        "heldout_run": 52,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 6933,
+        "auc": 0.9035676549195103
+      },
+      {
+        "heldout_run": 52,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 6933,
+        "auc": null
+      },
+      {
+        "heldout_run": 52,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 6933,
+        "auc": 0.9115863521979501
+      },
+      {
+        "heldout_run": 52,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 6933,
+        "auc": null
+      },
+      {
+        "heldout_run": 52,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 6933,
+        "auc": 0.906621182492896
+      },
+      {
+        "heldout_run": 52,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 6933,
+        "auc": null
+      },
+      {
+        "heldout_run": 53,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 31386,
+        "auc": 0.8817405894443529
+      },
+      {
+        "heldout_run": 53,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 31386,
+        "auc": null
+      },
+      {
+        "heldout_run": 53,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 31386,
+        "auc": 0.8942524040794302
+      },
+      {
+        "heldout_run": 53,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 31386,
+        "auc": null
+      },
+      {
+        "heldout_run": 53,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 31386,
+        "auc": 0.8921393526421195
+      },
+      {
+        "heldout_run": 53,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 31386,
+        "auc": null
+      },
+      {
+        "heldout_run": 54,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 29665,
+        "auc": 0.88906627548235
+      },
+      {
+        "heldout_run": 54,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 29665,
+        "auc": null
+      },
+      {
+        "heldout_run": 54,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 29665,
+        "auc": 0.8962925263867049
+      },
+      {
+        "heldout_run": 54,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 29665,
+        "auc": null
+      },
+      {
+        "heldout_run": 54,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 29665,
+        "auc": 0.8968524110306875
+      },
+      {
+        "heldout_run": 54,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 29665,
+        "auc": null
+      },
+      {
+        "heldout_run": 55,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 16841,
+        "auc": 0.8956829804993954
+      },
+      {
+        "heldout_run": 55,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 16841,
+        "auc": null
+      },
+      {
+        "heldout_run": 55,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 16841,
+        "auc": 0.9019452629558943
+      },
+      {
+        "heldout_run": 55,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 16841,
+        "auc": null
+      },
+      {
+        "heldout_run": 55,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 16841,
+        "auc": 0.9023876291595755
+      },
+      {
+        "heldout_run": 55,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 16841,
+        "auc": null
+      },
+      {
+        "heldout_run": 56,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 38932,
+        "auc": 0.8848945220873842
+      },
+      {
+        "heldout_run": 56,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 38932,
+        "auc": null
+      },
+      {
+        "heldout_run": 56,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 38932,
+        "auc": 0.889598804307109
+      },
+      {
+        "heldout_run": 56,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 38932,
+        "auc": null
+      },
+      {
+        "heldout_run": 56,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 38932,
+        "auc": 0.8891783256779825
+      },
+      {
+        "heldout_run": 56,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 38932,
+        "auc": null
+      },
+      {
+        "heldout_run": 57,
+        "model": "downstream_base",
+        "n_train": 18000,
+        "n_test": 12939,
+        "auc": 0.8939085370453403
+      },
+      {
+        "heldout_run": 57,
+        "model": "charge_base",
+        "n_train": 20993,
+        "n_test": 12939,
+        "auc": null
+      },
+      {
+        "heldout_run": 57,
+        "model": "downstream_p09a",
+        "n_train": 18000,
+        "n_test": 12939,
+        "auc": 0.8999319594409613
+      },
+      {
+        "heldout_run": 57,
+        "model": "charge_p09a",
+        "n_train": 20993,
+        "n_test": 12939,
+        "auc": null
+      },
+      {
+        "heldout_run": 57,
+        "model": "downstream_p09b",
+        "n_train": 18000,
+        "n_test": 12939,
+        "auc": 0.8970222772969568
+      },
+      {
+        "heldout_run": 57,
+        "model": "charge_p09b",
+        "n_train": 20993,
+        "n_test": 12939,
+        "auc": null
+      }
+    ]
+  },
+  "taxon_counts": [
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "baseline_excursion",
+      "n": 1745,
+      "group_rate": 0.007353715838934659,
+      "downstream_rate": 0.026934097421203437,
+      "median_log_p04_charge": 7.820247734769121
+    },
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "dropout",
+      "n": 264,
+      "group_rate": 0.0011125392444004299,
+      "downstream_rate": 0.003787878787878788,
+      "median_log_p04_charge": 7.810031636306871
+    },
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "novel_broad_template_mismatch",
+      "n": 882,
+      "group_rate": 0.003716892475610527,
+      "downstream_rate": 0.481859410430839,
+      "median_log_p04_charge": 10.998199293468659
+    },
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "novel_delayed_peak",
+      "n": 1427,
+      "group_rate": 0.006013611749088687,
+      "downstream_rate": 0.5143658023826209,
+      "median_log_p04_charge": 9.707012822317921
+    },
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "novel_early_pretrigger",
+      "n": 4790,
+      "group_rate": 0.020185844623780525,
+      "downstream_rate": 0.04801670146137787,
+      "median_log_p04_charge": 6.96268020609989
+    },
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "pileup_or_long_tail",
+      "n": 269,
+      "group_rate": 0.0011336100634231653,
+      "downstream_rate": 0.6096654275092936,
+      "median_log_p04_charge": 9.736828122520052
+    },
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "saturation",
+      "n": 13,
+      "group_rate": 5.478412945911207e-05,
+      "downstream_rate": 0.07692307692307693,
+      "median_log_p04_charge": 11.19967822101162
+    },
+    {
+      "label_source": "p09a",
+      "group": "high_20nA",
+      "label": "unassigned_common",
+      "n": 227905,
+      "group_rate": 0.9604290018753029,
+      "downstream_rate": 0.02776156731971655,
+      "median_log_p04_charge": 10.733469438569495
+    },
+    {
+      "label_source": "p09a",
+      "group": "low_2nA",
+      "label": "baseline_excursion",
+      "n": 39,
+      "group_rate": 0.006680369989722507,
+      "downstream_rate": 0.02564102564102564,
+      "median_log_p04_charge": 7.631285200402925
+    },
+    {
+      "label_source": "p09a",
+      "group": "low_2nA",
+      "label": "dropout",
+      "n": 6,
+      "group_rate": 0.0010277492291880781,
+      "downstream_rate": 0.0,
+      "median_log_p04_charge": 7.782352789972616
+    },
+    {
+      "label_source": "p09a",
+      "group": "low_2nA",
+      "label": "novel_broad_template_mismatch",
+      "n": 3,
+      "group_rate": 0.0005138746145940391,
+      "downstream_rate": 0.3333333333333333,
+      "median_log_p04_charge": 10.976056078715326
+    },
+    {
+      "label_source": "p09a",
+      "group": "low_2nA",
+      "label": "novel_delayed_peak",
+      "n": 14,
+      "group_rate": 0.002398081534772182,
+      "downstream_rate": 0.5714285714285714,
+      "median_log_p04_charge": 9.335873764012605
+    },
+    {
+      "label_source": "p09a",
+      "group": "low_2nA",
+      "label": "novel_early_pretrigger",
+      "n": 112,
+      "group_rate": 0.019184652278177457,
+      "downstream_rate": 0.026785714285714284,
+      "median_log_p04_charge": 6.9725504629572495
+    },
+    {
+      "label_source": "p09a",
+      "group": "low_2nA",
+      "label": "pileup_or_long_tail",
+      "n": 5,
+      "group_rate": 0.0008564576909900651,
+      "downstream_rate": 0.4,
+      "median_log_p04_charge": 10.050106362320609
+    },
+    {
+      "label_source": "p09a",
+      "group": "low_2nA",
+      "label": "unassigned_common",
+      "n": 5659,
+      "group_rate": 0.9693388146625557,
+      "downstream_rate": 0.021205159922247748,
+      "median_log_p04_charge": 10.466179763169793
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "baseline_excursion",
+      "n": 2106,
+      "group_rate": 0.008875028972376157,
+      "downstream_rate": 0.033713200379867046,
+      "median_log_p04_charge": 7.792370813208826
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "dropout",
+      "n": 4416,
+      "group_rate": 0.01860974736087992,
+      "downstream_rate": 0.0396286231884058,
+      "median_log_p04_charge": 6.889611764905675
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "novel_broad_template_mismatch",
+      "n": 328,
+      "group_rate": 0.0013822457278914431,
+      "downstream_rate": 0.5274390243902439,
+      "median_log_p04_charge": 10.93973114061077
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "novel_delayed_peak",
+      "n": 1212,
+      "group_rate": 0.005107566531111064,
+      "downstream_rate": 0.5750825082508251,
+      "median_log_p04_charge": 9.501137630213156
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "novel_early_pretrigger",
+      "n": 13,
+      "group_rate": 5.478412945911207e-05,
+      "downstream_rate": 0.3076923076923077,
+      "median_log_p04_charge": 9.967616593390638
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "pileup_or_long_tail",
+      "n": 1298,
+      "group_rate": 0.005469984618302113,
+      "downstream_rate": 0.3713405238828968,
+      "median_log_p04_charge": 10.10091198559745
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "saturation",
+      "n": 19,
+      "group_rate": 8.006911228639457e-05,
+      "downstream_rate": 0.10526315789473684,
+      "median_log_p04_charge": 11.184312068993089
+    },
+    {
+      "label_source": "p09b",
+      "group": "high_20nA",
+      "label": "unassigned_common",
+      "n": 227903,
+      "group_rate": 0.9604205735476938,
+      "downstream_rate": 0.02775303528255442,
+      "median_log_p04_charge": 10.733496088594551
+    },
+    {
+      "label_source": "p09b",
+      "group": "low_2nA",
+      "label": "baseline_excursion",
+      "n": 46,
+      "group_rate": 0.0078794107571086,
+      "downstream_rate": 0.021739130434782608,
+      "median_log_p04_charge": 7.672523613952323
+    },
+    {
+      "label_source": "p09b",
+      "group": "low_2nA",
+      "label": "dropout",
+      "n": 104,
+      "group_rate": 0.017814319972593355,
+      "downstream_rate": 0.028846153846153848,
+      "median_log_p04_charge": 6.872915538993423
+    },
+    {
+      "label_source": "p09b",
+      "group": "low_2nA",
+      "label": "novel_broad_template_mismatch",
+      "n": 1,
+      "group_rate": 0.00017129153819801302,
+      "downstream_rate": 0.0,
+      "median_log_p04_charge": 10.88100507782618
+    },
+    {
+      "label_source": "p09b",
+      "group": "low_2nA",
+      "label": "novel_delayed_peak",
+      "n": 12,
+      "group_rate": 0.0020554984583761563,
+      "downstream_rate": 0.5833333333333334,
+      "median_log_p04_charge": 9.272186288413296
+    },
+    {
+      "label_source": "p09b",
+      "group": "low_2nA",
+      "label": "pileup_or_long_tail",
+      "n": 16,
+      "group_rate": 0.0027406646111682084,
+      "downstream_rate": 0.25,
+      "median_log_p04_charge": 9.32839258217367
+    },
+    {
+      "label_source": "p09b",
+      "group": "low_2nA",
+      "label": "unassigned_common",
+      "n": 5659,
+      "group_rate": 0.9693388146625557,
+      "downstream_rate": 0.021205159922247748,
+      "median_log_p04_charge": 10.466179763169793
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "ml_heldout_runs_excluded_from_training",
+      "value": 1.0,
+      "flag": false,
+      "note": "Each ML prediction is made by a model trained without that source run."
+    },
+    {
+      "check": "identifier_current_and_downstream_excluded_from_features",
+      "value": 1.0,
+      "flag": false,
+      "note": "Feature matrices exclude run, event number, group/current, and downstream target."
+    },
+    {
+      "check": "p09a_and_p09b_labels_are_not_ml_truth",
+      "value": 1.0,
+      "flag": false,
+      "note": "P09a deterministic taxa and P09b fixed adjudication-rubric labels enter only as explanatory strata/features."
+    },
+    {
+      "check": "pred_downstream_base_current_auc",
+      "value": 0.5638378027399009,
+      "flag": false,
+      "note": "Flags if a propagated score almost identifies beam current."
+    },
+    {
+      "check": "pred_downstream_p09a_current_auc",
+      "value": 0.5501568455030595,
+      "flag": false,
+      "note": "Flags if a propagated score almost identifies beam current."
+    },
+    {
+      "check": "pred_downstream_p09b_current_auc",
+      "value": 0.5528930036009301,
+      "flag": false,
+      "note": "Flags if a propagated score almost identifies beam current."
+    },
+    {
+      "check": "resid_log_p04_charge_base_current_auc",
+      "value": 0.5711759128907077,
+      "flag": false,
+      "note": "Flags if a propagated score almost identifies beam current."
+    },
+    {
+      "check": "resid_log_p04_charge_p09a_current_auc",
+      "value": 0.5575635913744945,
+      "flag": false,
+      "note": "Flags if a propagated score almost identifies beam current."
+    },
+    {
+      "check": "resid_log_p04_charge_p09b_current_auc",
+      "value": 0.5612946797640106,
+      "flag": false,
+      "note": "Flags if a propagated score almost identifies beam current."
+    },
+    {
+      "check": "heldout_downstream_p09a_model_mean_auc",
+      "value": 0.8830639750701925,
+      "flag": false,
+      "note": "Flags an implausibly strong downstream classifier under run holdout."
+    },
+    {
+      "check": "heldout_downstream_p09b_model_mean_auc",
+      "value": 0.8827975632343434,
+      "flag": false,
+      "note": "Flags an implausibly strong downstream classifier under run holdout."
+    },
+    {
+      "check": "p09a_curated_rate_high_minus_low",
+      "value": 0.00890981278725278,
+      "flag": false,
+      "note": "Flags if label prevalence nearly encodes current."
+    },
+    {
+      "check": "p09b_curated_rate_high_minus_low",
+      "value": 0.00891824111486187,
+      "flag": false,
+      "note": "Flags if label prevalence nearly encodes current."
+    },
+    {
+      "check": "p09a_exactly_equals_p09b_rate",
+      "value": 0.9765848321700469,
+      "flag": false,
+      "note": "Flags if P09b adjudicated labels are effectively a copy of P09a."
+    },
+    {
+      "check": "p09b_gallery_ref_overlap_rows",
+      "value": 42.0,
+      "flag": false,
+      "note": "Only gallery pulses matching the S10 reference stave can be compared exactly."
+    },
+    {
+      "check": "p09b_script_matches_gallery_consensus",
+      "value": 1.0,
+      "flag": false,
+      "note": "Checks full-sample rubric reproduces stored P09b labels on exact overlap."
+    }
+  ],
+  "leakage_flags": 0,
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "configs/p09a_rare_waveform_anomaly_taxonomy.json": "279c6fc889ae527de652cc2011b9c4f274cbd5189b24d75a3402a7a82e2a3e2b",
+    "reports/1781011449.1304.37c054cc__p09b_manual_waveform_gallery_adjudication/adjudication_labels.csv": "c8dfce4acd8c1daa04cc746aa484c5f2c48319d089d59e358e3aae55eaa60416",
+    "reports/1781011449.1304.37c054cc__p09b_manual_waveform_gallery_adjudication/manifest.json": "d66275e91e287b9f45f33217969cba2f10c7343ff8519b9a7ac758e826459e2c"
+  },
+  "conclusion": "P09b adjudicated labels attenuate the matched downstream excess similarly to, but slightly less than, deterministic P09a labels. Traditional P04 strata give base downstream high-minus-low 0.00676, P09a 0.00412 [0.00209, 0.00609], and P09b 0.00409 [0.00200, 0.00612]. P07-corrected strata give base 0.00676, P09a 0.00412, and P09b 0.00409. The P04 duplicate-charge log shift changes from 0.04764 to P09a 0.04811 and P09b 0.04698. Run-held-out ML changes downstream residual high-minus-low from -0.00116 to P09a 0.00574 and P09b 0.00369; P04 log-charge residual high-minus-low changes from 0.01903 to P09a 0.01185 and P09b 0.01369. Leakage flags: 0.",
+  "git_commit": "7a18e3ab5e70f380db18ec9e2ba39fd18a989f9c",
+  "runtime_sec": 687.34
+}

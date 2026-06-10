@@ -1,0 +1,50 @@
+{
+  "study": "S05i",
+  "ticket": "1781042380.555.680a7339",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "10312f0a4f4cf783ed29fb29a71b95599916a3d0",
+  "command": "/home/billy/anaconda3/bin/python scripts/s05i_1781042380_555_680a7339_covariance_coverage_calibration.py --config configs/s05i_1781042380_555_680a7339_covariance_coverage_calibration.yaml",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "frozen_panel": "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier",
+  "inputs": {
+    "configs/s05i_1781042380_555_680a7339_covariance_coverage_calibration.yaml": {
+      "sha256": "65b46bc3eb3885115013aa35b44ba2166f9040ca05f3a7141e1cd5e5789083b3",
+      "bytes": 1740
+    },
+    "configs/s05h_1781040960_767_247d3910_saturation_covariance_support_frontier.yaml": {
+      "sha256": "f1560fa8d8b8ac5825a0d03f312960d14fdd93e34b1b3ea4477ab442d466ce9e",
+      "bytes": 1861
+    },
+    "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/heldout_pair_residuals.csv": {
+      "sha256": "dceda1792a4d6b8b861713a6af46d2d42eb11e9c985659810299a06b206bc5c6",
+      "bytes": 18659608
+    },
+    "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/support_summary.csv": {
+      "sha256": "7761510343b371758b0302193f906086e6f799a8019bc4306ebe2a6d06aa6cd3",
+      "bytes": 1412
+    }
+  },
+  "output_sha256": {
+    "REPORT.md": "7b28ec0267132d80805f10a915cd707612fad1953d0baec59eb8d1e9b2d6cbe1",
+    "astack_pair_table.csv.gz": "6670d227414050aa0ae812eb8ebc0a211d72456b5b39211943195d158fc36403",
+    "covariance_topology_summary.csv": "f396807a196cbd377d0f6d65c3338e90c6498c3a64aac0972b0ea3affe54f56b",
+    "fig_covariance_delta.png": "16aae70a5bf1b7dc3453fe52a61fe6b11781b4cc5afca662195861ff29feea14",
+    "fig_coverage_95.png": "160ad3c4f1f580d7cec72f948e7e2cc42990118edfad37a31cbb9ef85dc88c24",
+    "input_sha256.csv": "78276e5858071e48af8a41af25d55403d7473f4a347f999377ab09da32927be9",
+    "interval_coverage_by_run.csv": "7985ba9101d9571a765176f57a19908e1f8e76a17c8c695b0ef0ecf4d74aec13",
+    "interval_coverage_summary.csv": "ff3bc7d25474bf390fbfad40ab91db7ee9966a280d50264aa46caf705cada672",
+    "method_delta_summary.csv": "4a7f9f99c69b2a9b2b7a5c0f9944bcca926c639c4281df7e2acddeaf146f4cec",
+    "reproduction_match_table.csv": "371f7472dc50dee4e8c2b44f156ceb27e40e78392f9af503bdcc919c9fc9a265",
+    "residual_metrics_by_topology.csv": "056944d6326a1189a4bc5f8d11de900a336935c914cba9d28e51295a1c7ae0b2",
+    "result.json": "9ebf4c9d2a2d06b56020ff5dbaab7729a0cdd01bf304d1226738183367d1c691",
+    "support_summary_frozen.csv": "12b5c718a0dcc6d4d3898f7c5e32eaacfadc4915e65fd8579662f863409076b8"
+  },
+  "random_seed": 190555
+}

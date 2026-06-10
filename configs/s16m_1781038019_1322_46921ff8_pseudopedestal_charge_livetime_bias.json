@@ -1,0 +1,78 @@
+{
+  "study": "S16m",
+  "ticket": "1781038019.1322.46921ff8",
+  "worker": "testbeam-laptop-4",
+  "title": "pseudo-pedestal charge live-time bias closure",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781038019.1322.46921ff8__s16m_pseudopedestal_charge_livetime_bias",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "pedestal_estimators": ["mean3", "median3", "quietest", "quietish", "calibrated_pretrigger"],
+  "charge_closure": {
+    "target": "duplicate_odd_positive_charge",
+    "huber_epsilon": 1.35,
+    "min_target_charge_adc_samples": 50.0
+  },
+  "livetime": {
+    "last_above_fraction": 0.10,
+    "secondary_delay_samples": [2, 8],
+    "secondary_ratio_threshold": 0.15,
+    "timing_tail_abs_residual_ns": 5.0,
+    "downstream_staves": ["B4", "B6", "B8"]
+  },
+  "risk_label": {
+    "charge_shift_frac": 0.03,
+    "last_above_shift_ns": 10.0,
+    "flag_fraction": 0.15
+  },
+  "models": {
+    "random_seed": 1680132219,
+    "bootstrap_samples": 100,
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0],
+    "gbt_max_iter": 60,
+    "gbt_learning_rate": 0.05,
+    "gbt_max_leaf_nodes": 15,
+    "mlp_hidden_layer_sizes": [24, 12],
+    "mlp_alpha": 0.001,
+    "mlp_max_iter": 120,
+    "nn_epochs": 14,
+    "nn_patience": 4,
+    "nn_batch_size": 512,
+    "nn_learning_rate": 0.001,
+    "nn_weight_decay": 0.0001
+  },
+  "veto": {
+    "min_train_efficiency": 0.85,
+    "threshold_quantiles": [0.85],
+    "utility_tail_weight": 1.0,
+    "utility_veto_penalty": 0.0
+  },
+  "next_tickets": [
+    {
+      "title": "S16n: external no-pulse pedestal closure for pseudo-pedestal risk atoms",
+      "body": "Question: can external no-pulse or forced/random acquisition records validate the S16m high-risk pseudo-pedestal atoms with true electronics pedestal labels? Expected information gain: separates baseline-estimator algebra from physical pedestal contamination, deciding whether pseudo-pedestal corrections may enter charge/live-time analyses or must remain diagnostic."
+    }
+  ]
+}

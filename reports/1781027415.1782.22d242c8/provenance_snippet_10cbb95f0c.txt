@@ -1,0 +1,14 @@
+achine-learning extension outlined above. No Monte Carlo
+truth labels are used. The target is instead the internal timing-closure problem that is already central
+to the analysis: events whose corrected B-stack times are consistent with a common same-particle time
+are treated as a data-defined clean class, while events with large downstream inconsistency or large
+B2-to-downstream offsets are treated as a data-defined topology-violating class. These are weak labels,
+not particle-identification truth labels.
+
+A.1
+
+Weak labels and input variables
+
+For each analysis-run event, an event-level feature vector was built from the selected-pulse table. The
+variables were the B2, B4, B6 and B8 amplitudes, log-amplitudes, template-quality score, tail fraction,
+late fraction, area-over-peak ratio, quench proxy, hit-presence flags and hit mult

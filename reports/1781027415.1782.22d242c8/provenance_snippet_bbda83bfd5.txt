@@ -1,0 +1,15 @@
+beam-laptop-4
+- **Date:** 2026-06-09
+- **Inputs:** raw B-stack ROOT, S01 q_template table, and App.A documentation; checksums in `input_sha256.csv`
+- **Command:** `/home/billy/anaconda3/bin/python reports/1781006575.2866.622a4328/s07d_app_a_label_recovery.py`
+- **Git commit at run:** `076f9e4f7ae6dba0efb7c7c7ef2cb28335ef0753`
+
+## 0. Question
+Can the source table or exact timing definition behind the documented App.A 12,147 labelled events be recovered from the repository and raw ROOT, or should that number be retired?
+
+## 1. Reproduction first
+The raw S00 selected-pulse gate still reproduces exactly:
+
+| quantity              |   report_value |   reproduced |   delta |   tolerance | pass   |
+|:----------------------|---------------:|-------------:|--------:|------------:|:-------|
+| total_selected_pulses |         640737 |

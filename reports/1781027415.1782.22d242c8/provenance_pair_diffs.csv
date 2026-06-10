@@ -1,0 +1,16 @@
+left,right,same_file_sha256,same_text_sha256,word_jaccard,both_have_full_target_tuple
+/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf,True,True,1.0,True
+/home/billy/.tb-workers/testbeam-laptop-3/reports/1781006575.2866.622a4328/REPORT.md,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781012847.2575.40cb6e31/REPORT.md,False,False,0.2576985413290113,True
+/home/billy/.tb-workers/testbeam-laptop-3/docs/07_ml_methods.md,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781006575.2866.622a4328/REPORT.md,False,False,0.08121827411167512,True
+/home/billy/.tb-workers/testbeam-laptop-3/docs/07_ml_methods.md,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781012847.2575.40cb6e31/REPORT.md,False,False,0.07503410641200546,True
+/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/.tb-workers/testbeam-laptop-3/docs/07_ml_methods.md,False,False,0.030523060373806643,True
+/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/.tb-workers/testbeam-laptop-3/docs/07_ml_methods.md,False,False,0.030523060373806643,True
+/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781006575.2866.622a4328/REPORT.md,False,False,0.024638457418318157,True
+/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781006575.2866.622a4328/REPORT.md,False,False,0.024638457418318157,True
+/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781012847.2575.40cb6e31/REPORT.md,False,False,0.01961838215533459,True
+/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781012847.2575.40cb6e31/REPORT.md,False,False,0.01961838215533459,True
+/home/billy/.tb-workers/testbeam-laptop-3/reports/1781006575.2866.622a4328/REPORT.md,/home/billy/Downloads/ml_with_keras.ipynb,False,False,0.051174496644295304,False
+/home/billy/.tb-workers/testbeam-laptop-3/docs/07_ml_methods.md,/home/billy/Downloads/ml_with_keras.ipynb,False,False,0.04459124690338563,False
+/home/billy/.tb-workers/testbeam-laptop-3/reports/1781012847.2575.40cb6e31/REPORT.md,/home/billy/Downloads/ml_with_keras.ipynb,False,False,0.04298245614035088,False
+/home/billy/ccb-data/docs/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/Downloads/ml_with_keras.ipynb,False,False,0.038501158897759465,False
+/home/billy/Downloads/bstack_astack_report_with_timing_label_pileup_ml.pdf,/home/billy/Downloads/ml_with_keras.ipynb,False,False,0.038501158897759465,False

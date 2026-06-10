@@ -6,7 +6,7 @@
 - **Date:** 2026-06-10
 - **Depends on:** S00, S10, P04, S16g
 - **Input checksum(s):** `input_sha256.csv`
-- **Git commit:** `f49b5332de25569e8a2b81fc21661fec3d578dbc`
+- **Git commit:** `7682bfa2abe05226cd51d3425befdc46dc09348d`
 - **Config:** `configs/s16m_1781038019_1322_46921ff8_pseudopedestal_charge_livetime_bias.json`
 
 ## 0. Question

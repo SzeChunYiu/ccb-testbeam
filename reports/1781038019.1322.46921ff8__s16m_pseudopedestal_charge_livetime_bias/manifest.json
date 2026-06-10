@@ -4,7 +4,7 @@
   "worker": "testbeam-laptop-4",
   "config": "configs/s16m_1781038019_1322_46921ff8_pseudopedestal_charge_livetime_bias.json",
   "command": "/home/billy/anaconda3/bin/python scripts/s16m_1781038019_1322_46921ff8_pseudopedestal_charge_livetime_bias.py --config configs/s16m_1781038019_1322_46921ff8_pseudopedestal_charge_livetime_bias.json",
-  "git_commit": "f49b5332de25569e8a2b81fc21661fec3d578dbc",
+  "git_commit": "7682bfa2abe05226cd51d3425befdc46dc09348d",
   "python": "3.7.6",
   "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
   "random_seed": 1680132219,
@@ -177,7 +177,7 @@
     }
   ],
   "outputs": {
-    "REPORT.md": "eacfd2461349c54a8425e149c4d80874c3464a27f993944b232b7b1cc96d5001",
+    "REPORT.md": "0057dcf3ed4ba8df9dc3d49e9e4892523f12ed4b5adb7083e99bcda89595bf3f",
     "charge_closure_benchmark.csv": "b67bfa7ea55485e22e51bcbf1f61c55757e3863237f99ac480321a255a4b3f6e",
     "charge_closure_predictions.csv.gz": "9b34f8e3ed96074267caaffc29301d323f0b3be37de4eba66639eb17d4d8dd66",
     "fig_charge_closure_res68.png": "689e61a9f4029cdfc599fcd2dabb081ca5c66dfccc91fc4cd2ec5b1f1214b626",

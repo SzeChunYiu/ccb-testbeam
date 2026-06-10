@@ -1,0 +1,6 @@
+check,value,baseline_value,pass,note
+forbidden_dynamic_class_pair_median_oracle,1.750000000000098,2.092831006437085,False,uses held-out class/pair residual medians; diagnostic upper bound only
+source_s03j_split_by_run,True,,True,source timing residual models were fit in leave-one-run-out folds
+source_s03j_event_id_overlap_total,0.0,0.0,True,source train/held-out event-id overlap check
+source_s03j_hgb_shuffled_target_min_sigma68_ns,1.7089587161061384,,True,source shuffled-target leakage guard
+taxonomy_join_unmatched_fraction,0.0,0.0,True,S03j event ids map to S00d run/event_index taxonomy rows

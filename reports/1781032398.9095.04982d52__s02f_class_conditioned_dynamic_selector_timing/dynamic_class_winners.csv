@@ -1,0 +1,3 @@
+taxonomy_class,method,sigma68_ns,sigma68_ci_low,sigma68_ci_high,full_rms_ns,tail_frac_abs_gt5ns,n_events
+baseline_excursion,signed_physics_prior,2.084476566074529,1.5928310064370859,2.646896664896846,7.265690494292812,0.19364599092284418,661
+large_downstream_timing_span,gradient_boosted_trees_hgb,2.0298166257738806,0.8560970352937619,13.05685906360838,7.910648445570256,0.13333333333333333,10

@@ -1,0 +1,6 @@
+source_stratum,selector_gate,rows,events,unmatched
+dynamic_only,dynamic_range_extra,12096,672,0
+dynamic_only,dynamic_range_full,12096,672,0
+matched_control,matched_control,1566,87,0
+median_selected,dynamic_range_full,68760,3820,0
+median_selected,median_first_four,68760,3820,0

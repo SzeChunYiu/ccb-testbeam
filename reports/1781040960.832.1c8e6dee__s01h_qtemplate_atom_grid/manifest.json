@@ -1,0 +1,65 @@
+{
+  "ticket": "1781040960.832.1c8e6dee",
+  "worker": "testbeam-laptop-4",
+  "config": "configs/s01h_1781040960_832_1c8e6dee_qtemplate_atom_grid.yaml",
+  "config_sha256": "194b377ca4cd0cd06db24477f4fbe2e5de241bbc727e0990d2d31fb16a6c37bb",
+  "q_template_sha256": "afccd71367fbce78238afc2b98e144e1453585a59632c1e6f7ba5413a1fd5fff",
+  "generated_at_unix": 1781129937.923127,
+  "artifacts": [
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/REPORT.md",
+      "sha256": "5dcac36bcbc723a07c7160934d11341437c9d1e2baea40245377058cd477290b",
+      "bytes": 16930
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/atom_enrichment_grid.csv",
+      "sha256": "03fc7800a41b40aab515e081db2df5188c00c2b51a0072ad470a5e7b2e7d380f",
+      "bytes": 2136
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/benchmark_sample.csv.gz",
+      "sha256": "4e9428418e6fbfa920523a2f21a6c814c4421efd7f0ffe422917923df313c0ff",
+      "bytes": 3447723
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/heldout_per_run_metrics.csv",
+      "sha256": "92c66b69cfa3831e0abd32ea8ceec8720dfc71c21370479abfcf5e9261968826",
+      "bytes": 2775
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/heldout_predictions.csv.gz",
+      "sha256": "cc4a8e6b92724edb2650d143681375d1d218f15a9c483651e79900fe2cbd96fb",
+      "bytes": 1827021
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/method_auc_ci.png",
+      "sha256": "4524c5e48d04369dbdc1946b6708c4dbfe91a91c13d51fe04ab87fb75e11e93d",
+      "bytes": 35667
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/method_summary.csv",
+      "sha256": "28680064504c0c5a7efb0faaf600c0dc3e215b8d358f91d172c331a3b68c6c2d",
+      "bytes": 976
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/reproduction_match_table.csv",
+      "sha256": "3127c04c013d2e80c41daff3ba316fb69a1d6ff834cc62c526d7540b8afae899",
+      "bytes": 126
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/result.json",
+      "sha256": "b3f556eea57bd2e16cd5e80a368a9835fff3401349ebf8c44edd8b84c4c7f35b",
+      "bytes": 2855
+    },
+    {
+      "path": "reports/1781040960.832.1c8e6dee__s01h_qtemplate_atom_grid/run_stave_q_leakage_grid.csv",
+      "sha256": "805b3e1b06f0a0d69c4575d4ab22b579df9f6ac5b3b5fd57e54183e678145a42",
+      "bytes": 2418
+    }
+  ]
+}

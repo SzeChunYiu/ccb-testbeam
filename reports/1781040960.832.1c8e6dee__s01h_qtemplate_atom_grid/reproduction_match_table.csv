@@ -1,0 +1,2 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+selected B-stave pulses with amplitude >1000 ADC,640737,640737,0,0,True

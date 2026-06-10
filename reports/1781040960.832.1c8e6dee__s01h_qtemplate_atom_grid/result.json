@@ -1,0 +1,95 @@
+{
+  "study": "S01h",
+  "ticket": "1781040960.832.1c8e6dee",
+  "worker": "testbeam-laptop-4",
+  "title": "q-template run-stave leakage atom grid",
+  "reproduced": true,
+  "winner": "atom_gated_cnn_new",
+  "winner_family": "new_architecture",
+  "winner_metrics": {
+    "method": "atom_gated_cnn_new",
+    "family": "new_architecture",
+    "n": 36500,
+    "positives": 4539,
+    "roc_auc": 0.9979727509800564,
+    "auc_ci_low": 0.9974951528425046,
+    "auc_ci_high": 0.9983910098132383,
+    "average_precision": 0.9890227752995577,
+    "ap_ci_low": 0.9867063586801518,
+    "ap_ci_high": 0.991058586986993
+  },
+  "best_traditional": {
+    "method": "traditional_smoothed_atom_table",
+    "family": "traditional",
+    "n": 36500,
+    "positives": 4539,
+    "roc_auc": 0.9743176097267531,
+    "auc_ci_low": 0.9707633217487116,
+    "auc_ci_high": 0.9782483251004808,
+    "average_precision": 0.8978925566048768,
+    "ap_ci_low": 0.8757473018151458,
+    "ap_ci_high": 0.9117500258633072
+  },
+  "models_benchmarked": [
+    "atom_gated_cnn_new",
+    "mlp",
+    "gradient_boosted_trees",
+    "traditional_smoothed_atom_table",
+    "ridge",
+    "1d_cnn"
+  ],
+  "raw_root_dir": "data/root/root",
+  "q_template_path": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "q_rows_joined": 640737
+  },
+  "split": {
+    "train_groups": [
+      "sample_i_calib",
+      "sample_i_analysis",
+      "sample_ii_calib"
+    ],
+    "heldout_groups": [
+      "sample_ii_analysis"
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "train_rows": 70105,
+    "heldout_rows": 36500,
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_samples": 600
+  },
+  "target": {
+    "name": "train-defined high q_template residual",
+    "train_quantile": 0.9,
+    "threshold": 0.12440258472973621,
+    "train_positive_fraction": 0.09870907923828542,
+    "heldout_positive_fraction": 0.12435616438356165,
+    "q_template_excluded_from_features": true
+  },
+  "traditional_smoothing_alpha": 20.0,
+  "adoption": {
+    "support_covariate_safe": true,
+    "standalone_veto_claimed": false,
+    "reason": "run-heldout atom/waveform signal exists, but label is q_template residual rather than external truth"
+  },
+  "next_tickets": [
+    {
+      "title": "S01i q-template atom transfer to injected pile-up/dropout truth",
+      "body": "Use the S01h atom grid and atom-gated CNN on injected two-pulse/dropout labels with the same run-block bootstrap protocol, so q_template support-risk atoms are tested against externalized truth rather than q_template residuals."
+    }
+  ],
+  "git_commit": "861719863049fec53b47ee9f2b17f3f74040e0ba",
+  "python": "3.7.6",
+  "runtime_sec": 55.46963405609131
+}

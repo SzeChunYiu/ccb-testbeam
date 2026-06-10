@@ -1,0 +1,31 @@
+method,note,pair,alpha,cv_rmse_ns_mean,cv_rmse_ns_std,learning_rate,max_leaf_nodes,l2_regularization,hidden_layer_sizes,channels,weight_decay
+traditional_cfd20_poly,ordinary least squares on train-run CFD20 amplitude polynomial,control_A1_adjacent,,,,,,,,,
+ridge_shape_waveform,,control_A1_adjacent,0.1,9.213071893802825,7.135175562107203,,,,,,
+ridge_shape_waveform,,control_A1_adjacent,10.0,9.939304903620428,6.981308914190653,,,,,,
+ridge_shape_waveform,,control_A1_adjacent,1.0,10.168885454927965,8.921723189181387,,,,,,
+ridge_shape_waveform,,control_A1_adjacent,100.0,10.720940897174609,2.1043979371350563,,,,,,
+ridge_shape_waveform,,control_A1_adjacent,1000.0,19.45820477819526,2.262683668713428,,,,,,
+gradient_boosted_trees,,control_A1_adjacent,,5.866602931194879,4.011804880204423,0.05,7.0,0.01,,,
+gradient_boosted_trees,,control_A1_adjacent,,5.87695813081667,4.147283282667982,0.05,15.0,0.1,,,
+gradient_boosted_trees,,control_A1_adjacent,,6.576519525457857,3.7280451093355738,0.03,7.0,0.0,,,
+mlp_waveform,,control_A1_adjacent,0.01,4.475306274522291,2.2361306994531813,,,,"32,16",,
+mlp_waveform,,control_A1_adjacent,0.001,6.437717006003015,1.4172942783730302,,,,16,,
+cnn1d_waveform,,control_A1_adjacent,,12.704652671669958,2.5461900180104875,,,,,4.0,0.0
+cnn1d_waveform,,control_A1_adjacent,,12.955190779562665,1.7850068531351386,,,,,8.0,0.001
+antisymmetric_shared_cnn,,control_A1_adjacent,,9.677038480467607,2.4517028590462684,,,,,8.0,0.001
+antisymmetric_shared_cnn,,control_A1_adjacent,,12.515295040578879,1.6932225348941314,,,,,4.0,0.0
+traditional_cfd20_poly,ordinary least squares on train-run CFD20 amplitude polynomial,control_A3_adjacent,,,,,,,,,
+ridge_shape_waveform,,control_A3_adjacent,10.0,9.384076887576537,3.8132824248699673,,,,,,
+ridge_shape_waveform,,control_A3_adjacent,1.0,10.277365457237945,4.140462085432703,,,,,,
+ridge_shape_waveform,,control_A3_adjacent,100.0,10.520987363090338,2.8975933237940525,,,,,,
+ridge_shape_waveform,,control_A3_adjacent,0.1,10.604092638308014,3.9313773384306963,,,,,,
+ridge_shape_waveform,,control_A3_adjacent,1000.0,17.673287103801975,1.7759647836994013,,,,,,
+gradient_boosted_trees,,control_A3_adjacent,,7.022672816069412,5.175817854685149,0.05,7.0,0.01,,,
+gradient_boosted_trees,,control_A3_adjacent,,7.0290205201790386,5.308694629574498,0.05,15.0,0.1,,,
+gradient_boosted_trees,,control_A3_adjacent,,7.276379062386569,5.1898264443842965,0.03,7.0,0.0,,,
+mlp_waveform,,control_A3_adjacent,0.01,10.204722296402409,4.2789660476150075,,,,"32,16",,
+mlp_waveform,,control_A3_adjacent,0.001,10.587070892509763,2.882852043698161,,,,16,,
+cnn1d_waveform,,control_A3_adjacent,,10.869488192816876,2.4282094122894007,,,,,4.0,0.0
+cnn1d_waveform,,control_A3_adjacent,,12.370631651688587,2.2435479423700846,,,,,8.0,0.001
+antisymmetric_shared_cnn,,control_A3_adjacent,,11.64525902281619,2.4359199088661603,,,,,8.0,0.001
+antisymmetric_shared_cnn,,control_A3_adjacent,,14.393707750018262,2.7899390665649864,,,,,4.0,0.0

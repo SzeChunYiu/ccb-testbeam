@@ -1,0 +1,56 @@
+{
+  "conclusion": "Gradient-boosted trees win the sparse adjacent-control benchmark, but the low Sample-IV support means this ranks methods for side-channel coincidences rather than validating a universal late-Sample-III A-stack transfer correction.",
+  "critic": "pending",
+  "falsification": {
+    "adoption_rule": "learned method must have paired bootstrap delta CI entirely below zero versus traditional",
+    "n_methods": 6,
+    "preregistered_metric": "control_macro_mean_robust_width_ns"
+  },
+  "git_commit": "9aa581a3217e83d3c3259a5ed8488a200ce3c256",
+  "input_sha256": "see input_sha256.csv",
+  "ml": {
+    "ci": [
+      1.0303015822504167,
+      2.7687143385785586
+    ],
+    "method": "gradient_boosted_trees",
+    "metric": "control_macro_mean_robust_width_ns",
+    "value": 1.649243036262496
+  },
+  "ml_beats_baseline": true,
+  "next_tickets": [
+    "S18h: A-stack adjacent-control support audit across raw and sorted mirrors. Question: are the sparse HRDv 0-1 and 4-5 adjacent coincidences true side-readout timing controls or acquisition artifacts? Expected information gain: resolves whether S18f's low-support caveat is physical or a ROOT-channel mapping limitation."
+  ],
+  "repro_tolerance": "pairs exact; robust/core width <= 0.001 ns",
+  "reproduced": true,
+  "study": "S18f",
+  "ticket": "1781032542.991.23310d17",
+  "title": "A-stack adjacent-channel run-family transfer control",
+  "traditional": {
+    "ci": [
+      10.557631486512104,
+      25.017495853727016
+    ],
+    "method": "traditional_cfd20_poly",
+    "metric": "control_macro_mean_robust_width_ns",
+    "value": 18.30694873104182
+  },
+  "winner": {
+    "ci": [
+      1.0303015822504167,
+      2.7687143385785586
+    ],
+    "method": "gradient_boosted_trees",
+    "metric": "control_macro_mean_robust_width_ns",
+    "value": 1.649243036262496
+  },
+  "winner_delta_vs_traditional": {
+    "baseline": "traditional_cfd20_poly",
+    "delta_ci_high_ns": -9.110175829263031,
+    "delta_ci_low_ns": -22.67575637203598,
+    "delta_macro_width_ns": -16.657705694779324,
+    "method": "gradient_boosted_trees",
+    "p_value": 0.0
+  },
+  "worker": "testbeam-laptop-4"
+}

@@ -1,0 +1,3660 @@
+{
+  "study": "P04g_external_anomaly_charge_proxy_validation",
+  "ticket_id": "1781033470.1723.1a366adc",
+  "worker": "testbeam-laptop-3",
+  "raw_reproduction": {
+    "p04_s00": {
+      "expected_selected_pulses": 640737,
+      "reproduced_selected_pulses": 640737,
+      "delta": 0,
+      "pass": true,
+      "source": "P09a raw scan with the P04/S00 B-stack selected-pulse gate",
+      "raw_root_dir": "data/root/root"
+    },
+    "p09a_thresholds": [
+      {
+        "threshold": "amplitude_adc_q995",
+        "value": 9505.5
+      },
+      {
+        "threshold": "amplitude_adc_q999",
+        "value": 9605.5
+      },
+      {
+        "threshold": "saturation_count_q995",
+        "value": 2.0
+      },
+      {
+        "threshold": "post_peak_min_q001",
+        "value": -4.558413259
+      },
+      {
+        "threshold": "baseline_mad_q995",
+        "value": 1975.6925
+      },
+      {
+        "threshold": "abs_baseline_slope_q995",
+        "value": 6416.0
+      },
+      {
+        "threshold": "late_fraction_q999",
+        "value": 0.9993421362
+      },
+      {
+        "threshold": "timing_span_dup_q990",
+        "value": 18.0
+      },
+      {
+        "threshold": "secondary_peak_q999",
+        "value": 0.9993728253
+      },
+      {
+        "threshold": "undershoot_area_q001",
+        "value": -39.3153843498
+      },
+      {
+        "threshold": "width_half_q995",
+        "value": 12.0
+      },
+      {
+        "threshold": "q_template_rmse_q995",
+        "value": 2.2510819781
+      },
+      {
+        "threshold": "q_template_rmse_q999",
+        "value": 3.0121783299
+      }
+    ],
+    "p04b": {
+      "expected_external_rows": 3774,
+      "reproduced_external_rows": 3774,
+      "delta": 0,
+      "pass": true,
+      "counts_by_run": [
+        {
+          "run": 58,
+          "events_total": 34141,
+          "b2_selected": 15791,
+          "penetrating_rows": 72
+        },
+        {
+          "run": 59,
+          "events_total": 42303,
+          "b2_selected": 13565,
+          "penetrating_rows": 749
+        },
+        {
+          "run": 60,
+          "events_total": 36074,
+          "b2_selected": 9873,
+          "penetrating_rows": 802
+        },
+        {
+          "run": 61,
+          "events_total": 36535,
+          "b2_selected": 11015,
+          "penetrating_rows": 925
+        },
+        {
+          "run": 62,
+          "events_total": 37584,
+          "b2_selected": 11635,
+          "penetrating_rows": 798
+        },
+        {
+          "run": 63,
+          "events_total": 37030,
+          "b2_selected": 14566,
+          "penetrating_rows": 365
+        },
+        {
+          "run": 65,
+          "events_total": 38424,
+          "b2_selected": 11768,
+          "penetrating_rows": 63
+        }
+      ]
+    },
+    "p04c": {
+      "b_s00_reproduction_source": "shared P04/P09a raw B-stack S00 reproduction",
+      "expected_ab_rows": 4055,
+      "reproduced_ab_rows": 4055,
+      "delta": 0,
+      "pass": true,
+      "astack_analysis_counts": [
+        {
+          "sample": "sample_iii_analysis",
+          "events_total": 388848,
+          "events_with_selected": 7168,
+          "selected_pulses": 9682,
+          "A1": 2799,
+          "A3": 6883
+        },
+        {
+          "sample": "sample_iv_analysis",
+          "events_total": 262189,
+          "events_with_selected": 767,
+          "selected_pulses": 894,
+          "A1": 167,
+          "A3": 727
+        }
+      ],
+      "ab_topology_counts_by_run": [
+        {
+          "run": 31,
+          "matched_events": 16383,
+          "a_any_selected": 359,
+          "a_pair_selected": 111,
+          "b2_selected": 11294,
+          "ab_rows_b2_and_a_any": 229,
+          "ab_rows_a_pair": 80,
+          "ab_rows_b2_a_any_downstream_any": 0
+        },
+        {
+          "run": 32,
+          "matched_events": 16383,
+          "a_any_selected": 304,
+          "a_pair_selected": 105,
+          "b2_selected": 11564,
+          "ab_rows_b2_and_a_any": 207,
+          "ab_rows_a_pair": 72,
+          "ab_rows_b2_a_any_downstream_any": 4
+        },
+        {
+          "run": 33,
+          "matched_events": 16383,
+          "a_any_selected": 8,
+          "a_pair_selected": 1,
+          "b2_selected": 13656,
+          "ab_rows_b2_and_a_any": 8,
+          "ab_rows_a_pair": 1,
+          "ab_rows_b2_a_any_downstream_any": 1
+        },
+        {
+          "run": 34,
+          "matched_events": 16383,
+          "a_any_selected": 22,
+          "a_pair_selected": 8,
+          "b2_selected": 13830,
+          "ab_rows_b2_and_a_any": 16,
+          "ab_rows_a_pair": 5,
+          "ab_rows_b2_a_any_downstream_any": 0
+        },
+        {
+          "run": 35,
+          "matched_events": 16288,
+          "a_any_selected": 610,
+          "a_pair_selected": 200,
+          "b2_selected": 6130,
+          "ab_rows_b2_and_a_any": 221,
+          "ab_rows_a_pair": 67,
+          "ab_rows_b2_a_any_downstream_any": 8
+        },
+        {
+          "run": 36,
+          "matched_events": 16268,
+          "a_any_selected": 626,
+          "a_pair_selected": 213,
+          "b2_selected": 7216,
+          "ab_rows_b2_and_a_any": 295,
+          "ab_rows_a_pair": 97,
+          "ab_rows_b2_a_any_downstream_any": 11
+        },
+        {
+          "run": 37,
+          "matched_events": 16383,
+          "a_any_selected": 660,
+          "a_pair_selected": 225,
+          "b2_selected": 7036,
+          "ab_rows_b2_and_a_any": 292,
+          "ab_rows_a_pair": 104,
+          "ab_rows_b2_a_any_downstream_any": 10
+        },
+        {
+          "run": 39,
+          "matched_events": 16377,
+          "a_any_selected": 700,
+          "a_pair_selected": 257,
+          "b2_selected": 7238,
+          "ab_rows_b2_and_a_any": 324,
+          "ab_rows_a_pair": 120,
+          "ab_rows_b2_a_any_downstream_any": 16
+        },
+        {
+          "run": 40,
+          "matched_events": 16350,
+          "a_any_selected": 651,
+          "a_pair_selected": 221,
+          "b2_selected": 6854,
+          "ab_rows_b2_and_a_any": 265,
+          "ab_rows_a_pair": 83,
+          "ab_rows_b2_a_any_downstream_any": 9
+        },
+        {
+          "run": 41,
+          "matched_events": 16381,
+          "a_any_selected": 652,
+          "a_pair_selected": 242,
+          "b2_selected": 7197,
+          "ab_rows_b2_and_a_any": 295,
+          "ab_rows_a_pair": 113,
+          "ab_rows_b2_a_any_downstream_any": 14
+        },
+        {
+          "run": 42,
+          "matched_events": 16383,
+          "a_any_selected": 578,
+          "a_pair_selected": 189,
+          "b2_selected": 8114,
+          "ab_rows_b2_and_a_any": 279,
+          "ab_rows_a_pair": 92,
+          "ab_rows_b2_a_any_downstream_any": 11
+        },
+        {
+          "run": 44,
+          "matched_events": 1376,
+          "a_any_selected": 60,
+          "a_pair_selected": 22,
+          "b2_selected": 602,
+          "ab_rows_b2_and_a_any": 30,
+          "ab_rows_a_pair": 11,
+          "ab_rows_b2_a_any_downstream_any": 2
+        },
+        {
+          "run": 45,
+          "matched_events": 16383,
+          "a_any_selected": 635,
+          "a_pair_selected": 202,
+          "b2_selected": 7597,
+          "ab_rows_b2_and_a_any": 302,
+          "ab_rows_a_pair": 91,
+          "ab_rows_b2_a_any_downstream_any": 15
+        },
+        {
+          "run": 46,
+          "matched_events": 0,
+          "a_any_selected": 0,
+          "a_pair_selected": 0,
+          "b2_selected": 0,
+          "ab_rows_b2_and_a_any": 0,
+          "ab_rows_a_pair": 0,
+          "ab_rows_b2_a_any_downstream_any": 0
+        },
+        {
+          "run": 47,
+          "matched_events": 5558,
+          "a_any_selected": 191,
+          "a_pair_selected": 53,
+          "b2_selected": 2653,
+          "ab_rows_b2_and_a_any": 92,
+          "ab_rows_a_pair": 30,
+          "ab_rows_b2_a_any_downstream_any": 3
+        },
+        {
+          "run": 48,
+          "matched_events": 16352,
+          "a_any_selected": 688,
+          "a_pair_selected": 264,
+          "b2_selected": 6294,
+          "ab_rows_b2_and_a_any": 260,
+          "ab_rows_a_pair": 98,
+          "ab_rows_b2_a_any_downstream_any": 10
+        },
+        {
+          "run": 49,
+          "matched_events": 16319,
+          "a_any_selected": 665,
+          "a_pair_selected": 247,
+          "b2_selected": 7235,
+          "ab_rows_b2_and_a_any": 288,
+          "ab_rows_a_pair": 103,
+          "ab_rows_b2_a_any_downstream_any": 14
+        },
+        {
+          "run": 50,
+          "matched_events": 16383,
+          "a_any_selected": 79,
+          "a_pair_selected": 21,
+          "b2_selected": 12260,
+          "ab_rows_b2_and_a_any": 61,
+          "ab_rows_a_pair": 15,
+          "ab_rows_b2_a_any_downstream_any": 1
+        },
+        {
+          "run": 51,
+          "matched_events": 16160,
+          "a_any_selected": 43,
+          "a_pair_selected": 4,
+          "b2_selected": 11154,
+          "ab_rows_b2_and_a_any": 25,
+          "ab_rows_a_pair": 2,
+          "ab_rows_b2_a_any_downstream_any": 0
+        },
+        {
+          "run": 52,
+          "matched_events": 2499,
+          "a_any_selected": 6,
+          "a_pair_selected": 2,
+          "b2_selected": 1743,
+          "ab_rows_b2_and_a_any": 6,
+          "ab_rows_a_pair": 2,
+          "ab_rows_b2_a_any_downstream_any": 0
+        },
+        {
+          "run": 53,
+          "matched_events": 16383,
+          "a_any_selected": 19,
+          "a_pair_selected": 3,
+          "b2_selected": 12830,
+          "ab_rows_b2_and_a_any": 17,
+          "ab_rows_a_pair": 3,
+          "ab_rows_b2_a_any_downstream_any": 0
+        },
+        {
+          "run": 54,
+          "matched_events": 16383,
+          "a_any_selected": 24,
+          "a_pair_selected": 1,
+          "b2_selected": 12890,
+          "ab_rows_b2_and_a_any": 18,
+          "ab_rows_a_pair": 1,
+          "ab_rows_b2_a_any_downstream_any": 0
+        },
+        {
+          "run": 55,
+          "matched_events": 16268,
+          "a_any_selected": 37,
+          "a_pair_selected": 4,
+          "b2_selected": 11113,
+          "ab_rows_b2_and_a_any": 27,
+          "ab_rows_a_pair": 2,
+          "ab_rows_b2_a_any_downstream_any": 1
+        },
+        {
+          "run": 56,
+          "matched_events": 16383,
+          "a_any_selected": 89,
+          "a_pair_selected": 27,
+          "b2_selected": 12118,
+          "ab_rows_b2_and_a_any": 68,
+          "ab_rows_a_pair": 20,
+          "ab_rows_b2_a_any_downstream_any": 1
+        },
+        {
+          "run": 57,
+          "matched_events": 16290,
+          "a_any_selected": 660,
+          "a_pair_selected": 247,
+          "b2_selected": 6619,
+          "ab_rows_b2_and_a_any": 276,
+          "ab_rows_a_pair": 110,
+          "ab_rows_b2_a_any_downstream_any": 16
+        },
+        {
+          "run": 58,
+          "matched_events": 16382,
+          "a_any_selected": 72,
+          "a_pair_selected": 14,
+          "b2_selected": 7427,
+          "ab_rows_b2_and_a_any": 34,
+          "ab_rows_a_pair": 6,
+          "ab_rows_b2_a_any_downstream_any": 4
+        },
+        {
+          "run": 59,
+          "matched_events": 16383,
+          "a_any_selected": 22,
+          "a_pair_selected": 5,
+          "b2_selected": 5175,
+          "ab_rows_b2_and_a_any": 9,
+          "ab_rows_a_pair": 2,
+          "ab_rows_b2_a_any_downstream_any": 4
+        },
+        {
+          "run": 60,
+          "matched_events": 16383,
+          "a_any_selected": 42,
+          "a_pair_selected": 9,
+          "b2_selected": 4665,
+          "ab_rows_b2_and_a_any": 10,
+          "ab_rows_a_pair": 1,
+          "ab_rows_b2_a_any_downstream_any": 2
+        },
+        {
+          "run": 61,
+          "matched_events": 16383,
+          "a_any_selected": 16,
+          "a_pair_selected": 1,
+          "b2_selected": 4749,
+          "ab_rows_b2_and_a_any": 6,
+          "ab_rows_a_pair": 0,
+          "ab_rows_b2_a_any_downstream_any": 3
+        },
+        {
+          "run": 62,
+          "matched_events": 16383,
+          "a_any_selected": 21,
+          "a_pair_selected": 4,
+          "b2_selected": 4863,
+          "ab_rows_b2_and_a_any": 8,
+          "ab_rows_a_pair": 1,
+          "ab_rows_b2_a_any_downstream_any": 2
+        },
+        {
+          "run": 63,
+          "matched_events": 16381,
+          "a_any_selected": 86,
+          "a_pair_selected": 13,
+          "b2_selected": 6401,
+          "ab_rows_b2_and_a_any": 39,
+          "ab_rows_a_pair": 7,
+          "ab_rows_b2_a_any_downstream_any": 2
+        },
+        {
+          "run": 64,
+          "matched_events": 16383,
+          "a_any_selected": 92,
+          "a_pair_selected": 8,
+          "b2_selected": 6239,
+          "ab_rows_b2_and_a_any": 35,
+          "ab_rows_a_pair": 2,
+          "ab_rows_b2_a_any_downstream_any": 2
+        },
+        {
+          "run": 65,
+          "matched_events": 16381,
+          "a_any_selected": 66,
+          "a_pair_selected": 14,
+          "b2_selected": 4874,
+          "ab_rows_b2_and_a_any": 13,
+          "ab_rows_a_pair": 1,
+          "ab_rows_b2_a_any_downstream_any": 0
+        }
+      ]
+    }
+  },
+  "datasets": {
+    "p04b_downstream": {
+      "target": "B4+B6+B8 positive-lobe charge for penetrating B2-selected events",
+      "n_rows": 3774,
+      "runs": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ]
+    },
+    "p04c_ab_charge": {
+      "target": "selected event-matched A1/A3 positive-lobe charge",
+      "n_rows": 4055,
+      "runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ]
+    }
+  },
+  "run_split": "leave-one-run-out by source run",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 400,
+    "max_rows_per_run": 3000
+  },
+  "methods": [
+    "traditional_strong",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "residual_cnn_meta",
+    "shuffled_target_gbt"
+  ],
+  "winner": {
+    "method": "residual_cnn_meta",
+    "criterion": "lowest mean rank by res68_abs_frac across P04b and P04c external targets",
+    "mean_rank_table": [
+      {
+        "method": "residual_cnn_meta",
+        "rank": 1.5
+      },
+      {
+        "method": "cnn1d",
+        "rank": 2.0
+      },
+      {
+        "method": "ridge",
+        "rank": 3.5
+      },
+      {
+        "method": "traditional_strong",
+        "rank": 3.5
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "rank": 4.5
+      },
+      {
+        "method": "mlp",
+        "rank": 6.0
+      }
+    ],
+    "per_target": [
+      {
+        "dataset": "p04b_downstream",
+        "method": "residual_cnn_meta",
+        "rank": 2,
+        "res68_abs_frac": 0.211108461,
+        "res68_ci95": [
+          0.1973421946,
+          0.2287288978
+        ]
+      },
+      {
+        "dataset": "p04c_ab_charge",
+        "method": "residual_cnn_meta",
+        "rank": 1,
+        "res68_abs_frac": 0.5198863067,
+        "res68_ci95": [
+          0.5092753396,
+          0.5375332081
+        ]
+      }
+    ],
+    "best_target_specific": {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "cnn1d",
+      "n": 3774,
+      "bias_median_frac": -0.01096816345776348,
+      "res68_abs_frac": 0.21034863000437332,
+      "full_rms_frac": 0.3073845204468379,
+      "high_bias_tail_fraction": 0.2318494965553789,
+      "within_10pct": 0.3569157392686804,
+      "within_25pct": 0.7681505034446211,
+      "bias_ci95": [
+        -0.04924706018218123,
+        0.036652198691421424
+      ],
+      "res68_ci95": [
+        0.20134169578326827,
+        0.22748408767432823
+      ],
+      "full_rms_ci95": [
+        0.26692382737932296,
+        0.3775393285868601
+      ],
+      "high_bias_tail_ci95": [
+        0.20963794112776193,
+        0.2654758238373884
+      ]
+    }
+  },
+  "primary_metrics": [
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "traditional_strong",
+      "n": 3774,
+      "bias_median_frac": -0.0251516017,
+      "res68_abs_frac": 0.2268836824,
+      "full_rms_frac": 0.3806933516,
+      "high_bias_tail_fraction": 0.268945416,
+      "within_10pct": 0.3121356651,
+      "within_25pct": 0.731054584,
+      "bias_ci95": [
+        -0.0826815637,
+        0.0362482
+      ],
+      "res68_ci95": [
+        0.2154973771,
+        0.2461475867
+      ],
+      "full_rms_ci95": [
+        0.3196638199,
+        0.4877484728
+      ],
+      "high_bias_tail_ci95": [
+        0.234879063,
+        0.3117601392
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "ridge",
+      "n": 3774,
+      "bias_median_frac": -0.0193370831,
+      "res68_abs_frac": 0.2125814663,
+      "full_rms_frac": 0.295137134,
+      "high_bias_tail_fraction": 0.2466878643,
+      "within_10pct": 0.3441971383,
+      "within_25pct": 0.7533121357,
+      "bias_ci95": [
+        -0.0580762828,
+        0.0371450791
+      ],
+      "res68_ci95": [
+        0.1999852289,
+        0.228206512
+      ],
+      "full_rms_ci95": [
+        0.2628752473,
+        0.3434621993
+      ],
+      "high_bias_tail_ci95": [
+        0.221096845,
+        0.2826385873
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "gradient_boosted_trees",
+      "n": 3774,
+      "bias_median_frac": -0.0159130478,
+      "res68_abs_frac": 0.2140375172,
+      "full_rms_frac": 0.2663698953,
+      "high_bias_tail_fraction": 0.2337042925,
+      "within_10pct": 0.3505564388,
+      "within_25pct": 0.7662957075,
+      "bias_ci95": [
+        -0.0608210446,
+        0.0320472333
+      ],
+      "res68_ci95": [
+        0.2035399993,
+        0.2281500332
+      ],
+      "full_rms_ci95": [
+        0.2392612208,
+        0.3161903753
+      ],
+      "high_bias_tail_ci95": [
+        0.2100951374,
+        0.2699282528
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "mlp",
+      "n": 3774,
+      "bias_median_frac": -0.0223702454,
+      "res68_abs_frac": 0.3624121018,
+      "full_rms_frac": 9.4497856087,
+      "high_bias_tail_fraction": 0.4811870694,
+      "within_10pct": 0.2215156333,
+      "within_25pct": 0.5188129306,
+      "bias_ci95": [
+        -0.060966438,
+        0.0199451231
+      ],
+      "res68_ci95": [
+        0.3366842858,
+        0.3912107401
+      ],
+      "full_rms_ci95": [
+        1.4991467593,
+        16.1836950653
+      ],
+      "high_bias_tail_ci95": [
+        0.452356356,
+        0.5253587909
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "cnn1d",
+      "n": 3774,
+      "bias_median_frac": -0.0109681635,
+      "res68_abs_frac": 0.21034863,
+      "full_rms_frac": 0.3073845204,
+      "high_bias_tail_fraction": 0.2318494966,
+      "within_10pct": 0.3569157393,
+      "within_25pct": 0.7681505034,
+      "bias_ci95": [
+        -0.0492470602,
+        0.0366521987
+      ],
+      "res68_ci95": [
+        0.2013416958,
+        0.2274840877
+      ],
+      "full_rms_ci95": [
+        0.2669238274,
+        0.3775393286
+      ],
+      "high_bias_tail_ci95": [
+        0.2096379411,
+        0.2654758238
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "residual_cnn_meta",
+      "n": 3774,
+      "bias_median_frac": -0.0079638807,
+      "res68_abs_frac": 0.211108461,
+      "full_rms_frac": 0.3286361188,
+      "high_bias_tail_fraction": 0.2339692634,
+      "within_10pct": 0.3540010599,
+      "within_25pct": 0.7660307366,
+      "bias_ci95": [
+        -0.0486819398,
+        0.0449498923
+      ],
+      "res68_ci95": [
+        0.1973421946,
+        0.2287288978
+      ],
+      "full_rms_ci95": [
+        0.2751783508,
+        0.4077274596
+      ],
+      "high_bias_tail_ci95": [
+        0.20371767,
+        0.2779795446
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "all_rows",
+      "method": "shuffled_target_gbt",
+      "n": 3774,
+      "bias_median_frac": -0.0593314757,
+      "res68_abs_frac": 0.2806337442,
+      "full_rms_frac": 0.6173070003,
+      "high_bias_tail_fraction": 0.3786433492,
+      "within_10pct": 0.2615262321,
+      "within_25pct": 0.6213566508,
+      "bias_ci95": [
+        -0.1147719951,
+        0.0386379895
+      ],
+      "res68_ci95": [
+        0.2581455889,
+        0.2977021972
+      ],
+      "full_rms_ci95": [
+        0.5269862902,
+        0.7405483255
+      ],
+      "high_bias_tail_ci95": [
+        0.3392448257,
+        0.4171933641
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "normal_control_pool",
+      "method": "traditional_strong",
+      "n": 3682,
+      "bias_median_frac": -0.0298198178,
+      "res68_abs_frac": 0.2239538038,
+      "full_rms_frac": 0.3803128499,
+      "high_bias_tail_fraction": 0.2629005975,
+      "within_10pct": 0.314774579,
+      "within_25pct": 0.7370994025,
+      "bias_ci95": [
+        -0.084591776,
+        0.0367742358
+      ],
+      "res68_ci95": [
+        0.2135621903,
+        0.2461032053
+      ],
+      "full_rms_ci95": [
+        0.326600919,
+        0.4947625064
+      ],
+      "high_bias_tail_ci95": [
+        0.2350061253,
+        0.3117708787
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "normal_control_pool",
+      "method": "ridge",
+      "n": 3682,
+      "bias_median_frac": -0.0197758145,
+      "res68_abs_frac": 0.2113725342,
+      "full_rms_frac": 0.293706784,
+      "high_bias_tail_fraction": 0.2428028246,
+      "within_10pct": 0.3449212385,
+      "within_25pct": 0.7571971754,
+      "bias_ci95": [
+        -0.0621198132,
+        0.0373640348
+      ],
+      "res68_ci95": [
+        0.1987107515,
+        0.2264948239
+      ],
+      "full_rms_ci95": [
+        0.2618161741,
+        0.3517907041
+      ],
+      "high_bias_tail_ci95": [
+        0.2177755397,
+        0.2812867237
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "normal_control_pool",
+      "method": "gradient_boosted_trees",
+      "n": 3682,
+      "bias_median_frac": -0.0159130478,
+      "res68_abs_frac": 0.2146661571,
+      "full_rms_frac": 0.2648772795,
+      "high_bias_tail_fraction": 0.2341118957,
+      "within_10pct": 0.3500814775,
+      "within_25pct": 0.7658881043,
+      "bias_ci95": [
+        -0.0669718379,
+        0.0289168714
+      ],
+      "res68_ci95": [
+        0.2038421349,
+        0.228246676
+      ],
+      "full_rms_ci95": [
+        0.2370409754,
+        0.3118877747
+      ],
+      "high_bias_tail_ci95": [
+        0.2129929591,
+        0.2734311445
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "normal_control_pool",
+      "method": "mlp",
+      "n": 3682,
+      "bias_median_frac": -0.0221674854,
+      "res68_abs_frac": 0.3566945722,
+      "full_rms_frac": 9.562274767,
+      "high_bias_tail_fraction": 0.4777294948,
+      "within_10pct": 0.2221618685,
+      "within_25pct": 0.5222705052,
+      "bias_ci95": [
+        -0.0591957965,
+        0.0215046357
+      ],
+      "res68_ci95": [
+        0.330424503,
+        0.3811567903
+      ],
+      "full_rms_ci95": [
+        1.5080040433,
+        16.8527163428
+      ],
+      "high_bias_tail_ci95": [
+        0.4488772659,
+        0.521087347
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "normal_control_pool",
+      "method": "cnn1d",
+      "n": 3682,
+      "bias_median_frac": -0.0110944051,
+      "res68_abs_frac": 0.2102117876,
+      "full_rms_frac": 0.3057292865,
+      "high_bias_tail_fraction": 0.2311243889,
+      "within_10pct": 0.3563280826,
+      "within_25pct": 0.7688756111,
+      "bias_ci95": [
+        -0.0546593192,
+        0.0361462588
+      ],
+      "res68_ci95": [
+        0.2014349109,
+        0.2251326705
+      ],
+      "full_rms_ci95": [
+        0.2594845809,
+        0.3679652847
+      ],
+      "high_bias_tail_ci95": [
+        0.2080741533,
+        0.2617606843
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "normal_control_pool",
+      "method": "residual_cnn_meta",
+      "n": 3682,
+      "bias_median_frac": -0.008140039,
+      "res68_abs_frac": 0.2116418197,
+      "full_rms_frac": 0.3291417422,
+      "high_bias_tail_fraction": 0.2335687127,
+      "within_10pct": 0.3533405758,
+      "within_25pct": 0.7664312873,
+      "bias_ci95": [
+        -0.0481319031,
+        0.0435912306
+      ],
+      "res68_ci95": [
+        0.1997567126,
+        0.2274058449
+      ],
+      "full_rms_ci95": [
+        0.2787802155,
+        0.4066148504
+      ],
+      "high_bias_tail_ci95": [
+        0.2052115266,
+        0.2759235707
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "normal_control_pool",
+      "method": "shuffled_target_gbt",
+      "n": 3682,
+      "bias_median_frac": -0.0660862984,
+      "res68_abs_frac": 0.2761957681,
+      "full_rms_frac": 0.6091094773,
+      "high_bias_tail_fraction": 0.370994025,
+      "within_10pct": 0.2634437806,
+      "within_25pct": 0.629005975,
+      "bias_ci95": [
+        -0.120836481,
+        0.0189312621
+      ],
+      "res68_ci95": [
+        0.2565704032,
+        0.2922566542
+      ],
+      "full_rms_ci95": [
+        0.5210929223,
+        0.7406450117
+      ],
+      "high_bias_tail_ci95": [
+        0.3344058606,
+        0.4055245796
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "baseline_excursion",
+      "method": "traditional_strong",
+      "n": 18,
+      "bias_median_frac": -0.2083845177,
+      "res68_abs_frac": 0.2945054564,
+      "full_rms_frac": 0.3432233829,
+      "high_bias_tail_fraction": 0.3888888889,
+      "within_10pct": 0.2222222222,
+      "within_25pct": 0.6111111111,
+      "bias_ci95": [
+        -0.3267203416,
+        -0.0442084206
+      ],
+      "res68_ci95": [
+        0.2137950344,
+        0.4236896424
+      ],
+      "full_rms_ci95": [
+        0.2143380582,
+        0.4116313084
+      ],
+      "high_bias_tail_ci95": [
+        0.2142857143,
+        0.5457070707
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "baseline_excursion",
+      "method": "ridge",
+      "n": 18,
+      "bias_median_frac": -0.0779006595,
+      "res68_abs_frac": 0.3208906695,
+      "full_rms_frac": 0.4351664426,
+      "high_bias_tail_fraction": 0.3888888889,
+      "within_10pct": 0.2222222222,
+      "within_25pct": 0.6111111111,
+      "bias_ci95": [
+        -0.2471784804,
+        0.1779237047
+      ],
+      "res68_ci95": [
+        0.2184446287,
+        0.3668683293
+      ],
+      "full_rms_ci95": [
+        0.326906938,
+        0.4724424234
+      ],
+      "high_bias_tail_ci95": [
+        0.2307692308,
+        0.5555555556
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "baseline_excursion",
+      "method": "gradient_boosted_trees",
+      "n": 18,
+      "bias_median_frac": -0.0718443015,
+      "res68_abs_frac": 0.2011126989,
+      "full_rms_frac": 0.176813806,
+      "high_bias_tail_fraction": 0.2222222222,
+      "within_10pct": 0.4444444444,
+      "within_25pct": 0.7777777778,
+      "bias_ci95": [
+        -0.2009190744,
+        0.0189759613
+      ],
+      "res68_ci95": [
+        0.1282804279,
+        0.2831867277
+      ],
+      "full_rms_ci95": [
+        0.1331394094,
+        0.2302369072
+      ],
+      "high_bias_tail_ci95": [
+        0.037037037,
+        0.5454545455
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "baseline_excursion",
+      "method": "mlp",
+      "n": 18,
+      "bias_median_frac": -0.193704957,
+      "res68_abs_frac": 0.8911724567,
+      "full_rms_frac": 2.4635522941,
+      "high_bias_tail_fraction": 0.6666666667,
+      "within_10pct": 0.1111111111,
+      "within_25pct": 0.3333333333,
+      "bias_ci95": [
+        -0.4782690029,
+        0.8998441094
+      ],
+      "res68_ci95": [
+        0.5260373758,
+        3.5355971243
+      ],
+      "full_rms_ci95": [
+        0.6479142676,
+        4.0020231753
+      ],
+      "high_bias_tail_ci95": [
+        0.5555555556,
+        0.7503676471
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "baseline_excursion",
+      "method": "cnn1d",
+      "n": 18,
+      "bias_median_frac": -0.0013834556,
+      "res68_abs_frac": 0.2064593519,
+      "full_rms_frac": 0.6077082456,
+      "high_bias_tail_fraction": 0.2222222222,
+      "within_10pct": 0.3333333333,
+      "within_25pct": 0.7777777778,
+      "bias_ci95": [
+        -0.1095171071,
+        0.049814463
+      ],
+      "res68_ci95": [
+        0.177311879,
+        0.2945328021
+      ],
+      "full_rms_ci95": [
+        0.1916759084,
+        0.828697507
+      ],
+      "high_bias_tail_ci95": [
+        0.0666666667,
+        0.3571428571
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "baseline_excursion",
+      "method": "residual_cnn_meta",
+      "n": 18,
+      "bias_median_frac": -0.0176732889,
+      "res68_abs_frac": 0.2534507684,
+      "full_rms_frac": 0.2751008171,
+      "high_bias_tail_fraction": 0.3333333333,
+      "within_10pct": 0.2222222222,
+      "within_25pct": 0.6666666667,
+      "bias_ci95": [
+        -0.2523977927,
+        0.1257346763
+      ],
+      "res68_ci95": [
+        0.1516021733,
+        0.3650341818
+      ],
+      "full_rms_ci95": [
+        0.1532548896,
+        0.4007309164
+      ],
+      "high_bias_tail_ci95": [
+        0.0769230769,
+        0.6933333333
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "baseline_excursion",
+      "method": "shuffled_target_gbt",
+      "n": 18,
+      "bias_median_frac": 0.0140220621,
+      "res68_abs_frac": 0.1975085541,
+      "full_rms_frac": 0.1844812162,
+      "high_bias_tail_fraction": 0.2222222222,
+      "within_10pct": 0.5,
+      "within_25pct": 0.7777777778,
+      "bias_ci95": [
+        -0.1325391184,
+        0.0688394434
+      ],
+      "res68_ci95": [
+        0.1687497835,
+        0.3435195357
+      ],
+      "full_rms_ci95": [
+        0.1451848297,
+        0.2614820867
+      ],
+      "high_bias_tail_ci95": [
+        0.0555555556,
+        0.4615384615
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "novel_early_pretrigger",
+      "method": "traditional_strong",
+      "n": 74,
+      "bias_median_frac": 0.2166746542,
+      "res68_abs_frac": 0.3564734458,
+      "full_rms_frac": 0.4073489966,
+      "high_bias_tail_fraction": 0.5405405405,
+      "within_10pct": 0.2027027027,
+      "within_25pct": 0.4594594595,
+      "bias_ci95": [
+        0.1404357585,
+        0.2523237633
+      ],
+      "res68_ci95": [
+        0.2952333179,
+        0.5020456401
+      ],
+      "full_rms_ci95": [
+        0.3378993426,
+        0.4964934937
+      ],
+      "high_bias_tail_ci95": [
+        0.4545454545,
+        0.6470860566
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "novel_early_pretrigger",
+      "method": "ridge",
+      "n": 74,
+      "bias_median_frac": 0.0457626172,
+      "res68_abs_frac": 0.3184796664,
+      "full_rms_frac": 0.3227052812,
+      "high_bias_tail_fraction": 0.4054054054,
+      "within_10pct": 0.3378378378,
+      "within_25pct": 0.5945945946,
+      "bias_ci95": [
+        -0.0806798795,
+        0.1104381727
+      ],
+      "res68_ci95": [
+        0.2444042133,
+        0.3304228069
+      ],
+      "full_rms_ci95": [
+        0.2716826569,
+        0.3994295014
+      ],
+      "high_bias_tail_ci95": [
+        0.3185740145,
+        0.5362103175
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "novel_early_pretrigger",
+      "method": "gradient_boosted_trees",
+      "n": 74,
+      "bias_median_frac": -0.0040967463,
+      "res68_abs_frac": 0.1785046889,
+      "full_rms_frac": 0.3464992269,
+      "high_bias_tail_fraction": 0.2162162162,
+      "within_10pct": 0.3513513514,
+      "within_25pct": 0.7837837838,
+      "bias_ci95": [
+        -0.0652477401,
+        0.0112892518
+      ],
+      "res68_ci95": [
+        0.147770742,
+        0.2508004076
+      ],
+      "full_rms_ci95": [
+        0.198965707,
+        0.5391185872
+      ],
+      "high_bias_tail_ci95": [
+        0.126097973,
+        0.3272727273
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "novel_early_pretrigger",
+      "method": "mlp",
+      "n": 74,
+      "bias_median_frac": -0.0168157084,
+      "res68_abs_frac": 0.6295289263,
+      "full_rms_frac": 1.7694931293,
+      "high_bias_tail_fraction": 0.6081081081,
+      "within_10pct": 0.2162162162,
+      "within_25pct": 0.3918918919,
+      "bias_ci95": [
+        -0.1494669988,
+        0.1139402122
+      ],
+      "res68_ci95": [
+        0.4633706552,
+        0.7076377611
+      ],
+      "full_rms_ci95": [
+        0.8958667351,
+        2.4897887977
+      ],
+      "high_bias_tail_ci95": [
+        0.5131494602,
+        0.7111111111
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "novel_early_pretrigger",
+      "method": "cnn1d",
+      "n": 74,
+      "bias_median_frac": -0.0089356328,
+      "res68_abs_frac": 0.219126579,
+      "full_rms_frac": 0.2795203571,
+      "high_bias_tail_fraction": 0.2702702703,
+      "within_10pct": 0.3918918919,
+      "within_25pct": 0.7297297297,
+      "bias_ci95": [
+        -0.0653413201,
+        0.0227442547
+      ],
+      "res68_ci95": [
+        0.1704745156,
+        0.2710808727
+      ],
+      "full_rms_ci95": [
+        0.2093599785,
+        0.377048648
+      ],
+      "high_bias_tail_ci95": [
+        0.1891023166,
+        0.3617021277
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "novel_early_pretrigger",
+      "method": "residual_cnn_meta",
+      "n": 74,
+      "bias_median_frac": 0.0012875643,
+      "res68_abs_frac": 0.1832276181,
+      "full_rms_frac": 0.3151430283,
+      "high_bias_tail_fraction": 0.2297297297,
+      "within_10pct": 0.4189189189,
+      "within_25pct": 0.7702702703,
+      "bias_ci95": [
+        -0.0289600639,
+        0.0045705883
+      ],
+      "res68_ci95": [
+        0.134596802,
+        0.2279948999
+      ],
+      "full_rms_ci95": [
+        0.1937307751,
+        0.428872486
+      ],
+      "high_bias_tail_ci95": [
+        0.1529055258,
+        0.3182059961
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "novel_early_pretrigger",
+      "method": "shuffled_target_gbt",
+      "n": 74,
+      "bias_median_frac": 0.7760376731,
+      "res68_abs_frac": 0.9635966104,
+      "full_rms_frac": 0.9827080722,
+      "high_bias_tail_fraction": 0.7972972973,
+      "within_10pct": 0.1081081081,
+      "within_25pct": 0.2027027027,
+      "bias_ci95": [
+        0.321349845,
+        0.9283453607
+      ],
+      "res68_ci95": [
+        0.7646238707,
+        1.272252847
+      ],
+      "full_rms_ci95": [
+        0.7461691846,
+        1.2791964348
+      ],
+      "high_bias_tail_ci95": [
+        0.5352112676,
+        0.9714285714
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "traditional_strong",
+      "n": 18,
+      "bias_median_frac": -0.0510117709,
+      "res68_abs_frac": 0.2642532263,
+      "full_rms_frac": 0.2314265411,
+      "high_bias_tail_fraction": 0.3888888889,
+      "within_10pct": 0.4444444444,
+      "within_25pct": 0.6111111111,
+      "bias_ci95": [
+        -0.1910002071,
+        0.0425822456
+      ],
+      "res68_ci95": [
+        0.1223756582,
+        0.3582090418
+      ],
+      "full_rms_ci95": [
+        0.1620504932,
+        0.3232374562
+      ],
+      "high_bias_tail_ci95": [
+        0.2068965517,
+        0.7
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "ridge",
+      "n": 18,
+      "bias_median_frac": -0.0264089809,
+      "res68_abs_frac": 0.2167648155,
+      "full_rms_frac": 0.2627654625,
+      "high_bias_tail_fraction": 0.1666666667,
+      "within_10pct": 0.3888888889,
+      "within_25pct": 0.8333333333,
+      "bias_ci95": [
+        -0.1785097246,
+        -0.0099011185
+      ],
+      "res68_ci95": [
+        0.1614864823,
+        0.2970517175
+      ],
+      "full_rms_ci95": [
+        0.1494963366,
+        0.3902421054
+      ],
+      "high_bias_tail_ci95": [
+        0.0555555556,
+        0.3573051948
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "gradient_boosted_trees",
+      "n": 18,
+      "bias_median_frac": -0.067808449,
+      "res68_abs_frac": 0.2422979827,
+      "full_rms_frac": 0.2250363473,
+      "high_bias_tail_fraction": 0.3333333333,
+      "within_10pct": 0.2777777778,
+      "within_25pct": 0.6666666667,
+      "bias_ci95": [
+        -0.2207871787,
+        0.0155749163
+      ],
+      "res68_ci95": [
+        0.2084507228,
+        0.2894578734
+      ],
+      "full_rms_ci95": [
+        0.1574904724,
+        0.2554822638
+      ],
+      "high_bias_tail_ci95": [
+        0.0995833333,
+        0.4761904762
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "mlp",
+      "n": 18,
+      "bias_median_frac": 0.0643855316,
+      "res68_abs_frac": 0.4706123466,
+      "full_rms_frac": 13.3323117048,
+      "high_bias_tail_fraction": 0.6666666667,
+      "within_10pct": 0.1111111111,
+      "within_25pct": 0.3333333333,
+      "bias_ci95": [
+        -0.0515371869,
+        0.2897802638
+      ],
+      "res68_ci95": [
+        0.3845440382,
+        0.7389514021
+      ],
+      "full_rms_ci95": [
+        0.410538511,
+        23.0623654417
+      ],
+      "high_bias_tail_ci95": [
+        0.5714285714,
+        0.8575892857
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "cnn1d",
+      "n": 18,
+      "bias_median_frac": -0.0247759172,
+      "res68_abs_frac": 0.2267770053,
+      "full_rms_frac": 0.1956753453,
+      "high_bias_tail_fraction": 0.2777777778,
+      "within_10pct": 0.3888888889,
+      "within_25pct": 0.7222222222,
+      "bias_ci95": [
+        -0.2263122454,
+        0.0390331508
+      ],
+      "res68_ci95": [
+        0.1793379797,
+        0.2648494708
+      ],
+      "full_rms_ci95": [
+        0.1469862969,
+        0.2152640079
+      ],
+      "high_bias_tail_ci95": [
+        0.0713095238,
+        0.4210526316
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "residual_cnn_meta",
+      "n": 18,
+      "bias_median_frac": -0.0242873429,
+      "res68_abs_frac": 0.241531513,
+      "full_rms_frac": 0.208666763,
+      "high_bias_tail_fraction": 0.2777777778,
+      "within_10pct": 0.2777777778,
+      "within_25pct": 0.7222222222,
+      "bias_ci95": [
+        -0.2296692435,
+        0.0113733725
+      ],
+      "res68_ci95": [
+        0.1653481642,
+        0.2729037713
+      ],
+      "full_rms_ci95": [
+        0.1640283923,
+        0.2425875891
+      ],
+      "high_bias_tail_ci95": [
+        0.0713095238,
+        0.5
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "shuffled_target_gbt",
+      "n": 18,
+      "bias_median_frac": -0.1602198757,
+      "res68_abs_frac": 0.2502692023,
+      "full_rms_frac": 0.5011163684,
+      "high_bias_tail_fraction": 0.3333333333,
+      "within_10pct": 0.2222222222,
+      "within_25pct": 0.6666666667,
+      "bias_ci95": [
+        -0.2404743929,
+        0.2061928898
+      ],
+      "res68_ci95": [
+        0.2082997985,
+        0.3043828558
+      ],
+      "full_rms_ci95": [
+        0.2007484337,
+        0.9934338952
+      ],
+      "high_bias_tail_ci95": [
+        0.2608695652,
+        0.5555555556
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "traditional_strong",
+      "n": 74,
+      "bias_median_frac": 0.051981528,
+      "res68_abs_frac": 0.2743823356,
+      "full_rms_frac": 0.2988431457,
+      "high_bias_tail_fraction": 0.3648648649,
+      "within_10pct": 0.3648648649,
+      "within_25pct": 0.6351351351,
+      "bias_ci95": [
+        -0.0316771167,
+        0.0795550358
+      ],
+      "res68_ci95": [
+        0.1484765009,
+        0.3492697957
+      ],
+      "full_rms_ci95": [
+        0.1688320855,
+        0.3631514553
+      ],
+      "high_bias_tail_ci95": [
+        0.0950630252,
+        0.5438725976
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "ridge",
+      "n": 74,
+      "bias_median_frac": -0.0047286912,
+      "res68_abs_frac": 0.2580551103,
+      "full_rms_frac": 0.2457559198,
+      "high_bias_tail_fraction": 0.3648648649,
+      "within_10pct": 0.3648648649,
+      "within_25pct": 0.6351351351,
+      "bias_ci95": [
+        -0.0562869048,
+        0.0159259193
+      ],
+      "res68_ci95": [
+        0.14026768,
+        0.295033391
+      ],
+      "full_rms_ci95": [
+        0.1632055097,
+        0.305620772
+      ],
+      "high_bias_tail_ci95": [
+        0.1612353372,
+        0.5384615385
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "gradient_boosted_trees",
+      "n": 74,
+      "bias_median_frac": -0.0015759944,
+      "res68_abs_frac": 0.2023955649,
+      "full_rms_frac": 0.2312302698,
+      "high_bias_tail_fraction": 0.2432432432,
+      "within_10pct": 0.4189189189,
+      "within_25pct": 0.7567567568,
+      "bias_ci95": [
+        -0.0423530216,
+        0.0467683289
+      ],
+      "res68_ci95": [
+        0.1638851743,
+        0.2644513639
+      ],
+      "full_rms_ci95": [
+        0.167710918,
+        0.2856857372
+      ],
+      "high_bias_tail_ci95": [
+        0.0943396226,
+        0.336757885
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "mlp",
+      "n": 74,
+      "bias_median_frac": 0.0207999998,
+      "res68_abs_frac": 0.3329471287,
+      "full_rms_frac": 0.4699301141,
+      "high_bias_tail_fraction": 0.4459459459,
+      "within_10pct": 0.2567567568,
+      "within_25pct": 0.5540540541,
+      "bias_ci95": [
+        -0.0194688067,
+        0.0540926159
+      ],
+      "res68_ci95": [
+        0.2682095776,
+        0.3907166636
+      ],
+      "full_rms_ci95": [
+        0.2774454455,
+        0.619120067
+      ],
+      "high_bias_tail_ci95": [
+        0.3333333333,
+        0.5434454191
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "cnn1d",
+      "n": 74,
+      "bias_median_frac": -0.0092647999,
+      "res68_abs_frac": 0.2204992913,
+      "full_rms_frac": 0.2334323017,
+      "high_bias_tail_fraction": 0.2972972973,
+      "within_10pct": 0.4459459459,
+      "within_25pct": 0.7027027027,
+      "bias_ci95": [
+        -0.0573943287,
+        0.013189325
+      ],
+      "res68_ci95": [
+        0.1500253702,
+        0.2870469617
+      ],
+      "full_rms_ci95": [
+        0.1576487792,
+        0.2856150984
+      ],
+      "high_bias_tail_ci95": [
+        0.154666442,
+        0.4260335917
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "residual_cnn_meta",
+      "n": 74,
+      "bias_median_frac": 0.0134838738,
+      "res68_abs_frac": 0.2137059858,
+      "full_rms_frac": 0.2407760155,
+      "high_bias_tail_fraction": 0.2702702703,
+      "within_10pct": 0.4054054054,
+      "within_25pct": 0.7297297297,
+      "bias_ci95": [
+        -0.0474562618,
+        0.0619191601
+      ],
+      "res68_ci95": [
+        0.1398929724,
+        0.2928086541
+      ],
+      "full_rms_ci95": [
+        0.1460164563,
+        0.31698604
+      ],
+      "high_bias_tail_ci95": [
+        0.0526315789,
+        0.4270858617
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "shuffled_target_gbt",
+      "n": 74,
+      "bias_median_frac": 0.1765578785,
+      "res68_abs_frac": 0.4199640744,
+      "full_rms_frac": 0.7856825432,
+      "high_bias_tail_fraction": 0.5,
+      "within_10pct": 0.2432432432,
+      "within_25pct": 0.5,
+      "bias_ci95": [
+        0.0749071415,
+        0.3172072869
+      ],
+      "res68_ci95": [
+        0.2585487278,
+        0.50592599
+      ],
+      "full_rms_ci95": [
+        0.4419588292,
+        1.0872057536
+      ],
+      "high_bias_tail_ci95": [
+        0.4135444297,
+        0.5729166667
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "all_rows",
+      "method": "traditional_strong",
+      "n": 4055,
+      "bias_median_frac": -0.050382677,
+      "res68_abs_frac": 0.5199568129,
+      "full_rms_frac": 0.8474255843,
+      "high_bias_tail_fraction": 0.657459926,
+      "within_10pct": 0.1413070284,
+      "within_25pct": 0.342540074,
+      "bias_ci95": [
+        -0.0691407936,
+        -0.0219710536
+      ],
+      "res68_ci95": [
+        0.5063584286,
+        0.5376437212
+      ],
+      "full_rms_ci95": [
+        0.7472782126,
+        1.0281711569
+      ],
+      "high_bias_tail_ci95": [
+        0.6369469225,
+        0.676299301
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "all_rows",
+      "method": "ridge",
+      "n": 4055,
+      "bias_median_frac": -0.0490899266,
+      "res68_abs_frac": 0.525019164,
+      "full_rms_frac": 0.8620959728,
+      "high_bias_tail_fraction": 0.6604192355,
+      "within_10pct": 0.136621455,
+      "within_25pct": 0.3395807645,
+      "bias_ci95": [
+        -0.0668545145,
+        -0.0172481653
+      ],
+      "res68_ci95": [
+        0.5086584696,
+        0.5393867425
+      ],
+      "full_rms_ci95": [
+        0.7588239845,
+        1.0239907816
+      ],
+      "high_bias_tail_ci95": [
+        0.6423655308,
+        0.6784193412
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "all_rows",
+      "method": "gradient_boosted_trees",
+      "n": 4055,
+      "bias_median_frac": -0.0357279492,
+      "res68_abs_frac": 0.5306612593,
+      "full_rms_frac": 0.8657350317,
+      "high_bias_tail_fraction": 0.6660912454,
+      "within_10pct": 0.1299630086,
+      "within_25pct": 0.3339087546,
+      "bias_ci95": [
+        -0.0639601235,
+        -0.010305886
+      ],
+      "res68_ci95": [
+        0.5167002831,
+        0.5494719734
+      ],
+      "full_rms_ci95": [
+        0.760062143,
+        1.0375224365
+      ],
+      "high_bias_tail_ci95": [
+        0.6477603343,
+        0.6847911651
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "all_rows",
+      "method": "mlp",
+      "n": 4055,
+      "bias_median_frac": -0.0292612234,
+      "res68_abs_frac": 0.6299489977,
+      "full_rms_frac": 54340856542902.53,
+      "high_bias_tail_fraction": 0.7294697904,
+      "within_10pct": 0.1107274969,
+      "within_25pct": 0.2705302096,
+      "bias_ci95": [
+        -0.0538677425,
+        0.0093692461
+      ],
+      "res68_ci95": [
+        0.6117997582,
+        0.6450265611
+      ],
+      "full_rms_ci95": [
+        781.8592004565,
+        105251719773178.27
+      ],
+      "high_bias_tail_ci95": [
+        0.7166342697,
+        0.7434942027
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "all_rows",
+      "method": "cnn1d",
+      "n": 4055,
+      "bias_median_frac": -0.0227857602,
+      "res68_abs_frac": 0.5207561348,
+      "full_rms_frac": 0.8757088165,
+      "high_bias_tail_fraction": 0.6542540074,
+      "within_10pct": 0.1422934649,
+      "within_25pct": 0.3457459926,
+      "bias_ci95": [
+        -0.0450689613,
+        0.0052184979
+      ],
+      "res68_ci95": [
+        0.5088950207,
+        0.5388377033
+      ],
+      "full_rms_ci95": [
+        0.7640314392,
+        1.0148199737
+      ],
+      "high_bias_tail_ci95": [
+        0.6375856703,
+        0.6710529309
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "all_rows",
+      "method": "residual_cnn_meta",
+      "n": 4055,
+      "bias_median_frac": -0.0293864571,
+      "res68_abs_frac": 0.5198863067,
+      "full_rms_frac": 0.8656468581,
+      "high_bias_tail_fraction": 0.6567200986,
+      "within_10pct": 0.140567201,
+      "within_25pct": 0.3432799014,
+      "bias_ci95": [
+        -0.0483376517,
+        0.010418392
+      ],
+      "res68_ci95": [
+        0.5092753396,
+        0.5375332081
+      ],
+      "full_rms_ci95": [
+        0.7676292398,
+        1.0231920866
+      ],
+      "high_bias_tail_ci95": [
+        0.6364589526,
+        0.677940644
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "all_rows",
+      "method": "shuffled_target_gbt",
+      "n": 4055,
+      "bias_median_frac": -0.0463116319,
+      "res68_abs_frac": 0.5229746303,
+      "full_rms_frac": 0.8579407674,
+      "high_bias_tail_fraction": 0.6567200986,
+      "within_10pct": 0.1376078915,
+      "within_25pct": 0.3432799014,
+      "bias_ci95": [
+        -0.0670880002,
+        -0.0108101186
+      ],
+      "res68_ci95": [
+        0.5113323071,
+        0.5446162514
+      ],
+      "full_rms_ci95": [
+        0.754204796,
+        0.9802226998
+      ],
+      "high_bias_tail_ci95": [
+        0.6387633002,
+        0.6772378129
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "normal_control_pool",
+      "method": "traditional_strong",
+      "n": 3819,
+      "bias_median_frac": -0.0479887713,
+      "res68_abs_frac": 0.5212633492,
+      "full_rms_frac": 0.8599574146,
+      "high_bias_tail_fraction": 0.6569782666,
+      "within_10pct": 0.1406127258,
+      "within_25pct": 0.3430217334,
+      "bias_ci95": [
+        -0.0652500611,
+        -0.0237873824
+      ],
+      "res68_ci95": [
+        0.5094221808,
+        0.5374788435
+      ],
+      "full_rms_ci95": [
+        0.7592468332,
+        0.9995547931
+      ],
+      "high_bias_tail_ci95": [
+        0.638401593,
+        0.6762559275
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "normal_control_pool",
+      "method": "ridge",
+      "n": 3819,
+      "bias_median_frac": -0.0518551957,
+      "res68_abs_frac": 0.5258125918,
+      "full_rms_frac": 0.8732947666,
+      "high_bias_tail_fraction": 0.6606441477,
+      "within_10pct": 0.1358994501,
+      "within_25pct": 0.3393558523,
+      "bias_ci95": [
+        -0.0718991715,
+        -0.0173887447
+      ],
+      "res68_ci95": [
+        0.5091383915,
+        0.5397285022
+      ],
+      "full_rms_ci95": [
+        0.7551899998,
+        1.0271696538
+      ],
+      "high_bias_tail_ci95": [
+        0.6424498124,
+        0.6760417227
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "normal_control_pool",
+      "method": "gradient_boosted_trees",
+      "n": 3819,
+      "bias_median_frac": -0.0357279492,
+      "res68_abs_frac": 0.5329862769,
+      "full_rms_frac": 0.8805967206,
+      "high_bias_tail_fraction": 0.6677140613,
+      "within_10pct": 0.1288295365,
+      "within_25pct": 0.3322859387,
+      "bias_ci95": [
+        -0.056321551,
+        0.0028501515
+      ],
+      "res68_ci95": [
+        0.5185618981,
+        0.554285417
+      ],
+      "full_rms_ci95": [
+        0.7573837811,
+        1.0640779163
+      ],
+      "high_bias_tail_ci95": [
+        0.6501163355,
+        0.6887341683
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "normal_control_pool",
+      "method": "mlp",
+      "n": 3819,
+      "bias_median_frac": -0.0303665622,
+      "res68_abs_frac": 0.6213639976,
+      "full_rms_frac": 55994720314663.125,
+      "high_bias_tail_fraction": 0.7266300079,
+      "within_10pct": 0.1112856769,
+      "within_25pct": 0.2733699921,
+      "bias_ci95": [
+        -0.0538776091,
+        0.0011211482
+      ],
+      "res68_ci95": [
+        0.6082143358,
+        0.6404045994
+      ],
+      "full_rms_ci95": [
+        487.6503617305,
+        99294746608440.89
+      ],
+      "high_bias_tail_ci95": [
+        0.7140639063,
+        0.7419093261
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "normal_control_pool",
+      "method": "cnn1d",
+      "n": 3819,
+      "bias_median_frac": -0.0231527204,
+      "res68_abs_frac": 0.522365674,
+      "full_rms_frac": 0.8890668089,
+      "high_bias_tail_fraction": 0.6538360827,
+      "within_10pct": 0.143493061,
+      "within_25pct": 0.3461639173,
+      "bias_ci95": [
+        -0.0442354282,
+        0.007143039
+      ],
+      "res68_ci95": [
+        0.5081628099,
+        0.5378396576
+      ],
+      "full_rms_ci95": [
+        0.7657931286,
+        1.0418671056
+      ],
+      "high_bias_tail_ci95": [
+        0.6334208478,
+        0.6724922473
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "normal_control_pool",
+      "method": "residual_cnn_meta",
+      "n": 3819,
+      "bias_median_frac": -0.0297583173,
+      "res68_abs_frac": 0.5204795755,
+      "full_rms_frac": 0.8781702756,
+      "high_bias_tail_fraction": 0.6575019639,
+      "within_10pct": 0.1398271799,
+      "within_25pct": 0.3424980361,
+      "bias_ci95": [
+        -0.0496256421,
+        0.0048137806
+      ],
+      "res68_ci95": [
+        0.509499705,
+        0.534488486
+      ],
+      "full_rms_ci95": [
+        0.7723532064,
+        1.0298675887
+      ],
+      "high_bias_tail_ci95": [
+        0.6363247483,
+        0.6777528257
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "normal_control_pool",
+      "method": "shuffled_target_gbt",
+      "n": 3819,
+      "bias_median_frac": -0.0435766665,
+      "res68_abs_frac": 0.5250606388,
+      "full_rms_frac": 0.8689433732,
+      "high_bias_tail_fraction": 0.6569782666,
+      "within_10pct": 0.137470542,
+      "within_25pct": 0.3430217334,
+      "bias_ci95": [
+        -0.0638736367,
+        -0.0138363985
+      ],
+      "res68_ci95": [
+        0.5135725163,
+        0.5451675213
+      ],
+      "full_rms_ci95": [
+        0.7671190484,
+        1.0179965572
+      ],
+      "high_bias_tail_ci95": [
+        0.6384364339,
+        0.6754547742
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "baseline_excursion",
+      "method": "traditional_strong",
+      "n": 54,
+      "bias_median_frac": -0.0441905632,
+      "res68_abs_frac": 0.5687886146,
+      "full_rms_frac": 0.6588762333,
+      "high_bias_tail_fraction": 0.7592592593,
+      "within_10pct": 0.1666666667,
+      "within_25pct": 0.2407407407,
+      "bias_ci95": [
+        -0.2566588179,
+        0.5005769546
+      ],
+      "res68_ci95": [
+        0.4318607433,
+        1.0152055581
+      ],
+      "full_rms_ci95": [
+        0.4604795701,
+        0.8280211202
+      ],
+      "high_bias_tail_ci95": [
+        0.6529846939,
+        0.8431372549
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "baseline_excursion",
+      "method": "ridge",
+      "n": 54,
+      "bias_median_frac": -0.0631510908,
+      "res68_abs_frac": 0.5556998969,
+      "full_rms_frac": 0.6342800638,
+      "high_bias_tail_fraction": 0.7592592593,
+      "within_10pct": 0.1296296296,
+      "within_25pct": 0.2407407407,
+      "bias_ci95": [
+        -0.2671325054,
+        0.4352303993
+      ],
+      "res68_ci95": [
+        0.4503845534,
+        0.8757861476
+      ],
+      "full_rms_ci95": [
+        0.4386942676,
+        0.8006790414
+      ],
+      "high_bias_tail_ci95": [
+        0.6537790698,
+        0.8373317013
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "baseline_excursion",
+      "method": "gradient_boosted_trees",
+      "n": 54,
+      "bias_median_frac": -0.018908326,
+      "res68_abs_frac": 0.5661003387,
+      "full_rms_frac": 0.6708359159,
+      "high_bias_tail_fraction": 0.7407407407,
+      "within_10pct": 0.0925925926,
+      "within_25pct": 0.2592592593,
+      "bias_ci95": [
+        -0.2517167016,
+        0.4235259256
+      ],
+      "res68_ci95": [
+        0.4983881752,
+        1.026739841
+      ],
+      "full_rms_ci95": [
+        0.5056669401,
+        0.8171970367
+      ],
+      "high_bias_tail_ci95": [
+        0.61625,
+        0.8333333333
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "baseline_excursion",
+      "method": "mlp",
+      "n": 54,
+      "bias_median_frac": -0.2159518222,
+      "res68_abs_frac": 0.983136878,
+      "full_rms_frac": 2.1139013038,
+      "high_bias_tail_fraction": 0.8518518519,
+      "within_10pct": 0.0740740741,
+      "within_25pct": 0.1481481481,
+      "bias_ci95": [
+        -0.5060551215,
+        0.4821046763
+      ],
+      "res68_ci95": [
+        0.6466037018,
+        2.27187276
+      ],
+      "full_rms_ci95": [
+        1.2781453474,
+        2.7277171495
+      ],
+      "high_bias_tail_ci95": [
+        0.7399782609,
+        0.9333606557
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "baseline_excursion",
+      "method": "cnn1d",
+      "n": 54,
+      "bias_median_frac": -0.0934668341,
+      "res68_abs_frac": 0.5928133943,
+      "full_rms_frac": 0.6316923746,
+      "high_bias_tail_fraction": 0.7592592593,
+      "within_10pct": 0.0740740741,
+      "within_25pct": 0.2407407407,
+      "bias_ci95": [
+        -0.2291780572,
+        0.3810658617
+      ],
+      "res68_ci95": [
+        0.4488152556,
+        0.821794057
+      ],
+      "full_rms_ci95": [
+        0.4530527525,
+        0.7669696572
+      ],
+      "high_bias_tail_ci95": [
+        0.6338482385,
+        0.8393035714
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "baseline_excursion",
+      "method": "residual_cnn_meta",
+      "n": 54,
+      "bias_median_frac": -0.0462072597,
+      "res68_abs_frac": 0.5799765535,
+      "full_rms_frac": 0.6408496286,
+      "high_bias_tail_fraction": 0.7407407407,
+      "within_10pct": 0.1296296296,
+      "within_25pct": 0.2592592593,
+      "bias_ci95": [
+        -0.2589595078,
+        0.4357971526
+      ],
+      "res68_ci95": [
+        0.477595287,
+        0.925005764
+      ],
+      "full_rms_ci95": [
+        0.4520581556,
+        0.8102049181
+      ],
+      "high_bias_tail_ci95": [
+        0.6341090095,
+        0.8461864407
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "baseline_excursion",
+      "method": "shuffled_target_gbt",
+      "n": 54,
+      "bias_median_frac": -0.0697577947,
+      "res68_abs_frac": 0.6188969415,
+      "full_rms_frac": 0.7329279576,
+      "high_bias_tail_fraction": 0.7777777778,
+      "within_10pct": 0.0925925926,
+      "within_25pct": 0.2222222222,
+      "bias_ci95": [
+        -0.2993123107,
+        0.4849201451
+      ],
+      "res68_ci95": [
+        0.4358365288,
+        0.875427353
+      ],
+      "full_rms_ci95": [
+        0.518785895,
+        0.9036753617
+      ],
+      "high_bias_tail_ci95": [
+        0.6749854651,
+        0.8600686275
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "novel_early_pretrigger",
+      "method": "traditional_strong",
+      "n": 182,
+      "bias_median_frac": -0.084024889,
+      "res68_abs_frac": 0.4834075966,
+      "full_rms_frac": 0.5944921049,
+      "high_bias_tail_fraction": 0.6373626374,
+      "within_10pct": 0.1483516484,
+      "within_25pct": 0.3626373626,
+      "bias_ci95": [
+        -0.1560519315,
+        -0.0034423298
+      ],
+      "res68_ci95": [
+        0.4571846128,
+        0.5256383751
+      ],
+      "full_rms_ci95": [
+        0.5018213061,
+        0.6952792885
+      ],
+      "high_bias_tail_ci95": [
+        0.5808783527,
+        0.7038776086
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "novel_early_pretrigger",
+      "method": "ridge",
+      "n": 182,
+      "bias_median_frac": -0.0055374165,
+      "res68_abs_frac": 0.4969063648,
+      "full_rms_frac": 0.6607234722,
+      "high_bias_tail_fraction": 0.6263736264,
+      "within_10pct": 0.1538461538,
+      "within_25pct": 0.3736263736,
+      "bias_ci95": [
+        -0.0852069381,
+        0.1287281726
+      ],
+      "res68_ci95": [
+        0.4364940006,
+        0.5362164457
+      ],
+      "full_rms_ci95": [
+        0.528166868,
+        0.8177378394
+      ],
+      "high_bias_tail_ci95": [
+        0.5659464417,
+        0.7107568968
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "novel_early_pretrigger",
+      "method": "gradient_boosted_trees",
+      "n": 182,
+      "bias_median_frac": -0.0589781432,
+      "res68_abs_frac": 0.4794766219,
+      "full_rms_frac": 0.5419947741,
+      "high_bias_tail_fraction": 0.6098901099,
+      "within_10pct": 0.1648351648,
+      "within_25pct": 0.3901098901,
+      "bias_ci95": [
+        -0.1597714518,
+        0.019554137
+      ],
+      "res68_ci95": [
+        0.4284703841,
+        0.5311980077
+      ],
+      "full_rms_ci95": [
+        0.4684838243,
+        0.624031776
+      ],
+      "high_bias_tail_ci95": [
+        0.539990099,
+        0.6969379667
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "novel_early_pretrigger",
+      "method": "mlp",
+      "n": 182,
+      "bias_median_frac": 0.0591153916,
+      "res68_abs_frac": 0.7065031865,
+      "full_rms_frac": 1.8477247522,
+      "high_bias_tail_fraction": 0.7527472527,
+      "within_10pct": 0.1098901099,
+      "within_25pct": 0.2472527473,
+      "bias_ci95": [
+        -0.1126637141,
+        0.1704319541
+      ],
+      "res68_ci95": [
+        0.6060848531,
+        0.7831447424
+      ],
+      "full_rms_ci95": [
+        1.1218053226,
+        2.359595218
+      ],
+      "high_bias_tail_ci95": [
+        0.715053067,
+        0.7960518354
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "novel_early_pretrigger",
+      "method": "cnn1d",
+      "n": 182,
+      "bias_median_frac": -0.001868387,
+      "res68_abs_frac": 0.4864132923,
+      "full_rms_frac": 0.6175273574,
+      "high_bias_tail_fraction": 0.6318681319,
+      "within_10pct": 0.1373626374,
+      "within_25pct": 0.3681318681,
+      "bias_ci95": [
+        -0.123980392,
+        0.0974137513
+      ],
+      "res68_ci95": [
+        0.426027813,
+        0.5307443392
+      ],
+      "full_rms_ci95": [
+        0.5159587278,
+        0.7390346562
+      ],
+      "high_bias_tail_ci95": [
+        0.5884947917,
+        0.6821548328
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "novel_early_pretrigger",
+      "method": "residual_cnn_meta",
+      "n": 182,
+      "bias_median_frac": -0.0249599072,
+      "res68_abs_frac": 0.4876046999,
+      "full_rms_frac": 0.6257598053,
+      "high_bias_tail_fraction": 0.6153846154,
+      "within_10pct": 0.1593406593,
+      "within_25pct": 0.3846153846,
+      "bias_ci95": [
+        -0.0952776143,
+        0.0888825686
+      ],
+      "res68_ci95": [
+        0.423225922,
+        0.5404098415
+      ],
+      "full_rms_ci95": [
+        0.5078456564,
+        0.7695677319
+      ],
+      "high_bias_tail_ci95": [
+        0.554841049,
+        0.6881075845
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "novel_early_pretrigger",
+      "method": "shuffled_target_gbt",
+      "n": 182,
+      "bias_median_frac": -0.1089941281,
+      "res68_abs_frac": 0.4877278132,
+      "full_rms_frac": 0.6295862636,
+      "high_bias_tail_fraction": 0.6153846154,
+      "within_10pct": 0.1538461538,
+      "within_25pct": 0.3846153846,
+      "bias_ci95": [
+        -0.1819871963,
+        -0.0245830651
+      ],
+      "res68_ci95": [
+        0.4568466546,
+        0.5370101485
+      ],
+      "full_rms_ci95": [
+        0.5190175286,
+        0.7721508952
+      ],
+      "high_bias_tail_ci95": [
+        0.5526253133,
+        0.6905357143
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "traditional_strong",
+      "n": 53,
+      "bias_median_frac": -0.1092278612,
+      "res68_abs_frac": 0.4272059213,
+      "full_rms_frac": 0.7894206523,
+      "high_bias_tail_fraction": 0.6981132075,
+      "within_10pct": 0.1132075472,
+      "within_25pct": 0.3018867925,
+      "bias_ci95": [
+        -0.283254091,
+        0.1017794834
+      ],
+      "res68_ci95": [
+        0.3557793918,
+        0.5888555351
+      ],
+      "full_rms_ci95": [
+        0.4574584967,
+        1.1311125731
+      ],
+      "high_bias_tail_ci95": [
+        0.6153061224,
+        0.8086103723
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "ridge",
+      "n": 53,
+      "bias_median_frac": -0.112605021,
+      "res68_abs_frac": 0.4587349029,
+      "full_rms_frac": 0.7770612117,
+      "high_bias_tail_fraction": 0.6603773585,
+      "within_10pct": 0.0943396226,
+      "within_25pct": 0.3396226415,
+      "bias_ci95": [
+        -0.2759774711,
+        0.1585066411
+      ],
+      "res68_ci95": [
+        0.3644010943,
+        0.5938929934
+      ],
+      "full_rms_ci95": [
+        0.4784816503,
+        1.0990616602
+      ],
+      "high_bias_tail_ci95": [
+        0.5635285054,
+        0.7660114092
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "gradient_boosted_trees",
+      "n": 53,
+      "bias_median_frac": -0.1496506476,
+      "res68_abs_frac": 0.4754411122,
+      "full_rms_frac": 0.8247578975,
+      "high_bias_tail_fraction": 0.6981132075,
+      "within_10pct": 0.1320754717,
+      "within_25pct": 0.3018867925,
+      "bias_ci95": [
+        -0.2547650419,
+        0.1122199196
+      ],
+      "res68_ci95": [
+        0.3580988067,
+        0.593826292
+      ],
+      "full_rms_ci95": [
+        0.4826232979,
+        1.1737689942
+      ],
+      "high_bias_tail_ci95": [
+        0.6315503432,
+        0.7708333333
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "mlp",
+      "n": 53,
+      "bias_median_frac": -0.0655652274,
+      "res68_abs_frac": 0.6756560126,
+      "full_rms_frac": 0.9376474473,
+      "high_bias_tail_fraction": 0.7735849057,
+      "within_10pct": 0.1132075472,
+      "within_25pct": 0.2264150943,
+      "bias_ci95": [
+        -0.337224693,
+        0.1788438789
+      ],
+      "res68_ci95": [
+        0.5174604521,
+        0.8679980759
+      ],
+      "full_rms_ci95": [
+        0.6796091936,
+        1.1218737603
+      ],
+      "high_bias_tail_ci95": [
+        0.648120915,
+        0.8909577922
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "cnn1d",
+      "n": 53,
+      "bias_median_frac": -0.1142152872,
+      "res68_abs_frac": 0.4380495673,
+      "full_rms_frac": 0.8223906375,
+      "high_bias_tail_fraction": 0.679245283,
+      "within_10pct": 0.1320754717,
+      "within_25pct": 0.320754717,
+      "bias_ci95": [
+        -0.2586647885,
+        0.0944709529
+      ],
+      "res68_ci95": [
+        0.3593066612,
+        0.5919269864
+      ],
+      "full_rms_ci95": [
+        0.4947958022,
+        1.2557549444
+      ],
+      "high_bias_tail_ci95": [
+        0.5592278719,
+        0.7826086957
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "residual_cnn_meta",
+      "n": 53,
+      "bias_median_frac": -0.0947067263,
+      "res68_abs_frac": 0.4473745874,
+      "full_rms_frac": 0.8107316401,
+      "high_bias_tail_fraction": 0.6603773585,
+      "within_10pct": 0.1320754717,
+      "within_25pct": 0.3396226415,
+      "bias_ci95": [
+        -0.2428389083,
+        0.1078343219
+      ],
+      "res68_ci95": [
+        0.3522899671,
+        0.5987825683
+      ],
+      "full_rms_ci95": [
+        0.4874770337,
+        1.1403369808
+      ],
+      "high_bias_tail_ci95": [
+        0.5660172272,
+        0.7632278835
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_baseline_excursion",
+      "method": "shuffled_target_gbt",
+      "n": 53,
+      "bias_median_frac": -0.1177942318,
+      "res68_abs_frac": 0.4262009789,
+      "full_rms_frac": 0.890046617,
+      "high_bias_tail_fraction": 0.641509434,
+      "within_10pct": 0.0943396226,
+      "within_25pct": 0.358490566,
+      "bias_ci95": [
+        -0.2227373616,
+        0.1294313024
+      ],
+      "res68_ci95": [
+        0.3597836571,
+        0.6066562114
+      ],
+      "full_rms_ci95": [
+        0.478967264,
+        1.2639316917
+      ],
+      "high_bias_tail_ci95": [
+        0.5613028473,
+        0.7317073171
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "traditional_strong",
+      "n": 179,
+      "bias_median_frac": -0.0593941046,
+      "res68_abs_frac": 0.5228390051,
+      "full_rms_frac": 0.7141904134,
+      "high_bias_tail_fraction": 0.6592178771,
+      "within_10pct": 0.1508379888,
+      "within_25pct": 0.3407821229,
+      "bias_ci95": [
+        -0.1240657743,
+        -0.0115740621
+      ],
+      "res68_ci95": [
+        0.4908368358,
+        0.5654419045
+      ],
+      "full_rms_ci95": [
+        0.596223761,
+        0.8348213475
+      ],
+      "high_bias_tail_ci95": [
+        0.6105442881,
+        0.715215532
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "ridge",
+      "n": 179,
+      "bias_median_frac": -0.0927463367,
+      "res68_abs_frac": 0.5304678889,
+      "full_rms_frac": 0.7203962075,
+      "high_bias_tail_fraction": 0.6759776536,
+      "within_10pct": 0.1173184358,
+      "within_25pct": 0.3240223464,
+      "bias_ci95": [
+        -0.1219251531,
+        -0.0678160426
+      ],
+      "res68_ci95": [
+        0.5017295132,
+        0.5811297057
+      ],
+      "full_rms_ci95": [
+        0.6022888102,
+        0.8588439013
+      ],
+      "high_bias_tail_ci95": [
+        0.6307048048,
+        0.71765801
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "gradient_boosted_trees",
+      "n": 179,
+      "bias_median_frac": -0.0574199691,
+      "res68_abs_frac": 0.5608351,
+      "full_rms_frac": 0.7532823368,
+      "high_bias_tail_fraction": 0.687150838,
+      "within_10pct": 0.1284916201,
+      "within_25pct": 0.312849162,
+      "bias_ci95": [
+        -0.1108070003,
+        0.0519188341
+      ],
+      "res68_ci95": [
+        0.5364621938,
+        0.6022765657
+      ],
+      "full_rms_ci95": [
+        0.6220256072,
+        0.9277460029
+      ],
+      "high_bias_tail_ci95": [
+        0.6241809179,
+        0.7512032502
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "mlp",
+      "n": 179,
+      "bias_median_frac": -0.1581016296,
+      "res68_abs_frac": 0.5897373158,
+      "full_rms_frac": 11.8903387152,
+      "high_bias_tail_fraction": 0.687150838,
+      "within_10pct": 0.1005586592,
+      "within_25pct": 0.312849162,
+      "bias_ci95": [
+        -0.2119743786,
+        -0.0470263192
+      ],
+      "res68_ci95": [
+        0.5083726929,
+        0.6138429467
+      ],
+      "full_rms_ci95": [
+        0.8745570055,
+        20.4125835775
+      ],
+      "high_bias_tail_ci95": [
+        0.5891737452,
+        0.7678051439
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "cnn1d",
+      "n": 179,
+      "bias_median_frac": -0.0575367541,
+      "res68_abs_frac": 0.5244165023,
+      "full_rms_frac": 0.7392773785,
+      "high_bias_tail_fraction": 0.6424581006,
+      "within_10pct": 0.1284916201,
+      "within_25pct": 0.3575418994,
+      "bias_ci95": [
+        -0.1003501787,
+        0.0061619406
+      ],
+      "res68_ci95": [
+        0.4897273099,
+        0.5790231507
+      ],
+      "full_rms_ci95": [
+        0.5967231556,
+        0.8771676355
+      ],
+      "high_bias_tail_ci95": [
+        0.5911274071,
+        0.6941697692
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "residual_cnn_meta",
+      "n": 179,
+      "bias_median_frac": -0.049892858,
+      "res68_abs_frac": 0.527582112,
+      "full_rms_frac": 0.7386581979,
+      "high_bias_tail_fraction": 0.6536312849,
+      "within_10pct": 0.1229050279,
+      "within_25pct": 0.3463687151,
+      "bias_ci95": [
+        -0.1089090437,
+        0.0081515841
+      ],
+      "res68_ci95": [
+        0.4801416723,
+        0.5739541328
+      ],
+      "full_rms_ci95": [
+        0.6079935966,
+        0.8730095823
+      ],
+      "high_bias_tail_ci95": [
+        0.5939790883,
+        0.7206769777
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "shuffled_target_gbt",
+      "n": 179,
+      "bias_median_frac": -0.052085134,
+      "res68_abs_frac": 0.5359782807,
+      "full_rms_frac": 0.7073810344,
+      "high_bias_tail_fraction": 0.6592178771,
+      "within_10pct": 0.1173184358,
+      "within_25pct": 0.3407821229,
+      "bias_ci95": [
+        -0.1556073293,
+        0.0323817528
+      ],
+      "res68_ci95": [
+        0.4938177651,
+        0.5762334364
+      ],
+      "full_rms_ci95": [
+        0.5886601949,
+        0.8252503057
+      ],
+      "high_bias_tail_ci95": [
+        0.5951847291,
+        0.7219325609
+      ]
+    }
+  ],
+  "matched_stratum_deltas": [
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "traditional_strong",
+      "n_anomaly": 18,
+      "n_control": 18,
+      "delta_bias_median_frac": -0.1573727468,
+      "delta_res68_abs_frac": 0.0302522301,
+      "delta_high_bias_tail_fraction": 0.0,
+      "delta_bias_ci95": [
+        -0.3104630327,
+        -0.0041611852
+      ],
+      "delta_res68_ci95": [
+        -0.1038634582,
+        0.2892127111
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.5,
+        0.2608695652
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "ridge",
+      "n_anomaly": 18,
+      "n_control": 18,
+      "delta_bias_median_frac": -0.0514916786,
+      "delta_res68_abs_frac": 0.1041258539,
+      "delta_high_bias_tail_fraction": 0.2222222222,
+      "delta_bias_ci95": [
+        -0.1706518594,
+        0.2178620363
+      ],
+      "delta_res68_ci95": [
+        0.0234951934,
+        0.2018578174
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.1,
+        0.2692307692
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "gradient_boosted_trees",
+      "n_anomaly": 18,
+      "n_control": 18,
+      "delta_bias_median_frac": -0.0040358525,
+      "delta_res68_abs_frac": -0.0411852838,
+      "delta_high_bias_tail_fraction": -0.1111111111,
+      "delta_bias_ci95": [
+        -0.1173122326,
+        0.2279902974
+      ],
+      "delta_res68_ci95": [
+        -0.1240950389,
+        0.063758335
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.4090909091,
+        0.4004166667
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "mlp",
+      "n_anomaly": 18,
+      "n_control": 18,
+      "delta_bias_median_frac": -0.2580904887,
+      "delta_res68_abs_frac": 0.4205601101,
+      "delta_high_bias_tail_fraction": 0.0,
+      "delta_bias_ci95": [
+        -0.5908070474,
+        0.6115568683
+      ],
+      "delta_res68_ci95": [
+        0.0491126103,
+        2.8570443412
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.2,
+        0.1037466844
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "cnn1d",
+      "n_anomaly": 18,
+      "n_control": 18,
+      "delta_bias_median_frac": 0.0233924616,
+      "delta_res68_abs_frac": -0.0203176534,
+      "delta_high_bias_tail_fraction": -0.0555555556,
+      "delta_bias_ci95": [
+        -0.0133116008,
+        0.2356167678
+      ],
+      "delta_res68_ci95": [
+        -0.0731899121,
+        0.0612040642
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.2,
+        0.1538461538
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "residual_cnn_meta",
+      "n_anomaly": 18,
+      "n_control": 18,
+      "delta_bias_median_frac": 0.006614054,
+      "delta_res68_abs_frac": 0.0119192554,
+      "delta_high_bias_tail_fraction": 0.0555555556,
+      "delta_bias_ci95": [
+        -0.1684237546,
+        0.1428803969
+      ],
+      "delta_res68_ci95": [
+        -0.121301598,
+        0.2109519818
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.3,
+        0.5833333333
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "shuffled_target_gbt",
+      "n_anomaly": 18,
+      "n_control": 18,
+      "delta_bias_median_frac": 0.1742419378,
+      "delta_res68_abs_frac": -0.0527606481,
+      "delta_high_bias_tail_fraction": -0.1111111111,
+      "delta_bias_ci95": [
+        -0.1362493194,
+        0.2413758089
+      ],
+      "delta_res68_ci95": [
+        -0.0781525902,
+        0.0443317206
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.2222222222,
+        0.0
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "traditional_strong",
+      "n_anomaly": 74,
+      "n_control": 74,
+      "delta_bias_median_frac": 0.1646931262,
+      "delta_res68_abs_frac": 0.0820911102,
+      "delta_high_bias_tail_fraction": 0.1756756757,
+      "delta_bias_ci95": [
+        0.1056349268,
+        0.2425881203
+      ],
+      "delta_res68_ci95": [
+        -0.0492283066,
+        0.3292740518
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.0607392607,
+        0.5001865672
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "ridge",
+      "n_anomaly": 74,
+      "n_control": 74,
+      "delta_bias_median_frac": 0.0504913084,
+      "delta_res68_abs_frac": 0.0604245561,
+      "delta_high_bias_tail_fraction": 0.0405405405,
+      "delta_bias_ci95": [
+        -0.0769041903,
+        0.1378170837
+      ],
+      "delta_res68_ci95": [
+        0.0125416675,
+        0.1598993215
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1529411765,
+        0.2182272727
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "gradient_boosted_trees",
+      "n_anomaly": 74,
+      "n_control": 74,
+      "delta_bias_median_frac": -0.0025207519,
+      "delta_res68_abs_frac": -0.023890876,
+      "delta_high_bias_tail_fraction": -0.027027027,
+      "delta_bias_ci95": [
+        -0.0483665101,
+        0.0269723311
+      ],
+      "delta_res68_ci95": [
+        -0.0601193904,
+        0.0433523456
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1136363636,
+        0.14609375
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "mlp",
+      "n_anomaly": 74,
+      "n_control": 74,
+      "delta_bias_median_frac": -0.0376157082,
+      "delta_res68_abs_frac": 0.2965817976,
+      "delta_high_bias_tail_fraction": 0.1621621622,
+      "delta_bias_ci95": [
+        -0.2138403044,
+        0.0835120741
+      ],
+      "delta_res68_ci95": [
+        0.1066948877,
+        0.4458483848
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.0277777778,
+        0.3079545455
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "cnn1d",
+      "n_anomaly": 74,
+      "n_control": 74,
+      "delta_bias_median_frac": 0.0003291672,
+      "delta_res68_abs_frac": -0.0013727122,
+      "delta_high_bias_tail_fraction": -0.027027027,
+      "delta_bias_ci95": [
+        -0.0697913452,
+        0.0720874549
+      ],
+      "delta_res68_ci95": [
+        -0.0571796263,
+        0.0714980179
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1204918575,
+        0.0889393939
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "residual_cnn_meta",
+      "n_anomaly": 74,
+      "n_control": 74,
+      "delta_bias_median_frac": -0.0121963095,
+      "delta_res68_abs_frac": -0.0304783678,
+      "delta_high_bias_tail_fraction": -0.0405405405,
+      "delta_bias_ci95": [
+        -0.0665356773,
+        0.0486130364
+      ],
+      "delta_res68_ci95": [
+        -0.0950529708,
+        0.0409556562
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1547991071,
+        0.1489361702
+      ]
+    },
+    {
+      "dataset": "p04b_downstream",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "shuffled_target_gbt",
+      "n_anomaly": 74,
+      "n_control": 74,
+      "delta_bias_median_frac": 0.5994797946,
+      "delta_res68_abs_frac": 0.5436325361,
+      "delta_high_bias_tail_fraction": 0.2972972973,
+      "delta_bias_ci95": [
+        0.1727751289,
+        0.7973149392
+      ],
+      "delta_res68_ci95": [
+        0.3540929207,
+        0.9206778073
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.1249519231,
+        0.4584947183
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "traditional_strong",
+      "n_anomaly": 54,
+      "n_control": 53,
+      "delta_bias_median_frac": 0.065037298,
+      "delta_res68_abs_frac": 0.1415826933,
+      "delta_high_bias_tail_fraction": 0.0611460517,
+      "delta_bias_ci95": [
+        -0.1829827401,
+        0.6864793829
+      ],
+      "delta_res68_ci95": [
+        -0.0450192308,
+        0.4860054618
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.116497093,
+        0.2131440281
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "ridge",
+      "n_anomaly": 54,
+      "n_control": 53,
+      "delta_bias_median_frac": 0.0494539301,
+      "delta_res68_abs_frac": 0.096964994,
+      "delta_high_bias_tail_fraction": 0.0988819008,
+      "delta_bias_ci95": [
+        -0.293181994,
+        0.6380566359
+      ],
+      "delta_res68_ci95": [
+        -0.0270475519,
+        0.3792378401
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.0869565217,
+        0.2325581395
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "gradient_boosted_trees",
+      "n_anomaly": 54,
+      "n_control": 53,
+      "delta_bias_median_frac": 0.1307423216,
+      "delta_res68_abs_frac": 0.0906592265,
+      "delta_high_bias_tail_fraction": 0.0426275332,
+      "delta_bias_ci95": [
+        -0.3020869327,
+        0.6359813547
+      ],
+      "delta_res68_ci95": [
+        -0.0352115497,
+        0.433292871
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1,
+        0.1755526316
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "mlp",
+      "n_anomaly": 54,
+      "n_control": 53,
+      "delta_bias_median_frac": -0.1503865948,
+      "delta_res68_abs_frac": 0.3074808653,
+      "delta_high_bias_tail_fraction": 0.0782669462,
+      "delta_bias_ci95": [
+        -0.6141591741,
+        1.1380097858
+      ],
+      "delta_res68_ci95": [
+        -0.0514858995,
+        1.705433726
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.06,
+        0.2031489158
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "cnn1d",
+      "n_anomaly": 54,
+      "n_control": 53,
+      "delta_bias_median_frac": 0.0207484532,
+      "delta_res68_abs_frac": 0.1547638269,
+      "delta_high_bias_tail_fraction": 0.0800139762,
+      "delta_bias_ci95": [
+        -0.2718345893,
+        0.5909525707
+      ],
+      "delta_res68_ci95": [
+        -0.0694122462,
+        0.3938367202
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.0700502828,
+        0.1896756979
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "residual_cnn_meta",
+      "n_anomaly": 54,
+      "n_control": 53,
+      "delta_bias_median_frac": 0.0484994666,
+      "delta_res68_abs_frac": 0.1326019661,
+      "delta_high_bias_tail_fraction": 0.0803633823,
+      "delta_bias_ci95": [
+        -0.2431034445,
+        0.5860713976
+      ],
+      "delta_res68_ci95": [
+        -0.0249261212,
+        0.3965998762
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.0714721254,
+        0.2131790421
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "baseline_excursion",
+      "control_stratum": "matched_normal_for_baseline_excursion",
+      "method": "shuffled_target_gbt",
+      "n_anomaly": 54,
+      "n_control": 53,
+      "delta_bias_median_frac": 0.0480364371,
+      "delta_res68_abs_frac": 0.1926959626,
+      "delta_high_bias_tail_fraction": 0.1362683438,
+      "delta_bias_ci95": [
+        -0.2326020575,
+        0.6785111654
+      ],
+      "delta_res68_ci95": [
+        -0.1006608876,
+        0.3911925327
+      ],
+      "delta_high_bias_tail_ci95": [
+        0.0,
+        0.3
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "traditional_strong",
+      "n_anomaly": 182,
+      "n_control": 179,
+      "delta_bias_median_frac": -0.0246307844,
+      "delta_res68_abs_frac": -0.0394314085,
+      "delta_high_bias_tail_fraction": -0.0218552397,
+      "delta_bias_ci95": [
+        -0.1065065464,
+        0.0876997273
+      ],
+      "delta_res68_ci95": [
+        -0.1042375011,
+        0.0098534601
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1049412666,
+        0.0748822606
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "ridge",
+      "n_anomaly": 182,
+      "n_control": 179,
+      "delta_bias_median_frac": 0.0872089202,
+      "delta_res68_abs_frac": -0.0335615241,
+      "delta_high_bias_tail_fraction": -0.0496040273,
+      "delta_bias_ci95": [
+        0.0026230451,
+        0.2488111374
+      ],
+      "delta_res68_ci95": [
+        -0.1148562336,
+        0.0105147362
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1214984845,
+        0.0342962081
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "gradient_boosted_trees",
+      "n_anomaly": 182,
+      "n_control": 179,
+      "delta_bias_median_frac": -0.0015581741,
+      "delta_res68_abs_frac": -0.0813584781,
+      "delta_high_bias_tail_fraction": -0.0772607281,
+      "delta_bias_ci95": [
+        -0.1141118887,
+        0.0642499974
+      ],
+      "delta_res68_ci95": [
+        -0.1548461062,
+        -0.0104169785
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1666891892,
+        0.0398055516
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "mlp",
+      "n_anomaly": 182,
+      "n_control": 179,
+      "delta_bias_median_frac": 0.2172170212,
+      "delta_res68_abs_frac": 0.1167658707,
+      "delta_high_bias_tail_fraction": 0.0655964148,
+      "delta_bias_ci95": [
+        -0.0067635541,
+        0.3522337139
+      ],
+      "delta_res68_ci95": [
+        0.0205132433,
+        0.2947905146
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.021297167,
+        0.153513848
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "cnn1d",
+      "n_anomaly": 182,
+      "n_control": 179,
+      "delta_bias_median_frac": 0.0556683671,
+      "delta_res68_abs_frac": -0.0380032099,
+      "delta_high_bias_tail_fraction": -0.0105899687,
+      "delta_bias_ci95": [
+        -0.0767962601,
+        0.1654302233
+      ],
+      "delta_res68_ci95": [
+        -0.1214757965,
+        0.0160410287
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.0914947101,
+        0.0887677609
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "residual_cnn_meta",
+      "n_anomaly": 182,
+      "n_control": 179,
+      "delta_bias_median_frac": 0.0249329508,
+      "delta_res68_abs_frac": -0.0399774121,
+      "delta_high_bias_tail_fraction": -0.0382466695,
+      "delta_bias_ci95": [
+        -0.0490927146,
+        0.1628078713
+      ],
+      "delta_res68_ci95": [
+        -0.1219135537,
+        0.0509131997
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1242034314,
+        0.0750347222
+      ]
+    },
+    {
+      "dataset": "p04c_ab_charge",
+      "anomaly_stratum": "novel_early_pretrigger",
+      "control_stratum": "matched_normal_for_novel_early_pretrigger",
+      "method": "shuffled_target_gbt",
+      "n_anomaly": 182,
+      "n_control": 179,
+      "delta_bias_median_frac": -0.0569089941,
+      "delta_res68_abs_frac": -0.0482504674,
+      "delta_high_bias_tail_fraction": -0.0438332617,
+      "delta_bias_ci95": [
+        -0.1355115774,
+        0.0494932253
+      ],
+      "delta_res68_ci95": [
+        -0.1097446082,
+        0.0021931174
+      ],
+      "delta_high_bias_tail_ci95": [
+        -0.1261830328,
+        0.0571605667
+      ]
+    }
+  ],
+  "leakage_audit": {
+    "train_heldout_run_overlap_total": 0,
+    "p04b_shuffled_res68": 0.2806337442076485,
+    "p04c_shuffled_res68": 0.5229746303409174,
+    "p04b_label_join_misses": 0,
+    "p04c_label_join_misses": 0,
+    "excluded_features": [
+      "run id",
+      "event ids",
+      "P04b downstream target charge and downstream stave charge columns",
+      "P04c A-stack target charge and A-stack charge columns",
+      "held-out run rows"
+    ]
+  },
+  "next_tickets": [
+    {
+      "title": "P04n: independent calibration-pulse validation for external charge-proxy anomaly bias",
+      "body": "Use calibration/forced-trigger or scaler-backed charge references, rather than same-event B/A charge transfer, to test whether the P04f baseline-excursion and early-pretrigger bias persists against a detector-external charge scale."
+    }
+  ],
+  "novel_ticket_appended": {
+    "count": 1,
+    "ticket": {
+      "title": "P04n: independent calibration-pulse validation for external charge-proxy anomaly bias",
+      "body": "Use calibration/forced-trigger or scaler-backed charge references, rather than same-event B/A charge transfer, to test whether the P04f baseline-excursion and early-pretrigger bias persists against a detector-external charge scale."
+    },
+    "queue_id": "1781105308.1461.12695cf1"
+  },
+  "finding": "cnn1d is best on p04b_downstream with res68 0.2103 [0.2013, 0.2275]; residual_cnn_meta is best on p04c_ab_charge with res68 0.5199 [0.5093, 0.5375]. The cross-target winner is residual_cnn_meta. Matched anomaly effects for that method: p04b_downstream baseline_excursion delta res68 0.0119 [-0.1213, 0.2110]; p04b_downstream novel_early_pretrigger delta res68 -0.0305 [-0.0951, 0.0410]; p04c_ab_charge baseline_excursion delta res68 0.1326 [-0.0249, 0.3966]; p04c_ab_charge novel_early_pretrigger delta res68 -0.0400 [-0.1219, 0.0509]. Thus the P04f anomaly-bias signal is tested outside the duplicate-readout target; any surviving positive deltas are external-proxy effects, while null or unstable deltas bound the same-event electronics interpretation.",
+  "runtime_sec": 679.4,
+  "ticket_queue": {
+    "claimed_id": "1781033470.1723.1a366adc",
+    "done_confirmed": true,
+    "done_confirmed_from": "~/.config/tn/logs/testbeam-events.jsonl",
+    "appended_followup_id": "1781105308.1461.12695cf1"
+  }
+}

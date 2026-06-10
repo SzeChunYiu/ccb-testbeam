@@ -1,0 +1,7 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+"total selected B-stack pulses, A>1000 ADC",640737,640737,0,0,True
+Sample II analysis selected pulses,125096,125096,0,0,True
+Sample II analysis B2 pulses,88213,88213,0,0,True
+Sample II analysis B4 pulses,21229,21229,0,0,True
+Sample II analysis B6 pulses,11148,11148,0,0,True
+Sample II analysis B8 pulses,4506,4506,0,0,True

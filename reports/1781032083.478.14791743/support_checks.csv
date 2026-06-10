@@ -1,0 +1,6 @@
+check,value,pass
+loro_runs_match_config,"58,59,60,61,62,63,65",True
+all_methods_present,"cnn1d,gradient_boosted_trees,mlp,ridge,siamese_cnn_meta,traditional_quantile",True
+support_join_complete,11460,True
+frontier_has_all_method_quantiles,36,True
+all_frontier_metrics_finite,684,True

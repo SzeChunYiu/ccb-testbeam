@@ -1,0 +1,168 @@
+{
+  "study": "P03h",
+  "ticket": "1781035058.850.43a47da0",
+  "worker": "testbeam-laptop-4",
+  "title": "stave-aware residual support map by pulse atoms",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": {
+    "method": "analytic_timewalk",
+    "sigma68_ns": 1.551091710977783,
+    "ci": [
+      1.363752228304065,
+      1.936238056059584
+    ],
+    "full_rms_ns": 2.666988996928635
+  },
+  "benchmarked_methods": {
+    "ridge": "ridge_waveform_stave_onehot",
+    "gradient_boosted_trees": "hgb_waveform_amp_shape_stave",
+    "mlp": "mlp_waveform_amp_shape_stave",
+    "cnn1d": "cnn1d_waveform_amp_shape_stave",
+    "new_architecture": "feature_gated",
+    "new_architecture_best_method": "feature_gated_waveform_amp_shape_stave"
+  },
+  "winner": {
+    "method": "hgb_waveform_amp_shape_stave",
+    "family": "ml",
+    "sigma68_ns": 1.1074168319603352,
+    "ci": [
+      1.075312856264942,
+      1.1587926292593722
+    ],
+    "full_rms_ns": 2.1317098900814804,
+    "tail_frac_vs_traditional_p95": 0.0203315881326352,
+    "delta_vs_traditional_ns": -0.443674879017448,
+    "delta_ci": [
+      -0.8423304626565126,
+      -0.2411823439777396
+    ]
+  },
+  "support_atom_evidence": {
+    "n_atoms": 29,
+    "n_improved_atoms": 29,
+    "n_well_supported_atoms": 21,
+    "best_atoms": [
+      {
+        "support_category": "amplitude_bin",
+        "support_atom": "4000_6500_adc",
+        "n_runs": 7,
+        "n_events": 302,
+        "sigma68_ns": 1.365160320094006,
+        "sigma68_ci_low": 1.1762659251840728,
+        "sigma68_ci_high": 1.6390332485810057,
+        "delta_vs_traditional_ns": -1.1892791548111479,
+        "delta_ci_low": -1.922527484943341,
+        "delta_ci_high": -0.7315053237554955
+      },
+      {
+        "support_category": "run_family",
+        "support_atom": "sample_ii_run_61",
+        "n_runs": 1,
+        "n_events": 933,
+        "sigma68_ns": 1.0893511147892827,
+        "sigma68_ci_low": 1.035207394093982,
+        "sigma68_ci_high": 1.136727215229716,
+        "delta_vs_traditional_ns": -1.040613278750751,
+        "delta_ci_low": -1.144171212407441,
+        "delta_ci_high": -0.8758459228334758
+      },
+      {
+        "support_category": "peak_sample_phase",
+        "support_atom": "same_nominal_peak_9_11",
+        "n_runs": 7,
+        "n_events": 851,
+        "sigma68_ns": 1.3232110535331532,
+        "sigma68_ci_low": 1.213816260288199,
+        "sigma68_ci_high": 1.4304361152911258,
+        "delta_vs_traditional_ns": -0.6906011549557793,
+        "delta_ci_low": -1.0943142297175477,
+        "delta_ci_high": -0.17454818941242992
+      },
+      {
+        "support_category": "peak_sample_phase",
+        "support_atom": "mixed_early_peak_le5_rising_peak_6_8",
+        "n_runs": 7,
+        "n_events": 385,
+        "sigma68_ns": 0.6073399081331632,
+        "sigma68_ci_low": 0.5634629538028174,
+        "sigma68_ci_high": 0.6508852765026142,
+        "delta_vs_traditional_ns": -0.6025497487398284,
+        "delta_ci_low": -0.6629429084425004,
+        "delta_ci_high": -0.5389385969338175
+      },
+      {
+        "support_category": "peak_sample_phase",
+        "support_atom": "mixed_nominal_peak_9_11_rising_peak_6_8",
+        "n_runs": 7,
+        "n_events": 1345,
+        "sigma68_ns": 1.4068202772236225,
+        "sigma68_ci_low": 1.3263534307665068,
+        "sigma68_ci_high": 1.496054519445776,
+        "delta_vs_traditional_ns": -0.5963821082309124,
+        "delta_ci_low": -1.0010101478520137,
+        "delta_ci_high": -0.21054679151404454
+      },
+      {
+        "support_category": "q_template",
+        "support_atom": "mid_q_template",
+        "n_runs": 7,
+        "n_events": 2611,
+        "sigma68_ns": 1.1947660679072434,
+        "sigma68_ci_low": 1.1456071174263645,
+        "sigma68_ci_high": 1.2593441497078932,
+        "delta_vs_traditional_ns": -0.573841980978322,
+        "delta_ci_low": -0.8893518897713976,
+        "delta_ci_high": -0.3013770812846594
+      },
+      {
+        "support_category": "peak_sample_phase",
+        "support_atom": "same_early_peak_le5",
+        "n_runs": 7,
+        "n_events": 654,
+        "sigma68_ns": 0.6235008318452102,
+        "sigma68_ci_low": 0.5808734682807338,
+        "sigma68_ci_high": 0.6626308384083479,
+        "delta_vs_traditional_ns": -0.5631970018769663,
+        "delta_ci_low": -0.6137449844447864,
+        "delta_ci_high": -0.5148818247447355
+      },
+      {
+        "support_category": "q_template",
+        "support_atom": "high_q_template",
+        "n_runs": 7,
+        "n_events": 2180,
+        "sigma68_ns": 1.163128626506286,
+        "sigma68_ci_low": 1.1121194728887458,
+        "sigma68_ci_high": 1.225108043851309,
+        "delta_vs_traditional_ns": -0.5600831686173231,
+        "delta_ci_low": -0.9347212360150089,
+        "delta_ci_high": -0.2061787711377765
+      }
+    ]
+  },
+  "detector_identity_controls": {
+    "p03f_best_stave_offset_guardrail_sigma68_ns": 1.1515617974183487,
+    "p03f_guardrail_delta_vs_winner_ns": 0.044144965458013496,
+    "p03g_best_real_stave_method": "gradient_boosted_trees_real_stave",
+    "p03g_best_real_stave_mean_sigma68_ns": 1.0953325368264564,
+    "p03g_hgb_no_stave_mean_sigma68_ns": 1.4629139845828625,
+    "p03g_label_evidence": "all_true_label_gaps_exclude_zero"
+  },
+  "source_results": {
+    "p03f_ticket": "1781034623.1381.12086ef0",
+    "p03g_ticket": "1781034623.1447.4a243444"
+  },
+  "verdict": "The stave-aware gain is real at the predictive-support level: 21 winner atoms have run/event-bootstrap deltas below zero, and the pooled winner beats analytic timewalk by -0.444 ns. However, the stave-offset guardrail at 1.152 ns and the P03g real-stave/no-stave gap show that detector identity explains a substantial share of the lift; this is not a standalone causal waveform adoption result.",
+  "next_tickets": [],
+  "git_commit": "02495d7ea6f0b75fdbf1d987502cf1a2f385dcde"
+}

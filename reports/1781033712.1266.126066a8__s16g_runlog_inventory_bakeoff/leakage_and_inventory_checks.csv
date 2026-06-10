@@ -1,0 +1,10 @@
+check,value,pass
+fold_1_train_heldout_run_overlap,0,True
+fold_2_train_heldout_run_overlap,0,True
+fold_3_train_heldout_run_overlap,0,True
+all_root_files_have_sha256,110,True
+no_nonbeam_trigger_entries,0,True
+empty_root_trees_recorded_not_modeled,8,True
+visible_runlog_token_hits,0,True
+features_exclude_filename_run_and_event_ids_for_ml,tabular waveform summaries and raw waveforms only,True
+traditional_parser_uses_inventory_metadata_only,filename plus ROOT branch inventory,True

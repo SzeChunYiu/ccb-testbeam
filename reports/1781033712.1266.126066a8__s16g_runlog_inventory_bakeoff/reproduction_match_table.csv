@@ -1,0 +1,6 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+ROOT files in raw bundle,110,110,0,0,True
+HRDA ROOT files,57,57,0,0,True
+HRDB ROOT files,53,53,0,0,True
+selected B-stave pulses on S00 report runs,640737,640737,0,0,True
+non-beam trigger entries,0,0,0,0,True

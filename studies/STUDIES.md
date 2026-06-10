@@ -2220,3 +2220,57 @@ the waveform model within CIs and the surviving support islands are small.
   latents after nuisance matching with shuffled-label, charge-only, and topology-only sentinels.
   Metric: ROC AUC, AP, fixed-purity efficiency, calibration slope, and waveform-minus-charge
   residual lift per island with run-family bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, S10i/S10g/S10h/S04e/P02f/P10f layer): the exact requested
+`tn-ticket list testbeam` command initially reported `open=11 claimed=0 done=0 failed=14`, below
+the 18-ready trigger. A probe of `tn-ticket append --help` created an accidental default-queue
+`grocery` ticket; it was immediately moved to failed cleanup, so the same positional command now
+reports `open=11 claimed=0 done=0 failed=15`. The project-aware `testbeam` store remains deep
+after this pass (`open=182 claimed=3 done=270 failed=7`) under concurrent worker movement. The
+trigger was satisfied by appending four ready, non-duplicate `project:testbeam` tickets:
+S10p final-sample censoring live-time bound (`1781078145.745.604d188d`), S04k B2 q-veto
+external-pair transfer gate (`1781078146.810.71e65869`), P10n no-tail q-gain peak-phase
+counterfactual (`1781078146.875.034f6846`), and S10p quiet-tau method-disagreement closure
+(`1781078146.939.6c7536da`).
+
+Fresh synthesis: S10i makes the pile-up live-time problem operational by showing a near-null
+traditional quiet-candidate current excess at the template resolvability tau while the ML tau
+score remains strongly current-positive. S10g/S10h say low-threshold live-time estimates are
+right-censored and dominated by final-sample and late-tail taxa, so tau_eff/Rmax must be bounded
+as an acquisition-window problem before pile-up, baseline, energy, or PID claims inherit it.
+S04e shows q_template/shape vetoes can make B2-containing timing tails look excellent, but the
+retention and support-transfer risk must be audited before covariance or consumer studies reuse
+the veto. P02f says learned shape-atom vetoes are not yet a secure timing-tail improvement, and
+P10f says no-tail q_template gains still fire too-good controls. The new tickets therefore deepen
+the pulse at final-sample censoring, B2 timing-tail support transfer, q-template physical handles,
+and operational tau disagreement.
+
+- **S10p — Final-sample censoring live-time bound.** Decide whether 20% live-time inflation is
+  driven by final-sample acquisition-window censoring rather than detector recovery after
+  conditioning on peak phase, stave, amplitude, and topology. Traditional: Kaplan-Meier and
+  template-extrapolated lower/upper bounds split by peak-phase and final-sample taxon, with
+  S10b/S10g anchors reproduced first. ML: run-held-out monotone survival/AFT model using
+  early-shape, amplitude, stave, and peak-phase features while excluding final-sample target
+  leakage. Metric: live20_ns bound width, uncensored-holdout coverage, and high-minus-low
+  downstream excess shift with source-run bootstrap 95% CIs.
+- **S04k — B2 q-veto external-pair transfer gate.** Test whether the S04e q_template/shape veto
+  that cleans B2-containing residual tails transfers to B2-excluded pair families without changing
+  amplitude, saturation, or pathology support. Traditional: fixed q_template and hand-shape veto
+  thresholds trained on B2-containing folds and applied unchanged to B4-B6/B4-B8/B6-B8 pairs at
+  matched retention. ML: calibrated run-held-out RF/logistic veto trained without pair residuals,
+  with topology-only and shuffled-label sentinels. Metric: paired delta in sigma68, full RMS,
+  abs>5 ns tail fraction, retention, and support-distance shift with run-block bootstrap 95% CIs.
+- **P10n — No-tail q-gain peak-phase counterfactual.** Determine whether P10f no-tail conditional
+  q_template gains are physically carried by peak-phase/rising-edge information or by another
+  target-proximal artifact. Traditional: peak-phase-binned empirical templates plus explicit
+  timewalk handles under the same family holdouts. ML: no-tail ExtraTrees/MLP conditional template
+  with peak-phase counterfactual swaps, rising-edge ablations, and shuffled-phase controls.
+  Metric: q_template MSE, q_tail MSE, timing residual delta, and too-good trigger rate with
+  family/run bootstrap 95% CIs.
+- **S10p — Quiet-tau method-disagreement closure.** Localize why S10i's traditional quiet
+  template-tau excess is near null while the ML tau score is current-positive. Traditional:
+  bounded two-pulse template score and delay gates at S10d template/ml/90 ns/S10b tau definitions,
+  stratified by S10h late-residual taxa. ML: calibrated RF residual pile-up score with score-only,
+  tau-gated, and abstained operating points plus shuffled-current controls. Metric: high-minus-low
+  candidate-rate delta, method-overlap Jaccard, support-shift energy distance, and calibration
+  Brier delta with source-run bootstrap 95% CIs.

@@ -26,6 +26,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S03d | ✅ done | ✅ S03a/S03b LORO baselines reproduced | amp-only 1.551 ns; monotone-binned 1.645 ns | HGB residual 1.394 ns | ML gain is real in-fold; needs monotonicity/transfer audit before adoption | reports/1781010985.923.35c141ac |
 | S03d exact-fold | ✅ done | ✅ exact P01e candidate folds reproduced | S03 analytic timewalk 1.494 ns | S02 ridge 1.897 ns; P01e AE 1.980 ns | No; S03 analytic is the comparator to beat on these folds | reports/1781018587.1274.0a8b49e5 |
 | S03e all-three q-template | ✅ done | ✅ all-three control/gross gates reproduced | q_template score AUC 0.794 | q_template RF AUC 0.866 | **Yes**, but downstream q_template is label-source-adjacent; upstream-only leakage gate needed | reports/1781027860.926.103338b4 |
+| S04e B2 q-veto | ✅ done | ✅ raw-root pair table and q_template join | B2 raw sigma68 3.526 ns; q-threshold veto 1.720 ns | RF q-veto 1.299 ns; tail>5ns 0.0053 | Yes on heldout B2 tails; transfer/support bias must be audited | reports/1781028505.1210.78b135ab |
 | S05a | ✅ done | ✅ A-stack/B-stack external-control inputs | CFD20 pair-median residual width 2.082 ns | ExtraTrees B+A width 1.664 ns | No secure A-control gain; shuffled-A control is similar | reports/1781001480.696013.4ac50583__s05a_astack_external_control |
 | S05c | ✅ done | ✅ S05-style B-stack residual inputs | pair-median/hierarchical covariance sigma68 2.082 ns; B2 off-diagonal dominates | ExtraTrees waveform residual sigma68 1.449 ns | ML reduces residual width, but covariance remains B2/topology dominated | reports/1781009478.9969.16fe02b4 |
 | S05d | ✅ done | ✅ S05c covariance inputs | static two-ended priors sigma68 2.147 ns; bias -0.870 ns | dynamic waveform weights sigma68 2.021 ns; bias -0.621 ns | Small ML gain; projection bias requires support frontier | reports/1781016280.4623.016f3ea3 |
@@ -51,6 +52,9 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | S10f | ✅ done | ✅ S10/S10c topology fractions within 0.0015 | P09a-matched downstream excess 0.00478/event, CI [0.00346,0.00663] | current-score Δ=0.0222 but Brier/log-loss worse | No; traditional matched excess is physics-facing, baseline_excursion needs decomposition | reports/1781012706.846.1f364432 |
 | S10f amplitude templates | ✅ done | ✅ S10d and S10b anchors reproduced | amplitude-binned asymmetric fit time RMS 17.81 ns; failure 0.013 | compact MLP time RMS 9.28 ns; failure 0.277 | No adoption; ML lowers RMS but failure rate remains operational risk | reports/1781013481.902.5d6a5b89 |
 | S10h baseline excursion | ✅ done | ✅ S10f decomposition reproduced | baseline_excursion downstream high-low near 0, wide CI | ML residual/enrichment near null under LORO | No; baseline_excursion needs current-swap falsification before pile-up reuse | reports/1781027683.951.7bcc2f09 |
+| S10g censored livetime | ✅ done | ✅ S10b live10 reproduced | template live10 124.79 ns; KM restricted mean 151.64 ns | IPCW ridge mean 179.05 ns | No; low-threshold windows are heavily censored and need acquisition-window bounds | reports/1781028280.978.1e517fd7 |
+| S10h late residual taxonomy | ✅ done | ✅ live20 inflation reproduced | final-sample censored tail is 72.6% of pulses and 89.8% of positive inflation | inflation classifier AUC 0.998 on derivative label | Diagnostic; final-sample censoring must be bounded before tau/Rmax adoption | reports/1781028280.1036.7e527107 |
+| S10i operational tau | ✅ done | ✅ S10/S10b/S10d anchors reproduced | template-tau quiet excess 0.0017, CI [-0.0014,0.0049] | ML-tau quiet excess 0.0193, CI [0.0143,0.0249] | Mixed; method disagreement needs pulse-atom closure before pile-up claims | reports/1781028606.1003.76354c81 |
 | S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
 | S11b | ✅ done | ✅ S10c topology fractions within 0.0015 | real high-current secondary fraction Δ=0.0181, CI [-0.0168,0.0541] | RF secondary fraction Δ=0.00437, CI [-0.00138,0.0121] | Diagnostic; largest traditional excess is high-amp/large-lowering/broad-late | reports/1781010611.1197.028b141a |
 | S11c | ✅ done | ✅ S11a anchor reproduced | amplitude-binned asymmetric template time RMS 17.83 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate remains high (0.295) | reports/1781010611.1262.2e354bed |
@@ -97,6 +101,7 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P02c embedding | ✅ done | ✅ 640,737 exact; P01b artifact regenerated if missing | hand+PCA manual-flag AMI 0.497; purity 0.915 | train-only AE AMI 0.479; purity 0.912 | No; all-data embedding is forbidden diagnostic for claims | reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer |
 | P02d | ✅ done | ✅ early-peak rate and S07 gross-tail count | early-peak/topology AUC 0.692 on D_t tails | shape-only RF AUC 0.999 | Diagnostic only; downstream shape is label-source self-reference risk | reports/1781009575.1697.2f57332a |
 | P02e | ✅ done | ✅ all-three control/gross gates reproduced | transparent morphology AUC 0.639 | shape-only RF AUC 0.994 | Diagnostic; all-three restriction removes missing-stave topology but not D_t source risk | reports/1781015838.1380.00770dd4 |
+| P02f shape-atom veto | ✅ done | ✅ S00 and S03 run-65 references | hand/q veto delta 0.079 ns, CI [0.040,0.235] | RF shape delta -0.083 ns, CI [-0.129,0.062] | No; learned shape-atom veto has weak nonrobust narrowing | reports/1781028505.1268.682a3cf2 |
 | S07h | ✅ done | ✅ P02d and S07 gates reproduced | transparent morphology AUC 0.528; timing/template 0.612 | shape-only RF AUC 0.860 | ML wins on injected non-D_t truth; not a measured beam pile-up rate | reports/1781015838.1407.0539203d |
 | P03a | ✅ done | ✅ frozen S02 baseline reproduced | analytic amp-only timewalk sigma68 1.495 ns | tiny 18-sample MLP sigma68 1.927 ns | No; waveform MLP loses to analytic and frozen S02 baselines | reports/1781004956.603.7dce65be__p03a_18_sample_mlp_timing |
 | P03b | ✅ done | ✅ P03a run-65 reproduction | LORO analytic timewalk mean sigma68 1.496 ns | waveform MLP mean sigma68 1.805 ns | No; ML beats S02 ridge on 6/7 runs but not analytic baseline | reports/1781009029.1279.4d6e17f9 |
@@ -124,20 +129,27 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
 | P09c | ✅ done | ✅ 640,737 exact | delayed-peak target AP 0.433; pile-up-score delta 14.66 | latent/isolation delayed-peak AP 0.789 | ML improves delayed-peak isolation; recovery/veto evidence is low-count | reports/1781014256.642.6ded722c |
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
 | P10b | ✅ done | ✅ 640,737 exact | explicit timewalk q MSE 0.0444; timing 2.756 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | No; explicit traditional timewalk beats conditional template | reports/1781006250.1276.49814de9 |
+| P10f q-tail validation | ✅ done | ✅ family holdout inputs and leakage checks | calibration amplitude-median loses to shape handles | no-tail ExtraTrees improves q_tail MSE in 2/2 folds but fires too-good controls | No promotion; physical handle and density/counterfactual audits required | reports/1781027860.942.36c33ff0 |
 
 ## Current steering notes
 
 - Queue health: the exact requested command `tn-ticket list testbeam` still reports
-  `open=11 claimed=0 done=0 failed=14`, below the 18-ticket floor, because the legacy shim treats
+  `open=11 claimed=0 done=0 failed=15`, below the 18-ticket floor, because the legacy shim treats
   `testbeam` as a positional argument for the default queue unless `--project testbeam` is supplied.
-  The required append path was followed again with `--project testbeam`; the project-aware
-  testbeam queue remains deep, with this live post-append audit observing `open=182 claimed=4
-  done=260 failed=7` while workers continue moving tickets.
+  It initially reported `failed=14`; an accidental `tn-ticket append --help` probe created a
+  default-queue `grocery` ticket and was immediately failed as cleanup, accounting for the +1
+  default failed count. The required append path was followed again with `--project testbeam`; the
+  project-aware testbeam queue remains deep, with this live post-append audit observing
+  `open=182 claimed=3 done=270 failed=7` while workers continue moving tickets.
   The mission trigger still required new ready work. This pass appended four ready non-duplicate
-  tickets: S03s upstream q-template curvature leakage gate (`1781075115.415.5d145e93`),
+  tickets: S10p final-sample censoring live-time bound (`1781078145.745.604d188d`),
+  S04k B2 q-veto external-pair transfer gate (`1781078146.810.71e65869`),
+  P10n no-tail q-gain peak-phase counterfactual (`1781078146.875.034f6846`), and
+  S10p quiet-tau method-disagreement closure (`1781078146.939.6c7536da`). The previous pass
+  appended four ready non-duplicate tickets: S03s upstream q-template curvature leakage gate (`1781075115.415.5d145e93`),
   P08c charge-residual waveform PID null (`1781075123.485.458a1740`),
   S07m AppA definition-ensemble propagation (`1781075129.553.3f0644b1`), and
-  S10n baseline-excursion current-swap falsifier (`1781075136.621.29dd2751`). The previous pass
+  S10n baseline-excursion current-swap falsifier (`1781075136.621.29dd2751`). The pass before that
   appended four ready non-duplicate tickets: S03r stave-only HGB leakage dissection (`1781066704.631.13c7784e`),
   P10k minority-stave conditional-template failure map (`1781066704.689.2f5f3d2a`),
   S04h B2-inclusive all-hit timing closure harm map (`1781066704.724.5080332a`), and
@@ -208,6 +220,16 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   (`1781023326.470.61534f82`), S02h binned-timewalk shuffled-target failure autopsy
   (`1781023333.541.66a8325e`), and P12a pulse-axis covariance atom table across pathology flags
   (`1781023340.632.43377364`).
+- Latest synthesis: S10i exposes a method disagreement rather than an adoptable pile-up rate:
+  template-tau quiet candidates are near null while the ML tau score is current-positive. S10g
+  and S10h show that low-threshold live-time estimates are heavily right-censored and that
+  final-sample/late-tail taxa dominate the inflation, so tau_eff/Rmax work now needs explicit
+  acquisition-window bounds. S04e makes q_template/shape vetoes powerful for B2 timing tails but
+  retention and external-pair support transfer must be measured before covariance, PID, or energy
+  consumers reuse the veto. P02f keeps learned shape-atom vetoes non-adopted, and P10f keeps
+  no-tail conditional q gains behind too-good controls. The new tickets target those exact atoms:
+  final-sample censoring, B2 q-veto transfer, q-template peak-phase physicality, and quiet-tau
+  method disagreement.
 - Newest reports sharpen the next claims: S03e shows q_template ML gains on all-three curvature
   tails, but downstream q_template is too close to the label source; P08b shows calibrated
   charge-depth explains the new PID weak label as well as waveform ML, while P08c says topology-

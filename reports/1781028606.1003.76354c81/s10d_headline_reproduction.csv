@@ -1,0 +1,3 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S10d constrained_template_fit resolvable delay ns,60.0,60.0,0.0,1e-09,True
+S10d compact_mlp_classifier_regressor resolvable delay ns,20.0,20.0,0.0,1e-09,True

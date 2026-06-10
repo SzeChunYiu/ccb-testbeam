@@ -1,0 +1,88 @@
+{
+  "study": "P01h",
+  "ticket": "1781040959.702.2d1212fb",
+  "worker": "testbeam-laptop-4",
+  "title": "time-local latent residualization gate",
+  "reproduced": true,
+  "repro_tolerance": "exact raw ROOT selected-pulse count match",
+  "winner": {
+    "method": "residual_fusion_mlp_new_arch",
+    "metric": "mean_physics_balanced_accuracy_minus_0.20_mean_nuisance_balanced_accuracy",
+    "winner_score": 0.6433169493271762,
+    "mean_physics_balanced_accuracy": 0.8313189506906593,
+    "mean_nuisance_balanced_accuracy": 0.9400100068174155,
+    "score_delta_vs_traditional": 0.018915847311452905
+  },
+  "traditional": {
+    "method": "traditional_hand_pca_residualized",
+    "metric": "mean_physics_balanced_accuracy_minus_0.20_mean_nuisance_balanced_accuracy",
+    "value": 0.6244011020157233,
+    "mean_physics_balanced_accuracy": 0.7009820657745123,
+    "mean_nuisance_balanced_accuracy": 0.38290481879394495
+  },
+  "ml": {
+    "method": "residual_fusion_mlp_new_arch",
+    "metric": "mean_physics_balanced_accuracy_minus_0.20_mean_nuisance_balanced_accuracy",
+    "value": 0.6433169493271762,
+    "ci": [
+      0.8142779900752454,
+      0.8462214838631866
+    ]
+  },
+  "ml_beats_baseline": true,
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "artifact": {
+    "path": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz",
+    "rows": 640737,
+    "sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "sha256_matches_expected": true,
+    "key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "key_sha256_matches_expected": true,
+    "max_amplitude_delta_vs_raw": 0.0
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "max_rows_per_run_stave": 1200,
+    "train_rows": 71018,
+    "heldout_rows": 10498
+  },
+  "preregistration": {
+    "primary_task": "physics_q_template_top_quartile",
+    "winner_metric": "mean_physics_balanced_accuracy_minus_0.20_mean_nuisance_balanced_accuracy",
+    "planned_methods": [
+      "traditional_hand_pca_residualized",
+      "latent_resid_ridge",
+      "latent_resid_gbt",
+      "latent_resid_mlp",
+      "waveform_1d_cnn",
+      "residual_fusion_mlp_new_arch"
+    ]
+  },
+  "falsification": {
+    "preregistered_metric": "mean_physics_balanced_accuracy_minus_0.20_mean_nuisance_balanced_accuracy",
+    "n_tries": 6,
+    "result": "descriptive benchmark; fresh confirmation required for inferential superiority"
+  },
+  "parameters": {
+    "ridge_alpha": 1.0,
+    "bootstrap_replicates": 400,
+    "random_seed": 410959,
+    "cnn_epochs": 8
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "57a35c90fbb3777fe970fe67af7cca80422d5072",
+  "critic": "pending",
+  "next_tickets": [
+    "P01i: freeze the P01h residual-fusion gate and test whether it improves pair-timing sigma68 and charge-bias deltas on untouched run-family folds"
+  ],
+  "runtime_sec": 225.0
+}

@@ -555,6 +555,24 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   universal veto, and P05/S10/S11/S16 jointly show baseline motion can masquerade as overlap.
   The new tickets therefore deepen PULSE atoms around heavy-tail timing support, material-budget
   PID label uncertainty, broad anomaly propagation, and baseline-overlap false positives.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The correctly addressed
+  local `testbeam` project store remains deep and reports `open=184 claimed=4 done=219 failed=7`
+  after this pass. The trigger was satisfied by appending four ready, non-duplicate
+  `project:testbeam` tickets: S02j ROOT-only rate-proxy falsification ledger
+  (`1781061044.485.7c697079`), S02k high-risk timing atom handoff table
+  (`1781061052.556.26992c81`), P11b pretrigger atom charge-transfer gate
+  (`1781061059.627.4bc647a3`), and P10j tail-surrogate live-time control atlas
+  (`1781061067.698.6c8a6921`).
+- Fresh synthesis: the newest reports turn several tempting corrections into control problems.
+  S02f/S02g show ROOT-only rate proxies and missing external scaler metadata should be falsified
+  before they touch timing; S02e's high-risk timing candidates need atom labels because q_template,
+  shape recovery, and charge-pair nulls disagree; P11a shows pretrigger atoms carry strong
+  charge-bias structure that needs a transfer/abstention gate before charge, PID, or energy reuse;
+  and P10f-style learned tail surrogates need live-time and secondary-fraction controls before
+  they become pile-up templates. The new tickets deepen the pulse at rate, shape, baseline,
+  charge, tail, and live-time atoms while keeping every claim paired with traditional and ML
+  methods plus bootstrap CIs.
 - Near-term physics risk: ML wins only when the traditional comparator is genuinely weaker on
   the same held-out data. Keep every new claim paired, run-held-out, leakage-audited, and
   bootstrap-CI based before feeding PID or energy studies.

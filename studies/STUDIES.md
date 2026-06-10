@@ -1673,3 +1673,57 @@ S03o (`1781058292.515.16756522`), S14i (`1781058292.529.4efe2d6e`), P09i
   injected-overlap AP, real-candidate secondary-fraction delta, false-positive rate on baseline
   controls, recovered-time RMS, and charge-bias/res68 at fixed coverage with stratified run-block
   bootstrap CIs.
+
+Current steering pass (2026-06-10): the exact requested `tn-ticket list testbeam` command still
+reports `open=11 claimed=0 done=0 failed=14`, below the 18-ready trigger. The correctly addressed
+local `testbeam` project queue remains deep after this pass (`open=184 claimed=4 done=219
+failed=7`) while workers continue closing tickets. The trigger was satisfied by appending four
+ready, non-duplicate `project:testbeam` tickets focused on the newest timing, pretrigger,
+tail-shape, and charge-transfer gaps: S02j (`1781061044.485.7c697079`), S02k
+(`1781061052.556.26992c81`), P11b (`1781061059.627.4bc647a3`), and P10j
+(`1781061067.698.6c8a6921`).
+
+- **S02j — ROOT-only rate-proxy falsification ledger.** After S02f/S02g found no external scaler
+  files and no timing improvement from current/rate drift terms, decide which ROOT-only
+  trigger-density or event-order proxies are legitimate nuisances versus shuffled-control
+  artifacts for Sample-II timing closure. Traditional: freeze the S02b global/template and S02f
+  binned timewalk branches, construct transparent pre-timing event-density, run-local event-order,
+  selected-pulse-density, stave-occupancy, and topology-count proxies, then add one proxy family
+  at a time under leave-one-run-out folds with shuffled-proxy and run-label-permutation controls.
+  ML: guarded ridge/HGB residual correctors on the same proxy families with waveform, event id,
+  downstream timing labels, and held-out-run rows excluded, plus proxy-knockout, topology-only,
+  amplitude-only, run-only, and shuffled-target sentinels. Metric: per-run sigma68, full RMS,
+  >5 ns tail fraction, bias-vs-amplitude slope, false-improvement rate under controls, and
+  ML-minus-traditional deltas with run-block and pair bootstrap CIs.
+- **S02k — High-risk timing atom handoff table.** Convert the S02e high-risk timing output into
+  atom labels before S03/S04/S10 consumers reuse it. Traditional: freeze q_template RMSE/abs
+  difference, charge-pair matching, amplitude/log-amp delta, width, late-fraction, stave, run,
+  and topology tables, then build an auditable handoff table for delayed-peak, broad-late,
+  low-charge-pair, and common-shape atoms. ML: run-held-out calibrated atom classifier using only
+  18-sample shape summaries and P09 taxonomy features, with charge-only, topology-only, run-only,
+  q_template-only, and shuffled-risk sentinels. Metric: atom prevalence, tail precision/enrichment,
+  tail rate after exclusion, kept-pair fraction, max-pair-share concentration, downstream
+  sigma68/tail delta, and ML-minus-traditional deltas with event-paired run-block bootstrap CIs.
+- **P11b — Pretrigger atom charge-transfer gate.** Test whether P11a pretrigger atoms such as
+  adaptive_lowering and spike predict charge-transfer harm after matching amplitude, saturation,
+  dropout, and run family, or only label baseline excursions with no independent charge
+  consequence. Traditional: freeze P11a atom definitions, P04 peak/integral/Huber/template charge
+  estimators, P07 saturation flags, dropout/anomaly taxa, and run-family support bins, then compare
+  matched charge res68, signed bias, tail-bias rate, and support loss per atom. ML: run-held-out
+  calibrated charge-harm and support models from pretrigger summaries plus 18-sample waveform
+  atoms, with pretrigger-knockout, saturation-only, dropout-only, amplitude-only, run-only, and
+  shuffled-harm controls. Metric: charge res68/bias, charge-bias-tail rate, support coverage,
+  abstention harm reduction, saturation-boundary residual delta, calibration ECE/coverage, and
+  ML-minus-traditional deltas with stratified event/run-block bootstrap CIs.
+- **P10j — Tail-surrogate live-time control atlas.** Locate where learned P10f tail surrogates
+  improve q/tail reconstruction while failing live-time or pile-up transfer controls, and convert
+  those regions into accept, diagnostic-only, or veto labels. Traditional: freeze empirical
+  amplitude-binned templates, explicit timewalk terms, asymmetric tails, and measured
+  live-time/secondary-fraction tables, then stratify tail MSE, q_template shift, live10/tau_eff
+  shift, and secondary-fraction delta by amplitude, peak phase, q_template, saturation, baseline,
+  dropout/anomaly, and run family. ML: freeze P10f learned tail surrogate scores and recalibrate
+  only action/support layers under leave-run-family-out validation with tail-knockout,
+  amplitude-only, run-only, shuffled-live-time, and shuffled-current sentinels. Metric: q MSE,
+  tail MSE, timing sigma68, live10/tau_eff delta, high-minus-low secondary-fraction delta,
+  accepted support fraction, control false-pass rate, and ML-minus-traditional deltas with
+  event-paired run-block bootstrap CIs.

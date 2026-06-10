@@ -1988,3 +1988,57 @@ shape RF cues are interpreted as pulse morphology.
   injection parameters, plus charge-null and shuffled-label controls. Metric: AUC/AP,
   fixed-95%-clean rejection, charge-null AUC loss, sample-window rank stability, support drift,
   and ML-minus-traditional deltas with run-block bootstrap 95% CIs.
+
+Current steering pass (2026-06-10, S14d/S04d/P04j/P10h layer): the exact requested
+`tn-ticket list testbeam` command still reports `open=11 claimed=0 done=0 failed=14`, below the
+18-ready trigger. The project-aware `testbeam` queue remains deep after this pass
+(`open=180 claimed=4 done=249 failed=7`) under concurrent worker movement. The trigger was
+satisfied by appending four ready, non-duplicate `project:testbeam` tickets focused on raw-only
+PID falsification, pathology-interaction veto calibration, retained charge-interval support, and
+energy-claim red-team controls: S15b raw-HRD PID proxy falsification ledger
+(`1781069565.648.74687e98`), S04j pathology-interaction calibrated veto transfer
+(`1781069571.719.463e18dd`), P04x retained-support charge-interval calibration
+(`1781069576.790.606924bd`), and S14j raw-only energy claim red-team ledger
+(`1781069585.861.56193204`). S14d reproduces the S00/S14b gate and makes the missing external
+requirements for proton energy explicit; S04d finds real pathology interactions but warns that
+they are not a timing-correction shortcut; P04j shows conformal A-stack charge intervals are
+calibrated only by being broad and support-limited; P10h keeps explicit-handle template gains
+promotable only under sentinel-audited support. The new tickets keep the pulse programme atomic
+before shape, timing, amplitude, saturation, pile-up, baseline, dropout, PID, or energy consumers
+reuse any of those outputs.
+
+- **S15b — Raw-HRD PID proxy falsification ledger.** Test whether any raw HRD pulse atoms carry
+  PID-like information beyond penetration depth, charge, run family, saturation, and topology
+  proxies. Traditional: transparent DeltaE-E, stopping-depth, charge-ratio, tail/total, and
+  penetration-depth cuts matched by run, topology, saturation, anomaly, and external-charge
+  support. ML: calibrated waveform/charge RF or HGB PID-proxy classifiers with run-only,
+  topology-only, depth-only, shuffled-label, target-permutation, and feature-knockout sentinels.
+  Metric: proxy AUC/AP, fixed-purity efficiency, real-minus-sentinel separation, calibration ECE,
+  accepted support fraction, and ML-minus-traditional deltas with run-block and topology-block
+  bootstrap 95% CIs.
+- **S04j — Pathology-interaction calibrated veto transfer.** Convert the S04d interaction ledger
+  into a support-preserving timing-tail veto/harm table, or prove it cannot transfer. Traditional:
+  additive factorial interaction tables and transparent thresholds on pretrigger lowering,
+  dropout/jagged, broad-late, saturation, q_template, and anomaly axes. ML: calibrated sparse-logit
+  and shallow-tree tail-risk models with axis knockouts, run-only, amplitude-only, topology-only,
+  and shuffled-axis sentinels. Metric: sigma68, full RMS, |residual|>5 ns tail fraction, veto
+  coverage, composition drift, charge/pile-up proxy harm, calibration ECE, and ML-minus-traditional
+  deltas with held-out-run bootstrap 95% CIs.
+- **P04x — Retained-support charge-interval calibration.** Determine whether any P04j A-stack
+  charge-transfer support cell has acceptable interval width, coverage, and real-minus-shuffled
+  separation at the same time. Traditional: peak, integral, adaptive-template, topology-median,
+  ridge, Huber, and support-cut charge predictors calibrated by run, topology, A-stave, B-stave,
+  saturation, peak phase, dropout, and anomaly cells. ML: ExtraTrees/HGB waveform charge transfer
+  with conformal residual calibration, width-ranked abstention, target permutation, run-family,
+  topology-only, and shuffled-target sentinels. Metric: res68, full RMS, within-10/25% rates,
+  coverage68/90, mean interval width, retained support fraction, real-minus-shuffled delta, and
+  ML-minus-best-traditional deltas with run-block bootstrap 95% CIs.
+- **S14j — Raw-only energy claim red-team ledger.** Stress the exact assumptions that could make
+  an HRD-only range-energy or proton-energy claim appear valid despite missing material, geometry,
+  Birks, PID, and stopping-depth truth. Traditional: S14b/S14d PSTAR depth-charge lookup,
+  material/geometry envelope, duplicate-readout closure, and external-charge propagation with
+  bounded nuisance scans and support cuts. ML: monotonic HGB/ridge energy-proxy models with
+  ingredient-dropout, geometry-label, depth-only, run-family, topology-only, shuffled-target, and
+  proxy-leakage sentinels. Metric: energy-proxy res68, median bias, geometry/material sensitivity
+  span, support-abstention fraction, false-accept rate under missing-ingredient controls, and
+  ML-minus-traditional deltas with run-block bootstrap 95% CIs.

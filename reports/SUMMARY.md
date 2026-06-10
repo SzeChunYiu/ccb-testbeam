@@ -675,3 +675,22 @@ Maintained by the orchestrator/Integrator. One row per study as results land.
   keep shape RF signal after peak and charge preservation, but S07n adds stricter normalized
   charge nulls so all-three pile-up shape cues are not mistaken for amplitude-renormalization
   artifacts before timing, PID, or energy consumers inherit them.
+- Current steering pass: the exact requested command `tn-ticket list testbeam` reports
+  `open=11 claimed=0 done=0 failed=14`, still below the 18-ready trigger. The project-aware
+  `testbeam` queue remains deep after this pass (`open=180 claimed=4 done=249 failed=7`) under
+  concurrent worker movement. The trigger was satisfied by appending four ready, non-duplicate
+  `project:testbeam` tickets: S15b raw-HRD PID proxy falsification ledger
+  (`1781069565.648.74687e98`), S04j pathology-interaction calibrated veto transfer
+  (`1781069571.719.463e18dd`), P04x retained-support charge-interval calibration
+  (`1781069576.790.606924bd`), and S14j raw-only energy claim red-team ledger
+  (`1781069585.861.56193204`).
+- Fresh synthesis: the newest reports keep energy/PID and veto decisions in the control layer.
+  S14d reproduces S00/S14b but shows raw HRD can only support internal depth/charge ordering
+  without external material, geometry, Birks, PID, and stopping-depth truth, so S14j red-teams
+  raw-only energy claims and S15b falsifies PID-like proxies against sentinels. S04d finds real
+  pathology interactions, especially across baseline/dropout axes, but not a production timing
+  shortcut, so S04j calibrates support-preserving veto transfer and downstream harm. P04j shows
+  conformal A-stack charge intervals are broad and support-limited, so P04x looks for retained
+  cells where width, coverage, and real-minus-shuffled separation are all acceptable before
+  charge feeds saturation, pile-up, PID, or energy consumers. P10h remains a support-qualified
+  template result rather than a global template adoption.

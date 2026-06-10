@@ -276,13 +276,18 @@ Live queue decision: the exact requested command `tn-ticket list testbeam` now r
 `open=11 claimed=0 done=0 failed=14`, which is below the 18-ready floor because the shim treats
 `testbeam` as a positional default-queue argument. The required append path was still honoured
 with `--project testbeam`: the project-aware testbeam queue remains deep, with this live
-post-append audit observing `open=185 claimed=4 done=222 failed=7` while claimed counts moved
+post-append audit observing `open=183 claimed=3 done=260 failed=7` while claimed counts moved
 under concurrent worker activity, but the mission trigger still required a small set of
-new ready studies. This pass appended four additional non-duplicate ready tickets:
+new ready studies. This steering pass appended four additional non-duplicate ready tickets:
+S03s upstream q-template curvature leakage gate (`1781075115.415.5d145e93`),
+P08c charge-residual waveform PID null (`1781075123.485.458a1740`),
+S07m AppA definition-ensemble propagation (`1781075129.553.3f0644b1`), and
+S10n baseline-excursion current-swap falsifier (`1781075136.621.29dd2751`). The previous pass
+appended four additional non-duplicate ready tickets:
 S03p HGB transfer feature-leakage null grid (`1781062439.500.63591f99`),
 S05n pretrigger-atom covariance projection stress (`1781062443.571.1e7346af`),
 P04t A-stack topology lower-bound charge transfer (`1781062449.642.488b2d5f`), and
-P12e cross-consumer pulse-atom harm ledger (`1781062454.713.242b3d71`). The previous pass appended
+P12e cross-consumer pulse-atom harm ledger (`1781062454.713.242b3d71`). The pass before that appended
 four additional non-duplicate ready tickets:
 S02f binned-timewalk shuffled-control atom ledger (`1781059683.845.5a6958ad`),
 S13e residual CWoLa support-collapse atlas (`1781059683.869.4bca6f7e`),
@@ -344,12 +349,17 @@ binned-timewalk shuffled-target failure autopsy (`1781023333.541.66a8325e`), and
 covariance atom table across pathology flags (`1781023340.632.43377364`). The discrepancy is a
 shim/argument parsing issue, not a scientific queue shortage.
 
-Newest steering update: S02e elevates shuffled-target binned timewalk failures from a side check
-to an atom-ledger requirement; S13c shows residual CWoLa is only diagnostic after charge,
-topology, anomaly, lowering, run-family, and stave matching; P10f blocks live-time transfer from
-learned tail surrogates until real-minus-shuffled support is mapped; S06a shows charge-aware
-timing uncertainty is undercovered even when sigma68 is competitive; and P09d makes broad-width
-anomaly propagation depend on reviewer/agreement uncertainty rather than a single truth label.
+Newest steering update: S03e says q_template-only ML can beat a traditional q_template score on
+all-three curvature tails, but downstream q_template features remain too close to the label
+source, so an upstream-only leakage gate is now required. P08b upgrades the PID weak label with
+duplicate-readout range-energy residuals and collapses the old perfect topology proxy, but
+waveform ML only ties the calibrated charge-depth baseline; any PID waveform claim must therefore
+be a charge-residual null test. S07k finds no raw-HRDv definition that reproduces the archived
+App.A 12,147/10,636/1,511 tuple, so App.A conclusions now need definition-ensemble uncertainty.
+S10h shows baseline_excursion does not by itself carry a clean downstream/two-pulse excess under
+the current decomposition, motivating current-swap falsifiers. S14c and P08b together keep
+energy/PID work in support-map mode: downstream charge-energy proxies remain broader than the
+0.10 threshold, and calibrated labels are still proxy labels.
 
 Latest integration note: S10b reproduced the S10 `R_max=4.222 MHz` assumption but measured a
 template-tail live10 window of 124.79 ns (95% CI [123.33,126.36]), with a leakage-audited ridge
@@ -494,6 +504,12 @@ PID, or energy claims.
 
 Completed since last steering cycle:
 
+- **S03e/P08b/S10h/S07k/S14c — Fresh q-template, PID, baseline, App.A, and energy-proxy reports.**
+  Result: q_template ML gains are promising but source-separated leakage controls are mandatory;
+  calibrated PID labels reduce topology leakage but leave no waveform win beyond charge-depth;
+  baseline_excursion is not yet a clean pile-up excess mechanism; the historical App.A tuple
+  should be propagated as definition uncertainty; and downstream charge-energy proxies remain
+  support-limited rather than globally adoptable.
 - **P05b/S01f/P04e/S13b/S00c — Fresh abstention, q_template, charge-transfer, current, and
   selector reports.** Result: P05b shows injected two-pulse abstention lowers risk only with
   support/coverage tradeoffs; S01f says fold-local q_template does not securely improve timing

@@ -1,0 +1,108 @@
+study_id: BAKEOFF01
+title: systematic ML algorithm bake-off across canonical test-beam tasks
+ticket_id: "0000000002.1.bakeoff01"
+worker: testbeam-laptop-3
+raw_root_dir: data/root/root
+output_dir: reports/0000000002.1.bakeoff01
+random_seed: 2026061002
+
+amplitude_cut_adc: 1000.0
+clean_min_amp_adc: 1500.0
+clean_max_amp_adc: 12000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+tof_per_cm_ns: 0.078
+spacing_cm_values: [2.0]
+staves: {B2: 0, B4: 2, B6: 4, B8: 6}
+duplicate_readout_channels: {B2: 1, B4: 3, B6: 5, B8: 7}
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_pulses: 640737
+  sample_ii_analysis:
+    selected_pulses: 125096
+    B2: 88213
+    B4: 21229
+    B6: 11148
+    B8: 4506
+
+timing:
+  downstream_staves: [B4, B6, B8]
+  train_runs: [58, 59, 60, 61, 62, 63]
+  heldout_runs: [65]
+  leading_edge_threshold_adc: 500.0
+  cfd_fractions: [0.10, 0.20, 0.30, 0.40, 0.50]
+  of_windows:
+    - [1, 9]
+    - [2, 10]
+    - [3, 11]
+  template_shift_grid: {min: -1.5, max: 1.5, step: 0.05}
+  base_method: template_phase
+
+analytic:
+  random_seed: 2026061004
+  bootstrap_samples: 300
+  ridge_alphas: [0.0, 0.01, 0.1, 1.0, 10.0, 100.0]
+  cv_folds: 3
+  candidate_models: [amp_only, amp_rise_shape, amp_rise_shape_by_stave]
+
+ml:
+  random_seed: 2026061002
+  bootstrap_samples: 300
+  cv_folds: 3
+  ridge_alphas: [0.1, 1.0, 10.0]
+  hgb_learning_rates: [0.03, 0.08]
+  extra_trees_n_estimators: [120]
+  mlp_hidden: [32, 64]
+  cnn_channels: [8]
+  resnet_channels: [8]
+  tcn_channels: [8]
+  attention_width: [8]
+  gru_hidden: [16]
+  torch_epochs: 90
+  torch_lr: 0.003
+  torch_weight_decay: 0.0001
+  torch_batch_size: 4096
+  sklearn_max_iter: 360
+
+charge:
+  heldout_runs: [57, 65]
+  valid_min_target_adc: 100.0
+  max_train_rows: 30000
+  cv_max_train_rows: 15000
+  bootstrap_samples: 400
+  ridge_alphas: [0.1, 1.0, 10.0]
+  huber_alphas: [0.001]
+  rf_n_estimators: [48]
+  extra_trees_n_estimators: [64]
+  hgb_learning_rates: [0.08]
+  mlp_hidden: [48]
+
+anomaly:
+  bootstrap_samples: 400
+  logistic_c: [0.3, 1.0, 3.0]
+  rf_n_estimators: [96]
+  hgb_learning_rates: [0.08]
+  mlp_hidden: [48]
+
+injection:
+  train_runs: [58, 59, 60, 61]
+  heldout_runs: [63, 65]
+  max_clean_pulses_per_run_stave: 130
+  injected_per_train_run: 170
+  clean_per_train_run: 170
+  injected_per_heldout_run: 210
+  clean_per_heldout_run: 210
+  template_reference_cfd_sample: 5.0
+  template_shift_grid: {min: -1.25, max: 0.75, step: 0.25}
+  fit_separation_grid_samples: [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0]
+  injection_separation_grid_samples: [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0]
+  injection_ratio_grid: [0.25, 0.5, 0.75, 1.0]
+  fit_ratio_bounds: [0.15, 1.8]
+  baseline_bounds_adc: [-250.0, 250.0]

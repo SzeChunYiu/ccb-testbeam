@@ -1,0 +1,428 @@
+{
+  "study": "P04n",
+  "ticket": "1781036493.3330.4f5f1b60",
+  "worker": "testbeam-laptop-3",
+  "raw_reproduction": {
+    "source": "raw ROOT data/root/root/hrdb_run_*.root via P04 extract_rows",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train": "B4/B6/B8 selected duplicate-readout rows, runs not in heldout_runs",
+    "evaluate": "B2 selected duplicate-readout rows, heldout_runs only",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "run_block_bootstrap_reps": 500
+  },
+  "methods_benchmarked": [
+    "peak_loglinear",
+    "integral_loglinear",
+    "template_scale_loglinear",
+    "strong_huber_transfer",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "saturation_knockout_hgb",
+    "shuffled_target_hgb",
+    "1d_cnn",
+    "template_residual_cnn"
+  ],
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml",
+    "primary_metric": "res68_abs_frac",
+    "res68_abs_frac": 0.021319160048154838,
+    "res68_ci95": [
+      0.019245861336278036,
+      0.023812690191499827
+    ]
+  },
+  "best_traditional": {
+    "method": "strong_huber_transfer",
+    "res68_abs_frac": 0.04135497795752779,
+    "res68_ci95": [
+      0.03666243382304092,
+      0.04604249872197759
+    ]
+  },
+  "summary": [
+    {
+      "method": "gradient_boosted_trees",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": 0.0028516298,
+      "res68_abs_frac": 0.02131916,
+      "full_rms_frac": 0.310166534,
+      "within_10pct": 0.936448365,
+      "within_25pct": 0.9825388907,
+      "bias_ci95": [
+        0.0023555376,
+        0.0032739559
+      ],
+      "res68_ci95": [
+        0.0192458613,
+        0.0238126902
+      ],
+      "full_rms_ci95": [
+        0.1885088191,
+        0.419687003
+      ],
+      "within_10pct_ci95": [
+        0.9159405666,
+        0.9549798372
+      ],
+      "within_25pct_ci95": [
+        0.9752611932,
+        0.9885340022
+      ],
+      "family": "ml"
+    },
+    {
+      "method": "mlp",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.0004835039,
+      "res68_abs_frac": 0.0236538923,
+      "full_rms_frac": 1.5193131263,
+      "within_10pct": 0.9357227085,
+      "within_25pct": 0.9796135879,
+      "bias_ci95": [
+        -0.0017594322,
+        0.0006719149
+      ],
+      "res68_ci95": [
+        0.0223015593,
+        0.0253393593
+      ],
+      "full_rms_ci95": [
+        0.7608751663,
+        2.1481203432
+      ],
+      "within_10pct_ci95": [
+        0.919236454,
+        0.9518820047
+      ],
+      "within_25pct_ci95": [
+        0.9716922865,
+        0.9866826741
+      ],
+      "family": "ml"
+    },
+    {
+      "method": "ridge",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.0026457981,
+      "res68_abs_frac": 0.0267346945,
+      "full_rms_frac": 28.6268447802,
+      "within_10pct": 0.9065036963,
+      "within_25pct": 0.9628327815,
+      "bias_ci95": [
+        -0.0037595995,
+        -0.001330315
+      ],
+      "res68_ci95": [
+        0.0248385584,
+        0.0290573824
+      ],
+      "full_rms_ci95": [
+        14.4766093017,
+        42.4387113648
+      ],
+      "within_10pct_ci95": [
+        0.8827529958,
+        0.9337773028
+      ],
+      "within_25pct_ci95": [
+        0.9538706706,
+        0.9731251416
+      ],
+      "family": "ml"
+    },
+    {
+      "method": "saturation_knockout_hgb",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": 0.0019127394,
+      "res68_abs_frac": 0.0229537058,
+      "full_rms_frac": 0.2794257322,
+      "within_10pct": 0.9298834414,
+      "within_25pct": 0.981155608,
+      "bias_ci95": [
+        0.0012805049,
+        0.0024972618
+      ],
+      "res68_ci95": [
+        0.0208181809,
+        0.0255032455
+      ],
+      "full_rms_ci95": [
+        0.1783771772,
+        0.3672101308
+      ],
+      "within_10pct_ci95": [
+        0.9082973481,
+        0.9503496448
+      ],
+      "within_25pct_ci95": [
+        0.9735922257,
+        0.9884070513
+      ],
+      "family": "negative_control"
+    },
+    {
+      "method": "shuffled_target_hgb",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.4314409002,
+      "res68_abs_frac": 0.6727303664,
+      "full_rms_frac": 3.6970819291,
+      "within_10pct": 0.068291079,
+      "within_25pct": 0.1800761939,
+      "bias_ci95": [
+        -0.5064487271,
+        -0.358378387
+      ],
+      "res68_ci95": [
+        0.6565701304,
+        0.6862217889
+      ],
+      "full_rms_ci95": [
+        2.8586880686,
+        4.3409429058
+      ],
+      "within_10pct_ci95": [
+        0.0597631247,
+        0.0795416539
+      ],
+      "within_25pct_ci95": [
+        0.1587241387,
+        0.2049372429
+      ],
+      "family": "negative_control"
+    },
+    {
+      "method": "template_residual_cnn",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.0160673383,
+      "res68_abs_frac": 0.0486058045,
+      "full_rms_frac": 0.2540888647,
+      "within_10pct": 0.8266814822,
+      "within_25pct": 0.9240101592,
+      "bias_ci95": [
+        -0.0181591907,
+        -0.0134940253
+      ],
+      "res68_ci95": [
+        0.0445589235,
+        0.0533707052
+      ],
+      "full_rms_ci95": [
+        0.1925405153,
+        0.3294302504
+      ],
+      "within_10pct_ci95": [
+        0.8010179966,
+        0.8507394203
+      ],
+      "within_25pct_ci95": [
+        0.9043645872,
+        0.9448637503
+      ],
+      "family": "new_architecture"
+    },
+    {
+      "method": "1d_cnn",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.0058404861,
+      "res68_abs_frac": 0.066137437,
+      "full_rms_frac": 0.4261763805,
+      "within_10pct": 0.8112272665,
+      "within_25pct": 0.9110390494,
+      "bias_ci95": [
+        -0.0084876344,
+        -0.0034330942
+      ],
+      "res68_ci95": [
+        0.060598029,
+        0.0712149701
+      ],
+      "full_rms_ci95": [
+        0.2470076655,
+        0.5985169567
+      ],
+      "within_10pct_ci95": [
+        0.7839859364,
+        0.8403820901
+      ],
+      "within_25pct_ci95": [
+        0.8915993783,
+        0.9317025642
+      ],
+      "family": "nn"
+    },
+    {
+      "method": "strong_huber_transfer",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": 0.0064350897,
+      "res68_abs_frac": 0.041354978,
+      "full_rms_frac": 0.295938234,
+      "within_10pct": 0.8788720577,
+      "within_25pct": 0.9267767246,
+      "bias_ci95": [
+        0.0036072049,
+        0.0095782532
+      ],
+      "res68_ci95": [
+        0.0366624338,
+        0.0460424987
+      ],
+      "full_rms_ci95": [
+        0.2356295688,
+        0.3376690123
+      ],
+      "within_10pct_ci95": [
+        0.8455820777,
+        0.9182702486
+      ],
+      "within_25pct_ci95": [
+        0.9053127227,
+        0.9509170997
+      ],
+      "family": "traditional"
+    },
+    {
+      "method": "integral_loglinear",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.1236384599,
+      "res68_abs_frac": 0.158464408,
+      "full_rms_frac": 1.6898652956,
+      "within_10pct": 0.1541339743,
+      "within_25pct": 0.862023221,
+      "bias_ci95": [
+        -0.1324019545,
+        -0.117986642
+      ],
+      "res68_ci95": [
+        0.1558243578,
+        0.1602528907
+      ],
+      "full_rms_ci95": [
+        1.3241889875,
+        1.9841636187
+      ],
+      "within_10pct_ci95": [
+        0.1295799432,
+        0.1793059522
+      ],
+      "within_25pct_ci95": [
+        0.821957223,
+        0.9044315671
+      ],
+      "family": "traditional"
+    },
+    {
+      "method": "peak_loglinear",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.2234154216,
+      "res68_abs_frac": 0.3440594018,
+      "full_rms_frac": 1.9888404643,
+      "within_10pct": 0.1158215792,
+      "within_25pct": 0.4623112159,
+      "bias_ci95": [
+        -0.2296920121,
+        -0.2165257667
+      ],
+      "res68_ci95": [
+        0.2983223554,
+        0.3814249485
+      ],
+      "full_rms_ci95": [
+        1.5280793509,
+        2.3456231425
+      ],
+      "within_10pct_ci95": [
+        0.1026478009,
+        0.1359112016
+      ],
+      "within_25pct_ci95": [
+        0.4285164018,
+        0.5119774703
+      ],
+      "family": "traditional"
+    },
+    {
+      "method": "template_scale_loglinear",
+      "split": "train_B4B6B8_eval_B2_sample_ii_runs",
+      "n": 88196,
+      "bias_median_frac": -0.2703360894,
+      "res68_abs_frac": 0.49802115,
+      "full_rms_frac": 1.5152557139,
+      "within_10pct": 0.140051703,
+      "within_25pct": 0.2540024491,
+      "bias_ci95": [
+        -0.3330143338,
+        -0.2230821203
+      ],
+      "res68_ci95": [
+        0.4871167919,
+        0.5044306064
+      ],
+      "full_rms_ci95": [
+        1.2295200307,
+        1.7179077237
+      ],
+      "within_10pct_ci95": [
+        0.1224566052,
+        0.1520664951
+      ],
+      "within_25pct_ci95": [
+        0.2209073767,
+        0.2761078998
+      ],
+      "family": "traditional"
+    }
+  ],
+  "support_frontier": {
+    "support_tier_counts": {
+      "strong": 58669,
+      "frontier": 17932,
+      "unsupported": 11595
+    },
+    "accepted_fraction_by_tier": {
+      "strong": 0.6652115742210531,
+      "frontier": 0.20331987845253752,
+      "unsupported": 0.13146854732640936
+    }
+  },
+  "leakage_checks": {
+    "split": "train B4/B6/B8 in non-held-out runs; evaluate B2 in held-out Sample-II analysis runs",
+    "n_train_source_rows": 24428,
+    "n_eval_b2_rows": 88196,
+    "heldout_run_overlap": 0,
+    "b2_rows_in_training_matrix": 0,
+    "identifier_or_target_features": false,
+    "invalid_target_rows_removed_after_reproduction": 255,
+    "sklearn_train_rows_used": 24428,
+    "nn_train_rows_used": 24428,
+    "shuffled_target_hgb_res68": 0.6727303664155487,
+    "saturation_knockout_hgb_res68": 0.022953705777882395
+  },
+  "finding": "`gradient_boosted_trees` wins the held-out B2 transfer benchmark with res68 0.02132 and run-block 95 percent CI [0.019245861336278036, 0.023812690191499827]. The best strong traditional method is `strong_huber_transfer` at 0.04135; the shuffled-target sentinel is 0.67273. The B2 transfer is most trustworthy in support cells with strong B4/B6/B8 train coverage and low-to-moderate template mismatch; deep saturation and unsupported cells remain systematic frontiers rather than validated closure regions.",
+  "next_tickets": [],
+  "runtime_sec": 64.3
+}

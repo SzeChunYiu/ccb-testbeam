@@ -1,0 +1,53 @@
+{
+  "study_id": "P04n",
+  "ticket_id": "1781036493.3330.4f5f1b60",
+  "title": "B2 transfer saturation support frontier",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781036493.3330.4f5f1b60__p04n_b2_transfer_support_frontier",
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_run_groups": ["sample_ii_analysis"],
+  "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+  "source_staves": ["B4", "B6", "B8"],
+  "target_stave": "B2",
+  "primary_target": "target_odd_pos_charge",
+  "saturation_adc": 7000.0,
+  "template_bins": [1000, 2000, 3000, 5000, 7000, 1000000000],
+  "template_shift_grid": [-2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0],
+  "support_min_train_rows": 200,
+  "support_strong_train_rows": 1000,
+  "support_min_train_runs": 5,
+  "support_strong_train_runs": 12,
+  "random_seed": 4050,
+  "bootstrap_reps": 500,
+  "sklearn_max_train_rows": 90000,
+  "nn_max_train_rows": 70000,
+  "mlp_max_iter": 120,
+  "torch_epochs": 10,
+  "torch_batch_size": 4096,
+  "torch_learning_rate": 0.0012,
+  "torch_weight_decay": 0.0001,
+  "torch_channels": 16,
+  "prediction_sample_rows": 20000
+}

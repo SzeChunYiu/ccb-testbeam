@@ -1,0 +1,54 @@
+{
+  "study": "S16g",
+  "ticket": "1781033712.1266.126066a8",
+  "title": "cross-mirror run-log inventory for CCB HRD data",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781033712.1266.126066a8__s16g_runlog_inventory_bakeoff",
+  "search_roots": [
+    "data",
+    "/home/billy/ccb-data",
+    "/home/billy/Desktop/test_beam/data",
+    "/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data"
+  ],
+  "expected": {
+    "root_files": 110,
+    "hrda_files": 57,
+    "hrdb_files": 53,
+    "selected_b_stave_pulses": 640737
+  },
+  "report_run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "common_run_min": 12,
+  "event_sample_per_file": 80,
+  "random_seed": 37121266,
+  "group_folds": 3,
+  "bootstrap_replicates": 300,
+  "models": {
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0],
+    "mlp_hidden": [48, 16],
+    "mlp_max_iter": 80,
+    "cnn_epochs": 3,
+    "cnn_batch_size": 256,
+    "cnn_learning_rate": 0.0015
+  },
+  "next_tickets": [
+    {
+      "title": "S16i: external DAQ run-log checksum join for HRD runs 1-65",
+      "body": "Question: do DAQ-side logbooks or unmounted acquisition products contain independent trigger-mode, beam-state, and forced/random pedestal metadata for HRD runs 1-65? Join those external records to the S16g ROOT checksum manifest without changing waveform-derived labels. Expected information gain: separates true provenance metadata from filename/ROOT-header inference and decides whether direct forced/random pedestal closure is possible."
+    }
+  ]
+}

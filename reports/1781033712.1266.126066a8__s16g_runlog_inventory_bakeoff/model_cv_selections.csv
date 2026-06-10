@@ -1,0 +1,19 @@
+fold,method,best_param
+1,traditional_filename_root_parser,parse hrd[a/b]_run_NNNN.root
+1,ridge,"alpha=0.01, inner_bal_acc=0.9921"
+1,gradient_boosted_trees,fixed max_iter=90 lr=0.06
+1,mlp,"hidden=[48, 16]"
+1,cnn1d,fixed small CNN
+1,channel_attention_cnn,new architecture: channel-gated CNN
+2,traditional_filename_root_parser,parse hrd[a/b]_run_NNNN.root
+2,ridge,"alpha=0.01, inner_bal_acc=0.9915"
+2,gradient_boosted_trees,fixed max_iter=90 lr=0.06
+2,mlp,"hidden=[48, 16]"
+2,cnn1d,fixed small CNN
+2,channel_attention_cnn,new architecture: channel-gated CNN
+3,traditional_filename_root_parser,parse hrd[a/b]_run_NNNN.root
+3,ridge,"alpha=0.01, inner_bal_acc=0.9919"
+3,gradient_boosted_trees,fixed max_iter=90 lr=0.06
+3,mlp,"hidden=[48, 16]"
+3,cnn1d,fixed small CNN
+3,channel_attention_cnn,new architecture: channel-gated CNN

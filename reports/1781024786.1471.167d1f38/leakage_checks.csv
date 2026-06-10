@@ -1,0 +1,37 @@
+fold,check,value,flag,note
+holdout_low58_high60,train_test_run_overlap,0.0,False,Injected calibration rows exclude held-out real runs.
+holdout_low58_high60,train_test_event_overlap,0.0,False,Run split should make event overlap zero.
+holdout_low58_high60,forbidden_columns_used,0.0,False,Main S07f RF uses strict b2_shape_/ds_shape_ columns only.
+holdout_low58_high60,shuffled_label_current_auc,0.412109375,False,Flags if shuffled injected labels still separate current family.
+holdout_low58_high60,amplitude_only_current_auc,0.6162109375,False,Amplitude nuisance sentinel after amplitude/charge matching.
+holdout_low58_high60,s07f_current_auc_too_good,0.51953125,False,Flags suspiciously strong current-family separation.
+holdout_low58_high61,train_test_run_overlap,0.0,False,Injected calibration rows exclude held-out real runs.
+holdout_low58_high61,train_test_event_overlap,0.0,False,Run split should make event overlap zero.
+holdout_low58_high61,forbidden_columns_used,0.0,False,Main S07f RF uses strict b2_shape_/ds_shape_ columns only.
+holdout_low58_high61,shuffled_label_current_auc,0.49609375,False,Flags if shuffled injected labels still separate current family.
+holdout_low58_high61,amplitude_only_current_auc,0.5986328125,False,Amplitude nuisance sentinel after amplitude/charge matching.
+holdout_low58_high61,s07f_current_auc_too_good,0.544921875,False,Flags suspiciously strong current-family separation.
+holdout_low58_high62,train_test_run_overlap,0.0,False,Injected calibration rows exclude held-out real runs.
+holdout_low58_high62,train_test_event_overlap,0.0,False,Run split should make event overlap zero.
+holdout_low58_high62,forbidden_columns_used,0.0,False,Main S07f RF uses strict b2_shape_/ds_shape_ columns only.
+holdout_low58_high62,shuffled_label_current_auc,0.476643598615917,False,Flags if shuffled injected labels still separate current family.
+holdout_low58_high62,amplitude_only_current_auc,0.5899653979238755,False,Amplitude nuisance sentinel after amplitude/charge matching.
+holdout_low58_high62,s07f_current_auc_too_good,0.4429065743944637,False,Flags suspiciously strong current-family separation.
+holdout_low65_high60,train_test_run_overlap,0.0,False,Injected calibration rows exclude held-out real runs.
+holdout_low65_high60,train_test_event_overlap,0.0,False,Run split should make event overlap zero.
+holdout_low65_high60,forbidden_columns_used,0.0,False,Main S07f RF uses strict b2_shape_/ds_shape_ columns only.
+holdout_low65_high60,shuffled_label_current_auc,0.6621315192743764,False,Flags if shuffled injected labels still separate current family.
+holdout_low65_high60,amplitude_only_current_auc,0.5419501133786848,False,Amplitude nuisance sentinel after amplitude/charge matching.
+holdout_low65_high60,s07f_current_auc_too_good,0.6349206349206349,False,Flags suspiciously strong current-family separation.
+holdout_low65_high61,train_test_run_overlap,0.0,False,Injected calibration rows exclude held-out real runs.
+holdout_low65_high61,train_test_event_overlap,0.0,False,Run split should make event overlap zero.
+holdout_low65_high61,forbidden_columns_used,0.0,False,Main S07f RF uses strict b2_shape_/ds_shape_ columns only.
+holdout_low65_high61,shuffled_label_current_auc,0.579861111111111,False,Flags if shuffled injected labels still separate current family.
+holdout_low65_high61,amplitude_only_current_auc,0.375,False,Amplitude nuisance sentinel after amplitude/charge matching.
+holdout_low65_high61,s07f_current_auc_too_good,0.5729166666666666,False,Flags suspiciously strong current-family separation.
+holdout_low65_high62,train_test_run_overlap,0.0,False,Injected calibration rows exclude held-out real runs.
+holdout_low65_high62,train_test_event_overlap,0.0,False,Run split should make event overlap zero.
+holdout_low65_high62,forbidden_columns_used,0.0,False,Main S07f RF uses strict b2_shape_/ds_shape_ columns only.
+holdout_low65_high62,shuffled_label_current_auc,0.46227709190672156,False,Flags if shuffled injected labels still separate current family.
+holdout_low65_high62,amplitude_only_current_auc,0.4403292181069959,False,Amplitude nuisance sentinel after amplitude/charge matching.
+holdout_low65_high62,s07f_current_auc_too_good,0.5089163237311385,False,Flags suspiciously strong current-family separation.

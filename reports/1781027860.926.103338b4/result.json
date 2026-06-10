@@ -1,0 +1,170 @@
+{
+  "study": "S03e",
+  "ticket": "1781027860.926.103338b4",
+  "worker": "testbeam-laptop-3",
+  "title": "all-three-downstream q_template clean-cut validation with curvature C_t",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_calib selected pulses",
+      "report_value": 248745,
+      "reproduced": 248745,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_analysis selected pulses",
+      "report_value": 252266,
+      "reproduced": 252266,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_calib selected pulses",
+      "report_value": 14630,
+      "reproduced": 14630,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72,
+      "reproduced": 72,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "all-three downstream control events",
+      "report_value": 3774,
+      "reproduced": 3774,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "all-three downstream guarded gross events, D_t>51 ns",
+      "report_value": 22,
+      "reproduced": 22,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "traditional": {
+    "method": "traditional q_template score",
+    "metric": "leave-one-run-out ROC AUC for |C_t|>51 ns all-three curvature tails",
+    "value": 0.7939560439560439,
+    "ci": [
+      0.7673673884105661,
+      0.8381200618630896
+    ]
+  },
+  "ml": {
+    "method": "q_template-only RF",
+    "metric": "leave-one-run-out ROC AUC for |C_t|>51 ns all-three curvature tails",
+    "value": 0.8658325370281891,
+    "ci": [
+      0.8140056818181818,
+      0.9281727047413293
+    ],
+    "feature_columns": [
+      "q_b2",
+      "q_b4",
+      "q_b6",
+      "q_b8",
+      "q_mean",
+      "q_max",
+      "q_std",
+      "q_ds_mean",
+      "q_ds_max",
+      "q_ds_std",
+      "q_b2_minus_ds_mean",
+      "q_ds_span"
+    ],
+    "params": {
+      "n_estimators": 500,
+      "max_depth": 5,
+      "min_samples_leaf": 8
+    }
+  },
+  "ml_beats_traditional": true,
+  "details": {
+    "n_all_three_control_events": 3774,
+    "n_clean_events": 728,
+    "n_tail_events": 23,
+    "tail_fraction": 0.03062583222370173,
+    "template_bin_sources": {
+      "bin": 22,
+      "stave_fallback": 10
+    },
+    "fixed_clean_efficiency": 0.95,
+    "forbidden_main_features": []
+  },
+  "leakage_checks": [
+    {
+      "probe": "q-template RF with shuffled training labels",
+      "roc_auc": 0.4975513616817965,
+      "average_precision": 0.031093185107082474,
+      "notes": "Run-held-out null check; labels shuffled only inside training runs."
+    },
+    {
+      "probe": "B2-only q-template RF",
+      "roc_auc": 0.606844242713808,
+      "average_precision": 0.06226697455449309,
+      "notes": "Upstream q_template only; away from downstream D_t source waveforms."
+    },
+    {
+      "probe": "downstream-only q-template RF",
+      "roc_auc": 0.8364488772097467,
+      "average_precision": 0.3555220415110684,
+      "notes": "Downstream q_template only; shares waveform provenance with D_t labels."
+    },
+    {
+      "probe": "absolute-amplitude-only RF",
+      "roc_auc": 0.7188843764930721,
+      "average_precision": 0.14803276984322583,
+      "notes": "Amplitude nuisance probe; excluded from main RF."
+    },
+    {
+      "probe": "leaky |C_t| score",
+      "roc_auc": 1.0,
+      "average_precision": 0.9999999999999998,
+      "notes": "Forbidden label-defining ceiling, reported only as a reference."
+    },
+    {
+      "probe": "D_t cross-check score",
+      "roc_auc": 1.0,
+      "average_precision": 0.9999999999999998,
+      "notes": "Not used as the primary target; reports how close span is to the curvature label."
+    },
+    {
+      "probe": "forbidden feature audit",
+      "roc_auc": null,
+      "average_precision": null,
+      "notes": "Forbidden main-feature columns: []; main features: ['q_b2', 'q_b4', 'q_b6', 'q_b8', 'q_mean', 'q_max', 'q_std', 'q_ds_mean', 'q_ds_max', 'q_ds_std', 'q_b2_minus_ds_mean', 'q_ds_span']."
+    }
+  ],
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "b669f77964ce0115849d9a8ccdfddcee128fabb5",
+  "next_tickets": []
+}

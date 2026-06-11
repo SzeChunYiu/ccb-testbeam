@@ -1,0 +1,463 @@
+{
+  "study": "P12c",
+  "ticket": "1781046830.796.418e6e1f",
+  "worker": "testbeam-laptop-3",
+  "title": "pulse-action decision matrix",
+  "reproduced": true,
+  "raw_reproduction": {
+    "source": "/home/billy/ccb-data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train": "all configured B-stack runs except heldout_runs",
+    "evaluate": "heldout Sample-II analysis runs",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_reps": 250,
+    "train_cap": 30000
+  },
+  "methods_benchmarked": [
+    "empirical_bayes_action_table",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "action_prior_residual_cnn_new_arch"
+  ],
+  "primary_metric": "minimum held-out Brier score for unsafe-action risk",
+  "winner": {
+    "method": "mlp",
+    "family": "nn",
+    "brier": 0.0016779116560001273,
+    "brier_ci95": [
+      0.0010057325894396465,
+      0.002659213694568593
+    ],
+    "auc": 0.999805972817461,
+    "ece": 0.001259302774145512,
+    "pass_coverage_at_risk10": 0.17690413762230606,
+    "unsafe_rate_at_risk10": 0.00858563036601898
+  },
+  "traditional": {
+    "n": 125096,
+    "unsafe_rate": 0.8239751870563408,
+    "auc": 0.9996873809221445,
+    "average_precision": 0.9999268305891356,
+    "brier": 0.02710254174518138,
+    "ece": 0.11070959484659558,
+    "pass_coverage_at_risk10": 0.14894960670205282,
+    "unsafe_rate_at_risk10": 0.0031127569366178284,
+    "charge_res68_at_risk10": 1.0085234143812658,
+    "timing_sigma68_at_risk10": 0.8004956365965973,
+    "auc_ci95": [
+      0.9995435505597233,
+      0.9997902385767384
+    ],
+    "average_precision_ci95": [
+      0.9998994778231768,
+      0.9999478899893514
+    ],
+    "brier_ci95": [
+      0.019636056169280585,
+      0.03219893270612079
+    ],
+    "ece_ci95": [
+      0.08814587000947602,
+      0.12535464061566143
+    ],
+    "pass_coverage_at_risk10_ci95": [
+      0.11872356182733386,
+      0.18848672541652953
+    ],
+    "unsafe_rate_at_risk10_ci95": [
+      0.0013116288940032792,
+      0.0059127669900285035
+    ],
+    "charge_res68_at_risk10_ci95": [
+      0.9596895351912408,
+      1.067602153687619
+    ],
+    "timing_sigma68_at_risk10_ci95": [
+      0.7443559457556553,
+      0.8783225256736882
+    ],
+    "method": "empirical_bayes_action_table",
+    "family": "traditional",
+    "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+  },
+  "ml": {
+    "n": 125096,
+    "unsafe_rate": 0.8239751870563408,
+    "auc": 0.999805972817461,
+    "average_precision": 0.9999606190323305,
+    "brier": 0.0016779116560001273,
+    "ece": 0.001259302774145512,
+    "pass_coverage_at_risk10": 0.17690413762230606,
+    "unsafe_rate_at_risk10": 0.00858563036601898,
+    "charge_res68_at_risk10": 1.1049890965054014,
+    "timing_sigma68_at_risk10": 0.8246443442987313,
+    "auc_ci95": [
+      0.9996363134319489,
+      0.9998944147502445
+    ],
+    "average_precision_ci95": [
+      0.9999401919272463,
+      0.9999745332425785
+    ],
+    "brier_ci95": [
+      0.0010057325894396465,
+      0.002659213694568593
+    ],
+    "ece_ci95": [
+      0.0005993886223126766,
+      0.002289455785757392
+    ],
+    "pass_coverage_at_risk10_ci95": [
+      0.1441724314032241,
+      0.21384866057404706
+    ],
+    "unsafe_rate_at_risk10_ci95": [
+      0.003905446321865083,
+      0.01707327376586452
+    ],
+    "charge_res68_at_risk10_ci95": [
+      1.0448912869152045,
+      1.1974539251580638
+    ],
+    "timing_sigma68_at_risk10_ci95": [
+      0.7704483505452212,
+      0.918420497085396
+    ],
+    "method": "mlp",
+    "family": "nn",
+    "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+  },
+  "ml_beats_baseline": true,
+  "summary": [
+    {
+      "n": 125096,
+      "unsafe_rate": 0.8239751870563408,
+      "auc": 0.999805972817461,
+      "average_precision": 0.9999606190323305,
+      "brier": 0.0016779116560001273,
+      "ece": 0.001259302774145512,
+      "pass_coverage_at_risk10": 0.17690413762230606,
+      "unsafe_rate_at_risk10": 0.00858563036601898,
+      "charge_res68_at_risk10": 1.1049890965054014,
+      "timing_sigma68_at_risk10": 0.8246443442987313,
+      "auc_ci95": [
+        0.9996363134319489,
+        0.9998944147502445
+      ],
+      "average_precision_ci95": [
+        0.9999401919272463,
+        0.9999745332425785
+      ],
+      "brier_ci95": [
+        0.0010057325894396465,
+        0.002659213694568593
+      ],
+      "ece_ci95": [
+        0.0005993886223126766,
+        0.002289455785757392
+      ],
+      "pass_coverage_at_risk10_ci95": [
+        0.1441724314032241,
+        0.21384866057404706
+      ],
+      "unsafe_rate_at_risk10_ci95": [
+        0.003905446321865083,
+        0.01707327376586452
+      ],
+      "charge_res68_at_risk10_ci95": [
+        1.0448912869152045,
+        1.1974539251580638
+      ],
+      "timing_sigma68_at_risk10_ci95": [
+        0.7704483505452212,
+        0.918420497085396
+      ],
+      "method": "mlp",
+      "family": "nn",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "unsafe_rate": 0.8239751870563408,
+      "auc": 0.9998774541162874,
+      "average_precision": 0.9999768229973052,
+      "brier": 0.00169079150574221,
+      "ece": 0.002480584063532333,
+      "pass_coverage_at_risk10": 0.17612873313295388,
+      "unsafe_rate_at_risk10": 0.00771569917850497,
+      "charge_res68_at_risk10": 1.1000081645927595,
+      "timing_sigma68_at_risk10": 0.8234433022979477,
+      "auc_ci95": [
+        0.9998372183860208,
+        0.9999210376069412
+      ],
+      "average_precision_ci95": [
+        0.9999712317767488,
+        0.9999828349290024
+      ],
+      "brier_ci95": [
+        0.0008819095574157756,
+        0.002654600947594115
+      ],
+      "ece_ci95": [
+        0.001830815763151143,
+        0.00358775340898764
+      ],
+      "pass_coverage_at_risk10_ci95": [
+        0.14984202414909972,
+        0.2132542063432083
+      ],
+      "unsafe_rate_at_risk10_ci95": [
+        0.0026968919380651385,
+        0.015399502227596527
+      ],
+      "charge_res68_at_risk10_ci95": [
+        1.0383348183080336,
+        1.1717697069790003
+      ],
+      "timing_sigma68_at_risk10_ci95": [
+        0.7702009367978562,
+        0.9131616800227569
+      ],
+      "method": "gradient_boosted_trees",
+      "family": "ml",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "unsafe_rate": 0.8239751870563408,
+      "auc": 0.9994986358574816,
+      "average_precision": 0.9999031281267485,
+      "brier": 0.0017171579419785641,
+      "ece": 0.0015958966277441402,
+      "pass_coverage_at_risk10": 0.17707200869732045,
+      "unsafe_rate_at_risk10": 0.008622635546927904,
+      "charge_res68_at_risk10": 1.1060970566443364,
+      "timing_sigma68_at_risk10": 0.8248663055965793,
+      "auc_ci95": [
+        0.9991013217037881,
+        0.99976331471666
+      ],
+      "average_precision_ci95": [
+        0.9998464508161296,
+        0.9999437730090771
+      ],
+      "brier_ci95": [
+        0.0010448589893186859,
+        0.0027069952454477956
+      ],
+      "ece_ci95": [
+        0.0008520496445747458,
+        0.002623236059845815
+      ],
+      "pass_coverage_at_risk10_ci95": [
+        0.14553234850874416,
+        0.2143371850908329
+      ],
+      "unsafe_rate_at_risk10_ci95": [
+        0.004020675974662019,
+        0.016549165782612115
+      ],
+      "charge_res68_at_risk10_ci95": [
+        1.0542591839414401,
+        1.1907623910231084
+      ],
+      "timing_sigma68_at_risk10_ci95": [
+        0.7710455500265458,
+        0.9177446530795166
+      ],
+      "method": "ridge",
+      "family": "ml",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "unsafe_rate": 0.8239751870563408,
+      "auc": 0.9997082631092306,
+      "average_precision": 0.99994085407964,
+      "brier": 0.018300045236529297,
+      "ece": 0.09515405439275673,
+      "pass_coverage_at_risk10": 0.09356813966873441,
+      "unsafe_rate_at_risk10": 0.0005126014523707817,
+      "charge_res68_at_risk10": 0.8544412226147611,
+      "timing_sigma68_at_risk10": 0.8222359373660755,
+      "auc_ci95": [
+        0.9995213399458575,
+        0.9998111124927945
+      ],
+      "average_precision_ci95": [
+        0.9999176422263694,
+        0.9999573839580599
+      ],
+      "brier_ci95": [
+        0.0157459331451039,
+        0.020234980861923924
+      ],
+      "ece_ci95": [
+        0.08643719014505563,
+        0.10216944056372886
+      ],
+      "pass_coverage_at_risk10_ci95": [
+        0.07238119987176654,
+        0.11449898387895178
+      ],
+      "unsafe_rate_at_risk10_ci95": [
+        0.00017955893306109835,
+        0.0008141335222254411
+      ],
+      "charge_res68_at_risk10_ci95": [
+        0.7548235643451525,
+        0.9471759509180776
+      ],
+      "timing_sigma68_at_risk10_ci95": [
+        0.7383571278686407,
+        1.04061316472347
+      ],
+      "method": "action_prior_residual_cnn_new_arch",
+      "family": "new_architecture",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "unsafe_rate": 0.8239751870563408,
+      "auc": 0.9996873809221445,
+      "average_precision": 0.9999268305891356,
+      "brier": 0.02710254174518138,
+      "ece": 0.11070959484659558,
+      "pass_coverage_at_risk10": 0.14894960670205282,
+      "unsafe_rate_at_risk10": 0.0031127569366178284,
+      "charge_res68_at_risk10": 1.0085234143812658,
+      "timing_sigma68_at_risk10": 0.8004956365965973,
+      "auc_ci95": [
+        0.9995435505597233,
+        0.9997902385767384
+      ],
+      "average_precision_ci95": [
+        0.9998994778231768,
+        0.9999478899893514
+      ],
+      "brier_ci95": [
+        0.019636056169280585,
+        0.03219893270612079
+      ],
+      "ece_ci95": [
+        0.08814587000947602,
+        0.12535464061566143
+      ],
+      "pass_coverage_at_risk10_ci95": [
+        0.11872356182733386,
+        0.18848672541652953
+      ],
+      "unsafe_rate_at_risk10_ci95": [
+        0.0013116288940032792,
+        0.0059127669900285035
+      ],
+      "charge_res68_at_risk10_ci95": [
+        0.9596895351912408,
+        1.067602153687619
+      ],
+      "timing_sigma68_at_risk10_ci95": [
+        0.7443559457556553,
+        0.8783225256736882
+      ],
+      "method": "empirical_bayes_action_table",
+      "family": "traditional",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "unsafe_rate": 0.8239751870563408,
+      "auc": 0.8884986198732262,
+      "average_precision": 0.9697912847577169,
+      "brier": 0.10647100706126292,
+      "ece": 0.1481523068336279,
+      "pass_coverage_at_risk10": 0.0,
+      "unsafe_rate_at_risk10": null,
+      "charge_res68_at_risk10": null,
+      "timing_sigma68_at_risk10": null,
+      "auc_ci95": [
+        0.8762658006152866,
+        0.9012384268642758
+      ],
+      "average_precision_ci95": [
+        0.9632432878114241,
+        0.9753081907606416
+      ],
+      "brier_ci95": [
+        0.0944745539544087,
+        0.11891849930481169
+      ],
+      "ece_ci95": [
+        0.11663848279674013,
+        0.18742010077486004
+      ],
+      "pass_coverage_at_risk10_ci95": [
+        0.0,
+        0.0
+      ],
+      "unsafe_rate_at_risk10_ci95": [
+        null,
+        null
+      ],
+      "charge_res68_at_risk10_ci95": [
+        null,
+        null
+      ],
+      "timing_sigma68_at_risk10_ci95": [
+        null,
+        null
+      ],
+      "method": "1d_cnn",
+      "family": "nn",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    }
+  ],
+  "action_matrix": {
+    "path": "consumer_action_matrix.csv",
+    "consumers": [
+      "amplitude",
+      "baseline",
+      "covariance",
+      "dropout",
+      "energy",
+      "pid",
+      "pileup",
+      "saturation",
+      "timing"
+    ],
+    "actions": [
+      "pass",
+      "correct",
+      "abstain",
+      "veto"
+    ]
+  },
+  "falsification": {
+    "preregistered_metric": "held-out Brier score for unsafe-action risk plus action-knockout support metrics",
+    "n_tries": 6,
+    "action_knockout_path": "action_knockout_metrics.csv",
+    "leakage_checks_passed": true
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "68d50bf01f516aee92eec30b9e5463d6fdeedefe",
+  "critic": "pending",
+  "next_tickets": [
+    "P12d: test whether the P12c pass/correct/abstain/veto matrix improves downstream PID and energy calibration when frozen before fitting consumer models"
+  ],
+  "runtime_sec": 492.68351221084595
+}

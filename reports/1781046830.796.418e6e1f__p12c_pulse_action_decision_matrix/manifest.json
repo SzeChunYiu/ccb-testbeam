@@ -1,0 +1,77 @@
+{
+  "ticket_id": "1781046830.796.418e6e1f",
+  "script": "scripts/p12c_1781046830_796_418e6e1f_pulse_action_decision_matrix.py",
+  "config": "configs/p12c_1781046830_796_418e6e1f_pulse_action_decision_matrix.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p12c_1781046830_796_418e6e1f_pulse_action_decision_matrix.py --config configs/p12c_1781046830_796_418e6e1f_pulse_action_decision_matrix.json",
+  "git_commit": "68d50bf01f516aee92eec30b9e5463d6fdeedefe",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "raw_reproduction_passed": true,
+  "input_sha256_rows": 35,
+  "random_seed": 1206830,
+  "artifacts": [
+    "REPORT.md",
+    "action_knockout_metrics.csv",
+    "consumer_action_matrix.csv",
+    "counts_by_group.csv",
+    "counts_by_run.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "method_by_run.csv",
+    "method_metrics.csv",
+    "pulse_action_atoms.csv.gz",
+    "raw_count_match.csv",
+    "result.json"
+  ],
+  "output_sha256": [
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/REPORT.md",
+      "sha256": "ed4900b8bb05df8c0aba3e7c6ef5c81e0a7c5b3c35d8a6d74a1f7a2d6dfa96ac"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/action_knockout_metrics.csv",
+      "sha256": "3e6d4904e0805bd8d1cf48125ebcd8b426bbb2598a0145ac18416f436a963006"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/consumer_action_matrix.csv",
+      "sha256": "3328ea64286d92e1d1b09a69dfd09c11b3119edf1194799bbc9c2873562b38ae"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/counts_by_group.csv",
+      "sha256": "5f471827a94a55b0a8b3968d71d9f57955f82bdf8277d7d09439b370b862a890"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/input_sha256.csv",
+      "sha256": "f751997958820a91a6371074845dfcba384ca4e97299c94dbaa1007dc0b7f1b8"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/leakage_checks.csv",
+      "sha256": "752e9a2fdc339aa46621780d0330e872225089185d10364dbc360e6c209b4aaa"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/method_by_run.csv",
+      "sha256": "f110313429071618142676a7cadf7d59d4cd5a54cf4fc0d440088537443ed5fe"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/method_metrics.csv",
+      "sha256": "f6cdd4e9f48894ff9bb8596689ce98458d700d390a4e40120fd94ecb3c822726"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/pulse_action_atoms.csv.gz",
+      "sha256": "0d3945ae4cb712dbda9cd620033869687998262c556ab96d1ff72824d3c0853e"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/raw_count_match.csv",
+      "sha256": "b6227057386a9dc110b8b7c9ee2047ff4725be3c9c62da3fb65129c12a183dcf"
+    },
+    {
+      "path": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix/result.json",
+      "sha256": "b12c26fc7265dee88792b25f13f032852dd0ececc8dd1a2e81c45dd266ee7049"
+    }
+  ]
+}

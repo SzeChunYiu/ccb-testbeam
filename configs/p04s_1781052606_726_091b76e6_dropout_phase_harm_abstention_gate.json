@@ -1,0 +1,49 @@
+{
+  "study": "P04s",
+  "ticket_id": "1781052606.726.091b76e6",
+  "worker": "testbeam-laptop-3",
+  "title": "dropout recovery phase-harm abstention gate",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781052606.726.091b76e6__p04s_dropout_phase_harm_abstention_gate",
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 0.2,
+  "cfd_fraction": 0.2,
+  "catastrophic_abs_frac": 0.2,
+  "harm_time_margin_samples": 0.015,
+  "harm_tail_margin_frac": 0.015,
+  "harm_qtemplate_margin": 0.030,
+  "harm_pileup_margin": 0.030,
+  "charge_gain_margin_frac": 0.02,
+  "real_candidate_deficit_frac": 0.08,
+  "gate_threshold": 0.55,
+  "random_seed": 4219,
+  "bootstrap_reps": 120,
+  "max_sample_per_stratum": 12,
+  "ml_max_train_rows": 30000,
+  "nn_max_train_rows": 18000,
+  "nn_epochs": 14,
+  "nn_batch_size": 768,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [57, 65],
+  "amplitude_bins": [1000, 2000, 3000, 5000, 7000, 1000000000],
+  "dropout_cases": [
+    {"name": "leading_edge", "offsets": [-2, -1]},
+    {"name": "peak_sample", "offsets": [0]},
+    {"name": "trailing_sample", "offsets": [2]},
+    {"name": "peak_trailing", "offsets": [0, 1]}
+  ]
+}

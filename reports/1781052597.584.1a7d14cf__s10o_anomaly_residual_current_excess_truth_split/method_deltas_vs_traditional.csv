@@ -1,0 +1,6 @@
+method_metric,reference_metric,delta,ci_low,ci_high,n_bootstrap
+ridge_secondary_fraction,trad_secondary_fraction,0.0037137886712330023,-0.025933392306300707,0.03154844626141261,520
+gradient_boosted_trees_secondary_fraction,trad_secondary_fraction,-0.008390181507230202,-0.03425023183901002,0.0167044929877772,520
+mlp_secondary_fraction,trad_secondary_fraction,-0.022114251186291515,-0.042391795347899136,-0.0008078729583080817,520
+cnn1d_secondary_fraction,trad_secondary_fraction,-0.009987552708181073,-0.041283031414658736,0.018739167027194983,520
+residual_tcn_secondary_fraction,trad_secondary_fraction,-0.018782447256923285,-0.03429888242479105,-0.0027815160946686114,520

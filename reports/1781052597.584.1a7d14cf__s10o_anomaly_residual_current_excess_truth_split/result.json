@@ -1,0 +1,530 @@
+{
+  "study": "S10o",
+  "ticket": "1781052597.584.1a7d14cf",
+  "worker": "testbeam-laptop-4",
+  "title": "S10o anomaly-residual current excess truth split",
+  "reproduced": true,
+  "reproduction_gate": "S10 topology fractions from raw B-stack ROOT within 0.0015 absolute tolerance",
+  "split": "source-run held out; high-current scored by low-current-only template and synthetic-overlay ML/NN training; run bootstrap CIs within current group",
+  "strata": {
+    "definition": "amplitude bin x S16 adaptive lowering bin x P02 topology",
+    "n_matched_strata": 8,
+    "global_s10_downstream_high_minus_low": 0.010289747149522063,
+    "n_scored_events": 12617,
+    "sample_cap_per_run_stratum": 140
+  },
+  "methods": [
+    {
+      "method": "traditional",
+      "secondary_fraction_delta": 0.019723517329155435,
+      "secondary_fraction_ci_low": -0.007388216364754267,
+      "secondary_fraction_ci_high": 0.048125536643192204,
+      "overlap_score_delta": 0.015396337361634213,
+      "overlap_score_ci_low": -0.019110517019885448,
+      "overlap_score_ci_high": 0.04909744946323454,
+      "timing_tail_proxy_delta": 0.01578528851847092,
+      "charge_log_proxy_delta": 0.13978674642637495,
+      "support_accept_fraction": 1.0,
+      "synthetic_auc": null,
+      "synthetic_ap": null,
+      "synthetic_brier": null,
+      "secondary_fraction_mae": null
+    },
+    {
+      "method": "ridge",
+      "secondary_fraction_delta": 0.023437306000388437,
+      "secondary_fraction_ci_low": 0.01466991913267874,
+      "secondary_fraction_ci_high": 0.031791708100742146,
+      "overlap_score_delta": 0.051776036993033944,
+      "overlap_score_ci_low": 0.02967233803981582,
+      "overlap_score_ci_high": 0.07556597210799539,
+      "timing_tail_proxy_delta": -0.0036999095083795983,
+      "charge_log_proxy_delta": -0.07031221772437543,
+      "support_accept_fraction": 0.5583243040487263,
+      "synthetic_auc": 0.8178017337701146,
+      "synthetic_ap": 0.8267303290872402,
+      "synthetic_brier": 0.16957099610875043,
+      "secondary_fraction_mae": 0.1191191627782084
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "secondary_fraction_delta": 0.011333335821925233,
+      "secondary_fraction_ci_low": 0.007887409645920175,
+      "secondary_fraction_ci_high": 0.014401306002973971,
+      "overlap_score_delta": 0.026269817888565927,
+      "overlap_score_ci_low": 0.01862693933581806,
+      "overlap_score_ci_high": 0.03437583726213773,
+      "timing_tail_proxy_delta": -0.0019566282157196966,
+      "charge_log_proxy_delta": -0.04453445917354305,
+      "support_accept_fraction": 0.5583243040487263,
+      "synthetic_auc": 0.9216374466276801,
+      "synthetic_ap": 0.9273667579490729,
+      "synthetic_brier": 0.11298895024556699,
+      "secondary_fraction_mae": 0.07564830281511836
+    },
+    {
+      "method": "mlp",
+      "secondary_fraction_delta": -0.0023907338571360808,
+      "secondary_fraction_ci_low": -0.008453654438837659,
+      "secondary_fraction_ci_high": 0.005179008195508952,
+      "overlap_score_delta": 0.039195027684382294,
+      "overlap_score_ci_low": 0.021841261148593513,
+      "overlap_score_ci_high": 0.05575544162461471,
+      "timing_tail_proxy_delta": 0.0005795231454345052,
+      "charge_log_proxy_delta": 0.08679822345295335,
+      "support_accept_fraction": 0.5583243040487263,
+      "synthetic_auc": 0.9019441370298471,
+      "synthetic_ap": 0.9052760499484682,
+      "synthetic_brier": 0.12098050590237097,
+      "secondary_fraction_mae": 0.09330295380046448
+    },
+    {
+      "method": "cnn1d",
+      "secondary_fraction_delta": 0.009735964620974362,
+      "secondary_fraction_ci_low": 0.0004334617733934606,
+      "secondary_fraction_ci_high": 0.01980789307137167,
+      "overlap_score_delta": 0.0044393847422392885,
+      "overlap_score_ci_low": -0.02738691039099747,
+      "overlap_score_ci_high": 0.03512852747090019,
+      "timing_tail_proxy_delta": -0.006756265840527121,
+      "charge_log_proxy_delta": -0.0903711607864036,
+      "support_accept_fraction": 0.5583243040487263,
+      "synthetic_auc": 0.7410825455571722,
+      "synthetic_ap": 0.785925459532801,
+      "synthetic_brier": 0.2134986970041219,
+      "secondary_fraction_mae": 0.13875364516530495
+    },
+    {
+      "method": "residual_tcn",
+      "secondary_fraction_delta": 0.0009410700722321496,
+      "secondary_fraction_ci_low": -0.019912771508000283,
+      "secondary_fraction_ci_high": 0.025510565636867447,
+      "overlap_score_delta": -0.00694727606319721,
+      "overlap_score_ci_low": -0.06232190155191308,
+      "overlap_score_ci_high": 0.04496447556356941,
+      "timing_tail_proxy_delta": -0.0022522532138261656,
+      "charge_log_proxy_delta": 0.03296293210117854,
+      "support_accept_fraction": 0.5583243040487263,
+      "synthetic_auc": 0.7401725091057426,
+      "synthetic_ap": 0.7782625190107727,
+      "synthetic_brier": 0.21309448450618124,
+      "secondary_fraction_mae": 0.13947250613424397
+    }
+  ],
+  "ml_minus_traditional": [
+    {
+      "method_metric": "ridge_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": 0.0037137886712330023,
+      "ci_low": -0.025933392306300707,
+      "ci_high": 0.03154844626141261,
+      "n_bootstrap": 520
+    },
+    {
+      "method_metric": "gradient_boosted_trees_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.008390181507230202,
+      "ci_low": -0.03425023183901002,
+      "ci_high": 0.0167044929877772,
+      "n_bootstrap": 520
+    },
+    {
+      "method_metric": "mlp_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.022114251186291515,
+      "ci_low": -0.042391795347899136,
+      "ci_high": -0.0008078729583080817,
+      "n_bootstrap": 520
+    },
+    {
+      "method_metric": "cnn1d_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.009987552708181073,
+      "ci_low": -0.041283031414658736,
+      "ci_high": 0.018739167027194983,
+      "n_bootstrap": 520
+    },
+    {
+      "method_metric": "residual_tcn_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.018782447256923285,
+      "ci_low": -0.03429888242479105,
+      "ci_high": -0.0027815160946686114,
+      "n_bootstrap": 520
+    }
+  ],
+  "truth_split": {
+    "component_summary": [
+      {
+        "component": "topology_composition",
+        "dominant_atom": "p02_broad_late",
+        "secondary_fraction_delta": 0.02011188641536789,
+        "ci_low": -0.006434313808491293,
+        "ci_high": 0.04726739989723811,
+        "share_of_total_effect": 1.0196906606327445,
+        "support_fraction": 0.6490449393675201
+      },
+      {
+        "component": "baseline_pathology",
+        "dominant_atom": "s16_no_lowering",
+        "secondary_fraction_delta": 0.01979819280882515,
+        "ci_low": -0.007688302265900002,
+        "ci_high": 0.048368661489361434,
+        "share_of_total_effect": 1.0037861137252293,
+        "support_fraction": 0.4627883014979789
+      },
+      {
+        "component": "anomaly_taxonomy",
+        "dominant_atom": "p09_broad_late",
+        "secondary_fraction_delta": 0.019738818788022472,
+        "ci_low": -0.009015553490311445,
+        "ci_high": 0.04785925510524278,
+        "share_of_total_effect": 1.000775797673999,
+        "support_fraction": 0.530791788856305
+      },
+      {
+        "component": "charge_support_drift",
+        "dominant_atom": "amp_ge_4500",
+        "secondary_fraction_delta": 0.018324621962921443,
+        "ci_low": 0.006187981502570035,
+        "ci_high": 0.03338941883263605,
+        "share_of_total_effect": 0.9290747515826634,
+        "support_fraction": 0.36839185226282
+      },
+      {
+        "component": "beam_pileup",
+        "dominant_atom": "pileup_not_supported",
+        "secondary_fraction_delta": 7.22606250221857e-06,
+        "ci_low": 1.8159170765953165e-06,
+        "ci_high": 1.5604252594281475e-05,
+        "share_of_total_effect": 0.0003663678430995143,
+        "support_fraction": 0.5550447808512324
+      }
+    ],
+    "top_atom_rows": [
+      {
+        "component": "topology_composition",
+        "atom_level": "p02_broad_late",
+        "n_events": 8189,
+        "n_low": 864,
+        "n_high": 7325,
+        "support_fraction": 0.6490449393675201,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": 0.02011188641536789,
+        "ci_low": -0.006434313808491293,
+        "ci_high": 0.04726739989723811,
+        "share_of_total_effect": 1.0196906606327445,
+        "charge_log_shift": 0.011425315087100568,
+        "timing_tail_delta": 0.0
+      },
+      {
+        "component": "baseline_pathology",
+        "atom_level": "s16_no_lowering",
+        "n_events": 5839,
+        "n_low": 799,
+        "n_high": 5040,
+        "support_fraction": 0.4627883014979789,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": 0.01979819280882515,
+        "ci_low": -0.007688302265900002,
+        "ci_high": 0.048368661489361434,
+        "share_of_total_effect": 1.0037861137252293,
+        "charge_log_shift": 0.01085189987517848,
+        "timing_tail_delta": 0.0
+      },
+      {
+        "component": "anomaly_taxonomy",
+        "atom_level": "p09_broad_late",
+        "n_events": 6697,
+        "n_low": 837,
+        "n_high": 5860,
+        "support_fraction": 0.530791788856305,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": 0.019738818788022472,
+        "ci_low": -0.009015553490311445,
+        "ci_high": 0.04785925510524278,
+        "share_of_total_effect": 1.000775797673999,
+        "charge_log_shift": 0.01120575281694054,
+        "timing_tail_delta": 0.0
+      },
+      {
+        "component": "charge_support_drift",
+        "atom_level": "amp_ge_4500",
+        "n_events": 4648,
+        "n_low": 352,
+        "n_high": 4296,
+        "support_fraction": 0.36839185226282,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": 0.018324621962921443,
+        "ci_low": 0.006187981502570035,
+        "ci_high": 0.03338941883263605,
+        "share_of_total_effect": 0.9290747515826634,
+        "charge_log_shift": 0.012638532350247932,
+        "timing_tail_delta": -0.00011444853744306528
+      },
+      {
+        "component": "charge_support_drift",
+        "atom_level": "amp_2500_4500",
+        "n_events": 3423,
+        "n_low": 331,
+        "n_high": 3092,
+        "support_fraction": 0.2713006261393358,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": 0.0011882212721233364,
+        "ci_low": -0.01818927344704658,
+        "ci_high": 0.019632610566238776,
+        "share_of_total_effect": 0.06024388309112086,
+        "charge_log_shift": -0.002428075552461532,
+        "timing_tail_delta": -0.0005595135317372758
+      },
+      {
+        "component": "charge_support_drift",
+        "atom_level": "amp_1000_2500",
+        "n_events": 4546,
+        "n_low": 409,
+        "n_high": 4137,
+        "support_fraction": 0.3603075215978442,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": 0.0002106740941106537,
+        "ci_low": -0.00037229027277645453,
+        "ci_high": 0.0008102890030399566,
+        "share_of_total_effect": 0.010681365326215617,
+        "charge_log_shift": 8.594276597193002e-05,
+        "timing_tail_delta": 7.866101286645093e-05
+      },
+      {
+        "component": "beam_pileup",
+        "atom_level": "pileup_not_supported",
+        "n_events": 7003,
+        "n_low": 505,
+        "n_high": 6498,
+        "support_fraction": 0.5550447808512324,
+        "composition_delta": -0.037168205919428106,
+        "secondary_fraction_delta": 7.22606250221857e-06,
+        "ci_low": 1.8159170765953165e-06,
+        "ci_high": 1.5604252594281475e-05,
+        "share_of_total_effect": 0.0003663678430995143,
+        "charge_log_shift": -0.11192268781369608,
+        "timing_tail_delta": 7.095028000394881e-05
+      },
+      {
+        "component": "baseline_pathology",
+        "atom_level": "s16_large_lowering",
+        "n_events": 5920,
+        "n_low": 255,
+        "n_high": 5665,
+        "support_fraction": 0.46920821114369504,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": -1.5301458867039426e-05,
+        "ci_low": -0.00019070506802212802,
+        "ci_high": 0.0001252005683219222,
+        "share_of_total_effect": -0.0007757976739990847,
+        "charge_log_shift": -0.0009093532531822096,
+        "timing_tail_delta": -0.0005953010563138902
+      },
+      {
+        "component": "anomaly_taxonomy",
+        "atom_level": "p09_baseline_pathology",
+        "n_events": 5920,
+        "n_low": 255,
+        "n_high": 5665,
+        "support_fraction": 0.46920821114369504,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": -1.5301458867039426e-05,
+        "ci_low": -0.00018268053683029176,
+        "ci_high": 0.00012172672575266008,
+        "share_of_total_effect": -0.0007757976739990847,
+        "charge_log_shift": -0.0009093532531822096,
+        "timing_tail_delta": -0.0005953010563138902
+      },
+      {
+        "component": "baseline_pathology",
+        "atom_level": "s16_mild_lowering",
+        "n_events": 858,
+        "n_low": 38,
+        "n_high": 820,
+        "support_fraction": 0.06800348735832606,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": -5.9374020802676284e-05,
+        "ci_low": -0.00015521842564613497,
+        "ci_high": 6.876741179095308e-05,
+        "share_of_total_effect": -0.0030103160512303354,
+        "charge_log_shift": 0.00035385294176206106,
+        "timing_tail_delta": 0.0
+      },
+      {
+        "component": "topology_composition",
+        "atom_level": "p02_early_pathology",
+        "n_events": 4428,
+        "n_low": 228,
+        "n_high": 4200,
+        "support_fraction": 0.35095506063248,
+        "composition_delta": 0.0,
+        "secondary_fraction_delta": -0.00038836908621245716,
+        "ci_low": -0.0007059983576067511,
+        "ci_high": -0.0002871272067934057,
+        "share_of_total_effect": -0.019690660632744616,
+        "charge_log_shift": -0.001128915523342238,
+        "timing_tail_delta": -0.0005953010563138902
+      },
+      {
+        "component": "beam_pileup",
+        "atom_level": "pileup_like_high",
+        "n_events": 5496,
+        "n_low": 583,
+        "n_high": 4913,
+        "support_fraction": 0.4356027581834033,
+        "composition_delta": 0.03847232380615461,
+        "secondary_fraction_delta": -0.008608053827622407,
+        "ci_low": -0.016587069208856806,
+        "ci_high": 0.0012338106781916926,
+        "share_of_total_effect": -0.43643604150147824,
+        "charge_log_shift": 0.03756366307545526,
+        "timing_tail_delta": -0.00011531010731527279
+      },
+      {
+        "component": "beam_pileup",
+        "atom_level": "pileup_like_low",
+        "n_events": 118,
+        "n_low": 4,
+        "n_high": 114,
+        "support_fraction": 0.009352460965364191,
+        "composition_delta": -0.0013041178867264779,
+        "secondary_fraction_delta": -0.02220198563645495,
+        "ci_low": -0.04597787369753298,
+        "ci_high": 0.0015370247455223532,
+        "share_of_total_effect": -1.1256605637796575,
+        "charge_log_shift": -0.06814722127987875,
+        "timing_tail_delta": 0.0
+      }
+    ],
+    "interpretation": "support-preserving one-atom-at-a-time decomposition of the traditional residual secondary-fraction excess"
+  },
+  "residual_current_ml_panel": [
+    {
+      "variant": "full",
+      "n_features": 23,
+      "heldout_unit": "source_run",
+      "current_auc": 0.38901567702001544,
+      "current_ap": 0.8662810874169474,
+      "brier": 0.08694685752475247,
+      "predicted_high_minus_low": -0.0229719820237142,
+      "interpretation": "all non-identifier residual atoms and waveform summaries"
+    },
+    {
+      "variant": "taxon_knockout",
+      "n_features": 21,
+      "heldout_unit": "source_run",
+      "current_auc": 0.38901567702001544,
+      "current_ap": 0.8662810874169474,
+      "brier": 0.08694685752475247,
+      "predicted_high_minus_low": -0.0229719820237142,
+      "interpretation": "full model with P09/anomaly taxon indicators removed"
+    },
+    {
+      "variant": "charge_knockout",
+      "n_features": 17,
+      "heldout_unit": "source_run",
+      "current_auc": 0.3864942432838311,
+      "current_ap": 0.867594682451146,
+      "brier": 0.08708128865637056,
+      "predicted_high_minus_low": -0.02523137060859537,
+      "interpretation": "full model with amplitude and charge-support variables removed"
+    },
+    {
+      "variant": "topology_only",
+      "n_features": 5,
+      "heldout_unit": "source_run",
+      "current_auc": 0.5891203229164184,
+      "current_ap": 0.906781858983984,
+      "brier": 0.24461876135257205,
+      "predicted_high_minus_low": 0.01913328093795852,
+      "interpretation": "composition/topology stress test"
+    },
+    {
+      "variant": "amplitude_only",
+      "n_features": 3,
+      "heldout_unit": "source_run",
+      "current_auc": 0.5869109993405004,
+      "current_ap": 0.9122978125475405,
+      "brier": 0.25030043254279716,
+      "predicted_high_minus_low": -0.008841488304951572,
+      "interpretation": "charge-support-only stress test"
+    },
+    {
+      "variant": "run_only_sentinel",
+      "n_features": 1,
+      "heldout_unit": "source_run",
+      "current_auc": 0.8462472885032539,
+      "current_ap": 0.9862343890266675,
+      "brier": 0.19122066403538904,
+      "predicted_high_minus_low": 0.4062081775220118,
+      "interpretation": "run-number leakage sentinel"
+    },
+    {
+      "variant": "shuffled_current_sentinel",
+      "n_features": 23,
+      "heldout_unit": "source_run",
+      "current_auc": 0.4823267621749183,
+      "current_ap": 0.9177157705495619,
+      "brier": 0.2494698458408749,
+      "predicted_high_minus_low": 9.382446549000001e-05,
+      "interpretation": "permuted-current falsification sentinel"
+    }
+  ],
+  "traditional_stability": {
+    "thresholds": [
+      0.0,
+      0.005,
+      0.015,
+      0.03,
+      0.06
+    ],
+    "support_choices": [
+      "all_matched",
+      "dominant_three",
+      "dominant_one"
+    ],
+    "diagnostics": [
+      {
+        "diagnostic": "traditional_threshold_sensitivity_slope",
+        "value": 0.016497081349011948,
+        "unit": "secondary_fraction_delta_per_sse_improvement_threshold"
+      },
+      {
+        "diagnostic": "traditional_threshold_range",
+        "value": 0.0009076112885099893,
+        "unit": "secondary_fraction_delta"
+      }
+    ]
+  },
+  "winner": {
+    "primary_metric": "matched high-minus-low secondary-fraction delta",
+    "point_estimate_winner": "ridge",
+    "winner": "traditional",
+    "selection_rule": "rank secondary-fraction delta; promote an ML/NN method only if leakage checks pass and its ML-minus-traditional run-bootstrap CI is wholly positive"
+  },
+  "winner_name": "traditional",
+  "leakage_flags": 0,
+  "leakage_checks_pass": true,
+  "next_tickets": [],
+  "conclusion": "The raw-ROOT S10 topology reproduction passes before model fitting. The traditional bounded two-pulse fit gives a matched high-minus-low secondary-fraction delta of 0.01972 [-0.00739, 0.04813]. The largest support-preserving residual atom is topology_composition/p02_broad_late with delta 0.02011 [-0.00643, 0.04727]. The point-estimate winner is ridge, but the operational winner recorded for this ticket is traditional because the promotion rule requires clean leakage checks and an ML-minus-traditional CI wholly above zero. The selected winner has secondary-fraction delta 0.01972 [-0.00739, 0.04813], support acceptance 1.000, and overlap-score delta 0.01540.",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "0a5d421e7c6a2707ebcab737b8555b11d1e6ffba",
+  "runtime_sec": 733.1
+}

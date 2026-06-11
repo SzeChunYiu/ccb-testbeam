@@ -1,0 +1,8 @@
+variant,n_features,heldout_unit,current_auc,current_ap,brier,predicted_high_minus_low,interpretation
+full,23,source_run,0.38901567702001544,0.8662810874169474,0.08694685752475247,-0.0229719820237142,all non-identifier residual atoms and waveform summaries
+taxon_knockout,21,source_run,0.38901567702001544,0.8662810874169474,0.08694685752475247,-0.0229719820237142,full model with P09/anomaly taxon indicators removed
+charge_knockout,17,source_run,0.3864942432838311,0.867594682451146,0.08708128865637056,-0.02523137060859537,full model with amplitude and charge-support variables removed
+topology_only,5,source_run,0.5891203229164184,0.906781858983984,0.24461876135257205,0.01913328093795852,composition/topology stress test
+amplitude_only,3,source_run,0.5869109993405004,0.9122978125475405,0.25030043254279716,-0.008841488304951572,charge-support-only stress test
+run_only_sentinel,1,source_run,0.8462472885032539,0.9862343890266675,0.19122066403538904,0.4062081775220118,run-number leakage sentinel
+shuffled_current_sentinel,23,source_run,0.4823267621749183,0.9177157705495619,0.2494698458408749,9.382446549000001e-05,permuted-current falsification sentinel

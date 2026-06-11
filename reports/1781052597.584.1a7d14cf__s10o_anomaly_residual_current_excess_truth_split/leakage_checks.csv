@@ -1,0 +1,9 @@
+check,value,flag,note
+heldout_run_excluded_from_template_and_ml_training,1.0,False,Every fold uses low-current source runs only and removes the held-out low-current run from controls.
+identifier_features_excluded,1.0,False,"ML features exclude run, event number, current, group, downstream label, and stratum labels."
+mean_shuffled_label_synthetic_auc,0.5190195851839906,False,The permuted-label control should stay near chance on held-out synthetic overlays.
+ridge_current_auc_from_secondary_fraction,0.587588615289266,False,Flagged if the method nearly identifies beam current from the secondary-fraction output.
+gradient_boosted_trees_current_auc_from_secondary_fraction,0.6596443867051243,False,Flagged if the method nearly identifies beam current from the secondary-fraction output.
+mlp_current_auc_from_secondary_fraction,0.5271547758098734,False,Flagged if the method nearly identifies beam current from the secondary-fraction output.
+cnn1d_current_auc_from_secondary_fraction,0.6172682017909784,False,Flagged if the method nearly identifies beam current from the secondary-fraction output.
+residual_tcn_current_auc_from_secondary_fraction,0.46845585723026073,False,Flagged if the method nearly identifies beam current from the secondary-fraction output.

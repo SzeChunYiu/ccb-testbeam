@@ -1,0 +1,6 @@
+control,implementation,note
+B2-feature knockout,resid_b2_feature_knockout_control,"global train-run median; removes pair, topology, and B2 labels"
+topology-only,resid_topology_only_control,train-run median by B2-containing vs downstream-only topology
+saturation-only,support_axis_ledger axis=b2_saturation_depth_bin,"available as frozen S05h atom-support ledger, not row-level residual refit"
+run-only,resid_run_family_only_control,train-run median by sample/run family; held-out run excluded
+shuffled-target,resid_ml_shuffled_target_control,frozen S05h shuffled-target model

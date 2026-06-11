@@ -1,0 +1,61 @@
+{
+  "ticket_id": "1781045406.537.56ee4cc0",
+  "study_id": "P01j",
+  "title": "control-stratum latent calibration map",
+  "worker": "testbeam-laptop-4",
+  "output_dir": "reports/1781045406.537.56ee4cc0__p01j_control_stratum_latent_calibration_map",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "p01b_artifact_candidates": [
+    "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz",
+    "/home/billy/.tb-workers/testbeam-laptop-2/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz",
+    "/home/billy/ccb-data/artifacts/p01b_full_data_embedding_artifact/1781005204.1292.46e43fb0/p01b_embedding_latents.npz"
+  ],
+  "q_template_table": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "timing_residual_table": "reports/1781014251.574.7a497937/timing_residuals.csv.gz",
+  "timing_selector": "median_first4",
+  "expected_total_selected_pulses": 640737,
+  "expected_p01b_artifact_sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+  "expected_p01b_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 57, 64, 65],
+  "stratification": {
+    "amplitude_quantile_bins": 6,
+    "minimum_permutation_group_size": 2
+  },
+  "max_rows_per_run_stave": 400,
+  "max_train_rows_per_class": 7000,
+  "bootstrap_replicates": 400,
+  "permutation_replicates": 20,
+  "random_seed": 5406537,
+  "pca_components": 6,
+  "ridge_alpha": 1.0,
+  "hgb_max_iter": 90,
+  "hgb_max_leaf_nodes": 15,
+  "hgb_learning_rate": 0.06,
+  "mlp_hidden_layer_sizes": [48, 24],
+  "mlp_max_iter": 160,
+  "cnn_epochs": 6,
+  "cnn_batch_size": 384,
+  "cnn_learning_rate": 0.001,
+  "primary_target": "manual_flag",
+  "winner_metric": "mean lift over controls-only balanced accuracy across manual_flag and peak_group"
+}

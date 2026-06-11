@@ -1,0 +1,7 @@
+check,value,pass,detail
+train_heldout_run_overlap,0,True,Must be zero for split-by-run.
+p01b_key_order_matches_raw_scan,True,True,"Latent rows match raw ROOT recount by run, event_index, stave_index, and amplitude."
+permutation_changed_latent_fraction,0.9949355195657501,True,Within-stratum permutation should move almost all rows.
+winner_beats_controls,0.48624940356225554,True,Winner metric is mean lift over controls-only balanced accuracy.
+winner_beats_traditional_point_estimate,0.029587036926554733,True,Descriptive comparison; not promoted as a discovery p-value.
+label_shuffle_max_balanced_accuracy,0.4036142461861981,True,Train-label shuffle sentinel should stay near chance for these imbalanced tasks.

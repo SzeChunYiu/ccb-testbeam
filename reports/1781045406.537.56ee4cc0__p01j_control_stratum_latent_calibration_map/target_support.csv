@@ -1,0 +1,3 @@
+target,train_rows,heldout_rows,train_distribution,heldout_distribution
+manual_flag,33784,5126,"{""early_low_area"": 1235, ""early_peak"": 313, ""large_negative_step"": 708, ""late_peak"": 5546, ""nominal"": 25982}","{""early_low_area"": 192, ""early_peak"": 47, ""large_negative_step"": 100, ""late_peak"": 792, ""nominal"": 3995}"
+peak_group,33784,5126,"{""early_0_3"": 1679, ""late_10_17"": 7479, ""nominal_6_9"": 19525, ""prepeak_4_5"": 5101}","{""early_0_3"": 231, ""late_10_17"": 1085, ""nominal_6_9"": 3117, ""prepeak_4_5"": 693}"

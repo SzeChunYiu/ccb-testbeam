@@ -1,0 +1,7 @@
+method,target,label_shuffle_balanced_accuracy,label_shuffle_macro_f1
+traditional_hand_pca_qtemplate_ridge,manual_flag,0.36561701337530494,0.13250207005778175
+traditional_hand_pca_qtemplate_ridge,peak_group,0.22248235359632798,0.17610475237338305
+latent_ridge,manual_flag,0.296,0.02389482152031152
+latent_ridge,peak_group,0.4036142461861981,0.2716162612098483
+stratum_gated_fusion_new_arch,manual_flag,0.20443287695477932,0.18913506013705086
+stratum_gated_fusion_new_arch,peak_group,0.2653672373486711,0.23081758049317794

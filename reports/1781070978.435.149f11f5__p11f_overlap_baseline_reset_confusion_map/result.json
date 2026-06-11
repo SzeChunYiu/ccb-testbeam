@@ -1,0 +1,427 @@
+{
+  "study": "P11f",
+  "ticket_id": "1781070978.435.149f11f5",
+  "worker": "testbeam-laptop-4",
+  "title": "overlapping-pulse baseline-reset confusion map",
+  "runtime_sec": 114.47891616821289,
+  "raw_reproduction_passed": true,
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0
+  },
+  "split": {
+    "train_runs": [
+      46,
+      47
+    ],
+    "heldout_high_current_runs": [
+      44,
+      45,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "bootstrap_unit": "held-out high-current run",
+    "bootstrap_reps": 60
+  },
+  "primary_metric": "rank_loss = brier + ece + 0.5*confused_overlap_reset_rate + 0.25*template_disagreement - 0.05*max(AUC,0.5); lower is better",
+  "winner": {
+    "method": "gradient_boosted_trees_shape_no_reset",
+    "n_high": 246303,
+    "overlap_auc": 0.9987767335,
+    "overlap_auc_ci95": [
+      0.9986324423,
+      0.9988878582
+    ],
+    "average_precision": 0.9948279823,
+    "average_precision_ci95": [
+      0.9934641602,
+      0.9957497713
+    ],
+    "brier": 0.0102066095,
+    "brier_ci95": [
+      0.0090977969,
+      0.0117232316
+    ],
+    "ece": 0.0051129106,
+    "ece_ci95": [
+      0.0043384563,
+      0.0063761388
+    ],
+    "candidate_rate": 0.1732622014,
+    "confused_overlap_reset_rate": 0.0021152808,
+    "confused_overlap_reset_rate_ci95": [
+      0.0014995525,
+      0.0033244847
+    ],
+    "baseline_reset_enrichment_among_candidates": -0.1174813005,
+    "disagreement_with_template_label": 0.0135321129,
+    "rank_loss": -0.030178648
+  },
+  "best_traditional": {
+    "method": "traditional_template_shape_score",
+    "n_high": 246303,
+    "overlap_auc": 1.0,
+    "overlap_auc_ci95": [
+      1.0,
+      1.0
+    ],
+    "average_precision": 1.0,
+    "average_precision_ci95": [
+      1.0,
+      1.0
+    ],
+    "brier": 0.4296472991,
+    "brier_ci95": [
+      0.3932944751,
+      0.4542093348
+    ],
+    "ece": 0.5801047594,
+    "ece_ci95": [
+      0.5352494162,
+      0.6112465743
+    ],
+    "candidate_rate": 0.9455061449,
+    "confused_overlap_reset_rate": 0.0780502065,
+    "confused_overlap_reset_rate_ci95": [
+      0.0598593043,
+      0.0885565268
+    ],
+    "baseline_reset_enrichment_among_candidates": -0.0471412558,
+    "disagreement_with_template_label": 0.7675464773,
+    "rank_loss": 1.190663781
+  },
+  "models_benchmarked": [
+    "gradient_boosted_trees_shape_no_reset",
+    "gradient_boosted_trees_with_reset_features",
+    "mlp_shape_no_reset",
+    "control_topology_only",
+    "control_shuffled_label",
+    "ridge_shape_no_reset",
+    "control_pretrigger_only",
+    "reset_gated_cnn_new",
+    "cnn_1d_waveform",
+    "traditional_template_shape_score"
+  ],
+  "thresholds": {
+    "overlap_score_low_current_quantile": 0.85,
+    "overlap_score_cut": 0.44692914027859726,
+    "reset_score_low_current_quantile": 0.85,
+    "reset_score_cut": 5.190114655966151,
+    "p11_pretrigger_thresholds": {
+      "rms_hi": 90.39908599853516,
+      "slope_hi": 183.0,
+      "range_hi": 608.8000000000002,
+      "lower_hi": 15.900000000000091,
+      "score_hi": 577.9859191894528
+    },
+    "p09_anomaly_edges": [
+      1.4182547330856323,
+      6.471686840057379,
+      27.66864109039301
+    ]
+  },
+  "matched_confusion": [
+    {
+      "method": "traditional_template_shape_score",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0005027281,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": -0.0204533456,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        -0.0004685833,
+        0.0024964422
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0318628265,
+        -0.0082089742
+      ],
+      "matched_delta_confused_rate_ci95": [
+        -0.0316774829,
+        -0.0084295356
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0343890248,
+        0.0840566816
+      ]
+    },
+    {
+      "method": "ridge_shape_no_reset",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0750560995,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": 0.001163938,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        0.0526556666,
+        0.104716255
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0358812576,
+        -0.0043750214
+      ],
+      "matched_delta_confused_rate_ci95": [
+        5.01612e-05,
+        0.0022356438
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.043639726,
+        0.0961586071
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees_shape_no_reset",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0613325726,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": 0.0001898513,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        0.0337547008,
+        0.0845598412
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0363599661,
+        -0.008633237
+      ],
+      "matched_delta_confused_rate_ci95": [
+        -0.0004022961,
+        0.0008186131
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0358674296,
+        0.0863541333
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees_with_reset_features",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0612067799,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": 0.0002361358,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        0.0266677203,
+        0.0832916198
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0308753093,
+        -0.010774767
+      ],
+      "matched_delta_confused_rate_ci95": [
+        -0.0002122898,
+        0.0009760711
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.02892147,
+        0.0859101753
+      ]
+    },
+    {
+      "method": "mlp_shape_no_reset",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0638693115,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": 0.0001136345,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        0.0367833392,
+        0.0904002521
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0346218754,
+        -0.0095408131
+      ],
+      "matched_delta_confused_rate_ci95": [
+        -0.0006988643,
+        0.0008388578
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0364444875,
+        0.0909334456
+      ]
+    },
+    {
+      "method": "control_pretrigger_only",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0702255992,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": 0.0,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        0.0557259219,
+        0.0884568341
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0317360268,
+        -0.0088452882
+      ],
+      "matched_delta_confused_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0361144993,
+        0.0897126695
+      ]
+    },
+    {
+      "method": "control_topology_only",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0087696744,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": 0.0002307407,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        0.0031107889,
+        0.0175098082
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0388431504,
+        -0.0090034467
+      ],
+      "matched_delta_confused_rate_ci95": [
+        7.00999e-05,
+        0.0004725149
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0308636297,
+        0.0839965683
+      ]
+    },
+    {
+      "method": "control_shuffled_label",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": -0.0096650077,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": -0.0010661496,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        -0.0125567334,
+        -0.0065801036
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0328352207,
+        -0.0096216017
+      ],
+      "matched_delta_confused_rate_ci95": [
+        -0.00258843,
+        0.0001054691
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0399926925,
+        0.0904681632
+      ]
+    },
+    {
+      "method": "cnn_1d_waveform",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": -0.0033848688,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": -0.0208553483,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        -0.0062065104,
+        -0.0010849718
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0331777882,
+        -0.010862968
+      ],
+      "matched_delta_confused_rate_ci95": [
+        -0.0333313818,
+        -0.0112206783
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0390340977,
+        0.0927521478
+      ]
+    },
+    {
+      "method": "reset_gated_cnn_new",
+      "n_cells": 65,
+      "matched_weight": 5466,
+      "matched_delta_candidate_rate": 0.0313301784,
+      "matched_delta_reset_rate": -0.0203171725,
+      "matched_delta_confused_rate": 0.0,
+      "matched_delta_template_overlap_label": 0.0640110967,
+      "matched_delta_candidate_rate_ci95": [
+        0.0135636962,
+        0.0459032131
+      ],
+      "matched_delta_reset_rate_ci95": [
+        -0.0325233373,
+        -0.0094190907
+      ],
+      "matched_delta_confused_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "matched_delta_template_overlap_label_ci95": [
+        0.0403826986,
+        0.0898445136
+      ]
+    }
+  ],
+  "support_summary": [
+    {
+      "current_group": "high_20nA",
+      "n": 246303,
+      "overlap_proxy_rate": 0.1779596676,
+      "baseline_reset_proxy_rate": 0.1296898536,
+      "confused_proxy_rate": 0.0023588832,
+      "mean_secondary_fraction_proxy": 0.4106606611,
+      "broad_late_taxon_fraction": 0.6029646411,
+      "large_lowering_fraction": 0.0606651157
+    },
+    {
+      "current_group": "low_2nA",
+      "n": 5963,
+      "overlap_proxy_rate": 0.1500922355,
+      "baseline_reset_proxy_rate": 0.1500922355,
+      "confused_proxy_rate": 0.0015093074,
+      "mean_secondary_fraction_proxy": 0.4310332056,
+      "broad_late_taxon_fraction": 0.6176421264,
+      "large_lowering_fraction": 0.0476270334
+    }
+  ],
+  "finding": "Raw ROOT reproduction passes exactly (640,737 selected B-stave pulses). The proxy benchmark winner is `gradient_boosted_trees_shape_no_reset` with rank loss -0.03018, AUC 0.9988, Brier 0.01021, and confused overlap/reset rate 0.00212. The shape-only GBDT has confusion rate 0.00212; the reset-gated CNN has 0.00061. Matched high-minus-low tables show whether the excess survives amplitude, lowering, broad-late taxon, anomaly, saturation, and topology matching.",
+  "hypothesis": "High-current overlap-like candidates are only partially separable from baseline-reset/pretrigger support. Including reset variables improves proxy calibration but also exposes that a non-negligible fraction of candidate score is concentrated in reset-enriched support cells. The safe interpretation is a confusion map: shape-only overlap scores may be used for candidate ranking, while reset-enriched candidates should be flagged or down-weighted rather than promoted as clean pile-up truth.",
+  "next_tickets": [],
+  "leakage_audit": {
+    "train_heldout_run_overlap": [],
+    "forbidden_inputs_excluded_from_ml_features": [
+      "current_group",
+      "run label as predictor",
+      "eventno",
+      "evt",
+      "overlap_proxy",
+      "baseline_reset_proxy"
+    ],
+    "controls": [
+      "pretrigger_only",
+      "topology_only",
+      "shuffled_label"
+    ],
+    "proxy_label_caveat": "overlap and reset labels are frozen low-current support proxies, not external pile-up truth"
+  },
+  "git_commit": "dfee88ecfc2635baab635c4c28e01711f33cc806"
+}

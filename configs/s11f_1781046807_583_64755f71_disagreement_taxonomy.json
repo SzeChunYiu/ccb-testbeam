@@ -1,0 +1,30 @@
+{
+  "study": "S11f",
+  "ticket": "1781046807.583.64755f71",
+  "worker": "testbeam-laptop-4",
+  "title": "two-pulse method-disagreement taxonomy",
+  "source_script": "scripts/s11b_real_high_current_two_pulse_validation.py",
+  "benchmark_script": "scripts/p05c_1781036493_3234_59a107e5_real_current_abstention_transfer.py",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781046807.583.64755f71__s11f_two_pulse_method_disagreement_taxonomy",
+  "random_seed": 6807583,
+  "sample_cap_per_run_stratum": 80,
+  "synthetic_train_per_fold": 1500,
+  "synthetic_cal_per_fold": 450,
+  "bootstrap_samples": 500,
+  "target_bad_proxy_rate": 0.15,
+  "bad_fraction_error": 0.12,
+  "traditional_min_score": 0.015,
+  "traditional_min_secondary_fraction": 0.05,
+  "gallery_source": "reports/1781030296.1752.37d47174/morphology_scores.csv",
+  "s11e_audit_source": "reports/1781017996.1381.12c419dc/result.json",
+  "s11d_source": "reports/1781018533.1152.0dc47f07/result.json",
+  "required_methods": [
+    "traditional_template_fit",
+    "ridge_linear",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble"
+  ]
+}

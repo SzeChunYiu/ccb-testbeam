@@ -1,0 +1,483 @@
+{
+  "study": "S11f",
+  "ticket": "1781046807.583.64755f71",
+  "worker": "testbeam-laptop-4",
+  "title": "two-pulse method-disagreement taxonomy",
+  "reproduced": true,
+  "reproduction_gate": "S10 topology fractions rebuilt from raw B-stack ROOT within +/-0.0015 absolute tolerance",
+  "raw_root_counts": {
+    "low_2nA_events_with_selected": 5838,
+    "high_20nA_events_with_selected": 237295,
+    "global_downstream_high_minus_low": 0.010289747149522063,
+    "matched_downstream_high_minus_low": 0.0202483132962887
+  },
+  "split": {
+    "policy": "source-run-held-out; high-current scored from low-current training only",
+    "bootstrap_unit": "source_run_within_current_group",
+    "bootstrap_samples": 500
+  },
+  "methods": [
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge_linear",
+    "traditional_template_fit"
+  ],
+  "winner": {
+    "method": "traditional_template_fit",
+    "selection_score": 1.330875339167959,
+    "risk_coverage_score": 0.43078103029528314,
+    "risk_coverage_score_ci": [
+      0.41829781202293237,
+      0.44426410617561213
+    ],
+    "risk_coverage_delta_vs_traditional": 0.0,
+    "risk_coverage_delta_vs_traditional_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  "top_winner_disagreement_class": {},
+  "primary_supported_disagreement_class": {
+    "method": "consensus_abstention_ensemble",
+    "disagreement_class": "ml_only",
+    "low_rate": 0.0058732892369216,
+    "high_rate": 0.016783417017403175,
+    "high_minus_low": 0.010910127780481574,
+    "ci_low": 0.004036512421372116,
+    "ci_high": 0.014614667754660304,
+    "topology_excess_coverage": 0.5388166224433758,
+    "bootstrap_unit": "source_run_within_current_group",
+    "n_bootstrap": 500
+  },
+  "taxonomy": [
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "traditional_only",
+      "low_rate": 0.549321528140791,
+      "high_rate": 0.5021161792557686,
+      "high_minus_low": -0.04720534888502248,
+      "ci_low": -0.1548658196439641,
+      "ci_high": 0.01769204653931532,
+      "topology_excess_coverage": -2.3313225252038507,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "ml_only",
+      "low_rate": 0.0,
+      "high_rate": 0.041848804878410875,
+      "high_minus_low": 0.041848804878410875,
+      "ci_low": 0.00112341085812656,
+      "ci_high": 0.12164643678334654,
+      "topology_excess_coverage": 2.066779798694705,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "joint",
+      "low_rate": 0.0,
+      "high_rate": 0.04379621081198064,
+      "high_minus_low": 0.04379621081198064,
+      "ci_low": 0.0,
+      "ci_high": 0.13123690850288933,
+      "topology_excess_coverage": 2.162956003846899,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "neither",
+      "low_rate": 0.4506784718592088,
+      "high_rate": 0.4122388050538397,
+      "high_minus_low": -0.03843966680536909,
+      "ci_low": -0.11584001429885664,
+      "ci_high": 0.021892540886588763,
+      "topology_excess_coverage": -1.898413277337756,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "traditional_only",
+      "low_rate": 0.5396846140442585,
+      "high_rate": 0.5247268058981842,
+      "high_minus_low": -0.01495780814607428,
+      "ci_low": -0.03875283526506424,
+      "ci_high": 0.008514477730259488,
+      "topology_excess_coverage": -0.7387187232437721,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "ml_only",
+      "low_rate": 0.0058732892369216,
+      "high_rate": 0.016783417017403175,
+      "high_minus_low": 0.010910127780481574,
+      "ci_low": 0.004036512421372116,
+      "ci_high": 0.014614667754660304,
+      "topology_excess_coverage": 0.5388166224433758,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "joint",
+      "low_rate": 0.009636914096532495,
+      "high_rate": 0.021185584169564873,
+      "high_minus_low": 0.011548670073032377,
+      "ci_low": -0.0004724777692487874,
+      "ci_high": 0.024788224709002677,
+      "topology_excess_coverage": 0.5703522018868172,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "neither",
+      "low_rate": 0.4448051826222872,
+      "high_rate": 0.4373041929148474,
+      "high_minus_low": -0.007500989707439787,
+      "ci_low": -0.03878239527825004,
+      "ci_high": 0.02211801982572426,
+      "topology_excess_coverage": -0.37045010108642673,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "traditional_only",
+      "low_rate": 0.5412713451820874,
+      "high_rate": 0.0,
+      "high_minus_low": -0.5412713451820874,
+      "ci_low": -0.5463439838897235,
+      "ci_high": -0.5360210838125107,
+      "topology_excess_coverage": -26.731675733271903,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "ml_only",
+      "low_rate": 0.003596009757797525,
+      "high_rate": 0.45408760993225056,
+      "high_minus_low": 0.45049160017445306,
+      "ci_low": 0.42375135829776983,
+      "ci_high": 0.4776005537314589,
+      "topology_excess_coverage": 22.24835192850475,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "joint",
+      "low_rate": 0.008050182958703604,
+      "high_rate": 0.5459123900677493,
+      "high_minus_low": 0.5378622071090456,
+      "ci_low": 0.5160172565840532,
+      "ci_high": 0.5672786427968413,
+      "topology_excess_coverage": 26.563309211914955,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "neither",
+      "low_rate": 0.4470824621014112,
+      "high_rate": 0.0,
+      "high_minus_low": -0.4470824621014112,
+      "ci_low": -0.4570439100888656,
+      "ci_high": -0.43623137767152387,
+      "topology_excess_coverage": -22.0799854071478,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "mlp",
+      "disagreement_class": "traditional_only",
+      "low_rate": 0.0,
+      "high_rate": 0.0014830908404483934,
+      "high_minus_low": 0.0014830908404483934,
+      "ci_low": 0.0,
+      "ci_high": 0.004166485160016262,
+      "topology_excess_coverage": 0.07324515473198591,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "mlp",
+      "disagreement_class": "ml_only",
+      "low_rate": 0.4389832615645254,
+      "high_rate": 0.45157809940765437,
+      "high_minus_low": 0.012594837843128981,
+      "ci_low": -0.027558921128507625,
+      "ci_high": 0.0447672786181541,
+      "topology_excess_coverage": 0.6220191113616106,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "mlp",
+      "disagreement_class": "joint",
+      "low_rate": 0.549321528140791,
+      "high_rate": 0.5444292992273009,
+      "high_minus_low": -0.004892228913490171,
+      "ci_low": -0.03368317872199689,
+      "ci_high": 0.028873695283655205,
+      "topology_excess_coverage": -0.2416116760889345,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "mlp",
+      "disagreement_class": "neither",
+      "low_rate": 0.011695210294683412,
+      "high_rate": 0.0025095105245961534,
+      "high_minus_low": -0.00918569977008726,
+      "ci_low": -0.012763080299151812,
+      "ci_high": 0.003169491707020181,
+      "topology_excess_coverage": -0.4536525900046648,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "traditional_only",
+      "low_rate": 0.5456514636696288,
+      "high_rate": 0.542213276657256,
+      "high_minus_low": -0.003438187012372751,
+      "ci_low": -0.031289050211289235,
+      "ci_high": 0.026679336905887193,
+      "topology_excess_coverage": -0.16980115637597004,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "ml_only",
+      "low_rate": 0.0021168347885494243,
+      "high_rate": 0.007419046554282466,
+      "high_minus_low": 0.0053022117657330415,
+      "ci_low": 0.002876587901586433,
+      "ci_high": 0.007095119606326768,
+      "topology_excess_coverage": 0.2618594293829344,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "joint",
+      "low_rate": 0.0036700644711622223,
+      "high_rate": 0.0036991134104931178,
+      "high_minus_low": 2.9048939330895453e-05,
+      "ci_low": -0.0024682862866659146,
+      "ci_high": 0.003365249693583114,
+      "topology_excess_coverage": 0.0014346350190175996,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "neither",
+      "low_rate": 0.4485616370706594,
+      "high_rate": 0.44666856337796806,
+      "high_minus_low": -0.001893073692691316,
+      "ci_low": -0.03171913018463336,
+      "ci_high": 0.024296373655468793,
+      "topology_excess_coverage": -0.09349290802598834,
+      "bootstrap_unit": "source_run_within_current_group",
+      "n_bootstrap": 500
+    }
+  ],
+  "gallery_precision_recall": [
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "joint",
+      "n_gallery": 82,
+      "two_pulse_like_precision": 0.06097560975609756,
+      "two_pulse_like_recall": 0.002932551319648094,
+      "artifact_like_fraction": 0.9390243902439024,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "ml_only",
+      "n_gallery": 222,
+      "two_pulse_like_precision": 0.0990990990990991,
+      "two_pulse_like_recall": 0.012903225806451613,
+      "artifact_like_fraction": 0.9009009009009009,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "neither",
+      "n_gallery": 2270,
+      "two_pulse_like_precision": 0.10352422907488987,
+      "two_pulse_like_recall": 0.1378299120234604,
+      "artifact_like_fraction": 0.8964757709251101,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "cnn_1d_dual_head",
+      "disagreement_class": "traditional_only",
+      "n_gallery": 1283,
+      "two_pulse_like_precision": 0.06157443491816056,
+      "two_pulse_like_recall": 0.04633431085043988,
+      "artifact_like_fraction": 0.9384255650818394,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "joint",
+      "n_gallery": 20,
+      "two_pulse_like_precision": 0.0,
+      "two_pulse_like_recall": 0.0,
+      "artifact_like_fraction": 1.0,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "ml_only",
+      "n_gallery": 256,
+      "two_pulse_like_precision": 0.03515625,
+      "two_pulse_like_recall": 0.005278592375366569,
+      "artifact_like_fraction": 0.96484375,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "neither",
+      "n_gallery": 2236,
+      "two_pulse_like_precision": 0.11091234347048301,
+      "two_pulse_like_recall": 0.14545454545454545,
+      "artifact_like_fraction": 0.889087656529517,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "consensus_abstention_ensemble",
+      "disagreement_class": "traditional_only",
+      "n_gallery": 1345,
+      "two_pulse_like_precision": 0.06245353159851301,
+      "two_pulse_like_recall": 0.04926686217008798,
+      "artifact_like_fraction": 0.937546468401487,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "joint",
+      "n_gallery": 1152,
+      "two_pulse_like_precision": 0.05642361111111111,
+      "two_pulse_like_recall": 0.03812316715542522,
+      "artifact_like_fraction": 0.9435763888888888,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "ml_only",
+      "n_gallery": 2253,
+      "two_pulse_like_precision": 0.10918774966711052,
+      "two_pulse_like_recall": 0.14428152492668622,
+      "artifact_like_fraction": 0.8908122503328895,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "neither",
+      "n_gallery": 239,
+      "two_pulse_like_precision": 0.04602510460251046,
+      "two_pulse_like_recall": 0.0064516129032258064,
+      "artifact_like_fraction": 0.9539748953974896,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "disagreement_class": "traditional_only",
+      "n_gallery": 213,
+      "two_pulse_like_precision": 0.0892018779342723,
+      "two_pulse_like_recall": 0.011143695014662757,
+      "artifact_like_fraction": 0.9107981220657277,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "mlp",
+      "disagreement_class": "joint",
+      "n_gallery": 1365,
+      "two_pulse_like_precision": 0.06153846153846154,
+      "two_pulse_like_recall": 0.04926686217008798,
+      "artifact_like_fraction": 0.9384615384615385,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "mlp",
+      "disagreement_class": "ml_only",
+      "n_gallery": 2359,
+      "two_pulse_like_precision": 0.10555320050869012,
+      "two_pulse_like_recall": 0.14604105571847506,
+      "artifact_like_fraction": 0.8944467994913099,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "mlp",
+      "disagreement_class": "neither",
+      "n_gallery": 133,
+      "two_pulse_like_precision": 0.06015037593984962,
+      "two_pulse_like_recall": 0.00469208211143695,
+      "artifact_like_fraction": 0.9398496240601504,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "joint",
+      "n_gallery": 7,
+      "two_pulse_like_precision": 0.0,
+      "two_pulse_like_recall": 0.0,
+      "artifact_like_fraction": 1.0,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "ml_only",
+      "n_gallery": 197,
+      "two_pulse_like_precision": 0.05583756345177665,
+      "two_pulse_like_recall": 0.0064516129032258064,
+      "artifact_like_fraction": 0.9441624365482234,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "neither",
+      "n_gallery": 2295,
+      "two_pulse_like_precision": 0.10718954248366012,
+      "two_pulse_like_recall": 0.14428152492668622,
+      "artifact_like_fraction": 0.8928104575163399,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    },
+    {
+      "method": "ridge_linear",
+      "disagreement_class": "traditional_only",
+      "n_gallery": 1358,
+      "two_pulse_like_precision": 0.061855670103092786,
+      "two_pulse_like_recall": 0.04926686217008798,
+      "artifact_like_fraction": 0.9381443298969072,
+      "note": "S10f blinded morphology gallery join by event_index/run; not full truth labels"
+    }
+  ],
+  "prior_context": {
+    "s11e_conclusion": "The blinded top-candidate audit finds a joint traditional+ML candidate-rate excess of -0.00004 [-0.00330, 0.00335], smaller than the matched S10c downstream excess of 0.02025. The traditional-only excess is -0.02024 and the ML-only excess is 0.02253; inter-method agreement is partial rather than redundant. Leakage sentinels do not flag source-run, identifier, shuffled-label, or too-good current separation, so the top candidates are plausible waveform-shape enrichments but not a full accounting of the S10 topology excess.",
+    "s11d_conclusion": "S11c rich-template scoring does not produce a stable real high-current excess by itself: traditional candidate-rate high-minus-low is 0.01046 [-0.00145, 0.02364], while ML is 0.02417 [0.01729, 0.03023]. The joint excess is 0.00200 [-0.00031, 0.00486] against a matched S10c downstream excess of 0.02025. Leakage sentinels flag 0 checks."
+  },
+  "leakage_checks_pass": true,
+  "leakage_flags": 0,
+  "conclusion": "The strongest operating-rule method is traditional_template_fit; its risk-coverage delta versus the traditional template fit is 0.0000 [0.0000, 0.0000]. The strongest supported disagreement class in the consensus learned comparator is ml_only with high-minus-low rate 0.01091 [0.00404, 0.01461], covering 0.54 of the matched S10 downstream excess. The joint class remains small and gallery precision is artifact-dominated, so the traditional and learned methods are not redundant views of a clean two-pulse population; the learned excess remains support-dependent morphology until a larger blinded gallery validates it.",
+  "hypothesis": "ML-only excess marks broad/late residual morphology more than clean template-resolved double pulses.",
+  "next_tickets": [
+    "S11h blinded ML-only gallery expansion: hand-scan a larger run-balanced set of ML-only high-current rows and matched low controls to determine whether the learned excess is genuine two-pulse morphology or detector-shape artifact."
+  ],
+  "input_sha256": "2ccc8c90e08941bfd600f9ca455b22efe02646133d5f22338af801d2a55ca1cc",
+  "git_commit": "01aecae3ef2a27e7e64b2fb783b28393b90589d0",
+  "runtime_sec": 556.21
+}

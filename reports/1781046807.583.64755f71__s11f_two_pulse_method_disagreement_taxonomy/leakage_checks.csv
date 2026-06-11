@@ -1,0 +1,14 @@
+check,value,pass,note
+raw_root_reproduction_pass,1.0,True,S10 topology fractions are rebuilt directly from raw ROOT before any scoring.
+source_run_heldout_scoring,1.0,True,High-current folds train only on low-current runs; low-current controls leave their source run out.
+identifier_features_excluded,1.0,True,ML features are waveform and residual summaries; run/event/current labels are added only after prediction.
+cnn_1d_dual_head_current_auc_from_secondary_prediction,0.47123809168531555,True,Fails if the method score is almost a current identifier.
+consensus_abstention_ensemble_current_auc_from_secondary_prediction,0.5131826523352611,True,Fails if the method score is almost a current identifier.
+gradient_boosted_trees_current_auc_from_secondary_prediction,0.5996607983628791,True,Fails if the method score is almost a current identifier.
+mlp_current_auc_from_secondary_prediction,0.5668161752474543,True,Fails if the method score is almost a current identifier.
+ridge_linear_current_auc_from_secondary_prediction,0.5752946935556257,True,Fails if the method score is almost a current identifier.
+traditional_template_fit_current_auc_from_secondary_prediction,0.44792611563308055,True,Fails if the method score is almost a current identifier.
+cnn_1d_dual_head_synthetic_cal_auc_not_perfect,0.8612247308268829,True,Near-perfect synthetic calibration AUC would trigger leakage review.
+gradient_boosted_trees_synthetic_cal_auc_not_perfect,0.9670053343658839,True,Near-perfect synthetic calibration AUC would trigger leakage review.
+mlp_synthetic_cal_auc_not_perfect,0.9856683479782528,True,Near-perfect synthetic calibration AUC would trigger leakage review.
+ridge_linear_synthetic_cal_auc_not_perfect,0.9487264546952696,True,Near-perfect synthetic calibration AUC would trigger leakage review.

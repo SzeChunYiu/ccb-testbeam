@@ -1,0 +1,5 @@
+check,value,pass
+forbidden_feature_overlap,,True
+train_heldout_run_overlap,0,True
+pretrigger_atoms_joined_fraction,1.0,True
+shuffled_target_worse_than_winner_width,0.38160771821802886,True

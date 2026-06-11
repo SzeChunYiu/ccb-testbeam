@@ -1,0 +1,336 @@
+{
+  "study": "P11b",
+  "ticket_id": "1781061059.627.4bc647a3",
+  "worker": "testbeam-laptop-4",
+  "title": "pretrigger atom charge-transfer gate",
+  "runtime_sec": 95.32866168022156,
+  "raw_reproduction_passed": true,
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "invalid_duplicate_target_rows_removed_after_reproduction": 255
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      64
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "held-out run",
+    "bootstrap_reps": 400
+  },
+  "primary_metric": "duplicate-readout charge res68_abs_frac; lower is better",
+  "winner": {
+    "target": "duplicate_odd_charge",
+    "method": "ML_hgb_pretrigger_wave_atoms",
+    "split": "sample_ii_run_heldout",
+    "n": 125078,
+    "bias_median_frac": 0.0007389256,
+    "res68_abs_frac": 0.0163608514,
+    "full_rms_frac": 0.0510923997,
+    "charge_bias_tail_rate": 0.0048849518,
+    "within_10pct": 0.9663889733,
+    "bias_ci95": [
+      0.0006318997,
+      0.0008722102
+    ],
+    "res68_ci95": [
+      0.0130443377,
+      0.0189734685
+    ],
+    "charge_bias_tail_rate_ci95": [
+      0.0031634482,
+      0.006384758
+    ]
+  },
+  "best_traditional": {
+    "target": "duplicate_odd_charge",
+    "method": "traditional_p11a_atom_cell_corrected",
+    "split": "sample_ii_run_heldout",
+    "n": 125078,
+    "bias_median_frac": -0.0024468236,
+    "res68_abs_frac": 0.0275900535,
+    "full_rms_frac": 0.8772861233,
+    "charge_bias_tail_rate": 0.0940852908,
+    "within_10pct": 0.8356945266,
+    "bias_ci95": [
+      -0.0036989593,
+      -0.0014413985
+    ],
+    "res68_ci95": [
+      0.0230712864,
+      0.0322324008
+    ],
+    "charge_bias_tail_rate_ci95": [
+      0.0670072551,
+      0.1122041763
+    ]
+  },
+  "ml_minus_traditional": [
+    {
+      "method": "ML_ridge_pretrigger_wave_atoms",
+      "traditional_reference": "traditional_p11a_atom_cell_corrected",
+      "delta_res68_abs_frac": -0.0045249545,
+      "delta_res68_abs_frac_ci95": [
+        -0.0063554886,
+        -0.0025936549
+      ],
+      "delta_charge_bias_tail_rate": -0.0519435872,
+      "delta_charge_bias_tail_rate_ci95": [
+        -0.0628206207,
+        -0.0367739659
+      ]
+    },
+    {
+      "method": "ML_hgb_pretrigger_wave_atoms",
+      "traditional_reference": "traditional_p11a_atom_cell_corrected",
+      "delta_res68_abs_frac": -0.0112292021,
+      "delta_res68_abs_frac_ci95": [
+        -0.0134251144,
+        -0.0095507464
+      ],
+      "delta_charge_bias_tail_rate": -0.089200339,
+      "delta_charge_bias_tail_rate_ci95": [
+        -0.1051776088,
+        -0.0651433418
+      ]
+    },
+    {
+      "method": "NN_mlp_pretrigger_wave_atoms",
+      "traditional_reference": "traditional_p11a_atom_cell_corrected",
+      "delta_res68_abs_frac": 0.0147059102,
+      "delta_res68_abs_frac_ci95": [
+        0.0104689981,
+        0.017048949
+      ],
+      "delta_charge_bias_tail_rate": -0.0687411056,
+      "delta_charge_bias_tail_rate_ci95": [
+        -0.081671457,
+        -0.0486068095
+      ]
+    },
+    {
+      "method": "NN_1d_cnn_waveform",
+      "traditional_reference": "traditional_p11a_atom_cell_corrected",
+      "delta_res68_abs_frac": 0.3394418329,
+      "delta_res68_abs_frac_ci95": [
+        0.2763145589,
+        0.4016372783
+      ],
+      "delta_charge_bias_tail_rate": 0.3653400278,
+      "delta_charge_bias_tail_rate_ci95": [
+        0.3291597544,
+        0.3922707217
+      ]
+    },
+    {
+      "method": "NN_pretrigger_gated_residual_cnn_new",
+      "traditional_reference": "traditional_p11a_atom_cell_corrected",
+      "delta_res68_abs_frac": 0.0356402151,
+      "delta_res68_abs_frac_ci95": [
+        0.0299833244,
+        0.0401160432
+      ],
+      "delta_charge_bias_tail_rate": -0.0317321991,
+      "delta_charge_bias_tail_rate_ci95": [
+        -0.0377102616,
+        -0.0219019892
+      ]
+    }
+  ],
+  "abstention": {
+    "harm_abs_frac_threshold_train_q90": 0.02238915136434,
+    "abstain_pretrigger_score_threshold_train_q80": 330.623358154297,
+    "support_coverage_retained": 0.7926174067381954,
+    "support_loss": 0.20738259326180464,
+    "charge_harm_rate_no_abstention": 0.22888117814483763,
+    "charge_harm_rate_after_abstention": 0.11553475423395435,
+    "abstention_harm_reduction": 0.11334642391088329,
+    "retained_res68_abs_frac": 0.012073237464553679
+  },
+  "harm_classifier_metrics": [
+    {
+      "task": "charge_harm_tail",
+      "method": "traditional_p11a_atom_only",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.8914407783,
+      "average_precision": 0.7182916214,
+      "ece": 0.1280550737,
+      "coverage_retained_at_80pct_low_risk": 0.76980764,
+      "harm_rate_retained": 0.040878217
+    },
+    {
+      "task": "charge_harm_tail",
+      "method": "ML_hgb_pretrigger_wave_atoms",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.9907870442,
+      "average_precision": 0.957813099,
+      "ece": 0.0058805536,
+      "coverage_retained_at_80pct_low_risk": 0.799996802,
+      "harm_rate_retained": 0.0181287602
+    },
+    {
+      "task": "charge_harm_tail",
+      "method": "control_pretrigger_knockout",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.9895656071,
+      "average_precision": 0.9532441631,
+      "ece": 0.0064824265,
+      "coverage_retained_at_80pct_low_risk": 0.799996802,
+      "harm_rate_retained": 0.0186684256
+    },
+    {
+      "task": "charge_harm_tail",
+      "method": "control_saturation_only",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.8362778932,
+      "average_precision": 0.7069794885,
+      "ece": 0.0287555908,
+      "coverage_retained_at_80pct_low_risk": 0.7998209118,
+      "harm_rate_retained": 0.0854058377
+    },
+    {
+      "task": "charge_harm_tail",
+      "method": "control_dropout_only",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.9715927957,
+      "average_precision": 0.8866406523,
+      "ece": 0.0075146315,
+      "coverage_retained_at_80pct_low_risk": 0.799988807,
+      "harm_rate_retained": 0.0395958465
+    },
+    {
+      "task": "charge_harm_tail",
+      "method": "control_amplitude_only",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.9397138436,
+      "average_precision": 0.8579146784,
+      "ece": 0.0276709131,
+      "coverage_retained_at_80pct_low_risk": 0.799996802,
+      "harm_rate_retained": 0.0483200416
+    },
+    {
+      "task": "charge_harm_tail",
+      "method": "control_run_only",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.4863795721,
+      "average_precision": 0.1882996371,
+      "ece": 0.0052566396,
+      "coverage_retained_at_80pct_low_risk": 0.5588752618,
+      "harm_rate_retained": 0.1998912779
+    },
+    {
+      "task": "charge_harm_tail",
+      "method": "control_shuffled_harm_labels",
+      "n": 125078,
+      "positive_rate": 0.1923199923,
+      "roc_auc": 0.5792796882,
+      "average_precision": 0.2659130603,
+      "ece": 0.0927383044,
+      "coverage_retained_at_80pct_low_risk": null,
+      "harm_rate_retained": null
+    }
+  ],
+  "support_model_metrics": [
+    {
+      "task": "duplicate_target_support",
+      "method": "support_traditional_pretrigger_huber_proxy",
+      "n": 125096,
+      "positive_rate": 0.9998561105,
+      "roc_auc": 0.2779609968,
+      "average_precision": 0.9993961495,
+      "ece": 0.0004231013,
+      "coverage_retained_at_80pct_high_support": 0.1459918782,
+      "support_valid_rate_retained": 0.9992881783
+    },
+    {
+      "task": "duplicate_target_support",
+      "method": "support_ML_hgb_full",
+      "n": 125096,
+      "positive_rate": 0.9998561105,
+      "roc_auc": 0.7779925327,
+      "average_precision": 0.9998070734,
+      "ece": 0.0004748195,
+      "coverage_retained_at_80pct_high_support": 0.2020048603,
+      "support_valid_rate_retained": 0.9998417095
+    },
+    {
+      "task": "duplicate_target_support",
+      "method": "support_amplitude_only",
+      "n": 125096,
+      "positive_rate": 0.9998561105,
+      "roc_auc": 0.3636741784,
+      "average_precision": 0.9995842947,
+      "ece": 0.0010346907,
+      "coverage_retained_at_80pct_high_support": 0.1266387414,
+      "support_valid_rate_retained": 0.9993056432
+    }
+  ],
+  "p11a_atom_thresholds": {
+    "rms_hi": 75.76773834228516,
+    "exc_hi": 1589.0,
+    "slope_hi": 153.0,
+    "asym_hi": 78.5,
+    "lower_hi": 29.0
+  },
+  "finding": "Raw selected-pulse reproduction passes exactly (640737 vs 640737). The held-out duplicate-charge winner is `ML_hgb_pretrigger_wave_atoms` with res68 0.0164 [0.0130, 0.0190], compared with the strongest traditional method `traditional_p11a_atom_cell_corrected` at 0.0276. Matched P11a atom effects are small relative to the main amplitude/dropout/saturation structure, so adaptive-lowering/spike atoms are best used as support and abstention flags rather than as independent charge-correction variables.",
+  "hypothesis": "P11a pretrigger atoms do carry charge-transfer support information, but after explicit matching on amplitude, P07 saturation, dropout/anomaly taxa, stave, and run family they behave primarily as electronics-support labels. The operational rule is therefore pass quiet records, abstain or down-weight high pretrigger-score records near support boundaries, and avoid a hard veto unless downstream consumers require the lowest charge-tail rate.",
+  "next_tickets": [],
+  "leakage_audit": {
+    "train_heldout_run_overlap": [],
+    "feature_exclusions": [
+      "eventno",
+      "evt",
+      "target_odd_pos_charge",
+      "target_odd_neg_amp"
+    ],
+    "controls": [
+      "pretrigger_knockout",
+      "saturation_only",
+      "dropout_only",
+      "amplitude_only",
+      "run_only",
+      "shuffled_harm"
+    ]
+  }
+}

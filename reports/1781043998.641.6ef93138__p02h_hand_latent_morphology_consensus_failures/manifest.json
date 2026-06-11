@@ -1,0 +1,90 @@
+{
+  "ticket_id": "1781043998.641.6ef93138",
+  "script": "scripts/p02h_1781043998_641_6ef93138_consensus_failures.py",
+  "config": "configs/p02h_1781043998_641_6ef93138_consensus_failures.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p02h_1781043998_641_6ef93138_consensus_failures.py --config configs/p02h_1781043998_641_6ef93138_consensus_failures.json",
+  "git_commit": "1ca9c0783d8270e52425f076d36773459dd98260",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "input_sha256_csv": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/input_sha256.csv",
+  "input_file_count": 40,
+  "random_seed": 20260611,
+  "reproduction_passed": true,
+  "output_sha256": [
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/REPORT.md",
+      "sha256": "f71cb78c0ab6f2eaff6fe506e6b092039665c674788a3ec0a6aede2351a56cc9",
+      "bytes": 11092
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/atom_enrichment.csv",
+      "sha256": "dc4f5d5bee3b03ab9271aa28a1b6daa1e923524fdc433c87d4dfb0a693ee68ce",
+      "bytes": 757
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/consensus_failure_table.csv",
+      "sha256": "8685743d0fcbce1b7c998af5db7a3cae481cc90efea32c536796863c1bf1006c",
+      "bytes": 12165329
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/fig_method_benchmark.png",
+      "sha256": "578275f99354ee9ff3f978e87362e0329fcb830b346b57a80fd0bec9b81059fb",
+      "bytes": 66050
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/input_sha256.csv",
+      "sha256": "bedb606eafd84a258a6c6e46a30c99d7e9ba459bd6d24d98e1aeb2b89a56e1ae",
+      "bytes": 4579
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/leakage_checks.csv",
+      "sha256": "e683fd012c96b5db3939616dda892dd76f02411ad95e2d9b642a510dd434abf1",
+      "bytes": 678
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/manifest.json",
+      "sha256": "03ec14f3d76c7ff6bf2869875b8cd565b593c740d3728a5e8da6dda1c9e5900b",
+      "bytes": 4302
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/method_deltas_vs_traditional.csv",
+      "sha256": "3c377ff1fd75daa12c24677a788a37d16fd3b18665384fcfacd0cf6ff67024b6",
+      "bytes": 1703
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/method_predictions.csv",
+      "sha256": "c75a5f9665a1f34bbc3e4d8a37ce3d399d78d7b9be5ca8fc27c9fdb73c63dddd",
+      "bytes": 21270641
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/method_summary.csv",
+      "sha256": "4d0b3824d7b5fa505719ea1c522ca9b8b125155e87a1dfae74feff5e88c73ed7",
+      "bytes": 4448
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/p02e_frozen_method_metrics.csv",
+      "sha256": "0e56c39a24b35ab328de0bc5e533370f25582ec803cfdcea4e0cfb8bac306df0",
+      "bytes": 2146
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/reproduction_match_table.csv",
+      "sha256": "fc7c2c1a2a317bffbc792b9bff4ccd878e9dd569d7d7b23d1ef5cf138c611a1a",
+      "bytes": 110
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/result.json",
+      "sha256": "c04074e7cab822ba0db5e597ccbae803d265e8f2a770fad20bf578243dae7752",
+      "bytes": 14048
+    },
+    {
+      "path": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures/risk_delta.csv",
+      "sha256": "a8b7426360fe6507460bebc8ef46e932b8ab0082507b4241a3fcf9b5552d767f",
+      "bytes": 574
+    }
+  ]
+}

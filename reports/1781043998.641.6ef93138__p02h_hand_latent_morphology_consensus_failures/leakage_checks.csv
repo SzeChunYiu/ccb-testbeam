@@ -1,0 +1,8 @@
+check,value,pass,note
+raw_reproduction_passed,1.0,True,raw ROOT selected-pulse count exactly matches S00/P02e gate
+benchmark_key_match_p02e,1.0,True,reconstructed sample keys match frozen P02e labels
+outer_split_run_overlap,0.0,True,outer folds are disjoint run blocks
+p09b_gallery_join_fraction,0.0034694359216426718,True,curated gallery is partial by design
+shuffled_label_ap_minus_positive_rate,0.04111230413728256,True,null sentinel should stay close to class prevalence
+run_only_ap,0.24335863468654526,True,large run-only AP would indicate run nuisance dominance
+p02e_forbidden_release_minus_trainonly_manual_ami,0.02685448437341703,True,copied from frozen P02e diagnostic

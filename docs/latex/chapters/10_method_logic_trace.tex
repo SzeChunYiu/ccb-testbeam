@@ -1,0 +1,93 @@
+\chapter{Method Logic Trace}
+
+This appendix records the reasoning chain behind the analysis choices.  It is
+included to make the report auditable: a reader should be able to see not only
+what number was quoted, but why that operation was used, what alternative it
+guards against, and what interpretation is allowed.
+
+\section{Global rules}
+
+\begin{enumerate}
+  \item Start from raw waveforms whenever a population count or selection claim
+  matters.  Sorted or derived branches are useful diagnostics, but they can
+  encode historical choices that are invisible to a later reader.
+  \item Separate deterministic definitions from learned approximations.  If the
+  label is exactly \(A>1000\) ADC, a model trained to predict that label is not
+  discovering physics; it is approximating the cut.
+  \item Compare methods on run-held-out data.  Run period, beam current,
+  topology, and calibration are correlated, so random row splits can overstate
+  transfer performance.
+  \item Accept ML only against a strong traditional comparator on the same
+  target, population, split, and metric.  A neural model beating a weak baseline
+  does not justify replacing a transparent physics model.
+  \item Distinguish construction truth, electronics closure, simulation truth,
+  and real-event physics truth.  Injected overlaps, duplicate readout, and
+  GEANT4 each answer different questions.
+\end{enumerate}
+
+\section{Step-by-step chain}
+
+\begin{longtable}{@{}p{0.06\linewidth}p{0.20\linewidth}p{0.24\linewidth}p{0.24\linewidth}p{0.18\linewidth}@{}}
+\toprule
+Step & Input & Operation & Reason & Interpretation \\
+\midrule
+\endhead
+1 & Raw B-stack \texttt{HRDv} & Read the 18-sample waveforms for physical even B channels & This is the least ambiguous source for a pulse-count claim & Counts are raw-data anchored \\
+2 & Samples 0--3 & Compute \(b=\mathrm{median}(w_0,w_1,w_2,w_3)\) & The median is robust to one bad pre-pulse sample & This is a selection baseline, not final pedestal truth \\
+3 & Baseline-subtracted waveform & Compute \(A=\max_j(w_j-b)\) & Peak amplitude is the historical selection scalar & The selected population is deterministic \\
+4 & \(A\), stave id & Keep B2/B4/B6/B8 pulses with \(A>1000\) ADC & This defines the reproducible B-stack population & All downstream claims inherit this gate \\
+5 & Selected pulses & Build stave- and amplitude-binned templates & Pulse shape changes with stave and amplitude & Template quality is a covariate \\
+6 & Leading edge & Compute CFD20 seed time & A fractional crossing gives an interpretable local seed & The seed is a software primitive \\
+7 & Template and derivative & Fit sub-sample template phase & Timing needs a local shape model and sample masking & Raw time is model-estimated \\
+8 & Amplitude and run structure & Apply timewalk and offsets & Leading-edge time depends on amplitude and calibration period & Analytic timewalk explains most timing gain \\
+9 & Corrected stave times & Form inter-stave residuals & Same-particle residuals avoid needing external absolute time truth & B4/B6/B8 define the clean timing reference \\
+10 & Residual distribution & Quote \(\sigma_{68}\), core fits, and tails when available & A single Gaussian core hides topology tails & The metric must be named with every claim \\
+11 & B2 residuals & Compare topology covariance & B2 has terminal and overlap-dominated populations & B2 broadening is topology-local \\
+12 & Occupancy target & Compute \(R_{\max}=\mu_{\max}/\tau_{\mathrm{eff}}\) & Rate limits depend directly on live-time & The 4.22 MHz value assumes 90 ns \\
+13 & Waveform tails & Measure live-time from data & The assumed 90 ns window must be tested & The 10-percent estimate implies about 3.05 MHz \\
+14 & Current pairs & Compare high-current excess after baseline structure & Real beam pile-up should increase with current & Quote excess, not raw score \\
+15 & Injected overlaps & Compare bounded template and ML recovery & Synthetic truth allows controlled method ranking & ML RMS wins require failure-rate gates \\
+16 & Waveform matrices & Compare PCA and autoencoder latents & Tests whether pulse shape is low-dimensional & Nonlinearity helps mainly in compact latents \\
+17 & Duplicate readout & Predict amplitude and charge closure & The target is independent electronics information & This is not absolute energy truth \\
+18 & Artificial clips & Recover unclipped amplitude & Construction truth is known & ML wins artificial saturation closure \\
+19 & Pretrigger samples & Validate pedestal estimators & A positivity constraint can pass by construction & Adaptive lowering is a pathology diagnostic \\
+20 & GEANT4 truth & Benchmark energy models & Real HRD data lack event-level energy and PID truth & GEANT4 anchors energy interpretation \\
+\bottomrule
+\end{longtable}
+
+\section{How the conclusions follow}
+
+The selection conclusion follows because the gate contains no trained parameter:
+for fixed input bytes and fixed implementation, the row count is a reproducible
+integer.  The uncertainty is therefore provenance and implementation risk, not
+binomial counting error.
+
+The timing conclusion follows because a stronger analytic amplitude-timewalk
+model closes most of the initial ML advantage.  ML residual correction remains a
+useful diagnostic, but it is not adopted as the default timing model unless it
+wins against the analytic comparator on the same run-held-out benchmark with a
+larger and calibrated margin.
+
+The pile-up-rate conclusion follows from the occupancy equation.  The previous
+headline was conditional on \(\tau_{\mathrm{eff}}=90\) ns.  Once the waveform
+tail measurement gives a longer live-time, the same occupancy requirement
+implies a lower admissible rate.  ML classifiers diagnose waveform structure,
+but they do not replace the live-time term in the rate equation.
+
+The ML conclusion is task-specific.  ML wins where the target is independent and
+shape contains recoverable information, such as duplicate-readout closure and
+artificial saturation.  It is rejected or kept diagnostic where the label is a
+restatement of the inputs, where leakage risk is high, or where a transparent
+physics model already captures the dominant structure.
+
+The energy and PID conclusion follows from missing truth.  HRD waveform data can
+support sample-level enrichment and closure tests, but they do not contain
+event-level particle identity or deposited-energy truth.  GEANT4 is therefore
+the required bridge for physics-facing energy and PID claims.
+
+\section{Future edit checklist}
+
+Any future change to a headline number must update the source study reference,
+the Markdown summary, the LaTeX chapter, the visual figure or table, the
+validation command, and the caveat that bounds the interpretation.  This prevents
+a table from changing while the reasoning chain remains stale.

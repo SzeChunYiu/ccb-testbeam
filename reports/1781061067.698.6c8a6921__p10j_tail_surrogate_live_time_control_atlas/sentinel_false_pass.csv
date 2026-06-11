@@ -1,0 +1,5 @@
+sentinel,passes_tail_mse,passes_live10,passes_secondary_delta,false_pass
+sentinel_amplitude_only_ridge,True,True,True,True
+sentinel_shuffled_current_ridge,True,True,False,False
+sentinel_run_only_ridge,True,False,False,False
+sentinel_shuffled_live10_ridge,False,True,False,False

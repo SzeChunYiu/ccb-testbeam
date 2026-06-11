@@ -1,0 +1,72 @@
+study_id: P04u
+ticket_id: "1781063920.599.196428b2"
+title: A-stack shuffled-sentinel root cause
+worker: testbeam-laptop-3
+
+raw_root_dir: data/root/root
+output_dir: reports/1781063920.599.196428b2__p04u_astack_shuffled_sentinel_root_cause
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+
+random_seed: 64320
+bootstrap_reps: 300
+ml_max_train_rows: 50000
+nn_max_train_rows: 3000
+torch_epochs: 4
+torch_batch_size: 256
+torch_learning_rate: 0.0015
+torch_weight_decay: 0.0001
+
+p04c_script: scripts/p04c_ab_event_matched_charge_transfer.py
+p04h_script: scripts/p04h_1781023326_470_61534f82_support_map.py
+p04t_script: scripts/p04t_1781062449_642_488b2d5f_astack_topology_lower_bound_charge_transfer.py
+p04_reference_config: configs/p04_amplitude_charge_regression.yaml
+expected_b_s00_selected_pulses: 640737
+expected_p04c_rows: 4055
+expected_p04c_charge_transfer_ridge_res68: 0.519271
+expected_p04c_tolerance_res68: 0.001
+
+identifiability_delta_res68: -0.03
+identifiability_min_runs: 3
+strong_support_rows: 150
+strong_support_runs: 5
+min_support_rows: 50
+min_support_runs: 3
+saturation_adc: 7000.0
+dropout_postpeak_adc: -80.0
+broad_width50_samples: 8
+
+runs: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
+sample_iii_analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+sample_iv_analysis_runs: [58, 59, 60, 61, 62, 63, 65]
+
+expected_astack_counts:
+  sample_iii_analysis:
+    events_with_selected: 7168
+    selected_pulses: 9682
+  sample_iv_analysis:
+    events_with_selected: 767
+    selected_pulses: 894
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+b2_amplitude_bins:
+  - [1000, 2000]
+  - [2000, 3000]
+  - [3000, 5000]
+  - [5000, 7000]
+  - [7000, 1000000000]

@@ -2,7 +2,9 @@
 
 > **Project rule:** every ML method must be paired with a **traditional (non-ML) baseline** and
 > reported as a **head-to-head benchmark**. ML only earns its place if it beats a solid
-> conventional method on a fair, held-out comparison. See [studies/STUDIES.md](../studies/STUDIES.md).
+> conventional method on a fair, held-out comparison. The repo-level study ledger is
+> `studies/STUDIES.md`; this docs mirror keeps the rule here so the Markdown remains readable
+> even when `/docs/` is copied without the surrounding repository.
 
 All ML in the notes is **data-driven (no MC truth)**. Labels are weak / internally-defined.
 The implementations are, on the whole, **methodologically careful** — but with real soft spots

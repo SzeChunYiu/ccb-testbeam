@@ -1,0 +1,10 @@
+probe,value,interpretation
+sentinel_charge_only_ridge,0.984,Allowed even-readout charge closure probe; high AUC means the weak label is mainly charge-scale support.
+sentinel_depth_only_ridge,0.806,Penetration-depth-only probe; high AUC means range support explains the weak axis.
+sentinel_topology_only_ridge,0.788,Topology/saturation-only probe; high AUC means terminal topology or saturation explains the weak axis.
+sentinel_group_event_order_ridge,0.477,Run-family/event-order current proxy; high AUC indicates run-condition drift.
+sentinel_shuffled_label_gbt,0.532,Shuffled-label software leakage guard; should be near chance.
+sentinel_target_permutation_gbt,0.459,Within-depth target permutation guard; should be near chance if label-source ordering is not leaked.
+knockout_no_charge_gbt,0.988,Feature-family knockout removing charge summary terms; residual AUC estimates waveform/support-only separability.
+knockout_no_depth_topology_gbt,0.996,Feature-family knockout removing explicit depth/topology terms; residual AUC estimates charge/waveform separability.
+knockout_no_waveform_gbt,0.985,Feature-family knockout removing waveform samples; high AUC means conventional support variables are sufficient.

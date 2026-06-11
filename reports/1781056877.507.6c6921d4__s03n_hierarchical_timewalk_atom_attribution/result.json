@@ -1,0 +1,152 @@
+{
+  "study": "S03n",
+  "ticket": "1781056877.507.6c6921d4",
+  "worker": "testbeam-laptop-3",
+  "title": "hierarchical timewalk coefficient atom attribution",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03_reference_pass": true
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_samples": 250
+  },
+  "methods": [
+    "hierarchical_shared_bins",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn",
+    "tcn_new_architecture"
+  ],
+  "winner": {
+    "method": "hierarchical_shared_bins",
+    "sigma68_ns": 1.3581112507159523,
+    "ci_low": 1.0597047202841687,
+    "ci_high": 1.50131393440301
+  },
+  "best_traditional": {
+    "method": "hierarchical_shared_bins",
+    "sigma68_ns": 1.3581112507159523,
+    "ci_low": 1.0597047202841687,
+    "ci_high": 1.50131393440301
+  },
+  "pooled_scores": [
+    {
+      "method": "hierarchical_shared_bins",
+      "value": 1.3581112507159523,
+      "ci_low": 1.0597047202841687,
+      "ci_high": 1.50131393440301,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "value": 1.4958192089814728,
+      "ci_low": 1.342097242676383,
+      "ci_high": 1.7075430254207948,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "topology_only_control",
+      "value": 1.5335061330467887,
+      "ci_low": 1.2596117232401234,
+      "ci_high": 1.9209140109627523,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "analytic_amp_ridge",
+      "value": 1.5510917109777833,
+      "ci_low": 1.3589773389714803,
+      "ci_high": 1.8326280425405692,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "amplitude_only_control",
+      "value": 1.5615102379099093,
+      "ci_low": 1.3755466556200255,
+      "ci_high": 1.8548465958730347,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "ridge",
+      "value": 1.6012679786540258,
+      "ci_low": 1.4461045155953467,
+      "ci_high": 1.9082586217631874,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "mlp",
+      "value": 1.6347278511523686,
+      "ci_low": 1.4671096180040664,
+      "ci_high": 1.8202155063201966,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "monotone_binned",
+      "value": 1.6451494274970766,
+      "ci_low": 1.3255856505466923,
+      "ci_high": 1.9634344437311906,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "template_phase_base",
+      "value": 2.7414145300852155,
+      "ci_low": 2.68944645179862,
+      "ci_high": 2.992319268962799,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "shuffled_residual_hgb_control",
+      "value": 2.786453036381149,
+      "ci_low": 2.703513027082291,
+      "ci_high": 2.939024421877989,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "cnn",
+      "value": 2.8033360439348023,
+      "ci_low": 2.667896228511338,
+      "ci_high": 2.93360406753224,
+      "n_pair_residuals": 11460
+    },
+    {
+      "method": "tcn_new_architecture",
+      "value": 2.8035169894005785,
+      "ci_low": 2.655870150721572,
+      "ci_high": 2.9236205233271324,
+      "n_pair_residuals": 11460
+    }
+  ],
+  "controls": {
+    "amplitude_only_control_sigma68_ns": 1.5615102379099093,
+    "topology_only_control_sigma68_ns": 1.5335061330467887,
+    "shuffled_residual_hgb_control_sigma68_ns": 2.786453036381149
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_id": true,
+    "final_models_use_heldout_rows": false,
+    "leakage_failures": 0
+  },
+  "verdict": "winner_named_with_no_split_leakage",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "61edfa870653a6f4131d213a1655ed1b066de919",
+  "next_tickets": [
+    {
+      "title": "S03o external-shape constrained timewalk adoption gate",
+      "body": "Freeze the S03n winner and rerun on Sample-I-to-II plus A-stack/B-stack transfer with an external q-template or beamline support constraint; require monotonicity and shuffled-control guards before any production timing-correction recommendation."
+    }
+  ]
+}

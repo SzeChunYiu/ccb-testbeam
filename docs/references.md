@@ -1,7 +1,8 @@
 # References
 
-From the 122-page note (≈40 refs). Key entries grouped by topic; fill in full bibliographic
-details during S00 (cross-check against the PDF reference list, pp. 120–122).
+Key references grouped by topic. The thesis source keeps this as a compact working bibliography
+for the docs; paper-specific citation keys should be normalized when the manuscript is moved to a
+formal BibTeX workflow.
 
 ## Statistics / ML methods
 - Breiman, *Random Forests*, Mach. Learn. 45 (2001) — RF classifier. [29]
@@ -28,4 +29,15 @@ details during S00 (cross-check against the PDF reference list, pp. 120–122).
 - TOF-detector performance comparisons: ALICE, STAR, BESIII, CLAS12, HADES, NA62, CMS MIP,
   ATLAS HGTD, MEG II, SuperFGD [26].
 
-> TODO (S00): replace this with the verified, fully-formatted reference list from the PDF.
+## Simulation and energy-loss references
+- GEANT4 Collaboration papers and application developer documentation for detector geometry,
+  particle transport, and truth-tree production.
+- NIST PSTAR proton stopping-power tables for external stopping-power scale checks.
+- Birks, *The Theory and Practice of Scintillation Counting*, for ionisation-quenching response.
+
+## CCB analysis artifacts
+- `reports/SUMMARY.md` and the per-study `REPORT.md` files are the authoritative local analysis
+  record for quoted numbers.
+- [FINDINGS_SUMMARY.md](FINDINGS_SUMMARY.md) lists the high-level claims and links the plots used
+  in the Markdown narrative.
+- [latex/main.tex](latex/main.tex) is the thesis-style assembled manuscript.

@@ -30,16 +30,20 @@ decoupled cross-check (see [08_astack.md](08_astack.md)).
 2. **Pile-up** — when do overlapping pulses corrupt the time/charge, how often, and at what
    beam rate does it become limiting? See [06_pileup.md](06_pileup.md).
 
-## Headline numbers (preliminary)
+## Headline numbers
 
 | Quantity | Value | Source |
 |---|---|---|
+| Reproduced B-stack selected-pulse count | **640,737** raw `HRDv` pulse records with `A>1000 ADC` | S00 gate |
 | Downstream single-stave timing | B6 ≈ 0.68–0.75 ns, B8 ≈ 0.93 ns, B4 ≈ 1.4–1.5 ns | variance decomposition |
 | Combined 3-stave (B4+B6+B8) event time | σ_comb ≈ 0.54 ns (I) / 0.56 ns (II) | App. E |
 | Two-ended-readout projection | σ ≈ 0.6–1.0 ns (factor √2) | §13.6 |
 | A-stack A1–A3 residual | robust width 1.43 ns, core σ 1.41 ns | §15 |
-| Pile-up tolerance | R_max ≈ 4.2 MHz (\|Δt\|<1 ns & area<20%, >90% eff, τ_eff=90 ns) | App. G |
-| Current-dependent (beam) pile-up excess @ 20 nA | ≈ 9.2% downstream | App. G |
+| Pile-up tolerance with measured live-time | R_max ≈ 3.05 MHz for the same occupancy criterion once τ_eff≈124.8 ns is measured instead of assumed 90 ns | S10 |
+| Current-dependent beam pile-up excess @ 20 nA | ≈ 9.2% downstream after subtracting current-independent baseline | App. G / S10 |
+| Strongest accepted ML wins | duplicate-readout amplitude/charge, artificial saturation recovery, compact pulse-shape closure | ML closure studies |
+
+![Selected-pulse counts by stave](figures/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/fig_counts_by_group_stave.png)
 
 ## The samples
 
@@ -52,6 +56,9 @@ decoupled cross-check (see [08_astack.md](08_astack.md)).
 
 ## Reading order
 
+Start with [FINDINGS_SUMMARY.md](FINDINGS_SUMMARY.md), then read the thesis narrative in
+[ANALYSIS_REPORT.md](ANALYSIS_REPORT.md). The detailed notes follow:
 `01` setup → `02` data/runs → `03` pulse reconstruction → `04` timing calibration →
 `05` timing resolution → `06` pile-up → `07` ML → `08` A-stack → `09` open questions.
-Term definitions in [glossary.md](glossary.md); citations in [references.md](references.md).
+Term definitions are in [glossary.md](glossary.md), the plot map is in
+[FIGURE_INDEX.md](FIGURE_INDEX.md), and citations are in [references.md](references.md).

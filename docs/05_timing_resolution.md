@@ -49,6 +49,8 @@ anything explainable by TOF (≤0.5 ns), angle (≤0.004 ns), WLS (≤0.06 ns), 
 resolution. Interpreted as a **late/overlapping-pulse (pile-up-like) topology**, not a method
 failure → handled in [06_pileup.md](06_pileup.md), and B2 is excluded from the timing estimate.
 
+![Timing covariance by topology](figures/reports/1781009478.9969.16fe02b4/fig_pair_covariance_by_topology.png)
+
 ## Open issues for the timing-resolution programme
 - χ²/ndf of the Gaussian-core fits is **not reported** (Table 18 blank) — goodness unknown.
 - Narrow-core σ vs robust width vs **full RMS** must be reported together (S04).

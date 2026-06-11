@@ -1,0 +1,20 @@
+method,disagreement_class,n_gallery,two_pulse_like_precision,two_pulse_like_recall,artifact_like_fraction,note
+cnn_1d_dual_head,joint,82,0.06097560975609756,0.002932551319648094,0.9390243902439024,S10f blinded morphology gallery join by event_index/run; not full truth labels
+cnn_1d_dual_head,ml_only,222,0.0990990990990991,0.012903225806451613,0.9009009009009009,S10f blinded morphology gallery join by event_index/run; not full truth labels
+cnn_1d_dual_head,neither,2270,0.10352422907488987,0.1378299120234604,0.8964757709251101,S10f blinded morphology gallery join by event_index/run; not full truth labels
+cnn_1d_dual_head,traditional_only,1283,0.06157443491816056,0.04633431085043988,0.9384255650818394,S10f blinded morphology gallery join by event_index/run; not full truth labels
+consensus_abstention_ensemble,joint,20,0.0,0.0,1.0,S10f blinded morphology gallery join by event_index/run; not full truth labels
+consensus_abstention_ensemble,ml_only,256,0.03515625,0.005278592375366569,0.96484375,S10f blinded morphology gallery join by event_index/run; not full truth labels
+consensus_abstention_ensemble,neither,2236,0.11091234347048301,0.14545454545454545,0.889087656529517,S10f blinded morphology gallery join by event_index/run; not full truth labels
+consensus_abstention_ensemble,traditional_only,1345,0.06245353159851301,0.04926686217008798,0.937546468401487,S10f blinded morphology gallery join by event_index/run; not full truth labels
+gradient_boosted_trees,joint,1152,0.05642361111111111,0.03812316715542522,0.9435763888888888,S10f blinded morphology gallery join by event_index/run; not full truth labels
+gradient_boosted_trees,ml_only,2253,0.10918774966711052,0.14428152492668622,0.8908122503328895,S10f blinded morphology gallery join by event_index/run; not full truth labels
+gradient_boosted_trees,neither,239,0.04602510460251046,0.0064516129032258064,0.9539748953974896,S10f blinded morphology gallery join by event_index/run; not full truth labels
+gradient_boosted_trees,traditional_only,213,0.0892018779342723,0.011143695014662757,0.9107981220657277,S10f blinded morphology gallery join by event_index/run; not full truth labels
+mlp,joint,1365,0.06153846153846154,0.04926686217008798,0.9384615384615385,S10f blinded morphology gallery join by event_index/run; not full truth labels
+mlp,ml_only,2359,0.10555320050869012,0.14604105571847506,0.8944467994913099,S10f blinded morphology gallery join by event_index/run; not full truth labels
+mlp,neither,133,0.06015037593984962,0.00469208211143695,0.9398496240601504,S10f blinded morphology gallery join by event_index/run; not full truth labels
+ridge_linear,joint,7,0.0,0.0,1.0,S10f blinded morphology gallery join by event_index/run; not full truth labels
+ridge_linear,ml_only,197,0.05583756345177665,0.0064516129032258064,0.9441624365482234,S10f blinded morphology gallery join by event_index/run; not full truth labels
+ridge_linear,neither,2295,0.10718954248366012,0.14428152492668622,0.8928104575163399,S10f blinded morphology gallery join by event_index/run; not full truth labels
+ridge_linear,traditional_only,1358,0.061855670103092786,0.04926686217008798,0.9381443298969072,S10f blinded morphology gallery join by event_index/run; not full truth labels

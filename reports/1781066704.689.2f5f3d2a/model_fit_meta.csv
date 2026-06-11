@@ -1,0 +1,11 @@
+method,fit_predict_sec,train_rows,eval_rows,fold,target_pca_components,n_iter,device,early_relative_samples
+ridge,0.05,14630,31253,holdout_sample_i,,,,
+gradient_boosted_trees,3.15,14630,31253,holdout_sample_i,6.0,,,
+mlp,6.92,14630,31253,holdout_sample_i,,80.0,,
+shuffled_template_ridge,0.02,14630,31253,holdout_sample_i,,,,
+cnn_early_1d,0.21,14630,31253,holdout_sample_i,,,cpu,"[-3.0, -2.0, -1.0, 0.0, 1.0]"
+ridge,0.03,28364,53128,holdout_sample_ii,,,,
+gradient_boosted_trees,323.77,28364,53128,holdout_sample_ii,6.0,,,
+mlp,11.41,28364,53128,holdout_sample_ii,,80.0,,
+shuffled_template_ridge,0.04,28364,53128,holdout_sample_ii,,,,
+cnn_early_1d,0.41,28364,53128,holdout_sample_ii,,,cpu,"[-3.0, -2.0, -1.0, 0.0, 1.0]"

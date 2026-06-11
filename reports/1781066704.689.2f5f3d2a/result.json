@@ -1,0 +1,139 @@
+{
+  "study": "P10k",
+  "ticket_id": "1781066704.689.2f5f3d2a",
+  "worker": "testbeam-laptop-3",
+  "title": "minority-stave conditional-template failure map",
+  "reproduction": {
+    "passed": true,
+    "selected_b_stave_pulses": 640737,
+    "analysis_selected_rows": 377362
+  },
+  "split": "two run-family heldout folds; confidence intervals bootstrap held-out run rows",
+  "methods_benchmarked": [
+    "empirical",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_early_1d",
+    "support_gated_mixture",
+    "shuffled_template_ridge"
+  ],
+  "winner": {
+    "method": "cnn_early_1d",
+    "q_mse": 0.03898873359462784,
+    "q_template_shift": -0.06098850429034442,
+    "timing_sigma68_ns": 1.3392857142857144,
+    "minority_false_support_rate": 0.013860956821549824,
+    "accepted_support_fraction": 0.7477353992780622
+  },
+  "winner_selection_metric": "lowest mean held-out run-block q_mse across folds, excluding shuffled sentinel",
+  "interpretation": "an ML/NN method beats the empirical template on the capped held-out benchmark",
+  "traditional_q_mse": 0.09997723788497226,
+  "best_ml_or_nn_q_mse": 0.03898873359462784,
+  "leakage_checks": [
+    {
+      "fold": "holdout_sample_i",
+      "train_group": "sample_ii_calib",
+      "eval_group": "sample_i_analysis",
+      "n_train_runs": 1,
+      "n_eval_runs": 14,
+      "train_eval_run_overlap": "",
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "same_pulse_waveform_used_by_cnn": "early samples only, target includes full aligned template; caveated as handle-like not pure conditional template"
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "train_group": "sample_i_calib",
+      "eval_group": "sample_ii_analysis",
+      "n_train_runs": 11,
+      "n_eval_runs": 7,
+      "train_eval_run_overlap": "",
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "same_pulse_waveform_used_by_cnn": "early samples only, target includes full aligned template; caveated as handle-like not pure conditional template"
+    }
+  ],
+  "fold_meta": [
+    {
+      "fold": "holdout_sample_i",
+      "train_rows_total": 14630,
+      "eval_rows_total": 252266,
+      "train_rows_used": 14630,
+      "eval_rows_used": 31253,
+      "support_gate_min_train": 45,
+      "support_gated_fraction": 0.6370588423511343
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "train_rows_total": 248745,
+      "eval_rows_total": 125096,
+      "train_rows_used": 28364,
+      "eval_rows_used": 53128,
+      "support_gate_min_train": 45,
+      "support_gated_fraction": 0.8227111880740853
+    }
+  ],
+  "global_rank": [
+    {
+      "method": "cnn_early_1d",
+      "q_mse": 0.03898873359462784,
+      "q_template_shift": -0.06098850429034442,
+      "timing_sigma68_ns": 1.3392857142857144,
+      "minority_false_support_rate": 0.013860956821549824,
+      "accepted_support_fraction": 0.7477353992780622
+    },
+    {
+      "method": "ridge",
+      "q_mse": 0.04563638487468995,
+      "q_template_shift": -0.05434085301028231,
+      "timing_sigma68_ns": 1.1160714285714286,
+      "minority_false_support_rate": 0.07365887399913654,
+      "accepted_support_fraction": 0.7477353992780622
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "q_mse": 0.04630102374337047,
+      "q_template_shift": -0.053676214141601786,
+      "timing_sigma68_ns": 1.0267857142857144,
+      "minority_false_support_rate": 0.06862977112375761,
+      "accepted_support_fraction": 0.7477353992780622
+    },
+    {
+      "method": "mlp",
+      "q_mse": 0.04933397963389803,
+      "q_template_shift": -0.05064325825107423,
+      "timing_sigma68_ns": 1.25,
+      "minority_false_support_rate": 0.30768300356978356,
+      "accepted_support_fraction": 0.7477353992780622
+    },
+    {
+      "method": "support_gated_mixture",
+      "q_mse": 0.06413765897709224,
+      "q_template_shift": -0.03583957890788002,
+      "timing_sigma68_ns": 1.2946428571428572,
+      "minority_false_support_rate": 0.06862977112375761,
+      "accepted_support_fraction": 0.7477353992780622
+    },
+    {
+      "method": "empirical",
+      "q_mse": 0.09997723788497226,
+      "q_template_shift": 0.0,
+      "timing_sigma68_ns": 1.4803571428571414,
+      "minority_false_support_rate": 0.0,
+      "accepted_support_fraction": 1.0
+    }
+  ],
+  "conclusion": "At least one stronger method improves the capped held-out q-MSE, but the failure map and systematics should be checked before promoting it to downstream q_template consumers.",
+  "next_tickets": [],
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_summary": "method_summary.csv",
+    "by_run": "by_run_metrics.csv",
+    "by_stave": "by_stave_metrics.csv",
+    "support_failure_map": "support_failure_map.csv",
+    "leakage": "leakage_checks.csv",
+    "reproduction": "reproduction_match_table.csv"
+  },
+  "git_commit": "4f0af7f9b491d870ee10747c39d03033f3c6d698"
+}

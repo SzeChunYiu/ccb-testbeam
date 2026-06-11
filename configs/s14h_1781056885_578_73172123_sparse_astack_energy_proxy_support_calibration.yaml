@@ -1,0 +1,61 @@
+study_id: S14h
+ticket_id: "1781056885.578.73172123"
+title: sparse A-stack energy-proxy support calibration
+worker: testbeam-laptop-3
+
+raw_root_dir: data/root/root
+output_dir: reports/1781056885.578.73172123__s14h_sparse_astack_energy_proxy_support_calibration
+p04_reference_config: configs/p04_amplitude_charge_regression.yaml
+
+amplitude_cut_adc: 1000.0
+saturation_adc: 7800.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+
+random_seed: 4148
+bootstrap_reps: 500
+max_train_rows: 18000
+max_nn_train_rows: 22000
+nn_epochs: 2
+nn_batch_size: 512
+
+expected_b_s00_selected_pulses: 640737
+expected_astack_counts:
+  sample_iii_analysis:
+    events_with_selected: 7168
+    selected_pulses: 9682
+  sample_iv_analysis:
+    events_with_selected: 767
+    selected_pulses: 894
+
+runs: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
+sample_iii_analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+sample_iv_analysis_runs: [58, 59, 60, 61, 62, 63, 65]
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+traditional:
+  b2_quantile_bins: 5
+  bdown_quantile_bins: 4
+  min_bin_n: 25
+  min_support_lower95: 0.015
+  support_threshold: 0.050
+
+ml:
+  support_threshold: 0.050
+  ridge_alpha: 4.0
+  gbt_estimators: 45
+  gbt_max_depth: 3
+  mlp_hidden: [32]

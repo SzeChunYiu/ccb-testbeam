@@ -1,0 +1,7 @@
+method,method_label,charge_slope_ns_per_log_charge,charge_slope_ci_low,charge_slope_ci_high,abs_pull_slope_per_log_charge,abs_pull_slope_ci_low,abs_pull_slope_ci_high
+cnn1d,1D-CNN residual scale model,-0.4879231217215573,,,0.1772591755524085,,
+gradient_boosted_trees,HistGradientBoosting residual scale model,-0.7491327711129423,,,0.1109249835748388,,
+mlp,MLP residual scale model,-0.7055171293890994,,,0.13929226711775003,,
+phase_conformal_gated_cnn,Phase-conformal atom-gated CNN,-0.5338729010370001,,,0.06909319030692176,,
+ridge,Ridge residual scale model,-0.0800395244648176,,,0.1349327646990345,,
+traditional,S02/S03/S04 atom robust-width baseline,-0.0811722003771734,,,-3.1698428788326267,,

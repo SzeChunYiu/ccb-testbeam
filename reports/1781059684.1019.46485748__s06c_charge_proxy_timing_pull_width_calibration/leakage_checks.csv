@@ -1,0 +1,7 @@
+check,value,pass,note
+raw_root_reproduction_passed,True,True,raw HRDv selected-pulse count and S03a timing gate must pass before benchmark interpretation
+required_methods_present,"cnn1d,gradient_boosted_trees,mlp,phase_conformal_gated_cnn,ridge,traditional",True,"traditional plus ridge, gradient-boosted trees, MLP, 1D-CNN, and new phase-conformal gated CNN"
+split_by_run,"58,59,60,61,62,63,65",True,pair rows are leave-one-run-out over Sample-II analysis runs
+uncertainty_heldout_runs,"58,59,60,61,62,63,65",True,each uncertainty layer leaves out the evaluated run
+uncertainty_meta_available,42,True,fold metadata records the run-external uncertainty fits
+forbidden_feature_audit,0,True,"source P06c uncertainty features exclude event id, raw residual, pull, sigma target, and held-out labels"

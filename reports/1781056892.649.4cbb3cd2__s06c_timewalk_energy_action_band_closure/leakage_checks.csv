@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_root_reproduction_passed,True,True,raw HRDv count gate must pass before closure rows are interpreted
+required_methods_present,"cnn1d,gradient_boosted_trees,mlp,phase_conformal_gated_cnn,ridge,traditional",True,"traditional plus ridge, GBT, MLP, 1D-CNN, and phase-conformal gated CNN"
+split_by_run,"58,59,60,61,62,63,65",True,pair rows are leave-one-run-out over Sample-II analysis runs
+accepted_support_nonempty_all_runs,"58,59,60,61,62,63,65",True,action-band gate must not collapse to a subset of runs
+no_label_defining_dt_features_in_acceptance,"timing_window_action,saturation_action,dropout_action,baseline_action,q_template_action,energy_support_action",True,"acceptance uses waveform support atoms, not pair residual magnitude or pull"

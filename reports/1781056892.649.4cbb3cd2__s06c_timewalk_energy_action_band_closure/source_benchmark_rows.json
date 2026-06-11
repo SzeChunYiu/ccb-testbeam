@@ -1,0 +1,7 @@
+{
+  "source_pair_rows": "reports/1781054026.2063.38d35ceb__s06b_amplitude_energy_timing_support_closure/pair_residual_rows_with_pulls.csv.gz",
+  "source_pair_rows_sha256": "e1e7640880c70e23dc50e03eb8411d99f115a78efe69676595444397c051d06b",
+  "source_uncertainty_meta": "reports/1781054026.2063.38d35ceb__s06b_amplitude_energy_timing_support_closure/uncertainty_fold_meta.csv",
+  "source_uncertainty_meta_sha256": "70a100aec7236dcbcf0f686533932602ebfc67c08a38144cee134abe4c247c92",
+  "reason": "S06c applies new action-band acceptance and closure summaries to the already run-external P06c/S06b method panel."
+}

@@ -1,0 +1,133 @@
+{
+  "study": "S03h",
+  "ticket": "1781056371.1904.760d09ad",
+  "worker": "testbeam-laptop-3",
+  "title": "blinded placebo stress test for too-good run-level shared-bin shrinkage",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "run65_s03a_s03b_pass": true,
+    "selected_b_stave_pulses": 640737
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "winner": {
+    "method": "runlevel_shared_bins",
+    "metric": "pooled_leave_one_run_out_pairwise_sigma68_ns",
+    "value": 1.1672860387117052,
+    "ci95": [
+      1.0050570651733313,
+      1.2805554091523141
+    ]
+  },
+  "model_panel": {
+    "runlevel_shared_bins": {
+      "value": 1.1672860387117052,
+      "ci95": [
+        1.0050570651733313,
+        1.2805554091523141
+      ]
+    },
+    "gradient_boosted_trees": {
+      "value": 1.5419904488267397,
+      "ci95": [
+        1.3969347273328439,
+        1.7371739602434304
+      ]
+    },
+    "s03a_amp_only": {
+      "value": 1.5510917109777833,
+      "ci95": [
+        1.3742474454307327,
+        1.9141155588440313
+      ]
+    },
+    "ridge": {
+      "value": 1.5644835400502142,
+      "ci95": [
+        1.3694125142697708,
+        1.8155248200297336
+      ]
+    },
+    "cnn1d": {
+      "value": 1.5679114044275986,
+      "ci95": [
+        1.3458981421262268,
+        1.9772469783917366
+      ]
+    },
+    "gated_residual_cnn": {
+      "value": 1.6064212677673328,
+      "ci95": [
+        1.412825276450756,
+        1.9621306870465607
+      ]
+    },
+    "s03b_monotone_binned": {
+      "value": 1.6451494274970766,
+      "ci95": [
+        1.3214015519560254,
+        1.93535879153613
+      ]
+    },
+    "mlp": {
+      "value": 1.6578179298081994,
+      "ci95": [
+        1.4495915544369744,
+        1.9437116581017093
+      ]
+    },
+    "template_phase_base": {
+      "value": 2.7414145300852155,
+      "ci95": [
+        2.686700760270818,
+        2.9820699658645284
+      ]
+    }
+  },
+  "run61": {
+    "runlevel_shared_sigma68_ns": 1.2614579347847759,
+    "runlevel_shared_ci95": [
+      1.2494886779773016,
+      1.3309271948018984
+    ]
+  },
+  "placebo": {
+    "best_placebo_sigma68_ns": 0.5652762681513451,
+    "pass": false,
+    "controls": [
+      "deployment_curve_run_label_permutation",
+      "train_run_curve_sign_flip",
+      "within_run_amplitude_permutation_by_stave"
+    ]
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "heldout_run_curve_not_fit": true,
+    "final_models_use_heldout_rows": false,
+    "leakage_flag": true
+  },
+  "verdict": "shared_bin_gain_not_promoted",
+  "summary": "The point-estimate winner is runlevel_shared_bins with pooled sigma68 1.167 ns (95% run-bootstrap CI 1.005-1.281). The frozen shared-bin method gives 1.167 ns, run 61 gives 1.261 ns, and the best placebo remains at 0.565 ns. Verdict: shared_bin_gain_not_promoted.",
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "6299cafb04657617bebcb4b8bcb47a386e4d194f",
+  "next_tickets": [
+    {
+      "title": "S03m externalize shared-bin timewalk to independent A-stack or duplicate-readout timing anchor",
+      "body": "Question: does the S03 shared-bin timing correction improve an independent timing observable not used in downstream-pair closure? Expected information gain: separate real detector transport from pairwise self-closure using raw ROOT only, run-held-out CIs, and the frozen S03h placebo gates."
+    }
+  ]
+}

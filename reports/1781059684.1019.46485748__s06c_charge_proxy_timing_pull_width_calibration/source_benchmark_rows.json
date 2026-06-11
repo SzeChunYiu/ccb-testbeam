@@ -1,0 +1,7 @@
+{
+  "source_pair_rows": "reports/1781044013.777.0e401db7__p06c_time_local_pull_coverage_atlas/pair_residual_rows_with_pulls.csv.gz",
+  "source_pair_rows_sha256": "81e0e8b4d46d77b689770c1bc234bd2b87fa82ee9f59a761ed2547d523bbadf1",
+  "source_uncertainty_meta": "reports/1781044013.777.0e401db7__p06c_time_local_pull_coverage_atlas/uncertainty_fold_meta.csv",
+  "source_uncertainty_meta_sha256": "7eb752b44a4268d6d5353f4d2dd78eb3c39592b3929ed893a26be7fbf4ad2e0f",
+  "reason": "S06c reuses the P06c run-external pair-residual panel and performs a ticket-owned charge-proxy calibration gate after rerunning raw ROOT reproduction."
+}

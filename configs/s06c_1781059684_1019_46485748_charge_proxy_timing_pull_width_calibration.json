@@ -1,0 +1,117 @@
+{
+  "study_id": "S06c",
+  "ticket_id": "1781059684.1019.46485748",
+  "worker": "testbeam-laptop-4",
+  "title": "charge-proxy timing pull-width calibration gate",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781059684.1019.46485748__s06c_charge_proxy_timing_pull_width_calibration",
+  "source_pair_rows": "reports/1781044013.777.0e401db7__p06c_time_local_pull_coverage_atlas/pair_residual_rows_with_pulls.csv.gz",
+  "source_uncertainty_meta": "reports/1781044013.777.0e401db7__p06c_time_local_pull_coverage_atlas/uncertainty_fold_meta.csv",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "timing": {
+    "downstream_staves": ["B4", "B6", "B8"],
+    "train_runs": [58, 59, 60, 61, 62, 63],
+    "heldout_runs": [65],
+    "loro_runs": [58, 59, 60, 61, 62, 63, 65],
+    "leading_edge_threshold_adc": 500.0,
+    "cfd_fractions": [0.10, 0.20, 0.30, 0.40, 0.50],
+    "of_windows": [[1, 9], [2, 10], [3, 11], [4, 12]],
+    "template_shift_grid": {
+      "min": -1.5,
+      "max": 1.5,
+      "step": 0.05
+    },
+    "base_method": "template_phase"
+  },
+  "s03a_reference": {
+    "analytic_candidate": "amp_only",
+    "analytic_alpha": 100.0,
+    "heldout_analytic_sigma68_ns": 1.494640076269676,
+    "tolerance_ns": 1e-09
+  },
+  "analytic": {
+    "random_seed": 20260611,
+    "bootstrap_samples": 40,
+    "ridge_alphas": [0.0, 0.01, 0.1, 1.0, 10.0, 100.0],
+    "cv_folds": 3,
+    "candidate_models": ["amp_only", "amp_rise_shape", "amp_rise_shape_by_stave"]
+  },
+  "strata": {
+    "amplitude_edges_adc": [1000, 1500, 2500, 4000, 7000, 12000, 25000, 1000000000],
+    "charge_edges_adc_samples": [1000, 4000, 8000, 14000, 24000, 40000, 80000, 1000000000],
+    "q_template_edges": [0.0, 0.025, 0.05, 0.08, 0.12, 0.2, 1000000000.0],
+    "baseline_rms_edges_adc": [0.0, 8.0, 16.0, 32.0, 64.0, 1000000000.0],
+    "leading_phase_edges": [0.0, 0.2, 0.4, 0.6, 0.8, 1.000001],
+    "saturation_proxy_adc": 7000.0,
+    "tail_thresholds_ns": [3.0, 5.0, 8.0]
+  },
+  "models": {
+    "random_seed": 20260611,
+    "bootstrap_samples": 40,
+    "cv_folds": 3,
+    "ridge_alphas": [0.1, 1.0, 10.0, 100.0],
+    "hgb_l2_regularization": [0.0, 0.1],
+    "hgb_max_iter": 180,
+    "mlp_hidden_layer_sizes": [64, 32],
+    "mlp_alpha": 0.0001,
+    "mlp_max_iter": 220,
+    "torch_epochs": 56,
+    "torch_batch_size": 1024,
+    "torch_learning_rate": 0.0025,
+    "torch_weight_decay": 0.0001
+  },
+  "ml": {
+    "random_seed": 20260611,
+    "ridge_alpha": 10.0,
+    "pca_components": 4,
+    "uncertainty_floor_ns": 0.12,
+    "bootstrap_samples": 40,
+    "negative_control_repeats": 2
+  },
+  "coverage": {
+    "nominal68": 0.682689492137,
+    "nominal95": 0.95,
+    "min_stratum_n": 12,
+    "uncertainty_floor_ns": 0.12,
+    "bootstrap_samples": 40,
+    "torch_epochs": 52,
+    "torch_batch_size": 512,
+    "torch_learning_rate": 0.002,
+    "torch_weight_decay": 0.0002
+  },
+  "charge_gate": {
+    "winner_metric": "charge_matched_pooled_calibration_loss",
+    "bootstrap_samples": 40,
+    "support_min_n": 12,
+    "delta_bootstrap_samples": 20,
+    "charge_control_dimension": "charge_bin",
+    "primary_methods": ["traditional", "ridge", "gradient_boosted_trees", "mlp", "cnn1d", "phase_conformal_gated_cnn"]
+  }
+}

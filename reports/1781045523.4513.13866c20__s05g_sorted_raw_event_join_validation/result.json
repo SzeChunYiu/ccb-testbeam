@@ -1,0 +1,1303 @@
+{
+  "study": "S05g",
+  "ticket": "1781045523.4513.13866c20",
+  "worker": "testbeam-laptop-3",
+  "title": "sorted raw-event join validation for A/B controls",
+  "reproduction_pass": true,
+  "reproduced_counts": {
+    "total_selected_b_pulses": 640737,
+    "sample_i_analysis_b_selected_pulses": 252266,
+    "sample_ii_analysis_b_selected_pulses": 125096
+  },
+  "winner": "deterministic_evt_occurrence_join",
+  "winner_name": "deterministic_evt_occurrence_join",
+  "winner_selection_metric": "complete occurrence-ranked EVT retention plus exact sorted waveform hrdMax agreement; ML sentinels are falsification controls",
+  "methods_benchmarked": [
+    "deterministic_evt_occurrence_join",
+    "entry_order_join_control",
+    "eventno_naive_join_control",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "agreement_gated_cnn_new"
+  ],
+  "traditional": {
+    "method": "deterministic_evt_occurrence_join",
+    "entry_order_evt_match_rate_min": 1.0,
+    "evt_occurrence_joined_fraction_by_stack": [
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "metric": "joined_fraction_vs_entry",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "metric": "joined_fraction_vs_entry",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      }
+    ],
+    "eventno_naive_joined_fraction_by_stack": [
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "metric": "joined_fraction_vs_entry",
+        "value": 0.034629715726143304,
+        "ci_low": 0.0,
+        "ci_high": 0.09198500224175063,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "metric": "joined_fraction_vs_entry",
+        "value": 0.051812404156693116,
+        "ci_low": 0.0,
+        "ci_high": 0.131547139224451,
+        "n_runs": 21
+      }
+    ]
+  },
+  "ml": {
+    "best_sentinel_method": {
+      "method": "gradient_boosted_trees",
+      "metric": "roc_auc",
+      "value": 0.9839031341107872,
+      "ci_low": 0.9824077684645286,
+      "ci_high": 0.9854027976190476,
+      "n_runs": 21
+    },
+    "task": "run-heldout correct EVT join versus deterministic shifted-entry and channel-rotation controls",
+    "feature_note": "sorted quality variables and raw/sorted agreement residuals; run and event identifiers excluded"
+  },
+  "primary_metrics": {
+    "join_quality_summary": [
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "metric": "joined_events",
+        "value": 31001.761904761905,
+        "ci_low": 25001.34761904762,
+        "ci_high": 36749.5738095238,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "metric": "raw_selected_pulses",
+        "value": 503.6190476190476,
+        "ci_low": 231.91666666666666,
+        "ci_high": 849.3166666666665,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "metric": "sorted_any_clean_pulses",
+        "value": 543.952380952381,
+        "ci_low": 238.60476190476192,
+        "ci_high": 948.8773809523809,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "metric": "sorted_tr_clean_pulses",
+        "value": 768.0,
+        "ci_low": 363.70714285714286,
+        "ci_high": 1204.6083333333331,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "metric": "event_join_loss_vs_entry",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "metric": "joined_fraction_vs_entry",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "metric": "joined_events",
+        "value": 672.8571428571429,
+        "ci_low": 0.0,
+        "ci_high": 1930.5035714285627,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "metric": "raw_selected_pulses",
+        "value": 33.80952380952381,
+        "ci_low": 0.0,
+        "ci_high": 90.28571428571429,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "metric": "sorted_any_clean_pulses",
+        "value": 37.523809523809526,
+        "ci_low": 0.0,
+        "ci_high": 99.96904761904747,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "metric": "sorted_tr_clean_pulses",
+        "value": 47.38095238095238,
+        "ci_low": 0.0,
+        "ci_high": 134.66666666666666,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "metric": "event_join_loss_vs_entry",
+        "value": 30328.904761904763,
+        "ci_low": 24348.933333333334,
+        "ci_high": 35628.09166666666,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "metric": "joined_fraction_vs_entry",
+        "value": 0.034629715726143304,
+        "ci_low": 0.0,
+        "ci_high": 0.09198500224175063,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "metric": "joined_events",
+        "value": 31001.761904761905,
+        "ci_low": 24997.058333333334,
+        "ci_high": 36395.62738095238,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "metric": "raw_selected_pulses",
+        "value": 503.6190476190476,
+        "ci_low": 204.11190476190475,
+        "ci_high": 866.8238095238094,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "metric": "sorted_any_clean_pulses",
+        "value": 543.952380952381,
+        "ci_low": 217.97738095238097,
+        "ci_high": 952.3488095238092,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "metric": "sorted_tr_clean_pulses",
+        "value": 768.0,
+        "ci_low": 395.5678571428571,
+        "ci_high": 1201.1761904761902,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "metric": "event_join_loss_vs_entry",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "metric": "joined_fraction_vs_entry",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "metric": "joined_events",
+        "value": 30998.571428571428,
+        "ci_low": 25040.229761904764,
+        "ci_high": 36071.33214285714,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "metric": "raw_selected_pulses",
+        "value": 17969.619047619046,
+        "ci_low": 13766.155952380952,
+        "ci_high": 22472.203571428567,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "metric": "sorted_any_clean_pulses",
+        "value": 17973.52380952381,
+        "ci_low": 13986.210714285715,
+        "ci_high": 21736.559523809523,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "metric": "sorted_tr_clean_pulses",
+        "value": 19292.285714285714,
+        "ci_low": 14850.627380952381,
+        "ci_high": 23633.148809523806,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "metric": "event_join_loss_vs_entry",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "metric": "joined_fraction_vs_entry",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "metric": "joined_events",
+        "value": 746.7142857142857,
+        "ci_low": 0.0,
+        "ci_high": 2073.2321428571386,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "metric": "raw_selected_pulses",
+        "value": 357.5238095238095,
+        "ci_low": 0.0,
+        "ci_high": 1108.5714285714287,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "metric": "sorted_any_clean_pulses",
+        "value": 353.3333333333333,
+        "ci_low": 0.0,
+        "ci_high": 941.147619047618,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "metric": "sorted_tr_clean_pulses",
+        "value": 385.1904761904762,
+        "ci_low": 0.0,
+        "ci_high": 985.6666666666666,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "metric": "event_join_loss_vs_entry",
+        "value": 30251.85714285714,
+        "ci_low": 24160.72857142857,
+        "ci_high": 35674.05119047619,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "metric": "joined_fraction_vs_entry",
+        "value": 0.051812404156693116,
+        "ci_low": 0.0,
+        "ci_high": 0.131547139224451,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "metric": "joined_events",
+        "value": 30998.571428571428,
+        "ci_low": 25089.283333333333,
+        "ci_high": 36550.95476190476,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "metric": "raw_selected_pulses",
+        "value": 17969.619047619046,
+        "ci_low": 13716.747619047619,
+        "ci_high": 22572.639285714286,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "metric": "sorted_any_clean_pulses",
+        "value": 17973.52380952381,
+        "ci_low": 13476.713095238096,
+        "ci_high": 21961.489285714284,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "metric": "sorted_tr_clean_pulses",
+        "value": 19292.285714285714,
+        "ci_low": 14825.972619047618,
+        "ci_high": 23984.153571428567,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "metric": "event_join_loss_vs_entry",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "metric": "joined_fraction_vs_entry",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      }
+    ],
+    "amplitude_summary": [
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A1",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.8605244412585936,
+        "ci_low": 0.844079114637992,
+        "ci_high": 0.8752494377262147,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A1",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A1",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 19.488095238095237,
+        "ci_low": 19.16636904761905,
+        "ci_high": 19.80952380952381,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A1",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A3",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9015477210819253,
+        "ci_low": 0.8801498080844669,
+        "ci_high": 0.9235552914398211,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A3",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A3",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 18.94571428571428,
+        "ci_low": 18.79234523809523,
+        "ci_high": 19.13619047619047,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "entry_order",
+        "channel_name": "A3",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A1",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.005093979055045125,
+        "ci_low": -0.00148879819275029,
+        "ci_high": 0.011676756302840539,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A1",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 0.9999999999999999,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A1",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 34.625,
+        "ci_low": 34.25,
+        "ci_high": 35.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A1",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A3",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.0003141203255288374,
+        "ci_low": -0.0014046183370473226,
+        "ci_high": 0.0020328589881049974,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A3",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 0.9999999999999999,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A3",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 35.875,
+        "ci_low": 35.5,
+        "ci_high": 36.25,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "eventno_naive",
+        "channel_name": "A3",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A1",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.8605244412585936,
+        "ci_low": 0.8409893955511867,
+        "ci_high": 0.8761139239964584,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A1",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A1",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 19.488095238095237,
+        "ci_low": 19.05952380952381,
+        "ci_high": 19.75029761904762,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A1",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A3",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9015477210819253,
+        "ci_low": 0.8824161469674514,
+        "ci_high": 0.920989322929491,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A3",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A3",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 18.94571428571428,
+        "ci_low": 18.78282142857142,
+        "ci_high": 19.13095238095238,
+        "n_runs": 21
+      },
+      {
+        "stack": "A",
+        "join_method": "evt_occurrence",
+        "channel_name": "A3",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B2",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9345366163980566,
+        "ci_low": 0.9256425852394509,
+        "ci_high": 0.9435911509820568,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B2",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B2",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 29.012857142857108,
+        "ci_low": 20.652678571428574,
+        "ci_high": 40.56702380952371,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B2",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B4",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.8989243139045455,
+        "ci_low": 0.885930999822619,
+        "ci_high": 0.9116380547631129,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B4",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B4",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 17.047619047619047,
+        "ci_low": 16.547619047619047,
+        "ci_high": 17.46517857142857,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B4",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B6",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9168834725758694,
+        "ci_low": 0.9001388462048193,
+        "ci_high": 0.9312187724545097,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B6",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B6",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 15.273809523809524,
+        "ci_low": 14.904464285714287,
+        "ci_high": 15.595238095238095,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B6",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B8",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9130074688086507,
+        "ci_low": 0.8971821066669369,
+        "ci_high": 0.9281541527604464,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B8",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B8",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 15.226190476190476,
+        "ci_low": 14.916369047619048,
+        "ci_high": 15.547916666666666,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "entry_order",
+        "channel_name": "B8",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B2",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.00584284477758025,
+        "ci_low": -0.02561042111116471,
+        "ci_high": 0.03729611066632521,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B2",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 0.9999999999999999,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B2",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 4077.9749999999995,
+        "ci_low": 4067.05,
+        "ci_high": 4088.899999999999,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B2",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B4",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": -0.011811103283160842,
+        "ci_low": -0.018572939230232333,
+        "ci_high": -0.0050492673360893504,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B4",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 0.9999999999999999,
+        "ci_low": 0.9999999999999998,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B4",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 32.245000000000005,
+        "ci_low": 31.75,
+        "ci_high": 32.74000000000001,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B4",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B6",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": -0.001754358320814592,
+        "ci_low": -0.006838269214082066,
+        "ci_high": 0.0033295525724528824,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B6",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B6",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 28.375,
+        "ci_low": 28.25,
+        "ci_high": 28.5,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B6",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B8",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.007325160430573531,
+        "ci_low": -0.0045911324073609336,
+        "ci_high": 0.019241453268507996,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B8",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B8",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 28.125,
+        "ci_low": 27.5,
+        "ci_high": 28.75,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "eventno_naive",
+        "channel_name": "B8",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B2",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9345366163980566,
+        "ci_low": 0.9247071776063494,
+        "ci_high": 0.9451362242526271,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B2",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B2",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 29.012857142857108,
+        "ci_low": 20.370809523809534,
+        "ci_high": 39.440249999999935,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B2",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B4",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.8989243139045455,
+        "ci_low": 0.8847604334049124,
+        "ci_high": 0.9130437878380551,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B4",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B4",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 17.047619047619047,
+        "ci_low": 16.61904761904762,
+        "ci_high": 17.5125,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B4",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B6",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9168834725758694,
+        "ci_low": 0.9006585521400711,
+        "ci_high": 0.9317298561081602,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B6",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B6",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 15.273809523809524,
+        "ci_low": 14.869047619047619,
+        "ci_high": 15.64315476190476,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B6",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B8",
+        "metric": "corr_raw_amp_vs_hrdMax",
+        "value": 0.9130074688086507,
+        "ci_low": 0.8982491952641602,
+        "ci_high": 0.931510683556786,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B8",
+        "metric": "corr_sorted_wave_max_vs_hrdMax",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B8",
+        "metric": "sigma68_hrdMax_minus_raw_amp_adc",
+        "value": 15.226190476190476,
+        "ci_low": 14.892857142857142,
+        "ci_high": 15.535714285714286,
+        "n_runs": 21
+      },
+      {
+        "stack": "B",
+        "join_method": "evt_occurrence",
+        "channel_name": "B8",
+        "metric": "sigma68_hrdMax_minus_sorted_wave_max_adc",
+        "value": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0,
+        "n_runs": 21
+      }
+    ],
+    "ml_sentinel_summary": [
+      {
+        "method": "agreement_gated_cnn_new",
+        "metric": "roc_auc",
+        "value": 0.8904023566569486,
+        "ci_low": 0.8797623627308065,
+        "ci_high": 0.8993766557337219,
+        "n_runs": 21
+      },
+      {
+        "method": "agreement_gated_cnn_new",
+        "metric": "average_precision",
+        "value": 0.7903385787434543,
+        "ci_low": 0.7734317908804982,
+        "ci_high": 0.8057697311049852,
+        "n_runs": 21
+      },
+      {
+        "method": "agreement_gated_cnn_new",
+        "metric": "accuracy",
+        "value": 0.7596825396825396,
+        "ci_low": 0.7505663265306124,
+        "ci_high": 0.7688480725623583,
+        "n_runs": 21
+      },
+      {
+        "method": "agreement_gated_cnn_new",
+        "metric": "brier",
+        "value": 0.1463560066707386,
+        "ci_low": 0.14117702497429394,
+        "ci_high": 0.1521574678958924,
+        "n_runs": 21
+      },
+      {
+        "method": "cnn_1d",
+        "metric": "roc_auc",
+        "value": 0.8833499757045673,
+        "ci_low": 0.8700943671039844,
+        "ci_high": 0.8929658722060253,
+        "n_runs": 21
+      },
+      {
+        "method": "cnn_1d",
+        "metric": "average_precision",
+        "value": 0.7814422929409368,
+        "ci_low": 0.7630043537991673,
+        "ci_high": 0.7966138114415233,
+        "n_runs": 21
+      },
+      {
+        "method": "cnn_1d",
+        "metric": "accuracy",
+        "value": 0.7658276643990931,
+        "ci_low": 0.7545969387755103,
+        "ci_high": 0.7747647392290249,
+        "n_runs": 21
+      },
+      {
+        "method": "cnn_1d",
+        "metric": "brier",
+        "value": 0.14653830046522864,
+        "ci_low": 0.14118894725162398,
+        "ci_high": 0.15269800956241938,
+        "n_runs": 21
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "metric": "roc_auc",
+        "value": 0.9839031341107872,
+        "ci_low": 0.9824077684645286,
+        "ci_high": 0.9854027976190476,
+        "n_runs": 21
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "metric": "average_precision",
+        "value": 0.9654122581635066,
+        "ci_low": 0.9614673459904369,
+        "ci_high": 0.9685168434888676,
+        "n_runs": 21
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "metric": "accuracy",
+        "value": 0.934920634920635,
+        "ci_low": 0.9307936507936508,
+        "ci_high": 0.9393015873015872,
+        "n_runs": 21
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "metric": "brier",
+        "value": 0.04778473291542619,
+        "ci_low": 0.04538538678469573,
+        "ci_high": 0.04975642109583114,
+        "n_runs": 21
+      },
+      {
+        "method": "mlp",
+        "metric": "roc_auc",
+        "value": 0.9514829446064139,
+        "ci_low": 0.9469740379008745,
+        "ci_high": 0.9563649629494654,
+        "n_runs": 21
+      },
+      {
+        "method": "mlp",
+        "metric": "average_precision",
+        "value": 0.9010955749551777,
+        "ci_low": 0.8933987937980337,
+        "ci_high": 0.90922250390497,
+        "n_runs": 21
+      },
+      {
+        "method": "mlp",
+        "metric": "accuracy",
+        "value": 0.8769387755102039,
+        "ci_low": 0.8709036281179138,
+        "ci_high": 0.8836978458049887,
+        "n_runs": 21
+      },
+      {
+        "method": "mlp",
+        "metric": "brier",
+        "value": 0.08413307533564773,
+        "ci_low": 0.0806201473079366,
+        "ci_high": 0.08752271826526226,
+        "n_runs": 21
+      },
+      {
+        "method": "ridge",
+        "metric": "roc_auc",
+        "value": 0.8858263605442179,
+        "ci_low": 0.8790052787900876,
+        "ci_high": 0.892680119047619,
+        "n_runs": 21
+      },
+      {
+        "method": "ridge",
+        "metric": "average_precision",
+        "value": 0.7808750546150884,
+        "ci_low": 0.7710724191833751,
+        "ci_high": 0.7899236906768206,
+        "n_runs": 21
+      },
+      {
+        "method": "ridge",
+        "metric": "accuracy",
+        "value": 0.7771655328798187,
+        "ci_low": 0.7731247165532878,
+        "ci_high": 0.781814058956916,
+        "n_runs": 21
+      },
+      {
+        "method": "ridge",
+        "metric": "brier",
+        "value": 0.1408533215260422,
+        "ci_low": 0.13772577981828873,
+        "ci_high": 0.14494605731665786,
+        "n_runs": 21
+      }
+    ]
+  },
+  "finding": "Sorted hrdEvtNo follows raw EVT, not raw EVENTNO. Occurrence-ranked EVT and entry-order joins preserve event identity for analysis runs; naive EVENTNO joins fail as expected. Sorted hrdMax is exactly consistent with sorted waveform maxima by physical channel, while raw HRDv amplitude differences are baseline-convention scatter.",
+  "systematics": [
+    "raw HRDv median-baseline amplitudes and sorted hrdMax use different baseline conventions",
+    "duplicate EVT values require occurrence-ranked joins if future runs contain repeated counters",
+    "ML/NN sentinels are bad-join detectors, not replacement join authorities"
+  ],
+  "next_tickets": [
+    "S05l: build a waveform-fingerprint raw/sorted duplicate-EVT resolver for future sorted productions where duplicate trigger counters may be internally reordered."
+  ],
+  "git_commit": "266a69e4dad9fcb7e662fedf6cde9aa73c220e9f"
+}

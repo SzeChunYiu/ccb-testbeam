@@ -1,0 +1,66 @@
+{
+  "ticket_id": "1781046830.796.418e6e1f",
+  "study_id": "P12c",
+  "title": "pulse-action decision matrix",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "output_dir": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix",
+  "amplitude_cut_adc": 1000.0,
+  "high_amplitude_adc": 7000.0,
+  "adaptive_lowering_adc": 500.0,
+  "early_pretrigger_exc_adc": 500.0,
+  "delayed_peak_sample": 13,
+  "broad_width035_samples": 10,
+  "broad_width050_quantile": 0.995,
+  "pileup_secondary_rel": 0.62,
+  "pileup_secondary_min_sep": 4,
+  "pileup_late_fraction": 0.40,
+  "timing_tail_abs_ns": 5.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "groups": {
+      "sample_i_calib": {"events": 239559, "pulses": 248745},
+      "sample_i_analysis": {
+        "events": 243133,
+        "pulses": 252266,
+        "staves": {"B2": 241422, "B4": 6451, "B6": 3094, "B8": 1299}
+      },
+      "sample_ii_calib": {"events": 12103, "pulses": 14630},
+      "sample_ii_analysis": {
+        "events": 89807,
+        "pulses": 125096,
+        "staves": {"B2": 88213, "B4": 21229, "B6": 11148, "B8": 4506}
+      }
+    }
+  },
+  "benchmark": {
+    "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+    "train_cap": 30000,
+    "bootstrap_reps": 250,
+    "random_seed": 1206830,
+    "cnn_epochs": 3,
+    "cnn_batch_size": 768
+  },
+  "action_policy": {
+    "risk_threshold_for_pass": 0.10,
+    "minimum_pass_coverage_for_winner": 0.20
+  },
+  "novel_ticket": "P12d: test whether the P12c pass/correct/abstain/veto matrix improves downstream PID and energy calibration when frozen before fitting consumer models"
+}

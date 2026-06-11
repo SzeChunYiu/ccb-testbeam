@@ -1,0 +1,413 @@
+{
+  "study": "S05n",
+  "ticket": "1781062443.571.1e7346af",
+  "worker": "testbeam-laptop-2",
+  "reproduction_pass": true,
+  "winner": "ridge",
+  "winner_name": "ridge",
+  "winner_selection_metric": "smallest supported pretrigger-conditioned B2-minus-downstream covariance delta among non-control methods, sigma68 tie-break",
+  "traditional": {
+    "method": "traditional_atom_stratified_ridge",
+    "method_class": "traditional",
+    "n_pair_rows": 104464,
+    "n_runs": 21,
+    "sigma68_ns": 8.233988566480427,
+    "sigma68_ci_low_ns": 7.706994652967541,
+    "sigma68_ci_high_ns": 9.173819599584315,
+    "projected_twoended_sigma68_ns": 5.822309151570809,
+    "full_rms_ns": 11.058936186766138,
+    "full_rms_ci_low_ns": 9.865652611032361,
+    "full_rms_ci_high_ns": 13.666844896309936,
+    "pull_width": 0.9884782963890506,
+    "tail_fraction_abs_gt_5ns": 0.5049873640680043,
+    "mean_abs_pair_cov_ns2": 56.80265162080072,
+    "correlated_fraction": 0.3925720268650901
+  },
+  "ml": {
+    "method": "ridge",
+    "method_class": "ml",
+    "n_pair_rows": 104464,
+    "n_runs": 21,
+    "sigma68_ns": 7.285259561455707,
+    "sigma68_ci_low_ns": 6.740670914273472,
+    "sigma68_ci_high_ns": 8.759109191168395,
+    "projected_twoended_sigma68_ns": 5.151456438609463,
+    "full_rms_ns": 11.564242458425424,
+    "full_rms_ci_low_ns": 10.200587878541851,
+    "full_rms_ci_high_ns": 14.797852769136297,
+    "pull_width": 0.9829240363595877,
+    "tail_fraction_abs_gt_5ns": 0.4631069076428243,
+    "mean_abs_pair_cov_ns2": 92.2391331822524,
+    "correlated_fraction": 0.49701763593881276
+  },
+  "ml_beats_baseline": true,
+  "methods_benchmarked": [
+    "pair_median",
+    "traditional_atom_stratified_ridge",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "pretrigger_support_gated_cnn_new",
+    "pool_label_control",
+    "ml_shuffled_target_control"
+  ],
+  "primary_metrics": [
+    {
+      "method": "pair_median",
+      "method_class": "traditional",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 2.291582501582986,
+      "sigma68_ci_low_ns": 1.8994521398654687,
+      "sigma68_ci_high_ns": 16.147411408191665,
+      "projected_twoended_sigma68_ns": 1.6203935265177614,
+      "full_rms_ns": 22.57901752265611,
+      "full_rms_ci_low_ns": 15.752215935369566,
+      "full_rms_ci_high_ns": 34.150767052745145,
+      "pull_width": 0.9154505615813595,
+      "tail_fraction_abs_gt_5ns": 0.16537754633175064,
+      "mean_abs_pair_cov_ns2": 228.5346093364996,
+      "correlated_fraction": 0.3664194966874409
+    },
+    {
+      "method": "traditional_atom_stratified_ridge",
+      "method_class": "traditional",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 8.233988566480427,
+      "sigma68_ci_low_ns": 7.706994652967541,
+      "sigma68_ci_high_ns": 9.173819599584315,
+      "projected_twoended_sigma68_ns": 5.822309151570809,
+      "full_rms_ns": 11.058936186766138,
+      "full_rms_ci_low_ns": 9.865652611032361,
+      "full_rms_ci_high_ns": 13.666844896309936,
+      "pull_width": 0.9884782963890506,
+      "tail_fraction_abs_gt_5ns": 0.5049873640680043,
+      "mean_abs_pair_cov_ns2": 56.80265162080072,
+      "correlated_fraction": 0.3925720268650901
+    },
+    {
+      "method": "ridge",
+      "method_class": "ml",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 7.285259561455707,
+      "sigma68_ci_low_ns": 6.740670914273472,
+      "sigma68_ci_high_ns": 8.759109191168395,
+      "projected_twoended_sigma68_ns": 5.151456438609463,
+      "full_rms_ns": 11.564242458425424,
+      "full_rms_ci_low_ns": 10.200587878541851,
+      "full_rms_ci_high_ns": 14.797852769136297,
+      "pull_width": 0.9829240363595877,
+      "tail_fraction_abs_gt_5ns": 0.4631069076428243,
+      "mean_abs_pair_cov_ns2": 92.2391331822524,
+      "correlated_fraction": 0.49701763593881276
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "method_class": "ml",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 4.156135865828996,
+      "sigma68_ci_low_ns": 3.741202706441137,
+      "sigma68_ci_high_ns": 10.286967157886762,
+      "projected_twoended_sigma68_ns": 2.938831854260306,
+      "full_rms_ns": 12.548635096665025,
+      "full_rms_ci_low_ns": 10.899697125758285,
+      "full_rms_ci_high_ns": 17.340186211757644,
+      "pull_width": 0.9723238794200784,
+      "tail_fraction_abs_gt_5ns": 0.23669398070148567,
+      "mean_abs_pair_cov_ns2": 63.46463334902064,
+      "correlated_fraction": 0.32569713370867376
+    },
+    {
+      "method": "mlp",
+      "method_class": "ml",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 4.9378940254143355,
+      "sigma68_ci_low_ns": 4.392491342718043,
+      "sigma68_ci_high_ns": 13.60155341013333,
+      "projected_twoended_sigma68_ns": 3.4916183501510147,
+      "full_rms_ns": 19.344370282525368,
+      "full_rms_ci_low_ns": 15.308209278581996,
+      "full_rms_ci_high_ns": 26.61375103826104,
+      "pull_width": 0.9676583801417691,
+      "tail_fraction_abs_gt_5ns": 0.3212398529637004,
+      "mean_abs_pair_cov_ns2": 197.60335503732438,
+      "correlated_fraction": 0.4044060310680744
+    },
+    {
+      "method": "cnn_1d",
+      "method_class": "ml",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 5.636563873045986,
+      "sigma68_ci_low_ns": 4.450914019383039,
+      "sigma68_ci_high_ns": 17.265728696408683,
+      "projected_twoended_sigma68_ns": 3.985652537221927,
+      "full_rms_ns": 22.052858535232684,
+      "full_rms_ci_low_ns": 18.110901349864925,
+      "full_rms_ci_high_ns": 32.36488544242196,
+      "pull_width": 0.9713563988464475,
+      "tail_fraction_abs_gt_5ns": 0.36981160974115485,
+      "mean_abs_pair_cov_ns2": 230.22902742737327,
+      "correlated_fraction": 0.37437746487102685
+    },
+    {
+      "method": "pretrigger_support_gated_cnn_new",
+      "method_class": "ml",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 5.355891137777771,
+      "sigma68_ci_low_ns": 4.4133898851112985,
+      "sigma68_ci_high_ns": 13.716363154807919,
+      "projected_twoended_sigma68_ns": 3.787186942819595,
+      "full_rms_ns": 22.16044102282103,
+      "full_rms_ci_low_ns": 17.710012775754677,
+      "full_rms_ci_high_ns": 29.933163666540995,
+      "pull_width": 0.9705009397192772,
+      "tail_fraction_abs_gt_5ns": 0.3419072599172921,
+      "mean_abs_pair_cov_ns2": 228.11454158536978,
+      "correlated_fraction": 0.3734010405001579
+    },
+    {
+      "method": "pool_label_control",
+      "method_class": "control",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 6.632430102596329,
+      "sigma68_ci_low_ns": 4.859911515072344,
+      "sigma68_ci_high_ns": 15.777792787425343,
+      "projected_twoended_sigma68_ns": 4.689836301291653,
+      "full_rms_ns": 20.88087437314912,
+      "full_rms_ci_low_ns": 15.944840025437184,
+      "full_rms_ci_high_ns": 29.778999997076042,
+      "pull_width": 0.8024931347494288,
+      "tail_fraction_abs_gt_5ns": 0.4407738551079798,
+      "mean_abs_pair_cov_ns2": 228.5346093364996,
+      "correlated_fraction": 0.36641949668744095
+    },
+    {
+      "method": "ml_shuffled_target_control",
+      "method_class": "control",
+      "n_pair_rows": 104464,
+      "n_runs": 21,
+      "sigma68_ns": 5.7374988559958,
+      "sigma68_ci_low_ns": 4.775978716276446,
+      "sigma68_ci_high_ns": 17.07268063164663,
+      "projected_twoended_sigma68_ns": 4.057024348124688,
+      "full_rms_ns": 22.814789844739217,
+      "full_rms_ci_low_ns": 17.25908255987317,
+      "full_rms_ci_high_ns": 30.658079342425715,
+      "pull_width": 0.968106127956414,
+      "tail_fraction_abs_gt_5ns": 0.3724345228978404,
+      "mean_abs_pair_cov_ns2": 237.47309277036064,
+      "correlated_fraction": 0.3733081724183545
+    }
+  ],
+  "conditional_covariance_summary": [
+    {
+      "method": "cnn_1d",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 107.86022638419057,
+      "delta_ci_low_ns2": 37.789637728852334,
+      "delta_ci_high_ns2": 248.96966965195202,
+      "weighted_common_covariance_fraction": 0.5316851022244701,
+      "fraction_ci_low": 0.22468058282358797,
+      "fraction_ci_high": 0.8716053231803083
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 54.88109331367356,
+      "delta_ci_low_ns2": 24.163976128070235,
+      "delta_ci_high_ns2": 152.425326356649,
+      "weighted_common_covariance_fraction": 0.3588484356421444,
+      "fraction_ci_low": -0.3197763188876185,
+      "fraction_ci_high": 0.8293907079521079
+    },
+    {
+      "method": "ml_shuffled_target_control",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 106.46353188438631,
+      "delta_ci_low_ns2": 29.093222878785568,
+      "delta_ci_high_ns2": 277.0830170445365,
+      "weighted_common_covariance_fraction": 0.6052464320876533,
+      "fraction_ci_low": 0.3800443263715278,
+      "fraction_ci_high": 0.8101576710046389
+    },
+    {
+      "method": "mlp",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 93.25341639758118,
+      "delta_ci_low_ns2": 29.30108346257976,
+      "delta_ci_high_ns2": 221.28919982961173,
+      "weighted_common_covariance_fraction": 0.6034829204135915,
+      "fraction_ci_low": 0.332362674195794,
+      "fraction_ci_high": 0.8968592802357495
+    },
+    {
+      "method": "pair_median",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 106.09633378231365,
+      "delta_ci_low_ns2": 35.37754776058717,
+      "delta_ci_high_ns2": 226.14736038441345,
+      "weighted_common_covariance_fraction": 0.4464405774656594,
+      "fraction_ci_low": -0.2656207334952282,
+      "fraction_ci_high": 0.9068480899285484
+    },
+    {
+      "method": "pool_label_control",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 106.09633378231365,
+      "delta_ci_low_ns2": 40.57405179608848,
+      "delta_ci_high_ns2": 309.3732529637543,
+      "weighted_common_covariance_fraction": 0.44644057746565957,
+      "fraction_ci_low": -0.0771195984031942,
+      "fraction_ci_high": 0.9185988092287184
+    },
+    {
+      "method": "pretrigger_support_gated_cnn_new",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 101.80119017866923,
+      "delta_ci_low_ns2": 53.66089807104284,
+      "delta_ci_high_ns2": 292.91449774909825,
+      "weighted_common_covariance_fraction": 0.3869123183568659,
+      "fraction_ci_low": -0.26727494648075156,
+      "fraction_ci_high": 0.885154786983076
+    },
+    {
+      "method": "ridge",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 21.620740653974064,
+      "delta_ci_low_ns2": -1.977127055935843,
+      "delta_ci_high_ns2": 67.80054560918943,
+      "weighted_common_covariance_fraction": -0.47722815958941833,
+      "fraction_ci_low": -0.8662347390190719,
+      "fraction_ci_high": 0.12903224885558592
+    },
+    {
+      "method": "traditional_atom_stratified_ridge",
+      "n_conditioning_cells": 18,
+      "weighted_conditional_cov_delta_ns2": 28.235502549545874,
+      "delta_ci_low_ns2": -1.8932048285336147,
+      "delta_ci_high_ns2": 97.85226175187638,
+      "weighted_common_covariance_fraction": -0.4225121633622842,
+      "fraction_ci_low": -0.8629125946754437,
+      "fraction_ci_high": 0.14595982998197807
+    }
+  ],
+  "deltas": [
+    {
+      "method": "ridge",
+      "baseline": "pair_median",
+      "delta_sigma68_ns": 4.993677059872721,
+      "delta_projected_twoended_sigma68_ns": 3.5310629120917016,
+      "delta_pull_width": 0.06747347477822818,
+      "delta_conditioned_cov_ns2": -84.47559312833958
+    },
+    {
+      "method": "ridge",
+      "baseline": "traditional_atom_stratified_ridge",
+      "delta_sigma68_ns": -0.9487290050247204,
+      "delta_projected_twoended_sigma68_ns": -0.670852712961346,
+      "delta_pull_width": -0.00555426002946291,
+      "delta_conditioned_cov_ns2": -6.61476189557181
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "baseline": "pair_median",
+      "delta_sigma68_ns": 1.8645533642460101,
+      "delta_projected_twoended_sigma68_ns": 1.3184383277425447,
+      "delta_pull_width": 0.05687331783871885,
+      "delta_conditioned_cov_ns2": -51.21524046864009
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "baseline": "traditional_atom_stratified_ridge",
+      "delta_sigma68_ns": -4.077852700651431,
+      "delta_projected_twoended_sigma68_ns": -2.883477297310503,
+      "delta_pull_width": -0.01615441696897224,
+      "delta_conditioned_cov_ns2": 26.645590764127686
+    },
+    {
+      "method": "mlp",
+      "baseline": "pair_median",
+      "delta_sigma68_ns": 2.6463115238313497,
+      "delta_projected_twoended_sigma68_ns": 1.8712248236332534,
+      "delta_pull_width": 0.05220781856040957,
+      "delta_conditioned_cov_ns2": -12.842917384732473
+    },
+    {
+      "method": "mlp",
+      "baseline": "traditional_atom_stratified_ridge",
+      "delta_sigma68_ns": -3.2960945410660916,
+      "delta_projected_twoended_sigma68_ns": -2.3306908014197942,
+      "delta_pull_width": -0.020819916247281522,
+      "delta_conditioned_cov_ns2": 65.0179138480353
+    },
+    {
+      "method": "cnn_1d",
+      "baseline": "pair_median",
+      "delta_sigma68_ns": 3.3449813714630006,
+      "delta_projected_twoended_sigma68_ns": 2.3652590107041656,
+      "delta_pull_width": 0.05590583726508802,
+      "delta_conditioned_cov_ns2": 1.7638926018769183
+    },
+    {
+      "method": "cnn_1d",
+      "baseline": "traditional_atom_stratified_ridge",
+      "delta_sigma68_ns": -2.5974246934344407,
+      "delta_projected_twoended_sigma68_ns": -1.836656614348882,
+      "delta_pull_width": -0.01712189754260307,
+      "delta_conditioned_cov_ns2": 79.6247238346447
+    },
+    {
+      "method": "pretrigger_support_gated_cnn_new",
+      "baseline": "pair_median",
+      "delta_sigma68_ns": 3.0643086361947853,
+      "delta_projected_twoended_sigma68_ns": 2.1667934163018336,
+      "delta_pull_width": 0.05505037813791769,
+      "delta_conditioned_cov_ns2": -4.295143603644419
+    },
+    {
+      "method": "pretrigger_support_gated_cnn_new",
+      "baseline": "traditional_atom_stratified_ridge",
+      "delta_sigma68_ns": -2.878097428702656,
+      "delta_projected_twoended_sigma68_ns": -2.035122208751214,
+      "delta_pull_width": -0.017977356669773403,
+      "delta_conditioned_cov_ns2": 73.56568762912336
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "forbidden_feature_overlap",
+      "value": "",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true
+    },
+    {
+      "check": "pretrigger_atoms_joined_fraction",
+      "value": 1.0,
+      "pass": true
+    },
+    {
+      "check": "shuffled_target_worse_than_winner_width",
+      "value": 0.38160771821802886,
+      "pass": true
+    }
+  ],
+  "finding": "Pretrigger/saturation/topology conditioning substantially reduces the B2-minus-downstream covariance delta for ridge and its CI overlaps zero, but the broader method panel still leaves positive deltas; the correlated floor is weakened but not conclusively retired as a projection artifact.",
+  "next_tickets": [
+    {
+      "title": "S05o frozen pretrigger-conditioned covariance weights downstream pull trial",
+      "body": "Freeze the S05n pretrigger-conditioned covariance winner and test whether its two-ended pull widths improve independent S03/S18 timing consumers without widening charge/PID support drift. Expected information gain: separates covariance-ledger improvement from downstream timing adoption safety."
+    }
+  ]
+}

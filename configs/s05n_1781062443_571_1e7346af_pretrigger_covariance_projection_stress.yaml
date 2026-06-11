@@ -1,0 +1,72 @@
+study_id: S05n
+title: pretrigger-atom covariance projection stress
+ticket: "1781062443.571.1e7346af"
+worker: testbeam-laptop-2
+
+raw_root_dir: /home/billy/ccb-data/extracted/root/root
+output_dir: reports/1781062443.571.1e7346af__s05n_pretrigger_covariance_projection_stress
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+large_pulse_adc: 7000.0
+sample_period_ns: 10.0
+cfd_fraction: 0.20
+tof_per_cm_ns: 0.078
+stave_spacing_cm: 2.0
+trim_each_tail_fraction: 0.10
+bootstrap_resamples: 80
+random_seed: 2062443
+saturation_threshold_adc: 3800.0
+deep_saturation_adc: 7000.0
+tail_pileup_threshold: 0.72
+support_min_rows: 120
+support_min_runs: 3
+
+runs:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_b_pulses: 640737
+  sample_i_analysis_b_selected_pulses: 252266
+  sample_ii_analysis_b_selected_pulses: 125096
+  sample_iv_a1_a3_pairs: 127
+  sample_iv_a1_a3_robust_width_ns: 1.7936257228944265
+  sample_iv_a1_a3_tolerance_ns: 0.001
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+traditional:
+  ridge_alpha: 25.0
+
+ml:
+  n_estimators: 40
+  max_features: 0.8
+  min_samples_leaf: 15
+  gbt_max_iter: 28
+  gbt_learning_rate: 0.04
+  mlp_hidden: [28]
+  mlp_alpha: 0.001
+  mlp_max_iter: 10
+  nn_epochs: 1
+  nn_batch_size: 512
+  nn_learning_rate: 0.001
+  nn_weight_decay: 0.0001
+  max_model_train_rows: 1800

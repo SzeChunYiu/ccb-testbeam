@@ -1,0 +1,9 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+"S13d parent control events, B2 and >=2 downstream",10156,10156,0,0,True
+"S13d parent clean events, D_t<3 ns",2155,2155,0,0,True
+"S13d parent gross events, documented D_t>50 ns",74,74,0,0,True
+"S13d parent gross events, guarded D_t>51 ns",72,72,0,0,True
+S13d all-three control events,3774,3774,0,0,True
+S13d all-three guarded gross events,22,22,0,0,True
+S13f exactly-two control events,6382,6382,0,0,True
+S13f exactly-two guarded gross events,50,50,0,0,True

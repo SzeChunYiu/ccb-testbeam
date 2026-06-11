@@ -1,0 +1,31 @@
+fold,check,value,flag,note
+holdout_low58_high60,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low58_high60,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low58_high60,forbidden_columns_used_by_standard_ml,0.0,False,"Ridge/GBT/MLP/CNN exclude run, event id, current label, D_t/C_t, explicit topology flags, and absolute amplitudes."
+holdout_low58_high60,new_arch_support_atoms_declared,6.0,False,The support-gated CNN intentionally receives support atoms as the named new architecture stress test.
+holdout_low58_high60,shuffled_label_current_auc,0.49672460476897545,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low58_high61,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low58_high61,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low58_high61,forbidden_columns_used_by_standard_ml,0.0,False,"Ridge/GBT/MLP/CNN exclude run, event id, current label, D_t/C_t, explicit topology flags, and absolute amplitudes."
+holdout_low58_high61,new_arch_support_atoms_declared,6.0,False,The support-gated CNN intentionally receives support atoms as the named new architecture stress test.
+holdout_low58_high61,shuffled_label_current_auc,0.5217270710059171,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low58_high62,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low58_high62,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low58_high62,forbidden_columns_used_by_standard_ml,0.0,False,"Ridge/GBT/MLP/CNN exclude run, event id, current label, D_t/C_t, explicit topology flags, and absolute amplitudes."
+holdout_low58_high62,new_arch_support_atoms_declared,6.0,False,The support-gated CNN intentionally receives support atoms as the named new architecture stress test.
+holdout_low58_high62,shuffled_label_current_auc,0.452407525510204,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low65_high60,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low65_high60,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low65_high60,forbidden_columns_used_by_standard_ml,0.0,False,"Ridge/GBT/MLP/CNN exclude run, event id, current label, D_t/C_t, explicit topology flags, and absolute amplitudes."
+holdout_low65_high60,new_arch_support_atoms_declared,6.0,False,The support-gated CNN intentionally receives support atoms as the named new architecture stress test.
+holdout_low65_high60,shuffled_label_current_auc,0.4460204081632653,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low65_high61,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low65_high61,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low65_high61,forbidden_columns_used_by_standard_ml,0.0,False,"Ridge/GBT/MLP/CNN exclude run, event id, current label, D_t/C_t, explicit topology flags, and absolute amplitudes."
+holdout_low65_high61,new_arch_support_atoms_declared,6.0,False,The support-gated CNN intentionally receives support atoms as the named new architecture stress test.
+holdout_low65_high61,shuffled_label_current_auc,0.4725105728565936,False,Flag if shuffled timing-tail labels still separate current family.
+holdout_low65_high62,train_test_run_overlap,0.0,False,Held-out low/high runs are excluded from timing-tail training.
+holdout_low65_high62,train_test_event_overlap,0.0,False,Runs are disjoint; event overlap should be zero.
+holdout_low65_high62,forbidden_columns_used_by_standard_ml,0.0,False,"Ridge/GBT/MLP/CNN exclude run, event id, current label, D_t/C_t, explicit topology flags, and absolute amplitudes."
+holdout_low65_high62,new_arch_support_atoms_declared,6.0,False,The support-gated CNN intentionally receives support atoms as the named new architecture stress test.
+holdout_low65_high62,shuffled_label_current_auc,0.49709467120181405,False,Flag if shuffled timing-tail labels still separate current family.

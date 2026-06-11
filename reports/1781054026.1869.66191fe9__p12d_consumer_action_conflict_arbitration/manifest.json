@@ -1,0 +1,91 @@
+{
+  "ticket_id": "1781054026.1869.66191fe9",
+  "script": "scripts/p12d_1781054026_1869_66191fe9_consumer_action_conflict_arbitration.py",
+  "config": "configs/p12d_1781054026_1869_66191fe9_consumer_action_conflict_arbitration.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p12d_1781054026_1869_66191fe9_consumer_action_conflict_arbitration.py --config configs/p12d_1781054026_1869_66191fe9_consumer_action_conflict_arbitration.json",
+  "git_commit": "92fbdd8fb660b6c3dd6d4f70e5ac0c02c31c6ad9",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "raw_reproduction_passed": true,
+  "input_sha256_rows": 38,
+  "random_seed": 1254026,
+  "artifacts": [
+    "REPORT.md",
+    "action_knockout.csv",
+    "conflict_patterns.csv",
+    "consumer_knockout.csv",
+    "counts_by_group.csv",
+    "counts_by_run.csv",
+    "heldout_conflict_predictions.csv.gz",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "method_by_run.csv",
+    "method_metrics.csv",
+    "ml_minus_traditional_deltas.csv",
+    "pulse_conflict_atoms.csv.gz",
+    "raw_count_match.csv",
+    "result.json"
+  ],
+  "output_sha256": [
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/REPORT.md",
+      "sha256": "7d3eff66ee6c4bc4569fc8e6772bb35e0bad3d15e788f39fb0453e3c884e2765"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/action_knockout.csv",
+      "sha256": "0878627576f2ca1aac670cfbf4da7e1c2acdfe30d2ffa34464fd84691d2d9765"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/conflict_patterns.csv",
+      "sha256": "504a358783b18e84414fee96a5a7e186dc97bbd06ad4c2b9eef1c22264d8c63b"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/consumer_knockout.csv",
+      "sha256": "a58f8dc4c011c10986e244904b5c1633995412f036ee36b57b3f7b333eb85b9f"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/counts_by_group.csv",
+      "sha256": "5f471827a94a55b0a8b3968d71d9f57955f82bdf8277d7d09439b370b862a890"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/heldout_conflict_predictions.csv.gz",
+      "sha256": "3fec66f96177a1c6ce44c09d0908c300789d58d63dad0bf3457dd415c38e3527"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/input_sha256.csv",
+      "sha256": "1062e73460ec4a02fed384259b88f75ddbdca1578839c097fdcfa8534165c364"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/leakage_checks.csv",
+      "sha256": "f15bb0a6af7b3f49e680f70713add590639fe27dcfaf08a12b1106b4389feeab"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/method_by_run.csv",
+      "sha256": "daf779afa549dce9b0a9314987eac538b9bbc9ababfdd8234ab62895fb30216c"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/method_metrics.csv",
+      "sha256": "64ea95a13e577afc435d167c900255828f8dbf0f3469303d1f6a3a54e1d743fa"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/ml_minus_traditional_deltas.csv",
+      "sha256": "e0cb14073f775b5630e5a5b9861d950faa83fc403bdb606d52f173b71ed549e5"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/pulse_conflict_atoms.csv.gz",
+      "sha256": "92340df6bb77b45fe6ceea04aa52e2fcc0293edfcfe82c9e1cae6ca8e94a75a0"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/raw_count_match.csv",
+      "sha256": "b6227057386a9dc110b8b7c9ee2047ff4725be3c9c62da3fb65129c12a183dcf"
+    },
+    {
+      "path": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration/result.json",
+      "sha256": "3b91d5cdf939200aeb9dce915e53ff4e4f3d2d717e7080a2a22955d319e29094"
+    }
+  ]
+}

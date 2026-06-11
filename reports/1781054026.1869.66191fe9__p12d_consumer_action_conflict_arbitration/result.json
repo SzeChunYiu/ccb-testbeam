@@ -1,0 +1,570 @@
+{
+  "study": "P12d",
+  "ticket": "1781054026.1869.66191fe9",
+  "worker": "testbeam-laptop-3",
+  "title": "consumer action conflict arbitration",
+  "reproduced": true,
+  "raw_reproduction": {
+    "source": "/home/billy/ccb-data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train": "conflict rows from all configured B-stack runs except heldout_runs",
+    "evaluate": "all rows from heldout Sample-II analysis runs, with classifier metrics on conflict rows",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "event-paired held-out run block",
+    "bootstrap_reps": 250,
+    "train_cap": 30000
+  },
+  "methods_benchmarked": [
+    "traditional_precedence_ladder",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "conflict_prior_residual_cnn_new_arch"
+  ],
+  "primary_metric": "minimum operational primary_score: harmful-conflict Brier plus support, recall, PID drift, and energy degradation penalties",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml",
+    "primary_score": 0.007602834663682923,
+    "primary_score_ci95": [
+      0.005222688856943371,
+      0.009647775938924236
+    ],
+    "brier": 0.0018254573637334487,
+    "brier_ci95": [
+      0.0011379194442253673,
+      0.0027523520894702784
+    ],
+    "harmful_conflict_precision": 0.9996024684814296,
+    "harmful_conflict_recall": 0.9972992369872328,
+    "accepted_support_fraction": 0.17700006395088572,
+    "timing_tail_delta": -0.10642226769840762,
+    "charge_res68_delta": -0.9693334247633483,
+    "pid_weak_label_drift": 0.11554754599898948,
+    "energy_proxy_degradation_delta": -0.2803054509127506
+  },
+  "ml_beats_baseline": true,
+  "summary": [
+    {
+      "n": 125096,
+      "n_conflicts": 73899,
+      "conflict_rate": 0.5907383129756347,
+      "harmful_conflict_rate": 0.4232589371362793,
+      "auc": 0.9999352991765679,
+      "average_precision": 0.9999754553151295,
+      "brier": 0.0018254573637334487,
+      "ece": 0.003683538715471818,
+      "harmful_conflict_precision": 0.9996024684814296,
+      "harmful_conflict_recall": 0.9972992369872328,
+      "accepted_support_fraction": 0.17700006395088572,
+      "timing_tail_delta": -0.10642226769840762,
+      "charge_res68_delta": -0.9693334247633483,
+      "charge_bias_delta": -0.8803404077776431,
+      "pid_weak_label_drift": 0.11554754599898948,
+      "energy_proxy_degradation_delta": -0.2803054509127506,
+      "primary_score": 0.007602834663682923,
+      "conflict_rate_ci95": [
+        0.5569815947017276,
+        0.6379411068433216
+      ],
+      "harmful_conflict_rate_ci95": [
+        0.4140470905070913,
+        0.43857229825608374
+      ],
+      "auc_ci95": [
+        0.9998868964691346,
+        0.9999711555342574
+      ],
+      "average_precision_ci95": [
+        0.9999634019208509,
+        0.9999877188332869
+      ],
+      "brier_ci95": [
+        0.0011379194442253673,
+        0.0027523520894702784
+      ],
+      "ece_ci95": [
+        0.002919202337590969,
+        0.004830978955975144
+      ],
+      "harmful_conflict_precision_ci95": [
+        0.9994444592211265,
+        0.9997622176830449
+      ],
+      "harmful_conflict_recall_ci95": [
+        0.9959827436080108,
+        0.9983591662365509
+      ],
+      "accepted_support_fraction_ci95": [
+        0.14813195773866653,
+        0.21483303544568122
+      ],
+      "timing_tail_delta_ci95": [
+        -0.13888163738202525,
+        -0.06249713376200619
+      ],
+      "charge_res68_delta_ci95": [
+        -1.0063222714975026,
+        -0.8805151525532247
+      ],
+      "charge_bias_delta_ci95": [
+        -1.0430416439190713,
+        -0.7143126390368851
+      ],
+      "pid_weak_label_drift_ci95": [
+        0.07015748432199168,
+        0.15752331476083875
+      ],
+      "energy_proxy_degradation_delta_ci95": [
+        -0.33146424860585477,
+        -0.20586364034864915
+      ],
+      "primary_score_ci95": [
+        0.005222688856943371,
+        0.009647775938924236
+      ],
+      "method": "gradient_boosted_trees",
+      "family": "ml",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "n_conflicts": 73899,
+      "conflict_rate": 0.5907383129756347,
+      "harmful_conflict_rate": 0.4232589371362793,
+      "auc": 0.9997926988267523,
+      "average_precision": 0.9999245663772698,
+      "brier": 0.0027965804616859355,
+      "ece": 0.0024188379844743806,
+      "harmful_conflict_precision": 0.999791425700146,
+      "harmful_conflict_recall": 0.995844979980358,
+      "accepted_support_fraction": 0.1776955298330882,
+      "timing_tail_delta": -0.10642226769840762,
+      "charge_res68_delta": -0.9635307333421554,
+      "charge_bias_delta": -0.8862502686807225,
+      "pid_weak_label_drift": 0.11533950833043502,
+      "energy_proxy_degradation_delta": -0.2768667840074845,
+      "primary_score": 0.008563555878207688,
+      "conflict_rate_ci95": [
+        0.5550507550764764,
+        0.6366393054403613
+      ],
+      "harmful_conflict_rate_ci95": [
+        0.41273807101132937,
+        0.43885950383056627
+      ],
+      "auc_ci95": [
+        0.9996605337807796,
+        0.9998816019835516
+      ],
+      "average_precision_ci95": [
+        0.999896203293978,
+        0.9999489165031239
+      ],
+      "brier_ci95": [
+        0.001745489270852148,
+        0.004189389745432328
+      ],
+      "ece_ci95": [
+        0.0014208502022780953,
+        0.003848509737888997
+      ],
+      "harmful_conflict_precision_ci95": [
+        0.9997271371639129,
+        0.9998745601940772
+      ],
+      "harmful_conflict_recall_ci95": [
+        0.9937139607498454,
+        0.9974063451668965
+      ],
+      "accepted_support_fraction_ci95": [
+        0.14724372583874795,
+        0.21420712638660308
+      ],
+      "timing_tail_delta_ci95": [
+        -0.14356546889837696,
+        -0.061430864285567516
+      ],
+      "charge_res68_delta_ci95": [
+        -1.0013479862390875,
+        -0.8643533934293925
+      ],
+      "charge_bias_delta_ci95": [
+        -1.0535353032040893,
+        -0.6886525725939054
+      ],
+      "pid_weak_label_drift_ci95": [
+        0.06791478166466663,
+        0.15755897473224362
+      ],
+      "energy_proxy_degradation_delta_ci95": [
+        -0.3333149740670924,
+        -0.2000278721028446
+      ],
+      "primary_score_ci95": [
+        0.00580464222136244,
+        0.010811114479574528
+      ],
+      "method": "mlp",
+      "family": "nn",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "n_conflicts": 73899,
+      "conflict_rate": 0.5907383129756347,
+      "harmful_conflict_rate": 0.4232589371362793,
+      "auc": 0.9996251267274706,
+      "average_precision": 0.9998636227935653,
+      "brier": 0.0029717557522063033,
+      "ece": 0.0018164153866352232,
+      "harmful_conflict_precision": 0.9993746683847495,
+      "harmful_conflict_recall": 0.9960527309813402,
+      "accepted_support_fraction": 0.17743173242949414,
+      "timing_tail_delta": -0.10642226769840762,
+      "charge_res68_delta": -0.9651025672610734,
+      "charge_bias_delta": -0.8859013586339861,
+      "pid_weak_label_drift": 0.11559999339861826,
+      "energy_proxy_degradation_delta": -0.2773476544171582,
+      "primary_score": 0.008751755422137217,
+      "conflict_rate_ci95": [
+        0.5519973052625887,
+        0.6297142921035779
+      ],
+      "harmful_conflict_rate_ci95": [
+        0.4130043512662614,
+        0.4359167486354874
+      ],
+      "auc_ci95": [
+        0.9993599560062768,
+        0.9997891325625524
+      ],
+      "average_precision_ci95": [
+        0.9997856829608031,
+        0.9999172161549991
+      ],
+      "brier_ci95": [
+        0.0017855163711637944,
+        0.00447754882620421
+      ],
+      "ece_ci95": [
+        0.0007729331161773037,
+        0.003321643914035187
+      ],
+      "harmful_conflict_precision_ci95": [
+        0.9991534444282298,
+        0.9995421952101576
+      ],
+      "harmful_conflict_recall_ci95": [
+        0.9939931962884775,
+        0.9975930718164144
+      ],
+      "accepted_support_fraction_ci95": [
+        0.14617883059804657,
+        0.21082600404169125
+      ],
+      "timing_tail_delta_ci95": [
+        -0.14094412218394795,
+        -0.07199250902969004
+      ],
+      "charge_res68_delta_ci95": [
+        -1.0040120405929818,
+        -0.8851236275435199
+      ],
+      "charge_bias_delta_ci95": [
+        -1.0558740529171013,
+        -0.7336075779793365
+      ],
+      "pid_weak_label_drift_ci95": [
+        0.07001178117378577,
+        0.16119314262762768
+      ],
+      "energy_proxy_degradation_delta_ci95": [
+        -0.3336592065906868,
+        -0.21084145143208516
+      ],
+      "primary_score_ci95": [
+        0.00620082947522057,
+        0.010790043827042437
+      ],
+      "method": "ridge",
+      "family": "ml",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "n_conflicts": 73899,
+      "conflict_rate": 0.5907383129756347,
+      "harmful_conflict_rate": 0.4232589371362793,
+      "auc": 0.9994335005633592,
+      "average_precision": 0.9997595478817345,
+      "brier": 0.019243374558174584,
+      "ece": 0.0753362078982267,
+      "harmful_conflict_precision": 0.980591154900363,
+      "harmful_conflict_recall": 1.0,
+      "accepted_support_fraction": 0.16764724691436977,
+      "timing_tail_delta": -0.10642226769840762,
+      "charge_res68_delta": -1.0067004324212607,
+      "charge_bias_delta": -0.8231907143988271,
+      "pid_weak_label_drift": 0.12183103571002579,
+      "energy_proxy_degradation_delta": -0.2867637654281512,
+      "primary_score": 0.025334926343675873,
+      "conflict_rate_ci95": [
+        0.5545032645593053,
+        0.6317840727275472
+      ],
+      "harmful_conflict_rate_ci95": [
+        0.41315361521140853,
+        0.4367797865481286
+      ],
+      "auc_ci95": [
+        0.9990629503808838,
+        0.9997335592128708
+      ],
+      "average_precision_ci95": [
+        0.9996374701450376,
+        0.999867075048499
+      ],
+      "brier_ci95": [
+        0.013197668508212404,
+        0.02453815711651123
+      ],
+      "ece_ci95": [
+        0.058611425220756054,
+        0.08954538187493558
+      ],
+      "harmful_conflict_precision_ci95": [
+        0.974917811479517,
+        0.9877975508187135
+      ],
+      "harmful_conflict_recall_ci95": [
+        1.0,
+        1.0
+      ],
+      "accepted_support_fraction_ci95": [
+        0.1361435827258669,
+        0.20735923628031333
+      ],
+      "timing_tail_delta_ci95": [
+        -0.1388659827819375,
+        -0.06863942615238976
+      ],
+      "charge_res68_delta_ci95": [
+        -1.0513178245909514,
+        -0.9110194935951768
+      ],
+      "charge_bias_delta_ci95": [
+        -0.9903072286563996,
+        -0.6601005610173806
+      ],
+      "pid_weak_label_drift_ci95": [
+        0.07430116118599461,
+        0.16448896682752667
+      ],
+      "energy_proxy_degradation_delta_ci95": [
+        -0.3423563309178598,
+        -0.21284706813077578
+      ],
+      "primary_score_ci95": [
+        0.01950334984894468,
+        0.030447199404969167
+      ],
+      "method": "conflict_prior_residual_cnn_new_arch",
+      "family": "new_architecture",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "n_conflicts": 73899,
+      "conflict_rate": 0.5907383129756347,
+      "harmful_conflict_rate": 0.4232589371362793,
+      "auc": 0.8871842273759014,
+      "average_precision": 0.9436824783098661,
+      "brier": 0.12793958247635004,
+      "ece": 0.12066055282738816,
+      "harmful_conflict_precision": 0.8795564911110648,
+      "harmful_conflict_recall": 0.7970461584951273,
+      "accepted_support_fraction": 0.21573031911491974,
+      "timing_tail_delta": -0.10642226769840762,
+      "charge_res68_delta": -1.1094882306537315,
+      "charge_bias_delta": -0.4852760370446223,
+      "pid_weak_label_drift": 0.08501238670148689,
+      "energy_proxy_degradation_delta": -0.2858744483495578,
+      "primary_score": 0.13219020181142438,
+      "conflict_rate_ci95": [
+        0.5563258814072101,
+        0.6380729326465139
+      ],
+      "harmful_conflict_rate_ci95": [
+        0.4141599529266442,
+        0.4382686238885959
+      ],
+      "auc_ci95": [
+        0.8733056917556848,
+        0.9060544171192305
+      ],
+      "average_precision_ci95": [
+        0.9349482196772446,
+        0.9517612747204486
+      ],
+      "brier_ci95": [
+        0.11862763078522391,
+        0.13722663887976128
+      ],
+      "ece_ci95": [
+        0.1065702502493816,
+        0.13743564784686546
+      ],
+      "harmful_conflict_precision_ci95": [
+        0.8632384208112728,
+        0.8957120580013727
+      ],
+      "harmful_conflict_recall_ci95": [
+        0.7478142465756318,
+        0.8379168939433393
+      ],
+      "accepted_support_fraction_ci95": [
+        0.166900707206274,
+        0.27797773281616406
+      ],
+      "timing_tail_delta_ci95": [
+        -0.13812475539208663,
+        -0.061598737490005516
+      ],
+      "charge_res68_delta_ci95": [
+        -1.1905665116645845,
+        -0.990179466614974
+      ],
+      "charge_bias_delta_ci95": [
+        -0.5824503933786019,
+        -0.4084545560614323
+      ],
+      "pid_weak_label_drift_ci95": [
+        0.05057691791117837,
+        0.11092333302259101
+      ],
+      "energy_proxy_degradation_delta_ci95": [
+        -0.3395866131778434,
+        -0.2091661444316471
+      ],
+      "primary_score_ci95": [
+        0.12341865409316714,
+        0.14060173249348273
+      ],
+      "method": "1d_cnn",
+      "family": "nn",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    },
+    {
+      "n": 125096,
+      "n_conflicts": 73899,
+      "conflict_rate": 0.5907383129756347,
+      "harmful_conflict_rate": 0.4232589371362793,
+      "auc": 0.6156417617284884,
+      "average_precision": 0.7820622890695019,
+      "brier": 0.5507776640559938,
+      "ece": 0.5507780970378489,
+      "harmful_conflict_precision": 1.0,
+      "harmful_conflict_recall": 0.23128352345697667,
+      "accepted_support_fraction": 0.501390931764405,
+      "timing_tail_delta": -0.06143007994929248,
+      "charge_res68_delta": -0.8735750080090223,
+      "charge_bias_delta": -0.4572244980608109,
+      "pid_weak_label_drift": 0.021425597626594028,
+      "energy_proxy_degradation_delta": -0.2867637654281512,
+      "primary_score": 0.6690280630730794,
+      "conflict_rate_ci95": [
+        0.5564342320773387,
+        0.6354797103176368
+      ],
+      "harmful_conflict_rate_ci95": [
+        0.41325813489525515,
+        0.438697379693813
+      ],
+      "auc_ci95": [
+        0.5888736235482941,
+        0.6374144053855065
+      ],
+      "average_precision_ci95": [
+        0.7357721626789145,
+        0.8164588023092316
+      ],
+      "brier_ci95": [
+        0.5340318797330003,
+        0.5760690444302685
+      ],
+      "ece_ci95": [
+        0.5340322348454439,
+        0.5760694963597505
+      ],
+      "harmful_conflict_precision_ci95": [
+        1.0,
+        1.0
+      ],
+      "harmful_conflict_recall_ci95": [
+        0.17774724709658807,
+        0.27482881077101307
+      ],
+      "accepted_support_fraction_ci95": [
+        0.45081366652320104,
+        0.5709210267588776
+      ],
+      "timing_tail_delta_ci95": [
+        -0.07617579109148058,
+        -0.041583913670560434
+      ],
+      "charge_res68_delta_ci95": [
+        -0.9460789573296129,
+        -0.7673402652931548
+      ],
+      "charge_bias_delta_ci95": [
+        -0.5298058025311159,
+        -0.38353797751980556
+      ],
+      "pid_weak_label_drift_ci95": [
+        0.012540119499358016,
+        0.030516987973484785
+      ],
+      "energy_proxy_degradation_delta_ci95": [
+        -0.34086320232391737,
+        -0.21101398759729292
+      ],
+      "primary_score_ci95": [
+        0.6440103145109276,
+        0.7072631439064508
+      ],
+      "method": "traditional_precedence_ladder",
+      "family": "traditional",
+      "split": "train_non_sample_ii_runs_eval_sample_ii_analysis_runs"
+    }
+  ],
+  "falsification": {
+    "action_knockout_path": "action_knockout.csv",
+    "consumer_knockout_path": "consumer_knockout.csv",
+    "leakage_checks_passed": true
+  },
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "92fbdd8fb660b6c3dd6d4f70e5ac0c02c31c6ad9",
+  "critic": "pending",
+  "next_tickets": [
+    {
+      "title": "P12e frozen arbitration policy downstream consumer trial",
+      "body": "Freeze the P12d conflict-arbitration winner and test whether accepted pulses improve independent timing, charge, PID, and energy-proxy consumers under run-held-out bootstrap CIs, against deterministic precedence and no-arbitration baselines."
+    }
+  ],
+  "runtime_sec": 340.6850345134735
+}

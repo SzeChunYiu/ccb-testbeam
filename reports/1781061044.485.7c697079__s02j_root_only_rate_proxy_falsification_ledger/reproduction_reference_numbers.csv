@@ -1,0 +1,3 @@
+quantity,heldout_run,reproduced_sigma68_ns,reference_sigma68_ns,delta_ns,pass
+S02b global-template timewalk,65,1.6354173398186298,1.635417339803972,1.4657830504916092e-11,True
+S02b binned-template timewalk,65,3.4037013456652305,3.4037013456536833,1.1547207634521328e-11,True

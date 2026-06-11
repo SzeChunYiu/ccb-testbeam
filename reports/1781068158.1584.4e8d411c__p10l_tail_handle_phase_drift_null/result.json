@@ -1,0 +1,1477 @@
+{
+  "study": "P10l",
+  "ticket_id": "1781068158.1584.4e8d411c",
+  "worker": "testbeam-laptop-1",
+  "title": "tail-handle phase-drift null benchmark",
+  "reproduction": {
+    "passed": true,
+    "selected_b_stave_pulses": 640737,
+    "analysis_selected_rows": 377362
+  },
+  "split": "run-family holdout with held-out run bootstrap CIs",
+  "traditional": "S01 empirical amplitude-bin templates plus train-only explicit-handle residual medians",
+  "ml": "ridge, ExtraTrees, shallow stochastic gradient-boosted trees, tabular MLP, 1D-CNN, and phase-gated CNN multi-output template predictors",
+  "winner": {
+    "method": "ridge",
+    "q_template_mse": 0.06918212575901853
+  },
+  "method_order": [
+    "s01_empirical",
+    "handle_residual",
+    "ridge",
+    "extra_trees",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "phase_gated_cnn_new",
+    "family_label_sentinel",
+    "shuffled_target_extra_trees",
+    "phase_shuffled_gradient_boosted_trees"
+  ],
+  "method_classes": {
+    "s01_empirical": "traditional_base",
+    "handle_residual": "traditional_strong",
+    "ridge": "ml_linear",
+    "extra_trees": "ml_tree_control",
+    "gradient_boosted_trees": "ml_tree",
+    "mlp": "neural_tabular",
+    "cnn_1d": "neural_waveform",
+    "phase_gated_cnn_new": "new_neural_architecture",
+    "family_label_sentinel": "sentinel",
+    "shuffled_target_extra_trees": "sentinel",
+    "phase_shuffled_gradient_boosted_trees": "sentinel"
+  },
+  "metrics": [
+    "q_template_mse",
+    "tail_mse",
+    "tail_abs_residual",
+    "live10_abs_residual_ns",
+    "timing_fit_sigma68_ns",
+    "timing_fit_full_rms_ns",
+    "accepted_support_fraction",
+    "fallback_rate",
+    "false_pass_rate_under_sentinels"
+  ],
+  "folds": [
+    {
+      "fold": "holdout_sample_i",
+      "runs": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "n_eval": 17604,
+      "s01_empirical_q_mse": 0.20274025921278788,
+      "s01_empirical_q_mse_ci": [
+        0.18438485217248105,
+        0.21535401562890386
+      ],
+      "s01_empirical_live10_abs_ns": 29.84813064091347,
+      "s01_empirical_live10_abs_ns_ci": [
+        26.799867895872964,
+        32.19058588423888
+      ],
+      "s01_empirical_tail_abs": 2.4025363102730553,
+      "s01_empirical_tail_abs_ci": [
+        2.231165152909456,
+        2.5169944224767136
+      ],
+      "s01_empirical_tail_mse": 18.3254311213457,
+      "s01_empirical_tail_mse_ci": [
+        16.703582292633847,
+        19.623591044416095
+      ],
+      "s01_empirical_timing_sigma68_ns": 3.710714285714286,
+      "s01_empirical_timing_sigma68_ns_ci": [
+        3.085714285714286,
+        4.246428571428572
+      ],
+      "s01_empirical_timing_rms_ns": 6.973472099121809,
+      "s01_empirical_timing_rms_ns_ci": [
+        6.751204103607043,
+        7.121395529506387
+      ],
+      "handle_residual_q_mse": 0.14836045145072865,
+      "handle_residual_q_mse_ci": [
+        0.12621366611856505,
+        0.16465755904060198
+      ],
+      "handle_residual_live10_abs_ns": 23.582733565642616,
+      "handle_residual_live10_abs_ns_ci": [
+        20.759547592117965,
+        25.850354950307356
+      ],
+      "handle_residual_tail_abs": 1.8371792523580186,
+      "handle_residual_tail_abs_ci": [
+        1.6430868674278236,
+        1.9776985193607444
+      ],
+      "handle_residual_tail_mse": 11.750939321968803,
+      "handle_residual_tail_mse_ci": [
+        10.561974574705129,
+        12.66947947511123
+      ],
+      "handle_residual_timing_sigma68_ns": 2.5,
+      "handle_residual_timing_sigma68_ns_ci": [
+        1.9642857142857142,
+        2.9464285714285716
+      ],
+      "handle_residual_timing_rms_ns": 5.579483994665277,
+      "handle_residual_timing_rms_ns_ci": [
+        5.080372586187843,
+        5.951488212247918
+      ],
+      "handle_residual_fallback_rate": 0.28408357419017133,
+      "handle_residual_fallback_rate_ci": [
+        0.23732474329442552,
+        0.32350471503085
+      ],
+      "handle_residual_accepted_support_fraction": 0.7159164258098285,
+      "handle_residual_accepted_support_fraction_ci": [
+        0.67649528496915,
+        0.7626752567055745
+      ],
+      "ridge_q_mse": 0.0759190058810324,
+      "ridge_q_mse_ci": [
+        0.06369005368775543,
+        0.08510717658260931
+      ],
+      "ridge_live10_abs_ns": 17.956853188407973,
+      "ridge_live10_abs_ns_ci": [
+        15.630229223045902,
+        19.847566998681884
+      ],
+      "ridge_tail_abs": 0.9737691924688638,
+      "ridge_tail_abs_ci": [
+        0.8752575937930187,
+        1.0481487842006005
+      ],
+      "ridge_tail_mse": 2.354838647379032,
+      "ridge_tail_mse_ci": [
+        2.026682673705504,
+        2.6057416343161313
+      ],
+      "ridge_timing_sigma68_ns": 2.4107142857142856,
+      "ridge_timing_sigma68_ns_ci": [
+        2.232142857142857,
+        2.5
+      ],
+      "ridge_timing_rms_ns": 4.566625374760107,
+      "ridge_timing_rms_ns_ci": [
+        4.10001002288499,
+        4.93633241750283
+      ],
+      "extra_trees_q_mse": 0.08439512437582206,
+      "extra_trees_q_mse_ci": [
+        0.06953357323809148,
+        0.09561244887285401
+      ],
+      "extra_trees_live10_abs_ns": 18.555691786538198,
+      "extra_trees_live10_abs_ns_ci": [
+        15.88973034738707,
+        20.659922550470988
+      ],
+      "extra_trees_tail_abs": 1.011523991853496,
+      "extra_trees_tail_abs_ci": [
+        0.8896660585621299,
+        1.1048164758800174
+      ],
+      "extra_trees_tail_mse": 4.21181473865,
+      "extra_trees_tail_mse_ci": [
+        3.7765637933185334,
+        4.559104566881334
+      ],
+      "extra_trees_timing_sigma68_ns": 1.875,
+      "extra_trees_timing_sigma68_ns_ci": [
+        1.3392857142857142,
+        2.3214285714285716
+      ],
+      "extra_trees_timing_rms_ns": 4.536353146962434,
+      "extra_trees_timing_rms_ns_ci": [
+        3.9792809755562786,
+        4.97111652538987
+      ],
+      "gradient_boosted_trees_q_mse": 0.09722537351159591,
+      "gradient_boosted_trees_q_mse_ci": [
+        0.08342530156251605,
+        0.10792833569406193
+      ],
+      "gradient_boosted_trees_live10_abs_ns": 19.98020445714483,
+      "gradient_boosted_trees_live10_abs_ns_ci": [
+        17.301249167514676,
+        22.077170709203187
+      ],
+      "gradient_boosted_trees_tail_abs": 1.3753044061843807,
+      "gradient_boosted_trees_tail_abs_ci": [
+        1.259693922111338,
+        1.4614088301834385
+      ],
+      "gradient_boosted_trees_tail_mse": 5.836656678587737,
+      "gradient_boosted_trees_tail_mse_ci": [
+        5.418709512790193,
+        6.265017986541509
+      ],
+      "gradient_boosted_trees_timing_sigma68_ns": 2.0535714285714284,
+      "gradient_boosted_trees_timing_sigma68_ns_ci": [
+        1.6071428571428572,
+        2.4107142857142856
+      ],
+      "gradient_boosted_trees_timing_rms_ns": 4.739019290431464,
+      "gradient_boosted_trees_timing_rms_ns_ci": [
+        4.230156591829601,
+        5.130879003426118
+      ],
+      "family_label_sentinel_q_mse": 0.17329943102196038,
+      "family_label_sentinel_q_mse_ci": [
+        0.1576794073330151,
+        0.18414265290423906
+      ],
+      "family_label_sentinel_live10_abs_ns": 25.429030100506818,
+      "family_label_sentinel_live10_abs_ns_ci": [
+        22.448070871500047,
+        27.600982551380003
+      ],
+      "family_label_sentinel_tail_abs": 2.2423003119447933,
+      "family_label_sentinel_tail_abs_ci": [
+        2.128085071602085,
+        2.320023747131648
+      ],
+      "family_label_sentinel_tail_mse": 17.90641722909939,
+      "family_label_sentinel_tail_mse_ci": [
+        16.369824596184387,
+        19.363451612070506
+      ],
+      "family_label_sentinel_timing_sigma68_ns": 3.5714285714285716,
+      "family_label_sentinel_timing_sigma68_ns_ci": [
+        3.125,
+        3.9285714285714284
+      ],
+      "family_label_sentinel_timing_rms_ns": 5.892262777158776,
+      "family_label_sentinel_timing_rms_ns_ci": [
+        5.459067721588851,
+        6.2032052264296205
+      ],
+      "shuffled_target_extra_trees_q_mse": 0.17836110833002447,
+      "shuffled_target_extra_trees_q_mse_ci": [
+        0.16256313412890827,
+        0.18923770806809836
+      ],
+      "shuffled_target_extra_trees_live10_abs_ns": 26.521115722278534,
+      "shuffled_target_extra_trees_live10_abs_ns_ci": [
+        23.745404635411447,
+        28.525545928123965
+      ],
+      "shuffled_target_extra_trees_tail_abs": 2.36033705463015,
+      "shuffled_target_extra_trees_tail_abs_ci": [
+        2.239563985554711,
+        2.4418776742668187
+      ],
+      "shuffled_target_extra_trees_tail_mse": 18.638286248590767,
+      "shuffled_target_extra_trees_tail_mse_ci": [
+        17.06399951458457,
+        20.072751368923623
+      ],
+      "shuffled_target_extra_trees_timing_sigma68_ns": 4.821428571428571,
+      "shuffled_target_extra_trees_timing_sigma68_ns_ci": [
+        4.196428571428571,
+        5.270089285714284
+      ],
+      "shuffled_target_extra_trees_timing_rms_ns": 6.099548045675175,
+      "shuffled_target_extra_trees_timing_rms_ns_ci": [
+        5.669887573908363,
+        6.401278142839506
+      ],
+      "phase_shuffled_gradient_boosted_trees_q_mse": 0.09756268741298871,
+      "phase_shuffled_gradient_boosted_trees_q_mse_ci": [
+        0.08370694346765717,
+        0.10833129511895463
+      ],
+      "phase_shuffled_gradient_boosted_trees_live10_abs_ns": 20.052223011601146,
+      "phase_shuffled_gradient_boosted_trees_live10_abs_ns_ci": [
+        17.34662400446327,
+        22.16205669512307
+      ],
+      "phase_shuffled_gradient_boosted_trees_tail_abs": 1.374426140103969,
+      "phase_shuffled_gradient_boosted_trees_tail_abs_ci": [
+        1.2592587864102534,
+        1.4608499401277943
+      ],
+      "phase_shuffled_gradient_boosted_trees_tail_mse": 5.806174342853901,
+      "phase_shuffled_gradient_boosted_trees_tail_mse_ci": [
+        5.384747241156998,
+        6.235394858899388
+      ],
+      "phase_shuffled_gradient_boosted_trees_timing_sigma68_ns": 2.0535714285714284,
+      "phase_shuffled_gradient_boosted_trees_timing_sigma68_ns_ci": [
+        1.6071428571428572,
+        2.4107142857142856
+      ],
+      "phase_shuffled_gradient_boosted_trees_timing_rms_ns": 4.778178708053175,
+      "phase_shuffled_gradient_boosted_trees_timing_rms_ns_ci": [
+        4.267936655949445,
+        5.160858845465176
+      ],
+      "knockout_no_amplitude_q_mse": 0.08675586140382309,
+      "knockout_no_amplitude_q_mse_ci": [
+        0.07187975829453584,
+        0.09817502312029143
+      ],
+      "knockout_no_amplitude_live10_abs_ns": 18.34886258196969,
+      "knockout_no_amplitude_live10_abs_ns_ci": [
+        15.861233297755751,
+        20.3132410044965
+      ],
+      "knockout_no_amplitude_tail_abs": 0.9669979541281487,
+      "knockout_no_amplitude_tail_abs_ci": [
+        0.859060069125368,
+        1.0505058953144832
+      ],
+      "knockout_no_amplitude_tail_mse": 4.167935267781886,
+      "knockout_no_amplitude_tail_mse_ci": [
+        3.773855047774915,
+        4.496463993395721
+      ],
+      "knockout_no_amplitude_timing_sigma68_ns": 1.875,
+      "knockout_no_amplitude_timing_sigma68_ns_ci": [
+        1.3392857142857142,
+        2.3214285714285716
+      ],
+      "knockout_no_amplitude_timing_rms_ns": 4.566155275381205,
+      "knockout_no_amplitude_timing_rms_ns_ci": [
+        3.997047755708325,
+        4.996653968648091
+      ],
+      "knockout_no_shape_q_mse": 0.16642869722669146,
+      "knockout_no_shape_q_mse_ci": [
+        0.1489512723889648,
+        0.17824681070180062
+      ],
+      "knockout_no_shape_live10_abs_ns": 25.02455306767558,
+      "knockout_no_shape_live10_abs_ns_ci": [
+        22.46409316397997,
+        26.947009272750783
+      ],
+      "knockout_no_shape_tail_abs": 2.234684783702024,
+      "knockout_no_shape_tail_abs_ci": [
+        2.1174228046838794,
+        2.315132085383349
+      ],
+      "knockout_no_shape_tail_mse": 16.27558615655703,
+      "knockout_no_shape_tail_mse_ci": [
+        14.98332521779349,
+        17.367009930147297
+      ],
+      "knockout_no_shape_timing_sigma68_ns": 4.553571428571429,
+      "knockout_no_shape_timing_sigma68_ns_ci": [
+        4.017857142857143,
+        5.0
+      ],
+      "knockout_no_shape_timing_rms_ns": 5.966442626189115,
+      "knockout_no_shape_timing_rms_ns_ci": [
+        5.603697720102555,
+        6.237303664143304
+      ],
+      "knockout_no_stave_q_mse": 0.0831078334799258,
+      "knockout_no_stave_q_mse_ci": [
+        0.06863632340129595,
+        0.09398441652653179
+      ],
+      "knockout_no_stave_live10_abs_ns": 18.67769013411441,
+      "knockout_no_stave_live10_abs_ns_ci": [
+        16.12973227477371,
+        20.724158370688922
+      ],
+      "knockout_no_stave_tail_abs": 1.0021760654008163,
+      "knockout_no_stave_tail_abs_ci": [
+        0.8851102814422379,
+        1.0913654869714586
+      ],
+      "knockout_no_stave_tail_mse": 4.228435117756476,
+      "knockout_no_stave_tail_mse_ci": [
+        3.8259177392042245,
+        4.578834043574019
+      ],
+      "knockout_no_stave_timing_sigma68_ns": 1.9642857142857142,
+      "knockout_no_stave_timing_sigma68_ns_ci": [
+        1.4285714285714286,
+        2.4107142857142856
+      ],
+      "knockout_no_stave_timing_rms_ns": 4.4952401671716,
+      "knockout_no_stave_timing_rms_ns_ci": [
+        3.93452864011626,
+        4.916754296116592
+      ],
+      "knockout_no_current_q_mse": 0.08472611669336746,
+      "knockout_no_current_q_mse_ci": [
+        0.06987049106493545,
+        0.09598893954845268
+      ],
+      "knockout_no_current_live10_abs_ns": 18.611752343715363,
+      "knockout_no_current_live10_abs_ns_ci": [
+        15.952085709181903,
+        20.709434805148792
+      ],
+      "knockout_no_current_tail_abs": 1.0154830091932356,
+      "knockout_no_current_tail_abs_ci": [
+        0.8937992649162492,
+        1.108914592873627
+      ],
+      "knockout_no_current_tail_mse": 4.257389033017126,
+      "knockout_no_current_tail_mse_ci": [
+        3.827196743805972,
+        4.616545846527601
+      ],
+      "knockout_no_current_timing_sigma68_ns": 1.875,
+      "knockout_no_current_timing_sigma68_ns_ci": [
+        1.3392857142857142,
+        2.3214285714285716
+      ],
+      "knockout_no_current_timing_rms_ns": 4.530551231796965,
+      "knockout_no_current_timing_rms_ns_ci": [
+        3.9722342692116706,
+        4.963487685291242
+      ],
+      "mlp_q_mse": 0.1455324805450659,
+      "mlp_q_mse_ci": [
+        0.13156500079059458,
+        0.15577347276684134
+      ],
+      "mlp_live10_abs_ns": 19.833923229781067,
+      "mlp_live10_abs_ns_ci": [
+        17.650897298790074,
+        21.4941843072469
+      ],
+      "mlp_tail_abs": 1.7818761026096148,
+      "mlp_tail_abs_ci": [
+        1.696504538062612,
+        1.842925069226908
+      ],
+      "mlp_tail_mse": 12.528274773639692,
+      "mlp_tail_mse_ci": [
+        11.301652513037958,
+        13.778804577933034
+      ],
+      "mlp_timing_sigma68_ns": 3.392857142857143,
+      "mlp_timing_sigma68_ns_ci": [
+        3.0357142857142856,
+        3.6607142857142856
+      ],
+      "mlp_timing_rms_ns": 5.735608035011142,
+      "mlp_timing_rms_ns_ci": [
+        5.318532594797536,
+        6.041810507198733
+      ],
+      "cnn_1d_q_mse": 0.15680411833141109,
+      "cnn_1d_q_mse_ci": [
+        0.14068651107202604,
+        0.1679926283289939
+      ],
+      "cnn_1d_live10_abs_ns": 22.54006057606236,
+      "cnn_1d_live10_abs_ns_ci": [
+        19.94835494178699,
+        24.545835624120876
+      ],
+      "cnn_1d_tail_abs": 1.689525111192648,
+      "cnn_1d_tail_abs_ci": [
+        1.5687368740913885,
+        1.7724766466205932
+      ],
+      "cnn_1d_tail_mse": 9.96409805869378,
+      "cnn_1d_tail_mse_ci": [
+        9.050106811421044,
+        10.826432892899376
+      ],
+      "cnn_1d_timing_sigma68_ns": 5.0,
+      "cnn_1d_timing_sigma68_ns_ci": [
+        5.0,
+        5.0
+      ],
+      "cnn_1d_timing_rms_ns": 5.5456232515691966,
+      "cnn_1d_timing_rms_ns_ci": [
+        5.231655137628616,
+        5.792949487099912
+      ],
+      "phase_gated_cnn_new_q_mse": 0.14065456109238642,
+      "phase_gated_cnn_new_q_mse_ci": [
+        0.12708180120642198,
+        0.1504079057951049
+      ],
+      "phase_gated_cnn_new_live10_abs_ns": 22.190781422853046,
+      "phase_gated_cnn_new_live10_abs_ns_ci": [
+        19.90802640243969,
+        23.971607422981652
+      ],
+      "phase_gated_cnn_new_tail_abs": 1.481799723187822,
+      "phase_gated_cnn_new_tail_abs_ci": [
+        1.3806646530545392,
+        1.5493785889622722
+      ],
+      "phase_gated_cnn_new_tail_mse": 9.202591554856747,
+      "phase_gated_cnn_new_tail_mse_ci": [
+        8.28438143351852,
+        10.092768859529254
+      ],
+      "phase_gated_cnn_new_timing_sigma68_ns": 5.535714285714286,
+      "phase_gated_cnn_new_timing_sigma68_ns_ci": [
+        5.089285714285714,
+        6.160714285714286
+      ],
+      "phase_gated_cnn_new_timing_rms_ns": 6.569410042268386,
+      "phase_gated_cnn_new_timing_rms_ns_ci": [
+        6.127677844422218,
+        6.909740713333429
+      ],
+      "delta_ridge_minus_handle_q_mse": -0.07244144556969623,
+      "delta_ridge_minus_handle_q_mse_ci": [
+        -0.08050181369962006,
+        -0.06318349999030663
+      ],
+      "delta_extra_trees_minus_handle_q_mse": -0.06396532707490656,
+      "delta_extra_trees_minus_handle_q_mse_ci": [
+        -0.0701512952607019,
+        -0.056390351089205176
+      ],
+      "delta_gradient_boosted_trees_minus_handle_q_mse": -0.051135077939132724,
+      "delta_gradient_boosted_trees_minus_handle_q_mse_ci": [
+        -0.05752041354149741,
+        -0.04292625312914011
+      ],
+      "delta_mlp_minus_handle_q_mse": -0.002827970905662722,
+      "delta_mlp_minus_handle_q_mse_ci": [
+        -0.010710130923900807,
+        0.006968112570768272
+      ],
+      "delta_cnn_1d_minus_handle_q_mse": 0.008443666880682469,
+      "delta_cnn_1d_minus_handle_q_mse_ci": [
+        0.0028465873711216163,
+        0.015072425595097317
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_q_mse": -0.007705890358342176,
+      "delta_phase_gated_cnn_new_minus_handle_q_mse_ci": [
+        -0.015842409212340935,
+        0.0009202935385029089
+      ],
+      "delta_handle_minus_s01_q_mse": -0.05437980776205927,
+      "delta_handle_minus_s01_q_mse_ci": [
+        -0.06025668825861952,
+        -0.04868999954603191
+      ],
+      "delta_ridge_minus_handle_live10_abs_ns": -5.625880377234637,
+      "delta_ridge_minus_handle_live10_abs_ns_ci": [
+        -6.0398623263987234,
+        -5.173934756622048
+      ],
+      "delta_extra_trees_minus_handle_live10_abs_ns": -5.027041779104413,
+      "delta_extra_trees_minus_handle_live10_abs_ns_ci": [
+        -5.2613175465364845,
+        -4.745155092322444
+      ],
+      "delta_gradient_boosted_trees_minus_handle_live10_abs_ns": -3.60252910849778,
+      "delta_gradient_boosted_trees_minus_handle_live10_abs_ns_ci": [
+        -3.884011841678663,
+        -3.2786323395820403
+      ],
+      "delta_mlp_minus_handle_live10_abs_ns": -3.748810335861544,
+      "delta_mlp_minus_handle_live10_abs_ns_ci": [
+        -4.434180739430029,
+        -3.0071336575853893
+      ],
+      "delta_cnn_1d_minus_handle_live10_abs_ns": -1.0426729895802507,
+      "delta_cnn_1d_minus_handle_live10_abs_ns_ci": [
+        -1.3399798766881295,
+        -0.6718755167806537
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_live10_abs_ns": -1.3919521427895647,
+      "delta_phase_gated_cnn_new_minus_handle_live10_abs_ns_ci": [
+        -1.927853452833335,
+        -0.7620641940320785
+      ],
+      "delta_handle_minus_s01_live10_abs_ns": -6.265397075270859,
+      "delta_handle_minus_s01_live10_abs_ns_ci": [
+        -6.714766180730281,
+        -5.851689041811083
+      ],
+      "delta_ridge_minus_handle_tail_abs": -0.863410059889155,
+      "delta_ridge_minus_handle_tail_abs_ci": [
+        -0.927887145330216,
+        -0.766608535124889
+      ],
+      "delta_extra_trees_minus_handle_tail_abs": -0.825655260504523,
+      "delta_extra_trees_minus_handle_tail_abs_ci": [
+        -0.8855127411794108,
+        -0.7385127449733321
+      ],
+      "delta_gradient_boosted_trees_minus_handle_tail_abs": -0.46187484617363844,
+      "delta_gradient_boosted_trees_minus_handle_tail_abs_ci": [
+        -0.5164987015884631,
+        -0.3891767006413786
+      ],
+      "delta_mlp_minus_handle_tail_abs": -0.055303149748404,
+      "delta_mlp_minus_handle_tail_abs_ci": [
+        -0.14791584677162312,
+        0.07046029633978106
+      ],
+      "delta_cnn_1d_minus_handle_tail_abs": -0.14765414116537048,
+      "delta_cnn_1d_minus_handle_tail_abs_ci": [
+        -0.2121553197055904,
+        -0.062440769116951726
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_tail_abs": -0.35537952917019655,
+      "delta_phase_gated_cnn_new_minus_handle_tail_abs_ci": [
+        -0.43546870096812584,
+        -0.2557083387898303
+      ],
+      "delta_handle_minus_s01_tail_abs": -0.5653570579150365,
+      "delta_handle_minus_s01_tail_abs_ci": [
+        -0.6050744115167177,
+        -0.5329009384404767
+      ],
+      "delta_ridge_minus_handle_tail_mse": -9.396100674589771,
+      "delta_ridge_minus_handle_tail_mse_ci": [
+        -10.080944982345128,
+        -8.430531518351266
+      ],
+      "delta_extra_trees_minus_handle_tail_mse": -7.539124583318801,
+      "delta_extra_trees_minus_handle_tail_mse_ci": [
+        -8.20820914430856,
+        -6.609265792341828
+      ],
+      "delta_gradient_boosted_trees_minus_handle_tail_mse": -5.914282643381065,
+      "delta_gradient_boosted_trees_minus_handle_tail_mse_ci": [
+        -6.57428894540141,
+        -5.054916531024296
+      ],
+      "delta_mlp_minus_handle_tail_mse": 0.7773354516708894,
+      "delta_mlp_minus_handle_tail_mse_ci": [
+        -0.17449734119263022,
+        1.8283738296264243
+      ],
+      "delta_cnn_1d_minus_handle_tail_mse": -1.7868412632750232,
+      "delta_cnn_1d_minus_handle_tail_mse_ci": [
+        -2.454047858514853,
+        -1.0345672568898074
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_tail_mse": -2.548347767112056,
+      "delta_phase_gated_cnn_new_minus_handle_tail_mse_ci": [
+        -3.327977860954811,
+        -1.6749602176696208
+      ],
+      "delta_handle_minus_s01_tail_mse": -6.574491799376898,
+      "delta_handle_minus_s01_tail_mse_ci": [
+        -7.406461795336711,
+        -5.870558008122043
+      ],
+      "delta_ridge_minus_handle_timing_sigma68_ns": -0.08928571428571429,
+      "delta_ridge_minus_handle_timing_sigma68_ns_ci": [
+        -0.5357142857142857,
+        0.35714285714285715
+      ],
+      "delta_extra_trees_minus_handle_timing_sigma68_ns": -0.625,
+      "delta_extra_trees_minus_handle_timing_sigma68_ns_ci": [
+        -0.8928571428571429,
+        -0.26785714285714285
+      ],
+      "delta_gradient_boosted_trees_minus_handle_timing_sigma68_ns": -0.44642857142857145,
+      "delta_gradient_boosted_trees_minus_handle_timing_sigma68_ns_ci": [
+        -0.8035714285714286,
+        -0.17857142857142858
+      ],
+      "delta_mlp_minus_handle_timing_sigma68_ns": 0.8928571428571429,
+      "delta_mlp_minus_handle_timing_sigma68_ns_ci": [
+        0.625,
+        1.1607142857142858
+      ],
+      "delta_cnn_1d_minus_handle_timing_sigma68_ns": 2.5,
+      "delta_cnn_1d_minus_handle_timing_sigma68_ns_ci": [
+        2.0535714285714284,
+        2.9464285714285716
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_timing_sigma68_ns": 3.0357142857142856,
+      "delta_phase_gated_cnn_new_minus_handle_timing_sigma68_ns_ci": [
+        2.4107142857142856,
+        3.5714285714285716
+      ],
+      "delta_handle_minus_s01_timing_sigma68_ns": -1.2107142857142859,
+      "delta_handle_minus_s01_timing_sigma68_ns_ci": [
+        -1.4785714285714289,
+        -0.9428571428571431
+      ],
+      "delta_ridge_minus_handle_timing_rms_ns": -1.012858619905171,
+      "delta_ridge_minus_handle_timing_rms_ns_ci": [
+        -1.0651623539525008,
+        -0.9638175732438276
+      ],
+      "delta_extra_trees_minus_handle_timing_rms_ns": -1.043130847702843,
+      "delta_extra_trees_minus_handle_timing_rms_ns_ci": [
+        -1.137746034062865,
+        -0.9554304927941862
+      ],
+      "delta_gradient_boosted_trees_minus_handle_timing_rms_ns": -0.8404647042338141,
+      "delta_gradient_boosted_trees_minus_handle_timing_rms_ns_ci": [
+        -0.896313351772258,
+        -0.7898120646574536
+      ],
+      "delta_mlp_minus_handle_timing_rms_ns": 0.15612404034586444,
+      "delta_mlp_minus_handle_timing_rms_ns_ci": [
+        0.054204636655616305,
+        0.26388582591531623
+      ],
+      "delta_cnn_1d_minus_handle_timing_rms_ns": -0.03386074309608099,
+      "delta_cnn_1d_minus_handle_timing_rms_ns_ci": [
+        -0.18354670857446334,
+        0.16352697722021084
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_timing_rms_ns": 0.989926047603108,
+      "delta_phase_gated_cnn_new_minus_handle_timing_rms_ns_ci": [
+        0.8748735226915452,
+        1.0859226266275002
+      ],
+      "delta_handle_minus_s01_timing_rms_ns": -1.3939881044565314,
+      "delta_handle_minus_s01_timing_rms_ns_ci": [
+        -1.639961011052949,
+        -1.1734717365455551
+      ],
+      "train_group": "sample_ii_calib",
+      "eval_group": "sample_i_analysis",
+      "train_rows_used": 4830
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "runs": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "n_eval": 13749,
+      "s01_empirical_q_mse": 0.16763387174947003,
+      "s01_empirical_q_mse_ci": [
+        0.15694386950712325,
+        0.17813804287461507
+      ],
+      "s01_empirical_live10_abs_ns": 29.390545685157527,
+      "s01_empirical_live10_abs_ns_ci": [
+        27.94280483485761,
+        30.77897386716937
+      ],
+      "s01_empirical_tail_abs": 2.0536913693676,
+      "s01_empirical_tail_abs_ci": [
+        1.994643934330433,
+        2.113398106610741
+      ],
+      "s01_empirical_tail_mse": 11.629324348049723,
+      "s01_empirical_tail_mse_ci": [
+        10.777298230720929,
+        12.488768265031295
+      ],
+      "s01_empirical_timing_sigma68_ns": 3.75,
+      "s01_empirical_timing_sigma68_ns_ci": [
+        3.2142857142857144,
+        4.285714285714286
+      ],
+      "s01_empirical_timing_rms_ns": 6.609611760871741,
+      "s01_empirical_timing_rms_ns_ci": [
+        6.414922394905488,
+        6.838302004053461
+      ],
+      "handle_residual_q_mse": 0.1255846654982409,
+      "handle_residual_q_mse_ci": [
+        0.12114000458679011,
+        0.130588924266325
+      ],
+      "handle_residual_live10_abs_ns": 22.779083233702085,
+      "handle_residual_live10_abs_ns_ci": [
+        21.665803554601425,
+        23.880842710001897
+      ],
+      "handle_residual_tail_abs": 1.5770444103397965,
+      "handle_residual_tail_abs_ci": [
+        1.548359084235973,
+        1.623661649734235
+      ],
+      "handle_residual_tail_mse": 7.695769880249963,
+      "handle_residual_tail_mse_ci": [
+        7.306778171516225,
+        8.291538695550727
+      ],
+      "handle_residual_timing_sigma68_ns": 2.142857142857143,
+      "handle_residual_timing_sigma68_ns_ci": [
+        1.7857142857142858,
+        2.5
+      ],
+      "handle_residual_timing_rms_ns": 5.803504626936477,
+      "handle_residual_timing_rms_ns_ci": [
+        5.6864960414327665,
+        5.946842544956214
+      ],
+      "handle_residual_fallback_rate": 0.38189447493102097,
+      "handle_residual_fallback_rate_ci": [
+        0.30697655045704186,
+        0.44438255695585777
+      ],
+      "handle_residual_accepted_support_fraction": 0.6181055250689791,
+      "handle_residual_accepted_support_fraction_ci": [
+        0.5556174430441422,
+        0.6930234495429581
+      ],
+      "ridge_q_mse": 0.06244524563700465,
+      "ridge_q_mse_ci": [
+        0.059042480617299234,
+        0.06601172388534701
+      ],
+      "ridge_live10_abs_ns": 25.84708264614677,
+      "ridge_live10_abs_ns_ci": [
+        24.78046162035141,
+        27.036850099660718
+      ],
+      "ridge_tail_abs": 1.0600315896212071,
+      "ridge_tail_abs_ci": [
+        1.0341928858392397,
+        1.085705282155456
+      ],
+      "ridge_tail_mse": 2.3743052814772647,
+      "ridge_tail_mse_ci": [
+        2.232926160382341,
+        2.5103666951145156
+      ],
+      "ridge_timing_sigma68_ns": 1.7857142857142858,
+      "ridge_timing_sigma68_ns_ci": [
+        1.4241071428571432,
+        2.3214285714285716
+      ],
+      "ridge_timing_rms_ns": 4.636787788627361,
+      "ridge_timing_rms_ns_ci": [
+        4.46142374751783,
+        4.829145219715277
+      ],
+      "extra_trees_q_mse": 0.06840577722385319,
+      "extra_trees_q_mse_ci": [
+        0.06254357533942875,
+        0.07396259353843497
+      ],
+      "extra_trees_live10_abs_ns": 25.51830282316106,
+      "extra_trees_live10_abs_ns_ci": [
+        24.157637542854935,
+        26.93789199782376
+      ],
+      "extra_trees_tail_abs": 0.9009028438186004,
+      "extra_trees_tail_abs_ci": [
+        0.8452566809336409,
+        0.955238955575857
+      ],
+      "extra_trees_tail_mse": 3.1177655740429393,
+      "extra_trees_tail_mse_ci": [
+        2.7849321028363105,
+        3.4422878621892505
+      ],
+      "extra_trees_timing_sigma68_ns": 1.4285714285714286,
+      "extra_trees_timing_sigma68_ns_ci": [
+        1.25,
+        1.7857142857142858
+      ],
+      "extra_trees_timing_rms_ns": 4.47814996005217,
+      "extra_trees_timing_rms_ns_ci": [
+        4.230202908179933,
+        4.715271520867683
+      ],
+      "gradient_boosted_trees_q_mse": 0.08086122341588127,
+      "gradient_boosted_trees_q_mse_ci": [
+        0.07578535761715546,
+        0.08616982280185448
+      ],
+      "gradient_boosted_trees_live10_abs_ns": 29.2184579745895,
+      "gradient_boosted_trees_live10_abs_ns_ci": [
+        27.94018950218495,
+        30.47789747032573
+      ],
+      "gradient_boosted_trees_tail_abs": 1.255112620094307,
+      "gradient_boosted_trees_tail_abs_ci": [
+        1.21560618213708,
+        1.2939064701219278
+      ],
+      "gradient_boosted_trees_tail_mse": 4.045578353825021,
+      "gradient_boosted_trees_tail_mse_ci": [
+        3.7834722046292635,
+        4.33197794138259
+      ],
+      "gradient_boosted_trees_timing_sigma68_ns": 2.5,
+      "gradient_boosted_trees_timing_sigma68_ns_ci": [
+        2.5,
+        2.5
+      ],
+      "gradient_boosted_trees_timing_rms_ns": 4.5036722338182615,
+      "gradient_boosted_trees_timing_rms_ns_ci": [
+        4.320755623598165,
+        4.72940916429497
+      ],
+      "family_label_sentinel_q_mse": 0.13064436059121484,
+      "family_label_sentinel_q_mse_ci": [
+        0.12348786427302512,
+        0.137329471107083
+      ],
+      "family_label_sentinel_live10_abs_ns": 31.7867826162376,
+      "family_label_sentinel_live10_abs_ns_ci": [
+        30.520375266253094,
+        33.06402771592046
+      ],
+      "family_label_sentinel_tail_abs": 1.998770862278276,
+      "family_label_sentinel_tail_abs_ci": [
+        1.960170881190733,
+        2.0323562775501656
+      ],
+      "family_label_sentinel_tail_mse": 11.229883158880368,
+      "family_label_sentinel_tail_mse_ci": [
+        10.406299599204031,
+        12.039151662982778
+      ],
+      "family_label_sentinel_timing_sigma68_ns": 2.857142857142857,
+      "family_label_sentinel_timing_sigma68_ns_ci": [
+        2.5,
+        3.218749999999996
+      ],
+      "family_label_sentinel_timing_rms_ns": 5.375602175572435,
+      "family_label_sentinel_timing_rms_ns_ci": [
+        5.2255909392561755,
+        5.551648446109424
+      ],
+      "shuffled_target_extra_trees_q_mse": 0.13433665756215543,
+      "shuffled_target_extra_trees_q_mse_ci": [
+        0.12708276141409847,
+        0.1409310083820159
+      ],
+      "shuffled_target_extra_trees_live10_abs_ns": 30.03775468507057,
+      "shuffled_target_extra_trees_live10_abs_ns_ci": [
+        28.921299455425693,
+        31.150338221413953
+      ],
+      "shuffled_target_extra_trees_tail_abs": 2.0763456746342035,
+      "shuffled_target_extra_trees_tail_abs_ci": [
+        2.0378888918184734,
+        2.113836388930177
+      ],
+      "shuffled_target_extra_trees_tail_mse": 11.710823478077627,
+      "shuffled_target_extra_trees_tail_mse_ci": [
+        10.860606748876728,
+        12.529778429440311
+      ],
+      "shuffled_target_extra_trees_timing_sigma68_ns": 3.75,
+      "shuffled_target_extra_trees_timing_sigma68_ns_ci": [
+        3.75,
+        3.75
+      ],
+      "shuffled_target_extra_trees_timing_rms_ns": 5.551680320627166,
+      "shuffled_target_extra_trees_timing_rms_ns_ci": [
+        5.409692317046064,
+        5.710993611980063
+      ],
+      "phase_shuffled_gradient_boosted_trees_q_mse": 0.08093044939072788,
+      "phase_shuffled_gradient_boosted_trees_q_mse_ci": [
+        0.07588478863135088,
+        0.08619011149493037
+      ],
+      "phase_shuffled_gradient_boosted_trees_live10_abs_ns": 29.198957907226262,
+      "phase_shuffled_gradient_boosted_trees_live10_abs_ns_ci": [
+        27.926240721627646,
+        30.458994602156793
+      ],
+      "phase_shuffled_gradient_boosted_trees_tail_abs": 1.2549497197319137,
+      "phase_shuffled_gradient_boosted_trees_tail_abs_ci": [
+        1.2149793032740583,
+        1.294216821593589
+      ],
+      "phase_shuffled_gradient_boosted_trees_tail_mse": 4.058193445271534,
+      "phase_shuffled_gradient_boosted_trees_tail_mse_ci": [
+        3.794531400064116,
+        4.348933744022601
+      ],
+      "phase_shuffled_gradient_boosted_trees_timing_sigma68_ns": 2.5,
+      "phase_shuffled_gradient_boosted_trees_timing_sigma68_ns_ci": [
+        2.5,
+        2.5
+      ],
+      "phase_shuffled_gradient_boosted_trees_timing_rms_ns": 4.491586000556674,
+      "phase_shuffled_gradient_boosted_trees_timing_rms_ns_ci": [
+        4.308956520304981,
+        4.704346312005886
+      ],
+      "knockout_no_amplitude_q_mse": 0.0695355658148161,
+      "knockout_no_amplitude_q_mse_ci": [
+        0.06369276333780675,
+        0.07505357483690388
+      ],
+      "knockout_no_amplitude_live10_abs_ns": 26.009819233118623,
+      "knockout_no_amplitude_live10_abs_ns_ci": [
+        24.65452240748618,
+        27.309913906241377
+      ],
+      "knockout_no_amplitude_tail_abs": 0.894969718633171,
+      "knockout_no_amplitude_tail_abs_ci": [
+        0.8457339012263823,
+        0.9461656361084237
+      ],
+      "knockout_no_amplitude_tail_mse": 3.134295238384383,
+      "knockout_no_amplitude_tail_mse_ci": [
+        2.8051314559818272,
+        3.4632273246405356
+      ],
+      "knockout_no_amplitude_timing_sigma68_ns": 1.4285714285714286,
+      "knockout_no_amplitude_timing_sigma68_ns_ci": [
+        1.25,
+        1.7857142857142858
+      ],
+      "knockout_no_amplitude_timing_rms_ns": 4.460797321820141,
+      "knockout_no_amplitude_timing_rms_ns_ci": [
+        4.224780772667402,
+        4.690752650602086
+      ],
+      "knockout_no_shape_q_mse": 0.1290698298234076,
+      "knockout_no_shape_q_mse_ci": [
+        0.12082722743043975,
+        0.1369532573605483
+      ],
+      "knockout_no_shape_live10_abs_ns": 27.505242087163065,
+      "knockout_no_shape_live10_abs_ns_ci": [
+        26.348215561719392,
+        28.66705504367843
+      ],
+      "knockout_no_shape_tail_abs": 1.902901033794222,
+      "knockout_no_shape_tail_abs_ci": [
+        1.8436309914699798,
+        1.964265279288642
+      ],
+      "knockout_no_shape_tail_mse": 10.41076577225979,
+      "knockout_no_shape_tail_mse_ci": [
+        9.654014059036184,
+        11.241729606601227
+      ],
+      "knockout_no_shape_timing_sigma68_ns": 4.107142857142857,
+      "knockout_no_shape_timing_sigma68_ns_ci": [
+        3.75,
+        4.642857142857143
+      ],
+      "knockout_no_shape_timing_rms_ns": 5.773486789001211,
+      "knockout_no_shape_timing_rms_ns_ci": [
+        5.597080133723314,
+        5.990978803891757
+      ],
+      "knockout_no_stave_q_mse": 0.06241912288246306,
+      "knockout_no_stave_q_mse_ci": [
+        0.05662262152200195,
+        0.0681547500863896
+      ],
+      "knockout_no_stave_live10_abs_ns": 25.25036482307002,
+      "knockout_no_stave_live10_abs_ns_ci": [
+        23.768929392526655,
+        26.743653366144496
+      ],
+      "knockout_no_stave_tail_abs": 0.819226417465565,
+      "knockout_no_stave_tail_abs_ci": [
+        0.759934759915502,
+        0.8801599884754489
+      ],
+      "knockout_no_stave_tail_mse": 2.681716881221198,
+      "knockout_no_stave_tail_mse_ci": [
+        2.3494061226770846,
+        3.0038590179194697
+      ],
+      "knockout_no_stave_timing_sigma68_ns": 1.25,
+      "knockout_no_stave_timing_sigma68_ns_ci": [
+        1.25,
+        1.25
+      ],
+      "knockout_no_stave_timing_rms_ns": 4.324924309770576,
+      "knockout_no_stave_timing_rms_ns_ci": [
+        4.091710537903764,
+        4.568998002580776
+      ],
+      "knockout_no_current_q_mse": 0.06799331403785504,
+      "knockout_no_current_q_mse_ci": [
+        0.06200066070857242,
+        0.07362766643058456
+      ],
+      "knockout_no_current_live10_abs_ns": 25.544493053055444,
+      "knockout_no_current_live10_abs_ns_ci": [
+        24.140114146161256,
+        26.962576490328008
+      ],
+      "knockout_no_current_tail_abs": 0.8886041670910433,
+      "knockout_no_current_tail_abs_ci": [
+        0.8318205280042312,
+        0.945176137224614
+      ],
+      "knockout_no_current_tail_mse": 3.084592343931656,
+      "knockout_no_current_tail_mse_ci": [
+        2.753253289583042,
+        3.4083930036411574
+      ],
+      "knockout_no_current_timing_sigma68_ns": 1.4285714285714286,
+      "knockout_no_current_timing_sigma68_ns_ci": [
+        1.25,
+        1.7857142857142858
+      ],
+      "knockout_no_current_timing_rms_ns": 4.453141740840685,
+      "knockout_no_current_timing_rms_ns_ci": [
+        4.2065644371934345,
+        4.689025245019432
+      ],
+      "mlp_q_mse": 0.1000801487929854,
+      "mlp_q_mse_ci": [
+        0.09539075804741406,
+        0.1046294436514783
+      ],
+      "mlp_live10_abs_ns": 26.217214345744903,
+      "mlp_live10_abs_ns_ci": [
+        24.97182112626583,
+        27.504558694897778
+      ],
+      "mlp_tail_abs": 1.396064176081852,
+      "mlp_tail_abs_ci": [
+        1.3687208840782479,
+        1.4239222909433369
+      ],
+      "mlp_tail_mse": 6.184857957895881,
+      "mlp_tail_mse_ci": [
+        5.665439418926095,
+        6.71995199239773
+      ],
+      "mlp_timing_sigma68_ns": 3.392857142857143,
+      "mlp_timing_sigma68_ns_ci": [
+        3.03125,
+        3.75
+      ],
+      "mlp_timing_rms_ns": 5.054899055343727,
+      "mlp_timing_rms_ns_ci": [
+        4.926360890179961,
+        5.207238684488541
+      ],
+      "cnn_1d_q_mse": 0.09917701837355966,
+      "cnn_1d_q_mse_ci": [
+        0.09005884996385645,
+        0.10772136195537983
+      ],
+      "cnn_1d_live10_abs_ns": 23.423110411936047,
+      "cnn_1d_live10_abs_ns_ci": [
+        22.109596495719174,
+        24.753103885532237
+      ],
+      "cnn_1d_tail_abs": 1.2590299028069685,
+      "cnn_1d_tail_abs_ci": [
+        1.2111523516583558,
+        1.300778046071311
+      ],
+      "cnn_1d_tail_mse": 6.139114450913289,
+      "cnn_1d_tail_mse_ci": [
+        4.868236038057754,
+        7.451017535996806
+      ],
+      "cnn_1d_timing_sigma68_ns": 4.642857142857143,
+      "cnn_1d_timing_sigma68_ns_ci": [
+        4.107142857142857,
+        5.0
+      ],
+      "cnn_1d_timing_rms_ns": 5.356848805921968,
+      "cnn_1d_timing_rms_ns_ci": [
+        5.238491170556604,
+        5.500547511779371
+      ],
+      "phase_gated_cnn_new_q_mse": 0.08926218732734685,
+      "phase_gated_cnn_new_q_mse_ci": [
+        0.08476594252821602,
+        0.09393094363931244
+      ],
+      "phase_gated_cnn_new_live10_abs_ns": 23.88991720799523,
+      "phase_gated_cnn_new_live10_abs_ns_ci": [
+        22.674821811974336,
+        25.000940676632172
+      ],
+      "phase_gated_cnn_new_tail_abs": 1.1835253227651799,
+      "phase_gated_cnn_new_tail_abs_ci": [
+        1.1480698811661234,
+        1.2164221357858584
+      ],
+      "phase_gated_cnn_new_tail_mse": 4.075246920629928,
+      "phase_gated_cnn_new_tail_mse_ci": [
+        3.700829011257131,
+        4.465656876361066
+      ],
+      "phase_gated_cnn_new_timing_sigma68_ns": 4.642857142857143,
+      "phase_gated_cnn_new_timing_sigma68_ns_ci": [
+        4.107142857142857,
+        5.0
+      ],
+      "phase_gated_cnn_new_timing_rms_ns": 5.637745497089091,
+      "phase_gated_cnn_new_timing_rms_ns_ci": [
+        5.5030755008847745,
+        5.816123049599352
+      ],
+      "delta_ridge_minus_handle_q_mse": -0.06313941986123625,
+      "delta_ridge_minus_handle_q_mse_ci": [
+        -0.06649964754671389,
+        -0.0606805901848391
+      ],
+      "delta_extra_trees_minus_handle_q_mse": -0.05717888827438772,
+      "delta_extra_trees_minus_handle_q_mse_ci": [
+        -0.06116377778695401,
+        -0.05335028388687062
+      ],
+      "delta_gradient_boosted_trees_minus_handle_q_mse": -0.04472344208235964,
+      "delta_gradient_boosted_trees_minus_handle_q_mse_ci": [
+        -0.04884149480211004,
+        -0.041040958891475784
+      ],
+      "delta_mlp_minus_handle_q_mse": -0.025504516705255498,
+      "delta_mlp_minus_handle_q_mse_ci": [
+        -0.027436810862207648,
+        -0.0234886853299489
+      ],
+      "delta_cnn_1d_minus_handle_q_mse": -0.026407647124681237,
+      "delta_cnn_1d_minus_handle_q_mse_ci": [
+        -0.03319442271546141,
+        -0.018168339648923983
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_q_mse": -0.036322478170894054,
+      "delta_phase_gated_cnn_new_minus_handle_q_mse_ci": [
+        -0.03847143319556772,
+        -0.03346620158797544
+      ],
+      "delta_handle_minus_s01_q_mse": -0.0420492062512291,
+      "delta_handle_minus_s01_q_mse_ci": [
+        -0.04937562992772478,
+        -0.0351454731227114
+      ],
+      "delta_ridge_minus_handle_live10_abs_ns": 3.067999412444691,
+      "delta_ridge_minus_handle_live10_abs_ns_ci": [
+        2.314750701511537,
+        3.7738114272043797
+      ],
+      "delta_extra_trees_minus_handle_live10_abs_ns": 2.7392195894589797,
+      "delta_extra_trees_minus_handle_live10_abs_ns_ci": [
+        1.8899251484470203,
+        3.6419646274210775
+      ],
+      "delta_gradient_boosted_trees_minus_handle_live10_abs_ns": 6.4393747408874225,
+      "delta_gradient_boosted_trees_minus_handle_live10_abs_ns_ci": [
+        5.635817768104947,
+        7.30891645220353
+      ],
+      "delta_mlp_minus_handle_live10_abs_ns": 3.43813111204282,
+      "delta_mlp_minus_handle_live10_abs_ns_ci": [
+        2.7121142343219393,
+        4.251081600692856
+      ],
+      "delta_cnn_1d_minus_handle_live10_abs_ns": 0.6440271782339663,
+      "delta_cnn_1d_minus_handle_live10_abs_ns_ci": [
+        -0.07009950226515875,
+        1.5533891158353177
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_live10_abs_ns": 1.110833974293149,
+      "delta_phase_gated_cnn_new_minus_handle_live10_abs_ns_ci": [
+        0.4820183145077768,
+        1.7126958458424204
+      ],
+      "delta_handle_minus_s01_live10_abs_ns": -6.61146245145545,
+      "delta_handle_minus_s01_live10_abs_ns_ci": [
+        -7.271586135495617,
+        -6.0344267740128545
+      ],
+      "delta_ridge_minus_handle_tail_abs": -0.5170128207185891,
+      "delta_ridge_minus_handle_tail_abs_ci": [
+        -0.5601655016211498,
+        -0.4812446789970418
+      ],
+      "delta_extra_trees_minus_handle_tail_abs": -0.676141566521196,
+      "delta_extra_trees_minus_handle_tail_abs_ci": [
+        -0.7331437038570805,
+        -0.6193256402483089
+      ],
+      "delta_gradient_boosted_trees_minus_handle_tail_abs": -0.32193179024548924,
+      "delta_gradient_boosted_trees_minus_handle_tail_abs_ci": [
+        -0.3724262570815898,
+        -0.2766262351096408
+      ],
+      "delta_mlp_minus_handle_tail_abs": -0.18098023425794443,
+      "delta_mlp_minus_handle_tail_abs_ci": [
+        -0.21612103539196456,
+        -0.14757346670249996
+      ],
+      "delta_cnn_1d_minus_handle_tail_abs": -0.31801450753282773,
+      "delta_cnn_1d_minus_handle_tail_abs_ci": [
+        -0.35571126002636344,
+        -0.28025916654018485
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_tail_abs": -0.3935190875746167,
+      "delta_phase_gated_cnn_new_minus_handle_tail_abs_ci": [
+        -0.4416271868582505,
+        -0.34639314784245556
+      ],
+      "delta_handle_minus_s01_tail_abs": -0.4766469590278038,
+      "delta_handle_minus_s01_tail_abs_ci": [
+        -0.5356601879606832,
+        -0.4192200343972641
+      ],
+      "delta_ridge_minus_handle_tail_mse": -5.3214645987727,
+      "delta_ridge_minus_handle_tail_mse_ci": [
+        -5.914977792951142,
+        -4.861861579235662
+      ],
+      "delta_extra_trees_minus_handle_tail_mse": -4.578004306207025,
+      "delta_extra_trees_minus_handle_tail_mse_ci": [
+        -5.183109726441899,
+        -3.946873758200487
+      ],
+      "delta_gradient_boosted_trees_minus_handle_tail_mse": -3.650191526424944,
+      "delta_gradient_boosted_trees_minus_handle_tail_mse_ci": [
+        -4.302999119785583,
+        -3.1143712775193806
+      ],
+      "delta_mlp_minus_handle_tail_mse": -1.5109119223540826,
+      "delta_mlp_minus_handle_tail_mse_ci": [
+        -2.021911979502962,
+        -0.9133470928398867
+      ],
+      "delta_cnn_1d_minus_handle_tail_mse": -1.5566554293366746,
+      "delta_cnn_1d_minus_handle_tail_mse_ci": [
+        -2.58618719801754,
+        -0.3556422364723832
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_tail_mse": -3.6205229596200366,
+      "delta_phase_gated_cnn_new_minus_handle_tail_mse_ci": [
+        -4.083449230427666,
+        -3.234456757204674
+      ],
+      "delta_handle_minus_s01_tail_mse": -3.9335544677997594,
+      "delta_handle_minus_s01_tail_mse_ci": [
+        -4.7160098027108885,
+        -3.2627793483691465
+      ],
+      "delta_ridge_minus_handle_timing_sigma68_ns": -0.35714285714285715,
+      "delta_ridge_minus_handle_timing_sigma68_ns_ci": [
+        -0.8928571428571429,
+        0.18303571428571022
+      ],
+      "delta_extra_trees_minus_handle_timing_sigma68_ns": -0.7142857142857143,
+      "delta_extra_trees_minus_handle_timing_sigma68_ns_ci": [
+        -1.0714285714285714,
+        -0.17857142857142858
+      ],
+      "delta_gradient_boosted_trees_minus_handle_timing_sigma68_ns": 0.35714285714285715,
+      "delta_gradient_boosted_trees_minus_handle_timing_sigma68_ns_ci": [
+        0.0,
+        0.8928571428571429
+      ],
+      "delta_mlp_minus_handle_timing_sigma68_ns": 1.25,
+      "delta_mlp_minus_handle_timing_sigma68_ns_ci": [
+        0.5357142857142857,
+        1.9642857142857142
+      ],
+      "delta_cnn_1d_minus_handle_timing_sigma68_ns": 2.5,
+      "delta_cnn_1d_minus_handle_timing_sigma68_ns_ci": [
+        1.7857142857142858,
+        3.2142857142857144
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_timing_sigma68_ns": 2.5,
+      "delta_phase_gated_cnn_new_minus_handle_timing_sigma68_ns_ci": [
+        1.7857142857142858,
+        3.2142857142857144
+      ],
+      "delta_handle_minus_s01_timing_sigma68_ns": -1.6071428571428572,
+      "delta_handle_minus_s01_timing_sigma68_ns_ci": [
+        -2.142857142857143,
+        -1.0669642857142898
+      ],
+      "delta_ridge_minus_handle_timing_rms_ns": -1.1667168383091153,
+      "delta_ridge_minus_handle_timing_rms_ns_ci": [
+        -1.262397757629927,
+        -1.085066933539214
+      ],
+      "delta_extra_trees_minus_handle_timing_rms_ns": -1.3253546668843061,
+      "delta_extra_trees_minus_handle_timing_rms_ns_ci": [
+        -1.48161526203246,
+        -1.1909077525643301
+      ],
+      "delta_gradient_boosted_trees_minus_handle_timing_rms_ns": -1.2998323931182156,
+      "delta_gradient_boosted_trees_minus_handle_timing_rms_ns_ci": [
+        -1.385843097393619,
+        -1.2129054712591762
+      ],
+      "delta_mlp_minus_handle_timing_rms_ns": -0.7486055715927498,
+      "delta_mlp_minus_handle_timing_rms_ns_ci": [
+        -0.7993293492634715,
+        -0.6941451214535972
+      ],
+      "delta_cnn_1d_minus_handle_timing_rms_ns": -0.4466558210145094,
+      "delta_cnn_1d_minus_handle_timing_rms_ns_ci": [
+        -0.5034807203370747,
+        -0.4067850998310987
+      ],
+      "delta_phase_gated_cnn_new_minus_handle_timing_rms_ns": -0.1657591298473875,
+      "delta_phase_gated_cnn_new_minus_handle_timing_rms_ns_ci": [
+        -0.1989075504809524,
+        -0.12951882773462792
+      ],
+      "delta_handle_minus_s01_timing_rms_ns": -0.8061071339352635,
+      "delta_handle_minus_s01_timing_rms_ns_ci": [
+        -0.8971766666301819,
+        -0.7269301497106218
+      ],
+      "train_group": "sample_i_calib",
+      "eval_group": "sample_ii_analysis",
+      "train_rows_used": 9000
+    }
+  ],
+  "leakage": [
+    {
+      "fold": "holdout_sample_i",
+      "train_eval_run_overlap": [],
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "extra_trees_beats_handle_q_ci": true,
+      "shuffled_target_beats_real": false,
+      "phase_shuffled_beats_gbt": false,
+      "family_label_sentinel_beats_real": false,
+      "false_pass_rate_under_sentinels": 0.3333333333333333,
+      "leakage_alarm": false
+    },
+    {
+      "fold": "holdout_sample_ii",
+      "train_eval_run_overlap": [],
+      "train_eval_key_overlap": 0,
+      "uses_run_or_event_features": false,
+      "extra_trees_beats_handle_q_ci": true,
+      "shuffled_target_beats_real": false,
+      "phase_shuffled_beats_gbt": false,
+      "family_label_sentinel_beats_real": false,
+      "false_pass_rate_under_sentinels": 0.3333333333333333,
+      "leakage_alarm": false
+    }
+  ],
+  "max_false_pass_rate_under_sentinels": 0.3333333333333333,
+  "promotable_folds_without_sentinel_alarm": 2,
+  "conclusion": "Explicit handle residuals have limited promotable support: at least one fold improves over S01 by q-template CI, but support is region-specific. The learned panel has at least one CI win over the traditional handle method; the benchmark winner is ridge, subject to the sentinel audit. No sentinel alarm fired under the predeclared target-shuffle, phase-shuffle, and family-label controls.",
+  "followup_ticket": {
+    "title": "P10m freeze phase-gated tail template and test downstream timing/charge consumers",
+    "expected_information_gain": "It would decide whether the P10l waveform-template winner improves independent pair-timing and charge-consumer outcomes after freezing the model, instead of only improving q-template reconstruction."
+  },
+  "next_tickets": [
+    {
+      "title": "P10m freeze phase-gated tail template and test downstream timing/charge consumers",
+      "expected_information_gain": "It would decide whether the P10l waveform-template winner improves independent pair-timing and charge-consumer outcomes after freezing the model, instead of only improving q-template reconstruction."
+    }
+  ],
+  "git_commit": "9bca5060a4ccbf76a8fad6f921b95547aecca494",
+  "input_sha256": "input_sha256.csv"
+}

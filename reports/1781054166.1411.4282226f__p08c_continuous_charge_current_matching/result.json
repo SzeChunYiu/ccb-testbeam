@@ -1,0 +1,230 @@
+{
+  "ticket_id": "1781054166.1411.4282226f",
+  "worker": "testbeam-laptop-4",
+  "study_id": "P08c",
+  "title": "continuous charge-current matching for PID leakage control",
+  "config": "configs/p08c_1781054166_1411_4282226f_continuous_charge_current_matching.json",
+  "script": "scripts/p08c_1781054166_1411_4282226f_continuous_charge_current_matching.py",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "b08daa5bc38c435f596951c340e79b4951b9c98f",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "calibrated_label_definition": {
+    "weak_label": {
+      "positive_name": "high_calibrated_range_energy_residual",
+      "negative_name": "low_calibrated_range_energy_residual",
+      "within_run_depth_quantile": 0.25,
+      "min_atom_class_rows": 12,
+      "min_odd_total_charge": 100.0,
+      "min_even_total_charge": 100.0
+    },
+    "calibration": {
+      "calibration_groups": [
+        "sample_i_calib",
+        "sample_ii_calib"
+      ],
+      "calibration_rows": 249681,
+      "anchors_mev": {
+        "B2": 40.041411846408614,
+        "B4": 72.99642627825797,
+        "B6": 97.46806692646969,
+        "B8": 117.96480450815572
+      },
+      "label_source": "odd duplicate-readout PSTAR/depth charge quantile residual, thresholded within run/depth"
+    }
+  },
+  "calibrated_label_support": {
+    "n_atoms": 122,
+    "n_labeled_rows": 289626,
+    "atom_columns": [
+      "run",
+      "depth_idx"
+    ]
+  },
+  "matching": {
+    "method": "continuous run/depth nearest-neighbor matching in standardized nuisance plus propensity-logit space",
+    "settings": {
+      "random_seed": 8411,
+      "primary_caliper": 0.55,
+      "sensitivity_calipers": [
+        0.35,
+        0.55,
+        0.8
+      ],
+      "max_pairs_per_run_depth": 120,
+      "nearest_k": 80,
+      "propensity_weight": 1.0,
+      "min_pairs_per_run_depth": 8,
+      "exact_cell_quantile_bins": 6,
+      "nuisance_columns": [
+        "log_b2_area",
+        "log_even_total_charge",
+        "event_fraction",
+        "depth_idx",
+        "multiplicity",
+        "topology_code",
+        "downstream_charge_fraction",
+        "saturated_count",
+        "b2_saturated",
+        "b2_width20",
+        "b2_tail_fraction"
+      ]
+    },
+    "matched_rows": 2078,
+    "matched_pairs": 1039,
+    "support_loss_fraction": 0.9928252297790944,
+    "max_abs_smd": 1.414186685872044,
+    "exact_cell_matched_rows": 944,
+    "sensitivity": [
+      {
+        "matching": "exact_cell",
+        "caliper": null,
+        "matched_rows": 944,
+        "matched_pairs": 472,
+        "support_loss_fraction": 0.9967406241152382,
+        "max_abs_smd": 0.6704342727209963,
+        "nuisance_only_runheldout_auc": 0.7514571246974184
+      },
+      {
+        "matching": "continuous_nn_propensity",
+        "caliper": 0.35,
+        "matched_rows": 776,
+        "matched_pairs": 388,
+        "support_loss_fraction": 0.9973206825354077,
+        "max_abs_smd": 1.3440736552208044,
+        "nuisance_only_runheldout_auc": 0.9096790109920233
+      },
+      {
+        "matching": "continuous_nn_propensity",
+        "caliper": 0.55,
+        "matched_rows": 2078,
+        "matched_pairs": 1039,
+        "support_loss_fraction": 0.9928252297790944,
+        "max_abs_smd": 1.414186685872044,
+        "nuisance_only_runheldout_auc": 0.9412535745020245
+      },
+      {
+        "matching": "continuous_nn_propensity",
+        "caliper": 0.8,
+        "matched_rows": 3664,
+        "matched_pairs": 1832,
+        "support_loss_fraction": 0.9873492020743994,
+        "max_abs_smd": 1.4256567536644433,
+        "nuisance_only_runheldout_auc": 0.956668159694228
+      }
+    ]
+  },
+  "p01b_latent_join": {
+    "status": "joined",
+    "matched_fraction": 1.0,
+    "latent_columns": [
+      "p01b_z0",
+      "p01b_z1",
+      "p01b_z2",
+      "p01b_z3"
+    ]
+  },
+  "benchmark": {
+    "evaluated_rows": 2062,
+    "evaluated_runs": [
+      31,
+      32,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "skipped_runs": [
+      33,
+      44
+    ],
+    "positive_fraction": 0.5
+  },
+  "winner": {
+    "method": "gradient-boosted trees waveform+latent",
+    "selection_metric": "point-estimate ROC AUC among non-sentinel methods",
+    "roc_auc": 0.999794912513253,
+    "roc_auc_ci": [
+      0.9995374936984174,
+      0.9999610730927334
+    ],
+    "average_precision": 0.9997979216264877
+  },
+  "pid_adoption": false,
+  "p08b_comparison": {
+    "ml_auc": 0.9859412898142259,
+    "traditional_auc": 0.985552736677294,
+    "even_charge_proxy_auc": 0.985196964324116
+  },
+  "input_file_count": 33,
+  "follow_up_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 28.9,
+  "primary_interpretation": "Continuous charge/current matching suppresses the P08b nuisance shortcut relative to the pre-matched even-charge proxy, but the weak label remains a charge-residual construct. The named winner is a leakage-control benchmark winner, not a PID adoption result."
+}

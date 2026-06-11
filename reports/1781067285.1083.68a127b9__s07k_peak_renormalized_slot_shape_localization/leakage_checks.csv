@@ -1,0 +1,7 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5000000000000001,0.5,Same for pair members; should be chance.
+topology-only GBT,0.5,0.5,All-three topology should carry no injected label information.
+absolute-amplitude-only GBT,0.5,0.5,Excluded nuisance channel; peak renormalization should reduce but not force chance.
+slot-shape RF with shuffled training labels,0.4796892384881324,0.48106379210568784,Null/leakage sanity check for the permissive representation.
+pair split violations,0.0,,Must be 0.
+forbidden slot-shape columns,0.0,,slot_shape_columns raised on violations before model fitting.

@@ -1,0 +1,216 @@
+{
+  "study": "S13f",
+  "ticket": "1781063920.513.7c742542",
+  "worker": "testbeam-laptop-1",
+  "created_utc": "2026-06-11T13:45:55Z",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "git_commit": "6c913cb0d3360f7b5e96fd824b80e2496c34f545",
+  "command": ".venv/bin/python scripts/s13f_1781063920_513_7c742542_exactly_two_current_family_timing_tail_null.py --config configs/s13f_1781063920_513_7c742542_exactly_two_current_family_timing_tail_null.json",
+  "config": {
+    "study_id": "S13f",
+    "ticket": "1781063920.513.7c742542",
+    "worker": "testbeam-laptop-1",
+    "title": "exactly-two current-family timing-tail null",
+    "raw_root_dir": "data/root/root",
+    "output_dir": "reports/1781063920.513.7c742542__s13f_exactly_two_current_family_timing_tail_null",
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "amplitude_cut_adc": 1000.0,
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "samples_per_channel": 18,
+    "sample_period_ns": 10.0,
+    "cfd_fraction": 0.2,
+    "staves": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "downstream_staves": [
+      "B4",
+      "B6",
+      "B8"
+    ],
+    "clean_dt_max_ns": 3.0,
+    "gross_dt_min_ns": 51.0,
+    "documented_gross_dt_min_ns": 50.0,
+    "expected_parent_control_events": 10156,
+    "expected_parent_clean_events": 2155,
+    "expected_parent_gross_events_documented": 74,
+    "expected_parent_gross_events_guarded": 72,
+    "expected_all_three_events": 3774,
+    "expected_all_three_gross_events_guarded": 22,
+    "current_run_families": {
+      "low_all_three_rate_edge": [
+        58,
+        65
+      ],
+      "mid_all_three_rate": [
+        59,
+        63
+      ],
+      "high_all_three_rate": [
+        60,
+        61,
+        62
+      ]
+    },
+    "target_low_family": "low_all_three_rate_edge",
+    "target_high_family": "high_all_three_rate",
+    "charge_bins": 5,
+    "event_amp_bins": 5,
+    "baseline_bins": 3,
+    "tail_bins": 3,
+    "max_matched_per_stratum_family": 220,
+    "min_matched_per_fold": 20,
+    "bootstrap_replicates": 800,
+    "fixed_efficiency": 0.1,
+    "random_seed": 13261,
+    "ridge_c_grid": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "gbt_learning_rates": [
+      0.03,
+      0.07
+    ],
+    "gbt_max_leaf_nodes": [
+      15,
+      31
+    ],
+    "mlp_hidden_layers": [
+      [
+        32
+      ],
+      [
+        48,
+        16
+      ]
+    ],
+    "torch_epochs": 7,
+    "torch_batch_size": 256
+  },
+  "input_sha256": [
+    {
+      "file": "data/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+      "bytes": 9623179
+    },
+    {
+      "file": "data/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+      "bytes": 12032616
+    },
+    {
+      "file": "data/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+      "bytes": 10174098
+    },
+    {
+      "file": "data/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+      "bytes": 10362658
+    },
+    {
+      "file": "data/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+      "bytes": 10634393
+    },
+    {
+      "file": "data/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+      "bytes": 10494181
+    },
+    {
+      "file": "data/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+      "bytes": 10600278
+    }
+  ],
+  "outputs": [
+    {
+      "file": "REPORT.md",
+      "sha256": "1b6a5a544d1cb5043e3127d096b6591a642f758a15385154fb44d8f2da6883ac",
+      "bytes": 16483
+    },
+    {
+      "file": "control_population_by_run.csv",
+      "sha256": "759d8af01ef9bf35dcb6e715d7a74efbe5c9b5d56e2f56cad9cfc43b5f175d33",
+      "bytes": 1056
+    },
+    {
+      "file": "exactly_two_population.csv",
+      "sha256": "295d2d88cfe5b7d387be122e3f23195d7660b5b9da3cdd58b89749635ea91671",
+      "bytes": 562
+    },
+    {
+      "file": "fig_current_family_auc_ci.png",
+      "sha256": "d3f823d68475e6041707364629837bc4b69eca61a807664672f31a603b9a4d25",
+      "bytes": 67258
+    },
+    {
+      "file": "fig_current_family_tail_score_delta.png",
+      "sha256": "9e5ed567b7f7b5898203b8947f2601ae43d19c8e1d544ee08214e638b1917296",
+      "bytes": 72274
+    },
+    {
+      "file": "fig_tail_score_distributions.png",
+      "sha256": "4003b077f17b8e92d3ce0ac80ab7cc2457c83c34754670c675f865efaab4699e",
+      "bytes": 34927
+    },
+    {
+      "file": "heldout_matched_timing_tail_scores.csv",
+      "sha256": "0ec7214e1396a5cc82d231345ebec161c89c8a2cecae4fa7883111bbc1d666f1",
+      "bytes": 394389
+    },
+    {
+      "file": "heldout_run_pair_metrics.csv",
+      "sha256": "c77961d289396d13b4c7f04ae0612117f4fb4f9ce4f195f1429713d99900895e",
+      "bytes": 5951
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "487bc5b369a2c9cfb559ea405afb269cea1791ec1548fa990dbe469a71dae122",
+      "bytes": 773
+    },
+    {
+      "file": "leakage_checks.csv",
+      "sha256": "03a3a3df71aac7120ff567e506036c3b6e07e6dbffc7747a00733ff091865d0c",
+      "bytes": 4306
+    },
+    {
+      "file": "pooled_heldout_bootstrap_metrics.csv",
+      "sha256": "8af8e0ca8da52454c74ff61be8788177d6ffd92a23eac07e653c3fef1f036756",
+      "bytes": 1868
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "956f244daa0049dbca4d6dcaab6babfc8fa4cec6087140947a5832edcd2daaee",
+      "bytes": 512
+    },
+    {
+      "file": "result.json",
+      "sha256": "519ba1d8156b02177fd0a3c48ea06dedaf1174e15ce53239db9f03554ae79860",
+      "bytes": 8360
+    },
+    {
+      "file": "run_family_metadata.csv",
+      "sha256": "13807f1115fe6e6371c59392bf1d4f1509427eda08d348c8e6ef2df9c7b468a6",
+      "bytes": 553
+    }
+  ]
+}

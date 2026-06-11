@@ -1,0 +1,253 @@
+{
+  "study": "S13f",
+  "ticket": "1781063920.513.7c742542",
+  "worker": "testbeam-laptop-1",
+  "title": "exactly-two current-family timing-tail null",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "S13d parent control events, B2 and >=2 downstream",
+      "report_value": 10156,
+      "reproduced": 10156,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13d parent clean events, D_t<3 ns",
+      "report_value": 2155,
+      "reproduced": 2155,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13d parent gross events, documented D_t>50 ns",
+      "report_value": 74,
+      "reproduced": 74,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13d parent gross events, guarded D_t>51 ns",
+      "report_value": 72,
+      "reproduced": 72,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13d all-three control events",
+      "report_value": 3774,
+      "reproduced": 3774,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13d all-three guarded gross events",
+      "report_value": 22,
+      "reproduced": 22,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13f exactly-two control events",
+      "report_value": 6382,
+      "reproduced": 6382,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S13f exactly-two guarded gross events",
+      "report_value": 50,
+      "reproduced": 50,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split": "six held-out run-pair folds: one low-edge run plus one high-rate run held out per fold",
+  "matching": {
+    "keys": [
+      "event_max_amp_bin",
+      "event_charge_bin",
+      "b2_amp_bin",
+      "saturation",
+      "baseline_bin",
+      "baseline_lowering",
+      "anomaly_tail_bin",
+      "downstream_pair_topology"
+    ],
+    "matched_scored_events": 1568,
+    "target_low_family": "low_all_three_rate_edge",
+    "target_high_family": "high_all_three_rate"
+  },
+  "traditional": {
+    "method": "traditional_timing_template",
+    "metric": "high-rate minus low-edge matched timing-tail score",
+    "value": 0.008043413960961083,
+    "ci": [
+      0.0068039563499403335,
+      0.0098778044533326
+    ],
+    "current_family_auc": 0.5038436133381925
+  },
+  "ml_methods": [
+    {
+      "method": "ridge_waveform",
+      "score_col": "score_ridge_waveform",
+      "high_minus_low_score": 0.005600292517358765,
+      "high_minus_low_ci_low": -0.00022546593763963022,
+      "high_minus_low_ci_high": 0.012747265403464592,
+      "fixed_eff_tail_excess": 0.007653061224489795,
+      "fixed_eff_tail_excess_ci_low": -0.003318584070796464,
+      "fixed_eff_tail_excess_ci_high": 0.030490177008364122,
+      "current_family_auc": 0.5127103615680966,
+      "current_family_auc_ci_low": 0.5040343418280222,
+      "current_family_auc_ci_high": 0.523136509858901,
+      "n_matched_events": 1568
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "score_col": "score_gradient_boosted_trees",
+      "high_minus_low_score": 0.006725078475066136,
+      "high_minus_low_ci_low": 0.003099945990157442,
+      "high_minus_low_ci_high": 0.01041595628642314,
+      "fixed_eff_tail_excess": -0.006377551020408161,
+      "fixed_eff_tail_excess_ci_low": -0.020979020979020973,
+      "fixed_eff_tail_excess_ci_high": 0.0027286995892300265,
+      "current_family_auc": 0.5128478368388172,
+      "current_family_auc_ci_low": 0.4876162601105533,
+      "current_family_auc_ci_high": 0.5331469363474123,
+      "n_matched_events": 1568
+    },
+    {
+      "method": "mlp_waveform",
+      "score_col": "score_mlp_waveform",
+      "high_minus_low_score": -0.0018865317297283614,
+      "high_minus_low_ci_low": -0.007815351087317441,
+      "high_minus_low_ci_high": 0.004959317404728253,
+      "fixed_eff_tail_excess": -0.014030612244897964,
+      "fixed_eff_tail_excess_ci_low": -0.04389608840833201,
+      "fixed_eff_tail_excess_ci_high": 0.00928381962864721,
+      "current_family_auc": 0.4850208897334444,
+      "current_family_auc_ci_low": 0.46753376853333917,
+      "current_family_auc_ci_high": 0.49818201382320115,
+      "n_matched_events": 1568
+    },
+    {
+      "method": "cnn1d_waveform",
+      "score_col": "score_cnn1d_waveform",
+      "high_minus_low_score": -0.006653169540190483,
+      "high_minus_low_ci_low": -0.017077555928576436,
+      "high_minus_low_ci_high": 0.002177162683447179,
+      "fixed_eff_tail_excess": -0.02806122448979592,
+      "fixed_eff_tail_excess_ci_low": -0.05610170685372518,
+      "fixed_eff_tail_excess_ci_high": -0.0088987764182425,
+      "current_family_auc": 0.5145951556643066,
+      "current_family_auc_ci_low": 0.48299152575606696,
+      "current_family_auc_ci_high": 0.5474084932411013,
+      "n_matched_events": 1568
+    },
+    {
+      "method": "support_gated_cnn_new",
+      "score_col": "score_support_gated_cnn_new",
+      "high_minus_low_score": -0.005936913647116341,
+      "high_minus_low_ci_low": -0.01955394861383285,
+      "high_minus_low_ci_high": 0.005761169160851188,
+      "fixed_eff_tail_excess": -0.029336734693877552,
+      "fixed_eff_tail_excess_ci_low": -0.054093567251461985,
+      "fixed_eff_tail_excess_ci_high": -0.012627359776460166,
+      "current_family_auc": 0.5372143117451063,
+      "current_family_auc_ci_low": 0.5121260229567435,
+      "current_family_auc_ci_high": 0.5616389597846768,
+      "n_matched_events": 1568
+    }
+  ],
+  "winner": {
+    "method": "support_gated_cnn_new",
+    "metric": "current_family_auc",
+    "value": 0.5372143117451063,
+    "ci": [
+      0.5121260229567435,
+      0.5616389597846768
+    ],
+    "high_minus_low_score": -0.005936913647116341,
+    "high_minus_low_ci": [
+      -0.01955394861383285,
+      0.005761169160851188
+    ]
+  },
+  "ml_beats_baseline": true,
+  "positive_signal_gate": false,
+  "falsification": {
+    "preregistered_metric": "high-rate minus low-edge timing-tail score with run-pair bootstrap CI",
+    "gate": "traditional and winning ML deltas must be same-sign positive with both 95% CIs excluding zero",
+    "passed": false,
+    "n_tries": 6
+  },
+  "leakage": {
+    "flagged_checks": 0,
+    "shuffled_label_auc": 0.4786644887546856,
+    "forbidden_standard_ml_columns": [
+      "run",
+      "eventno",
+      "event_key",
+      "run_family",
+      "is_target_low",
+      "is_target_high",
+      "d_t_ns",
+      "abs_c_t_ns",
+      "event_max_amp",
+      "b2_amp",
+      "event_charge",
+      "explicit_topology_flags"
+    ]
+  },
+  "summary": "S13f reproduced 6382 exactly-two events from raw ROOT and benchmarked 6 real methods over six held-out run-pair folds. The winner is support_gated_cnn_new by current-family AUC, but the positive-signal gate is False; therefore the exactly-two support does not provide a robust positive high-rate timing-tail claim unless both traditional and ML deltas clear zero.",
+  "next_tickets": [],
+  "input_sha256": [
+    {
+      "file": "data/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+      "bytes": 9623179
+    },
+    {
+      "file": "data/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+      "bytes": 12032616
+    },
+    {
+      "file": "data/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+      "bytes": 10174098
+    },
+    {
+      "file": "data/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+      "bytes": 10362658
+    },
+    {
+      "file": "data/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+      "bytes": 10634393
+    },
+    {
+      "file": "data/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+      "bytes": 10494181
+    },
+    {
+      "file": "data/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+      "bytes": 10600278
+    }
+  ],
+  "git_commit": "6c913cb0d3360f7b5e96fd824b80e2496c34f545",
+  "critic": "pending",
+  "runtime_sec": 115.42
+}

@@ -1,0 +1,10 @@
+run_family,downstream_pair,events,gross_tail_events,clean_events,mean_dt_ns
+high_all_three_rate,B4+B6,3883,27,974,4.823124208131496
+high_all_three_rate,B4+B8,27,6,4,30.262359198553714
+high_all_three_rate,B6+B8,63,0,61,1.1191325674383965
+low_all_three_rate_edge,B4+B6,303,0,68,4.443681595341598
+low_all_three_rate_edge,B4+B8,5,2,1,46.367298979759184
+low_all_three_rate_edge,B6+B8,9,0,9,0.8843821913075556
+mid_all_three_rate,B4+B6,2023,13,403,5.171938698630968
+mid_all_three_rate,B4+B8,15,2,2,16.629397721308973
+mid_all_three_rate,B6+B8,54,0,54,1.1248087202076893

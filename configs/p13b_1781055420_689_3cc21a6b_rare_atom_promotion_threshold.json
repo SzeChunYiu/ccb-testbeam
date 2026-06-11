@@ -1,0 +1,52 @@
+{
+  "ticket_id": "1781055420.689.3cc21a6b",
+  "study_id": "P13b",
+  "worker": "testbeam-laptop-4",
+  "title": "rare-atom bootstrap promotion threshold",
+  "output_dir": "reports/1781055420.689.3cc21a6b__p13b_rare_atom_promotion_threshold",
+  "p09a_config": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/extracted/root/root"
+  ],
+  "expected_selected_pulses": 640737,
+  "heldout_runs": [42, 57, 64, 65],
+  "amplitude_atom_edges_adc": [1000, 1500, 2500, 4000, 7000, 12000, 25000, 50000],
+  "promotion_rule": {
+    "min_train_count": 24,
+    "min_effective_n": 18.0,
+    "min_train_runs": 4,
+    "max_run_share": 0.55,
+    "max_train_rate_ci_width": 0.035,
+    "min_heldout_count_for_stability": 3,
+    "min_heldout_runs_for_stability": 1,
+    "ci_overlap_tolerance": 0.005,
+    "loose_ml_min_train_count": 10,
+    "loose_ml_min_train_runs": 2,
+    "target_train_precision": 0.90,
+    "min_train_recall": 0.01
+  },
+  "ml": {
+    "random_seed": 20260611,
+    "max_train_rows": 30000,
+    "max_nn_train_rows": 12000,
+    "calibration_bins": 10,
+    "ridge_alphas": [0.1, 1.0, 10.0],
+    "gbt_learning_rate": 0.06,
+    "gbt_max_iter": 60,
+    "gbt_max_leaf_nodes": 15,
+    "mlp_hidden_layer_sizes": [32],
+    "mlp_max_iter": 35,
+    "torch_epochs": 3,
+    "torch_batch_size": 768,
+    "torch_learning_rate": 0.001,
+    "torch_weight_decay": 0.0001,
+    "torch_width": 16
+  },
+  "bootstrap_replicates": 400,
+  "next_ticket": {
+    "title": "P13c rare-atom external steering dry run",
+    "body": "Question: do the P13b promotion gates remain conservative when a promoted atom is used as an actual steering variable in one downstream consumer at a time? Freeze the P13b gates, apply them to timing, pile-up, charge, and PID consumers without retuning, and require run-block CIs plus shuffled-atom controls. Expected information gain: converts the promotion policy from a support/stability diagnostic into a consumer-level false-promotion bound."
+  }
+}

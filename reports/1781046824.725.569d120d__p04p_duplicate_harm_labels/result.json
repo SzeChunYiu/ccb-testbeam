@@ -1,0 +1,542 @@
+{
+  "study": "P04p",
+  "ticket_id": "1781046824.725.569d120d",
+  "worker": "testbeam-laptop-3",
+  "title": "duplicate-readout charge harm labels",
+  "winner": "gradient_boosted_trees",
+  "winner_selection": "coverage>=0.50 then min accepted_charge_res68_frac, accepted_timing_abs68_ns, calibration_ece",
+  "raw_reproduction": [
+    {
+      "quantity": "S00 selected B-stave pulse records",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "P07 Sample-II analysis B2 selected pulses",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "methods": [
+    "traditional_rule",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "wavegate_resnet",
+    "shuffled_target_gbt"
+  ],
+  "correction_methods": [
+    {
+      "method": "adaptive_template",
+      "n": 100107,
+      "charge_bias_median_frac": 0.04653268488140372,
+      "charge_res68_abs_frac": 0.13624622327638242,
+      "charge_full_rms_frac": 1.2955201951658375,
+      "timing_bias_median_ns": 0.08337643424277807,
+      "timing_abs68_ns": 0.48766364963695985,
+      "timing_tail_frac_gt5ns": 0.12201685474714699
+    },
+    {
+      "method": "raw_integral",
+      "n": 100107,
+      "charge_bias_median_frac": -0.004694538739328321,
+      "charge_res68_abs_frac": 0.022007773046689875,
+      "charge_full_rms_frac": 1.9071857328506874,
+      "timing_bias_median_ns": 2.3020421087876795,
+      "timing_abs68_ns": 8.213225529034252,
+      "timing_tail_frac_gt5ns": 0.0255883309606398
+    },
+    {
+      "method": "raw_peak",
+      "n": 100107,
+      "charge_bias_median_frac": 0.017217844348429392,
+      "charge_res68_abs_frac": 0.14028676629714393,
+      "charge_full_rms_frac": 2.717234047548437,
+      "timing_bias_median_ns": 0.022729066964972233,
+      "timing_abs68_ns": 0.08027827092121158,
+      "timing_tail_frac_gt5ns": 0.10125775717440064
+    },
+    {
+      "method": "template_saturation",
+      "n": 100107,
+      "charge_bias_median_frac": 0.01785004296066449,
+      "charge_res68_abs_frac": 0.13967054413997704,
+      "charge_full_rms_frac": 2.7194232834487897,
+      "timing_bias_median_ns": 0.010327119695185516,
+      "timing_abs68_ns": 0.09184327244059369,
+      "timing_tail_frac_gt5ns": 0.1013596038858898
+    }
+  ],
+  "harm_methods": [
+    {
+      "method": "gradient_boosted_trees",
+      "n": 100107,
+      "harm_rate": 0.4465421998461646,
+      "flag_rate": 0.49835675826865256,
+      "precision": 0.8423299725390366,
+      "recall": 0.9400697955348754,
+      "f1": 0.8885200494761658,
+      "accepted_coverage": 0.5016432417313474,
+      "accepted_charge_bias_frac": -0.0005527384644799189,
+      "accepted_charge_res68_frac": 0.03902452880489024,
+      "accepted_timing_abs68_ns": 0.039143681860957444,
+      "accepted_timing_tail_frac_gt5ns": 0.03032777091879406,
+      "calibration_ece": 0.0750709805072009,
+      "precision_ci95": [
+        0.8340234576625227,
+        0.8527955097334348
+      ],
+      "recall_ci95": [
+        0.9337127557900482,
+        0.9457675882185266
+      ],
+      "accepted_coverage_ci95": [
+        0.4781032287979763,
+        0.5382552094265317
+      ],
+      "accepted_charge_res68_frac_ci95": [
+        0.03566372530746706,
+        0.042719761350795714
+      ],
+      "accepted_timing_abs68_ns_ci95": [
+        0.025148684934951922,
+        0.061614348344582
+      ],
+      "accepted_timing_tail_frac_gt5ns_ci95": [
+        0.01802390970334132,
+        0.04632601068286178
+      ],
+      "flag_rate_ci95": [
+        0.4617447905734684,
+        0.5218967712020237
+      ],
+      "primary_rank": 1
+    },
+    {
+      "method": "mlp",
+      "n": 100107,
+      "harm_rate": 0.4465421998461646,
+      "flag_rate": 0.45291538054281916,
+      "precision": 0.9432509925011028,
+      "recall": 0.9567133461590085,
+      "f1": 0.9499344750227671,
+      "accepted_coverage": 0.5470846194571808,
+      "accepted_charge_bias_frac": 0.0017454595619849653,
+      "accepted_charge_res68_frac": 0.04055070702536622,
+      "accepted_timing_abs68_ns": 0.04517760365138898,
+      "accepted_timing_tail_frac_gt5ns": 0.04546533496448591,
+      "calibration_ece": 0.007440736549030646,
+      "precision_ci95": [
+        0.9390782744798273,
+        0.9480734311409204
+      ],
+      "recall_ci95": [
+        0.9489577077183948,
+        0.9643689404284713
+      ],
+      "accepted_coverage_ci95": [
+        0.5225633159229767,
+        0.580955936618611
+      ],
+      "accepted_charge_res68_frac_ci95": [
+        0.03669845908937857,
+        0.044091751893891404
+      ],
+      "accepted_timing_abs68_ns_ci95": [
+        0.028048532510561306,
+        0.07287043034375958
+      ],
+      "accepted_timing_tail_frac_gt5ns_ci95": [
+        0.026931260088637797,
+        0.06279839051822027
+      ],
+      "flag_rate_ci95": [
+        0.419044063381389,
+        0.47743668407702333
+      ],
+      "primary_rank": 2
+    },
+    {
+      "method": "traditional_rule",
+      "n": 100107,
+      "harm_rate": 0.4465421998461646,
+      "flag_rate": 0.20348227396685548,
+      "precision": 0.7037800687285224,
+      "recall": 0.3207015346069527,
+      "f1": 0.440619621342513,
+      "accepted_coverage": 0.7965177260331445,
+      "accepted_charge_bias_frac": -0.005380724410022705,
+      "accepted_charge_res68_frac": 0.07854122474166687,
+      "accepted_timing_abs68_ns": 0.03807678647200362,
+      "accepted_timing_tail_frac_gt5ns": 0.010559715063270502,
+      "calibration_ece": 0.13158170757289703,
+      "precision_ci95": [
+        0.6701681717039029,
+        0.7423214836070628
+      ],
+      "recall_ci95": [
+        0.2829515705213243,
+        0.34382241385199575
+      ],
+      "accepted_coverage_ci95": [
+        0.7726672918889558,
+        0.823106967936089
+      ],
+      "accepted_charge_res68_frac_ci95": [
+        0.06691811658378825,
+        0.08846998498401364
+      ],
+      "accepted_timing_abs68_ns_ci95": [
+        0.02741761042671901,
+        0.047960161118685486
+      ],
+      "accepted_timing_tail_frac_gt5ns_ci95": [
+        0.006548202476615997,
+        0.014295675060216331
+      ],
+      "flag_rate_ci95": [
+        0.17689303206391108,
+        0.2273327081110442
+      ],
+      "primary_rank": 3
+    },
+    {
+      "method": "shuffled_target_gbt",
+      "n": 100107,
+      "harm_rate": 0.4465421998461646,
+      "flag_rate": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "accepted_coverage": 1.0,
+      "accepted_charge_bias_frac": 0.010596173248994097,
+      "accepted_charge_res68_frac": 0.11166921405901398,
+      "accepted_timing_abs68_ns": 0.07317504179325625,
+      "accepted_timing_tail_frac_gt5ns": 0.08889488247575095,
+      "calibration_ece": 0.09800307334250893,
+      "precision_ci95": [
+        0.0,
+        0.0
+      ],
+      "recall_ci95": [
+        0.0,
+        0.0
+      ],
+      "accepted_coverage_ci95": [
+        1.0,
+        1.0
+      ],
+      "accepted_charge_res68_frac_ci95": [
+        0.08013120639133213,
+        0.1582789370234625
+      ],
+      "accepted_timing_abs68_ns_ci95": [
+        0.04656104540960301,
+        0.11827920325238371
+      ],
+      "accepted_timing_tail_frac_gt5ns_ci95": [
+        0.060326680896142265,
+        0.1143600804171431
+      ],
+      "flag_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "primary_rank": 4
+    },
+    {
+      "method": "cnn_1d",
+      "n": 100107,
+      "harm_rate": 0.4465421998461646,
+      "flag_rate": 0.5826166002377456,
+      "precision": 0.6741135724573074,
+      "recall": 0.8795355912487137,
+      "f1": 0.7632442296119426,
+      "accepted_coverage": 0.4173833997622544,
+      "accepted_charge_bias_frac": -0.009214840948706296,
+      "accepted_charge_res68_frac": 0.043347519022949955,
+      "accepted_timing_abs68_ns": 0.033164491305117005,
+      "accepted_timing_tail_frac_gt5ns": 0.020869731709068282,
+      "calibration_ece": 0.13483142764192804,
+      "precision_ci95": [
+        0.660821226109442,
+        0.6920942981580539
+      ],
+      "recall_ci95": [
+        0.8505673978051388,
+        0.9017679208221172
+      ],
+      "accepted_coverage_ci95": [
+        0.3760974550304921,
+        0.4674396329435827
+      ],
+      "accepted_charge_res68_frac_ci95": [
+        0.040507700664786365,
+        0.04736983319243202
+      ],
+      "accepted_timing_abs68_ns_ci95": [
+        0.02469135802470035,
+        0.052124971693705675
+      ],
+      "accepted_timing_tail_frac_gt5ns_ci95": [
+        0.012550940440463431,
+        0.029916881707965328
+      ],
+      "flag_rate_ci95": [
+        0.5325603670564173,
+        0.6239025449695079
+      ],
+      "primary_rank": 5
+    },
+    {
+      "method": "ridge",
+      "n": 100107,
+      "harm_rate": 0.4465421998461646,
+      "flag_rate": 0.5765131309498837,
+      "precision": 0.6719629892745136,
+      "recall": 0.8675450762829403,
+      "f1": 0.7573304691695554,
+      "accepted_coverage": 0.4234868690501164,
+      "accepted_charge_bias_frac": -0.00826670623095569,
+      "accepted_charge_res68_frac": 0.044736144044538136,
+      "accepted_timing_abs68_ns": 0.035924869637526495,
+      "accepted_timing_tail_frac_gt5ns": 0.025050714723781668,
+      "calibration_ece": 0.16842887985719443,
+      "precision_ci95": [
+        0.6542911266872005,
+        0.6854874723206033
+      ],
+      "recall_ci95": [
+        0.8394879101662409,
+        0.8855816866806928
+      ],
+      "accepted_coverage_ci95": [
+        0.39614490431942956,
+        0.4687292860855117
+      ],
+      "accepted_charge_res68_frac_ci95": [
+        0.04097057831891388,
+        0.04913956493378463
+      ],
+      "accepted_timing_abs68_ns_ci95": [
+        0.024691358024702036,
+        0.0562013210228787
+      ],
+      "accepted_timing_tail_frac_gt5ns_ci95": [
+        0.014306312018931813,
+        0.03650464661547879
+      ],
+      "flag_rate_ci95": [
+        0.5312707139144883,
+        0.6038550956805705
+      ],
+      "primary_rank": 6
+    },
+    {
+      "method": "wavegate_resnet",
+      "n": 100107,
+      "harm_rate": 0.4465421998461646,
+      "flag_rate": 0.5263767768487718,
+      "precision": 0.7130033779936995,
+      "recall": 0.8404769361549819,
+      "f1": 0.7715101236190398,
+      "accepted_coverage": 0.4736232231512282,
+      "accepted_charge_bias_frac": -0.003792476315873156,
+      "accepted_charge_res68_frac": 0.046993175832955626,
+      "accepted_timing_abs68_ns": 0.0361622068950044,
+      "accepted_timing_tail_frac_gt5ns": 0.020015607533798746,
+      "calibration_ece": 0.10428849746830912,
+      "precision_ci95": [
+        0.6956200818742505,
+        0.7305084038053372
+      ],
+      "recall_ci95": [
+        0.808275800780298,
+        0.8681248952767361
+      ],
+      "accepted_coverage_ci95": [
+        0.43888112244109617,
+        0.5170622498865847
+      ],
+      "accepted_charge_res68_frac_ci95": [
+        0.04278275744069934,
+        0.051826434980019535
+      ],
+      "accepted_timing_abs68_ns_ci95": [
+        0.024691358024703902,
+        0.05559567484196373
+      ],
+      "accepted_timing_tail_frac_gt5ns_ci95": [
+        0.00997030039014665,
+        0.030828210483037778
+      ],
+      "flag_rate_ci95": [
+        0.4829377501134153,
+        0.5611188775589039
+      ],
+      "primary_rank": 7
+    }
+  ],
+  "harm_rate_deltas_vs_traditional": [
+    {
+      "method": "ridge",
+      "harm_rate_delta_vs_traditional": 0.3730308569830282,
+      "ci95": [
+        0.34655577502045576,
+        0.4036440340971456
+      ],
+      "n_runs": 8
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "harm_rate_delta_vs_traditional": 0.2948744843017971,
+      "ci95": [
+        0.27435884210700306,
+        0.3201099155471602
+      ],
+      "n_runs": 8
+    },
+    {
+      "method": "mlp",
+      "harm_rate_delta_vs_traditional": 0.24943310657596368,
+      "ci95": [
+        0.22620003536426728,
+        0.2780356976623097
+      ],
+      "n_runs": 8
+    },
+    {
+      "method": "cnn_1d",
+      "harm_rate_delta_vs_traditional": 0.37913432627089017,
+      "ci95": [
+        0.3397830062489803,
+        0.4125973441915553
+      ],
+      "n_runs": 8
+    },
+    {
+      "method": "wavegate_resnet",
+      "harm_rate_delta_vs_traditional": 0.32289450288191635,
+      "ci95": [
+        0.2928548322370162,
+        0.35730388825638826
+      ],
+      "n_runs": 8
+    },
+    {
+      "method": "shuffled_target_gbt",
+      "harm_rate_delta_vs_traditional": -0.20348227396685548,
+      "ci95": [
+        -0.22821093871135006,
+        -0.17593741867795384
+      ],
+      "n_runs": 8
+    }
+  ],
+  "next_tickets": [
+    {
+      "id": "1781143765.834.683c6144",
+      "title": "P04q: cross-stave harm-veto transfer validation",
+      "question": "Does the P04p B2 duplicate-readout harm veto transfer to B4/B6/B8 without learning B2-specific saturation artifacts?",
+      "expected_information_gain": "Separates a reusable correction-veto policy from a B2-local pathology by rerunning the same raw ROOT reproduction, run-heldout harm-label benchmark, and odd-duplicate closure metrics per stave with a cross-stave holdout."
+    }
+  ],
+  "leakage_audit": {
+    "folds": [
+      {
+        "heldout_run": 58,
+        "train_rows": 45000,
+        "heldout_rows": 15790,
+        "train_positive_rate": 0.3479111111111111,
+        "heldout_positive_rate": 0.3583913869537682,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 338113.73037893255
+      },
+      {
+        "heldout_run": 59,
+        "train_rows": 45000,
+        "heldout_rows": 13563,
+        "train_positive_rate": 0.3519777777777778,
+        "heldout_positive_rate": 0.46177099461770993,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 287558.56951566105
+      },
+      {
+        "heldout_run": 60,
+        "train_rows": 45000,
+        "heldout_rows": 9866,
+        "train_positive_rate": 0.3519333333333333,
+        "heldout_positive_rate": 0.4585444962497466,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 300985.1483247103
+      },
+      {
+        "heldout_run": 61,
+        "train_rows": 45000,
+        "heldout_rows": 11015,
+        "train_positive_rate": 0.35355555555555557,
+        "heldout_positive_rate": 0.45901044030867,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 300286.4714749003
+      },
+      {
+        "heldout_run": 62,
+        "train_rows": 45000,
+        "heldout_rows": 11634,
+        "train_positive_rate": 0.34524444444444446,
+        "heldout_positive_rate": 0.46630565583634176,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 297885.6131005082
+      },
+      {
+        "heldout_run": 63,
+        "train_rows": 45000,
+        "heldout_rows": 14564,
+        "train_positive_rate": 0.34584444444444445,
+        "heldout_positive_rate": 0.45289755561658884,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 299955.2801569749
+      },
+      {
+        "heldout_run": 64,
+        "train_rows": 45000,
+        "heldout_rows": 11907,
+        "train_positive_rate": 0.3488,
+        "heldout_positive_rate": 0.46107331821617537,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 307133.5224134792
+      },
+      {
+        "heldout_run": 65,
+        "train_rows": 45000,
+        "heldout_rows": 11768,
+        "train_positive_rate": 0.34586666666666666,
+        "heldout_positive_rate": 0.48342963970088376,
+        "sampled_train_waveform_hash_overlap": 0,
+        "loss_cut": 314232.2782587363
+      }
+    ],
+    "feature_exclusions": [
+      "run_id",
+      "event_id",
+      "odd_waveform",
+      "odd_charge",
+      "odd_time",
+      "heldout_labels"
+    ],
+    "torch_available": true,
+    "train_eval_run_overlap": false
+  },
+  "finding": "The winning harm veto is gradient_boosted_trees: accepted charge res68 0.0390 at coverage 0.502, precision 0.842, recall 0.940, and timing abs68 0.039 ns. The traditional rule gives charge res68 0.0785 at coverage 0.797. The raw reproduction gate matched 640737 selected B-stave pulses exactly.",
+  "git_commit": "c31b40fdadff23272b13e3824e769f518c53b38e",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "runtime_sec": 330.43
+}

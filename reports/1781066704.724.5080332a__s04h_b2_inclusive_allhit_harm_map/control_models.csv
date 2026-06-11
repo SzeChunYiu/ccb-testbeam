@@ -1,0 +1,4 @@
+control,best,cv_rows
+run_only_control,"{""alpha"": 100.0, ""model"": ""ridge"", ""score"": 1.4527392756938933}",20
+target_stave_excluded_hgb_control,"{""learning_rate"": 0.06, ""max_iter"": 80, ""max_leaf_nodes"": 31, ""model"": ""hgb"", ""score"": 1.583682579642565}",10
+shuffled_target_ridge_control,"{""alpha"": 100.0, ""model"": ""ridge"", ""score"": 3.848638626337052}",20

@@ -1,0 +1,8 @@
+check,value,pass
+raw_selected_pulse_reproduction,640737,True
+train_heldout_run_overlap,0,True
+train_heldout_event_stave_key_overlap,0,True
+exact_even_waveform_hash_overlap,0,True
+features_exclude_run_event_odd_target,"even waveform, even summaries, train-only residual basis, stave one-hot, atom flags",True
+permuted_tail_risk_auc_near_random,0.5020372878427585,True
+torch_available_for_cnn,True,True

@@ -1,0 +1,49 @@
+{
+  "study": "S05j",
+  "ticket": "1781044006.709.301620de",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "6bd405df66f5425e69c9db2f97eccc0d796129e5",
+  "command": "/home/billy/anaconda3/bin/python scripts/s05j_1781044006_709_301620de_anomaly_tail_covariance_coverage_stress.py --config configs/s05j_1781044006_709_301620de_anomaly_tail_covariance_coverage_stress.yaml",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4"
+  },
+  "frozen_panel_dir": "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier",
+  "input_files": [
+    {
+      "file": "configs/s05j_1781044006_709_301620de_anomaly_tail_covariance_coverage_stress.yaml",
+      "sha256": "ecf6d8458c86a3b81a8e8d446e51bb23f92846d5e7646a3a30c33fbf2c0934d2",
+      "bytes": 1934
+    },
+    {
+      "file": "configs/s05h_1781040960_767_247d3910_saturation_covariance_support_frontier.yaml",
+      "sha256": "f1560fa8d8b8ac5825a0d03f312960d14fdd93e34b1b3ea4477ab442d466ce9e",
+      "bytes": 1861
+    },
+    {
+      "file": "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/heldout_pair_residuals.csv",
+      "sha256": "dceda1792a4d6b8b861713a6af46d2d42eb11e9c985659810299a06b206bc5c6",
+      "bytes": 18659608
+    }
+  ],
+  "output_sha256": {
+    "REPORT.md": "57ef36573c9e59c33c41ac01c8f2a76f785f6d7e347340c57f00fd3091b5f9ed",
+    "astack_pair_table.csv.gz": "7c6070c1a6333c0d7e27f22faec412451b9aaad494ac5ccc316f2274fdcf890a",
+    "bstack_pair_features.csv.gz": "bea91c2cf86df704ede59c74e6e7101d11b3a275d0232f21cf629a373f990236",
+    "covariance_stress_summary.csv": "d6e521146fd785a699c8dbaf06010d4ab1f53534164d10afc98abc1d68131ca3",
+    "fig_winner_coverage_stress.png": "10e13e480f04139c15fc1d98b571a7956420ac20c75fbaa479366d2187cebf65",
+    "fig_winner_score.png": "81e7880dcb5afbccce3737039723d1af0933139526e66df85b61888455d17460",
+    "input_sha256.csv": "52fab3761c28fdeae4e2092c956d5cb678d0f5b964d8a436ce2dd6225ddc5b05",
+    "interval_coverage_by_run.csv": "a046a8cd6ea1cd964cbfd232897332cf61ee70f9bc4bb62f7e3d26ed86fa281f",
+    "interval_coverage_summary.csv": "b7dc8746b39ae290b708fa1be7f829fe5b09af00acb5a602dd3b7bcc3e06555f",
+    "reproduction_match_table.csv": "371f7472dc50dee4e8c2b44f156ceb27e40e78392f9af503bdcc919c9fc9a265",
+    "result.json": "531a779ac766121804f07d0dc5765188e31ebd893fc0358a2ba919b1a1cdb42f",
+    "stress_axis_counts.csv": "9cc788d8e4aeff872a858302e733a6f2b59dc7aad78f5278bff9d4c3943eb55a",
+    "stress_residual_metrics.csv": "09328dcf7f5809fc042402786e009128ed85028acdd983298a9164f29a1d9300",
+    "winner_score_table.csv": "45ec912475e41a912ae778b281f917586eac04611360c992ac5c67adc461c25e"
+  },
+  "random_seed": 190709
+}

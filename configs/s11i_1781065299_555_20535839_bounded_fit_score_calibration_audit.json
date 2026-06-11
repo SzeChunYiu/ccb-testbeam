@@ -1,0 +1,35 @@
+{
+  "study_id": "S11i",
+  "ticket_id": "1781065299.555.20535839",
+  "worker": "testbeam-laptop-2",
+  "title": "bounded-fit score calibration audit",
+  "s07f_script": "scripts/s07f_independent_all_three_appi_validation.py",
+  "s07f_config": "configs/s07f_1781012109_1290_18206042.json",
+  "s11e_script": "scripts/s11e_1781024319_1354_2db2173f_all_three_full_fit.py",
+  "s11b_fit_script": "scripts/s11b_1781012659_s07d_two_pulse_fit.py",
+  "output_dir": "reports/1781065299.555.20535839",
+  "template_delay_candidates": [2, 3, 4, 5, 6],
+  "max_secondary_fraction": 0.65,
+  "min_secondary_fraction": 0.0,
+  "max_baseline_abs_norm": 0.25,
+  "bootstrap_replicates": 400,
+  "random_seed": 2026061121,
+  "nn_epochs": 25,
+  "nn_batch_size": 96,
+  "expected_s07f_traditional_auc": 0.605954,
+  "expected_s07f_shape_rf_auc": 0.822118,
+  "s07f_reproduction_auc_tolerance": 0.002,
+  "frontier_auc_margin_over_shuffle": 0.05,
+  "frontier_min_coverage": 0.80,
+  "rf_grid": [
+    {"n_estimators": 300, "max_depth": 4, "min_samples_leaf": 20},
+    {"n_estimators": 400, "max_depth": 5, "min_samples_leaf": 15},
+    {"n_estimators": 500, "max_depth": 7, "min_samples_leaf": 8}
+  ],
+  "next_tickets": [
+    {
+      "title": "S11j real-current bounded-fit calibration transfer check",
+      "body": "Apply the S11i calibrated bounded-fit and fit-plus-shape-residual scores to real high-current candidate windows with run-family heldout transfer, preserving the S11i ECE/Brier and fixed-clean operating-point diagnostics."
+    }
+  ]
+}

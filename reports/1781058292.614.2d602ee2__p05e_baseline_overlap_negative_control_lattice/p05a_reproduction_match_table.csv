@@ -1,0 +1,5 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+P05a selected B-stave pulses,640737.0,640737.0,0.0,0.0,True
+P05a traditional heldout time RMS ns,13.899264640601482,13.901854283929792,0.0025896433283101317,0.05,True
+P05a compact CNN heldout time RMS ns,10.009265624734077,9.496125777887274,-0.5131398468468031,0.6,True
+P05a compact CNN heldout detection AP,0.8684145380015449,0.8705989258646174,0.002184387863072512,0.01,True

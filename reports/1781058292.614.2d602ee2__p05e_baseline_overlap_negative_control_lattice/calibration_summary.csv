@@ -1,0 +1,49 @@
+method,method_label,metric,value,ci_low,ci_high,bootstrap_unit,n_bootstrap,n_folds
+gradient_boosted_trees,Histogram gradient-boosted trees,synthetic_overlap_brier,0.11790222218019766,0.10437376430703307,0.1259710972631491,heldout_source_run,450,14
+gradient_boosted_trees,Histogram gradient-boosted trees,synthetic_secondary_fraction_rmse,0.1157735244749326,0.10776225635438794,0.12064832956648977,heldout_source_run,450,14
+gradient_boosted_trees,Histogram gradient-boosted trees,synthetic_secondary_fraction_mae,0.0782868734268074,0.07169424655302616,0.08286608485950442,heldout_source_run,450,14
+gradient_boosted_trees,Histogram gradient-boosted trees,calibration_slope,0.9621321827245694,0.9495555477646751,0.9752320105735256,heldout_source_run,450,14
+gradient_boosted_trees,Histogram gradient-boosted trees,calibration_intercept,0.010400492328721983,0.007266533991724333,0.013217789568127372,heldout_source_run,450,14
+gradient_boosted_trees,Histogram gradient-boosted trees,accepted_recovery_rmse,0.11694162265495504,0.10927585896568917,0.12346916539791084,heldout_source_run,450,14
+gradient_boosted_trees,Histogram gradient-boosted trees,accepted_efficiency,0.41049107142857144,0.3973465401785714,0.4245535714285715,heldout_source_run,450,14
+gradient_boosted_trees,Histogram gradient-boosted trees,synthetic_overlap_auc,0.9158959960937499,0.9062527204241072,0.9289520874023439,heldout_source_run,450,14
+mlp,Multilayer perceptron,synthetic_overlap_brier,0.14560404356791684,0.1305230010573635,0.16000016905207817,heldout_source_run,450,14
+mlp,Multilayer perceptron,synthetic_secondary_fraction_rmse,0.19862880510359934,0.17266485659331351,0.2206665750433765,heldout_source_run,450,14
+mlp,Multilayer perceptron,synthetic_secondary_fraction_mae,0.11913731291300966,0.10391359545774005,0.13307655257745357,heldout_source_run,450,14
+mlp,Multilayer perceptron,calibration_slope,0.47538062351363736,0.39865211984311333,0.5777270046981118,heldout_source_run,450,14
+mlp,Multilayer perceptron,calibration_intercept,0.07797474687630765,0.06318913691814483,0.08947611278530983,heldout_source_run,450,14
+mlp,Multilayer perceptron,accepted_recovery_rmse,0.22972579628047132,0.19821884085842845,0.26040080248705366,heldout_source_run,450,14
+mlp,Multilayer perceptron,accepted_efficiency,0.41629464285714285,0.3984375,0.4363448660714285,heldout_source_run,450,14
+mlp,Multilayer perceptron,synthetic_overlap_auc,0.8689418247767857,0.8507955583844866,0.8899849853515625,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,synthetic_overlap_brier,0.15451701717980204,0.13747597863722108,0.16923842487394833,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,synthetic_secondary_fraction_rmse,0.13918857348420374,0.13057559675153288,0.14677151976535224,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,synthetic_secondary_fraction_mae,0.09012660729737035,0.08212898458446959,0.09621414824434323,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,calibration_slope,0.856786515215439,0.8257448002450091,0.8841986799534487,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,calibration_intercept,0.04510829550496338,0.03748306876637113,0.05220300496908854,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,accepted_recovery_rmse,0.12840464698948903,0.1197269142171569,0.1360452736231466,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,accepted_efficiency,0.38359375,0.3576395089285715,0.40611328124999996,heldout_source_run,450,14
+one_d_cnn,Compact 1D-CNN,synthetic_overlap_auc,0.8459831891741071,0.8223917759486605,0.8687064034598213,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,synthetic_overlap_brier,0.14856759215995846,0.13606859104941857,0.15634961488883423,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,synthetic_secondary_fraction_rmse,0.12266448886900624,0.11559957980971265,0.12793561717961882,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,synthetic_secondary_fraction_mae,0.08959162404396104,0.08277575552644921,0.09437959631528882,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,calibration_slope,1.0822610567570763,1.068961096558111,1.096594506496406,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,calibration_intercept,0.00013678051771482262,-0.0022754505919539993,0.002742370481185407,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,accepted_recovery_rmse,0.11150993383947219,0.10542929299423952,0.11635582133218536,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,accepted_efficiency,0.3199776785714286,0.3042661830357143,0.34104352678571437,heldout_source_run,450,14
+residual_shape_extratrees,Residual-shape ExtraTrees ensemble,synthetic_overlap_auc,0.8864700753348215,0.8750012294224331,0.9021289411272322,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,synthetic_overlap_brier,0.17776867153418976,0.1637911286513349,0.18867674415100943,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,synthetic_secondary_fraction_rmse,0.17681272357903702,0.16456311734628304,0.18760064681820413,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,synthetic_secondary_fraction_mae,0.12239707463610115,0.11527623925727512,0.1283825366577286,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,calibration_slope,0.578537447133498,0.511652230034577,0.6485378345682092,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,calibration_intercept,0.06607775006815401,0.054507044627543105,0.07564523345743329,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,accepted_recovery_rmse,0.21077021117495556,0.18997230380473587,0.23170394968806615,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,accepted_efficiency,0.40915178571428573,0.3952008928571429,0.42543247767857145,heldout_source_run,450,14
+ridge,Ridge/logistic linear calibration,synthetic_overlap_auc,0.8083733258928572,0.792667977469308,0.8292074148995536,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,synthetic_overlap_brier,0.4707950988607133,0.46461989194721615,0.4778809686027594,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,synthetic_secondary_fraction_rmse,0.36147933421405626,0.3553966836438399,0.3677695376822448,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,synthetic_secondary_fraction_mae,0.28724456105853496,0.2799257436368666,0.29636343367900764,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,calibration_slope,-0.1347611809850447,-0.15106202500658206,-0.12102245886042101,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,calibration_intercept,0.19668144215964034,0.19236660693702895,0.2020527910544675,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,accepted_recovery_rmse,0.5008834414147266,0.4973247538511576,0.503783449862048,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,accepted_efficiency,0.2858258928571429,0.26598493303571424,0.31160435267857145,heldout_source_run,450,14
+traditional_template_fit,Traditional bounded two-pulse template fit,synthetic_overlap_auc,0.4296135602678572,0.4205906284877233,0.438497794015067,heldout_source_run,450,14

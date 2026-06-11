@@ -1,0 +1,603 @@
+{
+  "study": "P05e",
+  "ticket": "1781058292.614.2d602ee2",
+  "worker": "testbeam-laptop-4",
+  "title": "baseline-overlap negative-control lattice",
+  "reproduced": true,
+  "reproduction_gate": "P05a injected anchor plus S10c topology fractions plus S11b traditional high-minus-low from raw ROOT",
+  "split": "leave-one-source-run-out; high-current runs train only on low-current source runs; lattice CIs bootstrap held-out source runs",
+  "bootstrap": {
+    "unit": "source_run",
+    "samples": 450
+  },
+  "strata": {
+    "definition": "S10c amplitude bin x S16 adaptive lowering bin x P02 topology",
+    "n_matched_strata": 8,
+    "global_s10_downstream_high_minus_low": 0.010289747149522063,
+    "n_scored_events": 9522,
+    "sample_cap_per_run_stratum": 100
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "method_label": "Histogram gradient-boosted trees",
+    "metric": "lattice_utility_loss",
+    "value": 0.4728698116016709,
+    "ci": [
+      0.40464488438701196,
+      0.5442107690191282
+    ],
+    "rule": "lowest mean heldout-source-run bootstrap lattice utility loss"
+  },
+  "winner_lattice_metrics": {
+    "lattice_utility_loss": {
+      "value": 0.4728698116016709,
+      "ci": [
+        0.40464488438701196,
+        0.5442107690191282
+      ]
+    },
+    "injected_overlap_ap": {
+      "value": 0.9634623739820727,
+      "ci": [
+        0.9565486340708839,
+        0.9722588664031288
+      ]
+    },
+    "baseline_control_fpr_at_fixed_coverage": {
+      "value": 0.058035714285714295,
+      "ci": [
+        0.04184151785714285,
+        0.07611607142857145
+      ]
+    },
+    "baseline_control_fpr_score50": {
+      "value": 0.07901785714285715,
+      "ci": [
+        0.061880580357142854,
+        0.09642857142857143
+      ]
+    },
+    "fixed_positive_coverage": {
+      "value": 0.8002232142857145,
+      "ci": [
+        0.8000000000000002,
+        0.8006696428571429
+      ]
+    },
+    "recovered_time_rms_ns": {
+      "value": 15.5874345781772,
+      "ci": [
+        14.353363443572546,
+        16.760658127028194
+      ]
+    },
+    "charge_bias_at_fixed_coverage": {
+      "value": -0.03687475428251797,
+      "ci": [
+        -0.04364985804162703,
+        -0.028350309784567946
+      ]
+    },
+    "charge_res68_at_fixed_coverage": {
+      "value": 0.088543070502582,
+      "ci": [
+        0.08054602475067747,
+        0.09560765346390687
+      ]
+    }
+  },
+  "traditional": {
+    "method": "traditional_template_fit",
+    "metric": "matched_stratified_secondary_fraction_high_minus_low",
+    "value": 0.0171913441422925,
+    "ci": [
+      -0.0113353241852964,
+      0.0454045883243938
+    ]
+  },
+  "ml": {
+    "winner_method": "gradient_boosted_trees",
+    "winner_method_label": "Histogram gradient-boosted trees",
+    "winner_metric": "lattice_utility_loss",
+    "winner_value": 0.4728698116016709,
+    "winner_ci": [
+      0.40464488438701196,
+      0.5442107690191282
+    ],
+    "methods_compared": [
+      "traditional_template_fit",
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "one_d_cnn",
+      "residual_shape_extratrees"
+    ]
+  },
+  "method_benchmark": {
+    "gradient_boosted_trees": {
+      "method_label": "Histogram gradient-boosted trees",
+      "lattice_utility_loss": 0.4728698116016709,
+      "ci": [
+        0.40464488438701196,
+        0.5442107690191282
+      ]
+    },
+    "mlp": {
+      "method_label": "Multilayer perceptron",
+      "lattice_utility_loss": 0.7700164529753222,
+      "ci": [
+        0.677845296464763,
+        0.8386180970207289
+      ]
+    },
+    "one_d_cnn": {
+      "method_label": "Compact 1D-CNN",
+      "lattice_utility_loss": 1.0873474686467748,
+      "ci": [
+        0.9331805330474092,
+        1.2026087751723669
+      ]
+    },
+    "residual_shape_extratrees": {
+      "method_label": "Residual-shape ExtraTrees ensemble",
+      "lattice_utility_loss": 0.8747554440334391,
+      "ci": [
+        0.7524708535747173,
+        0.9713500749454138
+      ]
+    },
+    "ridge": {
+      "method_label": "Ridge/logistic linear calibration",
+      "lattice_utility_loss": 1.0280873502416585,
+      "ci": [
+        0.9359570133603161,
+        1.1191860246350978
+      ]
+    },
+    "traditional_template_fit": {
+      "method_label": "Traditional bounded two-pulse template fit",
+      "lattice_utility_loss": 3.9706389998700193,
+      "ci": [
+        3.9572660326478153,
+        3.9834538343474146
+      ]
+    }
+  },
+  "lattice_metrics": {
+    "baseline_control_fpr_at_fixed_coverage": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": 0.058035714285714295,
+        "ci": [
+          0.04184151785714285,
+          0.07611607142857145
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": 0.13549107142857145,
+        "ci": [
+          0.11339285714285714,
+          0.15218191964285713
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": 0.2866071428571429,
+        "ci": [
+          0.23263950892857144,
+          0.3365066964285714
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": 0.19196428571428573,
+        "ci": [
+          0.15528459821428572,
+          0.22494977678571432
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": 0.2245535714285714,
+        "ci": [
+          0.18978236607142857,
+          0.25881696428571416
+        ]
+      },
+      "traditional_template_fit": {
+        "method_label": "Traditional bounded two-pulse template fit",
+        "value": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "baseline_control_fpr_score50": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": 0.07901785714285715,
+        "ci": [
+          0.061880580357142854,
+          0.09642857142857143
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": 0.11183035714285715,
+        "ci": [
+          0.09620535714285715,
+          0.1260658482142857
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": 0.09776785714285716,
+        "ci": [
+          0.08095424107142858,
+          0.11311941964285718
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": 0.057366071428571426,
+        "ci": [
+          0.04196428571428571,
+          0.07589285714285714
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": 0.1310267857142857,
+        "ci": [
+          0.11862723214285716,
+          0.14241071428571428
+        ]
+      },
+      "traditional_template_fit": {
+        "method_label": "Traditional bounded two-pulse template fit",
+        "value": 0.2955357142857143,
+        "ci": [
+          0.27571986607142857,
+          0.32244419642857136
+        ]
+      }
+    },
+    "charge_bias_at_fixed_coverage": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": -0.03687475428251797,
+        "ci": [
+          -0.04364985804162703,
+          -0.028350309784567946
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": -0.03001199696553597,
+        "ci": [
+          -0.041211266521703524,
+          -0.019295868580132342
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": -0.06531454035707553,
+        "ci": [
+          -0.07690867597246778,
+          -0.05237036363162073
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": -0.07146955035411608,
+        "ci": [
+          -0.08076411050071515,
+          -0.062331700939337084
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": -0.049229644494995124,
+        "ci": [
+          -0.05427274867722196,
+          -0.044635443341537705
+        ]
+      },
+      "traditional_template_fit": {
+        "method_label": "Traditional bounded two-pulse template fit",
+        "value": -0.1794258659431873,
+        "ci": [
+          -0.18832349043336535,
+          -0.17104586997466453
+        ]
+      }
+    },
+    "charge_res68_at_fixed_coverage": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": 0.088543070502582,
+        "ci": [
+          0.08054602475067747,
+          0.09560765346390687
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": 0.14090688387995723,
+        "ci": [
+          0.12189227602381501,
+          0.15952840833291212
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": 0.1093984674721707,
+        "ci": [
+          0.10000920146118057,
+          0.11798169356501617
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": 0.10564602316647179,
+        "ci": [
+          0.09731056727491728,
+          0.11238226378598701
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": 0.12288143753911832,
+        "ci": [
+          0.11886292398822725,
+          0.12697802781239936
+        ]
+      },
+      "traditional_template_fit": {
+        "method_label": "Traditional bounded two-pulse template fit",
+        "value": 0.3378472381274113,
+        "ci": [
+          0.32952195398093387,
+          0.3455838572783977
+        ]
+      }
+    },
+    "fixed_positive_coverage": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": 0.8002232142857145,
+        "ci": [
+          0.8000000000000002,
+          0.8006696428571429
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": 0.8000000000000002,
+        "ci": [
+          0.8000000000000002,
+          0.8000000000000002
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": 0.8000000000000002,
+        "ci": [
+          0.8000000000000002,
+          0.8000000000000002
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": 0.8000000000000002,
+        "ci": [
+          0.8000000000000002,
+          0.8000000000000002
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": 0.8000000000000002,
+        "ci": [
+          0.8000000000000002,
+          0.8000000000000002
+        ]
+      },
+      "traditional_template_fit": {
+        "method_label": "Traditional bounded two-pulse template fit",
+        "value": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "injected_overlap_ap": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": 0.9634623739820727,
+        "ci": [
+          0.9565486340708839,
+          0.9722588664031288
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": 0.8989508829249451,
+        "ci": [
+          0.8863417089804687,
+          0.9100320894720862
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": 0.8752803050582508,
+        "ci": [
+          0.8612984715200376,
+          0.8958238409368358
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": 0.9108576268612288,
+        "ci": [
+          0.8962134716947645,
+          0.9244537829017638
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": 0.8447979359737546,
+        "ci": [
+          0.8324913989911661,
+          0.8616711268167702
+        ]
+      },
+      "traditional_template_fit": {
+        "method_label": "Traditional bounded two-pulse template fit",
+        "value": 0.5466341042005791,
+        "ci": [
+          0.5380082288344421,
+          0.5571961418968552
+        ]
+      }
+    },
+    "lattice_utility_loss": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": 0.4728698116016709,
+        "ci": [
+          0.40464488438701196,
+          0.5442107690191282
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": 0.7700164529753222,
+        "ci": [
+          0.677845296464763,
+          0.8386180970207289
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": 1.0873474686467748,
+        "ci": [
+          0.9331805330474092,
+          1.2026087751723669
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": 0.8747554440334391,
+        "ci": [
+          0.7524708535747173,
+          0.9713500749454138
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": 1.0280873502416585,
+        "ci": [
+          0.9359570133603161,
+          1.1191860246350978
+        ]
+      },
+      "traditional_template_fit": {
+        "method_label": "Traditional bounded two-pulse template fit",
+        "value": 3.9706389998700193,
+        "ci": [
+          3.9572660326478153,
+          3.9834538343474146
+        ]
+      }
+    },
+    "recovered_time_rms_ns": {
+      "gradient_boosted_trees": {
+        "method_label": "Histogram gradient-boosted trees",
+        "value": 15.5874345781772,
+        "ci": [
+          14.353363443572546,
+          16.760658127028194
+        ]
+      },
+      "mlp": {
+        "method_label": "Multilayer perceptron",
+        "value": 17.97740502838679,
+        "ci": [
+          16.379386092519542,
+          19.234813482427867
+        ]
+      },
+      "one_d_cnn": {
+        "method_label": "Compact 1D-CNN",
+        "value": 17.176038412919485,
+        "ci": [
+          16.508826057533348,
+          17.85521079912246
+        ]
+      },
+      "residual_shape_extratrees": {
+        "method_label": "Residual-shape ExtraTrees ensemble",
+        "value": 17.965514075640673,
+        "ci": [
+          16.483295718693263,
+          19.14012718887772
+        ]
+      },
+      "ridge": {
+        "method_label": "Ridge/logistic linear calibration",
+        "value": 20.133364905932563,
+        "ci": [
+          18.91859464552519,
+          21.054112389348045
+        ]
+      }
+    }
+  },
+  "leakage_flags": 0,
+  "leakage_checks_pass": true,
+  "conclusion": "Winner by the predeclared negative-control lattice criterion is Histogram gradient-boosted trees with utility loss 0.47287 [0.40464, 0.54421], injected-overlap AP 0.96346 [0.95655, 0.97226], baseline-control FPR 0.05804 [0.04184, 0.07612], recovered-time RMS 15.59 ns [14.35, 16.76], and charge res68 0.08854 [0.08055, 0.09561] at 80% positive coverage. On real matched windows its secondary-fraction high-minus-low transfer estimate is 0.00675 [0.00157, 0.01077], compared with the traditional template-fit estimate 0.01719 [-0.01134, 0.04540]. Raw-root reproduction gates pass and 0 leakage/current-identification sentinels flag. The result supports using the winner as a baseline-aware overlap diagnostic under this support policy, not as an unqualified particle-truth pile-up correction.",
+  "next_tickets": [],
+  "input_sha256": {
+    "data/root/root/hrdb_run_0031.root": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+    "data/root/root/hrdb_run_0032.root": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff",
+    "data/root/root/hrdb_run_0033.root": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973",
+    "data/root/root/hrdb_run_0034.root": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51",
+    "data/root/root/hrdb_run_0035.root": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea",
+    "data/root/root/hrdb_run_0036.root": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee",
+    "data/root/root/hrdb_run_0037.root": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3",
+    "data/root/root/hrdb_run_0039.root": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568",
+    "data/root/root/hrdb_run_0040.root": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17",
+    "data/root/root/hrdb_run_0041.root": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010",
+    "data/root/root/hrdb_run_0042.root": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898",
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0064.root": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+    "configs/p05e_1781058292_614_2d602ee2_baseline_overlap_negative_control_lattice.json": "842441e1203218a64232799cbfd777111ba9a70d15eb08dd24a48d32e085a542",
+    "scripts/p05e_1781058292_614_2d602ee2_baseline_overlap_negative_control_lattice.py": "e608a7b76ee356008b6252d3074a1b4502c11f78bb2d163673a28f47960a402b"
+  },
+  "git_commit": "5a45531302dd933cfd02a4602f693efc18eacddd",
+  "runtime_sec": 909.17
+}

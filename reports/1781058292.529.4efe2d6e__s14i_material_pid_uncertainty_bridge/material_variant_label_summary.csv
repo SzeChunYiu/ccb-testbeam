@@ -1,0 +1,28 @@
+geometry,description,labeled_rows,valid_rows,abstention_fraction,support_atoms,positive_fraction,energy_order_violation_rate_even,energy_order_violation_rate_odd_label_source,common_with_nominal_rows,pid_band_flip_rate_common,action_band_flip_or_abstain_rate_vs_nominal
+nominal_budget,"nominal first-center, spacing, active thickness, dead layer, density, and PSTAR range scale",289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+active_thickness_cm_0p8,one-at-a-time scan: active_thickness_cm=0.8,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+active_thickness_cm_1,one-at-a-time scan: active_thickness_cm=1,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+active_thickness_cm_1p2,one-at-a-time scan: active_thickness_cm=1.2,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_hifir_hidea_hipst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_hifir_hidea_lopst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_hifir_lodea_hipst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_hifir_lodea_lopst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_lofir_hidea_hipst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_lofir_hidea_lopst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_lofir_lodea_hipst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+corner_lofir_lodea_lopst,corner envelope scan,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+dead_layer_cm_0,one-at-a-time scan: dead_layer_cm=0,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+dead_layer_cm_0p1,one-at-a-time scan: dead_layer_cm=0.1,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+dead_layer_cm_0p2,one-at-a-time scan: dead_layer_cm=0.2,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+first_center_cm_1p5,one-at-a-time scan: first_center_cm=1.5,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+first_center_cm_2,one-at-a-time scan: first_center_cm=2,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+first_center_cm_2p5,one-at-a-time scan: first_center_cm=2.5,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+pstar_density_g_cm3_1,one-at-a-time scan: pstar_density_g_cm3=1,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+pstar_density_g_cm3_1p032,one-at-a-time scan: pstar_density_g_cm3=1.032,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+pstar_density_g_cm3_1p06,one-at-a-time scan: pstar_density_g_cm3=1.06,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+pstar_range_scale_0p97,one-at-a-time scan: pstar_range_scale=0.97,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+pstar_range_scale_1,one-at-a-time scan: pstar_range_scale=1,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+pstar_range_scale_1p03,one-at-a-time scan: pstar_range_scale=1.03,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+spacing_cm_3p8,one-at-a-time scan: spacing_cm=3.8,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+spacing_cm_4,one-at-a-time scan: spacing_cm=4,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0
+spacing_cm_4p2,one-at-a-time scan: spacing_cm=4.2,289626,579230,0.4999810092709287,122,0.5,0.0,0.0,289626,0.0,0.0

@@ -1,0 +1,7 @@
+method,ambiguous_promoted,ambiguous_promoted_clean,ambiguous_promoted_violating,labelled_events,clean,violating,labelled_delta_to_12147,clean_delta_to_10636,violating_delta_to_1511,tuple_l1_error
+traditional_span_q,2341,2341,0,12238,9924,2314,91,-712,803,1606
+mlp,4115,4061,54,14012,11644,2368,1865,1008,857,3730
+gradient_boosted_trees,4277,4217,60,14174,11800,2374,2027,1164,863,4054
+gated_dilated_cnn,4413,4267,146,14310,11850,2460,2163,1214,949,4326
+ridge,4468,4275,193,14365,11858,2507,2218,1222,996,4436
+cnn1d,4580,4338,242,14477,11921,2556,2330,1285,1045,4660

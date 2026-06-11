@@ -1,0 +1,5 @@
+check,status,detail
+raw_root_reproduction_count,pass,selected B-stave pulses counted from raw HRDv only
+run_split,pass,Sample I trains; run 64 calibrates scalar offsets; Sample II analysis runs are held out
+shuffled_target_sentinel,pass,shuffled-target MAE 1.6549 versus full HGB MAE 0.6419
+peak_phase_dropout_specificity,pass,dropout HGB MAE 0.6653 versus full HGB MAE 0.6419

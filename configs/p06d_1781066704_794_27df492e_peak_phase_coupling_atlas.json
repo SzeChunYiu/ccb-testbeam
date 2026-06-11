@@ -1,0 +1,43 @@
+{
+  "study": "P06d",
+  "ticket": "1781066704.794.27df492e",
+  "worker": "testbeam-laptop-4",
+  "title": "peak-phase charge-timing coupling atlas",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781066704.794.27df492e__p06d_peak_phase_charge_timing_coupling_atlas",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "train_groups": ["sample_i_calib", "sample_i_analysis"],
+  "calibration_groups": ["sample_ii_calib"],
+  "test_groups": ["sample_ii_analysis"],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "timing_staves": ["B4", "B6", "B8"],
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "period_ns": 10.0,
+  "bootstrap_replicates": 500,
+  "random_seed": 61706704,
+  "max_train_records": 85000,
+  "torch_epochs": 10,
+  "torch_batch_size": 1024,
+  "appended_follow_up_ticket": {
+    "id": "1781188455.827.4be93277",
+    "title": "P06e external peak-phase causality control",
+    "body": "Question: does the P06d peak/CFD-phase coupling burden persist in an external control that breaks same-event pulse physics, such as forced-random/no-pulse ROOT where available or A-stack/B-stack event-matched controls? Expected information gain: distinguishes a causal waveform atom from acquisition/run-family confounding after the P06d phase-gated CNN win. Compare a support-matched peak-phase atlas against ridge, gradient-boosted trees, MLP, 1D-CNN, and the phase-gated CNN with run-held-out bootstrap CIs and shuffled/phase-dropout sentinels."
+  },
+  "pre_registered": {
+    "primary_metric": "held-out Sample-II MAE for the standardized peak-phase coupling burden, evaluated on B4/B6/B8 pulses in events with at least two selected timing staves",
+    "split": "train on Sample I runs, calibrate scalar offsets on run 64 only, evaluate only Sample II analysis runs 58-63 and 65; all confidence intervals resample held-out runs",
+    "traditional_method": "support-matched median atlas in stave, amplitude, peak-sample, and CFD-phase bins",
+    "ml_methods": ["ridge", "hist_gradient_boosted_trees", "mlp", "one_dimensional_cnn", "phase_gated_residual_cnn"],
+    "sentinels": ["amplitude_only_hgb", "run_only_hgb", "shuffled_target_hgb", "peak_phase_dropout_hgb"],
+    "significance_level": 0.05,
+    "win_rule": "lowest held-out MAE; ML wins only if its paired run-block bootstrap CI for method minus traditional is entirely below zero"
+  }
+}

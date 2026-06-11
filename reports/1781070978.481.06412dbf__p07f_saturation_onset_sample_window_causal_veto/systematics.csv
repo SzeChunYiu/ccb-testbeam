@@ -1,0 +1,5 @@
+check,finding,best_method,best_window,best_artificial_res68
+late_tail_control_negative_control,included as non-onset control window,ML_mlp,late_tail_control,0.028173582825906
+onset_windows_only,ranking restricted to rising_edge/peak/early_tail,ML_mlp,early_tail,0.0186472450541879
+traditional_vs_best_ml,onset-window best traditional utility versus best ML utility,traditional_rising_template,rising_edge,0.1070896690682498
+all_samples_reference_diagnostic,best diagnostic row excluded from production winner ranking,ML_mlp,all_samples_reference,0.0237377878807381

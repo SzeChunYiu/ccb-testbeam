@@ -1,0 +1,7 @@
+probe,value,notes
+pre-injection D_t,0.5000000000000001,Same for clean/injected pair members; should be near chance.
+absolute-amplitude-only GBT,0.5273594220277352,Excluded nuisance channel; should be below the shape winner.
+run+charge-bin label permutation mean AUC,0.49917600323349465,Destroys labels within run and target-charge strata.
+pair split violations,0.0,Must be zero.
+forbidden strict-shape columns,0.0,strict_shape_columns raises before fitting if forbidden inputs appear.
+charge-bin count,5.0,Used for charge-pair-matched null permutations.

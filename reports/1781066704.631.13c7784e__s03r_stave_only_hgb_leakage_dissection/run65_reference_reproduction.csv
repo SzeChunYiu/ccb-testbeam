@@ -1,0 +1,4 @@
+method,value,reference_value,delta_ns,n_pair_residuals,pass
+template_phase_base,2.889152765080617,2.889152765080617,0.0,198,True
+analytic_timewalk,1.4946400762696688,1.494640076269676,-7.327471962526033e-15,198,True
+s03b_binned_timewalk,1.5695763825403084,1.5695763825403084,0.0,198,True

@@ -1,0 +1,72 @@
+{
+  "study_id": "P10j",
+  "title": "tail-surrogate live-time control atlas",
+  "ticket_id": "1781061067.698.6c8a6921",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781061067.698.6c8a6921__p10j_tail_surrogate_live_time_control_atlas",
+  "random_seed": 20260611,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "aligned_relative_grid": [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "current_strata": {
+    "low_2nA": [46, 47],
+    "high_20nA": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii": [58, 59, 60, 61, 62, 63, 64, 65],
+    "calibration": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  },
+  "eval_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65],
+  "expected_selected_pulses": 640737,
+  "expected_analysis_rows": 377362,
+  "expected_s10b_live10_ns": 124.79018394263471,
+  "s10b_live10_tolerance_ns": 0.000001,
+  "template_amplitude_edges_adc": [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000],
+  "template_min_bin_pulses": 25,
+  "saturation_bins": [
+    {"name": "unsaturated", "low": 1000.0, "high": 6500.0},
+    {"name": "boundary", "low": 6500.0, "high": 9000.0},
+    {"name": "saturated_proxy", "low": 9000.0, "high": 1000000000.0}
+  ],
+  "max_eval_per_run_stave_amp_sat": 32,
+  "max_train_rows_per_fold": 9000,
+  "bootstrap_iterations": 800,
+  "atlas_min_rows": 45,
+  "atlas_min_runs": 2,
+  "control_live10_tolerance_ns": 2.0,
+  "control_secondary_tolerance": 0.025,
+  "control_timing_tolerance_ns": 0.5,
+  "ridge_alpha": 25.0,
+  "gbt": {
+    "n_estimators": 28,
+    "learning_rate": 0.05,
+    "max_depth": 2,
+    "subsample": 0.8,
+    "random_state": 20260611
+  },
+  "mlp": {
+    "hidden_layer_sizes": [56, 28],
+    "alpha": 0.0005,
+    "learning_rate_init": 0.001,
+    "max_iter": 55,
+    "early_stopping": true,
+    "n_iter_no_change": 8,
+    "random_state": 20260611
+  },
+  "cnn": {
+    "epochs": 5,
+    "batch_size": 384,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "channels": 16
+  }
+}

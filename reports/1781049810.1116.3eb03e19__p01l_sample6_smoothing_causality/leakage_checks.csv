@@ -1,0 +1,148 @@
+heldout_run,check,value,pass,detail
+58,train_heldout_run_overlap,0.0,True,
+58,train_heldout_event_id_overlap,0.0,True,
+58,feature_audit,0.0,True,"same-pulse normalized waveform samples, amplitude summaries, S02b train-template SSE, stave one-hot; no run id, event id, event order, other-stave time, or target"
+58,shuffled_target_worse:ridge_full,0.2728595987336495,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:hgb_full,0.5614948575696956,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:extra_trees_full,0.6648067151258192,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:mlp_full,0.017325917017679604,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:cnn1d_full,0.3230845014730914,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:early_late_gated_full,0.3775136663301317,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:ridge_no_sample6,0.24422636395517294,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:hgb_no_sample6,0.33809678004873667,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:extra_trees_no_sample6,0.7139321160749357,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:mlp_no_sample6,0.29243027181035797,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:cnn1d_no_sample6,0.12495869731976761,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:early_late_gated_no_sample6,0.2522633719162173,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:ridge_only_sample6,0.15242812513467174,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:hgb_only_sample6,0.40768938638029795,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:extra_trees_only_sample6,0.5019191832737167,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:mlp_only_sample6,0.14754277681408845,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:cnn1d_only_sample6,0.3119179807011967,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:early_late_gated_only_sample6,0.23499447700190168,True,positive means shuffled target is no better than nominal
+59,train_heldout_run_overlap,0.0,True,
+59,train_heldout_event_id_overlap,0.0,True,
+59,feature_audit,0.0,True,"same-pulse normalized waveform samples, amplitude summaries, S02b train-template SSE, stave one-hot; no run id, event id, event order, other-stave time, or target"
+59,shuffled_target_worse:ridge_full,0.26607936821981615,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:hgb_full,0.4974554153699522,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:extra_trees_full,0.7572860903653884,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:mlp_full,0.12029696544610391,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:cnn1d_full,0.2243134201795256,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:early_late_gated_full,0.16071983815471103,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:ridge_no_sample6,0.23940605343338106,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:hgb_no_sample6,0.46794091806233995,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:extra_trees_no_sample6,0.66102013695694,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:mlp_no_sample6,0.04230428184073287,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:cnn1d_no_sample6,0.3780541507872266,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:early_late_gated_no_sample6,0.3079734334679287,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:ridge_only_sample6,0.25117296474954665,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:hgb_only_sample6,0.45381169831170953,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:extra_trees_only_sample6,0.5596432306357262,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:mlp_only_sample6,0.32832578658599587,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:cnn1d_only_sample6,0.2892197405735919,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:early_late_gated_only_sample6,0.2271896263998785,True,positive means shuffled target is no better than nominal
+60,train_heldout_run_overlap,0.0,True,
+60,train_heldout_event_id_overlap,0.0,True,
+60,feature_audit,0.0,True,"same-pulse normalized waveform samples, amplitude summaries, S02b train-template SSE, stave one-hot; no run id, event id, event order, other-stave time, or target"
+60,shuffled_target_worse:ridge_full,0.05315452138828691,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:hgb_full,0.35393414608025386,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:extra_trees_full,0.4231456805386218,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:mlp_full,0.1647349126725417,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:cnn1d_full,0.14723798489749784,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:early_late_gated_full,0.06776092712853576,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:ridge_no_sample6,0.0734598178300061,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:hgb_no_sample6,0.32368777072479316,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:extra_trees_no_sample6,0.4429335189732764,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:mlp_no_sample6,0.1642332830511517,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:cnn1d_no_sample6,0.22865304903581674,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:early_late_gated_no_sample6,0.2983532165321665,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:ridge_only_sample6,0.06235735458610736,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:hgb_only_sample6,0.2812613447859782,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:extra_trees_only_sample6,0.4277616994670326,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:mlp_only_sample6,-0.016927904101995406,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:cnn1d_only_sample6,0.13599284369705078,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:early_late_gated_only_sample6,0.2088026671792882,True,positive means shuffled target is no better than nominal
+61,train_heldout_run_overlap,0.0,True,
+61,train_heldout_event_id_overlap,0.0,True,
+61,feature_audit,0.0,True,"same-pulse normalized waveform samples, amplitude summaries, S02b train-template SSE, stave one-hot; no run id, event id, event order, other-stave time, or target"
+61,shuffled_target_worse:ridge_full,0.9600531970515211,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:hgb_full,1.0618387329019179,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:extra_trees_full,1.0946061566993004,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:mlp_full,0.16966558651580854,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:cnn1d_full,0.14121527611392493,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:early_late_gated_full,0.07287071227529474,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:ridge_no_sample6,0.8805812455981497,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:hgb_no_sample6,0.996886919005672,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:extra_trees_no_sample6,1.1964320108058142,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:mlp_no_sample6,0.21616132885109063,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:cnn1d_no_sample6,0.2955597938865775,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:early_late_gated_no_sample6,0.24718743236495322,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:ridge_only_sample6,0.8873093867085635,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:hgb_only_sample6,1.081682009689453,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:extra_trees_only_sample6,1.0200035392440185,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:mlp_only_sample6,0.29657952669513654,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:cnn1d_only_sample6,0.6361295971290872,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:early_late_gated_only_sample6,0.45586129641472173,True,positive means shuffled target is no better than nominal
+62,train_heldout_run_overlap,0.0,True,
+62,train_heldout_event_id_overlap,0.0,True,
+62,feature_audit,0.0,True,"same-pulse normalized waveform samples, amplitude summaries, S02b train-template SSE, stave one-hot; no run id, event id, event order, other-stave time, or target"
+62,shuffled_target_worse:ridge_full,0.2657408349950827,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:hgb_full,0.5457018774966849,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:extra_trees_full,0.6361474405999672,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:mlp_full,0.19143423991564523,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:cnn1d_full,0.22380230157476277,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:early_late_gated_full,0.6068950795286583,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:ridge_no_sample6,0.3140660704224245,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:hgb_no_sample6,0.5279644376205781,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:extra_trees_no_sample6,0.6498860650789802,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:mlp_no_sample6,-0.024912822879008534,False,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:cnn1d_no_sample6,0.26649090670382036,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:early_late_gated_no_sample6,0.39505081933204234,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:ridge_only_sample6,0.3138630899420669,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:hgb_only_sample6,0.5051916923170658,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:extra_trees_only_sample6,0.4923747226963444,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:mlp_only_sample6,0.09836729619571383,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:cnn1d_only_sample6,0.32484889841908204,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:early_late_gated_only_sample6,0.4665800930401276,True,positive means shuffled target is no better than nominal
+63,train_heldout_run_overlap,0.0,True,
+63,train_heldout_event_id_overlap,0.0,True,
+63,feature_audit,0.0,True,"same-pulse normalized waveform samples, amplitude summaries, S02b train-template SSE, stave one-hot; no run id, event id, event order, other-stave time, or target"
+63,shuffled_target_worse:ridge_full,0.23184429563715092,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:hgb_full,0.2913101346369591,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:extra_trees_full,0.5548767197176077,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:mlp_full,0.20529584420606795,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:cnn1d_full,0.10040416869316426,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:early_late_gated_full,0.07385918235411393,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:ridge_no_sample6,0.17762133650618983,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:hgb_no_sample6,0.3115441293993224,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:extra_trees_no_sample6,0.5993200308224147,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:mlp_no_sample6,0.2995194504280725,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:cnn1d_no_sample6,0.3102855500421271,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:early_late_gated_no_sample6,0.00560700370621503,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:ridge_only_sample6,0.12820276506573713,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:hgb_only_sample6,0.3253205956315195,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:extra_trees_only_sample6,0.41408455072975614,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:mlp_only_sample6,0.24777653598678495,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:cnn1d_only_sample6,0.12344688125366021,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:early_late_gated_only_sample6,0.08656105408084258,True,positive means shuffled target is no better than nominal
+65,train_heldout_run_overlap,0.0,True,
+65,train_heldout_event_id_overlap,0.0,True,
+65,feature_audit,0.0,True,"same-pulse normalized waveform samples, amplitude summaries, S02b train-template SSE, stave one-hot; no run id, event id, event order, other-stave time, or target"
+65,shuffled_target_worse:ridge_full,0.11512448461055702,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:hgb_full,0.30395513278497854,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:extra_trees_full,0.5438577250058794,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:mlp_full,0.14951853568140372,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:cnn1d_full,0.03413854555607854,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:early_late_gated_full,0.19617329815639262,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:ridge_no_sample6,0.1207279236804435,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:hgb_no_sample6,0.230667088178651,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:extra_trees_no_sample6,0.4206469146441034,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:mlp_no_sample6,0.24341197135713855,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:cnn1d_no_sample6,0.0074680574897985075,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:early_late_gated_no_sample6,0.19693215732307356,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:ridge_only_sample6,0.12190416757201405,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:hgb_only_sample6,0.2738194663588698,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:extra_trees_only_sample6,0.5263040880673293,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:mlp_only_sample6,-0.019257636623250196,False,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:cnn1d_only_sample6,0.13979579482034454,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:early_late_gated_only_sample6,-0.012265245365081334,False,positive means shuffled target is no better than nominal

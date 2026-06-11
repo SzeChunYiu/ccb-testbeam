@@ -1,0 +1,7 @@
+check,value,pass,detail
+raw_root_reproduction_all_rows_pass,1.0,True,all registered selected-pulse count gates match exactly
+primary_panel_contains_required_families,1.0,True,"traditional S03, ridge, GBT, MLP, 1D-CNN, and feature-gated new architecture are present"
+split_unit_is_run,7.0,True,primary P03f panel leaves out each Sample-II analysis run
+s03_gate_ci_pass_count,5.0,True,number of required-family methods whose ML-minus-S03 delta CI is wholly below zero
+shuffled_target_controls_near_s03,1.566861978024571,True,median shuffled-target control should sit near analytic comparator rather than the ML winner
+best_shuffled_control_beats_s03_by_less_than_0p05_ns,0.0067419674790552,True,small negative shuffled deltas are treated as finite-sample stability caveats

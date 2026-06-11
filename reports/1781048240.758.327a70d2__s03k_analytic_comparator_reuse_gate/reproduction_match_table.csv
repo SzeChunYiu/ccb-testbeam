@@ -1,0 +1,7 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total_selected_pulses,640737,640737,0,0,True
+sample_ii_analysis_selected_pulses,125096,125096,0,0,True
+sample_ii_analysis_B2,88213,88213,0,0,True
+sample_ii_analysis_B4,21229,21229,0,0,True
+sample_ii_analysis_B6,11148,11148,0,0,True
+sample_ii_analysis_B8,4506,4506,0,0,True

@@ -1,0 +1,53 @@
+{
+  "ticket_id": "1781054026.1999.7ad97cb0",
+  "study_id": "P09h",
+  "title": "baseline-excursion temporal subtype ledger",
+  "output_dir": "reports/1781054026.1999.7ad97cb0__p09h_baseline_excursion_temporal_subtype_ledger",
+  "p09a_config": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+  "p09d_script": "scripts/p09d_1781032068_1433_5cef09d4_delayed_peak_recovery_refit.py",
+  "primary_metric": "macro_f1",
+  "random_seed": 1781054026,
+  "bootstrap_replicates": 100,
+  "max_train_rows": 28000,
+  "min_test_rows_per_run": 20,
+  "current_groups": {
+    "low_2nA": [46, 47],
+    "high_20nA": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  },
+  "fixed_endpoint_thresholds": {
+    "timing_tail_samples": 5.0,
+    "dropout_depth": 0.18
+  },
+  "subtype_quantiles": {
+    "baseline_mad_high": 0.70,
+    "slope_abs_high": 0.75,
+    "early_fraction_high": 0.75,
+    "cfd_abs_high": 0.80,
+    "width_half_high": 0.80,
+    "peak_sample_late": 0.70,
+    "late_fraction_high": 0.75,
+    "dropout_depth_high": 0.75,
+    "secondary_fraction_high": 0.75,
+    "charge_bias_abs_high": 0.75
+  },
+  "ml": {
+    "ridge_alpha": 2.0,
+    "gbt_max_iter": 90,
+    "gbt_learning_rate": 0.04,
+    "gbt_max_leaf_nodes": 15,
+    "gbt_l2_regularization": 0.3,
+    "mlp_hidden_layer_sizes": [64, 32],
+    "mlp_alpha": 0.001,
+    "mlp_max_iter": 120,
+    "cnn_epochs": 8,
+    "cnn_batch_size": 512,
+    "cnn_learning_rate": 0.001,
+    "cnn_weight_decay": 0.0001
+  },
+  "next_tickets": [
+    {
+      "title": "P09i blinded visual calibration of baseline-excursion temporal subtypes",
+      "body": "Blinded reviewers should score a balanced gallery from the P09h temporal subtype ledger, then compare reviewer agreement and endpoint enrichment against the train-run frozen subtype cuts. Expected information gain: turns the P09h operational pseudo-label ledger into a calibrated uncertainty on which baseline-excursion subtypes are physical enough for downstream veto/recovery policy."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "ticket_id": "1781043998.641.6ef93138",
+  "study_id": "P02h",
+  "worker": "testbeam-laptop-3",
+  "title": "hand-latent morphology consensus failures",
+  "output_dir": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures",
+  "upstream_p02e_dir": "reports/1781016529.1278.4216653c",
+  "p09b_gallery_path": "reports/1781011449.1304.37c054cc__p09b_manual_waveform_gallery_adjudication/adjudication_labels.csv",
+  "p07_run_summary_path": "reports/1781018174.2030.05ac1ce2/pseudo_saturation_recovery_by_run.csv",
+  "s16_run_summary_path": "reports/1781031000.2442.5ff56e52__s16h_sorted_baseline_pretrigger_pedestals/heldout_by_run.csv",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_total_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "max_per_run_stave_benchmark": 450,
+  "outer_folds": 5,
+  "bootstrap_replicates": 500,
+  "random_seed": 20260611,
+  "cnn": {
+    "epochs": 4,
+    "batch_size": 512,
+    "learning_rate": 0.001,
+    "max_train_rows": 24000
+  }
+}

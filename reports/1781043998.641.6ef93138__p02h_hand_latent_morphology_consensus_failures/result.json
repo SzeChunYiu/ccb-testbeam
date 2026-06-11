@@ -1,0 +1,493 @@
+{
+  "study": "P02h",
+  "ticket": "1781043998.641.6ef93138",
+  "worker": "testbeam-laptop-3",
+  "title": "hand-latent morphology consensus failures",
+  "raw_root_dir": "data/root/root",
+  "reproduced": true,
+  "repro_tolerance": "exact selected-pulse count",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true,
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "amplitude_cut_adc": 1000.0,
+    "staves": [
+      "B2",
+      "B4",
+      "B6",
+      "B8"
+    ]
+  },
+  "split": {
+    "outer_folds": 5,
+    "n_runs": 33,
+    "benchmark_rows": 42370,
+    "benchmark_key_sha256": "565dc01daae5f666ea4444262cb9493678c4f113599131823d937c93f232bdfe"
+  },
+  "targets": {
+    "consensus_failure_any_rate": 0.25133349067736604,
+    "consensus_failure_manual_rate": 0.15551097474628275,
+    "consensus_failure_peak_rate": 0.22954920934623554
+  },
+  "traditional": {
+    "metric": "average_precision",
+    "value": 0.5441843193422519,
+    "ci": [
+      0.47321176330656667,
+      0.6085778377491812
+    ]
+  },
+  "ml": {
+    "metric": "average_precision",
+    "method": "gradient_boosted_trees",
+    "value": 0.9211861618045283,
+    "ci": [
+      0.8974606006677719,
+      0.9413793262914243
+    ]
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "average_precision": 0.9211861618045283,
+    "ci_low": 0.8974606006677719,
+    "ci_high": 0.9413793262914243,
+    "delta_vs_traditional": 0.37700184246227636,
+    "delta_ci_low": 0.3087885407065654,
+    "delta_ci_high": 0.44480039733807225
+  },
+  "ml_beats_baseline": true,
+  "winner_delta_vs_traditional": {
+    "metric": "average_precision",
+    "delta": 0.37700184246227636,
+    "ci": [
+      0.3087885407065654,
+      0.44480039733807225
+    ]
+  },
+  "falsification": {
+    "preregistered_metric": "average_precision for consensus_failure_any under run-block splits",
+    "n_tries": 6,
+    "paired_bootstrap_ci_excludes_zero": true,
+    "shuffled_label_ap": 0.2924457948146486
+  },
+  "method_summary": [
+    {
+      "method": "1d_cnn",
+      "metric": "roc_auc",
+      "value": 0.9543390479748268,
+      "ci_low": 0.9460419064473151,
+      "ci_high": 0.9625195558582745,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "1d_cnn",
+      "metric": "average_precision",
+      "value": 0.8329919044199215,
+      "ci_low": 0.7936023597035333,
+      "ci_high": 0.8705923047135622,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "1d_cnn",
+      "metric": "brier",
+      "value": 0.11061692856786812,
+      "ci_low": 0.09448901543591527,
+      "ci_high": 0.12478336762822792,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "1d_cnn",
+      "metric": "ece",
+      "value": 0.12892681922638838,
+      "ci_low": 0.11259893111423722,
+      "ci_high": 0.14598191503864338,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "amplitude_only_sentinel",
+      "metric": "roc_auc",
+      "value": 0.5963231167988872,
+      "ci_low": 0.5553692516893243,
+      "ci_high": 0.6387636455748122,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "amplitude_only_sentinel",
+      "metric": "average_precision",
+      "value": 0.32114391881000687,
+      "ci_low": 0.28233248236845393,
+      "ci_high": 0.36190127345889134,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "amplitude_only_sentinel",
+      "metric": "brier",
+      "value": 0.1793930478315354,
+      "ci_low": 0.16883359990416436,
+      "ci_high": 0.1889001986553113,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "amplitude_only_sentinel",
+      "metric": "ece",
+      "value": 0.08423491439588204,
+      "ci_low": 0.07164930766492568,
+      "ci_high": 0.09828884892305394,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "metric": "roc_auc",
+      "value": 0.9745795849868718,
+      "ci_low": 0.9681034341806966,
+      "ci_high": 0.9805061208348229,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "metric": "average_precision",
+      "value": 0.9211861618045283,
+      "ci_low": 0.8974606006677719,
+      "ci_high": 0.9413793262914243,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "metric": "brier",
+      "value": 0.09957816963349604,
+      "ci_low": 0.08595278624400872,
+      "ci_high": 0.11411174651257855,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "metric": "ece",
+      "value": 0.1206736545471689,
+      "ci_low": 0.1057568289797926,
+      "ci_high": 0.13738285634448646,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "mlp",
+      "metric": "roc_auc",
+      "value": 0.9677786024471513,
+      "ci_low": 0.9586594569585324,
+      "ci_high": 0.9753696772961082,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "mlp",
+      "metric": "average_precision",
+      "value": 0.9018864757286359,
+      "ci_low": 0.8736246324948096,
+      "ci_high": 0.9276678132003454,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "mlp",
+      "metric": "brier",
+      "value": 0.09598633516131556,
+      "ci_low": 0.08361873365586507,
+      "ci_high": 0.10879982461599773,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "mlp",
+      "metric": "ece",
+      "value": 0.12134999422502492,
+      "ci_low": 0.10797698062463691,
+      "ci_high": 0.13415672998491476,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "ridge_logistic",
+      "metric": "roc_auc",
+      "value": 0.942923121804979,
+      "ci_low": 0.9311792906784118,
+      "ci_high": 0.9528739546543344,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "ridge_logistic",
+      "metric": "average_precision",
+      "value": 0.8230759912713322,
+      "ci_low": 0.7830904290710862,
+      "ci_high": 0.8583737670837381,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "ridge_logistic",
+      "metric": "brier",
+      "value": 0.10911440387379132,
+      "ci_low": 0.09579406932563526,
+      "ci_high": 0.1232529890001837,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "ridge_logistic",
+      "metric": "ece",
+      "value": 0.1267364204495107,
+      "ci_low": 0.11255901172116414,
+      "ci_high": 0.1413524648434326,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "run_only_sentinel",
+      "metric": "roc_auc",
+      "value": 0.5,
+      "ci_low": 0.5,
+      "ci_high": 0.5,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "run_only_sentinel",
+      "metric": "average_precision",
+      "value": 0.24335863468654526,
+      "ci_low": 0.2199533918917753,
+      "ci_high": 0.26627951939444905,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "run_only_sentinel",
+      "metric": "brier",
+      "value": 0.18947444528673618,
+      "ci_low": 0.17958924045846264,
+      "ci_high": 0.1992506345764987,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "run_only_sentinel",
+      "metric": "ece",
+      "value": 0.08256308510029764,
+      "ci_low": 0.06479740151364675,
+      "ci_high": 0.10242089278742512,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shape_gated_cnn",
+      "metric": "roc_auc",
+      "value": 0.9643016657875726,
+      "ci_low": 0.9554137683027025,
+      "ci_high": 0.9716304104195862,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shape_gated_cnn",
+      "metric": "average_precision",
+      "value": 0.8847649605811919,
+      "ci_low": 0.8451870211515919,
+      "ci_high": 0.9137227463648561,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shape_gated_cnn",
+      "metric": "brier",
+      "value": 0.10444159927120288,
+      "ci_low": 0.09174904612114573,
+      "ci_high": 0.1189619705620004,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shape_gated_cnn",
+      "metric": "ece",
+      "value": 0.12826445694774025,
+      "ci_low": 0.11271012401880942,
+      "ci_high": 0.143081462992887,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shuffled_label_sentinel",
+      "metric": "roc_auc",
+      "value": 0.4645213157176898,
+      "ci_low": 0.43260895863085447,
+      "ci_high": 0.49160031459462383,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shuffled_label_sentinel",
+      "metric": "average_precision",
+      "value": 0.2924457948146486,
+      "ci_low": 0.26168582624156955,
+      "ci_high": 0.3244136925927976,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shuffled_label_sentinel",
+      "metric": "brier",
+      "value": 0.19221163450020534,
+      "ci_low": 0.1824905170366341,
+      "ci_high": 0.20252971383241244,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "shuffled_label_sentinel",
+      "metric": "ece",
+      "value": 0.1117159257351985,
+      "ci_low": 0.09279654656990786,
+      "ci_high": 0.13248533802144577,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "topology_only_sentinel",
+      "metric": "roc_auc",
+      "value": 0.6344999682853064,
+      "ci_low": 0.5943146063964727,
+      "ci_high": 0.6767770560764147,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "topology_only_sentinel",
+      "metric": "average_precision",
+      "value": 0.3336744744597004,
+      "ci_low": 0.29739694326700994,
+      "ci_high": 0.37792694664017223,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "topology_only_sentinel",
+      "metric": "brier",
+      "value": 0.17399977776849027,
+      "ci_low": 0.16349041957768978,
+      "ci_high": 0.1837972669045354,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "topology_only_sentinel",
+      "metric": "ece",
+      "value": 0.08117157216834131,
+      "ci_low": 0.06817193584684006,
+      "ci_high": 0.09374031150691961,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "traditional_atom_score",
+      "metric": "roc_auc",
+      "value": 0.8248183340734783,
+      "ci_low": 0.8008588458420953,
+      "ci_high": 0.8524526590651058,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "traditional_atom_score",
+      "metric": "average_precision",
+      "value": 0.5441843193422519,
+      "ci_low": 0.47321176330656667,
+      "ci_high": 0.6085778377491812,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "traditional_atom_score",
+      "metric": "brier",
+      "value": 0.1574030314139843,
+      "ci_low": 0.1366037561937497,
+      "ci_high": 0.17766780677173466,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    },
+    {
+      "method": "traditional_atom_score",
+      "metric": "ece",
+      "value": 0.15379999315365855,
+      "ci_low": 0.13696527777528472,
+      "ci_high": 0.17244364413565935,
+      "n": 42370,
+      "positive_rate": 0.25133349067736604
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_reproduction_passed",
+      "value": 1.0,
+      "pass": true,
+      "note": "raw ROOT selected-pulse count exactly matches S00/P02e gate"
+    },
+    {
+      "check": "benchmark_key_match_p02e",
+      "value": 1.0,
+      "pass": true,
+      "note": "reconstructed sample keys match frozen P02e labels"
+    },
+    {
+      "check": "outer_split_run_overlap",
+      "value": 0.0,
+      "pass": true,
+      "note": "outer folds are disjoint run blocks"
+    },
+    {
+      "check": "p09b_gallery_join_fraction",
+      "value": 0.0034694359216426718,
+      "pass": true,
+      "note": "curated gallery is partial by design"
+    },
+    {
+      "check": "shuffled_label_ap_minus_positive_rate",
+      "value": 0.04111230413728256,
+      "pass": true,
+      "note": "null sentinel should stay close to class prevalence"
+    },
+    {
+      "check": "run_only_ap",
+      "value": 0.24335863468654526,
+      "pass": true,
+      "note": "large run-only AP would indicate run nuisance dominance"
+    },
+    {
+      "check": "p02e_forbidden_release_minus_trainonly_manual_ami",
+      "value": 0.02685448437341703,
+      "pass": true,
+      "note": "copied from frozen P02e diagnostic"
+    }
+  ],
+  "input_sha256": "bedb606eafd84a258a6c6e46a30c99d7e9ba459bd6d24d98e1aeb2b89a56e1ae",
+  "git_commit": "1ca9c0783d8270e52425f076d36773459dd98260",
+  "critic": "pending",
+  "next_tickets": [
+    "P02i: Freeze the P02h consensus-failure label and test the shape-gated CNN on a fresh raw-root sample not used by P02e; expected information gain: separates true morphology generalization from target-construction artifacts."
+  ],
+  "conclusion": "The consensus-failure map shows that disagreement is concentrated in peak-phase and tail/curvature boundary atoms rather than in a pure run artifact. The best method is `gradient_boosted_trees` with AP 0.9212; the paired AP delta versus the transparent atom score is +0.3770 [+0.3088, +0.4448]. Because the target is constructed from frozen P02e method disagreements, this is an error-atlas result, not an independent physics label.",
+  "runtime_seconds": 495.1
+}

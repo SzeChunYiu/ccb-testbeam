@@ -3,24 +3,24 @@
   "script": "scripts/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.py",
   "config": "configs/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.json",
   "python": "3.7.6",
-  "git_commit": "28bcfad5e8a5779a85e2286e402476011eab650a",
+  "git_commit": "7f3501541a9104a27d8943b83ed7a975ff85f7ea",
   "raw_root_dir": "data/root/root",
   "reproduction_passed": true,
   "artifacts": [
     {
       "file": "REPORT.md",
-      "sha256": "46eb00e951e19fd15163bfa63c839042881c831578ad7db0d103037818be7a98",
-      "bytes": 25481
+      "sha256": "e4a109893b697396a1c3cbeaff6c7e011cc4b614c04569cf8ee5611b2b0d3764",
+      "bytes": 33701
     },
     {
       "file": "action_mask_composition.csv",
-      "sha256": "af98a4287c8a592e9f21be1ee2a48e0fbe3e991f37da1b60262f775f23e5ef82",
-      "bytes": 684
+      "sha256": "032a4af0981b4e3da943a31ea4524da1b46216eaaa0ee394478d4b4056f23323",
+      "bytes": 1005
     },
     {
       "file": "action_source_audit.csv",
-      "sha256": "d2d571c56594b6276cfa97c1cd7c28fd4bfb1da5c4c43e54962119e22151ba08",
-      "bytes": 542
+      "sha256": "6accf730d4764fe2665f2002e0d210c9d66308cd48297c4c705578e6194a5479",
+      "bytes": 630
     },
     {
       "file": "benchmark_balanced_counts.csv",
@@ -44,13 +44,13 @@
     },
     {
       "file": "ml_minus_traditional.csv",
-      "sha256": "51dcf4ef62aca76282833047521a5a6afbc966e6e8d569816100e809b40228b1",
-      "bytes": 17357
+      "sha256": "55618ed405debca3af5700bf1a9014b0140e47447e10d474f2f8148243b0e0b7",
+      "bytes": 26382
     },
     {
       "file": "oof_pid_scores.csv.gz",
-      "sha256": "1580a94605a6273d6498b0303a9f3227e34bed277c5cf4ce6add4af85355ad50",
-      "bytes": 2631570
+      "sha256": "5c68d703b4d7e708db3d1747d2ffc812bee12d75b14eed337157f6e444115523",
+      "bytes": 2652903
     },
     {
       "file": "reproduction_counts_by_group.csv",
@@ -69,13 +69,13 @@
     },
     {
       "file": "result.json",
-      "sha256": "379b2c64fcb296f9ee8c202573a372e8496f3456a0f362373209f31cc6468d74",
-      "bytes": 7233
+      "sha256": "9c3ee56901f58a4e7a67624a3513acc6d21610a629b418ff5f6ba94f171660a4",
+      "bytes": 8152
     },
     {
       "file": "scoreboard_by_mask.csv",
-      "sha256": "c3dafbbda08f0f469c983dead64495cd543d9bfc6cf1a986067936e8b42a9bb0",
-      "bytes": 12526
+      "sha256": "fc6618be6585d34dd1a570cb565f1c3859a0ba8a34d009fd9fe0db1f7bc91e3f",
+      "bytes": 18957
     },
     {
       "file": "weak_label_counts_by_run.csv",

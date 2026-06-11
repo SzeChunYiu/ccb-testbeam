@@ -30,10 +30,12 @@
   },
   "action_masks": [
     "all_pre_action",
+    "p04s_dropout_phase_accept",
     "s14g_traditional_accept",
     "s14g_new_residual_accept",
     "p07j_traditional_correct",
-    "s14g_traditional_and_p07j_correct"
+    "s14g_traditional_and_p04s_accept",
+    "s14g_traditional_p04s_and_p07j_correct"
   ],
   "expected_counts": {
     "total_selected_pulses": 640737,

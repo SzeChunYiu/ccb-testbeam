@@ -1,0 +1,164 @@
+{
+  "config": "configs/p01k_1781048235_687_33ce5940_event_block_timing_leakage_atomizer.json",
+  "control_gain_fraction_warning": 0.6,
+  "critic": "pending",
+  "date": "2026-06-11",
+  "falsification": {
+    "control_gain_fraction_warning": 0.6,
+    "high_gain_atoms": [
+      "stave+topology",
+      "run_family+stave",
+      "stave",
+      "stave+amplitude"
+    ],
+    "n_atom_controls": 17,
+    "n_model_families": 6,
+    "preregistered_metric": "held-out event-block bootstrap sigma68_ns; event-block shuffled control gain fraction"
+  },
+  "git_commit": "6ebad0c0df5daa7975efe98cc35f2e81adff2cd8",
+  "heldout_candidate_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "input_sha256": "see input_sha256.csv",
+  "interpretation": {
+    "benchmark_verdict": "gradient_boosted_trees has the lowest pooled sigma68 point estimate",
+    "high_gain_atoms": [
+      "stave+topology",
+      "run_family+stave",
+      "stave",
+      "stave+amplitude"
+    ],
+    "top_atom": "stave+topology",
+    "top_atom_control_gain_fraction": 0.8693118741103516
+  },
+  "ml_beats_baseline": true,
+  "ml_methods": [
+    {
+      "ci_high": 1.9947722306102553,
+      "ci_low": 1.8236956347047348,
+      "delta_ci_high": -1.0837097367865882,
+      "delta_ci_low": -1.4668995981765383,
+      "delta_vs_cfd20_ns": -1.2774478517341614,
+      "full_rms_ns": 4.482021441643653,
+      "heldout_run": "pooled",
+      "method": "ridge_raw_waveform",
+      "n_events": 408,
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 1.9110023522210122,
+      "tail_abs_gt_2ns": 0.41830065359477125,
+      "tail_abs_gt_5ns": 0.03839869281045752
+    },
+    {
+      "ci_high": 1.957771328724927,
+      "ci_low": 1.7370273990904657,
+      "delta_ci_high": -1.1702204046363391,
+      "delta_ci_low": -1.4996742360016202,
+      "delta_vs_cfd20_ns": -1.3254147782058798,
+      "full_rms_ns": 4.103247928506228,
+      "heldout_run": "pooled",
+      "method": "gradient_boosted_trees",
+      "n_events": 408,
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 1.8630354257492938,
+      "tail_abs_gt_2ns": 0.38643790849673204,
+      "tail_abs_gt_5ns": 0.04820261437908497
+    },
+    {
+      "ci_high": 2.067931194423734,
+      "ci_low": 1.8695347624166492,
+      "delta_ci_high": -1.0398413343445942,
+      "delta_ci_low": -1.3886047906718226,
+      "delta_vs_cfd20_ns": -1.2076478317761403,
+      "full_rms_ns": 4.210297962587084,
+      "heldout_run": "pooled",
+      "method": "mlp_waveform",
+      "n_events": 408,
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 1.9808023721790333,
+      "tail_abs_gt_2ns": 0.4297385620915033,
+      "tail_abs_gt_5ns": 0.06290849673202614
+    },
+    {
+      "ci_high": 2.056547930933953,
+      "ci_low": 1.8890300613256692,
+      "delta_ci_high": -1.0403678477124256,
+      "delta_ci_low": -1.3882063461984382,
+      "delta_vs_cfd20_ns": -1.206206844768525,
+      "full_rms_ns": 4.145472102557095,
+      "heldout_run": "pooled",
+      "method": "cnn_1d_waveform",
+      "n_events": 408,
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 1.9822433591866486,
+      "tail_abs_gt_2ns": 0.45179738562091504,
+      "tail_abs_gt_5ns": 0.03676470588235294
+    },
+    {
+      "ci_high": 2.1770276619138724,
+      "ci_low": 1.9213376005553597,
+      "delta_ci_high": -0.9484757878323986,
+      "delta_ci_low": -1.3341800832533361,
+      "delta_vs_cfd20_ns": -1.1409748744368557,
+      "full_rms_ns": 3.6229183663218025,
+      "heldout_run": "pooled",
+      "method": "atom_gated_cnn",
+      "n_events": 408,
+      "n_pair_residuals": 1224,
+      "sigma68_ns": 2.047475329518318,
+      "tail_abs_gt_2ns": 0.4591503267973856,
+      "tail_abs_gt_5ns": 0.056372549019607844
+    }
+  ],
+  "next_tickets": [
+    "P01l: atom-matched residual timing benchmark that forces run-family, event-block, topology, and amplitude distributions to match before fitting nominal and shuffled controls"
+  ],
+  "raw_root_dir": "data/root/root",
+  "repro_tolerance": "exact selected-pulse count",
+  "reproduced": true,
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "passed": true,
+    "selected_pulses": 640737
+  },
+  "runtime_sec": 359.7,
+  "script": "scripts/p01k_1781048235_687_33ce5940_event_block_timing_leakage_atomizer.py",
+  "study": "P01k",
+  "ticket": "1781048235.687.33ce5940",
+  "ticket_id": "1781048235.687.33ce5940",
+  "title": "event-block timing leakage atomizer",
+  "traditional": {
+    "ci_high": 2.058016319051385,
+    "ci_low": 1.874044489306688,
+    "delta_ci_high": -1.049113082626933,
+    "delta_ci_low": -1.3942082129028655,
+    "delta_vs_cfd20_ns": -1.2317726237028852,
+    "full_rms_ns": 4.455197783636607,
+    "heldout_run": "pooled",
+    "method": "traditional_hand_shape_ridge",
+    "metric": "pooled held-out pair residual sigma68_ns",
+    "n_events": 408,
+    "n_pair_residuals": 1224,
+    "sigma68_ns": 1.9566775802522884,
+    "tail_abs_gt_2ns": 0.43709150326797386,
+    "tail_abs_gt_5ns": 0.05310457516339869
+  },
+  "winner": {
+    "ci_high": 1.957771328724927,
+    "ci_low": 1.7370273990904657,
+    "delta_ci_high": -1.1702204046363391,
+    "delta_ci_low": -1.4996742360016202,
+    "delta_vs_cfd20_ns": -1.3254147782058798,
+    "full_rms_ns": 4.103247928506228,
+    "heldout_run": "pooled",
+    "method": "gradient_boosted_trees",
+    "n_events": 408,
+    "n_pair_residuals": 1224,
+    "sigma68_ns": 1.8630354257492938,
+    "tail_abs_gt_2ns": 0.38643790849673204,
+    "tail_abs_gt_5ns": 0.04820261437908497
+  },
+  "worker": "testbeam-laptop-3"
+}

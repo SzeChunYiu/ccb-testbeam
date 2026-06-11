@@ -1,0 +1,80 @@
+{
+  "study": "P01l",
+  "ticket": "1781049810.1116.3eb03e19",
+  "worker": "testbeam-laptop-4",
+  "title": "sample-6 smoothing causality null atlas against timing residuals",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": {
+    "method": "s02b_global_template_timewalk",
+    "sigma68_ns": 1.6923582499801066,
+    "full_rms_ns": 2.5915073163614184,
+    "ci": [
+      1.5295652040396364,
+      2.0178254115633534
+    ]
+  },
+  "winner": {
+    "method": "extra_trees_full",
+    "family": "ml",
+    "sigma68_ns": 1.0985316878975313,
+    "full_rms_ns": 2.132994216948789,
+    "ci": [
+      1.063400161805249,
+      1.1313715679930505
+    ],
+    "delta_vs_traditional_ns": -0.5938265620825753,
+    "delta_ci": [
+      -0.9311997437040519,
+      -0.4052939139948389
+    ]
+  },
+  "sample6_ablation": {
+    "best_full": {
+      "method": "extra_trees_full",
+      "sigma68_ns": 1.0985316878975313
+    },
+    "best_no_sample6": {
+      "method": "extra_trees_no_sample6",
+      "sigma68_ns": 1.103385453378458
+    },
+    "best_only_sample6": {
+      "method": "extra_trees_only_sample6",
+      "sigma68_ns": 1.1531107400704919
+    }
+  },
+  "sample6_replacement_atlas": {
+    "best_traditional_row": {
+      "scope": "pooled_run_block",
+      "pickoff": "cfd20",
+      "variant": "amplitude_bin_template",
+      "method": "cfd20/amplitude_bin_template",
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 2.4682316642881386,
+      "full_rms_ns": 3.2534789527616814,
+      "ci_low": 2.341708025567751,
+      "ci_high": 2.6482055657011854,
+      "delta_vs_raw_same_pickoff_ns": -0.6820349498317779,
+      "delta_ci_low": -0.810215081303385,
+      "delta_ci_high": -0.5184674751674156
+    },
+    "max_abs_replacement_delta_ns": 1.3751956321938636
+  },
+  "controls": {
+    "shuffled_target_failures": 4,
+    "run_family_control_best_sigma68_ns": 1.20877135251816,
+    "max_train_heldout_event_overlap": 0
+  },
+  "verdict": "Sample 6 is not required for the best residual correction; gains persist when it is removed, so the sample-6 smoothing gain is consistent with nuisance/replacement structure rather than a unique causal timing source. 4 shuffled-target checks beat their nominal model and are flagged as stability caveats.",
+  "next_tickets": [],
+  "git_commit": "78f558a2d55723054c9b3b20b21ad32e1a25a087"
+}

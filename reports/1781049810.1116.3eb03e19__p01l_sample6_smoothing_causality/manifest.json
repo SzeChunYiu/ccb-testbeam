@@ -1,0 +1,25 @@
+{
+  "study": "P01l",
+  "ticket": "1781049810.1116.3eb03e19",
+  "worker": "testbeam-laptop-4",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-4/configs/p01l_1781049810_1116_3eb03e19_sample6_smoothing_causality.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p01l_1781049810_1116_3eb03e19_sample6_smoothing_causality.py --config configs/p01l_1781049810_1116_3eb03e19_sample6_smoothing_causality.json",
+  "elapsed_s": 298.08257937431335,
+  "git_commit": "78f558a2d55723054c9b3b20b21ad32e1a25a087",
+  "outputs": {
+    "REPORT.md": "6478a057c4aa92a45b0a1e5bb1a5e85a131b9f2fd8563006a2112e7bb00125a3",
+    "fig_pooled_benchmark.png": "6f1e0846bb451baddb91af314a437ee4e7d2e0dafc4ba2cc9dd23c8d655b6c1d",
+    "fig_residual_distributions.png": "306388bdb9a468ebbcd2e004ce2d91ba9d53a2e281461ec9cc186aec3819c94d",
+    "heldout_run_summary.csv": "4bdbd91cc8a237571c81fe0b2cec79bbfe58d4dd51aa84fdaf143c728b64de5d",
+    "input_sha256.csv": "54ffe78258dd00839e9ea3c1ccfe7fd98cf2ad263e3d399c8e18c0f3ced439f7",
+    "leakage_checks.csv": "d8ff14b3459b2c6628b3131dbf336f8acb2316cab440828c912a55e6f6d447b1",
+    "model_diagnostics.csv": "d1775cc142948a02e64b95e79065a56204e6737932d485ecb6b4331e6e3a07a2",
+    "pairwise_residuals.csv": "b705bffef9a9149c3e489349d2863de8c78fccfa8166653874af1834decfd96b",
+    "pooled_run_block_summary.csv": "79d98d6fc833e056476a33742922a415e65aa826086e5be6ff408e3aaef41f4a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "67cd8255889b952b02a627d8e4e7e61b1415a57f63504017a32c2d6c6630ed30",
+    "sample6_atlas_by_run.csv": "80c4ec7159bf498bba07aa6ebf6c5c35b79d8f14d150ff5cfaa958c9ab5612b7",
+    "sample6_atlas_pairwise_residuals.csv": "c3c32604583d3875524b815ed25558c7514037676150b01bf1ddc5a4b80a9b04",
+    "sample6_atlas_pooled.csv": "fe0f6d98e9592fec8dbb66849ee5a17ec0138019df5f9322c1a68372f1dfc8fd"
+  }
+}

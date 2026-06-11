@@ -1,0 +1,86 @@
+{
+  "folds": [
+    {
+      "heldout_run": 58,
+      "train_rows": 45000,
+      "heldout_rows": 15790,
+      "train_positive_rate": 0.3479111111111111,
+      "heldout_positive_rate": 0.3583913869537682,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 338113.73037893255
+    },
+    {
+      "heldout_run": 59,
+      "train_rows": 45000,
+      "heldout_rows": 13563,
+      "train_positive_rate": 0.3519777777777778,
+      "heldout_positive_rate": 0.46177099461770993,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 287558.56951566105
+    },
+    {
+      "heldout_run": 60,
+      "train_rows": 45000,
+      "heldout_rows": 9866,
+      "train_positive_rate": 0.3519333333333333,
+      "heldout_positive_rate": 0.4585444962497466,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 300985.1483247103
+    },
+    {
+      "heldout_run": 61,
+      "train_rows": 45000,
+      "heldout_rows": 11015,
+      "train_positive_rate": 0.35355555555555557,
+      "heldout_positive_rate": 0.45901044030867,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 300286.4714749003
+    },
+    {
+      "heldout_run": 62,
+      "train_rows": 45000,
+      "heldout_rows": 11634,
+      "train_positive_rate": 0.34524444444444446,
+      "heldout_positive_rate": 0.46630565583634176,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 297885.6131005082
+    },
+    {
+      "heldout_run": 63,
+      "train_rows": 45000,
+      "heldout_rows": 14564,
+      "train_positive_rate": 0.34584444444444445,
+      "heldout_positive_rate": 0.45289755561658884,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 299955.2801569749
+    },
+    {
+      "heldout_run": 64,
+      "train_rows": 45000,
+      "heldout_rows": 11907,
+      "train_positive_rate": 0.3488,
+      "heldout_positive_rate": 0.46107331821617537,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 307133.5224134792
+    },
+    {
+      "heldout_run": 65,
+      "train_rows": 45000,
+      "heldout_rows": 11768,
+      "train_positive_rate": 0.34586666666666666,
+      "heldout_positive_rate": 0.48342963970088376,
+      "sampled_train_waveform_hash_overlap": 0,
+      "loss_cut": 314232.2782587363
+    }
+  ],
+  "feature_exclusions": [
+    "run_id",
+    "event_id",
+    "odd_waveform",
+    "odd_charge",
+    "odd_time",
+    "heldout_labels"
+  ],
+  "torch_available": true,
+  "train_eval_run_overlap": false
+}

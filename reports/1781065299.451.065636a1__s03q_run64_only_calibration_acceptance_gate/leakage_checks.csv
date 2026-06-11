@@ -1,0 +1,6 @@
+check,value,pass,detail
+production_train_heldout_run_overlap,0.0,True,"production corrections train on run64 and evaluate on disjoint runs 58-63,65"
+feature_audit_no_event_order_cross_stave_time,0.0,True,features are same-pulse waveform/amplitude/template/pretrigger/stave/shape summaries only
+shuffled_target_worse_than_winner_sigma68_ns,1.7035851357744862,True,shuffled run64 target should not beat the selected production winner
+mixed_calibration_sentinel_not_used_for_winner,0.024193090508968895,True,"Sample-I plus run64 fit is a sentinel, not an eligible production method"
+raw_reproduction_all_pass,1.0,True,"S00, Sample-II analysis, and run64 count gates pass exactly"

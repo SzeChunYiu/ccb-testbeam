@@ -1,0 +1,10 @@
+method,fit,n_train_rows,n_features,alpha,n_bins,families,training_scope,train_rmse_ns,params,train_seconds,arch,last_loss,n_parameters
+run64_analytic_amp_only,fixed_alpha,630,6,10.0,,,,,,,,,
+run64_monotone_binned_timewalk,fixed_monotone_bins,630,1,,6.0,,,,,,,,
+ridge_run64,,630,42,10.0,,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",run64_only,1.5637550698717546,,,,,
+hgb_run64,,630,42,,,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",run64_only,1.1071675145665207,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.1, 'max_bins': 64, 'random_state': 20260712}",,,,
+mlp_run64,,630,42,,,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",run64_only,1.4208732988146056,,0.23831534385681152,,,
+cnn1d_run64,,630,42,,,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",run64_only,3.0415910512379463,,0.11975669860839844,cnn,0.8568342924118042,2193.0
+gated_tcn_new_run64,,630,42,,,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",run64_only,2.811797748354418,,0.11555266380310059,tcn,0.7580064535140991,2977.0
+hgb_shuffled_target_sentinel,,630,42,,,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",run64_only,2.295817674279594,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.1, 'max_bins': 64, 'random_state': 20261116}",,,,
+hgb_mixed_sample_i_run64_sentinel,,4410,42,,,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",sample_i_plus_run64,1.5283678759000214,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.1, 'max_bins': 64, 'random_state': 20261217}",,,,

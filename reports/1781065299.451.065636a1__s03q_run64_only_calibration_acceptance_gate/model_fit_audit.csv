@@ -1,0 +1,8 @@
+method,fit,rmse_ns,max_iter,learning_rate,max_leaf_nodes,l2_regularization,max_bins,random_state
+ridge_run64,run64_fixed,1.5637550698717546,,,,,,
+hgb_run64,run64_fixed,1.1071675145665207,80.0,0.05,15.0,0.1,64.0,20260712.0
+mlp_run64,run64_fixed,1.4208732988146056,,,,,,
+cnn1d_run64,run64_fixed,3.0415910512379463,,,,,,
+gated_tcn_new_run64,run64_fixed,2.811797748354418,,,,,,
+hgb_shuffled_target_sentinel,run64_fixed,2.295817674279594,80.0,0.05,15.0,0.1,64.0,20261116.0
+hgb_mixed_sample_i_run64_sentinel,run64_fixed,1.5283678759000214,80.0,0.05,15.0,0.1,64.0,20261217.0

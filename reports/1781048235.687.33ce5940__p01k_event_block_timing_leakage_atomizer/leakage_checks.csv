@@ -1,0 +1,13 @@
+heldout_run,check,value,pass,detail
+42,train_heldout_run_overlap,0,True,leave-one-run-out split
+42,train_heldout_event_overlap,0,True,event IDs are run-local and heldout run is excluded
+42,production_feature_audit,0,True,"production models exclude run id, event id, event order, and other-stave times"
+57,train_heldout_run_overlap,0,True,leave-one-run-out split
+57,train_heldout_event_overlap,0,True,event IDs are run-local and heldout run is excluded
+57,production_feature_audit,0,True,"production models exclude run id, event id, event order, and other-stave times"
+64,train_heldout_run_overlap,0,True,leave-one-run-out split
+64,train_heldout_event_overlap,0,True,event IDs are run-local and heldout run is excluded
+64,production_feature_audit,0,True,"production models exclude run id, event id, event order, and other-stave times"
+65,train_heldout_run_overlap,0,True,leave-one-run-out split
+65,train_heldout_event_overlap,0,True,event IDs are run-local and heldout run is excluded
+65,production_feature_audit,0,True,"production models exclude run id, event id, event order, and other-stave times"

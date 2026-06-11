@@ -1,0 +1,71 @@
+{
+  "study_id": "S13e",
+  "ticket": "1781059683.869.4bca6f7e",
+  "worker": "testbeam-laptop-3",
+  "title": "residual CWoLa support-collapse atlas",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781059683.869.4bca6f7e__s13e_residual_cwola_support_collapse_atlas",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "low_current_runs": [46, 47],
+  "high_current_runs": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "run_families": {
+    "family_a": {
+      "low": [46],
+      "high": [44, 45, 48, 49, 50, 51]
+    },
+    "family_b": {
+      "low": [47],
+      "high": [52, 53, 54, 55, 56, 57]
+    }
+  },
+  "expected_s13b_topology_ratio": 1.4449743989548876,
+  "expected_s13b_events_with_selected": 243133,
+  "expected_s13b_selected_pulses": 252266,
+  "folds": [
+    {
+      "name": "family_a_to_b",
+      "train_family": "family_a",
+      "test_family": "family_b"
+    },
+    {
+      "name": "family_b_to_a",
+      "train_family": "family_b",
+      "test_family": "family_a"
+    }
+  ],
+  "scalar_feature_columns": [
+    "log_amp",
+    "peak_sample",
+    "area_over_peak",
+    "tail_fraction",
+    "late_fraction",
+    "early_fraction",
+    "post_peak_min_fraction",
+    "neg_step_count",
+    "width_10_samples",
+    "width_20_samples",
+    "final_fraction",
+    "selected_multiplicity",
+    "downstream_event",
+    "baseline_abs",
+    "baseline_lowering"
+  ],
+  "ridge_c_grid": [0.1, 1.0, 10.0],
+  "gbt_learning_rates": [0.03, 0.07],
+  "gbt_max_leaf_nodes": [15, 31],
+  "mlp_hidden_layers": [[32], [48, 16]],
+  "max_events_per_run": 1800,
+  "torch_epochs": 6,
+  "torch_batch_size": 256,
+  "bootstrap_replicates": 800,
+  "support_min_per_current": 8,
+  "random_seed": 131305
+}

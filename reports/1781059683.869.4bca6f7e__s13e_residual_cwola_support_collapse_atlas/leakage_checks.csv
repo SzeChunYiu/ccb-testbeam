@@ -1,0 +1,9 @@
+fold,check,value,flag,note
+family_a_to_b,train_test_run_overlap,0.0,False,Leave-run-family-out folds must have disjoint runs.
+family_a_to_b,forbidden_columns_used,0.0,False,"Model features exclude run number, event number, current label, current group, and run-family label."
+family_a_to_b,support_distance_cut_train_q95,1.7599904525512298,False,Distance support gate is fit on train-fold residual features only.
+family_a_to_b,test_rows_scored,12600.0,False,Every capped held-out pulse receives a score and support label.
+family_b_to_a,train_test_run_overlap,0.0,False,Leave-run-family-out folds must have disjoint runs.
+family_b_to_a,forbidden_columns_used,0.0,False,"Model features exclude run number, event number, current label, current group, and run-family label."
+family_b_to_a,support_distance_cut_train_q95,1.5816856547085967,False,Distance support gate is fit on train-fold residual features only.
+family_b_to_a,test_rows_scored,11487.0,False,Every capped held-out pulse receives a score and support label.

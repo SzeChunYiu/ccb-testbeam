@@ -1,0 +1,49 @@
+{
+  "charge_null_auc_loss": 0.3457266190591246,
+  "charge_null_auc_mean": 0.49917600323349465,
+  "dataset_events": 1158,
+  "dataset_pairs": 579,
+  "elapsed_seconds": 905.5820293426514,
+  "method_auc": {
+    "1D-CNN": 0.5356087113449727,
+    "MLP": 0.8259103152657341,
+    "WaveAtomNet": 0.7119445413896272,
+    "gradient-boosted trees": 0.8449026222926193,
+    "ridge logistic": 0.7977037414874671,
+    "shape-only RF probe": 0.7939258622901137,
+    "traditional atom/template selector": 0.6050080389928439
+  },
+  "pair_split_violations": 0,
+  "raw_reproduction_pass": true,
+  "reference_auc_reproduction_pass": false,
+  "runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "study_id": "S07n",
+  "ticket_id": "1781068159.1658.5f900b07",
+  "top_localization_delta_auc": 0.11943049925277638,
+  "top_localization_group": "peak_samples_08_11",
+  "top_permutation_auc_importance": 0.04622312768567062,
+  "top_permutation_feature": "ds_shape_std_peak_sample",
+  "traditional_roc_auc": 0.6050080389928439,
+  "winner_average_precision": 0.8520417804655571,
+  "winner_fixed95_clean_rejection": 0.4784110535405872,
+  "winner_method": "gradient-boosted trees",
+  "winner_minus_traditional_auc": 0.2398945832997753,
+  "winner_minus_traditional_auc_ci": [
+    0.22013267907439732,
+    0.264779489103643
+  ],
+  "winner_roc_auc": 0.8449026222926193,
+  "winner_roc_auc_ci": [
+    0.8251661185200667,
+    0.8689525267676642
+  ],
+  "worker": "testbeam-laptop-1"
+}

@@ -1,0 +1,2 @@
+probe,observed_auc,null_auc_mean,null_auc_ci_low,null_auc_ci_high,charge_null_auc_loss,n_permutations
+run_plus_charge_bin_label_permutation,0.8449026222926193,0.49917600323349465,0.4686364436330879,0.5266816260540924,0.3457266190591246,40

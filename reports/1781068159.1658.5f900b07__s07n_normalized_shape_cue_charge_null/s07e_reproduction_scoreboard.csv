@@ -1,0 +1,4 @@
+method,roc_auc,roc_auc_ci_low,roc_auc_ci_high,average_precision,ap_ci_low,ap_ci_high,brier,brier_ci_low,brier_ci_high,notes
+reproduced all-three curvature-only,1.0,0.9999999999999999,1.0,0.9999999999999998,0.9999999999999998,1.0000000000000002,2.690411885320524e-07,0.0,8.945647037732609e-07,S07e pre-registered all-three traditional comparator.
+reproduced all-three D_t/curvature ceiling,1.0,0.9999999999999999,1.0,0.9999999999999998,0.9999999999999998,1.0000000000000002,1.8835862222222136e-06,0.0,4.344235074266054e-06,Forbidden self-referential timing ceiling.
+reproduced all-three shape-only RF,0.9907363793374157,0.9710214159491449,0.9992583201800413,0.8843471985974748,0.6325523362979476,0.9863425925925925,0.01404484418329383,0.004886905836711033,0.024169102536913973,"Best params={'n_estimators': 400, 'max_depth': 5, 'min_samples_leaf': 15}; raw-ROOT reproduction of S07e all-three App.I RF."

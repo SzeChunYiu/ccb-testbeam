@@ -1,0 +1,7 @@
+method,target,n_eval,n_positive,average_precision,roc_auc,balanced_accuracy,recall_at_1pct,precision_at_1pct
+traditional_robust_broad_veto,broad_downstream_risk,2024,6,0.594047619047619,0.9990089197224975,0.7507433102081269,1.0,0.2857142857142857
+ridge_scalar,broad_downstream_risk,2024,6,1.0,1.0,0.7507433102081269,1.0,0.2857142857142857
+gradient_boosted_trees,broad_downstream_risk,2024,6,1.0,1.0,0.7492566897918731,1.0,0.2857142857142857
+mlp_scalar_nn,broad_downstream_risk,2024,6,0.7345238095238095,0.9995044598612488,0.7507433102081269,1.0,0.2857142857142857
+cnn1d_waveform_nn,broad_downstream_risk,2024,6,0.8999999999999999,0.9992566897918731,0.7507433102081269,1.0,0.2857142857142857
+hybrid_gated_cnn_tabular,broad_downstream_risk,2024,6,1.0,1.0,0.7507433102081269,1.0,0.2857142857142857

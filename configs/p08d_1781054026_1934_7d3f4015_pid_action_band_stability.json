@@ -1,0 +1,45 @@
+{
+  "ticket_id": "1781054026.1934.7d3f4015",
+  "worker": "testbeam-laptop-3",
+  "study_id": "P08d",
+  "title": "PID weak-label action-band stability",
+  "output_dir": "reports/1781054026.1934.7d3f4015__p08d_pid_action_band_stability",
+  "p08b_config": "configs/p08b_1781027807_3490_5cdd4b0b_calibration_backed_pid.json",
+  "s14g_selector_oof": "reports/1781051226.621.082271da__s14g_veto_ladder_energy_acceptance/selector_oof.csv.gz",
+  "p07j_predictions": "reports/1781052602.655.4be6114e__p07j_saturation_knee_family_action_bands/predictions.csv.gz",
+  "p04s_action_band": null,
+  "benchmark": {
+    "random_seed": 8107,
+    "max_rows_per_run_label": 450,
+    "bootstrap_replicates": 300,
+    "fixed_efficiency": 0.8,
+    "ece_bins": 10,
+    "min_train_class_rows": 100,
+    "min_test_class_rows": 5
+  },
+  "models": {
+    "hgb_max_iter": 70,
+    "hgb_max_leaf_nodes": 15,
+    "hgb_max_depth": 3,
+    "hgb_min_samples_leaf": 35,
+    "mlp_hidden_layer_sizes": [48, 16],
+    "mlp_max_iter": 80,
+    "cnn_epochs": 3,
+    "cnn_batch_size": 1024,
+    "cnn_max_train_rows": 50000
+  },
+  "action_masks": [
+    "all_pre_action",
+    "s14g_traditional_accept",
+    "s14g_new_residual_accept",
+    "p07j_traditional_correct",
+    "s14g_traditional_and_p07j_correct"
+  ],
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_calib_pulses": 248745,
+    "sample_i_analysis_pulses": 252266,
+    "sample_ii_calib_pulses": 14630,
+    "sample_ii_analysis_pulses": 125096
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "ticket_id": "1781054026.1934.7d3f4015",
+  "script": "scripts/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.py",
+  "config": "configs/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.json",
+  "python": "3.7.6",
+  "git_commit": "28bcfad5e8a5779a85e2286e402476011eab650a",
+  "raw_root_dir": "data/root/root",
+  "reproduction_passed": true,
+  "artifacts": [
+    {
+      "file": "REPORT.md",
+      "sha256": "46eb00e951e19fd15163bfa63c839042881c831578ad7db0d103037818be7a98",
+      "bytes": 25481
+    },
+    {
+      "file": "action_mask_composition.csv",
+      "sha256": "af98a4287c8a592e9f21be1ee2a48e0fbe3e991f37da1b60262f775f23e5ef82",
+      "bytes": 684
+    },
+    {
+      "file": "action_source_audit.csv",
+      "sha256": "d2d571c56594b6276cfa97c1cd7c28fd4bfb1da5c4c43e54962119e22151ba08",
+      "bytes": 542
+    },
+    {
+      "file": "benchmark_balanced_counts.csv",
+      "sha256": "9335346197db14f283555ff8c335014e79b4cde9dea69e323e47eb33810aac0a",
+      "bytes": 2959
+    },
+    {
+      "file": "calibrated_label_support.csv",
+      "sha256": "b8a6495ac105d817318ec8c946f5463df38f510fd2c4fb5f369b134bf27bafa2",
+      "bytes": 7168
+    },
+    {
+      "file": "fold_summary.csv",
+      "sha256": "72152500a405cb029880a22c5211b2d7a23330ce89a7e2351afc7749a0a5bef1",
+      "bytes": 749
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+      "bytes": 3565
+    },
+    {
+      "file": "ml_minus_traditional.csv",
+      "sha256": "51dcf4ef62aca76282833047521a5a6afbc966e6e8d569816100e809b40228b1",
+      "bytes": 17357
+    },
+    {
+      "file": "oof_pid_scores.csv.gz",
+      "sha256": "1580a94605a6273d6498b0303a9f3227e34bed277c5cf4ce6add4af85355ad50",
+      "bytes": 2631570
+    },
+    {
+      "file": "reproduction_counts_by_group.csv",
+      "sha256": "b56cfcd2bc7ffd01d7bcde923bc801c41fc0b21514d2ca074ddc019a9c70167e",
+      "bytes": 302
+    },
+    {
+      "file": "reproduction_counts_by_run.csv",
+      "sha256": "89fdec960b8e0bce5d363cb25dbfc2971eae2d906df776c3c5dce5a23d02816b",
+      "bytes": 2106
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "f383906e6fd2f26e35bd34a7c496d2e0de07d4ade3d8ed80fa50b2ebe6a3255f",
+      "bytes": 329
+    },
+    {
+      "file": "result.json",
+      "sha256": "379b2c64fcb296f9ee8c202573a372e8496f3456a0f362373209f31cc6468d74",
+      "bytes": 7233
+    },
+    {
+      "file": "scoreboard_by_mask.csv",
+      "sha256": "c3dafbbda08f0f469c983dead64495cd543d9bfc6cf1a986067936e8b42a9bb0",
+      "bytes": 12526
+    },
+    {
+      "file": "weak_label_counts_by_run.csv",
+      "sha256": "6e28c985a536cfc5cecc2784a1b7101d83eaace237f43019222a2e945dc84bd8",
+      "bytes": 3023
+    }
+  ]
+}

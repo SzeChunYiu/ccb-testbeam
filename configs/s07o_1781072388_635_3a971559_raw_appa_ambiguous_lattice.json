@@ -1,0 +1,90 @@
+{
+  "ticket": "1781072388.635.3a971559",
+  "worker": "testbeam-laptop-3",
+  "study": "S07o_raw_appa_ambiguous_event_timing_definition_lattice",
+  "title": "raw App.A ambiguous-event timing definition lattice",
+  "seed": 72388635,
+  "raw_root_dir": "data/root/root",
+  "qtemplate_path": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "output_dir": "reports/1781072388.635.3a971559__s07o_raw_appa_ambiguous_event_timing_definition_lattice",
+  "target": {
+    "labelled_events": 12147,
+    "clean": 10636,
+    "violating": 1511,
+    "raw_cfd20_labelled_events": 9897,
+    "ambiguous_downstream_ge2_events": 5457
+  },
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "downstream_staves": ["B4", "B6", "B8"],
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_s00_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "grid": {
+    "cfd_fractions": [0.15, 0.20, 0.25],
+    "downstream_min_hits": [2, 3],
+    "timing_profiles": [
+      {
+        "name": "strict",
+        "clean_downstream_span_ns": 4.0,
+        "clean_all_span_ns": 8.0,
+        "violating_downstream_span_ns": 8.0,
+        "violating_b2_displacement_ns": 15.0
+      },
+      {
+        "name": "app_a",
+        "clean_downstream_span_ns": 5.0,
+        "clean_all_span_ns": 10.0,
+        "violating_downstream_span_ns": 10.0,
+        "violating_b2_displacement_ns": 20.0
+      },
+      {
+        "name": "loose",
+        "clean_downstream_span_ns": 6.0,
+        "clean_all_span_ns": 12.0,
+        "violating_downstream_span_ns": 12.0,
+        "violating_b2_displacement_ns": 25.0
+      }
+    ],
+    "qtemplate_quality": [
+      {"name": "none", "q_downstream_max_le": null},
+      {"name": "tight", "q_downstream_max_le": 0.06}
+    ],
+    "ambiguity_handling": ["exclude", "as_violating"]
+  },
+  "models": {
+    "bootstrap_replicates": 300,
+    "fixed_clean_efficiency": 0.90,
+    "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0],
+    "hgb_max_iter": 80,
+    "hgb_learning_rate": 0.06,
+    "hgb_max_leaf_nodes": 15,
+    "mlp_hidden": 48,
+    "mlp_alpha": 0.001,
+    "mlp_max_iter": 220,
+    "torch_epochs": 10,
+    "torch_batch_size": 512,
+    "torch_learning_rate": 0.001,
+    "torch_weight_decay": 0.0001,
+    "cnn_channels": 24,
+    "gated_dilated_channels": 24
+  }
+}

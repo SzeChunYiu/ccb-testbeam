@@ -1,0 +1,33 @@
+{
+  "study": "S11g",
+  "ticket": "1781048230.616.2d7e4b56",
+  "worker": "testbeam-laptop-4",
+  "title": "residual-pool two-pulse real-current transfer gate",
+  "source_script": "scripts/s11b_real_high_current_two_pulse_validation.py",
+  "s11c_script": "scripts/s11c_amp_binned_asymmetric_templates.py",
+  "s11e_dependency_report": "reports/1781018533.1179.60a328c5/result.json",
+  "s11e_dependency_report_md": "reports/1781018533.1179.60a328c5/REPORT.md",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781048230.616.2d7e4b56__s11g_residual_pool_real_current_transfer",
+  "random_seed": 1048230,
+  "sample_cap_per_run_stratum": 90,
+  "synthetic_train_per_fold": 1600,
+  "synthetic_cal_per_fold": 500,
+  "bootstrap_samples": 500,
+  "target_bad_proxy_rate": 0.15,
+  "bad_fraction_error": 0.12,
+  "traditional_min_score": 0.015,
+  "traditional_min_secondary_fraction": 0.05,
+  "template_reference_cfd_sample": 5.0,
+  "template_shift_grid": {"min": -1.25, "max": 1.25, "step": 0.25},
+  "fit_separation_grid_samples": [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0],
+  "fit_ratio_bounds": [0.10, 2.25],
+  "baseline_bounds_adc": [-250.0, 250.0],
+  "amp_binned_templates": {
+    "quantiles": [0.0, 0.33, 0.66, 1.0],
+    "shape_quantiles": [0.33, 0.66],
+    "max_primary_candidates": 2,
+    "max_secondary_candidates": 2
+  },
+  "required_methods": ["traditional_s11c_residual_pool_gate", "ridge", "gradient_boosted_trees", "mlp", "1d_cnn", "consensus_abstention_ensemble"]
+}

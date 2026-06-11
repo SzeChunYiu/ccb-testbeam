@@ -4,7 +4,7 @@
   "study_id": "P08d",
   "title": "PID weak-label action-band stability",
   "raw_root_dir": "data/root/root",
-  "git_commit_at_run": "28bcfad5e8a5779a85e2286e402476011eab650a",
+  "git_commit_at_run": "7f3501541a9104a27d8943b83ed7a975ff85f7ea",
   "reproduction": {
     "passed": true,
     "table": [
@@ -133,12 +133,12 @@
     },
     {
       "source": "P04s",
-      "path": "",
-      "rows_loaded": 0,
+      "path": "generated_from_raw_waveform_features",
+      "rows_loaded": 289626,
       "rows_before_merge": 289626,
       "rows_after_merge": 289626,
-      "available": false,
-      "note": "No tracked P04s action-band artifact was available in this checkout; treated as an explicit systematic caveat."
+      "available": true,
+      "note": "No tracked P04s artifact exists in this checkout; P08d reconstructs a transparent leave-one-run-held-out dropout-phase proxy from B2 waveform shape quantiles."
     }
   ],
   "action_mask_composition": [
@@ -151,6 +151,17 @@
       "action_band_label_shift": 0.0,
       "charge_log_median_shift": 0.0,
       "depth_mean_shift": 0.0,
+      "runs": 33
+    },
+    {
+      "action_mask": "p04s_dropout_phase_accept",
+      "n": 26077,
+      "support_fraction": 0.8950710510056978,
+      "support_loss": 0.10492894899430216,
+      "positive_fraction": 0.5086858150860912,
+      "action_band_label_shift": 0.008685815086091231,
+      "charge_log_median_shift": 0.01627540233712388,
+      "depth_mean_shift": -0.013328440033796449,
       "runs": 33
     },
     {
@@ -187,7 +198,18 @@
       "runs": 11
     },
     {
-      "action_mask": "s14g_traditional_and_p07j_correct",
+      "action_mask": "s14g_traditional_and_p04s_accept",
+      "n": 7619,
+      "support_fraction": 0.2615157547882199,
+      "support_loss": 0.7384842452117801,
+      "positive_fraction": 0.21564509778186114,
+      "action_band_label_shift": -0.28435490221813886,
+      "charge_log_median_shift": -0.8770405812650459,
+      "depth_mean_shift": -0.0804657990429115,
+      "runs": 21
+    },
+    {
+      "action_mask": "s14g_traditional_p04s_and_p07j_correct",
       "n": 0,
       "support_fraction": 0.0,
       "support_loss": 1.0,
@@ -202,14 +224,14 @@
   "winner": {
     "action_mask": "all_pre_action",
     "method": "NN_action_gated_residual_ensemble_new",
-    "roc_auc": 0.9955315069727333,
+    "roc_auc": 0.9955254560057494,
     "roc_auc_ci": [
-      0.9922854231010421,
-      0.9980385194240986
+      0.9922806896013047,
+      0.9980358524176208
     ],
-    "average_precision": 0.9957414189855426,
+    "average_precision": 0.9957360664237882,
     "purity_at_80pct_eff": 1.0,
-    "ece": 0.008102625024488495
+    "ece": 0.00795789008535233
   },
   "traditional": {
     "method": "traditional_charge_depth_logistic",
@@ -223,21 +245,21 @@
   },
   "best_ml_vs_traditional": {
     "method": "NN_action_gated_residual_ensemble_new",
-    "roc_auc_minus_traditional": 0.010735160018787937,
-    "ap_minus_traditional": 0.014849259293482464
+    "roc_auc_minus_traditional": 0.01072910905180402,
+    "ap_minus_traditional": 0.014843906731728085
   },
   "controls": {
-    "action_only_auc": 0.5681983423470199,
+    "action_only_auc": 0.6024659580208321,
     "run_family_only_auc": 0.5,
     "shuffled_label_auc": 0.48800672895804154
   },
-  "finding": "The best pre-action weak-label score is NN_action_gated_residual_ensemble_new (AUC 0.9955), while the traditional calibrated charge/depth baseline has AUC 0.9848.  The action-only control has AUC 0.5682; therefore action bands alone do not explain the primary weak-label separation.  However S14g/P07j masks induce non-negligible support and composition shifts, and the label is charge/depth-derived, so the result remains a stability diagnostic rather than a PID adoption claim.",
+  "finding": "The best pre-action weak-label score is NN_action_gated_residual_ensemble_new (AUC 0.9955), while the traditional calibrated charge/depth baseline has AUC 0.9848.  The action-only control has AUC 0.6025; therefore action bands alone do not explain the primary weak-label separation.  However S14g/P07j masks induce non-negligible support and composition shifts, and the label is charge/depth-derived, so the result remains a stability diagnostic rather than a PID adoption claim.",
   "next_tickets": [
     {
       "title": "P08e truth-anchored PID action-band closure",
-      "body": "Repeat the P08d action-mask stability test on an externally anchored PID/truth subset or beamline-calibrated proxy, including the missing P04s dropout-phase action band, before any PID adoption claim."
+      "body": "Repeat the P08d action-mask stability test on an externally anchored PID/truth subset or beamline-calibrated proxy, and replace the reconstructed P04s proxy with a canonical tracked P04s dropout-phase artifact before any PID adoption claim."
     }
   ],
-  "runtime_sec": 217.1,
+  "runtime_sec": 318.7,
   "command": "/home/billy/anaconda3/bin/python scripts/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.py --config configs/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.json"
 }

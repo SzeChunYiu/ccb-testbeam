@@ -1,4 +1,4 @@
 source,path,rows_loaded,rows_before_merge,rows_after_merge,available,note
 S14g,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781051226.621.082271da__s14g_veto_ladder_energy_acceptance/selector_oof.csv.gz,329548,289626,289626,True,
 P07j,/home/billy/.tb-workers/testbeam-laptop-3/reports/1781052602.655.4be6114e__p07j_saturation_knee_family_action_bands/predictions.csv.gz,177508,289626,289626,True,
-P04s,,0,289626,289626,False,No tracked P04s action-band artifact was available in this checkout; treated as an explicit systematic caveat.
+P04s,generated_from_raw_waveform_features,289626,289626,289626,True,No tracked P04s artifact exists in this checkout; P08d reconstructs a transparent leave-one-run-held-out dropout-phase proxy from B2 waveform shape quantiles.

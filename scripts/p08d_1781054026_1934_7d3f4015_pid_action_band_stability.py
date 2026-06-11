@@ -292,16 +292,17 @@ def merge_action_bands(meta: pd.DataFrame, config: dict, out_dir: Path) -> Tuple
             out[col] = False
         audit_rows.append({"source": "P07j", "path": str(p07j_path), "rows_loaded": 0, "rows_before_merge": int(len(out)), "rows_after_merge": int(len(out)), "available": False})
 
-    p04s_path = config.get("p04s_action_band")
+    before = len(out)
+    out = add_p04s_dropout_phase_mask(out)
     audit_rows.append(
         {
             "source": "P04s",
-            "path": "" if p04s_path is None else str(p04s_path),
-            "rows_loaded": 0,
-            "rows_before_merge": int(len(out)),
+            "path": "generated_from_raw_waveform_features",
+            "rows_loaded": int(len(out)),
+            "rows_before_merge": int(before),
             "rows_after_merge": int(len(out)),
-            "available": False,
-            "note": "No tracked P04s action-band artifact was available in this checkout; treated as an explicit systematic caveat.",
+            "available": True,
+            "note": "No tracked P04s artifact exists in this checkout; P08d reconstructs a transparent leave-one-run-held-out dropout-phase proxy from B2 waveform shape quantiles.",
         }
     )
 
@@ -309,10 +310,57 @@ def merge_action_bands(meta: pd.DataFrame, config: dict, out_dir: Path) -> Tuple
     out["s14g_traditional_accept"] = out["accept_traditional_veto_ladder"].astype(bool)
     out["s14g_new_residual_accept"] = out["accept_new_residual_gated_ensemble"].astype(bool)
     out["p07j_traditional_correct"] = out["p07j_traditional_correct"].astype(bool)
-    out["s14g_traditional_and_p07j_correct"] = out["s14g_traditional_accept"] & out["p07j_traditional_correct"]
+    out["s14g_traditional_and_p04s_accept"] = out["s14g_traditional_accept"] & out["p04s_dropout_phase_accept"]
+    out["s14g_traditional_p04s_and_p07j_correct"] = (
+        out["s14g_traditional_accept"] & out["p04s_dropout_phase_accept"] & out["p07j_traditional_correct"]
+    )
     audit = pd.DataFrame(audit_rows)
     audit.to_csv(out_dir / "action_source_audit.csv", index=False)
     return out, audit
+
+
+def add_p04s_dropout_phase_mask(meta: pd.DataFrame) -> pd.DataFrame:
+    """Transparent leave-one-run-held-out proxy for the P04s dropout/phase gate.
+
+    The source P04s artifact is not tracked in this checkout. This proxy uses the
+    same family of observables named by the P04s ticket lineage: phase/peak edge,
+    abrupt downward waveform steps, late-tail excess, and abnormal width.
+    Thresholds for each held-out run are quantiles of all other runs.
+    """
+    out = meta.copy()
+    accept = np.ones(len(out), dtype=bool)
+    reason = np.full(len(out), "accepted", dtype=object)
+    features = ["b2_max_down_step", "b2_tail_fraction", "b2_final_fraction", "b2_width20", "b2_peak_sample"]
+    values = out[features].copy()
+    for col in features:
+        values[col] = pd.to_numeric(values[col], errors="coerce")
+    for run in sorted(out["run"].unique()):
+        test = out["run"].to_numpy(dtype=int) == int(run)
+        train = ~test
+        tr = values.loc[train]
+        te = values.loc[test]
+        if len(tr) < 100:
+            continue
+        down_lo = float(np.nanpercentile(tr["b2_max_down_step"], 3.0))
+        tail_hi = float(np.nanpercentile(tr["b2_tail_fraction"], 97.0))
+        final_lo = float(np.nanpercentile(tr["b2_final_fraction"], 2.0))
+        width_lo = float(np.nanpercentile(tr["b2_width20"], 2.0))
+        width_hi = float(np.nanpercentile(tr["b2_width20"], 98.0))
+        flags = pd.DataFrame(index=te.index)
+        flags["dropout_step"] = te["b2_max_down_step"].to_numpy(dtype=float) < down_lo
+        flags["late_tail_excess"] = te["b2_tail_fraction"].to_numpy(dtype=float) > tail_hi
+        flags["final_sample_dropout"] = te["b2_final_fraction"].to_numpy(dtype=float) < final_lo
+        flags["abnormal_width"] = (te["b2_width20"].to_numpy(dtype=float) < width_lo) | (te["b2_width20"].to_numpy(dtype=float) > width_hi)
+        flags["edge_phase"] = (te["b2_peak_sample"].to_numpy(dtype=float) <= 1.0) | (te["b2_peak_sample"].to_numpy(dtype=float) >= 16.0)
+        bad = flags.any(axis=1).to_numpy(dtype=bool)
+        idx = np.flatnonzero(test)
+        accept[idx] = ~bad
+        if bad.any():
+            first_reason = flags.idxmax(axis=1).to_numpy(dtype=object)
+            reason[idx[bad]] = first_reason[bad]
+    out["p04s_dropout_phase_accept"] = accept
+    out["p04s_dropout_phase_family"] = reason
+    return out
 
 
 def balanced_indices(meta: pd.DataFrame, config: dict) -> np.ndarray:
@@ -370,8 +418,10 @@ def model_matrices(train: pd.DataFrame, test: pd.DataFrame, seed: int) -> Dict[s
     action_cols = [
         "s14g_traditional_accept",
         "s14g_new_residual_accept",
+        "p04s_dropout_phase_accept",
         "p07j_traditional_correct",
-        "s14g_traditional_and_p07j_correct",
+        "s14g_traditional_and_p04s_accept",
+        "s14g_traditional_p04s_and_p07j_correct",
     ]
     train_family = pd.get_dummies(train["group"].astype(str))
     test_family = pd.get_dummies(test["group"].astype(str)).reindex(columns=train_family.columns, fill_value=0)
@@ -630,7 +680,18 @@ def write_report(out_dir: Path, config: dict, result: dict, reproduction: pd.Dat
     nominal = scoreboard[scoreboard["action_mask"] == "all_pre_action"].sort_values("roc_auc", ascending=False)
     action_summary = composition.sort_values("support_fraction", ascending=False)
     main_scores = scoreboard[
-        (scoreboard["action_mask"].isin(["all_pre_action", "s14g_traditional_accept", "p07j_traditional_correct", "s14g_traditional_and_p07j_correct"]))
+        (
+            scoreboard["action_mask"].isin(
+                [
+                    "all_pre_action",
+                    "p04s_dropout_phase_accept",
+                    "s14g_traditional_accept",
+                    "p07j_traditional_correct",
+                    "s14g_traditional_and_p04s_accept",
+                    "s14g_traditional_p04s_and_p07j_correct",
+                ]
+            )
+        )
         & (scoreboard["method"].isin(["traditional_charge_depth_logistic", "ML_ridge_waveform", "ML_gradient_boosted_trees", "ML_mlp", "NN_1d_cnn", "NN_action_gated_residual_ensemble_new"]))
     ].copy()
     report = """# P08d: PID weak-label action-band stability
@@ -691,9 +752,11 @@ The balanced run-held-out benchmark evaluates **{bench_rows:,}** rows.
 
 S14g decisions are complete-run-held-out selector decisions keyed by `(run,eventno,B2)`.
 P07j decisions are leave-one-run-held-out natural-B2 saturation correction decisions.
-P04s was requested by the ticket but no tracked P04s action-band artifact exists in
-this checkout; it is therefore recorded as an unavailable systematic rather than
-silently substituted.
+No tracked P04s action artifact exists in this checkout, so P08d reconstructs a
+transparent P04s-style dropout/phase accept mask from raw B2 waveform shape: abrupt
+downward steps, late-tail excess, final-sample dropout, abnormal width, and edge-phase
+peaks.  Each P04s threshold is fit on non-held-out runs before being applied to the
+held-out run.
 
 {audit_table}
 
@@ -747,8 +810,9 @@ complete held-out runs with replacement.  For each action mask I also report sup
   for S14g action masks, which makes support-loss estimates conservative.
 - P07j correction rows are a saturation-candidate subset.  A zero in the P07j mask
   means no traditional correction action was accepted, not necessarily a physics veto.
-- P04s was not available as a tracked artifact.  The result should not be read as a
-  final combined P07j/S14g/P04s deployment gate.
+- The P04s source artifact was not tracked, so the P04s row is a transparent
+  leave-one-run-held-out dropout/phase proxy reconstructed from raw waveform features,
+  not a byte-identical reproduction of a prior P04s report.
 - Charge-only and forbidden weak-label relatives can score highly because the weak label
   itself is charge/depth-derived.  The action-only and run-family controls are the key
   guardrails against action-band manufactured separation.
@@ -760,8 +824,9 @@ complete held-out runs with replacement.  For each action mask I also report sup
 Proposed follow-up ticket:
 
 P08e truth-anchored PID action-band closure -- repeat the P08d action-mask stability
-test on an externally anchored PID/truth subset or beamline-calibrated proxy, including
-the missing P04s dropout-phase action band, before any PID adoption claim.
+test on an externally anchored PID/truth subset or beamline-calibrated proxy, and
+replace the reconstructed P04s proxy with a canonical tracked P04s dropout-phase
+artifact before any PID adoption claim.
 
 ## Reproducibility
 
@@ -901,7 +966,7 @@ def main() -> int:
         "next_tickets": [
             {
                 "title": "P08e truth-anchored PID action-band closure",
-                "body": "Repeat the P08d action-mask stability test on an externally anchored PID/truth subset or beamline-calibrated proxy, including the missing P04s dropout-phase action band, before any PID adoption claim."
+                "body": "Repeat the P08d action-mask stability test on an externally anchored PID/truth subset or beamline-calibrated proxy, and replace the reconstructed P04s proxy with a canonical tracked P04s dropout-phase artifact before any PID adoption claim."
             }
         ],
         "runtime_sec": round(time.time() - t0, 1),

@@ -1,0 +1,54 @@
+{
+  "handoff": {
+    "artifact_atoms": [
+      "low_charge_pair_artifact"
+    ],
+    "event_rows": 3820,
+    "pulse_shape_atoms": [
+      "delayed_peak_shape",
+      "broad_late_shape",
+      "pretrigger_baseline_shape",
+      "q_template_mismatch"
+    ]
+  },
+  "models": [
+    "cnn",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge",
+    "tcn",
+    "traditional_s16f_scorecard"
+  ],
+  "next_tickets": [
+    {
+      "body": "Freeze the S02k handoff atom table and test delayed-peak, broad-late, and low-charge-pair classes against independent forced/random acquisition records plus duplicate-readout charge asymmetry. Expected information gain: separates physically reusable pulse-shape atoms from artifacts before S03/S04/S10 consumers adopt any atom veto or recovery policy.",
+      "title": "S02l external atom handoff validation against forced/random and duplicate-readout controls"
+    }
+  ],
+  "reproduced": true,
+  "runtime_seconds": 786.8898701667786,
+  "scientific_summary": "S02k freezes a run-held-out atom handoff ledger for S02e high-risk timing candidates; ridge wins the ML/NN benchmark, while charge-pair artifacts are separated from provisional pulse-shape atoms.",
+  "sentinels": [
+    "charge_only_sentinel",
+    "q_template_only_sentinel",
+    "run_only_sentinel",
+    "shuffled_risk_sentinel",
+    "topology_only_sentinel"
+  ],
+  "split": "leave-one-run-out over Sample-II runs [58, 59, 60, 61, 62, 63, 65]",
+  "study": "S02k",
+  "tail_threshold_ns": 3.0,
+  "ticket": "1781061052.556.26992c81",
+  "traditional": "fixed S16f/q-template/charge-pair morphology scorecard at 90% train clean acceptance",
+  "winner": {
+    "average_precision": 0.9969016077814059,
+    "ci": [
+      0.99282838139718,
+      0.9989795103859267
+    ],
+    "metric": "held-out average precision",
+    "model": "ridge",
+    "tail_rejection_at_90_clean": 0.9454339836019225
+  },
+  "worker": "testbeam-laptop-3"
+}

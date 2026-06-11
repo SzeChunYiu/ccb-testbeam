@@ -1,0 +1,27 @@
+{
+  "config": "configs/s02k_1781061052_556_26992c81_highrisk_timing_atom_handoff.yaml",
+  "git_commit": "9d994c7ef757af01e757f347b386fde05aac1fa6",
+  "input_files": 33,
+  "outputs": {
+    "REPORT.md": "189a805fe1ea6c4f5af23e6e07985be4b193d49594eb302cccaef99c7effd37e",
+    "allhit_pulse_counts_by_run_stave.csv": "5e93bad5db7e07a6c6a56390a0dcc6fd8527f9346413bb18ac98908e8f405070",
+    "atom_handoff_events.csv": "e449b0a1758ba596740ab46dfa9f3a39d82fa58dfaadd9e75835cbf101fc3bbb",
+    "atom_handoff_table.csv": "ba7b3555036da13ea966165a8a76f75c8c5305fcd01d58567e8fb286c6fb2d92",
+    "fig_atom_tail_precision.png": "661c1883bcf041afe1a78a44a431213e319a3ca7e7ab714a2800b61502a55f82",
+    "fig_model_average_precision.png": "c202ddf544ca8113ac8b4ad83cac238f9ce5b0adb6837ebe558b8800be883cec",
+    "fold_model_choices.csv": "285e8cbfecd8fc65ea7ba019e39d411fc7e12d5cdfe3b2c66b74a0581f961519",
+    "heldout_fold_metrics.csv": "101d40bfd5e3670f39270ed1bc9b61c44147d1b419373e4e3d65b10d3d2c6ffd",
+    "input_sha256.csv": "22b29191e460d7b6644755e2d45d15ea60dcc5944d653a755fe588a055e6bb24",
+    "leakage_checks.csv": "fb7cea759dddef00784f4083cf31a670327e25cdab7e073c2aa49e7529a5803a",
+    "method_handoff_summary.csv": "ad8e772ac6f0776820308dbd3cb1568985d7a51570e8309247769ca3e96ce92d",
+    "ml_minus_traditional_bootstrap_delta.csv": "d8038db8c9aad8d5337b07bd12bf0862d01d4438cec99873084f5cc215b035e2",
+    "oof_tail_predictions.csv": "a5012b558ff96aac297837818aedaba05995ff22578422424eacc377d663ab4b",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "dafd5a0f915a30831735438c0cd50cccd10667b918071487ea03c329f3aad31e",
+    "run_block_bootstrap_summary.csv": "cabef3edfe3a7b45d5366d997a415c7129e1ac98b4917f5dc19efef9e6ea6688",
+    "sentinel_benchmark.csv": "7faeb58d7c32e50145fd5728fee90fee169fb2149422fd721c559b1359ec7397"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "script": "scripts/s02k_1781061052_556_26992c81_highrisk_timing_atom_handoff.py"
+}

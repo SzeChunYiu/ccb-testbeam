@@ -1,0 +1,146 @@
+{
+  "study": "S03o",
+  "ticket": "1781058292.515.16756522",
+  "worker": "testbeam-laptop-4",
+  "title": "run-61 heavy-tail support exclusion gate",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "total_selected_pulses": 640737
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run",
+    "train_excludes_candidate_support": true,
+    "evaluation_support": "candidate_support_events_only"
+  },
+  "support_atom": {
+    "late_norm_min": 5.85,
+    "peak_sample_min": 9.0,
+    "fall_slope_min": 0.25,
+    "total_support_events": 448,
+    "total_events": 3820
+  },
+  "winner": {
+    "method": "traditional_hier_amp",
+    "sigma68_ns": 1.8917149033657772,
+    "sigma68_ci": [
+      1.5881598103500028,
+      2.3348541882221245
+    ],
+    "full_rms_ns": 3.8982180706822587,
+    "tail_frac_abs_gt5ns": 0.04985119047619048
+  },
+  "traditional": {
+    "method": "traditional_hier_amp",
+    "sigma68_ns": 1.8917149033657772,
+    "sigma68_ci": [
+      1.5881598103500028,
+      2.3348541882221245
+    ]
+  },
+  "methods_ranked": [
+    {
+      "method": "traditional_hier_amp",
+      "sigma68_ns": 1.8917149033657772,
+      "sigma68_ci": [
+        1.5881598103500028,
+        2.3348541882221245
+      ],
+      "full_rms_ns": 3.8982180706822587,
+      "p95_abs_residual_ns": 4.984398077198517,
+      "tail_frac_abs_gt5ns": 0.04985119047619048
+    },
+    {
+      "method": "tiny_1d_cnn",
+      "sigma68_ns": 1.9229322629484393,
+      "sigma68_ci": [
+        1.639597355370699,
+        2.2850647087526093
+      ],
+      "full_rms_ns": 3.8402086514128966,
+      "p95_abs_residual_ns": 4.549015512201098,
+      "tail_frac_abs_gt5ns": 0.043154761904761904
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "sigma68_ns": 1.943859795868212,
+      "sigma68_ci": [
+        1.6983559508008716,
+        2.2250384403296226
+      ],
+      "full_rms_ns": 3.608322393521824,
+      "p95_abs_residual_ns": 4.518258563528188,
+      "tail_frac_abs_gt5ns": 0.04241071428571429
+    },
+    {
+      "method": "support_gated_ensemble",
+      "sigma68_ns": 1.999234947124774,
+      "sigma68_ci": [
+        1.721306952902804,
+        2.3493249192638843
+      ],
+      "full_rms_ns": 3.6795158135956467,
+      "p95_abs_residual_ns": 4.818309462688796,
+      "tail_frac_abs_gt5ns": 0.046130952380952384
+    },
+    {
+      "method": "mlp_waveform",
+      "sigma68_ns": 2.0140159199532004,
+      "sigma68_ci": [
+        1.7815775212723053,
+        2.1846848762885713
+      ],
+      "full_rms_ns": 3.419833992549147,
+      "p95_abs_residual_ns": 4.441572470993991,
+      "tail_frac_abs_gt5ns": 0.03943452380952381
+    },
+    {
+      "method": "ridge_waveform",
+      "sigma68_ns": 2.078435006025696,
+      "sigma68_ci": [
+        1.7071262291049196,
+        2.4370202985897165
+      ],
+      "full_rms_ns": 3.8605501148671277,
+      "p95_abs_residual_ns": 4.646284477565386,
+      "tail_frac_abs_gt5ns": 0.046875
+    },
+    {
+      "method": "template_phase_base",
+      "sigma68_ns": 3.3558442793874796,
+      "sigma68_ci": [
+        3.1874245630845017,
+        3.683753574014367
+      ],
+      "full_rms_ns": 4.4353608324317655,
+      "p95_abs_residual_ns": 6.455968009494399,
+      "tail_frac_abs_gt5ns": 0.22023809523809523
+    }
+  ],
+  "coefficient_drift": {
+    "median_l2_standardized": 3.0468135245708305,
+    "max_l2_standardized": 3.3424343280491393
+  },
+  "leakage": {
+    "split_by_run": true,
+    "train_support_rows_used": 0.0,
+    "event_id_overlap_total": 0.0,
+    "features_exclude_run_event_order_partner_time": true,
+    "leakage_flag": false
+  },
+  "verdict": "traditional_hier_amp_wins_excluded_run61_like_support",
+  "critic": "pending",
+  "next_tickets": [],
+  "git_commit": "633360f1ca614ce9f72a2edc713aabb11d27a8be",
+  "runtime_seconds": 146.6193528175354
+}

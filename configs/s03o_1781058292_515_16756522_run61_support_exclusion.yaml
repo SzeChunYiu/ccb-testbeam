@@ -1,0 +1,82 @@
+study_id: S03o
+title: run-61 heavy-tail support exclusion gate
+
+raw_root_dir: data/root/root
+output_dir: reports/1781058292.515.16756522__s03o_run61_heavy_tail_support_exclusion_gate
+ticket_id: "1781058292.515.16756522"
+worker: testbeam-laptop-4
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+tof_per_cm_ns: 0.078
+spacing_cm_values: [2.0]
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_pulses: 640737
+  sample_ii_analysis:
+    selected_pulses: 125096
+    B2: 88213
+    B4: 21229
+    B6: 11148
+    B8: 4506
+
+timing:
+  downstream_staves: [B4, B6, B8]
+  loo_runs: [58, 59, 60, 61, 62, 63, 65]
+  train_runs: [58, 59, 60, 61, 62, 63]
+  heldout_runs: [65]
+  leading_edge_threshold_adc: 500.0
+  cfd_fractions: [0.10, 0.20, 0.30, 0.40, 0.50]
+  of_windows:
+    - [1, 9]
+    - [2, 10]
+    - [3, 11]
+    - [4, 12]
+  template_shift_grid:
+    min: -1.5
+    max: 1.5
+    step: 0.05
+  base_method: template_phase
+
+support_atom:
+  late_norm_min: 5.85
+  peak_sample_min: 9
+  fall_slope_min: 0.25
+  description: "run-61-like late normalized charge with delayed peak and positive falling-tail slope"
+
+models:
+  random_seed: 20260611
+  bootstrap_samples: 300
+  cv_folds: 2
+  ridge_alphas: [1.0, 10.0]
+  hgb:
+    max_iter: [80]
+    learning_rate: [0.05]
+    max_leaf_nodes: [7]
+    l2_regularization: [0.1]
+    max_bins: 64
+  mlp:
+    hidden_layer_sizes: [[32]]
+    alpha: [0.001]
+    max_iter: 250
+  cnn:
+    n_filters: 5
+    kernel_size: 5
+    epochs: 100
+    learning_rate: 0.015
+    l2: 0.0005
+    random_seed_offset: 4100

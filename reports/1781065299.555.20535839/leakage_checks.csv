@@ -1,0 +1,10 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5000000000000001,0.5,Same for clean/injected pairs; should be chance.
+fit-output-only logistic sentinel,0.6528601811830892,0.6752944928078166,Interpretable bounded-fit variables only.
+fit-output-only ExtraTrees sentinel,0.7312724278951561,0.7514400056007443,Nonlinear fit-output-only calibration.
+shape-only RF sentinel,0.8223964252582471,0.8332728513197409,Waveform-shape baseline without fit outputs.
+topology-only RF,0.5,0.5,All-three topology should carry no label information.
+absolute-amplitude-only RF,0.5629025089413289,0.569827173372565,Excluded nuisance; injection changes peak height.
+shape RF with shuffled training labels,0.4776712872232215,0.4805339471119524,Null for frontier pass rule.
+pair split violations,0.0,,Must be 0.
+main feature count,173.0,,Shape-only tabular features used by ridge/HGB/MLP.

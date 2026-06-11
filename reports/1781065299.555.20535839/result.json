@@ -1,0 +1,41 @@
+{
+  "all_three_clean_events": 579,
+  "all_three_control_events": 3774,
+  "all_three_guarded_gross_events": 22,
+  "best_rf_params": {
+    "max_depth": 7,
+    "min_samples_leaf": 8,
+    "n_estimators": 500
+  },
+  "dataset_events": 1158,
+  "dataset_pairs": 579,
+  "elapsed_seconds": 114.69326090812683,
+  "fit_output_extratrees_auc": 0.7312724278951561,
+  "fit_output_logistic_auc": 0.6528601811830892,
+  "fit_plus_shape_residual_auc": 0.8355496493567314,
+  "frontier_passed_cells_for_winner": 5,
+  "next_tickets": [
+    {
+      "body": "Apply the S11i calibrated bounded-fit and fit-plus-shape-residual scores to real high-current candidate windows with run-family heldout transfer, preserving the S11i ECE/Brier and fixed-clean operating-point diagnostics.",
+      "title": "S11j real-current bounded-fit calibration transfer check"
+    }
+  ],
+  "pair_split_violations": 0,
+  "parent_guarded_gross_events": 72,
+  "raw_reproduction_pass": true,
+  "study_id": "S11i",
+  "ticket_id": "1781065299.555.20535839",
+  "total_frontier_cells": 15,
+  "traditional_auc": 0.607549494244439,
+  "winner_average_precision": 0.8983183784950621,
+  "winner_brier": 0.1301079507013655,
+  "winner_ece": 0.06490397426010601,
+  "winner_fixed_95_clean_rejection": 0.6234887737478411,
+  "winner_method": "MLP",
+  "winner_minus_traditional_auc": 0.29382295124999613,
+  "winner_roc_auc": 0.9013724454944352,
+  "winner_roc_auc_ci": [
+    0.8732420187830156,
+    0.9249109002944165
+  ]
+}

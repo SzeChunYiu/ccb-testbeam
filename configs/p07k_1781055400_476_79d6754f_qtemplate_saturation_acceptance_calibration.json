@@ -1,0 +1,85 @@
+{
+  "ticket": "1781055400.476.79d6754f",
+  "worker": "testbeam-laptop-4",
+  "study": "P07k",
+  "title": "q-template-preserving saturation acceptance calibration",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781055400.476.79d6754f__p07k_qtemplate_saturation_acceptance_calibration",
+  "amplitude_cut_adc": 1000.0,
+  "saturation_proxy_adc": 7000.0,
+  "expected_selected_pulses": 640737,
+  "expected_p07e_high_duplicate_rows": 183132,
+  "expected_p07f_duplicate_rows": 565387,
+  "expected_p07f_low_family_median_adc": 2752.018164556962,
+  "expected_p07f_high_family_median_adc": 7239.696392405063,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "duplicate_selection": {
+    "min_b2_amp_adc": 1000.0,
+    "min_odd_charge": 100.0,
+    "min_odd_amp": 100.0,
+    "min_peak_sample": 3,
+    "max_peak_sample": 14
+  },
+  "traditional": {
+    "bins": 70,
+    "min_bin_rows": 30,
+    "min_run_rows": 400,
+    "grid_points": 80,
+    "min_post_to_pre_slope_ratio": 1.05,
+    "max_post_to_pre_slope_ratio": 3.0,
+    "high_family_min_knee_adc": 5000.0,
+    "accept_band_low_adc": 550.0,
+    "accept_band_high_adc": 850.0,
+    "min_closure_residual_frac": 0.015,
+    "max_closure_residual_frac": 0.18
+  },
+  "action_bands": {
+    "pass_low_residual_abs_frac": 0.015,
+    "correct_min_residual_frac": 0.015,
+    "correct_max_residual_frac": 0.18,
+    "veto_min_harm_risk_frac": 0.18,
+    "veto_low_family_min_amp_adc": 7000.0,
+    "veto_unstable_min_amp_adc": 7000.0
+  },
+  "gate": {
+    "candidate_min_amp_adc": 7000.0,
+    "correction_gain": 0.22,
+    "max_lift_fraction": 0.04,
+    "closure_res68_gate": 0.12,
+    "q_template_abs_gate": 0.035,
+    "cfd_abs_gate_ns": 0.75,
+    "timing_tail_delta_gate": 0.015,
+    "harm_rate_gate": 0.08
+  },
+  "ml": {
+    "random_seed": 20260611,
+    "max_train_rows": 70000,
+    "max_train_rows_nn": 24000,
+    "min_train_positives": 80,
+    "calibration_bins": 10,
+    "probability_grid": [0.05, 0.08, 0.1, 0.12, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7],
+    "gbt_max_iter": 130,
+    "mlp_max_iter": 90,
+    "torch_epochs": 6,
+    "torch_batch_size": 512,
+    "torch_learning_rate": 0.001,
+    "torch_weight_decay": 0.0001
+  },
+  "bootstrap_replicates": 400
+}

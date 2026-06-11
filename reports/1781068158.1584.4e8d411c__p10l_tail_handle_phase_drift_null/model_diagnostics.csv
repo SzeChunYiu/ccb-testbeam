@@ -1,0 +1,27 @@
+model,kind,feature_groups,train_rows,eval_rows,fit_predict_sec,status,meta,fold
+ridge,ridge,"amplitude,stave,shape,saturation,current",4830,17604,0.09,,,holdout_sample_i
+extra_trees,extra_trees,"amplitude,stave,shape,saturation,current",4830,17604,0.31,,,holdout_sample_i
+gradient_boosted_trees,gradient_boosted_trees,"amplitude,stave,shape,saturation,current",4830,17604,1.4,,,holdout_sample_i
+family_label_sentinel,extra_trees,"current,run_family",4830,17604,0.21,,,holdout_sample_i
+shuffled_target_extra_trees,extra_trees_shuffled,"amplitude,stave,shape,saturation,current",4830,17604,0.31,,,holdout_sample_i
+phase_shuffled_gradient_boosted_trees,gradient_boosted_trees_phase_shuffled,"amplitude,stave,shape,saturation,current",4830,17604,0.93,,,holdout_sample_i
+knockout_no_amplitude,extra_trees,"stave,shape,saturation,current",4830,17604,0.31,,,holdout_sample_i
+knockout_no_shape,extra_trees,"amplitude,stave,saturation,current",4830,17604,0.21,,,holdout_sample_i
+knockout_no_stave,extra_trees,"amplitude,shape,saturation,current",4830,17604,0.31,,,holdout_sample_i
+knockout_no_current,extra_trees,"amplitude,stave,shape,saturation",4830,17604,0.31,,,holdout_sample_i
+mlp,tabular,"amplitude,stave,shape,saturation,current",4830,17604,0.28,trained,"{""device"": ""cpu"", ""epochs"": 6, ""train_rows"": 4830}",holdout_sample_i
+cnn_1d,cnn,"amplitude,stave,shape,saturation,current,waveform",4830,17604,0.3,trained,"{""architecture"": ""cnn_1d"", ""device"": ""cpu"", ""epochs"": 5, ""train_rows"": 4830}",holdout_sample_i
+phase_gated_cnn_new,gated_cnn,"amplitude,stave,shape,saturation,current,waveform",4830,17604,0.38,trained,"{""architecture"": ""phase_gated_cnn_new"", ""device"": ""cpu"", ""epochs"": 5, ""train_rows"": 4830}",holdout_sample_i
+ridge,ridge,"amplitude,stave,shape,saturation,current",9000,13749,0.02,,,holdout_sample_ii
+extra_trees,extra_trees,"amplitude,stave,shape,saturation,current",9000,13749,0.62,,,holdout_sample_ii
+gradient_boosted_trees,gradient_boosted_trees,"amplitude,stave,shape,saturation,current",9000,13749,1.58,,,holdout_sample_ii
+family_label_sentinel,extra_trees,"current,run_family",9000,13749,0.21,,,holdout_sample_ii
+shuffled_target_extra_trees,extra_trees_shuffled,"amplitude,stave,shape,saturation,current",9000,13749,0.71,,,holdout_sample_ii
+phase_shuffled_gradient_boosted_trees,gradient_boosted_trees_phase_shuffled,"amplitude,stave,shape,saturation,current",9000,13749,1.78,,,holdout_sample_ii
+knockout_no_amplitude,extra_trees,"stave,shape,saturation,current",9000,13749,0.41,,,holdout_sample_ii
+knockout_no_shape,extra_trees,"amplitude,stave,saturation,current",9000,13749,0.53,,,holdout_sample_ii
+knockout_no_stave,extra_trees,"amplitude,shape,saturation,current",9000,13749,0.84,,,holdout_sample_ii
+knockout_no_current,extra_trees,"amplitude,stave,shape,saturation",9000,13749,0.62,,,holdout_sample_ii
+mlp,tabular,"amplitude,stave,shape,saturation,current",9000,13749,0.19,trained,"{""device"": ""cpu"", ""epochs"": 6, ""train_rows"": 7000}",holdout_sample_ii
+cnn_1d,cnn,"amplitude,stave,shape,saturation,current,waveform",9000,13749,0.33,trained,"{""architecture"": ""cnn_1d"", ""device"": ""cpu"", ""epochs"": 5, ""train_rows"": 7000}",holdout_sample_ii
+phase_gated_cnn_new,gated_cnn,"amplitude,stave,shape,saturation,current,waveform",9000,13749,0.35,trained,"{""architecture"": ""phase_gated_cnn_new"", ""device"": ""cpu"", ""epochs"": 5, ""train_rows"": 7000}",holdout_sample_ii

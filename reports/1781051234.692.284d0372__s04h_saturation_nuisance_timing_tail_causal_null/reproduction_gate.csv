@@ -1,0 +1,3 @@
+quantity,expected,reproduced,delta,pass
+Sample-II analysis B2 selected pulses,88213,88213,0,True
+B2 pulses >= 7000 ADC,5351,5351,0,True

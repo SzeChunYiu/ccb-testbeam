@@ -1,0 +1,632 @@
+{
+  "study": "S04h",
+  "ticket": "1781051234.692.284d0372",
+  "worker": "testbeam-laptop-4",
+  "title": "saturation-nuisance timing-tail causal null",
+  "reproduced": true,
+  "raw_root_dir": "data/root/root",
+  "split": "leave-one-run-out by run over Sample-II analysis runs",
+  "methods": [
+    "observed_saturated",
+    "traditional_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "gated_residual_cnn"
+  ],
+  "winner": {
+    "winner_method": "gated_residual_cnn",
+    "winner_family": "ml_nn",
+    "primary_metric": "run-block mean tail fraction |residual-median| > 5 ns",
+    "tail_frac_abs_gt5ns": 0.6937774312774313,
+    "tail_frac_abs_gt5ns_ci95": [
+      0.5838199188199189,
+      0.8098488598488599
+    ],
+    "sigma68_ns": 19.39065657480823,
+    "sigma68_ns_ci95": [
+      13.661983002641229,
+      26.356395599693176
+    ],
+    "tail_delta_vs_observed": -0.004204204204204198,
+    "tail_delta_vs_observed_ci95": [
+      -0.01737451737451734,
+      0.004761904761904745
+    ],
+    "observed_tail_frac_abs_gt5ns": 0.6979816354816355,
+    "observed_sigma68_ns": 19.37500324801181
+  },
+  "winner_method": "gated_residual_cnn",
+  "winner_family": "ml_nn",
+  "primary_metric": "run-block mean tail fraction |residual-median| > 5 ns",
+  "causal_verdict": "saturation_correction_tail_delta_ci_overlaps_zero",
+  "timing_summary": [
+    {
+      "method": "observed_saturated",
+      "family": "observed",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        14.142857142857142,
+        60.714285714285715
+      ],
+      "tail_frac_abs_gt5ns": 0.6979816354816355,
+      "tail_frac_abs_gt5ns_ci95": [
+        0.5860786782661782,
+        0.8178528116028114
+      ],
+      "tail_delta_vs_observed": 0.0,
+      "tail_delta_vs_observed_ci95": [
+        0.0,
+        0.0
+      ],
+      "sigma68_ns": 19.37500324801181,
+      "sigma68_ns_ci95": [
+        13.518861817306384,
+        26.289098911528963
+      ],
+      "sigma68_delta_vs_observed_ns": 0.0,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        0.0,
+        0.0
+      ],
+      "q95_abs_ns": 57.767997150073654,
+      "q95_abs_ns_ci95": [
+        43.8724805136318,
+        67.92615988710615
+      ],
+      "q95_delta_vs_observed_ns": 0.0,
+      "q95_delta_vs_observed_ns_ci95": [
+        0.0,
+        0.0
+      ],
+      "q_template_median": 0.21726685921297983,
+      "q_template_median_ci95": [
+        0.20270204267111733,
+        0.23409567024560957
+      ],
+      "q_template_p95": 0.5325859323052801,
+      "q_template_p95_ci95": [
+        0.4976252042284926,
+        0.5737363842486928
+      ],
+      "amp_ratio_median": 1.0,
+      "amp_ratio_median_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "method": "traditional_template",
+      "family": "traditional",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        13.428571428571429,
+        55.714285714285715
+      ],
+      "tail_frac_abs_gt5ns": 0.6979816354816355,
+      "tail_frac_abs_gt5ns_ci95": [
+        0.5907764392139392,
+        0.8127024345774344
+      ],
+      "tail_delta_vs_observed": 0.0,
+      "tail_delta_vs_observed_ci95": [
+        0.0,
+        0.0
+      ],
+      "sigma68_ns": 19.374462060832997,
+      "sigma68_ns_ci95": [
+        13.508671722064433,
+        25.687960467295625
+      ],
+      "sigma68_delta_vs_observed_ns": -0.0005411871788142873,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        -0.014674912814579142,
+        0.01305135127813628
+      ],
+      "q95_abs_ns": 57.74339301261915,
+      "q95_abs_ns_ci95": [
+        43.93018008809979,
+        68.28778392771358
+      ],
+      "q95_delta_vs_observed_ns": -0.024604137454497885,
+      "q95_delta_vs_observed_ns_ci95": [
+        -0.07381241236349366,
+        0.0
+      ],
+      "q_template_median": 0.21726685921297983,
+      "q_template_median_ci95": [
+        0.20315438319132953,
+        0.23316617057510008
+      ],
+      "q_template_p95": 0.5325859323052801,
+      "q_template_p95_ci95": [
+        0.4949925223055714,
+        0.5662037066804052
+      ],
+      "amp_ratio_median": 1.0,
+      "amp_ratio_median_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        15.428571428571429,
+        57.503571428571426
+      ],
+      "tail_frac_abs_gt5ns": 0.6979816354816355,
+      "tail_frac_abs_gt5ns_ci95": [
+        0.5806509462759463,
+        0.8146329365079363
+      ],
+      "tail_delta_vs_observed": 0.0,
+      "tail_delta_vs_observed_ci95": [
+        0.0,
+        0.0
+      ],
+      "sigma68_ns": 19.37500324801181,
+      "sigma68_ns_ci95": [
+        13.231352574860649,
+        26.020708919343278
+      ],
+      "sigma68_delta_vs_observed_ns": 0.0,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        0.0,
+        0.0
+      ],
+      "q95_abs_ns": 57.767997150073654,
+      "q95_abs_ns_ci95": [
+        42.47496276820529,
+        68.41797625044872
+      ],
+      "q95_delta_vs_observed_ns": 0.0,
+      "q95_delta_vs_observed_ns_ci95": [
+        0.0,
+        0.0
+      ],
+      "q_template_median": 0.21726685921297983,
+      "q_template_median_ci95": [
+        0.20273418021690112,
+        0.23630830745433462
+      ],
+      "q_template_p95": 0.5325859323052801,
+      "q_template_p95_ci95": [
+        0.49962954524009595,
+        0.5702424051988635
+      ],
+      "amp_ratio_median": 1.0,
+      "amp_ratio_median_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        15.632142857142858,
+        62.36785714285713
+      ],
+      "tail_frac_abs_gt5ns": 0.7109011484011484,
+      "tail_frac_abs_gt5ns_ci95": [
+        0.6126831501831502,
+        0.8266825891825892
+      ],
+      "tail_delta_vs_observed": 0.01291951291951294,
+      "tail_delta_vs_observed_ci95": [
+        0.0,
+        0.034897534897534936
+      ],
+      "sigma68_ns": 19.51586732478028,
+      "sigma68_ns_ci95": [
+        13.373397966035933,
+        26.080539412556906
+      ],
+      "sigma68_delta_vs_observed_ns": 0.14086407676847226,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        0.021018128611179878,
+        0.27789219175503227
+      ],
+      "q95_abs_ns": 57.86338548883445,
+      "q95_abs_ns_ci95": [
+        46.25336757627118,
+        69.27686093721708
+      ],
+      "q95_delta_vs_observed_ns": 0.0953883387608064,
+      "q95_delta_vs_observed_ns_ci95": [
+        -0.1449864762664759,
+        0.45569778807208233
+      ],
+      "q_template_median": 0.21761349073539488,
+      "q_template_median_ci95": [
+        0.20353536852710932,
+        0.23551132624358911
+      ],
+      "q_template_p95": 0.5105708521928586,
+      "q_template_p95_ci95": [
+        0.47886485346982194,
+        0.541617592792828
+      ],
+      "amp_ratio_median": 1.0641046219283465,
+      "amp_ratio_median_ci95": [
+        1.0604141613145985,
+        1.067784547054548
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n_events_total": 248,
+      "n_events_mean_per_run": 35.42857142857143,
+      "n_events_mean_per_run_ci95": [
+        14.639285714285714,
+        58.93214285714285
+      ],
+      "tail_frac_abs_gt5ns": 0.6975926475926475,
+      "tail_frac_abs_gt5ns_ci95": [
+        0.5907014157014158,
+        0.820259339009339
+      ],
+      "tail_delta_vs_observed": -0.0003889878889879065,
+      "tail_delta_vs_observed_ci95": [
+        -0.060299227799227834,
+        0.057524255024255
+      ],
+      "sigma68_ns": 19.38138735785466,
+      "sigma68_ns_ci95": [
+        13.421853299405198,
+        26.517619683354443
+      ],
+      "sigma68_delta_vs_observed_ns": 0.00638410984284984,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        -0.3712643525706973,
+        0.3408845209797419
+      ],
+      "q95_abs_ns": 59.87871867829454,
+      "q95_abs_ns_ci95": [
+        47.672734430404965,
+        70.30670230497282
+      ],
+      "q95_delta_vs_observed_ns": 2.1107215282208958,
+      "q95_delta_vs_observed_ns_ci95": [
+        0.6258221908545828,
+        3.7583732039402906
+      ],
+      "q_template_median": 0.21940615475721853,
+      "q_template_median_ci95": [
+        0.2060884582649806,
+        0.23570495572468467
+      ],
+      "q_template_p95": 0.4955429124047136,
+      "q_template_p95_ci95": [
+        0.46100494064749054,
+        0.5382531508269235
+      ],
+      "amp_ratio_median": 1.0577576630985688,
+      "amp_ratio_median_ci95": [
+        1.0256386982401675,
+        1.0842945048704522
+      ]
+    },
+    {
+      "method": "cnn1d",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        14.210714285714285,
+        57.796428571428564
+      ],
+      "tail_frac_abs_gt5ns": 0.6963943338943339,
+      "tail_frac_abs_gt5ns_ci95": [
+        0.5833544636669636,
+        0.8200694031944029
+      ],
+      "tail_delta_vs_observed": -0.0015873015873015975,
+      "tail_delta_vs_observed_ci95": [
+        -0.004761904761904793,
+        0.0
+      ],
+      "sigma68_ns": 19.327932098187738,
+      "sigma68_ns_ci95": [
+        13.371273002137947,
+        25.994304483624678
+      ],
+      "sigma68_delta_vs_observed_ns": -0.04707114982407136,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        -0.1566022626646151,
+        0.016354360733781378
+      ],
+      "q95_abs_ns": 57.8422839526125,
+      "q95_abs_ns_ci95": [
+        44.02103320697914,
+        67.88725977366794
+      ],
+      "q95_delta_vs_observed_ns": 0.07428680253885693,
+      "q95_delta_vs_observed_ns_ci95": [
+        0.0015158532027094956,
+        0.16151688899482256
+      ],
+      "q_template_median": 0.21726685921297983,
+      "q_template_median_ci95": [
+        0.201226332390531,
+        0.23487867819479444
+      ],
+      "q_template_p95": 0.507286636273668,
+      "q_template_p95_ci95": [
+        0.47239630452866216,
+        0.5373369261133603
+      ],
+      "amp_ratio_median": 1.0,
+      "amp_ratio_median_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "method": "gated_residual_cnn",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n_events_total": 249,
+      "n_events_mean_per_run": 35.57142857142857,
+      "n_events_mean_per_run_ci95": [
+        14.775,
+        60.51071428571428
+      ],
+      "tail_frac_abs_gt5ns": 0.6937774312774313,
+      "tail_frac_abs_gt5ns_ci95": [
+        0.5838199188199189,
+        0.8098488598488599
+      ],
+      "tail_delta_vs_observed": -0.004204204204204198,
+      "tail_delta_vs_observed_ci95": [
+        -0.01737451737451734,
+        0.004761904761904745
+      ],
+      "sigma68_ns": 19.39065657480823,
+      "sigma68_ns_ci95": [
+        13.661983002641229,
+        26.356395599693176
+      ],
+      "sigma68_delta_vs_observed_ns": 0.01565332679642165,
+      "sigma68_delta_vs_observed_ns_ci95": [
+        0.0004953643612875932,
+        0.03797239353015135
+      ],
+      "q95_abs_ns": 57.84796791278111,
+      "q95_abs_ns_ci95": [
+        44.12135493148288,
+        68.07299873848063
+      ],
+      "q95_delta_vs_observed_ns": 0.07997076270746309,
+      "q95_delta_vs_observed_ns_ci95": [
+        -0.1176469033879499,
+        0.2811343420911103
+      ],
+      "q_template_median": 0.21726685921297983,
+      "q_template_median_ci95": [
+        0.20126704259161482,
+        0.23508598534858222
+      ],
+      "q_template_p95": 0.5158892756178673,
+      "q_template_p95_ci95": [
+        0.4874648834287329,
+        0.5502078036716884
+      ],
+      "amp_ratio_median": 1.0,
+      "amp_ratio_median_ci95": [
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "artificial_recovery_summary": [
+    {
+      "method": "observed_saturated",
+      "family": "observed",
+      "n_runs": 7,
+      "n": 2434.1428571428573,
+      "n_ci95": [
+        2077.5714285714284,
+        2974.371428571428
+      ],
+      "res68_abs_frac": 0.2674514856706497,
+      "res68_abs_frac_ci95": [
+        0.25878984115967274,
+        0.2776892066594488
+      ],
+      "bias_median_frac": -0.20733394296326027,
+      "bias_median_frac_ci95": [
+        -0.21788633773298413,
+        -0.19783116375100918
+      ],
+      "frac_within10": 0.16942828700627724,
+      "frac_within10_ci95": [
+        0.15055504080940665,
+        0.18432890644262329
+      ]
+    },
+    {
+      "method": "traditional_template",
+      "family": "traditional",
+      "n_runs": 7,
+      "n": 2434.1428571428573,
+      "n_ci95": [
+        2058.9142857142856,
+        2937.4071428571424
+      ],
+      "res68_abs_frac": 0.27458748404731065,
+      "res68_abs_frac_ci95": [
+        0.2584746296864553,
+        0.29108195887560684
+      ],
+      "bias_median_frac": -0.07550623094066737,
+      "bias_median_frac_ci95": [
+        -0.0936887716752693,
+        -0.06027604526361355
+      ],
+      "frac_within10": 0.34233818167373425,
+      "frac_within10_ci95": [
+        0.33012888488793535,
+        0.35621945407999467
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n": 2434.1428571428573,
+      "n_ci95": [
+        2063.2214285714285,
+        2937.285714285714
+      ],
+      "res68_abs_frac": 0.07894770151988388,
+      "res68_abs_frac_ci95": [
+        0.07800923156984814,
+        0.07995144631550129
+      ],
+      "bias_median_frac": -0.04690309597952852,
+      "bias_median_frac_ci95": [
+        -0.05057727284546104,
+        -0.04318142163745995
+      ],
+      "frac_within10": 0.8189557876899494,
+      "frac_within10_ci95": [
+        0.8078786119623481,
+        0.8297983429141117
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n": 2434.1428571428573,
+      "n_ci95": [
+        2092.1071428571427,
+        2946.5714285714284
+      ],
+      "res68_abs_frac": 0.04310319760772391,
+      "res68_abs_frac_ci95": [
+        0.04110010223392981,
+        0.045486682308190564
+      ],
+      "bias_median_frac": -0.0029477553759968975,
+      "bias_median_frac_ci95": [
+        -0.006941596159553131,
+        0.0009337650243940038
+      ],
+      "frac_within10": 0.9406750923477188,
+      "frac_within10_ci95": [
+        0.9199794234929858,
+        0.959202439400469
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n": 2434.1428571428573,
+      "n_ci95": [
+        2093.8571428571427,
+        2969.5714285714284
+      ],
+      "res68_abs_frac": 0.03908722583788735,
+      "res68_abs_frac_ci95": [
+        0.03489842531945582,
+        0.04322553759288221
+      ],
+      "bias_median_frac": -0.0011608275168125666,
+      "bias_median_frac_ci95": [
+        -0.004230571933983686,
+        0.0026502547464023352
+      ],
+      "frac_within10": 0.9362523914751611,
+      "frac_within10_ci95": [
+        0.9188771406350367,
+        0.9532673408108289
+      ]
+    },
+    {
+      "method": "cnn1d",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n": 2434.1428571428573,
+      "n_ci95": [
+        2055.9392857142857,
+        2914.892857142857
+      ],
+      "res68_abs_frac": 0.05629439027463268,
+      "res68_abs_frac_ci95": [
+        0.049400212073591646,
+        0.06352607778027816
+      ],
+      "bias_median_frac": 0.023345188015051997,
+      "bias_median_frac_ci95": [
+        0.017886011440142492,
+        0.029333682594565258
+      ],
+      "frac_within10": 0.8906216940456131,
+      "frac_within10_ci95": [
+        0.8533555081551351,
+        0.9280649154449965
+      ]
+    },
+    {
+      "method": "gated_residual_cnn",
+      "family": "ml_nn",
+      "n_runs": 7,
+      "n": 2434.1428571428573,
+      "n_ci95": [
+        2054.5714285714284,
+        2869.703571428571
+      ],
+      "res68_abs_frac": 0.03419365584691681,
+      "res68_abs_frac_ci95": [
+        0.032486796378072794,
+        0.0361607648336528
+      ],
+      "bias_median_frac": -4.468864543770645e-05,
+      "bias_median_frac_ci95": [
+        -0.0032913742414292756,
+        0.003473813560501591
+      ],
+      "frac_within10": 0.9537155354613036,
+      "frac_within10_ci95": [
+        0.9424707812719946,
+        0.9668041421128561
+      ]
+    }
+  ],
+  "leakage_audit": {
+    "pass": true,
+    "split_by_run": true,
+    "features_excluded": [
+      "run_id",
+      "event_id",
+      "downstream_timing",
+      "odd_readout_labels",
+      "true_heldout_amplitude"
+    ],
+    "shuffled_target_checks_pass": true,
+    "too_good_to_be_true": false
+  },
+  "headline_text": "`gated_residual_cnn` is the point-score winner by lowest run-block mean >5 ns tail fraction (0.6938, 95% CI 0.5838-0.8098). Relative to uncorrected saturated timing its tail delta is -0.0042 with 95% CI -0.0174 to +0.0048. Because that interval overlaps zero and all methods share the same high-amplitude event support, the causal interpretation is a null: retained-window saturation corrections do not explain the same-particle timing tail.",
+  "next_tickets": [],
+  "git_commit": "d29bff1fa2a179f308b9b708edfc88b3bab2ad71",
+  "runtime_sec": 103.01
+}

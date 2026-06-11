@@ -1,0 +1,20 @@
+method,alpha,group_cv_mae_sample,max_leaf_nodes,learning_rate,l2_regularization,hidden
+ridge,0.01,0.36361628518022704,,,,
+ridge,0.1,0.3636150236292586,,,,
+ridge,1.0,0.3635129575680271,,,,
+ridge,10.0,0.362766419020137,,,,
+ridge,100.0,0.3625647691936579,,,,
+hist_gradient_boosted_trees,,0.12644941769757648,15.0,0.04,0.0,
+hist_gradient_boosted_trees,,0.12613394058947242,15.0,0.04,0.05,
+hist_gradient_boosted_trees,,0.11090387647301746,15.0,0.08,0.0,
+hist_gradient_boosted_trees,,0.11109715998565488,15.0,0.08,0.05,
+hist_gradient_boosted_trees,,0.10002524058518544,31.0,0.04,0.0,
+hist_gradient_boosted_trees,,0.09994302983953068,31.0,0.04,0.05,
+hist_gradient_boosted_trees,,0.09165912072964623,31.0,0.08,0.0,
+hist_gradient_boosted_trees,,0.09143749997681096,31.0,0.08,0.05,
+hist_gradient_boosted_trees,,0.08379464101338864,63.0,0.04,0.0,
+hist_gradient_boosted_trees,,0.08355860365896028,63.0,0.04,0.05,
+hist_gradient_boosted_trees,,0.08166077903247768,63.0,0.08,0.0,
+hist_gradient_boosted_trees,,0.08162572230442985,63.0,0.08,0.05,
+mlp,,0.22511127242766205,,,,"(64,)"
+mlp,,0.15480213206821009,,,,"(96, 48)"

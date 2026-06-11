@@ -1,0 +1,61 @@
+{
+  "study": "P06e",
+  "ticket": "1781070978.431.052370d7",
+  "worker": "testbeam-laptop-2",
+  "title": "dropout-phase timing irrecoverability frontier",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781070978.431.052370d7__p06e_dropout_phase_timing_frontier",
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "bad_tail_abs_error_ns": 10.0,
+  "irrecoverable_sigma68_ns": 10.0,
+  "irrecoverable_bad_tail_frac": 0.25,
+  "random_seed": 60780978,
+  "bootstrap_reps": 500,
+  "max_sample_per_stratum": 8,
+  "ml_max_train_rows": 65000,
+  "torch_epochs": 8,
+  "torch_batch_size": 768,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "train_groups": ["sample_i_calib", "sample_i_analysis"],
+  "calibration_groups": ["sample_ii_calib"],
+  "test_groups": ["sample_ii_analysis"],
+  "amplitude_bins": [1000, 2000, 3000, 5000, 7000, 1000000000],
+  "dropout_cases": [
+    {"name": "leading_edge_pair", "phase": "leading_edge", "offsets": [-2, -1]},
+    {"name": "cfd_crossing_single", "phase": "leading_edge", "offsets": [-1]},
+    {"name": "peak_single", "phase": "peak", "offsets": [0]},
+    {"name": "peak_contiguous", "phase": "peak", "offsets": [0, 1]},
+    {"name": "early_tail_pair", "phase": "tail", "offsets": [2, 3]},
+    {"name": "late_tail_pair", "phase": "tail", "offsets": [4, 5]}
+  ],
+  "pre_registered": {
+    "primary_metric": "held-out Sample-II analysis timing sigma68 of predicted clean CFD20 time after injected dropout, in ns",
+    "secondary_metrics": ["full RMS", "bad-tail fraction |error|>10 ns", "abstention coverage of a recover-vs-veto phase policy"],
+    "split": "train on Sample-I runs, calibrate scalar offsets on run 64, evaluate only Sample-II analysis runs 58-63 and 65; confidence intervals resample held-out runs",
+    "traditional_method": "case-wise train-selected stronger of local interpolation and amplitude/stave/peak-binned template refit",
+    "ml_methods": ["ridge", "hist_gradient_boosted_trees", "mlp", "one_dimensional_cnn", "phase_gated_cnn"],
+    "sentinels": ["corrupted_cfd", "shuffled_target_hgb", "mask_phase_only_ridge"],
+    "significance_level": 0.05,
+    "win_rule": "winner is the eligible method with lowest held-out sigma68; ML adoption requires its run-bootstrap delta versus traditional to have 95% CI below zero"
+  },
+  "candidate_next_ticket": {
+    "title": "P06f consumer-specific dropout veto utility",
+    "body": "Question: do P06e recoverable/unrecoverable phase bands improve downstream timing, charge, and pile-up consumers when the action is recover versus veto rather than always-correct? Expected information gain: converts the dropout-phase frontier into a consumer-specific decision rule and tests whether a phase-gated CNN correction harms any downstream metric under run-held-out bootstrap CIs."
+  }
+}

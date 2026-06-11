@@ -1,0 +1,74 @@
+study_id: S14g
+ticket: "1781051226.621.082271da"
+title: veto-ladder energy acceptance calibration
+worker: testbeam-laptop-3
+
+raw_root_dir: data/root/root
+output_dir: reports/1781051226.621.082271da__s14g_veto_ladder_energy_acceptance
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+saturation_adc: 7000.0
+expected_selected_pulses: 640737
+bootstrap_resamples: 120
+random_seed: 514226
+
+runs:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65]
+low_current_runs: [46, 47]
+high_current_nA: 20.0
+low_current_nA: 2.0
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+  duplicate_readout_channels:
+    B2: 1
+    B4: 3
+    B6: 5
+    B8: 7
+
+geometry_variants:
+  center_4cm:
+    description: newer-note center spacing, front face halfway before B2
+    stave_centers_cm: {B2: 2.0, B4: 6.0, B6: 10.0, B8: 14.0}
+  center_2cm:
+    description: older-note two cm spacing variant
+    stave_centers_cm: {B2: 1.0, B4: 3.0, B6: 5.0, B8: 7.0}
+  zero_4cm:
+    description: centers quoted as 0/4/8/12 cm in notes, shifted to avoid zero range
+    stave_centers_cm: {B2: 0.5, B4: 4.0, B6: 8.0, B8: 12.0}
+
+pstar:
+  material: plastic scintillator
+  density_g_cm3: 1.032
+  source_note: NIST PSTAR proton CSDA range table for plastic scintillator; used only as a monotonic range-energy proxy.
+  energy_mev: [5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200]
+  range_g_cm2: [0.0408, 0.144, 0.293, 0.512, 0.801, 1.16, 2.06, 3.13, 4.36, 5.75, 7.28, 8.96, 10.8, 16.0, 22.0, 28.7, 35.8]
+
+models:
+  n_splits: 5
+  max_train_rows: 90000
+  max_nn_train_rows: 60000
+  hgb_max_iter: 120
+  mlp_max_iter: 60
+  cnn_epochs: 4
+  cnn_batch_size: 2048
+  support_quantile: 0.72
+  min_acceptance_for_winner: 0.35

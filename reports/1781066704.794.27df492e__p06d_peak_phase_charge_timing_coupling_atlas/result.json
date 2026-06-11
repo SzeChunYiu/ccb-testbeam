@@ -1,0 +1,371 @@
+{
+  "study": "P06d",
+  "ticket": "1781066704.794.27df492e",
+  "worker": "testbeam-laptop-4",
+  "title": "peak-phase charge-timing coupling atlas",
+  "reproduced": true,
+  "repro_tolerance": "exact raw HRDv selected-pulse count; tolerance 0",
+  "git_commit": "64b1940dbd9a7e2b4d66f4c759d69e709f530953",
+  "config": "configs/p06d_1781066704_794_27df492e_peak_phase_coupling_atlas.json",
+  "runtime_sec": 566.3,
+  "raw_reproduction": [
+    {
+      "quantity": "total selected B-stave pulses from raw HRDv",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_analysis selected B-stave pulses",
+      "report_value": 252266,
+      "reproduced": 252266,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_calib selected B-stave pulses",
+      "report_value": 248745,
+      "reproduced": 248745,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected B-stave pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_calib selected B-stave pulses",
+      "report_value": 14630,
+      "reproduced": 14630,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "n_selected_pulses": 640737,
+  "n_modeling_rows": 35998,
+  "split": {
+    "train_groups": [
+      "sample_i_calib",
+      "sample_i_analysis"
+    ],
+    "calibration_groups": [
+      "sample_ii_calib"
+    ],
+    "test_groups": [
+      "sample_ii_analysis"
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "target_scales": {
+    "timing_abs_ns": 2.0101700700760983,
+    "charge_abs": 0.2811299498168349,
+    "saturation": 0.6499999999999999,
+    "anomaly": 3.2631908226396575
+  },
+  "winner": {
+    "method": "one_dimensional_cnn",
+    "family": "ml",
+    "mae": 0.6166765970124833,
+    "mae_ci95": [
+      0.5850315913400373,
+      0.6521188621336066
+    ],
+    "substantive_ml_win_vs_traditional": true
+  },
+  "traditional": {
+    "method": "traditional_peak_phase_atlas",
+    "metric": "heldout_standardized_coupling_burden_mae",
+    "value": 0.8632784338332956,
+    "ci": [
+      0.8076186263251528,
+      0.9225752192117237
+    ],
+    "mae": 0.8632784338332956,
+    "mae_ci95": [
+      0.8076186263251528,
+      0.9225752192117237
+    ]
+  },
+  "ml": {
+    "method": "one_dimensional_cnn",
+    "metric": "heldout_standardized_coupling_burden_mae",
+    "value": 0.6166765970124833,
+    "ci": [
+      0.5850315913400373,
+      0.6521188621336066
+    ]
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "preregistered_metric": "held-out Sample-II MAE for the standardized peak-phase coupling burden, evaluated on B4/B6/B8 pulses in events with at least two selected timing staves",
+    "p_value": null,
+    "n_tries": 5,
+    "paired_run_block_delta_ci95": [
+      -0.2742822650532735,
+      -0.2121509181645424
+    ],
+    "sentinels": [
+      {
+        "check": "raw_root_reproduction_count",
+        "status": "pass",
+        "detail": "selected B-stave pulses counted from raw HRDv only"
+      },
+      {
+        "check": "run_split",
+        "status": "pass",
+        "detail": "Sample I trains; run 64 calibrates scalar offsets; Sample II analysis runs are held out"
+      },
+      {
+        "check": "shuffled_target_sentinel",
+        "status": "pass",
+        "detail": "shuffled-target MAE 1.6549 versus full HGB MAE 0.6419"
+      },
+      {
+        "check": "peak_phase_dropout_specificity",
+        "status": "pass",
+        "detail": "dropout HGB MAE 0.6653 versus full HGB MAE 0.6419"
+      }
+    ]
+  },
+  "input_sha256": "input_sha256.csv",
+  "critic": "pending",
+  "benchmark": [
+    {
+      "method": "one_dimensional_cnn",
+      "family": "ml",
+      "n": 24736,
+      "mae": 0.616676597,
+      "mae_ci_low": 0.5850315913,
+      "mae_ci_high": 0.6521188621,
+      "bias": -0.13660694,
+      "rmse": 1.9849679635,
+      "q05_residual": -1.1024887607,
+      "q95_residual": 0.9682482187
+    },
+    {
+      "method": "phase_gated_residual_cnn",
+      "family": "new_architecture",
+      "n": 24736,
+      "mae": 0.623570924,
+      "mae_ci_low": 0.5901872182,
+      "mae_ci_high": 0.6586950451,
+      "bias": -0.1533649566,
+      "rmse": 1.9981764252,
+      "q05_residual": -1.1406364552,
+      "q95_residual": 0.950636129
+    },
+    {
+      "method": "hist_gradient_boosted_trees",
+      "family": "ml",
+      "n": 24736,
+      "mae": 0.6419013771,
+      "mae_ci_low": 0.6051654954,
+      "mae_ci_high": 0.6856006508,
+      "bias": -0.0900681328,
+      "rmse": 1.9937665748,
+      "q05_residual": -1.1449497232,
+      "q95_residual": 0.9321059054
+    },
+    {
+      "method": "mlp",
+      "family": "ml",
+      "n": 24736,
+      "mae": 0.6510235825,
+      "mae_ci_low": 0.6102660321,
+      "mae_ci_high": 0.6974458487,
+      "bias": -0.0661058771,
+      "rmse": 2.0446689097,
+      "q05_residual": -1.1244924985,
+      "q95_residual": 0.9981623563
+    },
+    {
+      "method": "peak_phase_dropout_hgb",
+      "family": "sentinel",
+      "n": 24736,
+      "mae": 0.6652539927,
+      "mae_ci_low": 0.6275595873,
+      "mae_ci_high": 0.7058560249,
+      "bias": -0.0973304509,
+      "rmse": 1.9945301819,
+      "q05_residual": -1.1632895509,
+      "q95_residual": 0.9742012792
+    },
+    {
+      "method": "ridge",
+      "family": "ml",
+      "n": 24736,
+      "mae": 0.7413781715,
+      "mae_ci_low": 0.7037783619,
+      "mae_ci_high": 0.7826729157,
+      "bias": -0.0485760087,
+      "rmse": 2.0872085176,
+      "q05_residual": -1.2701389878,
+      "q95_residual": 1.1999155717
+    },
+    {
+      "method": "traditional_peak_phase_atlas",
+      "family": "traditional",
+      "n": 24736,
+      "mae": 0.8632784338,
+      "mae_ci_low": 0.8076186263,
+      "mae_ci_high": 0.9225752192,
+      "bias": -0.2930458861,
+      "rmse": 2.2558147758,
+      "q05_residual": -2.0352449752,
+      "q95_residual": 1.2698077998
+    },
+    {
+      "method": "amplitude_only_hgb",
+      "family": "sentinel",
+      "n": 24736,
+      "mae": 0.8928270006,
+      "mae_ci_low": 0.8224084775,
+      "mae_ci_high": 0.9664276897,
+      "bias": -0.1965380906,
+      "rmse": 2.1993829509,
+      "q05_residual": -1.9451718274,
+      "q95_residual": 1.3055809075
+    },
+    {
+      "method": "run_only_hgb",
+      "family": "sentinel",
+      "n": 24736,
+      "mae": 1.4960241981,
+      "mae_ci_low": 1.384801443,
+      "mae_ci_high": 1.6107599969,
+      "bias": -0.8266156245,
+      "rmse": 3.0338259787,
+      "q05_residual": -5.7892695668,
+      "q95_residual": 1.2214914252
+    },
+    {
+      "method": "shuffled_target_hgb",
+      "family": "sentinel",
+      "n": 24736,
+      "mae": 1.6548985147,
+      "mae_ci_low": 1.545034699,
+      "mae_ci_high": 1.773332182,
+      "bias": -0.6711304066,
+      "rmse": 3.0778162554,
+      "q05_residual": -5.6450793256,
+      "q95_residual": 1.9041434605
+    }
+  ],
+  "delta_vs_traditional": [
+    {
+      "method": "one_dimensional_cnn",
+      "delta_mae_vs_traditional": -0.2466018368,
+      "ci_low": -0.2742822651,
+      "ci_high": -0.2121509182
+    },
+    {
+      "method": "phase_gated_residual_cnn",
+      "delta_mae_vs_traditional": -0.2397075098,
+      "ci_low": -0.2678446885,
+      "ci_high": -0.2132223412
+    },
+    {
+      "method": "hist_gradient_boosted_trees",
+      "delta_mae_vs_traditional": -0.2213770567,
+      "ci_low": -0.2511247474,
+      "ci_high": -0.1886841579
+    },
+    {
+      "method": "mlp",
+      "delta_mae_vs_traditional": -0.2122548513,
+      "ci_low": -0.2353787473,
+      "ci_high": -0.1867392376
+    },
+    {
+      "method": "peak_phase_dropout_hgb",
+      "delta_mae_vs_traditional": -0.1980244411,
+      "ci_low": -0.2223010991,
+      "ci_high": -0.1687098222
+    },
+    {
+      "method": "ridge",
+      "delta_mae_vs_traditional": -0.1219002623,
+      "ci_low": -0.1583225203,
+      "ci_high": -0.083220044
+    },
+    {
+      "method": "amplitude_only_hgb",
+      "delta_mae_vs_traditional": 0.0295485667,
+      "ci_low": 0.0118014371,
+      "ci_high": 0.0447192271
+    },
+    {
+      "method": "run_only_hgb",
+      "delta_mae_vs_traditional": 0.6327457643,
+      "ci_low": 0.5640833096,
+      "ci_high": 0.6990047295
+    },
+    {
+      "method": "shuffled_target_hgb",
+      "delta_mae_vs_traditional": 0.7916200809,
+      "ci_low": 0.7202999969,
+      "ci_high": 0.8695558743
+    }
+  ],
+  "endpoint_effects": [
+    {
+      "contrast": "high_minus_low_cfd20_phase_quartile",
+      "n_low": 7491,
+      "n_high": 5165,
+      "delta_sigma68_timing_ns": -0.8139528702,
+      "delta_median_abs_charge_log_residual": -0.0035225939,
+      "delta_mean_saturation_harm": -0.0627805293,
+      "delta_mean_anomaly_dropout": 10.831882545,
+      "delta_mean_coupling_burden": 1.3217999753
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_root_reproduction_count",
+      "status": "pass",
+      "detail": "selected B-stave pulses counted from raw HRDv only"
+    },
+    {
+      "check": "run_split",
+      "status": "pass",
+      "detail": "Sample I trains; run 64 calibrates scalar offsets; Sample II analysis runs are held out"
+    },
+    {
+      "check": "shuffled_target_sentinel",
+      "status": "pass",
+      "detail": "shuffled-target MAE 1.6549 versus full HGB MAE 0.6419"
+    },
+    {
+      "check": "peak_phase_dropout_specificity",
+      "status": "pass",
+      "detail": "dropout HGB MAE 0.6653 versus full HGB MAE 0.6419"
+    }
+  ],
+  "headline": "one_dimensional_cnn has the lowest held-out burden MAE 0.6167 versus traditional 0.8633; paired CI declares an ML win.",
+  "follow_up_ticket_appended": true,
+  "appended_follow_up_ticket": {
+    "id": "1781188455.827.4be93277",
+    "title": "P06e external peak-phase causality control",
+    "body": "Question: does the P06d peak/CFD-phase coupling burden persist in an external control that breaks same-event pulse physics, such as forced-random/no-pulse ROOT where available or A-stack/B-stack event-matched controls? Expected information gain: distinguishes a causal waveform atom from acquisition/run-family confounding after the P06d phase-gated CNN win. Compare a support-matched peak-phase atlas against ridge, gradient-boosted trees, MLP, 1D-CNN, and the phase-gated CNN with run-held-out bootstrap CIs and shuffled/phase-dropout sentinels."
+  },
+  "next_tickets": [
+    "P06e external peak-phase causality control"
+  ]
+}

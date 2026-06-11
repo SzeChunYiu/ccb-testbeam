@@ -1,0 +1,100 @@
+{
+  "study": "P05f",
+  "ticket": "1781068159.1612.2426717d",
+  "worker": "testbeam-laptop-3",
+  "title": "two-pulse risk-coverage sideband map",
+  "reproduced": true,
+  "reproduction_gate": "S10 topology fractions rebuilt from raw B-stack HRDv ROOT within +/-0.0015 absolute tolerance",
+  "raw_root_counts": {
+    "low_2nA_events_with_selected": 5838,
+    "high_20nA_events_with_selected": 237295,
+    "global_downstream_high_minus_low": 0.010289747149522063
+  },
+  "split": {
+    "policy": "source-run-held-out; high-current scored from low-current training only",
+    "low_current_runs": [
+      46,
+      47
+    ],
+    "high_current_runs": [
+      44,
+      45,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "bootstrap_unit": "source_run",
+    "bootstrap_samples": 120
+  },
+  "methods": [
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge_linear",
+    "traditional_template_fit"
+  ],
+  "sideband_axes": [
+    "secondary_amplitude_sideband",
+    "delay_cell",
+    "baseline_state",
+    "saturation_support"
+  ],
+  "winner_name": "traditional_template_fit",
+  "winner": {
+    "method": "traditional_template_fit",
+    "selection_score": 1.594951024085548,
+    "coverage": 0.44011912359072536,
+    "coverage_ci": [
+      0.4312076695727971,
+      0.4500456251260516
+    ],
+    "bad_recovery_rate": 0.007249879168680522,
+    "bad_recovery_rate_ci": [
+      0.004169781691214735,
+      0.010638137300727327
+    ],
+    "recovered_time_rms_ns": 2.093774114913852,
+    "recovered_time_rms_ns_ci": [
+      2.063739779786627,
+      2.124835532189142
+    ],
+    "charge_fractional_bias_proxy": -0.019840008511424367,
+    "charge_fractional_res68_proxy": 0.0,
+    "sideband_calibration_ece": 0.549875830482049,
+    "fixed_risk_support_fraction": 0.24408014571949,
+    "risk_coverage_score": 0.4369283131248671,
+    "risk_coverage_score_ci": [
+      0.4275723837443613,
+      0.44700552938607596
+    ],
+    "ml_minus_traditional_risk_coverage_delta": 0.0,
+    "ml_minus_traditional_risk_coverage_delta_ci": [
+      0.0,
+      0.0
+    ]
+  },
+  "leakage_checks_pass": true,
+  "artifacts": {
+    "report": "reports/1781068159.1612.2426717d__p05f_two_pulse_risk_coverage_sidebands/REPORT.md",
+    "method_summary": "reports/1781068159.1612.2426717d__p05f_two_pulse_risk_coverage_sidebands/method_summary.csv",
+    "sideband_axis_metrics": "reports/1781068159.1612.2426717d__p05f_two_pulse_risk_coverage_sidebands/sideband_axis_metrics.csv",
+    "joint_sideband_metrics": "reports/1781068159.1612.2426717d__p05f_two_pulse_risk_coverage_sidebands/joint_sideband_metrics.csv"
+  },
+  "input_sha256": "5fca985a5dfc7e6703082488664d78e085500aae77d7a74b583b7af360739f1a",
+  "git_commit": "5f5db9e5e088e9249e584ce34e692f1172d5d919",
+  "runtime_sec": 209.53,
+  "next_tickets": [
+    {
+      "title": "P05g blinded hand-scan validation of high-amplitude large-lowering accepted/rejected two-pulse candidates",
+      "body": "Use the P05f joint sideband frontier to sample accepted and rejected high-amplitude/large-lowering/broad-late candidates for a blinded visual/fit-quality adjudication, validating whether the fixed-risk support proxy corresponds to real recoverability."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+check,value,pass,note
+raw_root_reproduction_pass,1.0,True,S10 topology fractions are rebuilt from raw HRDv ROOT branches before scoring.
+heldout_run_scoring_policy,1.0,True,Every scored row is produced in a source-run-held-out fold.
+identifier_features_excluded_from_ml,1.0,True,"Run, event number, current group, and sideband labels are not ML inputs."
+required_method_coverage,1.0,True,"Traditional, ridge, gradient-boosted trees, MLP, 1D-CNN, and consensus architecture are present."
+sideband_axis_coverage,4.0,True,"Secondary-amplitude, delay, baseline, and saturation-support maps were written."
+cnn_1d_dual_head_current_auc_from_prediction,0.589449914303229,True,High AUC would indicate the method is mostly a current tagger rather than a transferable recovery score.
+consensus_abstention_ensemble_current_auc_from_prediction,0.5284589305081467,True,High AUC would indicate the method is mostly a current tagger rather than a transferable recovery score.
+gradient_boosted_trees_current_auc_from_prediction,0.5794020761618625,True,High AUC would indicate the method is mostly a current tagger rather than a transferable recovery score.
+mlp_current_auc_from_prediction,0.5121556130182106,True,High AUC would indicate the method is mostly a current tagger rather than a transferable recovery score.
+ridge_linear_current_auc_from_prediction,0.5531348850816405,True,High AUC would indicate the method is mostly a current tagger rather than a transferable recovery score.
+traditional_template_fit_current_auc_from_prediction,0.48538343170097265,True,High AUC would indicate the method is mostly a current tagger rather than a transferable recovery score.

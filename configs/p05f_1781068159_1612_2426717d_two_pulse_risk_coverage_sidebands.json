@@ -1,0 +1,28 @@
+{
+  "study": "P05f",
+  "ticket": "1781068159.1612.2426717d",
+  "worker": "testbeam-laptop-3",
+  "title": "two-pulse risk-coverage sideband map",
+  "source_script": "scripts/s11b_real_high_current_two_pulse_validation.py",
+  "base_benchmark_script": "scripts/p05c_1781036493_3234_59a107e5_real_current_abstention_transfer.py",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781068159.1612.2426717d__p05f_two_pulse_risk_coverage_sidebands",
+  "random_seed": 681591,
+  "sample_cap_per_run_stratum": 45,
+  "synthetic_train_per_fold": 850,
+  "synthetic_cal_per_fold": 250,
+  "bootstrap_samples": 120,
+  "target_bad_proxy_rate": 0.15,
+  "bad_fraction_error": 0.12,
+  "traditional_min_score": 0.015,
+  "traditional_min_secondary_fraction": 0.05,
+  "minimum_joint_cell_events": 80,
+  "required_methods": [
+    "traditional_template_fit",
+    "ridge_linear",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble"
+  ]
+}

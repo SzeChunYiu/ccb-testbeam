@@ -1,0 +1,15 @@
+check,value,threshold,flag,interpretation
+p07c_boundary_q_shift_reproduction_delta,0.0036292047992189103,0.004,False,Raw ROOT reproduction of the P07c primary shape-only 6500-7500 q_template shift.
+heldout_split_run_overlap,0.0,0.0,False,All ratio and calibration models train on complete non-held-out runs only.
+primary_ml_raw_observed_amplitude_feature_count,0.0,0.0,False,"Primary ML calibration uses normalized waveform shape plus base lift, not raw observed amplitude."
+primary_ml_explicit_ceiling_feature_count,0.0,0.0,False,Primary shape-transfer and calibration features omit explicit log ceiling.
+primary_ml_run_feature_count,0.0,0.0,False,Primary ML calibration omits run id.
+primary_ml_event_id_feature_count,0.0,0.0,False,Primary ML calibration omits EVENTNO/EVT.
+linear_boundary_q_gate_abs,0.02168174449305027,0.025,False,Linear shrinkage must close the held-out boundary q_template gate.
+ml_boundary_q_gate_abs,0.022051786494162864,0.025,False,ML calibration must close the held-out boundary q_template gate.
+ml_boundary_cfd_gate_abs_ns,0.1087355762009792,0.75,False,ML calibration must preserve held-out boundary CFD20 timing.
+observed_amp_only_control_boundary_lift_fraction,0.024324145296795326,0.018046246182110433,True,An observed-amplitude-only calibration should not explain most primary ML lift.
+run_event_amp_control_boundary_lift_fraction,0.024348237726358316,0.018046246182110433,True,Run/event/amplitude control should not reproduce primary ML correction on held-out runs.
+shuffled_target_control_boundary_lift_fraction,0.02426460929604516,0.018046246182110433,True,Shuffled calibration target should not reproduce primary ML correction.
+application_ml_abstention_fraction,0.0005696923661222542,0.95,False,A useful gate should not abstain on nearly all A>=7000 pulses.
+application_linear_abstention_fraction,0.0,0.95,False,Traditional linear shrinkage should not collapse to no correction in application.

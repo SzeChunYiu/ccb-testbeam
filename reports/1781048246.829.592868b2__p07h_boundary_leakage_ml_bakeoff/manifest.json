@@ -1,0 +1,30 @@
+{
+  "config": "configs/p07h_1781048246_829_592868b2_boundary_leakage_ml_bakeoff.json",
+  "created_utc": "2026-06-11T03:14:35Z",
+  "git_commit": "2ad460b53f60e9569bd8633537aa5889b81d2344",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "data/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "data/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "data/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "data/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "data/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "data/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs_sha256": {
+    "REPORT.md": "5949e2f7067b5586d0273bf9cffc3e50899dfec5252c2ec35464ef752a465ced",
+    "alpha_scan.csv": "802ddff7e57a2ce11dfcf687848443e5624537bef331e1a67caa1ad98e70c9ae",
+    "alpha_targets.csv.gz": "0274b9973d10946ff9b951911e5cbef1f3faafc7aec1e89bac7cf8218fdc1ecf",
+    "benchmark_by_run.csv": "5770852b5c26360b22d3555200f1e97225b559e864a7f5bd5e505ed8d8b2aef9",
+    "benchmark_predictions.csv.gz": "923d6c0f8417b41fe57674cd2024f3fae3b798d15e31e7b5d4fd6a7f936676b3",
+    "benchmark_summary.csv": "0a3231f29fc09fd1104e3a7cc4b097b1080b10e195d1aa366968265c419e5adf",
+    "boundary_by_run.csv": "1e7295393869fd48218b4f859bd345812f18dc65f762b1e7be4935d1756159f4",
+    "boundary_predictions_sample.csv.gz": "d791aff4ea20db743d1dadff5c5179381f5cb9606cf15fa2878869cf853b4d12",
+    "fig_benchmark_res68_by_run.png": "4f7d92537add105a9dfb10cc9491e69430521cd1441fc2c720eda56ebe13add9",
+    "fig_boundary_q_shift_by_run.png": "d00404f4ed108cab647a52622d8ef3c39ec0fa2e0e0eab8ab5c573da792c4d8f",
+    "global_reproduction_by_run.csv": "e468e254705269e8570784f3b27cee4aa758f9f91f31b0b374d87c5448224010",
+    "leakage_checks.csv": "b21fc268a1e06f66d5c00fbbb88afc87349e98765577479bcd74d19df414ef51",
+    "result.json": "b4515cc92bdffbaa0858aa06179011cf3332b2b602bbe1949f4da44443bf3fa5"
+  },
+  "ticket": "1781048246.829.592868b2"
+}

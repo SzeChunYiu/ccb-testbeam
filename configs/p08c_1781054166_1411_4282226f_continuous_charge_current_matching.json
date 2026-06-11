@@ -1,0 +1,56 @@
+{
+  "ticket_id": "1781054166.1411.4282226f",
+  "worker": "testbeam-laptop-4",
+  "study_id": "P08c",
+  "title": "continuous charge-current matching for PID leakage control",
+  "output_dir": "reports/1781054166.1411.4282226f__p08c_continuous_charge_current_matching",
+  "p08b_config": "configs/p08b_1781027807_3490_5cdd4b0b_calibration_backed_pid.json",
+  "p08b_result": "reports/1781027807.3490.5cdd4b0b/result.json",
+  "p01b_embedding_candidates": [
+    "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz"
+  ],
+  "matching": {
+    "random_seed": 8411,
+    "primary_caliper": 0.55,
+    "sensitivity_calipers": [0.35, 0.55, 0.8],
+    "max_pairs_per_run_depth": 120,
+    "nearest_k": 80,
+    "propensity_weight": 1.0,
+    "min_pairs_per_run_depth": 8,
+    "exact_cell_quantile_bins": 6,
+    "nuisance_columns": [
+      "log_b2_area",
+      "log_even_total_charge",
+      "event_fraction",
+      "depth_idx",
+      "multiplicity",
+      "topology_code",
+      "downstream_charge_fraction",
+      "saturated_count",
+      "b2_saturated",
+      "b2_width20",
+      "b2_tail_fraction"
+    ]
+  },
+  "benchmark": {
+    "random_seed": 8412,
+    "bootstrap_replicates": 300,
+    "fixed_efficiency": 0.8,
+    "min_train_class_rows": 80,
+    "min_test_class_rows": 5,
+    "cnn_epochs": 3,
+    "cnn_batch_size": 384,
+    "mlp_max_iter": 60,
+    "hgb": {
+      "max_iter": 55,
+      "max_depth": 3,
+      "min_samples_leaf": 30,
+      "max_leaf_nodes": 15,
+      "learning_rate": 0.07,
+      "l2_regularization": 0.05
+    },
+    "residual_ridge": {
+      "c": 0.2
+    }
+  }
+}

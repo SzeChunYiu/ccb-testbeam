@@ -1,0 +1,493 @@
+{
+  "study": "P04r",
+  "ticket_id": "1781051221.550.4fc60093",
+  "worker": "testbeam-laptop-3",
+  "title": "dropout recovery timing-harm support map",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "n_clean_pulses_sampled": 16717,
+    "n_injected_rows": 66868,
+    "n_train_rows": 62620,
+    "n_heldout_rows": 4248,
+    "bootstrap_reps": 90,
+    "bootstrap_block": "run,event,stave with paired dropout variants"
+  },
+  "methods": {
+    "no_recovery": {
+      "family": "baseline",
+      "has_acceptance_gate": true
+    },
+    "interpolation": {
+      "family": "traditional",
+      "has_acceptance_gate": true
+    },
+    "rising_edge_huber": {
+      "family": "traditional",
+      "has_acceptance_gate": true
+    },
+    "ridge_residual": {
+      "family": "ridge",
+      "has_acceptance_gate": true
+    },
+    "gbt_residual": {
+      "family": "gradient_boosted_trees",
+      "has_acceptance_gate": true
+    },
+    "mlp_residual": {
+      "family": "mlp",
+      "has_acceptance_gate": true
+    },
+    "cnn_inpaint": {
+      "family": "1d_cnn",
+      "has_acceptance_gate": true
+    },
+    "support_gated_cnn": {
+      "family": "new_support_gated_cnn",
+      "has_acceptance_gate": true
+    }
+  },
+  "winner": {
+    "method": "rising_edge_huber",
+    "method_family": "traditional",
+    "utility": 0.0902704559557399,
+    "charge_res68_abs_frac": 0.02373755147505354,
+    "time_abs68_samples": 0.06009693053311782,
+    "net_harm_label_rate": 0.0
+  },
+  "best_traditional": {
+    "method": "rising_edge_huber",
+    "utility": 0.0902704559557399,
+    "charge_res68_abs_frac": 0.02373755147505354
+  },
+  "heldout_summary": [
+    {
+      "method": "rising_edge_huber",
+      "method_family": "traditional",
+      "n": 4248,
+      "accepted_fraction": 1.0,
+      "amp_bias_median_frac": 6.74778e-05,
+      "amp_res68_abs_frac": 0.0362106498,
+      "charge_bias_median_frac": 0.0004873341,
+      "charge_res68_abs_frac": 0.0237375515,
+      "time_abs68_samples": 0.0600969305,
+      "time_bias_median_samples": -0.0007148021,
+      "tail_bias_median_frac": -0.0107842699,
+      "catastrophic_rate": 0.0981638418,
+      "net_harm_label_rate": 0.0,
+      "amp_res68_abs_frac_ci95": [
+        0.0346919038,
+        0.0374851217
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0224636733,
+        0.0253173078
+      ],
+      "time_abs68_samples_ci95": [
+        0.0539425016,
+        0.0649475406
+      ],
+      "tail_bias_median_frac_ci95": [
+        -0.0166286725,
+        -0.0023151938
+      ],
+      "catastrophic_rate_ci95": [
+        0.0863170904,
+        0.1123646422
+      ],
+      "net_harm_label_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "accepted_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "utility": 0.090270456
+    },
+    {
+      "method": "support_gated_cnn",
+      "method_family": "new_support_gated_cnn",
+      "n": 4248,
+      "accepted_fraction": 0.5550847458,
+      "amp_bias_median_frac": 0.0040581087,
+      "amp_res68_abs_frac": 0.0488003707,
+      "charge_bias_median_frac": 0.0067183618,
+      "charge_res68_abs_frac": 0.0250155346,
+      "time_abs68_samples": 0.0481586402,
+      "time_bias_median_samples": -0.0103462978,
+      "tail_bias_median_frac": -0.0341185434,
+      "catastrophic_rate": 0.0555555556,
+      "net_harm_label_rate": 0.1518361582,
+      "amp_res68_abs_frac_ci95": [
+        0.0465595561,
+        0.0514878932
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0238399506,
+        0.0265787262
+      ],
+      "time_abs68_samples_ci95": [
+        0.0435836513,
+        0.0528381606
+      ],
+      "tail_bias_median_frac_ci95": [
+        -0.0376545737,
+        -0.0315773318
+      ],
+      "catastrophic_rate_ci95": [
+        0.0447033898,
+        0.0696975047
+      ],
+      "net_harm_label_rate_ci95": [
+        0.1379237288,
+        0.1640772128
+      ],
+      "accepted_fraction_ci95": [
+        0.5384239642,
+        0.574229049
+      ],
+      "utility": 0.2974993334
+    },
+    {
+      "method": "gbt_residual",
+      "method_family": "gradient_boosted_trees",
+      "n": 4248,
+      "accepted_fraction": 1.0,
+      "amp_bias_median_frac": 0.0013021955,
+      "amp_res68_abs_frac": 0.0192744018,
+      "charge_bias_median_frac": 0.0005537432,
+      "charge_res68_abs_frac": 0.0150142238,
+      "time_abs68_samples": 0.0481586402,
+      "time_bias_median_samples": -0.0103462978,
+      "tail_bias_median_frac": 0.0002880476,
+      "catastrophic_rate": 0.0320150659,
+      "net_harm_label_rate": 0.2457627119,
+      "amp_res68_abs_frac_ci95": [
+        0.017904145,
+        0.0209219603
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.014405543,
+        0.0161665298
+      ],
+      "time_abs68_samples_ci95": [
+        0.0435836513,
+        0.0528381606
+      ],
+      "tail_bias_median_frac_ci95": [
+        0.0,
+        0.0008706113
+      ],
+      "catastrophic_rate_ci95": [
+        0.0229166667,
+        0.0402542373
+      ],
+      "net_harm_label_rate_ci95": [
+        0.2293667608,
+        0.2637829567
+      ],
+      "accepted_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "utility": 0.4121887129
+    },
+    {
+      "method": "mlp_residual",
+      "method_family": "mlp",
+      "n": 4248,
+      "accepted_fraction": 1.0,
+      "amp_bias_median_frac": 0.0020184016,
+      "amp_res68_abs_frac": 0.0262290818,
+      "charge_bias_median_frac": 0.0002728477,
+      "charge_res68_abs_frac": 0.0193951189,
+      "time_abs68_samples": 0.0481586402,
+      "time_bias_median_samples": -0.0103462978,
+      "tail_bias_median_frac": 0.0002880476,
+      "catastrophic_rate": 0.0404896422,
+      "net_harm_label_rate": 0.2452919021,
+      "amp_res68_abs_frac_ci95": [
+        0.0247824844,
+        0.0274131273
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0182941885,
+        0.0204173821
+      ],
+      "time_abs68_samples_ci95": [
+        0.0435836513,
+        0.0528381606
+      ],
+      "tail_bias_median_frac_ci95": [
+        0.0,
+        0.0008706113
+      ],
+      "catastrophic_rate_ci95": [
+        0.0317031544,
+        0.048752354
+      ],
+      "net_harm_label_rate_ci95": [
+        0.22860758,
+        0.2636005179
+      ],
+      "accepted_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "utility": 0.4211438834
+    },
+    {
+      "method": "no_recovery",
+      "method_family": "baseline",
+      "n": 4248,
+      "accepted_fraction": 0.0,
+      "amp_bias_median_frac": -0.0017160017,
+      "amp_res68_abs_frac": 0.0397642122,
+      "charge_bias_median_frac": -0.1569910864,
+      "charge_res68_abs_frac": 0.2310047575,
+      "time_abs68_samples": 0.0600969305,
+      "time_bias_median_samples": -0.0007148021,
+      "tail_bias_median_frac": -0.0107842699,
+      "catastrophic_rate": 0.4138418079,
+      "net_harm_label_rate": 0.0,
+      "amp_res68_abs_frac_ci95": [
+        0.0352688522,
+        0.0456322801
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.2244799741,
+        0.2364939884
+      ],
+      "time_abs68_samples_ci95": [
+        0.0539425016,
+        0.0649475406
+      ],
+      "tail_bias_median_frac_ci95": [
+        -0.0166286725,
+        -0.0023151938
+      ],
+      "catastrophic_rate_ci95": [
+        0.3945150659,
+        0.424617467
+      ],
+      "net_harm_label_rate_ci95": [
+        0.0,
+        0.0
+      ],
+      "accepted_fraction_ci95": [
+        0.0,
+        0.0
+      ],
+      "utility": 0.4559096794
+    },
+    {
+      "method": "interpolation",
+      "method_family": "traditional",
+      "n": 4248,
+      "accepted_fraction": 1.0,
+      "amp_bias_median_frac": -0.0017160017,
+      "amp_res68_abs_frac": 0.0397642122,
+      "charge_bias_median_frac": -0.0142993557,
+      "charge_res68_abs_frac": 0.0343995691,
+      "time_abs68_samples": 0.0481586402,
+      "time_bias_median_samples": -0.0103462978,
+      "tail_bias_median_frac": 0.0002880476,
+      "catastrophic_rate": 0.1174670433,
+      "net_harm_label_rate": 0.2410546139,
+      "amp_res68_abs_frac_ci95": [
+        0.0352688522,
+        0.0456322801
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0324137477,
+        0.0368394819
+      ],
+      "time_abs68_samples_ci95": [
+        0.0435836513,
+        0.0528381606
+      ],
+      "tail_bias_median_frac_ci95": [
+        0.0,
+        0.0008706113
+      ],
+      "catastrophic_rate_ci95": [
+        0.1043903013,
+        0.1315913371
+      ],
+      "net_harm_label_rate_ci95": [
+        0.2249176083,
+        0.2582627119
+      ],
+      "accepted_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "utility": 0.4703113715
+    },
+    {
+      "method": "ridge_residual",
+      "method_family": "ridge",
+      "n": 4248,
+      "accepted_fraction": 1.0,
+      "amp_bias_median_frac": 0.006102562,
+      "amp_res68_abs_frac": 0.1137980942,
+      "charge_bias_median_frac": -0.0016169117,
+      "charge_res68_abs_frac": 0.0715955319,
+      "time_abs68_samples": 0.0481586402,
+      "time_bias_median_samples": -0.0103462978,
+      "tail_bias_median_frac": 0.0002880476,
+      "catastrophic_rate": 0.1720809793,
+      "net_harm_label_rate": 0.2354048964,
+      "amp_res68_abs_frac_ci95": [
+        0.1056031433,
+        0.1202808942
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0667841009,
+        0.0756745796
+      ],
+      "time_abs68_samples_ci95": [
+        0.0435836513,
+        0.0528381606
+      ],
+      "tail_bias_median_frac_ci95": [
+        0.0,
+        0.0008706113
+      ],
+      "catastrophic_rate_ci95": [
+        0.1538782957,
+        0.1908604049
+      ],
+      "net_harm_label_rate_ci95": [
+        0.2191148776,
+        0.251488936
+      ],
+      "accepted_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "utility": 0.5374448083
+    },
+    {
+      "method": "cnn_inpaint",
+      "method_family": "1d_cnn",
+      "n": 4248,
+      "accepted_fraction": 1.0,
+      "amp_bias_median_frac": 0.0101017088,
+      "amp_res68_abs_frac": 0.0564372005,
+      "charge_bias_median_frac": 0.0065107741,
+      "charge_res68_abs_frac": 0.0329207538,
+      "time_abs68_samples": 0.1352126741,
+      "time_bias_median_samples": -0.026316285,
+      "tail_bias_median_frac": -0.002729601,
+      "catastrophic_rate": 0.1106403013,
+      "net_harm_label_rate": 0.5739171375,
+      "amp_res68_abs_frac_ci95": [
+        0.0529001638,
+        0.0601795455
+      ],
+      "charge_res68_abs_frac_ci95": [
+        0.0307699525,
+        0.0349171487
+      ],
+      "time_abs68_samples_ci95": [
+        0.1219032748,
+        0.1492562871
+      ],
+      "tail_bias_median_frac_ci95": [
+        -0.0037702778,
+        -0.0020896693
+      ],
+      "catastrophic_rate_ci95": [
+        0.0975635593,
+        0.1260416667
+      ],
+      "net_harm_label_rate_ci95": [
+        0.55673258,
+        0.5920374294
+      ],
+      "accepted_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "utility": 0.9846247256
+    }
+  ],
+  "support_atom_status_counts": {
+    "harm_watch": 484,
+    "accept": 455,
+    "abstain": 13
+  },
+  "leakage_audit": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "heldout_absent_from_train": true,
+    "train_eval_block_overlap": 0,
+    "exact_corrupt_wave_hash_overlap": 0,
+    "feature_exclusion": "run id, event id, clean waveform, clean amplitude, clean charge, and post-injection labels are excluded from predictors",
+    "torch_available": true,
+    "too_good_triggered": false
+  },
+  "nn_diagnostics": {
+    "cnn_inpaint": {
+      "device": "cpu",
+      "loss_start": 0.1364814912279447,
+      "loss_end": 0.01417232178694879,
+      "epochs": 14
+    },
+    "support_gated_cnn": {
+      "device": "cpu",
+      "loss_start": 0.1426781459401051,
+      "loss_end": 0.09067626763135195,
+      "epochs": 14,
+      "train_harm_rate": 0.5837777853012085
+    }
+  },
+  "finding": "Winner by support-aware utility is rising_edge_huber (U=0.09027); best traditional comparator is rising_edge_huber (U=0.09027). The support map identifies atoms with charge gain but nonzero timing/tail harm, so dropout recovery should be applied with abstention rather than globally.",
+  "git_commit": "ab4fcbb0b7aa5e1b5de3ef1b1232d37b5f2199fd",
+  "runtime_sec": 53.49
+}

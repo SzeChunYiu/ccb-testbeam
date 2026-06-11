@@ -1,0 +1,16 @@
+check,method,value,flag,note
+traditional_template_fit_actual_current_auc_from_overlap_score,traditional_template_fit,0.43173721984557173,False,Flagged if the score nearly identifies beam current by itself.
+traditional_template_fit_actual_current_auc_from_secondary_fraction,traditional_template_fit,0.45242785069885005,False,Flagged if the secondary-fraction estimate nearly identifies beam current by itself.
+ridge_actual_current_auc_from_overlap_score,ridge,0.5812430272960221,False,Flagged if the score nearly identifies beam current by itself.
+ridge_actual_current_auc_from_secondary_fraction,ridge,0.5908326996352553,False,Flagged if the secondary-fraction estimate nearly identifies beam current by itself.
+gradient_boosted_trees_actual_current_auc_from_overlap_score,gradient_boosted_trees,0.6712313507877143,False,Flagged if the score nearly identifies beam current by itself.
+gradient_boosted_trees_actual_current_auc_from_secondary_fraction,gradient_boosted_trees,0.615719661865974,False,Flagged if the secondary-fraction estimate nearly identifies beam current by itself.
+mlp_actual_current_auc_from_overlap_score,mlp,0.5933267487406934,False,Flagged if the score nearly identifies beam current by itself.
+mlp_actual_current_auc_from_secondary_fraction,mlp,0.50284845589376,False,Flagged if the secondary-fraction estimate nearly identifies beam current by itself.
+one_d_cnn_actual_current_auc_from_overlap_score,one_d_cnn,0.668315442008186,False,Flagged if the score nearly identifies beam current by itself.
+one_d_cnn_actual_current_auc_from_secondary_fraction,one_d_cnn,0.6718028941294446,False,Flagged if the secondary-fraction estimate nearly identifies beam current by itself.
+residual_shape_extratrees_actual_current_auc_from_overlap_score,residual_shape_extratrees,0.6171267802931435,False,Flagged if the score nearly identifies beam current by itself.
+residual_shape_extratrees_actual_current_auc_from_secondary_fraction,residual_shape_extratrees,0.6216854656830324,False,Flagged if the secondary-fraction estimate nearly identifies beam current by itself.
+heldout_run_excluded_from_training,all,1.0,False,High-current runs are never in training; low-current controls leave the scored run out.
+identifier_features_excluded,all,1.0,False,"Tabular/NN features exclude run, event number, current, group, downstream label, and stratum labels."
+synthetic_train_source_runs_exclude_heldout,all,1.0,False,Fold diagnostics record raw source runs used to make synthetic overlays.

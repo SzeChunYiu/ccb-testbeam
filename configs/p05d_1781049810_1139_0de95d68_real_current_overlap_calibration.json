@@ -1,0 +1,38 @@
+{
+  "study_id": "P05d",
+  "ticket_id": "1781049810.1139.0de95d68",
+  "worker": "testbeam-laptop-3",
+  "title": "real-current overlap score calibration curve",
+  "output_dir": "reports/1781049810.1139.0de95d68__p05d_real_current_overlap_calibration",
+  "random_seed": 50113,
+  "p05a_config": "configs/p05a_cnn_two_pulse_decomposition.json",
+  "p05a_expected_result": "reports/1781010938.498.6bd050f4/result.json",
+  "s11b_expected_result": "reports/1781010611.1197.028b141a/result.json",
+  "sample_per_run_stratum": 100,
+  "synthetic_train_per_fold": 1400,
+  "synthetic_cal_per_fold": 360,
+  "bootstrap_samples": 500,
+  "winner_metric": "synthetic_secondary_fraction_rmse",
+  "winner_rule": "lowest source-run-bootstrap mean synthetic secondary-fraction RMSE; real high-minus-low and leakage sentinels are reported as transfer diagnostics, not optimized",
+  "cnn": {
+    "epochs": 90,
+    "batch_size": 128,
+    "channels": 10,
+    "learning_rate": 0.0015,
+    "weight_decay": 0.0001
+  },
+  "p05a_reproduction_tolerances": {
+    "traditional_time_rms_ns": 0.05,
+    "cnn_time_rms_ns": 0.6,
+    "cnn_detection_ap": 0.01
+  },
+  "s11b_reproduction_tolerances": {
+    "traditional_high_minus_low": 0.003
+  },
+  "next_tickets": [
+    {
+      "title": "P05e support-matched overlap calibration with external acquisition covariates",
+      "body": "Question: does the P05d winner remain calibrated after conditioning on run-family acquisition covariates and S16 baseline-support atoms, or is the apparent secondary-fraction calibration a support-mixture effect? Traditional method: constrained two-pulse template calibration within exact support cells. ML/NN methods: ridge, gradient-boosted trees, MLP, 1D-CNN, and a monotone support-gated ensemble, split by run with bootstrap CIs. Expected information gain: separates transferable overlap physics from current/run support leakage before any real-current recovery correction is adopted."
+    }
+  ]
+}

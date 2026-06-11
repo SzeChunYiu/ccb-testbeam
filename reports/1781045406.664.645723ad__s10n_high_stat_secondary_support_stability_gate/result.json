@@ -1,0 +1,211 @@
+{
+  "study": "S10n",
+  "ticket": "1781045406.664.645723ad",
+  "worker": "testbeam-laptop-3",
+  "title": "S10n high-stat secondary support stability gate",
+  "reproduced": true,
+  "reproduction_gate": "S10 topology fractions from raw B-stack ROOT within 0.0015 absolute tolerance",
+  "split": "source-run held out; high-current scored by low-current-only template and synthetic-overlay ML/NN training; run bootstrap CIs within current group",
+  "strata": {
+    "definition": "amplitude bin x S16 adaptive lowering bin x P02 topology",
+    "n_matched_strata": 8,
+    "global_s10_downstream_high_minus_low": 0.010289747149522063,
+    "n_scored_events": 12617,
+    "sample_cap_per_run_stratum": 140
+  },
+  "methods": [
+    {
+      "method": "traditional",
+      "secondary_fraction_delta": 0.01751472738716328,
+      "secondary_fraction_ci_low": -0.009083270189679927,
+      "secondary_fraction_ci_high": 0.04335499126056393,
+      "overlap_score_delta": 0.009184128837380796,
+      "overlap_score_ci_low": -0.021320144426674188,
+      "overlap_score_ci_high": 0.036656459135992144,
+      "timing_tail_proxy_delta": 0.009669376537529023,
+      "charge_log_proxy_delta": 0.1594534483391056,
+      "support_accept_fraction": 1.0,
+      "synthetic_auc": null,
+      "synthetic_ap": null,
+      "synthetic_brier": null,
+      "secondary_fraction_mae": null
+    },
+    {
+      "method": "ridge",
+      "secondary_fraction_delta": 0.01590182362472025,
+      "secondary_fraction_ci_low": 0.010060397137676388,
+      "secondary_fraction_ci_high": 0.0221261465495031,
+      "overlap_score_delta": 0.03491178533850884,
+      "overlap_score_ci_low": 0.01333241770575661,
+      "overlap_score_ci_high": 0.05749166216573153,
+      "timing_tail_proxy_delta": -0.0013492359698839295,
+      "charge_log_proxy_delta": -0.056954660016855466,
+      "support_accept_fraction": 0.5562846145089522,
+      "synthetic_auc": 0.8253142481696666,
+      "synthetic_ap": 0.8428193446014246,
+      "synthetic_brier": 0.16267413540091918,
+      "secondary_fraction_mae": 0.11734257226955831
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "secondary_fraction_delta": 0.006723075646524431,
+      "secondary_fraction_ci_low": 0.0019274218992061615,
+      "secondary_fraction_ci_high": 0.010204119043915721,
+      "overlap_score_delta": 0.02210130898059036,
+      "overlap_score_ci_low": 0.011529242356998102,
+      "overlap_score_ci_high": 0.03224526860362287,
+      "timing_tail_proxy_delta": -0.0011745998533360363,
+      "charge_log_proxy_delta": -0.018077681885259676,
+      "support_accept_fraction": 0.5562846145089522,
+      "synthetic_auc": 0.9272389663056883,
+      "synthetic_ap": 0.9332215588927438,
+      "synthetic_brier": 0.10623422612933253,
+      "secondary_fraction_mae": 0.07539406821182523
+    },
+    {
+      "method": "mlp",
+      "secondary_fraction_delta": -0.0021195813827589076,
+      "secondary_fraction_ci_low": -0.010637228401634401,
+      "secondary_fraction_ci_high": 0.014204307445178617,
+      "overlap_score_delta": -0.014395793829820095,
+      "overlap_score_ci_low": -0.06505812335883929,
+      "overlap_score_ci_high": 0.035033164809933987,
+      "timing_tail_proxy_delta": 0.001169020853283426,
+      "charge_log_proxy_delta": 0.022794665690295927,
+      "support_accept_fraction": 0.5562846145089522,
+      "synthetic_auc": 0.9116151173773241,
+      "synthetic_ap": 0.907280480302531,
+      "synthetic_brier": 0.1129226609473574,
+      "secondary_fraction_mae": 0.0905539073276055
+    },
+    {
+      "method": "cnn1d",
+      "secondary_fraction_delta": -0.010712829908727043,
+      "secondary_fraction_ci_low": -0.056494451570904755,
+      "secondary_fraction_ci_high": 0.03241633636716933,
+      "overlap_score_delta": -0.05303773376003419,
+      "overlap_score_ci_low": -0.17391398295696542,
+      "overlap_score_ci_high": 0.06919070083198768,
+      "timing_tail_proxy_delta": -0.006086244389413766,
+      "charge_log_proxy_delta": -0.0706188650609682,
+      "support_accept_fraction": 0.5562846145089522,
+      "synthetic_auc": 0.7544660723772143,
+      "synthetic_ap": 0.7953272770276384,
+      "synthetic_brier": 0.21094118918495844,
+      "secondary_fraction_mae": 0.1366584497570809
+    },
+    {
+      "method": "residual_tcn",
+      "secondary_fraction_delta": -0.02537192482553847,
+      "secondary_fraction_ci_low": -0.04002547242496462,
+      "secondary_fraction_ci_high": -0.010900444174414211,
+      "overlap_score_delta": -0.13941581460278424,
+      "overlap_score_ci_low": -0.19888799832187726,
+      "overlap_score_ci_high": -0.08048475394007594,
+      "timing_tail_proxy_delta": -0.004275586490863446,
+      "charge_log_proxy_delta": -0.01433305018461175,
+      "support_accept_fraction": 0.5562846145089522,
+      "synthetic_auc": 0.7634987252669453,
+      "synthetic_ap": 0.795631203020162,
+      "synthetic_brier": 0.2090261620557328,
+      "secondary_fraction_mae": 0.13386275599059086
+    }
+  ],
+  "ml_minus_traditional": [
+    {
+      "method_metric": "ridge_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.0016129037624430312,
+      "ci_low": -0.02639858850175432,
+      "ci_high": 0.02041732715696349,
+      "n_bootstrap": 700
+    },
+    {
+      "method_metric": "gradient_boosted_trees_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.010791651740638852,
+      "ci_low": -0.0317371609487151,
+      "ci_high": 0.007545540577516091,
+      "n_bootstrap": 700
+    },
+    {
+      "method_metric": "mlp_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.019634308769922188,
+      "ci_low": -0.034399568347184536,
+      "ci_high": 0.0001732341733604937,
+      "n_bootstrap": 700
+    },
+    {
+      "method_metric": "cnn1d_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.028227557295890326,
+      "ci_low": -0.056185954357519406,
+      "ci_high": 0.0006260001417574143,
+      "n_bootstrap": 700
+    },
+    {
+      "method_metric": "residual_tcn_secondary_fraction",
+      "reference_metric": "trad_secondary_fraction",
+      "delta": -0.042886652212701756,
+      "ci_low": -0.0634111741567759,
+      "ci_high": -0.02184071412984221,
+      "n_bootstrap": 700
+    }
+  ],
+  "traditional_stability": {
+    "thresholds": [
+      0.0,
+      0.005,
+      0.015,
+      0.03,
+      0.06
+    ],
+    "support_choices": [
+      "all_matched",
+      "dominant_three",
+      "dominant_one"
+    ],
+    "diagnostics": [
+      {
+        "diagnostic": "traditional_threshold_sensitivity_slope",
+        "value": 0.003979658354871916,
+        "unit": "secondary_fraction_delta_per_sse_improvement_threshold"
+      },
+      {
+        "diagnostic": "traditional_threshold_range",
+        "value": 0.0005447266208788298,
+        "unit": "secondary_fraction_delta"
+      }
+    ]
+  },
+  "winner": {
+    "primary_metric": "matched high-minus-low secondary-fraction delta",
+    "point_estimate_winner": "traditional",
+    "winner": "traditional",
+    "selection_rule": "rank secondary-fraction delta; promote an ML/NN method only if leakage checks pass and its ML-minus-traditional run-bootstrap CI is wholly positive"
+  },
+  "winner_name": "traditional",
+  "leakage_flags": 0,
+  "leakage_checks_pass": true,
+  "next_tickets": [],
+  "conclusion": "The raw-ROOT S10 topology reproduction passes before model fitting. The traditional bounded two-pulse fit gives a matched high-minus-low secondary-fraction delta of 0.01751 [-0.00908, 0.04335]. The point-estimate winner is traditional, but the operational winner recorded for this ticket is traditional because the promotion rule requires clean leakage checks and an ML-minus-traditional CI wholly above zero. The selected winner has secondary-fraction delta 0.01751 [-0.00908, 0.04335], support acceptance 1.000, and overlap-score delta 0.00918.",
+  "input_sha256": {
+    "data/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "data/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "data/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "data/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "data/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "data/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "data/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "data/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "data/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "data/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "data/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "data/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "data/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "data/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+  },
+  "git_commit": "124659c50f1b88bd01cad4b91e2ab9672b7ea27e",
+  "runtime_sec": 626.89
+}

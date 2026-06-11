@@ -57,7 +57,8 @@ decoupled cross-check (see [08_astack.md](08_astack.md)).
 ## Reading order
 
 Start with [FINDINGS_SUMMARY.md](FINDINGS_SUMMARY.md), then read the thesis narrative in
-[ANALYSIS_REPORT.md](ANALYSIS_REPORT.md). The detailed notes follow:
+[ANALYSIS_REPORT.md](ANALYSIS_REPORT.md). For the fully explicit "why each step exists"
+audit trail, read [METHOD_LOGIC_TRACE.md](METHOD_LOGIC_TRACE.md). The detailed notes follow:
 `01` setup → `02` data/runs → `03` pulse reconstruction → `04` timing calibration →
 `05` timing resolution → `06` pile-up → `07` ML → `08` A-stack → `09` open questions.
 Term definitions are in [glossary.md](glossary.md), the plot map is in

@@ -2,7 +2,9 @@
 
 This document is the short, reader-facing summary of the CCB test-beam analysis.
 The full narrative is in [ANALYSIS_REPORT.md](ANALYSIS_REPORT.md), and the
-thesis-style LaTeX source is in [latex/main.tex](latex/main.tex).
+thesis-style LaTeX source is in [latex/main.tex](latex/main.tex). The
+reviewer-level explanation of every analysis step is in
+[METHOD_LOGIC_TRACE.md](METHOD_LOGIC_TRACE.md).
 
 ## Executive verdict
 

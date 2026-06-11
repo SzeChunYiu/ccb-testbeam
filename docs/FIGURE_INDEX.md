@@ -4,6 +4,9 @@ The docs tree now carries the plot assets used by the thesis-style manuscript in
 `docs/figures/`. These figures are intentionally referenced from both Markdown
 and LaTeX so the report is visual and auditable.
 
+For the reasoning chain that explains why each plot or metric is used, see
+[METHOD_LOGIC_TRACE.md](METHOD_LOGIC_TRACE.md).
+
 | Topic | Figure | Used for |
 |---|---|---|
 | Raw sample reproduction | `fig_counts_by_run.png`, `fig_counts_by_group_stave.png` | Selected-pulse population and stave topology |

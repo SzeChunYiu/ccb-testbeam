@@ -1,0 +1,115 @@
+{
+  "ticket_id": "1781045406.537.56ee4cc0",
+  "study_id": "P01j",
+  "title": "control-stratum latent calibration map",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "primary_target": "manual_flag",
+  "winner": {
+    "method": "latent_gbt",
+    "metric": "mean lift over controls-only balanced accuracy across manual_flag and peak_group",
+    "mean_lift_vs_controls": 0.48624940356225554,
+    "mean_balanced_accuracy": 0.9583188659354245,
+    "mean_macro_f1": 0.927323231070907,
+    "mean_brier": 0.05913497472046413,
+    "mean_ece": 0.007245171857126238,
+    "score_delta_vs_traditional": 0.029587036926554733
+  },
+  "traditional": {
+    "method": "traditional_hand_pca_qtemplate_ridge",
+    "mean_lift_vs_controls": 0.4566623666357008,
+    "mean_balanced_accuracy": 0.9287318290088697,
+    "mean_macro_f1": 0.8291777900221293,
+    "mean_brier": 0.28392603366222136,
+    "mean_ece": 0.3501101764442516
+  },
+  "ml_beats_baseline": true,
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true,
+    "raw_key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193"
+  },
+  "artifact": {
+    "path": "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz",
+    "rows": 640737,
+    "sha256": "9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be",
+    "sha256_matches_expected": true,
+    "key_sha256": "605aa0fb0161573bf4afd95df232307823a4e7fd50a580455b0d53ee81121193",
+    "key_sha256_matches_expected": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_rows": 33784,
+    "heldout_rows": 5126,
+    "max_rows_per_run_stave": 400,
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_replicates": 400
+  },
+  "planned_methods": [
+    "controls_only_ridge",
+    "traditional_hand_pca_qtemplate_ridge",
+    "latent_ridge",
+    "latent_gbt",
+    "latent_mlp",
+    "latent_stratum_permuted_ridge",
+    "waveform_1d_cnn",
+    "stratum_gated_fusion_new_arch"
+  ],
+  "parameters": {
+    "ridge_alpha": 1.0,
+    "pca_components": 6,
+    "random_seed": 5406537,
+    "cnn_epochs": 6
+  },
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0,
+      "pass": true,
+      "detail": "Must be zero for split-by-run."
+    },
+    {
+      "check": "p01b_key_order_matches_raw_scan",
+      "value": true,
+      "pass": true,
+      "detail": "Latent rows match raw ROOT recount by run, event_index, stave_index, and amplitude."
+    },
+    {
+      "check": "permutation_changed_latent_fraction",
+      "value": 0.9949355195657501,
+      "pass": true,
+      "detail": "Within-stratum permutation should move almost all rows."
+    },
+    {
+      "check": "winner_beats_controls",
+      "value": 0.48624940356225554,
+      "pass": true,
+      "detail": "Winner metric is mean lift over controls-only balanced accuracy."
+    },
+    {
+      "check": "winner_beats_traditional_point_estimate",
+      "value": 0.029587036926554733,
+      "pass": true,
+      "detail": "Descriptive comparison; not promoted as a discovery p-value."
+    },
+    {
+      "check": "label_shuffle_max_balanced_accuracy",
+      "value": 0.4036142461861981,
+      "pass": true,
+      "detail": "Train-label shuffle sentinel should stay near chance for these imbalanced tasks."
+    }
+  ],
+  "next_tickets": [
+    "P01k frozen control-stratum morphology transfer: freeze the P01j winner and test pair-timing sigma68 plus amplitude-bias deltas on untouched run-family folds"
+  ],
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "7665c39cbd9fd4a336934f6f1ee2182f8df80088",
+  "critic": "pending",
+  "runtime_sec": 58.6
+}

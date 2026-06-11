@@ -1,0 +1,5 @@
+quantity,rows,fraction_of_evaluated
+evaluated_rows_before_support_matching,15694,1.0
+evaluated_rows_in_matched_support_cells,3734,0.23792532177902384
+support_collapse_fraction,11960,0.7620746782209762
+matched_support_cells,16,0.08333333333333333

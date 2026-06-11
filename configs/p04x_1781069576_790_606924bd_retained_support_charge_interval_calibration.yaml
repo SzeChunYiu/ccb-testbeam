@@ -1,0 +1,75 @@
+study_id: P04x
+ticket_id: "1781069576.790.606924bd"
+title: Retained-support charge-interval calibration
+worker: testbeam-laptop-3
+
+raw_root_dir: data/root/root
+output_dir: reports/1781069576.790.606924bd__p04x_retained_support_charge_interval_calibration
+predecessor_report: reports/1781065299.620.6b5f516e__p04w_external_charge_abstention_frontier
+predecessor_prediction_csv: reports/1781065299.620.6b5f516e__p04w_external_charge_abstention_frontier/prediction_sample.csv
+predecessor_method_summary_csv: reports/1781065299.620.6b5f516e__p04w_external_charge_abstention_frontier/method_summary.csv
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+
+random_seed: 4057
+bootstrap_reps: 500
+ml_max_train_rows: 50000
+interval_alpha_levels: [0.68, 0.90]
+retention_accept_fractions: [1.0, 0.75, 0.5, 0.25]
+
+min_support_rows: 50
+strong_support_rows: 150
+min_support_runs: 3
+strong_support_runs: 5
+saturation_adc: 7000.0
+dropout_postpeak_adc: -80.0
+broad_width50_samples: 8
+
+interval_acceptance:
+  min_retained_fraction: 0.25
+  max_res68_abs_frac: 0.40
+  max_mean_width68_frac: 0.90
+  min_coverage68: 0.60
+  max_coverage68: 0.76
+  min_coverage90: 0.84
+  max_coverage90: 0.96
+  max_real_minus_shuffled_res68: -0.03
+  max_real_minus_topology_res68: -0.03
+
+p04_reference_config: configs/p04_amplitude_charge_regression.yaml
+expected_b_s00_selected_pulses: 640737
+
+runs: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
+sample_iii_analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+sample_iv_analysis_runs: [58, 59, 60, 61, 62, 63, 65]
+
+expected_astack_counts:
+  sample_iii_analysis:
+    events_with_selected: 7168
+    selected_pulses: 9682
+  sample_iv_analysis:
+    events_with_selected: 767
+    selected_pulses: 894
+
+astack:
+  file_prefix: hrda
+  staves:
+    A1: 0
+    A3: 4
+
+bstack:
+  file_prefix: hrdb
+  staves:
+    B2: 0
+    B4: 2
+    B6: 4
+    B8: 6
+
+b2_amplitude_bins:
+  - [1000, 2000]
+  - [2000, 3000]
+  - [3000, 5000]
+  - [5000, 7000]
+  - [7000, 1000000000]

@@ -1,0 +1,2 @@
+split,features_exclude,prediction_join_rows,train_heldout_run_overlap,topology_only_res68,shuffled_target_res68,best_method,best_res68,best_minus_shuffled_res68,best_minus_topology_res68,accepted_support_cells,winner
+leave-one-run-out by run,"['run', 'evt', 'target_a_charge', 'A1_charge', 'A3_charge', 'A1_selected', 'A3_selected']",4055,0,0.3519246998901794,0.5264962100164489,strong_huber_transfer,0.3542717727823608,-0.17222443723408803,0.0023470728921814454,0,none_no_retained_support_cell_passed

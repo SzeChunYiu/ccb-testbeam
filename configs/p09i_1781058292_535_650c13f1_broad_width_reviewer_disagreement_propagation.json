@@ -1,0 +1,34 @@
+{
+  "ticket_id": "1781058292.535.650c13f1",
+  "study_id": "P09i",
+  "title": "broad-width reviewer-disagreement propagation",
+  "output_dir": "reports/1781058292.535.650c13f1__p09i_broad_width_reviewer_disagreement_propagation",
+  "p09a_config": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+  "p09c_reference_config": "configs/p09c_delayed_peak_dropout_propagation.json",
+  "p09b_config": "configs/p09b_manual_waveform_gallery_adjudication.json",
+  "p09c_review_config": "configs/p09c_1781021714_1194_414e1474_independent_gallery_review.json",
+  "p09d_report_dir": "reports/1781021714.1215.508e2136",
+  "heldout_runs": [37, 40, 42, 49, 52, 57, 58, 60, 62, 64, 65],
+  "p09c_reference_heldout_runs": [42, 57, 64, 65],
+  "target_taxon": "novel_broad_template_mismatch",
+  "normal_taxon": "unassigned_common",
+  "primary_target": "broad_downstream_risk",
+  "coverage_per_run_stave": 8,
+  "normal_ratio": 3,
+  "train_negative_to_positive_ratio": 10,
+  "bootstrap_replicates": 1500,
+  "random_seed": 9139,
+  "torch": {
+    "epochs": 14,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "hidden_dim": 48,
+    "max_train_rows": 90000
+  },
+  "gbt": {
+    "max_iter": 220,
+    "learning_rate": 0.055,
+    "max_leaf_nodes": 31,
+    "l2_regularization": 0.02
+  }
+}

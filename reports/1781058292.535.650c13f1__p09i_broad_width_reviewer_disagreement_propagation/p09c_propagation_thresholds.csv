@@ -1,0 +1,6 @@
+name,value
+baseline_score_q995_train,531.8204505598286
+baseline_lowering_score_q995_train,46.23750447722315
+pileup_score_q995_train,15.883313249332693
+charge_score_q995_train,39.53589574166759
+timing_score_q990_train,0.0

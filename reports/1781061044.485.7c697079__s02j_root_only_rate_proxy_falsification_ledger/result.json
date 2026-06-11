@@ -1,0 +1,67 @@
+{
+  "study": "S02j",
+  "ticket": "1781061044.485.7c697079",
+  "worker": "testbeam-laptop-4",
+  "title": "ROOT-only rate-proxy falsification ledger for Sample-II timing closure",
+  "reproduced_raw_root_counts": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "winner": {
+    "method": "ml_gated_proxy_all_root_proxies",
+    "family": "ml",
+    "mean_sigma68_ns": 1.28841735618882,
+    "ci": [
+      1.2429719340646836,
+      1.3378807229110028
+    ],
+    "delta_vs_traditional_ns": -0.366746683235429,
+    "delta_ci": [
+      -0.5558211204646579,
+      -0.23452915274888098
+    ]
+  },
+  "traditional_baseline": {
+    "method": "traditional_global_no_proxy",
+    "mean_sigma68_ns": 1.6551640394242493,
+    "ci": [
+      1.5367146525187405,
+      1.8394534636177218
+    ]
+  },
+  "best_traditional_proxy": {
+    "method": "traditional_proxy_current",
+    "mean_sigma68_ns": 1.655164039417847,
+    "ci": [
+      1.5313266755132298,
+      1.850024041950689
+    ],
+    "delta_vs_traditional_ns": -6.401990049198503e-12
+  },
+  "best_ml_nn": {
+    "method": "ml_gated_proxy_all_root_proxies",
+    "mean_sigma68_ns": 1.28841735618882,
+    "ci": [
+      1.2429719340646836,
+      1.3378807229110028
+    ],
+    "delta_vs_traditional_ns": -0.366746683235429
+  },
+  "controls": {
+    "shuffled_target_failures": 3,
+    "max_train_heldout_event_overlap": 0,
+    "structural_guards_pass": true
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "verdict": "The no-proxy global S02b traditional branch remains the adoption baseline at 1.655 ns. The best ROOT-proxy traditional branch is traditional_proxy_current with delta -0.000 ns, and the best guarded ML/NN branch is ml_gated_proxy_all_root_proxies with delta -0.367 ns. A non-baseline method wins the raw width table, but it should be interpreted through the shuffled-target and proxy-leakage controls before adoption. 3 shuffled-target checks beat their nominal model, so those rows are false-improvement warnings.",
+  "next_tickets": [],
+  "git_commit": "9d994c7ef757af01e757f347b386fde05aac1fa6"
+}

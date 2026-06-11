@@ -1,0 +1,127 @@
+method,base_method,drift_order,fold,heldout_runs,sigma68_ns,n_pair_residuals,proxy_family,heldout_run
+s02j_global_proxy_current,template_phase,1,0,61 65,2.156336096778108,2997,current,58
+s02j_global_proxy_current,template_phase,1,1,60 63,1.5203552625267351,3534,current,58
+s02j_global_proxy_current,template_phase,1,2,59 62,1.5754128682115183,4710,current,58
+s02j_global_proxy_trigger_density,template_phase,1,0,61 65,2.2005866357750556,2997,trigger_density,58
+s02j_global_proxy_trigger_density,template_phase,1,1,60 63,1.6333671210025456,3534,trigger_density,58
+s02j_global_proxy_trigger_density,template_phase,1,2,59 62,1.8934961620211976,4710,trigger_density,58
+s02j_global_proxy_event_order_density,template_phase,1,0,61 65,2.2005866357750556,2997,event_order_density,58
+s02j_global_proxy_event_order_density,template_phase,1,1,60 63,1.6333671210025456,3534,event_order_density,58
+s02j_global_proxy_event_order_density,template_phase,1,2,59 62,1.8934961620211976,4710,event_order_density,58
+s02j_global_proxy_selected_pulse_density,template_phase,1,0,61 65,2.113911646604816,2997,selected_pulse_density,58
+s02j_global_proxy_selected_pulse_density,template_phase,1,1,60 63,1.5807158508214625,3534,selected_pulse_density,58
+s02j_global_proxy_selected_pulse_density,template_phase,1,2,59 62,1.5355549779027444,4710,selected_pulse_density,58
+s02j_global_proxy_topology_occupancy,template_phase,1,0,61 65,2.1656440389064406,2997,topology_occupancy,58
+s02j_global_proxy_topology_occupancy,template_phase,1,1,60 63,1.6772381417405717,3534,topology_occupancy,58
+s02j_global_proxy_topology_occupancy,template_phase,1,2,59 62,1.6038825735862559,4710,topology_occupancy,58
+s02j_global_proxy_all_root_proxies,template_phase,1,0,61 65,2.344287975999422,2997,all_root_proxies,58
+s02j_global_proxy_all_root_proxies,template_phase,1,1,60 63,1.5962808313850179,3534,all_root_proxies,58
+s02j_global_proxy_all_root_proxies,template_phase,1,2,59 62,2.0104409856523646,4710,all_root_proxies,58
+s02j_global_proxy_current,template_phase,1,0,61,2.1733432775500736,2799,current,59
+s02j_global_proxy_current,template_phase,1,1,58 60 65,1.549232619033467,2841,current,59
+s02j_global_proxy_current,template_phase,1,2,62 63,1.5567295664093777,3531,current,59
+s02j_global_proxy_trigger_density,template_phase,1,0,61,2.1712569891670976,2799,trigger_density,59
+s02j_global_proxy_trigger_density,template_phase,1,1,58 60 65,1.9165734766411424,2841,trigger_density,59
+s02j_global_proxy_trigger_density,template_phase,1,2,62 63,1.544079262234555,3531,trigger_density,59
+s02j_global_proxy_event_order_density,template_phase,1,0,61,2.1712569891670976,2799,event_order_density,59
+s02j_global_proxy_event_order_density,template_phase,1,1,58 60 65,1.9165734766411424,2841,event_order_density,59
+s02j_global_proxy_event_order_density,template_phase,1,2,62 63,1.544079262234555,3531,event_order_density,59
+s02j_global_proxy_selected_pulse_density,template_phase,1,0,61,2.163286843785071,2799,selected_pulse_density,59
+s02j_global_proxy_selected_pulse_density,template_phase,1,1,58 60 65,3.764650350404869,2841,selected_pulse_density,59
+s02j_global_proxy_selected_pulse_density,template_phase,1,2,62 63,1.4907590837741018,3531,selected_pulse_density,59
+s02j_global_proxy_topology_occupancy,template_phase,1,0,61,2.16787372434981,2799,topology_occupancy,59
+s02j_global_proxy_topology_occupancy,template_phase,1,1,58 60 65,1.6110595276438706,2841,topology_occupancy,59
+s02j_global_proxy_topology_occupancy,template_phase,1,2,62 63,1.693489976717806,3531,topology_occupancy,59
+s02j_global_proxy_all_root_proxies,template_phase,1,0,61,2.1854963611114546,2799,all_root_proxies,59
+s02j_global_proxy_all_root_proxies,template_phase,1,1,58 60 65,26.824958451989822,2841,all_root_proxies,59
+s02j_global_proxy_all_root_proxies,template_phase,1,2,62 63,2.3253780660957357,3531,all_root_proxies,59
+s02j_global_proxy_current,template_phase,1,0,61,2.1340041310473823,2799,current,60
+s02j_global_proxy_current,template_phase,1,1,58 62 65,1.5760326037530952,2838,current,60
+s02j_global_proxy_current,template_phase,1,2,59 63,1.491698645845224,3399,current,60
+s02j_global_proxy_trigger_density,template_phase,1,0,61,2.13051364179129,2799,trigger_density,60
+s02j_global_proxy_trigger_density,template_phase,1,1,58 62 65,2.027686672936233,2838,trigger_density,60
+s02j_global_proxy_trigger_density,template_phase,1,2,59 63,1.4864873702648371,3399,trigger_density,60
+s02j_global_proxy_event_order_density,template_phase,1,0,61,2.13051364179129,2799,event_order_density,60
+s02j_global_proxy_event_order_density,template_phase,1,1,58 62 65,2.027686672936233,2838,event_order_density,60
+s02j_global_proxy_event_order_density,template_phase,1,2,59 63,1.4864873702648371,3399,event_order_density,60
+s02j_global_proxy_selected_pulse_density,template_phase,1,0,61,2.134222227190787,2799,selected_pulse_density,60
+s02j_global_proxy_selected_pulse_density,template_phase,1,1,58 62 65,1.8778226858566465,2838,selected_pulse_density,60
+s02j_global_proxy_selected_pulse_density,template_phase,1,2,59 63,1.4979591469280322,3399,selected_pulse_density,60
+s02j_global_proxy_topology_occupancy,template_phase,1,0,61,2.082798825029675,2799,topology_occupancy,60
+s02j_global_proxy_topology_occupancy,template_phase,1,1,58 62 65,1.644482907134985,2838,topology_occupancy,60
+s02j_global_proxy_topology_occupancy,template_phase,1,2,59 63,1.671898613050746,3399,topology_occupancy,60
+s02j_global_proxy_all_root_proxies,template_phase,1,0,61,2.1137179478287047,2799,all_root_proxies,60
+s02j_global_proxy_all_root_proxies,template_phase,1,1,58 62 65,2.3184076651884076,2838,all_root_proxies,60
+s02j_global_proxy_all_root_proxies,template_phase,1,2,59 63,3.148951739723753,3399,all_root_proxies,60
+s02j_global_proxy_current,template_phase,1,0,60 65,1.6299355999281273,2622,current,61
+s02j_global_proxy_current,template_phase,1,1,58 62,1.7454933796292413,2640,current,61
+s02j_global_proxy_current,template_phase,1,2,59 63,1.6856971129313596,3399,current,61
+s02j_global_proxy_trigger_density,template_phase,1,0,60 65,1.6264509694262401,2622,trigger_density,61
+s02j_global_proxy_trigger_density,template_phase,1,1,58 62,1.8490134770639686,2640,trigger_density,61
+s02j_global_proxy_trigger_density,template_phase,1,2,59 63,1.6758977093304186,3399,trigger_density,61
+s02j_global_proxy_event_order_density,template_phase,1,0,60 65,1.6264509694262401,2622,event_order_density,61
+s02j_global_proxy_event_order_density,template_phase,1,1,58 62,1.8490134770639686,2640,event_order_density,61
+s02j_global_proxy_event_order_density,template_phase,1,2,59 63,1.6758977093304186,3399,event_order_density,61
+s02j_global_proxy_selected_pulse_density,template_phase,1,0,60 65,2.3871890709308436,2622,selected_pulse_density,61
+s02j_global_proxy_selected_pulse_density,template_phase,1,1,58 62,1.7325260494370083,2640,selected_pulse_density,61
+s02j_global_proxy_selected_pulse_density,template_phase,1,2,59 63,1.6732474079820707,3399,selected_pulse_density,61
+s02j_global_proxy_topology_occupancy,template_phase,1,0,60 65,1.6174736736732964,2622,topology_occupancy,61
+s02j_global_proxy_topology_occupancy,template_phase,1,1,58 62,1.7585956212823612,2640,topology_occupancy,61
+s02j_global_proxy_topology_occupancy,template_phase,1,2,59 63,1.7079194143542598,3399,topology_occupancy,61
+s02j_global_proxy_all_root_proxies,template_phase,1,0,60 65,1.899963646786415,2622,all_root_proxies,61
+s02j_global_proxy_all_root_proxies,template_phase,1,1,58 62,1.9256721163175639,2640,all_root_proxies,61
+s02j_global_proxy_all_root_proxies,template_phase,1,2,59 63,1.5241442856322647,3399,all_root_proxies,61
+s02j_global_proxy_current,template_phase,1,0,61,2.1824845031419526,2799,current,62
+s02j_global_proxy_current,template_phase,1,1,58 60 65,1.4863074050545881,2841,current,62
+s02j_global_proxy_current,template_phase,1,2,59 63,1.5201255486776206,3399,current,62
+s02j_global_proxy_trigger_density,template_phase,1,0,61,2.1802202376387276,2799,trigger_density,62
+s02j_global_proxy_trigger_density,template_phase,1,1,58 60 65,1.9731596419707462,2841,trigger_density,62
+s02j_global_proxy_trigger_density,template_phase,1,2,59 63,1.505292977493603,3399,trigger_density,62
+s02j_global_proxy_event_order_density,template_phase,1,0,61,2.1802202376387276,2799,event_order_density,62
+s02j_global_proxy_event_order_density,template_phase,1,1,58 60 65,1.9731596419707462,2841,event_order_density,62
+s02j_global_proxy_event_order_density,template_phase,1,2,59 63,1.505292977493603,3399,event_order_density,62
+s02j_global_proxy_selected_pulse_density,template_phase,1,0,61,2.1671502885312477,2799,selected_pulse_density,62
+s02j_global_proxy_selected_pulse_density,template_phase,1,1,58 60 65,3.296375834835878,2841,selected_pulse_density,62
+s02j_global_proxy_selected_pulse_density,template_phase,1,2,59 63,1.4589346855950125,3399,selected_pulse_density,62
+s02j_global_proxy_topology_occupancy,template_phase,1,0,61,2.186104950608711,2799,topology_occupancy,62
+s02j_global_proxy_topology_occupancy,template_phase,1,1,58 60 65,1.5525306400021832,2841,topology_occupancy,62
+s02j_global_proxy_topology_occupancy,template_phase,1,2,59 63,1.7072255945348283,3399,topology_occupancy,62
+s02j_global_proxy_all_root_proxies,template_phase,1,0,61,2.211487277807811,2799,all_root_proxies,62
+s02j_global_proxy_all_root_proxies,template_phase,1,1,58 60 65,18.079475404483425,2841,all_root_proxies,62
+s02j_global_proxy_all_root_proxies,template_phase,1,2,59 63,2.2969809045498657,3399,all_root_proxies,62
+s02j_global_proxy_current,template_phase,1,0,61,2.1931134869852893,2799,current,63
+s02j_global_proxy_current,template_phase,1,1,58 60 65,1.506523859697083,2841,current,63
+s02j_global_proxy_current,template_phase,1,2,59 62,1.5200048065674392,4710,current,63
+s02j_global_proxy_trigger_density,template_phase,1,0,61,2.1925089313352566,2799,trigger_density,63
+s02j_global_proxy_trigger_density,template_phase,1,1,58 60 65,1.7974807090913585,2841,trigger_density,63
+s02j_global_proxy_trigger_density,template_phase,1,2,59 62,1.5087629540923377,4710,trigger_density,63
+s02j_global_proxy_event_order_density,template_phase,1,0,61,2.1925089313352566,2799,event_order_density,63
+s02j_global_proxy_event_order_density,template_phase,1,1,58 60 65,1.7974807090913585,2841,event_order_density,63
+s02j_global_proxy_event_order_density,template_phase,1,2,59 62,1.5087629540923377,4710,event_order_density,63
+s02j_global_proxy_selected_pulse_density,template_phase,1,0,61,2.1747146785185185,2799,selected_pulse_density,63
+s02j_global_proxy_selected_pulse_density,template_phase,1,1,58 60 65,3.429608602044452,2841,selected_pulse_density,63
+s02j_global_proxy_selected_pulse_density,template_phase,1,2,59 62,1.4573816756500928,4710,selected_pulse_density,63
+s02j_global_proxy_topology_occupancy,template_phase,1,0,61,2.170048418500381,2799,topology_occupancy,63
+s02j_global_proxy_topology_occupancy,template_phase,1,1,58 60 65,1.6553185030953996,2841,topology_occupancy,63
+s02j_global_proxy_topology_occupancy,template_phase,1,2,59 62,1.598529482267219,4710,topology_occupancy,63
+s02j_global_proxy_all_root_proxies,template_phase,1,0,61,2.2180813248506093,2799,all_root_proxies,63
+s02j_global_proxy_all_root_proxies,template_phase,1,1,58 60 65,36.399997643161015,2841,all_root_proxies,63
+s02j_global_proxy_all_root_proxies,template_phase,1,2,59 62,1.3720620409500544,4710,all_root_proxies,63
+s02j_global_proxy_current,template_phase,1,0,58 61,2.1365011719876814,3018,current,65
+s02j_global_proxy_current,template_phase,1,1,60 63,1.522461079711073,3534,current,65
+s02j_global_proxy_current,template_phase,1,2,59 62,1.5806733464133227,4710,current,65
+s02j_global_proxy_trigger_density,template_phase,1,0,58 61,2.4279100378939065,3018,trigger_density,65
+s02j_global_proxy_trigger_density,template_phase,1,1,60 63,1.5175469873244771,3534,trigger_density,65
+s02j_global_proxy_trigger_density,template_phase,1,2,59 62,1.5688612492824703,4710,trigger_density,65
+s02j_global_proxy_event_order_density,template_phase,1,0,58 61,2.4279100378939065,3018,event_order_density,65
+s02j_global_proxy_event_order_density,template_phase,1,1,60 63,1.5175469873244771,3534,event_order_density,65
+s02j_global_proxy_event_order_density,template_phase,1,2,59 62,1.5688612492824703,4710,event_order_density,65
+s02j_global_proxy_selected_pulse_density,template_phase,1,0,58 61,2.071070475728843,3018,selected_pulse_density,65
+s02j_global_proxy_selected_pulse_density,template_phase,1,1,60 63,3.0620046178959353,3534,selected_pulse_density,65
+s02j_global_proxy_selected_pulse_density,template_phase,1,2,59 62,1.5059180184110914,4710,selected_pulse_density,65
+s02j_global_proxy_topology_occupancy,template_phase,1,0,58 61,2.1575664164103454,3018,topology_occupancy,65
+s02j_global_proxy_topology_occupancy,template_phase,1,1,60 63,1.7325548733468197,3534,topology_occupancy,65
+s02j_global_proxy_topology_occupancy,template_phase,1,2,59 62,1.61212428950588,4710,topology_occupancy,65
+s02j_global_proxy_all_root_proxies,template_phase,1,0,58 61,2.502795157215729,3018,all_root_proxies,65
+s02j_global_proxy_all_root_proxies,template_phase,1,1,60 63,4.130166150446407,3534,all_root_proxies,65
+s02j_global_proxy_all_root_proxies,template_phase,1,2,59 62,1.5414301969389315,4710,all_root_proxies,65

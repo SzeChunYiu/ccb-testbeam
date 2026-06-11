@@ -1,0 +1,57 @@
+{
+  "study": "S05m",
+  "ticket": "1781055412.618.60fe5c1e",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "48a469c862203441d432f92f071137bf9fc888b4",
+  "command": "/home/billy/anaconda3/bin/python scripts/s05m_1781055412_618_60fe5c1e_correlated_floor_projection_coverage.py --config configs/s05m_1781055412_618_60fe5c1e_correlated_floor_projection_coverage.yaml",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "frozen_panel": "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier",
+  "inputs": {
+    "configs/s05m_1781055412_618_60fe5c1e_correlated_floor_projection_coverage.yaml": {
+      "sha256": "ffd41ec6cdbded62e8aa9ebcae9f44771b5e37e5149cd08a87184b9e8776f990",
+      "bytes": 1828
+    },
+    "configs/s05h_1781040960_767_247d3910_saturation_covariance_support_frontier.yaml": {
+      "sha256": "f1560fa8d8b8ac5825a0d03f312960d14fdd93e34b1b3ea4477ab442d466ce9e",
+      "bytes": 1861
+    },
+    "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/heldout_pair_residuals.csv": {
+      "sha256": "dceda1792a4d6b8b861713a6af46d2d42eb11e9c985659810299a06b206bc5c6",
+      "bytes": 18659608
+    },
+    "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/support_summary.csv": {
+      "sha256": "7761510343b371758b0302193f906086e6f799a8019bc4306ebe2a6d06aa6cd3",
+      "bytes": 1412
+    },
+    "reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/support_frontier.csv": {
+      "sha256": "09db3496932bcf162b032c74e0e26f21974ffdaa4614ee3d010b1610a8efe4a6",
+      "bytes": 205991
+    }
+  },
+  "output_sha256": {
+    "REPORT.md": "fd9564f0e258cad04bdb9b8bab0ae77017256eb01614b91de4a7e54e99e1cd6b",
+    "astack_pair_table.csv.gz": "12df7e3fa77b91c8028acbb8c95072a9022944384a1a547db9cbf6d2faee06e5",
+    "control_projection_ledger.csv": "72b584cb118a80ae06251093216ad2785833dc3d077032ca3b9385dbb1f41056",
+    "covariance_topology_summary.csv": "c470695cdee2a4ace8552c94f7fb8ea4ffffd17b282a209ac0176194b4cedbc6",
+    "fig_covariance_delta.png": "137daea7c73472db65feb9b7748237237089b704071658d52f83c0475c070a29",
+    "fig_coverage_95.png": "fe529ea443f50799e4dd7a4ce94ca91d469c6cb7c1dcd480f8e77bfcab2cc981",
+    "input_sha256.csv": "6a1d2cb1e00ae322212fcf60ec97c5ac34373290055435bd43b0d31acc4bd23a",
+    "interval_coverage_by_run.csv": "f3747a0cb73cfdc6759272e89db03a125d501f9c299639cfc63ef7de63fee733",
+    "interval_coverage_summary.csv": "10ab503bda68b2e9a99385cc59db14e96ff6a8f4228e1f5052dba97240b5fefd",
+    "method_delta_summary.csv": "4a7f9f99c69b2a9b2b7a5c0f9944bcca926c639c4281df7e2acddeaf146f4cec",
+    "reproduction_match_table.csv": "371f7472dc50dee4e8c2b44f156ceb27e40e78392f9af503bdcc919c9fc9a265",
+    "residual_metrics_by_topology.csv": "5410e8e22706d34104949d4845d8c3424af96998aebc18cb780ad1a4679d5baa",
+    "result.json": "6b69312e6ed975b7efb3c8691cede5fb04904037c91fdf8abe2760a45c559e73",
+    "stratified_interval_ledger.csv": "ef6a669d60f7cec9ca5d0806085aa490e4683fb0f3f8b50f920dd4c916c69315",
+    "support_axis_ledger.csv": "d588fa25bfb1b17131e7ccb95e8bc550d719e8152d6d498e48349f19a4510445",
+    "support_summary_frozen.csv": "c19d50b9b9a306cd37cb1cfda098725b4d0435042a8591ec8c1aa1aca93203d5"
+  },
+  "random_seed": 195412
+}

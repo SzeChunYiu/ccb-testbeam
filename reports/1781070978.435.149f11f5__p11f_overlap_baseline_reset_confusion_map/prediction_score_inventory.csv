@@ -1,0 +1,11 @@
+method,mean_score
+traditional_template_shape_score,0.7448155291365569
+ridge_shape_no_reset,0.3993447721004486
+gradient_boosted_trees_shape_no_reset,0.1734498890637061
+gradient_boosted_trees_with_reset_features,0.17323869812600914
+mlp_shape_no_reset,0.18260566890239716
+control_pretrigger_only,0.36828684939730877
+control_topology_only,0.1547603855911128
+control_shuffled_label,0.14589083736437639
+cnn_1d_waveform,0.5083478689193726
+reset_gated_cnn_new,0.49261242151260376

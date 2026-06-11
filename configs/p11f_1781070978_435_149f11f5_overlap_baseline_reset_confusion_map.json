@@ -1,0 +1,49 @@
+{
+  "study_id": "P11f",
+  "ticket_id": "1781070978.435.149f11f5",
+  "worker": "testbeam-laptop-4",
+  "title": "overlapping-pulse baseline-reset confusion map",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781070978.435.149f11f5__p11f_overlap_baseline_reset_confusion_map",
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "current_run_groups": {
+    "low_2nA": [46, 47],
+    "high_20nA": [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  },
+  "random_seed": 1781070978,
+  "ml_max_train_rows": 70000,
+  "nn_max_train_rows": 35000,
+  "bootstrap_reps": 60,
+  "nn_epochs": 4,
+  "nn_batch_size": 1024,
+  "nn_learning_rate": 0.001,
+  "saturation_raw_adc": 4090.0,
+  "atom_quantile": 0.95,
+  "overlap_quantile_low_current": 0.85,
+  "reset_quantile_low_current": 0.85,
+  "score_bins": 10,
+  "calibration_bins": 10,
+  "amplitude_bins": [1000, 1500, 2000, 3000, 4000, 5500, 7000, 9000, 1000000000],
+  "min_matched_cell": 12
+}

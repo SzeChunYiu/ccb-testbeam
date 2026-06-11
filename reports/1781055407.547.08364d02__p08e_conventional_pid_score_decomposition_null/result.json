@@ -1,0 +1,528 @@
+{
+  "ticket_id": "1781055407.547.08364d02",
+  "worker": "testbeam-laptop-3",
+  "study_id": "P08e",
+  "title": "conventional PID score decomposition null",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "6299cafb04657617bebcb4b8bcb47a386e4d194f",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "calibrated_label_definition": {
+    "weak_label": {
+      "positive_name": "high_calibrated_range_energy_residual",
+      "negative_name": "low_calibrated_range_energy_residual",
+      "within_run_depth_quantile": 0.25,
+      "min_atom_class_rows": 12,
+      "min_odd_total_charge": 100.0,
+      "min_even_total_charge": 100.0
+    },
+    "calibration": {
+      "calibration_groups": [
+        "sample_i_calib",
+        "sample_ii_calib"
+      ],
+      "calibration_rows": 249681,
+      "anchors_mev": {
+        "B2": 40.041411846408614,
+        "B4": 72.99642627825797,
+        "B6": 97.46806692646969,
+        "B8": 117.96480450815572
+      },
+      "label_source": "odd duplicate-readout PSTAR/depth charge quantile residual, thresholded within run/depth"
+    }
+  },
+  "calibrated_label_support": {
+    "n_atoms": 122,
+    "n_labeled_rows": 289626,
+    "atom_columns": [
+      "run",
+      "depth_idx"
+    ]
+  },
+  "winner": {
+    "method": "nuisance_residual_hybrid_mlp",
+    "selection_metric": "run-heldout ROC AUC among non-sentinel head-to-head methods",
+    "roc_auc": 0.996936764155314,
+    "roc_auc_ci": [
+      0.9944271921391951,
+      0.9985580506409363
+    ],
+    "caveat": "Winner is for calibrated weak-label discrimination only; it is not a truth PID adoption claim."
+  },
+  "head_to_head_methods": [
+    {
+      "method": "traditional_pid_ridge",
+      "family": "head_to_head",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.9861837052515559,
+      "average_precision": 0.9851952941720108,
+      "brier": 0.10199223973476276,
+      "ece": 0.2214628465052974,
+      "purity_at_fixed_efficiency": 0.9897508672343109,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.9771771668962664,
+        0.9939909209535255
+      ],
+      "ap_ci": [
+        0.9771510005694544,
+        0.9924630338289347
+      ],
+      "brier_ci": [
+        0.09320612402745754,
+        0.11139429238098966
+      ],
+      "ece_ci": [
+        0.20706468230416367,
+        0.24696768649084497
+      ],
+      "purity_ci": [
+        0.9677730202452867,
+        0.9963515226080728
+      ]
+    },
+    {
+      "method": "waveform_ridge",
+      "family": "head_to_head",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.9615155946426601,
+      "average_precision": 0.9323479307569189,
+      "brier": 0.11655936467978402,
+      "ece": 0.21962414859932056,
+      "purity_at_fixed_efficiency": 0.9734801488833746,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.9464005075867301,
+        0.976361149299878
+      ],
+      "ap_ci": [
+        0.9179602955066579,
+        0.9476938888279842
+      ],
+      "brier_ci": [
+        0.1063156685815117,
+        0.12753332073596277
+      ],
+      "ece_ci": [
+        0.1938792877992773,
+        0.25529708571516685
+      ],
+      "purity_ci": [
+        0.9322577206159105,
+        0.9806331163989557
+      ]
+    },
+    {
+      "method": "waveform_gradient_boosted_trees",
+      "family": "head_to_head",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.9872802062914434,
+      "average_precision": 0.9869474854176118,
+      "brier": 0.0937729441468811,
+      "ece": 0.2182271326248846,
+      "purity_at_fixed_efficiency": 0.997933227344992,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.980334687556702,
+        0.9937880756001944
+      ],
+      "ap_ci": [
+        0.9808947963580588,
+        0.9936392812701625
+      ],
+      "brier_ci": [
+        0.0854054471987945,
+        0.10185026777279876
+      ],
+      "ece_ci": [
+        0.20693954667892084,
+        0.24290623180263582
+      ],
+      "purity_ci": [
+        0.9895741469892124,
+        0.9996814792103493
+      ]
+    },
+    {
+      "method": "waveform_mlp",
+      "family": "head_to_head",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.9874229662039273,
+      "average_precision": 0.9875928256339586,
+      "brier": 0.0936285311372055,
+      "ece": 0.21844410906168124,
+      "purity_at_fixed_efficiency": 0.9957170050761421,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.9805295961482268,
+        0.9940530342234511
+      ],
+      "ap_ci": [
+        0.9808785178459871,
+        0.9939370080358713
+      ],
+      "brier_ci": [
+        0.08464156821220453,
+        0.10254185512144919
+      ],
+      "ece_ci": [
+        0.20532031940699358,
+        0.24560928736402418
+      ],
+      "purity_ci": [
+        0.9870678079520033,
+        0.9982509212466514
+      ]
+    },
+    {
+      "method": "waveform_1d_cnn",
+      "family": "head_to_head",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.9202012852241063,
+      "average_precision": 0.8890784620769676,
+      "brier": 0.13674577738393456,
+      "ece": 0.17628544354105638,
+      "purity_at_fixed_efficiency": 0.856343792633015,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.8898026922096368,
+        0.9467318941663304
+      ],
+      "ap_ci": [
+        0.8537384811760582,
+        0.9186892212962782
+      ],
+      "brier_ci": [
+        0.12272378578322551,
+        0.15013969737436209
+      ],
+      "ece_ci": [
+        0.14555242755196635,
+        0.21017421675080367
+      ],
+      "purity_ci": [
+        0.813643747628871,
+        0.9132397488851028
+      ]
+    },
+    {
+      "method": "nuisance_residual_hybrid_mlp",
+      "family": "head_to_head",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.996936764155314,
+      "average_precision": 0.9950614725321596,
+      "brier": 0.0804873843767922,
+      "ece": 0.24960985266880653,
+      "purity_at_fixed_efficiency": 0.9982506361323156,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.9944271921391951,
+        0.9985580506409363
+      ],
+      "ap_ci": [
+        0.9921154584313817,
+        0.9976686130964231
+      ],
+      "brier_ci": [
+        0.0758828669360006,
+        0.08604227828944119
+      ],
+      "ece_ci": [
+        0.24052404371589753,
+        0.25896123860630255
+      ],
+      "purity_ci": [
+        0.9969822109275731,
+        0.9991969693482622
+      ]
+    }
+  ],
+  "sentinels": [
+    {
+      "method": "sentinel_charge_only_ridge",
+      "family": "sentinel",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.9837650449061572,
+      "average_precision": 0.9826599262290248,
+      "brier": 0.10622616311277738,
+      "ece": 0.22770168593022627,
+      "purity_at_fixed_efficiency": 0.9886596314380217,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.974673447340322,
+        0.9917248971524067
+      ],
+      "ap_ci": [
+        0.9739629848836433,
+        0.990222371657976
+      ],
+      "brier_ci": [
+        0.09634631730145239,
+        0.11784633717594983
+      ],
+      "ece_ci": [
+        0.2098269483998848,
+        0.24586600369941655
+      ],
+      "purity_ci": [
+        0.9739764603465113,
+        0.9939897533458582
+      ]
+    },
+    {
+      "method": "sentinel_depth_topology_only_ridge",
+      "family": "sentinel",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.8111851924523961,
+      "average_precision": 0.7427357244912223,
+      "brier": 0.21572335098205586,
+      "ece": 0.1251649138484281,
+      "purity_at_fixed_efficiency": 0.746107215024367,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.7798860600478835,
+        0.8396164637218141
+      ],
+      "ap_ci": [
+        0.7123350443800923,
+        0.773021261490285
+      ],
+      "brier_ci": [
+        0.20913913928984215,
+        0.22292247653466196
+      ],
+      "ece_ci": [
+        0.09376073912377238,
+        0.15246476329448613
+      ],
+      "purity_ci": [
+        0.7151112537536503,
+        0.7767925617288101
+      ]
+    },
+    {
+      "method": "sentinel_group_event_order_ridge",
+      "family": "sentinel",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.501366397744918,
+      "average_precision": 0.49244940194516595,
+      "brier": 0.2953380089463206,
+      "ece": 0.18501702164235645,
+      "purity_at_fixed_efficiency": 0.5017184877307969,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.4919519463534628,
+        0.5114803094546049
+      ],
+      "ap_ci": [
+        0.4837555847727886,
+        0.5020359673286305
+      ],
+      "brier_ci": [
+        0.28714781029304376,
+        0.30457221844849647
+      ],
+      "ece_ci": [
+        0.16623738037527303,
+        0.20401385317555717
+      ],
+      "purity_ci": [
+        0.4979167116841509,
+        0.5080716630437356
+      ]
+    },
+    {
+      "method": "sentinel_shuffled_label_gbt",
+      "family": "sentinel",
+      "n_events": 15694,
+      "n_runs": 33,
+      "roc_auc": 0.4990581710955424,
+      "average_precision": 0.4822155333241555,
+      "brier": 0.2807138645378239,
+      "ece": 0.13305145141753189,
+      "purity_at_fixed_efficiency": 0.5047412407585985,
+      "bootstrap_valid": 400,
+      "auc_ci": [
+        0.44570662009922984,
+        0.549255996677635
+      ],
+      "ap_ci": [
+        0.44706744517345876,
+        0.5189725164526573
+      ],
+      "brier_ci": [
+        0.26716138163122016,
+        0.29463593776686897
+      ],
+      "ece_ci": [
+        0.10233480992515667,
+        0.1754842739160377
+      ],
+      "purity_ci": [
+        0.49111427193900026,
+        0.522550525597762
+      ]
+    }
+  ],
+  "ml_minus_traditional": [
+    {
+      "left": "traditional_pid_ridge",
+      "right": "waveform_ridge",
+      "right_minus_left_auc": -0.024668110608895732,
+      "ci": [
+        -0.03284853905213765,
+        -0.016364561981726762
+      ],
+      "bootstrap_valid": 400
+    },
+    {
+      "left": "traditional_pid_ridge",
+      "right": "waveform_gradient_boosted_trees",
+      "right_minus_left_auc": 0.0010965010398875652,
+      "ci": [
+        -0.0018656575224698156,
+        0.004972690276974713
+      ],
+      "bootstrap_valid": 400
+    },
+    {
+      "left": "traditional_pid_ridge",
+      "right": "waveform_mlp",
+      "right_minus_left_auc": 0.0012392609523714793,
+      "ci": [
+        -0.0015810061448393114,
+        0.00547434254157729
+      ],
+      "bootstrap_valid": 400
+    },
+    {
+      "left": "traditional_pid_ridge",
+      "right": "waveform_1d_cnn",
+      "right_minus_left_auc": -0.06598242002744958,
+      "ci": [
+        -0.08799338674170813,
+        -0.045815690895987866
+      ],
+      "bootstrap_valid": 400
+    },
+    {
+      "left": "traditional_pid_ridge",
+      "right": "nuisance_residual_hybrid_mlp",
+      "right_minus_left_auc": 0.010753058903758106,
+      "ci": [
+        0.003921100206611389,
+        0.0187053105891671
+      ],
+      "bootstrap_valid": 400
+    }
+  ],
+  "primary_interpretation": "This is a conventional PID score decomposition null. The named winner is a weak-label benchmark winner only; adoption is blocked without truth labels and by the nuisance sentinel pattern documented in REPORT.md.",
+  "benchmark": {
+    "benchmark_rows_after_balancing": 15694,
+    "evaluated_rows": 15694,
+    "evaluated_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "skipped_runs": [],
+    "positive_fraction": 0.5,
+    "winner": {
+      "method": "nuisance_residual_hybrid_mlp",
+      "selection_metric": "run-heldout ROC AUC among non-sentinel head-to-head methods",
+      "roc_auc": 0.996936764155314,
+      "roc_auc_ci": [
+        0.9944271921391951,
+        0.9985580506409363
+      ],
+      "caveat": "Winner is for calibrated weak-label discrimination only; it is not a truth PID adoption claim."
+    },
+    "torch_available": true,
+    "cnn_device": "cpu"
+  },
+  "next_tickets": [],
+  "input_file_count": 33,
+  "runtime_sec": 138.6
+}

@@ -1,0 +1,119 @@
+study_id: S03p
+title: HGB transfer feature-leakage null grid
+
+raw_root_dir: data/root/root
+output_dir: reports/1781062439.500.63591f99__s03p_hgb_feature_leakage_null_grid
+ticket_id: "1781062439.500.63591f99"
+worker: testbeam-laptop-1
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+tof_per_cm_ns: 0.078
+spacing_cm_values: [2.0, 4.0]
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_pulses: 640737
+  sample_ii_analysis:
+    selected_pulses: 125096
+    B2: 88213
+    B4: 21229
+    B6: 11148
+    B8: 4506
+
+timing:
+  downstream_staves: [B4, B6, B8]
+  train_runs: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  heldout_runs: [58, 59, 60, 61, 62, 63, 65]
+  sample_ii_reference_runs: [58, 59, 60, 61, 62, 63, 65]
+  sample_ii_reference_heldout_run: 65
+  leading_edge_threshold_adc: 500.0
+  cfd_fractions: [0.10, 0.20, 0.30, 0.40, 0.50]
+  of_windows:
+    - [1, 9]
+    - [2, 10]
+    - [3, 11]
+    - [4, 12]
+  template_shift_grid:
+    min: -1.5
+    max: 1.5
+    step: 0.05
+  base_method: template_phase
+
+analytic:
+  random_seed: 20260611
+  bootstrap_samples: 300
+  ridge_alphas: [0.01, 0.1, 1.0, 10.0, 100.0]
+  cv_folds: 3
+  candidate_models: [amp_only, amp_rise_shape, amp_rise_shape_by_stave]
+
+binned:
+  random_seed: 20260611
+  bootstrap_samples: 300
+  cv_folds: 3
+  n_bins: [4, 6, 8, 10, 12]
+  modes: [monotonic]
+  monotonic_directions: [decreasing]
+
+ml:
+  random_seed: 20260611
+  bootstrap_samples: 300
+  cv_folds: 3
+  max_train_rows: 22000
+  ridge_alphas: [0.1, 1.0, 10.0, 100.0]
+  hgb_max_iter: [40, 80]
+  hgb_learning_rate: [0.05]
+  hgb_max_leaf_nodes: [7, 15]
+  hgb_l2_regularization: [0.05, 0.2]
+  hgb_max_bins: 64
+  mlp_hidden: 48
+  mlp_alpha: 0.001
+  mlp_max_iter: 160
+  torch_epochs: 8
+  torch_batch_size: 768
+  torch_learning_rate: 0.0012
+  torch_weight_decay: 0.0001
+  cnn_channels: 16
+  tcn_channels: 16
+
+feature_sets:
+  hgb_all: [waveform, amplitude, q_template, pretrigger, stave, run_family, shape_extra]
+  hgb_no_pretrigger: [waveform, amplitude, q_template, stave, run_family, shape_extra]
+  hgb_no_amplitude: [waveform, q_template, pretrigger, stave, run_family, shape_extra]
+  hgb_no_q_template: [waveform, amplitude, pretrigger, stave, run_family, shape_extra]
+  hgb_no_stave: [waveform, amplitude, q_template, pretrigger, run_family, shape_extra]
+  hgb_no_run_family: [waveform, amplitude, q_template, pretrigger, stave, shape_extra]
+  hgb_no_waveform: [amplitude, q_template, pretrigger, stave, run_family, shape_extra]
+  hgb_amplitude_only_control: [amplitude]
+  hgb_run_family_only_sentinel: [run_family]
+  ridge_all: [waveform, amplitude, q_template, pretrigger, stave, run_family, shape_extra]
+  mlp_all: [waveform, amplitude, q_template, pretrigger, stave, run_family, shape_extra]
+  cnn1d_all: [waveform, amplitude, q_template, pretrigger, stave, run_family, shape_extra]
+  tcn_new_architecture_all: [waveform, amplitude, q_template, pretrigger, stave, run_family, shape_extra]
+  hgb_shuffled_target_sentinel: [waveform, amplitude, q_template, pretrigger, stave, run_family, shape_extra]
+
+primary:
+  traditional_method: analytic_timewalk
+  hgb_method: hgb_all
+  tail_threshold_ns: 5.0
+  alpha_familywise: 0.05
+
+reference_numbers:
+  run65_template_phase_base_sigma68_ns: 2.889152765080617
+  run65_s03a_amp_only_sigma68_ns: 1.494640076269676
+  run65_s03b_monotone_binned_sigma68_ns: 1.5695763825403084
+  sample_ii_s03a_amp_only_sigma68_ns: 1.5510917109777858
+  sample_ii_s03b_monotone_binned_sigma68_ns: 1.6451494274970766

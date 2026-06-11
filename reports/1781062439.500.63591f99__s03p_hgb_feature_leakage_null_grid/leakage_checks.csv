@@ -1,0 +1,7 @@
+check,value,pass,detail
+train_heldout_run_overlap,0.0,True,final fits use Sample-I runs only; held-out Sample-II run list is disjoint
+feature_audit_no_run_event_cross_stave_time,0.0,True,"features are same-pulse waveform/amplitude/template/pretrigger/stave/run-family indicators; no event id, run number, event order, other-stave time, or target residual"
+hgb_shuffled_target_sentinel_delta_vs_hgb_all_ns,1.0265922477820206,True,shuffled Sample-I target should not match the true HGB correction on Sample II
+hgb_run_family_only_sentinel_delta_vs_hgb_all_ns,0.6834417023092736,True,run-family atom alone should not reproduce the HGB correction
+hgb_all_beats_analytic_ci,-0.060500646774969344,True,upper endpoint of paired run-bootstrap delta vs analytic_timewalk must be below zero
+all_family_dropouts_beat_analytic_ci,1.0171887957288381,False,each feature-family removal must retain a CI win over analytic_timewalk to claim robust survival

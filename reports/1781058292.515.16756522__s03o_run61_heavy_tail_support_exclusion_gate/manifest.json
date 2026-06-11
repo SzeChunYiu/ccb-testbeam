@@ -1,0 +1,58 @@
+{
+  "study": "S03o",
+  "ticket": "1781058292.515.16756522",
+  "worker": "testbeam-laptop-4",
+  "config": "configs/s03o_1781058292_515_16756522_run61_support_exclusion.yaml",
+  "command": "scripts/s03o_1781058292_515_16756522_run61_support_exclusion.py --config configs/s03o_1781058292_515_16756522_run61_support_exclusion.yaml",
+  "git_commit": "633360f1ca614ce9f72a2edc713aabb11d27a8be",
+  "random_seed": 20260611,
+  "inputs": [
+    {
+      "path": "data/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "path": "data/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "outputs_sha256": {
+    "REPORT.md": "9e1f7d99b1d90fce90ca69808dd0f49cc6ac3a3449e449083343c0c06b6687b3",
+    "coefficient_drift.csv": "fdfa348a42e3600a4f0cddbc471257da2623a7b7cd9643497ed1ea8734776a26",
+    "coefficient_drift_by_fold.csv": "0a266977f14a312d041ac2dd3b27bf9dd2d5608d4e653bf3a05d29ecd007ed70",
+    "fig_excluded_support_sigma68.png": "60353a822b966181503d7fbe4270f0423edf2b5c9cb0021e690a8166034d2889",
+    "fig_per_run_transfer.png": "77dd4e202c534963f47f3f1226cec9d02ee27ae5bfbf802436dc243634efa04f",
+    "input_sha256.csv": "2a8bf2b72f778c72f375ec693e106f0993ae45763681bfc222a9a167161d3a75",
+    "leakage_checks.csv": "1fbadf35927d1f44ff6ca977606b6495b4e1cdc44b9b54250d2831e3985350fc",
+    "model_cv_scan.csv": "66f96c28170c2b4e94200222c1617826ee6d6c34052786a28ff67aa81a855eb4",
+    "paired_deltas_vs_traditional.csv": "69b370ce1cddbf0ed756aae052a3381350731da7b79b70113eba98c695c73c7c",
+    "pairwise_residuals_excluded_support.csv": "039b096cb7aee4f182cde6e92e6b97a9743180741a26d38401d525318127a23a",
+    "per_run_benchmark.csv": "84052ff844b5d893e9080651e312af1562bae08bd5475151705b6896359d290f",
+    "pooled_run_bootstrap.csv": "d16f1a9c0424ac5a06eb36543d8dea6bfbc3ff2a038fe3ca37ca359296fb9c43",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "cfb9a58bedcf681eb823bf0f96a6908bbcde62304a2224e19914c06bf8dac7f9",
+    "support_summary.csv": "0471f04db57cf98d594ca4c2325dc9fe094e21571a99a91f49a385dd6d86d2aa",
+    "traditional_coefficients.csv": "4d3881727dda80e3dfa620211298764c5212efcce3aa7fda231b68101f1e7980"
+  },
+  "runtime_seconds": 146.6456229686737
+}

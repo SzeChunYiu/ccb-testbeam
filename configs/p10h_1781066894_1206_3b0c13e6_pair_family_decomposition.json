@@ -1,0 +1,89 @@
+{
+  "study_id": "P10h",
+  "title": "Pair-family decomposition of B2-included explicit closure",
+  "ticket_id": "1781066894.1206.3b0c13e6",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781066894.1206.3b0c13e6__p10h_pair_family_decomposition",
+  "random_seed": 20260611,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "cfd_fraction": 0.2,
+  "aligned_relative_grid": [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_selected_pulses": 640737,
+  "expected_sample_ii_analysis_pulses": 125096,
+  "expected_run64_selected_pulses": 14630,
+  "expected_run64_all_hit_events": 207,
+  "expected_heldout_all_hit_events": 3774,
+  "template_amplitude_edges_adc": [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000],
+  "template_min_bin_pulses": 30,
+  "timing": {
+    "train_runs": [64],
+    "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+    "external_staves": ["B2", "B4", "B6", "B8"],
+    "heldout_target_staves": ["B4", "B6", "B8"],
+    "included_target_staves": ["B2", "B4", "B6", "B8"],
+    "template_shift_grid": {
+      "min": -1.5,
+      "max": 1.5,
+      "step": 0.05
+    }
+  },
+  "explicit_timewalk": {
+    "traditional_min_bin_pulses": 20,
+    "single_run_default_feature_set": "amp_bin_by_stave",
+    "single_run_default_alpha": 100.0
+  },
+  "models": {
+    "gradient_boosted_trees": {
+      "max_iter": 180,
+      "max_leaf_nodes": 15,
+      "learning_rate": 0.04,
+      "l2_regularization": 0.05
+    },
+    "mlp": {
+      "hidden_layer_sizes": [48, 24],
+      "alpha": 0.02,
+      "max_iter": 300
+    },
+    "torch": {
+      "epochs": 12,
+      "batch_size": 1024,
+      "learning_rate": 0.0015,
+      "weight_decay": 0.0005,
+      "cnn_channels": 12,
+      "attention_embed_dim": 32,
+      "attention_heads": 4
+    }
+  },
+  "p10e_reference": {
+    "ticket_id": "1781025482.1523.5eba101d",
+    "b2_heldout_traditional_sigma68_ns": 3.651263490311193,
+    "b2_heldout_ml_sigma68_ns": 3.6361628139544324,
+    "b2_included_traditional_sigma68_ns": 2.3523852156111835,
+    "b2_included_ml_sigma68_ns": 2.60597879978216
+  },
+  "bootstrap_iterations": 4000,
+  "next_tickets": [
+    {
+      "title": "P10i: external non-timewalk covariate veto for B2 pair-family closure",
+      "body": "Question: after P10h identifies the winning B2-included correction by pair family, does a strictly external, pre-timing quality veto based on raw waveform quality atoms recover the remaining B2-containing/downstream-only gap without using residuals or event order? Rebuild from raw ROOT, keep the same run64/Sample-II split, compare the P10h winner against traditional quality thresholds and shape-only ML vetoes with held-out-run bootstrap CIs and shuffled-label controls."
+    }
+  ]
+}

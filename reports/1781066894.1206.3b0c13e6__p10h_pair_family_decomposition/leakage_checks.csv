@@ -1,0 +1,14 @@
+check,value,pass
+selected_pulse_reproduction_passed,1.0,True
+run64_all_hit_events,207.0,True
+heldout_all_hit_events,3774.0,True
+train_heldout_run_overlap,0.0,True
+train_heldout_event_overlap,0.0,True
+b2_heldout_b2_rows_used_in_target_fit,0.0,True
+b2_included_b2_rows_used_in_target_fit,207.0,True
+p10e_b2_heldout_traditional_abs_delta_ns,0.0,True
+p10e_b2_heldout_ridge_abs_delta_ns,2.2648549702353193e-14,True
+p10e_b2_included_traditional_abs_delta_ns,0.0,True
+p10e_b2_included_ridge_abs_delta_ns,1.3766765505351941e-14,True
+all_included_shuffled_controls_worse_than_real,5.0,True
+too_good_external_sigma68_lt_1ns,0.0,True

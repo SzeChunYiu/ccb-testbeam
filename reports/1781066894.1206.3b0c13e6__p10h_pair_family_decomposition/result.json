@@ -1,0 +1,678 @@
+{
+  "study": "P10h",
+  "ticket_id": "1781066894.1206.3b0c13e6",
+  "worker": "testbeam-laptop-3",
+  "title": "Pair-family decomposition of B2-included explicit closure",
+  "config_path": "configs/p10h_1781066894_1206_3b0c13e6_pair_family_decomposition.json",
+  "reproduction": {
+    "passed": true,
+    "rows": [
+      {
+        "quantity": "S00/P10 selected B-stave pulses",
+        "expected": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II analysis selected B-stave pulses",
+        "expected": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "Sample-II calibration run 64 selected B-stave pulses",
+        "expected": 14630,
+        "reproduced": 14630,
+        "delta": 0,
+        "pass": true
+      }
+    ],
+    "run64_all_hit_events": 207,
+    "heldout_all_hit_events": 3774
+  },
+  "split": "train only on run 64; evaluate held-out Sample-II analysis runs 58-63 and 65; bootstrap by held-out run",
+  "bootstrap": {
+    "unit": "heldout_run",
+    "iterations": 4000
+  },
+  "pair_families": {
+    "all_six": [
+      [
+        "B2",
+        "B4"
+      ],
+      [
+        "B2",
+        "B6"
+      ],
+      [
+        "B2",
+        "B8"
+      ],
+      [
+        "B4",
+        "B6"
+      ],
+      [
+        "B4",
+        "B8"
+      ],
+      [
+        "B6",
+        "B8"
+      ]
+    ],
+    "b2_containing": [
+      [
+        "B2",
+        "B4"
+      ],
+      [
+        "B2",
+        "B6"
+      ],
+      [
+        "B2",
+        "B8"
+      ]
+    ],
+    "downstream_only": [
+      [
+        "B4",
+        "B6"
+      ],
+      [
+        "B4",
+        "B8"
+      ],
+      [
+        "B6",
+        "B8"
+      ]
+    ]
+  },
+  "methods_benchmarked": [
+    "base",
+    "traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "event_token_attention"
+  ],
+  "learned_methods": [
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "event_token_attention"
+  ],
+  "traditional_method": "run64 empirical phase template plus stave-by-amplitude-bin median residual correction",
+  "new_architecture": "event_token_attention: four B2/B4/B6/B8 event tokens with waveform and pulse-summary features, self-attention, and target-token residual regression",
+  "winner": {
+    "method": "event_token_attention",
+    "mode": "b2_included",
+    "family": "all_six",
+    "sigma68_ns": 2.2794538847615207,
+    "ci": [
+      2.0493992208072593,
+      2.525428787304396
+    ],
+    "beats_traditional_by_ns": -0.07293133084966286
+  },
+  "named_winner": "event_token_attention",
+  "b2_included_all_six": [
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "base",
+      "sigma68_ns": 3.2723517367772947,
+      "ci_low": 3.052184918343421,
+      "ci_high": 3.500917689032757,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "cnn1d",
+      "sigma68_ns": 2.4149995060687077,
+      "ci_low": 2.2235025505337878,
+      "ci_high": 2.6341995335514574,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "cnn1d_shuffled",
+      "sigma68_ns": 3.2471065656499727,
+      "ci_low": 2.982095849069877,
+      "ci_high": 3.5072803864625497,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "event_token_attention",
+      "sigma68_ns": 2.2794538847615207,
+      "ci_low": 2.0493992208072593,
+      "ci_high": 2.525428787304396,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "event_token_attention_shuffled",
+      "sigma68_ns": 3.114270786485698,
+      "ci_low": 2.92648840197339,
+      "ci_high": 3.333553285017992,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "gradient_boosted_trees",
+      "sigma68_ns": 2.795769449282606,
+      "ci_low": 2.6545195296997908,
+      "ci_high": 2.938408829596359,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "gradient_boosted_trees_shuffled",
+      "sigma68_ns": 4.633927202061853,
+      "ci_low": 4.375136717148816,
+      "ci_high": 4.932088419885626,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "mlp",
+      "sigma68_ns": 2.8775278950185394,
+      "ci_low": 2.698002558964162,
+      "ci_high": 3.0875202290808375,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "mlp_shuffled",
+      "sigma68_ns": 4.278340708761388,
+      "ci_low": 3.8949929336667863,
+      "ci_high": 4.699123042329156,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "ridge",
+      "sigma68_ns": 2.6059787997821737,
+      "ci_low": 2.41407353008955,
+      "ci_high": 2.8151243778159767,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "ridge_shuffled",
+      "sigma68_ns": 3.84457151852319,
+      "ci_low": 3.576643000494198,
+      "ci_high": 4.121722317610469,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_included",
+      "family": "all_six",
+      "method": "traditional",
+      "sigma68_ns": 2.3523852156111835,
+      "ci_low": 2.1741946282106137,
+      "ci_high": 2.5354433157551033,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    }
+  ],
+  "b2_heldout_all_six": [
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "base",
+      "sigma68_ns": 3.2723517367772947,
+      "ci_low": 3.052287566789784,
+      "ci_high": 3.5007428867654324,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "cnn1d",
+      "sigma68_ns": 2.946854219318283,
+      "ci_low": 2.7386047531181883,
+      "ci_high": 3.14621282347641,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "cnn1d_shuffled",
+      "sigma68_ns": 3.246043576959742,
+      "ci_low": 3.0702111359464044,
+      "ci_high": 3.43647989855377,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "event_token_attention",
+      "sigma68_ns": 2.9606912345352883,
+      "ci_low": 2.7146563877582994,
+      "ci_high": 3.198893681118238,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "event_token_attention_shuffled",
+      "sigma68_ns": 3.4958145242318293,
+      "ci_low": 3.2218694707570474,
+      "ci_high": 3.739412073802708,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "gradient_boosted_trees",
+      "sigma68_ns": 3.8743205251384576,
+      "ci_low": 3.587911563043146,
+      "ci_high": 4.243291653257293,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "gradient_boosted_trees_shuffled",
+      "sigma68_ns": 3.9078204597680033,
+      "ci_low": 3.6145308773362586,
+      "ci_high": 4.214070285594823,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "mlp",
+      "sigma68_ns": 3.74389100074794,
+      "ci_low": 3.5321955723308456,
+      "ci_high": 4.000370409705711,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "mlp_shuffled",
+      "sigma68_ns": 4.148361634894541,
+      "ci_low": 3.897106718307512,
+      "ci_high": 4.41770565681086,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "ridge",
+      "sigma68_ns": 3.6361628139544098,
+      "ci_low": 3.4207683722624584,
+      "ci_high": 3.8549698510981054,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "ridge_shuffled",
+      "sigma68_ns": 3.3381196197894414,
+      "ci_low": 3.1390341931231087,
+      "ci_high": 3.5496224751761822,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    },
+    {
+      "mode": "b2_heldout",
+      "family": "all_six",
+      "method": "traditional",
+      "sigma68_ns": 3.651263490311193,
+      "ci_low": 3.4300143782540853,
+      "ci_high": 3.853522605785602,
+      "n_runs": 7,
+      "n_pair_residuals": 22644
+    }
+  ],
+  "pair_family_summary_csv": "pair_family_summary.csv",
+  "pair_family_deltas_csv": "pair_family_deltas.csv",
+  "run_level_csv": "pair_family_by_run.csv",
+  "leakage_checks": [
+    {
+      "check": "selected_pulse_reproduction_passed",
+      "value": 1.0,
+      "pass": true
+    },
+    {
+      "check": "run64_all_hit_events",
+      "value": 207.0,
+      "pass": true
+    },
+    {
+      "check": "heldout_all_hit_events",
+      "value": 3774.0,
+      "pass": true
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "train_heldout_event_overlap",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "b2_heldout_b2_rows_used_in_target_fit",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "b2_included_b2_rows_used_in_target_fit",
+      "value": 207.0,
+      "pass": true
+    },
+    {
+      "check": "p10e_b2_heldout_traditional_abs_delta_ns",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "p10e_b2_heldout_ridge_abs_delta_ns",
+      "value": 2.2648549702353193e-14,
+      "pass": true
+    },
+    {
+      "check": "p10e_b2_included_traditional_abs_delta_ns",
+      "value": 0.0,
+      "pass": true
+    },
+    {
+      "check": "p10e_b2_included_ridge_abs_delta_ns",
+      "value": 1.3766765505351941e-14,
+      "pass": true
+    },
+    {
+      "check": "all_included_shuffled_controls_worse_than_real",
+      "value": 5.0,
+      "pass": true
+    },
+    {
+      "check": "too_good_external_sigma68_lt_1ns",
+      "value": 0.0,
+      "pass": true
+    }
+  ],
+  "mode_meta": {
+    "b2_heldout": {
+      "mode": "b2_heldout",
+      "target_staves": [
+        "B4",
+        "B6",
+        "B8"
+      ],
+      "train_runs": [
+        64
+      ],
+      "train_target_pulses": 621,
+      "b2_train_target_pulses": 0,
+      "traditional_bin_fallbacks": 15,
+      "learned_methods": [
+        "ridge",
+        "gradient_boosted_trees",
+        "mlp",
+        "cnn1d",
+        "event_token_attention"
+      ],
+      "method_meta": {
+        "ridge": {
+          "model": "ridge",
+          "shuffled": false,
+          "train_rows": 621
+        },
+        "ridge_shuffled": {
+          "model": "ridge",
+          "shuffled": true,
+          "train_rows": 621
+        },
+        "gradient_boosted_trees": {
+          "model": "gradient_boosted_trees",
+          "shuffled": false,
+          "train_rows": 621
+        },
+        "gradient_boosted_trees_shuffled": {
+          "model": "gradient_boosted_trees",
+          "shuffled": true,
+          "train_rows": 621
+        },
+        "mlp": {
+          "model": "mlp",
+          "shuffled": false,
+          "train_rows": 621
+        },
+        "mlp_shuffled": {
+          "model": "mlp",
+          "shuffled": true,
+          "train_rows": 621
+        },
+        "cnn1d": {
+          "model": "cnn1d",
+          "shuffled": false,
+          "train_rows": 621,
+          "torch": true
+        },
+        "cnn1d_shuffled": {
+          "model": "cnn1d",
+          "shuffled": true,
+          "train_rows": 621,
+          "torch": true
+        },
+        "event_token_attention": {
+          "token_dim": 25,
+          "tokens": [
+            "B2",
+            "B4",
+            "B6",
+            "B8"
+          ],
+          "scalar_mean": [
+            7.784256832613424,
+            6.761253604888007,
+            8.16183574879227
+          ],
+          "scalar_std": [
+            0.3925321180843046,
+            2.23208385061762,
+            2.9871532523008764
+          ],
+          "model": "event_token_attention",
+          "shuffled": false,
+          "train_rows": 621,
+          "torch": true
+        },
+        "event_token_attention_shuffled": {
+          "token_dim": 25,
+          "tokens": [
+            "B2",
+            "B4",
+            "B6",
+            "B8"
+          ],
+          "scalar_mean": [
+            7.784256832613424,
+            6.761253604888007,
+            8.16183574879227
+          ],
+          "scalar_std": [
+            0.3925321180843046,
+            2.23208385061762,
+            2.9871532523008764
+          ],
+          "model": "event_token_attention",
+          "shuffled": true,
+          "train_rows": 621,
+          "torch": true
+        }
+      }
+    },
+    "b2_included": {
+      "mode": "b2_included",
+      "target_staves": [
+        "B2",
+        "B4",
+        "B6",
+        "B8"
+      ],
+      "train_runs": [
+        64
+      ],
+      "train_target_pulses": 828,
+      "b2_train_target_pulses": 207,
+      "traditional_bin_fallbacks": 19,
+      "learned_methods": [
+        "ridge",
+        "gradient_boosted_trees",
+        "mlp",
+        "cnn1d",
+        "event_token_attention"
+      ],
+      "method_meta": {
+        "ridge": {
+          "model": "ridge",
+          "shuffled": false,
+          "train_rows": 828
+        },
+        "ridge_shuffled": {
+          "model": "ridge",
+          "shuffled": true,
+          "train_rows": 828
+        },
+        "gradient_boosted_trees": {
+          "model": "gradient_boosted_trees",
+          "shuffled": false,
+          "train_rows": 828
+        },
+        "gradient_boosted_trees_shuffled": {
+          "model": "gradient_boosted_trees",
+          "shuffled": true,
+          "train_rows": 828
+        },
+        "mlp": {
+          "model": "mlp",
+          "shuffled": false,
+          "train_rows": 828
+        },
+        "mlp_shuffled": {
+          "model": "mlp",
+          "shuffled": true,
+          "train_rows": 828
+        },
+        "cnn1d": {
+          "model": "cnn1d",
+          "shuffled": false,
+          "train_rows": 828,
+          "torch": true
+        },
+        "cnn1d_shuffled": {
+          "model": "cnn1d",
+          "shuffled": true,
+          "train_rows": 828,
+          "torch": true
+        },
+        "event_token_attention": {
+          "token_dim": 25,
+          "tokens": [
+            "B2",
+            "B4",
+            "B6",
+            "B8"
+          ],
+          "scalar_mean": [
+            7.784256832613424,
+            6.761253604888007,
+            8.16183574879227
+          ],
+          "scalar_std": [
+            0.3925321180843046,
+            2.23208385061762,
+            2.9871532523008764
+          ],
+          "model": "event_token_attention",
+          "shuffled": false,
+          "train_rows": 828,
+          "torch": true
+        },
+        "event_token_attention_shuffled": {
+          "token_dim": 25,
+          "tokens": [
+            "B2",
+            "B4",
+            "B6",
+            "B8"
+          ],
+          "scalar_mean": [
+            7.784256832613424,
+            6.761253604888007,
+            8.16183574879227
+          ],
+          "scalar_std": [
+            0.3925321180843046,
+            2.23208385061762,
+            2.9871532523008764
+          ],
+          "model": "event_token_attention",
+          "shuffled": true,
+          "train_rows": 828,
+          "torch": true
+        }
+      }
+    }
+  },
+  "synthesis_context": "Consistent with the fleet synthesis caution on timing ML: event_token_attention has the best B2-included all-six point estimate, but its CI overlaps the strong traditional correction, so this is a diagnostic point win rather than a production replacement claim.",
+  "hypothesis": "The remaining B2-containing/downstream-only gap is partly a raw waveform quality or topology covariate beyond amplitude timewalk; an external pre-timing quality veto should confirm or falsify this without using residual labels.",
+  "next_tickets": [
+    {
+      "title": "P10i: external non-timewalk covariate veto for B2 pair-family closure",
+      "body": "Question: after P10h identifies the winning B2-included correction by pair family, does a strictly external, pre-timing quality veto based on raw waveform quality atoms recover the remaining B2-containing/downstream-only gap without using residuals or event order? Rebuild from raw ROOT, keep the same run64/Sample-II split, compare the P10h winner against traditional quality thresholds and shape-only ML vetoes with held-out-run bootstrap CIs and shuffled-label controls."
+    }
+  ],
+  "conclusion": "The B2-included all-six winner is event_token_attention with sigma68=2.2795 ns [2.0494, 2.5254]. The strong traditional correction is 2.3524 ns [2.1742, 2.5354], so the winner-minus-traditional point delta is -0.0729 ns. Pair-family tables show whether that gain is driven by B2-containing or downstream-only pairs.",
+  "input_sha256": "input_sha256.csv",
+  "git_commit": "740dab6d337aa045931cd8cfada0b054c3b53dfc",
+  "elapsed_sec": 77.14209938049316,
+  "leakage_passed": true
+}

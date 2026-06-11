@@ -1,0 +1,62 @@
+{
+  "study": "P13b",
+  "title": "rare-atom bootstrap promotion threshold",
+  "ticket": "1781055420.689.3cc21a6b",
+  "worker": "testbeam-laptop-4",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781055420.689.3cc21a6b__p13b_rare_atom_bootstrap_promotion_threshold",
+  "random_seed": 2026061104,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737
+  },
+  "atom_thresholds": {
+    "baseline_ptp_adc": 3000.0,
+    "baseline_mad_adc": 1200.0,
+    "delayed_peak_sample": 13.0,
+    "late_fraction": 0.70,
+    "secondary_peak_frac": 0.85,
+    "dropout_depth_frac": 1.00,
+    "saturation_adc": 3500.0,
+    "qshape_abs": 0.85,
+    "rare_topology_min_selected": 3
+  },
+  "promotion_criteria": {
+    "min_total_support": 80,
+    "min_effective_runs": 4.0,
+    "min_runs_present": 5,
+    "max_run_fraction": 0.45,
+    "max_support_ci_width": 0.08,
+    "max_harm_rate": 0.22,
+    "max_harm_ci_high": 0.34,
+    "max_control_promotion_rate": 0.05,
+    "max_sample_balance_absdiff": 0.35
+  },
+  "ml": {
+    "bootstrap_samples": 600,
+    "ridge_C": [0.3, 1.0, 3.0],
+    "hgb_learning_rates": [0.03, 0.08],
+    "mlp_hidden": [16, 32],
+    "cnn_channels": 8,
+    "gated_cnn_channels": 8,
+    "torch_epochs": 80,
+    "torch_lr": 0.003,
+    "torch_weight_decay": 0.0001,
+    "torch_batch_size": 128,
+    "sklearn_max_iter": 800
+  }
+}

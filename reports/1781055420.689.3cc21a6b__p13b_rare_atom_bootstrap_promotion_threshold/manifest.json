@@ -1,0 +1,231 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/p13b_1781055420_689_3cc21a6b_rare_atom_bootstrap_promotion_threshold.py --config configs/p13b_1781055420_689_3cc21a6b_rare_atom_bootstrap_promotion_threshold.json",
+  "config": "configs/p13b_1781055420_689_3cc21a6b_rare_atom_bootstrap_promotion_threshold.json",
+  "git_commit": "1ab2cbba1d3af27f118958d06aa7df6a3b1576a5",
+  "inputs": [
+    {
+      "bytes": 11638901,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0031.root",
+      "run": 31,
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7"
+    },
+    {
+      "bytes": 12157812,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0032.root",
+      "run": 32,
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff"
+    },
+    {
+      "bytes": 16781109,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0033.root",
+      "run": 33,
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973"
+    },
+    {
+      "bytes": 11697434,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0034.root",
+      "run": 34,
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51"
+    },
+    {
+      "bytes": 7793651,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0035.root",
+      "run": 35,
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea"
+    },
+    {
+      "bytes": 6167361,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0036.root",
+      "run": 36,
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee"
+    },
+    {
+      "bytes": 14369738,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0037.root",
+      "run": 37,
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3"
+    },
+    {
+      "bytes": 8625385,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0039.root",
+      "run": 39,
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568"
+    },
+    {
+      "bytes": 9266489,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0040.root",
+      "run": 40,
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17"
+    },
+    {
+      "bytes": 9691925,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0041.root",
+      "run": 41,
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010"
+    },
+    {
+      "bytes": 9767653,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0042.root",
+      "run": 42,
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898"
+    },
+    {
+      "bytes": 1227977,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0044.root",
+      "run": 44,
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "bytes": 13786671,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0045.root",
+      "run": 45,
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "bytes": 412227,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0046.root",
+      "run": 46,
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3"
+    },
+    {
+      "bytes": 3098718,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0047.root",
+      "run": 47,
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3"
+    },
+    {
+      "bytes": 8995827,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0048.root",
+      "run": 48,
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8"
+    },
+    {
+      "bytes": 9203548,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0049.root",
+      "run": 49,
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744"
+    },
+    {
+      "bytes": 13217424,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0050.root",
+      "run": 50,
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799"
+    },
+    {
+      "bytes": 6036876,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0051.root",
+      "run": 51,
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e"
+    },
+    {
+      "bytes": 2941826,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0052.root",
+      "run": 52,
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af"
+    },
+    {
+      "bytes": 11713879,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0053.root",
+      "run": 53,
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c"
+    },
+    {
+      "bytes": 11056922,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0054.root",
+      "run": 54,
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c"
+    },
+    {
+      "bytes": 7153324,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0055.root",
+      "run": 55,
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c"
+    },
+    {
+      "bytes": 15273160,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0056.root",
+      "run": 56,
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb"
+    },
+    {
+      "bytes": 8881910,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0057.root",
+      "run": 57,
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+    },
+    {
+      "bytes": 9623179,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0058.root",
+      "run": 58,
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "bytes": 12032616,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0059.root",
+      "run": 59,
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "bytes": 10174098,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0060.root",
+      "run": 60,
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "bytes": 10362658,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0061.root",
+      "run": 61,
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "bytes": 10634393,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0062.root",
+      "run": 62,
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "bytes": 10494181,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0063.root",
+      "run": 63,
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "bytes": 10006223,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0064.root",
+      "run": 64,
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252"
+    },
+    {
+      "bytes": 10600278,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_0065.root",
+      "run": 65,
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "7fad4d7085a5e43e342d03dcc3559aab54e773ab570612e4fe6664fa63dd1efe",
+    "atom_mean_waveforms.npy": "64c87b6790b2e972cd7570cacae229f8b907bf5b940a1e7f7db4dffbe5203702",
+    "atom_run_cells.csv": "a9da3fcc659113c20b20b780990d6e133417dbd071c2da7e33b3b7bd2f0ca3ef",
+    "atom_support_ledger.csv": "5880e5aadc204adfc11a2b447097a9b521a2aaeebee7b9e0b801f12371203ab5",
+    "endpoint_systematics_by_atom.csv": "28bfab1d59f572ce7f29e4c21a0d2dc05c933ab07d10b67b6759a1bff154284a",
+    "fig_atom_support.png": "efddd28444cbc74e439f90d2fa15753f6fda621df7766c9d8ff81b665f5759a0",
+    "fig_promotion_label_by_run.png": "1edd48607921025f26983143c5d23e1e2a8cc1867f42e98670dc0dd1d5aa07a4",
+    "fig_promotion_utility.png": "a8f19e2571eb5eb9570ef57deeb301865100afe889f888b2dc841b09394498f1",
+    "heldout_fold_metrics.csv": "56b6099c588322ac0d649dab86c84898c1196ae3d21e85d59310be3766214161",
+    "heldout_promotion_predictions.csv": "12afe9d95c1d2d19ff44e22e69954ff4ec4ec97c07d0fefae738f35e62c487ec",
+    "input_sha256.csv": "3500539b58f9467a15c79b305cf6677859b64ae7ffcc72852a7b2e4068f7ad4d",
+    "leakage_checks.csv": "2eadea24c37dd5adcde6757626c2a413bc50838f95f7baca9e9477d5b3bfb32a",
+    "method_summary.csv": "7f754c01fb1fcc1e83d25edc37737f0f7fdcdca1e9bf15da0ad38dbd73c2a594",
+    "pulse_atom_assignments_sample.csv": "da965994935cdfb927634d20591dab99306c9fa8141a61f6b5867a9166539052",
+    "reproduction_counts_by_run.csv": "aa6cfd9b2cd23b52ab8e130439535172c8890cf91f0f987cc829bfce688ea546",
+    "reproduction_match_table.csv": "345acff2f446820cff28a08e2b24ff11b79e696b2135d2358beac7c15fd9f66c",
+    "result.json": "708500ca581082474db2b4c805da5d7457f224c788a3d589e345d71c25a0be11"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "random_seed": 2026061104,
+  "runtime_sec": 193.26169753074646,
+  "study": "P13b",
+  "ticket": "1781055420.689.3cc21a6b",
+  "worker": "testbeam-laptop-4"
+}

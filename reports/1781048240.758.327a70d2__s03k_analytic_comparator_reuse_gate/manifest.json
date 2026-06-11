@@ -1,0 +1,56 @@
+{
+  "ticket_id": "1781048240.758.327a70d2",
+  "generated_at_unix": 1781147353.9336364,
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "sha256": "81e0a75f0573b9b992e7ad8674d3f778af931eb66ed13b6965436ff6af76b90f",
+      "bytes": 13103
+    },
+    {
+      "path": "architecture_cross_checks.csv",
+      "sha256": "7899af23c9d89418e7e89870754c3f033d15687a511157d438fd60b3f8def2ee",
+      "bytes": 3648
+    },
+    {
+      "path": "input_sha256.csv",
+      "sha256": "018dc6e784c463466987681c7cf51436d32c842b4b5faa9460cb1fedfb816cbe",
+      "bytes": 880
+    },
+    {
+      "path": "leakage_checks.csv",
+      "sha256": "7a12668c1642ecd6ad714b6e60fa39a56d579e192d20dc59483ed6f440fca12e",
+      "bytes": 771
+    },
+    {
+      "path": "per_run_gate_summary.csv",
+      "sha256": "56ed815c991ada7a9673ed5ec95ec64f4c1440f9fe48784a6e21bfa8f079782c",
+      "bytes": 10436
+    },
+    {
+      "path": "primary_consumer_gate.csv",
+      "sha256": "32bfb7e18b50e3ea61ecd0a52676e241cf818d42b251652777ff227b93786179",
+      "bytes": 2151
+    },
+    {
+      "path": "reproduction_match_table.csv",
+      "sha256": "bdb7034681833496be8f2aa9bc60c5463ab76041407e1d47eb26dc3ce05daea6",
+      "bytes": 327
+    },
+    {
+      "path": "result.json",
+      "sha256": "2f3e7dfc5a6fad9c70b746f619b43db60123997b70fe573bbb60d702fdef7967",
+      "bytes": 7459
+    },
+    {
+      "path": "run_counts.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "s03_comparator_registry.csv",
+      "sha256": "5213136892f6e73674df0c1ceedd3ad71cb0d57cc720f1cbc9bd065e5520adf2",
+      "bytes": 1863
+    }
+  ]
+}

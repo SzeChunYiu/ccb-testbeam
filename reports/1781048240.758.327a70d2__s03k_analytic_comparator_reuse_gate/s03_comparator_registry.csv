@@ -1,0 +1,11 @@
+source,method,scope,metric,value,ci_low,ci_high,n_pair_residuals,role
+P03f exact-fold Sample-II,analytic_timewalk,"runs 58,59,60,61,62,63,65",pairwise sigma68 ns,1.551091710977783,1.363752228304065,1.936238056059584,11460,primary S03k comparator
+S03f traditional registry,hgb_timewalk,"runs 58,59,60,61,62,63,65",pairwise sigma68 ns,1.3941943679323168,1.2564261511942043,1.6578837795693178,11460,traditional registry context
+S03f traditional registry,hierarchical_signed_shrinkage,"runs 58,59,60,61,62,63,65",pairwise sigma68 ns,1.5680885307447414,1.3405856578944126,1.922281044254794,11460,traditional registry context
+S03f traditional registry,phys_signed_inverse_amp,"runs 58,59,60,61,62,63,65",pairwise sigma68 ns,1.6043573218297749,1.3852649690572272,1.9483740627723467,11460,traditional registry context
+S03f traditional registry,s03a_amp_only,"runs 58,59,60,61,62,63,65",pairwise sigma68 ns,1.551091710977783,1.3662535652875234,1.899387999128052,11460,traditional registry context
+S03f traditional registry,s03b_monotone_binned,"runs 58,59,60,61,62,63,65",pairwise sigma68 ns,1.6451494274970766,1.3217498254041793,1.9446031599334903,11460,traditional registry context
+S03f traditional registry,template_phase_base,"runs 58,59,60,61,62,63,65",pairwise sigma68 ns,2.7414145300852155,2.6842165631742354,2.992319268962799,11460,traditional registry context
+S19a run-65 architecture screen,analytic_timewalk,run 65,pairwise sigma68 ns,1.494640076269676,1.2986523154325624,1.666220166352765,198,single-run cross-check comparator
+S19a run-65 architecture screen,s02_ridge_cfd20,run 65,pairwise sigma68 ns,1.77781251968152,1.492656507418151,2.0703081939066355,198,single-run cross-check comparator
+S19a run-65 architecture screen,template_phase,run 65,pairwise sigma68 ns,2.889152765080617,2.639152765080615,3.277183911488385,198,single-run cross-check comparator

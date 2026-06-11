@@ -1,0 +1,4 @@
+check,value,pass,note
+train_heldout_run_overlap,0.0,True,must be zero
+feature_contains_run_or_event_id,0.0,True,identifiers excluded from ML matrices
+traditional_false_promotion_rate,0.21739130434782605,True,conservative support gate should keep false promotions low

@@ -1,0 +1,5 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5000000000000001,0.5,Same for pair members; should be chance.
+absolute-amplitude-only GBT,0.5273594220277352,0.521230465344686,Excluded nuisance channel; charge preservation should reduce but not force chance.
+pair split violations,0.0,,Must be 0.
+forbidden strict-shape columns,0.0,,strict_shape_columns raised on violations before model fitting.

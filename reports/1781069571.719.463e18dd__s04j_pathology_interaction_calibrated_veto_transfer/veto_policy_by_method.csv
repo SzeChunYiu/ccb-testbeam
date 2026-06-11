@@ -1,0 +1,7 @@
+method,policy,train_score_threshold,train_target_acceptance,heldout_event_acceptance,n_train_events,n_heldout_events,n_accepted_heldout_events
+traditional_explicit_timewalk,train95_pathology_interaction_veto,5.154312709712343,0.95,0.9862215156332803,782,3774,3722
+ridge,train95_pathology_interaction_veto,5.367567554232631,0.95,0.9817170111287759,782,3774,3705
+hgb,train95_pathology_interaction_veto,5.632262636667742,0.95,0.9835718071012188,782,3774,3712
+mlp,train95_pathology_interaction_veto,5.725543861070797,0.95,0.9835718071012188,782,3774,3712
+cnn1d,train95_pathology_interaction_veto,5.254920196233256,0.95,0.9870164281928988,782,3774,3725
+gated_mixer,train95_pathology_interaction_veto,5.160672247872823,0.95,0.9867514573396926,782,3774,3724

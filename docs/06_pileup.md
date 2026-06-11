@@ -13,11 +13,11 @@ data-drivenly via (a) broad B2-containing pair residuals, (b) large event timing
   2.68% (20 nA); ≥3-stave 0.41% vs 0.85%; any downstream hit 2.31% vs 3.34%. Higher current ⇒
   more multi-stave/downstream hits ⇒ more pile-up-like component.
 
-## Pile-up rate model (App. G)
+## Pile-up rate model and live-time revision
 - Pile-up fraction per pulse scales ~linearly with current: f(I) = f₀ + kI.
 - Poisson occupancy μ: P₀=e^{−μ}, P₁=μe^{−μ}, P≥₂=1−P₀−P₁.
 - Total efficiency ε(μ) = P₀ + P₁·ε₁ (≥2 extra pulses conservatively treated as failures).
-- **Max tolerable rate** R_max = μ_max / τ_eff, with τ_eff = 90 ns nominal:
+- **Max tolerable rate** R_max = μ_max / τ_eff. The old headline used τ_eff = 90 ns:
 
 | Requirement (>90% eff) | μ_max | R_max |
 |---|---|---|
@@ -27,8 +27,12 @@ data-drivenly via (a) broad B2-containing pair residuals, (b) large event timing
 | charge/area < 20% | 0.445 | 4.94 MHz |
 | **combined \|Δt\|<1 ns AND area<20%** | **0.380** | **≈ 4.22 MHz** |
 
-⚠ Scales as 1/τ_eff; **not** a universal hardware limit. τ_eff = 90 ns is an assumption to
-test (S10).
+The 90 ns value is not measured. Direct waveform live-time estimates give live10 =
+124.79 ns with a bootstrap interval near 123-126 ns, so the combined criterion rescales to
+about **3.05 MHz**, not 4.22 MHz. This is the rate number to quote unless a different live-time
+definition is explicitly chosen.
+
+![Measured live-time threshold scan](figures/reports/1781007337.1308.7dc86005/fig_threshold_scan_by_run.png)
 
 ## Injection-based tolerance (traditional, controlled)
 Inject a second clean real pulse onto a clean primary at random delay/amplitude; measure
@@ -42,6 +46,8 @@ pure beam pile-up; it has a large current-independent baseline (scintillator tai
 waveform pathologies). Only the **high−low excess ≈ 9.2% downstream at 20 nA** is genuine beam
 pile-up. **This is the key honest result: most of the "pile-up score" is not beam pile-up.**
 
+![Current-dependent excess](figures/reports/1780997954.15277.548b01a3__s10_pileup_rate_model/fig_current_excess.png)
+
 ## ML handles on pile-up (benchmarked against the above)
 See [07_ml_methods.md](07_ml_methods.md). Three complementary ML approaches:
 1. **Injection-trained classifiers** (App. B): dropout & pile-up tagging + timing recovery.
@@ -51,7 +57,8 @@ See [07_ml_methods.md](07_ml_methods.md). Three complementary ML approaches:
    train on waveform shape only, use as a pile-up/pathology rejection variable.
 
 ## Open issues
-- τ_eff = 90 ns assumption (S10); occupancy model needs a measured live-time.
-- Constrained **two-pulse template fit** (App. B.5 recommendation) is **not yet implemented**
-  — a traditional method that should be built and benchmarked vs ML recovery (S11).
+- The operational rate still depends on threshold choice, censoring, and how high-current
+  morphologies map to true overlapping particles.
+- Constrained two-pulse template fits and compact ML recovery both need adoption gates that
+  include failure rate, not just RMS on successful fits.
 - App. I positive class is only **72 events** — uncertainties must be bootstrapped (S12).

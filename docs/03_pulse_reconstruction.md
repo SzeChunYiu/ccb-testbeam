@@ -24,8 +24,11 @@ No single fixed template: high-amplitude B2 and downstream pulses change shape (
 quenching / Birks, non-linear light transport). So a template **s_i(j; A)** is built **per
 stave (B2/B4/B6/B8) and per amplitude bin**: align with a constant-fraction seed, divide by
 amplitude, median-combine; interpolate in log₁₀A during fitting.
-- ⚠ **Not yet evaluated on the full dataset** — the q_template numbers in the notes come from
-  an old small subset. Re-running this is an explicit TODO (Study S01).
+- The full-dataset template reproduction is now represented by S01. The key diagnostic is that
+  template quality is stave- and amplitude-dependent, so q-template values must be treated as
+  covariates rather than as a single global pulse-quality scalar.
+
+![Template quality by group and stave](figures/reports/1780997954.15037.36463764__s01_full_dataset_templates/fig_q_template_by_group_stave.png)
 
 ## 4. Time pickoff
 - **Seed — CFD20:** software digital constant-fraction at **20% of peak** on the rising edge;

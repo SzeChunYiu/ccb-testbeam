@@ -33,12 +33,18 @@ flagged below for each.
 - RF tagging: dropout test AUC 0.999; pile-up test AUC 0.995.
 - **Timing recovery:** pile-up sep ≥3 bins 2.07 → 0.61 ns; sep <3 bins 3.20 → 1.82 ns;
   dropout recoverable 0.00 → 0.65 ns, unrecoverable 5.63 → 2.31 ns.
-- **Traditional baseline:** constrained two-pulse template fit (App. B.5 — not yet built, S11).
-- Honest conclusion: ML cannot recover destroyed leading-edge info; separate into
-  clean / recoverable / unrecoverable.
+- **Traditional baseline:** bounded two-pulse template fit. In representative injection studies,
+  the template-like method keeps a lower failure rate while compact ML reaches shorter apparent
+  live-time and lower conditional RMS.
+- Honest conclusion: ML cannot recover destroyed leading-edge information by magic. It should
+  separate clean, recoverable, and unrecoverable regimes, and adoption must include failure rate.
+
+![Two-pulse resolvability and delay bias](figures/reports/1781007337.1325.2241031c/fig_resolvability_delay_bias.png)
 
 ## G/H. Pile-up rate & weak supervision
-- **G — injection tolerance scan** → R_max ≈ 4.2 MHz (see [06_pileup.md](06_pileup.md)).
+- **G — injection tolerance scan** → the old 90 ns occupancy headline was about 4.2 MHz, but
+  measured live-time moves the comparable combined criterion to about 3.05 MHz (see
+  [06_pileup.md](06_pileup.md)).
 - **H — weakly-supervised current classifier (CWoLa):** RF on **shape only** (balanced per
   stave & current) distinguishes 20 nA vs 2 nA. Test AUC **0.676** — *deliberately not*
   near-perfect (perfect ⇒ trivial instrumental difference / memorisation). Run-transfer folds
@@ -62,5 +68,9 @@ explicit refusal to over-interpret (proxies ≠ truth; RF prob ≠ calibrated pr
 
 ## Cross-cutting weaknesses (study targets)
 Class imbalance (7:1; 72 positives); calibration; unscanned hyperparameters; missing χ²/ndf;
-thin Sample II/IV stats; no strong non-ML baseline reported for most claims; **no deep model**
-(CNN/GNN) actually trained yet — only proposed (the user's "basic ML ideas" → S08, S09).
+thin Sample II/IV stats; and transfer across run family, topology, current, and saturation.
+Deep and compact learned models have now been tested in selected timing, representation,
+two-pulse, and energy panels; they are accepted only where they beat a strong conventional
+baseline under the same split.
+
+![ML classifier ROC and PR diagnostics](figures/reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard/fig_roc_pr.png)

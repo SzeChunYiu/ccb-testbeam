@@ -1,0 +1,15 @@
+method,families,n_features,cv_rmse_ns,params,n_train_rows,alpha,train_seconds,train_rmse_ns,arch,last_loss,n_parameters
+hgb_all,"waveform,amplitude,q_template,pretrigger,stave,run_family,shape_extra",45,1.6995023687757376,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.05, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_no_pretrigger,"waveform,amplitude,q_template,stave,run_family,shape_extra",38,1.6922912944067547,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.2, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_no_amplitude,"waveform,q_template,pretrigger,stave,run_family,shape_extra",40,1.7175104286066392,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.2, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_no_q_template,"waveform,amplitude,pretrigger,stave,run_family,shape_extra",42,1.7142667228559827,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.2, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_no_stave,"waveform,amplitude,q_template,pretrigger,run_family,shape_extra",42,2.866515751042081,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.2, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_no_run_family,"waveform,amplitude,q_template,pretrigger,stave,shape_extra",42,1.698113801924659,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.05, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_no_waveform,"amplitude,q_template,pretrigger,stave,run_family,shape_extra",27,1.7038968906700571,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.05, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_amplitude_only_control,amplitude,5,3.2308735024816624,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.05, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+hgb_run_family_only_sentinel,run_family,3,3.4252979747913828,"{'max_iter': 40, 'learning_rate': 0.05, 'max_leaf_nodes': 7, 'l2_regularization': 0.05, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,
+ridge_all,"waveform,amplitude,q_template,pretrigger,stave,run_family,shape_extra",45,1.9097201798493113,,3780,10.0,,,,,
+mlp_all,"waveform,amplitude,q_template,pretrigger,stave,run_family,shape_extra",45,,,3780,,0.42545199394226074,1.6866542463404788,,,
+cnn1d_all,"waveform,amplitude,q_template,pretrigger,stave,run_family,shape_extra",45,,,3780,,0.18960976600646973,,cnn,0.6826602220535278,2289.0
+tcn_new_architecture_all,"waveform,amplitude,q_template,pretrigger,stave,run_family,shape_extra",45,,,3780,,0.22538542747497559,,tcn,0.7457812428474426,3073.0
+hgb_shuffled_target_sentinel,"waveform,amplitude,q_template,pretrigger,stave,run_family,shape_extra",45,1.6995023687757376,"{'max_iter': 80, 'learning_rate': 0.05, 'max_leaf_nodes': 15, 'l2_regularization': 0.05, 'max_bins': 64, 'random_state': 20260628}",3780,,,,,,

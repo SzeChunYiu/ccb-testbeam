@@ -1,0 +1,80 @@
+{
+  "ticket_id": "1781055407.547.08364d02",
+  "worker": "testbeam-laptop-3",
+  "study_id": "P08e",
+  "title": "conventional PID score decomposition null",
+  "output_dir": "reports/1781055407.547.08364d02__p08e_conventional_pid_score_decomposition_null",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "p08a_result": "reports/1781012712.914.09cf1a30/result.json",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "saturation_adc": 7000.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_calib_pulses": 248745,
+    "sample_i_analysis_pulses": 252266,
+    "sample_ii_calib_pulses": 14630,
+    "sample_ii_analysis_pulses": 125096
+  },
+  "label_calibration_groups": ["sample_i_calib", "sample_ii_calib"],
+  "benchmark_groups": ["sample_i_calib", "sample_i_analysis", "sample_ii_calib", "sample_ii_analysis"],
+  "nominal_geometry": "center_4cm",
+  "geometry_variants": {
+    "center_4cm": {
+      "description": "newer-note centre spacing, front face halfway before B2",
+      "stave_centers_cm": {"B2": 2.0, "B4": 6.0, "B6": 10.0, "B8": 14.0}
+    }
+  },
+  "pstar": {
+    "material": "plastic scintillator",
+    "density_g_cm3": 1.032,
+    "source_note": "NIST PSTAR proton CSDA range table for plastic scintillator, range in g/cm2 converted to cm; table is used only for a data-driven weak-label proxy, not truth PID.",
+    "energy_mev": [5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200],
+    "range_g_cm2": [0.0408, 0.144, 0.293, 0.512, 0.801, 1.16, 2.06, 3.13, 4.36, 5.75, 7.28, 8.96, 10.8, 16.0, 22.0, 28.7, 35.8]
+  },
+  "weak_label": {
+    "positive_name": "high_calibrated_range_energy_residual",
+    "negative_name": "low_calibrated_range_energy_residual",
+    "within_run_depth_quantile": 0.25,
+    "min_atom_class_rows": 12,
+    "min_odd_total_charge": 100.0,
+    "min_even_total_charge": 100.0
+  },
+  "benchmark": {
+    "random_seed": 8089,
+    "max_rows_per_run_label": 240,
+    "bootstrap_replicates": 400,
+    "fixed_efficiency": 0.8,
+    "min_train_class_rows": 100,
+    "min_test_class_rows": 5,
+    "cnn_epochs": 5,
+    "mlp_max_iter": 70,
+    "ml_grid": [
+      {"n_estimators": 45, "max_depth": 3, "min_samples_leaf": 30, "max_leaf_nodes": 15, "learning_rate": 0.08, "l2_regularization": 0.05}
+    ]
+  }
+}

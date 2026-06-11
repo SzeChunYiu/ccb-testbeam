@@ -1,0 +1,89 @@
+{
+  "study": "P06e",
+  "ticket": "1781070978.431.052370d7",
+  "worker": "testbeam-laptop-2",
+  "status": "done",
+  "git_commit": "129326a38be2e936b0fb3a710e5b4da5b066aace",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "calibration_runs": [
+      64
+    ],
+    "test_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "train_rows_fit": 50148,
+    "test_rows": 16656
+  },
+  "winner": {
+    "method": "traditional_phase_selected_template_interp",
+    "family": "traditional",
+    "sigma68_ns": 0.21804222648752702,
+    "sigma68_ci95": [
+      0.2020911425275438,
+      0.2377086569317347
+    ],
+    "delta_sigma68_vs_traditional_ns": 0.0,
+    "traditional_sigma68_ns": 0.21804222648752702,
+    "full_rms_ns": 7.7896803466585265,
+    "bad_tail_frac": 0.008645533141210375
+  },
+  "traditional_case_winners": {
+    "cfd_crossing_single": "interpolation_cfd",
+    "early_tail_pair": "interpolation_cfd",
+    "late_tail_pair": "interpolation_cfd",
+    "leading_edge_pair": "interpolation_cfd",
+    "peak_contiguous": "template_refit_cfd",
+    "peak_single": "interpolation_cfd"
+  },
+  "next_tickets": [
+    {
+      "title": "P06f consumer-specific dropout veto utility",
+      "body": "Question: do P06e recoverable/unrecoverable phase bands improve downstream timing, charge, and pile-up consumers when the action is recover versus veto rather than always-correct? Expected information gain: converts the dropout-phase frontier into a consumer-specific decision rule and tests whether a phase-gated CNN correction harms any downstream metric under run-held-out bootstrap CIs."
+    }
+  ],
+  "finding": "The raw S00 selected-pulse count is reproduced exactly from ROOT. The held-out winner is traditional_phase_selected_template_interp with sigma68 0.218 ns versus traditional 0.218 ns; delta 0 ns. Dropout recoverability is phase-conditioned: the per-case table separates leading-edge, peak, and tail masks and the abstention policy reports which cases remain below the configured 10 ns / 25% bad-tail irrecoverability frontier.",
+  "artifacts": {
+    "report": "reports/1781070978.431.052370d7__p06e_dropout_phase_timing_frontier/REPORT.md",
+    "metrics": "reports/1781070978.431.052370d7__p06e_dropout_phase_timing_frontier/method_metrics.csv",
+    "phase_metrics": "reports/1781070978.431.052370d7__p06e_dropout_phase_timing_frontier/method_phase_metrics.csv"
+  }
+}

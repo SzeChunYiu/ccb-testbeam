@@ -1,0 +1,10 @@
+method,accepted_cases,abstention_coverage,post_abstention_sigma68_ns,post_abstention_bad_tail_frac,post_abstention_n
+traditional_phase_selected_template_interp,"cfd_crossing_single,early_tail_pair,late_tail_pair,leading_edge_pair,peak_contiguous,peak_single",1.0,0.21804222648752702,0.008645533141210375,16656
+hist_gradient_boosted_trees,"cfd_crossing_single,early_tail_pair,late_tail_pair,leading_edge_pair,peak_contiguous,peak_single",1.0,0.3535131490830939,0.011047070124879923,16656
+phase_gated_cnn,"cfd_crossing_single,early_tail_pair,late_tail_pair,leading_edge_pair,peak_contiguous,peak_single",1.0,0.9988427344036089,0.022214217098943324,16656
+one_dimensional_cnn,"cfd_crossing_single,early_tail_pair,late_tail_pair,leading_edge_pair,peak_contiguous,peak_single",1.0,1.0807792985108278,0.02509606147934678,16656
+mlp,"cfd_crossing_single,early_tail_pair,late_tail_pair,leading_edge_pair,peak_contiguous,peak_single",1.0,1.6248569172842189,0.01813160422670509,16656
+ridge,"cfd_crossing_single,early_tail_pair,late_tail_pair,leading_edge_pair,peak_contiguous,peak_single",1.0,3.628249588070206,0.04628962536023055,16656
+corrupted_cfd,"cfd_crossing_single,early_tail_pair,late_tail_pair,peak_contiguous,peak_single",0.8333333333333334,0.21480147215315723,0.031195965417867434,13880
+mask_phase_only_ridge,peak_single,0.16666666666666666,7.739021516386665,0.22946685878962536,2776
+shuffled_target_hgb,,0.0,,,0

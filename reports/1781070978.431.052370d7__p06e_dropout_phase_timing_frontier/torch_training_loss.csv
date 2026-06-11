@@ -1,0 +1,17 @@
+method,epoch,train_smooth_l1
+one_dimensional_cnn,1,1.4511153156107122
+one_dimensional_cnn,2,0.329303512293281
+one_dimensional_cnn,3,0.18543572182005102
+one_dimensional_cnn,4,0.1489309992528323
+one_dimensional_cnn,5,0.12873277056849364
+one_dimensional_cnn,6,0.11959677076700961
+one_dimensional_cnn,7,0.11192664549206242
+one_dimensional_cnn,8,0.10873400623148138
+phase_gated_cnn,1,1.430606561628255
+phase_gated_cnn,2,0.3175038250558304
+phase_gated_cnn,3,0.16241960193623195
+phase_gated_cnn,4,0.13140952282331206
+phase_gated_cnn,5,0.11942861635576595
+phase_gated_cnn,6,0.11109571802345189
+phase_gated_cnn,7,0.10445123707706278
+phase_gated_cnn,8,0.09946382773870771

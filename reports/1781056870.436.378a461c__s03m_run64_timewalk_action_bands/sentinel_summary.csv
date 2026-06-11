@@ -1,0 +1,6 @@
+check,value,pass,detail
+train_heldout_run_overlap_max,0.0,True,P03f required-family benchmark split by run
+train_heldout_event_id_overlap_max,0.0,True,No held-out event ids reused in training folds
+shuffled_target_sentinel_failure_rate,0.4357142857142857,True,Fraction of shuffled-target checks where shuffled residuals were not worse than nominal
+best_shuffled_or_offset_control_sigma68_ns,1.1515617974183487,True,"Best control should stay near the analytic comparator, not define the action-band winner"
+high_amplitude_false_pass_rate,0.0,True,Amplitude-only sentinel: high-amplitude action bins should not all pass blindly

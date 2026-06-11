@@ -1,0 +1,3 @@
+comparison,delta_sigma68_ns,delta_sigma68_ci_low_ns,delta_sigma68_ci_high_ns,delta_bias_ns,delta_bias_ci_low_ns,delta_bias_ci_high_ns,delta_tail_frac_abs_gt5ns,delta_tail_ci_low,delta_tail_ci_high,n_left,n_right
+run64_minus_sample_ii_analysis,,,,,,,,,,0,11460
+sample_ii_analysis_minus_sample_i,0.16025182652080128,0.04589817342312537,0.36007122202171904,0.2423069343864368,0.13256172862811222,0.41054152843764347,0.00886312640239342,0.00341372402424406,0.013712701879721227,11460,3780

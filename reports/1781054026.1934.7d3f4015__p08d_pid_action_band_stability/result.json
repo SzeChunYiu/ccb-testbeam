@@ -1,0 +1,243 @@
+{
+  "ticket_id": "1781054026.1934.7d3f4015",
+  "worker": "testbeam-laptop-3",
+  "study_id": "P08d",
+  "title": "PID weak-label action-band stability",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "28bcfad5e8a5779a85e2286e402476011eab650a",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "calibrated_label_definition": {
+    "source": "P08b rebuilt from raw ROOT",
+    "calibration": {
+      "calibration_groups": [
+        "sample_i_calib",
+        "sample_ii_calib"
+      ],
+      "calibration_rows": 249681,
+      "anchors_mev": {
+        "B2": 40.041411846408614,
+        "B4": 72.99642627825797,
+        "B6": 97.46806692646969,
+        "B8": 117.96480450815572
+      },
+      "label_source": "odd duplicate-readout PSTAR/depth charge quantile residual, thresholded within run/depth"
+    }
+  },
+  "calibrated_label_support": {
+    "n_labeled_rows": 289626,
+    "n_atoms": 122
+  },
+  "benchmark": {
+    "evaluated_rows": 29134,
+    "evaluated_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "split": "leave-one-run-out by complete run",
+    "bootstrap_replicates": 300,
+    "fixed_efficiency": 0.8
+  },
+  "action_source_audit": [
+    {
+      "source": "S14g",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781051226.621.082271da__s14g_veto_ladder_energy_acceptance/selector_oof.csv.gz",
+      "rows_loaded": 329548,
+      "rows_before_merge": 289626,
+      "rows_after_merge": 289626,
+      "available": true,
+      "note": null
+    },
+    {
+      "source": "P07j",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781052602.655.4be6114e__p07j_saturation_knee_family_action_bands/predictions.csv.gz",
+      "rows_loaded": 177508,
+      "rows_before_merge": 289626,
+      "rows_after_merge": 289626,
+      "available": true,
+      "note": null
+    },
+    {
+      "source": "P04s",
+      "path": "",
+      "rows_loaded": 0,
+      "rows_before_merge": 289626,
+      "rows_after_merge": 289626,
+      "available": false,
+      "note": "No tracked P04s action-band artifact was available in this checkout; treated as an explicit systematic caveat."
+    }
+  ],
+  "action_mask_composition": [
+    {
+      "action_mask": "all_pre_action",
+      "n": 29134,
+      "support_fraction": 1.0,
+      "support_loss": 0.0,
+      "positive_fraction": 0.5,
+      "action_band_label_shift": 0.0,
+      "charge_log_median_shift": 0.0,
+      "depth_mean_shift": 0.0,
+      "runs": 33
+    },
+    {
+      "action_mask": "s14g_traditional_accept",
+      "n": 7651,
+      "support_fraction": 0.26261412782316196,
+      "support_loss": 0.737385872176838,
+      "positive_fraction": 0.21539668017252647,
+      "action_band_label_shift": -0.28460331982747356,
+      "charge_log_median_shift": -0.8751269942172186,
+      "depth_mean_shift": -0.08027406065332973,
+      "runs": 21
+    },
+    {
+      "action_mask": "s14g_new_residual_accept",
+      "n": 7483,
+      "support_fraction": 0.2568476693897165,
+      "support_loss": 0.7431523306102835,
+      "positive_fraction": 0.22090070827208338,
+      "action_band_label_shift": -0.2790992917279166,
+      "charge_log_median_shift": -0.8106890969477138,
+      "depth_mean_shift": -0.08494056976046235,
+      "runs": 21
+    },
+    {
+      "action_mask": "p07j_traditional_correct",
+      "n": 67,
+      "support_fraction": 0.002299718541909796,
+      "support_loss": 0.9977002814580902,
+      "positive_fraction": 0.9701492537313433,
+      "action_band_label_shift": 0.4701492537313433,
+      "charge_log_median_shift": 0.2521982480313145,
+      "depth_mean_shift": -0.008969363384218484,
+      "runs": 11
+    },
+    {
+      "action_mask": "s14g_traditional_and_p07j_correct",
+      "n": 0,
+      "support_fraction": 0.0,
+      "support_loss": 1.0,
+      "positive_fraction": null,
+      "action_band_label_shift": null,
+      "charge_log_median_shift": null,
+      "depth_mean_shift": null,
+      "runs": 0
+    }
+  ],
+  "winner_method": "NN_action_gated_residual_ensemble_new",
+  "winner": {
+    "action_mask": "all_pre_action",
+    "method": "NN_action_gated_residual_ensemble_new",
+    "roc_auc": 0.9955315069727333,
+    "roc_auc_ci": [
+      0.9922854231010421,
+      0.9980385194240986
+    ],
+    "average_precision": 0.9957414189855426,
+    "purity_at_80pct_eff": 1.0,
+    "ece": 0.008102625024488495
+  },
+  "traditional": {
+    "method": "traditional_charge_depth_logistic",
+    "roc_auc": 0.9847963469539454,
+    "roc_auc_ci": [
+      0.9762823802643968,
+      0.9918524353654032
+    ],
+    "average_precision": 0.9808921596920601,
+    "ece": 0.028608094775606788
+  },
+  "best_ml_vs_traditional": {
+    "method": "NN_action_gated_residual_ensemble_new",
+    "roc_auc_minus_traditional": 0.010735160018787937,
+    "ap_minus_traditional": 0.014849259293482464
+  },
+  "controls": {
+    "action_only_auc": 0.5681983423470199,
+    "run_family_only_auc": 0.5,
+    "shuffled_label_auc": 0.48800672895804154
+  },
+  "finding": "The best pre-action weak-label score is NN_action_gated_residual_ensemble_new (AUC 0.9955), while the traditional calibrated charge/depth baseline has AUC 0.9848.  The action-only control has AUC 0.5682; therefore action bands alone do not explain the primary weak-label separation.  However S14g/P07j masks induce non-negligible support and composition shifts, and the label is charge/depth-derived, so the result remains a stability diagnostic rather than a PID adoption claim.",
+  "next_tickets": [
+    {
+      "title": "P08e truth-anchored PID action-band closure",
+      "body": "Repeat the P08d action-mask stability test on an externally anchored PID/truth subset or beamline-calibrated proxy, including the missing P04s dropout-phase action band, before any PID adoption claim."
+    }
+  ],
+  "runtime_sec": 217.1,
+  "command": "/home/billy/anaconda3/bin/python scripts/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.py --config configs/p08d_1781054026_1934_7d3f4015_pid_action_band_stability.json"
+}

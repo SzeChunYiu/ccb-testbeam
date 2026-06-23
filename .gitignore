@@ -55,4 +55,8 @@ geant4/jobs/*.err
 
 # MC validation ephemeral artifacts
 reports/mc_validation_fixture/
+reports/mc_validation/mv0_digitizer/
+reports/mc_validation/mv9_synthesis/
+reports/mv0_digitizer_skeleton/
+src/ccb_mc_validation.egg-info/
 *.parquet.tmp

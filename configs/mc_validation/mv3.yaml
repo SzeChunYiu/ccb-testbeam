@@ -1,0 +1,19 @@
+study_id: MV3
+title: Stopping-depth profile and Sample I/II mapping
+mc_file: geant4/data/output_krakow_1M.root
+tree: hibeam
+output_dir: reports/mv3_stopping_depth
+max_events: 0
+n_layers: 8
+layer_to_stave:
+  0: B2
+  1: B2
+  2: B4
+  3: B4
+  4: B6
+  5: B6
+  6: B8
+  7: B8
+branches_config: configs/mc_validation/branches.yaml
+# Optional data reference stave occupancy profiles for mapping score
+data_reference_profiles: {}

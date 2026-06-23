@@ -1,0 +1,22 @@
+# MC validation report template (string.Template syntax — not Jinja2)
+$status_banner
+
+# $study_id
+
+## Summary
+
+Study status: **$status**
+
+Provenance: $manifest_link · $result_link
+
+## Metrics
+
+$metrics_table
+
+## Cutflow
+
+$cutflow_table
+
+## Notes
+
+$notes_block

@@ -1,0 +1,15 @@
+# Minimal figure catalog for MC validation reporting
+schema_version: "1.0.0"
+figures:
+  mv1_pid_roc:
+    study_id: mv1
+    caption: "ROC curves for proton vs deuteron separation"
+  mv2_energy_residual:
+    study_id: mv2
+    caption: "Kinetic energy residual distribution by species"
+  mv3_stopping_profile:
+    study_id: mv3
+    caption: "Stopping depth profile vs Sample I/II selection"
+  mv0_waveform_overlay:
+    study_id: mv0
+    caption: "Digitized waveform overlay against truth deposit"

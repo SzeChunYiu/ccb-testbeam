@@ -1,0 +1,10 @@
+study_id: MV2
+title: Truth-level range-energy calibration
+mc_file: geant4/data/output_krakow_1M.root
+tree: hibeam
+output_dir: reports/mv2_energy
+max_events: 0
+layer_max: 7
+split: legacy_parity
+splits_config: configs/mc_validation/splits.yaml
+branches_config: configs/mc_validation/branches.yaml

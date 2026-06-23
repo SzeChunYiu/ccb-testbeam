@@ -1,0 +1,27 @@
+study_id: MV0
+title: Calibrated digitizer skeleton (truth → 18-sample ADC)
+output_dir: reports/mv0_digitizer_skeleton
+
+digitizer:
+  n_samples: 18
+  sample_spacing_ns: 10.0
+  tau_rise_ns: 2.0
+  tau_decay_ns: 35.0
+  transport_sigma_ns: 0.5
+  gain_adc_per_mev: 120.0
+  noise_adc_rms: 8.0
+  pedestal_adc: 300.0
+  adc_ceiling: 7000
+  apply_birks: false
+  stages:
+    - birks
+    - scintillation
+    - transport
+    - sampling
+    - electronics
+
+calibration:
+  stages:
+    - shape_template
+    - adc_scale
+    - noise_pedestal

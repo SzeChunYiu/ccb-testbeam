@@ -1,0 +1,9 @@
+study_id: MV1
+title: Truth-level proton vs deuteron PID ceiling
+mc_file: geant4/data/output_krakow_1M.root
+tree: hibeam
+output_dir: reports/mv1_pid
+max_events: 0
+split: legacy_parity
+splits_config: configs/mc_validation/splits.yaml
+branches_config: configs/mc_validation/branches.yaml

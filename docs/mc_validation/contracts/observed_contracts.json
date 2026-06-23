@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "contracts": {
+    "s00_selected_pulse_table": {
+      "source_script": "scripts/01_build_pulse_table_from_root.py",
+      "description": "Selected B-stave pulse table emitted by S00 data-integrity pipeline",
+      "columns": [
+        {"name": "run", "dtype": "int64", "description": "HRDB run number"},
+        {"name": "group", "dtype": "string", "description": "Configured run group label"},
+        {"name": "eventno", "dtype": "int64", "description": "EVENTNO branch value"},
+        {"name": "evt", "dtype": "int64", "description": "EVT branch value"},
+        {"name": "stave", "dtype": "string", "description": "B-stave identifier (B2, B4, B6, B8)"},
+        {"name": "channel", "dtype": "int64", "description": "HRDv channel index for the stave"},
+        {"name": "baseline_adc", "dtype": "float64", "description": "Median baseline ADC in configured window"},
+        {"name": "amplitude_adc", "dtype": "float64", "description": "Peak corrected amplitude ADC"},
+        {"name": "peak_sample", "dtype": "int64", "description": "Sample index of amplitude maximum"},
+        {"name": "area_adc_samples", "dtype": "float64", "description": "Baseline-subtracted area (ADC·samples)"}
+      ],
+      "selection_rule": "amplitude_adc > amplitude_cut_adc (default 1000 ADC)"
+    }
+  }
+}

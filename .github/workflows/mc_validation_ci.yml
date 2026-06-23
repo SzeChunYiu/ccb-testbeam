@@ -1,0 +1,30 @@
+name: MC Validation CI
+
+on:
+  push:
+    paths:
+      - "src/ccb_mc_validation/**"
+      - "tests/**"
+      - "configs/mc_validation/**"
+      - "pyproject.toml"
+      - ".github/workflows/mc_validation_ci.yml"
+  pull_request:
+    paths:
+      - "src/ccb_mc_validation/**"
+      - "tests/**"
+      - "configs/mc_validation/**"
+      - "pyproject.toml"
+      - ".github/workflows/mc_validation_ci.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Run unit tests
+        run: pytest tests/ -q --ignore=tests/integration

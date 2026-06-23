@@ -1,0 +1,20 @@
+tree: hibeam
+b_arm_layer_id1: 1
+
+truth_branches:
+  - Sci_bar_TrackID
+  - Sci_bar_LayerID
+  - Sci_bar_LayerID1
+  - Sci_bar_PDG
+  - Sci_bar_EDep
+  - Sci_bar_TrackLength
+  - Sci_bar_Momentum_X
+  - Sci_bar_Momentum_Y
+  - Sci_bar_Momentum_Z
+
+optional_branches:
+  - Sci_bar_Time
+  - PrimaryPDG
+  - PrimaryEkin
+
+step_size: 200 MB

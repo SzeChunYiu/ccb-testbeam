@@ -1,0 +1,16 @@
+default_split: legacy_parity
+
+splits:
+  legacy_parity:
+    strategy: legacy_parity
+    train_fraction: 0.5
+    seed: 0
+    description: >
+      Deterministic index parity (idx % 2 == 0 train). Legacy parity with
+      scripts/mv1_mv2_truth_pid_energy.py.
+
+  seeded_holdout:
+    strategy: deterministic_index
+    train_fraction: 0.5
+    seed: 171101
+    description: Permutation holdout driven by SplitRegistry seed.

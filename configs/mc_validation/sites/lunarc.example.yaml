@@ -1,0 +1,63 @@
+# Example LUNARC site overlay — paths via environment variables only
+schema_version: "1.0.0"
+
+paths:
+  repo_root: "${CCB_MC_REPO}"
+  mc_root: "${CCB_MC_MC_ROOT}"
+  data_pulses: "${CCB_MC_DATA_PULSES}"
+  reports_dir: "${CCB_MC_REPORTS_DIR}"
+  resolved_config_dir: "${CCB_MC_RESOLVED_CONFIG_DIR}"
+
+seeds:
+  global: 424242
+  split: 1701
+  bootstrap: 9001
+
+units:
+  energy: MeV
+  time: ns
+  adc: ADC
+  documented:
+    energy: "Monte Carlo Sci_bar EDep and calibration targets in MeV"
+    time: "Truth hit time and coincidence window in nanoseconds"
+    adc: "Digitizer output counts; data ceiling ~7000 ADC"
+
+waveform:
+  adc_samples: 18
+  sample_spacing_ns: 10.0
+
+coincidence_ns: 15.0
+
+detector:
+  b_arm: 1
+  a_arm: 2
+  nb_layers: 8
+
+logging:
+  level: INFO
+
+studies:
+  mv0:
+    enabled: true
+    output_subdir: mc_validation/mv0_digitizer
+    description: "Truth-to-waveform digitizer backbone"
+  mv1:
+    enabled: true
+    output_subdir: mc_validation/mv1_pid
+    description: "Particle ID p vs d truth comparison"
+  mv2:
+    enabled: true
+    output_subdir: mc_validation/mv2_energy
+    description: "Energy and range calibration vs truth"
+  mv3:
+    enabled: true
+    output_subdir: mc_validation/mv3_stopping_depth
+    description: "Stopping-depth profile vs Sample I/II"
+  mv4:
+    enabled: false
+    output_subdir: mc_validation/mv4_timing
+    description: "Timing resolution and timewalk (blocked until MV0)"
+  mv5:
+    enabled: false
+    output_subdir: mc_validation/mv5_pileup
+    description: "Pile-up recovery (blocked until MV0)"

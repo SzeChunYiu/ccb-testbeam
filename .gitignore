@@ -52,3 +52,7 @@ tmp/
 # SLURM job logs
 geant4/jobs/*.out
 geant4/jobs/*.err
+
+# MC validation ephemeral artifacts
+reports/mc_validation_fixture/
+*.parquet.tmp

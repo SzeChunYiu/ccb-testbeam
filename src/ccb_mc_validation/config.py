@@ -22,11 +22,37 @@ from ccb_mc_validation.constants import (
 )
 from ccb_mc_validation.exceptions import ConfigurationError, InputNotFoundError
 
-_ENV_PATTERN = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)\}")
+_ENV_PATTERN = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^}]*))?\}")
 
 _ALLOWED_KEYS: dict[str, set[str] | dict[str, set[str]]] = {
     "schema_version": set(),
-    "paths": {"repo_root", "mc_root", "data_pulses", "reports_dir", "resolved_config_dir"},
+    "paths": {
+        "repo_root",
+        "mc_root",
+        "data_pulses",
+        "reports_dir",
+        "resolved_config_dir",
+        "artifact_root",
+        "cache_root",
+    },
+    "profile": set(),
+    "mc_tree": set(),
+    "cluster": {
+        "host",
+        "ssh_host",
+        "python",
+        "project_root",
+        "account",
+        "partition",
+    },
+    "execution": {
+        "overwrite",
+        "resume",
+        "fail_fast",
+        "max_infrastructure_retries",
+        "smoke_max_events",
+        "smoke_max_tracks",
+    },
     "seeds": {"global", "split", "bootstrap"},
     "units": {"energy", "time", "adc", "documented"},
     "waveform": {"adc_samples", "sample_spacing_ns"},
@@ -47,7 +73,7 @@ _ALLOWED_KEYS: dict[str, set[str] | dict[str, set[str]]] = {
     },
 }
 
-_STUDY_SUBKEYS = {"enabled", "output_subdir", "description"}
+_STUDY_SUBKEYS = {"enabled", "output_subdir", "description", "tier"}
 
 
 @dataclass(frozen=True)
@@ -95,10 +121,12 @@ def _expand_env(value: Any) -> Any:
     if isinstance(value, str):
 
         def repl(match: re.Match[str]) -> str:
-            name = match.group(1)
-            if name not in os.environ:
-                raise ConfigurationError(f"environment variable ${{{name}}} is not set")
-            return os.environ[name]
+            name, default = match.group(1), match.group(2)
+            if name in os.environ:
+                return os.environ[name]
+            if default is not None:
+                return default
+            raise ConfigurationError(f"environment variable ${{{name}}} is not set")
 
         return _ENV_PATTERN.sub(repl, value)
     if isinstance(value, list):

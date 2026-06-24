@@ -1,0 +1,56 @@
+schema_version: "1.0.0"
+profile: smoke
+
+paths:
+  repo_root: "${CCB_REPO_ROOT:-.}"
+  mc_root: "${CCB_MC_ROOT:-geant4/data/output_krakow_1M.root}"
+  data_pulses: "${CCB_PULSE_TABLE:-data/tables/s00_selected_b_pulses.csv.gz}"
+  reports_dir: "reports"
+  artifact_root: "reports/mc_validation/runs"
+  cache_root: ".cache/ccb-testbeam"
+  resolved_config_dir: "reports/mc_validation/resolved_configs"
+
+mc_tree: hibeam
+
+seeds:
+  global: 20260623
+  split: 1701
+  bootstrap: 9001
+
+execution:
+  overwrite: false
+  resume: true
+  fail_fast: false
+  smoke_max_events: 2000
+  smoke_max_tracks: 4000
+
+coincidence_ns: 15.0
+
+detector:
+  b_arm: 1
+  a_arm: 2
+  nb_layers: 8
+
+waveform:
+  adc_samples: 18
+  sample_spacing_ns: 10.0
+
+units:
+  energy: MeV
+  time: ns
+  adc: ADC
+
+logging:
+  level: INFO
+
+studies:
+  mv0: {enabled: true, output_subdir: mc_validation/mv0_digitizer}
+  mv1: {enabled: true, output_subdir: mc_validation/mv1_pid}
+  mv2: {enabled: true, output_subdir: mc_validation/mv2_energy}
+  mv3: {enabled: true, output_subdir: mc_validation/mv3_stopping_depth}
+  mv4: {enabled: false, output_subdir: mc_validation/mv4_timing}
+  mv5: {enabled: false, output_subdir: mc_validation/mv5_pileup}
+  mv6: {enabled: false, output_subdir: mc_validation/mv6_pulse_shape}
+  mv7: {enabled: false, output_subdir: mc_validation/mv7_pedestal}
+  mv8: {enabled: false, output_subdir: mc_validation/mv8_saturation}
+  mv9: {enabled: true, output_subdir: mc_validation/mv9_synthesis}

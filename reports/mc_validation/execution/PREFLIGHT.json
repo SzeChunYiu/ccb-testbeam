@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "name": "mc_root",
+      "path": "/Users/billy/Desktop/projects/ccb-testbeam/geant4/data/output_krakow_1M.root",
+      "status": "MISSING"
+    },
+    {
+      "name": "data_pulses",
+      "path": "/Users/billy/Desktop/projects/ccb-testbeam/data/tables/s00_selected_b_pulses.csv.gz",
+      "status": "MISSING"
+    }
+  ],
+  "cluster_reachable": "UNREACHABLE (Connection timed out during banner exchange\nConnection to UNKNOWN port 65535 timed out)",
+  "dirty": true,
+  "environment_id": "unknown",
+  "generated_at": "2026-06-24T05:27:41.096187+00:00",
+  "git_sha": "a9b9f73f099f3673698753a12806f85f40be8b95",
+  "profile": "full"
+}

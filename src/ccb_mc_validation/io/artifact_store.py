@@ -23,6 +23,19 @@ def atomic_write(path: Path, writer: Callable[[Path], None]) -> None:
             tmp.unlink(missing_ok=True)
 
 
+def atomic_write_json(path: Path, payload: Any, *, indent: int = 2) -> None:
+    """Atomically write JSON (mapping or JSON-serializable object)."""
+
+    def _write(tmp: Path) -> None:
+        if isinstance(payload, dict):
+            text = json.dumps(payload, indent=indent, allow_nan=False, sort_keys=True)
+        else:
+            text = json.dumps(payload, indent=indent, allow_nan=False, default=str)
+        tmp.write_text(text + "\n", encoding="utf-8")
+
+    atomic_write(path, _write)
+
+
 def write_json(path: Path, payload: dict[str, Any], *, indent: int = 2) -> None:
     """Atomically write a JSON document."""
 

@@ -57,6 +57,9 @@ geant4/jobs/*.err
 reports/mc_validation_fixture/
 reports/mc_validation/mv0_digitizer/
 reports/mc_validation/mv9_synthesis/
+reports/mc_validation/runs/
+reports/mc_validation/resolved_configs/
 reports/mv0_digitizer_skeleton/
+RUN_BLOCKED.md
 src/ccb_mc_validation.egg-info/
 *.parquet.tmp

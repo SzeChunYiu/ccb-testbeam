@@ -1,0 +1,34 @@
+{
+  "active_production": [
+    "scripts/mc01_trigger_split_truth.py",
+    "scripts/mv1_mv2_truth_pid_energy.py",
+    "scripts/compare_data_mc.py",
+    "scripts/mv0_digitize_mc.py",
+    "scripts/mv1_pid_validation.py",
+    "scripts/mv2_energy_validation.py",
+    "scripts/mv3_stopping_depth.py"
+  ],
+  "generated_at": "2026-06-24T05:26:49.091009+00:00",
+  "orchestrator": "scripts/mc_validation/run_pipeline.py",
+  "package_cli": "python -m ccb_mc_validation",
+  "related_scripts_sample": [
+    "scripts/compare_data_mc.py",
+    "scripts/mc01_trigger_split_truth.py",
+    "scripts/mv0_digitize_mc.py",
+    "scripts/mv1_mv2_truth_pid_energy.py",
+    "scripts/mv1_pid_validation.py",
+    "scripts/mv2_energy_validation.py",
+    "scripts/mv3_stopping_depth.py"
+  ],
+  "slurm_jobs": [
+    "mc01_trigger_split.sbatch",
+    "mc_validation_pipeline.sbatch",
+    "mv0_digitize.sbatch",
+    "mv1_mv2_truth.sbatch",
+    "mv1_pid.sbatch",
+    "mv2_energy.sbatch",
+    "mv3_stopping.sbatch",
+    "mv4_timing.sbatch",
+    "mv5_pileup.sbatch"
+  ]
+}

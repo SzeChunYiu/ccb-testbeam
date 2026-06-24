@@ -1,4 +1,231 @@
 {
-  "schema_version": "1.0.0",
-  "studies": {}
+  "schema_version": "1",
+  "run_id": "20260624T052722Z_a9b9f73_d116fb9b_smoke_dirty-eb5bdd0c",
+  "studies": {
+    "MV1": {
+      "study_id": "MV1",
+      "status": "FIXTURE",
+      "metrics": {
+        "n_tracks": 4000,
+        "n_proton": 2000,
+        "n_deuteron": 2000,
+        "deltaE_E_medians": {
+          "proton": {
+            "edep_l0": 2.0809988050697674,
+            "edep_l1": 1.2968122759007878,
+            "edep_tot": 3.9818461149518773,
+            "stop_layer": 3.0
+          },
+          "deuteron": {
+            "edep_l0": 5.457182056216107,
+            "edep_l1": 3.3388447319482824,
+            "edep_tot": 9.41169374825562,
+            "stop_layer": 3.0
+          }
+        },
+        "split": "legacy_parity",
+        "logreg_auc": 0.921313,
+        "logreg_purity_at_90eff": 0.7205764611689351,
+        "hgb_auc": 0.924979,
+        "hgb_purity_at_90eff": 0.7389162561576355,
+        "cut_edep_l0_thr_MeV": 3.29757649697118,
+        "cut_purity": 0.818,
+        "cut_efficiency": 0.818
+      },
+      "cutflow": {
+        "n_tracks": 4000,
+        "n_proton": 2000,
+        "n_deuteron": 2000,
+        "n_binary_pid": 4000
+      },
+      "artifacts": {},
+      "notes": [
+        "Legacy parity split: train = index % 2 == 0 (see scripts/mv1_mv2_truth_pid_energy.py).",
+        "SplitRegistry supported via config mc_validation/splits.yaml."
+      ],
+      "provenance": {
+        "features": [
+          "edep_l0",
+          "edep_l1",
+          "edep_tot",
+          "stop_layer"
+        ]
+      }
+    },
+    "MV2": {
+      "study_id": "MV2",
+      "status": "FIXTURE",
+      "metrics": {
+        "proton_stoplayer_vs_ekin": {
+          "0": {
+            "n": 235,
+            "mean_ekin_MeV": 100.484299394309,
+            "mean_edep_tot_MeV": 4.02964362475106,
+            "mean_tracklen_mm": 46.05039191423122
+          },
+          "1": {
+            "n": 254,
+            "mean_ekin_MeV": 100.64341414503409,
+            "mean_edep_tot_MeV": 3.9049969238328734,
+            "mean_tracklen_mm": 46.09183814160961
+          },
+          "2": {
+            "n": 244,
+            "mean_ekin_MeV": 101.08686749417178,
+            "mean_edep_tot_MeV": 4.003887962142111,
+            "mean_tracklen_mm": 47.02285560342962
+          },
+          "3": {
+            "n": 281,
+            "mean_ekin_MeV": 100.36701428393243,
+            "mean_edep_tot_MeV": 4.1430050141495585,
+            "mean_tracklen_mm": 43.357911819211914
+          },
+          "4": {
+            "n": 228,
+            "mean_ekin_MeV": 93.8292160792244,
+            "mean_edep_tot_MeV": 4.194881903507514,
+            "mean_tracklen_mm": 43.988705283300554
+          },
+          "5": {
+            "n": 266,
+            "mean_ekin_MeV": 101.44167547067993,
+            "mean_edep_tot_MeV": 4.0619865602188,
+            "mean_tracklen_mm": 45.228831679654625
+          },
+          "6": {
+            "n": 260,
+            "mean_ekin_MeV": 96.862600807238,
+            "mean_edep_tot_MeV": 4.029745578772928,
+            "mean_tracklen_mm": 45.80744414955405
+          },
+          "7": {
+            "n": 232,
+            "mean_ekin_MeV": 104.06861264170844,
+            "mean_edep_tot_MeV": 3.977927950133269,
+            "mean_tracklen_mm": 44.05848640061948
+          }
+        },
+        "deuteron_stoplayer_vs_ekin": {
+          "0": {
+            "n": 252,
+            "mean_ekin_MeV": 101.74499345586888,
+            "mean_edep_tot_MeV": 9.678826784510532,
+            "mean_tracklen_mm": 43.78133612927928
+          },
+          "1": {
+            "n": 230,
+            "mean_ekin_MeV": 98.8443233179702,
+            "mean_edep_tot_MeV": 9.647301480352498,
+            "mean_tracklen_mm": 45.43127386075585
+          },
+          "2": {
+            "n": 261,
+            "mean_ekin_MeV": 99.31643339731521,
+            "mean_edep_tot_MeV": 9.37819741353744,
+            "mean_tracklen_mm": 44.55290008513921
+          },
+          "3": {
+            "n": 266,
+            "mean_ekin_MeV": 94.06038967356565,
+            "mean_edep_tot_MeV": 9.666152907623573,
+            "mean_tracklen_mm": 46.59181899379404
+          },
+          "4": {
+            "n": 233,
+            "mean_ekin_MeV": 100.20154589544678,
+            "mean_edep_tot_MeV": 9.39366253560332,
+            "mean_tracklen_mm": 46.30822621529274
+          },
+          "5": {
+            "n": 256,
+            "mean_ekin_MeV": 102.90386740236991,
+            "mean_edep_tot_MeV": 9.561061392776093,
+            "mean_tracklen_mm": 44.775432227107416
+          },
+          "6": {
+            "n": 249,
+            "mean_ekin_MeV": 100.4772317183858,
+            "mean_edep_tot_MeV": 9.458091564389377,
+            "mean_tracklen_mm": 44.00407540121239
+          },
+          "7": {
+            "n": 253,
+            "mean_ekin_MeV": 102.93016700600224,
+            "mean_edep_tot_MeV": 9.733049358183742,
+            "mean_tracklen_mm": 45.230263803039946
+          }
+        },
+        "censored_range_note": "Tracks with stop_layer==7 excluded from ekin regression (range censored at instrument boundary).",
+        "proton_ekin_recon_skipped": 1768,
+        "deuteron_ekin_recon_skipped": 1747
+      },
+      "cutflow": {
+        "n_tracks": 4000,
+        "n_proton_uncensored": 1768,
+        "n_deuteron_uncensored": 1747
+      },
+      "artifacts": {},
+      "notes": [
+        "Tracks with stop_layer==7 excluded from ekin regression (range censored at instrument boundary).",
+        "res68 = 68th percentile of |pred-truth|/truth on held-out split."
+      ],
+      "provenance": {}
+    },
+    "MV3": {
+      "study_id": "MV3",
+      "status": "FIXTURE",
+      "metrics": {
+        "layer_occupancy_sample_I": [
+          1.0,
+          0.881,
+          0.757,
+          0.634,
+          0.4935,
+          0.376,
+          0.2465,
+          0.122
+        ],
+        "layer_occupancy_sample_II": [
+          1.0,
+          0.8755,
+          0.7575,
+          0.628,
+          0.495,
+          0.382,
+          0.2505,
+          0.1205
+        ],
+        "layer_to_stave_mapping": {
+          "0": "B2",
+          "1": "B2",
+          "2": "B4",
+          "3": "B4",
+          "4": "B6",
+          "5": "B6",
+          "6": "B8",
+          "7": "B8"
+        },
+        "mapping_hypothesis_scores": {},
+        "truth_stave_counts": {
+          "B2": 971.0,
+          "B4": 1052.0,
+          "B6": 983.0,
+          "B8": 994.0
+        }
+      },
+      "cutflow": {
+        "n_tracks": 4000,
+        "sample_proxy_event_parity": 1,
+        "n_sample_I": 2000,
+        "n_sample_II": 2000
+      },
+      "artifacts": {},
+      "notes": [
+        "Sample I/II from sample_label when present; else event_id parity proxy.",
+        "Mapping hypothesis scoring skeleton \u2014 lower L1 score is better match to data profile."
+      ],
+      "provenance": {}
+    }
+  }
 }

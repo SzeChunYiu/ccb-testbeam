@@ -1,0 +1,95 @@
+schema_version: "1.0.0"
+profile: full
+
+paths:
+  repo_root: "${CCB_REPO_ROOT:-.}"
+  mc_root: "${CCB_MC_ROOT:-geant4/data/output_krakow_1M.root}"
+  data_pulses: "${CCB_PULSE_TABLE:-data/tables/s00_selected_b_pulses.csv.gz}"
+  reports_dir: "reports"
+  artifact_root: "${CCB_ARTIFACT_ROOT:-reports/mc_validation/runs}"
+  cache_root: "${CCB_CACHE_ROOT:-.cache/ccb-testbeam}"
+  resolved_config_dir: "reports/mc_validation/resolved_configs"
+
+mc_tree: hibeam
+
+seeds:
+  global: 20260623
+  split: 1701
+  bootstrap: 9001
+
+cluster:
+  host: cosmos2
+  ssh_host: lunarc
+  python: "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/bin/python3"
+  project_root: "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam"
+  account: "lu2026-2-51"
+  partition: lu48
+
+execution:
+  overwrite: false
+  resume: true
+  fail_fast: false
+  max_infrastructure_retries: 2
+  smoke_max_events: 5000
+  smoke_max_tracks: 8000
+
+coincidence_ns: 15.0
+
+detector:
+  b_arm: 1
+  a_arm: 2
+  nb_layers: 8
+
+waveform:
+  adc_samples: 18
+  sample_spacing_ns: 10.0
+
+units:
+  energy: MeV
+  time: ns
+  adc: ADC
+
+logging:
+  level: INFO
+
+studies:
+  mv0:
+    enabled: true
+    output_subdir: mc_validation/mv0_digitizer
+    tier: 2
+  mv1:
+    enabled: true
+    output_subdir: mc_validation/mv1_pid
+    tier: 1
+  mv2:
+    enabled: true
+    output_subdir: mc_validation/mv2_energy
+    tier: 1
+  mv3:
+    enabled: true
+    output_subdir: mc_validation/mv3_stopping_depth
+    tier: 1
+  mv4:
+    enabled: false
+    output_subdir: mc_validation/mv4_timing
+    tier: 2
+  mv5:
+    enabled: false
+    output_subdir: mc_validation/mv5_pileup
+    tier: 2
+  mv6:
+    enabled: false
+    output_subdir: mc_validation/mv6_pulse_shape
+    tier: 2
+  mv7:
+    enabled: false
+    output_subdir: mc_validation/mv7_pedestal
+    tier: 2
+  mv8:
+    enabled: false
+    output_subdir: mc_validation/mv8_saturation
+    tier: 2
+  mv9:
+    enabled: true
+    output_subdir: mc_validation/mv9_synthesis
+    tier: synthesis

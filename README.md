@@ -103,3 +103,17 @@ Studies are defined in [`studies/STUDIES.md`](studies/STUDIES.md), turned into t
 `tn-ticket` queue (`project:testbeam`), and worked by a fleet of codex agents (local laptop +
 LUNARC). See [`fleet/ORCHESTRATION.md`](fleet/ORCHESTRATION.md). Every study produces a report
 in `reports/` following [`studies/STUDY_TEMPLATE.md`](studies/STUDY_TEMPLATE.md).
+
+<!-- mc-validation-generated:start -->
+## MC validation execution status (auto-generated)
+
+- **Run ID:** `20260624T052722Z_a9b9f73_d116fb9b_smoke_dirty-eb5bdd0c`
+- **Generated:** 2026-06-24 05:27 UTC
+- **Git SHA:** `a9b9f73f099f3673698753a12806f85f40be8b95`
+- **Profile:** `smoke`
+- **Smoke gate:** `PASS` (FIXTURE)
+
+> Numbers in this block are resolved from validated run artifacts only.
+> See `reports/mc_validation/runs/20260624T052722Z_a9b9f73_d116fb9b_smoke_dirty-eb5bdd0c/` for manifests and study outputs.
+
+<!-- mc-validation-generated:end -->

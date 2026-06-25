@@ -406,3 +406,21 @@ Generated/refreshed evidence-packet artifacts are:
 Evidence-packet status is `PASS` for artifact generation with `packet_count=7`, `open_packet_count=7`, and `all_packets_closed=false`. The publication manifest now has `open_question_evidence_packets.exists=true` for `reports/mc_validation/open_questions/EVIDENCE_PACKETS.md`; the wiki manifest remains `PASS` with `page_count=8`.
 
 Release audit remains intentionally fail-closed: `open_question_evidence_packets` is `PASS`, but `all_evidence_packets_closed` is `BLOCKED` with observed `false` and reason `expected all_packets_closed=True, observed False`. Overall audit remains `BLOCKED`, `release_ready=false`, with `27` checks.
+
+## Corrected evidence-packet SLURM hints
+
+After PR #527, selected run release and QA artifacts were regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted qa
+```
+
+Refreshed packet artifacts are:
+
+- `reports/mc_validation/open_questions/EVIDENCE_PACKETS.json` (`12852` bytes, refreshed 2026-06-25 23:53:37 +0200)
+- `reports/mc_validation/open_questions/EVIDENCE_PACKETS.md` (`3747` bytes, refreshed 2026-06-25 23:53:37 +0200)
+- `wiki/Open-Questions.md` (`4422` bytes, refreshed 2026-06-25 23:53:37 +0200)
+- `QA_RELEASE_AUDIT.json` (`7068` bytes, refreshed 2026-06-25 23:53:38 +0200)
+
+The evidence packet command hints now match the actual SLURM wrapper interface: first packet check `hint_ok=True`, `has_unsupported_studies=False`, and `blocker_has_mv4=True`. MV4-MV8 packets therefore remain open because implementations/artifacts are missing, not because a per-study `sbatch --studies ...` command was submitted. Release audit remains `BLOCKED`, `release_ready=false`, with `27` checks.

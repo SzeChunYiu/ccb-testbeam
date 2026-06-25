@@ -14,6 +14,7 @@ REQUIRED_LINKS = {
     "release_audit": "QA_RELEASE_AUDIT.md",
     "claim_ledger": "reports/mc_validation/claims/CLAIM_LEDGER.md",
     "reference_registry": "reports/mc_validation/references/REFERENCE_REGISTRY.md",
+    "notation_registry": "reports/mc_validation/notation/NOTATION_REGISTRY.md",
     "run_summary_html": "reports/mc_validation/summary/RUN_SUMMARY.html",
     "notebook_overview": "notebooks/html/00_release_overview.html",
     "figure_contact_sheet": "figures/summary/FIGURE_CONTACT_SHEET.html",

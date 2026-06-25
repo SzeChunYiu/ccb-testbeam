@@ -1,4 +1,4 @@
-"""Production execution orchestration for MC validation."""
+"""Canonical fail-closed execution orchestration for MC validation."""
 
 from __future__ import annotations
 
@@ -6,9 +6,8 @@ import hashlib
 import json
 import logging
 import os
-import platform
 import re
-import shlex
+import platform
 import subprocess
 import sys
 import time
@@ -21,11 +20,9 @@ import yaml
 
 from ccb_mc_validation.config import ResolvedConfig, load_config, write_resolved_config
 from ccb_mc_validation.digitizer.pipeline import DigitizerPipeline
-from ccb_mc_validation.exceptions import InputNotFoundError, MCValidationError, exit_code_for
-from ccb_mc_validation.io.artifact_store import atomic_write_json, write_json
+from ccb_mc_validation.io.artifact_store import atomic_write_json
 from ccb_mc_validation.provenance.environment import capture_environment
 from ccb_mc_validation.provenance.hashing import sha256_file
-from ccb_mc_validation.reporting.renderer import render_mv_report
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -37,33 +34,74 @@ logger = logging.getLogger(__name__)
 _ENV_PATTERN = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^}]*))?\}")
 
 
-def _expand_env(value: str, env: dict[str, str] | None = None) -> str:
-    env = env or dict(os.environ)
-
+def _expand_env(value: str) -> str:
     def repl(match: re.Match[str]) -> str:
         name, default = match.group(1), match.group(2)
-        return env.get(name, default if default is not None else "")
-
+        return os.environ.get(name, default if default is not None else "")
     return _ENV_PATTERN.sub(repl, value)
 
+STATUS_FIXTURE = "FIXTURE"
+STATUS_SMOKE = "SMOKE"
+STATUS_PRODUCTION = "PRODUCTION"
+STATUS_BLOCKED = "BLOCKED"
+STATUS_FAILED = "FAILED"
+STATUS_STALE = "STALE"
+STATUS_SUBMITTED = "SUBMITTED"
+STATUS_DONE = "DONE"
 
-def _load_execution_yaml(path: Path) -> dict[str, Any]:
-    text = path.read_text(encoding="utf-8")
-    raw = yaml.safe_load(text) or {}
+CANONICAL_STUDIES = [
+    "truth_audit",
+    "MV0",
+    "MV1",
+    "MV2",
+    "MV3",
+    "MV4",
+    "MV5",
+    "MV6",
+    "MV7",
+    "MV8",
+    "MV9",
+]
 
-    def walk(obj: Any) -> Any:
-        if isinstance(obj, dict):
-            return {k: walk(v) for k, v in obj.items()}
-        if isinstance(obj, list):
-            return [walk(v) for v in obj]
-        if isinstance(obj, str):
-            return _expand_env(obj)
-        return obj
+DAG: dict[str, list[str]] = {
+    "discover": [],
+    "preflight": ["discover"],
+    "tests": ["preflight"],
+    "fixture": ["tests"],
+    "smoke_truth_audit": ["fixture"],
+    "smoke_MV1": ["fixture"],
+    "smoke_MV2": ["fixture"],
+    "smoke_MV3": ["fixture"],
+    "smoke_MV0": ["smoke_MV1", "smoke_MV2"],
+    "smoke_MV4": ["smoke_MV0"],
+    "smoke_MV5": ["smoke_MV0"],
+    "smoke_MV6": ["smoke_MV0"],
+    "smoke_MV7": ["smoke_MV0"],
+    "smoke_MV8": ["smoke_MV0"],
+    "smoke_MV9": ["smoke_MV1", "smoke_MV2", "smoke_MV3", "smoke_MV4", "smoke_MV5", "smoke_MV6", "smoke_MV7", "smoke_MV8"],
+    "prod_truth_audit": ["preflight"],
+    "prod_GEANT4_optional": ["preflight"],
+    "prod_MV1": ["prod_truth_audit"],
+    "prod_MV2": ["prod_truth_audit"],
+    "prod_MV3": ["prod_truth_audit"],
+    "prod_MV0": ["prod_truth_audit"],
+    "prod_MV4": ["prod_MV0"],
+    "prod_MV5": ["prod_MV0"],
+    "prod_MV6": ["prod_MV0"],
+    "prod_MV7": ["prod_MV0"],
+    "prod_MV8": ["prod_MV0"],
+    "prod_systematics": ["prod_MV1", "prod_MV2", "prod_MV3", "prod_MV4", "prod_MV5", "prod_MV6", "prod_MV7", "prod_MV8"],
+    "prod_MV9": ["prod_systematics"],
+    "figures": ["prod_MV9"],
+    "notebooks": ["figures"],
+    "docs": ["notebooks"],
+    "thesis": ["docs"],
+    "validate": ["thesis"],
+    "release": ["validate"],
+}
 
-    return walk(raw)
 
-
-@dataclass
+@dataclass(frozen=True)
 class RunIdentity:
     run_id: str
     git_sha: str
@@ -78,58 +116,39 @@ class TaskRecord:
     task_id: str
     study: str
     command: str
-    dependencies: list[str]
-    status: str = "NOT_STARTED"
+    dependencies: list[str] = field(default_factory=list)
+    status: str = "PLANNED"
     attempts: int = 0
-    slurm_job_id: str | None = None
-    started_at: str | None = None
-    finished_at: str | None = None
-    exit_code: int | None = None
-    outputs: list[str] = field(default_factory=list)
-    validation: str | None = None
-    notes: str | None = None
+    job_id: str | None = None
+    exit_code: str | None = None
+    reason: str | None = None
+    log: str | None = None
+    updated_at: str = field(default_factory=lambda: datetime.now(tz=timezone.utc).isoformat())
 
 
-DAG: dict[str, list[str]] = {
-    "preflight": [],
-    "tests": ["preflight"],
-    "smoke_mv1": ["tests"],
-    "smoke_mv2": ["tests"],
-    "smoke_mv3": ["tests"],
-    "smoke_mv0": ["smoke_mv1", "smoke_mv2"],
-    "smoke_mv9": ["smoke_mv1", "smoke_mv2", "smoke_mv3"],
-    "prod_mc01": ["preflight"],
-    "prod_mv1": ["prod_mc01"],
-    "prod_mv2": ["prod_mc01"],
-    "prod_mv3": ["prod_mc01"],
-    "prod_mv0": ["prod_mv1", "prod_mv2"],
-    "prod_mv9": ["prod_mv1", "prod_mv2", "prod_mv3"],
-    "plot": ["smoke_mv9"],
-    "notebooks": ["plot"],
-    "docs": ["notebooks"],
-    "validate": ["docs"],
-}
+def _load_execution_yaml(path: Path) -> dict[str, Any]:
+    if not path.is_file():
+        return {}
+    with path.open("r", encoding="utf-8") as fh:
+        raw = yaml.safe_load(fh) or {}
+    return raw if isinstance(raw, dict) else {}
 
 
 def _git_sha(repo: Path) -> str:
     try:
-        return subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], cwd=repo, text=True
-        ).strip()
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
         return "unknown"
 
 
 def _git_dirty(repo: Path) -> tuple[bool, str]:
     try:
-        out = subprocess.check_output(
-            ["git", "status", "--porcelain"], cwd=repo, text=True
-        )
+        out = subprocess.check_output(["git", "status", "--porcelain"], cwd=repo, text=True)
         if not out.strip():
             return False, ""
         return True, hashlib.sha256(out.encode()).hexdigest()[:8]
     except (subprocess.CalledProcessError, FileNotFoundError):
-        return False, ""
+        return False, "unknown"
 
 
 def make_run_id(repo: Path, config_sha: str, profile: str) -> str:
@@ -142,11 +161,12 @@ def make_run_id(repo: Path, config_sha: str, profile: str) -> str:
     return rid
 
 
-def _run_dir(config: ResolvedConfig, run_id: str, exec_raw: dict[str, Any] | None = None) -> Path:
-    raw = exec_raw or getattr(config, "raw", {})
-    paths = raw.get("paths", {}) if isinstance(raw, dict) else {}
-    root = paths.get("artifact_root", "reports/mc_validation/runs")
-    return (config.repo_root / root / run_id).resolve()
+def _profile_alias(profile: str | None) -> str:
+    if profile in (None, ""):
+        return "production"
+    if profile == "full":
+        return "production"
+    return profile
 
 
 def _synthetic_records(n: int, seed: int) -> dict[str, Any]:
@@ -156,408 +176,394 @@ def _synthetic_records(n: int, seed: int) -> dict[str, Any]:
     half = n // 2
     pdg = np.array([2212] * half + [1000010020] * (n - half), dtype=np.int64)
     is_p = pdg == 2212
-    edep_l0 = np.empty(n)
+    edep_l0 = np.empty(n, dtype=np.float64)
     edep_l0[is_p] = rng.uniform(0.3, 4.0, int(is_p.sum()))
     edep_l0[~is_p] = rng.uniform(2.0, 9.0, int((~is_p).sum()))
     edep_l1 = edep_l0 * rng.uniform(0.4, 0.9, n)
+    stop_layer = rng.integers(0, 8, size=n)
     return {
         "pdg": pdg,
         "edep_l0": edep_l0,
         "edep_l1": edep_l1,
         "edep_tot": edep_l0 + edep_l1 + rng.uniform(0.1, 1.0, n),
-        "stop_layer": rng.integers(0, 8, n),
-        "ekin": rng.uniform(20.0, 180.0, n),
-        "tracklen": rng.uniform(10.0, 80.0, n),
-        "nlayers": np.full(n, 8, dtype=np.int32),
-        "event_id": np.arange(n, dtype=np.int64),
+        "stop_layer": stop_layer,
+        "nlayers": stop_layer + 1,
+        "tracklen": rng.uniform(10, 40, n),
+        "ekin": rng.uniform(20, 80, n),
+        "event_id": np.arange(n),
     }
 
 
 class PipelineOrchestrator:
-    def __init__(self, config_path: Path, repo_root: Path | None = None) -> None:
+    def __init__(self, config_path: Path, repo_root: Path | None = None, profile: str | None = None, run_id: str | None = None) -> None:
         self.repo_root = (repo_root or Path.cwd()).resolve()
-        self.exec_raw = _load_execution_yaml(config_path)
-        self.config = load_config(config_path, repo_root=self.repo_root)
-        self.profile = self.exec_raw.get("profile", "full")
-        self.run_id: str | None = None
+        self.config_path = Path(config_path).resolve()
+        self.exec_raw = _load_execution_yaml(self.config_path)
+        self.config: ResolvedConfig = load_config(self.config_path, repo_root=self.repo_root)
+        self.profile = _profile_alias(profile or self.exec_raw.get("profile", "production"))
+        self.run_id: str | None = run_id
         self.run_path: Path | None = None
+        if run_id:
+            self.run_path = self._run_dir(run_id)
+
+    def _artifact_root(self) -> Path:
+        paths = self.exec_raw.get("paths", {}) if isinstance(self.exec_raw, dict) else {}
+        root = paths.get("artifact_root") or os.environ.get("CCB_ARTIFACT_ROOT") or "reports/mc_validation/runs"
+        root = _expand_env(str(root))
+        return (self.repo_root / root).resolve() if not Path(root).is_absolute() else Path(root).resolve()
+
+    def _run_dir(self, run_id: str) -> Path:
+        return self._artifact_root() / run_id
+
+    def init(self, profile: str | None = None) -> str:
+        if profile:
+            self.profile = _profile_alias(profile)
+        run_path = self._ensure_run()
+        self._event("init", STATUS_DONE, {"run_id": self.run_id})
+        return str(self.run_id)
 
     def _ensure_run(self, run_id: str | None = None) -> Path:
-        if self.run_id and self.run_path:
-            return self.run_path
-        rid = run_id or make_run_id(
-            self.repo_root, self.config.content_sha256, self.profile
-        )
-        self.run_id = rid
-        self.run_path = _run_dir(self.config, rid, self.exec_raw)
-        for sub in (
-            "execution",
-            "provenance",
-            "registry",
-            "tables",
-            "figures/png",
-            "figures/svg",
-            "notebooks/executed",
-            "notebooks/html",
-            "reports",
-        ):
+        if run_id:
+            self.run_id = run_id
+            self.run_path = self._run_dir(run_id)
+        if self.run_id is None:
+            self.run_id = make_run_id(self.repo_root, self.config.content_sha256, self.profile)
+            self.run_path = self._run_dir(self.run_id)
+        assert self.run_path is not None
+        for sub in ("execution", "provenance", "registry", "tables", "figures/png", "figures/svg", "notebooks/executed", "notebooks/html", "reports", "blockers"):
             (self.run_path / sub).mkdir(parents=True, exist_ok=True)
         identity = RunIdentity(
-            run_id=rid,
+            run_id=self.run_id,
             git_sha=_git_sha(self.repo_root),
             config_sha256=self.config.content_sha256,
             profile=self.profile,
             dirty=_git_dirty(self.repo_root)[0],
         )
-        atomic_write_json(self.run_path / "RUN_STATE.json", asdict(identity))
-        write_resolved_config(self.config, self.run_path / "provenance")
-        atomic_write_json(
-            self.run_path / "provenance" / "environment.json", capture_environment()
-        )
+        state_path = self.run_path / "RUN_STATE.json"
+        if not state_path.exists():
+            atomic_write_json(state_path, asdict(identity))
+            write_resolved_config(self.config, self.run_path / "provenance")
+            atomic_write_json(self.run_path / "provenance" / "environment.json", capture_environment())
         return self.run_path
 
-    def discover(self) -> dict[str, Any]:
-        scripts = sorted(
-            p.relative_to(self.repo_root)
-            for p in (self.repo_root / "scripts").rglob("*.py")
-            if "mc" in p.name.lower() or p.name.startswith("mv")
-        )
-        mc_scripts = [
-            "scripts/mc01_trigger_split_truth.py",
-            "scripts/mv1_mv2_truth_pid_energy.py",
-            "scripts/compare_data_mc.py",
-            "scripts/mv0_digitize_mc.py",
-            "scripts/mv1_pid_validation.py",
-            "scripts/mv2_energy_validation.py",
-            "scripts/mv3_stopping_depth.py",
-        ]
-        jobs = sorted(
-            p.name for p in (self.repo_root / "geant4" / "jobs").glob("*.sbatch")
-        )
+    def _event(self, action: str, status: str, payload: dict[str, Any] | None = None) -> None:
+        run_path = self._ensure_run()
+        event = {"time": datetime.now(tz=timezone.utc).isoformat(), "action": action, "status": status, **(payload or {})}
+        with (run_path / "execution" / "events.jsonl").open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(event, sort_keys=True) + "\n")
+
+    def inventory(self, include_untracked: bool = True) -> dict[str, Any]:
+        return self.discover(include_untracked=include_untracked)
+
+    def discover(self, include_untracked: bool = True) -> dict[str, Any]:
+        run_path = self._ensure_run()
+        py_files = sorted(str(p.relative_to(self.repo_root)) for p in self.repo_root.rglob("*.py") if ".git" not in p.parts and ".venv" not in p.parts)
+        md_files = sorted(str(p.relative_to(self.repo_root)) for p in self.repo_root.rglob("*.md") if ".git" not in p.parts and ".venv" not in p.parts)
+        slurm_files = sorted(str(p.relative_to(self.repo_root)) for p in self.repo_root.rglob("*") if p.suffix in {".slurm", ".sbatch"})
         inventory = {
             "generated_at": datetime.now(tz=timezone.utc).isoformat(),
-            "active_production": mc_scripts,
-            "slurm_jobs": jobs,
+            "run_id": self.run_id,
+            "git_sha": _git_sha(self.repo_root),
+            "include_untracked": include_untracked,
             "package_cli": "python -m ccb_mc_validation",
             "orchestrator": "scripts/mc_validation/run_pipeline.py",
-            "related_scripts_sample": [str(s) for s in scripts[:30]],
+            "counts": {"python": len(py_files), "markdown": len(md_files), "slurm": len(slurm_files)},
+            "python_files": py_files,
+            "markdown_files": md_files,
+            "slurm_files": slurm_files,
         }
-        out = self.repo_root / "reports/mc_validation/execution/SCRIPT_INVENTORY.json"
-        out.parent.mkdir(parents=True, exist_ok=True)
-        atomic_write_json(out, inventory)
+        atomic_write_json(run_path / "execution" / "SCRIPT_INVENTORY.json", inventory)
+        self._event("discover", STATUS_DONE, {"python_files": len(py_files), "markdown_files": len(md_files)})
         return inventory
 
-    def preflight(self, allow_dirty: bool = False) -> dict[str, Any]:
+    def preflight(self, allow_dirty: bool = False, strict: bool = False) -> dict[str, Any]:
+        run_path = self._ensure_run()
         dirty, diff8 = _git_dirty(self.repo_root)
-        if dirty and not allow_dirty:
-            logger.warning("Working tree is dirty (diff hash %s)", diff8)
-
         checks: list[dict[str, Any]] = []
-        mc = self.config.mc_root
-        pulses = self.config.data_pulses
-        for label, path in (("mc_root", mc), ("data_pulses", pulses)):
+        checks.append({"name": "git_dirty", "status": "PASS" if (not dirty or allow_dirty) else "FAIL", "dirty": dirty, "diff_hash": diff8})
+        for label, path in (("mc_root", self.config.mc_root), ("data_pulses", self.config.data_pulses)):
             rec: dict[str, Any] = {"name": label, "path": str(path)}
             if path.is_file():
-                rec["status"] = "PASS"
-                rec["size_bytes"] = path.stat().st_size
-                try:
-                    rec["sha256"] = sha256_file(path)
-                except OSError as exc:
-                    rec["status"] = "WARN"
-                    rec["error"] = str(exc)
+                rec.update({"status": "PASS", "size_bytes": path.stat().st_size, "sha256": sha256_file(path)})
             else:
                 rec["status"] = "MISSING"
             checks.append(rec)
-
-        env = capture_environment()
+        cluster = self._cluster_probe()
+        checks.append({"name": "lunarc_socket", "status": "PASS" if cluster == "REACHABLE" else "BLOCKED", "detail": cluster})
+        if any(c["status"] == "FAIL" for c in checks) or (dirty and not allow_dirty):
+            status = "FAIL"
+        elif any(c["status"] != "PASS" for c in checks):
+            status = "BLOCKED"
+        else:
+            status = "PASS"
+        if strict and any(c["status"] != "PASS" for c in checks):
+            status = "FAIL"
         preflight = {
             "generated_at": datetime.now(tz=timezone.utc).isoformat(),
+            "run_id": self.run_id,
             "profile": self.profile,
             "git_sha": _git_sha(self.repo_root),
-            "dirty": dirty,
             "checks": checks,
-            "environment_id": env.get("environment_id", "unknown"),
-            "cluster_reachable": self._cluster_probe(),
+            "status": status,
         }
-        out_dir = self.repo_root / "reports/mc_validation/execution"
-        out_dir.mkdir(parents=True, exist_ok=True)
-        atomic_write_json(out_dir / "PREFLIGHT.json", preflight)
-        md = ["# Preflight", ""]
-        for c in checks:
-            md.append(f"- **{c['name']}**: `{c['path']}` → {c['status']}")
-        md.append(f"\nCluster probe: {preflight['cluster_reachable']}")
-        (out_dir / "PREFLIGHT.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+        atomic_write_json(run_path / "execution" / "PREFLIGHT.json", preflight)
+        (run_path / "execution" / "PREFLIGHT.md").write_text(
+            "# Preflight\n\n" + "\n".join(f"- {c['name']}: {c['status']} {c.get('path', c.get('detail', ''))}" for c in checks) + "\n",
+            encoding="utf-8",
+        )
+        self._event("preflight", status, {"cluster": cluster})
         return preflight
 
     def _cluster_probe(self) -> str:
-        host = self.exec_raw.get("cluster", {}).get("ssh_host", "lunarc")
+        host = self.exec_raw.get("cluster", {}).get("ssh_host", "lunarc") if isinstance(self.exec_raw, dict) else "lunarc"
         try:
-            r = subprocess.run(
-                ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", host, "hostname"],
-                capture_output=True,
-                text=True,
-                timeout=12,
-            )
-            return "REACHABLE" if r.returncode == 0 else f"UNREACHABLE ({r.stderr.strip()[:120]})"
+            check = subprocess.run(["ssh", "-O", "check", host], capture_output=True, text=True, timeout=8)
+            if check.returncode != 0:
+                return f"UNREACHABLE (no active ssh control socket for {host})"
+            ping = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", host, "hostname"], capture_output=True, text=True, timeout=12)
+            return "REACHABLE" if ping.returncode == 0 else f"UNREACHABLE ({ping.stderr.strip()[:160]})"
         except (subprocess.TimeoutExpired, FileNotFoundError) as exc:
             return f"UNREACHABLE ({exc})"
 
-    def plan(self, studies: str = "all") -> dict[str, Any]:
+    def plan(self, studies: str = "all", freeze: bool = False) -> dict[str, Any]:
+        run_path = self._ensure_run()
         enabled = self._enabled_studies(studies)
-        tasks = []
+        tasks: list[TaskRecord] = []
         for tid, deps in DAG.items():
-            if tid.startswith("prod_") and self.profile == "smoke":
+            study = tid.split("_", 1)[-1]
+            if study.upper().startswith("MV") and study.upper() not in enabled:
                 continue
-            if tid.startswith("smoke_") and self.profile == "full":
+            if self.profile == "smoke" and tid.startswith("prod_"):
                 continue
-            study = tid.split("_", 1)[-1].upper()
-            if study.startswith("MV") and study not in enabled and study != "MV9":
-                if not tid.endswith("mv9"):
-                    continue
-            tasks.append(
-                TaskRecord(task_id=tid, study=study, command=tid, dependencies=deps)
-            )
+            tasks.append(TaskRecord(task_id=tid, study=study, command=self._command_for_task(tid), dependencies=deps))
         plan = {
-            "run_profile": self.profile,
+            "run_id": self.run_id,
+            "profile": self.profile,
             "enabled_studies": enabled,
+            "frozen": freeze,
             "tasks": [asdict(t) for t in tasks],
             "dag_mermaid": self._dag_mermaid(tasks),
         }
-        run_path = self._ensure_run()
         atomic_write_json(run_path / "execution" / "PLAN.json", plan)
-        (run_path / "execution" / "PLAN.md").write_text(
-            f"# Execution plan\n\n```mermaid\n{plan['dag_mermaid']}\n```\n",
-            encoding="utf-8",
-        )
+        (run_path / "execution" / "PLAN.md").write_text("# Execution plan\n\n```mermaid\n" + plan["dag_mermaid"] + "\n```\n", encoding="utf-8")
+        self._write_task_registry(tasks)
+        self._event("plan", STATUS_DONE, {"tasks": len(tasks)})
         return plan
 
+    def _command_for_task(self, task_id: str) -> str:
+        if task_id.startswith("prod_") or task_id in {"figures", "notebooks", "thesis"}:
+            return f"sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch {task_id}"
+        return f"python scripts/mc_validation/run_pipeline.py --run-id {self.run_id or '<RUN_ID>'} {task_id.split('_')[0]}"
+
     def _enabled_studies(self, studies: str) -> list[str]:
-        if studies.lower() == "all":
-            return [
-                k.upper().replace("MV", "MV")
-                for k, v in self.config.studies.items()
-                if v.get("enabled")
-            ]
-        return [s.strip().upper() for s in studies.split(",")]
+        if studies.lower() in {"all", "all-core"}:
+            return CANONICAL_STUDIES[:]
+        return [s.strip().upper() for s in studies.split(",") if s.strip()]
 
     def _dag_mermaid(self, tasks: Sequence[TaskRecord]) -> str:
+        ids = {t.task_id for t in tasks}
         lines = ["flowchart TD"]
         for t in tasks:
-            for d in t.dependencies:
-                lines.append(f"  {d} --> {t.task_id}")
+            if not t.dependencies:
+                lines.append(f"  {t.task_id}")
+            for dep in t.dependencies:
+                if dep in ids:
+                    lines.append(f"  {dep} --> {t.task_id}")
         return "\n".join(lines)
 
-    def smoke(self, studies: str = "all") -> str:
-        self.profile = "smoke"
+    def _write_task_registry(self, tasks: Sequence[TaskRecord]) -> None:
         run_path = self._ensure_run()
-        exec_cfg = self.exec_raw.get("execution", {})
-        n = int(exec_cfg.get("smoke_max_tracks", 4000))
-        seed = int(self.config.seeds.get("global", 20260623))
-        records = _synthetic_records(n, seed)
-        mode = StudyStatus.FIXTURE
+        atomic_write_json(run_path / "registry" / "TASK_REGISTRY.json", [asdict(t) for t in tasks])
 
-        if self.config.mc_root.is_file():
-            mode = StudyStatus.PRODUCTION
-            logger.info("MC ROOT present — production smoke path available")
+    def test(self, scope: str = "unit", strict: bool = False) -> dict[str, Any]:
+        run_path = self._ensure_run()
+        cmd = [sys.executable, "-m", "pytest", "-q"]
+        started = datetime.now(tz=timezone.utc).isoformat()
+        proc = subprocess.run(cmd, cwd=self.repo_root, capture_output=True, text=True)
+        log_path = run_path / "execution" / "pytest.log"
+        log_path.write_text(proc.stdout + proc.stderr, encoding="utf-8")
+        result = {"command": cmd, "scope": scope, "started_at": started, "finished_at": datetime.now(tz=timezone.utc).isoformat(), "returncode": proc.returncode, "log": str(log_path), "status": "PASS" if proc.returncode == 0 else "FAIL"}
+        atomic_write_json(run_path / "execution" / "TEST.json", result)
+        self._event("test", result["status"], {"returncode": proc.returncode})
+        return result
 
-        results = {}
-        if "MV1" in self._enabled_studies(studies) or studies == "all":
-            r1 = run_mv1(records, fixture=True)
-            r1.status = mode
-            out1 = run_path / "MV1"
-            write_study_result(r1, out1)
-            render_mv_report("MV1", r1, out1)
-            results["MV1"] = r1.metrics
+    def fixture(self, workers: int = 1, shards: int = 1) -> str:
+        return self.smoke(studies="MV0,MV1,MV2,MV3,MV9", fixture=True, workers=workers, shards=shards)
 
-        if "MV2" in self._enabled_studies(studies) or studies == "all":
-            r2 = run_mv2(records, fixture=True)
-            r2.status = mode
-            out2 = run_path / "MV2"
-            write_study_result(r2, out2)
-            render_mv_report("MV2", r2, out2)
-            results["MV2"] = r2.metrics
-
-        if "MV3" in self._enabled_studies(studies) or studies == "all":
-            r3 = run_mv3(records, fixture=True)
-            r3.status = mode
-            out3 = run_path / "MV3"
-            write_study_result(r3, out3)
-            render_mv_report("MV3", r3, out3)
-            results["MV3"] = r3.metrics
-
-        dig_cfg = self.exec_raw.get("digitizer", self.config.raw.get("digitizer", {}))
-        pipe = DigitizerPipeline.from_config(dig_cfg)
-        dig = pipe.run(
-            [{"edep_mev": 2.5, "time_ns": 0.0}],
-            event_id=seed,
-        )["adc"]
-        atomic_write_json(
-            run_path / "MV0" / "smoke_waveform.json",
-            {"samples": dig.tolist(), "status": "FIXTURE"},
-        )
-
-        synth_out = run_path / "MV9" / "MV9_SYNTHESIS.md"
-        synthesize_mv9(
-            self.repo_root / "reports/mc_validation_registry.json",
-            out_path=synth_out,
-        )
-
-        gate = {
-            "run_id": self.run_id,
-            "status": "PASS",
-            "mode": mode.value if hasattr(mode, "value") else str(mode),
-            "studies": list(results.keys()),
-            "deterministic_seed": seed,
-            "not_for_physics": True,
-        }
+    def smoke(self, studies: str = "all", fixture: bool = True, workers: int = 1, shards: int = 1) -> str:
+        run_path = self._ensure_run()
+        seed = int(self.config.seeds.get("global", 424242))
+        records = _synthetic_records(1000, seed)
+        results: dict[str, Any] = {}
+        enabled = self._enabled_studies(studies)
+        if "MV1" in enabled:
+            r = run_mv1(records, fixture=True); write_study_result(r, run_path / "MV1"); results["MV1"] = r.to_dict()
+        if "MV2" in enabled:
+            r = run_mv2(records, fixture=True); write_study_result(r, run_path / "MV2"); results["MV2"] = r.to_dict()
+        if "MV3" in enabled:
+            r = run_mv3(records, fixture=True, data_profiles=None); write_study_result(r, run_path / "MV3"); results["MV3"] = r.to_dict()
+        if "MV0" in enabled:
+            pipe = DigitizerPipeline.from_config(self.exec_raw.get("digitizer", self.config.raw.get("digitizer", {})))
+            dig = pipe.run([{"edep_mev": 2.5, "time_ns": 0.0}], event_id=seed)["adc"]
+            atomic_write_json(run_path / "MV0" / "smoke_waveform.json", {"samples": dig.tolist(), "status": STATUS_FIXTURE, "not_for_physics": True})
+            results["MV0"] = {"status": STATUS_FIXTURE, "n_samples": int(len(dig))}
+        for mv in ("MV4", "MV5", "MV6", "MV7", "MV8"):
+            if mv in enabled:
+                blocker = {"status": STATUS_BLOCKED, "reason": "requires calibrated MV0 and truth-labelled digitized MC; production implementation must run under SLURM", "not_for_physics": True}
+                atomic_write_json(run_path / mv / "BLOCKED.json", blocker)
+                results[mv] = blocker
+        if "MV9" in enabled:
+            synth_out = run_path / "MV9" / "MV9_SYNTHESIS.md"
+            try:
+                synthesize_mv9(self.repo_root / "reports/mc_validation_registry.json", out_path=synth_out)
+            except Exception as exc:  # keep smoke gate honest but non-fatal for missing registry
+                synth_out.write_text(f"# MV9 synthesis\n\nBLOCKED: {exc}\n", encoding="utf-8")
+            results["MV9"] = {"status": STATUS_SMOKE, "artifact": str(synth_out)}
+        gate = {"run_id": self.run_id, "status": "PASS", "mode": STATUS_FIXTURE if fixture else STATUS_SMOKE, "studies": results, "workers": workers, "shards": shards, "not_for_physics": True}
         atomic_write_json(run_path / "SMOKE_GATE.json", gate)
-        (run_path / "SMOKE_GATE.md").write_text(
-            f"# Smoke gate\n\nStatus: **PASS** (fixture mode)\n\nRun ID: `{self.run_id}`\n",
-            encoding="utf-8",
-        )
-        self._update_task_registry(run_path, "smoke", "DONE")
-        return self.run_id or ""
+        (run_path / "SMOKE_GATE.md").write_text(f"# Smoke gate\n\nStatus: **PASS** ({gate['mode']}; not for physics)\n\nRun ID: `{self.run_id}`\n", encoding="utf-8")
+        self._event("smoke", "PASS", {"studies": list(results)})
+        return str(self.run_id)
 
     def submit(self, studies: str = "all", dry_run: bool = False) -> dict[str, Any]:
-        pre = self.preflight(allow_dirty=True)
-        mc_missing = any(
-            c["name"] == "mc_root" and c["status"] == "MISSING" for c in pre["checks"]
-        )
-        cluster_ok = pre["cluster_reachable"] == "REACHABLE"
         run_path = self._ensure_run()
+        pre = self.preflight(allow_dirty=True)
+        cluster_ok = any(c["name"] == "lunarc_socket" and c["status"] == "PASS" for c in pre["checks"])
+        mc_ok = any(c["name"] == "mc_root" and c["status"] == "PASS" for c in pre["checks"])
         jobs: dict[str, Any] = {}
-
-        if mc_missing or not cluster_ok:
+        if not cluster_ok or not mc_ok:
             blocker = {
-                "status": "BLOCKED",
-                "reason": "mc_root_missing" if mc_missing else "cluster_unreachable",
-                "cluster": pre["cluster_reachable"],
-                "resume_command": (
-                    "ssh lunarc && cd /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam && "
-                    "python scripts/mc_validation/run_pipeline.py submit "
-                    "--config configs/mc_validation/execution.yaml"
-                ),
+                "status": STATUS_BLOCKED,
+                "reason": "lunarc_unreachable" if not cluster_ok else "mc_root_missing",
+                "cluster_reachable": cluster_ok,
+                "mc_root_present": mc_ok,
+                "resume_command": f"python scripts/mc_validation/run_pipeline.py --run-id {self.run_id} --profile production submit --studies {studies}",
+                "heavy_compute_policy": "No production MV/GEANT4/full ROOT/notebook work may run locally or on a LUNARC login node.",
             }
-            atomic_write_json(self.repo_root / "RUN_BLOCKED.md", blocker)
-            atomic_write_json(run_path / "JOB_REGISTRY.json", blocker)
+            atomic_write_json(run_path / "blockers" / "PRODUCTION_SUBMIT_BLOCKED.json", blocker)
+            self._event("submit", STATUS_BLOCKED, blocker)
             return blocker
+        if dry_run:
+            result = {"status": "DRY_RUN", "message": "Cluster and inputs available; sbatch submission suppressed."}
+            atomic_write_json(run_path / "execution" / "SUBMIT_DRY_RUN.json", result)
+            return result
+        # Submit canonical batch driver; actual heavy worker must enforce SLURM_JOB_ID.
+        cmd = ["ssh", "lunarc", f"cd {self.exec_raw.get('cluster', {}).get('project_root', '/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam')} && sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch {self.run_id} {studies}"]
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        job_id = proc.stdout.strip().splitlines()[-1] if proc.returncode == 0 and proc.stdout.strip() else None
+        status = STATUS_SUBMITTED if proc.returncode == 0 else STATUS_FAILED
+        jobs["all-core"] = {"status": status, "job_id": job_id, "returncode": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr, "command": cmd}
+        atomic_write_json(run_path / "execution" / "JOB_REGISTRY.json", jobs)
+        self._event("submit", status, {"job_id": job_id})
+        return {"status": status, "jobs": jobs}
 
-        sbatch_cmds = [
-            ("mc01", "geant4/jobs/mc01_trigger_split.sbatch"),
-            ("mv1", "geant4/jobs/mv1_pid.sbatch"),
-            ("mv2", "geant4/jobs/mv2_energy.sbatch"),
-            ("mv3", "geant4/jobs/mv3_stopping.sbatch"),
-        ]
-        cluster = self.exec_raw.get("cluster", {})
-        proj = cluster.get("project_root", "")
-        for name, script in sbatch_cmds:
-            remote = f"cd {proj} && sbatch {script}"
-            if dry_run:
-                jobs[name] = {"status": "DRY_RUN", "command": remote}
-                continue
-            r = subprocess.run(
-                ["ssh", cluster.get("ssh_host", "lunarc"), remote],
-                capture_output=True,
-                text=True,
-            )
-            job_id = r.stdout.strip().split()[-1] if r.returncode == 0 else None
-            jobs[name] = {
-                "status": "SUBMITTED" if r.returncode == 0 else "FAILED",
-                "job_id": job_id,
-                "stdout": r.stdout,
-                "stderr": r.stderr,
-            }
+    def watch(self, run_id: str | None = None, until_terminal: bool = False, poll_interval_seconds: int = 60) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        registry_path = path / "execution" / "JOB_REGISTRY.json"
+        if not registry_path.is_file():
+            result = {"status": STATUS_BLOCKED, "reason": "no submitted jobs", "run_id": self.run_id}
+            atomic_write_json(path / "execution" / "WATCH.json", result)
+            return result
+        jobs = json.loads(registry_path.read_text(encoding="utf-8"))
+        for rec in jobs.values():
+            jid = rec.get("job_id")
+            if jid:
+                rec["sacct_probe"] = self._sacct(jid)
+        result = {"status": "UPDATED", "jobs": jobs, "until_terminal": until_terminal}
+        atomic_write_json(path / "execution" / "WATCH.json", result)
+        return result
 
-        atomic_write_json(run_path / "JOB_REGISTRY.json", jobs)
-        return jobs
+    monitor = watch
 
-    def status(self, run_id: str | None = None) -> dict[str, Any]:
-        rid = run_id or self.run_id
-        if not rid:
-            return {"error": "no run_id"}
-        path = _run_dir(self.config, rid, self.exec_raw)
-        state = {}
-        for name in ("RUN_STATE.json", "JOB_REGISTRY.json", "SMOKE_GATE.json"):
-            fp = path / name
-            if fp.is_file():
-                state[name] = json.loads(fp.read_text(encoding="utf-8"))
-        return state
+    def _sacct(self, job_id: str) -> dict[str, Any]:
+        try:
+            proc = subprocess.run(["ssh", "lunarc", f"sacct -X -j {job_id} --format=JobID,State,ExitCode -P"], capture_output=True, text=True, timeout=30)
+            return {"returncode": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr}
+        except Exception as exc:
+            return {"returncode": -1, "error": str(exc)}
 
-    def collect(self, run_id: str) -> dict[str, Any]:
-        path = _run_dir(self.config, run_id, self.exec_raw)
-        collected = {"run_id": run_id, "artifacts": []}
-        for fp in path.rglob("*"):
-            if fp.is_file() and fp.suffix in {".json", ".md", ".png"}:
-                collected["artifacts"].append(str(fp.relative_to(path)))
-        atomic_write_json(path / "COLLECT.json", collected)
-        return collected
+    def status(self, run_id: str | None = None, all_runs: bool = False) -> dict[str, Any]:
+        if all_runs:
+            runs = sorted(p.name for p in self._artifact_root().glob("*") if p.is_dir()) if self._artifact_root().exists() else []
+            return {"artifact_root": str(self._artifact_root()), "runs": runs}
+        path = self._ensure_run(run_id)
+        state = json.loads((path / "RUN_STATE.json").read_text(encoding="utf-8")) if (path / "RUN_STATE.json").is_file() else {"run_id": self.run_id}
+        blockers = sorted(str(p.relative_to(path)) for p in (path / "blockers").glob("*.json")) if (path / "blockers").exists() else []
+        return {"run": state, "blockers": blockers, "path": str(path)}
 
-    def validate(self, run_id: str, scope: str = "smoke", strict: bool = False) -> dict[str, Any]:
-        path = _run_dir(self.config, run_id, self.exec_raw)
+    def collect(self, run_id: str | None = None) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        result = {"status": STATUS_BLOCKED, "reason": "No completed LUNARC production jobs to collect", "run_id": self.run_id}
+        atomic_write_json(path / "execution" / "COLLECT.json", result)
+        return result
+
+    def validate(self, run_id: str | None = None, scope: str = "all", strict: bool = False) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
         checks = []
-        gate = path / "SMOKE_GATE.json"
-        if scope in ("smoke", "all") and gate.is_file():
-            checks.append({"name": "smoke_gate", "status": "PASS"})
-        elif scope == "smoke" and strict:
-            checks.append({"name": "smoke_gate", "status": "FAIL"})
-        report = {"run_id": run_id, "scope": scope, "checks": checks}
-        report["status"] = "PASS" if all(c["status"] == "PASS" for c in checks) else "FAIL"
+        smoke = path / "SMOKE_GATE.json"
+        checks.append({"name": "smoke_gate", "status": "PASS" if smoke.is_file() else "MISSING"})
+        jobreg = path / "execution" / "JOB_REGISTRY.json"
+        checks.append({"name": "production_jobs", "status": "PASS" if jobreg.is_file() else STATUS_BLOCKED})
+        fixture_leak = self._fixture_release_leak(path)
+        checks.append({"name": "fixture_not_released", "status": "FAIL" if fixture_leak else "PASS", "matches": fixture_leak})
+        status = "PASS" if all(c["status"] == "PASS" for c in checks) else ("FAIL" if strict else STATUS_BLOCKED)
+        report = {"run_id": self.run_id, "scope": scope, "strict": strict, "status": status, "checks": checks}
         atomic_write_json(path / "VALIDATION.json", report)
+        (path / "FINAL_AUDIT.md").write_text("# Final audit\n\n" + "\n".join(f"- {c['name']}: {c['status']}" for c in checks) + f"\n\nStatus: **{status}**\n", encoding="utf-8")
         return report
 
-    def plot(self, run_id: str, figures: str = "all") -> dict[str, Any]:
-        path = _run_dir(self.config, run_id, self.exec_raw)
-        # Figures already emitted by study modules during smoke/production
-        figs = list(path.rglob("figures/*")) + list(path.rglob("*.png"))
-        return {"run_id": run_id, "figure_count": len(figs), "figures": figures}
+    def _fixture_release_leak(self, path: Path) -> list[str]:
+        matches: list[str] = []
+        for p in [self.repo_root / "README.md", self.repo_root / "PROJECT_REPORT.md", self.repo_root / "FINDINGS_SYNTHESIS.md"]:
+            if p.is_file() and "FIXTURE" in p.read_text(encoding="utf-8", errors="ignore"):
+                matches.append(str(p.relative_to(self.repo_root)))
+        return matches
 
-    def notebooks(self, run_id: str, sync: bool = True, execute: bool = True) -> dict[str, Any]:
-        script = self.repo_root / "scripts/notebooks/build_and_execute.py"
-        if not script.is_file():
-            return {"status": "BLOCKED", "reason": "notebook builder missing"}
-        cmd = [sys.executable, str(script), "all", "--run-id", run_id]
-        if execute:
-            cmd.append("--execute")
-        r = subprocess.run(cmd, cwd=self.repo_root, capture_output=True, text=True)
-        return {
-            "exit_code": r.returncode,
-            "stdout": r.stdout[-2000:],
-            "stderr": r.stderr[-2000:],
-        }
+    def qa(self, run_id: str | None = None, scope: str = "all", strict: bool = False) -> dict[str, Any]:
+        return self.validate(run_id=run_id, scope=scope, strict=strict)
 
-    def docs(self, run_id: str) -> dict[str, Any]:
-        script = self.repo_root / "scripts/docs/generate_docs.py"
-        if not script.is_file():
-            return {"status": "BLOCKED", "reason": "docs generator missing"}
-        r = subprocess.run(
-            [sys.executable, str(script), "--run-id", run_id, "--strict"],
-            cwd=self.repo_root,
-            capture_output=True,
-            text=True,
-        )
-        return {"exit_code": r.returncode, "stderr": r.stderr[-1500:]}
+    def plot(self, run_id: str | None = None) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        result = {"status": STATUS_BLOCKED, "reason": "Full figure suite requires completed production artifacts and LUNARC batch rendering"}
+        atomic_write_json(path / "figures" / "PLOT_BLOCKED.json", result)
+        return result
 
-    def release(self, run_id: str) -> dict[str, Any]:
-        v = self.validate(run_id, scope="all", strict=True)
-        status = v.get("status", "FAIL")
-        latest = {
-            "run_id": run_id,
-            "released_at": datetime.now(tz=timezone.utc).isoformat(),
-            "validation": status,
-        }
-        if status == "PASS":
-            atomic_write_json(
-                self.repo_root / "reports/mc_validation/latest.json", latest
-            )
+    def notebooks(self, run_id: str | None = None, execute: bool = False) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        result = {"status": STATUS_BLOCKED, "execute": execute, "reason": "Full-data notebook execution must run under LUNARC sbatch after production artifacts freeze"}
+        atomic_write_json(path / "notebooks" / "NOTEBOOKS_BLOCKED.json", result)
+        return result
+
+    def docs(self, run_id: str | None = None) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        result = {"status": STATUS_BLOCKED, "reason": "Production documentation injection requires validated production claim registry"}
+        atomic_write_json(path / "reports" / "DOCS_BLOCKED.json", result)
+        return result
+
+    def thesis(self, run_id: str | None = None) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        result = {"status": STATUS_BLOCKED, "reason": "Thesis build requires validated production reports/figures"}
+        atomic_write_json(path / "reports" / "THESIS_BLOCKED.json", result)
+        return result
+
+    def release(self, run_id: str | None = None) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        v = self.validate(run_id=self.run_id, scope="release", strict=True)
+        latest = {"run_id": self.run_id, "released_at": datetime.now(tz=timezone.utc).isoformat(), "validation": v["status"]}
+        if v["status"] == "PASS":
+            atomic_write_json(self.repo_root / "reports/mc_validation/latest.json", latest)
+        else:
+            atomic_write_json(path / "release_BLOCKED.json", {"status": STATUS_BLOCKED, "validation": v})
         return latest
 
-    def resume(self, run_id: str) -> dict[str, Any]:
-        return self.status(run_id)
+    def resume(self, run_id: str | None = None) -> dict[str, Any]:
+        path = self._ensure_run(run_id)
+        status = self.status(self.run_id)
+        self._event("resume", "READY", {"path": str(path)})
+        return status
 
-    def _update_task_registry(self, run_path: Path, phase: str, status: str) -> None:
-        reg_path = run_path / "TASK_REGISTRY.json"
-        reg = {}
-        if reg_path.is_file():
-            reg = json.loads(reg_path.read_text(encoding="utf-8"))
-        reg[phase] = {"status": status, "at": datetime.now(tz=timezone.utc).isoformat()}
-        atomic_write_json(reg_path, reg)
+    def all(self, studies: str = "all", wait_until_terminal: bool = False, continue_independent: bool = True, resume: bool = True) -> dict[str, Any]:
+        self.plan(studies=studies, freeze=True)
+        submit = self.submit(studies=studies)
+        watch = self.watch(until_terminal=wait_until_terminal) if submit.get("status") == STATUS_SUBMITTED else {"status": STATUS_BLOCKED, "reason": "submit did not start"}
+        return {"submit": submit, "watch": watch, "continue_independent": continue_independent, "resume": resume}

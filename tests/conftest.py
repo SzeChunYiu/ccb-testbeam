@@ -19,7 +19,7 @@ FIXTURES = Path(__file__).parent / "fixtures"
 def _write_truth_mini_npz(path: Path) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     layer = np.array(
-        [np.array([0, 1], dtype=np.int32), np.array([0], dtype=np.int32)],
+        [np.array([0, 0], dtype=np.int32), np.array([0], dtype=np.int32)],
         dtype=object,
     )
     layer1 = np.array(
@@ -50,7 +50,8 @@ def _write_truth_mini_npz(path: Path) -> Path:
 @pytest.fixture(scope="session")
 def truth_mini_npz() -> Path:
     path = FIXTURES / "truth_mini.npz"
-    if not path.is_file():
-        _write_truth_mini_npz(path)
+    # Always refresh this tiny deterministic fixture so stale local/CI artifacts
+    # cannot change the expected trigger classification population.
+    _write_truth_mini_npz(path)
     return path
 

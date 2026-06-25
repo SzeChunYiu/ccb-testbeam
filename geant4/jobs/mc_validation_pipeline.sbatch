@@ -23,7 +23,7 @@ fi
 _SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="${CCB_MC_REPO:-$(git -C "${_SCRIPT_DIR}/../.." rev-parse --show-toplevel 2>/dev/null || echo "${_SCRIPT_DIR}/../..")}"
 PY="${CCB_MC_PYTHON:-python3}"
-CONFIG="${CCB_MC_CONFIG:-${REPO}/configs/mc_validation/base.yaml}"
+CONFIG="${CCB_MC_CONFIG:-${REPO}/configs/mc_validation/execution.yaml}"
 STAMP="$(date +%s)"
 OUT="${CCB_MC_OUT:-${REPO}/reports/mc_validation/pipeline_${STAMP}}"
 RUN_ID="${CCB_RUN_ID:-slurm_${SLURM_JOB_ID}}"

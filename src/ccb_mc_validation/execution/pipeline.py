@@ -25,6 +25,7 @@ from ccb_mc_validation.provenance.environment import capture_environment
 from ccb_mc_validation.provenance.hashing import sha256_file
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
+from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -655,10 +656,15 @@ class PipelineOrchestrator:
 
     def docs(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        result = {"status": STATUS_BLOCKED, "reason": "Production documentation injection requires validated production claim registry"}
-        atomic_write_json(path / "reports" / "DOCS_BLOCKED.json", result)
-        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
-        return result
+        try:
+            manifest = generate_artifact_reports(path)
+        except (FileNotFoundError, ValueError) as exc:
+            result = {"status": STATUS_BLOCKED, "reason": str(exc)}
+            atomic_write_json(path / "reports" / "DOCS_BLOCKED.json", result)
+            self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
+            return result
+        self._event("docs", manifest["status"], {"scope": manifest["scope"], "full_suite": manifest["full_report_suite_status"]})
+        return manifest
 
     def thesis(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)

@@ -262,6 +262,25 @@ Generated GitHub-wiki-ready draft artifacts are:
 
 The wiki manifest status is `PASS` for scope `github-wiki-draft`, with `final_wiki_status=BLOCKED`, `page_count=6`, and `release_ready=false`. These pages include introduction, methods/math formulas, results/figures, discussion/blockers, and reproducibility sections, but final GitHub wiki publication remains blocked until the full release audit passes and citations/references are curated.
 
+## Reference registry and wiki citation refresh
+
+After PR #512 and the release-ordering fix in PR #513, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+```
+
+Generated/refreshed reference and wiki artifacts are:
+
+- `reports/mc_validation/references/REFERENCE_REGISTRY.json` (`1383` bytes, refreshed 2026-06-25 23:02:55 +0200)
+- `reports/mc_validation/references/REFERENCE_REGISTRY.md` (`910` bytes, refreshed 2026-06-25 23:02:55 +0200)
+- `wiki/References-and-Reproducibility.md` (`1358` bytes, refreshed 2026-06-25 23:02:55 +0200)
+- `wiki/WIKI_MANIFEST.json` (`644` bytes, refreshed 2026-06-25 23:02:55 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`2565` bytes, refreshed 2026-06-25 23:02:55 +0200)
+- `release_BLOCKED.json` (`3494` bytes, refreshed 2026-06-25 23:02:55 +0200)
+
+The reference registry status is `PASS` for scope `reference-registry`, with `final_bibliography_status=BLOCKED` and one blocked literature-curation placeholder. The publication manifest now has `reference_registry.exists=true` for `reports/mc_validation/references/REFERENCE_REGISTRY.md` (`910` bytes). Final curated citations/references remain a release/wiki blocker.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

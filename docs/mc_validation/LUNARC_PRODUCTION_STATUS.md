@@ -361,3 +361,25 @@ export CCB_ARTIFACT_ROOT=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/arti
 export CCB_MAX_ROOT_EVENTS=0
 sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch
 ```
+
+## Release-audit open-question gates
+
+After PR #521, selected run QA was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted qa
+```
+
+Generated/refreshed QA audit artifacts are:
+
+- `QA_RELEASE_AUDIT.json` (`6300` bytes, refreshed 2026-06-25 23:30:26 +0200)
+- `QA_RELEASE_AUDIT.md` (`2018` bytes, refreshed 2026-06-25 23:30:26 +0200)
+
+The release audit now checks the recursive open-question artifacts directly:
+
+- `open_question_registry`: `PASS`, observed `PASS`, `2159` bytes
+- `open_question_closure_plan`: `PASS`, observed `PASS`, `4932` bytes
+- `all_questions_closed`: `BLOCKED`, observed `false`, reason `expected all_questions_closed=True, observed False`
+- `all_question_steps_closed`: `BLOCKED`, observed `false`, reason `expected all_steps_closed=True, observed False`
+
+Overall release audit remains `BLOCKED` with `release_ready=false` and `25` checks. This is expected: the registry and closure-plan files exist and validate, but the recursive evidence-reduction condition is intentionally fail-closed until all open questions and closure-plan steps are actually resolved with production evidence. MV4-MV8 production artifacts, thesis/static-site output, and release bundle gates also remain blocked.

@@ -58,6 +58,22 @@ These are full-input production-run summaries from `CCB_MAX_ROOT_EVENTS=0`, not 
 - Job `3316255`: failed closed because MV1-MV3 production ROOT loading was intentionally blocked. Fixed by PR #473.
 - After job `3316449`, MV9 initially summarized stale fixture registry values. Fixed by PR #474 and rerun on LUNARC. Full-input job `3316531` used the corrected MV9 path.
 
+
+## Artifact validation
+
+Validation was run on LUNARC after PR #479 with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted validate --scope artifact --strict
+```
+
+Result: `PASS`. The generated files are:
+
+- `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/VALIDATION.json`
+- `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/VALIDATION_SUMMARY.md`
+
+Checks passing in that summary: `job_state_completed`, `preflight_mc_root`, `preflight_data_pulses`, `MV1_study_result`, `MV2_study_result`, `MV3_study_result`, `MV9_synthesis`, and `slurm_logs_present`. This validates artifact consistency for MV1-MV3/MV9 only; it does not complete figures, notebooks, thesis, uncertainty/systematic arrays, or final release audit.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

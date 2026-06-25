@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -78,6 +79,9 @@ def generate_run_summary(run_root: Path) -> dict[str, str]:
     md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     try:
+        mpl_dir = run_root / ".matplotlib"
+        mpl_dir.mkdir(parents=True, exist_ok=True)
+        os.environ.setdefault("MPLCONFIGDIR", str(mpl_dir))
         import matplotlib.pyplot as plt
 
         studies = [row["study"] for row in rows]

@@ -74,6 +74,18 @@ Result: `PASS`. The generated files are:
 
 Checks passing in that summary: `job_state_completed`, `preflight_mc_root`, `preflight_data_pulses`, `MV1_study_result`, `MV2_study_result`, `MV3_study_result`, `MV9_synthesis`, and `slurm_logs_present`. This validates artifact consistency for MV1-MV3/MV9 only; it does not complete figures, notebooks, thesis, uncertainty/systematic arrays, or final release audit.
 
+
+## Summary report and figures
+
+After PR #481, the compact run-summary generator was run on LUNARC for the selected artifacted run. It produced:
+
+- `reports/mc_validation/summary/RUN_SUMMARY.md`
+- `reports/mc_validation/summary/metrics_table.csv`
+- `figures/summary/study_support.svg` and `figures/summary/study_support.png`
+- `figures/summary/selected_metrics.svg` and `figures/summary/selected_metrics.png`
+
+All paths above are under `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/`. These compact figures summarize support and selected metrics only; they are not the final publication-quality figure suite required for thesis release.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

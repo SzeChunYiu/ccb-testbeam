@@ -1,0 +1,10 @@
+./tests/test_cli_smoke.py
+./tests/test_config.py
+./tests/test_digitizer_determinism.py
+./tests/test_manifest.py
+./tests/test_mc_validation_core.py
+./tests/test_mv1_fixture.py
+./tests/test_pdg.py
+./tests/test_report_lint.py
+./tests/test_splits.py
+./tests/test_trigger.py

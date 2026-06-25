@@ -1,0 +1,9 @@
+./geant4/jobs/mc01_trigger_split.sbatch
+./geant4/jobs/mc_validation_pipeline.sbatch
+./geant4/jobs/mv0_digitize.sbatch
+./geant4/jobs/mv1_mv2_truth.sbatch
+./geant4/jobs/mv1_pid.sbatch
+./geant4/jobs/mv2_energy.sbatch
+./geant4/jobs/mv3_stopping.sbatch
+./geant4/jobs/mv4_timing.sbatch
+./geant4/jobs/mv5_pileup.sbatch

@@ -28,6 +28,7 @@ from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
+from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
 from ccb_mc_validation.reporting.thesis_draft import generate_thesis_draft
 from ccb_mc_validation.reporting.publication_index import generate_publication_index
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
@@ -625,7 +626,8 @@ class PipelineOrchestrator:
         path = self._ensure_run(run_id)
         validation = self.validate(run_id=run_id, scope=scope, strict=strict)
         audit = generate_release_audit(path)
-        return {"status": audit["status"], "validation": validation, "release_audit": audit}
+        claims = generate_claim_ledger(path)
+        return {"status": audit["status"], "validation": validation, "release_audit": audit, "claim_ledger": claims}
 
     def plot(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)

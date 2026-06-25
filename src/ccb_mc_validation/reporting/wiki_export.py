@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from ccb_mc_validation.io.artifact_store import atomic_write_json
+from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -45,6 +46,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     audit = _load_json(run_root / "QA_RELEASE_AUDIT.json")
     claims = _load_json(run_root / "reports" / "mc_validation" / "claims" / "CLAIM_LEDGER.json")
     publication = _load_json(run_root / "publication" / "PUBLICATION_MANIFEST.json")
+    references = generate_reference_registry(run_root)
     figure_manifest = _load_json(run_root / "figures" / "summary" / "FIGURE_MANIFEST.json")
     rows = _load_rows(run_root / "reports" / "mc_validation" / "summary" / "metrics_table.csv")
     run_id = str(validation.get("run_id") or run_root.name)
@@ -168,6 +170,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "- Claim ledger: `reports/mc_validation/claims/CLAIM_LEDGER.md`",
         "- Publication index: `publication/index.html`",
         "- Thesis draft: `reports/mc_validation/thesis_draft/THESIS_DRAFT.md`",
+        "- Reference registry: `reports/mc_validation/references/REFERENCE_REGISTRY.md`",
         "",
         "## Reproduction command",
         "",
@@ -177,6 +180,12 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "```",
         "",
         "## References",
+        "",
+        f"Reference registry status: `{references.get('status')}`, final bibliography status: `{references.get('final_bibliography_status')}`.",
+        "",
+        "| ID | Status | Citation |",
+        "|---|---:|---|",
+        *[f"| {record.get('id')} | {record.get('status')} | {record.get('citation')} |" for record in references.get('records', [])],
         "",
         "Formal literature/citation entries still need final curation before publication-grade release. This draft intentionally leaves citation completion as a release blocker rather than inventing references.",
     ])

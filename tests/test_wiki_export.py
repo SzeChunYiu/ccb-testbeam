@@ -60,3 +60,6 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert "Draft / not final release" in home
     assert "```math" in methods
     assert "AUC" in (wiki / "Results-and-Figures.md").read_text(encoding="utf-8")
+    refs = (wiki / "References-and-Reproducibility.md").read_text(encoding="utf-8")
+    assert "REF-RUNBOOK" in refs
+    assert "final bibliography status" in refs

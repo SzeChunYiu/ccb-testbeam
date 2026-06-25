@@ -23,6 +23,7 @@ from ccb_mc_validation.digitizer.pipeline import DigitizerPipeline
 from ccb_mc_validation.io.artifact_store import atomic_write_json
 from ccb_mc_validation.provenance.environment import capture_environment
 from ccb_mc_validation.provenance.hashing import sha256_file
+from ccb_mc_validation.reporting.run_summary import generate_run_summary
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -619,6 +620,11 @@ class PipelineOrchestrator:
 
     def plot(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
+        if (path / "VALIDATION.json").is_file():
+            artifacts = generate_run_summary(path)
+            result = {"status": "PASS", "run_id": self.run_id, "artifacts": artifacts, "scope": "summary"}
+            atomic_write_json(path / "figures" / "PLOT_SUMMARY.json", result)
+            return result
         result = {"status": STATUS_BLOCKED, "reason": "Full figure suite requires completed production artifacts and LUNARC batch rendering"}
         atomic_write_json(path / "figures" / "PLOT_BLOCKED.json", result)
         self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])

@@ -26,6 +26,8 @@ def test_generate_run_summary_writes_tables_and_markdown(tmp_path: Path) -> None
     artifacts = generate_run_summary(run)
 
     assert Path(artifacts["metrics_table"]).is_file()
+    assert Path(artifacts["html"]).is_file()
+    assert "<!doctype html>" in Path(artifacts["html"]).read_text(encoding="utf-8")
     md = Path(artifacts["markdown"])
     assert md.is_file()
     text = md.read_text(encoding="utf-8")

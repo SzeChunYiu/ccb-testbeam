@@ -35,6 +35,8 @@ def _seed_run(run: Path) -> None:
     generate_release_audit(run)
     from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
     generate_claim_ledger(run)
+    from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
+    generate_reference_registry(run)
     generate_thesis_draft(run)
 
 
@@ -59,6 +61,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert "FIGURE_CONTACT_SHEET.html" in html
     assert "visual_review.html" in html
     assert "CLAIM_LEDGER.md" in html
+    assert "REFERENCE_REGISTRY.md" in html
     text = md.read_text(encoding="utf-8")
     assert "run-publication" in text
     assert "Remaining release blockers" in text

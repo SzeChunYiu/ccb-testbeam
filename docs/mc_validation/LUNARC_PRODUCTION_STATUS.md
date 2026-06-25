@@ -383,3 +383,26 @@ The release audit now checks the recursive open-question artifacts directly:
 - `all_question_steps_closed`: `BLOCKED`, observed `false`, reason `expected all_steps_closed=True, observed False`
 
 Overall release audit remains `BLOCKED` with `release_ready=false` and `25` checks. This is expected: the registry and closure-plan files exist and validate, but the recursive evidence-reduction condition is intentionally fail-closed until all open questions and closure-plan steps are actually resolved with production evidence. MV4-MV8 production artifacts, thesis/static-site output, and release bundle gates also remain blocked.
+
+## Open-question evidence packets
+
+After PRs #523-#525, selected run release and QA artifacts were regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted qa
+```
+
+Generated/refreshed evidence-packet artifacts are:
+
+- `reports/mc_validation/open_questions/EVIDENCE_PACKETS.json` (`11579` bytes, refreshed 2026-06-25 23:48:07 +0200)
+- `reports/mc_validation/open_questions/EVIDENCE_PACKETS.md` (`2676` bytes, refreshed 2026-06-25 23:48:07 +0200)
+- `wiki/Open-Questions.md` (`4422` bytes, refreshed 2026-06-25 23:48:07 +0200; contains `## Evidence packet templates` at line 46)
+- `wiki/WIKI_MANIFEST.json` (`702` bytes, refreshed 2026-06-25 23:48:07 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`3243` bytes, refreshed 2026-06-25 23:48:07 +0200)
+- `QA_RELEASE_AUDIT.json` (`7068` bytes, refreshed 2026-06-25 23:48:08 +0200)
+- `QA_RELEASE_AUDIT.md` (`2156` bytes, refreshed 2026-06-25 23:48:08 +0200)
+
+Evidence-packet status is `PASS` for artifact generation with `packet_count=7`, `open_packet_count=7`, and `all_packets_closed=false`. The publication manifest now has `open_question_evidence_packets.exists=true` for `reports/mc_validation/open_questions/EVIDENCE_PACKETS.md`; the wiki manifest remains `PASS` with `page_count=8`.
+
+Release audit remains intentionally fail-closed: `open_question_evidence_packets` is `PASS`, but `all_evidence_packets_closed` is `BLOCKED` with observed `false` and reason `expected all_packets_closed=True, observed False`. Overall audit remains `BLOCKED`, `release_ready=false`, with `27` checks.

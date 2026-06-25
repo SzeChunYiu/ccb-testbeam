@@ -32,6 +32,7 @@ from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
 from ccb_mc_validation.reporting.thesis_draft import generate_thesis_draft
 from ccb_mc_validation.reporting.publication_index import generate_publication_index
+from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
 from ccb_mc_validation.reporting.wiki_export import generate_wiki_export
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
@@ -775,6 +776,7 @@ class PipelineOrchestrator:
     def release(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
         try:
+            generate_reference_registry(path)
             manifest = generate_publication_index(path)
             wiki = generate_wiki_export(path)
             manifest["wiki"] = wiki

@@ -31,6 +31,8 @@ def _seed_run(run: Path) -> None:
     generate_notebook_exports(run)
     generate_artifact_reports(run)
     generate_release_audit(run)
+    from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
+    generate_claim_ledger(run)
     generate_thesis_draft(run)
 
 
@@ -53,6 +55,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert "Draft / blocked" in html
     assert "THESIS_DRAFT.html" in html
     assert "FIGURE_CONTACT_SHEET.html" in html
+    assert "CLAIM_LEDGER.md" in html
     text = md.read_text(encoding="utf-8")
     assert "run-publication" in text
     assert "Remaining release blockers" in text

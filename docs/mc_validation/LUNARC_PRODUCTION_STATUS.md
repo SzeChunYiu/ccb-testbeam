@@ -144,6 +144,22 @@ Updated QA artifacts are:
 
 The broad validation status is now `PASS`, including `fixture_not_released` with no README matches. The release QA audit remains `BLOCKED` and `release_ready=false` because MV4-MV8 production artifacts, systematic arrays, the full figure catalog, clean-kernel LUNARC notebook execution, thesis/static site build, and final release bundle are still incomplete.
 
+## Thesis draft scaffold
+
+After PR #492, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted thesis
+```
+
+Generated draft artifacts are:
+
+- `reports/mc_validation/thesis_draft/THESIS_DRAFT.md` (`2277` bytes, refreshed 2026-06-25 17:57:23 +0200)
+- `reports/mc_validation/thesis_draft/THESIS_DRAFT.html` (`2982` bytes, refreshed 2026-06-25 17:57:23 +0200)
+- `reports/mc_validation/thesis_draft/THESIS_DRAFT_MANIFEST.json` (`686` bytes, refreshed 2026-06-25 17:57:23 +0200)
+
+The thesis draft manifest status is `PASS` for scope `artifact-thesis-draft`, with `final_thesis_status=BLOCKED` and `blocked_count=10`. This is a scaffold assembled from frozen artifacts and release-audit gaps; it is not a final thesis PDF/static-site release.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

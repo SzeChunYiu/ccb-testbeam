@@ -160,6 +160,23 @@ Generated draft artifacts are:
 
 The thesis draft manifest status is `PASS` for scope `artifact-thesis-draft`, with `final_thesis_status=BLOCKED` and `blocked_count=10`. This is a scaffold assembled from frozen artifacts and release-audit gaps; it is not a final thesis PDF/static-site release.
 
+## Publication index draft
+
+After PR #494, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+```
+
+Generated publication draft artifacts are:
+
+- `publication/index.html` (`2962` bytes, refreshed 2026-06-25 18:03:19 +0200)
+- `publication/INDEX.md` (`2026` bytes, refreshed 2026-06-25 18:03:19 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`1959` bytes, refreshed 2026-06-25 18:03:19 +0200)
+- `release_BLOCKED.json` (`2119` bytes, refreshed 2026-06-25 18:03:19 +0200)
+
+The publication manifest status is `BLOCKED` for scope `publication-index-draft`, with `release_ready=false`, `blocked_count=10`, and no missing linked draft artifacts. This index is a navigation page over frozen artifacts, not a final signed release.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import html
 import os
 from pathlib import Path
 from typing import Any
@@ -78,6 +79,31 @@ def generate_run_summary(run_root: Path) -> dict[str, str]:
     )
     md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+    html_path = out_dir / "RUN_SUMMARY.html"
+    table_rows = "\n".join(
+        "<tr>"
+        f"<td>{html.escape(row['study'])}</td>"
+        f"<td>{html.escape(row['status'])}</td>"
+        f"<td>{html.escape(row['n_tracks'])}</td>"
+        f"<td>{html.escape(row['hgb_auc'] or row['proton_ekin_recon_res68'] or row['n_sample_I'])}</td>"
+        "</tr>"
+        for row in rows
+    )
+    html_path.write_text(
+        "<!doctype html>\n"
+        "<html><head><meta charset='utf-8'><title>MC Validation Run Summary</title>"
+        "<style>body{font-family:system-ui,sans-serif;max-width:960px;margin:2rem auto;line-height:1.45}"
+        "table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:.4rem;text-align:left}"
+        ".guardrail{background:#fff3cd;border:1px solid #ffe08a;padding:.75rem}</style></head><body>"
+        f"<h1>MC Validation Run Summary</h1><p><b>Run ID:</b> <code>{html.escape(str(validation.get('run_id')))}</code></p>"
+        f"<p><b>Artifact validation:</b> <code>{html.escape(str(validation.get('status')))}</code></p>"
+        "<table><thead><tr><th>Study</th><th>Status</th><th>n tracks</th><th>Key metric</th></tr></thead>"
+        f"<tbody>{table_rows}</tbody></table>"
+        "<p class='guardrail'>This compact artifact summary is not a final release, thesis, uncertainty study, or detector-physics conclusion by itself.</p>"
+        "</body></html>\n",
+        encoding="utf-8",
+    )
+
     try:
         mpl_dir = run_root / ".matplotlib"
         mpl_dir.mkdir(parents=True, exist_ok=True)
@@ -123,6 +149,7 @@ def generate_run_summary(run_root: Path) -> dict[str, str]:
     return {
         "metrics_table": str(csv_path),
         "markdown": str(md_path),
+        "html": str(html_path),
         "study_support_svg": str(support_svg),
         "study_support_png": str(support_png),
         "selected_metrics_svg": str(metrics_svg),

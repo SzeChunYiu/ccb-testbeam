@@ -28,6 +28,7 @@ from ccb_mc_validation.reporting.notebook_summary import generate_notebook_expor
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.reporting.thesis_draft import generate_thesis_draft
+from ccb_mc_validation.reporting.publication_index import generate_publication_index
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -765,13 +766,19 @@ class PipelineOrchestrator:
 
     def release(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        v = self.validate(run_id=self.run_id, scope="release", strict=True)
-        latest = {"run_id": self.run_id, "released_at": datetime.now(tz=timezone.utc).isoformat(), "validation": v["status"]}
-        if v["status"] == "PASS":
+        try:
+            manifest = generate_publication_index(path)
+        except (FileNotFoundError, ValueError) as exc:
+            result = {"status": STATUS_BLOCKED, "reason": str(exc)}
+            atomic_write_json(path / "release_BLOCKED.json", result)
+            return result
+        if manifest["status"] == "PASS":
+            latest = {"run_id": self.run_id, "released_at": datetime.now(tz=timezone.utc).isoformat(), "validation": "PASS", "publication_manifest": manifest["index_html"]}
             atomic_write_json(self.repo_root / "reports/mc_validation/latest.json", latest)
         else:
-            atomic_write_json(path / "release_BLOCKED.json", {"status": STATUS_BLOCKED, "validation": v})
-        return latest
+            atomic_write_json(path / "release_BLOCKED.json", {"status": STATUS_BLOCKED, "publication": manifest})
+        self._event("release", manifest["status"], {"scope": manifest["scope"], "release_ready": manifest["release_ready"]})
+        return manifest
 
     def resume(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)

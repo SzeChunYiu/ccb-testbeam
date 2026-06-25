@@ -52,6 +52,8 @@ run_step() {
 
 export CCB_MC_CONFIG="${CONFIG}"
 export CCB_ARTIFACT_ROOT="${CCB_ARTIFACT_ROOT:-${REPO}/reports/mc_validation/runs}"
+export PYTHONPATH="${REPO}/src${PYTHONPATH:+:${PYTHONPATH}}"
+echo "[prologue] pythonpath=${PYTHONPATH}"
 
 run_step "preflight" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
   --run-id "${RUN_ID}" --profile production --config "${CONFIG}" preflight --allow-dirty

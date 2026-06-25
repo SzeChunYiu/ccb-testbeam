@@ -242,6 +242,26 @@ Updated QA artifacts are:
 
 The release audit remains `BLOCKED` with `release_ready=false`, but the newly explicit generated-artifact gates pass: `summary_figure_manifest` (`1711` bytes), `summary_visual_review` (`1414` bytes), and `claim_ledger` (`3547` bytes). The remaining blockers are still the missing MV4-MV8 production artifacts, systematic arrays, full figure catalog, clean-kernel full-data notebooks, final thesis/PDF/static site, and final release bundle.
 
+## GitHub wiki draft export
+
+After PR #510, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+```
+
+Generated GitHub-wiki-ready draft artifacts are:
+
+- `wiki/Home.md` (`1127` bytes, refreshed 2026-06-25 22:50:46 +0200)
+- `wiki/Scientific-Introduction.md` (`453` bytes, refreshed 2026-06-25 22:50:46 +0200)
+- `wiki/Methods-and-Mathematics.md` (`1283` bytes, refreshed 2026-06-25 22:50:46 +0200)
+- `wiki/Results-and-Figures.md` (`1309` bytes, refreshed 2026-06-25 22:50:46 +0200)
+- `wiki/Discussion-and-Limitations.md` (`1741` bytes, refreshed 2026-06-25 22:50:46 +0200)
+- `wiki/References-and-Reproducibility.md` (`730` bytes, refreshed 2026-06-25 22:50:46 +0200)
+- `wiki/WIKI_MANIFEST.json` (`644` bytes, refreshed 2026-06-25 22:50:46 +0200)
+
+The wiki manifest status is `PASS` for scope `github-wiki-draft`, with `final_wiki_status=BLOCKED`, `page_count=6`, and `release_ready=false`. These pages include introduction, methods/math formulas, results/figures, discussion/blockers, and reproducibility sections, but final GitHub wiki publication remains blocked until the full release audit passes and citations/references are curated.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

@@ -6,6 +6,8 @@ from pathlib import Path
 
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
+from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
+from ccb_mc_validation.reporting.question_closure import generate_question_closure_plan
 from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
 from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_manifest
 from ccb_mc_validation.reporting.visual_review import generate_summary_visual_review
@@ -30,6 +32,8 @@ def _seed_run(run: Path) -> None:
     generate_summary_visual_review(run)
     generate_notebook_exports(run)
     generate_artifact_reports(run)
+    generate_open_question_registry(run)
+    generate_question_closure_plan(run)
     generate_release_audit(run)
     generate_claim_ledger(run)
 
@@ -48,6 +52,10 @@ def test_release_audit_writes_fail_closed_gap_matrix(tmp_path: Path) -> None:
     assert checks["summary_figure_manifest"]["status"] == "PASS"
     assert checks["summary_visual_review"]["status"] == "PASS"
     assert checks["claim_ledger"]["status"] == "PASS"
+    assert checks["open_question_registry"]["status"] == "PASS"
+    assert checks["open_question_closure_plan"]["status"] == "PASS"
+    assert checks["all_questions_closed"]["status"] == "BLOCKED"
+    assert checks["all_question_steps_closed"]["status"] == "BLOCKED"
     assert checks["MV4_production_artifact"]["status"] == "BLOCKED"
     assert checks["thesis_pdf_html"]["status"] == "BLOCKED"
     assert (run / "QA_RELEASE_AUDIT.json").is_file()

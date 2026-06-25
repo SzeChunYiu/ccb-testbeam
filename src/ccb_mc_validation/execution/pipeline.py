@@ -27,6 +27,7 @@ from ccb_mc_validation.reporting.run_summary import generate_run_summary
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
+from ccb_mc_validation.reporting.thesis_draft import generate_thesis_draft
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -672,11 +673,15 @@ class PipelineOrchestrator:
 
     def thesis(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        result = {"status": STATUS_BLOCKED, "reason": "Thesis build requires validated production reports/figures"}
-        atomic_write_json(path / "reports" / "THESIS_BLOCKED.json", result)
-        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
-        return result
-
+        try:
+            manifest = generate_thesis_draft(path)
+        except (FileNotFoundError, ValueError) as exc:
+            result = {"status": STATUS_BLOCKED, "reason": str(exc)}
+            atomic_write_json(path / "reports" / "THESIS_BLOCKED.json", result)
+            self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
+            return result
+        self._event("thesis", manifest["status"], {"scope": manifest["scope"], "final_thesis_status": manifest["final_thesis_status"]})
+        return manifest
 
     def _write_production_status_report(
         self,

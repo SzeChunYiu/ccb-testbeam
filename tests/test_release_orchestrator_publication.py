@@ -9,6 +9,7 @@ from ccb_mc_validation.reporting.artifact_reports import generate_artifact_repor
 from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
 from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_manifest
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
+from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
 from ccb_mc_validation.reporting.thesis_draft import generate_thesis_draft

@@ -9,6 +9,7 @@ from typing import Any
 
 from ccb_mc_validation.io.artifact_store import atomic_write_json
 from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
+from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -47,6 +48,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     claims = _load_json(run_root / "reports" / "mc_validation" / "claims" / "CLAIM_LEDGER.json")
     publication = _load_json(run_root / "publication" / "PUBLICATION_MANIFEST.json")
     references = generate_reference_registry(run_root)
+    notation = generate_notation_registry(run_root)
     figure_manifest = _load_json(run_root / "figures" / "summary" / "FIGURE_MANIFEST.json")
     rows = _load_rows(run_root / "reports" / "mc_validation" / "summary" / "metrics_table.csv")
     run_id = str(validation.get("run_id") or run_root.name)
@@ -77,6 +79,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "",
         "- [Scientific introduction](Scientific-Introduction)",
         "- [Methods and mathematical definitions](Methods-and-Mathematics)",
+        "- [Notation and equations](Notation-and-Equations)",
         "- [Results and figures](Results-and-Figures)",
         "- [Discussion, limitations, and blockers](Discussion-and-Limitations)",
         "- [References and reproducibility](References-and-Reproducibility)",
@@ -161,6 +164,18 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "",
         *[f"- `{c.get('name')}`: {c.get('reason') or c.get('status')}" for c in blocked],
     ])
+
+    notation_page = "\n".join([
+        "# Notation and equations",
+        "",
+        f"Notation registry status: `{notation.get('status')}`; final notation status: `{notation.get('final_notation_status')}`.",
+        "",
+        "| ID | Symbol | Equation | Meaning |",
+        "|---|---|---|---|",
+        *[f"| {record.get('id')} | `{record.get('symbol')}` | `${record.get('latex')}` | {record.get('meaning')} |" for record in notation.get('records', [])],
+        "",
+        "These equations are used for artifact-summary interpretation and do not replace the final thesis derivations or systematic uncertainty treatment.",
+    ])
     refs = "\n".join([
         "# References and reproducibility",
         "",
@@ -171,6 +186,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "- Publication index: `publication/index.html`",
         "- Thesis draft: `reports/mc_validation/thesis_draft/THESIS_DRAFT.md`",
         "- Reference registry: `reports/mc_validation/references/REFERENCE_REGISTRY.md`",
+        "- Notation registry: `reports/mc_validation/notation/NOTATION_REGISTRY.md`",
         "",
         "## Reproduction command",
         "",
@@ -193,6 +209,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "Home.md": home,
         "Scientific-Introduction.md": intro,
         "Methods-and-Mathematics.md": methods,
+        "Notation-and-Equations.md": notation_page,
         "Results-and-Figures.md": results,
         "Discussion-and-Limitations.md": discussion,
         "References-and-Reproducibility.md": refs,

@@ -66,4 +66,22 @@ run_step "MV2 energy" "${PY}" -m ccb_mc_validation mv2 --config "${CONFIG}" --re
 run_step "MV3 stopping" "${PY}" -m ccb_mc_validation mv3 --config "${CONFIG}" --repo-root "${REPO}"
 run_step "MV9 synthesis" "${PY}" -m ccb_mc_validation synthesize --config "${CONFIG}" --repo-root "${REPO}"
 
+RUN_ROOT="${CCB_ARTIFACT_ROOT}/${RUN_ID}"
+mkdir -p "${RUN_ROOT}/reports" "${RUN_ROOT}/logs"
+for rel in   reports/mc_validation/mv1_pid/study_result.json   reports/mc_validation/mv2_energy/study_result.json   reports/mc_validation/mv3_stopping_depth/study_result.json   reports/mc_validation/mv9_synthesis/MV9_SYNTHESIS.md   reports/mc_validation/mv9_synthesis/synthesis_scaffold.json; do
+  if [[ -f "${REPO}/${rel}" ]]; then
+    mkdir -p "${RUN_ROOT}/$(dirname "${rel}")"
+    cp "${REPO}/${rel}" "${RUN_ROOT}/${rel}"
+  else
+    echo "[artifact] missing ${rel}" >&2
+    exit 66
+  fi
+done
+cp "${REPO}/ccb_mc_validation_${SLURM_JOB_ID}.out" "${RUN_ROOT}/logs/" 2>/dev/null || true
+cp "${REPO}/ccb_mc_validation_${SLURM_JOB_ID}.err" "${RUN_ROOT}/logs/" 2>/dev/null || true
+cat > "${RUN_ROOT}/JOB_STATE.json" <<JSON
+{"job_id":"${SLURM_JOB_ID}","run_id":"${RUN_ID}","state":"COMPLETED","exit_code":"0:0","host":"$(hostname)","completed_at":"$(date -Is)"}
+JSON
+
+echo "[epilogue] artifacts=${RUN_ROOT}"
 echo "[epilogue] complete $(date -Is)"

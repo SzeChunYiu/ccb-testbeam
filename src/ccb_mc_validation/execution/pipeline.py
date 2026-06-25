@@ -499,22 +499,113 @@ class PipelineOrchestrator:
         self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
         return result
 
+    
     def validate(self, run_id: str | None = None, scope: str = "all", strict: bool = False) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        checks = []
-        smoke = path / "SMOKE_GATE.json"
-        checks.append({"name": "smoke_gate", "status": "PASS" if smoke.is_file() else "MISSING"})
-        jobreg = path / "execution" / "JOB_REGISTRY.json"
-        checks.append({"name": "production_jobs", "status": "PASS" if jobreg.is_file() else STATUS_BLOCKED})
-        fixture_leak = self._fixture_release_leak(path)
-        checks.append({"name": "fixture_not_released", "status": "FAIL" if fixture_leak else "PASS", "matches": fixture_leak})
+        checks: list[dict[str, Any]] = []
+
+        def add(name: str, ok: bool, **extra: Any) -> None:
+            checks.append({"name": name, "status": "PASS" if ok else ("FAIL" if strict else STATUS_BLOCKED), **extra})
+
+        job_state_path = path / "JOB_STATE.json"
+        if job_state_path.is_file():
+            job_state = json.loads(job_state_path.read_text(encoding="utf-8"))
+            add(
+                "job_state_completed",
+                job_state.get("state") == "COMPLETED" and job_state.get("exit_code") == "0:0",
+                job_id=job_state.get("job_id"),
+                state=job_state.get("state"),
+                exit_code=job_state.get("exit_code"),
+            )
+        else:
+            job_state = {}
+            add("job_state_completed", False, reason="missing JOB_STATE.json")
+
+        preflight_path = path / "execution" / "PREFLIGHT.json"
+        if preflight_path.is_file():
+            preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
+            input_checks = {c.get("name"): c for c in preflight.get("checks", []) if isinstance(c, dict)}
+            add("preflight_mc_root", input_checks.get("mc_root", {}).get("status") == "PASS", path=input_checks.get("mc_root", {}).get("path"), sha256=input_checks.get("mc_root", {}).get("sha256"))
+            add("preflight_data_pulses", input_checks.get("data_pulses", {}).get("status") == "PASS", path=input_checks.get("data_pulses", {}).get("path"), sha256=input_checks.get("data_pulses", {}).get("sha256"))
+        else:
+            preflight = {}
+            add("preflight_present", False, reason="missing execution/PREFLIGHT.json")
+
+        study_metrics: dict[str, Any] = {}
+        required_studies = {
+            "MV1": path / "reports" / "mc_validation" / "mv1_pid" / "study_result.json",
+            "MV2": path / "reports" / "mc_validation" / "mv2_energy" / "study_result.json",
+            "MV3": path / "reports" / "mc_validation" / "mv3_stopping_depth" / "study_result.json",
+        }
+        for study, result_path in required_studies.items():
+            if not result_path.is_file():
+                add(f"{study}_study_result", False, reason=f"missing {result_path.relative_to(path)}")
+                continue
+            payload = json.loads(result_path.read_text(encoding="utf-8"))
+            metrics = payload.get("metrics", {}) if isinstance(payload, dict) else {}
+            cutflow = payload.get("cutflow", {}) if isinstance(payload, dict) else {}
+            ok = payload.get("status") == STATUS_PRODUCTION and int(cutflow.get("n_tracks", 0)) > 0
+            add(f"{study}_study_result", ok, study_status=payload.get("status"), n_tracks=cutflow.get("n_tracks"), path=str(result_path.relative_to(path)))
+            study_metrics[study] = {"status": payload.get("status"), "metrics": metrics, "cutflow": cutflow}
+
+        mv9_path = path / "reports" / "mc_validation" / "mv9_synthesis" / "MV9_SYNTHESIS.md"
+        if mv9_path.is_file():
+            mv9_text = mv9_path.read_text(encoding="utf-8")
+            add("MV9_synthesis", "| MV1 | PRODUCTION |" in mv9_text and "MV4 | BLOCKED" in mv9_text, path=str(mv9_path.relative_to(path)))
+        else:
+            add("MV9_synthesis", False, reason="missing MV9 synthesis")
+
+        logs = list((path / "logs").glob("ccb_mc_validation_*.out")) if (path / "logs").is_dir() else []
+        add("slurm_logs_present", bool(logs), count=len(logs))
+
+        if scope in {"all", "release"}:
+            fixture_leak = self._fixture_release_leak(path)
+            add("fixture_not_released", not fixture_leak, matches=fixture_leak)
+
         status = "PASS" if all(c["status"] == "PASS" for c in checks) else ("FAIL" if strict else STATUS_BLOCKED)
-        report = {"run_id": self.run_id, "scope": scope, "strict": strict, "status": status, "checks": checks}
+        report = {
+            "run_id": self.run_id,
+            "scope": scope,
+            "strict": strict,
+            "status": status,
+            "job_state": job_state,
+            "study_metrics": study_metrics,
+            "checks": checks,
+        }
         atomic_write_json(path / "VALIDATION.json", report)
+        summary_lines = [
+            "# MC Validation Artifact Validation Summary",
+            "",
+            f"- **Run ID:** `{self.run_id}`",
+            f"- **Status:** **{status}**",
+            f"- **Job ID:** `{job_state.get('job_id', 'unknown')}`",
+            f"- **Job state:** `{job_state.get('state', 'unknown')}` / `{job_state.get('exit_code', 'unknown')}`",
+            "",
+            "## Checks",
+            "",
+        ]
+        summary_lines.extend(f"- {c['name']}: `{c['status']}`" for c in checks)
+        summary_lines.extend(["", "## Study support", ""])
+        for study, rec in study_metrics.items():
+            cutflow = rec.get("cutflow", {})
+            metrics = rec.get("metrics", {})
+            key_bits = []
+            for key in ("hgb_auc", "hgb_purity_at_90eff", "proton_ekin_recon_res68", "deuteron_ekin_recon_res68"):
+                if key in metrics:
+                    key_bits.append(f"{key}={metrics[key]}")
+            summary_lines.append(f"- {study}: `{rec.get('status')}`, n_tracks={cutflow.get('n_tracks')}, " + ", ".join(key_bits))
+        summary_lines.extend([
+            "",
+            "## Release guardrail",
+            "",
+            "This validation confirms artifact consistency for MV1-MV3 and MV9 only. It does not complete figures, notebooks, thesis, uncertainty/systematic arrays, or final release audit.",
+        ])
+        (path / "VALIDATION_SUMMARY.md").write_text("\n".join(summary_lines) + "\n", encoding="utf-8")
         (path / "FINAL_AUDIT.md").write_text("# Final audit\n\n" + "\n".join(f"- {c['name']}: {c['status']}" for c in checks) + f"\n\nStatus: **{status}**\n", encoding="utf-8")
         if status != "PASS":
             self._write_production_status_report(path, status=status, reason="validation gates not satisfied", extra={"validation_checks": checks})
         return report
+
 
     def _fixture_release_leak(self, path: Path) -> list[str]:
         matches: list[str] = []

@@ -10,6 +10,7 @@ from typing import Any
 from ccb_mc_validation.io.artifact_store import atomic_write_json
 from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
 from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
+from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -49,6 +50,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     publication = _load_json(run_root / "publication" / "PUBLICATION_MANIFEST.json")
     references = generate_reference_registry(run_root)
     notation = generate_notation_registry(run_root)
+    open_questions = generate_open_question_registry(run_root)
     figure_manifest = _load_json(run_root / "figures" / "summary" / "FIGURE_MANIFEST.json")
     rows = _load_rows(run_root / "reports" / "mc_validation" / "summary" / "metrics_table.csv")
     run_id = str(validation.get("run_id") or run_root.name)
@@ -82,6 +84,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "- [Notation and equations](Notation-and-Equations)",
         "- [Results and figures](Results-and-Figures)",
         "- [Discussion, limitations, and blockers](Discussion-and-Limitations)",
+        "- [Open questions and recursive study plan](Open-Questions)",
         "- [References and reproducibility](References-and-Reproducibility)",
         "",
         "## Current artifact status",
@@ -176,6 +179,18 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "",
         "These equations are used for artifact-summary interpretation and do not replace the final thesis derivations or systematic uncertainty treatment.",
     ])
+
+    questions_page = "\n".join([
+        "# Open questions and recursive study plan",
+        "",
+        f"All questions closed: `{open_questions.get('all_questions_closed')}`; open count: `{open_questions.get('open_count')}`.",
+        "",
+        "| ID | Status | Priority | Question | Needed evidence |",
+        "|---|---:|---:|---|---|",
+        *[f"| {record.get('id')} | {record.get('status')} | {record.get('priority')} | {record.get('question')} | {record.get('needed_evidence')} |" for record in open_questions.get('records', [])],
+        "",
+        "The project should recursively reduce this table until every question has direct evidence and `all_questions_closed=true`.",
+    ])
     refs = "\n".join([
         "# References and reproducibility",
         "",
@@ -212,6 +227,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "Notation-and-Equations.md": notation_page,
         "Results-and-Figures.md": results,
         "Discussion-and-Limitations.md": discussion,
+        "Open-Questions.md": questions_page,
         "References-and-Reproducibility.md": refs,
     }
     for name, text in pages.items():

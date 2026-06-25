@@ -26,6 +26,8 @@ def _seed_run(run: Path) -> None:
     (run / "VALIDATION.json").write_text(json.dumps(validation), encoding="utf-8")
     (run / "VALIDATION_SUMMARY.md").write_text("# validation\n", encoding="utf-8")
     generate_run_summary(run)
+    from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_manifest
+    generate_summary_figure_manifest(run)
     generate_notebook_exports(run)
     generate_artifact_reports(run)
     generate_release_audit(run)
@@ -50,6 +52,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     html = index.read_text(encoding="utf-8")
     assert "Draft / blocked" in html
     assert "THESIS_DRAFT.html" in html
+    assert "FIGURE_CONTACT_SHEET.html" in html
     text = md.read_text(encoding="utf-8")
     assert "run-publication" in text
     assert "Remaining release blockers" in text

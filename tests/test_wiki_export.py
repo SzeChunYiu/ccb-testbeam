@@ -64,7 +64,9 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert "```math" in methods
     assert (wiki / "Notation-and-Equations.md").is_file()
     assert (wiki / "Open-Questions.md").is_file()
-    assert "flowchart TD" in (wiki / "Open-Questions.md").read_text(encoding="utf-8")
+    open_questions = (wiki / "Open-Questions.md").read_text(encoding="utf-8")
+    assert "flowchart TD" in open_questions
+    assert "Evidence packet templates" in open_questions
     assert "AUC" in (wiki / "Results-and-Figures.md").read_text(encoding="utf-8")
     refs = (wiki / "References-and-Reproducibility.md").read_text(encoding="utf-8")
     assert "REF-RUNBOOK" in refs

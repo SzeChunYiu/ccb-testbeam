@@ -199,7 +199,15 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         closure_plan.get('dag_mermaid', ''),
         "```",
         "",
-        "The project should recursively reduce this table until every question has direct evidence and `all_questions_closed=true`.",
+        "## Evidence packet templates",
+        "",
+        f"All packets closed: `{evidence_packets.get('all_packets_closed')}`; open packet count: `{evidence_packets.get('open_packet_count')}`.",
+        "",
+        "| Question | Packet status | Required artifacts |",
+        "|---|---:|---|",
+        *[f"| {packet.get('question_id')} | {packet.get('packet_status')} | {', '.join(packet.get('required_artifacts', []))} |" for packet in evidence_packets.get('packets', [])],
+        "",
+        "The project should recursively reduce this table until every question has direct evidence, every packet is closed, and `all_questions_closed=true`.",
     ])
     refs = "\n".join([
         "# References and reproducibility",

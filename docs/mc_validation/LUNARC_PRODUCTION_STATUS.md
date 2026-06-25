@@ -193,6 +193,22 @@ Generated figure metadata artifacts are:
 
 The figure manifest status is `PASS` for scope `summary-figure-manifest`, with two compact summary figures (`SUMMARY-F001`, `SUMMARY-F002`) and `full_figure_catalog_status=BLOCKED`. The full thesis/release figure catalog remains incomplete.
 
+## Claim ledger / staleness guard
+
+After PR #500, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted qa
+```
+
+Generated claim-ledger artifacts are:
+
+- `reports/mc_validation/claims/CLAIM_LEDGER.json` (`3547` bytes, refreshed 2026-06-25 18:19:15 +0200)
+- `reports/mc_validation/claims/CLAIM_LEDGER.md` (`2138` bytes, refreshed 2026-06-25 18:19:15 +0200)
+- `QA_RELEASE_AUDIT.json` (`3842` bytes, refreshed 2026-06-25 18:19:15 +0200)
+
+The claim ledger status is `PASS` for scope `claim-ledger`. It supports the frozen MV1-MV3/MV9 artifact-summary claims but sets `release_claims_allowed=false` with `blocked_claim_count=6`, covering MV4-MV8 release claims and the final-release claim.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

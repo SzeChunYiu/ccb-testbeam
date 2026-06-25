@@ -24,6 +24,7 @@ from ccb_mc_validation.io.artifact_store import atomic_write_json
 from ccb_mc_validation.provenance.environment import capture_environment
 from ccb_mc_validation.provenance.hashing import sha256_file
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
+from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_manifest
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
@@ -630,7 +631,8 @@ class PipelineOrchestrator:
         path = self._ensure_run(run_id)
         if (path / "VALIDATION.json").is_file():
             artifacts = generate_run_summary(path)
-            result = {"status": "PASS", "run_id": self.run_id, "artifacts": artifacts, "scope": "summary"}
+            figure_manifest = generate_summary_figure_manifest(path)
+            result = {"status": "PASS", "run_id": self.run_id, "artifacts": artifacts, "figures": figure_manifest, "scope": "summary"}
             atomic_write_json(path / "figures" / "PLOT_SUMMARY.json", result)
             return result
         result = {"status": STATUS_BLOCKED, "reason": "Full figure suite requires completed production artifacts and LUNARC batch rendering"}

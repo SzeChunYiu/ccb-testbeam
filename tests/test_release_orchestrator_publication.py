@@ -58,7 +58,9 @@ def test_release_orchestrator_generates_reference_before_publication_index(tmp_p
     publication = json.loads((run / "publication" / "PUBLICATION_MANIFEST.json").read_text(encoding="utf-8"))
     assert publication["links"]["reference_registry"]["exists"] is True
     assert publication["links"]["open_question_evidence_packets"]["exists"] is True
+    assert publication["links"]["study_implementation_gap_audit"]["exists"] is True
     assert (run / "reports" / "mc_validation" / "open_questions" / "EVIDENCE_PACKETS.json").is_file()
+    assert (run / "reports" / "mc_validation" / "open_questions" / "STUDY_IMPLEMENTATION_GAP_AUDIT.json").is_file()
     assert (run / "reports" / "mc_validation" / "references" / "REFERENCE_REGISTRY.md").is_file()
     import shutil
     shutil.rmtree(run)

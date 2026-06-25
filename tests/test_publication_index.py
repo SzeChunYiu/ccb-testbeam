@@ -10,6 +10,7 @@ from ccb_mc_validation.reporting.notation_registry import generate_notation_regi
 from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
 from ccb_mc_validation.reporting.question_closure import generate_question_closure_plan
 from ccb_mc_validation.reporting.evidence_packets import generate_evidence_packets
+from ccb_mc_validation.reporting.study_gap_audit import generate_study_gap_audit
 from ccb_mc_validation.reporting.publication_index import generate_publication_index
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
@@ -45,6 +46,7 @@ def _seed_run(run: Path) -> None:
     generate_open_question_registry(run)
     generate_question_closure_plan(run)
     generate_evidence_packets(run)
+    generate_study_gap_audit(run)
     generate_thesis_draft(run)
 
 

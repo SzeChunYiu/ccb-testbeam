@@ -34,6 +34,20 @@ def _check_file(name: str, path: Path, *, required_status: str | None = None, js
     return rec
 
 
+def _check_json_bool(name: str, path: Path, key: str, expected: bool) -> dict[str, Any]:
+    rec: dict[str, Any] = {"name": name, "path": str(path), "exists": path.is_file(), "expected": expected}
+    if not path.is_file():
+        rec.update({"status": BLOCKED, "reason": "missing artifact"})
+        return rec
+    payload = _load_json(path)
+    observed = payload.get(key)
+    rec.update({"observed": observed, "size_bytes": path.stat().st_size})
+    rec["status"] = PASS if observed is expected else BLOCKED
+    if rec["status"] != PASS:
+        rec["reason"] = f"expected {key}={expected}, observed {observed}"
+    return rec
+
+
 def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False) -> dict[str, Any]:
     """Write a machine-readable release audit and Markdown summary.
 
@@ -50,6 +64,8 @@ def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False
         _check_file("artifact_report_manifest", run_root / "reports" / "mc_validation" / "artifact_reports" / "REPORTS_MANIFEST.json", required_status=PASS),
         _check_file("summary_figure_manifest", run_root / "figures" / "summary" / "FIGURE_MANIFEST.json", required_status=PASS),
         _check_file("summary_visual_review", run_root / "figures" / "summary" / "visual_review.json", required_status=PASS),
+        _check_file("open_question_registry", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTIONS.json", required_status=PASS),
+        _check_file("open_question_closure_plan", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTION_CLOSURE_PLAN.json", required_status=PASS),
     ]
     if include_claim_ledger:
         checks.append(_check_file("claim_ledger", run_root / "reports" / "mc_validation" / "claims" / "CLAIM_LEDGER.json", required_status=PASS))
@@ -75,6 +91,9 @@ def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False
                 "reason": "requires calibrated digitized MC/systematics production artifacts",
             }
         )
+    checks.append(_check_json_bool("all_questions_closed", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTIONS.json", "all_questions_closed", True))
+    checks.append(_check_json_bool("all_question_steps_closed", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTION_CLOSURE_PLAN.json", "all_steps_closed", True))
+
     for name, reason in (
         ("systematic_arrays", "required systematic/bootstrap arrays are not complete"),
         ("full_figure_catalog", "required 300-entry figure catalog/contact sheets are not complete"),

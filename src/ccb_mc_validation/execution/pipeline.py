@@ -441,6 +441,7 @@ class PipelineOrchestrator:
                 "heavy_compute_policy": "No production MV/GEANT4/full ROOT/notebook work may run locally or on a LUNARC login node.",
             }
             atomic_write_json(run_path / "blockers" / "PRODUCTION_SUBMIT_BLOCKED.json", blocker)
+            self._write_production_status_report(run_path, status=STATUS_BLOCKED, reason=blocker["reason"], resume_command=blocker["resume_command"], extra={"cluster_reachable": cluster_ok, "mc_root_present": mc_ok})
             self._event("submit", STATUS_BLOCKED, blocker)
             return blocker
         if dry_run:
@@ -495,6 +496,7 @@ class PipelineOrchestrator:
         path = self._ensure_run(run_id)
         result = {"status": STATUS_BLOCKED, "reason": "No completed LUNARC production jobs to collect", "run_id": self.run_id}
         atomic_write_json(path / "execution" / "COLLECT.json", result)
+        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
         return result
 
     def validate(self, run_id: str | None = None, scope: str = "all", strict: bool = False) -> dict[str, Any]:
@@ -510,6 +512,8 @@ class PipelineOrchestrator:
         report = {"run_id": self.run_id, "scope": scope, "strict": strict, "status": status, "checks": checks}
         atomic_write_json(path / "VALIDATION.json", report)
         (path / "FINAL_AUDIT.md").write_text("# Final audit\n\n" + "\n".join(f"- {c['name']}: {c['status']}" for c in checks) + f"\n\nStatus: **{status}**\n", encoding="utf-8")
+        if status != "PASS":
+            self._write_production_status_report(path, status=status, reason="validation gates not satisfied", extra={"validation_checks": checks})
         return report
 
     def _fixture_release_leak(self, path: Path) -> list[str]:
@@ -526,25 +530,110 @@ class PipelineOrchestrator:
         path = self._ensure_run(run_id)
         result = {"status": STATUS_BLOCKED, "reason": "Full figure suite requires completed production artifacts and LUNARC batch rendering"}
         atomic_write_json(path / "figures" / "PLOT_BLOCKED.json", result)
+        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
         return result
 
     def notebooks(self, run_id: str | None = None, execute: bool = False) -> dict[str, Any]:
         path = self._ensure_run(run_id)
         result = {"status": STATUS_BLOCKED, "execute": execute, "reason": "Full-data notebook execution must run under LUNARC sbatch after production artifacts freeze"}
         atomic_write_json(path / "notebooks" / "NOTEBOOKS_BLOCKED.json", result)
+        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"], extra={"notebook_execute_requested": execute})
         return result
 
     def docs(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
         result = {"status": STATUS_BLOCKED, "reason": "Production documentation injection requires validated production claim registry"}
         atomic_write_json(path / "reports" / "DOCS_BLOCKED.json", result)
+        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
         return result
 
     def thesis(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
         result = {"status": STATUS_BLOCKED, "reason": "Thesis build requires validated production reports/figures"}
         atomic_write_json(path / "reports" / "THESIS_BLOCKED.json", result)
+        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
         return result
+
+
+    def _write_production_status_report(
+        self,
+        path: Path,
+        *,
+        status: str,
+        reason: str,
+        resume_command: str | None = None,
+        extra: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        state_path = path / "RUN_STATE.json"
+        state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.is_file() else {"run_id": self.run_id}
+        smoke_path = path / "SMOKE_GATE.json"
+        smoke = json.loads(smoke_path.read_text(encoding="utf-8")) if smoke_path.is_file() else None
+        job_path = path / "execution" / "JOB_REGISTRY.json"
+        jobs = json.loads(job_path.read_text(encoding="utf-8")) if job_path.is_file() else {}
+        blockers = sorted(str(p.relative_to(path)) for p in (path / "blockers").glob("*.json")) if (path / "blockers").exists() else []
+        payload: dict[str, Any] = {
+            "run_id": state.get("run_id", self.run_id),
+            "git_sha": state.get("git_sha", _git_sha(self.repo_root)),
+            "profile": state.get("profile", self.profile),
+            "status": status,
+            "reason": reason,
+            "resume_command": resume_command or f"python scripts/mc_validation/run_pipeline.py --run-id {self.run_id} --profile production submit --studies all",
+            "blockers": blockers,
+            "job_count": len(jobs),
+            "smoke_gate": smoke,
+            "production_claims_allowed": False,
+            "heavy_compute_policy": "Production GEANT4, full ROOT scans, digitization, ML training, systematic/bootstrap arrays, and full-data notebooks must run only via LUNARC sbatch on compute nodes.",
+            "updated_at": datetime.now(tz=timezone.utc).isoformat(),
+        }
+        if extra:
+            payload.update(extra)
+        report_dir = path / "reports"
+        report_dir.mkdir(parents=True, exist_ok=True)
+        atomic_write_json(report_dir / "PRODUCTION_STATUS.json", payload)
+        lines = [
+            "# MC Validation Production Status",
+            "",
+            f"- **Run ID:** `{payload['run_id']}`",
+            f"- **Git SHA:** `{payload['git_sha']}`",
+            f"- **Profile:** `{payload['profile']}`",
+            f"- **Status:** **{payload['status']}**",
+            f"- **Reason:** {payload['reason']}",
+            f"- **Production claims allowed:** `{payload['production_claims_allowed']}`",
+            "",
+            "## Resume command",
+            "",
+            "```bash",
+            str(payload["resume_command"]),
+            "```",
+            "",
+            "## Heavy-compute policy",
+            "",
+            payload["heavy_compute_policy"],
+            "",
+            "## Blockers",
+            "",
+        ]
+        if blockers:
+            lines.extend(f"- `{b}`" for b in blockers)
+        else:
+            lines.append("- None recorded.")
+        lines.extend(["", "## Smoke/fixture evidence", ""])
+        if smoke:
+            lines.extend([
+                f"- Smoke status: `{smoke.get('status')}`",
+                f"- Mode: `{smoke.get('mode')}`",
+                "- Fixture/smoke outputs are wiring evidence only and are not physics results.",
+            ])
+        else:
+            lines.append("- No smoke gate recorded for this run.")
+        lines.extend(["", "## LUNARC job registry", ""])
+        if jobs:
+            for name, rec in jobs.items():
+                lines.append(f"- `{name}`: status `{rec.get('status')}`, job `{rec.get('job_id')}`")
+        else:
+            lines.append("- No production SLURM jobs submitted for this run.")
+        (report_dir / "PRODUCTION_STATUS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return payload
 
     def release(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)

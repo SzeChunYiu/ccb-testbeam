@@ -319,6 +319,24 @@ Generated/refreshed open-question and wiki artifacts are:
 
 The open-question registry status is `PASS` for scope `open-question-registry`, with `all_questions_closed=false` and `open_count=7`. It tracks the recursive evidence still needed for MV4-MV8, systematic arrays, and final wiki/publication readiness. The wiki draft now has `page_count=8`, and the publication manifest has `open_questions.exists=true` for `reports/mc_validation/open_questions/OPEN_QUESTIONS.md`.
 
+## Recursive open-question closure plan
+
+After PR #519, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+```
+
+Generated/refreshed closure-plan artifacts are:
+
+- `reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.json` (`4932` bytes, refreshed 2026-06-25 23:22:13 +0200)
+- `reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md` (`3356` bytes, refreshed 2026-06-25 23:22:13 +0200)
+- `wiki/Open-Questions.md` (`2854` bytes, refreshed 2026-06-25 23:22:13 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`3066` bytes, refreshed 2026-06-25 23:22:13 +0200)
+- `release_BLOCKED.json` (`4091` bytes, refreshed 2026-06-25 23:22:13 +0200)
+
+The closure-plan status is `PASS` for scope `open-question-closure-plan`, with `all_steps_closed=false` and `step_count=7`. It adds an evidence dependency DAG and terminal condition for each open question; the publication manifest has `open_question_closure_plan.exists=true` for `reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md`.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

@@ -35,6 +35,7 @@ from ccb_mc_validation.reporting.publication_index import generate_publication_i
 from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
 from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
 from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
+from ccb_mc_validation.reporting.question_closure import generate_question_closure_plan
 from ccb_mc_validation.reporting.wiki_export import generate_wiki_export
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
@@ -781,6 +782,7 @@ class PipelineOrchestrator:
             generate_reference_registry(path)
             generate_notation_registry(path)
             generate_open_question_registry(path)
+            generate_question_closure_plan(path)
             manifest = generate_publication_index(path)
             wiki = generate_wiki_export(path)
             manifest["wiki"] = wiki

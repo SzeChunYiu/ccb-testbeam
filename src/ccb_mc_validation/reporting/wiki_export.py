@@ -11,6 +11,7 @@ from ccb_mc_validation.io.artifact_store import atomic_write_json
 from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
 from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
 from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
+from ccb_mc_validation.reporting.question_closure import generate_question_closure_plan
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -51,6 +52,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     references = generate_reference_registry(run_root)
     notation = generate_notation_registry(run_root)
     open_questions = generate_open_question_registry(run_root)
+    closure_plan = generate_question_closure_plan(run_root)
     figure_manifest = _load_json(run_root / "figures" / "summary" / "FIGURE_MANIFEST.json")
     rows = _load_rows(run_root / "reports" / "mc_validation" / "summary" / "metrics_table.csv")
     run_id = str(validation.get("run_id") or run_root.name)
@@ -188,6 +190,12 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "| ID | Status | Priority | Question | Needed evidence |",
         "|---|---:|---:|---|---|",
         *[f"| {record.get('id')} | {record.get('status')} | {record.get('priority')} | {record.get('question')} | {record.get('needed_evidence')} |" for record in open_questions.get('records', [])],
+        "",
+        "## Closure DAG",
+        "",
+        "```mermaid",
+        closure_plan.get('dag_mermaid', ''),
+        "```",
         "",
         "The project should recursively reduce this table until every question has direct evidence and `all_questions_closed=true`.",
     ])

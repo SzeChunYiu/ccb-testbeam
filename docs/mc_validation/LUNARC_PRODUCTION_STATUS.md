@@ -177,6 +177,22 @@ Generated publication draft artifacts are:
 
 The publication manifest status is `BLOCKED` for scope `publication-index-draft`, with `release_ready=false`, `blocked_count=10`, and no missing linked draft artifacts. This index is a navigation page over frozen artifacts, not a final signed release.
 
+## Summary figure manifest/contact sheet
+
+After PR #496, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted plot
+```
+
+Generated figure metadata artifacts are:
+
+- `figures/summary/FIGURE_MANIFEST.json` (`1711` bytes, refreshed 2026-06-25 18:08:58 +0200)
+- `figures/summary/FIGURE_CONTACT_SHEET.md` (`645` bytes, refreshed 2026-06-25 18:08:58 +0200)
+- `figures/summary/FIGURE_CONTACT_SHEET.html` (`1192` bytes, refreshed 2026-06-25 18:08:58 +0200)
+
+The figure manifest status is `PASS` for scope `summary-figure-manifest`, with two compact summary figures (`SUMMARY-F001`, `SUMMARY-F002`) and `full_figure_catalog_status=BLOCKED`. The full thesis/release figure catalog remains incomplete.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

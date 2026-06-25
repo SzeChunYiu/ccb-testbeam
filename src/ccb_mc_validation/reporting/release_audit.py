@@ -34,7 +34,7 @@ def _check_file(name: str, path: Path, *, required_status: str | None = None, js
     return rec
 
 
-def generate_release_audit(run_root: Path) -> dict[str, Any]:
+def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False) -> dict[str, Any]:
     """Write a machine-readable release audit and Markdown summary.
 
     This audit intentionally fails closed for the current partial production state.
@@ -48,7 +48,11 @@ def generate_release_audit(run_root: Path) -> dict[str, Any]:
         _check_file("run_summary_metrics", run_root / "reports" / "mc_validation" / "summary" / "metrics_table.csv"),
         _check_file("artifact_notebook_manifest", run_root / "notebooks" / "NOTEBOOKS_MANIFEST.json", required_status=PASS),
         _check_file("artifact_report_manifest", run_root / "reports" / "mc_validation" / "artifact_reports" / "REPORTS_MANIFEST.json", required_status=PASS),
+        _check_file("summary_figure_manifest", run_root / "figures" / "summary" / "FIGURE_MANIFEST.json", required_status=PASS),
+        _check_file("summary_visual_review", run_root / "figures" / "summary" / "visual_review.json", required_status=PASS),
     ]
+    if include_claim_ledger:
+        checks.append(_check_file("claim_ledger", run_root / "reports" / "mc_validation" / "claims" / "CLAIM_LEDGER.json", required_status=PASS))
 
     validation = _load_json(run_root / "VALIDATION.json")
     studies = validation.get("study_metrics", {}) if isinstance(validation.get("study_metrics"), dict) else {}

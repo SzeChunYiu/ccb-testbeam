@@ -6,6 +6,9 @@ from pathlib import Path
 
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
+from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
+from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_manifest
+from ccb_mc_validation.reporting.visual_review import generate_summary_visual_review
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
 
@@ -23,21 +26,28 @@ def _seed_run(run: Path) -> None:
     }
     (run / "VALIDATION.json").write_text(json.dumps(validation), encoding="utf-8")
     generate_run_summary(run)
+    generate_summary_figure_manifest(run)
+    generate_summary_visual_review(run)
     generate_notebook_exports(run)
     generate_artifact_reports(run)
+    generate_release_audit(run)
+    generate_claim_ledger(run)
 
 
 def test_release_audit_writes_fail_closed_gap_matrix(tmp_path: Path) -> None:
     run = tmp_path / "run"
     _seed_run(run)
 
-    audit = generate_release_audit(run)
+    audit = generate_release_audit(run, include_claim_ledger=True)
 
     assert audit["status"] == "BLOCKED"
     assert audit["release_ready"] is False
     checks = {check["name"]: check for check in audit["checks"]}
     assert checks["artifact_validation"]["status"] == "PASS"
     assert checks["MV1_production_artifact"]["status"] == "PASS"
+    assert checks["summary_figure_manifest"]["status"] == "PASS"
+    assert checks["summary_visual_review"]["status"] == "PASS"
+    assert checks["claim_ledger"]["status"] == "PASS"
     assert checks["MV4_production_artifact"]["status"] == "BLOCKED"
     assert checks["thesis_pdf_html"]["status"] == "BLOCKED"
     assert (run / "QA_RELEASE_AUDIT.json").is_file()

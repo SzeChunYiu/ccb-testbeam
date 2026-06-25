@@ -628,6 +628,7 @@ class PipelineOrchestrator:
         validation = self.validate(run_id=run_id, scope=scope, strict=strict)
         audit = generate_release_audit(path)
         claims = generate_claim_ledger(path)
+        audit = generate_release_audit(path, include_claim_ledger=True)
         return {"status": audit["status"], "validation": validation, "release_audit": audit, "claim_ledger": claims}
 
     def plot(self, run_id: str | None = None) -> dict[str, Any]:

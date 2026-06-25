@@ -225,6 +225,23 @@ Generated visual-review artifacts are:
 
 The visual-review status is `PASS` for scope `summary-figure-visual-review`, with `review_count=2` and `full_visual_review_status=BLOCKED`. This is scoped to compact summary figures only; the full thesis/release visual review remains incomplete.
 
+## Refreshed release QA artifact gates
+
+After PR #508, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted qa
+```
+
+Updated QA artifacts are:
+
+- `QA_RELEASE_AUDIT.json` (`4773` bytes, refreshed 2026-06-25 22:42:51 +0200)
+- `QA_RELEASE_AUDIT.md` (`1763` bytes, refreshed 2026-06-25 22:42:51 +0200)
+- `reports/mc_validation/claims/CLAIM_LEDGER.json` (`3547` bytes, refreshed 2026-06-25 22:42:51 +0200)
+- `reports/mc_validation/claims/CLAIM_LEDGER.md` (`2138` bytes, refreshed 2026-06-25 22:42:51 +0200)
+
+The release audit remains `BLOCKED` with `release_ready=false`, but the newly explicit generated-artifact gates pass: `summary_figure_manifest` (`1711` bytes), `summary_visual_review` (`1414` bytes), and `claim_ledger` (`3547` bytes). The remaining blockers are still the missing MV4-MV8 production artifacts, systematic arrays, full figure catalog, clean-kernel full-data notebooks, final thesis/PDF/static site, and final release bundle.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

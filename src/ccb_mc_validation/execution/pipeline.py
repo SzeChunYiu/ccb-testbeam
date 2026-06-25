@@ -24,6 +24,7 @@ from ccb_mc_validation.io.artifact_store import atomic_write_json
 from ccb_mc_validation.provenance.environment import capture_environment
 from ccb_mc_validation.provenance.hashing import sha256_file
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
+from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -632,10 +633,25 @@ class PipelineOrchestrator:
 
     def notebooks(self, run_id: str | None = None, execute: bool = False) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        result = {"status": STATUS_BLOCKED, "execute": execute, "reason": "Full-data notebook execution must run under LUNARC sbatch after production artifacts freeze"}
-        atomic_write_json(path / "notebooks" / "NOTEBOOKS_BLOCKED.json", result)
-        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"], extra={"notebook_execute_requested": execute})
-        return result
+        if execute:
+            result = {
+                "status": STATUS_BLOCKED,
+                "execute": execute,
+                "reason": "Full-data notebook execution must be submitted as a LUNARC sbatch job; artifact-only export is available without --execute.",
+                "sbatch_required": True,
+            }
+            atomic_write_json(path / "notebooks" / "NOTEBOOKS_BLOCKED.json", result)
+            self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"], extra={"notebook_execute_requested": execute})
+            return result
+        try:
+            manifest = generate_notebook_exports(path)
+        except (FileNotFoundError, ValueError) as exc:
+            result = {"status": STATUS_BLOCKED, "execute": execute, "reason": str(exc)}
+            atomic_write_json(path / "notebooks" / "NOTEBOOKS_BLOCKED.json", result)
+            self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"], extra={"notebook_execute_requested": execute})
+            return result
+        self._event("notebooks", manifest["status"], {"scope": manifest["scope"], "full_suite": manifest["full_notebook_suite_status"]})
+        return manifest
 
     def docs(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)

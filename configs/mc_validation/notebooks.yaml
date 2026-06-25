@@ -1,0 +1,16 @@
+schema_version: 1
+notebooks:
+  - id: 00_release_overview
+    source: notebooks/source/00_release_overview.py
+    html: notebooks/html/00_release_overview.html
+    dependencies:
+      - VALIDATION.json
+      - reports/mc_validation/summary/metrics_table.csv
+      - reports/mc_validation/summary/RUN_SUMMARY.html
+    execution_mode: artifact-summary
+    full_data_execution: blocked_until_lunarc_sbatch_executor
+    required_sections:
+      - provenance
+      - scope
+      - primary-result
+      - reproduction

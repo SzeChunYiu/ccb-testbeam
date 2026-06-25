@@ -26,6 +26,7 @@ from ccb_mc_validation.provenance.hashing import sha256_file
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
+from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -618,7 +619,10 @@ class PipelineOrchestrator:
         return matches
 
     def qa(self, run_id: str | None = None, scope: str = "all", strict: bool = False) -> dict[str, Any]:
-        return self.validate(run_id=run_id, scope=scope, strict=strict)
+        path = self._ensure_run(run_id)
+        validation = self.validate(run_id=run_id, scope=scope, strict=strict)
+        audit = generate_release_audit(path)
+        return {"status": audit["status"], "validation": validation, "release_audit": audit}
 
     def plot(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)

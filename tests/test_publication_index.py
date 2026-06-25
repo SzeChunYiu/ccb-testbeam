@@ -28,6 +28,8 @@ def _seed_run(run: Path) -> None:
     generate_run_summary(run)
     from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_manifest
     generate_summary_figure_manifest(run)
+    from ccb_mc_validation.reporting.visual_review import generate_summary_visual_review
+    generate_summary_visual_review(run)
     generate_notebook_exports(run)
     generate_artifact_reports(run)
     generate_release_audit(run)
@@ -55,6 +57,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert "Draft / blocked" in html
     assert "THESIS_DRAFT.html" in html
     assert "FIGURE_CONTACT_SHEET.html" in html
+    assert "visual_review.html" in html
     assert "CLAIM_LEDGER.md" in html
     text = md.read_text(encoding="utf-8")
     assert "run-publication" in text

@@ -16,6 +16,7 @@ REQUIRED_LINKS = {
     "run_summary_html": "reports/mc_validation/summary/RUN_SUMMARY.html",
     "notebook_overview": "notebooks/html/00_release_overview.html",
     "figure_contact_sheet": "figures/summary/FIGURE_CONTACT_SHEET.html",
+    "summary_visual_review": "figures/summary/visual_review.html",
     "global_report": "reports/mc_validation/artifact_reports/GLOBAL_REPORT.html",
     "mv1_report": "reports/mc_validation/artifact_reports/MV1_REPORT.html",
     "mv2_report": "reports/mc_validation/artifact_reports/MV2_REPORT.html",

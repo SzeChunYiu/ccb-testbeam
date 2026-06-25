@@ -89,6 +89,22 @@ After PR #481/#482, the compact run-summary generator was run on the selected LU
 
 All paths above are under `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/`. Compact figures summarize study support and selected metrics only; they are not the final publication-quality figure suite required for thesis/release.
 
+## Artifact-only notebook export
+
+After PR #485, the selected run was regenerated on the synced LUNARC `origin/main` worktree with the lightweight artifact-only notebook phase:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted notebooks
+```
+
+Generated notebook artifacts are:
+
+- `notebooks/source/00_release_overview.py` (`2117` bytes, refreshed 2026-06-25 17:38:09 +0200)
+- `notebooks/html/00_release_overview.html` (`1927` bytes, refreshed 2026-06-25 17:38:09 +0200)
+- `notebooks/NOTEBOOKS_MANIFEST.json` (`1333` bytes, refreshed 2026-06-25 17:38:09 +0200)
+
+The manifest status is `PASS` for scope `artifact-summary`, with `full_notebook_suite_status` still `BLOCKED` and execution status `NOT_EXECUTED_ARTIFACT_HTML_ONLY`. This is a reader-facing summary export from frozen artifacts only; it is not the required full clean-kernel notebook suite, and it does not remove the MV4-MV8/systematics/thesis/release blockers.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

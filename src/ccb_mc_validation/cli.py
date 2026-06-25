@@ -23,7 +23,7 @@ from ccb_mc_validation.exceptions import (
     StudyBlockedError,
     exit_code_for,
 )
-from ccb_mc_validation.io.root_truth import DEFAULT_TRUTH_BRANCHES, audit_truth_tree
+from ccb_mc_validation.io.root_truth import DEFAULT_TRUTH_BRANCHES, audit_truth_tree, load_truth_records
 from ccb_mc_validation.logging_config import setup_logging
 from ccb_mc_validation.manifest import build_manifest_record, write_manifest
 from ccb_mc_validation.studies.common import write_study_result
@@ -178,9 +178,15 @@ def _run_tier1_study(
                 f"{study_key.upper()} heavy production task must run in a LUNARC batch allocation. "
                 f"Submit with: sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch {study_key}"
             )
-        raise StudyBlockedError(
-            f"{study_key.upper()} production ROOT loading is intentionally routed through scripts/mc_validation/run_pipeline.py submit."
+        max_events_raw = os.environ.get("CCB_MAX_ROOT_EVENTS", "100000")
+        max_events = int(max_events_raw) if max_events_raw else 100000
+        records = load_truth_records(
+            config.mc_root,
+            tree=str(config.raw.get("tree", "hibeam")),
+            max_events=max_events,
+            coinc_ns=float(config.coincidence_ns),
         )
+        result = runner(records, config.raw, fixture=False)
     out_dir = config.study_output_dir(study_key)
     path = write_study_result(result, out_dir)
     logger.info("%s wrote %s", study_key.upper(), path)

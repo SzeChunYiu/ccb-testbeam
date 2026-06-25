@@ -1,17 +1,17 @@
 # LUNARC MC Validation Production Status
 
-Generated: 2026-06-25 06:39 UTC
+Generated: 2026-06-25 06:48 UTC
 
 ## Current selected LUNARC run
 
-- Run ID: `20260625T063600Z_full_input_production`
-- LUNARC job ID: `3316531`
+- Run ID: `20260625T064500Z_full_input_artifacted`
+- LUNARC job ID: `3316536`
 - Terminal state: `COMPLETED`
 - Exit code: `0:0`
 - Node: `cn046`
 - Elapsed: `00:01:01`
 - Worktree: `/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main`
-- Code SHA at job completion: `851e2f402dc9566d566bc15356b739ca326b0e4b` after PR #475.
+- Code SHA at job completion: `7bd0a16` after PR #477.
 
 ## Inputs verified by LUNARC preflight
 
@@ -22,7 +22,7 @@ Generated: 2026-06-25 06:39 UTC
   - size: `9246625` bytes
   - sha256: `648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f`
 
-## Completed stages in job 3316531
+## Completed stages in job 3316536
 
 The SLURM log reports these stages completed with `rc=0`:
 
@@ -46,8 +46,8 @@ Study outputs were written under the LUNARC worktree:
 
 These are full-input production-run summaries from `CCB_MAX_ROOT_EVENTS=0`, not final thesis conclusions.
 
-- MV1: `PRODUCTION`, `n_tracks=1000000`, `n_proton=100549`, `n_deuteron=141047`, `hgb_auc=0.9976000820132317`, `hgb_purity_at_90eff=0.99531164249314`, `logreg_auc=0.9764543474193328`.
-- MV2: `PRODUCTION`, `n_proton_uncensored=69455`, `n_deuteron_uncensored=139074`, `proton_ekin_recon_res68=0.036265181328060205`, `deuteron_ekin_recon_res68=0.13319490593145097` in the current aggregate record representation.
+- MV1: `PRODUCTION`, `n_tracks=1000000`, `n_proton=100549`, `n_deuteron=141047`, `hgb_auc=0.997641986277693`, `hgb_purity_at_90eff=0.9953867753902006`, `logreg_auc=0.9764543474193328`.
+- MV2: `PRODUCTION`, `n_proton_uncensored=69455`, `n_deuteron_uncensored=139074`, `proton_ekin_recon_res68=0.036531109473233174`, `deuteron_ekin_recon_res68=0.13319490593145097` in the current aggregate record representation.
 - MV3: `PRODUCTION`, `n_sample_I=64762`, `n_sample_II=172336`; layer occupancy profiles were generated from trigger-derived `sample_label` rather than event-parity labels.
 - MV4-MV8: `BLOCKED`, requiring calibrated MV0 digitized MC and truth-labelled waveform products.
 
@@ -61,7 +61,7 @@ These are full-input production-run summaries from `CCB_MAX_ROOT_EVENTS=0`, not 
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.
-- Full-input campaign `3316531` completed. Remaining release work is validation/uncertainty/figures/notebooks/thesis/final audit, not another MV1-MV3 ROOT pass.
+- Full-input campaign `3316536` completed and persisted logs, JOB_STATE.json, MV1/MV2/MV3 results, and MV9 synthesis into `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted`. Remaining release work is validation/uncertainty/figures/notebooks/thesis/final audit, not another MV1-MV3 ROOT pass.
 - MV4-MV8 remain blocked until calibrated digitized MC is available.
 - No fixture/smoke value should be promoted as a physics conclusion.
 

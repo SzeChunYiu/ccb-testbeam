@@ -50,14 +50,26 @@ ARTIFACT_REQUIREMENTS: dict[str, list[str]] = {
 }
 
 
+SLURM_PIPELINE_COMMAND = "CCB_RUN_ID=<run_id> sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch"
+
 SLURM_HINTS: dict[str, str] = {
-    "OQ-MV4": "sbatch geant4/jobs/mc_validation_pipeline.sbatch --studies MV4",
-    "OQ-MV5": "sbatch geant4/jobs/mc_validation_pipeline.sbatch --studies MV5",
-    "OQ-MV6": "sbatch geant4/jobs/mc_validation_pipeline.sbatch --studies MV6",
-    "OQ-MV7": "sbatch geant4/jobs/mc_validation_pipeline.sbatch --studies MV7",
-    "OQ-MV8": "sbatch geant4/jobs/mc_validation_pipeline.sbatch --studies MV8",
-    "OQ-SYS": "sbatch geant4/jobs/mc_validation_pipeline.sbatch --studies systematics",
+    "OQ-MV4": SLURM_PIPELINE_COMMAND,
+    "OQ-MV5": SLURM_PIPELINE_COMMAND,
+    "OQ-MV6": SLURM_PIPELINE_COMMAND,
+    "OQ-MV7": SLURM_PIPELINE_COMMAND,
+    "OQ-MV8": SLURM_PIPELINE_COMMAND,
+    "OQ-SYS": SLURM_PIPELINE_COMMAND,
     "OQ-WIKI": "python scripts/mc_validation/run_pipeline.py --run-id <run_id> release && python scripts/mc_validation/run_pipeline.py --run-id <run_id> qa",
+}
+
+IMPLEMENTATION_BLOCKERS: dict[str, str] = {
+    "OQ-MV4": "current SLURM wrapper runs MV0-MV3/MV9; MV4 packet cannot close until calibrated timing implementation writes MV4 production artifacts",
+    "OQ-MV5": "current SLURM wrapper runs MV0-MV3/MV9; MV5 packet cannot close until pile-up overlay/recovery implementation writes MV5 production artifacts",
+    "OQ-MV6": "current SLURM wrapper runs MV0-MV3/MV9; MV6 packet cannot close until representation-comparison implementation writes MV6 production artifacts",
+    "OQ-MV7": "current SLURM wrapper runs MV0-MV3/MV9; MV7 packet cannot close until pedestal/noise closure implementation writes MV7 production artifacts",
+    "OQ-MV8": "current SLURM wrapper runs MV0-MV3/MV9; MV8 packet cannot close until saturation/dynamic-range implementation writes MV8 production artifacts",
+    "OQ-SYS": "systematic packet cannot close until MV4-MV8 production artifacts exist and paired systematic arrays are submitted through SLURM",
+    "OQ-WIKI": "wiki packet cannot close until QA release audit is PASS and bibliography/figures are publication-ready",
 }
 
 
@@ -83,6 +95,7 @@ def _packet(record: dict[str, Any]) -> dict[str, Any]:
         "dependencies": dependencies,
         "required_artifacts": ARTIFACT_REQUIREMENTS.get(question_id, []),
         "execution_hint": SLURM_HINTS.get(question_id, "define LUNARC execution command before closure"),
+        "implementation_blocker": IMPLEMENTATION_BLOCKERS.get(question_id, "implementation blocker not recorded"),
         "validation_gates": VALIDATION_GATES,
         "documentation_updates": [
             "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
@@ -120,13 +133,13 @@ def generate_evidence_packets(run_root: Path) -> dict[str, Any]:
         f"- **Packet count:** `{payload['packet_count']}`",
         f"- **Open packet count:** `{payload['open_packet_count']}`",
         "",
-        "| Question | Packet status | Closure action | Required artifacts | Execution hint |",
-        "|---|---:|---|---|---|",
+        "| Question | Packet status | Closure action | Required artifacts | Execution hint | Implementation blocker |",
+        "|---|---:|---|---|---|---|",
     ]
     for packet in packets:
         artifacts = "<br>".join(f"`{artifact}`" for artifact in packet["required_artifacts"])
         lines.append(
-            f"| {packet['question_id']} | {packet['packet_status']} | {packet['closure_action']} | {artifacts} | `{packet['execution_hint']}` |"
+            f"| {packet['question_id']} | {packet['packet_status']} | {packet['closure_action']} | {artifacts} | `{packet['execution_hint']}` | {packet['implementation_blocker']} |"
         )
     lines.extend(
         [

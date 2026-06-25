@@ -252,29 +252,50 @@ def _blocked_mv(study_id: str, blocked_by: str = "MV0") -> Callable[[argparse.Na
     return _cmd
 
 
+
 def cmd_synthesize(args: argparse.Namespace) -> int:
     config = _require_config(args)
     setup_logging(config.logging_level)
     out_dir = config.study_output_dir("mv9")
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    result_paths = {
+        "MV1": config.study_output_dir("mv1") / "study_result.json",
+        "MV2": config.study_output_dir("mv2") / "study_result.json",
+        "MV3": config.study_output_dir("mv3") / "study_result.json",
+    }
     rows: list[dict[str, object]] = []
-    for key in ("mv1", "mv2", "mv3", "mv0", "mv4", "mv5", "mv6", "mv7", "mv8"):
-        label = "MV" + key[2:]
-        blocked = key in {"mv4", "mv5", "mv6", "mv7", "mv8"}
-        rows.append(
-            StudyStatusRecord(
-                study_id=label,
-                phase="A-B" if not blocked else "blocked",
-                state="blocked" if blocked else ("ready" if _study_enabled(config, key) else "disabled"),
-                blocked_by="MV0" if blocked else None,
-                message="Tier-2 requires calibrated digitized MC" if blocked else "",
-            ).as_dict()
-        )
+    lines = ["# MV9 — MC Validation Synthesis", "", "Current-run study verdicts from `reports/mc_validation/*/study_result.json`.", ""]
+    lines.extend(["| Study | Status | Support / key metric |", "|---|---|---|"])
+    for study, path in result_paths.items():
+        if path.is_file():
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            metrics = payload.get("metrics", {}) if isinstance(payload, dict) else {}
+            key_metric = ""
+            for key in ("hgb_auc", "logreg_auc", "proton_ekin_recon_res68", "n_tracks"):
+                if key in metrics:
+                    key_metric = f"{key}={metrics[key]}"
+                    break
+            rows.append({"study_id": study, "state": payload.get("status", "UNKNOWN"), "path": str(path), "key_metric": key_metric})
+            lines.append(f"| {study} | {payload.get('status', 'UNKNOWN')} | {key_metric} |")
+        else:
+            rows.append({"study_id": study, "state": "BLOCKED", "path": str(path), "message": "missing study_result.json"})
+            lines.append(f"| {study} | BLOCKED | missing `{path}` |")
+    for study in ("MV4", "MV5", "MV6", "MV7", "MV8"):
+        rows.append({"study_id": study, "state": "BLOCKED", "blocked_by": "MV0", "message": "requires calibrated digitized MC"})
+        lines.append(f"| {study} | BLOCKED | requires calibrated digitized MC |")
     _write_json(out_dir / "synthesis_scaffold.json", {"studies": rows})
-    registry_path = config.repo_root / REGISTRY_PATH
-    if registry_path.is_file():
-        synthesize_mv9(registry_path, out_dir / "MV9_SYNTHESIS.md")
+    lines.extend([
+        "",
+        "## Interpretation guardrails",
+        "",
+        "- These rows summarize the current checked-out report artifacts only.",
+        "- Bounded or reduced-statistics production runs are not final thesis conclusions until strict validation, uncertainty, figures, and final audit pass.",
+        "- MV4–MV8 remain blocked until calibrated MV0 digitized MC is available.",
+    ])
+    (out_dir / "MV9_SYNTHESIS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return 0
+
 
 
 def _add_common_args(parser: argparse.ArgumentParser) -> None:

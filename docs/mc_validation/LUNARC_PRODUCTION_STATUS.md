@@ -77,14 +77,17 @@ Checks passing in that summary: `job_state_completed`, `preflight_mc_root`, `pre
 
 ## Summary report and figures
 
-After PR #481, the compact run-summary generator was run on LUNARC for the selected artifacted run. It produced:
+After PR #481/#482, the compact run-summary generator was run on the selected LUNARC artifacted run. After PR #483, the same selected run was regenerated from the synced `origin/main` worktree to add the browser-readable HTML summary. Current regenerated artifacts are:
 
-- `reports/mc_validation/summary/RUN_SUMMARY.md`
-- `reports/mc_validation/summary/metrics_table.csv`
-- `figures/summary/study_support.svg` and `figures/summary/study_support.png`
-- `figures/summary/selected_metrics.svg` and `figures/summary/selected_metrics.png`
+- `reports/mc_validation/summary/RUN_SUMMARY.md` (`526` bytes, refreshed 2026-06-25 17:27:54 +0200)
+- `reports/mc_validation/summary/RUN_SUMMARY.html` (`1047` bytes, refreshed 2026-06-25 17:27:54 +0200)
+- `reports/mc_validation/summary/metrics_table.csv` (`282` bytes, refreshed 2026-06-25 17:27:54 +0200)
+- `figures/summary/study_support.svg` (`22092` bytes, refreshed 2026-06-25 17:27:57 +0200)
+- `figures/summary/study_support.png` (`50970` bytes, refreshed 2026-06-25 17:27:57 +0200)
+- `figures/summary/selected_metrics.svg` (`30534` bytes, refreshed 2026-06-25 17:27:57 +0200)
+- `figures/summary/selected_metrics.png` (`106309` bytes, refreshed 2026-06-25 17:27:57 +0200)
 
-All paths above are under `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/`. These compact figures summarize support and selected metrics only; they are not the final publication-quality figure suite required for thesis release.
+All paths above are under `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/`. Compact figures summarize study support and selected metrics only; they are not the final publication-quality figure suite required for thesis/release.
 
 ## Guardrails and remaining blockers
 

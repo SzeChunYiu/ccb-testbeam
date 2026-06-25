@@ -127,6 +127,23 @@ Generated report artifacts are:
 
 The reports manifest status is `PASS` for scope `artifact-summary`, with `full_report_suite_status` still `BLOCKED` and blocked studies `MV4,MV5,MV6,MV7,MV8`. These reports summarize frozen MV1-MV3/MV9 artifacts only; they do not constitute the final thesis/report/release package.
 
+## Release QA audit
+
+After PR #489 and the README fixture-status cleanup in PR #490, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted qa
+```
+
+Updated QA artifacts are:
+
+- `VALIDATION.json` (`8385` bytes, refreshed 2026-06-25 17:51:58 +0200)
+- `VALIDATION_SUMMARY.md` (`945` bytes, refreshed 2026-06-25 17:51:58 +0200)
+- `QA_RELEASE_AUDIT.json` (`3842` bytes, refreshed 2026-06-25 17:51:58 +0200)
+- `QA_RELEASE_AUDIT.md` (`1662` bytes, refreshed 2026-06-25 17:51:58 +0200)
+
+The broad validation status is now `PASS`, including `fixture_not_released` with no README matches. The release QA audit remains `BLOCKED` and `release_ready=false` because MV4-MV8 production artifacts, systematic arrays, the full figure catalog, clean-kernel LUNARC notebook execution, thesis/static site build, and final release bundle are still incomplete.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

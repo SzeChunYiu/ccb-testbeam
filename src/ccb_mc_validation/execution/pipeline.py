@@ -36,6 +36,7 @@ from ccb_mc_validation.reporting.reference_registry import generate_reference_re
 from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
 from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
 from ccb_mc_validation.reporting.question_closure import generate_question_closure_plan
+from ccb_mc_validation.reporting.evidence_packets import generate_evidence_packets
 from ccb_mc_validation.reporting.wiki_export import generate_wiki_export
 from ccb_mc_validation.studies.common import StudyStatus, write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1

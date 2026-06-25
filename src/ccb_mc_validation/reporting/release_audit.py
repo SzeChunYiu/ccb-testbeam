@@ -66,6 +66,7 @@ def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False
         _check_file("summary_visual_review", run_root / "figures" / "summary" / "visual_review.json", required_status=PASS),
         _check_file("open_question_registry", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTIONS.json", required_status=PASS),
         _check_file("open_question_closure_plan", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTION_CLOSURE_PLAN.json", required_status=PASS),
+        _check_file("open_question_evidence_packets", run_root / "reports" / "mc_validation" / "open_questions" / "EVIDENCE_PACKETS.json", required_status=PASS),
     ]
     if include_claim_ledger:
         checks.append(_check_file("claim_ledger", run_root / "reports" / "mc_validation" / "claims" / "CLAIM_LEDGER.json", required_status=PASS))
@@ -93,6 +94,7 @@ def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False
         )
     checks.append(_check_json_bool("all_questions_closed", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTIONS.json", "all_questions_closed", True))
     checks.append(_check_json_bool("all_question_steps_closed", run_root / "reports" / "mc_validation" / "open_questions" / "OPEN_QUESTION_CLOSURE_PLAN.json", "all_steps_closed", True))
+    checks.append(_check_json_bool("all_evidence_packets_closed", run_root / "reports" / "mc_validation" / "open_questions" / "EVIDENCE_PACKETS.json", "all_packets_closed", True))
 
     for name, reason in (
         ("systematic_arrays", "required systematic/bootstrap arrays are not complete"),

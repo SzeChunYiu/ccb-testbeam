@@ -12,6 +12,7 @@ from ccb_mc_validation.reporting.reference_registry import generate_reference_re
 from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
 from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
 from ccb_mc_validation.reporting.question_closure import generate_question_closure_plan
+from ccb_mc_validation.reporting.evidence_packets import generate_evidence_packets
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -53,6 +54,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     notation = generate_notation_registry(run_root)
     open_questions = generate_open_question_registry(run_root)
     closure_plan = generate_question_closure_plan(run_root)
+    evidence_packets = generate_evidence_packets(run_root)
     figure_manifest = _load_json(run_root / "figures" / "summary" / "FIGURE_MANIFEST.json")
     rows = _load_rows(run_root / "reports" / "mc_validation" / "summary" / "metrics_table.csv")
     run_id = str(validation.get("run_id") or run_root.name)

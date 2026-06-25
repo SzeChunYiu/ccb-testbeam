@@ -170,12 +170,12 @@ python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_inpu
 
 Generated publication draft artifacts are:
 
-- `publication/index.html` (`3072` bytes, refreshed 2026-06-25 18:13:10 +0200)
-- `publication/INDEX.md` (`2106` bytes, refreshed 2026-06-25 18:13:10 +0200)
-- `publication/PUBLICATION_MANIFEST.json` (`2111` bytes, refreshed 2026-06-25 18:13:10 +0200)
-- `release_BLOCKED.json` (`2281` bytes, refreshed 2026-06-25 18:13:10 +0200)
+- `publication/index.html` (`3177` bytes, refreshed 2026-06-25 18:23:56 +0200)
+- `publication/INDEX.md` (`2181` bytes, refreshed 2026-06-25 18:23:56 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`2258` bytes, refreshed 2026-06-25 18:23:56 +0200)
+- `release_BLOCKED.json` (`2438` bytes, refreshed 2026-06-25 18:23:56 +0200)
 
-The publication manifest status is `BLOCKED` for scope `publication-index-draft`, with `release_ready=false`, `blocked_count=10`, and no missing linked draft artifacts. After PR #498, it also links `figures/summary/FIGURE_CONTACT_SHEET.html` (`1192` bytes). This index is a navigation page over frozen artifacts, not a final signed release.
+The publication manifest status is `BLOCKED` for scope `publication-index-draft`, with `release_ready=false`, `blocked_count=10`, and no missing linked draft artifacts. It links `figures/summary/FIGURE_CONTACT_SHEET.html` (`1192` bytes) and, after PR #502, `reports/mc_validation/claims/CLAIM_LEDGER.md` (`2138` bytes). This index is a navigation page over frozen artifacts, not a final signed release.
 
 ## Summary figure manifest/contact sheet
 

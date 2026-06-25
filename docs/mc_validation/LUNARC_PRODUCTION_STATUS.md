@@ -424,3 +424,24 @@ Refreshed packet artifacts are:
 - `QA_RELEASE_AUDIT.json` (`7068` bytes, refreshed 2026-06-25 23:53:38 +0200)
 
 The evidence packet command hints now match the actual SLURM wrapper interface: first packet check `hint_ok=True`, `has_unsupported_studies=False`, and `blocker_has_mv4=True`. MV4-MV8 packets therefore remain open because implementations/artifacts are missing, not because a per-study `sbatch --studies ...` command was submitted. Release audit remains `BLOCKED`, `release_ready=false`, with `27` checks.
+
+## Study implementation gap audit
+
+After PR #529, selected run release and QA artifacts were regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted qa
+```
+
+Generated/refreshed study-gap artifacts are:
+
+- `reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.json` (`1855` bytes, refreshed 2026-06-25 23:59:36 +0200)
+- `reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.md` (`1510` bytes, refreshed 2026-06-25 23:59:36 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`3434` bytes, refreshed 2026-06-25 23:59:36 +0200)
+- `QA_RELEASE_AUDIT.json` (`7879` bytes, refreshed 2026-06-25 23:59:37 +0200)
+- `QA_RELEASE_AUDIT.md` (`2311` bytes, refreshed 2026-06-25 23:59:37 +0200)
+
+Study-gap audit status is `PASS` for artifact generation, with `all_study_implementations_ready=false` and `blocked_count=5`. The publication manifest has `study_implementation_gap_audit.exists=true` for `reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.md`.
+
+Release audit remains intentionally fail-closed: `study_implementation_gap_audit` is `PASS`, but `all_study_implementations_ready` is `BLOCKED` with observed `false`. Overall audit remains `BLOCKED`, `release_ready=false`, with `29` checks. This records why MV4-MV8 should not be submitted/claimed as complete until their real production implementations and required artifacts exist.

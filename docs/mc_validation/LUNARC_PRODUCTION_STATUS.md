@@ -300,6 +300,25 @@ Generated/refreshed notation and wiki artifacts are:
 
 The notation registry status is `PASS` for scope `notation-registry`, with `final_notation_status=DRAFT` and `record_count=5`. The wiki draft now has `page_count=7` and the publication manifest has `notation_registry.exists=true` for `reports/mc_validation/notation/NOTATION_REGISTRY.md`. Final thesis derivations and systematic uncertainty notation remain part of the release blockers.
 
+## Recursive open-question registry
+
+After PR #517, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+```
+
+Generated/refreshed open-question and wiki artifacts are:
+
+- `reports/mc_validation/open_questions/OPEN_QUESTIONS.json` (`2159` bytes, refreshed 2026-06-25 23:14:56 +0200)
+- `reports/mc_validation/open_questions/OPEN_QUESTIONS.md` (`1425` bytes, refreshed 2026-06-25 23:14:56 +0200)
+- `wiki/Open-Questions.md` (`1542` bytes, refreshed 2026-06-25 23:14:56 +0200)
+- `wiki/WIKI_MANIFEST.json` (`702` bytes, refreshed 2026-06-25 23:14:56 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`2883` bytes, refreshed 2026-06-25 23:14:56 +0200)
+- `release_BLOCKED.json` (`3898` bytes, refreshed 2026-06-25 23:14:56 +0200)
+
+The open-question registry status is `PASS` for scope `open-question-registry`, with `all_questions_closed=false` and `open_count=7`. It tracks the recursive evidence still needed for MV4-MV8, systematic arrays, and final wiki/publication readiness. The wiki draft now has `page_count=8`, and the publication manifest has `open_questions.exists=true` for `reports/mc_validation/open_questions/OPEN_QUESTIONS.md`.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

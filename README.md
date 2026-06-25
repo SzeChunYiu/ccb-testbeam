@@ -107,13 +107,11 @@ in `reports/` following [`studies/STUDY_TEMPLATE.md`](studies/STUDY_TEMPLATE.md)
 <!-- mc-validation-generated:start -->
 ## MC validation execution status (auto-generated)
 
-- **Run ID:** `20260624T052722Z_a9b9f73_d116fb9b_smoke_dirty-eb5bdd0c`
-- **Generated:** 2026-06-24 05:27 UTC
-- **Git SHA:** `a9b9f73f099f3673698753a12806f85f40be8b95`
-- **Profile:** `smoke`
-- **Smoke gate:** `PASS` (FIXTURE)
+- **Selected run ID:** `20260625T064500Z_full_input_artifacted`
+- **Generated:** 2026-06-25 17:50 Europe/Stockholm
+- **LUNARC job ID:** `3316536` (`COMPLETED`, exit `0:0`)
+- **Artifact scope:** MV1-MV3 and MV9 frozen-artifact summaries
+- **Current QA status:** `BLOCKED` for release; MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, thesis/static site, and final release bundle are not complete.
 
-> Numbers in this block are resolved from validated run artifacts only.
-> See `reports/mc_validation/runs/20260624T052722Z_a9b9f73_d116fb9b_smoke_dirty-eb5bdd0c/` for manifests and study outputs.
-
+Validated artifact/report locations are under `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/` on LUNARC. See [`docs/mc_validation/LUNARC_PRODUCTION_STATUS.md`](docs/mc_validation/LUNARC_PRODUCTION_STATUS.md) for exact paths, sizes, guardrails, and reproduction commands.
 <!-- mc-validation-generated:end -->

@@ -209,6 +209,22 @@ Generated claim-ledger artifacts are:
 
 The claim ledger status is `PASS` for scope `claim-ledger`. It supports the frozen MV1-MV3/MV9 artifact-summary claims but sets `release_claims_allowed=false` with `blocked_claim_count=6`, covering MV4-MV8 release claims and the final-release claim.
 
+## Summary figure visual review
+
+After PR #504, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted plot
+```
+
+Generated visual-review artifacts are:
+
+- `figures/summary/visual_review.json` (`1414` bytes, refreshed 2026-06-25 18:29:32 +0200)
+- `figures/summary/visual_review.md` (`550` bytes, refreshed 2026-06-25 18:29:32 +0200)
+- `figures/summary/visual_review.html` (`985` bytes, refreshed 2026-06-25 18:29:32 +0200)
+
+The visual-review status is `PASS` for scope `summary-figure-visual-review`, with `review_count=2` and `full_visual_review_status=BLOCKED`. This is scoped to compact summary figures only; the full thesis/release visual review remains incomplete.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

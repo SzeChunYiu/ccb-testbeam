@@ -105,6 +105,28 @@ Generated notebook artifacts are:
 
 The manifest status is `PASS` for scope `artifact-summary`, with `full_notebook_suite_status` still `BLOCKED` and execution status `NOT_EXECUTED_ARTIFACT_HTML_ONLY`. This is a reader-facing summary export from frozen artifacts only; it is not the required full clean-kernel notebook suite, and it does not remove the MV4-MV8/systematics/thesis/release blockers.
 
+## Artifact-backed reports
+
+After PR #487, the selected run was regenerated on the synced LUNARC `origin/main` worktree with the frozen-artifact report phase:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted docs
+```
+
+Generated report artifacts are:
+
+- `reports/mc_validation/artifact_reports/GLOBAL_REPORT.md` (`1152` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/GLOBAL_REPORT.html` (`1672` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/MV1_REPORT.md` (`1260` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/MV1_REPORT.html` (`1899` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/MV2_REPORT.md` (`3796` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/MV2_REPORT.html` (`5095` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/MV3_REPORT.md` (`1232` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/MV3_REPORT.html` (`1881` bytes, refreshed 2026-06-25 17:44:16 +0200)
+- `reports/mc_validation/artifact_reports/REPORTS_MANIFEST.json` (`2067` bytes, refreshed 2026-06-25 17:44:16 +0200)
+
+The reports manifest status is `PASS` for scope `artifact-summary`, with `full_report_suite_status` still `BLOCKED` and blocked studies `MV4,MV5,MV6,MV7,MV8`. These reports summarize frozen MV1-MV3/MV9 artifacts only; they do not constitute the final thesis/report/release package.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

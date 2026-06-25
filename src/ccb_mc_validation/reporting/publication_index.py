@@ -17,6 +17,7 @@ REQUIRED_LINKS = {
     "notation_registry": "reports/mc_validation/notation/NOTATION_REGISTRY.md",
     "open_questions": "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
     "open_question_closure_plan": "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+    "open_question_evidence_packets": "reports/mc_validation/open_questions/EVIDENCE_PACKETS.md",
     "run_summary_html": "reports/mc_validation/summary/RUN_SUMMARY.html",
     "notebook_overview": "notebooks/html/00_release_overview.html",
     "figure_contact_sheet": "figures/summary/FIGURE_CONTACT_SHEET.html",

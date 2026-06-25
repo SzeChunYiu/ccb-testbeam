@@ -281,6 +281,25 @@ Generated/refreshed reference and wiki artifacts are:
 
 The reference registry status is `PASS` for scope `reference-registry`, with `final_bibliography_status=BLOCKED` and one blocked literature-curation placeholder. The publication manifest now has `reference_registry.exists=true` for `reports/mc_validation/references/REFERENCE_REGISTRY.md` (`910` bytes). Final curated citations/references remain a release/wiki blocker.
 
+## Notation and equation registry
+
+After PR #515, the selected run was regenerated on synced LUNARC `origin/main` with:
+
+```bash
+python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted release
+```
+
+Generated/refreshed notation and wiki artifacts are:
+
+- `reports/mc_validation/notation/NOTATION_REGISTRY.json` (`1599` bytes, refreshed 2026-06-25 23:09:39 +0200)
+- `reports/mc_validation/notation/NOTATION_REGISTRY.md` (`1137` bytes, refreshed 2026-06-25 23:09:39 +0200)
+- `wiki/Notation-and-Equations.md` (`1044` bytes, refreshed 2026-06-25 23:09:39 +0200)
+- `wiki/WIKI_MANIFEST.json` (`677` bytes, refreshed 2026-06-25 23:09:39 +0200)
+- `publication/PUBLICATION_MANIFEST.json` (`2724` bytes, refreshed 2026-06-25 23:09:39 +0200)
+- `release_BLOCKED.json` (`3700` bytes, refreshed 2026-06-25 23:09:39 +0200)
+
+The notation registry status is `PASS` for scope `notation-registry`, with `final_notation_status=DRAFT` and `record_count=5`. The wiki draft now has `page_count=7` and the publication manifest has `notation_registry.exists=true` for `reports/mc_validation/notation/NOTATION_REGISTRY.md`. Final thesis derivations and systematic uncertainty notation remain part of the release blockers.
+
 ## Guardrails and remaining blockers
 
 - This run is not a final release: strict validation, full uncertainty treatment, figures, notebooks, thesis rendering, and final audit have not passed.

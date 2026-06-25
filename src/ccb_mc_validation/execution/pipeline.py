@@ -784,6 +784,7 @@ class PipelineOrchestrator:
             generate_notation_registry(path)
             generate_open_question_registry(path)
             generate_question_closure_plan(path)
+            generate_evidence_packets(path)
             manifest = generate_publication_index(path)
             wiki = generate_wiki_export(path)
             manifest["wiki"] = wiki

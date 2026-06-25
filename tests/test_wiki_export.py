@@ -9,6 +9,7 @@ from ccb_mc_validation.reporting.claim_ledger import generate_claim_ledger
 from ccb_mc_validation.reporting.figure_manifest import generate_summary_figure_manifest
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
 from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
+from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
 from ccb_mc_validation.reporting.publication_index import generate_publication_index
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
@@ -61,6 +62,7 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert "Draft / not final release" in home
     assert "```math" in methods
     assert (wiki / "Notation-and-Equations.md").is_file()
+    assert (wiki / "Open-Questions.md").is_file()
     assert "AUC" in (wiki / "Results-and-Figures.md").read_text(encoding="utf-8")
     refs = (wiki / "References-and-Reproducibility.md").read_text(encoding="utf-8")
     assert "REF-RUNBOOK" in refs

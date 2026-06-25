@@ -7,6 +7,7 @@ from pathlib import Path
 from ccb_mc_validation.reporting.artifact_reports import generate_artifact_reports
 from ccb_mc_validation.reporting.notebook_summary import generate_notebook_exports
 from ccb_mc_validation.reporting.notation_registry import generate_notation_registry
+from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
 from ccb_mc_validation.reporting.publication_index import generate_publication_index
 from ccb_mc_validation.reporting.release_audit import generate_release_audit
 from ccb_mc_validation.reporting.run_summary import generate_run_summary
@@ -39,6 +40,7 @@ def _seed_run(run: Path) -> None:
     from ccb_mc_validation.reporting.reference_registry import generate_reference_registry
     generate_reference_registry(run)
     generate_notation_registry(run)
+    generate_open_question_registry(run)
     generate_thesis_draft(run)
 
 
@@ -65,6 +67,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert "CLAIM_LEDGER.md" in html
     assert "REFERENCE_REGISTRY.md" in html
     assert "NOTATION_REGISTRY.md" in html
+    assert "OPEN_QUESTIONS.md" in html
     text = md.read_text(encoding="utf-8")
     assert "run-publication" in text
     assert "Remaining release blockers" in text

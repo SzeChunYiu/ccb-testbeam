@@ -495,3 +495,13 @@ Local/GitHub checkpoint, generated 2026-06-26 07:13 UTC / 09:13 CEST:
 - LUNARC remains unavailable for new job submission in this checkpoint. The required pre-check/autologin command authenticated through OTP but ended with `Socket not created - check SSH config try again`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
 
 Release interpretation: this checkpoint strengthens recursive claim explanation and QA coverage only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.
+
+## 2026-06-26 publication claim-dependency link checkpoint
+
+Local/GitHub checkpoint, generated 2026-06-26 07:20 UTC / 09:20 CEST:
+
+- PR `#542` merged to `main` (`da0eede5a60fc7534e96e96ca965b2b541d2bad9`) and adds `wiki_claim_dependency_tree` to the publication index required links. After the two-pass release orchestration (`publication` draft first, wiki export second, final publication draft third), `publication/index.html`, `publication/INDEX.md`, and `publication/PUBLICATION_MANIFEST.json` now expose `wiki/Claim-Dependency-Tree.md` alongside `wiki/Claim-Evidence-Matrix.md`.
+- Local verification on `main` after PR `#542`: `python -m pytest tests/test_publication_index.py -q` -> `1 passed in 9.11s`. Full-suite verification on the PR branch before merge: `python -m pytest tests/ -q` -> `59 passed in 14.71s`; GitHub Actions MC Validation CI passed twice for PR `#542`.
+- LUNARC remains unavailable for new job submission in this checkpoint. The required pre-check/autologin command attempted to create the socket, waited for OTP, then failed with `Password rejected before OTP prompt`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
+
+Release interpretation: this checkpoint improves reader-facing publication navigation only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.

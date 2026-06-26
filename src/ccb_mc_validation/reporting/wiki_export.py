@@ -76,6 +76,50 @@ def _claim_matrix_row(claim: dict[str, Any]) -> str:
     return f"| `{claim_id}` | {status} | {evidence_text} | {references} | {statement} | {limitation} |"
 
 
+def _mermaid_id(raw: str) -> str:
+    safe = "".join(ch if ch.isalnum() else "_" for ch in raw)
+    return safe.strip("_") or "node"
+
+
+def _claim_dependency_mermaid(claims: list[dict[str, Any]]) -> str:
+    """Build a conservative Mermaid claim-dependency graph for the wiki.
+
+    The graph is intentionally not a proof engine. It exposes which project
+    evidence, literature anchors, and blockers each claim depends on so readers
+    can audit the chain instead of relying on narrative prose alone.
+    """
+
+    lines = [
+        "flowchart TD",
+        '    FINAL["Final release claim"]',
+        '    QA["QA release audit"]',
+        '    WIKI["Wiki claim evidence matrix"]',
+        '    FINAL --> QA',
+        '    FINAL --> WIKI',
+    ]
+    for claim in claims:
+        claim_id = str(claim.get("id", "CLAIM"))
+        node_id = "C_" + _mermaid_id(claim_id)
+        status = str(claim.get("status", "UNKNOWN"))
+        lines.append(f'    {node_id}["{claim_id} ({status})"]')
+        lines.append(f"    FINAL --> {node_id}")
+        evidence = claim.get("evidence") or []
+        if evidence:
+            for item in evidence:
+                ev_id = "E_" + _mermaid_id(str(item))
+                lines.append(f'    {ev_id}["{item}"]')
+                lines.append(f"    {node_id} --> {ev_id}")
+        else:
+            blocker_id = "B_" + _mermaid_id(claim_id)
+            lines.append(f'    {blocker_id}["blocked: no production artifact yet"]')
+            lines.append(f"    {node_id} --> {blocker_id}")
+        for ref in _reference_ids_for_claim(claim):
+            ref_id = "R_" + _mermaid_id(ref)
+            lines.append(f'    {ref_id}["{ref}"]')
+            lines.append(f"    {node_id} -. reference .-> {ref_id}")
+    return "\n".join(lines)
+
+
 def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     """Generate a GitHub-wiki-ready draft bundle from frozen artifacts."""
     run_root = Path(run_root)
@@ -112,6 +156,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         ["| Claim | Status | Evidence artifacts | Reference anchors | Statement | Limitation |", "|---|---:|---|---|---|---|"]
         + [_claim_matrix_row(c) for c in claims.get("claims", [])]
     )
+    claim_dependency_graph = _claim_dependency_mermaid(claims.get("claims", []))
 
     home = "\n".join([
         "# CCB testbeam MC validation wiki draft",
@@ -127,6 +172,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "- [Discussion, limitations, and blockers](Discussion-and-Limitations)",
         "- [Open questions and recursive study plan](Open-Questions)",
         "- [Claim evidence matrix](Claim-Evidence-Matrix)",
+        "- [Claim dependency tree](Claim-Dependency-Tree)",
         "- [References and reproducibility](References-and-Reproducibility)",
         "",
         "## Current artifact status",
@@ -243,6 +289,17 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         claim_matrix_rows,
     ])
 
+    claim_dependency_page = "\n".join([
+        "# Claim dependency tree",
+        "",
+        "This graph recursively exposes how the final-release claim depends on QA gates, wiki traceability, individual claim-ledger rows, frozen evidence artifacts, curated references, and explicit blockers.",
+        "Reference edges are dashed because literature anchors explain terminology or standard methods; they do not promote project-specific claims without project artifacts.",
+        "",
+        "```mermaid",
+        claim_dependency_graph,
+        "```",
+    ])
+
     questions_page = "\n".join([
         "# Open questions and recursive study plan",
         "",
@@ -306,6 +363,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "Discussion-and-Limitations.md": discussion,
         "Open-Questions.md": questions_page,
         "Claim-Evidence-Matrix.md": claim_matrix_page,
+        "Claim-Dependency-Tree.md": claim_dependency_page,
         "References-and-Reproducibility.md": refs,
     }
     for name, text in pages.items():

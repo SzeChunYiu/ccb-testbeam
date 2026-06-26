@@ -473,3 +473,14 @@ wiki/thesis, or final release-bundle blockers. Those claims remain blocked until
 LUNARC access is restored, production implementations exist, required artifacts
 are regenerated, QA release audit passes, and the pending GitHub check reaches a
 terminal successful state.
+
+## 2026-06-26 wiki claim-traceability and QA gate checkpoint
+
+Local/GitHub checkpoint, generated 2026-06-26 06:46 UTC / 08:46 CEST:
+
+- PR `#534` merged to `main` (`7a7f994795ffca72c0921fc9307f9a807d0a7bb9`) and adds generated wiki page `wiki/Claim-Evidence-Matrix.md`. The page maps every claim-ledger row to project evidence artifacts plus curated reference anchors and leaves blocked claims as `BLOCKED: no production artifact yet`.
+- PR `#535` merged to `main` (`f325fa36fa7c005985d61d7d0d13fa3ffc80a3e6`) and adds release-audit check `wiki_claim_evidence_matrix`. The check is fail-closed: it passes only when `wiki/WIKI_MANIFEST.json` lists `Claim-Evidence-Matrix.md` and the page exists non-empty.
+- Local verification on `main` after PR `#535`: `python -m pytest tests/test_release_audit.py -q` -> `1 passed in 9.18s`. Full-suite verification on the PR branch before merge: `python -m pytest tests/ -q` -> `59 passed in 14.39s`; GitHub Actions MC Validation CI passed twice for PR `#535`.
+- LUNARC remains unavailable for new job submission in this checkpoint. Required pre-check/autologin command `ssh -O check lunarc 2>/dev/null && echo Connected || /Users/billy/lunarc-init.sh` attempted again; the helper reported `LUNARC closed the connection before authentication completed`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
+
+Release interpretation: this checkpoint strengthens wiki/report traceability and QA coverage only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebook, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.

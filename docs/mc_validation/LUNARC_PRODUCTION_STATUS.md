@@ -505,3 +505,14 @@ Local/GitHub checkpoint, generated 2026-06-26 07:20 UTC / 09:20 CEST:
 - LUNARC remains unavailable for new job submission in this checkpoint. The required pre-check/autologin command attempted to create the socket, waited for OTP, then failed with `Password rejected before OTP prompt`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
 
 Release interpretation: this checkpoint improves reader-facing publication navigation only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.
+
+## 2026-06-26 release blocker digest checkpoint
+
+Local/GitHub checkpoint, generated 2026-06-26 13:32 UTC / 15:32 CEST:
+
+- PR `#544` merged to `main` (`688f5365d413c27d1bc125eaff3d3fe945050729`) and adds `blocker_digest` to `release_BLOCKED.json`. The digest summarizes `release_ready`, publication status, missing publication links, blocked QA-check count, top blocked QA checks, and the authoritative `QA_RELEASE_AUDIT.json` path.
+- The release-orchestrator test now verifies the digest remains fail-closed and includes `MV4_production_artifact` as a top blocker while preserving the full publication manifest and QA audit artifacts.
+- Local verification on `main` after PR `#544`: `python -m pytest tests/test_release_orchestrator_publication.py -q` -> `1 passed in 9.33s`. Full-suite verification on the PR branch before merge: `python -m pytest tests/ -q` -> `59 passed in 13.82s`; GitHub Actions MC Validation CI passed twice for PR `#544`.
+- LUNARC remains unavailable for new job submission in this checkpoint. The required pre-check/autologin command authenticated through OTP on one attempt but did not create a socket, and later failed with `Password rejected before OTP prompt`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
+
+Release interpretation: this checkpoint improves machine-readable blocker traceability only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.

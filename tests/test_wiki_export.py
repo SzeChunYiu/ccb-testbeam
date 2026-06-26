@@ -88,8 +88,16 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert (wiki / "Notation-and-Equations.md").is_file()
     assert (wiki / "Open-Questions.md").is_file()
     assert (wiki / "Claim-Evidence-Matrix.md").is_file()
+    assert (wiki / "Claim-Dependency-Tree.md").is_file()
     claim_matrix = (wiki / "Claim-Evidence-Matrix.md").read_text(encoding="utf-8")
+    claim_tree = (wiki / "Claim-Dependency-Tree.md").read_text(encoding="utf-8")
     assert "Claim evidence matrix" in claim_matrix
+    assert "Claim dependency tree" in claim_tree
+    assert "flowchart TD" in claim_tree
+    assert "CLAIM-FINAL-RELEASE" in claim_tree
+    assert "VALIDATION.json" in claim_tree
+    assert "REF-FINAL-BIBLIOGRAPHY-AUDIT" in claim_tree
+    assert "blocked: no production artifact yet" in claim_tree
     assert "CLAIM-MV1-SUMMARY" in claim_matrix
     assert "REF-PDG-RPP-2024" in claim_matrix
     assert "CLAIM-MV4-RELEASE" in claim_matrix
@@ -103,3 +111,4 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert "REF-RUNBOOK" in refs
     assert "final bibliography status" in refs
     assert "Claim evidence matrix" in home
+    assert "Claim dependency tree" in home

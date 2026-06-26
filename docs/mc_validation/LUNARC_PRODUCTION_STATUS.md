@@ -516,3 +516,14 @@ Local/GitHub checkpoint, generated 2026-06-26 13:32 UTC / 15:32 CEST:
 - LUNARC remains unavailable for new job submission in this checkpoint. The required pre-check/autologin command authenticated through OTP on one attempt but did not create a socket, and later failed with `Password rejected before OTP prompt`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
 
 Release interpretation: this checkpoint improves machine-readable blocker traceability only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.
+
+## 2026-06-26 GitHub Wiki publication checkpoint
+
+Local/GitHub checkpoint, generated 2026-06-26 13:36 UTC / 15:36 CEST:
+
+- Actual GitHub Wiki publication is now initialized and pushed at `https://github.com/SzeChunYiu/ccb-testbeam/wiki` (wiki git HEAD `7b23c2e30f8f08dce278f7d54874b68437efcc17`). This is distinct from earlier generated `wiki/` artifacts inside the frozen run bundle.
+- Published pages were regenerated locally with current `main` code from frozen LUNARC artifact bundle `20260625T064500Z_full_input_artifacted`. `generate_wiki_export` returned `PASS` with `page_count=10`; `generate_release_audit(..., include_claim_ledger=True)` remained `BLOCKED` and `release_ready=false`; `generate_publication_index` remained `BLOCKED` with no missing publication links.
+- Live HTTP verification returned `200` for `https://github.com/SzeChunYiu/ccb-testbeam/wiki`, `/wiki/Claim-Evidence-Matrix`, `/wiki/Claim-Dependency-Tree`, and `/wiki/References-and-Reproducibility`.
+- LUNARC access via `billy-old` was confirmed: `ssh billy-old 'ssh lunarc "hostname && whoami"'` reached `cosmos3.int.lunarc` as `scyiu`, and the selected artifact bundle was streamed locally through that route. No new SLURM job was submitted in this checkpoint; the wiki publication uses existing frozen job `3316536` artifacts only.
+
+Release interpretation: the public GitHub Wiki now exists and is populated with the current draft/fail-closed MC-validation pages, plots/figure links, claim matrices, dependency graph, formulas, references, and open-question blockers. It is still explicitly not a final release because MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, final thesis/static-site, final release bundle, and fresh LUNARC regeneration remain blocked/incomplete.

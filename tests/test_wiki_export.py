@@ -72,6 +72,14 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert "```math" in methods
     assert (wiki / "Notation-and-Equations.md").is_file()
     assert (wiki / "Open-Questions.md").is_file()
+    assert (wiki / "Claim-Evidence-Matrix.md").is_file()
+    claim_matrix = (wiki / "Claim-Evidence-Matrix.md").read_text(encoding="utf-8")
+    assert "Claim evidence matrix" in claim_matrix
+    assert "CLAIM-MV1-SUMMARY" in claim_matrix
+    assert "REF-PDG-RPP-2024" in claim_matrix
+    assert "CLAIM-MV4-RELEASE" in claim_matrix
+    assert "BLOCKED: no production artifact yet" in claim_matrix
+    assert "External references explain terminology" in claim_matrix
     open_questions = (wiki / "Open-Questions.md").read_text(encoding="utf-8")
     assert "flowchart TD" in open_questions
     assert "Evidence packet templates" in open_questions
@@ -79,3 +87,4 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     refs = (wiki / "References-and-Reproducibility.md").read_text(encoding="utf-8")
     assert "REF-RUNBOOK" in refs
     assert "final bibliography status" in refs
+    assert "Claim evidence matrix" in home

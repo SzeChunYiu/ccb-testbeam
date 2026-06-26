@@ -2,9 +2,29 @@ name: S00c selector-count regression
 
 on:
   pull_request:
+    paths:
+      - ".github/workflows/s00c-selector-count-regression.yml"
+      - "configs/s00d_1781028640_1234_005956da_ci_premerge.json"
+      - "configs/s00c_*.json"
+      - "scripts/s00c*.py"
+      - "scripts/s00d_1781028640_1234_005956da_ci_premerge.py"
+      - "scripts/p04k_1781029246_839_554f50f7_selector_charge_closure.py"
+      - "docs/02_data_and_runs.md"
+      - "docs/09_open_questions.md"
+      - "DATA.md"
   push:
     branches:
       - main
+    paths:
+      - ".github/workflows/s00c-selector-count-regression.yml"
+      - "configs/s00d_1781028640_1234_005956da_ci_premerge.json"
+      - "configs/s00c_*.json"
+      - "scripts/s00c*.py"
+      - "scripts/s00d_1781028640_1234_005956da_ci_premerge.py"
+      - "scripts/p04k_1781029246_839_554f50f7_selector_charge_closure.py"
+      - "docs/02_data_and_runs.md"
+      - "docs/09_open_questions.md"
+      - "DATA.md"
 
 jobs:
   s00c-selector-count:

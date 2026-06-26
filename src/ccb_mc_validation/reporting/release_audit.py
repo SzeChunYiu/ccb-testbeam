@@ -48,6 +48,36 @@ def _check_json_bool(name: str, path: Path, key: str, expected: bool) -> dict[st
     return rec
 
 
+
+def _check_wiki_page(name: str, run_root: Path, page_name: str) -> dict[str, Any]:
+    """Fail-closed check that a wiki manifest lists a concrete non-empty page."""
+
+    manifest_path = run_root / "wiki" / "WIKI_MANIFEST.json"
+    page_path = run_root / "wiki" / page_name
+    rec: dict[str, Any] = {
+        "name": name,
+        "manifest_path": str(manifest_path),
+        "page_path": str(page_path),
+        "manifest_exists": manifest_path.is_file(),
+        "page_exists": page_path.is_file(),
+    }
+    if not manifest_path.is_file():
+        rec.update({"status": BLOCKED, "reason": "missing wiki manifest"})
+        return rec
+    if not page_path.is_file():
+        rec.update({"status": BLOCKED, "reason": "missing wiki page"})
+        return rec
+    manifest = _load_json(manifest_path)
+    pages = manifest.get("pages", [])
+    listed = page_name in pages if isinstance(pages, list) else False
+    size = page_path.stat().st_size
+    rec.update({"listed_in_manifest": listed, "size_bytes": size})
+    rec["status"] = PASS if listed and size > 0 else BLOCKED
+    if rec["status"] != PASS:
+        rec["reason"] = f"expected {page_name} listed in WIKI_MANIFEST.json and non-empty"
+    return rec
+
+
 def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False) -> dict[str, Any]:
     """Write a machine-readable release audit and Markdown summary.
 
@@ -71,6 +101,7 @@ def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False
     ]
     if include_claim_ledger:
         checks.append(_check_file("claim_ledger", run_root / "reports" / "mc_validation" / "claims" / "CLAIM_LEDGER.json", required_status=PASS))
+    checks.append(_check_wiki_page("wiki_claim_evidence_matrix", run_root, "Claim-Evidence-Matrix.md"))
 
     validation = _load_json(run_root / "VALIDATION.json")
     studies = validation.get("study_metrics", {}) if isinstance(validation.get("study_metrics"), dict) else {}

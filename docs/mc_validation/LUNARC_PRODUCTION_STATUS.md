@@ -445,3 +445,31 @@ Generated/refreshed study-gap artifacts are:
 Study-gap audit status is `PASS` for artifact generation, with `all_study_implementations_ready=false` and `blocked_count=5`. The publication manifest has `study_implementation_gap_audit.exists=true` for `reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.md`.
 
 Release audit remains intentionally fail-closed: `study_implementation_gap_audit` is `PASS`, but `all_study_implementations_ready` is `BLOCKED` with observed `false`. Overall audit remains `BLOCKED`, `release_ready=false`, with `29` checks. This records why MV4-MV8 should not be submitted/claimed as complete until their real production implementations and required artifacts exist.
+
+## 2026-06-26 access and CI checkpoint
+
+Local repository checkpoint, generated 2026-06-26 06:13 UTC / 08:13 CEST:
+
+- LUNARC ControlMaster was not active. Required pre-check command
+  `ssh -O check lunarc 2>/dev/null && echo Connected || /Users/billy/lunarc-init.sh`
+  attempted to create the persistent socket, but authentication failed before a
+  fresh OTP could complete (`Password rejected before OTP prompt`). No LUNARC
+  job was submitted in this checkpoint; the selected production run therefore
+  remains the completed artifacted run `20260625T064500Z_full_input_artifacted`
+  / SLURM job `3316536`.
+- GitHub PR `#530` (`codex/document-study-gap-audit` into `main`) remains open
+  and unmerged because the self-hosted `s00c-selector-count` check is still
+  queued for run `28203194089` / job `83547676520`, created 2026-06-25
+  22:00:16 UTC. This checkpoint does not bypass that pending gate.
+- Best available local verification on the same checkout passed:
+  `python -m pytest tests/ -q` -> `57 passed in 13.76s`.
+- Focused wiki/publication/evidence verification also passed:
+  `python -m pytest tests/test_wiki_export.py tests/test_publication_index.py tests/test_evidence_packets.py tests/test_reference_registry.py tests/test_notation_registry.py -q`
+  -> `5 passed in 10.37s`.
+
+Release interpretation: this is a status/evidence update only. It does not close
+MV4-MV8, systematic-array, full figure-catalog, clean-kernel notebook, final
+wiki/thesis, or final release-bundle blockers. Those claims remain blocked until
+LUNARC access is restored, production implementations exist, required artifacts
+are regenerated, QA release audit passes, and the pending GitHub check reaches a
+terminal successful state.

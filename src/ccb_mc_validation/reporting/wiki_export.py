@@ -43,6 +43,39 @@ def _metric(row: dict[str, str]) -> str:
     return "metric unavailable"
 
 
+
+def _reference_ids_for_claim(claim: dict[str, Any]) -> list[str]:
+    """Return conservative reference anchors relevant to a claim.
+
+    References provide terminology/context only; they never promote a blocked
+    project claim to supported without frozen project evidence.
+    """
+
+    claim_id = str(claim.get("id", ""))
+    if claim_id == "CLAIM-ARTIFACT-VALIDATION":
+        return ["REF-VALIDATION-ARTIFACTS", "REF-GEANT4-2003", "REF-GEANT4-2006"]
+    if claim_id.startswith("CLAIM-MV1-"):
+        return ["REF-VALIDATION-ARTIFACTS", "REF-PDG-RPP-2024"]
+    if claim_id.startswith("CLAIM-MV2-") or claim_id.startswith("CLAIM-MV3-"):
+        return ["REF-VALIDATION-ARTIFACTS", "REF-GEANT4-2003", "REF-PDG-RPP-2024"]
+    if claim_id.startswith(("CLAIM-MV4-", "CLAIM-MV5-", "CLAIM-MV6-", "CLAIM-MV7-", "CLAIM-MV8-")):
+        return ["REF-FINAL-BIBLIOGRAPHY-AUDIT"]
+    if claim_id == "CLAIM-FINAL-RELEASE":
+        return ["REF-RUNBOOK", "REF-FINAL-BIBLIOGRAPHY-AUDIT"]
+    return ["REF-FINAL-BIBLIOGRAPHY-AUDIT"]
+
+
+def _claim_matrix_row(claim: dict[str, Any]) -> str:
+    evidence = claim.get("evidence") or []
+    evidence_text = ", ".join(f"`{item}`" for item in evidence) if evidence else "`BLOCKED: no production artifact yet`"
+    references = ", ".join(f"`{item}`" for item in _reference_ids_for_claim(claim))
+    status = claim.get("status", "")
+    claim_id = claim.get("id", "")
+    statement = str(claim.get("statement", "")).replace("|", "\\|")
+    limitation = str(claim.get("limitations", "")).replace("|", "\\|")
+    return f"| `{claim_id}` | {status} | {evidence_text} | {references} | {statement} | {limitation} |"
+
+
 def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     """Generate a GitHub-wiki-ready draft bundle from frozen artifacts."""
     run_root = Path(run_root)
@@ -75,6 +108,10 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     )
     supported_claims = [c for c in claims.get("claims", []) if c.get("status") == "SUPPORTED"]
     blocked_claims = [c for c in claims.get("claims", []) if c.get("status") != "SUPPORTED"]
+    claim_matrix_rows = "\n".join(
+        ["| Claim | Status | Evidence artifacts | Reference anchors | Statement | Limitation |", "|---|---:|---|---|---|---|"]
+        + [_claim_matrix_row(c) for c in claims.get("claims", [])]
+    )
 
     home = "\n".join([
         "# CCB testbeam MC validation wiki draft",
@@ -89,6 +126,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "- [Results and figures](Results-and-Figures)",
         "- [Discussion, limitations, and blockers](Discussion-and-Limitations)",
         "- [Open questions and recursive study plan](Open-Questions)",
+        "- [Claim evidence matrix](Claim-Evidence-Matrix)",
         "- [References and reproducibility](References-and-Reproducibility)",
         "",
         "## Current artifact status",
@@ -195,6 +233,16 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "These equations are used for artifact-summary interpretation and do not replace the final thesis derivations or systematic uncertainty treatment.",
     ])
 
+    claim_matrix_page = "\n".join([
+        "# Claim evidence matrix",
+        "",
+        "This table is the wiki-facing traceability bridge from each claim-ledger row to frozen artifact evidence and curated reference anchors.",
+        "External references explain terminology or standard methods; only project artifacts and QA gates support project-specific claims.",
+        "Blocked claims intentionally keep empty evidence as `BLOCKED: no production artifact yet` so missing MV4-MV8/final-release evidence cannot be hidden.",
+        "",
+        claim_matrix_rows,
+    ])
+
     questions_page = "\n".join([
         "# Open questions and recursive study plan",
         "",
@@ -257,6 +305,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "Results-and-Figures.md": results,
         "Discussion-and-Limitations.md": discussion,
         "Open-Questions.md": questions_page,
+        "Claim-Evidence-Matrix.md": claim_matrix_page,
         "References-and-Reproducibility.md": refs,
     }
     for name, text in pages.items():

@@ -117,6 +117,32 @@ DAG: dict[str, list[str]] = {
 }
 
 
+def _release_blocker_digest(run_root: Path, publication: dict[str, Any]) -> dict[str, Any]:
+    """Summarize why release is blocked without hiding the full audit artifacts."""
+
+    audit_path = run_root / "QA_RELEASE_AUDIT.json"
+    try:
+        audit = json.loads(audit_path.read_text(encoding="utf-8")) if audit_path.is_file() else {}
+    except json.JSONDecodeError:
+        audit = {}
+    blocked_checks = [
+        {
+            "name": check.get("name"),
+            "reason": check.get("reason") or check.get("status"),
+        }
+        for check in audit.get("checks", [])
+        if check.get("status") != "PASS"
+    ]
+    return {
+        "release_ready": bool(publication.get("release_ready")),
+        "publication_status": publication.get("status"),
+        "missing_publication_links": publication.get("missing", []),
+        "blocked_check_count": len(blocked_checks),
+        "top_blocked_checks": blocked_checks[:12],
+        "audit_path": str(audit_path),
+    }
+
+
 @dataclass(frozen=True)
 class RunIdentity:
     run_id: str
@@ -803,7 +829,14 @@ class PipelineOrchestrator:
             latest = {"run_id": self.run_id, "released_at": datetime.now(tz=timezone.utc).isoformat(), "validation": "PASS", "publication_manifest": manifest["index_html"]}
             atomic_write_json(self.repo_root / "reports/mc_validation/latest.json", latest)
         else:
-            atomic_write_json(path / "release_BLOCKED.json", {"status": STATUS_BLOCKED, "publication": manifest})
+            atomic_write_json(
+                path / "release_BLOCKED.json",
+                {
+                    "status": STATUS_BLOCKED,
+                    "publication": manifest,
+                    "blocker_digest": _release_blocker_digest(path, manifest),
+                },
+            )
         self._event("release", manifest["status"], {"scope": manifest["scope"], "release_ready": manifest["release_ready"]})
         return manifest
 

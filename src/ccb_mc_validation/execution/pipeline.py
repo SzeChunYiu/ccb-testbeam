@@ -789,6 +789,11 @@ class PipelineOrchestrator:
             generate_study_gap_audit(path)
             manifest = generate_publication_index(path)
             wiki = generate_wiki_export(path)
+            # Wiki export needs the publication manifest, while the final
+            # publication index should expose generated wiki pages such as the
+            # claim-evidence matrix. Regenerate once after wiki export so the
+            # final manifest is the reader-facing linked draft index.
+            manifest = generate_publication_index(path)
             manifest["wiki"] = wiki
         except (FileNotFoundError, ValueError) as exc:
             result = {"status": STATUS_BLOCKED, "reason": str(exc)}

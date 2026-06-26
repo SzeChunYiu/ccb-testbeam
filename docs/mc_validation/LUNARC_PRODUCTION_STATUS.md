@@ -484,3 +484,14 @@ Local/GitHub checkpoint, generated 2026-06-26 06:46 UTC / 08:46 CEST:
 - LUNARC remains unavailable for new job submission in this checkpoint. Required pre-check/autologin command `ssh -O check lunarc 2>/dev/null && echo Connected || /Users/billy/lunarc-init.sh` attempted again; the helper reported `LUNARC closed the connection before authentication completed`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
 
 Release interpretation: this checkpoint strengthens wiki/report traceability and QA coverage only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebook, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.
+
+## 2026-06-26 recursive claim-dependency wiki checkpoint
+
+Local/GitHub checkpoint, generated 2026-06-26 07:13 UTC / 09:13 CEST:
+
+- PR `#539` merged to `main` (`3e7c3c32b54e649935513ac7540a87f3642493fd`) and adds generated wiki page `wiki/Claim-Dependency-Tree.md`. The page renders a Mermaid dependency graph from final-release claim to QA/wiki traceability, individual claim-ledger rows, frozen evidence artifacts, curated reference anchors, and explicit blockers.
+- PR `#540` merged to `main` (`7cd0624020a4e21ca851be0e3b98fa10f01d5fe2`) and adds release-audit check `wiki_claim_dependency_tree`. The check is fail-closed: it passes only when `wiki/WIKI_MANIFEST.json` lists `Claim-Dependency-Tree.md` and the page exists non-empty.
+- Local verification on `main` after PR `#540`: `python -m pytest tests/test_release_audit.py -q` -> `1 passed in 9.29s`. Full-suite verification on PR branches before merge: `python -m pytest tests/ -q` -> `59 passed`; GitHub Actions MC Validation CI passed twice for both PRs.
+- LUNARC remains unavailable for new job submission in this checkpoint. The required pre-check/autologin command authenticated through OTP but ended with `Socket not created - check SSH config try again`. Therefore no new SLURM job or fresh artifact regeneration is claimed here.
+
+Release interpretation: this checkpoint strengthens recursive claim explanation and QA coverage only. It does not close MV4-MV8, systematic arrays, full figure catalog, clean-kernel notebooks, final thesis/static-site, final release bundle, or LUNARC regeneration blockers. The authoritative selected run remains `20260625T064500Z_full_input_artifacted` / SLURM job `3316536` until remote access is restored and new production jobs complete.

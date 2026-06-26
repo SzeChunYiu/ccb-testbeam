@@ -14,6 +14,7 @@ REQUIRED_LINKS = {
     "release_audit": "QA_RELEASE_AUDIT.md",
     "claim_ledger": "reports/mc_validation/claims/CLAIM_LEDGER.md",
     "wiki_claim_evidence_matrix": "wiki/Claim-Evidence-Matrix.md",
+    "wiki_claim_dependency_tree": "wiki/Claim-Dependency-Tree.md",
     "reference_registry": "reports/mc_validation/references/REFERENCE_REGISTRY.md",
     "notation_registry": "reports/mc_validation/notation/NOTATION_REGISTRY.md",
     "open_questions": "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",

@@ -60,7 +60,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert first_manifest["status"] == "BLOCKED"
     assert first_manifest["scope"] == "publication-index-draft"
     assert first_manifest["release_ready"] is False
-    assert first_manifest["missing"] == ["wiki_claim_evidence_matrix"]
+    assert first_manifest["missing"] == ["wiki_claim_evidence_matrix", "wiki_claim_dependency_tree"]
 
     generate_wiki_export(run)
     manifest = generate_publication_index(run)
@@ -70,6 +70,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert manifest["release_ready"] is False
     assert manifest["missing"] == []
     assert manifest["links"]["wiki_claim_evidence_matrix"]["exists"] is True
+    assert manifest["links"]["wiki_claim_dependency_tree"]["exists"] is True
     assert manifest["blocked_count"] > 0
     index = run / "publication" / "index.html"
     md = run / "publication" / "INDEX.md"
@@ -82,11 +83,13 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert "visual_review.html" in html
     assert "CLAIM_LEDGER.md" in html
     assert "Claim-Evidence-Matrix.md" in html
+    assert "Claim-Dependency-Tree.md" in html
     assert "REFERENCE_REGISTRY.md" in html
     assert "NOTATION_REGISTRY.md" in html
     assert "OPEN_QUESTIONS.md" in html
     assert "OPEN_QUESTION_CLOSURE_PLAN.md" in html
     text = md.read_text(encoding="utf-8")
     assert "wiki_claim_evidence_matrix" in text
+    assert "wiki_claim_dependency_tree" in text
     assert "run-publication" in text
     assert "Remaining release blockers" in text

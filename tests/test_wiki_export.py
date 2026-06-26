@@ -61,6 +61,14 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     home = (wiki / "Home.md").read_text(encoding="utf-8")
     methods = (wiki / "Methods-and-Mathematics.md").read_text(encoding="utf-8")
     assert "Draft / not final release" in home
+    intro = (wiki / "Scientific-Introduction.md").read_text(encoding="utf-8")
+    assert "Reference anchors" in intro
+    assert "REF-GEANT4-2003" in intro
+    assert "REF-PDG-RPP-2024" in intro
+    assert "REF-BIRKS-1964" in intro
+    assert "REF-ROOT-1997" in intro
+    assert "Claim support discipline" in methods
+    assert "project claims require project evidence" in methods
     assert "```math" in methods
     assert (wiki / "Notation-and-Equations.md").is_file()
     assert (wiki / "Open-Questions.md").is_file()

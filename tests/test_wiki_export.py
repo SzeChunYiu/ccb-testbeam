@@ -70,6 +70,21 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert "Claim support discipline" in methods
     assert "project claims require project evidence" in methods
     assert "```math" in methods
+
+    bad_fragments = [
+        "package not final-release ready",
+        "standard methods notation",
+        "evidence. wiki therefore pairs",
+        "efficiency purity",
+        "generated frozen summary artifacts",
+        "governed project S00",
+    ]
+    combined_wiki_text = "\n".join(
+        (wiki / name).read_text(encoding="utf-8")
+        for name in ("Scientific-Introduction.md", "Methods-and-Mathematics.md", "References-and-Reproducibility.md")
+    )
+    for fragment in bad_fragments:
+        assert fragment not in combined_wiki_text
     assert (wiki / "Notation-and-Equations.md").is_file()
     assert (wiki / "Open-Questions.md").is_file()
     assert (wiki / "Claim-Evidence-Matrix.md").is_file()

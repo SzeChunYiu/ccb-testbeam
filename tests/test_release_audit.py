@@ -61,6 +61,8 @@ def test_release_audit_writes_fail_closed_gap_matrix(tmp_path: Path) -> None:
     assert checks["claim_ledger"]["status"] == "PASS"
     assert checks["wiki_claim_evidence_matrix"]["status"] == "BLOCKED"
     assert checks["wiki_claim_evidence_matrix"]["reason"] == "missing wiki manifest"
+    assert checks["wiki_claim_dependency_tree"]["status"] == "BLOCKED"
+    assert checks["wiki_claim_dependency_tree"]["reason"] == "missing wiki manifest"
     assert checks["open_question_registry"]["status"] == "PASS"
     assert checks["open_question_closure_plan"]["status"] == "PASS"
     assert checks["all_questions_closed"]["status"] == "BLOCKED"
@@ -80,6 +82,9 @@ def test_release_audit_writes_fail_closed_gap_matrix(tmp_path: Path) -> None:
     assert checks_after_wiki["wiki_claim_evidence_matrix"]["status"] == "PASS"
     assert checks_after_wiki["wiki_claim_evidence_matrix"]["listed_in_manifest"] is True
     assert checks_after_wiki["wiki_claim_evidence_matrix"]["size_bytes"] > 0
+    assert checks_after_wiki["wiki_claim_dependency_tree"]["status"] == "PASS"
+    assert checks_after_wiki["wiki_claim_dependency_tree"]["listed_in_manifest"] is True
+    assert checks_after_wiki["wiki_claim_dependency_tree"]["size_bytes"] > 0
 
     assert (run / "QA_RELEASE_AUDIT.json").is_file()
     md = (run / "QA_RELEASE_AUDIT.md").read_text(encoding="utf-8")

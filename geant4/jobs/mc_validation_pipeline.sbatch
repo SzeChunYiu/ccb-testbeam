@@ -68,7 +68,7 @@ run_step "MV9 synthesis" "${PY}" -m ccb_mc_validation synthesize --config "${CON
 
 RUN_ROOT="${CCB_ARTIFACT_ROOT}/${RUN_ID}"
 mkdir -p "${RUN_ROOT}/reports" "${RUN_ROOT}/logs"
-for rel in   reports/mc_validation/mv1_pid/study_result.json   reports/mc_validation/mv2_energy/study_result.json   reports/mc_validation/mv3_stopping_depth/study_result.json   reports/mc_validation/mv9_synthesis/MV9_SYNTHESIS.md   reports/mc_validation/mv9_synthesis/synthesis_scaffold.json; do
+for rel in reports/mc_validation/mv1_pid/study_result.json reports/mc_validation/mv2_energy/study_result.json reports/mc_validation/mv3_stopping_depth/study_result.json reports/mc_validation/mv9_synthesis/MV9_SYNTHESIS.md reports/mc_validation/mv9_synthesis/synthesis_scaffold.json; do
   if [[ -f "${REPO}/${rel}" ]]; then
     mkdir -p "${RUN_ROOT}/$(dirname "${rel}")"
     cp "${REPO}/${rel}" "${RUN_ROOT}/${rel}"
@@ -82,6 +82,28 @@ cp "${REPO}/ccb_mc_validation_${SLURM_JOB_ID}.err" "${RUN_ROOT}/logs/" 2>/dev/nu
 cat > "${RUN_ROOT}/JOB_STATE.json" <<JSON
 {"job_id":"${SLURM_JOB_ID}","run_id":"${RUN_ID}","state":"COMPLETED","exit_code":"0:0","host":"$(hostname)","completed_at":"$(date -Is)"}
 JSON
+
+# Generate every lightweight downstream artifact inside the same LUNARC
+# allocation. These steps are after JOB_STATE/log copy so validators can prove
+# the SLURM job completed and can inspect stdout/stderr.
+run_step "validate artifacts" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
+  --run-id "${RUN_ID}" --profile production --config "${CONFIG}" validate
+run_step "summary figures" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
+  --run-id "${RUN_ID}" --profile production --config "${CONFIG}" plot
+run_step "notebook HTML" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
+  --run-id "${RUN_ID}" --profile production --config "${CONFIG}" notebooks
+run_step "artifact reports" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
+  --run-id "${RUN_ID}" --profile production --config "${CONFIG}" docs
+run_step "QA audit" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
+  --run-id "${RUN_ID}" --profile production --config "${CONFIG}" qa
+run_step "thesis draft" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
+  --run-id "${RUN_ID}" --profile production --config "${CONFIG}" thesis
+run_step "release and wiki draft" "${PY}" "${REPO}/scripts/mc_validation/run_pipeline.py" \
+  --run-id "${RUN_ID}" --profile production --config "${CONFIG}" release
+
+# Capture final wrapper logs after downstream reporting has been generated.
+cp "${REPO}/ccb_mc_validation_${SLURM_JOB_ID}.out" "${RUN_ROOT}/logs/" 2>/dev/null || true
+cp "${REPO}/ccb_mc_validation_${SLURM_JOB_ID}.err" "${RUN_ROOT}/logs/" 2>/dev/null || true
 
 echo "[epilogue] artifacts=${RUN_ROOT}"
 echo "[epilogue] complete $(date -Is)"

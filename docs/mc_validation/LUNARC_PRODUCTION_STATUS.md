@@ -554,3 +554,18 @@ LUNARC/GitHub checkpoint, generated 2026-06-27 11:30 UTC / 13:30 CEST:
 - Published the live GitHub Wiki from fresh run `20260627T111955Z_e3ac99f_current_main_retry1`. Live HTTP verification (`wiki/WIKI_PUBLICATION_HTTP_CHECK.json`) returned `status=PASS`, `published_count=11`, `page_count=11`, `blocked_count=0`; each page includes the fresh run provenance snippets where generated locally.
 
 Release interpretation: this is a fresh current-main LUNARC regeneration for MV1-MV3/MV9 and the public wiki/report draft. It still does **not** close MV4-MV8, open-question evidence packets, systematic/bootstrap arrays, full figure catalog/contact sheets, clean-kernel notebook execution, final thesis/static-site, final release bundle, or final physics-release claims. The wiki is public and current, but it remains a fail-closed draft.
+
+LUNARC wrapper-artifact checkpoint, generated 2026-06-27 11:38 UTC / 13:38 CEST:
+
+- Hardened `geant4/jobs/mc_validation_pipeline.sbatch` so a single SLURM allocation now continues past MV1-MV3/MV9 production into downstream lightweight artifact generation: validation, compact summary figures, artifact-only notebook HTML, artifact reports, QA/claim ledger, thesis draft, publication index, and GitHub-wiki draft export.
+- Branch-validation job `3325967` (`20260627T112940Z_719788b_wrapper_release`) completed (`COMPLETED`, `00:01:11`, exit `0:0`) but exposed a real wrapper ordering bug: `release` ran after a blocked `thesis` step because `QA_RELEASE_AUDIT.json` did not exist yet for thesis generation. That run wrote `release_BLOCKED.json` with missing `THESIS_DRAFT_MANIFEST.json`; no final success claim is made from that attempt.
+- Corrected the wrapper ordering to generate QA/claim-ledger before thesis, then reran branch-validation job `3325969` (`20260627T113254Z_8e7d78d_wrapper_release_retry`). The retry completed on `cn014` (`COMPLETED`, `00:00:42`, exit `0:0`) and wrote the complete downstream manifest set directly on LUNARC under `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry`.
+- Remote artifact inspection for retry `3325969` confirmed:
+  - `VALIDATION.json`: `status=PASS`
+  - `reports/mc_validation/claims/CLAIM_LEDGER.json`: `status=PASS`, `release_claims_allowed=false`
+  - `reports/mc_validation/thesis_draft/THESIS_DRAFT_MANIFEST.json`: `status=PASS`, `final_thesis_status=BLOCKED`, `blocked_count=21`
+  - `publication/PUBLICATION_MANIFEST.json`: `status=BLOCKED`, `release_ready=false`, `blocked_count=21`
+  - `wiki/WIKI_MANIFEST.json`: `status=PASS`, `page_count=11`, `release_ready=false`, `blocked_count=21`
+- Published the GitHub Wiki from retry run `20260627T113254Z_8e7d78d_wrapper_release_retry`; live HTTP verification returned `status=PASS`, `published_count=11`, `page_count=11`, `blocked_count=0` and was copied back to the LUNARC artifact bundle as `wiki/WIKI_PUBLICATION_HTTP_CHECK.json`.
+
+Release interpretation: the LUNARC wrapper now produces the public-report/wiki artifact surface in one batch job instead of requiring ad-hoc local post-processing. This improves reproducibility and prevents the missing-manifest gap from recurring, but it does not close the scientific release blockers: MV4-MV8, open-question evidence packets, systematic/bootstrap arrays, full figure catalog/contact sheets, clean-kernel notebooks, final thesis/static-site, and final release bundle remain incomplete.

@@ -60,7 +60,7 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     assert first_manifest["status"] == "BLOCKED"
     assert first_manifest["scope"] == "publication-index-draft"
     assert first_manifest["release_ready"] is False
-    assert first_manifest["missing"] == ["wiki_claim_evidence_matrix", "wiki_claim_dependency_tree"]
+    assert first_manifest["missing"] == ["wiki_claim_evidence_matrix", "wiki_claim_dependency_tree", "wiki_study_coverage_gaps"]
 
     generate_wiki_export(run)
     manifest = generate_publication_index(run)
@@ -91,5 +91,6 @@ def test_publication_index_writes_draft_index_and_manifest(tmp_path: Path) -> No
     text = md.read_text(encoding="utf-8")
     assert "wiki_claim_evidence_matrix" in text
     assert "wiki_claim_dependency_tree" in text
+    assert "wiki_study_coverage_gaps" in text
     assert "run-publication" in text
     assert "Remaining release blockers" in text

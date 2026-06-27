@@ -103,6 +103,7 @@ def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False
         checks.append(_check_file("claim_ledger", run_root / "reports" / "mc_validation" / "claims" / "CLAIM_LEDGER.json", required_status=PASS))
     checks.append(_check_wiki_page("wiki_claim_evidence_matrix", run_root, "Claim-Evidence-Matrix.md"))
     checks.append(_check_wiki_page("wiki_claim_dependency_tree", run_root, "Claim-Dependency-Tree.md"))
+    checks.append(_check_wiki_page("wiki_study_coverage_gaps", run_root, "Study-Coverage-and-Remaining-Gaps.md"))
 
     validation = _load_json(run_root / "VALIDATION.json")
     studies = validation.get("study_metrics", {}) if isinstance(validation.get("study_metrics"), dict) else {}

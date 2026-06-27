@@ -89,6 +89,10 @@ def test_generate_wiki_export_writes_github_wiki_pages(tmp_path: Path) -> None:
     assert (wiki / "Open-Questions.md").is_file()
     assert (wiki / "Claim-Evidence-Matrix.md").is_file()
     assert (wiki / "Claim-Dependency-Tree.md").is_file()
+    coverage = (wiki / "Study-Coverage-and-Remaining-Gaps.md").read_text(encoding="utf-8")
+    assert "Study coverage and remaining gaps" in coverage
+    assert "MV4" in coverage
+    assert "recursive closure chain" in coverage
     claim_matrix = (wiki / "Claim-Evidence-Matrix.md").read_text(encoding="utf-8")
     claim_tree = (wiki / "Claim-Dependency-Tree.md").read_text(encoding="utf-8")
     assert "Claim evidence matrix" in claim_matrix

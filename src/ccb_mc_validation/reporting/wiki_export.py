@@ -13,6 +13,7 @@ from ccb_mc_validation.reporting.notation_registry import generate_notation_regi
 from ccb_mc_validation.reporting.open_questions import generate_open_question_registry
 from ccb_mc_validation.reporting.question_closure import generate_question_closure_plan
 from ccb_mc_validation.reporting.evidence_packets import generate_evidence_packets
+from ccb_mc_validation.reporting.study_gap_audit import generate_study_gap_audit
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -132,6 +133,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
     open_questions = generate_open_question_registry(run_root)
     closure_plan = generate_question_closure_plan(run_root)
     evidence_packets = generate_evidence_packets(run_root)
+    study_gap_audit = generate_study_gap_audit(run_root)
     figure_manifest = _load_json(run_root / "figures" / "summary" / "FIGURE_MANIFEST.json")
     rows = _load_rows(run_root / "reports" / "mc_validation" / "summary" / "metrics_table.csv")
     run_id = str(validation.get("run_id") or run_root.name)
@@ -279,6 +281,48 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "These equations are used for artifact-summary interpretation and do not replace the final thesis derivations or systematic uncertainty treatment.",
     ])
 
+
+    study_gap_rows = "\n".join(
+        [
+            "| Study | Status | Current state | Required next artifact |",
+            "|---|---:|---|---|",
+        ]
+        + [
+            f"| {gap.get('study')} | {gap.get('status')} | {gap.get('current_state')} | `{gap.get('required_next_artifact')}` |"
+            for gap in study_gap_audit.get("studies", [])
+        ]
+    )
+    study_coverage_page = "\n".join([
+        "# Study coverage and remaining gaps",
+        "",
+        f"Run `{run_id}` is not a complete scientific closure package. This page makes every currently unstudied or under-studied topic explicit instead hiding it in prose.",
+        "",
+        f"All study implementations ready: `{study_gap_audit.get('all_study_implementations_ready')}`; blocked study count: `{study_gap_audit.get('blocked_count')}`.",
+        "",
+        "## Fail-closed coverage table",
+        "",
+        study_gap_rows,
+        "",
+        "## Recursive closure rule",
+        "",
+        "A topic is not considered understood merely because a placeholder module, fixture artifact, or literature reference exists. It remains open until production artifacts, QA gates, plots, uncertainty accounting, claim-ledger evidence, and wiki explanations all agree.",
+        "",
+        "For each blocked study the recursive closure chain is:",
+        "",
+        "```mermaid",
+        "flowchart TD",
+        "  Q[Open scientific question] --> M[Method and mathematical model]",
+        "  M --> A[Production LUNARC artifact]",
+        "  A --> U[Uncertainty and systematic checks]",
+        "  U --> F[Figures, tables, data sidecars]",
+        "  F --> C[Claim ledger evidence row]",
+        "  C --> W[Wiki/report explanation]",
+        "  W --> R[Release QA gate]",
+        "```",
+        "",
+        "Until that chain is complete for MV4-MV8 and every open-question evidence packet, the release remains blocked and no final physics conclusion is claimed.",
+    ])
+
     claim_matrix_page = "\n".join([
         "# Claim evidence matrix",
         "",
@@ -362,6 +406,7 @@ def generate_wiki_export(run_root: Path) -> dict[str, Any]:
         "Results-and-Figures.md": results,
         "Discussion-and-Limitations.md": discussion,
         "Open-Questions.md": questions_page,
+        "Study-Coverage-and-Remaining-Gaps.md": study_coverage_page,
         "Claim-Evidence-Matrix.md": claim_matrix_page,
         "Claim-Dependency-Tree.md": claim_dependency_page,
         "References-and-Reproducibility.md": refs,

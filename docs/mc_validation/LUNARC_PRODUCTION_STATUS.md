@@ -536,3 +536,21 @@ Local/GitHub checkpoint, generated 2026-06-27 11:12 UTC / 13:12 CEST:
 - LUNARC route through `billy-old` remains usable for future submissions: `ssh billy-old 'ssh lunarc "hostname && whoami"'` reached `cosmos3.int.lunarc` as `scyiu` during this checkpoint. No new MC-validation SLURM production job was submitted here because this iteration was a publication/coverage-traceability update over frozen job `3316536` artifacts.
 
 Release interpretation: this checkpoint makes the remaining unstudied topics visible in both generated wiki output and the live GitHub Wiki, and adds a fail-closed verifier for actual wiki publication. It does not close MV4-MV8, systematic arrays, full figure catalog/contact sheets, clean-kernel notebooks, final thesis/static-site, final release bundle, or fresh production-regeneration blockers.
+
+LUNARC/GitHub checkpoint, generated 2026-06-27 11:30 UTC / 13:30 CEST:
+
+- Refreshed the LUNARC worktree `/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main` to `origin/main` commit `e3ac99f9e3943656e89f5ed500cc79f57d8bf0fa` (`docs(mc-validation): expose study coverage gaps on wiki (#547)`).
+- Submitted a first current-main job `3325941`, run `20260627T111401Z_e3ac99f_current_main`, which failed fast (`FAILED`, elapsed `00:00:16`, exit `3:0`) because the refreshed worktree did not contain the large MC ROOT input at its relative default path `geant4/data/output_krakow_1M.root`.
+- Submitted corrected LUNARC SLURM job `3325947` with explicit production inputs:
+  - `CCB_MC_ROOT=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root` (`sha256=2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc`)
+  - `CCB_PULSE_TABLE=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz` (`sha256=648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f`)
+  - `CCB_ARTIFACT_ROOT=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts`
+- Job `3325947` completed on `cn014` (`COMPLETED`, elapsed `00:00:50`, exit `0:0`) and wrote fresh artifact bundle `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T111955Z_e3ac99f_current_main_retry1`.
+- Fresh validation over the new bundle returned `status=PASS` for job-state completion, MC ROOT preflight, pulse-table preflight, MV1/MV2/MV3 production study results, MV9 synthesis, SLURM logs, and fixture-release leakage guard. Fresh key metrics:
+  - MV1: `n_tracks=100000`, `hgb_auc=0.9972559545729799`, `hgb_purity_at_90eff=0.9957258192179832`
+  - MV2: `n_tracks=100000`, `proton_ekin_recon_res68=0.015380823301696338`, `deuteron_ekin_recon_res68=0.03677415671940314`
+  - MV3: `n_tracks=100000`, `n_sample_I=6450`, `n_sample_II=17024`
+- Regenerated artifact reports, compact figures, notebook HTML, thesis draft scaffold, claim ledger, publication index, and wiki pages for the fresh run. `wiki/WIKI_MANIFEST.json` is `status=PASS`, `page_count=11`, `blocked_count=17`, `release_ready=false`; `publication/PUBLICATION_MANIFEST.json` remains `status=BLOCKED`, `blocked_count=17`, `release_ready=false`.
+- Published the live GitHub Wiki from fresh run `20260627T111955Z_e3ac99f_current_main_retry1`. Live HTTP verification (`wiki/WIKI_PUBLICATION_HTTP_CHECK.json`) returned `status=PASS`, `published_count=11`, `page_count=11`, `blocked_count=0`; each page includes the fresh run provenance snippets where generated locally.
+
+Release interpretation: this is a fresh current-main LUNARC regeneration for MV1-MV3/MV9 and the public wiki/report draft. It still does **not** close MV4-MV8, open-question evidence packets, systematic/bootstrap arrays, full figure catalog/contact sheets, clean-kernel notebook execution, final thesis/static-site, final release bundle, or final physics-release claims. The wiki is public and current, but it remains a fail-closed draft.

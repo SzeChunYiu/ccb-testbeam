@@ -15,6 +15,7 @@ REQUIRED_LINKS = {
     "claim_ledger": "reports/mc_validation/claims/CLAIM_LEDGER.md",
     "wiki_claim_evidence_matrix": "wiki/Claim-Evidence-Matrix.md",
     "wiki_claim_dependency_tree": "wiki/Claim-Dependency-Tree.md",
+    "wiki_study_coverage_gaps": "wiki/Study-Coverage-and-Remaining-Gaps.md",
     "reference_registry": "reports/mc_validation/references/REFERENCE_REGISTRY.md",
     "notation_registry": "reports/mc_validation/notation/NOTATION_REGISTRY.md",
     "open_questions": "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",

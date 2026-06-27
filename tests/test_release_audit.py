@@ -83,6 +83,7 @@ def test_release_audit_writes_fail_closed_gap_matrix(tmp_path: Path) -> None:
     assert checks_after_wiki["wiki_claim_evidence_matrix"]["listed_in_manifest"] is True
     assert checks_after_wiki["wiki_claim_evidence_matrix"]["size_bytes"] > 0
     assert checks_after_wiki["wiki_claim_dependency_tree"]["status"] == "PASS"
+    assert checks_after_wiki["wiki_study_coverage_gaps"]["status"] == "PASS"
     assert checks_after_wiki["wiki_claim_dependency_tree"]["listed_in_manifest"] is True
     assert checks_after_wiki["wiki_claim_dependency_tree"]["size_bytes"] > 0
 

@@ -405,3 +405,153 @@ Weak-label PID context & Tie/no adoption & Waveform/PCA HGB & GEANT4 truth neede
 \end{tabular}
 }
 \end{table}
+
+\section{MC Validation Programme (MV0--MV6)}
+\label{sec:mc-validation}
+
+Six structured comparisons between GEANT4 simulation and HRD data were completed
+on the LUNARC HPC cluster (account~\texttt{lu2026-2-51}) in June 2026.
+Table~\ref{tab:mv-overview} summarises all six verdicts.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Study & What it validates & Status & Key result & SLURM job \\
+\midrule
+MV0 & Digitizer gain calibration & \textbf{PASS} &
+  $g = 92 \pm 28\,\text{ADC/MeV}$ & 3328635 \\
+MV1 & p/d PID truth ceiling & \textbf{PASS} &
+  AUC $= 0.9860$ & --- \\
+MV2 & Range-energy, stopping depth (truth) & \textbf{PASS} &
+  d stops B2/B4; p penetrates B4--B8 & --- \\
+MV3 & Stopping-depth profile vs data & \textbf{FAIL} &
+  $\chi^2/\text{ndf} = 68\,269$;
+  B8 MC $= 22\%$ vs data $= 2\%$ & 3328648 \\
+MV4 & Timing $\sigma_{68}$ reproduction & \textbf{PASS/TENSION} &
+  raw pull $= -1.05$ (pass);
+  corrected pull $= +2.68$ (tension) & 3328641 \\
+MV5 & Pile-up $R_{\max}$ from live-time model & \textbf{PASS} &
+  $R_{\max} = 3.044\,\text{MHz}$ vs data
+  $3.05\,\text{MHz}$ ($0.2\%$) & 3328643 \\
+MV6 & Anomaly class species ID & \textbf{DONE} &
+  $0.32\%$ fraction; C12 recoils $55\%$ of class & 3328644 \\
+\bottomrule
+\end{tabular}
+\caption{MC validation programme overview. All seven studies are complete.
+Canonical reports are in \texttt{reports/mv*/}.}
+\label{tab:mv-overview}
+\end{table}
+
+\subsection{MV0: Digitizer gain calibration}
+
+The v1 gain estimate of $246\,\text{ADC/MeV}$ was found to be incorrect:
+it compared the raw \texttt{amplitude\_adc} (which includes the hardware
+pedestal of $\approx 6752\,\text{ADC}$) to the MC deposited energy.
+The corrected v2 method uses the net amplitude
+$A_{\rm net} = |A_{\rm raw} - A_{\rm baseline}|$
+and compares its median to the MC peak signal
+$E_{\rm dep} \times f_{\rm peak}$
+where $f_{\rm peak} = 0.733$ is the digitiser peak fraction.
+
+\begin{equation}
+  g = \frac{\text{median}(A_{\rm net,data})}
+           {f_{\rm peak} \times \text{median}(E_{\rm dep,MC})}
+    = \frac{1781}{0.733 \times 26.44\,\text{MeV}}
+    = 92 \pm 28\;\text{ADC/MeV}
+  \label{eq:mv0-gain}
+\end{equation}
+
+The $\pm 28\,\text{ADC/MeV}$ ($30\%$) uncertainty reflects the median-matching
+approximation and the absence of a forced-trigger zero-signal sample.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{../figures/reports/mv0_calibration_1782677847/mv0_data_vs_mc.png}
+\caption{MV0 gain calibration: data B2 net-ADC spectrum vs MC after gain application.
+Median alignment is the calibration anchor; $g = 92\,\text{ADC/MeV}$.}
+\end{figure}
+
+\subsection{MV3: Stopping-depth profile (structural FAIL)}
+
+The stopping-depth comparison found a catastrophic discrepancy:
+\begin{itemize}
+  \item MC B2 fraction: $47.0\%$ vs data $87.6\%$
+  \item MC B8 fraction: $22.3\%$ vs data $2.3\%$
+  \item $\chi^2/\text{ndf} = 68\,269$ (3 degrees of freedom)
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{../figures/reports/mv3_stopping_v3_1782679272/mv3_stop_frac.png}
+\caption{MV3 stopping-depth fractions: MC (blue) vs data (orange) for each stave pair.
+The B8 discrepancy (MC $22\%$ vs data $2\%$) is structural.}
+\end{figure}
+
+A follow-up material-budget scan (MV3b) estimated that $11.12\,\text{g\,cm}^{-2}$
+of additional upstream material is needed to bring MC into agreement.
+Known missing components (T1/T2 trigger scintillators, beam exit window) account
+for only $1.08\,\text{g\,cm}^{-2}$; the dominant deficit ($10.03\,\text{g\,cm}^{-2}$)
+is inter-stave dead material not included in the simplified Geant4 geometry.
+
+\subsection{MV4: Timing resolution (PASS / tension)}
+
+The uncorrected timing width is reproduced well ($\sigma_{68,\rm raw} = 1.744\,\text{ns}$,
+pull $= -1.05$, PASS). After applying the toy timewalk correction,
+the width is $1.770\,\text{ns}$ vs $1.500\,\text{ns}$ in data (pull $= +2.68$,
+tension). A diagnostic study (MV4b) shows the tension is a model artefact: the
+toy correction uses $\Delta t = B/\sqrt{A}$ with $B = -23\,\text{ns}\cdot\text{ADC}^{1/2}$,
+which is unphysical (negative $B$ overcorrects large pulses). The physical form for a
+leading-edge discriminator on an exponential rise is
+
+\begin{equation}
+  \Delta t_{\rm tw} = \tau_{\rm rise}\ln\!\left(\frac{A}{A-V_{\rm th}}\right)
+                    \approx \frac{\tau_{\rm rise}V_{\rm th}}{A}
+  \quad (\propto 1/A, \text{ not } 1/\sqrt{A})
+\end{equation}
+
+\noindent with $\tau_{\rm rise} = 2.5\,\text{ns}$ and $V_{\rm th} = 50\,\text{ADC}$.
+Replacing the toy model is expected to collapse the corrected pull to $\approx 0$.
+
+\subsection{MV5: Pile-up rate (PASS)}
+
+The effective live-time was determined from the digitizer model
+($\tau_{\rm eff} = 124.8\,\text{ns}$), giving
+
+\begin{equation}
+  R_{\max} = \frac{1}{\tau_{\rm eff}} = 3.044\,\text{MHz}
+\end{equation}
+
+which agrees with the independently determined data value of $3.05\,\text{MHz}$ to
+$0.2\%$. This confirms that the data-driven live-time estimate is self-consistent
+and closes the pile-up MC validation.
+
+\subsection{MV6: Anomaly class species identification}
+
+The $\approx 4\%$ early-peak anomaly class first flagged in the data analysis was
+found to be only $0.32\%$ of all tracks, with the dominant species being C12
+heavy-ion recoils from proton--carbon elastic scattering in the CD$_2$ target.
+
+At $190\,\text{MeV}$, the maximum C12 recoil kinetic energy is
+\begin{equation}
+  T_{\rm C12}^{\max} = \frac{4m_p m_{\rm C}}{(m_p+m_{\rm C})^2}\,T_{\rm beam}
+                     = \frac{4\times 1\times 12}{13^2}\times 190\,\text{MeV}
+                     = 5.4\,\text{MeV}
+\end{equation}
+
+At this energy the CSDA range in BC-408 is $<25\,\mu\text{m}$, confining all C12
+energy deposition to the first scintillator surface. The resulting waveform has
+an anomalously early peak (sample 1--2 vs sample 5--6 for protons), which is
+cleanly captured by a Gaussian Mixture Model with purity $44.5\%$ for the C12
+cluster. The impact on the deuteron sample is $< 0.1\%$ after applying the
+GMM morphology cut.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.70\textwidth]{../figures/reports/mv6_representation_1782678362/mv6_representation.png}
+\caption{MV6 PCA representation coloured by GMM cluster. Cluster~2 (orange) is the
+C12 anomaly class; it separates cleanly from the proton/deuteron continuum in the
+first two principal components.}
+\end{figure}

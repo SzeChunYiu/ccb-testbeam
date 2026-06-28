@@ -1,5 +1,9 @@
 # Findings Summary
 
+
+> **MC validation addendum (2026-06-28):** MV0-MV6 all complete. gain=92+/-28 ADC/MeV (MV0), AUC=0.986 (MV1), chi2/ndf=68269 FAIL (MV3), timing PASS/tension (MV4), R_max=3.044 MHz PASS (MV5), C12 recoils 0.32% (MV6). See [MC_VALIDATION_RESULTS.md](mc_validation/MC_VALIDATION_RESULTS.md)
+
+
 This document is the short, reader-facing summary of the CCB test-beam analysis.
 The full narrative is in [ANALYSIS_REPORT.md](ANALYSIS_REPORT.md), and the
 thesis-style LaTeX source is in [latex/main.tex](latex/main.tex). The

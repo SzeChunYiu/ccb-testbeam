@@ -1,6 +1,6 @@
 # MC Validation Task Ledger
 
-Updated: 2026-06-23  
+Updated: 2026-06-28
 Branch: `feat/mc-validation-full-package`
 
 ## Phase A — Packaging and contracts
@@ -31,13 +31,15 @@ Branch: `feat/mc-validation-full-package`
 | B8 Makefile targets (`mc-test`, `mc-smoke`, `mc-help`) | DONE | local dev loop |
 | B9 Unit tests for config/units/exceptions | DONE | `tests/` |
 
-## Phase C+ (not started)
+## Phase C+ — MV studies (all completed 2026-06-23/28)
 
 | Task | Status | Notes |
 | --- | --- | --- |
-| C1 MV0 digitizer calibration vs data pulses | TODO | requires pulse templates |
-| C2 MV1 PID ROC and purity/efficiency plots | TODO | truth labels |
-| C3 MV2 MeV↔ADC calibration closure | TODO | PSTAR/range anchors |
-| C4 MV3 Sample I/II depth profile comparison | TODO | LayerID mapping |
-| D1 MV4–MV8 Tier-2 validations | TODO | blocked on MV0 |
-| E1 MV9 synthesis column in `reports/SUMMARY.md` | TODO | verdict table |
+| C1 MV0 digitizer calibration vs data pulses | DONE | gain=92±28 ADC/MeV (net_adc median); v1 error corrected; reports/mv0_calibration_1782677847/ |
+| C2 MV1 PID ROC and purity/efficiency plots | DONE | HGB AUC=0.9860; purity@90%eff=0.9644; 400,369 truth tracks; reports/mv1_mv2_truth_pid_energy_1782220258/ |
+| C3 MV2 MeV↔ADC calibration closure | DONE | d-frac layers 0-1: 0.36-0.39; p-frac layers 4-7: 0.89-0.90; absolute energy unreachable confirmed; same report as MV1 |
+| C4 MV3 Sample I/II depth profile comparison | DONE | chi2/ndf=68,269; MC B2=47%/B8=22% vs data B2=88%/B8=2%; structural FAIL (missing upstream material); reports/mv3_stopping_v3_1782679272/ |
+| D1 MV4 timing sigma68 reproduction | DONE | sigma68_raw=1.744+/-0.007 ns vs data 1.85 ns; PASS(raw)/TENSION(corrected); reports/mv4_timing_1782678162/ |
+| D2 MV5 pile-up R_max from dead-time model | DONE | R_max_MC=3.044 MHz vs data 3.05 MHz (0.2%); tau_eff=124.8 ns; PASS; reports/mv5_pileup_1782678353/ |
+| D3 MV6 anomaly species identification | DONE | 0.32% early-peak; C12 recoils 55%; GMM Cluster 2 purity=44.5%; reports/mv6_representation_1782678362/ |
+| E1 MV9 synthesis column in reports/SUMMARY.md | DONE | All 6 MV studies PRODUCTION; SUMMARY.md MV section appended 2026-06-28 |

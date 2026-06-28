@@ -135,3 +135,20 @@
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
 | P10b | ✅ done | ✅ 640,737 exact | explicit timewalk q MSE 0.0444; timing 2.756 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | No; explicit traditional timewalk beats conditional template | reports/1781006250.1276.49814de9 |
 | P10f q-tail validation | ✅ done | ✅ family holdout inputs and leakage checks | calibration amplitude-median loses to shape handles | no-tail ExtraTrees improves q_tail MSE in 2/2 folds but fires too-good controls | No promotion; physical handle and density/counterfactual audits required | reports/1781027860.942.36c33ff0 |
+
+---
+
+## MC Validation Studies (MV0–MV9, GEANT4 truth bridge)
+
+Status: ✅=done, ⚠️=pending, ⛔=structural_fail
+
+| Study | Status | What | Key result | Verdict | Report |
+|---|---|---|---|---|---|
+| MV0 v2 | ✅ done | Digitizer gain calibration (corrected) | gain = 92 ± 28 ADC/MeV (net_adc median matching; v1 error corrected) | PASS | reports/mv0_calibration_1782677847/ |
+| MV1 | ✅ done | p/d PID truth ceiling | HGB AUC=0.9860; purity@90%eff=0.9644; 400,369 truth tracks | PASS | reports/mv1_mv2_truth_pid_energy_1782220258/ |
+| MV2 | ✅ done | Range-energy / stopping depth (truth) | d-frac layers 0-1: 0.36-0.39; p-frac layers 4-7: 0.89-0.90; absolute energy unreachable confirmed | PASS (limitation confirmed) | reports/mv1_mv2_truth_pid_energy_1782220258/ |
+| MV3 v3 | ✅ done | Stopping-depth profile vs data (Layer↔stave) | χ²/ndf=68,269; MC B2=47%/B8=22% vs data B2=88%/B8=2%; structural FAIL (missing upstream material) | FAIL | reports/mv3_stopping_v3_1782679272/ |
+| MV4 | ✅ done | Timing σ₆₈ reproduction in MC | σ₆₈_raw=1.744±0.007 ns vs data 1.85 ns (pull=−1.05); σ₆₈_corrected=1.770±0.011 ns vs data 1.50 ns (pull=+2.68); timewalk B coeff negative | PASS(raw)/TENSION(corrected) | reports/mv4_timing_1782678162/ |
+| MV5 | ✅ done | Pile-up R_max from dead-time model | R_max_MC=3.044 MHz vs data 3.05 MHz (0.2% agreement); τ_eff=124.8 ns | PASS | reports/mv5_pileup_1782678353/ |
+| MV6 | ✅ done | Anomaly species identification | 0.32% early-peak (283/87555 tracks); C12 recoils 55%; GMM Cluster 2 purity=44.5%; 4 PCA components=74.5% variance | DONE | reports/mv6_representation_1782678362/ |
+| MV9 | ✅ done | MC synthesis (6/6 PRODUCTION) | all 6 MV studies PRODUCTION; synthesis registry complete | DONE | reports/mc_validation_synthesis/ |

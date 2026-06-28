@@ -3,7 +3,7 @@
 **One document with everything a human needs to know about this project: the science, what has been
 done, the results, the current state, what is blocking us, and what comes next.**
 
-- **Last updated:** 2026-06-28 (MV0–MV6 all complete)
+- **Last updated:** 2026-06-28 (MV0–MV6 + MV3b/MV4b diagnostic studies complete)
 - **Repository:** `SzeChunYiu/ccb-testbeam` (branch `main`); canonical tree on LUNARC at
   `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/`
 - **Status:** research in progress — all numbers **preliminary, not peer-reviewed**
@@ -101,6 +101,8 @@ All six MV studies are now complete. Numbers are from SLURM job JSON outputs (`r
 | **MV4** | Timing σ₆₈ reproduction in MC | ✅ 100% PASS/TENSION | σ₆₈_raw = **1.744 ± 0.007 ns** vs data 1.85 ns → pull −1.05 (**PASS**); σ₆₈_corrected = 1.770 ± 0.011 ns vs data 1.50 ns → pull +2.68 (**TENSION**: toy timewalk B coefficient negative/unphysical) |
 | **MV5** | Pile-up R_max from live-time model | ✅ 100% **PASS** | τ_eff=124.8 ns → R_max = **3.044 MHz** vs data corrected 3.05 MHz (0.2% agreement); confirms note's 4.22 MHz was wrong (τ_eff=90 ns assumption) |
 | **MV6** | Anomaly species ID (early-peak class) | ✅ 100% **PASS** | anomaly fraction = **0.32%** (not ~4%); early-peak class dominated by **C12 heavy-ion recoils** from CD₂ (55% of early-peak tracks), GMM Cluster 2 purity=44.5%; 4 PCA components capture 74.5% variance |
+| **MV3b** | Upstream material budget estimation (MV3 FAIL diagnosis) | ✅ done | 11.12 g/cm² extra material needed; 1.08 g/cm² known missing; **10.03 g/cm²** unmodelled inter-stave dead material. See `reports/mv3b_material_budget/` |
+| **MV4b** | Physical timewalk model diagnosis (MV4 TENSION diagnosis) | ✅ done | Toy 1/√ADC with B=−23 ns·√ADC is **unphysical** (B<0). Correct form: 1/A = τ_rise·V_th/A. After fix, pull=+2.68 expected to collapse to ~0. See `reports/mv4b_timewalk_model/` |
 | **MV9** | MC synthesis | ✅ 100% | 6/6 PRODUCTION; see `reports/mc_validation_synthesis/SYNTHESIS.md` |
 | **MV7/MV8** | Systematics / two-ended readout | reserved | — |
 

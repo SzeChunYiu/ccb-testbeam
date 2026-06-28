@@ -1,0 +1,45 @@
+{
+  "beam_energy_MeV": 190.0,
+  "mc_fractions_original": {
+    "B2": 0.47,
+    "B4": 0.182,
+    "B6": 0.125,
+    "B8": 0.223
+  },
+  "data_fractions": {
+    "B2": 0.876,
+    "B4": 0.063,
+    "B6": 0.039,
+    "B8": 0.023
+  },
+  "extra_upstream_required_gcm2": 11.116412213740459,
+  "known_upstream_gcm2": 1.083645,
+  "deficit_gcm2": 10.032767213740458,
+  "chi2_original": 2.341718187973102,
+  "chi2_fixed_estimate": 23.78727057212932,
+  "components": {
+    "Beam exit window (0.5mm Al)": 0.135,
+    "T1 scintillator (3mm)": 0.309,
+    "T2 scintillator (3mm)": 0.309,
+    "Air 50 cm": 0.000645,
+    "Target support / frame": 0.05,
+    "B2 light guides+wrap (2mm)": 0.27999999999999997,
+    "Subtotal (known)": 1.083645
+  },
+  "stopping_fractions_no_extra": {
+    "B2": 0.0,
+    "B4": 0.0,
+    "B6": 0.0,
+    "B8": 1.0,
+    "through": 0.0
+  },
+  "stopping_fractions_matched": {
+    "B2": 0.0,
+    "B4": 0.0,
+    "B6": 0.98294,
+    "B8": 0.01706,
+    "through": 0.0
+  },
+  "diagnosis": "The MC\u2013data B8 discrepancy (22.3% vs 2.3%) requires 11.1 g/cm\u00b2 additional upstream material. Known missing components account for only 1.08 g/cm\u00b2. The remaining deficit (10.0 g/cm\u00b2) likely comes from inter-stave dead material (PCBs, connectors, wrapping, light guides) not included in the simplified MC geometry.",
+  "recommendation": "Update Geant4 geometry to include: (1) beam exit window, (2) T1/T2 trigger scintillators, (3) inter-stave dead material (estimated 0.5 g/cm\u00b2 per pair). Re-run MV3 to verify chi2 improvement."
+}

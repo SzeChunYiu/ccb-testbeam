@@ -217,26 +217,31 @@ pulses.
 
 \section{Open questions}
 
-The first unresolved question is absolute energy and particle identity.  The direct
-path is a production GEANT4 sample with validated cross-section handling, material
-definitions, Birks response, optical/electronics response where needed, and a documented
-mapping from simulated scintillator layers to the HRD B-stack channels.  Until then,
-charge/depth labels are useful weak labels, not truth.
+The following items remain open after the MC validation programme:
 
-The second unresolved question is real pile-up truth.  The programme has strong
-synthetic-injection evidence and current-dependent excesses, but no event-level label
-stating which beam pulses truly contain two particles.  The next decisive study must
-connect high-current waveform taxa, topology, live-time, and either simulation truth
-or an independent experimental handle.
+\begin{enumerate}
+\item \textbf{MC geometry (MV3 FAIL).} The Geant4 stopping-depth profile
+  disagrees catastrophically with data ($\chi^2/\text{ndf} = 68\,269$)
+  due to missing upstream material budget in the simulation geometry.
+  The estimated deficit is $\approx 10\,\text{g\,cm}^{-2}$ of inter-stave
+  dead material. Correction requires a new MC production run.
 
-The third unresolved question is the pedestal source.  A true forced/random trigger
-sample would decide whether the adaptive lowering is an electronics correction or a
-contamination flag.  Without it, the safest interpretation is diagnostic.
+\item \textbf{Digitizer timewalk model (MV4 tension).} The corrected timing
+  $\sigma_{68}$ is in $2.7\sigma$ tension with data due to an unphysical
+  toy timewalk ($B/\sqrt{A}$ with $B<0$). Replacing it with the physical
+  leading-edge form ($\tau_{\rm rise}V_{\rm th}/A$) is expected to resolve
+  the tension; this requires a re-run of the MC digitizer.
 
-The fourth unresolved question is transfer.  Many ML wins are real inside their
-closure domain; the remaining work is to show that the same methods keep their
-advantage under run-family, topology, saturation, and current shifts while preserving
-failure-rate and uncertainty calibration.
+\item \textbf{Absolute energy scale and particle identity.} The gain
+  calibration carries $\pm 30\%$ uncertainty (dominant: absence of a
+  forced-trigger zero-signal reference sample). A future beam run with
+  forced/random triggers would fix this.
+
+\item \textbf{Two-ended readout cross-correlation.} Single-ended readout means
+  correlated timing and amplitude terms in the two-ended case cannot be
+  separated from the current dataset. This requires the full dual-readout
+  detector configuration.
+\end{enumerate}
 
 \section{Final verdict}
 

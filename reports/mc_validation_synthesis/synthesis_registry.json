@@ -1,0 +1,52 @@
+{
+  "studies": {
+    "MV1": {
+      "status": "PRODUCTION",
+      "report": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv1_mv2_truth_pid_energy_1782220258/mv1_mv2_truth_summary.json",
+      "key_result": "PID p/d separation",
+      "metrics": {
+        "key_result": "PID p/d separation"
+      }
+    },
+    "MV2": {
+      "status": "PRODUCTION",
+      "report": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv1_mv2_truth_pid_energy_1782220258/mv1_mv2_truth_summary.json",
+      "key_result": "range-energy calibration",
+      "metrics": {
+        "key_result": "range-energy calibration"
+      }
+    },
+    "MV3": {
+      "status": "PRODUCTION",
+      "report": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_stopping_v3_1782679272/mv3_summary.json",
+      "key_result": "stopping-depth Sample I/II",
+      "metrics": {
+        "key_result": "stopping-depth Sample I/II"
+      }
+    },
+    "MV4": {
+      "status": "PRODUCTION",
+      "report": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_summary.json",
+      "key_result": "single-stave timing",
+      "metrics": {
+        "key_result": "single-stave timing"
+      }
+    },
+    "MV5": {
+      "status": "PRODUCTION",
+      "report": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv5_pileup_1782678353/mv5_pileup_summary.json",
+      "key_result": "Rmax=3.04 MHz (tau=124.8ns)",
+      "metrics": {
+        "key_result": "Rmax=3.04 MHz (tau=124.8ns)"
+      }
+    },
+    "MV6": {
+      "status": "PRODUCTION",
+      "report": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv6_representation_1782678362/mv6_representation_summary.json",
+      "key_result": "anomaly=0.3% -> C12",
+      "metrics": {
+        "key_result": "anomaly=0.3% -> C12"
+      }
+    }
+  }
+}

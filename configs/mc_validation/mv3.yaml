@@ -15,5 +15,11 @@ layer_to_stave:
   6: B8
   7: B8
 branches_config: configs/mc_validation/branches.yaml
-# Optional data reference stave occupancy profiles for mapping score
-data_reference_profiles: {}
+# Data reference stave occupancy profiles (selected B pulses, S01b report).
+# NOTE: run_mv3 scores each profile via np.asarray(ref) against stave order
+# sorted([B2,B4,B6,B8]) -> the values MUST be an ordered list [B2,B4,B6,B8],
+# NOT a dict.  Fractions verified against
+# reports/.../s00_selected_b_pulses.csv.gz (sample_{i,ii}_analysis groups).
+data_reference_profiles:
+  sample_ii_stave_fractions: [0.7052, 0.1697, 0.0891, 0.0360]
+  sample_i_stave_fractions: [0.9570, 0.0256, 0.0123, 0.0051]

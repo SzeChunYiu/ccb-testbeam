@@ -60,3 +60,7 @@ reports/mc_validation/mv9_synthesis/
 reports/mv0_digitizer_skeleton/
 src/ccb_mc_validation.egg-info/
 *.parquet.tmp
+
+# Root-level SLURM output files
+ccb_*.out
+ccb_*.err

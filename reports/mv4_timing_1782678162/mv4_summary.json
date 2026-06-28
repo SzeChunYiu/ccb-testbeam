@@ -1,0 +1,43 @@
+{
+  "study_id": "MV4",
+  "generated_utc": "2026-06-28T20:22:56.970792+00:00",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "n_tracks": 80000,
+  "n_events_scanned": 241487,
+  "digitizer_params": {
+    "gain_adc_per_mev": 110.0,
+    "noise_adc_rms": 50.0,
+    "pedestal_adc": 350.0,
+    "tau_rise_ns": 2.5,
+    "tau_decay_ns": 42.0,
+    "n_samples": 18,
+    "sample_spacing_ns": 10.0,
+    "adc_ceiling": 7000.0
+  },
+  "timewalk_fit": {
+    "A_ns": -3.0695495019100325,
+    "B_ns_sqrtADC": -23.003540233558837
+  },
+  "sigma68_ns": {
+    "raw": 1.744319343085384,
+    "raw_unc": 0.006755405549476786,
+    "corrected_test_half": 1.7696154242198858,
+    "corrected_unc": 0.010813166729502352,
+    "corrected_all": 1.7724422459940556
+  },
+  "residual_median_ns": -4.1572340723375625,
+  "data_reference": {
+    "S02_raw": 1.85,
+    "S03_corrected": 1.5,
+    "assumed_data_unc": 0.1
+  },
+  "pull": {
+    "raw": -1.054403396247793,
+    "raw_combined_unc": 0.10022791778809886,
+    "corrected": 2.680528799917713,
+    "corrected_combined_unc": 0.10058292387239505
+  },
+  "improvement_factor": 0.9857053228694289,
+  "n_proton": 33806,
+  "n_deuteron": 34910
+}

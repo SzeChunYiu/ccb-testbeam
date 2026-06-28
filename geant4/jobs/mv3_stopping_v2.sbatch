@@ -1,24 +1,35 @@
 #!/bin/bash
 #SBATCH -A lu2026-2-51
 #SBATCH -p lu48
-#SBATCH -J ccb_mv5_pileup
+#SBATCH -J ccb_mv3v2
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 4
-#SBATCH -t 01:00:00
+#SBATCH -t 00:45:00
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
-# DRY_RUN: sbatch --test-only geant4/jobs/mv5_pileup.sbatch
-# CCB MC validation MV5 -- pile-up / Rmax study.
+
 set -euo pipefail
 REPO="${CCB_MC_REPO:-/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam}"
 PY="${CCB_MC_PYTHON:-/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/bin/python3}"
+DATA_CSV="/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz"
 export MPLCONFIGDIR="${MPLCONFIGDIR:-${TMPDIR:-/tmp}/mplcfg_${SLURM_JOB_ID:-$$}}"
 mkdir -p "${MPLCONFIGDIR}"
+
+STAMP=$(date +%s)
+OUT="${REPO}/reports/mv3_stopping_v2_${STAMP}"
+mkdir -p "${OUT}"
+
 echo "[prologue] host=$(hostname) start=$(date -Is)"
 echo "[prologue] repo=${REPO}"
 echo "[prologue] python=$("${PY}" --version 2>&1)"
-cd "${REPO}"
-"${PY}" scripts/mv5_pileup_study.py \
-  --truth reports/mv1_mv2_truth_pid_energy_1782220258/truth_tracks.npz
-echo "[epilogue] done=$(date -Is)"
+echo "[prologue] out=${OUT}"
+
+"${PY}" "${REPO}/scripts/mv3_stopping_v2.py" \
+  --mc "${REPO}/geant4/data/output_krakow_1M.root" \
+  --data "${DATA_CSV}" \
+  --out "${OUT}" \
+  --max-events 0
+
+echo "[job] done=$(date -Is) -> ${OUT}"
+ls "${OUT}"

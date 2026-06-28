@@ -1,0 +1,46 @@
+{
+  "study_id": "MV0",
+  "generated_utc": "2026-06-28T22:40:00+00:00",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "data_csv": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+  "methodology_note": "v2 (corrected): data variable = abs(amplitude_adc - baseline_adc) [net signal above hardware pedestal ~6752 ADC]; MC variable = gain * (edep_l0 + edep_l1) * peak_frac where peak_frac=0.733 from digitizer scintillation model (tau_r=2.5ns, tau_d=42ns, dt=10ns). v1 error: used raw amplitude_adc (included 6752-ADC hardware pedestal) against MC signal above digitizer model pedestal (350 ADC) — apples-to-oranges comparison.",
+  "calibration": {
+    "gain_adc_per_mev": 92.0,
+    "gain_method": "median_matching",
+    "gain_note": "data B2 net_adc median=1781 ADC / (MC edep_B2 median=26.44 MeV * peak_frac=0.733) = 91.9 ADC/MeV",
+    "gain_systematic_unc_pct": 30,
+    "gain_unc_sources": [
+      "B2 stopping-fraction MC vs data mismatch (B2 data includes pile-up; n_data=579k vs n_MC_B2=321k)",
+      "Mixed pulse polarity in B2 (35% positive, 65% negative vs 100% negative in B4-B8)",
+      "KS-optimal gain = 60 ADC/MeV (KS=0.12) vs median-matched 92 ADC/MeV: shape disagreement 32%",
+      "No data-level selection threshold simulation applied to MC (threshold ~14.8 MeV at gain=92)"
+    ],
+    "pedestal_adc": 350.0,
+    "pedestal_note": "digitizer model DC offset (NOT data hardware pedestal); data hardware pedestal ~6752 ADC (median baseline_adc), already removed by taking net_adc",
+    "ks_best": 0.1188,
+    "ks_best_gain": 60.0,
+    "ks_at_median_gain": 0.1577,
+    "peak_fraction": 0.7330
+  },
+  "data_net_amplitude_stats": {
+    "B2": {"n": 579424, "median": 1781, "p90": 4906, "max": 14495, "pos_frac": 0.35},
+    "B4": {"n": 36116, "median": 4132, "p90": 5839, "max": 13763, "pos_frac": 0.0},
+    "B6": {"n": 17945, "median": 4178, "p90": 5748, "max": 12312, "pos_frac": 0.0},
+    "B8": {"n": 7252, "median": 3851, "p90": 5781, "max": 12202, "pos_frac": 0.0}
+  },
+  "mc_b2_edep_stats_mev": {
+    "n_tracks_with_B2_hit": 321130,
+    "median": 26.44,
+    "p90": 77.41,
+    "max": 126.08,
+    "edep_l0_median": 13.64,
+    "edep_l1_median": 14.16
+  },
+  "v1_erroneous": {
+    "gain_adc_per_mev": 110.0,
+    "pedestal_adc": 6758.5,
+    "ks_statistic": 0.108,
+    "chi2_per_ndf": 2934.6,
+    "error": "used raw amplitude_adc (includes hardware pedestal) as data; used amplitude_adc > 1000 threshold on absolute ADC (selects everything since baseline ~6752 >> 1000)"
+  }
+}

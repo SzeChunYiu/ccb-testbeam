@@ -1,7 +1,7 @@
 {
-  "sigma68_raw_MC": 0.9926781163880226,
-  "sigma68_corrected_phys_MC": 0.9926781163880225,
-  "sigma68_corrected_toy_MC": 0.9926781163880227,
+  "sigma68_raw_MC": 1.0080284659025207,
+  "sigma68_corrected_phys_MC": 1.0048542696232068,
+  "sigma68_corrected_toy_MC": 1.0150233972752534,
   "sigma68_raw_data": 1.85,
   "sigma68_corr_data": 1.5,
   "B_physical_ns": 125.0,

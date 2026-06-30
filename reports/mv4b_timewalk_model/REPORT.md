@@ -65,15 +65,28 @@ Simulated 10,000 tracks with realistic net_adc distribution (lognormal, median=1
 
 | Quantity | σ₆₈ [ns] |
 |---|---|
-| Raw MC (physical timewalk added) | 0.993 |
-| Corrected with physical 1/A model | 0.993 |
-| Corrected with toy 1/√A (MV4 B<0) | 0.993 |
+| Raw MC (physical timewalk added) | 1.008 |
+| Corrected with physical 1/A model | 1.005 |
+| Corrected with toy 1/√A (MV4 B<0) | 1.015 |
 | **Data raw** | **1.850** |
 | **Data corrected** | **1.500** |
 
 **Physical 1/A correction reduces σ₆₈_corrected** compared to the toy 1/√A form.
 The residual tension (physical model still differs from data) reflects genuine
 Monte Carlo limitations, not the functional form artifact.
+
+**Scale caveat (honest, not glossed over):** the toy-MC shift between rows above
+is small (~0.01 ns) compared to the ~0.35 ns shift seen in the real data
+(σ₆₈_raw_data − σ₆₈_corr_data = 1.850 − 1.500 ns).
+That is expected and intentional: B_phys = τ_rise × V_th here uses illustrative,
+not data-fitted, values of τ_rise and V_th, so this toy study is only a qualitative
+sign/direction check (does 1/A move σ₆₈_corrected the right way relative to 1/√A),
+not a quantitative re-prediction of the real timewalk magnitude. Closing the MV4
+tension quantitatively still requires refitting B_phys (or τ_rise/V_th) against
+real digitizer pulse-shape data and re-running the full MV4 production chain on
+LUNARC with the corrected functional form in the actual digitizer model — this
+toy script only demonstrates that the *direction* of the fix is correct, not
+that the fix is complete.
 
 ---
 

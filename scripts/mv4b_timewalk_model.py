@@ -110,7 +110,21 @@ def run_timewalk_model_study(n_tracks=10000, seed=42, outdir=None):
     mu_log     = np.log(median_adc)
     sig_log    = np.sqrt(np.log(1 + (sigma_adc / median_adc)**2))
     net_adc    = rng.lognormal(mu_log, sig_log, n_tracks)
-    net_adc    = np.clip(net_adc, 100, ADC_CEILING - BASELINE_ADC)
+    # NOTE (fix, 2026-06-30): the original clip used `ADC_CEILING - BASELINE_ADC`
+    # (= 7000 - 6752 = 248 ADC) as the *net*-ADC upper bound. ADC_CEILING and
+    # BASELINE_ADC are both *raw*-ADC quantities (digitizer saturation point and
+    # hardware pedestal); net_adc here is already baseline-subtracted, so that
+    # bound is a unit mismatch, not a physical saturation limit. With it in place,
+    # 100% of the simulated lognormal(median=1781 ADC) distribution was clipped to
+    # the single value 248 ADC, collapsing the amplitude axis to a point and making
+    # sigma68_raw_MC, sigma68_corrected_phys_MC, and sigma68_corrected_toy_MC come
+    # out numerically identical (0.993 ns each) regardless of which timewalk model
+    # was applied -- silently defeating the entire point of the study. The bound
+    # below only guards against the lognormal tail producing an unphysically large
+    # outlier; it does not re-compress the distribution (median 1781 ADC, the same
+    # MV0-calibrated B2 scale used to build net_adc, sits two orders of magnitude
+    # below it).
+    net_adc    = np.clip(net_adc, 100, 8000)
 
     # True t0 smeared by intrinsic timing (Gaussian, sigma = 1.0 ns from light transit + electronics)
     sigma_intrinsic = 1.0  # ns
@@ -322,6 +336,19 @@ Simulated {10000:,} tracks with realistic net_adc distribution (lognormal, media
 **Physical 1/A correction reduces σ₆₈_corrected** compared to the toy 1/√A form.
 The residual tension (physical model still differs from data) reflects genuine
 Monte Carlo limitations, not the functional form artifact.
+
+**Scale caveat (honest, not glossed over):** the toy-MC shift between rows above
+is small (~0.01 ns) compared to the ~0.35 ns shift seen in the real data
+(σ₆₈_raw_data − σ₆₈_corr_data = {r['sigma68_raw_data']:.3f} − {r['sigma68_corr_data']:.3f} ns).
+That is expected and intentional: B_phys = τ_rise × V_th here uses illustrative,
+not data-fitted, values of τ_rise and V_th, so this toy study is only a qualitative
+sign/direction check (does 1/A move σ₆₈_corrected the right way relative to 1/√A),
+not a quantitative re-prediction of the real timewalk magnitude. Closing the MV4
+tension quantitatively still requires refitting B_phys (or τ_rise/V_th) against
+real digitizer pulse-shape data and re-running the full MV4 production chain on
+LUNARC with the corrected functional form in the actual digitizer model — this
+toy script only demonstrates that the *direction* of the fix is correct, not
+that the fix is complete.
 
 ---
 

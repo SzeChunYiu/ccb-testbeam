@@ -36,7 +36,7 @@ detailed findings follow in the per-section narrative.
 | **MV0 v2** | Digitizer gain calibration (corrected) | ✅ PASS | Gain = 92 ± 28 ADC/MeV (PRELIMINARY — KS shape mismatch 0.158, inter-stave variation unresolved, 30% systematic dominates deuteron-fraction budget) |
 | **MV1** | Particle ID (proton vs deuteron) | ✅ PASS (MV3 sensitivity: unquantified) | MC AUC = 0.986; data within 0.5% of ceiling; p/d separation at B2 (where deuterons stop) may be less affected by MV3 stopping-depth error |
 | **MV2** | Range-energy calibration | ✅ PASS (limitation confirmed) | Absolute energy unreachable; p/d range ordering validated |
-| **MV3 v3** | Stopping-depth profile | ⛔ FAIL | χ²/ndf = 68,269; MC overestimates B8 penetration 10×; missing upstream material budget |
+| **MV3 v3** | Stopping-depth profile | ⛔ FAIL | χ²/ndf = 68,269 (4 stave bins, ndf = 3); MC overestimates B8 penetration 10×; missing upstream material budget |
 | **MV4** | Single-stave timing | ✅ PASS (raw) / 🔶 TENSION (timewalk) | Raw: pull = −1.05σ; timewalk-corrected: pull = +2.68σ |
 | **MV5** | Pile-up / R_max | ✅ PASS (self-consistency, not independent) | MC reproduces data tau_eff (124.8 ns); R_max agreement is model self-consistency, not independent validation |
 | **MV6** | Representation & anomaly ID | ✅ DONE | 0.32% early-peak; C12 recoils dominant (55%); GMM captures >99% |
@@ -96,7 +96,7 @@ two-pulse time resolution. It **ties or loses** where an analytic physics model 
 disguised function of the input (D_t / curvature classifiers). The most consequential physics results
 are: (1) the pile-up R_max is **~3 MHz, not ~4.2 MHz**, now **MC-confirmed** (MV5); (2) proton/deuteron
 PID is **MC-closed** at AUC = 0.986 (MV1); (3) the stopping-depth profile has a **structural MC
-failure** (MV3: χ²/ndf = 68,269) traced to missing upstream material budget — a geometry update is
+failure** (MV3: χ²/ndf = 68,269 (4 stave bins, ndf = 3)) traced to missing upstream material budget — a geometry update is
 required; (4) the early-peak anomaly class is **C12 nuclear recoils** (MV6); and (5) the digitizer
 gain calibration is **92 ± 28 ADC/MeV** on a hardware-pedestal-subtracted net-ADC basis (MV0 v2,
 correcting the v1 error of ~246 ADC/MeV which used raw amplitude vs MC+digitizer pedestal).
@@ -343,7 +343,7 @@ data carries essentially the same separating information once a true label exist
 ### 6.2 Stopping-depth profile — structural FAIL (MV3)
 
 MV3 v3 (threshold-corrected) compared the MC and data stave-occupancy profiles quantitatively.
-Result: **χ²/ndf = 68,269** — a catastrophic failure, not a tension.
+Result: **χ²/ndf = 68,269 (4 stave bins, ndf = 3)** — a catastrophic failure, not a tension.
 
 | Stave | MC fraction | Data fraction | Ratio (Data/MC) |
 |---|---|---|---|

@@ -192,7 +192,7 @@ This lets the same analysis pipeline run on MC data **with truth labels attached
 
 When the same particle passes through two staves, the **time difference** Δt = t_stave1 − t_stave2 should be zero (for perpendicular tracks, after corrections). The width of the Δt distribution tells us how precisely each stave timestamps particles.
 
-For a single stave: **σ_single = σ(Δt) / √2** (assuming independent errors)
+For a single stave: sigma_single = sigma(Deltat) / sqrt(2) (exact for independent Gaussian errors; for sigma68 this is approximate -- the decomposition assumes Gaussian Deltat distribution, verified for downstream pairs but not for B2-containing pairs)
 
 We use **σ₆₈** — the half-width containing 68% of residuals (robust equivalent of Gaussian σ).
 
@@ -278,7 +278,7 @@ The A-stack (A1/A3) provides a **completely decoupled** timing measurement:
 > - Measured waveform live-time: **τ_eff = 124.8 ns** → **R_max ≈ 3.05 MHz**
 > - MC confirms: **R_max(MC) = 3.044 MHz** (0.2% agreement) — ✅ validated
 > - ML two-pulse recovery: better RMS but **higher failure rate** (0.295 vs 0.168)
-> - ~91% of "pile-up score" is current-independent baseline — only ~9.2% excess at high current is genuine beam pile-up
+> - ML pile-up score has large current-independent baseline (ratio ~1.29× between high/low current). Measured downstream excess at 20 nA: 0.0103 per event (~9.2% of downstream events). These are separate measurements.
 
 ### 5.1 What is Pile-up?
 
@@ -321,7 +321,7 @@ ML recovers shorter separations and lower time-RMS, but has a **higher failure r
 
 ### 5.4 Current-Dependent Excess
 
-The raw "pile-up score" (ML classifier output) shows only a **1.29× ratio** between high and low current — not the 10× expected from Poisson scaling with rate. This means **~91% of the score is current-independent baseline** (scintillator tails, waveform pathologies). The real beam pile-up signal is the **high-current MINUS low-current excess** (~9.2% of downstream hits at 20 nA).
+The ML pile-up classifier score ratio between high and low current is ~1.29× (not the ~10× expected from the 10× current ratio under pure Poisson scaling), indicating a large current-independent contribution (scintillator tails, waveform pathologies). Separately, the measured downstream per-event excess at 20 nA is 0.0103 (S10 current_excess_table.csv), corresponding to ~9.2% of downstream-hit events showing current-dependent excess. These are two independent measurements: the ML score ratio measures classifier behavior; the downstream excess measures physical pile-up rate. They should not be chained causally.
 
 ---
 
@@ -436,7 +436,7 @@ MC truth (MV2) confirms:
 > **Key Findings:**
 > - Proton/deuteron separation: **AUC = 0.986** (MC truth ceiling, HGB)
 > - Data methods using weak-label proxies reach within 0.5% of MC ceiling — leakage-safe stress test, not species-truth PID — information is in the data
-> - **Stopping-depth profile: ⛔ MC FAILS** (χ²/ndf = 68,269) — missing ~8–10 g/cm² in GEANT4 geometry
+> - **Stopping-depth profile: ⛔ MC FAILS** (χ²/ndf = 68,269 (4 bins: B2, B4, B6, B8 fractions; ndf = 3 after normalization; Poisson bin errors)) — missing ~8–10 g/cm² in GEANT4 geometry
 > - Depth ordering (B2 > B4 > B6 > B8) is qualitatively correct in both data and MC
 
 ### 8.1 How PID Works (Without Truth)
@@ -475,7 +475,7 @@ Data methods reach within 0.5% of the MC ceiling. **The data carries essentially
 | B6 | 12.5% | 3.9% | 0.31× |
 | B8 | **22.3%** | **2.3%** | **0.10×** ⛔ |
 
-MC overestimates B8 penetration by **10×** relative to data. The qualitative ordering is correct, but the quantitative profile fails catastrophically (χ²/ndf = 68,269).
+MC overestimates B8 penetration by **10×** relative to data. The qualitative ordering is correct, but the quantitative profile fails catastrophically (χ²/ndf = 68,269 (4 bins: B2, B4, B6, B8 fractions; ndf = 3 after normalization; Poisson bin errors)).
 
 **Root cause (MV3b):** Missing upstream material budget in GEANT4 geometry — absorbers, support structures, trigger scintillators, beam window, and approximately **8–10 g/cm² of inter-stave dead material** between the beam and B-arm.
 
@@ -539,13 +539,13 @@ The **adaptive pedestal** (positivity-constrained baseline, tolerance scales wit
 | What is the digitizer gain? | MV0 v2 | 92 ± 28 ADC/MeV (net-ADC basis) |
 | Is p/d PID at AUC 0.986 real? | MV1 | Yes; data within 0.5% of MC ceiling |
 | What is the dE/dx mechanism? | MV2 | Birks-law energy deposition; p 23 MeV, d 89 MeV |
-| Does raw timing match MC? | MV4 | Yes — pull = −1.05σ (PASS) |
+| Does raw timing match MC? | MV4 | Yes — pull = −1.05σ (PASS; pull = (MC−data)/sqrt(σ_MC^2 + σ_data^2) with σ_data = 0.10 ns assumed, not measured) |
 
 ### Still Open 🔶
 
 | Question | Blocker | Severity | Action |
 |---|---|---|---|
-| Stopping-depth at +2.68σ? | Missing ~10 g/cm² in MC geometry | ⛔ HIGH | Update GEANT4 geometry; new MC production |
+| Stopping-depth profile (chi2/ndf = 68,269) | Missing inter-stave dead material in MC geometry | ⛔ HIGH | Update GEANT4 geometry; new MC production |
 | Timewalk-corrected σ₆₈ at +2.68σ? | Toy digitizer CFD sign error | 🔶 HIGH | Switch B/√ADC→B/amplitude; rerun MV4 |
 | ML two-pulse failure rate on true overlaps? | No truth-labelled overlay MC | ⚠️ MEDIUM | MC overlay study (MV5 extension) |
 | Two-ended √2 projection valid? | Ignores correlated terms | ⚠️ MEDIUM | Measure correlation; validate projection |
@@ -661,7 +661,7 @@ Every study with a proper descriptive name and hyperlink to its full report.
 | **MV0** | [Digitizer Gain Calibration](reports/mv0_digitizer/) | 92 ± 28 ADC/MeV (v2 corrected) | ✅ |
 | **MV1** | [Proton/Deuteron PID Validation](reports/mv1_mv2_truth_pid_energy/) | AUC 0.986, purity 0.964 | ✅ |
 | **MV2** | [Energy/Range Truth Validation](reports/mv1_mv2_truth_pid_energy/) | p 23 MeV, d 89 MeV | ✅ |
-| **MV3** | [Stopping-Depth Profile](reports/mv3_stopping_depth/) | χ²/ndf = 68,269 | ⛔ |
+| **MV3** | [Stopping-Depth Profile](reports/mv3_stopping_depth/) | χ²/ndf = 68,269 (4 bins: B2, B4, B6, B8 fractions; ndf = 3 after normalization; Poisson bin errors) | ⛔ |
 | **MV4** | [Timing Resolution Validation](reports/mv4_timing_study/) | Raw PASS, corrected TENSION | 🔶 |
 | **MV5** | [Pile-up Rate Validation](reports/mv5_pileup_study/) | R_max = 3.044 MHz (0.2%) | ✅ |
 | **MV6** | [Representation & Anomaly ID](reports/mv6_representation_study/) | C12 recoils 0.32% | ✅ |

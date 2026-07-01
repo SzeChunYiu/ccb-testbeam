@@ -31,8 +31,8 @@
 
 ## Energy scale (interpretation only — NOT per-event truth)
 Fitted component scales:
-- Deuteron-like: median ≈ 15.8 MeV (16–84%: 7.2–34.7 MeV).
-- Proton-like (penetrating): median ≈ 69.3 MeV (16–84%: 53.3–90.2 MeV).
+- Deuteron-like: median ≈ 15.8 MeV (16-84%: 7.2-34.7 MeV) [sample-level characterization from analytic range model (2-parameter power-law fit to 4 NIST PSTAR CSDA points); NOT per-event measurement. Dominant systematics (geometry, Birks quenching, relative gains) unquantified.].
+- Proton-like (penetrating): median ≈ 69.3 MeV (16-84%: 53.3-90.2 MeV) [same caveat as above -- sample-level characterization, not per-event measurement].
 
 Energy is reconstructed via a **2-parameter power-law range model** R(T)=aT^p
 (a=1.913×10⁻³, p=1.797) anchored to 4 CSDA points — explicitly *not* a replacement for

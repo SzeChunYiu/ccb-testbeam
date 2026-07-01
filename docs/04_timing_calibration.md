@@ -49,3 +49,5 @@ Keep the template **global** per stave/amplitude bin (do not refit run-by-run un
 test fails); timewalk global per stave excluding terminal Sample I B2 pairs; absorb run drift
 only into a low-dimensional R_{i,run}; use `q_template` as a run-by-run stability monitor;
 **validate with a held-out-run closure test**.
+
+**Note on TOF reference energy (2026-07-01):** The TOF reference energy changed from 100 MeV to 40 MeV between analysis notes. The 40 MeV value corresponds to the approximate mean energy of protons reaching B4 after passing through B2 (consistent with the B2 stopping power). This is a modeling choice -- the TOF correction is small (~0.16 ns for B2-B4) compared to the timing resolution, so the exact reference energy matters at the ~10 ps level. A systematic from the reference energy choice has not been formally propagated.

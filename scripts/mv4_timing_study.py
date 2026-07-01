@@ -13,8 +13,11 @@ Pipeline (per B-arm truth track):
   3. CFD20 pick-off (20% of peak, linear interpolation between samples) -> t_cfd
   4. truth time = earliest hit time of the track (placed at a known window offset)
   5. residual  delta_t = t_cfd - t_truth ; sigma68 = (p84-p16)/2
-  6. analytic amplitude timewalk correction  delta_t = A + B/sqrt(amp), fit on
-     half the tracks, applied to the other half; report corrected sigma68
+  6. analytic amplitude timewalk correction  delta_t = A + B/amp (1/A form,
+     fixed 2026-07-01 per MV4b; see reports/mv4b_timewalk_model/REPORT.md --
+     was 1/sqrt(amp), which gave an unphysical negative B and a corrected-path
+     pull TENSION), fit on half the tracks, applied to the other half;
+     report corrected sigma68
   7. compare to data: raw CFD20 sigma68 ~ 1.85 ns (S02), timewalk ~ 1.50 ns (S03)
 
 Outputs (reports/mv4_timing_STAMP/):
@@ -237,12 +240,29 @@ def main():
     raw_sigma = sigma68(residual)
     raw_unc = boot_sigma68(residual)
 
-    # ---- analytic timewalk: dt = A + B/sqrt(amp), fit on half, apply to other ----
+    # ---- analytic timewalk: dt = A + B/amp, fit on half, apply to other ----
+    # FIX (2026-07-01, MV4b follow-up -- see reports/mv4b_timewalk_model/REPORT.md
+    # and docs/09_open_questions.md "MV4 residual: timewalk B coefficient"):
+    # this previously fit dt = A + B/sqrt(amp). For a leading-edge discriminator
+    # on an exponential-rise pulse V(t) = A*(1-exp(-(t-t0)/tau_rise)), the
+    # threshold-crossing time is t_cross = t0 + tau_rise*ln(A/(A-V_th)), which
+    # for A >> V_th expands to dt_tw ~= tau_rise*V_th/A -- a 1/A functional
+    # form, not 1/sqrt(A). The 1/sqrt(A) form belongs to PMT-style
+    # photoelectron-counting statistics (sigma ~ sqrt(N)), which does not apply
+    # here: this digitizer integrates the full waveform, not photon counts.
+    # Fitting the wrong functional form previously produced an unphysical
+    # negative B (B = -23.00 ns*sqrt(ADC), meaning larger pulses got MORE
+    # correction added instead of less) and an MV4-corrected-path pull of
+    # +2.68 (TENSION) against a raw-path pull of only -1.05 (PASS). Switching
+    # to the physical 1/A form is expected to reduce or resolve that tension;
+    # this must be confirmed by re-running this script on LUNARC and checking
+    # the resulting pull, not assumed from this comment alone.
+    #
     # Robust fit: the walk curve is fit to MEDIAN residual per amplitude bin on
-    # the training half (per-track OLS in 1/sqrt(amp) is dominated by low-amp
+    # the training half (per-track OLS in 1/amp is dominated by low-amp
     # noise leverage and overcorrects). This honours the train/test split while
     # giving a stable, physical walk curve.
-    x = 1.0 / np.sqrt(np.clip(amp_adc, 1.0, None))
+    x = 1.0 / np.clip(amp_adc, 1.0, None)
     n = residual.size
     fit_mask = np.arange(n) % 2 == 0
     app_mask = ~fit_mask
@@ -252,7 +272,7 @@ def main():
     for a, b in zip(edges[:-1], edges[1:]):
         mb = (af >= a) & (af < b)
         if mb.sum() >= 30:
-            bx.append(float(np.median(1.0 / np.sqrt(np.clip(af[mb], 1.0, None)))))
+            bx.append(float(np.median(1.0 / np.clip(af[mb], 1.0, None))))
             by.append(float(np.median(rf[mb])))
     if len(bx) >= 2:
         B, A = np.polyfit(np.asarray(bx), np.asarray(by), 1)  # median_residual = B*x + A
@@ -263,7 +283,7 @@ def main():
     corr_sigma_test = sigma68(corrected[app_mask])
     corr_unc = boot_sigma68(corrected[app_mask])
     corr_sigma_all = sigma68(corrected)
-    print(f"[mv4] timewalk fit: A={A:.3f} ns  B={B:.2f} ns*sqrt(ADC)")
+    print(f"[mv4] timewalk fit: A={A:.3f} ns  B={B:.2f} ns*ADC (1/A form; was ns*sqrt(ADC) pre-MV4b-fix)")
     print(f"[mv4] sigma68 raw={raw_sigma:.3f}+/-{raw_unc:.3f}  "
           f"corrected(test)={corr_sigma_test:.3f}+/-{corr_unc:.3f}")
 
@@ -295,7 +315,7 @@ def main():
         "n_tracks": int(residual.size),
         "n_events_scanned": int(ev_global),
         "digitizer_params": params,
-        "timewalk_fit": {"A_ns": float(A), "B_ns_sqrtADC": float(B)},
+        "timewalk_fit": {"A_ns": float(A), "B_ns_ADC": float(B), "timewalk_functional_form": "1/A (MV4b-fixed 2026-07-01, was 1/sqrt(A))"},
         "sigma68_ns": {
             "raw": raw_sigma, "raw_unc": raw_unc,
             "corrected_test_half": corr_sigma_test, "corrected_unc": corr_unc,

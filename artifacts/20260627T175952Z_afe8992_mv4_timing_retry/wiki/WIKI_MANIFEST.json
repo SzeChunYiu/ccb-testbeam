@@ -1,0 +1,24 @@
+{
+  "blocked_count": 21,
+  "final_wiki_status": "BLOCKED",
+  "generated_at": "2026-06-27T18:00:21.343162+00:00",
+  "page_count": 11,
+  "pages": [
+    "Claim-Dependency-Tree.md",
+    "Claim-Evidence-Matrix.md",
+    "Discussion-and-Limitations.md",
+    "Home.md",
+    "Methods-and-Mathematics.md",
+    "Notation-and-Equations.md",
+    "Open-Questions.md",
+    "References-and-Reproducibility.md",
+    "Results-and-Figures.md",
+    "Scientific-Introduction.md",
+    "Study-Coverage-and-Remaining-Gaps.md"
+  ],
+  "reason": "Generated GitHub-wiki-ready draft pages from frozen artifacts; final wiki publication remains blocked until release audit passes and citations are curated.",
+  "release_ready": false,
+  "run_id": "20260627T175952Z_afe8992_mv4_timing_retry",
+  "scope": "github-wiki-draft",
+  "status": "PASS"
+}

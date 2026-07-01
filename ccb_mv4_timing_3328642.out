@@ -1,0 +1,24 @@
+[prologue] host=cn044 start=2026-06-28T22:24:35+02:00
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam
+[prologue] python=Python 3.11.14
+[prologue] git_head=7c1822c9ee2114f4a67a9b92f297be6d58011110
+[prologue] git_branch=main
+[prologue] calib=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/calibration.json
+[prologue] out=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275
+[mv4] start=2026-06-28T20:24:35.604777+00:00
+[mv4] mc=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root
+[mv4] loaded calibration: gain=110.0 (pedestal kept at digitizer default 350)
+[mv4] tracks used=80000 (events scanned=241487)
+[mv4] timewalk fit: A=-3.070 ns  B=-23.00 ns*sqrt(ADC)
+[mv4] sigma68 raw=1.744+/-0.007  corrected(test)=1.770+/-0.011
+[mv4] wrote /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_summary.json
+[mv4] wrote /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/REPORT.md
+[mv4] done=2026-06-28T20:24:51.296931+00:00
+[job] done=2026-06-28T22:24:51+02:00 -> /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_data_vs_mc.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_pull.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_residuals.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_sigma_vs_amp.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_summary.json
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/mv4_waveform_examples.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782678275/REPORT.md

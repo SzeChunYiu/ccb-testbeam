@@ -1,0 +1,11 @@
+{
+  "blocked_count": 27,
+  "final_thesis_status": "BLOCKED",
+  "generated_at": "2026-06-27T11:23:56.236026+00:00",
+  "html": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/reports/mc_validation/thesis_draft/THESIS_DRAFT.html",
+  "markdown": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/reports/mc_validation/thesis_draft/THESIS_DRAFT.md",
+  "reason": "Generated a draft scaffold from frozen artifacts; final thesis/PDF/site remains blocked by release audit gaps.",
+  "run_id": "20260627T111955Z_e3ac99f_current_main_retry1",
+  "scope": "artifact-thesis-draft",
+  "status": "PASS"
+}

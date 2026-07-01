@@ -1,0 +1,44 @@
+{
+  "all_study_implementations_ready": false,
+  "blocked_count": 5,
+  "generated_at": "2026-06-27T11:33:38.759305+00:00",
+  "scope": "study-implementation-gap-audit",
+  "status": "PASS",
+  "studies": [
+    {
+      "current_state": "timing study placeholder / requires MV0 digitizer readiness and production timing artifacts",
+      "module": "ccb_mc_validation.studies.mv4_timing",
+      "required_next_artifact": "reports/mc_validation/systematics/MV4_TIMING_UNCERTAINTIES.json",
+      "status": "BLOCKED",
+      "study": "MV4"
+    },
+    {
+      "current_state": "pile-up overlay skeleton / requires controlled mixture lineage and recovery diagnostics",
+      "module": "ccb_mc_validation.studies.mv5_pileup",
+      "required_next_artifact": "reports/mc_validation/pileup/MV5_RECOVERY_DIAGNOSTICS.json",
+      "status": "BLOCKED",
+      "study": "MV5"
+    },
+    {
+      "current_state": "representation comparison skeleton / requires nuisance-leakage-safe waveform comparison",
+      "module": "ccb_mc_validation.studies.mv6_representation",
+      "required_next_artifact": "reports/mc_validation/representations/MV6_REPRESENTATION_COMPARISON.json",
+      "status": "BLOCKED",
+      "study": "MV6"
+    },
+    {
+      "current_state": "pedestal/noise closure skeleton / requires held-out channel diagnostics",
+      "module": "ccb_mc_validation.studies.mv7_pedestal",
+      "required_next_artifact": "reports/mc_validation/noise/MV7_PEDESTAL_NOISE_CLOSURE.json",
+      "status": "BLOCKED",
+      "study": "MV7"
+    },
+    {
+      "current_state": "saturation/dynamic-range skeleton / requires failure accounting and dynamic-range scan",
+      "module": "ccb_mc_validation.studies.mv8_saturation",
+      "required_next_artifact": "reports/mc_validation/saturation/MV8_DYNAMIC_RANGE_SCAN.json",
+      "status": "BLOCKED",
+      "study": "MV8"
+    }
+  ]
+}

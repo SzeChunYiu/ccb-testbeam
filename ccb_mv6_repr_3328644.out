@@ -1,0 +1,21 @@
+[prologue] host=cn044 start=2026-06-28T22:26:00+02:00
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam
+[prologue] python=Python 3.11.14
+{
+  "status": "ok",
+  "out": "reports/mv6_representation_1782678362",
+  "n_tracks": 87555,
+  "anomaly_frac_total": 0.003232254011764034,
+  "early_peak_composition": {
+    "C12": 156,
+    "proton": 43,
+    "electron": 38,
+    "alpha": 25,
+    "heavy_ion": 20,
+    "deuteron": 1,
+    "positron": 0
+  },
+  "pca_cum_at_4": 0.745517570480533
+}
+[ok] wrote reports/mv6_representation_1782678362/mv6_representation_summary.json
+[epilogue] done=2026-06-28T22:26:15+02:00

@@ -1,0 +1,20 @@
+{"action": "preflight", "cluster": "UNREACHABLE (no active ssh control socket for lunarc)", "status": "BLOCKED", "time": "2026-06-25T06:45:43.985335+00:00"}
+{"action": "plan", "status": "DONE", "tasks": 34, "time": "2026-06-25T06:45:44.714559+00:00"}
+{"action": "notebooks", "full_suite": "BLOCKED", "scope": "artifact-summary", "status": "PASS", "time": "2026-06-25T15:38:09.245996+00:00"}
+{"action": "docs", "full_suite": "BLOCKED", "scope": "artifact-summary", "status": "PASS", "time": "2026-06-25T15:44:16.682024+00:00"}
+{"action": "thesis", "final_thesis_status": "BLOCKED", "scope": "artifact-thesis-draft", "status": "PASS", "time": "2026-06-25T15:57:23.553184+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T16:03:19.681283+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T16:13:10.383409+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T16:23:57.007386+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T16:33:50.292013+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T20:50:46.161465+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T20:57:02.211602+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:02:55.813421+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:09:39.430888+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:14:56.567031+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:22:13.376606+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:38:06.655267+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:43:04.888111+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:48:07.946042+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:53:37.731273+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-25T21:59:36.898209+00:00"}

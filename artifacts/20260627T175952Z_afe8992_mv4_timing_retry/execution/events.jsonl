@@ -1,0 +1,6 @@
+{"action": "preflight", "cluster": "UNREACHABLE (no active ssh control socket for lunarc)", "status": "BLOCKED", "time": "2026-06-27T17:59:55.895526+00:00"}
+{"action": "plan", "status": "DONE", "tasks": 34, "time": "2026-06-27T17:59:56.613281+00:00"}
+{"action": "notebooks", "full_suite": "BLOCKED", "scope": "artifact-summary", "status": "PASS", "time": "2026-06-27T18:00:18.677641+00:00"}
+{"action": "docs", "full_suite": "BLOCKED", "scope": "artifact-summary", "status": "PASS", "time": "2026-06-27T18:00:19.359194+00:00"}
+{"action": "thesis", "final_thesis_status": "BLOCKED", "scope": "artifact-thesis-draft", "status": "PASS", "time": "2026-06-27T18:00:20.741176+00:00"}
+{"action": "release", "release_ready": false, "scope": "publication-index-draft", "status": "BLOCKED", "time": "2026-06-27T18:00:21.420078+00:00"}

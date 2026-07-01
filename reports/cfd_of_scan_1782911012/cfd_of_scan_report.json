@@ -1,0 +1,31 @@
+{
+  "study": "CFD/OF Parameter Scan (GAP-06)",
+  "description": "Systematic scan of CFD fraction and optimal filter window parameters",
+  "status": "framework_ready",
+  "dependency": "Requires S02 timing data with per-CFD-fraction times",
+  "cfd_fractions": [
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50
+  ],
+  "of_windows": [
+    3,
+    6,
+    9,
+    12,
+    15,
+    18
+  ],
+  "recommended_default": {
+    "cfd_fraction": 20,
+    "of_window": 9
+  },
+  "gap_closure_criterion": "If default is within 5% of optimum sigma68, GAP-06 is closed",
+  "next_step": "Run with actual S02 data to compute sigma68 per parameter set"
+}

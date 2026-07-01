@@ -1,0 +1,58 @@
+{
+  "all_questions_closed": false,
+  "generated_at": "2026-06-27T18:04:53.174358+00:00",
+  "open_count": 7,
+  "records": [
+    {
+      "id": "OQ-MV4",
+      "needed_evidence": "MV4 production artifact, uncertainty intervals, and acceptance decision.",
+      "priority": "high",
+      "question": "Can calibrated digitized MC validate timing observables without truth leakage?",
+      "status": "OPEN"
+    },
+    {
+      "id": "OQ-MV5",
+      "needed_evidence": "MV5 production artifact and pile-up recovery diagnostics.",
+      "priority": "high",
+      "question": "How robust is pile-up detection/reconstruction under controlled mixture lineage?",
+      "status": "OPEN"
+    },
+    {
+      "id": "OQ-MV6",
+      "needed_evidence": "MV6 representation comparison and probe results.",
+      "priority": "medium",
+      "question": "Which waveform representations preserve physics information without nuisance leakage?",
+      "status": "OPEN"
+    },
+    {
+      "id": "OQ-MV7",
+      "needed_evidence": "MV7 pedestal/noise closure with per-channel diagnostics.",
+      "priority": "high",
+      "question": "Do pedestal/noise models match held-out data sufficiently for MC validation?",
+      "status": "OPEN"
+    },
+    {
+      "id": "OQ-MV8",
+      "needed_evidence": "MV8 saturation/dynamic-range study and failure accounting.",
+      "priority": "high",
+      "question": "Where do saturation and dynamic-range effects invalidate reconstruction claims?",
+      "status": "OPEN"
+    },
+    {
+      "id": "OQ-SYS",
+      "needed_evidence": "LUNARC systematic arrays with paired shifts and uncertainty decomposition.",
+      "priority": "high",
+      "question": "How large are generator, detector, and electronics systematic envelopes?",
+      "status": "OPEN"
+    },
+    {
+      "id": "OQ-WIKI",
+      "needed_evidence": "Release-ready wiki publication with curated bibliography and all QA gates passing.",
+      "priority": "medium",
+      "question": "Are final citations, references, plots, and discussion complete enough for a publication-grade GitHub wiki?",
+      "status": "OPEN"
+    }
+  ],
+  "scope": "open-question-registry",
+  "status": "PASS"
+}

@@ -1,0 +1,72 @@
+schema_version: 1.0.0
+source_path: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/configs/mc_validation/base.yaml
+content_sha256: 55f085d294539497f6df703f34cfe023a8d8b943980a55403e72f299bcbe9641
+repo_root: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main
+paths:
+  mc_root: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/geant4/data/output_krakow_1M.root
+  data_pulses: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/data/tables/s00_selected_b_pulses.csv.gz
+  reports_dir: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports
+  resolved_config_dir: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/resolved_configs
+seeds:
+  global: 424242
+  split: 1701
+  bootstrap: 9001
+units:
+  energy: MeV
+  time: ns
+  adc: ADC
+unit_docs:
+  energy: Monte Carlo Sci_bar EDep and calibration targets in MeV
+  time: Truth hit time and coincidence window in nanoseconds
+  adc: Digitizer output counts; data ceiling ~7000 ADC
+waveform:
+  adc_samples: 18
+  sample_spacing_ns: 10.0
+coincidence_ns: 15.0
+detector:
+  b_arm: 1
+  a_arm: 2
+  nb_layers: 8
+logging_level: INFO
+studies:
+  mv0:
+    enabled: true
+    output_subdir: mc_validation/mv0_digitizer
+    description: Truth-to-waveform digitizer backbone
+  mv1:
+    enabled: true
+    output_subdir: mc_validation/mv1_pid
+    description: Particle ID p vs d truth comparison
+  mv2:
+    enabled: true
+    output_subdir: mc_validation/mv2_energy
+    description: Energy and range calibration vs truth
+  mv3:
+    enabled: true
+    output_subdir: mc_validation/mv3_stopping_depth
+    description: Stopping-depth profile vs Sample I/II
+  mv4:
+    enabled: false
+    output_subdir: mc_validation/mv4_timing
+    description: Timing resolution and timewalk (blocked until MV0)
+  mv5:
+    enabled: false
+    output_subdir: mc_validation/mv5_pileup
+    description: Pile-up recovery (blocked until MV0)
+  mv6:
+    enabled: false
+    output_subdir: mc_validation/mv6_pulse_shape
+    description: Pulse-shape representation (blocked until MV0)
+  mv7:
+    enabled: false
+    output_subdir: mc_validation/mv7_pedestal
+    description: Pedestal validation (blocked until MV0)
+  mv8:
+    enabled: false
+    output_subdir: mc_validation/mv8_saturation
+    description: Saturation recovery (blocked until MV0)
+  mv9:
+    enabled: true
+    output_subdir: mc_validation/mv9_synthesis
+    description: MC-vs-data synthesis scoreboard
+resolved_digest: f13bb1d20a9482c3cb99d021365c457f0631b04ea36013aa4ffc05e8bfb05b2d

@@ -1,0 +1,141 @@
+{
+  "base_url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki",
+  "blocked_count": 0,
+  "manifest_path": "/tmp/ccb_wrapper_run/20260627T113254Z_8e7d78d_wrapper_release_retry/wiki/WIKI_MANIFEST.json",
+  "page_count": 11,
+  "pages": [
+    {
+      "missing_snippets": [],
+      "page": "Claim-Dependency-Tree.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "Claim dependency tree"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Claim-Dependency-Tree"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Claim-Evidence-Matrix.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "20260627T113254Z_8e7d78d_wrapper_release_retry",
+        "Claim evidence matrix"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Claim-Evidence-Matrix"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Discussion-and-Limitations.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "Discussion, limitations, and blockers"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Discussion-and-Limitations"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Home.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "20260627T113254Z_8e7d78d_wrapper_release_retry",
+        "CCB testbeam MC validation wiki draft",
+        "Draft / not final release"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Methods-and-Mathematics.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "20260627T113254Z_8e7d78d_wrapper_release_retry",
+        "Methods and mathematical definitions"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Methods-and-Mathematics"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Notation-and-Equations.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "Notation and equations"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Notation-and-Equations"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Open-Questions.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "Open questions and recursive study plan"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Open-Questions"
+    },
+    {
+      "missing_snippets": [],
+      "page": "References-and-Reproducibility.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "20260627T113254Z_8e7d78d_wrapper_release_retry",
+        "References and reproducibility"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/References-and-Reproducibility"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Results-and-Figures.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "20260627T113254Z_8e7d78d_wrapper_release_retry",
+        "Results and figures"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Results-and-Figures"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Scientific-Introduction.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "20260627T113254Z_8e7d78d_wrapper_release_retry",
+        "Scientific introduction"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Scientific-Introduction"
+    },
+    {
+      "missing_snippets": [],
+      "page": "Study-Coverage-and-Remaining-Gaps.md",
+      "reason": "HTTP 200 and provenance snippets present",
+      "required_snippets": [
+        "20260627T113254Z_8e7d78d_wrapper_release_retry",
+        "Study coverage and remaining gaps"
+      ],
+      "status": "PASS",
+      "status_code": 200,
+      "url": "https://github.com/SzeChunYiu/ccb-testbeam/wiki/Study-Coverage-and-Remaining-Gaps"
+    }
+  ],
+  "published_count": 11,
+  "run_id": "20260627T113254Z_8e7d78d_wrapper_release_retry",
+  "scope": "github-wiki-publication-http",
+  "status": "PASS"
+}

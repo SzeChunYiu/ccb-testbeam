@@ -1,0 +1,44 @@
+{
+  "final_notation_status": "DRAFT",
+  "generated_at": "2026-06-27T18:00:21.332584+00:00",
+  "record_count": 5,
+  "records": [
+    {
+      "id": "EQ-PID-EFF",
+      "latex": "\\\\epsilon(t)=N_{\\\\mathrm{true\\\\,signal}}(s(x)\\\\ge t)/N_{\\\\mathrm{true\\\\,signal}}",
+      "meaning": "Signal efficiency at score threshold t.",
+      "scope": "MV1 artifact-summary interpretation",
+      "symbol": "\\\\epsilon(t)"
+    },
+    {
+      "id": "EQ-PID-PURITY",
+      "latex": "P(t)=N_{\\\\mathrm{true\\\\,signal}}(s(x)\\\\ge t)/N_{\\\\mathrm{selected}}(s(x)\\\\ge t)",
+      "meaning": "Purity among selected candidates at score threshold t.",
+      "scope": "MV1 artifact-summary interpretation",
+      "symbol": "P(t)"
+    },
+    {
+      "id": "EQ-R68",
+      "latex": "R_{68}=\\\\frac{1}{2}(Q_{84}[r]-Q_{16}[r])",
+      "meaning": "Robust central 68% residual scale.",
+      "scope": "MV2 artifact-summary interpretation",
+      "symbol": "R_68"
+    },
+    {
+      "id": "EQ-ERESID",
+      "latex": "r=(E_{\\\\mathrm{reco}}-E_{\\\\mathrm{truth}})/E_{\\\\mathrm{truth}}",
+      "meaning": "Relative reconstructed-energy residual.",
+      "scope": "MV2 artifact-summary interpretation",
+      "symbol": "r"
+    },
+    {
+      "id": "EQ-STOP-SUPPORT",
+      "latex": "N_{\\\\mathrm{Sample\\\\,I}},\\\\;N_{\\\\mathrm{Sample\\\\,II}}",
+      "meaning": "Frozen support counts for stopping-depth samples.",
+      "scope": "MV3 artifact-summary interpretation",
+      "symbol": "N_{\\\\mathrm{Sample\\\\,I}}, N_{\\\\mathrm{Sample\\\\,II}}"
+    }
+  ],
+  "scope": "notation-registry",
+  "status": "PASS"
+}

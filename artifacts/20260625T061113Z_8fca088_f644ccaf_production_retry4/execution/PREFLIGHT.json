@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "diff_hash": "0b91d90d",
+      "dirty": true,
+      "name": "git_dirty",
+      "status": "PASS"
+    },
+    {
+      "name": "mc_root",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+      "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+      "size_bytes": 677221620,
+      "status": "PASS"
+    },
+    {
+      "name": "data_pulses",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+      "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+      "size_bytes": 9246625,
+      "status": "PASS"
+    },
+    {
+      "detail": "UNREACHABLE (no active ssh control socket for lunarc)",
+      "name": "lunarc_socket",
+      "status": "BLOCKED"
+    }
+  ],
+  "generated_at": "2026-06-25T06:28:52.921592+00:00",
+  "git_sha": "00593273d7c4a375d9e61328fbeb839ec0080d05",
+  "profile": "production",
+  "run_id": "20260625T061113Z_8fca088_f644ccaf_production_retry4",
+  "status": "BLOCKED"
+}

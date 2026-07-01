@@ -1,0 +1,50 @@
+{
+  "study_id": "MV1",
+  "status": "PRODUCTION",
+  "metrics": {
+    "n_tracks": 100000,
+    "n_proton": 9929,
+    "n_deuteron": 14016,
+    "deltaE_E_medians": {
+      "proton": {
+        "edep_l0": 12.205358136137388,
+        "edep_l1": 13.053462853167208,
+        "edep_tot": 127.32770934912904,
+        "stop_layer": 6.0
+      },
+      "deuteron": {
+        "edep_l0": 53.11532825022807,
+        "edep_l1": 29.25954649717863,
+        "edep_tot": 122.94344416917055,
+        "stop_layer": 1.0
+      }
+    },
+    "split": "legacy_parity",
+    "logreg_auc": 0.9776122159551996,
+    "logreg_purity_at_90eff": 0.9620272546317562,
+    "hgb_auc": 0.9972559545729799,
+    "hgb_purity_at_90eff": 0.9957258192179832,
+    "cut_edep_l0_thr_MeV": 23.483633636797858,
+    "cut_purity": 0.9570664884731039,
+    "cut_efficiency": 0.817494292237443
+  },
+  "cutflow": {
+    "n_tracks": 100000,
+    "n_proton": 9929,
+    "n_deuteron": 14016,
+    "n_binary_pid": 23945
+  },
+  "artifacts": {},
+  "notes": [
+    "Legacy parity split: train = index % 2 == 0 (see scripts/mv1_mv2_truth_pid_energy.py).",
+    "SplitRegistry supported via config mc_validation/splits.yaml."
+  ],
+  "provenance": {
+    "features": [
+      "edep_l0",
+      "edep_l1",
+      "edep_tot",
+      "stop_layer"
+    ]
+  }
+}

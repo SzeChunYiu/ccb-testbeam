@@ -1,0 +1,14 @@
+{
+  "blockers": [],
+  "git_sha": "719788b2974ba414410c2aaecd19777c4441dd08",
+  "heavy_compute_policy": "Production GEANT4, full ROOT scans, digitization, ML training, systematic/bootstrap arrays, and full-data notebooks must run only via LUNARC sbatch on compute nodes.",
+  "job_count": 0,
+  "production_claims_allowed": false,
+  "profile": "production",
+  "reason": "missing required release audit: /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T112940Z_719788b_wrapper_release/QA_RELEASE_AUDIT.json",
+  "resume_command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T112940Z_719788b_wrapper_release --profile production submit --studies all",
+  "run_id": "20260627T112940Z_719788b_wrapper_release",
+  "smoke_gate": null,
+  "status": "BLOCKED",
+  "updated_at": "2026-06-27T11:30:54.651194+00:00"
+}

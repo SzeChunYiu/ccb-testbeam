@@ -1,0 +1,109 @@
+{
+  "artifacts": {
+    "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/summary/RUN_SUMMARY.html",
+    "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/summary/RUN_SUMMARY.md",
+    "metrics_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/summary/metrics_table.csv",
+    "selected_metrics_png": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/figures/summary/selected_metrics.png",
+    "selected_metrics_svg": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/figures/summary/selected_metrics.svg",
+    "study_support_png": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/figures/summary/study_support.png",
+    "study_support_svg": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/figures/summary/study_support.svg"
+  },
+  "figures": {
+    "figures": [
+      {
+        "alt_text": "Bar chart summarizing available support for MV1, MV2, and MV3 artifact studies.",
+        "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+        "data_sidecar_exists": true,
+        "formats": [
+          {
+            "exists": true,
+            "format": "svg",
+            "relative_path": "figures/summary/study_support.svg",
+            "size_bytes": 21694
+          },
+          {
+            "exists": true,
+            "format": "png",
+            "relative_path": "figures/summary/study_support.png",
+            "size_bytes": 50800
+          }
+        ],
+        "id": "SUMMARY-F001",
+        "scope": "summary-artifact",
+        "status": "PASS",
+        "title": "Study support overview"
+      },
+      {
+        "alt_text": "Bar chart of selected artifact metrics for MV1, MV2, and MV3.",
+        "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+        "data_sidecar_exists": true,
+        "formats": [
+          {
+            "exists": true,
+            "format": "svg",
+            "relative_path": "figures/summary/selected_metrics.svg",
+            "size_bytes": 30535
+          },
+          {
+            "exists": true,
+            "format": "png",
+            "relative_path": "figures/summary/selected_metrics.png",
+            "size_bytes": 106328
+          }
+        ],
+        "id": "SUMMARY-F002",
+        "scope": "summary-artifact",
+        "status": "PASS",
+        "title": "Selected validated metrics"
+      }
+    ],
+    "full_figure_catalog_status": "BLOCKED",
+    "generated_at": "2026-06-27T11:33:35.381332+00:00",
+    "reason": "Catalogs compact summary figures only; full required figure catalog/contact sheets remain incomplete.",
+    "scope": "summary-figure-manifest",
+    "status": "PASS"
+  },
+  "run_id": "20260627T113254Z_8e7d78d_wrapper_release_retry",
+  "scope": "summary",
+  "status": "PASS",
+  "visual_review": {
+    "full_visual_review_status": "BLOCKED",
+    "generated_at": "2026-06-27T11:33:35.397593+00:00",
+    "reason": "Reviews compact summary figures only; full catalog visual review remains incomplete.",
+    "review_count": 2,
+    "reviews": [
+      {
+        "checks": {
+          "alt_text_present": true,
+          "data_sidecar_present": true,
+          "png_present": true,
+          "scope_banner_required": true,
+          "svg_present": true
+        },
+        "figure_id": "SUMMARY-F001",
+        "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+        "reviewed_at": "2026-06-27T11:33:35.397593+00:00",
+        "reviewer": "codex-automated-visual-qa",
+        "status": "PASS",
+        "title": "Study support overview"
+      },
+      {
+        "checks": {
+          "alt_text_present": true,
+          "data_sidecar_present": true,
+          "png_present": true,
+          "scope_banner_required": true,
+          "svg_present": true
+        },
+        "figure_id": "SUMMARY-F002",
+        "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+        "reviewed_at": "2026-06-27T11:33:35.397593+00:00",
+        "reviewer": "codex-automated-visual-qa",
+        "status": "PASS",
+        "title": "Selected validated metrics"
+      }
+    ],
+    "scope": "summary-figure-visual-review",
+    "status": "PASS"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "study_id": "MV4",
+  "status": "BLOCKED",
+  "metrics": {
+    "n_tracks": 100000,
+    "n_usable_timing": 0,
+    "time_first_ns_median": 0.0,
+    "time_first_ns_res68": 0.0,
+    "event_time_span_ns_median": 0.0,
+    "event_time_span_ns_p95": 0.0,
+    "delta_t_l1_l0_ns_median": 0.0,
+    "delta_t_l1_l0_ns_res68": 0.0,
+    "timewalk_corr_l0_inv_sqrt_edep": 0.0,
+    "timewalk_corr_l1_inv_sqrt_edep": 0.0,
+    "method_status": "truth_timing_diagnostic_not_final_adc_calibration"
+  },
+  "cutflow": {
+    "n_tracks": 100000,
+    "n_with_any_timing": 0,
+    "n_with_l0_l1_timing": 0,
+    "n_usable_timing": 0
+  },
+  "artifacts": {},
+  "notes": [
+    "Truth-hit timing diagnostic; final ADC timing calibration remains a separate release gate.",
+    "timewalk correlations use 1/sqrt(energy deposit) as a monotonic proxy, not a fitted correction.",
+    "insufficient usable timing events: 0 < 500"
+  ],
+  "provenance": {
+    "features": [
+      "time_l0",
+      "time_l1",
+      "time_first",
+      "time_span",
+      "edep_l0",
+      "edep_l1"
+    ]
+  }
+}

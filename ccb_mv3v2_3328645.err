@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/scripts/mv3_stopping_v2.py", line 282, in <module>
+    main()
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/scripts/mv3_stopping_v2.py", line 180, in main
+    json.dump(summary, fh, indent=2)
+  File "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib/python3.11/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib/python3.11/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib/python3.11/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type int64 is not JSON serializable

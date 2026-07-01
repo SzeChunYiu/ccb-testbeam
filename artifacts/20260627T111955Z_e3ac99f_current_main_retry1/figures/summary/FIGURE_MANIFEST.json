@@ -1,0 +1,55 @@
+{
+  "figures": [
+    {
+      "alt_text": "Bar chart summarizing available support for MV1, MV2, and MV3 artifact studies.",
+      "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+      "data_sidecar_exists": true,
+      "formats": [
+        {
+          "exists": true,
+          "format": "svg",
+          "relative_path": "figures/summary/study_support.svg",
+          "size_bytes": 21694
+        },
+        {
+          "exists": true,
+          "format": "png",
+          "relative_path": "figures/summary/study_support.png",
+          "size_bytes": 45870
+        }
+      ],
+      "id": "SUMMARY-F001",
+      "scope": "summary-artifact",
+      "status": "PASS",
+      "title": "Study support overview"
+    },
+    {
+      "alt_text": "Bar chart of selected artifact metrics for MV1, MV2, and MV3.",
+      "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+      "data_sidecar_exists": true,
+      "formats": [
+        {
+          "exists": true,
+          "format": "svg",
+          "relative_path": "figures/summary/selected_metrics.svg",
+          "size_bytes": 30535
+        },
+        {
+          "exists": true,
+          "format": "png",
+          "relative_path": "figures/summary/selected_metrics.png",
+          "size_bytes": 89721
+        }
+      ],
+      "id": "SUMMARY-F002",
+      "scope": "summary-artifact",
+      "status": "PASS",
+      "title": "Selected validated metrics"
+    }
+  ],
+  "full_figure_catalog_status": "BLOCKED",
+  "generated_at": "2026-06-27T11:23:55.058098+00:00",
+  "reason": "Catalogs compact summary figures only; full required figure catalog/contact sheets remain incomplete.",
+  "scope": "summary-figure-manifest",
+  "status": "PASS"
+}

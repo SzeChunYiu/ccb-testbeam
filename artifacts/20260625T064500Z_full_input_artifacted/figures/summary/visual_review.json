@@ -1,0 +1,40 @@
+{
+  "full_visual_review_status": "BLOCKED",
+  "generated_at": "2026-06-25T16:29:32.468635+00:00",
+  "reason": "Reviews compact summary figures only; full catalog visual review remains incomplete.",
+  "review_count": 2,
+  "reviews": [
+    {
+      "checks": {
+        "alt_text_present": true,
+        "data_sidecar_present": true,
+        "png_present": true,
+        "scope_banner_required": true,
+        "svg_present": true
+      },
+      "figure_id": "SUMMARY-F001",
+      "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+      "reviewed_at": "2026-06-25T16:29:32.468635+00:00",
+      "reviewer": "codex-automated-visual-qa",
+      "status": "PASS",
+      "title": "Study support overview"
+    },
+    {
+      "checks": {
+        "alt_text_present": true,
+        "data_sidecar_present": true,
+        "png_present": true,
+        "scope_banner_required": true,
+        "svg_present": true
+      },
+      "figure_id": "SUMMARY-F002",
+      "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+      "reviewed_at": "2026-06-25T16:29:32.468635+00:00",
+      "reviewer": "codex-automated-visual-qa",
+      "status": "PASS",
+      "title": "Selected validated metrics"
+    }
+  ],
+  "scope": "summary-figure-visual-review",
+  "status": "PASS"
+}

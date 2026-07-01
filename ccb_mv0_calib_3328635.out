@@ -1,0 +1,33 @@
+[prologue] host=cn140 start=2026-06-28T22:17:27+02:00
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam
+[prologue] python=Python 3.11.14
+[prologue] git_head=7c1822c9ee2114f4a67a9b92f297be6d58011110
+[prologue] git_branch=main
+[prologue] data_csv=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz
+[prologue] truth_npz=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv1_mv2_truth_pid_energy_1782220258/truth_tracks.npz
+[prologue] out=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847
+[mv0] start=2026-06-28T20:17:29.829947+00:00
+[mv0] mc=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root
+[mv0] data_csv=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz
+[mv0] data analysis pulses=377362 amp_min=1000.5 pedestal_est=6758.5
+[mv0] MC events read=120864 MC pulses=259100
+[mv0]   stave B2: MC pulses=118400 data pulses=329635
+[mv0]   stave B4: MC pulses=65379 data pulses=27680
+[mv0]   stave B6: MC pulses=44181 data pulses=14242
+[mv0]   stave B8: MC pulses=31140 data pulses=5805
+[mv0] gain= 150.0  KS=0.2428  chi2/ndf=6041.02
+[mv0] gain= 200.0  KS=0.4161  chi2/ndf=9259.03
+[mv0] gain= 246.0  KS=0.5025  chi2/ndf=10672.39
+[mv0] gain= 300.0  KS=0.6367  chi2/ndf=7054.69
+[mv0] gain= 350.0  KS=0.7955  chi2/ndf=354.87
+[mv0] BEST gain=110.00 ADC/MeV  KS=0.1081  chi2=49887.9/17=2934.58  implied(median)=131.8
+[mv0] wrote /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/calibration.json
+[mv0] wrote /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/REPORT.md
+[mv0] done=2026-06-28T20:17:37.968460+00:00
+[job] done=2026-06-28T22:17:38+02:00 -> /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/calibration.json
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/mv0_data_vs_mc.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/mv0_gain_scan.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/mv0_per_stave.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/mv0_qq.png
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/REPORT.md

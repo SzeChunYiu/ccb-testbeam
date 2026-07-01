@@ -1,0 +1,4 @@
+{"action": "preflight", "cluster": "UNREACHABLE (no active ssh control socket for lunarc)", "status": "BLOCKED", "time": "2026-06-27T11:29:45.911860+00:00"}
+{"action": "plan", "status": "DONE", "tasks": 34, "time": "2026-06-27T11:29:46.644446+00:00"}
+{"action": "notebooks", "full_suite": "BLOCKED", "scope": "artifact-summary", "status": "PASS", "time": "2026-06-27T11:30:53.388990+00:00"}
+{"action": "docs", "full_suite": "BLOCKED", "scope": "artifact-summary", "status": "PASS", "time": "2026-06-27T11:30:54.049942+00:00"}

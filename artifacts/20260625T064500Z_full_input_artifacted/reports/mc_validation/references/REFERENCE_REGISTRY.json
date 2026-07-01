@@ -1,0 +1,33 @@
+{
+  "blocked_count": 1,
+  "final_bibliography_status": "BLOCKED",
+  "generated_at": "2026-06-25T21:59:36.780465+00:00",
+  "records": [
+    {
+      "citation": "Project runbook supplied with this repository session; governs execution, reporting, thesis, and release requirements.",
+      "id": "REF-RUNBOOK",
+      "note": "Local operator-provided specification, not an external literature source.",
+      "status": "AVAILABLE",
+      "title": "CCB testbeam Codex MC validation completion thesis runbook",
+      "type": "project-specification"
+    },
+    {
+      "citation": "Run 20260625T064500Z_full_input_artifacted, job 3316536, frozen validation artifacts under the configured LUNARC artifact root.",
+      "id": "REF-VALIDATION-ARTIFACTS",
+      "note": "Primary evidence for current MV1-MV3/MV9 artifact-summary claims.",
+      "status": "AVAILABLE",
+      "title": "Selected LUNARC MC validation artifacted run",
+      "type": "frozen-artifact"
+    },
+    {
+      "citation": "To be curated before final publication-grade wiki/thesis release.",
+      "id": "REF-FINAL-LITERATURE-CURATION",
+      "note": "Do not invent references; final bibliography remains a release blocker.",
+      "status": "BLOCKED",
+      "title": "Final detector/MC/statistical-method references",
+      "type": "literature-placeholder"
+    }
+  ],
+  "scope": "reference-registry",
+  "status": "PASS"
+}

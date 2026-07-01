@@ -1,0 +1,10 @@
+{
+  "git_commit": "2516606ac82036482fc2e3010ed0e506a34d3e77",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.1",
+    "uproot": "5.6.4"
+  },
+  "platform": "Linux-5.14.0-687.12.1.el9_8.x86_64-x86_64-with-glibc2.34",
+  "python": "3.11.14"
+}

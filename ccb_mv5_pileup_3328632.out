@@ -1,0 +1,12 @@
+[prologue] host=cn044 start=2026-06-28T22:17:19+02:00
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam
+[prologue] python=Python 3.11.14
+{
+  "status": "ok",
+  "out": "reports/mv5_pileup_1782677840",
+  "rmax_duty_124p8": 3.0448717948717947,
+  "rmax_duty_90": 4.222222222222222,
+  "rmax_from_failure": null
+}
+[ok] wrote reports/mv5_pileup_1782677840/mv5_pileup_summary.json
+[epilogue] done=2026-06-28T22:17:23+02:00

@@ -1,0 +1,109 @@
+{
+  "artifacts": {
+    "html": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/reports/mc_validation/summary/RUN_SUMMARY.html",
+    "markdown": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/reports/mc_validation/summary/RUN_SUMMARY.md",
+    "metrics_table": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/reports/mc_validation/summary/metrics_table.csv",
+    "selected_metrics_png": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/figures/summary/selected_metrics.png",
+    "selected_metrics_svg": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/figures/summary/selected_metrics.svg",
+    "study_support_png": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/figures/summary/study_support.png",
+    "study_support_svg": "/private/tmp/ccb_fresh_run/20260627T111955Z_e3ac99f_current_main_retry1/figures/summary/study_support.svg"
+  },
+  "figures": {
+    "figures": [
+      {
+        "alt_text": "Bar chart summarizing available support for MV1, MV2, and MV3 artifact studies.",
+        "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+        "data_sidecar_exists": true,
+        "formats": [
+          {
+            "exists": true,
+            "format": "svg",
+            "relative_path": "figures/summary/study_support.svg",
+            "size_bytes": 21694
+          },
+          {
+            "exists": true,
+            "format": "png",
+            "relative_path": "figures/summary/study_support.png",
+            "size_bytes": 45870
+          }
+        ],
+        "id": "SUMMARY-F001",
+        "scope": "summary-artifact",
+        "status": "PASS",
+        "title": "Study support overview"
+      },
+      {
+        "alt_text": "Bar chart of selected artifact metrics for MV1, MV2, and MV3.",
+        "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+        "data_sidecar_exists": true,
+        "formats": [
+          {
+            "exists": true,
+            "format": "svg",
+            "relative_path": "figures/summary/selected_metrics.svg",
+            "size_bytes": 30535
+          },
+          {
+            "exists": true,
+            "format": "png",
+            "relative_path": "figures/summary/selected_metrics.png",
+            "size_bytes": 89721
+          }
+        ],
+        "id": "SUMMARY-F002",
+        "scope": "summary-artifact",
+        "status": "PASS",
+        "title": "Selected validated metrics"
+      }
+    ],
+    "full_figure_catalog_status": "BLOCKED",
+    "generated_at": "2026-06-27T11:23:55.058098+00:00",
+    "reason": "Catalogs compact summary figures only; full required figure catalog/contact sheets remain incomplete.",
+    "scope": "summary-figure-manifest",
+    "status": "PASS"
+  },
+  "run_id": "20260627T111955Z_e3ac99f_current_main_retry1",
+  "scope": "summary",
+  "status": "PASS",
+  "visual_review": {
+    "full_visual_review_status": "BLOCKED",
+    "generated_at": "2026-06-27T11:23:55.058561+00:00",
+    "reason": "Reviews compact summary figures only; full catalog visual review remains incomplete.",
+    "review_count": 2,
+    "reviews": [
+      {
+        "checks": {
+          "alt_text_present": true,
+          "data_sidecar_present": true,
+          "png_present": true,
+          "scope_banner_required": true,
+          "svg_present": true
+        },
+        "figure_id": "SUMMARY-F001",
+        "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+        "reviewed_at": "2026-06-27T11:23:55.058561+00:00",
+        "reviewer": "codex-automated-visual-qa",
+        "status": "PASS",
+        "title": "Study support overview"
+      },
+      {
+        "checks": {
+          "alt_text_present": true,
+          "data_sidecar_present": true,
+          "png_present": true,
+          "scope_banner_required": true,
+          "svg_present": true
+        },
+        "figure_id": "SUMMARY-F002",
+        "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+        "reviewed_at": "2026-06-27T11:23:55.058561+00:00",
+        "reviewer": "codex-automated-visual-qa",
+        "status": "PASS",
+        "title": "Selected validated metrics"
+      }
+    ],
+    "scope": "summary-figure-visual-review",
+    "status": "PASS"
+  }
+}

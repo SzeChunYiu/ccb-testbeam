@@ -1,0 +1,14 @@
+# Final audit
+
+- job_state_completed: PASS
+- preflight_mc_root: PASS
+- preflight_data_pulses: PASS
+- MV1_study_result: PASS
+- MV2_study_result: PASS
+- MV3_study_result: PASS
+- MV4_study_result: BLOCKED
+- MV9_synthesis: BLOCKED
+- slurm_logs_present: PASS
+- fixture_not_released: PASS
+
+Status: **BLOCKED**

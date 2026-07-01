@@ -1,0 +1,273 @@
+{
+  "checks": [
+    {
+      "exit_code": "0:0",
+      "job_id": "3316536",
+      "name": "job_state_completed",
+      "state": "COMPLETED",
+      "status": "PASS"
+    },
+    {
+      "name": "preflight_mc_root",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+      "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+      "status": "PASS"
+    },
+    {
+      "name": "preflight_data_pulses",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+      "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+      "status": "PASS"
+    },
+    {
+      "n_tracks": 1000000,
+      "name": "MV1_study_result",
+      "path": "reports/mc_validation/mv1_pid/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "n_tracks": 1000000,
+      "name": "MV2_study_result",
+      "path": "reports/mc_validation/mv2_energy/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "n_tracks": 1000000,
+      "name": "MV3_study_result",
+      "path": "reports/mc_validation/mv3_stopping_depth/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "name": "MV9_synthesis",
+      "path": "reports/mc_validation/mv9_synthesis/MV9_SYNTHESIS.md",
+      "status": "PASS"
+    },
+    {
+      "count": 1,
+      "name": "slurm_logs_present",
+      "status": "PASS"
+    },
+    {
+      "matches": [],
+      "name": "fixture_not_released",
+      "status": "PASS"
+    }
+  ],
+  "job_state": {
+    "completed_at": "2026-06-25T08:46:42+02:00",
+    "exit_code": "0:0",
+    "host": "cn046",
+    "job_id": "3316536",
+    "run_id": "20260625T064500Z_full_input_artifacted",
+    "state": "COMPLETED"
+  },
+  "run_id": "20260625T064500Z_full_input_artifacted",
+  "scope": "all",
+  "status": "PASS",
+  "strict": false,
+  "study_metrics": {
+    "MV1": {
+      "cutflow": {
+        "n_binary_pid": 241596,
+        "n_deuteron": 141047,
+        "n_proton": 100549,
+        "n_tracks": 1000000
+      },
+      "metrics": {
+        "cut_edep_l0_thr_MeV": 23.391984775109016,
+        "cut_efficiency": 0.8204428311130333,
+        "cut_purity": 0.9579711584628885,
+        "deltaE_E_medians": {
+          "deuteron": {
+            "edep_l0": 53.0748501785012,
+            "edep_l1": 29.207290667434783,
+            "edep_tot": 123.04164629352441,
+            "stop_layer": 1.0
+          },
+          "proton": {
+            "edep_l0": 12.195985352475857,
+            "edep_l1": 13.046976199794067,
+            "edep_tot": 127.49393913443596,
+            "stop_layer": 6.0
+          }
+        },
+        "hgb_auc": 0.997641986277693,
+        "hgb_purity_at_90eff": 0.9954311373484896,
+        "logreg_auc": 0.9764543474193328,
+        "logreg_purity_at_90eff": 0.9606945181590719,
+        "n_deuteron": 141047,
+        "n_proton": 100549,
+        "n_tracks": 1000000,
+        "split": "legacy_parity"
+      },
+      "status": "PRODUCTION"
+    },
+    "MV2": {
+      "cutflow": {
+        "n_deuteron_uncensored": 139074,
+        "n_proton_uncensored": 69455,
+        "n_tracks": 1000000
+      },
+      "metrics": {
+        "censored_range_note": "Tracks with stop_layer==7 excluded from ekin regression (range censored at instrument boundary).",
+        "deuteron_ekin_mean_MeV": 8.434812395837786e-05,
+        "deuteron_ekin_recon_res68": 0.13292951136118858,
+        "deuteron_n_censored_excluded": 372,
+        "deuteron_stoplayer_vs_ekin": {
+          "0": {
+            "mean_edep_tot_MeV": 53.634602702793515,
+            "mean_ekin_MeV": 6.607838958673756e-05,
+            "mean_tracklen_mm": 110.17921520322952,
+            "n": 14327
+          },
+          "1": {
+            "mean_edep_tot_MeV": 101.43909150654027,
+            "mean_ekin_MeV": 7.505260275724434e-05,
+            "mean_tracklen_mm": 109.7429370616107,
+            "n": 68267
+          },
+          "2": {
+            "mean_edep_tot_MeV": 131.84764118507354,
+            "mean_ekin_MeV": 8.832233702314526e-05,
+            "mean_tracklen_mm": 110.14149597837158,
+            "n": 16831
+          },
+          "3": {
+            "mean_edep_tot_MeV": 134.81142615855518,
+            "mean_ekin_MeV": 0.00011031347587953121,
+            "mean_tracklen_mm": 110.8224791657808,
+            "n": 35230
+          },
+          "4": {
+            "mean_edep_tot_MeV": 103.50744305737172,
+            "mean_ekin_MeV": 7.885197876163932e-05,
+            "mean_tracklen_mm": 110.88404003989935,
+            "n": 765
+          },
+          "5": {
+            "mean_edep_tot_MeV": 129.78122960871963,
+            "mean_ekin_MeV": 6.018772469690152e-05,
+            "mean_tracklen_mm": 111.22517751994523,
+            "n": 952
+          },
+          "6": {
+            "mean_edep_tot_MeV": 163.7293708059013,
+            "mean_ekin_MeV": 3.945907134857259e-05,
+            "mean_tracklen_mm": 111.60319445348298,
+            "n": 4303
+          },
+          "7": {
+            "mean_edep_tot_MeV": 91.83408529064536,
+            "mean_ekin_MeV": 8.677809156234195e-05,
+            "mean_tracklen_mm": 110.6933623461683,
+            "n": 372
+          }
+        },
+        "proton_ekin_mean_MeV": 0.00013332355730454152,
+        "proton_ekin_recon_res68": 0.036531109473233174,
+        "proton_n_censored_excluded": 29734,
+        "proton_stoplayer_vs_ekin": {
+          "0": {
+            "mean_edep_tot_MeV": 24.86920971681107,
+            "mean_ekin_MeV": 9.692364081346271e-05,
+            "mean_tracklen_mm": 104.72355023804604,
+            "n": 3845
+          },
+          "1": {
+            "mean_edep_tot_MeV": 48.60254876043409,
+            "mean_ekin_MeV": 9.830924857009364e-05,
+            "mean_tracklen_mm": 106.55845538874465,
+            "n": 5392
+          },
+          "2": {
+            "mean_edep_tot_MeV": 62.52440188179504,
+            "mean_ekin_MeV": 0.00012605074351343886,
+            "mean_tracklen_mm": 110.31311696566947,
+            "n": 4476
+          },
+          "3": {
+            "mean_edep_tot_MeV": 75.15308826720276,
+            "mean_ekin_MeV": 0.00013290393564356748,
+            "mean_tracklen_mm": 110.35672896993756,
+            "n": 4624
+          },
+          "4": {
+            "mean_edep_tot_MeV": 88.92548046937455,
+            "mean_ekin_MeV": 0.00014169145566501548,
+            "mean_tracklen_mm": 111.06459602035672,
+            "n": 4685
+          },
+          "5": {
+            "mean_edep_tot_MeV": 123.17903938900159,
+            "mean_ekin_MeV": 0.00013253975286783645,
+            "mean_tracklen_mm": 111.27639214661556,
+            "n": 20246
+          },
+          "6": {
+            "mean_edep_tot_MeV": 133.8626911611151,
+            "mean_ekin_MeV": 0.00013908075553179655,
+            "mean_tracklen_mm": 110.76625120295097,
+            "n": 27547
+          },
+          "7": {
+            "mean_edep_tot_MeV": 128.61664362839156,
+            "mean_ekin_MeV": 0.00016044704077844283,
+            "mean_tracklen_mm": 111.59990455868932,
+            "n": 29734
+          }
+        }
+      },
+      "status": "PRODUCTION"
+    },
+    "MV3": {
+      "cutflow": {
+        "n_sample_I": 64762,
+        "n_sample_II": 172336,
+        "n_tracks": 1000000
+      },
+      "metrics": {
+        "layer_occupancy_sample_I": [
+          1.0,
+          0.9780117970414749,
+          0.41075013124980697,
+          0.2349834779654736,
+          0.08101973379450912,
+          0.07536827151724777,
+          0.06480652234334949,
+          0.002269849603162348
+        ],
+        "layer_occupancy_sample_II": [
+          1.0,
+          0.90958360412218,
+          0.7069561786277969,
+          0.6536881440906137,
+          0.4837468665862037,
+          0.45426956642837246,
+          0.335246263113917,
+          0.1738696499860737
+        ],
+        "layer_to_stave_mapping": {
+          "0": "B2",
+          "1": "B2",
+          "2": "B4",
+          "3": "B4",
+          "4": "B6",
+          "5": "B6",
+          "6": "B8",
+          "7": "B8"
+        },
+        "mapping_hypothesis_scores": {},
+        "truth_stave_counts": {
+          "B2": 849880.0,
+          "B4": 61329.0,
+          "B6": 26733.0,
+          "B8": 62058.0
+        }
+      },
+      "status": "PRODUCTION"
+    }
+  }
+}

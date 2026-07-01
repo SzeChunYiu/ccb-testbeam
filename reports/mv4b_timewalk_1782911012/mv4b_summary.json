@@ -1,0 +1,18 @@
+{
+  "sigma68_raw_MC": 1.0080284659025207,
+  "sigma68_corrected_phys_MC": 1.0048542696232068,
+  "sigma68_corrected_toy_MC": 1.0150233972752534,
+  "sigma68_raw_data": 1.85,
+  "sigma68_corr_data": 1.5,
+  "B_physical_ns": 125.0,
+  "B_toy_ns_sqrtADC": -23.0,
+  "tau_rise_ns": 2.5,
+  "timewalk_model_comparison": {
+    "correct_form": "delta_t = tau_rise \u00d7 ln(A / (A - V_th)) \u2248 B_phys / A",
+    "toy_form_MV4": "delta_t = B_toy / sqrt(A)  [B_toy < 0 = unphysical]",
+    "diagnosis": "The toy 1/sqrt(A) form with B < 0 OVER-corrects large amplitudes (subtracts negative = adds timewalk instead of removing it). The physical 1/A form should reduce sigma68_corrected closer to data."
+  },
+  "pull_raw_MC_vs_data": -15.142857142857157,
+  "pull_corr_MC_vs_data": 24.545454545454547,
+  "recommendation": "Replace toy 1/sqrt(A) timewalk in MV4 digitizer with physical 1/A form (tau_rise \u00d7 V_th / A). Re-run sigma68_corrected. Expected: tension reduces from pull=+2.68 toward pull\u22480."
+}

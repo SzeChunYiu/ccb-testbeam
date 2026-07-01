@@ -1,0 +1,105 @@
+{
+  "all_steps_closed": false,
+  "dag_mermaid": "flowchart TD\n  OQ_MV4[\"OQ-MV4: produce_mv4_timing_artifact\"]\n  calibrated_digitized_mc[\"calibrated_digitized_mc\"] --> OQ_MV4\n  timing_truth_boundary_audit[\"timing_truth_boundary_audit\"] --> OQ_MV4\n  OQ_MV5[\"OQ-MV5: produce_mv5_pileup_artifact\"]\n  calibrated_digitized_mc[\"calibrated_digitized_mc\"] --> OQ_MV5\n  controlled_mixture_manifest[\"controlled_mixture_manifest\"] --> OQ_MV5\n  OQ_MV6[\"OQ-MV6: produce_mv6_representation_artifact\"]\n  calibrated_digitized_mc[\"calibrated_digitized_mc\"] --> OQ_MV6\n  fit_split_registry[\"fit_split_registry\"] --> OQ_MV6\n  OQ_MV7[\"OQ-MV7: produce_mv7_pedestal_noise_artifact\"]\n  real_pedestal_splits[\"real_pedestal_splits\"] --> OQ_MV7\n  calibrated_digitized_mc[\"calibrated_digitized_mc\"] --> OQ_MV7\n  OQ_MV8[\"OQ-MV8: produce_mv8_saturation_artifact\"]\n  calibrated_digitized_mc[\"calibrated_digitized_mc\"] --> OQ_MV8\n  dynamic_range_scan[\"dynamic_range_scan\"] --> OQ_MV8\n  OQ_SYS[\"OQ-SYS: submit_systematic_arrays\"]\n  MV4[\"MV4\"] --> OQ_SYS\n  MV5[\"MV5\"] --> OQ_SYS\n  MV6[\"MV6\"] --> OQ_SYS\n  MV7[\"MV7\"] --> OQ_SYS\n  MV8[\"MV8\"] --> OQ_SYS\n  OQ_WIKI[\"OQ-WIKI: publish_final_wiki\"]\n  release_audit_PASS[\"release_audit_PASS\"] --> OQ_WIKI\n  curated_bibliography[\"curated_bibliography\"] --> OQ_WIKI\n  full_figure_catalog[\"full_figure_catalog\"] --> OQ_WIKI",
+  "generated_at": "2026-06-25T21:59:36.788694+00:00",
+  "scope": "open-question-closure-plan",
+  "status": "PASS",
+  "step_count": 7,
+  "steps": [
+    {
+      "action": "produce_mv4_timing_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "timing_truth_boundary_audit"
+      ],
+      "order": 1,
+      "priority": "high",
+      "question_id": "OQ-MV4",
+      "required_evidence": "MV4 production artifact, uncertainty intervals, and acceptance decision.",
+      "status": "OPEN",
+      "terminal_condition": "close only after required evidence artifact exists, validates, and claim ledger is updated"
+    },
+    {
+      "action": "produce_mv5_pileup_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "controlled_mixture_manifest"
+      ],
+      "order": 2,
+      "priority": "high",
+      "question_id": "OQ-MV5",
+      "required_evidence": "MV5 production artifact and pile-up recovery diagnostics.",
+      "status": "OPEN",
+      "terminal_condition": "close only after required evidence artifact exists, validates, and claim ledger is updated"
+    },
+    {
+      "action": "produce_mv6_representation_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "fit_split_registry"
+      ],
+      "order": 3,
+      "priority": "medium",
+      "question_id": "OQ-MV6",
+      "required_evidence": "MV6 representation comparison and probe results.",
+      "status": "OPEN",
+      "terminal_condition": "close only after required evidence artifact exists, validates, and claim ledger is updated"
+    },
+    {
+      "action": "produce_mv7_pedestal_noise_artifact",
+      "dependencies": [
+        "real_pedestal_splits",
+        "calibrated_digitized_mc"
+      ],
+      "order": 4,
+      "priority": "high",
+      "question_id": "OQ-MV7",
+      "required_evidence": "MV7 pedestal/noise closure with per-channel diagnostics.",
+      "status": "OPEN",
+      "terminal_condition": "close only after required evidence artifact exists, validates, and claim ledger is updated"
+    },
+    {
+      "action": "produce_mv8_saturation_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "dynamic_range_scan"
+      ],
+      "order": 5,
+      "priority": "high",
+      "question_id": "OQ-MV8",
+      "required_evidence": "MV8 saturation/dynamic-range study and failure accounting.",
+      "status": "OPEN",
+      "terminal_condition": "close only after required evidence artifact exists, validates, and claim ledger is updated"
+    },
+    {
+      "action": "submit_systematic_arrays",
+      "dependencies": [
+        "MV4",
+        "MV5",
+        "MV6",
+        "MV7",
+        "MV8"
+      ],
+      "order": 6,
+      "priority": "high",
+      "question_id": "OQ-SYS",
+      "required_evidence": "LUNARC systematic arrays with paired shifts and uncertainty decomposition.",
+      "status": "OPEN",
+      "terminal_condition": "close only after required evidence artifact exists, validates, and claim ledger is updated"
+    },
+    {
+      "action": "publish_final_wiki",
+      "dependencies": [
+        "release_audit_PASS",
+        "curated_bibliography",
+        "full_figure_catalog"
+      ],
+      "order": 7,
+      "priority": "medium",
+      "question_id": "OQ-WIKI",
+      "required_evidence": "Release-ready wiki publication with curated bibliography and all QA gates passing.",
+      "status": "OPEN",
+      "terminal_condition": "close only after required evidence artifact exists, validates, and claim ledger is updated"
+    }
+  ]
+}

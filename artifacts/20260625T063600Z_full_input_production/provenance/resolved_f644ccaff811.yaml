@@ -1,0 +1,69 @@
+schema_version: 1.0.0
+source_path: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/configs/mc_validation/execution.yaml
+content_sha256: f644ccaff81148dd714c04dee593dedff9ad86cc3f3891e732d1fbf686680f97
+repo_root: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main
+paths:
+  mc_root: /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root
+  data_pulses: /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz
+  reports_dir: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports
+  resolved_config_dir: /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/resolved_configs
+seeds:
+  global: 20260623
+  split: 1701
+  bootstrap: 9001
+units:
+  energy: MeV
+  time: ns
+  adc: ADC
+unit_docs: {}
+waveform:
+  adc_samples: 18
+  sample_spacing_ns: 10.0
+coincidence_ns: 15.0
+detector:
+  b_arm: 1
+  a_arm: 2
+  nb_layers: 8
+logging_level: INFO
+studies:
+  mv0:
+    enabled: true
+    output_subdir: mc_validation/mv0_digitizer
+    tier: 2
+  mv1:
+    enabled: true
+    output_subdir: mc_validation/mv1_pid
+    tier: 1
+  mv2:
+    enabled: true
+    output_subdir: mc_validation/mv2_energy
+    tier: 1
+  mv3:
+    enabled: true
+    output_subdir: mc_validation/mv3_stopping_depth
+    tier: 1
+  mv4:
+    enabled: false
+    output_subdir: mc_validation/mv4_timing
+    tier: 2
+  mv5:
+    enabled: false
+    output_subdir: mc_validation/mv5_pileup
+    tier: 2
+  mv6:
+    enabled: false
+    output_subdir: mc_validation/mv6_pulse_shape
+    tier: 2
+  mv7:
+    enabled: false
+    output_subdir: mc_validation/mv7_pedestal
+    tier: 2
+  mv8:
+    enabled: false
+    output_subdir: mc_validation/mv8_saturation
+    tier: 2
+  mv9:
+    enabled: true
+    output_subdir: mc_validation/mv9_synthesis
+    tier: synthesis
+resolved_digest: 35d77efbcac524e6907ba20a779547cf7eedce0d395834f5ce257ec99590ac0d

@@ -1,0 +1,5 @@
+study,status,n_tracks,hgb_auc,hgb_purity_at_90eff,proton_ekin_recon_res68,deuteron_ekin_recon_res68,delta_t_l1_l0_ns_res68,n_sample_I,n_sample_II
+MV1,PRODUCTION,100000,0.997229076225,0.995563302171,,,,,
+MV2,PRODUCTION,100000,,,0.0153808233017,0.0367741567194,,,
+MV3,PRODUCTION,100000,,,,,,6450,17024
+MV4,PRODUCTION,100000,,,,,0.0899723168016,,

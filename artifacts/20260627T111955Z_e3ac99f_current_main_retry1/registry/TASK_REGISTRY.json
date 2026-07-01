@@ -1,0 +1,525 @@
+[
+  {
+    "task_id": "discover",
+    "study": "discover",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 discover",
+    "dependencies": [],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332531+00:00"
+  },
+  {
+    "task_id": "preflight",
+    "study": "preflight",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 preflight",
+    "dependencies": [
+      "discover"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332541+00:00"
+  },
+  {
+    "task_id": "tests",
+    "study": "tests",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 tests",
+    "dependencies": [
+      "preflight"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332546+00:00"
+  },
+  {
+    "task_id": "fixture",
+    "study": "fixture",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 fixture",
+    "dependencies": [
+      "tests"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332550+00:00"
+  },
+  {
+    "task_id": "smoke_truth_audit",
+    "study": "truth_audit",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "fixture"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332555+00:00"
+  },
+  {
+    "task_id": "smoke_MV1",
+    "study": "MV1",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "fixture"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332559+00:00"
+  },
+  {
+    "task_id": "smoke_MV2",
+    "study": "MV2",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "fixture"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332564+00:00"
+  },
+  {
+    "task_id": "smoke_MV3",
+    "study": "MV3",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "fixture"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332573+00:00"
+  },
+  {
+    "task_id": "smoke_MV0",
+    "study": "MV0",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "smoke_MV1",
+      "smoke_MV2"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332578+00:00"
+  },
+  {
+    "task_id": "smoke_MV4",
+    "study": "MV4",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "smoke_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332582+00:00"
+  },
+  {
+    "task_id": "smoke_MV5",
+    "study": "MV5",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "smoke_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332586+00:00"
+  },
+  {
+    "task_id": "smoke_MV6",
+    "study": "MV6",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "smoke_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332590+00:00"
+  },
+  {
+    "task_id": "smoke_MV7",
+    "study": "MV7",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "smoke_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332593+00:00"
+  },
+  {
+    "task_id": "smoke_MV8",
+    "study": "MV8",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "smoke_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332597+00:00"
+  },
+  {
+    "task_id": "smoke_MV9",
+    "study": "MV9",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 smoke",
+    "dependencies": [
+      "smoke_MV1",
+      "smoke_MV2",
+      "smoke_MV3",
+      "smoke_MV4",
+      "smoke_MV5",
+      "smoke_MV6",
+      "smoke_MV7",
+      "smoke_MV8"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332600+00:00"
+  },
+  {
+    "task_id": "prod_truth_audit",
+    "study": "truth_audit",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_truth_audit",
+    "dependencies": [
+      "preflight"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332604+00:00"
+  },
+  {
+    "task_id": "prod_GEANT4_optional",
+    "study": "GEANT4_optional",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_GEANT4_optional",
+    "dependencies": [
+      "preflight"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332607+00:00"
+  },
+  {
+    "task_id": "prod_MV1",
+    "study": "MV1",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV1",
+    "dependencies": [
+      "prod_truth_audit"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332610+00:00"
+  },
+  {
+    "task_id": "prod_MV2",
+    "study": "MV2",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV2",
+    "dependencies": [
+      "prod_truth_audit"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332614+00:00"
+  },
+  {
+    "task_id": "prod_MV3",
+    "study": "MV3",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV3",
+    "dependencies": [
+      "prod_truth_audit"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332617+00:00"
+  },
+  {
+    "task_id": "prod_MV0",
+    "study": "MV0",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV0",
+    "dependencies": [
+      "prod_truth_audit"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332620+00:00"
+  },
+  {
+    "task_id": "prod_MV4",
+    "study": "MV4",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV4",
+    "dependencies": [
+      "prod_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332624+00:00"
+  },
+  {
+    "task_id": "prod_MV5",
+    "study": "MV5",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV5",
+    "dependencies": [
+      "prod_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332627+00:00"
+  },
+  {
+    "task_id": "prod_MV6",
+    "study": "MV6",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV6",
+    "dependencies": [
+      "prod_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332630+00:00"
+  },
+  {
+    "task_id": "prod_MV7",
+    "study": "MV7",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV7",
+    "dependencies": [
+      "prod_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332633+00:00"
+  },
+  {
+    "task_id": "prod_MV8",
+    "study": "MV8",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV8",
+    "dependencies": [
+      "prod_MV0"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332636+00:00"
+  },
+  {
+    "task_id": "prod_systematics",
+    "study": "systematics",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_systematics",
+    "dependencies": [
+      "prod_MV1",
+      "prod_MV2",
+      "prod_MV3",
+      "prod_MV4",
+      "prod_MV5",
+      "prod_MV6",
+      "prod_MV7",
+      "prod_MV8"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332639+00:00"
+  },
+  {
+    "task_id": "prod_MV9",
+    "study": "MV9",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV9",
+    "dependencies": [
+      "prod_systematics"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332643+00:00"
+  },
+  {
+    "task_id": "figures",
+    "study": "figures",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch figures",
+    "dependencies": [
+      "prod_MV9"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332646+00:00"
+  },
+  {
+    "task_id": "notebooks",
+    "study": "notebooks",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch notebooks",
+    "dependencies": [
+      "figures"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332649+00:00"
+  },
+  {
+    "task_id": "docs",
+    "study": "docs",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 docs",
+    "dependencies": [
+      "notebooks"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332660+00:00"
+  },
+  {
+    "task_id": "thesis",
+    "study": "thesis",
+    "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch thesis",
+    "dependencies": [
+      "docs"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332666+00:00"
+  },
+  {
+    "task_id": "validate",
+    "study": "validate",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 validate",
+    "dependencies": [
+      "thesis"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332669+00:00"
+  },
+  {
+    "task_id": "release",
+    "study": "release",
+    "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T111955Z_e3ac99f_current_main_retry1 release",
+    "dependencies": [
+      "validate"
+    ],
+    "status": "PLANNED",
+    "attempts": 0,
+    "job_id": null,
+    "exit_code": null,
+    "reason": null,
+    "log": null,
+    "updated_at": "2026-06-27T11:20:03.332673+00:00"
+  }
+]

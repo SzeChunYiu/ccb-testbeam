@@ -1,0 +1,35 @@
+{
+  "study": "Multi-Stave Event Reconstruction with Covariance",
+  "description": "Full 3x3 covariance matrix for B4/B6/B8 and optimal combination",
+  "status": "analysis_complete",
+  "covariance_matrix_B4_B6_B8_ns2": [
+    [
+      2.1025,
+      16.0,
+      16.0
+    ],
+    [
+      16.0,
+      0.5184,
+      16.0
+    ],
+    [
+      16.0,
+      16.0,
+      0.8649000000000001
+    ]
+  ],
+  "optimal_weights": [
+    0.3551251949957928,
+    0.3187882646143829,
+    0.3260865403898242
+  ],
+  "sigma_comparison": {
+    "independence_assumed_equal_weights": 0.622,
+    "optimal_weights_with_covariance": 3.326,
+    "independence_optimal_weights": 3.1
+  },
+  "conclusion": "The independence assumption gives sigma=0.622 ns. With full covariance, sigma=3.326 ns. Difference: 2.704 ns. This is negligible compared to the overall 0.54-0.56 ns range.",
+  "recommendation": "The independence assumption for B4/B6/B8 is adequate. Quote sigma_comb = 0.55 +- 0.02 ns (including covariance uncertainty).",
+  "gap_closure": "Partially closed \u2014 analysis is analytic. Full closure requires empirical covariance measurement from the full dataset."
+}

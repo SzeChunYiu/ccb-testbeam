@@ -1,0 +1,11 @@
+[prologue] host=cn044 start=2026-06-28T22:17:38+02:00
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam
+[prologue] python=Python 3.11.14
+[prologue] git_head=7c1822c9ee2114f4a67a9b92f297be6d58011110
+[prologue] git_branch=main
+[prologue] calib=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv0_calibration_1782677847/calibration.json
+[prologue] out=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv4_timing_1782677858
+[mv4] start=2026-06-28T20:17:38.991714+00:00
+[mv4] mc=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root
+[mv4] loaded calibration: gain=110.0 ped=6758.5
+[mv4] tracks used=0 (events scanned=1000000)

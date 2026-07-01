@@ -1,0 +1,1891 @@
+[prologue] host=cn014 start=2026-06-27T20:06:57+02:00
+[prologue] slurm_job_id=3326222
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main
+[prologue] python=Python 3.11.14
+[prologue] git_head=b83ab5a318b7c4eb0e7468bea342d42319103715
+[prologue] git_branch=codex/mv4-timing-artifact
+[prologue] config=/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/configs/mc_validation/execution.yaml
+[prologue] out=/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/pipeline_1782583617
+[prologue] run_id=20260627T180655Z_b83ab5a_mv4_timing_summary
+[prologue] pythonpath=/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/src:/sw/easybuild_milan/software/JupyterNotebook/7.2.0-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/JupyterLab/4.2.0-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/jupyter-server/2.14.0-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/BeautifulSoup/4.12.2-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/tornado/6.4-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/PyZMQ/25.1.2-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/PyYAML/6.0.1-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/IPython/8.17.2-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/jedi/0.19.1-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/lxml/4.9.3-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/Python-bundle-PyPI/2023.10-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/virtualenv/20.24.6-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/cryptography/41.0.5-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/cffi/1.15.1-GCCcore-13.2.0/lib/python3.11/site-packages:/sw/easybuild_milan/software/Python/3.11.5-GCCcore-13.2.0/easybuild/python
+[pipeline] preflight start 2026-06-27T20:06:57+02:00
+{
+  "checks": [
+    {
+      "diff_hash": "15bb3fcb",
+      "dirty": true,
+      "name": "git_dirty",
+      "status": "PASS"
+    },
+    {
+      "name": "mc_root",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+      "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+      "size_bytes": 677221620,
+      "status": "PASS"
+    },
+    {
+      "name": "data_pulses",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+      "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+      "size_bytes": 9246625,
+      "status": "PASS"
+    },
+    {
+      "detail": "UNREACHABLE (no active ssh control socket for lunarc)",
+      "name": "lunarc_socket",
+      "status": "BLOCKED"
+    }
+  ],
+  "generated_at": "2026-06-27T18:06:58.741982+00:00",
+  "git_sha": "b83ab5a318b7c4eb0e7468bea342d42319103715",
+  "profile": "production",
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "status": "BLOCKED"
+}
+[pipeline] preflight done rc=0 2026-06-27T20:06:58+02:00
+[pipeline] plan start 2026-06-27T20:06:58+02:00
+{
+  "dag_mermaid": "flowchart TD\n  discover\n  discover --> preflight\n  preflight --> tests\n  tests --> fixture\n  fixture --> smoke_truth_audit\n  fixture --> smoke_MV1\n  fixture --> smoke_MV2\n  fixture --> smoke_MV3\n  smoke_MV1 --> smoke_MV0\n  smoke_MV2 --> smoke_MV0\n  smoke_MV0 --> smoke_MV4\n  smoke_MV0 --> smoke_MV5\n  smoke_MV0 --> smoke_MV6\n  smoke_MV0 --> smoke_MV7\n  smoke_MV0 --> smoke_MV8\n  smoke_MV1 --> smoke_MV9\n  smoke_MV2 --> smoke_MV9\n  smoke_MV3 --> smoke_MV9\n  smoke_MV4 --> smoke_MV9\n  smoke_MV5 --> smoke_MV9\n  smoke_MV6 --> smoke_MV9\n  smoke_MV7 --> smoke_MV9\n  smoke_MV8 --> smoke_MV9\n  preflight --> prod_truth_audit\n  preflight --> prod_GEANT4_optional\n  prod_truth_audit --> prod_MV1\n  prod_truth_audit --> prod_MV2\n  prod_truth_audit --> prod_MV3\n  prod_truth_audit --> prod_MV0\n  prod_MV0 --> prod_MV4\n  prod_MV0 --> prod_MV5\n  prod_MV0 --> prod_MV6\n  prod_MV0 --> prod_MV7\n  prod_MV0 --> prod_MV8\n  prod_MV1 --> prod_systematics\n  prod_MV2 --> prod_systematics\n  prod_MV3 --> prod_systematics\n  prod_MV4 --> prod_systematics\n  prod_MV5 --> prod_systematics\n  prod_MV6 --> prod_systematics\n  prod_MV7 --> prod_systematics\n  prod_MV8 --> prod_systematics\n  prod_systematics --> prod_MV9\n  prod_MV9 --> figures\n  figures --> notebooks\n  notebooks --> docs\n  docs --> thesis\n  thesis --> validate\n  validate --> release",
+  "enabled_studies": [
+    "truth_audit",
+    "MV0",
+    "MV1",
+    "MV2",
+    "MV3",
+    "MV4",
+    "MV5",
+    "MV6",
+    "MV7",
+    "MV8",
+    "MV9"
+  ],
+  "frozen": true,
+  "profile": "production",
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "tasks": [
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary discover",
+      "dependencies": [],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "discover",
+      "task_id": "discover",
+      "updated_at": "2026-06-27T18:06:59.391539+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary preflight",
+      "dependencies": [
+        "discover"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "preflight",
+      "task_id": "preflight",
+      "updated_at": "2026-06-27T18:06:59.391549+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary tests",
+      "dependencies": [
+        "preflight"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "tests",
+      "task_id": "tests",
+      "updated_at": "2026-06-27T18:06:59.391554+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary fixture",
+      "dependencies": [
+        "tests"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "fixture",
+      "task_id": "fixture",
+      "updated_at": "2026-06-27T18:06:59.391559+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "fixture"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "truth_audit",
+      "task_id": "smoke_truth_audit",
+      "updated_at": "2026-06-27T18:06:59.391563+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "fixture"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV1",
+      "task_id": "smoke_MV1",
+      "updated_at": "2026-06-27T18:06:59.391568+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "fixture"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV2",
+      "task_id": "smoke_MV2",
+      "updated_at": "2026-06-27T18:06:59.391573+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "fixture"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV3",
+      "task_id": "smoke_MV3",
+      "updated_at": "2026-06-27T18:06:59.391582+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "smoke_MV1",
+        "smoke_MV2"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV0",
+      "task_id": "smoke_MV0",
+      "updated_at": "2026-06-27T18:06:59.391587+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "smoke_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV4",
+      "task_id": "smoke_MV4",
+      "updated_at": "2026-06-27T18:06:59.391592+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "smoke_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV5",
+      "task_id": "smoke_MV5",
+      "updated_at": "2026-06-27T18:06:59.391596+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "smoke_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV6",
+      "task_id": "smoke_MV6",
+      "updated_at": "2026-06-27T18:06:59.391600+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "smoke_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV7",
+      "task_id": "smoke_MV7",
+      "updated_at": "2026-06-27T18:06:59.391604+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "smoke_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV8",
+      "task_id": "smoke_MV8",
+      "updated_at": "2026-06-27T18:06:59.391608+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary smoke",
+      "dependencies": [
+        "smoke_MV1",
+        "smoke_MV2",
+        "smoke_MV3",
+        "smoke_MV4",
+        "smoke_MV5",
+        "smoke_MV6",
+        "smoke_MV7",
+        "smoke_MV8"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV9",
+      "task_id": "smoke_MV9",
+      "updated_at": "2026-06-27T18:06:59.391617+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_truth_audit",
+      "dependencies": [
+        "preflight"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "truth_audit",
+      "task_id": "prod_truth_audit",
+      "updated_at": "2026-06-27T18:06:59.391621+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_GEANT4_optional",
+      "dependencies": [
+        "preflight"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "GEANT4_optional",
+      "task_id": "prod_GEANT4_optional",
+      "updated_at": "2026-06-27T18:06:59.391625+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV1",
+      "dependencies": [
+        "prod_truth_audit"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV1",
+      "task_id": "prod_MV1",
+      "updated_at": "2026-06-27T18:06:59.391628+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV2",
+      "dependencies": [
+        "prod_truth_audit"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV2",
+      "task_id": "prod_MV2",
+      "updated_at": "2026-06-27T18:06:59.391632+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV3",
+      "dependencies": [
+        "prod_truth_audit"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV3",
+      "task_id": "prod_MV3",
+      "updated_at": "2026-06-27T18:06:59.391636+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV0",
+      "dependencies": [
+        "prod_truth_audit"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV0",
+      "task_id": "prod_MV0",
+      "updated_at": "2026-06-27T18:06:59.391640+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV4",
+      "dependencies": [
+        "prod_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV4",
+      "task_id": "prod_MV4",
+      "updated_at": "2026-06-27T18:06:59.391643+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV5",
+      "dependencies": [
+        "prod_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV5",
+      "task_id": "prod_MV5",
+      "updated_at": "2026-06-27T18:06:59.391647+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV6",
+      "dependencies": [
+        "prod_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV6",
+      "task_id": "prod_MV6",
+      "updated_at": "2026-06-27T18:06:59.391651+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV7",
+      "dependencies": [
+        "prod_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV7",
+      "task_id": "prod_MV7",
+      "updated_at": "2026-06-27T18:06:59.391654+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV8",
+      "dependencies": [
+        "prod_MV0"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV8",
+      "task_id": "prod_MV8",
+      "updated_at": "2026-06-27T18:06:59.391658+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_systematics",
+      "dependencies": [
+        "prod_MV1",
+        "prod_MV2",
+        "prod_MV3",
+        "prod_MV4",
+        "prod_MV5",
+        "prod_MV6",
+        "prod_MV7",
+        "prod_MV8"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "systematics",
+      "task_id": "prod_systematics",
+      "updated_at": "2026-06-27T18:06:59.391662+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch prod_MV9",
+      "dependencies": [
+        "prod_systematics"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "MV9",
+      "task_id": "prod_MV9",
+      "updated_at": "2026-06-27T18:06:59.391665+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch figures",
+      "dependencies": [
+        "prod_MV9"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "figures",
+      "task_id": "figures",
+      "updated_at": "2026-06-27T18:06:59.391669+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch notebooks",
+      "dependencies": [
+        "figures"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "notebooks",
+      "task_id": "notebooks",
+      "updated_at": "2026-06-27T18:06:59.391672+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary docs",
+      "dependencies": [
+        "notebooks"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "docs",
+      "task_id": "docs",
+      "updated_at": "2026-06-27T18:06:59.391678+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch thesis",
+      "dependencies": [
+        "docs"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "thesis",
+      "task_id": "thesis",
+      "updated_at": "2026-06-27T18:06:59.391681+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary validate",
+      "dependencies": [
+        "thesis"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "validate",
+      "task_id": "validate",
+      "updated_at": "2026-06-27T18:06:59.391684+00:00"
+    },
+    {
+      "attempts": 0,
+      "command": "python scripts/mc_validation/run_pipeline.py --run-id 20260627T180655Z_b83ab5a_mv4_timing_summary release",
+      "dependencies": [
+        "validate"
+      ],
+      "exit_code": null,
+      "job_id": null,
+      "log": null,
+      "reason": null,
+      "status": "PLANNED",
+      "study": "release",
+      "task_id": "release",
+      "updated_at": "2026-06-27T18:06:59.391688+00:00"
+    }
+  ]
+}
+[pipeline] plan done rc=0 2026-06-27T20:06:59+02:00
+[pipeline] truth-build start 2026-06-27T20:06:59+02:00
+[pipeline] truth-build done rc=0 2026-06-27T20:07:00+02:00
+[pipeline] MV0 digitizer start 2026-06-27T20:07:00+02:00
+[pipeline] MV0 digitizer done rc=0 2026-06-27T20:07:01+02:00
+[pipeline] MV1 PID start 2026-06-27T20:07:01+02:00
+[pipeline] MV1 PID done rc=0 2026-06-27T20:07:06+02:00
+[pipeline] MV2 energy start 2026-06-27T20:07:06+02:00
+[pipeline] MV2 energy done rc=0 2026-06-27T20:07:11+02:00
+[pipeline] MV3 stopping start 2026-06-27T20:07:11+02:00
+[pipeline] MV3 stopping done rc=0 2026-06-27T20:07:14+02:00
+[pipeline] MV4 timing start 2026-06-27T20:07:14+02:00
+[pipeline] MV4 timing done rc=0 2026-06-27T20:07:18+02:00
+[pipeline] MV9 synthesis start 2026-06-27T20:07:18+02:00
+[pipeline] MV9 synthesis done rc=0 2026-06-27T20:07:18+02:00
+[pipeline] validate artifacts start 2026-06-27T20:07:19+02:00
+{
+  "checks": [
+    {
+      "exit_code": "0:0",
+      "job_id": "3326222",
+      "name": "job_state_completed",
+      "state": "COMPLETED",
+      "status": "PASS"
+    },
+    {
+      "name": "preflight_mc_root",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+      "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+      "status": "PASS"
+    },
+    {
+      "name": "preflight_data_pulses",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+      "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+      "status": "PASS"
+    },
+    {
+      "n_tracks": 100000,
+      "name": "MV1_study_result",
+      "path": "reports/mc_validation/mv1_pid/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "n_tracks": 100000,
+      "name": "MV2_study_result",
+      "path": "reports/mc_validation/mv2_energy/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "n_tracks": 100000,
+      "name": "MV3_study_result",
+      "path": "reports/mc_validation/mv3_stopping_depth/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "n_tracks": 100000,
+      "name": "MV4_study_result",
+      "path": "reports/mc_validation/mv4_timing/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "name": "MV9_synthesis",
+      "path": "reports/mc_validation/mv9_synthesis/MV9_SYNTHESIS.md",
+      "status": "PASS"
+    },
+    {
+      "count": 1,
+      "name": "slurm_logs_present",
+      "status": "PASS"
+    },
+    {
+      "matches": [],
+      "name": "fixture_not_released",
+      "status": "PASS"
+    }
+  ],
+  "job_state": {
+    "completed_at": "2026-06-27T20:07:19+02:00",
+    "exit_code": "0:0",
+    "host": "cn014",
+    "job_id": "3326222",
+    "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+    "state": "COMPLETED"
+  },
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "scope": "all",
+  "status": "PASS",
+  "strict": false,
+  "study_metrics": {
+    "MV1": {
+      "cutflow": {
+        "n_binary_pid": 23945,
+        "n_deuteron": 14016,
+        "n_proton": 9929,
+        "n_tracks": 100000
+      },
+      "metrics": {
+        "cut_edep_l0_thr_MeV": 23.483633636797858,
+        "cut_efficiency": 0.817494292237443,
+        "cut_purity": 0.9570664884731039,
+        "deltaE_E_medians": {
+          "deuteron": {
+            "edep_l0": 53.11532825022807,
+            "edep_l1": 29.25954649717863,
+            "edep_tot": 122.94344416917055,
+            "stop_layer": 1.0
+          },
+          "proton": {
+            "edep_l0": 12.205358136137388,
+            "edep_l1": 13.053462853167208,
+            "edep_tot": 127.32770934912904,
+            "stop_layer": 6.0
+          }
+        },
+        "hgb_auc": 0.9972290762249,
+        "hgb_purity_at_90eff": 0.9955633021708129,
+        "logreg_auc": 0.9776122159551996,
+        "logreg_purity_at_90eff": 0.9620272546317562,
+        "n_deuteron": 14016,
+        "n_proton": 9929,
+        "n_tracks": 100000,
+        "split": "legacy_parity"
+      },
+      "status": "PRODUCTION"
+    },
+    "MV2": {
+      "cutflow": {
+        "n_deuteron_uncensored": 13815,
+        "n_proton_uncensored": 6858,
+        "n_tracks": 100000
+      },
+      "metrics": {
+        "censored_range_note": "Tracks with stop_layer==7 excluded from ekin regression (range censored at instrument boundary).",
+        "deuteron_ekin_mean_MeV": 8.391776449568594e-05,
+        "deuteron_ekin_recon_res68": 0.03677415671940314,
+        "deuteron_n_censored_excluded": 41,
+        "deuteron_stoplayer_vs_ekin": {
+          "0": {
+            "mean_edep_tot_MeV": 53.325764726548584,
+            "mean_ekin_MeV": 6.488409465542544e-05,
+            "mean_tracklen_mm": 109.86863302303702,
+            "n": 1435
+          },
+          "1": {
+            "mean_edep_tot_MeV": 101.57142962493415,
+            "mean_ekin_MeV": 7.505787781078171e-05,
+            "mean_tracklen_mm": 109.7452447144331,
+            "n": 6758
+          },
+          "2": {
+            "mean_edep_tot_MeV": 132.6428588926043,
+            "mean_ekin_MeV": 8.825784906395434e-05,
+            "mean_tracklen_mm": 110.2211959689144,
+            "n": 1729
+          },
+          "3": {
+            "mean_edep_tot_MeV": 134.4305318103906,
+            "mean_ekin_MeV": 0.00011035937888325466,
+            "mean_tracklen_mm": 110.82084162966582,
+            "n": 3410
+          },
+          "4": {
+            "mean_edep_tot_MeV": 104.59147374237219,
+            "mean_ekin_MeV": 7.961181158052195e-05,
+            "mean_tracklen_mm": 110.86247361207406,
+            "n": 73
+          },
+          "5": {
+            "mean_edep_tot_MeV": 127.54290467480811,
+            "mean_ekin_MeV": 6.431499547594432e-05,
+            "mean_tracklen_mm": 111.13550338749896,
+            "n": 99
+          },
+          "6": {
+            "mean_edep_tot_MeV": 165.1760946179713,
+            "mean_ekin_MeV": 3.7944697688175877e-05,
+            "mean_tracklen_mm": 111.60774268448581,
+            "n": 471
+          },
+          "7": {
+            "mean_edep_tot_MeV": 93.89859115930182,
+            "mean_ekin_MeV": 8.387728649256865e-05,
+            "mean_tracklen_mm": 110.88964219290771,
+            "n": 41
+          }
+        },
+        "proton_ekin_mean_MeV": 0.0001329271985133293,
+        "proton_ekin_recon_res68": 0.015380823301696338,
+        "proton_n_censored_excluded": 2943,
+        "proton_stoplayer_vs_ekin": {
+          "0": {
+            "mean_edep_tot_MeV": 23.722606134037473,
+            "mean_ekin_MeV": 9.733029285067479e-05,
+            "mean_tracklen_mm": 107.3659262958612,
+            "n": 387
+          },
+          "1": {
+            "mean_edep_tot_MeV": 50.076982897086275,
+            "mean_ekin_MeV": 9.771409860204037e-05,
+            "mean_tracklen_mm": 105.67630396476918,
+            "n": 564
+          },
+          "2": {
+            "mean_edep_tot_MeV": 62.681251136694954,
+            "mean_ekin_MeV": 0.00012515615892937524,
+            "mean_tracklen_mm": 110.40229481137989,
+            "n": 453
+          },
+          "3": {
+            "mean_edep_tot_MeV": 75.23038510914097,
+            "mean_ekin_MeV": 0.00013559235310213534,
+            "mean_tracklen_mm": 110.12957323632178,
+            "n": 443
+          },
+          "4": {
+            "mean_edep_tot_MeV": 89.33674458863939,
+            "mean_ekin_MeV": 0.00014154125817408494,
+            "mean_tracklen_mm": 111.21261067587398,
+            "n": 461
+          },
+          "5": {
+            "mean_edep_tot_MeV": 123.5597461174923,
+            "mean_ekin_MeV": 0.000132089776548346,
+            "mean_tracklen_mm": 111.3051458192407,
+            "n": 1979
+          },
+          "6": {
+            "mean_edep_tot_MeV": 133.97382950909255,
+            "mean_ekin_MeV": 0.00013909515088290762,
+            "mean_tracklen_mm": 110.79981656358326,
+            "n": 2699
+          },
+          "7": {
+            "mean_edep_tot_MeV": 128.53331255781453,
+            "mean_ekin_MeV": 0.00016048505174072182,
+            "mean_tracklen_mm": 111.62889833991039,
+            "n": 2943
+          }
+        }
+      },
+      "status": "PRODUCTION"
+    },
+    "MV3": {
+      "cutflow": {
+        "n_sample_I": 6450,
+        "n_sample_II": 17024,
+        "n_tracks": 100000
+      },
+      "metrics": {
+        "layer_occupancy_sample_I": [
+          1.0,
+          0.978139534883721,
+          0.41767441860465115,
+          0.23224806201550388,
+          0.08759689922480621,
+          0.08217054263565891,
+          0.07193798449612403,
+          0.0021705426356589145
+        ],
+        "layer_occupancy_sample_II": [
+          1.0,
+          0.9086583646616542,
+          0.7031837406015038,
+          0.6504934210526315,
+          0.48179041353383456,
+          0.45247885338345867,
+          0.3341752819548872,
+          0.17440084586466165
+        ],
+        "layer_to_stave_mapping": {
+          "0": "B2",
+          "1": "B2",
+          "2": "B4",
+          "3": "B4",
+          "4": "B6",
+          "5": "B6",
+          "6": "B8",
+          "7": "B8"
+        },
+        "mapping_hypothesis_scores": {},
+        "truth_stave_counts": {
+          "B2": 85158.0,
+          "B4": 6057.0,
+          "B6": 2624.0,
+          "B8": 6161.0
+        }
+      },
+      "status": "PRODUCTION"
+    },
+    "MV4": {
+      "cutflow": {
+        "n_tracks": 100000,
+        "n_usable_timing": 24004,
+        "n_with_any_timing": 24004,
+        "n_with_l0_l1_timing": 22086
+      },
+      "metrics": {
+        "delta_t_l1_l0_ns_median": 0.14260951615818085,
+        "delta_t_l1_l0_ns_res68": 0.08997231680159315,
+        "event_time_span_ns_median": 0.9030380230645356,
+        "event_time_span_ns_p95": 4.619435679701721,
+        "method_status": "truth_timing_diagnostic_not_final_adc_calibration",
+        "n_tracks": 100000,
+        "n_usable_timing": 24004,
+        "time_first_ns_median": 8.842886192596161,
+        "time_first_ns_res68": 1.9687645038607804,
+        "timewalk_corr_l0_inv_sqrt_edep": -0.3714889220968229,
+        "timewalk_corr_l1_inv_sqrt_edep": 0.031977158877660956
+      },
+      "status": "PRODUCTION"
+    }
+  }
+}
+[pipeline] validate artifacts done rc=0 2026-06-27T20:07:19+02:00
+[pipeline] summary figures start 2026-06-27T20:07:19+02:00
+{
+  "artifacts": {
+    "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/summary/RUN_SUMMARY.html",
+    "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/summary/RUN_SUMMARY.md",
+    "metrics_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/summary/metrics_table.csv",
+    "selected_metrics_png": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/figures/summary/selected_metrics.png",
+    "selected_metrics_svg": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/figures/summary/selected_metrics.svg",
+    "study_support_png": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/figures/summary/study_support.png",
+    "study_support_svg": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/figures/summary/study_support.svg"
+  },
+  "figures": {
+    "figures": [
+      {
+        "alt_text": "Bar chart summarizing available support for MV1, MV2, and MV3 artifact studies.",
+        "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+        "data_sidecar_exists": true,
+        "formats": [
+          {
+            "exists": true,
+            "format": "svg",
+            "relative_path": "figures/summary/study_support.svg",
+            "size_bytes": 22417
+          },
+          {
+            "exists": true,
+            "format": "png",
+            "relative_path": "figures/summary/study_support.png",
+            "size_bytes": 51479
+          }
+        ],
+        "id": "SUMMARY-F001",
+        "scope": "summary-artifact",
+        "status": "PASS",
+        "title": "Study support overview"
+      },
+      {
+        "alt_text": "Bar chart of selected artifact metrics for MV1, MV2, and MV3.",
+        "data_sidecar": "reports/mc_validation/summary/metrics_table.csv",
+        "data_sidecar_exists": true,
+        "formats": [
+          {
+            "exists": true,
+            "format": "svg",
+            "relative_path": "figures/summary/selected_metrics.svg",
+            "size_bytes": 30536
+          },
+          {
+            "exists": true,
+            "format": "png",
+            "relative_path": "figures/summary/selected_metrics.png",
+            "size_bytes": 106328
+          }
+        ],
+        "id": "SUMMARY-F002",
+        "scope": "summary-artifact",
+        "status": "PASS",
+        "title": "Selected validated metrics"
+      }
+    ],
+    "full_figure_catalog_status": "BLOCKED",
+    "generated_at": "2026-06-27T18:07:21.142167+00:00",
+    "reason": "Catalogs compact summary figures only; full required figure catalog/contact sheets remain incomplete.",
+    "scope": "summary-figure-manifest",
+    "status": "PASS"
+  },
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "scope": "summary",
+  "status": "PASS",
+  "visual_review": {
+    "full_visual_review_status": "BLOCKED",
+    "generated_at": "2026-06-27T18:07:21.146450+00:00",
+    "reason": "Reviews compact summary figures only; full catalog visual review remains incomplete.",
+    "review_count": 2,
+    "reviews": [
+      {
+        "checks": {
+          "alt_text_present": true,
+          "data_sidecar_present": true,
+          "png_present": true,
+          "scope_banner_required": true,
+          "svg_present": true
+        },
+        "figure_id": "SUMMARY-F001",
+        "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+        "reviewed_at": "2026-06-27T18:07:21.146450+00:00",
+        "reviewer": "codex-automated-visual-qa",
+        "status": "PASS",
+        "title": "Study support overview"
+      },
+      {
+        "checks": {
+          "alt_text_present": true,
+          "data_sidecar_present": true,
+          "png_present": true,
+          "scope_banner_required": true,
+          "svg_present": true
+        },
+        "figure_id": "SUMMARY-F002",
+        "notes": "Scoped review of compact summary artifact only; not a substitute for human review of the full thesis/release figure catalog.",
+        "reviewed_at": "2026-06-27T18:07:21.146450+00:00",
+        "reviewer": "codex-automated-visual-qa",
+        "status": "PASS",
+        "title": "Selected validated metrics"
+      }
+    ],
+    "scope": "summary-figure-visual-review",
+    "status": "PASS"
+  }
+}
+[pipeline] summary figures done rc=0 2026-06-27T20:07:21+02:00
+[pipeline] notebook HTML start 2026-06-27T20:07:21+02:00
+{
+  "full_notebook_suite_status": "BLOCKED",
+  "generated_at": "2026-06-27T18:07:21.797825+00:00",
+  "notebooks": [
+    {
+      "dependencies": [
+        "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/VALIDATION.json",
+        "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/summary/metrics_table.csv",
+        "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/summary/RUN_SUMMARY.html"
+      ],
+      "executed_ipynb": null,
+      "execution_status": "NOT_EXECUTED_ARTIFACT_HTML_ONLY",
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/notebooks/html/00_release_overview.html",
+      "id": "00_release_overview",
+      "source": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/notebooks/source/00_release_overview.py"
+    }
+  ],
+  "reason": "Generated artifact-only source and HTML; clean-kernel full-data notebook execution still requires LUNARC sbatch implementation and complete production artifacts.",
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "scope": "artifact-summary",
+  "status": "PASS"
+}
+[pipeline] notebook HTML done rc=0 2026-06-27T20:07:21+02:00
+[pipeline] artifact reports start 2026-06-27T20:07:21+02:00
+{
+  "blocked_studies": [
+    "MV4",
+    "MV5",
+    "MV6",
+    "MV7",
+    "MV8"
+  ],
+  "full_report_suite_status": "BLOCKED",
+  "generated_at": "2026-06-27T18:07:22.474083+00:00",
+  "global_report": {
+    "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/GLOBAL_REPORT.html",
+    "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/GLOBAL_REPORT.md"
+  },
+  "reason": "Generated global and MV1-MV3 artifact reports from frozen artifacts; full reports/thesis/release QA require remaining production blockers.",
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "scope": "artifact-summary",
+  "status": "PASS",
+  "study_reports": [
+    {
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/MV1_REPORT.html",
+      "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/MV1_REPORT.md",
+      "status": "PRODUCTION",
+      "study": "MV1"
+    },
+    {
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/MV2_REPORT.html",
+      "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/MV2_REPORT.md",
+      "status": "PRODUCTION",
+      "study": "MV2"
+    },
+    {
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/MV3_REPORT.html",
+      "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/MV3_REPORT.md",
+      "status": "PRODUCTION",
+      "study": "MV3"
+    }
+  ]
+}
+[pipeline] artifact reports done rc=0 2026-06-27T20:07:22+02:00
+[pipeline] QA audit start 2026-06-27T20:07:22+02:00
+{
+  "claim_ledger": {
+    "blocked_claim_count": 6,
+    "claims": [
+      {
+        "evidence": [
+          "VALIDATION.json",
+          "VALIDATION_SUMMARY.md"
+        ],
+        "id": "CLAIM-ARTIFACT-VALIDATION",
+        "limitations": "Does not by itself prove full release readiness or complete detector-physics validation.",
+        "statement": "The selected run has internally consistent frozen MV1-MV4/MV9 artifacts.",
+        "status": "SUPPORTED"
+      },
+      {
+        "evidence": [
+          "reports/mc_validation/summary/metrics_table.csv"
+        ],
+        "id": "CLAIM-MV1-SUMMARY",
+        "limitations": "Summary metric only; uncertainty/systematic and publication-grade figure requirements remain separate gates.",
+        "statement": "MV1 has a frozen artifact-summary metric (hgb_auc=0.997229076225) for run 20260627T180655Z_b83ab5a_mv4_timing_summary.",
+        "status": "SUPPORTED"
+      },
+      {
+        "evidence": [
+          "reports/mc_validation/summary/metrics_table.csv"
+        ],
+        "id": "CLAIM-MV2-SUMMARY",
+        "limitations": "Summary metric only; uncertainty/systematic and publication-grade figure requirements remain separate gates.",
+        "statement": "MV2 has a frozen artifact-summary metric (proton_ekin_recon_res68=0.0153808233017) for run 20260627T180655Z_b83ab5a_mv4_timing_summary.",
+        "status": "SUPPORTED"
+      },
+      {
+        "evidence": [
+          "reports/mc_validation/summary/metrics_table.csv"
+        ],
+        "id": "CLAIM-MV3-SUMMARY",
+        "limitations": "Summary metric only; uncertainty/systematic and publication-grade figure requirements remain separate gates.",
+        "statement": "MV3 has a frozen artifact-summary metric (n_sample_I=6450) for run 20260627T180655Z_b83ab5a_mv4_timing_summary.",
+        "status": "SUPPORTED"
+      },
+      {
+        "evidence": [
+          "reports/mc_validation/summary/metrics_table.csv"
+        ],
+        "id": "CLAIM-MV4-SUMMARY",
+        "limitations": "Summary metric only; uncertainty/systematic and publication-grade figure requirements remain separate gates.",
+        "statement": "MV4 has a frozen artifact-summary metric (delta_t_l1_l0_ns_res68=0.0899723168016) for run 20260627T180655Z_b83ab5a_mv4_timing_summary.",
+        "status": "SUPPORTED"
+      },
+      {
+        "evidence": [],
+        "id": "CLAIM-MV4-RELEASE",
+        "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+        "statement": "MV4 production validation is complete.",
+        "status": "BLOCKED"
+      },
+      {
+        "evidence": [],
+        "id": "CLAIM-MV5-RELEASE",
+        "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+        "statement": "MV5 production validation is complete.",
+        "status": "BLOCKED"
+      },
+      {
+        "evidence": [],
+        "id": "CLAIM-MV6-RELEASE",
+        "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+        "statement": "MV6 production validation is complete.",
+        "status": "BLOCKED"
+      },
+      {
+        "evidence": [],
+        "id": "CLAIM-MV7-RELEASE",
+        "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+        "statement": "MV7 production validation is complete.",
+        "status": "BLOCKED"
+      },
+      {
+        "evidence": [],
+        "id": "CLAIM-MV8-RELEASE",
+        "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+        "statement": "MV8 production validation is complete.",
+        "status": "BLOCKED"
+      },
+      {
+        "evidence": [
+          "QA_RELEASE_AUDIT.json",
+          "publication/PUBLICATION_MANIFEST.json"
+        ],
+        "id": "CLAIM-FINAL-RELEASE",
+        "limitations": "Release requires every QA audit gate to pass; current blocked gates must remain visible.",
+        "statement": "The MC validation package is final-release ready.",
+        "status": "BLOCKED"
+      }
+    ],
+    "generated_at": "2026-06-27T18:07:23.249327+00:00",
+    "release_claims_allowed": false,
+    "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+    "scope": "claim-ledger",
+    "status": "PASS"
+  },
+  "release_audit": {
+    "checks": [
+      {
+        "exists": true,
+        "name": "artifact_validation",
+        "observed_status": "PASS",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/VALIDATION.json",
+        "size_bytes": 9385,
+        "status": "PASS"
+      },
+      {
+        "exists": true,
+        "name": "run_summary_html",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/summary/RUN_SUMMARY.html",
+        "size_bytes": 1128,
+        "status": "PASS"
+      },
+      {
+        "exists": true,
+        "name": "run_summary_metrics",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/summary/metrics_table.csv",
+        "size_bytes": 349,
+        "status": "PASS"
+      },
+      {
+        "exists": true,
+        "name": "artifact_notebook_manifest",
+        "observed_status": "PASS",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/notebooks/NOTEBOOKS_MANIFEST.json",
+        "size_bytes": 1363,
+        "status": "PASS"
+      },
+      {
+        "exists": true,
+        "name": "artifact_report_manifest",
+        "observed_status": "PASS",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/artifact_reports/REPORTS_MANIFEST.json",
+        "size_bytes": 2112,
+        "status": "PASS"
+      },
+      {
+        "exists": true,
+        "name": "summary_figure_manifest",
+        "observed_status": "PASS",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/figures/summary/FIGURE_MANIFEST.json",
+        "size_bytes": 1711,
+        "status": "PASS"
+      },
+      {
+        "exists": true,
+        "name": "summary_visual_review",
+        "observed_status": "PASS",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/figures/summary/visual_review.json",
+        "size_bytes": 1414,
+        "status": "PASS"
+      },
+      {
+        "exists": false,
+        "name": "open_question_registry",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/OPEN_QUESTIONS.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": false,
+        "name": "open_question_closure_plan",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": false,
+        "name": "open_question_evidence_packets",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/EVIDENCE_PACKETS.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": false,
+        "name": "study_implementation_gap_audit",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": true,
+        "name": "claim_ledger",
+        "observed_status": "PASS",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/claims/CLAIM_LEDGER.json",
+        "size_bytes": 4017,
+        "status": "PASS"
+      },
+      {
+        "manifest_exists": false,
+        "manifest_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/wiki/WIKI_MANIFEST.json",
+        "name": "wiki_claim_evidence_matrix",
+        "page_exists": false,
+        "page_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/wiki/Claim-Evidence-Matrix.md",
+        "reason": "missing wiki manifest",
+        "status": "BLOCKED"
+      },
+      {
+        "manifest_exists": false,
+        "manifest_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/wiki/WIKI_MANIFEST.json",
+        "name": "wiki_claim_dependency_tree",
+        "page_exists": false,
+        "page_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/wiki/Claim-Dependency-Tree.md",
+        "reason": "missing wiki manifest",
+        "status": "BLOCKED"
+      },
+      {
+        "manifest_exists": false,
+        "manifest_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/wiki/WIKI_MANIFEST.json",
+        "name": "wiki_study_coverage_gaps",
+        "page_exists": false,
+        "page_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/wiki/Study-Coverage-and-Remaining-Gaps.md",
+        "reason": "missing wiki manifest",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "MV1_production_artifact",
+        "observed_status": "PRODUCTION",
+        "reason": null,
+        "status": "PASS"
+      },
+      {
+        "name": "MV2_production_artifact",
+        "observed_status": "PRODUCTION",
+        "reason": null,
+        "status": "PASS"
+      },
+      {
+        "name": "MV3_production_artifact",
+        "observed_status": "PRODUCTION",
+        "reason": null,
+        "status": "PASS"
+      },
+      {
+        "name": "MV4_production_artifact",
+        "observed_status": "PRODUCTION",
+        "reason": null,
+        "status": "PASS"
+      },
+      {
+        "exists": true,
+        "name": "MV4_timing_uncertainty_artifact",
+        "observed_status": "PRODUCTION",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/systematics/MV4_TIMING_UNCERTAINTIES.json",
+        "reason": "expected status=PASS, observed PRODUCTION",
+        "size_bytes": 576,
+        "status": "BLOCKED"
+      },
+      {
+        "name": "MV5_production_artifact",
+        "observed_status": "BLOCKED",
+        "reason": "requires calibrated digitized MC/systematics production artifacts",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "MV6_production_artifact",
+        "observed_status": "BLOCKED",
+        "reason": "requires calibrated digitized MC/systematics production artifacts",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "MV7_production_artifact",
+        "observed_status": "BLOCKED",
+        "reason": "requires calibrated digitized MC/systematics production artifacts",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "MV8_production_artifact",
+        "observed_status": "BLOCKED",
+        "reason": "requires calibrated digitized MC/systematics production artifacts",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": false,
+        "expected": true,
+        "name": "all_questions_closed",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/OPEN_QUESTIONS.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": false,
+        "expected": true,
+        "name": "all_question_steps_closed",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": false,
+        "expected": true,
+        "name": "all_evidence_packets_closed",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/EVIDENCE_PACKETS.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "exists": false,
+        "expected": true,
+        "name": "all_study_implementations_ready",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.json",
+        "reason": "missing artifact",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "systematic_arrays",
+        "reason": "required systematic/bootstrap arrays are not complete",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "full_figure_catalog",
+        "reason": "required 300-entry figure catalog/contact sheets are not complete",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "clean_kernel_notebooks",
+        "reason": "full-data notebooks have not been executed via LUNARC sbatch",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "thesis_pdf_html",
+        "reason": "thesis/static site PDF/HTML package is not built",
+        "status": "BLOCKED"
+      },
+      {
+        "name": "release_bundle",
+        "reason": "final release bundle/signoff is not complete",
+        "status": "BLOCKED"
+      }
+    ],
+    "generated_at": "2026-06-27T18:07:23.253276+00:00",
+    "release_ready": false,
+    "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+    "status": "BLOCKED"
+  },
+  "status": "BLOCKED",
+  "validation": {
+    "checks": [
+      {
+        "exit_code": "0:0",
+        "job_id": "3326222",
+        "name": "job_state_completed",
+        "state": "COMPLETED",
+        "status": "PASS"
+      },
+      {
+        "name": "preflight_mc_root",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+        "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+        "status": "PASS"
+      },
+      {
+        "name": "preflight_data_pulses",
+        "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+        "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+        "status": "PASS"
+      },
+      {
+        "n_tracks": 100000,
+        "name": "MV1_study_result",
+        "path": "reports/mc_validation/mv1_pid/study_result.json",
+        "status": "PASS",
+        "study_status": "PRODUCTION"
+      },
+      {
+        "n_tracks": 100000,
+        "name": "MV2_study_result",
+        "path": "reports/mc_validation/mv2_energy/study_result.json",
+        "status": "PASS",
+        "study_status": "PRODUCTION"
+      },
+      {
+        "n_tracks": 100000,
+        "name": "MV3_study_result",
+        "path": "reports/mc_validation/mv3_stopping_depth/study_result.json",
+        "status": "PASS",
+        "study_status": "PRODUCTION"
+      },
+      {
+        "n_tracks": 100000,
+        "name": "MV4_study_result",
+        "path": "reports/mc_validation/mv4_timing/study_result.json",
+        "status": "PASS",
+        "study_status": "PRODUCTION"
+      },
+      {
+        "name": "MV9_synthesis",
+        "path": "reports/mc_validation/mv9_synthesis/MV9_SYNTHESIS.md",
+        "status": "PASS"
+      },
+      {
+        "count": 1,
+        "name": "slurm_logs_present",
+        "status": "PASS"
+      },
+      {
+        "matches": [],
+        "name": "fixture_not_released",
+        "status": "PASS"
+      }
+    ],
+    "job_state": {
+      "completed_at": "2026-06-27T20:07:19+02:00",
+      "exit_code": "0:0",
+      "host": "cn014",
+      "job_id": "3326222",
+      "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+      "state": "COMPLETED"
+    },
+    "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+    "scope": "all",
+    "status": "PASS",
+    "strict": false,
+    "study_metrics": {
+      "MV1": {
+        "cutflow": {
+          "n_binary_pid": 23945,
+          "n_deuteron": 14016,
+          "n_proton": 9929,
+          "n_tracks": 100000
+        },
+        "metrics": {
+          "cut_edep_l0_thr_MeV": 23.483633636797858,
+          "cut_efficiency": 0.817494292237443,
+          "cut_purity": 0.9570664884731039,
+          "deltaE_E_medians": {
+            "deuteron": {
+              "edep_l0": 53.11532825022807,
+              "edep_l1": 29.25954649717863,
+              "edep_tot": 122.94344416917055,
+              "stop_layer": 1.0
+            },
+            "proton": {
+              "edep_l0": 12.205358136137388,
+              "edep_l1": 13.053462853167208,
+              "edep_tot": 127.32770934912904,
+              "stop_layer": 6.0
+            }
+          },
+          "hgb_auc": 0.9972290762249,
+          "hgb_purity_at_90eff": 0.9955633021708129,
+          "logreg_auc": 0.9776122159551996,
+          "logreg_purity_at_90eff": 0.9620272546317562,
+          "n_deuteron": 14016,
+          "n_proton": 9929,
+          "n_tracks": 100000,
+          "split": "legacy_parity"
+        },
+        "status": "PRODUCTION"
+      },
+      "MV2": {
+        "cutflow": {
+          "n_deuteron_uncensored": 13815,
+          "n_proton_uncensored": 6858,
+          "n_tracks": 100000
+        },
+        "metrics": {
+          "censored_range_note": "Tracks with stop_layer==7 excluded from ekin regression (range censored at instrument boundary).",
+          "deuteron_ekin_mean_MeV": 8.391776449568594e-05,
+          "deuteron_ekin_recon_res68": 0.03677415671940314,
+          "deuteron_n_censored_excluded": 41,
+          "deuteron_stoplayer_vs_ekin": {
+            "0": {
+              "mean_edep_tot_MeV": 53.325764726548584,
+              "mean_ekin_MeV": 6.488409465542544e-05,
+              "mean_tracklen_mm": 109.86863302303702,
+              "n": 1435
+            },
+            "1": {
+              "mean_edep_tot_MeV": 101.57142962493415,
+              "mean_ekin_MeV": 7.505787781078171e-05,
+              "mean_tracklen_mm": 109.7452447144331,
+              "n": 6758
+            },
+            "2": {
+              "mean_edep_tot_MeV": 132.6428588926043,
+              "mean_ekin_MeV": 8.825784906395434e-05,
+              "mean_tracklen_mm": 110.2211959689144,
+              "n": 1729
+            },
+            "3": {
+              "mean_edep_tot_MeV": 134.4305318103906,
+              "mean_ekin_MeV": 0.00011035937888325466,
+              "mean_tracklen_mm": 110.82084162966582,
+              "n": 3410
+            },
+            "4": {
+              "mean_edep_tot_MeV": 104.59147374237219,
+              "mean_ekin_MeV": 7.961181158052195e-05,
+              "mean_tracklen_mm": 110.86247361207406,
+              "n": 73
+            },
+            "5": {
+              "mean_edep_tot_MeV": 127.54290467480811,
+              "mean_ekin_MeV": 6.431499547594432e-05,
+              "mean_tracklen_mm": 111.13550338749896,
+              "n": 99
+            },
+            "6": {
+              "mean_edep_tot_MeV": 165.1760946179713,
+              "mean_ekin_MeV": 3.7944697688175877e-05,
+              "mean_tracklen_mm": 111.60774268448581,
+              "n": 471
+            },
+            "7": {
+              "mean_edep_tot_MeV": 93.89859115930182,
+              "mean_ekin_MeV": 8.387728649256865e-05,
+              "mean_tracklen_mm": 110.88964219290771,
+              "n": 41
+            }
+          },
+          "proton_ekin_mean_MeV": 0.0001329271985133293,
+          "proton_ekin_recon_res68": 0.015380823301696338,
+          "proton_n_censored_excluded": 2943,
+          "proton_stoplayer_vs_ekin": {
+            "0": {
+              "mean_edep_tot_MeV": 23.722606134037473,
+              "mean_ekin_MeV": 9.733029285067479e-05,
+              "mean_tracklen_mm": 107.3659262958612,
+              "n": 387
+            },
+            "1": {
+              "mean_edep_tot_MeV": 50.076982897086275,
+              "mean_ekin_MeV": 9.771409860204037e-05,
+              "mean_tracklen_mm": 105.67630396476918,
+              "n": 564
+            },
+            "2": {
+              "mean_edep_tot_MeV": 62.681251136694954,
+              "mean_ekin_MeV": 0.00012515615892937524,
+              "mean_tracklen_mm": 110.40229481137989,
+              "n": 453
+            },
+            "3": {
+              "mean_edep_tot_MeV": 75.23038510914097,
+              "mean_ekin_MeV": 0.00013559235310213534,
+              "mean_tracklen_mm": 110.12957323632178,
+              "n": 443
+            },
+            "4": {
+              "mean_edep_tot_MeV": 89.33674458863939,
+              "mean_ekin_MeV": 0.00014154125817408494,
+              "mean_tracklen_mm": 111.21261067587398,
+              "n": 461
+            },
+            "5": {
+              "mean_edep_tot_MeV": 123.5597461174923,
+              "mean_ekin_MeV": 0.000132089776548346,
+              "mean_tracklen_mm": 111.3051458192407,
+              "n": 1979
+            },
+            "6": {
+              "mean_edep_tot_MeV": 133.97382950909255,
+              "mean_ekin_MeV": 0.00013909515088290762,
+              "mean_tracklen_mm": 110.79981656358326,
+              "n": 2699
+            },
+            "7": {
+              "mean_edep_tot_MeV": 128.53331255781453,
+              "mean_ekin_MeV": 0.00016048505174072182,
+              "mean_tracklen_mm": 111.62889833991039,
+              "n": 2943
+            }
+          }
+        },
+        "status": "PRODUCTION"
+      },
+      "MV3": {
+        "cutflow": {
+          "n_sample_I": 6450,
+          "n_sample_II": 17024,
+          "n_tracks": 100000
+        },
+        "metrics": {
+          "layer_occupancy_sample_I": [
+            1.0,
+            0.978139534883721,
+            0.41767441860465115,
+            0.23224806201550388,
+            0.08759689922480621,
+            0.08217054263565891,
+            0.07193798449612403,
+            0.0021705426356589145
+          ],
+          "layer_occupancy_sample_II": [
+            1.0,
+            0.9086583646616542,
+            0.7031837406015038,
+            0.6504934210526315,
+            0.48179041353383456,
+            0.45247885338345867,
+            0.3341752819548872,
+            0.17440084586466165
+          ],
+          "layer_to_stave_mapping": {
+            "0": "B2",
+            "1": "B2",
+            "2": "B4",
+            "3": "B4",
+            "4": "B6",
+            "5": "B6",
+            "6": "B8",
+            "7": "B8"
+          },
+          "mapping_hypothesis_scores": {},
+          "truth_stave_counts": {
+            "B2": 85158.0,
+            "B4": 6057.0,
+            "B6": 2624.0,
+            "B8": 6161.0
+          }
+        },
+        "status": "PRODUCTION"
+      },
+      "MV4": {
+        "cutflow": {
+          "n_tracks": 100000,
+          "n_usable_timing": 24004,
+          "n_with_any_timing": 24004,
+          "n_with_l0_l1_timing": 22086
+        },
+        "metrics": {
+          "delta_t_l1_l0_ns_median": 0.14260951615818085,
+          "delta_t_l1_l0_ns_res68": 0.08997231680159315,
+          "event_time_span_ns_median": 0.9030380230645356,
+          "event_time_span_ns_p95": 4.619435679701721,
+          "method_status": "truth_timing_diagnostic_not_final_adc_calibration",
+          "n_tracks": 100000,
+          "n_usable_timing": 24004,
+          "time_first_ns_median": 8.842886192596161,
+          "time_first_ns_res68": 1.9687645038607804,
+          "timewalk_corr_l0_inv_sqrt_edep": -0.3714889220968229,
+          "timewalk_corr_l1_inv_sqrt_edep": 0.031977158877660956
+        },
+        "status": "PRODUCTION"
+      }
+    }
+  }
+}
+[pipeline] QA audit done rc=0 2026-06-27T20:07:23+02:00
+[pipeline] thesis draft start 2026-06-27T20:07:23+02:00
+{
+  "blocked_count": 21,
+  "final_thesis_status": "BLOCKED",
+  "generated_at": "2026-06-27T18:07:23.833751+00:00",
+  "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/thesis_draft/THESIS_DRAFT.html",
+  "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/reports/mc_validation/thesis_draft/THESIS_DRAFT.md",
+  "reason": "Generated a draft scaffold from frozen artifacts; final thesis/PDF/site remains blocked by release audit gaps.",
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "scope": "artifact-thesis-draft",
+  "status": "PASS"
+}
+[pipeline] thesis draft done rc=0 2026-06-27T20:07:23+02:00
+[pipeline] release and wiki draft start 2026-06-27T20:07:23+02:00
+{
+  "blocked_count": 21,
+  "generated_at": "2026-06-27T18:07:24.563641+00:00",
+  "index_html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/publication/index.html",
+  "index_markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180655Z_b83ab5a_mv4_timing_summary/publication/INDEX.md",
+  "links": {
+    "claim_ledger": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/claims/CLAIM_LEDGER.md",
+      "size_bytes": 2439
+    },
+    "figure_contact_sheet": {
+      "exists": true,
+      "relative_path": "figures/summary/FIGURE_CONTACT_SHEET.html",
+      "size_bytes": 1192
+    },
+    "global_report": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/artifact_reports/GLOBAL_REPORT.html",
+      "size_bytes": 1751
+    },
+    "mv1_report": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/artifact_reports/MV1_REPORT.html",
+      "size_bytes": 1892
+    },
+    "mv2_report": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/artifact_reports/MV2_REPORT.html",
+      "size_bytes": 5077
+    },
+    "mv3_report": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/artifact_reports/MV3_REPORT.html",
+      "size_bytes": 1884
+    },
+    "notation_registry": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/notation/NOTATION_REGISTRY.md",
+      "size_bytes": 1137
+    },
+    "notebook_overview": {
+      "exists": true,
+      "relative_path": "notebooks/html/00_release_overview.html",
+      "size_bytes": 1998
+    },
+    "open_question_closure_plan": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+      "size_bytes": 3356
+    },
+    "open_question_evidence_packets": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/open_questions/EVIDENCE_PACKETS.md",
+      "size_bytes": 3747
+    },
+    "open_questions": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+      "size_bytes": 1425
+    },
+    "reference_registry": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/references/REFERENCE_REGISTRY.md",
+      "size_bytes": 2899
+    },
+    "release_audit": {
+      "exists": true,
+      "relative_path": "QA_RELEASE_AUDIT.md",
+      "size_bytes": 2466
+    },
+    "run_summary_html": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/summary/RUN_SUMMARY.html",
+      "size_bytes": 1128
+    },
+    "study_implementation_gap_audit": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.md",
+      "size_bytes": 1523
+    },
+    "summary_visual_review": {
+      "exists": true,
+      "relative_path": "figures/summary/visual_review.html",
+      "size_bytes": 985
+    },
+    "thesis_draft": {
+      "exists": true,
+      "relative_path": "reports/mc_validation/thesis_draft/THESIS_DRAFT.html",
+      "size_bytes": 3575
+    },
+    "validation_summary": {
+      "exists": true,
+      "relative_path": "VALIDATION_SUMMARY.md",
+      "size_bytes": 1011
+    },
+    "wiki_claim_dependency_tree": {
+      "exists": true,
+      "relative_path": "wiki/Claim-Dependency-Tree.md",
+      "size_bytes": 5636
+    },
+    "wiki_claim_evidence_matrix": {
+      "exists": true,
+      "relative_path": "wiki/Claim-Evidence-Matrix.md",
+      "size_bytes": 3809
+    },
+    "wiki_study_coverage_gaps": {
+      "exists": true,
+      "relative_path": "wiki/Study-Coverage-and-Remaining-Gaps.md",
+      "size_bytes": 2151
+    }
+  },
+  "missing": [],
+  "reason": "Release remains blocked by QA audit or missing publication artifacts.",
+  "release_ready": false,
+  "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+  "scope": "publication-index-draft",
+  "status": "BLOCKED",
+  "wiki": {
+    "blocked_count": 21,
+    "final_wiki_status": "BLOCKED",
+    "generated_at": "2026-06-27T18:07:24.528633+00:00",
+    "page_count": 11,
+    "pages": [
+      "Claim-Dependency-Tree.md",
+      "Claim-Evidence-Matrix.md",
+      "Discussion-and-Limitations.md",
+      "Home.md",
+      "Methods-and-Mathematics.md",
+      "Notation-and-Equations.md",
+      "Open-Questions.md",
+      "References-and-Reproducibility.md",
+      "Results-and-Figures.md",
+      "Scientific-Introduction.md",
+      "Study-Coverage-and-Remaining-Gaps.md"
+    ],
+    "reason": "Generated GitHub-wiki-ready draft pages from frozen artifacts; final wiki publication remains blocked until release audit passes and citations are curated.",
+    "release_ready": false,
+    "run_id": "20260627T180655Z_b83ab5a_mv4_timing_summary",
+    "scope": "github-wiki-draft",
+    "status": "PASS"
+  }
+}
+[pipeline] release and wiki draft done rc=0 2026-06-27T20:07:24+02:00

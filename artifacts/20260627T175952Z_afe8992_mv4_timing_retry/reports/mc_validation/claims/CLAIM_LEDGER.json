@@ -1,0 +1,92 @@
+{
+  "blocked_claim_count": 6,
+  "claims": [
+    {
+      "evidence": [
+        "VALIDATION.json",
+        "VALIDATION_SUMMARY.md"
+      ],
+      "id": "CLAIM-ARTIFACT-VALIDATION",
+      "limitations": "Does not by itself prove full release readiness or complete detector-physics validation.",
+      "statement": "The selected run has internally consistent frozen MV1-MV3/MV9 artifacts.",
+      "status": "SUPPORTED"
+    },
+    {
+      "evidence": [
+        "reports/mc_validation/summary/metrics_table.csv"
+      ],
+      "id": "CLAIM-MV1-SUMMARY",
+      "limitations": "Summary metric only; uncertainty/systematic and publication-grade figure requirements remain separate gates.",
+      "statement": "MV1 has a frozen artifact-summary metric (hgb_auc=0.99719995921) for run 20260627T175952Z_afe8992_mv4_timing_retry.",
+      "status": "SUPPORTED"
+    },
+    {
+      "evidence": [
+        "reports/mc_validation/summary/metrics_table.csv"
+      ],
+      "id": "CLAIM-MV2-SUMMARY",
+      "limitations": "Summary metric only; uncertainty/systematic and publication-grade figure requirements remain separate gates.",
+      "statement": "MV2 has a frozen artifact-summary metric (proton_ekin_recon_res68=0.0153808233017) for run 20260627T175952Z_afe8992_mv4_timing_retry.",
+      "status": "SUPPORTED"
+    },
+    {
+      "evidence": [
+        "reports/mc_validation/summary/metrics_table.csv"
+      ],
+      "id": "CLAIM-MV3-SUMMARY",
+      "limitations": "Summary metric only; uncertainty/systematic and publication-grade figure requirements remain separate gates.",
+      "statement": "MV3 has a frozen artifact-summary metric (n_sample_I=6450) for run 20260627T175952Z_afe8992_mv4_timing_retry.",
+      "status": "SUPPORTED"
+    },
+    {
+      "evidence": [],
+      "id": "CLAIM-MV4-RELEASE",
+      "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+      "statement": "MV4 production validation is complete.",
+      "status": "BLOCKED"
+    },
+    {
+      "evidence": [],
+      "id": "CLAIM-MV5-RELEASE",
+      "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+      "statement": "MV5 production validation is complete.",
+      "status": "BLOCKED"
+    },
+    {
+      "evidence": [],
+      "id": "CLAIM-MV6-RELEASE",
+      "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+      "statement": "MV6 production validation is complete.",
+      "status": "BLOCKED"
+    },
+    {
+      "evidence": [],
+      "id": "CLAIM-MV7-RELEASE",
+      "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+      "statement": "MV7 production validation is complete.",
+      "status": "BLOCKED"
+    },
+    {
+      "evidence": [],
+      "id": "CLAIM-MV8-RELEASE",
+      "limitations": "Blocked pending calibrated digitized MC/systematic production artifacts.",
+      "statement": "MV8 production validation is complete.",
+      "status": "BLOCKED"
+    },
+    {
+      "evidence": [
+        "QA_RELEASE_AUDIT.json",
+        "publication/PUBLICATION_MANIFEST.json"
+      ],
+      "id": "CLAIM-FINAL-RELEASE",
+      "limitations": "Release requires every QA audit gate to pass; current blocked gates must remain visible.",
+      "statement": "The MC validation package is final-release ready.",
+      "status": "BLOCKED"
+    }
+  ],
+  "generated_at": "2026-06-27T18:00:20.037024+00:00",
+  "release_claims_allowed": false,
+  "run_id": "20260627T175952Z_afe8992_mv4_timing_retry",
+  "scope": "claim-ledger",
+  "status": "PASS"
+}

@@ -1,0 +1,65 @@
+# MV3 artifact report
+
+- **Status:** `PRODUCTION`
+- **Run ID:** `20260625T064500Z_full_input_artifacted`
+- **Scope:** `artifact-summary`
+- **n tracks:** `1000000`
+- **Key metric:** `n_sample_I=64762`
+
+## Artifact-backed metrics
+
+```json
+{
+  "layer_occupancy_sample_I": [
+    1.0,
+    0.9780117970414749,
+    0.41075013124980697,
+    0.2349834779654736,
+    0.08101973379450912,
+    0.07536827151724777,
+    0.06480652234334949,
+    0.002269849603162348
+  ],
+  "layer_occupancy_sample_II": [
+    1.0,
+    0.90958360412218,
+    0.7069561786277969,
+    0.6536881440906137,
+    0.4837468665862037,
+    0.45426956642837246,
+    0.335246263113917,
+    0.1738696499860737
+  ],
+  "layer_to_stave_mapping": {
+    "0": "B2",
+    "1": "B2",
+    "2": "B4",
+    "3": "B4",
+    "4": "B6",
+    "5": "B6",
+    "6": "B8",
+    "7": "B8"
+  },
+  "mapping_hypothesis_scores": {},
+  "truth_stave_counts": {
+    "B2": 849880.0,
+    "B4": 61329.0,
+    "B6": 26733.0,
+    "B8": 62058.0
+  }
+}
+```
+
+## Cutflow/support
+
+```json
+{
+  "n_sample_I": 64762,
+  "n_sample_II": 172336,
+  "n_tracks": 1000000
+}
+```
+
+## Guardrail
+
+This report summarizes validated frozen artifacts only. It does not add uncertainty/systematic arrays or final thesis/release conclusions.

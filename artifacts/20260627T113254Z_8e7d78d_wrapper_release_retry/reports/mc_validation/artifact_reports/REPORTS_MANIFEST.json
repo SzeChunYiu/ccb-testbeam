@@ -1,0 +1,39 @@
+{
+  "blocked_studies": [
+    "MV4",
+    "MV5",
+    "MV6",
+    "MV7",
+    "MV8"
+  ],
+  "full_report_suite_status": "BLOCKED",
+  "generated_at": "2026-06-27T11:33:36.715756+00:00",
+  "global_report": {
+    "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/GLOBAL_REPORT.html",
+    "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/GLOBAL_REPORT.md"
+  },
+  "reason": "Generated global and MV1-MV3 artifact reports from frozen artifacts; full reports/thesis/release QA require remaining production blockers.",
+  "run_id": "20260627T113254Z_8e7d78d_wrapper_release_retry",
+  "scope": "artifact-summary",
+  "status": "PASS",
+  "study_reports": [
+    {
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/MV1_REPORT.html",
+      "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/MV1_REPORT.md",
+      "status": "PRODUCTION",
+      "study": "MV1"
+    },
+    {
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/MV2_REPORT.html",
+      "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/MV2_REPORT.md",
+      "status": "PRODUCTION",
+      "study": "MV2"
+    },
+    {
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/MV3_REPORT.html",
+      "markdown": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T113254Z_8e7d78d_wrapper_release_retry/reports/mc_validation/artifact_reports/MV3_REPORT.md",
+      "status": "PRODUCTION",
+      "study": "MV3"
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "checks": [
+    {
+      "exists": true,
+      "name": "artifact_validation",
+      "observed_status": "PASS",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/VALIDATION.json",
+      "size_bytes": 9384,
+      "status": "PASS"
+    },
+    {
+      "exists": true,
+      "name": "run_summary_html",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/summary/RUN_SUMMARY.html",
+      "size_bytes": 1046,
+      "status": "PASS"
+    },
+    {
+      "exists": true,
+      "name": "run_summary_metrics",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/summary/metrics_table.csv",
+      "size_bytes": 304,
+      "status": "PASS"
+    },
+    {
+      "exists": true,
+      "name": "artifact_notebook_manifest",
+      "observed_status": "PASS",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/notebooks/NOTEBOOKS_MANIFEST.json",
+      "size_bytes": 1351,
+      "status": "PASS"
+    },
+    {
+      "exists": true,
+      "name": "artifact_report_manifest",
+      "observed_status": "PASS",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/artifact_reports/REPORTS_MANIFEST.json",
+      "size_bytes": 2094,
+      "status": "PASS"
+    },
+    {
+      "exists": true,
+      "name": "summary_figure_manifest",
+      "observed_status": "PASS",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/figures/summary/FIGURE_MANIFEST.json",
+      "size_bytes": 1711,
+      "status": "PASS"
+    },
+    {
+      "exists": true,
+      "name": "summary_visual_review",
+      "observed_status": "PASS",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/figures/summary/visual_review.json",
+      "size_bytes": 1414,
+      "status": "PASS"
+    },
+    {
+      "exists": false,
+      "name": "open_question_registry",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/OPEN_QUESTIONS.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": false,
+      "name": "open_question_closure_plan",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": false,
+      "name": "open_question_evidence_packets",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/EVIDENCE_PACKETS.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": false,
+      "name": "study_implementation_gap_audit",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": true,
+      "name": "claim_ledger",
+      "observed_status": "PASS",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/claims/CLAIM_LEDGER.json",
+      "size_bytes": 3558,
+      "status": "PASS"
+    },
+    {
+      "manifest_exists": false,
+      "manifest_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/wiki/WIKI_MANIFEST.json",
+      "name": "wiki_claim_evidence_matrix",
+      "page_exists": false,
+      "page_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/wiki/Claim-Evidence-Matrix.md",
+      "reason": "missing wiki manifest",
+      "status": "BLOCKED"
+    },
+    {
+      "manifest_exists": false,
+      "manifest_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/wiki/WIKI_MANIFEST.json",
+      "name": "wiki_claim_dependency_tree",
+      "page_exists": false,
+      "page_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/wiki/Claim-Dependency-Tree.md",
+      "reason": "missing wiki manifest",
+      "status": "BLOCKED"
+    },
+    {
+      "manifest_exists": false,
+      "manifest_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/wiki/WIKI_MANIFEST.json",
+      "name": "wiki_study_coverage_gaps",
+      "page_exists": false,
+      "page_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/wiki/Study-Coverage-and-Remaining-Gaps.md",
+      "reason": "missing wiki manifest",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "MV1_production_artifact",
+      "observed_status": "PRODUCTION",
+      "reason": null,
+      "status": "PASS"
+    },
+    {
+      "name": "MV2_production_artifact",
+      "observed_status": "PRODUCTION",
+      "reason": null,
+      "status": "PASS"
+    },
+    {
+      "name": "MV3_production_artifact",
+      "observed_status": "PRODUCTION",
+      "reason": null,
+      "status": "PASS"
+    },
+    {
+      "name": "MV4_production_artifact",
+      "observed_status": "PRODUCTION",
+      "reason": null,
+      "status": "PASS"
+    },
+    {
+      "exists": true,
+      "name": "MV4_timing_uncertainty_artifact",
+      "observed_status": "PRODUCTION",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/systematics/MV4_TIMING_UNCERTAINTIES.json",
+      "reason": "expected status=PASS, observed PRODUCTION",
+      "size_bytes": 576,
+      "status": "BLOCKED"
+    },
+    {
+      "name": "MV5_production_artifact",
+      "observed_status": "BLOCKED",
+      "reason": "requires calibrated digitized MC/systematics production artifacts",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "MV6_production_artifact",
+      "observed_status": "BLOCKED",
+      "reason": "requires calibrated digitized MC/systematics production artifacts",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "MV7_production_artifact",
+      "observed_status": "BLOCKED",
+      "reason": "requires calibrated digitized MC/systematics production artifacts",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "MV8_production_artifact",
+      "observed_status": "BLOCKED",
+      "reason": "requires calibrated digitized MC/systematics production artifacts",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": false,
+      "expected": true,
+      "name": "all_questions_closed",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/OPEN_QUESTIONS.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": false,
+      "expected": true,
+      "name": "all_question_steps_closed",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": false,
+      "expected": true,
+      "name": "all_evidence_packets_closed",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/EVIDENCE_PACKETS.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "exists": false,
+      "expected": true,
+      "name": "all_study_implementations_ready",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T180424Z_2516606_mv4_timing_final/reports/mc_validation/open_questions/STUDY_IMPLEMENTATION_GAP_AUDIT.json",
+      "reason": "missing artifact",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "systematic_arrays",
+      "reason": "required systematic/bootstrap arrays are not complete",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "full_figure_catalog",
+      "reason": "required 300-entry figure catalog/contact sheets are not complete",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "clean_kernel_notebooks",
+      "reason": "full-data notebooks have not been executed via LUNARC sbatch",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "thesis_pdf_html",
+      "reason": "thesis/static site PDF/HTML package is not built",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "release_bundle",
+      "reason": "final release bundle/signoff is not complete",
+      "status": "BLOCKED"
+    }
+  ],
+  "generated_at": "2026-06-27T18:04:51.932706+00:00",
+  "release_ready": false,
+  "run_id": "20260627T180424Z_2516606_mv4_timing_final",
+  "status": "BLOCKED"
+}

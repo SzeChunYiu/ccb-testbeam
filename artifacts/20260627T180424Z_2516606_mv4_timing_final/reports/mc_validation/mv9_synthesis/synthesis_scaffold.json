@@ -1,0 +1,58 @@
+{
+  "studies": [
+    {
+      "key_metric": "hgb_auc=0.9972714960844432",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv1_pid/study_result.json",
+      "state": "PRODUCTION",
+      "study_id": "MV1"
+    },
+    {
+      "key_metric": "proton_ekin_recon_res68=0.015380823301696338",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv2_energy/study_result.json",
+      "state": "PRODUCTION",
+      "study_id": "MV2"
+    },
+    {
+      "key_metric": "",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv3_stopping_depth/study_result.json",
+      "state": "PRODUCTION",
+      "study_id": "MV3"
+    },
+    {
+      "key_metric": "n_tracks=100000",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv4_timing/study_result.json",
+      "state": "PRODUCTION",
+      "study_id": "MV4"
+    },
+    {
+      "blocked_by": "MV0",
+      "message": "requires calibrated digitized MC",
+      "state": "BLOCKED",
+      "study_id": "MV4"
+    },
+    {
+      "blocked_by": "MV0",
+      "message": "requires calibrated digitized MC",
+      "state": "BLOCKED",
+      "study_id": "MV5"
+    },
+    {
+      "blocked_by": "MV0",
+      "message": "requires calibrated digitized MC",
+      "state": "BLOCKED",
+      "study_id": "MV6"
+    },
+    {
+      "blocked_by": "MV0",
+      "message": "requires calibrated digitized MC",
+      "state": "BLOCKED",
+      "study_id": "MV7"
+    },
+    {
+      "blocked_by": "MV0",
+      "message": "requires calibrated digitized MC",
+      "state": "BLOCKED",
+      "study_id": "MV8"
+    }
+  ]
+}

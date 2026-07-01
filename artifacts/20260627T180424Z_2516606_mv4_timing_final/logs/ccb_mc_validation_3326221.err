@@ -1,0 +1,7 @@
+2026-06-27T18:04:35.025Z | INFO | ccb_mc_validation.cli | MV1 wrote /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv1_pid/study_result.json
+2026-06-27T18:04:39.917Z | INFO | ccb_mc_validation.cli | MV2 wrote /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv2_energy/study_result.json
+2026-06-27T18:04:43.468Z | INFO | ccb_mc_validation.cli | MV3 wrote /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv3_stopping_depth/study_result.json
+2026-06-27T18:04:46.910Z | INFO | ccb_mc_validation.cli | MV4 wrote /projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/reports/mc_validation/mv4_timing/study_result.json
+Fontconfig error: No writable cache directories
+2026-06-27T18:04:49.292Z | INFO | matplotlib.font_manager | Failed to extract font properties from /usr/share/fonts/cantarell/Cantarell-VF.otf: Can not load face (SFNT font table missing; error code 0x8e)
+2026-06-27T18:04:49.311Z | INFO | matplotlib.font_manager | generated new fontManager

@@ -1,0 +1,73 @@
+{
+  "blockers": [],
+  "git_sha": "7bd0a16c3a34adf9a6f9d0d6440cf7f4c66df1ca",
+  "heavy_compute_policy": "Production GEANT4, full ROOT scans, digitization, ML training, systematic/bootstrap arrays, and full-data notebooks must run only via LUNARC sbatch on compute nodes.",
+  "job_count": 0,
+  "production_claims_allowed": false,
+  "profile": "production",
+  "reason": "validation gates not satisfied",
+  "resume_command": "python scripts/mc_validation/run_pipeline.py --run-id 20260625T064500Z_full_input_artifacted --profile production submit --studies all",
+  "run_id": "20260625T064500Z_full_input_artifacted",
+  "smoke_gate": null,
+  "status": "BLOCKED",
+  "updated_at": "2026-06-25T15:50:09.929046+00:00",
+  "validation_checks": [
+    {
+      "exit_code": "0:0",
+      "job_id": "3316536",
+      "name": "job_state_completed",
+      "state": "COMPLETED",
+      "status": "PASS"
+    },
+    {
+      "name": "preflight_mc_root",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+      "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+      "status": "PASS"
+    },
+    {
+      "name": "preflight_data_pulses",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+      "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+      "status": "PASS"
+    },
+    {
+      "n_tracks": 1000000,
+      "name": "MV1_study_result",
+      "path": "reports/mc_validation/mv1_pid/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "n_tracks": 1000000,
+      "name": "MV2_study_result",
+      "path": "reports/mc_validation/mv2_energy/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "n_tracks": 1000000,
+      "name": "MV3_study_result",
+      "path": "reports/mc_validation/mv3_stopping_depth/study_result.json",
+      "status": "PASS",
+      "study_status": "PRODUCTION"
+    },
+    {
+      "name": "MV9_synthesis",
+      "path": "reports/mc_validation/mv9_synthesis/MV9_SYNTHESIS.md",
+      "status": "PASS"
+    },
+    {
+      "count": 1,
+      "name": "slurm_logs_present",
+      "status": "PASS"
+    },
+    {
+      "matches": [
+        "README.md"
+      ],
+      "name": "fixture_not_released",
+      "status": "BLOCKED"
+    }
+  ]
+}

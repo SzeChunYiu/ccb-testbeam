@@ -1,0 +1,4 @@
+{
+  "reason": "missing required JSON artifact: /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260627T112940Z_719788b_wrapper_release/reports/mc_validation/thesis_draft/THESIS_DRAFT_MANIFEST.json",
+  "status": "BLOCKED"
+}

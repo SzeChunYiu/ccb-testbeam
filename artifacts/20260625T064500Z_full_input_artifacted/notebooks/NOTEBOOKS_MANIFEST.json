@@ -1,0 +1,22 @@
+{
+  "full_notebook_suite_status": "BLOCKED",
+  "generated_at": "2026-06-25T15:38:09.174180+00:00",
+  "notebooks": [
+    {
+      "dependencies": [
+        "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/VALIDATION.json",
+        "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/reports/mc_validation/summary/metrics_table.csv",
+        "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/reports/mc_validation/summary/RUN_SUMMARY.html"
+      ],
+      "executed_ipynb": null,
+      "execution_status": "NOT_EXECUTED_ARTIFACT_HTML_ONLY",
+      "html": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/notebooks/html/00_release_overview.html",
+      "id": "00_release_overview",
+      "source": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/artifacts/20260625T064500Z_full_input_artifacted/notebooks/source/00_release_overview.py"
+    }
+  ],
+  "reason": "Generated artifact-only source and HTML; clean-kernel full-data notebook execution still requires LUNARC sbatch implementation and complete production artifacts.",
+  "run_id": "20260625T064500Z_full_input_artifacted",
+  "scope": "artifact-summary",
+  "status": "PASS"
+}

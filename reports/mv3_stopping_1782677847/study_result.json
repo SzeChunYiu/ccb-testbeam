@@ -1,0 +1,60 @@
+{
+  "study_id": "MV3",
+  "status": "PRODUCTION",
+  "metrics": {
+    "layer_occupancy_sample_I": [
+      1.0,
+      0.7824170111518217,
+      0.5202267353804165,
+      0.433811363761328,
+      0.31745952403564986,
+      0.27134766591521414,
+      0.18522721024508015,
+      0.08527069785111244
+    ],
+    "layer_occupancy_sample_II": [
+      1.0,
+      0.7839670114621191,
+      0.5188056631654618,
+      0.4321059147729542,
+      0.3152731738487959,
+      0.2696293781700547,
+      0.18379328247933224,
+      0.08515715483845201
+    ],
+    "layer_to_stave_mapping": {
+      "0": "B2",
+      "1": "B2",
+      "2": "B4",
+      "3": "B4",
+      "4": "B6",
+      "5": "B6",
+      "6": "B8",
+      "7": "B8"
+    },
+    "mapping_hypothesis_scores": {
+      "sample_ii_stave_fractions": 0.44943149344729494,
+      "sample_i_stave_fractions": 0.953031493447295
+    },
+    "truth_stave_counts": {
+      "B2": 192371.0,
+      "B4": 81335.0,
+      "B6": 52791.0,
+      "B8": 73872.0
+    }
+  },
+  "cutflow": {
+    "n_tracks": 400369,
+    "sample_proxy_event_parity": 1,
+    "n_sample_I": 200057,
+    "n_sample_II": 200312
+  },
+  "artifacts": {},
+  "notes": [
+    "Sample I/II from sample_label when present; else event_id parity proxy.",
+    "Mapping hypothesis scoring skeleton \u2014 lower L1 score is better match to data profile."
+  ],
+  "provenance": {
+    "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root"
+  }
+}

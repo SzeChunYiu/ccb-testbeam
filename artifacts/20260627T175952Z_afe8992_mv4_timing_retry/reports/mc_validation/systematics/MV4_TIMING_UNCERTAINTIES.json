@@ -1,0 +1,14 @@
+{
+  "metrics": {
+    "delta_t_l1_l0_ns_res68": 0.08997231680159315,
+    "event_time_span_ns_p95": 4.619435679701721,
+    "time_first_ns_res68": 1.9687645038607804,
+    "timewalk_corr_l0_inv_sqrt_edep": -0.3714889220968229,
+    "timewalk_corr_l1_inv_sqrt_edep": 0.031977158877660956
+  },
+  "reason": "Truth timing diagnostic exists; final ADC waveform timing calibration remains a separate blocker.",
+  "release_claim": false,
+  "required_next_artifact": "calibrated ADC waveform timing pickoff comparison",
+  "scope": "mv4-truth-timing-diagnostic",
+  "status": "PRODUCTION"
+}

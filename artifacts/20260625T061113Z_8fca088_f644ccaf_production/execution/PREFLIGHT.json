@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "diff_hash": "562ceca3",
+      "dirty": true,
+      "name": "git_dirty",
+      "status": "PASS"
+    },
+    {
+      "name": "mc_root",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/geant4/data/output_krakow_1M.root",
+      "status": "MISSING"
+    },
+    {
+      "name": "data_pulses",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/worktrees/ccb-testbeam-origin-main/data/tables/s00_selected_b_pulses.csv.gz",
+      "status": "MISSING"
+    },
+    {
+      "detail": "UNREACHABLE (no active ssh control socket for lunarc)",
+      "name": "lunarc_socket",
+      "status": "BLOCKED"
+    }
+  ],
+  "generated_at": "2026-06-25T06:17:05.726820+00:00",
+  "git_sha": "afca7f313baa399140683b47566d79046cf158b3",
+  "profile": "production",
+  "run_id": "20260625T061113Z_8fca088_f644ccaf_production",
+  "status": "BLOCKED"
+}

@@ -1,0 +1,253 @@
+{
+  "all_packets_closed": false,
+  "generated_at": "2026-06-27T18:00:21.339175+00:00",
+  "open_packet_count": 7,
+  "packet_count": 7,
+  "packets": [
+    {
+      "closure_action": "produce_mv4_timing_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "timing_truth_boundary_audit"
+      ],
+      "documentation_updates": [
+        "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+        "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+        "reports/mc_validation/claims/CLAIM_LEDGER.md",
+        "publication/PUBLICATION_MANIFEST.json",
+        "wiki/Open-Questions.md"
+      ],
+      "execution_hint": "CCB_RUN_ID=<run_id> sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch",
+      "implementation_blocker": "current SLURM wrapper runs MV0-MV3/MV9; MV4 packet cannot close until calibrated timing implementation writes MV4 production artifacts",
+      "packet_status": "BLOCKED",
+      "priority": "high",
+      "question": "Can calibrated digitized MC validate timing observables without truth leakage?",
+      "question_id": "OQ-MV4",
+      "required_artifacts": [
+        "reports/mc_validation/artifact_reports/MV4_REPORT.html",
+        "reports/mc_validation/systematics/MV4_TIMING_UNCERTAINTIES.json",
+        "reports/mc_validation/leakage/MV4_TRUTH_BOUNDARY_AUDIT.json"
+      ],
+      "required_evidence": "MV4 production artifact, uncertainty intervals, and acceptance decision.",
+      "status": "OPEN",
+      "terminal_condition": "packet may close only after required artifacts validate, corresponding claim-ledger rows are evidence-backed, and release audit gates pass",
+      "validation_gates": [
+        "required artifacts exist and are non-empty",
+        "artifact statuses are PASS or PRODUCTION as appropriate",
+        "claim ledger updated with evidence links before claim promotion",
+        "QA release audit rerun after artifact generation"
+      ]
+    },
+    {
+      "closure_action": "produce_mv5_pileup_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "controlled_mixture_manifest"
+      ],
+      "documentation_updates": [
+        "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+        "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+        "reports/mc_validation/claims/CLAIM_LEDGER.md",
+        "publication/PUBLICATION_MANIFEST.json",
+        "wiki/Open-Questions.md"
+      ],
+      "execution_hint": "CCB_RUN_ID=<run_id> sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch",
+      "implementation_blocker": "current SLURM wrapper runs MV0-MV3/MV9; MV5 packet cannot close until pile-up overlay/recovery implementation writes MV5 production artifacts",
+      "packet_status": "BLOCKED",
+      "priority": "high",
+      "question": "How robust is pile-up detection/reconstruction under controlled mixture lineage?",
+      "question_id": "OQ-MV5",
+      "required_artifacts": [
+        "reports/mc_validation/artifact_reports/MV5_REPORT.html",
+        "reports/mc_validation/pileup/MV5_MIXTURE_LINEAGE.json",
+        "reports/mc_validation/pileup/MV5_RECOVERY_DIAGNOSTICS.json"
+      ],
+      "required_evidence": "MV5 production artifact and pile-up recovery diagnostics.",
+      "status": "OPEN",
+      "terminal_condition": "packet may close only after required artifacts validate, corresponding claim-ledger rows are evidence-backed, and release audit gates pass",
+      "validation_gates": [
+        "required artifacts exist and are non-empty",
+        "artifact statuses are PASS or PRODUCTION as appropriate",
+        "claim ledger updated with evidence links before claim promotion",
+        "QA release audit rerun after artifact generation"
+      ]
+    },
+    {
+      "closure_action": "produce_mv6_representation_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "fit_split_registry"
+      ],
+      "documentation_updates": [
+        "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+        "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+        "reports/mc_validation/claims/CLAIM_LEDGER.md",
+        "publication/PUBLICATION_MANIFEST.json",
+        "wiki/Open-Questions.md"
+      ],
+      "execution_hint": "CCB_RUN_ID=<run_id> sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch",
+      "implementation_blocker": "current SLURM wrapper runs MV0-MV3/MV9; MV6 packet cannot close until representation-comparison implementation writes MV6 production artifacts",
+      "packet_status": "BLOCKED",
+      "priority": "medium",
+      "question": "Which waveform representations preserve physics information without nuisance leakage?",
+      "question_id": "OQ-MV6",
+      "required_artifacts": [
+        "reports/mc_validation/artifact_reports/MV6_REPORT.html",
+        "reports/mc_validation/representations/MV6_REPRESENTATION_COMPARISON.json",
+        "reports/mc_validation/leakage/MV6_NUISANCE_LEAKAGE_AUDIT.json"
+      ],
+      "required_evidence": "MV6 representation comparison and probe results.",
+      "status": "OPEN",
+      "terminal_condition": "packet may close only after required artifacts validate, corresponding claim-ledger rows are evidence-backed, and release audit gates pass",
+      "validation_gates": [
+        "required artifacts exist and are non-empty",
+        "artifact statuses are PASS or PRODUCTION as appropriate",
+        "claim ledger updated with evidence links before claim promotion",
+        "QA release audit rerun after artifact generation"
+      ]
+    },
+    {
+      "closure_action": "produce_mv7_pedestal_noise_artifact",
+      "dependencies": [
+        "real_pedestal_splits",
+        "calibrated_digitized_mc"
+      ],
+      "documentation_updates": [
+        "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+        "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+        "reports/mc_validation/claims/CLAIM_LEDGER.md",
+        "publication/PUBLICATION_MANIFEST.json",
+        "wiki/Open-Questions.md"
+      ],
+      "execution_hint": "CCB_RUN_ID=<run_id> sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch",
+      "implementation_blocker": "current SLURM wrapper runs MV0-MV3/MV9; MV7 packet cannot close until pedestal/noise closure implementation writes MV7 production artifacts",
+      "packet_status": "BLOCKED",
+      "priority": "high",
+      "question": "Do pedestal/noise models match held-out data sufficiently for MC validation?",
+      "question_id": "OQ-MV7",
+      "required_artifacts": [
+        "reports/mc_validation/artifact_reports/MV7_REPORT.html",
+        "reports/mc_validation/noise/MV7_PEDESTAL_NOISE_CLOSURE.json",
+        "reports/mc_validation/noise/MV7_CHANNEL_DIAGNOSTICS.json"
+      ],
+      "required_evidence": "MV7 pedestal/noise closure with per-channel diagnostics.",
+      "status": "OPEN",
+      "terminal_condition": "packet may close only after required artifacts validate, corresponding claim-ledger rows are evidence-backed, and release audit gates pass",
+      "validation_gates": [
+        "required artifacts exist and are non-empty",
+        "artifact statuses are PASS or PRODUCTION as appropriate",
+        "claim ledger updated with evidence links before claim promotion",
+        "QA release audit rerun after artifact generation"
+      ]
+    },
+    {
+      "closure_action": "produce_mv8_saturation_artifact",
+      "dependencies": [
+        "calibrated_digitized_mc",
+        "dynamic_range_scan"
+      ],
+      "documentation_updates": [
+        "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+        "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+        "reports/mc_validation/claims/CLAIM_LEDGER.md",
+        "publication/PUBLICATION_MANIFEST.json",
+        "wiki/Open-Questions.md"
+      ],
+      "execution_hint": "CCB_RUN_ID=<run_id> sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch",
+      "implementation_blocker": "current SLURM wrapper runs MV0-MV3/MV9; MV8 packet cannot close until saturation/dynamic-range implementation writes MV8 production artifacts",
+      "packet_status": "BLOCKED",
+      "priority": "high",
+      "question": "Where do saturation and dynamic-range effects invalidate reconstruction claims?",
+      "question_id": "OQ-MV8",
+      "required_artifacts": [
+        "reports/mc_validation/artifact_reports/MV8_REPORT.html",
+        "reports/mc_validation/saturation/MV8_DYNAMIC_RANGE_SCAN.json",
+        "reports/mc_validation/saturation/MV8_FAILURE_ACCOUNTING.json"
+      ],
+      "required_evidence": "MV8 saturation/dynamic-range study and failure accounting.",
+      "status": "OPEN",
+      "terminal_condition": "packet may close only after required artifacts validate, corresponding claim-ledger rows are evidence-backed, and release audit gates pass",
+      "validation_gates": [
+        "required artifacts exist and are non-empty",
+        "artifact statuses are PASS or PRODUCTION as appropriate",
+        "claim ledger updated with evidence links before claim promotion",
+        "QA release audit rerun after artifact generation"
+      ]
+    },
+    {
+      "closure_action": "submit_systematic_arrays",
+      "dependencies": [
+        "MV4",
+        "MV5",
+        "MV6",
+        "MV7",
+        "MV8"
+      ],
+      "documentation_updates": [
+        "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+        "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+        "reports/mc_validation/claims/CLAIM_LEDGER.md",
+        "publication/PUBLICATION_MANIFEST.json",
+        "wiki/Open-Questions.md"
+      ],
+      "execution_hint": "CCB_RUN_ID=<run_id> sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch",
+      "implementation_blocker": "systematic packet cannot close until MV4-MV8 production artifacts exist and paired systematic arrays are submitted through SLURM",
+      "packet_status": "BLOCKED",
+      "priority": "high",
+      "question": "How large are generator, detector, and electronics systematic envelopes?",
+      "question_id": "OQ-SYS",
+      "required_artifacts": [
+        "reports/mc_validation/systematics/SYSTEMATIC_ARRAY_MANIFEST.json",
+        "reports/mc_validation/systematics/BOOTSTRAP_INTERVALS.json",
+        "reports/mc_validation/systematics/UNCERTAINTY_DECOMPOSITION.json"
+      ],
+      "required_evidence": "LUNARC systematic arrays with paired shifts and uncertainty decomposition.",
+      "status": "OPEN",
+      "terminal_condition": "packet may close only after required artifacts validate, corresponding claim-ledger rows are evidence-backed, and release audit gates pass",
+      "validation_gates": [
+        "required artifacts exist and are non-empty",
+        "artifact statuses are PASS or PRODUCTION as appropriate",
+        "claim ledger updated with evidence links before claim promotion",
+        "QA release audit rerun after artifact generation"
+      ]
+    },
+    {
+      "closure_action": "publish_final_wiki",
+      "dependencies": [
+        "release_audit_PASS",
+        "curated_bibliography",
+        "full_figure_catalog"
+      ],
+      "documentation_updates": [
+        "reports/mc_validation/open_questions/OPEN_QUESTIONS.md",
+        "reports/mc_validation/open_questions/OPEN_QUESTION_CLOSURE_PLAN.md",
+        "reports/mc_validation/claims/CLAIM_LEDGER.md",
+        "publication/PUBLICATION_MANIFEST.json",
+        "wiki/Open-Questions.md"
+      ],
+      "execution_hint": "python scripts/mc_validation/run_pipeline.py --run-id <run_id> release && python scripts/mc_validation/run_pipeline.py --run-id <run_id> qa",
+      "implementation_blocker": "wiki packet cannot close until QA release audit is PASS and bibliography/figures are publication-ready",
+      "packet_status": "BLOCKED",
+      "priority": "medium",
+      "question": "Are final citations, references, plots, and discussion complete enough for a publication-grade GitHub wiki?",
+      "question_id": "OQ-WIKI",
+      "required_artifacts": [
+        "wiki/WIKI_MANIFEST.json",
+        "reports/mc_validation/references/REFERENCE_REGISTRY.json",
+        "publication/PUBLICATION_MANIFEST.json",
+        "QA_RELEASE_AUDIT.json"
+      ],
+      "required_evidence": "Release-ready wiki publication with curated bibliography and all QA gates passing.",
+      "status": "OPEN",
+      "terminal_condition": "packet may close only after required artifacts validate, corresponding claim-ledger rows are evidence-backed, and release audit gates pass",
+      "validation_gates": [
+        "required artifacts exist and are non-empty",
+        "artifact statuses are PASS or PRODUCTION as appropriate",
+        "claim ledger updated with evidence links before claim promotion",
+        "QA release audit rerun after artifact generation"
+      ]
+    }
+  ],
+  "scope": "open-question-evidence-packets",
+  "status": "PASS"
+}

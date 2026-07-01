@@ -1,0 +1,19 @@
+[prologue] host=cn044 start=2026-06-28T22:17:27+02:00
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam
+[prologue] python=Python 3.11.14
+[prologue] git_head=7c1822c9ee2114f4a67a9b92f297be6d58011110
+[prologue] git_branch=main
+[prologue] config=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/configs/mc_validation/mv3.yaml
+[prologue] out=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_stopping_1782677847
+{
+  "status": "PRODUCTION",
+  "cutflow": {
+    "n_tracks": 400369,
+    "sample_proxy_event_parity": 1,
+    "n_sample_I": 200057,
+    "n_sample_II": 200312
+  }
+}
+[ok] wrote /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_stopping_1782677847/study_result.json
+[job] done=2026-06-28T22:17:43+02:00 -> /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_stopping_1782677847
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_stopping_1782677847/study_result.json

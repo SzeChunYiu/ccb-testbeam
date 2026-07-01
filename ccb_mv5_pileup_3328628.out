@@ -1,0 +1,3 @@
+[prologue] host=cn044 start=2026-06-28T22:15:30+02:00
+[prologue] repo=/var/spool/slurm
+[prologue] python=Python 3.11.14

@@ -2,7 +2,7 @@
 
 Generated: 2026-07-01
 Study: MV3c — follow-up to MV3 (structural FAIL) and MV3b (analytic material-budget diagnosis)
-Author: session follow-up (no LUNARC access; source-code audit + prepared patch only)
+Author: session follow-up (no LUNARC access; source-code audit + patch proposed for review as HIBEAM-NNBAR/hibeam_g4_geobuilder#8)
 
 ---
 
@@ -93,10 +93,12 @@ local branch of `hibeam_g4_geobuilder`:
 
 - Location: `~/Desktop/projects/_scratch/hibeam_g4_geobuilder` (branch
   `fix/mv3-interstave-dead-material`, commit `4714ddd`)
-- **Not pushed to `origin`**: `hibeam_g4_geobuilder` is a shared HIBEAM-NNBAR collaboration
-  repository, not a personal project. Pushing an untested, unreviewed geometry change to a
-  multi-institution codebase is a decision for the repository's maintainers/the user, not
-  something to do unilaterally. The branch is ready to push and open as a PR on request.
+- **Pushed and opened for review (2026-07-01):**
+  [HIBEAM-NNBAR/hibeam_g4_geobuilder#8](https://github.com/HIBEAM-NNBAR/hibeam_g4_geobuilder/pull/8).
+  Opening a pull request (rather than pushing directly to `main`) keeps this reversible and
+  review-gated: nothing in the shared collaboration repository changes unless a maintainer
+  reviews and merges it. The PR description states plainly that the change is not built,
+  not run, and not verified.
 - **Not compiled or run**: building `hibeam_g4_geobuilder` requires ROOT + VGM (the same
   `nnbar_env` conda environment documented in `geant4/REPRODUCTION_STATUS.md`), which is not
   set up on this Mac. The change was verified for **geometric self-consistency only**, by
@@ -119,8 +121,8 @@ stack depth grows.
 
 ### Recommended next step (requires LUNARC)
 
-1. Push the branch / open a PR against `HIBEAM-NNBAR/hibeam_g4_geobuilder` (user decision).
-2. Rebuild the `.root` geometry file with the current `main` (to also resolve the file-
+1. **Done (2026-07-01):** [PR #8](https://github.com/HIBEAM-NNBAR/hibeam_g4_geobuilder/pull/8) is open against `HIBEAM-NNBAR/hibeam_g4_geobuilder`, awaiting maintainer review.
+2. Once reviewed/merged, rebuild the `.root` geometry file with the current `main` (to also resolve the file-
    provenance ambiguity in Section 3) plus this patch.
 3. Re-run MV3 (`geant4/jobs/mv3_stopping_v3.sbatch` or its successor) against the new geometry.
 4. This is exactly the falsifying test already specified in `docs/09_open_questions.md`: scan
@@ -136,5 +138,5 @@ stack depth grows.
 | CD2 target, beam window, beam pipe | Present in geometry-builder source (contra part of MV3b's assumption list) |
 | T1/T2 trigger scintillators | Present in source since 2026-01-26; file-provenance relative to the June 2026 production run is unresolved |
 | Inter-stave dead material | Confirmed absent from source; MV3b's leading candidate for the ~10 g/cm2 deficit stands |
-| Candidate code fix | Written, self-consistency-verified, committed to a local branch; not built, not run, not pushed to the shared collaboration repo |
+| Candidate code fix | Written, self-consistency-verified, [PR #8](https://github.com/HIBEAM-NNBAR/hibeam_g4_geobuilder/pull/8) open for review; not built, not run, not merged |
 | MV3 status | Unchanged: STRUCTURAL FAIL, still requires a new Geant4 production run to close |

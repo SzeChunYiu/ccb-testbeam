@@ -140,3 +140,52 @@ stack depth grows.
 | Inter-stave dead material | Confirmed absent from source; MV3b's leading candidate for the ~10 g/cm2 deficit stands |
 | Candidate code fix | Written, self-consistency-verified, [PR #8](https://github.com/HIBEAM-NNBAR/hibeam_g4_geobuilder/pull/8) open for review; not built, not run, not merged |
 | MV3 status | Unchanged: STRUCTURAL FAIL, still requires a new Geant4 production run to close |
+
+---
+
+## 6. Addendum (2026-07-01): quantitative cross-check with real material densities, and a caveat on MV3b's toy-model baseline
+
+Using the exact material densities read from `hibeam_g4_geobuilder/include/materials.hh` (not
+assumed values), the components confirmed present in Section 2 amount to:
+
+| Component | Areal density |
+|---|---:|
+| CD2 target (0.23 cm, rho=1.01 g/cm3) | 0.232 g/cm2 |
+| Mylar window (0.01 cm, rho=1.39 g/cm3) | 0.014 g/cm2 |
+| One trigSci paddle (1 cm PSci, rho=1.032 g/cm3) | 1.032 g/cm2 |
+| Both trigSci paddles, if a track's x/y position falls in their full overlap region | 2.064 g/cm2 |
+
+The two-paddle case depends on `trigSciOverlapX`/`trigSciOverlapY`, which are set from
+`krakow_trigSciOverlapX`/`krakow_trigSciOverlapY` in the run's `.config` file. `krakow.geoconf`
+(this repository) does not set these keys, so the value actually used by the deployed
+production run could not be determined from this repository alone; this is a second,
+narrower instance of the same file/config-provenance question raised in Section 3, and does
+not change the conclusion below.
+
+**A separate, previously unremarked limitation in MV3b's own toy model, found while checking
+this:** MV3b's material-budget scan (`scripts/mv3b_material_budget.py::simulate_stopping_fractions`)
+computes its "0.0 g/cm2 (MC as-is)" reference row as a standalone continuum-slowing-down
+calculation with *no* upstream material beyond a fixed 0.15 g/cm2 target term, giving essentially
+the full 190 MeV beam range at the B2 entrance — which its own model resolves as **100% B8**
+(so little material is subtracted that a typical proton's range comfortably exceeds the
+combined depth of all four staves). This does not match MV3's actual Geant4-simulated
+"as-is" result of B2=47.0%/B4=18.2%/B6=12.5%/B8=22.3%, which is already a mixed, partly-stopped
+distribution. In other words, MV3b's toy model's "zero material" starting point and the real
+simulation's actual (already only partially corrected, since it is what failed the chi2 test)
+starting point are two different baselines. This means MV3b's headline number — "11.12 g/cm2
+of extra material required" — was obtained by scanning *the toy model's own* material axis
+until *the toy model's own* B8 fraction matched data, not by directly fitting the real Geant4
+simulation's stopping profile. It is a reasonable, physically-motivated order-of-magnitude
+estimate (built on the correct physics of continuum slowing-down and stave geometry), but it
+should be read as **an independent analytic cross-check that motivates the same qualitative
+conclusion (a large, previously-unmodeled areal density is needed), not as a calibrated
+quantitative prediction of exactly how much material the real Geant4 geometry needs.** The
+only way to get a calibrated number is to add material directly to the real geometry (as the
+`fix/mv3-interstave-dead-material` patch / PR #8 does) and re-run the actual simulation —
+exactly what Section 4 already recommends, now with one more concrete reason why that step
+cannot be skipped in favor of further analytic estimation.
+
+This addendum does not change Section 3's or Section 5's conclusions; it sharpens the reasoning
+behind why they hold and flags a methodological caveat on the specific number 2.51 g/cm2/pair
+used as the patch's default, which should be read as "a reasonable starting point for a scan,"
+exactly as Section 4 already stated, now with a fuller account of why.

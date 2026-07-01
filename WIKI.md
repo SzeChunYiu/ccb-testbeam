@@ -278,7 +278,7 @@ The A-stack (A1/A3) provides a **completely decoupled** timing measurement:
 > - Measured waveform live-time: **τ_eff = 124.8 ns** → **R_max ≈ 3.05 MHz**
 > - MC confirms: **R_max(MC) = 3.044 MHz** (0.2% agreement) — ✅ validated
 > - ML two-pulse recovery: better RMS but **higher failure rate** (0.295 vs 0.168)
-> - ML pile-up score has large current-independent baseline (ratio ~1.29× between high/low current). Measured downstream excess at 20 nA: 0.0103 per event (~9.2% of downstream events). These are separate measurements.
+> - ML pile-up score has large current-independent baseline (ratio ~1.29× between high/low current). Measured downstream excess at 20 nA: 0.0103 per selected event [CI 0.0064-0.0142], excess_fraction = 30.8% of high-current downstream rate (S10 current_excess_table.csv). ML score excess_fraction = 22.9% (ratio 1.30). These are separate measurements.
 
 ### 5.1 What is Pile-up?
 
@@ -321,7 +321,7 @@ ML recovers shorter separations and lower time-RMS, but has a **higher failure r
 
 ### 5.4 Current-Dependent Excess
 
-The ML pile-up classifier score ratio between high and low current is ~1.29× (not the ~10× expected from the 10× current ratio under pure Poisson scaling), indicating a large current-independent contribution (scintillator tails, waveform pathologies). Separately, the measured downstream per-event excess at 20 nA is 0.0103 (S10 current_excess_table.csv), corresponding to ~9.2% of downstream-hit events showing current-dependent excess. These are two independent measurements: the ML score ratio measures classifier behavior; the downstream excess measures physical pile-up rate. They should not be chained causally.
+The ML pile-up classifier score ratio between high and low current is ~1.29× (not the ~10× expected from the 10× current ratio under pure Poisson scaling), indicating a large current-independent contribution (scintillator tails, waveform pathologies). Separately, the measured downstream per-event excess at 20 nA is 0.0103 per selected event [CI 0.0064-0.0142, S10 current_excess_table.csv], representing 30.8% of the high-current downstream rate. The ML pile-up score shows 22.9% excess at high current (ratio 1.30). These are two independent measurements of different quantities. These are two independent measurements: the ML score ratio measures classifier behavior; the downstream excess measures physical pile-up rate. They should not be chained causally.
 
 ---
 

@@ -140,4 +140,9 @@ partial-geometry model (layer-by-layer) is needed.
 ## Infrastructure
 
 - Raw data not yet mirrored to LUNARC with checksums. (S00)
-- No unit/regression tests on the reconstruction pipeline. (cross-cutting)
+- ~~No unit/regression tests on the reconstruction pipeline.~~ **Closed (2026-07-01):**
+  `tests/test_s00_reconstruction.py` adds 11 tests against the real `pulse_quantities()`
+  and `compare_expected()` functions in `scripts/01_build_pulse_table_from_root.py`
+  (baseline-median-not-mean, multi-event/multi-stave independence, the exact selection-gate
+  boundary, and config self-consistency for the 640,737 headline count and its group/stave
+  subtotals). Runs without raw ROOT data; all 75 tests in `tests/` pass.

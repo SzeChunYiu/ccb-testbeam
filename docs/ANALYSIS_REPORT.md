@@ -611,20 +611,42 @@ baseline from early pulse contamination.
 
 ## 14. Open Questions and GEANT4 Path
 
-The open experimental questions are:
+The open experimental questions, with status as of the MC-validation program
+(MV0-MV6, MV3b, MV4b; see `docs/mc_validation/MC_VALIDATION_RESULTS.md` and the
+wiki page `09-Monte-Carlo-Validation`), are:
 
-1. Build or validate an independent GEANT4 model for the CCB geometry and
-   CD2 target response.
-2. Obtain event-level energy/PID labels or credible simulated truth for
-   calibrating the range-energy interpretation.
-3. Locate or acquire true forced/random pedestal events.
-4. Validate ML two-pulse failure rates on real high-current unresolved
-   candidates, not only synthetic overlays.
-5. Reconcile the remaining geometry/report discrepancies, including 2 cm
-   versus 4 cm stave spacing assumptions where they enter TOF and energy
-   proxies.
-6. Quantify correlated versus uncorrelated timing terms before promoting the
-   two-ended sqrt(2) projection.
+1. **Substantially addressed, not fully closed.** An independent GEANT4 model
+   for the CCB geometry and CD2 target response has been built and run
+   (`geant4/`, the HIBEAM `hibeam_g4` Krakow configuration) and produces
+   truth-labeled events. Two of its six validation studies remain unresolved:
+   MV3 (stopping-depth profile) is a structural fail diagnosed to a missing
+   ~10 g/cm2 of inter-stave dead material in the geometry (MV3b), and MV4's
+   timewalk-corrected path shows a tension diagnosed to an unphysical toy
+   digitizer timewalk sign (MV4b). Both diagnoses are documented but not yet
+   fixed by a new LUNARC production run.
+2. **Partially addressed, not yet transferable to data.** MV1 reaches a
+   simulation-side proton/deuteron PID AUC of 0.986 using GEANT4 truth labels.
+   This is not yet a data-usable PID calibration: it depends on the same
+   geometry and digitizer that MV3/MV4 show still need correction, so it
+   should be treated as a promising simulation-side result pending those
+   fixes, not as ready for adoption on real data.
+3. **Still open.** No true forced/random pedestal events have been located.
+   Two independent data-driven proxies were built instead (S16, held-out
+   pre-trigger samples within physics events; and the separately-ticketed
+   S16b forced-trigger-validation study, held-out later samples within
+   "quiet" no-pulse physics events) and both explicitly recommend acquiring
+   real forced-trigger data as the only way to close this question.
+4. **Still open.** ML two-pulse failure rates have not been validated on real
+   high-current unresolved candidates, only on synthetic overlays.
+5. **Closed.** S12a (`reports/0000000012.1.truthtiming/`) measured the
+   analysed-stave median separation directly from GEANT4 truth hit positions
+   at 4.0258 cm, confirming the 4 cm centre-to-centre convention (within
+   +0.65%) and rejecting the 2 cm interpretation (which underestimates the
+   true path length by approximately 50.3%). All downstream TOF and
+   range-interpretation code should use the 4 cm convention.
+6. **Still open.** Correlated versus uncorrelated timing terms have not been
+   quantified, so the two-ended sqrt(2) projection remains an upper-bound-style
+   estimate rather than a validated correction.
 
 A GEANT4 starting point exists at `/home/billy/ccb-geant4`, including
 `krakow.geoconf`, `krakow.config`, `run_krakow.mac`, and related cross-section

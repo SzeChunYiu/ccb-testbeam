@@ -34,8 +34,14 @@ that follow.
 - The raw-count gate follows the newer split with Sample II calibration run 64. The older run
   61 calibration choice still matters for timing-calibration comparisons, not for selected-pulse
   counting. (S03, S04)
-- The notes have used different stave-spacing conventions (2 cm vs 4 cm) in places. Geometry
-  assumptions must be stated whenever TOF or range interpretation enters.
+- The 2 cm vs 4 cm stave-spacing ambiguity is **closed**: S12a (`reports/0000000012.1.truthtiming/`)
+  measured the analysed-stave median separation directly from GEANT4 truth hit positions for the
+  B2-B4, B4-B6, and B6-B8 pairs (mapped to Sci_bar layer pairs 0-2, 2-4, 4-6) and found a median
+  path separation of 4.0258 cm. The 4 cm centre-to-centre convention is within +0.65% of this
+  truth value; the 2 cm interpretation underestimates the true path length by approximately 50.3%
+  and is rejected. All downstream TOF and range-interpretation code should use the 4 cm
+  convention; see `docs/mc_validation/` and the wiki page `02-Experimental-Setup-and-Detector`
+  for the resolved geometry.
 - Sorted `hrdMax` amplitudes are not an exact proxy for the raw `HRDv` S00 gate count; document
   or reconcile that derived-branch semantic before downstream workers use sorted counts. (S00a)
 - Full-dataset templates are now available, but q-template remains a covariate with stave and

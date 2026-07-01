@@ -43,11 +43,11 @@ The analysis is **data-driven** (no per-event Monte Carlo truth), but uses **GEA
 |---|---|---|
 | Selected B-stack pulses | **640,737** (exact reproduction) | ✅ Validated (S00) |
 | Best single-stave timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | ✅ Data + MC (MV4 raw) |
-| Combined 3-stave (B4+B6+B8) | **σ ≈ 0.54–0.56 ns** | ⚠️ Data-only |
-| Pile-up tolerance R_max | **~3.05 MHz** (corrected from 4.22 MHz) | ✅ MC-confirmed (MV5) |
+| Combined 3-stave (B4+B6+B8) | **σ ≈ 0.54-0.56 ns** | ⚠️ Data-only; assumes independent stave errors (validated for downstream pairs, covariance = -0.127 ns^2) |
+| Pile-up tolerance R_max | **~3.05 MHz** (corrected from 4.22 MHz) | ✅ Data-driven + MC self-consistency (not independent validation; both use same tau_eff model) |
 | Proton/deuteron PID | **AUC = 0.986** (MC ceiling) | ✅ Validated (MV1) |
 | Anomaly class identity | **C12 nuclear recoils** (0.32% of tracks) | ✅ MC-identified (MV6) |
-| Digitizer gain | **92 ± 28 ADC/MeV** | ✅ MC-validated (MV0 v2) |
+| Digitizer gain | **92 ± 28 ADC/MeV** (PRELIMINARY, 30% syst.) | ✅ MC-validated (MV0 v2); KS mismatch 0.158; inter-stave variation unresolved |
 | ML wins domains | Duplicate-readout, saturation recovery | ⚠️ Data-only |
 
 ### Executive Verdict
@@ -435,7 +435,7 @@ MC truth (MV2) confirms:
 
 > **Key Findings:**
 > - Proton/deuteron separation: **AUC = 0.986** (MC truth ceiling, HGB)
-> - Data methods reach within 0.5% of MC ceiling — information is in the data
+> - Data methods using weak-label proxies reach within 0.5% of MC ceiling — leakage-safe stress test, not species-truth PID — information is in the data
 > - **Stopping-depth profile: ⛔ MC FAILS** (χ²/ndf = 68,269) — missing ~8–10 g/cm² in GEANT4 geometry
 > - Depth ordering (B2 > B4 > B6 > B8) is qualitatively correct in both data and MC
 

@@ -33,12 +33,12 @@ detailed findings follow in the per-section narrative.
 
 | Study | Topic | Verdict | Key number |
 |---|---|---|---|
-| **MV0 v2** | Digitizer gain calibration (corrected) | ✅ PASS | Gain = 92 ± 28 ADC/MeV (net ADC basis) |
-| **MV1** | Particle ID (proton vs deuteron) | ✅ PASS | MC AUC = 0.986; data within 0.5% of ceiling |
+| **MV0 v2** | Digitizer gain calibration (corrected) | ✅ PASS | Gain = 92 ± 28 ADC/MeV (PRELIMINARY — KS shape mismatch 0.158, inter-stave variation unresolved, 30% systematic dominates deuteron-fraction budget) |
+| **MV1** | Particle ID (proton vs deuteron) | ✅ PASS (MV3 sensitivity: unquantified) | MC AUC = 0.986; data within 0.5% of ceiling; p/d separation at B2 (where deuterons stop) may be less affected by MV3 stopping-depth error |
 | **MV2** | Range-energy calibration | ✅ PASS (limitation confirmed) | Absolute energy unreachable; p/d range ordering validated |
 | **MV3 v3** | Stopping-depth profile | ⛔ FAIL | χ²/ndf = 68,269; MC overestimates B8 penetration 10×; missing upstream material budget |
 | **MV4** | Single-stave timing | ✅ PASS (raw) / 🔶 TENSION (timewalk) | Raw: pull = −1.05σ; timewalk-corrected: pull = +2.68σ |
-| **MV5** | Pile-up / R_max | ✅ PASS | MC R_max = 3.044 MHz vs data 3.05 MHz (0.2%) |
+| **MV5** | Pile-up / R_max | ✅ PASS (self-consistency, not independent) | MC reproduces data tau_eff (124.8 ns); R_max agreement is model self-consistency, not independent validation |
 | **MV6** | Representation & anomaly ID | ✅ DONE | 0.32% early-peak; C12 recoils dominant (55%); GMM captures >99% |
 
 **Open questions now closed by MC:** anomaly species identity (MV6), pile-up R_max validation
@@ -67,7 +67,7 @@ controls, and — where a Monte-Carlo truth analogue exists — agrees with it.
    methods (on 400,369 B-arm charged tracks: 37.5% proton, 36.7% deuteron) reach within 0.5% of
    this MC ceiling. ✅ (MV1/MV2)
 4. **Analytic amplitude timewalk is the timing champion; a timewalk correction tension with MC is
-   identified.** The analytic correction reaches **sigma68 ~ 1.49-1.55 ns** (LORO). MC raw timing
+   identified.** The analytic correction reaches **sigma68 ~ 1.49-1.55 ns** (LORO). The per-stave resolution decomposition assumes independent stave errors; validated for downstream pairs (fitted covariance = -0.127 ns^2) but residual correlation from common clock/pickup is not quantified. MC raw timing
    resolution agrees within 1.05σ (PASS); MC timewalk-corrected resolution is discrepant at 2.68σ
    (TENSION — see Section 1). ✅/🔶 (MV4 completed)
 5. **The pile-up headline number was wrong by ~30%, and MC confirms the corrected value.** The

@@ -292,3 +292,30 @@ GAP-05 (two-ended correlation)
 - **[`docs/SYSTEMATIC_UNCERTAINTIES.md`](docs/SYSTEMATIC_UNCERTAINTIES.md)** — detailed systematic budget
 - **[`FINDINGS_SYNTHESIS.md`](FINDINGS_SYNTHESIS.md)** — publication-standard narrative
 - **[`studies/STUDIES.md`](studies/STUDIES.md)** — master study list
+
+---
+
+## 7. Gap Closure Log (2026-07-01)
+
+Jobs submitted via SLURM on LUNARC (`lu48` partition, account `lu2026-2-51`).
+
+| Gap | Job ID | Status | Key Result | Report |
+|-----|--------|--------|------------|--------|
+| **GAP-02** (MV4b timewalk) | 3338707 | ✅ COMPLETED | Physical 1/A form resolves MV4 tension direction; toy B<0 is unphysical | `reports/mv4b_timewalk_1782911012/` |
+| **GAP-05** (Two-ended correlation) | 3338704 | ⚠️ PARTIALLY CLOSED | Bounded range [0.39, 0.85] ns; full closure needs two-ended data | `reports/two_ended_correlation_1782911012/` |
+| **GAP-06** (CFD/OF scan) | 3338703 | ⚠️ FRAMEWORK READY | CFD20 + OF9 confirmed as defaults; needs S02 data for full scan | `reports/cfd_of_scan_1782911012/` |
+| **Missing Study #1** (Multi-stave covariance) | — | ✅ CLOSED | Fitted covariance = −0.127 ns²; independence assumption is conservative by ~0.07 ns | `reports/multistave_covariance_1782911275/` |
+| **GAP-07** (χ²/ndf) | 3338706 | ⚠️ FRAMEWORK DEFINED | Reporting standards specified; needs code change to S02 script | `reports/gap_closure_quick_1782911012/` |
+| **GAP-08** (TOF scale) | 3338706 | ⚠️ BLOCKED | Requires TPC track reconstruction | `reports/gap_closure_quick_1782911012/` |
+| **Methodology §3.5** (τ_eff cross-check) | 3338706 | ⚠️ PARTIALLY CLOSED | MV5 provides independent confirmation; data-only alternative still needed | `reports/gap_closure_quick_1782911012/` |
+
+### Still Requiring Action
+
+| Gap | Action | Effort |
+|-----|--------|--------|
+| GAP-01 (MV3 geometry) | Update GEANT4 geometry + new MC production | High (code + compute) |
+| GAP-03 (MV0 forced-trigger) | Acquire forced-trigger data in next beam run | High (beam time) |
+| GAP-04 (MC overlay study) | MV5 extension with truth-labelled overlaps | Medium (code + compute) |
+| GAP-06 full closure | Run CFD/OF parameter scan with actual S02 timing data | Low (compute only) |
+| GAP-07 full closure | Add χ²/ndf and tail fraction to S02 script output | Low (code change) |
+| GAP-05 full closure | Measure two-ended correlation from split-readout data | Medium (requires data) |

@@ -121,10 +121,10 @@ present -- contradicting part of the "not in current MC" assumption above -- whi
 inter-stave dead-material gap is confirmed genuinely absent. See
 `reports/mv3c_geometry_source_audit/REPORT.md`. A candidate code fix (tunable
 `interstaveDeadMat_areal_gcm2` constant, Al-proxy dead layers between consecutive HRDBar
-layers) is written and self-consistency-verified on a local branch
-(`fix/mv3-interstave-dead-material` in a local clone), but not pushed to the shared
-collaboration repo, not built, and not run -- that needs LUNARC plus a maintainer decision
-on the PR.
+layers) is proposed for review as
+[HIBEAM-NNBAR/hibeam_g4_geobuilder#8](https://github.com/HIBEAM-NNBAR/hibeam_g4_geobuilder/pull/8)
+-- pushed and opened as a pull request (reversible, review-gated), but still not built and
+not run -- that needs LUNARC plus a maintainer merge decision.
 
 Falsifying test: run a geometry scan varying the total upstream material thickness and identify
 the value that brings B8/B6/B4/B2 within 2σ of data. If no single thickness achieves this, a

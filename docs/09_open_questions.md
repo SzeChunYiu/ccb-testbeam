@@ -71,6 +71,13 @@ toy digitizer returns B = −23.00 ns·√ADC (unphysical negative slope). A rea
 model with proper CFD simulation is needed before corrected timing can be validated. This
 affects only the corrected path; the raw σ₆₈ comparison remains valid.
 
+**Fix applied, not yet verified by rerun (2026-07-01):** `scripts/mv4_timing_study.py` --
+the actual production script behind SLURM job 3328641 -- has been switched from fitting
+`dt = A + B/sqrt(amp)` to the physically-derived `dt = A + B/amp`. This is committed and
+pushed to `main`. It has NOT been re-run (LUNARC access currently blocked, see
+`RUN_BLOCKED.md`), so the corrected-path pull is not yet confirmed to have improved; re-run
+this script against the same MC ROOT file to close this item.
+
 Falsifying test: generate pulses from the measured template library, apply the experimental
 CFD threshold, extract B empirically; if B < 0 survives, the data timewalk correction itself
 is suspect.
@@ -106,6 +113,18 @@ HRD stack are not fully implemented, causing simulated protons to penetrate furt
 This is a structural failure; it cannot be fixed analytically. A new GEANT4 production run with
 a corrected geometry is required. MV3 is therefore marked as a known-bad simulation artifact
 until the geometry PR is merged and re-simulated.
+
+**MV3c update (2026-07-01):** a source-code audit of the actual geometry builder
+(`HIBEAM-NNBAR/hibeam_g4_geobuilder`, `src/krakow.cxx`) found that the CD2 target, a beam
+window, and T1/T2-style trigger scintillators (added to source 2026-01-26) are already
+present -- contradicting part of the "not in current MC" assumption above -- while the
+inter-stave dead-material gap is confirmed genuinely absent. See
+`reports/mv3c_geometry_source_audit/REPORT.md`. A candidate code fix (tunable
+`interstaveDeadMat_areal_gcm2` constant, Al-proxy dead layers between consecutive HRDBar
+layers) is written and self-consistency-verified on a local branch
+(`fix/mv3-interstave-dead-material` in a local clone), but not pushed to the shared
+collaboration repo, not built, and not run -- that needs LUNARC plus a maintainer decision
+on the PR.
 
 Falsifying test: run a geometry scan varying the total upstream material thickness and identify
 the value that brings B8/B6/B4/B2 within 2σ of data. If no single thickness achieves this, a

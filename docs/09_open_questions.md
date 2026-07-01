@@ -120,7 +120,7 @@ window, and T1/T2-style trigger scintillators (added to source 2026-01-26) are a
 present -- contradicting part of the "not in current MC" assumption above -- while the
 inter-stave dead-material gap is confirmed genuinely absent. See
 `reports/mv3c_geometry_source_audit/REPORT.md`. A candidate code fix (tunable
-`interstaveDeadMat_areal_gcm2` constant, Al-proxy dead layers between consecutive HRDBar
+`interstaveDeadMat_areal_gcm2` constant, dead layers (using realistic low-Z materials, not Al proxy) between consecutive HRDBar
 layers) is proposed for review as
 [HIBEAM-NNBAR/hibeam_g4_geobuilder#8](https://github.com/HIBEAM-NNBAR/hibeam_g4_geobuilder/pull/8)
 -- pushed and opened as a pull request (reversible, review-gated), but still not built and

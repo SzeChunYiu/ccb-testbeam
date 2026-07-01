@@ -1,4 +1,4 @@
-# Response to Matthias re: MV3c Geometry PR — Inter-Stave Dead Layers
+# Response to Matthias re: MV3c Geometry PR - Inter-Stave Dead Layers
 
 **Date:** 2026-07-01
 **Re:** HIBEAM-NNBAR/hibeam_g4_geobuilder#8
@@ -7,65 +7,103 @@
 
 ## TL;DR
 
-You are right — 2 mm aluminum equivalent between every stave pair is not realistic. The 2.51 g/cm2/pair value in PR #8 is a **toy-model starting point**, not a calibrated number. I agree it should be revised downward. The actual value should be determined by scanning the parameter against data. The PR was opened as a review-gated draft precisely because it has not been built or run yet.
+You are completely right — 2 mm aluminum between staves makes no physical sense.
+Light guides are optical elements, not metal. I made an error by using "Al" as a
+placeholder proxy without checking whether the proxy material itself was physically
+appropriate. I have corrected the MV3b report with proper material estimates and an
+errata section documenting what was wrong. The PR #8 default value should be revised
+to a realistic starting point (~0.1-0.5 g/cm2/pair based on actual scintillator
+detector construction materials: FR-4 PCB, polymer wrapping, connector material),
+and the actual value must be determined by scanning the parameter against data.
 
-## Where the Numbers Come From
+## Where the "2 mm Al" Came From (and Why It Was Wrong)
 
-### The 2.51 g/cm2/pair (inter-stave dead material)
+The MV3b analytical toy model tried to estimate how much upstream material would
+be needed to bring the simulated B8 stopping fraction from its current value down
+to the data value (2.3%). In building a component budget, I used aluminum (rho=2.70
+g/cm3) as a generic placeholder for "structural material" in several places:
 
-This comes from MV3b's analytic toy model, which diagnosed MV3's stopping-depth failure (chi2/ndf = 68,269) as a missing-material problem. MV3b estimated:
+1. **"B2 light guides/wrapping (2 mm Al)"** — This was the worst offender. Light
+   guides in scintillator detectors are optical elements: wavelength-shifting fibers
+   (polystyrene core, acrylic cladding), ESR (Enhanced Specular Reflector) polymer
+   film wrapping, and optical coupling compound (silicone or epoxy). Aluminum would
+   block 100% of the scintillation light — a detector built this way would not work
+   at all. The actual B2 optical wrapping is approximately 0.05-0.10 g/cm2.
 
-- Known missing components (beam window, T1/T2, air, etc.): ~1.08 g/cm2
-- Required total to match data: ~11.12 g/cm2
-- Unexplained deficit: ~10.03 g/cm2
-- Divided across 4 stave pairs (B2-B4, B4-B6, B6-B8, plus one more): ~2.51 g/cm2/pair
+2. **"Beam exit window (0.5 mm Al)"** — The MV3c source audit (reading the actual
+   geometry-builder source code) found the window is Mylar (100 um, rho=1.39 g/cm3),
+   not aluminum. Areal density: 0.014 g/cm2, not 0.135 g/cm2.
 
-**Important caveat (documented in MV3c addendum):** MV3b's toy model uses a continuum-slowing-down calculation whose "zero material" baseline (100% B8) does NOT match the actual Geant4 simulation's baseline (B2=47%, B4=18%, B6=13%, B8=22%). This means the 11.12 g/cm2 is a **toy-model self-consistent estimate**, not a value extracted directly from the real simulation. The true required material is likely lower.
+3. **Inter-stave dead material proxy** — Using Al as a proxy for unknown material
+   between staves is physically inappropriate because Al (Z=13) has very different
+   stopping power from the actual low-Z materials (FR-4 PCB: epoxy/glass composite,
+   rho~1.8; polymer wrapping; plastic connector housings). Higher-Z materials stop
+   protons more efficiently per g/cm2, so an Al proxy overestimates the areal density
+   actually needed.
 
-### The 2 mm Al placeholder (NOT inter-stave)
+## What I Simulated vs What I Compared To
 
-MV3b's component table listed "B2 light guides + wrap" as a separate line item using "2mm Al" as a placeholder for that specific component. This was a rough proxy for light-guide material around the B2 stave, not for the inter-stave dead layers. The Al proxy convention was reused in PR #8 for the inter-stave layers, which is misleading — I will update the PR to use a different, clearly labeled proxy material.
+The MV3b analytic model used a simple Bethe-Bloch continuum-slowing-down calculation:
 
-## What PR #8 Actually Does
+- Beam: 190 MeV protons
+- Target: 0.15 g/cm2 CD2 (fixed in the model)
+- Variable upstream material added before B2, ranging from 0 to 15 g/cm2
+- 50,000 tracks, CSDA range formula calibrated to NIST PSTAR
+- Measured B8 fraction (fraction of tracks with range exceeding B8 depth)
 
-The PR adds a configurable `interstaveDeadMat_areal_gcm2` parameter (default 2.51 g/cm2/pair, implemented as thin Al-proxy layers between HRDBar volumes). Key points:
+This was compared to the data B8 fraction of 2.3% from the MV3 SLURM production
+run, which processed the GEANT4 simulation of 190 MeV protons through the krakow
+geometry and digitized the resulting energy deposits through the MV0 digitizer.
 
-1. **Al is a placeholder** — explicitly labeled as a proxy for generic structural/connector material, not a claim about composition
-2. **Setting the parameter to 0 recovers the original geometry exactly**
-3. **The value is meant to be scanned** — the PR description says: "The 2.51 g/cm2/pair default is a first candidate to start that scan from, not a predicted final answer"
-4. **The PR is review-gated** — opened for discussion, not pushed to main; nothing changes unless a maintainer merges it
+**The critical error:** I compared the toy model at "0 g/cm2 added" (which gives
+100% B8 because there is NO upstream material at all in the toy model baseline)
+against the data B8 fraction. But the actual GEANT4 simulation at "0 g/cm2 added"
+already gives 22.3% B8 — because the real geometry already includes the CD2 target,
+Mylar window, trigger scintillators, and beam pipe. The toy model baseline is a
+completely different physical situation from the simulation baseline.
 
-## What I Think the Real Value Should Be
+This means:
+1. The toy model is a useful qualitative diagnostic (confirms material deficit is
+   the right explanation), but
+2. The specific number 11.12 g/cm2 is NOT a calibrated prediction — it is the toy
+   model's self-consistent answer to "how much material would this toy model need
+   to match data," not "how much material does the real simulation need"
+3. The 2.51 g/cm2/pair default in PR #8 inherits this problem
 
-Based on the MV3c source audit findings:
+## Corrected Material Budget
 
-- The trigger scintillators (T1/T2) were likely already present in the simulation (added to source in Jan 2026), meaning MV3b overestimated the missing component
-- The CD2 target and Mylar beam window are also confirmed present in the geometry source
-- The inter-stave dead material is confirmed absent — but the amount needed is almost certainly less than 2.51 g/cm2/pair
-
-A realistic starting point might be **0.1-0.5 g/cm2/pair** (e.g., ~0.5 mm of PCB + connector material), which should be determined by:
-
-1. Actually building the geometry with the patch
-2. Running a parameter scan from 0 to ~3 g/cm2/pair in small steps
-3. Finding the value that brings simulated B8 fraction within 2 sigma of data (2.3%)
-
-## What's Needed to Resolve This
-
-1. **Merge or iterate PR #8** — with a corrected, more realistic default value
-2. **Rebuild the .root geometry file** on LUNARC (requires ROOT + VGM toolchain)
-3. **Re-run MV3 production** against the new geometry
-4. **Scan `interstaveDeadMat_areal_gcm2`** to find the calibrated value
-
-This is tracked as GAP-01 in STUDY_GAPS.md.
-
-## Summary
-
-| Item | MV3b Claim | MV3c Finding |
+| Component | Areal density [g/cm2] | Source |
 |---|---|---|
-| T1/T2 trigger scintillators | "Not in MC" | **Present in source** since 2026-01-26 |
-| CD2 target | Implicitly missing | **Present in source** |
-| Mylar beam window | "Not in MC" | **Present in source** (not Al as assumed) |
-| Inter-stave dead material | ~10 g/cm2 deficit | **Confirmed absent**; amount needed likely < MV3b estimate |
-| PR #8 default value | 2.51 g/cm2/pair | Should be revised to ~0.1-0.5 g/cm2/pair; actual value from scan |
+| CD2 target | 0.232 | Present in geometry source (MV3c audit) |
+| Mylar beam window | 0.014 | Present in geometry source |
+| Beam pipe (Al, 5 mm wall) | 1.35 | Present in geometry source |
+| T1 trigger scintillator (PSci, 1 cm) | 1.032 | In source since 2026-01-26 |
+| T2 trigger scintillator (PSci, 1 cm) | 1.032 | In source since 2026-01-26 |
+| B2 optical coupling/wrapping | ~0.05-0.10 | Estimated from typical construction |
+| **Inter-stave dead material** | **Unknown** | Confirmed absent; needs scan |
 
-I will update the PR description to clarify these points and revise the default value. Thanks for catching this — the 2.51 g/cm2/pair was indeed too high as a starting assumption.
+Most of the material is already present. The inter-stave dead material is the
+primary missing component, but the amount needed is almost certainly far less
+than the toy model's 2.51 g/cm2/pair estimate.
+
+## What Should Happen Next
+
+1. Revise the PR default to a physically realistic starting point (~0.1-0.5 g/cm2/pair
+   based on FR-4 PCB + connector + wrapping material)
+2. Use the actual low-Z material composition, not Al proxy
+3. Build the geometry, run MV3, scan the parameter from 0 to ~3 g/cm2/pair
+4. The calibrated value is whatever makes simulated B8 fraction match 2.3% (data)
+
+The MV3b report has been updated with full errata documenting all corrections.
+
+## Does This Pattern Appear Elsewhere?
+
+I am now auditing all claims throughout the wiki and reports for similar issues —
+any claim that uses a physically inappropriate proxy, any number presented as
+calibrated when it came from an uncalibrated model, and any assumption not grounded
+in the actual detector construction. The principle going forward is:
+
+**Every material claim must be based on the actual detector as built. No
+convenient proxies with different physics. When the exact value is unknown,
+state the uncertainty and give a physically motivated range, not a
+precise-looking number from an uncalibrated model.**

@@ -2,11 +2,19 @@
 
 - **CCB** — Centrum Cyklotronowe Bronowice (Cyclotron Centre Bronowice), Kraków; the facility.
 - **CD₂** — deuterated polyethylene target.
-- **HRD Stack A / B** — the two scintillator range stacks. "bstack"/"astack" = Stack B / A.
+- **HRD Stack A / B** — two **independent** scintillator range stacks at **conjugate angles**,
+  each ~100 cm from the target and each behind its own trigger scintillators (TPC in front of A);
+  the arms measure **different particles** of kinematically-correlated pairs (pd-elastic: proton
+  in one arm, deuteron in the other). "bstack"/"astack" = Stack B / A. (Experiment-owner setup
+  facts, 2026-07-03.)
 - **Stave (B2/B4/B6/B8, A1/A3)** — individual scintillator slab; deeper index = deeper in stack.
-- **Sample I / II** — B-stack run groups: I (runs 31–57, D-enriched, terminal-B2-like);
-  II (runs 58–65, p-enriched, penetrating, clean timing reference).
-- **Sample III / IV** — A-stack analogues of Sample I / II.
+- **Sample I / II** — B-stack run groups defined by trigger configuration (2026-07-03):
+  I (runs 31–57, **A·B trigger coincidence**; terminal-B2-like; D-enrichment = hypothesis, S21);
+  II (runs 58–65, **B trigger only**, A ignored; p-enriched, penetrating, clean timing reference).
+  In data these are **disjoint run sets**; in the MC mimic Sample I (first-A/first-B entry within
+  15 ns) is a **subset** of Sample II.
+- **Sample III / IV** — A-stack data from the Sample I / II run periods (the A arm records
+  different particles than B).
 - **Calibration run / analysis run** — runs used to build templates & timewalk vs runs used for
   results.
 - **A** — baseline-subtracted peak amplitude (ADC); selection cut **A > 1000 ADC**.

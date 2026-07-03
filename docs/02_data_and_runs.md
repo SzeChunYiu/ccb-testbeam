@@ -21,6 +21,14 @@
 | III (A) | = Sample I runs | 31–42 | 44–57 | A-stack |
 | IV (A) | = Sample II runs | 64 | 58–63, 65 | low stats |
 
+> **Trigger definitions (corrected 2026-07-03, experiment-owner setup facts):** Sample I runs were
+> taken with the **A AND B trigger coincidence**; Sample II runs with the **B trigger only**
+> (A ignored). In data the two samples are therefore **disjoint run sets** with different trigger
+> configurations. In MC the mimicked triggers are **inclusive** — Sample I (charged particle
+> entering the first A and first B layer within 15 ns) is a **subset** of Sample II (B entry) —
+> so MC-vs-data sample comparisons must state this asymmetry (inclusive flags in
+> `src/ccb_mc_validation/io/root_truth.py`; the legacy `sample_label` was exclusive).
+
 > **Discrepancy with older v41 note** (resolve in S00): the v41 note used Sample II **run 61**
 > as the single calibration run and a single Sample I calibration run; the newer report uses a
 > **pooled** Sample I calibration (31–42) and run **64** for Sample II. `docs/` follows the
@@ -37,6 +45,7 @@
   penetrating.
 
 ## Topology, in one line
-**Sample I** particles overwhelmingly **stop in B2** (terminal, D-like, high ionisation);
+**Sample I** particles overwhelmingly **stop in B2** (terminal, high ionisation; the D-enrichment
+reading is a hypothesis for S21 — 2026-07-03);
 **Sample II** particles **penetrate** to B4/B6/B8 (cleaner same-particle timing). This split
 drives every timing and pile-up conclusion downstream.

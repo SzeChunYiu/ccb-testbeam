@@ -1,0 +1,11 @@
+{
+  "enabledPlugins": {},
+  "extraKnownMarketplaces": {
+    "cpd-yuan1z0825-nature-skills-project": {
+      "source": {
+        "source": "directory",
+        "path": "/home/billy/projects/ccb-testbeam/.claude/.cpd-wrappers/yuan1z0825-nature-skills-project"
+      }
+    }
+  }
+}

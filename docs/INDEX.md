@@ -26,7 +26,7 @@ section if you know what you want. Confidence labels: ✅ validated (data+MC) / 
 | Timing resolution | [docs/05_timing_resolution.md](05_timing_resolution.md) |
 | Pile-up | [docs/06_pileup.md](06_pileup.md) |
 | ML methods | [docs/07_ml_methods.md](07_ml_methods.md) |
-| A-stack cross-check | [docs/08_astack.md](08_astack.md) |
+| A-stack independent-arm check | [docs/08_astack.md](08_astack.md) |
 | Open questions & caveats | [docs/09_open_questions.md](09_open_questions.md) |
 | Glossary | [docs/glossary.md](glossary.md) |
 | References | [docs/references.md](references.md) |

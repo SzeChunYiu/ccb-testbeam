@@ -92,7 +92,7 @@ Every finding is traceable to a specific report or source file.
 #### GAP-08: Absolute TOF Scale Unvalidated
 - **Severity:** **LOW** (relative timing is primary deliverable)
 - **Finding:** Absolute time-of-flight scale has no independent reference (TPC, trigger scintillators).
-- **Action:** Cross-check TOF against TPC track length / expected velocity, or against trigger scintillator coincidence.
+- **Action:** Cross-check TOF against TPC track length / expected velocity, or against trigger scintillator coincidence. *(Note 2026-07-03: the TPC sits in front of Stack A only, and each arm has its own trigger scintillators — a TPC-based check applies to the A arm; per-arm trigger-to-stack timing applies within one arm; experiment-owner setup facts.)*
 
 #### GAP-09: Stave-to-Stave Calibration Extrapolation
 - **Severity:** **LOW** (assumed ±10% from single-stave calibration point)

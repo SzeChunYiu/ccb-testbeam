@@ -15,8 +15,12 @@ a proton bound to a neutron). We want to (a) **time** those particles very preci
 understand **pile-up**: how often two particles arrive so close in time that their signals overlap
 and corrupt the measurement.
 
-The particles are caught by two stacks of plastic **scintillator bars** (called the A-stack and
-B-stack). A scintillator flashes light when a charged particle passes through; the light is carried
+The particles are caught by two separate stacks of plastic **scintillator bars** (the A-stack and
+B-stack), sitting at matched ("conjugate") angles, each about 1 m from the target and each with its
+own small trigger scintillators in front (plus a TPC in front of the A-stack). The two stacks see
+**different particles**: when a beam proton scatters off a deuteron in the target, the proton flies
+into one stack and its partner deuteron into the other (experiment-owner setup facts, 2026-07-03).
+A scintillator flashes light when a charged particle passes through; the light is carried
 out by a fibre and digitized into an **18-sample waveform** (one number every 10 nanoseconds). From
 each waveform we read off an **amplitude** (how big the pulse is, in ADC counts) and a **time**. The
 stack acts like a **range telescope**: light particles stop early (front bars), penetrating particles

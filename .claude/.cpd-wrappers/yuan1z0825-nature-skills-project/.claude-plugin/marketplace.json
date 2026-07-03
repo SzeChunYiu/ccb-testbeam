@@ -1,0 +1,16 @@
+{
+  "name": "cpd-yuan1z0825-nature-skills-project",
+  "owner": {
+    "name": "ClaudePluginHub CLI"
+  },
+  "plugins": [
+    {
+      "name": "nature-skills",
+      "source": {
+        "source": "github",
+        "repo": "yuan1z0825/nature-skills"
+      },
+      "strict": false
+    }
+  ]
+}

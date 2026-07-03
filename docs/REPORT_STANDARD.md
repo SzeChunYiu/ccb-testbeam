@@ -461,7 +461,7 @@ you have either found something or broken something — investigate before repor
 | Pretrigger-proxy LORO sigma68 (best traditional) | 1.343 ns | S02d+S16e |
 | CFD20 baseline pickoff sigma68 | 1.846 ns | S02 |
 | Template-phase pickoff sigma68 | 2.889 ns | S02 |
-| A1-A3 robust width (A-stack cross-check) | 1.389 ns (note: 1.43 ns) | S18 |
+| A1-A3 robust width (A-stack independent-arm check — different particles; 2026-07-03) | 1.389 ns (note: 1.43 ns) | S18 |
 | Pile-up R_max (note assumption, tau_eff=90 ns) | 4.222 MHz | S10b |
 | Pile-up R_max (measured live-time, corrected) | ~3.05 MHz | S10b/S10c |
 | 10% tail-crossing live-time | 124.79 ns, CI [123.33, 126.36] | S10b/S10c |

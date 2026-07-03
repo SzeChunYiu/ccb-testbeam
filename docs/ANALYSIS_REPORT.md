@@ -38,11 +38,17 @@ The central conclusions are:
 ## 1. Experimental Setup and Data
 
 The experiment used a 190 MeV proton beam at the Cyclotron Centre Bronowice
-incident on a CD2 target. Charged particles were recorded by trigger
-scintillators, a TPC, and two HRD scintillator range stacks approximately
-1 m from the target. The principal analysis uses the B-stack staves B2, B4,
-B6, and B8. The A-stack channels A1 and A3 form an independent but lower
-statistics cross-check.
+incident on a CD2 target. Charged particles were recorded by two independent
+HRD scintillator range stacks (A and B) at conjugate angles, each
+approximately 1 m from the target and each behind its own trigger
+scintillators, with a TPC in front of stack A (experiment-owner setup facts,
+2026-07-03; diagram source: `drawing_ccb_setup`). The two arms measure
+different particles: pd-elastic scattering sends the proton into one arm and
+the kinematically-correlated deuteron into the other, so an A-B coincidence
+tags a correlated pair sharing the event T0, never the same particle twice.
+The principal analysis uses the B-stack staves B2, B4, B6, and B8. The
+A-stack channels A1 and A3 form an independent, lower-statistics methodology
+check on different particles.
 
 Each HRD pulse is an 18-sample waveform with nominal 10 ns sample spacing. The
 readout is one-ended through a wavelength-shifting fiber, so absolute position
@@ -59,7 +65,7 @@ symlink to `/home/billy/ccb-data/extracted`. The reduced ROOT input set is:
 | Input | Location | Role |
 |---|---|---|
 | B-stack raw ROOT | `data/root/root/hrdb_run_NNNN.root` | Primary B2/B4/B6/B8 waveform analysis |
-| A-stack raw ROOT | `data/root/root/hrda_run_NNNN.root` | A1/A3 cross-check |
+| A-stack raw ROOT | `data/root/root/hrda_run_NNNN.root` | A1/A3 independent-arm check |
 | Sorted files | `data/sorted-a`, `data/sorted-b` | Historical report inputs and diagnostics |
 
 The root bundle is not the only copy of the original data. `DATA.md` records
@@ -72,10 +78,19 @@ The current documentation follows the newer report split:
 
 | Sample | Stack | Runs | Calibration | Analysis | Interpretation |
 |---|---|---|---|---|---|
-| I | B | 31-57 | 31-42, excluding absent/problem runs as documented | 44-57 | D-enriched, mostly terminal-B2 |
+| I | B | 31-57 | 31-42, excluding absent/problem runs as documented | 44-57 | Mostly terminal-B2; D-enrichment is a hypothesis for S21 (2026-07-03) |
 | II | B | 58-65 | 64 | 58-63, 65 | p-enriched, penetrating downstream timing reference |
-| III | A | Same period as Sample I | 31-42 | 44-57 | A-stack analogue of Sample I |
-| IV | A | Same period as Sample II | 64 | 58-63, 65 | Low-statistics A-stack analogue of Sample II |
+| III | A | Same period as Sample I | 31-42 | 44-57 | A-arm data from the Sample I runs (different particles) |
+| IV | A | Same period as Sample II | 64 | 58-63, 65 | Low-statistics A-arm data from the Sample II runs |
+
+Trigger definitions (corrected 2026-07-03, experiment-owner setup facts):
+Sample I runs used the A AND B trigger coincidence (MC mimic: a charged
+particle entering the first A and the first B layer within 15 ns); Sample II
+runs used the B trigger alone (A ignored). In data the two samples are
+therefore disjoint run sets with different trigger configurations, while in
+the MC mimic Sample I is a subset of Sample II (inclusive flags in
+`src/ccb_mc_validation/io/root_truth.py`). Any MC-vs-data sample comparison
+must state this subset-vs-disjoint asymmetry.
 
 The B-stack selected-pulse counts are strongly topology dependent. Sample I
 analysis contains 252,266 selected B pulses, dominated by B2
@@ -307,9 +322,13 @@ topology terms. The covariance studies imply that a realistic two-ended
 projection must separate downstream clean timing from B2-local topology
 variance; otherwise it will overstate the improvement for terminal-B2 events.
 
-### 5.3 A-Stack Cross-Check
+### 5.3 A-Stack Independent-Arm Check
 
-S18 reproduced the A-stack A1-A3 scale from raw ROOT:
+The A-stack is an independent detector arm at the conjugate angle measuring
+different particles than the B-stack (experiment-owner setup facts,
+2026-07-03), so this section is a methodology reproduction on an independent
+detector, not a cross-check of the same particles. S18 reproduced the
+A-stack A1-A3 scale from raw ROOT:
 
 | Sample | Method | n pairs | robust width (ns) | 95% CI (ns) | core sigma (ns) | chi2/ndf |
 |---|---|---:|---:|---:|---:|---:|
@@ -319,9 +338,10 @@ S18 reproduced the A-stack A1-A3 scale from raw ROOT:
 | Sample IV | ridge timewalk | 127 | 1.559 | [1.334, 1.780] | 1.808 | 1.032 |
 
 For Sample III, the paired ML-minus-traditional CI was [-0.054, 0.026] ns
-with p = 0.524, so ML was not adopted. The A-stack supports the timing scale
-but remains a two-stave, lower-statistics cross-check, not a B-stack
-calibration source.
+with p = 0.524, so ML was not adopted. The A-stack supports the timing
+methodology but remains a two-stave, lower-statistics independent-arm check
+on different particles, not a B-stack calibration source and not a
+same-particle cross-check (2026-07-03).
 
 ## 6. Pile-Up Rate and Current Excess
 
@@ -686,7 +706,7 @@ representative reports:
 | Analytic timewalk | `reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction/REPORT.md` |
 | Timewalk LORO | `reports/1781005627.1877.378c7a87/REPORT.md` |
 | Covariance/error structure | `reports/1781009478.9969.16fe02b4/REPORT.md` |
-| A-stack cross-check | `reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/REPORT.md` |
+| A-stack independent-arm check | `reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/REPORT.md` |
 | Pile-up live-time | `reports/1781000867.546870.5c124aaf/REPORT.md` |
 | Current excess | `reports/1781012706.846.1f364432/REPORT.md`, `reports/1781017360.928.15a27ed1/REPORT.md` |
 | CWoLa current classifier | `reports/1781000867.546938.20f0173c/REPORT.md` |

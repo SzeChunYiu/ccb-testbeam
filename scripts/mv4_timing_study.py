@@ -10,23 +10,38 @@ Pipeline (per B-arm truth track):
      (gain, noise, pedestal, tau_rise, tau_decay), integrating the unit-peak
      scintillation shape over each 10 ns sample bin, with a deterministic
      sub-sample phase + noise seeded by event_id (no global RNG state)
-  3. CFD20 pick-off (20% of peak, linear interpolation between samples) -> t_cfd
+  3. CFD20 pick-off (20% of peak), rising-edge constrained: find the peak
+     sample, scan BACKWARD from the peak for the last prev < thr <= cur
+     crossing, linear interpolation -> t_cfd (fixed 2026-07-03: the old
+     forward-from-sample-0 scan latched onto pre-signal noise crossings)
   4. truth time = earliest hit time of the track (placed at a known window offset)
   5. residual  delta_t = t_cfd - t_truth ; sigma68 = (p84-p16)/2
   6. analytic amplitude timewalk correction  delta_t = A + B/amp (1/A form,
      fixed 2026-07-01 per MV4b; see reports/mv4b_timewalk_model/REPORT.md --
-     was 1/sqrt(amp), which gave an unphysical negative B and a corrected-path
-     pull TENSION), fit on half the tracks, applied to the other half;
+     was 1/sqrt(amp), which gave an unphysical negative B),
+     fit on half the tracks, applied to the other half;
      report corrected sigma68
-  7. compare to data: raw CFD20 sigma68 ~ 1.85 ns (S02), timewalk ~ 1.50 ns (S03)
+  7. compare to data: the MC residual is SINGLE-TRACE; the data anchors are
+     pooled two-stave PAIR-DIFFERENCE sigma68s (raw CFD20 ~ 2.993 ns from
+     S02 head_to_head_benchmark cfd20_reference; ML-corrected ~ 1.50 ns).
+     MC is converted to pair-equivalent via *sqrt(2) (independent staves)
+     and the MC/data RATIO is reported with the MC bootstrap error only.
+     No pull-based PASS/TENSION verdict is emitted: the comparison is
+     unmatched (merged-track MC vs per-stave data, unmatched selection).
+
+===========================================================================
+NOTE (EXTERNAL_REVIEW_2026-07-02.md): ALL digitizer ADC/MeV gains are
+RETRACTED. The default gain used here only sets the amplitude/noise scale
+of the toy digitizer; no ADC/MeV physics claim is made or implied.
+===========================================================================
 
 Outputs (reports/mv4_timing_STAMP/):
   mv4_summary.json
   mv4_waveform_examples.png   proton + deuteron simulated waveforms w/ CFD
   mv4_residuals.png           residual before/after timewalk
   mv4_sigma_vs_amp.png        sigma68 vs amplitude (timewalk validation)
-  mv4_data_vs_mc.png          MC vs data S02/S03 sigma68 with error bars
-  mv4_pull.png                pull (MC-data)/combined_unc
+  mv4_data_vs_mc.png          pair-equivalent MC vs data sigma68
+  mv4_ratio.png               MC/data ratio (MC bootstrap error only)
   REPORT.md
 
 Usage:
@@ -44,10 +59,22 @@ import numpy as np
 B_ARM = 1
 PROTON, DEUTERON = 2212, 1000010020
 
-# data anchors (FINDINGS_SYNTHESIS): S02 raw CFD20, S03 analytic timewalk
-DATA_SIGMA_RAW = 1.85
-DATA_SIGMA_CORR = 1.50
-DATA_SIGMA_UNC = 0.10  # assumed data sigma68 uncertainty (documented assumption)
+# ---------------------------------------------------------------------------
+# Data anchors: pooled two-stave PAIR-DIFFERENCE sigma68s [ns].
+#
+# DATA_SIGMA_RAW is the true raw CFD20 pooled pair-difference sigma68 from
+#   reports/1780997954.15157.07ef03cf__s02_timing_pickoff/head_to_head_benchmark.csv
+#   row `cfd20_reference` (2.9933861916712807 ns).
+# The previous value here (1.85, commented "S02 raw CFD20") was WRONG: 1.85 is
+# the ML-ridge-CORRECTED number (`ml_ridge` row, 1.846 ns), not the raw CFD20.
+#
+# DATA_SIGMA_CORRECTED (1.50, S03) is kept for reference only.
+#
+# NOTE: these are PAIR-DIFFERENCE numbers; the MC residual below is
+# single-trace, so MC must be multiplied by sqrt(2) before comparing.
+# ---------------------------------------------------------------------------
+DATA_SIGMA_RAW = 2.993
+DATA_SIGMA_CORRECTED = 1.50
 
 DEFAULTS = dict(gain_adc_per_mev=246.0, noise_adc_rms=50.0, pedestal_adc=350.0,
                 tau_rise_ns=2.5, tau_decay_ns=42.0, n_samples=18, sample_spacing_ns=10.0,
@@ -118,23 +145,30 @@ class Digitizer:
         return wf
 
     def cfd20(self, wf):
+        """Rising-edge-constrained CFD at 20% of peak.
+
+        FIX (2026-07-03, external review): the old implementation took the
+        FIRST sample >= threshold scanning forward from sample 0. Since the
+        threshold (0.2*peak) can be ~1 sigma of noise at low amplitude,
+        pre-signal noise crossings fired ~50% of the time, corrupting t_cfd.
+        Now: find the peak sample first, then scan BACKWARD from the peak for
+        the last crossing where prev < thr <= cur, and linearly interpolate
+        (same pattern as s05c_hierarchical_bstack_covariance.cfd_quantities,
+        which constrains the crossing to sample_index <= peak).
+        """
         w = wf - self.ped
-        peak = float(w.max())
+        jp = int(np.argmax(w))
+        peak = float(w[jp])
         if peak <= 0:
             return float("nan"), peak
         thr = 0.20 * peak
-        above = np.where(w >= thr)[0]
-        if above.size == 0:
-            return float("nan"), peak
-        j = int(above[0])
-        if j == 0:
-            return float(self.centers[0]), peak
-        w0, w1 = w[j - 1], w[j]
-        if w1 == w0:
-            return float(self.centers[j]), peak
-        frac = (thr - w0) / (w1 - w0)
-        t_cfd = self.centers[j - 1] + frac * self.dt
-        return float(t_cfd), peak
+        for j in range(jp, 0, -1):
+            if w[j - 1] < thr <= w[j]:
+                # prev < thr <= cur guarantees w[j] > w[j-1]
+                frac = (thr - w[j - 1]) / (w[j] - w[j - 1])
+                return float(self.centers[j - 1] + frac * self.dt), peak
+        # no rising-edge crossing before the peak (e.g. peak at sample 0)
+        return float(self.centers[jp]), peak
 
 
 def load_digitizer_params(calib_path):
@@ -253,10 +287,12 @@ def main():
     # Fitting the wrong functional form previously produced an unphysical
     # negative B (B = -23.00 ns*sqrt(ADC), meaning larger pulses got MORE
     # correction added instead of less) and an MV4-corrected-path pull of
-    # +2.68 (TENSION) against a raw-path pull of only -1.05 (PASS). Switching
-    # to the physical 1/A form is expected to reduce or resolve that tension;
-    # this must be confirmed by re-running this script on LUNARC and checking
-    # the resulting pull, not assumed from this comment alone.
+    # +2.68 (TENSION) against a raw-path pull of only -1.05 (PASS). [Historical
+    # note: pull-based verdicts have since been removed entirely -- the data
+    # uncertainty was an assumption and the comparison is unmatched; the report
+    # now emits only the MC/data ratio with MC bootstrap error.] Switching to
+    # the physical 1/A form must be confirmed by re-running on LUNARC, not
+    # assumed from this comment alone.
     #
     # Robust fit: the walk curve is fit to MEDIAN residual per amplitude bin on
     # the training half (per-track OLS in 1/amp is dominated by low-amp
@@ -301,12 +337,24 @@ def main():
         sig_raw_err.append(boot_sigma68(residual[mb], n_boot=100))
         sig_corr_err.append(boot_sigma68(corrected[mb], n_boot=100))
 
-    # ---- pulls vs data ----
-    def pull(mc, mc_unc, data, data_unc):
-        comb = float(np.sqrt(mc_unc ** 2 + data_unc ** 2))
-        return (mc - data) / comb if comb > 0 else float("nan"), comb
-    pull_raw, comb_raw = pull(raw_sigma, raw_unc, DATA_SIGMA_RAW, DATA_SIGMA_UNC)
-    pull_corr, comb_corr = pull(corr_sigma_test, corr_unc, DATA_SIGMA_CORR, DATA_SIGMA_UNC)
+    # ---- pair-equivalent MC vs data (RATIO only; no pull, no PASS/TENSION) ----
+    # The MC residual is single-trace (t_cfd - t_truth), while the data anchors
+    # are pooled two-stave PAIR-DIFFERENCE sigma68s. Assuming INDEPENDENT stave
+    # errors, a pair difference carries sqrt(2) x the single-stave sigma, so
+    # the pair-equivalent MC number is mc_sigma * sqrt(2).
+    # The data sigma68 uncertainty is not measured (the old 0.10 ns was an
+    # assumption), so no pull is computed: we report the MC/data RATIO with the
+    # MC bootstrap error only.
+    SQRT2 = float(np.sqrt(2.0))
+    raw_pair, raw_pair_unc = raw_sigma * SQRT2, raw_unc * SQRT2
+    corr_pair, corr_pair_unc = corr_sigma_test * SQRT2, corr_unc * SQRT2
+    ratio_raw = raw_pair / DATA_SIGMA_RAW
+    ratio_raw_unc = raw_pair_unc / DATA_SIGMA_RAW
+    ratio_corr = corr_pair / DATA_SIGMA_CORRECTED
+    ratio_corr_unc = corr_pair_unc / DATA_SIGMA_CORRECTED
+    VERDICT = ("REVIEW — unmatched comparison (merged-track MC vs per-stave data; "
+               "selection unmatched; gain retracted); matched per-stave rerun "
+               "pending Phase 1 digitizer")
 
     summary = {
         "study_id": "MV4",
@@ -322,10 +370,26 @@ def main():
             "corrected_all": corr_sigma_all,
         },
         "residual_median_ns": float(np.median(residual)),
-        "data_reference": {"S02_raw": DATA_SIGMA_RAW, "S03_corrected": DATA_SIGMA_CORR,
-                           "assumed_data_unc": DATA_SIGMA_UNC},
-        "pull": {"raw": pull_raw, "raw_combined_unc": comb_raw,
-                 "corrected": pull_corr, "corrected_combined_unc": comb_corr},
+        "gain_retraction_note": ("all digitizer ADC/MeV gains RETRACTED per "
+                                 "EXTERNAL_REVIEW_2026-07-02.md; gain here only sets the "
+                                 "toy amplitude/noise scale, no ADC/MeV claim"),
+        "data_reference": {
+            "S02_raw_cfd20_pair_sigma68": DATA_SIGMA_RAW,
+            "S02_raw_source": ("reports/1780997954.15157.07ef03cf__s02_timing_pickoff/"
+                               "head_to_head_benchmark.csv row cfd20_reference"),
+            "S03_corrected_pair_sigma68": DATA_SIGMA_CORRECTED,
+            "semantics": "pooled two-stave pair-difference sigma68; data unc not measured",
+        },
+        "mc_pair_equivalent_ns": {
+            "raw": raw_pair, "raw_unc": raw_pair_unc,
+            "corrected": corr_pair, "corrected_unc": corr_pair_unc,
+            "conversion": "mc_sigma * sqrt(2), assuming independent stave errors",
+        },
+        "mc_over_data_ratio": {
+            "raw": ratio_raw, "raw_unc_mc_only": ratio_raw_unc,
+            "corrected": ratio_corr, "corrected_unc_mc_only": ratio_corr_unc,
+        },
+        "verdict": VERDICT,
         "improvement_factor": float(raw_sigma / corr_sigma_test) if corr_sigma_test else None,
         "n_proton": int((pdg_arr == PROTON).sum()),
         "n_deuteron": int((pdg_arr == DEUTERON).sum()),
@@ -380,38 +444,40 @@ def main():
     fig.tight_layout(); fig.savefig(os.path.join(args.out, "mv4_sigma_vs_amp.png"), dpi=130)
     plt.close(fig)
 
-    # 4. data vs MC sigma comparison
+    # 4. data vs MC sigma comparison (MC converted to pair-equivalent, *sqrt(2))
     fig, ax = plt.subplots(figsize=(7, 5))
     labels = ["raw CFD20", "timewalk-corr"]
-    mc_vals = [raw_sigma, corr_sigma_test]; mc_errs = [raw_unc, corr_unc]
-    data_vals = [DATA_SIGMA_RAW, DATA_SIGMA_CORR]; data_errs = [DATA_SIGMA_UNC, DATA_SIGMA_UNC]
+    mc_vals = [raw_pair, corr_pair]; mc_errs = [raw_pair_unc, corr_pair_unc]
+    data_vals = [DATA_SIGMA_RAW, DATA_SIGMA_CORRECTED]
     xpos = np.arange(len(labels)); w = 0.35
-    ax.bar(xpos - w / 2, mc_vals, w, yerr=mc_errs, capsize=4, color="C0", label="MC")
-    ax.bar(xpos + w / 2, data_vals, w, yerr=data_errs, capsize=4, color="C1", label="data (S02/S03)")
+    ax.bar(xpos - w / 2, mc_vals, w, yerr=mc_errs, capsize=4, color="C0",
+           label="MC pair-equivalent (sigma*sqrt(2))")
+    ax.bar(xpos + w / 2, data_vals, w, color="C1",
+           label="data pair-diff sigma68 (unc not measured)")
     ax.set_xticks(xpos); ax.set_xticklabels(labels)
-    ax.set_ylabel("sigma68 [ns]"); ax.set_title("MV4 MC vs data timing resolution"); ax.legend()
+    ax.set_ylabel("pair-difference sigma68 [ns]")
+    ax.set_title("MV4 pair-equivalent MC vs data (unmatched comparison)"); ax.legend()
     fig.tight_layout(); fig.savefig(os.path.join(args.out, "mv4_data_vs_mc.png"), dpi=130)
     plt.close(fig)
 
-    # 5. pull plot
+    # 5. ratio plot (MC bootstrap error only; no pull -- data unc not measured)
     fig, ax = plt.subplots(figsize=(7, 4.5))
-    pulls = [pull_raw, pull_corr]
-    ax.bar(labels, pulls, color=["C0", "C3"])
-    for sgma, c in [(1, "gray"), (2, "lightgray")]:
-        ax.axhspan(-sgma, sgma, color=c, alpha=0.25, zorder=0)
-    ax.axhline(0, color="k", lw=1)
-    ax.set_ylabel("pull  (MC - data)/combined_unc")
-    ax.set_title("MV4 MC-vs-data pull (bands: +/-1, +/-2 sigma)")
-    fig.tight_layout(); fig.savefig(os.path.join(args.out, "mv4_pull.png"), dpi=130)
+    ratios = [ratio_raw, ratio_corr]
+    ratio_errs = [ratio_raw_unc, ratio_corr_unc]
+    ax.bar(labels, ratios, yerr=ratio_errs, capsize=4, color=["C0", "C3"])
+    ax.axhline(1.0, color="k", lw=1, ls="--")
+    ax.set_ylabel("MC(pair-equiv) / data")
+    ax.set_title("MV4 MC/data ratio (MC bootstrap error only; unmatched comparison)")
+    fig.tight_layout(); fig.savefig(os.path.join(args.out, "mv4_ratio.png"), dpi=130)
     plt.close(fig)
 
     # ---- REPORT.md ----
-    def verdict(p):
-        ap_ = abs(p)
-        return "PASS" if ap_ < 2 else ("TENSION" if ap_ < 3 else "FAIL")
     lines = []
     lines.append("# MV4 -- Timing-Resolution MC Validation\n")
-    lines.append("- status: **PRODUCTION**")
+    lines.append("> **NOTE (EXTERNAL_REVIEW_2026-07-02.md):** all digitizer ADC/MeV gains are "
+                 "**RETRACTED**. The default gain used here only sets the amplitude/noise scale "
+                 "of the toy digitizer; **no ADC/MeV physics claim is made**.\n")
+    lines.append("- status: **REVIEW**")
     lines.append(f"- generated: {summary['generated_utc']}")
     lines.append(f"- MC: `{summary['mc_file']}`")
     lines.append(f"- tracks used: {residual.size} (proton {summary['n_proton']}, deuteron {summary['n_deuteron']})")
@@ -429,40 +495,37 @@ def main():
     lines.append(f"| timewalk-corrected sigma68 | {corr_sigma_test:.3f} +/- {corr_unc:.3f} ns |")
     lines.append(f"| improvement factor | {summary['improvement_factor']:.2f}x |")
     lines.append(f"| timewalk fit A | {A:.3f} ns |")
-    lines.append(f"| timewalk fit B | {B:.2f} ns*sqrt(ADC) |")
+    lines.append(f"| timewalk fit B | {B:.2f} ns*ADC (1/A form) |")
     lines.append(f"| residual median | {np.median(residual):.3f} ns |\n")
     lines.append("## Methodology")
     lines.append("- Per B-arm charged truth track: 18-sample ADC waveform from the unit-peak scintillation "
                  "shape (integrated over each 10 ns bin), per-hit amp = EDep*gain, plus Gaussian noise.")
     lines.append("- Deterministic sub-sample phase + noise seeded by `event_id` (no global RNG) so the run is reproducible.")
-    lines.append("- CFD20: 20% of peak, linear interpolation between straddling samples -> t_cfd.")
+    lines.append("- CFD20: rising-edge constrained -- find the peak sample, scan backward from the peak for the "
+                 "last prev < thr <= cur crossing (thr = 20% of peak), linear interpolation -> t_cfd. "
+                 "(Fixed 2026-07-03: the old forward-from-sample-0 scan fired on pre-signal noise crossings.)")
     lines.append("- Truth time = earliest hit time, placed at a fixed window offset; residual = t_cfd - t_truth.")
-    lines.append("- Timewalk model dt = A + B/sqrt(amp): fit on even-index tracks, applied to odd-index tracks; "
-                 "sigma68 reported on the held-out half.\n")
-    lines.append("## Comparison to data")
-    lines.append("| stage | MC sigma68 [ns] | data sigma68 [ns] | pull | verdict |")
+    lines.append("- Timewalk model dt = A + B/amp (physical 1/A leading-edge form, MV4b fix 2026-07-01): "
+                 "fit on even-index tracks, applied to odd-index tracks; sigma68 reported on the held-out half.\n")
+    lines.append("## Comparison to data (unmatched -- see verdict)")
+    lines.append("- The MC residual is **single-trace** (t_cfd - t_truth); the data anchors are pooled "
+                 "two-stave **pair-difference** sigma68s. MC is converted to pair-equivalent via "
+                 "`mc_sigma * sqrt(2)` (assumes independent stave errors).")
+    lines.append("- Data anchor: raw CFD20 pair-difference sigma68 = "
+                 f"{DATA_SIGMA_RAW:.3f} ns (S02 head_to_head_benchmark.csv, row cfd20_reference); "
+                 f"ML-corrected reference = {DATA_SIGMA_CORRECTED:.2f} ns (S03).")
+    lines.append("- The data sigma68 uncertainty is not measured, so **no pull is computed**; the ratio "
+                 "error below is the MC bootstrap error only.\n")
+    lines.append("| stage | MC single-trace [ns] | MC pair-equiv [ns] | data pair-diff [ns] | MC/data ratio |")
     lines.append("|---|---|---|---|---|")
-    lines.append(f"| raw CFD20 | {raw_sigma:.2f}+/-{raw_unc:.2f} | {DATA_SIGMA_RAW:.2f} (S02) | "
-                 f"{pull_raw:+.2f} | {verdict(pull_raw)} |")
-    lines.append(f"| timewalk-corr | {corr_sigma_test:.2f}+/-{corr_unc:.2f} | {DATA_SIGMA_CORR:.2f} (S03) | "
-                 f"{pull_corr:+.2f} | {verdict(pull_corr)} |\n")
-    overall = "PASS" if (verdict(pull_raw) == "PASS" and verdict(pull_corr) == "PASS") else "REVIEW"
-    data_impr = DATA_SIGMA_RAW / DATA_SIGMA_CORR
-    mc_impr = summary["improvement_factor"] or float("nan")
+    lines.append(f"| raw CFD20 | {raw_sigma:.3f}+/-{raw_unc:.3f} | {raw_pair:.3f}+/-{raw_pair_unc:.3f} | "
+                 f"{DATA_SIGMA_RAW:.3f} (S02) | {ratio_raw:.3f}+/-{ratio_raw_unc:.3f} |")
+    lines.append(f"| timewalk-corr | {corr_sigma_test:.3f}+/-{corr_unc:.3f} | {corr_pair:.3f}+/-{corr_pair_unc:.3f} | "
+                 f"{DATA_SIGMA_CORRECTED:.2f} (S03) | {ratio_corr:.3f}+/-{ratio_corr_unc:.3f} |\n")
     lines.append("## MC verdict")
-    lines.append(f"- Raw CFD20 resolution **reproduces data** (MC {raw_sigma:.2f} vs S02 {DATA_SIGMA_RAW:.2f} ns, "
-                 f"pull {pull_raw:+.2f}); overall **{overall}**.")
-    if mc_impr >= 0.9 * data_impr:
-        lines.append(f"- The timewalk correction improves MC sigma68 by {mc_impr:.2f}x, reproducing the "
-                     f"data S02->S03 improvement ({data_impr:.2f}x).")
-    else:
-        lines.append(f"- The MC shows **little amplitude timewalk** (correction {mc_impr:.2f}x vs data "
-                     f"{data_impr:.2f}x): with an ideal fractional CFD the leading-edge time is nearly "
-                     "amplitude-independent, so there is little walk to remove. The data's larger "
-                     "S02->S03 gain points to walk sources absent from this toy (real pulse-shape "
-                     "variation, baseline restoration, discrete-threshold electronics) -- hence the "
-                     "corrected-stage TENSION, while the raw resolution agrees.")
-    lines.append("- Data uncertainty is an assumption (0.10 ns); a measured data sigma68 error would sharpen the pull.\n")
+    lines.append(f"- **{VERDICT}**")
+    lines.append("- The ratio quantifies agreement scale only; it is not a hypothesis test. A matched "
+                 "comparison requires a per-stave MC digitization with the data selection applied.\n")
     lines.append("## Open questions")
     lines.append("- Absolute residual offset is set by the (arbitrary) window placement; only the spread (sigma68) "
                  "is physical. A common global time reference would let MC reproduce the data offset too.")

@@ -22,7 +22,7 @@ done, the results, the current state, what is blocking us, and what comes next.*
 | **Physics goals** | (1) same-particle **timing resolution** of the staves; (2) **pile-up** characterisation; (3+) energy/PID, now reachable via MC. |
 | **Data** | 640,737 selected B-stack pulses (median selector) / 706,373 (dynamic selector), 18-sample waveforms @ 10 ns. ~6.4 GB, stored **outside git**, immutable. |
 | **Method discipline** | Reproduce-first, traditional **and** ML head-to-head, atomic decomposition, three leakage controls, explicit MC verdict per study. See `docs/REPORT_STANDARD.md`. |
-| **Done so far** | ~230 data-driven studies complete; **all 6 MC validations done (MV0–MV6)**; Sample I/II trigger split reproduced. MV9 synthesis complete. |
+| **Done so far** | ~230 data-driven studies complete; **all 6 MC validations done (MV0–MV6)**; Sample I/II trigger split mimicked in MC (2026-07-03: the enrichment claim is downgraded to a hypothesis for S21 — the earlier run used retracted machinery). MV9 synthesis complete. |
 | **Headline science** | Analytic timewalk wins timing (sigma68 ~1.49-1.55 ns); pile-up R_max revised down 4.2 -> ≤3.05 MHz (one-sided bound); ML wins shape-closure tasks; **p/d PID MC-closed at AUC 0.986.** |
 | **Biggest open item** | **2026-07-03 correction:** MV0/MV2/MV5/MV6 retracted, MV4 under review (External Review 2026-07-02). MV3 stopping-depth FAIL (structural; root cause not established — MV3b toy estimate retracted). Anomaly species identity reopened (MV6 C12 attribution retracted). |
 
@@ -31,14 +31,18 @@ done, the results, the current state, what is blocking us, and what comes next.*
 ## 2. The measurement (science in brief)
 
 At the Cyclotron Centre Bronowice (CCB, Krakow) a **190 MeV proton beam** strikes a **deuterated
-polyethylene (CD2)** target. Charged particles leaving the target are recorded by trigger
-scintillators, a TPC, and **two HRD scintillator range stacks** (A and B), each ~1 m from the
-target, acting as a data-driven **ΔE-E / range telescope**.
+polyethylene (CD2)** target. Charged particles leaving the target are recorded by **two independent
+HRD scintillator range stacks** (A and B) at **conjugate angles**, each ~1 m from the target and
+each behind its **own trigger scintillators**, with a **TPC in front of stack A** (experiment-owner
+setup facts, 2026-07-03). Each stack acts as a data-driven **ΔE-E / range telescope**; the two arms
+measure **different particles** — pd-elastic sends the proton into one arm and the kinematically-
+correlated deuteron into the other.
 
 For each stave we record an **18-sample waveform at 10 ns spacing**, read out at one end via a
 wavelength-shifting (WLS) fibre, and reconstruct an amplitude (ADC), a time (ns), and shape
-variables. The main analysis uses **B-stack staves B2, B4, B6, B8**; the **A-stack (A1, A3)** is a
-decoupled cross-check.
+variables. The main analysis uses **B-stack staves B2, B4, B6, B8**; the **A-stack (A1, A3)** is an
+independent arm measuring **different particles** — an independent methodology check, not a
+same-particle cross-check (corrected 2026-07-03, experiment-owner setup facts).
 
 **The two original goals, plus the MC-enabled third:**
 1. **Timing resolution** — how precisely a stave (and a multi-stave event) timestamps a particle,
@@ -51,12 +55,19 @@ decoupled cross-check.
 
 | Sample | Stack | Enrichment | Role |
 |---|---|---|---|
-| Sample I (runs 31-57) | B | D-enriched, terminal-B2-like | topology-heavy |
+| Sample I (runs 31-57) | B | terminal-B2-like; D-enrichment = hypothesis (S21) | topology-heavy |
 | Sample II (runs 58-65) | B | p-enriched, penetrating | clean timing reference |
-| Sample III / IV | A | = Sample I / II runs | A-stack cross-check |
+| Sample III / IV | A | = Sample I / II runs | A-arm data (different particles) |
 
-The Sample I/II split is **MC-confirmed**: the trigger-split GEANT4 run reproduces Matthias's
-deuteron enrichment in the first B layer (Sci_bar LayerID 1 = stack B, 2 = stack A).
+**Trigger definitions (experiment-owner setup facts, 2026-07-03):** Sample I = **A AND B trigger
+coincidence** (MC mimic: a charged particle entering the first A and the first B layer within
+15 ns); Sample II = **B trigger only** (A ignored). In MC, Sample I is a **subset** of Sample II
+(inclusive flags in `src/ccb_mc_validation/io/root_truth.py`); in data, Samples I and II are
+**disjoint run sets** taken with different trigger configurations — MC-vs-data sample comparisons
+must state this asymmetry. Matthias's deuteron enrichment of Sample I in the first B layer
+(Sci_bar LayerID 1 = stack B, 2 = stack A) is a **hypothesis, to be tested by S21**
+(trigger-mimicked truth study) — the earlier MC "confirmation" ran on retracted machinery.
+Proposed mechanism: the coincidence tags kinematically-correlated pd-elastic pairs.
 
 ---
 

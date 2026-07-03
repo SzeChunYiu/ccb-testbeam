@@ -4,9 +4,12 @@
 
 At the Cyclotron Centre Bronowice (CCB, Kraków) a **190 MeV proton beam** strikes a
 **deuterated polyethylene (CD₂)** target. Charged particles leaving the target are recorded by
-a detector system: trigger scintillators, a TPC, and **two HRD scintillator range stacks**
-(Stack A and Stack B), each ~100 cm from the target. The stacks range out charged particles
-and act as a **data-driven ΔE–E / range telescope**.
+**two independent HRD scintillator range stacks** (Stack A and Stack B) at **conjugate angles**,
+each ~100 cm from the target and each behind its **own trigger scintillators**, with a **TPC in
+front of Stack A** (experiment-owner setup facts, 2026-07-03; diagram source: `drawing_ccb_setup`).
+The two arms measure **different particles** — pd-elastic sends the proton into one arm and the
+kinematically-correlated deuteron into the other. Each stack ranges out charged particles and
+acts as a **data-driven ΔE–E / range telescope**.
 
 The analysis is **entirely data-driven — there is no Monte Carlo truth**. Particle-type and
 energy statements are *sample-level* interpretations, never per-event truth labels.
@@ -19,8 +22,9 @@ For each scintillator stave we record an **18-sample waveform at 10 ns spacing**
 - a **pulse time** (leading-edge / optimal-filter, ns),
 - a set of **pulse-shape variables** (tail fraction, late fraction, area/peak, …).
 
-The main analysis uses **B-stack staves B2, B4, B6, B8**; the **A-stack (A1, A3)** is a
-decoupled cross-check (see [08_astack.md](08_astack.md)).
+The main analysis uses **B-stack staves B2, B4, B6, B8**; the **A-stack (A1, A3)** is an
+independent arm measuring different particles — an independent methodology check, not a
+same-particle cross-check (corrected 2026-07-03; see [08_astack.md](08_astack.md)).
 
 ## The two physics goals
 
@@ -49,10 +53,16 @@ decoupled cross-check (see [08_astack.md](08_astack.md)).
 
 | Sample | Stack | Former name | Physics enrichment | Role |
 |---|---|---|---|---|
-| Sample I | B | "30 s" | D-enriched, terminal-B2-like | topology-heavy |
+| Sample I | B | "30 s" | terminal-B2-like; D-enrichment = hypothesis (S21) | topology-heavy |
 | Sample II | B | "60 s" | p-enriched, penetrating | clean timing reference |
-| Sample III | A | (= Sample I runs) | — | A-stack cross-check |
-| Sample IV | A | (= Sample II runs) | — | A-stack, low stats |
+| Sample III | A | (= Sample I runs) | — | A-arm data (different particles) |
+| Sample IV | A | (= Sample II runs) | — | A-arm data, low stats |
+
+> **Trigger definitions (corrected 2026-07-03, experiment-owner setup facts):** Sample I = **A AND
+> B trigger coincidence** (MC mimic: charged particle entering the first A and first B layer within
+> 15 ns); Sample II = **B trigger only** (A ignored). In data the samples are **disjoint run sets**
+> with different trigger configurations; in MC the mimicked Sample I is a **subset** of Sample II —
+> MC-vs-data sample comparisons must state this asymmetry.
 
 ## Reading order
 

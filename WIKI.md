@@ -83,6 +83,18 @@ The analysis does **not** find that machine learning should fully replace tradit
   └───────────┘          └───────────┘
 ```
 
+> **Authoritative setup (experiment-owner setup facts, 2026-07-03; diagram source: `drawing_ccb_setup`):**
+> Stack A and Stack B are **two independent detector arms at conjugate angles**, each ~100 cm from
+> the CD₂ target and each behind its **own trigger scintillators**, with the **TPC in front of
+> Stack A only**. The arms measure **different particles** — pd-elastic scattering sends the proton
+> into one arm and the kinematically-correlated deuteron into the other. An A·B coincidence
+> therefore tags a correlated **pair** sharing the event T0, never the same particle twice.
+> The triggers define the samples: **Sample I = A AND B trigger coincidence** (MC mimic: a charged
+> particle entering the first A layer and the first B layer within 15 ns); **Sample II = B trigger
+> only** (A ignored). In MC, Sample I is a **subset** of Sample II (inclusive); in data, Samples I
+> and II are **disjoint run sets** taken with different trigger configurations. The ASCII sketch
+> above is schematic only.
+
 ### Detector Details
 
 | Component | Specification |
@@ -92,7 +104,7 @@ The analysis does **not** find that machine learning should fully replace tradit
 | **HRD Stacks** | Two scintillator range telescopes (A and B) |
 | **Distance from target** | ~100 cm |
 | **Primary staves** | B2, B4, B6, B8 (even channels only) |
-| **Cross-check staves** | A1, A3 (A-stack) |
+| **Independent-arm staves** | A1, A3 (Stack A — independent arm at the conjugate angle, measures different particles) |
 | **Waveform** | 18 samples × 10 ns spacing = 180 ns window |
 | **Readout** | One-ended wavelength-shifting (WLS) fibre → SiPM |
 | **WLS propagation** | ~17 cm/ns |
@@ -113,12 +125,12 @@ This is **not** an imaging detector — we get time and amplitude, not spatial p
 
 | Sample | Stack | Description | Enrichment |
 |---|---|---|---|
-| **Sample I** | B | D-enriched, topology-heavy | More deuterons stop in B2 |
-| **Sample II** | B | p-enriched, penetrating | More protons reach B6/B8 |
-| **Sample III** | A | Same runs as Sample I | A-stack cross-check |
-| **Sample IV** | A | Same runs as Sample II | Low statistics |
+| **Sample I** | B | A·B trigger-coincidence runs; topology-heavy | D-enrichment in B: **hypothesis** (S21) |
+| **Sample II** | B | B-trigger-only runs; penetrating | p-enriched (interpretation) |
+| **Sample III** | A | A-arm data from the Sample I runs | Independent arm — different particles |
+| **Sample IV** | A | A-arm data from the Sample II runs | Low statistics (A not in the trigger) |
 
-> **Key insight:** The "Sample I vs II" split reflects trigger configuration, not a beam change. The enrichment was confirmed by GEANT4 simulation (see [Proton/Deuteron PID (MV1)](reports/mv1_mv2_truth_pid_energy/)).
+> **Key insight (corrected 2026-07-03, experiment-owner setup facts):** The "Sample I vs II" split reflects trigger configuration, not a beam change: **Sample I = A AND B trigger coincidence** (MC mimic: charged particle entering the first A and first B layer within 15 ns); **Sample II = B trigger only** (A ignored). In MC, Sample I is a **subset** of Sample II (inclusive flags in `src/ccb_mc_validation/io/root_truth.py`; the legacy `sample_label` was exclusive). In data, Samples I and II are **disjoint run sets** with different trigger configurations — every MC-vs-data sample comparison must state this asymmetry. Matthias' deuteron enrichment of Sample I in the B stack is a **hypothesis, to be tested by S21** (trigger-mimicked truth study) — the earlier GEANT4 "confirmation" ran on retracted machinery. Proposed mechanism: the coincidence tags kinematically-correlated pd-elastic pairs.
 
 ---
 
@@ -187,7 +199,7 @@ This lets the same analysis pipeline run on MC data **with truth labels attached
 > - Combined 3-stave (B4+B6+B8): **σ₆₈ ≈ 0.54–0.56 ns** (under review — covariance validation withdrawn 2026-07-03)
 > - Analytic timewalk reaches **1.49–1.55 ns** — tied with ML at 1.39–1.47 ns under proper cross-validation
 > - B2-containing pairs have **large covariance** — B2 is excluded from precision timing
-> - A-stack reproduces: **A1–A3 width = 1.39 ns** (matches note's 1.43 ns)
+> - A-stack reproduces: **A1–A3 width = 1.39 ns** (matches note's 1.43 ns) — independent-arm methodology check on different particles (2026-07-03)
 > - MC timing verdicts (MV4): UNDER REVIEW 2026-07-03 — comparison not apples-to-apples; matched rerun required
 
 ### 4.1 What is Timing Resolution?
@@ -253,13 +265,20 @@ B2-containing timing pairs show dramatically larger covariance:
 
 This means B2 timing fluctuations are **not independent** of other staves — there is a shared, topology-correlated component. **B2 must be excluded from precision event-time estimates.** This is a physics finding (terminal deuteron topology), not a detector malfunction.
 
-### 4.6 A-Stack Cross-Check
+### 4.6 A-Stack Independent-Arm Check
 
 **Study:** [A-Stack Independent Reproduction (S18)](reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/)
 
-The A-stack (A1/A3) provides a **completely decoupled** timing measurement:
-- **Sample III** (D-enriched): robust width **1.39 ns** — reproduces the analysis note's 1.43 ns
-- **Sample IV** (p-enriched): broadening to 1.79 ns is a **calibration-pool / low-statistics effect**, not a physics effect
+> **Interpretation corrected 2026-07-03 (experiment-owner setup facts):** the A-stack is an
+> **independent detector arm at the conjugate angle** — it measures **different particles** than the
+> B-stack (pd-elastic sends the proton into one arm, the correlated deuteron into the other). Its
+> timing results therefore check the **methodology** (calibration chain, timewalk, width extraction)
+> on an independent detector; they are *not* a cross-check of the same particles, and any A–B
+> coincidence timing carries the pd-pair kinematic spread plus the shared event T0.
+
+The A-stack (A1/A3) provides an analysis-decoupled timing measurement on the independent arm:
+- **Sample III** (A-arm data, coincidence-trigger runs): robust width **1.39 ns** — reproduces the analysis note's 1.43 ns
+- **Sample IV** (A-arm data, B-trigger-only runs): broadening to 1.79 ns is a **calibration-pool / low-statistics effect**, not a physics effect
 - ML residual correction makes timing *worse* (1.94 ns) — **ML is not adopted** for A-stack
 
 ### 4.7 MC Validation of Timing
@@ -454,7 +473,7 @@ MC truth (MV2 — ⛔ retracted pending rerun, 2026-07-03):
 With no per-event truth labels in data, we use **physics-driven proxies**:
 - **ΔE–E method:** heavier particles (deuterons) deposit more energy per unit length and stop earlier
 - **Range separation:** deuterons stop in B2/B4; protons reach B6/B8
-- **Sample enrichment:** Sample I = deuteron-enriched (trigger selects early-stopping); Sample II = proton-enriched
+- **Sample enrichment (hypothesis — corrected 2026-07-03):** Sample I (A·B trigger coincidence) is *hypothesized* to be deuteron-enriched in the B stack; the proposed mechanism is that the coincidence tags kinematically-correlated pd-elastic pairs (not "the trigger selects early-stopping"). To be tested by S21 (trigger-mimicked truth study). Sample II (B trigger only) = proton-enriched interpretation
 
 ### 8.2 MC Truth Validation
 
@@ -646,7 +665,7 @@ Every study with a proper descriptive name and hyperlink to its full report.
 | **S03a** | Amplitude-Binned Monotonic Timewalk | |
 | **S03k** | Gated HGB Timing | σ₆₈ = 1.107 ns (in-fold); needs transfer audit |
 | **S05** | [Hierarchical B-Stack Covariance](reports/) | B2 pairs far more correlated than downstream pairs (quantitative covariance values ~1042/~16 ns² withdrawn 2026-07-03 — closure script numerically invalid) |
-| **S05a** | A-Stack External Control | |
+| **S05a** | A-Stack Independent-Arm Control (formerly "External Control"; the A arm measures different particles — experiment-owner setup facts, 2026-07-03) | |
 | **S07** | [ML Rigor Scoreboard](reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard/) | Most ML "wins" are leaked; CORRECTED claims |
 | **S10** | [Pile-up Rate Model](reports/1780997954.15277.548b01a3__s10_pileup_rate_model/) | τ_eff = 124.8 ns → R_max ≤ 3.05 MHz (one-sided bound) |
 | **S11** | [Two-Pulse Template + ML Recovery](reports/) | ML wins RMS but higher failure rate |

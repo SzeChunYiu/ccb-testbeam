@@ -74,7 +74,7 @@ Every finding is traceable to a specific report or source file.
 - **Severity:** ⚠️ **MEDIUM** (approximation used for headline number)
 - **Source:** S05d, `docs/09_open_questions.md`
 - **Finding:** The √2 projection for two-ended readout (σ_two-ended ≈ σ_one-ended / √2) "ignores correlated terms." The real improvement factor is unknown.
-- **Action:** Measure correlation between two ends using A/B stack coincidence or dedicated split-readout channels → replace √2 with measured factor.
+- **Action:** Measure correlation between two ends using dedicated split-readout channels → replace √2 with measured factor. *(Corrected 2026-07-03: A/B stack coincidences cannot serve here — the two stacks are independent arms measuring different particles of a kinematically-correlated pd pair, so A–B timing carries the pair kinematic spread plus the shared event T0, not a same-particle two-end correlation; experiment-owner setup facts.)*
 - **Impact if unresolved:** Two-ended timing projection remains an "upper-bound-style estimate" rather than a validated value.
 
 ### 2.3 Lower-Priority Open Questions
@@ -173,7 +173,7 @@ Every finding is traceable to a specific report or source file.
 
 **Why it matters:** If ends are positively correlated (common-mode noise, temperature), the √2 factor overestimates the improvement. If anti-correlated (differential sensing), it underestimates.
 
-**Proposed study:** Use A/B stack coincidence events or dedicated split-readout channels → measure end-to-end correlation → compute actual improvement factor.
+**Proposed study:** Use dedicated split-readout channels → measure end-to-end correlation → compute actual improvement factor. *(Corrected 2026-07-03: the earlier proposal to use A/B stack coincidence events is withdrawn — an A·B coincidence pairs different particles (a kinematically-correlated pd pair sharing the event T0), so it cannot measure same-stave end-to-end correlation; experiment-owner setup facts.)*
 
 ### 4.3 Full Birks-Law Energy Calibration
 
@@ -206,7 +206,7 @@ Every finding is traceable to a specific report or source file.
 
 **What's missing:** Only A1–A3 timing is done (S18). No A-stack PID, pile-up, shape analysis, or saturation recovery.
 
-**Why it matters:** The A-stack is the only decoupled cross-check. Full reproduction strengthens every B-stack claim.
+**Why it matters:** The A-stack is an independent detector arm at the conjugate angle measuring **different particles** (experiment-owner setup facts, 2026-07-03). Full reproduction is an independent **methodology** check — it strengthens every B-stack methods claim, though it cannot cross-check the same particles.
 
 **Proposed study:** Reproduce the full B-stack analysis chain on A-stack → compare per-section results → identify any stack-specific systematic.
 

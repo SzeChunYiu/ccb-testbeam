@@ -136,7 +136,11 @@ are UNDER REVIEW — see 2026-07-03 correction below (comparison mismatches; rer
 - **Error structure (S05c, S18g):** the inter-stave timing covariance is **B2-/topology-dominated**;
   the naive sigma^2 = sigma_i^2 + sigma_j^2 independence is imperfect. B4/B6/B8 timing is much
   cleaner and should define precision event-time estimates.
-- **A-stack cross-check (S18):** A1-A3 robust width **1.389 ns** reproduces the note (1.43 ns).
+- **A-stack independent-arm check (S18):** A1-A3 robust width **1.389 ns** reproduces the note
+  (1.43 ns). (Corrected 2026-07-03, experiment-owner setup facts: the A-stack is an independent
+  detector arm at the conjugate angle measuring **different particles** — pd-elastic sends the
+  proton into one arm, the correlated deuteron into the other — so S18 is a methodology
+  reproduction on an independent detector, not a same-particle cross-check.)
   Sample-IV broadening (1.794 ns) is **calibration-pool / low-statistics sensitivity** (S18b), not a
   physics effect; an ML residual correction makes it *worse* (1.935 ns).
 
@@ -360,7 +364,15 @@ through. MV2's ekin columns are unit-corrupted pending rerun.
 | Deuteron stopping depth | inferred early (B2-enriched Sample I) | layers 0-1, d-frac 0.36-0.39 | consistent |
 | Proton stopping depth | inferred penetrating (Sample II) | layers 4-7, p-frac 0.89-0.90 | consistent |
 | Depth occupancy ordering | B2 >> B4 > B6 > B8 | Sci_bar hits fall layer 0->7 | qualitative match |
-| Sample I/II trigger split | deuteron-enriched (Matthias) | trigger-split reproduces enrichment | confirmed |
+| Sample I/II trigger split | deuteron-enriched (Matthias — hypothesis) | earlier "confirmation" ran on retracted machinery | hypothesis — to be tested by S21 (2026-07-03) |
+
+> **Sample definitions (corrected 2026-07-03, experiment-owner setup facts):** Sample I = A AND B
+> trigger coincidence (MC mimic: charged particle entering the first A and first B layer within
+> 15 ns); Sample II = B trigger only (A ignored). In MC, Sample I is a **subset** of Sample II
+> (inclusive flags in `src/ccb_mc_validation/io/root_truth.py`); in data, Samples I and II are
+> **disjoint run sets** with different trigger configurations — the MC-vs-data sample rows above
+> inherit this subset-vs-disjoint asymmetry. The proposed enrichment mechanism is that the
+> coincidence tags kinematically-correlated pd-elastic pairs.
 
 ### 6.2 Stopping-depth profile — structural FAIL (MV3)
 

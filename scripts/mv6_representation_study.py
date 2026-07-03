@@ -25,6 +25,15 @@ Pipeline
 6. Per-species anomaly fractions with binomial CI.
 
 Output: JSON summary, multi-panel PNG, REPORT.md with the species verdict.
+
+DEPRECATED DIGITIZER CONSTANTS (Phase 1, 2026-07-03): the inline toy
+constants below (GAIN 246, NOISE 50, PED 350, TAU_D 42, CEIL 7000) are
+DEPRECATED in favour of the single calibration card
+configs/mc_validation/digitizer_card.yaml (pedestal 6752, noise 8, per-stave
+tau_decay B2 56.7 / B4 51.7 / B6 49.4 / B8 50.1 ns) consumed via
+DigitizerPipeline.from_card(). Internals are intentionally NOT rewritten
+(this study is RETRACTED as unsupported per EXTERNAL_REVIEW_2026-07-02.md
+P5); use scripts/mc02_build_mc_pulse_table.py for card-driven MC pulses.
 """
 from __future__ import annotations
 

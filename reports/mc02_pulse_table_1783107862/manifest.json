@@ -1,0 +1,60 @@
+{
+  "script": "scripts/mc02_build_mc_pulse_table.py",
+  "generated_utc": "2026-07-03T19:46:23+00:00",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "tree": "hibeam",
+  "n_entries_in_tree": 1000000,
+  "n_events_scanned": 1000000,
+  "n_rows": 518247,
+  "n_rows_a1000": 458712,
+  "rows_by_stave": {
+    "B2": 237234,
+    "B4": 130755,
+    "B6": 88200,
+    "B8": 62058
+  },
+  "events_sample_I": 64762,
+  "events_sample_II": 237098,
+  "mapping": "paired",
+  "trigger_offset_ns": 50.0,
+  "trigger_offset_note": "50 ns default corrects the historical 20 ns toy convention, which would place the pulse peak inside the s00 baseline window (samples 0-3) and poison baseline/amplitude/area",
+  "coinc_ns": 15.0,
+  "selection": "NONE (all channels with any B-arm deposit); companion a1000 filtered",
+  "card": {
+    "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/configs/mc_validation/digitizer_card.yaml",
+    "sha256": "4365fd6f1571e0385bf8e020d7a3c885555c856b1c0d2063e2a89af2c53fca49",
+    "card_id": "ccb_digitizer_card_phase1",
+    "card_version": 1,
+    "gain_adc_per_mev": 297.0,
+    "gain_status": "UNKNOWN_PLACEHOLDER_PENDING_PHASE2",
+    "pedestal_adc": 6752.0,
+    "noise_adc_rms": 8.0,
+    "tau_rise_ns": 2.5,
+    "tau_decay_ns_by_stave": {
+      "B2": 56.7,
+      "B4": 51.7,
+      "B6": 49.4,
+      "B8": 50.1
+    }
+  },
+  "zero_signal": {
+    "n_records": 100000,
+    "pedestal_true_range_adc": [
+      6737.0,
+      7029.0
+    ],
+    "seed_salt": 777,
+    "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_1783107862/mc02_zero_signal.csv.gz"
+  },
+  "caveats": [
+    "gain_adc_per_mev is an UNKNOWN placeholder (geometry-poisoned MC anchor, review P1/P2); amplitude scale is not calibrated",
+    "per-stave occupancy/spectrum weights inherit the geometry defect (MV3 chi2/ndf=68269)",
+    "LayerID->stave mapping is UNDER REVIEW (paired vs odd, review P4)"
+  ],
+  "outputs": {
+    "pulse_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_1783107862/mc02_pulse_table.csv.gz",
+    "pulse_table_sha256": "5eff0d9802fde298932950b5a66ba28d759d4386141595945ff82b58c25c5c26",
+    "a1000_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_1783107862/mc02_pulse_table_a1000.csv.gz",
+    "waveform_means": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_1783107862/mc02_waveform_means.npz"
+  }
+}

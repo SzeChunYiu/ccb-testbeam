@@ -1,0 +1,21 @@
+{
+  "study_id": "MV7",
+  "generated_utc": "2026-07-03T19:46:23+00:00",
+  "input": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_1783107862/mc02_zero_signal.csv.gz",
+  "n_records": 100000,
+  "n_train": 50000,
+  "n_test": 50000,
+  "adaptive_estimator": {
+    "definition": "median(samples 0-3) \u2014 identical to the s00 data baseline_adc",
+    "mae_adc": 3.484263160000001,
+    "rmse_adc": 4.368797979769722,
+    "bias_adc": 0.018470640000000295
+  },
+  "learned_estimator": {
+    "definition": "ridge regression on all 18 samples (alpha=1.0), half/half split",
+    "mae_adc": 1.4990590442945884,
+    "rmse_adc": 1.8817462171881887,
+    "bias_adc": 0.02002610469575651
+  },
+  "limitation": "MC-level closure only: real data has no true-pedestal ground truth. White-Gaussian noise + uniform pedestal jitter [6737, 7029] ADC; correlated noise / in-waveform drift / signal contamination of the pre-pulse window are not modelled, so these MAEs are lower bounds."
+}

@@ -33,6 +33,15 @@ Pipeline (per B-arm truth track):
 NOTE (EXTERNAL_REVIEW_2026-07-02.md): ALL digitizer ADC/MeV gains are
 RETRACTED. The default gain used here only sets the amplitude/noise scale
 of the toy digitizer; no ADC/MeV physics claim is made or implied.
+
+DEPRECATED DIGITIZER CONSTANTS (Phase 1, 2026-07-03): the inline toy
+digitizer below (DEFAULTS: gain 246, noise 50, pedestal 350, tau 2.5/42)
+is DEPRECATED in favour of the single calibration card
+configs/mc_validation/digitizer_card.yaml (data-anchored: pedestal 6752,
+noise 8, per-stave tau_decay B2 56.7 / B4 51.7 / B6 49.4 / B8 50.1 ns)
+consumed via DigitizerPipeline.from_card(). This script's internals are
+intentionally NOT rewritten; treat its absolute numbers as toy-scale only
+and use scripts/mc02_build_mc_pulse_table.py for card-driven MC pulses.
 ===========================================================================
 
 Outputs (reports/mv4_timing_STAMP/):

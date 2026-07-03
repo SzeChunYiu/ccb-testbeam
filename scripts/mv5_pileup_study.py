@@ -22,6 +22,14 @@ RETRACTION NOTE (see EXTERNAL_REVIEW_2026-07-02.md):
     the pile-up window counts only the gap to the PREVIOUS event; both make
     the failure-rate-vs-rate curve optimistic.
 
+DEPRECATED DIGITIZER CONSTANTS (Phase 1, 2026-07-03): the inline toy
+constants below (GAIN 246, NOISE 50, PED 350, TAU_D 42) are DEPRECATED in
+favour of the single calibration card configs/mc_validation/digitizer_card.yaml
+(pedestal 6752, noise 8, per-stave tau_decay B2 56.7 / B4 51.7 / B6 49.4 /
+B8 50.1 ns) consumed via DigitizerPipeline.from_card(). Internals are
+intentionally NOT rewritten; use scripts/mc02_build_mc_pulse_table.py for
+card-driven MC pulses.
+
 Question the data left open
 ---------------------------
 Data study S10 found the maximum sustainable beam rate Rmax was *not* the

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
 import numpy as np
@@ -179,21 +180,60 @@ class DigitizerPipeline:
         }
 
     @classmethod
-    def from_config(cls, config: Mapping[str, Any]) -> "DigitizerPipeline":
+    def from_config(cls, config: Mapping[str, Any], stave: str | None = None) -> "DigitizerPipeline":
+        """Build a pipeline from a config mapping (calibration-card format).
+
+        ``config`` may be either a flat digitizer mapping or a full calibration
+        card (``configs/mc_validation/digitizer_card.yaml``): a ``digitizer:``
+        sub-mapping is unwrapped automatically, and a ``staves:`` sub-mapping of
+        per-stave overrides (e.g. ``tau_decay_ns`` per B2/B4/B6/B8) is applied
+        when ``stave`` is given.  Non-physics keys (``channel``, ``gain_status``)
+        are ignored.
+        """
+        if "digitizer" in config and isinstance(config["digitizer"], Mapping):
+            config = config["digitizer"]
+        merged: dict[str, Any] = {k: v for k, v in config.items() if k != "staves"}
+        staves = config.get("staves") or {}
+        if stave is not None:
+            if stave not in staves:
+                raise KeyError(
+                    f"stave {stave!r} not in digitizer card staves {sorted(staves)!r}"
+                )
+            merged.update({k: v for k, v in staves[stave].items() if k != "channel"})
         elec = ElectronicsConfig(
-            gain_adc_per_mev=float(config.get("gain_adc_per_mev", 120.0)),
-            noise_adc_rms=float(config.get("noise_adc_rms", 8.0)),
-            adc_ceiling=int(config.get("adc_ceiling", 7000)),
-            pedestal_adc=float(config.get("pedestal_adc", 300.0)),
+            gain_adc_per_mev=float(merged.get("gain_adc_per_mev", 120.0)),
+            noise_adc_rms=float(merged.get("noise_adc_rms", 8.0)),
+            adc_bits=int(merged.get("adc_bits", 14)),
+            adc_ceiling=int(merged.get("adc_ceiling", 7000)),
+            pedestal_adc=float(merged.get("pedestal_adc", 300.0)),
         )
-        stages = list(config.get("stages", ["birks", "scintillation", "transport", "sampling"]))
+        stages = list(merged.get("stages", ["birks", "scintillation", "transport", "sampling"]))
         return cls(
-            n_samples=int(config.get("n_samples", DEFAULT_N_SAMPLES)),
-            sample_spacing_ns=float(config.get("sample_spacing_ns", DEFAULT_SAMPLE_SPACING_NS)),
+            n_samples=int(merged.get("n_samples", DEFAULT_N_SAMPLES)),
+            sample_spacing_ns=float(merged.get("sample_spacing_ns", DEFAULT_SAMPLE_SPACING_NS)),
             electronics=elec,
-            tau_rise_ns=float(config.get("tau_rise_ns", 2.0)),
-            tau_decay_ns=float(config.get("tau_decay_ns", 35.0)),
-            transport_sigma_ns=float(config.get("transport_sigma_ns", 0.5)),
-            apply_birks=bool(config.get("apply_birks", False)),
+            tau_rise_ns=float(merged.get("tau_rise_ns", 2.0)),
+            tau_decay_ns=float(merged.get("tau_decay_ns", 35.0)),
+            transport_sigma_ns=float(merged.get("transport_sigma_ns", 0.5)),
+            apply_birks=bool(merged.get("apply_birks", False)),
             stages=stages,
         )
+
+    @classmethod
+    def from_card(cls, card_path: "str | Path", stave: str | None = None) -> "DigitizerPipeline":
+        """Build a pipeline from the YAML calibration card on disk."""
+        return cls.from_config(load_digitizer_card(card_path), stave=stave)
+
+
+DEFAULT_CARD_PATH = Path(__file__).resolve().parents[3] / "configs" / "mc_validation" / "digitizer_card.yaml"
+
+
+def load_digitizer_card(path: "str | Path" = DEFAULT_CARD_PATH) -> dict[str, Any]:
+    """Load the digitizer calibration card YAML (single source of constants)."""
+    import yaml
+
+    with Path(path).open("r", encoding="utf-8") as handle:
+        card = yaml.safe_load(handle)
+    if not isinstance(card, Mapping) or "digitizer" not in card:
+        raise ValueError(f"{path} is not a digitizer calibration card (no 'digitizer' key)")
+    return dict(card)

@@ -1,0 +1,100 @@
+# =============================================================================
+# CCB MC digitizer calibration card (single source of truth) — Phase 1
+# =============================================================================
+# This card SUPERSEDES every inline digitizer constant in the repo:
+#   - configs/mc_validation/digitizer.yaml   (gain 120, tau 2.0/35, ped 300)
+#   - scripts/mv4_timing_study.py            (gain 246, noise 50, ped 350, tau 2.5/42)
+#   - scripts/mv5_pileup_study.py            (same drifted toy set)
+#   - scripts/mv6_representation_study.py    (same drifted toy set)
+#   - reports/mv0_calibration_*/calibration.json (gain 92 — RETRACTED, see below)
+# Consumers: DigitizerPipeline.from_config / from_card and
+# scripts/mc02_build_mc_pulse_table.py.  Provenance for every number is given
+# inline; anything marked UNKNOWN is a placeholder pending Phase 2.
+#
+# DATA SIGN CONVENTION (documented per EXTERNAL_REVIEW_2026-07-02.md C2):
+#   * The data hardware pedestal sits at ~6752 ADC (median s00 baseline_adc,
+#     B2; observed baseline range 6737–7029 across channels/runs).
+#   * The analysed EVEN channels (0/2/4/6) yield POSITIVE net amplitudes under
+#     the s00 estimator: baseline = median(samples 0–3),
+#     amplitude_adc = max(waveform - baseline).  The confirmed data B2 net
+#     median is 5752 ADC (C2 resolution, 579,424 B2 rows).
+#   * The paired ODD channels are negative-going inverted duplicates
+#     (amplitude = max(-odd_waveform); see scripts/p04_amplitude_charge_regression.py).
+#   * The MV0 v2 "100% negative-going B4/B6/B8" diagnostic was an artifact of
+#     folding the already-net amplitude_adc with the pedestal (|net - 6752|),
+#     not a property of the analysed waveforms.
+#   * The MC digitizer therefore emits positive-going waveforms on the 6752
+#     pedestal so the s00 estimator applies to MC and data IDENTICALLY.
+card_version: 1
+card_id: ccb_digitizer_card_phase1
+generated: "2026-07-03"
+provenance:
+  tail_decay_source: reports/1781000867.546870.5c124aaf/template_fit_by_run_stave.csv
+  tail_decay_stat: "per-stave mean of fit_decay_tau_10pct_ns over held-out runs 44-57"
+  pedestal_source: "s00 selected table baseline_adc median (mv0_calibration_1782677847/REPORT.md: ~6752, range 6737-7029)"
+  noise_source: "data baseline_rms ledgers (s06b/p06c REPORTs): modal bin [0,8) ADC, majority <16 ADC"
+  gain_source: "PLACEHOLDER — see gain comment; MC-side anchor geometry-poisoned (MV3 chi2/ndf=68269), pending Phase 2"
+
+digitizer:
+  n_samples: 18
+  sample_spacing_ns: 10.0
+
+  # Scintillation shape. tau_rise: repo-wide working default (2.5 ns); no
+  # direct data measurement exists (10 ns sampling cannot resolve it).
+  tau_rise_ns: 2.5
+
+  # Global fallback decay = B2 value; per-stave values below OVERRIDE this.
+  tau_decay_ns: 56.7
+
+  # Electronics — data-anchored.
+  # noise: data pre-pulse baseline_rms is modally in [0,8) ADC (s06b/p06c
+  # stratification ledgers); the drifted toy values (8 by coincidence, 50 in
+  # mv4/mv5/mv6) are retired in favour of this measured scale.
+  noise_adc_rms: 8.0
+  # pedestal: DATA HARDWARE pedestal (median s00 baseline_adc). The old
+  # digitizer-model offsets 300/350 ADC are retired.
+  pedestal_adc: 6752.0
+  # ceiling: highest observed data raw peak = pedestal 6752 + max net
+  # amplitude 14495 (MV0 v2 data stats, B2) ≈ 21247. NOTE: the data-analysis
+  # "saturation_adc: 7000" used across s06/s14/p04 configs is a NET-amplitude
+  # analysis flag (~30-40% of Sample-I B2 pulses exceed it), NOT the hardware
+  # ceiling; do not confuse the two.
+  adc_ceiling: 21247
+  adc_bits: 16
+
+  # GAIN — status UNKNOWN / RETRACTED. Both published values are invalid:
+  #   v1 110 ADC/MeV (raw-vs-model-pedestal apples-to-oranges) and
+  #   v2 92 ADC/MeV (computed on the garbage folded variable |net-6752|).
+  # The placeholder below is the C2-resolution arithmetic:
+  #   297 ≈ data B2 net median 5752 / (MC B2 edep median 26.44 MeV * peak_frac 0.733)
+  # It is NOT a calibration: the MC-side anchor (26.44 MeV) comes from the
+  # geometry MV3 declared structurally wrong (missing upstream material →
+  # through-goer-diluted B2 spectrum), and peak_frac 0.733 is phase-locked
+  # (true range ~0.71-0.95 over sampling phase, review P2). Re-anchor in
+  # Phase 2 after the geometry fix, preferably on a geometry-robust
+  # observable (MIP-like dE in B4/B6 or the duplicate readout).
+  gain_adc_per_mev: 297.0
+  gain_status: UNKNOWN_PLACEHOLDER_PENDING_PHASE2
+
+  transport_sigma_ns: 0.5
+  apply_birks: false
+  stages: [birks, scintillation, transport, sampling]
+
+  # Per-stave overrides. tau_decay tuned to the DATA pulse-tail decays:
+  # mean fit_decay_tau_10pct_ns per stave over held-out runs 44-57 in
+  # reports/1781000867.546870.5c124aaf/template_fit_by_run_stave.csv
+  # (verified 2026-07-03: B2 mean 56.74/median 56.64, B4 51.66/51.72,
+  #  B6 49.44/49.36, B8 50.10/50.33; n_rows 14/13/10/9).
+  # channel = data readout channel of the analysed (even) duplicate.
+  staves:
+    B2: {tau_decay_ns: 56.7, channel: 0}
+    B4: {tau_decay_ns: 51.7, channel: 2}
+    B6: {tau_decay_ns: 49.4, channel: 4}
+    B8: {tau_decay_ns: 50.1, channel: 6}
+
+# B-arm LayerID -> stave mapping (UNDER REVIEW, see review P4):
+#   paired (default): {0,1}->B2, {2,3}->B4, {4,5}->B6, {6,7}->B8 (pair-summed)
+#   odd:   odd layers unread; {0}->B2, {2}->B4, {4}->B6, {6}->B8
+# The paired mapping is an unvalidated guess; the odd-layer alternative mimics
+# "missing material" and is a live hypothesis until the Phase 2 MV3 v3 rerun.
+mapping_default: paired

@@ -1,0 +1,54 @@
+{
+  "study_id": "MV4",
+  "generated_utc": "2026-07-03T11:23:36.654308+00:00",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "n_tracks": 80000,
+  "n_events_scanned": 245982,
+  "digitizer_params": {
+    "gain_adc_per_mev": 92.0,
+    "noise_adc_rms": 50.0,
+    "pedestal_adc": 350.0,
+    "tau_rise_ns": 2.5,
+    "tau_decay_ns": 42.0,
+    "n_samples": 18,
+    "sample_spacing_ns": 10.0,
+    "adc_ceiling": 7000.0
+  },
+  "timewalk_fit": {
+    "A_ns": -3.52376538790085,
+    "B_ns_ADC": 39.60254635978541,
+    "timewalk_functional_form": "1/A (MV4b-fixed 2026-07-01, was 1/sqrt(A))"
+  },
+  "sigma68_ns": {
+    "raw": 1.4756002322067934,
+    "raw_unc": 0.006608933563011086,
+    "corrected_test_half": 1.4805071146723792,
+    "corrected_unc": 0.008575471560263045,
+    "corrected_all": 1.4808576834272997
+  },
+  "residual_median_ns": -3.8812087736510996,
+  "gain_retraction_note": "all digitizer ADC/MeV gains RETRACTED per EXTERNAL_REVIEW_2026-07-02.md; gain here only sets the toy amplitude/noise scale, no ADC/MeV claim",
+  "data_reference": {
+    "S02_raw_cfd20_pair_sigma68": 2.993,
+    "S02_raw_source": "reports/1780997954.15157.07ef03cf__s02_timing_pickoff/head_to_head_benchmark.csv row cfd20_reference",
+    "S03_corrected_pair_sigma68": 1.5,
+    "semantics": "pooled two-stave pair-difference sigma68; data unc not measured"
+  },
+  "mc_pair_equivalent_ns": {
+    "raw": 2.0868138610277356,
+    "raw_unc": 0.00934644347763302,
+    "corrected": 2.0937532407595376,
+    "corrected_unc": 0.012127548184268765,
+    "conversion": "mc_sigma * sqrt(2), assuming independent stave errors"
+  },
+  "mc_over_data_ratio": {
+    "raw": 0.6972314938281776,
+    "raw_unc_mc_only": 0.0031227676169839694,
+    "corrected": 1.3958354938396917,
+    "corrected_unc_mc_only": 0.008085032122845844
+  },
+  "verdict": "REVIEW \u2014 unmatched comparison (merged-track MC vs per-stave data; selection unmatched; gain retracted); matched per-stave rerun pending Phase 1 digitizer",
+  "improvement_factor": 0.9966856745118232,
+  "n_proton": 34027,
+  "n_deuteron": 35503
+}

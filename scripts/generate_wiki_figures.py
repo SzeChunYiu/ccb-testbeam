@@ -1,606 +1,503 @@
 #!/usr/bin/env python3
 """
-Generate publication-quality figures for the CCB Test-Beam wiki.
+Generate publication-quality figures for the CCB Test-Beam wiki (docs/figures/).
 
-This script creates:
-1.  Experimental setup schematic (beamline → detectors)
-2.  Analysis pipeline flowchart
-3.  Per-stave timing resolution comparison
-4.  MC vs Data comparison: timing, pile-up live-time
-5.  PCA explained variance and AE vs PCA MSE comparison
-6.  C12 anomaly waveform example
-7.  Systematic uncertainty budget
+Standards applied (nature-figure skill):
+- sans-serif (Arial/DejaVu), editable-text settings, no top/right spines
+- one restrained colorblind-safe palette across all figures
+- every axis labelled with units; error bars / CIs drawn wherever the source
+  artifact provides them; no fabricated uncertainties
+- every number traceable to a reports/<id>/ artifact (JSON read at run time
+  where available; otherwise the source report is cited next to the constant)
 
-All figures are saved to docs/figures/ as PNG files.
-Requires: matplotlib, numpy (standard scientific Python stack).
+Figures regenerated (WIKI-referenced):
+  03_timing_resolution.png   per-stave timing summary (S02/S03/S05 + external note)
+  04_mc_vs_data.png          MV4 honest rerun (reports/mv4_timing_1783077795)
+  05_pca_vs_ae.png           P01 PCA vs autoencoder compression
+  06_stopping_depth.png      MV3 stopping-depth FAIL
+  07_pid_auc.png             MV1 PID validation (reports/mv1_mv2_truth_pid_energy_1783077795)
+  08_c12_anomaly.png         early-peak anomaly SCHEMATIC (illustrative only; MV6 retracted)
+  09_systematic_budget.png   MC-validation status chart (no fabricated magnitudes)
+  10_ml_landscape.png        ML win/loss landscape
+  24_s21_denrichment.png     S21 Sample I/II deuteron enrichment
+                             (reports/s21_sample12_trigger_truth_1783077969)
+
+Output: PNG at 200 dpi (the wiki is a screen deliverable; font sizes are chosen
+for ~800 px display width rather than the 7 pt print rule).
+
+Run with: /home/billy/anaconda3/envs/nnbar_env/bin/python scripts/generate_wiki_figures.py
 """
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Arc, Rectangle
-import numpy as np
+import json
 import os
 import sys
 
-# ── Configuration ──────────────────────────────────────────────────────────
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.patches as mpatches  # noqa: E402
+import numpy as np  # noqa: E402
+
+# ── Global style (nature-figure quick-start, adapted for wiki PNG) ──────────
+plt.rcParams.update({
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Arial", "DejaVu Sans", "Liberation Sans"],
+    "svg.fonttype": "none",
+    "pdf.fonttype": 42,
+    "font.size": 9,
+    "axes.titlesize": 10,
+    "axes.labelsize": 9,
+    "legend.fontsize": 8,
+    "xtick.labelsize": 8.5,
+    "ytick.labelsize": 8.5,
+    "axes.spines.right": False,
+    "axes.spines.top": False,
+    "axes.linewidth": 0.8,
+    "legend.frameon": False,
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+    "savefig.bbox": "tight",
+    "savefig.pad_inches": 0.08,
+})
+
+# Colorblind-safe palette (nature-figure PALETTE)
+PALETTE = {
+    "blue_main": "#0F4D92",
+    "blue_secondary": "#3775BA",
+    "red_strong": "#B64342",
+    "teal": "#42949E",
+    "violet": "#9A4D8E",
+    "green_3": "#8BCF8B",
+    "neutral_light": "#CFCECE",
+    "neutral_mid": "#767676",
+    "neutral_dark": "#4D4D4D",
+}
+
 OUTPUT_DIR = "docs/figures"
-DPI = 150
-STYLE = "seaborn-v0_8-darkgrid"
+DPI = 200
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# ── Data (from FINDINGS_SYNTHESIS.md and reports) ──────────────────────────
+S21_JSON = os.path.join(REPO, "reports/s21_sample12_trigger_truth_1783077969/s21_summary.json")
+MV4_JSON = os.path.join(REPO, "reports/mv4_timing_1783077795/mv4_summary.json")
+MV12_JSON = os.path.join(REPO, "reports/mv1_mv2_truth_pid_energy_1783077795/mv1_mv2_truth_summary.json")
 
-# Per-stave timing resolution
-STAVE_TIMING = {
-    "B2": 2.8,       # ~2.5-3.5 ns (topology-dominated)
-    "B4": 1.45,      # ~1.4-1.5 ns
-    "B6": 0.72,      # ~0.68-0.75 ns (best)
-    "B8": 0.93,      # ~0.93 ns
-    "B4+B6+B8": 0.55, # combined
-}
-
-# PCA vs AE comparison
-PCA_AE_DATA = {
-    "latent_dim": [2, 3, 4, 8],
-    "pca_mse": [0.02622, 0.01416, 0.00880, 0.00166],
-    "ae_mse": [0.01294, 0.00841, 0.00527, 0.00292],
-}
-
-# MC vs Data comparison
-MC_VS_DATA = {
-    "timing_raw": {"mc": 1.744, "mc_err": 0.007, "data": 1.85, "label": "Timing σ68 raw (ns)"},
-    "timing_corrected": {"mc": 1.770, "mc_err": 0.010, "data": 1.50, "label": "Timing σ68 corrected (ns)"},
-    "pileup_rmax": {"mc": 3.044, "mc_err": 0.005, "data": 3.05, "label": "Pile-up R_max (MHz)"},
-    "pileup_taueff": {"mc": 124.8, "mc_err": 1.0, "data": 124.79, "label": "Pile-up τ_eff (ns)"},
-}
-
-# Stopping-depth profile
-STOPPING_DEPTH = {
-    "staves": ["B2", "B4", "B6", "B8"],
-    "mc": [47.0, 18.2, 12.5, 22.3],
-    "data": [87.6, 6.3, 3.9, 2.3],
-}
-
-# PID AUC
-PID_AUC = {
-    "methods": ["Single-cut ΔE", "Logistic Reg.", "HGB (MC truth)"],
-    "auc": [0.8910, 0.9629, 0.9860],
-    "purity": [0.8910, 0.9489, 0.9644],
-}
-
-# Systematic uncertainties
-SYST_BUDGET = {
-    "sources": ["Gain (MV0)\n±30%", "Stopping-depth\n(MV3)", "Timing\n(MV4)", "C12 anomaly\n(MV6)", "Pile-up\n(MV5)"],
-    "magnitudes": [30.0, 5.0, 3.0, 0.1, 0.0],
-    "colors": ["#e74c3c", "#e67e22", "#f39c12", "#2ecc71", "#3498db"],
-}
-
-# C12 anomaly waveform (mock based on MV6 description)
-def mock_c12_waveform():
-    """Generate representative normal and C12-recoil waveforms."""
-    t = np.arange(18) * 10  # 10 ns spacing
-    # Normal proton pulse: peaks at sample ~5 (50 ns)
-    normal = np.exp(-0.5 * ((t - 55) / 15)**2) * 1.0 + 0.02 * np.random.randn(18)
-    # C12 recoil: peaks at sample ~1-2 (10-20 ns), very narrow
-    c12 = np.exp(-0.5 * ((t - 15) / 5)**2) * 0.8 + 0.01 * np.random.randn(18)
-    # Set baseline
-    normal[:3] += 0.0
-    c12[:3] += 0.0
-    return t, normal, c12
+STAVES = ["B2", "B4", "B6", "B8"]
 
 
-# ── Plotting Functions ──────────────────────────────────────────────────────
-
-def setup_style():
-    """Apply consistent styling."""
-    plt.style.use(STYLE)
-    matplotlib.rcParams.update({
-        "figure.facecolor": "white",
-        "axes.facecolor": "#f8f9fa",
-        "font.size": 11,
-        "axes.titlesize": 13,
-        "axes.labelsize": 11,
-        "legend.fontsize": 10,
-        "figure.dpi": DPI,
-        "savefig.dpi": DPI,
-        "savefig.bbox": "tight",
-        "savefig.pad_inches": 0.1,
-    })
+def load_json(path):
+    with open(path) as fh:
+        return json.load(fh)
 
 
-def fig_experimental_setup():
-    """Figure 1: Experimental setup schematic."""
-    fig, ax = plt.subplots(1, 1, figsize=(12, 5))
-    ax.set_xlim(0, 14)
-    ax.set_ylim(0, 6)
-    ax.axis("off")
-    ax.set_title("CCB Test-Beam Experimental Setup", fontweight="bold", pad=20)
-
-    # Beam line
-    ax.annotate("", xy=(12.5, 3), xytext=(0.5, 3),
-                arrowprops=dict(arrowstyle="->", color="#e74c3c", lw=3))
-    ax.text(6.5, 3.7, "190 MeV protons", ha="center", fontweight="bold", color="#e74c3c")
-
-    # Target
-    target = Rectangle((2.5, 2.2), 0.8, 1.6, facecolor="#f39c12", edgecolor="black", lw=2, alpha=0.8)
-    ax.add_patch(target)
-    ax.text(2.9, 3.0, "CD₂\nTarget", ha="center", va="center", fontsize=9, fontweight="bold")
-
-    # Trigger scintillators
-    trig = Rectangle((4.0, 2.4), 0.6, 1.2, facecolor="#3498db", edgecolor="black", lw=1.5, alpha=0.7)
-    ax.add_patch(trig)
-    ax.text(4.3, 3.0, "Trigger\nScints", ha="center", va="center", fontsize=8)
-
-    # TPC
-    tpc = Rectangle((5.2, 2.0), 1.2, 2.0, facecolor="#9b59b6", edgecolor="black", lw=1.5, alpha=0.6)
-    ax.add_patch(tpc)
-    ax.text(5.8, 3.0, "TPC\n(tracking)", ha="center", va="center", fontsize=8)
-
-    # A-Stack
-    a_stack = Rectangle((7.5, 1.5), 1.5, 3.0, facecolor="#1abc9c", edgecolor="black", lw=2, alpha=0.7)
-    ax.add_patch(a_stack)
-    ax.text(8.25, 4.3, "A-Stack (HRD)", ha="center", fontsize=9, fontweight="bold")
-    ax.text(8.25, 3.0, "A1 A3 A5 A7\n~100 cm", ha="center", fontsize=8)
-
-    # B-Stack
-    b_stack = Rectangle((9.8, 1.5), 1.5, 3.0, facecolor="#2ecc71", edgecolor="black", lw=2, alpha=0.7)
-    ax.add_patch(b_stack)
-    ax.text(10.55, 4.3, "B-Stack (HRD)", ha="center", fontsize=9, fontweight="bold")
-    ax.text(10.55, 3.0, "B2 B4 B6 B8\n~100 cm", ha="center", fontsize=8)
-    ax.text(10.55, 1.8, "★ Primary analysis", ha="center", fontsize=7, color="#2ecc71", fontweight="bold")
-
-    # Distance annotations
-    ax.annotate("", xy=(7.5, 5.0), xytext=(3.3, 5.0),
-                arrowprops=dict(arrowstyle="<->", color="gray", lw=1))
-    ax.text(5.4, 5.2, "~100 cm", ha="center", fontsize=8, color="gray")
-
-    # Waveform inset arrow
-    ax.annotate("18-sample\nwaveform", xy=(11.3, 1.0), xytext=(11.3, 0.2),
-                fontsize=8, ha="center", color="#2ecc71",
-                arrowprops=dict(arrowstyle="->", color="#2ecc71", lw=1.5))
-
-    # Legend-like annotations
-    ax.text(0.5, 0.5, "Beam: proton, T_p = 190 MeV", fontsize=8, color="gray")
-    ax.text(0.5, 0.2, "Target: deuterated polyethylene (CD₂)", fontsize=8, color="gray")
-
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "01_experimental_setup.png")
-    fig.savefig(path)
+def save(fig, name):
+    path = os.path.join(OUTPUT_DIR, name)
+    fig.savefig(path, dpi=DPI)
     plt.close(fig)
-    print(f"  ✓ {path}")
+    print(f"  written {path}")
     return path
 
 
-def fig_analysis_pipeline():
-    """Figure 2: Analysis pipeline flowchart."""
-    fig, ax = plt.subplots(1, 1, figsize=(14, 6))
-    ax.set_xlim(0, 16)
-    ax.set_ylim(0, 6)
-    ax.axis("off")
-    ax.set_title("Analysis Pipeline", fontweight="bold", pad=20)
+# ── Figure 24: S21 Sample I/II deuteron enrichment (NEW, hero figure) ───────
+def fig_s21_enrichment():
+    s21 = load_json(S21_JSON)
+    kt = s21["key_table"]["staves"]
+    samples = s21["samples"]
 
-    boxes = [
-        (1, 3.5, 3, 1.5, "#34495e", "Raw ROOT Files\n(110 files, ~810 MB)\nhrdb_run_NNNN.root", "white"),
-        (5.5, 3.5, 3, 1.5, "#2980b9", "Pulse Table\n640,737 selected pulses\nbaseline median(samples 0-3)\nA > 1000 ADC", "white"),
-        (10, 3.5, 4.5, 1.5, "#27ae60", "Analysis Branches", "white"),
-        (10, 5.0, 1.3, 0.7, "#e74c3c", "Timing\nCFD→Timewalk", "white"),
-        (11.6, 5.0, 1.3, 0.7, "#e67e22", "Pile-up\nLive-time→R", "white"),
-        (13.2, 5.0, 1.3, 0.7, "#9b59b6", "PID\nΔE-E→AUC", "white"),
-    ]
+    fig, axes = plt.subplots(1, 3, figsize=(11.4, 3.5))
 
-    for x, y, w, h, color, label, textcolor in boxes:
-        rect = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.1",
-                              facecolor=color, edgecolor="black", lw=1.5, alpha=0.85)
-        ax.add_patch(rect)
-        ax.text(x + w/2, y + h/2, label, ha="center", va="center",
-                fontsize=8, color=textcolor, fontweight="bold")
+    # Panel a: deuteron fraction per stave, Sample I vs Sample II, 95% CI
+    ax = axes[0]
+    x = np.arange(len(STAVES))
+    w = 0.34
+    for off, key, color, label in [
+        (-w / 2, "sample_I", PALETTE["blue_main"], "Sample I (A·B coincidence)"),
+        (+w / 2, "sample_II", PALETTE["teal"], "Sample II (B-only, inclusive)"),
+    ]:
+        f = np.array([kt[s][key]["fraction"] for s in STAVES])
+        lo = np.array([kt[s][key]["ci95"][0] for s in STAVES])
+        hi = np.array([kt[s][key]["ci95"][1] for s in STAVES])
+        ax.bar(x + off, f, w, color=color, edgecolor="black", linewidth=0.8,
+               yerr=[f - lo, hi - f], capsize=3, label=label,
+               error_kw=dict(ecolor="black", lw=0.9))
+    ax.set_xticks(x)
+    ax.set_xticklabels(STAVES)
+    ax.set_ylabel("Deuteron fraction of charged B-arm tracks")
+    ax.set_ylim(0, 0.85)
+    ax.legend(loc="upper right", fontsize=7.5)
+    ax.set_title("a  Truth deuteron fraction per stave", loc="left")
 
-    # Arrows
-    for (x1, x2, y) in [(4, 5.5, 4.25), (8.5, 10, 4.25)]:
-        ax.annotate("", xy=(x2, y), xytext=(x1, y),
-                    arrowprops=dict(arrowstyle="->", color="black", lw=2))
+    # Panel b: enrichment ratio I/II per stave (inclusive and exclusive)
+    ax2 = axes[1]
+    for off, key, color, marker, label in [
+        (-0.10, "enrichment_I_over_II_inclusive", PALETTE["blue_main"], "o", "I / II (inclusive)"),
+        (+0.10, "enrichment_I_over_II_exclusive", PALETTE["violet"], "s", "I / (II\\I) (exclusive)"),
+    ]:
+        r = np.array([kt[s][key]["ratio"] for s in STAVES])
+        lo = np.array([kt[s][key]["ci_low"] for s in STAVES])
+        hi = np.array([kt[s][key]["ci_high"] for s in STAVES])
+        ax2.errorbar(x + off, r, yerr=[r - lo, hi - r], fmt=marker, markersize=6,
+                     color=color, capsize=3, lw=1.1, label=label)
+    ax2.axhline(1.0, color=PALETTE["neutral_mid"], linestyle="--", lw=0.9)
+    ax2.text(3.42, 1.03, "no enrichment", fontsize=7, color=PALETTE["neutral_mid"],
+             ha="right")
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(STAVES)
+    ax2.set_ylabel("Deuteron-fraction ratio, Sample I / Sample II")
+    ax2.set_yscale("log")
+    ax2.set_yticks([0.25, 0.5, 1.0, 2.0])
+    ax2.set_yticklabels(["0.25", "0.5", "1", "2"])
+    ax2.legend(loc="lower left", fontsize=7.5)
+    ax2.set_title("b  Enrichment fades with depth", loc="left")
 
-    # Branch arrows from main box
-    for x in [10.65, 12.25, 13.85]:
-        ax.annotate("", xy=(x, 5.0), xytext=(x, 5.0),
-                    arrowprops=dict(arrowstyle="->", color="gray", lw=1))
+    # Panel c: median energy deposit per stave (Sample I), deuteron vs proton,
+    # whiskers = 16-84% quantile span from the S21 artifact
+    ax3 = axes[2]
+    for off, sp, color, label in [
+        (-w / 2, "d", PALETTE["blue_main"], "deuteron"),
+        (+w / 2, "p", PALETTE["red_strong"], "proton"),
+    ]:
+        med = np.array([samples["I"]["stave_occupancy"][s]["edep_stats"][sp]["median_MeV"]
+                        for s in STAVES])
+        q16 = np.array([samples["I"]["stave_occupancy"][s]["edep_stats"][sp]["q16_MeV"]
+                        for s in STAVES])
+        q84 = np.array([samples["I"]["stave_occupancy"][s]["edep_stats"][sp]["q84_MeV"]
+                        for s in STAVES])
+        ax3.bar(x + off, med, w, color=color, edgecolor="black", linewidth=0.8,
+                yerr=[med - q16, q84 - med], capsize=3, label=label,
+                error_kw=dict(ecolor="black", lw=0.9))
+    ax3.set_xticks(x)
+    ax3.set_xticklabels(STAVES)
+    ax3.set_ylabel("Median energy deposit (MeV)")
+    ax3.legend(loc="upper right", fontsize=7.5)
+    ax3.set_title("c  Sample I energy deposits (16–84% span)", loc="left")
 
-    # MC validation pipeline (bottom)
-    ax.text(8, 1.2, "MC Validation Pipeline", fontsize=10, fontweight="bold", ha="center", color="#8e44ad")
-    mc_boxes = [
-        (3.5, 0.3, 1.8, 0.6, "#8e44ad", "MV0: Digitizer\nGain 92 ADC/MeV"),
-        (5.8, 0.3, 1.8, 0.6, "#8e44ad", "MV1: PID\nAUC 0.986 ✅"),
-        (8.1, 0.3, 1.8, 0.6, "#8e44ad", "MV3: Stopping\n⛔ FAIL χ²=68269"),
-        (10.4, 0.3, 1.8, 0.6, "#8e44ad", "MV5: Pile-up\nR_max=3.04 MHz ✅"),
-    ]
-    for x, y, w, h, color, label in mc_boxes:
-        rect = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.05",
-                              facecolor=color, edgecolor="black", lw=1, alpha=0.7)
-        ax.add_patch(rect)
-        ax.text(x + w/2, y + h/2, label, ha="center", va="center", fontsize=6, color="white")
-
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "02_analysis_pipeline.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
-
-
-def fig_timing_resolution():
-    """Figure 3: Per-stave timing resolution comparison."""
-    fig, ax = plt.subplots(1, 1, figsize=(9, 5))
-    staves = list(STAVE_TIMING.keys())
-    values = list(STAVE_TIMING.values())
-    colors = ["#e74c3c", "#e67e22", "#2ecc71", "#3498db", "#9b59b6"]
-
-    bars = ax.bar(staves, values, color=colors, edgecolor="black", linewidth=1.2, alpha=0.85)
-
-    # Annotate bars
-    for bar, val in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.05,
-                f"{val:.2f} ns", ha="center", va="bottom", fontweight="bold", fontsize=11)
-
-    ax.set_ylabel("σ₆₈ (ns)", fontweight="bold")
-    ax.set_title("Per-Stave Timing Resolution", fontweight="bold", pad=15)
-    ax.set_ylim(0, max(values) * 1.25)
-
-    # Add annotation for B2
-    ax.annotate("Topology-dominated\n(excluded from\nprecision timing)",
-                xy=(0, STAVE_TIMING["B2"]), xytext=(0.5, STAVE_TIMING["B2"] * 1.3),
-                fontsize=8, ha="center", color="#e74c3c",
-                arrowprops=dict(arrowstyle="->", color="#e74c3c", lw=1))
-
-    # Add annotation for combined
-    ax.annotate("Multi-stave\ncombination",
-                xy=(4, STAVE_TIMING["B4+B6+B8"]), xytext=(4.8, STAVE_TIMING["B4+B6+B8"] * 1.5),
-                fontsize=8, ha="center", color="#9b59b6",
-                arrowprops=dict(arrowstyle="->", color="#9b59b6", lw=1))
-
-    ax.grid(axis="y", alpha=0.3)
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "03_timing_resolution.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
+    fig.suptitle(
+        "S21 — GEANT4 trigger-truth: the A·B coincidence enriches deuterons in the upstream B staves",
+        fontsize=10, y=1.04)
+    return save(fig, "24_s21_denrichment.png")
 
 
+# ── Figure 04: MV4 honest rerun, MC vs data ─────────────────────────────────
 def fig_mc_vs_data():
-    """Figure 4: MC vs Data comparison for timing and pile-up."""
-    fig, axes = plt.subplots(2, 2, figsize=(12, 9))
+    mv4 = load_json(MV4_JSON)
+    mc_pair = mv4["mc_pair_equivalent_ns"]
+    ratio = mv4["mc_over_data_ratio"]
+    data_raw = mv4["data_reference"]["S02_raw_cfd20_pair_sigma68"]
+    data_corr = mv4["data_reference"]["S03_corrected_pair_sigma68"]
 
-    comparisons = [
-        ("timing_raw", 0, 0),
-        ("timing_corrected", 0, 1),
-        ("pileup_rmax", 1, 0),
-        ("pileup_taueff", 1, 1),
+    fig, axes = plt.subplots(1, 2, figsize=(8.8, 3.5))
+
+    # Panel a: pair-difference sigma68, MC vs data anchors
+    ax = axes[0]
+    stages = ["raw CFD20", "timewalk-corrected"]
+    mc_vals = [mc_pair["raw"], mc_pair["corrected"]]
+    mc_errs = [mc_pair["raw_unc"], mc_pair["corrected_unc"]]
+    data_vals = [data_raw, data_corr]
+    x = np.arange(2)
+    w = 0.34
+    ax.bar(x - w / 2, mc_vals, w, yerr=mc_errs, capsize=4,
+           color=PALETTE["blue_main"], edgecolor="black", linewidth=0.9,
+           label="MC pair-equivalent (single-trace × √2)",
+           error_kw=dict(ecolor="black", lw=1.0))
+    ax.bar(x + w / 2, data_vals, w,
+           color=PALETTE["red_strong"], edgecolor="black", linewidth=0.9,
+           label="data pair-difference (S02 / S03)")
+    for xi, v, e in zip(x - w / 2, mc_vals, mc_errs):
+        ax.text(xi, v + e + 0.07, f"{v:.3f}", ha="center", fontsize=8)
+    for xi, v in zip(x + w / 2, data_vals):
+        ax.text(xi, v + 0.07, f"{v:.2f}", ha="center", fontsize=8)
+    ax.set_xticks(x)
+    ax.set_xticklabels(stages)
+    ax.set_ylabel("Pair-difference σ₆₈ (ns)")
+    ax.set_ylim(0, 3.7)
+    ax.legend(loc="upper right", fontsize=7.2)
+    ax.set_title("a  MV4 rerun vs data anchors", loc="left")
+
+    # Panel b: MC/data ratio; error bars are MC bootstrap only
+    ax2 = axes[1]
+    r_vals = [ratio["raw"], ratio["corrected"]]
+    r_errs = [ratio["raw_unc_mc_only"], ratio["corrected_unc_mc_only"]]
+    ax2.errorbar(x, r_vals, yerr=r_errs, fmt="o", markersize=7,
+                 color=PALETTE["blue_main"], capsize=4, lw=1.2)
+    ax2.axhline(1.0, color=PALETTE["neutral_mid"], linestyle="--", lw=0.9)
+    for xi, v in zip(x, r_vals):
+        ax2.text(xi + 0.06, v, f"{v:.3f}", fontsize=8.5, va="center")
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(stages)
+    ax2.set_xlim(-0.5, 1.5)
+    ax2.set_ylabel("σ₆₈ ratio, MC / data")
+    ax2.set_ylim(0.55, 1.55)
+    ax2.set_title("b  Agreement scale (not a hypothesis test)", loc="left")
+    ax2.text(0.5, 0.05,
+             "data σ₆₈ uncertainty unmeasured → no pull computed;\n"
+             "error bars are the MC bootstrap component only",
+             transform=ax2.transAxes, ha="center", fontsize=7,
+             color=PALETTE["neutral_dark"])
+
+    fig.suptitle("MV4 timing validation, honest rerun 2026-07-03 — status: REVIEW (unmatched comparison)",
+                 fontsize=10, y=1.04)
+    return save(fig, "04_mc_vs_data.png")
+
+
+# ── Figure 03: per-stave timing resolution ──────────────────────────────────
+# Sources: S03 (B4/B8, analytic timewalk), external-note Gaussian core (B6,
+# UNDER REVIEW: not sigma68), S05 combination (UNDER REVIEW: covariance
+# validation withdrawn 2026-07-03). Error bars are half-widths of the quoted
+# ranges in WIKI section 4.4, not fitted CIs.
+def fig_timing_resolution():
+    labels = ["B2", "B4", "B6*", "B8", "B4+B6+B8*"]
+    vals = np.array([2.8, 1.45, 0.715, 0.93, 0.55])
+    errs = np.array([0.0, 0.05, 0.035, 0.0, 0.01])
+    under_review = [False, False, True, False, True]
+
+    fig, ax = plt.subplots(figsize=(6.6, 3.6))
+    x = np.arange(len(labels))
+    for i, (v, e, ur) in enumerate(zip(vals, errs, under_review)):
+        color = PALETTE["neutral_light"] if ur else PALETTE["blue_main"]
+        edge = PALETTE["neutral_mid"] if ur else "black"
+        ax.bar(i, v, 0.62, color=color, edgecolor=edge, linewidth=0.9,
+               hatch="//" if ur else None,
+               yerr=e if e > 0 else None, capsize=4,
+               error_kw=dict(ecolor=PALETTE["neutral_dark"], lw=1.0))
+        ax.text(i, v + e + 0.09, f"{v:.2f}", ha="center", fontsize=8.5)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.set_ylabel("Timing resolution σ₆₈ (ns)")
+    ax.set_ylim(0, 3.7)
+    ax.annotate("topology-dominated;\nexcluded from precision timing",
+                xy=(0, 2.85), xytext=(0.85, 3.25), fontsize=7.5,
+                color=PALETTE["neutral_dark"], ha="center",
+                arrowprops=dict(arrowstyle="->", color=PALETTE["neutral_dark"], lw=0.8))
+    legend = [
+        mpatches.Patch(facecolor=PALETTE["blue_main"], edgecolor="black",
+                       label="quoted range (S03)"),
+        mpatches.Patch(facecolor=PALETTE["neutral_light"], edgecolor=PALETTE["neutral_mid"],
+                       hatch="//", label="under review (2026-07-03)"),
     ]
-
-    verdict_colors = {
-        "timing_raw": "#2ecc71",        # PASS
-        "timing_corrected": "#e67e22",   # TENSION
-        "pileup_rmax": "#2ecc71",        # PASS
-        "pileup_taueff": "#2ecc71",      # PASS
-    }
-
-    verdicts = {
-        "timing_raw": "✅ PASS (pull = −1.05σ)",
-        "timing_corrected": "🔶 TENSION (pull = +2.68σ)",
-        "pileup_rmax": "✅ PASS (0.2% agreement)",
-        "pileup_taueff": "✅ PASS (<0.01% agreement)",
-    }
-
-    for key, row, col in comparisons:
-        ax = axes[row, col]
-        d = MC_VS_DATA[key]
-        color = verdict_colors[key]
-
-        ax.bar(["MC (GEANT4)", "Data"], [d["mc"], d["data"]],
-               yerr=[d["mc_err"], 0],
-               color=[color, "#3498db"], edgecolor="black", linewidth=1.2,
-               alpha=0.8, capsize=8)
-
-        ax.set_title(d["label"], fontweight="bold")
-        ax.set_ylabel("Value")
-        ax.text(0.5, 0.95, verdicts[key], transform=ax.transAxes,
-                ha="center", fontsize=9, fontweight="bold",
-                bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.8))
-
-    plt.suptitle("MC Validation: Key Comparisons", fontweight="bold", fontsize=14, y=1.01)
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "04_mc_vs_data.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
+    ax.legend(handles=legend, loc="upper right", fontsize=7.5)
+    fig.text(0.99, -0.04,
+             "*B6 is the external note's Gaussian-core σ (not σ₆₈); the B4+B6+B8 combination assumes\n"
+             "independent stave errors — its covariance validation was withdrawn 2026-07-03.",
+             ha="right", fontsize=7, color=PALETTE["neutral_dark"])
+    return save(fig, "03_timing_resolution.png")
 
 
+# ── Figure 05: PCA vs AE pulse-shape compression (P01) ──────────────────────
+# Source: reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation/
 def fig_pca_vs_ae():
-    """Figure 5: PCA vs AE pulse shape compression."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+    dims = np.array([2, 3, 4, 8])
+    pca = np.array([0.02622, 0.01416, 0.00880, 0.00166])
+    ae = np.array([0.01294, 0.00841, 0.00527, 0.00292])
 
-    dims = PCA_AE_DATA["latent_dim"]
-    pca = PCA_AE_DATA["pca_mse"]
-    ae = PCA_AE_DATA["ae_mse"]
-
-    x = np.arange(len(dims))
-    width = 0.35
-
-    bars1 = ax.bar(x - width/2, pca, width, label="PCA", color="#3498db",
-                   edgecolor="black", linewidth=1, alpha=0.85)
-    bars2 = ax.bar(x + width/2, ae, width, label="Autoencoder", color="#e74c3c",
-                   edgecolor="black", linewidth=1, alpha=0.85)
-
-    # Annotate winner
-    winners = ["AE +50.6%", "AE +40.6%", "AE +40.1%", "PCA +75.9%"]
-    for i, (b1, b2, w) in enumerate(zip(bars1, bars2, winners)):
-        winner_bar = b1 if "PCA" in w else b2
-        ax.text(winner_bar.get_x() + winner_bar.get_width()/2, max(b1.get_height(), b2.get_height()) + 0.002,
-                w, ha="center", fontsize=8, fontweight="bold", color="#2c3e50")
-
-    ax.set_xticks(x)
-    ax.set_xticklabels([f"d={d}" for d in dims])
-    ax.set_ylabel("MSE", fontweight="bold")
-    ax.set_xlabel("Latent Dimension", fontweight="bold")
-    ax.set_title("Pulse Shape Compression: PCA vs Autoencoder", fontweight="bold", pad=15)
+    fig, ax = plt.subplots(figsize=(5.6, 3.4))
+    ax.plot(dims, pca, "o-", color=PALETTE["blue_main"], markersize=6, lw=1.4, label="PCA")
+    ax.plot(dims, ae, "s-", color=PALETTE["red_strong"], markersize=6, lw=1.4, label="Autoencoder")
+    ax.set_yscale("log")
+    ax.set_xticks(dims)
+    ax.set_xlabel("Latent dimension")
+    ax.set_ylabel("Reconstruction MSE (normalized ADC²)")
     ax.legend(loc="upper right")
-    ax.grid(axis="y", alpha=0.3)
+    ax.annotate("AE better at d ≤ 4", xy=(3, 0.0084), xytext=(4.4, 0.02),
+                fontsize=8, color=PALETTE["neutral_dark"],
+                arrowprops=dict(arrowstyle="->", color=PALETTE["neutral_dark"], lw=0.8))
+    ax.annotate("PCA overtakes at d = 8", xy=(8, 0.00166), xytext=(5.8, 0.0008),
+                fontsize=8, color=PALETTE["neutral_dark"],
+                arrowprops=dict(arrowstyle="->", color=PALETTE["neutral_dark"], lw=0.8))
+    return save(fig, "05_pca_vs_ae.png")
 
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "05_pca_vs_ae.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
 
-
+# ── Figure 06: MV3 stopping-depth profile FAIL ──────────────────────────────
+# Source: reports/mv3_stopping_depth/ (fractions in %; chi2/ndf = 68,269)
 def fig_stopping_depth():
-    """Figure 6: MC vs Data stopping-depth profile (MV3 failure)."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    mc = np.array([47.0, 18.2, 12.5, 22.3])
+    data = np.array([87.6, 6.3, 3.9, 2.3])
 
-    staves = STOPPING_DEPTH["staves"]
-    mc = STOPPING_DEPTH["mc"]
-    data = STOPPING_DEPTH["data"]
-
-    # Side-by-side bar chart
-    x = np.arange(len(staves))
-    width = 0.35
+    fig, axes = plt.subplots(1, 2, figsize=(8.8, 3.5))
+    x = np.arange(len(STAVES))
+    w = 0.34
 
     ax = axes[0]
-    ax.bar(x - width/2, mc, width, label="MC (GEANT4)", color="#8e44ad",
-           edgecolor="black", linewidth=1, alpha=0.8)
-    ax.bar(x + width/2, data, width, label="Data", color="#2ecc71",
-           edgecolor="black", linewidth=1, alpha=0.8)
+    ax.bar(x - w / 2, mc, w, label="MC (GEANT4)", color=PALETTE["violet"],
+           edgecolor="black", linewidth=0.8)
+    ax.bar(x + w / 2, data, w, label="Data", color=PALETTE["teal"],
+           edgecolor="black", linewidth=0.8)
     ax.set_xticks(x)
-    ax.set_xticklabels(staves)
-    ax.set_ylabel("Fraction of selected pulses (%)", fontweight="bold")
-    ax.set_title("Stopping-Depth Profile", fontweight="bold")
-    ax.legend()
-    ax.grid(axis="y", alpha=0.3)
+    ax.set_xticklabels(STAVES)
+    ax.set_ylabel("Fraction of selected pulses (%)")
+    ax.legend(loc="upper right")
+    ax.set_title("a  Stopping-depth profile", loc="left")
 
-    # Ratio plot
     ax2 = axes[1]
-    ratios = [d/m if m > 0 else 0 for d, m in zip(data, mc)]
-    colors = ["#2ecc71" if 0.5 < r < 2 else "#e74c3c" for r in ratios]
-    ax2.bar(staves, ratios, color=colors, edgecolor="black", linewidth=1, alpha=0.8)
-    ax2.axhline(y=1.0, color="black", linestyle="--", alpha=0.5, label="Agreement")
-    ax2.set_ylabel("Data / MC Ratio", fontweight="bold")
-    ax2.set_title("Data/MC Ratio (1.0 = perfect agreement)", fontweight="bold")
-    ax2.set_ylim(0, max(ratios) * 1.3)
+    ratios = data / mc
+    ax2.plot(x, ratios, "o", markersize=7, color=PALETTE["red_strong"])
+    ax2.axhline(1.0, color=PALETTE["neutral_mid"], linestyle="--", lw=0.9)
+    for xi, r in zip(x, ratios):
+        ax2.text(xi + 0.08, r, f"{r:.2f}", fontsize=8.5, va="center")
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(STAVES)
+    ax2.set_xlim(-0.5, 3.7)
+    ax2.set_yscale("log")
+    ax2.set_ylabel("Data / MC ratio")
+    ax2.set_title("b  MC overpredicts B8 penetration ×10", loc="left")
 
-    # Annotate B8
-    ax2.annotate(f"B8: {ratios[3]:.2f}×\n(MC 10× too many\nat B8)",
-                xy=(3, ratios[3]), xytext=(3.3, ratios[3] + 0.3),
-                fontsize=9, ha="center", color="#e74c3c", fontweight="bold",
-                arrowprops=dict(arrowstyle="->", color="#e74c3c", lw=1.5))
-
-    plt.suptitle("MV3: Stopping-Depth Profile — ⛔ STRUCTURAL FAIL (χ²/ndf = 68,269)",
-                 fontweight="bold", fontsize=13, y=1.02, color="#e74c3c")
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "06_stopping_depth.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
+    fig.suptitle("MV3 stopping-depth — FAIL (χ²/ndf = 68,269; root cause not established)",
+                 fontsize=10, y=1.04, color=PALETTE["red_strong"])
+    return save(fig, "06_stopping_depth.png")
 
 
-def fig_pid_roc():
-    """Figure 7: PID classifier performance."""
-    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+# ── Figure 07: MV1 PID validation ───────────────────────────────────────────
+def fig_pid_auc():
+    mv1 = load_json(MV12_JSON)["MV1_pid"]
+    methods = ["Single-cut ΔE", "Logistic regression", "HGB"]
+    aucs = [None, mv1["logreg_auc"], mv1["hgb_auc"]]
+    purities = [mv1["cut_purity"], mv1["logreg_purity_at_90eff"], mv1["hgb_purity_at_90eff"]]
 
-    methods = PID_AUC["methods"]
-    aucs = PID_AUC["auc"]
-    purities = PID_AUC["purity"]
-
+    fig, ax = plt.subplots(figsize=(6.2, 3.5))
     x = np.arange(len(methods))
-    width = 0.35
-
-    bars1 = ax.bar(x - width/2, aucs, width, label="AUC", color="#3498db",
-                   edgecolor="black", linewidth=1, alpha=0.85)
-    bars2 = ax.bar(x + width/2, purities, width, label="Purity @ 90% eff",
-                   color="#2ecc71", edgecolor="black", linewidth=1, alpha=0.85)
-
-    for bar, val in zip(bars1, aucs):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
-                f"{val:.4f}", ha="center", fontsize=9, fontweight="bold")
-    for bar, val in zip(bars2, purities):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
-                f"{val:.4f}", ha="center", fontsize=9, fontweight="bold")
-
+    w = 0.34
+    auc_x = [xi - w / 2 for xi, a in zip(x, aucs) if a is not None]
+    auc_v = [a for a in aucs if a is not None]
+    ax.bar(auc_x, auc_v, w, label="AUC", color=PALETTE["blue_main"],
+           edgecolor="black", linewidth=0.8)
+    ax.bar(x + w / 2, purities, w, label="Purity at 90% efficiency",
+           color=PALETTE["teal"], edgecolor="black", linewidth=0.8)
+    for xi, v in zip(auc_x, auc_v):
+        ax.text(xi, v + 0.004, f"{v:.4f}", ha="center", fontsize=8)
+    for xi, v in zip(x + w / 2, purities):
+        ax.text(xi, v + 0.004, f"{v:.4f}", ha="center", fontsize=8)
     ax.set_xticks(x)
-    ax.set_xticklabels(methods, fontsize=9)
-    ax.set_ylabel("Score", fontweight="bold")
-    ax.set_title("Proton/Deuteron PID: MC Truth Validation (MV1)", fontweight="bold", pad=15)
-    ax.legend(loc="lower right")
-    ax.set_ylim(0.80, 1.02)
-    ax.grid(axis="y", alpha=0.3)
-
-    # MC ceiling annotation
-    ax.axhline(y=0.9860, color="#e74c3c", linestyle="--", alpha=0.6, linewidth=1.5)
-    ax.text(2.5, 0.988, "MC truth ceiling\n(AUC = 0.9860)", fontsize=8, color="#e74c3c", ha="center")
-
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "07_pid_auc.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
+    ax.set_xticklabels(methods)
+    ax.set_ylabel("Score (dimensionless)")
+    ax.set_ylim(0.80, 1.03)
+    ax.legend(loc="lower right", fontsize=8)
+    ax.text(0 - w / 2, 0.81, "no AUC\n(hard cut)", ha="center", fontsize=7,
+            color=PALETTE["neutral_dark"])
+    ax.set_title("MV1 proton/deuteron PID on GEANT4 truth (400,369 tracks) — MC truth ceiling",
+                 loc="left", fontsize=9.5)
+    return save(fig, "07_pid_auc.png")
 
 
-def fig_c12_anomaly():
-    """Figure 8: C12 anomaly waveform comparison."""
-    t, normal, c12 = mock_c12_waveform()
+# ── Figure 08: early-peak anomaly schematic (ILLUSTRATIVE ONLY) ─────────────
+# The species attribution (MV6 "C12 recoils") is RETRACTED 2026-07-03.
+# The waveforms below are drawn shapes, not measured pulses; they illustrate
+# the early-peak signature of the P09a anomaly class only.
+def fig_anomaly_schematic():
+    rng = np.random.default_rng(7)
+    t = np.arange(18) * 10.0
+    normal = np.exp(-0.5 * ((t - 55) / 15) ** 2) + 0.015 * rng.standard_normal(18)
+    early = 0.8 * np.exp(-0.5 * ((t - 15) / 5) ** 2) + 0.01 * rng.standard_normal(18)
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
-
-    # Normal pulse
-    ax = axes[0]
-    ax.plot(t, normal, "o-", color="#3498db", markersize=6, linewidth=2, label="Normal proton pulse")
-    ax.fill_between(t, 0, normal, alpha=0.2, color="#3498db")
-    ax.axvline(x=55, color="#3498db", linestyle="--", alpha=0.4)
-    ax.text(57, max(normal)*0.9, "Peak at\nsample ~5", fontsize=8, color="#3498db")
-    ax.set_xlabel("Time (ns)", fontweight="bold")
-    ax.set_ylabel("ADC (normalized)", fontweight="bold")
-    ax.set_title("Normal Proton Pulse", fontweight="bold")
-    ax.set_xlim(0, 170)
-    ax.grid(alpha=0.3)
-
-    # C12 recoil
-    ax2 = axes[1]
-    ax2.plot(t, c12, "s-", color="#e74c3c", markersize=6, linewidth=2, label="C12 recoil pulse")
-    ax2.fill_between(t, 0, c12, alpha=0.2, color="#e74c3c")
-    ax2.axvline(x=15, color="#e74c3c", linestyle="--", alpha=0.4)
-    ax2.text(17, max(c12)*0.9, "Peak at\nsample ~1-2", fontsize=8, color="#e74c3c")
-    ax2.set_xlabel("Time (ns)", fontweight="bold")
-    ax2.set_ylabel("ADC (normalized)", fontweight="bold")
-    ax2.set_title("C12 Nuclear Recoil (Anomaly Class)", fontweight="bold")
-    ax2.set_xlim(0, 170)
-    ax2.grid(alpha=0.3)
-
-    plt.suptitle("MV6: Waveform Comparison — Normal vs C12 Recoil",
-                 fontweight="bold", fontsize=13)
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "08_c12_anomaly.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
+    fig, ax = plt.subplots(figsize=(6.2, 3.3))
+    ax.plot(t, normal, "o-", color=PALETTE["blue_main"], markersize=5, lw=1.3,
+            label="typical pulse (peak ≈ sample 5)")
+    ax.plot(t, early, "s-", color=PALETTE["red_strong"], markersize=5, lw=1.3,
+            label="early-peak anomaly class (peak ≈ sample 1–2)")
+    ax.set_xlabel("Time (ns)")
+    ax.set_ylabel("Amplitude (arbitrary units)")
+    ax.set_xlim(0, 175)
+    ax.legend(loc="upper right", fontsize=7.5)
+    ax.set_title("Early-peak anomaly signature — SCHEMATIC (drawn shapes, not data)",
+                 loc="left", fontsize=9.5)
+    ax.text(0.99, 0.62, "species attribution (MV6 \"C12\")\nretracted 2026-07-03",
+            transform=ax.transAxes, ha="right", fontsize=7.5,
+            color=PALETTE["red_strong"])
+    return save(fig, "08_c12_anomaly.png")
 
 
-def fig_systematic_budget():
-    """Figure 9: Systematic uncertainty budget."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 5))
-
-    sources = SYST_BUDGET["sources"]
-    magnitudes = SYST_BUDGET["magnitudes"]
-    colors = SYST_BUDGET["colors"]
-
-    bars = ax.barh(sources, magnitudes, color=colors, edgecolor="black", linewidth=1.2, alpha=0.85)
-
-    for bar, mag in zip(bars, magnitudes):
-        if mag > 0:
-            ax.text(bar.get_width() + 0.5, bar.get_y() + bar.get_height()/2,
-                    f"{mag:.1f}%", va="center", fontweight="bold", fontsize=10)
-        else:
-            ax.text(bar.get_width() + 0.5, bar.get_y() + bar.get_height()/2,
-                    "Negligible", va="center", fontsize=9)
-
-    ax.set_xlabel("Systematic Uncertainty (%)", fontweight="bold")
-    ax.set_title("Systematic Uncertainty Budget (Deuteron Fraction)", fontweight="bold", pad=15)
-
-    # Quadrature sum annotation
-    quad_sum = np.sqrt(sum(m*m for m in magnitudes))
-    ax.text(0.95, 0.05, f"Quadrature total: ~{quad_sum:.0f}%\nDominant: MV0 gain ±30%",
-            transform=ax.transAxes, ha="right", fontsize=10, fontweight="bold",
-            bbox=dict(boxstyle="round,pad=0.5", facecolor="#f8f9fa", edgecolor="gray"))
-
-    ax.set_xlim(0, max(magnitudes) * 1.5)
-    ax.grid(axis="x", alpha=0.3)
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "09_systematic_budget.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
-
-
-def fig_ml_landscape():
-    """Figure 10: ML win/loss/tie summary."""
-    fig, ax = plt.subplots(1, 1, figsize=(10, 5))
-
-    domains = [
-        "Saturation\nRecovery",
-        "Duplicate\nReadout",
-        "Two-Pulse\nTime RMS",
-        "Timewalk\nCorrection",
-        "Pile-up\nPoisson Rate",
-        "Deep Net\nTiming",
-        "PID\n(Data-only)",
-        "Representation\nSuperiority",
+# ── Figure 09: MC-validation status (no fabricated magnitudes) ──────────────
+def fig_validation_status():
+    rows = [
+        ("MV0 gain", "RETRACTED", "gain UNKNOWN (v1 and v2 both retracted)"),
+        ("MV1 PID", "PASS", "AUC 0.986 on GEANT4 truth (rerun 2026-07-03)"),
+        ("MV2 energy/range", "RERUN OK", "MeV-scale after unit fix; containment p 0.70 / d 0.84"),
+        ("MV3 stopping depth", "FAIL", "χ²/ndf = 68,269; root cause not established"),
+        ("MV4 timing", "REVIEW", "MC pair-equiv 2.09 ns between data 2.99 (raw) and 1.50 (corr)"),
+        ("MV5 pile-up", "RETRACTED", "MC τ_eff was a copy of the data value; R_max is data-only"),
+        ("MV6 anomaly ID", "RETRACTED", "C12 attribution unsupported; species open"),
+        ("S21 trigger truth", "CONFIRMED", "Sample I d-enrichment in B2: ratio 1.519 [1.510, 1.528]"),
     ]
-    verdicts = [
-        ("ML Wins", "#2ecc71", "3-7× better"),
-        ("ML Wins", "#2ecc71", "res68 0.003 vs 0.12"),
-        ("ML Wins RMS\n⚠️ Higher failure", "#f39c12", "0.295 vs 0.168"),
-        ("Tie/Loss", "#3498db", "Analytic optimal"),
-        ("Tie/Loss", "#3498db", "Analytic optimal"),
-        ("ML Loses", "#e74c3c", "CNN < analytic"),
-        ("Leakage", "#e74c3c", "Self-referential"),
-        ("CORRECTED", "#e74c3c", "Failed LORO"),
-    ]
+    status_color = {
+        "PASS": PALETTE["blue_main"],
+        "CONFIRMED": PALETTE["blue_main"],
+        "RERUN OK": PALETTE["teal"],
+        "REVIEW": PALETTE["neutral_mid"],
+        "FAIL": PALETTE["red_strong"],
+        "RETRACTED": PALETTE["red_strong"],
+    }
 
-    y_pos = range(len(domains))
-    colors = [v[1] for v in verdicts]
-    labels = [f"{v[0]}\n{v[2]}" for v in verdicts]
-
-    ax.barh(y_pos, [1]*len(domains), color=colors, edgecolor="black", linewidth=1, alpha=0.7, height=0.7)
-    for i, (domain, label) in enumerate(zip(domains, labels)):
-        ax.text(0.5, i, f"{domain}: {label}", ha="center", va="center", fontsize=9, fontweight="bold")
-
-    ax.set_yticks([])
-    ax.set_xlim(0, 1)
+    fig, ax = plt.subplots(figsize=(8.6, 3.8))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(-0.5, len(rows) - 0.5)
     ax.axis("off")
-    ax.set_title("ML Performance Landscape: Where ML Wins, Ties, or Loses", fontweight="bold", pad=15)
+    for i, (name, status, note) in enumerate(reversed(rows)):
+        c = status_color[status]
+        ax.text(0.0, i, name, fontsize=9, va="center", fontweight="bold")
+        ax.add_patch(mpatches.FancyBboxPatch((2.55, i - 0.28), 1.5, 0.56,
+                                             boxstyle="round,pad=0.02",
+                                             facecolor=c, edgecolor="none", alpha=0.9))
+        ax.text(3.3, i, status, fontsize=8, va="center", ha="center",
+                color="white", fontweight="bold")
+        ax.text(4.35, i, note, fontsize=8, va="center", color=PALETTE["neutral_dark"])
+    ax.set_title("MC-validation status after the 2026-07-02 external review and 2026-07-03 reruns",
+                 loc="left", fontsize=9.5, pad=12)
+    return save(fig, "09_systematic_budget.png")
 
-    # Legend
-    legend_elements = [
-        mpatches.Patch(color="#2ecc71", label="✅ ML Wins (truth independent, shape signal)"),
-        mpatches.Patch(color="#f39c12", label="⚠️ ML Wins partially (higher failure rate)"),
-        mpatches.Patch(color="#3498db", label="Tie/Loss (analytic model already optimal)"),
-        mpatches.Patch(color="#e74c3c", label="❌ ML Loses / CORRECTED (leakage artifact)"),
+
+# ── Figure 10: ML performance landscape ─────────────────────────────────────
+def fig_ml_landscape():
+    rows = [
+        ("Saturation recovery", "ML wins", "res68 0.032–0.046 vs 0.104–0.286 (P07)"),
+        ("Duplicate-readout amplitude", "ML wins", "res68 0.003–0.009 vs 0.12–0.20 (P04)"),
+        ("Two-pulse recovery", "Traditional favoured", "matched risk-coverage P05f; S11 table superseded"),
+        ("Timewalk correction", "Tie / loss", "analytic B/A model 1.49–1.55 ns ≈ ML 1.39–1.47 ns (S03)"),
+        ("Pile-up rate model", "Tie / loss", "analytic Poisson model already optimal (S10)"),
+        ("Deep-net timing", "ML loses", "CNN/MLP on raw waveform < analytic timewalk (P03)"),
+        ("PID (data-only)", "Leakage", "label = f(input); AUC ≈ 1.0 is self-referential (S07)"),
+        ("Representation superiority", "CORRECTED", "failed run-family and event-block controls (P01/P02)"),
     ]
-    ax.legend(handles=legend_elements, loc="lower center", ncol=2, fontsize=8,
-              bbox_to_anchor=(0.5, -0.25))
+    cat_color = {
+        "ML wins": PALETTE["blue_main"],
+        "Traditional favoured": PALETTE["teal"],
+        "Tie / loss": PALETTE["neutral_mid"],
+        "ML loses": PALETTE["neutral_mid"],
+        "Leakage": PALETTE["red_strong"],
+        "CORRECTED": PALETTE["red_strong"],
+    }
 
-    plt.tight_layout()
-    path = os.path.join(OUTPUT_DIR, "10_ml_landscape.png")
-    fig.savefig(path)
-    plt.close(fig)
-    print(f"  ✓ {path}")
-    return path
+    fig, ax = plt.subplots(figsize=(8.8, 3.8))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(-0.5, len(rows) - 0.5)
+    ax.axis("off")
+    for i, (domain, verdict, note) in enumerate(reversed(rows)):
+        c = cat_color[verdict]
+        ax.text(0.0, i, domain, fontsize=9, va="center", fontweight="bold")
+        ax.add_patch(mpatches.FancyBboxPatch((3.35, i - 0.28), 2.0, 0.56,
+                                             boxstyle="round,pad=0.02",
+                                             facecolor=c, edgecolor="none", alpha=0.9))
+        ax.text(4.35, i, verdict, fontsize=8, va="center", ha="center",
+                color="white", fontweight="bold")
+        ax.text(5.6, i, note, fontsize=7.5, va="center", color=PALETTE["neutral_dark"])
+    ax.set_title("Where ML helps — and where it does not (verdicts after leakage controls)",
+                 loc="left", fontsize=9.5, pad=12)
+    return save(fig, "10_ml_landscape.png")
 
 
 # ── Main ────────────────────────────────────────────────────────────────────
-
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    setup_style()
     print(f"Generating figures in {OUTPUT_DIR}/ ...")
-
-    fig_experimental_setup()
-    fig_analysis_pipeline()
-    fig_timing_resolution()
+    fig_s21_enrichment()
     fig_mc_vs_data()
+    fig_timing_resolution()
     fig_pca_vs_ae()
     fig_stopping_depth()
-    fig_pid_roc()
-    fig_c12_anomaly()
-    fig_systematic_budget()
+    fig_pid_auc()
+    fig_anomaly_schematic()
+    fig_validation_status()
     fig_ml_landscape()
-
-    print(f"\n✓ All figures generated successfully in {OUTPUT_DIR}/")
+    print("done")
     return 0
 
 

@@ -1,0 +1,237 @@
+{
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "n_tracks": 400369,
+  "n_proton": 150130,
+  "n_deuteron": 146842,
+  "MV1_pid": {
+    "deltaE_E_medians": {
+      "proton": {
+        "edep_l0": 11.422130422685726,
+        "edep_l1": 11.96690924571572,
+        "edep_tot": 101.14635080646323,
+        "stop_layer": 5.0
+      },
+      "deuteron": {
+        "edep_l0": 35.856014783414466,
+        "edep_l1": 26.60756634520599,
+        "edep_tot": 73.44754338576749,
+        "stop_layer": 1.0
+      }
+    },
+    "logreg_auc": 0.9628868703282414,
+    "logreg_purity_at_90eff": 0.9488978818667125,
+    "hgb_auc": 0.9859267232735824,
+    "hgb_purity_at_90eff": 0.9645972518014996,
+    "cut_edep_l0_thr_MeV": 13.287866011130776,
+    "cut_purity": 0.8909863556160177,
+    "cut_efficiency": 0.900961577750235
+  },
+  "MV2_range_energy": {
+    "proton_stoplayer_vs_ekin": {
+      "0": {
+        "n": 16674,
+        "mean_ekin_MeV": 30.893291726271205,
+        "mean_edep_tot_MeV": 10.390852486852154,
+        "mean_tracklen_mm": 27.925542757605253
+      },
+      "1": {
+        "n": 14908,
+        "mean_ekin_MeV": 50.17006433747411,
+        "mean_edep_tot_MeV": 18.35914571538436,
+        "mean_tracklen_mm": 61.046662149252946
+      },
+      "2": {
+        "n": 11326,
+        "mean_ekin_MeV": 61.334397606469224,
+        "mean_edep_tot_MeV": 23.732187193052,
+        "mean_tracklen_mm": 122.3874179969086
+      },
+      "3": {
+        "n": 9595,
+        "mean_ekin_MeV": 70.43771891180982,
+        "mean_edep_tot_MeV": 33.0145480398508,
+        "mean_tracklen_mm": 194.74540380183714
+      },
+      "4": {
+        "n": 8990,
+        "mean_ekin_MeV": 80.66885870906853,
+        "mean_edep_tot_MeV": 45.82873150905328,
+        "mean_tracklen_mm": 294.89012213526115
+      },
+      "5": {
+        "n": 24398,
+        "mean_ekin_MeV": 106.34196323980287,
+        "mean_edep_tot_MeV": 102.37093266910324,
+        "mean_tracklen_mm": 572.9619256897291
+      },
+      "6": {
+        "n": 33597,
+        "mean_ekin_MeV": 120.518300799851,
+        "mean_edep_tot_MeV": 123.559977898211,
+        "mean_tracklen_mm": 746.3337302384391
+      },
+      "7": {
+        "n": 30642,
+        "mean_ekin_MeV": 141.75974765075398,
+        "mean_edep_tot_MeV": 121.95644593334202,
+        "mean_tracklen_mm": 890.7214253721004
+      }
+    },
+    "deuteron_stoplayer_vs_ekin": {
+      "0": {
+        "n": 38021,
+        "mean_ekin_MeV": 57.21296677363195,
+        "mean_edep_tot_MeV": 41.0637367871173,
+        "mean_tracklen_mm": 99.01459027930801
+      },
+      "1": {
+        "n": 71142,
+        "mean_ekin_MeV": 74.31241984518294,
+        "mean_edep_tot_MeV": 72.95923633305982,
+        "mean_tracklen_mm": 213.16418249396824
+      },
+      "2": {
+        "n": 9017,
+        "mean_ekin_MeV": 96.40399067745072,
+        "mean_edep_tot_MeV": 76.57323636364188,
+        "mean_tracklen_mm": 259.922180933602
+      },
+      "3": {
+        "n": 27085,
+        "mean_ekin_MeV": 116.81566599272494,
+        "mean_edep_tot_MeV": 122.12859278977999,
+        "mean_tracklen_mm": 435.6861099197299
+      },
+      "4": {
+        "n": 725,
+        "mean_ekin_MeV": 19.298187621380634,
+        "mean_edep_tot_MeV": 19.85898576418519,
+        "mean_tracklen_mm": 1.5682610371033097
+      },
+      "5": {
+        "n": 469,
+        "mean_ekin_MeV": 17.659014817470975,
+        "mean_edep_tot_MeV": 18.091288307744396,
+        "mean_tracklen_mm": 0.45463400593028686
+      },
+      "6": {
+        "n": 237,
+        "mean_ekin_MeV": 16.412783738923455,
+        "mean_edep_tot_MeV": 16.899191127779545,
+        "mean_tracklen_mm": 2.308494746508541
+      },
+      "7": {
+        "n": 146,
+        "mean_ekin_MeV": 14.1706275961117,
+        "mean_edep_tot_MeV": 14.575389194990088,
+        "mean_tracklen_mm": 4.329207179237989
+      }
+    },
+    "proton_stoplayer_vs_ekin_contained": {
+      "0": {
+        "n": 11069,
+        "mean_ekin_MeV": 11.57928132013831,
+        "mean_edep_tot_MeV": 12.891696879995573,
+        "mean_tracklen_mm": 1.2002044882975995
+      },
+      "1": {
+        "n": 9427,
+        "mean_ekin_MeV": 18.04956741852888,
+        "mean_edep_tot_MeV": 19.60877961115136,
+        "mean_tracklen_mm": 1.0140040700861275
+      },
+      "2": {
+        "n": 6138,
+        "mean_ekin_MeV": 18.06941051083884,
+        "mean_edep_tot_MeV": 19.60466089822232,
+        "mean_tracklen_mm": 1.863266019437496
+      },
+      "3": {
+        "n": 4654,
+        "mean_ekin_MeV": 21.44084040082123,
+        "mean_edep_tot_MeV": 22.96496647438699,
+        "mean_tracklen_mm": 3.423459235882367
+      },
+      "4": {
+        "n": 3920,
+        "mean_ekin_MeV": 26.324678478879896,
+        "mean_edep_tot_MeV": 27.510763958187304,
+        "mean_tracklen_mm": 21.79673608118182
+      },
+      "5": {
+        "n": 20663,
+        "mean_ekin_MeV": 102.83753894557522,
+        "mean_edep_tot_MeV": 107.88428542075408,
+        "mean_tracklen_mm": 566.6057711285837
+      },
+      "6": {
+        "n": 31557,
+        "mean_ekin_MeV": 119.88964075776207,
+        "mean_edep_tot_MeV": 126.58087982813484,
+        "mean_tracklen_mm": 750.0598118633415
+      },
+      "7": {
+        "n": 17048,
+        "mean_ekin_MeV": 133.77295745382673,
+        "mean_edep_tot_MeV": 128.63471718420269,
+        "mean_tracklen_mm": 867.9146890871612
+      }
+    },
+    "deuteron_stoplayer_vs_ekin_contained": {
+      "0": {
+        "n": 25312,
+        "mean_ekin_MeV": 50.19267612548523,
+        "mean_edep_tot_MeV": 53.0725669886453,
+        "mean_tracklen_mm": 94.34446819178957
+      },
+      "1": {
+        "n": 65534,
+        "mean_ekin_MeV": 71.69923702629886,
+        "mean_edep_tot_MeV": 75.80156622609123,
+        "mean_tracklen_mm": 212.98672615207533
+      },
+      "2": {
+        "n": 5274,
+        "mean_ekin_MeV": 81.30669242331207,
+        "mean_edep_tot_MeV": 84.70517024877957,
+        "mean_tracklen_mm": 216.02930022499467
+      },
+      "3": {
+        "n": 26386,
+        "mean_ekin_MeV": 116.99488405657083,
+        "mean_edep_tot_MeV": 123.2628924042923,
+        "mean_tracklen_mm": 436.9443348173128
+      },
+      "4": {
+        "n": 641,
+        "mean_ekin_MeV": 20.27315810863559,
+        "mean_edep_tot_MeV": 21.85575403522577,
+        "mean_tracklen_mm": 1.747800020920005
+      },
+      "5": {
+        "n": 393,
+        "mean_ekin_MeV": 19.28913054025171,
+        "mean_edep_tot_MeV": 20.709034102244306,
+        "mean_tracklen_mm": 0.4986006220435705
+      },
+      "6": {
+        "n": 204,
+        "mean_ekin_MeV": 17.569595139626973,
+        "mean_edep_tot_MeV": 19.001168690318146,
+        "mean_tracklen_mm": 1.4649182053745664
+      },
+      "7": {
+        "n": 120,
+        "mean_ekin_MeV": 15.699579462623584,
+        "mean_edep_tot_MeV": 16.993465556078682,
+        "mean_tracklen_mm": 4.22699204528668
+      }
+    },
+    "proton_contained_fraction": 0.6959035502564445,
+    "deuteron_contained_fraction": 0.8435188842429278,
+    "proton_ekin_recon_res68": 0.047387213822096715,
+    "proton_ekin_mean_MeV": 99.37638134718853,
+    "deuteron_ekin_recon_res68": 0.009558012329442207,
+    "deuteron_ekin_mean_MeV": 79.68720816151033
+  }
+}

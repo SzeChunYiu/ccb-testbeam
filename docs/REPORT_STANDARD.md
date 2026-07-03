@@ -383,6 +383,18 @@ A study is not "closed" until all of the above are done in one pass. Partial upd
 [ ] FINDINGS_SYNTHESIS.md + SUMMARY.md + PROJECT_REPORT.md updated in the same pass
 ```
 
+### 11.1 Critic gate — honest status (2026-07-03)
+
+The fleet's acceptance gate (`fleet/CRITIC_PROTOCOL.md`) was **specified but never executed** for
+the 2026-06 program: there are 0 `critic:accept` verdicts in the repo, all `result.json` critic
+fields read `"pending"`, and studies reached `reports/SUMMARY.md` without any Critic review. Any
+statement that studies here passed an adversarial Critic gate is false for that program; the
+adversarial review that actually happened was post hoc (`EXTERNAL_REVIEW_2026-07-02.md`). The
+protocol remains in force for future runs **only as a CI-enforced merge gate** (a check that fails
+without a `critic: accept` from a different worker), not as a prose promise — see the status note
+at the top of `fleet/CRITIC_PROTOCOL.md`. Ticking the checklist above does not substitute for that
+gate.
+
 *End of standard. A report that ticks every box above is publication-grade and leaves no reviewer
 question unanswered. Anything less is a draft.*
 

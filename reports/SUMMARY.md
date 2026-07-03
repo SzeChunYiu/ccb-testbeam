@@ -1,3 +1,15 @@
+# Rolling study scoreboard
+
+> **Note (2026-07-03, statistics-hardening pass).** This scoreboard is a **sample, not a census**:
+> it holds ~137 study rows out of ~238 studies run in the 2026-06 program (~95 studies — including
+> falsification studies such as S03p/S03r below — never received rows). Do not treat absence of a
+> row as absence of a result, and do not treat a bold "Yes" as a multiplicity-controlled win: no
+> study here was corrected for the ~2,000 delta-CIs the program produced. The claim-level census
+> with Benjamini–Hochberg FDR control per claim family is
+> `reports/stats01_program_fdr_<stamp>/REPORT.md` (regenerate with
+> `scripts/stats01_program_fdr.py`); consult it before citing any row as a win.
+> Context: `EXTERNAL_REVIEW_2026-07-02.md` §4.
+
 | Study | Status | Reproduced? | Traditional | ML | ML beats baseline? | Report/PR |
 |---|---|---|---|---|---|---|
 | S00 | ✅ done | ✅ 640,737 exact | per-stave counts | run-split sanity | — (foundation) | reports/S00_… (PR #1) |
@@ -23,7 +35,9 @@
 | S03c | ✅ done | ✅ S00 and S03a run-65 reproduction | LORO analytic timewalk 1.551 ns | LORO ridge residual 1.537 ns | Tie; analytic closure is stable across Sample-II runs | reports/1781005627.1877.378c7a87 |
 | S03d | ✅ done | ✅ S03a/S03b LORO baselines reproduced | amp-only 1.551 ns; monotone-binned 1.645 ns | HGB residual 1.394 ns | ML gain is real in-fold; needs monotonicity/transfer audit before adoption | reports/1781010985.923.35c141ac |
 | S03d exact-fold | ✅ done | ✅ exact P01e candidate folds reproduced | S03 analytic timewalk 1.494 ns | S02 ridge 1.897 ns; P01e AE 1.980 ns | No; S03 analytic is the comparator to beat on these folds | reports/1781018587.1274.0a8b49e5 |
-| S03k comparator gate | ✅ done | ✅ 640,737 exact; Sample-II counts exact | exact-fold S03 analytic timewalk 1.551 ns | HGB waveform/amp/shape/stave 1.107 ns; ridge/MLP/1D-CNN/new gated arch all CI-beat S03 | **Yes** for frozen timing consumers; direct downstream substitution still gated | reports/1781048240.758.327a70d2__s03k_analytic_comparator_reuse_gate |
+| S03k comparator gate | ⚠️ gated — subsequently falsified by S03p/S03r feature-leakage nulls | ✅ 640,737 exact; Sample-II counts exact | exact-fold S03 analytic timewalk 1.551 ns | HGB waveform/amp/shape/stave 1.107 ns; ridge/MLP/1D-CNN/new gated arch all CI-beat S03 | ~~Yes~~ withdrawn as a win: S03p verdict `hgb_gain_is_not_robust_to_feature_leakage_null_grid`, S03r verdict `hgb_gain_not_safe_against_stave_support_leakage` (rows below); do not cite 1.107 ns pending confirmation partition (docs/CONFIRMATION_PARTITION.md) | reports/1781048240.758.327a70d2__s03k_analytic_comparator_reuse_gate |
+| S03p HGB feature-leakage null grid | ✅ done (falsification of S03k robustness) | ✅ 640,737 exact; Sample-II counts exact; run-65 S03 references exact | s03b_binned_timewalk sigma68 1.398 ns (best traditional); analytic comparator frozen | hgb_all sigma68 1.363 ns, Δ vs analytic −0.132 ns, CI [−0.202, −0.061]; named winner hgb_no_amplitude 1.304 ns, CI [1.218, 1.471] | No — overall verdict `hgb_gain_is_not_robust_to_feature_leakage_null_grid`; the blind HGB gain does not survive the feature-family dropout/sentinel grid and "should be consumed only after direct downstream substitution tests" | reports/1781062439.500.63591f99__s03p_hgb_feature_leakage_null_grid |
+| S03r stave-only HGB leakage dissection | ✅ done (falsification of S03k robustness) | ✅ 640,737 exact; Sample-II counts exact; run-65 S03 references exact | s03b_binned_timewalk sigma68 1.398 ns (best traditional); analytic comparator frozen | hgb_all sigma68 1.341 ns, Δ vs analytic −0.154 ns, CI [−0.230, −0.096] | No — overall verdict `hgb_gain_not_safe_against_stave_support_leakage`; stave-only status `stave_only_worse_than_full_hgb`, but support-excluded HGB `does_not_clear_analytic_ci` | reports/1781066704.631.13c7784e__s03r_stave_only_hgb_leakage_dissection |
 | S03e all-three q-template | ✅ done | ✅ all-three control/gross gates reproduced | q_template score AUC 0.794 | q_template RF AUC 0.866 | **Yes**, but downstream q_template is label-source-adjacent; upstream-only leakage gate needed | reports/1781027860.926.103338b4 |
 | S04e B2 q-veto | ✅ done | ✅ raw-root pair table and q_template join | B2 raw sigma68 3.526 ns; q-threshold veto 1.720 ns | RF q-veto 1.299 ns; tail>5ns 0.0053 | Yes on heldout B2 tails; transfer/support bias must be audited | reports/1781028505.1210.78b135ab |
 | S05a | ✅ done | ✅ A-stack/B-stack external-control inputs | CFD20 pair-median residual width 2.082 ns | ExtraTrees B+A width 1.664 ns | No secure A-control gain; shuffled-A control is similar | reports/1781001480.696013.4ac50583__s05a_astack_external_control |

@@ -1,8 +1,23 @@
 # Scientific Critic protocol
 
+> **Status (2026-07-03): specified, never executed.** For the 2026-06 program this gate did not
+> run — there are **0 `critic:accept` verdicts anywhere in the repo**, every `result.json` critic
+> field says `"pending"`, and studies were placed on `reports/SUMMARY.md` without any Critic
+> review (External Review 2026-07-02, I6). An earlier version of this file claimed "no study is
+> accepted into the scoreboard without a passing Critic review"; that claim was false and is
+> withdrawn. The adversarial review that actually happened was post hoc:
+> `EXTERNAL_REVIEW_2026-07-02.md`.
+>
+> The protocol below is kept for future runs on one condition: **it must be enforced by CI, not
+> prose** — a merge/scoreboard gate that fails unless the study's `result.json` carries
+> `critic: accept` from a different worker. A protocol document cannot enforce itself; if the CI
+> gate is not implemented for the next program, delete this file rather than re-asserting the
+> claim.
+
 An adversarial review role, borrowed from the Stanford Virtual Lab ("Scientific Critic") and
-Google's AI co-scientist ("Reflection" agent). **No study is accepted into the scoreboard
-without a passing Critic review.** The Critic does **not** redo the study — it tries to break it.
+Google's AI co-scientist ("Reflection" agent). The intended rule — enforced by CI, not by this
+sentence — is that no study is accepted into the scoreboard without a passing Critic review. The
+Critic does **not** redo the study — it tries to break it.
 
 ## Who
 A **different** worker/model than the one that did the study (never self-grade — LLM judges have

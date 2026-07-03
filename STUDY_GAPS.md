@@ -260,6 +260,7 @@ GAP-05 (two-ended correlation)
 
 | Priority | Action | Effort |
 |---|---|---|
+| 0 | **Enforce the confirmation-partition policy** ([`docs/CONFIRMATION_PARTITION.md`](docs/CONFIRMATION_PARTITION.md)): runs 64 and 12–30 are reserved; any sub-0.3 ns timing claim (absolute or delta — all S03-family gains, incl. the falsified S03k 1.107 ns) requires a one-shot preregistered confirmation there before publication, using the shared estimators in `src/ccb_mc_validation/statistics/estimators.py` and consulting the program-level FDR census (`scripts/stats01_program_fdr.py`) | Low (policy landed 2026-07-03) |
 | 1 | Add χ²/ndf to all timing residual fits (GAP-07) | Low |
 | 2 | CFD/OF parameter grid search (GAP-06) | Low |
 | 3 | Measure two-ended correlation from existing data (GAP-05) | Medium |

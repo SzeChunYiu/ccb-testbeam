@@ -1,6 +1,6 @@
 # STATS01 — Program-level FDR pass over all delta-CI claims
 
-- **Date:** 2026-07-03 21:59:59
+- **Date:** 2026-07-03 22:01:16
 - **Input:** 443 `reports/*/result.json` artifacts
 - **Procedure:** Benjamini-Hochberg at q = 0.05 within claim family; p-values from a normal approximation of each bootstrap CI (`se = (hi - lo) / (2 x 1.96)`, two-sided).
 - **Motivation:** External Review 2026-07-02 section 4 — ~238 adaptive studies on one dataset, no multiplicity control; ~12+ chance wins expected among thousands of CIs.
@@ -15,29 +15,29 @@
 ## Parse accounting (no silent drops)
 
 - Artifacts found: **443**
-- Artifacts no delta ci claims: **244**
-- Artifacts with claims: **199**
-- Claims parsed: **1925**
+- Artifacts no delta ci claims: **240**
+- Artifacts with claims: **203**
+- Claims parsed: **1948**
 - Claim-level `ci_key_not_2list`: 53
 - Claim-level `ci_zero_width`: 180
 - Claim-level `delta_metric_value_without_ci`: 4
-- Claim-level `derived_unpaired_ml_vs_traditional`: 83
+- Claim-level `derived_unpaired_ml_vs_traditional`: 106
 - Claim-level `ml_traditional_values_without_both_cis`: 14
 - Claim-level `point_estimate_from_midpoint`: 157
 - Claim-level `study_id_from_dirname_or_unknown`: 4
-- Artifacts with zero extractable delta-CI claims are listed in `artifacts_without_claims.txt` (244 files); these include verdict-only, count-only, and classifier-metric-only artifacts.
+- Artifacts with zero extractable delta-CI claims are listed in `artifacts_without_claims.txt` (240 files); these include verdict-only, count-only, and classifier-metric-only artifacts.
 
 ## Family summary (BH at q = 0.05 within family)
 
 | Family | Studies | Claims | Nominal CI-excludes-zero | Survive BH | Survival rate of nominal |
 |---|---|---|---|---|---|
 | amplitude-charge | 25 | 738 | 462 | 419 | 91% |
-| pedestal | 14 | 272 | 227 | 222 | 98% |
+| pedestal | 14 | 282 | 231 | 225 | 97% |
 | pid | 5 | 30 | 18 | 17 | 94% |
-| pileup | 31 | 183 | 123 | 121 | 98% |
+| pileup | 35 | 191 | 131 | 129 | 98% |
 | representation | 27 | 409 | 372 | 372 | 100% |
-| timing | 46 | 293 | 217 | 196 | 90% |
-| **total** | 148 | **1925** | **1419** | **1347** | 95% |
+| timing | 46 | 298 | 221 | 200 | 90% |
+| **total** | 152 | **1948** | **1435** | **1362** | 95% |
 
 ## Scoreboard bold wins vs BH
 
@@ -47,10 +47,10 @@ The rolling scoreboard (`reports/SUMMARY.md`) marks 17 rows as bold ML wins. Per
 |---|---|---|---|---|---|
 | S01 | representation | 2 | 2 | 2 | survives BH (at least one claim) |
 | S02 | timing | 1 | 1 | 1 | survives BH (at least one claim) |
-| S03b | timing | 3 | 1 | 1 | survives BH (at least one claim) |
+| S03b | timing | 5 | 3 | 3 | survives BH (at least one claim) |
 | S03e | timing | 5 | 2 | 1 | survives BH (at least one claim) |
 | S07 | pileup | 3 | 3 | 3 | survives BH (at least one claim) |
-| S07c | pileup | 0 | 0 | 0 | NO PARSED DELTA-CI ARTIFACT (cannot be FDR-assessed) |
+| S07c | pileup | 2 | 2 | 2 | survives BH (at least one claim) |
 | S07f | pileup | 0 | 0 | 0 | NO PARSED DELTA-CI ARTIFACT (cannot be FDR-assessed) |
 | S10d | pileup | 2 | 2 | 2 | survives BH (at least one claim) |
 | S11a | pileup | 1 | 1 | 1 | survives BH (at least one claim) |
@@ -63,7 +63,7 @@ The rolling scoreboard (`reports/SUMMARY.md`) marks 17 rows as bold ML wins. Per
 | P05b | pileup | 2 | 1 | 1 | survives BH (at least one claim) |
 | P07 | amplitude-charge | 0 | 0 | 0 | NO PARSED DELTA-CI ARTIFACT (cannot be FDR-assessed) |
 
-**Headline:** of 17 scoreboard bold wins, **10 survive BH** (at least one delta-CI claim), **0 fail BH**, and **7 have no machine-readable delta CI at all** (win asserted in prose/derived numbers only).
+**Headline:** of 17 scoreboard bold wins, **11 survive BH** (at least one delta-CI claim), **0 fail BH**, and **6 have no machine-readable delta CI at all** (win asserted in prose/derived numbers only).
 
 A BH-surviving claim is *necessary, not sufficient*: it does not repair dependent-residual iid bootstraps, leakage, or unfair baselines. Studies whose wins fail BH here (or have no parsable delta CI) must not be cited as wins pending confirmation on the reserved partition (`docs/CONFIRMATION_PARTITION.md`).
 

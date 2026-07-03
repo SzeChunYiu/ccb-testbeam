@@ -314,6 +314,26 @@ def _extract_from_dict(node: dict, path: str, out, skips: Counter, claimed: set)
                         skips["derived_unpaired_ml_vs_traditional"] += 1
                         derived_any = True
                     break
+        # D3: matching per-metric keys '<k>' + '<k>_ci_low'/'<k>_ci_high' scalars
+        for k, v in ml.items():
+            if not _is_num(v) or _looks_like_ci_component(k):
+                continue
+            lo_k, hi_k = k + "_ci_low", k + "_ci_high"
+            if (_is_num(ml.get(lo_k)) and _is_num(ml.get(hi_k))
+                    and _is_num(trad.get(k))
+                    and _is_num(trad.get(lo_k)) and _is_num(trad.get(hi_k))):
+                ci_m = _validate_ci([ml[lo_k], ml[hi_k]], skips)
+                ci_t = _validate_ci([trad[lo_k], trad[hi_k]], skips)
+                if ci_m and ci_t:
+                    se = math.hypot((ci_m[1] - ci_m[0]) / (2.0 * Z975),
+                                    (ci_t[1] - ci_t[0]) / (2.0 * Z975))
+                    delta = float(v) - float(trad[k])
+                    _emit(out, claimed, path, f"ml.{k}_ci-vs-traditional.{k}_ci",
+                          delta, delta - Z975 * se, delta + Z975 * se,
+                          "unpaired_per_method_cis", node,
+                          "D_unpaired_ml_vs_traditional")
+                    skips["derived_unpaired_ml_vs_traditional"] += 1
+                    derived_any = True
         if not derived_any and _is_num(ml.get("value")) and _is_num(trad.get("value")):
             skips["ml_traditional_values_without_both_cis"] += 1
 

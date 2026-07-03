@@ -316,20 +316,19 @@ def timewalk_phi(amp: np.ndarray) -> np.ndarray:
     return np.column_stack([1000.0 / a, np.sqrt(1000.0 / a), np.log1p(a / 1000.0)])
 
 
-def fit_timewalk(pairs: pd.DataFrame, train_runs: Sequence[int]) -> Dict[str, np.ndarray]:
-    """Fit per-stave f_s(A) so that corrected pair residuals are amp-flat.
+def _ridge_solve(X: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """Deterministic standardised-ridge normal-equation solve."""
+    mu = X.mean(axis=0)
+    sd = X.std(axis=0)
+    sd[sd == 0.0] = 1.0
+    Xs = (X - mu) / sd
+    A = Xs.T @ Xs + RIDGE_ALPHA * len(X) * np.eye(Xs.shape[1])
+    b = Xs.T @ (y - y.mean())
+    return np.linalg.solve(A, b) / sd
 
-    Model: E[centered residual (right-left)] = f_right(A_right) - f_left(A_left)
-    with f_s(A) = beta_s . phi(A), phi constant-free (per-(pair,run) centering
-    absorbs all constant offsets).  Solved by ridge-regularised normal
-    equations; deterministic.  B2 gets its own parameters but B2-containing
-    pairs are flagged downstream (saturation).
-    """
-    sub = pairs[pairs["run"].isin(list(train_runs))]
-    if len(sub) == 0:
-        return {s: np.zeros(len(TIMEWALK_FEATURES)) for s in STAVE_CHANNELS}
-    y = center_per_group(sub["raw_residual_ns"].to_numpy(), [sub["pair"].to_numpy(), sub["run"].to_numpy()])
-    staves = sorted(STAVE_CHANNELS.keys())
+
+def _pair_design(sub: pd.DataFrame, staves: List[str]) -> np.ndarray:
+    """Design matrix for E[residual] = f_right(A_right) - f_left(A_left)."""
     k = len(TIMEWALK_FEATURES)
     X = np.zeros((len(sub), k * len(staves)))
     phi_l = timewalk_phi(sub["amp_left"].to_numpy())
@@ -340,16 +339,48 @@ def fit_timewalk(pairs: pd.DataFrame, train_runs: Sequence[int]) -> Dict[str, np
         cols = slice(si * k, (si + 1) * k)
         X[left == s, cols] -= phi_l[left == s]
         X[right == s, cols] += phi_r[right == s]
-    # standardise columns for a scale-meaningful ridge, then unwind
-    mu = X.mean(axis=0)
-    sd = X.std(axis=0)
-    sd[sd == 0.0] = 1.0
-    Xs = (X - mu) / sd
-    A = Xs.T @ Xs + RIDGE_ALPHA * len(sub) * np.eye(Xs.shape[1])
-    b = Xs.T @ (y - y.mean())
-    beta_s = np.linalg.solve(A, b)
-    beta = beta_s / sd
-    return {s: beta[si * k : (si + 1) * k] for si, s in enumerate(staves)}
+    return X
+
+
+def fit_timewalk(pairs: pd.DataFrame, train_runs: Sequence[int]) -> Dict[str, np.ndarray]:
+    """Fit per-stave f_s(A) so that corrected pair residuals are amp-flat.
+
+    Model: E[centered residual (right-left)] = f_right(A_right) - f_left(A_left)
+    with f_s(A) = beta_s . phi(A), phi constant-free (per-(pair,run) centering
+    absorbs all constant offsets).  TWO-STAGE fit so that the saturation-
+    contaminated B2 pulses cannot leak into the headline downstream
+    corrections: stage 1 fits B4/B6/B8 on DOWNSTREAM pairs only; stage 2
+    fits B2's own beta on B2-containing pairs with the downstream betas
+    frozen.  Ridge-regularised normal equations; deterministic.
+    """
+    sub = pairs[pairs["run"].isin(list(train_runs))]
+    zeros = {s: np.zeros(len(TIMEWALK_FEATURES)) for s in STAVE_CHANNELS}
+    if len(sub) == 0:
+        return zeros
+    k = len(TIMEWALK_FEATURES)
+
+    betas = dict(zeros)
+    down = sub[~sub["has_b2"]]
+    downstream_staves = ["B4", "B6", "B8"]
+    if len(down) >= 10 * k * len(downstream_staves):
+        y = center_per_group(down["raw_residual_ns"].to_numpy(), [down["pair"].to_numpy(), down["run"].to_numpy()])
+        X = _pair_design(down, downstream_staves)
+        beta = _ridge_solve(X, y)
+        for si, s in enumerate(downstream_staves):
+            betas[s] = beta[si * k : (si + 1) * k]
+
+    b2 = sub[sub["has_b2"]]
+    if len(b2) >= 10 * k:
+        y2 = center_per_group(b2["raw_residual_ns"].to_numpy(), [b2["pair"].to_numpy(), b2["run"].to_numpy()])
+        # subtract the frozen downstream (right-side) contribution; B2 is
+        # always the left stave in B2-containing pairs
+        phi_r = timewalk_phi(b2["amp_right"].to_numpy())
+        right = b2["right"].to_numpy()
+        for s in downstream_staves:
+            y2[right == s] -= phi_r[right == s] @ betas[s]
+        X2 = -timewalk_phi(b2["amp_left"].to_numpy())  # left stave enters with minus sign
+        betas["B2"] = _ridge_solve(X2, y2)
+    return betas
 
 
 def apply_timewalk(pairs: pd.DataFrame, betas: Dict[str, np.ndarray]) -> np.ndarray:
@@ -751,8 +782,10 @@ def write_report(out_dir: Path, summary: dict, curves: pd.DataFrame, tri: pd.Dat
         "  No pooled iid bootstrap over the three linearly dependent pair residuals is performed.",
         "- Timewalk: analytic AMP-ONLY correction (features 1000/A, sqrt(1000/A), log1p(A/1000) per stave;",
         "  s03a amp_only basis, MV4b 1/A-leading form), fit as a pair-difference model on per-(pair,run)-",
-        "  centered residuals, evaluated LEAVE-ONE-RUN-OUT within each sample (every corrected number is",
-        "  out-of-sample at run level).",
+        "  centered residuals, TWO-STAGE (downstream betas from downstream pairs only; B2's beta fit",
+        "  afterwards with downstream betas frozen, so B2 saturation cannot leak into the headline",
+        "  downstream corrections), evaluated LEAVE-ONE-RUN-OUT within each sample (every corrected",
+        "  number is out-of-sample at run level).",
         "- Per-stave: sigma_pair/sqrt(2) under the ASSUMPTION of independent equal-variance stave errors;",
         "  triangle decomposition cross-check where all three downstream pairs populate a bin.",
         "",
@@ -928,6 +961,7 @@ def main() -> int:
         "per_stave_assumption": "sigma_pair/sqrt(2) assumes independent equal-variance stave errors",
         "timewalk": {
             "basis": TIMEWALK_FEATURES,
+            "fit": "two-stage: downstream betas from downstream pairs only; B2 beta fit with downstream frozen",
             "evaluation": "leave-one-run-out within sample",
             "ridge_alpha": RIDGE_ALPHA,
             "loro_betas": loro_betas,

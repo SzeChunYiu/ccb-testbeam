@@ -132,9 +132,23 @@ class DigitizerPipeline:
             raise KeyError(f"unknown digitizer stage {stage_name!r}")
         return table[stage_name]
 
-    def run(self, hits: Sequence[Mapping[str, Any]], event_id: int) -> dict[str, Any]:
-        """Process truth hits for one channel/event into a summed ADC waveform."""
-        rng = np.random.default_rng(int(event_id))
+    def run(
+        self,
+        hits: Sequence[Mapping[str, Any]],
+        event_id: int,
+        channel: int = 0,
+        seed_salt: int = 0,
+    ) -> dict[str, Any]:
+        """Process truth hits for one channel/event into a summed ADC waveform.
+
+        The noise seed mixes (event_id, channel, seed_salt) so different
+        channels of the same event — and different studies via ``seed_salt`` —
+        get independent noise realisations (fixed 2026-07-03: seeding on
+        event_id alone made inter-channel noise 100% correlated).
+        """
+        rng = np.random.default_rng(
+            np.random.SeedSequence([int(event_id), int(channel), int(seed_salt)])
+        )
         analog_adc_sum = np.zeros(self.n_samples, dtype=np.float64)
 
         for hit in hits:

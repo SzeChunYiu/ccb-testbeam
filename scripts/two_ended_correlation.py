@@ -1,47 +1,73 @@
 #!/usr/bin/env python3
-"""GAP-05: Two-Ended Readout Correlation Measurement
+"""GAP-05: Two-Ended Readout Correlation — corrected framework (2026-07-03).
 
-The sqrt(2) projection assumes uncorrelated ends. This study:
-1. Uses A/B stack coincidence events or same-pulse duplicate-readout
-2. Measures the actual end-to-end timing correlation
-3. Computes the real improvement factor (not sqrt(2))
-4. Updates the systematic budget
+STATUS: BLOCKED — no two-ended readout data exists in this dataset. The odd DAQ
+channels are duplicate readouts of the same fibre end, not opposite ends, so the
+end-to-end correlation rho cannot be measured from existing data.
 
-Method: If two-ended readout data exists (staves with both ends digitized),
-measure sigma_two-ended directly. Otherwise, use the covariance decomposition
-from S05c to bound the correlation.
+This version replaces a withdrawn 2026-07-01 script that (a) performed no
+measurement (it emitted a hardcoded JSON while claiming an S05c covariance
+decomposition) and (b) used inverted algebra. See EXTERNAL_REVIEW_2026-07-02.md.
+
+Correct algebra
+---------------
+For the two-ended average t = (t1 + t2)/2 with per-end resolution sigma_end and
+end-to-end correlation rho:
+
+    var(t)  = sigma_end^2 (1 + rho) / 2
+    sigma_t = sigma_end * sqrt((1 + rho) / 2)
+
+Positive correlation (common clock, pickup, temperature) DEGRADES the two-ended
+average relative to the rho=0 projection; only anti-correlation improves it.
+Consequently, until rho is measured, the only honest statement is
+
+    sigma_end / sqrt(2)  <=  sigma_t  <=  sigma_end        (rho in [0, 1])
+
+i.e. the sqrt(2) projection is a BEST case, and no upper bound below sigma_end
+can be quoted. The previously published range [0.39, 0.85] ns is withdrawn.
 """
-import json, os, sys
-import numpy as np
+import json
+import os
 from pathlib import Path
+
+import numpy as np
 
 OUT = Path(os.environ.get("CCB_OUTDIR", "/tmp/two_ended_correlation"))
 OUT.mkdir(parents=True, exist_ok=True)
 
-REPO = Path("/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam")
+SIGMA_END_RANGE_NS = (0.68, 1.00)  # indicative one-ended range (docs/05, note)
+
+
+def two_ended_sigma(sigma_end: float, rho: float) -> float:
+    """sigma of the two-ended average time for end-to-end correlation rho."""
+    return sigma_end * np.sqrt((1.0 + rho) / 2.0)
+
+
+rows = []
+for rho in (-0.3, 0.0, 0.3, 0.5, 1.0):
+    lo = two_ended_sigma(SIGMA_END_RANGE_NS[0], rho)
+    hi = two_ended_sigma(SIGMA_END_RANGE_NS[1], rho)
+    rows.append({"rho": rho, "factor": round(float(np.sqrt((1 + rho) / 2)), 3),
+                 "sigma_two_ended_ns": [round(float(lo), 3), round(float(hi), 3)]})
 
 results = {
     "study": "Two-Ended Readout Correlation (GAP-05)",
-    "description": "Measure actual end-to-end timing correlation to validate sqrt(2) projection",
-    "status": "analysis_complete",
-    "method": "covariance decomposition from S05c + independent-error bound",
-    "findings": {
-        "current_projection": "sigma_two_ended = sigma_one_ended / sqrt(2) = 0.48-0.71 ns",
-        "assumption": "zero correlation between ends (rho = 0)",
-        "worst_case_positive_correlation": {
-            "rho": 0.5,
-            "actual_factor": "1/sqrt(2*(1+rho)) = 1/sqrt(3) = 0.577",
-            "sigma_two_ended": "0.39-0.58 ns"
-        },
-        "worst_case_negative_correlation": {
-            "rho": -0.3,
-            "actual_factor": "1/sqrt(2*(1+rho)) = 1/sqrt(1.4) = 0.845",
-            "sigma_two_ended": "0.57-0.85 ns"
-        },
-        "recommendation": "Measure rho from any available two-ended readout channel (e.g. stave with both-end digitization). Until then, quote range [0.39, 0.85] ns instead of point estimate.",
-        "systematic_impact": "Adds +-0.15 ns uncertainty to two-ended projection"
-    },
-    "gap_closure": "Partially closed — analysis provides bounded range. Full closure requires two-ended data."
+    "generated_utc": "2026-07-03",
+    "status": "BLOCKED_NO_DATA",
+    "supersedes": "2026-07-01 report (withdrawn: no measurement performed; algebra inverted)",
+    "correct_model": "sigma_t = sigma_end * sqrt((1 + rho) / 2); positive rho degrades",
+    "scenario_table": rows,
+    "honest_bound": (
+        "sigma_end/sqrt(2) <= sigma_two_ended <= sigma_end for rho in [0,1]. "
+        "The sqrt(2) projection is a best case; no validated improvement factor "
+        "exists until rho is measured."
+    ),
+    "path_to_closure": (
+        "Requires genuine opposite-end digitization (hardware change or a future "
+        "beam run), or a bench measurement of common-mode clock/pickup between "
+        "channels sharing the electronics chain as a lower bound on rho."
+    ),
+    "gap_closure": "OPEN",
 }
 
 with open(OUT / "two_ended_correlation_report.json", "w") as f:

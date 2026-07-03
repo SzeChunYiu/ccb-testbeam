@@ -59,7 +59,8 @@ def main():
           "Sci_bar_Momentum_X","Sci_bar_Momentum_Y","Sci_bar_Momentum_Z"]
     # per-track records
     rec = {"pdg": [], "ekin": [], "edep_l0": [], "edep_l1": [],
-           "edep_tot": [], "stop_layer": [], "nlayers": [], "tracklen": []}
+           "edep_tot": [], "stop_layer": [], "nlayers": [], "tracklen": [],
+           "contained": []}
 
     tree = uproot.open(args.mc)[args.tree]
     stop = args.max_events if args.max_events > 0 else None
@@ -82,20 +83,29 @@ def main():
                 order=np.argsort(layers)
                 entry_idx=np.where(m)[0][order[0]]
                 px,py,pz=MX[i][entry_idx],MY[i][entry_idx],MZ[i][entry_idx]
-                pmag=float(np.sqrt(px*px+py*py+pz*pz))
+                # momentum branches are GeV/c; convert to MeV/c before mixing
+                # with MeV masses (fix 2026-07-03: previously produced eV-scale
+                # kinetic energies — EXTERNAL_REVIEW_2026-07-02.md)
+                pmag=float(np.sqrt(px*px+py*py+pz*pz))*1000.0
                 mm=mass_of(p0)
                 ekin=float(np.sqrt(pmag*pmag+mm*mm)-mm)
                 # per-layer edep (sum within a layer for this track)
                 el={}
                 for lay,e in zip(layers,eds): el[int(lay)]=el.get(int(lay),0.0)+float(e)
+                edep_tot=float(eds.sum())
+                # containment: a track that stops in the stack deposits its full
+                # arrival kinetic energy; a large deficit marks punch-through /
+                # escape, so "stop_layer" must not be read as a range for it
+                contained=bool(ekin>0.0 and edep_tot>=0.8*ekin)
                 rec["pdg"].append(p0)
                 rec["ekin"].append(ekin)
                 rec["edep_l0"].append(el.get(0,0.0))
                 rec["edep_l1"].append(el.get(1,0.0))
-                rec["edep_tot"].append(float(eds.sum()))
+                rec["edep_tot"].append(edep_tot)
                 rec["stop_layer"].append(int(layers.max()))
                 rec["nlayers"].append(int(len(set(layers.tolist()))))
                 rec["tracklen"].append(float(TL[i][m].sum()))
+                rec["contained"].append(contained)
 
     for k in rec: rec[k]=np.asarray(rec[k])
     pdg=rec["pdg"]; isp=(pdg==2212); isd=(pdg==1000010020)
@@ -156,7 +166,14 @@ def main():
                         "mean_tracklen_mm":float(rec["tracklen"][mm].mean())}
         return d
     out["MV2_range_energy"]={"proton_stoplayer_vs_ekin":prof(isp),
-                             "deuteron_stoplayer_vs_ekin":prof(isd)}
+                             "deuteron_stoplayer_vs_ekin":prof(isd),
+                             # contained-only profiles: stop_layer is a true
+                             # range only for contained tracks; punch-through
+                             # tracks pollute the range curve (2026-07-03)
+                             "proton_stoplayer_vs_ekin_contained":prof(isp&rec["contained"]),
+                             "deuteron_stoplayer_vs_ekin_contained":prof(isd&rec["contained"]),
+                             "proton_contained_fraction":float(rec["contained"][isp].mean()) if isp.any() else 0.0,
+                             "deuteron_contained_fraction":float(rec["contained"][isd].mean()) if isd.any() else 0.0}
     # Ekin reconstruction from observables (stop_layer + edep_tot), per species, truth test
     try:
         from sklearn.ensemble import HistGradientBoostingRegressor

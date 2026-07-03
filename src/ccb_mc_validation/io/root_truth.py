@@ -82,6 +82,10 @@ def _first_or_default(values: Any, default: float = 0.0) -> float:
     return float(arr.reshape(-1)[0])
 
 
+B_ARM_ID = 1  # Sci_bar_LayerID1: 1 = B arm, 2 = A arm
+MOMENTUM_UNIT_TO_MEV = 1000.0  # Sci_bar_Momentum_* is stored in GeV/c
+
+
 def _records_from_truth_arrays(arrays: Mapping[str, Any], *, coinc_ns: float = 15.0) -> dict[str, np.ndarray]:
     """Convert jagged event truth arrays into per-event study records.
 
@@ -89,6 +93,16 @@ def _records_from_truth_arrays(arrays: Mapping[str, Any], *, coinc_ns: float = 1
     scaffolds.  It intentionally records provenance-friendly, label-safe fields:
     sample labels are computed from trigger-entry truth and event parity is not
     used for production Sample I/II assignment.
+
+    Fixed 2026-07-03 (EXTERNAL_REVIEW_2026-07-02.md):
+      * all per-event energy/depth aggregates are restricted to B-arm hits
+        (LayerID restarts per arm, so cross-arm sums double-counted layers);
+      * ``pdg`` is the species carrying the largest B-arm energy deposit, not
+        the event's first hit (which can be a secondary);
+      * ``tracklen`` is the maximum recorded track length among B-arm hits of
+        the dominant species (previously the first jagged element of any arm);
+      * ``ekin`` converts the GeV/c momentum branches to MeV/c before mixing
+        with MeV masses (previously eV-scale nonsense energies).
     """
     layer = np.asarray(arrays["Sci_bar_LayerID"], dtype=object)
     arm = np.asarray(arrays["Sci_bar_LayerID1"], dtype=object)
@@ -113,28 +127,54 @@ def _records_from_truth_arrays(arrays: Mapping[str, Any], *, coinc_ns: float = 1
     sample_label = np.full(n, "NONE", dtype=object)
 
     for i in range(n):
-        lay = np.asarray(layer[i], dtype=np.int16)
-        e = np.asarray(edep_j[i], dtype=np.float64)
-        pvals = np.asarray(pdg_j[i], dtype=np.int64)
-        if pvals.size:
-            pdg[i] = int(pvals.reshape(-1)[0])
-        if lay.size and e.size:
-            usable = min(lay.size, e.size)
-            lay_u = lay[:usable]
-            e_u = e[:usable]
-            edep_l0[i] = float(e_u[lay_u == 0].sum())
-            edep_l1[i] = float(e_u[lay_u == 1].sum())
-            edep_tot[i] = float(e_u.sum())
-            hit_layers = lay_u[e_u > 0]
-            stop_layer[i] = int(hit_layers.max()) if hit_layers.size else int(lay_u.max())
-            nlayers[i] = int(np.unique(lay_u).size)
-        tracklen[i] = _first_or_default(tracklen_j[i], 0.0)
-        px = _first_or_default(px_j[i], 0.0)
-        py = _first_or_default(py_j[i], 0.0)
-        pz = _first_or_default(pz_j[i], 0.0)
-        mass = mass_of(int(pdg[i])) if int(pdg[i]) else 0.0
-        momentum = float(np.sqrt(px * px + py * py + pz * pz))
-        ekin[i] = float(np.sqrt(momentum * momentum + mass * mass) - mass) if mass else 0.0
+        lay = np.asarray(layer[i], dtype=np.int16).reshape(-1)
+        arm_i = np.asarray(arm[i], dtype=np.int16).reshape(-1)
+        e = np.asarray(edep_j[i], dtype=np.float64).reshape(-1)
+        pvals = np.asarray(pdg_j[i], dtype=np.int64).reshape(-1)
+        tl = np.asarray(tracklen_j[i], dtype=np.float64).reshape(-1)
+        px = np.asarray(px_j[i], dtype=np.float64).reshape(-1)
+        py = np.asarray(py_j[i], dtype=np.float64).reshape(-1)
+        pz = np.asarray(pz_j[i], dtype=np.float64).reshape(-1)
+
+        usable = min(lay.size, arm_i.size, e.size, pvals.size)
+        if usable == 0:
+            continue
+        b = arm_i[:usable] == B_ARM_ID
+        lay_b = lay[:usable][b]
+        e_b = e[:usable][b]
+        p_b = pvals[:usable][b]
+        if lay_b.size == 0:
+            continue
+
+        # dominant species: PDG carrying the largest summed B-arm deposit
+        dom_pdg = 0
+        dom_edep = -1.0
+        for species in np.unique(p_b):
+            s = float(e_b[p_b == species].sum())
+            if s > dom_edep:
+                dom_edep = s
+                dom_pdg = int(species)
+        pdg[i] = dom_pdg
+
+        edep_l0[i] = float(e_b[lay_b == 0].sum())
+        edep_l1[i] = float(e_b[lay_b == 1].sum())
+        edep_tot[i] = float(e_b.sum())
+        hit_layers = lay_b[e_b > 0]
+        stop_layer[i] = int(hit_layers.max()) if hit_layers.size else int(lay_b.max())
+        nlayers[i] = int(np.unique(lay_b).size)
+
+        dom = p_b == dom_pdg
+        if tl.size >= usable:
+            tl_b = tl[:usable][b]
+            tracklen[i] = float(tl_b[dom].max()) if tl_b[dom].size else 0.0
+        if px.size >= usable and py.size >= usable and pz.size >= usable:
+            pmag_b = np.sqrt(
+                px[:usable][b] ** 2 + py[:usable][b] ** 2 + pz[:usable][b] ** 2
+            ) * MOMENTUM_UNIT_TO_MEV
+            mass = mass_of(dom_pdg) if dom_pdg else 0.0
+            if mass and pmag_b[dom].size:
+                p_entry = float(pmag_b[dom].max())  # entry hit carries the largest momentum
+                ekin[i] = float(np.sqrt(p_entry * p_entry + mass * mass) - mass)
         if flags["sample_I"][i]:
             sample_label[i] = "I"
         elif flags["sample_II"][i]:
@@ -150,7 +190,16 @@ def _records_from_truth_arrays(arrays: Mapping[str, Any], *, coinc_ns: float = 1
         "tracklen": tracklen,
         "ekin": ekin,
         "event_id": np.arange(n, dtype=np.int64),
+        # sample_label is EXCLUSIVE ("II" means Sample II minus Sample I) and
+        # is kept for backward compatibility only. The physics definition is
+        # INCLUSIVE — Sample I (A+B coincidence) is a subset of Sample II
+        # (B entry, A ignored) — so analyses comparing the samples must use
+        # the boolean flags below, not the label.
         "sample_label": sample_label,
+        "sample_I": np.asarray(flags["sample_I"], dtype=bool),
+        "sample_II": np.asarray(flags["sample_II"], dtype=bool),
+        "enter_A": np.asarray(flags["enter_A"], dtype=bool),
+        "enter_B": np.asarray(flags["enter_B"], dtype=bool),
     }
 
 

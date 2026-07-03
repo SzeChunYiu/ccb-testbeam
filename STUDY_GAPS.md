@@ -3,7 +3,7 @@
 > **A systematic audit of what's missing, what's unresolved, and what should be studied next.**
 > For the complete analysis narrative, see [`WIKI.md`](WIKI.md).
 
-**Last updated:** 2026-07-01
+**Last updated:** 2026-07-01 (corrected 2026-07-03 following External Review 2026-07-02 — several 2026-07-01 gap closures reopened/withdrawn, see §7)
 **Status:** Recursive gap analysis — all ~230 studies + 6 MC validations audited.
 
 ---
@@ -40,9 +40,9 @@ Every finding is traceable to a specific report or source file.
 - **Severity:** ⛔ **BLOCKING** (prevents quantitative MC-based acceptance corrections)
 - **Source:** [MV3 Stopping-Depth Profile](reports/mv3_stopping_depth/REPORT.md), MV3 v3
 - **Finding:** χ²/ndf = 68,269. MC overestimates B8 penetration by 10× relative to data.
-- **Root cause:** Missing upstream material budget in GEANT4 geometry (absorbers, support structures, trigger scintillators, beam window, inter-stave dead material). Estimated missing: ~8–10 g/cm².
-- **MV3b diagnosis:** Some geometry elements already present; inter-stave dead-material gap is the primary missing element.
-- **Action:** Update GEANT4 geometry → new MC production run → rerun MV3 with updated geometry.
+- **Root cause:** not established (corrected 2026-07-03). MV3b's toy estimate (~8–10 g/cm² of missing upstream material) was retracted in its own errata (realistic inter-stave estimate 0.1–0.5 g/cm²/pair); co-factors include track-basis vs event-basis counting, species exclusion (24% of charged tracks), no Birks quenching in the threshold, gain uncertainty, and an unvalidated LayerID→stave mapping.
+- **MV3b diagnosis:** toy estimate retracted in its own errata; the real missing amount is unknown — a beamline material audit is required.
+- **Action:** Audit real beamline material → update GEANT4 geometry → new MC production run → rerun MV3 with a nuisance scan.
 - **Impact if unresolved:** All quantitative stopping-depth claims from MC are unreliable. B8 trigger efficiency calibration cannot be MC-anchored.
 
 #### GAP-02: Timewalk Correction — MC Tension
@@ -107,7 +107,7 @@ Every finding is traceable to a specific report or source file.
 
 **Claim:** Multi-stave timing uses σ_comb² = Σ σ_i² / N (independent errors).
 
-**Reality:** S05c shows B2-containing pairs have covariance ~1042 ns² vs ~16 ns² for downstream pairs. The independence assumption **fails for B2** but holds reasonably for B4/B6/B8.
+**Reality:** S05c shows B2-containing pairs are far more correlated than downstream pairs (the quantitative covariance values ~1042/~16 ns² were withdrawn 2026-07-03 — closure script numerically invalid). The independence assumption **fails for B2**; residual downstream covariance is unmeasured.
 
 **Verdict:** ✅ **Partially addressed.** The project correctly identifies and excludes B2 from combined timing. But the residual covariance among B4/B6/B8 should be explicitly quantified.
 
@@ -141,7 +141,7 @@ Every finding is traceable to a specific report or source file.
 
 **Check:** Are there alternative methods (e.g., exponential fit to tail, CFD threshold scan) that give consistent results?
 
-**Verdict:** ⚠️ **Partially verified.** The 10% tail-crossing method is well-defined and bootstrap CIs are given. MV5 provides independent MC confirmation. But alternative measurement methods are not cross-checked against each other. **Recommendation:** Add at least one alternative τ_eff measurement method as a cross-check.
+**Verdict:** ⚠️ **Partially verified.** The 10% tail-crossing method is well-defined and bootstrap CIs are given. (Correction 2026-07-03: MV5 does *not* provide independent confirmation — it used the data-measured τ_eff as an input and was retracted as a validation.) Alternative measurement methods are not cross-checked against each other. **Recommendation:** Add at least one alternative τ_eff measurement method as a cross-check.
 
 ### 3.6 Pile-up Censoring
 
@@ -157,6 +157,8 @@ Every finding is traceable to a specific report or source file.
 
 ### 4.1 Multi-Stave Event Reconstruction with Covariance
 
+> **Note (2026-07-03):** the 2026-07-01 "closure" of this item (fitted covariance = −0.127 ns²) was withdrawn — the closure script was numerically invalid. This study is genuinely missing again; the listing below stands.
+
 **What's missing:** Current B4+B6+B8 combination assumes zero covariance. S05c showed B2 covariance is large; residual downstream covariance may be non-zero.
 
 **Why it matters:** The combined σ ≈ 0.54 ns may be optimistic if downstream covariance is non-negligible.
@@ -164,6 +166,8 @@ Every finding is traceable to a specific report or source file.
 **Proposed study:** Fit full 3×3 covariance matrix for B4/B6/B8 → compute optimal weighted combination → compare with independence-assumed σ.
 
 ### 4.2 Two-Ended Readout Correlation Measurement
+
+> **Note (2026-07-03):** the 2026-07-01 partial closure (bounded [0.39, 0.85] ns) was withdrawn — the script measured nothing and its algebra was inverted (correct form σ√((1+ρ)/2); honest worst case ρ→1 = no improvement). This study is genuinely missing again; the listing below stands.
 
 **What's missing:** The √2 projection assumes uncorrelated ends. No measurement of actual end-to-end correlation exists.
 
@@ -248,6 +252,10 @@ GAP-05 (two-ended correlation)
 
 ## 6. Recommended Next Actions
 
+> **Note (2026-07-03):** the items below that were marked closed in the §7 Gap Closure Log
+> (GAP-02 rerun, GAP-05 two-ended correlation, multi-stave covariance) are open again after the
+> external review withdrew those closures — this list is again correct as written.
+
 ### Immediate (Can Be Done Now, No New Data)
 
 | Priority | Action | Effort |
@@ -301,13 +309,13 @@ Jobs submitted via SLURM on LUNARC (`lu48` partition, account `lu2026-2-51`).
 
 | Gap | Job ID | Status | Key Result | Report |
 |-----|--------|--------|------------|--------|
-| **GAP-02** (MV4b timewalk) | 3338707 | ✅ COMPLETED | Physical 1/A form resolves MV4 tension direction; toy B<0 is unphysical | `reports/mv4b_timewalk_1782911012/` |
-| **GAP-05** (Two-ended correlation) | 3338704 | ⚠️ PARTIALLY CLOSED | Bounded range [0.39, 0.85] ns; full closure needs two-ended data | `reports/two_ended_correlation_1782911012/` |
+| **GAP-02** (MV4b timewalk) | 3338707 | ⚠️ REOPENED 2026-07-03 | MV4 rerun never happened; MV4b misquoted MV4's pulls | `reports/mv4b_timewalk_1782911012/` |
+| **GAP-05** (Two-ended correlation) | 3338704 | ⛔ WITHDRAWN 2026-07-03 | Script measured nothing; algebra inverted — correct form σ√((1+ρ)/2); honest worst case ρ→1 = no improvement | `reports/two_ended_correlation_1782911012/` |
 | **GAP-06** (CFD/OF scan) | 3338703 | ⚠️ FRAMEWORK READY | CFD20 + OF9 confirmed as defaults; needs S02 data for full scan | `reports/cfd_of_scan_1782911012/` |
-| **Missing Study #1** (Multi-stave covariance) | — | ✅ CLOSED | Fitted covariance = −0.127 ns²; independence assumption is conservative by ~0.07 ns | `reports/multistave_covariance_1782911275/` |
+| **Missing Study #1** (Multi-stave covariance) | — | ⛔ WITHDRAWN 2026-07-03 | Closure script numerically invalid; −0.127 ns² untraceable | `reports/multistave_covariance_1782911275/` |
 | **GAP-07** (χ²/ndf) | 3338706 | ⚠️ FRAMEWORK DEFINED | Reporting standards specified; needs code change to S02 script | `reports/gap_closure_quick_1782911012/` |
 | **GAP-08** (TOF scale) | 3338706 | ⚠️ BLOCKED | Requires TPC track reconstruction | `reports/gap_closure_quick_1782911012/` |
-| **Methodology §3.5** (τ_eff cross-check) | 3338706 | ⚠️ PARTIALLY CLOSED | MV5 provides independent confirmation; data-only alternative still needed | `reports/gap_closure_quick_1782911012/` |
+| **Methodology §3.5** (τ_eff cross-check) | 3338706 | ⚠️ STILL OPEN | MV5 retracted as validation (2026-07-03) — no independent confirmation exists; data-only alternative still needed | `reports/gap_closure_quick_1782911012/` |
 
 ### Still Requiring Action
 

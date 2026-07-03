@@ -33,8 +33,9 @@ These predate this document and override convenience. Every report must visibly 
    controls in section 4. A claim that fails any control is **CORRECTED**, which is a *first-class
    positive result*, not a failure.
 5. **Never report a number without its uncertainty and its baseline comparison.** A bare number is
-   not a result. `1.39 ns` is meaningless; `1.394 ns (LORO, vs analytic 1.494 ns, Delta=-0.100 ns,
-   bootstrap CI [-0.140,-0.061])` is a result.
+   not a result. `1.39 ns` is meaningless; `1.394 ns, CI [1.242, 1.682] (pooled LORO, vs s03a
+   amp-only 1.551 ns, CI [1.369, 1.925])` is a result (real values from the S03d record,
+   `reports/1781010985.923.35c141ac/result.json`).
 
 ---
 
@@ -97,7 +98,7 @@ pile-up) or to a truth-limited gap (energy, PID).
 - **Leakage controls:** which of the three (section 4) were applied and what each returned.
 
 ### 7. Results
-- Every metric in a table with its CI (bootstrap 1000 resamples, or LORO SEM — state which).
+- Every metric in a table with its CI (bootstrap, 300–1000 resamples as configured per study, or LORO SEM — state which).
 - A **comparison panel**: ML vs traditional vs prior studies, same metric, same units.
 - The sign and magnitude of `Delta = ML - traditional` with its CI.
 
@@ -387,30 +388,56 @@ question unanswered. Anything less is a draft.*
 
 ---
 
-## Appendix A — A worked example of a CORRECTED verdict (S03d)
+## Appendix A — Worked examples (corrected 2026-07-03)
 
-This is the canonical example of rule 4 in action. Read it before claiming any timing ML win.
+> **Correction (2026-07-03).** An earlier version of this appendix presented S03d as a worked
+> CORRECTED example with Δ = −0.100 ns, CI [−0.140, −0.061]. Those numbers exist in no artifact,
+> and S03d's actual verdict was `stable_no_leakage_flag`, not CORRECTED; it never ran an
+> event-block shuffle. The stitched example is replaced below with the real records.
+> (External Review 2026-07-02)
 
-**Setup.** S03d asked whether an HGB residual corrector on top of the analytic amplitude timewalk
-improves single-stave timing. Anchor reproduced exactly (640,737 selected pulses; Sample-II folds).
+### A.1 — The real S03d record (verdict: `stable_no_leakage_flag`)
 
-**In-fold result.** HGB residual gave sigma68 = 1.394 ns vs the analytic baseline 1.494 ns
-(Delta = -0.100 ns, bootstrap CI [-0.140, -0.061]). The CI excludes zero, so *in-fold the ML wins*.
+**Setup.** S03d tested leave-one-run-out stability for the S03a amp-only and S03b monotone-binned /
+HGB timewalk corrections. Anchor reproduced exactly (640,737 selected pulses; held-out runs
+{58, 59, 60, 61, 62, 63, 65}, bootstrap unit = held-out run).
 
-**Leakage controls.**
-- Target shuffle: permuted-label model collapsed to no skill (correct null) — pass.
-- LORO: the gain shrank substantially on held-out runs; the per-fold spread overlapped the baseline.
-- Event-block shuffle: the residual gain failed — the model was exploiting within-run temporal
-  structure as a proxy.
+**Result** (from `reports/1781010985.923.35c141ac/result.json`, pooled LORO):
+- HGB residual corrector: sigma68 = **1.394 ns**, CI **[1.242, 1.682]**
+- s03a amp-only (traditional): sigma68 = **1.551 ns**, CI **[1.369, 1.925]**
+- Verdict: **`stable_no_leakage_flag`** — the HGB gain *survives* LORO here; the CIs overlap, so
+  this is not an adoptable CI-excluding-zero win either. It is a stability record, not a CORRECTED
+  example.
 
-**Verdict.** Two of the three controls reject the win. Final status: **CORRECTED**. The exact-fold
-follow-up (`S03d exact-fold`) confirmed it: on frozen P01e folds the S03 analytic timewalk
-(1.494 ns) is the comparator to beat, and S02 ridge (1.897 ns) and the P01e autoencoder (1.980 ns)
-both lose. The transparent analytic amplitude timewalk remains the production candidate for timing.
+### A.2 — A worked example of a CORRECTED verdict (P01 representation superiority)
 
-**Lesson for future sessions.** A CI-excluding-zero in-fold delta is *necessary but not sufficient*.
-Adoption requires survival of all three controls. The "win" that evaporates under LORO is the most
-common failure mode in this project — expect it, test for it, and report the correction proudly.
+The genuinely CORRECTED family is **P01**: the claim that a learned waveform representation beats
+hand-crafted/PCA features on downstream tasks. The event-shuffle diagnosis (P01f,
+`reports/1781018587.1208.05763e48/`) grounds it with real numbers (pooled, held-out runs
+{42, 57, 64, 65}, 1224 pair residuals):
+
+| Method | sigma68 (ns) | CI |
+|---|---|---|
+| Strict CFD20 (weak baseline) | 3.188 | [3.052, 3.303] |
+| Strict traditional hand-shape ridge | 1.962 | [1.865, 2.063] |
+| Strict ML AE latent ridge | 1.965 | [1.891, 2.054] |
+| Strict ML **event-shuffled target** | 2.056 | [1.949, 2.173] |
+
+Two independent falsifications:
+1. **No win over the strong baseline:** the AE latent (1.965 ns) does not beat the traditional
+   hand-shape ridge (1.962 ns) — the apparent superiority existed only against the weak CFD20
+   baseline.
+2. **The shuffled-target control retains most of the gain:** a model trained on an event-shuffled
+   target still reaches 2.056 ns vs CFD20's 3.188 ns — most of the apparent "representation gain"
+   is run/stave/amplitude composition structure, not per-event timing signal.
+
+**Verdict: CORRECTED.** The representation-superiority claim is withdrawn; the transparent
+traditional method remains the production candidate.
+
+**Lesson for future sessions.** A gain over a weak baseline is *necessary but not sufficient*.
+Adoption requires beating the strongest traditional baseline AND surviving all three controls —
+including a shuffled-target control whose residual "skill" exposes composition leakage. Report the
+correction proudly.
 
 Note the contrast with `S03k`, where HGB on waveform+amp+shape+stave features reached 1.107 ns and
 CI-beat the analytic comparator: that result is real *in-fold* but the report correctly leaves direct
@@ -438,9 +465,9 @@ you have either found something or broken something — investigate before repor
 | Pile-up R_max (note assumption, tau_eff=90 ns) | 4.222 MHz | S10b |
 | Pile-up R_max (measured live-time, corrected) | ~3.05 MHz | S10b/S10c |
 | 10% tail-crossing live-time | 124.79 ns, CI [123.33, 126.36] | S10b/S10c |
-| Two-pulse recovery time-RMS (ML vs trad) | 10.67 vs 13.30 ns | S11a |
-| Two-pulse recovery failure rate (ML vs trad) | 0.295 vs 0.168 | S11a |
-| Duplicate-readout amplitude res68 (ML vs trad) | 0.003-0.009 vs 0.12-0.20 | P04 |
+| Two-pulse recovery time-RMS (ML vs trad) | 10.67 vs 13.30 ns (survivorship-conditioned; see P05f) | S11a |
+| Two-pulse recovery failure rate (ML vs trad) | 0.295 vs 0.168 (survivorship-conditioned; see P05f) | S11a |
+| Duplicate-readout amplitude res68 (ML vs trad) | 0.003-0.009 vs 0.12-0.20 (strong baseline: Huber closure 0.0203, P04d — cite this, not the 0.12-0.20 strawman) | P04 |
 | Saturation recovery res68 (ML vs template) | 0.032-0.046 vs 0.104-0.286 | P07 |
 | Pedestal MAE (learned vs pretrigger-median) | 48.9 vs 341 ADC | S16 |
 | MV1 PID AUC (HGB / logreg / cut purity) | 0.9860 / 0.9629 / 0.8910 | MV1 |

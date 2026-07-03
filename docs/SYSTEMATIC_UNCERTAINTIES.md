@@ -1,7 +1,9 @@
 # Systematic Uncertainties — CCB Test-Beam Analysis
 
-Date: 2026-06-28
-Status: All 6 MC validation studies complete (MV0–MV6)
+Date: 2026-06-28 (corrected 2026-07-03 following External Review 2026-07-02)
+Status: All 6 MC validation studies ran; MV0/MV2/MV5/MV6 verdicts retracted and MV4 under review
+(see `docs/mc_validation/MC_VALIDATION_RESULTS.md`) — magnitudes below that depend on the retracted
+gain (92 ± 28 ADC/MeV) or on MV5/MV6 verdicts are pending re-derivation.
 
 ---
 
@@ -48,12 +50,16 @@ Status: All 6 MC validation studies complete (MV0–MV6)
 
 **Quantity**: Fraction of tracks stopping in each stave pair
 **MC vs data**: B2 47%/data 87%; B8 22%/data 2% (factor 9.7× discrepancy)
-**Root cause**: Missing upstream material budget (~8-10 g/cm²) in Geant4 geometry
+**Root cause**: not established (corrected 2026-07-03 — the "~8-10 g/cm² missing upstream material"
+toy estimate was retracted in MV3b's own errata; realistic inter-stave estimate 0.1–0.5 g/cm²/pair;
+co-factors include counting basis, species exclusion, no Birks quenching, gain uncertainty, and an
+unvalidated LayerID→stave mapping)
 
 **Impact by analysis**:
 - **PID (MV1)**: Deuterons stop in B2 at 95 MeV/u → d-frac in B8 < 5% in data.
   Even with B8 MC fraction wrong, d/p separation in B2 is unaffected.
-  **Impact: <3% on AUC**.
+  **Impact on AUC: unquantified** (the previously quoted "<3%" had no computation behind it —
+  corrected 2026-07-03; a sensitivity scan is required).
 
 - **Range-energy (MV2)**: Stopping depths in data are ~20 cm shallower than MC predicts.
   Any range-based energy reconstruction has systematic offset.
@@ -95,7 +101,11 @@ until timewalk model is corrected.
 **Agreement**: 0.2% → **negligible systematic**
 
 **Note**: The note's value of 4.22 MHz (assuming τ_eff = 90 ns) was wrong.
-The correct τ_eff = 124.8 ns = τ_rise + τ_decay ×(1 − threshold) ≈ 2.5 + 42 × (1 − 0.05).
+τ_eff is measured from data (10% tail-crossing live-time, S10b); no analytic derivation is quoted.
+(Correction 2026-07-03: an earlier pseudo-derivation "τ_rise + τ_decay×(1−threshold) ≈
+2.5 + 42×(1−0.05)" was removed — it evaluates to 42.4 ns, not 124.8 ns. The "MC result 3.044 MHz"
+above is retracted as a validation: MV5's MC τ_eff was a hardcoded copy of the data value, and
+R_max ≤ 3.05 MHz is a data-driven one-sided upper bound.)
 
 ---
 

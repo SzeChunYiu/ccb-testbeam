@@ -307,10 +307,14 @@ def run_ml_check(config: dict, ml_rows: pd.DataFrame, out_dir: Path) -> pd.DataF
 
     rng = np.random.default_rng(int(config["ml_check"]["random_seed"]))
     boot = []
+    boot_det = []
     for _ in range(300):
         idx = rng.integers(0, len(test), len(test))
         boot.append(float(np.mean(predicted[idx] == y_test[idx])))
+        boot_det.append(float(np.mean(deterministic[idx] == y_test[idx])))
     lo, hi = np.quantile(boot, [0.025, 0.975])
+    det_lo, det_hi = np.quantile(boot_det, [0.025, 0.975])
+    det_float = deterministic.astype(float)
 
     ml_summary = pd.DataFrame(
         [
@@ -319,12 +323,12 @@ def run_ml_check(config: dict, ml_rows: pd.DataFrame, out_dir: Path) -> pd.DataF
                 "heldout_runs": ",".join(str(run) for run in sorted(heldout)),
                 "metric": "selection accuracy",
                 "value": float(np.mean(deterministic == y_test)),
-                "ci_low": 1.0,
-                "ci_high": 1.0,
-                "roc_auc": 1.0,
-                "average_precision": 1.0,
-                "brier": 0.0,
-                "notes": "Deterministic A>1000 ADC rule.",
+                "ci_low": float(det_lo),
+                "ci_high": float(det_hi),
+                "roc_auc": float(roc_auc_score(y_test, det_float)),
+                "average_precision": float(average_precision_score(y_test, det_float)),
+                "brier": float(brier_score_loss(y_test, det_float)),
+                "notes": "Deterministic A>1000 ADC rule; metrics computed, not asserted.",
             },
             {
                 "method": "calibrated logistic regression",
@@ -434,6 +438,18 @@ def main() -> int:
 
     counts_by_run, counts_by_group, _, selected, ml_rows = scan_raw(config)
     comparison = compare_expected(config, counts_by_group)
+    if not bool(comparison["pass"].all()):
+        # Fail closed: never publish a pulse table whose selection count does
+        # not reproduce the anchor (previously all artifacts were written and
+        # only the exit code changed — EXTERNAL_REVIEW_2026-07-02.md). Override
+        # only for deliberate selector-change studies.
+        if os.environ.get("CCB_ALLOW_COUNT_MISMATCH", "") != "1":
+            print(comparison.to_string(index=False))
+            raise SystemExit(
+                "count gate FAILED: selected-pulse counts do not match the expected "
+                "anchor; no artifacts written. Set CCB_ALLOW_COUNT_MISMATCH=1 only "
+                "for a deliberate, documented selector change."
+            )
     sorted_counts = sorted_crosscheck(config)
     sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
         sorted_counts[["run", "selected_pulses", "B2", "B4", "B6", "B8"]],

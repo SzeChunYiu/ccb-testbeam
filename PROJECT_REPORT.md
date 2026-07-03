@@ -3,7 +3,7 @@
 **One document with everything a human needs to know about this project: the science, what has been
 done, the results, the current state, what is blocking us, and what comes next.**
 
-- **Last updated:** 2026-06-28 (MV0–MV6 + MV3b/MV4b diagnostic studies complete)
+- **Last updated:** 2026-06-28; corrected 2026-07-03 following External Review 2026-07-02 (MV0/MV2/MV5/MV6 retracted; MV4 under review — see `EXTERNAL_REVIEW_2026-07-02.md`)
 - **Repository:** `SzeChunYiu/ccb-testbeam` (branch `main`); canonical tree on LUNARC at
   `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/`
 - **Status:** research in progress — all numbers **preliminary, not peer-reviewed**
@@ -23,8 +23,8 @@ done, the results, the current state, what is blocking us, and what comes next.*
 | **Data** | 640,737 selected B-stack pulses (median selector) / 706,373 (dynamic selector), 18-sample waveforms @ 10 ns. ~6.4 GB, stored **outside git**, immutable. |
 | **Method discipline** | Reproduce-first, traditional **and** ML head-to-head, atomic decomposition, three leakage controls, explicit MC verdict per study. See `docs/REPORT_STANDARD.md`. |
 | **Done so far** | ~230 data-driven studies complete; **all 6 MC validations done (MV0–MV6)**; Sample I/II trigger split reproduced. MV9 synthesis complete. |
-| **Headline science** | Analytic timewalk wins timing (sigma68 ~1.49-1.55 ns); pile-up R_max revised down 4.2 -> ~3.05 MHz; ML wins shape-closure tasks; **p/d PID MC-closed at AUC 0.986.** |
-| **Biggest open item** | MV3 stopping-depth FAIL (structural: missing upstream material budget in MC geometry — B8 fraction 22% MC vs 2% data). MV4 timing corrected σ₆₈ in TENSION (+2.7σ; toy timewalk unphysical B coefficient). MV6 anomaly CLOSED: C12 heavy-ion recoils from CD₂ (0.32% of tracks, not 4%). |
+| **Headline science** | Analytic timewalk wins timing (sigma68 ~1.49-1.55 ns); pile-up R_max revised down 4.2 -> ≤3.05 MHz (one-sided bound); ML wins shape-closure tasks; **p/d PID MC-closed at AUC 0.986.** |
+| **Biggest open item** | **2026-07-03 correction:** MV0/MV2/MV5/MV6 retracted, MV4 under review (External Review 2026-07-02). MV3 stopping-depth FAIL (structural; root cause not established — MV3b toy estimate retracted). Anomaly species identity reopened (MV6 C12 attribution retracted). |
 
 ---
 
@@ -83,25 +83,27 @@ Each row is a study family; per-row detail in `reports/SUMMARY.md`. "ML verdict"
 | **P03** deep timing | P03a-c | ✅ done | MLP/CNN lose to analytic | trad wins |
 | **P04** amplitude | P04, P04c-e | ✅ done | res68 0.003-0.009 vs 0.12-0.20 | ML wins (decisive) |
 | **P07** saturation | P07, P07b-e | ✅ done | ML res68 0.032-0.046 vs 0.104-0.286 | ML wins (3-7x) |
-| **P09** anomaly | P09a, P09c | ✅ done | ~4% early-peak class; MC-closed: C12 recoils 0.32% (MV6) | ML for novelty; cuts for precision |
+| **P09** anomaly | P09a, P09c | ✅ done | ~4% early-peak class; species identity open (MV6 retracted 2026-07-03) | ML for novelty; cuts for precision |
 | **P10** cond. template | P10a-b | ✅ done | analytic timewalk beats learned template | trad wins |
 
 ---
 
 ## 4. MC validation status (MV0-MV9)
 
-All six MV studies are now complete. Numbers are from SLURM job JSON outputs (`reports/<id>/*.json`).
+All six MV studies ran to completion; following External Review 2026-07-02, MV0/MV2/MV5/MV6 are
+retracted and MV4 is under review (see rows below). Numbers are from SLURM job JSON outputs
+(`reports/<id>/*.json`).
 
 | MV | What it validates | Status | Result |
 |---|---|---|---|
-| **MV0** | Digitizer gain calibration | ✅ 100% v2 corrected | gain = **92 ± 28 ADC/MeV** (net_adc median matching; v1 used raw amplitude vs MC digitizer pedestal — apples-to-oranges); peak_frac=0.733 |
+| **MV0** | Digitizer gain calibration | ⛔ **RETRACTED** (2026-07-03) | v2 gain 92 ± 28 ADC/MeV retracted: anchor was \|net−pedestal\| of an already baseline-subtracted amplitude (true B2 net median 5752 ADC, not 1781), unreproducible from any committed script; v1 (~246) also invalid. Gain UNKNOWN pending geometry-fixed MC. |
 | **MV1** | p/d PID (truth ceiling) | ✅ 100% PASS | HGB AUC **0.9860**, logreg 0.9629, cut purity 0.8910; purity@90%eff 0.9644 (400,369 truth tracks) |
-| **MV2** | Energy / range / stopping | ✅ 100% PASS | deuterons stop layers 0-1 (d-frac 0.36-0.39), protons penetrate layers 4-7 (p-frac 0.89-0.90); absolute energy unreachable from data confirmed |
+| **MV2** | Energy / range / stopping | ⛔ **RETRACTED pending rerun** (2026-07-03) | momentum unit error → ekin columns eV-scale; edep medians misquoted (artifact: proton 101.1 / deuteron 73.4 MeV). Qualitative depth ordering (deuterons stop layers 0-1, protons penetrate 4-7) still supported |
 | **MV3** | Stopping-depth profile (Layer↔stave) | ✅ 100% **FAIL** | χ²/ndf = **68,269**; MC B2=47.0%/B8=22.3% vs data B2=87.6%/B8=2.3%. **Structural**: missing upstream material budget in MC geometry — near-stopping protons exceed threshold in B8 unrealistically. Not fixable at analysis level. |
-| **MV4** | Timing σ₆₈ reproduction in MC | ✅ 100% PASS/TENSION | σ₆₈_raw = **1.744 ± 0.007 ns** vs data 1.85 ns → pull −1.05 (**PASS**); σ₆₈_corrected = 1.770 ± 0.011 ns vs data 1.50 ns → pull +2.68 (**TENSION**: toy timewalk B coefficient negative/unphysical) |
-| **MV5** | Pile-up R_max from live-time model | ✅ 100% **PASS** | τ_eff=124.8 ns → R_max = **3.044 MHz** vs data corrected 3.05 MHz (0.2% agreement); confirms note's 4.22 MHz was wrong (τ_eff=90 ns assumption) |
-| **MV6** | Anomaly species ID (early-peak class) | ✅ 100% **PASS** | anomaly fraction = **0.32%** (not ~4%); early-peak class dominated by **C12 heavy-ion recoils** from CD₂ (55% of early-peak tracks), GMM Cluster 2 purity=44.5%; 4 PCA components capture 74.5% variance |
-| **MV3b** | Upstream material budget estimation (MV3 FAIL diagnosis) | ✅ done | 11.12 g/cm² extra material needed; 1.08 g/cm² known missing; **10.03 g/cm²** unmodelled inter-stave dead material. See `reports/mv3b_material_budget/` |
+| **MV4** | Timing σ₆₈ reproduction in MC | ⚠️ **UNDER REVIEW, rerun required** (2026-07-03) | pulls −1.05/+2.68 unreliable: data anchor 1.85 ns is ML-corrected (raw 2.99 ns), single-trace MC vs pair-difference data, σ_data=0.10 assumed. Matched rerun required |
+| **MV5** | Pile-up R_max from live-time model | ⛔ **RETRACTED as validation** (2026-07-03) | "MC τ_eff = 124.8 ns" was a hardcoded copy of the data value — no independent MC measurement. The 4.22 → 3.05 MHz correction stands as a data-driven one-sided upper bound (censoring-aware estimators suggest ≈2.1 MHz or lower) |
+| **MV6** | Anomaly species ID (early-peak class) | ⛔ **RETRACTED** (2026-07-03) | ran with invalidated gain 246, no Birks quenching, no amplitude threshold, per-track whole-arm waveforms; C12 attribution unsupported; 12× data/MC rate mismatch unresolved |
+| **MV3b** | Upstream material budget estimation (MV3 FAIL diagnosis) | ⚠️ toy estimate retracted (own errata) | The 11.12 g/cm² needed / 10.03 g/cm² unmodelled figures were a toy estimate, retracted in MV3b's errata (realistic inter-stave estimate 0.1–0.5 g/cm²/pair); the real missing amount is unknown — beamline audit required. See `reports/mv3b_material_budget/` |
 | **MV4b** | Physical timewalk model diagnosis (MV4 TENSION diagnosis) | ✅ done | Toy 1/√ADC with B=−23 ns·√ADC is **unphysical** (B<0). Correct form: 1/A = τ_rise·V_th/A. After fix, pull=+2.68 expected to collapse to ~0. See `reports/mv4b_timewalk_model/` |
 | **MV9** | MC synthesis | ✅ 100% | 6/6 PRODUCTION; see `reports/mc_validation_synthesis/SYNTHESIS.md` |
 | **MV7/MV8** | Systematics / two-ended readout | reserved | — |
@@ -111,16 +113,16 @@ All six MV studies are now complete. Numbers are from SLURM job JSON outputs (`r
 
 | # | Finding | Number (with uncertainty) | Confidence | Source |
 |---|---|---|---|---|
-| 1 | Pile-up R_max revised down ~30% | 4.222 -> ~3.05 MHz (live10 124.79 ns, CI [123.33,126.36]) | ⚠️ data-only (MV5 pending) | S10b/c |
+| 1 | Pile-up R_max revised down ~30% | 4.222 -> ≤3.05 MHz one-sided bound (live10 124.79 ns, CI [123.33,126.36]) | ⚠️ data-only (MV5 retracted as validation) | S10b/c |
 | 2 | p/d PID is MC-closed | AUC 0.9860 (HGB), data ~0.985 | ✅ validated (data+MC) | MV1 |
-| 3 | Analytic timewalk wins timing | sigma68 1.494-1.551 ns (LORO); best trad 1.343 ns | ⚠️ data-only (MV4 pending) | S03/S02d+S16e |
+| 3 | Analytic timewalk wins timing | sigma68 1.494-1.551 ns (LORO); best trad 1.343 ns | ⚠️ data-only (MV4 under review, rerun required) | S03/S02d+S16e |
 | 4 | Duplicate-readout amplitude closure | res68 0.003-0.009 vs 0.12-0.20 | ⚠️ data-only | P04 |
 | 5 | Saturation recovery by ML | res68 0.032-0.046 vs template 0.104-0.286 | ⚠️ data-only | P07 |
-| 6 | Absolute energy unreachable from data | res68 0.19-0.25 (fails 10%) | ✅ limitation MC-confirmed | S14/MV2 |
-| 7 | Range telescope + p/d depth separation | d-frac 0.36-0.39 (lyr 0-1), p-frac 0.89-0.90 (lyr 4-7) | ✅ validated | MV2 |
+| 6 | Absolute energy unreachable from data | res68 0.19-0.25 (fails 10%) | ⚠️ data-side limitation stands (MV2 support retracted pending rerun) | S14/MV2 |
+| 7 | Range telescope + p/d depth separation | d-frac 0.36-0.39 (lyr 0-1), p-frac 0.89-0.90 (lyr 4-7) | ⚠️ qualitative only (MV2 retracted pending rerun) | MV2 |
 | 8 | Two-pulse ML recovery vs failure rate | RMS 10.67 vs 13.30 ns; fail 0.295 vs 0.168 | ⚠️ gated on failure rate | S11a |
 | 9 | Representation-superiority claim is leakage | latent does not beat hand-crafted under controls | ❌ CORRECTED | P01a-f |
-| 10 | Early-peak anomaly class | **0.32%** of tracks; **C12 recoils** (CD₂ target, 55% of early-peak), GMM Cluster 2 purity=44.5% | ✅ MC-identified (MV6) | P02/P09/MV6 |
+| 10 | Early-peak anomaly class | ~4% early-peak class in data; species identity open (MV6 C12 attribution retracted) | ⛔ MV6 retracted (2026-07-03) | P02/P09/MV6 |
 
 ---
 
@@ -177,11 +179,11 @@ These cannot be done by an agent and block specific next steps:
 
 | Priority | Item | Closes | Blocker |
 |---|---|---|---|
-| ~~P0~~ | ~~MV6 — anomaly species ID~~ | **CLOSED**: C12 recoils (0.32% frac, 55% of early-peak) | — |
-| P0 | MV3 — stopping-depth FAIL (structural) | χ²/ndf=68,269; B8 MC 22% vs data 2% | MC geometry update required (upstream material budget) |
-| P1 | MV0 — gain v2 adopted (92 ADC/MeV) | S16 pedestal proxy-only; no forced-trigger sample in data | accepted systematic |
-| P1 | MV4 — timing PASS (raw)/TENSION (corrected) | σ₆₈_raw=1.744 PASS; corrected pull=+2.7σ (toy timewalk unphysical) | investigate physical timewalk model |
-| P1 | MV5 — R_max PASS | 3.044 MHz MC vs 3.05 MHz data | closed |
+| P0 | MV6 — anomaly species ID (REOPENED 2026-07-03; retracted) | species identity open | honest MV6 redo (Birks quenching, threshold, data-matched selection) |
+| P0 | MV3 — stopping-depth FAIL (structural) | χ²/ndf=68,269; B8 MC 22% vs data 2% | root cause not established — beamline material audit + geometry update + nuisance scan |
+| P1 | MV0 — gain RETRACTED (2026-07-03); gain unknown | energy scale, S16 pedestal proxy-only | re-derive on geometry-fixed MC with correct anchor variable |
+| P1 | MV4 — under review, rerun required | pulls unreliable (comparison mismatches) | matched rerun (per-stave traces, pair-difference, measured σ_data) + physical timewalk model |
+| P1 | MV5 — retracted as validation | R_max is a data-only one-sided bound ≤3.05 MHz | independent MC live-time measurement |
 | P2 | Validate P07 saturation on real B2>7000 pulses | production saturation use | strengthen S01 template baseline |
 | P2 | Two-ended-readout √2 projection with correlated terms | timing projection bias | MV7 (reserved) |
 

@@ -187,6 +187,30 @@ def _run_tier1_study(
             coinc_ns=float(config.coincidence_ns),
         )
         result = runner(records, config.raw, fixture=False)
+        # Record truncation explicitly: the bounded default previously produced
+        # PRODUCTION-stamped results on 10% of the MC without any flag
+        # (EXTERNAL_REVIEW_2026-07-02.md).
+        first_col = records.get("event_id", next(iter(records.values())))
+        n_loaded = int(np.asarray(first_col).size)
+        result.provenance["events_loaded"] = n_loaded
+        try:
+            n_in_file = int(
+                audit_truth_tree(config.mc_root, tree=str(config.raw.get("tree", "hibeam")))["n_entries"]
+            )
+        except Exception:  # file not auditable (e.g. mocked loader in tests)
+            result.provenance["truncation_check"] = "unavailable"
+        else:
+            result.provenance["events_in_file"] = n_in_file
+            result.provenance["truncated"] = bool(n_loaded < n_in_file)
+            if n_loaded < n_in_file:
+                from ccb_mc_validation.studies.common import StudyStatus
+
+                result.status = StudyStatus.TRUNCATED_INPUT
+                logger.warning(
+                    "%s ran on %d of %d events (CCB_MAX_ROOT_EVENTS=%s); status set to TRUNCATED_INPUT — "
+                    "set CCB_MAX_ROOT_EVENTS=0 in the sbatch script for full production",
+                    study_key.upper(), n_loaded, n_in_file, max_events_raw,
+                )
     out_dir = config.study_output_dir(study_key)
     path = write_study_result(result, out_dir)
     logger.info("%s wrote %s", study_key.upper(), path)

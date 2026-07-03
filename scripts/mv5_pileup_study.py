@@ -2,15 +2,33 @@
 """
 mv5_pileup_study.py
 ===================
-MV5 -- Pile-up validation (Tier-2, most important).
+MV5 -- Pile-up study (RETRACTED as an MC validation, 2026-07-03).
+
+RETRACTION NOTE (see EXTERNAL_REVIEW_2026-07-02.md):
+  - TAU_EFF_NEW = 124.8 ns below is the DATA-measured live-time used as an
+    INPUT. This script performs no independent MC live-time measurement, so
+    the previously advertised "MC tau_eff = 124.8 ns, <0.01% agreement" was
+    the same number compared with itself. An honest MC measurement is
+    currently impossible: the toy digitizer decay (42 ns) disagrees with the
+    measured data tails (49-57 ns).
+  - MU_MAX = 0.38 is the maximum acceptable per-pulse occupancy for the
+    |dt|<1 ns & area<20% distortion requirement (S10 rate model). It was
+    previously mislabelled a "beam duty factor"; no in-spill fraction was
+    ever measured, and conclusions built on that reading are withdrawn.
+  - Rmax = MU_MAX / tau_eff is a DATA-DRIVEN one-sided bound: censoring-aware
+    tau_eff estimators (KM 151.6 ns, IPCW 179.1 ns) imply Rmax <= 3.05 MHz.
+  - The toy two-pulse recovery scores merged pairs (true separation < 30 ns)
+    as successes (rec_sep = 0 passes the |rec - true| < 30 ns criterion), and
+    the pile-up window counts only the gap to the PREVIOUS event; both make
+    the failure-rate-vs-rate curve optimistic.
 
 Question the data left open
 ---------------------------
 Data study S10 found the maximum sustainable beam rate Rmax was *not* the
 4.2 MHz the note assumed, but ~3.05 MHz, because the effective dead-time per
 pulse (tau_eff) is longer than the assumed 90 ns. A direct waveform fit
-(template "live10") measured tau_eff = 124.8 ns. With a 0.38 beam duty
-factor this gives 1/124.8ns * 0.38 = 3.04 MHz -- matching the corrected Rmax.
+(template "live10") measured tau_eff = 124.8 ns. With the occupancy criterion
+mu_max = 0.38 this gives 0.38/124.8ns = 3.04 MHz -- the corrected Rmax.
 
 This study uses MC truth tracks (proton + deuteron) to:
   1. model in-spill pile-up as a Poisson process and predict the two-pulse
@@ -18,7 +36,7 @@ This study uses MC truth tracks (proton + deuteron) to:
   2. simulate overlapped (proton+proton, proton+deuteron) waveforms and run a
      bounded two-pulse recovery, measuring the failure rate vs beam rate,
   3. derive Rmax under three tau_eff assumptions {90, 124.8, 179} ns by two
-     definitions (reciprocal*duty, and the rate where two-pulse recovery
+     definitions (mu_max/tau occupancy bound, and the rate where two-pulse recovery
      failure exceeds the traditional template ceiling 0.17),
   4. compare the predicted pile-up against the data-observed anomalous
      fractions (4.2% raw, 2.025% stratified current-excess), inferring the
@@ -56,7 +74,7 @@ CEIL = 7000.0
 TAU_EFF_OLD = 90.0    # note assumption (ns)
 TAU_EFF_NEW = 124.8   # template live10 measurement (ns)
 TAU_EFF_IPCW = 179.0  # IPCW upper estimate (ns)
-DUTY = 0.38           # beam duty factor (in-spill fraction)
+MU_MAX = 0.38         # max acceptable occupancy (S10 rate model); NOT a beam duty factor
 RATES_MHZ = [0.5, 1.0, 2.0, 3.0, 4.0]
 FAIL_CEILING = 0.17   # traditional template two-pulse failure ceiling (S10d)
 RESOLVE_BINS = 2      # >2 bins (20 ns) separation counts as resolvable
@@ -140,7 +158,7 @@ def main():
         "seed": SEED,
         "constants": {
             "tau_eff_old_ns": TAU_EFF_OLD, "tau_eff_new_ns": TAU_EFF_NEW,
-            "tau_eff_ipcw_ns": TAU_EFF_IPCW, "duty": DUTY,
+            "tau_eff_ipcw_ns": TAU_EFF_IPCW, "mu_max": MU_MAX,
             "gain": GAIN, "noise": NOISE, "tau_rise": TAU_R, "tau_decay": TAU_D,
         },
         "n_proton_tracks": int(e_p.size), "n_deuteron_tracks": int(e_d.size),
@@ -202,11 +220,11 @@ def main():
     rmax_rows = []
     for tau in (TAU_EFF_OLD, TAU_EFF_NEW, TAU_EFF_IPCW):
         rmax_raw = 1.0 / (tau * 1e-9) / 1e6           # MHz, pure reciprocal
-        rmax_duty = rmax_raw * DUTY                    # MHz, duty-corrected
+        rmax_mu = rmax_raw * MU_MAX                    # MHz, occupancy criterion
         rmax_rows.append({
             "tau_eff_ns": tau,
             "rmax_reciprocal_mhz": float(rmax_raw),
-            "rmax_duty_corrected_mhz": float(rmax_duty),
+            "rmax_duty_corrected_mhz": float(rmax_mu),  # key name kept for artifact compatibility
         })
     summary["rmax_by_tau_eff"] = rmax_rows
 
@@ -279,7 +297,7 @@ def main():
     ax[0, 2].bar(xb - 0.2, [r["rmax_reciprocal_mhz"] for r in rmax_rows], 0.4,
                  label="1/tau_eff", color="C4")
     ax[0, 2].bar(xb + 0.2, [r["rmax_duty_corrected_mhz"] for r in rmax_rows], 0.4,
-                 label=f"x duty {DUTY}", color="C1")
+                 label=f"x mu_max {MU_MAX}", color="C1")
     ax[0, 2].axhline(3.05, ls="--", color="k", label="data Rmax 3.05")
     ax[0, 2].axhline(4.2, ls=":", color="gray", label="note assumed 4.2")
     ax[0, 2].set_xticks(xb); ax[0, 2].set_xticklabels([f"{t:.0f}ns" for t in taus])
@@ -317,7 +335,7 @@ def main():
     txt = [
         "MV5 PILE-UP -- DATA vs MC",
         "",
-        f"Rmax (1/tau x duty {DUTY}):",
+        f"Rmax (mu_max {MU_MAX} / tau), one-sided upper bound:",
         f"  tau=90ns  -> {rmax_rows[0]['rmax_duty_corrected_mhz']:.2f} MHz  (note: 4.2)",
         f"  tau=124.8 -> {rmax_rows[1]['rmax_duty_corrected_mhz']:.2f} MHz  (data: 3.05)",
         f"  tau=179ns -> {rmax_rows[2]['rmax_duty_corrected_mhz']:.2f} MHz",
@@ -329,10 +347,10 @@ def main():
         f"  4.2%   @tau124.8 -> {infer_rate(DATA_FRAC_RAW, TAU_EFF_NEW):.3f} MHz",
         f"  2.025% @tau124.8 -> {infer_rate(DATA_FRAC_STRAT, TAU_EFF_NEW):.3f} MHz",
         "",
-        "Verdict: tau_eff=124.8ns reproduces the",
-        "data Rmax=3.05 MHz; the note's 90ns gives 4.2.",
-        "Observed pile-up => avg in-spill rate ~0.2-0.5 MHz,",
-        "~10x below capacity (beam is bunched).",
+        "NOTE: tau_eff=124.8ns is a data INPUT here,",
+        "not an MC measurement (retracted as validation).",
+        "Rmax <= 3.05 MHz is a one-sided data bound;",
+        "the note's 90ns -> 4.2 MHz remains an error.",
     ]
     ax[1, 2].text(0.02, 0.98, "\n".join(txt), va="top", ha="left",
                   family="monospace", fontsize=8.5, transform=ax[1, 2].transAxes)
@@ -388,13 +406,13 @@ fitting (template "live10") measured tau_eff = 124.8 ns, implying a *lower* Rmax
 This MC study quantifies the pile-up consequences and pins Rmax.
 
 ## Rmax under three tau_eff assumptions
-| tau_eff [ns] | 1/tau_eff [MHz] | x duty ({DUTY}) [MHz] |
+| tau_eff [ns] | 1/tau_eff [MHz] | x mu_max ({MU_MAX}) [MHz] |
 | --- | --- | --- |
 | {rm[0]['tau_eff_ns']:.1f} (note) | {rm[0]['rmax_reciprocal_mhz']:.2f} | **{rm[0]['rmax_duty_corrected_mhz']:.2f}** |
 | {rm[1]['tau_eff_ns']:.1f} (measured) | {rm[1]['rmax_reciprocal_mhz']:.2f} | **{rm[1]['rmax_duty_corrected_mhz']:.2f}** |
 | {rm[2]['tau_eff_ns']:.1f} (IPCW) | {rm[2]['rmax_reciprocal_mhz']:.2f} | **{rm[2]['rmax_duty_corrected_mhz']:.2f}** |
 
-The measured tau_eff = 124.8 ns x 0.38 duty -> **{rm[1]['rmax_duty_corrected_mhz']:.2f} MHz**, reproducing the
+The data-measured tau_eff = 124.8 ns x mu_max 0.38 -> **{rm[1]['rmax_duty_corrected_mhz']:.2f} MHz**, reproducing the
 data-corrected **Rmax = 3.05 MHz**. The note's 90 ns gives {rm[0]['rmax_duty_corrected_mhz']:.2f} MHz (= the
 old 4.2 MHz assumption). The 90 -> 124.8 ns dead-time correction *is* the
 4.2 -> 3.05 MHz Rmax correction.
@@ -416,23 +434,27 @@ At Rmax = 3.05 MHz the *raw* coincidence probability is
     for c in data_cmp:
         report += f"| {c['observed']} | {c['tau_eff_ns']:.1f} ns | {c['implied_operating_rate_mhz']:.3f} MHz |\n"
     report += f"""
-**Interpretation:** the observed pile-up fractions imply an *average* in-spill
-rate of ~0.16-0.48 MHz -- about 10x below the 3.05 MHz capacity. This is
-self-consistent: Rmax is the instantaneous handling *ceiling*, not the mean
-operating rate; the beam is bunched, so most of the spill runs well under
-capacity while brief peaks approach Rmax. The 4% anomaly is therefore not bulk
-pile-up but a sub-population (handed to MV6 for species identification).
+**Interpretation (corrected 2026-07-03):** IF the observed anomalous fractions
+were pure pile-up, they would imply an average in-spill rate of ~0.16-0.48 MHz
+under the Poisson model. No measured spill/bunch structure exists in this
+analysis, so no statement about instantaneous-vs-average rate can be made; the
+"beam is bunched" narrative in earlier versions was unsupported. The 4% class
+is a sub-population of unresolved composition (its previous MV6 species
+attribution was retracted; see EXTERNAL_REVIEW_2026-07-02.md).
 
 ## Artifacts
 - `mv5_pileup_summary.json`
 - `mv5_pileup.png` (6-panel: fraction, failure, Rmax, overlaps, separation, summary)
 - `mv5_example_waveforms.png` (p+p / p+d recovery at 20/40/60/80 ns)
 
-## Verdict
-MC **confirms** the data-corrected dead-time picture: tau_eff = 124.8 ns is the
-physically consistent value, yielding Rmax = 3.05 MHz, and the note's 90 ns /
-4.2 MHz is the over-optimistic assumption. Observed anomaly fractions are
-consistent with an operating rate ~10x below capacity, not raw pile-up.
+## Verdict (corrected 2026-07-03)
+RETRACTED as an MC validation: tau_eff = 124.8 ns entered this study as a data
+input, so no independent MC confirmation exists. The data-driven statement
+stands on its own: the note's 90 ns assumption is wrong, and the measured
+live-time implies a one-sided bound Rmax <= 3.05 MHz (censoring-aware
+estimators suggest ~2.1 MHz or lower). An honest MC cross-check requires a
+digitizer whose pulse shape is derived independently of these waveforms and
+whose tail matches the measured 49-57 ns decay.
 """
     (out / "REPORT.md").write_text(report)
 

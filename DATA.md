@@ -8,10 +8,11 @@ truth for where it lives and what it contains.
 | Copy | Path | Notes |
 |---|---|---|
 | Local (laptop `billy`) | `/home/billy/Desktop/test_beam/data/` | working copy; gitignored |
-| LUNARC (canonical) | `/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data/` | **to be populated** — primary archive for the fleet |
+| Local canonical data store | `/home/billy/ccb-data` | outside repo, immutable (see `PROJECT_REPORT.md` §6); `raw/` + `extracted/` |
+| LUNARC (canonical) | `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/` | **populated** — canonical tree for the fleet (fs10, mounted on compute nodes) |
 
-> TODO: rsync `data/raw/` to the LUNARC path above and record checksums so every worker
-> (laptop, LUNARC, Mac) pulls byte-identical inputs.
+> Corrected 2026-07-03: an earlier version of this file pointed at fs9 marked "to be populated";
+> the canonical LUNARC tree lives on **fs10** and is populated. (External Review 2026-07-02)
 
 ## Archive contents
 

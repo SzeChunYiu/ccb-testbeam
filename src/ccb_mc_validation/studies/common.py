@@ -16,6 +16,7 @@ class StudyStatus(str, Enum):
     BLOCKED = "BLOCKED"
     FIXTURE = "FIXTURE"
     PRODUCTION = "PRODUCTION"
+    TRUNCATED_INPUT = "TRUNCATED_INPUT"
 
 
 class StudyBlockedError(Exception):

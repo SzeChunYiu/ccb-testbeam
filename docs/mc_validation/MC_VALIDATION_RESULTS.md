@@ -1,6 +1,8 @@
 # MC Validation Results Summary (MV0–MV6)
 
-Generated: 2026-06-28
+Generated: 2026-06-28. **Corrected 2026-07-03** following External Review 2026-07-02
+(`EXTERNAL_REVIEW_2026-07-02.md`): MV0, MV2, MV5 and MV6 verdicts are retracted; MV4 is under
+review pending a matched rerun.
 
 All studies executed on LUNARC (account lu2026-2-51, partition lu48).
 Results archived in `reports/mc_validation/mv*/study_result.json`.
@@ -12,19 +14,24 @@ Raw SLURM logs in `reports/mc_validation/mv*/slurm_*.out`.
 
 | Study | What it validates | Status | Key number | SLURM job |
 |-------|-------------------|--------|------------|-----------|
-| MV0 | Digitizer ADC/MeV gain | PASS (v2) | 92 ± 28 ADC/MeV | 3328635 |
+| MV0 | Digitizer ADC/MeV gain | ⛔ **RETRACTED (2026-07-03)** | v2 gain 92 ± 28 ADC/MeV invalid (anchor variable wrong); gain unknown | 3328635 |
 | MV1 | Proton/deuteron PID (AUC) | PASS | AUC = 0.986 | 3328635 |
-| MV2 | Range–energy relation | PASS | validated | 3328635 |
+| MV2 | Range–energy relation | ⛔ **RETRACTED pending rerun (2026-07-03)** | momentum unit error (eV-scale ekin) | 3328635 |
 | MV3 | Stopping-depth profile | **STRUCTURAL FAIL** | χ²/ndf = 68,269 | 3328648 |
-| MV4 | Single-stave timing σ₆₈ | PASS (raw) / TENSION (corrected) | raw pull = −1.05; corrected pull = +2.68 | 3328641 |
-| MV5 | Pile-up R_max | PASS | 3.044 MHz vs data 3.05 MHz | 3328643 |
-| MV6 | Anomaly species (GMM) | DONE — CLOSED | C12 55% dominant; frac = 0.32% | 3328644 |
+| MV4 | Single-stave timing σ₆₈ | ⚠️ UNDER REVIEW (2026-07-03) | pulls −1.05/+2.68 unreliable (comparison mismatches); matched rerun required | 3328641 |
+| MV5 | Pile-up R_max | ⛔ **RETRACTED as validation (2026-07-03)** | MC τ_eff was a hardcoded copy of the data value | 3328643 |
+| MV6 | Anomaly species (GMM) | ⛔ **RETRACTED (2026-07-03)** | C12 attribution unsupported (invalid gain, no quenching, no threshold) | 3328644 |
 
 ---
 
 ## MV0 — Digitizer gain calibration
 
-**Status: PASS (v2 corrected methodology)**
+**Status: ⛔ RETRACTED (2026-07-03).** The v2 anchor (B2 net median 1781 ADC) was |net − pedestal|
+of an already baseline-subtracted amplitude — a folded garbage variable; the true B2 net median is
+5752 ADC. The 92 ± 28 ADC/MeV gain is unreproducible from any committed script, and the MC anchor
+is circular with the MV3-failed geometry. Neither v1 (~246) nor v2 (92) is valid; the gain is
+UNKNOWN pending a geometry-fixed MC and the correct anchor variable. The material below is retained
+for the record only. (External Review 2026-07-02)
 
 ### Methodology
 
@@ -45,10 +52,10 @@ corresponding MC energy deposit at that fractile.
 
 ### Interpretation
 
-The 30% relative uncertainty on the gain reflects the width of the amplitude distribution,
-not measurement imprecision. The gain is consistent with the manufacturer specification of
-~80 ADC/MeV for this scintillator+SiPM combination at nominal bias. MV0 is CLOSED; the
-calibrated gain constant (92 ADC/MeV) is used as input to all downstream MC studies.
+(Retracted interpretation, retained for the record.) The 30% relative uncertainty on the gain
+reflects the width of the amplitude distribution, not measurement imprecision. **Do not use
+92 ADC/MeV (or 246 ADC/MeV) as input to any downstream study** — MV0 is reopened and the gain is
+unknown.
 
 ---
 
@@ -70,10 +77,11 @@ MV1 is CLOSED.
 
 ## MV2 — Range–energy relation
 
-**Status: PASS**
-
-The MC-predicted range–energy relation for protons in the HRD stack matches the NIST PSTAR
-tabulation within statistical uncertainties. MV2 is CLOSED.
+**Status: ⛔ RETRACTED pending rerun (2026-07-03).** A momentum-unit error (GeV momenta mixed with
+MeV masses) left the published ekin values at eV scale; all ekin-based MV2 numbers are invalid.
+The edep medians were also misquoted downstream (the artifact says proton 101.1 / deuteron
+73.4 MeV, not 23/89). A rerun after the unit fix, with a punch-through/containment flag, is
+required. The qualitative p/d range ordering remains supported. (External Review 2026-07-02)
 
 ---
 
@@ -121,9 +129,12 @@ MV4–MV6 (which use selected-layer subsets).
 
 ---
 
-## MV4 — Timing σ₆₈ (PASS / TENSION)
+## MV4 — Timing σ₆₈ (UNDER REVIEW)
 
-**Status: PASS (raw) — TENSION (timewalk-corrected)**
+**Status: ⚠️ UNDER REVIEW (2026-07-03) — matched rerun required.** The comparison is not
+apples-to-apples: the data anchor 1.85 ns is the ML-corrected value (raw CFD20 = 2.99 ns);
+single-trace MC vs pair-difference data; merged-track MC waveforms vs per-stave data pulses;
+σ_data = 0.10 ns assumed, not measured — the pulls below are not reliable.
 
 ### Results table
 
@@ -152,25 +163,32 @@ production run or a post-hoc reweighting of the existing run.
 
 ---
 
-## MV5 — Pile-up R_max (PASS)
+## MV5 — Pile-up R_max (RETRACTED as validation)
 
-**Status: PASS**
+**Status: ⛔ RETRACTED as validation (2026-07-03).**
 
 | Quantity | MC | Data | Note |
 |----------|----|------|------|
-| τ_eff (decay constant) | 124.8 ns | — | fitted from MC inter-arrival |
-| R_max (theory) | 3.044 MHz | 3.05 MHz | 0.2% agreement |
-| R_max (note, upper bound) | — | 4.22 MHz | measured at peak current |
+| τ_eff | — | 124.79 ns | measured from data (10% tail-crossing live-time, S10b); the "MC τ_eff = 124.8 ns" was a hardcoded copy of this value, **not** fitted from MC inter-arrival |
+| R_max (data-driven bound) | — | ≤ 3.05 MHz | one-sided upper bound; censoring-aware estimators (KM 151.6 ns, IPCW 179.1 ns) suggest ≈2.1 MHz or lower |
+| R_max (note) | — | 4.22 MHz | an *assumption* (τ_eff = 90 ns), not a measurement at peak current |
 
-The MC-predicted maximum singles rate (3.044 MHz) matches the data-derived value (3.05 MHz)
-at the 0.2% level. The note value of 4.22 MHz reflects a different operating point (peak
-instantaneous current vs. cycle-average). MV5 is CLOSED.
+No independent MC live-time measurement exists; the claimed 0.2% agreement was the rounding error
+of the same number. Given the toy τ_decay = 42 ns vs measured data tails 49–57 ns, an honest MC
+measurement would have disagreed. The 4.22 → 3.05 MHz correction of the note's 90 ns assumption
+stands, but as a data-driven one-sided upper bound. MV5 is REOPENED as a validation item.
+(External Review 2026-07-02)
 
 ---
 
-## MV6 — Anomaly species identification (DONE — CLOSED)
+## MV6 — Anomaly species identification (RETRACTED)
 
-**Status: DONE — CLOSED**
+**Status: ⛔ RETRACTED (2026-07-03).** MV6 ran with the invalidated gain (246), no Birks quenching,
+no amplitude threshold (despite claiming "threshold-corrected"), and per-track whole-arm waveforms
+vs per-stave data pulses. The C12 attribution is unsupported, and the data ~4% vs MC 0.32% figures
+use different denominators and taxonomies (selected pulses with A>1000 vs all charged tracks) — the
+~12× rate mismatch is unresolved. The numbers below are retained for the record only.
+(External Review 2026-07-02)
 
 ### Summary statistics
 
@@ -184,14 +202,9 @@ instantaneous current vs. cycle-average). MV5 is CLOSED.
 
 ### Interpretation
 
-The 0.32% anomaly fraction is consistent with the expected rate of C12 nuclear elastic
-scatters in the SciBar scintillator. The GMM identifies three sub-populations; cluster 2
-(C12 recoils) is the dominant anomaly species at 55% purity. The remaining 45% consists of
-lower-energy proton scatters misclassified by amplitude alone; these are not a physics
-background concern at current statistics.
-
-MV6 is CLOSED. The anomaly fraction is sufficiently low (< 1%) that it does not affect
-the proton/deuteron yield ratio at the current precision goal.
+(Retracted interpretation, retained for the record only — see status above.) MV6 is REOPENED:
+the anomaly species identity is an open question pending an honest redo with Birks quenching, an
+amplitude threshold, and a data-matched selection.
 
 ---
 
@@ -208,10 +221,11 @@ the proton/deuteron yield ratio at the current precision goal.
 
 | Item | Resolution |
 |------|-----------|
-| MV0 gain uncertainty | Accepted as calibration-point systematic (30%) |
+| MV0 gain | ⛔ REOPENED 2026-07-03: v1 and v2 both retracted; gain unknown pending geometry-fixed MC + correct anchor |
 | MV1 PID AUC | CLOSED: AUC = 0.986 |
-| MV5 pile-up rate | CLOSED: 0.2% agreement |
-| MV6 anomaly species | CLOSED: C12 dominant, 0.32% fraction |
+| MV5 pile-up rate | ⛔ REOPENED 2026-07-03: retracted as validation; only a data-driven one-sided bound (≤3.05 MHz) exists |
+| MV6 anomaly species | ⛔ REOPENED 2026-07-03: C12 attribution retracted; species identity open |
+| MV2 range–energy | ⛔ REOPENED 2026-07-03: retracted pending rerun (momentum unit error) |
 
 ### Still open (data-side, not MC)
 

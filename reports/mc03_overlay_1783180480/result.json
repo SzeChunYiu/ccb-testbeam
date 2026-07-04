@@ -1,0 +1,283 @@
+{
+  "study": "S24/mc03",
+  "title": "Honest two-pulse benchmark on truth-labelled overlays + independent MC tau_eff",
+  "failure_definition": "missed detection OR |dt_rec - dt_true| > 15.0 ns (single, both methods)",
+  "matched_coverage": 0.8,
+  "detection_thresholds": {
+    "trad": 0.9393008553612047,
+    "ml": 0.0540212725563509
+  },
+  "train_negative_fpr": 0.1,
+  "failure_at_coverage": [
+    {
+      "method": "trad",
+      "n_positive": 70100,
+      "theta": 0.9393008553612047,
+      "failure_rate_full": 0.047489300998573465,
+      "failure_at_80pct_coverage": 0.0,
+      "failure_ci_low": 0.0,
+      "failure_ci_high": 0.0,
+      "rate_mhz": 0.5
+    },
+    {
+      "method": "ml",
+      "n_positive": 70100,
+      "theta": 0.0540212725563509,
+      "failure_rate_full": 0.010613409415121256,
+      "failure_at_80pct_coverage": 0.00010699001426533524,
+      "failure_ci_low": 3.566333808844508e-05,
+      "failure_ci_high": 0.00019614835948644793,
+      "rate_mhz": 0.5
+    },
+    {
+      "method": "trad",
+      "n_positive": 70174,
+      "theta": 0.9393008553612047,
+      "failure_rate_full": 0.04855074529027845,
+      "failure_at_80pct_coverage": 1.7812611328820805e-05,
+      "failure_ci_low": 0.0,
+      "failure_ci_high": 6.278945493409293e-05,
+      "rate_mhz": 1.5
+    },
+    {
+      "method": "ml",
+      "n_positive": 70174,
+      "theta": 0.0540212725563509,
+      "failure_rate_full": 0.010516715592669649,
+      "failure_at_80pct_coverage": 0.00023156394727467047,
+      "failure_ci_low": 0.00010687566797292483,
+      "failure_ci_high": 0.0003918774492340577,
+      "rate_mhz": 1.5
+    },
+    {
+      "method": "trad",
+      "n_positive": 69582,
+      "theta": 0.9393008553612047,
+      "failure_rate_full": 0.04933747233479923,
+      "failure_at_80pct_coverage": 1.796428699744907e-05,
+      "failure_ci_low": 0.0,
+      "failure_ci_high": 5.3892860992347213e-05,
+      "rate_mhz": 3.0
+    },
+    {
+      "method": "ml",
+      "n_positive": 69582,
+      "theta": 0.0540212725563509,
+      "failure_rate_full": 0.010864878847977925,
+      "failure_at_80pct_coverage": 0.00010778572198469443,
+      "failure_ci_low": 3.592857399489814e-05,
+      "failure_ci_high": 0.00021557144396938885,
+      "rate_mhz": 3.0
+    }
+  ],
+  "threshold_sensitivity": [
+    {
+      "rate_mhz": 0.5,
+      "method": "trad",
+      "train_neg_fpr": 0.05,
+      "failure_at_80pct_coverage": 0.0
+    },
+    {
+      "rate_mhz": 0.5,
+      "method": "trad",
+      "train_neg_fpr": 0.2,
+      "failure_at_80pct_coverage": 0.0
+    },
+    {
+      "rate_mhz": 0.5,
+      "method": "ml",
+      "train_neg_fpr": 0.05,
+      "failure_at_80pct_coverage": 0.00010699001426533524
+    },
+    {
+      "rate_mhz": 0.5,
+      "method": "ml",
+      "train_neg_fpr": 0.2,
+      "failure_at_80pct_coverage": 0.00010699001426533524
+    },
+    {
+      "rate_mhz": 1.5,
+      "method": "trad",
+      "train_neg_fpr": 0.05,
+      "failure_at_80pct_coverage": 1.7812611328820805e-05
+    },
+    {
+      "rate_mhz": 1.5,
+      "method": "trad",
+      "train_neg_fpr": 0.2,
+      "failure_at_80pct_coverage": 1.7812611328820805e-05
+    },
+    {
+      "rate_mhz": 1.5,
+      "method": "ml",
+      "train_neg_fpr": 0.05,
+      "failure_at_80pct_coverage": 0.00023156394727467047
+    },
+    {
+      "rate_mhz": 1.5,
+      "method": "ml",
+      "train_neg_fpr": 0.2,
+      "failure_at_80pct_coverage": 0.00023156394727467047
+    },
+    {
+      "rate_mhz": 3.0,
+      "method": "trad",
+      "train_neg_fpr": 0.05,
+      "failure_at_80pct_coverage": 1.796428699744907e-05
+    },
+    {
+      "rate_mhz": 3.0,
+      "method": "trad",
+      "train_neg_fpr": 0.2,
+      "failure_at_80pct_coverage": 1.796428699744907e-05
+    },
+    {
+      "rate_mhz": 3.0,
+      "method": "ml",
+      "train_neg_fpr": 0.05,
+      "failure_at_80pct_coverage": 0.00010778572198469443
+    },
+    {
+      "rate_mhz": 3.0,
+      "method": "ml",
+      "train_neg_fpr": 0.2,
+      "failure_at_80pct_coverage": 0.00010778572198469443
+    }
+  ],
+  "common_subset_sigma68": [
+    {
+      "rate_mhz": 0.5,
+      "n_common": 49111,
+      "sigma68_trad_ns": 0.645565599999999,
+      "sigma68_ml_ns": 0.8933634928779725,
+      "bias_trad_ns": -0.03711900000000412,
+      "bias_ml_ns": 0.01495723600213239
+    },
+    {
+      "rate_mhz": 1.5,
+      "n_common": 49211,
+      "sigma68_trad_ns": 0.6440941000000024,
+      "sigma68_ml_ns": 0.8907105054764137,
+      "bias_trad_ns": -0.037358999999995035,
+      "bias_ml_ns": 0.013571920147683159
+    },
+    {
+      "rate_mhz": 3.0,
+      "n_common": 48993,
+      "sigma68_trad_ns": 0.6393858800000003,
+      "sigma68_ml_ns": 0.8969674611409795,
+      "bias_trad_ns": -0.026935000000001708,
+      "bias_ml_ns": 0.013659837520847873
+    }
+  ],
+  "detection_metrics": [
+    {
+      "rate_mhz": 0.5,
+      "method": "trad",
+      "auc": 0.9805092253537316,
+      "ap": 0.9929179288147933,
+      "neg_fpr_at_theta": 0.10257690771074711
+    },
+    {
+      "rate_mhz": 0.5,
+      "method": "ml",
+      "auc": 0.9971879816497901,
+      "ap": 0.9989976950662115,
+      "neg_fpr_at_theta": 0.10740444799573845
+    },
+    {
+      "rate_mhz": 1.5,
+      "method": "trad",
+      "auc": 0.9804414362529265,
+      "ap": 0.9929186813812179,
+      "neg_fpr_at_theta": 0.10062389483868815
+    },
+    {
+      "rate_mhz": 1.5,
+      "method": "ml",
+      "auc": 0.9973543450484295,
+      "ap": 0.999064526471421,
+      "neg_fpr_at_theta": 0.10365996063123478
+    },
+    {
+      "rate_mhz": 3.0,
+      "method": "trad",
+      "auc": 0.9802330695922473,
+      "ap": 0.9927673259703275,
+      "neg_fpr_at_theta": 0.0994670219853431
+    },
+    {
+      "rate_mhz": 3.0,
+      "method": "ml",
+      "auc": 0.9972590061494266,
+      "ap": 0.9990219388463604,
+      "neg_fpr_at_theta": 0.10343104596935376
+    }
+  ],
+  "tau_eff": {
+    "by_stave": [
+      {
+        "stave": "B2",
+        "n_selected": 76650,
+        "n_aligned": 6000,
+        "live10_ns": 141.35152437065,
+        "live10_ci_low": 141.3056015078869,
+        "live10_ci_high": 141.39566195803215,
+        "decay_tau_ns": 65.64473644510235,
+        "empirical_mean_live10_ns": 127.73364654732967,
+        "fit_ok": true
+      },
+      {
+        "stave": "B4",
+        "n_selected": 48392,
+        "n_aligned": 6000,
+        "live10_ns": 132.15174019864833,
+        "live10_ci_low": 132.11301696072124,
+        "live10_ci_high": 132.1909182115342,
+        "decay_tau_ns": 59.18842746474417,
+        "empirical_mean_live10_ns": 127.7428973409881,
+        "fit_ok": true
+      },
+      {
+        "stave": "B6",
+        "n_selected": 32273,
+        "n_aligned": 6000,
+        "live10_ns": 127.71867990432145,
+        "live10_ci_low": 127.67868179621652,
+        "live10_ci_high": 127.75720404519289,
+        "decay_tau_ns": 56.37760410805576,
+        "empirical_mean_live10_ns": 127.36436607503757,
+        "fit_ok": true
+      },
+      {
+        "stave": "B8",
+        "n_selected": 19876,
+        "n_aligned": 6000,
+        "live10_ns": 129.16472865663883,
+        "live10_ci_low": 129.12405385354987,
+        "live10_ci_high": 129.20844145358794,
+        "decay_tau_ns": 57.09488370007317,
+        "empirical_mean_live10_ns": 127.63856407943446,
+        "fit_ok": true
+      }
+    ],
+    "pooled": {
+      "live10_ns": 134.9889354314544,
+      "ci_low": 134.96018155839982,
+      "ci_high": 135.01251853569903,
+      "n_boot": 300,
+      "data_live10_ns": 124.79,
+      "delta_ns": 10.198935431454387,
+      "stave_weights": {
+        "B2": 76650.0,
+        "B4": 48392.0,
+        "B6": 32273.0,
+        "B8": 19876.0
+      }
+    },
+    "estimator": "S10b 10% tail-crossing (aligned median template + exp tail fit), ported",
+    "data_value_ns": 124.79
+  },
+  "circularity_note": "fit templates from the digitizer-card kernel, never from the injection sample; injection dt continuous vs independent fit grid; kernel FAMILY shared with the generator by construction (documented in REPORT.md section 1)",
+  "runtime_sec": 149.69
+}

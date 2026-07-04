@@ -77,7 +77,15 @@ digitizer:
   gain_status: UNKNOWN_PLACEHOLDER_PENDING_PHASE2
 
   transport_sigma_ns: 0.5
-  apply_birks: false
+  # Birks quenching — ENABLED Phase 4 (2026-07-04). Physically correct per-hit
+  # law L = edep/(1 + kB*dE/dx) with kB = 0.0126 g/(MeV cm^2) (Craun & Smith
+  # 1970 / GEANT4 polystyrene default) / rho 1.06 g/cm^3 = 0.011887 cm/MeV.
+  # Per-hit dE/dx from truth step lengths (consecutive-hit differences of the
+  # cumulative Sci_bar_TrackLength) with a PSTAR/ASTAR-anchored species+energy
+  # lookup fallback — see src/ccb_mc_validation/digitizer/birks.py.
+  # This fixes review F2.2 (dimensionless proxy) and F6.2 (MV6 ran unquenched,
+  # overstating C12 light ~10x). Rebuild with --no-birks for the legacy twin.
+  apply_birks: true
   stages: [birks, scintillation, transport, sampling]
 
   # Per-stave overrides. tau_decay tuned to the DATA pulse-tail decays:
@@ -91,10 +99,25 @@ digitizer:
     B4: {tau_decay_ns: 51.7, channel: 2}
     B6: {tau_decay_ns: 49.4, channel: 4}
     B8: {tau_decay_ns: 50.1, channel: 6}
+    # A-arm staves (Phase 4, --arm A in mc02). CAVEAT: no data-fitted tau_decay
+    # exists for A staves — the template-fit CSV
+    # (reports/1781000867.546870.5c124aaf/template_fit_by_run_stave.csv)
+    # contains ONLY B2/B4/B6/B8 rows (verified 2026-07-04). tau_decay 50 ns is
+    # a DEFAULT taken as the B4-B8 scale (49.4-51.7 ns), not a measurement.
+    # channel = A-stack raw ROOT channel of the analysed (even) duplicate
+    # (hrda files: A1=0, A3=4 per S18; A2/A4 by the same even convention —
+    # they have no selected data pulses, docs/08_astack.md).
+    A1: {tau_decay_ns: 50.0, channel: 0}
+    A2: {tau_decay_ns: 50.0, channel: 2}
+    A3: {tau_decay_ns: 50.0, channel: 4}
+    A4: {tau_decay_ns: 50.0, channel: 6}
 
 # B-arm LayerID -> stave mapping (UNDER REVIEW, see review P4):
 #   paired (default): {0,1}->B2, {2,3}->B4, {4,5}->B6, {6,7}->B8 (pair-summed)
 #   odd:   odd layers unread; {0}->B2, {2}->B4, {4}->B6, {6}->B8
 # The paired mapping is an unvalidated guess; the odd-layer alternative mimics
 # "missing material" and is a live hypothesis until the Phase 2 MV3 v3 rerun.
+# A-arm (LayerID1 == 2): truth LayerID is 0-3 (verified on output_krakow_1M
+# 2026-07-04) and maps DIRECTLY 0->A1, 1->A2, 2->A3, 3->A4 (no pair-summing;
+# the --mapping option applies to the B arm only).
 mapping_default: paired

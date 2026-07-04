@@ -1,0 +1,38 @@
+{
+  "script": "scripts/s24_two_pulse_honest_benchmark.py",
+  "generated_utc": "2026-07-04T16:00:59+00:00",
+  "overlay_dir": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc03_overlay_1783180480/overlays",
+  "overlay_manifest_sha256": "88c98f2eb3363509196b9d96141e58fb4e7b20db4cdb551a895286c35053eacd",
+  "card_sha256": "65e00bf4705836395f06801375e48c2ab71729f16edc2fe04b8f8b455b11ba5c",
+  "seed": 2404,
+  "fit_grids": {
+    "t1_ns": [
+      38.0,
+      66.0,
+      0.5
+    ],
+    "t2_ns": [
+      40.0,
+      176.0,
+      1.0
+    ],
+    "min_sep_ns": 2.0,
+    "note": "independent of the continuous injection law (review P8)"
+  },
+  "outputs": {
+    "REPORT.md": "392cd21acab3cb991502897c1e0632b95737542a259ed0542648445763bd6147",
+    "common_subset_sigma68.csv": "9c8e856fb7296ab9c33e0d0890bbb4d837eea86bb62197c6cc482aeecea231d6",
+    "detection_metrics.csv": "659a04a2eb093613a7ea2c085f412fdd1495ef1d7a621cfe16fee9524b892491",
+    "failure_at_coverage.csv": "1b182a5cebfdd06407bdd960ca2df3a3e90fe34a1bf1ed495bdf599d2253596c",
+    "fig_mc03_benchmark.pdf": "111429a6495164b0e6e56ce3c8441652008203016a8897cd7571a7deecc97fce",
+    "fig_mc03_benchmark.png": "7bed350487d0533f9ab55d4cdd7c7086d246491975d6ce9292d0c19274511e32",
+    "fig_mc03_benchmark.svg": "311c8e6ea11624c96c2b283b7b890f2e50abd1f99ea4d5f8b4bf66bc1b08a41b",
+    "predictions_rate0.5MHz.csv.gz": "3b455eeca3d8909327df5aed90c7aa7406d717a52cc23c9b2f08c1fab9cabce6",
+    "predictions_rate1.5MHz.csv.gz": "1002fb765823e86a92c1bfab7d7238ea1ba675c700cae927b4cc0c0ca23a7333",
+    "predictions_rate3MHz.csv.gz": "00caac71bbf5c78474647d2522ee7ed5ef32e3b5db7ee4cdefe77fdf336bef1d",
+    "result.json": "66febf0797acba86fd883bd1fdebb275b10afdf0c91981180a5a8f520cd26c5c",
+    "risk_coverage_curves.csv": "a70038efa985d7a68571e4e81016ed92ba772450eb3006aeb4f1108b9a1ce59f",
+    "tau_eff_by_stave.csv": "717ced050343070808d20650763cd98d6230f166accd2a3d2d822cf2ce2c2df6",
+    "threshold_sensitivity.csv": "826308d79fc9bf78ee74846ed22ca60c84a0888ae948709b7d0ccf4b95f9353b"
+  }
+}

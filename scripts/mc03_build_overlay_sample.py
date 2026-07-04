@@ -468,8 +468,8 @@ def main() -> int:
             "tau_decay_ns_by_stave": {s: dig_params[s]["tau_decay_ns"] for s in STAVES},
         },
         "caveats": [
-            "gain is an UNKNOWN placeholder (297 ADC/MeV) — all amplitudes in arbitrary scale (review P1/P2)",
-            "stave occupancy and amplitude-spectrum weights inherit the geometry defect (MV3 chi2/ndf=68269)",
+            "gain is an UNKNOWN placeholder (297 ADC/MeV) — all amplitudes in arbitrary scale (review P1/P2); Phase 2 attributes the MV3 discrepancy to the unsimulated two-arm coincidence trigger (not missing material) and prefers gain ~60 as the trigger-consistent estimate",
+            "stave occupancy and amplitude-spectrum weights inherit the MV3 spectrum discrepancy (chi2/ndf=68269; Phase 2 root cause: unsimulated trigger)",
             "single-stave overlays only: both constituents land on the same stave/channel",
             "constituent selection amp>1000 evaluated at the nominal 50 ns placement (phase-locked)",
         ],

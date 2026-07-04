@@ -54,7 +54,17 @@ class DigitizerPipeline:
     ) -> Mapping[str, Any]:
         out = dict(hit)
         if self.apply_birks:
-            out["edep_mev"] = birks_quench(float(hit.get("edep_mev", 0.0)))
+            # Phase 4: physically correct per-hit quenching. Optional hit keys
+            # (all backward compatible — absent keys fall back inside
+            # birks_quench): dedx_mev_per_cm (truth-measured), pdg, ekin_mev.
+            dedx = hit.get("dedx_mev_per_cm")
+            pdg = hit.get("pdg")
+            out["edep_mev"] = birks_quench(
+                float(hit.get("edep_mev", 0.0)),
+                dedx_mev_per_cm=None if dedx is None else float(dedx),
+                pdg=None if pdg is None else int(pdg),
+                ekin_mev=hit.get("ekin_mev"),
+            )
         return out
 
     def _stage_scintillation(

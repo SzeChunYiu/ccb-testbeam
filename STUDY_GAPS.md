@@ -328,3 +328,15 @@ Jobs submitted via SLURM on LUNARC (`lu48` partition, account `lu2026-2-51`).
 | GAP-06 full closure | Run CFD/OF parameter scan with actual S02 timing data | Low (compute only) |
 | GAP-07 full closure | Add χ²/ndf and tail fraction to S02 script output | Low (code change) |
 | GAP-05 full closure | Measure two-ended correlation from split-readout data | Medium (requires data) |
+
+---
+
+## 8. Phase 4 Log (2026-07-04) — Birks quenching, MV6 redo, A-arm digitization
+
+| Item | Job ID | Status | Artifact |
+|-----|--------|--------|----------|
+| **Birks quenching** (review F2.2: old `birks.py` was dimensionally meaningless — `edep×density` as "dE/dx") | — (code) | ✅ FIXED | `src/ccb_mc_validation/digitizer/birks.py` (per-hit `light = edep/(1+kB·dE/dx)`, kB = 0.0126 g/(MeV cm²)/1.06 g/cm³; truth step-length dE/dx + PSTAR/ASTAR-anchored species lookup); card `apply_birks: true`; `tests/test_birks_quench.py` |
+| **MV6 honest redo** (review F6.2: MV6 ran unquenched, C12 light overstated ~10×; retracted) | 3347280 | see `reports/mv6b_anomaly_quenching_*/REPORT.md` | quenched vs unquenched twin, DATA taxonomy (A>1000, early-peak `peak_sample<=3`), gain 60 (Phase-2 preferred) primary + 297, `sample_II` trigger proxy |
+| **§4.6 A-stack MC counterpart** (partial: digitized A-arm table for S18) | 3347281 | table built | `reports/mc02_pulse_table_aarm_*/` — staves A1..A4, τ_decay 50 ns DEFAULT (no A rows in the template-fit CSV), occupancy/amplitude medians in `manifest.json` |
+| **P06 DAQ dropouts** | — | ⛔ NOT MC-INFORMABLE | dropouts are a real-DAQ acquisition-layer failure; the MC chain has no DAQ transport to drop |
+| **P13a ADC noise floor** | — | ⛔ NOT MC-INFORMABLE | the noise floor is a measured data *input* to the digitizer card (`noise_adc_rms`); MC output cannot validate its own input |

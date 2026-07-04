@@ -1,0 +1,587 @@
+{
+  "study_id": "MV6b-anomaly-with-quenching",
+  "generated_utc": "2026-07-04T16:01:26+00:00",
+  "script": "scripts/mv6b_anomaly_with_quenching.py",
+  "inputs": {
+    "quenched": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_birks_1783180742/mc02_pulse_table.csv.gz",
+    "unquenched": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_1783107862/mc02_pulse_table.csv.gz"
+  },
+  "taxonomy": {
+    "selection": "amplitude_adc > 1000.0 (gain-equivalent rescaled)",
+    "early_peak": "peak_sample <= 3 (P02 section 5)",
+    "data_reference": "P02: clusters 1&4 = ~4.4% early-peak/low-area"
+  },
+  "gain_handling": {
+    "native_gain_adc_per_mev": 297.0,
+    "gains_reported": [
+      60.0,
+      297.0
+    ],
+    "primary_gain": 60.0,
+    "note": "Phase 2 grid prefers ~60 ADC/MeV (trigger-consistent); the gain-g selection on a gain-297 table is amplitude > 1000*297/g"
+  },
+  "results": {
+    "quenched": {
+      "gain60_sample_II": {
+        "population": "sample_II",
+        "threshold_native_adc": 4950.0,
+        "n_population_rows": 517747,
+        "n_selected": 0,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          1.0
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {},
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 0,
+          "frac_of_selected": 0.0
+        },
+        "c12_rows_in_population": 1656,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain60_all": {
+        "population": "all",
+        "threshold_native_adc": 4950.0,
+        "n_population_rows": 518247,
+        "n_selected": 0,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          1.0
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {},
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 0,
+          "frac_of_selected": 0.0
+        },
+        "c12_rows_in_population": 1821,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain60_sample_I": {
+        "population": "sample_I",
+        "threshold_native_adc": 4950.0,
+        "n_population_rows": 83470,
+        "n_selected": 0,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          1.0
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {},
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 0,
+          "frac_of_selected": 0.0
+        },
+        "c12_rows_in_population": 459,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain297_sample_II": {
+        "population": "sample_II",
+        "threshold_native_adc": 1000.0,
+        "n_population_rows": 517747,
+        "n_selected": 415400,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          9.247868255631461e-06
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "He3": {
+            "n": 69,
+            "frac": 0.0001661049590755898,
+            "median_amplitude_adc": 1194.5
+          },
+          "alpha": {
+            "n": 346,
+            "frac": 0.0008329321136254212,
+            "median_amplitude_adc": 1164.0
+          },
+          "d": {
+            "n": 156467,
+            "frac": 0.37666586422725085,
+            "median_amplitude_adc": 2415.0
+          },
+          "other_ion": {
+            "n": 6,
+            "frac": 1.4443909484833895e-05,
+            "median_amplitude_adc": 1184.75
+          },
+          "p": {
+            "n": 258446,
+            "frac": 0.6221617717862301,
+            "median_amplitude_adc": 1334.0
+          },
+          "t": {
+            "n": 66,
+            "frac": 0.00015888300433317283,
+            "median_amplitude_adc": 1380.75
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 487,
+          "frac_of_selected": 0.0011723639865190178
+        },
+        "c12_rows_in_population": 1656,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain297_all": {
+        "population": "all",
+        "threshold_native_adc": 1000.0,
+        "n_population_rows": 518247,
+        "n_selected": 415416,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          9.247512071652572e-06
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "He3": {
+            "n": 69,
+            "frac": 0.00016609856144202438,
+            "median_amplitude_adc": 1194.5
+          },
+          "alpha": {
+            "n": 346,
+            "frac": 0.0008329000327382672,
+            "median_amplitude_adc": 1164.0
+          },
+          "d": {
+            "n": 156473,
+            "frac": 0.3766658000654765,
+            "median_amplitude_adc": 2415.0
+          },
+          "other_ion": {
+            "n": 6,
+            "frac": 1.4443353168871686e-05,
+            "median_amplitude_adc": 1184.75
+          },
+          "p": {
+            "n": 258456,
+            "frac": 0.6221618811023167,
+            "median_amplitude_adc": 1334.0
+          },
+          "t": {
+            "n": 66,
+            "frac": 0.00015887688485758853,
+            "median_amplitude_adc": 1380.75
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 487,
+          "frac_of_selected": 0.0011723188322067517
+        },
+        "c12_rows_in_population": 1821,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain297_sample_I": {
+        "population": "sample_I",
+        "threshold_native_adc": 1000.0,
+        "n_population_rows": 83470,
+        "n_selected": 74027,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          5.189188609737485e-05
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "He3": {
+            "n": 10,
+            "frac": 0.00013508584705580396,
+            "median_amplitude_adc": 1185.25
+          },
+          "alpha": {
+            "n": 54,
+            "frac": 0.0007294635741013414,
+            "median_amplitude_adc": 1136.75
+          },
+          "d": {
+            "n": 59029,
+            "frac": 0.7973982465857052,
+            "median_amplitude_adc": 2522.5
+          },
+          "other_ion": {
+            "n": 3,
+            "frac": 4.052575411674119e-05,
+            "median_amplitude_adc": 1343.0
+          },
+          "p": {
+            "n": 14920,
+            "frac": 0.20154808380725953,
+            "median_amplitude_adc": 1315.0
+          },
+          "t": {
+            "n": 11,
+            "frac": 0.00014859443176138437,
+            "median_amplitude_adc": 1164.0
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 78,
+          "frac_of_selected": 0.001053669607035271
+        },
+        "c12_rows_in_population": 459,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      }
+    },
+    "unquenched": {
+      "gain60_sample_II": {
+        "population": "sample_II",
+        "threshold_native_adc": 4950.0,
+        "n_population_rows": 517747,
+        "n_selected": 312,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          0.012163058951069143
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "He3": {
+            "n": 10,
+            "frac": 0.03205128205128205,
+            "median_amplitude_adc": 5760.75
+          },
+          "alpha": {
+            "n": 27,
+            "frac": 0.08653846153846154,
+            "median_amplitude_adc": 5302.5
+          },
+          "d": {
+            "n": 111,
+            "frac": 0.3557692307692308,
+            "median_amplitude_adc": 5145.5
+          },
+          "other_ion": {
+            "n": 2,
+            "frac": 0.00641025641025641,
+            "median_amplitude_adc": 5409.0
+          },
+          "p": {
+            "n": 158,
+            "frac": 0.5064102564102564,
+            "median_amplitude_adc": 5219.5
+          },
+          "t": {
+            "n": 4,
+            "frac": 0.01282051282051282,
+            "median_amplitude_adc": 5229.75
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 43,
+          "frac_of_selected": 0.13782051282051283
+        },
+        "c12_rows_in_population": 1656,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain60_all": {
+        "population": "all",
+        "threshold_native_adc": 4950.0,
+        "n_population_rows": 518247,
+        "n_selected": 312,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          0.012163058951069143
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "He3": {
+            "n": 10,
+            "frac": 0.03205128205128205,
+            "median_amplitude_adc": 5760.75
+          },
+          "alpha": {
+            "n": 27,
+            "frac": 0.08653846153846154,
+            "median_amplitude_adc": 5302.5
+          },
+          "d": {
+            "n": 111,
+            "frac": 0.3557692307692308,
+            "median_amplitude_adc": 5145.5
+          },
+          "other_ion": {
+            "n": 2,
+            "frac": 0.00641025641025641,
+            "median_amplitude_adc": 5409.0
+          },
+          "p": {
+            "n": 158,
+            "frac": 0.5064102564102564,
+            "median_amplitude_adc": 5219.5
+          },
+          "t": {
+            "n": 4,
+            "frac": 0.01282051282051282,
+            "median_amplitude_adc": 5229.75
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 43,
+          "frac_of_selected": 0.13782051282051283
+        },
+        "c12_rows_in_population": 1821,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain60_sample_I": {
+        "population": "sample_I",
+        "threshold_native_adc": 4950.0,
+        "n_population_rows": 83470,
+        "n_selected": 16,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          0.19361341827271994
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "alpha": {
+            "n": 3,
+            "frac": 0.1875,
+            "median_amplitude_adc": 5288.5
+          },
+          "d": {
+            "n": 11,
+            "frac": 0.6875,
+            "median_amplitude_adc": 5066.0
+          },
+          "p": {
+            "n": 2,
+            "frac": 0.125,
+            "median_amplitude_adc": 5173.0
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 3,
+          "frac_of_selected": 0.1875
+        },
+        "c12_rows_in_population": 459,
+        "c12_rows_passing_selection": 0,
+        "c12_selection_survival_frac": 0.0
+      },
+      "gain297_sample_II": {
+        "population": "sample_II",
+        "threshold_native_adc": 1000.0,
+        "n_population_rows": 517747,
+        "n_selected": 458651,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          8.375797335091295e-06
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "C12": {
+            "n": 3,
+            "frac": 6.540921092508247e-06,
+            "median_amplitude_adc": 1477.0
+          },
+          "He3": {
+            "n": 394,
+            "frac": 0.0008590409701494165,
+            "median_amplitude_adc": 2818.75
+          },
+          "alpha": {
+            "n": 2167,
+            "frac": 0.0047247253358217904,
+            "median_amplitude_adc": 2373.0
+          },
+          "d": {
+            "n": 160257,
+            "frac": 0.34940946384069804,
+            "median_amplitude_adc": 2970.0
+          },
+          "other_ion": {
+            "n": 168,
+            "frac": 0.0003662915811804618,
+            "median_amplitude_adc": 1861.75
+          },
+          "p": {
+            "n": 295424,
+            "frac": 0.6441150242777188,
+            "median_amplitude_adc": 1455.0
+          },
+          "t": {
+            "n": 238,
+            "frac": 0.0005189130733389876,
+            "median_amplitude_adc": 2682.25
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 2970,
+          "frac_of_selected": 0.006475511881583165
+        },
+        "c12_rows_in_population": 1656,
+        "c12_rows_passing_selection": 3,
+        "c12_selection_survival_frac": 0.0018115942028985507
+      },
+      "gain297_all": {
+        "population": "all",
+        "threshold_native_adc": 1000.0,
+        "n_population_rows": 518247,
+        "n_selected": 458712,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          8.374683522157216e-06
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "C12": {
+            "n": 3,
+            "frac": 6.540051274001988e-06,
+            "median_amplitude_adc": 1477.0
+          },
+          "He3": {
+            "n": 394,
+            "frac": 0.0008589267339855944,
+            "median_amplitude_adc": 2818.75
+          },
+          "alpha": {
+            "n": 2175,
+            "frac": 0.004741537173651442,
+            "median_amplitude_adc": 2371.5
+          },
+          "d": {
+            "n": 160271,
+            "frac": 0.3493935192451909,
+            "median_amplitude_adc": 2970.0
+          },
+          "other_ion": {
+            "n": 168,
+            "frac": 0.00036624287134411136,
+            "median_amplitude_adc": 1861.75
+          },
+          "p": {
+            "n": 295463,
+            "frac": 0.6441143898568165,
+            "median_amplitude_adc": 1455.0
+          },
+          "t": {
+            "n": 238,
+            "frac": 0.000518844067737491,
+            "median_amplitude_adc": 2682.25
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 2978,
+          "frac_of_selected": 0.00649209089799264
+        },
+        "c12_rows_in_population": 1821,
+        "c12_rows_passing_selection": 3,
+        "c12_selection_survival_frac": 0.0016474464579901153
+      },
+      "gain297_sample_I": {
+        "population": "sample_I",
+        "threshold_native_adc": 1000.0,
+        "n_population_rows": 83470,
+        "n_selected": 79447,
+        "n_early_peak": 0,
+        "early_peak_frac": 0.0,
+        "early_peak_frac_ci95": [
+          0.0,
+          4.8351910724127566e-05
+        ],
+        "data_early_peak_frac": 0.044,
+        "species_composition_selected": {
+          "C12": {
+            "n": 1,
+            "frac": 1.25870076906617e-05,
+            "median_amplitude_adc": 1791.0
+          },
+          "He3": {
+            "n": 95,
+            "frac": 0.0011957657306128613,
+            "median_amplitude_adc": 2599.5
+          },
+          "alpha": {
+            "n": 598,
+            "frac": 0.007527030599015696,
+            "median_amplitude_adc": 2098.25
+          },
+          "d": {
+            "n": 60346,
+            "frac": 0.7595755661006709,
+            "median_amplitude_adc": 3079.25
+          },
+          "other_ion": {
+            "n": 47,
+            "frac": 0.0005915893614610999,
+            "median_amplitude_adc": 1963.5
+          },
+          "p": {
+            "n": 18287,
+            "frac": 0.23017860963913048,
+            "median_amplitude_adc": 1444.0
+          },
+          "t": {
+            "n": 73,
+            "frac": 0.000918851561418304,
+            "median_amplitude_adc": 2519.0
+          }
+        },
+        "species_composition_early_peak": {},
+        "heavy_ion_selected": {
+          "n": 814,
+          "frac_of_selected": 0.010245824260198624
+        },
+        "c12_rows_in_population": 459,
+        "c12_rows_passing_selection": 1,
+        "c12_selection_survival_frac": 0.002178649237472767
+      }
+    }
+  },
+  "verdict": {
+    "primary_config": "gain60_sample_II",
+    "early_peak_frac_quenched": 0.0,
+    "early_peak_frac_unquenched": 0.0,
+    "data_early_peak_frac": 0.044,
+    "c12_survival_quenched": 0.0,
+    "c12_survival_unquenched": 0.0,
+    "heavy_ion_frac_selected_quenched": 0.0,
+    "heavy_ion_frac_selected_unquenched": 0.13782051282051283
+  },
+  "caveats": [
+    "MC pulses have a construction-pinned peak phase (trigger offset 50 ns, no trigger-phase jitter), so MC early-peak can only arise from noise/baseline pathologies \u2014 the decisive quench observable is C12/ion survival of the A>1000 selection, not the raw early-peak fraction",
+    "gain is a placeholder either way; both hypotheses (60 preferred, 297) reported",
+    "occupancy weights inherit the unsimulated-trigger defect (Phase 2)"
+  ]
+}

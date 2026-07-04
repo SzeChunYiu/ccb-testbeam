@@ -195,8 +195,15 @@ def main() -> int:
     lines.append("4. **MV7 is MC-level only**: white-Gaussian noise + uniform pedestal jitter; "
                  "no correlated noise/drift/signal contamination. Real data still has no true "
                  "pedestal sample.")
-    lines.append("5. **No Birks quenching** (card `apply_birks: false`): heavy-ion light yield "
-                 "is overstated; species composition of the high-amplitude tail is unreliable.")
+    if manifest.get("apply_birks"):
+        lines.append("5. **Birks quenching ON** (Phase 4): per-hit light = edep/(1+kB*dE/dx), "
+                     "kB = 0.0126 g/(MeV cm^2)/1.06 g/cm^3; heavy-ion (alpha/C12) light is "
+                     "quenched. dE/dx from truth step lengths with a PSTAR/ASTAR-anchored "
+                     "species lookup fallback (digitizer/birks.py).")
+    else:
+        lines.append("5. **No Birks quenching** (`apply_birks: false` for this build): heavy-ion "
+                     "light yield is overstated; species composition of the high-amplitude tail "
+                     "is unreliable.")
 
     report_path = report_dir / "REPORT.md"
     report_path.write_text("\n".join(lines) + "\n", encoding="utf-8")

@@ -1,0 +1,149 @@
+{
+  "script": "scripts/mc03_build_overlay_sample.py",
+  "generated_utc": "2026-07-04T15:58:22+00:00",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "n_events_scanned": 1000000,
+  "mapping": "paired",
+  "trigger_offset_ns": 50.0,
+  "window_ns": 180.0,
+  "dt_max_ns": 130.0,
+  "dt_law": "Exponential(mean=1000/R_MHz ns) truncated to (0, dt_max] via inverse CDF \u2014 CONTINUOUS, no grid (review P8)",
+  "overlap_fraction": 0.7,
+  "min_true_amp_adc": 1000.0,
+  "amplitude_pairing": "independent draws from the truth population, no ratio restriction",
+  "split_hygiene": "train records use even source events, eval records odd source events (both constituents)",
+  "pool_cap_per_stave_parity": 120000,
+  "pools": {
+    "B2": {
+      "kept": [
+        100180,
+        100572
+      ],
+      "seen": [
+        100180,
+        100572
+      ]
+    },
+    "B4": {
+      "kept": [
+        61789,
+        61857
+      ],
+      "seen": [
+        61789,
+        61857
+      ]
+    },
+    "B6": {
+      "kept": [
+        41625,
+        41666
+      ],
+      "seen": [
+        41625,
+        41666
+      ]
+    },
+    "B8": {
+      "kept": [
+        25442,
+        25377
+      ],
+      "seen": [
+        25442,
+        25377
+      ]
+    }
+  },
+  "stave_weights": {
+    "B2": 200752.0,
+    "B4": 123646.0,
+    "B6": 83291.0,
+    "B8": 50819.0
+  },
+  "seeds": {
+    "master": 20260703,
+    "salt": 2403
+  },
+  "card": {
+    "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/configs/mc_validation/digitizer_card.yaml",
+    "sha256": "65e00bf4705836395f06801375e48c2ab71729f16edc2fe04b8f8b455b11ba5c",
+    "card_id": "ccb_digitizer_card_phase1",
+    "gain_adc_per_mev": 297.0,
+    "gain_status": "UNKNOWN_PLACEHOLDER_PENDING_PHASE2",
+    "tau_decay_ns_by_stave": {
+      "B2": 56.7,
+      "B4": 51.7,
+      "B6": 49.4,
+      "B8": 50.1
+    }
+  },
+  "caveats": [
+    "gain is an UNKNOWN placeholder (297 ADC/MeV) \u2014 all amplitudes in arbitrary scale (review P1/P2); Phase 2 attributes the MV3 discrepancy to the unsimulated two-arm coincidence trigger (not missing material) and prefers gain ~60 as the trigger-consistent estimate",
+    "stave occupancy and amplitude-spectrum weights inherit the MV3 spectrum discrepancy (chi2/ndf=68269; Phase 2 root cause: unsimulated trigger)",
+    "single-stave overlays only: both constituents land on the same stave/channel",
+    "constituent selection amp>1000 evaluated at the nominal 50 ns placement (phase-locked)"
+  ],
+  "rates": [
+    {
+      "rate_mhz": 0.5,
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc03_overlay_1783180480/overlays/mc03_overlay_rate0.5MHz.csv.gz",
+      "n_records": 200000,
+      "n_overlap": 139952,
+      "overlap_fraction_realized": 0.69976,
+      "n_saturated": 0,
+      "records_by_stave": {
+        "B2": 87812,
+        "B4": 54062,
+        "B6": 35916,
+        "B8": 22210
+      },
+      "dt_mean_ns": 64.32669157688603,
+      "dt_median_ns": 64.11778936614556,
+      "dt_max_drawn_ns": 129.9999319166908,
+      "n_unique_dt": 139952,
+      "digitizer_seed_salt": 2403,
+      "sha256": "c6efe9bf0baa6e1aabf420f869e19e5937366e57555a54f99315a096759ef44a"
+    },
+    {
+      "rate_mhz": 1.5,
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc03_overlay_1783180480/overlays/mc03_overlay_rate1.5MHz.csv.gz",
+      "n_records": 200000,
+      "n_overlap": 139981,
+      "overlap_fraction_realized": 0.699905,
+      "n_saturated": 0,
+      "records_by_stave": {
+        "B2": 87922,
+        "B4": 53804,
+        "B6": 36130,
+        "B8": 22144
+      },
+      "dt_mean_ns": 63.08412389928772,
+      "dt_median_ns": 62.11538348407356,
+      "dt_max_drawn_ns": 129.99973515514768,
+      "n_unique_dt": 139981,
+      "digitizer_seed_salt": 2404,
+      "sha256": "aaf1e46f8b199ac11a7d492820a84d0b0ad70993d2d2e48b296b81682ad54e9a"
+    },
+    {
+      "rate_mhz": 3.0,
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc03_overlay_1783180480/overlays/mc03_overlay_rate3MHz.csv.gz",
+      "n_records": 200000,
+      "n_overlap": 140048,
+      "overlap_fraction_realized": 0.70024,
+      "n_saturated": 0,
+      "records_by_stave": {
+        "B2": 87789,
+        "B4": 53536,
+        "B6": 36331,
+        "B8": 22344
+      },
+      "dt_mean_ns": 60.809052132264085,
+      "dt_median_ns": 58.667391214071586,
+      "dt_max_drawn_ns": 129.99682642448352,
+      "n_unique_dt": 140048,
+      "digitizer_seed_salt": 2405,
+      "sha256": "c265105c3d70d32c718883cc53fc9bceb98d2965d0bb2b0090eb1108504b2308"
+    }
+  ]
+}

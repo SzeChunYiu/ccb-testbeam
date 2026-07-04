@@ -50,3 +50,18 @@ Plus **MV9 — synthesis**: an MC-vs-data column added to `reports/SUMMARY.md` a
 
 ## Acceptance for the whole program
 Every research direction in `FINDINGS_SYNTHESIS.md` carries an explicit **MC verdict**: the data-driven method is either (a) validated against truth within stated tolerance, (b) shown biased with the bias quantified, or (c) genuinely limited (truth needed, now supplied). No direction is left "data-only, MC unknown."
+
+---
+
+## Phase 4 (2026-07-04) — species/dE/dx scintillation & A-arm digitization
+
+- **Birks quenching (fixes review F2.2/F6.2):** `src/ccb_mc_validation/digitizer/birks.py` rewritten to the physically correct per-hit law `light = edep/(1 + kB·dE/dx)` with kB = 0.0126 g/(MeV cm²) (Craun & Smith 1970 / GEANT4 polystyrene) / ρ 1.06 g/cm³ = 0.011887 cm/MeV; per-hit dE/dx from truth step lengths (consecutive-hit differences of the cumulative `Sci_bar_TrackLength`, verified cumulative-in-cm on `output_krakow_1M.root`) with a PSTAR/ASTAR-anchored species+energy lookup fallback. Card `apply_birks: true` (CLI `--apply-birks`/`--no-birks` override). Unit-tested (`tests/test_birks_quench.py`).
+- **MV6 honest redo (MV6b):** `scripts/mv6b_anomaly_with_quenching.py` applies the DATA taxonomy (A>1000 net amplitude; early-peak = `peak_sample<=3`, P02 §5) to the quenched B-arm pulse table vs its unquenched twin, at the Phase-2-preferred gain 60 (primary) and 297, with the `sample_II` trigger proxy. Artifact: `reports/mv6b_anomaly_quenching_*/` (LUNARC job 3347280). Answers whether C12 recoils can be the data's 4.4% early-peak class once quenching is included.
+- **A-arm digitization (S18 MC counterpart):** `mc02_build_mc_pulse_table.py --arm A` (LayerID1==2, staves A1..A4, direct LayerID 0–3 mapping, per-stave τ_decay **50 ns DEFAULT** — the data template-fit CSV has no A-stave rows). Artifact: `reports/mc02_pulse_table_aarm_*/` (LUNARC job 3347281); per-stave occupancy + amplitude medians in `manifest.json:amplitude_stats_by_stave`.
+
+### Not MC-informable (recorded per the review's Phase-4 instruction)
+
+| ID | Direction | Why MC cannot inform it |
+|---|---|---|
+| **P06** | DAQ dropouts | Dropouts are an acquisition-layer failure of the real DAQ transport/firmware; the MC chain has no DAQ to drop — any simulated dropout model would only restate its own assumptions. |
+| **P13a** | ADC noise floor | The noise floor is a *measured data input* the digitizer card consumes as a parameter (`noise_adc_rms: 8.0`); MC output cannot validate its own input. |

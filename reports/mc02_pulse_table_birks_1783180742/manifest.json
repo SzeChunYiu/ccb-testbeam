@@ -1,0 +1,96 @@
+{
+  "script": "scripts/mc02_build_mc_pulse_table.py",
+  "generated_utc": "2026-07-04T16:01:21+00:00",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "tree": "hibeam",
+  "n_entries_in_tree": 1000000,
+  "n_events_scanned": 1000000,
+  "n_rows": 518247,
+  "n_rows_a1000": 415416,
+  "rows_by_stave": {
+    "B2": 237234,
+    "B4": 130755,
+    "B6": 88200,
+    "B8": 62058
+  },
+  "amplitude_stats_by_stave": {
+    "B2": {
+      "n": 237234,
+      "median_adc": 1715.0,
+      "p10_adc": 866.5,
+      "p90_adc": 2733.0,
+      "n_a1000": 167826,
+      "median_a1000_adc": 1934.5
+    },
+    "B4": {
+      "n": 130755,
+      "median_adc": 1298.0,
+      "p10_adc": 1010.0,
+      "p90_adc": 2770.0,
+      "n_a1000": 118806,
+      "median_a1000_adc": 1322.5
+    },
+    "B6": {
+      "n": 88200,
+      "median_adc": 1726.5,
+      "p10_adc": 1219.0,
+      "p90_adc": 2542.5,
+      "n_a1000": 81356,
+      "median_a1000_adc": 1796.0
+    },
+    "B8": {
+      "n": 62058,
+      "median_adc": 1582.0,
+      "p10_adc": 562.5,
+      "p90_adc": 2071.0,
+      "n_a1000": 47428,
+      "median_a1000_adc": 1686.5
+    }
+  },
+  "events_sample_I": 64762,
+  "events_sample_II": 237098,
+  "arm": "B",
+  "apply_birks": true,
+  "birks": {
+    "enabled": true,
+    "law": "light = edep / (1 + kB * dEdx)",
+    "kb_cm_per_mev": 0.011886792452830188,
+    "kb_source": "0.0126 g/(MeV cm^2) (Craun & Smith 1970 / GEANT4 polystyrene) / rho 1.06 g/cm^3",
+    "dedx_source": "per-hit edep/step_length from consecutive-hit differences of the cumulative Sci_bar_TrackLength (cm); fallback PSTAR/ASTAR-anchored species+energy lookup (digitizer/birks.py) with per-hit ekin from the momentum branches",
+    "optional_branches_missing": []
+  },
+  "mapping": "paired",
+  "trigger_offset_ns": 50.0,
+  "trigger_offset_note": "50 ns default corrects the historical 20 ns toy convention, which would place the pulse peak inside the s00 baseline window (samples 0-3) and poison baseline/amplitude/area",
+  "coinc_ns": 15.0,
+  "selection": "NONE (all channels with any B-arm deposit); companion a1000 filtered",
+  "card": {
+    "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/configs/mc_validation/digitizer_card.yaml",
+    "sha256": "65e00bf4705836395f06801375e48c2ab71729f16edc2fe04b8f8b455b11ba5c",
+    "card_id": "ccb_digitizer_card_phase1",
+    "card_version": 1,
+    "gain_adc_per_mev": 297.0,
+    "gain_status": "UNKNOWN_PLACEHOLDER_PENDING_PHASE2",
+    "pedestal_adc": 6752.0,
+    "noise_adc_rms": 8.0,
+    "tau_rise_ns": 2.5,
+    "tau_decay_ns_by_stave": {
+      "B2": 56.7,
+      "B4": 51.7,
+      "B6": 49.4,
+      "B8": 50.1
+    }
+  },
+  "zero_signal": null,
+  "caveats": [
+    "gain_adc_per_mev is an UNKNOWN placeholder (geometry-poisoned MC anchor, review P1/P2); amplitude scale is not calibrated. Phase 2 grid: trigger-consistent scan prefers ~60 ADC/MeV",
+    "per-stave occupancy/spectrum weights inherit the geometry defect (MV3 chi2/ndf=68269; Phase 2: dominated by the unsimulated two-arm coincidence trigger)",
+    "LayerID->stave mapping is UNDER REVIEW (paired vs odd, review P4)"
+  ],
+  "outputs": {
+    "pulse_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_birks_1783180742/mc02_pulse_table.csv.gz",
+    "pulse_table_sha256": "d4c6a7f7b887f0e3da65ce7b9a6104f2a426d5c0056ff8c1b04d1666a67b8ba4",
+    "a1000_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_birks_1783180742/mc02_pulse_table_a1000.csv.gz",
+    "waveform_means": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mc02_pulse_table_birks_1783180742/mc02_waveform_means.npz"
+  }
+}

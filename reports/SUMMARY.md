@@ -72,9 +72,9 @@
 | S10h late residual taxonomy | ✅ done | ✅ live20 inflation reproduced | final-sample censored tail is 72.6% of pulses and 89.8% of positive inflation | inflation classifier AUC 0.998 on derivative label | Diagnostic; final-sample censoring must be bounded before tau/Rmax adoption | reports/1781028280.1036.7e527107 |
 | S10i operational tau | ✅ done | ✅ S10/S10b/S10d anchors reproduced | template-tau quiet excess 0.0017, CI [-0.0014,0.0049] | ML-tau quiet excess 0.0193, CI [0.0143,0.0249] | Mixed; method disagreement needs pulse-atom closure before pile-up claims | reports/1781028606.1003.76354c81 |
 | S10m overlap-secondary discordance | ✅ done | ✅ S10 topology and S10f counts reproduced from raw ROOT | bounded-template secondary-fraction Δ=0.0156, CI [-0.0085,0.0362] | GBT wins synthetic bakeoff AUC 0.849; real secondary-fraction Δ=0.00623, CI [0.00026,0.01228] | Diagnostic; overlap/secondary disagreement is support-dependent morphology, not a correction-ready truth label | reports/1781032084.526.56a43973 |
-| S11a | ✅ done | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate is higher (0.295 vs 0.168) | reports/1781005319.561.508a188d |
+| S11a | ⛔ RETIRED 2026-07-04 | ✅ S01/S02 injection benchmark | bounded two-pulse fit time RMS 13.30 ns | compact MLP time RMS 10.67 ns | ~~Yes~~ retired — the benchmark was rigged (review P8: injection grid == fit grid, self-templates, per-method failure definitions); its 0.295/0.168 failure rates must not be cited. Superseded by the honest MC03/S24 row below | reports/1781005319.561.508a188d |
 | S11b | ✅ done | ✅ S10c topology fractions within 0.0015 | real high-current secondary fraction Δ=0.0181, CI [-0.0168,0.0541] | RF secondary fraction Δ=0.00437, CI [-0.00138,0.0121] | Diagnostic; largest traditional excess is high-amp/large-lowering/broad-late | reports/1781010611.1197.028b141a |
-| S11c | ✅ done | ✅ S11a anchor reproduced | amplitude-binned asymmetric template time RMS 17.83 ns | compact MLP time RMS 10.67 ns | **Yes**, but ML failure rate remains high (0.295) | reports/1781010611.1262.2e354bed |
+| S11c | ⛔ RETIRED 2026-07-04 | ✅ S11a anchor reproduced | amplitude-binned asymmetric template time RMS 17.83 ns | compact MLP time RMS 10.67 ns | ~~Yes~~ retired — inherits the rigged S11a benchmark (review P8); superseded by MC03/S24 | reports/1781010611.1262.2e354bed |
 | S11d real-current | ✅ done | ✅ S10c topology fractions within 0.0015 | traditional candidate excess 0.0105, CI [-0.0015,0.0236] | ML candidate excess 0.0242, CI [0.0173,0.0302] | Mixed; method-specific candidates overlap weakly and joint excess is small | reports/1781018533.1152.0dc47f07 |
 | S11e residual-pool | ✅ done | ✅ S11a/S11c anchors reproduced | conditioned template RMS 17.36 ns; failure 0.0117 | conditioned MLP RMS 9.07 ns; failure 0.252 | ML wins RMS/charge res68, but failure-rate transfer still gates adoption | reports/1781018533.1179.60a328c5 |
 | S13b | ✅ done | ✅ S10 score ratio 1.297 reproduced | downstream high/low topology ratio 1.445, CI [1.220,2.542] | CWoLa RF score ratio 1.220, AUC 0.668 | ML transfers modestly, but topology remains the physics-facing rate handle | reports/1781000867.546938.20f0173c |
@@ -152,17 +152,37 @@
 
 ---
 
+## Post-review program rows (2026-07-03/04)
+
+| Study | Status | Reproduced? | Traditional | ML | One-line verdict | Report |
+|---|---|---|---|---|---|---|
+| S21 | ✅ done | ✅ 1M truth events | trigger-mimic truth counting | — | Sample-I D-enrichment CONFIRMED at truth level: B2 f_d ratio 1.519 [1.510, 1.528] (excl. 1.912); 91.2% d\|p pd-elastic pairs | reports/s21_sample12_trigger_truth_1783077969 |
+| S22 | ✅ done | ✅ raw-ROOT, A>1000 anchor | per-(pair,run)-centered CFD20 + amp-only LORO timewalk | — | σ68 vs amplitude per stave/sample: 1/A beats 1/√A raw (B4–B6 χ²/ndf 0.32–0.87 vs 1.25–3.71); per-stave ≈0.85–1.1 ns at high amplitude; B2 saturation-excluded | reports/s22_timing_vs_amplitude_1783108999 |
+| S23 | ✅ done | ✅ S00 table + mc02 A>1000 companion | occupancy χ², median-scaled KS, double ratios | — | D-enrichment CONFIRMED in data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]); trigger mimic moves MC toward data (KS 0.192→0.131, χ² 624k→20k); MC under-predicts contrast (DR 0.738, z=−99) | reports/s23_sample12_data_mc_1783108675 |
+| MC02 | ✅ done | ✅ 1M events → 518,247 rows | card-driven digitizer, per-stave data-tuned τ_decay | — | Phase-1 truth-labelled digitized pulse table built (gain 297 = explicit placeholder); Birks + A-arm variants in Phase 4 | reports/mc02_pulse_table_1783107862 |
+| MC03/S24 | ✅ done | ✅ 600k truth-labelled overlays (0.5/1.5/3 MHz) | constrained template fit | compact ML | Honest two-pulse benchmark (replaces rigged S11a; 0.295/0.168 retired): trad wins at matched 80% coverage; ML wins at full coverage (0.011 vs 0.048); σ68 trad 0.64 vs ML 0.89 ns; independent MC τ_eff 134.99 ns vs data 124.79 (+8%, honest disagreement) | reports/mc03_overlay_1783180480 |
+| MV6b | ✅ done | ✅ quenched vs unquenched twin tables | Birks-quenched species taxonomy under data selection | — | C12 RULED OUT as the 4.4% early-peak class (0/1,656 quenched C12 pass A>1000 at any gain 60–297); class must be instrumental/trigger-phase — reopened data-side (P02/P09) | reports/mv6b_anomaly_quenching_1783180742 |
+| MV7 | ✅ done (MC level) | ✅ 100k zero-signal records | adaptive pedestal (median samples 0–3) MAE 3.48 ADC | learned ridge MAE 1.50 ADC | Zero-signal pedestal validation closed on MC (lower bounds); data side remains proxy-only | reports/mc02_pulse_table_1783107862 |
+| PHASE2/MV3 v4 | ✅ done | ✅ MV3 v3 reproduced bit-for-bit, then scanned | 264-point hypothesis grid on 1M truth | — | MV3 root cause = unsimulated two-arm trigger; missing-material narrative FALSIFIED (~0.13 g/cm² air vs ≥10.5 needed); χ²/ndf 68,269 → 625 (109×) with trigger proxy + event basis + species-inclusive + gain 60; MV3 re-graded FAIL → TENSION; no new production | reports/phase2_geometry_1783108797 |
+| STATS01 | ✅ done | ✅ 443 artifacts parsed, no silent drops | BH at q=0.05 within claim family | — | 1,948 delta-CI claims: 11/17 scoreboard bold wins survive BH, 0 fail, 6 prose-only; S03k survives BH yet leakage-falsified (BH necessary, not sufficient) | reports/stats01_program_fdr_20260703_220116 |
+
+---
+
 ## MC Validation Studies (MV0–MV9, GEANT4 truth bridge)
 
-Status: ✅=done, ⚠️=pending, ⛔=structural_fail
+Status: ✅=done, ⚠️=pending/review, ⛔=retracted/fail. Corrected 2026-07-03/04: the pre-review
+verdict column of this table asserted PASS grades the External Review 2026-07-02 dismantled;
+rows below carry the current honest verdicts.
 
 | Study | Status | What | Key result | Verdict | Report |
 |---|---|---|---|---|---|
-| MV0 v2 | ✅ done | Digitizer gain calibration (corrected) | gain = 92 ± 28 ADC/MeV (net_adc median matching; v1 error corrected) | PASS | reports/mv0_calibration_1782677847/ |
-| MV1 | ✅ done | p/d PID truth ceiling | HGB AUC=0.9860; purity@90%eff=0.9644; 400,369 truth tracks | PASS | reports/mv1_mv2_truth_pid_energy_1782220258/ |
-| MV2 | ✅ done | Range-energy / stopping depth (truth) | d-frac layers 0-1: 0.36-0.39; p-frac layers 4-7: 0.89-0.90; absolute energy unreachable confirmed | PASS (limitation confirmed) | reports/mv1_mv2_truth_pid_energy_1782220258/ |
-| MV3 v3 | ✅ done | Stopping-depth profile vs data (Layer↔stave) | χ²/ndf=68,269; MC B2=47%/B8=22% vs data B2=88%/B8=2%; structural FAIL (missing upstream material) | FAIL | reports/mv3_stopping_v3_1782679272/ |
-| MV4 | ✅ done | Timing σ₆₈ reproduction in MC | σ₆₈_raw=1.744±0.007 ns vs data 1.85 ns (pull=−1.05); σ₆₈_corrected=1.770±0.011 ns vs data 1.50 ns (pull=+2.68); timewalk B coeff negative | PASS(raw)/TENSION(corrected) | reports/mv4_timing_1782678162/ |
-| MV5 | ✅ done | Pile-up R_max from dead-time model | R_max_MC=3.044 MHz vs data 3.05 MHz (0.2% agreement); τ_eff=124.8 ns | PASS | reports/mv5_pileup_1782678353/ |
-| MV6 | ✅ done | Anomaly species identification | 0.32% early-peak (283/87555 tracks); C12 recoils 55%; GMM Cluster 2 purity=44.5%; 4 PCA components=74.5% variance | DONE | reports/mv6_representation_1782678362/ |
-| MV9 | ✅ done | MC synthesis (6/6 PRODUCTION) | all 6 MV studies PRODUCTION; synthesis registry complete | DONE | reports/mc_validation_synthesis/ |
+| MV0 | ⛔ retracted (2026-07-03) | Digitizer gain calibration | v2 gain 92 ± 28 ADC/MeV retracted (folded anchor variable, unreproducible); v1 ~246 also invalid. Current best statement: **gain ≈ 60–80 ADC/MeV (trigger/quenching-dominated), no precision value**; quenched re-scan pending | RETRACTED | reports/mv0_calibration_1782677847/ |
+| MV1 | ✅ done (rerun 2026-07-03) | p/d PID truth ceiling | HGB AUC=0.9860; purity@90%eff=0.9644; 400,369 truth tracks | PASS | reports/mv1_mv2_truth_pid_energy_1783077795/ |
+| MV2 | ✅ done (rerun 2026-07-03) | Range-energy / stopping depth (truth) | momentum-unit fix: MeV-scale ekin; edep medians p 101.1 / d 73.4 MeV; containment p 0.70 / d 0.84; absolute energy unreachable confirmed | PASS (limitation confirmed; geometry/trigger caveat) | reports/mv1_mv2_truth_pid_energy_1783077795/ |
+| MV3 v4 | ✅ done (Phase 2, 2026-07-03) | Stopping-depth profile vs data (Layer↔stave) | root cause = **unsimulated two-arm trigger** (missing-material narrative falsified); χ²/ndf 68,269 → 625 (109×) with trigger proxy + event basis + species-inclusive + gain 60 | TENSION (re-graded from FAIL) | reports/phase2_geometry_1783108797/ |
+| MV4 | ⚠️ review (honest rerun 2026-07-03) | Timing σ₆₈ reproduction in MC | rising-edge CFD + physical timewalk (B=+39.6 ns·ADC); MC pair-equivalent 2.087±0.009 ns between data raw 2.993 and corrected 1.50; matched per-stave rerun pending | REVIEW | reports/mv4_timing_1783077795/ |
+| MV5 | ⛔ retracted as validation (2026-07-03) | Pile-up R_max from live-time model | the 2026-06 "MC τ_eff = 124.8 ns" was a hardcoded copy of the data value; slot refilled by MC03's independent measurement (134.99 vs 124.79 ns, +8%, honest disagreement) | RETRACTED → see MC03 | reports/mv5_pileup_1782678353/ |
+| MV6 | ⛔ retracted (2026-07-03) | Anomaly species identification | ran unquenched with invalidated gain and no threshold; C12 attribution unsupported; superseded by MV6b (C12 ruled out) | RETRACTED → see MV6b | reports/mv6_representation_1782678362/ |
+| MV6b | ✅ done (2026-07-04) | Anomaly taxonomy with Birks quenching | 0/1,656 quenched C12 records pass A>1000 at any gain (60–297); MC early-peak 0.000% vs data 4.4% — class is instrumental/trigger-phase (data-side) | C12 RULED OUT | reports/mv6b_anomaly_quenching_1783180742/ |
+| MV7 | ✅ done (2026-07-03, MC level) | Zero-signal pedestal validation | adaptive MAE 3.48 ADC / learned 1.50 ADC vs absolute truth (lower bounds) | PASS (MC level) | reports/mc02_pulse_table_1783107862/ |
+| MV9 | ⚠️ superseded | MC synthesis | the pre-review "6/6 PRODUCTION" registry is superseded by FINDINGS_SYNTHESIS.md "Post-review program (2026-07-03/04)" | SUPERSEDED | reports/mc_validation_synthesis/ |

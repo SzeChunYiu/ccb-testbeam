@@ -2,7 +2,8 @@
 
 **A distilled, physics-organized synthesis of the autonomous study program, written to
 publication standard.** As of 2026-06-28 (corrected 2026-07-03 following external review — see
-`EXTERNAL_REVIEW_2026-07-02.md`) the fleet has completed ~230 data-driven studies plus all
+`EXTERNAL_REVIEW_2026-07-02.md`; post-review program completed 2026-07-04 — see the
+"Post-review program" section below) the fleet has completed ~230 data-driven studies plus all
 six planned GEANT4 Monte-Carlo validations (MV0–MV6). This document pulls their
 conclusions into one self-contained narrative so a reviewer does not have to read 230 reports.
 Per-study detail is in `reports/<id>/REPORT.md`; the row-by-row scoreboard is `reports/SUMMARY.md`;
@@ -34,21 +35,98 @@ detailed findings follow in the per-section narrative.
 
 | Study | Topic | Verdict | Key number |
 |---|---|---|---|
-| **MV0 v2** | Digitizer gain calibration (corrected) | ⛔ RETRACTED (2026-07-03) | v2 gain 92±28 was computed on a folded variable \|net−pedestal\| (amplitude_adc is already baseline-subtracted; true B2 net median = 5752 ADC, not 1781) and is unreproducible from any committed script; anchor also circular with the MV3-failed geometry. Gain re-derivation pending geometry fix. (External Review 2026-07-02) |
+| **MV0 v2** | Digitizer gain calibration (corrected) | ⛔ RETRACTED (2026-07-03) | v2 gain 92±28 was computed on a folded variable \|net−pedestal\| (amplitude_adc is already baseline-subtracted; true B2 net median = 5752 ADC, not 1781) and is unreproducible from any committed script; v1 (~246) also invalid. **Current best statement (2026-07-04): gain ≈ 60–80 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet.** The Phase-2 trigger-consistent scan prefers ~60 (unquenched threshold model); with Birks quenching on, the optimum is expected at ~70–80 (re-scan pending). The 297 ADC/MeV in the mc02 card is the C2-corrected data-side anchor over trigger-unselected MC and is carried as an explicit placeholder only. |
 | **MV1** | Particle ID (proton vs deuteron) | ✅ PASS (MV3 sensitivity: unquantified) | MC AUC = 0.986; data within 0.5% of ceiling; p/d separation at B2 (where deuterons stop) may be less affected by MV3 stopping-depth error |
-| **MV2** | Range-energy calibration | ⛔ RETRACTED pending rerun | Momentum unit error: published ekin values are eV-scale; edep medians misquoted — artifact says proton 101.1 / deuteron 73.4 MeV |
-| **MV3 v3** | Stopping-depth profile | ⛔ FAIL | χ²/ndf = 68,269 (4 stave bins, ndf = 3); MC overestimates B8 penetration 10×; missing upstream material budget |
-| **MV4** | Single-stave timing | ✅ PASS (raw) / 🔶 TENSION (timewalk) | Raw: pull = −1.05σ; timewalk-corrected: pull = +2.68σ (comparison not apples-to-apples: data anchor 1.85 ns is the ML-corrected value, raw is 2.99 ns; single-trace MC vs pair-difference data; σ_data=0.10 assumed — pulls not reliable; rerun required) |
-| **MV5** | Pile-up / R_max | ⛔ RETRACTED as validation | MC τ_eff was a hardcoded copy of the data value; toy τ_decay=42 ns vs measured 49–57 ns tails means an honest MC measurement would disagree |
-| **MV6** | Representation & anomaly ID | ⛔ RETRACTED | Invalidated gain 246, no Birks quenching, no amplitude threshold, per-track whole-arm waveforms; C12 attribution unsupported |
+| **MV2** | Range-energy calibration | ✅ rerun 2026-07-03 (geometry/trigger caveat) | Momentum-unit fix landed: MeV-scale ekin (mean p 99.4 / d 79.7 MeV); edep medians p 101.1 / d 73.4 MeV; containment p 0.70 / d 0.84 (`reports/mv1_mv2_truth_pid_energy_1783077795/`) |
+| **MV3 v4** | Stopping-depth profile | 🔶 TENSION (re-graded from FAIL, Phase 2, 2026-07-03) | The published χ²/ndf = 68,269 was dominated by the **unsimulated two-arm coincidence trigger**, not geometry: a truth-level trigger proxy alone gives 3,141, and with event basis + species-inclusive counting + gain 60 **625 (109× reduction)**. Missing-material narrative **falsified**: only ~0.13 g/cm² of air is absent from the production geometry vs ≥10.5 g/cm² a material explanation would need. No new production required. Next: score `Trig_bar` volumes for a real trigger flag. (`reports/phase2_geometry_1783108797/`) |
+| **MV4** | Single-stave timing | ⚠️ REVIEW (honest rerun 2026-07-03) | Rising-edge CFD + physical timewalk sign (B = +39.6 ns·ADC) landed; MC pair-equivalent σ₆₈ = 2.087 ± 0.009 ns sits between the data raw (2.993 ns) and corrected (1.50 ns) anchors. Matched per-stave rerun awaits the Phase-1 digitizer (`reports/mv4_timing_1783077795/`) |
+| **MV5** | Pile-up / R_max | ⛔ RETRACTED as validation → slot refilled (2026-07-04) | The 2026-06 "MC τ_eff" was a hardcoded copy of the data value. The validation slot now points to the **first honest MC live-time (MC03): τ_eff = 134.99 ns [134.96, 135.01] vs data 124.79 ns (+8%, B2-driven)** — an honest disagreement, measured independently by the S10b estimator on digitized MC single pulses. (`reports/mc03_overlay_1783180480/`) |
+| **MV6** | Representation & anomaly ID | ⛔ RETRACTED → **MV6b: C12 RULED OUT** (2026-07-04) | Honest redo with physical Birks quenching: **0 of 1,656 quenched C12-dominant records pass A>1000 at any gain (60–297)**; MC early-peak fraction is 0.000% in every configuration vs data 4.4%. The early-peak class cannot be a species/scintillation effect — it must be instrumental or trigger-phase-related, and is reopened as a **data-side** question (P02/P09 leads). (`reports/mv6b_anomaly_quenching_1783180742/`) |
 
 **Correction 2026-07-03:** following the external review, most of the "closed by MC" claims are
 withdrawn. **Still closed:** PID ceiling (MV1), timing raw resolution (MV4 — under review pending
 matched rerun). **Reopened:** anomaly species identity (MV6 retracted), pile-up R_max validation
 (MV5 retracted as validation — R_max is now a data-driven one-sided bound), digitizer gain model
-(MV0 retracted), MV2 range-energy mechanism (retracted pending rerun). Also still open: timewalk
-analytic correction mismatch (MV4 tension), upstream material budget in MC geometry (MV3 structural
-fix), two-pulse ML failure-rate transfer, forced-pedestal zero-signal sample.
+(MV0 retracted), MV2 range-energy mechanism (retracted pending rerun).
+
+**Update 2026-07-04:** the post-review program closed or re-scoped most of the reopened items —
+MV3's root cause is the unsimulated trigger (re-graded TENSION), the C12 attribution is ruled out
+(MV6b), the two-pulse failure-rate question is closed by the honest truth-labelled benchmark
+(MC03/S24), the zero-signal pedestal validation ran (MV7), and an independent MC live-time now
+exists (an honest +8% disagreement). Details in the section below.
+
+---
+
+## Post-review program (2026-07-03/04) — what changed after the external review
+
+The seven-track external review (`EXTERNAL_REVIEW_2026-07-02.md`) triggered a correction program
+(Phase 0 retractions through Phase 4 physics upgrades, plus a statistics-hardening pass). All
+phases are complete. The seven results below supersede the corresponding 2026-06 claims wherever
+the two disagree.
+
+1. **MV3 root cause found: the unsimulated trigger, not missing material (Phase 2).** The
+   missing-material narrative is **falsified**: a direct volume dump of the production geometry
+   shows every named upstream component already present except ~0.13 g/cm² of air, while a
+   material explanation would require ≥10.5 g/cm² — a factor ≥13 more than physically exists.
+   Requiring a truth-level A-arm coincidence (trigger proxy) collapses the MV3 discrepancy from
+   χ²/ndf = 68,269 to 3,141, and with an event basis, species-inclusive counting, and gain 60 to
+   **625 (a 109× reduction)**. The physics: the two-arm coincidence keeps deuteron-into-B events
+   (the conjugate ~85 MeV proton reaches Stack A) and vetoes deep-proton events (the conjugate
+   ~37 MeV deuteron dies in the TPC hull). MV3 is re-graded **FAIL → TENSION**; no new GEANT4
+   production was needed. Next MC-side work item: score the `Trig_bar` volumes as sensitive
+   detectors and emit a real per-event trigger flag, replacing the truth proxy.
+   (`reports/phase2_geometry_1783108797/REPORT.md`)
+2. **Gain: no precision value yet — the honest statement is "≈60–80 ADC/MeV, dominated by
+   trigger/quenching modelling".** v1 (246) and v2 (92 ± 28) are both retracted; 297 ADC/MeV is
+   the C2-corrected data-side anchor (true B2 net median 5752 ADC) over trigger-unselected MC and
+   is carried only as an explicit placeholder. The trigger-consistent Phase-2 scan prefers ~60
+   (unquenched threshold model; monotonic: 60 → χ²/ndf 625, 92 → 3,613, 300 → 7,017); with Birks
+   quenching on, the optimum is expected to rise to ~70–80 and that re-scan is pending.
+3. **Sample-I deuteron enrichment is confirmed at truth level and in data (S21 + S23).** Truth
+   (S21): B2 deuteron-fraction ratio I/II = 1.519 [1.510, 1.528] (exclusive I vs II\I: 1.912
+   [1.898, 1.925]); 91.2% of Sample-I events are d-into-B / p-into-A pd-elastic pairs. Data
+   (S23): the Sample-I B2 spectrum is harder — high-amplitude fraction ratio f(A>5000)_I/II =
+   3.45 [3.41, 3.50]. Mimicking the trigger moves MC toward the data (B2 KS 0.192 → 0.131;
+   occupancy χ² 624k → 20k), and the residual double-ratio deficit (B2 occupancy DR = 0.738
+   [0.733, 0.742], z = −99) shows MC under-predicts the between-sample contrast — consistent
+   with the Phase-2 trigger finding. (`reports/s21_sample12_trigger_truth_1783077969/`,
+   `reports/s23_sample12_data_mc_1783108675/`)
+4. **Per-stave timing resolution vs amplitude is measured (S22).** σ68 vs min-pair amplitude per
+   pair and per sample, per-(pair, run) centered; the raw curves follow a 1/A scaling better than
+   1/√A in the high-lever pairs (B4–B6 χ²/ndf 0.32–0.87 vs 1.25–3.71) and tie where the constant
+   floor dominates; downstream per-stave resolution reaches **≈0.85–1.1 ns at high amplitude**
+   (σ_pair/√2, cross-checked by a triangle decomposition); B2 curves are saturation-flagged
+   (30–40% of selected B2 pulses above ~7000 ADC) and excluded from headline per-stave claims.
+   (`reports/s22_timing_vs_amplitude_1783108999/REPORT.md`)
+5. **Honest two-pulse benchmark and the first real MC live-time (Phase 3, MC03/S24).** The
+   truth-labelled overlay benchmark (continuous injected dt, digitized real truth-hit pairs, one
+   failure definition for both methods, matched coverage) replaces the rigged S11a comparison —
+   its failure rates 0.295 vs 0.168 are retired everywhere. Result: at matched 80% coverage the
+   **traditional fit wins** (failure ≤0.0001 vs ML 0.0001–0.0002); at full coverage **ML wins**
+   (0.011 vs 0.048); common-subset dt σ68 is trad 0.64 ns vs ML 0.89 ns. Independently, the S10b
+   estimator on digitized MC single pulses gives **MC τ_eff = 134.99 ns [134.96, 135.01] vs data
+   124.79 ns (+8%, B2-driven)** — the first honest MC live-time, an honest disagreement, and the
+   measurement that now fills the validation slot left by the retracted MV5.
+   (`reports/mc03_overlay_1783180480/REPORT.md`)
+6. **Physical Birks quenching lands; C12 ruled out; MV7 pedestal closure (Phase 4).** With the
+   rewritten per-hit Birks law (kB = 0.0126 g/(MeV cm²), PSTAR/ASTAR-anchored dE/dx), **0 of
+   1,656 quenched C12-dominant records pass A>1000 at any gain hypothesis (60–297)** — C12
+   recoils are **ruled out** as the data's 4.4% early-peak class, which must be instrumental or
+   trigger-phase-related and is reopened as a **data-side** question (P02/P09 leads). MV7:
+   pedestal estimators validated on zero-signal MC (adaptive MAE 3.48 ADC, learned 1.50 ADC;
+   MC-level lower bounds — data still has no true-pedestal sample). An A-arm digitized baseline
+   table (S18 counterpart; only A1/A3 usable in data) now exists.
+   (`reports/phase4_1783180742/REPORT.md`, `reports/mv6b_anomaly_quenching_1783180742/`,
+   `reports/mc02_pulse_table_1783107862/`)
+7. **Statistics hardening.** A program-level Benjamini–Hochberg FDR census over 1,948 delta-CI
+   claims in 443 artifacts: of the 17 scoreboard bold wins, **11 survive BH, 0 fail, and 6 rest
+   on prose only** (no machine-readable delta CI). S03k survives BH yet was falsified by the
+   S03p/S03r leakage nulls — BH survival is necessary, not sufficient. A confirmation partition
+   (runs 64 and 12–30) is reserved for sub-0.3 ns claims (`docs/CONFIRMATION_PARTITION.md`); a
+   shared, tested estimators module (`src/ccb_mc_validation/statistics/estimators.py`) replaces
+   per-study bootstrap code; and the Critic gate's honest status (specified, never executed) is
+   recorded in `fleet/CRITIC_PROTOCOL.md`.
+   (`reports/stats01_program_fdr_20260703_220116/REPORT.md`)
 
 ---
 
@@ -79,15 +157,19 @@ controls, and — where a Monte-Carlo truth analogue exists — agrees with it.
    ≈2.1 MHz or lower). MV5 retracted as validation 2026-07-03 — its "MC τ_eff" was a hardcoded
    copy of the data value. ⚠️
 6. **ML genuinely wins where the truth is independent of the input and lives in waveform shape:**
-   duplicate-readout amplitude/charge closure, artificial saturation recovery, and two-pulse
-   time-RMS — each with a CI excluding zero and surviving leakage controls. ⚠️
+   duplicate-readout amplitude/charge closure and artificial saturation recovery — each with a CI
+   excluding zero and surviving leakage controls. (Two-pulse recovery, once claimed here, is now a
+   split verdict on the honest truth-labelled benchmark: traditional wins at matched coverage, ML
+   wins at full coverage — MC03/S24.) ⚠️
 7. **Absolute per-event energy is not reachable from data alone** to the 10% target; this is a
    structural limitation, confirmed by the GEANT4 finding that the physics-anchored Birks lookup is
    the best held-out energy method. ✅ (the *limitation* is MC-confirmed)
-8. ⛔ **RETRACTED (2026-07-03): the C12-recoil identification of the 4% early-peak anomaly class.**
-   MV6 ran with the invalidated gain (246), no Birks quenching, no amplitude threshold, and
-   per-track whole-arm waveforms; the data ~4% vs MC 0.32% rate mismatch (~12×) is unresolved.
-   The anomaly species identity is again an open question. (External Review 2026-07-02)
+8. **The C12-recoil identification of the 4.4% early-peak anomaly class is RULED OUT (MV6b,
+   2026-07-04).** The retracted MV6 attribution was tested honestly with physical Birks
+   quenching: 0 of 1,656 quenched C12-dominant records pass A>1000 at any gain (60–297), and the
+   MC early-peak fraction is 0.000% in every configuration vs data 4.4%. The class cannot be a
+   species/scintillation effect; it must be instrumental or trigger-phase-related and is now a
+   **data-side** open question (P02/P09 leads). ✅ (the *exclusion* is MC-confirmed)
 
 ---
 
@@ -96,21 +178,25 @@ controls, and — where a Monte-Carlo truth analogue exists — agrees with it.
 The CCB B-stack pulse is **low-dimensional in shape** and **well-described by analytic models** for
 timing and pile-up rate, so **ML helps most where the signal lives in waveform shape and the truth is
 independent of the inputs** — saturation recovery, duplicate-readout amplitude/charge closure, and
-two-pulse time resolution. It **ties or loses** where an analytic physics model is already optimal
+two-pulse detection at full coverage (though the traditional fit wins two-pulse recovery at a
+matched abstaining operating point — MC03/S24). It **ties or loses** where an analytic physics
+model is already optimal
 (timewalk correction, Poisson pile-up rate) or where an apparent win rests on a label that is a
 disguised function of the input (D_t / curvature classifiers). The most consequential physics results
-are: (1) the pile-up R_max is **≤3.05 MHz, not ~4.2 MHz** — a data-driven one-sided bound (MV5
-retracted as validation 2026-07-03); (2) proton/deuteron PID is **MC-closed** at AUC = 0.986 (MV1);
-(3) the stopping-depth profile has a **structural MC failure** (MV3: χ²/ndf = 68,269 (4 stave bins,
-ndf = 3)) whose root cause is not established (the "missing upstream material" toy estimate was
-retracted in MV3b's errata) — a geometry audit is required; (4) the early-peak anomaly species
-identification (**C12 nuclear recoils**, MV6) is **retracted** (2026-07-03); and (5) the digitizer
-gain is **unknown** — both MV0 v1 (~246 ADC/MeV) and v2 (92 ± 28 ADC/MeV) are retracted pending a
-geometry-fixed MC and the correct anchor variable.
+are: (1) the pile-up R_max is **≤3.05 MHz, not ~4.2 MHz** — a data-driven one-sided bound; the
+first honest MC live-time (MC03, 2026-07-04) disagrees by +8% (134.99 vs 124.79 ns, B2-driven);
+(2) proton/deuteron PID is **MC-closed** at AUC = 0.986 (MV1); (3) the stopping-depth discrepancy
+(MV3: χ²/ndf = 68,269) is **caused by the unsimulated two-arm coincidence trigger, not by missing
+material** — a truth-level trigger proxy plus gain 60 collapses it to 625 (109×), and MV3 is
+re-graded TENSION (Phase 2, 2026-07-03); (4) the early-peak anomaly class is **not C12 recoils**
+(MV6b, 2026-07-04: 0 quenched C12 records pass A>1000 at any gain) — it must be
+instrumental/trigger-phase and is a data-side open question; and (5) the digitizer gain has **no
+precision value yet** — the honest statement is ≈60–80 ADC/MeV, dominated by trigger/quenching
+modelling (v1 246 and v2 92 ± 28 both retracted; 297 is an explicit placeholder).
 
 ---
 
-## 1. Timing  (S02, S03, S04, S05, S18, P01, P03)
+## 1. Timing  (S02, S03, S04, S05, S18, S22, P01, P03)
 
 **Section verdict: traditional analytic timewalk wins for raw timing; the MV4 PASS/TENSION verdicts
 are UNDER REVIEW — see 2026-07-03 correction below (comparison mismatches; rerun required).**
@@ -136,6 +222,13 @@ are UNDER REVIEW — see 2026-07-03 correction below (comparison mismatches; rer
 - **Error structure (S05c, S18g):** the inter-stave timing covariance is **B2-/topology-dominated**;
   the naive sigma^2 = sigma_i^2 + sigma_j^2 independence is imperfect. B4/B6/B8 timing is much
   cleaner and should define precision event-time estimates.
+- **Resolution vs amplitude (S22, 2026-07-03):** per-pair sigma68 vs min-pair amplitude, per
+  sample, per-(pair, run) centered (cable-delay offsets removed before pooling). The raw curves
+  follow a **1/A** scaling better than 1/sqrt(A) in the high-lever pairs (B4-B6 chi2/ndf
+  0.32-0.87 vs 1.25-3.71); downstream per-stave resolution reaches **~0.85-1.1 ns at high
+  amplitude** (sigma_pair/sqrt(2), triangle-decomposition cross-checked). B2 curves are
+  saturation-flagged and excluded from headline per-stave claims.
+  (`reports/s22_timing_vs_amplitude_1783108999/`)
 - **A-stack independent-arm check (S18):** A1-A3 robust width **1.389 ns** reproduces the note
   (1.43 ns). (Corrected 2026-07-03, experiment-owner setup facts: the A-stack is an independent
   detector arm at the conjugate angle measuring **different particles** — pd-elastic sends the
@@ -159,6 +252,13 @@ per-stave data pulses; (iv) σ_data = 0.10 ns was assumed, not measured — so t
 not reliable. A matched rerun is required before either verdict can stand. (External Review
 2026-07-02)
 
+**Update (2026-07-03, honest rerun):** MV4 was rerun with a rising-edge-constrained CFD and the
+MV4b functional-form fix; the fitted timewalk coefficient is now physical (B = +39.6 ns·ADC) and
+the MC pair-equivalent σ₆₈ = 2.087 ± 0.009 ns sits between the data raw (2.993 ns) and corrected
+(1.50 ns) anchors. Verdict **REVIEW** — the comparison is still merged-track MC vs per-stave data
+with unmatched selection; a matched per-stave rerun awaits the Phase-1 digitizer.
+(`reports/mv4_timing_1783077795/`)
+
 Prior interpretation (retained for the record, now under review): raw timing resolution matches
 within 1.05σ — the detector geometry and electronics noise are
 adequately modelled at the pre-correction level. The tension in the timewalk-corrected resolution
@@ -173,10 +273,12 @@ the toy digitizer timewalk parametrization.
 
 ---
 
-## 2. Pile-up  (S10, S11, S13)  — the headline physics revision
+## 2. Pile-up  (S10, S11→S24, S13)  — the headline physics revision
 
 **Section verdict: R_max ≤ 3.05 MHz is a data-driven one-sided bound (MV5 retracted as validation
-2026-07-03); ML two-pulse recovery lowers RMS but at a higher failure rate that gates adoption. ⚠️**
+2026-07-03; independent MC live-time disagrees by +8%, MC03 2026-07-04); the honest truth-labelled
+two-pulse benchmark (MC03/S24) gives a split verdict — traditional at matched coverage, ML at full
+coverage. ⚠️/🔶**
 
 - **R_max is lower than the note claims — as a data-driven upper bound.** The note's R_max =
   **4.222 MHz** assumes tau_eff = 90 ns. Direct measurement of the waveform live-time window finds
@@ -186,14 +288,14 @@ the toy digitizer timewalk parametrization.
   censoring-aware estimators (KM 151.6 ns, IPCW 179.1 ns) imply **R_max ≤ 3.05 MHz, plausibly
   ≈2.1 MHz or lower**. The analysis note's τ_eff = 90 ns → 4.22 MHz correction stands — but as an
   upper bound. ⚠️
-- **Two-pulse recovery (S11a, S10f):** ML (compact MLP/CNN) resolves shorter separations and lower
-  time-RMS (**10.67 ns** vs the constrained two-pulse template fit **13.30 ns**; amplitude-binned
-  variant 9.28 vs 17.81 ns) — *but at a markedly higher failure rate* (**0.295 vs 0.168**). The
-  failure-rate regression gates adoption; the conventional fit is **safer at the accepted-recovery
-  operating point**. Caveat (2026-07-03): the benchmark's injection grid coincided with the fit's
-  hypothesis grid and injected waveforms were generated from the fit's own templates; failure
-  definitions differ between methods at unmatched coverage. The matched risk-coverage comparison
-  (P05f) favours the traditional fit — treat the comparison above as superseded.
+- **Two-pulse recovery — settled by the honest truth-labelled benchmark (MC03/S24, 2026-07-04):**
+  the S11a comparison (and its failure rates 0.295 vs 0.168) is **retired** — its injection grid
+  coincided with the fit's hypothesis grid, its injected waveforms came from the fit's own
+  templates, and its failure definitions differed between methods (review P8). The replacement
+  benchmark (continuous injected dt, digitized real truth-hit pairs, one failure definition,
+  matched coverage) finds: at matched **80% coverage the traditional fit wins** (failure ≤0.0001
+  vs ML 0.0001–0.0002); at **full coverage ML wins** (0.011 vs 0.048); common-subset dt σ68 is
+  trad 0.64 ns vs ML 0.89 ns. (`reports/mc03_overlay_1783180480/`)
 - **Current-dependent excess is real but heterogeneous.** CIs exclude zero, but after matching on
   amplitude/baseline/topology it concentrates in high-amplitude / large-baseline-lowering /
   broad-late pulses (S10c-f, S11b-d). The honest beam-pile-up statement is the **high-current
@@ -203,21 +305,25 @@ the toy digitizer timewalk parametrization.
 - **Censoring caveat (S10h, S10i):** the final-sample window is heavily censored (72.6% of pulses
   show positive inflation at live20); tau/R_max adoption requires acquisition-window bounds.
 
-**MC verdict (pile-up) — MV5, ⛔ RETRACTED as validation (2026-07-03).** MV5 used the
-data-measured τ_eff as an input; no independent MC live-time measurement exists. R_max =
-0.380/τ_eff is a data-driven one-sided bound: censoring-aware estimators (KM 151.6 ns, IPCW
-179.1 ns) imply R_max ≤ 3.05 MHz, plausibly ≈2.1 MHz or lower. The note's 90 ns assumption is
-still corrected (4.22 → 3.05 MHz), but as an upper bound, not an MC-validated value. The two-pulse
-recovery ML failure rate on truth-labelled overlaps remains an open sub-item (data result: 0.295,
-ungated). ⚠️
+**MC verdict (pile-up) — MV5 retracted; slot refilled by MC03 (2026-07-04).** The 2026-06 MV5
+used the data-measured τ_eff as an input and was retracted as a validation. The validation slot
+now points to the **independent MC live-time (MC03)**: the S10b 10% tail-crossing estimator on
+digitized MC single pulses gives **τ_eff = 134.99 ns [134.96, 135.01] vs data 124.79 ns
+(Δ = +10.2 ns, +8%, driven by B2: 141.35 ns)** — an honest disagreement, not a pass; MC pulses
+are clean by construction while the data value includes real pathologies. R_max = 0.380/τ_eff
+remains a data-driven one-sided bound: censoring-aware estimators (KM 151.6 ns, IPCW 179.1 ns)
+imply R_max ≤ 3.05 MHz, plausibly ≈2.1 MHz or lower. The note's 90 ns assumption is still
+corrected (4.22 → ≤3.05 MHz), as an upper bound. The two-pulse failure-rate sub-item is closed by
+the honest benchmark above. ⚠️/🔶
 
 ---
 
 ## 3. Pulse shape and learned representation  (P01, P02, P09)
 
 **Section verdict: shapes are low-dimensional; a compact autoencoder wins only at very low latent
-dim; the representation-superiority claim for downstream tasks is CORRECTED (leakage); the MC
-anomaly-species identification is RETRACTED (MV6, 2026-07-03). ⚠️/❌/⛔**
+dim; the representation-superiority claim for downstream tasks is CORRECTED (leakage); the C12
+anomaly-species identification is RULED OUT (MV6b, 2026-07-04) — the early-peak class is now a
+data-side question. ⚠️/❌/⛔**
 
 - **Compression (P02):** an autoencoder beats PCA by **40.1-50.6%** at low latent dim (2-4); PCA
   wins at dim 8 (the small AE underfits). PCA's first 3 components capture ~89% of shape variance, 8
@@ -241,13 +347,18 @@ anomaly-species identification is RETRACTED (MV6, 2026-07-03). ⚠️/❌/⛔**
 - **Anomaly detection (P09a, P09c):** ML is better for *novel* taxa and delayed-peak isolation;
   conventional cuts give slightly better curated precision.
 
-**MC verdict (representation/anomaly) — MV6, ⛔ RETRACTED (2026-07-03).** MV6 ran with the
-invalidated gain (246), no Birks quenching, no amplitude threshold (despite claiming
-"threshold-corrected"), and per-track whole-arm waveforms vs per-stave data pulses; the C12
-attribution is unsupported. Moreover the data ~4% and MC 0.32% figures use different denominators
-and taxonomies (data: selected pulses with A>1000; MC: all charged tracks), so no reconciliation
-of the ~12× rate mismatch exists. The numbers below are retained for the record only. (External
-Review 2026-07-02)
+**MC verdict (representation/anomaly) — MV6 ⛔ RETRACTED (2026-07-03); MV6b redo: C12 RULED OUT
+(2026-07-04).** MV6 ran with the invalidated gain (246), no Birks quenching, no amplitude
+threshold (despite claiming "threshold-corrected"), and per-track whole-arm waveforms vs per-stave
+data pulses; the C12 attribution was unsupported. The honest redo (MV6b) compared a quenched
+digitized table against its unquenched twin under the data taxonomy (A>1000, early-peak
+`peak_sample ≤ 3`): **0 of 1,656 quenched C12-dominant records pass A>1000 at any gain hypothesis
+(60–297)** (unquenched, only 3 pass at gain 297), and the MC early-peak fraction is 0.000% in
+every configuration vs data 4.4%. The early-peak class **cannot be a species/scintillation
+effect**; it must be instrumental (baseline/noise/bipolar artifacts, per P02/P09 leads) or
+trigger-phase-related — neither of which the MC models — and is reopened as a **data-side**
+question. (`reports/mv6b_anomaly_quenching_1783180742/`) The retracted MV6 numbers below are
+retained for the record only. (External Review 2026-07-02)
 
 | Observable | Value |
 |---|---|
@@ -261,7 +372,8 @@ Review 2026-07-02)
 | GMM Cluster 2 capture of early-peak tracks | >99% |
 
 The early-peak morphology explanation and the GMM Cluster-2 veto recommendation are withdrawn with
-the MV6 retraction; the anomaly species identity is again an open question. ⛔
+the MV6 retraction; MV6b (2026-07-04) rules the C12 hypothesis out, so the open question is now
+data-side: which instrumental or trigger-phase mechanism produces the 4.4% early-peak class? ⛔→🔶
 
 ---
 
@@ -285,15 +397,16 @@ structurally unreachable from data, MC-confirmed. ⚠️ closure / ✅ limitatio
 - **Conditional templates (P10):** an explicit analytic timewalk **beats** a learned conditional
   template on the primary q-template metric; ML only helps a secondary timing metric (P10a-b).
 
-**MC verdict (energy) — MV2, ⛔ RETRACTED pending rerun (2026-07-03).** MV2 supported the
+**MC verdict (energy) — MV2, rerun 2026-07-03 after the momentum-unit fix.** MV2 supports the
 limitation: absolute energy reconstruction is unreachable without inter-stave absorber calibration.
 Per-species medians at truth level: proton edep_tot median = **101.1 MeV**, deuteron = **73.4 MeV**
-(artifact values; the previously quoted 23/89 MeV were untraceable). Deuterons stop early because
-pd-elastic kinematics gives them ~105 MeV with roughly half a proton's range; forward protons
-(~150 MeV) penetrate deep or punch through. Note: MV2's ekin columns are unit-corrupted (eV-scale
-values from a GeV/MeV momentum-unit error) pending rerun. Relative range ordering (p/d separation
-by stopping depth) remains qualitatively supported; the GEANT4 Birks lookup remains the best
-held-out energy method; neural/tree models do not supersede the physics prior. ⚠️
+(the previously quoted 23/89 MeV were untraceable). The eV-scale ekin corruption (review C3) is
+fixed: entry kinetic energies are MeV-scale (mean proton 99.4 MeV, deuteron 79.7 MeV); containment
+proton 0.70 / deuteron 0.84. Deuterons stop early because pd-elastic kinematics gives them
+~105 MeV with roughly half a proton's range; forward protons (~150 MeV) penetrate deep or punch
+through. Relative range ordering (p/d separation by stopping depth) is supported; the GEANT4
+Birks lookup remains the best held-out energy method; neural/tree models do not supersede the
+physics prior. ⚠️ (geometry/trigger caveat: MV2 runs on the untriggered MC population) ✅/⚠️
 
 ---
 
@@ -317,18 +430,25 @@ the MV0 v2 gain model is RETRACTED (2026-07-03) — the digitizer gain is unknow
 The v2 anchor (B2 net median = 1781 ADC) was computed as |net − pedestal| of an already
 baseline-subtracted amplitude — `amplitude_adc` is net, so the v2 basis was a folded garbage
 variable. The true B2 net median is **5752 ADC**. Neither v1 (~246 ADC/MeV) nor v2
-(92 ± 28 ADC/MeV) is valid; the digitizer gain is **UNKNOWN** pending a geometry-fixed MC and the
-correct anchor variable. The hardware pedestal ~6752 ADC statement stands (it is the
-`baseline_adc` column). A forced-trigger-equivalent zero-signal MC sample to validate the learned
-pedestal against absolute truth remains desirable but not yet produced. (External Review
-2026-07-02)
+(92 ± 28 ADC/MeV) is valid. **Current best statement (2026-07-04): gain ≈ 60–80 ADC/MeV,
+dominated by trigger/quenching modelling — no precision value yet.** The Phase-2
+trigger-consistent scan prefers ~60 (unquenched); the quenched re-scan (expected ~70–80) is
+pending; 297 ADC/MeV is the C2-corrected data-side placeholder in the mc02 card. The hardware
+pedestal ~6752 ADC statement stands (it is the `baseline_adc` column).
+
+**MV7 (zero-signal pedestal validation) ran 2026-07-03** on a 100,000-record zero-signal MC
+sample: adaptive estimator (median of samples 0–3) MAE **3.48 ADC**, learned (ridge on 18
+samples) MAE **1.50 ADC**. This is an MC-level closure and a lower bound — correlated noise,
+drift, and signal contamination are not modelled, and real data still has no true-pedestal
+sample. (`reports/mc02_pulse_table_1783107862/`)
 
 ---
 
 ## 6. Particle identification and stopping depth  (MV1, MV2, MV3, S07, S15)
 
-**Section verdict: ✅ PID validated (data + MC, MV1/MV2 complete); ⛔ stopping-depth profile FAILS
-MC with a structural geometry discrepancy (MV3 complete).**
+**Section verdict: ✅ PID validated (data + MC, MV1/MV2 complete); 🔶 stopping-depth profile
+re-graded FAIL → TENSION (Phase 2, 2026-07-03): the discrepancy is the unsimulated two-arm
+coincidence trigger, not geometry.**
 
 ### 6.1 Proton/deuteron PID — closed
 
@@ -349,12 +469,13 @@ reaches:
 The HGB AUC (0.986) is the MC truth ceiling; data methods reach within 0.5% of this ceiling — the
 data carries essentially the same separating information once a true label exists. ✅
 
-**MV2 (energy/range, ⛔ retracted pending rerun 2026-07-03):** deuterons deposit and stop early
-(layers 0-1), protons penetrate (layers 4-7, p-fraction ~0.89-0.90). edep_tot medians at truth
-level: proton **101.1 MeV**, deuteron **73.4 MeV** (artifact values; the previously quoted
-23/89 MeV were untraceable). Deuterons stop early because pd-elastic kinematics gives them
-~105 MeV with roughly half a proton's range; forward protons (~150 MeV) penetrate deep or punch
-through. MV2's ekin columns are unit-corrupted pending rerun.
+**MV2 (energy/range, rerun 2026-07-03 after the momentum-unit fix):** deuterons deposit and stop
+early (layers 0-1), protons penetrate (layers 4-7, p-fraction ~0.89-0.90). edep_tot medians at
+truth level: proton **101.1 MeV**, deuteron **73.4 MeV** (the previously quoted 23/89 MeV were
+untraceable). Entry kinetic energies are now MeV-scale (mean proton 99.4 MeV, deuteron 79.7 MeV);
+containment (edep_tot ≥ 0.8·ekin): proton 0.70, deuteron 0.84. Deuterons stop early because
+pd-elastic kinematics gives them ~105 MeV with roughly half a proton's range; forward protons
+(~150 MeV) penetrate deep or punch through.
 
 **Data vs MC comparison (PID/range, MV1 + MV2):**
 
@@ -364,20 +485,22 @@ through. MV2's ekin columns are unit-corrupted pending rerun.
 | Deuteron stopping depth | inferred early (B2-enriched Sample I) | layers 0-1, d-frac 0.36-0.39 | consistent |
 | Proton stopping depth | inferred penetrating (Sample II) | layers 4-7, p-frac 0.89-0.90 | consistent |
 | Depth occupancy ordering | B2 >> B4 > B6 > B8 | Sci_bar hits fall layer 0->7 | qualitative match |
-| Sample I/II trigger split | deuteron-enriched (Matthias — hypothesis) | earlier "confirmation" ran on retracted machinery | hypothesis — to be tested by S21 (2026-07-03) |
+| Sample I/II trigger split | deuteron-enriched — confirmed in data (S23: B2 f(A>5000) ratio 3.45 [3.41, 3.50]) | confirmed at truth level (S21: B2 f_d ratio 1.519 [1.510, 1.528], exclusive 1.912) | ✅ confirmed both sides (2026-07-03); MC under-predicts the contrast (S23 DR 0.738, z = −99 — trigger modelling, Phase 2) |
 
 > **Sample definitions (corrected 2026-07-03, experiment-owner setup facts):** Sample I = A AND B
 > trigger coincidence (MC mimic: charged particle entering the first A and first B layer within
 > 15 ns); Sample II = B trigger only (A ignored). In MC, Sample I is a **subset** of Sample II
 > (inclusive flags in `src/ccb_mc_validation/io/root_truth.py`); in data, Samples I and II are
 > **disjoint run sets** with different trigger configurations — the MC-vs-data sample rows above
-> inherit this subset-vs-disjoint asymmetry. The proposed enrichment mechanism is that the
-> coincidence tags kinematically-correlated pd-elastic pairs.
+> inherit this subset-vs-disjoint asymmetry. The enrichment mechanism — the coincidence tags
+> kinematically-correlated pd-elastic pairs — is confirmed by S21 (91.2% of Sample-I events are
+> d-into-B / p-into-A pairs) and, on the data side, by S23.
 
-### 6.2 Stopping-depth profile — structural FAIL (MV3)
+### 6.2 Stopping-depth profile — FAIL re-graded TENSION (MV3, root cause: the trigger)
 
-MV3 v3 (threshold-corrected) compared the MC and data stave-occupancy profiles quantitatively.
-Result: **χ²/ndf = 68,269 (4 stave bins, ndf = 3)** — a catastrophic failure, not a tension.
+MV3 v3 (threshold-corrected) compared the MC and data stave-occupancy profiles quantitatively and
+published **χ²/ndf = 68,269 (4 stave bins, ndf = 3)**. Phase 2 (2026-07-03) established the root
+cause: the comparison, not the geometry — see below.
 
 | Stave | MC fraction | Data fraction | Ratio (Data/MC) |
 |---|---|---|---|
@@ -386,21 +509,30 @@ Result: **χ²/ndf = 68,269 (4 stave bins, ndf = 3)** — a catastrophic failure
 | B6 | 12.5% | 3.9% | 0.31× |
 | B8 | 22.3% | 2.3% | 0.10× |
 
-MC overestimates B8 penetration by a factor of ~10 relative to data. The qualitative depth ordering
-(B2 > B4 > B6 > B8 in data) is reproduced, but the quantitative profile fails completely.
+The untriggered MC overestimates B8 penetration by a factor of ~10 relative to data. The
+qualitative depth ordering (B2 > B4 > B6 > B8 in data) is reproduced.
 
-**Root cause not established (corrected 2026-07-03):** MV3b's toy estimate (8–10 g/cm² of missing
-upstream material) was retracted in its own errata (realistic inter-stave estimate
-0.1–0.5 g/cm²/pair). Additional co-factors that could produce or inflate the discrepancy include:
-track-basis vs event-basis counting, exclusion of C12/alpha/heavy-ion species (24% of charged
-tracks), no Birks quenching in the threshold, gain uncertainty, and an unvalidated LayerID→stave
-mapping. The FAIL is real in sign, but a geometry/beamline audit and a nuisance scan are required
-before any quantitative stopping-depth comparison is meaningful. (External Review 2026-07-02)
+**Root cause established (Phase 2, 2026-07-03): the unsimulated two-arm coincidence trigger.**
+The geometry audit (direct `TGeoManager` dump of the production file) **falsified** the
+missing-material narrative: every named upstream component (vacuum window, trigger scintillators,
+TPC) is already in the production geometry; only ~0.13 g/cm² of air is genuinely missing, while a
+material explanation of the B2 deficit would require ≥10.5 g/cm² — a factor ≥13 more than
+physically exists. Instead, requiring a truth-level A-arm coincidence (the Sample-I trigger the
+data actually recorded with) collapses χ²/ndf from 68,269 to 3,141; adding the event basis,
+species-inclusive counting and gain 60 reaches **625 (109×)** (best grid point 555; vs the
+C2-corrected data profile 88,542 → 1,061). The physics: the coincidence keeps deuteron-into-B
+events (conjugate ~85 MeV proton reaches Stack A) and vetoes deep-proton events (conjugate
+~37 MeV deuteron dies in the TPC hull) — the MC without a trigger contains both populations. The
+odd-layer mapping hypothesis (review P4) is disfavored (both unread-bar variants are worse); the
+`paired` mapping stands. The residual χ²/ndf ~600–1,100 corresponds to ≲1% absolute per-stave
+deviations and belongs to the trigger-flag and digitizer work, not to a geometry production.
+(`reports/phase2_geometry_1783108797/REPORT.md`)
 
-**Impact:** the PID qualitative conclusion (p/d range separation exists) is not invalidated — the
-direction of separation is correct. However, all **quantitative** stopping-depth claims from MC
-(layer fractions, penetration depths) must be treated as unreliable pending the geometry fix. MV3 is
-the primary blocker for MC-based acceptance corrections. ⛔
+**Impact:** MV3 is re-graded **FAIL → TENSION**; no new GEANT4 production is needed, and PR #8
+(inter-stave Al proxy in the geobuilder) should be closed or reworked, not merged. The PID
+qualitative conclusion (p/d range separation) stands. Quantitative stopping-depth and acceptance
+work should proceed via the next MC-side work item: **score the `Trig_bar` volumes as sensitive
+detectors and emit a real per-event Sample-I/Sample-II trigger flag**, replacing the truth proxy. 🔶
 
 ---
 
@@ -411,15 +543,18 @@ the primary blocker for MC-based acceptance corrections. ⛔
   S07g, P02d). On injected-corruption truth (label independent of input), shape-only ML legitimately
   wins (S07f, S07h) — but that is *not* a measured beam pile-up rate.
 - **The pattern.** ML wins when truth is independent and the signal is in shape (saturation,
-  duplicate-amplitude, two-pulse RMS); ML ties/loses when an analytic model is already optimal
-  (timewalk, Poisson rate) or when the apparent win is leakage.
+  duplicate-amplitude; two-pulse only at full coverage per the honest MC03/S24 benchmark); ML
+  ties/loses when an analytic model is already optimal (timewalk, Poisson rate) or when the
+  apparent win is leakage.
 - **Reproduce-first is enforced.** Every study above carries an exact count gate; the 640,737 /
   706,373 selector distinction (S00b/c) is the model of how a one-line selection change is tracked
   rather than silently absorbed.
 - **MC validation is adversarial.** MV0 v1 was rejected when its χ²/ndf = 2934 was traced to a
-  wrong baseline definition; MV3 v3 is reported as FAIL rather than papered over. The MV program
-  distinguishes structural MC failures (geometry, need external fix) from operational ones (code
-  bugs, can be fixed within the study).
+  wrong baseline definition; MV3 v3 was reported as FAIL rather than papered over — and the
+  Phase-2 diagnosis then falsified its own "missing material" story and re-graded it TENSION
+  (unsimulated trigger). The MV program distinguishes comparison-level failures (what is being
+  compared — trigger selection, event basis, species) from model failures (geometry, code bugs),
+  and requires the distinction to be tested, not asserted.
 
 ---
 
@@ -428,25 +563,29 @@ the primary blocker for MC-based acceptance corrections. ⛔
 ### Closed by MC validation
 
 _(Corrected 2026-07-03: R_max, digitizer gain, anomaly species, and the MV2 range-energy mechanism
-were moved back to "Still open" following the external review.)_
+were moved back to "Still open" following the external review. Updated 2026-07-04: the post-review
+program closed the rows added below.)_
 
 | Question | Closed by | Finding |
 |---|---|---|
-| Is p/d PID at AUC 0.986 real? | MV1 | Yes; data within 0.5% of MC ceiling |
-| Does raw timing resolution match MC? | MV4 | Pull = −1.05σ — UNDER REVIEW (comparison mismatches; matched rerun required) |
+| Is p/d PID at AUC 0.986 real? | MV1 (rerun 2026-07-03) | Yes; data within 0.5% of MC ceiling |
+| What caused the MV3 stopping-depth FAIL? | Phase 2 (2026-07-03) | The unsimulated two-arm coincidence trigger, not missing material (falsified: ~0.13 g/cm² air missing vs ≥10.5 needed). Trigger proxy + event basis + species-inclusive + gain 60: χ²/ndf 68,269 → 625 (109×). MV3 re-graded TENSION |
+| Is Sample I deuteron-enriched? | S21 + S23 (2026-07-03) | Yes, truth (B2 f_d ratio 1.519 [1.510, 1.528]; exclusive 1.912) and data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]); MC under-predicts the contrast (DR 0.738, z = −99, trigger modelling) |
+| Is the early-peak anomaly class C12 recoils? | MV6b (2026-07-04) | **No — ruled out.** 0/1,656 quenched C12 records pass A>1000 at any gain (60–297); the class must be instrumental/trigger-phase (data-side question, P02/P09) |
+| Does ML two-pulse recovery maintain failure rate on true overlaps? | MC03/S24 (2026-07-04) | Truth-labelled honest benchmark: traditional wins at matched 80% coverage (≤0.0001 vs 0.0001–0.0002); ML wins at full coverage (0.011 vs 0.048); common-subset dt σ68 trad 0.64 vs ML 0.89 ns |
+| What is the p/d range-energy mechanism (quantitative)? | MV2 rerun (2026-07-03) | MeV-scale ekin after the momentum-unit fix; containment p 0.70 / d 0.84; Birks lookup remains best (geometry/trigger caveat) |
+| Is the zero-signal pedestal model validated? | MV7 (2026-07-03, MC-level) | Adaptive MAE 3.48 ADC, learned 1.50 ADC on zero-signal MC — lower bounds; data still has no true-pedestal sample |
 
 ### Still open
 
 | Question | Blocker | Path to close |
 |---|---|---|
-| Why does timewalk-corrected σ₆₈ disagree at 2.68σ? | Toy digitizer CFD ≠ real analog timewalk (negative B parameter = inverted correction); MV4 comparison itself not apples-to-apples | Matched MV4 rerun (per-stave traces, pair-difference observable, measured σ_data) |
-| Can the stopping-depth profile be quantitatively matched? | Root cause not established (MV3b toy retracted); geometry/beamline audit + nuisance scan needed | Audit real beamline material, update GEANT4 geometry; rerun MV3 with nuisance scan |
-| Is R_max validated by MC? | MV5 retracted — MC τ_eff was a hardcoded copy of the data value; only a data-driven one-sided bound (≤3.05 MHz) exists | Independent MC live-time measurement with data-matched tails (τ_decay 49–57 ns) |
-| What is the digitizer gain? | Both v1 (246) and v2 (92) retracted; anchor variable was wrong and MC anchor is geometry-poisoned | Re-derive on geometry-fixed MC with the correct net-ADC anchor (5752, not 1781) |
-| What is the early-peak anomaly species? | MV6 retracted (invalidated gain, no quenching, no threshold; 12× rate mismatch, mismatched denominators) | Honest MV6 redo with Birks quenching, threshold, and data-matched selection |
-| What is the p/d range-energy mechanism (quantitative)? | MV2 ekin columns unit-corrupted (eV-scale); edep medians now corrected to 101.1/73.4 MeV | MV2 rerun after momentum-unit fix, with punch-through/containment flag |
-| Does ML two-pulse recovery maintain failure rate on true overlaps? | No truth-labelled overlay MC run | Dedicated MC overlay study (sub-task of MV5 extension) |
-| Is the forced-pedestal zero-signal model validated? | No forced-trigger sample in data; no valid gain model or zero-signal equivalent | Add forced-trigger capability to acquisition, or produce MC-equivalent zero-signal events |
+| Does MC timing match data in a matched comparison? | MV4 honest rerun (2026-07-03) is REVIEW: MC pair-equivalent 2.087 ns sits between the data raw (2.993) and corrected (1.50) anchors, but merged-track MC vs per-stave data and unmatched selection remain | Matched per-stave MV4 rerun on the Phase-1 digitizer (data selection applied, measured σ_data) |
+| Can the residual MV3 tension (χ²/ndf ~600–1,100) be closed? | Truth-level trigger proxy is crude vs the real paddle coincidence; no Birks in the threshold model; pile-up in data B2 | **Score `Trig_bar` volumes as sensitive detectors → real per-event trigger flag**; fold in the quenched threshold model |
+| Why does the MC live-time exceed data by +8%? | MC03 τ_eff 134.99 vs data 124.79 ns is B2-driven; MC pulses are clean by construction, data includes real pathologies | Data-matched selection/pathology model on the MC side; per-stave comparison |
+| What is the precision digitizer gain? | Trigger-consistent scan optimum ~60 was fitted **unquenched**; with Birks on the quenched table has zero A>1000 rows at gain 60 | **Quenched trigger-consistent gain re-scan** (expected ~70–80), then re-anchor on a geometry-robust observable |
+| What instrumental mechanism produces the 4.4% early-peak class? | Species/scintillation origin ruled out (MV6b); MC has no trigger-phase or DAQ-artifact model | **Data-side investigation of the early-peak class** (P02 cluster morphology, P09 taxonomy; baseline/noise/bipolar and trigger-phase hypotheses) |
+| Is the forced-pedestal model validated on data? | No forced-trigger sample in data (MV7 closes the MC side only) | Add forced-trigger capability to the acquisition in a future beam run |
 
 ---
 
@@ -458,8 +597,10 @@ were moved back to "Still open" following the external review.)_
   (`reports/mv1_mv2_truth_pid_energy_1782220258/mv1_mv2_truth_summary.json`).
 - MC truth from GEANT4 (`hibeam_g4`, official HIBEAM-NNBAR source, conda env `nnbar_env`, GEANT4
   11.2.2 / ROOT 6.32), 1M primary events; `geant4/results/sim_summary.json` and SLURM job 3310358.
-- MV0 v2 gain (92 ± 28 ADC/MeV) and MV0 v1 (~246 ADC/MeV) are both retracted (2026-07-03); the
-  digitizer gain is unknown. Do not use either value for any energy-scale reference.
+- MV0 v2 gain (92 ± 28 ADC/MeV) and MV0 v1 (~246 ADC/MeV) are both retracted (2026-07-03). Do not
+  use either value for any energy-scale reference. The current best statement (2026-07-04) is
+  gain ≈ 60–80 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet; 297
+  ADC/MeV in the mc02 card is an explicit placeholder.
 - Every per-section number above is traceable to a `reports/<id>/REPORT.md`; see `reports/SUMMARY.md`
   for the live scoreboard and `docs/REPORT_STANDARD.md` for the rules each report obeys.
 

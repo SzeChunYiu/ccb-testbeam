@@ -160,6 +160,66 @@ Difficulty/where: **[L]** laptop-fine, **[G]** needs LUNARC GPU, **[C]** CPU-hea
 
 ---
 
+## Post-review program studies (2026-07-03/04)
+
+Cut by the External Review 2026-07-02 action plan (`EXTERNAL_REVIEW_2026-07-02.md` §7); all
+complete. One-line verdicts in `reports/SUMMARY.md` ("Post-review program rows"); synthesis in
+`FINDINGS_SYNTHESIS.md` ("Post-review program (2026-07-03/04)").
+
+### S21 — Sample I vs II trigger-truth comparison  [L]  (dep: MC truth)  — ✅ done
+- Trigger-mimicked truth study on the 1M GEANT4 sample. **Confirmed** the Sample-I deuteron
+  enrichment at truth level: B2 f_d ratio I/II = 1.519 [1.510, 1.528] (exclusive 1.912); 91.2%
+  of Sample-I events are d-into-B / p-into-A pd-elastic pairs.
+  `reports/s21_sample12_trigger_truth_1783077969/`
+
+### S22 — Per-stave timing resolution vs amplitude  [L]  (dep: S00, S03)  — ✅ done
+- σ68 vs min-pair amplitude per pair/sample, per-(pair, run) centered, event-level within-run
+  bootstrap; two-stage amp-only LORO timewalk. Raw curves follow 1/A better than 1/√A (B4–B6
+  χ²/ndf 0.32–0.87 vs 1.25–3.71); downstream per-stave ≈0.85–1.1 ns at high amplitude;
+  B2 saturation-excluded. `reports/s22_timing_vs_amplitude_1783108999/`
+
+### S23 — Sample I vs II data-side closure + data–MC comparison  [L]  (dep: S00, MC02)  — ✅ done
+- **Confirmed** the enrichment in data: Sample-I B2 f(A>5000) ratio 3.45 [3.41, 3.50]. Trigger
+  mimicking moves MC toward the data (B2 KS 0.192 → 0.131; occupancy χ² 624k → 20k); the double
+  ratio (DR 0.738 [0.733, 0.742], z = −99) shows MC under-predicts the between-sample contrast
+  (trigger modelling, Phase 2). `reports/s23_sample12_data_mc_1783108675/`
+
+### S24 / MC03 — Honest truth-labelled two-pulse benchmark + independent MC τ_eff  [C]  (dep: MC02)  — ✅ done
+- Replaces the rigged S11a benchmark (review P8; its 0.295/0.168 failure rates are retired).
+  600k truth-labelled overlays at 0.5/1.5/3 MHz: traditional wins at matched 80% coverage; ML
+  wins at full coverage (0.011 vs 0.048); common-subset dt σ68 trad 0.64 vs ML 0.89 ns.
+  Independent MC live-time (S10b estimator on digitized MC): τ_eff = 134.99 ns vs data 124.79
+  (+8%, B2-driven, honest disagreement — fills the retracted MV5's validation slot).
+  `reports/mc03_overlay_1783180480/`
+
+### MC02 — Phase-1 truth-labelled digitized MC pulse table (+ MV7)  [C]  (dep: geant4 truth)  — ✅ done
+- Config-driven digitizer (card), per-stave data-tuned τ_decay, 1M events → 518,247 rows
+  (A>1000 companion 458,712); gain 297 = explicit placeholder. **MV7** zero-signal pedestal
+  validation: adaptive MAE 3.48 ADC, learned 1.50 ADC (MC-level lower bounds). Phase-4 variants:
+  Birks-quenched table and A-arm (A1–A4) table. `reports/mc02_pulse_table_1783107862/`,
+  `reports/mc02_pulse_table_birks_1783180742/`, `reports/mc02_pulse_table_aarm_1783180742/`
+
+### MV6b — Anomaly taxonomy with Birks quenching (honest MV6 redo)  [C]  (dep: MC02)  — ✅ done
+- **C12 recoils ruled out** as the data's 4.4% early-peak class: 0/1,656 quenched C12 records
+  pass A>1000 at any gain (60–297); MC early-peak fraction 0.000% everywhere. The class must be
+  instrumental/trigger-phase — reopened as a data-side question (P02/P09 leads).
+  `reports/mv6b_anomaly_quenching_1783180742/`
+
+### PHASE2 / MV3 v4 — Geometry audit + trigger diagnostics  [C]  (dep: MC truth)  — ✅ done
+- Missing-material narrative **falsified** (only ~0.13 g/cm² air missing vs ≥10.5 g/cm² needed);
+  root cause of the MV3 FAIL = **unsimulated two-arm coincidence trigger**: χ²/ndf 68,269 → 625
+  (109×) with trigger proxy + event basis + species-inclusive + gain 60. MV3 re-graded TENSION;
+  no new production. Next work item: score `Trig_bar` volumes for a real per-event trigger flag.
+  `reports/phase2_geometry_1783108797/`
+
+### STATS01 — Program-level FDR census  [L]  (dep: all reports)  — ✅ done
+- Benjamini–Hochberg at q = 0.05 within claim family over 1,948 delta-CI claims (443 artifacts):
+  11/17 scoreboard bold wins survive BH, 0 fail, 6 rest on prose only; S03k survives BH yet is
+  leakage-falsified (BH necessary, not sufficient). Confirmation partition + shared estimators
+  module landed. `reports/stats01_program_fdr_20260703_220116/`
+
+---
+
 ## ML Pulse-Characterisation Program (P-series)
 
 A dedicated, comprehensive programme to characterise the pulse **with ML, each benchmarked

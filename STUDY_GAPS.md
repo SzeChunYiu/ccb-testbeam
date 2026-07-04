@@ -3,8 +3,8 @@
 > **A systematic audit of what's missing, what's unresolved, and what should be studied next.**
 > For the complete analysis narrative, see [`WIKI.md`](WIKI.md).
 
-**Last updated:** 2026-07-01 (corrected 2026-07-03 following External Review 2026-07-02 — several 2026-07-01 gap closures reopened/withdrawn, see §7)
-**Status:** Recursive gap analysis — all ~230 studies + 6 MC validations audited.
+**Last updated:** 2026-07-04 (post-review program complete — see §8/§9 logs and the per-gap updates below; previously corrected 2026-07-03 following External Review 2026-07-02, see §7)
+**Status:** Recursive gap analysis — all ~230 studies + 6 MC validations audited; post-review program (Phases 0–4 + statistics hardening) folded in.
 
 ---
 
@@ -36,39 +36,36 @@ Every finding is traceable to a specific report or source file.
 
 ### 2.1 Blocking Issues (Must Fix Before Publication)
 
-#### GAP-01: Stopping-Depth Profile — Structural MC Failure
-- **Severity:** ⛔ **BLOCKING** (prevents quantitative MC-based acceptance corrections)
-- **Source:** [MV3 Stopping-Depth Profile](reports/mv3_stopping_depth/REPORT.md), MV3 v3
-- **Finding:** χ²/ndf = 68,269. MC overestimates B8 penetration by 10× relative to data.
-- **Root cause:** not established (corrected 2026-07-03). MV3b's toy estimate (~8–10 g/cm² of missing upstream material) was retracted in its own errata (realistic inter-stave estimate 0.1–0.5 g/cm²/pair); co-factors include track-basis vs event-basis counting, species exclusion (24% of charged tracks), no Birks quenching in the threshold, gain uncertainty, and an unvalidated LayerID→stave mapping.
-- **MV3b diagnosis:** toy estimate retracted in its own errata; the real missing amount is unknown — a beamline material audit is required.
-- **Action:** Audit real beamline material → update GEANT4 geometry → new MC production run → rerun MV3 with a nuisance scan.
-- **Impact if unresolved:** All quantitative stopping-depth claims from MC are unreliable. B8 trigger efficiency calibration cannot be MC-anchored.
+#### GAP-01: Stopping-Depth Profile — ✅ RE-SCOPED 2026-07-03: trigger simulation, not geometry
+- **Severity:** 🔶 residual TENSION (was ⛔ BLOCKING; the geometry hypothesis is closed)
+- **Source:** [Phase 2 geometry audit + MV3 v4 diagnostics](reports/phase2_geometry_1783108797/REPORT.md); previously MV3 v3
+- **Finding (Phase 2):** the missing-material narrative is **falsified** — the production geometry already contains every named upstream component except ~0.13 g/cm² of air, while a material explanation would need ≥10.5 g/cm² (factor ≥13 short). The published χ²/ndf = 68,269 collapses to 3,141 with a truth-level A-arm coincidence trigger proxy alone, and to **625 (109×)** with event basis + species-inclusive counting + gain 60. MV3 re-graded **FAIL → TENSION**. The odd-layer mapping hypothesis is disfavored (`paired` stands); no new GEANT4 production was needed.
+- **Remaining root cause of the residual (χ²/ndf ~600–1,100):** the crude A-HRD truth proxy vs the real trigger-paddle coincidence, no Birks quenching in the threshold model, pile-up in data B2, phase-locked peak_frac.
+- **Action (NEW-01 below):** score the `Trig_bar` volumes as sensitive detectors and emit a real per-event Sample-I/Sample-II trigger flag; do **not** merge geobuilder PR #8 as-is (its inter-stave Al default injects ~10× the realistic wrapping budget).
+- **Impact:** quantitative stopping-depth and acceptance work is unblocked once the real trigger flag exists; upstream-material geometry work is second-order fidelity, not the blocker.
 
-#### GAP-02: Timewalk Correction — MC Tension
-- **Severity:** 🔶 **HIGH** (2.68σ pull, but raw timing passes)
-- **Source:** [MV4 Timing Resolution](reports/mv4_timing_study/REPORT.md), MV4b
-- **Finding:** Raw timing passes (pull = −1.05σ), but timewalk-corrected σ₆₈ shows +2.68σ tension.
-- **Root cause:** Toy digitizer uses B/√ADC with negative B — physically inverted timewalk. MV4b diagnosed; correct form is B/amplitude.
-- **Action:** Switch toy digitizer timewalk parametrization from B/√ADC → B/amplitude → rerun MV4.
-- **Impact if unresolved:** Timewalk-corrected σ₆₈ comparison with MC cannot be reported at face value.
+#### GAP-02: Timewalk Correction — MC comparison (honest rerun done; matched rerun pending)
+- **Severity:** ⚠️ MEDIUM (was 🔶 HIGH; the pathologies are fixed, the comparison is not yet matched)
+- **Source:** [MV4 honest rerun](reports/mv4_timing_1783077795/), MV4b
+- **Finding (2026-07-03 rerun):** the rising-edge CFD and the MV4b B/amplitude form landed; the fitted timewalk coefficient is now physical (B = +39.6 ns·ADC). MC pair-equivalent σ₆₈ = 2.087 ± 0.009 ns sits between the data raw (2.993 ns) and corrected (1.50 ns) anchors — verdict REVIEW. The old pulls (−1.05σ/+2.68σ) are retired.
+- **Action:** matched per-stave MV4 rerun on the Phase-1 digitized table (data selection applied, measured σ_data).
+- **Impact if unresolved:** the timewalk-corrected σ₆₈ MC comparison stays a scale check, not a hypothesis test.
 
 ### 2.2 High-Impact Open Questions
 
-#### GAP-03: Digitizer Gain — ±30% Uncertainty
-- **Severity:** ⚠️ **HIGH** (dominant systematic for deuteron fraction)
-- **Source:** [MV0 Digitizer Calibration](reports/mv0_digitizer/REPORT.md), MV0 v2
-- **Finding:** Gain = 92 ± 28 ADC/MeV (±30% relative). v1 (~246 ADC/MeV) was wrong due to baseline mismatch.
-- **Sub-sources:** Methodology approximation (±15%), missing forced-pedestal sample (±10%), MC digitizer fidelity (±10%), single-stave calibration point (±10%).
-- **Action:** Acquire forced-trigger pedestal data in next beam run → reduce to ~±10–15%.
-- **Impact if unresolved:** ±30% energy-scale uncertainty propagates into dE/dx ratios, Birks calibration, and any ADC→MeV conversion.
+#### GAP-03: Digitizer Gain — no precision value (updated 2026-07-04)
+- **Severity:** ⚠️ **HIGH** (dominant systematic for any ADC→MeV conversion)
+- **Source:** [Phase 2 grid](reports/phase2_geometry_1783108797/REPORT.md); MV0 v1/v2 both **retracted 2026-07-03** (v2's 92 ± 28 ADC/MeV was computed on a folded garbage variable; v1 ~246 also invalid — do not cite either)
+- **Current best statement:** **gain ≈ 60–80 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet.** The trigger-consistent Phase-2 scan prefers ~60 (unquenched threshold model; monotonic 60 → χ²/ndf 625 … 300 → 7,017); with Birks quenching on, the preferred gain is expected to rise to ~70–80 (the quenched table has zero A>1000 rows at gain 60). The 297 ADC/MeV in the mc02 card is the C2-corrected data-side anchor (true B2 net median 5752 ADC) over trigger-unselected MC, carried as an explicit placeholder only.
+- **Action (NEW-02 below):** quenched trigger-consistent gain re-scan; then re-anchor on a geometry-robust observable (MIP-like ΔE in B4/B6 or duplicate-readout). Forced-trigger pedestal data in the next beam run remains desirable for the pedestal side.
+- **Impact if unresolved:** the energy scale, dE/dx ratios, Birks calibration, and any absolute-amplitude MC comparison stay placeholder-scaled.
 
-#### GAP-04: Two-Pulse ML Failure Rate
-- **Severity:** ⚠️ **MEDIUM** (gates ML adoption for production)
-- **Source:** [Two-Pulse Recovery (S11)](reports/), S10f
-- **Finding:** ML two-pulse recovery achieves better RMS (9–11 ns vs 13–18 ns) but higher failure rate (0.295 vs 0.168). No truth-labelled overlay MC exists to validate failure modes.
-- **Action:** MC overlay study (MV5 extension) with truth-labelled overlaps → measure true ML failure rate.
-- **Impact if unresolved:** ML two-pulse recovery cannot be adopted for production; conventional fit remains default.
+#### GAP-04: Two-Pulse ML Failure Rate — ✅ CLOSED 2026-07-04 (MC03/S24)
+- **Severity:** closed
+- **Source:** [MC03 truth-labelled overlay benchmark](reports/mc03_overlay_1783180480/REPORT.md)
+- **Finding:** the honest truth-labelled benchmark (continuous injected dt, digitized real truth-hit pairs, one failure definition, matched coverage) replaces the rigged S11a comparison — its 0.295 vs 0.168 failure rates are retired. Result: **traditional wins at matched 80% coverage** (failure ≤0.0001 vs ML 0.0001–0.0002); **ML wins at full coverage** (0.011 vs 0.048); common-subset dt σ68 trad 0.64 ns vs ML 0.89 ns.
+- **Residual caveats:** kernel-family circularity of the fit template, fixed trigger phase, single-stave overlays; a data-side template-mismatch stress remains future work.
+- **Adoption:** coverage-dependent — the conventional fit at an abstaining operating point, ML only if full coverage is required.
 
 #### GAP-05: Two-Ended Timing Projection Unvalidated
 - **Severity:** ⚠️ **MEDIUM** (approximation used for headline number)
@@ -141,7 +138,7 @@ Every finding is traceable to a specific report or source file.
 
 **Check:** Are there alternative methods (e.g., exponential fit to tail, CFD threshold scan) that give consistent results?
 
-**Verdict:** ⚠️ **Partially verified.** The 10% tail-crossing method is well-defined and bootstrap CIs are given. (Correction 2026-07-03: MV5 does *not* provide independent confirmation — it used the data-measured τ_eff as an input and was retracted as a validation.) Alternative measurement methods are not cross-checked against each other. **Recommendation:** Add at least one alternative τ_eff measurement method as a cross-check.
+**Verdict:** ⚠️ **Partially verified.** The 10% tail-crossing method is well-defined and bootstrap CIs are given. (Correction 2026-07-03: MV5 does *not* provide independent confirmation — it used the data-measured τ_eff as an input and was retracted as a validation.) **Update 2026-07-04:** an independent **MC** live-time now exists (MC03: the same S10b estimator on digitized MC single pulses gives τ_eff = 134.99 ns vs data 124.79 ns, +8%, B2-driven — an honest disagreement, not a confirmation). A second *data-side* measurement method is still not cross-checked. **Recommendation:** Add at least one alternative data-side τ_eff measurement method as a cross-check, and reconcile the +8% MC excess.
 
 ### 3.6 Pile-up Censoring
 
@@ -223,25 +220,22 @@ Every finding is traceable to a specific report or source file.
 ## 5. Dependency Graph of Unresolved Items
 
 ```
-GAP-01 (MV3 geometry fix)
-  ├─▶ Required for: quantitative stopping-depth claims, B8 acceptance
-  ├─▶ Blocks: MV3 re-run, acceptance-corrected PID yields
-  └─▶ Timeline: requires GEANT4 code change + new MC production
+GAP-01 → NEW-01 (Trig_bar trigger flag; geometry-production plan superseded 2026-07-03)
+  ├─▶ Required for: closing the residual MV3 tension, acceptance-corrected PID yields
+  ├─▶ Blocks: quantitative stopping-depth claims at the <1% level
+  └─▶ Timeline: geobuilder/hibeam_g4 detector-list change + short rebuild (no new 1M production)
 
-GAP-02 (MV4 timewalk fix)
-  ├─▶ Required for: timewalk-corrected σ₆₈ MC comparison
+GAP-02 (MV4 matched per-stave rerun; honest rerun ✅ done 2026-07-03)
+  ├─▶ Required for: timewalk-corrected σ₆₈ MC comparison as a hypothesis test
   ├─▶ Blocks: final timing resolution paper number
-  └─▶ Timeline: digitizer fix (code change only) + rerun
+  └─▶ Timeline: comparison script on the mc02 per-stave table
 
-GAP-03 (MV0 forced-trigger)
-  ├─▶ Required for: gain uncertainty reduction ±30% → ±10%
-  ├─▶ Blocks: precision energy-scale references
-  └─▶ Timeline: requires new beam run (months)
+GAP-03 (gain: NEW-02 quenched re-scan; forced-trigger pedestal for the pedestal side)
+  ├─▶ Required for: precision energy-scale references (current statement: ≈60–80 ADC/MeV)
+  ├─▶ Blocks: dE/dx ratios, Birks calibration, absolute-amplitude MC comparisons
+  └─▶ Timeline: re-scan now (compute only); forced-trigger data needs a new beam run (months)
 
-GAP-04 (MC overlay study)
-  ├─▶ Required for: ML two-pulse recovery adoption
-  ├─▶ Blocks: production two-pulse recovery
-  └─▶ Timeline: MV5 extension (code + MC production)
+GAP-04 ✅ CLOSED 2026-07-04 (MC03/S24 truth-labelled benchmark)
 
 GAP-05 (two-ended correlation)
   ├─▶ Required for: validated two-ended timing projection
@@ -254,7 +248,17 @@ GAP-05 (two-ended correlation)
 
 > **Note (2026-07-03):** the items below that were marked closed in the §7 Gap Closure Log
 > (GAP-02 rerun, GAP-05 two-ended correlation, multi-stave covariance) are open again after the
-> external review withdrew those closures — this list is again correct as written.
+> external review withdrew those closures.
+> **Note (2026-07-04):** the post-review program then honestly closed several of them — done
+> items are struck through in the tables below; the new work items it produced are listed first.
+
+### New items from the post-review program (2026-07-04)
+
+| ID | Action | Closes | Effort |
+|---|---|---|---|
+| **NEW-01** | **Score `Trig_bar` volumes as sensitive detectors** (add to `Detectors` in `krakow.config` or extend the geobuilder/hibeam_g4 detector list) and emit a real per-event Sample-I/Sample-II trigger flag, replacing the A-HRD truth proxy | residual MV3 tension (χ²/ndf ~600–1,100); S23 double-ratio deficit (DR 0.738); trigger-poisoned MC occupancy weights | Medium (code + short rebuild; no new 1M production) |
+| **NEW-02** | **Quenched trigger-consistent gain re-scan** (Phase-2 grid with the Birks threshold model; expected optimum ~70–80), then re-anchor on a geometry-robust observable | GAP-03 precision gain | Low (compute only; machinery exists) |
+| **NEW-03** | **Early-peak 4.4% class: data-side instrumental investigation** — species/scintillation origin ruled out by MV6b; test baseline/noise/bipolar-artifact and trigger-phase hypotheses via P02 cluster morphology and P09 taxonomy | anomaly mechanism | Medium (data-side only) |
 
 ### Immediate (Can Be Done Now, No New Data)
 
@@ -271,10 +275,10 @@ GAP-05 (two-ended correlation)
 
 | Priority | Action | Effort |
 |---|---|---|
-| 1 | Fix MV4 toy digitizer timewalk (B/√ADC → B/amplitude) + rerun (GAP-02) | Medium |
-| 2 | Update GEANT4 geometry with missing material + new MC production (GAP-01) | High |
-| 3 | MC overlay study for two-pulse failure rate (GAP-04) | Medium |
-| 4 | Per-stave gain calibration (GAP-09) | Low |
+| 1 | ~~Fix MV4 toy digitizer timewalk (B/√ADC → B/amplitude) + rerun (GAP-02)~~ ✅ DONE 2026-07-03 (honest rerun, B = +39.6 ns·ADC; matched per-stave rerun still pending) | — |
+| 2 | ~~Update GEANT4 geometry with missing material + new MC production (GAP-01)~~ ✅ SUPERSEDED 2026-07-03 — material hypothesis falsified; do NEW-01 (`Trig_bar` trigger flag) instead | — |
+| 3 | ~~MC overlay study for two-pulse failure rate (GAP-04)~~ ✅ DONE 2026-07-04 (MC03/S24 truth-labelled benchmark) | — |
+| 4 | Per-stave gain calibration (GAP-09) — after NEW-02 | Low |
 | 5 | Full systematic propagation through derived quantities (§4.4) | Medium |
 
 ### Next Beam Run
@@ -310,7 +314,7 @@ Jobs submitted via SLURM on LUNARC (`lu48` partition, account `lu2026-2-51`).
 
 | Gap | Job ID | Status | Key Result | Report |
 |-----|--------|--------|------------|--------|
-| **GAP-02** (MV4b timewalk) | 3338707 | ⚠️ REOPENED 2026-07-03 | MV4 rerun never happened; MV4b misquoted MV4's pulls | `reports/mv4b_timewalk_1782911012/` |
+| **GAP-02** (MV4b timewalk) | 3338707 | ⚠️ REOPENED 2026-07-03 → ✅ honest rerun done later that day (`reports/mv4_timing_1783077795/`, verdict REVIEW; see §2.1 GAP-02) | MV4 rerun never happened at the time; MV4b misquoted MV4's pulls | `reports/mv4b_timewalk_1782911012/` |
 | **GAP-05** (Two-ended correlation) | 3338704 | ⛔ WITHDRAWN 2026-07-03 | Script measured nothing; algebra inverted — correct form σ√((1+ρ)/2); honest worst case ρ→1 = no improvement | `reports/two_ended_correlation_1782911012/` |
 | **GAP-06** (CFD/OF scan) | 3338703 | ⚠️ FRAMEWORK READY | CFD20 + OF9 confirmed as defaults; needs S02 data for full scan | `reports/cfd_of_scan_1782911012/` |
 | **Missing Study #1** (Multi-stave covariance) | — | ⛔ WITHDRAWN 2026-07-03 | Closure script numerically invalid; −0.127 ns² untraceable | `reports/multistave_covariance_1782911275/` |
@@ -322,9 +326,9 @@ Jobs submitted via SLURM on LUNARC (`lu48` partition, account `lu2026-2-51`).
 
 | Gap | Action | Effort |
 |-----|--------|--------|
-| GAP-01 (MV3 geometry) | Update GEANT4 geometry + new MC production | High (code + compute) |
-| GAP-03 (MV0 forced-trigger) | Acquire forced-trigger data in next beam run | High (beam time) |
-| GAP-04 (MC overlay study) | MV5 extension with truth-labelled overlaps | Medium (code + compute) |
+| ~~GAP-01 (MV3 geometry)~~ | ✅ RE-SCOPED 2026-07-03: material hypothesis falsified (Phase 2); do NEW-01 (`Trig_bar` trigger flag) instead of a geometry production | Medium |
+| GAP-03 (MV0 forced-trigger) | Acquire forced-trigger data in next beam run (pedestal side; the gain side is NEW-02) | High (beam time) |
+| ~~GAP-04 (MC overlay study)~~ | ✅ DONE 2026-07-04: MC03/S24 truth-labelled benchmark (`reports/mc03_overlay_1783180480/`) | — |
 | GAP-06 full closure | Run CFD/OF parameter scan with actual S02 timing data | Low (compute only) |
 | GAP-07 full closure | Add χ²/ndf and tail fraction to S02 script output | Low (code change) |
 | GAP-05 full closure | Measure two-ended correlation from split-readout data | Medium (requires data) |
@@ -340,3 +344,17 @@ Jobs submitted via SLURM on LUNARC (`lu48` partition, account `lu2026-2-51`).
 | **§4.6 A-stack MC counterpart** (partial: digitized A-arm table for S18) | 3347281 | table built | `reports/mc02_pulse_table_aarm_*/` — staves A1..A4, τ_decay 50 ns DEFAULT (no A rows in the template-fit CSV), occupancy/amplitude medians in `manifest.json` |
 | **P06 DAQ dropouts** | — | ⛔ NOT MC-INFORMABLE | dropouts are a real-DAQ acquisition-layer failure; the MC chain has no DAQ transport to drop |
 | **P13a ADC noise floor** | — | ⛔ NOT MC-INFORMABLE | the noise floor is a measured data *input* to the digitizer card (`noise_adc_rms`); MC output cannot validate its own input |
+
+---
+
+## 9. Phase 2/3 + Statistics Log (2026-07-03/04)
+
+| Item | Job ID | Status | Key result | Report |
+|-----|--------|--------|------------|--------|
+| **Phase 2 / MV3 v4** (geometry audit + trigger diagnosis) | 3346841 | ✅ DONE | material narrative falsified (~0.13 g/cm² air missing vs ≥10.5 needed); trigger proxy + event basis + species-inclusive + gain 60: χ²/ndf 68,269 → **625 (109×)**; MV3 re-graded TENSION; no new production | `reports/phase2_geometry_1783108797/` |
+| **S21** (Sample I/II trigger truth) | — | ✅ DONE | D-enrichment confirmed at truth level: B2 f_d ratio 1.519 [1.510, 1.528] (excl. 1.912); 91.2% d\|p pd-elastic pairs | `reports/s21_sample12_trigger_truth_1783077969/` |
+| **S22** (per-stave timing vs amplitude) | — | ✅ DONE | 1/A beats 1/√A raw (B4–B6 χ²/ndf 0.32–0.87 vs 1.25–3.71); per-stave ~0.85–1.1 ns at high amplitude; B2 saturation-excluded | `reports/s22_timing_vs_amplitude_1783108999/` |
+| **S23** (data-side I/II + data–MC) | — | ✅ DONE | D-enrichment confirmed in data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]); trigger mimic moves MC toward data (KS 0.192→0.131, occupancy χ² 624k→20k); DR 0.738 (z=−99) | `reports/s23_sample12_data_mc_1783108675/` |
+| **MC02** (Phase-1 digitized MC pulse table + MV7) | — | ✅ DONE | 1M events → 518,247 rows; data-tuned per-stave τ_decay; MV7 zero-signal pedestal: adaptive MAE 3.48 / learned 1.50 ADC (MC-level lower bounds) | `reports/mc02_pulse_table_1783107862/` |
+| **MC03/S24** (truth-labelled overlays + honest two-pulse benchmark + independent MC τ_eff) | — | ✅ DONE | trad wins at matched 80% coverage; ML wins at full coverage (0.011 vs 0.048); σ68 trad 0.64 vs ML 0.89 ns; **MC τ_eff 134.99 ns vs data 124.79 ns (+8%, honest disagreement)** | `reports/mc03_overlay_1783180480/` |
+| **STATS01** (program-level FDR census) | — | ✅ DONE | 1,948 delta-CI claims / 443 artifacts; 11/17 scoreboard bold wins survive BH, 0 fail, 6 rest on prose; S03k survives BH yet is falsified (leakage) — BH necessary, not sufficient; confirmation partition + shared estimators module landed | `reports/stats01_program_fdr_20260703_220116/` |

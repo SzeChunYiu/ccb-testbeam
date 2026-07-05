@@ -11,7 +11,7 @@ list of what would raise the analysis from "honest and corrected" to
 
 | ID | Item | Origin | Maps to existing gap | Effort |
 |----|------|--------|----------------------|--------|
-| B-M1 | **Score `Trig_bar` volumes** in GEANT4 → real per-event Sample-I/II flag; re-fit MV3; soften "root cause established" → "strongly indicated" until then | reviewer M1 | STUDY_GAPS NEW-01 | High (G4 + production) |
+| ~~B-M1~~ | ✅ **DONE 2026-07-05** ([MV3 v5](reports/mv3_v5_realtrigger_1783242005/REPORT.md), LUNARC jobs 3348610/3348673). Scored `Trig_bar` as a real GEANT4 SD and ran a full 1M `Trig_bar`-scored production (`output_krakow_1M_trig.root`). The real two-arm coincidence **establishes the trigger as the mechanism** (untriggered B2 45.9% → triggered 99.7%) but **over-purifies** — MC B2 99.7% vs data Sample I 93.3%, profile NOT reproduced (χ²/ndf vs Sample I ~1.3×10⁵). Net: "root cause established" holds **for the mechanism** (real trigger, not proxy); "profile reproduced / χ²/ndf ≈ 625" is **retired** as over-optimistic. Residual is data-side (pile-up/accidentals, Sample-I purity) → STUDY_GAPS NEW-04. | reviewer M1 | STUDY_GAPS NEW-01 → NEW-04 | High (G4 + production) — done |
 | B-M2 | **Systematic-aware CIs**: every headline CI gets a systematic component or an explicit "statistics-only, systematics dominate" flag; stop quoting sub-0.1 ns CIs on %-discrepant quantities; fold the √1.5 bootstrap under-coverage | reviewer M2 | review §4 | Medium |
 | B-M3 | **Certify P04/P07 ML wins**: emit machine-readable delta-CIs, run through STATS01 FDR, reconcile retired S11a; stop citing as certified until assessed | reviewer M3 | STATS01 follow-up | Medium |
 | B-M4 | **One validated timing σ₆₈** — **DONE (partial, honest) 2026-07-05** (LUNARC 3348546, `reports/s25_covariance_timing_1783241582/`): measured 3×3 inter-stave covariance on timewalk-corrected LORO residuals (B4/B6/B8, A>1000, 3,820 downstream triples), PSD-projected; combined σ₆₈ = **0.490 ns [0.470, 0.508]** (correlation-aware whole-event bootstrap), **replacing the withdrawn 0.54-0.56**; per-stave B4 1.52 / B6 0.68 / B8 0.80 ns. Independence-assumption test (off-diagonal equality) **not rejected**, bootstrap p=0.62; Cauchy-Schwarz bound [0, 0.81] ns. No sub-0.3 ns claim (combined 0.49, min per-stave 0.68). **Held-out confirmation BLOCKED**: reserved runs {64, 12-30} raw files are not staged on LUNARC (only analysis runs 44-63,65) → the FIRST *validated* timing number is not achievable until they are staged. Matched-MV4 not run (MC digitizer gain unanchored, B-M5). | reviewer M4 | STUDY_GAPS covariance + confirmation partition | High |
@@ -54,8 +54,11 @@ provenance (job IDs, md5s, reproduce commands).
   strength-language normalization. Figures rebuilt so none asserts a retracted
   claim (commit "post-review figures"). Manuscript + Data Availability + verified
   references + this backlog committed.
-- Next compute round (still OPEN — require new jobs on LUNARC): B-M1 (Trig_bar
-  scoring), B-M5 (quenched gain re-scan), B-M4 (measured inter-stave covariance +
+- **B-M1 DONE 2026-07-05** (real `Trig_bar` SD production + MV3 re-fit, LUNARC jobs
+  3348610/3348673; trigger established as mechanism, ideal trigger over-purifies,
+  residual is data-side → STUDY_GAPS NEW-04). See `reports/mv3_v5_realtrigger_1783242005/`.
+- Next compute round (still OPEN — require new jobs on LUNARC):
+  B-M5 (quenched gain re-scan), B-M4 (measured inter-stave covariance +
   matched MV4 + confirmation-partition sign-off), B-M6 (separate data enrichment
   from run-set/beam differences), B-M7 (overlay realism: phase jitter + cross-stave),
   B-M8 (early-peak leakage budget), B-M9 (close layer→stave mapping). These are the

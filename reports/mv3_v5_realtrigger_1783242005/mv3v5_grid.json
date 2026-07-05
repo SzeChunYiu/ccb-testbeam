@@ -1,0 +1,3114 @@
+{
+  "study_id": "MV3v5-realtrigger",
+  "generated_utc": "2026-07-05T09:00:06.941148+00:00",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M_trig.root",
+  "trig_edep_thresh_mev": 0.5,
+  "trig_window_ns": 20.0,
+  "threshold_adc": 1000.0,
+  "peak_frac": 0.733,
+  "gains_scanned": [
+    60.0,
+    80.0,
+    92.0,
+    110.0,
+    130.0,
+    150.0,
+    180.0,
+    220.0,
+    260.0,
+    297.0,
+    300.0
+  ],
+  "trigger_diagnostics": {
+    "n_events": 1000000,
+    "A_fired": 36501,
+    "B_fired": 110978,
+    "coinc": 36186,
+    "proxy_ahrd": null
+  },
+  "data": {
+    "all": {
+      "counts": {
+        "B2": 268576,
+        "B4": 19284,
+        "B6": 11834,
+        "B8": 7051
+      },
+      "n_events": 306745,
+      "fractions": {
+        "B2": 0.8755676539144892,
+        "B4": 0.06286655039201942,
+        "B6": 0.03857927594581819,
+        "B8": 0.02298651974767315
+      }
+    },
+    "sample_i": {
+      "counts": {
+        "B2": 217458,
+        "B4": 8689,
+        "B6": 4604,
+        "B8": 2433
+      },
+      "n_events": 233184,
+      "fractions": {
+        "B2": 0.9325596953478797,
+        "B4": 0.037262419376972694,
+        "B6": 0.019744064772883218,
+        "B8": 0.010433820502264306
+      }
+    },
+    "sample_ii": {
+      "counts": {
+        "B2": 51118,
+        "B4": 10595,
+        "B6": 7230,
+        "B8": 4618
+      },
+      "n_events": 73561,
+      "fractions": {
+        "B2": 0.6949062682671524,
+        "B4": 0.14403012465844672,
+        "B6": 0.09828577643044548,
+        "B8": 0.06277783064395535
+      }
+    }
+  },
+  "composition_real_coinc_paired_g92_track": {
+    "C12": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "He3": [
+      44,
+      0,
+      0,
+      0
+    ],
+    "alpha": [
+      282,
+      2,
+      2,
+      1
+    ],
+    "d": [
+      32628,
+      4,
+      1,
+      1
+    ],
+    "other_ion": [
+      86,
+      0,
+      0,
+      0
+    ],
+    "p": [
+      1164,
+      24,
+      13,
+      8
+    ],
+    "t": [
+      49,
+      0,
+      0,
+      0
+    ]
+  },
+  "grid": [
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "proxy_ahrd",
+      "n": 59257,
+      "fractions": {
+        "B2": 0.8724201360176856,
+        "B4": 0.0559427578176418,
+        "B6": 0.03844271562853334,
+        "B8": 0.03319439053613919
+      },
+      "chi2_ndf_all": 409.7982284118698,
+      "chi2_ndf_sample_i": 2727.0732192957244,
+      "chi2_ndf_sample_ii": 7217.397086390846
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "proxy_ahrd",
+      "n": 58964,
+      "fractions": {
+        "B2": 0.8720236076249915,
+        "B4": 0.056051149854148295,
+        "B6": 0.038582864120480294,
+        "B8": 0.033342378400379895
+      },
+      "chi2_ndf_all": 415.0819255833246,
+      "chi2_ndf_sample_i": 2754.5811635358114,
+      "chi2_ndf_sample_ii": 7170.682692773647
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "proxy_ahrd",
+      "n": 58964,
+      "fractions": {
+        "B2": 0.8723627976392375,
+        "B4": 0.05499966080998575,
+        "B6": 0.038803337629740184,
+        "B8": 0.03383420392103657
+      },
+      "chi2_ndf_all": 472.0006186242878,
+      "chi2_ndf_sample_i": 2753.100725094202,
+      "chi2_ndf_sample_ii": 7261.888139833473
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "proxy_ahrd",
+      "n": 58370,
+      "fractions": {
+        "B2": 0.872314545143053,
+        "B4": 0.05477128661983896,
+        "B6": 0.03897550111358575,
+        "B8": 0.03393866712352236
+      },
+      "chi2_ndf_all": 485.368006724781,
+      "chi2_ndf_sample_i": 2761.349795918591,
+      "chi2_ndf_sample_ii": 7265.446122533854
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "proxy_ahrd",
+      "n": 63308,
+      "fractions": {
+        "B2": 0.871264295191761,
+        "B4": 0.057781007139697985,
+        "B6": 0.024372907057559866,
+        "B8": 0.046581790610981236
+      },
+      "chi2_ndf_all": 2116.664247646086,
+      "chi2_ndf_sample_i": 3150.23245496921,
+      "chi2_ndf_sample_ii": 9666.382159265833
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "proxy_ahrd",
+      "n": 62634,
+      "fractions": {
+        "B2": 0.8707570967844941,
+        "B4": 0.05789187980968803,
+        "B6": 0.02429990101222978,
+        "B8": 0.04705112239358815
+      },
+      "chi2_ndf_all": 2162.864349102785,
+      "chi2_ndf_sample_i": 3193.770347749327,
+      "chi2_ndf_sample_ii": 9665.943003255885
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "proxy_ahrd",
+      "n": 61211,
+      "fractions": {
+        "B2": 0.8706114913986048,
+        "B4": 0.05698322196990737,
+        "B6": 0.023786574308539313,
+        "B8": 0.04861871232294849
+      },
+      "chi2_ndf_all": 2387.3586132748696,
+      "chi2_ndf_sample_i": 3257.5920392174194,
+      "chi2_ndf_sample_ii": 9952.466743394967
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "proxy_ahrd",
+      "n": 60788,
+      "fractions": {
+        "B2": 0.8708626702638679,
+        "B4": 0.056705270777127066,
+        "B6": 0.023771139040600117,
+        "B8": 0.048660919918404946
+      },
+      "chi2_ndf_all": 2399.341790275465,
+      "chi2_ndf_sample_i": 3245.1574318293074,
+      "chi2_ndf_sample_ii": 9997.041397713894
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "proxy_ahrd",
+      "n": 65261,
+      "fractions": {
+        "B2": 0.8717917285974778,
+        "B4": 0.057997885413953204,
+        "B6": 0.021314414428219,
+        "B8": 0.04889597156034998
+      },
+      "chi2_ndf_all": 2877.1542618705957,
+      "chi2_ndf_sample_i": 3266.103999377925,
+      "chi2_ndf_sample_ii": 10921.606264130014
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "proxy_ahrd",
+      "n": 64255,
+      "fractions": {
+        "B2": 0.8710294918683371,
+        "B4": 0.05814333514901564,
+        "B6": 0.021196794023811378,
+        "B8": 0.04963037895883589
+      },
+      "chi2_ndf_all": 2961.6760725426684,
+      "chi2_ndf_sample_i": 3334.6305125361664,
+      "chi2_ndf_sample_ii": 10943.972951137757
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "proxy_ahrd",
+      "n": 62185,
+      "fractions": {
+        "B2": 0.8702902629251427,
+        "B4": 0.057473667283106857,
+        "B6": 0.020455093672107422,
+        "B8": 0.051780976119643
+      },
+      "chi2_ndf_all": 3334.2143106220246,
+      "chi2_ndf_sample_i": 3466.9294871188918,
+      "chi2_ndf_sample_ii": 11381.781589020351
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "proxy_ahrd",
+      "n": 61831,
+      "fractions": {
+        "B2": 0.8708576603968883,
+        "B4": 0.05701023758308939,
+        "B6": 0.020410473710598245,
+        "B8": 0.051721628309424075
+      },
+      "chi2_ndf_all": 3350.1484611608553,
+      "chi2_ndf_sample_i": 3435.0132614128743,
+      "chi2_ndf_sample_ii": 11472.31784336511
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "proxy_ahrd",
+      "n": 77289,
+      "fractions": {
+        "B2": 0.8650648863357011,
+        "B4": 0.06435585917789077,
+        "B6": 0.019873461941544074,
+        "B8": 0.050705792544864084
+      },
+      "chi2_ndf_all": 3366.2206785506237,
+      "chi2_ndf_sample_i": 3782.111961086208,
+      "chi2_ndf_sample_ii": 10895.983424630973
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "proxy_ahrd",
+      "n": 77210,
+      "fractions": {
+        "B2": 0.8651081466131331,
+        "B4": 0.06435694858178992,
+        "B6": 0.019829037689418468,
+        "B8": 0.050705867115658596
+      },
+      "chi2_ndf_all": 3378.7374318473244,
+      "chi2_ndf_sample_i": 3781.591635068606,
+      "chi2_ndf_sample_ii": 10921.864911939947
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "proxy_ahrd",
+      "n": 75867,
+      "fractions": {
+        "B2": 0.8658178127512621,
+        "B4": 0.06380903423095681,
+        "B6": 0.019257384633635178,
+        "B8": 0.051115768384145936
+      },
+      "chi2_ndf_all": 3577.6676176637266,
+      "chi2_ndf_sample_i": 3775.968912899036,
+      "chi2_ndf_sample_ii": 11317.834079034104
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "proxy_ahrd",
+      "n": 67104,
+      "fractions": {
+        "B2": 0.8703654029566047,
+        "B4": 0.05922150691463996,
+        "B6": 0.019238793514544588,
+        "B8": 0.05117429661421078
+      },
+      "chi2_ndf_all": 3601.6481817203335,
+      "chi2_ndf_sample_i": 3500.3913517020032,
+      "chi2_ndf_sample_ii": 11873.621688990881
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "proxy_ahrd",
+      "n": 74191,
+      "fractions": {
+        "B2": 0.866398889353156,
+        "B4": 0.06310738499278888,
+        "B6": 0.01891064953970158,
+        "B8": 0.05158307611435349
+      },
+      "chi2_ndf_all": 3722.6832452418894,
+      "chi2_ndf_sample_i": 3769.761879942193,
+      "chi2_ndf_sample_ii": 11605.695770872202
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "proxy_ahrd",
+      "n": 65576,
+      "fractions": {
+        "B2": 0.8694949371721361,
+        "B4": 0.05927473465902159,
+        "B6": 0.018939856044894475,
+        "B8": 0.05229047212394779
+      },
+      "chi2_ndf_all": 3787.996977330635,
+      "chi2_ndf_sample_i": 3597.8362951062677,
+      "chi2_ndf_sample_ii": 12033.546884207237
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "proxy_ahrd",
+      "n": 68791,
+      "fractions": {
+        "B2": 0.8690671744850343,
+        "B4": 0.060429416638804495,
+        "B6": 0.018505327731825384,
+        "B8": 0.05199808114433574
+      },
+      "chi2_ndf_all": 3896.583692005348,
+      "chi2_ndf_sample_i": 3639.7875270054415,
+      "chi2_ndf_sample_ii": 12180.33180582688
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "proxy_ahrd",
+      "n": 72077,
+      "fractions": {
+        "B2": 0.8676138019062947,
+        "B4": 0.06187826907335211,
+        "B6": 0.018313747797494347,
+        "B8": 0.05219418122285889
+      },
+      "chi2_ndf_all": 3973.2182944879464,
+      "chi2_ndf_sample_i": 3744.7825463707813,
+      "chi2_ndf_sample_ii": 12132.980760326305
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "proxy_ahrd",
+      "n": 70222,
+      "fractions": {
+        "B2": 0.8682748996041126,
+        "B4": 0.06130557375181567,
+        "B6": 0.018227905784511975,
+        "B8": 0.05219162085955968
+      },
+      "chi2_ndf_all": 4004.621125510133,
+      "chi2_ndf_sample_i": 3709.5538468779473,
+      "chi2_ndf_sample_ii": 12260.383664252658
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "proxy_ahrd",
+      "n": 66655,
+      "fractions": {
+        "B2": 0.868126922211387,
+        "B4": 0.060415572725226914,
+        "B6": 0.017883129547670844,
+        "B8": 0.05357437551571525
+      },
+      "chi2_ndf_all": 4251.35756949574,
+      "chi2_ndf_sample_i": 3776.6217243833885,
+      "chi2_ndf_sample_ii": 12587.681386672577
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "proxy_ahrd",
+      "n": 62708,
+      "fractions": {
+        "B2": 0.8686292020156918,
+        "B4": 0.05849333418383619,
+        "B6": 0.017796772341646998,
+        "B8": 0.05508069145882503
+      },
+      "chi2_ndf_all": 4432.671593738337,
+      "chi2_ndf_sample_i": 3794.2030709045143,
+      "chi2_ndf_sample_ii": 12871.422501322815
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "proxy_ahrd",
+      "n": 62416,
+      "fractions": {
+        "B2": 0.8693283773391438,
+        "B4": 0.05804601384260446,
+        "B6": 0.017607664701358626,
+        "B8": 0.055017944116893105
+      },
+      "chi2_ndf_all": 4506.291870688229,
+      "chi2_ndf_sample_i": 3764.293798008512,
+      "chi2_ndf_sample_ii": 13072.421713418897
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "proxy_ahrd",
+      "n": 67529,
+      "fractions": {
+        "B2": 0.8673903063868856,
+        "B4": 0.06111448414755142,
+        "B6": 0.017340698070458616,
+        "B8": 0.05415451139510433
+      },
+      "chi2_ndf_all": 4506.9351431199075,
+      "chi2_ndf_sample_i": 3873.628078592777,
+      "chi2_ndf_sample_ii": 12897.981830152547
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "proxy_ahrd",
+      "n": 70837,
+      "fractions": {
+        "B2": 0.8645623050100936,
+        "B4": 0.06341318802320821,
+        "B6": 0.017335573217386394,
+        "B8": 0.0546889337493118
+      },
+      "chi2_ndf_all": 4555.688019727677,
+      "chi2_ndf_sample_i": 4063.520584904871,
+      "chi2_ndf_sample_ii": 12627.523145633997
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "proxy_ahrd",
+      "n": 70874,
+      "fractions": {
+        "B2": 0.8645201343228829,
+        "B4": 0.0634506306967294,
+        "B6": 0.017326523125546747,
+        "B8": 0.054702711854840984
+      },
+      "chi2_ndf_all": 4560.686561896259,
+      "chi2_ndf_sample_i": 4067.2041675651126,
+      "chi2_ndf_sample_ii": 12630.14955043837
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "proxy_ahrd",
+      "n": 69525,
+      "fractions": {
+        "B2": 0.8657461344839985,
+        "B4": 0.06242358863718087,
+        "B6": 0.0170873786407767,
+        "B8": 0.05474289823804387
+      },
+      "chi2_ndf_all": 4659.272209539758,
+      "chi2_ndf_sample_i": 4008.823019021453,
+      "chi2_ndf_sample_ii": 12932.683799065713
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "proxy_ahrd",
+      "n": 70277,
+      "fractions": {
+        "B2": 0.8652332911194274,
+        "B4": 0.06292243550521508,
+        "B6": 0.017061058383254835,
+        "B8": 0.05478321499210268
+      },
+      "chi2_ndf_all": 4674.628579409066,
+      "chi2_ndf_sample_i": 4044.0180435264797,
+      "chi2_ndf_sample_ii": 12896.274641432972
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "proxy_ahrd",
+      "n": 68501,
+      "fractions": {
+        "B2": 0.8666150859111545,
+        "B4": 0.06161953840089926,
+        "B6": 0.017007050991956322,
+        "B8": 0.05475832469598984
+      },
+      "chi2_ndf_all": 4694.746276674235,
+      "chi2_ndf_sample_i": 3961.424227598925,
+      "chi2_ndf_sample_ii": 13090.274958652872
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "proxy_ahrd",
+      "n": 63053,
+      "fractions": {
+        "B2": 0.8670007771240068,
+        "B4": 0.05961651309216056,
+        "B6": 0.016398902510586334,
+        "B8": 0.05698380727324632
+      },
+      "chi2_ndf_all": 5168.159513498996,
+      "chi2_ndf_sample_i": 4045.6078693521504,
+      "chi2_ndf_sample_ii": 13809.132052405068
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "proxy_ahrd",
+      "n": 62809,
+      "fractions": {
+        "B2": 0.8677578054100527,
+        "B4": 0.05914757439220494,
+        "B6": 0.016223789584295243,
+        "B8": 0.05687083061344712
+      },
+      "chi2_ndf_all": 5245.075868074192,
+      "chi2_ndf_sample_i": 4012.1808731902643,
+      "chi2_ndf_sample_ii": 14024.13762886844
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "proxy_ahrd",
+      "n": 63280,
+      "fractions": {
+        "B2": 0.8661820480404551,
+        "B4": 0.06016118836915297,
+        "B6": 0.015597345132743363,
+        "B8": 0.058059418457648546
+      },
+      "chi2_ndf_all": 5651.589665197612,
+      "chi2_ndf_sample_i": 4195.118170055844,
+      "chi2_ndf_sample_ii": 14455.67107109332
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "proxy_ahrd",
+      "n": 63058,
+      "fractions": {
+        "B2": 0.8671540486536204,
+        "B4": 0.05962764439087824,
+        "B6": 0.015335088331377462,
+        "B8": 0.05788321862412382
+      },
+      "chi2_ndf_all": 5779.94967245013,
+      "chi2_ndf_sample_i": 4157.360222016332,
+      "chi2_ndf_sample_ii": 14780.785396289053
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "proxy_ahrd",
+      "n": 63495,
+      "fractions": {
+        "B2": 0.8652177336798174,
+        "B4": 0.06068194346011497,
+        "B6": 0.014851563115205921,
+        "B8": 0.0592487597448618
+      },
+      "chi2_ndf_all": 6166.078706193274,
+      "chi2_ndf_sample_i": 4361.329502079191,
+      "chi2_ndf_sample_ii": 15127.536532193653
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "proxy_ahrd",
+      "n": 63314,
+      "fractions": {
+        "B2": 0.8662381147929368,
+        "B4": 0.060113087152920366,
+        "B6": 0.014578134377862716,
+        "B8": 0.059070663676280125
+      },
+      "chi2_ndf_all": 6317.320799482349,
+      "chi2_ndf_sample_i": 4324.826909572245,
+      "chi2_ndf_sample_ii": 15494.800214779012
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "proxy_ahrd",
+      "n": 63725,
+      "fractions": {
+        "B2": 0.8641663397410749,
+        "B4": 0.06138877991369164,
+        "B6": 0.014656728128677913,
+        "B8": 0.059788152216555514
+      },
+      "chi2_ndf_all": 6327.613773091031,
+      "chi2_ndf_sample_i": 4461.738756053393,
+      "chi2_ndf_sample_ii": 15244.96969944344
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "proxy_ahrd",
+      "n": 63881,
+      "fractions": {
+        "B2": 0.8634335717975611,
+        "B4": 0.061802413863277034,
+        "B6": 0.014464394733958453,
+        "B8": 0.06029961960520343
+      },
+      "chi2_ndf_all": 6490.935969968287,
+      "chi2_ndf_sample_i": 4542.6466728728965,
+      "chi2_ndf_sample_ii": 15402.326008775848
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "proxy_ahrd",
+      "n": 63992,
+      "fractions": {
+        "B2": 0.8626547068383548,
+        "B4": 0.062273409176147015,
+        "B6": 0.014501812726590823,
+        "B8": 0.060570071258907364
+      },
+      "chi2_ndf_all": 6492.299748701568,
+      "chi2_ndf_sample_i": 4594.0921584261605,
+      "chi2_ndf_sample_ii": 15303.047695331035
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "proxy_ahrd",
+      "n": 63989,
+      "fractions": {
+        "B2": 0.8626951507290316,
+        "B4": 0.06226070105799434,
+        "B6": 0.014486864929909828,
+        "B8": 0.06055728328306428
+      },
+      "chi2_ndf_all": 6500.380696079472,
+      "chi2_ndf_sample_i": 4592.957733421318,
+      "chi2_ndf_sample_ii": 15321.26178769538
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "proxy_ahrd",
+      "n": 63567,
+      "fractions": {
+        "B2": 0.8652445451256154,
+        "B4": 0.060801988453128196,
+        "B6": 0.014347066874321582,
+        "B8": 0.05960639954693473
+      },
+      "chi2_ndf_all": 6504.971076913509,
+      "chi2_ndf_sample_i": 4426.282148631703,
+      "chi2_ndf_sample_ii": 15661.60509732862
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "proxy_ahrd",
+      "n": 63870,
+      "fractions": {
+        "B2": 0.8639110693596368,
+        "B4": 0.061593862533270705,
+        "B6": 0.014153749804289965,
+        "B8": 0.060341318302802566
+      },
+      "chi2_ndf_all": 6693.196240577924,
+      "chi2_ndf_sample_i": 4551.1680131380845,
+      "chi2_ndf_sample_ii": 15780.924983197188
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "proxy_ahrd",
+      "n": 63874,
+      "fractions": {
+        "B2": 0.8638726242289507,
+        "B4": 0.06162131696778032,
+        "B6": 0.014152863449917024,
+        "B8": 0.06035319535335191
+      },
+      "chi2_ndf_all": 6694.808270381458,
+      "chi2_ndf_sample_i": 4553.976023760398,
+      "chi2_ndf_sample_ii": 15778.588472865302
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "proxy_ahrd",
+      "n": 63744,
+      "fractions": {
+        "B2": 0.8646460843373494,
+        "B4": 0.06116654116465863,
+        "B6": 0.01407191265060241,
+        "B8": 0.060115461847389556
+      },
+      "chi2_ndf_all": 6727.795299606473,
+      "chi2_ndf_sample_i": 4509.871253478072,
+      "chi2_ndf_sample_ii": 15930.31253886266
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "none",
+      "n": 304296,
+      "fractions": {
+        "B2": 0.48232970528695746,
+        "B4": 0.1927235323500802,
+        "B6": 0.11794436995556958,
+        "B8": 0.2070023924073928
+      },
+      "chi2_ndf_all": 63914.090479348255,
+      "chi2_ndf_sample_i": 63277.73483723963,
+      "chi2_ndf_sample_ii": 5143.225928348126
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "none",
+      "n": 303860,
+      "fractions": {
+        "B2": 0.48224182189166065,
+        "B4": 0.19268083986046206,
+        "B6": 0.117912854604094,
+        "B8": 0.20716448364378331
+      },
+      "chi2_ndf_all": 63944.31222129744,
+      "chi2_ndf_sample_i": 63303.43605735642,
+      "chi2_ndf_sample_ii": 5148.456044946599
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "none",
+      "n": 298133,
+      "fractions": {
+        "B2": 0.4814361375627656,
+        "B4": 0.19183384596807465,
+        "B6": 0.11762535512673873,
+        "B8": 0.209104661342421
+      },
+      "chi2_ndf_all": 64226.32469313856,
+      "chi2_ndf_sample_i": 63540.73885478632,
+      "chi2_ndf_sample_ii": 5201.784299879435
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "none",
+      "n": 290861,
+      "fractions": {
+        "B2": 0.48005748450290686,
+        "B4": 0.19075778464627433,
+        "B6": 0.11769195595146822,
+        "B8": 0.21149277489935056
+      },
+      "chi2_ndf_all": 64702.14110419156,
+      "chi2_ndf_sample_i": 63946.540643532666,
+      "chi2_ndf_sample_ii": 5281.016049945389
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "none",
+      "n": 282015,
+      "fractions": {
+        "B2": 0.4786731202241016,
+        "B4": 0.18910696239561725,
+        "B6": 0.11789089232842224,
+        "B8": 0.21432902505185894
+      },
+      "chi2_ndf_all": 65187.30183962199,
+      "chi2_ndf_sample_i": 64357.75417862237,
+      "chi2_ndf_sample_ii": 5366.185241532626
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "none",
+      "n": 273989,
+      "fractions": {
+        "B2": 0.47672716787900243,
+        "B4": 0.18791630320925293,
+        "B6": 0.1186981959129746,
+        "B8": 0.21665833299877002
+      },
+      "chi2_ndf_all": 65857.78651893637,
+      "chi2_ndf_sample_i": 64935.63758846935,
+      "chi2_ndf_sample_ii": 5465.68786090943
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "none",
+      "n": 267899,
+      "fractions": {
+        "B2": 0.47540677643440254,
+        "B4": 0.18682040619785814,
+        "B6": 0.12007510293058204,
+        "B8": 0.2176977144371573
+      },
+      "chi2_ndf_all": 66311.17944219046,
+      "chi2_ndf_sample_i": 65329.71327470755,
+      "chi2_ndf_sample_ii": 5525.5375364823885
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "none",
+      "n": 261131,
+      "fractions": {
+        "B2": 0.4737315753395805,
+        "B4": 0.18577648766328012,
+        "B6": 0.12221452068119067,
+        "B8": 0.2182774163159487
+      },
+      "chi2_ndf_all": 66883.5376624054,
+      "chi2_ndf_sample_i": 65831.24428115346,
+      "chi2_ndf_sample_ii": 5593.199995274146
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "none",
+      "n": 254171,
+      "fractions": {
+        "B2": 0.471902774116638,
+        "B4": 0.1847811119285835,
+        "B6": 0.12574605285418083,
+        "B8": 0.21757006110059762
+      },
+      "chi2_ndf_all": 67502.32376603475,
+      "chi2_ndf_sample_i": 66380.52050400634,
+      "chi2_ndf_sample_ii": 5651.820306795952
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "none",
+      "n": 274850,
+      "fractions": {
+        "B2": 0.47160269237766056,
+        "B4": 0.1884846279788976,
+        "B6": 0.11651446243405494,
+        "B8": 0.22339821720938693
+      },
+      "chi2_ndf_all": 67654.45606960647,
+      "chi2_ndf_sample_i": 66478.26848599975,
+      "chi2_ndf_sample_ii": 5751.357450089101
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "none",
+      "n": 274660,
+      "fractions": {
+        "B2": 0.47156848467195805,
+        "B4": 0.1884293308090002,
+        "B6": 0.11651496395543581,
+        "B8": 0.22348722056360593
+      },
+      "chi2_ndf_all": 67667.0402954193,
+      "chi2_ndf_sample_i": 66488.81792982218,
+      "chi2_ndf_sample_ii": 5753.78970428483
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "none",
+      "n": 272346,
+      "fractions": {
+        "B2": 0.471374648425165,
+        "B4": 0.18788966975832214,
+        "B6": 0.11668612720583375,
+        "B8": 0.22404955461067907
+      },
+      "chi2_ndf_all": 67739.03075937791,
+      "chi2_ndf_sample_i": 66548.93257710252,
+      "chi2_ndf_sample_ii": 5767.801262211743
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "none",
+      "n": 269224,
+      "fractions": {
+        "B2": 0.47095726978278313,
+        "B4": 0.18717870620747035,
+        "B6": 0.11719237512257451,
+        "B8": 0.22467164888717203
+      },
+      "chi2_ndf_all": 67888.27153481422,
+      "chi2_ndf_sample_i": 66676.97857082161,
+      "chi2_ndf_sample_ii": 5790.382826740967
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "none",
+      "n": 248888,
+      "fractions": {
+        "B2": 0.47069364533444763,
+        "B4": 0.18359261997364276,
+        "B6": 0.13003037510848253,
+        "B8": 0.21568335958342708
+      },
+      "chi2_ndf_all": 67905.47235874826,
+      "chi2_ndf_sample_i": 66744.67222667817,
+      "chi2_ndf_sample_ii": 5675.916005735916
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "none",
+      "n": 265159,
+      "fractions": {
+        "B2": 0.47065345698241434,
+        "B4": 0.18632594028488567,
+        "B6": 0.11774067634890764,
+        "B8": 0.22527992638379238
+      },
+      "chi2_ndf_all": 67998.89414387241,
+      "chi2_ndf_sample_i": 66770.96355654957,
+      "chi2_ndf_sample_ii": 5808.4759323084945
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "none",
+      "n": 261096,
+      "fractions": {
+        "B2": 0.46999188038116246,
+        "B4": 0.1856405306860312,
+        "B6": 0.1189447559518338,
+        "B8": 0.22542283298097252
+      },
+      "chi2_ndf_all": 68228.10137869703,
+      "chi2_ndf_sample_i": 66972.64436527011,
+      "chi2_ndf_sample_ii": 5833.331515053098
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "none",
+      "n": 257732,
+      "fractions": {
+        "B2": 0.469596324864588,
+        "B4": 0.18502553039591513,
+        "B6": 0.12048950072167988,
+        "B8": 0.22488864401781697
+      },
+      "chi2_ndf_all": 68359.98739054809,
+      "chi2_ndf_sample_i": 67092.54985865306,
+      "chi2_ndf_sample_ii": 5839.147535566655
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "none",
+      "n": 253697,
+      "fractions": {
+        "B2": 0.46904378057288815,
+        "B4": 0.18441290200514787,
+        "B6": 0.12276061601043765,
+        "B8": 0.22378270141152634
+      },
+      "chi2_ndf_all": 68541.7003357915,
+      "chi2_ndf_sample_i": 67259.5953052143,
+      "chi2_ndf_sample_ii": 5843.737934102729
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "none",
+      "n": 249102,
+      "fractions": {
+        "B2": 0.4685189199604981,
+        "B4": 0.18369984986069962,
+        "B6": 0.12633379097719008,
+        "B8": 0.2214474392016122
+      },
+      "chi2_ndf_all": 68704.90413585045,
+      "chi2_ndf_sample_i": 67416.73314944295,
+      "chi2_ndf_sample_ii": 5832.704923001576
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "none",
+      "n": 245279,
+      "fractions": {
+        "B2": 0.46816482454674063,
+        "B4": 0.18278776413798165,
+        "B6": 0.13059413973475104,
+        "B8": 0.21845327158052666
+      },
+      "chi2_ndf_all": 68806.46781309978,
+      "chi2_ndf_sample_i": 67521.48924829258,
+      "chi2_ndf_sample_ii": 5810.4520708290975
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "none",
+      "n": 236485,
+      "fractions": {
+        "B2": 0.46444383364695435,
+        "B4": 0.18301372180053704,
+        "B6": 0.1452396557921221,
+        "B8": 0.2073027887603865
+      },
+      "chi2_ndf_all": 70040.947001988,
+      "chi2_ndf_sample_i": 68656.245177056,
+      "chi2_ndf_sample_ii": 5850.545439295728
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "none",
+      "n": 234830,
+      "fractions": {
+        "B2": 0.46304134906102284,
+        "B4": 0.18257462845462674,
+        "B6": 0.14575650470553167,
+        "B8": 0.20862751777881872
+      },
+      "chi2_ndf_all": 70552.07525569508,
+      "chi2_ndf_sample_i": 69097.49928713754,
+      "chi2_ndf_sample_ii": 5925.7058018569305
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "none",
+      "n": 230658,
+      "fractions": {
+        "B2": 0.4595461679196039,
+        "B4": 0.1772754467653409,
+        "B6": 0.13139800050290906,
+        "B8": 0.23178038481214613
+      },
+      "chi2_ndf_all": 71993.99015663694,
+      "chi2_ndf_sample_i": 70244.16308330809,
+      "chi2_ndf_sample_ii": 6334.792111026231
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "none",
+      "n": 231605,
+      "fractions": {
+        "B2": 0.459446039593273,
+        "B4": 0.17778545368191534,
+        "B6": 0.13090390967379806,
+        "B8": 0.2318645970510136
+      },
+      "chi2_ndf_all": 72028.9108746035,
+      "chi2_ndf_sample_i": 70275.33087763775,
+      "chi2_ndf_sample_ii": 6338.828889940298
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "none",
+      "n": 228729,
+      "fractions": {
+        "B2": 0.45853389819393253,
+        "B4": 0.17818903593335345,
+        "B6": 0.146802547993477,
+        "B8": 0.216474517879237
+      },
+      "chi2_ndf_all": 72253.80895327295,
+      "chi2_ndf_sample_i": 70544.1581734022,
+      "chi2_ndf_sample_ii": 6217.27951513174
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "none",
+      "n": 231506,
+      "fractions": {
+        "B2": 0.45892115107167847,
+        "B4": 0.17753319568391315,
+        "B6": 0.12656691403246567,
+        "B8": 0.23697873921194268
+      },
+      "chi2_ndf_all": 72262.08135618946,
+      "chi2_ndf_sample_i": 70451.61476426298,
+      "chi2_ndf_sample_ii": 6425.380888890151
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "none",
+      "n": 227277,
+      "fractions": {
+        "B2": 0.4582601847085275,
+        "B4": 0.17754106222803012,
+        "B6": 0.14757322562335828,
+        "B8": 0.21662552744008412
+      },
+      "chi2_ndf_all": 72358.6035550617,
+      "chi2_ndf_sample_i": 70633.31639499153,
+      "chi2_ndf_sample_ii": 6234.384410554794
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "none",
+      "n": 232296,
+      "fractions": {
+        "B2": 0.45855718565967557,
+        "B4": 0.1781649275062851,
+        "B6": 0.12626562661431967,
+        "B8": 0.23701226021971966
+      },
+      "chi2_ndf_all": 72392.41737818086,
+      "chi2_ndf_sample_i": 70566.93751170441,
+      "chi2_ndf_sample_ii": 6440.108481663607
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "none",
+      "n": 232406,
+      "fractions": {
+        "B2": 0.45823687856595785,
+        "B4": 0.17768474135779627,
+        "B6": 0.1221526122389267,
+        "B8": 0.24192576783731917
+      },
+      "chi2_ndf_all": 72553.98616843195,
+      "chi2_ndf_sample_i": 70678.97153429574,
+      "chi2_ndf_sample_ii": 6520.758067256743
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "none",
+      "n": 233043,
+      "fractions": {
+        "B2": 0.4577996335440241,
+        "B4": 0.17818600000858212,
+        "B6": 0.12202469072231305,
+        "B8": 0.2419896757250808
+      },
+      "chi2_ndf_all": 72712.21394591975,
+      "chi2_ndf_sample_i": 70818.40691584111,
+      "chi2_ndf_sample_ii": 6539.311760968151
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "none",
+      "n": 233099,
+      "fractions": {
+        "B2": 0.45774542147327957,
+        "B4": 0.17783431074350384,
+        "B6": 0.11927979099009434,
+        "B8": 0.24514047679312223
+      },
+      "chi2_ndf_all": 72762.80740012291,
+      "chi2_ndf_sample_i": 70842.35706568182,
+      "chi2_ndf_sample_ii": 6587.558119566351
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "none",
+      "n": 233616,
+      "fractions": {
+        "B2": 0.4571904321621807,
+        "B4": 0.17829258269981507,
+        "B6": 0.11929833573042942,
+        "B8": 0.24521864940757482
+      },
+      "chi2_ndf_all": 72964.57154936284,
+      "chi2_ndf_sample_i": 71020.0111660018,
+      "chi2_ndf_sample_ii": 6611.172639493711
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "none",
+      "n": 233563,
+      "fractions": {
+        "B2": 0.457238518087197,
+        "B4": 0.17805474325984852,
+        "B6": 0.1171932198164949,
+        "B8": 0.24751351883645953
+      },
+      "chi2_ndf_all": 72970.4397830564,
+      "chi2_ndf_sample_i": 71009.51292836238,
+      "chi2_ndf_sample_ii": 6644.271459076808
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "none",
+      "n": 234111,
+      "fractions": {
+        "B2": 0.45686447881560455,
+        "B4": 0.17817189282007254,
+        "B6": 0.11531709317375091,
+        "B8": 0.249646535190572
+      },
+      "chi2_ndf_all": 73128.56250016311,
+      "chi2_ndf_sample_i": 71134.06564518902,
+      "chi2_ndf_sample_ii": 6693.141857221405
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "none",
+      "n": 234004,
+      "fractions": {
+        "B2": 0.4565135638707031,
+        "B4": 0.17853113621989367,
+        "B6": 0.11734842139450608,
+        "B8": 0.24760687851489718
+      },
+      "chi2_ndf_all": 73234.82256659902,
+      "chi2_ndf_sample_i": 71242.3119076244,
+      "chi2_ndf_sample_ii": 6674.951777022873
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "none",
+      "n": 234563,
+      "fractions": {
+        "B2": 0.4561588997412209,
+        "B4": 0.1784552550913827,
+        "B6": 0.11419959669683624,
+        "B8": 0.25118624847056015
+      },
+      "chi2_ndf_all": 73401.93419898016,
+      "chi2_ndf_sample_i": 71364.32886917757,
+      "chi2_ndf_sample_ii": 6746.424447877733
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "none",
+      "n": 234463,
+      "fractions": {
+        "B2": 0.4559909239410909,
+        "B4": 0.17866784951143677,
+        "B6": 0.11551929302277972,
+        "B8": 0.2498219335246926
+      },
+      "chi2_ndf_all": 73448.49159463594,
+      "chi2_ndf_sample_i": 71415.3510977456,
+      "chi2_ndf_sample_ii": 6731.000593290912
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "none",
+      "n": 234874,
+      "fractions": {
+        "B2": 0.45567836371841924,
+        "B4": 0.17874690259458262,
+        "B6": 0.1133373638631777,
+        "B8": 0.25223736982382045
+      },
+      "chi2_ndf_all": 73588.69316246845,
+      "chi2_ndf_sample_i": 71521.49262926781,
+      "chi2_ndf_sample_ii": 6783.323539561939
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "none",
+      "n": 234848,
+      "fractions": {
+        "B2": 0.4552221011036926,
+        "B4": 0.178945530726257,
+        "B6": 0.11442294590543671,
+        "B8": 0.2514094222646137
+      },
+      "chi2_ndf_all": 73746.56244552006,
+      "chi2_ndf_sample_i": 71667.08034807428,
+      "chi2_ndf_sample_ii": 6787.642498440492
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "none",
+      "n": 235095,
+      "fractions": {
+        "B2": 0.4552542589166082,
+        "B4": 0.17894468193708926,
+        "B6": 0.11289478721367957,
+        "B8": 0.252906271932623
+      },
+      "chi2_ndf_all": 73751.14122030564,
+      "chi2_ndf_sample_i": 71659.97939109574,
+      "chi2_ndf_sample_ii": 6811.5650330545795
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "none",
+      "n": 235118,
+      "fractions": {
+        "B2": 0.4552437499468352,
+        "B4": 0.17895269609302564,
+        "B6": 0.11288374348199627,
+        "B8": 0.2529198104781429
+      },
+      "chi2_ndf_all": 73755.13517032452,
+      "chi2_ndf_sample_i": 71663.40447024551,
+      "chi2_ndf_sample_ii": 6812.222944908436
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "none",
+      "n": 235109,
+      "fractions": {
+        "B2": 0.4546189214364401,
+        "B4": 0.17932108086036688,
+        "B6": 0.11361538690564801,
+        "B8": 0.252444610797545
+      },
+      "chi2_ndf_all": 73978.86589636315,
+      "chi2_ndf_sample_i": 71864.57980077963,
+      "chi2_ndf_sample_ii": 6829.337928095979
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "none",
+      "n": 235299,
+      "fractions": {
+        "B2": 0.45417107595017403,
+        "B4": 0.179490775566407,
+        "B6": 0.11321340082193294,
+        "B8": 0.253124747661486
+      },
+      "chi2_ndf_all": 74150.93507022684,
+      "chi2_ndf_sample_i": 72011.48727037758,
+      "chi2_ndf_sample_ii": 6858.712800945559
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "none",
+      "n": 235320,
+      "fractions": {
+        "B2": 0.4541517933027367,
+        "B4": 0.17949175590685024,
+        "B6": 0.11321604623491416,
+        "B8": 0.2531404045554989
+      },
+      "chi2_ndf_all": 74158.20610200177,
+      "chi2_ndf_sample_i": 72017.79508076502,
+      "chi2_ndf_sample_ii": 6859.7317648618655
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_Aonly",
+      "n": 39363,
+      "fractions": {
+        "B2": 0.9932169804130783,
+        "B4": 0.003861494296674542,
+        "B6": 0.0016767014709244722,
+        "B8": 0.0012448238193227142
+      },
+      "chi2_ndf_all": 215486.14646403285,
+      "chi2_ndf_sample_i": 43149.17449042216,
+      "chi2_ndf_sample_ii": 338030.0604632134
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_Aonly",
+      "n": 39316,
+      "fractions": {
+        "B2": 0.9932343066436057,
+        "B4": 0.0038406755519381423,
+        "B6": 0.0016787058703835588,
+        "B8": 0.001246311934072642
+      },
+      "chi2_ndf_all": 215891.84295179902,
+      "chi2_ndf_sample_i": 43269.79260123353,
+      "chi2_ndf_sample_ii": 338482.5249048084
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_Aonly",
+      "n": 33414,
+      "fractions": {
+        "B2": 0.9933261507152691,
+        "B4": 0.003920512360088586,
+        "B6": 0.0015562339139282935,
+        "B8": 0.001197103010714072
+      },
+      "chi2_ndf_all": 222658.13419977087,
+      "chi2_ndf_sample_i": 44390.849961112915,
+      "chi2_ndf_sample_ii": 350076.0992534848
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_Aonly",
+      "n": 33414,
+      "fractions": {
+        "B2": 0.9933261507152691,
+        "B4": 0.003920512360088586,
+        "B6": 0.0015562339139282935,
+        "B8": 0.001197103010714072
+      },
+      "chi2_ndf_all": 222658.13419977087,
+      "chi2_ndf_sample_i": 44390.849961112915,
+      "chi2_ndf_sample_ii": 350076.0992534848
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_Aonly",
+      "n": 33403,
+      "fractions": {
+        "B2": 0.9937730143999042,
+        "B4": 0.003622429123132653,
+        "B6": 0.001466934107714876,
+        "B8": 0.001137622369248271
+      },
+      "chi2_ndf_all": 239417.06250316845,
+      "chi2_ndf_sample_i": 48180.337666578074,
+      "chi2_ndf_sample_ii": 374233.50151540595
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_Aonly",
+      "n": 38707,
+      "fractions": {
+        "B2": 0.9939287467383161,
+        "B4": 0.003487741235435451,
+        "B6": 0.0014984369752241197,
+        "B8": 0.0010850750510243625
+      },
+      "chi2_ndf_all": 243831.52452092952,
+      "chi2_ndf_sample_i": 49246.174980369186,
+      "chi2_ndf_sample_ii": 380373.2912978611
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_coinc",
+      "n": 33359,
+      "fractions": {
+        "B2": 0.9943343625408435,
+        "B4": 0.0029976917773314547,
+        "B6": 0.0015587997242123566,
+        "B8": 0.0011091459576126382
+      },
+      "chi2_ndf_all": 257727.0301001248,
+      "chi2_ndf_sample_i": 53324.71318008929,
+      "chi2_ndf_sample_ii": 396156.23656050005
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_coinc",
+      "n": 33359,
+      "fractions": {
+        "B2": 0.9943343625408435,
+        "B4": 0.0029976917773314547,
+        "B6": 0.0015587997242123566,
+        "B8": 0.0011091459576126382
+      },
+      "chi2_ndf_all": 257727.0301001248,
+      "chi2_ndf_sample_i": 53324.71318008929,
+      "chi2_ndf_sample_ii": 396156.23656050005
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_coinc",
+      "n": 39279,
+      "fractions": {
+        "B2": 0.9944499605387103,
+        "B4": 0.002698643040810611,
+        "B6": 0.0016802871763537768,
+        "B8": 0.0011711092441253595
+      },
+      "chi2_ndf_all": 263020.42719778,
+      "chi2_ndf_sample_i": 55497.3249053136,
+      "chi2_ndf_sample_ii": 399362.0152863884
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_coinc",
+      "n": 39232,
+      "fractions": {
+        "B2": 0.9944688009787929,
+        "B4": 0.0026763866231647635,
+        "B6": 0.001682300163132137,
+        "B8": 0.0011725122349102773
+      },
+      "chi2_ndf_all": 264100.6108762792,
+      "chi2_ndf_sample_i": 55798.38173437128,
+      "chi2_ndf_sample_ii": 400661.8248178116
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_Aonly",
+      "n": 33389,
+      "fractions": {
+        "B2": 0.9943095031297733,
+        "B4": 0.0034442481056635417,
+        "B6": 0.0012578993081553806,
+        "B8": 0.000988349456407799
+      },
+      "chi2_ndf_all": 269557.8036067873,
+      "chi2_ndf_sample_i": 54240.857446472444,
+      "chi2_ndf_sample_ii": 421154.0634095618
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_coinc",
+      "n": 33348,
+      "fractions": {
+        "B2": 0.994752308984047,
+        "B4": 0.00272879932829555,
+        "B6": 0.0014693534844668346,
+        "B8": 0.0010495382031905961
+      },
+      "chi2_ndf_all": 279686.97966558015,
+      "chi2_ndf_sample_i": 58460.385559069495,
+      "chi2_ndf_sample_ii": 427070.41020759434
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_Aonly",
+      "n": 37977,
+      "fractions": {
+        "B2": 0.9945756642178161,
+        "B4": 0.0032914658872475445,
+        "B6": 0.0012112594465070964,
+        "B8": 0.0009216104484293125
+      },
+      "chi2_ndf_all": 283599.6563659534,
+      "chi2_ndf_sample_i": 57224.66208704956,
+      "chi2_ndf_sample_ii": 442337.289281834
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_coinc",
+      "n": 38627,
+      "fractions": {
+        "B2": 0.9951070494731664,
+        "B4": 0.002381753695601522,
+        "B6": 0.0015015403733140032,
+        "B8": 0.0010096564579180367
+      },
+      "chi2_ndf_all": 301050.188361964,
+      "chi2_ndf_sample_i": 64075.44009028377,
+      "chi2_ndf_sample_ii": 454408.8893591317
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_Aonly",
+      "n": 33341,
+      "fractions": {
+        "B2": 0.9948711796286854,
+        "B4": 0.003179268768183318,
+        "B6": 0.001169730961878768,
+        "B8": 0.0007798206412525119
+      },
+      "chi2_ndf_all": 303028.23711499426,
+      "chi2_ndf_sample_i": 60919.159902285726,
+      "chi2_ndf_sample_ii": 473795.4976856646
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_Aonly",
+      "n": 33340,
+      "fractions": {
+        "B2": 0.9949010197960408,
+        "B4": 0.003149370125974805,
+        "B6": 0.001169766046790642,
+        "B8": 0.0007798440311937612
+      },
+      "chi2_ndf_all": 304226.584779735,
+      "chi2_ndf_sample_i": 61238.28977037804,
+      "chi2_ndf_sample_ii": 475304.2657050166
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_Aonly",
+      "n": 36334,
+      "fractions": {
+        "B2": 0.9950184400286233,
+        "B4": 0.0031100346782627843,
+        "B6": 0.0011559420928056365,
+        "B8": 0.0007155832003082512
+      },
+      "chi2_ndf_all": 313617.3109042009,
+      "chi2_ndf_sample_i": 62947.88575096215,
+      "chi2_ndf_sample_ii": 490895.29416382517
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_Aonly",
+      "n": 36317,
+      "fractions": {
+        "B2": 0.9950436434727538,
+        "B4": 0.0030839551725087423,
+        "B6": 0.0011564831896907785,
+        "B8": 0.0007159181650466724
+      },
+      "chi2_ndf_all": 314617.2006043587,
+      "chi2_ndf_sample_i": 63221.825558755336,
+      "chi2_ndf_sample_ii": 492119.0498431704
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_coinc",
+      "n": 33334,
+      "fractions": {
+        "B2": 0.9952900941981161,
+        "B4": 0.00254994900101998,
+        "B6": 0.00125997480050399,
+        "B8": 0.0008999820003599928
+      },
+      "chi2_ndf_all": 315796.4281477293,
+      "chi2_ndf_sample_i": 65964.30482568764,
+      "chi2_ndf_sample_ii": 482227.74151572195
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_Aonly",
+      "n": 33373,
+      "fractions": {
+        "B2": 0.9950558834986366,
+        "B4": 0.0029664699008180267,
+        "B6": 0.0010487519851376862,
+        "B8": 0.0009288946154076649
+      },
+      "chi2_ndf_all": 316020.89129125857,
+      "chi2_ndf_sample_i": 64588.39539717234,
+      "chi2_ndf_sample_ii": 488742.2403376337
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_Aonly",
+      "n": 33319,
+      "fractions": {
+        "B2": 0.9951679222065488,
+        "B4": 0.0030012905549386235,
+        "B6": 0.0010804645997779046,
+        "B8": 0.0007503226387346559
+      },
+      "chi2_ndf_all": 324014.5901158594,
+      "chi2_ndf_sample_i": 65478.66580286121,
+      "chi2_ndf_sample_ii": 504881.6402114653
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_Aonly",
+      "n": 33348,
+      "fractions": {
+        "B2": 0.9955019791291831,
+        "B4": 0.002578865299268322,
+        "B6": 0.0010195513973851504,
+        "B8": 0.0008996041741633681
+      },
+      "chi2_ndf_all": 342509.8935091361,
+      "chi2_ndf_sample_i": 71150.1833445197,
+      "chi2_ndf_sample_ii": 524365.1725075122
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_coinc",
+      "n": 37900,
+      "fractions": {
+        "B2": 0.9957255936675462,
+        "B4": 0.0022163588390501318,
+        "B6": 0.0012137203166226913,
+        "B8": 0.0008443271767810027
+      },
+      "chi2_ndf_all": 348174.5802503111,
+      "chi2_ndf_sample_i": 73841.16047084643,
+      "chi2_ndf_sample_ii": 526489.1665825037
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_Aonly",
+      "n": 36076,
+      "fractions": {
+        "B2": 0.9955094799866947,
+        "B4": 0.0028273644528218206,
+        "B6": 0.0009978933362900543,
+        "B8": 0.0006652622241933695
+      },
+      "chi2_ndf_all": 353131.2589135464,
+      "chi2_ndf_sample_i": 71429.87816781948,
+      "chi2_ndf_sample_ii": 549910.9400309812
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_coinc",
+      "n": 33286,
+      "fractions": {
+        "B2": 0.9958240701796551,
+        "B4": 0.002313284864507601,
+        "B6": 0.0011716637625428109,
+        "B8": 0.0006909811932944782
+      },
+      "chi2_ndf_all": 359228.2454818623,
+      "chi2_ndf_sample_i": 74914.40229032627,
+      "chi2_ndf_sample_ii": 549277.0006579063
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_coinc",
+      "n": 33285,
+      "fractions": {
+        "B2": 0.9958539882830104,
+        "B4": 0.0022833108006609583,
+        "B6": 0.0011716989634970709,
+        "B8": 0.0006910019528316058
+      },
+      "chi2_ndf_all": 361512.85627521103,
+      "chi2_ndf_sample_i": 75523.66873337857,
+      "chi2_ndf_sample_ii": 552152.9544670744
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_Aonly",
+      "n": 33294,
+      "fractions": {
+        "B2": 0.9956448609359043,
+        "B4": 0.0027632606475641256,
+        "B6": 0.0009911695801045233,
+        "B8": 0.0006007088364269838
+      },
+      "chi2_ndf_all": 366197.785814822,
+      "chi2_ndf_sample_i": 73879.01801236114,
+      "chi2_ndf_sample_ii": 571303.1108171272
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_Aonly",
+      "n": 37089,
+      "fractions": {
+        "B2": 0.9956860524683868,
+        "B4": 0.0026962172072582165,
+        "B6": 0.0008897516783952115,
+        "B8": 0.0007279786459597186
+      },
+      "chi2_ndf_all": 371608.5694553175,
+      "chi2_ndf_sample_i": 75869.27803025152,
+      "chi2_ndf_sample_ii": 574995.5564692094
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_Aonly",
+      "n": 33323,
+      "fractions": {
+        "B2": 0.9958887255049065,
+        "B4": 0.0023407256249437327,
+        "B6": 0.0009602976922846083,
+        "B8": 0.0008102511778651382
+      },
+      "chi2_ndf_all": 374254.40601787413,
+      "chi2_ndf_sample_i": 78252.5767568767,
+      "chi2_ndf_sample_ii": 570609.1904882296
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_coinc",
+      "n": 33318,
+      "fractions": {
+        "B2": 0.9960381775616783,
+        "B4": 0.0020709526382135784,
+        "B6": 0.0010504832222822497,
+        "B8": 0.0008403865778257998
+      },
+      "chi2_ndf_all": 380735.5103972896,
+      "chi2_ndf_sample_i": 81165.16990858676,
+      "chi2_ndf_sample_ii": 573462.4557532646
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 300.0,
+      "trigger": "real_coinc",
+      "n": 36264,
+      "fractions": {
+        "B2": 0.9961118464592985,
+        "B4": 0.002095742333995147,
+        "B6": 0.001158173395102581,
+        "B8": 0.0006342378116037944
+      },
+      "chi2_ndf_all": 385846.7258024416,
+      "chi2_ndf_sample_i": 81134.44663767127,
+      "chi2_ndf_sample_ii": 586965.6025406107
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_coinc",
+      "n": 33264,
+      "fractions": {
+        "B2": 0.9961219336219336,
+        "B4": 0.0021344396344396346,
+        "B6": 0.0010822510822510823,
+        "B8": 0.0006613756613756613
+      },
+      "chi2_ndf_all": 388072.7240876926,
+      "chi2_ndf_sample_i": 81488.02607006872,
+      "chi2_ndf_sample_ii": 590660.6315735856
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 297.0,
+      "trigger": "real_coinc",
+      "n": 36247,
+      "fractions": {
+        "B2": 0.9961376113885287,
+        "B4": 0.002069136756145336,
+        "B6": 0.0011587165834413883,
+        "B8": 0.0006345352718845697
+      },
+      "chi2_ndf_all": 388222.5292713936,
+      "chi2_ndf_sample_i": 81776.33595968282,
+      "chi2_ndf_sample_ii": 589918.8844411009
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_Aonly",
+      "n": 35787,
+      "fractions": {
+        "B2": 0.9959482493642943,
+        "B4": 0.0026825383519155,
+        "B6": 0.0008382932349735938,
+        "B8": 0.0005309190488166094
+      },
+      "chi2_ndf_all": 410396.97986871796,
+      "chi2_ndf_sample_i": 82460.32487923093,
+      "chi2_ndf_sample_ii": 641567.0302260645
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_Aonly",
+      "n": 33292,
+      "fractions": {
+        "B2": 0.996215306980656,
+        "B4": 0.0021927189715246907,
+        "B6": 0.0008110056470022829,
+        "B8": 0.0007809684008170131
+      },
+      "chi2_ndf_all": 417554.2180976788,
+      "chi2_ndf_sample_i": 87542.52036086183,
+      "chi2_ndf_sample_ii": 635151.7328432094
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_Aonly",
+      "n": 36311,
+      "fractions": {
+        "B2": 0.9961168791826168,
+        "B4": 0.0024785877557764865,
+        "B6": 0.000743576326732946,
+        "B8": 0.0006609567348737298
+      },
+      "chi2_ndf_all": 425883.42815979896,
+      "chi2_ndf_sample_i": 87227.88378738721,
+      "chi2_ndf_sample_ii": 657350.4364386061
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_coinc",
+      "n": 33293,
+      "fractions": {
+        "B2": 0.996455711410807,
+        "B4": 0.0017120716066440394,
+        "B6": 0.0010212356951911814,
+        "B8": 0.0008109812873577029
+      },
+      "chi2_ndf_all": 428085.34732404957,
+      "chi2_ndf_sample_i": 93251.81458516081,
+      "chi2_ndf_sample_ii": 635570.914614576
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 260.0,
+      "trigger": "real_coinc",
+      "n": 36008,
+      "fractions": {
+        "B2": 0.996556320817596,
+        "B4": 0.0018606976227505,
+        "B6": 0.0009997778271495224,
+        "B8": 0.0005832037325038881
+      },
+      "chi2_ndf_all": 438440.70879154745,
+      "chi2_ndf_sample_i": 92921.72686568223,
+      "chi2_ndf_sample_ii": 663355.2426349111
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_Aonly",
+      "n": 33231,
+      "fractions": {
+        "B2": 0.9964490987331106,
+        "B4": 0.0020462820860040324,
+        "B6": 0.0008124943576780717,
+        "B8": 0.0006921248232072462
+      },
+      "chi2_ndf_all": 439260.45781323616,
+      "chi2_ndf_sample_i": 92371.22936559054,
+      "chi2_ndf_sample_ii": 667098.3606115656
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_coinc",
+      "n": 33239,
+      "fractions": {
+        "B2": 0.996600379072776,
+        "B4": 0.0018953638797797768,
+        "B6": 0.0009928096513132163,
+        "B8": 0.0005114473961310509
+      },
+      "chi2_ndf_all": 448530.31239996245,
+      "chi2_ndf_sample_i": 94106.23447577517,
+      "chi2_ndf_sample_ii": 683265.1569898139
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_Aonly",
+      "n": 33266,
+      "fractions": {
+        "B2": 0.9963626525581675,
+        "B4": 0.0023447363674622738,
+        "B6": 0.0007515180664943185,
+        "B8": 0.0005410930078759093
+      },
+      "chi2_ndf_all": 451115.40406833426,
+      "chi2_ndf_sample_i": 92102.1966271121,
+      "chi2_ndf_sample_ii": 698084.4004048036
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_Aonly",
+      "n": 35712,
+      "fractions": {
+        "B2": 0.9965557795698925,
+        "B4": 0.002212141577060932,
+        "B6": 0.0007000448028673835,
+        "B8": 0.0005320340501792115
+      },
+      "chi2_ndf_all": 478020.11284093536,
+      "chi2_ndf_sample_i": 98078.85085874109,
+      "chi2_ndf_sample_ii": 737301.528669872
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_coinc",
+      "n": 37016,
+      "fractions": {
+        "B2": 0.9968392046682516,
+        "B4": 0.0016209206829479145,
+        "B6": 0.000891506375621353,
+        "B8": 0.0006483682731791658
+      },
+      "chi2_ndf_all": 479720.8692662856,
+      "chi2_ndf_sample_i": 103705.01772415603,
+      "chi2_ndf_sample_ii": 715911.064774929
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_coinc",
+      "n": 33268,
+      "fractions": {
+        "B2": 0.996813754959721,
+        "B4": 0.0015029457737164842,
+        "B6": 0.0009318263797042203,
+        "B8": 0.0007514728868582421
+      },
+      "chi2_ndf_all": 480473.49857881013,
+      "chi2_ndf_sample_i": 105671.87347166963,
+      "chi2_ndf_sample_ii": 708598.333833748
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_Aonly",
+      "n": 33215,
+      "fractions": {
+        "B2": 0.9966581363841638,
+        "B4": 0.002137588438958302,
+        "B6": 0.000692458226704802,
+        "B8": 0.0005118169501731146
+      },
+      "chi2_ndf_all": 490776.13849959715,
+      "chi2_ndf_sample_i": 100875.911289068,
+      "chi2_ndf_sample_ii": 756201.8777527907
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 220.0,
+      "trigger": "real_coinc",
+      "n": 35720,
+      "fractions": {
+        "B2": 0.996976483762598,
+        "B4": 0.0017357222844344904,
+        "B6": 0.0008398656215005599,
+        "B8": 0.0004479283314669653
+      },
+      "chi2_ndf_all": 511003.67714273743,
+      "chi2_ndf_sample_i": 107221.79337563923,
+      "chi2_ndf_sample_ii": 778185.3676188447
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_Aonly",
+      "n": 33175,
+      "fractions": {
+        "B2": 0.9968651092690278,
+        "B4": 0.0019291635267520723,
+        "B6": 0.0006631499623210249,
+        "B8": 0.0005425772418990204
+      },
+      "chi2_ndf_all": 514912.89204215124,
+      "chi2_ndf_sample_i": 107313.20145523245,
+      "chi2_ndf_sample_ii": 786322.4294326081
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_Aonly",
+      "n": 33177,
+      "fractions": {
+        "B2": 0.9968954396117793,
+        "B4": 0.0019591885945082436,
+        "B6": 0.0006631099858335594,
+        "B8": 0.00048226180787895226
+      },
+      "chi2_ndf_all": 524167.48318230035,
+      "chi2_ndf_sample_i": 108407.05286286649,
+      "chi2_ndf_sample_ii": 804578.0314216549
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_Aonly",
+      "n": 35387,
+      "fractions": {
+        "B2": 0.9966937010766665,
+        "B4": 0.0022607172125356768,
+        "B6": 0.0005651793031339192,
+        "B8": 0.00048040240766383135
+      },
+      "chi2_ndf_all": 536872.2510057254,
+      "chi2_ndf_sample_i": 109059.09969693019,
+      "chi2_ndf_sample_ii": 832621.9522589912
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_Aonly",
+      "n": 35042,
+      "fractions": {
+        "B2": 0.9968894469493751,
+        "B4": 0.00202614006049883,
+        "B6": 0.0005992808629644426,
+        "B8": 0.0004851321271616917
+      },
+      "chi2_ndf_all": 541133.1725539191,
+      "chi2_ndf_sample_i": 111350.2975956314,
+      "chi2_ndf_sample_ii": 832859.4639196438
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_coinc",
+      "n": 33237,
+      "fractions": {
+        "B2": 0.9971417396275235,
+        "B4": 0.0013539128080151638,
+        "B6": 0.0007822607335198725,
+        "B8": 0.0007220868309414207
+      },
+      "chi2_ndf_all": 544195.6690915657,
+      "chi2_ndf_sample_i": 120229.41621636173,
+      "chi2_ndf_sample_ii": 799684.3523009719
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_Aonly",
+      "n": 35032,
+      "fractions": {
+        "B2": 0.9968314683717744,
+        "B4": 0.002140899748801096,
+        "B6": 0.0005423612696962777,
+        "B8": 0.00048527060972824846
+      },
+      "chi2_ndf_all": 557065.5540749588,
+      "chi2_ndf_sample_i": 113800.33922927252,
+      "chi2_ndf_sample_ii": 860827.1664848085
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_coinc",
+      "n": 36240,
+      "fractions": {
+        "B2": 0.9972682119205298,
+        "B4": 0.0014072847682119205,
+        "B6": 0.0007450331125827815,
+        "B8": 0.0005794701986754967
+      },
+      "chi2_ndf_all": 561000.9624623121,
+      "chi2_ndf_sample_i": 122017.2705435974,
+      "chi2_ndf_sample_ii": 833501.7934668196
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_coinc",
+      "n": 33211,
+      "fractions": {
+        "B2": 0.9973201650055704,
+        "B4": 0.0014754147722140256,
+        "B6": 0.0007527626388847069,
+        "B8": 0.00045165758333082413
+      },
+      "chi2_ndf_all": 572023.3490630519,
+      "chi2_ndf_sample_i": 122187.19134447766,
+      "chi2_ndf_sample_ii": 860738.2914352928
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_Aonly",
+      "n": 33110,
+      "fractions": {
+        "B2": 0.9971307762005437,
+        "B4": 0.0018423437028088191,
+        "B6": 0.0005436424041075203,
+        "B8": 0.00048323769254001814
+      },
+      "chi2_ndf_all": 587437.3036487827,
+      "chi2_ndf_sample_i": 121890.86403689881,
+      "chi2_ndf_sample_ii": 899134.9141768363
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_coinc",
+      "n": 33176,
+      "fractions": {
+        "B2": 0.9973776223776224,
+        "B4": 0.0012056908608632747,
+        "B6": 0.0007836990595611285,
+        "B8": 0.0006329877019532192
+      },
+      "chi2_ndf_all": 591044.4053323136,
+      "chi2_ndf_sample_i": 131591.33046997254,
+      "chi2_ndf_sample_ii": 864150.4157444021
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_Aonly",
+      "n": 34706,
+      "fractions": {
+        "B2": 0.9970610269117732,
+        "B4": 0.0019881288538004956,
+        "B6": 0.0005474557713363683,
+        "B8": 0.0004033884630899556
+      },
+      "chi2_ndf_all": 591539.3209259661,
+      "chi2_ndf_sample_i": 120678.00658000955,
+      "chi2_ndf_sample_ii": 915439.6790307696
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_Aonly",
+      "n": 34333,
+      "fractions": {
+        "B2": 0.9972038563481199,
+        "B4": 0.001893222264293828,
+        "B6": 0.0005242769347275216,
+        "B8": 0.0003786444528587656
+      },
+      "chi2_ndf_all": 622759.4424615077,
+      "chi2_ndf_sample_i": 127207.36249970477,
+      "chi2_ndf_sample_ii": 963047.6570110169
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_coinc",
+      "n": 33160,
+      "fractions": {
+        "B2": 0.9976176115802171,
+        "B4": 0.0012665862484921592,
+        "B6": 0.0006936067551266586,
+        "B8": 0.0004221954161640531
+      },
+      "chi2_ndf_all": 642747.4975986228,
+      "chi2_ndf_sample_i": 138967.76892652572,
+      "chi2_ndf_sample_ii": 959345.0990214488
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_coinc",
+      "n": 35644,
+      "fractions": {
+        "B2": 0.9976153069240264,
+        "B4": 0.0012344293569745259,
+        "B6": 0.0006733251038042868,
+        "B8": 0.00047693861519470317
+      },
+      "chi2_ndf_all": 642980.0737283357,
+      "chi2_ndf_sample_i": 140203.01605675896,
+      "chi2_ndf_sample_ii": 953821.5427973503
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_Aonly",
+      "n": 33010,
+      "fractions": {
+        "B2": 0.997364435019691,
+        "B4": 0.0017267494698576188,
+        "B6": 0.0005149954559224478,
+        "B8": 0.00039382005452893065
+      },
+      "chi2_ndf_all": 643058.2190820029,
+      "chi2_ndf_sample_i": 132872.71399580437,
+      "chi2_ndf_sample_ii": 987256.4493813395
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_Aonly",
+      "n": 34375,
+      "fractions": {
+        "B2": 0.9973527272727273,
+        "B4": 0.0018036363636363636,
+        "B6": 0.0004945454545454545,
+        "B8": 0.0003490909090909091
+      },
+      "chi2_ndf_all": 662879.6841880105,
+      "chi2_ndf_sample_i": 135395.17953319923,
+      "chi2_ndf_sample_ii": 1025158.9149229443
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 180.0,
+      "trigger": "real_coinc",
+      "n": 35321,
+      "fractions": {
+        "B2": 0.9977350584638034,
+        "B4": 0.0013023413833130432,
+        "B6": 0.0005662353840491493,
+        "B8": 0.00039636476883440447
+      },
+      "chi2_ndf_all": 691672.5472449114,
+      "chi2_ndf_sample_i": 147753.36954731707,
+      "chi2_ndf_sample_ii": 1040053.4165570358
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_Aonly",
+      "n": 33866,
+      "fractions": {
+        "B2": 0.9975196362133113,
+        "B4": 0.0016831039981101991,
+        "B6": 0.0004724502450835646,
+        "B8": 0.00032480954349495066
+      },
+      "chi2_ndf_all": 704872.159093014,
+      "chi2_ndf_sample_i": 144346.41946684627,
+      "chi2_ndf_sample_ii": 1088447.244380771
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_coinc",
+      "n": 33120,
+      "fractions": {
+        "B2": 0.9977958937198068,
+        "B4": 0.0010869565217391304,
+        "B6": 0.0006038647342995169,
+        "B8": 0.0005132850241545894
+      },
+      "chi2_ndf_all": 705357.3510343395,
+      "chi2_ndf_sample_i": 155972.63661743733,
+      "chi2_ndf_sample_ii": 1035843.923554046
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_coinc",
+      "n": 33122,
+      "fractions": {
+        "B2": 0.9978262182235372,
+        "B4": 0.00111708230179337,
+        "B6": 0.0006340196848016425,
+        "B8": 0.0004226797898677616
+      },
+      "chi2_ndf_all": 705905.018186247,
+      "chi2_ndf_sample_i": 154440.20095927262,
+      "chi2_ndf_sample_ii": 1044924.2137033386
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_Aonly",
+      "n": 33904,
+      "fractions": {
+        "B2": 0.9974929211892402,
+        "B4": 0.0017402076451156206,
+        "B6": 0.00044242567248702216,
+        "B8": 0.0003244454931571496
+      },
+      "chi2_ndf_all": 719042.0615202851,
+      "chi2_ndf_sample_i": 146625.76440346136,
+      "chi2_ndf_sample_ii": 1112888.5097258294
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_Aonly",
+      "n": 32914,
+      "fractions": {
+        "B2": 0.9975998055538676,
+        "B4": 0.0016406392416600838,
+        "B6": 0.00045573312268335663,
+        "B8": 0.0003038220817889044
+      },
+      "chi2_ndf_all": 734385.8040604838,
+      "chi2_ndf_sample_i": 150152.8389517607,
+      "chi2_ndf_sample_ii": 1135211.3730105213
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 150.0,
+      "trigger": "real_coinc",
+      "n": 34967,
+      "fractions": {
+        "B2": 0.9978837189349958,
+        "B4": 0.0011725341035833787,
+        "B6": 0.0005433694626361999,
+        "B8": 0.00040037749878456833
+      },
+      "chi2_ndf_all": 735956.0948266196,
+      "chi2_ndf_sample_i": 158955.4049383028,
+      "chi2_ndf_sample_ii": 1098451.457397899
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_Aonly",
+      "n": 33538,
+      "fractions": {
+        "B2": 0.9976444629971972,
+        "B4": 0.001610113900650009,
+        "B6": 0.00044725386129166917,
+        "B8": 0.0002981692408611128
+      },
+      "chi2_ndf_all": 748753.9668833079,
+      "chi2_ndf_sample_i": 153185.4533747367,
+      "chi2_ndf_sample_ii": 1156972.5900990649
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_coinc",
+      "n": 34977,
+      "fractions": {
+        "B2": 0.9979415044171884,
+        "B4": 0.0010578380078337193,
+        "B6": 0.0005718043285587672,
+        "B8": 0.0004288532464190754
+      },
+      "chi2_ndf_all": 750432.199416594,
+      "chi2_ndf_sample_i": 164754.92934002294,
+      "chi2_ndf_sample_ii": 1107783.247165052
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_Aonly",
+      "n": 33041,
+      "fractions": {
+        "B2": 0.9978511546260707,
+        "B4": 0.0013316788232801671,
+        "B6": 0.00045398141702732966,
+        "B8": 0.00036318513362186376
+      },
+      "chi2_ndf_all": 763735.3999572621,
+      "chi2_ndf_sample_i": 161101.93660867176,
+      "chi2_ndf_sample_ii": 1157157.503116333
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 130.0,
+      "trigger": "real_coinc",
+      "n": 34642,
+      "fractions": {
+        "B2": 0.9980659315282028,
+        "B4": 0.0010680676635298192,
+        "B6": 0.0005196004849604526,
+        "B8": 0.0003464003233069684
+      },
+      "chi2_ndf_all": 803489.1198814603,
+      "chi2_ndf_sample_i": 173789.90468460871,
+      "chi2_ndf_sample_ii": 1198431.630469281
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_coinc",
+      "n": 33055,
+      "fractions": {
+        "B2": 0.9980638330055968,
+        "B4": 0.0009983361064891847,
+        "B6": 0.0005142943578883679,
+        "B8": 0.00042353653002571474
+      },
+      "chi2_ndf_all": 804533.3345431801,
+      "chi2_ndf_sample_i": 177000.66029101913,
+      "chi2_ndf_sample_ii": 1185592.3879044536
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 110.0,
+      "trigger": "real_coinc",
+      "n": 34271,
+      "fractions": {
+        "B2": 0.9982200694464708,
+        "B4": 0.0009629132502699075,
+        "B6": 0.000496046219836013,
+        "B8": 0.00032097108342330253
+      },
+      "chi2_ndf_all": 871058.460642412,
+      "chi2_ndf_sample_i": 189518.52074529332,
+      "chi2_ndf_sample_ii": 1294186.554607615
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_coinc",
+      "n": 32955,
+      "fractions": {
+        "B2": 0.9983007130936125,
+        "B4": 0.0008799878622363829,
+        "B6": 0.0004855105446821423,
+        "B8": 0.00033378849946897286
+      },
+      "chi2_ndf_all": 910793.576845023,
+      "chi2_ndf_sample_i": 200388.17543491165,
+      "chi2_ndf_sample_ii": 1342766.7600044536
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_coinc",
+      "n": 34312,
+      "fractions": {
+        "B2": 0.9983679179295873,
+        "B4": 0.0008743296805782234,
+        "B6": 0.00046630916297505244,
+        "B8": 0.0002914432268594078
+      },
+      "chi2_ndf_all": 950184.0854863917,
+      "chi2_ndf_sample_i": 207430.51887814453,
+      "chi2_ndf_sample_ii": 1408660.9098063817
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_coinc",
+      "n": 33805,
+      "fractions": {
+        "B2": 0.9984913474338115,
+        "B4": 0.0007986984173938767,
+        "B6": 0.00041413992013015826,
+        "B8": 0.00029581422866439876
+      },
+      "chi2_ndf_all": 1032312.4431826634,
+      "chi2_ndf_sample_i": 226867.2245789334,
+      "chi2_ndf_sample_ii": 1522838.845264341
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 92.0,
+      "trigger": "real_coinc",
+      "n": 33843,
+      "fractions": {
+        "B2": 0.9984930413970393,
+        "B4": 0.0008273498212333422,
+        "B6": 0.0004136749106166711,
+        "B8": 0.00026593387111071713
+      },
+      "chi2_ndf_all": 1035724.8217351831,
+      "chi2_ndf_sample_i": 225484.0027586584,
+      "chi2_ndf_sample_ii": 1538132.3371186487
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_coinc",
+      "n": 32859,
+      "fractions": {
+        "B2": 0.9985392130010043,
+        "B4": 0.000791259624456009,
+        "B6": 0.0003956298122280045,
+        "B8": 0.0002738975623116954
+      },
+      "chi2_ndf_all": 1068871.7317565402,
+      "chi2_ndf_sample_i": 233846.3753330769,
+      "chi2_ndf_sample_ii": 1581725.3116300723
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_Aonly",
+      "n": 32880,
+      "fractions": {
+        "B2": 0.9982664233576642,
+        "B4": 0.0011861313868613138,
+        "B6": 0.0002737226277372263,
+        "B8": 0.0002737226277372263
+      },
+      "chi2_ndf_all": 1070313.7781252896,
+      "chi2_ndf_sample_i": 222587.390129257,
+      "chi2_ndf_sample_ii": 1634589.8053101134
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_Aonly",
+      "n": 32666,
+      "fractions": {
+        "B2": 0.9982550664299271,
+        "B4": 0.0012245147860160412,
+        "B6": 0.0002755158268536093,
+        "B8": 0.0002449029572032082
+      },
+      "chi2_ndf_all": 1079243.5002275093,
+      "chi2_ndf_sample_i": 222653.4521599994,
+      "chi2_ndf_sample_ii": 1657060.6710117522
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 80.0,
+      "trigger": "real_coinc",
+      "n": 33479,
+      "fractions": {
+        "B2": 0.9985961348905283,
+        "B4": 0.0007467367603572389,
+        "B6": 0.0003883031153857642,
+        "B8": 0.000268825233728606
+      },
+      "chi2_ndf_all": 1110297.3098149814,
+      "chi2_ndf_sample_i": 244002.89764623946,
+      "chi2_ndf_sample_ii": 1638007.7851527908
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_Aonly",
+      "n": 32736,
+      "fractions": {
+        "B2": 0.9983198924731183,
+        "B4": 0.0011913489736070381,
+        "B6": 0.00024437927663734115,
+        "B8": 0.00024437927663734115
+      },
+      "chi2_ndf_all": 1159274.2253781098,
+      "chi2_ndf_sample_i": 239189.04021150075,
+      "chi2_ndf_sample_ii": 1779008.4247734307
+    },
+    {
+      "basis": "event",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_coinc",
+      "n": 32987,
+      "fractions": {
+        "B2": 0.998787401097402,
+        "B4": 0.00048503956103919724,
+        "B6": 0.0003940946433443478,
+        "B8": 0.0003334646982144481
+      },
+      "chi2_ndf_all": 1357544.0381708604,
+      "chi2_ndf_sample_i": 314719.9362007117,
+      "chi2_ndf_sample_ii": 1926885.0055856584
+    },
+    {
+      "basis": "event",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_coinc",
+      "n": 32612,
+      "fractions": {
+        "B2": 0.9992027474549245,
+        "B4": 0.000367962713111738,
+        "B6": 0.00021464491598184718,
+        "B8": 0.00021464491598184718
+      },
+      "chi2_ndf_all": 2035120.9324066238,
+      "chi2_ndf_sample_i": 463814.3885335116,
+      "chi2_ndf_sample_ii": 2923466.4335987135
+    },
+    {
+      "basis": "track",
+      "species": "inclusive",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_coinc",
+      "n": 32823,
+      "fractions": {
+        "B2": 0.9992078725284099,
+        "B4": 0.00033513085336501846,
+        "B6": 0.00021326508850501172,
+        "B8": 0.0002437315297200134
+      },
+      "chi2_ndf_all": 2117260.4703617045,
+      "chi2_ndf_sample_i": 488756.81194726814,
+      "chi2_ndf_sample_ii": 3012306.9512951397
+    },
+    {
+      "basis": "track",
+      "species": "filtered",
+      "mapping": "paired",
+      "gain": 60.0,
+      "trigger": "real_coinc",
+      "n": 32680,
+      "fractions": {
+        "B2": 0.999265605875153,
+        "B4": 0.0003365973072215422,
+        "B6": 0.0001835985312117503,
+        "B8": 0.0002141982864137087
+      },
+      "chi2_ndf_all": 2257868.383028796,
+      "chi2_ndf_sample_i": 515094.43526928197,
+      "chi2_ndf_sample_ii": 3239827.7822024287
+    }
+  ]
+}

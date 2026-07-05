@@ -10,7 +10,7 @@
 >
 > **Update 2026-07-03 (post-review reruns):** three honest reruns landed the same day: **S21** confirms the Sample-I deuteron-enrichment hypothesis at truth level ([§8.4](#84-trigger-truth-deuteron-enrichment-s21--confirmed)); **MV4** was rerun with a rising-edge CFD and physical timewalk sign, verdict REVIEW ([§4.7](#47-mc-validation-of-timing-mv4-honest-rerun)); **MV2** was rerun after the momentum-unit fix and now reports MeV-scale energies ([§7.3](#73-absolute-energy-limitation)).
 >
-> **Update 2026-07-04 (post-review program complete):** the full correction program (Phases 0–4 + statistics hardening) is done. Headlines: **MV3's stopping-depth discrepancy has its mechanism ESTABLISHED by a real `Trig_bar` sensitive-detector simulation (2026-07-05) as the unsimulated two-arm coincidence trigger, not missing material** — re-graded FAIL → TENSION (untriggered B2 45.9% → real triggered 99.7%, toward data 93.3%); quantitative closure is NOT achieved (the ideal trigger over-purifies, so the earlier proxy χ²/ndf ≈ 625 is retired as over-optimistic; residual is data-side, NEW-04) ([§8.3](#83-stopping-depth-profile--fail-re-graded-tension-root-cause-the-trigger)); the Sample-I deuteron enrichment is confirmed at truth level and **consistent in data** (S23, run-set differences not yet separated, [§8.5](#85-data-side-sample-iii-closure-s23--consistent-in-data)); per-stave timing vs amplitude is measured (S22, [§4.8](#48-timing-resolution-vs-amplitude-s22)); the honest truth-labelled two-pulse benchmark replaces the rigged S11a table and the first independent MC live-time exists (MC03/S24, [§5.2–5.3](#52-the-r_max-correction)); **C12 recoils are ruled out** as the early-peak class (MV6b, [§6.3](#63-the-early-peak-anomaly-c12-ruled-out)); MV7 pedestal validation ran on zero-signal MC ([§9](#9-pedestal--baseline)); a program-level FDR census covers all delta-CI claims ([§12.5](#125-uncertainty-conventions)). Synthesis: `FINDINGS_SYNTHESIS.md` "Post-review program (2026-07-03/04)".
+> **Update 2026-07-04 (post-review program complete):** the full correction program (Phases 0–4 + statistics hardening) is done. Headlines: **MV3's stopping-depth discrepancy has its mechanism ESTABLISHED by a real `Trig_bar` sensitive-detector simulation (2026-07-05) as the unsimulated two-arm coincidence trigger, not missing material** — re-graded FAIL → TENSION (untriggered B2 45.9% → real triggered 99.7%, toward data 93.3%); quantitative closure is NOT achieved (the ideal trigger over-purifies, so the earlier proxy χ²/ndf ≈ 625 is retired as over-optimistic; residual is data-side, NEW-04) ([§8.3](#83-stopping-depth-profile--fail-re-graded-tension-root-cause-the-trigger)); the Sample-I deuteron enrichment is confirmed at truth level and **consistent in data** (S23, run-set/beam drift bounded ≤~29% by B-M6, [§8.5](#85-data-side-sample-iii-closure-s23--consistent-in-data)); per-stave timing vs amplitude is measured (S22, [§4.8](#48-timing-resolution-vs-amplitude-s22)); the honest truth-labelled two-pulse benchmark replaces the rigged S11a table and the first independent MC live-time exists (MC03/S24, [§5.2–5.3](#52-the-r_max-correction)); **C12 recoils are ruled out** as the early-peak class (MV6b, [§6.3](#63-the-early-peak-anomaly-c12-ruled-out)); MV7 pedestal validation ran on zero-signal MC ([§9](#9-pedestal--baseline)); a program-level FDR census covers all delta-CI claims ([§12.5](#125-uncertainty-conventions)). Synthesis: `FINDINGS_SYNTHESIS.md` "Post-review program (2026-07-03/04)".
 
 ---
 
@@ -52,7 +52,7 @@ The analysis is **data-driven** (no per-event Monte Carlo truth), but uses **GEA
 | Combined 3-stave (B4+B6+B8) | **σ₆₈ = 0.490 ns [0.470, 0.508]** | ✅ Measured, correlation-aware (S25, 2026-07-05; supersedes the withdrawn 0.54–0.56); not yet held-out-confirmed (reserved runs unstaged) |
 | Pile-up tolerance R_max | **≤ 3.05 MHz** (one-sided upper bound, corrected from 4.22 MHz; censoring-aware estimators suggest ≈2.1 MHz or lower) | ⚠️ Data-driven bound; first independent MC live-time disagrees by +8% (MC03: 134.99 vs 124.79 ns) — the excess, if real, **tightens the bound rather than validating it** |
 | Proton/deuteron PID | **AUC = 0.986** (MC truth ceiling; data reaches it only via weak-label proxies, not species truth) | ⚠️ MC truth ceiling only; the data side uses weak-label proxies, not species truth (MV1, rerun 2026-07-03) |
-| Sample-I deuteron enrichment (B2) | truth: **ratio 1.519 [1.510, 1.528]** (exclusive 1.912); data: **f(A>5000) ratio 3.45 [3.41, 3.50]** | ✅ Confirmed at truth level (S21); **consistent in data** (S23, 2026-07-03; run-set differences not yet separated); MC under-predicts the contrast (DR 0.738, z = −99 statistics-only; systematics from disjoint run-sets/beam conditions not included) |
+| Sample-I deuteron enrichment (B2) | truth: **ratio 1.519 [1.510, 1.528]** (exclusive 1.912); data: **f(A>5000) ratio 3.45 [3.41, 3.50]** | ✅ Confirmed at truth level (S21); **consistent in data** (S23, 2026-07-03; run-set/beam drift bounded ≤~29% by B-M6); MC under-predicts the contrast (DR 0.738, z = −99 statistics-only; systematics from disjoint run-sets/beam conditions not included) |
 | MV3 stopping-depth discrepancy | mechanism **ESTABLISHED (real `Trig_bar` SD sim, 2026-07-05)** = **unsimulated two-arm coincidence trigger** (untriggered B2 45.9% → triggered 99.7%, toward data 93.3%); quantitative closure NOT achieved (ideal trigger over-purifies; proxy χ²/ndf ≈ 625 retired) | 🔶 Re-graded FAIL → TENSION; missing-material narrative falsified; residual data-side (NEW-04) |
 | MC timing (MV4 honest rerun) | MC pair-equivalent **2.087 ± 0.009 ns**, between data raw 2.993 ns and corrected 1.50 ns | ⚠️ REVIEW — unmatched comparison; matched per-stave rerun pending |
 | Per-stave timing vs amplitude (S22) | downstream per-stave σ ≈ **0.85–1.1 ns** at high amplitude; raw curves follow 1/A better than 1/√A | ✅ Measured (2026-07-03); B2 saturation-excluded |
@@ -150,7 +150,7 @@ This is **not** an imaging detector — we get time and amplitude, not spatial p
 
 | Sample | Stack | Description | Enrichment |
 |---|---|---|---|
-| **Sample I** | B | A·B trigger-coincidence runs; topology-heavy | D-enriched in upstream B staves: **confirmed at truth level** (S21: B2 ratio 1.519 [1.510, 1.528]; [§8.4](#84-trigger-truth-deuteron-enrichment-s21--confirmed)) and **consistent in data** (S23: B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set differences not yet separated; [§8.5](#85-data-side-sample-iii-closure-s23--consistent-in-data)) |
+| **Sample I** | B | A·B trigger-coincidence runs; topology-heavy | D-enriched in upstream B staves: **confirmed at truth level** (S21: B2 ratio 1.519 [1.510, 1.528]; [§8.4](#84-trigger-truth-deuteron-enrichment-s21--confirmed)) and **consistent in data** (S23: B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set/beam drift bounded ≤~29% by B-M6; [§8.5](#85-data-side-sample-iii-closure-s23--consistent-in-data)) |
 | **Sample II** | B | B-trigger-only runs; penetrating | p-enriched relative to Sample I (S21 truth: f_p rises from 0.40 in B2 to 0.87 in B8) |
 | **Sample III** | A | A-arm data from the Sample I runs | Independent arm — different particles |
 | **Sample IV** | A | A-arm data from the Sample II runs | Low statistics (A not in the trigger) |
@@ -569,7 +569,7 @@ MC truth (MV2 rerun after the momentum-unit fix, 400,369 tracks):
 > - Proton/deuteron separation: **AUC = 0.986** (MC truth ceiling, HGB; rerun 2026-07-03)
 > - Data methods using weak-label proxies reach within 0.5% of MC ceiling — leakage-safe stress test, not species-truth PID — information is in the data
 > - **Sample-I deuteron enrichment: ✅ CONFIRMED at truth level (S21, 2026-07-03)** — B2 ratio 1.519 [1.510, 1.528]; enrichment fades with depth (B4 1.40, B6 ~1.0, B8 inverted at 0.43)
-> - **…and CONSISTENT in data (S23, 2026-07-03; run-set differences not yet separated)** — Sample-I B2 high-amplitude fraction ratio 3.45 [3.41, 3.50]; trigger mimicking moves MC toward the data (KS 0.192 → 0.131; occupancy χ² 624k → 20k)
+> - **…and CONSISTENT in data (S23, 2026-07-03; run-set/beam drift bounded ≤~29% by B-M6)** — Sample-I B2 high-amplitude fraction ratio 3.45 [3.41, 3.50]; trigger mimicking moves MC toward the data (KS 0.192 → 0.131; occupancy χ² 624k → 20k)
 > - **Stopping-depth profile: 🔶 re-graded FAIL → TENSION (Phase 2, 2026-07-03; mechanism ESTABLISHED 2026-07-05)** — the χ²/ndf = 68,269 has its mechanism **ESTABLISHED by a real `Trig_bar` sensitive-detector simulation** as the **unsimulated two-arm coincidence trigger**, not geometry (untriggered B2 45.9%, χ²/ndf 68,705 → real triggered 99.7%, toward data 93.3%); missing-material narrative falsified (~0.13 g/cm² air missing vs ≥10.5 needed). **Quantitative closure NOT achieved:** the ideal trigger over-purifies (99.7% vs data Sample I 93.3%), the earlier proxy χ²/ndf ≈ 625 (109×) is **retired as over-optimistic**, and the residual ~7–12% deep-stave data population is data-side (NEW-04)
 > - Depth ordering (B2 > B4 > B6 > B8) is qualitatively correct in both data and MC
 
@@ -651,8 +651,10 @@ events; the true coincidence retains ~0.2%.
 **The physics of the mechanism:** the coincidence keeps deuteron-into-B events (the conjugate
 ~85 MeV proton reaches Stack A) and vetoes deep-proton events (the conjugate ~37 MeV deuteron dies
 before the A-paddle). Untriggered MC contains both populations; the trigger selects one. The
-odd-layer mapping hypothesis (review P4) is disfavored — both unread-bar variants score worse — so
-the `paired` LayerID→stave mapping stands.
+odd-layer mapping hypothesis (review P4) is the marginal best-χ² loser (both unread-bar variants
+score worse) so the `paired` mapping is adopted as default — but note (B-M9) this is a data-χ²
+preference, not an independent geometry proof, and the deep-stave (B4/B6/B8) MC fractions are carried
+mapping-conditional (see §8.4/§8.5 and `reports/bm9_layerid_stave_mapping_20260705_204303/`).
 
 **Impact:** MV3 is re-graded **FAIL → TENSION** (mechanism established, quantitative match not);
 **no new GEANT4 production is needed**, and geobuilder PR #8 (inter-stave Al proxy, ~10× the
@@ -684,7 +686,7 @@ folding — **STUDY_GAPS NEW-04**, not a geometry/SD production. (`reports/mv3_v
 
 **Caveats (from the S21 report):**
 - Truth level only: EDep proxies the pulse amplitude — no digitizer, threshold, saturation, or Birks quenching. Data-facing amplitudes will differ.
-- The LayerID→stave mapping ({0,1}→B2 … {6,7}→B8) is a repo convention under review; per-LayerID tables in the report allow re-derivation under alternative mappings, and the enrichment holds per-LayerID (f_d = 0.735/0.752 in layers 0/1 of Sample I vs 0.484/0.447 in Sample II).
+- The LayerID→stave mapping is **partially signed off (B-M9, 2026-07-05, `reports/bm9_layerid_stave_mapping_20260705_204303/`)**: the GEANT4 geometry + `SamplingD.cc` SD confirm `LayerID = copyNo = bar depth index`, **0 = upstream entrance → B2, monotonic to B8** (8 contiguous 2 cm PSci bars, no interleaving), so the depth **ordering, B2 fraction, B2-vs-rest and total occupancy are geometry-certain and mapping-invariant** (≲0.3% across variants). The residual ambiguity is purely the *energy grouping* — `paired` ({0,1}→B2 … {6,7}→B8; adopted default) vs `odd/even_read` (alternate bars only) — which the sim cannot resolve (it has 8 undifferentiated fully-active bars, no read/unread attribute). **The individual deep-stave B4/B6/B8 MC fractions are therefore carried mapping-conditional** (they move a few % between variants; DATA per-stave fractions are unaffected). Per-LayerID tables allow re-derivation under either mapping; the enrichment holds per-LayerID (f_d = 0.735/0.752 in layers 0/1 of Sample I vs 0.484/0.447 in Sample II).
 - S21's absolute per-stave fractions come from the untriggered-MC population and inherit the MV3 comparison bias (Phase 2 root cause: the unsimulated trigger, not missing material — §8.3); the I/II enrichment **ratios** (same geometry, same bias) are more robust than any absolute fraction.
 - Inclusive definitions make Sample I a subset of Sample II, so the inclusive ratio's binomial errors are positively correlated; the exclusive I vs II\I comparison (disjoint events) is reported alongside and is stronger (1.912 at B2).
 - In data, Samples I and II are disjoint run sets with different trigger configurations — this MC comparison mimics the trigger logic, not the run-set split.
@@ -712,11 +714,23 @@ digitization, thresholds and saturation), and does trigger-mimicked MC move towa
    quantile-matched and shape metrics median-scaled so the placeholder gain cancels to first
    order.
 
-**Caveats:** disjoint data run sets vs inclusive MC mimics (the exclusive II\I MC variant is
-reported alongside); beam/rate differences between run sets are not modelled; B2 saturation
-leaves a tail-shape systematic in the KS distance.
+**Run-set/beam-drift confound bounded (B-M6, 2026-07-05):** because data Samples I/II are disjoint
+run sets, the I→II hardening could in principle be run-condition drift rather than the trigger.
+[B-M6](reports/bm6_runset_confound_20260705_202638/REPORT.md) bounds this by treating the **run** as
+the dependence unit and using the within-sample run-to-run spread as the drift proxy: (i) the
+run-clustered ratio R = f_I/f_II = 3.45 keeps a 95% CI **[2.52, 4.64]** that excludes 1 even with each
+run resampled whole; (ii) the between-sample gap is **3.5× the within-sample run-to-run SD** (Welch
+t≈6.5 on per-run f(A>5000), Cohen d≈2.3); (iii) a smooth within-sample linear-drift model reproduces
+only **~3%** of the log-gap. **Conservative bound: run-set/beam drift accounts for at most ~29% of the
+hardening (a full 1-SD coherent excursion); central estimate ~3%.** So the enrichment is
+directionally confirmed in data and **quantitatively dominated by the trigger**, but — run sets being
+disjoint — it remains a directional/consistent result, not a clean same-run confirmation.
 
-![S23 — the Sample-I enrichment is consistent in the data (run-set differences not yet separated)](docs/figures/32_s23_data_enrichment.png)
+**Other caveats:** disjoint data run sets vs inclusive MC mimics (the exclusive II\I MC variant is
+reported alongside); B2 saturation leaves a tail-shape systematic in the KS distance; no external
+beam-current/HV metadata exists, so the drift proxy is the observable's own within-sample dispersion.
+
+![S23 — the Sample-I enrichment is consistent in the data (run-set/beam drift bounded ≤~29% by B-M6)](docs/figures/32_s23_data_enrichment.png)
 
 *Figure 32: (a) data fraction of pulses with A > 5000 ADC, Sample I vs II per stave — the B2 Sample-I/II high-amplitude ratio is **3.45 [3.41, 3.50]**; (b) data/MC double ratios (data I/II)/(MC I/II): the occupancy DR per stave is everywhere < 1 (MC under-predicts the between-sample contrast — the missing trigger simulation) and the B2 high-amplitude DR is **1.67 [1.64, 1.70]**. Error bars = 95% bootstrap CI; n = 640,737 data / 458,712 MC rows. Source: [`reports/s23_sample12_data_mc_1783108675/s23_summary.json`](reports/s23_sample12_data_mc_1783108675/s23_summary.json). Regenerated by `scripts/generate_postreview_figures.py`.*
 
@@ -818,7 +832,7 @@ _(Corrected 2026-07-03: R_max, digitizer gain, and anomaly species moved back to
 | Why is the MC live-time +8% above data? | MC03 τ_eff 134.99 vs 124.79 ns, B2-driven; MC pulses clean by construction vs data pathologies | 🔶 MEDIUM | Data-matched selection/pathology model on the MC side; per-stave reconciliation |
 | What is the precision digitizer gain? | Quenched re-scan DONE 2026-07-05 (LUNARC 3348264): trigger-consistent optimum **~65 ADC/MeV (band ~60–70)**, chi2/ndf 322 vs unquenched-60 625 / placeholder-297 7,751; B2 amp median 2,917 brackets data 2,576 | ⚠️ still a band | Re-anchor on a geometry-robust observable next; residual = trigger proxy (B-M1) (`reports/mv3_gain_quenched_1783240619/`) |
 | What instrumental mechanism makes the 4.4% early-peak class? | Species origin ruled out (MV6b); MC models neither trigger phase nor DAQ artifacts | 🔶 HIGH | **Data-side investigation** (P02 morphology, P09 taxonomy; baseline/noise/bipolar + trigger-phase hypotheses) |
-| Does the S21 enrichment survive digitization end-to-end in MC? | S23 shows the data side is consistent (run-set differences not yet separated) and the mimic direction improves; a fully digitized truth-labelled S21 selection replay is still pending | ⚠️ LOW | Rerun S21 selection on the mc02 digitized pulse table with the real trigger flag |
+| Does the S21 enrichment survive digitization end-to-end in MC? | S23 shows the data side is consistent (run-set/beam drift bounded ≤~29% by B-M6) and the mimic direction improves; a fully digitized truth-labelled S21 selection replay is still pending | ⚠️ LOW | Rerun S21 selection on the mc02 digitized pulse table with the real trigger flag |
 | Two-ended √2 projection valid? | Ignores correlated terms | ⚠️ MEDIUM | Measure correlation; validate projection |
 | Forced-pedestal validated on data? | No forced-trigger in data (MV7 closes the MC side) | ⚠️ MEDIUM | Next beam run acquisition |
 | CFD/OF parameters optimal? | Never systematically scanned | LOW | Grid search over fraction/window |
@@ -885,7 +899,7 @@ Every claim obeys **six rules** (from [`docs/REPORT_STANDARD.md`](docs/REPORT_ST
 - CIs use **run-level bootstrap**; resample counts vary by study (typically 300–1000 — the blanket "1000 resamples" claim was corrected by the 2026-07-02 external review, which also flagged that pair-residual bootstraps under-cover by ~√1.5)
 - AUC to 4 decimal places (from MV1 truth summary)
 - Every number traceable to a `reports/<id>/REPORT.md`
-- **Multiplicity control (2026-07-03):** a program-level Benjamini–Hochberg census over all 1,948 delta-CI claims exists ([STATS01](reports/stats01_program_fdr_20260703_220116/)); of the 17 scoreboard bold wins, 11 survive BH, 0 fail, 6 rest on prose only. The 6 prose-only wins include the flagship **P04 (duplicate-readout) and P07 (saturation) ML wins — reported, not yet FDR-certified**; the retired, rigged S11a (0.295/0.168) is not among the 11 BH survivors. BH survival is necessary, not sufficient (S03k survives BH yet is leakage-falsified). Sub-0.3 ns timing claims additionally require the reserved **confirmation partition** (runs 64, 12–30; [`docs/CONFIRMATION_PARTITION.md`](docs/CONFIRMATION_PARTITION.md)) and the shared estimators module (`src/ccb_mc_validation/statistics/estimators.py`). **That partition is defined but not yet used** — so any sub-0.3 ns timing claim is not yet confirmed on held-out data.
+- **Multiplicity control (2026-07-03; P04/P07 certified 2026-07-05):** a program-level Benjamini–Hochberg census over all delta-CI claims exists ([STATS01](reports/stats01_program_fdr_20260705_203905/)); after B-M3 emitted machine-readable, dependence-aware delta-CIs for the flagship wins ([`stats02`](reports/bm3_p04p07_fdr_20260705_203249/REPORT.md)), the refreshed census (1,957 claims) finds **14 of 15 scoreboard bold wins survive BH, 0 fail, 1 prose-only**. **P04 (duplicate-readout) and P07 (saturation) are now FDR-certified** — all five (P04/P04c/P04d/P04e/P07) pass BH at q=0.05 in the amplitude-charge family with paired **event-clustered** delta-CIs (design effect ~1.05; z = 23–166). Certification = statistically distinguishable from zero, NOT absolute-energy truth (P04 stays a duplicate-readout closure; P07 natural-transfer unaudited). The one remaining prose-only win is **P05b** (pile-up two-pulse). The retired, rigged S11a (0.295/0.168) is not a BH survivor (killed for circularity, not multiplicity). BH survival is necessary, not sufficient (S03k survives BH yet is leakage-falsified). Sub-0.3 ns timing claims additionally require the reserved **confirmation partition** (runs 64, 12–30; [`docs/CONFIRMATION_PARTITION.md`](docs/CONFIRMATION_PARTITION.md)) and the shared estimators module (`src/ccb_mc_validation/statistics/estimators.py`). **That partition is defined but not yet used** — so any sub-0.3 ns timing claim is not yet confirmed on held-out data.
 
 ---
 
@@ -915,7 +929,7 @@ Every study with a proper descriptive name and hyperlink to its full report.
 | **S18** | [A-Stack Independent Reproduction](reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/) | A1–A3 width 1.39 ns reproduces note's 1.43 ns |
 | **S21** | [Sample I vs II Trigger-Truth Comparison](reports/s21_sample12_trigger_truth_1783077969/) | Sample-I d-enrichment CONFIRMED at truth level: B2 ratio 1.519 [1.510, 1.528]; pd-pair tagging (91.2% d\|p) |
 | **S22** | [Per-Stave Timing vs Amplitude](reports/s22_timing_vs_amplitude_1783108999/) | 1/A beats 1/√A raw; downstream per-stave ≈0.85–1.1 ns at high amplitude; B2 saturation-excluded |
-| **S23** | [Sample I vs II Data-Side Closure + Data–MC](reports/s23_sample12_data_mc_1783108675/) | d-enrichment consistent in data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set differences not yet separated); trigger mimic moves MC toward data (KS 0.192→0.131); DR 0.738 (z=−99, statistics-only) |
+| **S23** | [Sample I vs II Data-Side Closure + Data–MC](reports/s23_sample12_data_mc_1783108675/) | d-enrichment consistent in data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set/beam drift bounded ≤~29% by B-M6); trigger mimic moves MC toward data (KS 0.192→0.131); DR 0.738 (z=−99, statistics-only) |
 | **S24** | [Honest Two-Pulse Benchmark (MC03)](reports/mc03_overlay_1783180480/) | Truth-labelled: trad wins at matched 80% coverage; ML wins at full coverage (0.011 vs 0.048); σ68 trad 0.64 / ML 0.89 ns; independent MC τ_eff 134.99 vs data 124.79 ns |
 
 ### ML Pulse Characterisation (P01–P13)

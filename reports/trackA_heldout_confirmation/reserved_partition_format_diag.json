@@ -1,0 +1,210 @@
+{
+  "generated_utc": "2026-07-05 18:21:13 UTC",
+  "analysis_map": "B2=ch0,B4=ch2,B6=ch4,B8=ch6 (even), 18-sample basis",
+  "runs": [
+    {
+      "run": 65,
+      "nsamp": 18,
+      "n_events": 38424,
+      "B2": {
+        "chan": 0,
+        "med_amp": 47.0,
+        "frac_A_gt_1000": 0.312,
+        "peak_sample_med": 7.0,
+        "peak_in_last2": 0.08375
+      },
+      "B4": {
+        "chan": 2,
+        "med_amp": 22.33333333333303,
+        "frac_A_gt_1000": 0.022125,
+        "peak_sample_med": 7.0,
+        "peak_in_last2": 0.133125
+      },
+      "B6": {
+        "chan": 4,
+        "med_amp": 22.66666666666697,
+        "frac_A_gt_1000": 0.008625,
+        "peak_sample_med": 8.0,
+        "peak_in_last2": 0.13975
+      },
+      "B8": {
+        "chan": 6,
+        "med_amp": 23.33333333333303,
+        "frac_A_gt_1000": 0.003,
+        "peak_sample_med": 8.0,
+        "peak_in_last2": 0.144625
+      },
+      "odd_channels": {
+        "ch1": {
+          "med_amp": 12.66666666666606,
+          "peak_in_last2": 0.132125
+        },
+        "ch3": {
+          "med_amp": 17.33333333333394,
+          "peak_in_last2": 0.176125
+        },
+        "ch5": {
+          "med_amp": 18.0,
+          "peak_in_last2": 0.1405
+        },
+        "ch7": {
+          "med_amp": 17.66666666666606,
+          "peak_in_last2": 0.162125
+        }
+      }
+    },
+    {
+      "run": 64,
+      "nsamp": 16,
+      "n_events": 35943,
+      "B2": {
+        "chan": 0,
+        "med_amp": 67.0,
+        "frac_A_gt_1000": 0.39875,
+        "peak_sample_med": 7.0,
+        "peak_in_last2": 0.083
+      },
+      "B4": {
+        "chan": 2,
+        "med_amp": 17.33333333333394,
+        "frac_A_gt_1000": 0.04675,
+        "peak_sample_med": 3.0,
+        "peak_in_last2": 0.006125
+      },
+      "B6": {
+        "chan": 4,
+        "med_amp": 13.0,
+        "frac_A_gt_1000": 0.03575,
+        "peak_sample_med": 4.0,
+        "peak_in_last2": 0.007875
+      },
+      "B8": {
+        "chan": 6,
+        "med_amp": 15.0,
+        "frac_A_gt_1000": 0.0195,
+        "peak_sample_med": 6.0,
+        "peak_in_last2": 0.000625
+      },
+      "odd_channels": {
+        "ch1": {
+          "med_amp": 1926.666666666667,
+          "peak_in_last2": 0.128
+        },
+        "ch3": {
+          "med_amp": 2368.666666666667,
+          "peak_in_last2": 0.2775
+        },
+        "ch5": {
+          "med_amp": 2555.333333333333,
+          "peak_in_last2": 0.397
+        },
+        "ch7": {
+          "med_amp": 2575.333333333333,
+          "peak_in_last2": 0.993375
+        }
+      }
+    },
+    {
+      "run": 12,
+      "nsamp": 16,
+      "n_events": 14791,
+      "B2": {
+        "chan": 0,
+        "med_amp": 6841.166666666666,
+        "frac_A_gt_1000": 0.888375,
+        "peak_sample_med": 6.0,
+        "peak_in_last2": 0.015
+      },
+      "B4": {
+        "chan": 2,
+        "med_amp": 738.333333333333,
+        "frac_A_gt_1000": 0.067,
+        "peak_sample_med": 3.0,
+        "peak_in_last2": 0.0795
+      },
+      "B6": {
+        "chan": 4,
+        "med_amp": 15.33333333333394,
+        "frac_A_gt_1000": 0.01,
+        "peak_sample_med": 6.0,
+        "peak_in_last2": 0.00075
+      },
+      "B8": {
+        "chan": 6,
+        "med_amp": 13.0,
+        "frac_A_gt_1000": 0.00275,
+        "peak_sample_med": 6.0,
+        "peak_in_last2": 0.00025
+      },
+      "odd_channels": {
+        "ch1": {
+          "med_amp": 356.0,
+          "peak_in_last2": 0.021125
+        },
+        "ch3": {
+          "med_amp": 2327.0,
+          "peak_in_last2": 0.299125
+        },
+        "ch5": {
+          "med_amp": 2509.333333333333,
+          "peak_in_last2": 0.385125
+        },
+        "ch7": {
+          "med_amp": 2624.333333333333,
+          "peak_in_last2": 0.998875
+        }
+      }
+    },
+    {
+      "run": 30,
+      "nsamp": 16,
+      "n_events": 5265,
+      "B2": {
+        "chan": 0,
+        "med_amp": 2834.0,
+        "frac_A_gt_1000": 0.58670465337132,
+        "peak_sample_med": 6.0,
+        "peak_in_last2": 0.0547008547008547
+      },
+      "B4": {
+        "chan": 2,
+        "med_amp": 214.33333333333394,
+        "frac_A_gt_1000": 0.1312440645773979,
+        "peak_sample_med": 3.0,
+        "peak_in_last2": 0.04577397910731244
+      },
+      "B6": {
+        "chan": 4,
+        "med_amp": 13.66666666666606,
+        "frac_A_gt_1000": 0.012535612535612535,
+        "peak_sample_med": 5.0,
+        "peak_in_last2": 0.002089268755935423
+      },
+      "B8": {
+        "chan": 6,
+        "med_amp": 12.66666666666606,
+        "frac_A_gt_1000": 0.004748338081671415,
+        "peak_sample_med": 6.0,
+        "peak_in_last2": 0.0005698005698005698
+      },
+      "odd_channels": {
+        "ch1": {
+          "med_amp": 1676.666666666667,
+          "peak_in_last2": 0.1282051282051282
+        },
+        "ch3": {
+          "med_amp": 2332.333333333333,
+          "peak_in_last2": 0.29705603038936373
+        },
+        "ch5": {
+          "med_amp": 2505.666666666667,
+          "peak_in_last2": 0.3878442545109212
+        },
+        "ch7": {
+          "med_amp": 2598.666666666667,
+          "peak_in_last2": 0.9975308641975309
+        }
+      }
+    }
+  ]
+}

@@ -49,6 +49,59 @@
 }
 
 % =====================================================================
+% 1b. CCB Krakow proton beam facility (Cyclotron Centre Bronowice, IFJ PAN)
+% =====================================================================
+% Verified 2026-07-05 by web search + Crossref. The 190 MeV research beam used
+% in this analysis is the IBA Proteus C-235 beam (continuously variable 70-230 MeV)
+% in the CCB physics experimental hall; Maj2024CCB is the canonical facility paper.
+
+@article{Maj2024CCB,
+  author  = {Maj, Adam and Olko, Pawe{\l} and Kmiecik, Maria and Kope{\'c}, Renata
+             and Swako{\'n}, Jan},
+  title   = {The Proton Therapy and Research Cyclotron Facilities at the {IFJ PAN Krakow}},
+  journal = {Nuclear Physics News},
+  volume  = {34},
+  number  = {2},
+  pages   = {4--7},
+  year    = {2024},
+  doi     = {10.1080/10619127.2024.2336422},
+  note    = {Canonical CCB facility paper: AIC-144 (60 MeV) + IBA Proteus C-235
+             (70--230 MeV research beam, physics experimental hall, detector test beams)}
+}
+
+@article{Swakon2010CCB,
+  author  = {Swako{\'n}, J. and Olko, P. and Adamczyk, D. and Cywicka-Jakiel, T.
+             and D{\k{a}}browska, J. and Dulny, B. and Grzanka, L. and Horwacik, T.
+             and Kajdrowicz, T. and Michalec, B. and Nowak, T. and Ptaszkiewicz, M.
+             and Sowa, U. and Stolarczyk, L. and Waligorski, M. P. R.},
+  title   = {Facility for proton radiotherapy of eye cancer at {IFJ PAN} in {Krakow}},
+  journal = {Radiation Measurements},
+  volume  = {45},
+  number  = {10},
+  pages   = {1469--1471},
+  year    = {2010},
+  doi     = {10.1016/j.radmeas.2010.06.020},
+  note    = {Founding IFJ PAN proton-therapy facility (AIC-144 60 MeV eye-tumour beam);
+             heritage reference for the CCB proton programme}
+}
+
+@article{Briz2022ProtonRad,
+  author  = {Briz, J. A. and Nerio, A. N. and Ballesteros, C. and Borge, M. J. G.
+             and Mart{\'\i}nez, P. and Perea, A. and T{\'a}vora, V. G. and Tengblad, O.
+             and Ciema{\l}a, M. and Maj, A. and Olko, P. and Parol, W. and Pedracka, A.
+             and Sowicki, B. and Zieblinski, M. and N{\'a}cher, E.},
+  title   = {Proton radiographs using position-sensitive silicon detectors and
+             high-resolution scintillators},
+  journal = {IEEE Transactions on Nuclear Science},
+  year    = {2022},
+  doi     = {10.1109/TNS.2022.3142618},
+  eprint  = {2111.08681},
+  archivePrefix = {arXiv},
+  note    = {Detector test beam at CCB Krakow (Proteus C-235, ~100 MeV protons) using
+             scintillator range/energy detection; documents scintillator tests at this beam}
+}
+
+% =====================================================================
 % 2. GEANT4 simulation toolkit (truth-tree production)
 % =====================================================================
 
@@ -272,30 +325,97 @@
 }
 
 % =====================================================================
-% TO-CHECK (NOT verified enough to cite) — confirm authors + DOI before use.
-% These titles/venues exist per web search but were not fully verified.
+% Promoted from TO-CHECK — ALL SIX VERIFIED 2026-07-05 (authors + venue + DOI
+% confirmed via web search + Crossref). Formerly stubs [TC1]-[TC6]; now live.
 % =====================================================================
-%
-% [TC1] "Artificial neural network algorithms for pulse shape discrimination and
-%        recovery of piled-up pulses in organic scintillators", Annals of Nuclear
-%        Energy (2018). ScienceDirect PII S0306454918302974. Authors + DOI unconfirmed.
-%        Bucket 8 (ML pile-up recovery).
-%
-% [TC2] "A Time-Walk Correction Method for PET Detectors Based on Leading Edge
-%        Discriminators" (2017), PMC5739333. Authors/venue/DOI unconfirmed.
-%        Bucket 5 (amplitude time-walk correction) alternative to Gedcke1967CFD.
-%
-% [TC3] "A novel range telescope concept for proton CT", arXiv:2109.03452 (2021).
-%        Published venue + DOI unconfirmed. Bucket 2 (scintillator range telescope).
-%
-% [TC4] "Time resolution of BC422 plastic scintillator read out by a SiPM",
-%        arXiv:2103.11391. Authors/published venue/DOI unconfirmed. Bucket 3
-%        (plastic scintillator + SiPM timing) — alternative/addition to Moskal2016JPET.
-%
-% [TC5] "FPGA implementation of a deep learning algorithm for real-time signal
-%        reconstruction in radiation detectors under high pile-up conditions",
-%        arXiv:1903.02439. Authors/venue/DOI unconfirmed. Bucket 8.
-%
-% [TC6] "Particle Physics at the European Spallation Source", arXiv:2211.10396.
-%        Published venue/DOI unconfirmed. Bucket 1 (broader ESS particle-physics context).
+
+% [was TC3] Scintillator range-telescope method (Bucket 2 — HRD range telescope).
+% Closest established plastic-scintillator range-telescope method paper (ASTRA);
+% no HIBEAM-specific HRD instrument paper exists, so this is the method anchor.
+@article{GranadoGonzalez2022ASTRA,
+  author  = {Granado-Gonz{\'a}lez, Marc and Jes{\'u}s-Valls, C{\'e}sar and Lux, Thorsten
+             and Price, Tony and S{\'a}nchez, Federico},
+  title   = {A novel range telescope concept for proton {CT}},
+  journal = {Physics in Medicine and Biology},
+  volume  = {67},
+  number  = {3},
+  pages   = {035013},
+  year    = {2022},
+  doi     = {10.1088/1361-6560/ac4b39},
+  eprint  = {2109.03452},
+  archivePrefix = {arXiv},
+  note    = {ASTRA plastic-scintillator range telescope for proton energy/range via a
+             depth-ordered scintillator stack; GEANT4-simulated 0.7% energy resolution}
+}
+
+% [was TC4] Plastic scintillator + SiPM timing (Bucket 3), complements Moskal2016JPET.
+@article{Stoykov2021BC422,
+  author  = {Stoykov, Alexey and Rostomyan, Tigran},
+  title   = {Time Resolution of {BC422} Plastic Scintillator Read Out by a {SiPM}},
+  journal = {IEEE Transactions on Nuclear Science},
+  volume  = {68},
+  number  = {7},
+  pages   = {1487--1494},
+  year    = {2021},
+  doi     = {10.1109/TNS.2021.3089616},
+  eprint  = {2103.11391},
+  archivePrefix = {arXiv}
+}
+
+% [was TC2] Leading-edge time-walk correction (Bucket 5), complements Gedcke1967CFD.
+@article{Du2017TimeWalk,
+  author  = {Du, Junwei and Schmall, Jeffrey P. and Judenhofer, Martin S. and Di, Kun
+             and Yang, Yongfeng and Cherry, Simon R.},
+  title   = {A Time-Walk Correction Method for {PET} Detectors Based on Leading Edge
+             Discriminators},
+  journal = {IEEE Transactions on Radiation and Plasma Medical Sciences},
+  volume  = {1},
+  number  = {5},
+  pages   = {385--390},
+  year    = {2017},
+  doi     = {10.1109/TRPMS.2017.2726534}
+}
+
+% [was TC1] ML pulse-shape discrimination / pile-up recovery (Bucket 8).
+@article{Fu2018ANNpileup,
+  author  = {Fu, C. and Di Fulvio, A. and Clarke, S. D. and Wentzloff, D.
+             and Pozzi, S. A. and Kim, H. S.},
+  title   = {Artificial neural network algorithms for pulse shape discrimination and
+             recovery of piled-up pulses in organic scintillators},
+  journal = {Annals of Nuclear Energy},
+  volume  = {120},
+  pages   = {410--421},
+  year    = {2018},
+  doi     = {10.1016/j.anucene.2018.05.054}
+}
+
+% [was TC5] Deep-learning real-time signal reconstruction under pile-up (Bucket 8).
+@article{Ortiz2019FPGApileup,
+  author  = {Ortiz Arciniega, J. L. and Carri{\'o}, F. and Valero, A.},
+  title   = {{FPGA} implementation of a deep learning algorithm for real-time signal
+             reconstruction in particle detectors under high pile-up conditions},
+  journal = {Journal of Instrumentation},
+  volume  = {14},
+  number  = {09},
+  pages   = {P09002},
+  year    = {2019},
+  doi     = {10.1088/1748-0221/14/09/P09002},
+  eprint  = {1903.02439},
+  archivePrefix = {arXiv}
+}
+
+% [was TC6] Broader ESS particle-physics context (Bucket 1).
+@article{Abele2023ESS,
+  author  = {Abele, H. and others},
+  title   = {Particle physics at the {European Spallation Source}},
+  journal = {Physics Reports},
+  volume  = {1023},
+  pages   = {1--84},
+  year    = {2023},
+  doi     = {10.1016/j.physrep.2023.06.001},
+  eprint  = {2211.10396},
+  archivePrefix = {arXiv},
+  note    = {Large-collaboration review; ESS particle-physics programme incl.
+             HIBEAM/NNBAR n-nbar context}
+}
 </content>

@@ -222,6 +222,36 @@ def _load_s22():
     return module
 
 
+def daq_format_ok(s22, raw_dir: Path, run: int):
+    """Guard: is `run` in the SAME acquisition configuration as the analysis runs?
+
+    The reserved confirmation partition {64, 12-30} turned out to be DAQ-incompatible
+    with the Sample-II analysis runs (Track A, 2026-07-05): a 16-sample window (vs the
+    18-sample analysis basis), signal cabled onto the ODD channels rather than the
+    analysis even-channel B-stave map, and pulses truncated at the last sample. Applying
+    the frozen 18-sample/even-channel timewalk model to such runs is physically invalid,
+    not a confirmation. This checks the waveform length and returns (ok, reason).
+    """
+    import numpy as _np
+
+    try:
+        for batch in s22.iter_raw(s22.raw_file(raw_dir, run), ["HRDv"]):
+            flat = _np.stack(batch["HRDv"])
+            nsamp = int(flat.shape[1] // 8)
+            if flat.shape[1] != 8 * s22.SAMPLES_PER_CHANNEL:
+                return False, (
+                    f"run {run}: {nsamp}-sample window (HRDv len {flat.shape[1]}) "
+                    f"!= analysis 8*{s22.SAMPLES_PER_CHANNEL}; reserved partition is a "
+                    "different acquisition configuration (see "
+                    "reports/trackA_heldout_confirmation/). Held-out confirmation is "
+                    "physically invalid on this run."
+                )
+            return True, "compatible"
+    except Exception as exc:  # pragma: no cover - I/O guard
+        return False, f"run {run}: could not read HRDv ({exc})"
+    return False, f"run {run}: no HRDv batches"
+
+
 def load_event_triples(s22, raw_dir: Path, run: int, sample: str, max_events: int = 0):
     """Per-event downstream triples (B4,B6,B8 all A>1000, valid CFD).
 
@@ -569,20 +599,40 @@ def main() -> int:
     print(f"[s25] primary combined sigma68={primary['combined_sigma_ns']:.3f} ns", flush=True)
 
     # ---- confirmation partition ----
-    reserved_present = [r for r in RESERVED_RUNS if s22.raw_file(raw_dir, r).exists()]
+    reserved_staged = [r for r in RESERVED_RUNS if s22.raw_file(raw_dir, r).exists()]
+    # Track A (2026-07-05): even when staged, the reserved runs are DAQ-incompatible
+    # (16-sample window / odd-channel cabling / truncated pulses). Guard on waveform
+    # format so a frozen one-shot confirmation only runs on compatible runs; incompatible
+    # runs are reported as such, never crashed on or silently mis-analysed.
+    fmt = {r: daq_format_ok(s22, raw_dir, r) for r in reserved_staged}
+    reserved_present = [r for r in reserved_staged if fmt[r][0]]
+    reserved_incompatible = [r for r in reserved_staged if not fmt[r][0]]
     any_sub03 = primary["any_sub_03"] or high["any_sub_03"]
     held = {"combined_sigma_ns": None}
     if not reserved_present:
-        held["report_text"] = (
-            f"- Reserved runs {{64, 12-30}}: **NOT staged** on this node (only analysis runs "
-            f"{expl_runs} present in {raw_dir}). The one-shot held-out confirmation is therefore "
-            f"**BLOCKED — data unavailable**. Combined sigma68 sub-0.3 ns claim present? {any_sub03}. "
-            "Per policy a sub-0.3 ns claim would require confirmation on the reserved runs before "
-            "publication; here the combined value is > 0.3 ns and, regardless, cannot be confirmed "
-            "this round. This is a first-class (blocked) result: the FIRST validated timing number "
-            "is not achievable until the reserved raw runs are staged."
-        )
-        held["status"] = "BLOCKED_DATA_UNAVAILABLE"
+        if reserved_incompatible:
+            reasons = "; ".join(fmt[r][1] for r in reserved_incompatible)
+            held["report_text"] = (
+                f"- Reserved runs staged but **DAQ-INCOMPATIBLE**: {reserved_incompatible}. {reasons} "
+                "The reserved partition {64, 12-30} was recorded in a different acquisition "
+                "configuration (16-sample window vs 18; signal on odd channels vs the analysis "
+                "even-channel B-stave map; truncated pulses) — a frozen one-shot confirmation is "
+                "physically invalid, not merely deferred. See reports/trackA_heldout_confirmation/. "
+                f"Combined sigma68 sub-0.3 ns claim present? {any_sub03}. Net: 0.490 ns is a "
+                "definitive SINGLE-PARTITION result; a validated one needs a new Sample-II beam run."
+            )
+            held["status"] = "BLOCKED_DAQ_INCOMPATIBLE"
+        else:
+            held["report_text"] = (
+                f"- Reserved runs {{64, 12-30}}: **NOT staged** on this node (only analysis runs "
+                f"{expl_runs} present in {raw_dir}). The one-shot held-out confirmation is therefore "
+                f"**BLOCKED — data unavailable**. Combined sigma68 sub-0.3 ns claim present? {any_sub03}. "
+                "Per policy a sub-0.3 ns claim would require confirmation on the reserved runs before "
+                "publication; here the combined value is > 0.3 ns and, regardless, cannot be confirmed "
+                "this round. This is a first-class (blocked) result: the FIRST validated timing number "
+                "is not achievable until the reserved raw runs are staged."
+            )
+            held["status"] = "BLOCKED_DATA_UNAVAILABLE"
     else:
         # freeze the timewalk model on ALL exploration runs, apply to reserved runs
         betas_frozen = s22.fit_timewalk(pairs_df, expl_runs)
@@ -623,6 +673,7 @@ def main() -> int:
         "exploration_runs": expl_runs,
         "reserved_runs_policy": RESERVED_RUNS,
         "reserved_runs_present": reserved_present,
+        "reserved_runs_incompatible": reserved_incompatible,
         "n_triples": int(len(y)),
         "loro_betas": fold_betas,
         "primary": primary,

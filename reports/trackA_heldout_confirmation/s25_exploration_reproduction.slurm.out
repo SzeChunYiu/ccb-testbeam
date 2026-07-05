@@ -1,0 +1,13 @@
+[job] host=cn001 start=2026-07-05T20:15:06+02:00
+[job] reserved runs present in RAW:
+hrdb_run_0064.root
+Python 3.11.14
+[s25] exploration runs present: [58, 59, 60, 61, 62, 63, 65]
+[s25] run 58: triples=73
+[s25] run 59: triples=763
+[s25] run 60: triples=808
+[s25] run 61: triples=933
+[s25] run 62: triples=807
+[s25] run 63: triples=370
+[s25] run 65: triples=66
+[s25] primary combined sigma68=0.490 ns

@@ -1,0 +1,32 @@
+{
+  "study": "B-M9",
+  "generated": "2026-07-05",
+  "verdict": "PARTIAL_SIGN_OFF",
+  "signed_off_mapping_invariant": {
+    "layerid_semantics": "LayerID = Sci_bar copyNo = bar depth index",
+    "ordering": "LayerID 0 = most-upstream entrance bar (-> B2); monotonic increasing depth to LayerID 7 (-> B8); no interleaving",
+    "stack_id": {"LayerID1==1": "B-stack (8 bars)", "LayerID1==2": "A-stack (4 bars)"},
+    "b_arm_geometry": "8 contiguous 2 cm PSci bars, 16 cm total, zero gaps, fully active",
+    "mapping_invariant_quantities": ["B2_fraction(~0.87)", "B2_vs_rest", "total_B_occupancy", "depth_ordering"],
+    "invariance_tolerance": "<=0.3% across paired/even/odd variants (phase2 grid)"
+  },
+  "adopted_default_mapping_paired": {
+    "LayerID1==1": {"0": "B2", "1": "B2", "2": "B4", "3": "B4", "4": "B6", "5": "B6", "6": "B8", "7": "B8"},
+    "LayerID1==2": {"0": "A1", "1": "A2", "2": "A3", "3": "A4"}
+  },
+  "carried_mapping_conditional": {
+    "quantities": ["S21 per-stave B4/B6/B8 deuteron fractions", "S23 per-stave B4/B6/B8 MC occupancy shares", "MV3 B4/B6/B8 stopping-depth profile"],
+    "variant_spread_example": {"B6": "0.038 (paired) vs 0.023 (even_read)", "B8": "0.036 vs 0.049", "B4": "~0.055 both"},
+    "data_side_affected": false,
+    "reason": "GEANT4 has 8 undifferentiated fully-active bars with no read/unread attribute; paired(4x4cm staves) vs odd-even(4x2cm, alternate bars read) is a hardware fact the sim cannot resolve"
+  },
+  "correction": "The prior 'MV3 v4 closed the mapping -> paired stands' claim is overstated: paired is only the marginal best-chi2 variant (best chi2/ndf still ~554, entangled with gain/trigger); it is a data-chi2 preference, not an independent geometry validation.",
+  "sources": {
+    "geometry_root": "geant4/data/krakow_109_8-38deg_4-71deg.root (Sci_stack1_1 copyNo1; 8 Sci_bar copyNo0-7 at z=-7..+7 cm)",
+    "sd_source": "HIBEAM_Detector/hibeam_g4-main/src/SamplingD.cc:58,60,85-87",
+    "constants": "src/ccb_mc_validation/constants.py:5-7 (B_ARM=1,A_ARM=2,NB_LAYERS=8)",
+    "mapping_code": "scripts/mc02_build_mc_pulse_table.py:52-53,142-155; scripts/mv3_stopping_v4_diagnostics.py:18-21,51-54",
+    "chi2_grid": "reports/phase2_geometry_1783108797/grid_table.md",
+    "prior_audit": "reports/mv3c_geometry_source_audit/REPORT.md"
+  }
+}

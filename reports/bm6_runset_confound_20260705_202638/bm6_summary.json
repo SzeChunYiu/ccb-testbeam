@@ -1,0 +1,126 @@
+{
+  "study": "B-M6",
+  "generated": "2026-07-05T18:26:40Z",
+  "data": "/home/billy/projects/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+  "high_adc": 5000.0,
+  "sample_I_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+  ],
+  "sample_II_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "headline_pulse_pooled": {
+    "B2_fhi_I": 0.7096163564215358,
+    "n_B2_I": 241422,
+    "B2_fhi_II": 0.20555927130921747,
+    "n_B2_II": 88213,
+    "R_data_pool": 3.4521252770646296,
+    "note": "matches S23 f(A>5000) I=0.710 II=0.206 ratio 3.452"
+  },
+  "run_clustered_ratio": {
+    "fI": 0.7096163564215358,
+    "fII": 0.20555927130921747,
+    "R_data": 3.4521252770646296,
+    "R_ci95_runcluster": [
+      2.5208476449653006,
+      4.638547998675125
+    ],
+    "excludes_1": true,
+    "interpretation": "R_data CI with the RUN as the resampling unit (not the pulse). If it excludes 1 and lies well above the within-sample run-ratio spread, the I>II hardening is not a single-run artifact."
+  },
+  "run_level_welch": {
+    "B2_fhi": {
+      "mean_I": 0.6160848913569277,
+      "mean_II": 0.19666143050091459,
+      "sd_I": 0.21912268447017635,
+      "sd_II": 0.06932962925149154,
+      "se_diff": 0.06415825625175109,
+      "t": 6.537326376362756,
+      "cohen_d": 2.2623641271707697,
+      "n_I": 14,
+      "n_II": 7
+    },
+    "B2_share": {
+      "mean_I": 0.9542271310509266,
+      "mean_II": 0.7174772369542989,
+      "sd_I": 0.020149417182985387,
+      "sd_II": 0.1547087517561797,
+      "se_diff": 0.05872185937154704,
+      "t": 4.0317165810206275,
+      "cohen_d": 2.6744749428207064,
+      "n_I": 14,
+      "n_II": 7
+    },
+    "B2_med_amp": {
+      "mean_I": 5721.75,
+      "mean_II": 3348.285714285714,
+      "sd_I": 1400.1601453734881,
+      "sd_II": 335.2288841402315,
+      "se_diff": 395.0773199384174,
+      "t": 6.007594376929177,
+      "cohen_d": 2.02273878195321,
+      "n_I": 14,
+      "n_II": 7
+    }
+  },
+  "within_sample_spread": {
+    "B2_fhi_I_runs": [
+      0.4124,
+      0.4651,
+      0.4237,
+      0.4652,
+      0.3574,
+      0.3719,
+      0.8482,
+      0.7954,
+      0.801,
+      0.8506,
+      0.8515,
+      0.7895,
+      0.8334,
+      0.3598
+    ],
+    "B2_fhi_II_runs": [
+      0.3376,
+      0.1796,
+      0.1433,
+      0.1492,
+      0.1542,
+      0.2346,
+      0.1782
+    ],
+    "sd_log_fhi_within_pooled": 0.35570867755437474,
+    "log_gap_I_minus_II": 1.2389900637169695,
+    "gap_in_within_sample_SD": 3.4831595119789385,
+    "one_sd_drift_frac_of_gap": 0.2870956660356492
+  },
+  "linear_drift_model": {
+    "slope_logfhi_per_run_I": 0.04625692005210371,
+    "r2_I": 0.26443137325306676,
+    "slope_logfhi_per_run_II": -0.039127620708916816,
+    "r2_II": 0.09475702974487421,
+    "mean_run_gap_II_minus_I": 10.642857142857146,
+    "predicted_drift_logdrop_avg": 0.037938057219101706,
+    "drift_attributable_fraction_of_gap": -0.03062014646452253,
+    "note": "Fraction of the log(f_I/f_II) drop reproducible by extrapolating the within-sample linear run-trend across the mean run gap. Small => the cross-sample jump is a step at the trigger change, not smooth drift."
+  }
+}

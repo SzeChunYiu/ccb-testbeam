@@ -1,0 +1,197 @@
+{
+  "study": "B-M3",
+  "generated": "2026-07-05T18:32:49Z",
+  "wins": {
+    "P04": [
+      {
+        "comparison": "amp: peak_calibrated - ml_hgb",
+        "res68_delta": 0.11422953948469158,
+        "res68_delta_ci95": [
+          0.11268931365461071,
+          0.11564039298243137
+        ],
+        "res68_delta_se": 0.0007602963320443708,
+        "z_approx": 150.2434441286048,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.1237824793094783,
+        "res68_ml": 0.009552939824786716,
+        "iid_ci95": [
+          0.11271350577931044,
+          0.11561522330535157
+        ],
+        "design_effect_cluster_over_iid": 1.0211913194343971,
+        "cluster_unit": "event(run,eventno)",
+        "n_events": 24830
+      },
+      {
+        "comparison": "charge: integral_calibrated - ml_hgb",
+        "res68_delta": 0.18012874291684214,
+        "res68_delta_ci95": [
+          0.17825164779627062,
+          0.18251591783098173
+        ],
+        "res68_delta_se": 0.0010819160804759484,
+        "z_approx": 166.49049419581715,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.19541229087486175,
+        "res68_ml": 0.015283547958019606,
+        "iid_ci95": [
+          0.17829788479762557,
+          0.18217157165107745
+        ],
+        "design_effect_cluster_over_iid": 1.0735813474489337,
+        "cluster_unit": "event(run,eventno)",
+        "n_events": 24830
+      }
+    ],
+    "P07": [
+      {
+        "comparison": "saturation_recovery ceiling=4000: template_scale - ml_gbr",
+        "res68_delta": 0.07193649689113166,
+        "res68_delta_ci95": [
+          0.07021448630342965,
+          0.07385050357665594
+        ],
+        "res68_delta_se": 0.0009337405403529089,
+        "z_approx": 77.04120554082736,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.10436827496889789,
+        "res68_ml": 0.03243177807776623,
+        "iid_ci95": [
+          0.07020251040802944,
+          0.07383041802009553
+        ],
+        "design_effect_cluster_over_iid": 0.9979959029870095,
+        "cluster_unit": "event(run,eventno)",
+        "n_saturating": 8873,
+        "n_events": 8675
+      },
+      {
+        "comparison": "saturation_recovery ceiling=3000: template_scale - ml_gbr",
+        "res68_delta": 0.19988609759116208,
+        "res68_delta_ci95": [
+          0.1958821986562872,
+          0.20409889635471234
+        ],
+        "res68_delta_se": 0.0021397399821711663,
+        "z_approx": 93.41606889466087,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.2388716547866865,
+        "res68_ml": 0.038985557195524434,
+        "iid_ci95": [
+          0.1958567137513486,
+          0.20378276713684892
+        ],
+        "design_effect_cluster_over_iid": 1.0456586275595525,
+        "cluster_unit": "event(run,eventno)",
+        "n_saturating": 20254,
+        "n_events": 17791
+      },
+      {
+        "comparison": "saturation_recovery ceiling=2500: template_scale - ml_gbr",
+        "res68_delta": 0.191266615674885,
+        "res68_delta_ci95": [
+          0.18725640495873644,
+          0.1962211309859556
+        ],
+        "res68_delta_se": 0.002348630274652145,
+        "z_approx": 81.4375160446288,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.23318456983214955,
+        "res68_ml": 0.04191795415726455,
+        "iid_ci95": [
+          0.18746181883021815,
+          0.19615635036740028
+        ],
+        "design_effect_cluster_over_iid": 1.0495171848960798,
+        "cluster_unit": "event(run,eventno)",
+        "n_saturating": 27971,
+        "n_events": 22462
+      },
+      {
+        "comparison": "saturation_recovery ceiling=2000: template_scale - ml_gbr",
+        "res68_delta": 0.24042694354564725,
+        "res68_delta_ci95": [
+          0.2358463645860481,
+          0.24498143257176377
+        ],
+        "res68_delta_se": 0.002274656971418811,
+        "z_approx": 105.69811033778934,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.2863549991139299,
+        "res68_ml": 0.04592805556828265,
+        "iid_ci95": [
+          0.23631601319228357,
+          0.2446777927882519
+        ],
+        "design_effect_cluster_over_iid": 1.0974323135525317,
+        "cluster_unit": "event(run,eventno)",
+        "n_saturating": 33823,
+        "n_events": 25928
+      }
+    ],
+    "P04c": [
+      {
+        "comparison": "amplitude: adaptive_template_ridge - ml_hgb (heldout 57/65)",
+        "res68_delta": 0.0766330495,
+        "res68_delta_ci95": [
+          0.07520835330685667,
+          0.07805774569314332
+        ],
+        "res68_delta_se": 0.0007268991697710519,
+        "z_approx": 105.42459351568218,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.085755668,
+        "res68_ml": 0.0091226185,
+        "method": "conservative_unpaired_hypot_x_design_effect",
+        "ci_kind": "iid",
+        "design_effect_applied": 1.0473863334416653
+      }
+    ],
+    "P04d": [
+      {
+        "comparison": "amplitude: strong_traditional_huber - ml_extra_trees (heldout 57/65)",
+        "res68_delta": 0.0175546536,
+        "res68_delta_ci95": [
+          0.017145724054322437,
+          0.017963583145677565
+        ],
+        "res68_delta_se": 0.00020864135713877902,
+        "z_approx": 84.13793813813922,
+        "p_two_sided": 0.0,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.0202567806,
+        "res68_ml": 0.002702127,
+        "method": "conservative_unpaired_hypot_x_design_effect",
+        "ci_kind": "iid",
+        "design_effect_applied": 1.0473863334416653
+      }
+    ],
+    "P04e": [
+      {
+        "comparison": "amplitude B2 holdout: traditional_huber - ml_extra_trees (run-block CI)",
+        "res68_delta": 0.1202208864,
+        "res68_delta_ci95": [
+          0.11003887794547677,
+          0.13040289485452322
+        ],
+        "res68_delta_se": 0.0051949977320183485,
+        "z_approx": 23.141662922977265,
+        "p_two_sided": 1.7638077547219772e-118,
+        "ci_excludes_zero": true,
+        "res68_traditional": 0.1369987423,
+        "res68_ml": 0.0167778559,
+        "method": "conservative_unpaired_hypot_runblock_ci",
+        "ci_kind": "runblock",
+        "design_effect_applied": 1.0
+      }
+    ]
+  }
+}

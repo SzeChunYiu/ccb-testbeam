@@ -28,6 +28,21 @@ heavily-reused Sample-II analysis set):
 Sample-I calibration runs 31–42 are **not** reserved — they were fitted as training data in
 ~100 studies each and run 42 served as a holdout 54 times.
 
+> **UPDATE 2026-07-05 (Track A, `reports/trackA_heldout_confirmation/`): the reserved
+> partition is DAQ-incompatible, not merely un-staged.** The reserved raw runs were located
+> (in `ccb_data/hrd/root/`, never staged into the working dir) and inspected. They cannot
+> serve as a held-out confirmation of the Sample-II 18-sample downstream-stave timing
+> resolution because they were recorded in a *different acquisition configuration*:
+> **16-sample** window (vs 18); the active detector channels are the **odd** channels
+> (1/3/5/7) rather than the analysis **even**-channel B-stave map (B2=0,B4=2,B6=4,B8=6), so
+> the frozen selection reads near-empty channels (downstream-stave median amplitude 13–17
+> ADC); and the active channels are **truncated**, peaking at the last sample (ch7:
+> ~99–100% of pulses in the final two samples). This applies to **run 64 as well** — it is
+> *not* a clean in-Sample-II holdout. Consequence: the S25 σ₆₈ = 0.490 ns is a **definitive
+> single-partition (uncorroborated)** result; a genuine held-out confirmation requires a
+> *new* Sample-II-configuration beam run. Run 65 remains the only (exhausted) Sample-II
+> holdout. See the Track A report for the per-run channel/amplitude/truncation table.
+
 Honest caveat: nothing in this dataset is a virgin partition. Run 64 is the best available
 approximation inside Sample II; treat its **first preregistered confirmation use per claim as the
 only use** — after that it is burned for that claim family, like run 65 before it. A genuinely

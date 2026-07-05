@@ -91,13 +91,18 @@ the two disagree.
    proxy-scan diagnostics whose absolute values are retired as over-optimistic with the MV3 proxy
    headline, but the monotonic gain *trend* still informs the band); with Birks
    quenching on, the quenched re-scan (2026-07-05, LUNARC 3348264) measured the optimum at ~65 (band ~60–70).
-3. **Sample-I deuteron enrichment is confirmed at truth level and consistent in data (S21 + S23;
-   run-set differences not yet separated).** Truth
+3. **Sample-I deuteron enrichment is confirmed at truth level and directionally confirmed in data,
+   with the run-set/beam-drift confound now bounded (S21 + S23 + B-M6).** Truth
    (S21): B2 deuteron-fraction ratio I/II = 1.519 [1.510, 1.528] (exclusive I vs II\I: 1.912
    [1.898, 1.925]); 91.2% of Sample-I events are d-into-B / p-into-A pd-elastic pairs. Data
    (S23): the Sample-I B2 spectrum is harder — high-amplitude fraction ratio f(A>5000)_I/II =
-   3.45 [3.41, 3.50] — but in data Samples I and II are disjoint run sets, so run-set/beam
-   differences are not yet separated from the trigger. Mimicking the trigger moves MC toward the
+   3.45 [3.41, 3.50]. Samples I/II are disjoint run sets, so **B-M6 (2026-07-05,
+   `reports/bm6_runset_confound_20260705_202638/`) bounds the run-set/beam confound**: treating the
+   run as the dependence unit, the run-clustered ratio CI is **[2.52, 4.64]** (excludes 1), the gap
+   is **3.5× the within-sample run-to-run SD** (Welch t≈6.5, d≈2.3), and a smooth-drift model
+   reproduces only ~3% — so run-set/beam drift accounts for **at most ~29% (conservative 1-SD;
+   central ~3%)** of the hardening, which is therefore trigger-dominated but not a clean same-run
+   confirmation. Mimicking the trigger moves MC toward the
    data (B2 KS 0.192 → 0.131; occupancy χ² 624k → 20k), and the residual double-ratio deficit
    (B2 occupancy DR = 0.738 [0.733, 0.742], z = −99 — statistics-only significance; systematics
    from disjoint run-sets/beam conditions not included) shows MC under-predicts the between-sample
@@ -131,12 +136,20 @@ the two disagree.
    table (S18 counterpart; only A1/A3 usable in data) now exists.
    (`reports/phase4_1783180742/REPORT.md`, `reports/mv6b_anomaly_quenching_1783180742/`,
    `reports/mc02_pulse_table_1783107862/`)
-7. **Statistics hardening.** A program-level Benjamini–Hochberg FDR census over 1,948 delta-CI
-   claims in 443 artifacts: of the 17 scoreboard bold wins, **11 survive BH, 0 fail, and 6 rest
-   on prose only** (no machine-readable delta CI). **The 6 prose-only wins include the flagship
-   P04 (duplicate-readout) and P07 (saturation) ML wins — they are reported, not yet
-   FDR-certified.** The retired, rigged S11a (0.295/0.168) is not counted among the 11 BH
-   survivors. S03k survives BH yet was falsified by the
+7. **Statistics hardening.** A program-level Benjamini–Hochberg FDR census over the delta-CI
+   claims: after B-M3 emitted machine-readable, dependence-aware delta-CIs for the P04/P07 wins
+   (`scripts/stats02_p04p07_delta_ci.py`), the refreshed census
+   (`reports/stats01_program_fdr_20260705_203905/`, 1,957 claims) finds **14 of 15 scoreboard bold
+   wins survive BH, 0 fail, 1 prose-only**. **The flagship P04 (duplicate-readout) and P07
+   (saturation) ML wins are now FDR-certified** — all five (P04/P04c/P04d/P04e/P07) pass BH at
+   q=0.05 in the amplitude-charge family with paired **event-clustered** delta-CIs (event-cluster
+   design effect only ~1.05, so the dependence unit barely moves these amplitude/charge closures;
+   z = 23–166). Certification means *statistically distinguishable from zero*, not absolute-energy
+   truth: P04 stays a duplicate-readout electronics closure, P07's natural-saturation transfer is
+   unaudited (`reports/bm3_p04p07_fdr_20260705_203249/REPORT.md`). The one remaining prose-only win
+   is **P05b** (a pile-up two-pulse study). The retired, rigged S11a (0.295/0.168) is not a BH
+   survivor — it was killed for circularity, not multiplicity, the reminder that S03k survives BH
+   yet was falsified by the
    S03p/S03r leakage nulls — BH survival is necessary, not sufficient. A confirmation partition
    (runs 64 and 12–30) is reserved for sub-0.3 ns claims (`docs/CONFIRMATION_PARTITION.md`) but is
    **defined and not yet used**, so any sub-0.3 ns timing claim is not yet confirmed on held-out
@@ -522,7 +535,7 @@ pd-elastic kinematics gives them ~105 MeV with roughly half a proton's range; fo
 | Deuteron stopping depth | inferred early (B2-enriched Sample I) | layers 0-1, d-frac 0.36-0.39 | consistent |
 | Proton stopping depth | inferred penetrating (Sample II) | layers 4-7, p-frac 0.89-0.90 | consistent |
 | Depth occupancy ordering | B2 >> B4 > B6 > B8 | Sci_bar hits fall layer 0->7 | qualitative match |
-| Sample I/II trigger split | deuteron-enriched — consistent in data (S23: B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set differences not yet separated) | confirmed at truth level (S21: B2 f_d ratio 1.519 [1.510, 1.528], exclusive 1.912) | confirmed at truth level, consistent in data (2026-07-03); MC under-predicts the contrast (S23 DR 0.738, z = −99 statistics-only; systematics from disjoint run-sets/beam conditions not included) |
+| Sample I/II trigger split | deuteron-enriched — consistent in data (S23: B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set/beam drift bounded ≤~29% by B-M6) | confirmed at truth level (S21: B2 f_d ratio 1.519 [1.510, 1.528], exclusive 1.912) | confirmed at truth level, consistent in data (2026-07-03); MC under-predicts the contrast (S23 DR 0.738, z = −99 statistics-only; systematics from disjoint run-sets/beam conditions not included) |
 
 > **Sample definitions (corrected 2026-07-03, experiment-owner setup facts):** Sample I = A AND B
 > trigger coincidence (MC mimic: charged particle entering the first A and first B layer within
@@ -571,7 +584,11 @@ coincidence population that the ideal trigger does not produce. The earlier prox
 retained ~13% non-B2 events. The physics of the mechanism is transparent: the coincidence keeps
 deuteron-into-B events (conjugate ~85 MeV proton reaches Stack A) and vetoes deep-proton events
 (conjugate ~37 MeV deuteron dies before the A-paddle). The odd-layer mapping hypothesis (review P4)
-is disfavored (both unread-bar variants are worse); the `paired` mapping stands. The residual
+is the marginal best-χ² loser (both unread-bar variants are worse); `paired` is adopted as default.
+B-M9 (2026-07-05) signs off the LayerID *semantics* from the geometry/SD source (`LayerID=copyNo=bar
+depth index`, 0=upstream→B2, monotonic to B8; B2/total/ordering mapping-invariant) but carries the
+deep-stave B4/B6/B8 MC fractions as **mapping-conditional** (paired↔odd/even is an unresolved
+energy-grouping/hardware question, not derivable from the sim). The residual
 deep-stave data population is now a **data-side** question (accidental/pile-up coincidences absent
 in the truth MC, Sample-I purity, paddle threshold/resolution fidelity, LayerID→stave mapping) —
 STUDY_GAPS NEW-04; it is not a geometry/SD production.
@@ -619,7 +636,7 @@ program closed the rows added below.)_
 |---|---|---|
 | Is p/d PID at AUC 0.986 real? | MV1 (rerun 2026-07-03) | Yes as an MC truth ceiling; data within 0.5% via weak-label proxies, not species truth |
 | What caused the MV3 stopping-depth FAIL? | Phase 2 (2026-07-03) + real `Trig_bar` SD sim (2026-07-05) | **Mechanism ESTABLISHED** by a real `Trig_bar` sensitive-detector simulation: the unsimulated two-arm coincidence trigger, not missing material (falsified: ~0.13 g/cm² air missing vs ≥10.5 needed). Untriggered B2 45.9% (χ²/ndf 68,705) → real triggered 99.7%, toward data 93.3%. **Quantitative closure NOT achieved** — the ideal trigger over-purifies (99.7% vs data 93.3%); the proxy χ²/ndf ≈ 625 is retired as over-optimistic; residual ~7–12% deep-stave data population is data-side (NEW-04). MV3 stays TENSION |
-| Is Sample I deuteron-enriched? | S21 + S23 (2026-07-03) | Confirmed at truth level (B2 f_d ratio 1.519 [1.510, 1.528]; exclusive 1.912); consistent in data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set differences not yet separated); MC under-predicts the contrast (DR 0.738, z = −99 statistics-only; disjoint run-set/beam systematics not included) |
+| Is Sample I deuteron-enriched? | S21 + S23 (2026-07-03) | Confirmed at truth level (B2 f_d ratio 1.519 [1.510, 1.528]; exclusive 1.912); consistent in data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set/beam drift bounded ≤~29% by B-M6); MC under-predicts the contrast (DR 0.738, z = −99 statistics-only; disjoint run-set/beam systematics not included) |
 | Is the early-peak anomaly class C12 recoils? | MV6b (2026-07-04) | **No — ruled out.** 0/1,656 quenched C12 records pass A>1000 at any gain (60–297); the class must be instrumental/trigger-phase (data-side question, P02/P09) |
 | Does ML two-pulse recovery maintain failure rate on true overlaps? | MC03/S24 (2026-07-04) | Truth-labelled honest benchmark: traditional wins at matched 80% coverage (≤0.0001 vs 0.0001–0.0002); ML wins at full coverage (0.011 vs 0.048); common-subset dt σ68 trad 0.64 vs ML 0.89 ns |
 | What is the p/d range-energy mechanism (quantitative)? | MV2 rerun (2026-07-03) | MeV-scale ekin after the momentum-unit fix; containment p 0.70 / d 0.84; Birks lookup remains best (geometry/trigger caveat) |

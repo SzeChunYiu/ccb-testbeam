@@ -1,0 +1,24 @@
+{
+  "study": "P04e",
+  "generated": "2026-07-05T18:38:37Z",
+  "source": "scripts/stats02_p04p07_delta_ci.py (B-M3)",
+  "benchmark": [
+    {
+      "comparison": "amplitude B2 holdout: traditional_huber - ml_extra_trees (run-block CI)",
+      "res68_delta": 0.1202208864,
+      "res68_delta_ci95": [
+        0.11003887794547677,
+        0.13040289485452322
+      ],
+      "res68_delta_se": 0.0051949977320183485,
+      "z_approx": 23.141662922977265,
+      "p_two_sided": 1.7638077547219772e-118,
+      "ci_excludes_zero": true,
+      "res68_traditional": 0.1369987423,
+      "res68_ml": 0.0167778559,
+      "method": "conservative_unpaired_hypot_runblock_ci",
+      "ci_kind": "runblock",
+      "design_effect_applied": 1.0
+    }
+  ]
+}

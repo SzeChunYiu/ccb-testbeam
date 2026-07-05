@@ -1,0 +1,49 @@
+{
+  "study": "P04",
+  "generated": "2026-07-05T18:34:49Z",
+  "source": "scripts/stats02_p04p07_delta_ci.py (B-M3)",
+  "benchmark": [
+    {
+      "comparison": "amp: peak_calibrated - ml_hgb",
+      "res68_delta": 0.11422953948469158,
+      "res68_delta_ci95": [
+        0.11268931365461071,
+        0.11564039298243137
+      ],
+      "res68_delta_se": 0.0007602963320443708,
+      "z_approx": 150.2434441286048,
+      "p_two_sided": 0.0,
+      "ci_excludes_zero": true,
+      "res68_traditional": 0.1237824793094783,
+      "res68_ml": 0.009552939824786716,
+      "iid_ci95": [
+        0.11271350577931044,
+        0.11561522330535157
+      ],
+      "design_effect_cluster_over_iid": 1.0211913194343971,
+      "cluster_unit": "event(run,eventno)",
+      "n_events": 24830
+    },
+    {
+      "comparison": "charge: integral_calibrated - ml_hgb",
+      "res68_delta": 0.18012874291684214,
+      "res68_delta_ci95": [
+        0.17825164779627062,
+        0.18251591783098173
+      ],
+      "res68_delta_se": 0.0010819160804759484,
+      "z_approx": 166.49049419581715,
+      "p_two_sided": 0.0,
+      "ci_excludes_zero": true,
+      "res68_traditional": 0.19541229087486175,
+      "res68_ml": 0.015283547958019606,
+      "iid_ci95": [
+        0.17829788479762557,
+        0.18217157165107745
+      ],
+      "design_effect_cluster_over_iid": 1.0735813474489337,
+      "cluster_unit": "event(run,eventno)",
+      "n_events": 24830
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "study": "P04c",
+  "generated": "2026-07-05T18:38:37Z",
+  "source": "scripts/stats02_p04p07_delta_ci.py (B-M3)",
+  "benchmark": [
+    {
+      "comparison": "amplitude: adaptive_template_ridge - ml_hgb (heldout 57/65)",
+      "res68_delta": 0.0766330495,
+      "res68_delta_ci95": [
+        0.07520835330685667,
+        0.07805774569314332
+      ],
+      "res68_delta_se": 0.0007268991697710519,
+      "z_approx": 105.42459351568218,
+      "p_two_sided": 0.0,
+      "ci_excludes_zero": true,
+      "res68_traditional": 0.085755668,
+      "res68_ml": 0.0091226185,
+      "method": "conservative_unpaired_hypot_x_design_effect",
+      "ci_kind": "iid",
+      "design_effect_applied": 1.0473863334416653
+    }
+  ]
+}

@@ -597,7 +597,7 @@ def fig_11_leakage_controls():
 # ═══════════════════════════════════════════════════════════════════════════════
 def fig_12_stopping_depth_failure():
     fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-    fig.suptitle("MV3: The Stopping-Depth Problem — Why MC Fails", fontweight="bold", fontsize=13, color=C_FAIL)
+    fig.suptitle("MV3: Stopping-Depth Tension — the trigger, not missing material (real Trig_bar sim)", fontweight="bold", fontsize=12, color="#3498db")
 
     staves = ["B2", "B4", "B6", "B8"]
     mc_frac = [47.0, 18.2, 12.5, 22.3]
@@ -618,16 +618,16 @@ def fig_12_stopping_depth_failure():
 
     ax2 = axes[1]
     ax2.set_xlim(0, 6); ax2.set_ylim(0, 6); ax2.axis("off")
-    ax2.set_title("Root Cause", fontweight="bold")
+    ax2.set_title("Root Cause — CORRECTED", fontweight="bold")
 
-    ax2.text(3, 5.5, "χ²/ndf = 68,269", ha="center", fontsize=12, fontweight="bold", color=C_FAIL)
-    ax2.text(3, 5.0, "A CATASTROPHIC failure, not a tension", ha="center", fontsize=9, color=C_FAIL)
+    ax2.text(3, 5.5, "χ²/ndf = 68,269 (untriggered)", ha="center", fontsize=11, fontweight="bold", color=C_FAIL)
+    ax2.text(3, 5.0, "Re-graded FAIL → TENSION (2026-07-05)", ha="center", fontsize=9, color="#3498db")
 
-    rect = FancyBboxPatch((0.3, 1), 5.4, 3.5, boxstyle="round", facecolor="#fff0f0", edgecolor=C_FAIL, lw=2)
+    rect = FancyBboxPatch((0.3, 1), 5.4, 3.5, boxstyle="round", facecolor="#eef4ff", edgecolor="#3498db", lw=2)
     ax2.add_patch(rect)
-    ax2.text(3, 4.2, "Missing ~8-10 g/cm² in GEANT4:", ha="center", fontsize=9, fontweight="bold")
-    ax2.text(3, 3.5, "• Trigger scintillators (T1, T2)\n• Beam window\n• Inter-stave dead material\n• Support structures\n• Air gaps between staves", ha="center", fontsize=8)
-    ax2.text(3, 1.8, "Fix: Update GEANT4 geometry\n→ new MC production → rerun MV3", ha="center", fontsize=9, fontweight="bold", color="#3498db")
+    ax2.text(3, 4.2, "Mechanism: the two-arm coincidence TRIGGER", ha="center", fontsize=9, fontweight="bold")
+    ax2.text(3, 3.4, "'Missing ~8-10 g/cm² material' is FALSIFIED:\n≤0.8 g/cm² exists vs ≥10.5 g/cm² required (×13).\nReal Trig_bar sim: B2 45.9% → 99.7% (over-purifies\nvs data 93.3%). No new GEANT4 production needed.", ha="center", fontsize=8)
+    ax2.text(3, 1.6, "See Fig 33 (hero) / Fig 25 — postreview set", ha="center", fontsize=9, fontweight="bold", color="#3498db")
 
     plt.tight_layout()
     save(fig, "12_stopping_depth_failure.png")

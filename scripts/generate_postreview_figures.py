@@ -89,6 +89,12 @@ SOURCES = {
     "mc03":  "reports/mc03_overlay_1783180480/result.json",
     "rc":    "reports/mc03_overlay_1783180480/risk_coverage_curves.csv",
     "mv7":   "reports/mc02_pulse_table_1783107862/mv7_pedestal_validation.json",
+    # ── post-review round: real Trig_bar simulation + measured systematics ──
+    "mv3v5": "reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json",
+    "gainq": "reports/mv3_gain_quenched_1783240619/mv3_gain_quenched.json",
+    "s25":   "reports/s25_covariance_timing_1783241582/s25_summary.json",
+    "s26":   "reports/s26_overlay_realism_1783241582/s26_summary.json",
+    "s27":   "reports/s27_earlypeak_budget_1783241582/s27_summary.json",
 }
 
 
@@ -122,103 +128,89 @@ def _strike(ax, x, y, val_text, color=PAL["red_down"]):
     return t
 
 
+# ── helper: locate an entry in the real-trigger (mv3 v5) grid ───────────────
+def _v5(basis, species, trigger, gain):
+    for g in load("mv3v5")["grid"]:
+        if (g["basis"] == basis and g["species"] == species
+                and g["trigger"] == trigger and g["gain"] == gain):
+            return g
+    raise KeyError((basis, species, trigger, gain))
+
+
 # ══════════════════════════════════════════════════════════════════════════
-# Fig 25 — HERO: the trigger, not missing material, is the MV3 root cause.
-#   Archetype: asymmetric mixed-modality (hero ladder + subordinate profiles).
-#   Source: reports/phase2_geometry_1783108797/mv3v4_grid.json + grid_table.md
-#           (published untriggered ref χ²/ndf = 68,269 quoted in the MV3 report).
+# Fig 25 (REBUILT 2026-07-05) — the trigger MOVES the B2 fraction the right way
+#   (45.9% → 99.7%) but over-purifies; the Phase-2 proxy χ²/ndf ≈ 625 is RETIRED.
+#   Core conclusion: a real Trig_bar simulation establishes the trigger as the
+#   mechanism (untriggered B2 45.9% → real-trigger 99.7%, vs data 93.3%); the
+#   over-optimistic proxy χ² 625 is retired — see Fig 33 for the hero profiles.
+#   Archetype: asymmetric mixed-modality (B2-movement lollipop + retire card).
+#   Source: reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json.
+#   NOTE: a χ²/ndf ladder is deliberately NOT used — the ideal trigger over-
+#   purifies, so its χ² vs data is LARGER, not smaller; the honest axis is the
+#   B2 fraction, which moves toward (and past) the data.
 # ══════════════════════════════════════════════════════════════════════════
 def fig25_mv3_hero():
-    grid = load("grid")["grid"]
+    d = load("mv3v5")
+    untrig = _v5("track", "filtered", "none", 92.0)["fractions"]["B2"]     # 0.469
+    proxy = _v5("track", "inclusive", "proxy_ahrd", 60.0)["fractions"]["B2"]  # 0.872
+    real = _v5("event", "inclusive", "real_coinc", 92.0)["fractions"]["B2"]   # 0.997
+    data_si = d["data"]["sample_i"]["fractions"]["B2"]                     # 0.933
+    data_all = d["data"]["all"]["fractions"]["B2"]                         # 0.876
 
-    def pick(basis, species, mapping, gain):
-        for g in grid:
-            if (g["basis"] == basis and g["species"] == species
-                    and g["mapping"] == mapping and g["gain"] == gain
-                    and g["trigger"] == "acoinc"):
-                return g
-        raise KeyError((basis, species, mapping, gain))
-
-    trig_g92 = pick("track", "inclusive", "paired", 92.0)   # A·B trigger proxy
-    even_g92 = pick("track", "inclusive", "even_read", 92.0)
-    odd_g92 = pick("track", "inclusive", "odd_read", 92.0)
-    best_g60 = pick("track", "inclusive", "paired", 60.0)    # best grid point
-    evt_g60 = pick("event", "inclusive", "paired", 60.0)     # +event+species-incl
-
-    # Hero ladder: (label, chi2/ndf, colour-role)
+    # (label, B2 fraction, colour-role, struck?)
     ladder = [
-        ("odd-read map\n(disfavoured, gain 92)", odd_g92["chi2_ndf_all"], "grey"),
-        ("Untriggered MC\n(MV3 published ref, gain 92)", 68269.0, "fail"),
-        ("even-read map\n(disfavoured, gain 92)", even_g92["chi2_ndf_all"], "grey"),
-        ("+ A·B trigger proxy\n(gain 92)", trig_g92["chi2_ndf_all"], "fix"),
-        ("+ event basis + species-inclusive\n(gain 60)", evt_g60["chi2_ndf_all"], "fix"),
-        ("Best grid point\n(trigger, gain 60)", best_g60["chi2_ndf_all"], "fixbest"),
+        ("Untriggered MC\n(real 1M production, gain 92)", untrig, "fail", False),
+        ("Retired Phase-2 A-HRD proxy\n(gain 60; χ²/ndf 625 RETIRED)", proxy, "grey", True),
+        ("Real Trig_bar coincidence\n(A·B EDep, gain 92)", real, "fix", False),
     ]
-    role_c = {"grey": PAL["n_light"], "fail": PAL["red_strong"],
-              "fix": PAL["blue_secondary"], "fixbest": PAL["blue_main"]}
+    role_c = {"fail": PAL["red_strong"], "grey": PAL["n_mid"],
+              "fix": PAL["blue_main"]}
 
-    fig = plt.figure(figsize=(7.2, 5.6))
-    gs = fig.add_gridspec(2, 1, height_ratios=[1.35, 1.0], hspace=0.42)
-    axh = fig.add_subplot(gs[0])
-    axs = fig.add_subplot(gs[1])
-
-    # Hero: horizontal log lollipop of chi2/ndf
-    order = sorted(range(len(ladder)), key=lambda i: ladder[i][1])  # best->worst
-    ypos = np.arange(len(ladder))
-    for y, i in zip(ypos, order):
-        lab, val, role = ladder[i]
+    fig = plt.figure(figsize=(7.2, 3.4))
+    ax = fig.add_subplot(111)
+    y = np.arange(len(ladder))[::-1]
+    for yi, (lab, val, role, struck) in zip(y, ladder):
         c = role_c[role]
-        axh.hlines(y, 1, val, color=c, lw=2.4, zorder=2)
-        axh.plot(val, y, "o", color=c, markersize=6.5, zorder=3,
-                 markeredgecolor="black", markeredgewidth=0.5)
-        axh.text(val * 1.35, y, f"{val:,.0f}", va="center", ha="left",
-                 fontsize=6.8, color=PAL["n_black"])
-        axh.text(0.6, y, lab, va="center", ha="right", fontsize=6.3,
-                 color=PAL["n_dark"])
-    axh.set_yticks([])
-    axh.set_xscale("log")
-    axh.set_xlim(0.5, 3e6)
-    axh.set_xlabel("Stopping-depth profile agreement,  χ²/ndf  (log scale; lower = better)")
-    axh.spines["left"].set_visible(False)
-    # Annotate the decisive drop
-    yi_untrig = int(np.where(np.array(order) == 1)[0][0])
-    yi_trig = int(np.where(np.array(order) == 3)[0][0])
-    axh.annotate("A·B coincidence trigger\napplied: ×22 drop",
-                 xy=(trig_g92["chi2_ndf_all"], yi_trig),
-                 xytext=(2.5e4, (yi_untrig + yi_trig) / 2 + 0.35),
-                 fontsize=6.4, color=PAL["blue_main"], ha="left", va="center",
-                 arrowprops=dict(arrowstyle="->", color=PAL["blue_main"], lw=0.9))
-    axh.set_title("a   The trigger — not missing material — is the root cause of the MV3 stopping-depth failure",
-                  loc="left", fontsize=8.2)
+        ax.hlines(yi, 0, val * 100, color=c, lw=2.6, zorder=2,
+                  alpha=0.45 if struck else 1.0)
+        ax.plot(val * 100, yi, "o", color=c, markersize=7, zorder=3,
+                markeredgecolor="black", markeredgewidth=0.5,
+                alpha=0.45 if struck else 1.0)
+        txt = f"{val * 100:.1f}%"
+        ax.text(val * 100 + 2.2, yi, txt, va="center", ha="left",
+                fontsize=7.2, color=PAL["n_black"],
+                fontweight="bold" if not struck else "normal")
+        ax.text(-2, yi, lab, va="center", ha="right", fontsize=6.4,
+                color=PAL["n_dark"])
+        if struck:  # strike the retired proxy bar
+            ax.plot([0, val * 100], [yi, yi], color=PAL["red_down"], lw=0.9,
+                    zorder=4)
 
-    # Subordinate: stave-fraction profiles vs data
-    data_all = load("grid")["data"]["all"]["fractions"]
-    prof = {
-        "Data (all)": [data_all[s] for s in STAVES],
-        "Untriggered MC (MV3)": [0.470, 0.182, 0.125, 0.223],
-        "Trigger-proxy MC (gain 60)": [best_g60["fractions"][s] for s in STAVES],
-    }
-    pcol = {"Data (all)": PAL["n_black"],
-            "Untriggered MC (MV3)": PAL["red_strong"],
-            "Trigger-proxy MC (gain 60)": PAL["blue_main"]}
-    x = np.arange(len(STAVES))
-    w = 0.26
-    for k, (name, vals) in enumerate(prof.items()):
-        axs.bar(x + (k - 1) * w, vals, w, label=name, color=pcol[name],
-                edgecolor="black", linewidth=0.5)
-    axs.set_yscale("log")
-    axs.set_ylim(8e-3, 1.3)
-    axs.set_xticks(x)
-    axs.set_xticklabels(STAVES)
-    axs.set_xlabel("B-arm stave (increasing depth →)")
-    axs.set_ylabel("Fraction of selected pulses")
-    axs.legend(loc="upper center", ncol=3, fontsize=6.0, columnspacing=1.0,
-               handletextpad=0.4, bbox_to_anchor=(0.5, 1.02))
-    axs.set_title("b   Untriggered MC over-predicts deep-stave (B8) penetration ×10; the trigger proxy tracks the data",
-                  loc="left", fontsize=8.2)
-    axs.annotate("×10 excess", xy=(3.0, 0.20), xytext=(2.45, 0.055),
-                 fontsize=6.3, color=PAL["red_strong"], ha="center", va="center",
-                 arrowprops=dict(arrowstyle="->", color=PAL["red_strong"], lw=0.8))
+    # data reference lines
+    ax.axvline(data_si * 100, color=PAL["n_black"], ls="--", lw=1.0, zorder=1)
+    ax.text(data_si * 100, len(ladder) - 0.35, f"data Sample I {data_si*100:.1f}%",
+            fontsize=6.4, color=PAL["n_black"], ha="center", va="bottom")
+    ax.axvline(data_all * 100, color=PAL["n_mid"], ls=":", lw=0.9, zorder=1)
+    ax.text(data_all * 100, -0.72, f"data all {data_all*100:.1f}%",
+            fontsize=6.0, color=PAL["n_mid"], ha="center", va="top")
+
+    # the decisive movement + the honest over-purification
+    ax.annotate("", xy=(real * 100, y[2]), xytext=(untrig * 100, y[0]),
+                arrowprops=dict(arrowstyle="->", color=PAL["blue_main"], lw=1.0,
+                                connectionstyle="arc3,rad=-0.15"))
+    ax.text(20, 0.52, "trigger established as\nthe mechanism\n45.9% → 99.7%",
+            fontsize=6.4, color=PAL["blue_main"], ha="left", va="center")
+    ax.text(101, 0.52, "over-purifies\n(> data 93.3%)", fontsize=6.0,
+            color=PAL["n_dark"], ha="left", va="center")
+
+    ax.set_yticks([])
+    ax.set_xlim(0, 118)
+    ax.set_ylim(-1.1, len(ladder) - 0.1)
+    ax.set_xlabel("B2 (shallowest stave) fraction of the selected B-arm sample (%)")
+    ax.spines["left"].set_visible(False)
+    ax.set_title("The real Trig_bar trigger establishes the MV3 mechanism (B2 45.9% → 99.7%) "
+                 "and retires the proxy χ²/ndf 625",
+                 loc="left", fontsize=7.6)
     return save_pub(fig, "25_mv3_trigger_rootcause")
 
 
@@ -750,12 +742,427 @@ def fig19_pedestal():
     return save_pub(fig, "19_pedestal_comparison")
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 33 — HERO (round hero): a REAL two-arm trigger simulation establishes the
+#   trigger — not missing material — as the MV3 mechanism, while over-purifying
+#   vs the data (B2 45.9%→99.7% vs data 93.3%; quantitative closure open).
+#   Archetype: asymmetric mixed-modality (hero per-stave profiles + subordinate
+#   deep-proton veto mechanism).  This RETIRES the proxy χ²/ndf 625.
+#   Source: reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json (profiles,
+#           n, data fractions); mechanism fractions (31.1% / 0.06%) quoted from
+#           that report's REPORT.md "The mechanism, made explicit" table.
+# ══════════════════════════════════════════════════════════════════════════
+def fig33_realtrigger():
+    d = load("mv3v5")
+    untrig_e = _v5("track", "filtered", "none", 92.0)
+    real_e = _v5("event", "inclusive", "real_coinc", 92.0)
+    data_si = d["data"]["sample_i"]
+    untrig = [untrig_e["fractions"][s] for s in STAVES]
+    real = [real_e["fractions"][s] for s in STAVES]
+    dsi = [data_si["fractions"][s] for s in STAVES]
+
+    fig = plt.figure(figsize=(7.2, 3.5))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.65, 1.0], wspace=0.34)
+    axa = fig.add_subplot(gs[0])
+    axb = fig.add_subplot(gs[1])
+
+    # Panel a: per-stave grouped bars, log-y (real-trigger B4–B8 ~0.001)
+    prof = [
+        ("Untriggered MC", untrig, PAL["red_strong"]),
+        ("Real Trig_bar coincidence", real, PAL["blue_main"]),
+        ("Data (Sample I)", dsi, PAL["n_black"]),
+    ]
+    x = np.arange(len(STAVES))
+    w = 0.26
+    for k, (name, vals, col) in enumerate(prof):
+        axa.bar(x + (k - 1) * w, vals, w, label=name, color=col,
+                edgecolor="black", linewidth=0.5)
+    axa.set_yscale("log")
+    axa.set_ylim(5e-4, 1.6)
+    axa.set_xticks(x)
+    axa.set_xticklabels(STAVES)
+    axa.set_xlabel("B-arm stave (increasing stopping depth →)")
+    axa.set_ylabel("Fraction of selected B-arm sample")
+    axa.legend(loc="upper center", ncol=1, fontsize=6.0, bbox_to_anchor=(0.72, 1.03))
+    # B2 movement callout
+    axa.annotate(f"B2  45.9% → 99.7%\n(data Sample I 93.3%:\nover-purifies)",
+                 xy=(0 + w, real[0]), xytext=(0.55, 0.30),
+                 fontsize=6.2, color=PAL["blue_main"], ha="left", va="center",
+                 arrowprops=dict(arrowstyle="->", color=PAL["blue_main"], lw=0.8))
+    axa.set_title("a   Real trigger drives the shallow-stave (B2) concentration",
+                  loc="left", fontsize=7.6)
+
+    # Panel b: deep-proton veto mechanism (fractions that fire the A-paddle)
+    # From REPORT.md: shallow B2 deuteron events fire A-paddle 31.1%; deep
+    # B6/B8 proton events fire it 0.06% ⇒ deep-proton veto 99.94%.
+    frac_deut, frac_prot = 31.1, 0.06
+    cats = ["Shallow B2 deuteron\nevents\n(conjugate ~85 MeV p\nreaches A-paddle)",
+            "Deep B6/B8 proton\nevents\n(conjugate ~37 MeV d\ndies before A-paddle)"]
+    vals = [frac_deut, frac_prot]
+    cols = [PAL["blue_main"], PAL["n_mid"]]
+    xb = np.arange(2)
+    axb.bar(xb, vals, 0.55, color=cols, edgecolor="black", linewidth=0.6)
+    axb.set_yscale("log")
+    axb.set_ylim(0.03, 100)
+    for xi, v in zip(xb, vals):
+        axb.text(xi, v * 1.35, f"{v:.2f}%", ha="center", fontsize=6.6,
+                 color=PAL["n_black"])
+    axb.set_xticks(xb)
+    axb.set_xticklabels(cats, fontsize=5.5)
+    axb.set_ylabel("Conjugate particle fires the A-paddle (%)")
+    axb.annotate("deep-proton\nveto 99.94%", xy=(1, frac_prot),
+                 xytext=(1.0, 3.0), fontsize=6.2, color=PAL["red_strong"],
+                 ha="center", va="center",
+                 arrowprops=dict(arrowstyle="->", color=PAL["red_strong"], lw=0.8))
+    axb.set_title("b   Two-arm coincidence keeps B2 deuterons, vetoes deep protons",
+                  loc="left", fontsize=7.6)
+
+    fig.suptitle("MV3 v5 — a REAL GEANT4 two-arm-trigger simulation establishes the trigger (not missing "
+                 "material) as the mechanism; the ideal trigger over-purifies (closure open)\n"
+                 f"n = {untrig_e['n']:,} untriggered / {real_e['n']:,} real-coincidence MC events; "
+                 f"{data_si['n_events']:,} data Sample-I pulses; exact fractions (no CIs); proxy χ²/ndf 625 retired",
+                 fontsize=6.9, y=1.10)
+    return save_pub(fig, "33_mv3_realtrigger")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 34 — Quenched trigger-consistent gain ≈ 65 ADC/MeV (band 60–70): the χ²/ndf
+#   well and the B2 amplitude scale point to the same window; 297 is a placeholder.
+#   Archetype: quantitative grid (χ² scan + amplitude cross-check).
+#   Source: reports/mv3_gain_quenched_1783240619/mv3_gain_quenched.json.
+# ══════════════════════════════════════════════════════════════════════════
+def fig34_gain_quenched():
+    gq = load("gainq")
+    acoinc = {g["gain"]: g for g in gq["grid"] if g["trigger"] == "acoinc"}
+    # the report's presented curve (skips low-gain threshold-boundary points 40,50)
+    report_gains = [45, 55, 60, 65, 70, 75, 80, 90, 100, 297]
+    gains = [g for g in report_gains if float(g) in acoinc]
+    chi2 = [acoinc[float(g)]["chi2_ndf_all"] for g in gains]
+    amp = [acoinc[float(g)]["b2_amp_median_adc"] for g in gains]
+    data_amp = gq["data"]["b2_net_median_adc"]           # 2576 ADC
+    gopt = int(gq["best_acoinc_all"]["gain"])            # 65
+    chi2_opt = gq["best_acoinc_all"]["chi2_ndf_all"]     # 322
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.1),
+                                  gridspec_kw={"wspace": 0.34})
+
+    # Panel a: chi2/ndf vs gain (log y)
+    ax.plot(gains, chi2, "o-", color=PAL["blue_main"], markersize=4, zorder=2)
+    ax.plot(gopt, chi2_opt, "o", color=PAL["green_up"], markersize=8, zorder=4)
+    ax.annotate(f"quenched optimum\ngain ≈ {gopt}\nχ²/ndf {chi2_opt:.0f}",
+                xy=(gopt, chi2_opt), xytext=(95, 470),
+                fontsize=6.1, color=PAL["green_up"], va="center", ha="left",
+                arrowprops=dict(arrowstyle="->", color=PAL["green_up"], lw=0.7))
+    # unquenched-60 reference (Phase-2 = 625) and placeholder-297
+    ax.axhline(625.0, color=PAL["n_mid"], ls="--", lw=0.9)
+    ax.text(150, 625 * 1.08, "unquenched-60 (Phase 2) = 625", fontsize=5.8,
+            color=PAL["n_mid"], ha="center", va="bottom")
+    g297 = acoinc[297.0]["chi2_ndf_all"]
+    ax.annotate(f"297 placeholder\nχ²/ndf {g297:.0f} (~24×)", xy=(297, g297),
+                xytext=(180, g297 * 0.9), fontsize=5.8, color=PAL["n_dark"],
+                ha="center", va="center",
+                arrowprops=dict(arrowstyle="->", color=PAL["n_mid"], lw=0.7))
+    ax.axvspan(60, 70, color=PAL["green_up"], alpha=0.10, zorder=0)
+    ax.set_yscale("log")
+    ax.set_xlabel("Digitizer gain (ADC / MeV)")
+    ax.set_ylabel("MV3 stopping-depth χ²/ndf (vs data all)")
+    ax.set_title("a   Quenched (Birks-on) χ² well: optimum ≈ 65, band 60–70",
+                 loc="left", fontsize=7.4)
+
+    # Panel b: B2 amplitude median vs gain, crossing the data line
+    ax2.plot(gains, amp, "s-", color=PAL["blue_secondary"], markersize=4, zorder=2)
+    ax2.axhline(data_amp, color=PAL["red_strong"], ls="--", lw=1.0)
+    ax2.text(44, data_amp * 0.90, f"data B2 net median {data_amp:.0f} ADC",
+             fontsize=6.0, color=PAL["red_strong"], ha="left", va="top")
+    for g in (60, 65, 70):
+        a = acoinc[float(g)]["b2_amp_median_adc"]
+        ax2.plot(g, a, "o", color=PAL["green_up"] if g == 65 else PAL["n_mid"],
+                 markersize=6 if g == 65 else 4, zorder=3)
+    ax2.axvspan(60, 70, color=PAL["green_up"], alpha=0.10, zorder=0)
+    ax2.annotate("gain 60–70 brackets\nthe data amplitude\n(2,696 / 2,917 / 3,140 ADC)",
+                 xy=(70, acoinc[70.0]["b2_amp_median_adc"]), xytext=(150, 4600),
+                 fontsize=5.9, color=PAL["green_up"], ha="center", va="center",
+                 arrowprops=dict(arrowstyle="->", color=PAL["green_up"], lw=0.7))
+    ax2.set_yscale("log")
+    ax2.set_xlabel("Digitizer gain (ADC / MeV)")
+    ax2.set_ylabel("MC B2 amplitude median (ADC)")
+    ax2.set_title("b   Independent amplitude-scale cross-check confirms 60–70",
+                  loc="left", fontsize=7.4)
+    fig.suptitle("MV3 B-M5 — quenched trigger-consistent gain ≈ 65 ADC/MeV (band 60–70); χ² point values "
+                 "(ndf 3, systematics-dominated — no sub-unit CI)",
+                 fontsize=7.2, y=1.03)
+    return save_pub(fig, "34_gain_quenched_scan")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 35 — A properly MEASURED combined inter-stave timing σ68 = 0.490 ns
+#   [0.470, 0.508], replacing the withdrawn 0.54–0.56; not yet held-out-validated.
+#   Archetype: quantitative grid (covariance heatmap + per-stave/combined forest).
+#   Source: reports/s25_covariance_timing_1783241582/s25_summary.json (primary).
+# ══════════════════════════════════════════════════════════════════════════
+def fig35_covariance():
+    s25 = load("s25")
+    p = s25["primary"]
+    cov = np.array(p["cov_psd_ns2"])
+    st = ["B4", "B6", "B8"]
+    comb = p["combined_sigma_ns"]
+    comb_ci = p["combined_sigma_ci"]
+    pval = p["offdiag_equality_bootstrap_p"]
+    withdrawn = s25["withdrawn_number_ns"]           # [0.54, 0.56]
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.2),
+                                  gridspec_kw={"width_ratios": [1.0, 1.15],
+                                               "wspace": 0.42})
+
+    # Panel a: 3x3 covariance heatmap (single neutral→blue sequential ramp)
+    im = ax.imshow(cov, cmap="Blues", aspect="equal")
+    ax.set_xticks(range(3)); ax.set_xticklabels(st)
+    ax.set_yticks(range(3)); ax.set_yticklabels(st)
+    vmax = cov.max()
+    for (i, j), v in np.ndenumerate(cov):
+        ax.text(j, i, f"{v:.0f}", ha="center", va="center", fontsize=6.6,
+                color="white" if v > 0.62 * vmax else PAL["n_black"])
+    ax.set_frame_on(False)
+    cb = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    cb.set_label("Cov (ns²)", fontsize=6.2)
+    cb.ax.tick_params(labelsize=5.8)
+    ax.set_title(f"a   Measured 3×3 inter-stave covariance (A>1000, n={p['n_events']:,})",
+                 loc="left", fontsize=7.1)
+
+    # Panel b: per-stave σ68 with CIs + combined vs withdrawn
+    labels = st + ["Combined\n(indep. completion)"]
+    y = np.arange(len(labels))[::-1]
+    sig = [p["per_stave_sigma_ns"][s] for s in st] + [comb]
+    ci = [p["per_stave_sigma_ci"][s] for s in st] + [comb_ci]
+    cols = [PAL["blue_secondary"]] * 3 + [PAL["blue_main"]]
+    for yi, s, c, col in zip(y, sig, ci, cols):
+        ax2.plot([c[0], c[1]], [yi, yi], color=col, lw=1.4)
+        ax2.plot(s, yi, "o", color=col, markersize=6,
+                 markeredgecolor="black", markeredgewidth=0.4)
+        ax2.text(c[1] + 0.03, yi, f"{s:.2f} [{c[0]:.2f}, {c[1]:.2f}]",
+                 va="center", fontsize=6.0, color=PAL["n_black"])
+    # withdrawn 0.54–0.56 band, struck (shown as a retracted row below Combined)
+    ax2.axvspan(withdrawn[0], withdrawn[1], color=PAL["red_down"], alpha=0.10)
+    ywd = y[-1] - 0.55
+    ax2.plot([withdrawn[0], withdrawn[1]], [ywd, ywd], color=PAL["red_down"], lw=1.0)
+    ax2.plot(np.mean(withdrawn), ywd, "x", color=PAL["red_down"],
+             markersize=6, markeredgewidth=1.3)
+    ax2.text(withdrawn[1] + 0.06, ywd,
+             f"withdrawn {withdrawn[0]:.2f}–{withdrawn[1]:.2f} ns (retracted)",
+             fontsize=5.8, color=PAL["red_down"], ha="left", va="center")
+    ax2.set_yticks(y)
+    ax2.set_yticklabels(labels, fontsize=6.2)
+    ax2.set_xlim(0, 1.9)
+    ax2.set_ylim(y[-1] - 1.75, y[0] + 0.6)
+    ax2.set_xlabel("Timing σ₆₈ (ns)")
+    ax2.text(0.02, y[-1] - 1.05,
+             f"independence not rejected (off-diagonal-equality p = {pval:.2f});\n"
+             "single-partition — held-out confirmation BLOCKED (reserved runs unstaged)",
+             fontsize=5.6, color=PAL["n_dark"], va="top")
+    ax2.set_title("b   Combined σ₆₈ = 0.490 ns [0.470, 0.508] (correlation-aware)",
+                  loc="left", fontsize=7.1)
+
+    fig.suptitle("S25 (B-M4) — a properly measured combined inter-stave timing σ₆₈ (0.490 ns), "
+                 "replacing the withdrawn 0.54–0.56; error bars = 95% bootstrap CI (400 replicas)",
+                 fontsize=7.0, y=1.03)
+    return save_pub(fig, "35_covariance_timing")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 36 — The traditional-fit two-pulse verdict is robust: it wins at matched
+#   80% coverage across pinned / +phase-jitter / +cross-stave realism configs.
+#   Archetype: quantitative grid (failure@80% bars + Δt σ68 bars, three configs).
+#   Source: reports/s26_overlay_realism_1783241582/s26_summary.json.
+# ══════════════════════════════════════════════════════════════════════════
+def fig36_overlay_realism():
+    s26 = load("s26")
+    order = ["pinned_same", "jitter_same", "jitter_cross"]
+    nice = {"pinned_same": "pinned\n(single-stave)",
+            "jitter_same": "+ phase\njitter",
+            "jitter_cross": "+ cross-stave\noverlay"}
+    res = s26["results"]
+
+    def mean_sigma(cfg, key):
+        rows = res[cfg]["benchmark"]["common_subset"]
+        return float(np.mean([r[key] for r in rows]))
+
+    trad_fail = [res[c]["verdict"]["trad_mean_failure"] for c in order]  # all 0
+    ml_fail = [res[c]["verdict"]["ml_mean_failure"] for c in order]
+    trad_sig = [mean_sigma(c, "sigma68_trad_ns") for c in order]
+    ml_sig = [mean_sigma(c, "sigma68_ml_ns") for c in order]
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.1),
+                                  gridspec_kw={"wspace": 0.36})
+    x = np.arange(len(order))
+    w = 0.36
+
+    # Panel a: failure @ matched 80% coverage (trad vs ML)
+    ax.bar(x - w / 2, trad_fail, w, color=PAL["blue_main"], edgecolor="black",
+           linewidth=0.5, label="Template fit (traditional)")
+    ax.bar(x + w / 2, ml_fail, w, color=PAL["red_strong"], edgecolor="black",
+           linewidth=0.5, label="Compact ML")
+    for xi, t, m in zip(x, trad_fail, ml_fail):
+        ax.text(xi - w / 2, 4e-5, f"{t:.4f}", ha="center", fontsize=5.6,
+                rotation=90, va="bottom", color=PAL["n_dark"])
+        ax.text(xi + w / 2, m + 4e-5, f"{m:.4f}", ha="center", fontsize=5.6,
+                rotation=90, va="bottom", color=PAL["n_dark"])
+    ax.set_xticks(x); ax.set_xticklabels([nice[c] for c in order], fontsize=6.0)
+    ax.set_ylabel("Failure rate @ matched 80% coverage")
+    ax.set_ylim(0, 0.00145)
+    ax.legend(loc="upper left", fontsize=5.8)
+    ax.set_title("a   Trad = 0.0000 in all three configs (wins)",
+                 loc="left", fontsize=7.3)
+
+    # Panel b: common-subset Δt σ68 (trad vs ML), mean over rates
+    ax2.bar(x - w / 2, trad_sig, w, color=PAL["blue_main"], edgecolor="black",
+            linewidth=0.5, label="Template fit")
+    ax2.bar(x + w / 2, ml_sig, w, color=PAL["red_strong"], edgecolor="black",
+            linewidth=0.5, label="Compact ML")
+    for xi, t, m in zip(x, trad_sig, ml_sig):
+        ax2.text(xi - w / 2, t + 0.03, f"{t:.2f}", ha="center", fontsize=6.0)
+        ax2.text(xi + w / 2, m + 0.03, f"{m:.2f}", ha="center", fontsize=6.0)
+    ax2.set_xticks(x); ax2.set_xticklabels([nice[c] for c in order], fontsize=6.0)
+    ax2.set_ylabel("Common-subset Δt σ₆₈ (ns)")
+    ax2.set_ylim(0, 1.7)
+    ax2.legend(loc="upper left", fontsize=5.8)
+    ax2.set_title("b   Trad σ₆₈ 0.33–0.41 vs ML 1.07–1.47 ns",
+                  loc="left", fontsize=7.3)
+    fig.suptitle("S26 (B-M7) — the traditional two-pulse verdict is STABLE across phase-jitter and "
+                 "cross-stave realism (30,000 overlays/config × 3 rates; CIs in the report)",
+                 fontsize=7.0, y=1.03)
+    return save_pub(fig, "36_overlay_realism")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 37 — The early-peak class (3.41% of A>1000) leakage footprint per headline
+#   observable: timing +0.058 ns, τ_eff −13.2 ns, pile-up/area −1.2%.
+#   Archetype: quantitative grid (per-observable forest of fractional shifts).
+#   Source: reports/s27_earlypeak_budget_1783241582/s27_summary.json.
+# ══════════════════════════════════════════════════════════════════════════
+def fig37_earlypeak_budget():
+    s27 = load("s27")
+    tm = s27["timing"]
+    te = s27["tau_eff"]
+    pc = s27["pileup_current"]["overall"]
+    count_share = pc["early_count_fraction"] * 100.0   # 3.41 %
+    area_share = pc["early_area_fraction"] * 100.0      # -1.25 %
+
+    # fractional shift (%) when the early-peak class is EXCLUDED, per observable
+    tim_base = tm["sigma68_early_excluded_ns"]
+    tim_rel = tm["shift_ns"] / tim_base * 100.0                    # +3.5 %
+    tim_rel_ci = [tm["shift_ci_ns"][0] / tim_base * 100.0,
+                  tm["shift_ci_ns"][1] / tim_base * 100.0]
+    tau_base = te["tau_eff_early_excluded_ns"]
+    tau_rel = te["shift_ns"] / tau_base * 100.0                    # -9.1 %
+
+    rows = [
+        ("Downstream pair σ₆₈", tim_rel, tim_rel_ci,
+         f"+{tm['shift_ns']:.3f} ns  [+{tm['shift_ci_ns'][0]:.3f}, +{tm['shift_ci_ns'][1]:.3f}]"),
+        ("live10 τ_eff", tau_rel, None,
+         f"{te['shift_ns']:.1f} ns  (131.6 with → 144.9 excl.)"),
+        ("Integrated pulse area", area_share, None,
+         f"{area_share:.2f}% of area  ({count_share:.2f}% of counts)"),
+    ]
+
+    fig, ax = plt.subplots(figsize=(6.2, 3.1))
+    y = np.arange(len(rows))[::-1]
+    for yi, (name, rel, ci, lab) in zip(y, rows):
+        col = PAL["blue_main"]
+        ax.barh(yi, rel, 0.52, color=col, edgecolor="black", linewidth=0.5)
+        if ci is not None:
+            ax.plot(ci, [yi, yi], color=PAL["n_black"], lw=1.1)
+            ax.plot([ci[0], ci[0]], [yi - 0.08, yi + 0.08], color=PAL["n_black"], lw=1.1)
+            ax.plot([ci[1], ci[1]], [yi - 0.08, yi + 0.08], color=PAL["n_black"], lw=1.1)
+        ha = "left" if rel >= 0 else "right"
+        off = 0.4 if rel >= 0 else -0.4
+        ax.text(rel + off, yi + 0.30, lab, va="center", ha=ha, fontsize=6.0,
+                color=PAL["n_black"])
+    ax.axvline(0, color=PAL["n_mid"], lw=1.0)
+    ax.set_yticks(y)
+    ax.set_yticklabels([r[0] for r in rows], fontsize=6.6)
+    ax.set_xlim(-12, 8)
+    ax.set_xlabel("Fractional shift when the early-peak class is excluded (%)")
+    ax.text(-11.5, y[1] - 0.46,
+            "τ_eff shift (−13.2 ns) is OPPOSITE in sign to the MC–data +8% τ_eff offset\n"
+            "(so the class cannot explain that offset)",
+            fontsize=5.7, color=PAL["red_strong"], va="top")
+    ax.set_title(f"S27 (B-M8) — early-peak class = {count_share:.2f}% of A>1000 pulses "
+                 f"(n = {tm['n_pairs']:,} pairs); its per-observable leakage bound\n"
+                 "error bar (timing) = 95% bootstrap CI; τ_eff / area are point shifts",
+                 loc="left", fontsize=6.9)
+    return save_pub(fig, "37_earlypeak_budget")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 12 (REBUILT 2026-07-05) — the "missing material" root cause is FALSIFIED;
+#   the two-arm trigger is the established mechanism (see Fig 33/25). Filename
+#   kept so legacy links resolve; content corrected — no retracted claim remains.
+#   Archetype: quantitative grid (profile bars + corrected root-cause card).
+#   Source: reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json.
+# ══════════════════════════════════════════════════════════════════════════
+def fig12_stopping_depth_rebuilt():
+    d = load("mv3v5")
+    untrig = _v5("track", "filtered", "none", 92.0)["fractions"]
+    dsi = d["data"]["sample_i"]["fractions"]
+    real = _v5("event", "inclusive", "real_coinc", 92.0)["fractions"]
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.2),
+                                  gridspec_kw={"width_ratios": [1.15, 1.0],
+                                               "wspace": 0.30})
+    x = np.arange(len(STAVES))
+    w = 0.26
+    for k, (name, frac, col) in enumerate([
+            ("Untriggered MC", untrig, PAL["red_strong"]),
+            ("Real Trig_bar trigger", real, PAL["blue_main"]),
+            ("Data (Sample I)", dsi, PAL["n_black"])]):
+        ax.bar(x + (k - 1) * w, [frac[s] for s in STAVES], w, label=name,
+               color=col, edgecolor="black", linewidth=0.5)
+    ax.set_yscale("log")
+    ax.set_ylim(5e-4, 1.6)
+    ax.set_xticks(x); ax.set_xticklabels(STAVES)
+    ax.set_xlabel("B-arm stave (increasing depth →)")
+    ax.set_ylabel("Fraction of selected pulses")
+    ax.legend(loc="upper right", fontsize=5.8)
+    ax.set_title("a   Stopping-depth profile (real-trigger corrected)",
+                 loc="left", fontsize=7.4)
+
+    # Panel b: corrected root-cause card (no missing-material claim)
+    ax2.axis("off"); ax2.set_xlim(0, 1); ax2.set_ylim(0, 1)
+    ax2.text(0.0, 0.98, "Root cause — CORRECTED", fontsize=7.6,
+             fontweight="bold", va="top", color=PAL["blue_main"])
+    ax2.add_patch(mpatches.FancyBboxPatch(
+        (0.0, 0.06), 1.0, 0.82, boxstyle="round,pad=0.02",
+        facecolor=PAL["blue_soft"], alpha=0.18, edgecolor=PAL["blue_main"],
+        lw=0.9, transform=ax2.transAxes))
+    ax2.text(0.5, 0.74,
+             "Mechanism: the two-arm coincidence TRIGGER\n"
+             "(established by a real Trig_bar GEANT4 simulation)",
+             ha="center", va="center", fontsize=6.4, color=PAL["n_black"])
+    ax2.text(0.5, 0.50,
+             "'Missing ~8–10 g/cm² of material' is FALSIFIED:\n"
+             "≤ 0.8 g/cm² exists vs ≥ 10.5 g/cm² required (×13).",
+             ha="center", va="center", fontsize=6.2, color=PAL["red_strong"])
+    ax2.text(0.5, 0.26,
+             "Untriggered B2 45.9% → real-trigger 99.7%\n"
+             "(over-purifies vs data 93.3%; closure open).\n"
+             "See Fig 33 (hero) / Fig 25.",
+             ha="center", va="center", fontsize=6.2, color=PAL["n_dark"])
+    ax2.set_title("b   Not missing material — the trigger", loc="left", fontsize=7.4)
+    fig.suptitle("MV3 stopping-depth 'failure' re-graded to TENSION — the trigger, not missing material, "
+                 "is the mechanism (real Trig_bar simulation)",
+                 fontsize=7.0, y=1.02)
+    return save_pub(fig, "12_stopping_depth_failure")
+
+
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     print(f"Generating post-review figures into {os.path.relpath(OUTPUT_DIR, REPO)}/ ...")
     all_paths = []
     for fn in (fig25_mv3_hero, fig26_c12, fig27_taueff, fig28_gain, fig29_fdr,
-               fig30_riskcov, fig31_s22, fig32_s23, fig09_rmax, fig19_pedestal):
+               fig30_riskcov, fig31_s22, fig32_s23, fig09_rmax, fig19_pedestal,
+               fig33_realtrigger, fig34_gain_quenched, fig35_covariance,
+               fig36_overlay_realism, fig37_earlypeak_budget,
+               fig12_stopping_depth_rebuilt):
         print(f"[{fn.__name__}]")
         all_paths.extend(fn())
     print(f"\nDONE — {len(all_paths)} files written "

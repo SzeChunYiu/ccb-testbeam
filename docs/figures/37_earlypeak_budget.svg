@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="471.653828pt" height="222.098881pt" viewBox="0 0 471.653828 222.098881" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-05T11:47:03.004064</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 222.098881 
+L 471.653828 222.098881 
+L 471.653828 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 81.779969 194.433413 
+L 427.739969 194.433413 
+L 427.739969 22.569412 
+L 81.779969 22.569412 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 289.355969 62.621413 
+L 350.28571 62.621413 
+L 350.28571 30.381413 
+L 289.355969 30.381413 
+z
+" clip-path="url(#pd1456848a2)" style="fill: #0f4d92; stroke: #000000; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 289.355969 124.621413 
+L 131.158118 124.621413 
+L 131.158118 92.381413 
+L 289.355969 92.381413 
+z
+" clip-path="url(#pd1456848a2)" style="fill: #0f4d92; stroke: #000000; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 289.355969 186.621413 
+L 267.819837 186.621413 
+L 267.819837 154.381413 
+L 289.355969 154.381413 
+z
+" clip-path="url(#pd1456848a2)" style="fill: #0f4d92; stroke: #000000; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m3bd403a7a7" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="116.375969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="116.375969" y="206.372397" transform="rotate(-0 116.375969 206.372397)">−10.0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="159.620969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="159.620969" y="206.372397" transform="rotate(-0 159.620969 206.372397)">−7.5</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="202.865969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="202.865969" y="206.372397" transform="rotate(-0 202.865969 206.372397)">−5.0</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="246.110969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="246.110969" y="206.372397" transform="rotate(-0 246.110969 206.372397)">−2.5</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="289.355969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="289.355969" y="206.372397" transform="rotate(-0 289.355969 206.372397)">0.0</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="332.600969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="332.600969" y="206.372397" transform="rotate(-0 332.600969 206.372397)">2.5</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="375.845969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="375.845969" y="206.372397" transform="rotate(-0 375.845969 206.372397)">5.0</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m3bd403a7a7" x="419.090969" y="194.433413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 6.5px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="419.090969" y="206.372397" transform="rotate(-0 419.090969 206.372397)">7.5</text>
+     </g>
+    </g>
+    <g id="text_9">
+     <text style="font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle" x="254.759969" y="217.0431" transform="rotate(-0 254.759969 217.0431)">Fractional shift when the early-peak class is excluded (%)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_9">
+      <defs>
+       <path id="me8cf3cdabc" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#me8cf3cdabc" x="81.779969" y="46.501412" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: end" x="74.779969" y="49.008897" transform="rotate(-0 74.779969 49.008897)">Downstream pair σ₆₈</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#me8cf3cdabc" x="81.779969" y="108.501413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: end" x="74.779969" y="111.008897" transform="rotate(-0 74.779969 111.008897)">live10 τ_eff</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#me8cf3cdabc" x="81.779969" y="170.501413" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: end" x="74.779969" y="173.008897" transform="rotate(-0 74.779969 173.008897)">Integrated pulse area</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_12">
+    <path d="M 338.214232 46.501412 
+L 361.265425 46.501412 
+" clip-path="url(#pd1456848a2)" style="fill: none; stroke: #272727; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_13">
+    <path d="M 338.214232 51.461412 
+L 338.214232 41.541412 
+" clip-path="url(#pd1456848a2)" style="fill: none; stroke: #272727; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_14">
+    <path d="M 361.265425 51.461412 
+L 361.265425 41.541412 
+" clip-path="url(#pd1456848a2)" style="fill: none; stroke: #272727; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_15">
+    <path d="M 289.355969 194.433413 
+L 289.355969 22.569412 
+" clip-path="url(#pd1456848a2)" style="fill: none; stroke: #767676; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 81.779969 194.433413 
+L 81.779969 22.569412 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 81.779969 194.433413 
+L 427.739969 194.433413 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start; fill: #272727" x="357.20491" y="29.557037" transform="rotate(-0 357.20491 29.557037)">+0.058 ns  [+0.047, +0.068]</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: end; fill: #272727" x="124.238918" y="91.557037" transform="rotate(-0 124.238918 91.557037)">-13.2 ns  (131.6 with → 144.9 excl.)</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: end; fill: #272727" x="260.900637" y="153.557038" transform="rotate(-0 260.900637 153.557038)">-1.25% of area  (3.41% of counts)</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 5.7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #b64342" transform="translate(90.428969 141.352522)">τ_eff shift (−13.2 ns) is OPPOSITE in sign to the MC–data +8% τ_eff offset</text>
+    <text style="font-size: 5.7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #b64342" transform="translate(90.428969 147.893806)">(so the class cannot explain that offset)</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 6.9px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif" transform="translate(81.779969 8.842922)">S27 (B-M8) — early-peak class = 3.41% of A&gt;1000 pulses (n = 21,521 pairs); its per-observable leakage bound</text>
+    <text style="font-size: 6.9px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif" transform="translate(81.779969 16.569412)">error bar (timing) = 95% bootstrap CI; τ_eff / area are point shifts</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd1456848a2">
+   <rect x="81.779969" y="22.569412" width="345.96" height="171.864"/>
+  </clipPath>
+ </defs>
+</svg>

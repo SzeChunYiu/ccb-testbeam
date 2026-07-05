@@ -95,6 +95,12 @@ SOURCES = {
     "s25":   "reports/s25_covariance_timing_1783241582/s25_summary.json",
     "s26":   "reports/s26_overlay_realism_1783241582/s26_summary.json",
     "s27":   "reports/s27_earlypeak_budget_1783241582/s27_summary.json",
+    # ── audit-gap round (figs 38–44): reconciliation / provenance / FDR ──
+    "bm6":   "reports/bm6_runset_confound_20260705_202638/bm6_summary.json",
+    "new04": "reports/new04_trigger_residual_1783275727/new04_summary.json",
+    "s10g":  "reports/1781028280.978.1e517fd7/result.json",
+    "bm3fdr": "reports/bm3_p04p07_fdr_20260705_203249/stats02_delta_ci_summary.json",
+    "census": "reports/stats01_program_fdr_20260705_203905/claims.csv",
 }
 
 
@@ -1154,6 +1160,565 @@ def fig12_stopping_depth_rebuilt():
     return save_pub(fig, "12_stopping_depth_failure")
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 38 — reconcile the two deuteron-enrichment headline ratios that look
+#   inconsistent (S21 truth species-fraction ratio 1.519 vs S23 data amplitude-
+#   tail ratio 3.45). They measure DIFFERENT observables; the double ratio
+#   (data I/II)/(MC I/II) = 0.738 [0.733,0.742], z=−99, is the reconciled cross-
+#   check, with the B-M6 run-set/beam-drift confound bounded ≤~29% (central ~3%).
+#   Archetype: quantitative grid (two per-stave ratio panels + reconciliation card).
+#   Source: reports/s21_.../s21_summary.json (key_table inclusive ratios),
+#           reports/s23_.../s23_summary.json (high_frac_b2, occupancy DR),
+#           reports/bm6_.../bm6_summary.json (linear-drift central; 29% prose).
+# ══════════════════════════════════════════════════════════════════════════
+def fig38_enrichment_reconciliation():
+    s21 = load("s21")["key_table"]["staves"]
+    s23 = load("s23")
+    bm6 = load("bm6")
+
+    # Left: S21 truth species-fraction ratio f_d(I)/f_d(II), inclusive, per stave
+    s21r = {s: s21[s]["enrichment_I_over_II_inclusive"] for s in STAVES}
+    # Right: S23 data amplitude-tail ratio f(A>5000)_I / f(A>5000)_II  (B2 only
+    # has the headline; ratio_data = [central, lo, hi])
+    b2_tail = s23["double_ratio"]["high_frac_b2"]["ratio_data"]  # [3.452,3.407,3.498]
+    # Reconciliation: the B2 double ratio (data I/II)/(MC I/II) — occupancy
+    dr = s23["double_ratio"]["occupancy"]["B2"]                  # 0.738, z=-99
+    # B-M6 drift: central linear-drift attributable fraction of the gap
+    drift_central = abs(bm6["linear_drift_model"]["drift_attributable_fraction_of_gap"])  # 0.031
+    drift_band = 0.29  # conservative 1-SD bound; REPORT.md prose (1 SD / 3.5x gap)
+    r_ci_runcluster = bm6["run_clustered_ratio"]["R_ci95_runcluster"]  # [2.52,4.64]
+
+    fig = plt.figure(figsize=(7.4, 3.5))
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.15, 1.0, 1.05], wspace=0.42)
+    axL = fig.add_subplot(gs[0])
+    axR = fig.add_subplot(gs[1])
+    axC = fig.add_subplot(gs[2])
+
+    # Panel a: S21 truth species-fraction ratio per stave
+    x = np.arange(len(STAVES))
+    vals = [s21r[s]["ratio"] for s in STAVES]
+    lo = [s21r[s]["ci_low"] for s in STAVES]
+    hi = [s21r[s]["ci_high"] for s in STAVES]
+    axL.bar(x, vals, 0.62, color=PAL["blue_main"], edgecolor="black", linewidth=0.5,
+            yerr=[np.array(vals) - lo, np.array(hi) - vals], capsize=2.5,
+            error_kw=dict(ecolor="black", lw=0.8))
+    axL.axhline(1.0, color=PAL["n_mid"], ls="--", lw=0.9)
+    for xi, v in zip(x, vals):
+        axL.text(xi, v + 0.05, f"{v:.3f}", ha="center", fontsize=6.2,
+                 color=PAL["n_black"])
+    axL.set_xticks(x); axL.set_xticklabels(STAVES)
+    axL.set_ylabel("MC truth deuteron-fraction ratio  f_d(I) / f_d(II)")
+    axL.set_ylim(0, 1.75)
+    axL.set_title("a   S21 truth species-fraction ratio\n(B2 1.519; falls with depth)",
+                  loc="left", fontsize=7.2)
+
+    # Panel b: S23 data amplitude-tail ratio f(A>5000) I/II — B2 headline
+    axR.bar([0], [b2_tail[0]], 0.5, color=PAL["teal"], edgecolor="black",
+            linewidth=0.5,
+            yerr=[[b2_tail[0] - b2_tail[1]], [b2_tail[2] - b2_tail[0]]],
+            capsize=3.0, error_kw=dict(ecolor="black", lw=0.9))
+    axR.axhline(1.0, color=PAL["n_mid"], ls="--", lw=0.9)
+    axR.text(0, b2_tail[0] + 0.12, f"{b2_tail[0]:.2f}\n[{b2_tail[1]:.2f}, {b2_tail[2]:.2f}]",
+             ha="center", fontsize=6.4, color=PAL["n_black"])
+    axR.set_xticks([0]); axR.set_xticklabels(["B2"])
+    axR.set_xlim(-0.9, 0.9)
+    axR.set_ylabel("Data amplitude-tail ratio  f(A>5000)_I / f(A>5000)_II")
+    axR.set_ylim(0, 4.1)
+    axR.set_title("b   S23 data amplitude-tail ratio\n(B2 3.45 — a DIFFERENT observable)",
+                  loc="left", fontsize=7.2)
+
+    # Panel c: reconciliation card — double ratio + drift bound
+    axC.axis("off"); axC.set_xlim(0, 1); axC.set_ylim(0, 1)
+    axC.text(0.0, 0.99, "Reconciliation", fontsize=7.8, fontweight="bold",
+             va="top", color=PAL["blue_main"])
+    axC.add_patch(mpatches.FancyBboxPatch(
+        (0.0, 0.50), 1.0, 0.42, boxstyle="round,pad=0.02",
+        facecolor=PAL["blue_soft"], alpha=0.18, edgecolor=PAL["blue_main"],
+        lw=0.9, transform=axC.transAxes))
+    axC.text(0.5, 0.855, "3.45  ≠  1.519  because they are\n"
+             "DIFFERENT observables:\namplitude-tail (data)  vs  species-fraction (MC truth)",
+             ha="center", va="top", fontsize=6.0, color=PAL["n_black"])
+    axC.text(0.5, 0.605,
+             f"gain/geometry-robust cross-check:\ndouble ratio (data I/II)/(MC I/II)\n"
+             f"= {dr['dr']:.3f} [{dr['dr_lo']:.3f}, {dr['dr_hi']:.3f}],  z = {dr['z_vs_1']:.0f}",
+             ha="center", va="top", fontsize=6.0, color=PAL["blue_main"])
+    axC.add_patch(mpatches.FancyBboxPatch(
+        (0.0, 0.06), 1.0, 0.36, boxstyle="round,pad=0.02",
+        facecolor=PAL["n_light"], alpha=0.35, edgecolor=PAL["n_mid"],
+        lw=0.8, transform=axC.transAxes))
+    axC.text(0.5, 0.385, "B-M6 run-set / beam-drift confound", ha="center",
+             va="top", fontsize=6.2, fontweight="bold", color=PAL["n_dark"])
+    axC.text(0.5, 0.265,
+             f"bounded ≤ ~{drift_band*100:.0f}% of the effect\n"
+             f"(conservative 1-SD; central ~{drift_central*100:.0f}%);\n"
+             f"run-clustered R CI [{r_ci_runcluster[0]:.1f}, {r_ci_runcluster[1]:.1f}] excludes 1",
+             ha="center", va="top", fontsize=5.8, color=PAL["n_dark"])
+    axC.text(0.5, -0.03, "≤29% & central 3%: bm6 REPORT.md prose / linear_drift_model",
+             ha="center", va="top", fontsize=5.0, color=PAL["n_mid"],
+             style="italic")
+
+    fig.suptitle("Deuteron-enrichment reconciliation — the S23 amplitude-tail ratio (3.45) and the S21 "
+                 "species-fraction ratio (1.519) measure DIFFERENT observables;\nthe MC-anchored double ratio "
+                 "0.738 (z=−99) is the reconciled cross-check, run-set drift bounded ≤~29%  "
+                 "(error bars: 95% bootstrap CI)",
+                 fontsize=6.9, y=1.08)
+    return save_pub(fig, "38_enrichment_reconciliation")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 39 — NEW-04 budget of the 6.4-pt MC-vs-data trigger over-purification
+#   residual: accidentals ~2.0 + paddle fidelity ~1.5 + ~2.9 unexplained (no
+#   forced closure), with a ±2 pt B-M6 run-set band and the S10 data anchor
+#   +1.03 pt [0.64,1.42] overlaid.
+#   Archetype: waterfall / stacked contribution bars with ranges.
+#   Source: reports/new04_trigger_residual_1783275727/new04_summary.json.
+# ══════════════════════════════════════════════════════════════════════════
+def fig39_new04_residual_waterfall():
+    n04 = load("new04")
+    bp = n04["budget_points"]
+    total = bp["total"]                                  # 6.4
+    acc_c, acc_r = bp["accidentals_central"], bp["accidentals_range"]      # 2.0 [1.3,2.6]
+    pad_c, pad_r = bp["paddle_fidelity_central"], bp["paddle_fidelity_range"]  # 1.5 [0.5,3.0]
+    unx_c, unx_r = bp["unexplained_central"], bp["unexplained_range"]      # 2.9 [0.0,4.0]
+    anchor = n04["data_anchor_S10"]                      # 1.03 [0.64,1.42]
+    an_c = anchor["current_excess_pts"]
+    an_ci = anchor["current_excess_CI"]
+
+    # waterfall stacking of the three contributions up to the 6.4-pt total
+    comps = [
+        ("Accidentals", acc_c, acc_r, PAL["blue_main"], "first-\nprinciples;\nR_max-\nbounded"),
+        ("Paddle / selection\nfidelity", pad_c, pad_r, PAL["blue_secondary"],
+         "deep-p\nA-fire\n>0.06%\ntruth"),
+        ("Unexplained\n(no forced closure)", unx_c, unx_r, PAL["n_mid"],
+         "genuinely open"),
+    ]
+
+    fig, ax = plt.subplots(figsize=(7.0, 3.6))
+    # total reference bar
+    ax.bar([-0.8], [total], 0.55, color=PAL["n_light"], edgecolor="black",
+           linewidth=0.6, zorder=1)
+    ax.text(-0.8, total + 0.12, f"{total:.1f} pt\ntotal", ha="center",
+            fontsize=6.4, color=PAL["n_black"], fontweight="bold")
+    # stacked waterfall
+    base = 0.0
+    x = np.arange(len(comps))
+    for xi, (name, c, r, col, note) in zip(x, comps):
+        ax.bar(xi, c, 0.55, bottom=base, color=col, edgecolor="black",
+               linewidth=0.5, zorder=2)
+        # range as an error bar on the cumulative top
+        top = base + c
+        ax.plot([xi, xi], [base + r[0], base + r[1]], color=PAL["n_black"],
+                lw=1.1, zorder=3)
+        for yy in (base + r[0], base + r[1]):
+            ax.plot([xi - 0.08, xi + 0.08], [yy, yy], color=PAL["n_black"],
+                    lw=1.1, zorder=3)
+        ax.text(xi, top + 0.10, f"{c:.1f} pt\n[{r[0]:.1f}, {r[1]:.1f}]",
+                ha="center", fontsize=6.0, color=PAL["n_black"])
+        ax.text(xi, base + c / 2, note, ha="center", va="center", fontsize=5.4,
+                color="white" if col != PAL["n_mid"] else PAL["n_black"])
+        # connector to next
+        if xi < len(comps) - 1:
+            ax.plot([xi + 0.275, xi + 1 - 0.275], [top, top], color=PAL["n_mid"],
+                    ls=":", lw=0.8, zorder=1)
+        base = top
+
+    # B-M6 run-set ±2 pt systematic band around the total
+    ax.axhspan(total - 2, total + 2, color=PAL["gold"], alpha=0.10, zorder=0)
+    ax.text(-1.32, total + 1.7, "B-M6 run-set\nband ±2 pt", fontsize=5.6,
+            color=PAL["gold"], ha="left", va="center")
+
+    # S10 data anchor +1.03 [0.64,1.42] overlaid
+    ax.errorbar([3.05], [an_c], yerr=[[an_c - an_ci[0]], [an_ci[1] - an_c]],
+                fmt="D", color=PAL["green_up"], markersize=6, capsize=3.0, lw=1.1,
+                zorder=4)
+    ax.text(3.05, an_c + 1.55, f"S10 data anchor\n+{an_c:.2f} pt\n[{an_ci[0]:.2f}, {an_ci[1]:.2f}]",
+            ha="center", fontsize=5.8, color=PAL["green_up"])
+    ax.annotate("independent DATA\ncurrent-excess evidence\n(brackets accidentals)",
+                xy=(3.05, an_c), xytext=(2.35, 0.4), fontsize=5.5,
+                color=PAL["green_up"], ha="center", va="center",
+                arrowprops=dict(arrowstyle="->", color=PAL["green_up"], lw=0.7))
+
+    ax.axhline(total, color=PAL["n_dark"], ls="--", lw=0.8, zorder=0)
+    ax.set_xticks(list(x) + [-0.8])
+    ax.set_xticklabels([c[0] for c in comps] + ["6.4-pt\nresidual"], fontsize=6.0)
+    ax.set_ylabel("Contribution to the Sample-I non-B2 residual (percentage points)")
+    ax.set_ylim(0, 8.9)
+    ax.set_xlim(-1.4, 3.6)
+    ax.set_title("NEW-04 — the 6.4-pt MC-vs-data trigger over-purification residual is only PARTLY explained; "
+                 "~2.9 pt remain unexplained (no forced closure)\n"
+                 "MC ideal 0.3% vs data 6.7% Sample-I non-B2; ranges are first-principles bounds, "
+                 "S10 anchor error bar = 95% CI",
+                 loc="left", fontsize=6.6)
+    return save_pub(fig, "39_new04_residual_waterfall")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 40 — basis-explicit MV3 stopping-depth closure: the untriggered B2
+#   "stopping" fraction quoted on THREE selection bases (event 45.9% / track
+#   46.9% / track-inclusive 47.2%) → real Trig_bar 99.7% → data Sample I 93.3%.
+#   Fixes a basis-mix where 45.9% (event) was quoted next to a track-basis χ².
+#   Archetype: quantitative grid (basis-labelled ladder of bars).
+#   Source: reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json.
+# ══════════════════════════════════════════════════════════════════════════
+def fig40_mv3_closure_basis():
+    d = load("mv3v5")
+    ev = _v5("event", "filtered", "none", 92.0)["fractions"]["B2"]     # 0.4589
+    tr = _v5("track", "filtered", "none", 92.0)["fractions"]["B2"]     # 0.4685
+    tri = _v5("track", "inclusive", "none", 92.0)["fractions"]["B2"]   # 0.4719
+    real = _v5("event", "inclusive", "real_coinc", 92.0)["fractions"]["B2"]  # 0.9974
+    data_si = d["data"]["sample_i"]["fractions"]["B2"]                 # 0.9326
+
+    bars = [
+        ("Untriggered MC\n(event basis)", ev, PAL["red_strong"], "event"),
+        ("Untriggered MC\n(track basis)", tr, PAL["red_strong"], "track"),
+        ("Untriggered MC\n(track, inclusive)", tri, PAL["red_strong"], "track incl"),
+        ("Real Trig_bar\ncoincidence (event)", real, PAL["blue_main"], ""),
+        ("Data Sample I", data_si, PAL["n_black"], ""),
+    ]
+    fig, ax = plt.subplots(figsize=(7.2, 3.5))
+    x = np.arange(len(bars))
+    for xi, (lab, v, col, basis) in zip(x, bars):
+        ax.bar(xi, v * 100, 0.62, color=col, edgecolor="black", linewidth=0.5)
+        ax.text(xi, v * 100 + 1.4, f"{v*100:.1f}%", ha="center", fontsize=6.6,
+                fontweight="bold", color=PAL["n_black"])
+        if basis:  # label the selection BASIS on each untriggered bar
+            ax.text(xi, v * 100 / 2, f"basis:\n{basis}", ha="center", va="center",
+                    fontsize=5.8, color="white")
+    # data reference line
+    ax.axhline(data_si * 100, color=PAL["n_black"], ls="--", lw=0.9, zorder=0)
+    ax.set_xticks(x)
+    ax.set_xticklabels([b[0] for b in bars], fontsize=6.0)
+    ax.set_ylabel("B2 (shallowest stave) 'stopping' fraction of the B-arm sample (%)")
+    ax.set_ylim(0, 118)
+    # over-purification annotation (empty upper-middle region)
+    ax.annotate("real trigger over-purifies\npast the data\n(99.7% > 93.3%)",
+                xy=(3, real * 100), xytext=(2.05, 88), fontsize=6.0,
+                color=PAL["blue_main"], ha="center", va="center",
+                arrowprops=dict(arrowstyle="->", color=PAL["blue_main"], lw=0.8))
+    ax.text(1.5, 63,
+            "basis-mix fixed:\n45.9% is the EVENT basis;\na track-basis χ²\nmust use 46.9 / 47.2%",
+            fontsize=5.8, color=PAL["red_strong"], ha="center", va="center")
+    ax.set_xlim(-0.7, 4.7)
+    ax.set_title("MV3 stopping-depth closure, basis-explicit — untriggered B2 (event 45.9% / track 46.9% / "
+                 "track-incl 47.2%)\n→ real trigger 99.7% → data 93.3%",
+                 loc="left", fontsize=7.0)
+    fig.text(0.5, -0.02, "proxy χ² ≈ 625 retired (event/track basis-mix); closure judged on the B2 "
+             "fraction, not χ²    [source: reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json]",
+             ha="center", fontsize=5.2, color=PAL["n_mid"], style="italic")
+    return save_pub(fig, "40_mv3_closure_basis")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 41 — why is B4's per-stave timing σ68 (1.52 ns) 2.2× worse than B6/B8
+#   despite similar amplitude? (a) per-stave σ68 with 95% CI; (b) per-stave
+#   median amplitude — B4≈B6 amplitude yet B4 is 2.2× worse ⇒ the excess is
+#   INTRINSIC (B4 is the most-upstream downstream stave), not timewalk/amplitude.
+#   Archetype: quantitative grid (σ68 forest + amplitude bars).
+#   Source: reports/s25_.../s25_summary.json (per_stave_sigma_ns + CIs);
+#           per-stave median amplitude computed on the SAME S25 selection
+#           (s00 selected-B-pulse table, downstream triples runs 58-63,65,
+#           A>1000, n=3,820 — reproduces the S25 n_events exactly).
+# ══════════════════════════════════════════════════════════════════════════
+def fig41_b4_outlier_diagnostic():
+    s25 = load("s25")["primary"]
+    st = ["B4", "B6", "B8"]
+    sig = {s: s25["per_stave_sigma_ns"][s] for s in st}
+    ci = {s: s25["per_stave_sigma_ci"][s] for s in st}
+    # per-stave median amplitude on the S25 selection (computed at build time
+    # from the s00 selected-B-pulse table; see header — n=3,820 triples each).
+    amp_median = {"B4": 2367.8, "B6": 2468.0, "B8": 3344.0}
+    amp_src = ("reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/"
+               "s00_selected_b_pulses.csv.gz")
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.3),
+                                  gridspec_kw={"wspace": 0.36})
+    x = np.arange(len(st))
+    scol = {"B4": PAL["red_strong"], "B6": PAL["blue_main"], "B8": PAL["blue_secondary"]}
+
+    # Panel a: per-stave σ68 with 95% CI
+    for xi, s in zip(x, st):
+        c = ci[s]
+        ax.bar(xi, sig[s], 0.6, color=scol[s], edgecolor="black", linewidth=0.5,
+               yerr=[[sig[s] - c[0]], [c[1] - sig[s]]], capsize=3.0,
+               error_kw=dict(ecolor="black", lw=0.9))
+        ax.text(xi, c[1] + 0.05, f"{sig[s]:.2f}\n[{c[0]:.2f}, {c[1]:.2f}]",
+                ha="center", fontsize=6.0, color=PAL["n_black"])
+    ax.set_xticks(x); ax.set_xticklabels(st)
+    ax.set_ylabel("Per-stave timing σ₆₈ (ns)")
+    ax.set_ylim(0, 1.85)
+    ratio = sig["B4"] / sig["B6"]
+    ax.annotate(f"B4 is {ratio:.1f}× worse\nthan B6", xy=(0, sig["B4"]),
+                xytext=(1.1, 1.45), fontsize=6.2, color=PAL["red_strong"],
+                ha="center", va="center",
+                arrowprops=dict(arrowstyle="->", color=PAL["red_strong"], lw=0.8))
+    ax.set_title("a   Per-stave timing σ₆₈ (S25; n = 3,820, 95% CI)",
+                 loc="left", fontsize=7.2)
+
+    # Panel b: per-stave median amplitude
+    for xi, s in zip(x, st):
+        ax2.bar(xi, amp_median[s], 0.6, color=scol[s], edgecolor="black",
+                linewidth=0.5)
+        ax2.text(xi, amp_median[s] + 45, f"{amp_median[s]:.0f}", ha="center",
+                 fontsize=6.4, color=PAL["n_black"])
+    ax2.set_xticks(x); ax2.set_xticklabels(st)
+    ax2.set_ylabel("Per-stave median amplitude (ADC)")
+    ax2.set_ylim(0, 3800)
+    # B4 ~ B6 amplitude bracket
+    ax2.annotate("", xy=(0, amp_median["B4"] + 250), xytext=(1, amp_median["B6"] + 250),
+                 arrowprops=dict(arrowstyle="<->", color=PAL["n_mid"], lw=0.9))
+    ax2.text(0.5, amp_median["B6"] + 470, "B4 ≈ B6 amplitude\n(within ~4%)",
+             ha="center", fontsize=6.0, color=PAL["n_dark"])
+    ax2.set_title("b   Per-stave median amplitude (same S25 selection)",
+                  loc="left", fontsize=7.2)
+
+    fig.suptitle("B4 timing outlier — B4 and B6 have ~equal amplitude yet B4's σ₆₈ is 2.2× worse: the excess is "
+                 "INTRINSIC (B4 is the most-upstream downstream stave, most exposed to the B2/beam topology), "
+                 "NOT a timewalk/amplitude effect",
+                 fontsize=6.6, y=1.04)
+    fig.text(0.5, -0.02, f"amplitude medians computed on {amp_src} (downstream triples, "
+             "runs 58-63,65, A>1000; n=3,820 — reproduces S25 n_events)",
+             ha="center", fontsize=5.0, color=PAL["n_mid"], style="italic")
+    return save_pub(fig, "41_b4_outlier_diagnostic")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 42 — the pile-up τ_eff → R_max ladder, killing the retracted 4.22 MHz.
+#   Points: data τ_eff estimators (10%-cross 124.79 [123.35,126.31], KM 151.64,
+#   IPCW 179.05, retracted note 90 ns struck) + MC03 135.0, each mapped to
+#   R_max = 0.380/τ. Annotates the ≤3.05 MHz upper bound and ≈2.1 MHz censoring-aware.
+#   Archetype: schematic-led composite (τ estimators + resulting R_max).
+#   Source: reports/1781028280.978.1e517fd7/result.json (S10g 10% thresholds),
+#           reports/mc03_.../result.json (MC pooled), reports/mv5_.../REPORT.md
+#           (retracted 90 ns / 4.22 MHz), new04 R_max_MHz_upper.
+# ══════════════════════════════════════════════════════════════════════════
+def fig42_taueff_rmax_ladder():
+    s10g = load("s10g")["thresholds"]["10pct"]
+    mc03 = load("mc03")["tau_eff"]["pooled"]
+    n04 = load("new04")
+    MU = 0.380
+    rmax_upper = n04["inputs"]["R_max_MHz_upper"]   # 3.045
+
+    # (label, tau_ns, ci [lo,hi] or None, colour, struck?)
+    est = [
+        ("note\n(90 ns)", 90.0, None, PAL["red_down"], True),
+        ("10%-cross\n(data)", s10g["template_exponential_cross_ns"],
+         [s10g["template_ci95_low_ns"], s10g["template_ci95_high_ns"]],
+         PAL["blue_main"], False),
+        ("MC03\nlive10", mc03["live10_ns"],
+         [mc03["ci_low"], mc03["ci_high"]], PAL["teal"], False),
+        ("Kaplan–\nMeier", s10g["km_restricted_mean_ns"],
+         [s10g["km_ci95_low_ns"], s10g["km_ci95_high_ns"]], PAL["violet"], False),
+        ("IPCW\nAFT", s10g["ml_ipcw_mean_ns"],
+         [s10g["ml_ipcw_ci95_low_ns"], s10g["ml_ipcw_ci95_high_ns"]],
+         PAL["gold"], False),
+    ]
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.4, 3.3),
+                                  gridspec_kw={"wspace": 0.30})
+    x = np.arange(len(est))
+
+    # Panel a: tau_eff estimators
+    for xi, (lab, tau, ci, col, struck) in zip(x, est):
+        ax.bar(xi, tau, 0.62, color=col, edgecolor="black", linewidth=0.5,
+               hatch="///" if struck else None, alpha=0.5 if struck else 1.0)
+        if ci is not None:
+            ax.plot([xi, xi], ci, color=PAL["n_black"], lw=1.0)
+            for yy in ci:
+                ax.plot([xi - 0.08, xi + 0.08], [yy, yy], color=PAL["n_black"], lw=1.0)
+        ax.text(xi, tau + 5, f"{tau:.1f}", ha="center", fontsize=6.2,
+                color=PAL["n_mid"] if struck else PAL["n_black"])
+        if struck:
+            ax.plot([xi - 0.31, xi + 0.31], [tau, tau], color=PAL["red_down"], lw=1.4)
+    ax.set_xticks(x); ax.set_xticklabels([e[0] for e in est], fontsize=6.0)
+    ax.set_ylabel("Effective live-time τ_eff (ns)")
+    ax.set_ylim(0, 205)
+    ax.text(0, 40, "RETRACTED", ha="center", color=PAL["red_down"], fontsize=6.0,
+            rotation=90, fontweight="bold")
+    ax.set_title("a   τ_eff estimators (data + MC03; 95% CI)",
+                 loc="left", fontsize=7.2)
+
+    # Panel b: R_max = 0.380 / tau
+    def rmax(tau):
+        return MU / (tau * 1e-9) / 1e6
+    for xi, (lab, tau, ci, col, struck) in zip(x, est):
+        r = rmax(tau)
+        ax2.bar(xi, r, 0.62, color=col, edgecolor="black", linewidth=0.5,
+                hatch="///" if struck else None, alpha=0.5 if struck else 1.0)
+        if ci is not None:
+            rc = [rmax(ci[1]), rmax(ci[0])]  # note inversion
+            ax2.plot([xi, xi], rc, color=PAL["n_black"], lw=1.0)
+        ax2.text(xi, r + 0.09, f"{r:.2f}", ha="center", fontsize=6.2,
+                 color=PAL["n_mid"] if struck else PAL["n_black"])
+        if struck:
+            ax2.plot([xi - 0.31, xi + 0.31], [r, r], color=PAL["red_down"], lw=1.4)
+    ax2.axhline(rmax_upper, color=PAL["blue_main"], ls="--", lw=1.0)
+    ax2.text(2.5, rmax_upper + 0.12, f"R_max ≤ {rmax(s10g['template_exponential_cross_ns']):.2f} MHz "
+             "(one-sided upper bound)",
+             fontsize=5.8, color=PAL["blue_main"], ha="center", va="bottom")
+    ax2.axhline(rmax(s10g["ml_ipcw_mean_ns"]), color=PAL["gold"], ls=":", lw=1.0)
+    ax2.annotate("≈2.1 MHz\ncensoring-aware", xy=(4, rmax(s10g["ml_ipcw_mean_ns"])),
+                 xytext=(2.6, 3.55), fontsize=5.8, color=PAL["gold"], ha="center",
+                 va="center", arrowprops=dict(arrowstyle="->", color=PAL["gold"], lw=0.7))
+    ax2.set_xticks(x); ax2.set_xticklabels([e[0] for e in est], fontsize=6.0)
+    ax2.set_ylabel("R_max = μ_max / τ_eff  (MHz)")
+    ax2.set_ylim(0, 4.8)
+    ax2.text(0, 0.9, "4.22 MHz RETRACTED", ha="center", color=PAL["red_down"],
+             fontsize=5.8, rotation=90, va="bottom", fontweight="bold")
+    ax2.set_title("b   R_max = 0.380 / τ_eff  (upper bound, not 4.22 MHz)",
+                  loc="left", fontsize=7.2)
+
+    fig.suptitle("Pile-up τ_eff → R_max ladder — the retracted 90 ns / 4.22 MHz is struck; every measured "
+                 "estimator gives R_max ≤ 3.05 MHz (≈2.1 MHz censoring-aware)\n"
+                 "μ_max = 0.380; τ estimators from S10g (10% threshold) + MC03 pooled",
+                 fontsize=6.7, y=1.06)
+    return save_pub(fig, "42_taueff_rmax_ladder")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 43 — the certified ML-win delta-CI forest with BH-FDR. Forest of the
+#   P04/P07 amplitude+charge win deltas (event-clustered CIs + z), all surviving BH.
+#   Archetype: quantitative grid (delta-CI forest).
+#   Source: reports/bm3_p04p07_fdr_20260705_203249/stats02_delta_ci_summary.json.
+# ══════════════════════════════════════════════════════════════════════════
+def fig43_fdr_delta_forest():
+    wins = load("bm3fdr")["wins"]
+
+    # (short label, delta, ci95, z)  in a readable order
+    rows = []
+    for grp in ("P04", "P04c", "P04d", "P04e", "P07"):
+        for r in wins[grp]:
+            comp = r["comparison"]
+            if grp == "P04":
+                tag = "amp (peak−ML)" if comp.startswith("amp") else "charge (integral−ML)"
+                short = f"P04 {tag}"
+            elif grp == "P07":
+                ceil = comp.split("ceiling=")[1].split(":")[0]
+                short = f"P07 sat. ceiling {ceil}"
+            else:
+                short = {"P04c": "P04c amp (adaptive-ridge−ML)",
+                         "P04d": "P04d amp (huber−extratrees)",
+                         "P04e": "P04e amp B2-holdout (run-block)"}[grp]
+            rows.append((short, r["res68_delta"], r["res68_delta_ci95"],
+                         r["z_approx"]))
+
+    fig, ax = plt.subplots(figsize=(7.2, 3.8))
+    y = np.arange(len(rows))[::-1]
+    for yi, (lab, d, ci, z) in zip(y, rows):
+        col = PAL["blue_main"] if "P04" in lab and "P07" not in lab else PAL["teal"]
+        ax.plot(ci, [yi, yi], color=col, lw=1.6, zorder=2)
+        ax.plot(d, yi, "o", color=col, markersize=6, markeredgecolor="black",
+                markeredgewidth=0.4, zorder=3)
+        ax.text(ci[1] + 0.004, yi, f"Δ={d:.3f}  z={z:.0f}  ✓BH", va="center",
+                fontsize=5.9, color=PAL["n_black"])
+    ax.axvline(0.0, color=PAL["red_down"], ls="--", lw=1.0)
+    ax.text(0.002, y[0] + 0.5, "Δ = 0 (no win)", color=PAL["red_down"],
+            fontsize=5.8, va="bottom")
+    ax.set_yticks(y)
+    ax.set_yticklabels([r[0] for r in rows], fontsize=6.0)
+    ax.set_xlabel("Traditional − ML residual-σ₆₈ advantage  Δ  (larger = traditional wins)")
+    ax.set_xlim(-0.02, 0.30)
+    ax.set_ylim(y[-1] - 0.7, y[0] + 1.0)
+    ax.set_title("B-M3 — the certified traditional-fit wins: every P04/P07 amplitude+charge Δ excludes 0 and "
+                 "survives BH-FDR\nevent-clustered 95% CIs (P04e run-block); z from the CI SE; q = 0.05",
+                 loc="left", fontsize=6.7)
+    return save_pub(fig, "43_fdr_delta_forest")
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Fig 44 (SUPERSEDES Fig 29) — the REFRESHED program-level FDR census: 1,957
+#   claims / 157 studies; BH q=0.05 within family; 14/15 scoreboard bold wins
+#   survive, 0 fail, 1 prose-only. (a) sorted-p vs BH-threshold plot;
+#   (b) per-family survive/nominal breakdown + scoreboard headline.
+#   Archetype: quantitative grid (BH p-value plot + family census bars).
+#   Source: reports/stats01_program_fdr_20260705_203905/claims.csv (+ REPORT.md
+#           prose for the 14/15 scoreboard headline).
+# ══════════════════════════════════════════════════════════════════════════
+def fig44_fdr_census_refly():
+    rows = list(csv.DictReader(open(os.path.join(REPO, SOURCES["census"]))))
+    n_claims = len(rows)
+    studies = sorted({r["study_id"] for r in rows})
+    # per-family census from the claim rows
+    fams = {}
+    for r in rows:
+        f = r["family"]
+        d = fams.setdefault(f, {"n": 0, "nominal": 0, "survive": 0})
+        d["n"] += 1
+        if r["nominal_ci_excludes_zero"].strip().lower() == "true":
+            d["nominal"] += 1
+        if r["bh_pass"].strip().lower() == "true":
+            d["survive"] += 1
+    order = sorted(fams, key=lambda f: fams[f]["nominal"])
+    total_nominal = sum(d["nominal"] for d in fams.values())
+    total_surv = sum(d["survive"] for d in fams.values())
+
+    # BH p-value plot inputs (sorted p, BH line i/m*q)
+    q = 0.05
+    ps = np.array(sorted(float(r["p"]) for r in rows if r["p"] not in ("", "nan")))
+    m = len(ps)
+    idx = np.arange(1, m + 1)
+    bh_line = idx / m * q
+    # largest i with p(i) <= i/m q  (BH survivor count)
+    below = ps <= bh_line
+    k = int(np.max(np.where(below)[0]) + 1) if below.any() else 0
+    # floor exact zeros / astronomically small p for a readable log axis
+    FLOOR = 1e-30
+    ps_disp = np.clip(ps, FLOOR, None)
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.4, 3.3),
+                                  gridspec_kw={"width_ratios": [1.05, 1.15],
+                                               "wspace": 0.40})
+
+    # Panel a: sorted p vs BH threshold (log-y); points below FLOOR sit on the floor
+    ax.plot(idx, ps_disp, ".", color=PAL["blue_main"], markersize=2.0,
+            label=f"sorted claim p-values (floored at {FLOOR:.0e})", zorder=2)
+    ax.plot(idx, bh_line, "-", color=PAL["red_strong"], lw=1.2,
+            label=f"BH threshold  i/m·q  (q={q})", zorder=3)
+    if k:
+        ax.axvline(k, color=PAL["n_mid"], ls=":", lw=0.9, zorder=1)
+        ax.annotate(f"k = {k}\nsurvive BH\n(reject H₀ left of here)",
+                    xy=(k, q * 0.5), xytext=(k * 0.60, 3e-4),
+                    fontsize=5.8, color=PAL["n_dark"], ha="center", va="center",
+                    arrowprops=dict(arrowstyle="->", color=PAL["n_mid"], lw=0.7))
+    ax.set_yscale("log")
+    ax.set_ylim(FLOOR * 0.4, 3.0)
+    ax.set_xlim(0, m)
+    ax.set_xlabel("Rank i of claim p-value (ascending)")
+    ax.set_ylabel("p-value  (floored at 1e−30)")
+    ax.legend(loc="lower right", fontsize=5.6)
+    ax.set_title(f"a   Global BH view (m = {m:,} claims with p)",
+                 loc="left", fontsize=7.1)
+
+    # Panel b: per-family survive/nominal bars + headline card
+    y = np.arange(len(order))
+    nom = np.array([fams[f]["nominal"] for f in order])
+    sur = np.array([fams[f]["survive"] for f in order])
+    ax2.barh(y, nom, 0.62, color=PAL["n_light"], edgecolor="black", linewidth=0.5,
+             label="Nominal (CI excludes 0)")
+    ax2.barh(y, sur, 0.62, color=PAL["blue_main"], edgecolor="black", linewidth=0.5,
+             label="Survives BH (q = 0.05)")
+    for yi, f in zip(y, order):
+        d = fams[f]
+        drop = d["nominal"] - d["survive"]
+        ax2.text(d["nominal"] + 5, yi, f"{d['survive']}/{d['nominal']}"
+                 + (f" (−{drop})" if drop else ""), va="center", fontsize=5.6,
+                 color=PAL["n_dark"])
+    ax2.set_yticks(y); ax2.set_yticklabels(order, fontsize=6.0)
+    ax2.set_xlim(0, max(nom) * 1.28)
+    ax2.set_xlabel("Delta-with-CI claims")
+    ax2.legend(loc="lower right", fontsize=5.6)
+    ax2.set_title("b   Per-family BH census (refreshed)", loc="left", fontsize=7.1)
+
+    fig.suptitle(f"STATS01 program-level FDR census (REFRESHED) — {n_claims:,} delta-CI claims across "
+                 f"{len(studies)} studies; {total_surv:,}/{total_nominal:,} nominal survive BH;\n"
+                 "of 15 scoreboard bold wins 14 survive BH, 0 fail, 1 prose-only "
+                 "(amplitude-charge family 432/471) — SUPERSEDES Fig 29",
+                 fontsize=6.6, y=1.06)
+    fig.text(0.5, -0.02, "14/15 scoreboard & 1 prose-only headline: "
+             "reports/stats01_program_fdr_20260705_203905/REPORT.md prose",
+             ha="center", fontsize=5.0, color=PAL["n_mid"], style="italic")
+    return save_pub(fig, "44_fdr_census_refly")
+
+
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     print(f"Generating post-review figures into {os.path.relpath(OUTPUT_DIR, REPO)}/ ...")
@@ -1162,7 +1727,11 @@ def main():
                fig30_riskcov, fig31_s22, fig32_s23, fig09_rmax, fig19_pedestal,
                fig33_realtrigger, fig34_gain_quenched, fig35_covariance,
                fig36_overlay_realism, fig37_earlypeak_budget,
-               fig12_stopping_depth_rebuilt):
+               fig12_stopping_depth_rebuilt,
+               fig38_enrichment_reconciliation, fig39_new04_residual_waterfall,
+               fig40_mv3_closure_basis, fig41_b4_outlier_diagnostic,
+               fig42_taueff_rmax_ladder, fig43_fdr_delta_forest,
+               fig44_fdr_census_refly):
         print(f"[{fn.__name__}]")
         all_paths.extend(fn())
     print(f"\nDONE — {len(all_paths)} files written "

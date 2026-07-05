@@ -41,7 +41,8 @@
       "artifacts": {},
       "notes": [
         "Legacy parity split: train = index % 2 == 0 (see scripts/mv1_mv2_truth_pid_energy.py).",
-        "SplitRegistry supported via config mc_validation/splits.yaml."
+        "SplitRegistry supported via config mc_validation/splits.yaml.",
+        "STATUS=FIXTURE: these metrics (hgb_auc 0.925) are the small 4000-track fixture, NOT the production result. The authoritative MV1 rerun (2026-07-03, reports/mv1_mv2_truth_pid_energy_1783077795/) uses 400,369 truth tracks and gives hgb_auc 0.9860, purity@90eff 0.9646 -- this is the number quoted in WIKI.md/SUMMARY.md. Do not cite the fixture AUC as the PID result."
       ],
       "provenance": {
         "features": [

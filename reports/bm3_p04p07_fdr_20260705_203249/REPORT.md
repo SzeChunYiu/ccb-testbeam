@@ -54,8 +54,11 @@ FDR-assessed, so they were **not certified**.
 `reports/stats01_program_fdr_20260705_203905/`: **1,957 delta-CI claims** parsed (was 1,948). Of the
 **15** scoreboard bold wins, **14 survive BH, 0 fail, 1 has no machine-readable delta-CI**. All five
 P04/P07 wins now appear in the census win table as **"survives BH"** (P04: 2/2 claims, P04c 1/1,
-P04d 1/1, P04e 1/1, P07 4/4). The single remaining prose-only win is **P05b** (a *pile-up* two-pulse
-study -- outside the P04/P07 scope of B-M3).
+P04d 1/1, P04e 1/1, P07 4/4). The single remaining prose-only win is **S07f** (a *pile-up* study with
+no parsed delta-CI artifact, so it cannot be FDR-assessed -- see the refreshed census REPORT scoreboard,
+`reports/stats01_program_fdr_20260705_203905/REPORT.md`; outside the P04/P07 scope of B-M3). (An earlier
+draft of this report named P05b here; P05b in fact carries parsed delta-CIs and passes BH -- corrected
+2026-07-05.)
 
 **Certification statement:** each P04/P07 win now **passes the program-level BH-FDR census at
 q = 0.05 within the amplitude-charge family** with a machine-readable, dependence-aware delta-CI.

@@ -52,10 +52,10 @@ The analysis is **data-driven** (no per-event Monte Carlo truth), but uses **GEA
 | Combined 3-stave (B4+B6+B8) | **σ₆₈ = 0.490 ns [0.470, 0.508]** | ✅ Measured, correlation-aware (S25, 2026-07-05; supersedes the withdrawn 0.54–0.56); not yet held-out-confirmed (reserved runs unstaged) |
 | Pile-up tolerance R_max | **≤ 3.05 MHz** (one-sided upper bound, corrected from 4.22 MHz; censoring-aware estimators suggest ≈2.1 MHz or lower) | ⚠️ Data-driven bound; first independent MC live-time disagrees by +8% (MC03: 134.99 vs 124.79 ns) — the excess, if real, **tightens the bound rather than validating it** |
 | Proton/deuteron PID | **AUC = 0.986** (MC truth ceiling; data reaches it only via weak-label proxies, not species truth) | ⚠️ MC truth ceiling only; the data side uses weak-label proxies, not species truth (MV1, rerun 2026-07-03) |
-| Sample-I deuteron enrichment (B2) | truth: **ratio 1.519 [1.510, 1.528]** (exclusive 1.912); data: **f(A>5000) ratio 3.45 [3.41, 3.50]** | ✅ Confirmed at truth level (S21); **consistent in data** (S23, 2026-07-03; run-set/beam drift bounded ≤~29% by B-M6); MC under-predicts the contrast (DR 0.738, z = −99 statistics-only; systematics from disjoint run-sets/beam conditions not included) |
+| Sample-I deuteron enrichment (B2) | truth: **species-fraction ratio 1.519 [1.510, 1.528]** (exclusive 1.912); data: **amplitude-tail f(A>5000) ratio 3.45 [3.41, 3.50]** — *different observables* (the ~1.5× species enrichment is amplified into a ~3.5× amplitude-tail contrast because deuterons deposit ~3× the energy and the A>5000 cut is nonlinear); reconciled by the double ratio | ✅ Confirmed at truth level (S21); **directionally confirmed in data** (S23, 2026-07-03; run-set/beam drift bounded ≤~29% by B-M6, central ~3%); MC under-predicts the contrast (DR 0.738, z = −99 statistics-only; systematics from disjoint run-sets/beam conditions not included). See Fig 38. |
 | MV3 stopping-depth discrepancy | mechanism **ESTABLISHED (real `Trig_bar` SD sim, 2026-07-05)** = **unsimulated two-arm coincidence trigger** (untriggered B2 45.9% → triggered 99.7%, toward data 93.3%); quantitative closure NOT achieved (ideal trigger over-purifies; proxy χ²/ndf ≈ 625 retired) | 🔶 Re-graded FAIL → TENSION; missing-material narrative falsified; residual data-side (NEW-04) |
 | MC timing (MV4 honest rerun) | MC pair-equivalent **2.087 ± 0.009 ns**, between data raw 2.993 ns and corrected 1.50 ns | ⚠️ REVIEW — unmatched comparison; matched per-stave rerun pending |
-| Per-stave timing vs amplitude (S22) | downstream per-stave σ ≈ **0.85–1.1 ns** at high amplitude; raw curves follow 1/A better than 1/√A | ✅ Measured (2026-07-03); B2 saturation-excluded |
+| Per-stave timing vs amplitude (S22) | downstream per-stave σ ≈ **0.9–1.15 ns** at high amplitude (√2-converted highest bin 0.93–1.15); raw curves follow 1/A better than 1/√A | ✅ Measured (2026-07-03); B2 saturation-excluded |
 | Two-pulse recovery (honest benchmark) | trad wins at matched 80% coverage; ML wins at full coverage (0.011 vs 0.048); σ68 trad 0.64 / ML 0.89 ns | ✅ Truth-labelled (MC03/S24, 2026-07-04; replaces the rigged S11a table) |
 | Anomaly class identity | **NOT C12 recoils** — 0/1,656 quenched C12 records pass A>1000 at any gain | ✅ Ruled out (MV6b, 2026-07-04); class must be instrumental/trigger-phase — data-side question |
 | Digitizer gain | **≈ 60–70 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet** (v1 246 and v2 92 ± 28 both retracted; 297 = explicit placeholder) | ⚠️ Trigger-consistent scan optimum ~60 (unquenched); quenched re-scan DONE 2026-07-05 (~65 measured) |
@@ -132,7 +132,7 @@ The analysis does **not** find that machine learning should fully replace tradit
 | **Independent-arm staves** | A1, A3 (Stack A — independent arm at the conjugate angle, measures different particles) |
 | **Waveform** | 18 samples × 10 ns spacing = 180 ns window |
 | **Readout** | One-ended wavelength-shifting (WLS) fibre → SiPM |
-| **WLS propagation** | ~17 cm/ns |
+| **WLS propagation** | ~17 cm/ns *(assumed modelling constant — used only for the digitizer transit-jitter model in `src/ccb_mc_validation/digitizer/transport.py`; not a measured/datasheet value, carried as an assumption)* |
 
 ### How the Detector Works
 
@@ -185,7 +185,7 @@ This is **not** an imaging detector — we get time and amplitude, not spatial p
 
 The script `scripts/01_build_pulse_table_from_root.py` reads 110 ROOT files and produces a selected-pulse table:
 
-1. Read `HRDv` tree from each ROOT file
+1. Read the `HRDv` branch of the `h101` tree from each ROOT file
 2. Use **even B-stack staves** only: B2, B4, B6, B8
 3. Compute **baseline** = median of ADC samples 0–3
 4. Select pulses with **amplitude A > 1000 ADC**
@@ -203,7 +203,7 @@ All downstream analysis scripts read from this table and produce results in `rep
 
 ### Step 3: MC Validation Pipeline
 
-**Study:** [Digitizer Calibration (MV0)](reports/mv0_digitizer/)
+**Study:** [Digitizer Calibration (MV0)](reports/mv0_calibration_1782677847/)
 
 The GEANT4 Monte Carlo produces **truth-level** particle data (PDG code, energy, position, time) but no waveforms. The **MV0 digitizer** converts MC truth into synthetic 18-sample ADC waveforms by modeling:
 
@@ -224,11 +224,11 @@ This lets the same analysis pipeline run on MC data **with truth labels attached
 > **Key Findings:**
 > - Best single-stave timing: **B6 σ(core) ≈ 0.68–0.75 ns** (external-note Gaussian-core decomposition; not σ₆₈, not MC-validated — under review 2026-07-03)
 > - Combined 3-stave (B4+B6+B8): **σ₆₈ = 0.490 ns [0.470, 0.508]** (measured, correlation-aware — S25, 2026-07-05; supersedes the withdrawn 0.54–0.56; not yet held-out-confirmed)
-> - Analytic timewalk reaches **1.49–1.55 ns** — tied with ML at 1.39–1.47 ns under proper cross-validation
+> - Analytic timewalk reaches **1.49–1.55 ns** — tied with ML at 1.39–1.54 ns under proper cross-validation (ML: 1.39 held-out, 1.54 LORO — S03a)
 > - B2-containing pairs have **large covariance** — B2 is excluded from precision timing
 > - A-stack reproduces: **A1–A3 width = 1.39 ns** (matches note's 1.43 ns) — independent-arm methodology check on different particles (2026-07-03)
 > - MC timing (MV4 honest rerun 2026-07-03): MC pair-equivalent σ₆₈ = **2.087 ± 0.009 ns**, between the data raw (2.993 ns) and corrected (1.50 ns) anchors — **REVIEW**; matched per-stave comparison pending Phase 1 digitizer
-> - Resolution vs amplitude (S22, 2026-07-03): raw curves follow **1/A** better than 1/√A; downstream per-stave σ ≈ **0.85–1.1 ns at high amplitude**; B2 saturation-excluded (§4.8)
+> - Resolution vs amplitude (S22, 2026-07-03): raw curves follow **1/A** better than 1/√A; downstream per-stave σ ≈ **0.9–1.15 ns at high amplitude** (√2-converted highest bin 0.93–1.15); B2 saturation-excluded (§4.8)
 
 ### 4.1 What is Timing Resolution?
 
@@ -246,10 +246,10 @@ Raw Waveform → CFD20 (seed time) → Template Phase Fit → Amplitude Timewalk
 
 | Step | Study | Method | σ₆₈ (ns) |
 |---|---|---|---|
-| **1. Pickoff** | [Timing Pickoff (S02)](reports/1780997954.15157.07ef03cf__s02_timing_pickoff/) | CFD20 at 20% of peak | **1.85** |
+| **1. Pickoff** | [Timing Pickoff (S02)](reports/1780997954.15157.07ef03cf__s02_timing_pickoff/) | CFD20 + ML-ridge correction (raw CFD20 alone = 2.993, see caveat) | **1.85** |
 |  |  | Template phase fit | 2.89 |
 | **2. Timewalk** | [Analytic Timewalk (S03)](reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction/) | Amplitude-only analytic | **1.49–1.55** |
-|  |  | Ridge residual corrector | 1.39–1.47 |
+|  |  | Ridge residual corrector | 1.39 (held-out) – 1.54 (LORO) |
 |  |  | HGB on waveform+shape (S03k, gated) | 1.11 (in-fold only) |
 | **3. Combined** | [Inter-stave Covariance (S25)](reports/s25_covariance_timing_1783241582/) | B4+B6+B8 event time (measured, correlation-aware) | **0.490 [0.470, 0.508]** (§4.5, Fig 35; supersedes the withdrawn 0.54–0.56) |
 
@@ -277,13 +277,15 @@ where the analytic form is **f(A) = A₀ + B/amplitude** (fitted per stave from 
 
 *Figure: per-stave timing resolution. Solid bars are quoted S03 ranges (error bars = half-width of the quoted range, not fitted CIs); hatched bars are under review since 2026-07-03 — B6 is the external note's Gaussian-core σ (not σ₆₈), and the B4+B6+B8 combination assumes independent stave errors after its covariance validation was withdrawn.*
 
-| Stave | σ₆₈ (ns) | Notes |
-|---|---|---|
-| B2 | ~2.8 | Topology-dominated, large covariance — **excluded from precision** |
-| B4 | ~1.45 | Good downstream reference |
-| B6 | **~0.72** | Best single-stave — cleanest timing (Gaussian-core value, not σ₆₈; under review 2026-07-03) |
-| B8 | ~0.93 | Good, some penetration dependence |
-| **B4+B6+B8** | **0.490 [0.470, 0.508]** | Combined event time — measured, correlation-aware (S25, 2026-07-05; supersedes the withdrawn 0.54–0.56; see §4.5 / Fig 35) |
+Two metrics appear below and must not be conflated. The **note Gaussian-core σ** (`docs/05_timing_resolution.md` Table 19) is a narrow-core Gaussian width; the **measured σ₆₈** (S25, `s25_summary.json`) is the robust 68% half-width — the quantity used for the combined number. Where both exist, the S25 σ₆₈ supersedes.
+
+| Stave | Note Gaussian-core σ (ns) | Measured σ₆₈ (ns, S25) | Notes |
+|---|---|---|---|
+| B2 | ~1.1–1.5 (all-pair) | not separable | Topology-dominated, large covariance — single-stave σ₆₈ not cleanly identifiable; **excluded from precision** (a prior "~2.8 ns" entry was unbacked and is removed) |
+| B4 | ~1.45 | **1.52 [1.48, 1.57]** | Most-upstream downstream stave; σ₆₈ worst of the three despite mid amplitude — intrinsic, not timewalk (see §4.5 / Fig 41) |
+| B6 | ~0.72 | **0.68 [0.61, 0.74]** | Best single-stave — cleanest timing |
+| B8 | ~0.93 | **0.80 [0.74, 0.86]** | Good; highest amplitude, some penetration dependence |
+| **B4+B6+B8** | — | **0.490 [0.470, 0.508]** | Combined event time — measured, correlation-aware (S25, 2026-07-05; supersedes the withdrawn 0.54–0.56; see §4.5 / Fig 35) |
 
 ### 4.5 The B2 Covariance Problem
 
@@ -297,7 +299,13 @@ B2-containing timing pairs show dramatically larger covariance:
 
 This means B2 timing fluctuations are **not independent** of other staves — there is a shared, topology-correlated component. **B2 must be excluded from precision event-time estimates.** This is a physics finding (terminal deuteron topology), not a detector malfunction.
 
-**The downstream (B4/B6/B8) inter-stave covariance is now properly MEASURED (S25, B-M4, 2026-07-05)**, replacing the withdrawn 0.54–0.56 ns combined number. On the A>1000 downstream triples (n = 3,820 events over 7 runs; whole-event bootstrap, 400 replicas) the combined event-time resolution is **σ₆₈ = 0.490 ns [0.470, 0.508]** (95% CI, correlation-aware, minimum-norm independence completion), with per-stave B4 1.52, B6 0.68, B8 0.80 ns. The off-diagonal-equality (independence) test is not rejected (p = 0.62); a held-out confirmation is **BLOCKED** (the reserved runs are not staged), so this is a first, properly-measured — but not yet held-out-validated — combined timing number.
+**The downstream (B4/B6/B8) inter-stave covariance is now properly MEASURED (S25, B-M4, 2026-07-05)**, replacing the withdrawn 0.54–0.56 ns combined number. On the A>1000 downstream triples (n = 3,820 events over 7 runs; whole-event bootstrap, 400 replicas) the combined event-time resolution is **σ₆₈ = 0.490 ns [0.470, 0.508]** (95% CI, correlation-aware, minimum-norm independence completion), with per-stave B4 1.52, B6 0.68, B8 0.80 ns. The off-diagonal-equality (independence) test is not rejected (p = 0.62); a held-out confirmation is **not achievable in this dataset** — the reserved runs were located but are a DAQ-incompatible acquisition configuration (16-sample window / odd-channel cabling / truncated pulses; see §11 and `reports/trackA_heldout_confirmation/`), so this is a first, properly-measured — but definitively single-partition — combined timing number.
+
+**Why is B4 (1.52 ns) 2.2× worse than B6 (0.68) and B8 (0.80)?** This is *not* an amplitude/timewalk effect: recomputing median amplitudes on the exact S25 selection (n = 3,820 downstream triples, A>1000, runs 58–63,65) gives B4 ≈ 2368, B6 ≈ 2468, B8 ≈ 3344 ADC — B4 and B6 are essentially equal amplitude, yet B4's σ₆₈ is 2.2× larger, and the highest-amplitude stave (B8) is also worse than B6. B4's excess variance is therefore **intrinsic**: B4 is the most-upstream of the downstream staves (nearest B2 and the beam), so it is the most exposed to topology contamination, secondary hits, and wider pulse-shape variation. This is a physics/geometry effect, not a calibration defect (Fig 41).
+
+![B4 timing-outlier diagnostic: equal amplitude to B6 but 2.2× worse σ₆₈ → intrinsic, not timewalk](docs/figures/41_b4_outlier_diagnostic.png)
+
+*Figure 41: (a) per-stave σ₆₈ with 95% bootstrap CIs (B4 1.52, B6 0.68, B8 0.80 ns); (b) per-stave median amplitude (B4 ≈ 2368 ≈ B6 2468 ADC, B8 3344). B4 and B6 sit at the same amplitude yet B4 is 2.2× worse — the excess is intrinsic to B4's upstream position, not an amplitude/timewalk artifact. Amplitudes computed at build time on the exact S25 selection (n = 3,820). Source: [`reports/s25_covariance_timing_1783241582/s25_summary.json`](reports/s25_covariance_timing_1783241582/s25_summary.json) + s00 selected-pulse table.*
 
 ![Measured 3×3 inter-stave covariance and the combined σ₆₈ = 0.490 ns, replacing the withdrawn 0.54–0.56](docs/figures/35_covariance_timing.png)
 
@@ -316,8 +324,8 @@ This means B2 timing fluctuations are **not independent** of other staves — th
 
 The A-stack (A1/A3) provides an analysis-decoupled timing measurement on the independent arm:
 - **Sample III** (A-arm data, coincidence-trigger runs): robust width **1.39 ns** — reproduces the analysis note's 1.43 ns
-- **Sample IV** (A-arm data, B-trigger-only runs): broadening to 1.79 ns is a **calibration-pool / low-statistics effect**, not a physics effect
-- ML residual correction makes timing *worse* (1.94 ns) — **ML is not adopted** for A-stack
+- **Sample IV** (A-arm data, B-trigger-only runs): broadening to 1.79 ns is a **calibration-pool / low-statistics effect** (n = 127 pairs vs 2,514 for III; CI [1.38, 2.22] overlaps 1.39), not a physics effect
+- ML residual correction **ties** the traditional fit (robust width III 1.383 vs 1.389; IV 1.559 vs 1.794; paired p = 0.524) — no significant gain, so **ML is not adopted** for A-stack. (An earlier "ML makes it worse, 1.94 ns" statement conflated the full-RMS/CI figure with the robust width and is corrected here.)
 
 ### 4.7 MC Validation of Timing (MV4 honest rerun)
 
@@ -350,11 +358,11 @@ fix) and event-level within-run bootstrap errors:
 - **Scaling law:** the raw curves follow σ(A) = √(c² + k²(1000/A)²) — a **1/A** timewalk-style
   law — better than 1/√A in the high-lever pairs (B4–B6: χ²/ndf 0.32–0.87 vs 1.25–3.71), and tie
   where the constant floor dominates (B6–B8).
-- **Per-stave resolution at high amplitude:** ≈ **0.85–1.1 ns** for the downstream staves
-  (σ_pair/√2, cross-checked with a three-pair triangle decomposition).
-- **B2 is saturation-excluded:** 30–40% of selected B2 pulses sit above ~7000 ADC where the
-  amplitude (hence the CFD threshold and the timewalk feature) is compressed; B2 curves are
-  flagged and excluded from headline per-stave claims.
+- **Per-stave resolution at high amplitude:** ≈ **0.93–1.15 ns** for the downstream staves
+  (σ_pair/√2 highest bin, cross-checked with a three-pair triangle decomposition).
+- **B2 is saturation-excluded:** **≈42% of Sample-I** (and ≈6% of Sample-II) selected B2 pulses
+  sit above ~7000 ADC where the amplitude (hence the CFD threshold and the timewalk feature) is
+  compressed; B2 curves are flagged and excluded from headline per-stave claims.
 - The amp-only timewalk correction is fitted two-stage (downstream betas first, B2 frozen out)
   and evaluated leave-one-run-out. Caveats: the √2 conversion assumes independent equal-variance
   stave errors; the runs are the same as earlier S02/S03 work (no fresh confirmation partition).
@@ -390,7 +398,7 @@ The maximum tolerable rate: **R_max = μ_max / τ_eff** where μ_max is the acce
 The original analysis note assumed τ_eff = 90 ns → R_max = 4.22 MHz.
 
 **Direct waveform measurement** (10% tail-crossing of the pulse template):
-- **Live-time: τ_eff = 124.79 ns** (bootstrap CI: [123.33, 126.36] ns)
+- **Live-time: τ_eff = 124.79 ns** (bootstrap CI: [123.35, 126.31] ns)
 - **R_max ≤ 3.05 MHz** (one-sided upper bound; for |Δt| < 1 ns and area error < 20%, at ε > 90%)
 
 **MC confirmation (MV5): ⛔ RETRACTED as validation (2026-07-03); slot refilled by MC03 (2026-07-04).** [Pile-up Rate Validation (MV5)](reports/mv5_pileup_study/) | [MC03 overlay + independent τ_eff](reports/mc03_overlay_1783180480/)
@@ -407,6 +415,10 @@ The original analysis note assumed τ_eff = 90 ns → R_max = 4.22 MHz.
 ![R_max is a one-sided upper bound, not 4.22 MHz](docs/figures/09_rmax_correction.png)
 
 *Figure 09 (rebuilt): (a) τ_eff estimators — the note's assumed 90 ns is an error; the 10%-crossing data value is 124.8 ns, and censoring-aware Kaplan–Meier / IPCW give 151.6 / 179.1 ns. (b) the resulting R_max = μ_max/τ_eff: the note's **4.22 MHz is retracted as a value**; the data 10%-crossing gives the one-sided bound **R_max ≤ 3.05 MHz**, and the censoring-aware estimators imply **≈2.1 MHz or lower**. No error bars (derived point values). Sources: S10 τ estimators; MC τ_eff from [`reports/mc03_overlay_1783180480/`](reports/mc03_overlay_1783180480/). Regenerated by `scripts/generate_postreview_figures.py`.*
+
+![τ_eff → R_max ladder: the retracted 90 ns / 4.22 MHz vs the data estimators](docs/figures/42_taueff_rmax_ladder.png)
+
+*Figure 42: the full τ_eff → R_max ladder in one view — the retracted note value (90 ns → 4.22 MHz, struck) against the data estimators (10%-crossing 124.8 → ≤3.05 MHz; Kaplan–Meier 151.6 and IPCW 179.1 → ≈2.1 MHz or lower) and MC03's 135.0 ns, each mapped through R_max = 0.380/τ_eff. Makes the "upper bound, not 4.22" story legible at a glance. Sources: S10g `live_time_definitions.csv`, [`reports/mc03_overlay_1783180480/result.json`](reports/mc03_overlay_1783180480/result.json), [`reports/new04_trigger_residual_1783275727/new04_summary.json`](reports/new04_trigger_residual_1783275727/new04_summary.json). Regenerated by `scripts/generate_postreview_figures.py`.*
 
 ### 5.3 Two-Pulse Recovery — honest truth-labelled benchmark (MC03/S24)
 
@@ -427,7 +439,7 @@ The honest benchmark uses 600,000 truth-labelled overlay records at 0.5/1.5/3 MH
 
 *Figure 30: (a) risk (failure rate on the answered subset) vs coverage for the template fit and compact ML (bold = 0.5 MHz; faint = 1.5 / 3.0 MHz), with the matched 80%-coverage line; (b) at 0.5 MHz — failure @ full coverage (trad 0.047 vs ML 0.011), failure @ 80% coverage (trad 0.000 vs ML 1.1×10⁻⁴), and common-subset Δt σ₆₈ (trad 0.646 vs ML 0.893 ns); bars scaled per metric with true values annotated. 600,000 truth-labelled overlays; the retired S11a 0.295/0.168 table is not shown. Source: [`reports/mc03_overlay_1783180480/`](reports/mc03_overlay_1783180480/) (risk_coverage_curves.csv, result.json). Regenerated by `scripts/generate_postreview_figures.py`.*
 
-**Robustness (S26, B-M7, 2026-07-05).** The matched-coverage verdict is stable when the overlays are made more realistic. Across three configs — pinned single-stave, + phase jitter (t₁ ~ Uniform(45,55) ns), and + cross-stave overlay (donor stave ≠ host, digitized with the donor kernel) — the **traditional fit wins at matched 80% coverage in all three** (trad failure 0.0000 vs ML 0.0005–0.0010), and the common-subset Δt σ₆₈ stays trad 0.33–0.41 vs ML 1.07–1.47 ns.
+**Robustness (S26, B-M7, 2026-07-05).** The matched-coverage verdict is stable when the overlays are made more realistic. Across three configs — pinned single-stave, + phase jitter (t₁ ~ Uniform(45,55) ns), and + cross-stave overlay (donor stave ≠ host, digitized with the donor kernel) — the **traditional fit wins at matched 80% coverage in all three** (trad failure 0.0000 vs ML ≈0.0002–0.0014 across configs), and the common-subset Δt σ₆₈ stays trad 0.33–0.41 vs ML 1.07–1.47 ns.
 
 ![Two-pulse verdict robustness: traditional wins at matched 80% coverage across pinned / +jitter / +cross-stave configs](docs/figures/36_overlay_realism.png)
 
@@ -470,9 +482,9 @@ The ML pile-up classifier score ratio between high and low current is ~1.29× (n
 
 ![Reconstruction MSE vs latent dimension for PCA and autoencoder](docs/figures/05_pca_vs_ae.png)
 
-*Figure: waveform reconstruction MSE (normalized ADC², log scale) vs latent dimension. The autoencoder wins at d ≤ 4; PCA overtakes at d = 8. Values from the P01 report table below (no per-point uncertainties were published).*
+*Figure: waveform reconstruction MSE (normalized ADC², log scale) vs latent dimension. In the **in-sample** discovery fit the autoencoder wins at d ≤ 4 and PCA overtakes at d = 8. **Caveat (2026-07-05 audit):** these values are the P02 in-sample discovery fit, not a held-out result — under the rigorous by-run holdout (P01, train/eval split on runs 42/57/64/65) the AE's low-dim edge does not survive (at d = 4, held-out PCA 0.01337 < AE 0.01428). No per-point uncertainties were published.*
 
-**Study:** [Self-Supervised Waveform Representation (P01)](reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation/)
+**Studies:** table values from [Pulse Representation Discovery (P02, in-sample)](reports/P02_pulse_representation_discovery/); held-out reconciliation in [Self-Supervised Waveform Representation (P01, by-run holdout)](reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation/)
 
 | Latent Dim | PCA MSE | AE MSE | Winner |
 |---|---|---|---|
@@ -481,7 +493,9 @@ The ML pile-up classifier score ratio between high and low current is ~1.29× (n
 | 4 | 0.00880 | 0.00527 | AE +40.1% |
 | 8 | 0.00166 | 0.00292 | PCA +75.9% |
 
-**Conclusion:** Pulses are simple shapes. The AE helps at very low dimensions (capturing nonlinear manifold), but PCA catches up once sufficient linear components are retained. The representation is compact — there's no deep hidden structure in pulse shape.
+*(The AE-wins rows above are in-sample; under P01's by-run holdout PCA matches or beats the AE at every overlapping dimension — see the figure caveat.)*
+
+**Conclusion:** Pulses are simple shapes. The apparent low-dimensional AE advantage is largely an in-sample effect that does not survive by-run generalisation; once sufficient linear (PCA) components are retained the representation is compact — there's no deep hidden structure in pulse shape (3 PCs capture 89% of variance, 8 capture 99.7%).
 
 ### 6.3 The Early-Peak Anomaly: C12 Ruled Out
 
@@ -531,7 +545,7 @@ When the same pulse is read out through two independent paths, the "duplicate" m
 
 This is the cleanest demonstration that **waveform shape carries recoverable calibration information** beyond scalar summaries.
 
-> **FDR status (P04):** the P04/P04c–e duplicate-readout wins have **no machine-readable delta-CI in the STATS01 FDR census** — they are among the 6 prose-only bold wins outside the BH census ([§12.5](#125-uncertainty-conventions)). They are **reported, not yet FDR-certified**; treat the res68 gap as indicative until a machine-readable delta-CI is run through the census.
+> **FDR status (P04): now CERTIFIED (B-M3, 2026-07-05).** The P04/P04c–e duplicate-readout wins now carry machine-readable, **event-clustered** delta-CIs and **survive the program-level BH-FDR census** (P04 amp Δ = 0.114 [0.113, 0.116], z ≈ 150; charge Δ = 0.180, z ≈ 166; P04c Δ = 0.077; P04d Δ = 0.018; P04e Δ = 0.120; the event-cluster design effect is only ~1.05). "Certified" means the ML–traditional gap is statistically distinguishable from zero, not that the absolute energy is truth (P04 remains a duplicate-readout closure). Source: [`reports/bm3_p04p07_fdr_20260705_203249/`](reports/bm3_p04p07_fdr_20260705_203249/) — Fig 43.
 
 ### 7.2 Saturation Recovery
 
@@ -546,13 +560,13 @@ B2 staves in Sample I saturate — ~30–40% of B2 pulses exceed the 7000 ADC ce
 
 On **artificial constant-ceiling clips**, ML is 3–7× better. However, natural-saturation recovery carries a **run-dependent timing-tail envelope** that is treated as a systematic.
 
-> **FDR status (P07):** like P04, the P07 saturation-recovery win has **no machine-readable delta-CI in the STATS01 FDR census** (a prose-only bold win, [§12.5](#125-uncertainty-conventions)). It is **reported, not yet FDR-certified**.
+> **FDR status (P07): now CERTIFIED (B-M3, 2026-07-05).** The P07 saturation-recovery win now carries event-clustered delta-CIs and **survives BH-FDR** at every ceiling (Δ = 0.072 / 0.200 / 0.191 / 0.240 for 4000/3000/2500/2000; z ≈ 77–106). Certified = distinguishable from zero on the constant-ceiling (leakage-safe) benchmark; the natural-transfer envelope remains a systematic. Source: [`reports/bm3_p04p07_fdr_20260705_203249/`](reports/bm3_p04p07_fdr_20260705_203249/) — Fig 43.
 
 ### 7.3 Absolute Energy Limitation
 
-**Study:** [Truth Energy Validation, rerun (MV2)](reports/mv1_mv2_truth_pid_energy_1783077795/) — 2026-07-03
+**Studies:** [Truth Energy Validation, rerun (MV2)](reports/mv1_mv2_truth_pid_energy_1783077795/) — 2026-07-03 (truth-internal energy); data-facing propagation res68 in [`reports/0000000001.1.audit01/`](reports/0000000001.1.audit01/) (0.246 trad / 0.189 ML) and [`reports/1781011754.…25ac6c9f/`](reports/).
 
-**There is no per-event energy truth in the data.** Propagated per-event energy reaches res68 ~ 0.19–0.25, failing the 10% threshold.
+**There is no per-event energy truth in the data.** The *data-facing* propagated per-event energy reaches res68 ~ **0.19–0.25** (0.2462 trad / 0.1885 ML), failing the 10% threshold. (Note: MV2's own `ekin_recon_res68` = 0.047 (proton) / 0.010 (deuteron) is a *truth-to-truth*, contained-track optimistic bound — not the data-reachable number; the ~0.19–0.25 above is what a real per-event energy estimate would achieve.)
 
 MC truth (MV2 rerun after the momentum-unit fix, 400,369 tracks):
 - The eV-scale ekin corruption (GeV/MeV momentum-unit error, review item C3) is fixed: entry kinetic energies are now MeV-scale (mean proton ekin 99.4 MeV, deuteron 79.7 MeV).
@@ -592,7 +606,7 @@ On 400,369 GEANT4 truth tracks (150,130 protons, 146,842 deuterons); the rerun a
 
 | Method | AUC | Purity @ 90% Efficiency |
 |---|---|---|
-| Hist Gradient Boosting (HGB) | **0.9860** | **0.9644** |
+| Hist Gradient Boosting (HGB) | **0.9860** | **0.9646** |
 | Logistic Regression | 0.9629 | 0.9489 |
 | Single-cut ΔE | — | 0.8910 |
 
@@ -615,10 +629,12 @@ Data methods reach within 0.5% of the MC ceiling — but **only via weak-label p
 **Studies:** [Phase 2 geometry audit + MV3 v4 diagnostics](reports/phase2_geometry_1783108797/) — 2026-07-03 | original: [Stopping-Depth Profile (MV3)](reports/mv3_stopping_depth/)
 
 The published comparison (untriggered MC, species-filtered, gain 92) gave χ²/ndf = 68,269. The real
-`Trig_bar` simulation (2026-07-05) confirms untriggered B2 45.9% (χ²/ndf 68,705) and drives the real
+`Trig_bar` simulation (2026-07-05) confirms the untriggered B2 fraction and drives the real
 triggered B2 to 99.7% — **over-purifying** relative to the data (Sample I 93.3%). The middle column
 below is the retired Phase-2 truth *proxy* (its close match to the data was fortuitous, see above),
 kept only for reference:
+
+> **Selection-basis note.** The untriggered B2 fraction depends on the counting basis: **45.9%** on the *event* basis (the like-for-like partner of the 99.7% event-basis triggered number, χ²/ndf 72,262), **46.9%** on the *track* basis (χ²/ndf **68,705**), and **47.0%** on the track-inclusive basis (the table row below). All three are backed by `mv3v5_grid.json`; the 45.9%→99.7% mechanism pair is internally consistent (both event basis). Fig 40 shows all three bases explicitly.
 
 | Stave | MC Fraction (untriggered) | MC Fraction (retired proxy, gain 60) | MC Fraction (real `Trig_bar` trigger) | Data Fraction (Sample I) |
 |---|---|---|---|---|
@@ -627,10 +643,14 @@ kept only for reference:
 | B6 | 12.5% | 3.8% | 0.1% | 2.0% |
 | B8 | 22.3% | 3.6% | 0.1% | 1.0% |
 
+![MV3 stopping-depth closure, basis-explicit: untriggered → real trigger → data](docs/figures/40_mv3_closure_basis.png)
+
+*Figure 40: the B2 "stopping" fraction across the closure chain with the counting basis made explicit — untriggered 45.9% (event) / 46.9% (track) / 47.0% (track-incl) → real `Trig_bar` two-arm coincidence 99.7% → data Sample I 93.3%. The trigger is the established mechanism (event-basis 45.9% → 99.7%) but over-purifies past data; the Phase-2 proxy χ²≈625 is retired. Source: [`reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json`](reports/mv3_v5_realtrigger_1783242005/mv3v5_grid.json). Regenerated by `scripts/generate_postreview_figures.py`.*
+
 **Root-cause mechanism ESTABLISHED by a real `Trig_bar` sensitive-detector simulation (2026-07-05,
 full 1M production, LUNARC job 3348610; superseding the Phase-2 truth proxy): the unsimulated
 two-arm coincidence trigger.** The real production reproduces the published FAIL untriggered
-(B2 45.9%, χ²/ndf 68,705) and, with the real A-paddle AND B-paddle coincidence (EDep > 0.5 MeV,
+(B2 45.9% event basis / 46.9% track basis, the latter fit giving χ²/ndf 68,705) and, with the real A-paddle AND B-paddle coincidence (EDep > 0.5 MeV,
 20 ns window), drives B2 to **99.7%**, toward the data (Sample I 93.3%): the coincidence vetoes
 99.94% of deep-proton events (their conjugate 37 MeV deuteron never reaches the A-paddle) and keeps
 B2 deuterons, leaving a ~98%-pure B2 deuteron sample.
@@ -659,9 +679,21 @@ mapping-conditional (see §8.4/§8.5 and `reports/bm9_layerid_stave_mapping_2026
 **Impact:** MV3 is re-graded **FAIL → TENSION** (mechanism established, quantitative match not);
 **no new GEANT4 production is needed**, and geobuilder PR #8 (inter-stave Al proxy, ~10× the
 realistic wrapping budget) should be closed or reworked, not merged. The residual deep-stave data
-population is now a **data-side** question — accidental/pile-up coincidences absent in the truth MC,
-Sample-I purity, paddle threshold/resolution fidelity, and the LayerID→stave mapping/digitizer
-folding — **STUDY_GAPS NEW-04**, not a geometry/SD production. (`reports/mv3_v5_realtrigger_1783242005/`)
+population is now a **data-side** question, and NEW-04 **budgets** the 6.4-point gap (ideal trigger
+99.7% − data 93.3%) rather than hand-waving it:
+
+| Residual source | Central | Range | Basis |
+|---|---|---|---|
+| Accidental (random) A·B coincidences | **~2.0 pt** | 1.3–2.6 | first-principles f_acc = R_B·Δt/(1+R_B·Δt), R_B ≤ 3.05 MHz (upper bound), Δt = 15–30 ns; data-anchored by S10 (+1.03 pt [0.64, 1.42], the 2→20 nA current-driven downstream excess) |
+| Paddle / selection fidelity | **~1.5 pt** | 0.5–3.7 | real deep-proton A-firing above the idealized truth 0.06% (δ-rays, straggling, finite threshold); largest, least-constrained term |
+| Run-set / beam (B-M6) | 0 | −2…+2 | disjoint Sample-I/II run sets; owned by B-M6 |
+| **Still unexplained** | **~2.9 pt** | 0–4 | no forced closure asserted |
+
+So `6.4 ≈ 2.0 (accidentals, upper-bound, data-anchored) + 1.5 (paddle fidelity, loose) + ~2.9 (unexplained)`; full closure only at the joint high end, which is not claimed. This is **STUDY_GAPS NEW-04**, not a geometry/SD production. Fig 39 shows the budget waterfall. (`reports/mv3_v5_realtrigger_1783242005/`, `reports/new04_trigger_residual_1783275727/`)
+
+![NEW-04: budget of the 6.4-point MC-over-data trigger over-purification residual](docs/figures/39_new04_residual_waterfall.png)
+
+*Figure 39 (NEW-04): waterfall of the 6.4-point gap between the ideal-trigger MC B2 fraction (99.7%) and data Sample I (93.3%) — accidentals ~2.0 pt [1.3–2.6] (data-anchored by the S10 +1.03 pt current-driven excess), paddle fidelity ~1.5 pt [0.5–3.7], run-set/beam (B-M6) ±2 pt, and ~2.9 pt genuinely unexplained (no forced closure). Source: [`reports/new04_trigger_residual_1783275727/new04_summary.json`](reports/new04_trigger_residual_1783275727/new04_summary.json). Regenerated by `scripts/generate_postreview_figures.py`.*
 
 ### 8.4 Trigger-Truth Deuteron Enrichment (S21) — CONFIRMED
 
@@ -734,6 +766,12 @@ beam-current/HV metadata exists, so the drift proxy is the observable's own with
 
 *Figure 32: (a) data fraction of pulses with A > 5000 ADC, Sample I vs II per stave — the B2 Sample-I/II high-amplitude ratio is **3.45 [3.41, 3.50]**; (b) data/MC double ratios (data I/II)/(MC I/II): the occupancy DR per stave is everywhere < 1 (MC under-predicts the between-sample contrast — the missing trigger simulation) and the B2 high-amplitude DR is **1.67 [1.64, 1.70]**. Error bars = 95% bootstrap CI; n = 640,737 data / 458,712 MC rows. Source: [`reports/s23_sample12_data_mc_1783108675/s23_summary.json`](reports/s23_sample12_data_mc_1783108675/s23_summary.json). Regenerated by `scripts/generate_postreview_figures.py`.*
 
+**Reconciling the two enrichment ratios.** The truth species-fraction ratio (S21, **1.519**) and the data amplitude-tail ratio (S23, **3.45**) are *different observables* and must not be read as inconsistent: a ~1.5× enrichment in the deuteron *fraction* is amplified into a ~3.5× contrast in the *high-amplitude tail* because deuterons deposit ~3× the energy (S21 B2 medians 70.5 vs 24.6 MeV) and the A>5000 cut is nonlinear. The gain-/geometry-robust apples-to-apples comparison is the **double ratio (data I/II)/(MC I/II) = 0.738** (z = −99): the MC under-predicts the contrast — the missing-trigger signature. Fig 38 lays out all three views (truth ratio, data ratio, double ratio) with the ≤~29% run-set/beam-drift band.
+
+![Enrichment reconciliation: species-fraction 1.519 vs amplitude-tail 3.45 vs double ratio 0.738](docs/figures/38_enrichment_reconciliation.png)
+
+*Figure 38: (left) S21 truth species-fraction ratios per stave (B2 1.519); (right) S23 data amplitude-tail f(A>5000) ratios per stave (B2 3.45); (center) the double ratio 0.738 (z = −99) tying them, with the B-M6 run-set/beam-drift band (≤~29%, central ~3%) shaded. Makes explicit that 3.45 and 1.519 measure different things. Error bars = 95% bootstrap/run-clustered CI. Sources: [`reports/s21_sample12_trigger_truth_1783077969/s21_summary.json`](reports/s21_sample12_trigger_truth_1783077969/s21_summary.json), [`reports/s23_sample12_data_mc_1783108675/s23_summary.json`](reports/s23_sample12_data_mc_1783108675/s23_summary.json), [`reports/bm6_runset_confound_20260705_202638/bm6_summary.json`](reports/bm6_runset_confound_20260705_202638/bm6_summary.json). Regenerated by `scripts/generate_postreview_figures.py`.*
+
 ---
 
 ## 9. Pedestal & Baseline
@@ -798,12 +836,20 @@ The external review flagged ~238 adaptive studies on one dataset with no multipl
 control. STATS01 applies a per-family Benjamini–Hochberg correction (q = 0.05) over every
 delta-with-CI claim in the artifacts.
 
-![Program-level FDR census: multiplicity control is necessary, not sufficient](docs/figures/29_fdr_census.png)
+![Program-level FDR census (refreshed 2026-07-05): 14/15 bold wins survive BH](docs/figures/44_fdr_census_refly.png)
 
-*Figure 29: (a) per-family BH census — nominal (CI-excludes-zero) vs BH-surviving delta-with-CI claim counts across **1,948 claims in 152 studies** (representation 372/372, amplitude-charge 419/462, pedestal 225/231, timing 200/221, pileup 129/131, pid 17/18); (b) of the 17 scoreboard "bold wins", **11 survive BH, 6 are prose/derived-only, 0 fail** — and the callout shows **S03k survives BH yet was falsified** by the S03p/S03r feature-leakage null grids. Counts; BH q = 0.05 within family; the normal-approximation p-values make survivor counts an upper bound on trustworthy wins. Source: [`reports/stats01_program_fdr_20260703_220116/REPORT.md`](reports/stats01_program_fdr_20260703_220116/REPORT.md). Regenerated by `scripts/generate_postreview_figures.py`.*
+*Figure 44 (refreshed program-level FDR census, 2026-07-05): per-family BH survival across **1,957 claims / 157 studies**; **14 of 15 scoreboard bold wins survive BH, 0 fail, 1 prose-only (S07f)**; amplitude-charge family 432/471. Supersedes Fig 29. BH q = 0.05 within family; normal-approximation p-values make survivor counts an upper bound. Source: [`reports/stats01_program_fdr_20260705_203905/`](reports/stats01_program_fdr_20260705_203905/). Regenerated by `scripts/generate_postreview_figures.py`.*
+
+![Program-level FDR census (superseded historical version)](docs/figures/29_fdr_census.png)
+
+*Figure 29 (superseded by Fig 44, refreshed census): the earlier 2026-07-03 census (**1,948 claims / 152 studies**; 11 of 17 bold wins survive) is retained for history. **Current numbers (refreshed 2026-07-05 after B-M3): 1,957 claims / 157 studies; 14 of 15 scoreboard bold wins survive BH, 0 fail, 1 prose-only (S07f); amplitude-charge family 432/471.** The S03k callout (survives BH yet leakage-falsified) still holds. See Fig 44 for the current plot. Source: [`reports/stats01_program_fdr_20260705_203905/REPORT.md`](reports/stats01_program_fdr_20260705_203905/REPORT.md). Regenerated by `scripts/generate_postreview_figures.py`.*
 
 **A BH-surviving claim is necessary, not sufficient:** multiplicity control does not repair
 dependent-residual bootstraps, feature leakage, or unfair baselines (the S03k lesson).
+
+![Certified ML-win delta-CI forest with the BH-FDR threshold](docs/figures/43_fdr_delta_forest.png)
+
+*Figure 43 (B-M3): forest of the P04/P07 ML-vs-traditional win deltas with **event-clustered** 95% CIs — P04 amplitude Δ 0.114 [0.113, 0.116] (z ≈ 150) and charge Δ 0.180 (z ≈ 166); P04c 0.077; P04d 0.018; P04e 0.120; P07 ceilings 4000/3000/2500/2000 Δ 0.072/0.200/0.191/0.240 (z ≈ 77–106) — all excluding zero and surviving BH at q = 0.05 in the amplitude-charge family (design effect only ~1.05). Certification = distinguishable from zero, not absolute-energy truth. Source: [`reports/bm3_p04p07_fdr_20260705_203249/stats02_delta_ci_summary.json`](reports/bm3_p04p07_fdr_20260705_203249/stats02_delta_ci_summary.json). Regenerated by `scripts/generate_postreview_figures.py`.*
 
 ---
 
@@ -833,6 +879,7 @@ _(Corrected 2026-07-03: R_max, digitizer gain, and anomaly species moved back to
 | What is the precision digitizer gain? | Quenched re-scan DONE 2026-07-05 (LUNARC 3348264): trigger-consistent optimum **~65 ADC/MeV (band ~60–70)**, chi2/ndf 322 vs unquenched-60 625 / placeholder-297 7,751; B2 amp median 2,917 brackets data 2,576 | ⚠️ still a band | Re-anchor on a geometry-robust observable next; residual = trigger proxy (B-M1) (`reports/mv3_gain_quenched_1783240619/`) |
 | What instrumental mechanism makes the 4.4% early-peak class? | Species origin ruled out (MV6b); MC models neither trigger phase nor DAQ artifacts | 🔶 HIGH | **Data-side investigation** (P02 morphology, P09 taxonomy; baseline/noise/bipolar + trigger-phase hypotheses) |
 | Does the S21 enrichment survive digitization end-to-end in MC? | S23 shows the data side is consistent (run-set/beam drift bounded ≤~29% by B-M6) and the mimic direction improves; a fully digitized truth-labelled S21 selection replay is still pending | ⚠️ LOW | Rerun S21 selection on the mc02 digitized pulse table with the real trigger flag |
+| Held-out confirmation of the combined σ₆₈ = 0.490 ns? | **Definitively blocked** — the reserved partition {64, 12–30} was located but is a DAQ-incompatible acquisition (16-sample window / odd-channel cabling / truncated pulses; Track A, `reports/trackA_heldout_confirmation/`); run 65 is the only, exhausted, Sample-II holdout | 🔶 MEDIUM | **New Sample-II-configuration beam run** — no in-dataset path exists; 0.490 ns stays definitively single-partition |
 | Two-ended √2 projection valid? | Ignores correlated terms | ⚠️ MEDIUM | Measure correlation; validate projection |
 | Forced-pedestal validated on data? | No forced-trigger in data (MV7 closes the MC side) | ⚠️ MEDIUM | Next beam run acquisition |
 | CFD/OF parameters optimal? | Never systematically scanned | LOW | Grid search over fraction/window |
@@ -899,7 +946,7 @@ Every claim obeys **six rules** (from [`docs/REPORT_STANDARD.md`](docs/REPORT_ST
 - CIs use **run-level bootstrap**; resample counts vary by study (typically 300–1000 — the blanket "1000 resamples" claim was corrected by the 2026-07-02 external review, which also flagged that pair-residual bootstraps under-cover by ~√1.5)
 - AUC to 4 decimal places (from MV1 truth summary)
 - Every number traceable to a `reports/<id>/REPORT.md`
-- **Multiplicity control (2026-07-03; P04/P07 certified 2026-07-05):** a program-level Benjamini–Hochberg census over all delta-CI claims exists ([STATS01](reports/stats01_program_fdr_20260705_203905/)); after B-M3 emitted machine-readable, dependence-aware delta-CIs for the flagship wins ([`stats02`](reports/bm3_p04p07_fdr_20260705_203249/REPORT.md)), the refreshed census (1,957 claims) finds **14 of 15 scoreboard bold wins survive BH, 0 fail, 1 prose-only**. **P04 (duplicate-readout) and P07 (saturation) are now FDR-certified** — all five (P04/P04c/P04d/P04e/P07) pass BH at q=0.05 in the amplitude-charge family with paired **event-clustered** delta-CIs (design effect ~1.05; z = 23–166). Certification = statistically distinguishable from zero, NOT absolute-energy truth (P04 stays a duplicate-readout closure; P07 natural-transfer unaudited). The one remaining prose-only win is **P05b** (pile-up two-pulse). The retired, rigged S11a (0.295/0.168) is not a BH survivor (killed for circularity, not multiplicity). BH survival is necessary, not sufficient (S03k survives BH yet is leakage-falsified). Sub-0.3 ns timing claims additionally require the reserved **confirmation partition** (runs 64, 12–30; [`docs/CONFIRMATION_PARTITION.md`](docs/CONFIRMATION_PARTITION.md)) and the shared estimators module (`src/ccb_mc_validation/statistics/estimators.py`). **That partition is defined but not yet used** — so any sub-0.3 ns timing claim is not yet confirmed on held-out data.
+- **Multiplicity control (2026-07-03; P04/P07 certified 2026-07-05):** a program-level Benjamini–Hochberg census over all delta-CI claims exists ([STATS01](reports/stats01_program_fdr_20260705_203905/)); after B-M3 emitted machine-readable, dependence-aware delta-CIs for the flagship wins ([`stats02`](reports/bm3_p04p07_fdr_20260705_203249/REPORT.md)), the refreshed census (1,957 claims) finds **14 of 15 scoreboard bold wins survive BH, 0 fail, 1 prose-only**. **P04 (duplicate-readout) and P07 (saturation) are now FDR-certified** — all five (P04/P04c/P04d/P04e/P07) pass BH at q=0.05 in the amplitude-charge family with paired **event-clustered** delta-CIs (design effect ~1.05; z = 23–166). Certification = statistically distinguishable from zero, NOT absolute-energy truth (P04 stays a duplicate-readout closure; P07 natural-transfer unaudited). The one remaining prose-only win is **S07f** (pile-up; no parsed delta-CI artifact, so it cannot be FDR-assessed — `REPORT.md` scoreboard). The retired, rigged S11a (0.295/0.168) is not a BH survivor (killed for circularity, not multiplicity). BH survival is necessary, not sufficient (S03k survives BH yet is leakage-falsified). Sub-0.3 ns timing claims additionally require the reserved **confirmation partition** (runs 64, 12–30; [`docs/CONFIRMATION_PARTITION.md`](docs/CONFIRMATION_PARTITION.md)) and the shared estimators module (`src/ccb_mc_validation/statistics/estimators.py`). **That partition was attempted (Track A, 2026-07-05) and found DAQ-incompatible** (16-sample window / odd-channel cabling / truncated pulses; `reports/trackA_heldout_confirmation/`) — so no sub-0.3 ns timing claim can be confirmed on held-out data in this dataset; a new Sample-II-configuration beam run is required.
 
 ---
 
@@ -922,7 +969,7 @@ Every study with a proper descriptive name and hyperlink to its full report.
 | **S05** | [Hierarchical B-Stack Covariance](reports/) | B2 pairs far more correlated than downstream pairs (quantitative covariance values ~1042/~16 ns² withdrawn 2026-07-03 — closure script numerically invalid) |
 | **S05a** | A-Stack Independent-Arm Control (formerly "External Control"; the A arm measures different particles — experiment-owner setup facts, 2026-07-03) | |
 | **S07** | [ML Rigor Scoreboard](reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard/) | Most ML "wins" are leaked; CORRECTED claims |
-| **S10** | [Pile-up Rate Model](reports/1780997954.15277.548b01a3__s10_pileup_rate_model/) | τ_eff = 124.8 ns → R_max ≤ 3.05 MHz (one-sided bound) |
+| **S10** | [Pile-up Rate Model](reports/1780997954.15277.548b01a3__s10_pileup_rate_model/) | τ_eff = 124.8 ns (10%-crossing) → R_max ≤ 3.05 MHz (one-sided bound; the S10 report itself quotes R_max = 4.22 MHz at the note's τ_eff = 90 ns — the 3.05 is the re-derivation at the corrected data τ_eff from MC03) |
 | **S11** | [Two-Pulse Template + ML Recovery](reports/) | RETIRED — rigged benchmark (review P8); replaced by the honest truth-labelled S24 (below) |
 | **S14** | Range-Energy Calibration | GEANT4 Birks lookup validated |
 | **S16** | [Pedestal/Baseline Validation](reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/) | Adaptive pedestal biased 341 ADC (MAE) |
@@ -948,7 +995,7 @@ Every study with a proper descriptive name and hyperlink to its full report.
 
 | Code | Descriptive Name | Report | Verdict |
 |---|---|---|---|
-| **MV0** | [Digitizer Gain Calibration](reports/mv0_digitizer/) | v1 and v2 both retracted 2026-07-03; current best statement: gain ≈ 60–70 ADC/MeV (trigger/quenching-dominated), no precision value | ⛔ retracted / ⚠️ range only |
+| **MV0** | [Digitizer Gain Calibration](reports/mv0_calibration_1782677847/) | v1 and v2 both retracted 2026-07-03; current best statement: gain ≈ 60–70 ADC/MeV (trigger/quenching-dominated), no precision value | ⛔ retracted / ⚠️ range only |
 | **MV1** | [Proton/Deuteron PID Validation](reports/mv1_mv2_truth_pid_energy_1783077795/) | AUC 0.986, purity 0.964 (rerun 2026-07-03) | ✅ |
 | **MV2** | [Energy/Range Truth Validation](reports/mv1_mv2_truth_pid_energy_1783077795/) | Rerun 2026-07-03 after unit fix: MeV-scale ekin; containment p 0.70 / d 0.84; medians p 101.1 / d 73.4 MeV | ✅ (geometry caveat) |
 | **MV3 v5** | [Real-trigger simulation](reports/mv3_v5_realtrigger_1783242005/) + [Phase-2 Diagnostics](reports/phase2_geometry_1783108797/) | Mechanism ESTABLISHED (real `Trig_bar` SD sim) = unsimulated trigger: untriggered B2 45.9% → triggered 99.7% (toward data 93.3%); material narrative falsified. Quantitative closure NOT achieved (ideal trigger over-purifies; proxy χ²/ndf ≈ 625 retired); residual data-side (NEW-04) | 🔶 TENSION (re-graded from FAIL) |
@@ -959,7 +1006,7 @@ Every study with a proper descriptive name and hyperlink to its full report.
 | **MV7** | [Zero-Signal Pedestal Validation](reports/mc02_pulse_table_1783107862/) | Adaptive MAE 3.48 ADC, learned 1.50 ADC vs absolute truth on zero-signal MC (lower bounds) | ✅ (MC level) |
 | **MC02** | [Digitized MC Pulse Table (Phase 1)](reports/mc02_pulse_table_1783107862/) | 1M events → 518,247 rows; per-stave data-tuned τ_decay; Birks + A-arm variants ([Phase 4](reports/phase4_1783180742/)) | ✅ built (gain placeholder) |
 | **MC03** | [Truth-Labelled Overlays + Independent τ_eff](reports/mc03_overlay_1783180480/) | 600k overlay records at 0.5/1.5/3 MHz; honest S24 benchmark; MC τ_eff 134.99 ns vs data 124.79 (+8%) | ✅ built / 🔶 τ_eff disagreement |
-| **STATS01** | [Program-Level FDR Census](reports/stats01_program_fdr_20260703_220116/) | 1,948 delta-CI claims; 11/17 bold wins survive BH, 0 fail, 6 prose-only; S03k survives BH yet leakage-falsified | ✅ census |
+| **STATS01** | [Program-Level FDR Census (refreshed)](reports/stats01_program_fdr_20260705_203905/) | 1,957 delta-CI claims / 157 studies; **14/15 bold wins survive BH, 0 fail, 1 prose-only (S07f)** after B-M3 certified P04/P07 (refreshed 2026-07-05; supersedes the 2026-07-03 1,948/11-of-17 census); S03k survives BH yet leakage-falsified | ✅ census |
 
 ---
 

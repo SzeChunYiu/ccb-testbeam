@@ -38,7 +38,7 @@ detailed findings follow in the per-section narrative.
 | **MV0 v2** | Digitizer gain calibration (corrected) | ⛔ RETRACTED (2026-07-03) | v2 gain 92±28 was computed on a folded variable \|net−pedestal\| (amplitude_adc is already baseline-subtracted; true B2 net median = 5752 ADC, not 1781) and is unreproducible from any committed script; v1 (~246) also invalid. **Current best statement (2026-07-04): gain ≈ 60–70 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet.** The Phase-2 trigger-consistent scan prefers ~60 (unquenched threshold model); with Birks quenching on, the quenched re-scan DONE (2026-07-05, LUNARC 3348264): optimum ~65 ADC/MeV (`reports/mv3_gain_quenched_1783240619/`). The 297 ADC/MeV in the mc02 card is the C2-corrected data-side anchor over trigger-unselected MC and is carried as an explicit placeholder only. |
 | **MV1** | Particle ID (proton vs deuteron) | ✅ PASS (MC truth ceiling; data = weak-label proxy) | MC AUC = 0.986 (MC truth ceiling); data within 0.5% via weak-label proxies, not species truth; p/d separation at B2 (where deuterons stop) may be less affected by MV3 stopping-depth error |
 | **MV2** | Range-energy calibration | ✅ rerun 2026-07-03 (geometry/trigger caveat) | Momentum-unit fix landed: MeV-scale ekin (mean p 99.4 / d 79.7 MeV); edep medians p 101.1 / d 73.4 MeV; containment p 0.70 / d 0.84 (`reports/mv1_mv2_truth_pid_energy_1783077795/`) |
-| **MV3 v4** | Stopping-depth profile | 🔶 TENSION (re-graded from FAIL, Phase 2, 2026-07-03) | The published χ²/ndf = 68,269 is **strongly indicated (pending `Trig_bar` simulation)** to be dominated by the **unsimulated two-arm coincidence trigger**, not geometry: a truth-level trigger proxy alone gives 3,141, and with event basis + species-inclusive counting + gain 60 **625 (109× reduction)**. Missing-material narrative **falsified**: only ~0.13 g/cm² of air is absent from the production geometry vs ≥10.5 g/cm² a material explanation would need. No new production required. Next: score `Trig_bar` volumes for a real trigger flag. (`reports/phase2_geometry_1783108797/`) |
+| **MV3 v5** | Stopping-depth profile | 🔶 TENSION (re-graded from FAIL, Phase 2; mechanism ESTABLISHED 2026-07-05) | The published χ²/ndf = 68,269 is **ESTABLISHED by a real `Trig_bar` sensitive-detector simulation** (full 1M, job 3348610) to be dominated by the **unsimulated two-arm coincidence trigger**, not geometry: untriggered MC B2 45.9% (χ²/ndf 68,705, reproduces the FAIL) → real triggered 99.7%, toward data 93.3%. Missing-material narrative **falsified**: only ~0.13 g/cm² of air is absent vs ≥10.5 g/cm² a material explanation would need. **Quantitative closure NOT achieved:** the ideal truth trigger **over-purifies** (B2 99.7% vs data Sample I 93.3%), so the profile is not reproduced; the earlier proxy headline **χ²/ndf 68,269 → 625 (109×) is RETIRED as over-optimistic** (coincidence MC vs mixed all-data, fortuitously loose A-HRD threshold). Residual (~7–12% deep-stave data population) is now **data-side** — STUDY_GAPS NEW-04. (`reports/mv3_v5_realtrigger_1783242005/`, `reports/phase2_geometry_1783108797/`) |
 | **MV4** | Single-stave timing | ⚠️ REVIEW (honest rerun 2026-07-03) | Rising-edge CFD + physical timewalk sign (B = +39.6 ns·ADC) landed; MC pair-equivalent σ₆₈ = 2.087 ± 0.009 ns sits between the data raw (2.993 ns) and corrected (1.50 ns) anchors. Matched per-stave rerun awaits the Phase-1 digitizer (`reports/mv4_timing_1783077795/`) |
 | **MV5** | Pile-up / R_max | ⛔ RETRACTED as validation → slot refilled (2026-07-04) | The 2026-06 "MC τ_eff" was a hardcoded copy of the data value. The validation slot now points to the **first honest MC live-time (MC03): τ_eff = 134.99 ns [134.96, 135.01]** (statistics only; the +8% / +10.2 ns offset from data 124.79 ns is the dominant, systematic, difference) **vs data 124.79 ns (+8%, B2-driven)** — an honest disagreement, measured independently by the S10b estimator on digitized MC single pulses. (`reports/mc03_overlay_1783180480/`) |
 | **MV6** | Representation & anomaly ID | ⛔ RETRACTED → **MV6b: C12 RULED OUT** (2026-07-04) | Honest redo with physical Birks quenching: **0 of 1,656 quenched C12-dominant records pass A>1000 at any gain (60–297)**; MC early-peak fraction is 0.000% in every configuration vs data 4.4%. The early-peak class cannot be a species/scintillation effect — it must be instrumental or trigger-phase-related, and is reopened as a **data-side** question (P02/P09 leads). (`reports/mv6b_anomaly_quenching_1783180742/`) |
@@ -50,7 +50,7 @@ matched rerun). **Reopened:** anomaly species identity (MV6 retracted), pile-up 
 (MV0 retracted), MV2 range-energy mechanism (retracted pending rerun).
 
 **Update 2026-07-04:** the post-review program closed or re-scoped most of the reopened items —
-MV3's root cause is strongly indicated (pending `Trig_bar` simulation) to be the unsimulated trigger (re-graded TENSION), the C12 attribution is ruled out
+MV3's root-cause mechanism is ESTABLISHED by a real `Trig_bar` sensitive-detector simulation (the unsimulated trigger, not missing material; re-graded TENSION, quantitative closure still open), the C12 attribution is ruled out
 (MV6b), the two-pulse failure-rate question is closed by the honest truth-labelled benchmark
 (MC03/S24), the zero-signal pedestal validation ran (MV7), and an independent MC live-time now
 exists (an honest +8% disagreement). Details in the section below.
@@ -64,25 +64,32 @@ The seven-track external review (`EXTERNAL_REVIEW_2026-07-02.md`) triggered a co
 phases are complete. The seven results below supersede the corresponding 2026-06 claims wherever
 the two disagree.
 
-1. **MV3 root cause strongly indicated (pending `Trig_bar` simulation): the unsimulated trigger,
-   not missing material (Phase 2).** The demonstration rests on a truth-level A-arm coincidence
-   *proxy*, not a simulated trigger, and the residual is still large — so the cause is directionally
-   compelling but not yet established. The missing-material narrative is **falsified**: a direct volume dump of the production geometry
-   shows every named upstream component already present except ~0.13 g/cm² of air, while a
-   material explanation would require ≥10.5 g/cm² — a factor ≥13 more than physically exists.
-   Requiring a truth-level A-arm coincidence (trigger proxy) collapses the MV3 discrepancy from
-   χ²/ndf = 68,269 to 3,141, and with an event basis, species-inclusive counting, and gain 60 to
-   **625 (a 109× reduction)**. The physics: the two-arm coincidence keeps deuteron-into-B events
-   (the conjugate ~85 MeV proton reaches Stack A) and vetoes deep-proton events (the conjugate
-   ~37 MeV deuteron dies in the TPC hull). MV3 is re-graded **FAIL → TENSION**; no new GEANT4
-   production was needed. Next MC-side work item: score the `Trig_bar` volumes as sensitive
-   detectors and emit a real per-event trigger flag, replacing the truth proxy.
-   (`reports/phase2_geometry_1783108797/REPORT.md`)
+1. **MV3 root-cause mechanism ESTABLISHED by a real `Trig_bar` sensitive-detector simulation: the
+   unsimulated trigger, not missing material (Phase 2 diagnosis; MV3 v5 real simulation 2026-07-05).**
+   A real GEANT4 production with `Trig_bar` scored as a sensitive detector (full 1M, job 3348610)
+   now supersedes the Phase-2 truth proxy. It **validates against the original** (untriggered MC
+   B2 = 45.9%, χ²/ndf 68,705 — reproduces the published FAIL) and shows the real two-arm coincidence
+   drives B2 to **99.7%**, toward the data (Sample I 93.3%); the coincidence vetoes 99.94% of
+   deep-proton events (the conjugate 37 MeV deuteron never reaches the A-paddle) and keeps B2
+   deuterons, giving a ~98%-pure B2 deuteron sample. The missing-material narrative is **falsified**:
+   a direct volume dump shows every named upstream component present except ~0.13 g/cm² of air, vs
+   ≥10.5 g/cm² a material explanation would need. **BUT quantitative closure is NOT achieved:** the
+   *ideal* truth trigger **over-purifies** (B2 99.7% overshoots data Sample I 93.3%); the data keeps
+   a 6.7% (Sample I) / 12.4% (all) deep-stave coincidence population the ideal trigger does not
+   produce. The earlier proxy headline **χ²/ndf 68,269 → 625 (109×) is RETIRED as over-optimistic**
+   — it compared a coincidence MC against *mixed* all-data with a fortuitously loose A-HRD threshold.
+   MV3 is re-graded **FAIL → TENSION** (mechanism established, quantitative match not). The residual
+   is now **data-side** (accidental/pile-up coincidences absent in truth MC, Sample-I purity,
+   paddle threshold/resolution fidelity, LayerID→stave mapping) — STUDY_GAPS NEW-04; no new GEANT4
+   production is needed. (`reports/mv3_v5_realtrigger_1783242005/REPORT.md`,
+   `reports/phase2_geometry_1783108797/REPORT.md`)
 2. **Gain: no precision value yet — the honest statement is "≈60–70 ADC/MeV, dominated by
    trigger/quenching modelling".** v1 (246) and v2 (92 ± 28) are both retracted; 297 ADC/MeV is
    the C2-corrected data-side anchor (true B2 net median 5752 ADC) over trigger-unselected MC and
    is carried only as an explicit placeholder. The trigger-consistent Phase-2 scan prefers ~60
-   (unquenched threshold model; monotonic: 60 → χ²/ndf 625, 92 → 3,613, 300 → 7,017); with Birks
+   (unquenched threshold model; monotonic in the *proxy* χ²/ndf: 60 → 625, 92 → 3,613, 300 → 7,017 —
+   proxy-scan diagnostics whose absolute values are retired as over-optimistic with the MV3 proxy
+   headline, but the monotonic gain *trend* still informs the band); with Birks
    quenching on, the quenched re-scan (2026-07-05, LUNARC 3348264) measured the optimum at ~65 (band ~60–70).
 3. **Sample-I deuteron enrichment is confirmed at truth level and consistent in data (S21 + S23;
    run-set differences not yet separated).** Truth
@@ -202,9 +209,11 @@ first honest MC live-time (MC03, 2026-07-04) disagrees by +8% (134.99 vs 124.79 
 statistics-only CI, the +8% offset is the dominant systematic difference); (2) proton/deuteron PID
 is **MC-closed** at AUC = 0.986 (MV1) — an MC truth ceiling reached in data only via weak-label
 proxies, not species truth; (3) the stopping-depth discrepancy
-(MV3: χ²/ndf = 68,269) is **strongly indicated (pending `Trig_bar` simulation) to be caused by the
-unsimulated two-arm coincidence trigger, not by missing material** — a truth-level trigger *proxy*
-plus gain 60 collapses it to 625 (109×), and MV3 is re-graded TENSION (Phase 2, 2026-07-03); (4) the early-peak anomaly class is **not C12 recoils**
+(MV3: χ²/ndf = 68,269) has its **mechanism ESTABLISHED by a real `Trig_bar` sensitive-detector simulation
+(2026-07-05) as the unsimulated two-arm coincidence trigger, not missing material** (untriggered
+B2 45.9% → real triggered 99.7%, toward data 93.3%); quantitative closure is NOT achieved (the
+ideal trigger over-purifies, so the proxy χ²/ndf ≈ 625 is retired as over-optimistic; residual is
+data-side, NEW-04), and MV3 stays TENSION (Phase 2, 2026-07-03); (4) the early-peak anomaly class is **not C12 recoils**
 (MV6b, 2026-07-04: 0 quenched C12 records pass A>1000 at any gain) — it must be
 instrumental/trigger-phase and is a data-side open question; and (5) the digitizer gain has **no
 precision value yet** — the honest statement is ≈60–70 ADC/MeV, dominated by trigger/quenching
@@ -471,8 +480,9 @@ sample. (`reports/mc02_pulse_table_1783107862/`)
 
 **Section verdict: ✅ PID MC truth ceiling (MV1/MV2 complete; data side is weak-label proxy, not
 species truth); 🔶 stopping-depth profile re-graded FAIL → TENSION (Phase 2, 2026-07-03): the
-discrepancy is strongly indicated (pending `Trig_bar` simulation) to be the unsimulated two-arm
-coincidence trigger, not geometry.**
+discrepancy has its mechanism ESTABLISHED by a real `Trig_bar` sensitive-detector simulation
+(2026-07-05) as the unsimulated two-arm coincidence trigger, not geometry — but quantitative
+closure is NOT achieved (ideal trigger over-purifies; residual data-side, NEW-04).**
 
 ### 6.1 Proton/deuteron PID — closed
 
@@ -526,8 +536,9 @@ pd-elastic kinematics gives them ~105 MeV with roughly half a proton's range; fo
 ### 6.2 Stopping-depth profile — FAIL re-graded TENSION (MV3, root cause: the trigger)
 
 MV3 v3 (threshold-corrected) compared the MC and data stave-occupancy profiles quantitatively and
-published **χ²/ndf = 68,269 (4 stave bins, ndf = 3)**. Phase 2 (2026-07-03) strongly indicated the
-root cause (pending `Trig_bar` simulation): the comparison, not the geometry — see below.
+published **χ²/ndf = 68,269 (4 stave bins, ndf = 3)**. Phase 2 (2026-07-03) diagnosed, and a real
+`Trig_bar` sensitive-detector simulation (2026-07-05) then ESTABLISHED, the mechanism: the
+comparison (trigger selection), not the geometry — see below.
 
 | Stave | MC fraction | Data fraction | Ratio (Data/MC) |
 |---|---|---|---|
@@ -539,24 +550,32 @@ root cause (pending `Trig_bar` simulation): the comparison, not the geometry —
 The untriggered MC overestimates B8 penetration by a factor of ~10 relative to data. The
 qualitative depth ordering (B2 > B4 > B6 > B8 in data) is reproduced.
 
-**Root cause strongly indicated (Phase 2, 2026-07-03), pending `Trig_bar` simulation: the
-unsimulated two-arm coincidence trigger.** (The A-arm coincidence requirement is a truth-level
-*proxy*, not a simulated trigger, and the residual χ²/ndf ~600–1,100 is still large — directionally
-compelling, not yet established.)
-The geometry audit (direct `TGeoManager` dump of the production file) **falsified** the
+**Root-cause mechanism ESTABLISHED by a real `Trig_bar` sensitive-detector simulation (2026-07-05,
+full 1M production, job 3348610; superseding the Phase-2 truth proxy): the unsimulated two-arm
+coincidence trigger.** The real production reproduces the published FAIL untriggered (B2 45.9%,
+χ²/ndf 68,705) and, with the real A-paddle AND B-paddle coincidence (EDep > 0.5 MeV, 20 ns window),
+drives B2 to **99.7%**, toward the data (Sample I 93.3%): the coincidence vetoes 99.94% of
+deep-proton events (their conjugate 37 MeV deuteron never reaches the A-paddle) and keeps B2
+deuterons, leaving a ~98%-pure B2 deuteron sample.
+The geometry audit (direct `TGeoManager` dump of the production file) independently **falsified** the
 missing-material narrative: every named upstream component (vacuum window, trigger scintillators,
 TPC) is already in the production geometry; only ~0.13 g/cm² of air is genuinely missing, while a
 material explanation of the B2 deficit would require ≥10.5 g/cm² — a factor ≥13 more than
-physically exists. Instead, requiring a truth-level A-arm coincidence (the Sample-I trigger the
-data actually recorded with) collapses χ²/ndf from 68,269 to 3,141; adding the event basis,
-species-inclusive counting and gain 60 reaches **625 (109×)** (best grid point 555; vs the
-C2-corrected data profile 88,542 → 1,061). The physics: the coincidence keeps deuteron-into-B
-events (conjugate ~85 MeV proton reaches Stack A) and vetoes deep-proton events (conjugate
-~37 MeV deuteron dies in the TPC hull) — the MC without a trigger contains both populations. The
-odd-layer mapping hypothesis (review P4) is disfavored (both unread-bar variants are worse); the
-`paired` mapping stands. The residual χ²/ndf ~600–1,100 corresponds to ≲1% absolute per-stave
-deviations and belongs to the trigger-flag and digitizer work, not to a geometry production.
-(`reports/phase2_geometry_1783108797/REPORT.md`)
+physically exists.
+**BUT quantitative closure is NOT achieved.** The *ideal* truth trigger **over-purifies**: B2 =
+99.7% overshoots even the data's own coincidence sample (Sample I 93.3%), so the profile is not
+reproduced (χ²/ndf vs Sample I ~1.3×10⁵). The data keeps a 6.7% (Sample I) / 12.4% (all) deep-stave
+coincidence population that the ideal trigger does not produce. The earlier proxy headline
+**χ²/ndf 68,269 → 625 (109×) is RETIRED as over-optimistic** — it compared a coincidence MC against
+*mixed* all-data with a fortuitously loose, gain-dependent A-HRD threshold that fortuitously
+retained ~13% non-B2 events. The physics of the mechanism is transparent: the coincidence keeps
+deuteron-into-B events (conjugate ~85 MeV proton reaches Stack A) and vetoes deep-proton events
+(conjugate ~37 MeV deuteron dies before the A-paddle). The odd-layer mapping hypothesis (review P4)
+is disfavored (both unread-bar variants are worse); the `paired` mapping stands. The residual
+deep-stave data population is now a **data-side** question (accidental/pile-up coincidences absent
+in the truth MC, Sample-I purity, paddle threshold/resolution fidelity, LayerID→stave mapping) —
+STUDY_GAPS NEW-04; it is not a geometry/SD production.
+(`reports/mv3_v5_realtrigger_1783242005/REPORT.md`, `reports/phase2_geometry_1783108797/REPORT.md`)
 
 **Impact:** MV3 is re-graded **FAIL → TENSION**; no new GEANT4 production is needed, and PR #8
 (inter-stave Al proxy in the geobuilder) should be closed or reworked, not merged. The PID
@@ -599,7 +618,7 @@ program closed the rows added below.)_
 | Question | Closed by | Finding |
 |---|---|---|
 | Is p/d PID at AUC 0.986 real? | MV1 (rerun 2026-07-03) | Yes as an MC truth ceiling; data within 0.5% via weak-label proxies, not species truth |
-| What caused the MV3 stopping-depth FAIL? | Phase 2 (2026-07-03) | Strongly indicated (pending `Trig_bar` simulation) to be the unsimulated two-arm coincidence trigger, not missing material (falsified: ~0.13 g/cm² air missing vs ≥10.5 needed). Trigger *proxy* + event basis + species-inclusive + gain 60: χ²/ndf 68,269 → 625 (109×). MV3 re-graded TENSION |
+| What caused the MV3 stopping-depth FAIL? | Phase 2 (2026-07-03) + real `Trig_bar` SD sim (2026-07-05) | **Mechanism ESTABLISHED** by a real `Trig_bar` sensitive-detector simulation: the unsimulated two-arm coincidence trigger, not missing material (falsified: ~0.13 g/cm² air missing vs ≥10.5 needed). Untriggered B2 45.9% (χ²/ndf 68,705) → real triggered 99.7%, toward data 93.3%. **Quantitative closure NOT achieved** — the ideal trigger over-purifies (99.7% vs data 93.3%); the proxy χ²/ndf ≈ 625 is retired as over-optimistic; residual ~7–12% deep-stave data population is data-side (NEW-04). MV3 stays TENSION |
 | Is Sample I deuteron-enriched? | S21 + S23 (2026-07-03) | Confirmed at truth level (B2 f_d ratio 1.519 [1.510, 1.528]; exclusive 1.912); consistent in data (B2 f(A>5000) ratio 3.45 [3.41, 3.50]; run-set differences not yet separated); MC under-predicts the contrast (DR 0.738, z = −99 statistics-only; disjoint run-set/beam systematics not included) |
 | Is the early-peak anomaly class C12 recoils? | MV6b (2026-07-04) | **No — ruled out.** 0/1,656 quenched C12 records pass A>1000 at any gain (60–297); the class must be instrumental/trigger-phase (data-side question, P02/P09) |
 | Does ML two-pulse recovery maintain failure rate on true overlaps? | MC03/S24 (2026-07-04) | Truth-labelled honest benchmark: traditional wins at matched 80% coverage (≤0.0001 vs 0.0001–0.0002); ML wins at full coverage (0.011 vs 0.048); common-subset dt σ68 trad 0.64 vs ML 0.89 ns |
@@ -611,7 +630,7 @@ program closed the rows added below.)_
 | Question | Blocker | Path to close |
 |---|---|---|
 | Does MC timing match data in a matched comparison? | MV4 honest rerun (2026-07-03) is REVIEW: MC pair-equivalent 2.087 ns sits between the data raw (2.993) and corrected (1.50) anchors, but merged-track MC vs per-stave data and unmatched selection remain | Matched per-stave MV4 rerun on the Phase-1 digitizer (data selection applied, measured σ_data) |
-| Can the residual MV3 tension (χ²/ndf ~600–1,100) be closed? | Truth-level trigger proxy is crude vs the real paddle coincidence; no Birks in the threshold model; pile-up in data B2 | **Score `Trig_bar` volumes as sensitive detectors → real per-event trigger flag**; fold in the quenched threshold model |
+| Can the residual MV3 tension be closed? (mechanism established; ideal trigger over-purifies, B2 99.7% vs data 93.3%) | The real `Trig_bar` SD sim is DONE; the residual is now **data-side** — accidental/pile-up coincidences absent in the truth MC, Sample-I purity, paddle threshold/resolution fidelity, LayerID→stave mapping | **Model the data-side deep-stave coincidence population** (accidental/pile-up rate model, Sample-I purity, paddle fidelity) — STUDY_GAPS NEW-04; no new GEANT4 production needed |
 | Why does the MC live-time exceed data by +8%? | MC03 τ_eff 134.99 vs data 124.79 ns is B2-driven; MC pulses are clean by construction, data includes real pathologies | Data-matched selection/pathology model on the MC side; per-stave comparison |
 | What is the precision digitizer gain? | Quenched re-scan DONE 2026-07-05 (LUNARC 3348264): the trigger-consistent optimum is **~65 ADC/MeV (band ~60–70)**, up from the unquenched ~60, far below the 297 placeholder; B2 amplitude median 2,917 ADC brackets data 2,576 | Still a **band, not precision** — residual set by the trigger proxy (B-M1); re-anchor on a geometry-robust observable next (`reports/mv3_gain_quenched_1783240619/`) |
 | What instrumental mechanism produces the 4.4% early-peak class? | Species/scintillation origin ruled out (MV6b); MC has no trigger-phase or DAQ-artifact model | **Data-side investigation of the early-peak class** (P02 cluster morphology, P09 taxonomy; baseline/noise/bipolar and trigger-phase hypotheses) |

@@ -1,0 +1,84 @@
+{
+  "study": "S27",
+  "title": "early-peak class leakage budget",
+  "git_commit": "b85f11bc75f4d95e48a7037aad5c7939135262c3",
+  "generated_utc": "2026-07-05 08:53:11 UTC",
+  "early_peak_max_sample": 3,
+  "amplitude_cut_adc": 1000.0,
+  "runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "s00_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+  "timing": {
+    "sigma68_all_ns": 1.7056581542304468,
+    "sigma68_early_excluded_ns": 1.6476229812686822,
+    "sigma68_early_only_ns": 2.0793117683329863,
+    "shift_ns": 0.058035172961764525,
+    "shift_ci_ns": [
+      0.046537170184195786,
+      0.06849327820912492
+    ],
+    "n_pairs": 21521,
+    "n_early_pairs": 880,
+    "early_pair_fraction": 0.04089029320198875
+  },
+  "tau_eff": {
+    "tau_eff_all_ns": 131.61648413612602,
+    "tau_eff_early_excluded_ns": 144.8650311382777,
+    "shift_ns": -13.248547002151668,
+    "data_tau_eff_ns": 124.79
+  },
+  "pileup_current": {
+    "overall": {
+      "n_selected": 640737,
+      "early_count_fraction": 0.03407326250864239,
+      "early_area_fraction": -0.012450070635961293,
+      "early_mean_area": -14784.9391260535,
+      "nonearly_mean_area": 42412.20693482845,
+      "area_to_count_excess": -0.36539121056586343
+    },
+    "by_stave": {
+      "B2": {
+        "n_selected": 579424,
+        "early_count_fraction": 0.03210774838460264,
+        "early_area_fraction": -0.012599485624808907
+      },
+      "B4": {
+        "n_selected": 36116,
+        "early_count_fraction": 0.05382655886587662,
+        "early_area_fraction": -0.009958794762122244
+      },
+      "B6": {
+        "n_selected": 17945,
+        "early_count_fraction": 0.04736695458344943,
+        "early_area_fraction": -0.010637045966420506
+      },
+      "B8": {
+        "n_selected": 7252,
+        "early_count_fraction": 0.059845559845559844,
+        "early_area_fraction": -0.005593915274759055
+      }
+    }
+  },
+  "runtime_sec": 8.8
+}

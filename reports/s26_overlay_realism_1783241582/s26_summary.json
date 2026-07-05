@@ -1,0 +1,328 @@
+{
+  "study": "S26",
+  "title": "two-pulse overlay realism (phase jitter + cross-stave)",
+  "git_commit": "b85f11bc75f4d95e48a7037aad5c7939135262c3",
+  "generated_utc": "2026-07-05 08:54:57 UTC",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "card": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/configs/mc_validation/digitizer_card.yaml",
+  "n_records_per_rate": 30000,
+  "rates_mhz": [
+    0.5,
+    1.5,
+    3.0
+  ],
+  "phase_jitter_ns": [
+    45.0,
+    55.0
+  ],
+  "pools": {
+    "B2": [
+      100000,
+      100000
+    ],
+    "B4": [
+      61789,
+      61857
+    ],
+    "B6": [
+      41625,
+      41666
+    ],
+    "B8": [
+      25442,
+      25377
+    ]
+  },
+  "results": {
+    "pinned_same": {
+      "benchmark": {
+        "thetas": {
+          "trad": 0.7722148402350769,
+          "ml": 0.026999810737425738
+        },
+        "failure_at_coverage": [
+          {
+            "method": "trad",
+            "n_positive": 10437,
+            "theta": 0.7722148402350769,
+            "failure_rate_full": 0.024240682188368307,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 0.5
+          },
+          {
+            "method": "ml",
+            "n_positive": 10437,
+            "theta": 0.026999810737425738,
+            "failure_rate_full": 0.013797068123023858,
+            "failure_at_80pct_coverage": 0.0009580838323353293,
+            "failure_ci_low": 0.0003592814371257485,
+            "failure_ci_high": 0.0016766467065868263,
+            "rate_mhz": 0.5
+          },
+          {
+            "method": "trad",
+            "n_positive": 10447,
+            "theta": 0.7722148402350769,
+            "failure_rate_full": 0.02297310232602661,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 1.5
+          },
+          {
+            "method": "ml",
+            "n_positive": 10447,
+            "theta": 0.026999810737425738,
+            "failure_rate_full": 0.011773714942088637,
+            "failure_at_80pct_coverage": 0.0003589375448671931,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.000957166786312515,
+            "rate_mhz": 1.5
+          },
+          {
+            "method": "trad",
+            "n_positive": 10572,
+            "theta": 0.7722148402350769,
+            "failure_rate_full": 0.023269012485811577,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 3.0
+          },
+          {
+            "method": "ml",
+            "n_positive": 10572,
+            "theta": 0.026999810737425738,
+            "failure_rate_full": 0.01362088535754824,
+            "failure_at_80pct_coverage": 0.0007093875620714117,
+            "failure_ci_low": 0.00023646252069047056,
+            "failure_ci_high": 0.0014187751241428233,
+            "rate_mhz": 3.0
+          }
+        ],
+        "common_subset": [
+          {
+            "rate_mhz": 0.5,
+            "n_common": 7237,
+            "sigma68_trad_ns": 0.337687731568941,
+            "sigma68_ml_ns": 1.082640745699651
+          },
+          {
+            "rate_mhz": 1.5,
+            "n_common": 7218,
+            "sigma68_trad_ns": 0.3402140719758634,
+            "sigma68_ml_ns": 1.0710547975736935
+          },
+          {
+            "rate_mhz": 3.0,
+            "n_common": 7339,
+            "sigma68_trad_ns": 0.3336952876488454,
+            "sigma68_ml_ns": 1.1109730839395828
+          }
+        ]
+      },
+      "verdict": {
+        "trad_mean_failure": 0.0,
+        "ml_mean_failure": 0.0006754696464246448,
+        "winner": "trad",
+        "margin": 0.0006754696464246448
+      }
+    },
+    "jitter_same": {
+      "benchmark": {
+        "thetas": {
+          "trad": 0.9398413659061066,
+          "ml": 0.10975349445248192
+        },
+        "failure_at_coverage": [
+          {
+            "method": "trad",
+            "n_positive": 10434,
+            "theta": 0.9398413659061066,
+            "failure_rate_full": 0.04073222158328541,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 0.5
+          },
+          {
+            "method": "ml",
+            "n_positive": 10434,
+            "theta": 0.10975349445248192,
+            "failure_rate_full": 0.020414031052328925,
+            "failure_at_80pct_coverage": 0.0014374700527072352,
+            "failure_ci_low": 0.0007187350263536176,
+            "failure_ci_high": 0.002275994250119789,
+            "rate_mhz": 0.5
+          },
+          {
+            "method": "trad",
+            "n_positive": 10496,
+            "theta": 0.9398413659061066,
+            "failure_rate_full": 0.03944359756097561,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 1.5
+          },
+          {
+            "method": "ml",
+            "n_positive": 10496,
+            "theta": 0.10975349445248192,
+            "failure_rate_full": 0.01800685975609756,
+            "failure_at_80pct_coverage": 0.0008336310587114446,
+            "failure_ci_low": 0.00023818030248898416,
+            "failure_ci_high": 0.0014290818149339049,
+            "rate_mhz": 1.5
+          },
+          {
+            "method": "trad",
+            "n_positive": 10463,
+            "theta": 0.9398413659061066,
+            "failure_rate_full": 0.043104272197266556,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 3.0
+          },
+          {
+            "method": "ml",
+            "n_positive": 10463,
+            "theta": 0.10975349445248192,
+            "failure_rate_full": 0.02054859982796521,
+            "failure_at_80pct_coverage": 0.0008362202843148966,
+            "failure_ci_low": 0.0003583801218492414,
+            "failure_ci_high": 0.0014335204873969656,
+            "rate_mhz": 3.0
+          }
+        ],
+        "common_subset": [
+          {
+            "rate_mhz": 0.5,
+            "n_common": 7397,
+            "sigma68_trad_ns": 0.3506423799817303,
+            "sigma68_ml_ns": 1.409244843527592
+          },
+          {
+            "rate_mhz": 1.5,
+            "n_common": 7460,
+            "sigma68_trad_ns": 0.35435248209492864,
+            "sigma68_ml_ns": 1.4174379895537839
+          },
+          {
+            "rate_mhz": 3.0,
+            "n_common": 7452,
+            "sigma68_trad_ns": 0.34185455635924167,
+            "sigma68_ml_ns": 1.4040287204338329
+          }
+        ]
+      },
+      "verdict": {
+        "trad_mean_failure": 0.0,
+        "ml_mean_failure": 0.0010357737985778588,
+        "winner": "trad",
+        "margin": 0.0010357737985778588
+      }
+    },
+    "jitter_cross": {
+      "benchmark": {
+        "thetas": {
+          "trad": 0.9405672508655032,
+          "ml": 0.08730053121492176
+        },
+        "failure_at_coverage": [
+          {
+            "method": "trad",
+            "n_positive": 10477,
+            "theta": 0.9405672508655032,
+            "failure_rate_full": 0.08189367185262957,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 0.5
+          },
+          {
+            "method": "ml",
+            "n_positive": 10477,
+            "theta": 0.08730053121492176,
+            "failure_rate_full": 0.01584423021857402,
+            "failure_at_80pct_coverage": 0.000954426151276545,
+            "failure_ci_low": 0.00035790980672870435,
+            "failure_ci_high": 0.0016702457647339538,
+            "rate_mhz": 0.5
+          },
+          {
+            "method": "trad",
+            "n_positive": 10452,
+            "theta": 0.9405672508655032,
+            "failure_rate_full": 0.08668197474167623,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 1.5
+          },
+          {
+            "method": "ml",
+            "n_positive": 10452,
+            "theta": 0.08730053121492176,
+            "failure_rate_full": 0.01282051282051282,
+            "failure_at_80pct_coverage": 0.00023917723032767282,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.000597943075819182,
+            "rate_mhz": 1.5
+          },
+          {
+            "method": "trad",
+            "n_positive": 10557,
+            "theta": 0.9405672508655032,
+            "failure_rate_full": 0.09548167092924126,
+            "failure_at_80pct_coverage": 0.0,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0,
+            "rate_mhz": 3.0
+          },
+          {
+            "method": "ml",
+            "n_positive": 10557,
+            "theta": 0.08730053121492176,
+            "failure_rate_full": 0.01894477597802406,
+            "failure_at_80pct_coverage": 0.0003551977267345489,
+            "failure_ci_low": 0.0,
+            "failure_ci_high": 0.0007133554345252164,
+            "rate_mhz": 3.0
+          }
+        ],
+        "common_subset": [
+          {
+            "rate_mhz": 0.5,
+            "n_common": 7494,
+            "sigma68_trad_ns": 0.4103198432934063,
+            "sigma68_ml_ns": 1.4279279713600628
+          },
+          {
+            "rate_mhz": 1.5,
+            "n_common": 7489,
+            "sigma68_trad_ns": 0.4018637603059327,
+            "sigma68_ml_ns": 1.441542487476673
+          },
+          {
+            "rate_mhz": 3.0,
+            "n_common": 7632,
+            "sigma68_trad_ns": 0.4093451562443195,
+            "sigma68_ml_ns": 1.465563930694184
+          }
+        ]
+      },
+      "verdict": {
+        "trad_mean_failure": 0.0,
+        "ml_mean_failure": 0.0005162670361129222,
+        "winner": "trad",
+        "margin": 0.0005162670361129222
+      }
+    }
+  },
+  "movement_text": "Pinned single-stave: winner **trad** (trad 0.0000 vs ML 0.0007). Adding phase jitter: winner **trad** (trad 0.0000 vs ML 0.0010). Adding cross-stave overlays too: winner **trad** (trad 0.0000 vs ML 0.0005). The matched-coverage verdict is STABLE across the realism axes.",
+  "runtime_sec": 115.3
+}

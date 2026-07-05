@@ -35,7 +35,7 @@ detailed findings follow in the per-section narrative.
 
 | Study | Topic | Verdict | Key number |
 |---|---|---|---|
-| **MV0 v2** | Digitizer gain calibration (corrected) | ⛔ RETRACTED (2026-07-03) | v2 gain 92±28 was computed on a folded variable \|net−pedestal\| (amplitude_adc is already baseline-subtracted; true B2 net median = 5752 ADC, not 1781) and is unreproducible from any committed script; v1 (~246) also invalid. **Current best statement (2026-07-04): gain ≈ 60–80 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet.** The Phase-2 trigger-consistent scan prefers ~60 (unquenched threshold model); with Birks quenching on, the optimum is expected at ~70–80 (re-scan pending). The 297 ADC/MeV in the mc02 card is the C2-corrected data-side anchor over trigger-unselected MC and is carried as an explicit placeholder only. |
+| **MV0 v2** | Digitizer gain calibration (corrected) | ⛔ RETRACTED (2026-07-03) | v2 gain 92±28 was computed on a folded variable \|net−pedestal\| (amplitude_adc is already baseline-subtracted; true B2 net median = 5752 ADC, not 1781) and is unreproducible from any committed script; v1 (~246) also invalid. **Current best statement (2026-07-04): gain ≈ 60–70 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet.** The Phase-2 trigger-consistent scan prefers ~60 (unquenched threshold model); with Birks quenching on, the quenched re-scan DONE (2026-07-05, LUNARC 3348264): optimum ~65 ADC/MeV (`reports/mv3_gain_quenched_1783240619/`). The 297 ADC/MeV in the mc02 card is the C2-corrected data-side anchor over trigger-unselected MC and is carried as an explicit placeholder only. |
 | **MV1** | Particle ID (proton vs deuteron) | ✅ PASS (MC truth ceiling; data = weak-label proxy) | MC AUC = 0.986 (MC truth ceiling); data within 0.5% via weak-label proxies, not species truth; p/d separation at B2 (where deuterons stop) may be less affected by MV3 stopping-depth error |
 | **MV2** | Range-energy calibration | ✅ rerun 2026-07-03 (geometry/trigger caveat) | Momentum-unit fix landed: MeV-scale ekin (mean p 99.4 / d 79.7 MeV); edep medians p 101.1 / d 73.4 MeV; containment p 0.70 / d 0.84 (`reports/mv1_mv2_truth_pid_energy_1783077795/`) |
 | **MV3 v4** | Stopping-depth profile | 🔶 TENSION (re-graded from FAIL, Phase 2, 2026-07-03) | The published χ²/ndf = 68,269 is **strongly indicated (pending `Trig_bar` simulation)** to be dominated by the **unsimulated two-arm coincidence trigger**, not geometry: a truth-level trigger proxy alone gives 3,141, and with event basis + species-inclusive counting + gain 60 **625 (109× reduction)**. Missing-material narrative **falsified**: only ~0.13 g/cm² of air is absent from the production geometry vs ≥10.5 g/cm² a material explanation would need. No new production required. Next: score `Trig_bar` volumes for a real trigger flag. (`reports/phase2_geometry_1783108797/`) |
@@ -78,12 +78,12 @@ the two disagree.
    production was needed. Next MC-side work item: score the `Trig_bar` volumes as sensitive
    detectors and emit a real per-event trigger flag, replacing the truth proxy.
    (`reports/phase2_geometry_1783108797/REPORT.md`)
-2. **Gain: no precision value yet — the honest statement is "≈60–80 ADC/MeV, dominated by
+2. **Gain: no precision value yet — the honest statement is "≈60–70 ADC/MeV, dominated by
    trigger/quenching modelling".** v1 (246) and v2 (92 ± 28) are both retracted; 297 ADC/MeV is
    the C2-corrected data-side anchor (true B2 net median 5752 ADC) over trigger-unselected MC and
    is carried only as an explicit placeholder. The trigger-consistent Phase-2 scan prefers ~60
    (unquenched threshold model; monotonic: 60 → χ²/ndf 625, 92 → 3,613, 300 → 7,017); with Birks
-   quenching on, the optimum is expected to rise to ~70–80 and that re-scan is pending.
+   quenching on, the quenched re-scan (2026-07-05, LUNARC 3348264) measured the optimum at ~65 (band ~60–70).
 3. **Sample-I deuteron enrichment is confirmed at truth level and consistent in data (S21 + S23;
    run-set differences not yet separated).** Truth
    (S21): B2 deuteron-fraction ratio I/II = 1.519 [1.510, 1.528] (exclusive I vs II\I: 1.912
@@ -207,7 +207,7 @@ unsimulated two-arm coincidence trigger, not by missing material** — a truth-l
 plus gain 60 collapses it to 625 (109×), and MV3 is re-graded TENSION (Phase 2, 2026-07-03); (4) the early-peak anomaly class is **not C12 recoils**
 (MV6b, 2026-07-04: 0 quenched C12 records pass A>1000 at any gain) — it must be
 instrumental/trigger-phase and is a data-side open question; and (5) the digitizer gain has **no
-precision value yet** — the honest statement is ≈60–80 ADC/MeV, dominated by trigger/quenching
+precision value yet** — the honest statement is ≈60–70 ADC/MeV, dominated by trigger/quenching
 modelling (v1 246 and v2 92 ± 28 both retracted; 297 is an explicit placeholder).
 
 ---
@@ -453,9 +453,9 @@ the MV0 v2 gain model is RETRACTED (2026-07-03) — the digitizer gain is unknow
 The v2 anchor (B2 net median = 1781 ADC) was computed as |net − pedestal| of an already
 baseline-subtracted amplitude — `amplitude_adc` is net, so the v2 basis was a folded garbage
 variable. The true B2 net median is **5752 ADC**. Neither v1 (~246 ADC/MeV) nor v2
-(92 ± 28 ADC/MeV) is valid. **Current best statement (2026-07-04): gain ≈ 60–80 ADC/MeV,
+(92 ± 28 ADC/MeV) is valid. **Current best statement (2026-07-04): gain ≈ 60–70 ADC/MeV,
 dominated by trigger/quenching modelling — no precision value yet.** The Phase-2
-trigger-consistent scan prefers ~60 (unquenched); the quenched re-scan (expected ~70–80) is
+trigger-consistent scan prefers ~60 (unquenched); the quenched re-scan (2026-07-05, LUNARC 3348264) measured ~65 and is
 pending; 297 ADC/MeV is the C2-corrected data-side placeholder in the mc02 card. The hardware
 pedestal ~6752 ADC statement stands (it is the `baseline_adc` column).
 
@@ -613,7 +613,7 @@ program closed the rows added below.)_
 | Does MC timing match data in a matched comparison? | MV4 honest rerun (2026-07-03) is REVIEW: MC pair-equivalent 2.087 ns sits between the data raw (2.993) and corrected (1.50) anchors, but merged-track MC vs per-stave data and unmatched selection remain | Matched per-stave MV4 rerun on the Phase-1 digitizer (data selection applied, measured σ_data) |
 | Can the residual MV3 tension (χ²/ndf ~600–1,100) be closed? | Truth-level trigger proxy is crude vs the real paddle coincidence; no Birks in the threshold model; pile-up in data B2 | **Score `Trig_bar` volumes as sensitive detectors → real per-event trigger flag**; fold in the quenched threshold model |
 | Why does the MC live-time exceed data by +8%? | MC03 τ_eff 134.99 vs data 124.79 ns is B2-driven; MC pulses are clean by construction, data includes real pathologies | Data-matched selection/pathology model on the MC side; per-stave comparison |
-| What is the precision digitizer gain? | Trigger-consistent scan optimum ~60 was fitted **unquenched**; with Birks on the quenched table has zero A>1000 rows at gain 60 | **Quenched trigger-consistent gain re-scan** (expected ~70–80), then re-anchor on a geometry-robust observable |
+| What is the precision digitizer gain? | Quenched re-scan DONE 2026-07-05 (LUNARC 3348264): the trigger-consistent optimum is **~65 ADC/MeV (band ~60–70)**, up from the unquenched ~60, far below the 297 placeholder; B2 amplitude median 2,917 ADC brackets data 2,576 | Still a **band, not precision** — residual set by the trigger proxy (B-M1); re-anchor on a geometry-robust observable next (`reports/mv3_gain_quenched_1783240619/`) |
 | What instrumental mechanism produces the 4.4% early-peak class? | Species/scintillation origin ruled out (MV6b); MC has no trigger-phase or DAQ-artifact model | **Data-side investigation of the early-peak class** (P02 cluster morphology, P09 taxonomy; baseline/noise/bipolar and trigger-phase hypotheses) |
 | Is the forced-pedestal model validated on data? | No forced-trigger sample in data (MV7 closes the MC side only) | Add forced-trigger capability to the acquisition in a future beam run |
 
@@ -629,7 +629,7 @@ program closed the rows added below.)_
   11.2.2 / ROOT 6.32), 1M primary events; `geant4/results/sim_summary.json` and SLURM job 3310358.
 - MV0 v2 gain (92 ± 28 ADC/MeV) and MV0 v1 (~246 ADC/MeV) are both retracted (2026-07-03). Do not
   use either value for any energy-scale reference. The current best statement (2026-07-04) is
-  gain ≈ 60–80 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet; 297
+  gain ≈ 60–70 ADC/MeV, dominated by trigger/quenching modelling — no precision value yet; 297
   ADC/MeV in the mc02 card is an explicit placeholder.
 - Every per-section number above is traceable to a `reports/<id>/REPORT.md`; see `reports/SUMMARY.md`
   for the live scoreboard and `docs/REPORT_STANDARD.md` for the rules each report obeys.

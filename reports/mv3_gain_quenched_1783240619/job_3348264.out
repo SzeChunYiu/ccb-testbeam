@@ -1,0 +1,20 @@
+[prologue] host=cn013 start=2026-07-05T10:36:59+02:00
+[prologue] repo=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam
+[prologue] python=Python 3.11.14
+[prologue] out=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_gain_quenched_1783240619
+[quenched-scan] start=2026-07-05T08:37:00.497170+00:00
+[data:all] n=306745 B2=0.876 B4=0.063 B6=0.039 B8=0.023
+[data:sample_i] n=233184 B2=0.933 B4=0.037 B6=0.020 B8=0.010
+[data:sample_ii] n=73561 B2=0.695 B4=0.144 B6=0.098 B8=0.063
+[data] B2 net-median ADC = 2576.0
+[quenched-scan] events processed: 1000000
+[quenched-scan] wrote /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_gain_quenched_1783240619/mv3_gain_quenched.json
+[quenched-scan] wrote /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_gain_quenched_1783240619/gain_curve.md
+[quenched-scan] BEST acoinc vs data(all): gain=65 chi2/ndf=322.4 n=54627 B2=0.875 B4=0.054 B6=0.042 B8=0.029 B2ampMed=2917.255511747454
+[quenched-scan] done=2026-07-05T08:37:04.819934+00:00
+[job] done=2026-07-05T10:37:04+02:00 -> /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/mv3_gain_quenched_1783240619
+total 68
+drwxr-xr-x   2 scyiu hep    69 Jul  5 10:37 .
+drwxrwxr-x 483 scyiu hep 28672 Jul  5 10:36 ..
+-rw-r--r--   1 scyiu hep  2120 Jul  5 10:37 gain_curve.md
+-rw-r--r--   1 scyiu hep 28797 Jul  5 10:37 mv3_gain_quenched.json

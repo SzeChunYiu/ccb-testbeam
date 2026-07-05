@@ -103,7 +103,7 @@ Each row is a study family; per-row detail in `reports/SUMMARY.md`. "ML verdict"
 | **P10** cond. template | P10a-b | ✅ done | analytic timewalk beats learned template | trad wins |
 | **S21** trigger truth | S21 | ✅ done (2026-07-03) | Sample-I D-enrichment confirmed at truth level: B2 f_d ratio 1.519 [1.510, 1.528] (excl. 1.912); 91.2% d\|p pairs | n/a (truth study) |
 | **S22** timing vs amplitude | S22 | ✅ done (2026-07-03) | per-stave σ68 vs amplitude; 1/A beats 1/√A raw; ~0.85-1.1 ns/stave at high amplitude; B2 saturation-excluded | n/a (traditional measurement) |
-| **S23** data I/II + MC | S23 | ✅ done (2026-07-03) | D-enrichment confirmed in data (B2 f(A>5000) ratio 3.45); trigger mimic moves MC toward data (KS 0.192→0.131, χ² 624k→20k); DR 0.738 (z=−99) | n/a (data–MC comparison) |
+| **S23** data I/II + MC | S23 | ✅ done (2026-07-03) | D-enrichment consistent in data (B2 f(A>5000) ratio 3.45; run-set differences not yet separated); trigger mimic moves MC toward data (KS 0.192→0.131, χ² 624k→20k); DR 0.738 (z=−99, statistics-only) | n/a (data–MC comparison) |
 | **S24** honest two-pulse (MC03) | S24 | ✅ done (2026-07-04) | truth-labelled: trad wins at matched 80% coverage; ML wins at full coverage (0.011 vs 0.048); σ68 trad 0.64 vs ML 0.89 ns | split verdict (coverage-dependent) |
 
 ---
@@ -111,8 +111,9 @@ Each row is a study family; per-row detail in `reports/SUMMARY.md`. "ML verdict"
 ## 4. MC validation status (MV0-MV9)
 
 All six MV studies ran to completion. Following External Review 2026-07-02, MV0/MV5/MV6 were
-retracted; the 2026-07-03/04 post-review program then reran MV2 and MV4, established MV3's root
-cause (re-graded TENSION), ruled the MV6 C12 attribution out (MV6b), and ran MV7 (see rows below).
+retracted; the 2026-07-03/04 post-review program then reran MV2 and MV4, strongly indicated MV3's
+root cause (the unsimulated trigger, pending `Trig_bar` simulation; re-graded TENSION), ruled the
+MV6 C12 attribution out (MV6b), and ran MV7 (see rows below).
 
 | MV | What it validates | Status | Result |
 |---|---|---|---|
@@ -121,7 +122,7 @@ cause (re-graded TENSION), ruled the MV6 C12 attribution out (MV6b), and ran MV7
 | **MV2** | Energy / range / stopping | ✅ rerun 2026-07-03 (untriggered-MC caveat) | momentum-unit fix landed: MeV-scale ekin (mean p 99.4 / d 79.7 MeV); edep medians p 101.1 / d 73.4 MeV; containment p 0.70 / d 0.84 (**untriggered MC — not trigger-representative**). Depth ordering (deuterons stop layers 0-1, protons penetrate 4-7) supported |
 | **MV3** | Stopping-depth profile (Layer↔stave) | 🔶 **TENSION** (re-graded from FAIL, Phase 2, 2026-07-03) | Root cause **strongly indicated (pending `Trig_bar` simulation)** = **unsimulated two-arm coincidence trigger**, not geometry (truth-level A-arm coincidence *proxy*, residual still large). Missing-material narrative **falsified** (only ~0.13 g/cm² air missing vs ≥10.5 g/cm² needed). Trigger proxy: χ²/ndf 68,269 → 3,141; + event basis + species-inclusive + gain 60 → **625 (109×)**. No new production needed. Next: score `Trig_bar` volumes for a real trigger flag. (`reports/phase2_geometry_1783108797/`) |
 | **MV4** | Timing σ₆₈ reproduction in MC | ⚠️ **REVIEW** (honest rerun 2026-07-03) | rising-edge CFD + physical timewalk sign (B = +39.6 ns·ADC); MC pair-equivalent σ₆₈ 2.087 ± 0.009 ns sits between data raw (2.993) and corrected (1.50) anchors; matched per-stave rerun awaits Phase-1 digitizer (`reports/mv4_timing_1783077795/`) |
-| **MV5** | Pile-up R_max from live-time model | ⛔ RETRACTED as validation → slot refilled (MC03, 2026-07-04) | The 2026-06 "MC τ_eff" was a hardcoded copy of the data value. **First honest MC live-time: τ_eff = 134.99 ns [134.96, 135.01] vs data 124.79 ns (+8%, B2-driven) — an honest disagreement.** The 4.22 → ≤3.05 MHz correction stands as a data-driven one-sided upper bound (censoring-aware estimators suggest ≈2.1 MHz or lower) (`reports/mc03_overlay_1783180480/`) |
+| **MV5** | Pile-up R_max from live-time model | ⛔ RETRACTED as validation → slot refilled (MC03, 2026-07-04) | The 2026-06 "MC τ_eff" was a hardcoded copy of the data value. **First honest MC live-time: τ_eff = 134.99 ns [134.96, 135.01]** (statistics only; the +8% / +10.2 ns offset from data 124.79 ns is the dominant, systematic, difference) **vs data 124.79 ns (+8%, B2-driven) — an honest disagreement.** The 4.22 → ≤3.05 MHz correction stands as **one data-driven one-sided upper bound plus estimator band (censoring-aware estimators suggest ≈2.1 MHz or lower)**; the +8% MC excess, if real, tightens the bound rather than validating it (`reports/mc03_overlay_1783180480/`) |
 | **MV6** | Anomaly species ID (early-peak class) | ⛔ RETRACTED → **MV6b: C12 RULED OUT** (2026-07-04) | Honest redo with physical Birks quenching: 0/1,656 quenched C12 records pass A>1000 at any gain (60–297); MC early-peak fraction 0.000% everywhere vs data 4.4%. Class must be instrumental/trigger-phase — reopened as a **data-side** question (P02/P09 leads) (`reports/mv6b_anomaly_quenching_1783180742/`) |
 | **MV3b** | Upstream material budget estimation (MV3 FAIL diagnosis) | ⛔ superseded by Phase 2 | The toy 8–10 g/cm² estimate was retracted in MV3b's own errata; Phase 2 then **falsified** the material hypothesis outright (available missing material ≲0.8 g/cm² vs ≥10.5 needed) and identified the trigger as the cause. See `reports/phase2_geometry_1783108797/` |
 | **MV4b** | Physical timewalk model diagnosis (MV4 TENSION diagnosis) | ✅ done, confirmed by the MV4 rerun | Toy 1/√ADC with B=−23 ns·√ADC was **unphysical** (B<0). Correct form: 1/A = τ_rise·V_th/A; the MV4 honest rerun with rising-edge CFD fits B = +39.6 ns·ADC (physical). See `reports/mv4b_timewalk_model/` |
@@ -132,19 +133,50 @@ cause (re-graded TENSION), ruled the MV6 C12 attribution out (MV6b), and ran MV7
 
 ## 5. Key findings, ranked by physics impact
 
-| # | Finding | Number (with uncertainty) | Confidence | Source |
+The **Grade** column is the load-bearing verdict (words + number); any emoji is a mnemonic only.
+Grade key: **G1 Validated** (truth + data, no dominant unquantified systematic) · **G2
+Confirmatory/negative** (clean exclusion or truth ceiling) · **G3 Indicated / consistent**
+(directional; a dominant systematic or confound unseparated) · **G4 Under review / bound**
+(provisional or one-sided) · **G5 Corrected/retracted**.
+
+| # | Finding | Number (with uncertainty) | Grade | Source |
 |---|---|---|---|---|
-| 1 | Pile-up R_max revised down ~30% | 4.222 -> ≤3.05 MHz one-sided bound (live10 124.79 ns, CI [123.33,126.36]); first independent MC live-time 134.99 ns (+8%, honest disagreement, MC03) | ⚠️ data-driven bound; MC disagrees +8% | S10b/c, MC03 |
-| 2 | p/d PID is MC-closed | AUC 0.9860 (HGB), data ~0.985 | ✅ validated (data+MC) | MV1 |
-| 3 | Sample-I deuteron enrichment confirmed | truth: B2 f_d ratio 1.519 [1.510,1.528] (excl. 1.912); data: B2 f(A>5000) ratio 3.45 [3.41,3.50]; MC under-predicts contrast (DR 0.738, z=−99) | ✅ confirmed (truth + data, 2026-07-03) | S21/S23 |
-| 4 | MV3 stopping-depth root cause = unsimulated trigger | χ²/ndf 68,269 → 625 (109×) with trigger proxy + event basis + species-inclusive + gain 60; material narrative falsified | 🔶 TENSION (re-graded from FAIL) | Phase 2 |
-| 5 | Analytic timewalk wins timing | sigma68 1.494-1.551 ns (LORO); best trad 1.343 ns; per-stave ~0.85-1.1 ns at high amplitude (S22) | ⚠️ data-only (MV4 REVIEW after honest rerun) | S03/S02d+S16e/S22 |
-| 6 | Duplicate-readout amplitude closure | res68 0.003-0.009 vs 0.12-0.20 | ⚠️ data-only | P04 |
-| 7 | Saturation recovery by ML | res68 0.032-0.046 vs template 0.104-0.286 | ⚠️ data-only | P07 |
-| 8 | Absolute energy unreachable from data | res68 0.19-0.25 (fails 10%) | ⚠️ data-side limitation stands (MV2 rerun supports) | S14/MV2 |
-| 9 | Two-pulse recovery, honest truth-labelled benchmark | trad wins at matched 80% coverage (fail ≤0.0001 vs 0.0001-0.0002); ML wins at full coverage (0.011 vs 0.048); σ68 trad 0.64 vs ML 0.89 ns. Replaces the rigged S11a table (0.295/0.168 retired) | ✅ truth-labelled (MC03/S24, 2026-07-04) | MC03/S24 |
-| 10 | Representation-superiority claim is leakage | latent does not beat hand-crafted under controls | ❌ CORRECTED | P01a-f |
-| 11 | Early-peak anomaly class is NOT C12 | 0/1,656 quenched C12 records pass A>1000 at any gain; MC early-peak 0.000% vs data 4.4% — instrumental/trigger-phase, data-side question | ✅ exclusion MC-confirmed (MV6b, 2026-07-04) | P02/P09/MV6b |
+| 1 | Pile-up R_max revised down ~30% | 4.222 -> ≤3.05 MHz one-sided bound + estimator band ≈2.1 MHz (live10 124.79 ns, CI [123.33,126.36]); first independent MC live-time 134.99 ns (+8%, statistics-only CI; the +8% offset is the dominant systematic — tightens the bound if real, does not validate) | **G4 Under review / bound** (data-driven; MC +8%) | S10b/c, MC03 |
+| 2 | p/d PID is MC-closed (truth ceiling) | AUC 0.9860 (HGB) MC truth ceiling; data ~0.985 via weak-label proxies, not species truth | **G2 Confirmatory** (MC truth ceiling; data = weak-label proxy, not species truth) | MV1 |
+| 3 | Sample-I deuteron enrichment | truth: B2 f_d ratio 1.519 [1.510,1.528] (excl. 1.912); data: B2 f(A>5000) ratio 3.45 [3.41,3.50]; MC under-predicts contrast (DR 0.738, z=−99, statistics-only) | **G2/G3** confirmed at truth level; **consistent in data** (run-set differences not yet separated) | S21/S23 |
+| 4 | MV3 stopping-depth root cause = unsimulated trigger | χ²/ndf 68,269 → 625 (109×) with trigger proxy + event basis + species-inclusive + gain 60; material narrative falsified | **G3 Indicated** — strongly indicated, pending `Trig_bar` simulation; TENSION (re-graded from FAIL) | Phase 2 |
+| 5 | Analytic timewalk wins timing | sigma68 1.494-1.551 ns (LORO); best trad 1.343 ns; per-stave ~0.85-1.1 ns at high amplitude (S22) | **G4 Under review** (data-only; MV4 REVIEW after honest rerun) | S03/S02d+S16e/S22 |
+| 6 | Duplicate-readout amplitude closure | res68 0.003-0.009 vs 0.12-0.20 | **G4 Data-only** — reported, not yet FDR-certified (no machine-readable delta-CI in STATS01) | P04 |
+| 7 | Saturation recovery by ML | res68 0.032-0.046 vs template 0.104-0.286 | **G4 Data-only** — reported, not yet FDR-certified (no machine-readable delta-CI in STATS01) | P07 |
+| 8 | Absolute energy unreachable from data | res68 0.19-0.25 (fails 10%) | **G2 Confirmatory limitation** (data-side; MV2 rerun supports) | S14/MV2 |
+| 9 | Two-pulse recovery, honest truth-labelled benchmark | trad wins at matched 80% coverage (fail ≤0.0001 vs 0.0001-0.0002); ML wins at full coverage (0.011 vs 0.048); σ68 trad 0.64 vs ML 0.89 ns. Replaces the rigged S11a table (0.295/0.168 retired) | **G2 Truth-labelled** (MC03/S24, 2026-07-04; fixed trigger phase / single-stave caveats) | MC03/S24 |
+| 10 | Representation-superiority claim is leakage | latent does not beat hand-crafted under controls | **G5 Corrected** | P01a-f |
+| 11 | Early-peak anomaly class is NOT C12 | 0/1,656 quenched C12 records pass A>1000 at any gain; MC early-peak 0.000% vs data 4.4% — instrumental/trigger-phase, data-side question | **G2 Confirmatory/negative** (clean exclusion, MC-confirmed, MV6b 2026-07-04) | P02/P09/MV6b |
+
+### 5.1 Status of each headline result (consolidated)
+
+This is the single honest status table for the whole program. It uses the words+number grade key
+above (G1–G5); the emoji elsewhere in this repo are mnemonics, not the verdict.
+
+**Bottom line: there is no single fully-validated (G1) primary physics result yet.** The cleanest
+results are the **negative / confirmatory** ones — the C12 exclusion (MV6b) and the p/d PID truth
+ceiling (MV1) — not a novel positive measurement. Every would-be positive headline is either a
+one-sided bound (R_max), under review (timing σ₆₈), reported-but-not-FDR-certified (P04/P07),
+directionally indicated with an unseparated systematic (MV3 trigger, data-side enrichment), or
+carries a statistics-only CI dominated by a %-level systematic.
+
+| Headline | Grade | Truth-validated? | Data-validated? | Dominant caveat |
+|---|---|---|---|---|
+| C12 exclusion (early-peak class) | **G2** | Yes (MV6b) | n/a (exclusion) | Positive identity of the 4.4% class still open |
+| p/d PID AUC 0.986 | **G2** | Yes (MC ceiling) | Weak-label proxy only | Data side is not species truth |
+| Absolute-energy limitation | **G2** | Yes (MV2) | Yes (data) | — (a confirmed *limitation*, not a measurement) |
+| Pile-up R_max ≤ 3.05 MHz | **G4** | No | One-sided bound | MC +8% live-time; band to ≈2.1 MHz; statistics-only CI |
+| Sample-I d-enrichment | **G2 truth / G3 data** | Yes (S21) | Consistent only (S23) | Data run-sets disjoint; beam differences unseparated |
+| MV3 root cause = trigger | **G3** | Proxy only | — | `Trig_bar` unsimulated; residual χ²/ndf ~600–1,100 |
+| Analytic timewalk timing σ₆₈ | **G4** | MV4 REVIEW | Data-only | Mixed metric; covariance withdrawn; partition unused |
+| Duplicate-readout / saturation ML wins (P04/P07) | **G4** | n/a | Data-only | No machine-readable delta-CI; not in STATS01 FDR census |
+| Two-pulse split verdict (MC03/S24) | **G2** | Truth-labelled | n/a | Fixed trigger phase; single-stave overlays |
+| Representation-superiority claim | **G5** | — | Corrected | Failed run-family / event-block leakage controls |
 
 ---
 
@@ -188,8 +220,9 @@ These cannot be done by an agent and block specific next steps:
 
 1. ✓ MV4/MV5/MV6 SLURM jobs **done**; ✓ post-review program (Phases 0–4 + statistics hardening)
    **done** (2026-07-03/04).
-2. ✓ **MV3 resolved without a new production** (Phase 2, 2026-07-03): the discrepancy was the
-   unsimulated two-arm coincidence trigger, not geometry; re-graded TENSION. Remaining decision:
+2. ✓ **MV3 diagnosed without a new production** (Phase 2, 2026-07-03): the discrepancy is strongly
+   indicated (pending `Trig_bar` simulation) to be the unsimulated two-arm coincidence trigger, not
+   geometry; re-graded TENSION (not yet established — the trigger is a truth proxy). Remaining decision:
    approve the `Trig_bar` sensitive-detector scoring work item (geobuilder/hibeam_g4 change) and
    close or rework geobuilder PR #8 (its 2.51 g/cm²/pair default injects ~10× the realistic
    wrapping budget).
@@ -199,7 +232,9 @@ These cannot be done by an agent and block specific next steps:
 4. **Sign off on the GEANT4 production macro / event-to-HRD alignment** before MV results are quoted
    as a production calibration (currently a layer-level prior + smoke-tested truth tree).
 5. **Adoption policies now decidable on honest evidence:** S03k is withdrawn (falsified by
-   S03p/S03r; any sub-0.3 ns claim needs the confirmation partition, `docs/CONFIRMATION_PARTITION.md`);
+   S03p/S03r; any sub-0.3 ns claim needs the confirmation partition, `docs/CONFIRMATION_PARTITION.md`,
+   which is **defined but not yet used** — so sub-0.3 ns timing claims are not yet confirmed on
+   held-out data);
    two-pulse recovery has a split truth-labelled verdict (MC03/S24: traditional at matched 80%
    coverage, ML at full coverage) — choose the operating point.
 

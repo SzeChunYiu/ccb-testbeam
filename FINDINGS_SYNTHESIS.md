@@ -50,7 +50,7 @@ matched rerun). **Reopened:** anomaly species identity (MV6 retracted), pile-up 
 (MV0 retracted), MV2 range-energy mechanism (retracted pending rerun).
 
 **Update 2026-07-04:** the post-review program closed or re-scoped most of the reopened items —
-MV3's root cause is the unsimulated trigger (re-graded TENSION), the C12 attribution is ruled out
+MV3's root cause is strongly indicated (pending `Trig_bar` simulation) to be the unsimulated trigger (re-graded TENSION), the C12 attribution is ruled out
 (MV6b), the two-pulse failure-rate question is closed by the honest truth-labelled benchmark
 (MC03/S24), the zero-signal pedestal validation ran (MV7), and an independent MC live-time now
 exists (an honest +8% disagreement). Details in the section below.
@@ -126,7 +126,10 @@ the two disagree.
    `reports/mc02_pulse_table_1783107862/`)
 7. **Statistics hardening.** A program-level Benjamini–Hochberg FDR census over 1,948 delta-CI
    claims in 443 artifacts: of the 17 scoreboard bold wins, **11 survive BH, 0 fail, and 6 rest
-   on prose only** (no machine-readable delta CI). S03k survives BH yet was falsified by the
+   on prose only** (no machine-readable delta CI). **The 6 prose-only wins include the flagship
+   P04 (duplicate-readout) and P07 (saturation) ML wins — they are reported, not yet
+   FDR-certified.** The retired, rigged S11a (0.295/0.168) is not counted among the 11 BH
+   survivors. S03k survives BH yet was falsified by the
    S03p/S03r leakage nulls — BH survival is necessary, not sufficient. A confirmation partition
    (runs 64 and 12–30) is reserved for sub-0.3 ns claims (`docs/CONFIRMATION_PARTITION.md`) but is
    **defined and not yet used**, so any sub-0.3 ns timing claim is not yet confirmed on held-out
@@ -523,8 +526,8 @@ pd-elastic kinematics gives them ~105 MeV with roughly half a proton's range; fo
 ### 6.2 Stopping-depth profile — FAIL re-graded TENSION (MV3, root cause: the trigger)
 
 MV3 v3 (threshold-corrected) compared the MC and data stave-occupancy profiles quantitatively and
-published **χ²/ndf = 68,269 (4 stave bins, ndf = 3)**. Phase 2 (2026-07-03) established the root
-cause: the comparison, not the geometry — see below.
+published **χ²/ndf = 68,269 (4 stave bins, ndf = 3)**. Phase 2 (2026-07-03) strongly indicated the
+root cause (pending `Trig_bar` simulation): the comparison, not the geometry — see below.
 
 | Stave | MC fraction | Data fraction | Ratio (Data/MC) |
 |---|---|---|---|

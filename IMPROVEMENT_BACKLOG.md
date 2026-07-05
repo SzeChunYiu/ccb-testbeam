@@ -47,8 +47,16 @@ C12 exclusion (MV6b); the retraction/leakage-control discipline; reproducibility
 provenance (job IDs, md5s, reproduce commands).
 
 ## Application plan
-- Immediate (docs-only, no new compute): B-M2 flags, B-M3 reconciliation of S11a,
-  B-m1–B-m9 — applied in a consistency pass across WIKI/FINDINGS/PROJECT_REPORT.
-- Next compute round: B-M1 (Trig_bar), B-M5 (quenched gain), B-M4 (covariance +
-  matched MV4), B-M7 (overlay realism), B-M8 (early-peak budget) — these are the
-  NEW-01/02/03 + covariance items already queued in STUDY_GAPS §recommended.
+- Immediate (docs-only, no new compute): **APPLIED 2026-07-05** (commit "calibrate
+  claims across top-level docs") — B-M2 systematic-aware CIs, B-M3 S11a/P04/P07
+  reconciliation, B-m1 R_max single bound, B-m2 PID caveat, B-m3 MV2 flag, B-m5
+  confirmation-partition note, B-m8 G1–G5 grade + consolidated status table, B-m9
+  strength-language normalization. Figures rebuilt so none asserts a retracted
+  claim (commit "post-review figures"). Manuscript + Data Availability + verified
+  references + this backlog committed.
+- Next compute round (still OPEN — require new jobs on LUNARC): B-M1 (Trig_bar
+  scoring), B-M5 (quenched gain re-scan), B-M4 (measured inter-stave covariance +
+  matched MV4 + confirmation-partition sign-off), B-M6 (separate data enrichment
+  from run-set/beam differences), B-M7 (overlay realism: phase jitter + cross-stave),
+  B-M8 (early-peak leakage budget), B-M9 (close layer→stave mapping). These are the
+  STUDY_GAPS NEW-01/02/03 + covariance items; each is scoped and ready to run.

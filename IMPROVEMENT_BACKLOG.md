@@ -35,6 +35,13 @@ list of what would raise the analysis from "honest and corrected" to
 | B-m8 | Replace load-bearing emoji glyphs with a quantitative "status of each headline" table naming the single defensible primary result | reviewer m8 |
 | B-m9 | Normalize strength language (confirmed/closed/ruled out/established) across WIKI/FINDINGS/PROJECT_REPORT | reviewer m9 |
 
+## Citation gaps (from nature-citation pass, 2026-07-05)
+- **No verified HRD / scintillator-range-telescope method paper** — the methods
+  section currently leans on general HIBEAM-NNBAR papers. Targeted search needed.
+- **No citation for the CCB Kraków 190 MeV proton beam facility** — the beam claim
+  is uncited. Targeted search needed before the methods section is final.
+- 6 candidate refs are quarantined UNVERIFIED in `docs/references.bib` — verify or drop.
+
 ## Assets to protect (do not regress)
 C12 exclusion (MV6b); the retraction/leakage-control discipline; reproducibility
 provenance (job IDs, md5s, reproduce commands).

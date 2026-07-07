@@ -135,13 +135,6 @@
 | P10a | ✅ done | ✅ 640,737 exact | empirical template q MSE 0.0444; timing 3.831 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | Mixed; ML improves timing but loses primary q-template metric | reports/1781000612.495978.66c00082__p10a_conditional_template |
 | P10b | ✅ done | ✅ 640,737 exact | explicit timewalk q MSE 0.0444; timing 2.756 ns | conditional MLP q MSE 0.0781; timing 3.579 ns | No; explicit traditional timewalk beats conditional template | reports/1781006250.1276.49814de9 |
 | P10f q-tail validation | ✅ done | ✅ family holdout inputs and leakage checks | calibration amplitude-median loses to shape handles | no-tail ExtraTrees improves q_tail MSE in 2/2 folds but fires too-good controls | No promotion; physical handle and density/counterfactual audits required | reports/1781027860.942.36c33ff0 |
-
----
-
-## MC Validation Studies (MV0–MV9, GEANT4 truth bridge)
-
-Status: ✅=done, ⚠️=pending, ⛔=structural_fail
-
 | Study | Status | What | Key result | Verdict | Report |
 |---|---|---|---|---|---|
 | MV0 v2 | ✅ done | Digitizer gain calibration (corrected) | gain = 92 ± 28 ADC/MeV (net_adc median matching; v1 error corrected) | PASS | reports/mv0_calibration_1782677847/ |

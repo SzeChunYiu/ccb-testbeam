@@ -1,0 +1,207 @@
+{
+  "study": "S03s",
+  "ticket": "1781075115.415.5d145e93",
+  "worker": "testbeam-laptop-3",
+  "title": "upstream q-template curvature leakage gate",
+  "claimed_once_evidence": {
+    "command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+    "event_log": "2026-07-07T18:30:23Z claim OK id=1781075115.415.5d145e93 worker=testbeam-laptop-3"
+  },
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_calib selected pulses",
+      "report_value": 248745,
+      "reproduced": 248745,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_analysis selected pulses",
+      "report_value": 252266,
+      "reproduced": 252266,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_calib selected pulses",
+      "report_value": 14630,
+      "reproduced": 14630,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72,
+      "reproduced": 72,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "all-three downstream control events",
+      "report_value": 3774,
+      "reproduced": 3774,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "all-three downstream guarded gross events, D_t>51 ns",
+      "report_value": 22,
+      "reproduced": 22,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split": "leave-one-run-out by run over Sample-II analysis runs, with run bootstrap CIs",
+  "primary_features": [
+    "q_b2",
+    "amp_b2",
+    "log_amp_b2",
+    "q_b2_amp_resid",
+    "q_b2_amp_z",
+    "run_family_code"
+  ],
+  "forbidden_downstream_features": [
+    "q_b4",
+    "q_b6",
+    "q_b8",
+    "q_ds_max",
+    "q_ds_mean",
+    "q_ds_span",
+    "q_ds_std"
+  ],
+  "metric": "ROC AUC primary, AP secondary for |C_t|>51 ns versus |C_t|<3 ns",
+  "methods": [
+    {
+      "method": "ridge",
+      "roc_auc": 0.81444099378882,
+      "roc_auc_ci_low": 0.7156535292807837,
+      "roc_auc_ci_high": 0.8944140367221769,
+      "average_precision": 0.14642739876023844,
+      "ap_ci_low": 0.0803384392131823,
+      "ap_ci_high": 0.2455156421457951
+    },
+    {
+      "method": "one_dimensional_cnn",
+      "roc_auc": 0.7782489249880554,
+      "roc_auc_ci_low": 0.5882212746033276,
+      "roc_auc_ci_high": 0.871046511627907,
+      "average_precision": 0.15478487045821684,
+      "ap_ci_low": 0.0937944066515495,
+      "ap_ci_high": 0.24359383655672248
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "roc_auc": 0.7531055900621118,
+      "roc_auc_ci_low": 0.6533860878273438,
+      "roc_auc_ci_high": 0.8750282593687492,
+      "average_precision": 0.13363115139633838,
+      "ap_ci_low": 0.06732180403686863,
+      "ap_ci_high": 0.2748740162695744
+    },
+    {
+      "method": "traditional_upstream_q",
+      "roc_auc": 0.7120387536630585,
+      "roc_auc_ci_low": 0.641925681616095,
+      "roc_auc_ci_high": 0.8375933365965273,
+      "average_precision": 0.05201894026351926,
+      "ap_ci_low": 0.046521017392253484,
+      "ap_ci_high": 0.08003815103255726
+    },
+    {
+      "method": "mlp",
+      "roc_auc": 0.5907787864309604,
+      "roc_auc_ci_low": 0.31317407175764117,
+      "roc_auc_ci_high": 0.7603720922287355,
+      "average_precision": 0.04275599424700482,
+      "ap_ci_low": 0.015495958105787428,
+      "ap_ci_high": 0.12763334045542676
+    },
+    {
+      "method": "amplitude_residual_stack",
+      "roc_auc": 0.4927735308170091,
+      "roc_auc_ci_low": 0.2933049946865038,
+      "roc_auc_ci_high": 0.6123362096516458,
+      "average_precision": 0.03355319374232943,
+      "ap_ci_low": 0.016977602657704878,
+      "ap_ci_high": 0.0412237955960131
+    }
+  ],
+  "winner_name": "ridge",
+  "winner": {
+    "method": "ridge",
+    "roc_auc": 0.81444099378882,
+    "roc_auc_ci_low": 0.7156535292807837,
+    "roc_auc_ci_high": 0.8944140367221769,
+    "average_precision": 0.14642739876023844,
+    "ap_ci_low": 0.0803384392131823,
+    "ap_ci_high": 0.2455156421457951
+  },
+  "traditional_method": "training-run-selected upstream q-template scalar score",
+  "ml_methods": [
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "one_dimensional_cnn",
+    "amplitude_residual_stack"
+  ],
+  "leakage_checks": [
+    {
+      "probe": "b2_only_ridge",
+      "roc_auc": 0.6479335881509795,
+      "average_precision": 0.04700813614757446,
+      "notes": "Strict upstream shape-only lower-capacity sentinel."
+    },
+    {
+      "probe": "downstream_forbidden_gbt",
+      "roc_auc": 0.8101708074534162,
+      "average_precision": 0.361427580399942,
+      "notes": "Forbidden provenance ceiling using downstream q-template columns."
+    },
+    {
+      "probe": "amplitude_only_gbt",
+      "roc_auc": 0.5615444338270424,
+      "average_precision": 0.10704787793392062,
+      "notes": "Nuisance-only amplitude sentinel."
+    },
+    {
+      "probe": "leaky_abs_ct_ceiling",
+      "roc_auc": 1.0,
+      "average_precision": 0.9999999999999998,
+      "notes": "Label-defining oracle; must be 1.0 if target construction is coherent."
+    }
+  ],
+  "details": {
+    "n_all_three_control_events": 3774,
+    "n_clean_events": 728,
+    "n_tail_events": 23,
+    "tail_fraction": 0.03062583222370173,
+    "bootstrap_replicates": 2000,
+    "fixed_clean_efficiency": 0.95
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "cd6a268dd09373fd2f00bf82cd2c29073151677b",
+  "next_tickets": []
+}

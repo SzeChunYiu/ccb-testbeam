@@ -1,0 +1,25 @@
+{
+  "study_id": "S03s",
+  "ticket_id": "1781075115.415.5d145e93",
+  "worker": "testbeam-laptop-3",
+  "title": "upstream q-template curvature leakage gate",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781075115.415.5d145e93__s03s_upstream_qtemplate_curvature_leakage_gate",
+  "base_config": "configs/s03e_1781027860_926_103338b4_all_three_curvature_qtemplate.json",
+  "primary_feature_columns": [
+    "q_b2",
+    "amp_b2",
+    "log_amp_b2",
+    "q_b2_amp_resid",
+    "q_b2_amp_z",
+    "run_family_code"
+  ],
+  "traditional_candidates": [
+    "q_b2",
+    "q_b2_amp_resid",
+    "q_b2_amp_z"
+  ],
+  "fixed_clean_efficiency": 0.95,
+  "bootstrap_replicates": 2000,
+  "random_seed": 20260708
+}

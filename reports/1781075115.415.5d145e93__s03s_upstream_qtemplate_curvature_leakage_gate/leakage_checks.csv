@@ -1,0 +1,5 @@
+probe,roc_auc,average_precision,notes
+b2_only_ridge,0.6479335881509795,0.04700813614757446,Strict upstream shape-only lower-capacity sentinel.
+downstream_forbidden_gbt,0.8101708074534162,0.361427580399942,Forbidden provenance ceiling using downstream q-template columns.
+amplitude_only_gbt,0.5615444338270424,0.10704787793392062,Nuisance-only amplitude sentinel.
+leaky_abs_ct_ceiling,1.0,0.9999999999999998,Label-defining oracle; must be 1.0 if target construction is coherent.

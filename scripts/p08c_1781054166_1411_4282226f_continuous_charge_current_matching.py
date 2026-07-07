@@ -726,11 +726,11 @@ def write_report(
     winner = result["winner"]
     nuisance = sent_rows[sent_rows["method"] == "leakage sentinel: matched nuisance-only logistic"].iloc[0]
     p08b = result["p08b_comparison"]
-    report = """# P08c: continuous charge-current matching for PID leakage control
+    report = """# P08c: {title}
 
 **Ticket:** {ticket}
 **Worker:** {worker}
-**Date:** 2026-06-11
+**Date:** 2026-07-08
 **Depends on:** S00, P01b, P08b
 **Input:** raw B-stack `HRDv` ROOT from `{raw_root_dir}`
 **Git commit:** `{commit}`
@@ -738,13 +738,13 @@ def write_report(
 **Constraint:** no Monte Carlo truth and no PID adoption without S17 truth.
 
 ## 0. Question
-Does continuous nearest-neighbor/propensity matching on charge, current proxy,
-depth/topology, saturation, and pile-up proxies suppress the P08b charge-current
-leakage enough that waveform or latent classifiers can be read as independent
-PID-like information? The operational answer is deliberately narrower: compare
-a strong transparent PSD/calibrated-cut baseline to ridge, gradient-boosted
-trees, MLP, 1D-CNN, and a residual-fusion architecture on the same
-run-held-out matched support, while measuring nuisance-only AUC.
+After calibrated duplicate-readout charge-depth and range-energy residuals are
+modeled, does the 18-sample waveform retain PID-like information beyond
+charge, topology, saturation, and run-family support? Operationally, this is a
+charge-residual null test: compare a strong transparent
+PSD/calibrated-charge-depth baseline to ridge, gradient-boosted trees, MLP,
+1D-CNN, and a residual-fusion architecture on the same run-held-out matched
+support, while measuring nuisance-only and shuffled-label controls.
 
 ## 1. Reproduction From Raw ROOT
 Before labels, matching, or models, the script rescans the B-stack ROOT
@@ -767,7 +767,7 @@ the bottom `{q_pct:.0f}%` of odd residuals is labeled
 `r_odd = (E_odd(q_odd, d) - E_PSTAR(d)) / max(E_PSTAR(d), 1 MeV)`.
 
 The labeled support has `{label_rows:,}` rows across `{label_atoms}` run/depth
-atoms. Continuous matching fits a nuisance propensity
+atoms. Continuous matching first fits a nuisance propensity
 
 `logit e(x) = beta0 + beta^T x`
 
@@ -798,7 +798,8 @@ DeltaE-like even-charge residual, even calibrated range-energy residual,
 depth, multiplicity, saturation, and event-current proxy. It is a strong
 traditional comparator because it sees the hand-engineered variables that a
 PSD/DeltaE-E analysis would use, but not the odd readout that defines the weak
-label.
+label. The learned models therefore test residual information relative to this
+calibrated charge-depth surface rather than a raw topology shortcut.
 
 The learned panel is:
 
@@ -862,7 +863,7 @@ model unless the raw ROOT reproduction table passes.
 
 ## 8. Reproducibility
 ```bash
-/home/billy/anaconda3/bin/python scripts/p08c_1781054166_1411_4282226f_continuous_charge_current_matching.py --config configs/p08c_1781054166_1411_4282226f_continuous_charge_current_matching.json
+/home/billy/anaconda3/bin/python {script} --config {config}
 ```
 
 Artifacts include `result.json`, `manifest.json`, `input_sha256.csv`,
@@ -870,9 +871,11 @@ Artifacts include `result.json`, `manifest.json`, `input_sha256.csv`,
 `matching_sensitivity.csv`, `matched_balance_smd.csv`, `scoreboard.csv`,
 `heldout_run_label_counts.csv`, and `oof_prediction_preview.csv`.
 """.format(
+        title=cfg["title"],
         ticket=cfg["ticket_id"],
         worker=cfg["worker"],
         raw_root_dir=result["raw_root_dir"],
+        script=result["script"],
         commit=result["git_commit_at_run"],
         config=result["config"],
         reproduction_table=reproduction.to_markdown(index=False),
@@ -999,8 +1002,8 @@ def main() -> int:
         "runtime_sec": round(time.time() - t0, 1),
     }
     result["primary_interpretation"] = (
-        "Continuous charge/current matching suppresses the P08b nuisance shortcut relative to the pre-matched even-charge proxy, "
-        "but the weak label remains a charge-residual construct. The named winner is a leakage-control benchmark winner, not a PID adoption result."
+        "After calibrated charge-depth and range-energy residual controls, the benchmark remains a charge-residual null test. "
+        "The named winner is a leakage-control benchmark winner, not a PID adoption result."
     )
     (out_dir / "result.json").write_text(json.dumps(json_sanitize(result), indent=2) + "\n", encoding="utf-8")
     write_report(out_dir, cfg, p08b_cfg, result, reproduction, label_support, sensitivity, balance, scoreboard)

@@ -1,0 +1,256 @@
+{
+  "study": "S14e",
+  "ticket_id": "1781103906.2406.756b7515",
+  "worker": "testbeam-laptop-2",
+  "title": "external A-stack validation of accepted saturation bands",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "s14d_reference": {
+    "result": "reports/1781033028.1769.29f13a58__s14d_saturation_acceptance_bands/result.json",
+    "winner": {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "saturated_energy_res68": 0.0182769327627102,
+      "saturated_energy_res68_ci95": [
+        0.017167606514002735,
+        0.020763694131705136
+      ],
+      "saturated_charge_res68": 0.051136482071173724,
+      "all_heldout_energy_res68": 0.013137727206483428
+    },
+    "accepted_band_count": 12
+  },
+  "row_definition": {
+    "match_key": "(run, EVT)",
+    "source": "B-stack even-channel waveform and charge summaries",
+    "target": "selected A1/A3 positive-lobe charge",
+    "n_rows": 4055,
+    "runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ]
+  },
+  "split": "leave-one-run-out by run",
+  "bootstrap": {
+    "unit": "held-out run block",
+    "reps": 500
+  },
+  "feature_names": [
+    "depth_idx",
+    "b_mult",
+    "b_downstream_mult",
+    "log_b2_charge",
+    "log_btotal_charge",
+    "log_bdown_charge",
+    "bdown_frac",
+    "log_charge_B2",
+    "log_charge_B4",
+    "log_charge_B6",
+    "log_charge_B8",
+    "log_amp_B2",
+    "log_amp_B4",
+    "log_amp_B6",
+    "log_amp_B8",
+    "peak_B2",
+    "peak_B4",
+    "peak_B6",
+    "peak_B8",
+    "half_width_B2",
+    "half_width_B4",
+    "half_width_B6",
+    "half_width_B8",
+    "early_charge_fraction",
+    "late_charge_fraction"
+  ],
+  "summary": [
+    {
+      "method": "physics_residual_mlp",
+      "split": "leave-one-run-out",
+      "n": 4055,
+      "bias_median_frac": -0.03895304322981818,
+      "res68_abs_frac": 0.3593393400445642,
+      "full_rms_frac": 0.5843268628210534,
+      "within_10pct": 0.18594327990135634,
+      "within_25pct": 0.48212083847102344,
+      "tail_gt50pct": 0.17928483353884095,
+      "bias_ci95": [
+        -0.05640351833285385,
+        -0.014440069109148131
+      ],
+      "res68_ci95": [
+        0.35267585321776607,
+        0.3716405837302852
+      ],
+      "full_rms_ci95": [
+        0.5226145039401717,
+        0.6722844802435657
+      ]
+    },
+    {
+      "method": "traditional_depth_charge_bins",
+      "split": "leave-one-run-out",
+      "n": 4055,
+      "bias_median_frac": -0.004818971530023115,
+      "res68_abs_frac": 0.3610465207839556,
+      "full_rms_frac": 0.6215742807144685,
+      "within_10pct": 0.19482120838471023,
+      "within_25pct": 0.49124537607891494,
+      "tail_gt50pct": 0.19309494451294698,
+      "bias_ci95": [
+        -0.024213625877292654,
+        0.014188135941845646
+      ],
+      "res68_ci95": [
+        0.3508952156308627,
+        0.37643550245937146
+      ],
+      "full_rms_ci95": [
+        0.547008305728141,
+        0.7170850744622831
+      ]
+    },
+    {
+      "method": "ridge",
+      "split": "leave-one-run-out",
+      "n": 4055,
+      "bias_median_frac": -0.046015532912168436,
+      "res68_abs_frac": 0.5201045629961657,
+      "full_rms_frac": 0.8458468866290146,
+      "within_10pct": 0.1376078914919852,
+      "within_25pct": 0.349691738594328,
+      "tail_gt50pct": 0.3422934648581998,
+      "bias_ci95": [
+        -0.07121577490542913,
+        -0.020282724779445042
+      ],
+      "res68_ci95": [
+        0.5025130430619305,
+        0.5369326813838093
+      ],
+      "full_rms_ci95": [
+        0.7390191241119445,
+        0.9781180920858049
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "split": "leave-one-run-out",
+      "n": 4055,
+      "bias_median_frac": -0.047558341128352694,
+      "res68_abs_frac": 0.5223751898559597,
+      "full_rms_frac": 0.8490565656997154,
+      "within_10pct": 0.14007398273736127,
+      "within_25pct": 0.34303329223181256,
+      "tail_gt50pct": 0.34254007398273734,
+      "bias_ci95": [
+        -0.07106424494100236,
+        -0.022801262988081893
+      ],
+      "res68_ci95": [
+        0.5043491002430095,
+        0.5441303081345482
+      ],
+      "full_rms_ci95": [
+        0.750664733362694,
+        1.0016017963357018
+      ]
+    },
+    {
+      "method": "mlp",
+      "split": "leave-one-run-out",
+      "n": 4055,
+      "bias_median_frac": -0.7801539969200615,
+      "res68_abs_frac": 0.9360031386693727,
+      "full_rms_frac": 1.7699367160278674,
+      "within_10pct": 0.02688039457459926,
+      "within_25pct": 0.06954377311960543,
+      "tail_gt50pct": 0.8451294697903823,
+      "bias_ci95": [
+        -0.8347685185185184,
+        -0.6532338255118054
+      ],
+      "res68_ci95": [
+        0.9320081799915243,
+        0.939848476269088
+      ],
+      "full_rms_ci95": [
+        1.604036210002127,
+        1.9441743910586489
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "split": "leave-one-run-out",
+      "n": 4055,
+      "bias_median_frac": -0.9189324247586598,
+      "res68_abs_frac": 0.9363223024979461,
+      "full_rms_frac": 0.9031479790659781,
+      "within_10pct": 0.0007398273736128237,
+      "within_25pct": 0.0014796547472256474,
+      "tail_gt50pct": 0.9975339087546239,
+      "bias_ci95": [
+        -0.9206860344580828,
+        -0.9170579691424445
+      ],
+      "res68_ci95": [
+        0.9342340469440843,
+        0.9378173754652728
+      ],
+      "full_rms_ci95": [
+        0.9002686202776173,
+        0.9056029443718024
+      ]
+    }
+  ],
+  "winner": {
+    "method": "physics_residual_mlp",
+    "res68_abs_frac": 0.3593393400445642,
+    "res68_ci95": [
+      0.35267585321776607,
+      0.3716405837302852
+    ],
+    "bias_median_frac": -0.03895304322981818,
+    "full_rms_frac": 0.5843268628210534,
+    "within_25pct": 0.48212083847102344
+  },
+  "finding": "External A-stack transfer is much broader than S14d duplicate-readout closure. The winner is physics_residual_mlp with selected-A charge res68 0.35934 [0.35268, 0.37164], while the strong traditional hierarchical bins give 0.36105 [0.3509, 0.37644]. The imported S14d winner was gradient_boosted_trees on duplicate-readout saturated B-stack energy proxy, but the external A-stack handle is topology- and acceptance-limited; therefore S14d accepted bands should not be promoted as detector-independent range-energy corrections without a geometry-aware external calibration.",
+  "novel_ticket": {
+    "title": "S14f: external A-stack energy proxy calibration with geometry-aware controls",
+    "body": "Fit a geometry-aware A-stack energy proxy and repeat the S14e external-transfer test with explicit A-stack acceptance and range-order nuisance bands. Expected information gain: distinguishes broad external charge transfer from unmodeled A-stack geometry and selection effects."
+  },
+  "runtime_sec": 123.7
+}

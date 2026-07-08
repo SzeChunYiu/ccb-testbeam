@@ -1,0 +1,13 @@
+method,metric,ci_low,ci_high,bootstrap_samples
+traditional_template_delta_sse,high_minus_low_candidate_rate,-0.011432741242400912,0.06561959004850565,400
+traditional_template_delta_sse,support_jaccard,0.0,0.9032258064516129,400
+ridge_linear_classifier,high_minus_low_candidate_rate,-0.25798805230669264,-0.09196007633587781,400
+ridge_linear_classifier,support_jaccard,0.0,0.8888888888888888,400
+gradient_boosted_trees,high_minus_low_candidate_rate,-0.2106098493688342,-0.09361436291240045,400
+gradient_boosted_trees,support_jaccard,0.0,0.6842105263157895,400
+mlp_dense_waveform,high_minus_low_candidate_rate,-0.21626892705014136,-0.08865584577114437,400
+mlp_dense_waveform,support_jaccard,0.0,0.8421052631578947,400
+random_filter_1d_cnn,high_minus_low_candidate_rate,-0.0858978838469461,0.0077470019342359845,400
+random_filter_1d_cnn,support_jaccard,0.0,0.8,400
+hybrid_template_residual_stack,high_minus_low_candidate_rate,-0.14893396946564885,-0.045039285714285775,400
+hybrid_template_residual_stack,support_jaccard,0.0,0.7692307692307693,400

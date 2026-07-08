@@ -1,0 +1,2 @@
+quantity,expected,reproduced_from_raw_root,s12a_result_reproduced,delta,raw_files_present,selector_script,selector_config,pass
+S00 selected B-stave pulse records,640737,640737,640737,0,53,scripts/s12a_0000000012_1_truthtiming.py,configs/s12a_0000000012_1_truthtiming.yaml,True

@@ -1,0 +1,38 @@
+{
+  "study": "analysis_report_refresh",
+  "ticket": "1781083988.768.29c955ca",
+  "worker": "testbeam-laptop-2",
+  "title": "Refresh docs/ANALYSIS_REPORT.md periodically from new reports",
+  "reproduced": true,
+  "primary_deliverable": "docs/ANALYSIS_REPORT.md",
+  "winner": {
+    "overall": "documentation_refresh_complete",
+    "reason": "The claimed ticket was a synthesis/documentation refresh. The updated analysis report now summarizes the latest bounded report set, adds method-winner rows with CIs, and revises caveats and open-question status."
+  },
+  "sources_read": [
+    "reports/SUMMARY.md",
+    "FINDINGS_SYNTHESIS.md",
+    "docs/ANALYSIS_REPORT.md",
+    "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/REPORT.md",
+    "reports/1781081181.768.455d705f__s16p_pretrigger_tau_sign_inversion_falsifier/REPORT.md",
+    "reports/1781081189.836.1e03033f__s10r_overlay_to_real_pileup_backprojection/REPORT.md",
+    "reports/1781081167.631.051f65df__s02l_dynamic_only_timing_quarantine_boundary/REPORT.md",
+    "reports/1781081173.700.0ebd3bf2__p04x_dynamic_externalization_null/REPORT.md"
+  ],
+  "updated_sections": [
+    "12.1 Latest Refresh From July 2026 Reports",
+    "12 Method Winners by Theme",
+    "13.5 ML Label Source Risk",
+    "14 Open Questions and GEANT4 Path",
+    "Source Reports Read for This Chapter"
+  ],
+  "new_method_winner_rows": [
+    "dynamic_only_timing_support",
+    "overlay_pileup_backprojection",
+    "dynamic_selector_duplicate_charge",
+    "pretrigger_tau_sign",
+    "geant4_truth_pid_bridge"
+  ],
+  "scientific_summary": "The refresh reinforces the previous synthesis: boosted trees and other ML methods win well-labeled closure or simulation-truth tasks, but support-changing applications remain gated by externalization. Dynamic-only timing remains a traditional median-first timing win; overlay pile-up classifiers win synthetic overlay ranking but do not yet transfer to real high-current candidates; dynamic-selector charge closure wins duplicate-readout closure but fails the event-external proxy; S17a gives a strong GEANT4 truth-side HGB PID ranking win that is not yet a data calibration.",
+  "next_tickets": []
+}

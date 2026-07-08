@@ -542,23 +542,48 @@ is a useful weak-label stress test, not a PID adoption result.
 
 ## 12. Method Winners by Theme
 
+### 12.1 Latest Refresh From July 2026 Reports
+
+The July 8 refresh adds five representative post-synthesis reports. They do
+not overturn the central pattern, but they sharpen several boundaries:
+
+| Study | Question | Strong traditional comparator | ML/NN field | Winner or status | Reason |
+|---|---|---|---|---|---|
+| S17a GEANT4 truth bridge | Can GEANT4 truth support p/d PID ranking? | DeltaE/range cut AP 0.7666 [0.7570, 0.7771] | HGB AP 0.9918 [0.9910, 0.9925]; 1D-CNN 0.9904; MLP 0.9902; ridge 0.9381; gated CNN 0.8546 | HGB, simulation-side | ML clearly wins truth PID ranking on pseudo-run splits, but the bridge is not a data calibration until the response chain and MV3/MV4 issues are closed. |
+| S02l dynamic-only timing quarantine | Does dynamic-only support improve timing if quarantined or proxy-refit? | Global median-first timing refit sigma68 1.655 [1.530, 1.847] ns | Dynamic-boundary/proxy refits 5.18 ns scale with wide CIs | Traditional | Dynamic-only rows remain a timing-risk support class; transparent quarantine/proxy refits degrade the run-held-out timing metric. |
+| S10r overlay-to-real pile-up backprojection | Do overlay-trained classifiers transfer to real high-current candidates? | Template delta-SSE overlay AUC 0.770 [0.738, 0.804] | GBT overlay AUC 0.862 [0.836, 0.888]; ridge 0.829; MLP 0.818 | Mixed; no adoption | GBT wins synthetic overlay classification, but real backprojection score shifts are negative for ML and near-null for the template score. |
+| S16p pretrigger tau sign falsifier | Is pretrigger tau sign aligned with downstream current excess? | Stratified pretrigger current score downstream delta 0.5938 [0.5388, 0.6806] | Ridge delta 0.6307 [0.5699, 0.7406]; GBT 0.6274; CNN/TCN higher AUC but wrong operational sign gain | Ridge diagnostic | Ridge gives the largest positive ML-minus-traditional downstream-sign lift, 0.0359 [0.0137, 0.0629], but this is a diagnostic sign test, not a pile-up rate calibration. |
+| P04x dynamic externalization null | Does dynamic-selector charge closure externalize? | Strong Huber duplicate res68 0.696 [0.642, 0.879] | Dynamic-selector GBT duplicate res68 0.0877 [0.0693, 0.0951]; external res68 0.903 [0.840, 0.937] | ML wins duplicate closure; externalization mostly null | Dynamic-selector GBT is excellent against duplicate readout but still fails the event-external proxy at near-unity fractional resolution. |
+
+These reports reinforce the existing interpretation. ML is strong for
+well-labeled closure or simulation-truth tasks, especially boosted trees on
+structured pulse/range features. The same scores should not be promoted across
+support boundaries without externalization: dynamic-only charge, overlay
+pile-up, and pretrigger tau all pass useful diagnostics but remain gated for
+physics-facing correction.
+
 | Theme | Strong traditional method | ML/NN method | Winner | Basis |
 |---|---|---|---|---|
 | S00 selection | Deterministic raw HRDv threshold | Logistic sanity checks | Traditional | Exact threshold rule reproduces 640,737 |
 | Timing pickoff, weak baseline | Template phase | Ridge on CFD20 | ML diagnostic | 1.846 ns vs 2.889 ns on run 65 |
 | Timewalk adoption | Analytic amplitude timewalk | Ridge residual correction | Tie / prefer traditional | LORO 1.551 [1.367, 1.903] vs 1.537 [1.335, 1.819] |
+| Dynamic-only timing support | Median-first global timing refit | Dynamic-boundary/proxy refits | Traditional | 1.655 [1.530, 1.847] ns vs proxy refits near 5 ns |
 | Error structure | Pair covariance decomposition | ExtraTrees residual model | Mixed | ML narrows residuals; B2-local covariance remains the finding |
 | A-stack timing | CFD20 polynomial timewalk | Ridge timewalk | Tie | ML-minus-trad CI [-0.054, 0.026] ns |
 | Pile-up live-time | Template tail live10 | Ridge live10 diagnostic | Traditional | Both agree near 124 ns; template gives physics-facing rescale to 3.05 MHz |
 | Current excess | Matched topology/rate excess | CWoLa/current scores | Traditional | ML diagnostics not calibrated; Brier/log-loss worse in S10f |
+| Overlay pile-up backprojection | Template delta-SSE | GBT/ridge/MLP overlay classifiers | Synthetic ML, real-data gated | GBT overlay AUC 0.862, but real ML score shifts are negative |
 | Two-pulse synthetic recovery | Bounded template fit | Compact MLP | ML on RMS, not failure rate | 9.07 ns vs 17.36 ns, but ML failure about 0.25 |
 | Representation | PCA and hand features | Masked AE | Mixed | PCA wins dim-4 recon in P01; AE useful compact/probe signal |
 | Anomaly triage | Robust template ranker | PCA/AE/IsolationForest | Mixed | Traditional curated precision; ML novel precision |
 | Duplicate amplitude/charge | Peak/integral calibration | HGB | ML | Amplitude res68 0.009 vs 0.124; charge 0.015 vs 0.195 |
+| Dynamic-selector duplicate charge | Strong Huber duplicate closure | Dynamic-selector GBT, MLP, CNN, gated CNN | ML for duplicate closure only | GBT res68 0.0877, but event-external res68 0.903 |
 | Saturation closure | Rising-edge template | Gradient-boosted regressor | ML on artificial truth | res68 0.0298 vs 0.1480 |
 | Energy proxy | Observed/template charge | P07/P04 corrected ML | ML for proxy only | energy-proxy res68 0.0145 vs 0.0289 |
 | Pedestal proxy | Mean/median/adaptive | HGBR | ML proxy | MAE 48.9 ADC vs 260-341 ADC |
+| Pretrigger tau sign | Stratified pretrigger current score | Ridge, GBT, CNN, dilated TCN | Ridge diagnostic | Downstream-sign lift over traditional 0.0359 [0.0137, 0.0629] |
 | PID weak label | Charge-depth logistic | Waveform/PCA HGB | Tie / no adoption | AUCs both 0.986; label-source closure dominates |
+| GEANT4 truth PID bridge | DeltaE/range cut | HGB, MLP, 1D-CNN, ridge, gated CNN | HGB simulation-side | AP 0.9918 [0.9910, 0.9925] vs 0.7666 [0.7570, 0.7771] |
 
 ## 13. Systematics and Caveats
 
@@ -595,6 +620,13 @@ span, curvature, topology, duplicate charge, or other features adjacent to the
 input. Such models can be valuable diagnostics but are rejected as independent
 physics measurements unless a separate truth source exists.
 
+The newest dynamic-selector and overlay studies make this caveat more
+operational. A method can win a local closure target by an order of magnitude
+and still fail an event-external proxy or real-current backprojection. The
+required evidence for promotion is therefore not only a held-out run split, but
+also a support-preserving externalization test whose target is not the same
+electronics or synthetic construction that trained the score.
+
 ### 13.6 Pile-Up Rate
 
 The measured live-time revision changes the rate interpretation but not the
@@ -629,7 +661,10 @@ wiki page `09-Monte-Carlo-Validation`), are:
    This is not yet a data-usable PID calibration: it depends on the same
    geometry and digitizer that MV3/MV4 show still need correction, so it
    should be treated as a promising simulation-side result pending those
-   fixes, not as ready for adoption on real data.
+   fixes, not as ready for adoption on real data. The S17a truth-bridge
+   extension strengthens this point: HGB reaches AP 0.9918 on p/d truth, far
+   above a DeltaE/range cut, but the target remains GEANT4 truth under
+   pseudo-run splits rather than an independently calibrated data label.
 3. **Still open.** No true forced/random pedestal events have been located.
    Two independent data-driven proxies were built instead (S16, held-out
    pre-trigger samples within physics events; and the separately-ticketed
@@ -637,7 +672,9 @@ wiki page `09-Monte-Carlo-Validation`), are:
    "quiet" no-pulse physics events) and both explicitly recommend acquiring
    real forced-trigger data as the only way to close this question.
 4. **Still open.** ML two-pulse failure rates have not been validated on real
-   high-current unresolved candidates, only on synthetic overlays.
+   high-current unresolved candidates, only on synthetic overlays. S10r adds a
+   direct warning: overlay classifiers rank synthetic overlap well, but their
+   real high-current backprojection shifts are negative or support dependent.
 5. **Closed.** S12a (`reports/0000000012.1.truthtiming/`) measured the
    analysed-stave median separation directly from GEANT4 truth hit positions
    at 4.0258 cm, confirming the 4 cm centre-to-centre convention (within
@@ -698,3 +735,8 @@ representative reports:
 | Energy proxy | `reports/1781014263.712.4e9c774b/REPORT.md` |
 | Pedestal | `reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/REPORT.md` |
 | PID weak labels | `reports/1781027807.3490.5cdd4b0b/REPORT.md` |
+| Latest dynamic timing boundary | `reports/1781081167.631.051f65df__s02l_dynamic_only_timing_quarantine_boundary/REPORT.md` |
+| Latest overlay-to-real pile-up | `reports/1781081189.836.1e03033f__s10r_overlay_to_real_pileup_backprojection/REPORT.md` |
+| Latest pretrigger tau sign test | `reports/1781081181.768.455d705f__s16p_pretrigger_tau_sign_inversion_falsifier/REPORT.md` |
+| Latest dynamic charge externalization | `reports/1781081173.700.0ebd3bf2__p04x_dynamic_externalization_null/REPORT.md` |
+| Latest GEANT4 truth bridge | `reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/REPORT.md` |

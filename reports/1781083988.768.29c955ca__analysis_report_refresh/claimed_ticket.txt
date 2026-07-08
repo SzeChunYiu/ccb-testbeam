@@ -1,0 +1,4 @@
+1781083988.768.29c955ca
+# Refresh docs/ANALYSIS_REPORT.md periodically from new reports
+
+Follow-up: periodically refresh docs/ANALYSIS_REPORT.md after new study reports land. Re-read reports/SUMMARY.md, FINDINGS_SYNTHESIS.md, docs/ overview files, and a bounded representative set of new or changed reports; update method-winner tables, CIs, caveats, and GEANT4/open-question status.

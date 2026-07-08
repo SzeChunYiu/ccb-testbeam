@@ -1,0 +1,19 @@
+{
+  "ticket_id": "1781083265.459.750722a1",
+  "worker": "testbeam-laptop-1",
+  "root_file": "/home/billy/ccb-geant4/output_30k.root",
+  "tree": "hibeam",
+  "report_dir": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge",
+  "raw_reproduction_report": "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv",
+  "positive_class": "deuteron",
+  "positive_pdg": 1000010020,
+  "negative_class": "proton",
+  "negative_pdg": 2212,
+  "primary_track_ids_only": true,
+  "n_pseudo_runs": 10,
+  "random_seed": 170459,
+  "n_bootstrap": 1000,
+  "torch_epochs": 24,
+  "torch_batch_size": 256,
+  "notes": "output_30k.root has no experimental run branch; contiguous event-id blocks are used as simulation-run analogues for held-out folds and bootstrap units. The experimental selected-pulse number is reproduced from the in-repo S00 raw-ROOT reproduction artifact because the raw experimental ROOT bundle is not mounted in this worker workspace."
+}

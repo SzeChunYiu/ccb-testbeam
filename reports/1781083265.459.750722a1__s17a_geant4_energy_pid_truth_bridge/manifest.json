@@ -1,0 +1,113 @@
+{
+  "ticket_id": "1781083265.459.750722a1",
+  "worker": "testbeam-laptop-1",
+  "created_utc": "2026-07-08T16:01:22Z",
+  "git_commit": "0efd268407a6fc4e6d270390b7f455265a87cfcf",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "packages": {
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117",
+    "uproot": "5.0.9"
+  },
+  "random_seed": 170459,
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/s17a_1781083265_459_750722a1_g4_energy_pid_truth_bridge.py --config configs/s17a_1781083265_459_750722a1_g4_energy_pid_truth_bridge.json"
+  ],
+  "input_sha256": [
+    {
+      "path": "/home/billy/ccb-geant4/output_30k.root",
+      "sha256": "f831db709cd7446e4a75c8883a8dd82be4a1b23e05bef3002f2991082214a84f",
+      "role": "GEANT4 truth ROOT"
+    },
+    {
+      "path": "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv",
+      "sha256": "b6227057386a9dc110b8b7c9ee2047ff4725be3c9c62da3fb65129c12a183dcf",
+      "role": "S00 experimental raw-ROOT reproduction table"
+    },
+    {
+      "path": "configs/s17a_1781083265_459_750722a1_g4_energy_pid_truth_bridge.json",
+      "sha256": "da37f8ecafd465f96dee26b6f04e56579394e4fcd439d07e5993b245c3fffee2",
+      "role": "analysis config"
+    }
+  ],
+  "output_sha256": [
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/REPORT.md",
+      "sha256": "69fd97d6d1716282d306c708214dd7ee06b5a73760d6d7414fd4a5b51ea5ba2c"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/energy_scale_validation.csv",
+      "sha256": "242ea276af49280ce763f9ac0da9bdab3a3c4318b08ab7936ab53b654297ef65"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/fig_layer_truth_profile.png",
+      "sha256": "345e9f1a3c758abd4e5dade3c3228330ccfc2acd8c1381ae3196ad868247612a"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/fig_pid_average_precision.png",
+      "sha256": "a424619de679b908e6086d0d10c9e4a45f6e27cf3bcbe66a8c08ccdb264e3db6"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/fig_winner_reliability.png",
+      "sha256": "163ccfd193465acb28ae843dea80d4decf6a2198394ebd9ecca654bebec65011"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/geant4_reproduction_gate.csv",
+      "sha256": "c7b1362ac44d30431d1922ba7661da2c28669f3038f22b0be202fb35174e683b"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/input_sha256.csv",
+      "sha256": "c9be31ccee4436fe64dce9a57e016fc4235131f8af25239122a75bf08d3f98aa"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/layer_mapping_truth.csv",
+      "sha256": "04ebc6c5839329f3666ad5aeba98594dfd9e910da207d7d0d03335478deb062d"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/leakage_checks.csv",
+      "sha256": "ad9337507d9be53152d5368663734b479dc058a35ad1a406fb391a8001bfe34c"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_benchmark.csv",
+      "sha256": "d4eff3e7b1797db827f5954b3facf6353e02fc35762ba066776ff594d3dec62b"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_per_pseudo_run.csv",
+      "sha256": "15077923b623a1622dedcf56e5d6f2dd25c0893a5b803d77a1622a86fc88794a"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_predictions.csv",
+      "sha256": "1d26c44ba902b24f03e2ff08405cec0325c9b36a162563619ff5ae2423b815a2"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_thresholds.csv",
+      "sha256": "d92962f1af587c6e47c4c9c1cda3580cd8f48197eb0b714d429aae09e19d4486"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_track_dataset.csv",
+      "sha256": "7c9d785672f3dae0c3705a62d3afb9b32fde67d8b4827831b13050d2c56a9f2c"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/raw_reproduction_gate.csv",
+      "sha256": "5ba9d8774ff1315b413eee28cb6023a1cee2ccf75d7803e02f9a20fac7595b0a"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/raw_root_reproduction_s00_count_match_table.csv",
+      "sha256": "b6227057386a9dc110b8b7c9ee2047ff4725be3c9c62da3fb65129c12a183dcf"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/result.json",
+      "sha256": "04c1d31eba57c1150e29006b55b6ea89d724246df661e16b2fff75ab81ebd747"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/stave_mapping_data_vs_sim.csv",
+      "sha256": "c7b0422180c7e488353bd0f8ef2d75482a7a65687e47ec0f68d3a99824c1cb07"
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/winner_reliability.csv",
+      "sha256": "008ca5a2a73a7f2b09c130537293711e0150ba19c30c075fd800a319cbb19dba"
+    }
+  ]
+}

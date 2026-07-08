@@ -1,0 +1,8 @@
+quantity,reference_value,reproduced,delta,tolerance,pass
+total selected B-stave pulses from experimental raw ROOT,640737,640737,0,0,True
+total selected B-stave pulses,640737,640737,0,0,True
+sample_i_calib events with selected pulse,239559,239559,0,0,True
+sample_i_calib selected pulses,248745,248745,0,0,True
+sample_i_analysis events with selected pulse,243133,243133,0,0,True
+sample_i_analysis selected pulses,252266,252266,0,0,True
+sample_i_analysis B2 selected pulses,241422,241422,0,0,True

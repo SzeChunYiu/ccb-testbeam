@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_reproduction_before_modeling,640737,True,script raises before model training if this is false
+leave_one_run_train_test_overlap,0,True,run identifier is used only for splitting and bootstrap blocks
+identifier_columns_absent_from_features,0,True,"run, eventno, evt, event_index, channel, and stave are not in SCALAR_FEATURES"
+all_methods_same_eval_rows,1,True,head-to-head methods must score the same delayed candidates
+finite_predictions,1,True,NaN predictions would invalidate recovery scoring

@@ -2,7 +2,7 @@
   "command": "/home/billy/anaconda3/bin/python scripts/p10n_1781078146_875_034f6846_peak_phase_counterfactual.py --config configs/p10n_1781078146_875_034f6846_peak_phase_counterfactual.json",
   "config": "configs/p10n_1781078146_875_034f6846_peak_phase_counterfactual.json",
   "config_sha256": "5a96f4ec46ff1b277f7d26b427927dfaf3fbaef3c426b226ee8f3623b7c5dcd2",
-  "git_commit": "c4544ad50b600acf3852b36752c03aecbaa4610e",
+  "git_commit": "874cb8faf0a15da6154aeb9d8304b46daf7698b5",
   "inputs": [
     {
       "bytes": 11638901,
@@ -172,9 +172,9 @@
   ],
   "outputs": [
     {
-      "bytes": 18678,
+      "bytes": 18819,
       "path": "reports/1781078146.875.034f6846__p10n_peak_phase_counterfactual/REPORT.md",
-      "sha256": "0dd823b9493f3e1de075f3ff95ec101d18193dea63d71df8c096fde556fcc40c"
+      "sha256": "1adfcb3a94e385b4bcb1451ee522661e8baffec91f2e93bd67c2abc4ef28ee22"
     },
     {
       "bytes": 605350,
@@ -244,7 +244,7 @@
     {
       "bytes": 66118,
       "path": "reports/1781078146.875.034f6846__p10n_peak_phase_counterfactual/result.json",
-      "sha256": "bd10c9eb06f3b04fcf4b269f3e78ee1cd921374fafdc0c556e61ea9b7cb82e6a"
+      "sha256": "2430ec6c3cd7857b1c48c4d6b584a47684bc2b7eff158c4bc4fbc95e9ee31966"
     },
     {
       "bytes": 2457,
@@ -262,7 +262,7 @@
   "random_seed": 20260708,
   "resume_note": "Final artifact assembly resumed from fold-complete CSV outputs after atlas-column patch; model folds were not rerun.",
   "script": "scripts/p10n_1781078146_875_034f6846_peak_phase_counterfactual.py",
-  "script_sha256": "1ff25828b77b0fc31da6e900bfdb59c419625f9cc8c8cf1c88577fccc9fb686e",
+  "script_sha256": "2cde269a696d465d2e856a85785e755e618826d88ecb5d45f82f8376ce75699d",
   "study": "P10n",
   "support_scripts": [
     {

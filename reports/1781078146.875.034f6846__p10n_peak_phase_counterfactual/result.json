@@ -503,7 +503,7 @@
       "traditional_templates": 524
     }
   ],
-  "git_commit": "c4544ad50b600acf3852b36752c03aecbaa4610e",
+  "git_commit": "874cb8faf0a15da6154aeb9d8304b46daf7698b5",
   "leakage_audit": {
     "control_false_pass_rate": 0.0,
     "heldout_absent_from_train": true,

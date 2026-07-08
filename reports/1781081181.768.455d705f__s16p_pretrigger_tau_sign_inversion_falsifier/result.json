@@ -1,0 +1,197 @@
+{
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "input_sha256.csv",
+    "reproduction_match_table.csv",
+    "method_summary.csv",
+    "method_deltas_vs_traditional.csv",
+    "fold_scores.csv.gz",
+    "sign_diagnostic.png"
+  ],
+  "bootstrap_replicates": 500,
+  "environment": {
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10"
+  },
+  "git_commit": "b8934e5358c09125709ede8039e9775b0a3dd972",
+  "methods": [
+    {
+      "auc": 0.5083875143215119,
+      "auc_ci_high": 0.6559632698851643,
+      "auc_ci_low": 0.4132626226773891,
+      "average_precision": 0.9288334299638432,
+      "brier": 0.0676130399423139,
+      "log_loss": 0.3458459779248597,
+      "method": "traditional",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.6806437744636582,
+      "predicted_downstream_delta_ci_low": 0.5387772684070185,
+      "predicted_high_minus_low_downstream": 0.5938433518993197,
+      "score_downstream_slope": 4.48758546280246
+    },
+    {
+      "auc": 0.522485645449109,
+      "auc_ci_high": 0.6901558446467991,
+      "auc_ci_low": 0.4144804446701653,
+      "average_precision": 0.9381233182706168,
+      "brier": 0.1162277156112183,
+      "log_loss": 0.4112380021153416,
+      "method": "ridge",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.7406101741564134,
+      "predicted_downstream_delta_ci_low": 0.5698950184943502,
+      "predicted_high_minus_low_downstream": 0.630706124643706,
+      "score_downstream_slope": 14.03962920234602
+    },
+    {
+      "auc": 0.4971241339638163,
+      "auc_ci_high": 0.6918074226088717,
+      "auc_ci_low": 0.3773775542890558,
+      "average_precision": 0.9042385398970976,
+      "brier": 0.067076336018109,
+      "log_loss": 0.3097975986170226,
+      "method": "gradient_boosted_trees",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.7123788023909187,
+      "predicted_downstream_delta_ci_low": 0.5629830163385517,
+      "predicted_high_minus_low_downstream": 0.6274344809831357,
+      "score_downstream_slope": 4.652529872227237
+    },
+    {
+      "auc": 0.3315753497826214,
+      "auc_ci_high": 0.5538251335266485,
+      "auc_ci_low": 0.1991897359985235,
+      "average_precision": 0.8975545959253698,
+      "brier": 0.0678570817395373,
+      "log_loss": 0.3061718529780594,
+      "method": "mlp",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.531147027001193,
+      "predicted_downstream_delta_ci_low": 0.3123768954627709,
+      "predicted_high_minus_low_downstream": 0.4303010482805389,
+      "score_downstream_slope": 5.362013667633295
+    },
+    {
+      "auc": 0.6959697677978627,
+      "auc_ci_high": 0.8300895909365686,
+      "auc_ci_low": 0.6037127713907878,
+      "average_precision": 0.959304472101122,
+      "brier": 0.2396025721753487,
+      "log_loss": 0.6661803697817965,
+      "method": "cnn1d",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.5340264587528328,
+      "predicted_downstream_delta_ci_low": 0.3554608829365276,
+      "predicted_high_minus_low_downstream": 0.4439456492244142,
+      "score_downstream_slope": 1.4147607663584976
+    },
+    {
+      "auc": 0.6324688909780991,
+      "auc_ci_high": 0.7440140082757972,
+      "auc_ci_low": 0.5429760483008775,
+      "average_precision": 0.954513806952099,
+      "brier": 0.2425410453752102,
+      "log_loss": 0.6728635176298441,
+      "method": "dilated_pretrigger_tcn",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.4655113147366203,
+      "predicted_downstream_delta_ci_low": 0.3134701696404812,
+      "predicted_high_minus_low_downstream": 0.3744434631665499,
+      "score_downstream_slope": 1.4213675278283875
+    }
+  ],
+  "ml_minus_traditional": [
+    {
+      "ci_high": 0.0629197207667588,
+      "ci_low": 0.0136487339643603,
+      "delta": 0.0359170557369404,
+      "method": "ridge",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": 0.0424090261192114,
+      "ci_low": 0.0179504882255928,
+      "delta": 0.0312757450959669,
+      "method": "gradient_boosted_trees",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": -0.0470593570779571,
+      "ci_low": -0.315955899104353,
+      "delta": -0.1652378156096194,
+      "method": "mlp",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": -0.0782757634362216,
+      "ci_low": -0.2208303443518296,
+      "delta": -0.1520222207763905,
+      "method": "cnn1d",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": -0.1476725413530169,
+      "ci_low": -0.2663630269660953,
+      "delta": -0.2127805983138181,
+      "method": "dilated_pretrigger_tcn",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    }
+  ],
+  "next_tickets": [
+    "S16q: validate pretrigger tau sign using external tagged-random or scaler-current records"
+  ],
+  "promotion_rule": "promote an ML/NN method only if downstream sign CI and ML-minus-traditional sign CI are wholly positive; otherwise retain traditional",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "delta": 0,
+      "expected": 640737,
+      "pass": true,
+      "quantity": "total selected B-stave pulses from raw HRDv",
+      "reproduced": 640737
+    },
+    {
+      "delta": 0,
+      "expected": 0,
+      "pass": true,
+      "quantity": "non-beam selected pulses in benchmark runs",
+      "reproduced": 0
+    }
+  ],
+  "runtime_sec": null,
+  "sign_summary": {
+    "benchmark_rows": 9381,
+    "benchmark_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "high_downstream_fraction": 0.7007649275031397,
+    "low_downstream_fraction": 0.28135048231511256,
+    "observed_downstream_high_minus_low": 0.4194144451880271
+  },
+  "split": "leave one source run out over S10 low_2nA and high_20nA current-family runs; run-block bootstrap CIs",
+  "study": "S16p",
+  "ticket": "1781081181.768.455d705f",
+  "title": "pretrigger tau sign-inversion falsifier",
+  "winner": "ridge",
+  "worker": "testbeam-laptop-3"
+}

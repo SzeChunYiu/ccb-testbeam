@@ -1,0 +1,6 @@
+policy,threshold,target_acceptance
+fixed_q_shape_veto,4.364915274261227,0.95
+rf_external_veto,0.9895690005869863,0.95
+logistic_external_veto,0.9970812751881863,0.95
+topology_only_sentinel,0.9864960210020847,0.95
+shuffled_label_sentinel,0.6235079360473009,0.95

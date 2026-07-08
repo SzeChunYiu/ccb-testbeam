@@ -1,0 +1,18 @@
+{
+  "artifacts": {
+    "REPORT.md": "fa8dcca46cb73d351bf53710e238d391fd83631cfca928ba6f76d009fb4808fa",
+    "benchmark_metrics.csv": "a1df411a24dd91715d7646ebfc1090e4c13679a9d925e7359e0f53bff72b07a7",
+    "contract_table.csv": "a821f214df42795ed2f2290332d4182238b75a5d4b89eabda2220d6a08defb9d",
+    "layer_coordinate_summary.csv": "be55441689290bef6d8b768a3e6850bb8e68b5dc00275265d8c8bcb77d7595c7",
+    "raw_reproduction_gate.csv": "9bbaa0349417cea58b657652f1aaeb744c635ec3e1a9fdab2b2f4d0a4d0ad09c",
+    "raw_reproduction_run_counts.csv": "adf10141d0c82a39ab43880d26e15fd35c8021eeadda2c62d065fe69dcb3c244",
+    "result.json": "e174b61616fc2e1dbe2f4b06a283097ddbbacaab007d7e83cb9c95662f3d8754"
+  },
+  "config": "configs/s12b_1781091056_1272_7ad60e8d_detector_map_contract.yaml",
+  "external_geant4_commit": "b73ea2a1bd2419e7c4a25a3bf23a419ad619234c",
+  "git_commit": "d7478d0d1b2d8525a4257efbc1303add81000a31",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "truth_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "truth_root_sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc"
+}

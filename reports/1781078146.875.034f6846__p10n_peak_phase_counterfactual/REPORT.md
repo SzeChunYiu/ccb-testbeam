@@ -4,7 +4,7 @@
 - **Worker:** `testbeam-laptop-3`
 - **Date:** 2026-07-08
 - **Input:** raw B-stack ROOT under `data/root/root`
-- **Git commit:** `c4544ad50b600acf3852b36752c03aecbaa4610e`
+- **Git commit:** `874cb8faf0a15da6154aeb9d8304b46daf7698b5`
 - **Config:** `configs/p10n_1781078146_875_034f6846_peak_phase_counterfactual.json`
 
 ## 0. Question
@@ -25,11 +25,15 @@ The selected-pulse count is rebuilt by reading `HRDv` from the raw B-stack ROOT 
 
 ## 2. Methods
 
-Let `y_i(t)` be the CFD20-aligned, amplitude-normalized waveform on the grid `t in {-3,...,14}` samples. The full-waveform reconstruction loss is
+Let $y_i(t)$ be the CFD20-aligned, amplitude-normalized waveform on the grid $t \in \{-3,\ldots,14\}$ samples. The full-waveform reconstruction loss for method $m$ is
 
-`qMSE_i(m) = |V_i|^{-1} sum_{t in V_i} (y_i(t) - yhat_{im}(t))^2`,
+$$\operatorname{qMSE}_i(m)=\frac{1}{|V_i|}\sum_{t\in V_i}\left[y_i(t)-\hat y_{im}(t)\right]^2,$$
 
-and the tail loss is the same sum restricted to `t >= 2`. Timing is the robust width `sigma68 = (Q84(e_t) - Q16(e_t))/2` of `e_t = 10 ns * (CFD20(yhat) - CFD20(y))`. The live-time proxy is the last post-peak grid point above 10 percent of the normalized peak, and `tau_eff = live10 / ln(10)`. A too-good trigger fires when a learned model halves the empirical q MSE while making template-implied timing more than the configured tolerance worse; this is an artifact screen, not a physics claim.
+and the tail loss is the same sum restricted to $t \ge 2$. Timing is the robust width
+
+$$\sigma_{68}(m)=\frac{Q_{84}(e_i)-Q_{16}(e_i)}{2},\qquad e_i=10\,\mathrm{ns}\,[\operatorname{CFD20}(\hat y_{im})-\operatorname{CFD20}(y_i)].$$
+
+The live-time proxy is the last post-peak grid point above 10 percent of the normalized peak, with $\tau_{\mathrm{eff}}=\operatorname{live10}/\ln 10$. A too-good trigger fires when a learned model halves the empirical q MSE while making template-implied timing more than the configured tolerance worse; this is an artifact screen, not a physics claim.
 
 Traditional baseline: frozen empirical median templates binned by stave, amplitude, current stratum, saturation proxy, peak phase, and rising-edge proxy, with phase and stave-amplitude fallbacks. This is intentionally strong because it gives the classical comparator the same early-phase physical handles under run holdout.
 

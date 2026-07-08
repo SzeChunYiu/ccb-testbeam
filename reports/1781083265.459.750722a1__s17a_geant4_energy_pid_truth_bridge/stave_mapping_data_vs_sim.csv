@@ -1,0 +1,5 @@
+stave,mapped_layers,sim_primary_tracks_with_deposit,sim_fraction_of_tracks,sim_median_track_edep_MeV,data_selected_pulses_sampleI_plus_sampleII_analysis,data_fraction_relative_to_B2
+B2,"0,1",8954,0.99966507,42.929615,329635,1
+B4,"2,3",4223,0.47147482,32.365191,27680,0.083971666
+B6,"4,5",2503,0.27944624,43.142984,14242,0.043205364
+B8,"6,7",1772,0.1978341,40.159972,5805,0.017610387

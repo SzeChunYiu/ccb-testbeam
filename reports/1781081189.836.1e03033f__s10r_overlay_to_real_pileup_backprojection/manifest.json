@@ -1,0 +1,21 @@
+{
+  "config": "configs/s10r_1781081189_836_1e03033f_overlay_to_real_backprojection.json",
+  "git_commit": "c03bd119779774549dcde3462d772452ecd25377",
+  "outputs_sha256": {
+    "REPORT.md": "0375dfd9120364a4d8f2495be87d2eebdc57ae2aed0db5832aa3bf303d561b74",
+    "clean_pulse_sample.pkl": "e6763892656f1cc38c0522fe57ec1946f8e0bf9c18a495b38f091d2b7140ccd8",
+    "input_sha256.csv": "635f1749a367b025658732e6bbb53d5bf6145f580491c312abbb491afc4a7224",
+    "overlay_model_metrics.csv": "72da138a9b70502d37e699fd6b70526c7b08499a42822d292ef9bcf77a37bce4",
+    "overlay_model_metrics_by_run.csv": "26d640cb0c85990f1b67e65c596b0b4014003561f2dcc0bf1b99ac8ae8f5e951",
+    "real_backprojection_bootstrap_ci.csv": "bdf3e6e22e5b394496ba1dd647d4b6863bebb3d6056ac0190e9d7e043fe44666",
+    "real_backprojection_metrics.csv": "dce872070a54594376334f3c8bb2f7ebd797fdb3e47a9f3b22b575781f46da32",
+    "real_event_scores.csv": "3c8bd07cb2a023b2b03f865723344b5f8c318038e757ec7f3c9a018d496f57ba",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "3843047cc86d684b01c7e48620c6e1c586af51edcaf00a54004996d45653a0ff",
+    "stress_event_table.csv": "af8b4fedb0037a95aa581966aa527633999cbd2934711b81a2d2b75c62995c1f",
+    "template_summary.csv": "08b444fd6ccf5441915dbd176bc3925177ab546fe05b0ea3765a30b981c9bec0"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "script": "scripts/s10r_1781081189_836_1e03033f_overlay_to_real_backprojection.py"
+}

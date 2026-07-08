@@ -1,0 +1,5 @@
+check,value,pass
+heldout_runs_absent_from_training,"[57, 65]",True
+raw_reproduction_exact,True,True
+target_stave_excluded_ridge_present,ridge_target_stave_excluded_train_median_selector,True
+shuffled_target_sentinels_present,"shuffled_target_hgb_train_median_selector,shuffled_target_hgb_train_dynamic_selector",True

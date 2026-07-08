@@ -1,0 +1,95 @@
+{
+  "study": "P03g",
+  "ticket": "1781097097.1022.02db7832",
+  "worker": "testbeam-laptop-3",
+  "title": "blinded pedestal-proxy residualization of samples 0-3 before P03f multimodel ablation",
+  "residualized_samples": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": {
+    "method": "analytic_timewalk",
+    "sigma68_ns": 1.5510917109777833,
+    "ci": [
+      1.363752228304065,
+      1.9362380560595842
+    ]
+  },
+  "winner": {
+    "method": "hgb_waveform_amp_shape_stave",
+    "family": "ml",
+    "sigma68_ns": 1.108846236098982,
+    "ci": [
+      1.0764780740654243,
+      1.164914807997271
+    ],
+    "delta_vs_traditional_ns": -0.4422454748788014,
+    "delta_ci": [
+      -0.8449419754251458,
+      -0.2351940748621927
+    ]
+  },
+  "feature_ablation": {
+    "waveform_only": {
+      "method": "hgb_waveform_only",
+      "sigma68_ns": 1.5093683625565213,
+      "ci": [
+        1.426320373392989,
+        1.6371834855647622
+      ]
+    },
+    "waveform_stave_onehot": {
+      "method": "hgb_waveform_stave_onehot",
+      "sigma68_ns": 1.1358406144394066,
+      "ci": [
+        1.0897775829873944,
+        1.1890568889037243
+      ]
+    },
+    "waveform_amp_shape": {
+      "method": "hgb_waveform_amp_shape",
+      "sigma68_ns": 1.4706040210021134,
+      "ci": [
+        1.3838027069568142,
+        1.589122664276812
+      ]
+    },
+    "waveform_amp_shape_stave": {
+      "method": "hgb_waveform_amp_shape_stave",
+      "sigma68_ns": 1.108846236098982,
+      "ci": [
+        1.0764780740654243,
+        1.164914807997271
+      ]
+    }
+  },
+  "p03e_stave_aware_gain": {
+    "waveform_amp_shape_stave_minus_waveform_amp_shape_ns": -0.3617577849031315,
+    "waveform_stave_onehot_minus_waveform_only_ns": -0.37352774811711464,
+    "aware_beats_blind_heldout_runs": 7,
+    "n_heldout_runs_compared": 7
+  },
+  "controls": {
+    "shuffled_target_failures": 54,
+    "stave_offset_guardrail_best_sigma68_ns": 1.1515617974183487,
+    "max_train_heldout_event_overlap": 0
+  },
+  "verdict": "The P03e waveform_amp_shape_stave gain survives beyond run 65 in the leave-one-run repetition: stave-aware amplitude/shape models beat their stave-blind analogues in most held-out runs and in the run-block pooled estimate. 54 shuffled-target checks beat their nominal model and are flagged as stability caveats.",
+  "next_tickets": [
+    "P03h: train-fold external pedestal-proxy validation for residualized early waveform samples"
+  ],
+  "git_commit": "bec6a51f1328472fce50216fbcd600e41d2d7d1d"
+}

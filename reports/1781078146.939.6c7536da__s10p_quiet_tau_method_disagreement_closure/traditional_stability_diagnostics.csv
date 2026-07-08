@@ -1,0 +1,3 @@
+diagnostic,value,unit
+traditional_threshold_sensitivity_slope,0.015359929615791816,secondary_fraction_delta_per_sse_improvement_threshold
+traditional_threshold_range,0.0009660005626153378,secondary_fraction_delta

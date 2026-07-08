@@ -1,0 +1,25 @@
+{
+  "ticket": "1781079699.541.0a2d19ff",
+  "study": "S01i",
+  "worker": "testbeam-laptop-4",
+  "title": "selected-table byte-vs-content consumer sentinel",
+  "random_seed": 1907,
+  "raw_root_dir": "data/root/root",
+  "s01_config": "reports/1780997954.15037.36463764__s01_full_dataset_templates/s01_config.json",
+  "s01_q_template_table": "reports/1780997954.15037.36463764__s01_full_dataset_templates/q_template_per_pulse.csv.gz",
+  "expected_selected_pulses": 640737,
+  "output_dir": "reports/1781079699.541.0a2d19ff__s01i_hash_sentinel",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "stave_channels": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "bootstrap_iterations": 400,
+  "ml_repeats": 2,
+  "ml_test_fraction": 0.35
+}

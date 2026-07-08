@@ -1,0 +1,26 @@
+{
+  "claimed_ticket": "1781079699.541.0a2d19ff",
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "required_methods_present": [
+    "traditional_content_replay",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "gated_residual_cnn"
+  ],
+  "winner_named_in_result_json": "gradient_boosted_trees",
+  "report_sections": [
+    "methods",
+    "equations",
+    "tables_with_cis",
+    "systematics",
+    "caveats"
+  ]
+}

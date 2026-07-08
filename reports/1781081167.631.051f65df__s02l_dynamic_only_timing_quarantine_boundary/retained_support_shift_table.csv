@@ -1,0 +1,16 @@
+method,family,mean_retained_fraction,min_retained_fraction,support_shift_energy_distance_adc,mean_full_rms_ns,mean_tail_frac_abs_gt5ns
+ml_cnn1d_proxy_all_root_proxies,ml,1.0,1.0,0.0,2.3120025505440935,0.013881782002441683
+ml_gated_proxy_all_root_proxies,ml,1.0,1.0,0.0,2.2603460089768466,0.013206244643817271
+ml_hgb_all_root_proxies,ml,1.0,1.0,0.0,2.291440429280461,0.013915283470249751
+ml_mlp_all_root_proxies,ml,1.0,1.0,0.0,2.350907541796723,0.014690614850382783
+ml_ridge_all_root_proxies,ml,1.0,1.0,0.0,2.316299750467014,0.013922744693897298
+ml_cnn1d_proxy_all_root_proxies_shuffled,shuffled_target_control,1.0,1.0,0.0,2.465637227300308,0.01535616374181416
+ml_gated_proxy_all_root_proxies_shuffled,shuffled_target_control,1.0,1.0,0.0,2.460817671420061,0.014866103859946581
+ml_hgb_all_root_proxies_shuffled,shuffled_target_control,1.0,1.0,0.0,2.476735557974411,0.015823480325747007
+ml_mlp_all_root_proxies_shuffled,shuffled_target_control,1.0,1.0,0.0,2.447672379280093,0.014743700106842486
+ml_ridge_all_root_proxies_shuffled,shuffled_target_control,1.0,1.0,0.0,2.4554736297432305,0.01493648300286568
+traditional_binned_no_proxy,traditional,1.0,1.0,0.0,3.6679000023978188,0.12211622135297551
+traditional_global_no_proxy,traditional,1.0,1.0,0.0,2.464448383679764,0.015293753456599156
+traditional_proxy_all_root_proxies,traditional_proxy,1.0,1.0,0.0,5.483656004943205,0.11196096212119455
+traditional_proxy_baseline_rate,traditional_proxy,1.0,1.0,0.0,5.474180880087886,0.06427644001121624
+traditional_proxy_dynamic_boundary,traditional_proxy,1.0,1.0,0.0,5.483655808563663,0.11196096212119455

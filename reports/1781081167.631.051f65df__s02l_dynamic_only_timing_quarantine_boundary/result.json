@@ -1,0 +1,65 @@
+{
+  "study": "S02l",
+  "ticket": "1781081167.631.051f65df",
+  "worker": "testbeam-laptop-2",
+  "title": "dynamic-only timing quarantine boundary",
+  "reproduced_raw_root_counts": true,
+  "reference_numbers_reproduced": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "winner": {
+    "method": "ml_gated_proxy_all_root_proxies",
+    "family": "ml",
+    "mean_sigma68_ns": 1.2874021416424857,
+    "ci": [
+      1.219717500318644,
+      1.3494823004108514
+    ],
+    "delta_vs_traditional_ns": -0.36776189833642536,
+    "delta_ci": [
+      -0.5472477676448408,
+      -0.2349001513259706
+    ]
+  },
+  "traditional_baseline": {
+    "method": "traditional_global_no_proxy",
+    "mean_sigma68_ns": 1.6551640399789107,
+    "ci": [
+      1.5302256419373894,
+      1.8471011243982511
+    ]
+  },
+  "dynamic_boundary_traditional": {
+    "method": "traditional_proxy_dynamic_boundary",
+    "mean_sigma68_ns": 5.1807940295117865,
+    "ci": [
+      1.6786171794300166,
+      11.45377599993228
+    ],
+    "lift_vs_traditional_ns": -3.5256299895328755
+  },
+  "best_ml_nn": {
+    "method": "ml_gated_proxy_all_root_proxies",
+    "mean_sigma68_ns": 1.2874021416424857,
+    "ci": [
+      1.219717500318644,
+      1.3494823004108514
+    ],
+    "delta_vs_traditional_ns": -0.36776189833642536
+  },
+  "controls": {
+    "shuffled_target_failures": 2,
+    "structural_guards_pass": true
+  },
+  "next_tickets": [],
+  "verdict": "The strong traditional baseline has mean sigma68 1.655 ns. The dynamic-boundary traditional quarantine proxy has mean sigma68 5.181 ns (lift -3.526 ns). The best ML/NN method is ml_gated_proxy_all_root_proxies at 1.287 ns. An ML/NN method wins numerically; adoption should remain conditional on the shuffled-target and leakage controls. 2 shuffled-target control checks are warnings.",
+  "git_commit": "c03bd119779774549dcde3462d772452ecd25377"
+}

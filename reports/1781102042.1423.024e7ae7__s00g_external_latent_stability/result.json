@@ -1,0 +1,153 @@
+{
+  "critic": "pending",
+  "finding": "S00e release latents retain measurable calibration-origin structure under run-held-out stress; downstream consumers should retain calibration/run-family provenance.",
+  "git_commit": "e200430bc072f5ab7addd463c33b184a6ab36d02",
+  "input_sha256": "input_sha256.csv",
+  "latent_artifact_sha256": "de03b77e3b55e33016d2ab81ba17f3dbd30c89d433388a81905b6f533c07cb6a",
+  "ml": {
+    "ci": [
+      0.31013976543209876,
+      0.7194945
+    ],
+    "methods": [
+      {
+        "average_precision": 0.5058111388356138,
+        "average_precision_ci_high": 0.8346662511879563,
+        "average_precision_ci_low": 0.1909610012273695,
+        "balanced_accuracy": 0.5216944444444445,
+        "balanced_accuracy_ci_high": 0.6821111111111111,
+        "balanced_accuracy_ci_low": 0.3612777777777778,
+        "brier": 0.25261383122843034,
+        "ece_10bin": 0.017316317777666797,
+        "method": "ridge",
+        "roc_auc": 0.5131577021604938,
+        "roc_auc_ci_high": 0.7194945,
+        "roc_auc_ci_low": 0.31013976543209876
+      },
+      {
+        "average_precision": 0.4954547046780345,
+        "average_precision_ci_high": 0.8393836333989246,
+        "average_precision_ci_low": 0.1743918589809978,
+        "balanced_accuracy": 0.5001388888888889,
+        "balanced_accuracy_ci_high": 0.5017777777777778,
+        "balanced_accuracy_ci_low": 0.4985,
+        "brier": 0.28595883441650766,
+        "ece_10bin": 0.15504722988761996,
+        "method": "gradient_boosted_trees_hgb",
+        "roc_auc": 0.49508678395061734,
+        "roc_auc_ci_high": 0.7247021296296297,
+        "roc_auc_ci_low": 0.2779694567901234
+      },
+      {
+        "average_precision": 0.49382878999723834,
+        "average_precision_ci_high": 0.8388785608756621,
+        "average_precision_ci_low": 0.1833575335815679,
+        "balanced_accuracy": 0.49983333333333335,
+        "balanced_accuracy_ci_high": 0.5006111111111111,
+        "balanced_accuracy_ci_low": 0.49905555555555553,
+        "brier": 0.28573123480552237,
+        "ece_10bin": 0.1553489319608373,
+        "method": "new_stave_residualized_fusion_hgb",
+        "roc_auc": 0.4947083719135802,
+        "roc_auc_ci_high": 0.7254734567901235,
+        "roc_auc_ci_low": 0.2768489444444444
+      },
+      {
+        "average_precision": 0.4888796943080264,
+        "average_precision_ci_high": 0.8293092186243423,
+        "average_precision_ci_low": 0.170429853206616,
+        "balanced_accuracy": 0.49819444444444444,
+        "balanced_accuracy_ci_high": 0.5041666666666667,
+        "balanced_accuracy_ci_low": 0.4922222222222222,
+        "brier": 0.28521016821615475,
+        "ece_10bin": 0.1574112820033398,
+        "method": "mlp",
+        "roc_auc": 0.4880091975308642,
+        "roc_auc_ci_high": 0.6981329814814814,
+        "roc_auc_ci_low": 0.2915329135802469
+      },
+      {
+        "average_precision": 0.48989389852251775,
+        "average_precision_ci_high": 0.7867785506017082,
+        "average_precision_ci_low": 0.20095093189632002,
+        "balanced_accuracy": 0.4991111111111111,
+        "balanced_accuracy_ci_high": 0.5197777777777778,
+        "balanced_accuracy_ci_low": 0.47844444444444445,
+        "brier": 0.48064929171078885,
+        "ece_10bin": 0.4764972926640572,
+        "method": "traditional_diag_gaussian_moment",
+        "roc_auc": 0.4870808101851852,
+        "roc_auc_ci_high": 0.5850124197530864,
+        "roc_auc_ci_low": 0.39636935185185185
+      },
+      {
+        "average_precision": 0.45840464841932277,
+        "average_precision_ci_high": 0.7216491790243311,
+        "average_precision_ci_low": 0.2160646876076438,
+        "balanced_accuracy": 0.45519444444444446,
+        "balanced_accuracy_ci_high": 0.47611111111111115,
+        "balanced_accuracy_ci_low": 0.43427777777777776,
+        "brier": 0.2576332878084296,
+        "ece_10bin": 0.0777653329504861,
+        "method": "cnn_1d",
+        "roc_auc": 0.4322533117283951,
+        "roc_auc_ci_high": 0.4697631481481482,
+        "roc_auc_ci_low": 0.39644505555555554
+      }
+    ],
+    "metric": "held-out calibration-origin ROC AUC",
+    "value": 0.5131577021604938,
+    "winner": "ridge"
+  },
+  "next_tickets": [],
+  "raw_root_dir": "/home/billy/.tb-workers/testbeam-laptop-1/data/root/root",
+  "reproduced": true,
+  "reproduction": {
+    "dynamic_only": 65636,
+    "dynamic_range_selected": 706373,
+    "median_first_four_selected": 640737,
+    "median_only": 0
+  },
+  "runtime_s": 343.559,
+  "split": {
+    "cv_validation_runs": [
+      41,
+      56,
+      63
+    ],
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "test_analysis_rows": 18000,
+    "test_calibration_rows": 18000,
+    "test_rows": 36000,
+    "train_rows": 111199,
+    "validation_rows": 13500
+  },
+  "study": "S00g",
+  "ticket": "1781102042.1423.024e7ae7",
+  "title": "External stability of dynamic-selected release latents against calibration-run drift",
+  "traditional": {
+    "ci": [
+      0.39636935185185185,
+      0.5850124197530864
+    ],
+    "method": "traditional_diag_gaussian_moment",
+    "metric": "held-out calibration-origin ROC AUC",
+    "value": 0.4870808101851852
+  },
+  "winner": {
+    "auc_excess_over_random": 0.013157702160493834,
+    "ci": [
+      0.31013976543209876,
+      0.7194945
+    ],
+    "method": "ridge",
+    "metric": "roc_auc",
+    "value": 0.5131577021604938
+  },
+  "worker": "testbeam-laptop-1"
+}

@@ -1,0 +1,71 @@
+{
+  "ticket_id": "1781076713.924.3a47146c",
+  "worker": "testbeam-laptop-2",
+  "study_id": "P08f",
+  "title": "PID support-island bootstrap ledger",
+  "output_dir": "reports/1781076713.924.3a47146c__p08f_support_island_bootstrap_ledger",
+  "p08b_config": "configs/p08b_1781027807_3490_5cdd4b0b_calibration_backed_pid.json",
+  "p08b_result": "reports/1781027807.3490.5cdd4b0b/result.json",
+  "p01b_embedding_candidates": [
+    "reports/1781005204.1292.46e43fb0__p01b_full_data_embedding_artifact/p01b_embedding_latents.npz"
+  ],
+  "matching": {
+    "random_seed": 6713,
+    "primary_caliper": 0.55,
+    "sensitivity_calipers": [0.35, 0.55, 0.8],
+    "max_pairs_per_run_depth": 35,
+    "nearest_k": 45,
+    "propensity_weight": 1.0,
+    "min_pairs_per_run_depth": 8,
+    "exact_cell_quantile_bins": 6,
+    "nuisance_columns": [
+      "log_b2_area",
+      "log_even_total_charge",
+      "event_fraction",
+      "depth_idx",
+      "multiplicity",
+      "topology_code",
+      "downstream_charge_fraction",
+      "saturated_count",
+      "b2_saturated",
+      "b2_width20",
+      "b2_tail_fraction"
+    ]
+  },
+  "benchmark": {
+    "random_seed": 6720,
+    "bootstrap_replicates": 180,
+    "fixed_efficiency": 0.8,
+    "min_train_class_rows": 40,
+    "min_test_class_rows": 3,
+    "cnn_epochs": 1,
+    "cnn_batch_size": 384,
+    "mlp_max_iter": 20,
+    "hgb": {
+      "max_iter": 35,
+      "max_depth": 3,
+      "min_samples_leaf": 18,
+      "max_leaf_nodes": 15,
+      "learning_rate": 0.07,
+      "l2_regularization": 0.05
+    },
+    "residual_ridge": {
+      "c": 0.2
+    }
+  },
+  "ledger": {
+    "support_island_min_rows": 24,
+    "support_island_min_class_rows": 5,
+    "support_island_min_runs": 3,
+    "q_template_quantile_bins": 3,
+    "alternate_label_quantiles": [0.2, 0.25, 0.3],
+    "promotion": {
+      "min_rows": 24,
+      "min_runs": 3,
+      "min_winner_auc_ci_low": 0.6,
+      "min_lift_ci_low": 0.0,
+      "max_nuisance_auc_ci_high": 0.75,
+      "max_shuffled_auc_ci_high": 0.65
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "base_study": "BAKEOFF01",
+  "external_candidate_winners": {
+    "anomaly": "lightgbm",
+    "anomaly_ci": [
+      0.8143310657596372,
+      0.8758503401360545
+    ],
+    "anomaly_roc_auc": 0.8456575963718821,
+    "timing": "xgboost",
+    "timing_ci": [
+      0.9360553398099833,
+      1.4790394364349506
+    ],
+    "timing_sigma68_ns": 1.1460530387758776
+  },
+  "near_tie_tasks": [
+    "timing",
+    "anomaly"
+  ],
+  "next_tickets": [],
+  "packages": {
+    "lightgbm": "4.6.0",
+    "numpy": "1.24.3",
+    "pandas": "2.0.3",
+    "python": "3.8.10",
+    "torch": "2.4.1+cpu",
+    "xgboost": "2.1.4"
+  },
+  "reproduced": true,
+  "runtime_seconds": 108.07748484611511,
+  "scientific_summary": "On BAKEOFF01 near-tie timing, the combined point-estimate winner is gradient_boosted_trees from BAKEOFF01 at sigma68 1.127 ns; the best BAKEOFF02 external candidate is xgboost at 1.146 ns. On injected-truth anomaly classification, the combined point-estimate winner is hist_gradient_boosting from BAKEOFF01 at ROC AUC 0.868; the best BAKEOFF02 external candidate is lightgbm at 0.846. Therefore the BAKEOFF01 recommendation table is stable under this XGBoost/LightGBM/compact-transformer audit.",
+  "study": "BAKEOFF02",
+  "ticket": "1781088343.1569.30350cc6",
+  "winner": {
+    "anomaly": "hist_gradient_boosting",
+    "anomaly_source": "BAKEOFF01",
+    "overall": "BAKEOFF01_stable",
+    "timing": "gradient_boosted_trees",
+    "timing_source": "BAKEOFF01"
+  },
+  "worker": "testbeam-laptop-1"
+}

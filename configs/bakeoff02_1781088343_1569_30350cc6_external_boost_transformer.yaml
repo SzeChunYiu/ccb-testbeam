@@ -1,0 +1,67 @@
+study_id: BAKEOFF02
+title: XGBoost/LightGBM and compact transformer near-tie audit
+ticket_id: "1781088343.1569.30350cc6"
+worker: testbeam-laptop-1
+
+base_config: configs/bakeoff01_0000000002_1_systematic_ml_bakeoff.yaml
+base_report_dir: reports/0000000002.1.bakeoff01
+output_dir: reports/1781088343.1569.30350cc6.bakeoff02
+random_seed: 1781088343
+
+audit:
+  ci_overlap_only: true
+  task_order: [timing, anomaly]
+  bootstrap_samples: 300
+  anomaly_bootstrap_samples: 400
+
+external_boosting:
+  xgboost:
+    timing:
+      n_estimators: 160
+      max_depth: 3
+      learning_rate: 0.035
+      subsample: 0.85
+      colsample_bytree: 0.85
+      reg_lambda: 3.0
+    anomaly:
+      n_estimators: 180
+      max_depth: 3
+      learning_rate: 0.04
+      subsample: 0.9
+      colsample_bytree: 0.9
+      reg_lambda: 2.0
+  lightgbm:
+    timing:
+      n_estimators: 180
+      num_leaves: 15
+      learning_rate: 0.035
+      subsample: 0.85
+      colsample_bytree: 0.85
+      reg_lambda: 2.0
+      min_child_samples: 20
+    anomaly:
+      n_estimators: 200
+      num_leaves: 15
+      learning_rate: 0.04
+      subsample: 0.9
+      colsample_bytree: 0.9
+      reg_lambda: 2.0
+      min_child_samples: 20
+
+compact_transformer:
+  timing:
+    width: 16
+    layers: 1
+    heads: 2
+    epochs: 70
+    batch_size: 4096
+    lr: 0.002
+    weight_decay: 0.0001
+  anomaly:
+    width: 16
+    layers: 1
+    heads: 2
+    epochs: 90
+    batch_size: 512
+    lr: 0.002
+    weight_decay: 0.0001

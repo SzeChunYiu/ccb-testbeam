@@ -1,0 +1,131 @@
+{
+  "deltas_vs_traditional": [
+    {
+      "ci_high_ns": -0.09452766207091914,
+      "ci_low_ns": -0.5137474778355208,
+      "delta_sigma68_vs_traditional_ns": -0.3074792602996417,
+      "method": "gated_cnn_residual"
+    },
+    {
+      "ci_high_ns": -0.01445078287127232,
+      "ci_low_ns": -0.4796360674212894,
+      "delta_sigma68_vs_traditional_ns": -0.2964923927531946,
+      "method": "one_dimensional_cnn"
+    },
+    {
+      "ci_high_ns": 0.04651288657656014,
+      "ci_low_ns": -0.35550041285348954,
+      "delta_sigma68_vs_traditional_ns": -0.21219724167782017,
+      "method": "ridge"
+    },
+    {
+      "ci_high_ns": 0.4449425127889968,
+      "ci_low_ns": -0.10535816207807719,
+      "delta_sigma68_vs_traditional_ns": 0.11682614628594346,
+      "method": "hist_gradient_boosted_trees"
+    },
+    {
+      "ci_high_ns": 0.7559981676234921,
+      "ci_low_ns": 0.2206460607903109,
+      "delta_sigma68_vs_traditional_ns": 0.4736548067197912,
+      "method": "mlp"
+    }
+  ],
+  "expected_selected_pulses": 640737,
+  "heldout_runs": [
+    57,
+    65
+  ],
+  "methods": [
+    {
+      "family": "new_architecture",
+      "full_rms_ns": 1.7622438787705603,
+      "median_ns": 1.0636670395907046,
+      "method": "gated_cnn_residual",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 1.9242059004279548,
+      "sigma68_ci_low_ns": 1.5561792884647319,
+      "sigma68_ns": 1.7531450749615862,
+      "tail_frac_abs_gt5ns": 0.007692307692307693
+    },
+    {
+      "family": "ml",
+      "full_rms_ns": 1.8206768302210765,
+      "median_ns": 1.212660313532595,
+      "method": "one_dimensional_cnn",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 1.9784921753851392,
+      "sigma68_ci_low_ns": 1.6259384623541462,
+      "sigma68_ns": 1.7641319425080333,
+      "tail_frac_abs_gt5ns": 0.005128205128205128
+    },
+    {
+      "family": "ml",
+      "full_rms_ns": 1.8658706467482717,
+      "median_ns": 1.5652972641427318,
+      "method": "ridge",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.0397081597793507,
+      "sigma68_ci_low_ns": 1.7066819703219374,
+      "sigma68_ns": 1.8484270935834077,
+      "tail_frac_abs_gt5ns": 0.007692307692307693
+    },
+    {
+      "family": "traditional",
+      "full_rms_ns": 1.9633817713411528,
+      "median_ns": 1.0310846888677059,
+      "method": "traditional_binned_cfd20",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.22009689547533,
+      "sigma68_ci_low_ns": 1.8418721801131457,
+      "sigma68_ns": 2.060624335261228,
+      "tail_frac_abs_gt5ns": 0.005128205128205128
+    },
+    {
+      "family": "ml",
+      "full_rms_ns": 2.7743739908601923,
+      "median_ns": 1.3827911975926739,
+      "method": "hist_gradient_boosted_trees",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.457433637820173,
+      "sigma68_ci_low_ns": 1.975742109610903,
+      "sigma68_ns": 2.1774504815471714,
+      "tail_frac_abs_gt5ns": 0.05128205128205128
+    },
+    {
+      "family": "ml",
+      "full_rms_ns": 2.5723618816229465,
+      "median_ns": 2.040649316750125,
+      "method": "mlp",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.747342650290152,
+      "sigma68_ci_low_ns": 2.2618070270761024,
+      "sigma68_ns": 2.534279141981019,
+      "tail_frac_abs_gt5ns": 0.05384615384615385
+    }
+  ],
+  "primary_metric": "held-out pair residual sigma68_ns",
+  "reproduced_selected_pulses": 640737,
+  "reproduction_pass": true,
+  "status": "DONE",
+  "study": "S16i",
+  "ticket": "1781096100.1466.0e861527",
+  "traditional_ci95_ns": [
+    1.8418721801131457,
+    2.22009689547533
+  ],
+  "traditional_sigma68_ns": 2.060624335261228,
+  "winner": "gated_cnn_residual",
+  "winner_ci95_ns": [
+    1.5561792884647319,
+    1.9242059004279548
+  ],
+  "winner_sigma68_ns": 1.7531450749615862,
+  "worker": "testbeam-laptop-4"
+}

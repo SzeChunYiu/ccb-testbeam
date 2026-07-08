@@ -1,0 +1,16 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s00g_1781102042_1423_024e7ae7_external_latent_stability.py --config configs/s00g_1781102042_1423_024e7ae7_external_latent_stability.json",
+  "outputs": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "selector_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "heldout_model_benchmark.csv",
+    "hyperparameter_cv.csv",
+    "input_sha256.csv"
+  ],
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "ticket": "1781102042.1423.024e7ae7"
+}

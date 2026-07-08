@@ -1,0 +1,15 @@
+method,parameter,value,validation_auc
+ridge,alpha,0.1,0.5478934197530865
+ridge,alpha,1.0,0.5479003580246913
+ridge,alpha,10.0,0.5479826296296296
+ridge,alpha,100.0,0.5470735555555555
+gradient_boosted_trees_hgb,max_leaf_nodes,15.0,0.6202358641975309
+gradient_boosted_trees_hgb,max_leaf_nodes,31.0,0.6228062716049383
+gradient_boosted_trees_hgb,max_leaf_nodes,63.0,0.624888037037037
+mlp,hidden,32.0,0.6125387160493827
+mlp,hidden,64.0,0.6238011481481481
+cnn_1d,channels,4.0,0.5434955061728395
+cnn_1d,channels,8.0,0.6520235432098767
+new_stave_residualized_fusion_hgb,max_leaf_nodes,15.0,0.6219362345679013
+new_stave_residualized_fusion_hgb,max_leaf_nodes,31.0,0.6246812345679011
+new_stave_residualized_fusion_hgb,max_leaf_nodes,63.0,0.6250858765432099

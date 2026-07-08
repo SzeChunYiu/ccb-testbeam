@@ -1,0 +1,105 @@
+{
+  "bootstrap": {
+    "ci": "percentile 95%",
+    "iterations": 1500,
+    "unit": "held-out run block"
+  },
+  "conclusion": "The S04k transfer-gate winner is logistic_external_veto, evaluated on B2-excluded downstream pairs with traditional_explicit_timewalk timing corrections: sigma68 1.817 ns [1.730, 1.901], retention 0.996, and support-distance shift 0.019. The fixed traditional q/shape veto gives 1.820 ns [1.739, 1.903]. The gate is support-preserving=True; controls are reported to expose topology-only and shuffled-label failure modes.",
+  "correction_method": "traditional_explicit_timewalk",
+  "critic": "pending",
+  "falsification": {
+    "falsified_if": "ML vetoes fail to beat the fixed q/shape veto or violate retention/support gates",
+    "observed": "see veto_summary_bootstrap.csv and support_distance_shift_by_run.csv"
+  },
+  "git_commit": "c4544ad50b600acf3852b36752c03aecbaa4610e",
+  "ml_beats_baseline": true,
+  "ml_methods": {
+    "sentinels": [
+      "topology_only_sentinel",
+      "shuffled_label_sentinel"
+    ],
+    "timing_corrections": {
+      "cnn1d": {
+        "channels": 8,
+        "model": "cnn1d",
+        "score": 1.211538169980049
+      },
+      "gated_mixer": {
+        "hidden": 16,
+        "model": "gated_mixer",
+        "score": 1.195931673645973
+      },
+      "hgb": {
+        "learning_rate": 0.06,
+        "max_iter": 80,
+        "max_leaf_nodes": 31,
+        "model": "hgb",
+        "score": 1.5548358078664868
+      },
+      "mlp": {
+        "hidden": 24,
+        "model": "mlp",
+        "score": 1.5356075286865236
+      },
+      "ridge": {
+        "alpha": 100.0,
+        "model": "ridge",
+        "score": 1.5095077633857725
+      }
+    },
+    "veto_policies": [
+      "rf_external_veto",
+      "logistic_external_veto"
+    ]
+  },
+  "next_tickets": [],
+  "raw_root_dir": "data/root/root",
+  "reproduced": true,
+  "runtime_sec": 80.95058679580688,
+  "study": "S04k",
+  "ticket": "1781078146.810.71e65869",
+  "title": "B2 q-veto external-pair transfer gate",
+  "traditional": {
+    "ci": [
+      1.7389501027842922,
+      1.9031914113409847
+    ],
+    "correction_best_params": {
+      "alpha": 1000.0,
+      "feature_set": "amp_bin_by_stave",
+      "score": 1.6990519362688064,
+      "train_pulses": 2346,
+      "train_runs": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42,
+        64
+      ]
+    },
+    "metric": "retained B2-excluded downstream sigma68 ns",
+    "policy": "fixed_q_shape_veto",
+    "value": 1.8204027231706885
+  },
+  "winner": {
+    "ci": [
+      1.730084014613558,
+      1.9005317248971108
+    ],
+    "mean_acceptance": 0.9958596958410973,
+    "mean_support_distance_shift": 0.019207858810331883,
+    "metric": "support-penalized retained B2-excluded downstream sigma68 ns",
+    "policy": "logistic_external_veto",
+    "primary_score": 1.8165322806658044,
+    "support_preserving": true,
+    "value": 1.8165322806658044
+  },
+  "worker": "testbeam-laptop-4"
+}

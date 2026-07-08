@@ -1,0 +1,6 @@
+policy,correction_method,score_threshold,n_heldout_events,n_accepted_heldout_events,heldout_acceptance
+fixed_q_shape_veto,traditional_explicit_timewalk,4.364915274261227,3774,3738,0.9904610492845787
+rf_external_veto,traditional_explicit_timewalk,0.9895690005869863,3774,3760,0.9962904080551139
+logistic_external_veto,traditional_explicit_timewalk,0.9970812751881863,3774,3755,0.9949655537890832
+topology_only_sentinel,traditional_explicit_timewalk,0.9864960210020847,3774,3730,0.9883412824589295
+shuffled_label_sentinel,traditional_explicit_timewalk,0.6235079360473009,3774,3725,0.9870164281928988

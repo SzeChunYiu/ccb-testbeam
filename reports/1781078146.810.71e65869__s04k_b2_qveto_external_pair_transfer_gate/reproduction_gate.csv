@@ -1,0 +1,6 @@
+quantity,expected,observed,delta,pass
+selected_pulses_total,640737,640737,0,True
+sample_ii_analysis_selected_pulses,125096,125096,0,True
+run64_selected_pulses,14630,14630,0,True
+run64_all_hit_events,207,207,0,True
+heldout_all_hit_events,3774,3774,0,True

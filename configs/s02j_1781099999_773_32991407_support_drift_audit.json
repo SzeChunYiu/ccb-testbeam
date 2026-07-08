@@ -1,0 +1,24 @@
+{
+  "study": "S02j",
+  "ticket": "1781099999.773.32991407",
+  "worker": "testbeam-laptop-3",
+  "title": "support-drift audit for S02i pretrigger residual correction",
+  "raw_root_dir": "data/root/root",
+  "source_s02i_config": "configs/s02i_1781032083_463_2d9c6a45_pretrigger_atom_transfer.json",
+  "source_s02i_report_dir": "reports/1781032083.463.2d9c6a45__s02i_pretrigger_atom_transfer",
+  "output_dir": "reports/1781099999.773.32991407__s02j_support_drift_audit",
+  "selection_abs_residual_ns": 5.0,
+  "support_drift_ci_high_gate": 0.05,
+  "charge_bins_adc": [1000.0, 1300.0, 1700.0, 2400.0, 4000.0, 1000000000.0],
+  "current_proxy_quantiles": [0.0, 0.25, 0.5, 0.75, 1.0],
+  "bootstrap_samples": 600,
+  "random_seed": 2026070903,
+  "required_methods": [
+    "traditional_atom_slope",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "siamese_cnn_meta"
+  ]
+}

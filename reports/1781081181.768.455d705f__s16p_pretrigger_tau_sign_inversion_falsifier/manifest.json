@@ -1,0 +1,16 @@
+{
+  "created_utc_unix": 1783526036.2787266,
+  "files": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "input_sha256.csv",
+    "reproduction_match_table.csv",
+    "method_summary.csv",
+    "method_deltas_vs_traditional.csv",
+    "fold_scores.csv.gz",
+    "sign_diagnostic.png"
+  ],
+  "output_dir": "reports/1781081181.768.455d705f__s16p_pretrigger_tau_sign_inversion_falsifier",
+  "ticket": "1781081181.768.455d705f"
+}

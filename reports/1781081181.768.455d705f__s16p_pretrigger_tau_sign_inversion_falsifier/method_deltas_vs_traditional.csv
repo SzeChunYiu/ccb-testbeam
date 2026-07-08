@@ -1,0 +1,6 @@
+method,metric,delta,ci_low,ci_high,n_bootstrap
+ridge,predicted_high_minus_low_downstream_minus_traditional,0.035917055736940456,0.013648733964360385,0.06291972076675889,500
+gradient_boosted_trees,predicted_high_minus_low_downstream_minus_traditional,0.031275745095966936,0.017950488225592805,0.04240902611921148,500
+mlp,predicted_high_minus_low_downstream_minus_traditional,-0.16523781560961942,-0.315955899104353,-0.04705935707795714,500
+cnn1d,predicted_high_minus_low_downstream_minus_traditional,-0.15202222077639058,-0.2208303443518296,-0.07827576343622163,500
+dilated_pretrigger_tcn,predicted_high_minus_low_downstream_minus_traditional,-0.21278059831381813,-0.2663630269660953,-0.14767254135301694,500

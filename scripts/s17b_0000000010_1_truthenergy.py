@@ -751,13 +751,20 @@ def make_report(
     ranked = metrics.sort_values("res68_frac").copy()
     winner = result["winner"]["method"]
     ci = result["winner"]["res68_ci95"]
+    report_heading = str(config.get("report_heading", "S17b: GEANT4-truth anchored B-stave energy calibration"))
+    reproduction_command = str(
+        config.get(
+            "reproduction_command",
+            "/home/billy/anaconda3/bin/python scripts/s17b_0000000010_1_truthenergy.py --config configs/s17b_0000000010_1_truthenergy.yaml",
+        )
+    )
     compare_text = (
         md_table(comparison, ["method", "s17b_truth_res68_frac", "s14g_data_only_res68_frac", "delta_res68_frac", "delta_bias_frac"])
         if len(comparison)
         else "Reference S14g result file was not available."
     )
     lines = [
-        "# S17b: GEANT4-truth anchored B-stave energy calibration",
+        f"# {report_heading}",
         "",
         "## Abstract",
         "",
@@ -852,7 +859,7 @@ def make_report(
         "## Reproducibility",
         "",
         "```bash",
-        "/home/billy/anaconda3/bin/python scripts/s17b_0000000010_1_truthenergy.py --config configs/s17b_0000000010_1_truthenergy.yaml",
+        reproduction_command,
         "```",
     ]
     (out_dir / "REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1093,7 +1100,12 @@ def main() -> None:
         "ticket_id": config["ticket_id"],
         "worker": "testbeam-laptop-3",
         "git_commit": git_commit(),
-        "command": "/home/billy/anaconda3/bin/python scripts/s17b_0000000010_1_truthenergy.py --config configs/s17b_0000000010_1_truthenergy.yaml",
+        "command": str(
+            config.get(
+                "reproduction_command",
+                f"/home/billy/anaconda3/bin/python scripts/s17b_0000000010_1_truthenergy.py --config {config_path.relative_to(ROOT)}",
+            )
+        ),
         "config": str(config_path.relative_to(ROOT)),
         "environment": {
             "python": platform.python_version(),

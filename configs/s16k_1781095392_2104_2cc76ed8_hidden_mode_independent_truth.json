@@ -1,0 +1,52 @@
+{
+  "study": "S16k",
+  "ticket": "1781095392.2104.2cc76ed8",
+  "worker": "testbeam-laptop-1",
+  "title": "hidden-mode pretrigger score independent truth confirmation",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781095392.2104.2cc76ed8__s16k_hidden_mode_independent_truth",
+  "source_s16f_config": "configs/s16f_1781031083_1784_78066bc6_pretrigger_veto_loro.json",
+  "source_s16f_report_dir": "reports/1781031083.1784.78066bc6__s16f_pretrigger_veto_loro",
+  "source_s16i_report_dir": "reports/1781034306.1188.0470572e__s16i_prepost_tagged_random_ingest",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "methods": [
+    "traditional_quantile",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "siamese_cnn_meta"
+  ],
+  "metrics": {
+    "tail_cut_ns": 5.0,
+    "bootstrap_replicates": 800,
+    "random_seed": 1781095392,
+    "primary_metric": "tail_fraction_after",
+    "winner_rule": "lowest run-block bootstrapped held-out post-veto blinded timing-tail fraction; ties by higher AUC then lower veto fraction"
+  },
+  "next_tickets": [
+    {
+      "title": "S16q: acquire DAQ-provenanced B-stack forced/random pedestal ROOT for direct hidden-mode validation",
+      "body": "Locate or acquire true non-beam B-stack forced/random pedestal ROOT with trigger-code provenance, then score the frozen S16k hidden-mode methods without timing-tail labels. Expected information gain: converts the current absence-gated proxy confirmation into a direct electronics-nuisance truth test."
+    }
+  ]
+}

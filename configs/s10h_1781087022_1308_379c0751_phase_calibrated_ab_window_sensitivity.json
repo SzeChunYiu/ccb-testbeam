@@ -1,0 +1,45 @@
+{
+  "study_id": "S10h",
+  "ticket_id": "1781087022.1308.379c0751",
+  "worker": "testbeam-laptop-2",
+  "title": "phase-calibrated A/B coincidence window sensitivity",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity",
+  "random_seed": 1781087022,
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "sample_period_ns": 10.0,
+  "amplitude_cut_adc": 1000.0,
+  "clean_min_amp_adc": 1500.0,
+  "clean_max_amp_adc": 12000.0,
+  "cfd_fraction": 0.2,
+  "expected_b_selected_pulses": 640737,
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "benchmark_train_runs": [58, 59, 60, 61, 62],
+  "benchmark_heldout_runs": [63, 65],
+  "b_staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "max_clean_per_run_stave": 180,
+  "events_per_run_per_window_per_class": 95,
+  "coincidence_windows_ns": [5.0, 10.0, 15.0, 20.0, 30.0],
+  "offset_jitter_ns": 2.0,
+  "noncoincident_offset_ns": 55.0,
+  "bootstrap_samples": 500,
+  "models": {
+    "gbt_max_iter": 80,
+    "mlp_max_iter": 70,
+    "torch_epochs": 7,
+    "torch_batch_size": 256,
+    "torch_learning_rate": 0.001,
+    "torch_weight_decay": 0.0001
+  },
+  "novel_ticket": {
+    "title": "S10i: validate phase-calibrated A/B windows on true independent A-stack ROOT files",
+    "body": "Repeat the S10h phase-calibrated coincidence-window benchmark using hrda A1/A3 ROOT files as the independent A stack and hrdb B-stave ROOT files as the B stack, with event-level alignment diagnostics and run-held-out bootstrap CIs. Expected information gain: separates duplicate-readout closure from physically independent A/B stack timing."
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "ticket_id": "1781087022.1308.379c0751",
+  "generated_at_unix": 1783548089.4734657,
+  "artifacts": [
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/REPORT.md",
+      "sha256": "2ad8f7b9a117ba6f2b2dedeb181915942204b580d350be32b606b454098e84d5",
+      "bytes": 9832
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/benchmark_events.csv",
+      "sha256": "5c62faeaa18f1884d415700097dee2c7625519253c66076c481bf66812f1dffc",
+      "bytes": 952995
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/clean_pair_table.csv",
+      "sha256": "3bde0685978f7b1660c3fc743a200be65c2d54e1276b201660dd51645b6e6702",
+      "bytes": 420007
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/feature_manifest.csv",
+      "sha256": "87708e090440af8465cb68cfdd62526d96034e6491ff75554e5525fce1187459",
+      "bytes": 967
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/heldout_per_run_metrics.csv",
+      "sha256": "dce8ef0614e7f672fa24357807243a8d2e8b4d3fb009390d742a8fda91a5bab7",
+      "bytes": 3297
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/heldout_predictions.csv.gz",
+      "sha256": "1be5fd98b652240455df2a865a9bcad2bb275de4807e725b168791abb0ee958e",
+      "bytes": 131093
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/mean_method_summary.csv",
+      "sha256": "28aafdf4175c6161263cf45cced7a745d6ce726920518d7c3c68b059dbe3fe55",
+      "bytes": 334
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/phase_offsets_by_run_stave.csv",
+      "sha256": "81de2010c8b4094ffabf3184a1f8a42d69e56b5877587e8787115de798d31a9a",
+      "bytes": 1395
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/raw_reproduction_counts_by_run.csv",
+      "sha256": "f7d9e9aa67d0cea987bce69ef6177bfc6c4bc5bfbafbd8eeadf89782e6cba844",
+      "bytes": 523
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/reproduction_match_table.csv",
+      "sha256": "89ac7b77d6d795904d0bb951ab4966fe544a8a568b4124e54a5a8c95dfe5f432",
+      "bytes": 89
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/result.json",
+      "sha256": "db7b27867f488bec946144fc51fcf8cdac65269ff4eb04f873947f818e3bcf9f",
+      "bytes": 1859
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/window_ap_curves.png",
+      "sha256": "8ef9b0047cf12a21c3b517d99a0f662e8e486870342761d408912fd757158fb7",
+      "bytes": 48531
+    },
+    {
+      "path": "reports/1781087022.1308.379c0751__s10h_phase_calibrated_ab_window_sensitivity/window_method_summary.csv",
+      "sha256": "abf7f43095254deefd456743b8b052fa85b1e2db418617879cb6ae56503b808b",
+      "bytes": 2577
+    }
+  ]
+}

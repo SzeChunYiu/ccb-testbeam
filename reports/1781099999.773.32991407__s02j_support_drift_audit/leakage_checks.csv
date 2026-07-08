@@ -1,0 +1,6 @@
+check,value,pass
+raw_root_reproduction_passes,True,True
+required_methods_present,"cnn1d,gradient_boosted_trees,mlp,ridge,siamese_cnn_meta,traditional_atom_slope,uncorrected_cfd20",True
+one_prediction_per_method_event_pair,1,True
+all_support_features_finite,240660,True
+fixed_eff_thresholds_finite,80220,True

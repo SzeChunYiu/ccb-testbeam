@@ -1,0 +1,17 @@
+method,comparison,metric,delta,ci95,n_pairs
+peak_calibrated,dynamic_only_minus_matched_control,res68_abs_frac,0.908388801247237,"[0.7378729384842223, 1.244189304387184]",3715
+integral_calibrated,dynamic_only_minus_matched_control,res68_abs_frac,0.55717568607515,"[0.48582877247155754, 0.5837991412457033]",3715
+adaptive_template_charge,dynamic_only_minus_matched_control,res68_abs_frac,0.5228700366838811,"[0.4563462862922616, 0.7934374470773713]",3715
+strong_traditional_huber,dynamic_only_minus_matched_control,res68_abs_frac,0.6741442145562656,"[0.6514341355236506, 0.7338299165727141]",3715
+ridge_target_stave_excluded_train_median_selector,dynamic_only_minus_matched_control,res68_abs_frac,2.5438660162372875,"[0.5722221277981514, 6.74113648878688]",3715
+gradient_boosted_trees_train_median_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.8138898565371361,"[0.7424111954920017, 0.8649060595277155]",3715
+mlp_train_median_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.6890470022061632,"[0.4846227956396049, 0.7710490140123446]",3715
+1d_cnn_train_median_selector,dynamic_only_minus_matched_control,res68_abs_frac,1.2649016773507855,"[0.5930848822342112, 1.8559057195413455]",3715
+residual_gated_cnn_train_median_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.9723741522045829,"[0.8575634208681319, 0.9777687777807973]",3715
+shuffled_target_hgb_train_median_selector,dynamic_only_minus_matched_control,res68_abs_frac,88.24193674035335,"[74.08030801300573, 94.53576084022717]",3715
+ridge_target_stave_excluded_train_dynamic_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.3363498762510616,"[0.30573641066895624, 0.3532308837300473]",3715
+gradient_boosted_trees_train_dynamic_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.0657638392769802,"[0.06079954104873041, 0.07551200632065609]",3715
+mlp_train_dynamic_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.12015073559834456,"[0.10280680468490046, 0.12842277219534692]",3715
+1d_cnn_train_dynamic_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.24393464915283714,"[0.2176837521626653, 0.2589618045744087]",3715
+residual_gated_cnn_train_dynamic_selector,dynamic_only_minus_matched_control,res68_abs_frac,0.16474607500222074,"[0.15837700232933413, 0.1729682030681137]",3715
+shuffled_target_hgb_train_dynamic_selector,dynamic_only_minus_matched_control,res68_abs_frac,62.97395543472091,"[52.55862364046648, 67.42075410825508]",3715

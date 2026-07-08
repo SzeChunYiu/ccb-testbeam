@@ -1,0 +1,61 @@
+{
+  "config": "configs/s10h_1781087022_1308_379c0751_phase_calibrated_ab_window_sensitivity.json",
+  "git_commit": "45f821246a6d42b7fbbae84a716a32a5a15e5af1",
+  "methods": [
+    "1d_cnn",
+    "gradient_boosted_trees",
+    "late_fusion_phase_cnn_new",
+    "mlp",
+    "ridge",
+    "traditional_phase_template"
+  ],
+  "novel_ticket": {
+    "body": "Repeat the S10h phase-calibrated coincidence-window benchmark using hrda A1/A3 ROOT files as the independent A stack and hrdb B-stave ROOT files as the B stack, with event-level alignment diagnostics and run-held-out bootstrap CIs. Expected information gain: separates duplicate-readout closure from physically independent A/B stack timing.",
+    "title": "S10i: validate phase-calibrated A/B windows on true independent A-stack ROOT files"
+  },
+  "phase_calibration": {
+    "median_abs_phase_offset_ns": 9.993189120242736,
+    "median_raw_dt_sigma68_ns": 0.2758542133643007,
+    "n_clean_pairs": 4804
+  },
+  "primary_methods": [
+    "traditional_phase_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "late_fusion_phase_cnn_new"
+  ],
+  "python": "3.7.6",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "delta": 0,
+    "expected_selected_b_pulses": 640737,
+    "pass": true,
+    "reproduced_selected_b_pulses": 640737
+  },
+  "runtime_seconds": 20.26214861869812,
+  "script": "scripts/s10h_1781087022_1308_379c0751_phase_calibrated_ab_window_sensitivity.py",
+  "split": {
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ]
+  },
+  "study_id": "S10h",
+  "ticket_id": "1781087022.1308.379c0751",
+  "title": "phase-calibrated A/B coincidence window sensitivity",
+  "winner": {
+    "mean_average_precision": 1.0,
+    "mean_roc_auc": 1.0,
+    "method": "1d_cnn"
+  },
+  "worker": "testbeam-laptop-2"
+}

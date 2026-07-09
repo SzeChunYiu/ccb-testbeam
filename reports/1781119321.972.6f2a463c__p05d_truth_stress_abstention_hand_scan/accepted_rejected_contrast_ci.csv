@@ -1,0 +1,2 @@
+contrast,estimate,ci_low,ci_high,n_bootstrap
+accepted_minus_rejected_consensus_recoverable_rate,1.0,1.0,1.0,1200

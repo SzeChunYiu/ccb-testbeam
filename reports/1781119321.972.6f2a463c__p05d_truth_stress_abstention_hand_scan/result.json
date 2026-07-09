@@ -1,0 +1,75 @@
+{
+  "study": "P05d",
+  "ticket": "1781119321.972.6f2a463c",
+  "worker": "testbeam-laptop-2",
+  "title": "truth-stress abstention hand scan",
+  "reproduced": true,
+  "reproduction_gate": "S10 topology fractions rebuilt from raw B-stack ROOT within +/-0.0015 absolute tolerance",
+  "raw_root_counts": {
+    "low_2nA_events_with_selected": 5838,
+    "high_20nA_events_with_selected": 237295
+  },
+  "benchmark_source": "reports/1781036493.3234.59a107e5/result.json",
+  "methods_benchmarked_in_p05c": [
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge_linear",
+    "traditional_template_fit"
+  ],
+  "winner_name": "traditional_template_fit",
+  "winner": {
+    "method": "traditional_template_fit",
+    "selection_score": 1.28381626912814,
+    "note": "Inherited from P05c run-held-out traditional-vs-ML benchmark; P05d audits its support with blinded reviews."
+  },
+  "scan_population": {
+    "primary_method": "traditional_template_fit",
+    "support": "high_20nA, ref_amp_adc>=4500, adaptive_lowering_adc>200, p02_broad_late",
+    "n_candidates": 72,
+    "n_accepted": 36,
+    "n_rejected": 36,
+    "n_event_displays": 48
+  },
+  "inter_reviewer_agreement": {
+    "n_candidates": 72,
+    "reviewer_a": "blind_residual_recovery_review",
+    "reviewer_b": "blind_shape_fit_review",
+    "agreement": 0.5,
+    "agreement_ci_low": 0.3888888888888889,
+    "agreement_ci_high": 0.6111111111111112,
+    "cohen_kappa": 0.0,
+    "cohen_kappa_ci_low": 0.0,
+    "cohen_kappa_ci_high": 0.0
+  },
+  "accepted_rejected_contrast": {
+    "contrast": "accepted_minus_rejected_consensus_recoverable_rate",
+    "estimate": 1.0,
+    "ci_low": 1.0,
+    "ci_high": 1.0,
+    "n_bootstrap": 1200
+  },
+  "accepted_consensus_recoverable_rate": 1.0,
+  "rejected_consensus_recoverable_rate": 0.0,
+  "scan_conclusion": "accepted_candidates_more_recoverable",
+  "review_limitation": "Two deterministic blinded rubric reviewers were used; no human reviewer inputs are present in this repository.",
+  "split": {
+    "policy": "source-run-held-out provenance inherited from P05c; P05d bootstraps source runs within accepted/rejected strata",
+    "bootstrap_unit": "source_run",
+    "bootstrap_samples": 1200
+  },
+  "artifacts": {
+    "report": "reports/1781119321.972.6f2a463c__p05d_truth_stress_abstention_hand_scan/REPORT.md",
+    "blinded_candidates": "reports/1781119321.972.6f2a463c__p05d_truth_stress_abstention_hand_scan/blinded_candidates.csv",
+    "blinded_reviews": "reports/1781119321.972.6f2a463c__p05d_truth_stress_abstention_hand_scan/blinded_reviews.csv",
+    "run_block_ci": "reports/1781119321.972.6f2a463c__p05d_truth_stress_abstention_hand_scan/run_block_ci.csv",
+    "event_display_manifest": "reports/1781119321.972.6f2a463c__p05d_truth_stress_abstention_hand_scan/event_display_manifest.csv"
+  },
+  "input_sha256": "517b3e6916314c44593c8b54b3833dbc2ae069515c48ad68265b1ee7adbe79d3",
+  "git_commit": "49744cc8e8c7cdbdbf5ccd5674b1891d2fbe852c",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "runtime_sec": 34.11875772476196,
+  "next_tickets": []
+}

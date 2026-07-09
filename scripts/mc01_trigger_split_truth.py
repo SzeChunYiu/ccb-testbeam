@@ -254,6 +254,8 @@ def main():
     # ── convert accumulators to arrays ───────────────────────────────────
     for s in ("I", "II"):
         for k in samples[s]["tracks"]:
+            if k == "edep_per_layer":
+                continue  # list of dicts, not numeric
             samples[s]["tracks"][k] = np.asarray(samples[s]["tracks"][k], dtype=float)
         for k in deltaE_E[s]:
             deltaE_E[s][k] = np.asarray(deltaE_E[s][k], dtype=float)

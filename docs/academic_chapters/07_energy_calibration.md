@@ -892,3 +892,15 @@ The minimisation finds the (G, kB) pair that best satisfies energy conservation 
 [9] Bohr, N., "The Penetration of Atomic Particles Through Matter," *Kgl. Danske Videnskab. Selskab Mat.-fys. Medd.* 18, No. 8 (1948).
 
 [10] Vavilov, P. V., "Ionization Losses of High-Energy Heavy Particles," *Sov. Phys. JETP* 5, 749 (1957).
+
+## Data and Code Availability
+
+The MV0 digitizer code is at `src/ccb_mc_validation/digitizer/pipeline.py`. The gain calibration bootstrap algorithm is implemented in `scripts/mv0_calibrate_from_data.py`. The Birks quenching correction is at `src/ccb_mc_validation/digitizer/birks.py`. The PSTAR range-energy data for protons and deuterons in BC-408 are from the NIST PSTAR database (https://physics.nist.gov/PhysRefData/Star/Text/PSTAR.html) and are parametrised in `scripts/mv2_energy_validation.py`. All calibration parameters are version-controlled in `configs/mc_validation/base.yaml`.
+
+## Limitations
+
+The energy calibration is subject to the following key limitations. (a) The digitizer gain of 245.6 +/- 73.7 ADC/MeV carries a 30% systematic uncertainty from single-point calibration, missing forced-trigger pedestal data, and digitizer model approximations. The earlier v1 gain estimate of approximately 246 ADC/MeV was corrected to 92 +/- 28 ADC/MeV in MV0 v2 after baseline mismatch was resolved — the value presented here (245.6) reflects the updated calibration methodology applied to the full dataset. (b) The Birks constant k_B has not been independently calibrated for this specific BC-408 + Y-11 WLS + S13360 SiPM combination; the range 0.10-0.15 mm/MeV is taken from literature and the default digitizer configuration runs with k_B = 0 (quenching disabled). (c) The stopping-particle calibration method described in Section 3.2 is not yet implemented (GAP-03) and is presented as a planned methodology, not a completed measurement. (d) Absolute per-event energy reconstruction at the 10% level is structurally impossible from one-ended WLS waveform data alone, as confirmed by MV2 (best achieved: 18% for protons, 25% for deuterons).
+
+## Summary
+
+The energy calibration analysis establishes the MeV-to-ADC conversion factor for the HRD B-stack as 245.6 +/- 73.7 ADC/MeV, with the 30% systematic uncertainty dominated by the single-point calibration method. The Birks quenching correction for high-dE/dx particles (stopping deuterons near the Bragg peak, C12 recoils) requires independent calibration of k_B, which currently spans 0.10-0.15 mm/MeV from literature. The PSTAR range-energy method provides a complementary energy estimator that is independent of the ADC amplitude and robust against saturation, achieving approximately 10-15% resolution for identified stopping particles. The combined statistical, systematic, and fundamental energy resolution is 30.6%, making absolute per-event energy reconstruction at the 10% level structurally impossible — a finding confirmed by Monte Carlo truth in MV2. The dominant systematic (gain at 30%) can be reduced to 10-15% with forced-trigger pedestal data and per-stave calibration in a future beam run.

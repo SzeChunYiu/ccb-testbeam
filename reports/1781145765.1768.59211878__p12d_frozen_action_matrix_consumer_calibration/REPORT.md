@@ -81,7 +81,7 @@ Run-level primary scores:
 
 The P12c accepted set is fixed before modeling. Improvements in accepted residual width therefore test whether the frozen action matrix defines a usable calibration support boundary, not whether a model can rediscover the P12c labels. Reweighting retains low-weight abstain/veto cells in the weighted MAE, while the accepted residual width asks what downstream consumers would see if they used only pass/correct cells.
 
-## 7. Leakage and Systematics
+## 7. Leakage, Caveats, and Systematics
 
 | check                                  | value                                                                                                                                                                                                                 | pass   |
 |:---------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------|
@@ -93,7 +93,7 @@ The P12c accepted set is fixed before modeling. Improvements in accepted residua
 | p12c_policy_frozen_before_fit          | reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix                                                                                                                                                    | True   |
 
 - The residual target is a ROOT-derived proxy, not independent detector-level PID or energy truth.
-- CIs resample only seven held-out runs, so run-level uncertainty is more important than nominal pulse count.
+- Bootstrap CIs resample only seven held-out runs, so run-level uncertainty is more important than nominal pulse count.
 - The frozen P12c policy was developed on related atoms; this study tests downstream calibration behavior but cannot remove all circularity without an independent reference.
 - The neural methods are small CPU-compatible comparators. A larger GPU-tuned network may change point estimates, but the winner rule and run split would need to remain fixed.
 

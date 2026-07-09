@@ -1,0 +1,8 @@
+quantity,expected,reproduced,delta,tolerance,pass
+total_selected_b_pulses,640737.0,640737.0,0.0,0.0,True
+sample_i_analysis_b_selected_pulses,252266.0,252266.0,0.0,0.0,True
+sample_ii_analysis_b_selected_pulses,125096.0,125096.0,0.0,0.0,True
+fixed_efficiency_reference_events,798651.0,798651.0,0.0,0.0,True
+fixed_efficiency_reference_pairs,6377.0,6377.0,0.0,0.0,True
+sample_iv_fixed_efficiency_a1_a3_pairs,2110.0,2110.0,0.0,0.0,True
+sample_iv_fixed_efficiency_a1_a3_robust_width_ns,39.713162200380395,39.713162200380395,0.0,1000000.0,True

@@ -1,0 +1,91 @@
+{
+  "study": "S01i",
+  "ticket": "1781130196.1693.4b0d0148",
+  "worker": "testbeam-laptop-4",
+  "title": "q-template atom transfer to injected pile-up/dropout truth",
+  "reproduced": true,
+  "winner": "atom_gated_cnn_new",
+  "winner_family": "new_architecture",
+  "winner_metrics": {
+    "method": "atom_gated_cnn_new",
+    "family": "new_architecture",
+    "n": 21613,
+    "positives": 10800,
+    "roc_auc": 0.9653015274823514,
+    "auc_ci_low": 0.9613280744361865,
+    "auc_ci_high": 0.9684495044192809,
+    "average_precision": 0.9757185433318858,
+    "ap_ci_low": 0.9738444258446435,
+    "ap_ci_high": 0.977572533570861
+  },
+  "best_traditional": {
+    "method": "traditional_smoothed_atom_table",
+    "family": "traditional",
+    "n": 21613,
+    "positives": 10800,
+    "roc_auc": 0.5346473038283822,
+    "auc_ci_low": 0.529219007867328,
+    "auc_ci_high": 0.5408677235172763,
+    "average_precision": 0.5326553319268365,
+    "ap_ci_low": 0.5262870451459716,
+    "ap_ci_high": 0.541500118607193
+  },
+  "delta_auc_vs_best_traditional": 0.4306542236539692,
+  "models_benchmarked": [
+    "atom_gated_cnn_new",
+    "mlp",
+    "gradient_boosted_trees",
+    "ridge",
+    "1d_cnn",
+    "traditional_smoothed_atom_table",
+    "traditional_analytic_shape_score"
+  ],
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0
+  },
+  "split": {
+    "train_groups": [
+      "sample_i_calib",
+      "sample_i_analysis",
+      "sample_ii_calib"
+    ],
+    "heldout_groups": [
+      "sample_ii_analysis"
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "train_rows": 46650,
+    "heldout_rows": 21613,
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_samples": 800
+  },
+  "target": {
+    "name": "deterministic injected pileup/dropout truth",
+    "positive_fraction_train": 0.4995712754555198,
+    "positive_fraction_heldout": 0.4996992550779623,
+    "subtype_counts_heldout": {
+      "clean": 10813,
+      "pileup": 5412,
+      "dropout": 5388
+    }
+  },
+  "verdict": "ML wins",
+  "next_tickets": [
+    {
+      "title": "S01j q-template atom transfer to real external overlay hand-scan",
+      "body": "Test whether S01i injected-truth transfer survives a small blinded hand-scan or real overlay label set; expected information gain is separating injection realism from genuine acquisition pathologies."
+    }
+  ],
+  "git_commit": "9b02bb7da346f67b2c44033e363d0427a7a2b3db",
+  "python": "3.7.6",
+  "runtime_sec": 60.66682529449463
+}

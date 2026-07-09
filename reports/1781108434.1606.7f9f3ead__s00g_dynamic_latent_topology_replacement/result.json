@@ -1,0 +1,101 @@
+{
+  "study": "S00g",
+  "ticket": "1781108434.1606.7f9f3ead",
+  "worker": "testbeam-laptop-2",
+  "title": "dynamic-only topology proxy replacement with joined P02 latent labels",
+  "reproduced_raw_root_first": true,
+  "reproduction": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "bootstrap_samples": 300
+  },
+  "latent_artifact": "reports/1781032398.9027.3d275e75__s00e_dynamic_embedding_release/s00e_dynamic_embedding_latents.npz",
+  "latent_topology_join": {
+    "selected_rows_joined": 706373,
+    "missing_rows": 0,
+    "cluster_count": 8,
+    "match_topology_column": "latent_topology",
+    "summary_table": "latent_topology_summary.csv"
+  },
+  "traditional_method": "exact_run_current_amplitude_joined_p02_latent_topology_matched_fixed_secondary_rubric",
+  "methods": [
+    "new_shape_residual_fusion",
+    "mlp",
+    "gradient_boosted_trees",
+    "cnn_1d",
+    "ridge",
+    "traditional_fixed_secondary_score",
+    "shuffled_label_fusion_control"
+  ],
+  "cnn_1d_implementation": "fixed_1d_convolution_filter_bank_hist_gradient_boosting_fallback",
+  "winner": {
+    "method": "new_shape_residual_fusion",
+    "roc_auc": 0.991806776097553,
+    "roc_auc_ci": [
+      0.9910965244901312,
+      0.9924659758805892
+    ],
+    "average_precision": 0.9919303637199761,
+    "balanced_accuracy": 0.9577390385631274
+  },
+  "physics_verdict": {
+    "verdict": "selector_artifact_region",
+    "matched_coverage": 0.2509770295005194,
+    "matched_rows": 30440,
+    "matched_dynamic_rows": 15220,
+    "matched_control_rows": 15220,
+    "dynamic_baseline_excursion_total": 60643,
+    "secondary_delta": -0.03153745072273325,
+    "secondary_delta_ci": [
+      -0.03512664838539888,
+      -0.0282658086578639
+    ],
+    "timing_tail_delta": -0.05788436268068331,
+    "timing_tail_delta_ci": [
+      -0.07160613490003577,
+      -0.044386382088138894
+    ],
+    "charge_area_delta": -24477.5,
+    "charge_area_delta_ci": [
+      -24894.675,
+      -24008.4875
+    ],
+    "baseline_excursion_delta": 336.0,
+    "baseline_excursion_delta_ci": [
+      298.475,
+      395.0
+    ]
+  },
+  "non_oracle_leakage_checks_pass": true,
+  "input_sha256_table": "input_sha256.csv",
+  "git_commit": "e0b0c12c9a46fcc5e134a5b4b6bef3b625eb323b",
+  "runtime_sec": 59.483,
+  "next_tickets": [],
+  "finding": "Baseline-excursion dynamic-only pulses reproduce at 65636; exact matched deltas favor selector_artifact_region. Predictive benchmark winner: new_shape_residual_fusion.",
+  "output_files": [
+    "fig_model_auc.png",
+    "fig_support_summary.png",
+    "heldout_model_scores.csv.gz",
+    "input_sha256.csv",
+    "latent_topology_summary.csv",
+    "leakage_checks.csv",
+    "matched_pulse_table.csv.gz",
+    "matched_strata_summary.csv",
+    "matched_support_summary.csv",
+    "model_benchmark.csv",
+    "primary_delta_metrics.csv",
+    "reproduction_match_table.csv",
+    "selector_counts_by_run.csv"
+  ]
+}

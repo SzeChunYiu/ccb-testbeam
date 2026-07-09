@@ -1,0 +1,12 @@
+source,consumer,method,metric,value,ci_low,ci_high,role
+S06b charge-energy timing support,charge,traditional,calibration_loss,0.6590594203452015,0.5499436811302684,0.7752570534286872,charge-matched pull calibration baseline
+S06b charge-energy timing support,charge,phase_conformal_gated_cnn,calibration_loss,0.05344836831331472,0.04141975261815986,0.07046327215017092,best existing uncertainty consumer
+S06b charge-energy timing support,energy,traditional,sigma68_ns,1.5510917109777835,,,energy-support timing width baseline
+S06b charge-energy timing support,energy,phase_conformal_gated_cnn,sigma68_ns,1.503985568351275,1.3773029035293658,1.6835747824493226,best existing energy-support timing width
+S06c action-band closure,energy,traditional_after_action_bands,calibration_loss,0.2038557789450791,0.09193443554706454,0.3841420325361983,accepted support baseline
+S06c action-band closure,energy,phase_conformal_gated_cnn,calibration_loss,0.07481527559296627,0.05428414358715894,0.10624071461105548,accepted support best existing consumer
+S10h phase-calibrated pileup window,pileup,1d_cnn,mean_average_precision,1.0,,,event-level pile-up classifier reference
+S00h calibrated PID-energy support,pid,traditional_fixed_secondary_score,roc_auc,0.48875,0.47,0.50875,traditional PID-energy support reference
+S00h calibrated PID-energy support,pid,new_shape_residual_fusion,roc_auc,0.9883375000000001,0.9843353125000001,0.99361875,best PID-energy support model
+S14h G4 energy calibration,energy,geant4_birks_lookup,res68_frac,0.0402439783091376,0.03885687265429256,0.041606317494948857,traditional energy calibration
+S14h G4 energy calibration,energy,gradient_boosted_trees,res68_frac,0.0566846321762142,0.04880395769058964,0.06719740156251883,tree energy calibration reference

@@ -1,0 +1,32 @@
+{
+  "study": "S11h",
+  "ticket": "1781146783.955.745c6984",
+  "worker": "testbeam-laptop-1",
+  "title": "blinded real-current waveform adjudication",
+  "s11g_report_dir": "reports/1781048230.616.2d7e4b56__s11g_residual_pool_real_current_transfer",
+  "s11g_script": "scripts/s11g_1781048230_616_2d7e4b56_residual_pool_real_current_transfer.py",
+  "s11b_source_script": "scripts/s11b_real_high_current_two_pulse_validation.py",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication",
+  "random_seed": 1146783,
+  "bootstrap_samples": 1000,
+  "target_population": {
+    "group": "high_20nA",
+    "p02_topology": "p02_broad_late",
+    "min_ref_amp_adc": 2500.0,
+    "min_adaptive_lowering_adc": 200.0
+  },
+  "blinded_review": {
+    "shape_score_threshold": 1.15,
+    "residual_score_threshold": 1.05,
+    "consensus_min_reviews": 2
+  },
+  "required_methods": [
+    "traditional_template_fit",
+    "ridge_linear",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble"
+  ]
+}

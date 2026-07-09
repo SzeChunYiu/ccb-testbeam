@@ -1,0 +1,15 @@
+run,group,current_nA,events_total,events_with_selected,selected_pulses,multi_stave_events,three_stave_events,downstream_events,source
+44,high_20nA,20.0,4294,1912,2038,90,29,116,raw_root_reload
+45,high_20nA,20.0,48181,23013,24333,944,285,1147,raw_root_reload
+46,low_2nA,2.0,1441,677,687,8,1,10,raw_root_reload
+47,low_2nA,2.0,10970,5161,5276,83,23,125,raw_root_reload
+48,high_20nA,20.0,31713,13185,14000,584,179,708,raw_root_reload
+49,high_20nA,20.0,32354,13937,14815,623,202,770,raw_root_reload
+50,high_20nA,20.0,44804,34257,35217,691,209,854,raw_root_reload
+51,high_20nA,20.0,20569,14295,14740,308,103,400,raw_root_reload
+52,high_20nA,20.0,10005,6933,7152,147,51,186,raw_root_reload
+53,high_20nA,20.0,39612,31386,32200,567,188,727,raw_root_reload
+54,high_20nA,20.0,37413,29665,30440,547,178,716,raw_root_reload
+55,high_20nA,20.0,24416,16841,17387,379,124,479,raw_root_reload
+56,high_20nA,20.0,51823,38932,40148,854,271,1050,raw_root_reload
+57,high_20nA,20.0,31284,12939,13833,627,207,776,raw_root_reload

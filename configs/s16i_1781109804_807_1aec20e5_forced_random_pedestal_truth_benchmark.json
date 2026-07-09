@@ -1,0 +1,13 @@
+{
+  "ticket": "1781109804.807.1aec20e5",
+  "worker": "testbeam-laptop-3",
+  "study": "S16i",
+  "title": "true B-stack forced/random pedestal ROOT provenance and pretrigger fallback benchmark",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "benchmark_runs": [58, 59, 60, 61, 62, 63, 64, 65],
+  "canonical_selected_pulses": 640737,
+  "rows_per_run": 850,
+  "bootstrap_resamples": 500,
+  "seed": 1781109804,
+  "forced_random_keywords": ["forced", "random", "pedestal", "ped", "nopulse", "no_pulse", "empty", "noise", "dark"]
+}

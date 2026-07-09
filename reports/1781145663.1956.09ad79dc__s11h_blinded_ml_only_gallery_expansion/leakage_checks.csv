@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_root_reproduction_pass,1.0,True,S10 topology fractions rebuilt directly from local ROOT files.
+all_required_methods_present,1.0,True,"Traditional, ridge, GBT, MLP, 1D-CNN, and consensus actions are present."
+labels_do_not_use_ml_probabilities,1.0,True,"Blinded label columns are functions of external labels, bounded-fit diagnostics, and shape/topology fields only."
+source_run_bootstrap_used,800.0,True,Intervals resample source runs within gallery arm.
+prior_gallery_overlap_not_complete,0.7821782178217822,True,External S10f labels are used where available but S11h is an expanded deterministic blinded gallery.

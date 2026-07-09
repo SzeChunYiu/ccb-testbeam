@@ -1,0 +1,30 @@
+{
+  "study": "S11h",
+  "ticket": "1781145663.1956.09ad79dc",
+  "worker": "testbeam-laptop-3",
+  "title": "blinded ML-only gallery expansion",
+  "source_script": "scripts/s11b_real_high_current_two_pulse_validation.py",
+  "s11f_report_dir": "reports/1781046807.583.64755f71__s11f_two_pulse_method_disagreement_taxonomy",
+  "gallery_source": "reports/1781030296.1752.37d47174/morphology_scores.csv",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781145663.1956.09ad79dc__s11h_blinded_ml_only_gallery_expansion",
+  "random_seed": 1145663,
+  "target_method": "consensus_abstention_ensemble",
+  "target_disagreement_class": "ml_only",
+  "high_arm": "high_ml_only",
+  "control_arm": "matched_low_control",
+  "high_per_run_cap": 32,
+  "control_ratio": 1,
+  "bootstrap_samples": 800,
+  "required_methods": [
+    "traditional_template_fit",
+    "ridge_linear",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble"
+  ],
+  "traditional_min_score": 0.015,
+  "traditional_min_secondary_fraction": 0.05,
+  "matched_downstream_high_minus_low": 0.0202483132962887
+}

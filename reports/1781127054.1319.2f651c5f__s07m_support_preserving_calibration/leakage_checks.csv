@@ -1,0 +1,7 @@
+probe,roc_auc,average_precision,notes
+pre-injection D_t,0.5,0.5,Same source event before corruption; should be chance.
+topology-only RF,0.5010118377915709,0.5019092193807453,Present flags and downstream count only; excluded from main models.
+absolute-amplitude-only RF,0.5874152270928774,0.6092627108846721,Injection can change peak height; excluded from main models.
+shape RF with shuffled training labels,0.4947666087068868,0.4971892568869477,Run-heldout null sanity check.
+pair split violations,0.0,,Must be 0.
+forbidden main feature columns,0.0,,None.

@@ -64,3 +64,168 @@ The digitizer is configured through a YAML specification (`configs/mc_validation
 ## Pipeline provenance and reproducibility
 
 The entire pipeline is version-controlled in the repository `SzeChunYiu/ccb-testbeam`. The S00 reproduction study records SHA256 checksums for all 110 input ROOT files and the output pulse table. The MC validation pipeline is executed via SLURM job scripts on the LUNARC cluster (LU48 partition) and produces self-contained report directories under `reports/sampleI_II_trigger_split_<timestamp>/` that include JSON summaries, NPZ data arrays, and publication-ready PNG figures. The digitizer pipeline is invoked through a unified CLI (`ccb-mc-validation`) that resolves study dependencies, manages random seeds for reproducibility, and writes a machine-readable manifest of all outputs.
+
+## Pipeline execution environment
+
+### 5.1 LUNARC cluster configuration
+
+The analysis pipeline is executed on the LUNARC high-performance computing cluster at Lund University. The SLURM job scripts (under `geant4/jobs/`) request resources from the LU48 partition:
+
+```
+#SBATCH -A lu2026-2-51
+#SBATCH -p lu48
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 4
+#SBATCH -t 00:25:00
+```
+
+Each job runs on a single node with 4 CPU cores and a 25-minute wall time. The full trigger-split pipeline (MC truth analysis of 1 million events, data analysis of 640,737 pulses, and data/MC comparison with 10 plots) completes within the 25-minute allocation. The Python environment is the `hibeam_env` conda environment located at `/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/`, which provides NumPy, SciPy, pandas, scikit-learn, uproot, Matplotlib, and PyTorch.
+
+### 5.2 Data flow architecture
+
+The pipeline's data flow follows a directed acyclic graph (DAG) structure:
+
+```
+raw ROOT (110 files, 810 MB)
+    |
+    v
+01_build_pulse_table_from_root.py
+    |
+    v
+s00_selected_b_pulses.csv.gz (640,737 rows, ~50 MB compressed)
+    |
+    +---> Timing branch: CFD20 -> timewalk -> residuals -> sigma_68
+    |
+    +---> Pile-up branch: live10 -> tau_eff -> R_max -> two-pulse recovery
+    |
+    +---> PID branch: B2/B4 amplitudes -> deltaE-E plane -> AUC
+    |
+    +---> ML branch: PCA/AE embeddings -> classifiers -> leakage controls
+
+MC truth (output_krakow_1M.root, 677 MB)
+    |
+    v
+MV0 digitizer (configs/mc_validation/base.yaml)
+    |
+    v
+Synthetic waveforms (1M events, 18-sample ADC)
+    |
+    v
+Identical analysis pipeline (same scripts, same configs)
+    |
+    v
+Truth-labelled results -> data/MC comparison (MV1-MV6)
+```
+
+Each intermediate data product is stored in a versioned format (CSV with gzip compression for the pulse table, NPZ for NumPy arrays, JSON for structured results, PNG for figures). No intermediate product exceeds 100 MB, ensuring that the full pipeline can be rerun from scratch on a single LUNARC node.
+
+### 5.3 Random seed management
+
+Reproducibility of stochastic algorithms (bootstrap resampling, train/test splitting, GMM initialisation, neural network weight initialisation) is ensured by fixed random seeds configured in the base YAML:
+
+```
+seeds:
+  global: 424242
+  split: 1701
+  bootstrap: 9001
+```
+
+The global seed initialises the NumPy random state at the start of each script. The split seed is used for train/test splits, ensuring that the same events are assigned to training and test sets across pipeline runs. The bootstrap seed initialises the resampling for confidence interval computation. All three seeds are recorded in the output manifest, enabling exact reproduction of any stochastic result.
+
+### 5.4 Error handling and data quality
+
+The pipeline includes automated data quality checks at each stage:
+
+- **Input validation:** The `audit_truth_tree()` function in `src/ccb_mc_validation/io/root_truth.py` verifies that the expected branches (Sci_bar_LayerID, Sci_bar_PDG, Sci_bar_EDep, Sci_bar_Time) are present in the ROOT file and that the data types match the schema. Missing or malformed branches raise an `InputNotFoundError` or `SchemaMismatchError` with a descriptive message.
+
+- **Run-level QC:** Baseline mean and RMS are computed per run. Runs with baseline shift >3 sigma from the global mean or RMS >2 times the global median are flagged and excluded from analysis (run 43 is the only exclusion in the current dataset).
+
+- **Study dependency resolution:** The MC validation CLI resolves study dependencies automatically. If MV4 (timing) is requested but MV0 (digitizer) has not been run, the pipeline raises a `StudyBlockedError` indicating the missing prerequisite. This prevents downstream studies from running on unvalidated digitizer output.
+
+- **Output integrity:** Each study writes a JSON manifest recording the git commit hash, the resolved configuration, the random seeds, the input file paths with SHA256 checksums, and the output file list. The manifest is the authoritative record of the study's execution environment and can be used to detect bit-level changes in upstream data or code.
+
+## Pulse reconstruction algorithm
+
+### 6.1 Baseline subtraction
+
+The baseline subtraction algorithm computes the median of the first 4 ADC samples for each waveform:
+
+```
+Function compute_baseline(waveform):
+    pretrigger = waveform[0:4]  # ADC samples 0-3
+    baseline = median(pretrigger)
+    return baseline, waveform - baseline
+```
+
+The median is preferred over the mean because it is robust to single-sample outliers: a pre-trigger pile-up tail or an electronic noise spike that affects one sample does not bias the median, whereas it would shift the mean. The pre-trigger window of 4 samples (40 ns) is chosen as a compromise between statistical precision (more samples reduce the baseline RMS) and contamination risk (later samples may be affected by the rising edge of the pulse or by a preceding pulse tail).
+
+The baseline RMS is approximately 50-80 ADC, measured from the pre-trigger samples of isolated pulses in low-rate runs. This is the fundamental noise floor for amplitude and timing measurements.
+
+### 6.2 CFD time extraction
+
+The constant-fraction discriminator (CFD) algorithm determines the pulse arrival time by finding the sample at which the waveform crosses a fixed fraction (20%) of its peak amplitude:
+
+```
+Function cfd_time(waveform, fraction=0.2):
+    amplitude = max(waveform)
+    threshold = fraction * amplitude
+    peak_sample = argmax(waveform)
+    # Search backward from peak for threshold crossing
+    for i in range(peak_sample, 0, -1):
+        if waveform[i] <= threshold and waveform[i-1] > threshold:
+            # Linear interpolation between samples i-1 and i
+            t_cfd = i - 1 + (waveform[i-1] - threshold) / (waveform[i-1] - waveform[i])
+            return t_cfd  # in sample units (10 ns per sample)
+    return 0.0  # No crossing found (should not happen for selected pulses)
+```
+
+The linear interpolation between the two samples bracketing the threshold crossing provides sub-sample timing precision. The effective time resolution of the CFD algorithm, limited by the 50-80 ADC noise RMS and the approximately 500 ADC/sample rising-edge slope, is approximately 50/500 * 10 ns = 1 ns, consistent with the measured sigma_68 of 1.85 ns for single-stave CFD timing.
+
+### 6.3 Optimal filter
+
+The optimal filter (OF) is an alternative time pickoff that correlates the full waveform with a template pulse shape:
+
+```
+Function optimal_filter_time(waveform, template):
+    # template: average pulse shape (18 samples), normalised to unit amplitude
+    # Compute cross-correlation at sub-sample shifts
+    best_t = 0.0
+    best_chi2 = inf
+    for t_shift in linspace(-2.0, 2.0, 41):  # +/-2 samples, 0.1 sample steps
+        shifted_template = interpolate(template, t_shift)
+        scale = sum(waveform * shifted_template) / sum(shifted_template^2)
+        chi2 = sum((waveform - scale * shifted_template)^2)
+        if chi2 < best_chi2:
+            best_chi2 = chi2
+            best_t = t_shift
+    return best_t
+```
+
+The OF provides better noise rejection than the CFD (it uses all 18 samples rather than just the 2 samples bracketing the threshold), but it is sensitive to pulse shape variations: a saturated or pile-up-distorted pulse has a different shape from the template, and the OF fit can converge to a biased time. For this reason, the CFD is the canonical pickoff method (sigma_68 = 1.85 ns), while the OF is used as a cross-check (sigma_68 = 2.89 ns, worse due to shape sensitivity).
+
+### 6.4 Template construction
+
+The average pulse template is constructed from a high-purity sample of isolated, high-amplitude pulses:
+
+```
+Function build_template(pulse_table, n_pulses=5000):
+    # Select isolated pulses: no other selected pulse within +/- 50 ns
+    # in the same event and stave
+    isolated = filter(pulse_table, isolation_cut)
+    # Select high-amplitude pulses: amplitude > 4000 ADC (unsaturated, good SNR)
+    high_amp = filter(isolated, amplitude > 4000)
+    # Randomly sample n_pulses
+    sample = random_sample(high_amp, n_pulses)
+    # Align at CFD time and average
+    aligned_waveforms = []
+    for pulse in sample:
+        waveform = load_waveform(pulse.run, pulse.eventno, pulse.stave)
+        t_cfd = cfd_time(waveform)
+        aligned = shift_waveform(waveform, -t_cfd)  # align CFD time to t=0
+        aligned_waveforms.append(aligned)
+    template = mean(aligned_waveforms, axis=0)
+    return template / max(template)  # normalise to unit amplitude
+```
+
+The template is constructed per stave and per run group (Sample I calibration, Sample II calibration) to account for subtle differences in pulse shape arising from SiPM gain variations and WLS fibre coupling differences. The template construction is performed once and the templates are stored as NPZ files for use by downstream timing and shape analyses.

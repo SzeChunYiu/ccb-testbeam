@@ -1,0 +1,164 @@
+# Chapter 11: Open Questions and Future Work
+
+## Abstract
+
+The CCB test-beam analysis programme has addressed the primary physics goals of timing resolution characterisation and pile-up rate determination, with Monte Carlo validation providing truth-bridged assessment of every major claim. This chapter catalogues the open questions that remain, ranked by severity from blocking (must fix before publication) to low (completeness items). Each gap is traceable to a specific study and includes a concrete action plan for resolution.
+
+---
+
+## 1. Blocking Issues
+
+### GAP-01: Stopping-Depth Monte Carlo Failure (BLOCKING)
+
+**Severity:** Blocks quantitative MC-based acceptance corrections.
+
+**Source:** MV3 stopping-depth profile comparison (chi^2/ndf = 68,269).
+
+**Finding:** The GEANT4 geometry overestimates the fraction of particles reaching deep staves (B6, B8) by a factor of 10. The root cause is missing upstream material budget: the target support structure, beam window, trigger scintillators, and inter-stave absorber layers, estimated at 8-10 g/cm^2 total.
+
+**Action:** Update the GEANT4 geometry file with full material specification including all passive elements between the target and the B-stack entrance. Regenerate the 1M-event Monte Carlo sample. Rerun MV3 with the updated geometry. Target: reduce chi^2/ndf below 5 (qualitative agreement) or below 2 (quantitative agreement).
+
+**Impact if unresolved:** All quantitative stopping-depth claims from Monte Carlo are unreliable. B8 trigger efficiency calibration cannot be MC-anchored. The PSTAR range-energy method (Chapter 7) cannot be validated for deep-stopping particles.
+
+---
+
+## 2. High-Impact Issues
+
+### GAP-02: Timewalk Monte Carlo Tension (HIGH)
+
+**Severity:** Prevents reporting of timewalk-corrected sigma_68 with MC validation.
+
+**Source:** MV4 timing comparison (pull = 2.68 sigma for timewalk-corrected resolution).
+
+**Finding:** The digitizer CFD model uses B/sqrt(ADC) instead of the physically correct B/amplitude parametrisation, producing an inverted timewalk correction in the Monte Carlo.
+
+**Action:** Code fix in `src/ccb_mc_validation/digitizer/pipeline.py` or the CFD stage: replace the B/sqrt(ADC) term with B/amplitude. Rerun MV4 with the corrected digitizer. Expected result: timewalk-corrected pull < 2 sigma.
+
+**Impact if unresolved:** Timewalk-corrected sigma_68 cannot be reported as MC-validated. The raw timing (pull = 1.05 sigma) already passes, so the uncorrected timing resolution is validated.
+
+### GAP-03: Digitizer Gain Uncertainty (HIGH)
+
+**Severity:** Dominant systematic for deuteron fraction and energy-dependent quantities.
+
+**Source:** MV0 digitizer calibration (245.6 plus or minus 73.7 ADC/MeV, 30% systematic).
+
+**Finding:** The gain calibration uses a single calibration point (Sample II B2 median). The uncertainty arises from single-point calibration (15%), digitizer model approximations (10%), and missing forced-trigger pedestal data (10%).
+
+**Action:** (1) Acquire forced-trigger pedestal data in the next beam run (reduces baseline uncertainty to 5%). (2) Perform per-stave gain calibration using duplicate-readout or GEANT4 truth per stave. (3) Include Birks quenching in the digitizer model to correct for high-dE/dx light suppression. Target: reduce gain uncertainty to 10-15%.
+
+**Impact if unresolved:** 30% energy-scale uncertainty propagates into all ADC-to-MeV conversions.
+
+---
+
+## 3. Medium-Impact Issues
+
+### GAP-04: Two-Pulse ML Failure Rate (MEDIUM)
+
+**Severity:** Gates ML adoption for production two-pulse recovery.
+
+**Source:** S11 two-pulse decomposition comparison.
+
+**Finding:** ML achieves better time RMS (9-11 ns vs 13-18 ns for template fit) but higher failure rate (0.295 vs 0.168). No truth-labelled overlay Monte Carlo exists to characterise ML failure modes.
+
+**Action:** Extend MV5 to generate truth-labelled overlapping waveforms by superposing digitised single-particle pulses with known time separations and amplitudes. Train and evaluate ML models on this labelled dataset. Characterise failure modes as a function of time separation, amplitude ratio, and particle species.
+
+**Impact if unresolved:** ML two-pulse recovery cannot be adopted for production. Conventional template fit remains the default.
+
+### GAP-05: Two-Ended Timing Projection (MEDIUM)
+
+**Severity:** The sqrt(2) projection for two-ended timing improvement is unvalidated.
+
+**Source:** S05d two-ended covariance study.
+
+**Finding:** The one-ended timing resolution is dominated by position-dependent WLS propagation delay (0-5.9 ns variation). Two-ended readout averages the two end times, cancelling the position dependence to first order and projecting a sqrt(2) improvement. This projection assumes uncorrelated end measurements.
+
+**Action:** Measure the correlation between the two ends using A/B stack coincidence events (where the same particle crosses both stacks, providing an independent position constraint) or dedicated split-readout channels in a future beam test.
+
+**Impact if unresolved:** The two-ended timing projection remains an upper-bound estimate rather than a validated value.
+
+---
+
+## 4. Low-Impact Issues
+
+### GAP-06: CFD/OF Parameter Scan (LOW)
+
+**Finding:** CFD fraction (20%) and optimal filter window were chosen heuristically. No systematic grid search exists.
+
+**Action:** Parameter sweep: CFD fraction 10-50% in 5% steps, OF window 3-18 samples. Confirm 20% is near-optimal.
+
+### GAP-07: Gaussian-Core Fit Quality (LOW)
+
+**Finding:** Gaussian-core fits to residual distributions do not report chi^2/ndf.
+
+**Action:** Add chi^2/ndf and tail fraction to all timing residual fit reports.
+
+### GAP-08: Absolute TOF Scale (LOW)
+
+**Finding:** No independent time-of-flight reference (TPC, trigger scintillator cross-check) exists.
+
+**Action:** Cross-check TOF against TPC track length divided by expected velocity, or against trigger scintillator coincidence timing.
+
+### GAP-09: Stave-to-Stave Calibration (LOW)
+
+**Finding:** MV0 gain is calibrated on B2 only; inter-stave variation (plus or minus 10%) is assumed, not measured.
+
+**Action:** Measure per-stave gain using duplicate-readout or GEANT4 truth per stave.
+
+---
+
+## 5. Dependency Graph
+
+The open questions form a dependency graph:
+
+- GAP-01 (geometry update) is independent and can be addressed in parallel with all other gaps.
+- GAP-02 (timewalk fix) depends on the digitizer code change but not on new data or MC.
+- GAP-03 (gain uncertainty) depends on new beam data (forced-trigger pedestal) and is gated by the next beam run.
+- GAP-04 (ML failure rate) depends on MV5 extension and can be addressed with existing simulation infrastructure.
+- GAP-05 (two-ended timing) depends on new beam data with split-readout configuration.
+
+The blocking and high-impact items (GAP-01, GAP-02, GAP-03) must be resolved before the analysis can be considered publication-ready. The medium and low items are completeness issues that do not affect the validity of the existing physics claims.
+
+## 6. Recommended Next Actions
+
+In priority order, the recommended sequence of actions to close the remaining open questions is:
+
+1. **Fix MV4 timewalk (GAP-02) — immediate, code change only.** This is the highest-return action: a one-line change from B/sqrt(ADC) to B/amplitude in the digitizer CFD stage resolves the only remaining tension in the timing validation programme. No new data or MC production required. Estimated effort: 1 day.
+
+2. **Update GEANT4 geometry (GAP-01) — requires MC regeneration.** Add the missing material budget (target support, beam window, trigger paddles, inter-stave absorbers) to the GEANT4 geometry file. Regenerate the 1M-event sample. Rerun MV3. Estimated effort: 2-4 weeks (geometry update, validation, MC production on LUNARC).
+
+3. **Extend MV5 for truth-labelled overlay (GAP-04) — simulation only.** Generate synthetic overlapping waveforms by superposing digitised single-particle pulses with known time separations and amplitudes. Train and evaluate ML models on this labelled dataset. Characterise failure modes. Estimated effort: 1-2 weeks.
+
+4. **Acquire forced-trigger pedestal data (GAP-03) — requires new beam run.** Include forced-trigger runs in the next CCB beam time. This reduces the gain uncertainty from 30% to 10-15%. Combined with per-stave calibration, this is the single most impactful data-taking improvement. Estimated effort: 1 day of beam time.
+
+5. **Perform CFD/OF parameter scans (GAP-06) — completeness.** Systematic grid search over CFD fraction (10-50%) and OF window (3-18 samples). Confirm 20% is near-optimal. Estimated effort: 1-2 days.
+
+6. **Add chi^2/ndf to timing fits (GAP-07) — reporting completeness.** Add goodness-of-fit metrics to all timing residual reports. Estimated effort: 0.5 days.
+
+7. **Cross-check absolute TOF (GAP-08) — completeness.** Use TPC track length or trigger scintillator coincidence to validate the absolute time-of-flight scale. Estimated effort: 1-2 days.
+
+8. **Measure stave-to-stave gain variation (GAP-09) — completeness.** Use duplicate-readout or GEANT4 truth per stave to calibrate inter-stave gain differences. Estimated effort: 2-3 days.
+
+9. **Validate two-ended timing projection (GAP-05) — requires new beam run.** Instrument both ends of selected WLS fibres and measure the correlation between the two end times. Replace the sqrt(2) projection with a measured factor. Estimated effort: 1-2 days of beam time plus analysis.
+
+## 7. Publication Readiness Assessment
+
+The analysis programme currently meets the following publication-readiness criteria:
+
+- **Reproducibility:** The selected-pulse table is reproduced with exact fidelity (S00, SHA256-verified). The digitizer configuration is version-controlled. The pipeline is executable on LUNARC with SLURM job scripts.
+- **MC validation:** Every physics claim carries an explicit MC validation verdict (MV0-MV6). Where the MC fails (MV3 stopping-depth, MV4 timewalk), the root cause is diagnosed and documented.
+- **Methodological rigour:** The three leakage controls (target shuffle, LORO, event-block shuffle) are defined, applied, and documented. The CORRECTED studies are published as negative findings.
+- **Systematic uncertainties:** Quantified for all major physics quantities. The dominant systematics (digitizer gain 30%, stopping-depth model 5%) are acknowledged and their resolutions planned.
+
+The outstanding items before submission to a peer-reviewed journal are: GAP-01 (geometry update, blocking for MC acceptance corrections), GAP-02 (timewalk fix, high, code-only), and GAP-03 (gain uncertainty, high, requires new beam data). Chapters 2-10, which document the current state of the analysis with explicit caveats for the open gaps, are suitable for internal collaboration review and pre-submission circulation.
+
+## 8. Summary of Closed Findings
+
+For completeness, the following analysis threads are considered fully closed with no remaining open questions:
+
+- **S00 data gate:** The 640,737 selected-pulse count is reproduced exactly (SHA256-verified). No further work needed.
+- **MV1 PID ceiling:** AUC = 0.986 at MC truth level. Data-only PID is benchmarked against this ceiling. No further work needed.
+- **MV5 pile-up validation:** R_max = 3.05 MHz validated to 0.2% agreement with MC. The original 4.22 MHz is confirmed as an error. No further work needed.
+- **MV6 anomaly identification:** C12 nuclear recoils identified (55% of anomalies, 0.32% of tracks). Impact on physics quantified as negligible (0.1% systematic). No further work needed.
+- **S10 pile-up rate:** The effective live-time tau_eff = 124.79 ns is measured and MC-validated. No further work needed.
+- **S18 A-stack reproduction:** The A1-A3 residual width of 1.39 ns reproduces the analysis note's 1.43 ns. No further work needed.
+- **Sample I/II trigger split:** The deuteron enrichment (73.5% vs 48.4%) is MC-confirmed. The trigger mimicry algorithm reproduces the Matthias effect. All supervisor deliverables (deltaE-E per sample, per-stave per-species energy spectra, stopping-depth distributions, data/MC comparison with KS tests) are complete. No further work needed.

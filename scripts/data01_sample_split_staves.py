@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-data01_sample_split_staves.py
-=============================
+data01_sample_split_staves.py  (v2 — extended with supervisor deliverables)
+==========================================================================
 DATA side of the Sample I / Sample II comparison (CCB test beam, B-stack).
 
 In DATA the trigger is the *hardware* trigger, already encoded by run range in
@@ -10,10 +10,12 @@ the `group` column of the selected-pulse table:
     sample_ii_*  -> single B trigger              [Sample II]
 We use the *_analysis groups (calibration runs excluded) by default.
 
-Per the supervisor's task (1): study the differences between stave outputs for
-Sample I and II.  The headline is the first B layer (stave B2): Sample I should
-show large pulses (early stopping / Bragg, deuteron-enriched per MC) that Sample
-II does not.
+v2 NEW — per supervisor request:
+  - Per-stave amplitude spectra plots
+  - Depth profile (fraction of pulses per stave) plot
+  - ΔE-E style plot: B2 amplitude vs B4 amplitude per sample
+  - Per-stave per-sample amplitude distributions saved as arrays
+  - Cumulative amplitude distributions per stave
 
 Columns: run, group, eventno, evt, stave, channel, baseline_adc,
          amplitude_adc, peak_sample, area_adc_samples
@@ -25,7 +27,8 @@ import argparse, json, os
 import numpy as np
 import pandas as pd
 
-STAVES = ["B2", "B4", "B6", "B8"]   # B2 = first (upstream) layer
+STAVES = ["B2", "B4", "B6", "B8"]
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -70,13 +73,11 @@ def main():
                 "frac_large": float((a > args.large_adc).mean()),
                 "frac_saturated": float((a >= args.sat_adc).mean()),
             }
-        # depth profile (fraction of this sample's pulses in each stave)
         tot = len(sub) or 1
         rec["depth_fraction"] = {st: round(int((sub["stave"] == st).sum()) / tot, 4)
                                  for st in STAVES}
         out["per_sample"][s] = rec
 
-    # headline: first B layer (B2)
     b2I = out["per_sample"]["I"]["staves"]["B2"]
     b2II = out["per_sample"]["II"]["staves"]["B2"]
     out["headline_first_B_layer_B2"] = {
@@ -92,15 +93,155 @@ def main():
     with open(os.path.join(args.out, "data_sample_split_summary.json"), "w") as fh:
         json.dump(out, fh, indent=2)
 
-    # save B2 amplitude arrays for the data/MC overlay
+    # Save arrays
     np.savez_compressed(
         os.path.join(args.out, "first_B_layer_B2_amplitude.npz"),
         sampleI=df[(df["sample"] == "I") & (df["stave"] == "B2")]["amplitude_adc"].to_numpy(np.float32),
         sampleII=df[(df["sample"] == "II") & (df["stave"] == "B2")]["amplitude_adc"].to_numpy(np.float32),
     )
+    per_stave_amp = {}
+    for s in ("I", "II"):
+        for st in STAVES:
+            arr = df[(df["sample"] == s) & (df["stave"] == st)]["amplitude_adc"].to_numpy(np.float32)
+            per_stave_amp[f"{s}_{st}"] = arr
+    np.savez_compressed(os.path.join(args.out, "per_stave_amplitude.npz"), **per_stave_amp)
+
+    # B2 vs B4 per-event
+    for s, label in (("I", "Sample I"), ("II", "Sample II")):
+        sub = df[df["sample"] == s]
+        b2 = sub[sub["stave"] == "B2"][["eventno", "amplitude_adc"]].copy()
+        b2.columns = ["eventno", "amp_B2"]
+        b4 = sub[sub["stave"] == "B4"][["eventno", "amplitude_adc"]].copy()
+        b4.columns = ["eventno", "amp_B4"]
+        merged = b2.merge(b4, on="eventno", how="inner")
+        if len(merged) > 0:
+            np.savez_compressed(
+                os.path.join(args.out, f"B2_vs_B4_{s}.npz"),
+                amp_B2=merged["amp_B2"].to_numpy(np.float32),
+                amp_B4=merged["amp_B4"].to_numpy(np.float32),
+            )
+
+    # ═══════════════════════════════════════════════════════════════════════
+    #  PLOTS
+    # ═══════════════════════════════════════════════════════════════════════
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+
+        # Figure 1: First B layer (B2) amplitude spectrum
+        fig, ax = plt.subplots(figsize=(10, 5.5))
+        colors = {"I": "C0", "II": "C3"}
+        for s, label, ls in (("I", "Sample I (coincidence)", "-"),
+                              ("II", "Sample II (single-B)", "--")):
+            a = df[(df["sample"] == s) & (df["stave"] == "B2")]["amplitude_adc"].to_numpy(float)
+            ax.hist(a, bins=80, range=(0, 15000), histtype="step", linewidth=2,
+                    color=colors[s], linestyle=ls, label=label, density=True)
+        ax.set_xlabel("Amplitude B2 [ADC]")
+        ax.set_ylabel("Normalised counts")
+        ax.set_title("DATA: First B-Layer (B2) Pulse Amplitude — Sample I vs Sample II")
+        ax.legend()
+        ax.set_xlim(0, 14000)
+        fig.tight_layout()
+        fig.savefig(os.path.join(args.out, "first_B_layer_B2_amplitude_spectrum.png"), dpi=150)
+        plt.close(fig)
+
+        # Figure 2: Depth profile
+        fig, ax = plt.subplots(figsize=(9, 5))
+        x = np.arange(len(STAVES))
+        for s, label, marker in (("I", "Sample I", "o"), ("II", "Sample II", "s")):
+            fracs = [out["per_sample"][s]["depth_fraction"][st] for st in STAVES]
+            ax.plot(x, fracs, marker=marker, linewidth=2, label=label)
+        ax.set_xticks(x)
+        ax.set_xticklabels(STAVES)
+        ax.set_xlabel("B-stack stave")
+        ax.set_ylabel("Fraction of pulses")
+        ax.set_title("DATA: Depth Profile — Pulse Fraction per Stave")
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+        fig.tight_layout()
+        fig.savefig(os.path.join(args.out, "depth_profile_data.png"), dpi=150)
+        plt.close(fig)
+
+        # Figure 3: Per-stave amplitude spectra
+        fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+        for idx, st in enumerate(STAVES):
+            ax = axes[idx // 2][idx % 2]
+            for s, label, color, ls in (("I", "Sample I", "C0", "-"),
+                                         ("II", "Sample II", "C3", "--")):
+                a = df[(df["sample"] == s) & (df["stave"] == st)]["amplitude_adc"].to_numpy(float)
+                if a.size > 0:
+                    ax.hist(a, bins=60, range=(0, 8000), histtype="step", linewidth=2,
+                            color=color, linestyle=ls, label=f"{label} (n={a.size})",
+                            density=True)
+            ax.set_xlabel(f"Amplitude {st} [ADC]")
+            ax.set_ylabel("Normalised counts")
+            ax.set_title(f"DATA: {st} Pulse Amplitude — Sample I vs Sample II")
+            ax.legend(fontsize=8)
+            ax.set_xlim(0, 7000)
+        fig.suptitle("DATA: Per-Stave Pulse Amplitude Spectra — Sample I vs Sample II",
+                     fontsize=14, fontweight="bold")
+        fig.tight_layout()
+        fig.savefig(os.path.join(args.out, "per_stave_amplitude_spectra.png"), dpi=150)
+        plt.close(fig)
+
+        # Figure 4: B2 vs B4 scatter (ΔE-E analogue)
+        fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+        for si, (s, lbl) in enumerate((("I", "Sample I"), ("II", "Sample II"))):
+            ax = axes[si]
+            sub = df[df["sample"] == s]
+            b2 = sub[sub["stave"] == "B2"][["eventno", "amplitude_adc"]].copy()
+            b2.columns = ["eventno", "amp_B2"]
+            b4 = sub[sub["stave"] == "B4"][["eventno", "amplitude_adc"]].copy()
+            b4.columns = ["eventno", "amp_B4"]
+            merged = b2.merge(b4, on="eventno", how="inner")
+            if len(merged) > 0:
+                n_pts = min(8000, len(merged))
+                idx = np.random.choice(len(merged), n_pts, replace=False) if len(merged) > n_pts else np.arange(len(merged))
+                ax.scatter(merged["amp_B2"].iloc[idx], merged["amp_B4"].iloc[idx],
+                           s=2, alpha=0.3, color="C0" if s == "I" else "C3", rasterized=True)
+                corr = merged["amp_B2"].corr(merged["amp_B4"])
+                ax.set_title(f"DATA {lbl} — B2 vs B4 Amplitude (r={corr:.3f}, n={len(merged):,})")
+            ax.set_xlabel("B2 Amplitude [ADC]")
+            ax.set_ylabel("B4 Amplitude [ADC]")
+            ax.set_xlim(0, 14000)
+            ax.set_ylim(0, 5000)
+        fig.suptitle("DATA ΔE-E Analogue: B2 vs B4 Pulse Amplitude — Sample I vs Sample II",
+                     fontsize=13, fontweight="bold")
+        fig.tight_layout()
+        fig.savefig(os.path.join(args.out, "B2_vs_B4_scatter.png"), dpi=150)
+        plt.close(fig)
+
+        # Figure 5: Cumulative amplitude distributions
+        fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+        for idx, st in enumerate(STAVES):
+            ax = axes[idx // 2][idx % 2]
+            for s, label, color, ls in (("I", "Sample I", "C0", "-"),
+                                         ("II", "Sample II", "C3", "--")):
+                a = df[(df["sample"] == s) & (df["stave"] == st)]["amplitude_adc"].to_numpy(float)
+                if a.size > 0:
+                    a_sorted = np.sort(a)
+                    cdf = np.arange(1, len(a_sorted) + 1) / len(a_sorted)
+                    ax.plot(a_sorted, cdf, color=color, linestyle=ls, linewidth=2, label=label)
+            ax.set_xlabel(f"Amplitude {st} [ADC]")
+            ax.set_ylabel("Cumulative fraction")
+            ax.set_title(f"DATA: {st} Cumulative Amplitude Distribution")
+            ax.legend(fontsize=8)
+            ax.grid(True, alpha=0.3)
+            ax.set_xlim(0, 12000)
+        fig.suptitle("DATA: Cumulative Amplitude Distributions — Sample I vs Sample II",
+                     fontsize=14, fontweight="bold")
+        fig.tight_layout()
+        fig.savefig(os.path.join(args.out, "cumulative_amplitude_per_stave.png"), dpi=150)
+        plt.close(fig)
+
+        print("[plots] All 5 DATA figures generated.")
+    except Exception as e:
+        print(f"[plot_error] {e}", file=sys.stderr)
 
     print(json.dumps(out["headline_first_B_layer_B2"], indent=2))
     print(f"[ok] wrote {args.out}/data_sample_split_summary.json")
+
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,181 @@
+{
+  "study": "P03g",
+  "ticket": "1781115235.1015.307372f4",
+  "worker": "testbeam-laptop-1",
+  "title": "blinded Sample-I to Sample-II morphology-gated residual transfer",
+  "reproduced": true,
+  "raw_root_reproduction": {
+    "s00_counts_pass": true,
+    "selected_pulses": 640737,
+    "sample_ii_selected_pulses": 125096
+  },
+  "split": {
+    "train_domain": "sample_i_analysis",
+    "train_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "test_domain": "sample_ii_analysis",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run"
+  },
+  "winner": {
+    "method": "hierarchical_shrinkage",
+    "family": "traditional",
+    "value": 1.1152507565403655,
+    "ci": [
+      1.04885406857762,
+      1.2605679035407886
+    ]
+  },
+  "best_traditional": {
+    "method": "hierarchical_shrinkage",
+    "value": 1.1152507565403655,
+    "ci": [
+      1.04885406857762,
+      1.2605679035407886
+    ]
+  },
+  "best_ml_or_nn": {
+    "method": "gradient_boosted_trees",
+    "family": "ml",
+    "value": 1.5114121622357726,
+    "ci": [
+      1.4541419032135237,
+      1.6573585654907024
+    ]
+  },
+  "methods": {
+    "cnn1d": {
+      "family": "nn",
+      "value": 1.8412711868634493,
+      "ci": [
+        1.7209717201092607,
+        2.050683241652179
+      ],
+      "tail_frac_abs_gt5ns": 0.041099476439790575
+    },
+    "gradient_boosted_trees": {
+      "family": "ml",
+      "value": 1.5114121622357726,
+      "ci": [
+        1.4541419032135237,
+        1.6573585654907024
+      ],
+      "tail_frac_abs_gt5ns": 0.020942408376963352
+    },
+    "hierarchical_shrinkage": {
+      "family": "traditional",
+      "value": 1.1152507565403655,
+      "ci": [
+        1.04885406857762,
+        1.2605679035407886
+      ],
+      "tail_frac_abs_gt5ns": 0.03289703315881326
+    },
+    "mlp": {
+      "family": "nn",
+      "value": 1.9813096431658974,
+      "ci": [
+        1.8293539798386396,
+        2.1723123512700853
+      ],
+      "tail_frac_abs_gt5ns": 0.049476439790575914
+    },
+    "ridge": {
+      "family": "ml",
+      "value": 1.735881986032648,
+      "ci": [
+        1.7058240510742544,
+        1.8285428264306975
+      ],
+      "tail_frac_abs_gt5ns": 0.019197207678883072
+    },
+    "s03a_amp_only_global": {
+      "family": "traditional",
+      "value": 1.722539772521092,
+      "ci": [
+        1.6799999706038131,
+        1.9199540130316628
+      ],
+      "tail_frac_abs_gt5ns": 0.02225130890052356
+    },
+    "shape_gated_cnn_new": {
+      "family": "nn",
+      "value": 1.93747213820127,
+      "ci": [
+        1.8057950920452301,
+        2.162357255831813
+      ],
+      "tail_frac_abs_gt5ns": 0.048080279232111695
+    },
+    "template_phase_base": {
+      "family": "traditional",
+      "value": 2.5000000000000036,
+      "ci": [
+        2.359067938531375,
+        2.6090679385313607
+      ],
+      "tail_frac_abs_gt5ns": 0.14973821989528796
+    }
+  },
+  "frozen_selection": {
+    "base_method": "template_phase",
+    "s03a_candidate": "amp_only",
+    "s03a_alpha": 100.0,
+    "hierarchical_best": {
+      "score": 0.6494184883052112,
+      "alpha_global": 100.0,
+      "alpha_dev": 10.0
+    },
+    "ridge_best": {
+      "score": 1.5853753267517732,
+      "alpha": 100.0
+    },
+    "hgb_best": {
+      "score": 1.222054671878104,
+      "params": {
+        "max_iter": 60,
+        "learning_rate": 0.04,
+        "max_leaf_nodes": 15,
+        "l2_regularization": 0.0,
+        "max_bins": 64,
+        "random_state": 20260709
+      }
+    }
+  },
+  "leakage": {
+    "split_by_run": true,
+    "event_id_overlap_total": 0,
+    "features_exclude_run_event_order_cross_stave_time": true,
+    "hyperparameters_selected_on_sample_i_only": true,
+    "final_models_use_sample_ii_labels_or_rows": false,
+    "shuffled_target_min_sigma68_ns": 2.482223769840951,
+    "leakage_flag": false
+  },
+  "verdict": "hierarchical_shrinkage is the best frozen Sample-I to Sample-II transfer method; best ML/NN minus best traditional = 0.396 ns.",
+  "next_tickets": [],
+  "input_sha256": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+  "git_commit": "76a707d8390ea716a5be7bdca0826e6c343eafc7",
+  "runtime_sec": 84.03
+}

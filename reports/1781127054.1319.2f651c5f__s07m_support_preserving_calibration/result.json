@@ -1,0 +1,569 @@
+{
+  "study": "S07m",
+  "ticket": "1781127054.1319.2f651c5f",
+  "worker": "testbeam-laptop-2",
+  "title": "support-preserving injected-morphology calibration",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "quantity": "P02 early-peak pulse rate, peak_sample<=3",
+      "report_value": 0.044,
+      "reproduced": 0.04388333333333334,
+      "delta": -0.00011666666666666076,
+      "tolerance": 0.002,
+      "pass": true,
+      "sample_size": 60000
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72.0,
+      "reproduced": 72.0,
+      "delta": 0.0,
+      "tolerance": 0.0,
+      "pass": true,
+      "sample_size": 10156
+    },
+    {
+      "quantity": "P02d transparent morphology ROC AUC",
+      "report_value": 0.692169373549884,
+      "reproduced": 0.692169373549884,
+      "delta": 0.0,
+      "tolerance": 1e-12,
+      "pass": true,
+      "sample_size": 2227
+    },
+    {
+      "quantity": "S07h shape-only RF injected ROC AUC",
+      "report_value": 0.8597877918400527,
+      "reproduced": 0.8604485333304623,
+      "delta": 0.000660741490409622,
+      "tolerance": 0.025,
+      "pass": true,
+      "sample_size": 4310
+    }
+  ],
+  "injected_dataset": {
+    "n_rows": 4310,
+    "n_pairs": 2155,
+    "n_clean": 2155,
+    "n_injected": 2155,
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "traditional": {
+    "method": "traditional timing/template reference",
+    "metric": "leave-one-run-out ROC AUC on injected non-D_t labels",
+    "value": 0.6124055103062537,
+    "ci": [
+      0.6035118606642579,
+      0.6259927026867588
+    ]
+  },
+  "ml_methods": [
+    {
+      "method": "gradient_boosted_trees",
+      "roc_auc": 0.9164468322198953,
+      "roc_auc_ci_low": 0.901277376726296,
+      "roc_auc_ci_high": 0.9305905119299458,
+      "average_precision": 0.9205806094705957,
+      "ap_ci_low": 0.9067894799088649,
+      "ap_ci_high": 0.937245693488093,
+      "brier": 0.11909213571545553,
+      "brier_ci_low": 0.10629524424305863,
+      "brier_ci_high": 0.13530372012217703,
+      "notes": "Histogram gradient-boosted trees on strict normalized morphology features."
+    },
+    {
+      "method": "mlp",
+      "roc_auc": 0.9016062575029204,
+      "roc_auc_ci_low": 0.8873337732996232,
+      "roc_auc_ci_high": 0.9208047743583603,
+      "average_precision": 0.9022968967119258,
+      "ap_ci_low": 0.8899444236785422,
+      "ap_ci_high": 0.9207685891918423,
+      "brier": 0.13349325388855812,
+      "brier_ci_low": 0.11614071916189488,
+      "brier_ci_high": 0.1533845064989434,
+      "notes": "Small early-stopped dense neural network on strict normalized morphology features."
+    },
+    {
+      "method": "random_forest_s07h",
+      "roc_auc": 0.8604485333304623,
+      "roc_auc_ci_low": 0.8358415695257162,
+      "roc_auc_ci_high": 0.8833074090607188,
+      "average_precision": 0.873343286005585,
+      "ap_ci_low": 0.8495598410894232,
+      "ap_ci_high": 0.898329993467885,
+      "brier": 0.15526064483725818,
+      "brier_ci_low": 0.14129948336316578,
+      "brier_ci_high": 0.17087386136475985,
+      "notes": "S07h random-forest continuity model; best params={'n_estimators': 500, 'max_depth': 7, 'min_samples_leaf': 8}."
+    },
+    {
+      "method": "ridge_logistic",
+      "roc_auc": 0.8184417611877628,
+      "roc_auc_ci_low": 0.8045525059490028,
+      "roc_auc_ci_high": 0.8320629486489651,
+      "average_precision": 0.8199222043164599,
+      "ap_ci_low": 0.8012991519648665,
+      "ap_ci_high": 0.8442175961109162,
+      "brier": 0.17552716966996543,
+      "brier_ci_low": 0.16640066405182394,
+      "brier_ci_high": 0.18604665133146503,
+      "notes": "L2-regularized logistic regression on strict normalized morphology features."
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "roc_auc": 0.8006830281921393,
+      "roc_auc_ci_low": 0.7760114028827966,
+      "roc_auc_ci_high": 0.8232948144819092,
+      "average_precision": 0.7918619114297861,
+      "ap_ci_low": 0.7662272930807281,
+      "ap_ci_high": 0.8184556581121086,
+      "brier": 0.17951547029937046,
+      "brier_ci_low": 0.16536548253135505,
+      "brier_ci_high": 0.1932243830060434,
+      "notes": "New residual dilated temporal CNN with non-sample morphology-stat fusion."
+    },
+    {
+      "method": "cnn_1d",
+      "roc_auc": 0.6765867970133665,
+      "roc_auc_ci_low": 0.6646169502176725,
+      "roc_auc_ci_high": 0.6889585982161122,
+      "average_precision": 0.6886670853429178,
+      "ap_ci_low": 0.673878684652011,
+      "ap_ci_high": 0.7060196447066165,
+      "brier": 0.2206030758829414,
+      "brier_ci_low": 0.2159140979690053,
+      "brier_ci_high": 0.22663955936413488,
+      "notes": "Small 1D-CNN over B2/downstream mean/downstream std normalized waveforms."
+    },
+    {
+      "method": "traditional timing/template reference",
+      "roc_auc": 0.6124055103062537,
+      "roc_auc_ci_low": 0.6035118606642579,
+      "roc_auc_ci_high": 0.6259927026867588,
+      "average_precision": 0.5778323599886604,
+      "ap_ci_low": 0.5715368877538382,
+      "ap_ci_high": 0.5875351388608498,
+      "brier": 0.24016675596811177,
+      "brier_ci_low": 0.23725593400864092,
+      "brier_ci_high": 0.24239013993252428,
+      "notes": "Strong fold-local timing/template score; primary traditional comparator."
+    },
+    {
+      "method": "transparent P02 morphology",
+      "roc_auc": 0.5276177453825076,
+      "roc_auc_ci_low": 0.520402844265278,
+      "roc_auc_ci_high": 0.5369344817035456,
+      "average_precision": 0.5103673358250431,
+      "ap_ci_low": 0.506478094606341,
+      "ap_ci_high": 0.5156323324085692,
+      "brier": 0.24864564567257852,
+      "brier_ci_low": 0.2478906835363706,
+      "brier_ci_high": 0.2494154418482604,
+      "notes": "Train-fold-selected transparent P02 morphology cuts/scores only."
+    }
+  ],
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "metric": "leave-one-run-out ROC AUC on injected non-D_t labels",
+    "roc_auc": 0.9164468322198953,
+    "ci": [
+      0.901277376726296,
+      0.9305905119299458
+    ],
+    "average_precision": 0.9205806094705957,
+    "ap_ci": [
+      0.9067894799088649,
+      0.937245693488093
+    ],
+    "delta_auc_vs_traditional": 0.30404132191364164
+  },
+  "benchmark_winner": "gradient_boosted_trees",
+  "ml_beats_baseline": true,
+  "operating_point_summary": [
+    {
+      "method": "gradient_boosted_trees",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9531983377942145,
+      "false_positive_rate_mean": 0.046801662205785535,
+      "injected_rejection_mean": 0.5948694781733593,
+      "runs": 7
+    },
+    {
+      "method": "mlp",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9519073068280882,
+      "false_positive_rate_mean": 0.04809269317191184,
+      "injected_rejection_mean": 0.5843191247258208,
+      "runs": 7
+    },
+    {
+      "method": "random_forest_s07h",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9516596113813766,
+      "false_positive_rate_mean": 0.04834038861862365,
+      "injected_rejection_mean": 0.5008481993502966,
+      "runs": 7
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9512236171832003,
+      "false_positive_rate_mean": 0.04877638281679979,
+      "injected_rejection_mean": 0.4297028572588319,
+      "runs": 7
+    },
+    {
+      "method": "ridge_logistic",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9526634529075257,
+      "false_positive_rate_mean": 0.0473365470924743,
+      "injected_rejection_mean": 0.389498160618102,
+      "runs": 7
+    },
+    {
+      "method": "cnn_1d",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.948282624241874,
+      "false_positive_rate_mean": 0.051717375758126086,
+      "injected_rejection_mean": 0.26906028836447055,
+      "runs": 7
+    },
+    {
+      "method": "traditional timing/template reference",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9171180953025792,
+      "false_positive_rate_mean": 0.08288190469742082,
+      "injected_rejection_mean": 0.10860413571055896,
+      "runs": 7
+    },
+    {
+      "method": "transparent P02 morphology",
+      "mode": "fixed_clean_efficiency",
+      "clean_acceptance_mean": 0.9565514255569763,
+      "false_positive_rate_mean": 0.04344857444302381,
+      "injected_rejection_mean": 0.03833817060801629,
+      "runs": 7
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9531983377942145,
+      "false_positive_rate_mean": 0.046801662205785535,
+      "injected_rejection_mean": 0.5948694781733593,
+      "runs": 7
+    },
+    {
+      "method": "mlp",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9519073068280882,
+      "false_positive_rate_mean": 0.04809269317191184,
+      "injected_rejection_mean": 0.5843191247258208,
+      "runs": 7
+    },
+    {
+      "method": "random_forest_s07h",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9516596113813766,
+      "false_positive_rate_mean": 0.04834038861862365,
+      "injected_rejection_mean": 0.5008481993502966,
+      "runs": 7
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9512236171832003,
+      "false_positive_rate_mean": 0.04877638281679979,
+      "injected_rejection_mean": 0.4297028572588319,
+      "runs": 7
+    },
+    {
+      "method": "ridge_logistic",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9526634529075257,
+      "false_positive_rate_mean": 0.0473365470924743,
+      "injected_rejection_mean": 0.389498160618102,
+      "runs": 7
+    },
+    {
+      "method": "cnn_1d",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.948282624241874,
+      "false_positive_rate_mean": 0.051717375758126086,
+      "injected_rejection_mean": 0.26906028836447055,
+      "runs": 7
+    },
+    {
+      "method": "traditional timing/template reference",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9171180953025792,
+      "false_positive_rate_mean": 0.08288190469742082,
+      "injected_rejection_mean": 0.10860413571055896,
+      "runs": 7
+    },
+    {
+      "method": "transparent P02 morphology",
+      "mode": "fixed_false_positive_rate",
+      "clean_acceptance_mean": 0.9565514255569763,
+      "false_positive_rate_mean": 0.04344857444302381,
+      "injected_rejection_mean": 0.03833817060801629,
+      "runs": 7
+    }
+  ],
+  "support_drift_summary": [
+    {
+      "method": "transparent P02 morphology",
+      "veto_fraction": 0.043448574443023816,
+      "timing_sigma68_delta_ns": -0.05052599590985597,
+      "charge_logamp_delta": 0.023019409369939785,
+      "baseline_final_fraction_delta": 0.04530625864813816,
+      "saturation_logamp_top10_delta": 0.008198700022008286,
+      "pileup_dt_mean_delta_ns": 0.04554556282151153,
+      "topology_n_downstream_delta": 0.0027479808822594392
+    },
+    {
+      "method": "traditional timing/template reference",
+      "veto_fraction": 0.08288190469742082,
+      "timing_sigma68_delta_ns": 0.00288746416147434,
+      "charge_logamp_delta": 0.005913819380941376,
+      "baseline_final_fraction_delta": -0.08002590329386772,
+      "saturation_logamp_top10_delta": 0.006796298814617707,
+      "pileup_dt_mean_delta_ns": -0.012924433469353838,
+      "topology_n_downstream_delta": 0.006215138600722029
+    },
+    {
+      "method": "random_forest_s07h",
+      "veto_fraction": 0.04834038861862366,
+      "timing_sigma68_delta_ns": -0.008003768067994283,
+      "charge_logamp_delta": -0.003077451542208541,
+      "baseline_final_fraction_delta": -0.008123464403028286,
+      "saturation_logamp_top10_delta": -0.0018818954867944168,
+      "pileup_dt_mean_delta_ns": -0.004892040441086376,
+      "topology_n_downstream_delta": 0.0015435949061998347
+    },
+    {
+      "method": "ridge_logistic",
+      "veto_fraction": 0.047336547092474306,
+      "timing_sigma68_delta_ns": -0.0034375750585637277,
+      "charge_logamp_delta": 0.003221239499010764,
+      "baseline_final_fraction_delta": -0.0007941187158980843,
+      "saturation_logamp_top10_delta": 0.0011060907663850567,
+      "pileup_dt_mean_delta_ns": -0.0011158241601757965,
+      "topology_n_downstream_delta": 0.0028355496772282584
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "veto_fraction": 0.04680166220578554,
+      "timing_sigma68_delta_ns": -0.0077756168810348015,
+      "charge_logamp_delta": -0.005954226924848578,
+      "baseline_final_fraction_delta": -0.008150933244718826,
+      "saturation_logamp_top10_delta": 0.0003591534814148058,
+      "pileup_dt_mean_delta_ns": 0.0058527489421502975,
+      "topology_n_downstream_delta": 0.0004334909269556597
+    },
+    {
+      "method": "mlp",
+      "veto_fraction": 0.04809269317191184,
+      "timing_sigma68_delta_ns": -0.004743637070747938,
+      "charge_logamp_delta": 0.0034992068019959227,
+      "baseline_final_fraction_delta": -0.0011382320453574607,
+      "saturation_logamp_top10_delta": 0.0002208105406916203,
+      "pileup_dt_mean_delta_ns": -0.004664539564003066,
+      "topology_n_downstream_delta": 0.003105619526051865
+    },
+    {
+      "method": "cnn_1d",
+      "veto_fraction": 0.051717375758126086,
+      "timing_sigma68_delta_ns": -0.007253945827436358,
+      "charge_logamp_delta": -0.02663221998870632,
+      "baseline_final_fraction_delta": 1.4419788469027806e-05,
+      "saturation_logamp_top10_delta": -0.001892687582340404,
+      "pileup_dt_mean_delta_ns": 0.00860644994551166,
+      "topology_n_downstream_delta": -0.013018029668576934
+    },
+    {
+      "method": "residual_tcn_fusion",
+      "veto_fraction": 0.048776382816799795,
+      "timing_sigma68_delta_ns": -0.007479442280185108,
+      "charge_logamp_delta": -0.010746731810031131,
+      "baseline_final_fraction_delta": -0.009406209381384058,
+      "saturation_logamp_top10_delta": -0.0028383003746819163,
+      "pileup_dt_mean_delta_ns": 0.005753475149452221,
+      "topology_n_downstream_delta": -0.002255134545786852
+    }
+  ],
+  "falsification": {
+    "preregistered_metric": "injected detection AP/AUC, fixed-efficiency FPR, support drift, ML-minus-traditional utility",
+    "n_model_families": 8,
+    "pair_split_violations": 0,
+    "forbidden_main_feature_columns": [],
+    "amplitude_only_auc": 0.5874152270928774,
+    "topology_only_auc": 0.5010118377915709,
+    "shuffled_label_auc": 0.4947666087068868
+  },
+  "input_sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+  "git_commit": "6ea6b53502f8475a7c07d9637467f9cedd2cc696",
+  "runtime_sec": 314.8,
+  "critic": "pending",
+  "next_tickets": [
+    "S07n: hierarchical support-pooling calibration for injected morphology"
+  ],
+  "support_matched_calibration_winner": "gradient boosted trees",
+  "matched_calibration_summary": [
+    {
+      "method": "gradient boosted trees",
+      "clean_acceptance_mean": 0.9531983377942145,
+      "false_positive_rate_mean": 0.04680166220578554,
+      "injected_rejection_mean": 0.5948694781733591,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    },
+    {
+      "method": "mlp",
+      "clean_acceptance_mean": 0.9519073068280882,
+      "false_positive_rate_mean": 0.04809269317191184,
+      "injected_rejection_mean": 0.5843191247258208,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    },
+    {
+      "method": "random forest s07h",
+      "clean_acceptance_mean": 0.9516596113813763,
+      "false_positive_rate_mean": 0.04834038861862366,
+      "injected_rejection_mean": 0.5008481993502966,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    },
+    {
+      "method": "residual tcn fusion",
+      "clean_acceptance_mean": 0.9512236171832003,
+      "false_positive_rate_mean": 0.048776382816799795,
+      "injected_rejection_mean": 0.4297028572588319,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    },
+    {
+      "method": "ridge logistic",
+      "clean_acceptance_mean": 0.9526634529075257,
+      "false_positive_rate_mean": 0.047336547092474306,
+      "injected_rejection_mean": 0.389498160618102,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    },
+    {
+      "method": "cnn 1d",
+      "clean_acceptance_mean": 0.9482826242418739,
+      "false_positive_rate_mean": 0.051717375758126086,
+      "injected_rejection_mean": 0.26906028836447055,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    },
+    {
+      "method": "traditional timing template reference",
+      "clean_acceptance_mean": 0.9171180953025793,
+      "false_positive_rate_mean": 0.08288190469742082,
+      "injected_rejection_mean": 0.10860413571055896,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    },
+    {
+      "method": "transparent P02 morphology",
+      "clean_acceptance_mean": 0.9565514255569763,
+      "false_positive_rate_mean": 0.043448574443023816,
+      "injected_rejection_mean": 0.038338170608016274,
+      "fallback_fraction_mean": 1.0,
+      "matched_strata_mean": 31.714285714285715,
+      "runs": 7
+    }
+  ],
+  "matched_support_drift_summary": [
+    {
+      "method": "transparent P02 morphology",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.04344857444302382,
+      "timing_sigma68_delta_ns": -0.05052599590985597,
+      "charge_logamp_delta": 0.023019409369939785,
+      "baseline_final_fraction_delta": 0.04530625864813816,
+      "topology_n_downstream_delta": 0.0027479808822594392
+    },
+    {
+      "method": "traditional timing template reference",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.08288190469742081,
+      "timing_sigma68_delta_ns": 0.00288746416147434,
+      "charge_logamp_delta": 0.005913819380941376,
+      "baseline_final_fraction_delta": -0.08002590329386772,
+      "topology_n_downstream_delta": 0.006215138600722029
+    },
+    {
+      "method": "random forest s07h",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.04834038861862363,
+      "timing_sigma68_delta_ns": -0.008003768067994283,
+      "charge_logamp_delta": -0.003077451542208541,
+      "baseline_final_fraction_delta": -0.008123464403028286,
+      "topology_n_downstream_delta": 0.0015435949061998347
+    },
+    {
+      "method": "ridge logistic",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.04733654709247432,
+      "timing_sigma68_delta_ns": -0.0034375750585637277,
+      "charge_logamp_delta": 0.003221239499010764,
+      "baseline_final_fraction_delta": -0.0007941187158980843,
+      "topology_n_downstream_delta": 0.0028355496772282584
+    },
+    {
+      "method": "gradient boosted trees",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.046801662205785556,
+      "timing_sigma68_delta_ns": -0.0077756168810348015,
+      "charge_logamp_delta": -0.005954226924848578,
+      "baseline_final_fraction_delta": -0.008150933244718826,
+      "topology_n_downstream_delta": 0.0004334909269556597
+    },
+    {
+      "method": "mlp",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.04809269317191183,
+      "timing_sigma68_delta_ns": -0.004743637070747938,
+      "charge_logamp_delta": 0.0034992068019959227,
+      "baseline_final_fraction_delta": -0.0011382320453574607,
+      "topology_n_downstream_delta": 0.003105619526051865
+    },
+    {
+      "method": "cnn 1d",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.05171737575812607,
+      "timing_sigma68_delta_ns": -0.007253945827436358,
+      "charge_logamp_delta": -0.02663221998870632,
+      "baseline_final_fraction_delta": 1.4419788469027806e-05,
+      "topology_n_downstream_delta": -0.013018029668576934
+    },
+    {
+      "method": "residual tcn fusion",
+      "heldout_run": 61.142857142857146,
+      "veto_fraction": 0.04877638281679978,
+      "timing_sigma68_delta_ns": -0.007479442280185108,
+      "charge_logamp_delta": -0.010746731810031131,
+      "baseline_final_fraction_delta": -0.009406209381384058,
+      "topology_n_downstream_delta": -0.002255134545786852
+    }
+  ]
+}

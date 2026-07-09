@@ -162,3 +162,79 @@ For completeness, the following analysis threads are considered fully closed wit
 - **S10 pile-up rate:** The effective live-time tau_eff = 124.79 ns is measured and MC-validated. No further work needed.
 - **S18 A-stack reproduction:** The A1-A3 residual width of 1.39 ns reproduces the analysis note's 1.43 ns. No further work needed.
 - **Sample I/II trigger split:** The deuteron enrichment (73.5% vs 48.4%) is MC-confirmed. The trigger mimicry algorithm reproduces the Matthias effect. All supervisor deliverables (deltaE-E per sample, per-stave per-species energy spectra, stopping-depth distributions, data/MC comparison with KS tests) are complete. No further work needed.
+
+## 9. Gap Closure Timeline
+
+The following timeline represents the recommended sequence and estimated effort for closing the remaining open questions, assuming one full-time-equivalent analyst with LUNARC cluster access:
+
+| Priority | Gap | Estimated Effort | Dependencies | Earliest Completion |
+|----------|-----|-----------------|--------------|---------------------|
+| 1 | GAP-02 (timewalk fix) | 1 day | None (code change only) | Immediate |
+| 2 | GAP-04 (ML failure rate) | 1-2 weeks | MV5 extension | 2 weeks |
+| 3 | GAP-01 (geometry update) | 2-4 weeks | MC regeneration on LUNARC | 4-6 weeks |
+| 4 | GAP-03 (gain uncertainty) | Requires new beam run | Next CCB beam time | 3-6 months |
+| 5 | GAP-05 (two-ended timing) | Requires new beam run | Split-readout hardware | 6-12 months |
+| 6 | GAP-06 through GAP-09 (completeness) | 1-2 weeks each | None | 1-2 months |
+
+## 10. Risk Assessment Matrix
+
+Each gap is assessed on two axes: scientific impact if unresolved (1-5, where 5 means a major physics claim is unvalidated) and difficulty of resolution (1-5, where 5 means new hardware or beam time):
+
+| Gap | Impact | Difficulty | Risk Level | Mitigation |
+|-----|--------|------------|------------|------------|
+| GAP-01 | 5 (MC acceptance corrections unreliable) | 4 (geometry rebuild + MC production) | CRITICAL | Flag all MC-dependent depth claims as preliminary |
+| GAP-02 | 3 (timewalk-corrected timing unvalidated) | 1 (code change only) | MODERATE | Raw timing already passes MC validation |
+| GAP-03 | 4 (energy scale systematic dominates) | 5 (requires beam time) | HIGH | Propagate 30% systematic through all energy-dependent quantities |
+| GAP-04 | 2 (ML two-pulse not adopted) | 3 (simulation study) | LOW | Template fit is the recommended default |
+| GAP-05 | 2 (two-ended projection unvalidated) | 5 (requires hardware) | LOW | Report sqrt(2) as upper-bound estimate |
+
+## 11. Publication Strategy
+
+The analysis programme is suitable for submission to a peer-reviewed journal upon resolution of GAP-01 and GAP-02. The recommended publication strategy is:
+
+**Target journal:** Nuclear Instruments and Methods in Physics Research, Section A (NIM-A). This journal specialises in detector physics, test-beam analysis, and instrumentation methods — the core contributions of this work.
+
+**Alternative journals:** Journal of Instrumentation (JINST) for open-access publication with a focus on detector commissioning methodology; Physical Review Accelerators and Beams (PRAB) if the emphasis is on the ESS operational implications.
+
+**Main findings for the cover letter:**
+1. Sub-nanosecond timing resolution (540 ps combined) achieved with one-ended WLS fibre readout — competitive with two-ended systems at a fraction of the hardware complexity.
+2. Validated pile-up tolerance of 3.05 MHz, correcting a 4.22 MHz error in the original analysis note that arose from an incorrect effective live-time assumption.
+3. Systematic Monte Carlo validation programme (MV0-MV6) providing truth-bridged assessment of every physics claim.
+4. Methodological finding: rigorous leakage controls (target shuffle, LORO, event-block shuffle) are essential for evaluating machine learning in detector physics — 230+ studies, multiple corrected claims.
+5. Complete, reproducible analysis pipeline with SHA256-verified data provenance and version-controlled configuration.
+
+**Suggested referees:** Experts in scintillator detector timing, GEANT4 simulation validation, and machine learning for particle physics (specific names to be provided by the collaboration).
+
+## 12. Future Beam Test Wishlist
+
+Based on the open questions and systematic limitations identified in this analysis, the following measurements should be prioritised in the next CCB beam run:
+
+1. **Forced-trigger pedestal data (highest priority):** Acquire events with no beam to measure the true ADC baseline distribution. This reduces the digitizer gain systematic from 30% to 10-15% and anchors the absolute energy scale.
+
+2. **Per-stave gain calibration:** Use a beam of known energy (e.g., 190 MeV protons at normal incidence) to calibrate the relative gain of each stave. Alternatively, use cosmic muons (minimum-ionising, approximately 2 MeV/cm) to provide an absolute energy reference independent of the beam.
+
+3. **Two-ended readout validation:** Instrument both ends of selected WLS fibres to measure the correlation between end times and validate the sqrt(2) projection. This requires only a fibre splitter and a second SiPM channel.
+
+4. **Beam energy scan:** Vary the proton energy (e.g., 100, 150, 190, 230 MeV) to map the range-energy relation and calibrate the Birks constant via stopping particles of known incident energy.
+
+5. **Low-rate runs for pile-up baseline:** Acquire data at very low beam current (< 0.1 nA) to measure the single-particle pulse shape with negligible pile-up contamination, providing a clean template for the two-pulse decomposition algorithm.
+
+6. **Beam spot position scan:** Move the beam spot across the stave surface to map the position-dependent light collection efficiency and validate the WLS attenuation model.
+
+## 13. Potential PhD Thesis Structure
+
+This analysis programme provides sufficient material for a doctoral thesis structured as follows:
+
+- **Chapter 1:** Introduction — HIBEAM/NNBAR physics motivation, ESS facility, detector requirements
+- **Chapter 2:** The CCB Test-Beam Experiment — beamline, detector, data acquisition
+- **Chapter 3:** Data Pipeline and Monte Carlo Digitizer — raw data processing, truth-bridged validation framework
+- **Chapter 4:** Timing Resolution — CFD, timewalk correction, multi-stave combination, B2 covariance
+- **Chapter 5:** Pile-up Characterisation — effective live-time, rate limits, two-pulse recovery
+- **Chapter 6:** Pulse Shape and Machine Learning — dimensionality reduction, leakage controls, ML landscape
+- **Chapter 7:** Energy Calibration — digitizer gain, Birks quenching, range-energy method
+- **Chapter 8:** Particle Identification — deltaE-E method, stopping-depth PID, MC truth ceiling
+- **Chapter 9:** Anomaly Discovery and Identification — C12 nuclear recoils, unsupervised clustering
+- **Chapter 10:** Monte Carlo Validation Programme — systematic truth-bridged assessment
+- **Chapter 11:** Conclusions and Outlook — summary of findings, open questions, future work
+
+The thesis would contribute three original results to the field: (i) the validated timing and pile-up performance of one-ended WLS+SiPM readout for large-area scintillator detectors, (ii) the methodological framework for leakage-controlled ML evaluation in detector physics, and (iii) the complete, reproducible analysis pipeline with Monte Carlo truth bridging.

@@ -212,3 +212,106 @@ The analysis was developed and executed with the following software versions:
 | VGM | 5.4.0 | Virtual Geometry Model |
 
 The conda environment `hibeam_env` at `/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/` provides the Python environment for all analysis scripts. The conda environment `nnbar_env` provides the GEANT4 compilation and execution environment. Both environments are version-locked and documented in their respective `environment.yml` files.
+
+## 9. Continuous Integration and Testing
+
+### 9.1 GitHub Actions workflows
+
+The repository includes two CI/CD workflows under `.github/workflows/`:
+
+**`mc_validation_ci.yml`** — Triggered on every push to `main` and on pull requests. This workflow: (1) checks out the repository, (2) sets up Python 3.11 with the `hibeam_env` conda environment, (3) runs `pytest tests/ -q` to execute the unit test suite, (4) runs `python scripts/mc_validation/verify_wiki_publication.py` to validate that all figures referenced in the wiki are present in `docs/figures/` and that all study references resolve to valid report directories, and (5) fails the build if any assertion fails or any figure is missing.
+
+**`s00c-selector-count-regression.yml`** — Triggered on pushes that modify `scripts/01_build_pulse_table_from_root.py` or `configs/s00_reproduction.yaml`. This workflow: (1) downloads the S00 raw ROOT files from the LUNARC data archive (requires LUNARC SSH key as a GitHub secret), (2) runs the reconstruction script, (3) asserts that the output pulse table contains exactly 640,737 rows and that the SHA256 checksum of the output matches the golden reference recorded in Study S00. This is a regression test that prevents accidental changes to the selection pipeline from silently altering the pulse count.
+
+### 9.2 Test suite structure
+
+The test suite under `tests/` uses pytest with the following organisation:
+
+- `tests/test_root_truth_records.py` — Tests for the ROOT truth tree reader (`src/ccb_mc_validation/io/root_truth.py`): verifies that the expected branches are present, that the data types match the schema, and that corrupted files raise appropriate exceptions.
+- `tests/test_digitizer_pipeline.py` — Tests for the MV0 digitizer pipeline: verifies that each stage (Birks, scintillation, transport, sampling, electronics) produces output with the correct shape and physical bounds (e.g., amplitudes non-negative, time within 0-180 ns).
+- `tests/test_statistics.py` — Tests for the statistical utilities: bootstrap confidence interval coverage, KS test calibration against known distributions, and BIC model selection on synthetic GMM data.
+- `tests/fixtures/` — Small synthetic ROOT files and CSV tables used as test inputs.
+
+The test coverage target is >80% for the `src/` package. Coverage is measured with `pytest-cov` and reported in the CI output.
+
+### 9.3 Code style guide
+
+All Python code in the repository follows these conventions:
+
+- **Formatting:** `ruff format` with line length 100 characters.
+- **Linting:** `ruff check` with the default rule set plus `flake8-bugbear` (B) and `pyupgrade` (UP) rules.
+- **Type hints:** All public functions and methods must have complete type annotations using Python 3.10+ syntax (e.g., `list[dict[str, float]]` rather than `List[Dict[str, float]]`). Type checking is performed by `mypy --strict` in CI.
+- **Docstrings:** NumPy docstring format (triple-quoted string with `Parameters`, `Returns`, `Raises` sections). Every public function must have a docstring describing its purpose, inputs, outputs, and side effects.
+- **Imports:** Standard library first, then third-party packages, then local modules. Absolute imports preferred over relative imports for clarity.
+- **Naming:** `snake_case` for functions, methods, and variables; `PascalCase` for classes; `UPPER_CASE` for module-level constants.
+
+### 9.4 Release procedure
+
+Releases follow semantic versioning (`MAJOR.MINOR.PATCH`):
+
+- **MAJOR** version increment: breaking changes to the analysis pipeline that change physics results (e.g., new baseline algorithm, new selection threshold).
+- **MINOR** version increment: new features or studies added without breaking existing results (e.g., new MV study, new figure).
+- **PATCH** version increment: bug fixes, documentation updates, CI improvements.
+
+Each release is tagged with `git tag -a vX.Y.Z -m "Release vX.Y.Z: summary"` and pushed to GitHub. The release notes are auto-generated from the commit messages since the previous tag using `git log --oneline vX.Y.Z-1..HEAD`.
+
+---
+
+## 10. Mathematical Notation
+
+All equations across the 12 academic chapters use a consistent notation. The following table defines every symbol used:
+
+| Symbol | Definition | Units | First Use |
+|--------|-----------|-------|-----------|
+| sigma_68 | Half-width of central 68% interval of a distribution | ns, MeV, ADC | Ch 1 |
+| A | Pulse amplitude (maximum baseline-subtracted ADC) | ADC | Ch 1 |
+| A_0 | Asymptotic CFD offset in timewalk correction | ns | Ch 1 |
+| B | Timewalk amplitude coefficient | ns * ADC or ns * ADC^(1/2) | Ch 1 |
+| t_CFD | Constant-fraction discriminator arrival time | ns | Ch 1 |
+| t_corrected | Timewalk-corrected arrival time | ns | Ch 1 |
+| tau_eff | Effective waveform live-time | ns | Ch 1 |
+| tau_rise | Scintillator rise time | ns | Ch 2 |
+| tau_decay | Scintillator decay time (fast component) | ns | Ch 2 |
+| R_max | Maximum tolerable beam rate | MHz | Ch 1 |
+| D | Beam duty factor | dimensionless | Ch 1 |
+| R | Beam rate | particles/s | Ch 5 |
+| mu | Mean occupancy (Poisson parameter) | dimensionless | Ch 5 |
+| k_B | Birks constant | mm/MeV | Ch 2 |
+| dE/dx | Specific energy loss | MeV/cm | Ch 2 |
+| dL/dx | Scintillation light yield per unit path | MeV-equivalent/cm | Ch 7 |
+| beta | Particle velocity in units of c | dimensionless | Ch 2 |
+| gamma | Lorentz factor | dimensionless | Ch 2 |
+| T_p | Proton kinetic energy | MeV | Ch 2 |
+| m_p | Proton rest mass (938.272 MeV/c^2) | MeV/c^2 | Ch 2 |
+| m_d | Deuteron rest mass (1875.613 MeV/c^2) | MeV/c^2 | Ch 2 |
+| theta | Scattering angle | degrees or rad | Ch 2 |
+| epsilon_WLS | WLS fibre collection efficiency | dimensionless | Ch 7 |
+| epsilon_SiPM | SiPM photon detection efficiency | dimensionless | Ch 7 |
+| G | Digitizer gain | ADC/MeV | Ch 7 |
+| q_Birks | Birks quenching factor | dimensionless | Ch 7 |
+| chi^2 | Chi-squared statistic | dimensionless | Ch 3 |
+| ndf | Number of degrees of freedom | dimensionless | Ch 3 |
+| AUC | Area under ROC curve | dimensionless | Ch 8 |
+| D | KS test statistic | dimensionless | Ch 3 |
+| lambda_j | PCA eigenvalue | ADC^2 | Ch 6 |
+| pi_k | GMM mixture weight | dimensionless | Ch 6 |
+| mu_k | GMM component mean | PCA-space units | Ch 6 |
+| Sigma_k | GMM component covariance matrix | PCA-space units^2 | Ch 6 |
+| gamma_ik | GMM responsibility (posterior) | dimensionless | Ch 6 |
+| BIC | Bayesian Information Criterion | dimensionless | Ch 6 |
+| N | Number of data points | dimensionless | Ch 6 |
+| K | Number of GMM components | dimensionless | Ch 6 |
+| d | Latent dimension | dimensionless | Ch 6 |
+| z_i | PCA embedding vector | dimensionless | Ch 6 |
+| w_i | Waveform vector (18 samples) | ADC | Ch 6 |
+| w_bar | Mean waveform vector | ADC | Ch 6 |
+| Sigma | Covariance matrix (18x18) | ADC^2 | Ch 6 |
+| V | Eigenvector matrix | dimensionless | Ch 6 |
+| Lambda | Eigenvalue diagonal matrix | ADC^2 | Ch 6 |
+| T | Kinetic energy | MeV | Ch 2 |
+| R | Range (CSDA) | cm | Ch 7 |
+| alpha, beta | PSTAR power-law fit parameters | cm/MeV^beta, dimensionless | Ch 7 |
+| sigma_noise | Electronic noise RMS | ADC | Ch 3 |
+| sigma_transport | WLS fibre Gaussian time dispersion | ns | Ch 3 |
+
+All symbols are defined on first use in their respective chapters and used consistently throughout. Greek letters are rendered in Unicode (e.g., sigma for sigma, tau for tau). Mathematical operators follow standard physics notation: mean values denoted by angle brackets or overbars, uncertainties denoted by plus/minus, and statistical estimators denoted by hats where needed.

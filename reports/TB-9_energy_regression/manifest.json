@@ -1,0 +1,18 @@
+{
+  "ticket_id": "TB-9",
+  "files": [
+    "REPORT.md",
+    "birks_fit.csv",
+    "counts_by_run.csv",
+    "energy_bin_metrics.csv",
+    "geant4_truth_layer_priors.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "method_metrics.csv",
+    "metrics_table.md",
+    "reproduction_match_table.csv",
+    "result.json",
+    "run_heldout_summary.csv"
+  ],
+  "source": "reports/0000000010.1.truthenergy"
+}

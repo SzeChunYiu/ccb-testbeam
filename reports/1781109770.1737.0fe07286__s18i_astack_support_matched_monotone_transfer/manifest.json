@@ -1,0 +1,35 @@
+{
+  "study": "S18i",
+  "ticket": "1781109770.1737.0fe07286",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "6a08b614fafd46dd9f0ef3ba2643c5812d4fcc11",
+  "config": "configs/s18i_1781109770_1737_0fe07286_astack_support_matched_monotone_transfer.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/s18i_1781109770_1737_0fe07286_astack_support_matched_monotone_transfer.py --config configs/s18i_1781109770_1737_0fe07286_astack_support_matched_monotone_transfer.json",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "output_sha256": {
+    "REPORT.md": "53c20f6472ba85177b3c94845b5d52007b1ee7a60915604948bec51ee43ad044",
+    "astack_counts.csv": "4a74e0f451bb430ea99e3af4c8adff6f704edd56e9ed29ac76b2f22e4088e504",
+    "atom_ablation_metrics.csv": "838bc05045cea8164bb465c000da97e5a0f7907131060b3aec997c7ad9ce8712",
+    "atom_ablation_predictions.csv.gz": "3f46fe7bc4dc3518f387d26fbfff2945e737764c98ffd56ede73c09a1252584a",
+    "fig_gate_method_sensitivity.png": "4d0087dddcbf5a2cab7c0ace89e8f547590d94967cc6ec95568746a4d55ec22a",
+    "fig_primary_winner_residuals.png": "ac5fd2a023a7387d45df477b0b1228ae7f8ab491a101ac01099867a45ea7d80f",
+    "fig_raw_gate_sensitivity.png": "6fa9094646e7474f168d86253d9d6286fbfc3a2f7d4d78fc463c5cb99719fda5",
+    "heldout_predictions.csv.gz": "f322045b4a3f890dc372daf4e649d30702c5f215407576537c1cbe0f824097a4",
+    "input_sha256.csv": "a761bd997059596553b552b4903f6947206ad8939520efc22c511b90de08eac1",
+    "leakage_checks.csv": "d3e75ceb9bfe1820ef07a8dea730645541243b9481a451b1be485dd5516acbed",
+    "method_delta_bootstrap.csv": "ac2f5ca64b4db36a7074d77fdc4f6d8b24c1f6b065224e0956e427841a0b854d",
+    "method_metrics.csv": "527b54f9a657d0fd1584e76613b42fd7e75e2d84a468349f2e536f0edc3f4b5c",
+    "per_run_metrics.csv": "81381d161bdcbd0970cfbd0a59c1127f7233e893fd9c946d0191a65d64ba9454",
+    "raw_gate_metrics.csv": "6595548accf79d99462c5428ab7f5870fc7fb518412665be710f63e422b5f654",
+    "reproduction_match_table.csv": "1a4ef6831cf06b0d535215369d8308e9dd9a3bd3a61f95e5944d30f73eaea3a5",
+    "result.json": "eb91d78afa531888d9dc7720581c799743e6f8ddcbb047f40dd602c2126cb85e",
+    "ridge_cv_scan.csv": "0c3707cd287dc7beed937414a6b16331f643d2d4df8609edd4eb194bad24fecc"
+  }
+}

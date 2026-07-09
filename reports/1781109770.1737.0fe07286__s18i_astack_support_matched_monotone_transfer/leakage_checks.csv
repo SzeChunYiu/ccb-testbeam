@@ -1,0 +1,4 @@
+check,value,flag
+forbidden_feature_overlap,,False
+group_split_r2_mean,0.49213365376169166,False
+row_split_advantage_rmse_ns,-0.21413825171873047,False

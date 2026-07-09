@@ -1,0 +1,6 @@
+pool,comparison,ci_low_ns,ci_high_ns,p_value,cfd_fraction,amplitude_cut_adc
+cfd0.20_cut1000,ridge_minus_constrained_monotone_timewalk,-0.2920166944475502,0.8064780781954197,0.95,0.2,1000.0
+cfd0.20_cut1000,gradient_boosted_trees_minus_constrained_monotone_timewalk,-0.8661060739028438,-0.11474990758162398,0.0,0.2,1000.0
+cfd0.20_cut1000,mlp_minus_constrained_monotone_timewalk,-1.265528858578931,-0.43498615483885084,0.01,0.2,1000.0
+cfd0.20_cut1000,cnn_1d_minus_constrained_monotone_timewalk,-0.09886185600376196,0.6430605191953437,0.2,0.2,1000.0
+cfd0.20_cut1000,gated_residual_cnn_new_minus_constrained_monotone_timewalk,-0.7335557553106626,0.19889256573394196,0.28,0.2,1000.0

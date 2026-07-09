@@ -1,0 +1,165 @@
+{
+  "study": "S18i",
+  "ticket": "1781109770.1737.0fe07286",
+  "worker": "testbeam-laptop-2",
+  "title": "A-stack support-matched external timing transfer with monotone constraints",
+  "reproduced": true,
+  "primary_gate_label": "cfd0.20_cut1000",
+  "primary_gate": {
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "raw_standard_gate": {
+    "pool": "cfd0.20_cut1000",
+    "method": "raw_percentile68",
+    "n_pairs": 127,
+    "median_ns": 3.724376296008302,
+    "robust_width_ns": 1.6099706543209522,
+    "full_rms_ns": 1.4992425001417917,
+    "within_abs_2ns": 0.8267716535433071,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 1.2748754594777947,
+    "robust_ci_high_ns": 1.701505363930383,
+    "core_sigma_ns": 1.8749892887759023,
+    "core_sigma_err_ns": 0.4369641867809996,
+    "core_mean_ns": -0.05268347755626,
+    "chi2_ndf": 2.0220707908458113,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "winner": {
+    "pool": "cfd0.20_cut1000",
+    "method": "mlp",
+    "n_pairs": 127,
+    "median_ns": -0.13957504735305415,
+    "robust_width_ns": 0.5285400781006044,
+    "full_rms_ns": 1.5199372821213075,
+    "within_abs_2ns": 0.905511811023622,
+    "tail_fraction_abs_gt_5ns": 0.023622047244094488,
+    "robust_ci_low_ns": 0.3637200412205048,
+    "robust_ci_high_ns": 0.8791513332604001,
+    "core_sigma_ns": 0.32565387527219636,
+    "core_sigma_err_ns": 0.03128233445890236,
+    "core_mean_ns": -0.011001489363189556,
+    "chi2_ndf": 65997547.27145473,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "best_traditional": {
+    "pool": "cfd0.20_cut1000",
+    "method": "constrained_monotone_timewalk",
+    "n_pairs": 127,
+    "median_ns": 0.09140440352265511,
+    "robust_width_ns": 1.5178248372481482,
+    "full_rms_ns": 1.4745552393190424,
+    "within_abs_2ns": 0.8346456692913385,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 1.2403122673206564,
+    "robust_ci_high_ns": 1.7169724703308773,
+    "core_sigma_ns": 3.872301509883971,
+    "core_sigma_err_ns": 4.021550764477781,
+    "core_mean_ns": -0.014583004849277836,
+    "chi2_ndf": 1.5850773081333158,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "best_ml": {
+    "pool": "cfd0.20_cut1000",
+    "method": "mlp",
+    "n_pairs": 127,
+    "median_ns": -0.13957504735305415,
+    "robust_width_ns": 0.5285400781006044,
+    "full_rms_ns": 1.5199372821213075,
+    "within_abs_2ns": 0.905511811023622,
+    "tail_fraction_abs_gt_5ns": 0.023622047244094488,
+    "robust_ci_low_ns": 0.3637200412205048,
+    "robust_ci_high_ns": 0.8791513332604001,
+    "core_sigma_ns": 0.32565387527219636,
+    "core_sigma_err_ns": 0.03128233445890236,
+    "core_mean_ns": -0.011001489363189556,
+    "chi2_ndf": 65997547.27145473,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "overall_min_width_gate_method": {
+    "pool": "cfd0.20_cut1000",
+    "method": "mlp",
+    "n_pairs": 127,
+    "median_ns": -0.13957504735305415,
+    "robust_width_ns": 0.5285400781006044,
+    "full_rms_ns": 1.5199372821213075,
+    "within_abs_2ns": 0.905511811023622,
+    "tail_fraction_abs_gt_5ns": 0.023622047244094488,
+    "robust_ci_low_ns": 0.3637200412205048,
+    "robust_ci_high_ns": 0.8791513332604001,
+    "core_sigma_ns": 0.32565387527219636,
+    "core_sigma_err_ns": 0.03128233445890236,
+    "core_mean_ns": -0.011001489363189556,
+    "chi2_ndf": 65997547.27145473,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "winner_name": "cfd0.20_cut1000 / mlp",
+  "primary_metric": "Standard-gate Sample IV A1-A3 percentile68 residual width, bootstrap over held-out runs",
+  "methods_benchmarked": [
+    "constrained_monotone_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "gated_residual_cnn_new"
+  ],
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_heldout_pairs": 127,
+  "gate_grid": {
+    "cfd_fractions": [
+      0.2
+    ],
+    "amplitude_cuts_adc": [
+      1000.0
+    ]
+  },
+  "torch_available": true,
+  "leakage_flags": 0,
+  "atom_audit": {
+    "best_atom_model": {
+      "pool": "drop_tail_samples",
+      "method": "gradient_boosted_trees",
+      "n_pairs": 127,
+      "median_ns": 0.15339569801485986,
+      "robust_width_ns": 0.9663013222421059,
+      "full_rms_ns": 1.4464670992653752,
+      "within_abs_2ns": 0.8818897637795275,
+      "tail_fraction_abs_gt_5ns": 0.007874015748031496,
+      "robust_ci_low_ns": 0.7307763303372933,
+      "robust_ci_high_ns": 1.285463213601573,
+      "core_sigma_ns": 0.8676867405662716,
+      "core_sigma_err_ns": 0.1150917290949222,
+      "core_mean_ns": -0.23569982517780413,
+      "chi2_ndf": 3.5254671672818803,
+      "atom_mode": "drop_tail_samples",
+      "model_family": "gradient_boosted_trees"
+    },
+    "modes": [
+      "full_features",
+      "drop_leading_edge_samples",
+      "drop_tail_samples",
+      "amplitude_only",
+      "waveform_shuffled_control"
+    ],
+    "interpretation": "Support-matched monotone baseline plus full, leading-edge-dropped, tail-dropped, amplitude-only, and waveform-shuffled controls on the same Sample III to Sample IV split."
+  },
+  "input_sha256": "reports/1781109770.1737.0fe07286__s18i_astack_support_matched_monotone_transfer/input_sha256.csv",
+  "git_commit": "6a08b614fafd46dd9f0ef3ba2643c5812d4fcc11",
+  "next_tickets": [
+    "S18k: validate the S18i support-matched monotone transfer under fixed-efficiency per-run amplitude quantile gates to separate pulse-selection support loss from CFD interpolation noise."
+  ]
+}

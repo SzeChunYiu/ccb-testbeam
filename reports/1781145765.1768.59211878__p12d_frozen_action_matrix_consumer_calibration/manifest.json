@@ -1,0 +1,22 @@
+{
+  "ticket": "1781145765.1768.59211878",
+  "script": "scripts/p12d_1781145765_1768_59211878_frozen_action_matrix_consumer_calibration.py",
+  "config": "configs/p12d_1781145765_1768_59211878_frozen_action_matrix_consumer_calibration.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p12d_1781145765_1768_59211878_frozen_action_matrix_consumer_calibration.py --config configs/p12d_1781145765_1768_59211878_frozen_action_matrix_consumer_calibration.json",
+  "git_commit": "8fd6ee857e6784ba8fa1f660e618e54483c6c23c",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "runtime_s": 111.40867495536804,
+  "artifacts": [
+    "REPORT.md",
+    "counts_by_run.csv",
+    "heldout_predictions.csv.gz",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "method_by_run.csv",
+    "method_metrics.csv",
+    "raw_count_match.csv",
+    "result.json"
+  ]
+}

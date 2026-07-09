@@ -1,0 +1,2 @@
+n_candidates,reviewer_a,reviewer_b,agreement,agreement_ci_low,agreement_ci_high,cohen_kappa,cohen_kappa_ci_low,cohen_kappa_ci_high
+72,blind_residual_recovery_review,blind_shape_fit_review,0.5,0.3888888888888889,0.6111111111111112,0.0,0.0,0.0

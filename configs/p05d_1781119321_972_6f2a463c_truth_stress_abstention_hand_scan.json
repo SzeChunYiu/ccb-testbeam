@@ -1,0 +1,19 @@
+{
+  "study": "P05d",
+  "ticket": "1781119321.972.6f2a463c",
+  "worker": "testbeam-laptop-2",
+  "title": "truth-stress abstention hand scan",
+  "source_script": "scripts/s11b_real_high_current_two_pulse_validation.py",
+  "p05c_report_dir": "reports/1781036493.3234.59a107e5",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781119321.972.6f2a463c__p05d_truth_stress_abstention_hand_scan",
+  "random_seed": 1119321972,
+  "candidate_cap_per_stratum": 36,
+  "bootstrap_samples": 1200,
+  "event_display_count": 48,
+  "primary_method": "traditional_template_fit",
+  "review_methods": [
+    "blind_shape_fit_review",
+    "blind_residual_recovery_review"
+  ]
+}

@@ -1,0 +1,4 @@
+contrast,value,q_threshold
+target_rate_top_decile_q_minus_rest,-0.01571299066362651,0.12396409650092602
+mean_damage_top_decile_q_minus_rest,-0.03709860146045685,0.12396409650092602
+heldout_target_fraction,0.06237237237237237,0.12396409650092602

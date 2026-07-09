@@ -1,0 +1,70 @@
+{
+  "study": "S18h",
+  "ticket": "1781111715.1694.3de93cb7",
+  "worker": "testbeam-laptop-4",
+  "title": "A-stack fixed-efficiency gate decomposition",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781111715.1694.3de93cb7__s18h_fixed_efficiency_astack_gate",
+  "script_path": "scripts/s18h_1781111715_1694_3de93cb7_fixed_efficiency_astack_gate.py",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "cfd_fraction": 0.20,
+  "stress_cfd_fractions": [0.10, 0.20, 0.40],
+  "stress_amplitude_cuts_adc": [1000.0],
+  "gate_modes": ["fixed_adc", "fixed_efficiency"],
+  "fixed_efficiency_reference": {
+    "runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "amplitude_cut_adc": 1000.0
+  },
+  "primary_gate": {
+    "cfd_fraction": 0.20,
+    "amplitude_cut_adc": 1000.0,
+    "gate_mode": "fixed_efficiency"
+  },
+  "random_seed": 18111715,
+  "bootstrap_resamples": 400,
+  "gaussian_core_bins": 40,
+  "gaussian_core_window_ns": 2.5,
+  "sample_iii_calib_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+  "sample_iii_analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "sample_iv_calib_runs": [64],
+  "sample_iv_analysis_runs": [58, 59, 60, 61, 62, 63, 65],
+  "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "astack": {
+    "file_prefix": "hrda",
+    "staves": {
+      "A1": 0,
+      "A3": 4
+    }
+  },
+  "expected_reproduction": {
+    "sample_iv_A1_A3_pairs": 127,
+    "sample_iv_run64_ols_robust_width_ns": 1.7936257228944265,
+    "sample_iv_run64_ols_core_sigma_ns": 1.9921758801207758,
+    "robust_width_tolerance_ns": 0.001,
+    "core_sigma_tolerance_ns": 0.001
+  },
+  "ridge": {
+    "alphas": [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+  },
+  "gbt": {
+    "max_iter": 80,
+    "learning_rate": 0.04,
+    "max_leaf_nodes": 15,
+    "l2_regularization": 0.02
+  },
+  "mlp": {
+    "hidden_layer_sizes": [48, 24],
+    "alpha": 0.001,
+    "max_iter": 160,
+    "early_stopping": true
+  },
+  "nn": {
+    "epochs": 10,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "max_train_rows": 8000
+  }
+}

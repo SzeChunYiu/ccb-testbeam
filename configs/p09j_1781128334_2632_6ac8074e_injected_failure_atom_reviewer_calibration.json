@@ -1,0 +1,30 @@
+{
+  "ticket_id": "1781128334.2632.6ac8074e",
+  "study_id": "P09j",
+  "worker": "testbeam-laptop-4",
+  "title": "injected-failure atom reviewer calibration",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781128334.2632.6ac8074e__p09j_injected_failure_atom_reviewer_calibration",
+  "p09g_report_dir": "reports/1781039488.1166.6e40385a__p09g_injected_morphology_false_positive_gallery",
+  "bootstrap_replicates": 2000,
+  "random_seed": 2026070904,
+  "reviewer_thresholds": {
+    "reviewer_a_ml": 0.68,
+    "reviewer_b_rubric": 1.55,
+    "reviewer_c_hybrid": 0.62,
+    "dttail_confirmed_severity_ns": 50.0,
+    "curated_precision_threshold": 0.5
+  },
+  "methods": [
+    "traditional_atom_rubric",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "atom_gated_cnn"
+  ],
+  "novel_ticket": {
+    "title": "P09k real reviewer locked-label replacement",
+    "body": "Replace the deterministic P09j blinded-review proxy with independently collected human reviewer labels on the same run/stave/variant-balanced P09g failure and D_t-tail gallery, then repeat the frozen rubric and ML exemplar benchmark with identical run-block bootstrap CIs."
+  }
+}

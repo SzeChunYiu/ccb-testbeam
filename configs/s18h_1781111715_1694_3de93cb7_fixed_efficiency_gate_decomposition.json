@@ -1,0 +1,23 @@
+{
+  "study": "S18h",
+  "ticket": "1781111715.1694.3de93cb7",
+  "worker": "testbeam-laptop-2",
+  "title": "fixed-efficiency A-stack gate decomposition",
+  "source_config": "configs/s18h_1781102709_886_658f43d5_astack_waveform_atom_audit.json",
+  "output_dir": "reports/1781111715.1694.3de93cb7__s18h_fixed_efficiency_gate_decomposition",
+  "script_path": "scripts/s18h_1781111715_1694_3de93cb7_fixed_efficiency_gate_decomposition.py",
+  "primary_gate": {
+    "cfd_fraction": 0.20,
+    "amplitude_cut_adc": 1000.0
+  },
+  "fixed_efficiency_reference": "pooled CFD20/cut1000 pair efficiency on Sample III train + Sample IV held-out support",
+  "random_seed": 1111715,
+  "bootstrap_resamples": 300,
+  "nn": {
+    "epochs": 6,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "max_train_rows": 8000
+  }
+}

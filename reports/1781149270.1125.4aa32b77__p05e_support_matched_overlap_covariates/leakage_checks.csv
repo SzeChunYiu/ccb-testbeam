@@ -1,0 +1,14 @@
+check,method,value,flag,note
+traditional_template_fit_current_auc_from_overlap_score,traditional_template_fit,0.43173721984557173,False,Flag if a score is effectively a current/run identifier after support matching.
+traditional_template_fit_current_auc_from_secondary_fraction,traditional_template_fit,0.45242785069885005,False,Flag if a score is effectively a current/run identifier after support matching.
+ridge_current_auc_from_overlap_score,ridge,0.5812430272960221,False,Flag if a score is effectively a current/run identifier after support matching.
+ridge_current_auc_from_secondary_fraction,ridge,0.5908326996352553,False,Flag if a score is effectively a current/run identifier after support matching.
+gradient_boosted_trees_current_auc_from_overlap_score,gradient_boosted_trees,0.6712313507877143,False,Flag if a score is effectively a current/run identifier after support matching.
+gradient_boosted_trees_current_auc_from_secondary_fraction,gradient_boosted_trees,0.615719661865974,False,Flag if a score is effectively a current/run identifier after support matching.
+mlp_current_auc_from_overlap_score,mlp,0.5933267487406934,False,Flag if a score is effectively a current/run identifier after support matching.
+mlp_current_auc_from_secondary_fraction,mlp,0.50284845589376,False,Flag if a score is effectively a current/run identifier after support matching.
+one_d_cnn_current_auc_from_overlap_score,one_d_cnn,0.668315442008186,False,Flag if a score is effectively a current/run identifier after support matching.
+one_d_cnn_current_auc_from_secondary_fraction,one_d_cnn,0.6718028941294446,False,Flag if a score is effectively a current/run identifier after support matching.
+monotone_support_gated_ensemble_current_auc_from_overlap_score,monotone_support_gated_ensemble,0.5573003397865232,False,Flag if a score is effectively a current/run identifier after support matching.
+monotone_support_gated_ensemble_current_auc_from_secondary_fraction,monotone_support_gated_ensemble,0.5052975145155063,False,Flag if a score is effectively a current/run identifier after support matching.
+identifier_features_excluded,all,1.0,False,"P05d model features excluded run, event number, current, group, downstream label, and stratum labels; P05e uses these only for post-hoc conditioning."

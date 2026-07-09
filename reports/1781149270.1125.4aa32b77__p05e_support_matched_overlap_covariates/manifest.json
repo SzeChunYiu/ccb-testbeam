@@ -1,0 +1,17 @@
+{
+  "files": {
+    "REPORT.md": "f4fdf6a9e9aef1ff6784b1e4e08f2321f3018820bdfb99ccfb0e186ff5f39523",
+    "input_sha256.csv": "c49fe3a4a67c036b7b8a0ebb54d8dac82a046a484259748eb471e2ef2e7fc5ad",
+    "leakage_checks.csv": "b9a51ab3ef444dc4435076e9a047d743a35f205db1d8b70de184dc221e2b2f74",
+    "method_support_conditioned_summary.csv": "882a27523ad366510d5670f9ae6967c9e581dbe79c306805eda6108819961daa",
+    "raw_p05d_count_reproduction.csv": "ef9a3d7281433ca40dc2e32aa704a5097e0b1a285337ec541d62676a98f5c202",
+    "raw_run_counts.csv": "38af1cbd4bfe0af84ca04328ee9d399e9c2ab0aa285e9f6e92a86c445379f156",
+    "raw_s10_reproduction_match_table.csv": "aa90a4857a3d080584376fe169e7df1c62e831d12158f1299f8da5dc44b2397e",
+    "raw_support_strata.csv": "cf8c87bfd5862454c5730dcdc9672cd1b83d106840f5f3ebb5a5e2029b2ab38e",
+    "raw_topology_by_group.csv": "80909001620fbe8b5f9b71b5cdeb2eaca6e28e727c562d90bb3277db0627ad49",
+    "result.json": "79227c643bd86a346edfb9f704a00066d1dd5c2b258ff3a9c26a4b7c145b7253",
+    "support_conditioned_scores.csv": "1724d410a500f307c4ae3a43101b698c151a86e92b1a8ca970c1ce931f2d45ef",
+    "winner_support_atom_table.csv": "b24b285c4ae839d17cfc6db7ab3d53e01215782c1fd7cd447dc74ddd157ae436"
+  },
+  "ticket": "1781149270.1125.4aa32b77"
+}

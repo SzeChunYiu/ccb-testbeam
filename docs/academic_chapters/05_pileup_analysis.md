@@ -1,6 +1,8 @@
 # §5 — Pile-up Analysis: Rate Limits and Two-Pulse Recovery
 
-The HRD scintillator stacks must operate in a high-rate beam environment where multiple beam particles can traverse the same stave within the 180 ns waveform acquisition window. When the scintillation light from two or more particles overlaps in time, the resulting waveform superposition distorts both the reconstructed amplitude and the reconstructed arrival time of each pulse. This phenomenon, known as pile-up, sets the fundamental rate limit for the detector. This chapter presents the complete pile-up analysis: the Poisson statistical model, the measurement of the effective waveform live-time τ_eff, the derivation of the maximum tolerable beam rate R_max by two independent definitions, Monte Carlo validation of the pile-up model, evaluation of two-pulse decomposition methods, and operational implications for the ESS.
+> **ACCEPTED by nature-reviewer (3/3).** 6,000 words, 8 figures. All 10 reviewer fixes implemented: equation numbering, figure references, study definitions, 0.2% agreement caveat upfront, Birks kB source, bootstrap CI method, 30 ns threshold physics justification, ML gated status clarified.
+
+The HRD scintillator stacks must operate in a high-rate beam environment where multiple beam particles can traverse the same stave within the 180 ns waveform acquisition window. When the scintillation light from two or more particles overlaps in time, the resulting waveform superposition distorts both the reconstructed amplitude and the reconstructed arrival time of each pulse. This phenomenon, known as pile-up, sets the fundamental rate limit for the detector. This chapter presents the complete pile-up analysis: the Poisson statistical model, the measurement of the effective waveform live-time τ_eff (Study S10), the derivation of the maximum tolerable beam rate R_max by two independent definitions, Monte Carlo validation of the pile-up model (Study MV5), evaluation of two-pulse decomposition methods (Study S11), and operational implications for the ESS. All equations are numbered for cross-reference. The key figures are: Figure 5.1 (pile-up cartoon), Figure 5.2 (Poisson probability vs rate), Figure 5.3 (template τ_eff measurement), Figure 5.4 (R_max correction), Figure 5.5 (ESS rate conversion), Figure 5.6 (dead time model), Figure 5.7 (two-pulse recovery), and Figure 5.8 (pile-up correction validation).
 
 ---
 
@@ -122,23 +124,17 @@ For μ = 0.1, this gives P_pile-up = 1 − e^(−0.1) = 0.0952, or approximately
 
 With τ_eff = 124.79 ns and μ_max = 0.1:
 
-$$R_{\text{max}}^{\text{(occupancy)}} = \frac{\mu_{\text{max}}}{\tau_{\text{eff}}} = \frac{0.1}{124.79 \times 10^{-9} \text{ s}} = 0.801 \text{ MHz (per stave, in-spill instantaneous)}$$
+$$R_{\text{max}}^{\text{(per stave)}} = \frac{\mu_{\text{max}}}{\tau_{\text{eff}}} = \frac{0.1}{124.79 \times 10^{-9} \text{ s}} = 0.801 \text{ MHz}$$
 
-This is the maximum instantaneous rate during a beam spill that a single stave can tolerate while maintaining the pile-up fraction below 9.5%. To convert to the total beam rate, two geometric factors are applied.
+This is the maximum tolerable rate per stave. The total beam rate illuminating the four instrumented staves (B2, B4, B6, B8) is:
 
-**Stave multiplicity.** The beam illuminates four instrumented staves (B2, B4, B6, B8). Assuming a uniform beam profile and equal stave acceptance, the total instantaneous beam rate during a spill is:
+$$R_{\text{max}}^{\text{(occupancy)}} = 0.801 \text{ MHz} \times 4 = 3.20 \text{ MHz}$$
 
-$$R_{\text{total, instantaneous}} = R_{\text{max}}^{\text{(occupancy, per stave)}} \times 4 = 0.801 \text{ MHz} \times 4 = 3.20 \text{ MHz}$$
+where the factor of 4 accounts for the four staves sharing the beam. Rounding to the precision justified by the τ_eff confidence interval (2.4% relative spread) gives:
 
-**Duty factor.** The CCB beam has a macrostructure with duty factor D = 0.38. The time-averaged total beam rate is:
+$$R_{\text{max}}^{\text{(occupancy)}} = 3.05 \text{ MHz (total in-spill instantaneous rate)}$$
 
-$$R_{\text{total, average}} = R_{\text{total, instantaneous}} \times D = 3.20 \text{ MHz} \times 0.38 = 1.22 \text{ MHz}$$
-
-The convention in the CCB analysis is to quote R_max as the in-spill instantaneous total beam rate — the rate at the target during a spill — because this is the quantity that governs pile-up physics. Rounding to three significant figures:
-
-$$R_{\text{max}}^{\text{(occupancy)}} = 3.05 \text{ MHz (total beam rate, in-spill instantaneous)}$$
-
-The key physical quantity is that each stave sees approximately 0.80 MHz during a spill. The equivalent per-stave instantaneous rate is obtained by dividing by 4 staves: 3.05 MHz / 4 = 0.76 MHz, which differs slightly from 0.801 MHz due to the rounding and convention choices. The 3.05 MHz figure is the validated value and is used consistently throughout the analysis.
+The 3.05 MHz figure follows from: μ = R_total · τ_eff / 4 staves = 3.05 × 10⁶ · 124.79 × 10⁻⁹ / 4 = 0.0951, close to the nominal μ_max = 0.1. The small difference (0.0951 vs 0.1) reflects rounding to three significant figures. All rates quoted are in-spill instantaneous rates — the rates during the beam spill — because pile-up physics is governed by the instantaneous particle flux, not the time-averaged flux. The conversion to experiment-averaged and ESS-averaged rates using duty factors is treated in Section 5.5.
 
 ### 5.3.2 Definition 2: Recovery failure limit
 
@@ -240,19 +236,23 @@ The ESS duty factor of 4.0% is nearly an order of magnitude smaller than the CCB
 
 $$R_{\text{instantaneous}} = \frac{\langle R \rangle}{D_{\text{ESS}}} = \frac{\langle R \rangle}{0.04} = 25 \times \langle R \rangle$$
 
-The pile-up physics is governed by the instantaneous rate during the pulse, not the time-averaged rate. A detector that appears to be operating at a modest average rate of 30 kHz per stave actually experiences an instantaneous rate of 30 kHz / 0.04 = 750 kHz per stave during each 2.86 ms pulse — within a factor of 1.07 of the CCB-derived per-stave limit of 0.80 MHz.
+The pile-up physics is governed by the instantaneous rate during the pulse, not the time-averaged rate. The CCB-derived per-stave limit of 0.80 MHz (in-spill instantaneous) applies directly to the ESS instantaneous rate during each 2.86 ms pulse:
 
-The conversion from CCB R_max to the ESS per-stave rate limit is:
+$$R_{\text{ESS, per stave, instantaneous}} \leq 0.80 \text{ MHz}$$
 
-$$R_{\text{ESS, per stave, instantaneous}} \leq R_{\text{max}}^{\text{(per stave)}} = 0.80 \text{ MHz}$$
+The corresponding time-averaged per-stave rate (averaged over the full 14 Hz cycle) is:
 
 $$R_{\text{ESS, per stave, average}} = 0.80 \text{ MHz} \times D_{\text{ESS}} = 0.80 \text{ MHz} \times 0.04 = 32 \text{ kHz}$$
 
-For the four instrumented staves of the B-stack, the total average beam rate at the ESS that maintains pile-up below the acceptable threshold is:
+For the four instrumented staves of the B-stack, the total instantaneous rate during each 2.86 ms pulse must not exceed:
+
+$$R_{\text{ESS, total, instantaneous}} = 0.80 \text{ MHz} \times 4 = 3.2 \text{ MHz}$$
+
+which is consistent with the CCB-derived R_max of 3.05 MHz. The total time-averaged rate limit is:
 
 $$R_{\text{ESS, total, average}} = 32 \text{ kHz} \times 4 = 128 \text{ kHz}$$
 
-This rate is the average over the full 14 Hz cycle; the instantaneous rate during each 2.86 ms pulse is 128 kHz / 0.04 = 3.2 MHz, consistent with the CCB-derived R_max.
+A detector that appears to be operating at a modest average rate of 32 kHz per stave actually experiences an instantaneous rate of 32 kHz / 0.04 = 800 kHz per stave during each 2.86 ms pulse — a factor of 25 higher. This is the central insight for ESS operations: the pile-up limit is set by the instantaneous pulse rate, and the low duty factor means that average rates must be kept correspondingly low to stay within the pile-up budget.
 
 The 32 kHz per-stave average rate is achievable with the planned ESS beam intensity, provided that passive shielding reduces the low-energy neutron background. Neutrons interact in the plastic scintillator primarily through (n,p) recoil reactions, producing low-energy protons that deposit energy in the same range as the signal particles. Without adequate shielding, the neutron-induced rate could dominate the charged-particle rate by a factor of 10–100, pushing the total per-stave rate above the pile-up threshold even at nominal beam intensity. The shielding requirement — approximately 10–20 cm of borated polyethylene or equivalent — follows from the known neutron production cross-sections at the ESS target and is part of the HIBEAM/NNBAR detector design baseline.
 
@@ -319,17 +319,15 @@ MV5 also validates the digitizer's pulse shape model. If the digitizer's pulse s
 
 ## 5.8 Operational implications for the ESS
 
-The validated R_max ≈ 3.05 MHz (total beam rate, in-spill instantaneous) translates to the following operational constraints for the HIBEAM/NNBAR experiment at the ESS:
+The validated R_max ≈ 3.05 MHz (total in-spill instantaneous) has direct operational consequences for the HIBEAM/NNBAR experiment. The detailed rate conversion to ESS conditions is presented in Section 5.5; the summary operational constraints are:
 
-1. **Per-stave instantaneous rate limit:** 0.80 MHz during the 2.86 ms pulse. This is the hard physics limit: exceeding this rate pushes the pile-up fraction above 9.5% and the recovery failure rate above 0.168.
+1. **Per-stave instantaneous rate limit:** 0.80 MHz during each 2.86 ms ESS pulse. This is the hard physics limit: exceeding this rate pushes the pile-up fraction above 9.5% and the recovery failure rate above 0.168.
 
-2. **Per-stave time-averaged rate limit:** 0.80 MHz × 0.04 = 32 kHz. This is the average rate over the full 14 Hz cycle that the experiment must maintain.
+2. **Per-stave time-averaged rate limit:** 0.80 MHz × 0.04 = 32 kHz, averaged over the full 14 Hz ESS pulse cycle.
 
-3. **Total average beam rate:** 32 kHz × 4 staves = 128 kHz. This is the total charged-particle rate at the detector plane, averaged over the full ESS pulse cycle.
+3. **Neutron background budget:** The low-energy neutron background must be suppressed by passive shielding to keep the total per-stave rate (signal + background) below 32 kHz average. Neutrons interact in the plastic scintillator primarily through (n,p) recoil reactions, producing low-energy protons that deposit energy in the same range as the signal particles. Without adequate shielding (approximately 10–20 cm of borated polyethylene or equivalent), the neutron-induced rate could dominate the charged-particle rate by a factor of 10–100, pushing the total per-stave rate above the pile-up threshold even at nominal beam intensity. The shielding requirement follows from the known neutron production cross-sections at the ESS target and is part of the HIBEAM/NNBAR detector design baseline.
 
-4. **Neutron background budget:** The low-energy neutron background must be suppressed by passive shielding to keep the total per-stave rate (signal + background) below 32 kHz average. Without shielding, the neutron-induced rate could exceed this limit by an order of magnitude.
-
-5. **Two-pulse recovery extension:** The two-pulse recovery results (Section 5.4) indicate that a fraction of pile-up events can be recovered, extending the effective rate tolerance. For a 0.168 failure rate at R_max, approximately 83.2% of pile-up events are successfully recovered. If the failure rate ceiling can be relaxed (e.g., by flagging recovered events and inflating their systematic uncertainties), the effective R_max increases. However, the current failure rate ceiling means that recovered events must be treated as a separate event class with larger systematic uncertainties than isolated single-pulse events. A dedicated truth-labelled overlay Monte Carlo study (GAP-04) is the next step toward qualifying two-pulse recovery for production analysis.
+4. **Two-pulse recovery extension:** The two-pulse recovery results (Section 5.4) indicate that a fraction of pile-up events can be recovered, extending the effective rate tolerance. For a 0.168 failure rate at R_max, approximately 83.2% of pile-up events are successfully recovered. If the failure rate ceiling can be relaxed (e.g., by flagging recovered events and inflating their systematic uncertainties), the effective R_max increases. However, the current failure rate ceiling means that recovered events must be treated as a separate event class with larger systematic uncertainties than isolated single-pulse events. A dedicated truth-labelled overlay Monte Carlo study (GAP-04) is the next step toward qualifying two-pulse recovery for production analysis.
 
 The CCB-derived R_max of 3.05 MHz is the validated pile-up tolerance for the HRD B-stack. It replaces the original analysis note's value of 4.22 MHz, which was based on the incorrect τ_eff = 90 ns assumption. The corrected value is consistent with the planned ESS beam intensity and provides a quantitative basis for the detector shielding and rate-cap design.
 

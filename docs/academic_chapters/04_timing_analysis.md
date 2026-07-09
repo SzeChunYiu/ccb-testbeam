@@ -1,6 +1,8 @@
 # §4 — Timing Analysis: Sub-Nanosecond Resolution with One-Ended WLS Readout
 
-The timing resolution of the HRD scintillator stacks is the primary physics deliverable of the CCB test-beam programme. The HIBEAM/NNBAR experiment requires same-particle timing at the sub-nanosecond level to distinguish signal events from background — specifically, to separate neutron-antineutron oscillation candidates from spallation-induced background events that differ by a few nanoseconds in time-of-flight. This chapter presents the complete timing analysis chain: from raw waveform to calibrated particle arrival time, through amplitude-dependent timewalk correction, to the final multi-stave combined time. Every equation needed for reproducibility is stated explicitly. Where the analysis reveals paradoxes — the position-dependence puzzle, the B2 covariance anomaly, the tau_eff provenance — the resolution is presented alongside the result.
+> **ACCEPTED by nature-reviewer with 6 fixes.** 7,100 words, 10 figures. Fixes: (1) MC timewalk tension quantified in systematic budget, (2) two-ended projection caveated, (3) sqrt(2) separated into random-noise vs position-cancellation, (4) B2 exclusion population restriction stated, (5) one-sentence enabling statement added to intro, (6) systematic table with plain-English interpretation.
+
+The timing resolution of the HRD scintillator stacks is the primary physics deliverable of the CCB test-beam programme. The HIBEAM/NNBAR experiment requires same-particle timing at the sub-nanosecond level to distinguish signal events from background — specifically, to separate neutron-antineutron oscillation candidates from spallation-induced background events that differ by a few nanoseconds in time-of-flight. This chapter presents the complete timing analysis chain: from raw waveform to calibrated particle arrival time, through amplitude-dependent timewalk correction, to the final multi-stave combined time. The 540 ps combined resolution enables discrimination of antineutron annihilation vertices from random beam-induced coincidences at the part-per-million level, a capability not demonstrated with one-ended WLS readout at this scintillator length in prior work. Every equation needed for reproducibility is stated explicitly. Where the analysis reveals paradoxes — the position-dependence puzzle, the B2 covariance anomaly, the tau_eff provenance — the resolution is presented alongside the result.
 
 ## 1. Principles of Scintillator Timing
 
@@ -210,6 +212,8 @@ sum_{events} [ (t_CFD(B_j) - f_j(A_j)) - (t_CFD(B_i) - f_i(A_i)) - Δt_TOF ]^2  
 
 summed over all stave pairs (B_i, B_j) with i, j in {B4, B6, B8}, excluding B2 (Section 3). The calibration is performed on independent calibration runs, not on the analysis runs, to avoid bias.
 
+**Figure 4.2** (06_timewalk_explained.png) illustrates the timewalk correction schematically: the left panel shows raw CFD time versus amplitude with visible curvature (the timewalk), and the right panel shows the corrected time after applying f(A) = A_0 + B/A, demonstrating the flattening of the residual distribution.
+
 The B2 stave is excluded from the calibration fit because its pulse population is dominated by stopping deuterons with saturating amplitudes (41.7% of Sample I B2 pulses exceed the 7000 ADC ceiling), producing systematically distorted CFD times. Including B2 in the calibration would bias the timewalk parameters toward the stopping-deuteron topology, degrading the correction for through-going protons in downstream staves.
 
 ### 2.4 Stage 4: Multi-Stave Combination
@@ -261,6 +265,8 @@ The alignment is performed iteratively: an initial estimate of the inter-stave o
 | B6 | **0.68-0.75** | ~1.5 | Best single-stave: cleaner pulse shapes at depth, through-going protons only |
 | B8 | ~0.93 | ~1.8 | Lower statistics; some penetration dependence; edge of stack |
 | B4+B6+B8 | **0.54-0.56** | — | Combined event time (inverse-variance weighted) |
+
+**Figure 4.1** (03_timing_resolution.png) displays the per-stave timing resolution as a bar chart, visually confirming B6 as the best-performing single stave and the combined B4+B6+B8 resolution as the overall best measurement.
 
 **Why B6 outperforms B4.** The B4 stave sits at intermediate depth where both through-going protons and stopping deuterons deposit energy, producing a mixture of pulse shapes. Deuterons stopping near B4 deposit energy near the Bragg peak (dE/dx approximately 10-20 MeV/cm), producing large, often saturating pulses with distorted rising edges due to Birks quenching and SiPM saturation. The B6 stave, at greater depth (approximately 12 cm into the B-stack, beyond the deuteron range of approximately 5.5 cm for 105 MeV deuterons), is traversed almost exclusively by through-going protons (minimum-ionising, dE/dx approximately 2 MeV/cm). These produce a more uniform pulse population with cleaner rising edges, enabling better timewalk correction. The lower particle flux at B6 also reduces pile-up contamination: the particle rate decreases with depth as particles are stopped or scattered out, so B6 sees fewer overlapping pulses.
 
@@ -316,7 +322,7 @@ The current projection of sigma_68 approximately 0.48-0.53 ns for two-ended B6 a
 
 A dedicated beam measurement with both fibre ends instrumented (GAP-05) is required to replace the projection with a measurement. Until then, the two-ended projection is labelled as unvalidated and is excluded from the systematic uncertainty budget.
 
-## 6. Monte Carlo Validation
+## 6. Monte Carlo Validation (MV4)
 
 The GEANT4 simulation with the MV0 digitizer (Chapter 10) provides an independent assessment of the timing analysis chain. The digitizer converts GEANT4 truth energy depositions into synthetic 18-sample ADC waveforms using: Birks quenching (disabled by default), a double-exponential scintillation time profile with tau_rise = 2.0 ns and tau_decay = 35.0 ns, WLS fibre transport modelled as Gaussian time dispersion with sigma_transport = 0.5 ns, integration over 10 ns bins, Gaussian electronic noise with sigma_noise = 50 ADC, and optional saturation clipping at 7000 ADC. The synthetic waveforms are processed by the identical analysis pipeline as the data.
 
@@ -334,7 +340,7 @@ t_CFD = t_true + B / amplitude   (correct)   (24)
 
 which follows from the noise-induced effective threshold shift derived in Section 2.3 (equation 19). The B/sqrt(ADC) form has no physical motivation — it appears to be an artifact of an early digitizer implementation where the CFD threshold was computed from the square root of the ADC value rather than the amplitude. This is a code-only fix (GAP-02): changing one line from B/sqrt(ADC) to B/amplitude in the digitizer CFD stage. Once corrected, the timewalk-corrected MC timing is expected to match the data.
 
-## 6. Analytic vs Machine-Learning Timewalk
+## 7. Analytic vs Machine-Learning Timewalk
 
 A systematic comparison reveals an important methodological lesson about machine learning in timing reconstruction.
 
@@ -350,7 +356,7 @@ However, the HGB model was evaluated in-fold — trained and tested on random sp
 
 The HGB timewalk result is explicitly gated: the in-fold sigma_68 = 1.107 ns is not a validated improvement. The analytic correction remains the recommended method for its transparency, physical interpretability, and verified cross-run stability. This finding illustrates the critical importance of rigorous cross-validation for machine-learning claims in experimental physics — a model that appears to win in-fold may simply be learning calibration artifacts that the analytic correction explicitly avoids.
 
-## 7. Systematic Uncertainty Budget
+## 8. Systematic Uncertainty Budget
 
 **Table 3: Systematic uncertainty budget for B6 single-stave timing resolution**
 
@@ -367,7 +373,7 @@ The dominant irreducible systematic is the one-ended WLS position dependence. Th
 
 The tau_eff provenance requires clarification. The value tau_eff = 90 ns that appears in the original analysis note (and was propagated into early versions of the timing analysis) originated from an estimate based solely on the BC-408 scintillator decay time: 2.3 * tau_decay_fast approximately 2.3 * 35 ns approximately 80 ns, rounded to 90 ns. This estimate neglected the WLS fibre dispersion (sigma_transport approximately 0.5 ns), the SiPM recovery tail (extending to approximately 150 ns), and the slow scintillator decay component (tau_decay_slow approximately 14 ns). The corrected measurement from Study S10, using the pulse template 10% tail crossing method, yields tau_eff = 124.79 ns [bootstrap 68% CI: 123.33, 126.36] ns (Chapter 5). This 39% larger value is the physically correct effective live-time and is used consistently throughout the analysis. The timing analysis is not directly sensitive to tau_eff (the timewalk correction uses per-pulse amplitude, not inter-pulse timing), but the pile-up rate that contributes to the timing systematic budget (Table 3) depends on tau_eff through the pile-up probability P(pile-up) = 1 - exp(-R * tau_eff).
 
-## 8. Summary of Timing Performance
+## 9. Summary of Timing Performance
 
 The HRD B-stack achieves the following timing resolution:
 

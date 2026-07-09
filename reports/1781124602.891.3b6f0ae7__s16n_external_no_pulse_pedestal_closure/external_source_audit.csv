@@ -1,0 +1,4 @@
+check,value,detail
+root_files_in_data_root_root,110,find -L data/root/root -maxdepth 1 -type f -name '*.root'
+forced_random_no_pulse_pedestal_filename_matches,0,"find -L data -type f with forced|random|nopulse|no_pulse|pedestal|ped filename predicates"
+direct_external_pedestal_labels_available,false,"No current mirrored file advertises forced/random/no-pulse/pedestal acquisition in its path; S16n therefore evaluates target-excluded beam-triggered closure as a risk diagnostic rather than a direct electronics-pedestal label test."

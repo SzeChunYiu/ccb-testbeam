@@ -1,0 +1,4 @@
+Quantity,Report value,Reproduced,Delta,Tolerance,Pass
+S00 selected B-stave pulses,640737,640737,0,0,True
+forced/random/non-beam B-stack entries,0,0,0,0,True
+independent external acquisition records,0,0,0,0,True

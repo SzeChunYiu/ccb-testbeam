@@ -1,0 +1,6 @@
+check,status,detail
+leave_one_run_out_declared,pass,"heldout runs [58, 59, 60, 61, 62, 63, 65]; every fold trains with its held-out run removed"
+target_sample_excluded_from_features,pass,feature matrix contains only the other three pretrigger samples; target_adc is never in TAB_FEATURES or NN sequence
+run_and_event_id_excluded_from_features,pass,"run, event_id, eventno, evt, residuals, and target labels are not model inputs"
+train_test_run_sets_disjoint,pass,"for each fold, model training uses analysis_runs minus the current held-out run; the scored rows are only that held-out run"
+finite_predictions,pass,4503456 / 4503456 finite predictions

@@ -1,0 +1,250 @@
+{
+  "study": "S14m",
+  "ticket_id": "1781109219.904.3a4267b9",
+  "worker": "testbeam-laptop-3",
+  "title": "external A-stack geometry validation of S14f saturation stress bands",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "split_unit": "run"
+  },
+  "primary_metric": "external_transfer_score = weighted held-out B saturated R68 times one plus absolute run-level correlation with A-stack charge IQR fraction",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "external_transfer_score": 0.02800425044270275,
+    "external_transfer_score_ci95": [
+      0.023907923437978453,
+      0.03373965555862854
+    ],
+    "mean_b_saturated_res68": 0.018767236066338497,
+    "mean_b_saturated_res68_ci95": [
+      0.017483644530550978,
+      0.021286694239082266
+    ],
+    "abs_corr_b_res68_vs_astack_iqr": 0.4921883192449449,
+    "abs_corr_b_res68_vs_astack_iqr_ci95": [
+      0.2683870748312539,
+      0.7228473969302435
+    ]
+  },
+  "methods": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0187672361,
+      "mean_b_saturated_res68_ci95": [
+        0.0174836445,
+        0.0212866942
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.4921883192,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.2683870748,
+        0.7228473969
+      ],
+      "external_transfer_score": 0.0280042504,
+      "external_transfer_score_ci95": [
+        0.0239079234,
+        0.0337396556
+      ]
+    },
+    {
+      "method": "observed_even_charge",
+      "family": "traditional_observed",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0218959223,
+      "mean_b_saturated_res68_ci95": [
+        0.019835082,
+        0.026769442
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.5059145758,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.2148767018,
+        0.7052205398
+      ],
+      "external_transfer_score": 0.0329733886,
+      "external_transfer_score_ci95": [
+        0.0277171715,
+        0.0407040247
+      ]
+    },
+    {
+      "method": "p07_p04_corrected",
+      "family": "ml_p07_p04_duplicate",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0272891112,
+      "mean_b_saturated_res68_ci95": [
+        0.0266808772,
+        0.0286910498
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.4721494571,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.2983448952,
+        0.6799931278
+      ],
+      "external_transfer_score": 0.0401736503,
+      "external_transfer_score_ci95": [
+        0.0358245125,
+        0.0461359784
+      ]
+    },
+    {
+      "method": "template_residual_mlp",
+      "family": "neural_template_residual",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0309768394,
+      "mean_b_saturated_res68_ci95": [
+        0.0294305081,
+        0.035405777
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.6328513252,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.4882164332,
+        0.775074637
+      ],
+      "external_transfer_score": 0.0505805733,
+      "external_transfer_score_ci95": [
+        0.0449756926,
+        0.058990352
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0459297772,
+      "mean_b_saturated_res68_ci95": [
+        0.0432498067,
+        0.0500061348
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.4445206288,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.1941421868,
+        0.7441067779
+      ],
+      "external_transfer_score": 0.0663465106,
+      "external_transfer_score_ci95": [
+        0.0563790219,
+        0.0798268835
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0545350912,
+      "mean_b_saturated_res68_ci95": [
+        0.0521750715,
+        0.0601624801
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.575337209,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.4190362513,
+        0.808961234
+      ],
+      "external_transfer_score": 0.0859111583,
+      "external_transfer_score_ci95": [
+        0.0757650113,
+        0.1010389672
+      ]
+    },
+    {
+      "method": "traditional_template_corrected",
+      "family": "traditional_rising_edge_template",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0818770182,
+      "mean_b_saturated_res68_ci95": [
+        0.0799833684,
+        0.0849220494
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.0846956757,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.0082836523,
+        0.4951256072
+      ],
+      "external_transfer_score": 0.0888116475,
+      "external_transfer_score_ci95": [
+        0.0818745232,
+        0.1226315772
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.1523191355,
+      "mean_b_saturated_res68_ci95": [
+        0.1449813698,
+        0.1618466055
+      ],
+      "abs_corr_b_res68_vs_astack_iqr": 0.3808119284,
+      "abs_corr_b_res68_vs_astack_iqr_ci95": [
+        0.0511046447,
+        0.6511564202
+      ],
+      "external_transfer_score": 0.2103240792,
+      "external_transfer_score_ci95": [
+        0.164833491,
+        0.2508910336
+      ]
+    }
+  ],
+  "finding": "gradient_boosted_trees has the best external-transfer score (0.028004), combining mean held-out saturated B-stack R68 0.018767 with absolute A-stack instability correlation 0.49219. The result supports S14f transfer only as a run-level external validation; it is not an event-level absolute energy calibration.",
+  "next_tickets": [
+    {
+      "title": "S14n: event-key A/B coincidence validation for saturation transfer",
+      "body": "Verify whether A-stack and B-stack ROOT event counters can be joined at event-key level across analysis runs, then rerun S14m with event-level A-stack charge instead of run-level transfer handles."
+    }
+  ],
+  "runtime_sec": 59.3
+}

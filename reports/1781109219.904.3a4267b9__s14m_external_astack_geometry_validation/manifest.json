@@ -1,0 +1,6 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s14m_1781109219_904_3a4267b9_external_astack_geometry_validation.py --config configs/s14m_1781109219_904_3a4267b9_external_astack_geometry_validation.yaml",
+  "git_commit": "6a08b614fafd46dd9f0ef3ba2643c5812d4fcc11",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "runtime_sec": 59.3
+}

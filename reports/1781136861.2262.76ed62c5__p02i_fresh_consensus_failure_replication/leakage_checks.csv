@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_reproduction_passed,1.0,True,raw ROOT selected-pulse count exactly matches P02e/S00 gate
+fresh_sample_overlap_with_p02e_keys,0.0,True,fresh sample excludes all P02e benchmark keys
+outer_split_run_overlap,0.0,True,outer folds are disjoint run blocks
+shuffled_label_ap_minus_positive_rate,0.12271359664275422,False,null sentinel should stay near prevalence
+run_only_ap,0.2142045797268563,True,large run-only AP would indicate run nuisance dominance

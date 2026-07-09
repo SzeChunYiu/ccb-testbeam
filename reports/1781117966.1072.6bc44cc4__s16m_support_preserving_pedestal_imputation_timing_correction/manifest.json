@@ -1,0 +1,20 @@
+{
+  "created_utc": "2026-07-09T11:03:37Z",
+  "files": {
+    "REPORT.md": "209d8ae46c5f5f8332a60dd73caa101eaf43f3cbe376066caa59470d982f35f9",
+    "bootstrap_metrics.csv": "3d56ce9267b5300128aef9f89aecb4bf26ea365bce08de3f84b858e244dae12c",
+    "config.json": "60d43fe49d0780e2d8afb0e5c1ceb7e1cbb6df531b135890024053ee235527c2",
+    "input_sha256.csv": "22b29191e460d7b6644755e2d45d15ea60dcc5944d653a755fe588a055e6bb24",
+    "method_metrics.csv": "7cfd82f5cc4be2b0980e289f0438a36397ba58ce1dfe6837302eaf23ae0f0d5d",
+    "method_predictions.csv.gz": "6d763e2f5f5eac9f64f71dc687de7b37e7d926a8050d12f47b94e010a52c9834",
+    "metric_summary.png": "4e78d36c3d4394fe60904f94e86f962e91c6046b98f35b630c152f4e4e899457",
+    "nuisance_features.csv.gz": "eeb4ea81e6f161b99036d034c0cd1098b7f7c649440b5e6f07603595b3e9a2c5",
+    "pair_rows.csv.gz": "fcad677b5d5fb853fa2a1a25da1a5df3f5e2509a2b2e57ebcec756396f8ad573",
+    "per_run_metrics.csv": "ac6716fbaa92949d58e632e79507a78b2e078f80b6f60cd9e7e75f4d655a6c45",
+    "reproduction_counts.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "residual_distributions.png": "05278dc26aef5a622228ff0f5d808fa621f5ed8864e0b0c6963cc32ab79a3f62",
+    "result.json": "4c16413b1390e9270042e45627e69616a4002bba49c774800e2872fd2f6a56e4"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6"
+}

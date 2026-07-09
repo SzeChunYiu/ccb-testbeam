@@ -1,0 +1,2 @@
+gate,target,n_runs,brier,ece,positive_rate,score_min,score_max
+A_percentile68_width_rank,above_median_B_pair_median_mean_abs_pair_covariance,20,0.4248107223385583,0.4299981301292891,0.5,0.0,1.0

@@ -1,0 +1,25 @@
+{
+  "ticket": "1781135617.950.4da27974",
+  "worker": "testbeam-laptop-2",
+  "study": "S16p",
+  "title": "target-excluded pedestal adoption rule on true forced/random mirror if acquired",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781135617.950.4da27974__s16p_target_excluded_pedestal_adoption_rule",
+  "all_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
+  "benchmark_runs": [58, 59, 60, 61, 62, 63, 64, 65],
+  "expected_selected_pulses": 640737,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "samples_per_channel": 18,
+  "pretrigger_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "max_pulses_per_run": 900,
+  "random_seed": 1781135617,
+  "bootstrap_resamples": 500,
+  "torch_epochs": 10,
+  "next_tickets": [
+    {
+      "title": "S16q: acquire dedicated no-pulse B-stack forced/random ROOT mirror",
+      "body": "Acquire or expose the dedicated forced/random no-pulse B-stack ROOT files with trigger/run metadata, then rerun the S16p target-excluded pedestal adoption rule with true no-pulse labels rather than beam-pretrigger surrogates."
+    }
+  ]
+}

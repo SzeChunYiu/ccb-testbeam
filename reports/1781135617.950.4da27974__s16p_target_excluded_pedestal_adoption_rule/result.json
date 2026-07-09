@@ -1,0 +1,215 @@
+{
+  "ticket": "1781135617.950.4da27974",
+  "study": "S16p",
+  "worker": "testbeam-laptop-2",
+  "title": "target-excluded pedestal adoption rule on true forced/random mirror if acquired",
+  "git_commit": "9b02bb7da346f67b2c44033e363d0427a7a2b3db",
+  "runtime_sec": 118.46512722969055,
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "torch_available": true
+  },
+  "raw_root_reproduction": {
+    "status": "recomputed_from_raw_root",
+    "tree": "h101",
+    "branch": "HRDv",
+    "staves": [
+      "B2",
+      "B4",
+      "B6",
+      "B8"
+    ],
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "amplitude_cut_adc": 1000.0,
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "matches_expected": true,
+    "delta_vs_expected": 0,
+    "n_runs": 33
+  },
+  "forced_random_inventory": {
+    "searched_roots": [
+      "/home/billy/.tb-workers/testbeam-laptop-2/data/root/root",
+      "/home/billy/.tb-workers/testbeam-laptop-2/data/root",
+      "/home/billy/.tb-workers/testbeam-laptop-2/data"
+    ],
+    "keyword_file_hits": 0,
+    "keyword_root_hits": 0,
+    "dedicated_forced_random_root_found": false,
+    "root_hit_examples": []
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_resamples": 500
+  },
+  "methods": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_nn",
+      "mean_mae_adc": 42.64550674549059,
+      "mae_ci95": [
+        35.002944067924716,
+        50.03867502839424
+      ],
+      "mean_sigma68_adc": 17.361142273023287,
+      "sigma68_ci95": [
+        14.387237221204048,
+        20.19870965646437
+      ],
+      "mean_tail_gt25_adc": 0.22864583333333333,
+      "tail_gt25_ci95": [
+        0.17956510416666666,
+        0.2670486111111111
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "ml_nn",
+      "mean_mae_adc": 80.45487631516129,
+      "mae_ci95": [
+        70.47795897165918,
+        90.71984970713392
+      ],
+      "mean_sigma68_adc": 49.006471288895796,
+      "sigma68_ci95": [
+        40.885561565165574,
+        56.558696285287695
+      ],
+      "mean_tail_gt25_adc": 0.5560416666666667,
+      "tail_gt25_ci95": [
+        0.4805902777777778,
+        0.6147951388888888
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_nn",
+      "mean_mae_adc": 149.5109819332351,
+      "mae_ci95": [
+        127.2186713529508,
+        169.1333037532649
+      ],
+      "mean_sigma68_adc": 78.15215665346975,
+      "sigma68_ci95": [
+        69.8624992956459,
+        85.7081362381532
+      ],
+      "mean_tail_gt25_adc": 0.7682291666666666,
+      "tail_gt25_ci95": [
+        0.7559869791666666,
+        0.7777960069444444
+      ]
+    },
+    {
+      "method": "traditional_line3",
+      "family": "traditional",
+      "mean_mae_adc": 165.40069444444444,
+      "mae_ci95": [
+        120.21921750992064,
+        193.79240079365078
+      ],
+      "mean_sigma68_adc": 18.60416666666668,
+      "sigma68_ci95": [
+        13.364842261904824,
+        25.353101190476135
+      ],
+      "mean_tail_gt25_adc": 0.24319444444444444,
+      "tail_gt25_ci95": [
+        0.1798255208333333,
+        0.29346093749999996
+      ]
+    },
+    {
+      "method": "target_masked_residual_cnn",
+      "family": "new_nn",
+      "mean_mae_adc": 178.19755316840278,
+      "mae_ci95": [
+        139.85112458377415,
+        213.13516699642605
+      ],
+      "mean_sigma68_adc": 43.93890869140624,
+      "sigma68_ci95": [
+        33.87886761474609,
+        56.05051181030271
+      ],
+      "mean_tail_gt25_adc": 0.8087847222222222,
+      "tail_gt25_ci95": [
+        0.6699001736111111,
+        0.9313854166666666
+      ]
+    },
+    {
+      "method": "cnn1d",
+      "family": "ml_nn",
+      "mean_mae_adc": 313.4852370029025,
+      "mae_ci95": [
+        261.32545927259656,
+        371.6671376813253
+      ],
+      "mean_sigma68_adc": 54.307491455078114,
+      "sigma68_ci95": [
+        43.8128881225586,
+        66.25164819335936
+      ],
+      "mean_tail_gt25_adc": 0.9428125,
+      "tail_gt25_ci95": [
+        0.8721328125,
+        0.9901875
+      ]
+    }
+  ],
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_nn",
+    "mean_mae_adc": 42.64550674549059,
+    "mae_ci95": [
+      35.002944067924716,
+      50.03867502839424
+    ],
+    "mean_sigma68_adc": 17.361142273023287,
+    "sigma68_ci95": [
+      14.387237221204048,
+      20.19870965646437
+    ],
+    "mean_tail_gt25_adc": 0.22864583333333333,
+    "tail_gt25_ci95": [
+      0.17956510416666666,
+      0.2670486111111111
+    ]
+  },
+  "adoption_decision": {
+    "production_pedestal_replacement": false,
+    "reason": "No dedicated forced/random no-pulse ROOT mirror was found; benchmark is a beam-pretrigger surrogate.",
+    "candidate_to_rerun_when_truth_available": "gradient_boosted_trees"
+  },
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "benchmark_summary.csv",
+    "benchmark_by_run.csv",
+    "raw_root_selected_counts_by_run.csv"
+  ],
+  "next_tickets": [
+    {
+      "title": "S16q: acquire dedicated no-pulse B-stack forced/random ROOT mirror",
+      "body": "Acquire or expose the dedicated forced/random no-pulse B-stack ROOT files with trigger/run metadata, then rerun the S16p target-excluded pedestal adoption rule with true no-pulse labels rather than beam-pretrigger surrogates."
+    }
+  ]
+}

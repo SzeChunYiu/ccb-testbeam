@@ -8,15 +8,17 @@
 
 ---
 
+> 📘 **Academic Chapters:** Chapters 2–12 are available as self-contained academic papers (Nature Methods style, ≥1000 words each) in [`docs/academic_chapters/`](docs/academic_chapters/). Each chapter recursively explains all concepts from first principles, grounded in real data and Monte Carlo simulation. The summaries below link to the full versions.
+
 ## Quick Navigation
 
 | I want to... | Go to |
 |---|---|
 | See the key results at a glance | [§1 Executive Summary](#1-executive-summary) |
-| Understand the experiment | [§2 Experimental Setup](#2-experimental-setup) |
-| Follow the data from raw files | [§3 Data Pipeline](#3-data-pipeline) |
-| Understand timing resolution | [§4 Timing Analysis](#4-timing-analysis) |
-| Learn about pile-up | [§5 Pile-up Analysis](#5-pile-up-analysis) |
+| Understand the experiment | [§2 Experimental Setup](#2-experimental-setup) → [Full chapter](docs/academic_chapters/02_experimental_setup.md) |
+| Follow the data from raw files | [§3 Data Pipeline](#3-data-pipeline) → [Full chapter](docs/academic_chapters/03_data_pipeline.md) |
+| Understand timing resolution | [§4 Timing Analysis](#4-timing-analysis) → [Full chapter](docs/academic_chapters/04_timing_analysis.md) |
+| Learn about pile-up | [§5 Pile-up Analysis](#5-pile-up-analysis) → [Full chapter](docs/academic_chapters/05_pileup_analysis.md) |
 | See where ML helps (or doesn't) | [§6 Pulse Shape & Machine Learning](#6-pulse-shape--machine-learning) |
 | Check the methodology | [§12 Methodology Appendix](#12-methodology-appendix) |
 | Find what's still missing | [§11 Open Questions](#11-open-questions--next-steps) and [`STUDY_GAPS.md`](STUDY_GAPS.md) |

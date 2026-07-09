@@ -1,0 +1,53 @@
+{
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/s16n_1781042563_1754_57ab2a20_large_lowering_taxonomy_propagation_gate.py --config configs/s16o_1781134843_1313_241f286b_independent_forced_random_validation.json"
+  ],
+  "config": "configs/s16o_1781134843_1313_241f286b_independent_forced_random_validation.json",
+  "git_commit": "86bafe676dade95b30d4c92630f6d93b4d930548",
+  "outputs": {
+    "REPORT.md": "0b64a1a92a7faf954ee77d9969a84911e52304163aeaf51f50c8dcdecf06d1c4",
+    "allhit_pulse_counts_by_run_stave.csv": "a20b922cdc2b23d405ecadeb2e5b7d4a932a82e5b62e72137e146a80003ee5d1",
+    "class_propagation_metrics.csv": "976dffcfafde0031dd8e8b46a783d29697080e5469cb0f02874fdd93783d93fe",
+    "control_model_summary.csv": "83f0b7514025e2a3d534b204b948af696b5f073afe0f8d7e367e606ad721e1b1",
+    "fig_class_tail_fraction.png": "b7695b62a2d826e1e0ab3a30490f588a8a6b50f43c56d2b947707a02fb346600",
+    "fig_model_average_precision.png": "d0c4da2d45b07ed7b1ea728c050eedd2ae861324abe633bb3c9d155a193d0bf5",
+    "fold_event_taxonomy_table.csv": "9a60e9b05bf566eb467958f7118f09a072ca4c0d162aac8d8e71165961c379e4",
+    "fold_model_choices.csv": "cfb71f91867d7fa3526b7d3ab900a5ba411ec070c2f37056491bd9d7ceaa3669",
+    "heldout_fold_metrics.csv": "5ee60aabb3d8b1307ade7c66f015522f0d3d234afef6ce486bf09e5fe1742795",
+    "input_sha256.csv": "22b29191e460d7b6644755e2d45d15ea60dcc5944d653a755fe588a055e6bb24",
+    "leakage_checks.csv": "3622f0c1aa9380a530b429d97dacb666b1d8d11b614c3dea6dd53b26608ea59e",
+    "oof_event_predictions.csv": "c60163cfedd87a0b0a46e4bd01773f2ff778d02c09154972b0fbb9b502ea6375",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "f14a79465645f3c7e730527952c9df76545dc99234c5306b00daf985c0d4abf9",
+    "run_block_bootstrap_summary.csv": "494ee501c5563a611ebae36b4141a55b5a3d76bd120ce19715995eb7787a825e",
+    "run_class_endpoint_metrics.csv": "d030c2424085572aa4e8cc7a365f19183855121e1399673edf30aa2f926ec542"
+  },
+  "outputs_sha256": {
+    "REPORT.md": "5f11dfab272ae80a2490f1bf1d0c160118fb9478a0fcac22999cdcd8bd14a4a8",
+    "allhit_pulse_counts_by_run_stave.csv": "a20b922cdc2b23d405ecadeb2e5b7d4a932a82e5b62e72137e146a80003ee5d1",
+    "class_propagation_metrics.csv": "976dffcfafde0031dd8e8b46a783d29697080e5469cb0f02874fdd93783d93fe",
+    "control_model_summary.csv": "83f0b7514025e2a3d534b204b948af696b5f073afe0f8d7e367e606ad721e1b1",
+    "external_source_audit.csv": "e06cd25784bd0a042d98924a554a1b4095e01823f8de492603212cbb9a80d3ff",
+    "fig_class_tail_fraction.png": "b7695b62a2d826e1e0ab3a30490f588a8a6b50f43c56d2b947707a02fb346600",
+    "fig_model_average_precision.png": "d0c4da2d45b07ed7b1ea728c050eedd2ae861324abe633bb3c9d155a193d0bf5",
+    "fold_event_taxonomy_table.csv": "9a60e9b05bf566eb467958f7118f09a072ca4c0d162aac8d8e71165961c379e4",
+    "fold_model_choices.csv": "cfb71f91867d7fa3526b7d3ab900a5ba411ec070c2f37056491bd9d7ceaa3669",
+    "heldout_fold_metrics.csv": "5ee60aabb3d8b1307ade7c66f015522f0d3d234afef6ce486bf09e5fe1742795",
+    "input_sha256.csv": "22b29191e460d7b6644755e2d45d15ea60dcc5944d653a755fe588a055e6bb24",
+    "leakage_checks.csv": "3622f0c1aa9380a530b429d97dacb666b1d8d11b614c3dea6dd53b26608ea59e",
+    "oof_event_predictions.csv": "c60163cfedd87a0b0a46e4bd01773f2ff778d02c09154972b0fbb9b502ea6375",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "54290cfb131f1dd580b16fd699fa9a891db51fd84bd6ca098c27306d7c1fdd97",
+    "run_block_bootstrap_summary.csv": "494ee501c5563a611ebae36b4141a55b5a3d76bd120ce19715995eb7787a825e",
+    "run_class_endpoint_metrics.csv": "d030c2424085572aa4e8cc7a365f19183855121e1399673edf30aa2f926ec542"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "postprocess": {
+    "config": "configs/s16o_1781134843_1313_241f286b_independent_forced_random_validation.json",
+    "external_source_audit_rows": 0,
+    "report_reframed_for_ticket": true
+  },
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "random_seed": 1781134843,
+  "script": "scripts/s16n_1781042563_1754_57ab2a20_large_lowering_taxonomy_propagation_gate.py"
+}

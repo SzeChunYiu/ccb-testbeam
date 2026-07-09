@@ -1,0 +1,5 @@
+check,value,pass,note
+raw_root_reproduction_gate,1,True,reproduction_match_table.csv exact before modeling
+required_methods_present,"cnn1d,gradient_boosted_trees,mlp,phase_conformal_gated_cnn,ridge,traditional",True,"traditional, ridge, GBT, MLP, 1D-CNN, and new phase-conformal gated CNN"
+uncertainty_train_eval_event_overlap,0,True,uncertainty layer leaves out the evaluated run
+forbidden_feature_audit,0,True,"uncertainty features exclude event id, raw residual, pull, sigma target, and held-out labels"

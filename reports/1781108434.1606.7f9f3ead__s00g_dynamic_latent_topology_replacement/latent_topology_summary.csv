@@ -1,0 +1,16 @@
+latent_topology,latent_cluster,dynamic_only,rows,runs,median_dynamic_amp_adc,raw_dynamic_topologies
+p02_latent_c00,0,0,108382,33,5567.0,9
+p02_latent_c00,0,1,16622,33,2409.5,9
+p02_latent_c01,1,0,220052,33,7334.0,9
+p02_latent_c01,1,1,111,28,1012.0,6
+p02_latent_c02,2,1,6450,33,3484.0,9
+p02_latent_c03,3,0,85423,33,4603.0,9
+p02_latent_c03,3,1,109,25,1008.0,5
+p02_latent_c04,4,0,54117,33,3753.0,9
+p02_latent_c04,4,1,33,15,1009.0,8
+p02_latent_c05,5,0,757,33,6997.0,4
+p02_latent_c05,5,1,42148,33,3333.0,9
+p02_latent_c06,6,0,69459,33,3608.0,9
+p02_latent_c06,6,1,58,19,1010.0,7
+p02_latent_c07,7,0,102547,33,5338.0,9
+p02_latent_c07,7,1,105,27,1008.0,4

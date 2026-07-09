@@ -1,0 +1,7 @@
+metric,dynamic_value,matched_control_value,delta,ci_low,ci_high,unit
+secondary_fraction,6.570302233902759e-05,0.03160315374507228,-0.03153745072273325,-0.03512664838539888,-0.0282658086578639,fraction
+timing_tail_fraction,0.11925098554533509,0.1771353482260184,-0.05788436268068331,-0.07160613490003577,-0.044386382088138894,fraction
+median_amp_adc,740.5,1896.75,-1156.25,-1190.69375,-1111.975,ADC or ADC-samples
+dynamic_amp_adc,2713.0,2798.0,-85.0,-106.0,-50.23750000000001,ADC or ADC-samples
+signed_area_adc_samples,-15804.5,8673.0,-24477.5,-24894.675,-24008.4875,ADC or ADC-samples
+baseline_excursion_adc,1436.0,1100.0,336.0,298.475,395.0,ADC or ADC-samples

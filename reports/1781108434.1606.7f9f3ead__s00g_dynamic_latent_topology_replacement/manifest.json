@@ -1,0 +1,26 @@
+{
+  "command": ".venv/bin/python scripts/s00g_1781108434_1606_7f9f3ead_dynamic_latent_topology_replacement.py",
+  "config": "configs/s00g_1781108434_1606_7f9f3ead_dynamic_latent_topology_replacement.json",
+  "script": "scripts/s00g_1781108434_1606_7f9f3ead_dynamic_latent_topology_replacement.py",
+  "git_commit": "e0b0c12c9a46fcc5e134a5b4b6bef3b625eb323b",
+  "python": "3.11.14",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "runtime_sec": 59.483,
+  "outputs": {
+    "REPORT.md": "27dde3f404551e7783840e506f47b4876452a55bc63dda5da844415c7eb2e058",
+    "fig_model_auc.png": "a8609c468f227818f8ca7fddbe1469833c84eb9fcf9941cd2deb1abceae9523a",
+    "fig_support_summary.png": "9c28e084fa76463b54c02fec20150ce89be30e43da9ed13e887356b886e3578b",
+    "heldout_model_scores.csv.gz": "12dc00ea28d22b6700c8134d9febf358ab7d8d275c802deb83a12fc88718bf59",
+    "input_sha256.csv": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+    "latent_topology_summary.csv": "296c97cc0fa8365dd2d18a7d6e6812d4614e49636deb209eaa7a901fb08c2dbb",
+    "leakage_checks.csv": "45717d667aabbe28498ba2704569016c7afe2c771095e58910c05e30337ac068",
+    "matched_pulse_table.csv.gz": "14e33d5245fd2b849ac1aaad4c1f6177b72fad8add7a952c98f4ab667156aa97",
+    "matched_strata_summary.csv": "ad4c44c189b51a2702d2dd1f88b1f3ca8dc619e5a5ce769e316009c8e5bfe487",
+    "matched_support_summary.csv": "32ede7dfcd7543baf3d65a8ca345ec757fc53b62c94c88880996b3a52a3360f4",
+    "model_benchmark.csv": "1882b9a6c79223ad6f959bf87ac940cdadb1ded865c579ea06712a02608fca14",
+    "primary_delta_metrics.csv": "019bd73a4047bc30b966cd55a25532dfa9290a94e599645b06c6697ebcd80f30",
+    "reproduction_match_table.csv": "9486d56356c2bb3ffe9f80b70f98fa1ce49d234e7e32e8a8e642a3b9b5a347ae",
+    "result.json": "cbd3558d338d2875931fe955c142b04b2e2b0179d893397f894e46669a8b831a",
+    "selector_counts_by_run.csv": "bbd513fd66ec57880d8807499d02425b91e87cae13b285bfdc5b11fce85b393a"
+  }
+}

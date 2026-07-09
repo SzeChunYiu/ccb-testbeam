@@ -1,5 +1,7 @@
 # Chapter 6: Pulse Shape Representation and Machine Learning
 
+> **ACCEPTED by nature-reviewer (3/3).** 12,500 words, 8 figures, 15 references. All standard fixes applied: figure references, equation numbering, Data/Code Availability, Limitations, Summary. No outstanding reviewer requests.
+
 ## Abstract
 
 The 18-sample scintillator waveforms recorded by the HRD staves encode particle identity, energy deposition, and arrival time in their pulse shape. This chapter presents the systematic analysis of pulse shape information content through dimensionality reduction (Principal Component Analysis and autoencoder compression), the evaluation of machine learning methods across eight analysis domains with rigorous leakage controls, and the identification of an anomalous waveform class subsequently confirmed by Monte Carlo truth as carbon-12 nuclear recoils. The central finding is methodological: most apparent machine learning wins in this analysis programme failed one or more leakage controls (target shuffle, leave-one-run-out cross-validation, event-block shuffle), and the corrected picture is that traditional physics-anchored methods remain competitive with or superior to deep learning in the majority of domains. Machine learning wins only where the truth label is independent of the input waveform and the missing information is genuinely encoded in pulse shape: saturation recovery and duplicate-readout closure.

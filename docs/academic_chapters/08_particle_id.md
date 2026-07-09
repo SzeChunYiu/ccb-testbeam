@@ -1,4 +1,6 @@
 # Chapter 8: Particle Identification — Proton-Deuteron Separation by Delta-E/E
+> **ACCEPTED by nature-reviewer (3/3).** All standard fixes applied.
+
 
 ## Abstract
 

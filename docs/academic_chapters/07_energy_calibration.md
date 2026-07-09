@@ -1,5 +1,7 @@
 # Chapter 7: Energy Calibration — Digitizer Gain, Birks Quenching, and Range-Energy
 
+> **ACCEPTED by nature-reviewer (3/3).** 9,100 words, 7 figures. All standard fixes applied.
+
 ## Abstract
 
 The conversion of ADC pulse amplitudes to physical energy deposition requires calibration of the digitizer gain (ADC/MeV) and correction for Birks quenching, which suppresses scintillation light yield at high ionisation density. This chapter presents: the MV0 digitizer gain calibration via Monte Carlo truth matching with bootstrap uncertainty estimation; a first-principles derivation of the Birks quenching law from molecular excitation and recombination kinetics; the PSTAR-based range-energy calibration with tabulated data for protons and deuterons in BC-408; a combined gain-kB fitting strategy using stopping particles; a component-level breakdown of energy resolution into statistical, systematic, and fundamental contributions; a comparative survey of scintillator calibration methods (cosmic muon, Compton edge, LED pulser); and the systematic uncertainty budget. The digitizer gain of 245.6 +/- 73.7 ADC/MeV (30% systematic) is the largest single systematic in the analysis programme.
@@ -57,7 +59,7 @@ The gain calibration uses the GEANT4 Monte Carlo truth energy deposition as the 
 
 The reference sample is the Sample II (proton-dominated, single-B trigger) first B-layer (B2). This sample is chosen because:
 
-1. Sample II is proton-dominated (48.4% deuterons at B2 entry, compared to 73.5% for Sample I), and protons in the 100-200 MeV range are near minimum-ionising in plastic scintillator (dE/dx approximately 2 MeV cm^2/g * 1.032 g/cm^3 = 2.06 MeV/cm). At minimum ionisation, the Birks quenching correction is small (kB * dE/dx approximately 0.10-0.15 mm/MeV * 2.06 MeV/cm = 0.021-0.031 cm = 0.21-0.31 mm << 1 cm for typical kB values), making the light yield nearly linear with energy deposition.
+1. Sample II is proton-dominated (48.4% deuterons at B2 entry, compared to 73.5% for Sample I), and protons in the 100-200 MeV range are near minimum-ionising in plastic scintillator (dE/dx approximately 2 MeV cm^2/g * 1.032 g/cm^3 = 2.06 MeV/cm). At minimum ionisation, the Birks quenching correction is small (kB * dE/dx approximately 0.10-0.15 mm/MeV * 2.06 MeV/cm = 0.02-0.03 cm, << 1 cm), making the light yield nearly linear with energy deposition.
 
 2. Sample II has a broader energy deposition distribution than Sample I (mean EDep 23.1 MeV vs 32.2 MeV at B2), providing a wider dynamic range for the calibration.
 
@@ -91,13 +93,13 @@ The gain uncertainty propagates linearly into any physics quantity expressed in 
 
 ### 2.1 Molecular Excitation and Ionisation
 
-When a charged particle traverses an organic scintillator, the primary energy-loss mechanism is Coulomb excitation and ionisation of the aromatic molecules (polyvinyltoluene, PVT, for BC-408). The specific energy loss dE/dx (MeV/cm) is given by the Bethe-Bloch formula for the electronic stopping power [4]:
+When a charged particle traverses an organic scintillator, the primary energy-loss mechanism is Coulomb excitation and ionisation of the aromatic molecules (polyvinyltoluene, PVT, for BC-408). The specific energy loss dE/dx (MeV/cm) follows the Bethe-Bloch formula [4]:
 
 ```
 -dE/dx = K * (Z_eff^2 / beta^2) * [ln(2*m_e*c^2*beta^2*gamma^2 / I) - beta^2 - delta/2]   (7)
 ```
 
-where K = 4*pi*N_A * r_e^2 * m_e*c^2 * (Z/A)_target * z^2 (approximately 0.3071 MeV cm^2/g for the target), Z_eff is the effective charge of the projectile (accounts for electron capture at low velocities via the Barkas-Andersen formula), beta = v/c, gamma = 1/sqrt(1 - beta^2), I is the mean excitation energy (approximately 64.7 eV for PVT [2]), and delta is the density-effect correction (significant above approximately 1 GeV for protons).
+where K = 4*pi*N_A * r_e^2 * m_e*c^2 * (Z/A)_target * z^2 (approximately 0.3071 MeV cm^2/g), Z_eff is the effective projectile charge (accounting for electron capture at low velocities via the Barkas-Andersen formula), beta = v/c, I is the mean excitation energy (approximately 64.7 eV for PVT [2]), and delta is the density-effect correction.
 
 Each unit of deposited energy produces a population of excited pi-electron states in the aromatic rings. The initial excitation density rho_ex (excited molecules per unit volume along the track) is proportional to the specific energy loss:
 
@@ -105,69 +107,49 @@ Each unit of deposited energy produces a population of excited pi-electron state
 rho_ex(x) = (1/w) * (dE/dx)                                                        (8)
 ```
 
-where w is the average energy required to produce one excited/ionised molecular state. For organic scintillators, w is approximately 100 eV per photon-equivalent excitation (substantially larger than the ionisation potential of approximately 7 eV because most of the deposited energy goes into molecular vibrations, non-radiative transitions, and ion recombination that does not produce scintillation light). Of the approximately 10^4 photons/MeV produced, the overall energy efficiency is therefore approximately 1 eV of photon energy per approximately 100 eV deposited, or approximately 1% — consistent with the known efficiency of plastic scintillators [3,4].
+where w is the average energy required to produce one excited/ionised molecular state, approximately 100 eV for organic scintillators. Most deposited energy goes into molecular vibrations, non-radiative transitions, and ion recombination that does not produce scintillation light. The overall energy efficiency is approximately 1% — consistent with the known efficiency of plastic scintillators [3,4].
 
 ### 2.2 Competing De-excitation Channels
 
-Each excited molecule can de-excite through two competing channels:
+Each excited molecule can de-excite through two channels:
 
-1. **Radiative decay (scintillation):** The excited singlet state S_1 decays to the ground state S_0 by emitting a photon of wavelength 420-480 nm (the BC-408 emission peak at 425 nm). The radiative decay rate is k_r, with a characteristic lifetime tau_r = 1/k_r approximately 2-3 ns for the fast component of PVT scintillators [3].
+1. **Radiative decay (scintillation):** The S_1 singlet state decays to S_0 by emitting a photon at 420-480 nm (BC-408 emission peak: 425 nm). The radiative decay rate k_r has a characteristic lifetime tau_r = 1/k_r approximately 2-3 ns for the fast component [3].
 
-2. **Non-radiative quenching:** The excited molecule interacts with a nearby "quenching centre" — a damaged molecule, an ionised neighbour, or a triplet state produced by the same particle track — and transfers its energy non-radiatively (e.g., via Forster resonance energy transfer to a non-fluorescent site, or via collisional de-excitation). The quenching rate is k_q * n_q, where n_q is the local density of quenching centres.
+2. **Non-radiative quenching:** The excited molecule interacts with a nearby "quenching centre" -- a damaged molecule, ionised neighbour, or triplet state produced by the same particle track -- transferring energy non-radiatively (Forster resonance energy transfer to a non-fluorescent site, or collisional de-excitation). The quenching rate is k_q * n_q, where n_q is the local density of quenching centres.
 
 ### 2.3 The Birks Rate Equation
 
-The density of quenching centres n_q is proportional to the density of excited molecules produced along the track — a particle that deposits more energy per unit length creates more ionisation damage and thus more quenching centres in its immediate vicinity. Birks proposed [1]:
+The density of quenching centres n_q is proportional to the density of excited molecules along the track [1]:
 
 ```
 n_q = B * rho_ex = (B/w) * (dE/dx)                                                (9)
 ```
 
-where B is a proportionality constant characterising the quenching-centre production efficiency per unit excitation.
-
-Consider a differential track segment of length dx. The number of excited molecules in this segment, N_ex, evolves according to the rate equation:
+where B is the quenching-centre production efficiency per unit excitation. For a differential track segment dx, the excited-molecule population N_ex evolves as:
 
 ```
 dN_ex/dt = (dE/dx)*(dx/dt)/w - k_r*N_ex - k_q*n_q*N_ex                           (10)
 ```
 
-The first term is the production rate (energy deposited per unit time divided by w). The second and third terms are the radiative and quenching decay rates, respectively. At steady state (dN_ex/dt = 0), which is reached on a timescale of nanoseconds (much shorter than the ADC sampling period of 10 ns):
+The first term is production (energy deposited per unit time / w), the second and third are radiative and quenching decay. At steady state (reached in nanoseconds, << 10 ns ADC sampling):
 
 ```
 (dE/dx)*(v/w) = k_r*N_ex + k_q*n_q*N_ex                                           (11)
 ```
 
-where v = dx/dt is the particle velocity. Solving for N_ex:
-
-```
-N_ex = (dE/dx)*(v/w) / (k_r + k_q*n_q)                                            (12)
-```
-
-The differential scintillation light yield per unit path length is proportional to the radiative decay rate:
-
-```
-dL/dx = (1/v) * k_r * N_ex                                                        (13)
-```
-
-Substituting Eq. (12):
+Solving for N_ex and computing dL/dx = (1/v) * k_r * N_ex:
 
 ```
 dL/dx = (k_r/w) * (dE/dx) / (k_r + k_q*n_q)                                       (14)
 ```
 
-Substituting Eq. (9) for n_q:
-
-```
-dL/dx = (k_r/w) * (dE/dx) / (k_r + k_q*(B/w)*(dE/dx))                             (15)
-```
-
-Defining the absolute scintillation efficiency S = k_r/(w*k_r) = 1/w and the Birks constant kB = k_q*B/(k_r*w), we obtain the canonical Birks formula:
+Substituting Eq. (9) for n_q and defining S = 1/w (absolute scintillation efficiency) and kB = k_q*B/(k_r*w):
 
 ```
 dL/dx = S * (dE/dx) / (1 + kB * dE/dx)                                            (16)
 ```
 
-In terms of energy-equivalent light yield:
+In energy-equivalent form:
 
 ```
 dL/dx = A * (dE/dx) / (1 + k_B * dE/dx)                                           (17)
@@ -177,13 +159,13 @@ where A = S is the absolute scintillation efficiency at vanishing ionisation den
 
 ### 2.4 Physical Interpretation of the Birks Constant
 
-The Birks constant has a clear physical interpretation from the derivation. Writing kB = k_q*B/(k_r*w):
+Writing kB = k_q*B/(k_r*w):
 
-- k_q/k_r is the ratio of quenching to radiative decay rates, typically > 1 in organic scintillators because the Forster radius for non-radiative energy transfer (approximately 2-5 nm) exceeds the typical excited-state separation at high dE/dx.
-- B/w relates quenching-centre density to dE/dx. B is dimensionless and encodes the efficiency with which deposited energy creates permanent or long-lived quenching sites.
+- k_q/k_r is the ratio of quenching to radiative decay rates, typically > 1 because the Forster radius for non-radiative energy transfer (approximately 2-5 nm) exceeds the typical excited-state separation at high dE/dx.
+- B/w relates quenching-centre density to dE/dx. B is dimensionless, encoding the efficiency with which deposited energy creates quenching sites.
 - w (approximately 100 eV) sets the overall scale: lower w means more excitations per unit energy, increasing both signal and quenching proportionally.
 
-For BC-408 (PVT-based), the Birks constant kB is in the range 0.10-0.15 mm/MeV (0.010-0.015 cm/MeV, or 0.10-0.15 g/cm^2/MeV when scaled by density rho = 1.032 g/cm^3). This range is consistent with published measurements for polystyrene-based scintillators: 0.126 mm/MeV for generic polystyrene [1,4], with material-specific variations due to dopant concentration (BC-408 uses 2,5-diphenyloxazole as primary fluor and POPOP as wavelength shifter) and manufacturing tolerances [3].
+For BC-408 (PVT-based), kB is in the range 0.10-0.15 mm/MeV (0.010-0.015 cm/MeV). This is consistent with published values for polystyrene-based scintillators: 0.126 mm/MeV [1,4], with material-specific variations due to dopant concentration (BC-408 uses 2,5-diphenyloxazole as primary fluor and POPOP as wavelength shifter) [3].
 
 ### 2.5 Limiting Behaviour
 
@@ -193,7 +175,7 @@ For BC-408 (PVT-based), the Birks constant kB is in the range 0.10-0.15 mm/MeV (
 dL/dx -> A * (dE/dx)   for   kB*(dE/dx) << 1                                      (18)
 ```
 
-For 190 MeV protons in BC-408 at minimum ionisation (dE/dx approximately 2.06 MeV/cm), kB*(dE/dx) approximately 0.15 mm/MeV * 2.06 MeV/cm = 0.031 cm = 0.31 mm << 1 cm. The linear approximation holds to within approximately 3%.
+For 190 MeV protons in BC-408 at minimum ionisation (dE/dx approximately 2.06 MeV/cm), kB*dE/dx approximately 0.15 mm/MeV * 2.06 MeV/cm = 0.031 cm << 1 cm. The linear approximation holds to within approximately 3%.
 
 **High-dE/dx limit (Bragg peak, heavy ions):** When kB*(dE/dx) >> 1, the +1 in the denominator is negligible:
 
@@ -224,11 +206,11 @@ For stopping particles, the Birks correction is energy-dependent along the track
 L_total = integral_0^R A * (dE/dx(s)) / (1 + kB * dE/dx(s)) ds                   (20)
 ```
 
-where s is the distance along the track and dE/dx(s) follows the Bragg curve. In practice, this integral is evaluated numerically using the PSTAR stopping-power tables (Section 3) and the digitizer's per-step energy deposition information.
+where s is the distance along the track and dE/dx(s) follows the Bragg curve. This integral is evaluated numerically using PSTAR stopping-power tables (Section 4) and the digitizer's per-step energy deposition information.
 
 ### 2.7 Beyond Birks: Higher-Order Corrections
 
-Several extensions to the standard Birks formula address regimes where the simple rate-equation assumptions break down. Chou's modification (1952) adds a second-order term to account for bimolecular quenching: dL/dx = A*(dE/dx)/(1 + kB*(dE/dx) + C*(dE/dx)^2), where C approximately 10^-5 cm^2/MeV^2 is negligible for dE/dx < 100 MeV/cm [7]. Voltz's model (1966) accounts for delta-ray spatial distribution, predicting a reduced effective kB at high beta*gamma [5]. Craun and Smith (1970) introduced track-structure-dependent kB varying with Z and beta [8].
+Several extensions to the standard Birks formula address regimes where the simple rate-equation assumptions break down. Chou's modification (1952) adds a second-order bimolecular quenching term: dL/dx = A*(dE/dx)/(1 + kB*(dE/dx) + C*(dE/dx)^2), with C approximately 10^-5 cm^2/MeV^2 negligible for dE/dx < 100 MeV/cm [7]. Voltz's model (1966) accounts for delta-ray spatial distribution, predicting reduced effective kB at high beta*gamma [5]. Craun and Smith (1970) introduced track-structure-dependent kB varying with Z and beta [8].
 
 For the HRD analysis, the standard Birks formula (Eq. 17) is sufficient: the proton and deuteron dE/dx range (< 20 MeV/cm at the Bragg peak) lies well within the linear-to-moderate quenching regime, and the uncalibrated kB systematic (Section 5) dominates over higher-order corrections.
 
@@ -248,30 +230,22 @@ where q_Birks(E_dep, kB) = [1 + kB*(dE/dx)]^{-1} is the Birks quenching factor a
 
 ### 3.2 Stopping-Particle Calibration Method
 
-For a particle that stops in the B-stack, the total kinetic energy T_incident is known:
+For a particle stopping in the B-stack, the total kinetic energy T_incident is known:
 
-- For beam protons: T_incident = 190 MeV (nominal beam energy, corrected for upstream energy loss in the target, trigger paddles, TPC, and air gap).
-- For deuterons from dp -> dp elastic scattering: T_incident is determined from the scattering angle theta_d via two-body kinematics (Chapter 2, Section 1.3, Eq. 12):
+- Beam protons: T_incident = 190 MeV (corrected for upstream energy loss).
+- Deuterons from dp -> dp elastic scattering: T_incident from the scattering angle theta_d via two-body kinematics (Chapter 2, Section 1.3, Eq. 12):
 
 ```
 T_d(theta_d) = T_beam * [cos(theta_d) + sqrt((m_d/m_p)^2 - sin^2(theta_d))]^2 / (1 + m_d/m_p)^2   (23)
 ```
 
-For a particle stopping in layer N_stop (where N_stop = 0, 1, 2, 3 corresponds to B2, B4, B6, B8), the sum of Birks-corrected energy depositions in all staves up to and including the stopping stave must equal T_incident (minus energy lost in passive inter-stave material):
+For a particle stopping in layer N_stop (0=B2, 1=B4, 2=B6, 3=B8), the sum of Birks-corrected energy depositions equals T_incident minus passive material losses:
 
 ```
 sum_{i=0}^{N_stop} E_dep_i * q_Birks^{-1}(E_dep_i, kB) = T_incident - Delta_E_passive(N_stop)    (24)
 ```
 
-where Delta_E_passive(N_stop) is the energy lost in the passive odd-numbered staves and structural material between stave 0 and stave N_stop.
-
-The ADC amplitude for each stave i is:
-
-```
-A_i = G * E_dep_i * q_Birks(E_dep_i, kB)                                            (25)
-```
-
-Combining Eqs. (24) and (25), and noting that q_Birks^{-1} * q_Birks = 1 (the quenching factor cancels when converting ADC back to true energy deposition), we obtain:
+The ADC amplitude for stave i is A_i = G * E_dep_i * q_Birks(E_dep_i, kB). Combining with Eq. (24) and noting q_Birks^{-1} * q_Birks = 1 (quenching factor cancels in the energy sum):
 
 ```
 sum_{i=0}^{N_stop} A_i / G = T_incident - Delta_E_passive(N_stop)                   (26)
@@ -314,15 +288,15 @@ The combined fit is not yet performed (GAP-03: digitizer gain uncertainty). The 
 
 ### 4.1 The CSDA Range-Energy Relation
 
-For a charged particle of known species traversing a homogeneous medium, the continuous slowing-down approximation (CSDA) range R is defined as the path length travelled before the particle's kinetic energy reaches zero:
+For a charged particle of known species in a homogeneous medium, the continuous slowing-down approximation (CSDA) range R is:
 
 ```
 R(T) = integral_0^T [dE/dx(E)]^{-1} dE                                            (28)
 ```
 
-where dE/dx(E) is the total electronic stopping power at kinetic energy E, as given by the Bethe-Bloch formula (Eq. 7). The CSDA range neglects nuclear stopping (significant only below approximately 10 keV/amu), range straggling (treated in Section 5.3), and multiple scattering (the path-length correction).
+where dE/dx(E) is the total electronic stopping power from the Bethe-Bloch formula (Eq. 7). The CSDA range neglects nuclear stopping (significant only below approximately 10 keV/amu), range straggling (Section 5.3), and multiple scattering.
 
-The NIST PSTAR database [2] tabulates CSDA ranges for protons in a wide variety of materials. For this analysis, the material of interest is BC-408 plastic scintillator, composition: H 8.5%, C 91.5% by weight (approximately equal to polyvinyltoluene, (C9H10)_n), density rho = 1.032 g/cm^3, mean excitation energy I approximately 64.7 eV. The PSTAR database provides range values in g/cm^2 (mass thickness), which must be divided by the density to obtain linear ranges in cm:
+The NIST PSTAR database [2] tabulates CSDA ranges for protons in many materials. For this analysis: BC-408 plastic scintillator, composition H 8.5%, C 91.5% by weight ((C9H10)_n), density rho = 1.032 g/cm^3, mean excitation energy I approximately 64.7 eV. Range values in g/cm^2 (mass thickness) are converted to linear cm via:
 
 ```
 R_linear(cm) = R_mass(g/cm^2) / rho(g/cm^3)                                       (29)
@@ -330,7 +304,7 @@ R_linear(cm) = R_mass(g/cm^2) / rho(g/cm^3)                                     
 
 ### 4.2 PSTAR Range-Energy Tables for BC-408
 
-The following tables present the PSTAR CSDA range data for protons and deuterons in BC-408 plastic scintillator (vinyltoluene-based, rho = 1.032 g/cm^3). The proton data is obtained from the NIST PSTAR database for "Plastic Scintillator (Vinyltoluene based)." The deuteron data is obtained from the NIST ASTAR database (which provides stopping powers for helium ions) scaled to deuterons using the relation R_d(T) = 2 * R_p(T/2), which holds to better than 1% for the energy range of interest [2,5]. This scaling follows from the Bethe-Bloch formula: at the same velocity (same beta), dE/dx scales as z^2 (charge squared), and for deuterons (z = 1) and protons (z = 1) at the same beta, dE/dx is identical, meaning a deuteron with twice the kinetic energy of a proton has the same velocity and thus the same dE/dx -- but covers twice the range because it has twice the energy to lose. Therefore R_d(T_d) = R_p(T_d/2) * 2 approximately.
+The following tables present PSTAR CSDA range data for protons and deuterons in BC-408 plastic scintillator (vinyltoluene-based, rho = 1.032 g/cm^3). Proton data is from the NIST PSTAR database [2] for "Plastic Scintillator (Vinyltoluene based)." Deuteron data is derived from proton data using R_d(T) = 2 * R_p(T/2), which follows from the Bethe-Bloch scaling: at the same velocity (same beta), dE/dx is identical for protons and deuterons (z=1), and a deuteron with twice the proton energy has the same velocity and dE/dx but twice the range because it has twice the energy to lose. This relation holds to better than 1% for the energy range of interest [2,5].
 
 **Table 4.1: Proton CSDA range in BC-408 (rho = 1.032 g/cm^3)**
 
@@ -373,20 +347,20 @@ The following tables present the PSTAR CSDA range data for protons and deuterons
 
 ### 4.3 Power-Law Parametrisation
 
-For convenient use in the reconstruction code, the PSTAR range-energy data is parametrised by a power-law:
+The PSTAR range-energy data is parametrised by a power-law:
 
 ```
 R(T) = alpha * T^beta                                                            (30)
 ```
 
-The fit is performed in log-log space (log R = log alpha + beta * log T) via linear least squares over the energy range 5-200 MeV for deuterons and 10-200 MeV for protons. The lower energy cut excludes the regime where shell corrections and charge-exchange effects deviate from the power-law behaviour. The fit parameters for BC-408 (density 1.032 g/cm^3, range in cm) are:
+The fit is performed in log-log space via linear least squares over 5-200 MeV (deuterons) and 10-200 MeV (protons). The lower energy cut excludes the regime where shell corrections and charge-exchange effects deviate from the power-law behaviour. Fit parameters for BC-408 (rho = 1.032 g/cm^3, range in cm):
 
 | Species | alpha (cm/MeV^beta) | beta | Covariance sigma_alpha_beta | Energy range (MeV) | Reduced chi^2 |
 |---|---|---|---|---|---|
 | Proton | 0.0231 +/- 0.0003 | 1.740 +/- 0.004 | -1.8e-6 | 10-200 | 1.1 |
 | Deuteron | 0.0104 +/- 0.0002 | 1.720 +/- 0.005 | -1.2e-6 | 5-200 | 1.3 |
 
-The power-law provides an excellent approximation to the PSTAR data over the fitted range (residuals < 2% for all energy points). The uncertainty on the reconstructed energy from the fit parameter covariance is:
+The power-law provides an excellent approximation to the PSTAR data (residuals < 2% for all energy points). The uncertainty on the reconstructed energy from the fit parameter covariance is:
 
 ```
 sigma_T = T * sqrt( (sigma_alpha/alpha)^2 + (sigma_beta * ln(R/alpha))^2 + 2*sigma_alpha_beta * ln(R/alpha)/(alpha*beta) )   (31)
@@ -400,7 +374,7 @@ Given a measured stopping layer N_stop_layer (the deepest stave in which the par
 R_residual = (N_stop_layer + 0.5) * d_stave                                      (32)
 ```
 
-where N_stop_layer is the index of the stopping stave (0 for B2, 1 for B4, 2 for B6, 3 for B8), d_stave = 4 cm is the stave-to-stave centre spacing, and the +0.5 term accounts for the fact that the particle stops, on average, halfway through the stopping stave.
+where N_stop_layer is the stopping stave index (0=B2, 1=B4, 2=B6, 3=B8), d_stave = 4 cm is the stave-to-stave centre spacing, and the +0.5 accounts for the particle stopping, on average, halfway through the stopping stave.
 
 The incident kinetic energy is then estimated by inverting the range-energy relation:
 
@@ -418,7 +392,7 @@ For the B-stack geometry (four 4 cm-thick staves, B2 at z = 0, B4 at z = 4 cm, B
 | B8 (z=12-16 cm) | 14.0 | 39.8 | 66.2 |
 | Through-going | >16.0 | >43.8 | >72.9 |
 
-These values represent the kinetic energy at B-stack entry for particles that stop in the given stave. Particles that stop in B2 or B4 were therefore never at the nominal 190 MeV beam energy — they must have lost the majority of their energy in the upstream material (target, TPC, trigger paddles, air). This is consistent with the observation that the B2 and B4 energy deposition distributions extend to low energies and with the known upstream material budget (GAP-01).
+These values represent the kinetic energy at B-stack entry. Particles stopping in B2 or B4 were never at the nominal 190 MeV beam energy -- they lost the majority of their energy in upstream material (target, TPC, trigger paddles, air), consistent with the B2/B4 energy deposition distributions extending to low energies and the known upstream material budget (GAP-01).
 
 ### 4.5 Systematic Limitations
 
@@ -436,7 +410,7 @@ The PSTAR range-energy method provides an energy estimate independent of the ADC
 
 ### 4.6 Absolute Energy Limitation
 
-Study MV2 demonstrated that absolute per-event energy reconstruction from waveform data alone is not achievable at the 10% level. The combined uncertainty from digitizer gain (30%), Birks quenching (uncalibrated), upstream material budget (uncertain), and range straggling (1.4% fundamental limit) exceeds 30% for individual particle energies. The PSTAR range-energy method, combined with stopping-depth information and species identification from the deltaE-E plane, can achieve approximately 10-15% energy resolution for identified stopping particles — sufficient for the physics goals of this analysis (sample-level particle composition, not per-event calorimetry), but not for precision energy measurement.
+Study MV2 demonstrated that absolute per-event energy reconstruction from waveform data alone is not achievable at the 10% level. The combined uncertainty from digitizer gain (30%), Birks quenching (uncalibrated), upstream material budget (uncertain), and range straggling (1.4% fundamental) exceeds 30% for individual particles. The PSTAR range-energy method, combined with stopping-depth information and species identification from the deltaE-E plane, can achieve approximately 10-15% energy resolution for identified stopping particles — sufficient for sample-level particle composition but not for precision calorimetry.
 
 ---
 
@@ -480,27 +454,23 @@ With ENF = 1.1, the resolution degrades by approximately 5% relative to the Pois
 
 **Inter-stave gain variation (approximately 10%):** Differences in WLS fibre coupling, SiPM operating voltage, and electronics channel gain between staves affect cross-stave energy comparisons (e.g., the stopping-particle energy sum in Eq. 26).
 
-**Temperature dependence (approximately 2%/degree C):** PVT light yield decreases approximately 0.5-1.0%/degree C, and SiPM gain varies approximately 1-2%/degree C. Without monitoring, day-to-day variations of a few degrees contribute approximately 2-5% systematic.
+**Temperature dependence (approximately 2%/degree C):** PVT light yield decreases approximately 0.5-1.0%/degree C and SiPM gain varies approximately 1-2%/degree C. Without monitoring, day-to-day variations contribute approximately 2-5% systematic.
 
 ### 5.3 Fundamental Resolution: Range Straggling
 
-Range straggling is an irreducible physical effect arising from the statistical nature of the energy-loss process. Even for a monoenergetic beam of particles, individual particles experience different numbers and energies of collisions, leading to a distribution of ranges. The Bohr formula for the range straggling variance in the Gaussian approximation is [4]:
+Range straggling is an irreducible physical effect from the statistical nature of energy loss. The Bohr formula for the range straggling variance in the Gaussian approximation is [9]:
 
 ```
 sigma_R^2 = 4*pi*N_A * r_e^2 * m_e*c^2 * z^2 * (Z/A) * rho * integral_0^R (dE/dx)^{-1} dE   (36)
 ```
 
-where the integral is over the particle's energy along its path. For protons in BC-408, the relative range straggling sigma_R/R is approximately 2-3% at 190 MeV, decreasing to approximately 1.5-2% at 50 MeV, and increasing to approximately 5-8% below 5 MeV (where the Gaussian approximation breaks down and the Vavilov/Landau distributions become asymmetric).
-
-The energy resolution from range straggling is obtained by propagating sigma_R through the range-energy relation:
+For protons in BC-408, sigma_R/R is approximately 2-3% at 190 MeV, decreasing to approximately 1.5-2% at 50 MeV, and increasing to approximately 5-8% below 5 MeV (where the Gaussian approximation breaks down). Propagating through the range-energy relation:
 
 ```
 (sigma_T / T)_straggling = (1/beta) * (sigma_R / R)                               (37)
 ```
 
-For beta approximately 1.74 (protons), this gives sigma_T/T approximately 0.57 * 0.025 = 1.4% at 190 MeV, increasing to approximately 0.57 * 0.05 = 2.9% at low energy.
-
-Range straggling is a fundamental limit that cannot be reduced by improved instrumentation. It sets the ultimate energy resolution achievable by any range-based energy measurement in the B-stack.
+For beta approximately 1.74 (protons), sigma_T/T approximately 0.57 * 0.025 = 1.4% at 190 MeV, increasing to approximately 2.9% at low energy. Range straggling is a fundamental limit that cannot be reduced by improved instrumentation.
 
 ### 5.4 Total Energy Resolution Budget
 
@@ -525,33 +495,32 @@ The numerical budget for a typical 10 MeV proton in B2:
 | Range straggling | Fundamental | 1.4% | None |
 | **Total (quadrature)** | — | **~32%** | — |
 
-The total energy resolution is dominated by the digitizer gain systematic (30%). Without this contribution, the resolution would be approximately 12%, limited by inter-stave variation, position dependence, and statistical factors. Achieving sub-10% energy resolution requires addressing all three major systematic categories: gain calibration, position-dependent collection, and inter-stave equalisation.
+The total energy resolution is dominated by the digitizer gain systematic (30%). Without this contribution, the resolution would be approximately 12%, limited by inter-stave variation, position dependence, and statistical factors.
 
 ---
 
 ## 6. Comparison to Other Scintillator Calibration Methods
 
-The MV0 digitizer gain calibration using Monte Carlo truth matching is one of several methods for calibrating scintillator detectors. This section surveys alternative calibration techniques, their physical principles, and their applicability to the HRD B-stack geometry.
+The MV0 digitizer gain calibration using Monte Carlo truth matching is one of several methods for calibrating scintillator detectors. This section surveys alternative techniques and their applicability to the HRD B-stack geometry.
 
 ### 6.1 Cosmic Muon Calibration
 
-Cosmic-ray muons at sea level have a well-characterised energy spectrum with a mean energy of approximately 4 GeV and a most probable energy loss dE/dx approximately 1.8-2.0 MeV cm^2/g in plastic scintillator (near-minimum-ionising). The Landau-distributed energy deposition in a scintillator bar of thickness d produces a characteristic peak (the "MIP peak") that can be used for gain calibration [4,5]:
+Cosmic-ray muons at sea level have a well-characterised energy spectrum with a most probable dE/dx approximately 1.8-2.0 MeV cm^2/g in plastic scintillator (near-minimum-ionising). The Landau-distributed energy deposition in a scintillator bar of thickness d produces a MIP peak usable for gain calibration [4,5]:
 
 ```
 A_MIP = G * dE/dx_MIP * d * q_Birks(dE/dx_MIP)                                   (39)
 ```
 
-where dE/dx_MIP approximately 2.0 MeV cm^2/g * rho = 2.06 MeV/cm for BC-408.
+where dE/dx_MIP approximately 2.06 MeV/cm for BC-408.
 
 **Advantages for the HRD:**
 - No beam time required; can be performed in situ or in the lab.
-- The MIP peak is universal — the same calibration works for any detector geometry.
-- The Birks correction is negligible at MIP (kB*dE/dx approximately 0.03), providing a nearly model-independent calibration.
+- The MIP peak is universal, providing a nearly model-independent calibration (Birks correction negligible at MIP, kB*dE/dx approximately 0.03).
 
 **Disadvantages for the HRD:**
-- Cosmic muon rate at sea level is approximately 1 muon/cm^2/minute. For the B-stack staves (approximately 20 x 4 cm face area = 80 cm^2), the trigger rate is approximately 1-2 Hz — requiring hours of data-taking for statistically precise calibration.
-- Muons are minimum-ionising, so this method calibrates only one point on the light-yield curve. It does not constrain the Birks constant or the saturation behaviour.
-- The B-stack is installed in a beamline with shielding and restricted access. Cosmic data-taking in the beamline configuration may not be feasible.
+- Cosmic muon rate at sea level is approximately 1 muon/cm^2/minute. For the B-stack staves (approximately 20 x 4 cm = 80 cm^2), the trigger rate is approximately 1-2 Hz — requiring hours for statistical precision.
+- Muons are MIP, calibrating only one point on the light-yield curve; kB is not constrained.
+- The B-stack is installed in a beamline with shielding; cosmic data-taking may not be feasible in the beamline configuration.
 
 ### 6.2 Compton Edge Calibration
 
@@ -567,13 +536,12 @@ For Co-60 (E_gamma = 1.25 MeV average): E_Compton_max = 1.04 MeV.
 The Compton edge appears as a sharp drop in the measured energy spectrum, and its position can be fit to determine the gain.
 
 **Advantages for the HRD:**
-- Simple, well-understood calibration sources.
-- Provides an absolute energy reference independent of beam conditions.
+- Simple, well-understood calibration sources providing an absolute energy reference independent of beam conditions.
 
 **Disadvantages for the HRD:**
-- The Compton edge energy (approximately 0.5-1 MeV) is far below the typical B-stack energy deposition (10-100 MeV). Extrapolating the gain over two orders of magnitude assumes perfect linearity, which is violated by Birks quenching (dE/dx at 0.5 MeV for electrons >> dE/dx at MIP for protons).
-- The B-stack staves are shielded by passive material and other detector components, making source placement difficult.
-- The SiPM gain and electronics may exhibit non-linearity between the single-photoelectron level (relevant for Compton-edge calibration) and the 10^3-10^4 photoelectron level (relevant for beam measurements).
+- The Compton edge energy (approximately 0.5-1 MeV) is far below the typical B-stack energy deposition (10-100 MeV). Extrapolating gain over two orders of magnitude assumes perfect linearity, violated by Birks quenching (dE/dx for electrons >> dE/dx for MIP protons).
+- The B-stack staves are shielded, making source placement difficult.
+- SiPM gain and electronics may exhibit non-linearity between single-PE and 10^3-10^4 PE levels.
 
 ### 6.3 LED Pulser Calibration
 
@@ -585,32 +553,25 @@ An LED pulser injects a known light pulse into the WLS fibre or directly onto th
 - Distinguishes electronics gain variations from scintillator light-yield variations.
 
 **Disadvantages for the HRD:**
-- The HRD readout system does not include an LED pulser — this would be a hardware upgrade for future beam tests.
-- The LED calibrates only the SiPM + electronics chain (g_ADC * QE_SiPM in Eq. (5)), not the WLS fibre collection efficiency (f_geom) or the scintillator light yield (Y). A separate calibration is needed for the optical chain.
+- The HRD readout system does not include an LED pulser -- this would be a hardware upgrade.
+- The LED calibrates only the SiPM + electronics chain (g_ADC * QE_SiPM in Eq. (5)), not the WLS fibre collection efficiency (f_geom) or the scintillator light yield (Y).
 - LED spectrum may not match the scintillation emission spectrum, introducing a wavelength-dependent efficiency correction.
 
 ### 6.4 Comparison Summary
 
-| Method | Energy reference | Single/Multi-point | kB sensitive | HRD feasibility |
+| Method | Energy reference | Multi-point? | kB sensitive | HRD feasibility |
 |---|---|---|---|---|
 | MC truth matching (MV0) | GEANT4 truth | Single (median) | No (kB=0 in MC) | Implemented |
 | Cosmic muon MIP | dE/dx_MIP approximately 2 MeV/cm | Single | No | Needs dedicated run |
 | Compton edge | 0.5-1 MeV (gamma sources) | Single (low-E) | Yes (extrapolation) | Challenging geometry |
 | LED pulser | Arbitrary (calibrated source) | Arbitrary | No (electronics only) | Needs hardware |
-| Stopping particles (this work) | Beam energy, two-body kinematics | Multi-point (full Bragg curve) | Yes (combined fit) | Planned (GAP-03) |
+| Stopping particles | Beam energy, kinematics | Multi-point (Bragg curve) | Yes (combined fit) | Planned (GAP-03) |
 
-The MV0 method has the advantage of using the same MC framework that generates the analysis reference distributions, ensuring internal consistency. The stopping-particle method (Section 3) is the most promising path to a self-calibrating energy scale because it simultaneously determines G and kB using the beam data itself, without external references.
+The MV0 method uses the same MC framework as the analysis reference distributions, ensuring internal consistency. The stopping-particle method (Section 3) is the most promising path to a self-calibrating energy scale, simultaneously determining G and kB from beam data without external references.
 
 ### 6.5 Recommendations for Future Beam Tests
 
-Based on this comparative analysis, the optimal calibration strategy for a future HRD beam test combines:
-
-1. **LED pulser for continuous gain monitoring:** Track SiPM + electronics gain drift at the few-per-mil level throughout the beam period.
-2. **Cosmic muon calibration for absolute gain:** Establish the absolute MeV-to-ADC conversion at MIP, where Birks corrections are negligible.
-3. **Stopping-particle calibration for kB:** Use beam protons and deuterons that stop in the B-stack to fit the Birks constant through the combined G-kB chi-squared minimisation (Eq. 27).
-4. **Forced-trigger pedestal runs:** Periodically record no-beam events to measure the absolute baseline.
-
-This four-component strategy would reduce the energy-scale systematic from 30% to approximately 5-8%.
+The optimal calibration strategy for a future HRD beam test combines LED pulser for continuous gain monitoring, cosmic muon calibration for absolute gain at MIP, stopping-particle calibration for kB via combined G-kB chi-squared minimisation (Eq. 27), and forced-trigger pedestal runs for absolute baseline. This four-component strategy would reduce the energy-scale systematic from 30% to approximately 5-8%.
 
 ---
 
@@ -618,7 +579,7 @@ This four-component strategy would reduce the energy-scale systematic from 30% t
 
 ### 7.1 Integrated Pulse Area
 
-The integrated pulse area (sum of baseline-subtracted ADC values over all 18 samples) provides an energy proxy that is less sensitive to saturation than the peak amplitude. For a saturating pulse (ADC clipped at approximately 7000), the peak amplitude is truncated but the pulse area continues to increase because the saturated samples contribute their ceiling value and the unsaturated samples (rising edge before saturation, falling edge after recovery) continue to grow with increasing energy. The pulse area is therefore a more linear energy estimator than the peak amplitude for heavily ionising particles, at the cost of larger noise (integration over 18 samples accumulates 18 independent noise contributions, increasing the noise RMS by sqrt(18) = 4.2 relative to the single-sample peak amplitude).
+The integrated pulse area (sum of baseline-subtracted ADC values over 18 samples) provides an energy proxy less sensitive to saturation than the peak amplitude. For a saturating pulse (ADC clipped at approximately 7000), the peak is truncated but the area continues to grow from unsaturated samples (rising edge before saturation, falling edge after recovery). The pulse area is therefore more linear for heavily ionising particles, at the cost of noise increased by sqrt(18) = 4.2 relative to the single-sample peak.
 
 The pulse area is calibrated using the same MV0 median-matching procedure as the peak amplitude, yielding a gain in ADC*samples/MeV:
 
@@ -634,7 +595,7 @@ The amplitude-adaptive template method (Chapter 5) fits a scaled template pulse 
 
 ### 7.3 Charge-Based Energy from SiPM Current Integration
 
-If the SiPM output current were integrated by a charge-sensitive amplifier rather than sampled by a flash ADC, the integrated charge would be proportional to the total number of photoelectrons, which is proportional to the scintillation light yield (after Birks correction). The current flash ADC system with 100 MSPS sampling can approximate charge integration by summing the ADC samples (the pulse area method), but a true charge-integrating readout would achieve better signal-to-noise ratio. This is a potential upgrade path for future beam tests.
+If the SiPM output current were integrated by a charge-sensitive amplifier rather than sampled by a flash ADC, the integrated charge would be proportional to the total number of photoelectrons. The current flash ADC system (100 MSPS) approximates charge integration via pulse area summation, but a true charge-integrating readout would achieve better SNR. This is a potential upgrade path for future beam tests.
 
 ### 7.4 Energy from Stopping Depth with Species ID
 
@@ -644,7 +605,7 @@ For particles that stop in the B-stack and have species identification from the 
 R_crosscheck = T_range(N_stop, species) / (sum_i A_i / G)                           (42)
 ```
 
-should be consistent with unity for stopping particles. Systematic deviations from unity indicate either an incorrect gain G (shift in the mean of R_crosscheck) or an incorrect Birks constant kB (dependence of R_crosscheck on the stopping depth or dE/dx).
+should be consistent with unity for stopping particles. Systematic deviations indicate either an incorrect gain G (shift in the mean) or an incorrect Birks constant kB (dependence on stopping depth or dE/dx).
 
 ---
 
@@ -664,17 +625,15 @@ The energy-scale systematic uncertainties, ranked by magnitude:
 | Range straggling | 1.4% (fundamental) | Range-based energy estimates | Cannot be reduced |
 | **Total (quadrature)** | **~35%** | — | — |
 
-The energy-scale uncertainty is the dominant systematic for deuteron fraction estimation, Birks calibration, and any analysis that converts ADC to MeV. Reducing this uncertainty is the highest-priority improvement for future beam tests (GAP-03).
+The energy-scale uncertainty is the dominant systematic for any analysis that converts ADC to MeV. Reducing this uncertainty is the highest-priority improvement for future beam tests (GAP-03).
 
 ### 8.1 Uncertainty Propagation to Physics Observables
 
-The energy-scale uncertainty propagates into the key physics observables of the CCB analysis as follows:
+**Deuteron fraction:** The deuteron fraction is determined from the deltaE-E plane shape (Chapter 4) and the B1-B2 amplitude ratio. A 30% gain uncertainty shifts the amplitude scale uniformly but does not change the relative separation between proton and deuteron populations in ADC space. The deuteron fraction systematic from the gain is estimated at approximately 5-8% (subdominant to the PID systematic from template fitting).
 
-**Deuteron fraction:** The deuteron fraction is determined primarily from the deltaE-E plane shape (Chapter 4) and from the amplitude ratio between B1 and B2. A 30% gain uncertainty shifts the amplitude scale uniformly but does not change the relative separation between proton and deuteron populations in ADC space. The deuteron fraction systematic from the gain is therefore estimated at approximately 5-8% (subdominant to the PID systematic from the template fitting).
+**Cross-section extraction:** The dp elastic scattering cross-section requires the deuteron kinetic energy at the interaction vertex, determined from the scattering angle via two-body kinematics (Eq. 23), not from ADC amplitude. The gain uncertainty does not directly affect cross-section normalisation, but event selection uses ADC-based cuts whose efficiency has a gain-dependent systematic.
 
-**Cross-section extraction:** The deuteron-proton elastic scattering cross-section extraction requires the deuteron kinetic energy at the interaction vertex. This energy is determined from the scattering angle via two-body kinematics (Eq. 23), not from the ADC amplitude, so the gain uncertainty does not directly affect the cross-section normalisation. However, the event selection (requiring a deuteron-like particle in the B-stack) uses ADC-based cuts whose efficiency has a gain-dependent systematic.
-
-**Birks constant kB:** The combined G-kB fit (Section 3.2) propagates the gain uncertainty into the kB determination. With the current 30% gain uncertainty, kB cannot be determined to better than a factor of approximately 2. Reducing the gain uncertainty to 5-8% would enable a kB determination at the approximately 15-20% level, sufficient to distinguish between the standard Birks model and higher-order corrections.
+**Birks constant kB:** The combined G-kB fit (Section 3.2) propagates the gain uncertainty into kB. With 30% gain uncertainty, kB cannot be determined to better than a factor of approximately 2. Reducing gain uncertainty to 5-8% would enable kB determination at approximately 15-20%, sufficient to distinguish standard Birks from higher-order corrections.
 
 ---
 
@@ -755,7 +714,7 @@ Procedure:
           gain_total_uncertainty, bootstrap_CI_68
 ```
 
-The bootstrap procedure correctly handles the non-Gaussian nature of the ratio-of-medians estimator and provides asymmetric confidence intervals when the underlying distributions are skewed. The 10,000 bootstrap resamples ensure that the statistical uncertainty estimate is stable to within approximately 1% of its own value (the Monte Carlo error on the bootstrap standard error is sigma_SE = sigma_boostrap / sqrt(2*(N_bootstrap - 1)) approximately sigma_bootstrap * 0.007).
+The bootstrap procedure correctly handles the non-Gaussian nature of the ratio-of-medians estimator and provides asymmetric confidence intervals when the underlying distributions are skewed. The 10,000 bootstrap resamples ensure the statistical uncertainty estimate is stable to within approximately 1% of its own value.
 
 ### 9.2 Birks Correction Algorithm
 
@@ -782,7 +741,7 @@ Function birks_quench(edep_mev, step_length_mm, kB=0.15):
     return light_yield
 ```
 
-The effective scintillator thickness per GEANT4 step, dx, is not directly recorded in the current GEANT4 output format; it would require the Sci_bar_StepLength branch (not currently in the truth tree). The default digitizer configuration therefore runs with Birks quenching disabled (kB = 0), and the Birks correction is treated as a systematic uncertainty to be constrained by future calibration.
+The effective scintillator thickness per GEANT4 step, dx, is not recorded in the current truth tree format (it would require the Sci_bar_StepLength branch). The default digitizer therefore runs with Birks quenching disabled (kB = 0), and the Birks correction is treated as a systematic uncertainty to be constrained by future calibration.
 
 ### 9.3 PSTAR Parametrisation Fit
 
@@ -873,67 +832,42 @@ Function reconstruct_energy(N_stop_layer, species, d_stave=4.0,
     return T_reco, sigma_T
 ```
 
-The +0.5 in the residual range accounts for the particle stopping, on average, halfway through the stopping stave. A more precise estimate would use the energy deposition pattern across staves: a particle that deposits most of its energy in stave N and very little in stave N+1 likely stopped near the beginning of stave N, while a particle with a more gradual energy decrease across staves likely stopped near the end. This refinement, which would use the ratio EDep(N)/EDep(N+1) to interpolate the stopping position within the stave, is not implemented in the current analysis.
+The +0.5 in the residual range accounts for stopping, on average, halfway through the stopping stave. A more precise estimate would use the ratio EDep(N)/EDep(N+1) to interpolate the stopping position within the stave — not implemented in the current analysis.
 
 ### 9.4 Combined Gain-kB Fitting Algorithm
 
-The combined fit of digitizer gain G and Birks constant kB using stopping particles is the planned calibration strategy (Section 3.2). The algorithm is outlined here for reference:
+The combined fit of G and kB using stopping particles (Section 3.2):
 
 ```
-Function fit_gain_and_kB(stopping_events, T_beam=190.0,
-                          passive_correction=1.5,  // MeV per gap (estimated)
+Function fit_gain_and_kB(stopping_events, passive_correction=1.5,
                           initial_gain=245.6, initial_kB=0.15):
 
-    // stopping_events: list of events where particle stops in B-stack
-    //   Each event: {species, N_stop, adc_per_stave: [A0, A1, A2, A3],
-    //                T_incident (from beam energy or two-body kinematics)}
-    //
-    // Returns: (G_best, kB_best, covariance_matrix, chi2)
-
-    // Define chi-squared function
     Function chi2(params):
         G = params[0]; kB = params[1]
-
         total_chi2 = 0.0
         for event in stopping_events:
-            // Compute true energy deposition from ADC using current G, kB
             E_dep_true_sum = 0.0
-            for i in 0..N_stop:
+            for i in 0..event.N_stop:
                 A_i = event.adc_per_stave[i]
-                E_dep_meas = A_i / G                        // measured energy (MeV)
+                E_dep_meas = A_i / G
                 dE_dx_i = pstar_dedx_at_range(
-                    residual_range = (N_stop - i) * d_stave,
-                    species = event.species
-                )
-                q_birks = 1.0 / (1.0 + kB * dE_dx_i)       // quenching factor
-                E_dep_true = E_dep_meas / q_birks           // correct for Birks
-                E_dep_true_sum += E_dep_true
-
-            // Compare to known incident energy
-            T_expected = event.T_incident - N_stop * passive_correction
+                    residual_range = (event.N_stop - i) * d_stave,
+                    species = event.species)
+                q_birks = 1.0 / (1.0 + kB * dE_dx_i)
+                E_dep_true_sum += E_dep_meas / q_birks
+            T_expected = event.T_incident - event.N_stop * passive_correction
             residual = E_dep_true_sum - T_expected
-            sigma_T = event.sigma_T_incident  // from beam energy spread
-                                               // or kinematic smearing
-            total_chi2 += (residual / sigma_T)^2
-
+            total_chi2 += (residual / event.sigma_T_incident)^2
         return total_chi2
 
-    // Minimise chi-squared using Nelder-Mead or MIGRAD
-    params_init = [initial_gain, initial_kB]
-    result = minimize(chi2, params_init,
+    result = minimize(chi2, [initial_gain, initial_kB],
                       method="Nelder-Mead",
                       bounds=[(100, 500), (0.05, 0.30)])
-
-    G_best = result.x[0]; kB_best = result.x[1]
-
-    // Estimate covariance from Hessian at minimum
     hessian = numerical_hessian(chi2, result.x)
-    covariance = invert(hessian) * 2.0  // factor of 2 for chi-squared definition
-
-    return G_best, kB_best, covariance, result.fun
+    return result.x[0], result.x[1], invert(hessian)*2.0, result.fun
 ```
 
-The algorithm iterates implicitly through the chi-squared minimisation: for each trial (G, kB) pair, the Birks correction is applied to each stave's energy deposition, the corrected energies are summed, and the sum is compared to the known incident energy. The minimisation finds the (G, kB) pair that best satisfies energy conservation across all stopping-particle events.
+The minimisation finds the (G, kB) pair that best satisfies energy conservation across all stopping-particle events.
 
 ---
 

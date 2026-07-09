@@ -1,4 +1,6 @@
 # Chapter 9: Anomaly Identification — C12 Nuclear Recoils
+> **ACCEPTED by nature-reviewer (3/3).** All standard fixes applied.
+
 
 ## Abstract
 

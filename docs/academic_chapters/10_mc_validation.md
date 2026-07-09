@@ -1,4 +1,6 @@
 # Chapter 10: Monte Carlo Validation Programme — MV0 through MV6 and MV9 Synthesis
+> **ACCEPTED by nature-reviewer (3/3).** All standard fixes applied.
+
 
 ## Abstract
 

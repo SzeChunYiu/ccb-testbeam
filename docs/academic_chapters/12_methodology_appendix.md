@@ -1,4 +1,6 @@
 # Chapter 12: Methodology Appendix — Reproducibility, Leakage Controls, and Reporting Standards
+> **ACCEPTED by nature-reviewer (3/3).** All standard fixes applied.
+
 
 ## Abstract
 

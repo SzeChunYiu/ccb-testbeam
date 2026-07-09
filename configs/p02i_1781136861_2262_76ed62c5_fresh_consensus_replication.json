@@ -1,0 +1,40 @@
+{
+  "study_id": "P02i",
+  "ticket_id": "1781136861.2262.76ed62c5",
+  "title": "Fresh-sample consensus-failure replication",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root"
+  ],
+  "output_dir": "reports/1781136861.2262.76ed62c5__p02i_fresh_consensus_failure_replication",
+  "upstream_p02e_dir": "reports/1781016529.1278.4216653c",
+  "upstream_p02h_dir": "reports/1781043998.641.6ef93138__p02h_hand_latent_morphology_consensus_failures",
+  "p09b_gallery_path": "reports/1781011449.1304.37c054cc__p09b_manual_waveform_gallery_adjudication/adjudication_labels.csv",
+  "expected_total_selected_pulses": 640737,
+  "fresh_max_per_run_stave": 260,
+  "outer_folds": 5,
+  "bootstrap_replicates": 400,
+  "random_seed": 20260709,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65],
+    "sample_ii_calib": [64]
+  },
+  "cnn": {
+    "epochs": 3,
+    "batch_size": 512,
+    "learning_rate": 0.001,
+    "max_train_rows": 16000
+  }
+}

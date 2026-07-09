@@ -1,0 +1,479 @@
+{
+  "conclusion": "On the P02e-disjoint fresh raw sample, `mlp` wins with AP 1.0000 [1.0000, 1.0000]. The P02h GBT winner's fresh AP is 0.9999, compared with its original P02h AP 0.9212; this supports morphology-boundary generalization only for the frozen operational target, not for an independent physics label.",
+  "critic": "self-audited; shuffled-label sentinel caveat retained",
+  "falsification": {
+    "n_tries": 5,
+    "paired_bootstrap_ci_excludes_zero": true,
+    "preregistered_metric": "average_precision for frozen P02h-derived fresh target under run-block splits",
+    "shuffled_label_ap": 0.3569750232782107
+  },
+  "git_commit": "a5f5deae273d4ee85ec30474031f3574b7202aed",
+  "input_sha256": "67d5c3584eca11970f6e1aefc7288ef5aeb7f5af33b5f9cd407c73fda24396fc",
+  "leakage_checks": [
+    {
+      "check": "raw_reproduction_passed",
+      "note": "raw ROOT selected-pulse count exactly matches P02e/S00 gate",
+      "pass": true,
+      "value": 1.0
+    },
+    {
+      "check": "fresh_sample_overlap_with_p02e_keys",
+      "note": "fresh sample excludes all P02e benchmark keys",
+      "pass": true,
+      "value": 0.0
+    },
+    {
+      "check": "outer_split_run_overlap",
+      "note": "outer folds are disjoint run blocks",
+      "pass": true,
+      "value": 0.0
+    },
+    {
+      "check": "shuffled_label_ap_minus_positive_rate",
+      "note": "null sentinel should stay near prevalence",
+      "pass": false,
+      "value": 0.12271359664275422
+    },
+    {
+      "check": "run_only_ap",
+      "note": "large run-only AP would indicate run nuisance dominance",
+      "pass": true,
+      "value": 0.2142045797268563
+    }
+  ],
+  "method_summary": [
+    {
+      "ci_high": 0.9837663569372105,
+      "ci_low": 0.9745135885234473,
+      "method": "1d_cnn",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9792676090879359
+    },
+    {
+      "ci_high": 0.9467489145871123,
+      "ci_low": 0.9057648513657266,
+      "method": "1d_cnn",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9274705635902581
+    },
+    {
+      "ci_high": 0.04732351486695429,
+      "ci_low": 0.0382665370089017,
+      "method": "1d_cnn",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.04256973262369172
+    },
+    {
+      "ci_high": 0.06974573740712427,
+      "ci_low": 0.05742390093680081,
+      "method": "1d_cnn",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.06353107985025866
+    },
+    {
+      "ci_high": 0.7113110630139952,
+      "ci_low": 0.6427182423432529,
+      "method": "amplitude_only_sentinel",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.6809330038059361
+    },
+    {
+      "ci_high": 0.44588653055858296,
+      "ci_low": 0.3447546598953092,
+      "method": "amplitude_only_sentinel",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.3993448056890729
+    },
+    {
+      "ci_high": 0.1737661119471991,
+      "ci_low": 0.1397983611217992,
+      "method": "amplitude_only_sentinel",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.1563199660827576
+    },
+    {
+      "ci_high": 0.11235440045965119,
+      "ci_low": 0.08494129185880163,
+      "method": "amplitude_only_sentinel",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.09786306867647951
+    },
+    {
+      "ci_high": 0.9999948147870992,
+      "ci_low": 0.9999199663911682,
+      "method": "gradient_boosted_trees",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9999634591993257
+    },
+    {
+      "ci_high": 0.9999795422580233,
+      "ci_low": 0.9996971092951444,
+      "method": "gradient_boosted_trees",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.999855912496005
+    },
+    {
+      "ci_high": 0.0010098921316111442,
+      "ci_low": 0.00038014017919735097,
+      "method": "gradient_boosted_trees",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.0006867016275162589
+    },
+    {
+      "ci_high": 0.0017106927706838642,
+      "ci_low": 0.0007694971334883027,
+      "method": "gradient_boosted_trees",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.0012018247537252588
+    },
+    {
+      "ci_high": 0.9999995678712256,
+      "ci_low": 0.9999944649571837,
+      "method": "mlp",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9999974283167624
+    },
+    {
+      "ci_high": 0.9999988108686604,
+      "ci_low": 0.9999824893165727,
+      "method": "mlp",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9999914702103704
+    },
+    {
+      "ci_high": 0.0009714981622683473,
+      "ci_low": 0.00030981599677864846,
+      "method": "mlp",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.0005835627276031957
+    },
+    {
+      "ci_high": 0.0042898567946069825,
+      "ci_low": 0.003479614777108035,
+      "method": "mlp",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.003908113549251715
+    },
+    {
+      "ci_high": 1.0,
+      "ci_low": 0.9995771670190274,
+      "method": "ridge_logistic",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9998590556730093
+    },
+    {
+      "ci_high": 1.0,
+      "ci_low": 0.9996645796064401,
+      "method": "ridge_logistic",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9998881932021468
+    },
+    {
+      "ci_high": 0.0003470479176657415,
+      "ci_low": 1.2116401978117697e-06,
+      "method": "ridge_logistic",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.00013301079501726784
+    },
+    {
+      "ci_high": 0.0004447527240365304,
+      "ci_low": 8.226515119231119e-05,
+      "method": "ridge_logistic",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.00023574207005050968
+    },
+    {
+      "ci_high": 0.5,
+      "ci_low": 0.5,
+      "method": "run_only_sentinel",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.5
+    },
+    {
+      "ci_high": 0.24624975837764954,
+      "ci_low": 0.181433284925403,
+      "method": "run_only_sentinel",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.2142045797268563
+    },
+    {
+      "ci_high": 0.18343169853019628,
+      "ci_low": 0.15424967173988227,
+      "method": "run_only_sentinel",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.1696730800074924
+    },
+    {
+      "ci_high": 0.09881809670516335,
+      "ci_low": 0.05958217321055252,
+      "method": "run_only_sentinel",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.07834137759132755
+    },
+    {
+      "ci_high": 0.9951358180261455,
+      "ci_low": 0.9909361573640577,
+      "method": "shape_gated_cnn",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9931992357594921
+    },
+    {
+      "ci_high": 0.9790680267362097,
+      "ci_low": 0.9612621518935727,
+      "method": "shape_gated_cnn",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9711985282505948
+    },
+    {
+      "ci_high": 0.022739217092130514,
+      "ci_low": 0.014743931396102961,
+      "method": "shape_gated_cnn",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.018869472534747914
+    },
+    {
+      "ci_high": 0.021187289351384447,
+      "ci_low": 0.016772280896373098,
+      "method": "shape_gated_cnn",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.0189262394360257
+    },
+    {
+      "ci_high": 0.5154889275790765,
+      "ci_low": 0.40209498466431115,
+      "method": "shuffled_label_sentinel",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.4640112838453085
+    },
+    {
+      "ci_high": 0.41459495421709297,
+      "ci_low": 0.2987881923509798,
+      "method": "shuffled_label_sentinel",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.3569750232782107
+    },
+    {
+      "ci_high": 0.18410297813317672,
+      "ci_low": 0.154633149883881,
+      "method": "shuffled_label_sentinel",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.16895631355583118
+    },
+    {
+      "ci_high": 0.1327494330781084,
+      "ci_low": 0.08589601704886322,
+      "method": "shuffled_label_sentinel",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.10840224105135285
+    },
+    {
+      "ci_high": 0.6629529751990184,
+      "ci_low": 0.5630173341416784,
+      "method": "topology_only_sentinel",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.6133553648232416
+    },
+    {
+      "ci_high": 0.3664980442822546,
+      "ci_low": 0.2513563215205569,
+      "method": "topology_only_sentinel",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.31072148485937956
+    },
+    {
+      "ci_high": 0.16442756483739732,
+      "ci_low": 0.12885203391523084,
+      "method": "topology_only_sentinel",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.1477852210278898
+    },
+    {
+      "ci_high": 0.08481100449273817,
+      "ci_low": 0.05511043979862225,
+      "method": "topology_only_sentinel",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.06986200135637043
+    },
+    {
+      "ci_high": 0.9742317316596318,
+      "ci_low": 0.9560692421552277,
+      "method": "traditional_atom_score",
+      "metric": "roc_auc",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9644216608438573
+    },
+    {
+      "ci_high": 0.9498709932455568,
+      "ci_low": 0.9205167864932345,
+      "method": "traditional_atom_score",
+      "metric": "average_precision",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.9361041829976017
+    },
+    {
+      "ci_high": 0.041400773387997414,
+      "ci_low": 0.02997895205991618,
+      "method": "traditional_atom_score",
+      "metric": "brier",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.035256999803761756
+    },
+    {
+      "ci_high": 0.06024262263519536,
+      "ci_low": 0.05204345769370702,
+      "method": "traditional_atom_score",
+      "metric": "ece",
+      "n": 16234,
+      "positive_rate": 0.23426142663545646,
+      "value": 0.05617132107003133
+    }
+  ],
+  "ml": {
+    "ci": [
+      0.9999824893165727,
+      0.9999988108686604
+    ],
+    "method": "mlp",
+    "metric": "average_precision",
+    "value": 0.9999914702103704
+  },
+  "ml_beats_baseline": true,
+  "next_tickets": [],
+  "raw_root_dir": "data/root/root",
+  "repro_tolerance": "exact selected-pulse count",
+  "reproduced": true,
+  "reproduction": {
+    "amplitude_cut_adc": 1000.0,
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "expected_selected_pulses": 640737,
+    "passed": true,
+    "selected_pulses": 640737,
+    "staves": [
+      "B2",
+      "B4",
+      "B6",
+      "B8"
+    ]
+  },
+  "runtime_seconds": 60.7,
+  "split": {
+    "fresh_key_sha256": "80d1860c0555eb6d2890ead55861cb058f062ebbfa4c5fb7eba0983b5377ac98",
+    "fresh_rows": 16234,
+    "n_runs": 33,
+    "outer_folds": 5
+  },
+  "study": "P02i",
+  "targets": {
+    "definition": "pretrigger OR large_drop OR early_peak OR (tail AND late_peak)",
+    "fresh_positive_rate": 0.23426142663545646,
+    "p02h_positive_rate": 0.25133349067736604
+  },
+  "ticket": "1781136861.2262.76ed62c5",
+  "title": "Fresh-sample consensus-failure replication",
+  "traditional": {
+    "ci": [
+      0.9205167864932345,
+      0.9498709932455568
+    ],
+    "metric": "average_precision",
+    "value": 0.9361041829976017
+  },
+  "winner": {
+    "average_precision": 0.9999914702103704,
+    "ci_high": 0.9999988108686604,
+    "ci_low": 0.9999824893165727,
+    "delta_ci_high": 0.08003224827922466,
+    "delta_ci_low": 0.04757093640982407,
+    "delta_vs_traditional": 0.06388728721276857,
+    "method": "mlp"
+  },
+  "winner_delta_vs_traditional": {
+    "ci": [
+      0.04757093640982407,
+      0.08003224827922466
+    ],
+    "delta": 0.06388728721276857,
+    "metric": "average_precision"
+  },
+  "worker": "testbeam-laptop-3"
+}

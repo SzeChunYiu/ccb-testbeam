@@ -1,0 +1,39 @@
+{
+  "study_id": "P04n_external_calibration_charge_proxy_anomaly_bias",
+  "ticket_id": "1781105308.1461.12695cf1",
+  "worker": "testbeam-laptop-1",
+  "title": "independent calibration-pulse validation for external charge-proxy anomaly bias",
+  "output_dir": "reports/1781105308.1461.12695cf1__p04n_external_calibration_charge_proxy_anomaly_bias",
+  "raw_root_dir": "data/root/root",
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "physical_b_staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "predecessor_p04g_dir": "reports/1781033470.1723.1a366adc__p04g_external_anomaly_charge_proxy_validation",
+  "predecessor_p04n_forced_random_dir": "reports/1781101446.892.139c702a__p04n_forced_random_pedestal_validation",
+  "required_methods": [
+    "traditional_strong",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "residual_cnn_meta"
+  ],
+  "new_architecture": "residual_cnn_meta",
+  "bootstrap_unit": "run block",
+  "bootstrap_reps": 400,
+  "random_seed": 1781105308,
+  "follow_up_ticket": null
+}

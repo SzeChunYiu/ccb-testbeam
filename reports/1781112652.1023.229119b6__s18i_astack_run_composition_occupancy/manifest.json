@@ -1,0 +1,36 @@
+{
+  "study": "S18i",
+  "ticket": "1781112652.1023.229119b6",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "282af65bc3ab529cb0bf140355f2842beed0e6d1",
+  "config": "configs/s18i_1781112652_1023_229119b6_astack_run_composition_occupancy.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/s18i_1781112652_1023_229119b6_astack_run_composition_occupancy.py --config configs/s18i_1781112652_1023_229119b6_astack_run_composition_occupancy.json",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "output_sha256": {
+    "REPORT.md": "5952da9222cfb92611f1a96e1306d6f16f3cc612eb08cc248cffffa05357717a",
+    "astack_counts.csv": "4a74e0f451bb430ea99e3af4c8adff6f704edd56e9ed29ac76b2f22e4088e504",
+    "atom_ablation_metrics.csv": "a99a9067a99e6d7af1f9cff47955208238a233138bcbeff26617ce82cd46ab44",
+    "atom_ablation_predictions.csv.gz": "dcb71933662581cb9a86114a0e1486b275bdeaf0788bfa7b5cd311aaac05e1cf",
+    "fig_gate_method_sensitivity.png": "c0608d6dcb6c0c8205d448383c2abb137efa76b7cec0a6901e052f8ec9c56fe3",
+    "fig_primary_winner_residuals.png": "686409a80a5417d8555d37e01e37d7b9bb8b8dd4bb90852d4a39d7b45a2348cc",
+    "fig_raw_gate_sensitivity.png": "8141eb5460955e675d4a11d37933bc7f14221d341535d72eb20c332ed29b4330",
+    "heldout_predictions.csv.gz": "c2fd8d3cb390ee3933e6b351b6133dfce79eb53b021c5b5f327625d46fb6936e",
+    "input_sha256.csv": "a761bd997059596553b552b4903f6947206ad8939520efc22c511b90de08eac1",
+    "leakage_checks.csv": "d3e75ceb9bfe1820ef07a8dea730645541243b9481a451b1be485dd5516acbed",
+    "method_delta_bootstrap.csv": "7e1aaf3ec1c81a006dafd3112a47114c33eaf75ddac8228f173efda4762e2448",
+    "method_metrics.csv": "d3ed729a9cce59b6589cd6d6a7e74f9e848e7bbd42d28732437263086f6f50c2",
+    "per_run_metrics.csv": "7def6a5b877a660f6a47489980ca4ccf047dcfdf1e0c43473b3f9e548e7c71c3",
+    "raw_gate_metrics.csv": "8a1bd997cafc5bb34bf770b68e8767739994f8d405d46d2d973edc1f8a12767e",
+    "reproduction_match_table.csv": "1a4ef6831cf06b0d535215369d8308e9dd9a3bd3a61f95e5944d30f73eaea3a5",
+    "residual_bin_occupancy.csv": "8b444204f0236bca28cceb9c9b773b37e762e20fa036382bfe13cf898ed1f641",
+    "result.json": "f82559cc3b9df40ab1ba569135fa6e1b77fb42295414f076a9724165f385420b",
+    "ridge_cv_scan.csv": "0c3707cd287dc7beed937414a6b16331f643d2d4df8609edd4eb194bad24fecc"
+  }
+}

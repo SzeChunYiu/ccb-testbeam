@@ -1,0 +1,2 @@
+pool,method,n_pairs,median_ns,robust_width_ns,full_rms_ns,within_abs_2ns,tail_fraction_abs_gt_5ns,robust_ci_low_ns,robust_ci_high_ns,core_sigma_ns,core_sigma_err_ns,core_mean_ns,chi2_ndf,cfd_fraction,amplitude_cut_adc
+cfd0.20_cut1000,raw_percentile68,127,3.724376296008302,1.6099706543209522,1.4992425001417917,0.8267716535433071,0.0,1.2173507273073683,1.709021865896385,1.8749892887759023,0.4369641867809996,-0.05268347755626,2.0220707908458113,0.2,1000.0

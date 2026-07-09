@@ -1,0 +1,168 @@
+{
+  "study": "S00h",
+  "study_id": "S00h",
+  "ticket": "1781123061.1907.2a8a64b4",
+  "ticket_id": "1781123061.1907.2a8a64b4",
+  "worker": "testbeam-laptop-1",
+  "title": "selector-edge atom ledger with joined calibrated PID-energy support",
+  "reproduced_raw_root_first": true,
+  "reproduction": {
+    "median_first_four_selected": 640737,
+    "dynamic_range_selected": 706373,
+    "dynamic_only": 65636,
+    "median_only": 0
+  },
+  "split": {
+    "unit": "run",
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "bootstrap_samples": 100
+  },
+  "split_unit": "run",
+  "heldout_runs": [
+    42,
+    57,
+    64,
+    65
+  ],
+  "bootstrap_samples": 100,
+  "traditional_method": "exact_run_current_amplitude_topology_calibrated_pid_energy_matched_fixed_secondary_rubric",
+  "methods": [
+    "new_shape_residual_fusion",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge",
+    "cnn_1d",
+    "traditional_fixed_secondary_score",
+    "shuffled_label_fusion_control"
+  ],
+  "winner": {
+    "method": "new_shape_residual_fusion",
+    "roc_auc": 0.9883375000000001,
+    "roc_auc_ci": [
+      0.9843353125000001,
+      0.99361875
+    ],
+    "average_precision": 0.9902160440417329,
+    "balanced_accuracy": 0.94
+  },
+  "s00c_honest_mistakes": {
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "cv_selected_c": 10.0,
+    "cv_accuracy": 0.9467250132303534,
+    "heldout_records": 278832,
+    "false_positive": 556,
+    "false_negative": 78,
+    "accuracy": 0.9977262294141275
+  },
+  "calibrated_support_sources": [
+    {
+      "source": "p08d_pid_depth_thresholds",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-1/reports/1781072388.710.65f565af__p08d_depth_matched_pulse_shape_pid_null/calibrated_label_support.csv",
+      "rows": 122,
+      "used_for": "run/depth PID residual support thresholds"
+    },
+    {
+      "source": "s17a_g4_pid_depth_reference",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-1/reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_track_dataset.csv",
+      "rows": 8957,
+      "used_for": "calibrated downstream PID/depth support reference"
+    },
+    {
+      "source": "s14g_truth_energy_bins",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-1/reports/0000000010.1.truthenergy/energy_bin_metrics.csv",
+      "rows": 35,
+      "used_for": "energy-support bin documentation"
+    }
+  ],
+  "physics_verdict": {
+    "verdict": "selector_systematic_atom",
+    "matched_coverage": 0.6372201506851417,
+    "matched_rows": 249162,
+    "matched_edge_rows": 124581,
+    "matched_control_rows": 124581,
+    "selector_edge_total": 195507,
+    "secondary_delta": -0.016928745153755385,
+    "secondary_delta_ci": [
+      -0.019464968459939395,
+      -0.01440525723335697
+    ],
+    "timing_tail_delta": -0.03370497908990937,
+    "timing_tail_delta_ci": [
+      -0.04682805748559687,
+      -0.020902664651072093
+    ],
+    "charge_area_delta": -3498.0,
+    "charge_area_delta_ci": [
+      -3850.7375,
+      -607.1125000000002
+    ],
+    "baseline_excursion_delta": 611.0,
+    "baseline_excursion_delta_ci": [
+      525.275,
+      729.1999999999999
+    ]
+  },
+  "verdict": "selector_systematic_atom",
+  "non_oracle_leakage_checks_pass": true,
+  "input_sha256_table": "input_sha256.csv",
+  "git_commit": "63fdd2ecfaca9add14b969da01dd7a788fe8a1b5",
+  "runtime_sec": 102.201,
+  "next_tickets": [],
+  "finding": "Selector-edge atoms reproduce raw anchors at median=640737 and dynamic_only=65636; exact run/current/stave/amplitude/topology matching joined to calibrated PID-energy support favors selector_systematic_atom. Predictive benchmark winner: new_shape_residual_fusion.",
+  "output_files": [
+    "REPORT.md",
+    "atom_propagation_ledger.csv",
+    "calibrated_energy_bin_reference.csv",
+    "calibrated_support_sources.csv",
+    "fig_model_auc.png",
+    "fig_support_summary.png",
+    "g4_pid_depth_reference.csv",
+    "heldout_model_scores.csv.gz",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "manifest.json",
+    "matched_pulse_table.csv.gz",
+    "matched_strata_summary.csv",
+    "matched_support_summary.csv",
+    "model_benchmark.csv",
+    "primary_delta_metrics.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "s00c_mistake_atom_ledger.csv",
+    "selector_atom_ledger.csv",
+    "selector_counts_by_run.csv",
+    "selector_edge_table.csv.gz"
+  ],
+  "artifacts": [
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/REPORT.md",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/atom_propagation_ledger.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/calibrated_energy_bin_reference.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/calibrated_support_sources.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/fig_model_auc.png",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/fig_support_summary.png",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/g4_pid_depth_reference.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/heldout_model_scores.csv.gz",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/input_sha256.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/leakage_checks.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/manifest.json",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/matched_pulse_table.csv.gz",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/matched_strata_summary.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/matched_support_summary.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/model_benchmark.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/primary_delta_metrics.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/reproduction_match_table.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/result.json",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/s00c_mistake_atom_ledger.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/selector_atom_ledger.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/selector_counts_by_run.csv",
+    "reports/1781123061.1907.2a8a64b4__s00h_calibrated_pid_energy_support/selector_edge_table.csv.gz"
+  ]
+}

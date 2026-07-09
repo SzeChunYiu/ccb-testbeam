@@ -1,0 +1,4 @@
+source,path,rows,used_for
+p08d_pid_depth_thresholds,/home/billy/.tb-workers/testbeam-laptop-1/reports/1781072388.710.65f565af__p08d_depth_matched_pulse_shape_pid_null/calibrated_label_support.csv,122,run/depth PID residual support thresholds
+s17a_g4_pid_depth_reference,/home/billy/.tb-workers/testbeam-laptop-1/reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_track_dataset.csv,8957,calibrated downstream PID/depth support reference
+s14g_truth_energy_bins,/home/billy/.tb-workers/testbeam-laptop-1/reports/0000000010.1.truthenergy/energy_bin_metrics.csv,35,energy-support bin documentation

@@ -1,0 +1,172 @@
+{
+  "ticket": "1781106994.1116.576a205e",
+  "worker": "testbeam-laptop-3",
+  "status": "completed",
+  "winner": "ridge",
+  "winner_metric": "run-held-out MAE on timing-tail intervention target",
+  "winner_mae": 0.00020559319778887578,
+  "winner_ci95": [
+    0.00020195748346578783,
+    0.00020871781860434599
+  ],
+  "raw_root_reproduction": {
+    "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+    "n_raw_root_files_hashed": 14,
+    "status": "recomputed_from_raw_root",
+    "reader": "uproot",
+    "tree": "h101",
+    "branch": "HRDv",
+    "runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "staves": [
+      "B2",
+      "B4",
+      "B6",
+      "B8"
+    ],
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "amplitude_cut": 1000.0,
+    "selected_pulses": 640737,
+    "canonical_selected_pulses": 640737,
+    "matches_canonical": true,
+    "delta_vs_canonical": 0,
+    "n_runs": 33
+  },
+  "split_strategy": "leave-one-run-out",
+  "bootstrap_resamples": 500,
+  "methods": [
+    {
+      "method": "ridge",
+      "mean_mae": 0.00020559319778887578,
+      "ci95_low": 0.00020195748346578783,
+      "ci95_high": 0.00020871781860434599,
+      "ranking_auc": 0.5311533635676493
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mean_mae": 0.0010038500161960963,
+      "ci95_low": 0.0007878695275473849,
+      "ci95_high": 0.0013232752788027973,
+      "ranking_auc": 0.5653958427815571
+    },
+    {
+      "method": "mlp",
+      "mean_mae": 0.024531440581669638,
+      "ci95_low": 0.01841088268002743,
+      "ci95_high": 0.0317136700221893,
+      "ranking_auc": 0.5712785840262031
+    },
+    {
+      "method": "cnn1d",
+      "mean_mae": 0.02487313137752627,
+      "ci95_low": 0.019011877426372302,
+      "ci95_high": 0.032228108341071184,
+      "ranking_auc": 0.5605714537666919
+    },
+    {
+      "method": "quiet_gated_cnn",
+      "mean_mae": 0.031644556695455815,
+      "ci95_low": 0.021839532225797632,
+      "ci95_high": 0.044607633631891706,
+      "ranking_auc": 0.5468455026455026
+    },
+    {
+      "method": "traditional_matched_strata",
+      "mean_mae": 0.04664650338060453,
+      "ci95_low": 0.037857158313642864,
+      "ci95_high": 0.05973078031700562,
+      "ranking_auc": 0.5819686696900983
+    }
+  ],
+  "intervention_curve": [
+    {
+      "quiet_bin": 0,
+      "n": 2520,
+      "quiet_mid": 0.16222194186269198,
+      "observed_tail": 0.9210807089337153,
+      "predicted_tail": 0.9210674991722902
+    },
+    {
+      "quiet_bin": 1,
+      "n": 2520,
+      "quiet_mid": 0.2628312750473744,
+      "observed_tail": 0.8143681025848957,
+      "predicted_tail": 0.8143442300141229
+    },
+    {
+      "quiet_bin": 2,
+      "n": 2520,
+      "quiet_mid": 0.35149704225585754,
+      "observed_tail": 0.7089214246875388,
+      "predicted_tail": 0.7089068433702989
+    },
+    {
+      "quiet_bin": 3,
+      "n": 2520,
+      "quiet_mid": 0.4512987651879344,
+      "observed_tail": 0.6017125655323003,
+      "predicted_tail": 0.601715850055525
+    },
+    {
+      "quiet_bin": 4,
+      "n": 2520,
+      "quiet_mid": 0.6053870497095993,
+      "observed_tail": 0.45121951361004126,
+      "predicted_tail": 0.4512319001129215
+    }
+  ],
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "metrics_summary.csv",
+    "per_run_metrics.csv",
+    "intervention_curve.csv",
+    "raw_root_inventory.csv",
+    "raw_root_selection_counts.csv",
+    "benchmark_panel.csv"
+  ],
+  "environment": {
+    "python": "3.8.10",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+    "git_commit": "9c4d72a215696a5e31638fe7e4e74a6cb84cd3ef"
+  },
+  "runtime_seconds": 501.92615008354187
+}

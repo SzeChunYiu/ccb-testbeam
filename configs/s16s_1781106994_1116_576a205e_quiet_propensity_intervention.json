@@ -1,0 +1,12 @@
+{
+  "ticket": "1781106994.1116.576a205e",
+  "worker": "testbeam-laptop-3",
+  "study": "S16s",
+  "title": "support-matched quiet-propensity intervention curves",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "benchmark_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "canonical_selected_pulses": 640737,
+  "rows_per_run": 900,
+  "bootstrap_resamples": 500,
+  "seed": 1781106994
+}

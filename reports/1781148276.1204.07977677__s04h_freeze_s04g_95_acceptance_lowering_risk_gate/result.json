@@ -1,0 +1,145 @@
+{
+  "study": "S04h",
+  "ticket": "1781148276.1204.07977677",
+  "worker": "testbeam-laptop-4",
+  "title": "freeze S04g 95%-acceptance lowering-risk gate and audit downstream charge/current/topology bias",
+  "reproduced": true,
+  "raw_root_reproduction_gate": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "primary_metric": "pull width plus 68/90/95 coverage ECE plus sharpness penalty",
+  "bootstrap_ci": "95% confidence intervals from held-out-run block bootstrap in frozen S04g artifacts",
+  "benchmark_source": "frozen reviewed S04g run-heldout benchmark artifacts; S04h reran the raw ROOT reproduction gate and audits the retained fixed-95%-acceptance summaries",
+  "frozen_parent_study": "S04g",
+  "frozen_parent_ticket": "1781049810.1103.616476c3",
+  "methods": [
+    "gated_waveform_tabular_cnn",
+    "ridge_conformal",
+    "mlp_heteroskedastic",
+    "gradient_boosted_trees_conformal",
+    "cnn_1d_heteroskedastic",
+    "traditional_stratified_robust_width"
+  ],
+  "required_method_families_present": {
+    "traditional": true,
+    "ridge": true,
+    "gradient_boosted_trees": true,
+    "mlp": true,
+    "1d_cnn": true,
+    "new_architecture": true
+  },
+  "winner": {
+    "method": "gated_waveform_tabular_cnn",
+    "family": "new_gated_waveform_tabular_cnn",
+    "primary_score": 0.0551598094076878,
+    "primary_score_ci": [
+      0.0446108705280974,
+      0.2951149617255557
+    ],
+    "coverage95": 0.9342059336823736,
+    "tail_probability_ece": 0.0095324151635746,
+    "tail_probability_ece_ci": [
+      0.0057446367514172,
+      0.0184098378504797
+    ],
+    "tail_capture_at_95_acceptance": 0.2869955156950672,
+    "tail_capture_at_95_acceptance_ci": [
+      0.2018813970905294,
+      0.3782780320366131
+    ]
+  },
+  "traditional_baseline": {
+    "method": "traditional_stratified_robust_width",
+    "primary_score": 0.1833146132648134,
+    "primary_score_ci": [
+      0.1062597694307408,
+      0.4051758566300683
+    ],
+    "tail_probability_ece": 0.012248683016503,
+    "tail_capture_at_95_acceptance": 0.2058823529411764
+  },
+  "support_audit": {
+    "tail_rate_range": 0.015260897377318797,
+    "accepted_tail_rate_range": 0.0197481977865773,
+    "tail_capture_range": 0.38333333333333336,
+    "large_lowering_n": 465
+  },
+  "support_audit_scope": {
+    "direct_axes": [
+      "heldout_run",
+      "stave",
+      "lowering_axis",
+      "selected_downstream_pulse_count"
+    ],
+    "proxy_axes": {
+      "charge": "selected-pulse population support; per-pulse amplitude quantiles are not retained in the frozen S04g summaries",
+      "current": "held-out run identity; no external scaler-current table is joined",
+      "topology": "stave and lowering-axis strata; no full event-level multi-stave topology ledger is retained"
+    },
+    "per_pulse_acceptance_ledger_available": false,
+    "per_pulse_charge_current_topology_sculpting_test": "not directly testable from retained S04g artifacts"
+  },
+  "leakage_checks_pass": true,
+  "verdict": "conditional_summary_level_risk_ledger_with_large_lowering_watch",
+  "caveat": "a full local S04h rerun was attempted but interrupted during the first heavy gradient-boosted fold; this artifact uses the frozen S04g benchmark summaries and does not claim a newly regenerated per-pulse acceptance ledger",
+  "next_tickets": [],
+  "git_commit": "42160812d1c467ac0a9c2e2e00d95ac55238125b",
+  "runtime_sec": 0.02
+}

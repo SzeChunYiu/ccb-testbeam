@@ -1,0 +1,28 @@
+{
+  "ticket": "1781148276.1204.07977677",
+  "study": "S04h",
+  "worker": "testbeam-laptop-4",
+  "command": "/home/billy/anaconda3/bin/python scripts/s04h_1781148276_1204_07977677_freeze_gate_audit.py",
+  "config": "configs/s04h_1781148276_1204_07977677_freeze_s04g_95_acceptance_lowering_risk_gate.yaml",
+  "git_commit": "42160812d1c467ac0a9c2e2e00d95ac55238125b",
+  "inputs": {
+    "reports/1781049810.1103.616476c3__s04g_lowering_axis_pull_adoption_gate/pooled_method_summary.csv": "f94bc3c84b44b09637128591d424452eedb412824557c605ef88de53838cab9f",
+    "reports/1781049810.1103.616476c3__s04g_lowering_axis_pull_adoption_gate/tail_probability_summary.csv": "b9d3f7fa0c8c3dc686d5b880e06d53eeffae3ebc03009256dc111dc3e6ee1960",
+    "reports/1781049810.1103.616476c3__s04g_lowering_axis_pull_adoption_gate/lowering_axis_tail_summary.csv": "b7f0788d2332650e3b998daa0cc3baa710ce98a68b3d6bd1b6bf0c9d8cb900e6",
+    "reports/1781148276.1204.07977677__s04h_freeze_s04g_95_acceptance_lowering_risk_gate/reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020"
+  },
+  "outputs": {
+    "REPORT.md": "480273c7213f16244435e34fd980302c4c544e5b9f325f9f137a3f004efebe14",
+    "downstream_counts_by_run.csv": "1ca0d48a401d7e441f30b7a9c4cc1e81c178f7bd97f273377f399ab54dc6d83a",
+    "frozen_s04g_heldout_run_summary.csv": "537fba3653aa23057a00df5680dda66ed7b045ebc052f3b3603dbff66d8a6b6d",
+    "frozen_s04g_leakage_checks.csv": "e7aba8b1765a1d8393950b7a9521e9f5a374141b176289fabe9f4b8e0aeb42c6",
+    "frozen_s04g_lowering_axis_tail_summary.csv": "ddfa9ffa4a6bb4a7324e356bab0ad75941be836bba2dbebcf396a352c08d6c54",
+    "frozen_s04g_pooled_method_summary.csv": "3f6da0f0fb5be51b4949a74cfe18ecabb2a409cebd18e1bc575f859cea3a4611",
+    "frozen_s04g_tail_probability_summary.csv": "7b4ce9b60ae8dbd1ebfb879364726dcf9ac12f9e0f2da2902ded2e0bd6b2c928",
+    "manifest.json": "4e180526f550b521846a27f1daeff1b9b952c26defdbb476047f9537b2faf054",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "cd0e79e1ad8383dfb49059d8f3a0df08adfec5cd5e84ecd07f32f6dffcc7a711",
+    "support_counts_by_run_stave_lowering.csv": "b58e47fe5d4fd91c3294424a9cd025c285214aa85fb2ed5106b88127a7e6985c",
+    "winner_lowering_acceptance_audit.csv": "a6d34e32079ac2b683390f7e312793ed5267536d0d5eef701f7105ec7680bee6"
+  }
+}

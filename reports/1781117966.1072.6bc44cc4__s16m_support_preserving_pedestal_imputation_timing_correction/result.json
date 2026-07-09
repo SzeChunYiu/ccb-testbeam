@@ -1,0 +1,120 @@
+{
+  "bootstrap": {
+    "paired": true,
+    "replicates": 300,
+    "unit": "held-out run"
+  },
+  "git_commit": "6f9a567db7a749d5316d2262a0df177e93f591f3",
+  "input_root_files": 33,
+  "methods": [
+    "uncorrected",
+    "traditional_binned_median",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "one_dimensional_cnn",
+    "nuisance_gated_pair_cnn"
+  ],
+  "n_pairs": 18098,
+  "next_tickets": [
+    {
+      "body": "Stress-test the support-preserving timing-correction nuisance score on negative-polarity and low-amplitude sidebands where pedestal contamination is enriched but signal timing should not improve mechanically. Expected information gain: separates genuine run-stable timing structure from nuisance-feature overfitting.",
+      "title": "S16q: polarity-sideband validation for support-preserving timing correction"
+    }
+  ],
+  "outputs": [
+    "REPORT.md",
+    "result.json",
+    "reproduction_counts.csv",
+    "input_sha256.csv",
+    "nuisance_features.csv.gz",
+    "pair_rows.csv.gz",
+    "method_predictions.csv.gz",
+    "method_metrics.csv",
+    "per_run_metrics.csv",
+    "bootstrap_metrics.csv",
+    "metric_summary.png",
+    "residual_distributions.png"
+  ],
+  "primary_metric": "sigma68_ns",
+  "raw_reproduction": {
+    "all_pass": true,
+    "rows": [
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis selected_pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B2",
+        "report_value": 88213,
+        "reproduced": 88213,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B4",
+        "report_value": 21229,
+        "reproduced": 21229,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B6",
+        "report_value": 11148,
+        "reproduced": 11148,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B8",
+        "report_value": 4506,
+        "reproduced": 4506,
+        "tolerance": 0
+      }
+    ]
+  },
+  "runtime_seconds": 72.785,
+  "split": "leave-one-run-out over Sample-II analysis runs",
+  "status": "complete",
+  "study": "S16m",
+  "support_preserving": true,
+  "ticket": "1781117966.1072.6bc44cc4",
+  "title": "support-preserving pedestal-imputation timing correction",
+  "traditional_method": "traditional_binned_median",
+  "winner": "gradient_boosted_trees",
+  "winner_metrics": {
+    "bias_ns": -0.008365332970239924,
+    "bias_ns_ci_high": 0.15742280784043475,
+    "bias_ns_ci_low": -0.09383286425751161,
+    "delta_sigma68_vs_uncorrected_ns_ci_high": -1.6046396385302186,
+    "delta_sigma68_vs_uncorrected_ns_ci_low": -1.818333323012862,
+    "method": "gradient_boosted_trees",
+    "n_pairs": 18098,
+    "rms_ns": 4.143319611389769,
+    "sigma68_ns": 1.2195995956853123,
+    "sigma68_ns_ci_high": 1.2588137580821657,
+    "sigma68_ns_ci_low": 1.1881285220723448,
+    "tail_abs_gt_0p5_ns": 0.6632777102442259,
+    "tail_abs_gt_0p5_ns_ci_high": 0.6708421811914125,
+    "tail_abs_gt_0p5_ns_ci_low": 0.6575299570730119,
+    "tail_abs_gt_1p0_ns": 0.4055144214830368
+  },
+  "worker": "testbeam-laptop-4"
+}

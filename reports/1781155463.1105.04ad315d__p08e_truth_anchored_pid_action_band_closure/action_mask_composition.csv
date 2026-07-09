@@ -1,0 +1,8 @@
+action_mask,n,support_fraction,support_loss,positive_fraction,action_band_label_shift,charge_log_median_shift,depth_mean_shift,runs
+all_pre_action,19424,1.0,0.0,0.5,0.0,0.0,0.0,32
+p04s_dropout_phase_accept,17114,0.8810749588138386,0.11892504118616143,0.5535234311090336,0.05352343110903357,0.016943140119408895,-0.06922036069200843,32
+s14g_traditional_accept,0,0.0,1.0,,,,,0
+s14g_new_residual_accept,0,0.0,1.0,,,,,0
+p07j_traditional_correct,114,0.005869028006589786,0.9941309719934102,0.22807017543859648,-0.2719298245614035,0.38340210789173845,0.4591958943900113,11
+s14g_traditional_and_p04s_accept,0,0.0,1.0,,,,,0
+s14g_traditional_p04s_and_p07j_correct,0,0.0,1.0,,,,,0

@@ -1,0 +1,27 @@
+{
+  "study": "P03j",
+  "ticket": "1781123335.1223.1d162b44",
+  "worker": "testbeam-laptop-2",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-2/configs/p03j_1781123335_1223_1d162b44_blinded_qtemplate_baseline_veto.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p03j_1781123335_1223_1d162b44_blinded_qtemplate_baseline_veto.py --config configs/p03j_1781123335_1223_1d162b44_blinded_qtemplate_baseline_veto.json",
+  "elapsed_s": 793.5618934631348,
+  "git_commit": "87032b8ee4a221775e4e37f9ac8ff0d0649ccc20",
+  "outputs": {
+    "REPORT.md": "27b7412dae1bcc0f8b44b497851374ea4a3b38e8f0ad8739164d29f6ec623596",
+    "atom_failure_map.csv": "8a3b1784de6710f7dee55d2fa1530455ca4d8af2ce36891c8b92208a9513ee54",
+    "event_atoms.csv": "8886f75716fa8cb571235390385842e001ee964c81318299c152cd4d6c47b3a4",
+    "fig_pooled_benchmark.png": "f27ee731b000f5ccad16adf18908bbfec2148b05e7be75aef38e50158e499624",
+    "fig_residual_distributions.png": "2ce18acca3b22db3e370103174db9e7f0aa920e637e8598678d9903af9ddbb1b",
+    "fig_veto_fraction_by_run.png": "9adfeecbe4b8f57302b960182c20212d4a8f9e1d0fb70e43834859152615027b",
+    "heldout_run_summary.csv": "4a4ecf8348108f97fd7032a5fb104f83bba4c9fc5c1d4e175e084ca6d0c471d2",
+    "input_sha256.csv": "54ffe78258dd00839e9ea3c1ccfe7fd98cf2ad263e3d399c8e18c0f3ced439f7",
+    "leakage_checks.csv": "151f205ce1c21d4542dba70b54a4b7a6103f113db52f2352ddd8576d0706d372",
+    "model_diagnostics.csv": "3661598347ef7db3046aa8cfc3ddf75be6946e46c621707952431deea6a3caf9",
+    "pairwise_residuals.csv": "a193386b177effd9082491546bad8169fca9ad681adee1483cfadbe31290f67d",
+    "per_atom_winners.csv": "b25c5a59c5cde32d27bfc647971c98b110563c69e13035398651b29013d1a66d",
+    "pooled_run_block_summary.csv": "5c52c059ec668554322eafca9383d78e555f291130e3e5c45320d5afa2aa4840",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "50d730c5153a56b61c2437e62b6160640803bfcbae1135056e27b1b3bd024f7e",
+    "veto_summary.csv": "06b589904a05572bf35f9859054a81fd7265c26f99fa806d46625259400bdad6"
+  }
+}

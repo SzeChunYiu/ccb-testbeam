@@ -1,0 +1,74 @@
+{
+  "study": "P03j",
+  "ticket": "1781123335.1223.1d162b44",
+  "worker": "testbeam-laptop-2",
+  "title": "blinded q-template and baseline residual veto for waveform timing learners",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "veto": {
+    "threshold_source": "train_fold_only",
+    "q_template_event_quantile": 0.9,
+    "baseline_event_quantile": 0.9,
+    "mean_heldout_event_veto_fraction": 0.18794691115142306,
+    "applied_to_training": true,
+    "applied_to_heldout": true
+  },
+  "traditional_method": {
+    "method": "s02b_global_template_timewalk",
+    "sigma68_ns": 1.7600191385583435,
+    "ci": [
+      1.5469216270061978,
+      2.080773008662982
+    ]
+  },
+  "winner": {
+    "method": "hgb_no_samples_0_3",
+    "family": "ml",
+    "sigma68_ns": 1.2082939188719442,
+    "ci": [
+      1.1643750897642802,
+      1.2529073992356874
+    ],
+    "delta_vs_traditional_ns": -0.5517252196863993,
+    "delta_ci": [
+      -0.9127411748072513,
+      -0.3174708770041878
+    ]
+  },
+  "hgb_survival": {
+    "best_method": "hgb_no_samples_0_3",
+    "sigma68_ns": 1.2082939188719442,
+    "delta_vs_traditional_ns": -0.5517252196863993,
+    "survives_veto": true
+  },
+  "architecture_findings": {
+    "best_full": {
+      "method": "hgb_full",
+      "sigma68_ns": 1.214319452511004
+    },
+    "best_no_samples_0_3": {
+      "method": "hgb_no_samples_0_3",
+      "sigma68_ns": 1.2082939188719442
+    },
+    "new_architecture": "early_late_gated",
+    "new_architecture_best_sigma68_ns": 1.469202322380581
+  },
+  "controls": {
+    "shuffled_target_failures": 13,
+    "run_family_control_best_sigma68_ns": 1.2706204201349482,
+    "max_train_heldout_event_overlap_after_veto": 0,
+    "veto_threshold_source_passes": true
+  },
+  "verdict": "After removing train-fold-defined q-template/baseline high-risk events, the pooled winner is hgb_no_samples_0_3; its gain versus the traditional retained-event baseline is -0.552 ns. The best HGB row is hgb_no_samples_0_3 at 1.208 ns, so the HGB gain survives. The best no-samples-0-3 model is hgb_no_samples_0_3 (1.208 ns) versus best full-waveform hgb_full (1.214 ns). Mean held-out event veto fraction is 0.188; the new gated architecture reaches 1.469 ns but does not set the pooled minimum. 13 shuffled-target checks beat their nominal fold model and are retained as caveats.",
+  "next_tickets": [],
+  "git_commit": "87032b8ee4a221775e4e37f9ac8ff0d0649ccc20"
+}

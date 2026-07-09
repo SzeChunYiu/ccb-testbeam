@@ -1,0 +1,3 @@
+quantity,upstream_p05d,reproduced_from_raw_root,delta,tolerance,pass
+P05d selected events total,243133,243133,0,0,True
+P05d selected pulses total,252266,252266,0,0,True

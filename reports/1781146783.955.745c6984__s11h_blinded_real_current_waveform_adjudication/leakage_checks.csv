@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_root_reproduction_pass,1.0,True,S10 topology fractions reproduced from raw ROOT.
+all_required_methods_present,"traditional_template_fit,ridge_linear,gradient_boosted_trees,mlp,cnn_1d_dual_head,consensus_abstention_ensemble",True,"Traditional, ridge, GBT, MLP, 1D-CNN, and new architecture are present."
+run_split_inherited,12.0,True,Frozen scores are S11g source-run-held-out predictions.
+review_positive_rate,0.18052738336713997,True,Avoids a degenerate blinded label.
+max_run_positive_rate,0.3111111111111111,True,No single run is all-positive under the review rule.

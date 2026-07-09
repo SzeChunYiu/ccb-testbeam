@@ -1,0 +1,16 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s11h_1781146783_955_745c6984_blinded_real_current_waveform_adjudication.py --config configs/s11h_1781146783_955_745c6984_blinded_real_current_waveform_adjudication.json",
+  "created_unix": 1783633730.526684,
+  "outputs": [
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/REPORT.md",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/blinded_gallery_adjudication.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/input_sha256.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/leakage_checks.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/method_adjudication_scores.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/method_summary.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/paired_bootstrap_deltas.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/raw_root_run_counts.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/reproduction_match_table.csv",
+    "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/result.json"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "best_noise_weighted": {
+    "ci_high": 1.180060433155672,
+    "ci_low": 1.110992304548041,
+    "delta_ci_high": -0.37162874480148744,
+    "delta_ci_low": -0.44188500176646234,
+    "delta_vs_analytic_timewalk_ns": -0.40905151871404755,
+    "full_rms_ns": 2.421465578939118,
+    "method": "tcn_noise_weighted",
+    "n_events": 3820,
+    "n_pair_residuals": 11460,
+    "n_runs": 7,
+    "sigma68_ns": 1.1420401922637358,
+    "tail_frac_abs_gt5ns": 0.014048865619546248
+  },
+  "command": "/home/billy/anaconda3/bin/python scripts/p13b_1781119277_1012_58a021c9_noise_weighted_timing.py --config configs/p13b_1781119277_1012_58a021c9_noise_weighted_timing.yaml",
+  "model_families": [
+    "analytic_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn",
+    "tcn"
+  ],
+  "new_architecture": "tcn",
+  "next_tickets": [],
+  "raw_reproduction_pass": true,
+  "runtime_seconds": 137.99706864356995,
+  "split": "leave-one-run-out over Sample II analysis runs 58,59,60,61,62,63,65",
+  "study": "P13b",
+  "ticket": "1781119277.1012.58a021c9",
+  "title": "heteroscedastic sample-noise weighting in timing residual fits",
+  "traditional_baseline": {
+    "ci_high": 1.5851788788669636,
+    "ci_low": 1.5196259703835595,
+    "delta_ci_high": 0.0,
+    "delta_ci_low": 0.0,
+    "delta_vs_analytic_timewalk_ns": 0.0,
+    "full_rms_ns": 2.666988996928635,
+    "method": "analytic_timewalk_unweighted",
+    "n_events": 3820,
+    "n_pair_residuals": 11460,
+    "n_runs": 7,
+    "sigma68_ns": 1.5510917109777833,
+    "tail_frac_abs_gt5ns": 0.019109947643979056
+  },
+  "winner": {
+    "ci_high": 1.1558586594472111,
+    "ci_low": 1.0990377337156048,
+    "method": "gradient_boosted_trees_unweighted",
+    "n_pair_residuals": 11460,
+    "n_runs": 7,
+    "pooled_sigma68_ns": 1.129418493053588
+  },
+  "worker": "testbeam-laptop-1"
+}

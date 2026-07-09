@@ -1,0 +1,57 @@
+{
+  "ticket_id": "1781145765.1768.59211878",
+  "study_id": "P12d",
+  "title": "frozen action-matrix consumer calibration test",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "p12c_report_dir": "reports/1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix",
+  "output_dir": "reports/1781145765.1768.59211878__p12d_frozen_action_matrix_consumer_calibration",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "groups": {
+      "sample_i_calib": {"events": 239559, "pulses": 248745},
+      "sample_i_analysis": {
+        "events": 243133,
+        "pulses": 252266,
+        "staves": {"B2": 241422, "B4": 6451, "B6": 3094, "B8": 1299}
+      },
+      "sample_ii_calib": {"events": 12103, "pulses": 14630},
+      "sample_ii_analysis": {
+        "events": 89807,
+        "pulses": 125096,
+        "staves": {"B2": 88213, "B4": 21229, "B6": 11148, "B8": 4506}
+      }
+    }
+  },
+  "benchmark": {
+    "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+    "train_cap": 40000,
+    "bootstrap_reps": 250,
+    "random_seed": 12145765,
+    "cnn_epochs": 4,
+    "cnn_batch_size": 1024
+  },
+  "policy": {
+    "accepted_actions": ["pass", "correct"],
+    "risk_weight_by_action": {"pass": 1.0, "correct": 0.85, "abstain": 0.30, "veto": 0.08},
+    "minimum_accepted_fraction_for_winner": 0.08,
+    "energy_failure_abs_residual": 2.0
+  },
+  "novel_ticket": {
+    "title": "P12f: independent detector-level validation of P12c action accept/reject cells",
+    "body": "Question: do P12c accepted and rejected pulse cells preserve calibration when tested against an independent detector-level PID or energy reference not derived from the same charge/timing atoms? Expected information gain: separates useful support policy from circular atom-defined proxy improvement before production adoption."
+  }
+}

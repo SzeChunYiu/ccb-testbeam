@@ -1,0 +1,348 @@
+{
+  "study": "P12d",
+  "ticket": "1781145765.1768.59211878",
+  "worker": "testbeam-laptop-3",
+  "title": "frozen action-matrix consumer calibration test",
+  "raw_reproduction": {
+    "source": "/home/billy/ccb-data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train": "all configured B-stack P12c atom rows except heldout_runs",
+    "evaluate": "Sample-II analysis heldout runs",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "held-out run block",
+    "bootstrap_reps": 250
+  },
+  "methods_benchmarked": [
+    "gradient_boosted_trees",
+    "mlp",
+    "traditional_action_matrix",
+    "action_prior_residual_cnn_new_arch",
+    "ridge",
+    "1d_cnn"
+  ],
+  "primary_metric": "minimum weighted residual MAE minus accepted-support sigma68 improvement, with support penalty",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "n": 125096,
+    "accepted_n": 24842,
+    "accepted_fraction": 0.19858348788130717,
+    "mae_all": 0.996312627803861,
+    "rmse_all": 1.5496710454183438,
+    "weighted_mae": 0.8230329008268308,
+    "accepted_mae": 0.7209681178971987,
+    "accepted_res68": 0.8562961009268479,
+    "raw_res68": 2.073152793308209,
+    "res68_improvement_vs_raw": 1.2168566923813608,
+    "energy_failure_rate_accepted": 0.15715320827630624,
+    "energy_failure_rate_raw": 0.3430485387222613,
+    "pid_label_rate_accepted": 0.07952986098681462,
+    "pid_label_rate_raw": 0.5609786871628797,
+    "mae_all_ci95": [
+      0.9161440803824298,
+      1.0591852506933301
+    ],
+    "weighted_mae_ci95": [
+      0.7597614578709232,
+      0.8764779223403653
+    ],
+    "accepted_mae_ci95": [
+      0.6636998218471242,
+      0.7763183595860217
+    ],
+    "accepted_res68_ci95": [
+      0.7434004580688475,
+      0.942186679244321
+    ],
+    "res68_improvement_vs_raw_ci95": [
+      1.1840917792300645,
+      1.2542887118874173
+    ],
+    "energy_failure_rate_accepted_ci95": [
+      0.14187273489622126,
+      0.17064552896096705
+    ],
+    "family": "ml",
+    "primary_score": 0.7013472315886947
+  },
+  "ml_beats_baseline": true,
+  "summary": [
+    {
+      "method": "gradient_boosted_trees",
+      "n": 125096,
+      "accepted_n": 24842,
+      "accepted_fraction": 0.19858348788130717,
+      "mae_all": 0.996312627803861,
+      "rmse_all": 1.5496710454183438,
+      "weighted_mae": 0.8230329008268308,
+      "accepted_mae": 0.7209681178971987,
+      "accepted_res68": 0.8562961009268479,
+      "raw_res68": 2.073152793308209,
+      "res68_improvement_vs_raw": 1.2168566923813608,
+      "energy_failure_rate_accepted": 0.15715320827630624,
+      "energy_failure_rate_raw": 0.3430485387222613,
+      "pid_label_rate_accepted": 0.07952986098681462,
+      "pid_label_rate_raw": 0.5609786871628797,
+      "mae_all_ci95": [
+        0.9161440803824298,
+        1.0591852506933301
+      ],
+      "weighted_mae_ci95": [
+        0.7597614578709232,
+        0.8764779223403653
+      ],
+      "accepted_mae_ci95": [
+        0.6636998218471242,
+        0.7763183595860217
+      ],
+      "accepted_res68_ci95": [
+        0.7434004580688475,
+        0.942186679244321
+      ],
+      "res68_improvement_vs_raw_ci95": [
+        1.1840917792300645,
+        1.2542887118874173
+      ],
+      "energy_failure_rate_accepted_ci95": [
+        0.14187273489622126,
+        0.17064552896096705
+      ],
+      "family": "ml",
+      "primary_score": 0.7013472315886947
+    },
+    {
+      "method": "mlp",
+      "n": 125096,
+      "accepted_n": 24842,
+      "accepted_fraction": 0.19858348788130717,
+      "mae_all": 1.024904305812098,
+      "rmse_all": 1.5747081206881823,
+      "weighted_mae": 0.8705102605926157,
+      "accepted_mae": 0.7721477333002305,
+      "accepted_res68": 0.905378601249404,
+      "raw_res68": 2.073152793308209,
+      "res68_improvement_vs_raw": 1.167774192058805,
+      "energy_failure_rate_accepted": 0.15715320827630624,
+      "energy_failure_rate_raw": 0.3430485387222613,
+      "pid_label_rate_accepted": 0.07952986098681462,
+      "pid_label_rate_raw": 0.5609786871628797,
+      "mae_all_ci95": [
+        0.9343461090126896,
+        1.0915215923023631
+      ],
+      "weighted_mae_ci95": [
+        0.8008223970601885,
+        0.9290314602186742
+      ],
+      "accepted_mae_ci95": [
+        0.7105484444520461,
+        0.8281411340104307
+      ],
+      "accepted_res68_ci95": [
+        0.790739078835229,
+        0.9831530171241307
+      ],
+      "res68_improvement_vs_raw_ci95": [
+        1.1299849103718167,
+        1.1989460423956058
+      ],
+      "energy_failure_rate_accepted_ci95": [
+        0.14196921928654402,
+        0.17040943125790373
+      ],
+      "family": "nn",
+      "primary_score": 0.7537328413867352
+    },
+    {
+      "method": "traditional_action_matrix",
+      "n": 125096,
+      "accepted_n": 24842,
+      "accepted_fraction": 0.19858348788130717,
+      "mae_all": 1.3436623469667395,
+      "rmse_all": 2.2631862540370404,
+      "weighted_mae": 1.0385713451475642,
+      "accepted_mae": 0.8731810679449324,
+      "accepted_res68": 1.0168879079918198,
+      "raw_res68": 2.073152793308209,
+      "res68_improvement_vs_raw": 1.056264885316389,
+      "energy_failure_rate_accepted": 0.15715320827630624,
+      "energy_failure_rate_raw": 0.3430485387222613,
+      "pid_label_rate_accepted": 0.07952986098681462,
+      "pid_label_rate_raw": 0.5609786871628797,
+      "mae_all_ci95": [
+        1.201833877822816,
+        1.4481370139090572
+      ],
+      "weighted_mae_ci95": [
+        0.9524518234605863,
+        1.112026514834675
+      ],
+      "accepted_mae_ci95": [
+        0.8073461308079878,
+        0.9374341522711369
+      ],
+      "accepted_res68_ci95": [
+        0.9042583479639602,
+        1.1107134140889978
+      ],
+      "res68_improvement_vs_raw_ci95": [
+        1.022361092463664,
+        1.093862491813332
+      ],
+      "energy_failure_rate_accepted_ci95": [
+        0.14206269526390722,
+        0.17183218138334883
+      ],
+      "family": "traditional",
+      "primary_score": 0.9329448566159253
+    },
+    {
+      "method": "action_prior_residual_cnn_new_arch",
+      "n": 125096,
+      "accepted_n": 24842,
+      "accepted_fraction": 0.19858348788130717,
+      "mae_all": 1.3430560141012664,
+      "rmse_all": 2.254917248594744,
+      "weighted_mae": 1.043532458556209,
+      "accepted_mae": 0.8858231797786806,
+      "accepted_res68": 1.0145413789710311,
+      "raw_res68": 2.073152793308209,
+      "res68_improvement_vs_raw": 1.0586114143371776,
+      "energy_failure_rate_accepted": 0.15715320827630624,
+      "energy_failure_rate_raw": 0.3430485387222613,
+      "pid_label_rate_accepted": 0.07952986098681462,
+      "pid_label_rate_raw": 0.5609786871628797,
+      "mae_all_ci95": [
+        1.187734633319763,
+        1.4315343106750487
+      ],
+      "weighted_mae_ci95": [
+        0.9513623206911932,
+        1.107732857852581
+      ],
+      "accepted_mae_ci95": [
+        0.8169636619815226,
+        0.9393588455636182
+      ],
+      "accepted_res68_ci95": [
+        0.891432764752712,
+        1.0973033188024266
+      ],
+      "res68_improvement_vs_raw_ci95": [
+        1.0210499167024965,
+        1.096339805192644
+      ],
+      "energy_failure_rate_accepted_ci95": [
+        0.14020451466260728,
+        0.17022840127157213
+      ],
+      "family": "new_architecture",
+      "primary_score": 0.9376713171224911
+    },
+    {
+      "method": "ridge",
+      "n": 125096,
+      "accepted_n": 24842,
+      "accepted_fraction": 0.19858348788130717,
+      "mae_all": 1.3580903693501214,
+      "rmse_all": 2.1548783591451826,
+      "weighted_mae": 1.1435252498755544,
+      "accepted_mae": 1.0439805027326516,
+      "accepted_res68": 1.1531828131251203,
+      "raw_res68": 2.073152793308209,
+      "res68_improvement_vs_raw": 0.9199699801830885,
+      "energy_failure_rate_accepted": 0.15715320827630624,
+      "energy_failure_rate_raw": 0.3430485387222613,
+      "pid_label_rate_accepted": 0.07952986098681462,
+      "pid_label_rate_raw": 0.5609786871628797,
+      "mae_all_ci95": [
+        1.2238571753501062,
+        1.4482606972135976
+      ],
+      "weighted_mae_ci95": [
+        1.0329011611283285,
+        1.246100713764783
+      ],
+      "accepted_mae_ci95": [
+        0.9162834204969538,
+        1.1720208694409644
+      ],
+      "accepted_res68_ci95": [
+        1.0149072839145103,
+        1.2339303250824243
+      ],
+      "res68_improvement_vs_raw_ci95": [
+        0.8892448751476677,
+        0.9751237590094866
+      ],
+      "energy_failure_rate_accepted_ci95": [
+        0.14231949553363277,
+        0.173226050192044
+      ],
+      "family": "ml",
+      "primary_score": 1.0515282518572455
+    },
+    {
+      "method": "1d_cnn",
+      "n": 125096,
+      "accepted_n": 24842,
+      "accepted_fraction": 0.19858348788130717,
+      "mae_all": 1.5428439138256036,
+      "rmse_all": 2.5439375942063136,
+      "weighted_mae": 1.229377229662816,
+      "accepted_mae": 1.0571375284887978,
+      "accepted_res68": 1.1045063773792305,
+      "raw_res68": 2.073152793308209,
+      "res68_improvement_vs_raw": 0.9686464159289783,
+      "energy_failure_rate_accepted": 0.15715320827630624,
+      "energy_failure_rate_raw": 0.3430485387222613,
+      "pid_label_rate_accepted": 0.07952986098681462,
+      "pid_label_rate_raw": 0.5609786871628797,
+      "mae_all_ci95": [
+        1.3422721370736082,
+        1.678812480685975
+      ],
+      "weighted_mae_ci95": [
+        1.0917638277064798,
+        1.3512487267429087
+      ],
+      "accepted_mae_ci95": [
+        0.9224085445314905,
+        1.1831664447649952
+      ],
+      "accepted_res68_ci95": [
+        0.9212527167950717,
+        1.2587097435237864
+      ],
+      "res68_improvement_vs_raw_ci95": [
+        0.9008952437727513,
+        1.0273957270905623
+      ],
+      "energy_failure_rate_accepted_ci95": [
+        0.1425472959011671,
+        0.17191055693115773
+      ],
+      "family": "nn",
+      "primary_score": 1.1325125880699183
+    }
+  ],
+  "next_tickets": [
+    {
+      "title": "P12f: independent detector-level validation of P12c action accept/reject cells",
+      "body": "Question: do P12c accepted and rejected pulse cells preserve calibration when tested against an independent detector-level PID or energy reference not derived from the same charge/timing atoms? Expected information gain: separates useful support policy from circular atom-defined proxy improvement before production adoption."
+    }
+  ],
+  "finding": "Raw ROOT reproduction passes exactly; gradient_boosted_trees wins the frozen P12c consumer-calibration benchmark by primary score 0.701347."
+}

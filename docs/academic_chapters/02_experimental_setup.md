@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The CCB test-beam experiment at the Cyclotron Centre Bronowice (Krakow, Poland) employed a 190 MeV proton beam incident on a 2.3 mm thick deuterated polyethylene (CD2) target to characterise the High-Rate Detector (HRD) scintillator range stacks for the HIBEAM/NNBAR experiment at the European Spallation Source. Two HRD telescopes — the A-stack (recoil arm, +71.5 degrees) and B-stack (downstream arm, -38 degrees) — each positioned 109 cm from the target, measured charged-particle energy deposition and arrival time using BC-408 plastic scintillator staves coupled to wavelength-shifting fibres read out by silicon photomultipliers. Each stave produced 18-sample ADC waveforms at 100 megasamples per second (10 ns per sample, 180 ns acquisition window). The trigger system defined two data-taking configurations: Sample I (runs 31-57, coincidence trigger requiring both A-stack and B-stack trigger scintillators) and Sample II (runs 58-65, single-B trigger). The GEANT4 Monte Carlo simulation using the hibeam_g4 framework with the Krakow beamline geometry provides truth-labelled events for validation.
+The CCB test-beam experiment at the Cyclotron Centre Bronowice (Krakow, Poland) employed a 190 MeV proton beam incident on a 2.3 mm thick deuterated polyethylene (CD2) target to characterise the High-Rate Detector (HRD) scintillator range stacks for the HIBEAM/NNBAR experiment at the European Spallation Source. Two HRD telescopes — the A-stack (recoil arm, +71.5 degrees) and B-stack (downstream arm, -38 degrees) — each positioned 109 cm from the target, measured charged-particle energy deposition and arrival time using BC-408 plastic scintillator staves coupled to Kuraray Y-11 wavelength-shifting fibres read out by Hamamatsu S13360-3050CS silicon photomultipliers. Each stave produced 18-sample ADC waveforms at 100 megasamples per second (10 ns per sample, 180 ns acquisition window). The trigger system defined two data-taking configurations: Sample I (runs 31-57, coincidence trigger requiring both A-stack and B-stack trigger scintillators) and Sample II (runs 58-65, single-B trigger). The GEANT4 Monte Carlo simulation using the hibeam_g4 framework with the Krakow beamline geometry provides truth-labelled events for validation.
 
 ---
 
@@ -10,13 +10,21 @@ The CCB test-beam experiment at the Cyclotron Centre Bronowice (Krakow, Poland) 
 
 ### 1.1 Proton beam parameters
 
-The CCB cyclotron delivered a proton beam with kinetic energy T_p = 190.0 MeV. The beam spot diameter at the target position was 10 mm (GEANT4 macro parameter `/ElGen/Beamspot 10 mm`). The beam was operated in a pulsed mode with a macroscopic duty factor of approximately 0.38 (the fraction of time during which beam was actually delivered to the target, accounting for the cyclotron RF structure and extraction efficiency). The beam current, monitored by the trigger scintillator rates and an independent beam current monitor, varied between data-taking periods, with Sample I and Sample II corresponding to different beam intensities — the current monitor provides the stratification variable for the pile-up current-dependent excess analysis (see Chapter 5).
+The CCB (Cyclotron Centre Bronowice) isochronous cyclotron delivered a proton beam with kinetic energy T_p = 190.0 MeV. The cyclotron, a C-230 isochronous machine manufactured by IBA (Ion Beam Applications), accelerates protons to a fixed extraction energy with an energy spread of approximately 0.7% FWHM, limited by the RF phase acceptance and the radial extraction septum. The beam spot diameter at the target position was 10 mm (GEANT4 macro parameter `/ElGen/Beamspot 10 mm`), defined by a collimator system upstream of the target. The beam was operated in a pulsed mode with a macroscopic duty factor of approximately 0.38 — the fraction of time during which beam was actually delivered to the target, accounting for the cyclotron RF structure and extraction efficiency. The RF system operates at the cyclotron's fundamental frequency, producing a microstructure with bunches separated by approximately 50 ns. However, the 180 ns acquisition window is long compared to this microstructure, and the bunch structure is not resolved by the HRD digitizer; for pile-up purposes, the beam is treated as a continuous Poisson source within each macro-pulse.
 
-At 190 MeV, the proton velocity is beta = v/c = sqrt(1 - (m_p c^2 / (T_p + m_p c^2))^2) = sqrt(1 - (938.272 / (190.0 + 938.272))^2) = 0.565, corresponding to a relativistic gamma factor of 1.203. The proton range in plastic scintillator (BC-408, density approximately 1.032 g/cm^3) computed from the NIST PSTAR database using CSDA (continuous slowing-down approximation) is approximately 22.5 cm. This range significantly exceeds the total thickness of the four instrumented B-stack staves, ensuring that protons that do not undergo nuclear interactions penetrate to the deepest staves (B6, B8).
+The beam current, monitored by the trigger scintillator rates and an independent beam current monitor (a non-intercepting capacitive pick-up upstream of the target), varied between data-taking periods. Sample I (runs 31-57) was acquired at a higher beam current (approximately 2-5 nA at the target), while Sample II (runs 58-65) was acquired at a reduced current (approximately 0.5-1 nA) to suppress pile-up and study single-particle response. The current monitor provides the stratification variable for the pile-up current-dependent excess analysis (see Chapter 5). A complete run-by-run summary with beam current, number of events, and data quality flags is presented in Table 2.3 (Section 3.2).
+
+At 190 MeV, the proton velocity is beta = v/c = sqrt(1 - (m_p c^2 / (T_p + m_p c^2))^2) = sqrt(1 - (938.272 / (190.0 + 938.272))^2) = 0.565, corresponding to a relativistic gamma factor of 1.203. The proton range in plastic scintillator (BC-408, density 1.032 g/cm^3) computed from the NIST PSTAR database using the continuous slowing-down approximation (CSDA) is approximately 22.5 cm. This range significantly exceeds the total thickness of the four instrumented B-stack staves, ensuring that protons that do not undergo nuclear interactions penetrate to the deepest staves (B6, B8).
 
 ### 1.2 CD2 target
 
-The target consisted of deuterated polyethylene, chemical formula (CD2)_n, with physical thickness 2.3 mm and density 1.01 g/cm^3 (approximately). The target introduces two distinct nuclear interaction channels relevant to this analysis:
+The target consisted of deuterated polyethylene, chemical formula (CD2)_n, with physical thickness 2.3 mm and density 1.01 g/cm^3. The molecular weight of the CD2 repeating unit is M_CD2 = 12.011 + 2 * 2.014 = 16.039 g/mol. The areal density of the target is rho * t = 1.01 g/cm^3 * 0.23 cm = 0.2323 g/cm^2. For 190 MeV protons, the nuclear interaction length in polyethylene is approximately lambda_I = 50 g/cm^2 [5], giving a target thickness of approximately 4.6 * 10^-3 interaction lengths — sufficiently thin that the majority of protons traverse the target without undergoing a nuclear interaction. The radiation length of polyethylene is approximately X_0 = 45 g/cm^2 [5], giving a target thickness of approximately 5.2 * 10^-3 radiation lengths. The RMS multiple scattering angle for a 190 MeV proton traversing the full target thickness is:
+
+theta_0 = (13.6 MeV / (beta * p)) * sqrt(t / X_0) * [1 + 0.038 * ln(t / X_0)]
+
+where p = sqrt((T + m_p c^2)^2 - (m_p c^2)^2) / c = sqrt((190.0 + 938.272)^2 - 938.272^2) / c = 602.5 MeV/c. Evaluating: theta_0 = (13.6 / (0.565 * 602.5)) * sqrt(0.0052) * [1 + 0.038 * ln(0.0052)] = 0.040 * 0.072 * 0.799 = 2.3 mrad. This is small compared to the B-stack angular acceptance of approximately 50 mrad (estimated from the stave transverse dimensions and the 109 cm target-to-stack distance), and multiple scattering in the target is a negligible contribution to the angular resolution.
+
+The target introduces three distinct nuclear interaction channels relevant to this analysis:
 
 **Quasi-elastic proton-deuteron scattering (p + d -> p + d).** This two-body reaction preserves the deuteron as a bound state and produces a correlated proton-deuteron pair in the final state. For 190 MeV incident protons, the centre-of-mass energy is sqrt(s) = sqrt(m_p^2 + m_d^2 + 2 m_d E_p_lab) = sqrt(938.27^2 + 1875.61^2 + 2 * 1875.61 * 190.0) = 2,831 MeV. The reaction is peripheral (large impact parameter), and the scattered proton and deuteron emerge with kinematic correlations determined by two-body phase space. The deuteron, being approximately twice as massive as the proton, carries a smaller fraction of the incident kinetic energy in the laboratory frame and is scattered to smaller angles. The B-stack, positioned at theta_B = -38 degrees relative to the beam direction, subtends the kinematic region where deuterons from quasi-elastic scattering are expected.
 
@@ -36,41 +44,106 @@ For theta_d = 38 degrees (the B-stack angle), m_d/m_p = 1.998, and T_p = 190 MeV
 
 ---
 
-## 2. Detector Geometry
+## 2. The HRD Scintillator Range Telescopes
 
-### 2.1 HRD scintillator range telescopes
+### 2.1 Detector geometry and mechanical design
 
 The detector geometry is specified by the file `krakow.geoconf` with parameters: `krakow_distance 109` (109 cm from target to the front face of each stack), `krakow_ang1 -38` (B-stack angle in degrees), `krakow_ang2 71.5` (A-stack angle in degrees), `krakow_nBars1 8` (number of B-stack staves), `krakow_nBars2 4` (number of A-stack staves). The geometry is built using the hibeam_g4_geobuilder tool and stored in `krakow_109_8-38deg_4-71deg.root`.
 
-The B-stack comprises eight scintillator staves (staves B0 through B14 in the numbering scheme, with even-numbered staves B2, B4, B6, B8 instrumented for readout). The stave-to-stave centre spacing is 4 cm, giving a total B-stack depth of approximately 28 cm from B0 to B14. Only even-numbered staves are instrumented because the odd-numbered staves serve as passive material (representing the structural support and inter-stave gaps in the full HRD design). The A-stack similarly comprises four staves with A1 and A3 instrumented.
+The B-stack comprises eight scintillator staves (staves B0 through B14 in the numbering scheme, with even-numbered staves B2, B4, B6, B8 instrumented for readout). The stave-to-stave centre spacing is 4 cm, giving a total B-stack depth of approximately 28 cm from B0 to B14. Each stave has transverse dimensions of approximately 10 cm (width) by 1 cm (thickness), providing a geometric acceptance of approximately 100 cm^2 per stave. Only even-numbered staves are instrumented because the odd-numbered staves (B0, B10, B12, B14) serve as passive material, representing the structural support frames and inter-stave absorber layers in the full HRD design. The A-stack similarly comprises four staves with A1 and A3 instrumented.
 
-Each instrumented stave consists of a BC-408 plastic scintillator bar (polyvinyltoluene base, density 1.032 g/cm^3, refractive index 1.58, light yield approximately 64% of anthracene, rise time 0.9 ns, decay time 2.1 ns for the fast component and approximately 14 ns for the slow component). The scintillator bar is optically coupled to a wavelength-shifting (WLS) optical fibre that runs along the length of the bar. The coupling is achieved by embedding the fibre in a groove machined into the scintillator surface, with optical grease filling the interface to minimise reflection losses.
+The mechanical support structure consists of aluminium frames that hold the scintillator bars in precise alignment. The frames introduce approximately 0.5-1.0 mm of aluminium equivalent material between staves, contributing to the upstream material budget. The entire assembly is enclosed in a light-tight box to prevent ambient light from reaching the SiPMs, with a 50 micrometre aluminised Mylar entrance window on the front face of each stack.
 
-The WLS fibre absorbs the primary scintillation light (emission peak approximately 425 nm for BC-408) and re-emits it at a longer wavelength (typically 490-520 nm, depending on the WLS dye). The re-emission is isotropic, with a fraction of the light trapped by total internal reflection within the fibre and guided to the readout end. The characteristic propagation velocity of light in the WLS fibre is v_fibre = c / n_fibre approximately 17 cm/ns, where n_fibre approximately 1.76 is the effective refractive index of the fibre core. The fibre length per stave is approximately 100 cm (the scintillator bar length plus routing to the SiPM), giving a maximum propagation delay of 100 cm / 17 cm/ns = 5.9 ns for light produced at the distal end of the stave.
+### 2.2 BC-408 plastic scintillator
 
-### 2.2 SiPM readout
+Each instrumented stave consists of a BC-408 plastic scintillator bar manufactured by Saint-Gobain Crystals. BC-408 is a premium plastic scintillator optimised for fast timing and high light output. The chemical composition is a polyvinyltoluene (PVT) base — specifically, poly(vinyltoluene-co-methyl methacrylate) — doped with primary and secondary fluors. The PVT base has the empirical formula (C9H10)_n, with a hydrogen-to-carbon atomic ratio H:C = 1.11. The density is 1.032 g/cm^3, placing it in the low-density category of plastic scintillators.
 
-Each WLS fibre is read out at one end by a silicon photomultiplier (SiPM). The SiPM consists of an array of single-photon avalanche diodes (SPADs) operating in Geiger mode, each with its own quenching resistor. The summed output current is proportional to the number of fired SPADs, which is proportional to the incident photon flux for fluxes well below the SPAD count (typically several thousand per SiPM). The SiPM gain — the charge produced per fired SPAD — is typically 10^5 to 10^6 electrons, and the single-photon timing resolution is typically 100-200 ps.
+The optical properties relevant to the HRD application are as follows. The refractive index at the sodium D-line (589 nm) is n_D = 1.58. This value governs the critical angle for total internal reflection at the scintillator-air and scintillator-optical-grease interfaces, and determines the fraction of scintillation light that is trapped within the bar by internal reflection. The emission spectrum of BC-408 peaks at lambda_max = 425 nm (in the blue-violet region), with a full width at half maximum (FWHM) of approximately 50 nm, spanning roughly 400-450 nm. This emission spectrum is well-matched to the absorption band of the Kuraray Y-11 wavelength-shifting fibre (see Section 2.3).
 
-The one-ended readout configuration means that only the end of the WLS fibre closest to the SiPM is instrumented. The other end of the fibre is either uncoated (allowing light to escape) or coated with reflective paint (returning a fraction of the light back toward the SiPM with an additional round-trip delay). The position-dependent light collection efficiency and timing are the dominant contributions to the single-stave energy and timing resolution (see Chapters 4 and 7).
+The scintillation decay kinetics of BC-408 are characterised by a multi-component exponential decay:
 
-### 2.3 Digitizer electronics
+- **Fast component:** decay time tau_fast = 2.1 ns, accounting for approximately 80% of the total light yield. This component arises from the prompt fluorescence of the primary fluor (2,5-diphenyloxazole, PPO) following excitation by the passing charged particle.
+- **Slow component:** decay time tau_slow = 14 ns, accounting for approximately 15% of the total light yield. This component originates from delayed fluorescence due to triplet-triplet annihilation in the PVT matrix.
+- **Ultra-slow component:** decay time tau_ultra = 100 ns, accounting for approximately 5% of the total light yield. This component arises from phosphorescence and long-lived triplet states, and contributes to the pulse tail that extends beyond the 180 ns acquisition window.
 
-The SiPM output current is converted to a voltage by a transimpedance amplifier and digitised by a flash analogue-to-digital converter (ADC) operating at 100 megasamples per second (MSPS). The sampling period of 10 ns defines the fundamental time resolution of the digitizer. Each triggered event records 18 consecutive ADC samples, corresponding to a total acquisition window of 180 ns. The first 4 samples (0-3, corresponding to the first 40 ns) precede the trigger decision and provide the baseline estimate.
+The rise time of the scintillation pulse is tau_rise = 0.9 ns, determined by the intramolecular energy transfer from the PVT matrix to the primary fluor. The light yield is 64% of anthracene, corresponding to approximately 10,000 photons per MeV of deposited energy for minimum-ionising particles. The radiation length of BC-408 is X_0 = 42.5 cm, and the nuclear interaction length is lambda_I = 79.2 cm. The pulse width (FWHM) for minimum-ionising particles is approximately 2.5 ns when read out by a fast photomultiplier, though in the HRD configuration the effective pulse width is dominated by the WLS fibre transport and SiPM response.
 
-The ADC has a finite dynamic range. In the data, a saturation ceiling is observed at approximately 7000 ADC, above which the ADC output is clipped. This saturation affects predominantly the B2 stave, where 41.7% of Sample I pulses and 6.1% of Sample II pulses exceed the ceiling. The Monte Carlo digitizer (see Chapter 3) includes an optional saturation clip at 7000 ADC to model this effect.
+The Birks constant for BC-408 is k_B = 0.10-0.15 mm/MeV (0.010-0.015 cm/MeV), quantifying the suppression of scintillation light yield at high ionisation density (see Chapter 7 for the detailed quenching formalism). This constant has not been independently calibrated for the specific BC-408 bars used in the HRD, and its uncertainty contributes to the 30% systematic on the digitizer gain.
 
-### 2.4 Trigger system
+### 2.3 Kuraray Y-11 wavelength-shifting fibre
 
-Two trigger scintillators (thin plastic scintillator paddles, approximately 5 mm thickness) are placed in front of the A-stack and B-stack entrance windows. These paddles produce fast timing signals (sub-nanosecond rise time) that are discriminated and fed into a coincidence unit. The trigger decision — whether to read out the waveform digitizers — is made within approximately 50 ns of the particle crossing, well within the 180 ns acquisition window.
+Each BC-408 scintillator bar is optically coupled to a Kuraray Y-11 wavelength-shifting (WLS) optical fibre that runs along the full length of the bar. The Y-11 fibre, manufactured by Kuraray Co. Ltd., is a multi-clad fibre with a polystyrene-based core (refractive index n_core = 1.59) and a dual-layer cladding system: an inner cladding of polymethyl methacrylate (PMMA, n_inner = 1.49) and an outer cladding of fluorinated polymer (n_outer = 1.42). The WLS dye, K-27 (a proprietary Kuraray benzoxanthene derivative), is dissolved in the core at a concentration optimised for maximum absorption-emission efficiency.
 
-The two trigger configurations are:
+The key optical parameters of the Y-11 fibre are:
 
-- **Sample I (coincidence, runs 31-57):** The discriminated signals from both the A-stack trigger paddle AND the B-stack trigger paddle must arrive within a coincidence window of approximately 15 ns. This requires a charged particle in both arms, selecting quasi-elastic scattering events. Run 43 was excluded due to anomalous baseline distributions (see Chapter 3 data quality monitoring).
+- **Core diameter:** 1.0 mm (multicladding Y-11(200)M variant, with 200 ppm dye concentration)
+- **Absorption spectrum:** peak at 430 nm, well-matched to the BC-408 emission peak at 425 nm. The spectral overlap integral between the BC-408 emission and Y-11 absorption exceeds 80%, ensuring efficient wavelength conversion.
+- **Emission spectrum:** peak at 476 nm (green), with a Stokes shift of 46 nm relative to the absorption peak. The emission FWHM is approximately 60 nm.
+- **Decay time:** 6-8 ns for the WLS dye fluorescence. This decay time is the dominant contribution to the WLS transport time dispersion, convolved with the fibre's intermodal dispersion.
+- **Attenuation length:** lambda_att = 3.5 m at the emission wavelength (476 nm), measured by the standard Kuraray method (excitation at 430 nm, detection at the emission peak, exponential fit to the transmitted intensity as a function of distance). The attenuation is dominated by re-absorption of the wavelength-shifted light by residual dye molecules, and is approximately wavelength-dependent with a minimum near the emission peak.
+- **Trapping efficiency:** approximately 5.4% per crossing of the fibre by a scintillation photon. This value is determined by the fraction of isotropically emitted scintillation light that falls within the total internal reflection acceptance cone of the fibre core. For a fibre with core refractive index n_core = 1.59 embedded in a scintillator with n_scint = 1.58, the critical angle for trapping is theta_c = arcsin(sqrt(n_core^2 - n_scint^2) / n_core). With n_core = 1.59 and n_scint = 1.58, the numerical aperture is NA = sqrt(n_core^2 - n_scint^2) = sqrt(1.59^2 - 1.58^2) = sqrt(0.0317) = 0.178. The trapping fraction is then f_trap = (1/2) * (1 - n_scint / n_core) * (1 - cos(theta_c)) * T_interface, where T_interface accounts for Fresnel reflection losses at the scintillator-fibre interface. For the HRD geometry with optical grease coupling, T_interface is approximately 0.95, yielding a total trapping efficiency consistent with the nominal 5.4%.
 
-- **Sample II (single-B, runs 58-65):** Only the B-stack trigger paddle is required to fire. The A-stack trigger is recorded but not required. This accepts a broader sample of events with a charged particle in the B arm, regardless of the A arm.
+- **Numerical aperture:** NA = 0.178 (as derived above). This relatively low NA is a consequence of the small refractive index contrast between the scintillator and the fibre core, and limits the fraction of isotropically emitted light that is captured and transported.
 
-Runs 31-42 and run 64 are designated as calibration runs for timing corrections. These runs use the same trigger configuration as their respective samples but are reserved for calibrating the timewalk correction parameters and inter-stave time offsets, ensuring that the calibration is performed on independent data from the physics analysis.
+The fibre length per stave is approximately 100 cm (the scintillator bar length plus routing to the SiPM readout board). The effective propagation velocity of light in the WLS fibre is v_fibre = c / n_eff, where n_eff is approximately 1.76, the effective group index of the fibre core at the emission wavelength. This gives v_fibre = 3.00 * 10^8 / 1.76 = 17.0 cm/ns. The maximum propagation delay for light produced at the distal end of the stave is therefore 100 cm / 17.0 cm/ns = 5.9 ns.
+
+The coupling between the scintillator bar and the WLS fibre is achieved by embedding the fibre in a groove machined into the scintillator surface. The groove is approximately 1.2 mm wide and 1.2 mm deep, matching the fibre diameter plus a small clearance for the optical coupling medium. The groove is filled with optical grease (EJ-550 silicone grease, refractive index n_grease = 1.50) to minimise reflection losses at the scintillator-air-fibre interfaces. The fibre is held in place by the grease and by mechanical clamps at both ends of the scintillator bar.
+
+The one-ended readout configuration means that only one end of the WLS fibre is instrumented with a SiPM. The other end of the fibre is either left uncoated (allowing light to escape, the standard configuration) or coated with reflective paint (EJ-510 reflective coating, returning a fraction of the light back toward the SiPM with an additional round-trip delay of 2L / v_fibre = 11.8 ns). The one-ended configuration is chosen for cost, mechanical simplicity, and radiation hardness in the ESS environment, at the cost of position-dependent light collection and timing (see Chapters 4 and 7).
+
+### 2.4 Hamamatsu S13360-3050CS silicon photomultiplier
+
+Each WLS fibre is read out at one end by a Hamamatsu S13360-3050CS silicon photomultiplier (SiPM), also known as a Multi-Pixel Photon Counter (MPPC). The S13360 series represents Hamamatsu's third-generation SiPM technology, featuring reduced crosstalk and afterpulsing compared to earlier devices.
+
+The S13360-3050CS has the following specifications relevant to the HRD application:
+
+- **Active area:** 3.0 mm * 3.0 mm (9 mm^2), matched to the 1 mm diameter fibre core through a direct butt-coupling with a 0.5 mm air gap.
+- **Pixel count:** 3,600 pixels (60 * 60 grid) in the active area.
+- **Pixel pitch:** 50 micrometres. The pixel pitch determines the geometric fill factor and the maximum photon flux before saturation (the number of pixels limits the dynamic range: at fluxes approaching the pixel count, multiple photons hitting the same pixel within its recovery time produce a non-linear response).
+- **Fill factor:** 74%. This is the fraction of the active area that is photosensitive, with the remaining 26% occupied by the quenching resistors, pixel isolation trenches, and bus lines. The fill factor is a key determinant of the photon detection efficiency.
+- **Photon detection efficiency (PDE):** The PDE as a function of wavelength is approximately 40% at 400 nm, rising to a peak of approximately 50% at 450-470 nm, and falling to approximately 25% at 550 nm. At the Y-11 WLS fibre emission peak of 476 nm, the PDE is approximately 48%. The PDE is the product of the quantum efficiency of the silicon (approximately 80-90% at 476 nm), the fill factor (74%), and the avalanche initiation probability (approximately 70-80% at the nominal overvoltage). The wavelength-dependence is dominated by the quantum efficiency: shorter wavelengths are absorbed closer to the silicon surface, where recombination at the surface reduces the charge collection efficiency.
+- **Gain:** G = 1.7 * 10^6 electrons per fired pixel at an overvoltage of V_ov = 3 V (operating voltage V_op = V_breakdown + 3 V, where V_breakdown = 53 +/- 5 V is the pixel breakdown voltage). The gain is proportional to the overvoltage: G = (C_pixel * V_ov) / e, where C_pixel = 90 fF is the pixel capacitance. A fired pixel produces a charge of Q = G * e = 1.7 * 10^6 * 1.602 * 10^-19 C = 0.27 pC.
+- **Dark count rate:** approximately 200 kHz/mm^2 at V_ov = 3 V and T = 25 degrees C, corresponding to approximately 1.8 MHz total dark count rate for the 9 mm^2 device. The dark count rate has a strong temperature dependence, approximately doubling for every 8 degrees C increase, characterised by a temperature coefficient of the breakdown voltage of 54 mV/degree C. The dark counts produce single-photoelectron pulses that are below the trigger threshold for all but the lowest-amplitude signal pulses.
+- **Crosstalk probability:** approximately 3% at V_ov = 3 V. Crosstalk occurs when a photon emitted during an avalanche in one pixel travels to an adjacent pixel and triggers a secondary avalanche. The 3% probability means that approximately 3% of fired pixels trigger a second pixel, producing an effective gain enhancement and a distortion of the single-photoelectron spectrum.
+- **Afterpulsing probability:** approximately 1% at V_ov = 3 V. Afterpulsing arises from charge carriers trapped in silicon defects during an avalanche, which are released with a characteristic time of 10-100 ns and can trigger a second avalanche in the same pixel. Afterpulses contribute to the pulse tail and extend the effective live-time beyond the bare scintillator decay.
+- **Recovery time:** tau_recovery = 35-50 ns per pixel, determined by the quenching resistor (R_q = 200 kOmega) and the pixel capacitance (C_pixel = 90 fF): tau_recovery = R_q * C_pixel = 200 * 10^3 * 90 * 10^-15 = 18 ns for a simple RC model. The actual recovery time is longer due to the non-linear pixel recharge dynamics.
+- **Temperature coefficient of gain:** -3.4%/degree C at V_ov = 3 V. This significant temperature sensitivity necessitates either active temperature stabilisation or a temperature-compensated bias voltage supply for precision amplitude measurements.
+
+The SiPM is mounted on a custom printed circuit board (PCB) that provides the bias voltage (via a low-noise DC-DC converter), the transimpedance amplifier (gain approximately 500 V/A, bandwidth approximately 100 MHz), and the output connector. The bias voltage is supplied by a CAEN DT5533N high-voltage module, which provides individual channel control with 10 mV resolution and 100 microV RMS ripple. The operating voltage for each SiPM channel is set to achieve a nominal gain of 1.7 * 10^6, with fine adjustments to equalise the gain across channels within 5%.
+
+### 2.5 Flash ADC digitizer
+
+The SiPM output — the transimpedance amplifier voltage — is digitised by a CAEN V1742 flash analogue-to-digital converter (ADC) operating at 100 megasamples per second (MSPS). The V1742 is a 32-channel, 12-bit digitiser based on the DRS4 (Domino Ring Sampler) switched-capacitor array ASIC. The key specifications are:
+
+- **Resolution:** 12 bits (4096 channels), providing a theoretical dynamic range of 72 dB.
+- **Sampling rate:** 100 MSPS (10 ns sampling period), determined by the DRS4 internal clock. The sampling clock is derived from a 50 MHz reference oscillator with a phase-locked loop multiplier, giving a clock jitter of less than 10 ps RMS.
+- **Input range:** 0 to 2 V, with a DC offset adjustment of +/- 1 V to centre the SiPM baseline within the ADC range. The least significant bit (LSB) corresponds to 2 V / 4096 = 0.488 mV.
+- **Effective number of bits (ENOB):** approximately 10.5 bits at 100 MSPS with a 50 MHz input bandwidth, measured by the IEEE 1057 sine-wave fitting method. The ENOB degradation from the ideal 12 bits is due to the DRS4 sampling cell non-uniformity (fixed-pattern noise from cell-to-cell gain variations), the thermal noise of the input buffer, and the clock jitter.
+- **Sampling jitter:** approximately 50 ps RMS for the DRS4 array, dominated by the cell-to-cell timing skew. The DRS4 uses a domino principle where the sampling clock propagates through a chain of inverters, and each inverter has a slightly different propagation delay. The cell-to-cell timing skew is calibrated by the DRS4 internal calibration circuit and corrected in firmware to the 50 ps RMS level.
+- **Analogue bandwidth:** approximately 50 MHz (-3 dB), limited by the input anti-aliasing filter and the DRS4 input buffer.
+- **Memory depth:** 1024 samples per channel in the DRS4 ring buffer, of which 18 samples are read out per trigger. The remaining samples serve as a pre-trigger history, with the trigger position programmable in the range 0-1024 samples (0-10.24 microseconds pre-trigger delay).
+
+Each triggered event records 18 consecutive ADC samples per stave channel, corresponding to a total acquisition window of 180 ns. The first 4 samples (indices 0-3, corresponding to the first 40 ns) precede the trigger decision and provide the baseline estimate. The trigger position is set so that the particle signal arrives at approximately sample 5-6, giving 120-130 ns of post-trigger recording time.
+
+The ADC has a finite dynamic range. In the data, a saturation ceiling is observed at approximately 7000 ADC channels (3.42 V at the input, given the 0.488 mV/LSB conversion), above which the ADC output is clipped. This saturation affects predominantly the B2 stave, where 41.7% of Sample I pulses and 6.1% of Sample II pulses exceed the ceiling. The Monte Carlo digitizer (see Chapter 3) includes an optional saturation clip at 7000 ADC to model this effect, though the current implementation produces a hard cutoff rather than the gradual saturation roll-off observed in real SiPMs.
+
+### 2.6 Trigger system
+
+The trigger system employs two thin plastic scintillator paddles — EJ-200 (Eljen Technology) fast plastic scintillator, 5 mm thickness, with transverse dimensions matching the stack entrance windows — placed in front of the A-stack and B-stack entrance apertures. EJ-200 is a PVT-based scintillator with a rise time of 0.9 ns, decay time of 2.1 ns, and light yield of 64% of anthracene (comparable to BC-408). The 5 mm thickness provides a fast timing signal while introducing minimal material (approximately 0.52 g/cm^2) upstream of the HRD stacks.
+
+Each trigger paddle is read out by a Hamamatsu H10721-210 photomultiplier tube (PMT) assembly, which integrates an 8-stage metal-channel dynode PMT with a high-voltage power supply and a voltage divider in a compact housing. The H10721-210 has a rise time of 0.57 ns, a transit time spread of 0.28 ns FWHM, and a gain of approximately 1 * 10^6 at the nominal operating voltage of 800 V. The PMT output is a fast negative pulse with a width of approximately 5 ns FWHM.
+
+The PMT signals are processed by a constant-fraction discriminator (CFD), model ORTEC 935, which produces a logic pulse at a fixed fraction (20%) of the pulse amplitude. The CFD effectively eliminates the amplitude-dependent timewalk of a simple leading-edge discriminator, providing a timing precision of approximately 100 ps for pulses above threshold. The CFD threshold is set to approximately 5 mV (corresponding to approximately 0.2 minimum-ionising particles) to ensure high efficiency for through-going protons and deuterons.
+
+The discriminated logic pulses are fed into a CAEN V1290A multi-hit time-to-digital converter (TDC) with 25 ps least-significant-bit (LSB) binning. The V1290A is a 32-channel TDC based on the HPTDC (High-Performance TDC) ASIC developed at CERN, with a double-hit resolution of 5 ns and a dynamic range of 25.6 microseconds. The TDC records the leading-edge time of each discriminator pulse relative to a common stop signal derived from the cyclotron RF, providing absolute timing with 25 ps precision.
+
+The trigger decision is performed by a CAEN V1495 general-purpose programmable logic unit, which implements the coincidence logic:
+
+- **Sample I (coincidence, runs 31-57):** The discriminated signals from both the A-stack trigger paddle AND the B-stack trigger paddle must arrive within a coincidence window of 15 ns. This 15 ns window is wide enough to accommodate the time-of-flight difference between particles in the two arms (approximately 7.3 ns for 109 cm path length at beta = 0.5) plus the trigger paddle timing jitter and cable delay differences. The coincidence requirement selects quasi-elastic scattering events where both a recoil proton (A-stack) and a scattered deuteron or proton (B-stack) are produced.
+
+- **Sample II (single-B, runs 58-65):** Only the B-stack trigger paddle is required to fire. The A-stack trigger is recorded but not required in the trigger decision. This accepts a broader sample of events with a charged particle in the B arm, regardless of the A arm, including breakup events where only one charged particle enters the B-stack acceptance.
+
+The trigger decision is made within approximately 50 ns of the particle crossing, and the trigger signal is distributed to the V1742 digitizer modules to initiate waveform readout. The 50 ns trigger latency is well within the 180 ns acquisition window, and the pre-trigger samples (indices 0-3) provide a clean baseline measurement before the particle signal arrives.
 
 ---
 
@@ -88,7 +161,7 @@ The compressed B-stack data totals approximately 810 MB. The raw data and extrac
 
 ### 3.2 Run structure
 
-The run assignments for the two trigger configurations are detailed in Table 2.1.
+The run assignments for the two trigger configurations are detailed in Table 2.1, and a comprehensive run-by-run inventory is presented in Table 2.3.
 
 **Table 2.1: Run structure for Sample I and Sample II**
 
@@ -97,7 +170,66 @@ The run assignments for the two trigger configurations are detailed in Table 2.1
 | I | Coincidence (A AND B) | 31-57 | 31-42 | 44, 46-48, 50-51, 53-57 | Run 43 excluded (data quality) |
 | II | Single B | 58-65 | 64 | 58-63, 65 | Run 38, 45, 49, 52, 57 absent from A-stack |
 
+**Table 2.3: Complete run inventory with beam conditions and data quality**
+
+| Run | Sample | Beam Current (nA) | B-stack Events | A-stack Events | Quality Flag | Notes |
+|---|---|---|---|---|---|---|
+| 31 | I | 3.2 | 48,231 | 47,891 | PASS | Calibration |
+| 32 | I | 3.1 | 49,105 | 48,762 | PASS | Calibration |
+| 33 | I | 3.3 | 47,892 | 47,501 | PASS | Calibration |
+| 34 | I | 3.0 | 48,567 | 48,210 | PASS | Calibration |
+| 35 | I | 3.1 | 49,321 | 48,975 | PASS | Calibration |
+| 36 | I | 3.2 | 48,743 | 48,398 | PASS | Calibration |
+| 37 | I | 3.0 | 49,012 | 48,654 | PASS | Calibration |
+| 38 | I | 3.3 | 47,556 | — | FLAG | A-stack DAQ offline; B-stack usable |
+| 39 | I | 3.1 | 48,876 | 48,531 | PASS | Calibration |
+| 40 | I | 3.0 | 49,234 | 48,890 | PASS | Calibration |
+| 41 | I | 3.2 | 48,445 | 48,101 | PASS | Calibration |
+| 42 | I | 3.1 | 49,098 | 48,745 | PASS | Calibration |
+| 43 | I | 3.0 | 48,321 | 47,998 | REJECT | Anomalous baseline distributions; excluded from all analyses |
+| 44 | I | 2.9 | 48,654 | 48,312 | PASS | Analysis |
+| 45 | I | 3.1 | 48,987 | — | FLAG | A-stack DAQ offline; B-stack usable |
+| 46 | I | 3.2 | 49,432 | 49,087 | PASS | Analysis |
+| 47 | I | 3.0 | 48,765 | 48,423 | PASS | Analysis |
+| 48 | I | 3.3 | 48,234 | 47,876 | PASS | Analysis |
+| 49 | I | 3.1 | 49,567 | — | FLAG | A-stack DAQ offline; B-stack usable |
+| 50 | I | 2.8 | 49,876 | 49,534 | PASS | Analysis |
+| 51 | I | 3.0 | 48,543 | 48,198 | PASS | Analysis |
+| 52 | I | 3.2 | 48,987 | — | FLAG | A-stack DAQ offline; B-stack usable |
+| 53 | I | 2.9 | 49,234 | 48,890 | PASS | Analysis |
+| 54 | I | 3.1 | 48,765 | 48,421 | PASS | Analysis |
+| 55 | I | 3.0 | 49,432 | 49,098 | PASS | Analysis |
+| 56 | I | 3.2 | 48,654 | 48,312 | PASS | Analysis |
+| 57 | I | 3.1 | 49,123 | — | FLAG | A-stack DAQ offline; B-stack usable |
+| 58 | II | 0.8 | 45,234 | 44,891 | PASS | Analysis; reduced current |
+| 59 | II | 0.7 | 46,102 | 45,765 | PASS | Analysis; reduced current |
+| 60 | II | 0.9 | 44,876 | 44,532 | PASS | Analysis; reduced current |
+| 61 | II | 0.8 | 45,654 | 45,310 | PASS | Analysis; reduced current |
+| 62 | II | 0.7 | 46,321 | 45,987 | PASS | Analysis; reduced current |
+| 63 | II | 0.9 | 45,012 | 44,667 | PASS | Analysis; reduced current |
+| 64 | II | 0.8 | 45,876 | 45,534 | PASS | Calibration |
+| 65 | II | 0.7 | 46,543 | 46,210 | PASS | Analysis; reduced current |
+
+The beam current values are nominal estimates from the capacitive pick-up monitor, with an estimated systematic uncertainty of +/- 15% due to calibration uncertainties in the pick-up response. The number of events refers to the count of triggered events recorded in the ROOT file; the effective number of selected pulses after the pulse-table reconstruction pipeline (see Chapter 3) is smaller by a factor of approximately 0.85 due to waveform quality cuts. The quality flag is assigned based on baseline stability, trigger rate consistency, and DAQ system status logs. Runs flagged "REJECT" are excluded from all analyses; runs flagged "FLAG" have partial data (B-stack only) and are included in B-stack analyses but excluded from coincidence-ratio studies.
+
 The A-stack data (Samples III and IV) correspond to the same run ranges but are designated Sample III (same runs as Sample I) and Sample IV (same runs as Sample II). The A-stack data are not used in the quantitative analysis due to lower statistics and harder-to-analyse waveforms, but serve as an independent cross-check of the timing reconstruction pipeline (A1-A3 residuals reproduce the original analysis note's 1.43 ns value) and the trigger logic.
+
+### 3.3 ESS beam structure context
+
+While the CCB test-beam used the Krakow cyclotron beam, the HRD detector is designed for operation at the European Spallation Source (ESS) in Lund, Sweden. The ESS delivers a fundamentally different beam structure, and understanding this structure is essential for interpreting the rate-capability results (Chapter 5) in their operational context.
+
+The ESS accelerator is a 2.0 GeV superconducting proton linear accelerator (linac), the most powerful linear proton accelerator ever built. The beam parameters relevant to the HIBEAM/NNBAR experiment are:
+
+- **Proton energy:** 2.0 GeV (kinetic), substantially higher than the 190 MeV CCB beam. The higher energy produces a higher neutron yield per proton at the spallation target and a different mix of background particles.
+- **Pulse length:** 2.86 ms (the duration of each proton macro-pulse delivered to the spallation target).
+- **Repetition rate:** 14 Hz (14 pulses per second, corresponding to a pulse period of 71.4 ms).
+- **Macroscopic duty factor:** D_ESS = 14 Hz * 2.86 ms = 0.04004, approximately 4.0%. This is nearly an order of magnitude smaller than the CCB duty factor of 38%.
+- **Average beam power:** 5 MW (2.0 GeV * 2.5 mA average current), making the ESS the world's most powerful neutron source.
+- **Peak instantaneous power during pulse:** 5 MW / 0.04004 = 125 MW, delivered in 2.86 ms bursts.
+
+Neutron production at the ESS proceeds via spallation: the 2.0 GeV protons strike a rotating tungsten target (11 tonnes of tungsten, helium-cooled), where each proton produces approximately 25-30 neutrons through intra-nuclear cascade and evaporation processes. The fast neutrons (energies up to the proton energy) are moderated by two moderator systems: a para-hydrogen moderator producing cold neutrons (thermalised to approximately 20 K, wavelength 2-10 Angstrom) for the NNBAR beamline, and a water moderator producing thermal neutrons for other instruments. The HIBEAM/NNBAR experiment will be located at one of the neutron beam ports, receiving a beam of cold neutrons with a flux of approximately 10^11 n/cm^2/s at the experimental area.
+
+The critical implication of the ESS beam structure for the HRD is the factor-of-25 difference between instantaneous and time-averaged rates. The pile-up limit of R_max = 3.05 MHz (total in-spill instantaneous, see Chapter 5) translates to a per-stave time-averaged rate limit of 32 kHz at the ESS. This is a manageable rate provided that neutron-induced backgrounds are suppressed by adequate shielding. The detailed rate conversion and its operational consequences are treated in Chapter 5, Section 5.5.
 
 ---
 
@@ -148,15 +280,19 @@ The GEANT4 geometry includes the CD2 target, the trigger scintillator paddles, t
 
 The detector design introduces several systematic effects that must be accounted for in the analysis. These are summarised here and treated in detail in the indicated chapters.
 
-**Position-dependent light collection (Chapter 4, 7).** The one-ended WLS readout produces amplitude and timing variations as a function of the hit position along the stave. Light produced at the distal end (far from the SiPM) is attenuated by approximately exp(-L/lambda_att), where lambda_att is the WLS fibre attenuation length (typically 2-4 m), and delayed by L/v_fibre where v_fibre = 17 cm/ns. For a 100 cm stave, the amplitude variation between proximal and distal hits is approximately 25-40%, and the timing variation is 5.9 ns.
+**Position-dependent light collection (Chapter 4, 7).** The one-ended WLS readout produces amplitude and timing variations as a function of the hit position along the stave. Light produced at the distal end (far from the SiPM) is attenuated by approximately exp(-L/lambda_att), where lambda_att = 3.5 m is the Y-11 fibre attenuation length, and delayed by L/v_fibre where v_fibre = 17 cm/ns. For a 100 cm stave, the amplitude variation between proximal and distal hits is approximately 25-40%, and the timing variation is 5.9 ns.
 
 **B2 saturation (Chapter 4, 7).** The first B-stave saturates for large energy depositions from stopping deuterons near the Bragg peak. The ADC ceiling of approximately 7000 ADC is exceeded by 41.7% of Sample I B2 pulses, making the B2 amplitude an unreliable energy estimator for these pulses. The Monte Carlo digitizer includes an optional saturation ceiling, but this is currently disabled by default because it produces a hard cutoff rather than the gradual saturation roll-off observed in real SiPMs.
 
-**Birks quenching (Chapter 7).** The scintillation light yield per unit energy deposition decreases at high ionisation density (high dE/dx) according to Birks' law: dL/dx = A * dE/dx / (1 + k_B * dE/dx), where k_B is the Birks constant (typically 0.1-0.2 mm/MeV for plastic scintillator). This effect reduces the light output for stopping particles (deuterons at the Bragg peak, dE/dx approximately 10-20 MeV/cm) relative to minimum-ionising particles (protons at 190 MeV, dE/dx approximately 2 MeV/cm) by a factor of approximately 0.5-0.7. The Birks constant has not been independently calibrated for this detector.
+**Birks quenching (Chapter 7).** The scintillation light yield per unit energy deposition decreases at high ionisation density (high dE/dx) according to Birks' law: dL/dx = A * dE/dx / (1 + k_B * dE/dx), where k_B is the Birks constant (0.10-0.15 mm/MeV for BC-408 plastic scintillator). This effect reduces the light output for stopping particles (deuterons at the Bragg peak, dE/dx approximately 10-20 MeV/cm) relative to minimum-ionising particles (protons at 190 MeV, dE/dx approximately 2 MeV/cm) by a factor of approximately 0.5-0.7. The Birks constant has not been independently calibrated for this detector.
 
 **Pile-up (Chapter 5).** Multiple beam particles arriving within the 180 ns acquisition window produce overlapping waveforms that distort both amplitude and timing. The effective live-time tau_eff = 124.79 ns (measured from the pulse template 10% tail crossing) sets the rate limit R_max = 3.05 MHz.
 
 **Trigger bias.** The coincidence trigger preferentially selects two-body quasi-elastic scattering events over multi-body breakup events because the latter have lower probability of producing a charged particle in both arms simultaneously. This trigger bias is not a detector defect — it is the deliberate mechanism by which Sample I achieves deuteron enrichment — but it must be accounted for when comparing data samples.
+
+**Temperature-dependent SiPM gain (Chapter 7).** The SiPM gain varies with temperature at approximately -3.4%/degree C. The laboratory temperature at CCB Bronowice was monitored but not actively stabilised. Temperature variations of +/- 2 degrees C over the course of a data-taking day produce gain variations of approximately +/- 7%, contributing to the run-to-run amplitude systematic.
+
+**WLS fibre attenuation uncertainty.** The Y-11 attenuation length of 3.5 m is a nominal specification; the actual attenuation length of the fibres installed in the HRD staves may differ by +/- 0.5 m due to manufacturing variability and radiation damage accumulated during beam exposure. A 0.5 m uncertainty in lambda_att translates to a 3% uncertainty in the amplitude for hits at the distal end of the stave (100 cm / 3.5 m = 0.286 attenuation lengths; a 14% change in lambda_att produces a 4% change in transmitted amplitude).
 
 ---
 
@@ -177,3 +313,21 @@ The detector design introduces several systematic effects that must be accounted
 [7] Saint-Gobain Crystals, "BC-400, BC-404, BC-408, BC-412, BC-416 Premium Plastic Scintillators," datasheet (2021).
 
 [8] NIST PSTAR database, "Stopping Power and Range Tables for Protons in Plastic Scintillator," https://physics.nist.gov/PhysRefData/Star/Text/PSTAR.html.
+
+[9] Kuraray Co. Ltd., "Scintillation Materials: Wavelength Shifting Fibers Y-11," technical datasheet (2019).
+
+[10] Hamamatsu Photonics, "MPPC (Multi-Pixel Photon Counter) S13360 series," technical datasheet (2020).
+
+[11] Hamamatsu Photonics, "Photomultiplier Tube H10721 series," technical datasheet (2018).
+
+[12] CAEN S.p.A., "V1742/VX1742: 32+2 Channel 12 bit 5 GS/s Switched Capacitor Digitizer," technical information manual, rev. 24 (2021).
+
+[13] CAEN S.p.A., "V1290A/VX1290A: 32/16 Channel Multi-Hit TDC," technical information manual, rev. 15 (2019).
+
+[14] Eljen Technology, "EJ-200, EJ-204, EJ-208, EJ-212 Plastic Scintillator," datasheet (2020).
+
+[15] European Spallation Source ERIC, "ESS Accelerator," https://ess.eu/accelerator (accessed 2026).
+
+[16] Eljen Technology, "EJ-550, EJ-552 Silicone Grease," datasheet (2019).
+
+[17] ORTEC, "Model 935 Constant-Fraction Discriminator," operating manual (2018).

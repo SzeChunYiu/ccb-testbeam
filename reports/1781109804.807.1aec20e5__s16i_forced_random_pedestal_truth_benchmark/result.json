@@ -1,0 +1,187 @@
+{
+  "ticket": "1781109804.807.1aec20e5",
+  "worker": "testbeam-laptop-3",
+  "status": "completed",
+  "winner": "ridge",
+  "winner_metric": "run-held-out MAE on timing-tail intervention target",
+  "winner_mae": 0.0003578054570296934,
+  "winner_ci95": [
+    0.0003548597459155592,
+    0.00036081993746387407
+  ],
+  "raw_root_reproduction": {
+    "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+    "n_raw_root_files_hashed": 8,
+    "status": "recomputed_from_raw_root",
+    "reader": "uproot",
+    "tree": "h101",
+    "branch": "HRDv",
+    "runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "staves": [
+      "B2",
+      "B4",
+      "B6",
+      "B8"
+    ],
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "amplitude_cut": 1000.0,
+    "selected_pulses": 640737,
+    "canonical_selected_pulses": 640737,
+    "matches_canonical": true,
+    "delta_vs_canonical": 0,
+    "n_runs": 33
+  },
+  "forced_random_pedestal_provenance": {
+    "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+    "n_bstack_root_files": 53,
+    "n_trigger_rows": 53,
+    "unique_trigger_codes": [
+      1
+    ],
+    "n_files_with_nonbeam_trigger_code": 0,
+    "n_forced_random_keyword_files": 0,
+    "n_forced_random_keyword_root_files": 0,
+    "dedicated_forced_random_pedestal_root_found": false,
+    "verdict": "no_true_nonbeam_pedestal_root_in_accessible_mirror"
+  },
+  "split_strategy": "leave-one-run-out",
+  "bootstrap_resamples": 500,
+  "methods": [
+    {
+      "method": "ridge",
+      "mean_mae": 0.0003578054570296934,
+      "ci95_low": 0.0003548597459155592,
+      "ci95_high": 0.00036081993746387407,
+      "ranking_auc": 0.5519168685121107
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mean_mae": 0.0008094790352465393,
+      "ci95_low": 0.0007557591696136936,
+      "ci95_high": 0.0008824084958751296,
+      "ranking_auc": 0.6196148788927336
+    },
+    {
+      "method": "cnn1d",
+      "mean_mae": 0.02178893690612558,
+      "ci95_low": 0.01859319514190273,
+      "ci95_high": 0.025543388829382965,
+      "ranking_auc": 0.5664548442906574
+    },
+    {
+      "method": "pretrigger_gated_cnn",
+      "mean_mae": 0.024034043290343546,
+      "ci95_low": 0.021992977505460712,
+      "ci95_high": 0.026590326361043335,
+      "ranking_auc": 0.5906590830449827
+    },
+    {
+      "method": "traditional_s16f_scorecard",
+      "mean_mae": 0.03375231818343315,
+      "ci95_low": 0.03315014569259873,
+      "ci95_high": 0.03441364528508336,
+      "ranking_auc": 0.5770901384083045
+    },
+    {
+      "method": "mlp",
+      "mean_mae": 0.03699321302381108,
+      "ci95_low": 0.024860305479982896,
+      "ci95_high": 0.05146829206278887,
+      "ranking_auc": 0.5965413494809688
+    }
+  ],
+  "intervention_curve": [
+    {
+      "quiet_bin": 0,
+      "n": 1360,
+      "quiet_mid": 0.14548947210169336,
+      "observed_tail": 0.9364595831260113,
+      "predicted_tail": 0.9364342622934917
+    },
+    {
+      "quiet_bin": 1,
+      "n": 1360,
+      "quiet_mid": 0.23811308647077864,
+      "observed_tail": 0.838287291746723,
+      "predicted_tail": 0.8382406449395173
+    },
+    {
+      "quiet_bin": 2,
+      "n": 1360,
+      "quiet_mid": 0.32120351440016187,
+      "observed_tail": 0.7374850547763447,
+      "predicted_tail": 0.7374536569718972
+    },
+    {
+      "quiet_bin": 3,
+      "n": 1360,
+      "quiet_mid": 0.41784426759619797,
+      "observed_tail": 0.6351809863941534,
+      "predicted_tail": 0.6351953581555496
+    },
+    {
+      "quiet_bin": 4,
+      "n": 1360,
+      "quiet_mid": 0.5682944517582231,
+      "observed_tail": 0.49701787578173384,
+      "predicted_tail": 0.49704769262056836
+    }
+  ],
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "metrics_summary.csv",
+    "per_run_metrics.csv",
+    "intervention_curve.csv",
+    "raw_root_inventory.csv",
+    "raw_root_selection_counts.csv",
+    "root_trigger_inventory.csv",
+    "forced_random_source_inventory.csv",
+    "benchmark_panel.csv"
+  ],
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "git_commit": "e0b0c12c9a46fcc5e134a5b4b6bef3b625eb323b"
+  },
+  "runtime_seconds": 338.4870653152466
+}

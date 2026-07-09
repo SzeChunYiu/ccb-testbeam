@@ -1,0 +1,101 @@
+{
+  "study": "S01h_external_transfer",
+  "ticket": "1781120073.951.3fa574c6",
+  "worker": "testbeam-laptop-4",
+  "title": "external q-template support transfer",
+  "reproduced": true,
+  "winner": "gradient_boosted_trees",
+  "winner_family": "ml",
+  "winner_metrics": {
+    "method": "gradient_boosted_trees",
+    "family": "ml",
+    "n": 33300,
+    "positives": 2077,
+    "roc_auc": 0.9986443829114962,
+    "auc_ci_low": 0.9983576357237381,
+    "auc_ci_high": 0.9989327210379895,
+    "average_precision": 0.9814984121054908,
+    "ap_ci_low": 0.9699245367082426,
+    "ap_ci_high": 0.9901749456784186
+  },
+  "best_traditional": {
+    "method": "traditional_atom_table",
+    "family": "traditional",
+    "n": 33300,
+    "positives": 2077,
+    "roc_auc": 0.977113352561553,
+    "auc_ci_low": 0.9739583285532687,
+    "auc_ci_high": 0.9788175826820007,
+    "average_precision": 0.6638358310516744,
+    "ap_ci_low": 0.6010143705541876,
+    "ap_ci_high": 0.7283546190862522
+  },
+  "models_benchmarked": [
+    "gradient_boosted_trees",
+    "atom_gated_cnn_new",
+    "mlp",
+    "ridge",
+    "traditional_atom_table",
+    "1d_cnn",
+    "traditional_q_threshold",
+    "q_token_attention"
+  ],
+  "new_architecture": "atom_gated_cnn_new and q_token_attention",
+  "primary_metric": "ROC AUC for injected pile-up/dropout support target",
+  "verdict": "weak_or_no_q_template_transfer",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "q_rows_joined": 640737
+  },
+  "split": {
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_samples": 500,
+    "train_rows": 65016,
+    "heldout_rows": 33300
+  },
+  "target": {
+    "name": "injected pile-up/dropout support damage",
+    "threshold": 0.29416606575250626,
+    "train_positive_fraction": 0.1500092284976006,
+    "heldout_positive_fraction": 0.06237237237237237,
+    "uses_s03_timing_tail": false
+  },
+  "traditional_smoothing_alpha": 20.0,
+  "qtemplate_transfer_diagnostics": [
+    {
+      "contrast": "target_rate_top_decile_q_minus_rest",
+      "value": -0.01571299066362651,
+      "q_threshold": 0.12396409650092602
+    },
+    {
+      "contrast": "mean_damage_top_decile_q_minus_rest",
+      "value": -0.03709860146045685,
+      "q_threshold": 0.12396409650092602
+    },
+    {
+      "contrast": "heldout_target_fraction",
+      "value": 0.06237237237237237,
+      "q_threshold": 0.12396409650092602
+    }
+  ],
+  "next_tickets": [
+    {
+      "title": "S01i charge-depth truth transfer for q-template support atom",
+      "body": "Repeat the S01h external-transfer panel on calibrated charge-depth or simulation-truth labels, keeping run-block bootstrap CIs and the same q-token/atom-gated architecture, to test whether the injected support-transfer winner generalizes beyond synthetic pile-up/dropout."
+    }
+  ],
+  "git_commit": "98d586d0c9cfa63d3459c8ef3b9422338e6e6df1",
+  "python": "3.7.6",
+  "runtime_sec": 61.74940347671509
+}

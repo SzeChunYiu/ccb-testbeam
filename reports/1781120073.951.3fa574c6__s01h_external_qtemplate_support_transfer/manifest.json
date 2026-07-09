@@ -1,0 +1,65 @@
+{
+  "ticket": "1781120073.951.3fa574c6",
+  "worker": "testbeam-laptop-4",
+  "config": "configs/s01h_1781120073_951_3fa574c6_external_qtemplate_support_transfer.yaml",
+  "config_sha256": "0fededababdd6f89db3a5a39bb4e4e2af1d0ecd0b9ec987766f361e8280ba7d4",
+  "q_template_sha256": "afccd71367fbce78238afc2b98e144e1453585a59632c1e6f7ba5413a1fd5fff",
+  "generated_at_unix": 1783596288.6349654,
+  "artifacts": [
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/REPORT.md",
+      "sha256": "e545982a0885969bcdf686cbd22ae2b5842a81cccb6dc615d04e6973f9741dc6",
+      "bytes": 13129
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/benchmark_sample.csv.gz",
+      "sha256": "452771c67151a1c9177c6c9f661acc30c5fd5666d51a09ec668a761489a11442",
+      "bytes": 4062396
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/heldout_per_run_metrics.csv",
+      "sha256": "1e3d7b16591b56d59a18b18b0f299e7b9ff75b010a2019f745bca8e9aa139e95",
+      "bytes": 3734
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/heldout_predictions.csv.gz",
+      "sha256": "80fea0fb97ed739ab3fa7f783cac47a8418350923715e25ccaaa7165668af557",
+      "bytes": 2204694
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/method_auc_ci.png",
+      "sha256": "0fa7f8ec779fdabe6493a10a5bfcfbd18977f5c244a7c77bfd61b1300e15ef41",
+      "bytes": 41842
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/method_summary.csv",
+      "sha256": "40eb8901a629911dfa5128c15af5a4a442f7dac8d65a05da28698ac1f59e1448",
+      "bytes": 1297
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/qtemplate_transfer_diagnostics.csv",
+      "sha256": "3962678dce4cca893b7afe68c35b303e2647f9fa0699f1f1ea5486e1530e24e7",
+      "bytes": 245
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/reproduction_match_table.csv",
+      "sha256": "3127c04c013d2e80c41daff3ba316fb69a1d6ff834cc62c526d7540b8afae899",
+      "bytes": 126
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/result.json",
+      "sha256": "df601ee230f228758d351ba8e57a9732e9960231d730fce0a561985715e730b4",
+      "bytes": 3028
+    },
+    {
+      "path": "reports/1781120073.951.3fa574c6__s01h_external_qtemplate_support_transfer/transfer_summary.csv",
+      "sha256": "855c4227509312010231b3f2dfc711e07adb3e136d40b0cc36a02887a5e68631",
+      "bytes": 1197
+    }
+  ]
+}

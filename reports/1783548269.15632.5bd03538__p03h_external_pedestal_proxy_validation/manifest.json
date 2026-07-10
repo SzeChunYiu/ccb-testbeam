@@ -1,0 +1,23 @@
+{
+  "study": "P03h",
+  "ticket": "1783548269.15632.5bd03538",
+  "worker": "testbeam-laptop-2",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-2/configs/p03h_1783548269_15632_5bd03538_external_pedestal_proxy_validation.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p03h_1783548269_15632_5bd03538_external_pedestal_proxy_validation.py --config configs/p03h_1783548269_15632_5bd03538_external_pedestal_proxy_validation.json",
+  "elapsed_s": 446.43194222450256,
+  "git_commit": "2b5a6c9db3a5aef38cdaecc12a5822e58906cb00",
+  "outputs": {
+    "REPORT.md": "21771db51ed5bbae564e4abda9fa8df9bbc96dce3e6a2c0c45df367e28ca39c5",
+    "external_pedestal_validation.csv": "bd50aec17327a2fa618f9fed279861807e1cdb98be91cf19c8d0684531511a6f",
+    "fig_pooled_benchmark.png": "ebbe90077486b4af7d810aa8c256aa24009cc20ebc4c01c469a53074d0d2faf5",
+    "fig_residual_distributions.png": "9311e3bf2fe98d263775a26a052aa0ddd241a45a747ca00c54b1191a37571345",
+    "heldout_run_summary.csv": "2819135186d53f67d060ff6bd38448c61f379d4101dc3149db871da4e5b0cc8d",
+    "input_sha256.csv": "54ffe78258dd00839e9ea3c1ccfe7fd98cf2ad263e3d399c8e18c0f3ced439f7",
+    "leakage_checks.csv": "d332c7c52be8c6af837c949ac6e3bb2ffd7c71f31ce4da916581e599b1ced207",
+    "model_diagnostics.csv": "abd2846e275c6f2b3f8a6f56b111d6aca708ab70049deb1763817d69921cee64",
+    "pairwise_residuals.csv": "0a504919008e2b9783915f6a82b95994f317f1b978e6a2a95b4b073485ae2945",
+    "pooled_run_block_summary.csv": "d0ba0621c925514c36e401deb935cf3a62d779fabcb71220095c26661f2e815a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "a51243ccf456a0c6f9d0b512dbb9f20e0de3ede49b55301796fdad13474a522e"
+  }
+}

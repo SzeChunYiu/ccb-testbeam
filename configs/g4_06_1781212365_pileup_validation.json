@@ -1,0 +1,55 @@
+{
+  "ticket_id": "1781212365.2054638.39f3086b",
+  "study_id": "G4-06",
+  "worker": "testbeam-laptop-1",
+  "title": "Pile-up validation via raw-waveform overlays and run-heldout ML benchmarks",
+  "output_dir": "reports/1781212365.2054638.39f3086b__g4_06_pileup_validation",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "g4_root_candidates": [
+    "geant4/data/output_krakow_1M.root",
+    "/home/billy/ccb-geant4/output_krakow_1M.root",
+    "/home/billy/ccb-geant4/krakow_109_8-38deg_4-71deg.root"
+  ],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "expected_total_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "max_clean_per_run_stave": 420,
+  "overlays_per_heldout_run": 720,
+  "clean_controls_per_heldout_run": 240,
+  "dt_min_ns": 5.0,
+  "dt_max_ns": 105.0,
+  "sample_spacing_ns": 10.0,
+  "bootstrap_replicates": 800,
+  "random_seed": 2026071006,
+  "nn": {
+    "epochs": 8,
+    "batch_size": 512,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "ticket_id": "1783449200.17995.063d4449",
+  "worker": "testbeam-laptop-4",
+  "study_id": "P08f",
+  "title": "external-anchor depth-matched PID null",
+  "config": "configs/p08f_1783449200_17995_063d4449_external_anchor_depth_matched_pid_null.json",
+  "script": "scripts/p08f_1781076713_924_3a47146c_support_island_bootstrap_ledger.py",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "8cac3adb090e6216ccd2f18f809cac66b17c015a",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "calibrated_label_definition": {
+    "weak_label": {
+      "positive_name": "high_calibrated_range_energy_residual",
+      "negative_name": "low_calibrated_range_energy_residual",
+      "within_run_depth_quantile": 0.25,
+      "min_atom_class_rows": 12,
+      "min_odd_total_charge": 100.0,
+      "min_even_total_charge": 100.0
+    },
+    "calibration": {
+      "calibration_groups": [
+        "sample_i_calib",
+        "sample_ii_calib"
+      ],
+      "calibration_rows": 249681,
+      "anchors_mev": {
+        "B2": 40.041411846408614,
+        "B4": 72.99642627825797,
+        "B6": 97.46806692646969,
+        "B8": 117.96480450815572
+      },
+      "label_source": "odd duplicate-readout PSTAR/depth charge quantile residual, thresholded within run/depth"
+    }
+  },
+  "calibrated_label_support": {
+    "n_atoms": 122,
+    "n_labeled_rows": 289626,
+    "atom_columns": [
+      "run",
+      "depth_idx"
+    ]
+  },
+  "matching": {
+    "method": "continuous run/depth nearest-neighbor matching in standardized nuisance plus propensity-logit space",
+    "settings": {
+      "random_seed": 49200,
+      "primary_caliper": 0.45,
+      "sensitivity_calipers": [
+        0.3,
+        0.45,
+        0.65
+      ],
+      "max_pairs_per_run_depth": 45,
+      "nearest_k": 55,
+      "propensity_weight": 1.0,
+      "min_pairs_per_run_depth": 8,
+      "exact_cell_quantile_bins": 6,
+      "nuisance_columns": [
+        "log_b2_area",
+        "log_even_total_charge",
+        "event_fraction",
+        "depth_idx",
+        "multiplicity",
+        "topology_code",
+        "downstream_charge_fraction",
+        "saturated_count",
+        "b2_saturated",
+        "b2_width20",
+        "b2_tail_fraction"
+      ]
+    },
+    "matched_rows": 816,
+    "matched_pairs": 408,
+    "support_loss_fraction": 0.9971825733877483,
+    "max_abs_smd": 1.2438794737962362,
+    "exact_cell_matched_rows": 944,
+    "sensitivity": [
+      {
+        "matching": "exact_cell",
+        "caliper": null,
+        "matched_rows": 944,
+        "matched_pairs": 472,
+        "support_loss_fraction": 0.9967406241152382,
+        "max_abs_smd": 0.6711794642484447,
+        "nuisance_only_runheldout_auc": 0.7489327942084646
+      },
+      {
+        "matching": "continuous_nn_propensity",
+        "caliper": 0.3,
+        "matched_rows": 320,
+        "matched_pairs": 160,
+        "support_loss_fraction": 0.9988951268187248,
+        "max_abs_smd": 1.1738701378498648,
+        "nuisance_only_runheldout_auc": 0.8848306207014396
+      },
+      {
+        "matching": "continuous_nn_propensity",
+        "caliper": 0.45,
+        "matched_rows": 816,
+        "matched_pairs": 408,
+        "support_loss_fraction": 0.9971825733877483,
+        "max_abs_smd": 1.2438794737962362,
+        "nuisance_only_runheldout_auc": 0.9058401378100882
+      },
+      {
+        "matching": "continuous_nn_propensity",
+        "caliper": 0.65,
+        "matched_rows": 1700,
+        "matched_pairs": 850,
+        "support_loss_fraction": 0.9941303612244757,
+        "max_abs_smd": 1.2884070938028191,
+        "nuisance_only_runheldout_auc": 0.9290560553633219
+      }
+    ]
+  },
+  "p01b_latent_join": {
+    "status": "joined",
+    "matched_fraction": 1.0,
+    "latent_columns": [
+      "p01b_z0",
+      "p01b_z1",
+      "p01b_z2",
+      "p01b_z3"
+    ]
+  },
+  "benchmark": {
+    "evaluated_rows": 802,
+    "evaluated_runs": [
+      31,
+      32,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      48,
+      49,
+      50,
+      53,
+      54,
+      55,
+      56,
+      57,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "skipped_runs": [
+      33,
+      47,
+      51,
+      52
+    ],
+    "positive_fraction": 0.5
+  },
+  "winner": {
+    "method": "ridge logistic waveform+latent",
+    "selection_metric": "point-estimate ROC AUC among non-sentinel methods",
+    "roc_auc": 0.9988992605767377,
+    "roc_auc_ci": [
+      0.997051582048453,
+      0.9998903623086315
+    ],
+    "average_precision": 0.999093660819117,
+    "fixed_purity_at_80pct_eff": 1.0
+  },
+  "support_island_ledger": {
+    "n_total_islands": 46,
+    "n_eligible_islands": 3,
+    "n_promoted_islands": 0,
+    "promotion_rule": {
+      "min_rows": 24,
+      "min_runs": 3,
+      "min_winner_auc_ci_low": 0.6,
+      "min_lift_ci_low": 0.0,
+      "max_nuisance_auc_ci_high": 0.75,
+      "max_shuffled_auc_ci_high": 0.65
+    },
+    "promoted_islands": []
+  },
+  "alternate_label_stability": [
+    {
+      "alternate_quantile": 0.2,
+      "n_scored_rows": 498,
+      "n_support_atoms": 118,
+      "positive_fraction": 0.4799196787148594,
+      "winner_roc_auc": 0.9991114844671329,
+      "winner_average_precision": 0.9991887882704691,
+      "traditional_roc_auc": 0.9775447892602704,
+      "traditional_average_precision": 0.9662562090831361,
+      "nuisance_roc_auc": 0.8975783913022406,
+      "nuisance_average_precision": 0.7960886351710063,
+      "shuffled_roc_auc": 0.5875995541267508,
+      "shuffled_average_precision": 0.5386017336872815
+    },
+    {
+      "alternate_quantile": 0.25,
+      "n_scored_rows": 802,
+      "n_support_atoms": 122,
+      "positive_fraction": 0.5,
+      "winner_roc_auc": 0.9988992605767377,
+      "winner_average_precision": 0.999093660819117,
+      "traditional_roc_auc": 0.9857401384319749,
+      "traditional_average_precision": 0.9814287854711441,
+      "nuisance_roc_auc": 0.9056038208717607,
+      "nuisance_average_precision": 0.8192399403246263,
+      "shuffled_roc_auc": 0.5548908277933595,
+      "shuffled_average_precision": 0.5352610884266515
+    },
+    {
+      "alternate_quantile": 0.3,
+      "n_scored_rows": 802,
+      "n_support_atoms": 123,
+      "positive_fraction": 0.5,
+      "winner_roc_auc": 0.9988992605767377,
+      "winner_average_precision": 0.999093660819117,
+      "traditional_roc_auc": 0.9857401384319749,
+      "traditional_average_precision": 0.9814287854711441,
+      "nuisance_roc_auc": 0.9056038208717607,
+      "nuisance_average_precision": 0.8192399403246263,
+      "shuffled_roc_auc": 0.5548908277933595,
+      "shuffled_average_precision": 0.5352610884266515
+    }
+  ],
+  "pid_adoption": false,
+  "p08b_comparison": {
+    "ml_auc": 0.9859412898142259,
+    "traditional_auc": 0.985552736677294,
+    "even_charge_proxy_auc": 0.985196964324116
+  },
+  "input_file_count": 33,
+  "follow_up_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 67.5,
+  "primary_interpretation": "The GBT-style waveform model wins the weak-label benchmark, but no support island is promoted unless it clears traditional, nuisance-only, and shuffled-label bootstrap gates. This run is a support ledger, not PID adoption."
+}

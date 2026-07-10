@@ -1,0 +1,209 @@
+{
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "input_sha256.csv",
+    "root_trigger_audit.csv",
+    "external_record_inventory.csv",
+    "external_text_hits.csv",
+    "reproduction_match_table.csv",
+    "method_summary.csv",
+    "method_deltas_vs_traditional.csv",
+    "fold_scores.csv.gz",
+    "sign_diagnostic.png"
+  ],
+  "bootstrap_replicates": 500,
+  "environment": {
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "python": "3.7.6"
+  },
+  "external_record_summary": {
+    "external_validation_available": false,
+    "independent_external_candidate_files": 0,
+    "text_files_scanned": 521,
+    "text_token_hits": 54
+  },
+  "git_commit": "a386519e78489f52548a37d8637715e9570e2d36",
+  "methods": [
+    {
+      "auc": 0.5253064463965222,
+      "auc_ci_high": 0.6734204698603227,
+      "auc_ci_low": 0.4275152943356289,
+      "average_precision": 0.9299180123400301,
+      "brier": 0.06706243193793711,
+      "log_loss": 0.34439076418814146,
+      "method": "traditional",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.6618766796760405,
+      "predicted_downstream_delta_ci_low": 0.5211893099506293,
+      "predicted_high_minus_low_downstream": 0.5759694665093388,
+      "score_downstream_slope": 4.2129925081345165
+    },
+    {
+      "auc": 0.5329889440314767,
+      "auc_ci_high": 0.688582077549948,
+      "auc_ci_low": 0.43444002083995686,
+      "average_precision": 0.9422290109472047,
+      "brier": 0.11612055909262442,
+      "log_loss": 0.41093498747366103,
+      "method": "ridge",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.7026044407741655,
+      "predicted_downstream_delta_ci_low": 0.562901115796542,
+      "predicted_high_minus_low_downstream": 0.6264418686783519,
+      "score_downstream_slope": 13.116460452681785
+    },
+    {
+      "auc": 0.5246520895916336,
+      "auc_ci_high": 0.6951257187559382,
+      "auc_ci_low": 0.41822727550157646,
+      "average_precision": 0.9065766454962437,
+      "brier": 0.06594418400289971,
+      "log_loss": 0.3040407272542994,
+      "method": "gradient_boosted_trees",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.6945953449817549,
+      "predicted_downstream_delta_ci_low": 0.5527488447099888,
+      "predicted_high_minus_low_downstream": 0.609386117498508,
+      "score_downstream_slope": 3.982574619526201
+    },
+    {
+      "auc": 0.2675702603000166,
+      "auc_ci_high": 0.39469100129664353,
+      "auc_ci_low": 0.18462567624895757,
+      "average_precision": 0.8865875514914088,
+      "brier": 0.06794705804445053,
+      "log_loss": 0.31659090231490516,
+      "method": "mlp",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.41864029630834665,
+      "predicted_downstream_delta_ci_low": 0.16772640545359976,
+      "predicted_high_minus_low_downstream": 0.30195620248182,
+      "score_downstream_slope": 3.7608159320162438
+    },
+    {
+      "auc": 0.6083500149960591,
+      "auc_ci_high": 0.6768848232144333,
+      "auc_ci_low": 0.5008455403047372,
+      "average_precision": 0.9523987985504879,
+      "brier": 0.2415205455171982,
+      "log_loss": 0.6693911355081305,
+      "method": "cnn1d",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.46705397512782165,
+      "predicted_downstream_delta_ci_low": 0.3202959326822069,
+      "predicted_high_minus_low_downstream": 0.38595577704255163,
+      "score_downstream_slope": 1.4022207448223727
+    },
+    {
+      "auc": 0.6631005903344617,
+      "auc_ci_high": 0.7686573294885,
+      "auc_ci_low": 0.4864182366938099,
+      "average_precision": 0.9582776191762641,
+      "brier": 0.24052949639404614,
+      "log_loss": 0.66837400616331,
+      "method": "dilated_pretrigger_tcn",
+      "n": 9381,
+      "predicted_downstream_delta_ci_high": 0.4053038250921483,
+      "predicted_downstream_delta_ci_low": 0.2678878121154383,
+      "predicted_high_minus_low_downstream": 0.32967179814906655,
+      "score_downstream_slope": 1.3853703234010384
+    }
+  ],
+  "ml_minus_traditional": [
+    {
+      "ci_high": 0.05874225547289516,
+      "ci_low": 0.031207707544822414,
+      "delta": 0.046040705266804746,
+      "method": "ridge",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": 0.046528120605031226,
+      "ci_low": 0.0031314185355212883,
+      "delta": 0.02992102371209357,
+      "method": "gradient_boosted_trees",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": -0.12997858977894441,
+      "ci_low": -0.48996441858228396,
+      "delta": -0.28164561434900487,
+      "method": "mlp",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": -0.10938338027367868,
+      "ci_low": -0.2822056377484729,
+      "delta": -0.18569748980781817,
+      "method": "cnn1d",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    },
+    {
+      "ci_high": -0.16364316754437586,
+      "ci_low": -0.36306454787856035,
+      "delta": -0.23827921322062773,
+      "method": "dilated_pretrigger_tcn",
+      "metric": "predicted_high_minus_low_downstream_minus_traditional",
+      "n_bootstrap": 500
+    }
+  ],
+  "next_tickets": [],
+  "promotion_rule": "promote an ML/NN method only if an independent external tagged-random/scaler-current source is available and downstream sign CI plus ML-minus-traditional sign CI are wholly positive; otherwise retain traditional",
+  "reproduced": true,
+  "reproduction": [
+    {
+      "delta": 0,
+      "expected": 640737,
+      "pass": true,
+      "quantity": "total selected B-stave pulses from raw HRDv",
+      "reproduced": 640737
+    },
+    {
+      "delta": 0,
+      "expected": 0,
+      "pass": true,
+      "quantity": "non-beam selected pulses in benchmark runs",
+      "reproduced": 0
+    }
+  ],
+  "root_trigger_summary": {
+    "nonbeam_trigger_entries": 0,
+    "runs_audited": 33,
+    "tagged_random_trigger_runs": 0
+  },
+  "runtime_sec": 158.21277403831482,
+  "sign_summary": {
+    "benchmark_rows": 9381,
+    "benchmark_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "high_downstream_fraction": 0.7021349469117479,
+    "low_downstream_fraction": 0.2845659163987138,
+    "observed_downstream_high_minus_low": 0.4175690305130341
+  },
+  "split": "leave one source run out over S10 low_2nA and high_20nA current-family runs; run-block bootstrap CIs",
+  "study": "S16q",
+  "ticket": "1783526593.13513.0bba7add",
+  "title": "external tagged-random/scaler-current tau sign validation",
+  "winner": "traditional",
+  "worker": "testbeam-laptop-4"
+}

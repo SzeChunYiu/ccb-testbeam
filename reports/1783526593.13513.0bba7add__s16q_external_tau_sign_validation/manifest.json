@@ -1,0 +1,18 @@
+{
+  "created_utc_unix": 1783697443.8081234,
+  "files": [
+    "REPORT.md",
+    "external_record_inventory.csv",
+    "external_text_hits.csv",
+    "fold_scores.csv.gz",
+    "input_sha256.csv",
+    "method_deltas_vs_traditional.csv",
+    "method_summary.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "root_trigger_audit.csv",
+    "sign_diagnostic.png"
+  ],
+  "output_dir": "reports/1783526593.13513.0bba7add__s16q_external_tau_sign_validation",
+  "ticket": "1783526593.13513.0bba7add"
+}

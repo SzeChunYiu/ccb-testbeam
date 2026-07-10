@@ -1,0 +1,129 @@
+{
+  "ticket_id": "1783449200.17995.063d4449",
+  "script": "scripts/p08f_1781076713_924_3a47146c_support_island_bootstrap_ledger.py",
+  "config": "configs/p08f_1783449200_17995_063d4449_external_anchor_depth_matched_pid_null.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p08f_1781076713_924_3a47146c_support_island_bootstrap_ledger.py --config configs/p08f_1783449200_17995_063d4449_external_anchor_depth_matched_pid_null.json",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "git_commit_at_run": "8cac3adb090e6216ccd2f18f809cac66b17c015a",
+  "raw_root_dir": "data/root/root",
+  "random_seeds": {
+    "matching": 49200,
+    "benchmark": 49207
+  },
+  "input_sha256_csv": "reports/1783449200.17995.063d4449__p08f_external_anchor_depth_matched_pid_null/input_sha256.csv",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "artifacts": [
+    {
+      "file": "REPORT.md",
+      "sha256": "6d1821758bf08eb8d7e4ef1a2b6752bc5db2ecfe4c7df8bb331655e348e17cb0",
+      "bytes": 15407
+    },
+    {
+      "file": "alternate_label_stability.csv",
+      "sha256": "a22fe511e9643bf6ef9c09da1dc718bf8730d1bed26d2d16a74d9a2ec6865074",
+      "bytes": 763
+    },
+    {
+      "file": "calibrated_label_support.csv",
+      "sha256": "b8a6495ac105d817318ec8c946f5463df38f510fd2c4fb5f369b134bf27bafa2",
+      "bytes": 7168
+    },
+    {
+      "file": "continuous_matching_cells_caliper_0.30.csv",
+      "sha256": "4a75855013605dd83b5509a85ddfe65b41dc2bd68afcd263f7d7878acd6ffcf9",
+      "bytes": 3663
+    },
+    {
+      "file": "continuous_matching_cells_caliper_0.45.csv",
+      "sha256": "d3ed2404a4aeebeb44342c068144e36754748761872cfa728a87ab567bbfb79e",
+      "bytes": 4138
+    },
+    {
+      "file": "continuous_matching_cells_caliper_0.65.csv",
+      "sha256": "10a49379a2722e417cbc32b1c96b9473cad1c7cd9f2892a1847db974ff4f9286",
+      "bytes": 4837
+    },
+    {
+      "file": "exact_cell_matching_cells.csv",
+      "sha256": "f2511964fa9f877c59a37cd2c2c3805faa6356667af6ffb85acc682c123d459d",
+      "bytes": 736537
+    },
+    {
+      "file": "heldout_run_label_counts.csv",
+      "sha256": "e3d75f17df0dc06d27db3061477d4b1a92551334416b13b5c31d637add976ded",
+      "bytes": 882
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+      "bytes": 3565
+    },
+    {
+      "file": "matched_balance_smd.csv",
+      "sha256": "970257dd2390216ec9af63887aa45369e0ae63f774a22d715075cbcb1f17e87b",
+      "bytes": 867
+    },
+    {
+      "file": "matched_event_preview.csv",
+      "sha256": "38a82dc913d0bd0f1236e753302db11f4848b2d40ca170f1e05fd3fdbf6898e6",
+      "bytes": 65099
+    },
+    {
+      "file": "matching_sensitivity.csv",
+      "sha256": "3839546b15256ba8d52d82022cd5fb98e311a2c9c90142e306b8c6f00eab617b",
+      "bytes": 469
+    },
+    {
+      "file": "oof_prediction_preview.csv",
+      "sha256": "013080b5ca052fcfd53d3ff005c06b0a0a46b09820c7ba13a941a83dbf693625",
+      "bytes": 279254
+    },
+    {
+      "file": "reproduction_counts_by_group.csv",
+      "sha256": "b56cfcd2bc7ffd01d7bcde923bc801c41fc0b21514d2ca074ddc019a9c70167e",
+      "bytes": 302
+    },
+    {
+      "file": "reproduction_counts_by_run.csv",
+      "sha256": "89fdec960b8e0bce5d363cb25dbfc2971eae2d906df776c3c5dce5a23d02816b",
+      "bytes": 2106
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "f383906e6fd2f26e35bd34a7c496d2e0de07d4ade3d8ed80fa50b2ebe6a3255f",
+      "bytes": 329
+    },
+    {
+      "file": "result.json",
+      "sha256": "2df367e284b0b97f05b92cb2851431d398948957d4f531f081375792ed148c4f",
+      "bytes": 8170
+    },
+    {
+      "file": "scoreboard.csv",
+      "sha256": "31932853b935fc50099534f7b3b5b3c339e187d146bba37f6732d6b81bde5cce",
+      "bytes": 3721
+    },
+    {
+      "file": "support_island_event_scores.csv",
+      "sha256": "5cb6615ed090748fe7be05f4e781acd714b5debb2601271c1738b3170d887215",
+      "bytes": 128572
+    },
+    {
+      "file": "support_island_ledger.csv",
+      "sha256": "a06741236042e832bf67700d7e35104f161f0000998bb650a15da17d3c79899d",
+      "bytes": 5584
+    },
+    {
+      "file": "support_stratum_summary.csv",
+      "sha256": "a1492b7dca3c34490b46e4f87ba7ec809b7dd26d9e3ec50deb8aa2e075531f4a",
+      "bytes": 2592
+    },
+    {
+      "file": "weak_label_counts_by_run_depth.csv",
+      "sha256": "dabd6c3ddf627ca14134d830b58dcb34ceb275bdd86627ce8e0c88f532db97d3",
+      "bytes": 11314
+    }
+  ]
+}

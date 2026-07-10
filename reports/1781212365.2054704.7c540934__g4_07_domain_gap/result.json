@@ -1,0 +1,66 @@
+{
+  "ticket_id": "1781212365.2054704.7c540934",
+  "worker": "testbeam-laptop-2",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "run"
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "heldout_auc": 0.9999995077357515,
+    "heldout_average_precision": 0.9999999128907312,
+    "auc_ci95_low": 0.9999983928089273,
+    "auc_ci95_high": 1.0,
+    "n_heldout": 29040
+  },
+  "unsafe_feature_count_auc_gt_0p70": 7,
+  "deliverables": {
+    "report": "reports/1781212365.2054704.7c540934__g4_07_domain_gap/REPORT.md",
+    "docs_report": "docs/reports/G4_07_domain_gap.md",
+    "heatmap": "docs/figures/reports/1781212365.2054704.7c540934__g4_07_domain_gap/g4_07_domain_gap_heatmap.png",
+    "flagged_feature_list": "reports/1781212365.2054704.7c540934__g4_07_domain_gap/flagged_features.csv"
+  }
+}

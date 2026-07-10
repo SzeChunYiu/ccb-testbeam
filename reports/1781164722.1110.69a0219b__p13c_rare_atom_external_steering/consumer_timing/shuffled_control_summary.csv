@@ -1,0 +1,7 @@
+consumer,method,method_variant,shuffled_false_steer_rate,shuffled_false_steer_rate_ci_low,shuffled_false_steer_rate_ci_high,n_shuffled_negative
+timing,traditional_support_scorecard,traditional_support_scorecard,0.0,0.0,0.0,851
+timing,gradient_boosted_trees,gradient_boosted_trees_learning_rate0.03,0.005875440658049354,0.001217409062235646,0.01072070438207028,851
+timing,ridge,ridge_C3,0.010575793184488837,0.005705834258916451,0.015789258297584107,851
+timing,support_gated_cnn_new,support_gated_cnn_new_width8,0.02702702702702703,0.0188538923189845,0.03535136874554205,851
+timing,cnn_1d,cnn_1d_width8,0.08695652173913043,0.07159272859100659,0.10320493542512489,851
+timing,mlp,mlp_hidden32,0.381903642773208,0.2740646167366887,0.4711111732312079,851

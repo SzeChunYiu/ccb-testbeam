@@ -1,0 +1,9 @@
+check,value,threshold,pass,interpretation
+tree_entries,1000000,exactly 1000000,True,The ROOT tree has the requested one million event rows.
+committed_summary_reproduced,43,43 summary fields pass,True,Independent chunked recomputation matches sim_summary.json.
+energy_conservation,185,0 events with sum detector EDep > sum primary Ekin,False,No event deposits more sensitive-detector energy than primary kinetic energy.
+finite_edep,0,0 non-finite EDep values,True,No NaN or infinite EDep entries were found.
+nonnegative_edep,0,0 negative EDep values,True,No negative deposited energies were found.
+scibar_layer_domain,0,0 Sci_bar hits outside layer IDs 0..7,True,Sci_bar layers match the eight-layer summary contract.
+duplicate_exact_hit_rows,0,0 exact duplicate detector hit tuples,True,No exact duplicate hit records after rounded numeric tuple comparison.
+geometry_positions_finite,0,0 non-finite global hit positions,True,No non-finite global positions; no numeric geometry escape sentinel found.

@@ -1,0 +1,225 @@
+{
+  "ticket_id": "1781181864.166771.778b7120",
+  "study": "S20",
+  "worker": "testbeam-laptop-4",
+  "title": "Audit Geant4 truth integrity for output_krakow_1M.root",
+  "root_file": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "summary_file": "geant4/results/sim_summary.json",
+  "root_sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+  "git_commit": "ca371e2f1b7cfe6c813c45ad515783e5f9e34c48",
+  "python": "3.7.6",
+  "uproot": "5.0.9",
+  "events": 1000000,
+  "reproduced": false,
+  "winner": {
+    "name": "sim_summary_json_reproduced_but_truth_integrity_energy_budget_fails",
+    "reason": "The committed summary is exactly reproduced, but the requested energy-conservation gate flags 185 events with summed sensitive-detector EDep above summed primary Ekin."
+  },
+  "recomputed_summary": {
+    "events": 1000000,
+    "per_layer": [
+      {
+        "layer": 0,
+        "hits": 371089,
+        "hits_gt10MeV": 311247,
+        "mean_edep_MeV": 23.3447089755593,
+        "p_frac": 0.4954040674878533,
+        "d_frac": 0.39248536065472167
+      },
+      {
+        "layer": 1,
+        "hits": 288230,
+        "hits_gt10MeV": 245197,
+        "mean_edep_MeV": 20.907364379187054,
+        "p_frac": 0.5484508899143046,
+        "d_frac": 0.3633070811504701
+      },
+      {
+        "layer": 2,
+        "hits": 175489,
+        "hits_gt10MeV": 148042,
+        "mean_edep_MeV": 20.535003877146956,
+        "p_frac": 0.6921459464695793,
+        "d_frac": 0.20136304839619576
+      },
+      {
+        "layer": 3,
+        "hits": 143580,
+        "hits_gt10MeV": 122023,
+        "mean_edep_MeV": 17.71756402545068,
+        "p_frac": 0.7274481125504945,
+        "d_frac": 0.189657333890514
+      },
+      {
+        "layer": 4,
+        "hits": 100797,
+        "hits_gt10MeV": 86361,
+        "mean_edep_MeV": 16.94477199808007,
+        "p_frac": 0.895205214440906,
+        "d_frac": 0.008026032520809152
+      },
+      {
+        "layer": 5,
+        "hits": 95953,
+        "hits_gt10MeV": 81368,
+        "mean_edep_MeV": 23.224951481136767,
+        "p_frac": 0.8851104186424603,
+        "d_frac": 0.005283836878471752
+      },
+      {
+        "layer": 6,
+        "hits": 69737,
+        "hits_gt10MeV": 58409,
+        "mean_edep_MeV": 22.59389224001373,
+        "p_frac": 0.9019458823866814,
+        "d_frac": 0.0036279163141517416
+      },
+      {
+        "layer": 7,
+        "hits": 34565,
+        "hits_gt10MeV": 28013,
+        "mean_edep_MeV": 19.905209765019734,
+        "p_frac": 0.8865036887024447,
+        "d_frac": 0.004223925936641111
+      }
+    ],
+    "truth_protons": 836534,
+    "truth_deuterons": 314646
+  },
+  "max_summary_abs_delta": 7.105427357601002e-15,
+  "energy_conservation": {
+    "violating_events": 185,
+    "max_total_edep_over_primary_ekin": 1.0131772368782808,
+    "mean_detector_edep_per_event_MeV": 34.92627087107475,
+    "max_detector_edep_per_event_MeV": 192.2207883344734
+  },
+  "event_support": {
+    "events_with_any_detector_hit": 1000000,
+    "events_with_scibar_hit": 242147,
+    "fraction_with_any_detector_hit": 1.0,
+    "fraction_with_scibar_hit": 0.242147
+  },
+  "primary_pdg_spectrum": [
+    {
+      "pdg": 2212,
+      "count": 1000000,
+      "mean_ekin_MeV": 104.3666868303361,
+      "std_ekin_MeV": 60.21018820623956,
+      "min_ekin_MeV": 19.26001678658669,
+      "max_ekin_MeV": 189.99932765070014,
+      "fraction_of_primary_records": 0.5
+    },
+    {
+      "pdg": 1000010020,
+      "count": 1000000,
+      "mean_ekin_MeV": 85.19331518851185,
+      "std_ekin_MeV": 60.210383637724576,
+      "min_ekin_MeV": 8.967617759481072e-10,
+      "max_ekin_MeV": 170.65731139035762,
+      "fraction_of_primary_records": 0.5
+    }
+  ],
+  "detector_hit_summary": [
+    {
+      "detector": "TARGET",
+      "hits": 2042996,
+      "mean_edep_MeV": 3.858374242425379,
+      "hits_gt10MeV": 195032,
+      "nan_edep": 0,
+      "negative_edep": 0,
+      "duplicate_hits_exact": 0,
+      "nonfinite_position": 0,
+      "max_edep_MeV": 65.0703079118,
+      "unique_layers": 1,
+      "p_frac": 0.4955237308345195,
+      "d_frac": 0.4906475587813192
+    },
+    {
+      "detector": "ProtoTPC",
+      "hits": 1855512,
+      "mean_edep_MeV": 0.00368548080081056,
+      "hits_gt10MeV": 0,
+      "nan_edep": 0,
+      "negative_edep": 0,
+      "duplicate_hits_exact": 0,
+      "nonfinite_position": 0,
+      "max_edep_MeV": 0.9853666833410145,
+      "unique_layers": 10,
+      "p_frac": 0.27169805422977594,
+      "d_frac": 0.002725932249427651
+    },
+    {
+      "detector": "Sci_bar",
+      "hits": 1279440,
+      "mean_edep_MeV": 21.131736754709095,
+      "hits_gt10MeV": 1080660,
+      "nan_edep": 0,
+      "negative_edep": 0,
+      "duplicate_hits_exact": 0,
+      "nonfinite_position": 0,
+      "max_edep_MeV": 126.07548522949224,
+      "unique_layers": 8,
+      "p_frac": 0.6538282373538423,
+      "d_frac": 0.2459247795910711
+    }
+  ],
+  "integrity_checks": [
+    {
+      "check": "tree_entries",
+      "value": 1000000,
+      "threshold": "exactly 1000000",
+      "pass": true,
+      "interpretation": "The ROOT tree has the requested one million event rows."
+    },
+    {
+      "check": "committed_summary_reproduced",
+      "value": 43,
+      "threshold": "43 summary fields pass",
+      "pass": true,
+      "interpretation": "Independent chunked recomputation matches sim_summary.json."
+    },
+    {
+      "check": "energy_conservation",
+      "value": 185,
+      "threshold": "0 events with sum detector EDep > sum primary Ekin",
+      "pass": false,
+      "interpretation": "No event deposits more sensitive-detector energy than primary kinetic energy."
+    },
+    {
+      "check": "finite_edep",
+      "value": 0,
+      "threshold": "0 non-finite EDep values",
+      "pass": true,
+      "interpretation": "No NaN or infinite EDep entries were found."
+    },
+    {
+      "check": "nonnegative_edep",
+      "value": 0,
+      "threshold": "0 negative EDep values",
+      "pass": true,
+      "interpretation": "No negative deposited energies were found."
+    },
+    {
+      "check": "scibar_layer_domain",
+      "value": 0,
+      "threshold": "0 Sci_bar hits outside layer IDs 0..7",
+      "pass": true,
+      "interpretation": "Sci_bar layers match the eight-layer summary contract."
+    },
+    {
+      "check": "duplicate_exact_hit_rows",
+      "value": 0,
+      "threshold": "0 exact duplicate detector hit tuples",
+      "pass": true,
+      "interpretation": "No exact duplicate hit records after rounded numeric tuple comparison."
+    },
+    {
+      "check": "geometry_positions_finite",
+      "value": 0,
+      "threshold": "0 non-finite global hit positions",
+      "pass": true,
+      "interpretation": "No non-finite global positions; no numeric geometry escape sentinel found."
+    }
+  ],
+  "elapsed_s": 8.584696292877197
+}

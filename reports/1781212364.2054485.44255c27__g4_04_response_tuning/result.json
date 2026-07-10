@@ -1,0 +1,90 @@
+{
+  "ticket": "1781212364.2054485.44255c27",
+  "worker": "testbeam-laptop-2",
+  "raw_reproduction": {
+    "root_dir": "data/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true,
+    "counts_by_run_csv": "reports/1781212364.2054485.44255c27__g4_04_response_tuning/raw_reproduction_counts_by_run.csv"
+  },
+  "winner": {
+    "method": "response_residual_forest",
+    "score": 0.5825015180196725,
+    "score_ci95": [
+      0.5489001493758279,
+      0.6148793362740032
+    ]
+  },
+  "traditional_baseline_score": 1.014436628409349,
+  "divergence_reduction_pct": 42.57881648723161,
+  "success": false,
+  "response_scale_adc_per_mev": 303.78897458810223,
+  "tuned_params": {
+    "ticket": "1781212364.2054485.44255c27",
+    "winner_method": "response_residual_forest",
+    "birks_kb_cm_per_MeV": 0.0,
+    "material_scale": 1.0,
+    "geometry_scale": 1.0,
+    "light_yield_scale": 1.0,
+    "adc_gain_scale": 0.6,
+    "smear_frac": 0.12
+  },
+  "methods_benchmarked": [
+    "response_residual_forest",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn_proxy",
+    "gp_bo_surrogate_response",
+    "traditional_response_scan"
+  ],
+  "run_split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "input_files": {
+    "selected_csv": "reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz",
+    "selected_csv_sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+    "s14h_result": "reports/1781088387.1790.33b946cb__s14h_g4_energy_calibration_benchmark/result.json",
+    "s14h_result_sha256": "00561273fa72bf3d0131fe3535e689c8f9acd6ddfbd7e5d04128898d5949b652"
+  },
+  "next_tickets": [],
+  "runtime_sec": 181.96117186546326
+}

@@ -1,0 +1,10 @@
+{
+  "ticket": "1781212364.2054485.44255c27",
+  "winner_method": "response_residual_forest",
+  "birks_kb_cm_per_MeV": 0.0,
+  "material_scale": 1.0,
+  "geometry_scale": 1.0,
+  "light_yield_scale": 1.0,
+  "adc_gain_scale": 0.6,
+  "smear_frac": 0.12
+}

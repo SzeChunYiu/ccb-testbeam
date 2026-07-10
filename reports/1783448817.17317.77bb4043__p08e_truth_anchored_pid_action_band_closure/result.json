@@ -1,0 +1,510 @@
+{
+  "ticket_id": "1783448817.17317.77bb4043",
+  "worker": "testbeam-laptop-2",
+  "study_id": "P08e",
+  "title": "truth-anchored PID action-band closure",
+  "raw_root_dir": "data/root/root",
+  "git_commit_at_run": "76f49968b1e6131d841f55a6b50e1bb38154fb50",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "beamline_proxy": {
+    "positive_name": "deuteron_enriched_terminal_b2_high_ionization",
+    "negative_name": "proton_enriched_downstream_penetrating",
+    "terminal_depth_idx": 0,
+    "penetrating_min_depth_idx": 1,
+    "terminal_b2_area_quantile": 0.55,
+    "penetrating_min_downstream_charge_fraction": 0.03,
+    "min_atom_class_rows": 10,
+    "source_note": "Beamline-calibrated proxy: Sample I is D-enriched terminal-B2-like and Sample II is more penetrating/proton-like; labels are event-level enriched support proxies from raw B-stack topology and charge, not hidden truth."
+  },
+  "beamline_proxy_support": {
+    "n_labeled_rows": 31462,
+    "n_runs": 32,
+    "support_rows": [
+      {
+        "run": 31,
+        "positive_rows": 292,
+        "negative_rows": 292,
+        "terminal_available": 13176,
+        "penetrating_available": 292,
+        "terminal_b2_area_cut": 60935.875
+      },
+      {
+        "run": 32,
+        "positive_rows": 296,
+        "negative_rows": 296,
+        "terminal_available": 13360,
+        "penetrating_available": 296,
+        "terminal_b2_area_cut": 60701.95
+      },
+      {
+        "run": 33,
+        "positive_rows": 286,
+        "negative_rows": 286,
+        "terminal_available": 23578,
+        "penetrating_available": 286,
+        "terminal_b2_area_cut": 59153.0
+      },
+      {
+        "run": 34,
+        "positive_rows": 209,
+        "negative_rows": 209,
+        "terminal_available": 16480,
+        "penetrating_available": 209,
+        "terminal_b2_area_cut": 61251.725
+      },
+      {
+        "run": 35,
+        "positive_rows": 186,
+        "negative_rows": 186,
+        "terminal_available": 5328,
+        "penetrating_available": 186,
+        "terminal_b2_area_cut": 49581.55
+      },
+      {
+        "run": 36,
+        "positive_rows": 144,
+        "negative_rows": 144,
+        "terminal_available": 4760,
+        "penetrating_available": 144,
+        "terminal_b2_area_cut": 55507.25
+      },
+      {
+        "run": 37,
+        "positive_rows": 486,
+        "negative_rows": 486,
+        "terminal_available": 10982,
+        "penetrating_available": 486,
+        "terminal_b2_area_cut": 55480.75
+      },
+      {
+        "run": 39,
+        "positive_rows": 306,
+        "negative_rows": 306,
+        "terminal_available": 6276,
+        "penetrating_available": 306,
+        "terminal_b2_area_cut": 52945.5
+      },
+      {
+        "run": 40,
+        "positive_rows": 324,
+        "negative_rows": 324,
+        "terminal_available": 6464,
+        "penetrating_available": 324,
+        "terminal_b2_area_cut": 50809.3
+      },
+      {
+        "run": 41,
+        "positive_rows": 360,
+        "negative_rows": 360,
+        "terminal_available": 7120,
+        "penetrating_available": 360,
+        "terminal_b2_area_cut": 53364.45
+      },
+      {
+        "run": 42,
+        "positive_rows": 342,
+        "negative_rows": 342,
+        "terminal_available": 8144,
+        "penetrating_available": 342,
+        "terminal_b2_area_cut": 58718.575000000004
+      },
+      {
+        "run": 44,
+        "positive_rows": 26,
+        "negative_rows": 26,
+        "terminal_available": 898,
+        "penetrating_available": 26,
+        "terminal_b2_area_cut": 53292.025
+      },
+      {
+        "run": 45,
+        "positive_rows": 462,
+        "negative_rows": 462,
+        "terminal_available": 10926,
+        "penetrating_available": 462,
+        "terminal_b2_area_cut": 56807.25
+      },
+      {
+        "run": 47,
+        "positive_rows": 24,
+        "negative_rows": 24,
+        "terminal_available": 2518,
+        "penetrating_available": 24,
+        "terminal_b2_area_cut": 57462.12500000001
+      },
+      {
+        "run": 48,
+        "positive_rows": 288,
+        "negative_rows": 288,
+        "terminal_available": 6234,
+        "penetrating_available": 288,
+        "terminal_b2_area_cut": 51115.15
+      },
+      {
+        "run": 49,
+        "positive_rows": 308,
+        "negative_rows": 308,
+        "terminal_available": 6576,
+        "penetrating_available": 308,
+        "terminal_b2_area_cut": 51579.75
+      },
+      {
+        "run": 50,
+        "positive_rows": 344,
+        "negative_rows": 344,
+        "terminal_available": 16702,
+        "penetrating_available": 344,
+        "terminal_b2_area_cut": 62453.60000000001
+      },
+      {
+        "run": 51,
+        "positive_rows": 154,
+        "negative_rows": 154,
+        "terminal_available": 6948,
+        "penetrating_available": 154,
+        "terminal_b2_area_cut": 62217.7
+      },
+      {
+        "run": 52,
+        "positive_rows": 44,
+        "negative_rows": 44,
+        "terminal_available": 3374,
+        "penetrating_available": 44,
+        "terminal_b2_area_cut": 61884.05
+      },
+      {
+        "run": 53,
+        "positive_rows": 285,
+        "negative_rows": 285,
+        "terminal_available": 15328,
+        "penetrating_available": 285,
+        "terminal_b2_area_cut": 60823.0
+      },
+      {
+        "run": 54,
+        "positive_rows": 274,
+        "negative_rows": 274,
+        "terminal_available": 14476,
+        "penetrating_available": 274,
+        "terminal_b2_area_cut": 60874.25
+      },
+      {
+        "run": 55,
+        "positive_rows": 190,
+        "negative_rows": 190,
+        "terminal_available": 8180,
+        "penetrating_available": 190,
+        "terminal_b2_area_cut": 61990.45
+      },
+      {
+        "run": 56,
+        "positive_rows": 426,
+        "negative_rows": 426,
+        "terminal_available": 18938,
+        "penetrating_available": 426,
+        "terminal_b2_area_cut": 62484.35
+      },
+      {
+        "run": 57,
+        "positive_rows": 308,
+        "negative_rows": 308,
+        "terminal_available": 6076,
+        "penetrating_available": 308,
+        "terminal_b2_area_cut": 50834.25
+      },
+      {
+        "run": 58,
+        "positive_rows": 292,
+        "negative_rows": 292,
+        "terminal_available": 7606,
+        "penetrating_available": 292,
+        "terminal_b2_area_cut": 49256.5
+      },
+      {
+        "run": 59,
+        "positive_rows": 2034,
+        "negative_rows": 2034,
+        "terminal_available": 4520,
+        "penetrating_available": 2266,
+        "terminal_b2_area_cut": 40499.600000000006
+      },
+      {
+        "run": 60,
+        "positive_rows": 1321,
+        "negative_rows": 1321,
+        "terminal_available": 2936,
+        "penetrating_available": 2000,
+        "terminal_b2_area_cut": 41551.75
+      },
+      {
+        "run": 61,
+        "positive_rows": 1498,
+        "negative_rows": 1498,
+        "terminal_available": 3326,
+        "penetrating_available": 2186,
+        "terminal_b2_area_cut": 42104.0
+      },
+      {
+        "run": 62,
+        "positive_rows": 1684,
+        "negative_rows": 1684,
+        "terminal_available": 3742,
+        "penetrating_available": 2078,
+        "terminal_b2_area_cut": 40627.450000000004
+      },
+      {
+        "run": 63,
+        "positive_rows": 1298,
+        "negative_rows": 1298,
+        "terminal_available": 5988,
+        "penetrating_available": 1298,
+        "terminal_b2_area_cut": 43301.100000000006
+      },
+      {
+        "run": 64,
+        "positive_rows": 836,
+        "negative_rows": 836,
+        "terminal_available": 5120,
+        "penetrating_available": 836,
+        "terminal_b2_area_cut": 41603.15
+      },
+      {
+        "run": 65,
+        "positive_rows": 404,
+        "negative_rows": 404,
+        "terminal_available": 5484,
+        "penetrating_available": 404,
+        "terminal_b2_area_cut": 39195.725
+      }
+    ]
+  },
+  "benchmark": {
+    "evaluated_rows": 19424,
+    "evaluated_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "split": "leave-one-run-out by complete run",
+    "bootstrap_replicates": 300,
+    "fixed_efficiency": 0.8
+  },
+  "action_source_audit": [
+    {
+      "source": "S14g",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/reports/1781051226.621.082271da__s14g_veto_ladder_energy_acceptance/selector_oof.csv.gz",
+      "rows_loaded": 0,
+      "rows_before_merge": 31462,
+      "rows_after_merge": 31462,
+      "available": false,
+      "note": null
+    },
+    {
+      "source": "P07j",
+      "path": "/home/billy/.tb-workers/testbeam-laptop-2/reports/1781052602.655.4be6114e__p07j_saturation_knee_family_action_bands/predictions.csv.gz",
+      "rows_loaded": 177508,
+      "rows_before_merge": 31462,
+      "rows_after_merge": 31462,
+      "available": true,
+      "note": null
+    },
+    {
+      "source": "P04s",
+      "path": "generated_from_raw_waveform_features",
+      "rows_loaded": 31462,
+      "rows_before_merge": 31462,
+      "rows_after_merge": 31462,
+      "available": true,
+      "note": "No tracked P04s artifact exists in this checkout; P08d reconstructs a transparent leave-one-run-held-out dropout-phase proxy from B2 waveform shape quantiles."
+    }
+  ],
+  "action_mask_composition": [
+    {
+      "action_mask": "all_pre_action",
+      "n": 19424,
+      "support_fraction": 1.0,
+      "support_loss": 0.0,
+      "positive_fraction": 0.5,
+      "action_band_label_shift": 0.0,
+      "charge_log_median_shift": 0.0,
+      "depth_mean_shift": 0.0,
+      "runs": 32
+    },
+    {
+      "action_mask": "p04s_dropout_phase_accept",
+      "n": 17114,
+      "support_fraction": 0.8810749588138386,
+      "support_loss": 0.11892504118616143,
+      "positive_fraction": 0.5535234311090336,
+      "action_band_label_shift": 0.05352343110903357,
+      "charge_log_median_shift": 0.016943140119408895,
+      "depth_mean_shift": -0.06922036069200843,
+      "runs": 32
+    },
+    {
+      "action_mask": "s14g_traditional_accept",
+      "n": 0,
+      "support_fraction": 0.0,
+      "support_loss": 1.0,
+      "positive_fraction": null,
+      "action_band_label_shift": null,
+      "charge_log_median_shift": null,
+      "depth_mean_shift": null,
+      "runs": 0
+    },
+    {
+      "action_mask": "s14g_new_residual_accept",
+      "n": 0,
+      "support_fraction": 0.0,
+      "support_loss": 1.0,
+      "positive_fraction": null,
+      "action_band_label_shift": null,
+      "charge_log_median_shift": null,
+      "depth_mean_shift": null,
+      "runs": 0
+    },
+    {
+      "action_mask": "p07j_traditional_correct",
+      "n": 114,
+      "support_fraction": 0.005869028006589786,
+      "support_loss": 0.9941309719934102,
+      "positive_fraction": 0.22807017543859648,
+      "action_band_label_shift": -0.2719298245614035,
+      "charge_log_median_shift": 0.38340210789173845,
+      "depth_mean_shift": 0.4591958943900113,
+      "runs": 11
+    },
+    {
+      "action_mask": "s14g_traditional_and_p04s_accept",
+      "n": 0,
+      "support_fraction": 0.0,
+      "support_loss": 1.0,
+      "positive_fraction": null,
+      "action_band_label_shift": null,
+      "charge_log_median_shift": null,
+      "depth_mean_shift": null,
+      "runs": 0
+    },
+    {
+      "action_mask": "s14g_traditional_p04s_and_p07j_correct",
+      "n": 0,
+      "support_fraction": 0.0,
+      "support_loss": 1.0,
+      "positive_fraction": null,
+      "action_band_label_shift": null,
+      "charge_log_median_shift": null,
+      "depth_mean_shift": null,
+      "runs": 0
+    }
+  ],
+  "winner_method": "traditional_charge_depth_logistic",
+  "winner": {
+    "action_mask": "all_pre_action",
+    "method": "traditional_charge_depth_logistic",
+    "roc_auc": 1.0,
+    "roc_auc_ci": [
+      0.9999999999999999,
+      1.0
+    ],
+    "average_precision": 1.0,
+    "purity_at_80pct_eff": 1.0,
+    "ece": 0.00015006952850469676
+  },
+  "traditional": {
+    "method": "traditional_charge_depth_logistic",
+    "roc_auc": 1.0,
+    "roc_auc_ci": [
+      0.9999999999999999,
+      1.0
+    ],
+    "average_precision": 1.0,
+    "ece": 0.00015006952850469676
+  },
+  "best_ml_vs_traditional": {
+    "method": "NN_action_gated_residual_ensemble_new",
+    "roc_auc_minus_traditional": 0.0,
+    "ap_minus_traditional": 0.0
+  },
+  "controls": {
+    "action_only_auc": 0.5766888807032995,
+    "run_family_only_auc": 0.5,
+    "shuffled_label_auc": 0.5085775312526293
+  },
+  "finding": "The pre-action beamline-proxy winner is traditional_charge_depth_logistic with AUC 1.0000; the strong traditional range-telescope comparator has AUC 1.0000. The best learned-minus-traditional AUC delta is 0.0000 for NN_action_gated_residual_ensemble_new. Action-only AUC is 0.5767, run-family-only AUC is 0.5000, and shuffled-label AUC is 0.5086. The result closes the action-band stability check for an externally anchored enriched proxy, but it remains below the standard for a PID adoption claim because no event-level data truth exists.",
+  "next_tickets": [],
+  "runtime_sec": 650.1,
+  "command": "/home/billy/anaconda3/bin/python scripts/p08e_1781155463_1105_04ad315d_truth_anchored_pid_action_band_closure.py --config configs/p08e_1783448817_17317_77bb4043_truth_anchored_pid_action_band_closure.json"
+}

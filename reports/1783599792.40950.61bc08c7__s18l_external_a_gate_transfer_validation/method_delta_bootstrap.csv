@@ -1,0 +1,3 @@
+method,baseline,comparison,delta_sigma68_ns,sigma68_ci_low_ns,sigma68_ci_high_ns,delta_mean_abs_pair_cov_ns2,cov_ci_low_ns2,cov_ci_high_ns2
+extra_trees_s18e_style,pair_median,winner_minus_pair_median,-0.2130208501596491,-0.2604654454867841,-0.05535189525989938,-8.037628032479267,-12.78729634023614,-2.872342568798394
+extra_trees_s18e_style,traditional_a_width_gate_ridge,winner_minus_traditional_gate,-5.548698603009333,-5.96803731550002,-5.038972481453091,-24.95201900829671,-28.2732550272827,-21.70306971401455

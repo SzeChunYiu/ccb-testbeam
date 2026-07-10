@@ -1,0 +1,228 @@
+{
+  "study": "P12f",
+  "ticket": "1781191863.1669.616c1405",
+  "worker": "testbeam-laptop-4",
+  "title": "externalized frozen harm-ledger policy validation",
+  "raw_reproduction": {
+    "source": "/home/billy/ccb-data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "pass": true
+  },
+  "frozen_policy_source": "reports/1781062454.713.242b3d71__p12e_cross_consumer_pulse_atom_harm_ledger/heldout_consumer_predictions.csv.gz",
+  "support_raw_count_source": "reports/1781145765.1768.59211878__p12d_frozen_action_matrix_consumer_calibration",
+  "p12e_artifact_present": true,
+  "fixed_acceptance_coverage": 0.9,
+  "split": {
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "held-out run block",
+    "bootstrap_reps": 2000
+  },
+  "methods_benchmarked": [
+    "traditional_frozen_harm_ledger",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "action_prior_residual_cnn_new_arch"
+  ],
+  "primary_metric": "minimum external_validation_score over frozen method panel",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml",
+    "n_runs": 7,
+    "external_validation_score": 1.792116432051879,
+    "external_validation_score_ci95": [
+      1.6652638047947361,
+      1.9155776531833093
+    ],
+    "p12_primary_score_mean": 0.7634023128368203,
+    "p04_res68_abs_frac_mean": 0.22914610341382757,
+    "p04_catastrophic_rate_mean": 0.2757086791756301,
+    "s02_brier_mean": 0.043403789010573436,
+    "s02_tail_rejection_mean": 0.9998156682027649,
+    "s03_sigma68_ns_mean": 1.7766074210178728,
+    "s03_tail_gt5_mean": 0.036119360563324376
+  },
+  "ml_beats_baseline": true,
+  "external_artifacts": {
+    "p04": "reports/1781105308.1461.12695cf1__p04n_external_calibration_charge_proxy_anomaly_bias/external_by_run.csv",
+    "s02": "reports/1781182736.737.1d9a19c6__s02l_external_atom_handoff_validation/heldout_fold_metrics.csv",
+    "s03": "reports/1781167155.1451.52b255f2__s03o_external_shape_constrained_timewalk_adoption_gate/per_run_benchmark.csv"
+  },
+  "summary": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml",
+      "n_runs": 7,
+      "external_validation_score": 1.792116432051879,
+      "external_validation_score_ci95": [
+        1.6652638047947361,
+        1.9155776531833093
+      ],
+      "p12_primary_score_mean": 0.7634023128368203,
+      "p04_res68_abs_frac_mean": 0.22914610341382757,
+      "p04_catastrophic_rate_mean": 0.2757086791756301,
+      "s02_brier_mean": 0.043403789010573436,
+      "s02_tail_rejection_mean": 0.9998156682027649,
+      "s03_sigma68_ns_mean": 1.7766074210178728,
+      "s03_tail_gt5_mean": 0.036119360563324376
+    },
+    {
+      "method": "ridge",
+      "family": "ml",
+      "n_runs": 7,
+      "external_validation_score": 1.8651427910481044,
+      "external_validation_score_ci95": [
+        1.6619751272005543,
+        2.0598850996311415
+      ],
+      "p12_primary_score_mean": 0.7880896607858032,
+      "p04_res68_abs_frac_mean": 0.2191821320048922,
+      "p04_catastrophic_rate_mean": 0.2642405367349921,
+      "s02_brier_mean": 0.05387919940560399,
+      "s02_tail_rejection_mean": 0.9625421804020959,
+      "s03_sigma68_ns_mean": 1.8604768888900562,
+      "s03_tail_gt5_mean": 0.03717422029639474
+    },
+    {
+      "method": "action_prior_residual_cnn_new_arch",
+      "family": "new_architecture",
+      "n_runs": 7,
+      "external_validation_score": 2.187048326943119,
+      "external_validation_score_ci95": [
+        1.9648626169039625,
+        2.4738090441804927
+      ],
+      "p12_primary_score_mean": 0.8296130467459791,
+      "p04_res68_abs_frac_mean": 0.22364300125237388,
+      "p04_catastrophic_rate_mean": 0.2662004092870983,
+      "s02_brier_mean": 0.1536698382847892,
+      "s02_tail_rejection_mean": 0.7652387432700578,
+      "s03_sigma68_ns_mean": 1.7760890492132084,
+      "s03_tail_gt5_mean": 0.03513851233963416
+    },
+    {
+      "method": "1d_cnn",
+      "family": "nn",
+      "n_runs": 7,
+      "external_validation_score": 2.3582143631412142,
+      "external_validation_score_ci95": [
+        2.160082060412618,
+        2.6087670633630196
+      ],
+      "p12_primary_score_mean": 1.0152377689909653,
+      "p04_res68_abs_frac_mean": 0.22354336081927956,
+      "p04_catastrophic_rate_mean": 0.2532572621182264,
+      "s02_brier_mean": 0.14838355282868698,
+      "s02_tail_rejection_mean": 0.7627458562202808,
+      "s03_sigma68_ns_mean": 1.7599901809745275,
+      "s03_tail_gt5_mean": 0.040540729360704776
+    },
+    {
+      "method": "mlp",
+      "family": "nn",
+      "n_runs": 7,
+      "external_validation_score": 2.869167563809437,
+      "external_validation_score_ci95": [
+        2.79128669042579,
+        2.9459884191549555
+      ],
+      "p12_primary_score_mean": 0.7536803485343925,
+      "p04_res68_abs_frac_mean": 0.3708863790133223,
+      "p04_catastrophic_rate_mean": 0.4939628945553269,
+      "s02_brier_mean": 0.06184773187020138,
+      "s02_tail_rejection_mean": 0.3515908764626244,
+      "s03_sigma68_ns_mean": 2.0005760056456077,
+      "s03_tail_gt5_mean": 0.04023708488741695
+    },
+    {
+      "method": "traditional_frozen_harm_ledger",
+      "family": "traditional",
+      "n_runs": 7,
+      "external_validation_score": 3.2439538021624257,
+      "external_validation_score_ci95": [
+        3.172048713726231,
+        3.3062244217327725
+      ],
+      "p12_primary_score_mean": 0.7659023322375033,
+      "p04_res68_abs_frac_mean": 0.2522374583378433,
+      "p04_catastrophic_rate_mean": 0.3145083320663205,
+      "s02_brier_mean": 0.754036307212305,
+      "s02_tail_rejection_mean": 0.31913985093151515,
+      "s03_sigma68_ns_mean": 1.7406413519527237,
+      "s03_tail_gt5_mean": 0.0412488852517875
+    }
+  ],
+  "shuffled_policy_sentinel": [
+    {
+      "method": "gradient_boosted_trees",
+      "shuffled_mean": 2.3269064114821436,
+      "shuffled_ci95": [
+        1.9471677047049436,
+        2.7452603591027858
+      ],
+      "real_minus_shuffled": -0.5347899794302646
+    },
+    {
+      "method": "ridge",
+      "shuffled_mean": 2.3549499792800397,
+      "shuffled_ci95": [
+        1.9679700733465524,
+        2.7839554369272896
+      ],
+      "real_minus_shuffled": -0.48980718823193525
+    },
+    {
+      "method": "1d_cnn",
+      "shuffled_mean": 2.578651090395307,
+      "shuffled_ci95": [
+        2.213356789437997,
+        2.996399773142573
+      ],
+      "real_minus_shuffled": -0.2204367272540928
+    },
+    {
+      "method": "action_prior_residual_cnn_new_arch",
+      "shuffled_mean": 2.397634826380871,
+      "shuffled_ci95": [
+        2.029196921143334,
+        2.8240424902269763
+      ],
+      "real_minus_shuffled": -0.21058649943775176
+    },
+    {
+      "method": "mlp",
+      "shuffled_mean": 2.31752326285297,
+      "shuffled_ci95": [
+        1.9355021624201887,
+        2.7489280030478187
+      ],
+      "real_minus_shuffled": 0.5516443009564669
+    },
+    {
+      "method": "traditional_frozen_harm_ledger",
+      "shuffled_mean": 2.3286470657922225,
+      "shuffled_ci95": [
+        1.9303522371715607,
+        2.7715973674707013
+      ],
+      "real_minus_shuffled": 0.9153067363702032
+    }
+  ],
+  "follow_up_tickets": [],
+  "runtime_seconds": 129.21787428855896,
+  "environment": {
+    "python": "3.8.10",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+    "git_commit": "3ecd4cde7f619f6899eb725dfa04ea8681e313cc"
+  }
+}

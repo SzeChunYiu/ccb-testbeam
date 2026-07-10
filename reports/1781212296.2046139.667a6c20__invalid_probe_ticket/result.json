@@ -1,0 +1,58 @@
+{
+  "study": "INVALID-PROBE-TICKET",
+  "ticket": "1781212296.2046139.667a6c20",
+  "worker": "testbeam-laptop-3",
+  "title": "TEST-PROBE-DELETEME",
+  "reproduced": false,
+  "repro_tolerance": "not_applicable_empty_probe_ticket",
+  "traditional": {
+    "metric": "not_applicable",
+    "value": null,
+    "ci": null,
+    "method": "not_run",
+    "reason": "The claimed ticket has a probe/delete title, an empty body, and no scientific observable or reported number to reproduce from raw ROOT."
+  },
+  "ml": {
+    "metric": "not_applicable",
+    "value": null,
+    "ci": null,
+    "models_requested_by_worker_goal": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "new_architecture_when_sensible"
+    ],
+    "methods_run": [],
+    "reason": "No ridge, tree, MLP, CNN, or new architecture benchmark can be defined because the ticket gives no label, target, metric, split, tolerance, or decision rule."
+  },
+  "run_split": {
+    "status": "not_applicable_invalid_ticket",
+    "reason": "No target variable exists, so a run-held-out or bootstrap split would be arbitrary."
+  },
+  "bootstrap_ci": {
+    "status": "not_applicable_invalid_ticket",
+    "reason": "No metric exists for confidence interval estimation."
+  },
+  "ml_beats_baseline": false,
+  "winner": {
+    "overall": "not_applicable_invalid_ticket",
+    "reason": "No valid head-to-head benchmark can be defined for an empty TEST-PROBE-DELETEME queue item."
+  },
+  "falsification": {
+    "preregistered_metric": "not_available_in_ticket",
+    "p_value": null,
+    "n_tries": 0,
+    "status": "not_applicable_invalid_ticket"
+  },
+  "input_sha256": {
+    "claimed_ticket": "5b62fb562c00c9dd43da4a3fa58e068561e47f905aa0e0894950431dffc7a0ff",
+    "lease": "3febfde0e4d444d42a6527923e9ae5c84d4684f4bd86793466d15e2e9b31a4eb",
+    "raw_b_first_hrdb_run_0012_root": "84f09fe5eabb8f0af30907c82be33dfae19cf1b78d2799ac7141da7e98649cf9",
+    "raw_b_last_hrdb_run_0065_root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "git_commit_at_audit_start": "3defbda9afa80dc0895f57f15924a3ad627e8a66",
+  "branch": "work-1781212296.2046139.667a6c20",
+  "scientific_summary": "The claimed queue item is an administrative probe, not a scientific testbeam study. Raw ROOT files are present and readable, but the ticket contains no reported number, observable, target, method, run split, metric, or tolerance. The defensible outcome is to close the malformed ticket with an audit artifact rather than fabricate a benchmark.",
+  "next_tickets": []
+}

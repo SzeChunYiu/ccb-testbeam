@@ -1,0 +1,65 @@
+{
+  "ticket": "1781212296.2046139.667a6c20",
+  "worker": "testbeam-laptop-3",
+  "created_utc_date": "2026-07-10",
+  "purpose": "Audit and close malformed probe queue item with title TEST-PROBE-DELETEME and empty body.",
+  "git_commit_at_audit_start": "3defbda9afa80dc0895f57f15924a3ad627e8a66",
+  "branch": "work-1781212296.2046139.667a6c20",
+  "commands": [
+    "tn-ticket claim testbeam-laptop-3 --project testbeam",
+    "sed -n '1,120p' /home/billy/.config/tn/tickets/testbeam/claimed/1781212296.2046139.667a6c20",
+    "find -L data/root/root -maxdepth 1 -type f -name '*.root' | wc -l",
+    "find -L data/root/root -maxdepth 1 -type f -name 'hrdb_run_*.root' | wc -l",
+    "find -L data/root/root -maxdepth 1 -type f -name 'hrda_run_*.root' | wc -l",
+    "find -L data/sorted-b -maxdepth 1 -type f -name '*.root' | wc -l",
+    "find -L data/sorted-a -maxdepth 1 -type f -name '*.root' | wc -l",
+    "sha256sum /home/billy/.config/tn/tickets/testbeam/claimed/1781212296.2046139.667a6c20",
+    "sha256sum /home/billy/.config/tn/tickets/testbeam/claimed/1781212296.2046139.667a6c20.lease",
+    "sha256sum data/root/root/hrdb_run_0012.root data/root/root/hrdb_run_0065.root",
+    "/home/billy/anaconda3/bin/python -c \"import uproot, glob; paths=sorted(glob.glob('data/root/root/hrdb_run_*.root'))[:2]; [print(path, list(uproot.open(path).keys())[:5]) for path in paths]\""
+  ],
+  "inputs": {
+    "claimed_ticket_file": {
+      "path": "/home/billy/.config/tn/tickets/testbeam/claimed/1781212296.2046139.667a6c20",
+      "sha256": "5b62fb562c00c9dd43da4a3fa58e068561e47f905aa0e0894950431dffc7a0ff"
+    },
+    "claimed_ticket_lease": {
+      "path": "/home/billy/.config/tn/tickets/testbeam/claimed/1781212296.2046139.667a6c20.lease",
+      "sha256": "3febfde0e4d444d42a6527923e9ae5c84d4684f4bd86793466d15e2e9b31a4eb"
+    },
+    "raw_root_sentinels": [
+      {
+        "path": "data/root/root/hrdb_run_0012.root",
+        "sha256": "84f09fe5eabb8f0af30907c82be33dfae19cf1b78d2799ac7141da7e98649cf9"
+      },
+      {
+        "path": "data/root/root/hrdb_run_0065.root",
+        "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+      }
+    ]
+  },
+  "raw_data_inventory": {
+    "raw_root_total_files": 110,
+    "raw_root_b_stack_files": 53,
+    "raw_root_a_stack_files": 57,
+    "sorted_b_root_files": 53,
+    "sorted_a_root_files": 53,
+    "checked_root_keys": [
+      {
+        "path": "data/root/root/hrdb_run_0012.root",
+        "keys_prefix": [
+          "h101;1"
+        ]
+      },
+      {
+        "path": "data/root/root/hrdb_run_0013.root",
+        "keys_prefix": [
+          "h101;1"
+        ]
+      }
+    ]
+  },
+  "benchmark_status": "not_run_invalid_probe_ticket",
+  "queue_action_recommended": "done",
+  "next_tickets_appended": []
+}

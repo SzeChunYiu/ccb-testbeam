@@ -1,0 +1,6 @@
+check,value,pass
+loro_train_heldout_run_overlap_zero,0,True
+feature_names_exclude_identifiers_and_labels,,True
+tail_label_defined_only_from_heldout_fold_template_timing,template_phase D_t > 3 ns,True
+all_models_have_oof_scores,1,True
+rounded_waveform_hash_cross_run_duplicates_reported,0,True

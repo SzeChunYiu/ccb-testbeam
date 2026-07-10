@@ -1,0 +1,218 @@
+{
+  "external_controls": {
+    "atom_control_summary": [
+      {
+        "atom_class": "pretrigger_baseline_shape",
+        "median_log_odd_minus_even": -1.5193110163,
+        "median_log_odd_minus_even_ci_high": -1.4240296863,
+        "median_log_odd_minus_even_ci_low": -1.6271956843,
+        "median_max_abs_charge_asymmetry": 0.7262732213,
+        "median_max_abs_charge_asymmetry_ci_high": 0.762367707,
+        "median_max_abs_charge_asymmetry_ci_low": 0.7126436782,
+        "n_events": 193,
+        "p90_max_abs_charge_asymmetry": 0.8562491768,
+        "p90_max_abs_charge_asymmetry_ci_high": 0.8597609769,
+        "p90_max_abs_charge_asymmetry_ci_low": 0.8450446819,
+        "prevalence": 0.0505235602,
+        "prevalence_ci_high": 0.0549407477,
+        "prevalence_ci_low": 0.0444588901,
+        "tail_precision": 1.0,
+        "tail_precision_ci_high": 1.0,
+        "tail_precision_ci_low": 1.0
+      },
+      {
+        "atom_class": "q_template_mismatch",
+        "median_log_odd_minus_even": -1.2653274528,
+        "median_log_odd_minus_even_ci_high": -1.1529431362,
+        "median_log_odd_minus_even_ci_low": -1.291770978,
+        "median_max_abs_charge_asymmetry": 0.6260041453,
+        "median_max_abs_charge_asymmetry_ci_high": 0.6372937716,
+        "median_max_abs_charge_asymmetry_ci_low": 0.6198092477,
+        "n_events": 24,
+        "p90_max_abs_charge_asymmetry": 0.6744798171,
+        "p90_max_abs_charge_asymmetry_ci_high": 0.6811639549,
+        "p90_max_abs_charge_asymmetry_ci_low": 0.6635140322,
+        "prevalence": 0.0062827225,
+        "prevalence_ci_high": 0.0085721277,
+        "prevalence_ci_low": 0.0045172421,
+        "tail_precision": 1.0,
+        "tail_precision_ci_high": 1.0,
+        "tail_precision_ci_low": 1.0
+      },
+      {
+        "atom_class": "delayed_peak_shape",
+        "median_log_odd_minus_even": 0.0506486212,
+        "median_log_odd_minus_even_ci_high": 0.0973930761,
+        "median_log_odd_minus_even_ci_low": 0.0277087614,
+        "median_max_abs_charge_asymmetry": 0.0647665745,
+        "median_max_abs_charge_asymmetry_ci_high": 0.0904156894,
+        "median_max_abs_charge_asymmetry_ci_low": 0.0522605598,
+        "n_events": 382,
+        "p90_max_abs_charge_asymmetry": 0.3314526348,
+        "p90_max_abs_charge_asymmetry_ci_high": 0.3942358495,
+        "p90_max_abs_charge_asymmetry_ci_low": 0.2632020272,
+        "prevalence": 0.1,
+        "prevalence_ci_high": 0.1205672747,
+        "prevalence_ci_low": 0.0855298067,
+        "tail_precision": 0.9502617801,
+        "tail_precision_ci_high": 0.9877873086,
+        "tail_precision_ci_low": 0.9037455277
+      },
+      {
+        "atom_class": "broad_late_shape",
+        "median_log_odd_minus_even": -0.0787273998,
+        "median_log_odd_minus_even_ci_high": -0.052255764,
+        "median_log_odd_minus_even_ci_low": -0.1144816955,
+        "median_max_abs_charge_asymmetry": 0.0909303528,
+        "median_max_abs_charge_asymmetry_ci_high": 0.1162296814,
+        "median_max_abs_charge_asymmetry_ci_low": 0.0626932113,
+        "n_events": 542,
+        "p90_max_abs_charge_asymmetry": 0.4373178947,
+        "p90_max_abs_charge_asymmetry_ci_high": 0.5412305143,
+        "p90_max_abs_charge_asymmetry_ci_low": 0.400597339,
+        "prevalence": 0.1418848168,
+        "prevalence_ci_high": 0.1656217965,
+        "prevalence_ci_low": 0.1145325078,
+        "tail_precision": 0.9354243542,
+        "tail_precision_ci_high": 0.9842920832,
+        "tail_precision_ci_low": 0.8688665572
+      },
+      {
+        "atom_class": "low_charge_pair_artifact",
+        "median_log_odd_minus_even": 0.0215001163,
+        "median_log_odd_minus_even_ci_high": 0.0236552097,
+        "median_log_odd_minus_even_ci_low": 0.0202389048,
+        "median_max_abs_charge_asymmetry": 0.032066701,
+        "median_max_abs_charge_asymmetry_ci_high": 0.0333169697,
+        "median_max_abs_charge_asymmetry_ci_low": 0.0293402573,
+        "n_events": 245,
+        "p90_max_abs_charge_asymmetry": 0.4236553149,
+        "p90_max_abs_charge_asymmetry_ci_high": 0.5813997524,
+        "p90_max_abs_charge_asymmetry_ci_low": 0.3231732274,
+        "prevalence": 0.0641361257,
+        "prevalence_ci_high": 0.0747032093,
+        "prevalence_ci_low": 0.0589230083,
+        "tail_precision": 0.9183673469,
+        "tail_precision_ci_high": 0.9547840909,
+        "tail_precision_ci_low": 0.8878100221
+      },
+      {
+        "atom_class": "common_shape",
+        "median_log_odd_minus_even": 0.0183443321,
+        "median_log_odd_minus_even_ci_high": 0.0196337214,
+        "median_log_odd_minus_even_ci_low": 0.0168466453,
+        "median_max_abs_charge_asymmetry": 0.0157038929,
+        "median_max_abs_charge_asymmetry_ci_high": 0.0165713678,
+        "median_max_abs_charge_asymmetry_ci_low": 0.0148274671,
+        "n_events": 2434,
+        "p90_max_abs_charge_asymmetry": 0.1716617528,
+        "p90_max_abs_charge_asymmetry_ci_high": 0.2070062274,
+        "p90_max_abs_charge_asymmetry_ci_low": 0.1497361303,
+        "prevalence": 0.6371727749,
+        "prevalence_ci_high": 0.6750457045,
+        "prevalence_ci_low": 0.5965808182,
+        "tail_precision": 0.9141331142,
+        "tail_precision_ci_high": 0.9652278696,
+        "tail_precision_ci_low": 0.8309470011
+      }
+    ],
+    "duplicate_readout_control_rows": 3820,
+    "forced_random_available_in_visible_root": false,
+    "forced_random_nonbeam_entries": 0
+  },
+  "handoff_verdict": {
+    "artifact_atoms": [
+      "low_charge_pair_artifact"
+    ],
+    "forced_random_caveat": "visible ROOT mirror has no usable tagged forced/random entries",
+    "pulse_shape_atoms_provisional": [
+      "delayed_peak_shape",
+      "broad_late_shape",
+      "pretrigger_baseline_shape",
+      "q_template_mismatch"
+    ]
+  },
+  "models": [
+    "cnn",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge",
+    "tcn",
+    "traditional_s16f_scorecard"
+  ],
+  "next_tickets": [
+    {
+      "body": "Rerun S02l without the forced/random absence fallback once tagged forced/random HRD ROOT files are mirrored into the canonical data bundle, preserving the same S02k frozen atom definitions and run-block bootstrap protocol.",
+      "title": "S02m atom handoff validation with true external random-trigger ROOT when mirrored"
+    }
+  ],
+  "raw_reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis selected_pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B2",
+        "report_value": 88213,
+        "reproduced": 88213,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B4",
+        "report_value": 21229,
+        "reproduced": 21229,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B6",
+        "report_value": 11148,
+        "reproduced": 11148,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B8",
+        "report_value": 4506,
+        "reproduced": 4506,
+        "tolerance": 0
+      }
+    ]
+  },
+  "runtime_seconds": 14.50370192527771,
+  "split": "leave-one-run-out over Sample-II runs [58, 59, 60, 61, 62, 63, 65]",
+  "study": "S02l",
+  "ticket": "1781182736.737.1d9a19c6",
+  "traditional_method": "frozen S16f/S02k morphology scorecard at 90% train-run clean acceptance",
+  "winner": {
+    "average_precision": 0.996901607781406,
+    "ci95": [
+      0.9930909286590754,
+      0.9990668696761632
+    ],
+    "metric": "held-out average precision",
+    "model": "ridge",
+    "tail_rejection_at_90_clean": 0.9454339836019224
+  },
+  "worker": "testbeam-laptop-1"
+}

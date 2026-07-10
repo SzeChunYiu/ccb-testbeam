@@ -1,0 +1,60 @@
+{
+  "ticket_id": "1781166372.1269.335801ba",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "sha256": "9d027d3676574ed112efd0c258d0df62740aa7b838941516629b3727d210f6af",
+      "bytes": 22091
+    },
+    {
+      "path": "action_labeled_residual_rows.csv.gz",
+      "sha256": "18f666d2b8c63dbbe5ef666018dc26e52a5ac25842a6fb91d348522e5668c6c5",
+      "bytes": 4777059
+    },
+    {
+      "path": "consumer_decision_changes.csv",
+      "sha256": "c6eded94895214081af4627f5e6fc0c404d719e759a3c2ce4d4b7a0ccaf5b589",
+      "bytes": 1367
+    },
+    {
+      "path": "downstream_metric_deltas.csv",
+      "sha256": "d286978793917169fa1041d8fd6c97a0225493e85ab1d1d01a47fd17fd904ca4",
+      "bytes": 17324
+    },
+    {
+      "path": "frozen_s03m_action_bands.csv",
+      "sha256": "91e2e13fa88be4c84e63af1e1908dfa93013d54a3b6021dce92e7d9e091afd3f",
+      "bytes": 8054
+    },
+    {
+      "path": "imported_consumer_evidence.csv",
+      "sha256": "a65e1489ce16e53a15854d4eb437cff6a7008cb1b9a5dad634f2e5e40e2ac28b",
+      "bytes": 838
+    },
+    {
+      "path": "input_sha256.csv",
+      "sha256": "e6089613bb015056ccb4e901bd04d7ac15bd34e2854fe8d2664a3600a47d9343",
+      "bytes": 5117
+    },
+    {
+      "path": "reproduction_match_table.csv",
+      "sha256": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+      "bytes": 335
+    },
+    {
+      "path": "required_family_benchmark.csv",
+      "sha256": "36e01fee83a9abf13bc77d176836de02c01736011af588e38cf1a519624c5636",
+      "bytes": 1936
+    },
+    {
+      "path": "result.json",
+      "sha256": "1ee74885ade0d8b2b17f6e4bac1ce6e1149c46220e31188a0e9808d6916b312d",
+      "bytes": 59363
+    },
+    {
+      "path": "substitution_summary.csv",
+      "sha256": "c04a0a14f085dd3911b488a32a06b85806c7ff8d55ab95f216f5e97b8348c307",
+      "bytes": 16666
+    }
+  ]
+}

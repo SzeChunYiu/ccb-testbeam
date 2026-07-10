@@ -1,0 +1,2 @@
+contrast,n_low,n_high,delta_sigma68_timing_ns,delta_median_abs_charge_log_residual,delta_mean_saturation_harm,delta_mean_anomaly_dropout,delta_mean_coupling_burden
+high_minus_low_cfd20_phase_quartile,10735,7402,5.3982100558871835,-0.04317230606323097,-0.06250745496471394,15.482213305148536,2.3790192141204076

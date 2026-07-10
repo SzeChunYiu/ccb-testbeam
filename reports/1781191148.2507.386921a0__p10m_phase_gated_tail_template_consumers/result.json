@@ -1,0 +1,56 @@
+{
+  "elapsed_sec": 43.96,
+  "git_commit": "6fce8edc68a587e914ed0be5b1eee939618440a4",
+  "overall_method_ranking": [
+    {
+      "charge_sigma68_log": 0.2748457696895876,
+      "method": "gradient_boosted_trees",
+      "primary_loss": 14.066688987410844,
+      "timing_sigma68_ns": 11.318231290514968
+    },
+    {
+      "charge_sigma68_log": 0.4477533685711209,
+      "method": "mlp",
+      "primary_loss": 14.648411701087968,
+      "timing_sigma68_ns": 10.17087801537676
+    },
+    {
+      "charge_sigma68_log": 0.4081853000476401,
+      "method": "phase_gated_cnn_new",
+      "primary_loss": 14.802684686276383,
+      "timing_sigma68_ns": 10.720831685799983
+    },
+    {
+      "charge_sigma68_log": 0.48077678938794977,
+      "method": "cnn_1d",
+      "primary_loss": 15.358221159317138,
+      "timing_sigma68_ns": 10.55045326543764
+    },
+    {
+      "charge_sigma68_log": 0.5325851782015923,
+      "method": "traditional_explicit_handles",
+      "primary_loss": 15.593545389416416,
+      "timing_sigma68_ns": 10.267693607400492
+    },
+    {
+      "charge_sigma68_log": 0.34848818101185974,
+      "method": "ridge",
+      "primary_loss": 16.922784870932006,
+      "timing_sigma68_ns": 13.43790306081341
+    },
+    {
+      "charge_sigma68_log": 0.7640305416417528,
+      "method": "shuffled_target_ridge_sentinel",
+      "primary_loss": 18.551977114168963,
+      "timing_sigma68_ns": 10.911671697751437
+    }
+  ],
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "reproduced_selected_pulses": 640737,
+  "reproduction_pass": true,
+  "study": "P10m",
+  "ticket": "1781191148.2507.386921a0",
+  "winner": "gradient_boosted_trees",
+  "winner_selection": "lowest non-sentinel mean fold primary_loss = timing_sigma68_ns + 10 * charge_sigma68_log",
+  "worker": "testbeam-laptop-3"
+}

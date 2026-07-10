@@ -1,0 +1,5 @@
+quantity,reference,reproduced,delta,pass
+parent App.I guarded gross D_t>51 ns,72.0,72,0.0,True
+all-three control events,3774.0,3774,0.0,True
+all-three clean events D_t<3 ns,,579,,True
+all-three real high-current candidates D_t>51 ns,22.0,22,0.0,True

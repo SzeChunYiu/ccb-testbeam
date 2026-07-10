@@ -1,0 +1,69 @@
+{
+  "command": "p09k_1783600897_13505_593263a7_real_reviewer_locked_label_replacement.py --config configs/p09k_1783600897_13505_593263a7_real_reviewer_locked_label_replacement.json",
+  "config": "configs/p09k_1783600897_13505_593263a7_real_reviewer_locked_label_replacement.json",
+  "environment_command": ".venv/bin/python",
+  "git_commit": "022cedd84ba0617d3bd7d486f8a072a8aee9dcfa",
+  "inputs": [
+    {
+      "bytes": 945,
+      "path": "configs/p09k_1783600897_13505_593263a7_real_reviewer_locked_label_replacement.json",
+      "sha256": "cb3555214c9846a13480aab1f81b8886aff92487596b4917d34ae0c87ab1c07f"
+    },
+    {
+      "bytes": 3629,
+      "path": "reports/1781039488.1166.6e40385a__p09g_injected_morphology_false_positive_gallery/manifest.json",
+      "sha256": "12c71f79d91867925555c7ef3b6b68bd38fb30f9ed9352776531e2222e865d73"
+    },
+    {
+      "bytes": 1203726,
+      "path": "reports/1781039488.1166.6e40385a__p09g_injected_morphology_false_positive_gallery/heldout_predictions.csv",
+      "sha256": "0ecccd34d112ddb484dabea20f18635348de50d3f09fc6f946a9a5e9e2795277"
+    },
+    {
+      "bytes": 336,
+      "path": "reports/1781039488.1166.6e40385a__p09g_injected_morphology_false_positive_gallery/p02d_raw_run_counts.csv",
+      "sha256": "a72dbb1bee7a6392c3faa84da13c65c93d91e1f558b5262723cd8d1da8b5ebbd"
+    },
+    {
+      "bytes": 92285,
+      "path": "reports/1781039488.1166.6e40385a__p09g_injected_morphology_false_positive_gallery/failure_gallery.csv",
+      "sha256": "083b9e75448672018a87118f806e4ef5e810338dfebec05036a6155a66d7c206"
+    },
+    {
+      "bytes": 4482,
+      "path": "reports/1781039488.1166.6e40385a__p09g_injected_morphology_false_positive_gallery/dttail_gallery.csv",
+      "sha256": "cdee7545c8398dcaa3a97257bb99bd0e853684423614c6400cb646cae3386453"
+    },
+    {
+      "bytes": 1542314,
+      "path": "reports/1781128334.2632.6ac8074e__p09j_injected_failure_atom_reviewer_calibration/reviewer_calibrated_rows.csv",
+      "sha256": "2c6d3872f9485999b6faba205a1bacccc3bb4c1b19cb087dc2b9accd2b8c3c23"
+    },
+    {
+      "bytes": 234796,
+      "path": "reports/1781021714.1194.414e1474/independent_review_labels.csv",
+      "sha256": "286edbcf60944064397623769605e1d71086ec31d85b1d872dfe6670127726fb"
+    },
+    {
+      "bytes": 109778,
+      "path": "reports/1781158366.1591.124904bf__p09i_blinded_temporal_subtype_calibration/reviewer_calibrated_gallery.csv",
+      "sha256": "1e1464a27626b814b2250c475f4e181214873bfe133974fb7938e631990a6736"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "f198badf4b7c44d65188bc4f194549ba5275febea7e358f533a6cea11fca3bba",
+    "input_sha256.csv": "57722a98c0129f1d03da9048d72be9428dea6eb2267ae19ab4aa7fe34ae4df2e",
+    "label_source_audit.csv": "78d26d858e22fa63457eb830307ac4d7356830fa7276dad39fdb49c1d69745e7",
+    "locked_reviewer_labels.csv": "aadaf1ab8aa0aedf36bc72ae592d48245304b6a08c3f0e6ae4dc4a6adc172058",
+    "method_scoreboard.csv": "ceba6ae2dd518f9ef15478ea650e4d391311f6a987cfcf1331ea39d9934b1fc7",
+    "per_run_metrics.csv": "ef9e162cbe53d177e81e69fa7e63b4d4d601688f3872ae62d1b7145befd1be88",
+    "raw_root_input_verification.csv": "84e0f25f83fcf43c989c1dc67bd974c13e06120dc608cc1895d2aee82779159c",
+    "reproduction_counts_by_run.csv": "a72dbb1bee7a6392c3faa84da13c65c93d91e1f558b5262723cd8d1da8b5ebbd",
+    "result.json": "47c0b8aff0e2ec13831a138ee14cf738163f3cfaf8e6c3dd9fa8316017c1fa1a",
+    "taxon_metrics.csv": "c4a5aab8b0a8f7329307b9307cb62d51ebdb5d6801c34840539337fef0fd91b0"
+  },
+  "runtime_sec": 249.42,
+  "study": "P09k",
+  "ticket": "1783600897.13505.593263a7",
+  "worker": "testbeam-laptop-3"
+}

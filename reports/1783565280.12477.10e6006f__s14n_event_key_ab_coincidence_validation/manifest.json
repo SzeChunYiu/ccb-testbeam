@@ -1,0 +1,6 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s14n_1783565280_12477_10e6006f_event_key_ab_coincidence_validation.py --config configs/s14n_1783565280_12477_10e6006f_event_key_ab_coincidence_validation.yaml",
+  "git_commit": "2b5a6c9db3a5aef38cdaecc12a5822e58906cb00",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "runtime_sec": 74.3
+}

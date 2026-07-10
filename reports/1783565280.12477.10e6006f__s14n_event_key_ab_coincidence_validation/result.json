@@ -1,0 +1,261 @@
+{
+  "study": "S14n",
+  "ticket_id": "1783565280.12477.10e6006f",
+  "worker": "testbeam-laptop-4",
+  "title": "event-key A/B coincidence validation for saturation transfer",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "event_key_validation": {
+    "accepted_event_key": "EVENTNO",
+    "accepted_selected_b_match_fraction_min": 0.9763663220088626,
+    "accepted_selected_b_match_fraction_median": 0.9991605104096709,
+    "accepted_selected_b_match_fraction_max": 1.0,
+    "accepted_max_duplicate_keys_a": 0,
+    "accepted_max_duplicate_keys_b": 0,
+    "evt_selected_b_match_fraction_min": 0.0,
+    "evt_selected_b_match_fraction_median": 2.2018737672583826,
+    "evt_selected_b_match_fraction_max": 3.1626682420630843,
+    "evt_max_duplicate_keys_a": 35446,
+    "evt_max_duplicate_keys_b": 35440,
+    "eventno_selected_b_match_fraction_min": 0.9763663220088626,
+    "eventno_selected_b_match_fraction_median": 0.9991605104096709,
+    "eventno_selected_b_match_fraction_max": 1.0
+  },
+  "split": {
+    "split_unit": "run",
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "primary_metric": "event_astack_transfer_score = weighted held-out B saturated R68 times one plus absolute run-level correlation with event-matched A-stack charge IQR fraction",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "event_astack_transfer_score": 0.021719242273443646,
+    "event_astack_transfer_score_ci95": [
+      0.018614016737551854,
+      0.028678244888524974
+    ],
+    "mean_b_saturated_res68": 0.018767236066338497,
+    "mean_b_saturated_res68_ci95": [
+      0.017464455932117897,
+      0.021362321777521082
+    ],
+    "abs_corr_b_res68_vs_event_astack_iqr": 0.1572957358595792,
+    "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+      0.011055062692860594,
+      0.5308449955587119
+    ]
+  },
+  "methods": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0187672361,
+      "mean_b_saturated_res68_ci95": [
+        0.0174644559,
+        0.0213623218
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.1572957359,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.0110550627,
+        0.5308449956
+      ],
+      "event_astack_transfer_score": 0.0217192423,
+      "event_astack_transfer_score_ci95": [
+        0.0186140167,
+        0.0286782449
+      ]
+    },
+    {
+      "method": "observed_even_charge",
+      "family": "traditional_observed",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0218959223,
+      "mean_b_saturated_res68_ci95": [
+        0.0196019401,
+        0.0265621807
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.3443718565,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.0438314754,
+        0.6979122572
+      ],
+      "event_astack_transfer_score": 0.0294362617,
+      "event_astack_transfer_score_ci95": [
+        0.0229140003,
+        0.0382664915
+      ]
+    },
+    {
+      "method": "p07_p04_corrected",
+      "family": "ml_p07_p04_duplicate",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0272891112,
+      "mean_b_saturated_res68_ci95": [
+        0.026589248,
+        0.0286057562
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.114578555,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.0044708889,
+        0.4769370475
+      ],
+      "event_astack_transfer_score": 0.0304158581,
+      "event_astack_transfer_score_ci95": [
+        0.0272457523,
+        0.0417289422
+      ]
+    },
+    {
+      "method": "template_residual_mlp",
+      "family": "neural_template_residual",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0309768394,
+      "mean_b_saturated_res68_ci95": [
+        0.029230734,
+        0.0345748277
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.0652332951,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.005369197,
+        0.4220502154
+      ],
+      "event_astack_transfer_score": 0.0329975607,
+      "event_astack_transfer_score_ci95": [
+        0.0302667196,
+        0.0474937684
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0459297772,
+      "mean_b_saturated_res68_ci95": [
+        0.0433817878,
+        0.0498399134
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.1678674882,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.0128225676,
+        0.5068990809
+      ],
+      "event_astack_transfer_score": 0.0536398935,
+      "event_astack_transfer_score_ci95": [
+        0.0451855871,
+        0.0718611715
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0545350912,
+      "mean_b_saturated_res68_ci95": [
+        0.0522284996,
+        0.0602628706
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.2810945563,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.0147361279,
+        0.5898179996
+      ],
+      "event_astack_transfer_score": 0.0698646084,
+      "event_astack_transfer_score_ci95": [
+        0.0543230894,
+        0.0933495904
+      ]
+    },
+    {
+      "method": "traditional_template_corrected",
+      "family": "traditional_rising_edge_template",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.0818770182,
+      "mean_b_saturated_res68_ci95": [
+        0.0798132867,
+        0.0845644276
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.4755554818,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.2436347045,
+        0.7507351125
+      ],
+      "event_astack_transfer_score": 0.120814083,
+      "event_astack_transfer_score_ci95": [
+        0.1024431178,
+        0.1433807435
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n_runs": 21,
+      "n_saturated": 106217,
+      "mean_b_saturated_res68": 0.1523191355,
+      "mean_b_saturated_res68_ci95": [
+        0.1462771951,
+        0.1624223113
+      ],
+      "abs_corr_b_res68_vs_event_astack_iqr": 0.4045306887,
+      "abs_corr_b_res68_vs_event_astack_iqr_ci95": [
+        0.0759112912,
+        0.8001556111
+      ],
+      "event_astack_transfer_score": 0.2139369002,
+      "event_astack_transfer_score_ci95": [
+        0.1639937857,
+        0.2761641284
+      ]
+    }
+  ],
+  "finding": "`EVENTNO` is the accepted duplicate-free A/B event key for this transfer study: selected-B match fractions over held-out runs span 0.97637 to 1.00000. `EVT` is rejected because it has held-out duplicate counts up to A=35446, B=35440. Replacing S14m's run-level A-stack handle with event-matched A charge keeps gradient_boosted_trees as the best method (score 0.021719, 95% CI [0.018614016737551854, 0.028678244888524974]).",
+  "next_tickets": [],
+  "runtime_sec": 74.3
+}

@@ -1,0 +1,71 @@
+{
+  "study": "S10i",
+  "ticket": "1783548324.12257.18612134",
+  "worker": "testbeam-laptop-3",
+  "title": "Validate phase-calibrated A/B windows on true independent A-stack ROOT files",
+  "reproduced": true,
+  "reproduced_number": 20,
+  "winner": {
+    "method": "ridge",
+    "n_aligned_pairs": 20,
+    "median_ns": 0.0,
+    "robust_width_ns": 5.38768264434262,
+    "robust_ci_low_ns": 1.921472902483238,
+    "robust_ci_high_ns": 24.85807263848746,
+    "full_rms_ns": 16.040736975379822,
+    "tail_abs_gt_5ns": 0.35
+  },
+  "winner_name": "ridge",
+  "primary_metric": "held-out run-bootstrap phase-calibrated A/B W68",
+  "methods_benchmarked": [
+    "traditional_phase_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "phase_gated_cnn_new"
+  ],
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "torch_available": true,
+  "git_commit": "2b5a6c9db3a5aef38cdaecc12a5822e58906cb00",
+  "next_tickets": [
+    "S10j: compare local-EVT alignment against cross-correlation-derived trigger offsets using low-threshold A/B control pulses; expected information gain is whether residual A/B width is limited by DAQ index jitter or pulse-time estimator variance."
+  ]
+}

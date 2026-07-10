@@ -1,0 +1,23 @@
+{
+  "study": "S10i",
+  "ticket": "1783548324.12257.18612134",
+  "worker": "testbeam-laptop-3",
+  "title": "Validate phase-calibrated A/B windows on true independent A-stack ROOT files",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1783548324.12257.18612134__s10i_independent_ab_windows",
+  "script_path": "scripts/s10i_1783548324_12257_18612134_independent_ab_windows.py",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "cfd_fraction": 0.2,
+  "amplitude_cut_adc": 1000.0,
+  "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+  "astack": {"file_prefix": "hrda", "staves": {"A1": 0, "A3": 4}},
+  "bstack": {"file_prefix": "hrdb", "staves": {"B2": 0, "B4": 2}},
+  "random_seed": 108324,
+  "bootstrap_resamples": 500,
+  "ridge_alphas": [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0],
+  "gbt": {"max_iter": 90, "learning_rate": 0.045, "max_leaf_nodes": 15, "l2_regularization": 0.03},
+  "mlp": {"hidden_layer_sizes": [64, 32], "alpha": 0.001, "max_iter": 180},
+  "nn": {"epochs": 12, "batch_size": 256, "learning_rate": 0.001, "weight_decay": 0.0001, "max_train_rows": 10000}
+}

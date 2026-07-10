@@ -1,0 +1,7 @@
+method,family,status,n_joined_truth_rows,n_runs,roc_auc,roc_auc_ci_low,roc_auc_ci_high,average_precision,average_precision_ci_low,average_precision_ci_high,notes
+traditional_deltae_depth_ridge,truth_supervised_requested,blocked_no_event_level_pid_truth,0,0,,,,,,,Not fit: no candidate source provides real-data run+event PID truth for S15 rows.
+ridge,truth_supervised_requested,blocked_no_event_level_pid_truth,0,0,,,,,,,Not fit: no candidate source provides real-data run+event PID truth for S15 rows.
+gradient_boosted_trees,truth_supervised_requested,blocked_no_event_level_pid_truth,0,0,,,,,,,Not fit: no candidate source provides real-data run+event PID truth for S15 rows.
+mlp,truth_supervised_requested,blocked_no_event_level_pid_truth,0,0,,,,,,,Not fit: no candidate source provides real-data run+event PID truth for S15 rows.
+cnn_1d,truth_supervised_requested,blocked_no_event_level_pid_truth,0,0,,,,,,,Not fit: no candidate source provides real-data run+event PID truth for S15 rows.
+support_residual_hybrid_mlp_new,truth_supervised_requested,blocked_no_event_level_pid_truth,0,0,,,,,,,Not fit: no candidate source provides real-data run+event PID truth for S15 rows.

@@ -1,0 +1,78 @@
+{
+  "ticket_id": "1781192570.878.59e556f7",
+  "worker": "testbeam-laptop-2",
+  "study_id": "S15c",
+  "title": "external PID truth join feasibility gate",
+  "output_dir": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "s15b_result": "reports/1781070978.487.042a7300__s15b_pid_null_label_stability_audit/result.json",
+  "candidate_truth_sources": [
+    "reports/0000000004.1.g4truth",
+    "reports/0000000008.1.usesim",
+    "reports/0000000009.1.pidfull",
+    "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge",
+    "reports/1781181864.166893.491f3bde__s22_g4_truth_real_pid_transfer",
+    "geant4/results"
+  ],
+  "truth_keywords": [
+    "pid",
+    "truth",
+    "species",
+    "particle",
+    "pdg",
+    "proton",
+    "deuteron"
+  ],
+  "join_key_candidates": [
+    "run",
+    "event_index",
+    "eventno",
+    "evt",
+    "EVENTNO",
+    "EVT",
+    "track_id",
+    "event_id"
+  ],
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "saturation_adc": 7000.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_i_calib_pulses": 248745,
+    "sample_i_analysis_pulses": 252266,
+    "sample_ii_calib_pulses": 14630,
+    "sample_ii_analysis_pulses": 125096
+  },
+  "benchmark_methods_required": [
+    "traditional_deltae_depth_ridge",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "support_residual_hybrid_mlp_new"
+  ]
+}

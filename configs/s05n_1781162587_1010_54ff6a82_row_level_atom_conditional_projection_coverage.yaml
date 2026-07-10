@@ -1,0 +1,34 @@
+study_id: S05n
+title: row-level atom-conditional projection coverage
+ticket: "1781162587.1010.54ff6a82"
+worker: testbeam-laptop-1
+
+raw_root_dir: /home/billy/ccb-data/extracted/root/root
+output_dir: reports/1781162587.1010.54ff6a82__s05n_row_level_atom_conditional_projection_coverage
+frozen_s05h_dir: reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier
+frozen_s05m_dir: reports/1781055412.618.60fe5c1e__s05m_correlated_floor_projection_coverage
+frozen_s05h_config: configs/s05h_1781040960_767_247d3910_saturation_covariance_support_frontier.yaml
+
+nominal_coverages: [0.68, 0.95]
+bootstrap_resamples: 240
+random_seed: 1162587
+min_atom_rows: 120
+min_atom_runs: 3
+
+primary_methods:
+  - pair_median
+  - traditional_s05d_static_priors
+  - ridge
+  - gradient_boosted_trees
+  - mlp
+  - cnn_1d
+  - support_gated_cnn_new
+  - extra_trees_s05e_dynamic
+
+required_methods:
+  - traditional_s05d_static_priors
+  - ridge
+  - gradient_boosted_trees
+  - mlp
+  - cnn_1d
+  - support_gated_cnn_new

@@ -1,0 +1,29 @@
+{
+  "study": "P05g",
+  "ticket": "1781191650.1263.35bb131f",
+  "worker": "testbeam-laptop-2",
+  "title": "blinded hand-scan validation of high-amplitude large-lowering accepted/rejected two-pulse candidates",
+  "upstream_ticket": "1781068159.1612.2426717d",
+  "upstream_report_dir": "reports/1781068159.1612.2426717d__p05f_two_pulse_risk_coverage_sidebands",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation",
+  "random_seed": 1191650,
+  "bootstrap_samples": 120,
+  "frontier_filter": {
+    "p02_topology": "p02_broad_late",
+    "saturation_support": "sat_high_amp_large_lowering"
+  },
+  "recoverability_threshold": 0.45,
+  "required_methods": [
+    "traditional_template_fit",
+    "ridge_linear",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble"
+  ],
+  "novel_ticket": {
+    "title": "P05h external reviewer calibration for borderline high-amplitude two-pulse hand-scan labels",
+    "body": "Repeat the P05g blinded hand-scan adjudication with two independent reviewers and a preregistered disagreement rubric for borderline high-amplitude/large-lowering broad-late candidates, then propagate reviewer variance into the P05f support frontier."
+  }
+}

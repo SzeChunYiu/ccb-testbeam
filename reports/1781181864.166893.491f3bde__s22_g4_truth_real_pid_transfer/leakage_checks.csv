@@ -1,0 +1,4 @@
+check,value,pass,interpretation
+feature_excludes_event_track_run_and_label,1.0,True,Only Sci_bar EDep depth vectors and derived range summaries enter models.
+shuffled_training_label_logistic_auc,0.5237770555555555,True,Chance-like ranking when training labels are permuted inside the same folds.
+intentional_label_oracle_auc,1.0,True,"A direct-label oracle is detected as perfect, validating the sentinel."

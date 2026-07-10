@@ -1,0 +1,4 @@
+claim,evidence,severity
+"GEANT4 p/d score is trained on MeV EDep truth, not ADC waveforms",real raw ROOT provides selected-pulse counts but no truth PID label or calibrated ADC-to-MeV response,high
+simulation penetration is much gentler than selected real B-stack support,compare sim_active_fraction and data_fraction_relative_to_B2 by stave,high
+winner score operating range in truth benchmark,hist_gradient_boosted_trees score q10/q50/q90 = 0.001/0.506/0.999,context

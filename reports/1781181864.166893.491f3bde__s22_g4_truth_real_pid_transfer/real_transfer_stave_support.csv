@@ -1,0 +1,5 @@
+stave,data_selected_pulses,data_fraction_relative_to_B2,sim_primary_tracks_active,sim_active_fraction,sim_median_active_edep_MeV
+B2,579424,1,36410,0.99975288,43.431976
+B4,36116,0.062330867,17093,0.46934293,32.45562
+B6,17945,0.030970412,10035,0.27554299,42.195786
+B8,7252,0.012515878,7108,0.19517285,40.098953

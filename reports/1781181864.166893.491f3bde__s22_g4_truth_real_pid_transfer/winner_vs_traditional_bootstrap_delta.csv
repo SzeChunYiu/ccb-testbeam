@@ -1,0 +1,2 @@
+metric,winner_minus_traditional,ci_low,ci_high
+average_precision_delta,0.2058461,0.19971253,0.21208407

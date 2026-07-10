@@ -1,0 +1,11 @@
+method,bin_low,bin_high,n,mean_score,observed_deuteron_fraction
+hist_gradient_boosted_trees,0,0.1,10253,0.0049662607,0.0025358432
+hist_gradient_boosted_trees,0.1,0.2,483,0.15892448,0.13664596
+hist_gradient_boosted_trees,0.2,0.3,120,0.24729847,0.24166667
+hist_gradient_boosted_trees,0.3,0.4,130,0.36612449,0.46923077
+hist_gradient_boosted_trees,0.4,0.5,673,0.46617628,0.46656761
+hist_gradient_boosted_trees,0.5,0.6,1309,0.5408752,0.53857907
+hist_gradient_boosted_trees,0.6,0.7,239,0.64260295,0.69456067
+hist_gradient_boosted_trees,0.7,0.8,416,0.72176039,0.75
+hist_gradient_boosted_trees,0.8,0.9,229,0.8516046,0.84279476
+hist_gradient_boosted_trees,0.9,1,10148,0.99721093,0.99802917

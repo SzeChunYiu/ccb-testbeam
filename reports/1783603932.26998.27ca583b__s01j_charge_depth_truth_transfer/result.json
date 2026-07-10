@@ -1,0 +1,98 @@
+{
+  "study": "S01j_charge_depth_truth_transfer",
+  "ticket": "1783603932.26998.27ca583b",
+  "worker": "testbeam-laptop-1",
+  "title": "S01j charge-depth truth transfer for q-template support atom",
+  "reproduced": true,
+  "winner": "traditional_charge_depth_rule",
+  "winner_family": "traditional",
+  "winner_metrics": {
+    "method": "traditional_charge_depth_rule",
+    "family": "traditional",
+    "n": 33300,
+    "positives": 18845,
+    "roc_auc": 1.0,
+    "auc_ci_low": 0.9999999999999999,
+    "auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "ap_ci_low": 0.9999999999999999,
+    "ap_ci_high": 1.0
+  },
+  "best_traditional": {
+    "method": "traditional_charge_depth_rule",
+    "family": "traditional",
+    "n": 33300,
+    "positives": 18845,
+    "roc_auc": 1.0,
+    "auc_ci_low": 0.9999999999999999,
+    "auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "ap_ci_low": 0.9999999999999999,
+    "ap_ci_high": 1.0
+  },
+  "models_benchmarked": [
+    "traditional_charge_depth_rule",
+    "atom_gated_cnn_new",
+    "mlp",
+    "gradient_boosted_trees",
+    "ridge",
+    "traditional_atom_table",
+    "1d_cnn",
+    "q_token_attention"
+  ],
+  "new_architecture": "atom_gated_cnn_new plus retained q_token_attention",
+  "primary_metric": "ROC AUC for calibrated charge-depth detector-level target",
+  "verdict": "physics_rule_wins_atom_gated_support_transfers_q_token_alone_does_not",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "q_rows_joined": 640737
+  },
+  "split": {
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_samples": 500,
+    "train_rows": 65016,
+    "heldout_rows": 33300
+  },
+  "target": {
+    "name": "calibrated charge-depth detector-level pseudo-truth",
+    "threshold": 0.73461534907549,
+    "train_positive_fraction": 0.2499846191706657,
+    "heldout_positive_fraction": 0.565915915915916,
+    "uses_s03_timing_tail": false,
+    "uses_injected_pileup_dropout": false,
+    "independent_particle_truth": false
+  },
+  "traditional_smoothing_alpha": 20.0,
+  "qtemplate_transfer_diagnostics": [
+    {
+      "contrast": "target_rate_top_decile_q_minus_rest",
+      "value": -0.37582613598290315,
+      "q_threshold": 0.11939760269486206
+    },
+    {
+      "contrast": "mean_charge_depth_score_top_decile_q_minus_rest",
+      "value": -1.664052288227069,
+      "q_threshold": 0.11939760269486206
+    },
+    {
+      "contrast": "heldout_target_fraction",
+      "value": 0.565915915915916,
+      "q_threshold": 0.11939760269486206
+    }
+  ],
+  "next_tickets": [],
+  "git_commit": "b687c3f29fbf5fdeb4248ce706f3e034b5808394",
+  "python": "3.7.6",
+  "runtime_sec": 78.6517608165741
+}

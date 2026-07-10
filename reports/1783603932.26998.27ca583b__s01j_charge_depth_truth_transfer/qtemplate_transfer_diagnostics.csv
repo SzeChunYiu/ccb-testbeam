@@ -1,0 +1,4 @@
+contrast,value,q_threshold
+target_rate_top_decile_q_minus_rest,-0.37582613598290315,0.11939760269486206
+mean_charge_depth_score_top_decile_q_minus_rest,-1.664052288227069,0.11939760269486206
+heldout_target_fraction,0.565915915915916,0.11939760269486206

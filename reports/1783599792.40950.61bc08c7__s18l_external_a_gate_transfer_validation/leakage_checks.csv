@@ -1,0 +1,8 @@
+check,value,flag
+s18k_reproduction_all_pass,True,False
+endpoint_uses_later_sample_ii_runs_only,"58,59,60,61,62,63,65",False
+endpoint_excludes_B2_pairs,"B4-B6,B4-B8,B6-B8",False
+frozen_s18k_gate_no_new_threshold_tuning,true,False
+claimed_ticket,1783599792.40950.61bc08c7,False
+winner_cov_minus_waveform_only_control_ns2,-8.808677282176731,False
+winner_cov_minus_shuffled_control_ns2,-10.806242267641716,False

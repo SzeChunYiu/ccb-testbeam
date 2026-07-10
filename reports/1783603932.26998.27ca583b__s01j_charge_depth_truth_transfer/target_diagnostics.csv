@@ -1,0 +1,7 @@
+quantity,value
+train_rows,65016
+heldout_rows,33300
+charge_depth_threshold_train_quantile,0.73461534907549
+train_positive_fraction,0.2499846191706657
+heldout_positive_fraction,0.565915915915916
+target_source,calibrated detector-level charge-depth pseudo-truth

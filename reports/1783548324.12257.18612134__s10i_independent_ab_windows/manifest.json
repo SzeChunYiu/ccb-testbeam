@@ -1,0 +1,25 @@
+{
+  "ticket": "1783548324.12257.18612134",
+  "command": "/home/billy/anaconda3/bin/python scripts/s10i_1783548324_12257_18612134_independent_ab_windows.py --config configs/s10i_1783548324_12257_18612134_independent_ab_windows.json",
+  "git_commit": "2b5a6c9db3a5aef38cdaecc12a5822e58906cb00",
+  "python": "3.7.6",
+  "packages": {
+    "uproot": "5.0.9",
+    "torch": "1.13.1+cu117"
+  },
+  "output_sha256": {
+    "REPORT.md": "a16525165e325a7f27f2b87fb6293240ec148d33ee16de92ca38a5700a4d0a19",
+    "alignment_diagnostics.csv": "b230c93d2bb6cdf5eb3470fefdbe9f9121aff4cfb2c7d8ab3e57efcd6ef31895",
+    "fig_method_widths.png": "e90a7fa84e4b3574a582055753ffccadb5ce7507757c9e64cae3021388ef0f10",
+    "fig_winner_residuals.png": "6850270dd8c3b098c89d2cdaf13dcd3926c320f4ef6ef139354442c37ac003f5",
+    "heldout_aligned_summary.csv.gz": "b9a02769bc167d862f6e5fc8b9472ca2fef3ba934fd490363614908731ca7b91",
+    "heldout_predictions.csv.gz": "32c0c4f828620832f6a5da4578c0e42ee15fb50bf52107abd9bb3ef87f7ef38c",
+    "input_sha256.csv": "fdac161a51f7b359058eb5d4151a9154dcf3f8ed8162fe7c3bae281581f99131",
+    "method_metrics.csv": "6172b6a1ba884a12bae1971753f104e6a52424263068e4e556e7ceffb5ec85d6",
+    "per_run_metrics.csv": "4555917c2932403541f6212d338686c18295f89ab701085a3ab64bb538f5740d",
+    "reproduction_counts.csv": "fb97b0f8edb3f7783d5f021b1c8f5069095d9ae1c013c9748fbcad7323ecfebe",
+    "result.json": "2f1b3b30bb03b16d0087c1aaeb42c9cfedc91fe7b7200739f4341c1ee7a5e2e6",
+    "ridge_cv_scan.csv": "df8f7063c03f0c763a5b20658719ec3dc786ac7984e67272bea415c55854a4c6",
+    "train_aligned_summary.csv.gz": "762576de0cf16df24a656978242ec1ecebd92c8868226d9c11ded576e76a878e"
+  }
+}

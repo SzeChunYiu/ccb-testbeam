@@ -1,0 +1,139 @@
+{
+  "study": "S06d",
+  "ticket": "1781168903.1206.4984072c",
+  "worker": "testbeam-laptop-4",
+  "title": "propagate S06c accepted-support timing intervals into PID/range-energy pulls",
+  "reproduced": true,
+  "raw_root_reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split": {
+    "mode": "leave-one-run-out by run with event-paired run-block bootstrap",
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_samples": 200
+  },
+  "fixed_abstention_budget": 0.2700698080279232,
+  "methods": [
+    "traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "phase_conformal_gated_cnn"
+  ],
+  "consumers": [
+    "pid_pull",
+    "range_energy_pull"
+  ],
+  "winner": {
+    "method": "phase_conformal_gated_cnn",
+    "method_label": "Phase-conformal atom-gated CNN",
+    "consumer": "range_energy_pull",
+    "metric": "consumer_loss",
+    "consumer_loss": 0.06315342062716175,
+    "ci_low": 0.04426028199959441,
+    "ci_high": 0.08148203863851908,
+    "pull_width68": 0.9180402684328764,
+    "coverage68": 0.5705977382875606,
+    "coverage95": 0.945718901453958,
+    "tail_frac_abs_gt1p96": 0.054281098546042
+  },
+  "fixed_cost_winner_delta": 0.015393652174726158,
+  "fixed_cost_answer": "Accepted-support ML propagation identifies the phase-conformal gated CNN as the downstream winner, but the S06c action band does not beat same-cost random acceptance for that winning consumer/method; the action band most clearly improves the traditional baseline at fixed abstention.",
+  "traditional": [
+    {
+      "subset": "s06c_accepted_support",
+      "consumer": "pid_pull",
+      "method": "traditional",
+      "method_label": "S02/S03/S04 atom robust-width baseline",
+      "n": 6190,
+      "pull_width68": 1.4492987856169257,
+      "coverage68": 0.4339256865912762,
+      "coverage95": 0.7431340872374798,
+      "tail_frac_abs_gt1p96": 0.2568659127625202,
+      "consumer_loss": 0.2904486041719225,
+      "consumer_loss_ci_low": 0.1612621779226212,
+      "consumer_loss_ci_high": 0.47091988469135715
+    },
+    {
+      "subset": "s06c_accepted_support",
+      "consumer": "range_energy_pull",
+      "method": "traditional",
+      "method_label": "S02/S03/S04 atom robust-width baseline",
+      "n": 6190,
+      "pull_width68": 1.3608438073111946,
+      "coverage68": 0.45977382875605816,
+      "coverage95": 0.7667205169628433,
+      "tail_frac_abs_gt1p96": 0.2332794830371567,
+      "consumer_loss": 0.2500796091916125,
+      "consumer_loss_ci_low": 0.13133971933856844,
+      "consumer_loss_ci_high": 0.4167498211111397
+    }
+  ],
+  "ml": {
+    "methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "cnn1d",
+      "phase_conformal_gated_cnn"
+    ],
+    "best_method": "phase_conformal_gated_cnn",
+    "best_consumer": "range_energy_pull"
+  }
+}

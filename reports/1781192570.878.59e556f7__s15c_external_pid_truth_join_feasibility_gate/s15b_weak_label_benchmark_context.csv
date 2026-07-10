@@ -1,0 +1,7 @@
+method,prior_scope,roc_auc,roc_auc_ci_low,roc_auc_ci_high,average_precision,average_precision_ci_low,average_precision_ci_high,caveat
+traditional_deltae_depth_ridge,S15b weak-label only,0.9860319401207713,0.9763536403686677,0.9940470896126792,0.9849680550505755,0.9752645674696362,0.9936913479889372,Not event-level PID truth; included only to show what cannot be promoted by S15c.
+ridge,S15b weak-label only,0.9605440704421467,0.9448374074188307,0.973851186133716,0.9319205146725121,0.9197815197561707,0.9446112448295115,Not event-level PID truth; included only to show what cannot be promoted by S15c.
+gradient_boosted_trees,S15b weak-label only,0.988334969890334,0.9808198555823608,0.9947629336403925,0.9890798321082822,0.9823392358390323,0.995033619776163,Not event-level PID truth; included only to show what cannot be promoted by S15c.
+mlp,S15b weak-label only,0.987590939103628,0.9797434736221204,0.9942888979844644,0.9884070785727591,0.9813951108801343,0.9943119443556041,Not event-level PID truth; included only to show what cannot be promoted by S15c.
+cnn_1d,S15b weak-label only,0.903370767703711,0.8677616906578948,0.9407932236298687,0.8570988322505027,0.8110597428447077,0.9101788632947523,Not event-level PID truth; included only to show what cannot be promoted by S15c.
+support_residual_hybrid_mlp_new,S15b weak-label only,0.9967396724884118,0.9941437169341416,0.998663020418014,0.9963802091021033,0.9939687689400738,0.9984229695362963,Not event-level PID truth; included only to show what cannot be promoted by S15c.

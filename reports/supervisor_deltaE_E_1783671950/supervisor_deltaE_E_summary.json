@@ -1,0 +1,204 @@
+{
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "data_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+  "trigger_counts": {
+    "enter_B": 237098,
+    "enter_A": 69770,
+    "coincidence_AB": 64762
+  },
+  "mc_summary": {
+    "I": {
+      "p": {
+        "n_events": 14453,
+        "deltaE_median_MeV": 9.83370823446228,
+        "deltaE_p16_MeV": 0.0,
+        "deltaE_p84_MeV": 13.104859099229495,
+        "Eres_median_MeV": 6.40928353211052,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 45.73587536621101,
+        "median_stop_layer": 1.0,
+        "frac_stop_B2": 0.30789455476371685,
+        "frac_reach_B4": 0.6921054452362831,
+        "frac_reach_B6": 0.4848128416245762,
+        "frac_reach_B8": 0.4208814778938629
+      },
+      "d": {
+        "n_events": 61686,
+        "deltaE_median_MeV": 38.93704358046685,
+        "deltaE_p16_MeV": 30.715829625347308,
+        "deltaE_p84_MeV": 55.79847208128763,
+        "Eres_median_MeV": 31.171880683963657,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 52.26493550099746,
+        "median_stop_layer": 1.0,
+        "frac_stop_B2": 0.33028564017767403,
+        "frac_reach_B4": 0.669714359822326,
+        "frac_reach_B6": 0.061456408261193786,
+        "frac_reach_B8": 0.028337061894108874
+      },
+      "alpha": {
+        "n_events": 10136,
+        "deltaE_median_MeV": 1.6210904318850226,
+        "deltaE_p16_MeV": 0.0,
+        "deltaE_p84_MeV": 8.158677306622211,
+        "Eres_median_MeV": 0.0,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 4.014915450198652,
+        "median_stop_layer": 0.0,
+        "frac_stop_B2": 0.6024072612470402,
+        "frac_reach_B4": 0.39759273875295975,
+        "frac_reach_B6": 0.15568271507498027,
+        "frac_reach_B8": 0.09116022099447514
+      },
+      "heavy": {
+        "n_events": 7562,
+        "deltaE_median_MeV": 0.0,
+        "deltaE_p16_MeV": 0.0,
+        "deltaE_p84_MeV": 1.3097412835610465,
+        "Eres_median_MeV": 0.0,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 0.8391558652391514,
+        "median_stop_layer": 1.0,
+        "frac_stop_B2": 0.4830732610420524,
+        "frac_reach_B4": 0.5169267389579476,
+        "frac_reach_B6": 0.23961914837344617,
+        "frac_reach_B8": 0.16503570483998942
+      },
+      "other": {
+        "n_events": 0,
+        "note": "<5 events"
+      },
+      "all": {
+        "n_events": 97500,
+        "deltaE_median_MeV": 32.805823851108556,
+        "deltaE_p16_MeV": 0.21727214966245817,
+        "deltaE_p84_MeV": 50.94999100959993,
+        "Eres_median_MeV": 6.1764251301080435,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 46.969168036099546,
+        "median_stop_layer": 1.0,
+        "frac_stop_B2": 0.3733948717948718,
+        "frac_reach_B4": 0.6266051282051283,
+        "frac_reach_B6": 0.15504615384615383,
+        "frac_reach_B8": 0.10868717948717949
+      }
+    },
+    "II": {
+      "p": {
+        "n_events": 149914,
+        "deltaE_median_MeV": 11.427025691752531,
+        "deltaE_p16_MeV": 0.0,
+        "deltaE_p84_MeV": 13.000186515187947,
+        "Eres_median_MeV": 36.97742795971506,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 46.849167059807264,
+        "median_stop_layer": 5.0,
+        "frac_stop_B2": 0.11122376829382179,
+        "frac_reach_B4": 0.8887762317061783,
+        "frac_reach_B6": 0.7896327227610497,
+        "frac_reach_B8": 0.7143362194324746
+      },
+      "d": {
+        "n_events": 146816,
+        "deltaE_median_MeV": 35.85860137606054,
+        "deltaE_p16_MeV": 22.037617328962813,
+        "deltaE_p84_MeV": 53.539122967493725,
+        "Eres_median_MeV": 31.41662709859434,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 97.19929417731572,
+        "median_stop_layer": 1.0,
+        "frac_stop_B2": 0.2589704119442023,
+        "frac_reach_B4": 0.7410295880557978,
+        "frac_reach_B6": 0.2564843068875327,
+        "frac_reach_B8": 0.19511497384481255
+      },
+      "alpha": {
+        "n_events": 45412,
+        "deltaE_median_MeV": 0.0,
+        "deltaE_p16_MeV": 0.0,
+        "deltaE_p84_MeV": 5.155061263052348,
+        "Eres_median_MeV": 0.0,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 6.078468234161039,
+        "median_stop_layer": 1.0,
+        "frac_stop_B2": 0.3427508147626178,
+        "frac_reach_B4": 0.6572491852373822,
+        "frac_reach_B6": 0.4627191050823571,
+        "frac_reach_B8": 0.3188804721219061
+      },
+      "heavy": {
+        "n_events": 38041,
+        "deltaE_median_MeV": 0.0,
+        "deltaE_p16_MeV": 0.0,
+        "deltaE_p84_MeV": 0.48709872444924257,
+        "Eres_median_MeV": 0.0,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 0.7953721618650885,
+        "median_stop_layer": 2.0,
+        "frac_stop_B2": 0.25133408690623277,
+        "frac_reach_B4": 0.7486659130937673,
+        "frac_reach_B6": 0.5685181777555796,
+        "frac_reach_B8": 0.43705475670986565
+      },
+      "other": {
+        "n_events": 0,
+        "note": "<5 events"
+      },
+      "all": {
+        "n_events": 399664,
+        "deltaE_median_MeV": 11.876168385166146,
+        "deltaE_p16_MeV": 0.0,
+        "deltaE_p84_MeV": 38.209956295705354,
+        "Eres_median_MeV": 14.761883054474438,
+        "Eres_p16_MeV": 0.0,
+        "Eres_p84_MeV": 47.878102841076704,
+        "median_stop_layer": 2.0,
+        "frac_stop_B2": 0.21718993954922133,
+        "frac_reach_B4": 0.7828100604507786,
+        "frac_reach_B6": 0.5190434965370911,
+        "frac_reach_B8": 0.4326684414908523
+      }
+    }
+  },
+  "data_summary": {
+    "I": {
+      "n_events": 241422,
+      "deltaE_median_ADC": 6542.5,
+      "deltaE_p16_ADC": 3460.0,
+      "deltaE_p84_ADC": 8302.0,
+      "Eres_median_ADC": 0.0,
+      "Eres_p16_ADC": 0.0,
+      "Eres_p84_ADC": 0.0,
+      "frac_saturated_B2": 0.41738532528104316,
+      "frac_reach_B4": 0.02631491744745715,
+      "frac_reach_B6": 0.010396732692132449,
+      "frac_reach_B8": 0.0037527648681561746,
+      "deepest_stave_fracs": {
+        "B2": 0.9736850825525428,
+        "B4": 0.0159181847553247,
+        "B6": 0.006643967823976274,
+        "B8": 0.0037527648681561746
+      }
+    },
+    "II": {
+      "n_events": 88213,
+      "deltaE_median_ADC": 3350.0,
+      "deltaE_p16_ADC": 1849.96,
+      "deltaE_p84_ADC": 5466.5,
+      "Eres_median_ADC": 0.0,
+      "Eres_p16_ADC": 0.0,
+      "Eres_p84_ADC": 3636.0,
+      "frac_saturated_B2": 0.06065999342500539,
+      "frac_reach_B4": 0.238184848038271,
+      "frac_reach_B6": 0.11892804915375285,
+      "frac_reach_B8": 0.04576422976205321,
+      "deepest_stave_fracs": {
+        "B2": 0.761815151961729,
+        "B4": 0.11925679888451815,
+        "B6": 0.07316381939169964,
+        "B8": 0.04576422976205321
+      }
+    }
+  },
+  "note": "MC: Delta E = Edep(B2), Residual E = Edep(B4+B6+B8). Data: amplitude proxies, NOT calibrated energy. Per Dave's spec (Issue #618)."
+}

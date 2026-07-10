@@ -1,0 +1,15 @@
+{
+  "study": "P12f",
+  "ticket": "1781191863.1669.616c1405",
+  "files": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "externalized_policy_by_run.csv",
+    "frozen_predecessor_method_metrics.csv",
+    "method_external_validation_summary.csv",
+    "shuffled_policy_sentinel.csv",
+    "raw_count_match.csv"
+  ],
+  "command": "python3 scripts/p12f_1781191863_1669_616c1405_externalized_harm_ledger_policy_validation.py --config configs/p12f_1781191863_1669_616c1405_externalized_harm_ledger_policy_validation.json"
+}

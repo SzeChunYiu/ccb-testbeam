@@ -1,0 +1,27 @@
+{
+  "ticket": "1781191863.1669.616c1405",
+  "study": "P12f",
+  "worker": "testbeam-laptop-4",
+  "title": "externalized frozen harm-ledger policy validation",
+  "expected_selected_pulses": 640737,
+  "p12e_policy_dir": "reports/1781062454.713.242b3d71__p12e_cross_consumer_pulse_atom_harm_ledger",
+  "p12e_predictions": "reports/1781062454.713.242b3d71__p12e_cross_consumer_pulse_atom_harm_ledger/heldout_consumer_predictions.csv.gz",
+  "fixed_acceptance_coverage": 0.90,
+  "predecessor_policy_dir": "reports/1781145765.1768.59211878__p12d_frozen_action_matrix_consumer_calibration",
+  "predecessor_arbitration_dir": "reports/1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration",
+  "external_p04_by_run": "reports/1781105308.1461.12695cf1__p04n_external_calibration_charge_proxy_anomaly_bias/external_by_run.csv",
+  "external_s02_folds": "reports/1781182736.737.1d9a19c6__s02l_external_atom_handoff_validation/heldout_fold_metrics.csv",
+  "external_s03_by_run": "reports/1781167155.1451.52b255f2__s03o_external_shape_constrained_timewalk_adoption_gate/per_run_benchmark.csv",
+  "output_dir": "reports/1781191863.1669.616c1405__p12f_externalized_harm_ledger_policy_validation",
+  "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+  "bootstrap_reps": 2000,
+  "random_seed": 6161405,
+  "method_map": {
+    "traditional_action_matrix": "traditional_frozen_harm_ledger",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "1d_cnn": "1d_cnn",
+    "action_prior_residual_cnn_new_arch": "action_prior_residual_cnn_new_arch"
+  }
+}

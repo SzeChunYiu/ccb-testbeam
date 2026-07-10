@@ -1,0 +1,7 @@
+method,policy,train_score_threshold,train_target_acceptance,heldout_event_acceptance,n_train_events,n_heldout_events,n_accepted_heldout_events
+traditional_explicit_timewalk,train95_b2_atom_abstention,3.443032148971531,0.95,0.985691573926868,782,3774,3720
+ridge,train95_b2_atom_abstention,3.443032148971531,0.95,0.985691573926868,782,3774,3720
+hgb,train95_b2_atom_abstention,3.443032148971531,0.95,0.985691573926868,782,3774,3720
+mlp,train95_b2_atom_abstention,3.443032148971531,0.95,0.985691573926868,782,3774,3720
+cnn1d,train95_b2_atom_abstention,3.443032148971531,0.95,0.985691573926868,782,3774,3720
+gated_mixer,train95_b2_atom_abstention,3.443032148971531,0.95,0.985691573926868,782,3774,3720

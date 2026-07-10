@@ -1,0 +1,64 @@
+study_id: S03m
+ticket: "1781163916.1315.567b2c03"
+worker: testbeam-laptop-4
+title: External shared-bin timewalk anchor on A-stack duplicate timing
+
+raw_root_dir: data/root/root
+output_dir: reports/1781163916.1315.567b2c03__s03m_external_sharedbin_astack_anchor
+
+samples:
+  sample_iii_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_iii_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_iv_calib: [64]
+  sample_iv_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+samples_per_channel: 18
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+cfd_fraction: 0.20
+bootstrap_resamples: 300
+random_seed: 20260710
+
+astack:
+  file_prefix: hrda
+  staves: {A1: 0, A3: 4}
+  pair: [A1, A3]
+  expected_counts:
+    sample_iii_analysis:
+      events_with_selected: 7168
+      selected_pulses: 9682
+    sample_iv_analysis:
+      events_with_selected: 767
+      selected_pulses: 894
+
+bstack:
+  file_prefix: hrdb
+  staves: {B2: 0, B4: 2, B6: 4, B8: 6}
+  expected_counts:
+    total_selected_pulses: 640737
+    sample_ii_analysis:
+      selected_pulses: 125096
+      B2: 88213
+      B4: 21229
+      B6: 11148
+      B8: 4506
+
+shared_bins:
+  n_bins: 8
+  min_bin_count: 20
+  shrink_strength: 80.0
+
+ml:
+  ridge_alphas: [0.01, 0.1, 1.0, 10.0, 100.0]
+  hgb_max_iter: 80
+  hgb_learning_rate: 0.06
+  hgb_max_leaf_nodes: 15
+  mlp_hidden: [16]
+  mlp_alpha: 0.001
+  mlp_max_iter: 80
+  torch_epochs: 12
+  torch_learning_rate: 0.01
+  torch_weight_decay: 0.001
+  torch_batch_size: 2048
+  cnn_channels: 8
+  gated_hidden: 16

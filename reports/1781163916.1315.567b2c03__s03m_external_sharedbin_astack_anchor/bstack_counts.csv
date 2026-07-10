@@ -1,0 +1,5 @@
+stack,sample,events_total,events_with_selected,selected_pulses,B2,B4,B6,B8
+hrdb,sample_iii_calib,409815,239559,248745,237882,6747,2940,1176
+hrdb,sample_iii_analysis,388879,243133,252266,241422,6451,3094,1299
+hrdb,sample_iv_calib,35943,12103,14630,11907,1689,763,271
+hrdb,sample_iv_analysis,262091,89807,125096,88213,21229,11148,4506

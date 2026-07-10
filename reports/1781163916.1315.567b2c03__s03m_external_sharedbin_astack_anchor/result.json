@@ -1,0 +1,28 @@
+{
+  "study": "S03m",
+  "ticket": "1781163916.1315.567b2c03",
+  "worker": "testbeam-laptop-4",
+  "title": "External shared-bin timewalk check on A-stack duplicate timing anchor",
+  "raw_root_reproduction_pass": true,
+  "primary_metric": "sample_iii_analysis A1-A3 run-block bootstrap sigma68_ns",
+  "winner": "gradient_boosted_trees",
+  "winner_model_family": "gradient_boosted_trees",
+  "winner_sigma68_ns": 0.33068011771039735,
+  "winner_sigma68_ci_ns": [
+    0.32250401848008026,
+    0.3525277883364032
+  ],
+  "required_methods_present": [
+    "cnn1d",
+    "gated_cnn",
+    "gradient_boosted_trees",
+    "mlp",
+    "ridge",
+    "shared_bin_timewalk",
+    "traditional_poly_logamp"
+  ],
+  "git_commit": "0574a649d0919344642222dae9942c4b4ad50ad0",
+  "next_tickets": [
+    "S03n: validate the A-stack shared-bin anchor against event-matched B-stack duplicate-readout pairs with a pre-registered cross-stack residual-sign convention."
+  ]
+}

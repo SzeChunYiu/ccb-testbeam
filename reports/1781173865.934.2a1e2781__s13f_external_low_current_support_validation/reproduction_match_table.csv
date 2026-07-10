@@ -1,0 +1,4 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S13b downstream-topology high/low ratio,1.4449743989548876,1.4449743989548876,0.0,1e-12,True
+S13b events with selected B-stack pulse,243133.0,243133.0,0.0,0.0,True
+S13b selected B-stack pulses,252266.0,252266.0,0.0,0.0,True

@@ -1,0 +1,5 @@
+check,value,pass,detail
+train_test_pair_id_overlap,0,True,Raw/injected paired variants stay in the same held-out run.
+p02d_artifact_columns_used,0,True,No P02d latent artifact or cluster-label columns are read.
+forbidden_primary_feature_columns,0,True,None.
+raw_reproduction_gate,1,True,All parent raw-ROOT numbers matched.

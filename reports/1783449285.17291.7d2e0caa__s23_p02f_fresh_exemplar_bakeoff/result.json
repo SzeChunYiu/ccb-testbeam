@@ -1,0 +1,141 @@
+{
+  "study_id": "S23",
+  "ticket_id": "1783449285.17291.7d2e0caa",
+  "worker": "testbeam-laptop-4",
+  "question": "P02f critic replication on fresh non-P02d exemplar labels",
+  "label_source": "fresh raw-root injected exemplar labels; no P02d cluster labels reused",
+  "split": "leave-one-run-out over runs 58,59,60,61,62,63,65",
+  "bootstrap": {
+    "unit": "run",
+    "replicates": 800,
+    "confidence_level": 0.95
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "roc_auc": 0.9296155813114702,
+    "roc_auc_ci_low": 0.9169729278904551,
+    "roc_auc_ci_high": 0.9435614109435834,
+    "average_precision": 0.9321067468523894,
+    "ap_ci_low": 0.9190781808549062,
+    "ap_ci_high": 0.9479414074605187,
+    "brier": 0.1078631505752658,
+    "brier_ci_low": 0.09746427354090698,
+    "brier_ci_high": 0.11952143034318465,
+    "notes": "Histogram gradient-boosted classifier on normalized morphology features."
+  },
+  "all_methods": [
+    {
+      "method": "gradient_boosted_trees",
+      "roc_auc": 0.9296155813114702,
+      "roc_auc_ci_low": 0.9169729278904551,
+      "roc_auc_ci_high": 0.9435614109435834,
+      "average_precision": 0.9321067468523894,
+      "ap_ci_low": 0.9190781808549062,
+      "ap_ci_high": 0.9479414074605187,
+      "brier": 0.1078631505752658,
+      "brier_ci_low": 0.09746427354090698,
+      "brier_ci_high": 0.11952143034318465,
+      "notes": "Histogram gradient-boosted classifier on normalized morphology features."
+    },
+    {
+      "method": "mlp",
+      "roc_auc": 0.9095597030593074,
+      "roc_auc_ci_low": 0.8977568331838448,
+      "roc_auc_ci_high": 0.9241775510204082,
+      "average_precision": 0.9098615413154668,
+      "ap_ci_low": 0.8927428069177806,
+      "ap_ci_high": 0.926559810684422,
+      "brier": 0.12026502302058238,
+      "brier_ci_low": 0.11074118693395046,
+      "brier_ci_high": 0.1288942840049706,
+      "notes": "One-hidden-layer MLP classifier on normalized morphology features."
+    },
+    {
+      "method": "ridge",
+      "roc_auc": 0.8320140395454374,
+      "roc_auc_ci_low": 0.8126718397314929,
+      "roc_auc_ci_high": 0.8435734577583134,
+      "average_precision": 0.8308620905509219,
+      "ap_ci_low": 0.8098136126101118,
+      "ap_ci_high": 0.8540026693172493,
+      "brier": 0.21204578162505666,
+      "brier_ci_low": 0.2101477571766711,
+      "brier_ci_high": 0.2151663258423134,
+      "notes": "Linear ridge regression score on normalized morphology features."
+    },
+    {
+      "method": "traditional_nearest_neighbor",
+      "roc_auc": 0.8242449168555294,
+      "roc_auc_ci_low": 0.8017039554154515,
+      "roc_auc_ci_high": 0.8405246680053439,
+      "average_precision": 0.8461126460306947,
+      "ap_ci_low": 0.8238531173618723,
+      "ap_ci_high": 0.8619038983607349,
+      "brier": 0.21230209101896938,
+      "brier_ci_low": 0.20896346681402336,
+      "brier_ci_high": 0.21597009511616191,
+      "notes": "Standardized training-run nearest-neighbor distance to fresh clean/injected exemplar pools."
+    },
+    {
+      "method": "cnn",
+      "roc_auc": 0.7613056561926347,
+      "roc_auc_ci_low": 0.7355083163164976,
+      "roc_auc_ci_high": 0.7967310103488139,
+      "average_precision": 0.7697643047519442,
+      "ap_ci_low": 0.7415705680113401,
+      "ap_ci_high": 0.8027337798020725,
+      "brier": 0.19776184064833746,
+      "brier_ci_low": 0.18293033959314406,
+      "brier_ci_high": 0.2095551349807135,
+      "notes": "Small 1D-CNN over four normalized B-stave waveforms."
+    },
+    {
+      "method": "attention",
+      "roc_auc": 0.7120819763028838,
+      "roc_auc_ci_low": 0.6862618660290164,
+      "roc_auc_ci_high": 0.7444259915987013,
+      "average_precision": 0.7398753332170378,
+      "ap_ci_low": 0.7154797901185366,
+      "ap_ci_high": 0.7680203386200701,
+      "brier": 0.21511412786021106,
+      "brier_ci_low": 0.20402636786830736,
+      "brier_ci_high": 0.22398762529344898,
+      "notes": "Compact self-attention encoder over waveform samples; new architecture in this study."
+    }
+  ],
+  "reproduction": [
+    {
+      "quantity": "P02 early-peak pulse rate, peak_sample<=3",
+      "report_value": 0.044,
+      "reproduced": 0.04388333333333334,
+      "delta": -0.00011666666666666076,
+      "tolerance": 0.002,
+      "pass": true,
+      "sample_size": 60000
+    },
+    {
+      "quantity": "S07 parent guarded gross events, D_t>51 ns",
+      "report_value": 72.0,
+      "reproduced": 72.0,
+      "delta": 0.0,
+      "tolerance": 0.0,
+      "pass": true,
+      "sample_size": 10156
+    },
+    {
+      "quantity": "P02d transparent morphology ROC AUC",
+      "report_value": 0.692169373549884,
+      "reproduced": 0.692169373549884,
+      "delta": 0.0,
+      "tolerance": 1e-12,
+      "pass": true,
+      "sample_size": 2227
+    }
+  ],
+  "n_rows": 4310,
+  "n_positive": 2155,
+  "n_negative": 2155,
+  "feature_count": 179,
+  "runtime_seconds": 466.3809506893158,
+  "follow_up_ticket": null
+}

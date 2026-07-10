@@ -1,0 +1,41 @@
+{
+  "study": "S16j",
+  "ticket": "1783568931.24470.56e21d18",
+  "worker": "testbeam-laptop-3",
+  "title": "mirror true non-beam B-stack forced/random pedestal ROOT from DAQ archive",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1783568931.24470.56e21d18__s16j_mirror_true_nonbeam_bstack_forced_random",
+  "source_s16k_config": "configs/s16k_1781095392_2104_2cc76ed8_hidden_mode_independent_truth.json",
+  "source_s16f_config": "configs/s16f_1781031083_1784_78066bc6_pretrigger_veto_loro.json",
+  "source_s16f_report_dir": "reports/1781031083.1784.78066bc6__s16f_pretrigger_veto_loro",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "methods": [
+    "traditional_quantile",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "siamese_cnn_meta"
+  ],
+  "metrics": {
+    "tail_cut_ns": 5.0,
+    "bootstrap_replicates": 800,
+    "random_seed": 1783568931,
+    "primary_metric": "tail_fraction_after",
+    "winner_rule": "if direct forced/random truth exists, score frozen methods on direct labels; otherwise score the frozen run-held-out S16k timing-tail fallback and name the lowest post-veto timing-tail fraction, ties by higher AUC then lower veto fraction"
+  },
+  "direct_truth_decision": {
+    "required_trigger_condition": "at least one populated B-stack ROOT entry with TRIGGER != 1 or a dedicated forced/random/pedestal/no-pulse filename token",
+    "fallback_target": "blinded_sample_ii_timing_tail_abs_gt5ns"
+  },
+  "next_tickets": []
+}

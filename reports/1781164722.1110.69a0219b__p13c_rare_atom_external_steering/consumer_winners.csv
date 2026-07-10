@@ -1,0 +1,5 @@
+consumer,winner_method,winner_variant,positive_cells,best_utility,utility_ci,false_control,shuffled_false_steer_rate
+timing,gradient_boosted_trees,gradient_boosted_trees_learning_rate0.03,17,1.0474203533994089,"[0.962, 1.130]",0.0,0.005875440658049354
+pileup,gradient_boosted_trees,gradient_boosted_trees_learning_rate0.08,24,1.0804300950271728,"[1.008, 1.158]",0.0,0.009433962264150943
+charge,gradient_boosted_trees,gradient_boosted_trees_learning_rate0.03,25,1.1862904133563372,"[1.166, 1.241]",0.0,0.020047169811320754
+pid,gradient_boosted_trees,gradient_boosted_trees_learning_rate0.03,25,1.1863610849302901,"[1.166, 1.241]",0.0,0.0199764982373678

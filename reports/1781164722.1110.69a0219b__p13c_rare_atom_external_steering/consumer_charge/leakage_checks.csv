@@ -1,0 +1,5 @@
+consumer,check,value,pass
+charge,leave_one_run_out_train_test_overlap,0,True
+charge,scalar_feature_identifier_label_exclusion,,True
+charge,nominal_control_present_for_false_promotion,130,True
+charge,all_best_predictions_finite,1,True

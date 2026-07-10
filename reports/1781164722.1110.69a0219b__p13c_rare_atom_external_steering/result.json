@@ -1,0 +1,495 @@
+{
+  "consumer_winners": [
+    {
+      "best_utility": 1.0474203533994089,
+      "consumer": "timing",
+      "false_control": 0.0,
+      "positive_cells": 17,
+      "shuffled_false_steer_rate": 0.005875440658049354,
+      "utility_ci": "[0.962, 1.130]",
+      "winner_method": "gradient_boosted_trees",
+      "winner_variant": "gradient_boosted_trees_learning_rate0.03"
+    },
+    {
+      "best_utility": 1.0804300950271728,
+      "consumer": "pileup",
+      "false_control": 0.0,
+      "positive_cells": 24,
+      "shuffled_false_steer_rate": 0.009433962264150943,
+      "utility_ci": "[1.008, 1.158]",
+      "winner_method": "gradient_boosted_trees",
+      "winner_variant": "gradient_boosted_trees_learning_rate0.08"
+    },
+    {
+      "best_utility": 1.1862904133563372,
+      "consumer": "charge",
+      "false_control": 0.0,
+      "positive_cells": 25,
+      "shuffled_false_steer_rate": 0.020047169811320754,
+      "utility_ci": "[1.166, 1.241]",
+      "winner_method": "gradient_boosted_trees",
+      "winner_variant": "gradient_boosted_trees_learning_rate0.03"
+    },
+    {
+      "best_utility": 1.1863610849302901,
+      "consumer": "pid",
+      "false_control": 0.0,
+      "positive_cells": 25,
+      "shuffled_false_steer_rate": 0.0199764982373678,
+      "utility_ci": "[1.166, 1.241]",
+      "winner_method": "gradient_boosted_trees",
+      "winner_variant": "gradient_boosted_trees_learning_rate0.03"
+    }
+  ],
+  "consumers": [
+    "timing",
+    "pileup",
+    "charge",
+    "pid"
+  ],
+  "endpoint_systematics_by_consumer": [
+    {
+      "consumer": "timing",
+      "control_metric_mean": 0.009075114971895759,
+      "metric": "timing_tail_rate",
+      "n_cells": 1003,
+      "n_positive": 17,
+      "promoted_metric_ci_high": 0.15364100278721673,
+      "promoted_metric_ci_low": 0.06356668061744504,
+      "promoted_metric_mean": 0.09206798866855524
+    },
+    {
+      "consumer": "pileup",
+      "control_metric_mean": 0.9378081239290466,
+      "metric": "pileup_excess_proxy",
+      "n_cells": 1003,
+      "n_positive": 24,
+      "promoted_metric_ci_high": 1.198501519026431,
+      "promoted_metric_ci_low": 1.157988345767833,
+      "promoted_metric_mean": 1.1712733106347335
+    },
+    {
+      "consumer": "charge",
+      "control_metric_mean": 0.307149186503006,
+      "metric": "charge_res68_proxy",
+      "n_cells": 1003,
+      "n_positive": 25,
+      "promoted_metric_ci_high": 0.16262718758781475,
+      "promoted_metric_ci_low": 0.15208993619483807,
+      "promoted_metric_mean": 0.15836698527413404
+    },
+    {
+      "consumer": "pid",
+      "control_metric_mean": 0.18485140383552454,
+      "metric": "qshape_abs_mean",
+      "n_cells": 1003,
+      "n_positive": 25,
+      "promoted_metric_ci_high": 0.21463096946928975,
+      "promoted_metric_ci_low": 0.17306353263131122,
+      "promoted_metric_mean": 0.18326503747150422
+    }
+  ],
+  "frozen_gate_source": "P13b promotion_criteria, unchanged in configs/p13c_1781164722_1110_69a0219b_rare_atom_external_steering.json",
+  "git_commit": "0574a649d0919344642222dae9942c4b4ad50ad0",
+  "leakage_checks": [
+    {
+      "check": "leave_one_run_out_train_test_overlap",
+      "consumer": "timing",
+      "pass": true,
+      "value": 0
+    },
+    {
+      "check": "scalar_feature_identifier_label_exclusion",
+      "consumer": "timing",
+      "pass": true,
+      "value": ""
+    },
+    {
+      "check": "nominal_control_present_for_false_promotion",
+      "consumer": "timing",
+      "pass": true,
+      "value": 130
+    },
+    {
+      "check": "all_best_predictions_finite",
+      "consumer": "timing",
+      "pass": true,
+      "value": 1
+    },
+    {
+      "check": "leave_one_run_out_train_test_overlap",
+      "consumer": "pileup",
+      "pass": true,
+      "value": 0
+    },
+    {
+      "check": "scalar_feature_identifier_label_exclusion",
+      "consumer": "pileup",
+      "pass": true,
+      "value": ""
+    },
+    {
+      "check": "nominal_control_present_for_false_promotion",
+      "consumer": "pileup",
+      "pass": true,
+      "value": 130
+    },
+    {
+      "check": "all_best_predictions_finite",
+      "consumer": "pileup",
+      "pass": true,
+      "value": 1
+    },
+    {
+      "check": "leave_one_run_out_train_test_overlap",
+      "consumer": "charge",
+      "pass": true,
+      "value": 0
+    },
+    {
+      "check": "scalar_feature_identifier_label_exclusion",
+      "consumer": "charge",
+      "pass": true,
+      "value": ""
+    },
+    {
+      "check": "nominal_control_present_for_false_promotion",
+      "consumer": "charge",
+      "pass": true,
+      "value": 130
+    },
+    {
+      "check": "all_best_predictions_finite",
+      "consumer": "charge",
+      "pass": true,
+      "value": 1
+    },
+    {
+      "check": "leave_one_run_out_train_test_overlap",
+      "consumer": "pid",
+      "pass": true,
+      "value": 0
+    },
+    {
+      "check": "scalar_feature_identifier_label_exclusion",
+      "consumer": "pid",
+      "pass": true,
+      "value": ""
+    },
+    {
+      "check": "nominal_control_present_for_false_promotion",
+      "consumer": "pid",
+      "pass": true,
+      "value": 130
+    },
+    {
+      "check": "all_best_predictions_finite",
+      "consumer": "pid",
+      "pass": true,
+      "value": 1
+    }
+  ],
+  "methods_benchmarked": [
+    "traditional_support_scorecard",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "support_gated_cnn_new"
+  ],
+  "next_tickets": [],
+  "python": "3.7.6",
+  "raw_reproduction": [
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "S00 selected B-stave pulse records",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "tolerance": 0
+    }
+  ],
+  "reproduction_pass": true,
+  "runtime_sec": 415.1819095611572,
+  "shuffled_control_summary": [
+    {
+      "consumer": "timing",
+      "method": "traditional_support_scorecard",
+      "method_variant": "traditional_support_scorecard",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.0,
+      "shuffled_false_steer_rate_ci_high": 0.0,
+      "shuffled_false_steer_rate_ci_low": 0.0
+    },
+    {
+      "consumer": "timing",
+      "method": "gradient_boosted_trees",
+      "method_variant": "gradient_boosted_trees_learning_rate0.03",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.005875440658049354,
+      "shuffled_false_steer_rate_ci_high": 0.01072070438207028,
+      "shuffled_false_steer_rate_ci_low": 0.001217409062235646
+    },
+    {
+      "consumer": "timing",
+      "method": "ridge",
+      "method_variant": "ridge_C3",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.010575793184488837,
+      "shuffled_false_steer_rate_ci_high": 0.015789258297584107,
+      "shuffled_false_steer_rate_ci_low": 0.005705834258916451
+    },
+    {
+      "consumer": "timing",
+      "method": "support_gated_cnn_new",
+      "method_variant": "support_gated_cnn_new_width8",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.02702702702702703,
+      "shuffled_false_steer_rate_ci_high": 0.03535136874554205,
+      "shuffled_false_steer_rate_ci_low": 0.0188538923189845
+    },
+    {
+      "consumer": "timing",
+      "method": "cnn_1d",
+      "method_variant": "cnn_1d_width8",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.08695652173913043,
+      "shuffled_false_steer_rate_ci_high": 0.10320493542512489,
+      "shuffled_false_steer_rate_ci_low": 0.07159272859100659
+    },
+    {
+      "consumer": "timing",
+      "method": "mlp",
+      "method_variant": "mlp_hidden32",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.381903642773208,
+      "shuffled_false_steer_rate_ci_high": 0.4711111732312079,
+      "shuffled_false_steer_rate_ci_low": 0.2740646167366887
+    },
+    {
+      "consumer": "pileup",
+      "method": "traditional_support_scorecard",
+      "method_variant": "traditional_support_scorecard",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.0,
+      "shuffled_false_steer_rate_ci_high": 0.0,
+      "shuffled_false_steer_rate_ci_low": 0.0
+    },
+    {
+      "consumer": "pileup",
+      "method": "gradient_boosted_trees",
+      "method_variant": "gradient_boosted_trees_learning_rate0.08",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.009433962264150943,
+      "shuffled_false_steer_rate_ci_high": 0.015589407991678947,
+      "shuffled_false_steer_rate_ci_low": 0.004716703662597114
+    },
+    {
+      "consumer": "pileup",
+      "method": "ridge",
+      "method_variant": "ridge_C3",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.014150943396226415,
+      "shuffled_false_steer_rate_ci_high": 0.021506664091172495,
+      "shuffled_false_steer_rate_ci_low": 0.009142335885323344
+    },
+    {
+      "consumer": "pileup",
+      "method": "support_gated_cnn_new",
+      "method_variant": "support_gated_cnn_new_width8",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.024764150943396228,
+      "shuffled_false_steer_rate_ci_high": 0.03505603890586898,
+      "shuffled_false_steer_rate_ci_low": 0.01646009145707753
+    },
+    {
+      "consumer": "pileup",
+      "method": "cnn_1d",
+      "method_variant": "cnn_1d_width8",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.11556603773584906,
+      "shuffled_false_steer_rate_ci_high": 0.1354376481042654,
+      "shuffled_false_steer_rate_ci_low": 0.09938345813785636
+    },
+    {
+      "consumer": "pileup",
+      "method": "mlp",
+      "method_variant": "mlp_hidden16",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.3018867924528302,
+      "shuffled_false_steer_rate_ci_high": 0.3981781744392526,
+      "shuffled_false_steer_rate_ci_low": 0.21148292279001238
+    },
+    {
+      "consumer": "charge",
+      "method": "traditional_support_scorecard",
+      "method_variant": "traditional_support_scorecard",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.0,
+      "shuffled_false_steer_rate_ci_high": 0.0,
+      "shuffled_false_steer_rate_ci_low": 0.0
+    },
+    {
+      "consumer": "charge",
+      "method": "ridge",
+      "method_variant": "ridge_C3",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.015330188679245283,
+      "shuffled_false_steer_rate_ci_high": 0.021431134654818867,
+      "shuffled_false_steer_rate_ci_low": 0.009258054041452503
+    },
+    {
+      "consumer": "charge",
+      "method": "gradient_boosted_trees",
+      "method_variant": "gradient_boosted_trees_learning_rate0.03",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.020047169811320754,
+      "shuffled_false_steer_rate_ci_high": 0.026129042735573815,
+      "shuffled_false_steer_rate_ci_low": 0.013013569374550683
+    },
+    {
+      "consumer": "charge",
+      "method": "support_gated_cnn_new",
+      "method_variant": "support_gated_cnn_new_width8",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.0294811320754717,
+      "shuffled_false_steer_rate_ci_high": 0.040534714816441185,
+      "shuffled_false_steer_rate_ci_low": 0.019628228610867778
+    },
+    {
+      "consumer": "charge",
+      "method": "cnn_1d",
+      "method_variant": "cnn_1d_width8",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.11320754716981132,
+      "shuffled_false_steer_rate_ci_high": 0.1330264782227709,
+      "shuffled_false_steer_rate_ci_low": 0.09117741536940945
+    },
+    {
+      "consumer": "charge",
+      "method": "mlp",
+      "method_variant": "mlp_hidden16",
+      "n_shuffled_negative": 848,
+      "shuffled_false_steer_rate": 0.30542452830188677,
+      "shuffled_false_steer_rate_ci_high": 0.39257623192304336,
+      "shuffled_false_steer_rate_ci_low": 0.21006132951555487
+    },
+    {
+      "consumer": "pid",
+      "method": "traditional_support_scorecard",
+      "method_variant": "traditional_support_scorecard",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.0,
+      "shuffled_false_steer_rate_ci_high": 0.0,
+      "shuffled_false_steer_rate_ci_low": 0.0
+    },
+    {
+      "consumer": "pid",
+      "method": "ridge",
+      "method_variant": "ridge_C3",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.01527614571092832,
+      "shuffled_false_steer_rate_ci_high": 0.020982095278695514,
+      "shuffled_false_steer_rate_ci_low": 0.00940715109573241
+    },
+    {
+      "consumer": "pid",
+      "method": "gradient_boosted_trees",
+      "method_variant": "gradient_boosted_trees_learning_rate0.03",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.0199764982373678,
+      "shuffled_false_steer_rate_ci_high": 0.026500307869764126,
+      "shuffled_false_steer_rate_ci_low": 0.012802633893384785
+    },
+    {
+      "consumer": "pid",
+      "method": "support_gated_cnn_new",
+      "method_variant": "support_gated_cnn_new_width8",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.02937720329024677,
+      "shuffled_false_steer_rate_ci_high": 0.03885859164420485,
+      "shuffled_false_steer_rate_ci_low": 0.019647876442452892
+    },
+    {
+      "consumer": "pid",
+      "method": "cnn_1d",
+      "method_variant": "cnn_1d_width8",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.1128084606345476,
+      "shuffled_false_steer_rate_ci_high": 0.1337477741812231,
+      "shuffled_false_steer_rate_ci_low": 0.09457415055417065
+    },
+    {
+      "consumer": "pid",
+      "method": "mlp",
+      "method_variant": "mlp_hidden16",
+      "n_shuffled_negative": 851,
+      "shuffled_false_steer_rate": 0.30669800235017625,
+      "shuffled_false_steer_rate_ci_high": 0.39978189551104354,
+      "shuffled_false_steer_rate_ci_low": 0.22518983114441535
+    }
+  ],
+  "split": {
+    "bootstrap_samples": 240,
+    "runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "type": "leave-one-run-out",
+    "unit": "run"
+  },
+  "study": "P13c",
+  "ticket": "1781164722.1110.69a0219b",
+  "title": "rare-atom external steering dry run",
+  "winner": {
+    "average_precision": 0.9970370370370372,
+    "average_precision_ci": [
+      0.9847546583850931,
+      1.0
+    ],
+    "consumer": "pid",
+    "ece": 0.002797815477516502,
+    "false_promotion_control_rate": 0.0,
+    "method": "gradient_boosted_trees",
+    "method_variant": "gradient_boosted_trees_learning_rate0.03",
+    "promotion_utility": 1.1863610849302901,
+    "promotion_utility_ci": [
+      1.1663059442553416,
+      1.2407168154587462
+    ],
+    "shuffled_false_steer_rate": 0.0199764982373678
+  },
+  "winner_name": "gradient_boosted_trees",
+  "worker": "testbeam-laptop-1"
+}

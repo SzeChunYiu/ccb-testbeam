@@ -1,0 +1,19 @@
+{
+  "ticket": "1781191650.1263.35bb131f",
+  "script": "scripts/p05g_1781191650_1263_35bb131f_blinded_handscan_validation.py",
+  "config": "configs/p05g_1781191650_1263_35bb131f_blinded_handscan_validation.json",
+  "python": "3.8.10",
+  "runtime_sec": 6.247647523880005,
+  "artifacts": [
+    "blinded_candidate_ledger.csv",
+    "frontier_method_scores.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "method_summary.csv",
+    "per_run_method_metrics.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "run_counts.csv",
+    "sideband_method_metrics.csv"
+  ]
+}

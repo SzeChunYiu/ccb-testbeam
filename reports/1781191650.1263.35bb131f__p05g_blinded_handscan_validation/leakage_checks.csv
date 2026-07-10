@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_root_reproduction_pass,True,True,P05f raw HRDv ROOT reproduction gate passed before P05g reuse.
+required_method_coverage,"cnn_1d_dual_head,consensus_abstention_ensemble,gradient_boosted_trees,mlp,ridge_linear,traditional_template_fit",True,"Traditional, ridge, GBT, MLP, 1D-CNN, and consensus architecture are all present."
+label_blinded_to_method_acceptance,True,True,"Recoverability uses fit-quality primitives only, not method name or accepted flag."
+run_block_bootstrap_unit,120,True,CIs resample whole source runs.
+frontier_population_nontrivial,549,True,High-amplitude large-lowering broad-late candidates include both labels.

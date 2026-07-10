@@ -1,0 +1,104 @@
+{
+  "study": "P05g",
+  "ticket": "1781191650.1263.35bb131f",
+  "worker": "testbeam-laptop-2",
+  "title": "blinded hand-scan validation of high-amplitude large-lowering accepted/rejected two-pulse candidates",
+  "upstream_ticket": "1781068159.1612.2426717d",
+  "reproduced": true,
+  "reproduction_gate": "P05f raw B-stack HRDv ROOT topology fractions reused with all rows passing",
+  "raw_root_counts": {
+    "low_2nA_events_with_selected": 5838,
+    "high_20nA_events_with_selected": 237295,
+    "global_downstream_high_minus_low": 0.010289747149522063
+  },
+  "frontier_filter": {
+    "p02_topology": "p02_broad_late",
+    "saturation_support": "sat_high_amp_large_lowering"
+  },
+  "n_blinded_candidates": 549,
+  "n_source_runs": 14,
+  "recoverable_prevalence": 0.5136612021857924,
+  "split": {
+    "policy": "source-run held out in upstream P05f scoring; P05g uncertainty resamples source runs",
+    "bootstrap_unit": "source_run",
+    "bootstrap_samples": 120,
+    "runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ]
+  },
+  "methods": [
+    "traditional_template_fit",
+    "ridge_linear",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble"
+  ],
+  "winner_name": "traditional_template_fit",
+  "winner": {
+    "method": "traditional_template_fit",
+    "n_events": 549,
+    "n_accepted": 134,
+    "coverage": 0.24408014571949,
+    "recoverable_prevalence": 0.5136612021857924,
+    "accepted_precision": 1.0,
+    "recoverable_recall": 0.475177304964539,
+    "false_accept_rate": 0.0,
+    "f1": 0.6442307692307693,
+    "roc_auc": 0.7659574468085106,
+    "average_precision": 0.7723520520869667,
+    "brier": 0.28238372356850394,
+    "calibration_ece": 0.29553506587229894,
+    "n_bootstrap": 120,
+    "coverage_ci_low": 0.1887836301629405,
+    "coverage_ci_high": 0.2965119949494949,
+    "recoverable_prevalence_ci_low": 0.42151475975005387,
+    "recoverable_prevalence_ci_high": 0.6008184523809523,
+    "accepted_precision_ci_low": 1.0,
+    "accepted_precision_ci_high": 1.0,
+    "recoverable_recall_ci_low": 0.44222328244274806,
+    "recoverable_recall_ci_high": 0.5048119122257052,
+    "false_accept_rate_ci_low": 0.0,
+    "false_accept_rate_ci_high": 0.0,
+    "f1_ci_low": 0.6132519893899204,
+    "f1_ci_high": 0.6709299698795181,
+    "roc_auc_ci_low": 0.7423461032597483,
+    "roc_auc_ci_high": 0.788708855799373,
+    "average_precision_ci_low": 0.7083885144283134,
+    "average_precision_ci_high": 0.8245116567740122,
+    "brier_ci_low": 0.23635821926576336,
+    "brier_ci_high": 0.32209502626171294,
+    "calibration_ece_ci_low": 0.24863972164117693,
+    "calibration_ece_ci_high": 0.3372913312207632,
+    "selection_score": -1.1696634954782106
+  },
+  "leakage_checks_pass": true,
+  "next_tickets": [
+    {
+      "title": "P05h external reviewer calibration for borderline high-amplitude two-pulse hand-scan labels",
+      "body": "Repeat the P05g blinded hand-scan adjudication with two independent reviewers and a preregistered disagreement rubric for borderline high-amplitude/large-lowering broad-late candidates, then propagate reviewer variance into the P05f support frontier."
+    }
+  ],
+  "artifacts": {
+    "report": "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/REPORT.md",
+    "method_summary": "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/method_summary.csv",
+    "per_run_method_metrics": "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/per_run_method_metrics.csv",
+    "sideband_method_metrics": "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/sideband_method_metrics.csv",
+    "candidate_ledger": "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/blinded_candidate_ledger.csv"
+  },
+  "git_commit": "3ecd4cde7f619f6899eb725dfa04ea8681e313cc",
+  "runtime_sec": 6.247647523880005
+}

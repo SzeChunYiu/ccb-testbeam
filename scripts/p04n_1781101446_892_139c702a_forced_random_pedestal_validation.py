@@ -282,8 +282,12 @@ def write_report(out_dir: Path, config: dict, result: dict, counts: pd.DataFrame
     reproduction = result["raw_reproduction"]
     winner = result["winner"]
     best_trad = result["best_traditional"]
+    runner_command = config.get(
+        "runner_command",
+        "/home/billy/anaconda3/bin/python scripts/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.py --config configs/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.json",
+    )
     lines = [
-        "# P04n: Forced-random pedestal validation of P04m pretrigger abstention",
+        f"# {config['study_id']}: Forced-random pedestal validation of P04m pretrigger abstention",
         "",
         f"- **Ticket:** `{config['ticket_id']}`",
         f"- **Worker:** `{config['worker']}`",
@@ -376,7 +380,7 @@ def write_report(out_dir: Path, config: dict, result: dict, counts: pd.DataFrame
         "## 10. Reproducibility",
         "",
         "```bash",
-        "/home/billy/anaconda3/bin/python scripts/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.py --config configs/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.json",
+        runner_command,
         "```",
     ]
     (out_dir / "REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -481,7 +485,10 @@ def main() -> int:
         "git_commit": git_commit(),
         "python": platform.python_version(),
         "platform": platform.platform(),
-        "command": "/home/billy/anaconda3/bin/python scripts/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.py --config configs/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.json",
+        "command": config.get(
+            "runner_command",
+            "/home/billy/anaconda3/bin/python scripts/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.py --config configs/p04n_1781101446_892_139c702a_forced_random_pedestal_validation.json",
+        ),
         "random_seed": int(config["random_seed"]),
         "inputs": [
             {"path": str(raw_path(config, run).relative_to(ROOT)), "sha256": sha256_file(raw_path(config, run))}

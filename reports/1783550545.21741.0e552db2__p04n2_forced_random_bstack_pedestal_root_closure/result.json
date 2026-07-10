@@ -1,0 +1,411 @@
+{
+  "study": "P04n2",
+  "ticket_id": "1783550545.21741.0e552db2",
+  "worker": "testbeam-laptop-4",
+  "title": "acquire or mirror true forced-random B-stack pedestal ROOT for P04m support veto closure",
+  "runtime_sec": 15.936838626861572,
+  "reproduced": true,
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "forced_random_pedestal_source": {
+    "n_bstack_raw_root_files": 53,
+    "n_nonempty_bstack_raw_root_files": 51,
+    "unique_trigger_codes": [
+      1
+    ],
+    "n_files_with_nonbeam_trigger_code": 0,
+    "n_keyword_root_files": 0,
+    "dedicated_forced_random_pedestal_root_found": false
+  },
+  "split": {
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "held-out run",
+    "bootstrap_reps": 1200
+  },
+  "primary_metric": "external downstream B4+B6+B8 charge-proxy res68_abs_frac; lower is better",
+  "best_traditional": {
+    "target": "downstream_B4B6B8_charge_proxy",
+    "method": "traditional_huber_ridge",
+    "split": "leave_one_run_out",
+    "n": 3774,
+    "bias_median_frac": -0.00587118089456389,
+    "res68_abs_frac": 0.21978359870554123,
+    "full_rms_frac": 0.316197377732481,
+    "catastrophic_rate": 0.25781664016958133,
+    "within_10pct": 0.3375728669846317,
+    "bias_ci95": [
+      -0.06883884184048567,
+      0.06989509464600027
+    ],
+    "res68_ci95": [
+      0.20234321073935008,
+      0.24626871415090598
+    ],
+    "full_rms_ci95": [
+      0.2678952051200715,
+      0.37660783174471374
+    ],
+    "catastrophic_rate_ci95": [
+      0.21989038490734283,
+      0.31514096424810695
+    ],
+    "within_10pct_ci95": [
+      0.3163347002937105,
+      0.36200294550810014
+    ]
+  },
+  "winner": {
+    "target": "downstream_B4B6B8_charge_proxy",
+    "method": "extra_trees_with_pretrigger",
+    "split": "leave_one_run_out",
+    "n": 3774,
+    "bias_median_frac": -0.013238405179768355,
+    "res68_abs_frac": 0.20976084068583387,
+    "full_rms_frac": 0.27276290994167224,
+    "catastrophic_rate": 0.237413884472708,
+    "within_10pct": 0.3510863804981452,
+    "bias_ci95": [
+      -0.05968841247073923,
+      0.03780599913419201
+    ],
+    "res68_ci95": [
+      0.1974236797910943,
+      0.226751084597957
+    ],
+    "full_rms_ci95": [
+      0.23999022555171512,
+      0.33020222997096677
+    ],
+    "catastrophic_rate_ci95": [
+      0.2122040072859745,
+      0.2768756906270941
+    ],
+    "within_10pct_ci95": [
+      0.3291427348792234,
+      0.37062276211848844
+    ]
+  },
+  "ml_beats_baseline": true,
+  "method_family_context": [
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_hgb_with_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0009034920781521,
+      "res68_abs_frac": 0.0161867160970174,
+      "full_rms_frac": 0.0472091832950383,
+      "catastrophic_rate": 0.0048689617678568,
+      "within_10pct": 0.9687714865923664,
+      "bias_ci95": "[0.00075274763217978, 0.0010885764101696762]",
+      "res68_ci95": "[0.013449432337012667, 0.018396167658845802]",
+      "full_rms_ci95": "[0.039768596463963655, 0.052079009864946124]",
+      "catastrophic_rate_ci95": "[0.003314694869275303, 0.006159193794785278]",
+      "p04n_method_family": "gradient_boosted_trees_with_pretrigger"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_ridge_with_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0009170457487925,
+      "res68_abs_frac": 0.0249422312527894,
+      "full_rms_frac": 0.1687847822904586,
+      "catastrophic_rate": 0.0436847407217896,
+      "within_10pct": 0.8780201154479604,
+      "bias_ci95": "[-0.0009288013752666302, 0.0029563890129793427]",
+      "res68_ci95": "[0.021862959422171122, 0.02813398219645024]",
+      "full_rms_ci95": "[0.13371357321739197, 0.1924663819372654]",
+      "catastrophic_rate_ci95": "[0.03147135670860432, 0.0517259741258709]",
+      "p04n_method_family": "ridge_with_pretrigger"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "traditional_dropout_cell_corrected",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.0029536599484739,
+      "res68_abs_frac": 0.0310563102889711,
+      "full_rms_frac": 1.0389947790215597,
+      "catastrophic_rate": 0.125705559730728,
+      "within_10pct": 0.8057212299525096,
+      "bias_ci95": "[-0.0053957333372366125, -0.0012362258537726531]",
+      "res68_ci95": "[0.025364953261856015, 0.036739308678197614]",
+      "full_rms_ci95": "[0.8061769784968797, 1.2076822703528447]",
+      "catastrophic_rate_ci95": "[0.08705830905086823, 0.1506709570264118]",
+      "p04n_method_family": "traditional_dropout_cell_corrected"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_mlp",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0029946779832243,
+      "res68_abs_frac": 0.0357687076926231,
+      "full_rms_frac": 0.1053604856133461,
+      "catastrophic_rate": 0.0246086442060154,
+      "within_10pct": 0.8998704808199683,
+      "bias_ci95": "[0.000522381677001249, 0.005362973804585635]",
+      "res68_ci95": "[0.028978814253583562, 0.041470635045319816]",
+      "full_rms_ci95": "[0.08568301778286695, 0.11886161342263221]",
+      "catastrophic_rate_ci95": "[0.017107064504720798, 0.029989567261539073]",
+      "p04n_method_family": "mlp"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "NN_pretrigger_gated_wave_net_new",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0019533154554665,
+      "res68_abs_frac": 0.0533973367512226,
+      "full_rms_frac": 0.2225957661867141,
+      "catastrophic_rate": 0.0552855018468475,
+      "within_10pct": 0.8411791042389549,
+      "bias_ci95": "[0.0008098369638901205, 0.002943553496152162]",
+      "res68_ci95": "[0.04123901575803757, 0.0629325732588768]",
+      "full_rms_ci95": "[0.18215421959757805, 0.2532925605773926]",
+      "catastrophic_rate_ci95": "[0.03911122804162077, 0.06601673720672627]",
+      "p04n_method_family": "new_pretrigger_gated_wave_net"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "NN_1d_cnn",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.0254384372383356,
+      "res68_abs_frac": 0.3746889472007751,
+      "full_rms_frac": 1.6305214166641235,
+      "catastrophic_rate": 0.4564671644893586,
+      "within_10pct": 0.1846847567118118,
+      "bias_ci95": "[-0.08100184276700019, 0.02559398720040917]",
+      "res68_ci95": "[0.30765259191393857, 0.4384879775345325]",
+      "full_rms_ci95": "[1.3727070540189743, 1.8045051753520964]",
+      "catastrophic_rate_ci95": "[0.39570405986234614, 0.4960809271480172]",
+      "p04n_method_family": "1d_cnn"
+    }
+  ],
+  "external_benchmark": [
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "traditional_huber_ridge",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.00587118089456389,
+      "res68_abs_frac": 0.21978359870554123,
+      "full_rms_frac": 0.316197377732481,
+      "catastrophic_rate": 0.25781664016958133,
+      "within_10pct": 0.3375728669846317,
+      "bias_ci95": [
+        -0.06883884184048567,
+        0.06989509464600027
+      ],
+      "res68_ci95": [
+        0.20234321073935008,
+        0.24626871415090598
+      ],
+      "full_rms_ci95": [
+        0.2678952051200715,
+        0.37660783174471374
+      ],
+      "catastrophic_rate_ci95": [
+        0.21989038490734283,
+        0.31514096424810695
+      ],
+      "within_10pct_ci95": [
+        0.3163347002937105,
+        0.36200294550810014
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "gradient_boosted_trees_no_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.016515384603426837,
+      "res68_abs_frac": 0.21287175525736565,
+      "full_rms_frac": 0.26673903681032934,
+      "catastrophic_rate": 0.2384737678855326,
+      "within_10pct": 0.34737678855325915,
+      "bias_ci95": [
+        -0.06267939781968553,
+        0.03275925924280153
+      ],
+      "res68_ci95": [
+        0.2051691850696972,
+        0.22915641510610357
+      ],
+      "full_rms_ci95": [
+        0.2408145411728334,
+        0.30668006957507815
+      ],
+      "catastrophic_rate_ci95": [
+        0.21643875113882224,
+        0.2745981766239741
+      ],
+      "within_10pct_ci95": [
+        0.32687955745536834,
+        0.3642908567314615
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "gradient_boosted_trees_with_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.016913033439462745,
+      "res68_abs_frac": 0.21203912089227267,
+      "full_rms_frac": 0.27088085003570817,
+      "catastrophic_rate": 0.237413884472708,
+      "within_10pct": 0.33518812930577635,
+      "bias_ci95": [
+        -0.062418125560572094,
+        0.03566574600325306
+      ],
+      "res68_ci95": [
+        0.2023608206253751,
+        0.22794345015309603
+      ],
+      "full_rms_ci95": [
+        0.24317043518962156,
+        0.31095839973367156
+      ],
+      "catastrophic_rate_ci95": [
+        0.21360232945091515,
+        0.2775429698506622
+      ],
+      "within_10pct_ci95": [
+        0.31848491925863304,
+        0.3522213459991014
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "extra_trees_with_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.013238405179768355,
+      "res68_abs_frac": 0.20976084068583387,
+      "full_rms_frac": 0.27276290994167224,
+      "catastrophic_rate": 0.237413884472708,
+      "within_10pct": 0.3510863804981452,
+      "bias_ci95": [
+        -0.05968841247073923,
+        0.03780599913419201
+      ],
+      "res68_ci95": [
+        0.1974236797910943,
+        0.226751084597957
+      ],
+      "full_rms_ci95": [
+        0.23999022555171512,
+        0.33020222997096677
+      ],
+      "catastrophic_rate_ci95": [
+        0.2122040072859745,
+        0.2768756906270941
+      ],
+      "within_10pct_ci95": [
+        0.3291427348792234,
+        0.37062276211848844
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "duplicate_transfer_hgb_new_architecture",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": 2.753818532365177,
+      "res68_abs_frac": 3.8299914132478583,
+      "full_rms_frac": 3.5013243047543816,
+      "catastrophic_rate": 0.8404875463698993,
+      "within_10pct": 0.07286698463169052,
+      "bias_ci95": [
+        0.0889394289832572,
+        3.5480418652519687
+      ],
+      "res68_ci95": [
+        0.9444524579021997,
+        4.2901381169984285
+      ],
+      "full_rms_ci95": [
+        2.3842208216516383,
+        4.1469786848533285
+      ],
+      "catastrophic_rate_ci95": [
+        0.5350803043110736,
+        0.9915290849292638
+      ],
+      "within_10pct_ci95": [
+        0.00384204909284952,
+        0.21274846477052353
+      ]
+    }
+  ],
+  "pretrigger_support_effects": [
+    {
+      "method": "ML_extratrees_without_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0516936223024902,
+      "delta_abs_frac_ci95": [
+        0.0440058113051316,
+        0.05883319741495225
+      ]
+    },
+    {
+      "method": "traditional_dropout_cell_corrected",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 1.35763208199908,
+      "delta_abs_frac_ci95": [
+        1.2517341506439645,
+        1.4596159938769548
+      ]
+    },
+    {
+      "method": "ML_hgb_with_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0422817980113833,
+      "delta_abs_frac_ci95": [
+        0.03484249581417634,
+        0.05086687676669042
+      ]
+    },
+    {
+      "method": "ML_hgb_without_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0420966512483111,
+      "delta_abs_frac_ci95": [
+        0.03484295584798306,
+        0.0487958508324434
+      ]
+    }
+  ],
+  "finding": "Raw ROOT reproduction passes exactly (640,737 selected B-stave pulses; delta +0). No accessible forced/random pedestal B-stack ROOT source was found: 53 B-stack files carry only trigger code(s) [1] and keyword search found 0 candidate ROOT files. On the external downstream charge proxy, extra_trees_with_pretrigger wins with res68 0.2098 [0.1974, 0.2268], versus the traditional comparator traditional_huber_ridge at 0.2198. This validates P04m only as a physics-event pretrigger support diagnostic, not as a true forced/random pedestal veto.",
+  "hypothesis": "The high-pretrigger P04m cells are likely electronics-support boundary markers that expose charge-transfer fragility, but without true forced/random pedestal rows they cannot be interpreted as independently measured pedestal disturbances. The external proxy still favors tree-based waveform/context models over the traditional Huber comparator, while the same-event duplicate closure remains much sharper than downstream transfer.",
+  "next_tickets": [
+    {
+      "title": "P04n3: acquire external DAQ run log or scaler metadata for B-stack trigger-code semantics",
+      "body": "Question: can external DAQ run logs or scaler metadata explain whether the mounted B-stack ROOT trigger code 1 exhausts all acquisition modes, or whether forced/random pedestal triggers were recorded outside data/root/root? Expected information gain: distinguishes true non-acquisition from mirror omission and determines the operational path for a direct P04m pedestal-veto validation."
+    }
+  ],
+  "critic": "pending"
+}

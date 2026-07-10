@@ -1,0 +1,371 @@
+{
+  "ticket_id": "1781181864.166710.25f5247a",
+  "status": "complete",
+  "raw_reproduction_pass": true,
+  "raw_gate": [
+    {
+      "quantity": "selected B-stave pulse records",
+      "expected": 640737,
+      "observed": 640737,
+      "delta": 0
+    },
+    {
+      "quantity": "Sample I analysis B2 selected pulses",
+      "expected": 241422,
+      "observed": 241422,
+      "delta": 0
+    },
+    {
+      "quantity": "Sample II analysis B4 selected pulses",
+      "expected": 21229,
+      "observed": 21229,
+      "delta": 0
+    },
+    {
+      "quantity": "Sample II analysis B6 selected pulses",
+      "expected": 11148,
+      "observed": 11148,
+      "delta": 0
+    },
+    {
+      "quantity": "Sample II analysis B8 selected pulses",
+      "expected": 4506,
+      "observed": 4506,
+      "delta": 0
+    }
+  ],
+  "winner": "50_MeV_EDep_threshold_best_B8_over_B2_closure",
+  "best_threshold_MeV": 50.0,
+  "best_remaining_gap_factor": 0.6445512332250689,
+  "conclusion": "Raw Geant4 truth is too penetrating; a high 50 MeV EDep threshold gives the closest B8/B2 scalar closure but remains an uncalibrated selection emulation.",
+  "data_penetration": [
+    {
+      "source": "data",
+      "threshold_MeV": NaN,
+      "stave": "B2",
+      "deepest_fraction": 0.9304330125452872,
+      "ci95": [
+        0.8943016660825558,
+        0.9563717186426904
+      ]
+    },
+    {
+      "source": "data",
+      "threshold_MeV": NaN,
+      "stave": "B4",
+      "deepest_fraction": 0.03621438175031902,
+      "ci95": [
+        0.023562925107335653,
+        0.05345600428816644
+      ]
+    },
+    {
+      "source": "data",
+      "threshold_MeV": NaN,
+      "stave": "B6",
+      "deepest_fraction": 0.020947584852600572,
+      "ci95": [
+        0.01271622490146284,
+        0.032714147513779344
+      ]
+    },
+    {
+      "source": "data",
+      "threshold_MeV": NaN,
+      "stave": "B8",
+      "deepest_fraction": 0.012405020851793186,
+      "ci95": [
+        0.007094190953361517,
+        0.020139026948233
+      ]
+    }
+  ],
+  "threshold_scan": [
+    {
+      "threshold_MeV": 50.0,
+      "sim_B8_over_B2": 0.008593495050581965,
+      "sim_B8_over_B2_ci95": [
+        0.007637081553757578,
+        0.009587232561580044
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 0.6445512332250689,
+      "ratio_gap_sim_over_data_ci95": [
+        0.3825970295502876,
+        1.189361369134437
+      ]
+    },
+    {
+      "threshold_MeV": 40.0,
+      "sim_B8_over_B2": 0.11695952306244117,
+      "sim_B8_over_B2_ci95": [
+        0.11430900369967235,
+        0.11962099318861207
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 8.772496450347878,
+      "ratio_gap_sim_over_data_ci95": [
+        5.27934619753047,
+        15.877256305891734
+      ]
+    },
+    {
+      "threshold_MeV": 30.0,
+      "sim_B8_over_B2": 0.22218678956085217,
+      "sim_B8_over_B2_ci95": [
+        0.2187467913639951,
+        0.2255581810463605
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 16.66502027112562,
+      "ratio_gap_sim_over_data_ci95": [
+        9.912987077305502,
+        30.212642020407714
+      ]
+    },
+    {
+      "threshold_MeV": 25.0,
+      "sim_B8_over_B2": 0.29003971891231284,
+      "sim_B8_over_B2_ci95": [
+        0.2861738901384281,
+        0.29372679203526403
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 21.754298735125627,
+      "ratio_gap_sim_over_data_ci95": [
+        12.906427840145557,
+        39.09586736224079
+      ]
+    },
+    {
+      "threshold_MeV": 20.0,
+      "sim_B8_over_B2": 0.3375360125006104,
+      "sim_B8_over_B2_ci95": [
+        0.33345658807682504,
+        0.3414310400876825
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 25.31673688465175,
+      "ratio_gap_sim_over_data_ci95": [
+        15.286254338132666,
+        45.46681987852202
+      ]
+    },
+    {
+      "threshold_MeV": 15.0,
+      "sim_B8_over_B2": 0.5379679144385027,
+      "sim_B8_over_B2_ci95": [
+        0.5327261771391081,
+        0.5431020404672164
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 40.35004158911722,
+      "ratio_gap_sim_over_data_ci95": [
+        24.20078702300995,
+        72.24420951823075
+      ]
+    },
+    {
+      "threshold_MeV": 10.0,
+      "sim_B8_over_B2": 0.539435465852387,
+      "sim_B8_over_B2_ci95": [
+        0.5344115457638079,
+        0.5445961049688804
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 40.46011462320551,
+      "ratio_gap_sim_over_data_ci95": [
+        23.818355470391708,
+        73.1430499597352
+      ]
+    },
+    {
+      "threshold_MeV": 5.0,
+      "sim_B8_over_B2": 0.55506436094136,
+      "sim_B8_over_B2_ci95": [
+        0.5497815743419909,
+        0.5604125830569519
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 41.63235287367854,
+      "ratio_gap_sim_over_data_ci95": [
+        24.658189641316852,
+        73.84980488121653
+      ]
+    },
+    {
+      "threshold_MeV": 2.0,
+      "sim_B8_over_B2": 0.562514510721682,
+      "sim_B8_over_B2_ci95": [
+        0.5570154658574485,
+        0.5679110065227643
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 42.191148008877086,
+      "ratio_gap_sim_over_data_ci95": [
+        25.04166755641133,
+        75.96023744201553
+      ]
+    },
+    {
+      "threshold_MeV": 1.0,
+      "sim_B8_over_B2": 0.5668643349872927,
+      "sim_B8_over_B2_ci95": [
+        0.5615848382545998,
+        0.5724915366376123
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 42.517404622537654,
+      "ratio_gap_sim_over_data_ci95": [
+        25.595658141278275,
+        76.24600530216317
+      ]
+    },
+    {
+      "threshold_MeV": 0.0,
+      "sim_B8_over_B2": 0.5788835407814087,
+      "sim_B8_over_B2_ci95": [
+        0.5733246589591072,
+        0.5843869004799392
+      ],
+      "data_B8_over_B2": 0.013332524410175519,
+      "data_B8_over_B2_ci95": [
+        0.007421140291036791,
+        0.022505252975974072
+      ],
+      "ratio_gap_sim_over_data": 43.41889975011775,
+      "ratio_gap_sim_over_data_ci95": [
+        26.095622632062394,
+        80.57906533675252
+      ]
+    }
+  ],
+  "artifacts": {
+    "report": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/REPORT.md",
+    "script": "/home/billy/.tb-workers/testbeam-laptop-3/scripts/s19_1781181864_166710_25f5247a_geant4_penetration_selection.py"
+  },
+  "provenance": {
+    "git_commit": "60747b6acf2052ff31ba9db044dc167225d33715",
+    "data_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "run_groups": {
+      "sample_i_calib": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42
+      ],
+      "sample_i_analysis": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "sample_ii_calib": [
+        64
+      ],
+      "sample_ii_analysis": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ]
+    },
+    "sim_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+    "sim_root_sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+    "elapsed_s": 10.41
+  }
+}

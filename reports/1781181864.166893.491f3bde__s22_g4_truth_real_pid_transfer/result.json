@@ -1,0 +1,363 @@
+{
+  "ticket_id": "1781181864.166893.491f3bde",
+  "ticket": "1781181864.166893.491f3bde",
+  "worker": "testbeam-laptop-3",
+  "study": "S22",
+  "title": "S22 supervised p/d PID from GEANT4 truth transferred to real CCB pulses",
+  "reproduced": true,
+  "raw_root_reproduction": [
+    {
+      "quantity": "total selected B-stave pulses from raw HRDv",
+      "expected": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_calib selected B-stave pulses",
+      "expected": "",
+      "reproduced": 248745,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    },
+    {
+      "quantity": "sample_i_analysis selected B-stave pulses",
+      "expected": "",
+      "reproduced": 252266,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_calib selected B-stave pulses",
+      "expected": "",
+      "reproduced": 14630,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected B-stave pulses",
+      "expected": "",
+      "reproduced": 125096,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    }
+  ],
+  "geant4_reproduction": [
+    {
+      "quantity": "hibeam tree entries",
+      "reference_value": 1000000,
+      "reproduced": 1000000,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "GEANT4 events materialized for truth features",
+      "reference_value": "bounded by config max_geant4_events_materialized=120000",
+      "reproduced": 120000,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    },
+    {
+      "quantity": "Sci_bar truth hits",
+      "reference_value": "",
+      "reproduced": 152323,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    },
+    {
+      "quantity": "primary p/d tracks with Sci_bar deposit",
+      "reference_value": "",
+      "reproduced": 36419,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    },
+    {
+      "quantity": "GEANT4 input path",
+      "reference_value": "/home/billy/ccb-geant4/output_krakow_1M.root",
+      "reproduced": "/home/billy/ccb-geant4/output_krakow_1M.root",
+      "delta": "",
+      "tolerance": "identity",
+      "pass": true
+    },
+    {
+      "quantity": "truth-labelled primary p/d tracks",
+      "reference_value": "",
+      "reproduced": 36419,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    },
+    {
+      "quantity": "Sci_bar truth hits used for transfer summaries",
+      "reference_value": "",
+      "reproduced": 152323,
+      "delta": "",
+      "tolerance": "descriptive",
+      "pass": true
+    }
+  ],
+  "split": {
+    "kind": "leave-one-pseudo-run-out",
+    "n_pseudo_runs": 8,
+    "bootstrap": "pseudo-run block bootstrap",
+    "caveat": "GEANT4 file has no real acquisition-run branch."
+  },
+  "dataset": {
+    "n_primary_pid_tracks": 24000,
+    "n_primary_pid_tracks_materialized": 36419,
+    "max_geant4_events_materialized": 120000,
+    "max_benchmark_tracks": 24000,
+    "n_deuteron_tracks": 12000,
+    "n_proton_tracks": 12000,
+    "n_sci_bar_hits": 152323,
+    "real_selected_b_stave_pulses": 640737
+  },
+  "winner": "hist_gradient_boosted_trees",
+  "winner_metric": "average_precision",
+  "traditional": {
+    "method": "traditional_deltae_range_cut",
+    "metric": "average_precision",
+    "value": 0.7871469978833883,
+    "ci": [
+      0.7800467698936996,
+      0.7929333351497566
+    ],
+    "purity_precision": 0.667706534454905,
+    "efficiency_recall": 0.9988333333333334
+  },
+  "ml": {
+    "method": "hist_gradient_boosted_trees",
+    "metric": "average_precision",
+    "value": 0.9929931011720702,
+    "ci": [
+      0.9925324729661671,
+      0.9934076453269232
+    ],
+    "purity_precision": 0.9345170223163382,
+    "efficiency_recall": 0.9561666666666667
+  },
+  "ml_beats_baseline": true,
+  "winner_minus_traditional": {
+    "metric": "average_precision_delta",
+    "winner_minus_traditional": 0.20584610328868191,
+    "ci_low": 0.1997125264566401,
+    "ci_high": 0.21208406751603506
+  },
+  "benchmark": [
+    {
+      "method": "traditional_deltae_range_cut",
+      "n": 24000,
+      "positives": 12000,
+      "purity_precision": 0.667706534454905,
+      "efficiency_recall": 0.9988333333333334,
+      "balanced_accuracy": 0.750875,
+      "brier": 0.21831221026212488,
+      "f1": 0.8003739441087109,
+      "roc_auc": 0.8185843576388889,
+      "average_precision": 0.7871469978833883,
+      "purity_precision_ci_low": 0.6639762656152084,
+      "purity_precision_ci_high": 0.6720729123426764,
+      "efficiency_recall_ci_low": 0.9976229166666667,
+      "efficiency_recall_ci_high": 0.9998333333333334,
+      "balanced_accuracy_ci_low": 0.7466447916666668,
+      "balanced_accuracy_ci_high": 0.755778125,
+      "f1_ci_low": 0.7977437513188693,
+      "f1_ci_high": 0.8035701909022608,
+      "roc_auc_ci_low": 0.8121287761284723,
+      "roc_auc_ci_high": 0.8249620282118055,
+      "average_precision_ci_low": 0.7800467698936996,
+      "average_precision_ci_high": 0.7929333351497566,
+      "brier_ci_low": 0.21337734176357764,
+      "brier_ci_high": 0.22313697721938142
+    },
+    {
+      "method": "ridge_logistic_l2",
+      "n": 24000,
+      "positives": 12000,
+      "purity_precision": 0.8494337614957818,
+      "efficiency_recall": 0.9313333333333333,
+      "balanced_accuracy": 0.8831249999999999,
+      "brier": 0.0913499368373054,
+      "f1": 0.8885002186270223,
+      "roc_auc": 0.9545372916666668,
+      "average_precision": 0.9501724195729844,
+      "purity_precision_ci_low": 0.8442620851060342,
+      "purity_precision_ci_high": 0.8548217212053908,
+      "efficiency_recall_ci_low": 0.9272458333333333,
+      "efficiency_recall_ci_high": 0.9359166666666666,
+      "balanced_accuracy_ci_low": 0.8792020833333333,
+      "balanced_accuracy_ci_high": 0.8868354166666667,
+      "f1_ci_low": 0.8848440666038278,
+      "f1_ci_high": 0.8920276238303397,
+      "roc_auc_ci_low": 0.9524618892361111,
+      "roc_auc_ci_high": 0.9567164017361112,
+      "average_precision_ci_low": 0.9473844426582704,
+      "average_precision_ci_high": 0.9528483342428801,
+      "brier_ci_low": 0.08962727509346255,
+      "brier_ci_high": 0.09346718780548835
+    },
+    {
+      "method": "hist_gradient_boosted_trees",
+      "n": 24000,
+      "positives": 12000,
+      "purity_precision": 0.9345170223163382,
+      "efficiency_recall": 0.9561666666666667,
+      "balanced_accuracy": 0.9445833333333333,
+      "brier": 0.03366694533583937,
+      "f1": 0.9452178927424005,
+      "roc_auc": 0.9928206527777779,
+      "average_precision": 0.9929931011720702,
+      "purity_precision_ci_low": 0.9271870352669509,
+      "purity_precision_ci_high": 0.9441916022568432,
+      "efficiency_recall_ci_low": 0.94470625,
+      "efficiency_recall_ci_high": 0.9644333333333333,
+      "balanced_accuracy_ci_low": 0.9421229166666667,
+      "balanced_accuracy_ci_high": 0.9468333333333334,
+      "f1_ci_low": 0.9429074080941914,
+      "f1_ci_high": 0.9473197947190941,
+      "roc_auc_ci_low": 0.9924346674479166,
+      "roc_auc_ci_high": 0.9932738871527778,
+      "average_precision_ci_low": 0.9925324729661671,
+      "average_precision_ci_high": 0.9934076453269232,
+      "brier_ci_low": 0.032386371740069794,
+      "brier_ci_high": 0.034698524474454116
+    },
+    {
+      "method": "sklearn_mlp",
+      "n": 24000,
+      "positives": 12000,
+      "purity_precision": 0.9262650602409639,
+      "efficiency_recall": 0.961,
+      "balanced_accuracy": 0.94225,
+      "brier": 0.03488863401355643,
+      "f1": 0.9433128834355828,
+      "roc_auc": 0.99236984375,
+      "average_precision": 0.9926095566825025,
+      "purity_precision_ci_low": 0.9184841339479707,
+      "purity_precision_ci_high": 0.9344105872003664,
+      "efficiency_recall_ci_low": 0.9492125,
+      "efficiency_recall_ci_high": 0.9735166666666666,
+      "balanced_accuracy_ci_low": 0.9403114583333334,
+      "balanced_accuracy_ci_high": 0.9440416666666667,
+      "f1_ci_low": 0.9411266774998355,
+      "f1_ci_high": 0.945307448650161,
+      "roc_auc_ci_low": 0.9918794917534722,
+      "roc_auc_ci_high": 0.9928440379340278,
+      "average_precision_ci_low": 0.992065993536954,
+      "average_precision_ci_high": 0.9931043254233188,
+      "brier_ci_low": 0.03363328443231544,
+      "brier_ci_high": 0.03609962127368725
+    },
+    {
+      "method": "torch_1d_cnn",
+      "n": 24000,
+      "positives": 12000,
+      "purity_precision": 0.7078715775749674,
+      "efficiency_recall": 0.7239166666666667,
+      "balanced_accuracy": 0.7125833333333333,
+      "brier": 0.14815261291478732,
+      "f1": 0.7158042188529993,
+      "roc_auc": 0.8743583923611111,
+      "average_precision": 0.8736599449774833,
+      "purity_precision_ci_low": 0.6739990483265513,
+      "purity_precision_ci_high": 0.7665472702850983,
+      "efficiency_recall_ci_low": 0.4840729166666667,
+      "efficiency_recall_ci_high": 0.9045,
+      "balanced_accuracy_ci_low": 0.6420458333333333,
+      "balanced_accuracy_ci_high": 0.7657864583333333,
+      "f1_ci_low": 0.5782243668665371,
+      "f1_ci_high": 0.7880388878652292,
+      "roc_auc_ci_low": 0.8599663343749999,
+      "roc_auc_ci_high": 0.8946624756944445,
+      "average_precision_ci_low": 0.8624886708339753,
+      "average_precision_ci_high": 0.8927541028317197,
+      "brier_ci_low": 0.13925023342677026,
+      "brier_ci_high": 0.15483098985558152
+    },
+    {
+      "method": "physics_gated_cnn",
+      "n": 24000,
+      "positives": 12000,
+      "purity_precision": 0.5537658917084536,
+      "efficiency_recall": 0.9110833333333334,
+      "balanced_accuracy": 0.5884583333333333,
+      "brier": 0.3180177931596284,
+      "f1": 0.6888447846769364,
+      "roc_auc": 0.6343004513888889,
+      "average_precision": 0.6169080437818848,
+      "purity_precision_ci_low": 0.5233165368758589,
+      "purity_precision_ci_high": 0.6106062176717348,
+      "efficiency_recall_ci_low": 0.8456854166666666,
+      "efficiency_recall_ci_high": 0.959,
+      "balanced_accuracy_ci_low": 0.5424166666666667,
+      "balanced_accuracy_ci_high": 0.6522364583333333,
+      "f1_ci_low": 0.6753768844221106,
+      "f1_ci_high": 0.7078616918418803,
+      "roc_auc_ci_low": 0.4928418339409722,
+      "roc_auc_ci_high": 0.7286529503472222,
+      "average_precision_ci_low": 0.570813961469008,
+      "average_precision_ci_high": 0.6481847205264125,
+      "brier_ci_low": 0.26841366992211535,
+      "brier_ci_high": 0.38911640147387677
+    }
+  ],
+  "transfer_to_real": {
+    "claim_level": "support-level only; no real p/d truth calibration",
+    "stave_support_file": "real_transfer_stave_support.csv",
+    "caveats": [
+      {
+        "claim": "GEANT4 p/d score is trained on MeV EDep truth, not ADC waveforms",
+        "evidence": "real raw ROOT provides selected-pulse counts but no truth PID label or calibrated ADC-to-MeV response",
+        "severity": "high"
+      },
+      {
+        "claim": "simulation penetration is much gentler than selected real B-stack support",
+        "evidence": "compare sim_active_fraction and data_fraction_relative_to_B2 by stave",
+        "severity": "high"
+      },
+      {
+        "claim": "winner score operating range in truth benchmark",
+        "evidence": "hist_gradient_boosted_trees score q10/q50/q90 = 0.001/0.506/0.999",
+        "severity": "context"
+      }
+    ]
+  },
+  "leakage_checks": [
+    {
+      "check": "feature_excludes_event_track_run_and_label",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Only Sci_bar EDep depth vectors and derived range summaries enter models."
+    },
+    {
+      "check": "shuffled_training_label_logistic_auc",
+      "value": 0.5237770555555555,
+      "pass": true,
+      "interpretation": "Chance-like ranking when training labels are permuted inside the same folds."
+    },
+    {
+      "check": "intentional_label_oracle_auc",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "A direct-label oracle is detected as perfect, validating the sentinel."
+    }
+  ],
+  "finding": "hist_gradient_boosted_trees wins the GEANT4 truth p/d PID benchmark by average precision and beats the traditional dE-E/range rule on pseudo-run bootstrap AP. Real-data transfer remains support-level because raw CCB pulses lack p/d truth labels and ADC-to-MeV response calibration.",
+  "next_tickets": [
+    {
+      "title": "S22a: external real-data p/d PID calibration bridge",
+      "body": "Build or import a labelled real CCB subset, or a detector-response ADC-to-MeV bridge with Birks/electronics/trigger terms, then rerun the S22 GEANT4-trained p/d score on real pulses with true p/d validation. Expected information gain: decides whether the simulation winner is deployable or only a truth-side benchmark."
+    }
+  ],
+  "git_commit": "d2a393d37665c6bd7a95bac48a623950f58758a6",
+  "runtime_sec": 193.11597418785095
+}

@@ -1,0 +1,8 @@
+quantity,reference_value,reproduced,delta,tolerance,pass
+hibeam tree entries,1000000,1000000,0,0,True
+GEANT4 events materialized for truth features,bounded by config max_geant4_events_materialized=120000,120000,,descriptive,True
+Sci_bar truth hits,,152323,,descriptive,True
+primary p/d tracks with Sci_bar deposit,,36419,,descriptive,True
+GEANT4 input path,/home/billy/ccb-geant4/output_krakow_1M.root,/home/billy/ccb-geant4/output_krakow_1M.root,,identity,True
+truth-labelled primary p/d tracks,,36419,,descriptive,True
+Sci_bar truth hits used for transfer summaries,,152323,,descriptive,True

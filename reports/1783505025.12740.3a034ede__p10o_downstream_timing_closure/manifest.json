@@ -1,0 +1,20 @@
+{
+  "config": "configs/p10o_1783505025_12740_3a034ede_downstream_timing_closure.yaml",
+  "input_count": 33,
+  "outputs": [
+    "REPORT.md",
+    "fig_consumer_summary.png",
+    "fold_run_metrics.csv",
+    "fold_summary.csv",
+    "holdout_sample_i_traditional_occupancy.csv",
+    "holdout_sample_ii_traditional_occupancy.csv",
+    "input_sha256.csv",
+    "model_diagnostics.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "template_support.csv"
+  ],
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "script": "scripts/p10o_1783505025_12740_3a034ede_downstream_timing_closure.py"
+}

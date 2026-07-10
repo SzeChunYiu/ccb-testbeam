@@ -1,0 +1,2 @@
+heldout_absent_from_train,train_eval_key_overlap,primary_feature_names,no_run_or_event_primary_features,sentinel_feature_names,control_false_pass_rate
+True,0,log_amp;log_amp2;area_over_amp;peak_sample;is_boundary;is_saturation_proxy;stave_B2;stave_B4;stave_B6;stave_B8;current_calibration;current_high_20nA;current_low_2nA;current_sample_ii,True,amplitude_only=log_amp;log_amp2;area_over_amp;peak_sample;run_only=run_31;run_32;run_33;run_34;run_35;...,0.25

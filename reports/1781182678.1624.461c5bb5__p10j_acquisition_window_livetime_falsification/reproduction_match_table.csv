@@ -1,0 +1,4 @@
+quantity,expected,reproduced,delta,tolerance,pass
+S00/S01 selected B-stave pulses,640737.0,640737.0,0.0,0.0,True
+analysis selected rows,377362.0,377362.0,0.0,0.0,True
+S10b traditional template live10 ns,124.79018394263471,124.79018394263471,0.0,1e-06,True

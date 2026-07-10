@@ -1,0 +1,16 @@
+{
+  "config": "configs/p04v_1781187102_5993_395f46f4_neural_matched_controls.json",
+  "source": "reports/1781063920.599.196428b2__p04u_astack_shuffled_sentinel_root_cause",
+  "elapsed_seconds": 63.067,
+  "python": "3.13.12",
+  "git_commit": "83cc55376173c51a01933e2eba0a4790dbd5401d",
+  "files": {
+    "REPORT.md": "20848dc42b840ab7609d3a77449e321604daec7655d9352a470c38579a8ba656",
+    "by_run_metrics.csv": "2c67f2879b24dc914001a8554984d21978acb3ca5b5e75ef1056b216dc03931c",
+    "method_summary.csv": "4993eb991ea74cbcb42edaa36b391b979be5e301e035ff432706f2a45351ff29",
+    "neural_control_deltas.csv": "20f723c12aae152870c6a36dfe4d822343bede2bbc483639c46f373e105f722c",
+    "predictions.csv": "e64fe37f9cd8d37f3ab65c28df5b326ff76ca66fa39c3efa6eaa41c11cb97a95",
+    "result.json": "574630a980776c6e920b47c51f42a7040d0fa07f6586de3b3d9a1e21a856f826",
+    "support_cell_neural_controls.csv": "f9f36683f9436b529b64e33b183f446c5a352f73d21dd1054e89a07bd163d320"
+  }
+}

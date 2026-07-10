@@ -1,0 +1,14 @@
+{
+  "study_id": "P04v",
+  "ticket_id": "1781187102.5993.395f46f4",
+  "title": "neural matched-controls for A/B charge-transfer non-identifiability",
+  "worker": "testbeam-laptop-1",
+  "source_report": "reports/1781063920.599.196428b2__p04u_astack_shuffled_sentinel_root_cause",
+  "output_dir": "reports/1781187102.5993.395f46f4__p04v_neural_matched_controls",
+  "random_seed": 71102,
+  "bootstrap_reps": 700,
+  "identifiability_delta_res68": -0.03,
+  "identifiability_min_runs": 3,
+  "strong_support_rows": 150,
+  "strong_support_runs": 5
+}

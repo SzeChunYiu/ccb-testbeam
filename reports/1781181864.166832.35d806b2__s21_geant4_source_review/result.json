@@ -1,0 +1,56 @@
+{
+  "study": "S21",
+  "ticket": "1781181864.166832.35d806b2",
+  "worker": "testbeam-laptop-1",
+  "title": "Review hibeam_g4 source geometry, scattering source, physics list, tables, and reproducibility",
+  "reproduced": true,
+  "review_type": "source_and_input_review_no_rebuild",
+  "winner": "not_applicable_source_review_verdict",
+  "winner_name": "usable_with_weighting_and_provenance_caveats",
+  "physics_validity_judgement": "usable for first-order weighted truth studies, not yet production-grade or fully faithful for quantitative CCB detector-response claims",
+  "geometry_fidelity_assessment": {
+    "geometry_file": "krakow_109_8-38deg_4-71deg.root",
+    "root_key": "geometry",
+    "top_volume": "MOTHER",
+    "n_volume_uids": 13,
+    "n_placements": 37,
+    "relevant_volumes": ["TARGET", "Sci_stack1", "Sci_stack2", "Sci_bar", "Trig_bar", "ProtoTPCHull", "ProtoTPCGas", "ProtoTPCActive", "ProtoTPC"],
+    "judgement": "compact CCB/Krakow model with CD2 target, two scintillator stack envelopes, bars, trigger bar, and ProtoTPC; not enough detail to prove full mechanical/material fidelity"
+  },
+  "correctness_issues": [
+    {
+      "severity": "high",
+      "issue": "Cross-section table is applied as PrimaryWeight after uniform angular sampling rather than as the event sampling distribution.",
+      "consequence": "Unweighted analyses are physically biased."
+    },
+    {
+      "severity": "high",
+      "issue": "Possible centre-of-mass versus lab angle mismatch: sigma_pd_cm_190.txt appears CM-named but EvalWeight is called with lab theta3.",
+      "consequence": "Differential cross-section weights may be assigned in the wrong frame."
+    },
+    {
+      "severity": "medium",
+      "issue": "PAI model is constructed but SetExtraEmModel calls are commented out.",
+      "consequence": "The intended PAI gas ionization model is not active."
+    },
+    {
+      "severity": "medium",
+      "issue": "Run scripts do not pin seed or record source/input provenance in output.",
+      "consequence": "Existing output ROOT files are not independently reproducible."
+    }
+  ],
+  "csfile_command_status": "present_in_hibeam_g4_github_scattering_generator_and_used_by_run_krakow_mac",
+  "input_sha256": {
+    "krakow.config": "9bee1e7f1519d2796fb08333de01b3ee1344cbb515672fc537c2411dbd134d2f",
+    "krakow.geoconf": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+    "run_krakow.mac": "f9bb3d5e6e44971a4f52a836ff95aad8b20acc8804f5d44ca5399cd938afd5a7",
+    "krakow_109_8-38deg_4-71deg.root": "a71c5cd7ce4cd7085f7f0236d5852f81aba0b52ff56bc2e9593f677e1e410d4e",
+    "sigma_pd_cm_190.txt": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "dedx_p_in_CD2.txt": "9c2dd0d42473a6ffb96ec317a26d97815699d6b9ced6d3c46e65093d0114cb7b"
+  },
+  "external_source_commit": "b73ea2a1bd2419e7c4a25a3bf23a419ad619234c",
+  "critic": "pending",
+  "next_tickets": [
+    "S21b: Weighted scattering-source closure and geometry overlap audit"
+  ]
+}

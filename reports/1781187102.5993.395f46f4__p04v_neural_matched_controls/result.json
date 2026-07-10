@@ -1,0 +1,147 @@
+{
+  "study": "P04v",
+  "ticket_id": "1781187102.5993.395f46f4",
+  "worker": "testbeam-laptop-1",
+  "title": "neural matched-controls for A/B charge-transfer non-identifiability",
+  "winner": "ridge_log_charge_support",
+  "point_estimate_best_real_method": "ridge_log_charge_support",
+  "raw_reproduction_first": {
+    "b_s00_expected_selected_pulses": 640737,
+    "b_s00_reproduced_selected_pulses": 640737,
+    "b_s00_delta": 0,
+    "astack_analysis_counts": [
+      {
+        "sample": "sample_iii_analysis",
+        "events_total": 388848,
+        "events_with_selected": 7168,
+        "selected_pulses": 9682,
+        "A1": 2799,
+        "A3": 6883
+      },
+      {
+        "sample": "sample_iv_analysis",
+        "events_total": 262189,
+        "events_with_selected": 767,
+        "selected_pulses": 894,
+        "A1": 167,
+        "A3": 727
+      }
+    ],
+    "p04c_expected_rows": 4055,
+    "p04c_reproduced_rows": 4055,
+    "p04c_expected_charge_transfer_ridge_res68": 0.519271,
+    "p04c_reproduced_charge_transfer_ridge_res68": 0.5192709757631775,
+    "p04c_reproduction_pass": true
+  },
+  "split": "leave-one-run-out by run inherited exactly from P04u",
+  "bootstrap": {
+    "unit": "run block",
+    "reps": 700
+  },
+  "methods": {
+    "traditional": [
+      "adaptive_template_ridge"
+    ],
+    "ml_nn": [
+      "ridge_log_charge_support",
+      "gradient_boosted_trees",
+      "mlp_waveform",
+      "cnn1d_waveform",
+      "hybrid_support_gate_cnn"
+    ],
+    "neural_controls": [
+      "neural_shuffled_target_control",
+      "neural_bwaveform_knockoff_control"
+    ]
+  },
+  "best_real": {
+    "method": "ridge_log_charge_support",
+    "method_family": "ml_nn",
+    "n": 4055,
+    "bias_median_frac": -0.04775864765871733,
+    "res68_abs_frac": 0.5184752210009423,
+    "full_rms_frac": 0.8432073488834927,
+    "within_10pct": 0.13908754623921085,
+    "within_25pct": 0.34254007398273734,
+    "bias_median_frac_ci95": [
+      -0.07094930065358267,
+      -0.02036026227083555
+    ],
+    "res68_abs_frac_ci95": [
+      0.5040570133096666,
+      0.5371372006697666
+    ],
+    "full_rms_frac_ci95": [
+      0.7359542829680245,
+      1.0099749128022588
+    ],
+    "within_10pct_ci95": [
+      0.1269143793114447,
+      0.15298435145924388
+    ],
+    "within_25pct_ci95": [
+      0.32425889635040067,
+      0.3615120180259963
+    ]
+  },
+  "neural_control_deltas": [
+    {
+      "method": "cnn1d_waveform",
+      "control": "neural_shuffled_target_control",
+      "delta_res68": -0.01994928030849563,
+      "delta_full_rms": -0.49629994108299247,
+      "delta_res68_ci95": [
+        -0.03334876732337838,
+        -0.008913052483968892
+      ],
+      "delta_full_rms_ci95": [
+        -0.8448061461399474,
+        -0.13602315765125686
+      ]
+    },
+    {
+      "method": "cnn1d_waveform",
+      "control": "neural_bwaveform_knockoff_control",
+      "delta_res68": 0.13632088791873742,
+      "delta_full_rms": -2.4038931220892237,
+      "delta_res68_ci95": [
+        0.12378712569910154,
+        0.15101847903412802
+      ],
+      "delta_full_rms_ci95": [
+        -4.758019705656488,
+        0.26469223720263313
+      ]
+    },
+    {
+      "method": "hybrid_support_gate_cnn",
+      "control": "neural_shuffled_target_control",
+      "delta_res68": -0.01887617586111856,
+      "delta_full_rms": -0.4939027778030628,
+      "delta_res68_ci95": [
+        -0.031548782742754376,
+        -0.004067988497212788
+      ],
+      "delta_full_rms_ci95": [
+        -0.8321206449257833,
+        -0.13659775163039206
+      ]
+    },
+    {
+      "method": "hybrid_support_gate_cnn",
+      "control": "neural_bwaveform_knockoff_control",
+      "delta_res68": 0.1373939923661145,
+      "delta_full_rms": -2.401495958809294,
+      "delta_res68_ci95": [
+        0.12369219073642619,
+        0.15306250247860276
+      ],
+      "delta_full_rms_ci95": [
+        -5.003485711434281,
+        0.278346815605333
+      ]
+    }
+  ],
+  "neural_identifiability_pass_runs": 18,
+  "finding": "The P04u CNN-family point estimates remain control-parity results under matched neural controls. The 1D-CNN and support-gated CNN do not clear the preregistered run-level identifiability gate against the neural shuffled-target control, so the P04u conclusion is not an ExtraTrees-control artifact."
+}

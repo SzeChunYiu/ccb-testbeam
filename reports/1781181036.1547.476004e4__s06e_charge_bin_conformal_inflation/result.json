@@ -1,0 +1,165 @@
+{
+  "study": "S06e",
+  "ticket": "1781181036.1547.476004e4",
+  "worker": "testbeam-laptop-2",
+  "title": "charge-bin conformal inflation stress test for pull-calibrated timing",
+  "reproduced": true,
+  "raw_root_reproduction": [
+    {
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "delta": 0,
+      "tolerance": 0,
+      "pass": true
+    }
+  ],
+  "split": {
+    "mode": "leave-one-run-out by run",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap": "event-paired run-block 95pct CI",
+    "bootstrap_samples": 250
+  },
+  "traditional": {
+    "dimension": "all",
+    "stratum": "all",
+    "policy": "charge_bin_conformal68_budget0.10",
+    "method": "traditional",
+    "method_label": "S02/S03/S04 atom robust-width baseline",
+    "accepted_fraction": 0.899912739965096,
+    "n": 10313,
+    "n_events": 3817,
+    "n_runs": 7,
+    "sigma68_ns": 1.5287108581941515,
+    "full_rms_ns": 2.040977032824432,
+    "tail_frac_abs_gt5ns": 0.020653544070590515,
+    "pull_width68": 0.9923743272298036,
+    "coverage68": 0.6980510035877049,
+    "coverage95": 0.8621157762047901,
+    "coverage68_error": 0.015361511450704857,
+    "coverage95_error": 0.08788422379520988,
+    "calibration_loss": 0.03695713600537039,
+    "mean_sigma_hat_ns": 2.6090959224291996,
+    "calibration_loss_ci_low": 0.03589639223741967,
+    "coverage68_ci_low": 0.5483502269921965,
+    "coverage95_ci_low": 0.8012675679999697,
+    "pull_width68_ci_low": 0.7304724246205275,
+    "sigma68_ns_ci_low": 1.298158798237883,
+    "tail_frac_abs_gt5ns_ci_low": 0.0022709819592532116,
+    "calibration_loss_ci_high": 0.16496228430387275,
+    "coverage68_ci_high": 0.7806528718570487,
+    "coverage95_ci_high": 0.8990817964648831,
+    "pull_width68_ci_high": 1.2117065555276463,
+    "sigma68_ns_ci_high": 1.934999333123336,
+    "tail_frac_abs_gt5ns_ci_high": 0.0511444097654482,
+    "score": 0.3357817090492706
+  },
+  "ml": {
+    "methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "cnn1d",
+      "phase_conformal_gated_cnn"
+    ],
+    "best_method": "cnn1d",
+    "best_policy": "charge_bin_conformal68_budget0.05",
+    "score": 0.2302198611234318
+  },
+  "winner": {
+    "dimension": "all",
+    "stratum": "all",
+    "policy": "charge_bin_conformal68_budget0.05",
+    "method": "cnn1d",
+    "method_label": "1D-CNN residual scale model",
+    "accepted_fraction": 0.949825479930192,
+    "n": 10885,
+    "n_events": 3815,
+    "n_runs": 7,
+    "sigma68_ns": 1.4240405052322538,
+    "full_rms_ns": 1.8181377416995572,
+    "tail_frac_abs_gt5ns": 0.0,
+    "pull_width68": 0.8493425749177855,
+    "coverage68": 0.6847037207165825,
+    "coverage95": 0.9699586587046394,
+    "coverage68_error": 0.0020142285795824444,
+    "coverage95_error": 0.01995865870463942,
+    "calibration_loss": 0.057543437455478776,
+    "mean_sigma_hat_ns": 1.759822804003737,
+    "calibration_loss_ci_low": 0.048478033209255034,
+    "coverage68_ci_low": 0.593516238036488,
+    "coverage95_ci_low": 0.9587162465818178,
+    "pull_width68_ci_low": 0.7599607939402114,
+    "sigma68_ns_ci_low": 1.340836633299382,
+    "tail_frac_abs_gt5ns_ci_low": 0.0,
+    "calibration_loss_ci_high": 0.12334458947515692,
+    "coverage68_ci_high": 0.7844750073348116,
+    "coverage95_ci_high": 0.9813267353020837,
+    "pull_width68_ci_high": 0.9472671995184919,
+    "sigma68_ns_ci_high": 1.5516864934252574,
+    "tail_frac_abs_gt5ns_ci_high": 0.0,
+    "score": 0.2302198611234318
+  },
+  "ml_beats_baseline": true,
+  "next_tickets": [
+    "S06f: external clock or duplicate-source validation for charge-bin conformal timing intervals; test whether S06e calibrated pair intervals remain calibrated for an absolute-time or independent duplicate timing target."
+  ],
+  "input_sha256": {
+    "source_pair_rows": "7ec7a61bee60a1e271c145545ca7e214a59b5f653d65c0c68282d7b665736a01",
+    "raw_reproduction_config": "9754a35dc725d8d5dd89415c7c8119bde0e5062bf137e44d0e112875a5221c43",
+    "reproduction_match_table": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "s03a_reproduction_benchmark": "a8c1326ec053cdd901b71ac1ce901e86a33b1a140717d6a1bcfe833b4392f717",
+    "source_uncertainty_meta": "70a100aec7236dcbcf0f686533932602ebfc67c08a38144cee134abe4c247c92",
+    "claimed_ticket": "ac434a9d965f88baee0acbcd00080436cd9cc46c4ca78ce311093a12672ddf7e"
+  },
+  "git_commit": "60747b6acf2052ff31ba9db044dc167225d33715",
+  "critic": "pending"
+}

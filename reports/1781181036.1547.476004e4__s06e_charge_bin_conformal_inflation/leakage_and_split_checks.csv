@@ -1,0 +1,6 @@
+check,value,pass
+raw_root_reproduction_passed,True,True
+required_methods_present,"cnn1d,gradient_boosted_trees,mlp,phase_conformal_gated_cnn,ridge,traditional",True
+leave_run_out_rows,"58,59,60,61,62,63,65",True
+fold_meta_present,42,True
+conformal_excludes_heldout_run,true,True

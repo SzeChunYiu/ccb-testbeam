@@ -1,0 +1,45 @@
+{
+  "ticket_id": "1781158366.1591.124904bf",
+  "study_id": "P09i",
+  "worker": "testbeam-laptop-2",
+  "title": "blinded visual calibration of baseline-excursion temporal subtypes",
+  "output_dir": "reports/1781158366.1591.124904bf__p09i_blinded_temporal_subtype_calibration",
+  "p09h_report_dir": "reports/1781054026.1999.7ad97cb0__p09h_baseline_excursion_temporal_subtype_ledger",
+  "p09h_config": "configs/p09h_1781054026_1999_7ad97cb0_baseline_excursion_temporal_subtype_ledger.json",
+  "p09a_config": "configs/p09a_rare_waveform_anomaly_taxonomy.json",
+  "p09d_script": "scripts/p09d_1781032068_1433_5cef09d4_delayed_peak_recovery_refit.py",
+  "raw_root_dir": "data/root/root",
+  "primary_metric": "calibrated_f1",
+  "bootstrap_replicates": 2000,
+  "random_seed": 1781158366,
+  "gallery": {
+    "max_rows_per_subtype_current": 36,
+    "min_rows_per_subtype": 1
+  },
+  "methods": [
+    "traditional_train_frozen_cuts",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "temporal_gate_cnn_new"
+  ],
+  "physical_subtype_policy": {
+    "pretrigger_slope": 0.92,
+    "early_sample_offset": 0.72,
+    "rising_edge_distortion": 0.66,
+    "peak_phase_late": 0.58,
+    "tail_recovery_dropout": 0.95,
+    "downstream_topology": 0.82,
+    "nominal_baseline_excursion": 0.18
+  },
+  "reviewer_thresholds": {
+    "shape_reviewer": 0.52,
+    "endpoint_reviewer": 0.50,
+    "hybrid_reviewer": 0.56
+  },
+  "novel_ticket": {
+    "title": "P09k locked human-review replacement for temporal subtype calibration",
+    "body": "Collect independent human labels on the P09i balanced blinded temporal-subtype gallery, then rerun the frozen traditional, ridge, gradient-boosted-tree, MLP, 1D-CNN, and temporal-gated-CNN benchmark with the same run-block bootstrap confidence intervals."
+  }
+}

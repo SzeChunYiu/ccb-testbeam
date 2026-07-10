@@ -1,0 +1,6 @@
+check,value,pass,note
+raw_reproduction_before_calibration,640737,True,fresh raw ROOT scan must match the frozen selected-pulse count exactly
+upstream_p09h_reproduction_consistent,640737,True,P09h ledger count is identical to the fresh P09i raw ROOT count
+all_methods_cover_gallery,1,True,every method scores the same blinded gallery rows
+reviewer_blinded_to_subtype,0,True,reviewer score equations use endpoint columns only and not subtype_true or subtype_pred
+run_split_inherited_from_p09h,13,True,method predictions are P09h leave-one-run-out held-out predictions

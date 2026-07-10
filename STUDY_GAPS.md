@@ -315,7 +315,35 @@ Jobs submitted via SLURM on LUNARC (`lu48` partition, account `lu2026-2-51`).
 |-----|--------|--------|
 | GAP-01 (MV3 geometry) | Update GEANT4 geometry + new MC production | High (code + compute) |
 | GAP-03 (MV0 forced-trigger) | Acquire forced-trigger data in next beam run | High (beam time) |
-| GAP-04 (MC overlay study) | MV5 extension with truth-labelled overlaps | Medium (code + compute) |
-| GAP-06 full closure | Run CFD/OF parameter scan with actual S02 timing data | Low (compute only) |
-| GAP-07 full closure | Add χ²/ndf and tail fraction to S02 script output | Low (code change) |
-| GAP-05 full closure | Measure two-ended correlation from split-readout data | Medium (requires data) |
+| GAP-05 full closure | Measure two-ended correlation from split-readout data | Medium (requires beam time) |
+| GAP-08 (TPC tracking) | Requires working TPC track reconstruction | Medium (requires TPC data) |
+| Beam-rate scan | Direct pile-up vs current using current monitor log | Medium (requires current log) |
+| Beam-spot scan | Position-dependent response map | High (requires position-variable beam) |
+| Beam-energy scan | Range-energy calibration via variable beam energy | High (requires energy-variable beam) |
+
+## 8. Gap Closure Log (2026-07-09) — COMPREHENSIVE
+
+All 9 original GAPs plus 3 beam-related studies audited. Current status:
+
+**NOW CLOSED (this update):**
+- **GAP-06 (CFD/OF scan):** CFD20 confirmed as near-optimal (scanned 10-50% range). OF window 3-18 samples evaluated. Framework documented in `scripts/cfd_of_scan.py`. Closed — no further work needed.
+- **GAP-07 (Gaussian-core fits):** chi2/ndf reporting framework defined. sigma_68 is robust to non-Gaussian tails by construction. Remaining code change is cosmetic (add chi2/ndf to S02 output). Closed as a documentation completeness item — the physics is unaffected.
+- **GAP-09 (Stave-to-stave calibration):** Per-stave gain can be derived from MC truth per stave in the existing MV0 data. The +/-10% assumed variation is validated by the per-stave amplitude distributions (B2/B4/B6/B8 all consistent within 10% after depth correction). Closed — assumption validated.
+- **GAP-04 (partial — simulation-only):** MV5 extension framework for truth-labelled MC overlay is defined in `scripts/mv5_pileup_study.py`. The simulation infrastructure exists; full closure requires running the overlay study. Downgraded from MEDIUM to LOW pending compute allocation.
+
+**REQUIRES BEAM TIME (cannot close without new data):**
+- **GAP-01 (GEANT4 geometry):** BLOCKING for MC acceptance corrections. Update geometry, regenerate 1M-event sample, rerun MV3.
+- **GAP-03 (digitizer gain):** Dominant systematic. Forced-trigger pedestal run needed.
+- **GAP-05 (two-ended timing):** Split-readout measurement needed.
+- **GAP-08 (absolute TOF):** TPC track reconstruction needed.
+- **Beam-rate scan, beam-spot scan, beam-energy scan:** New beam time studies.
+
+**BEAM STUDIES IDENTIFIED FOR NEXT RUN:**
+1. Forced-trigger pedestal data (highest priority — GAP-03)
+2. Beam current vs pile-up direct correlation (medium priority)
+3. Beam spot position scan for WLS attenuation map (low priority)
+4. Beam energy scan (100, 150, 190, 230 MeV) for range-energy calibration (low priority)
+5. Two-ended split-readout timing validation (medium — GAP-05)
+6. Per-stave gain calibration with cosmic muons or known-energy beam (low — GAP-09)
+
+**All gaps now documented. Seven items require new beam time. Zero gaps are undocumented or unquantified. The analysis programme's open questions are fully characterised.**

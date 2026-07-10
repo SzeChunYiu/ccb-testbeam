@@ -1,0 +1,136 @@
+{
+  "abstention_budgets": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "consumer_scoreboard_file": "consumer_scoreboard.csv",
+  "coverage_improvement_file": "coverage_improvement_by_budget.csv",
+  "finding": "At the fixed 10% interval-abstention budget, phase_conformal_gated_cnn has the lowest composite consumer loss (0.1298) versus traditional 1.2743. Its timing interval calibration loss is 0.0465 [0.0354, 0.0645], with PID AUC 1.0000 and energy charge res68 0.0126. The result supports propagating the S06b support-conditioned gated timing intervals as a consumer dry-run gate, while keeping PID/energy interpretation proxy-limited.",
+  "git_commit": "e7f1575e6309b0757835ec023bcdc29bbf725315",
+  "method_summary_file": "interval_abstention_summary.csv",
+  "ml": {
+    "best_method": "phase_conformal_gated_cnn",
+    "methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "cnn1d",
+      "phase_conformal_gated_cnn"
+    ],
+    "metric": "composite consumer loss at fixed interval-abstention budget"
+  },
+  "ml_beats_baseline": true,
+  "next_tickets": [],
+  "per_run_metrics_file": "interval_by_run.csv",
+  "primary_abstention_budget": 0.1,
+  "raw_root_dir": "/home/billy/Desktop/test_beam/data/root/root",
+  "raw_root_reproduction": [
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "tolerance": 0
+    }
+  ],
+  "reproduced": true,
+  "runtime_sec": 260.931,
+  "split": {
+    "bootstrap": "run-block bootstrap over held-out S06b timing runs",
+    "bootstrap_replicates": 600,
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "unit": "run"
+  },
+  "study": "P06e",
+  "ticket": "1781158601.1510.50fe016d",
+  "title": "support-conditioned timing interval propagation to PID and energy consumers",
+  "traditional": {
+    "calibration_loss": 0.7393450936324598,
+    "consumer_loss": 1.2743083678641516,
+    "coverage68": 0.36784055727554177,
+    "coverage95": 0.6034249226006192,
+    "energy_charge_res68": 0.0154068299365386,
+    "method": "traditional",
+    "pid_roc_auc": 1.0
+  },
+  "winner": {
+    "abstention_budget": 0.1,
+    "calibration_loss": 0.046534742697607795,
+    "calibration_loss_ci": [
+      0.035360687216137235,
+      0.06453832036736781
+    ],
+    "consumer_loss": 0.12975433029316477,
+    "coverage68": 0.6237153383750242,
+    "coverage68_ci": [
+      0.5659733254907879,
+      0.6726368081834748
+    ],
+    "coverage95": 0.9598603839441536,
+    "coverage95_ci": [
+      0.9529198625342088,
+      0.968421052631579
+    ],
+    "delta_consumer_loss_vs_traditional": -1.1445540375709868,
+    "energy_charge_res68": 0.012581449972136,
+    "energy_harm_rate": 0.0169062802803253,
+    "method": "phase_conformal_gated_cnn",
+    "method_label": "Phase-conformal atom-gated CNN",
+    "metric": "composite_consumer_loss",
+    "pid_ece": 0.0018029465458181,
+    "pid_roc_auc": 1.0
+  },
+  "winner_scoreboard_file": "winner_scoreboard.csv",
+  "worker": "testbeam-laptop-4"
+}

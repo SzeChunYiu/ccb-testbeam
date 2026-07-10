@@ -1,0 +1,7 @@
+method,energy,pid
+traditional,traditional_run_family_duplicate_gate,traditional_charge_depth_logistic
+ridge,ML_ridge_logistic,ML_ridge_waveform
+gradient_boosted_trees,ML_gradient_boosted_trees,ML_gradient_boosted_trees
+mlp,ML_mlp,ML_mlp
+cnn1d,NN_1d_cnn,NN_1d_cnn
+phase_conformal_gated_cnn,NN_residual_gated_cnn_new,NN_action_gated_residual_ensemble_new

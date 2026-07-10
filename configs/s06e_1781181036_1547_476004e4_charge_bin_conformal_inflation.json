@@ -1,0 +1,40 @@
+{
+  "study_id": "S06e",
+  "ticket_id": "1781181036.1547.476004e4",
+  "worker": "testbeam-laptop-2",
+  "title": "charge-bin conformal inflation stress test for pull-calibrated timing",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781181036.1547.476004e4__s06e_charge_bin_conformal_inflation",
+  "raw_reproduction_config": "configs/s06c_1781059684_1019_46485748_charge_proxy_timing_pull_width_calibration.json",
+  "source_s06c_dir": "reports/1781059684.1019.46485748__s06c_charge_proxy_timing_pull_width_calibration",
+  "source_pair_rows": "reports/1781059684.1019.46485748__s06c_charge_proxy_timing_pull_width_calibration/pair_residual_rows_with_pulls.csv.gz",
+  "source_uncertainty_meta": "reports/1781059684.1019.46485748__s06c_charge_proxy_timing_pull_width_calibration/uncertainty_fold_meta.csv",
+  "source_reproduction": "reports/1781059684.1019.46485748__s06c_charge_proxy_timing_pull_width_calibration/reproduction_match_table.csv",
+  "source_s03_benchmark": "reports/1781059684.1019.46485748__s06c_charge_proxy_timing_pull_width_calibration/s03a_reproduction_benchmark.csv",
+  "sample_ii_runs": [58, 59, 60, 61, 62, 63, 65],
+  "required_methods": [
+    "traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "phase_conformal_gated_cnn"
+  ],
+  "nominal_coverage68": 0.682689492137,
+  "nominal_coverage95": 0.95,
+  "alpha68": 0.317310507863,
+  "alpha95": 0.05,
+  "min_bin_calibration_n": 30,
+  "bootstrap_samples": 250,
+  "random_seed": 20260710,
+  "abstention_budgets": [0.0, 0.05, 0.1, 0.2],
+  "primary_policy": "charge_bin_conformal95_budget0.10",
+  "winner_score": {
+    "coverage68_error_weight": 1.0,
+    "coverage95_error_weight": 2.0,
+    "pull_width68_error_weight": 1.0,
+    "tail_frac_weight": 3.0,
+    "abstention_weight": 0.75
+  },
+  "next_ticket": "S06f: external clock or duplicate-source validation for charge-bin conformal timing intervals; test whether S06e calibrated pair intervals remain calibrated for an absolute-time or independent duplicate timing target."
+}

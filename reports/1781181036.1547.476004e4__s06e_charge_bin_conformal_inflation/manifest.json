@@ -1,0 +1,25 @@
+{
+  "ticket": "1781181036.1547.476004e4",
+  "study": "S06e",
+  "worker": "testbeam-laptop-2",
+  "runtime_sec": 254.96,
+  "command": "/home/billy/anaconda3/bin/python scripts/s06e_1781181036_1547_476004e4_charge_bin_conformal_inflation.py --config configs/s06e_1781181036_1547_476004e4_charge_bin_conformal_inflation.json",
+  "environment": {
+    "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4"
+  },
+  "outputs": {
+    "REPORT.md": "e9c7e0d108edc1563c1af2a4835e1a7f297598aefa74fdb0d855e04c86882d96",
+    "charge_bin_policy_summary.csv": "312e3bce3fa3f8fca93a84f1db6915c06a7ebeb5415adaaa4a9a9f74d9184577",
+    "conformal_scale_ledger.csv": "8966d4984cb200b88038f114234e4883e41938e8926abf90e95e12559d60dffe",
+    "leakage_and_split_checks.csv": "d48e1741cc294d28ff22e89b552c7bfa0174ecfb407a88837b8455f915c9e259",
+    "per_run_policy_summary.csv": "09ae0f3cbd1ba71c67801410a7f08b0b6cc304fa2aaa925b20026e74fbd00be9",
+    "policy_pair_residuals.csv.gz": "da05cf29a1a82762ea88931976ee4ab8bb557ac5f2ce40987780ce6e1fe43b1c",
+    "pooled_policy_summary.csv": "adbdbdcb96320dbc17dadcaacdd2eb163627e1188d33bfa788d7c0346e8f0531",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "8dd188b5ca904d8ac57fb59742c6af0c55110d9b54a2d5430cb5369cac9e851b",
+    "s03a_reproduction_benchmark.csv": "a8c1326ec053cdd901b71ac1ce901e86a33b1a140717d6a1bcfe833b4392f717"
+  }
+}

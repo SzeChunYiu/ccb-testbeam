@@ -1,0 +1,129 @@
+{
+  "command": "python3 scripts/s23_1781181864_166962_68322ee6_geant4_data_consistency_review.py",
+  "environment_checks": [
+    {
+      "component": "python",
+      "note": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+      "status": "3.8.10"
+    },
+    {
+      "component": "numpy",
+      "note": "",
+      "status": "1.24.3"
+    },
+    {
+      "component": "pandas",
+      "note": "",
+      "status": "2.0.3"
+    },
+    {
+      "component": "uproot",
+      "note": "needed only for direct raw ROOT rerun",
+      "status": "missing"
+    },
+    {
+      "component": "awkward",
+      "note": "needed only for direct raw ROOT rerun",
+      "status": "missing"
+    },
+    {
+      "component": "raw_root_files",
+      "note": "files under data/root/root",
+      "status": "110"
+    },
+    {
+      "component": "sigma_pd_cm_190.txt",
+      "note": "not found under geant4/ or data/",
+      "status": "missing"
+    },
+    {
+      "component": "dedx tables",
+      "note": "no explicit table file found under geant4/ or data/",
+      "status": "missing"
+    }
+  ],
+  "figures": [
+    "reports/1781181864.166962.68322ee6__s23_geant4_data_consistency_review/figures/fig_s23_consistency_verdicts.png",
+    "reports/1781181864.166962.68322ee6__s23_geant4_data_consistency_review/figures/fig_s23_energy_methods.png",
+    "reports/1781181864.166962.68322ee6__s23_geant4_data_consistency_review/figures/fig_s23_pid_methods.png",
+    "reports/1781181864.166962.68322ee6__s23_geant4_data_consistency_review/figures/fig_s23_penetration_profile.png"
+  ],
+  "git_commit": "d2a393d37665c6bd7a95bac48a623950f58758a6",
+  "input_artifacts": [
+    {
+      "path": "geant4/REPRODUCTION_STATUS.md",
+      "sha256": "45e6e7e3ff3db59db1aca3f53c01077915f540bf201df3ab808e18cc40a09bac",
+      "size_bytes": 2313
+    },
+    {
+      "path": "geant4/results/sim_summary.json",
+      "sha256": "9bb809e2cc9c21cb7f3f3b0590adfa075560738cab091bce7ecd7d1c02e39417",
+      "size_bytes": 1496
+    },
+    {
+      "path": "reports/1781088387.1790.33b946cb__s14h_g4_energy_calibration_benchmark/result.json",
+      "sha256": "00561273fa72bf3d0131fe3535e689c8f9acd6ddfbd7e5d04128898d5949b652",
+      "size_bytes": 31663
+    },
+    {
+      "path": "reports/1781088387.1790.33b946cb__s14h_g4_energy_calibration_benchmark/method_metrics.csv",
+      "sha256": "1f606a6db7b73bf106c078c4f5edb0c1bca353d0e2a04064a2ace020a7bf5378",
+      "size_bytes": 1692
+    },
+    {
+      "path": "reports/1781069565.648.74687e98__s15b_raw_hrd_pid_proxy_falsification_ledger/result.json",
+      "sha256": "46070ca9034c942adfa9224032b50d35f4e955431ead615122796d5635ea408f",
+      "size_bytes": 24761
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/result.json",
+      "sha256": "04c1d31eba57c1150e29006b55b6ea89d724246df661e16b2fff75ab81ebd747",
+      "size_bytes": 10778
+    },
+    {
+      "path": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_benchmark.csv",
+      "sha256": "d4eff3e7b1797db827f5954b3facf6353e02fc35762ba066776ff594d3dec62b",
+      "size_bytes": 1946
+    },
+    {
+      "path": "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/result.json",
+      "sha256": "3b13863c1b41c8bba962e4ea7184113c8b0c99b5c5eb28093fe8f44b22841cff",
+      "size_bytes": 8819
+    },
+    {
+      "path": "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/raw_data_per_run.csv",
+      "sha256": "fdf26ec16aef2fe4a69a09a315d0f6a06f5e80c13dcb64bc7fa46c4fb733e291",
+      "size_bytes": 1105
+    },
+    {
+      "path": "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/data_deepest_per_run.csv",
+      "sha256": "0a26f44d7ed729d4c389e08392880c6aa0a701c177008f3c139c4563218925ea",
+      "size_bytes": 896
+    },
+    {
+      "path": "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/sim_deepest_by_block_threshold.csv",
+      "sha256": "8af97c0948ae150be9a51b7389dadfe7149c6ff37b9454aa83049b8047a02d6d",
+      "size_bytes": 37770
+    }
+  ],
+  "outputs": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "claim_scoreboard.csv",
+    "energy_benchmark.csv",
+    "pid_benchmark.csv",
+    "reproduction_gate.csv",
+    "raw_root_file_hashes.csv"
+  ],
+  "runtime_sec": 1.791,
+  "sim_summary_keys": [
+    "events",
+    "per_layer",
+    "truth_deuterons",
+    "truth_protons"
+  ],
+  "study": "S23",
+  "ticket": "1781181864.166962.68322ee6",
+  "worker": "testbeam-laptop-2"
+}

@@ -1,0 +1,82 @@
+{
+  "claim_verdict_counts": {
+    "FAIL_PROVENANCE": 1,
+    "PASS": 2,
+    "PASS_FOR_SIM_TRUTH_ONLY": 1,
+    "PASS_WITH_RESPONSE_CAVEAT": 1,
+    "TENSION": 1
+  },
+  "critic": "pending",
+  "falsification": {
+    "failed_controls": [
+      "cross-section/dedx provenance missing",
+      "penetration profile remains in tension"
+    ],
+    "n_tries": 1,
+    "p_value": null,
+    "preregistered_metric": "claim-level PASS/FAIL/TENSION plus energy res68 and PID AP"
+  },
+  "finding": "Energy closure is internally consistent and won by the traditional Geant4/Birks lookup; simulation-only p/d PID is won by HGBT; penetration and cross-section/dedx provenance remain blocking tensions for publication-grade end-to-end consistency.",
+  "git_commit": "d2a393d37665c6bd7a95bac48a623950f58758a6",
+  "input_sha256": {
+    "geant4/REPRODUCTION_STATUS.md": "45e6e7e3ff3db59db1aca3f53c01077915f540bf201df3ab808e18cc40a09bac",
+    "geant4/results/sim_summary.json": "9bb809e2cc9c21cb7f3f3b0590adfa075560738cab091bce7ecd7d1c02e39417",
+    "reports/1781069565.648.74687e98__s15b_raw_hrd_pid_proxy_falsification_ledger/result.json": "46070ca9034c942adfa9224032b50d35f4e955431ead615122796d5635ea408f",
+    "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_benchmark.csv": "d4eff3e7b1797db827f5954b3facf6353e02fc35762ba066776ff594d3dec62b",
+    "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/result.json": "04c1d31eba57c1150e29006b55b6ea89d724246df661e16b2fff75ab81ebd747",
+    "reports/1781088387.1790.33b946cb__s14h_g4_energy_calibration_benchmark/method_metrics.csv": "1f606a6db7b73bf106c078c4f5edb0c1bca353d0e2a04064a2ace020a7bf5378",
+    "reports/1781088387.1790.33b946cb__s14h_g4_energy_calibration_benchmark/result.json": "00561273fa72bf3d0131fe3535e689c8f9acd6ddfbd7e5d04128898d5949b652",
+    "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/data_deepest_per_run.csv": "0a26f44d7ed729d4c389e08392880c6aa0a701c177008f3c139c4563218925ea",
+    "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/raw_data_per_run.csv": "fdf26ec16aef2fe4a69a09a315d0f6a06f5e80c13dcb64bc7fa46c4fb733e291",
+    "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/result.json": "3b13863c1b41c8bba962e4ea7184113c8b0c99b5c5eb28093fe8f44b22841cff",
+    "reports/1781181864.166710.25f5247a__s19_geant4_penetration_selection/sim_deepest_by_block_threshold.csv": "8af97c0948ae150be9a51b7389dadfe7149c6ff37b9454aa83049b8047a02d6d"
+  },
+  "ml": {
+    "ci": [
+      0.04880395769058964,
+      0.06719740156251883
+    ],
+    "method": "gradient_boosted_trees",
+    "metric": "heldout_res68_frac",
+    "value": 0.0566846321762142
+  },
+  "ml_beats_baseline": false,
+  "next_tickets": [
+    "S23a: digitized Geant4-to-HRD response closure for penetration, ADC threshold, and cross-section provenance"
+  ],
+  "raw_root_direct_audit": {
+    "branch": "h101/HRDv",
+    "delta": 0,
+    "environment": "/tmp/s23_rootcheck_env",
+    "expected_selected_b_stave_pulses": 640737,
+    "observed_selected_b_stave_pulses": 640737,
+    "selection": "channels 0,2,4,6; baseline median samples 0:4; max waveform amplitude > 1000 ADC"
+  },
+  "repro_tolerance": "exact raw ROOT S00/S19 gate; direct /tmp uproot audit reproduced 640737 with zero delta",
+  "reproduced": true,
+  "secondary_winner": {
+    "ci": [
+      0.99097698,
+      0.99245146
+    ],
+    "method": "hist_gradient_boosted_trees",
+    "metric": "average_precision",
+    "scope": "simulation-only proton/deuteron PID bridge",
+    "value": 0.99178506
+  },
+  "study": "S23",
+  "ticket": "1781181864.166962.68322ee6",
+  "title": "End-to-end Geant4/data consistency review",
+  "traditional": {
+    "ci": [
+      0.03885687265429256,
+      0.041606317494948857
+    ],
+    "method": "geant4_birks_lookup",
+    "metric": "heldout_res68_frac",
+    "value": 0.0402439783091376
+  },
+  "winner": "geant4_birks_lookup",
+  "winner_scope": "end-to-end energy data/MC closure",
+  "worker": "testbeam-laptop-2"
+}

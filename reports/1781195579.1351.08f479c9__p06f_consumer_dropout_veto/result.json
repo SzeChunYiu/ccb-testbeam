@@ -1,0 +1,347 @@
+{
+  "study": "P06f",
+  "ticket": "1781195579.1351.08f479c9",
+  "worker": "testbeam-laptop-2",
+  "status": "done",
+  "git_commit": "3defbda9afa80dc0895f57f15924a3ad627e8a66",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "held-out run",
+    "bootstrap_reps": 800
+  },
+  "winner": {
+    "method": "traditional_phase_selected_template_interp",
+    "method_label": "traditional",
+    "policy": "phase_recover_veto",
+    "mean_consumer_utility_loss": 0.5701227405608177
+  },
+  "raw_counts_by_run": [
+    {
+      "run": 31,
+      "events": 39990,
+      "selected_pulses": 27871,
+      "B2": 26948,
+      "B4": 592,
+      "B6": 237,
+      "B8": 94
+    },
+    {
+      "run": 32,
+      "events": 41921,
+      "selected_pulses": 28240,
+      "B2": 27316,
+      "B4": 605,
+      "B6": 224,
+      "B8": 95
+    },
+    {
+      "run": 33,
+      "events": 57173,
+      "selected_pulses": 48737,
+      "B2": 47724,
+      "B4": 559,
+      "B6": 318,
+      "B8": 136
+    },
+    {
+      "run": 34,
+      "events": 39765,
+      "selected_pulses": 34118,
+      "B2": 33373,
+      "B4": 412,
+      "B6": 244,
+      "B8": 89
+    },
+    {
+      "run": 35,
+      "events": 27786,
+      "selected_pulses": 11667,
+      "B2": 11029,
+      "B4": 403,
+      "B6": 163,
+      "B8": 72
+    },
+    {
+      "run": 36,
+      "events": 21764,
+      "selected_pulses": 10391,
+      "B2": 9847,
+      "B4": 340,
+      "B6": 143,
+      "B8": 61
+    },
+    {
+      "run": 37,
+      "events": 50513,
+      "selected_pulses": 24537,
+      "B2": 22956,
+      "B4": 997,
+      "B6": 423,
+      "B8": 161
+    },
+    {
+      "run": 39,
+      "events": 30321,
+      "selected_pulses": 14218,
+      "B2": 13174,
+      "B4": 663,
+      "B6": 273,
+      "B8": 108
+    },
+    {
+      "run": 40,
+      "events": 32613,
+      "selected_pulses": 14708,
+      "B2": 13575,
+      "B4": 707,
+      "B6": 310,
+      "B8": 116
+    },
+    {
+      "run": 41,
+      "events": 33997,
+      "selected_pulses": 16146,
+      "B2": 14963,
+      "B4": 758,
+      "B6": 298,
+      "B8": 127
+    },
+    {
+      "run": 42,
+      "events": 33972,
+      "selected_pulses": 18112,
+      "B2": 16977,
+      "B4": 711,
+      "B6": 307,
+      "B8": 117
+    },
+    {
+      "run": 44,
+      "events": 4294,
+      "selected_pulses": 2038,
+      "B2": 1884,
+      "B4": 93,
+      "B6": 44,
+      "B8": 17
+    },
+    {
+      "run": 45,
+      "events": 48181,
+      "selected_pulses": 24333,
+      "B2": 22786,
+      "B4": 969,
+      "B6": 401,
+      "B8": 177
+    },
+    {
+      "run": 46,
+      "events": 1441,
+      "selected_pulses": 687,
+      "B2": 675,
+      "B4": 7,
+      "B6": 3,
+      "B8": 2
+    },
+    {
+      "run": 47,
+      "events": 10970,
+      "selected_pulses": 5276,
+      "B2": 5116,
+      "B4": 85,
+      "B6": 50,
+      "B8": 25
+    },
+    {
+      "run": 48,
+      "events": 31713,
+      "selected_pulses": 14000,
+      "B2": 13044,
+      "B4": 599,
+      "B6": 245,
+      "B8": 112
+    },
+    {
+      "run": 49,
+      "events": 32354,
+      "selected_pulses": 14815,
+      "B2": 13779,
+      "B4": 640,
+      "B6": 281,
+      "B8": 115
+    },
+    {
+      "run": 50,
+      "events": 44804,
+      "selected_pulses": 35217,
+      "B2": 34088,
+      "B4": 659,
+      "B6": 330,
+      "B8": 140
+    },
+    {
+      "run": 51,
+      "events": 20569,
+      "selected_pulses": 14740,
+      "B2": 14200,
+      "B4": 303,
+      "B6": 177,
+      "B8": 60
+    },
+    {
+      "run": 52,
+      "events": 10005,
+      "selected_pulses": 7152,
+      "B2": 6893,
+      "B4": 148,
+      "B6": 76,
+      "B8": 35
+    },
+    {
+      "run": 53,
+      "events": 39612,
+      "selected_pulses": 32200,
+      "B2": 31225,
+      "B4": 559,
+      "B6": 296,
+      "B8": 120
+    },
+    {
+      "run": 54,
+      "events": 37413,
+      "selected_pulses": 30440,
+      "B2": 29493,
+      "B4": 536,
+      "B6": 298,
+      "B8": 113
+    },
+    {
+      "run": 55,
+      "events": 24416,
+      "selected_pulses": 17387,
+      "B2": 16735,
+      "B4": 372,
+      "B6": 199,
+      "B8": 81
+    },
+    {
+      "run": 56,
+      "events": 51823,
+      "selected_pulses": 40148,
+      "B2": 38730,
+      "B4": 825,
+      "B6": 421,
+      "B8": 172
+    },
+    {
+      "run": 57,
+      "events": 31284,
+      "selected_pulses": 13833,
+      "B2": 12774,
+      "B4": 656,
+      "B6": 273,
+      "B8": 130
+    },
+    {
+      "run": 58,
+      "events": 34141,
+      "selected_pulses": 16781,
+      "B2": 15791,
+      "B4": 591,
+      "B6": 285,
+      "B8": 114
+    },
+    {
+      "run": 59,
+      "events": 42303,
+      "selected_pulses": 21377,
+      "B2": 13565,
+      "B4": 4527,
+      "B6": 2366,
+      "B8": 919
+    },
+    {
+      "run": 60,
+      "events": 36074,
+      "selected_pulses": 17029,
+      "B2": 9873,
+      "B4": 4040,
+      "B6": 2189,
+      "B8": 927
+    },
+    {
+      "run": 61,
+      "events": 36535,
+      "selected_pulses": 18965,
+      "B2": 11015,
+      "B4": 4401,
+      "B6": 2490,
+      "B8": 1059
+    },
+    {
+      "run": 62,
+      "events": 37584,
+      "selected_pulses": 19089,
+      "B2": 11635,
+      "B4": 4183,
+      "B6": 2342,
+      "B8": 929
+    },
+    {
+      "run": 63,
+      "events": 37030,
+      "selected_pulses": 18817,
+      "B2": 14566,
+      "B4": 2645,
+      "B6": 1153,
+      "B8": 453
+    },
+    {
+      "run": 64,
+      "events": 35943,
+      "selected_pulses": 14630,
+      "B2": 11907,
+      "B4": 1689,
+      "B6": 763,
+      "B8": 271
+    },
+    {
+      "run": 65,
+      "events": 38424,
+      "selected_pulses": 13038,
+      "B2": 11768,
+      "B4": 842,
+      "B6": 323,
+      "B8": 105
+    }
+  ],
+  "method_families": {
+    "traditional_phase_selected_template_interp": "traditional",
+    "ridge": "ridge",
+    "hist_gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "phase_gated_cnn": "phase_gated_cnn_new_architecture"
+  },
+  "artifacts": {
+    "report": "reports/1781195579.1351.08f479c9__p06f_consumer_dropout_veto/REPORT.md",
+    "result": "reports/1781195579.1351.08f479c9__p06f_consumer_dropout_veto/result.json",
+    "scoreboard": "reports/1781195579.1351.08f479c9__p06f_consumer_dropout_veto/consumer_policy_scoreboard.csv",
+    "case_metrics": "reports/1781195579.1351.08f479c9__p06f_consumer_dropout_veto/consumer_case_metrics.csv",
+    "raw_counts": "reports/1781195579.1351.08f479c9__p06f_consumer_dropout_veto/raw_reproduction_counts.csv"
+  },
+  "finding": "P06f converts the P06e phase frontier into consumer-specific recover/veto utilities. The traditional recovery method is the overall winner; phase-gated vetoing can reduce rare-tail exposure for selected consumers but costs acceptance."
+}

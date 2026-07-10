@@ -1,0 +1,38 @@
+{
+  "study": "P06f",
+  "ticket": "1781195579.1351.08f479c9",
+  "worker": "testbeam-laptop-2",
+  "title": "consumer-specific dropout veto utility",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "p06e_report_dir": "reports/1781070978.431.052370d7__p06e_dropout_phase_timing_frontier",
+  "output_dir": "reports/1781195579.1351.08f479c9__p06f_consumer_dropout_veto",
+  "expected_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "test_groups": ["sample_ii_analysis"],
+  "bootstrap_reps": 800,
+  "random_seed": 61195579,
+  "consumer_thresholds": {
+    "timing": {"sigma68_ns": 0.90, "bad_tail_frac": 0.030, "veto_penalty": 0.20, "tail_weight": 8.0, "rms_weight": 0.02},
+    "charge": {"sigma68_ns": 1.25, "bad_tail_frac": 0.020, "veto_penalty": 0.12, "tail_weight": 20.0, "rms_weight": 0.05},
+    "pileup": {"sigma68_ns": 1.50, "bad_tail_frac": 0.018, "veto_penalty": 0.08, "tail_weight": 30.0, "rms_weight": 0.01},
+    "pid": {"sigma68_ns": 1.80, "bad_tail_frac": 0.025, "veto_penalty": 0.10, "tail_weight": 18.0, "rms_weight": 0.02},
+    "energy": {"sigma68_ns": 1.15, "bad_tail_frac": 0.020, "veto_penalty": 0.12, "tail_weight": 22.0, "rms_weight": 0.05}
+  },
+  "method_labels": {
+    "traditional_phase_selected_template_interp": "traditional",
+    "ridge": "ridge",
+    "hist_gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "phase_gated_cnn": "phase_gated_cnn_new_architecture"
+  }
+}

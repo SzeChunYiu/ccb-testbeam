@@ -1,0 +1,13 @@
+model,status,train_rows,eval_rows,fit_predict_sec,meta,fold
+ridge,trained,828,2524,0.08,,holdout_sample_i
+gradient_boosted_trees,trained,828,2524,0.22,,holdout_sample_i
+shuffled_target_ridge_sentinel,trained_control,828,2524,0.01,"{""target"": ""row-permuted train targets""}",holdout_sample_i
+mlp,trained,828,2524,3.43,"{""device"": ""cpu"", ""epochs"": 8, ""train_rows"": 828}",holdout_sample_i
+cnn_1d,trained,828,2524,10.91,"{""device"": ""cpu"", ""epochs"": 6, ""train_rows"": 828}",holdout_sample_i
+phase_gated_cnn_new,trained,828,2524,9.07,"{""device"": ""cpu"", ""epochs"": 6, ""train_rows"": 828}",holdout_sample_i
+ridge,trained,2300,15096,0.01,,holdout_sample_ii
+gradient_boosted_trees,trained,2300,15096,0.65,,holdout_sample_ii
+shuffled_target_ridge_sentinel,trained_control,2300,15096,0.01,"{""target"": ""row-permuted train targets""}",holdout_sample_ii
+mlp,trained,2300,15096,9.51,"{""device"": ""cpu"", ""epochs"": 8, ""train_rows"": 2300}",holdout_sample_ii
+cnn_1d,trained,2300,15096,18.56,"{""device"": ""cpu"", ""epochs"": 6, ""train_rows"": 2300}",holdout_sample_ii
+phase_gated_cnn_new,trained,2300,15096,21.16,"{""device"": ""cpu"", ""epochs"": 6, ""train_rows"": 2300}",holdout_sample_ii

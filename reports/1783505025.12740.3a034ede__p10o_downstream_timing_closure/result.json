@@ -1,0 +1,85 @@
+{
+  "elapsed_sec": 143.01,
+  "git_commit": "b901cefadd688579465989349d345654580d6f66",
+  "next_tickets": [],
+  "overall_method_ranking": [
+    {
+      "charge_sigma68_log": 0.5325851782015923,
+      "method": "traditional_explicit_handles",
+      "primary_loss": 18.307607226521924,
+      "tail_gt5ns_fraction": 0.2852193001350143,
+      "timing_rms_ns": 20.750882471085145,
+      "timing_sigma68_ns": 10.267693607400492,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.0540426365808078
+    },
+    {
+      "charge_sigma68_log": 0.7550729474804012,
+      "method": "shuffled_target_ridge_sentinel",
+      "primary_loss": 18.727174566264633,
+      "tail_gt5ns_fraction": 0.37561545830456067,
+      "timing_rms_ns": 19.77414314988188,
+      "timing_sigma68_ns": 10.027484195748556,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 0.9937338239745741
+    },
+    {
+      "charge_sigma68_log": 0.4863851445772827,
+      "method": "cnn_1d",
+      "primary_loss": 18.767403753176666,
+      "tail_gt5ns_fraction": 0.3747245283744125,
+      "timing_rms_ns": 18.41426363150404,
+      "timing_sigma68_ns": 10.416592561556532,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.1860628671626579
+    },
+    {
+      "charge_sigma68_log": 0.5461416959883776,
+      "method": "phase_gated_cnn_new",
+      "primary_loss": 18.919443127812787,
+      "tail_gt5ns_fraction": 0.36634985861099484,
+      "timing_rms_ns": 18.964908067218033,
+      "timing_sigma68_ns": 10.51471752489833,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.121462590734088
+    },
+    {
+      "charge_sigma68_log": 0.27386221637238667,
+      "method": "gradient_boosted_trees",
+      "primary_loss": 19.86478357635835,
+      "tail_gt5ns_fraction": 0.421616451677915,
+      "timing_rms_ns": 17.280230617111172,
+      "timing_sigma68_ns": 11.328561405301407,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.6435601581726418
+    },
+    {
+      "charge_sigma68_log": 0.39158241333057153,
+      "method": "mlp",
+      "primary_loss": 19.92604020273876,
+      "tail_gt5ns_fraction": 0.4179099074624646,
+      "timing_rms_ns": 18.843338693957957,
+      "timing_sigma68_ns": 11.036106454624624,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.322116434064569
+    },
+    {
+      "charge_sigma68_log": 0.34848818101185974,
+      "method": "ridge",
+      "primary_loss": 23.67462085606421,
+      "tail_gt5ns_fraction": 0.5532218134526615,
+      "timing_rms_ns": 18.817998642896747,
+      "timing_sigma68_ns": 13.43790306081341,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 2.1732220481879465
+    }
+  ],
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "reproduced_selected_pulses": 640737,
+  "reproduction_pass": true,
+  "study": "P10o",
+  "ticket": "1783505025.12740.3a034ede",
+  "winner": "traditional_explicit_handles",
+  "winner_selection": "lowest non-sentinel mean fold primary_loss = timing_sigma68_ns + 0.25 * timing_rms_ns + 10 * tail_gt5ns_fraction",
+  "worker": "testbeam-laptop-1"
+}

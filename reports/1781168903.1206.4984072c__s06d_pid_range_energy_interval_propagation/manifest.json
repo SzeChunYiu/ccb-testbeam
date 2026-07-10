@@ -1,0 +1,16 @@
+{
+  "config": "configs/s06d_1781168903_1206_4984072c_pid_range_energy_interval_propagation.json",
+  "git_commit": "5a7b59236bcd76ba331f322eddfc2c74e6b588a7",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "outputs": {
+    "REPORT.md": "8934c07e417abd9db09346a6bbd11f1998de35da25f4a82740a112155a440ca9",
+    "accepted_support_per_run_summary.csv": "02e045f838a3f0b36c3424096ce84ee9163831d6db4a429e76c2545823f6c0a1",
+    "consumer_method_summary.csv": "c379b48e14b212396bf680be2ff68dfb2b70afd21bd876294018a2a4ea5cb4e7",
+    "consumer_pull_rows.csv.gz": "f1e53db2b99a9818e35523191cb51de0d6cf3b2750898c95a59764fb26d9596a",
+    "fixed_cost_abstention_delta.csv": "e71f397442511030fde9a5400a7378a9ddf4f3b471d184dc1bc2e4b482b91914",
+    "input_sha256.csv": "4f1bd938d9e6e5ef822a99aa5e4ab76743f49c401e8fa29260c1805eefc20986",
+    "raw_root_reproduction.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "6eadcb29d9e0b4cd99f98285b8f6174aedc5491eb71c469e21c0938f2ebab370"
+  }
+}

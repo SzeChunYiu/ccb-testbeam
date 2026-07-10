@@ -1,0 +1,27 @@
+{
+  "study_id": "S06d",
+  "ticket_id": "1781168903.1206.4984072c",
+  "worker": "testbeam-laptop-4",
+  "title": "propagate S06c accepted-support timing intervals into PID/range-energy pulls",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1781168903.1206.4984072c__s06d_pid_range_energy_interval_propagation",
+  "source_s06c_config": "configs/s06c_1781056892_649_4cbb3cd2_timewalk_energy_action_band_closure.json",
+  "source_s06c_rows": "reports/1781056892.649.4cbb3cd2__s06c_timewalk_energy_action_band_closure/pair_residual_rows_with_pulls.csv.gz",
+  "source_s06c_result": "reports/1781056892.649.4cbb3cd2__s06c_timewalk_energy_action_band_closure/result.json",
+  "source_s17a_pid_truth": "reports/1781083265.459.750722a1__s17a_geant4_energy_pid_truth_bridge/pid_benchmark.csv",
+  "random_seed": 20260710,
+  "bootstrap_samples": 200,
+  "nominal68": 0.682689492137,
+  "nominal95": 0.95,
+  "fixed_abstention_budget_source": "S06c traditional accepted-support fraction",
+  "consumer_sensitivity": {
+    "pid_amplitude_pivot_adc": 2500.0,
+    "pid_amplitude_width_adc": 1600.0,
+    "pid_charge_balance_weight": 0.20,
+    "pid_phase_weight": 0.12,
+    "range_energy_charge_pivot_adc_samples": 18000.0,
+    "range_energy_charge_width_adc_samples": 9500.0,
+    "range_energy_amplitude_balance_weight": 0.18,
+    "range_energy_phase_weight": 0.10
+  }
+}

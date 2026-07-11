@@ -1,0 +1,181 @@
+{
+  "bootstrap_samples": 400,
+  "critic": "pending",
+  "elapsed_s": 197.598,
+  "finding": "Under run-held-out and target-pair-held-out duplicate-source conformal validation, traditional has the lowest calibration loss (0.0786, 95% CI [0.0328, 0.1691]) versus traditional 0.0786. The validation supports interval transfer across duplicate stave-pair endpoints, but not promotion to an absolute-clock calibration because no independent clock branch is present.",
+  "git_commit": "b4cd47795a6f1fc42ff58a98fdc457d0e55215b1",
+  "input_sha256": {
+    "s02_config": "cd71af873ba5542b7cd79d36ab712d26681b37d04a60295e9b56037e5fe28a47",
+    "s06c_pair_rows": "7ec7a61bee60a1e271c145545ca7e214a59b5f653d65c0c68282d7b665736a01",
+    "s06e_result": "8dd188b5ca904d8ac57fb59742c6af0c55110d9b54a2d5430cb5369cac9e851b"
+  },
+  "methods": [
+    "traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn1d",
+    "phase_conformal_gated_cnn"
+  ],
+  "methods_present": [
+    "cnn1d",
+    "gradient_boosted_trees",
+    "mlp",
+    "phase_conformal_gated_cnn",
+    "ridge",
+    "traditional"
+  ],
+  "ml": {
+    "best_method": "traditional",
+    "best_policy": "charge_bin_conformal68_budget0.05_duplicate_pair_external",
+    "methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "cnn1d",
+      "phase_conformal_gated_cnn"
+    ],
+    "score": 0.07861081165948973
+  },
+  "ml_beats_baseline": false,
+  "next_tickets": [],
+  "raw_root_reproduction": [
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "tolerance": 0
+    }
+  ],
+  "reproduced": true,
+  "split": {
+    "bootstrap": "run-block 95pct CI",
+    "bootstrap_samples": 400,
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "mode": "leave-one-run-out plus leave-one-target-pair-out",
+    "target_pairs": [
+      "B4-B6",
+      "B4-B8",
+      "B6-B8"
+    ]
+  },
+  "study": "S06f",
+  "ticket": "1783656008.24866.43be308f",
+  "ticket_id": "1783656008.24866.43be308f",
+  "title": "external duplicate-source validation for charge-bin conformal timing intervals",
+  "traditional": {
+    "abstention_budget": 0.05,
+    "accepted_fraction": 0.8945026178010471,
+    "accepted_fraction_ci_high": 0.8987739315154512,
+    "accepted_fraction_ci_low": 0.8873510356768725,
+    "bootstrap_replicates": 400,
+    "calibration_loss": 0.07861081165948973,
+    "calibration_loss_ci_high": 0.16906961935791165,
+    "calibration_loss_ci_low": 0.03280632920234602,
+    "coverage68": 0.7254901960784313,
+    "coverage68_ci_high": 0.811608453270383,
+    "coverage68_ci_low": 0.6043403062047197,
+    "coverage95": 0.8872305140961857,
+    "coverage95_ci_high": 0.9328853018273691,
+    "coverage95_ci_low": 0.8174510129504756,
+    "full_rms_ns": 1.9432171105901646,
+    "mean_sigma_hat_ns": 2.9700964185065044,
+    "method": "traditional",
+    "method_label": "S02/S03/S04 atom robust-width baseline",
+    "n": 10251,
+    "n_events": 3812,
+    "n_runs": 7,
+    "pull_width68": 0.8697377548667764,
+    "pull_width68_ci_high": 1.1464154901889378,
+    "pull_width68_ci_low": 0.6482723983297903,
+    "sigma68_ns": 1.6248907013442493,
+    "sigma68_ns_ci_high": 1.9974362974730537,
+    "sigma68_ns_ci_low": 1.4105227046585975,
+    "tail_frac_abs_gt5ns": 0.027411959808799142,
+    "tail_frac_abs_gt5ns_ci_high": 0.05674251874291966,
+    "tail_frac_abs_gt5ns_ci_low": 0.009087284024786507
+  },
+  "winner": {
+    "abstention_budget": 0.05,
+    "accepted_fraction": 0.8945026178010471,
+    "accepted_fraction_ci_high": 0.8987739315154512,
+    "accepted_fraction_ci_low": 0.8873510356768725,
+    "bootstrap_replicates": 400,
+    "calibration_loss": 0.07861081165948973,
+    "calibration_loss_ci_high": 0.16906961935791165,
+    "calibration_loss_ci_low": 0.03280632920234602,
+    "coverage68": 0.7254901960784313,
+    "coverage68_ci_high": 0.811608453270383,
+    "coverage68_ci_low": 0.6043403062047197,
+    "coverage95": 0.8872305140961857,
+    "coverage95_ci_high": 0.9328853018273691,
+    "coverage95_ci_low": 0.8174510129504756,
+    "full_rms_ns": 1.9432171105901646,
+    "mean_sigma_hat_ns": 2.9700964185065044,
+    "method": "traditional",
+    "method_label": "S02/S03/S04 atom robust-width baseline",
+    "n": 10251,
+    "n_events": 3812,
+    "n_runs": 7,
+    "pull_width68": 0.8697377548667764,
+    "pull_width68_ci_high": 1.1464154901889378,
+    "pull_width68_ci_low": 0.6482723983297903,
+    "sigma68_ns": 1.6248907013442493,
+    "sigma68_ns_ci_high": 1.9974362974730537,
+    "sigma68_ns_ci_low": 1.4105227046585975,
+    "tail_frac_abs_gt5ns": 0.027411959808799142,
+    "tail_frac_abs_gt5ns_ci_high": 0.05674251874291966,
+    "tail_frac_abs_gt5ns_ci_low": 0.009087284024786507
+  },
+  "worker": "testbeam-laptop-3"
+}

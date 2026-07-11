@@ -1,0 +1,19 @@
+{
+  "elapsed_s": 197.598,
+  "input_sha256": {
+    "s02_config": "cd71af873ba5542b7cd79d36ab712d26681b37d04a60295e9b56037e5fe28a47",
+    "s06c_pair_rows": "7ec7a61bee60a1e271c145545ca7e214a59b5f653d65c0c68282d7b665736a01",
+    "s06e_result": "8dd188b5ca904d8ac57fb59742c6af0c55110d9b54a2d5430cb5369cac9e851b"
+  },
+  "outputs": [
+    "REPORT.md",
+    "duplicate_conformal_scale_ledger.csv",
+    "manifest.json",
+    "per_pair_duplicate_source_summary.csv",
+    "per_run_duplicate_source_summary.csv",
+    "pooled_duplicate_source_summary.csv",
+    "reproduction_match_table.csv",
+    "result.json"
+  ],
+  "ticket": "1783656008.24866.43be308f"
+}

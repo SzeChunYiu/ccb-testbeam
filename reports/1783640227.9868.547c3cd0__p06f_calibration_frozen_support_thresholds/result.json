@@ -1,0 +1,149 @@
+{
+  "abstention_budgets": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "consumer_scoreboard_file": "consumer_scoreboard.csv",
+  "coverage_improvement_file": "coverage_improvement_by_budget.csv",
+  "finding": "At the calibration-frozen 10% nominal support-threshold budget, phase_conformal_gated_cnn has the lowest composite consumer loss (0.1256) versus traditional 1.3618. Its timing interval calibration loss is 0.0386 [0.0304, 0.0605], with PID AUC 1.0000 and energy charge res68 0.0126. The result supports propagating the S06b support-conditioned gated timing intervals under a frozen deployment threshold, while keeping PID/energy interpretation proxy-limited.",
+  "git_commit": "2e1cf7fae038fada041850d6f63c43a56beb612c",
+  "method_summary_file": "calibration_frozen_interval_summary.csv",
+  "ml": {
+    "best_method": "phase_conformal_gated_cnn",
+    "methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "cnn1d",
+      "phase_conformal_gated_cnn"
+    ],
+    "metric": "composite consumer loss at calibration-frozen support threshold"
+  },
+  "ml_beats_baseline": true,
+  "next_tickets": [],
+  "per_run_metrics_file": "interval_by_run.csv",
+  "primary_abstention_budget": 0.1,
+  "raw_root_dir": "/home/billy/Desktop/test_beam/data/root/root",
+  "raw_root_reproduction": [
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "total selected B-stave pulses",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis selected_pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample_ii_analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "tolerance": 0
+    }
+  ],
+  "reproduced": true,
+  "retrospective_equal_support_file": "retrospective_equal_support_summary.csv",
+  "runtime_sec": 309.905,
+  "split": {
+    "available_interval_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap": "run-block bootstrap over deployment S06b timing runs",
+    "bootstrap_replicates": 600,
+    "calibration_note": "S06b interval rows are only available for Sample-II analysis runs 58,59,60,61,62,63,65. Run 64 raw counts are still reproduced, but method-level sigma_hat rows for run 64 do not exist in the frozen upstream artifact. P06f therefore freezes thresholds on the early Sample-II analysis calibration block 58-60 and applies them unchanged to deployment runs 61-63,65.",
+    "deployment_runs": [
+      61,
+      62,
+      63,
+      65
+    ],
+    "threshold_calibration_runs": [
+      58,
+      59,
+      60
+    ],
+    "unit": "run"
+  },
+  "study": "P06f",
+  "ticket": "1783640227.9868.547c3cd0",
+  "title": "calibration-run frozen support thresholds for consumer deployment",
+  "traditional": {
+    "calibration_loss": 0.7775535603730638,
+    "consumer_loss": 1.3618348135275684,
+    "coverage68": 0.34011090573012936,
+    "coverage95": 0.5679717694505125,
+    "energy_charge_res68": 0.0154068299365386,
+    "method": "traditional",
+    "pid_roc_auc": 1.0
+  },
+  "winner": {
+    "abstention_budget": 0.1,
+    "calibration_loss": 0.03858594423741162,
+    "calibration_loss_ci": [
+      0.030405209739916644,
+      0.060468450798647946
+    ],
+    "consumer_loss": 0.1255605936270357,
+    "coverage68": 0.6140254003313087,
+    "coverage68_ci": [
+      0.547329754167844,
+      0.7065317387304508
+    ],
+    "coverage95": 0.958770476716363,
+    "coverage95_ci": [
+      0.9472703825763004,
+      0.9714489650249821
+    ],
+    "delta_consumer_loss_vs_traditional": -1.2362742199005328,
+    "energy_charge_res68": 0.012581449972136,
+    "energy_harm_rate": 0.0169062802803253,
+    "method": "phase_conformal_gated_cnn",
+    "method_label": "Phase-conformal atom-gated CNN",
+    "metric": "calibration_frozen_composite_consumer_loss",
+    "pid_ece": 0.0018029465458181,
+    "pid_roc_auc": 1.0
+  },
+  "winner_scoreboard_file": "winner_scoreboard.csv",
+  "worker": "testbeam-laptop-4"
+}

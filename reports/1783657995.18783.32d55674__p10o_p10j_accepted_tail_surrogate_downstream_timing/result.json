@@ -1,0 +1,99 @@
+{
+  "elapsed_sec": 58.07,
+  "git_commit": "41f27354ea729f567369d8ecc3648a2890f18bda",
+  "next_tickets": [],
+  "overall_method_ranking": [
+    {
+      "accepted_support_harm_rate": 0.2630549071019344,
+      "charge_sigma68_log": 0.5325851782015923,
+      "high_minus_low_secondary_proxy": 0.19485876306474637,
+      "method": "traditional_explicit_handles",
+      "primary_loss": 18.307607226521924,
+      "tail_gt5ns_fraction": 0.2852193001350143,
+      "timing_rms_ns": 20.750882471085145,
+      "timing_sigma68_ns": 10.267693607400492,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.0540426365808078
+    },
+    {
+      "accepted_support_harm_rate": 0.33076570523815585,
+      "charge_sigma68_log": 0.7550729474804012,
+      "high_minus_low_secondary_proxy": 0.14010409828756795,
+      "method": "shuffled_target_ridge_sentinel",
+      "primary_loss": 18.727174566264633,
+      "tail_gt5ns_fraction": 0.37561545830456067,
+      "timing_rms_ns": 19.77414314988188,
+      "timing_sigma68_ns": 10.027484195748556,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 0.9937338239745741
+    },
+    {
+      "accepted_support_harm_rate": 0.2913819818891431,
+      "charge_sigma68_log": 0.4863851445772827,
+      "high_minus_low_secondary_proxy": 0.24070871975386976,
+      "method": "cnn_1d",
+      "primary_loss": 18.767403753176666,
+      "tail_gt5ns_fraction": 0.3747245283744125,
+      "timing_rms_ns": 18.41426363150404,
+      "timing_sigma68_ns": 10.416592561556532,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.1860628671626579
+    },
+    {
+      "accepted_support_harm_rate": 0.2664018803135763,
+      "charge_sigma68_log": 0.5461416959883776,
+      "high_minus_low_secondary_proxy": 0.14324947455055626,
+      "method": "phase_gated_cnn_new",
+      "primary_loss": 18.919443127812787,
+      "tail_gt5ns_fraction": 0.36634985861099484,
+      "timing_rms_ns": 18.964908067218033,
+      "timing_sigma68_ns": 10.51471752489833,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.121462590734088
+    },
+    {
+      "accepted_support_harm_rate": 0.3525993170428888,
+      "charge_sigma68_log": 0.27386221637238667,
+      "high_minus_low_secondary_proxy": 0.04972610291629455,
+      "method": "gradient_boosted_trees",
+      "primary_loss": 19.86478357635835,
+      "tail_gt5ns_fraction": 0.421616451677915,
+      "timing_rms_ns": 17.280230617111172,
+      "timing_sigma68_ns": 11.328561405301407,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.6435601581726418
+    },
+    {
+      "accepted_support_harm_rate": 0.28262650836578657,
+      "charge_sigma68_log": 0.39158241333057153,
+      "high_minus_low_secondary_proxy": 0.31524057955350077,
+      "method": "mlp",
+      "primary_loss": 19.92604020273876,
+      "tail_gt5ns_fraction": 0.4179099074624646,
+      "timing_rms_ns": 18.843338693957957,
+      "timing_sigma68_ns": 11.036106454624624,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 1.322116434064569
+    },
+    {
+      "accepted_support_harm_rate": 0.5119406759376495,
+      "charge_sigma68_log": 0.34848818101185974,
+      "high_minus_low_secondary_proxy": 0.08487766186274195,
+      "method": "ridge",
+      "primary_loss": 23.67462085606421,
+      "tail_gt5ns_fraction": 0.5532218134526615,
+      "timing_rms_ns": 18.817998642896747,
+      "timing_sigma68_ns": 13.43790306081341,
+      "too_good_trigger_carryover_rate": 0.0,
+      "trigger_carryover_ratio": 2.1732220481879465
+    }
+  ],
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "reproduced_selected_pulses": 640737,
+  "reproduction_pass": true,
+  "study": "P10o",
+  "ticket": "1783657995.18783.32d55674",
+  "winner": "traditional_explicit_handles",
+  "winner_selection": "lowest non-sentinel mean fold primary_loss = timing_sigma68_ns + 0.25 * timing_rms_ns + 10 * tail_gt5ns_fraction",
+  "worker": "testbeam-laptop-3"
+}

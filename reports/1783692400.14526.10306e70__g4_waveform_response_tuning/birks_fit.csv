@@ -1,0 +1,2 @@
+kB_cm_per_MeV,alpha_adc_per_MeV,median_abs_log_charge_error,n_train_pulses,log_residual_mean,log_residual_std,chi2_log_unit_ndf,chi2_definition
+0.0,2673.2892559519323,0.25583678261844334,263267,-0.3610927497729172,0.8930508459708707,0.9279318073916224,"sum(log(Q)-log(Q_model))^2 / (N-2), unit log-charge variance diagnostic"

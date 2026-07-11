@@ -1,0 +1,25 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/p06f_1783640227_9868_547c3cd0_calibration_frozen_support_thresholds.py --config configs/p06f_1783640227_9868_547c3cd0_calibration_frozen_support_thresholds.json",
+  "config": "configs/p06f_1783640227_9868_547c3cd0_calibration_frozen_support_thresholds.json",
+  "git_commit": "2e1cf7fae038fada041850d6f63c43a56beb612c",
+  "inputs": {
+    "p07k_benchmark": "reports/1781153592.1544.2e244948__p07k_action_band_downstream_consumers/benchmark_summary.csv",
+    "p08e_scoreboard": "reports/1781155463.1105.04ad315d__p08e_truth_anchored_pid_action_band_closure/scoreboard_by_mask.csv",
+    "s06b_pair_rows": "reports/1781054026.2063.38d35ceb__s06b_amplitude_energy_timing_support_closure/pair_residual_rows_with_pulls.csv.gz"
+  },
+  "output_sha256": {
+    "REPORT.md": "43652f36f0a2f38e4755798b4059b8ded45468d48b30308c0b666155d2297484",
+    "calibration_frozen_interval_summary.csv": "6896fb99f15846dcfffc252d389a6197dcbb8833dcab26311bae95c2b4c65d93",
+    "consumer_method_map.csv": "8ac4af81d0a231e4c8698e4f508d03c932abc02b5318b6237668c7a59e2aaf7b",
+    "consumer_scoreboard.csv": "3a5dc73f60d29a31812cc47443d1f9df20aa2e8aa94828f8cb33d7a5b915639b",
+    "coverage_improvement_by_budget.csv": "df787089ba5846deb34b228225e3e53066ad6b8532f56d96a7a40b1171d2696c",
+    "interval_by_run.csv": "5ca336f8a7eea341d747f50d27352770a8f27d04ed3c673eba466e1135991931",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "b289f72679d8cfc48986835bfc6ceeae9cf77c24c2f14cc9c2ef2e4ccac55074",
+    "retrospective_equal_support_summary.csv": "f28f4b4be8e6b2306e2485dcda6d70eb7f1db74eda251968083b969fd5c0880a",
+    "winner_scoreboard.csv": "e0623090141f3a4221ab9d0ba8c603573c9db2aad2c2708a9d0e8b0efe2079f2"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "runtime_sec": 309.94
+}

@@ -1,0 +1,85 @@
+{
+  "ticket_id": "1783798536.2368.2ce12433",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "Saturation energy recovery architecture bakeoff",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer": "tiny_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite saturation-energy/timing score with run-block bootstrap CIs reported",
+    "winner_score": 0.1648080523707394,
+    "energy_fractional_sigma68": 0.06495921086696767,
+    "energy_fractional_sigma68_ci95": [
+      0.059328457413025254,
+      0.07654656755381159
+    ],
+    "time_sigma68_ns": 7.429328594821617,
+    "time_sigma68_ci95": [
+      6.344572232835085,
+      7.9560274279597945
+    ],
+    "pileup_miss_rate": 0.36666666666666664,
+    "false_split_rate": 0.14444444444444443
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ]
+}

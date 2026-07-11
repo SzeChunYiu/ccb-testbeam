@@ -1,0 +1,66 @@
+{
+  "ticket_id": "1783727976.9059.2fa2489b",
+  "generated_at_unix": 1783759265.7101016,
+  "artifacts": [
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/REPORT.md",
+      "sha256": "1149a99818bf34e3edf217e403d6a05e7d72c89943c61c2414f06b1695272c0f",
+      "bytes": 8077
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/benchmark_sample_meta.csv",
+      "sha256": "53f07fdb7210543f68dc487cfa58a7db218fa7ed3d5fdf154a1252a39b9c443e",
+      "bytes": 4428637
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/feature_families.csv",
+      "sha256": "2d9407638c9cbf98002846025d8725ecb2ef72055abfaa6f829feda81a96c6ad",
+      "bytes": 618
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/heldout_per_run_metrics.csv",
+      "sha256": "d9224b735cafec2a85f42bc2a19a59acc6b09f8068c32a05e53d22fae0df16ea",
+      "bytes": 3961
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/heldout_predictions.csv.gz",
+      "sha256": "4657c45e59bf2e836fc8554809cdcda3586fa4eadae111de83fa9fc837ea44df",
+      "bytes": 2546765
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/input_sha256.csv",
+      "sha256": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+      "bytes": 3279
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/method_rmse_ci.png",
+      "sha256": "fed6eaf65786dc5a3a574d1c949c95f8cae822408d5d759c28287ac8275c5352",
+      "bytes": 43709
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/method_summary.csv",
+      "sha256": "dcd5be1af26b2562bf9af45b037fa7164b1d44d3b06af66794ba62c7ae3be989",
+      "bytes": 1412
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/result.json",
+      "sha256": "757f29428e7f88d65e3c1a18c15961e504a056574d8f823089a249d4375d824f",
+      "bytes": 2172
+    },
+    {
+      "path": "reports/1783727976.9059.2fa2489b__pedestal_energy_pid_coupling/stratum_summary.csv",
+      "sha256": "61c353ea78dd89407442ad5ce373758932db51c54effe597d1d8d0ea14391c64",
+      "bytes": 1978
+    }
+  ]
+}

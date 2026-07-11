@@ -1,0 +1,60 @@
+{
+  "ticket_id": "1783754154.7824.22ac6254",
+  "worker": "testbeam-laptop-2",
+  "analysis_name": "s24a_pulse_shape_pedestal_disentanglement_benchmark",
+  "created_from_raw_root_derived_artifacts": true,
+  "primary_report": "REPORT.md",
+  "primary_result": "result.json",
+  "raw_root_input": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+  "copied_evidence_tables": [
+    {
+      "file": "reproduction_match_table.csv",
+      "source": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction/reproduction_match_table.csv",
+      "purpose": "Raw ROOT pulse-count reproduction gate"
+    },
+    {
+      "file": "energy_method_metrics.csv",
+      "source": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction/method_metrics.csv",
+      "purpose": "Inclusive energy benchmark over traditional, ML, and NN methods"
+    },
+    {
+      "file": "energy_run_heldout_summary.csv",
+      "source": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction/run_heldout_summary.csv",
+      "purpose": "Held-out-run energy split evidence"
+    },
+    {
+      "file": "saturation_shape_strata_metrics.csv",
+      "source": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction/saturation_shape_strata_metrics.csv",
+      "purpose": "Saturation and pulse-shape stratum performance"
+    },
+    {
+      "file": "pedestal_primary_method_summary.csv",
+      "source": "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance/primary_method_summary.csv",
+      "purpose": "Pedestal-drift classification benchmark"
+    },
+    {
+      "file": "pedestal_traditional_method_summary.csv",
+      "source": "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance/traditional_method_summary.csv",
+      "purpose": "Traditional Fisher-Gatti pedestal benchmark details"
+    },
+    {
+      "file": "proxy_shift_bootstrap_cis.csv",
+      "source": "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance/proxy_shift_bootstrap_cis.csv",
+      "purpose": "Timing, energy, PID, and shape proxy shifts with bootstrap CIs"
+    },
+    {
+      "file": "pedestal_drift_by_run.csv",
+      "source": "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance/pedestal_drift_by_run.csv",
+      "purpose": "Run-level pedestal drift strata"
+    },
+    {
+      "file": "pedestal_drift_time_blocks.csv",
+      "source": "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance/pedestal_drift_time_blocks.csv",
+      "purpose": "Time-block drift stability evidence"
+    }
+  ],
+  "ticket_append_policy": {
+    "maximum_novel_tickets_allowed": 1,
+    "novel_tickets_appended": 0
+  }
+}

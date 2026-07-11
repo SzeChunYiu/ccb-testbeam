@@ -1,0 +1,109 @@
+{
+  "ticket_id": "1783754154.7824.22ac6254",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S24a pulse-shape pedestal disentanglement benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "tree": "h101/HRDv",
+    "selection": "B-stave channels {2,4,6,8}; median pedestal from samples 0:3; require baseline-subtracted maximum amplitude > 1000 ADC",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv",
+    "source_analyses": [
+      "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction",
+      "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance"
+    ]
+  },
+  "evaluation_design": {
+    "split": "leave-one-run-out and held-out-run evaluation; no event-level random mixing across runs",
+    "bootstrap": "run-block bootstrap percentile 95% confidence intervals",
+    "heldout_runs_for_pedestal_panel": [42, 50, 57, 58, 60, 62, 64, 65],
+    "pedestal_bootstrap_replicates": 500,
+    "energy_bootstrap_unit": "held-out run blocks"
+  },
+  "required_method_coverage": {
+    "traditional": [
+      "traditional_fisher_gatti_all_features",
+      "geant4_birks_lookup",
+      "old_power_law"
+    ],
+    "ridge": "ML_ridge_classifier and ridge",
+    "gradient_boosted_trees": "ML_gradient_boosted_trees and gradient_boosted_trees",
+    "mlp": "ML_mlp and mlp",
+    "one_dimensional_cnn": "NN_1d_cnn and 1d_cnn",
+    "new_architecture": [
+      "NN_residual_squeeze_cnn_new",
+      "physics_residual_mlp",
+      "transformer"
+    ]
+  },
+  "primary_winner": {
+    "name": "ML_gradient_boosted_trees",
+    "family": "ml_panel",
+    "criterion": "primary pedestal-drift versus genuine pulse-shape disentanglement endpoint",
+    "roc_auc": 0.9483792977114667,
+    "roc_auc_ci95": [0.9248153335858457, 0.9644058296786087],
+    "average_precision": 0.9203535813333132,
+    "rationale": "It achieved the highest held-out-run ROC AUC for high-pedestal-drift identification, exceeding the Fisher-Gatti traditional baseline and all neural waveform models under the run-block bootstrap."
+  },
+  "endpoint_winners": {
+    "pedestal_shape_disentanglement": {
+      "method": "ML_gradient_boosted_trees",
+      "metric": "ROC AUC",
+      "value": 0.9483792977114667,
+      "ci95": [0.9248153335858457, 0.9644058296786087]
+    },
+    "inclusive_energy_closure": {
+      "method": "geant4_birks_lookup",
+      "metric": "fractional sigma68",
+      "value": 0.040243978309137673,
+      "ci95": [0.03885687265429256, 0.041606317494948857]
+    },
+    "saturation_onset_energy_stratum": {
+      "method": "physics_residual_mlp",
+      "metric": "fractional sigma68",
+      "value": 0.0387697764,
+      "ci95": [0.0358850684, 0.0447138613]
+    }
+  },
+  "pedestal_proxy_shifts_high_minus_low": {
+    "shape_distance_nominal_chi2": {
+      "shift": 0.1171211079,
+      "ci95": [0.1034267997, 0.127211772]
+    },
+    "timing_residual_mean_time_sample": {
+      "shift": -3.2408986092,
+      "ci95": [-3.5574350119, -2.8709838212]
+    },
+    "energy_residual_log10_amplitude": {
+      "shift": -0.0902587175,
+      "ci95": [-0.1006792545, -0.0798376471]
+    },
+    "pid_residual_odd_negative_adc": {
+      "shift": -1545.625,
+      "ci95": [-1645.38125, -1424.03125]
+    }
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "pedestal_methods": "pedestal_primary_method_summary.csv",
+    "traditional_pedestal_methods": "pedestal_traditional_method_summary.csv",
+    "pedestal_proxy_shifts": "proxy_shift_bootstrap_cis.csv",
+    "energy_methods": "energy_method_metrics.csv",
+    "energy_run_splits": "energy_run_heldout_summary.csv",
+    "saturation_strata": "saturation_shape_strata_metrics.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "This synthesis uses already materialized, audited raw-ROOT-derived S24a/S24b analyses in the repository as source evidence rather than rerunning every neural training job in the default Python environment.",
+    "Pedestal labels are weak labels based on run-block pedestal drift, so the classifier endpoint should be interpreted as disentanglement evidence, not a direct detector-state truth label."
+  ]
+}

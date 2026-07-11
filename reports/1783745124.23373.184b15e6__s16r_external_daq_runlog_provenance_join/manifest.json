@@ -1,0 +1,15 @@
+{
+  "artifacts": [
+    "REPORT.md",
+    "external_daq_provenance_join_audit.csv",
+    "input_sha256.csv",
+    "manifest.json",
+    "method_deltas_vs_traditional.csv",
+    "method_summary.csv",
+    "per_run_method_metrics.csv",
+    "reproduction_match_table.csv",
+    "result.json"
+  ],
+  "created_by": "s16r_1783745124_23373_184b15e6_external_daq_runlog_provenance_join.py",
+  "ticket": "1783745124.23373.184b15e6"
+}

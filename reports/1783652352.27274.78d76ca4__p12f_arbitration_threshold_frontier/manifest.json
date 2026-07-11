@@ -1,0 +1,58 @@
+{
+  "study": "P12f",
+  "ticket": "1783652352.27274.78d76ca4",
+  "script": "scripts/p12f_1783652352_27274_78d76ca4_arbitration_threshold_frontier.py",
+  "config": "configs/p12f_1783652352_27274_78d76ca4_arbitration_threshold_frontier.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p12f_1783652352_27274_78d76ca4_arbitration_threshold_frontier.py --config configs/p12f_1783652352_27274_78d76ca4_arbitration_threshold_frontier.json",
+  "git_commit": "236509bb99fa6d3a037dc8f1bee21e13a5538b54",
+  "created_unix": 1783747115.5070095,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "artifacts": [
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/REPORT.md"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/result.json"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/manifest.json"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/raw_count_match.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/counts_by_run.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/counts_by_group.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/threshold_frontier.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/threshold_frontier_by_run.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/threshold_frontier_bootstrap.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/threshold_stability.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/accepted_stave_frontier.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/raw_family_support.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/raw_family_support_delta.csv"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/p12e_policy_rows_audit.csv.gz"
+    },
+    {
+      "path": "reports/1783652352.27274.78d76ca4__p12f_arbitration_threshold_frontier/input_sha256.csv"
+    }
+  ]
+}

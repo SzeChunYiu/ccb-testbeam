@@ -397,7 +397,7 @@ def write_report(out: Path, cfg: dict, result: dict, metrics: pd.DataFrame, byru
         "## Reproducibility",
         "",
         "```bash",
-        f"/home/billy/anaconda3/bin/python scripts/s17c_1783760285_digitized_g4_waveform_bridge.py --config configs/s17c_1783760285_digitized_g4_waveform_bridge.yaml",
+        f"/home/billy/anaconda3/bin/python scripts/s17c_1783760285_digitized_g4_waveform_bridge.py --config {cfg.get('_config_arg', 'configs/s17c_1783760285_digitized_g4_waveform_bridge.yaml')}",
         "```",
     ]
     (out / "REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -410,6 +410,7 @@ def main():
     t0 = time.time()
     cfg_path = ROOT / args.config
     cfg = load_config(cfg_path)
+    cfg["_config_arg"] = args.config
     out = ROOT / cfg["output_dir"]
     out.mkdir(parents=True, exist_ok=True)
     total, raw_counts = raw_reproduction(cfg)

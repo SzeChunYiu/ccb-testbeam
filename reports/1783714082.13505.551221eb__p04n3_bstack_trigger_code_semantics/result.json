@@ -1,0 +1,420 @@
+{
+  "study": "P04n3",
+  "ticket_id": "1783714082.13505.551221eb",
+  "worker": "testbeam-laptop-1",
+  "title": "acquire external DAQ run log or scaler metadata for B-stack trigger-code semantics",
+  "runtime_sec": 22.373175859451294,
+  "reproduced": true,
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "forced_random_pedestal_source": {
+    "n_bstack_raw_root_files": 53,
+    "n_nonempty_bstack_raw_root_files": 51,
+    "unique_trigger_codes": [
+      1
+    ],
+    "n_files_with_nonbeam_trigger_code": 0,
+    "n_keyword_root_files": 0,
+    "dedicated_forced_random_pedestal_root_found": false
+  },
+  "split": {
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "held-out run",
+    "bootstrap_reps": 1200
+  },
+  "primary_metric": "external downstream B4+B6+B8 charge-proxy res68_abs_frac; lower is better",
+  "best_traditional": {
+    "target": "downstream_B4B6B8_charge_proxy",
+    "method": "traditional_huber_ridge",
+    "split": "leave_one_run_out",
+    "n": 3774,
+    "bias_median_frac": -0.00587118089456389,
+    "res68_abs_frac": 0.21978359870554123,
+    "full_rms_frac": 0.316197377732481,
+    "catastrophic_rate": 0.25781664016958133,
+    "within_10pct": 0.3375728669846317,
+    "bias_ci95": [
+      -0.07055729112084877,
+      0.07306424496462707
+    ],
+    "res68_ci95": [
+      0.20092251210856293,
+      0.26064338499267264
+    ],
+    "full_rms_ci95": [
+      0.2672983606608452,
+      0.3852957964238381
+    ],
+    "catastrophic_rate_ci95": [
+      0.21783148171562774,
+      0.3323705455632745
+    ],
+    "within_10pct_ci95": [
+      0.31531837941618585,
+      0.36081903707802987
+    ]
+  },
+  "winner": {
+    "target": "downstream_B4B6B8_charge_proxy",
+    "method": "extra_trees_with_pretrigger",
+    "split": "leave_one_run_out",
+    "n": 3774,
+    "bias_median_frac": -0.013238405179768355,
+    "res68_abs_frac": 0.20976084068583387,
+    "full_rms_frac": 0.27276290994167224,
+    "catastrophic_rate": 0.237413884472708,
+    "within_10pct": 0.3510863804981452,
+    "bias_ci95": [
+      -0.06223622213840731,
+      0.04244534059726981
+    ],
+    "res68_ci95": [
+      0.1976204278478839,
+      0.22763176752381725
+    ],
+    "full_rms_ci95": [
+      0.23966248343775257,
+      0.33565557683128755
+    ],
+    "catastrophic_rate_ci95": [
+      0.21265133844822098,
+      0.2802059462252711
+    ],
+    "within_10pct_ci95": [
+      0.3288888888888889,
+      0.3704437400950872
+    ]
+  },
+  "ml_beats_baseline": true,
+  "method_family_context": [
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_hgb_with_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0009034920781521,
+      "res68_abs_frac": 0.0161867160970174,
+      "full_rms_frac": 0.0472091832950383,
+      "catastrophic_rate": 0.0048689617678568,
+      "within_10pct": 0.9687714865923664,
+      "bias_ci95": "[0.00075274763217978, 0.0010885764101696762]",
+      "res68_ci95": "[0.013449432337012667, 0.018396167658845802]",
+      "full_rms_ci95": "[0.039768596463963655, 0.052079009864946124]",
+      "catastrophic_rate_ci95": "[0.003314694869275303, 0.006159193794785278]",
+      "p04n_method_family": "gradient_boosted_trees_with_pretrigger"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_ridge_with_pretrigger",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0009170457487925,
+      "res68_abs_frac": 0.0249422312527894,
+      "full_rms_frac": 0.1687847822904586,
+      "catastrophic_rate": 0.0436847407217896,
+      "within_10pct": 0.8780201154479604,
+      "bias_ci95": "[-0.0009288013752666302, 0.0029563890129793427]",
+      "res68_ci95": "[0.021862959422171122, 0.02813398219645024]",
+      "full_rms_ci95": "[0.13371357321739197, 0.1924663819372654]",
+      "catastrophic_rate_ci95": "[0.03147135670860432, 0.0517259741258709]",
+      "p04n_method_family": "ridge_with_pretrigger"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "traditional_dropout_cell_corrected",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.0029536599484739,
+      "res68_abs_frac": 0.0310563102889711,
+      "full_rms_frac": 1.0389947790215597,
+      "catastrophic_rate": 0.125705559730728,
+      "within_10pct": 0.8057212299525096,
+      "bias_ci95": "[-0.0053957333372366125, -0.0012362258537726531]",
+      "res68_ci95": "[0.025364953261856015, 0.036739308678197614]",
+      "full_rms_ci95": "[0.8061769784968797, 1.2076822703528447]",
+      "catastrophic_rate_ci95": "[0.08705830905086823, 0.1506709570264118]",
+      "p04n_method_family": "traditional_dropout_cell_corrected"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "ML_mlp",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0029946779832243,
+      "res68_abs_frac": 0.0357687076926231,
+      "full_rms_frac": 0.1053604856133461,
+      "catastrophic_rate": 0.0246086442060154,
+      "within_10pct": 0.8998704808199683,
+      "bias_ci95": "[0.000522381677001249, 0.005362973804585635]",
+      "res68_ci95": "[0.028978814253583562, 0.041470635045319816]",
+      "full_rms_ci95": "[0.08568301778286695, 0.11886161342263221]",
+      "catastrophic_rate_ci95": "[0.017107064504720798, 0.029989567261539073]",
+      "p04n_method_family": "mlp"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "NN_pretrigger_gated_wave_net_new",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": 0.0019533154554665,
+      "res68_abs_frac": 0.0533973367512226,
+      "full_rms_frac": 0.2225957661867141,
+      "catastrophic_rate": 0.0552855018468475,
+      "within_10pct": 0.8411791042389549,
+      "bias_ci95": "[0.0008098369638901205, 0.002943553496152162]",
+      "res68_ci95": "[0.04123901575803757, 0.0629325732588768]",
+      "full_rms_ci95": "[0.18215421959757805, 0.2532925605773926]",
+      "catastrophic_rate_ci95": "[0.03911122804162077, 0.06601673720672627]",
+      "p04n_method_family": "new_pretrigger_gated_wave_net"
+    },
+    {
+      "target": "duplicate_odd_charge",
+      "method": "NN_1d_cnn",
+      "split": "run_heldout",
+      "n": 125078,
+      "bias_median_frac": -0.0254384372383356,
+      "res68_abs_frac": 0.3746889472007751,
+      "full_rms_frac": 1.6305214166641235,
+      "catastrophic_rate": 0.4564671644893586,
+      "within_10pct": 0.1846847567118118,
+      "bias_ci95": "[-0.08100184276700019, 0.02559398720040917]",
+      "res68_ci95": "[0.30765259191393857, 0.4384879775345325]",
+      "full_rms_ci95": "[1.3727070540189743, 1.8045051753520964]",
+      "catastrophic_rate_ci95": "[0.39570405986234614, 0.4960809271480172]",
+      "p04n_method_family": "1d_cnn"
+    }
+  ],
+  "external_benchmark": [
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "traditional_huber_ridge",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.00587118089456389,
+      "res68_abs_frac": 0.21978359870554123,
+      "full_rms_frac": 0.316197377732481,
+      "catastrophic_rate": 0.25781664016958133,
+      "within_10pct": 0.3375728669846317,
+      "bias_ci95": [
+        -0.07055729112084877,
+        0.07306424496462707
+      ],
+      "res68_ci95": [
+        0.20092251210856293,
+        0.26064338499267264
+      ],
+      "full_rms_ci95": [
+        0.2672983606608452,
+        0.3852957964238381
+      ],
+      "catastrophic_rate_ci95": [
+        0.21783148171562774,
+        0.3323705455632745
+      ],
+      "within_10pct_ci95": [
+        0.31531837941618585,
+        0.36081903707802987
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "gradient_boosted_trees_no_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.016515384603426837,
+      "res68_abs_frac": 0.21287175525736565,
+      "full_rms_frac": 0.26673903681032934,
+      "catastrophic_rate": 0.2384737678855326,
+      "within_10pct": 0.34737678855325915,
+      "bias_ci95": [
+        -0.06519519962160766,
+        0.033819646515693795
+      ],
+      "res68_ci95": [
+        0.20517015524382484,
+        0.22966274092746358
+      ],
+      "full_rms_ci95": [
+        0.24081807429616323,
+        0.31048286259698493
+      ],
+      "catastrophic_rate_ci95": [
+        0.21653370973142458,
+        0.27985372988785956
+      ],
+      "within_10pct_ci95": [
+        0.32605114805432833,
+        0.36385316267958673
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "gradient_boosted_trees_with_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.016913033439462745,
+      "res68_abs_frac": 0.21203912089227267,
+      "full_rms_frac": 0.27088085003570817,
+      "catastrophic_rate": 0.237413884472708,
+      "within_10pct": 0.33518812930577635,
+      "bias_ci95": [
+        -0.0617917404753978,
+        0.03531972894235954
+      ],
+      "res68_ci95": [
+        0.20312906978101306,
+        0.22935222375427933
+      ],
+      "full_rms_ci95": [
+        0.24103425101525947,
+        0.31127913221114667
+      ],
+      "catastrophic_rate_ci95": [
+        0.21260376727430594,
+        0.2788697788697789
+      ],
+      "within_10pct_ci95": [
+        0.3193599565354607,
+        0.3511339967739942
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "extra_trees_with_pretrigger",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": -0.013238405179768355,
+      "res68_abs_frac": 0.20976084068583387,
+      "full_rms_frac": 0.27276290994167224,
+      "catastrophic_rate": 0.237413884472708,
+      "within_10pct": 0.3510863804981452,
+      "bias_ci95": [
+        -0.06223622213840731,
+        0.04244534059726981
+      ],
+      "res68_ci95": [
+        0.1976204278478839,
+        0.22763176752381725
+      ],
+      "full_rms_ci95": [
+        0.23966248343775257,
+        0.33565557683128755
+      ],
+      "catastrophic_rate_ci95": [
+        0.21265133844822098,
+        0.2802059462252711
+      ],
+      "within_10pct_ci95": [
+        0.3288888888888889,
+        0.3704437400950872
+      ]
+    },
+    {
+      "target": "downstream_B4B6B8_charge_proxy",
+      "method": "duplicate_transfer_hgb_new_architecture",
+      "split": "leave_one_run_out",
+      "n": 3774,
+      "bias_median_frac": 2.753818532365177,
+      "res68_abs_frac": 3.8299914132478583,
+      "full_rms_frac": 3.5013243047543816,
+      "catastrophic_rate": 0.8404875463698993,
+      "within_10pct": 0.07286698463169052,
+      "bias_ci95": [
+        0.09164205622514607,
+        3.5445930722832455
+      ],
+      "res68_ci95": [
+        0.9460688761717703,
+        4.283194929540283
+      ],
+      "full_rms_ci95": [
+        2.4727158506770897,
+        4.130994691747967
+      ],
+      "catastrophic_rate_ci95": [
+        0.5362452215085479,
+        0.9921748860967978
+      ],
+      "within_10pct_ci95": [
+        0.0037380996353294847,
+        0.21159257175014068
+      ]
+    }
+  ],
+  "pretrigger_support_effects": [
+    {
+      "method": "ML_extratrees_without_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0516936223024902,
+      "delta_abs_frac_ci95": [
+        0.0440058113051316,
+        0.05883319741495225
+      ]
+    },
+    {
+      "method": "traditional_dropout_cell_corrected",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 1.35763208199908,
+      "delta_abs_frac_ci95": [
+        1.2517341506439645,
+        1.4596159938769548
+      ]
+    },
+    {
+      "method": "ML_hgb_with_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0422817980113833,
+      "delta_abs_frac_ci95": [
+        0.03484249581417634,
+        0.05086687676669042
+      ]
+    },
+    {
+      "method": "ML_hgb_without_pretrigger",
+      "contrast": "high_pretrigger_minus_quiet_reference",
+      "matched_controls": "run+stave+amp_bin+peak_bin+is_saturated",
+      "n_cells": 177,
+      "delta_abs_frac": 0.0420966512483111,
+      "delta_abs_frac_ci95": [
+        0.03484295584798306,
+        0.0487958508324434
+      ]
+    }
+  ],
+  "finding": "Raw ROOT reproduction passes exactly (640,737 selected B-stave pulses; delta +0). No accessible forced/random pedestal B-stack ROOT source was found: 53 B-stack files carry only trigger code(s) [1] and keyword search found 0 candidate ROOT files. The external DAQ run-log/checksum-join context likewise joins 0 independent run-log or scaler records to the ROOT manifest, so the mounted trigger code 1 should be interpreted as exhaustive only for the visible data/root/root mirror, not as proof that forced/random pedestal acquisitions never existed. On the external downstream charge proxy, extra_trees_with_pretrigger wins with res68 0.2098 [0.1976, 0.2276], versus the traditional comparator traditional_huber_ridge at 0.2198. This validates P04m only as a physics-event pretrigger support diagnostic, not as a true forced/random pedestal veto.",
+  "hypothesis": "The high-pretrigger P04m cells are likely electronics-support boundary markers that expose charge-transfer fragility, but without true forced/random pedestal rows or joinable external DAQ/scaler metadata they cannot be interpreted as independently measured pedestal disturbances. Trigger code 1 exhausts the mounted B-stack ROOT mirror; the current evidence cannot prove whether this is true non-acquisition or omission from the mirror. The external proxy still favors tree-based waveform/context models over the traditional Huber comparator, while the same-event duplicate closure remains much sharper than downstream transfer.",
+  "next_tickets": [
+    null
+  ],
+  "critic": "pending",
+  "external_daq_scaler_metadata": {
+    "context_source": "reports/1781110796.1578.28f051c2__s16i_external_daq_runlog_checksum_join",
+    "visible_hrd_root_files_in_checksum_manifest": 110,
+    "bstack_root_files_in_manifest": 53,
+    "independent_external_daq_records_joined": 0,
+    "external_daq_candidate_records_joined_to_bstack_runs": 0,
+    "scaler_metadata_files_joined_to_bstack_runs": 0,
+    "nonbeam_trigger_entries_in_visible_root": 0,
+    "trigger_code_1_exhausts_visible_mirror": true,
+    "distinguishes_true_nonacquisition_from_mirror_omission": false,
+    "interpretation": "No mounted external DAQ run log or scaler metadata joins to B-stack ROOT runs; trigger code 1 is exhaustive for visible data/root/root entries but cannot prove whether forced/random pedestal acquisitions were never taken or omitted from the mirror."
+  }
+}

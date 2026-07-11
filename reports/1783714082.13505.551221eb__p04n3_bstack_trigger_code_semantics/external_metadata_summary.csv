@@ -1,0 +1,11 @@
+item,value
+context_source,reports/1781110796.1578.28f051c2__s16i_external_daq_runlog_checksum_join
+visible_hrd_root_files_in_checksum_manifest,110
+bstack_root_files_in_manifest,53
+independent_external_daq_records_joined,0
+external_daq_candidate_records_joined_to_bstack_runs,0
+scaler_metadata_files_joined_to_bstack_runs,0
+nonbeam_trigger_entries_in_visible_root,0
+trigger_code_1_exhausts_visible_mirror,True
+distinguishes_true_nonacquisition_from_mirror_omission,False
+interpretation,No mounted external DAQ run log or scaler metadata joins to B-stack ROOT runs; trigger code 1 is exhaustive for visible data/root/root entries but cannot prove whether forced/random pedestal acquisitions were never taken or omitted from the mirror.

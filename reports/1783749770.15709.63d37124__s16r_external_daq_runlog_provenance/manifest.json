@@ -1,0 +1,280 @@
+{
+  "artifacts": [
+    "REPORT.md",
+    "external_source_inventory.csv",
+    "heldout_predictions.csv.gz",
+    "manifest.json",
+    "method_summary.csv",
+    "per_run_method_summary.csv",
+    "quiet_proxy_panel_preview.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "root_branch_inventory.csv",
+    "root_trigger_audit.csv",
+    "selected_counts_by_run.csv"
+  ],
+  "config": {
+    "all_b_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "amplitude_cut_adc": 1000.0,
+    "analysis_runs_heldout": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "analysis_runs_train": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "bootstrap_replicates": 400,
+    "expected_selected_pulses": 640737,
+    "forced_random_keywords": [
+      "forced",
+      "random",
+      "pedestal",
+      "ped",
+      "no-pulse",
+      "nopulse",
+      "trigger",
+      "scaler",
+      "runlog",
+      "daq",
+      "converter"
+    ],
+    "max_events_per_run": 900,
+    "max_train_rows": 45000,
+    "methods": [
+      "traditional_pretrigger_median",
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "one_dimensional_cnn",
+      "pretrigger_gated_cnn"
+    ],
+    "next_tickets": [
+      {
+        "body": "Question: can the original run-control database or elog export enumerate forced/random/no-pulse trigger-mode runs with checksums and converter command lines for the CCB B-stack period? Expected information gain: distinguishes true non-acquisition from a mirror omission after S16r found no external DAQ/scaler/converter metadata in the mounted data tree.",
+        "title": "S16s: recover original DAQ run-control database for B-stack forced/random triggers"
+      }
+    ],
+    "output_dir": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1783749770.15709.63d37124__s16r_external_daq_runlog_provenance",
+    "quiet_event_max_amplitude_adc": 80.0,
+    "random_seed": 1783749770,
+    "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+    "report_date": "2026-07-11",
+    "samples_per_channel": 18,
+    "search_roots": [
+      "/home/billy/ccb-data",
+      "/home/billy/Desktop/test_beam/data",
+      "data"
+    ],
+    "staves": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "study": "S16r",
+    "target_samples": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "ticket": "1783749770.15709.63d37124",
+    "title": "join external DAQ runlog provenance to B-stack forced/random pedestal mirror",
+    "winner_rule": "lowest held-out run-block bootstrap MAE on the quiet beam-triggered proxy; direct forced/random truth winner is none when external labels are absent",
+    "worker": "testbeam-laptop-4"
+  },
+  "input_sha256": [
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    }
+  ],
+  "result": {
+    "benchmark": {
+      "heldout_rows": 45906,
+      "panel_rows": 135000,
+      "train_rows": 45000,
+      "winner": "gradient_boosted_trees"
+    },
+    "direct_forced_random_labels_available": false,
+    "direct_winner": null,
+    "git_commit": "2a50af146057f88865d7dfd5a4a6965efe2df3d0",
+    "method_summary": [
+      {
+        "bias_adc": -0.5728012032045717,
+        "heldout_runs": "58,59,60,61,62,63,65",
+        "mae_adc": 14.899147318698656,
+        "mae_ci_high": 15.368619986763408,
+        "mae_ci_low": 14.459564510322654,
+        "method": "gradient_boosted_trees",
+        "n_rows": 45906,
+        "rmse_adc": 32.30437933377336,
+        "rmse_ci_high": 37.60380494637767,
+        "rmse_ci_low": 26.986396438171568
+      },
+      {
+        "bias_adc": 1.9804091329576359,
+        "heldout_runs": "58,59,60,61,62,63,65",
+        "mae_adc": 15.485955488200332,
+        "mae_ci_high": 15.846995232471741,
+        "mae_ci_low": 15.096478368909924,
+        "method": "mlp",
+        "n_rows": 45906,
+        "rmse_adc": 31.19175833330352,
+        "rmse_ci_high": 35.77839009980916,
+        "rmse_ci_low": 27.089237814720903
+      },
+      {
+        "bias_adc": 1.4756898083841785,
+        "heldout_runs": "58,59,60,61,62,63,65",
+        "mae_adc": 17.228169862553752,
+        "mae_ci_high": 17.72158543251499,
+        "mae_ci_low": 16.590405430928687,
+        "method": "one_dimensional_cnn",
+        "n_rows": 45906,
+        "rmse_adc": 46.47886211450305,
+        "rmse_ci_high": 56.47747901716653,
+        "rmse_ci_low": 34.96349083065873
+      },
+      {
+        "bias_adc": 2.069044533016302,
+        "heldout_runs": "58,59,60,61,62,63,65",
+        "mae_adc": 17.260093379792742,
+        "mae_ci_high": 17.794473666924837,
+        "mae_ci_low": 16.739523417773615,
+        "method": "pretrigger_gated_cnn",
+        "n_rows": 45906,
+        "rmse_adc": 46.52171725241061,
+        "rmse_ci_high": 55.946560493448956,
+        "rmse_ci_low": 36.546207079524386
+      },
+      {
+        "bias_adc": 2.6416443188791012,
+        "heldout_runs": "58,59,60,61,62,63,65",
+        "mae_adc": 17.39109246569497,
+        "mae_ci_high": 17.93561700069276,
+        "mae_ci_low": 16.707184122836313,
+        "method": "traditional_pretrigger_median",
+        "n_rows": 45906,
+        "rmse_adc": 46.697842429095644,
+        "rmse_ci_high": 58.03880843522036,
+        "rmse_ci_low": 35.36394803163174
+      },
+      {
+        "bias_adc": -2.6042587593785487,
+        "heldout_runs": "58,59,60,61,62,63,65",
+        "mae_adc": 21.7100682635255,
+        "mae_ci_high": 22.151176212473043,
+        "mae_ci_low": 21.162676210267307,
+        "method": "ridge",
+        "n_rows": 45906,
+        "rmse_adc": 40.830324222428466,
+        "rmse_ci_high": 46.92183527062608,
+        "rmse_ci_low": 34.51683356263892
+      }
+    ],
+    "next_tickets": [
+      {
+        "body": "Question: can the original run-control database or elog export enumerate forced/random/no-pulse trigger-mode runs with checksums and converter command lines for the CCB B-stack period? Expected information gain: distinguishes true non-acquisition from a mirror omission after S16r found no external DAQ/scaler/converter metadata in the mounted data tree.",
+        "title": "S16s: recover original DAQ run-control database for B-stack forced/random triggers"
+      }
+    ],
+    "provenance": {
+      "external_text_like_files": 16,
+      "keyword_root_files": 0,
+      "keyword_source_files": 3,
+      "nonbeam_trigger_entries": 0,
+      "root_files_scanned": 53,
+      "total_root_entries": 1649802,
+      "unique_trigger_values": [
+        1
+      ]
+    },
+    "reproduction": {
+      "delta": 0,
+      "expected_selected_pulses": 640737,
+      "matches_expected": true,
+      "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+      "selected_pulses": 640737
+    },
+    "runtime_seconds": 55.47462821006775,
+    "study": "S16r",
+    "ticket": "1783749770.15709.63d37124",
+    "winner": "gradient_boosted_trees",
+    "winner_context": "quiet beam-triggered proxy; direct forced/random truth unavailable",
+    "winner_rule": "lowest held-out run-block bootstrap MAE on the quiet beam-triggered proxy; direct forced/random truth winner is none when external labels are absent",
+    "worker": "testbeam-laptop-4"
+  }
+}

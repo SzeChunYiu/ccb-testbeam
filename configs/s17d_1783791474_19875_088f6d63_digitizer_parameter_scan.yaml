@@ -1,0 +1,41 @@
+study_id: S17d
+ticket_id: 1783791474.19875.088f6d63
+worker: testbeam-laptop-1
+title: Optical photon and electronics parameter scan for the digitized GEANT4 bridge
+output_dir: reports/1783791474.19875.088f6d63__s17d_digitizer_parameter_scan
+raw_root_dir: /home/billy/Desktop/test_beam/data/root/root
+truth_root: /home/billy/ccb-geant4/output_krakow_1M.root
+reference_s24a_result: reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction/result.json
+reference_s24a_metrics: reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction/method_metrics.csv
+reference_s24a_strata: reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction/saturation_shape_strata_metrics.csv
+expected_selected_pulses: 640737
+run_groups:
+  calibration: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 64]
+  analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65]
+heldout_groups: [analysis]
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+amplitude_cut_adc: 1000.0
+saturation_adc: 4095.0
+staves: {B2: 0, B4: 2, B6: 4, B8: 6}
+truth_layer_map: {B2: 0, B4: 2, B6: 4, B8: 6}
+truth_track_length_to_cm: 0.1
+sim_max_events: 150000
+sim_pseudo_runs: 10
+bootstrap_reps: 400
+random_seed: 1783791474
+digitizer:
+  light_yield_adc_per_mev: 2673.2892559519323
+  birks_kb_cm_per_mev: 0.0
+  pedestal_adc: 210.0
+  noise_adc: 18.0
+  common_mode_adc: 7.0
+  time_jitter_samples: 0.45
+  shaping_tau_samples: 2.15
+  afterpulse_fraction: 0.035
+  pedestal_run_drift_adc: 12.0
+scan:
+  light_yield_scale: [0.70, 0.85, 1.00, 1.15, 1.30]
+  shaping_tau_samples: [1.45, 1.80, 2.15, 2.60, 3.10]
+  pedestal_run_drift_adc: [0.0, 6.0, 12.0, 24.0, 36.0]
+  saturation_adc: [2048.0, 3072.0, 3584.0, 4095.0]

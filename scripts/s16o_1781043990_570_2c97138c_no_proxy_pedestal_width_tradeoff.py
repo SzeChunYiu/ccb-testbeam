@@ -134,7 +134,17 @@ def s16e_reference_reproduction(config: dict, outdir: Path) -> tuple[pd.DataFram
 
     selected_total = int(selected_counts["selected_b_stave_pulses"].sum())
     forced_entries = int(trigger["non_beam_trigger_entries"].sum() + trigger.loc[trigger["filename_forced_random_hit"], "entries"].sum())
-    forced_hits = int(archive["forced_random_hit"].sum()) if len(archive) else 0
+    if len(archive):
+        container_lower = archive["container"].fillna("").astype(str).str.lower()
+        member_lower = archive["member"].fillna("").astype(str).str.lower()
+        candidate_data = (
+            container_lower.str.endswith((".root", ".zip", ".tar", ".tar.gz", ".tgz", ".gz"))
+            | member_lower.str.endswith(".root")
+            | member_lower.str.contains(r"\.root(?:$|/)", regex=True)
+        )
+        forced_hits = int((archive["forced_random_hit"] & candidate_data).sum())
+    else:
+        forced_hits = 0
     reproduction = pd.DataFrame(
         [
             {
@@ -507,13 +517,16 @@ def write_report(
         "timing_tail_gt5_fraction",
         "charge_bias_delta_adc",
     ]
-    report = f"""# S16o: no-proxy pedestal width tradeoff audit
+    config_label = config.get("_config_path", CONFIG_DEFAULT)
+    command_label = " ".join(config.get("_command", ["/home/billy/anaconda3/bin/python", str(Path(__file__)), "--config", config_label]))
+    report_date = config.get("report_date", "2026-06-11")
+    report = f"""# {config.get('study', 'S16o')}: {config.get('title', 'no-proxy pedestal width tradeoff audit')}
 
 - **Ticket:** `{config['ticket']}`
 - **Worker:** `{config['worker']}`
-- **Date:** 2026-06-11
+- **Date:** {report_date}
 - **Input:** raw B-stack ROOT under `data/root/root`; checksums in `input_sha256.csv`
-- **Config:** `{CONFIG_DEFAULT}`
+- **Config:** `{config_label}`
 - **Git commit:** `{result['git_commit']}`
 
 ## 1. Preregistered Question
@@ -672,7 +685,7 @@ audit does not justify adopting MAE alone as the pedestal replacement criterion.
 ## 12. Reproducibility
 
 ```bash
-/home/billy/anaconda3/bin/python scripts/s16o_1781043990_570_2c97138c_no_proxy_pedestal_width_tradeoff.py --config {CONFIG_DEFAULT}
+{command_label}
 ```
 
 Primary artifacts: `REPORT.md`, `result.json`, `manifest.json`,
@@ -693,9 +706,11 @@ def main() -> int:
     start = time.time()
     config_path = Path(args.config)
     config = json.loads(config_path.read_text(encoding="utf-8"))
+    config["_config_path"] = str(config_path)
     outdir = Path(config["output_dir"])
     outdir.mkdir(parents=True, exist_ok=True)
     command = ["/home/billy/anaconda3/bin/python", str(Path(__file__)), "--config", str(config_path)]
+    config["_command"] = command
 
     print("1/8 reproducing S16e raw-ROOT no-proxy reference", flush=True)
     s16e_repro, s16e_summary, s16e_leakage, s16e_ref = s16e_reference_reproduction(config, outdir)

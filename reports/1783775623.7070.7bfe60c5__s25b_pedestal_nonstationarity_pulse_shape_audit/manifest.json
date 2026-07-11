@@ -1,0 +1,91 @@
+{
+  "ticket_id": "1783775623.7070.7bfe60c5",
+  "generated_at_unix": 1783798773.4214206,
+  "artifacts": [
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/REPORT.md",
+      "sha256": "ff2aca4935fc5bb8541b15ac35f384f3f01c3549dd43c584f68b81620f87053d",
+      "bytes": 11493
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/benchmark_sample_labels.csv",
+      "sha256": "35812e1dbb3cab09847b2c4e708ed96b02446edee47bb991acc1c2be8030de72",
+      "bytes": 4586466
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/heldout_per_run_metrics.csv",
+      "sha256": "5475b0829bf8cd66d3d9080041632604a1e7c981473b442953c8541866e8d2f9",
+      "bytes": 35388
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/heldout_predictions.csv.gz",
+      "sha256": "ace4ebb176fae91afa567a4e5a476f076074ed8fb23082f4a8944dcc5e0ec505",
+      "bytes": 6450006
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/label_counts.csv",
+      "sha256": "db0e1745ddbfa800feb24d94a48d67436226730dcb45139ab6a54192a925b324",
+      "bytes": 149
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/method_summary_all.csv",
+      "sha256": "d3a130706b1e2ed7448dcea5dfeb92c62bbe6d2416e5bd783d0dc8cc2eef75fe",
+      "bytes": 8324
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/pedestal_drift_by_run.csv",
+      "sha256": "f9bfe8be06006f18e4d59fa9d5bf7004f56121071d9c8c2918d4cd4ddbfa9b9a",
+      "bytes": 2599
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/pedestal_drift_time_blocks.csv",
+      "sha256": "196eaaa586dc830d7414318cd1efc86712075696a04a162fb2795daf8e62aec8",
+      "bytes": 5924
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/pedestal_perturbation_negative_controls.csv",
+      "sha256": "8cd8afc2a2fe48fbe48d95340f412503a00b41da4ada1fa2bf6b96f2f336c540",
+      "bytes": 287
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/primary_auc_ci.png",
+      "sha256": "d7e09aa5a142ece470e29efb816d23f66b0a6ef5fccf96064d45ede47f998516",
+      "bytes": 43588
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/primary_method_summary.csv",
+      "sha256": "2f373bed5e2112b53c1145119e7232cd71f55433398ca5c82e06216c25ee9c4f",
+      "bytes": 840
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/proxy_shift_bootstrap_cis.csv",
+      "sha256": "972e2619dda55a6736675739b9444c92aa61e84b562fdb38debf1e622e835236",
+      "bytes": 596
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/result.json",
+      "sha256": "df86d8b62f02b54bb9b75c6fd571d41874a05860b8094060b48439e1b7f53e18",
+      "bytes": 4826
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/traditional_feature_families.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/1783775623.7070.7bfe60c5__s25b_pedestal_nonstationarity_pulse_shape_audit/traditional_method_summary.csv",
+      "sha256": "a4a396d6906ea5d3475ebef78430dca0df1a3d35801688b7295a7e5e7e9dc5d6",
+      "bytes": 7746
+    }
+  ]
+}

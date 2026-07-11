@@ -1,0 +1,42 @@
+{
+  "ml": {
+    "best_charge_fractional_res68": 0.060578288915480005,
+    "best_model": "gradient_boosted_trees",
+    "best_time_rms_ci": [
+      6.112523422498261,
+      6.403293080751612
+    ],
+    "best_time_rms_ns": 6.263298805003599
+  },
+  "next_tickets": [
+    {
+      "body": "Question: does the support-preserved two-pulse winner transfer from injected closure truth to blinded high-current real pile-up candidates? Build a small reviewer-adjudicated gallery from runs 63/65 with unchanged model thresholds and compare template-fit, gradient-boosted tree, and sequence-head decisions. Expected information gain: separates injected-template closure from real pile-up morphology before adoption.",
+      "title": "S19e: real high-current adjudication of support-preserved pile-up winner"
+    }
+  ],
+  "reproduced": true,
+  "runtime_seconds": 76.35183715820312,
+  "scientific_summary": "With train-only support-preserving augmentation, held-out winner is gradient_boosted_trees at 6.263 ns [6.113, 6.403] versus constrained_template_fit 15.522 ns. Charge res68 for the winner is 0.0606. Held-out runs are untouched; the result tests training-support density rather than held-out augmentation.",
+  "study": "S19b",
+  "support_preserving_augmentation": {
+    "augmented_train_events": 4080,
+    "heldout_events_untouched": 840,
+    "original_train_events": 1360
+  },
+  "ticket": "1783757474.25319.0c3b2402",
+  "traditional": {
+    "baseline": "constrained_template_fit",
+    "charge_fractional_res68": 0.10357459593476342,
+    "time_rms_ci": [
+      14.390899743723995,
+      16.57079938803554
+    ],
+    "time_rms_ns": 15.522269110419414
+  },
+  "winner": {
+    "charge_recovery_res68": "gradient_boosted_trees",
+    "overall": "gradient_boosted_trees",
+    "two_pulse_time_rms": "gradient_boosted_trees"
+  },
+  "worker": "testbeam-laptop-1"
+}

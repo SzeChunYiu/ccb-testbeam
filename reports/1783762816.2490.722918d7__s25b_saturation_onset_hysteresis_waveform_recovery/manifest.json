@@ -1,0 +1,16 @@
+{
+  "ticket_id": "1783762816.2490.722918d7",
+  "study": "S25b",
+  "command": "/home/billy/anaconda3/bin/python scripts/s25b_1783762816_2490_722918d7_saturation_hysteresis.py --config configs/s25b_1783762816_2490_722918d7_saturation_onset_hysteresis.yaml",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_summary.csv",
+    "strata_summary.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "mlp"
+}

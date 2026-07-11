@@ -405,11 +405,11 @@ def markdown_table(df: pd.DataFrame, cols: list[str]) -> str:
 def write_report(out: Path, config: dict, result: dict, counts: pd.DataFrame, summary: pd.DataFrame, strata: pd.DataFrame) -> None:
     winner = result["winner"]["method"]
     lines = [
-        f"# {config['study_id']}: pedestal-saturation pulse-shape frontier",
+        f"# {config['study_id']}: {config['title']}",
         "",
         "## Abstract",
         "",
-        f"This study reproduces the S00 B-stave selected-pulse number directly from raw ROOT and then benchmarks a traditional robust pedestal plus clipped-template saturation correction against ridge, gradient-boosted trees, MLP, 1D-CNN, a waveform transformer, and a new gated residual CNN. The winner is **{winner}** under held-out-run pulse-shape residual res68 with run-block bootstrap confidence intervals.",
+        f"This study reproduces the S00 B-stave selected-pulse number directly from raw ROOT and then benchmarks a traditional robust pedestal plus clipped-template energy/PID calibration against ridge, gradient-boosted trees, MLP, 1D-CNN, a waveform transformer, and a new gated residual CNN. The winner is **{winner}** under held-out-run pulse-shape residual res68 with run-block bootstrap confidence intervals.",
         "",
         "## Raw ROOT Reproduction",
         "",
@@ -576,10 +576,10 @@ def main() -> None:
         "feature_names": feature_names,
         "input_sha256": [{"path": str(raw_path(config, r)), "sha256": sha256_file(raw_path(config, r))} for r in runs(config)],
         "environment": {"git_commit": git_commit(), "python": platform.python_version(), "platform": platform.platform(), "torch_available": torch is not None},
-        "claimed_ticket_text": "S25A pedestal-saturation pulse-shape frontier",
+        "claimed_ticket_text": config.get("claimed_ticket_text", config["title"]),
     }
     (out / "result.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
-    (out / "claimed_ticket.txt").write_text(config["ticket_id"] + "\n# S25A pedestal-saturation pulse-shape frontier\n", encoding="utf-8")
+    (out / "claimed_ticket.txt").write_text(config["ticket_id"] + f"\n# {config.get('claimed_ticket_text', config['title'])}\n", encoding="utf-8")
     pd.DataFrame(result["input_sha256"]).to_csv(out / "input_sha256.csv", index=False)
     write_report(out, config, result, counts, summary, strata)
     manifest = {

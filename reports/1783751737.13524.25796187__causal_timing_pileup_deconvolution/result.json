@@ -1,0 +1,39 @@
+{
+  "ml": {
+    "timing_best_ci": [
+      1.021475660353822,
+      1.5066837320076167
+    ],
+    "timing_best_model": "gru",
+    "timing_best_sigma68_ns": 1.201773937649214,
+    "two_pulse_best_ci": [
+      6.877934272312545,
+      6.956580243064827
+    ],
+    "two_pulse_best_model": "gradient_boosted_trees",
+    "two_pulse_best_time_rms_ns": 6.916715801735216
+  },
+  "next_tickets": [
+    {
+      "body": "Question: do the S19c winners remain stable under run-held-out pedestal and pulse-shape drift? Refit only the timing GRU and two-pulse gradient-boosted tree with nested run-block calibration, adversarial pedestal offsets, and blinded validation runs. Expected information gain: separates architecture merit from calibration fragility before production timing or pile-up deconvolution use.",
+      "title": "S19d: run-held-out drift calibration for the S19c timing and pile-up winners"
+    }
+  ],
+  "reproduced": true,
+  "runtime_seconds": 195.3666696548462,
+  "scientific_summary": "Timing point-estimate winner is gru at 1.202 ns versus analytic_timewalk 1.495 ns. Two-pulse point-estimate winner is gradient_boosted_trees at 6.917 ns versus constrained_template_fit 15.311 ns. The winner named here is the held-out metric winner; adoption remains conditional on the failure-rate and leakage guards documented in REPORT.md.",
+  "study": "S19c",
+  "ticket": "1783751737.13524.25796187",
+  "traditional": {
+    "timing_baseline": "analytic_timewalk",
+    "timing_sigma68_ns": 1.494640076269676,
+    "two_pulse_baseline": "constrained_template_fit",
+    "two_pulse_time_rms_ns": 15.311048829720855
+  },
+  "winner": {
+    "overall": "gradient_boosted_trees",
+    "timing": "gru",
+    "two_pulse": "gradient_boosted_trees"
+  },
+  "worker": "testbeam-laptop-1"
+}

@@ -718,15 +718,18 @@ def write_report(
     traditional_diag = traditional_scan[
         (traditional_scan["split"] == "heldout") & (traditional_scan["spacing_cm"] == 2.0)
     ][["method", "sigma68_ns", "full_rms_ns", "tail_frac_abs_gt5ns", "core_sigma_ns", "chi2_ndf"]].sort_values("sigma68_ns")
+    report_title = str(config.get("title", "neural architecture sweep for timing and two-pulse recovery"))
+    report_date = str(config.get("report_date", "2026-07-11"))
+    report_config = str(config.get("_config_path", "configs/s19a_0000000006_1_nnarch_sweep.yaml"))
     lines = [
-        "# Study report: S19a - neural architecture sweep for waveform timing and two-pulse recovery",
+        f"# Study report: {config['study_id']} - {report_title}",
         "",
-        f"- **Study ID:** S19a",
+        f"- **Study ID:** {config['study_id']}",
         f"- **Ticket:** `{config['ticket_id']}`",
         f"- **Author:** `{config['worker']}`",
-        "- **Date:** 2026-06-10",
+        f"- **Date:** {report_date}",
         "- **Input:** raw B-stack ROOT files under `data/root/root`",
-        "- **Config:** `configs/s19a_0000000006_1_nnarch_sweep.yaml`",
+        f"- **Config:** `{report_config}`",
         f"- **Git commit at run time:** `{git_commit()}`",
         "",
         "## 0. Question",
@@ -825,7 +828,7 @@ def write_report(
         "## 9. Reproducibility",
         "",
         "```bash",
-        "/home/billy/anaconda3/bin/python scripts/s19a_0000000006_1_nnarch_sweep.py --config configs/s19a_0000000006_1_nnarch_sweep.yaml",
+        f"{sys.executable} scripts/s19a_0000000006_1_nnarch_sweep.py --config {report_config}",
         "```",
         "",
         f"Runtime in this execution was `{runtime:.2f}` s. Machine-readable outputs include `result.json`, `manifest.json`, `timing_head_to_head.csv`, `two_pulse_head_to_head.csv`, `timing_architecture_cv.csv`, and `two_pulse_architecture_cv.csv`.",
@@ -841,6 +844,7 @@ def main() -> int:
     start = time.time()
     config_path = Path(args.config)
     config = load_config(config_path)
+    config["_config_path"] = str(config_path)
     out_dir = Path(config["output_dir"])
     out_dir.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(int(config["random_seed"]))

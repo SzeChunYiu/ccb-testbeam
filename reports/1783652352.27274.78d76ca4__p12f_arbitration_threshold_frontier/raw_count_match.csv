@@ -1,0 +1,18 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total selected B-stave pulses,640737,640737,0,0,True
+sample_i_calib events with selected pulse,239559,239559,0,0,True
+sample_i_calib selected pulses,248745,248745,0,0,True
+sample_i_analysis events with selected pulse,243133,243133,0,0,True
+sample_i_analysis selected pulses,252266,252266,0,0,True
+sample_i_analysis B2 selected pulses,241422,241422,0,0,True
+sample_i_analysis B4 selected pulses,6451,6451,0,0,True
+sample_i_analysis B6 selected pulses,3094,3094,0,0,True
+sample_i_analysis B8 selected pulses,1299,1299,0,0,True
+sample_ii_calib events with selected pulse,12103,12103,0,0,True
+sample_ii_calib selected pulses,14630,14630,0,0,True
+sample_ii_analysis events with selected pulse,89807,89807,0,0,True
+sample_ii_analysis selected pulses,125096,125096,0,0,True
+sample_ii_analysis B2 selected pulses,88213,88213,0,0,True
+sample_ii_analysis B4 selected pulses,21229,21229,0,0,True
+sample_ii_analysis B6 selected pulses,11148,11148,0,0,True
+sample_ii_analysis B8 selected pulses,4506,4506,0,0,True

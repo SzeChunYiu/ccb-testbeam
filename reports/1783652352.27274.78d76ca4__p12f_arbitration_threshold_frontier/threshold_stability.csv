@@ -1,0 +1,7 @@
+method,family,threshold_min,threshold_max,threshold_range,max_run_threshold_span,winner_reversal_any_coverage,winner_sequence_by_coverage
+traditional_atom_action_rule,traditional,0.6733333333333333,0.9486666666666668,0.27533333333333343,0.2479999999999999,True,traditional_atom_action_rule -> ridge -> ridge -> ridge -> ridge -> mlp
+ridge,ml,0.9996639560880167,0.9999999976912728,0.00033604160325606536,0.0006907600982791751,True,traditional_atom_action_rule -> ridge -> ridge -> ridge -> ridge -> mlp
+gradient_boosted_trees,ml,0.8543187566665668,0.8543187566665668,0.0,0.0,True,traditional_atom_action_rule -> ridge -> ridge -> ridge -> ridge -> mlp
+mlp,nn,0.984873530359341,0.9997292144982389,0.014855684138897929,0.013981831123212496,True,traditional_atom_action_rule -> ridge -> ridge -> ridge -> ridge -> mlp
+1d_cnn,nn,0.4717271625995636,0.4797321185469627,0.008004955947399084,0.005964738130569469,True,traditional_atom_action_rule -> ridge -> ridge -> ridge -> ridge -> mlp
+atom_prior_residual_cnn_new_arch,new_architecture,0.509888082742691,0.5502918213605881,0.040403738617897034,0.015989732742309526,True,traditional_atom_action_rule -> ridge -> ridge -> ridge -> ridge -> mlp

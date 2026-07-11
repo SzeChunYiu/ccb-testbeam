@@ -1,0 +1,94 @@
+{
+  "study": "P12f",
+  "ticket": "1783652352.27274.78d76ca4",
+  "worker": "testbeam-laptop-1",
+  "title": "arbitration threshold frontier under sample-family drift",
+  "reproduced": true,
+  "raw_reproduction": {
+    "source": "/home/billy/ccb-data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "evaluation_policy_rows": "frozen P12e held-out sample_ii_analysis rows",
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "run block",
+    "bootstrap_reps": 500,
+    "coverage_grid": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95
+    ],
+    "primary_coverage": 0.9
+  },
+  "methods_benchmarked": [
+    "traditional_atom_action_rule",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "atom_prior_residual_cnn_new_arch"
+  ],
+  "primary_metric": "policy_loss = accepted harm rate + (1 - rejected harm-count capture), lower is better",
+  "winner": {
+    "method": "ridge",
+    "family": "ml",
+    "coverage": 0.9,
+    "threshold": 0.9999997636605851,
+    "policy_loss": 1.675073149970146,
+    "policy_loss_ci95": [
+      1.6303759912359026,
+      1.7038905414964547
+    ],
+    "accepted_harm_rate": 0.8843461886913115,
+    "accepted_harm_rate_ci95": [
+      0.8540228234528361,
+      0.9021277314219455
+    ],
+    "rejected_harm_capture": 0.20927303872116562,
+    "rejected_harm_capture_ci95": [
+      0.19766672586010925,
+      0.22589842611318664
+    ],
+    "accepted_support": 0.899996802455714
+  },
+  "winner_reversal_any_coverage": true,
+  "raw_family_support_delta_max_abs": 0.3553788411413672,
+  "sample_i_policy_rows_available": false,
+  "sample_family_caveat": "Frozen P12e policy rows are Sample-II only; Sample-I is audited through raw ROOT support, not imputed policy loss.",
+  "next_ticket": {
+    "title": "P12g row-level Sample-I policy shadow table for frozen arbitration",
+    "body": "Materialize frozen P12e-compatible policy scores for Sample-I analysis pulses so the P12f threshold frontier can be retested with true Sample-I and Sample-II row-level policy predictions instead of Sample-II policy rows plus raw family-support constraints."
+  },
+  "runtime_seconds": 32.187825441360474,
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "raw_count_match.csv",
+    "counts_by_run.csv",
+    "counts_by_group.csv",
+    "threshold_frontier.csv",
+    "threshold_frontier_by_run.csv",
+    "threshold_frontier_bootstrap.csv",
+    "threshold_stability.csv",
+    "accepted_stave_frontier.csv",
+    "raw_family_support.csv",
+    "raw_family_support_delta.csv",
+    "p12e_policy_rows_audit.csv.gz",
+    "input_sha256.csv"
+  ]
+}

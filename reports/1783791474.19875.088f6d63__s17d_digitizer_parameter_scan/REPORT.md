@@ -98,6 +98,10 @@ with signed median fractional bias and mean absolute error as secondary scores. 
 - The optical-yield scan inherits the S24a Birks calibration and does not replace an optical photon simulation.
 - Clipping and pedestal drift are applied after waveform synthesis; unmodeled baseline recovery and front-end nonlinearities can still dominate real saturation tails.
 
+## Caveats
+
+The selected light-yield response is the best member of the scanned one-factor families, not a globally optimized detector model. The S24a real-data targets are residual-shape constraints rather than labels for the same events used in simulation, so agreement in those strata should be read as consistency evidence rather than proof of a unique optical or electronics parameter. The bootstrap intervals quantify held-out pseudo-run variation for this simulation sample; they do not include uncertainty from the GEANT4 production, ROOT decoding assumptions, or the real-data Birks calibration inherited from S24a.
+
 ## Finding
 
 Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. Across the four S24a residual strata, the closest one-factor digitizer family is light_yield_scale=0.7 (RMS log-res68 distance 1.6421). On that selected response model, gradient_boosted_trees wins the held-out pseudo-run benchmark with res68=0.05026; the conclusion is that light_yield_scale is the most plausible single missing detector-response handle among the scanned families, while real-data deployment remains bounded by the S24a non-event-aligned comparison.

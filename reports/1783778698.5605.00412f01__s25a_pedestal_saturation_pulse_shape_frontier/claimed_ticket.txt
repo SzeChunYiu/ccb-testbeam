@@ -1,0 +1,2 @@
+1783778698.5605.00412f01
+# S25A pedestal-saturation pulse-shape frontier

@@ -1,0 +1,423 @@
+{
+  "study": "S25A",
+  "ticket_id": "1783778698.5605.00412f01",
+  "worker": "testbeam-laptop-3",
+  "title": "Pedestal-saturation pulse-shape frontier",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "split_type": "complete run held-out"
+  },
+  "bootstrap": {
+    "unit": "held-out run block",
+    "replicates": 300,
+    "interval": "95% percentile"
+  },
+  "winner": {
+    "method": "mlp",
+    "n": 167683,
+    "bias": -0.00025117278099062723,
+    "res68": 0.0159647370815277,
+    "mae": 0.05162201269112962,
+    "res68_ci95": [
+      0.013523441382646566,
+      0.018961805856227875
+    ],
+    "bias_ci95": [
+      -0.00049141846597196,
+      4.679268598557032e-05
+    ],
+    "mae_ci95": [
+      0.04146822730690501,
+      0.062348648252296274
+    ],
+    "pid_auc": 0.4966299287644918,
+    "pid_average_precision": 0.39614034161223555
+  },
+  "all_metrics": [
+    {
+      "method": "mlp",
+      "n": 167683,
+      "bias": -0.00025117278099062723,
+      "res68": 0.0159647370815277,
+      "mae": 0.05162201269112962,
+      "res68_ci95": [
+        0.013523441382646566,
+        0.018961805856227875
+      ],
+      "bias_ci95": [
+        -0.00049141846597196,
+        4.679268598557032e-05
+      ],
+      "mae_ci95": [
+        0.04146822730690501,
+        0.062348648252296274
+      ]
+    },
+    {
+      "method": "traditional_clipped_template",
+      "n": 167683,
+      "bias": 0.0011627489017526915,
+      "res68": 0.02996081570576483,
+      "mae": 0.14102418320441867,
+      "res68_ci95": [
+        0.027511029857142204,
+        0.03303475614542952
+      ],
+      "bias_ci95": [
+        -0.00017297738323740277,
+        0.0025326164483023828
+      ],
+      "mae_ci95": [
+        0.11116764640502595,
+        0.17108123335358097
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n": 167683,
+      "bias": -0.013694568683334463,
+      "res68": 0.03320675386353347,
+      "mae": 0.07831394675086449,
+      "res68_ci95": [
+        0.02984716186433946,
+        0.037954409174035676
+      ],
+      "bias_ci95": [
+        -0.015822824996310908,
+        -0.011690478889581852
+      ],
+      "mae_ci95": [
+        0.06222091537900172,
+        0.0948179139665819
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "n": 167683,
+      "bias": -0.009512400925159453,
+      "res68": 0.038576413679122935,
+      "mae": 0.09426641468993771,
+      "res68_ci95": [
+        0.0352931073100865,
+        0.042278885729908955
+      ],
+      "bias_ci95": [
+        -0.010568653196096433,
+        -0.008108760748058566
+      ],
+      "mae_ci95": [
+        0.07738540283465561,
+        0.11061839473359782
+      ]
+    },
+    {
+      "method": "charge_tail_integration",
+      "n": 167683,
+      "bias": 0.003826810714412876,
+      "res68": 0.04825985288238408,
+      "mae": 0.2057112553835769,
+      "res68_ci95": [
+        0.04355560229268362,
+        0.053582388067677574
+      ],
+      "bias_ci95": [
+        -0.0055180851850210825,
+        0.012641397166535888
+      ],
+      "mae_ci95": [
+        0.1541255282490798,
+        0.25526635116998736
+      ]
+    },
+    {
+      "method": "birks_huber_saturation",
+      "n": 167683,
+      "bias": -0.008352274082154026,
+      "res68": 0.050402002445170103,
+      "mae": 0.23515074856612886,
+      "res68_ci95": [
+        0.04308824944601026,
+        0.058156388811403996
+      ],
+      "bias_ci95": [
+        -0.014149162394341091,
+        -0.0039765794816713305
+      ],
+      "mae_ci95": [
+        0.17567817150905077,
+        0.3021244214861927
+      ]
+    },
+    {
+      "method": "gated_residual_cnn",
+      "n": 167683,
+      "bias": 0.022718124091625214,
+      "res68": 0.062069056463241574,
+      "mae": 0.11352905378126552,
+      "res68_ci95": [
+        0.05279361670196057,
+        0.07380660544693472
+      ],
+      "bias_ci95": [
+        0.02040526939183473,
+        0.026324028000235544
+      ],
+      "mae_ci95": [
+        0.09090577171366793,
+        0.13554186987700267
+      ]
+    },
+    {
+      "method": "waveform_transformer",
+      "n": 167683,
+      "bias": 0.04038924038410187,
+      "res68": 0.0730860678911209,
+      "mae": 0.10951717472852107,
+      "res68_ci95": [
+        0.0667771150121093,
+        0.08059666297584772
+      ],
+      "bias_ci95": [
+        0.03756075784564017,
+        0.043359984844923025
+      ],
+      "mae_ci95": [
+        0.09213072729095051,
+        0.12504913034804818
+      ]
+    },
+    {
+      "method": "ridge",
+      "n": 167683,
+      "bias": 0.018039359642451847,
+      "res68": 0.16362470733955597,
+      "mae": 0.2105512580603239,
+      "res68_ci95": [
+        0.13384319840125594,
+        0.20764489538537206
+      ],
+      "bias_ci95": [
+        0.004502312697528382,
+        0.033863064859206364
+      ],
+      "mae_ci95": [
+        0.17467821138023276,
+        0.24780456005356713
+      ]
+    }
+  ],
+  "torch_status": {
+    "mlp": "trained",
+    "1d_cnn": "trained",
+    "gated_residual_cnn": "trained",
+    "waveform_transformer": "trained"
+  },
+  "feature_names": [
+    "multiplicity",
+    "even_total_charge",
+    "even_max_amp",
+    "saturated_count",
+    "knee_count",
+    "recovery_tail",
+    "early_fraction",
+    "onset_sharpness",
+    "pedestal_iqr_adc",
+    "pedestal_abs_slope_adc",
+    "log_charge_stave_0",
+    "log_charge_stave_1",
+    "log_charge_stave_2",
+    "log_charge_stave_3",
+    "log_amp_stave_0",
+    "log_amp_stave_1",
+    "log_amp_stave_2",
+    "log_amp_stave_3",
+    "peak_stave_0",
+    "peak_stave_1",
+    "peak_stave_2",
+    "peak_stave_3"
+  ],
+  "input_sha256": [
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0031.root",
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0032.root",
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0033.root",
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0034.root",
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0035.root",
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0036.root",
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0037.root",
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0039.root",
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0040.root",
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0041.root",
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0042.root",
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0064.root",
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "environment": {
+    "git_commit": "24a8f9cefba2f2c580a8fd988367f37406c4c560",
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "torch_available": true
+  },
+  "claimed_ticket_text": "S25A pedestal-saturation pulse-shape frontier"
+}

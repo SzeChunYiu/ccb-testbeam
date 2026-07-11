@@ -1,0 +1,30 @@
+{
+  "all_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
+  "amplitude_cut_adc": 1000.0,
+  "benchmark_runs": [58, 59, 60, 61, 62, 63, 64, 65],
+  "bootstrap_resamples": 500,
+  "expected_selected_pulses": 640737,
+  "max_pulses_per_run": 900,
+  "next_tickets": [
+    {
+      "title": "S16r: join external DAQ runlog provenance to B-stack forced/random pedestal mirror",
+      "body": "Question: can DAQ runlog, scaler, or converter metadata identify whether non-beam B-stack forced/random pedestal triggers were acquired outside the mounted ROOT mirror? Expected information gain: distinguishes a true acquisition gap from a mirror/metadata omission and would make the S16p adoption rule directly testable against no-pulse labels."
+    }
+  ],
+  "output_dir": "reports/1783604316.18537.4d971468__s16p_checksum_bound_forced_random_bstack_pedestal_labels",
+  "pretrigger_samples": [0, 1, 2, 3],
+  "random_seed": 1783604316,
+  "raw_root_dir": "data/root/root",
+  "samples_per_channel": 18,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "study": "S16p",
+  "ticket": "1783604316.18537.4d971468",
+  "title": "checksum-bound ingest of true forced-random B-stack pedestal ROOT labels",
+  "torch_epochs": 10,
+  "worker": "testbeam-laptop-4"
+}

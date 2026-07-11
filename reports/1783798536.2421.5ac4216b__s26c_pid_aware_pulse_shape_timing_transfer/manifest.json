@@ -1,0 +1,84 @@
+{
+  "ticket_id": "1783798536.2421.5ac4216b",
+  "study_id": "S26c",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "5a07783ca67f9c412017131ab36e88c4406f7bd8",
+  "command": "uv run python scripts/s26c_1783798536_2421_5ac4216b_pid_aware_pulse_shape_timing_transfer.py --config configs/s26c_1783798536_2421_5ac4216b_pid_aware_pulse_shape_timing_transfer.json",
+  "config": "configs/s26c_1783798536_2421_5ac4216b_pid_aware_pulse_shape_timing_transfer.json",
+  "raw_root_dir": "data/root/root",
+  "source_artifacts": {
+    "pid_energy": "reports/1783751737.13516.61447038__s25a_joint_pid_energy_pileup_saturation",
+    "timing": "reports/1783770201.8157.51000596__s18i_pulse_shape_timing_model_hierarchy",
+    "pileup": "reports/1783770201.8222.568f4add__s25b_pileup_saturation_recovery_benchmark",
+    "pedestal": "reports/1783762816.2490.722918d7__s25b_saturation_onset_hysteresis_waveform_recovery"
+  },
+  "environment": {
+    "python": "3.11.14",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "uproot": "5.7.5"
+  },
+  "outputs": [
+    {
+      "file": "REPORT.md",
+      "bytes": 6947,
+      "sha256": "e7f30279ca4336fb5d375bb2fbad3d79a196658cf0bb1a7ff20417e294904c61"
+    },
+    {
+      "file": "claimed_ticket.txt",
+      "bytes": 175,
+      "sha256": "2fd28d570d73f1cab1e334d98fba9da35cff23e7e3d95d6384470365545ae96e"
+    },
+    {
+      "file": "manifest.json",
+      "bytes": 2706,
+      "sha256": "2e33376b004c3b37fe4e045487a3fe18e9522d66ccdd792afd733d02ed67a163"
+    },
+    {
+      "file": "method_benchmark.csv",
+      "bytes": 3210,
+      "sha256": "e3a00ce2a4c3659fe560dfdbebb050a5afe12c5ae5ab5720346384d75dce414d"
+    },
+    {
+      "file": "reproduction_counts_by_run.csv",
+      "bytes": 1677,
+      "sha256": "bee13bc5ee64a023c0a9b7c3af0fe0614e45533e43e74b858a18ee2793b3b591"
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "bytes": 325,
+      "sha256": "4772a525e133564a818e56ed4f3df60c3a0ab697df97b368cfee4ed5697e7e09"
+    },
+    {
+      "file": "result.json",
+      "bytes": 11314,
+      "sha256": "0359fba1d49ee549586bff09efd77845c67cc478c4feb194f5e544a9fd6dd720"
+    },
+    {
+      "file": "source_energy_method_benchmark.csv",
+      "bytes": 1917,
+      "sha256": "8d38240959e22282a7d330003204602242a4d4fcedab97c2c3da56eac2cd988d"
+    },
+    {
+      "file": "source_pid_method_benchmark.csv",
+      "bytes": 10826,
+      "sha256": "b83dbf1b0799140f507610315c6941ebd0a1c2cb37e22291e7f8924363507e8c"
+    },
+    {
+      "file": "source_pileup_method_metrics.csv",
+      "bytes": 3692,
+      "sha256": "c41ed269dcac755a16cc27546e001babcf441666e990c8986d7bedbf58c75388"
+    },
+    {
+      "file": "source_timing_method_metrics.csv",
+      "bytes": 1724,
+      "sha256": "e13f925bcea9f37133da908b54b4c38808511cf0e044e324e65010e2ddf05415"
+    },
+    {
+      "file": "timing_run_bootstrap.csv",
+      "bytes": 514,
+      "sha256": "5cc1984ce1824ad5ad851e061b8e16b7a8df4d7e7db07edce40ab5496648e718"
+    }
+  ]
+}

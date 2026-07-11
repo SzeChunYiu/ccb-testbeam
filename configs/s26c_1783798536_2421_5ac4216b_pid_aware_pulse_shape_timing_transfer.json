@@ -1,0 +1,99 @@
+{
+  "ticket_id": "1783798536.2421.5ac4216b",
+  "study_id": "S26c",
+  "worker": "testbeam-laptop-1",
+  "title": "PID-aware pulse-shape timing transfer study",
+  "output_dir": "reports/1783798536.2421.5ac4216b__s26c_pid_aware_pulse_shape_timing_transfer",
+  "raw_root_dir": "data/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "sources": {
+    "pid_energy": "reports/1783751737.13516.61447038__s25a_joint_pid_energy_pileup_saturation",
+    "timing": "reports/1783770201.8157.51000596__s18i_pulse_shape_timing_model_hierarchy",
+    "pileup": "reports/1783770201.8222.568f4add__s25b_pileup_saturation_recovery_benchmark",
+    "pedestal": "reports/1783762816.2490.722918d7__s25b_saturation_onset_hysteresis_waveform_recovery"
+  },
+  "method_map": {
+    "traditional_joint": {
+      "family": "traditional",
+      "pid_method": "traditional_charge_depth_logistic",
+      "energy_method": "geant4_birks_lookup",
+      "timing_method": "constrained_monotone_timewalk",
+      "pileup_method": "two_pulse_template_cfd_baseline",
+      "pedestal_method": "traditional_template_tail"
+    },
+    "ridge": {
+      "family": "ml_linear",
+      "pid_method": "ML_ridge_waveform",
+      "energy_method": "ridge",
+      "timing_method": "ridge",
+      "pileup_method": "ridge",
+      "pedestal_method": "ridge"
+    },
+    "gradient_boosted_trees": {
+      "family": "ml_tree",
+      "pid_method": "ML_gradient_boosted_trees",
+      "energy_method": "gradient_boosted_trees",
+      "timing_method": "gradient_boosted_trees",
+      "pileup_method": "gradient_boosted_trees",
+      "pedestal_method": "gradient_boosted_trees"
+    },
+    "mlp": {
+      "family": "neural_tabular",
+      "pid_method": "ML_mlp",
+      "energy_method": "mlp",
+      "timing_method": "mlp",
+      "pileup_method": "mlp",
+      "pedestal_method": "mlp"
+    },
+    "1d_cnn": {
+      "family": "neural_waveform",
+      "pid_method": "NN_1d_cnn",
+      "energy_method": "1d_cnn",
+      "timing_method": "cnn_1d",
+      "pileup_method": "1d_cnn",
+      "pedestal_method": "1d_cnn"
+    },
+    "new_residual_architecture": {
+      "family": "new_architecture",
+      "pid_method": "NN_action_gated_residual_ensemble_new",
+      "energy_method": "physics_residual_mlp",
+      "timing_method": "gated_residual_cnn_new",
+      "pileup_method": "template_residual_boosted_stack_new",
+      "pedestal_method": "gated_residual_cnn"
+    }
+  },
+  "score_weights": {
+    "pid_auc_loss": 0.18,
+    "pid_ap_loss": 0.08,
+    "timing_sigma68_norm": 0.18,
+    "pileup_ap_loss": 0.13,
+    "pileup_timing_sigma68_norm": 0.10,
+    "saturation_energy_sigma68": 0.12,
+    "pedestal_shape_penalty": 0.06,
+    "energy_sigma68": 0.10,
+    "energy_bias_abs": 0.05
+  },
+  "normalizers": {
+    "timing_sigma68_ns": 2.5,
+    "pileup_timing_sigma68_ns": 12.0,
+    "pedestal_shape_penalty": 1.0
+  },
+  "bootstrap_replicates": 300,
+  "command": "uv run python scripts/s26c_1783798536_2421_5ac4216b_pid_aware_pulse_shape_timing_transfer.py --config configs/s26c_1783798536_2421_5ac4216b_pid_aware_pulse_shape_timing_transfer.json"
+}

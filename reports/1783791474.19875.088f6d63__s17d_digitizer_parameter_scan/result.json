@@ -1,0 +1,428 @@
+{
+  "study": "S17d",
+  "ticket_id": "1783791474.19875.088f6d63",
+  "worker": "testbeam-laptop-1",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "sim_events_with_scibar_truth": 36049,
+  "train_pseudo_runs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "heldout_pseudo_runs": [
+    8,
+    9,
+    10
+  ],
+  "best_digitizer_variant": {
+    "family": "light_yield_scale",
+    "value": 0.7,
+    "distance_log_res68_rms": 1.6420959632990366,
+    "mean_log_res68_delta_sim_minus_real": 1.4793375148401415,
+    "sim_saturation_event_fraction": 0.9897361924047824,
+    "light_yield_adc_per_mev": 1871.3024791663524,
+    "shaping_tau_samples": 2.15,
+    "pedestal_run_drift_adc": 12.0,
+    "saturation_adc": 4095.0
+  },
+  "selected_digitizer": {
+    "light_yield_adc_per_mev": 1871.3024791663524,
+    "birks_kb_cm_per_mev": 0.0,
+    "pedestal_adc": 210.0,
+    "noise_adc": 18.0,
+    "common_mode_adc": 7.0,
+    "time_jitter_samples": 0.45,
+    "shaping_tau_samples": 2.15,
+    "afterpulse_fraction": 0.035,
+    "pedestal_run_drift_adc": 12.0,
+    "saturation_adc": 4095.0
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "res68_frac": 0.050259135415802396,
+    "res68_ci95": [
+      0.04719029142887861,
+      0.0551729681204654
+    ],
+    "bias_frac": -0.005023917991877885,
+    "mae_mev": 2.7540378593402215,
+    "mae_mev_ci95": [
+      2.581293054759755,
+      3.0245650984246395
+    ]
+  },
+  "methods_benchmarked": [
+    "gradient_boosted_trees",
+    "mlp",
+    "gated_residual_cnn",
+    "ridge",
+    "1d_cnn",
+    "truth_birks_lookup"
+  ],
+  "feature_names": [
+    "multiplicity",
+    "depth_idx",
+    "log_total_charge",
+    "log_max_adc",
+    "saturated_count",
+    "early_fraction",
+    "late_fraction",
+    "log_charge_B2",
+    "log_charge_B4",
+    "log_charge_B6",
+    "log_charge_B8",
+    "log_amp_B2",
+    "log_amp_B4",
+    "log_amp_B6",
+    "log_amp_B8",
+    "peak_B2",
+    "peak_B4",
+    "peak_B6",
+    "peak_B8",
+    "hit_B2",
+    "hit_B4",
+    "hit_B6",
+    "hit_B8"
+  ],
+  "all_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 10814,
+      "bias_frac": -0.005023917991877885,
+      "res68_frac": 0.050259135415802396,
+      "mae_mev": 2.7540378593402215,
+      "res68_ci95": [
+        0.04719029142887861,
+        0.0551729681204654
+      ],
+      "bias_ci95": [
+        -0.019562564848178372,
+        0.007869332586117451
+      ],
+      "mae_mev_ci95": [
+        2.581293054759755,
+        3.0245650984246395
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 10814,
+      "bias_frac": 0.01414621968163017,
+      "res68_frac": 0.08329976067523222,
+      "mae_mev": 4.479143597017742,
+      "res68_ci95": [
+        0.0810677916166492,
+        0.08677154015466298
+      ],
+      "bias_ci95": [
+        -0.006280284727843671,
+        0.029753184953991645
+      ],
+      "mae_mev_ci95": [
+        4.445944041943911,
+        4.513004961279218
+      ]
+    },
+    {
+      "method": "gated_residual_cnn",
+      "family": "neural_gated_residual_new",
+      "n": 10814,
+      "bias_frac": -0.011376424633832934,
+      "res68_frac": 0.0993164735506252,
+      "mae_mev": 5.323814798057437,
+      "res68_ci95": [
+        0.09821967144683327,
+        0.10046677264704777
+      ],
+      "bias_ci95": [
+        -0.032519206640435734,
+        0.003268023988904806
+      ],
+      "mae_mev_ci95": [
+        5.172050917528869,
+        5.562608910412357
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 10814,
+      "bias_frac": 0.009653467755796796,
+      "res68_frac": 0.23011150871720826,
+      "mae_mev": 11.784115588603697,
+      "res68_ci95": [
+        0.22217989741610092,
+        0.2342031448944878
+      ],
+      "bias_ci95": [
+        0.006848879296385745,
+        0.014251059972075446
+      ],
+      "mae_mev_ci95": [
+        11.527109740117588,
+        11.914736379968577
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 10814,
+      "bias_frac": 0.006505065367834886,
+      "res68_frac": 0.2338410054328216,
+      "mae_mev": 12.186978733081103,
+      "res68_ci95": [
+        0.22941760025844624,
+        0.23839197565065706
+      ],
+      "bias_ci95": [
+        0.004700323634143952,
+        0.008608709398666575
+      ],
+      "mae_mev_ci95": [
+        11.92503130202816,
+        12.363813894710914
+      ]
+    },
+    {
+      "method": "truth_birks_lookup",
+      "family": "traditional_digitized_birks",
+      "n": 10814,
+      "bias_frac": -0.3080736780043755,
+      "res68_frac": 0.5373916581504441,
+      "mae_mev": 25.707237714499378,
+      "res68_ci95": [
+        0.5357738431515904,
+        0.5398907028408899
+      ],
+      "bias_ci95": [
+        -0.312538821308713,
+        -0.30472680301404387
+      ],
+      "mae_mev_ci95": [
+        25.600169266260888,
+        25.77344058108427
+      ]
+    }
+  ],
+  "parameter_scan_top": [
+    {
+      "family": "light_yield_scale",
+      "value": 0.7,
+      "distance_log_res68_rms": 1.6420959632990366,
+      "mean_log_res68_delta_sim_minus_real": 1.4793375148401415,
+      "sim_saturation_event_fraction": 0.9897361924047824,
+      "light_yield_adc_per_mev": 1871.3024791663524,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "light_yield_scale",
+      "value": 0.85,
+      "distance_log_res68_rms": 1.7071257306841623,
+      "mean_log_res68_delta_sim_minus_real": 1.5509102854755281,
+      "sim_saturation_event_fraction": 0.9911786734722183,
+      "light_yield_adc_per_mev": 2272.2958675591426,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "pedestal_run_drift_adc",
+      "value": 24.0,
+      "distance_log_res68_rms": 1.908830975184548,
+      "mean_log_res68_delta_sim_minus_real": 1.789349394238203,
+      "sim_saturation_event_fraction": 0.9923160143138506,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 24.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "saturation_adc",
+      "value": 4095.0,
+      "distance_log_res68_rms": 1.9112000984221098,
+      "mean_log_res68_delta_sim_minus_real": 1.7921101717724528,
+      "sim_saturation_event_fraction": 0.9923437543343782,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "light_yield_scale",
+      "value": 1.0,
+      "distance_log_res68_rms": 1.9123347172108576,
+      "mean_log_res68_delta_sim_minus_real": 1.7935061434467396,
+      "sim_saturation_event_fraction": 0.9923437543343782,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "baseline",
+      "value": 1.0,
+      "distance_log_res68_rms": 1.9125139525258423,
+      "mean_log_res68_delta_sim_minus_real": 1.79348732921593,
+      "sim_saturation_event_fraction": 0.9923160143138506,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "pedestal_run_drift_adc",
+      "value": 12.0,
+      "distance_log_res68_rms": 1.9141262569858817,
+      "mean_log_res68_delta_sim_minus_real": 1.7948442863822978,
+      "sim_saturation_event_fraction": 0.9923714943549058,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "pedestal_run_drift_adc",
+      "value": 0.0,
+      "distance_log_res68_rms": 1.9164529945922664,
+      "mean_log_res68_delta_sim_minus_real": 1.797113466278729,
+      "sim_saturation_event_fraction": 0.992288274293323,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 0.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "pedestal_run_drift_adc",
+      "value": 6.0,
+      "distance_log_res68_rms": 1.9165328400703368,
+      "mean_log_res68_delta_sim_minus_real": 1.7976316820068476,
+      "sim_saturation_event_fraction": 0.9923714943549058,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 6.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "shaping_tau_samples",
+      "value": 1.8,
+      "distance_log_res68_rms": 1.9171503613652856,
+      "mean_log_res68_delta_sim_minus_real": 1.7981633964869148,
+      "sim_saturation_event_fraction": 0.9934533551554828,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 1.8,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "shaping_tau_samples",
+      "value": 2.15,
+      "distance_log_res68_rms": 1.9185552969461674,
+      "mean_log_res68_delta_sim_minus_real": 1.7999752890851108,
+      "sim_saturation_event_fraction": 0.9923160143138506,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 12.0,
+      "saturation_adc": 4095.0
+    },
+    {
+      "family": "pedestal_run_drift_adc",
+      "value": 36.0,
+      "distance_log_res68_rms": 1.9226457222190763,
+      "mean_log_res68_delta_sim_minus_real": 1.8066228953877288,
+      "sim_saturation_event_fraction": 0.9923714943549058,
+      "light_yield_adc_per_mev": 2673.2892559519323,
+      "shaping_tau_samples": 2.15,
+      "pedestal_run_drift_adc": 36.0,
+      "saturation_adc": 4095.0
+    }
+  ],
+  "real_s24a_strata_targets": [
+    {
+      "stratum": "adc_saturation_onset",
+      "definition": "any_saturated",
+      "n": 106217,
+      "bias_frac": -0.0404028613830016,
+      "res68_frac": 0.0484975857724767,
+      "mae_mev": 1.2845669095942986
+    },
+    {
+      "stratum": "pileup_or_multihit",
+      "definition": "multiplicity>=2",
+      "n": 27765,
+      "bias_frac": -0.0194332312311095,
+      "res68_frac": 0.1259451554158297,
+      "mae_mev": 3.168267493943049
+    },
+    {
+      "stratum": "pedestal_drift_proxy_high",
+      "definition": "charge/peak above heldout median",
+      "n": 166426,
+      "bias_frac": -0.0232582648913174,
+      "res68_frac": 0.0332155477031802,
+      "mae_mev": 1.1234949091217272
+    },
+    {
+      "stratum": "late_pulse_shape",
+      "definition": "deepest selected B stave index>=2",
+      "n": 15256,
+      "bias_frac": -0.0170259586431105,
+      "res68_frac": 0.1166683814900125,
+      "mae_mev": 3.08324219733879
+    }
+  ],
+  "sim_vs_real_method_residuals": [
+    {
+      "method": "gradient_boosted_trees",
+      "sim_res68_frac": 0.050259135415802396,
+      "real_s24a_res68_frac": 0.0566846321762142,
+      "delta_sim_minus_real": -0.006425496760411806,
+      "interpretation": "same method label after Birks-name normalization"
+    },
+    {
+      "method": "mlp",
+      "sim_res68_frac": 0.08329976067523222,
+      "real_s24a_res68_frac": 0.6923472493440915,
+      "delta_sim_minus_real": -0.6090474886688593,
+      "interpretation": "same method label after Birks-name normalization"
+    },
+    {
+      "method": "ridge",
+      "sim_res68_frac": 0.23011150871720826,
+      "real_s24a_res68_frac": 0.0966729355403716,
+      "delta_sim_minus_real": 0.13343857317683666,
+      "interpretation": "same method label after Birks-name normalization"
+    },
+    {
+      "method": "1d_cnn",
+      "sim_res68_frac": 0.2338410054328216,
+      "real_s24a_res68_frac": 0.2657039478238139,
+      "delta_sim_minus_real": -0.0318629423909923,
+      "interpretation": "same method label after Birks-name normalization"
+    },
+    {
+      "method": "truth_birks_lookup",
+      "sim_res68_frac": 0.5373916581504441,
+      "real_s24a_res68_frac": 0.0402439783091376,
+      "delta_sim_minus_real": 0.4971476798413065,
+      "interpretation": "same method label after Birks-name normalization"
+    }
+  ],
+  "new_architecture": "gated_residual_cnn: 1D waveform convolutions modulated by tabular saturation/shape gates, trained as a multiplicative residual correction to digitized Birks.",
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. Across the four S24a residual strata, the closest one-factor digitizer family is light_yield_scale=0.7 (RMS log-res68 distance 1.6421). On that selected response model, gradient_boosted_trees wins the held-out pseudo-run benchmark with res68=0.05026; the conclusion is that light_yield_scale is the most plausible single missing detector-response handle among the scanned families, while real-data deployment remains bounded by the S24a non-event-aligned comparison.",
+  "next_tickets": [],
+  "runtime_sec": 443.1
+}

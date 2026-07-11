@@ -1,0 +1,6 @@
+method,sim_res68_frac,real_s24a_res68_frac,delta_sim_minus_real,interpretation
+gradient_boosted_trees,0.050259135415802396,0.0566846321762142,-0.006425496760411806,same method label after Birks-name normalization
+mlp,0.08329976067523222,0.6923472493440915,-0.6090474886688593,same method label after Birks-name normalization
+ridge,0.23011150871720826,0.0966729355403716,0.13343857317683666,same method label after Birks-name normalization
+1d_cnn,0.2338410054328216,0.2657039478238139,-0.0318629423909923,same method label after Birks-name normalization
+truth_birks_lookup,0.5373916581504441,0.0402439783091376,0.4971476798413065,same method label after Birks-name normalization

@@ -1,0 +1,266 @@
+{
+  "ticket_id": "1783751737.13516.61447038",
+  "study_id": "S25a",
+  "worker": "testbeam-laptop-2",
+  "title": "Joint PID-energy calibration under pile-up and saturation stress",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "passed": true,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      }
+    ]
+  },
+  "split": {
+    "run_groups": {
+      "sample_i_calib": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42
+      ],
+      "sample_i_analysis": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "sample_ii_calib": [
+        64
+      ],
+      "sample_ii_analysis": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ]
+    },
+    "split_type": "complete run held-out groups inherited from P08e and S24a"
+  },
+  "bootstrap": {
+    "unit": "held-out run block",
+    "replicates": 300,
+    "interval": "95% percentile"
+  },
+  "winner": "traditional_joint",
+  "winner_details": {
+    "joint_method": "traditional_joint",
+    "pid_method": "traditional_charge_depth_logistic",
+    "energy_method": "geant4_birks_lookup",
+    "pid_auc": 1.0,
+    "pid_auc_ci_low": 1.0,
+    "pid_auc_ci_high": 1.0,
+    "pid_average_precision": 1.0,
+    "pid_ece": 0.0001500695285046,
+    "energy_res68_frac": 0.0402439783091376,
+    "energy_res68_ci_low": 0.03885687265429256,
+    "energy_res68_ci_high": 0.041606317494948857,
+    "energy_mae_mev": 1.0824359599765987,
+    "saturation_res68_frac": 0.0484975857724767,
+    "saturation_res68_ci_low": 0.04744534451871076,
+    "saturation_res68_ci_high": 0.05114720164608243,
+    "joint_score": 0.0237849095626935
+  },
+  "joint_benchmark": [
+    {
+      "joint_method": "traditional_joint",
+      "pid_method": "traditional_charge_depth_logistic",
+      "energy_method": "geant4_birks_lookup",
+      "pid_auc": 1.0,
+      "pid_auc_ci_low": 1.0,
+      "pid_auc_ci_high": 1.0,
+      "pid_average_precision": 1.0,
+      "pid_ece": 0.0001500695285046,
+      "energy_res68_frac": 0.0402439783091376,
+      "energy_res68_ci_low": 0.03885687265429256,
+      "energy_res68_ci_high": 0.041606317494948857,
+      "energy_mae_mev": 1.0824359599765987,
+      "saturation_res68_frac": 0.0484975857724767,
+      "saturation_res68_ci_low": 0.04744534451871076,
+      "saturation_res68_ci_high": 0.05114720164608243,
+      "joint_score": 0.0237849095626935
+    },
+    {
+      "joint_method": "new_residual_architecture",
+      "pid_method": "NN_action_gated_residual_ensemble_new",
+      "energy_method": "physics_residual_mlp",
+      "pid_auc": 1.0,
+      "pid_auc_ci_low": 1.0,
+      "pid_auc_ci_high": 1.0,
+      "pid_average_precision": 1.0,
+      "pid_ece": 0.0018029465458181,
+      "energy_res68_frac": 0.0586801621140033,
+      "energy_res68_ci_low": 0.049024699196538256,
+      "energy_res68_ci_high": 0.0778824801768244,
+      "energy_mae_mev": 1.051508630675238,
+      "saturation_res68_frac": 0.0387697764284218,
+      "saturation_res68_ci_low": 0.03588506844063465,
+      "saturation_res68_ci_high": 0.04471386133503352,
+      "joint_score": 0.02829201202558551
+    },
+    {
+      "joint_method": "gradient_boosted_trees",
+      "pid_method": "ML_gradient_boosted_trees",
+      "energy_method": "gradient_boosted_trees",
+      "pid_auc": 0.9280095148429632,
+      "pid_auc_ci_low": 0.9216148500739324,
+      "pid_auc_ci_high": 0.9352319618943888,
+      "pid_average_precision": 0.8942663262803092,
+      "pid_ece": 0.0340176058994234,
+      "energy_res68_frac": 0.0566846321762142,
+      "energy_res68_ci_low": 0.04880395769058964,
+      "energy_res68_ci_high": 0.06719740156251883,
+      "energy_mae_mev": 1.0028925714276464,
+      "saturation_res68_frac": 0.0562142558279182,
+      "saturation_res68_ci_low": 0.0517199705719396,
+      "saturation_res68_ci_high": 0.06268440375730644,
+      "joint_score": 0.06347819074792516
+    },
+    {
+      "joint_method": "ridge",
+      "pid_method": "ML_ridge_waveform",
+      "energy_method": "ridge",
+      "pid_auc": 0.8513208514780879,
+      "pid_auc_ci_low": 0.8447716046752325,
+      "pid_auc_ci_high": 0.8621867257244059,
+      "pid_average_precision": 0.7787513966213357,
+      "pid_ece": 0.031782305607993,
+      "energy_res68_frac": 0.0966729355403716,
+      "energy_res68_ci_low": 0.08871564277716167,
+      "energy_res68_ci_high": 0.11720596181535417,
+      "energy_mae_mev": 1.4114180808798578,
+      "saturation_res68_frac": 0.0549548576044372,
+      "saturation_res68_ci_low": 0.052796272830628765,
+      "saturation_res68_ci_high": 0.05926999972738509,
+      "joint_score": 0.11173211579487793
+    },
+    {
+      "joint_method": "1d_cnn",
+      "pid_method": "NN_1d_cnn",
+      "energy_method": "1d_cnn",
+      "pid_auc": 0.7267674024254375,
+      "pid_auc_ci_low": 0.7075822917850639,
+      "pid_auc_ci_high": 0.7484302388622134,
+      "pid_average_precision": 0.6389048149075939,
+      "pid_ece": 0.1408650865120494,
+      "energy_res68_frac": 0.2657039478238139,
+      "energy_res68_ci_low": 0.24926581203810588,
+      "energy_res68_ci_high": 0.2890790024307048,
+      "energy_mae_mev": 3.86211397876782,
+      "saturation_res68_frac": 0.1897611439072851,
+      "saturation_res68_ci_low": 0.1809644808514061,
+      "saturation_res68_ci_high": 0.19880711123036537,
+      "joint_score": 0.253903279428345
+    },
+    {
+      "joint_method": "mlp",
+      "pid_method": "ML_mlp",
+      "energy_method": "mlp",
+      "pid_auc": 0.947092374470415,
+      "pid_auc_ci_low": 0.9407200210085076,
+      "pid_auc_ci_high": 0.9540671179653102,
+      "pid_average_precision": 0.9221278409392843,
+      "pid_ece": 0.0131415734283209,
+      "energy_res68_frac": 0.6923472493440915,
+      "energy_res68_ci_low": 0.6842365680562779,
+      "energy_res68_ci_high": 0.6996464636631826,
+      "energy_mae_mev": 10.616250817321616,
+      "saturation_res68_frac": 0.5733302281479044,
+      "saturation_res68_ci_low": 0.570494263691369,
+      "saturation_res68_ci_high": 0.5755893637596577,
+      "joint_score": 0.3807960143883261
+    }
+  ],
+  "source_pid_winner": {
+    "action_mask": "all_pre_action",
+    "method": "traditional_charge_depth_logistic",
+    "roc_auc": 1.0,
+    "roc_auc_ci": [
+      0.9999999999999999,
+      1.0
+    ],
+    "average_precision": 1.0,
+    "purity_at_80pct_eff": 1.0,
+    "ece": 0.00015006952850469676
+  },
+  "source_energy_winner": {
+    "method": "geant4_birks_lookup",
+    "family": "traditional_geant4_birks",
+    "res68_frac": 0.040243978309137673,
+    "res68_ci95": [
+      0.03885687265429256,
+      0.041606317494948857
+    ],
+    "bias_frac": -0.02309863561869246,
+    "mae_mev": 1.0824359599765987,
+    "mae_mev_ci95": [
+      0.9581666378891074,
+      1.2490247117015882
+    ]
+  },
+  "next_tickets": [
+    {
+      "title": "Digitized GEANT4 multi-task PID-energy truth benchmark",
+      "expected_information_gain": "Provides event-aligned true PID and energy labels with ADC-like waveforms, directly testing whether a coupled neural architecture can beat the physics/range baseline without proxy-label circularity."
+    }
+  ],
+  "runtime_sec": 6.5905022621154785
+}

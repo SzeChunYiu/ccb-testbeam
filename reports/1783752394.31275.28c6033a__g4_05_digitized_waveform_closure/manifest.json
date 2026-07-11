@@ -1,0 +1,15 @@
+{
+  "files": [
+    "REPORT.md",
+    "benchmark_metrics.csv",
+    "claimed_ticket.txt",
+    "event_predictions.csv",
+    "geant4_truth_event_summary.csv",
+    "per_run_metrics.csv",
+    "raw_reproduction_by_run.csv",
+    "raw_root_inventory.csv",
+    "residual_atoms.csv",
+    "result.json"
+  ],
+  "script": "/home/billy/.tb-workers/testbeam-laptop-4/scripts/g4_05_1783752394_31275_28c6033a_digitized_waveform_closure.py"
+}

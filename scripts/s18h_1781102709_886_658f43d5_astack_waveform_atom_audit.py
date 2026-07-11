@@ -40,7 +40,10 @@ try:
     import torch.nn as nn
 except Exception:  # pragma: no cover - script reports this in result.json
     torch = None
-    nn = None
+    class _UnavailableTorchNN:
+        Module = object
+
+    nn = _UnavailableTorchNN()
 
 
 METHOD_ORDER = [
@@ -401,7 +404,7 @@ def atom_audit(train: pd.DataFrame, test: pd.DataFrame, config: dict, rng: np.ra
         estimators = {
             "ridge": make_pipeline(StandardScaler(), Ridge(alpha=10.0)),
             "gradient_boosted_trees": HistGradientBoostingRegressor(
-                loss="least_squares",
+                loss="squared_error",
                 max_iter=int(config["gbt"]["max_iter"]),
                 learning_rate=float(config["gbt"]["learning_rate"]),
                 max_leaf_nodes=int(config["gbt"]["max_leaf_nodes"]),
@@ -464,7 +467,7 @@ def fit_tabular_methods(train: pd.DataFrame, test: pd.DataFrame, config: dict) -
     outputs["ridge"] = test["raw_residual_ns"].to_numpy() - ridge.predict(x_test)
 
     gbt = HistGradientBoostingRegressor(
-        loss="least_squares",
+        loss="squared_error",
         max_iter=int(config["gbt"]["max_iter"]),
         learning_rate=float(config["gbt"]["learning_rate"]),
         max_leaf_nodes=int(config["gbt"]["max_leaf_nodes"]),
@@ -582,9 +585,67 @@ def predict_torch_regressor(model, test: pd.DataFrame, center: float, scale: flo
     return np.concatenate(out).astype(float) * scale + center
 
 
+def conv_feature_bank(df: pd.DataFrame, gated: bool = False) -> np.ndarray:
+    waves = wave_tensor(df).astype(float)
+    kernels = [
+        [-1.0, 0.0, 1.0],
+        [-1.0, 2.0, -1.0],
+        [0.25, 0.5, 0.25],
+        [-0.5, -0.25, 0.25, 0.5],
+        [1.0, -1.0, 0.0, 0.0],
+    ]
+    rows = []
+    for channel in range(waves.shape[1]):
+        x = waves[:, channel, :]
+        channel_features = []
+        for kernel in kernels:
+            k = np.asarray(kernel, dtype=float)
+            conv = np.apply_along_axis(lambda row: np.convolve(row, k, mode="valid"), 1, x)
+            channel_features.extend(
+                [
+                    conv.mean(axis=1),
+                    conv.std(axis=1),
+                    conv.max(axis=1),
+                    conv.min(axis=1),
+                    np.percentile(conv, 75, axis=1) - np.percentile(conv, 25, axis=1),
+                ]
+            )
+        rows.extend(channel_features)
+    conv_features = np.column_stack(rows)
+    aux = engineered_features(df)[:, :22]
+    if gated:
+        amp_gate = 1.0 / (1.0 + np.exp(-0.35 * (aux[:, 0:1] + aux[:, 1:2] - np.median(aux[:, 0] + aux[:, 1]))))
+        peak_gate = 1.0 / (1.0 + np.exp(-0.25 * (aux[:, 7:8] + aux[:, 8:9] - np.median(aux[:, 7] + aux[:, 8]))))
+        conv_features = np.column_stack([conv_features, conv_features * amp_gate, conv_features * peak_gate])
+    return np.column_stack([aux, conv_features])
+
+
+def fit_conv_fallback_methods(train: pd.DataFrame, test: pd.DataFrame, config: dict) -> dict[str, np.ndarray]:
+    y_train = train["raw_residual_ns"].to_numpy(dtype=float)
+    y_test = test["raw_residual_ns"].to_numpy(dtype=float)
+    outputs = {}
+    cnn = make_pipeline(StandardScaler(), Ridge(alpha=10.0))
+    cnn.fit(conv_feature_bank(train, gated=False), y_train)
+    outputs["cnn_1d"] = y_test - cnn.predict(conv_feature_bank(test, gated=False))
+
+    gated = make_pipeline(
+        StandardScaler(),
+        MLPRegressor(
+            hidden_layer_sizes=(32,),
+            alpha=float(config["mlp"]["alpha"]),
+            max_iter=max(80, int(config["mlp"]["max_iter"])),
+            early_stopping=True,
+            random_state=int(config["random_seed"]) + 77,
+        ),
+    )
+    gated.fit(conv_feature_bank(train, gated=True), y_train)
+    outputs["gated_residual_cnn_new"] = y_test - gated.predict(conv_feature_bank(test, gated=True))
+    return outputs
+
+
 def fit_torch_methods(train: pd.DataFrame, test: pd.DataFrame, config: dict) -> dict[str, np.ndarray]:
     if torch is None:
-        return {}
+        return fit_conv_fallback_methods(train, test, config)
     aux_dim = engineered_features(train)[:, :22].shape[1]
     methods = [
         ("cnn_1d", TinyPairCNN(aux_dim), int(config["random_seed"]) + 11),
@@ -870,13 +931,18 @@ def write_report(
         .reset_index()
         .sort_values("median_width_ns")
     )
-    report = f"""# S18h: A-stack waveform atom audit for late/mixed ML transfer
+    torch_note = (
+        "Torch was available, so `cnn_1d` and `gated_residual_cnn_new` were trained as compact neural convolutional regressors."
+        if torch is not None
+        else "Torch was not available in the ticket venv; `cnn_1d` and `gated_residual_cnn_new` therefore use deterministic one-dimensional convolutional waveform filter banks followed by regularized sklearn heads. They retain the same convolutional pulse-shape inductive bias, but the caveats treat them as lightweight CNN surrogates rather than GPU-trained deep networks."
+    )
+    report = f"""# {config['study']}: {config['title']}
 
 - **Ticket:** `{config['ticket']}`
 - **Worker:** `{config['worker']}`
-- **Date:** 2026-07-09
+- **Date:** 2026-07-11
 - **Input:** raw A-stack ROOT `HRDv` from `{config['raw_root_dir']}`
-- **Command:** `/home/billy/anaconda3/bin/python {config['script_path']} --config {config_path}`
+- **Command:** `.venv/bin/python {config['script_path']} --config {config_path}`
 - **Primary split:** train on Sample III runs `{','.join(str(r) for r in config['train_runs'])}`; evaluate on held-out Sample IV analysis runs `{','.join(str(r) for r in config['sample_iv_analysis_runs'])}`.
 - **Primary metric:** `percentile68_ns = 0.5 * (Q_84(e - median(e)) - Q_16(e - median(e)))`, with 95% confidence intervals from a bootstrap over held-out runs.
 
@@ -923,6 +989,8 @@ Both `d_L` and `d_R` are non-increasing isotonic functions, fitted by alternatin
 ### ML and Neural Models
 
 Ridge, gradient-boosted trees, and MLP consume engineered amplitude and shape features: log amplitudes, log positive areas, peaks, tails, normalized A1/A3 waveforms, and waveform differences. Ridge alpha is selected by GroupKFold over training runs. The 1D-CNN consumes the two normalized 18-sample waveforms plus auxiliary shape features. The new `gated_residual_cnn_new` uses residual temporal convolutions and an auxiliary squeeze gate, which is sensible here because the stress test asks whether local leading-edge distortions or pulse-selection support dominate the width changes.
+
+{torch_note}
 
 No method receives run number, event number, raw residual, A1 time, or A3 time as a feature. Hyperparameter selection uses training runs only.
 
@@ -986,7 +1054,7 @@ def write_manifest(out_dir: Path, config: dict, config_path: Path) -> None:
         "worker": config["worker"],
         "git_commit": git_head(),
         "config": str(config_path),
-        "command": f"/home/billy/anaconda3/bin/python {config['script_path']} --config {config_path}",
+        "command": f".venv/bin/python {config['script_path']} --config {config_path}",
         "environment": {
             "python": platform.python_version(),
             "platform": platform.platform(),

@@ -1,0 +1,165 @@
+{
+  "study": "S18i",
+  "ticket": "1783770201.8157.51000596",
+  "worker": "testbeam-laptop-2",
+  "title": "Pulse-shape timing model hierarchy with bootstrap closure",
+  "reproduced": true,
+  "primary_gate_label": "cfd0.20_cut1000",
+  "primary_gate": {
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "raw_standard_gate": {
+    "pool": "cfd0.20_cut1000",
+    "method": "raw_percentile68",
+    "n_pairs": 127,
+    "median_ns": 3.724376296008302,
+    "robust_width_ns": 1.6099706543209522,
+    "full_rms_ns": 1.4992425001417917,
+    "within_abs_2ns": 0.8267716535433071,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 1.2585219361430042,
+    "robust_ci_high_ns": 1.7220549139231973,
+    "core_sigma_ns": 1.8749893002610187,
+    "core_sigma_err_ns": 0.4369641772853221,
+    "core_mean_ns": -0.05268359587192729,
+    "chi2_ndf": 2.0220708242363337,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "winner": {
+    "pool": "cfd0.20_cut1000",
+    "method": "mlp",
+    "n_pairs": 127,
+    "median_ns": -0.04786614915872356,
+    "robust_width_ns": 0.5840905672956752,
+    "full_rms_ns": 1.1093584408204067,
+    "within_abs_2ns": 0.9133858267716536,
+    "tail_fraction_abs_gt_5ns": 0.007874015748031496,
+    "robust_ci_low_ns": 0.47849589936682,
+    "robust_ci_high_ns": 0.773545368568936,
+    "core_sigma_ns": 0.43767739983958975,
+    "core_sigma_err_ns": 0.0389032962955685,
+    "core_mean_ns": -0.00047356991788009205,
+    "chi2_ndf": 23604.110417820477,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "best_traditional": {
+    "pool": "cfd0.20_cut1000",
+    "method": "constrained_monotone_timewalk",
+    "n_pairs": 127,
+    "median_ns": 0.09140440352265511,
+    "robust_width_ns": 1.5178248372481482,
+    "full_rms_ns": 1.4745552393190424,
+    "within_abs_2ns": 0.8346456692913385,
+    "tail_fraction_abs_gt_5ns": 0.0,
+    "robust_ci_low_ns": 1.2582635807500018,
+    "robust_ci_high_ns": 1.7196698775668118,
+    "core_sigma_ns": 3.872304476264705,
+    "core_sigma_err_ns": 4.021538856293893,
+    "core_mean_ns": -0.014571524474876476,
+    "chi2_ndf": 1.5850773682930914,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "best_ml": {
+    "pool": "cfd0.20_cut1000",
+    "method": "mlp",
+    "n_pairs": 127,
+    "median_ns": -0.04786614915872356,
+    "robust_width_ns": 0.5840905672956752,
+    "full_rms_ns": 1.1093584408204067,
+    "within_abs_2ns": 0.9133858267716536,
+    "tail_fraction_abs_gt_5ns": 0.007874015748031496,
+    "robust_ci_low_ns": 0.47849589936682,
+    "robust_ci_high_ns": 0.773545368568936,
+    "core_sigma_ns": 0.43767739983958975,
+    "core_sigma_err_ns": 0.0389032962955685,
+    "core_mean_ns": -0.00047356991788009205,
+    "chi2_ndf": 23604.110417820477,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "overall_min_width_gate_method": {
+    "pool": "cfd0.20_cut1000",
+    "method": "mlp",
+    "n_pairs": 127,
+    "median_ns": -0.04786614915872356,
+    "robust_width_ns": 0.5840905672956752,
+    "full_rms_ns": 1.1093584408204067,
+    "within_abs_2ns": 0.9133858267716536,
+    "tail_fraction_abs_gt_5ns": 0.007874015748031496,
+    "robust_ci_low_ns": 0.47849589936682,
+    "robust_ci_high_ns": 0.773545368568936,
+    "core_sigma_ns": 0.43767739983958975,
+    "core_sigma_err_ns": 0.0389032962955685,
+    "core_mean_ns": -0.00047356991788009205,
+    "chi2_ndf": 23604.110417820477,
+    "cfd_fraction": 0.2,
+    "amplitude_cut_adc": 1000.0
+  },
+  "winner_name": "cfd0.20_cut1000 / mlp",
+  "primary_metric": "Standard-gate Sample IV A1-A3 percentile68 residual width, bootstrap over held-out runs",
+  "methods_benchmarked": [
+    "constrained_monotone_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "gated_residual_cnn_new"
+  ],
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_heldout_pairs": 127,
+  "gate_grid": {
+    "cfd_fractions": [
+      0.2
+    ],
+    "amplitude_cuts_adc": [
+      1000.0
+    ]
+  },
+  "torch_available": false,
+  "leakage_flags": 0,
+  "atom_audit": {
+    "best_atom_model": {
+      "pool": "full_features",
+      "method": "gradient_boosted_trees",
+      "n_pairs": 127,
+      "median_ns": 0.12667158824785218,
+      "robust_width_ns": 0.9904716467093306,
+      "full_rms_ns": 1.5370320883685826,
+      "within_abs_2ns": 0.8818897637795275,
+      "tail_fraction_abs_gt_5ns": 0.015748031496062992,
+      "robust_ci_low_ns": 0.7186757199609064,
+      "robust_ci_high_ns": 1.3542809173495054,
+      "core_sigma_ns": 0.6209469322849578,
+      "core_sigma_err_ns": 0.060711774810241786,
+      "core_mean_ns": -0.14721134541461425,
+      "chi2_ndf": 41.22118699860689,
+      "atom_mode": "full_features",
+      "model_family": "gradient_boosted_trees"
+    },
+    "modes": [
+      "full_features",
+      "drop_leading_edge_samples",
+      "drop_tail_samples",
+      "amplitude_only",
+      "waveform_shuffled_control"
+    ],
+    "interpretation": "Compare full, leading-edge-dropped, tail-dropped, amplitude-only, and waveform-shuffled controls on the same Sample III to Sample IV split."
+  },
+  "input_sha256": "reports/1783770201.8157.51000596__s18i_pulse_shape_timing_model_hierarchy/input_sha256.csv",
+  "git_commit": "df0ecbec8e039b0ef89a942597a5edb81724c94e",
+  "next_tickets": [
+    "S18k: fit a fixed-efficiency A-stack amplitude gate with per-run quantiles to separate pulse-selection support loss from CFD interpolation noise in late/mixed transfer."
+  ]
+}

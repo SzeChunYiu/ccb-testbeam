@@ -1,0 +1,14 @@
+{
+  "config": "configs/s19d_1783770959_22058_576950cd_runheldout_drift_calibration.yaml",
+  "files": {
+    "REPORT.md": "ac691e7ad1c11c3313782dfd5c186857b6cd88d62bdd585e604f1dd269c940c3",
+    "adversarial_pedestal.csv": "8e8e58b5efd25bf7c2e836d3b7fca46364563f08e606a64f3def8d4052c8aeba",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "nested_calibration.csv": "2e2883af6797be43457f089914b911d8df56c0f62aa7c5b4aa3cd447461d4701",
+    "nested_calibration_folds.csv": "cf50620d949b8ee8e4380c16f7df2a175c60b9100ab1699271e1e48861ccbd5e",
+    "primary_benchmark.csv": "d62d42c685b713a13532e942fd56751be5fb71733f19d11ed9ec47960b6fcdf7",
+    "reproduction_match_table.csv": "7887812125da332edfff6b1e4081e7464d451bb36c7b6cc60229fa8dda9612ae",
+    "result.json": "ac2b267008fb5f4e969b2da30d7f320c0577c6275d6061105106b123cadc174f"
+  },
+  "generated_by": "s19d_1783770959_22058_576950cd_runheldout_drift_calibration.py"
+}

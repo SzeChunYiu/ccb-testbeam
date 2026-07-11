@@ -1,0 +1,168 @@
+{
+  "study": "S21b",
+  "ticket": "1783656688.10969.21015d93",
+  "worker": "testbeam-laptop-2",
+  "title": "Weighted scattering-source closure and geometry overlap audit",
+  "reproduced": true,
+  "winner": "lab_angle_primary_weight_requires_weight_aware_analysis",
+  "winner_name": "lab-angle PrimaryWeight closure; geometry overlap-clean at 1e-4 cm but unweighted angular sampling is not physical",
+  "root_event_sample": {
+    "root_file": "/home/billy/ccb-geant4/output_30k.root",
+    "root_stdout": "\nProcessing /tmp/tmpv3wez6yd/extract_s21b.C...\nentries=30000 exported_events=30000\n",
+    "entries": 30000,
+    "exported_events": 30000,
+    "exported_primary_particles": 60000,
+    "exported_protons": 30000
+  },
+  "weight_closure": {
+    "lab_rms_relative_error": 4.014437841602423e-06,
+    "lab_median_abs_relative_error": 1.7502202380137233e-06,
+    "lab_r2": 0.9999999999929614,
+    "cm_rms_relative_error": 0.5631178824718159,
+    "cm_median_abs_relative_error": 0.5886157637606408,
+    "cm_r2": 0.8428693964783887
+  },
+  "angular_distribution": {
+    "js_unweighted_vs_intended": 0.39790248934973865,
+    "js_primary_weighted_vs_intended": 0.1392342769517368,
+    "js_primary_weighted_vs_sigma_only": 0.16098925529707556,
+    "intended_density": "sigma(theta_cm) * sin(theta_cm)",
+    "observed_source_sampling": "uniform theta_cm with lab-angle PrimaryWeight"
+  },
+  "benchmark_applicability": {
+    "generic_ml_template_applicable": false,
+    "requested_methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "new_architecture"
+    ],
+    "reason": "S21b is a Geant4 source-weight and geometry closure audit with no supervised ML target, labels, waveform feature tensor, or model-selection metric.",
+    "ticket_specific_benchmark": [
+      "PrimaryWeight equals sigma(theta_lab)",
+      "PrimaryWeight equals sigma(theta_cm)",
+      "unweighted theta_cm versus sigma(theta_cm)*sin(theta_cm)",
+      "PrimaryWeight-weighted theta_cm versus sigma(theta_cm)*sin(theta_cm)",
+      "PrimaryWeight-weighted theta_cm versus sigma(theta_cm)"
+    ]
+  },
+  "run_split": {
+    "available": false,
+    "reason": "The available ROOT tree is a single Geant4 simulation ntuple and has no run-number branch; bootstrap CIs are computed over exported event rows."
+  },
+  "geometry_file": "/home/billy/ccb-geant4/krakow_109_8-38deg_4-71deg.root",
+  "geometry": {
+    "top_volume": "MOTHER",
+    "n_volumes": 13,
+    "n_top_nodes": 8,
+    "n_overlaps": 0,
+    "volumes": [
+      {
+        "name": "MOTHER",
+        "material": " Vacuum",
+        "shape": "TGeoTube",
+        "capacity_cm3": 235619000.0
+      },
+      {
+        "name": "PIPE",
+        "material": "Al",
+        "shape": "TGeoTube",
+        "capacity_cm3": 745.83
+      },
+      {
+        "name": "Window",
+        "material": "Mylar",
+        "shape": "TGeoTube",
+        "capacity_cm3": 1.5708
+      },
+      {
+        "name": "TARGET",
+        "material": "CD2",
+        "shape": "TGeoTube",
+        "capacity_cm3": 6.20316
+      },
+      {
+        "name": "Sci_stack1",
+        "material": " Vacuum",
+        "shape": "TGeoBBox",
+        "capacity_cm3": 4000
+      },
+      {
+        "name": "Sci_stack2",
+        "material": " Vacuum",
+        "shape": "TGeoBBox",
+        "capacity_cm3": 2000
+      },
+      {
+        "name": "Sci_bar",
+        "material": "PSci",
+        "shape": "TGeoBBox",
+        "capacity_cm3": 500
+      },
+      {
+        "name": "ProtoTPCHull",
+        "material": "Al",
+        "shape": "TGeoTube",
+        "capacity_cm3": 13571.7
+      },
+      {
+        "name": "ProtoTPCGas",
+        "material": "Ar80CO2",
+        "shape": "TGeoTube",
+        "capacity_cm3": 12903.7
+      },
+      {
+        "name": "ProtoTPCActive",
+        "material": "Ar80CO2",
+        "shape": "TGeoBBox",
+        "capacity_cm3": 2300
+      },
+      {
+        "name": "ProtoTPC",
+        "material": "Ar80CO2",
+        "shape": "TGeoBBox",
+        "capacity_cm3": 230
+      },
+      {
+        "name": "Trig_stack",
+        "material": " Vacuum",
+        "shape": "TGeoBBox",
+        "capacity_cm3": 320
+      },
+      {
+        "name": "Trig_bar",
+        "material": "PSci",
+        "shape": "TGeoBBox",
+        "capacity_cm3": 160
+      }
+    ]
+  },
+  "input_sha256": {
+    "geometry": "a71c5cd7ce4cd7085f7f0236d5852f81aba0b52ff56bc2e9593f677e1e410d4e",
+    "output_root": "f831db709cd7446e4a75c8883a8dd82be4a1b23e05bef3002f2991082214a84f",
+    "output_root_1m": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+    "sigma_table": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "dedx_table": "9c2dd0d42473a6ffb96ec317a26d97815699d6b9ced6d3c46e65093d0114cb7b",
+    "macro": "f9bb3d5e6e44971a4f52a836ff95aad8b20acc8804f5d44ca5399cd938afd5a7",
+    "config": "9bee1e7f1519d2796fb08333de01b3ee1344cbb515672fc537c2411dbd134d2f",
+    "geoconf": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+    "source": "fa1fea341986a6270494cc7e714bd69aabf254350a75750c0b1a9acaaea2e05d"
+  },
+  "source_commit": "b73ea2a1bd2419e7c4a25a3bf23a419ad619234c",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "primary_event_export.csv.gz",
+    "primary_weight_closure_sample.csv.gz",
+    "weight_closure_bins.csv",
+    "angular_distribution_bins.csv",
+    "bootstrap_cis.csv",
+    "geometry_volume_inventory.csv",
+    "geometry_root_audit.json",
+    "geometry_overlap_stdout.txt"
+  ],
+  "next_tickets": [],
+  "runtime_sec": 5.248477458953857
+}

@@ -1,0 +1,41 @@
+{
+  "command": "python3 scripts/s21b_1783656688_10969_21015d93_weighted_source_geometry_audit.py",
+  "cwd": "/home/billy/.tb-workers/testbeam-laptop-2",
+  "python": "3.8.10",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "git_commit": "9e2176f2750eda73e56905bdc7b7b53990d52aa0",
+  "input_paths": {
+    "geometry": "/home/billy/ccb-geant4/krakow_109_8-38deg_4-71deg.root",
+    "output_root": "/home/billy/ccb-geant4/output_30k.root",
+    "output_root_1m": "/home/billy/ccb-geant4/output_krakow_1M.root",
+    "sigma_table": "/home/billy/ccb-geant4/sigma_pd_cm_190.txt",
+    "dedx_table": "/home/billy/ccb-geant4/dedx_p_in_CD2.txt",
+    "macro": "/home/billy/ccb-geant4/run_krakow.mac",
+    "config": "/home/billy/ccb-geant4/krakow.config",
+    "geoconf": "/home/billy/ccb-geant4/krakow.geoconf",
+    "source": "/home/billy/ccb-geant4/hibeam_g4_github/src/ScatteringGenerator.cc"
+  },
+  "input_sha256": {
+    "geometry": "a71c5cd7ce4cd7085f7f0236d5852f81aba0b52ff56bc2e9593f677e1e410d4e",
+    "output_root": "f831db709cd7446e4a75c8883a8dd82be4a1b23e05bef3002f2991082214a84f",
+    "output_root_1m": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+    "sigma_table": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "dedx_table": "9c2dd0d42473a6ffb96ec317a26d97815699d6b9ced6d3c46e65093d0114cb7b",
+    "macro": "f9bb3d5e6e44971a4f52a836ff95aad8b20acc8804f5d44ca5399cd938afd5a7",
+    "config": "9bee1e7f1519d2796fb08333de01b3ee1344cbb515672fc537c2411dbd134d2f",
+    "geoconf": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+    "source": "fa1fea341986a6270494cc7e714bd69aabf254350a75750c0b1a9acaaea2e05d"
+  },
+  "output_sha256": {
+    "REPORT.md": "0f137eab9772ff1d6b219278a1235717307a4b0ccbcc4216393a8a1715654cb9",
+    "angular_distribution_bins.csv": "fb21e84685bc80649649f4243270b7253b3c590425e8c21040919600e208b79f",
+    "bootstrap_cis.csv": "216fcf3d43c493aeb8c6b49833d9b0e5bf44118301c69d62ee8aed437d2dd5d4",
+    "geometry_overlap_stdout.txt": "4e91e896f1373cc1f1ea7b718158ddadc12aac2cb399330e35199ecba18acb4b",
+    "geometry_root_audit.json": "e058b10564acac41a1ff0861f218e6ef6147e7741108bcbd1e3d564d612c9250",
+    "geometry_volume_inventory.csv": "73513d0c690d8b51d2fadc942376ad74fc079b301e2ef3bd190da409e24ce895",
+    "primary_event_export.csv.gz": "703e70993f6785f0d95d2346289cb58778504441eaf5b9f6ace5144651dc3a1f",
+    "primary_weight_closure_sample.csv.gz": "a7157dd33505ae3d8ca5bb2aef0f29a62d8b543450eaf80c8371b1b14428542e",
+    "result.json": "5bec6f7a8e8de61185d3d9c29a8d392a2fe29572e0fa06710b2d285edf216890",
+    "weight_closure_bins.csv": "8b8999d96b1ecb689e3fbc17a0c3dc371730724fc97ec0af20db2e4ad66728c2"
+  }
+}

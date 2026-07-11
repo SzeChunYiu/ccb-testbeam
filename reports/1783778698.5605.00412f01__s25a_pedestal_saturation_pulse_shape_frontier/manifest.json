@@ -1,0 +1,16 @@
+{
+  "ticket_id": "1783778698.5605.00412f01",
+  "study": "S25A",
+  "command": "/home/billy/anaconda3/bin/python scripts/s25a_1783778698_5605_00412f01_pedestal_saturation_frontier.py --config configs/s25a_1783778698_5605_00412f01_pedestal_saturation_frontier.yaml",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_summary.csv",
+    "strata_summary.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "mlp"
+}

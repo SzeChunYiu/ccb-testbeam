@@ -1,0 +1,21 @@
+{
+  "ticket_id": "1783744936.12694.7f7904bd",
+  "config": "configs/s01k_1783744936_12694_7f7904bd_independent_overlay_review.yaml",
+  "command": "/home/billy/anaconda3/bin/python scripts/s01k_1783744936_12694_7f7904bd_independent_overlay_review.py --config configs/s01k_1783744936_12694_7f7904bd_independent_overlay_review.yaml",
+  "git_commit": "36d556b27a13582c2dfc2717c934ef8c8e9cc7ef",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "outputs": [
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/REPORT.md",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/heldout_per_run_metrics.csv",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/heldout_predictions.csv",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/input_sha256.csv",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/manifest.json",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/method_summary.csv",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/positive_gate_by_run.csv",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/reproduction_counts_by_run.csv",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/reproduction_match_table.csv",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/result.json",
+    "reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review/secondary_target_positive_gate_audit.csv"
+  ]
+}

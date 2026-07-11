@@ -1,0 +1,23 @@
+{
+  "study": "S18k",
+  "ticket": "1783798158.34403.4ec84e9b",
+  "worker": "testbeam-laptop-4",
+  "title": "fixed-efficiency A-stack amplitude gate transfer test",
+  "source_config": "configs/s18h_1781102709_886_658f43d5_astack_waveform_atom_audit.json",
+  "output_dir": "reports/1783798158.34403.4ec84e9b__s18k_fixed_efficiency_astack_amplitude_gate_transfer",
+  "script_path": "scripts/s18k_1783798158_34403_4ec84e9b_fixed_efficiency_astack_amplitude_gate_transfer.py",
+  "primary_gate": {
+    "cfd_fraction": 0.20,
+    "amplitude_cut_adc": 1000.0
+  },
+  "fixed_efficiency_reference": "pooled CFD20/cut1000 pair efficiency on Sample III train + Sample IV held-out support; per-run quantiles test whether late/mixed A-stack transfer is dominated by support loss or CFD interpolation noise",
+  "random_seed": 3798158,
+  "bootstrap_resamples": 300,
+  "nn": {
+    "epochs": 6,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "max_train_rows": 8000
+  }
+}

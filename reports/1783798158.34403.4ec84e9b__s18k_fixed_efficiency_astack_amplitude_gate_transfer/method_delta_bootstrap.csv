@@ -1,0 +1,11 @@
+pool,comparison,ci_low_ns,ci_high_ns,p_value
+fixed_adc_cut1000,ridge_minus_constrained_monotone_timewalk,-0.31926222941407423,1.029787930265272,0.88
+fixed_adc_cut1000,gradient_boosted_trees_minus_constrained_monotone_timewalk,-0.8430498789717316,-0.10342300880413079,0.02
+fixed_adc_cut1000,mlp_minus_constrained_monotone_timewalk,-1.0667451674831632,-0.4294973509271041,0.0
+fixed_adc_cut1000,cnn_1d_minus_constrained_monotone_timewalk,-0.13829195356464213,0.5060375908077073,0.62
+fixed_adc_cut1000,gated_residual_cnn_new_minus_constrained_monotone_timewalk,-0.03922624813115886,0.4912121622404155,0.11333333333333333
+fixed_efficiency,ridge_minus_constrained_monotone_timewalk,-23.989417705834647,-19.219786680543574,0.0
+fixed_efficiency,gradient_boosted_trees_minus_constrained_monotone_timewalk,-31.322914061636574,-24.451229089532582,0.0
+fixed_efficiency,mlp_minus_constrained_monotone_timewalk,-28.507743094481558,-23.036153232995936,0.0
+fixed_efficiency,cnn_1d_minus_constrained_monotone_timewalk,-6.040179447167004,-3.741728052896857,0.0
+fixed_efficiency,gated_residual_cnn_new_minus_constrained_monotone_timewalk,-19.67049679867327,-14.331496086122302,0.0

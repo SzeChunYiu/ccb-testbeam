@@ -2,6 +2,6 @@
 
 | Task | Status | Evidence |
 |---|---|---|
-| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` reported `open=17 claimed=4 done=639 failed=38`; after append: `open=20 claimed=2 done=641 failed=38`. |
-| New study tickets | done | Added `1783778698.5605.00412f01`, `1783778698.5670.085e66c9`, and `1783778698.5724.35fa56f2` as non-duplicate academic study tickets. |
+| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` initially reported `open=17 claimed=0 done=648 failed=40`; final audit reported `open=16 claimed=4 done=648 failed=40`. |
+| New study tickets | done | Added non-duplicate academic tickets `1783797017.25228.65b03fd7`, `1783797017.25295.3bed5b6b`, and `1783797017.25361.2d22547a`. |
 | Report hygiene | done | Scoreboard-only summary, under 200 lines, no running pass-log. |

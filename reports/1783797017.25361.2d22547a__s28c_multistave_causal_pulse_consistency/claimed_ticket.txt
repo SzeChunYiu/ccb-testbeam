@@ -1,0 +1,2 @@
+1783797017.25361.2d22547a
+# S28c multi-stave causal pulse-consistency audit. Academic-grade study: compare traditional time-of-flight plus charge-ratio chi-square consistency fits against ridge, gradient-boosted trees, MLP, 1D-CNN, and a transformer over ordered stave waveforms. Use bootstrap CIs for cross-stave timing closure, pulse-shape agreement, pile-up localization, saturation and pedestal robustness, energy calibration residuals, and PID separation.

@@ -1,0 +1,58 @@
+{
+  "config": {
+    "study_id": "S07o",
+    "ticket_id": "1783724290.27234.08030cfb",
+    "worker": "testbeam-laptop-1",
+    "title": "real-current validation of S07n hierarchical support-pooling gate",
+    "raw_root_dir": "data/root/root",
+    "output_dir": "reports/1783724290.27234.08030cfb__s07o_real_current_support_pooling",
+    "s07n_report_dir": "reports/1783600624.24816.324219c6__s07n_hierarchical_support_pooling",
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_replicates": 2000,
+    "random_seed": 2026071111,
+    "control_variant": "raw_clean",
+    "manual_proxy_dt_soft_ns": 1.5,
+    "manual_proxy_dt_hard_ns": 2.2,
+    "manual_proxy_traditional_quantile": 0.82,
+    "manual_proxy_p02_quantile": 0.82,
+    "manual_proxy_gbt_quantile": 0.86,
+    "manual_proxy_consensus_votes": 2,
+    "methods": [
+      "traditional timing/template reference",
+      "ridge_logistic",
+      "gradient_boosted_trees",
+      "mlp",
+      "cnn_1d",
+      "residual_tcn_fusion"
+    ]
+  },
+  "inputs": {
+    "/home/billy/.tb-workers/testbeam-laptop-1/reports/1783600624.24816.324219c6__s07n_hierarchical_support_pooling/oof_predictions.csv": "b9c06ef3bf36a837b9c255b4f98835fd812f39974124144526b88b6642e97424",
+    "/home/billy/.tb-workers/testbeam-laptop-1/reports/1783600624.24816.324219c6__s07n_hierarchical_support_pooling/hierarchical_pooling_by_row.csv": "fb55aa1bd2a33f634ea135f74a10f5ae4d1ede9eb8ed6f018b1cf687c9940528"
+  },
+  "environment": {
+    "python": "3.11.14",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35"
+  },
+  "git_commit": "373ae1f583e5148da0ac7ee979d7bdb626a89852",
+  "outputs": {
+    "hierarchical_gate_real_control_summary.csv": "45771e26d47bcab44ede9af163c30256509cf40bf2bf4ced5e485dd26fe0e6f9",
+    "hierarchical_gate_real_control_rows.csv": "2e05b92a7a05a9053e53b154afaa3e768235e7eb61e2a49e3c748463bf61d571",
+    "real_current_control_windows.csv": "432c6af6e714ba3383b7b0cbfb79bb9f5a2c083058219804aac2d3df55db1db7",
+    "REPORT.md": "cb75040a8c9e1153f506a75003abb26704f768849ae5f06041f6a57779cd61cc",
+    "method_by_run.csv": "a7426027141c553605a3f244c2cf466e2cc5581d5f9419518f5c8eb3d163417b",
+    "reproduction_match_table.csv": "e9942533ab4e7ab4352869a38599358820f1d6a4a646de5df25cad6e7b89193f",
+    "result.json": "d8b733233fb875719f9f7ed0de92acae857244efb2cb2cf64d24145f4516b62e",
+    "method_metrics.csv": "5fc5e1529d55da39660aa7d323e67b020e86e068b6c971c0023a76c33fadde11",
+    "raw_root_reproduction.csv": "4f6b96a4e5d6da5d604f18b227525a9f9d036a66c0c054ae2151ef4e997a1627",
+    "control_counts_by_run.csv": "1de26731a6d6ca051ab8253ab10f1fdc79f29dcaf07a023877e6bd5a382a7712"
+  }
+}

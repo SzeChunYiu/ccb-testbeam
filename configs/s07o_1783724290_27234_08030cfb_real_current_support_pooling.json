@@ -1,0 +1,27 @@
+{
+  "study_id": "S07o",
+  "ticket_id": "1783724290.27234.08030cfb",
+  "worker": "testbeam-laptop-1",
+  "title": "real-current validation of S07n hierarchical support-pooling gate",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1783724290.27234.08030cfb__s07o_real_current_support_pooling",
+  "s07n_report_dir": "reports/1783600624.24816.324219c6__s07n_hierarchical_support_pooling",
+  "runs": [58, 59, 60, 61, 62, 63, 65],
+  "bootstrap_replicates": 2000,
+  "random_seed": 2026071111,
+  "control_variant": "raw_clean",
+  "manual_proxy_dt_soft_ns": 1.5,
+  "manual_proxy_dt_hard_ns": 2.2,
+  "manual_proxy_traditional_quantile": 0.82,
+  "manual_proxy_p02_quantile": 0.82,
+  "manual_proxy_gbt_quantile": 0.86,
+  "manual_proxy_consensus_votes": 2,
+  "methods": [
+    "traditional timing/template reference",
+    "ridge_logistic",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "residual_tcn_fusion"
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "benchmark": {
+    "heldout_rows": 45906,
+    "panel_rows": 135000,
+    "train_rows": 45000,
+    "winner": "gradient_boosted_trees"
+  },
+  "direct_forced_random_labels_available": false,
+  "direct_winner": null,
+  "git_commit": "2a50af146057f88865d7dfd5a4a6965efe2df3d0",
+  "method_summary": [
+    {
+      "bias_adc": -0.5728012032045717,
+      "heldout_runs": "58,59,60,61,62,63,65",
+      "mae_adc": 14.899147318698656,
+      "mae_ci_high": 15.368619986763408,
+      "mae_ci_low": 14.459564510322654,
+      "method": "gradient_boosted_trees",
+      "n_rows": 45906,
+      "rmse_adc": 32.30437933377336,
+      "rmse_ci_high": 37.60380494637767,
+      "rmse_ci_low": 26.986396438171568
+    },
+    {
+      "bias_adc": 1.9804091329576359,
+      "heldout_runs": "58,59,60,61,62,63,65",
+      "mae_adc": 15.485955488200332,
+      "mae_ci_high": 15.846995232471741,
+      "mae_ci_low": 15.096478368909924,
+      "method": "mlp",
+      "n_rows": 45906,
+      "rmse_adc": 31.19175833330352,
+      "rmse_ci_high": 35.77839009980916,
+      "rmse_ci_low": 27.089237814720903
+    },
+    {
+      "bias_adc": 1.4756898083841785,
+      "heldout_runs": "58,59,60,61,62,63,65",
+      "mae_adc": 17.228169862553752,
+      "mae_ci_high": 17.72158543251499,
+      "mae_ci_low": 16.590405430928687,
+      "method": "one_dimensional_cnn",
+      "n_rows": 45906,
+      "rmse_adc": 46.47886211450305,
+      "rmse_ci_high": 56.47747901716653,
+      "rmse_ci_low": 34.96349083065873
+    },
+    {
+      "bias_adc": 2.069044533016302,
+      "heldout_runs": "58,59,60,61,62,63,65",
+      "mae_adc": 17.260093379792742,
+      "mae_ci_high": 17.794473666924837,
+      "mae_ci_low": 16.739523417773615,
+      "method": "pretrigger_gated_cnn",
+      "n_rows": 45906,
+      "rmse_adc": 46.52171725241061,
+      "rmse_ci_high": 55.946560493448956,
+      "rmse_ci_low": 36.546207079524386
+    },
+    {
+      "bias_adc": 2.6416443188791012,
+      "heldout_runs": "58,59,60,61,62,63,65",
+      "mae_adc": 17.39109246569497,
+      "mae_ci_high": 17.93561700069276,
+      "mae_ci_low": 16.707184122836313,
+      "method": "traditional_pretrigger_median",
+      "n_rows": 45906,
+      "rmse_adc": 46.697842429095644,
+      "rmse_ci_high": 58.03880843522036,
+      "rmse_ci_low": 35.36394803163174
+    },
+    {
+      "bias_adc": -2.6042587593785487,
+      "heldout_runs": "58,59,60,61,62,63,65",
+      "mae_adc": 21.7100682635255,
+      "mae_ci_high": 22.151176212473043,
+      "mae_ci_low": 21.162676210267307,
+      "method": "ridge",
+      "n_rows": 45906,
+      "rmse_adc": 40.830324222428466,
+      "rmse_ci_high": 46.92183527062608,
+      "rmse_ci_low": 34.51683356263892
+    }
+  ],
+  "next_tickets": [
+    {
+      "body": "Question: can the original run-control database or elog export enumerate forced/random/no-pulse trigger-mode runs with checksums and converter command lines for the CCB B-stack period? Expected information gain: distinguishes true non-acquisition from a mirror omission after S16r found no external DAQ/scaler/converter metadata in the mounted data tree.",
+      "title": "S16s: recover original DAQ run-control database for B-stack forced/random triggers"
+    }
+  ],
+  "provenance": {
+    "external_text_like_files": 16,
+    "keyword_root_files": 0,
+    "keyword_source_files": 3,
+    "nonbeam_trigger_entries": 0,
+    "root_files_scanned": 53,
+    "total_root_entries": 1649802,
+    "unique_trigger_values": [
+      1
+    ]
+  },
+  "reproduction": {
+    "delta": 0,
+    "expected_selected_pulses": 640737,
+    "matches_expected": true,
+    "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+    "selected_pulses": 640737
+  },
+  "runtime_seconds": 55.47462821006775,
+  "study": "S16r",
+  "ticket": "1783749770.15709.63d37124",
+  "winner": "gradient_boosted_trees",
+  "winner_context": "quiet beam-triggered proxy; direct forced/random truth unavailable",
+  "winner_rule": "lowest held-out run-block bootstrap MAE on the quiet beam-triggered proxy; direct forced/random truth winner is none when external labels are absent",
+  "worker": "testbeam-laptop-4"
+}

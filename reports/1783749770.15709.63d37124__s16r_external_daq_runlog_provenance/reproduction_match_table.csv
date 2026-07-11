@@ -1,0 +1,2 @@
+quantity,expected,observed,delta,pass
+"S00 selected B-stack pulses, A > 1000 ADC",640737,640737,0,True

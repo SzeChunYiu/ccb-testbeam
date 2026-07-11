@@ -1,0 +1,36 @@
+{
+  "methods_compared": [
+    "gradient_boosted_trees",
+    "traditional_joint",
+    "ridge",
+    "new_residual_architecture",
+    "1d_cnn",
+    "mlp",
+    "transformer_tokens"
+  ],
+  "next_tickets": [
+    "Train a single run-heldout waveform-token transformer with shared PID and energy heads, then rerun the residual-shape transfer audit without importing endpoint proxies."
+  ],
+  "primary_table": "method_benchmark.csv",
+  "raw_root_reproduction": {
+    "counts_by_run": "reproduction_counts_by_run.csv",
+    "delta": 0,
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737
+  },
+  "reproduced": true,
+  "source_artifacts": {
+    "endpoint": "reports/1783745883.3840.006f2c7d__pulse_pid_timing_waveform_ablation_bakeoff",
+    "energy": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction",
+    "pid": "reports/1783448817.17317.77bb4043__p08e_truth_anchored_pid_action_band_closure"
+  },
+  "split": "run-heldout source studies; source CIs are run-block bootstrap 95% intervals",
+  "study_id": "S24c",
+  "ticket_id": "1783754712.12305.1987074e",
+  "title": "Energy PID residual-shape transfer audit",
+  "transformer_note": "transformer_tokens is included as an energy-only aligned waveform-token comparator and is not eligible for the joint PID-energy transfer winner",
+  "winner": "gradient_boosted_trees",
+  "winner_rationale": "lowest weighted residual-transfer score across PID AUC loss, energy width, energy bias, saturation width, timing, pile-up, and pedestal diagnostics",
+  "winner_score": 0.09461792444631031,
+  "worker": "testbeam-laptop-1"
+}

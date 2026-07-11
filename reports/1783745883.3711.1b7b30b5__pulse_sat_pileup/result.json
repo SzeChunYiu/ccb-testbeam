@@ -1,0 +1,147 @@
+{
+  "ticket_id": "1783745883.3711.1b7b30b5",
+  "study_id": "PULSE-SAT-PILEUP",
+  "worker": "testbeam-laptop-1",
+  "title": "template deconvolution vs ML saturation/pile-up recovery",
+  "raw_root_dir": "data/root/root",
+  "script": "scripts/pulse_sat_pileup_1783745883_3711_1b7b30b5.py",
+  "config_path": "configs/1783745883.3711.1b7b30b5_pulse_sat_pileup.json",
+  "git_commit": "1d7d3da7a325276e8cca5a3d8c7f3f28a72367f0",
+  "python": "3.11.14",
+  "config": {
+    "max_clean_per_run_stave": 120,
+    "saturation_ceilings_adc": [
+      2400.0,
+      3200.0,
+      4200.0
+    ],
+    "pileup_secondary_fraction_range": [
+      0.2,
+      0.55
+    ],
+    "pileup_delay_samples": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "bootstrap_replicates": 300
+  },
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "amplitude_cut_adc": 1000.0
+  },
+  "runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "split": "leave-one-run-out with run-block bootstrap CIs",
+  "clean_seed_count": 13383,
+  "method_family_note": {
+    "NN_1d_cnn_feature_mlp": "fixed 1D temporal convolution feature map plus MLP head; PyTorch unavailable",
+    "NN_causal_attention_mlp_new": "causal cumulative-attention feature map plus MLP head; transformer-like surrogate due to PyTorch unavailable"
+  },
+  "winner": {
+    "method": "NN_1d_cnn_feature_mlp",
+    "energy_res68_frac": 0.06869147785566032,
+    "timing_sigma68_samples": 0.15832496643066407,
+    "pileup_auc": 0.997480897889837,
+    "energy_rank": 3.0,
+    "timing_rank": 1.0,
+    "pileup_rank": 2.0,
+    "composite_rank_score": 2.0
+  },
+  "best_saturation_energy": {
+    "method": "ML_gradient_boosted_trees",
+    "task": "saturation",
+    "n": 13383,
+    "energy_res68_frac": 0.022272704823616464,
+    "energy_res68_frac_ci_low": 0.021401395159906293,
+    "energy_res68_frac_ci_high": 0.023086472328005647,
+    "energy_bias_frac": 0.0005955560649320013,
+    "energy_bias_frac_ci_low": 0.0002363226310313438,
+    "energy_bias_frac_ci_high": 0.0009511762910479726,
+    "timing_sigma68_samples": 0.1583250575582548,
+    "timing_sigma68_samples_ci_low": 0.14710238458100314,
+    "timing_sigma68_samples_ci_high": 0.17016896883526644
+  },
+  "best_pileup_auc": {
+    "method": "NN_causal_attention_mlp_new",
+    "task": "pileup",
+    "n": 26766,
+    "pileup_auc": 0.9976104059453186,
+    "pileup_auc_ci_low": 0.9970336470752673,
+    "pileup_auc_ci_high": 0.9981390728045265,
+    "pileup_ap": 0.997891440760704,
+    "pileup_ap_ci_low": 0.9973087744974397,
+    "pileup_ap_ci_high": 0.9983197049667629
+  },
+  "traditional_baselines": {
+    "saturation": {
+      "method": "traditional_template_deconvolution_cfd",
+      "task": "saturation",
+      "n": 13383,
+      "energy_res68_frac": 0.1352173972522397,
+      "energy_res68_frac_ci_low": 0.1313994029543539,
+      "energy_res68_frac_ci_high": 0.1381598034537981,
+      "energy_bias_frac": -0.15120543369785222,
+      "energy_bias_frac_ci_low": -0.15315226848884375,
+      "energy_bias_frac_ci_high": -0.1487089533782852,
+      "timing_sigma68_samples": 0.15832505755825435,
+      "timing_sigma68_samples_ci_low": 0.14677805295956697,
+      "timing_sigma68_samples_ci_high": 0.16955212648974446
+    },
+    "pileup": {
+      "method": "traditional_template_residual_cfd",
+      "task": "pileup",
+      "n": 26766,
+      "pileup_auc": 0.5198024324198458,
+      "pileup_auc_ci_low": 0.5138112827331869,
+      "pileup_auc_ci_high": 0.5251260358569227,
+      "pileup_ap": 0.4932673613563907,
+      "pileup_ap_ci_low": 0.4900420770156576,
+      "pileup_ap_ci_high": 0.497349176924727
+    }
+  },
+  "runtime_sec": 484.989
+}

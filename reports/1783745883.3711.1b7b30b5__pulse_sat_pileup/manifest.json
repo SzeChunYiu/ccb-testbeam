@@ -1,0 +1,81 @@
+{
+  "ticket_id": "1783745883.3711.1b7b30b5",
+  "generated_at_unix": 1783762561.840874,
+  "artifacts": [
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/REPORT.md",
+      "sha256": "7539dc18aa3f937e703349fb6016abe3ce8254a78cbe085a5122b87e3a84ba83",
+      "bytes": 9630
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/benchmark_summary.png",
+      "sha256": "913d63340b2b7544fff9750f2681efbc3df15bd35c2919c95dba0e6a9f0478a6",
+      "bytes": 74208
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/clean_seed_sample.csv",
+      "sha256": "4443760050b3712e48e6cacd9ab4505f7b33b510675c3ae857d7d138b5bccd89",
+      "bytes": 790336
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/composite_ranking.csv",
+      "sha256": "cc211313c68eb868f3ec551693731eb9b080d43ef2ed17e75662409adcd04039",
+      "bytes": 642
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/pileup_per_run.csv",
+      "sha256": "c198400e294552c27ae47f571ebdb2ea8de04ddc8cfd45c28ee7009eb3173c80",
+      "bytes": 14367
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/pileup_predictions.csv.gz",
+      "sha256": "476168f8386e92b7a1d18f7dba49ff401e67da1e7330f685d2bfccebab5cc1fd",
+      "bytes": 1883115
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/pileup_summary.csv",
+      "sha256": "92a829c0f3c46420e79f8efb744fa3b9efcd2a2a314cd131d9b4473cbc671540",
+      "bytes": 989
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/pileup_task_rows.csv",
+      "sha256": "f76870b52a71488336c4598de3a2ad52a641ea47a3ede0ed460f880df7f3b204",
+      "bytes": 2670923
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/reproduction_match_table.csv",
+      "sha256": "00fd5ecc569cbb0f3bf88f77e4b5265db56373e1e266ec255d862c7e1d6c27c1",
+      "bytes": 131
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/result.json",
+      "sha256": "2727d1c7a482cd78c543a48122acc0af716e54def6385063dfaee68ef50211a1",
+      "bytes": 3962
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/saturation_per_run.csv",
+      "sha256": "1ba74751e8d5b0af4443930d5e3e7b1ed69d6b382ae921e321c11773a50fb2c3",
+      "bytes": 20080
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/saturation_predictions.csv.gz",
+      "sha256": "782c4ace89aff83fc63ab749b6a27a3bdddf5e74880ffb1108119aa60b57669c",
+      "bytes": 2223173
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/saturation_summary.csv",
+      "sha256": "737097916134e4ca09f746cfdab9125758943a9c181e148195c6bfa7d9c82c1d",
+      "bytes": 1567
+    },
+    {
+      "path": "reports/1783745883.3711.1b7b30b5__pulse_sat_pileup/saturation_task_rows.csv",
+      "sha256": "f1cacfa5dd634367b6b7fe8dbfbb3dc0922788964b7327791197c3958a222a36",
+      "bytes": 1246169
+    }
+  ]
+}

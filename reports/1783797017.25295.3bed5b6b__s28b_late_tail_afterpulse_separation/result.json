@@ -1,0 +1,240 @@
+{
+  "ticket_id": "1783797017.25295.3bed5b6b",
+  "study_id": "S28b",
+  "worker": "testbeam-laptop-3",
+  "title": "Late-tail memory and afterpulse separation study",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "09bdf2b7b5a726b210869a7c654830112213f32b",
+  "runtime_sec": 85.46257400512695,
+  "python": "3.7.6",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "train_rows": 30525,
+    "heldout_rows": 11845,
+    "bootstrap_replicates": 500
+  },
+  "label": {
+    "name": "afterpulse_or_pileup",
+    "late_tail_memory_threshold": 0.3356955921910285,
+    "afterpulse_residual_threshold": 0.25581894695758817
+  },
+  "label_counts": [
+    {
+      "split": "train",
+      "rows": 30525,
+      "positives": 12317,
+      "positive_fraction": 0.40350532350532353
+    },
+    {
+      "split": "heldout",
+      "rows": 11845,
+      "positives": 5048,
+      "positive_fraction": 0.42617138032925284
+    },
+    {
+      "split": "all",
+      "rows": 42370,
+      "positives": 17365,
+      "positive_fraction": 0.4098418692471088
+    }
+  ],
+  "systematic_bootstrap_cis": [
+    {
+      "metric": "tail_shape_parameter_exp_slope",
+      "interpretation": "tail-shape exponential slope",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": 0.037793248891830444,
+      "ci_low": 0.01605526888743043,
+      "ci_high": 0.08788686860352751,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "tail_shape_parameter_ar_rms",
+      "interpretation": "tail-shape AR residual RMS",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": 0.021942418068647385,
+      "ci_low": 0.012265833234414459,
+      "ci_high": 0.052989076869562265,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "timing_shift_mean_time_sample",
+      "interpretation": "timing shift",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": 0.5748553276062012,
+      "ci_low": 0.3664900898933411,
+      "ci_high": 1.4325795710086815,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pileup_confusion_event_multiplicity",
+      "interpretation": "pile-up confusion",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 1.0,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "saturation_recovery_late_tail_fraction",
+      "interpretation": "saturation recovery",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": 0.06399068981409073,
+      "ci_low": 0.03814968802034855,
+      "ci_high": 0.14854679331183435,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pedestal_drift_sensitivity_adc",
+      "interpretation": "pedestal drift sensitivity",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": -1.5,
+      "ci_low": -2.5,
+      "ci_high": 0.0,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "energy_bias_log10_amplitude",
+      "interpretation": "energy bias proxy",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": -0.02422696352005005,
+      "ci_low": -0.029775793850421905,
+      "ci_high": -0.0178834468126297,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pid_confusion_duplicate_readout_adc",
+      "interpretation": "PID confusion proxy",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5048,
+      "afterpulse_minus_memory_median_shift": -82.5,
+      "ci_low": -123.084375,
+      "ci_high": -41.97500000000002,
+      "bootstrap_replicates": 500
+    }
+  ],
+  "perturbation_negative_controls": [
+    {
+      "perturbation_adc": -150.0,
+      "rows": 42370,
+      "shape_l2_median": 0.034236816805257905,
+      "shape_l2_p95": 0.12455348389292713,
+      "label_flip_fraction": 0.2074581071512863,
+      "afterpulse_flip_fraction": 0.44307515116613877,
+      "memory_flip_fraction": 0.04383123375324935
+    },
+    {
+      "perturbation_adc": 150.0,
+      "rows": 42370,
+      "shape_l2_median": 0.031195557542128865,
+      "shape_l2_p95": 0.09706996889073968,
+      "label_flip_fraction": 0.1706868067028558,
+      "afterpulse_flip_fraction": 0.40765908436510223,
+      "memory_flip_fraction": 0.0061187762447510495
+    }
+  ],
+  "time_shuffle_negative_controls": [
+    {
+      "control": "time_reversal",
+      "description": "reverse the waveform sample order",
+      "rows": 42370,
+      "shape_l2_median": 0.3814008831977844,
+      "shape_l2_p95": 0.8439768552780148,
+      "original_afterpulse_fraction": 0.4098418692471088,
+      "control_afterpulse_fraction": 0.7713712532452207,
+      "label_flip_fraction": 0.5808827000236017,
+      "afterpulse_flip_fraction": 0.2676072559746617,
+      "memory_flip_fraction": 0.7984403119376124
+    },
+    {
+      "control": "circular_roll_plus3",
+      "description": "roll each waveform three samples later",
+      "rows": 42370,
+      "shape_l2_median": 0.41963398456573486,
+      "shape_l2_p95": 0.6698376268148423,
+      "original_afterpulse_fraction": 0.4098418692471088,
+      "control_afterpulse_fraction": 0.632452206750059,
+      "label_flip_fraction": 0.3195185272598537,
+      "afterpulse_flip_fraction": 0.1182263173049237,
+      "memory_flip_fraction": 0.45930813837232554
+    },
+    {
+      "control": "per_pulse_random_permutation",
+      "description": "shuffle sample order independently per pulse",
+      "rows": 42370,
+      "shape_l2_median": 0.5112568140029907,
+      "shape_l2_p95": 0.7752376973628994,
+      "original_afterpulse_fraction": 0.4098418692471088,
+      "control_afterpulse_fraction": 0.6155770592400284,
+      "label_flip_fraction": 0.3332782629218787,
+      "afterpulse_flip_fraction": 0.15560034552260293,
+      "memory_flip_fraction": 0.4566686662667466
+    }
+  ],
+  "best_traditional": {
+    "method": "traditional_scalar__event_selected_stave_multiplicity",
+    "n": 11845,
+    "positives": 5048,
+    "roc_auc": 0.8464738510301109,
+    "auc_ci_low": 0.8307624060751626,
+    "auc_ci_high": 0.8619314210328304,
+    "average_precision": 0.8238046037064861,
+    "role": "traditional_scalar",
+    "family": "pileup_event_context"
+  },
+  "winner": {
+    "method": "ML_gradient_boosted_trees",
+    "n": 11845,
+    "positives": 5048,
+    "roc_auc": 0.9999969980696714,
+    "auc_ci_low": 0.9999940678791548,
+    "auc_ci_high": 0.9999995346627927,
+    "average_precision": 0.9999959576748872,
+    "role": "ml_panel",
+    "family": null
+  },
+  "primary_methods": [
+    "traditional_scalar__event_selected_stave_multiplicity",
+    "ML_ridge_classifier",
+    "ML_gradient_boosted_trees",
+    "ML_mlp",
+    "NN_1d_cnn",
+    "NN_transformer_sequence_encoder_new"
+  ],
+  "verdict": "ML/NN model beats the strongest traditional exponential-tail/AR baseline by held-out AUC",
+  "ticket_cli_append_audit": {
+    "intentional_testbeam_follow_up_appended": false,
+    "accidental_default_project_append_id": "1783807740.5591.289d7cf0",
+    "accidental_default_project": "grocery",
+    "note": "No intentional testbeam follow-up was appended. A single accidental default-project grocery ticket was created by probing `tn-ticket append --help`: 1783807740.5591.289d7cf0."
+  },
+  "next_tickets": [
+    {
+      "appended_ticket_id": null,
+      "title": "Validate S28b afterpulse labels against random-trigger no-pulse windows",
+      "body": "Build an external negative-control label set from random-trigger/no-pulse windows and rerun the S28b late-tail afterpulse separator with identical run-block bootstrap CIs."
+    }
+  ]
+}

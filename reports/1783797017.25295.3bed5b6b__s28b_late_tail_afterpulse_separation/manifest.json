@@ -1,0 +1,96 @@
+{
+  "ticket_id": "1783797017.25295.3bed5b6b",
+  "generated_at_unix": 1783808319.0227144,
+  "artifacts": [
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/REPORT.md",
+      "sha256": "b32704464ea7a9d1b01143bf5b418feca8003517be6b8fd404c0e8da36a68121",
+      "bytes": 8497
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/claimed_ticket.txt",
+      "sha256": "02626f756211ef607e35074134af01ded3252ff002e4ed2a3476f6f6c06a3d15",
+      "bytes": 82
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/exponential_tail_diagnostics.csv",
+      "sha256": "ec089d26d91a5c34129087f42ed95f52ec18e9c1601fcef5b7310c1969512bc0",
+      "bytes": 523
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/heldout_predictions.csv.gz",
+      "sha256": "fc24a05cacff1364fed503b0122681d606a96dbfb9b2d729b754db959a6edd3a",
+      "bytes": 8378011
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/label_counts.csv",
+      "sha256": "3d2d8f9fca62e30068c329512e7561dc2c9c983fdc8010780f70842d420c5d9a",
+      "bytes": 151
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/late_tail_afterpulse_labels.csv",
+      "sha256": "cc5938ac0fc4c64b2e8c816162efa2c4c9f290cb620932a0c03079f7dafb5185",
+      "bytes": 7410541
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/method_summary_all.csv",
+      "sha256": "446467bdd74e012cee72b60008c76e1339dec81132d2dbf69c4491b75f6ff111",
+      "bytes": 9270
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/primary_auc_ci.png",
+      "sha256": "26b9fe0b8ffb914a5fa2980d024dfdd4751533ebe33d226bb057d7fceeca9dcf",
+      "bytes": 46824
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/primary_method_summary.csv",
+      "sha256": "6c03cd843a70fdbb0b34ff10b8d197b17b5fd062ba120484794d07fb57bf0c34",
+      "bytes": 842
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/reproduction_match_table.csv",
+      "sha256": "89ac7b77d6d795904d0bb951ab4966fe544a8a568b4124e54a5a8c95dfe5f432",
+      "bytes": 89
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/result.json",
+      "sha256": "17f4da5386fe656e241f47b3b923effeaf895d0048db7bf3b64825579be6c8d0",
+      "bytes": 7929
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/run_heldout_metrics.csv",
+      "sha256": "f7c97650ff1d4d149213c3f563f2b27cee53cd880e801b6a99bc1749bd9472bf",
+      "bytes": 39219
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/systematic_bootstrap_cis.csv",
+      "sha256": "8920dae6197c420e47b0c689070c1ad36ef71d50ab52386bca198a0724a177ca",
+      "bytes": 1048
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/tail_perturbation_negative_controls.csv",
+      "sha256": "ad5b263daab0a9e778533a2e1a3d27a265b9177474b6a699848724accd801ee9",
+      "bytes": 344
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/time_shuffle_negative_controls.csv",
+      "sha256": "3a3b4247a3b9c60845d5b1f2bec985caf72b50ba4b913414dae69953525e7e25",
+      "bytes": 777
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/traditional_feature_families.csv",
+      "sha256": "4742b2eed43305990befb1f3f7744df335902527852655bdcf7b632f18ff5bb7",
+      "bytes": 1690
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1783797017.25295.3bed5b6b__s28b_late_tail_afterpulse_separation/traditional_method_summary.csv",
+      "sha256": "3b67b00309218ef503a4b26967fc2cf32c658544460334d3478030a8b6f10643",
+      "bytes": 8689
+    }
+  ]
+}

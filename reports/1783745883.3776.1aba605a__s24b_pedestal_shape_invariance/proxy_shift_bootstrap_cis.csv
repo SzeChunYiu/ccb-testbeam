@@ -1,0 +1,5 @@
+metric,interpretation,heldout_rows,heldout_positive_rows,high_minus_low_median_shift,ci_low,ci_high,bootstrap_replicates
+shape_distance_nominal_chi2,shape-distance stability,9745,2060,0.11712110787630081,0.10342679973691701,0.12721177199855446,500
+timing_residual_mean_time_sample,timing residual,9745,2060,-3.240898609161377,-3.5574350118637086,-2.870983821153641,500
+energy_residual_log10_amplitude,energy calibration proxy,9745,2060,-0.09025871753692627,-0.10067925453186036,-0.07983764708042144,500
+pid_residual_odd_negative_adc,PID score proxy,9745,2060,-1545.625,-1645.38125,-1424.03125,500

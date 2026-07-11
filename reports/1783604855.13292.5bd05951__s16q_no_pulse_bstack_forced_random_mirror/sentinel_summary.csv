@@ -1,0 +1,3 @@
+sentinel,pedestal_mae_adc,pedestal_rmse_adc,pedestal_width68_adc,status
+shuffled_gradient_boosted_predictions,553.1888279323108,1262.3088949810274,269.80046679663695,pass
+run_target_median_sentinel,322.87281367909446,928.5474575999765,154.0,pass

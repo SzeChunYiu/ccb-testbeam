@@ -1,0 +1,21 @@
+{
+  "ticket_id": "1783798536.2368.2ce12433",
+  "git_commit": "5a07783ca67f9c412017131ab36e88c4406f7bd8",
+  "command": "/home/billy/anaconda3/bin/python scripts/s26b_1783798536_2368_2ce12433_saturation_energy_recovery_architecture_bakeoff.py",
+  "runtime_seconds": 145.6698453426361,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "b9e7fa1744a388fcb50a0b59b8133bd47c86663348eb08d27b1b3296003c56a7",
+    "claimed_ticket.txt": "ec1dbba1d210e4f11d47bb6ccea4a266d6776cd3e66279f7114a61aaab764b7d",
+    "event_predictions.csv": "09e52b936d9889180028a5aa9372907871f945ef85ab4781ccb73dff3abecf8a",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "375a009e013bebac8f4f36e4d1c514669dd757c36639a0f536a7a80b9550562a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "77b2142ae24578deb9e4d419b3010c647131b734def776571b3664cfdf03f278",
+    "run_heldout_metrics.csv": "6785766dccb7221a450ca07e366bde219ffd8f0c421351fdc7e58f0366f81454",
+    "strata_metrics.csv": "f462ce49552a3dcfa845d9b7ef2c7e68302a3f5ab0c2b86154d004411087d826",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "7f4fa98bc3a1e3e0b5d3308c269172ff921100b471f081968d63ee92aee3525f"
+  }
+}

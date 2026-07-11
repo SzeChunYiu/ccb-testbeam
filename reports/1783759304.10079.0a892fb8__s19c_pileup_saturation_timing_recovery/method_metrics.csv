@@ -1,0 +1,28 @@
+method,subset,n_pair_rows,n_runs,sigma68_ns,sigma68_ci_low_ns,sigma68_ci_high_ns,full_rms_ns,tail_frac_abs_gt5ns,note
+raw_pair_median,all,53039,7,1.7785114012708658,1.6119121632458218,2.129969066781833,12.778676396339755,0.08861403872622033,S05c pair-median centered raw CFD20 residual; no saturation correction
+raw_pair_median,B2_containing,34941,7,1.8378528249084942,1.563622019878086,2.776430555964933,15.03482886764508,0.1256689848601929,S05c pair-median centered raw CFD20 residual; no saturation correction
+raw_pair_median,downstream_only,18098,7,1.739301451550118,1.6962243291866825,1.7759025402924975,6.491766815720065,0.017073709802188086,S05c pair-median centered raw CFD20 residual; no saturation correction
+ridge_no_saturation,all,53039,7,4.857260222358541,4.492417696520838,5.377366815160782,10.275544366194984,0.31011142744018555,Ridge residual correction with amplitude/area/tail/peak features but no saturation features
+ridge_no_saturation,B2_containing,34941,7,4.880884672522989,4.434240449560962,6.147545629344304,11.68011309237326,0.3126985489825706,Ridge residual correction with amplitude/area/tail/peak features but no saturation features
+ridge_no_saturation,downstream_only,18098,7,4.539085381326437,4.164147475967853,5.076175644056476,6.874785817349594,0.28439606586363136,Ridge residual correction with amplitude/area/tail/peak features but no saturation features
+ridge_duplicate_safe,all,53039,7,4.601522575181081,4.345455054395761,5.174266855308642,9.734606857368954,0.29022040385376796,strong traditional Ridge with duplicate-safe waveform saturation diagnostics
+ridge_duplicate_safe,B2_containing,34941,7,4.944897191777962,4.54357172455567,5.903701597449169,11.131978487745375,0.31704873930339716,strong traditional Ridge with duplicate-safe waveform saturation diagnostics
+ridge_duplicate_safe,downstream_only,18098,7,3.8098640125822056,3.4393854525020235,4.350997236852287,6.297511452501764,0.2216819538070505,strong traditional Ridge with duplicate-safe waveform saturation diagnostics
+gbt_duplicate_safe,all,53039,7,3.8844029187793607,3.745833493852114,4.139239625755982,9.950658626915153,0.2198947943965761,gradient-boosted regression trees with duplicate-safe saturation diagnostics
+gbt_duplicate_safe,B2_containing,34941,7,3.8122245134706882,3.5007255216405175,4.469689907383709,11.480452129392486,0.24134970378638276,gradient-boosted regression trees with duplicate-safe saturation diagnostics
+gbt_duplicate_safe,downstream_only,18098,7,3.747064420052958,3.6104275966258577,3.8620051237148476,6.328821849448547,0.17598629682837882,gradient-boosted regression trees with duplicate-safe saturation diagnostics
+extra_trees_duplicate_safe,all,53039,7,2.9940445098395276,2.774632986804737,3.541029474301393,11.238167251251147,0.17841588265238786,ExtraTrees residual model with waveform and duplicate-safe saturation diagnostics
+extra_trees_duplicate_safe,B2_containing,34941,7,3.251720634267727,2.9808333128549,3.998016528386179,13.119762221152383,0.21977047022123009,ExtraTrees residual model with waveform and duplicate-safe saturation diagnostics
+extra_trees_duplicate_safe,downstream_only,18098,7,2.1724733148755844,1.9474268391795808,2.5029233983874817,6.297440523639961,0.0807824068957896,ExtraTrees residual model with waveform and duplicate-safe saturation diagnostics
+mlp_duplicate_safe,all,53039,7,3.609570164890484,3.3481245751399897,4.00608922415906,11.951953089408718,0.17613454250645752,tabular MLP with waveform summaries and duplicate-safe saturation diagnostics
+mlp_duplicate_safe,B2_containing,34941,7,3.5972049978286824,3.273386566037409,4.377175772738128,14.056290530726924,0.200480810509144,tabular MLP with waveform summaries and duplicate-safe saturation diagnostics
+mlp_duplicate_safe,downstream_only,18098,7,2.5494695344940386,2.4102876372670496,2.711999614539264,6.470704955720467,0.05204995027074815,tabular MLP with waveform summaries and duplicate-safe saturation diagnostics
+cnn_waveform_only,all,53039,7,4.688149247917692,3.313965779498357,5.455040863938604,13.127777592029279,0.289013744603028,1D-CNN over the two normalized endpoint waveforms only
+cnn_waveform_only,B2_containing,34941,7,4.9365592294471465,3.2094326546596017,5.444609176646824,15.361661613003939,0.3157036146647205,1D-CNN over the two normalized endpoint waveforms only
+cnn_waveform_only,downstream_only,18098,7,3.911074468638012,2.928485175337778,4.6370078980324765,7.265944497720397,0.18184329760194495,1D-CNN over the two normalized endpoint waveforms only
+hybrid_cnn_tabular_duplicate_safe,all,53039,7,4.0844898161208505,3.119138805538217,5.199334312775924,13.144937529906517,0.20631987782575087,new dual-branch 1D-CNN plus tabular duplicate-safe saturation diagnostics
+hybrid_cnn_tabular_duplicate_safe,B2_containing,34941,7,4.029737580527885,3.026924391444819,5.347629707650189,15.452945765854796,0.19922154488995736,new dual-branch 1D-CNN plus tabular duplicate-safe saturation diagnostics
+hybrid_cnn_tabular_duplicate_safe,downstream_only,18098,7,3.5556591229577523,2.8557212941091037,4.20548149500735,7.151365958404054,0.17090286219471765,new dual-branch 1D-CNN plus tabular duplicate-safe saturation diagnostics
+gbt_shuffled_target,all,53039,7,3.674611079995979,3.3243038957924096,4.1794333134533215,12.905172723392502,0.17191123512886744,gradient-boosted shuffled-target leakage sentinel
+gbt_shuffled_target,B2_containing,34941,7,3.672744451601452,3.162842974060249,4.843769162563012,15.228259098210675,0.1949572135886208,gradient-boosted shuffled-target leakage sentinel
+gbt_shuffled_target,downstream_only,18098,7,3.311597442474092,3.0490722504218053,3.5144613059123526,6.965847734651054,0.11785832688694883,gradient-boosted shuffled-target leakage sentinel

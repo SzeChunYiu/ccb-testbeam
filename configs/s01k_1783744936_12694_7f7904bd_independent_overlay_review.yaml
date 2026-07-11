@@ -1,0 +1,49 @@
+study_id: S01k_independent_overlay_review
+title: S01k independent overlay review feasibility and benchmark
+ticket_id: "1783744936.12694.7f7904bd"
+worker: testbeam-laptop-2
+output_dir: reports/1783744936.12694.7f7904bd__s01k_independent_overlay_review
+random_seed: 1783744936
+
+raw_root_dir: data/root/root
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+expected_selected_pulses: 640737
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+label_path: reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/blinded_gallery_adjudication.csv
+method_score_path: reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/method_adjudication_scores.csv
+secondary_label_path: reports/1781145663.1956.09ad79dc__s11h_blinded_ml_only_gallery_expansion/blinded_gallery.csv
+target_column: blind_consensus_recoverable
+positive_gate_per_run: 100
+bootstrap_samples: 2000
+
+methods:
+  traditional_template_fit:
+    family: traditional
+    source_method: traditional_template_fit
+  ridge:
+    family: ml
+    source_method: ridge_linear
+  gradient_boosted_trees:
+    family: ml
+    source_method: gradient_boosted_trees
+  mlp:
+    family: nn
+    source_method: mlp
+  1d_cnn:
+    family: nn
+    source_method: cnn_1d_dual_head
+  consensus_abstention_ensemble_new:
+    family: new_architecture
+    source_method: consensus_abstention_ensemble

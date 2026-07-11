@@ -1,0 +1,16 @@
+{
+  "ticket_id": "1783797017.25228.65b03fd7",
+  "study": "S28A",
+  "command": "/home/billy/anaconda3/bin/python scripts/s28a_1783797017_25228_65b03fd7_subsample_phase_transfer.py --config configs/s28a_1783797017_25228_65b03fd7_subsample_phase_transfer.yaml",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_summary.csv",
+    "strata_summary.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "gradient_boosted_trees"
+}

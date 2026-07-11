@@ -1,0 +1,64 @@
+{
+  "appended_ticket_id": "1783809609.5914.003e7f6e",
+  "benchmark_file": "method_summary.csv",
+  "leakage_checks_file": "leakage_checks.csv",
+  "ml_methods": [
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn",
+    "attention_quant"
+  ],
+  "next_tickets": [
+    {
+      "appended_ticket_id": "1783809609.5914.003e7f6e",
+      "body": "Freeze the S27a winning correction and repeat the quantization-stratified timing benchmark on an independent run block or acquisition period, retaining the same traditional baseline and paired bootstrap CI procedure. Expected information gain: distinguishes a stable ADC quantization correction from a run-local waveform support artifact.",
+      "title": "S27d: external run-block replication of ADC quantization timing correction"
+    }
+  ],
+  "per_run_metrics_file": "per_run_metrics.csv",
+  "raw_root_reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "status": "pass"
+  },
+  "reproduced": true,
+  "runtime_seconds": 50.769378662109375,
+  "scientific_summary": "The held-out winner is ridge with pairwise sigma68 1.4090 ns (95% CI 1.3301-1.4759) versus the training-selected traditional baseline traditional_template_phase at 3.0150 ns (95% CI 2.8940-3.0314). ADC quantization residual features are mapped as a systematic across pulse-shape, timing, pile-up, saturation, pedestal, energy, and PID-proxy strata; the result should be read as run-held-out timing-bias evidence, not external time truth.",
+  "split": {
+    "heldout_runs": [
+      63,
+      65
+    ],
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "unit": "run"
+  },
+  "strata_summary_file": "strata_summary.csv",
+  "study": "S27a",
+  "ticket": "1783780886.11160.609b70e1",
+  "title": "ADC quantization pulse-shape timing bias map",
+  "traditional": {
+    "ci95": [
+      2.8939930472240363,
+      3.0314459575271506
+    ],
+    "method": "traditional_template_phase",
+    "sigma68_ns": 3.014951608290771
+  },
+  "winner": {
+    "ci95": [
+      1.3300746842370068,
+      1.4759245933521798
+    ],
+    "metric": "heldout_pairwise_sigma68_ns",
+    "model": "ridge",
+    "value": 1.4089965930118609
+  },
+  "worker": "testbeam-laptop-3"
+}

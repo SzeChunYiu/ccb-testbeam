@@ -1,0 +1,21 @@
+{
+  "ticket": "1783680524.8153.67476e48",
+  "script": "scripts/p05h_1783680524_8153_67476e48_external_reviewer_calibration.py",
+  "config": "configs/p05h_1783680524_8153_67476e48_external_reviewer_calibration.json",
+  "python": "3.8.10",
+  "runtime_sec": 13.104615688323975,
+  "artifacts": [
+    "external_reviewer_agreement.csv",
+    "input_sha256.csv",
+    "leakage_checks.csv",
+    "method_summary.csv",
+    "per_run_method_metrics.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "reviewer_candidate_ledger.csv",
+    "reviewer_method_scores.csv",
+    "run_counts.csv",
+    "sideband_method_metrics.csv",
+    "threshold_recalibration.csv"
+  ]
+}

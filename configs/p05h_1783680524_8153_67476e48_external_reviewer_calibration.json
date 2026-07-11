@@ -1,0 +1,38 @@
+{
+  "study": "P05h",
+  "ticket": "1783680524.8153.67476e48",
+  "worker": "testbeam-laptop-4",
+  "title": "external reviewer calibration for borderline high-amplitude two-pulse hand-scan labels",
+  "upstream_ticket": "1781191650.1263.35bb131f",
+  "upstream_report_dir": "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation",
+  "raw_root_upstream_ticket": "1781068159.1612.2426717d",
+  "output_dir": "reports/1783680524.8153.67476e48__p05h_external_reviewer_calibration",
+  "random_seed": 3680524,
+  "bootstrap_samples": 200,
+  "borderline_band": "borderline",
+  "base_threshold": 0.45,
+  "reviewer_a_threshold": 0.45,
+  "reviewer_b_threshold": 0.45,
+  "threshold_grid": [
+    0.35,
+    0.375,
+    0.4,
+    0.425,
+    0.45,
+    0.475,
+    0.5,
+    0.525,
+    0.55,
+    0.575,
+    0.6
+  ],
+  "required_methods": [
+    "traditional_template_fit",
+    "ridge_linear",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d_dual_head",
+    "consensus_abstention_ensemble"
+  ],
+  "next_tickets": []
+}

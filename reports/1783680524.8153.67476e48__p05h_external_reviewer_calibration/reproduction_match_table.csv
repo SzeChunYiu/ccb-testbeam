@@ -1,0 +1,7 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+low_2nA multi_stave_per_selected_event,0.0156,0.0155875299760191,-1.24700239808144e-05,0.0015,True
+low_2nA three_stave_per_selected_event,0.0041,0.0041109969167523,1.099691675231218e-05,0.0015,True
+low_2nA downstream_per_selected_event,0.0231,0.0231243576567317,2.435765673175841e-05,0.0015,True
+high_20nA multi_stave_per_selected_event,0.0268,0.0268062959607239,6.295960723993327e-06,0.0015,True
+high_20nA three_stave_per_selected_event,0.0085,0.0085378958680123,3.789586801238899e-05,0.0015,True
+high_20nA downstream_per_selected_event,0.0334,0.0334141048062538,1.4104806253821545e-05,0.0015,True

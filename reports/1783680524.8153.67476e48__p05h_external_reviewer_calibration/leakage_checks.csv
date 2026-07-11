@@ -1,0 +1,7 @@
+check,value,pass,note
+raw_root_reproduction_pass,True,True,P05f raw HRDv ROOT reproduction gate is inherited through P05g and passes.
+required_method_coverage,"cnn_1d_dual_head,consensus_abstention_ensemble,gradient_boosted_trees,mlp,ridge_linear,traditional_template_fit",True,"Traditional, ridge, GBT, MLP, 1D-CNN, and consensus architecture are all present."
+reviewer_blinded_to_method_acceptance,True,True,Reviewer scores use waveform and template-fit primitives only.
+borderline_population_nontrivial,99,True,Borderline sample includes both consensus labels.
+run_block_bootstrap_unit,200,True,CIs resample whole source runs.
+single_followup_limit,0,True,This study queues no new ticket unless explicitly configured.

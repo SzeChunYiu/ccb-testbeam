@@ -1,0 +1,26 @@
+{
+  "ticket_id": "1783754165.7988.061a26d6",
+  "worker": "testbeam-laptop-1",
+  "output_dir": "reports/1783754165.7988.061a26d6__s24b_pileup_saturation_timing_frontier",
+  "created_date": "2026-07-11",
+  "claimed_ticket_file": "claimed_ticket.txt",
+  "report": "REPORT.md",
+  "result": "result.json",
+  "raw_root_reproduction_evidence": "raw_root_reproduction_check.txt",
+  "benchmark_tables": [
+    "source_endpoint_benchmark.csv",
+    "saturation_shape_strata_metrics.csv",
+    "energy_method_metrics.csv"
+  ],
+  "source_artifacts": [
+    {
+      "path": "reports/1783745883.3840.006f2c7d__pulse_pid_timing_waveform_ablation_bakeoff",
+      "used_for": "raw ROOT reproduction check and cross-endpoint timing, pile-up, saturation, PID, ridge, GBT, MLP, 1D-CNN, and new-architecture benchmark table"
+    },
+    {
+      "path": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction",
+      "used_for": "saturation-onset, multihit/pile-up, and inclusive energy-stratum confidence intervals"
+    }
+  ],
+  "append_ticket_count": 0
+}

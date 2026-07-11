@@ -1,0 +1,27 @@
+study_id: S19d
+title: Run-held-out drift calibration for the S19c timing and pile-up winners
+ticket: "1783770959.22058.576950cd"
+worker: testbeam-laptop-1
+
+raw_root_dir: data/root/root
+output_dir: reports/1783770959.22058.576950cd__s19d_runheldout_drift_calibration
+
+source_reports:
+  causal_s19c: reports/1783751737.13524.25796187__causal_timing_pileup_deconvolution
+  saturation_s19c: reports/1783759304.10079.0a892fb8__s19c_pileup_saturation_timing_recovery
+
+bootstrap_resamples: 600
+random_seed: 190419
+
+expected_counts:
+  total_selected_b_pulses: 640737
+  sample_i_analysis_b_selected_pulses: 252266
+  sample_ii_analysis_b_selected_pulses: 125096
+
+drift:
+  calibration_runs: [58, 59, 60, 61, 62, 63]
+  blinded_validation_runs: [65]
+  run_block_size: 2
+  adversarial_pedestal_offsets_adc: [-20.0, -10.0, 10.0, 20.0]
+  timing_pedestal_sensitivity_ns_per_adc: 0.006
+  pileup_pedestal_sensitivity_ns_per_adc: 0.018

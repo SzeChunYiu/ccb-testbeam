@@ -1,0 +1,23 @@
+Direct raw-ROOT selected-pulse reproduction check
+
+Command environment:
+- interpreter: .venv/bin/python
+- input glob: /home/billy/ccb-data/extracted/root/root/hrdb_run_*.root
+- tree: h101
+- branch: HRDv
+- configured runs: 31,32,33,34,35,36,37,39,40,41,42,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65
+
+Gate:
+- reshape each event to (8,18)
+- baseline: median of samples 0,1,2,3 per channel
+- corrected amplitude: max(raw - baseline)
+- selected channels: B2=0, B4=2, B6=4, B8=6
+- threshold: amplitude > 1000 ADC
+
+Result:
+- files_used: 33
+- by_stave B2 B4 B6 B8: 579424, 36116, 17945, 7252
+- total_selected: 640737
+- expected: 640737
+- delta: 0
+- pass: true

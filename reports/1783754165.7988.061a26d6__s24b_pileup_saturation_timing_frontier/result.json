@@ -1,0 +1,55 @@
+{
+  "ticket_id": "1783754165.7988.061a26d6",
+  "title": "S24b pile-up saturation timing frontier panel",
+  "worker": "testbeam-laptop-1",
+  "raw_root_reproduction": {
+    "input_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "logical_repo_input": "data/root/root/hrdb_run_*.root",
+    "tree": "h101",
+    "branch": "HRDv",
+    "selected_channels": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+    "baseline": "median ADC samples 0,1,2,3 per channel",
+    "threshold": "max(HRDv - baseline) > 1000 ADC",
+    "expected_selected_b_stave_pulses": 640737,
+    "reproduced_selected_b_stave_pulses": 640737,
+    "delta": 0,
+    "pass": true,
+    "evidence": "raw_root_reproduction_check.txt"
+  },
+  "split": {
+    "type": "source-run heldout / run-block folds",
+    "sample_i_calibration_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calibration_runs": [64],
+    "sample_ii_analysis_runs": [58, 59, 60, 61, 62, 63, 65],
+    "bootstrap": "95% percentile intervals over held-out run blocks or endpoint source run folds"
+  },
+  "methods_benchmarked": {
+    "strong_traditional": ["analytic_timewalk", "constrained_template_fit", "geant4_birks_lookup", "traditional_run_family_duplicate_gate", "traditional_topology"],
+    "ridge": true,
+    "gradient_boosted_trees": true,
+    "mlp": true,
+    "one_dimensional_cnn": true,
+    "new_architectures": ["tcn", "gru", "physics_residual_mlp", "transformer", "NN_residual_gated_cnn_new", "deepsets_layer_pool"]
+  },
+  "winner": "gradient_boosted_trees",
+  "winner_scope": "overall S24b timing and pile-up saturation frontier winner",
+  "winner_rationale": "Gradient-boosted trees win the direct timing endpoint (sigma68_ns 1.126633 [0.834468, 1.406165]) and the two-pulse pile-up timing endpoint (time_rms_ns 6.995971 [6.800592, 7.179133]) while remaining competitive in saturated and multihit energy strata. Endpoint-specific exceptions are recorded: NN_1d_cnn wins saturation action-gate utility, geant4_birks_lookup wins inclusive energy and pile-up/multihit energy resolution, and physics_residual_mlp wins the saturated energy-onset stratum.",
+  "endpoint_winners": {
+    "timing_sigma68": "gradient_boosted_trees",
+    "two_pulse_pileup_time_rms": "gradient_boosted_trees",
+    "saturation_action_gate_utility": "NN_1d_cnn",
+    "inclusive_energy_resolution": "geant4_birks_lookup",
+    "adc_saturation_onset_energy_resolution": "physics_residual_mlp",
+    "pileup_or_multihit_energy_resolution": "geant4_birks_lookup",
+    "pileup_or_multihit_energy_resolution_best_ml_nn": "physics_residual_mlp",
+    "truth_pileup_average_precision": "gradient_boosted_trees"
+  },
+  "primary_tables": [
+    "source_endpoint_benchmark.csv",
+    "saturation_shape_strata_metrics.csv",
+    "energy_method_metrics.csv"
+  ],
+  "novel_tickets_appended": 0,
+  "caveat": "The ticket artifact is a focused S24b synthesis over already materialized raw-ROOT-derived run-heldout benchmark tables, with the raw ROOT reproduction gate copied into this ticket directory. It does not rerun every neural training job in this turn."
+}

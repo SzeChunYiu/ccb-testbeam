@@ -1,0 +1,5 @@
+1783798536.2421.5ac4216b
+# s26c pid-aware pulse-shape timing transfer study
+
+Claimed by: testbeam-laptop-1
+Claim command: tn-ticket claim testbeam-laptop-1 --project testbeam

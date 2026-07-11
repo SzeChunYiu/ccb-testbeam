@@ -2,6 +2,6 @@
 
 | Task | Status | Evidence |
 |---|---|---|
-| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` reported `open=17`, then `open=18` after append drift. |
-| New study tickets | done | Added `1783744185.18732.50fe0fac`, `1783744185.18797.74950ac8`, `1783744185.18861.10947fe9`. |
+| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` reported `open=17`; after three appends `open=20`; latest recheck `open=19 claimed=7`. |
+| New study tickets | done | Added `1783745883.3711.1b7b30b5`, `1783745883.3776.1aba605a`, `1783745883.3840.006f2c7d`. |
 | Report hygiene | done | Scoreboard-only summary; no narrative log retained. |

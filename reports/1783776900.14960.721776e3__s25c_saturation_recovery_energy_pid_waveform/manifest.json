@@ -1,0 +1,48 @@
+{
+  "ticket_id": "1783776900.14960.721776e3",
+  "generated_utc": "2026-07-11T19:56:49.488702+00:00",
+  "git_commit": "24a8f9cefba2f2c580a8fd988367f37406c4c560",
+  "command": ".venv/bin/python scripts/s25c_1783776900_14960_721776e3_saturation_recovery_energy_pid_waveform.py",
+  "inputs": {
+    "config": "configs/s25c_1783776900_14960_721776e3_saturation_recovery_energy_pid_waveform.json",
+    "raw_root_dir": "data/root/root",
+    "s25a": "reports/1783751737.13516.61447038__s25a_joint_pid_energy_pileup_saturation",
+    "endpoint": "reports/1783745883.3840.006f2c7d__pulse_pid_timing_waveform_ablation_bakeoff",
+    "causal_timing": "reports/1783751737.13524.25796187__causal_timing_pileup_deconvolution",
+    "s25b": "reports/1783762816.2490.722918d7__s25b_saturation_onset_hysteresis_waveform_recovery"
+  },
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 16142,
+      "sha256": "e92a373192a0a28f5efce2faa4375f006ed5b9c65358806100f11b5a0ee7f80a"
+    },
+    "causal_ablation_method_panel.csv": {
+      "bytes": 5572,
+      "sha256": "d1ace8cb88ec9744c3415605a4c8c819e7dfa013e7cad10e5cfa70e534f67dbf"
+    },
+    "reproduction_counts_by_run.csv": {
+      "bytes": 1677,
+      "sha256": "bee13bc5ee64a023c0a9b7c3af0fe0614e45533e43e74b858a18ee2793b3b591"
+    },
+    "reproduction_match_table.csv": {
+      "bytes": 329,
+      "sha256": "b2c75394ea0fb21ca2ed7531c9178a9544d97a1becb51d046e990178321c6dc9"
+    },
+    "result.json": {
+      "bytes": 17665,
+      "sha256": "a08d68ce3d1df76fd746037f8815c4564ac66e9be804eb51dbf987f681cdbce8"
+    },
+    "source_artifacts.csv": {
+      "bytes": 626,
+      "sha256": "7ecbfa97dc8005538fdb14e2ff0f116d8eee4fcefa3248680e41a23cc4ce19ea"
+    },
+    "timing_knockout_summary.csv": {
+      "bytes": 1304,
+      "sha256": "d3bc6ccc0ccc3ab0be763ba4147260d65bea9ab175438f9ae36a12cbc24497b1"
+    },
+    "manifest.json": {
+      "bytes": 1839,
+      "sha256": "cb58be63532895a86d81aca62055d7b0d7915c6a96fde6ec79a90646c73e9f6a"
+    }
+  }
+}

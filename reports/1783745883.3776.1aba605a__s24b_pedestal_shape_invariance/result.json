@@ -1,0 +1,162 @@
+{
+  "ticket_id": "1783745883.3776.1aba605a",
+  "study_id": "S24B",
+  "worker": "testbeam-laptop-4",
+  "title": "pedestal drift and waveform-shape invariance benchmark",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "c241663789ef7e4182851174428df40b930b94e6",
+  "runtime_sec": 74.71673679351807,
+  "python": "3.7.6",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "train_rows": 25493,
+    "heldout_rows": 9745,
+    "bootstrap_replicates": 500
+  },
+  "label": {
+    "name": "high pedestal drift",
+    "definition": "abs(baseline_adc - median_run_stave_baseline_adc) >= configured quantile threshold",
+    "high_quantile": 0.8,
+    "threshold_adc": 38.25
+  },
+  "pedestal_drift": {
+    "by_run_rows": 33,
+    "time_block_rows": 119,
+    "median_abs_drift_adc": 17.25,
+    "p90_abs_drift_adc": 375.2999999999993
+  },
+  "perturbation_negative_controls": [
+    {
+      "perturbation_adc": -150.0,
+      "rows": 35238,
+      "shape_l2_median": 0.03475685420283781,
+      "shape_l2_p95": 0.12413844872096991,
+      "high_drift_shape_l2_median": 0.047257359453519485,
+      "low_drift_shape_l2_median": 0.033000416153124566
+    },
+    {
+      "perturbation_adc": 150.0,
+      "rows": 35238,
+      "shape_l2_median": 0.03161870149670762,
+      "shape_l2_p95": 0.09684760156626421,
+      "high_drift_shape_l2_median": 0.042094319839824534,
+      "low_drift_shape_l2_median": 0.030120764219235135
+    }
+  ],
+  "proxy_shift_bootstrap_cis": [
+    {
+      "metric": "shape_distance_nominal_chi2",
+      "interpretation": "shape-distance stability",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": 0.11712110787630081,
+      "ci_low": 0.10342679973691701,
+      "ci_high": 0.12721177199855446,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "timing_residual_mean_time_sample",
+      "interpretation": "timing residual",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": -3.240898609161377,
+      "ci_low": -3.5574350118637086,
+      "ci_high": -2.870983821153641,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "energy_residual_log10_amplitude",
+      "interpretation": "energy calibration proxy",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": -0.09025871753692627,
+      "ci_low": -0.10067925453186036,
+      "ci_high": -0.07983764708042144,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pid_residual_odd_negative_adc",
+      "interpretation": "PID score proxy",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": -1545.625,
+      "ci_low": -1645.38125,
+      "ci_high": -1424.03125,
+      "bootstrap_replicates": 500
+    }
+  ],
+  "label_counts": [
+    {
+      "split": "train",
+      "rows": 25493,
+      "positives": 5009,
+      "positive_fraction": 0.19648530969285685
+    },
+    {
+      "split": "heldout",
+      "rows": 9745,
+      "positives": 2060,
+      "positive_fraction": 0.21139045664443304
+    },
+    {
+      "split": "all",
+      "rows": 35238,
+      "positives": 7069,
+      "positive_fraction": 0.2006072989386458
+    }
+  ],
+  "best_traditional": {
+    "method": "traditional_fisher_gatti_all_features",
+    "n": 9745,
+    "positives": 2060,
+    "roc_auc": 0.887847780634321,
+    "auc_ci_low": 0.8585370244706627,
+    "auc_ci_high": 0.9069646780313374,
+    "average_precision": 0.8437369626806818,
+    "role": "traditional_multivariate",
+    "family": "fisher_gatti_engineered_features"
+  },
+  "winner": {
+    "method": "ML_gradient_boosted_trees",
+    "n": 9745,
+    "positives": 2060,
+    "roc_auc": 0.9483792977114667,
+    "auc_ci_low": 0.9248153335858457,
+    "auc_ci_high": 0.9644058296786087,
+    "average_precision": 0.9203535813333132,
+    "role": "ml_panel",
+    "family": null
+  },
+  "primary_methods": [
+    "traditional_fisher_gatti_all_features",
+    "ML_ridge_classifier",
+    "ML_gradient_boosted_trees",
+    "ML_mlp",
+    "NN_1d_cnn",
+    "NN_residual_squeeze_cnn_new"
+  ],
+  "verdict": "winner is ML_gradient_boosted_trees by held-out ROC AUC; best traditional is traditional_fisher_gatti_all_features",
+  "next_tickets": [
+    {
+      "appended_ticket_id": null,
+      "title": "Externalize pedestal drift labels with no-pulse random-trigger windows",
+      "body": "Validate S24B by deriving independent pedestal-drift labels from random-trigger/no-pulse windows and testing whether the winning waveform-shape discriminator still predicts them under run-heldout and time-blocked bootstrap CIs."
+    }
+  ]
+}

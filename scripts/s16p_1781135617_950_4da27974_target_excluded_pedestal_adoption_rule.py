@@ -165,6 +165,36 @@ def load_selected_and_reproduce(cfg: dict) -> tuple[pd.DataFrame, np.ndarray, pd
     return meta, wave, per_run, reproduction
 
 
+def trigger_mode_manifest(cfg: dict) -> pd.DataFrame:
+    rows = []
+    tag_tokens = ("trigger", "trig", "mode", "random", "forced", "ped", "beam")
+    for run in cfg["all_runs"]:
+        path = raw_file(cfg, int(run))
+        with uproot.open(path)["h101"] as tree:
+            branches = list(tree.keys())
+            tag_like = [b for b in branches if any(tok in b.lower() for tok in tag_tokens)]
+            if "TRIGGER" in branches:
+                trig = np.asarray(tree.arrays(["TRIGGER"], library="np")["TRIGGER"])
+                vals, counts = np.unique(trig, return_counts=True)
+                summary = ";".join("%s:%d" % (str(int(v)), int(c)) for v, c in zip(vals, counts))
+                non_beam = int(np.sum(trig != 1))
+            else:
+                summary = "missing"
+                non_beam = 0
+        rows.append(
+            {
+                "run": int(run),
+                "path": str(path),
+                "sha256": sha256_file(path),
+                "entries": int(uproot.open(path)["h101"].num_entries),
+                "trigger_summary": summary,
+                "non_beam_trigger_entries": non_beam,
+                "tag_like_branches": ";".join(tag_like),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def forced_random_inventory(cfg: dict) -> dict:
     roots = [ROOT / cfg["raw_root_dir"], (ROOT / cfg["raw_root_dir"]).parent, ROOT / "data"]
     keywords = ("forced", "random", "pedestal", "nopulse", "no_pulse", "empty", "noise", "dark")
@@ -352,9 +382,11 @@ def md_table(df: pd.DataFrame, cols: list[str]) -> str:
     return "\n".join(out)
 
 
-def write_report(cfg, out, reproduction, inventory, summary, by_run, winner, runtime):
+def write_report(cfg, out, reproduction, inventory, trigger_manifest, summary, by_run, winner, runtime):
+    n_non_beam = int(trigger_manifest["non_beam_trigger_entries"].sum())
+    trigger_modes = sorted(set(str(x) for x in trigger_manifest["trigger_summary"].unique()))
     lines = [
-        "# S16p Target-Excluded Pedestal Adoption Rule",
+        "# S16p Checksum-Bound Forced/Random B-Stack Pedestal Label Ingest",
         "",
         f"- **Ticket:** `{cfg['ticket']}`",
         f"- **Worker:** `{cfg['worker']}`",
@@ -364,7 +396,7 @@ def write_report(cfg, out, reproduction, inventory, summary, by_run, winner, run
         "",
         "## Abstract",
         "",
-        "S16p tests whether the target-excluded pretrigger pedestal estimator can be adopted if a true forced/random B-stack no-pulse mirror has been acquired. The raw-data gate is an exact recount of selected B-stack pulses from `h101/HRDv`. The benchmark then uses real selected-pulse waveforms from held-out runs to predict each pretrigger sample from the other three samples and pulse-shape covariates. This is a surrogate for the desired no-pulse truth test; the acquisition inventory found no dedicated forced/random ROOT mirror in the accessible data tree, so the adoption decision is conservative.",
+        "This ticket asks for a checksum-pinned forced/random/no-pulse B-stack ROOT ingest with trigger-mode metadata and an S16o/S16p-style benchmark against true electronics-pedestal labels. The mounted data tree contains the canonical reduced B-stack ROOT files but no dedicated forced/random/no-pulse B-stack ROOT source. I therefore separate two estimands. First, the ingest audit is a direct raw-ROOT audit of every analysed B-stack file, with SHA-256 checksums and trigger-mode summaries. Second, because true no-pulse labels are absent, the benchmark is the strongest available beam-pretrigger surrogate: predict a hidden pretrigger sample from the other three samples and waveform covariates with full runs held out. The numerical winner is recorded, but the production adoption rule remains blocked until true forced/random labels are mounted.",
         "",
         "## Raw ROOT Reproduction",
         "",
@@ -374,15 +406,21 @@ def write_report(cfg, out, reproduction, inventory, summary, by_run, winner, run
         "",
         f"The recomputed total is **{reproduction['selected_pulses']:,}**, matching the canonical ticket number: `{reproduction['matches_expected']}`.",
         "",
+        "The reproduction gate is evaluated before any model is fit. The per-run artifact `raw_root_selected_counts_by_run.csv` contains the selected-pulse count and checksum for each ROOT file.",
+        "",
         "## Forced/Random Mirror Inventory",
         "",
-        f"Keyword ROOT hits: {inventory['keyword_root_hits']}. Dedicated forced/random ROOT found: `{inventory['dedicated_forced_random_root_found']}`. Because no true no-pulse mirror was found, S16p evaluates the adoption rule on beam pretrigger samples and does not promote the estimator for production baseline replacement.",
+        f"Keyword ROOT hits: {inventory['keyword_root_hits']}. Dedicated forced/random ROOT found: `{inventory['dedicated_forced_random_root_found']}`. The trigger-mode checksum manifest contains {len(trigger_manifest)} B-stack ROOT files and {n_non_beam} entries with `TRIGGER != 1`; observed trigger summaries are `{'; '.join(trigger_modes)}`. Because no true no-pulse mirror was found, S16p evaluates the adoption rule on beam pretrigger samples and does not promote the estimator for production baseline replacement.",
+        "",
+        "The manifest file `trigger_mode_manifest.csv` is the checksum-bound ingest artifact requested by the ticket. It records `run`, `path`, `sha256`, `entries`, `trigger_summary`, non-beam-trigger counts, and tag-like branch names. The companion `input_sha256.csv` is a minimal checksum table for downstream provenance checks.",
         "",
         "## Methods",
         "",
-        "Each selected pulse contributes four supervised rows. For target pretrigger sample \\(j\\in\\{0,1,2,3\\}\\), the target is \\(y=x_j\\). The traditional comparator is the three-point least-squares line extrapolation/interpolation \\(\\hat y_j=a+bj\\) fitted only on the other three pretrigger samples. ML/NN methods receive the same scalar covariates: target index, stave index, amplitude, peak sample, pretrigger RMS/range, late integral, late maximum, and three-sample summaries. The 1D-CNN also sees the 18-sample waveform with the target sample replaced by the traditional estimate. The new `target_masked_residual_cnn` gates convolution channels with scalar covariates before regression.",
+        "Each selected pulse contributes four supervised rows. For target pretrigger sample \\(j\\in\\{0,1,2,3\\}\\), the target is \\(y=x_j\\). Let \\(O_j=\\{0,1,2,3\\}\\setminus\\{j\\}\\). The strong traditional comparator fits \\(x_t=a+b t\\) by least squares using only \\(t\\in O_j\\), then predicts \\(\\hat y_j=a+bj\\). Ridge regression minimizes \\(\\sum_i (y_i-x_i^T\\beta)^2+\\lambda\\|\\beta\\|_2^2\\). Histogram gradient-boosted trees minimize squared error with shallow additive trees. The MLP is a two-hidden-layer tabular regressor. The 1D-CNN receives the 18-sample waveform with the target sample replaced by the traditional estimate. The new `target_masked_residual_cnn` gates convolution channels with scalar covariates before regression, explicitly marking the hidden target location and allowing waveform residual features to be conditionally suppressed or amplified.",
         "",
         "For held-out run \\(r\\), all rows from \\(r\\) are excluded from training. The primary loss is \\(\\mathrm{MAE}=n^{-1}\\sum_i |\\hat y_i-y_i|\\). The secondary robust width is \\(\\sigma_{68}=(Q_{84}-Q_{16})/2\\), and the operational tail is \\(P(|\\hat y-y|>25\\,\\mathrm{ADC})\\). Confidence intervals resample held-out runs with replacement.",
+        "",
+        "No model receives run number, event number, ROOT entry order, or the hidden target sample value as an input. Target leakage is further reduced by replacing the target waveform sample with the traditional estimate before neural-network training.",
         "",
         "## Pooled Run-Held-Out Results",
         "",
@@ -397,6 +435,8 @@ def write_report(cfg, out, reproduction, inventory, summary, by_run, winner, run
         "- The exact raw ROOT count validates file access and selected-pulse semantics, but it does not by itself supply no-pulse pedestal truth.",
         "- The accessible data tree contains beam-trigger selected-pulse files; keyword inventory did not find a dedicated forced/random no-pulse ROOT mirror.",
         "- The benchmark target is a pretrigger sample hidden from the model. It diagnoses target-excluded imputation skill, not unbiased baseline replacement under true no-pulse acquisition.",
+        "- The raw files expose only beam-trigger reduced ROOT in this mirror. Trigger-mode metadata are checksum-pinned, but the physical forced/random acquisition requested by the ticket is not present.",
+        "- The traditional line3 method can have low robust width but high MAE when run-level offsets or outliers dominate; the winner is selected by the predeclared run-mean MAE for this imputation benchmark.",
         "- Run-bootstrap intervals use eight held-out runs, so they measure run-to-run variation coarsely and should not be interpreted as asymptotic standard errors.",
         "- Neural-network rankings can vary with initialization; fixed seeds, capped rows per run, and common run splits are used to keep the artifact reproducible.",
         "",
@@ -419,13 +459,16 @@ def main() -> None:
     start = time.time()
     meta, waves, per_run, reproduction = load_selected_and_reproduce(cfg)
     inventory = forced_random_inventory(cfg)
+    trigger_manifest = trigger_mode_manifest(cfg)
     df, wave_rows, y = make_target_rows(meta, waves, cfg["pretrigger_samples"])
     summary, by_run, winner = benchmark(cfg, df, wave_rows, y)
     runtime = time.time() - start
     per_run.to_csv(out / "raw_root_selected_counts_by_run.csv", index=False)
+    trigger_manifest.to_csv(out / "trigger_mode_manifest.csv", index=False)
+    trigger_manifest[["run", "path", "sha256"]].to_csv(out / "input_sha256.csv", index=False)
     summary.to_csv(out / "benchmark_summary.csv", index=False)
     by_run.to_csv(out / "benchmark_by_run.csv", index=False)
-    write_report(cfg, out, reproduction, inventory, summary, by_run, winner, runtime)
+    write_report(cfg, out, reproduction, inventory, trigger_manifest, summary, by_run, winner, runtime)
     result = {
         "ticket": cfg["ticket"],
         "study": cfg["study"],
@@ -436,6 +479,13 @@ def main() -> None:
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "torch_available": bool(torch is not None)},
         "raw_root_reproduction": reproduction,
         "forced_random_inventory": inventory,
+        "trigger_mode_manifest": {
+            "artifact": "trigger_mode_manifest.csv",
+            "n_files": int(len(trigger_manifest)),
+            "total_entries": int(trigger_manifest["entries"].sum()),
+            "non_beam_trigger_entries": int(trigger_manifest["non_beam_trigger_entries"].sum()),
+            "unique_trigger_summaries": sorted(str(x) for x in trigger_manifest["trigger_summary"].unique()),
+        },
         "split": {"unit": "run", "heldout_runs": sorted(int(x) for x in df["run"].unique()), "bootstrap_unit": "heldout_run", "bootstrap_resamples": int(cfg["bootstrap_resamples"])},
         "methods": summary.to_dict(orient="records"),
         "winner": winner,
@@ -444,7 +494,7 @@ def main() -> None:
             "reason": "No dedicated forced/random no-pulse ROOT mirror was found; benchmark is a beam-pretrigger surrogate.",
             "candidate_to_rerun_when_truth_available": str(winner["method"]),
         },
-        "artifacts": ["REPORT.md", "result.json", "benchmark_summary.csv", "benchmark_by_run.csv", "raw_root_selected_counts_by_run.csv"],
+        "artifacts": ["REPORT.md", "result.json", "benchmark_summary.csv", "benchmark_by_run.csv", "raw_root_selected_counts_by_run.csv", "trigger_mode_manifest.csv", "input_sha256.csv"],
         "next_tickets": cfg.get("next_tickets", [])[:1],
     }
     (out / "result.json").write_text(json.dumps(json_ready(result), indent=2) + "\n", encoding="utf-8")

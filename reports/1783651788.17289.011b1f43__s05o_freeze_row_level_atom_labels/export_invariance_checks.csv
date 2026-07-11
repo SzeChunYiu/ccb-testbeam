@@ -1,0 +1,10 @@
+check,value,expected,pass
+row_count_export,65504,65504,True
+key_set_match,"{'both': 65504, 'left_only': 0, 'right_only': 0}",both only,True
+support_atom_mismatch_count,0,0,True
+support_ref_atom_mismatch_count,0,0,True
+atom_b2_saturation_depth_mismatch_count,0,0,True
+atom_q_template_shift_mismatch_count,0,0,True
+atom_amplitude_mismatch_count,0,0,True
+atom_baseline_lowering_mismatch_count,0,0,True
+atom_pileup_candidate_mismatch_count,0,0,True

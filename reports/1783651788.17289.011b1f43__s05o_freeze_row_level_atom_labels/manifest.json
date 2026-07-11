@@ -1,0 +1,19 @@
+{
+  "ticket": "1783651788.17289.011b1f43",
+  "outputs": [
+    "REPORT.md",
+    "atom_interval_by_run.csv",
+    "atom_interval_summary.csv",
+    "axis_systematics_summary.csv",
+    "export_invariance_checks.csv",
+    "input_sha256.csv",
+    "loro_residual_export_with_atoms.csv.gz",
+    "manifest.json",
+    "method_atom_coverage_summary.csv",
+    "metric_invariance_vs_reconstruction.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "row_level_support_residuals.csv.gz",
+    "run_split_method_metrics.csv"
+  ]
+}

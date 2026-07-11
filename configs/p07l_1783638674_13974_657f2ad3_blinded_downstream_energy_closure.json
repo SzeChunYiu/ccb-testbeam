@@ -1,0 +1,30 @@
+{
+  "ticket": "1783638674.13974.657f2ad3",
+  "worker": "testbeam-laptop-3",
+  "study": "P07l",
+  "title": "blinded downstream-energy closure for duplicate-gated B2 corrections",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1783638674.13974.657f2ad3__p07l_blinded_downstream_energy_closure",
+  "frozen_p07j_report": "reports/1781151055.1851.734c09d2__p07j_duplicate_gated_independent_consumers",
+  "frozen_p07k_report": "reports/1781153592.1544.2e244948__p07k_action_band_downstream_consumers",
+  "frozen_p07k_config": "configs/p07k_1781153592_1544_2e244948_action_band_downstream_consumers.json",
+  "expected_selected_pulses": 640737,
+  "expected_p07e_high_duplicate_rows": 183132,
+  "expected_p07f_duplicate_rows": 565387,
+  "expected_candidate_rows": 177508,
+  "expected_oracle_accepted_rows": 2716,
+  "bootstrap_replicates": 400,
+  "primary_winner_rule": [
+    "use only methods with passes_side_effect_gates=true",
+    "require zero or near-zero PID harm, timing-tail shift, q_template shift, and CFD20 median shift before energy ranking",
+    "among methods satisfying the safety screen, minimize charge_res68 and absolute charge_bias",
+    "report support-utility winner separately and do not promote it if blinded downstream safety is worse"
+  ],
+  "side_effect_tolerances": {
+    "harm_rate_vs_no_correction": 0.0001,
+    "abs_timing_tail_delta": 0.00002,
+    "abs_q_template_median_shift": 0.0001,
+    "median_abs_cfd20_shift_ns": 0.001
+  },
+  "append_followup_ticket": false
+}

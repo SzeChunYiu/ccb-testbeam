@@ -1,0 +1,7 @@
+method,uses_odd_or_duplicate_columns_after_gate,allowed_inputs_after_gate,gate_formation_source
+NN_1d_cnn,False,"even B2 waveform and even-waveform scalars only; no run id, event id, odd channel, duplicate charge ratio, or duplicate residual",P07k leave-one-run-out training target from non-held-out runs
+NN_residual_gated_cnn_new,False,"even B2 waveform and even-waveform scalars only; no run id, event id, odd channel, duplicate charge ratio, or duplicate residual",P07k leave-one-run-out training target from non-held-out runs
+traditional_run_family_duplicate_gate,False,"frozen action label only; downstream table contains run, B2 amplitude support, q_template/timing/energy summaries",P07j/P07k duplicate envelope formed before blinding
+ML_gradient_boosted_trees,False,"even B2 waveform and even-waveform scalars only; no run id, event id, odd channel, duplicate charge ratio, or duplicate residual",P07k leave-one-run-out training target from non-held-out runs
+ML_mlp,False,"even B2 waveform and even-waveform scalars only; no run id, event id, odd channel, duplicate charge ratio, or duplicate residual",P07k leave-one-run-out training target from non-held-out runs
+ML_ridge_logistic,False,"even B2 waveform and even-waveform scalars only; no run id, event id, odd channel, duplicate charge ratio, or duplicate residual",P07k leave-one-run-out training target from non-held-out runs

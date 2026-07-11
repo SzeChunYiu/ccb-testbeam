@@ -1,0 +1,2 @@
+method,family,scope,energy_bias_frac,energy_bias_ci_low,energy_bias_ci_high,energy_res68_frac,energy_res68_ci_low,energy_res68_ci_high,energy_mae_mev
+transformer_tokens,neural_waveform_attention,energy-only aligned waveform-token comparator; no audited PID head in the source artifact,0.0326052852300494,0.009215722787804432,0.043804819038469334,0.1264364895645204,0.12036696496072326,0.14397723058115808,1.9290969292100304

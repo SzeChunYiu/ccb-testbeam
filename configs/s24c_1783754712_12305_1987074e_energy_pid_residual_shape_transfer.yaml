@@ -1,0 +1,41 @@
+study_id: S24c
+ticket_id: "1783754712.12305.1987074e"
+title: Energy PID residual-shape transfer audit
+worker: testbeam-laptop-1
+raw_root_dir: data/root/root
+output_dir: reports/1783754712.12305.1987074e__s24c_energy_pid_residual_shape_transfer_audit
+pid_source_dir: reports/1783448817.17317.77bb4043__p08e_truth_anchored_pid_action_band_closure
+energy_source_dir: reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction
+endpoint_source_dir: reports/1783745883.3840.006f2c7d__pulse_pid_timing_waveform_ablation_bakeoff
+expected_selected_pulses: 640737
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+expected_group_counts:
+  sample_i_calib: 248745
+  sample_i_analysis: 252266
+  sample_ii_calib: 14630
+  sample_ii_analysis: 125096
+score_weights:
+  pid_auc_loss: 0.28
+  energy_res68: 0.27
+  energy_bias_abs: 0.15
+  saturation_res68: 0.15
+  timing_sigma68_norm: 0.05
+  pileup_loss: 0.05
+  pedestal_norm: 0.05
+normalizers:
+  timing_sigma68_ns: 1.494640
+  pedestal_mae_adc: 260.701055
+  pileup_average_precision_loss: 0.733373
+command: "/home/billy/anaconda3/bin/python scripts/s24c_1783754712_12305_1987074e_energy_pid_residual_shape_transfer.py --config configs/s24c_1783754712_12305_1987074e_energy_pid_residual_shape_transfer.yaml"

@@ -1,0 +1,4 @@
+contrast,value
+target_rate_top_q_quartile_minus_rest,-0.2760416666666667
+target_rate_atom_gated_top_decile,1.0
+heldout_positive_fraction,0.23828125

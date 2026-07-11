@@ -1,0 +1,58 @@
+study_id: S01j_external_handscan_transfer
+title: S01j q-template atom transfer to real external overlay hand-scan
+ticket_id: "1783605034.12126.04fe4a38"
+worker: testbeam-laptop-1
+raw_root_dir: data/root/root
+label_path: reports/1781011449.1304.37c054cc__p09b_manual_waveform_gallery_adjudication/adjudication_labels.csv
+output_dir: reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer
+random_seed: 1783605034
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+expected_selected_pulses: 640737
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+target:
+  column: consensus_target_any
+  positive_description: delayed peak or other hand-scan target morphology
+
+benchmark:
+  bootstrap_samples: 2000
+  traditional_candidates:
+    - traditional_score
+    - ml_score
+    - q_template_rmse
+    - pca_recon_mse
+    - ae_recon_mse
+    - isolation_anomaly_score
+    - late_fraction
+    - baseline_mad
+    - secondary_peak
+    - post_peak_min
+    - timing_span_dup
+
+models:
+  ridge_alpha: 1.0
+  hgb_max_iter: 160
+  hgb_learning_rate: 0.04
+  hgb_max_leaf_nodes: 15
+  hgb_l2_regularization: 0.05
+  mlp_hidden: [64, 32]
+  mlp_alpha: 0.001
+  mlp_max_iter: 500
+  torch_epochs: 80
+  torch_lr: 0.001
+  torch_weight_decay: 0.0005
+  torch_batch_size: 64

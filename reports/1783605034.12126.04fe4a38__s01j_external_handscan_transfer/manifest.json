@@ -1,0 +1,25 @@
+{
+  "ticket_id": "1783605034.12126.04fe4a38",
+  "config": "configs/s01j_1783605034_12126_04fe4a38_external_handscan_transfer.yaml",
+  "command": "scripts/s01j_1783605034_12126_04fe4a38_external_handscan_transfer.py --config configs/s01j_1783605034_12126_04fe4a38_external_handscan_transfer.yaml",
+  "git_commit": "654a7d167f5b113a0afaf5301fea7a0daf601419",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6",
+  "random_seed": 1783605034,
+  "outputs": [
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/REPORT.md",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/handscan_feature_table.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/heldout_per_run_metrics.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/heldout_predictions.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/input_sha256.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/label_counts_by_run.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/manifest.json",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/method_auc_ci.png",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/method_summary.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/qtemplate_transfer_diagnostics.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/reproduction_counts_by_run.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/reproduction_match_table.csv",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/result.json",
+    "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/traditional_fold_choices.csv"
+  ]
+}

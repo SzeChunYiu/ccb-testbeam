@@ -1,0 +1,6 @@
+quantity,expected,reproduced,pass
+S07o claimed ticket id,1783724290.27234.08030cfb,1783724290.27234.08030cfb,True
+non-injected real-current control rows,2155,2155,True
+unique raw ROOT events found,2155,2155,True
+run split count,7,7,True
+manual-proxy positives,1165,1165,True

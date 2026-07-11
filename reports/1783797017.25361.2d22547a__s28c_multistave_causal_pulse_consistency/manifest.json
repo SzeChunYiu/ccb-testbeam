@@ -1,0 +1,16 @@
+{
+  "ticket_id": "1783797017.25361.2d22547a",
+  "study": "S28C",
+  "command": "/home/billy/anaconda3/bin/python scripts/s28c_1783797017_25361_2d22547a_multistave_causal_pulse_consistency.py --config configs/s28c_1783797017_25361_2d22547a_multistave_causal_pulse_consistency.yaml",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_summary.csv",
+    "strata_summary.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "traditional_clipped_template"
+}

@@ -1,0 +1,23 @@
+{
+  "config": "configs/s03o_1783653582_14387_18484e38_consumer_native_labels.yaml",
+  "generated_at_unix": 1783746141.032253,
+  "outputs": [
+    "REPORT.md",
+    "consumer_native_label_join.csv",
+    "excluded_region_action_split.csv",
+    "input_sha256.csv",
+    "manifest.json",
+    "reproduction_match_table.csv",
+    "required_family_benchmark.csv",
+    "result.json"
+  ],
+  "sha256": {
+    "REPORT.md": "e69dbba7e7b784599b9fefec0f34e49b759a177a119d17a0f7a282e36e10041b",
+    "consumer_native_label_join.csv": "f62a03b3a709ec0cfce6fa3ca9e982677d8655da8e2ea9bc16eaedabc2a19aeb",
+    "excluded_region_action_split.csv": "ca8edcd520e88f54eabef69ef978c851cd0d7cb817b0aee0a6e5a862dcae4e13",
+    "input_sha256.csv": "c8e6515b3dc94101db365e0364896bede1b168c8bee7762e5fdec4191e012c1e",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "required_family_benchmark.csv": "85fe573a6afc200f524a6d932ce6c147553d6aca19353c6a4230fc8a933c067c",
+    "result.json": "1772e3dbd69b2b270459800fed3372c17edccaf57d378cd82275ab1914738893"
+  }
+}

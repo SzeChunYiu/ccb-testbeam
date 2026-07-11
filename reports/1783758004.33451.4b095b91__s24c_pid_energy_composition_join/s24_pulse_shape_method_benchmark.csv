@@ -1,0 +1,7 @@
+method,n,positives,roc_auc,auc_ci_low,auc_ci_high,average_precision,role,family
+ML_gradient_boosted_trees,9745,2060,0.9483792977,0.9248153336,0.9644058297,0.9203535813,ml_panel,
+ML_mlp,9745,2060,0.918080803,0.8907796485,0.9378824735,0.881292496,ml_panel,
+NN_residual_squeeze_cnn_new,9745,2060,0.9061838091,0.8795121925,0.9233132774,0.8631665384,ml_panel,
+ML_ridge_classifier,9745,2060,0.8926078415,0.8686431847,0.9106554777,0.8426990112,ml_panel,
+traditional_fisher_gatti_all_features,9745,2060,0.8878477806,0.8585370245,0.906964678,0.8437369627,traditional_multivariate,fisher_gatti_engineered_features
+NN_1d_cnn,9745,2060,0.7070792617,0.6771084925,0.7337607974,0.5702040927,ml_panel,

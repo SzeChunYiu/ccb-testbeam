@@ -1,0 +1,54 @@
+{
+  "ticket_id": "1783758004.33451.4b095b91",
+  "study_id": "S24C",
+  "generated_utc": "2026-07-11T12:48:05.553674+00:00",
+  "git_commit": "3a39ce65e11896d4b8e3f121e3453ad7707c513b",
+  "inputs": {
+    "s24a_report_dir": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction",
+    "s24b_report_dir": "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance",
+    "s15c_report_dir": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate",
+    "config": "configs/s24c_1783758004_33451_4b095b91_pid_energy_join.json"
+  },
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 10780,
+      "sha256": "137698f4ed9b31eca569d7f0c4bcd5756056421a162699ef78793f5d01c5b937"
+    },
+    "composition_proxy_shift_cis.csv": {
+      "bytes": 590,
+      "sha256": "e916a8a87e4b4d81c91b9c7f1685dcbbf4d11355e36fa844e62bb8f1e3f51aa2"
+    },
+    "energy_method_benchmark.csv": {
+      "bytes": 1917,
+      "sha256": "8d38240959e22282a7d330003204602242a4d4fcedab97c2c3da56eac2cd988d"
+    },
+    "energy_run_heldout_summary.csv": {
+      "bytes": 13348,
+      "sha256": "e84314cf79b2b02fd37fbb0012b2f148cb1313a47b20268fcf3a469696f51a67"
+    },
+    "raw_reproduction_counts_by_run.csv": {
+      "bytes": 1896,
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744"
+    },
+    "raw_reproduction_match_table.csv": {
+      "bytes": 135,
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf"
+    },
+    "result.json": {
+      "bytes": 5931,
+      "sha256": "07c212da811c14df18b11d7776eda9ede61d23f001dd0cb49f8aae0c65bd0e1d"
+    },
+    "s24_pulse_shape_method_benchmark.csv": {
+      "bytes": 686,
+      "sha256": "e06717e66c3945c9530a0ed1eae83b006c05a9fd7762ad4386698bfd90c0f867"
+    },
+    "s24_pulse_shape_per_run.csv": {
+      "bytes": 3467,
+      "sha256": "e0a785844ca864daa3686748e4a8655a615ec39aea8e4be998f07318fd2d3cc3"
+    },
+    "manifest.json": {
+      "bytes": 1920,
+      "sha256": "ec16125fe004823090a635b3937568cb20695167a0cb3fdc1413aaf184abe0e2"
+    }
+  }
+}

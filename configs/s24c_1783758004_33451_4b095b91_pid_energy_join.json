@@ -1,0 +1,21 @@
+{
+  "ticket_id": "1783758004.33451.4b095b91",
+  "study_id": "S24C",
+  "worker": "testbeam-laptop-2",
+  "title": "PID and calibrated-energy composition bridge for S24 pulse-shape predictions",
+  "expected_selected_pulses": 640737,
+  "s24a_report_dir": "reports/1783744185.18797.74950ac8__s24a_saturation_energy_reconstruction",
+  "s24b_report_dir": "reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance",
+  "s15c_report_dir": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate",
+  "output_dir": "reports/1783758004.33451.4b095b91__s24c_pid_energy_composition_join",
+  "required_pulse_shape_methods": [
+    "traditional_fisher_gatti_all_features",
+    "ML_ridge_classifier",
+    "ML_gradient_boosted_trees",
+    "ML_mlp",
+    "NN_1d_cnn",
+    "NN_residual_squeeze_cnn_new"
+  ],
+  "external_pid_policy": "Do not attach event-level species labels unless a run/event-keyed PID or truth branch is present in audited raw ROOT inputs.",
+  "calibrated_energy_policy": "Attach the S24A Geant4-Birks calibrated-energy benchmark as a run-heldout energy-composition bridge, not as an event-level PID label."
+}

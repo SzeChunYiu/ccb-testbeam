@@ -1,0 +1,7 @@
+{
+  "top_volume": "MOTHER",
+  "n_volumes": 13,
+  "n_top_nodes": 8,
+  "n_overlaps": 0,
+  "volumes": [{"name":"MOTHER","material":" Vacuum","shape":"TGeoTube","capacity_cm3":2.35619e+08},{"name":"PIPE","material":"Al","shape":"TGeoTube","capacity_cm3":745.83},{"name":"Window","material":"Mylar","shape":"TGeoTube","capacity_cm3":1.5708},{"name":"TARGET","material":"CD2","shape":"TGeoTube","capacity_cm3":6.20316},{"name":"Sci_stack1","material":" Vacuum","shape":"TGeoBBox","capacity_cm3":4000},{"name":"Sci_stack2","material":" Vacuum","shape":"TGeoBBox","capacity_cm3":2000},{"name":"Sci_bar","material":"PSci","shape":"TGeoBBox","capacity_cm3":500},{"name":"ProtoTPCHull","material":"Al","shape":"TGeoTube","capacity_cm3":13571.7},{"name":"ProtoTPCGas","material":"Ar80CO2","shape":"TGeoTube","capacity_cm3":12903.7},{"name":"ProtoTPCActive","material":"Ar80CO2","shape":"TGeoBBox","capacity_cm3":2300},{"name":"ProtoTPC","material":"Ar80CO2","shape":"TGeoBBox","capacity_cm3":230},{"name":"Trig_stack","material":" Vacuum","shape":"TGeoBBox","capacity_cm3":320},{"name":"Trig_bar","material":"PSci","shape":"TGeoBBox","capacity_cm3":160}]
+}

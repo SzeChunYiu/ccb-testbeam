@@ -1,0 +1,50 @@
+
+Processing /tmp/tmpiz6u17sa/geom_s21b.C...
+Error in <TList::Clear>: A list is accessing an object (0x55fd419f3460) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c17400) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c17830) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c24a20) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c24e90) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c4a720) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5ab70) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5aef0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5b370) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5b8b0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5bd00) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5c320) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5c8d0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5cf80) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5d4a0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5e5d0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5e8d0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5ed70) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5f140) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5f370) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c5f7f0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c601b0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c60730) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c60960) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c60f70) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c628d0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c6f1a0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c71f70) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c72ae0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c731b0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c73550) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c73ef0) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c74540) already deleted (list name = TList)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41c6bfd0) already deleted (list name = TList)
+Info in <TGeoManager::CloseGeometry>: Geometry loaded from file...
+Info in <TGeoManager::SetTopVolume>: Top volume is MOTHER. Master volume is MOTHER
+Info in <TGeoNavigator::BuildCache>: --- Maximum geometry depth set to 100
+Info in <TGeoManager::CloseGeometry>: Voxelization retrieved from file
+Info in <TGeoManager::CountLevels>: max level = 4, max placements = 8
+Info in <TGeoManager::CloseGeometry>: 37 nodes/ 13 volume UID's in geometry.C
+Info in <TGeoManager::CloseGeometry>: ----------------modeler ready----------------
+Info in <TGeoNodeMatrix::CheckOverlaps>: Checking overlaps for MOTHER and daughters within 0.0001
+MOTHER               [=         ]    0 [  0.00 %]   TIME 00:00:00           
+Check overlaps:      [==========]   37 [100.00 %]           
+Info in <TGeoNodeMatrix::CheckOverlaps>: Number of illegal overlaps/extrusions : 0
+
+Error in <TList::Delete>: A list is accessing an object (0x55fd41cddc90) already deleted (list name = Geometries)
+Error in <TList::Clear>: A list is accessing an object (0x55fd41cddc90) already deleted (list name = Browsables)

@@ -1,0 +1,14 @@
+name,material,shape,capacity_cm3
+MOTHER, Vacuum,TGeoTube,235619000.0
+PIPE,Al,TGeoTube,745.83
+Window,Mylar,TGeoTube,1.5708
+TARGET,CD2,TGeoTube,6.20316
+Sci_stack1, Vacuum,TGeoBBox,4000.0
+Sci_stack2, Vacuum,TGeoBBox,2000.0
+Sci_bar,PSci,TGeoBBox,500.0
+ProtoTPCHull,Al,TGeoTube,13571.7
+ProtoTPCGas,Ar80CO2,TGeoTube,12903.7
+ProtoTPCActive,Ar80CO2,TGeoBBox,2300.0
+ProtoTPC,Ar80CO2,TGeoBBox,230.0
+Trig_stack, Vacuum,TGeoBBox,320.0
+Trig_bar,PSci,TGeoBBox,160.0

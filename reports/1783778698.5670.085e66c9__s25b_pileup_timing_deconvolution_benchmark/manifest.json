@@ -1,0 +1,19 @@
+{
+  "ticket_id": "1783778698.5670.085e66c9",
+  "git_commit": "de618c7fe19b4ab456214144e89f85f9d2ee5180",
+  "command": "/home/billy/anaconda3/bin/python scripts/s25b_1783778698_5670_085e66c9_pileup_timing_deconvolution.py",
+  "runtime_seconds": 120.44822001457214,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "25e300a56344302adad417efa6fcef22c6ceb2785588d34baa5d59edf87b64ac",
+    "event_predictions.csv": "a3ebde8dcae9834241991487cb20e3eaec0c8d78875a5e0c23e68d254c2d251f",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "9ac6b31fc289063b6a3ed1462db5e2f821bbd14622a90bcb4c9fcc6979450143",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "b3545ba989819655e55630cad2598557a222a39d237ea49baedbaa56b4e1bbb4",
+    "run_heldout_metrics.csv": "cad687bf87cfc10d60963ef15181a209b41baff373470766921256ed3dc283f6",
+    "strata_metrics.csv": "3540a461021a39f1374be6281d6624f6d7757249f193e7b2a3aa54ab27e4bcea",
+    "template_summary.csv": "2ef79f21f3ccced6bd82918b3cdb42a73409d733b0b07a4ef422f1892faf800a"
+  }
+}

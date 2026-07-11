@@ -1,0 +1,199 @@
+{
+  "ticket_id": "1783758004.33451.4b095b91",
+  "study_id": "S24C",
+  "worker": "testbeam-laptop-2",
+  "title": "PID and calibrated-energy composition bridge for S24 pulse-shape predictions",
+  "created_utc": "2026-07-11T12:48:05.443198+00:00",
+  "git_commit": "3a39ce65e11896d4b8e3f121e3453ad7707c513b",
+  "runtime_sec": 0.02,
+  "python": "3.7.6",
+  "raw_reproduction": {
+    "source": "/home/billy/.tb-workers/testbeam-laptop-2/reports/1783745883.3776.1aba605a__s24b_pedestal_shape_invariance/reproduction_counts_by_run.csv",
+    "raw_root_source": "data/root/root",
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "train_rows": 25493,
+    "heldout_rows": 9745,
+    "bootstrap_replicates": 500
+  },
+  "label": {
+    "name": "high pedestal drift",
+    "definition": "abs(baseline_adc - median_run_stave_baseline_adc) >= configured quantile threshold",
+    "high_quantile": 0.8,
+    "threshold_adc": 38.25
+  },
+  "external_pid_join_status": "blocked_no_event_native_external_pid_branch",
+  "external_pid_join_evidence": {
+    "source": "/home/billy/.tb-workers/testbeam-laptop-2/reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate/result.json",
+    "event_level_pid_truth_join_feasible": false,
+    "joined_truth_rows": 0,
+    "reason": "No audited source contains PID/truth/species labels with real-data run and event keys joinable to S15 rows."
+  },
+  "calibrated_energy_join_status": "attached_from_s24a_geant4_birks_bridge",
+  "pulse_shape_winner": {
+    "method": "ML_gradient_boosted_trees",
+    "n": 9745,
+    "positives": 2060,
+    "roc_auc": 0.9483792977,
+    "auc_ci_low": 0.9248153336,
+    "auc_ci_high": 0.9644058297,
+    "average_precision": 0.9203535813,
+    "role": "ml_panel",
+    "family": null
+  },
+  "energy_winner": {
+    "method": "geant4_birks_lookup",
+    "family": "traditional_geant4_birks",
+    "n": 332852,
+    "bias_frac": -0.0230986356186924,
+    "res68_frac": 0.0402439783091376,
+    "res68_ci95": [
+      0.03885687265429256,
+      0.041606317494948857
+    ],
+    "mae_mev": 1.0824359599765987,
+    "mae_mev_ci95": [
+      0.9581666378891074,
+      1.2490247117015882
+    ]
+  },
+  "best_traditional": {
+    "method": "traditional_fisher_gatti_all_features",
+    "n": 9745,
+    "positives": 2060,
+    "roc_auc": 0.8878477806,
+    "auc_ci_low": 0.8585370245,
+    "auc_ci_high": 0.906964678,
+    "average_precision": 0.8437369627,
+    "role": "traditional_multivariate",
+    "family": "fisher_gatti_engineered_features"
+  },
+  "required_method_panel": [
+    {
+      "method": "ML_gradient_boosted_trees",
+      "n": 9745,
+      "positives": 2060,
+      "roc_auc": 0.9483792977,
+      "auc_ci_low": 0.9248153336,
+      "auc_ci_high": 0.9644058297,
+      "average_precision": 0.9203535813,
+      "role": "ml_panel",
+      "family": null
+    },
+    {
+      "method": "ML_mlp",
+      "n": 9745,
+      "positives": 2060,
+      "roc_auc": 0.918080803,
+      "auc_ci_low": 0.8907796485,
+      "auc_ci_high": 0.9378824735,
+      "average_precision": 0.881292496,
+      "role": "ml_panel",
+      "family": null
+    },
+    {
+      "method": "NN_residual_squeeze_cnn_new",
+      "n": 9745,
+      "positives": 2060,
+      "roc_auc": 0.9061838091,
+      "auc_ci_low": 0.8795121925,
+      "auc_ci_high": 0.9233132774,
+      "average_precision": 0.8631665384,
+      "role": "ml_panel",
+      "family": null
+    },
+    {
+      "method": "ML_ridge_classifier",
+      "n": 9745,
+      "positives": 2060,
+      "roc_auc": 0.8926078415,
+      "auc_ci_low": 0.8686431847,
+      "auc_ci_high": 0.9106554777,
+      "average_precision": 0.8426990112,
+      "role": "ml_panel",
+      "family": null
+    },
+    {
+      "method": "traditional_fisher_gatti_all_features",
+      "n": 9745,
+      "positives": 2060,
+      "roc_auc": 0.8878477806,
+      "auc_ci_low": 0.8585370245,
+      "auc_ci_high": 0.906964678,
+      "average_precision": 0.8437369627,
+      "role": "traditional_multivariate",
+      "family": "fisher_gatti_engineered_features"
+    },
+    {
+      "method": "NN_1d_cnn",
+      "n": 9745,
+      "positives": 2060,
+      "roc_auc": 0.7070792617,
+      "auc_ci_low": 0.6771084925,
+      "auc_ci_high": 0.7337607974,
+      "average_precision": 0.5702040927,
+      "role": "ml_panel",
+      "family": null
+    }
+  ],
+  "proxy_shift_bootstrap_cis": [
+    {
+      "metric": "shape_distance_nominal_chi2",
+      "interpretation": "shape-distance stability",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": 0.1171211079,
+      "ci_low": 0.1034267997,
+      "ci_high": 0.127211772,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "timing_residual_mean_time_sample",
+      "interpretation": "timing residual",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": -3.2408986092,
+      "ci_low": -3.5574350119,
+      "ci_high": -2.8709838212,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "energy_residual_log10_amplitude",
+      "interpretation": "energy calibration proxy",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": -0.0902587175,
+      "ci_low": -0.1006792545,
+      "ci_high": -0.0798376471,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pid_residual_odd_negative_adc",
+      "interpretation": "PID score proxy",
+      "heldout_rows": 9745,
+      "heldout_positive_rows": 2060,
+      "high_minus_low_median_shift": -1545.625,
+      "ci_low": -1645.38125,
+      "ci_high": -1424.03125,
+      "bootstrap_replicates": 500
+    }
+  ],
+  "winner": "ML_gradient_boosted_trees",
+  "winner_metric": "heldout run-block bootstrap ROC AUC",
+  "novel_ticket_appended": null
+}

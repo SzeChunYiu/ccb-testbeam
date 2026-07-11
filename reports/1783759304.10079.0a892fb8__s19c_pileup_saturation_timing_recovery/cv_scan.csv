@@ -1,0 +1,15 @@
+heldout_run,model,alpha,cv_rmse_ns,note,n_estimators,max_features,min_samples_leaf
+58,traditional_saturation_ridge,10.0,,fixed conservative alpha with explicit B2 saturation-recovery features,,,
+58,extra_trees_saturation_ml,,,fixed ExtraTrees waveform model with explicit saturation-recovery features,12.0,0.8,60.0
+59,traditional_saturation_ridge,10.0,,fixed conservative alpha with explicit B2 saturation-recovery features,,,
+59,extra_trees_saturation_ml,,,fixed ExtraTrees waveform model with explicit saturation-recovery features,12.0,0.8,60.0
+60,traditional_saturation_ridge,10.0,,fixed conservative alpha with explicit B2 saturation-recovery features,,,
+60,extra_trees_saturation_ml,,,fixed ExtraTrees waveform model with explicit saturation-recovery features,12.0,0.8,60.0
+61,traditional_saturation_ridge,10.0,,fixed conservative alpha with explicit B2 saturation-recovery features,,,
+61,extra_trees_saturation_ml,,,fixed ExtraTrees waveform model with explicit saturation-recovery features,12.0,0.8,60.0
+62,traditional_saturation_ridge,10.0,,fixed conservative alpha with explicit B2 saturation-recovery features,,,
+62,extra_trees_saturation_ml,,,fixed ExtraTrees waveform model with explicit saturation-recovery features,12.0,0.8,60.0
+63,traditional_saturation_ridge,10.0,,fixed conservative alpha with explicit B2 saturation-recovery features,,,
+63,extra_trees_saturation_ml,,,fixed ExtraTrees waveform model with explicit saturation-recovery features,12.0,0.8,60.0
+65,traditional_saturation_ridge,10.0,,fixed conservative alpha with explicit B2 saturation-recovery features,,,
+65,extra_trees_saturation_ml,,,fixed ExtraTrees waveform model with explicit saturation-recovery features,12.0,0.8,60.0

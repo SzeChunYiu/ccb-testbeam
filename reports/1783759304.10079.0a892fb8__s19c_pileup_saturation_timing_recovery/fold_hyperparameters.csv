@@ -1,0 +1,8 @@
+heldout_run,n_pair_rows,train_rows,capped_train_rows_for_ml_nn,ridge_alpha,ml_n_estimators,ml_max_features,ml_min_samples_leaf,train_runs,torch_available,torch_device
+58,1207,51832,1200,10.0,12,0.8,60,6,True,cpu
+59,11187,41852,1200,10.0,12,0.8,60,6,True,cpu
+60,10524,42515,1200,10.0,12,0.8,60,6,True,cpu
+61,11855,41184,1200,10.0,12,0.8,60,6,True,cpu
+62,10936,42103,1200,10.0,12,0.8,60,6,True,cpu
+63,5816,47223,1200,10.0,12,0.8,60,6,True,cpu
+65,1514,51525,1200,10.0,12,0.8,60,6,True,cpu

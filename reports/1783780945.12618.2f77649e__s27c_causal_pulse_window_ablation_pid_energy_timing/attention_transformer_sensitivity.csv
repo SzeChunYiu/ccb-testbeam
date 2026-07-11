@@ -1,0 +1,5 @@
+architecture,endpoint,metric,value,ci_low,ci_high,eligible_for_complete_panel,reason
+attention,timing,sigma68_ns,1.4066567291668668,1.0171696670809278,1.6386932374237948,False,"timing architecture row exists, but no complete PID-energy-stress attention row exists"
+attention,two_pulse,time_rms_ns,14.102053482656828,13.893261479264604,14.338153433953371,False,"two-pulse architecture row exists, but no complete PID-energy-stress attention row exists"
+transformer,energy,res68_frac,0.1264364895645204,0.12036696496072326,0.14397723058115808,False,"energy/saturation transformer row exists, but PID transformer head was not audited in the source panel"
+transformer,saturation_onset,res68_frac,0.0960039123982892,0.09198734107417024,0.10442983802208876,False,"saturation transformer stress row exists, but full PID-energy-stress eligibility is incomplete"

@@ -1,0 +1,41 @@
+{
+  "study_id": "P04n3",
+  "ticket_id": "1783714082.13505.551221eb",
+  "worker": "testbeam-laptop-1",
+  "title": "acquire external DAQ run log or scaler metadata for B-stack trigger-code semantics",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/1783714082.13505.551221eb__p04n3_bstack_trigger_code_semantics",
+  "runner_command": "python scripts/p04n3_1783714082_13505_551221eb_bstack_trigger_code_semantics.py",
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "physical_b_staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [58, 59, 60, 61, 62, 63, 65],
+  "bootstrap_reps": 1200,
+  "random_seed": 1783714082,
+  "catastrophic_abs_frac": 0.25,
+  "predecessor_p04m_dir": "reports/1781032084.548.4ccc082b__p04m_pretrigger_charge_abstention_map",
+  "predecessor_s16f_dir": "reports/1781033712.1201.63fd2ee4__s16f_forced_random_pedestal_audit",
+  "external_metadata_context_dir": "reports/1781110796.1578.28f051c2__s16i_external_daq_runlog_checksum_join",
+  "required_method_families": [
+    "traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "new_pretrigger_gated_wave_net"
+  ],
+  "follow_up_ticket": null
+}

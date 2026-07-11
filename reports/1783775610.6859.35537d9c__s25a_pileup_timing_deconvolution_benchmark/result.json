@@ -1,0 +1,74 @@
+{
+  "ticket_id": "1783775610.6859.35537d9c",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "Pile-up timing deconvolution benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 300,
+    "negative_control": "clean single-pulse controls with matched source-run distribution"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out constituent timing sigma68 with run-block bootstrap CI reported",
+    "time_sigma68_ns": 7.4371477990577795,
+    "time_sigma68_ci95": [
+      7.006578757733735,
+      8.28020668344394
+    ],
+    "pileup_miss_rate": 0.31333333333333335,
+    "false_split_rate": 0.17333333333333334
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Pile-up truth comes from controlled doublet injection into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude proxy rather than electronics saturation flags."
+  ]
+}

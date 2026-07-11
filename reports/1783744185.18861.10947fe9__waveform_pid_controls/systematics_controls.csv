@@ -1,0 +1,9 @@
+control,quantity,value,ci_low,ci_high,unit,verdict,note
+raw_root_reproduction,selected B-stave pulses,640737.0,,,pulses,pass,"Exact S00 selected-pulse gate from HRDv, median samples 0-3, A>1000 ADC."
+pedestal_threshold_gate,amplitude threshold after median baseline,1000.0,,,ADC,controlled in reproduction gate,Pedestal enters through per-channel median of samples 0-3 before pulse selection.
+pileup_occupancy_proxy,"selected pulses per raw event, run mean range",0.5682485013302835,0.33931917551530294,0.8579906953350936,pulses/event,bounded as raw run heterogeneity,Selected-pulse multiplicity is used as a raw occupancy proxy; true unresolved pile-up labels are not available.
+run_split_stability,winner balanced accuracy fold range,0.9156861807310744,0.860939390147249,0.9392786281179138,balanced accuracy,weakest held-out block reported,Bootstrap CIs resample held-out blocks; fold range exposes non-bootstrap block variation.
+traditional_baseline_margin,winner minus traditional balanced accuracy,0.11804761904761907,,,balanced accuracy,winner exceeds traditional baseline,Margin is descriptive; paired bootstrap of the margin is not available because per-event predictions are not retained.
+energy_dependence_proxy,energy features included,1.0,,,boolean,"modeled, not separately stress-scanned","Inputs include log total B-stack deposited energy, first/tail charge, centroid, spread, active layers, and dE/dx proxy."
+pulse_shape_timing_proxy,layer time features included,1.0,,,boolean,"modeled, no real timing claim",Sequence includes energy-weighted layer times T_ik/100 and tabular timing moments from GEANT4.
+saturation_breakdown,electronics saturation model present,0.0,,,boolean,caveated,GEANT4 deposits are not digitized ADC waveforms; saturation robustness is not proven by this benchmark.

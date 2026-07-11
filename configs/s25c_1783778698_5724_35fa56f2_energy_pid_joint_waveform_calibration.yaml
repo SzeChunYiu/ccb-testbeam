@@ -1,0 +1,47 @@
+study_id: S25C
+ticket_id: "1783778698.5724.35fa56f2"
+title: Energy-PID joint waveform calibration
+claimed_ticket_text: S25C energy-PID joint waveform calibration
+worker: testbeam-laptop-4
+
+raw_root_dir: /home/billy/ccb-data/extracted/root/root
+output_dir: reports/1783778698.5724.35fa56f2__s25c_energy_pid_joint_waveform_calibration
+
+expected_selected_pulses: 640737
+amplitude_cut_adc: 1000.0
+saturation_adc: 7000.0
+knee_low_adc: 6200.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+duplicate_readout_channels:
+  B2: 1
+  B4: 3
+  B6: 5
+  B8: 7
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+heldout_groups: [sample_i_analysis, sample_ii_analysis]
+expected_group_counts:
+  sample_i_calib: 248745
+  sample_i_analysis: 252266
+  sample_ii_calib: 14630
+  sample_ii_analysis: 125096
+
+max_events_per_run: 5000
+ml_max_train_events: 30000
+cnn_max_train_events: 12000
+random_seed: 7251
+bootstrap_reps: 200
+mlp_epochs: 5
+cnn_epochs: 4
+transformer_epochs: 3
+command: "/home/billy/anaconda3/bin/python scripts/s25a_1783778698_5605_00412f01_pedestal_saturation_frontier.py --config configs/s25c_1783778698_5724_35fa56f2_energy_pid_joint_waveform_calibration.yaml"

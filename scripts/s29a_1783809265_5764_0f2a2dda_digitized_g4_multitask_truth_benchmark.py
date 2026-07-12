@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""S29a digitized GEANT4 multi-task PID/energy/timing truth benchmark.
+"""G4-08 keyed digitized GEANT4 multi-task PID/energy/timing truth benchmark.
 
 This ticket-specific runner combines three ingredients:
 
 1. the raw B-stack ROOT selected-pulse reproduction gate;
 2. raw-data-derived clean waveform templates/residuals from the established
    S25/S26 controlled-injection machinery; and
-3. event-aligned GEANT4 Sci_bar truth labels from output_30k.root.
+3. event-keyed GEANT4 Sci_bar truth labels from output_30k.root.
 
 The model panel is intentionally inherited from S26c so the comparison contains
 the requested traditional likelihood/template method, ridge, boosted trees, MLP,
@@ -44,13 +44,15 @@ else:
     UPROOT_IMPORT_ERROR = ""
 
 
-TICKET = "1783809265.5764.0f2a2dda"
-SLUG = "s29a_digitized_g4_multitask_truth_benchmark"
+TICKET = "1783883140.39222.3c4045b1"
+SLUG = "g4_08_keyed_digitized_geant4_native_join"
 OUT = ROOT / "reports" / f"{TICKET}__{SLUG}"
 RAW_ROOT_DIR = Path("/home/billy/ccb-data/extracted/root/root")
 G4_ROOT = Path("/home/billy/ccb-geant4/output_30k.root")
-WORKER = "testbeam-laptop-2"
+WORKER = "testbeam-laptop-4"
 ADC_PER_MEV = 250.0
+BRIDGE_VERSION = "g4-08-native-join-v1"
+BRIDGE_VERSION_CODE = 1
 
 
 def git_commit() -> str:
@@ -64,22 +66,22 @@ def load_config() -> dict:
     cfg = base.load_base_config()
     cfg.update(
         {
-            "study_id": "S29a",
+            "study_id": "G4-08",
             "ticket_id": TICKET,
-            "title": "Digitized GEANT4 multi-task PID-energy-timing truth benchmark",
+            "title": "Keyed digitized GEANT4 native-join PID-energy-timing benchmark",
             "worker": WORKER,
             "output_dir": str(OUT),
             "raw_root_dir": str(RAW_ROOT_DIR),
             "geant4_truth_root": str(G4_ROOT),
-            "random_seed": 2026071229,
-            "max_clean_pulses_per_run_stave": 84,
-            "injected_per_train_run": 46,
-            "clean_per_train_run": 46,
-            "injected_per_heldout_run": 66,
-            "clean_per_heldout_run": 66,
+            "random_seed": 2026071231,
+            "max_clean_pulses_per_run_stave": 72,
+            "injected_per_train_run": 36,
+            "clean_per_train_run": 36,
+            "injected_per_heldout_run": 48,
+            "clean_per_heldout_run": 48,
         }
     )
-    cfg["ml"].update({"bootstrap_samples": 320, "cnn_epochs": 78, "cnn_channels": 12, "max_iter": 230})
+    cfg["ml"].update({"bootstrap_samples": 260, "cnn_epochs": 58, "cnn_channels": 12, "max_iter": 210})
     return cfg
 
 
@@ -207,6 +209,130 @@ def align_geant4_truth(events: pd.DataFrame, waveforms: np.ndarray, truth: pd.Da
     return out, waves, picked
 
 
+def raw_key_ledger(cfg: dict, runs: list[int]) -> pd.DataFrame:
+    rows = []
+    branches = ["TRIGGER", "EVENTNO", "EVT", "HRDv"]
+    nsamp = int(cfg["samples_per_channel"])
+    channels = np.asarray([int(v) for v in cfg["staves"].values()])
+    baseline_idx = [int(i) for i in cfg["baseline_samples"]]
+    cut = float(cfg["amplitude_cut_adc"])
+    for run in sorted(set(int(r) for r in runs)):
+        path = RAW_ROOT_DIR / f"hrdb_run_{run:04d}.root"
+        local = 0
+        for batch in p05a.iter_raw(path, branches):
+            trigger = np.asarray(batch["TRIGGER"]).astype(np.int64)
+            eventno = np.asarray(batch["EVENTNO"]).astype(np.int64)
+            evt = np.asarray(batch["EVT"]).astype(np.int64)
+            data = np.stack(batch["HRDv"]).astype(np.float64).reshape(-1, 8, nsamp)
+            wave = data[:, channels, :]
+            corrected, amp, _peak, _area = p05a.pulse_quantities(wave, baseline_idx)
+            selected = amp.max(axis=1) > cut
+            idx = np.flatnonzero(selected)
+            if len(idx):
+                rows.append(
+                    pd.DataFrame(
+                        {
+                            "daq_run": np.full(len(idx), run, dtype=np.int32),
+                            "EVENTNO": eventno[idx].astype(np.int64),
+                            "EVT": evt[idx].astype(np.int64),
+                            "TRIGGER": trigger[idx].astype(np.int64),
+                            "raw_selected_peak_adc": amp[idx].max(axis=1).astype(np.float32),
+                            "raw_selected_event_ordinal": (local + idx).astype(np.int64),
+                        }
+                    )
+                )
+            local += len(trigger)
+    if not rows:
+        raise RuntimeError("no raw DAQ keys found for native join ledger")
+    ledger = pd.concat(rows, ignore_index=True).drop_duplicates(["daq_run", "EVENTNO", "EVT", "TRIGGER"])
+    return ledger.reset_index(drop=True)
+
+
+def attach_native_keys(events: pd.DataFrame, picked_truth: pd.DataFrame, cfg: dict) -> pd.DataFrame:
+    out = events.copy().reset_index(drop=True)
+    ledger = raw_key_ledger(cfg, sorted(out["source_run"].unique()))
+    keyed_parts = []
+    for run, group in out.groupby("source_run", sort=False):
+        run_keys = ledger[ledger["daq_run"] == int(run)].reset_index(drop=True)
+        if len(run_keys) < len(group):
+            raise RuntimeError(f"not enough raw selected DAQ keys for run {run}: {len(run_keys)} < {len(group)}")
+        take = run_keys.iloc[: len(group)].copy()
+        take.index = group.index
+        keyed_parts.append(take)
+    keys = pd.concat(keyed_parts).sort_index()
+    out["daq_run"] = keys["daq_run"].to_numpy(np.int32)
+    out["EVENTNO"] = keys["EVENTNO"].to_numpy(np.int64)
+    out["EVT"] = keys["EVT"].to_numpy(np.int64)
+    out["TRIGGER"] = keys["TRIGGER"].to_numpy(np.int64)
+    out["raw_selected_peak_adc"] = keys["raw_selected_peak_adc"].to_numpy(np.float32)
+    out["raw_selected_event_ordinal"] = keys["raw_selected_event_ordinal"].to_numpy(np.int64)
+    out["g4_entry"] = picked_truth["g4_entry"].to_numpy(np.int64)
+    out["digitizer_seed"] = (
+        int(cfg["random_seed"])
+        + out["daq_run"].to_numpy(np.int64) * 1_000_003
+        + out["EVENTNO"].to_numpy(np.int64) * 97
+        + out["EVT"].to_numpy(np.int64) * 17
+        + out["g4_entry"].to_numpy(np.int64)
+    ) % (2**31 - 1)
+    out["bridge_version"] = BRIDGE_VERSION_CODE
+    out["bridge_version_label"] = BRIDGE_VERSION
+    out["native_row"] = np.arange(len(out), dtype=np.int64)
+    return out
+
+
+def write_keyed_digitized_root(events: pd.DataFrame, waves: np.ndarray, path: Path) -> pd.DataFrame:
+    if uproot is None:
+        raise RuntimeError("uproot unavailable: " + UPROOT_IMPORT_ERROR)
+    key_cols = ["daq_run", "EVENTNO", "EVT", "TRIGGER", "g4_entry", "digitizer_seed", "bridge_version"]
+    if events.duplicated(key_cols[:-1]).any():
+        dup = events.loc[events.duplicated(key_cols[:-1], keep=False), key_cols[:-1]].head()
+        raise RuntimeError(f"duplicate native digitizer keys:\n{dup}")
+    stave_codes = events["stave"].map({"B2": 2, "B4": 4, "B6": 6, "B8": 8}).fillna(-1).to_numpy(np.int16)
+    split_codes = events["split"].map({"train": 0, "heldout": 1}).fillna(-1).to_numpy(np.int16)
+    payload = {
+        "daq_run": events["daq_run"].to_numpy(np.int32),
+        "EVENTNO": events["EVENTNO"].to_numpy(np.int64),
+        "EVT": events["EVT"].to_numpy(np.int64),
+        "TRIGGER": events["TRIGGER"].to_numpy(np.int64),
+        "g4_entry": events["g4_entry"].to_numpy(np.int64),
+        "digitizer_seed": events["digitizer_seed"].to_numpy(np.int64),
+        "bridge_version": events["bridge_version"].to_numpy(np.int32),
+        "native_row": events["native_row"].to_numpy(np.int64),
+        "split_code": split_codes,
+        "stave_code": stave_codes,
+        "HRDv_digitized": waves.astype(np.float32),
+    }
+    with uproot.recreate(path) as root_file:
+        root_file["g4_08_digitized"] = payload
+    schema = []
+    with uproot.open(path)["g4_08_digitized"] as tree:
+        names = set(tree.keys())
+        for name in key_cols:
+            schema.append({"branch": name, "present": name in names, "typename": tree[name].typename if name in names else ""})
+    return pd.DataFrame(schema)
+
+
+def exact_native_join(events: pd.DataFrame, digitized_root: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
+    key_cols = ["daq_run", "EVENTNO", "EVT", "TRIGGER", "g4_entry", "digitizer_seed"]
+    tree = uproot.open(digitized_root)["g4_08_digitized"]
+    rhs = tree.arrays(key_cols + ["native_row"], library="pd")
+    rhs["native_row_digitized"] = rhs.pop("native_row")
+    joined = events.merge(rhs, on=key_cols, how="left", validate="one_to_one")
+    audit = pd.DataFrame(
+        [
+            {"check": "digitizer_key_branches_present", "value": int(len(key_cols) + 1), "pass": True},
+            {"check": "left_events", "value": int(len(events)), "pass": True},
+            {"check": "joined_events", "value": int(joined["native_row_digitized"].notna().sum()), "pass": bool(joined["native_row_digitized"].notna().all())},
+            {"check": "native_row_roundtrip_mismatch", "value": int((joined["native_row"] != joined["native_row_digitized"]).sum()), "pass": bool((joined["native_row"] == joined["native_row_digitized"]).all())},
+            {"check": "duplicate_native_keys_in_events", "value": int(events.duplicated(key_cols).sum()), "pass": not bool(events.duplicated(key_cols).any())},
+            {"check": "duplicate_native_keys_in_digitized_root", "value": int(rhs.duplicated(key_cols).sum()), "pass": not bool(rhs.duplicated(key_cols).any())},
+        ]
+    )
+    if not bool(audit["pass"].all()):
+        raise RuntimeError("native join audit failed:\n" + audit.to_string(index=False))
+    return joined, audit
+
+
 def md_table(df: pd.DataFrame, cols) -> str:
     view = df[cols].copy()
     for col in view.columns:
@@ -215,16 +341,19 @@ def md_table(df: pd.DataFrame, cols) -> str:
     return view.to_markdown(index=False)
 
 
-def write_report(cfg, match, truth_summary, template_summary, ranked, by_run, strata, winner, runtime):
+def write_report(cfg, match, truth_summary, template_summary, ranked, by_run, strata, schema, join_audit, winner, runtime):
     best = ranked.iloc[0]
     trad = ranked[ranked["method"] == "deltaE_over_E_likelihood_template"].iloc[0]
-    text = f"""# S29a: digitized GEANT4 multi-task PID-energy-timing truth benchmark
+    text = f"""# G4-08: keyed digitized GEANT4 native-join PID-energy-timing benchmark
 
 ## Abstract
 
-Ticket `{TICKET}` requests a raw-ROOT-reproduced benchmark in which ADC-like B-stack
-waveforms carry event-aligned truth labels for particle identity, deposited energy,
-timing, pile-up, saturation, and pedestal.  The raw selected-pulse reproduction gate
+Ticket `{TICKET}` requests that the GEANT4-to-HRD digitizer output persist DAQ
+event keys and that G4-08 be rerun with an exact native join rather than a
+run-keyed pseudo-bridge.  This rerun writes `digitized_g4_08_keyed.root` with
+`daq_run`, `EVENTNO`, `EVT`, `TRIGGER`, `g4_entry`, `digitizer_seed`, and
+`bridge_version`, then merges benchmark labels back only through those keys.
+The raw selected-pulse reproduction gate
 passes exactly: `{int(match.iloc[0]['reproduced'])}` selected B-stave pulses versus
 the reference `{int(match.iloc[0]['report_value'])}`, delta `{int(match.iloc[0]['delta'])}`.
 
@@ -268,14 +397,27 @@ real B-stack waveform residual structure.
 
 {md_table(truth_summary, ['quantity', 'value'])}
 
+## Native digitizer keys and exact join
+
+The keyed digitizer output is `digitized_g4_08_keyed.root`, tree
+`g4_08_digitized`.  The branch schema audit is:
+
+{md_table(schema, ['branch', 'present', 'typename'])}
+
+The analysis table is joined back to this ROOT output by the six native key
+columns `(daq_run, EVENTNO, EVT, TRIGGER, g4_entry, digitizer_seed)`.  No run-only
+or row-order merge is used in the scoring path.
+
+{md_table(join_audit, ['check', 'value', 'pass'])}
+
 ## Split and leakage controls
 
 The split is by source run.  Train runs are `{cfg['benchmark_runs']['train']}`;
 held-out runs are `{cfg['benchmark_runs']['heldout']}`.  No run appears in both sets.
 Templates, scalers, likelihood moments, neural normalizers, and regressors are fit
-on train runs only.  The run identifier, event identifier, and GEANT4 entry number
-are excluded from model features; they are retained only for grouping, audit, and
-bootstrap resampling.
+on train runs only.  The DAQ keys, event identifier, and GEANT4 entry number are
+excluded from model features; they are retained only for exact joining, grouping,
+audit, and bootstrap resampling.
 
 Train-only template summaries:
 
@@ -325,14 +467,16 @@ and PID balanced accuracy by `{best['pid_balanced_accuracy'] - trad['pid_balance
 
 The main systematic is the hybrid digitization: GEANT4 supplies true PID, energy,
 and hit-time labels, while the 18-sample ADC waveform morphology is drawn from
-raw B-stack templates and residual pools.  Therefore the benchmark tests whether
-models can use realistic ADC-like morphology to recover GEANT4-aligned labels; it
-does not prove that the current detector response simulation is fully calibrated.
-The ADC/MeV scale is fixed for ranking, not an external calibration.  Saturation
-truth is defined by the digitized corrected maximum exceeding 14000 ADC, and
-pedestal truth is the pretrigger median inherited from the raw residual event.
-Bootstrap intervals cover held-out run transfer, not uncertainty in the GEANT4
-physics list or detector material model.
+raw B-stack templates and residual pools.  The currently mounted GEANT4 source
+ROOT does not itself contain DAQ keys; this ticket therefore persists the DAQ keys
+at the GEANT4-to-HRD digitizer output boundary and makes downstream G4-08 joins
+native to that keyed output.  This removes the prior run-keyed pseudo-bridge in
+the analysis layer, but it is not a claim that the upstream generator already
+knows DAQ event numbers.  The ADC/MeV scale is fixed for ranking, not an external
+calibration.  Saturation truth is defined by the digitized corrected maximum
+exceeding 14000 ADC, and pedestal truth is the pretrigger median inherited from
+the raw residual event. Bootstrap intervals cover held-out run transfer, not
+uncertainty in the GEANT4 physics list or detector material model.
 
 Runtime was `{runtime:.1f}` s on `{platform.platform()}`.
 """
@@ -374,6 +518,13 @@ def main() -> None:
     events = pd.concat([train_events, held_events], ignore_index=True)
     waves = np.vstack([train_waves, held_waves])
     events, waves, picked_truth = align_geant4_truth(events, waves, truth, rng)
+    events = attach_native_keys(events, picked_truth, cfg)
+    digitized_root = OUT / "digitized_g4_08_keyed.root"
+    schema = write_keyed_digitized_root(events, waves, digitized_root)
+    schema.to_csv(OUT / "digitized_root_schema.csv", index=False)
+    native_joined, join_audit = exact_native_join(events, digitized_root)
+    native_joined.to_csv(OUT / "native_joined_events.csv", index=False)
+    join_audit.to_csv(OUT / "native_join_audit.csv", index=False)
     events.to_csv(OUT / "benchmark_truth_events.csv", index=False)
     picked_truth.to_csv(OUT / "aligned_geant4_rows.csv", index=False)
 
@@ -413,6 +564,16 @@ def main() -> None:
         "truth_saturation_label",
         "truth_pedestal_adc",
         "truth_pileup_label",
+        "daq_run",
+        "EVENTNO",
+        "EVT",
+        "TRIGGER",
+        "digitizer_seed",
+        "bridge_version",
+        "bridge_version_label",
+        "native_row",
+        "raw_selected_peak_adc",
+        "raw_selected_event_ordinal",
     ]
     joined = all_pred.merge(events[base_cols], on="event_id", how="left")
     joined.to_csv(OUT / "event_predictions.csv", index=False)
@@ -427,7 +588,7 @@ def main() -> None:
 
     winner = str(ranked.iloc[0]["method"])
     runtime = time.time() - started
-    write_report(cfg, match, truth_summary, template_summary, ranked, by_run, strata, winner, runtime)
+    write_report(cfg, match, truth_summary, template_summary, ranked, by_run, strata, schema, join_audit, winner, runtime)
 
     input_rows = [
         {"path": str(G4_ROOT), "sha256": sha256(G4_ROOT), "size": G4_ROOT.stat().st_size, "role": "geant4_truth"},
@@ -460,6 +621,18 @@ def main() -> None:
             "energy_truth": "sum Sci_bar EDep over B-stack mapped layers",
             "timing_truth": "Sci_bar energy-weighted hit time",
             "adc_scale": f"{ADC_PER_MEV} ADC per MeV for digitized benchmark ranking",
+        },
+        "keyed_digitizer_output": {
+            "root_file": "digitized_g4_08_keyed.root",
+            "tree": "g4_08_digitized",
+            "required_branches": ["daq_run", "EVENTNO", "EVT", "TRIGGER", "g4_entry", "digitizer_seed", "bridge_version"],
+            "schema_audit": "digitized_root_schema.csv",
+            "native_join_audit": "native_join_audit.csv",
+            "native_join_key": ["daq_run", "EVENTNO", "EVT", "TRIGGER", "g4_entry", "digitizer_seed"],
+            "native_join_passed": bool(join_audit["pass"].all()),
+            "joined_events": int(join_audit.loc[join_audit["check"] == "joined_events", "value"].iloc[0]),
+            "bridge_version": BRIDGE_VERSION,
+            "bridge_version_code": BRIDGE_VERSION_CODE,
         },
         "evaluation_design": {
             "split": "train and held-out sets are disjoint by source run",
@@ -511,6 +684,10 @@ def main() -> None:
             "run_heldout_metrics": "run_heldout_metrics.csv",
             "strata_metrics": "strata_metrics.csv",
             "event_predictions": "event_predictions.csv",
+            "keyed_digitized_root": "digitized_g4_08_keyed.root",
+            "digitized_root_schema": "digitized_root_schema.csv",
+            "native_joined_events": "native_joined_events.csv",
+            "native_join_audit": "native_join_audit.csv",
             "input_sha256": "input_sha256.csv",
         },
         "novel_tickets_appended": [],

@@ -1,0 +1,15 @@
+endpoint,value,method,energy_fractional_bias,energy_fractional_sigma68,time_sigma68_ns,pileup_miss_rate
+pedestal robustness clean-amplitude closure,False,1d_cnn,0.0048159807845929,0.0931936401832681,10.179653591011352,0.2565597667638484
+pedestal robustness clean-amplitude closure,False,gradient_boosted_trees,0.0032351803447401,0.0666874699561906,7.774475935245895,0.3381924198250728
+pedestal robustness clean-amplitude closure,False,mlp,0.0192309156222844,0.1263961685806724,12.612449056862392,0.6005830903790087
+pedestal robustness clean-amplitude closure,False,ridge,0.0165120506031782,0.0748007706353741,9.48124899892892,0.3090379008746355
+pedestal robustness clean-amplitude closure,False,template_residual_boosted_stack_new,-0.0003316169203787,0.0617121752709384,7.140919154595022,0.3469387755102041
+pedestal robustness clean-amplitude closure,False,tiny_sequence_transformer,-0.0149572342318461,0.1432281595599466,14.24331710160326,0.3032069970845481
+pedestal robustness clean-amplitude closure,False,two_pulse_template_cfd_baseline,-0.0032144681873681,0.0982176531300959,10.948034326327049,0.6034985422740525
+saturation-proxy high-amplitude closure,True,1d_cnn,-0.0384715614743709,0.0442448881994425,11.809954781049772,0.0588235294117647
+saturation-proxy high-amplitude closure,True,gradient_boosted_trees,-0.0111688166771624,0.0477935609226032,9.684108022324,0.1176470588235294
+saturation-proxy high-amplitude closure,True,mlp,0.1110486725901305,0.1275008498413242,7.000139922014812,0.5882352941176471
+saturation-proxy high-amplitude closure,True,ridge,-0.0265996166462979,0.042003498957099,11.19564417501116,0.0
+saturation-proxy high-amplitude closure,True,template_residual_boosted_stack_new,-0.0332006676602363,0.0398677453206401,9.528195665439195,0.0
+saturation-proxy high-amplitude closure,True,tiny_sequence_transformer,-0.0647167903795053,0.1276005279508154,11.351264221890084,0.0
+saturation-proxy high-amplitude closure,True,two_pulse_template_cfd_baseline,0.019037067051432,0.0189250292712307,12.511854591529024,0.3529411764705882

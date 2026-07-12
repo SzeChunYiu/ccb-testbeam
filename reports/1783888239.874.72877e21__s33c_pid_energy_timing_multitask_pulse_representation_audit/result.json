@@ -1,0 +1,117 @@
+{
+  "ticket_id": "1783888239.874.72877e21",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "PID energy timing multitask pulse representation audit",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 440,
+    "pid_truth": "deterministic raw-waveform deuteron-like high-dEdx-depth proxy",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "strong_traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "joint_sequence_transformer",
+    "additional_new_physics_residual_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite joint PID/energy/timing score with run-block bootstrap CIs reported",
+    "winner_score": 0.1832157508596251,
+    "pid_auc": 0.9958796296296296,
+    "pid_balanced_accuracy": 0.9388888888888888,
+    "pid_balanced_accuracy_ci95": [
+      0.917945205479452,
+      0.959560292275522
+    ],
+    "pid_efficiency": 0.8833333333333333,
+    "pid_purity": 0.9298245614035088,
+    "energy_fractional_sigma68": 0.0669729746032282,
+    "energy_fractional_sigma68_ci95": [
+      0.0618441118594549,
+      0.0704762818715155
+    ],
+    "time_sigma68_ns": 7.532397283759352,
+    "time_sigma68_ci95": [
+      6.837840766311738,
+      8.897171352412911
+    ],
+    "pileup_miss_rate": 0.3205128205128205,
+    "false_split_rate": 0.1923076923076923
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "ablation_metrics": "ablation_metrics.csv",
+    "winner_ablation_metrics": "winner_ablation_metrics.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "PID truth is a deterministic raw-waveform proxy, not external particle truth.",
+    "Pile-up and saturation truths come from controlled injections into raw-ROOT-derived clean pulses.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "ablation_design": {
+    "pedestal_subtraction": "top-quartile shape_area_over_amp stress slice for pedestal-sensitive late-tail baseline motion",
+    "pileup_masking": "post-fit accept-all-candidates ablation with failed set to false",
+    "saturated_samples": "top-quartile true_energy_proxy_adc high-amplitude saturation-proxy stress slice",
+    "bootstrap": "same held-out run-block percentile 95% CI machinery as nominal metrics"
+  },
+  "completion_audit": {
+    "raw_root_reproduced": true,
+    "required_methods_present": [
+      "1d_cnn",
+      "deltaE_over_E_likelihood_template",
+      "gradient_boosted_trees",
+      "joint_sequence_transformer",
+      "mlp",
+      "ridge",
+      "template_residual_boosted_stack_new"
+    ],
+    "winner_named": "template_residual_boosted_stack_new",
+    "run_bootstrap_cis_reported": true,
+    "ablation_tables_written": true,
+    "runtime_seconds_including_wrapper": 163.14980101585388
+  }
+}

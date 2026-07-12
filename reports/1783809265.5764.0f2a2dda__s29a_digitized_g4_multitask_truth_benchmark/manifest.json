@@ -1,0 +1,25 @@
+{
+  "ticket_id": "1783809265.5764.0f2a2dda",
+  "git_commit": "546bd5ee38da7159930ccf52eae00cd1df7c61d1",
+  "command": "/home/billy/anaconda3/bin/python scripts/s29a_1783809265_5764_0f2a2dda_digitized_g4_multitask_truth_benchmark.py",
+  "runtime_seconds": 68.06574845314026,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "2178c92c7de14d7bfef7df4d37df2850875bde4998279f07bb129248bb8f2a4d",
+    "aligned_geant4_rows.csv": "25b1fc7565dc71028f6d41ad46e217d55c7f0fb77cbf216834388ba674ab3b3b",
+    "benchmark_truth_events.csv": "382c32591f63ac8b0560203279e430db1ce90a053bae6c47d45847455963ac95",
+    "claimed_ticket.txt": "aec20c8dfd83893764a61f312ed99af8cc3ad840ea7d922b500236dbbaebb59a",
+    "event_predictions.csv": "c9715a600ae8604c181b1080295438b7f6e478a7e030b5eb67eb729a78394108",
+    "geant4_truth_summary.csv": "b2dc4f79501bff6e2e9246b742bd1cc2d12224558808d91abd415d057be81210",
+    "geant4_truth_table.csv": "fa30c93cc18728ad30ddaa5d3b41ac60c00279ace17c7c3ee69cf5b664f1d3f2",
+    "input_sha256.csv": "c484e95a8adbe04556806734680dd15b15d0311aba4a9bfa5bdf445814f4945a",
+    "method_metrics.csv": "0b32ea64b3c18d08362849416f4eb79e712ea5c34f57bb89cc9c7a994d570b08",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "50fcc4a5e890523ab343a4ad3d97ae8113616d0d4778ebb8faa46a56fbb407cf",
+    "run_heldout_metrics.csv": "162b5704a0e50cb3464539f517d2a286ab898918ba27a970cecd5d70f96dd14d",
+    "strata_metrics.csv": "f3c595e688c1cb83ccafb441ff062859bdb3aee33a5b30d7e829ef659ee7d5fd",
+    "template_summary.csv": "9ea803737e0c59bf5e794b704d65896ff1910a00bfc4bc8feda3115ea6f66038",
+    "winner_ranked_metrics.csv": "a780c12bf2323133944a0538040aedf9caa7ddaeaa3ae91fa58f6f74dc3acdbb"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "ticket_id": "1783809165.2703.494a356d",
+  "study": "S29A",
+  "command": "/home/billy/anaconda3/bin/python scripts/s29a_1783809165_2703_494a356d_pedestal_shape_timing_frontier.py --config configs/s29a_1783809165_2703_494a356d_pedestal_shape_timing_frontier.yaml",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_summary.csv",
+    "strata_summary.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "mlp"
+}

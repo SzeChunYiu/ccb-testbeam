@@ -1,0 +1,18 @@
+{
+  "ticket_id": "1783828686.21844.219b682b",
+  "study": "S29B",
+  "command": "/home/billy/anaconda3/bin/python scripts/s29b_1783828686_21844_219b682b_forced_pedestal_drift_truth_crosscheck.py --config configs/s29b_1783828686_21844_219b682b_forced_pedestal_drift_truth_crosscheck.yaml",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_summary.csv",
+    "undercoverage_summary.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "pedestal_truth_source_audit.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "mlp",
+  "direct_truth_available": false
+}

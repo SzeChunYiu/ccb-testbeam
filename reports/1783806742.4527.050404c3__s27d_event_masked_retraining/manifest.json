@@ -1,0 +1,39 @@
+{
+  "ticket_id": "1783806742.4527.050404c3",
+  "generated_utc": "2026-07-12T03:43:57.266440+00:00",
+  "command": "/home/billy/anaconda3/envs/nnbar_env/bin/python scripts/s27d_1783806742_4527_050404c3_event_masked_retraining.py",
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 19879,
+      "sha256": "cd9765989c3b18146e7fed007a9eeefa6f40cf1ef5446024c8a7574df5a4ae9f"
+    },
+    "claimed_ticket.txt": {
+      "bytes": 25,
+      "sha256": "32146c925e97a096bd30decf64f04c4b780dbc77b2a0913691d10066b1ed355a"
+    },
+    "event_table.csv.gz": {
+      "bytes": 455062,
+      "sha256": "7c2b6bd4a439e69243ef1fe970fe0948e8898d1b279501d3bab32160b7758c97"
+    },
+    "method_mask_metrics.csv": {
+      "bytes": 15603,
+      "sha256": "565dafc4d33d80e314caf7abf77cd393b5f1bdbcccc1ff1f5056e33ed0841574"
+    },
+    "per_run_metrics.csv": {
+      "bytes": 49971,
+      "sha256": "cd184c016650d6c847154e035a3ae40645974b657396a3810426395ab37834cc"
+    },
+    "reproduction_counts_by_run.csv": {
+      "bytes": 1677,
+      "sha256": "bee13bc5ee64a023c0a9b7c3af0fe0614e45533e43e74b858a18ee2793b3b591"
+    },
+    "reproduction_match_table.csv": {
+      "bytes": 305,
+      "sha256": "6636defecb584dcf4c6ef82b56280cc17b87f924f2c18bace788bbb3cab177ca"
+    },
+    "result.json": {
+      "bytes": 3981,
+      "sha256": "7c78ac71dbcab81c159e4761c9295db350ec15988c5410d9e9772ac53f67a739"
+    }
+  }
+}

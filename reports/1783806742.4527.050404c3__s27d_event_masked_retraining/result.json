@@ -1,0 +1,181 @@
+{
+  "ticket_id": "1783806742.4527.050404c3",
+  "study_id": "S27d",
+  "worker": "testbeam-laptop-2",
+  "created_utc": "2026-07-12T03:43:57.252804+00:00",
+  "git_commit": "52ccb1eb4450351f0e6d687dc9a9315ec8602200",
+  "python": "3.11.13",
+  "raw_root_dir": "data/root/root",
+  "raw_reproduction": {
+    "passed": true,
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "checks": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "expected": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "expected": 248745,
+        "reproduced": 248745,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "expected": 252266,
+        "reproduced": 252266,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "expected": 14630,
+        "reproduced": 14630,
+        "delta": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "expected": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "pass": true
+      }
+    ]
+  },
+  "split": {
+    "train_groups": [
+      "sample_i_calib",
+      "sample_i_analysis",
+      "sample_ii_calib"
+    ],
+    "heldout_groups": [
+      "sample_ii_analysis"
+    ],
+    "heldout_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "bootstrap": {
+    "unit": "held-out run",
+    "replicates": 100,
+    "ci": "95% percentile"
+  },
+  "methods": [
+    "attention_transformer_small",
+    "cnn1d",
+    "gradient_boosted_trees",
+    "mlp",
+    "residual_cnn_gru_new",
+    "ridge",
+    "traditional_charge_depth_timewalk"
+  ],
+  "masks": {
+    "pretrigger_0_3": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "rising_edge_4_7": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "peak_charge_8_11": [
+      8,
+      9,
+      10,
+      11
+    ],
+    "late_tail_12_17": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "causal_0_11": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "all_0_17": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ]
+  },
+  "winner": "gradient_boosted_trees",
+  "winner_mask": "all_0_17",
+  "winner_metric": "lowest weighted joint score",
+  "winner_details": {
+    "mask": "all_0_17",
+    "samples": "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17",
+    "method": "gradient_boosted_trees",
+    "family": "tree",
+    "joint_score": 0.0799642576979721,
+    "energy_res68": 0.0339556585152737,
+    "energy_mae": 0.0489782237198481,
+    "energy_bias": 0.0036454379654236,
+    "timing_res68_samples": 0.6738823053221816,
+    "timing_mae_samples": 0.6426227014654965,
+    "pid_auc": 0.9959292989572432,
+    "stress_auc": 0.993721991641596,
+    "n_events": 4200,
+    "n_runs": 7,
+    "energy_res68_ci_low": 0.0237055024958669,
+    "energy_res68_ci_high": 0.0496803843196831,
+    "timing_res68_samples_ci_low": 0.6212485496682445,
+    "timing_res68_samples_ci_high": 0.7084319327043307,
+    "pid_auc_ci_low": 0.9947838208911616,
+    "pid_auc_ci_high": 0.9972856007601404,
+    "stress_auc_ci_low": 0.9910665610513032,
+    "stress_auc_ci_high": 0.9955022863515534
+  },
+  "next_tickets": [
+    {
+      "title": "S27e: external weak-label perturbation audit for S27d event-level mask winners",
+      "body": "Repeat the S27d event-native masked benchmark under alternative PID/stress weak-label definitions and fixed efficiency thresholds to separate architecture gains from proxy-label choice."
+    }
+  ],
+  "novel_ticket_appended": "S27e: external weak-label perturbation audit for S27d event-level mask winners",
+  "runtime_sec": 0.026
+}

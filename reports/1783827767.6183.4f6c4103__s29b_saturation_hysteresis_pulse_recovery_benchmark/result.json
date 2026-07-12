@@ -1,0 +1,121 @@
+{
+  "ticket_id": "1783827767.6183.4f6c4103",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S29b saturation hysteresis pulse recovery benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/.tb-workers/testbeam-laptop-1/data/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv",
+    "data_folder": "/home/billy/.tb-workers/testbeam-laptop-1/data"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "injection_source_bootstrap": "held-out source_run:stave:is_overlap:spacing_bin:ratio_bin percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_head": "tiny_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite saturation-energy/timing score with run-block and injection-source bootstrap CIs reported",
+    "winner_score": 0.16330222103026903,
+    "energy_fractional_sigma68": 0.06367449143452107,
+    "energy_fractional_sigma68_run_block_ci95": [
+      0.05555050668705546,
+      0.06923540243657106
+    ],
+    "energy_fractional_sigma68_injection_source_ci95": [
+      0.05204167620637993,
+      0.07082626184716707
+    ],
+    "time_sigma68_ns": 7.4072174040192404,
+    "time_sigma68_run_block_ci95": [
+      6.5848558102871735,
+      8.575003462780208
+    ],
+    "time_sigma68_injection_source_ci95": [
+      6.630949976027986,
+      8.292671233918393
+    ],
+    "pileup_miss_rate": 0.3111111111111111,
+    "false_split_rate": 0.2,
+    "named_in_result_json": true,
+    "saturation_knee_adc": 2619.25,
+    "recovery_bias_delta": -0.02557466049927871,
+    "max_abs_stave_energy_bias": 0.013495983575736
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "injection_source_bootstrap_ci": "injection_source_bootstrap_ci.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "saturation_hysteresis_summary": "saturation_hysteresis_summary.csv",
+    "saturation_knee_location": "saturation_knee_location.csv",
+    "pulse_window_masking_ablation": "pulse_window_masking_ablation.csv",
+    "pid_boundary_and_residual_checks": "pid_boundary_and_residual_checks.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "Injection-source cells are retained provenance units, not exact residual waveform indices.",
+    "Hysteresis is evaluated as a close-versus-wide pulse-separation recovery proxy because the ROOT tree has no explicit electronics hysteresis latch.",
+    "Saturation-knee location is a controlled-injection energy-bin threshold, not a hardware scan of front-end saturation settings.",
+    "Pulse-window masking is represented by separation-conditioned sidebands over the 18-sample waveform.",
+    "Hysteresis is evaluated as a close-versus-wide pulse-separation recovery proxy because the ROOT tree has no explicit electronics hysteresis latch.",
+    "Saturation-knee location is a controlled-injection energy-bin threshold, not a hardware scan of front-end saturation settings.",
+    "Pulse-window masking is represented by separation-conditioned sidebands over the 18-sample waveform."
+  ],
+  "study_id": "S29b",
+  "required_endpoint_coverage": {
+    "timing_residual": "method_metrics.csv time_bias_ns/time_sigma68_ns with run-block bootstrap CIs",
+    "energy_bias": "method_metrics.csv energy_fractional_bias and energy_fractional_sigma68 with CIs",
+    "pid_leakage": "pid_boundary_and_residual_checks.csv stave-conditioned energy and late-tail leakage proxy",
+    "saturation_knee_location": "saturation_knee_location.csv first-bin sigma68 threshold scan",
+    "pile_up_sensitivity": "method_metrics.csv pileup_miss_rate/false_split_rate and pulse_window_masking_ablation.csv",
+    "saturation_onset_hysteresis_recovery": "saturation_hysteresis_summary.csv onset proxy, recovery-bias delta, close-vs-wide hysteresis proxy",
+    "pedestal_drift_ablation": "saturation_hysteresis_summary.csv pedestal_drift_bias_delta and CIs",
+    "pulse_window_masking_ablation": "pulse_window_masking_ablation.csv close/tail proxy sidebands"
+  }
+}

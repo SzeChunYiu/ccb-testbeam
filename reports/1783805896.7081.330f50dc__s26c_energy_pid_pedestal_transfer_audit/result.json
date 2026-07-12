@@ -1,0 +1,98 @@
+{
+  "ticket_id": "1783805896.7081.330f50dc",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "Energy-PID pedestal transfer audit",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer": "tiny_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite saturation-energy/timing score with run-block bootstrap CIs reported",
+    "winner_score": 0.1757403658174363,
+    "energy_fractional_sigma68": 0.06524776197934946,
+    "energy_fractional_sigma68_ci95": [
+      0.055380197167933326,
+      0.07638702543964493
+    ],
+    "time_sigma68_ns": 8.382593717142015,
+    "time_sigma68_ci95": [
+      7.381006082140926,
+      9.563933199208009
+    ],
+    "pileup_miss_rate": 0.3277777777777778,
+    "false_split_rate": 0.20555555555555555
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "pid_proxy_confusion": "pid_proxy_confusion.csv",
+    "pid_proxy_summary": "pid_proxy_summary.csv",
+    "pedestal_transfer_sensitivity": "pedestal_transfer_sensitivity.csv",
+    "pileup_abstention_deltas": "pileup_abstention_deltas.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals.",
+    "PID and pedestal diagnostics are explicitly marked proxies because independent PID truth and pedestal-truth labels are not present in the raw branches used for this benchmark."
+  ],
+  "ticket": "1783805896.7081.330f50dc",
+  "study": "S26c energy-PID pedestal transfer audit",
+  "artifact_dir": "reports/1783805896.7081.330f50dc__s26c_energy_pid_pedestal_transfer_audit",
+  "diagnostics": {
+    "pid_proxy_confusion": "stave plus injected total-energy tertile confusion on held-out overlaps; abstain is counted explicitly",
+    "pedestal_transfer_sensitivity": "run/stave spread in clean false split and overlap miss rates used as pedestal-transfer proxy",
+    "pileup_abstention_deltas": "miss/false-split/tail deltas versus traditional baseline"
+  }
+}

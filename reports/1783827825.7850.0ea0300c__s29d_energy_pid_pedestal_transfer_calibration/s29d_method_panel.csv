@@ -1,0 +1,8 @@
+method,family,role
+deltaE_over_E_likelihood_template,strong traditional,"charge-integration, template timing, and deltaE/E Gaussian PID likelihood"
+ridge,linear ML,regularized linear accessibility test
+gradient_boosted_trees,tree ML,nonlinear threshold and saturation interactions
+mlp,tabular neural network,dense nonlinear pulse-summary model
+1d_cnn,waveform neural network,local 18-sample convolutional waveform model
+joint_sequence_transformer,new architecture,compact full-context waveform transformer with PID and energy heads
+template_residual_boosted_stack_new,new architecture,physics residual stack using traditional estimates as residual features

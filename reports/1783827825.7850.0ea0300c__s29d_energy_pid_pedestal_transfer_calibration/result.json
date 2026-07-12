@@ -1,0 +1,106 @@
+{
+  "ticket_id": "1783827825.7850.0ea0300c",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S29d energy-PID pedestal transfer calibration study",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 180,
+    "pid_truth": "deterministic raw-waveform deuteron-like high-dEdx-depth proxy",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "strong_traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "joint_sequence_transformer",
+    "additional_new_physics_residual_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out composite joint PID/energy/timing score with run-block bootstrap CIs reported",
+    "winner_score": 0.252921140551697,
+    "pid_auc": 1.0,
+    "pid_balanced_accuracy": 0.96875,
+    "pid_efficiency": 0.9375,
+    "pid_purity": 1.0,
+    "energy_fractional_sigma68": 0.1084142175754784,
+    "energy_fractional_sigma68_ci95": [
+      0.09224875602134852,
+      0.12121602876634893
+    ],
+    "time_sigma68_ns": 10.533078661258223,
+    "time_sigma68_ci95": [
+      8.340186953854339,
+      11.366204348774156
+    ],
+    "pileup_miss_rate": 0.2818181818181818,
+    "false_split_rate": 0.34545454545454546,
+    "s29d_transfer_check": "gradient_boosted_trees",
+    "interpretation": "primary winner is the overall held-out composite-score winner; transfer winner is reported as a robustness cross-check"
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "s29d_method_panel": "s29d_method_panel.csv",
+    "s29d_transfer_axis_metrics": "s29d_transfer_axis_metrics.csv",
+    "s29d_stress_worst_case_metrics": "s29d_stress_worst_case_metrics.csv",
+    "s29d_overall_vs_transfer_ranking": "s29d_overall_vs_transfer_ranking.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "PID truth is a deterministic raw-waveform proxy, not external particle truth.",
+    "Pile-up and saturation truths come from controlled injections into raw-ROOT-derived clean pulses.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals.",
+    "Pedestal regimes are waveform-derived area-over-peak strata rather than dedicated pedestal-run labels.",
+    "Saturation bands use controlled-injection energy proxy strata because hardware saturation metadata are not present in the waveform tree.",
+    "Run-family transfer is implemented as complete held-out source-run families with run-block bootstrap CIs."
+  ],
+  "s29d_transfer_winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum worst-case transfer score across run family, pedestal regime, saturation band, pile-up load, pulse-shape family, and stave strata",
+    "transfer_score": 0.3336678824105986,
+    "worst_energy_fractional_sigma68": 0.14993101252789567,
+    "worst_pid_balanced_accuracy": 0.9,
+    "max_abs_energy_bias": 0.13192449271909948
+  }
+}

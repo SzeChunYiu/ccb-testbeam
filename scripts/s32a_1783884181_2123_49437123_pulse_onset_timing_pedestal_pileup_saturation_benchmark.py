@@ -47,6 +47,7 @@ METHOD_ORDER = [
     "gradient_boosted_trees",
     "mlp",
     "1d_cnn",
+    "waveform_transformer",
     "edge_attention_cnn_new",
 ]
 
@@ -364,6 +365,32 @@ class TinyCNN(nn.Module):
         return self.head(h).squeeze(-1)
 
 
+class WaveformTransformer(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.embed = nn.Linear(2, 24)
+        self.position = nn.Parameter(torch.zeros(1, 18, 24))
+        layer = nn.TransformerEncoderLayer(
+            d_model=24,
+            nhead=4,
+            dim_feedforward=64,
+            dropout=0.05,
+            activation="gelu",
+            batch_first=True,
+        )
+        self.encoder = nn.TransformerEncoder(layer, num_layers=1)
+        self.head = nn.Sequential(nn.LayerNorm(24), nn.Linear(24, 32), nn.GELU(), nn.Linear(32, 1))
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        wave = x.squeeze(1)
+        t = torch.linspace(0.0, 1.0, wave.shape[1], device=wave.device).expand_as(wave)
+        h = self.embed(torch.stack([wave, t], dim=-1)) + self.position
+        h = self.encoder(h)
+        weights = torch.softmax(3.0 * wave, dim=1).unsqueeze(-1)
+        pooled = (h * weights).sum(dim=1)
+        return self.head(pooled).squeeze(-1)
+
+
 def fit_cnn(df: pd.DataFrame, config: dict, name: str, gated: bool, seed: int) -> np.ndarray:
     if torch is None:
         raise RuntimeError("torch is required for neural waveform methods")
@@ -400,6 +427,42 @@ def fit_cnn(df: pd.DataFrame, config: dict, name: str, gated: bool, seed: int) -
     return np.concatenate(out) * ys + ym
 
 
+def fit_transformer(df: pd.DataFrame, config: dict, seed: int) -> np.ndarray:
+    if torch is None:
+        raise RuntimeError("torch is required for waveform transformer methods")
+    torch.manual_seed(seed)
+    torch.set_num_threads(1)
+    x = waveform_array(df)[:, None, :]
+    y = df["target_onset_residual_ns"].to_numpy(dtype=np.float32)
+    train = df["split"].eq("train").to_numpy()
+    ym = float(y[train].mean())
+    ys = float(y[train].std() + 1e-6)
+    ds = TensorDataset(torch.from_numpy(x[train]), torch.from_numpy(((y[train] - ym) / ys).astype(np.float32)))
+    loader = DataLoader(
+        ds,
+        batch_size=int(config["nn"]["batch_size"]),
+        shuffle=True,
+        generator=torch.Generator().manual_seed(seed),
+    )
+    model = WaveformTransformer()
+    opt = torch.optim.AdamW(model.parameters(), lr=float(config["nn"]["learning_rate"]), weight_decay=float(config["nn"]["weight_decay"]))
+    loss_fn = nn.SmoothL1Loss()
+    model.train()
+    for _ in range(int(config["nn"].get("transformer_epochs", config["nn"]["epochs"]))):
+        for xb, yb in loader:
+            opt.zero_grad(set_to_none=True)
+            loss = loss_fn(model(xb), yb)
+            loss.backward()
+            opt.step()
+    out = []
+    model.eval()
+    with torch.no_grad():
+        tx = torch.from_numpy(x)
+        for start in range(0, len(tx), 2048):
+            out.append(model(tx[start : start + 2048]).cpu().numpy())
+    return np.concatenate(out) * ys + ym
+
+
 def metric_values(frame: pd.DataFrame) -> dict[str, float]:
     err = frame["error_ns"].to_numpy(float)
     abs_err = np.abs(err[np.isfinite(err)])
@@ -412,11 +475,12 @@ def metric_values(frame: pd.DataFrame) -> dict[str, float]:
     }
 
 
-def summarize(predictions: pd.DataFrame, config: dict, rng: np.random.Generator) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def summarize(predictions: pd.DataFrame, config: dict, rng: np.random.Generator) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     held = predictions[predictions["split"].eq("heldout")].copy()
     metric_rows = []
     run_rows = []
     strata_rows = []
+    boot_by_method: dict[str, dict[str, list[float]]] = {}
     for method, group in held.groupby("method"):
         row = {"method": method, "n": int(len(group)), **metric_values(group)}
         runs = sorted(group["run"].unique())
@@ -431,6 +495,7 @@ def summarize(predictions: pd.DataFrame, config: dict, rng: np.random.Generator)
         for key, values in samples.items():
             row[f"{key}_ci_low"] = float(np.percentile(values, 2.5))
             row[f"{key}_ci_high"] = float(np.percentile(values, 97.5))
+        boot_by_method[str(method)] = samples
         metric_rows.append(row)
         for run, rg in group.groupby("run"):
             run_rows.append({"method": method, "run": int(run), "n": int(len(rg)), **metric_values(rg)})
@@ -439,11 +504,72 @@ def summarize(predictions: pd.DataFrame, config: dict, rng: np.random.Generator)
                 strata_rows.append({"method": method, "stratum": col, "level": str(level), "n": int(len(sg)), **metric_values(sg)})
     metrics = pd.DataFrame(metric_rows)
     metrics["method"] = pd.Categorical(metrics["method"], METHOD_ORDER, ordered=True)
+    metrics = metrics.sort_values("sigma68_ns").reset_index(drop=True)
+    delta_rows = []
+    reference = "traditional_cfd_template_timewalk"
+    for method in metrics["method"].astype(str):
+        if method == reference:
+            continue
+        row = {"method": method, "reference_method": reference}
+        for key in ["bias_ns", "sigma68_ns", "rms_ns", "tail_fraction_abs_gt_5ns", "tail_fraction_abs_gt_10ns"]:
+            val = float(metrics.loc[metrics["method"].astype(str).eq(method), key].iloc[0])
+            ref = float(metrics.loc[metrics["method"].astype(str).eq(reference), key].iloc[0])
+            paired = np.asarray(boot_by_method[method][key]) - np.asarray(boot_by_method[reference][key])
+            row[f"delta_{key}"] = val - ref
+            row[f"delta_{key}_ci_low"] = float(np.percentile(paired, 2.5))
+            row[f"delta_{key}_ci_high"] = float(np.percentile(paired, 97.5))
+        delta_rows.append(row)
     return (
-        metrics.sort_values("sigma68_ns").reset_index(drop=True),
+        metrics,
         pd.DataFrame(run_rows).sort_values(["method", "run"]),
         pd.DataFrame(strata_rows).sort_values(["stratum", "level", "method"]),
+        pd.DataFrame(delta_rows).sort_values("delta_sigma68_ns"),
     )
+
+
+def ablation_study(df: pd.DataFrame, rng: np.random.Generator) -> pd.DataFrame:
+    train = df["split"].eq("train").to_numpy()
+    y = df["target_onset_residual_ns"].to_numpy(float)
+    feature_sets = {
+        "full_gradient_boosted_trees": feature_columns(df),
+        "drop_pretrigger_features": [c for c in feature_columns(df) if c not in {"baseline", "pretrigger_slope", "w00", "w01", "w02", "w03"}],
+        "drop_tail_pulse_shape_features": [
+            c
+            for c in feature_columns(df)
+            if c not in {"tail_fraction", "late_peak_sample", "late_peak_prominence", "w12", "w13", "w14", "w15", "w16", "w17"}
+        ],
+        "amplitude_cfd_only": ["amplitude", "cfd50_sample", "cfd80_sample", "rise_time_sample", "peak_sample"],
+    }
+    rows = []
+    for name, cols in feature_sets.items():
+        model = HistGradientBoostingRegressor(max_iter=140, learning_rate=0.05, l2_regularization=0.02, random_state=91)
+        x = df[cols].to_numpy(dtype=float)
+        model.fit(x[train], y[train])
+        pred = model.predict(x)
+        frame = df[["run", "split", "target_onset_residual_ns"]].copy()
+        frame["error_ns"] = frame["target_onset_residual_ns"] - pred
+        held = frame[frame["split"].eq("heldout")]
+        vals = metric_values(held)
+        runs = sorted(held["run"].unique())
+        boot = []
+        for _ in range(200):
+            take = rng.choice(runs, size=len(runs), replace=True)
+            sample = pd.concat([held[held["run"].eq(r)] for r in take], ignore_index=True)
+            boot.append(metric_values(sample)["sigma68_ns"])
+        rows.append(
+            {
+                "ablation": name,
+                "n_features": int(len(cols)),
+                "sigma68_ns": vals["sigma68_ns"],
+                "sigma68_ns_ci_low": float(np.percentile(boot, 2.5)),
+                "sigma68_ns_ci_high": float(np.percentile(boot, 97.5)),
+                "tail_fraction_abs_gt_5ns": vals["tail_fraction_abs_gt_5ns"],
+            }
+        )
+    out = pd.DataFrame(rows).sort_values("sigma68_ns").reset_index(drop=True)
+    base = float(out.loc[out["ablation"].eq("full_gradient_boosted_trees"), "sigma68_ns"].iloc[0])
+    out["delta_sigma68_vs_full_ns"] = out["sigma68_ns"] - base
+    return out
 
 
 def md_table(df: pd.DataFrame, columns: Sequence[str], max_rows: int | None = None) -> str:
@@ -456,7 +582,7 @@ def md_table(df: pd.DataFrame, columns: Sequence[str], max_rows: int | None = No
     return view.to_markdown(index=False)
 
 
-def write_report(config: dict, reproduction: pd.DataFrame, data: pd.DataFrame, metrics: pd.DataFrame, by_run: pd.DataFrame, strata: pd.DataFrame, result: dict, runtime: float) -> None:
+def write_report(config: dict, reproduction: pd.DataFrame, data: pd.DataFrame, metrics: pd.DataFrame, deltas: pd.DataFrame, by_run: pd.DataFrame, strata: pd.DataFrame, ablations: pd.DataFrame, result: dict, runtime: float) -> None:
     out = Path(config["output_dir"])
     winner = result["winner"]["method"]
     best = metrics[metrics["method"].astype(str).eq(winner)].iloc[0]
@@ -468,6 +594,7 @@ def write_report(config: dict, reproduction: pd.DataFrame, data: pd.DataFrame, m
             ["gradient_boosted_trees", "tree ML", "histogram gradient-boosted regression on the same engineered waveform features"],
             ["mlp", "neural tabular", "two-hidden-layer perceptron on engineered waveform and detector-state summaries"],
             ["1d_cnn", "neural waveform", "compact 1D convolutional regressor over the 18 normalized ADC samples"],
+            ["waveform_transformer", "neural waveform", "one-layer self-attention encoder over waveform samples with amplitude-weighted pooling"],
             ["edge_attention_cnn_new", "new architecture", "gated 1D-CNN whose learned edge gate emphasizes onset and late-curvature samples"],
         ],
         columns=["method", "family", "description"],
@@ -548,6 +675,14 @@ No method receives event number or run identifier as a feature.
 The traditional method has sigma68 `{trad['sigma68_ns']:.4g} ns`; the selected
 winner `{winner}` has sigma68 `{best['sigma68_ns']:.4g} ns`.
 
+## Paired Method Deltas
+
+The following deltas are paired by held-out run-block bootstrap against the
+traditional reference.  Positive `delta_sigma68_ns` means the method is wider
+than the traditional comparator.
+
+{md_table(deltas, ['method', 'reference_method', 'delta_sigma68_ns', 'delta_sigma68_ns_ci_low', 'delta_sigma68_ns_ci_high', 'delta_tail_fraction_abs_gt_5ns', 'delta_tail_fraction_abs_gt_5ns_ci_low', 'delta_tail_fraction_abs_gt_5ns_ci_high'])}
+
 ## Run Stability
 
 {md_table(by_run, ['method', 'run', 'n', 'bias_ns', 'sigma68_ns', 'tail_fraction_abs_gt_5ns'], max_rows=80)}
@@ -562,6 +697,16 @@ occupancy; energy proxy is amplitude quartile; PID sideband is the duplicate
 readout amplitude ratio sideband.
 
 {md_table(strata, ['stratum', 'level', 'method', 'n', 'bias_ns', 'sigma68_ns', 'tail_fraction_abs_gt_5ns'], max_rows=140)}
+
+## Pulse-Shape and Pretrigger Ablations
+
+These ablations use the gradient-boosted-tree learner because it was the best
+non-traditional ML method in the primary table.  They remove feature families
+rather than individual correlated columns, exposing whether the learned timing
+understanding is driven by pretrigger pedestal information or by tail/shape
+features.
+
+{md_table(ablations, ['ablation', 'n_features', 'sigma68_ns', 'sigma68_ns_ci_low', 'sigma68_ns_ci_high', 'delta_sigma68_vs_full_ns', 'tail_fraction_abs_gt_5ns'])}
 
 ## Systematics and Caveats
 
@@ -602,6 +747,7 @@ def main() -> None:
     preds = {"traditional_cfd_template_timewalk": traditional_prediction(data)}
     preds.update(fit_tabular_methods(data))
     preds["1d_cnn"] = fit_cnn(data, config, "1d_cnn", gated=False, seed=int(config["random_seed"]) + 1)
+    preds["waveform_transformer"] = fit_transformer(data, config, seed=int(config["random_seed"]) + 3)
     preds["edge_attention_cnn_new"] = fit_cnn(data, config, "edge_attention_cnn_new", gated=True, seed=int(config["random_seed"]) + 2)
 
     pred_rows = []
@@ -627,10 +773,13 @@ def main() -> None:
     predictions = pd.concat(pred_rows, ignore_index=True)
     predictions.to_parquet(out / "predictions.parquet", index=False)
 
-    metrics, by_run, strata = summarize(predictions, config, rng)
+    metrics, by_run, strata, deltas = summarize(predictions, config, rng)
+    ablations = ablation_study(data, rng)
     metrics.to_csv(out / "metrics.csv", index=False)
+    deltas.to_csv(out / "method_deltas.csv", index=False)
     by_run.to_csv(out / "by_run.csv", index=False)
     strata.to_csv(out / "strata.csv", index=False)
+    ablations.to_csv(out / "ablations.csv", index=False)
     winner_row = metrics.iloc[0].to_dict()
     result = {
         "ticket_id": config["ticket_id"],
@@ -666,11 +815,13 @@ def main() -> None:
             "bias_ns": float(winner_row["bias_ns"]),
         },
         "metric_table": json_safe(metrics.to_dict("records")),
+        "paired_delta_table": json_safe(deltas.to_dict("records")),
+        "ablation_table": json_safe(ablations.to_dict("records")),
         "strata_axes": ["pedestal_drift_bin", "pulse_shape_class", "pileup_separation_bin", "saturation_onset_bin", "energy_bin", "pid_sideband"],
         "next_tickets": [],
     }
     (out / "result.json").write_text(json.dumps(json_safe(result), indent=2) + "\n", encoding="utf-8")
-    write_report(config, reproduction, data, metrics, by_run, strata, result, time.time() - started)
+    write_report(config, reproduction, data, metrics, deltas, by_run, strata, ablations, result, time.time() - started)
 
 
 if __name__ == "__main__":

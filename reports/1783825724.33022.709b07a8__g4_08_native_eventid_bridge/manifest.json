@@ -1,0 +1,30 @@
+{
+  "ticket_id": "1783825724.33022.709b07a8",
+  "git_commit": "c4ccb946ba67a21c8121d18ba3420adb51d6ecd0",
+  "command": "/home/billy/anaconda3/bin/python scripts/g4_08_1783825724_33022_709b07a8_native_eventid_bridge.py",
+  "runtime_seconds": 73.09124183654785,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "b65177f038d23c6a67fd12be2d9d30087180d889b41a6aa0694e2e0a88d98564",
+    "alignment_policy_summary.csv": "0f44779c788dde4e11f88b0a76179a68bb4a7194fd17192d0f1bf0bf42dd3793",
+    "benchmark_truth_events.csv": "1f3b63ac3d7a634795fe6d96c226b5284101b4085b0239caa5151a441b1d5e8c",
+    "claimed_ticket.txt": "f0fe059851d016ca1e398332a05f02da0e830a4464d509f7e1454e42ca548231",
+    "daq_event_key_inventory.csv": "cd9dc624d2b2ba84803612ed7c612b9b71126e882d13099ff20abdef5cc26988",
+    "event_predictions.csv": "f8330de88f47baf2b4207e4b0e4ca450cd89a92aa57d96843b74d18429a2ed5c",
+    "future_metadata_export_contract.csv": "1d9d5f612ea5aa020466ccf6a3f090919f7f70f485babc29dc87ea2d1d0fbfb2",
+    "geant4_event_key_inventory.csv": "24fe6e29993f96d144b34bc15b5402babd266e9f97e45dede28907037dbc6bab",
+    "geant4_truth_summary.csv": "b2dc4f79501bff6e2e9246b742bd1cc2d12224558808d91abd415d057be81210",
+    "geant4_truth_table.csv": "df0bac71932b802a5c5acd88f66d9105bb3a9b01867965d20635dad1ec01b427",
+    "input_sha256.csv": "c484e95a8adbe04556806734680dd15b15d0311aba4a9bfa5bdf445814f4945a",
+    "method_metrics.csv": "7cbd07a6995df4dd8a8fb9dd6858189de2f709d059f0c407633a4417803df5f1",
+    "native_bridge_contract.csv": "349c62552a656837b97f77a017f95f65eb21934a4a1b0fe7231b80991ea55879",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "fc7b3910e96415e76cd252d872057305a5b404f3639b8ca11a483d2561004f2c",
+    "run_heldout_metrics.csv": "fdf1f5ac6d7fb9d731ed6fb3318069bf227950c97af341abdde04f6af37c5eec",
+    "run_keyed_geant4_rows.csv": "cb61b13fe1bd66a4fd23ae1021f6474e9d05955dee069e29ec3b470b4a321baa",
+    "strata_metrics.csv": "0f14e7effee8045a59cf00cbde6ee1461bba9f893d1849c559bfded597ec741f",
+    "template_summary.csv": "9ea803737e0c59bf5e794b704d65896ff1910a00bfc4bc8feda3115ea6f66038",
+    "winner_ranked_metrics.csv": "b4c538524c26a78024e04d7d75f202a3248a473a1d122b2cc4c6033134d4b9f3"
+  }
+}

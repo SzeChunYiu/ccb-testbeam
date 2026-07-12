@@ -1,0 +1,5 @@
+key,daq_available,geant4_available,native_joinable,meaning
+run,True,False,False,required to split by acquisition run
+EVENTNO,True,False,False,primary DAQ event counter
+EVT,True,False,False,secondary DAQ event or trigger key
+TRIGGER,True,False,False,DAQ trigger metadata

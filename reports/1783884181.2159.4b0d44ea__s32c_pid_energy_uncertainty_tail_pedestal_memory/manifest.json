@@ -1,0 +1,72 @@
+{
+  "ticket_id": "1783884181.2159.4b0d44ea",
+  "generated_at_unix": 1783887535.6757414,
+  "command": "scripts/s32c_1783884181_2159_4b0d44ea_pid_energy_uncertainty_tail_pedestal_memory.py --config configs/s32c_1783884181_2159_4b0d44ea_pid_energy_uncertainty_tail_pedestal_memory.json",
+  "artifacts": [
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/REPORT.md",
+      "sha256": "e4ba0145be544fc23e76e6b53250dd0ab56ec4d8f2bb8e927658b73a2a70897b",
+      "bytes": 42736
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/calibration_ece.csv",
+      "sha256": "73f089c37a4a5b336f4888a12691c975400b51f1bcf40fa4dac1868cc3c52520",
+      "bytes": 5956
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/endpoint_method_summary.csv",
+      "sha256": "8032a285caada50fcbae776bda29db21ae91493acfe9a388799273d8f262fb06",
+      "bytes": 10553
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/heldout_predictions.csv.gz",
+      "sha256": "828d17f72ae3a665c975fd89f909d26faa8e5e6091b6907f4e7c0d5cdf9a893c",
+      "bytes": 1958845
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/heldout_strata_assignments.csv",
+      "sha256": "de5bd40f62e28d0dca3d815fbaddb8bbea1a43c7740123cbc368153e9f55b47a",
+      "bytes": 952562
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/joint_scoreboard.csv",
+      "sha256": "93c35f5f21714d3e3366560fabaae5ff05a32b298b10a432fb6193a98f87d5ab",
+      "bytes": 2368
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/leakage_audit.csv",
+      "sha256": "a64c883c9544d8828bc415bfd27d71477c0689aa01a737282402ad886011e1d3",
+      "bytes": 2938
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/paired_bootstrap_deltas.csv",
+      "sha256": "498793814df0d1de931c83b5776c28824992e52245171d40b8c3f3f9613bb11e",
+      "bytes": 10258
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/result.json",
+      "sha256": "6f55b66bc470daa624928cbe807195ebc748959b45487f257772683cce06e9f3",
+      "bytes": 2638
+    },
+    {
+      "path": "reports/1783884181.2159.4b0d44ea__s32c_pid_energy_uncertainty_tail_pedestal_memory/strata_metrics.csv",
+      "sha256": "ccc317f0dc43e7e19326d6bbb5a69ff77c4954707b90f93ca9b8e6ab59a9c22f",
+      "bytes": 133433
+    }
+  ]
+}

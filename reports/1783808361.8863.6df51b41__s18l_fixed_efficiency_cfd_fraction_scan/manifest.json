@@ -1,0 +1,27 @@
+{
+  "study": "S18l",
+  "ticket": "1783808361.8863.6df51b41",
+  "worker": "testbeam-laptop-3",
+  "config": "configs/s18l_1783808361_8863_6df51b41_fixed_efficiency_cfd_fraction_scan.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/s18l_1783808361_8863_6df51b41_fixed_efficiency_cfd_fraction_scan.py --config configs/s18l_1783808361_8863_6df51b41_fixed_efficiency_cfd_fraction_scan.json",
+  "environment": {
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid"
+  },
+  "output_sha256": {
+    "REPORT.md": "909a722e973906b1bfbd96c178cdf4f2dc295af6fa45d07953a2cd9da3aeae85",
+    "astack_counts.csv": "4a74e0f451bb430ea99e3af4c8adff6f704edd56e9ed29ac76b2f22e4088e504",
+    "fixed_efficiency_thresholds.csv": "62ecaaf72de21344c12cce21002a2620bfb8a7f81f791a09c15c20ec599dcf31",
+    "heldout_predictions.csv.gz": "7e34e66820aad6dfd398b3da5cbfb317fba2b528a7be6800a1a6febb515bf978",
+    "input_sha256.csv": "a761bd997059596553b552b4903f6947206ad8939520efc22c511b90de08eac1",
+    "leakage_checks.csv": "e6ed00dffcab75b471537065d11c5ddc0f5617cd99d2ccea104ba98f2e0912f1",
+    "method_cfd_stability.csv": "300036c86936c4b30aead5b463af5e80a935f2c45e9847f5831ff36d01a1fcb5",
+    "method_delta_bootstrap.csv": "89c471a26101eeb7773152dd65f3b90de2a55dc70e7ce622df4c49d7f6408db0",
+    "method_metrics.csv": "288b3b861c7804a78dcb838b4f8fec6de23f6e975d778e1023217725666e443a",
+    "per_run_metrics.csv": "3a5d61b657554237e3826296db613d2dd9c3a27778facf3098302652a7565541",
+    "raw_cfd_scan_metrics.csv": "b6618c858de847dbb34cad2a9bb7cb2f560cf2f469bd9435bb6c14cf11850b1e",
+    "reproduction_match_table.csv": "1a4ef6831cf06b0d535215369d8308e9dd9a3bd3a61f95e5944d30f73eaea3a5",
+    "result.json": "b23db5761f31b98f5d90cad184fdd1cd86a00db793f59eda1ae257334dc26899",
+    "ridge_cv_scan.csv": "6bdb5ceba0a61d1d4c193edc25f45244ab58d36de6637872c7d44a82eb5aa127"
+  }
+}

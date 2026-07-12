@@ -1,0 +1,24 @@
+{
+  "study": "S18l",
+  "ticket": "1783808361.8863.6df51b41",
+  "worker": "testbeam-laptop-3",
+  "title": "fixed-efficiency CFD fraction interpolation-noise scan",
+  "source_config": "configs/s18h_1781102709_886_658f43d5_astack_waveform_atom_audit.json",
+  "output_dir": "reports/1783808361.8863.6df51b41__s18l_fixed_efficiency_cfd_fraction_scan",
+  "script_path": "scripts/s18l_1783808361_8863_6df51b41_fixed_efficiency_cfd_fraction_scan.py",
+  "primary_gate": {
+    "cfd_fraction": 0.20,
+    "amplitude_cut_adc": 1000.0
+  },
+  "cfd_fraction_scan": [0.10, 0.15, 0.20, 0.25, 0.30, 0.35],
+  "fixed_efficiency_reference": "pooled CFD20/cut1000 pair efficiency on Sample III train + Sample IV held-out positive A1/A3 support; per-run quantile thresholds are then frozen across CFD fractions",
+  "random_seed": 3808361,
+  "bootstrap_resamples": 300,
+  "nn": {
+    "epochs": 5,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "max_train_rows": 8000
+  }
+}

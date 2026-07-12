@@ -1,0 +1,8 @@
+method,knee_definition,saturation_knee_adc,min_bin_sigma68,max_bin_sigma68,n_bins
+1d_cnn,first true-energy bin with sigma68 >= 0.08,2619.25,0.07281825919929233,0.17789489147011583,6
+gradient_boosted_trees,first true-energy bin with sigma68 >= 0.08,2619.25,0.05219206239963892,0.1079994130358037,6
+mlp,first true-energy bin with sigma68 >= 0.08,2619.25,0.09939864533458753,0.19616561595295084,6
+ridge,first true-energy bin with sigma68 >= 0.08,2619.25,0.04038130411956817,0.1304644219233888,6
+template_residual_boosted_stack_new,first true-energy bin with sigma68 >= 0.08,2619.25,0.044924180800883715,0.10752339913621696,6
+tiny_sequence_transformer,first true-energy bin with sigma68 >= 0.08,2619.25,0.10367840104335216,0.13974874971586065,6
+two_pulse_template_cfd_baseline,first true-energy bin with sigma68 >= 0.08,2619.25,0.06147768511761627,0.16948986109905478,6

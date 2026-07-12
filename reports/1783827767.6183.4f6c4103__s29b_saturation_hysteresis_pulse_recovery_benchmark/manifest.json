@@ -1,0 +1,30 @@
+{
+  "ticket_id": "1783827767.6183.4f6c4103",
+  "git_commit": "37a2016f0c3fcd5034985f668d8093ef9d6fba79",
+  "command": "/home/billy/anaconda3/bin/python scripts/s29b_1783827767_6183_4f6c4103_saturation_hysteresis_pulse_recovery_benchmark.py",
+  "runtime_seconds": 455.1972322463989,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "2e163e84286b485f90d7c7abb2cd0f8516e8eb0d66144deb7ec6a31c196278b3",
+    "claimed_ticket.txt": "9c2a35c1440c2bc3442693144f676a0ae73095314b5161e44bd150d92d90578f",
+    "event_predictions.csv": "bec033866d9cba1994ae9955530fd86b4a5219683414b5d5cdcf1a94c7a9595c",
+    "injection_source_bootstrap_ci.csv": "378531fbec2a2e244d8a701b12e866e24de5dbe4aaf37487154cc9bb9f4ab36d",
+    "input_sha256.csv": "07b6d318ddd4c9dd6c883403e78c7a2848358ee5d6e4d9ef6443d72512c84b13",
+    "method_metrics.csv": "6438beec927b509f89026d0df1175bbc32e43f314fc1f5eec49415436783de83",
+    "pid_boundary_and_residual_checks.csv": "e099f2cade760fca368d1fae47168f9e5bf829d29fb2203cc564fdf1e336764e",
+    "pulse_window_masking_ablation.csv": "dd78f4472481ca3fbca935a289176a6093887df8d895813c692c4f89bd67fb70",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "5b228586eb4baf79d5d5c292f3630e487e8bab9229abd118c72d4c99f502a9e5",
+    "run_heldout_metrics.csv": "be7e10ceea4a592c4697e2043167846ec6f2da081c153a389508b15d4943dcce",
+    "saturation_hysteresis_summary.csv": "e6d74c1accffe8eb59a76782583fcf3f14f13328f0d0cbc3546b2aaed9a53f91",
+    "saturation_knee_location.csv": "cc4ab43a3e4d6234e56fcccb02a0a4be76e0022a1f07fd8639c3f37785341bcf",
+    "strata_metrics.csv": "26f34bf82e7a9fcb200a0415ac31c6c0c512c93f8831d3dc3647c3f26fb52380",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "9dfcb92542d6cf3f4ed9e58095c54eed416d71d120d3e50a7d3c6602daeee99a"
+  },
+  "title": "S29b saturation hysteresis pulse recovery benchmark",
+  "worker": "testbeam-laptop-1",
+  "study_id": "S29b",
+  "postprocess_note": "S29b saturation hysteresis, knee, pedestal, and pulse-window endpoint tables appended after base runner completion."
+}

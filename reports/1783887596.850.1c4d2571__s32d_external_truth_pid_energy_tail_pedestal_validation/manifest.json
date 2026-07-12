@@ -1,0 +1,123 @@
+{
+  "result": {
+    "ticket_id": "1783887596.850.1c4d2571",
+    "study_id": "S32d",
+    "worker": "testbeam-laptop-2",
+    "title": "External-truth PID-energy tail/pedestal validation",
+    "raw_root_dir": "data/root/root",
+    "git_commit": "d2e952e8aea8580089d6a60ded9ac9f9e2261560",
+    "runtime_sec": 122.07707285881042,
+    "python": "3.7.6",
+    "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "reproduction": {
+      "selected_pulses": 640737,
+      "expected_selected_pulses": 640737,
+      "delta": 0,
+      "passed": true,
+      "samples_per_channel": 18
+    },
+    "geant4_truth": {
+      "digitized_root": "reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join/digitized_g4_08_keyed.root",
+      "truth_table": "reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join/geant4_truth_table.csv",
+      "pid_truth": "dominant Sci_bar PDG deuteron vs proton",
+      "energy_truth": "GEANT4 total B-stack Sci_bar deposited energy, log residualized by run/stave",
+      "n_digitized_events": 1056,
+      "native_keys": [
+        "daq_run",
+        "EVENTNO",
+        "EVT",
+        "TRIGGER",
+        "g4_entry",
+        "digitizer_seed"
+      ]
+    },
+    "split": {
+      "requested_heldout_runs": [
+        42,
+        50,
+        57,
+        58,
+        60,
+        62,
+        64,
+        65
+      ],
+      "available_runs": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        60,
+        62,
+        64,
+        65
+      ],
+      "run_heldout_runs": [
+        50,
+        57,
+        58,
+        60,
+        62,
+        64,
+        65
+      ],
+      "particle_holdout_family": "external_high_energy_tail_family",
+      "split_descriptions": {
+        "run_heldout": "complete held-out runs available in keyed GEANT4 bridge: 50, 57, 58, 60, 62, 64, 65",
+        "particle_heldout": "external truth particle family `external_high_energy_tail_family` held out"
+      },
+      "bootstrap_replicates": 260
+    },
+    "primary_methods": [
+      "traditional_dE_E_tail_pedestal_likelihood",
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "spectral_transformer_new"
+    ],
+    "joint_score_weights": {
+      "pid_auc_loss": 0.34,
+      "energy_sigma68": 0.3,
+      "pileup_auc_loss": 0.1,
+      "saturation_auc_loss": 0.08,
+      "pedestal_auc_loss": 0.08,
+      "tail_harmonic_auc_loss": 0.1
+    },
+    "winner": {
+      "method": "gradient_boosted_trees",
+      "mean_joint_loss": 0.2965095120132778,
+      "selection_rule": "minimum mean registered joint loss across available S32c-style run-heldout and external particle-family-heldout splits"
+    },
+    "winner_details": {
+      "split_name": "particle_heldout",
+      "method": "gradient_boosted_trees",
+      "joint_loss": 0.2671867596632456,
+      "pid_separation": 0.5659768879333512,
+      "energy_scale": 0.20090050959915595,
+      "pileup_sideband": 0.8352777777777778,
+      "saturation_clipping": 1.0,
+      "pedestal_noise_color": 1.0,
+      "pulse_shape_harmonics": 0.5712347354138398,
+      "mean_joint_loss": 0.2965095120132778
+    },
+    "artifacts": {
+      "REPORT.md": "academic report",
+      "joint_scoreboard.csv": "winner table",
+      "endpoint_method_summary.csv": "bootstrap endpoint CIs",
+      "paired_bootstrap_deltas.csv": "paired bootstrap vs traditional",
+      "calibration_ece.csv": "PID/proxy calibration",
+      "strata_metrics.csv": "tail/pedestal/pulse/pileup/saturation/energy strata",
+      "leakage_audit.csv": "external-truth leakage audit",
+      "external_truth_family_assignments.csv": "particle-family split assignments"
+    },
+    "next_tickets": [],
+    "status": "complete"
+  },
+  "created": 1783888347.5857897
+}

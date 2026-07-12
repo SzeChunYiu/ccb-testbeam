@@ -1,0 +1,389 @@
+{
+  "study": "S27c",
+  "ticket_id": "1783806624.5871.585133e5",
+  "worker": "testbeam-laptop-1",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "sim_events_with_scibar_truth": 33651,
+  "train_pseudo_runs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "heldout_pseudo_runs": [
+    8,
+    9,
+    10
+  ],
+  "feature_names": [
+    "multiplicity",
+    "depth_idx",
+    "log_total_charge",
+    "log_max_adc",
+    "saturated_count",
+    "early_fraction",
+    "late_fraction",
+    "log_charge_B2",
+    "log_charge_B4",
+    "log_charge_B6",
+    "log_charge_B8",
+    "log_amp_B2",
+    "log_amp_B4",
+    "log_amp_B6",
+    "log_amp_B8",
+    "peak_B2",
+    "peak_B4",
+    "peak_B6",
+    "peak_B8",
+    "hit_B2",
+    "hit_B4",
+    "hit_B6",
+    "hit_B8"
+  ],
+  "digitizer": {
+    "light_yield_adc_per_mev": 2673.2892559519323,
+    "birks_kb_cm_per_mev": 0.0,
+    "pedestal_adc": 210.0,
+    "noise_adc": 18.0,
+    "common_mode_adc": 7.0,
+    "time_jitter_samples": 0.45,
+    "shaping_tau_samples": 2.15,
+    "afterpulse_fraction": 0.035,
+    "pedestal_run_drift_adc": 12.0
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "res68_frac": 0.05815425653223081,
+    "res68_ci95": [
+      0.05376350528144887,
+      0.06296594870704252
+    ],
+    "bias_frac": 0.02624696903606835,
+    "mae_mev": 3.089147639636334,
+    "mae_mev_ci95": [
+      2.892577917879187,
+      3.282612301001347
+    ]
+  },
+  "all_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 10095,
+      "bias_frac": 0.026246969,
+      "res68_frac": 0.0581542565,
+      "mae_mev": 3.0891476396,
+      "res68_ci95": [
+        0.0537635053,
+        0.0629659487
+      ],
+      "bias_ci95": [
+        0.0198675248,
+        0.0323114228
+      ],
+      "mae_mev_ci95": [
+        2.8925779179,
+        3.282612301
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 10095,
+      "bias_frac": 0.0341203754,
+      "res68_frac": 0.0910690404,
+      "mae_mev": 4.5750374501,
+      "res68_ci95": [
+        0.0857171292,
+        0.101321809
+      ],
+      "bias_ci95": [
+        0.025871446,
+        0.0491544599
+      ],
+      "mae_mev_ci95": [
+        4.3454149304,
+        5.0049952052
+      ]
+    },
+    {
+      "method": "physics_residual_mlp",
+      "family": "neural_physics_residual",
+      "n": 10095,
+      "bias_frac": 0.0295551806,
+      "res68_frac": 0.1152612996,
+      "mae_mev": 6.2137026364,
+      "res68_ci95": [
+        0.1104542848,
+        0.1242257649
+      ],
+      "bias_ci95": [
+        0.0223463352,
+        0.0426502156
+      ],
+      "mae_mev_ci95": [
+        6.0839123855,
+        6.4540753008
+      ]
+    },
+    {
+      "method": "gated_residual_cnn",
+      "family": "neural_gated_residual_new",
+      "n": 10095,
+      "bias_frac": 0.0658680671,
+      "res68_frac": 0.1531302844,
+      "mae_mev": 7.749304825,
+      "res68_ci95": [
+        0.1480182312,
+        0.1618187621
+      ],
+      "bias_ci95": [
+        0.0572950251,
+        0.0809492034
+      ],
+      "mae_mev_ci95": [
+        7.4963432262,
+        8.0971285319
+      ]
+    },
+    {
+      "method": "transformer",
+      "family": "neural_waveform_attention",
+      "n": 10095,
+      "bias_frac": 0.0443929317,
+      "res68_frac": 0.17421451,
+      "mae_mev": 8.3568337061,
+      "res68_ci95": [
+        0.1710677915,
+        0.1776385588
+      ],
+      "bias_ci95": [
+        0.0391258799,
+        0.050273614
+      ],
+      "mae_mev_ci95": [
+        8.3139735176,
+        8.4122057944
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 10095,
+      "bias_frac": -0.0229121834,
+      "res68_frac": 0.2411866191,
+      "mae_mev": 12.1493130774,
+      "res68_ci95": [
+        0.2403756383,
+        0.2416350559
+      ],
+      "bias_ci95": [
+        -0.0248332254,
+        -0.0218661591
+      ],
+      "mae_mev_ci95": [
+        12.0653868234,
+        12.2585762999
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 10095,
+      "bias_frac": 0.0102395206,
+      "res68_frac": 0.2559995205,
+      "mae_mev": 12.8787002889,
+      "res68_ci95": [
+        0.2534108871,
+        0.258808759
+      ],
+      "bias_ci95": [
+        0.0092648351,
+        0.0123273848
+      ],
+      "mae_mev_ci95": [
+        12.6372395548,
+        13.0137528651
+      ]
+    },
+    {
+      "method": "truth_birks_lookup",
+      "family": "traditional_digitized_birks",
+      "n": 10095,
+      "bias_frac": -0.0093414246,
+      "res68_frac": 0.5885763166,
+      "mae_mev": 28.4566116974,
+      "res68_ci95": [
+        0.5841976733,
+        0.5930596532
+      ],
+      "bias_ci95": [
+        -0.0111067553,
+        -0.0066956296
+      ],
+      "mae_mev_ci95": [
+        28.3147870303,
+        28.56102366
+      ]
+    }
+  ],
+  "real_s27b_reference_metrics": [
+    {
+      "method": "geant4_birks_lookup",
+      "family": "traditional_geant4_birks",
+      "n": 332852,
+      "bias_frac": -0.0230986356,
+      "res68_frac": 0.0402439783,
+      "mae_mev": 1.08243596,
+      "res68_ci95": "[0.03885442055147856, 0.04166439307853137]",
+      "bias_ci95": "[-0.026454122387290033, -0.018144606320368104]",
+      "mae_mev_ci95": "[0.9594800872478235, 1.258193699308261]"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "bias_frac": -0.0145380199,
+      "res68_frac": 0.0520384581,
+      "mae_mev": 0.960461523,
+      "res68_ci95": "[0.04407365786784419, 0.0632146894582223]",
+      "bias_ci95": "[-0.01814565749913055, -0.007517923233911557]",
+      "mae_mev_ci95": "[0.8401409537081808, 1.096858319660444]"
+    },
+    {
+      "method": "physics_residual_mlp",
+      "family": "neural_physics_residual",
+      "n": 332852,
+      "bias_frac": -0.0052203447,
+      "res68_frac": 0.0545188264,
+      "mae_mev": 0.9894236427,
+      "res68_ci95": "[0.04880770366533209, 0.06254275382030709]",
+      "bias_ci95": "[-0.012720175359953888, 0.005627443056424789]",
+      "mae_mev_ci95": "[0.8872438671430233, 1.1170681222659633]"
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "bias_frac": -0.017931882,
+      "res68_frac": 0.0853888318,
+      "mae_mev": 1.3147214392,
+      "res68_ci95": "[0.07438479562823815, 0.11515744652807515]",
+      "bias_ci95": "[-0.028644999330131257, -0.0009394103178623957]",
+      "mae_mev_ci95": "[1.1774236799246565, 1.4779674403059078]"
+    },
+    {
+      "method": "transformer",
+      "family": "neural_waveform_attention",
+      "n": 332852,
+      "bias_frac": 0.0677596276,
+      "res68_frac": 0.1340584458,
+      "mae_mev": 1.8575520063,
+      "res68_ci95": "[0.111358557220359, 0.1710212142435038]",
+      "bias_ci95": "[0.05917721100087026, 0.08186330731476645]",
+      "mae_mev_ci95": "[1.7249010401339766, 2.0463347096539954]"
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "bias_frac": -0.1088160832,
+      "res68_frac": 0.2468687513,
+      "mae_mev": 3.0234258703,
+      "res68_ci95": "[0.23871004824723283, 0.26205114603226426]",
+      "bias_ci95": "[-0.1258143666825595, -0.09390907913577361]",
+      "mae_mev_ci95": "[2.9267786884060714, 3.0973532227524245]"
+    },
+    {
+      "method": "old_power_law",
+      "family": "traditional_empirical",
+      "n": 332852,
+      "bias_frac": -0.2976285931,
+      "res68_frac": 0.4623578427,
+      "mae_mev": 7.8628000793,
+      "res68_ci95": "[0.4457562519005668, 0.5558938582674989]",
+      "bias_ci95": "[-0.35670708728998374, -0.12097626116105896]",
+      "mae_mev_ci95": "[7.385822567380821, 8.284146134914257]"
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "bias_frac": -0.5240065793,
+      "res68_frac": 0.599370821,
+      "mae_mev": 9.2537448203,
+      "res68_ci95": "[0.5805660689352949, 0.6106645566646908]",
+      "bias_ci95": "[-0.5613130088482787, -0.4372173440472484]",
+      "mae_mev_ci95": "[7.665600110972426, 10.317401025040489]"
+    }
+  ],
+  "sim_vs_real_residual_structure": [
+    {
+      "method": "gradient_boosted_trees",
+      "sim_res68_frac": 0.0581542565,
+      "real_s27b_res68_frac": 0.0520384581,
+      "delta_sim_minus_real": 0.0061157984,
+      "interpretation": "matched method"
+    },
+    {
+      "method": "mlp",
+      "sim_res68_frac": 0.0910690404,
+      "real_s27b_res68_frac": 0.599370821,
+      "delta_sim_minus_real": -0.5083017806,
+      "interpretation": "matched method"
+    },
+    {
+      "method": "physics_residual_mlp",
+      "sim_res68_frac": 0.1152612996,
+      "real_s27b_res68_frac": 0.0545188264,
+      "delta_sim_minus_real": 0.0607424732,
+      "interpretation": "matched method"
+    },
+    {
+      "method": "transformer",
+      "sim_res68_frac": 0.17421451,
+      "real_s27b_res68_frac": 0.1340584458,
+      "delta_sim_minus_real": 0.0401560642,
+      "interpretation": "matched method"
+    },
+    {
+      "method": "1d_cnn",
+      "sim_res68_frac": 0.2411866191,
+      "real_s27b_res68_frac": 0.2468687513,
+      "delta_sim_minus_real": -0.0056821321,
+      "interpretation": "matched method"
+    },
+    {
+      "method": "ridge",
+      "sim_res68_frac": 0.2559995205,
+      "real_s27b_res68_frac": 0.0853888318,
+      "delta_sim_minus_real": 0.1706106887,
+      "interpretation": "matched method"
+    },
+    {
+      "method": "truth_birks_lookup",
+      "sim_res68_frac": 0.5885763166,
+      "real_s27b_res68_frac": 0.0402439783,
+      "delta_sim_minus_real": 0.5483323383,
+      "interpretation": "matched method"
+    }
+  ],
+  "new_architecture": "gated_residual_cnn: 1D convolution over four B-stave waveforms with tabular saturation/shape gates, trained as a multiplicative residual correction to the digitized Birks baseline.",
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. On digitized GEANT4 ADC waveforms the winner is gradient_boosted_trees with res68=0.05815; the traditional truth_birks_lookup remains the transparent baseline and the real S27b reference winner remains geant4_birks_lookup. This separates detector-response idealization from model capacity: when the response is generated by the digitizer, residual neural correction can exploit waveform artifacts, but in real run-held-out data the physics/Birks lookup is still stronger.",
+  "next_tickets": [
+    {
+      "title": "S27d: tune digitized gain-transition response against real S27b strata",
+      "body": "Scan optical yield, shaping time, pedestal drift, common-mode noise, and ADC clipping in the S27c digitizer against S27b real held-out gain-transition strata to identify which response parameter family explains the remaining Birks-versus-ML residual mismatch."
+    }
+  ],
+  "runtime_sec": 98.3
+}

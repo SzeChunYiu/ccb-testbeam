@@ -30,6 +30,7 @@
   "mlp_max_iter": 35,
   "nn": {
     "epochs": 6,
+    "transformer_epochs": 5,
     "batch_size": 1024,
     "learning_rate": 0.001,
     "weight_decay": 0.0001

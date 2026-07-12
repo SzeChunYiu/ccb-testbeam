@@ -1,0 +1,29 @@
+{
+  "ticket_id": "1783809165.2768.748951b9",
+  "git_commit": "a9e2a9e177400f15c5307fe529ccc4b267fe98cd",
+  "command": "/home/billy/anaconda3/envs/GNN_GPU/bin/python scripts/s29b_1783809165_2768_748951b9_pileup_saturation_energy_recovery_study.py",
+  "runtime_seconds": 251.15355825424194,
+  "python": "3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "6552856e0d8c14fcf4b496f69d522febfe034397d2ce56e92017ed854ff357c9",
+    "claimed_ticket.txt": "a843d1c99143bed05b748dc9bb3b575f87ea29bad903f51943aab6a88786d2fa",
+    "endpoint_metrics_ci.csv": "1c76a96c263afeaccd89865d3b094ce838d9f462c79b972a9fb3cf62c033aeb9",
+    "event_predictions.csv": "3a653f2e1ccf87daa8e139fc6ada80f29e3c61b68bbe0e8e003b689f6c70544d",
+    "injection_source_bootstrap_ci.csv": "2d82d6ca82cbc19f612d91531fde44a97860c6595dd400728904924faaa38e2f",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "f456e31dce077ad7e4f6a8f2c75fa2a42a01f9ce13f29e7b1c0c76f36dbd4393",
+    "pedestal_saturation_strata.csv": "167dcc67d75420d7ef36bff3bc854a66dec901db487d089e745fb365ef86001a",
+    "pid_boundary_and_residual_checks.csv": "4f01290e74d558bb2f5e6d984597cff30a3d76eecb98a4e42e0dc9c49adea492",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "bf8972c910dd9153fa12303082b99fc0d4a0c4872e338d024083d3a06c856f85",
+    "run_heldout_metrics.csv": "b5c0e169c373707769fcd763e3b4df42e2093b3d6aebb3ce7f2352f949ad6402",
+    "strata_metrics.csv": "1b330400ffdd2a8e791d36033aa9d300b13dfb2ed3c5ad8eacb9bf07364fff92",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "d76e21e9fd17220e4896007ab80320a778fd5c86d96e817adbf99643d925a9ab"
+  },
+  "title": "S29b pile-up saturation energy recovery study",
+  "worker": "testbeam-laptop-3",
+  "study_id": "S29b",
+  "postprocess_note": "S29b endpoint synthesis appended after base runner completion."
+}

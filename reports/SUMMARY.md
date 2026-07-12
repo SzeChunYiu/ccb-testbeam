@@ -2,6 +2,6 @@
 
 | Task | Status | Evidence |
 |---|---|---|
-| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` reported `open=9 claimed=4 done=698 failed=40`; threshold required 3 additions already present. |
-| New study tickets | done | Present in open queue: `1783884181.2123.49437123`, `1783884181.2140.09a136f2`, and `1783884181.2159.4b0d44ea`. |
+| Ticket inventory | done | Initial `tn-ticket list testbeam --project testbeam` reported `open=3 claimed=3 done=706 failed=40`; open was under 18. |
+| New study tickets | done | Appended `1783886867.733.26397352`, `1783886867.735.59c92683`, and `1783886867.863.4c7c62fb`; each names a traditional comparator, ridge, gradient-boosted trees, MLP, 1D-CNN, transformer-family model, and bootstrap CIs. |
 | Report hygiene | done | Scoreboard-only summary, 7 lines. |

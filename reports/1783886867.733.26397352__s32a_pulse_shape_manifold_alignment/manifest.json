@@ -1,0 +1,17 @@
+{
+  "ticket_id": "1783886867.733.26397352",
+  "study": "S32a",
+  "command": "/home/billy/anaconda3/bin/python scripts/s32a_1783886867_733_26397352_pulse_shape_manifold_alignment.py",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "transfer_summary.csv",
+    "strata_summary.csv",
+    "event_prediction_sample.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "mlp"
+}

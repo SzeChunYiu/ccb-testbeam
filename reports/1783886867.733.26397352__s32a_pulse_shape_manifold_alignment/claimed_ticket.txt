@@ -1,0 +1,2 @@
+1783886867.733.26397352
+# S32a pulse-shape manifold alignment for timing, PID, and energy transfer

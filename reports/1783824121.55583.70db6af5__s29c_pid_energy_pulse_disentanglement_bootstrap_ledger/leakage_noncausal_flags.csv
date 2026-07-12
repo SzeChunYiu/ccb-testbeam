@@ -1,0 +1,7 @@
+method,timing_mediated_fraction,late_tail_fraction_of_joint_loss,rising_edge_fraction_of_joint_loss,peak_charge_fraction_of_joint_loss,noncausal_tail_flag,too_good_pid_flag,interpretation
+compact_sequence_residual,0.3166170758993332,0.34314761957671275,0.35606504781769055,0.0517290301791427,True,True,requires tail-ablation guard before PID promotion
+traditional_joint,0.41780613947639245,0.27668502613513973,0.4155781991192497,0.029552848962267782,True,True,requires tail-ablation guard before PID promotion
+1d_cnn,0.2698915984046279,0.31757181553366326,0.3181783310189409,0.16637404777360218,False,False,no primary noncausal tail warning under registered threshold
+mlp,0.3174422765355804,0.10677720107247467,0.26294155702286326,0.3724740148643017,False,False,no primary noncausal tail warning under registered threshold
+ridge,0.47885873253706746,0.09827297357205844,0.40346299934723023,0.16033716253964828,False,False,no primary noncausal tail warning under registered threshold
+gradient_boosted_trees,0.7214750170556185,0.06334261222042084,0.5854829026234482,0.11510020099086997,False,False,no primary noncausal tail warning under registered threshold

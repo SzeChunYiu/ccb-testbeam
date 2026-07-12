@@ -1,0 +1,3 @@
+# S29c: PID-energy pulse disentanglement bootstrap ledger
+
+Question: can pulse shape improve PID/energy inference beyond depth-charge and topology once timing phase, pile-up, saturation, and pedestal support are matched? Traditional: charge-depth PSD, range-energy lookup, and logistic/isotonic calibrated cuts. Compare ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer encoders with depth-only, charge-only, and phase-scrambled controls. Metrics: PID AUC/AP, energy-proxy res68/bias, support coverage, calibration ECE, and bootstrap 95% CIs for each method delta across stave, amplitude, pile-up, saturation, and baseline strata.

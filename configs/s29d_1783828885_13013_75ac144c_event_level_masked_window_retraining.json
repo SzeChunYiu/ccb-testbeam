@@ -1,0 +1,61 @@
+{
+  "ticket_id": "1783828885.13013.75ac144c",
+  "study_id": "S29d",
+  "worker": "testbeam-laptop-3",
+  "title": "event-level masked-window retraining for complete PID-energy-stress transformer eligibility",
+  "output_dir": "reports/1783828885.13013.75ac144c__s29d_event_level_masked_window_retraining",
+  "raw_root_dir": "data/root/root",
+  "geant4_truth_root": "/home/billy/ccb-geant4/output_30k.root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "benchmark_runs": {
+    "train": [50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout": [58, 60, 62, 64, 65]
+  },
+  "window_masks": {
+    "full_18_samples": {"samples": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "causal": false},
+    "pretrigger_pedestal_samples_0_3": {"samples": [0, 1, 2, 3], "causal": true},
+    "rising_edge_samples_4_7": {"samples": [4, 5, 6, 7], "causal": true},
+    "peak_charge_samples_8_11": {"samples": [8, 9, 10, 11], "causal": true},
+    "late_tail_samples_12_17": {"samples": [12, 13, 14, 15, 16, 17], "causal": false}
+  },
+  "random_seed": 2026071239,
+  "max_clean_pulses_per_run_stave": 60,
+  "injected_per_train_run": 34,
+  "clean_per_train_run": 34,
+  "injected_per_heldout_run": 46,
+  "clean_per_heldout_run": 46,
+  "bootstrap_replicates": 240,
+  "ml": {
+    "max_iter": 260,
+    "cnn_epochs": 30,
+    "transformer_epochs": 34,
+    "batch_size": 96
+  },
+  "score_weights": {
+    "pid_balanced_accuracy_loss": 0.25,
+    "energy_fractional_sigma68": 1.0,
+    "time_sigma68_ns": 0.01,
+    "pileup_miss_rate": 0.05,
+    "false_split_rate": 0.05
+  },
+  "sources": {
+    "s29c": "reports/1783809165.2835.20015c6e__s29c_causal_pulse_window_pid_energy_ablation",
+    "s29a": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark"
+  }
+}

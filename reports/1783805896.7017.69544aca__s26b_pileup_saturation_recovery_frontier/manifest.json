@@ -1,0 +1,22 @@
+{
+  "ticket_id": "1783805896.7017.69544aca",
+  "git_commit": "3322f12ea491ee90728102cc652feb305cb98437",
+  "command": "/home/billy/anaconda3/bin/python scripts/s26b_1783805896_7017_69544aca_pileup_saturation_recovery_frontier.py",
+  "runtime_seconds": 332.379075050354,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "567ff855999a6ff121ad9e14fdbae64524903819b644f3c0b755a21a605f349d",
+    "claimed_ticket.txt": "350cfa014dd4300b2e1526b8c0085abeca70f4b6bb6bde69d401fb8375aaab61",
+    "event_predictions.csv": "74ca59fb9686e1692a51783693a939c09e0b3a0f295563a8d1b9da65fb72ce45",
+    "injection_source_bootstrap_ci.csv": "03bdc731096f773587c9eea9f7a371fbc8293e26928f09e5cb96e7316de6ea8b",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "93ba886b5cb31b055fc8d806ba9c1f865fe32eeca21cb8121cd1bc2e820073d6",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "a1929b18f69d4ed02a161338952f5d8bdd8f27647cf2872b7e1835f20578336d",
+    "run_heldout_metrics.csv": "b7c0022008b08c32f4a72f3f3a9a5d4dff2e3dbbb702e08619db3ed648c8c786",
+    "strata_metrics.csv": "c90eda4069fbf18e93e847837014311c6d55e675b32cc8e63429dd4cc5b7fa92",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "db600f2fde24bb0c896cd4213b90db2e8d0e38d9a02dbc581407b69d8b8628e0"
+  }
+}

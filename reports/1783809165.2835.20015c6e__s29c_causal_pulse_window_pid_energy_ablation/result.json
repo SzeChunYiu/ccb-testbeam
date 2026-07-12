@@ -1,0 +1,289 @@
+{
+  "ticket_id": "1783809165.2835.20015c6e",
+  "study_id": "S29c",
+  "worker": "testbeam-laptop-1",
+  "title": "causal pulse-window PID energy ablation",
+  "created_utc": "2026-07-12T04:00:41.122802+00:00",
+  "git_commit": "a9e2a9e177400f15c5307fe529ccc4b267fe98cd",
+  "python": "3.7.6",
+  "runtime_sec": 6.357,
+  "raw_root_dir": "data/root/root",
+  "raw_reproduction": {
+    "passed": true,
+    "tree": "h101",
+    "branches": [
+      "HRDv"
+    ],
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "table": [
+      {
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_calib selected pulses",
+        "report_value": 248745,
+        "reproduced": 248745,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_i_analysis selected pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_calib selected pulses",
+        "report_value": 14630,
+        "reproduced": 14630,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      },
+      {
+        "quantity": "sample_ii_analysis selected pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "delta": 0,
+        "tolerance": 0,
+        "pass": true
+      }
+    ]
+  },
+  "split": {
+    "split_type": "complete run held-out groups inherited from raw-ROOT-derived source endpoint panels",
+    "run_groups": {
+      "sample_i_calib": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42
+      ],
+      "sample_i_analysis": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "sample_ii_calib": [
+        64
+      ],
+      "sample_ii_analysis": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ]
+    }
+  },
+  "bootstrap": {
+    "unit": "source-run / held-out run block",
+    "replicates": 300,
+    "interval": "95% percentile CI preserved from source endpoint tables"
+  },
+  "methods": [
+    "traditional_joint",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "compact_sequence_residual"
+  ],
+  "attention_transformer_status": "included as sensitivity rows; excluded from complete-panel winner because no full PID-energy-stress transformer row exists",
+  "winner": "gradient_boosted_trees",
+  "winner_metric": "lowest weighted joint loss; lower is better",
+  "winner_details": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "description": "histogram gradient-boosted trees on causal pulse-window, charge, depth, and timing summaries",
+    "pid_method": "ML_gradient_boosted_trees",
+    "energy_method": "gradient_boosted_trees",
+    "pid_auc": 0.9280095148429632,
+    "pid_auc_ci_low": 0.9216148500739324,
+    "pid_auc_ci_high": 0.9352319618943888,
+    "pid_average_precision": 0.8942663262803092,
+    "energy_res68_frac": 0.0566846321762142,
+    "energy_res68_ci_low": 0.04880395769058964,
+    "energy_res68_ci_high": 0.06719740156251883,
+    "energy_bias_frac": -0.0167355872103629,
+    "energy_bias_ci_low": -0.020389423104361468,
+    "energy_bias_ci_high": -0.008551688140306596,
+    "saturation_energy_res68_frac": 0.0562142558279182,
+    "saturation_energy_res68_ci_low": 0.0517199705719396,
+    "saturation_energy_res68_ci_high": 0.06268440375730644,
+    "saturation_hysteresis_res68": 0.0313697380962435,
+    "saturation_hysteresis_res68_ci_low": 0.029430484475913593,
+    "saturation_hysteresis_res68_ci_high": 0.03437786541387658,
+    "timing_sigma68_ns": 1.2194465886541082,
+    "timing_sigma68_ci_low": 0.9169265065318064,
+    "timing_sigma68_ci_high": 1.4712204662168429,
+    "endpoint_timing_sigma68_ns": 1.126633,
+    "endpoint_timing_ci_low": 0.834468,
+    "endpoint_timing_ci_high": 1.406165,
+    "pileup_average_precision": 0.983139,
+    "pileup_ap_ci_low": 0.982529,
+    "pileup_ap_ci_high": 0.985,
+    "pedestal_mae_adc": 48.879367,
+    "pedestal_mae_ci_low": 43.822284,
+    "pedestal_mae_ci_high": 55.285716,
+    "pid_loss_term": 0.016557811586118458,
+    "energy_res68_term": 0.012470619078767125,
+    "timing_loss_term": 0.13007430278977153,
+    "pileup_loss_term": 0.0031473866666666696,
+    "saturation_loss_term": 0.004078065952511655,
+    "pedestal_loss_term": 0.013124441287742393,
+    "energy_bias_loss_term": 0.000836779360518145,
+    "joint_loss_score": 0.18028940672209598,
+    "shape_only_loss_score": 0.05021510393232445,
+    "shape_knockout_loss_score": 0.15042419669669224,
+    "timing_mediated_fraction": 0.7214750170556185
+  },
+  "window_winners": [
+    {
+      "window_mask": "late_tail_samples_12_17",
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "samples": "12-13-14-15-16-17",
+      "causal_before_or_at_peak": false,
+      "window_loss_score": 0.011420001977447459,
+      "fraction_of_joint_loss": 0.06334261222042084,
+      "dominant_terms": "pileup_loss_term*0.75: late overlap and broad-tail pile-up evidence; pid_loss_term*0.35: tail-over-total and noncausal PID dependence; energy_res68_term*0.18: tail charge contribution; saturation_loss_term*0.25: post-peak recovery shape",
+      "rank_within_window": 1.0
+    },
+    {
+      "window_mask": "peak_charge_samples_8_11",
+      "method": "traditional_joint",
+      "family": "traditional",
+      "samples": "8-9-10-11",
+      "causal_before_or_at_peak": true,
+      "window_loss_score": 0.011276904000132742,
+      "fraction_of_joint_loss": 0.029552848962267782,
+      "dominant_terms": "energy_res68_term*0.82: charge and energy scale; energy_bias_loss_term*0.75: calibrated energy bias; saturation_loss_term*0.6: saturation onset and hysteresis; pid_loss_term*0.45: dE/dx and charge-depth PID",
+      "rank_within_window": 1.0
+    },
+    {
+      "window_mask": "pretrigger_pedestal_samples_0_3",
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "samples": "0-1-2-3",
+      "causal_before_or_at_peak": true,
+      "window_loss_score": 0.013736151180619141,
+      "fraction_of_joint_loss": 0.07618945244959675,
+      "dominant_terms": "pedestal_loss_term*1: pedestal baseline and drift proxy; saturation_loss_term*0.15: baseline memory contribution to saturation recovery",
+      "rank_within_window": 1.0
+    },
+    {
+      "window_mask": "rising_edge_samples_4_7",
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "samples": "4-5-6-7",
+      "causal_before_or_at_peak": true,
+      "window_loss_score": 0.10555636515991217,
+      "fraction_of_joint_loss": 0.5854829026234482,
+      "dominant_terms": "timing_loss_term*0.78: CFD/template phase and causal timing pickoff; pid_loss_term*0.2: rise-shape PID leakage sensitivity; pileup_loss_term*0.25: early second-pulse separability",
+      "rank_within_window": 1.0
+    }
+  ],
+  "noncausal_flags": [
+    {
+      "method": "compact_sequence_residual",
+      "timing_mediated_fraction": 0.3166170758993332,
+      "late_tail_fraction_of_joint_loss": 0.34314761957671275,
+      "rising_edge_fraction_of_joint_loss": 0.35606504781769055,
+      "peak_charge_fraction_of_joint_loss": 0.0517290301791427,
+      "noncausal_tail_flag": true,
+      "too_good_pid_flag": true,
+      "interpretation": "requires tail-ablation guard before PID promotion"
+    },
+    {
+      "method": "traditional_joint",
+      "timing_mediated_fraction": 0.41780613947639245,
+      "late_tail_fraction_of_joint_loss": 0.27668502613513973,
+      "rising_edge_fraction_of_joint_loss": 0.4155781991192497,
+      "peak_charge_fraction_of_joint_loss": 0.029552848962267782,
+      "noncausal_tail_flag": true,
+      "too_good_pid_flag": true,
+      "interpretation": "requires tail-ablation guard before PID promotion"
+    },
+    {
+      "method": "1d_cnn",
+      "timing_mediated_fraction": 0.2698915984046279,
+      "late_tail_fraction_of_joint_loss": 0.31757181553366326,
+      "rising_edge_fraction_of_joint_loss": 0.3181783310189409,
+      "peak_charge_fraction_of_joint_loss": 0.16637404777360218,
+      "noncausal_tail_flag": false,
+      "too_good_pid_flag": false,
+      "interpretation": "no primary noncausal tail warning under registered threshold"
+    },
+    {
+      "method": "mlp",
+      "timing_mediated_fraction": 0.3174422765355804,
+      "late_tail_fraction_of_joint_loss": 0.10677720107247467,
+      "rising_edge_fraction_of_joint_loss": 0.26294155702286326,
+      "peak_charge_fraction_of_joint_loss": 0.3724740148643017,
+      "noncausal_tail_flag": false,
+      "too_good_pid_flag": false,
+      "interpretation": "no primary noncausal tail warning under registered threshold"
+    },
+    {
+      "method": "ridge",
+      "timing_mediated_fraction": 0.47885873253706746,
+      "late_tail_fraction_of_joint_loss": 0.09827297357205844,
+      "rising_edge_fraction_of_joint_loss": 0.40346299934723023,
+      "peak_charge_fraction_of_joint_loss": 0.16033716253964828,
+      "noncausal_tail_flag": false,
+      "too_good_pid_flag": false,
+      "interpretation": "no primary noncausal tail warning under registered threshold"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "timing_mediated_fraction": 0.7214750170556185,
+      "late_tail_fraction_of_joint_loss": 0.06334261222042084,
+      "rising_edge_fraction_of_joint_loss": 0.5854829026234482,
+      "peak_charge_fraction_of_joint_loss": 0.11510020099086997,
+      "noncausal_tail_flag": false,
+      "too_good_pid_flag": false,
+      "interpretation": "no primary noncausal tail warning under registered threshold"
+    }
+  ],
+  "next_tickets": [
+    {
+      "title": "S29d: event-level masked-window retraining for complete PID-energy-stress transformer eligibility",
+      "body": "Question: after freezing S29c's pulse-window masks, do ridge, GBT, MLP, 1D-CNN, compact sequence/residual, and a small transformer retain PID/energy/timing gains when each mask is retrained event-level on the same complete-run folds? Expected information gain: converts S29c's endpoint-level causal attribution into a single event-native masked prediction table and makes the transformer eligible for the full winner rule."
+    }
+  ],
+  "novel_ticket_appended": "S29d: event-level masked-window retraining for complete PID-energy-stress transformer eligibility",
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claimed_once": true,
+  "status": "complete"
+}

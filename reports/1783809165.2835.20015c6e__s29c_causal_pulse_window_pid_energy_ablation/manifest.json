@@ -1,0 +1,60 @@
+{
+  "ticket_id": "1783809165.2835.20015c6e",
+  "generated_utc": "2026-07-12T04:00:41.156184+00:00",
+  "git_commit": "a9e2a9e177400f15c5307fe529ccc4b267fe98cd",
+  "command": "/home/billy/anaconda3/bin/python scripts/s29c_1783809165_2835_20015c6e_causal_pulse_window_pid_energy_ablation.py",
+  "inputs": {
+    "config": "configs/s29c_1783809165_2835_20015c6e_causal_pulse_window_pid_energy_ablation.json",
+    "raw_root_dir": "data/root/root",
+    "s25a": "reports/1783751737.13516.61447038__s25a_joint_pid_energy_pileup_saturation",
+    "endpoint": "reports/1783745883.3840.006f2c7d__pulse_pid_timing_waveform_ablation_bakeoff",
+    "causal_timing": "reports/1783751737.13524.25796187__causal_timing_pileup_deconvolution",
+    "s25b": "reports/1783762816.2490.722918d7__s25b_saturation_onset_hysteresis_waveform_recovery"
+  },
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 21224,
+      "sha256": "cad236b038a56f4074a014097472143315d02637d110c7f0af10737f6c1e5fcd"
+    },
+    "attention_transformer_sensitivity.csv": {
+      "bytes": 854,
+      "sha256": "654175ce39ac5b42c68c7e394491b73df35229457ea772bd8f877ee76604fbf6"
+    },
+    "claimed_ticket.txt": {
+      "bytes": 25,
+      "sha256": "172c6b0ad4d220f52180396ee4ca870617c17f4a606eb86d9a5df5ca130e4253"
+    },
+    "leakage_noncausal_flags.csv": {
+      "bytes": 1156,
+      "sha256": "2e3cae33fe286dd75da8aa180339e46fdf980ca7231dc48d72ae6571150e18e3"
+    },
+    "method_benchmark.csv": {
+      "bytes": 5495,
+      "sha256": "3c9c398d33797b23c1c9ada6c9a41a477f95130bd49cbc7e7404b23b7c300c8e"
+    },
+    "reproduction_counts_by_run.csv": {
+      "bytes": 1677,
+      "sha256": "bee13bc5ee64a023c0a9b7c3af0fe0614e45533e43e74b858a18ee2793b3b591"
+    },
+    "reproduction_match_table.csv": {
+      "bytes": 329,
+      "sha256": "b2c75394ea0fb21ca2ed7531c9178a9544d97a1becb51d046e990178321c6dc9"
+    },
+    "result.json": {
+      "bytes": 10737,
+      "sha256": "09c0d3aa09b34b5c91697dafb830b8c6a1ae5f0e97cd0e64e1db7c99cfc7f14e"
+    },
+    "source_artifacts.csv": {
+      "bytes": 626,
+      "sha256": "7ecbfa97dc8005538fdb14e2ff0f116d8eee4fcefa3248680e41a23cc4ce19ea"
+    },
+    "timing_knockout_summary.csv": {
+      "bytes": 1304,
+      "sha256": "1e931ab8dd68ca1d6a39517c59885de00071cdb3e62f3802d952a45558382133"
+    },
+    "window_mask_attribution.csv": {
+      "bytes": 7404,
+      "sha256": "017ba4525d40c5114437ab823582043429b47d345357f677db22211aaacd82f6"
+    }
+  }
+}

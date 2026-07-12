@@ -1,0 +1,18 @@
+{
+  "ticket_id": "1783882774.38023.3e0801f0",
+  "study": "S31c",
+  "command": "/home/billy/anaconda3/bin/python scripts/s31c_1783882774_38023_3e0801f0_run_drift_calibration_transfer_pulse_frontier.py",
+  "delegated_command": "/home/billy/anaconda3/bin/python /home/billy/.tb-workers/testbeam-laptop-3/scripts/s29a_1783809165_2703_494a356d_pedestal_shape_timing_frontier.py --config /home/billy/.tb-workers/testbeam-laptop-3/configs/s31c_1783882774_38023_3e0801f0_run_drift_calibration_transfer_pulse_frontier.yaml",
+  "artifacts": [
+    "REPORT.md",
+    "claimed_ticket.txt",
+    "input_sha256.csv",
+    "method_summary.csv",
+    "result.json",
+    "run_counts.csv",
+    "run_drift_effects.csv",
+    "strata_summary.csv"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "mlp"
+}

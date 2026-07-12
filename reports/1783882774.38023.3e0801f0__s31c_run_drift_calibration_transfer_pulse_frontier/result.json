@@ -1,0 +1,745 @@
+{
+  "study": "S31c",
+  "ticket_id": "1783882774.38023.3e0801f0",
+  "worker": "testbeam-laptop-3",
+  "title": "Run-drift calibration transfer pulse frontier",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "split_type": "complete run held-out"
+  },
+  "bootstrap": {
+    "unit": "held-out run block",
+    "replicates": 360,
+    "interval": "95% percentile"
+  },
+  "winner": {
+    "method": "mlp",
+    "n": 167683,
+    "bias": 0.00039228856563566783,
+    "res68": 0.014764632463455211,
+    "mae": 0.051025872791289915,
+    "res68_ci95": [
+      0.011687127278447158,
+      0.020603106342256067
+    ],
+    "bias_ci95": [
+      -0.000536870360374464,
+      0.0014337119460105904
+    ],
+    "mae_ci95": [
+      0.03939318303143195,
+      0.06370185470167457
+    ],
+    "timing_residual_res68": 0.014764632463455211,
+    "timing_residual_res68_ci95": [
+      0.011687127278447158,
+      0.020603106342256067
+    ],
+    "shape_error_mae": 0.051025872791289915,
+    "shape_error_mae_ci95": [
+      0.03939318303143195,
+      0.06370185470167457
+    ],
+    "energy_proxy_bias": 0.00039228856563566783,
+    "energy_proxy_bias_ci95": [
+      -0.000536870360374464,
+      0.0014337119460105904
+    ],
+    "saturation_sensitivity": -0.007843474519252791,
+    "pid_leakage_abs_delta": 0.014414040138106925,
+    "saturation_sensitivity_ci95": [
+      -0.0136410304814577,
+      -0.003627555013298979
+    ],
+    "pid_leakage_abs_delta_ci95": [
+      0.00927192303190761,
+      0.02173258922572995
+    ],
+    "pid_auc": 0.47008142001822734,
+    "pid_average_precision": 0.3759872177294441
+  },
+  "all_metrics": [
+    {
+      "method": "mlp",
+      "n": 167683,
+      "bias": 0.00039228856563566783,
+      "res68": 0.014764632463455211,
+      "mae": 0.051025872791289915,
+      "res68_ci95": [
+        0.011687127278447158,
+        0.020603106342256067
+      ],
+      "bias_ci95": [
+        -0.000536870360374464,
+        0.0014337119460105904
+      ],
+      "mae_ci95": [
+        0.03939318303143195,
+        0.06370185470167457
+      ],
+      "timing_residual_res68": 0.014764632463455211,
+      "timing_residual_res68_ci95": [
+        0.011687127278447158,
+        0.020603106342256067
+      ],
+      "shape_error_mae": 0.051025872791289915,
+      "shape_error_mae_ci95": [
+        0.03939318303143195,
+        0.06370185470167457
+      ],
+      "energy_proxy_bias": 0.00039228856563566783,
+      "energy_proxy_bias_ci95": [
+        -0.000536870360374464,
+        0.0014337119460105904
+      ],
+      "saturation_sensitivity": -0.007843474519252791,
+      "pid_leakage_abs_delta": 0.014414040138106925,
+      "saturation_sensitivity_ci95": [
+        -0.0136410304814577,
+        -0.003627555013298979
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.00927192303190761,
+        0.02173258922572995
+      ]
+    },
+    {
+      "method": "traditional_clipped_template",
+      "n": 167683,
+      "bias": 0.0007629552563180875,
+      "res68": 0.02869313668007433,
+      "mae": 0.14168626178262286,
+      "res68_ci95": [
+        0.026157457685863167,
+        0.031077491650455178
+      ],
+      "bias_ci95": [
+        -0.00028940785018237577,
+        0.0019524247184340509
+      ],
+      "mae_ci95": [
+        0.11058366213362754,
+        0.17417871995897563
+      ],
+      "timing_residual_res68": 0.02869313668007433,
+      "timing_residual_res68_ci95": [
+        0.026157457685863167,
+        0.031077491650455178
+      ],
+      "shape_error_mae": 0.14168626178262286,
+      "shape_error_mae_ci95": [
+        0.11058366213362754,
+        0.17417871995897563
+      ],
+      "energy_proxy_bias": 0.0007629552563180875,
+      "energy_proxy_bias_ci95": [
+        -0.00028940785018237577,
+        0.0019524247184340509
+      ],
+      "saturation_sensitivity": 0.006925846227626459,
+      "pid_leakage_abs_delta": 0.13638567933440965,
+      "saturation_sensitivity_ci95": [
+        0.004832465872177057,
+        0.00928863639508561
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.09784394837094501,
+        0.17152694968894444
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n": 167683,
+      "bias": -0.012312542613999056,
+      "res68": 0.03243900732053569,
+      "mae": 0.07715276951252414,
+      "res68_ci95": [
+        0.02994646155782821,
+        0.03556308902329309
+      ],
+      "bias_ci95": [
+        -0.013843501256930861,
+        -0.010964340001563733
+      ],
+      "mae_ci95": [
+        0.061945117736054045,
+        0.09323754604589587
+      ],
+      "timing_residual_res68": 0.03243900732053569,
+      "timing_residual_res68_ci95": [
+        0.02994646155782821,
+        0.03556308902329309
+      ],
+      "shape_error_mae": 0.07715276951252414,
+      "shape_error_mae_ci95": [
+        0.061945117736054045,
+        0.09323754604589587
+      ],
+      "energy_proxy_bias": -0.012312542613999056,
+      "energy_proxy_bias_ci95": [
+        -0.013843501256930861,
+        -0.010964340001563733
+      ],
+      "saturation_sensitivity": -0.002432370122775942,
+      "pid_leakage_abs_delta": 0.03700599526539785,
+      "saturation_sensitivity_ci95": [
+        -0.004400659940979506,
+        0.0007853677013493531
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.02994544028259186,
+        0.04475039044632177
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "n": 167683,
+      "bias": -0.0032300943136215343,
+      "res68": 0.036791129708290085,
+      "mae": 0.08704581852686794,
+      "res68_ci95": [
+        0.03227954020515084,
+        0.043416690986454474
+      ],
+      "bias_ci95": [
+        -0.009868157725781231,
+        0.0022570995986461494
+      ],
+      "mae_ci95": [
+        0.07088963478984972,
+        0.10349316573241654
+      ],
+      "timing_residual_res68": 0.036791129708290085,
+      "timing_residual_res68_ci95": [
+        0.03227954020515084,
+        0.043416690986454474
+      ],
+      "shape_error_mae": 0.08704581852686794,
+      "shape_error_mae_ci95": [
+        0.07088963478984972,
+        0.10349316573241654
+      ],
+      "energy_proxy_bias": -0.0032300943136215343,
+      "energy_proxy_bias_ci95": [
+        -0.009868157725781231,
+        0.0022570995986461494
+      ],
+      "saturation_sensitivity": -0.004882795834541334,
+      "pid_leakage_abs_delta": 0.011213423036375906,
+      "saturation_sensitivity_ci95": [
+        -0.011260242037177083,
+        0.0001335888582467804
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.0008623291615916268,
+        0.021191607235063126
+      ]
+    },
+    {
+      "method": "charge_tail_integration",
+      "n": 167683,
+      "bias": 0.0035978956998999057,
+      "res68": 0.04706393836359602,
+      "mae": 0.20781072731022598,
+      "res68_ci95": [
+        0.04257774814847286,
+        0.05321892366493294
+      ],
+      "bias_ci95": [
+        -0.005134980255773494,
+        0.011762452157305921
+      ],
+      "mae_ci95": [
+        0.15541102345829336,
+        0.26437855539681393
+      ],
+      "timing_residual_res68": 0.04706393836359602,
+      "timing_residual_res68_ci95": [
+        0.04257774814847286,
+        0.05321892366493294
+      ],
+      "shape_error_mae": 0.20781072731022598,
+      "shape_error_mae_ci95": [
+        0.15541102345829336,
+        0.26437855539681393
+      ],
+      "energy_proxy_bias": 0.0035978956998999057,
+      "energy_proxy_bias_ci95": [
+        -0.005134980255773494,
+        0.011762452157305921
+      ],
+      "saturation_sensitivity": 0.004780537800556796,
+      "pid_leakage_abs_delta": 0.08512185115157135,
+      "saturation_sensitivity_ci95": [
+        -0.003696401060173408,
+        0.011966571423260835
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.033753607409758135,
+        0.14820081766799484
+      ]
+    },
+    {
+      "method": "waveform_transformer",
+      "n": 167683,
+      "bias": -0.020317732095718383,
+      "res68": 0.050060551178455384,
+      "mae": 0.09235674360238115,
+      "res68_ci95": [
+        0.04398964464038611,
+        0.056792700994312766
+      ],
+      "bias_ci95": [
+        -0.023932292789220794,
+        -0.016964024726301447
+      ],
+      "mae_ci95": [
+        0.07788357884441008,
+        0.10825077161076649
+      ],
+      "timing_residual_res68": 0.050060551178455384,
+      "timing_residual_res68_ci95": [
+        0.04398964464038611,
+        0.056792700994312766
+      ],
+      "shape_error_mae": 0.09235674360238115,
+      "shape_error_mae_ci95": [
+        0.07788357884441008,
+        0.10825077161076649
+      ],
+      "energy_proxy_bias": -0.020317732095718383,
+      "energy_proxy_bias_ci95": [
+        -0.023932292789220794,
+        -0.016964024726301447
+      ],
+      "saturation_sensitivity": -0.018457874059677123,
+      "pid_leakage_abs_delta": 0.009970097887715822,
+      "saturation_sensitivity_ci95": [
+        -0.02231613100409507,
+        -0.013102571753561503
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.0026540228581410333,
+        0.01560938909163281
+      ]
+    },
+    {
+      "method": "birks_huber_saturation",
+      "n": 167683,
+      "bias": -0.008088341038832741,
+      "res68": 0.05039580497441574,
+      "mae": 0.23755959715673067,
+      "res68_ci95": [
+        0.04266079691200359,
+        0.05783409344020262
+      ],
+      "bias_ci95": [
+        -0.013891341927197872,
+        -0.004153764864788162
+      ],
+      "mae_ci95": [
+        0.17621821872653207,
+        0.30143541599406576
+      ],
+      "timing_residual_res68": 0.05039580497441574,
+      "timing_residual_res68_ci95": [
+        0.04266079691200359,
+        0.05783409344020262
+      ],
+      "shape_error_mae": 0.23755959715673067,
+      "shape_error_mae_ci95": [
+        0.17621821872653207,
+        0.30143541599406576
+      ],
+      "energy_proxy_bias": -0.008088341038832741,
+      "energy_proxy_bias_ci95": [
+        -0.013891341927197872,
+        -0.004153764864788162
+      ],
+      "saturation_sensitivity": -0.020278809881880702,
+      "pid_leakage_abs_delta": 0.11194863377589913,
+      "saturation_sensitivity_ci95": [
+        -0.02557969436870488,
+        -0.013240326130247707
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.05463961770135792,
+        0.18499523256921185
+      ]
+    },
+    {
+      "method": "gated_residual_cnn",
+      "n": 167683,
+      "bias": 0.011386588811874376,
+      "res68": 0.06378184584379198,
+      "mae": 0.11552059571626996,
+      "res68_ci95": [
+        0.05609603048115974,
+        0.07278279475197197
+      ],
+      "bias_ci95": [
+        0.007792452231049525,
+        0.014448831554502235
+      ],
+      "mae_ci95": [
+        0.09435308891295723,
+        0.13535209987869584
+      ],
+      "timing_residual_res68": 0.06378184584379198,
+      "timing_residual_res68_ci95": [
+        0.05609603048115974,
+        0.07278279475197197
+      ],
+      "shape_error_mae": 0.11552059571626996,
+      "shape_error_mae_ci95": [
+        0.09435308891295723,
+        0.13535209987869584
+      ],
+      "energy_proxy_bias": 0.011386588811874376,
+      "energy_proxy_bias_ci95": [
+        0.007792452231049525,
+        0.014448831554502235
+      ],
+      "saturation_sensitivity": -0.02104084079265598,
+      "pid_leakage_abs_delta": 0.01623617227369,
+      "saturation_sensitivity_ci95": [
+        -0.028441181544363477,
+        -0.012524044173061875
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.00682357420932611,
+        0.02633515750541716
+      ]
+    },
+    {
+      "method": "ridge",
+      "n": 167683,
+      "bias": 0.017675238895649925,
+      "res68": 0.1565111758012436,
+      "mae": 0.20698422766463082,
+      "res68_ci95": [
+        0.1285320258008764,
+        0.1887742856748096
+      ],
+      "bias_ci95": [
+        0.004144033165545964,
+        0.0317556507211
+      ],
+      "mae_ci95": [
+        0.1681123773369824,
+        0.24008024433808722
+      ],
+      "timing_residual_res68": 0.1565111758012436,
+      "timing_residual_res68_ci95": [
+        0.1285320258008764,
+        0.1887742856748096
+      ],
+      "shape_error_mae": 0.20698422766463082,
+      "shape_error_mae_ci95": [
+        0.1681123773369824,
+        0.24008024433808722
+      ],
+      "energy_proxy_bias": 0.017675238895649925,
+      "energy_proxy_bias_ci95": [
+        0.004144033165545964,
+        0.0317556507211
+      ],
+      "saturation_sensitivity": -0.06358253981373198,
+      "pid_leakage_abs_delta": 0.036866361964251394,
+      "saturation_sensitivity_ci95": [
+        -0.10311631613677555,
+        -0.033033253299477976
+      ],
+      "pid_leakage_abs_delta_ci95": [
+        0.00784298203007793,
+        0.05712823313646359
+      ]
+    }
+  ],
+  "torch_status": {
+    "mlp": "trained",
+    "1d_cnn": "trained",
+    "gated_residual_cnn": "trained",
+    "waveform_transformer": "trained"
+  },
+  "feature_names": [
+    "multiplicity",
+    "even_total_charge",
+    "even_max_amp",
+    "saturated_count",
+    "knee_count",
+    "recovery_tail",
+    "early_fraction",
+    "onset_sharpness",
+    "pedestal_iqr_adc",
+    "pedestal_abs_slope_adc",
+    "log_charge_stave_0",
+    "log_charge_stave_1",
+    "log_charge_stave_2",
+    "log_charge_stave_3",
+    "log_amp_stave_0",
+    "log_amp_stave_1",
+    "log_amp_stave_2",
+    "log_amp_stave_3",
+    "peak_stave_0",
+    "peak_stave_1",
+    "peak_stave_2",
+    "peak_stave_3"
+  ],
+  "input_sha256": [
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0031.root",
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0032.root",
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0033.root",
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0034.root",
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0035.root",
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0036.root",
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0037.root",
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0039.root",
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0040.root",
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0041.root",
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0042.root",
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0064.root",
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "environment": {
+    "git_commit": "9ff7f2b61e437cff0e95acb7ee2ac1665fe8d0dd",
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "torch_available": true
+  },
+  "claimed_ticket_text": "S31c run-drift calibration transfer pulse frontier",
+  "drift_effects": [
+    {
+      "effect": "pulse_shape_residual",
+      "contrast": "winner held-out res68",
+      "value": 0.0147646324634552,
+      "ci95": "[0.011687, 0.020603]",
+      "interpretation": "primary pulse-shape/timing-transfer residual width"
+    },
+    {
+      "effect": "timing_bias_proxy",
+      "contrast": "winner median residual",
+      "value": 0.0003922885656356,
+      "ci95": "[-0.00053687, 0.0014337]",
+      "interpretation": "signed residual on charge-loss plus peak-sample proxy scale"
+    },
+    {
+      "effect": "saturation_knee",
+      "contrast": "saturated minus unsaturated res68",
+      "value": -0.0078434745192527,
+      "ci95": "[-0.013641, -0.0036276]",
+      "interpretation": "extra residual width when any stave crosses the ADC saturation knee"
+    },
+    {
+      "effect": "pid_stability",
+      "contrast": "absolute PID-proxy residual shift",
+      "value": 0.0144140401381069,
+      "ci95": "[0.0092719, 0.021733]",
+      "interpretation": "residual dependence on duplicate-readout high-amplitude or multi-hit PID proxy"
+    },
+    {
+      "effect": "ml_gain_over_traditional",
+      "contrast": "mlp minus traditional_clipped_template res68",
+      "value": -0.0139285042166191,
+      "ci95": "not paired; see method table CIs",
+      "interpretation": "negative values favor the S31c winner over the traditional calibration baseline"
+    },
+    {
+      "effect": "pile_up_rate",
+      "contrast": "pileup_multiplicity_ge2 minus all held-out res68",
+      "value": 0.05857461409568781,
+      "ci95": "[0.0711, 0.078148]",
+      "interpretation": "stratum-local run-bootstrap CI; contrast uses all-held-out point estimate as reference"
+    },
+    {
+      "effect": "pedestal_baseline",
+      "contrast": "high_pedestal_drift minus all held-out res68",
+      "value": 0.054662975060939804,
+      "ci95": "[0.032373, 0.11366]",
+      "interpretation": "stratum-local run-bootstrap CI; contrast uses all-held-out point estimate as reference"
+    },
+    {
+      "effect": "energy_linearity",
+      "contrast": "high_recovery_tail minus all held-out res68",
+      "value": 0.0018540319204330014,
+      "ci95": "[0.012708, 0.020891]",
+      "interpretation": "stratum-local run-bootstrap CI; contrast uses all-held-out point estimate as reference"
+    },
+    {
+      "effect": "timing_drift_tail",
+      "contrast": "large_timing_bias_proxy minus all held-out res68",
+      "value": 0.0080265789985658,
+      "ci95": "[0.019083, 0.027087]",
+      "interpretation": "stratum-local run-bootstrap CI; contrast uses all-held-out point estimate as reference"
+    }
+  ],
+  "novel_tickets": [],
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_summary": "method_summary.csv",
+    "strata_summary": "strata_summary.csv",
+    "run_drift_effects": "run_drift_effects.csv"
+  }
+}

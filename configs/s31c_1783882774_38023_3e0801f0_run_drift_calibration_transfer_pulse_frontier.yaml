@@ -1,0 +1,47 @@
+study_id: S31c
+ticket_id: "1783882774.38023.3e0801f0"
+title: Run-drift calibration transfer pulse frontier
+worker: testbeam-laptop-3
+
+raw_root_dir: /home/billy/ccb-data/extracted/root/root
+output_dir: reports/1783882774.38023.3e0801f0__s31c_run_drift_calibration_transfer_pulse_frontier
+claimed_ticket_text: "S31c run-drift calibration transfer pulse frontier"
+
+expected_selected_pulses: 640737
+amplitude_cut_adc: 1000.0
+saturation_adc: 7000.0
+knee_low_adc: 6200.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+duplicate_readout_channels:
+  B2: 1
+  B4: 3
+  B6: 5
+  B8: 7
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+heldout_groups: [sample_i_analysis, sample_ii_analysis]
+expected_group_counts:
+  sample_i_calib: 248745
+  sample_i_analysis: 252266
+  sample_ii_calib: 14630
+  sample_ii_analysis: 125096
+
+max_events_per_run: 9000
+ml_max_train_events: 45000
+cnn_max_train_events: 22000
+random_seed: 7313
+bootstrap_reps: 360
+mlp_epochs: 8
+cnn_epochs: 6
+transformer_epochs: 5
+command: "/home/billy/anaconda3/bin/python scripts/s31c_1783882774_38023_3e0801f0_run_drift_calibration_transfer_pulse_frontier.py"

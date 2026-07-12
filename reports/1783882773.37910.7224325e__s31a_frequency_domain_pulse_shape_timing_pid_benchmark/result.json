@@ -1,0 +1,172 @@
+{
+  "ticket_id": "1783882773.37910.7224325e",
+  "study_id": "S31a",
+  "worker": "testbeam-laptop-2",
+  "title": "frequency-domain pulse-shape timing PID benchmark",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "f1a803344f6d22e4dba9ffedce181f34652007cf",
+  "runtime_sec": 54.57513475418091,
+  "python": "3.7.6",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "train_rows": 15137,
+    "heldout_rows": 5466,
+    "bootstrap_replicates": 400
+  },
+  "endpoints": {
+    "pulse_shape_harmonics": {
+      "kind": "classification",
+      "metric": "roc_auc",
+      "better": "higher",
+      "definition": "top-quartile high-frequency FFT power fraction after removing waveform mean"
+    },
+    "timing_residual": {
+      "kind": "regression",
+      "metric": "sigma68",
+      "better": "lower",
+      "definition": "CFD50 time minus run/stave median CFD50 time"
+    },
+    "pileup_sideband": {
+      "kind": "classification",
+      "metric": "roc_auc",
+      "better": "higher",
+      "definition": "top-quintile late-tail plus negative-step sideband score"
+    },
+    "saturation_clipping": {
+      "kind": "classification",
+      "metric": "roc_auc",
+      "better": "higher",
+      "definition": "high-amplitude or flat-top pulse proxy for ADC clipping/saturation"
+    },
+    "pedestal_noise_color": {
+      "kind": "classification",
+      "metric": "roc_auc",
+      "better": "higher",
+      "definition": "top-quintile run/stave pedestal residual plus early-late color proxy"
+    },
+    "energy_scale": {
+      "kind": "regression",
+      "metric": "sigma68",
+      "better": "lower",
+      "definition": "log-amplitude energy proxy minus run/stave median"
+    },
+    "pid_separation": {
+      "kind": "classification",
+      "metric": "roc_auc",
+      "better": "higher",
+      "definition": "median-split duplicate-readout response ratio with low-order harmonic context; PID proxy, not truth PID"
+    }
+  },
+  "primary_methods": [
+    "traditional_fourier_wavelet_cfd_matched",
+    "ML_ridge",
+    "ML_gradient_boosted_trees",
+    "ML_mlp",
+    "NN_1d_cnn",
+    "NN_spectral_transformer_new"
+  ],
+  "endpoint_winners": [
+    {
+      "endpoint": "pulse_shape_harmonics",
+      "method": "ML_gradient_boosted_trees",
+      "kind": "classification",
+      "n": 5466,
+      "positives": 1091,
+      "metric_value": 0.9999820872070184,
+      "ci_low": 0.9999604606005333,
+      "ci_high": 0.9999949834902612,
+      "average_precision": 0.999927834878704
+    },
+    {
+      "endpoint": "timing_residual",
+      "method": "ML_gradient_boosted_trees",
+      "kind": "regression",
+      "n": 5466,
+      "positives": null,
+      "metric_value": 0.3901433652692893,
+      "ci_low": 0.3394766178628931,
+      "ci_high": 0.4402932724524144,
+      "average_precision": null
+    },
+    {
+      "endpoint": "pileup_sideband",
+      "method": "ML_gradient_boosted_trees",
+      "kind": "classification",
+      "n": 5466,
+      "positives": 877,
+      "metric_value": 0.9999823582892311,
+      "ci_low": 0.9999595871269352,
+      "ci_high": 0.9999986897377954,
+      "average_precision": 0.9999069873470721
+    },
+    {
+      "endpoint": "saturation_clipping",
+      "method": "ML_gradient_boosted_trees",
+      "kind": "classification",
+      "n": 5466,
+      "positives": 334,
+      "metric_value": 0.9988442833740158,
+      "ci_low": 0.9976158220750093,
+      "ci_high": 0.9995537336599511,
+      "average_precision": 0.9877010152171096
+    },
+    {
+      "endpoint": "pedestal_noise_color",
+      "method": "ML_gradient_boosted_trees",
+      "kind": "classification",
+      "n": 5466,
+      "positives": 1115,
+      "metric_value": 0.9485987964212135,
+      "ci_low": 0.9240307314779574,
+      "ci_high": 0.9632329334967806,
+      "average_precision": 0.9153591236659835
+    },
+    {
+      "endpoint": "energy_scale",
+      "method": "ML_gradient_boosted_trees",
+      "kind": "regression",
+      "n": 5466,
+      "positives": null,
+      "metric_value": 0.10206543699693929,
+      "ci_low": 0.07212633233074106,
+      "ci_high": 0.15248756945033332,
+      "average_precision": null
+    },
+    {
+      "endpoint": "pid_separation",
+      "method": "ML_gradient_boosted_trees",
+      "kind": "classification",
+      "n": 5466,
+      "positives": 3225,
+      "metric_value": 0.9993875934400824,
+      "ci_low": 0.9991958253219151,
+      "ci_high": 0.9995921844958982,
+      "average_precision": 0.9995757389964134
+    }
+  ],
+  "winner": {
+    "method": "ML_gradient_boosted_trees",
+    "endpoint_wins": 7,
+    "win_counts": {
+      "ML_gradient_boosted_trees": 7
+    }
+  },
+  "verdict": "overall winner is ML_gradient_boosted_trees by endpoint-win count; endpoint-specific winners are listed in endpoint_winners",
+  "next_tickets": []
+}

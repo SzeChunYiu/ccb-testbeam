@@ -1,0 +1,3 @@
+input_view,methods,n,timing_pull_sigma68,pileup_miss_rate,false_split_rate,energy_fractional_sigma68,pid_balanced_accuracy
+raw_adc_sequence_view,"1d_cnn, joint_sequence_transformer",1280,9.866612993913952,0.3390625,0.215625,0.14507829158709606,0.6374389051808407
+pedestal_subtracted_feature_view,"deltaE_over_E_likelihood_template, gradient_boosted_trees, mlp, ridge, template_residual_boosted_stack_new",3200,7.328120532835518,0.38125,0.1875,0.12571039456360644,0.8197556207233627

@@ -1,0 +1,27 @@
+{
+  "ticket_id": "1783882773.37962.04e64694",
+  "git_commit": "f1a803344f6d22e4dba9ffedce181f34652007cf",
+  "command": "/home/billy/anaconda3/bin/python scripts/s31b_1783882773_37962_04e64694_causal_pretrigger_pedestal_intervention_bakeoff.py",
+  "runtime_seconds": 63.74642992019653,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "fa6efc11258597bd75fc45fd1f8f59d6d5de9ff8c9f152d2ab622ba6750635e4",
+    "aligned_geant4_rows.csv": "1e5e75a89580a4eefc43472a85cefc95cd48f9134f3306257a39de8c939c9abe",
+    "benchmark_truth_events.csv": "8397dd048e09ca1a793feb1c9c96d7b996e28ae5c9fdee5c08cd07929926fc45",
+    "claimed_ticket.txt": "d55932b1d60c0f27131470724989c1c140c9adf82ad851d1b24e7d4032a44861",
+    "event_predictions.csv": "2eff3e67ba03862eb8b3a0f261edbb7a840992c71aee2561d3583b4e337aa40a",
+    "geant4_truth_summary.csv": "b2dc4f79501bff6e2e9246b742bd1cc2d12224558808d91abd415d057be81210",
+    "geant4_truth_table.csv": "fa30c93cc18728ad30ddaa5d3b41ac60c00279ace17c7c3ee69cf5b664f1d3f2",
+    "input_sha256.csv": "c484e95a8adbe04556806734680dd15b15d0311aba4a9bfa5bdf445814f4945a",
+    "method_metrics.csv": "b58205676cb8e7f9f456d72e77127c4bf945df5c2c37979a1a8164cd95bb5329",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "ceb4684df7020b2404184756041cba3503e9fd3bb1900d64aafd2b504f4f3b87",
+    "run_heldout_metrics.csv": "e107b4c048a0b575446754d0d3fa3bd7d52116f94009fc898620f1b62c5b96c1",
+    "s31b_input_view_metrics.csv": "e6c8734671a28c23a8cfd0793728cb46edc2ab989d2bbe45d4c158f5b010114d",
+    "s31b_pedestal_intervention_sidebands.csv": "ab6822ce6e5e0cee5621719018b7c3b58328346f68940a0626d403995119dd56",
+    "strata_metrics.csv": "461b39a02b69dd722ee93de71870be1851ccec7cc0e437ce07eb9855647dd5e5",
+    "template_summary.csv": "2ef79f21f3ccced6bd82918b3cdb42a73409d733b0b07a4ef422f1892faf800a",
+    "winner_ranked_metrics.csv": "75a6e1cfa0ab45664423fa2c9f1e5868bde6edc02929fcc1861ef2103ced13f1"
+  }
+}

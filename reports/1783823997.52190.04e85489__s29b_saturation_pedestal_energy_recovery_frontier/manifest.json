@@ -1,0 +1,29 @@
+{
+  "ticket_id": "1783823997.52190.04e85489",
+  "git_commit": "c4ccb946ba67a21c8121d18ba3420adb51d6ecd0",
+  "command": "/home/billy/anaconda3/bin/python scripts/s29b_1783823997_52190_04e85489_saturation_pedestal_energy_recovery_frontier.py",
+  "runtime_seconds": 341.53427386283875,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "f4f6b26dd6b661a083b6657e6e64fc8bdf0e8509b897afd677c8a743202688ea",
+    "claimed_ticket.txt": "6d09c5c509aa0ec6ae5be5e6901c3eb539e2c673f29e1b11666a041dbc5d6b08",
+    "endpoint_metrics_ci.csv": "2309f4db086805d92b54899e55a33d1cb980db0466079aa4863ebc56fbe4ac4a",
+    "event_predictions.csv": "13639be8c61665311157d02656caefe21768296eded05f10824bb2e1b10fd17a",
+    "injection_source_bootstrap_ci.csv": "b6773a516708b79a9f94d1b9f08a5837492e64a2228a946230944fee7ced0010",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "caab35d2bfdd62a88e771adc74d99bb1d221a622dadc9dd8cc529097f21cacd6",
+    "pedestal_saturation_strata.csv": "f8a836d05fd955da9f9592142a6d21fdf40c076c573cd70def5c90f15fa8d254",
+    "pid_boundary_and_residual_checks.csv": "6cb402de0fb5d0b8bf11aaf32f24cf7be36cfbb1054c132de1f53bffb3b8cd62",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "44df5a2a59fcc6e0081533ae1f1ea526c9043a4a1ded3f0d3681ec175114e0f2",
+    "run_heldout_metrics.csv": "ac33e530b2c0e8e1a706e024fad2f5d177c61fad84e33efda30febd8dd64d367",
+    "strata_metrics.csv": "b2dcd6f99b7a20487e92bb60464517a8bbaf4320e195669918f10eac42ef7ba2",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "2c4fedd7a6323167bbcc841ddba59a6f306a813084cffb948e6ad48e89f5208b"
+  },
+  "title": "S29b saturation-pedestal energy recovery frontier",
+  "worker": "testbeam-laptop-1",
+  "study_id": "S29b",
+  "postprocess_note": "S29b endpoint synthesis appended after base runner completion."
+}

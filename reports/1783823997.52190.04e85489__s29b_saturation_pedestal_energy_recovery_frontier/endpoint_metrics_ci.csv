@@ -1,0 +1,29 @@
+endpoint,method,primary_metric,value_ci95,secondary_metric,secondary_value,interpretation
+pile-up separation,template_residual_boosted_stack_new,detection AP,"0.854 [0.834, 0.873]",miss / false split,0.3306 / 0.1667,ability to find injected doublets without splitting clean controls
+saturation recovery,template_residual_boosted_stack_new,fractional energy sigma68,"0.06415 [0.05622, 0.06845]",fractional energy bias,-0.005736,resolution of total constituent amplitude in high-charge mixtures
+energy closure,template_residual_boosted_stack_new,fractional energy bias,"-0.005736 [-0.01053, 0.003615]",fractional energy sigma68,0.06415,median closure of recovered sum amplitude against injection truth
+pulse-shape residuals,template_residual_boosted_stack_new,late-tail |dt|>15 ns rate,"0.09751 [0.08594, 0.1157]",timing sigma68 ns,7.326,timing harm exposed by residual pulse-shape mismatch
+pile-up separation,gradient_boosted_trees,detection AP,"0.8422 [0.8205, 0.863]",miss / false split,0.3278 / 0.2,ability to find injected doublets without splitting clean controls
+saturation recovery,gradient_boosted_trees,fractional energy sigma68,"0.06556 [0.05973, 0.07584]",fractional energy bias,0.002403,resolution of total constituent amplitude in high-charge mixtures
+energy closure,gradient_boosted_trees,fractional energy bias,"0.002403 [-0.005644, 0.006793]",fractional energy sigma68,0.06556,median closure of recovered sum amplitude against injection truth
+pulse-shape residuals,gradient_boosted_trees,late-tail |dt|>15 ns rate,"0.1033 [0.08197, 0.1384]",timing sigma68 ns,7.971,timing harm exposed by residual pulse-shape mismatch
+pile-up separation,ridge,detection AP,"0.8337 [0.8086, 0.8581]",miss / false split,0.2944 / 0.2056,ability to find injected doublets without splitting clean controls
+saturation recovery,ridge,fractional energy sigma68,"0.07413 [0.0688, 0.07853]",fractional energy bias,0.01498,resolution of total constituent amplitude in high-charge mixtures
+energy closure,ridge,fractional energy bias,"0.01498 [0.005393, 0.02594]",fractional energy sigma68,0.07413,median closure of recovered sum amplitude against injection truth
+pulse-shape residuals,ridge,late-tail |dt|>15 ns rate,"0.1614 [0.1365, 0.1875]",timing sigma68 ns,9.883,timing harm exposed by residual pulse-shape mismatch
+pile-up separation,1d_cnn,detection AP,"0.7962 [0.7768, 0.8148]",miss / false split,0.2472 / 0.2972,ability to find injected doublets without splitting clean controls
+saturation recovery,1d_cnn,fractional energy sigma68,"0.09167 [0.08242, 0.09984]",fractional energy bias,0.002586,resolution of total constituent amplitude in high-charge mixtures
+energy closure,1d_cnn,fractional energy bias,"0.002586 [-0.01812, 0.02103]",fractional energy sigma68,0.09167,median closure of recovered sum amplitude against injection truth
+pulse-shape residuals,1d_cnn,late-tail |dt|>15 ns rate,"0.1753 [0.1465, 0.2113]",timing sigma68 ns,10.29,timing harm exposed by residual pulse-shape mismatch
+pile-up separation,two_pulse_template_cfd_baseline,detection AP,"0.6545 [0.6357, 0.6745]",miss / false split,0.5917 / 0.2361,ability to find injected doublets without splitting clean controls
+saturation recovery,two_pulse_template_cfd_baseline,fractional energy sigma68,"0.09121 [0.07698, 0.1044]",fractional energy bias,0.002043,resolution of total constituent amplitude in high-charge mixtures
+energy closure,two_pulse_template_cfd_baseline,fractional energy bias,"0.002043 [-0.004589, 0.004295]",fractional energy sigma68,0.09121,median closure of recovered sum amplitude against injection truth
+pulse-shape residuals,two_pulse_template_cfd_baseline,late-tail |dt|>15 ns rate,"0.2007 [0.1544, 0.244]",timing sigma68 ns,11.41,timing harm exposed by residual pulse-shape mismatch
+pile-up separation,mlp,detection AP,"0.77 [0.7381, 0.7926]",miss / false split,0.6 / 0.1167,ability to find injected doublets without splitting clean controls
+saturation recovery,mlp,fractional energy sigma68,"0.1272 [0.1119, 0.1441]",fractional energy bias,0.02153,resolution of total constituent amplitude in high-charge mixtures
+energy closure,mlp,fractional energy bias,"0.02153 [-0.008082, 0.03921]",fractional energy sigma68,0.1272,median closure of recovered sum amplitude against injection truth
+pulse-shape residuals,mlp,late-tail |dt|>15 ns rate,"0.2465 [0.1871, 0.3125]",timing sigma68 ns,12.54,timing harm exposed by residual pulse-shape mismatch
+pile-up separation,tiny_sequence_transformer,detection AP,"0.7716 [0.7579, 0.7958]",miss / false split,0.2889 / 0.2722,ability to find injected doublets without splitting clean controls
+saturation recovery,tiny_sequence_transformer,fractional energy sigma68,"0.142 [0.1325, 0.1499]",fractional energy bias,-0.01802,resolution of total constituent amplitude in high-charge mixtures
+energy closure,tiny_sequence_transformer,fractional energy bias,"-0.01802 [-0.03084, -0.01069]",fractional energy sigma68,0.142,median closure of recovered sum amplitude against injection truth
+pulse-shape residuals,tiny_sequence_transformer,late-tail |dt|>15 ns rate,"0.3945 [0.3517, 0.4386]",timing sigma68 ns,13.9,timing harm exposed by residual pulse-shape mismatch

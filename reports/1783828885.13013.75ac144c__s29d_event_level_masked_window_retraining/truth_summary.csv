@@ -1,0 +1,7 @@
+quantity,value
+event_rows,1004
+train_rows,544
+heldout_rows,460
+usable_geant4_sci_bar_events,7101
+proton_truth_rows,498
+deuteron_truth_rows,506

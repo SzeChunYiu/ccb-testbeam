@@ -1,0 +1,34 @@
+{
+  "ticket_id": "1783828885.13013.75ac144c",
+  "generated_utc": "2026-07-12T19:46:34.863724+00:00",
+  "git_commit": "f4410effcc4013f5f79c28eb157b59c1e7ec157f",
+  "command": ".venv/bin/python scripts/s29d_1783828885_13013_75ac144c_event_level_masked_window_retraining.py",
+  "runtime_seconds": 171.493,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "inputs": {
+    "config": "configs/s29d_1783828885_13013_75ac144c_event_level_masked_window_retraining.json",
+    "raw_root_dir": "data/root/root",
+    "geant4_truth_root": "/home/billy/ccb-geant4/output_30k.root",
+    "s29c": "reports/1783809165.2835.20015c6e__s29c_causal_pulse_window_pid_energy_ablation",
+    "s29a": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark"
+  },
+  "outputs_sha256": {
+    "REPORT.md": "068350e3f3c6c1c719163f578900441e366f0ce2c5207efcc11e340ed4666e9d",
+    "aligned_geant4_rows.csv": "4703b69de6b2005a6a0431ce008c7ad20354522562855c0e002bb822eaee90b9",
+    "claimed_ticket.txt": "70602457772d64845b2d46a47a5e9fc70b3fe35ea73e2d62d485c252e6b82308",
+    "event_truth_table.csv": "06a807bf46865ed3ab5fec005720bd0e9fee29365bc6f1643c267cf0f73954e5",
+    "mask_retention_summary.csv": "ad980c35952179083752cec8eec3fc93f21d8f0a8b2b382cf7025b27c3d5de45",
+    "mask_winners.csv": "fc34a2a15804cde1a73ac85f3e83684a75587f4aff41d3805f1a963fa1c83a49",
+    "masked_event_predictions.csv": "5b8bdd2f59619c83d6f5286f00f80c5f973abef526d85c9019e0d05d7b62bff4",
+    "masked_method_metrics.csv": "83f956469d7360548c4a84e22e53d2e224f2d1aedcbb71b8aa90c351c815d56e",
+    "masked_run_heldout_metrics.csv": "856ac68346df1273e6a93d15b4c136706aefbca0f594184ca6201197f852ed52",
+    "masked_winner_ranked_metrics.csv": "b507a079f8adf7778fbf9eeaf7964f4bcd41e2aa024cfd201080d77befb6e833",
+    "reproduction_counts_by_run.csv": "bee13bc5ee64a023c0a9b7c3af0fe0614e45533e43e74b858a18ee2793b3b591",
+    "reproduction_match_table.csv": "b2c75394ea0fb21ca2ed7531c9178a9544d97a1becb51d046e990178321c6dc9",
+    "result.json": "cb13c9d19f41dd6ab7e50b0d4c7eba4334b4e0fc0bde35ce51012911226919d0",
+    "source_artifacts.csv": "a5fb374a92f89b804f91cbb8e5947fcdec2742c86173903c0b45af1cd493dfa2",
+    "template_summary.csv": "a5a82a72cea68d8678e5d75f2e3d5daa45e22cb48f1ab0eb3da7b69799905301",
+    "truth_summary.csv": "dadd8cb2b56685f3a0f0db9d098d960f5dba295be0205e3993dfdc3e79110c69"
+  }
+}

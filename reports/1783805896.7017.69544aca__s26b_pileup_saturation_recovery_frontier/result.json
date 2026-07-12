@@ -1,0 +1,95 @@
+{
+  "ticket_id": "1783805896.7017.69544aca",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "Pile-up saturation recovery frontier",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "injection_source_bootstrap": "held-out source_run:stave:is_overlap:spacing_bin:ratio_bin percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_head": "tiny_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite saturation-energy/timing score with run-block and injection-source bootstrap CIs reported",
+    "winner_score": 0.17429851289335818,
+    "energy_fractional_sigma68": 0.07114073530139213,
+    "energy_fractional_sigma68_run_block_ci95": [
+      0.06620672362950658,
+      0.07946406554876848
+    ],
+    "energy_fractional_sigma68_injection_source_ci95": [
+      0.06364704771545315,
+      0.08432639857839606
+    ],
+    "time_sigma68_ns": 7.926888870307713,
+    "time_sigma68_run_block_ci95": [
+      7.530452819262734,
+      8.483400773950695
+    ],
+    "time_sigma68_injection_source_ci95": [
+      7.268854587492663,
+      9.043438757439
+    ],
+    "pileup_miss_rate": 0.2916666666666667,
+    "false_split_rate": 0.18611111111111112
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "injection_source_bootstrap_ci": "injection_source_bootstrap_ci.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "Injection-source cells are retained provenance units, not exact residual waveform indices."
+  ]
+}

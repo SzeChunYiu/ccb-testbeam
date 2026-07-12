@@ -1,0 +1,83 @@
+{
+  "ticket_id": "1783798536.2303.53394aed",
+  "study_id": "S26a",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "e3eb2efc02c365a25c94ff00e2e6998781de9d8f",
+  "command": ".venv/bin/python scripts/s26a_1783798536_2303_53394aed_pedestal_timing_pileup_disentanglement.py --config configs/s26a_1783798536_2303_53394aed_pedestal_timing_pileup_disentanglement.json",
+  "config": "configs/s26a_1783798536_2303_53394aed_pedestal_timing_pileup_disentanglement.json",
+  "raw_root_dir": "data/root/root",
+  "source_artifacts": {
+    "pid_energy": "reports/1783751737.13516.61447038__s25a_joint_pid_energy_pileup_saturation",
+    "timing": "reports/1783770201.8157.51000596__s18i_pulse_shape_timing_model_hierarchy",
+    "pileup": "reports/1783770201.8222.568f4add__s25b_pileup_saturation_recovery_benchmark",
+    "pedestal": "reports/1783762816.2490.722918d7__s25b_saturation_onset_hysteresis_waveform_recovery"
+  },
+  "environment": {
+    "python": "3.11.14",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3"
+  },
+  "outputs": [
+    {
+      "file": "REPORT.md",
+      "bytes": 8305,
+      "sha256": "98ffa7f5ae680751e2fef8ec77d898a8f40821101def4110c0f6a4739f2870f0"
+    },
+    {
+      "file": "claimed_ticket.txt",
+      "bytes": 25,
+      "sha256": "dfa8eba6b3db240726d7501c35ee622df5f78e57055a9d16bfdbfe8acee8135f"
+    },
+    {
+      "file": "manifest.json",
+      "bytes": 2841,
+      "sha256": "a40f072ec5a8553f36911f4c23f7bd97c915b9b5b805dc4ea94dcbb96a960887"
+    },
+    {
+      "file": "method_benchmark.csv",
+      "bytes": 4738,
+      "sha256": "1919dd0af7f4c08e866600189d11c7a551846772686bc4967bdc8808f8731497"
+    },
+    {
+      "file": "reproduction_counts_by_run.csv",
+      "bytes": 1677,
+      "sha256": "bee13bc5ee64a023c0a9b7c3af0fe0614e45533e43e74b858a18ee2793b3b591"
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "bytes": 325,
+      "sha256": "4772a525e133564a818e56ed4f3df60c3a0ab697df97b368cfee4ed5697e7e09"
+    },
+    {
+      "file": "result.json",
+      "bytes": 15450,
+      "sha256": "69cf5a61817450e3a6a4749c4c148053ab4ab88641486641409b3f526b5d6ecb"
+    },
+    {
+      "file": "source_joint_method_benchmark.csv",
+      "bytes": 1916,
+      "sha256": "38134b9411768916757af38719aba0d7860e47a16e2ef47d8ae84bb527759bc4"
+    },
+    {
+      "file": "source_pedestal_method_summary.csv",
+      "bytes": 1805,
+      "sha256": "77f4a44709ab28b3320b9e3e72d8b395f960b2ff33043866b80c714514168a3a"
+    },
+    {
+      "file": "source_pileup_method_metrics.csv",
+      "bytes": 3692,
+      "sha256": "c41ed269dcac755a16cc27546e001babcf441666e990c8986d7bedbf58c75388"
+    },
+    {
+      "file": "source_timing_method_metrics.csv",
+      "bytes": 1724,
+      "sha256": "e13f925bcea9f37133da908b54b4c38808511cf0e044e324e65010e2ddf05415"
+    },
+    {
+      "file": "timing_run_bootstrap.csv",
+      "bytes": 516,
+      "sha256": "d2b8597368de1f02293e295ff7f0dce2f09b736951a4dd3990da40fb76a99c9c"
+    }
+  ]
+}

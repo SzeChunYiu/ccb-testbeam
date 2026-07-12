@@ -1,0 +1,56 @@
+{
+  "ticket_id": "1783882773.37910.7224325e",
+  "generated_at_unix": 1783886317.9144614,
+  "artifacts": [
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/REPORT.md",
+      "sha256": "a40070d1e62df54871505732afcb01ce4135fb2116770c95f47b24e75e2440ff",
+      "bytes": 10764
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/claimed_ticket.txt",
+      "sha256": "dd795906dc39a6d222f08c9b86b2a3a2413082ac5aca0e63860a910c5acd0248",
+      "bytes": 26
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/endpoint_method_summary.csv",
+      "sha256": "ba4caa2d0e8324d680689f71ddc1ff74631a150a69e1a85ebfe7d5d4d217477a",
+      "bytes": 5579
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/endpoint_targets.csv",
+      "sha256": "462b9ea695c0705ab34b4f069e177dfe60591edd0e655554e3201b6edbd35265",
+      "bytes": 659667
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/endpoint_winner_ci.png",
+      "sha256": "4fcacad99635c213d44b888d15f0c5f8bd7b35e35c5c023d4c4088724488433a",
+      "bytes": 51271
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/endpoint_winners.csv",
+      "sha256": "76f8af43bf17b3a29ecf0bd89180c6b1d91ae87e94b7ed8eeb7ea107a5049baa",
+      "bytes": 1049
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/result.json",
+      "sha256": "ca3f718c98d04f2e4ca51461ee40a48a11261a351f02fd32c3b33bf9d0c64623",
+      "bytes": 4966
+    },
+    {
+      "path": "reports/1783882773.37910.7224325e__s31a_frequency_domain_pulse_shape_timing_pid_benchmark/traditional_feature_families.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    }
+  ]
+}

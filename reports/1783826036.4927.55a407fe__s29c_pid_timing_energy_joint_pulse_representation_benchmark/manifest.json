@@ -1,0 +1,21 @@
+{
+  "ticket_id": "1783826036.4927.55a407fe",
+  "git_commit": "37a2016f0c3fcd5034985f668d8093ef9d6fba79",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-3/.venv-s04g-sys/bin/python scripts/s29c_1783826036_4927_55a407fe_pid_timing_energy_joint_pulse_representation_benchmark.py",
+  "runtime_seconds": 74.95240616798401,
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "outputs_sha256": {
+    "REPORT.md": "d7c2d31acdbc6ad59ce46914fc9b8ca65e339018ed1999f1e96e8e454ff00936",
+    "claimed_ticket.txt": "781345bdcf8b0a3a7b18a4ffc85edca1b9026b21696de6ffffa5071e67db6558",
+    "event_predictions.csv": "885b963a4104b52bd21d5cc32872a49f28836afab1633f5a8289f19767396a19",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "e4e9905b587f331159b86dbd9e4356c0f1fb5aa6a74ab152e9bbe29d0cbe27ff",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "fae06a97a048f729b464b6b4a9c5d45f83345b03f32e3d2c8b5a219689c8e0e9",
+    "run_heldout_metrics.csv": "85f99abbff6c719f9bb41af2d8149aed74019332d7491e90ee3a29acfe3941c4",
+    "strata_metrics.csv": "a543638ba6c7ae6be9ad58462ccc3f71f37f86dd43f1ceb1bca038a9e0aaafb3",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "6c7c1a2c135c6861d11ee4f35f04531c5a5c29b2b8f7145728ee8f214e8e66e4"
+  }
+}

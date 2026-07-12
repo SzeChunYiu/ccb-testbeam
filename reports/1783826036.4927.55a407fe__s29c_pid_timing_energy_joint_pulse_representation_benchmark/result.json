@@ -1,0 +1,104 @@
+{
+  "ticket_id": "1783826036.4927.55a407fe",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "PID timing-energy joint pulse representation benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 420,
+    "pid_truth": "deterministic raw-waveform deuteron-like high-dEdx-depth proxy",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "strong_traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "joint_sequence_transformer",
+    "additional_new_physics_residual_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out composite joint PID/energy/timing score with run-block bootstrap CIs reported",
+    "winner_score": 0.18095557434023007,
+    "pid_auc": 0.995163482989403,
+    "pid_balanced_accuracy": 0.9525585610708309,
+    "pid_efficiency": 0.9204545454545454,
+    "pid_purity": 0.8901098901098901,
+    "energy_fractional_sigma68": 0.06546031836340777,
+    "energy_fractional_sigma68_ci95": [
+      0.06064425628489553,
+      0.07337391441873925
+    ],
+    "time_sigma68_ns": 7.687813948777326,
+    "time_sigma68_ci95": [
+      6.904950325622652,
+      8.041054646596056
+    ],
+    "pileup_miss_rate": 0.3162162162162162,
+    "false_split_rate": 0.21891891891891893
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "PID truth is a deterministic raw-waveform proxy, not external particle truth.",
+    "Pile-up and saturation truths come from controlled injections into raw-ROOT-derived clean pulses.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "completion_audit": {
+    "raw_root_reproduced": true,
+    "required_methods_present": [
+      "1d_cnn",
+      "deltaE_over_E_likelihood_template",
+      "gradient_boosted_trees",
+      "joint_sequence_transformer",
+      "mlp",
+      "ridge",
+      "template_residual_boosted_stack_new"
+    ],
+    "winner_named": "gradient_boosted_trees",
+    "run_bootstrap_cis_reported": true,
+    "runtime_seconds_including_wrapper": 75.40120244026184
+  }
+}

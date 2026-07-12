@@ -1,0 +1,3 @@
+# S32c: pedestal-memory counterfactuals for pulse amplitude and identity stability
+
+Question: does pretrigger pedestal memory bias pulse amplitude, timing, energy, and PID decisions after conventional baseline subtraction? Traditional comparator: four-sample pedestal/IQR/slope scorecard with Huber calibration and run-family offsets. Compare ridge, gradient-boosted trees, MLP, 1D-CNN, and a masked pretrigger-to-pulse transformer where apt under run-held-out validation, reporting bootstrap 95% CIs for pedestal counterfactual deltas, saturation interactions, energy bias, PID AUC/ECE, and timing res68.

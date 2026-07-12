@@ -1,0 +1,96 @@
+{
+  "ticket_id": "1783886867.863.4c7c62fb",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "pedestal-memory counterfactuals for pulse amplitude and identity stability",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_configured": "data/root/root",
+    "raw_root_resolved": "data/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "raw_root_reproduction.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by run",
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "counterfactual": "high versus low run-local pretrigger pedestal-memory terciles"
+  },
+  "required_method_coverage": {
+    "traditional": "traditional_pedestal_scorecard",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "pedestal_memory_transformer_new"
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "criterion": "minimum S32c composite amplitude/timing/energy/PID/pedestal-counterfactual score",
+    "winner_score": 1.9593743005650248,
+    "amplitude_sigma68": 0.09629341836201422,
+    "amplitude_sigma68_ci95": [
+      0.07002912604616927,
+      0.15875175329711577
+    ],
+    "timing_res68_ns": 3.7568640646492013,
+    "timing_res68_ns_ci95": [
+      3.0360390600176563,
+      4.325130291490391
+    ],
+    "energy_bias": -0.15286631081576524,
+    "energy_sigma68": 0.7751869807973248,
+    "saturation_interaction_energy_sigma68": 0.7368866212169791,
+    "pid_auc": 0.9999581824416436,
+    "pid_ece": 0.0025108121036635524,
+    "pedestal_counterfactual_amplitude_delta": 0.0021533981827629722,
+    "pedestal_counterfactual_timing_delta_ns": 0.5790304298978439
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "config": "configs/s32c_1783886867_863_4c7c62fb_pedestal_memory_counterfactuals.json",
+    "script": "scripts/s32c_1783886867_863_4c7c62fb_pedestal_memory_counterfactuals.py",
+    "claimed_ticket": "claimed_ticket.txt",
+    "claimed_ticket_body": "claimed_ticket_body.txt",
+    "raw_reproduction": "raw_root_reproduction.csv",
+    "sampled_pulses": "sampled_pulses.csv",
+    "event_predictions": "event_predictions.csv",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "PID identity is a duplicate-readout sideband proxy, not particle truth.",
+    "Pedestal counterfactuals are inferred from observed pretrigger memory terciles.",
+    "Energy is an area-over-amplitude stability proxy rather than full calorimetric calibration."
+  ],
+  "git_commit": "809094931ae93c32ec759ed41cbbd00123e3174b",
+  "script_sha256": "e40a2406e747a0c88f9e50639bd5eceaf11340bdf28d64a12c218d6373543c58",
+  "config_sha256": "a4fa00cef1d3c3d14e9313172708cb2b178e87477291570e3b20b05e03f7daed",
+  "runtime_sec": 58.1456093788147,
+  "python": "3.11.14",
+  "methods": [
+    "traditional_pedestal_scorecard",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "pedestal_memory_transformer_new"
+  ]
+}

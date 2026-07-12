@@ -1,0 +1,4 @@
+region_test,ablation,sigma68_ns,delta_vs_full_gbt_ns,interpretation
+pretrigger pedestal memory,drop_pretrigger_features,3.873711401851817,0.08225154211613495,weak or redundant after run-block controls
+late pulse-shape/tail region,drop_tail_pulse_shape_features,3.7755044425874633,-0.015955417148218576,weak or redundant after run-block controls
+leading-edge amplitude and CFD region only,amplitude_cfd_only,3.931415827004477,0.1399559672687949,weak or redundant after run-block controls

@@ -1,0 +1,83 @@
+{
+  "benchmark_file": "method_summary.csv",
+  "frozen_s27a_winning_correction": {
+    "alpha": 10.0,
+    "ci95": [
+      1.1519390208965812,
+      1.2073387259974728
+    ],
+    "delta_ci95": [
+      -1.4920540263274586,
+      -1.436654321226567
+    ],
+    "delta_vs_traditional_ns": -1.4666523974700882,
+    "model": "ridge",
+    "sigma68_ns": 1.1773406497539516
+  },
+  "leakage_checks_file": "leakage_checks.csv",
+  "ml_methods": [
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn",
+    "attention_quant"
+  ],
+  "next_tickets": [],
+  "per_run_metrics_file": "per_run_metrics.csv",
+  "raw_root_reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "status": "pass"
+  },
+  "reproduced": true,
+  "runtime_seconds": 63.34972047805786,
+  "scientific_summary": "The held-out winner is cnn with pairwise sigma68 0.6366 ns (95% CI 0.6189-0.6617) versus the training-selected traditional baseline traditional_template_phase at 2.6440 ns (95% CI 2.6440-2.6440). The frozen S27a ridge correction also transfers to the independent Sample-I block at 1.1773 ns (95% CI 1.1519-1.2073), but it is not the external-block winner; the result should be read as timing-proxy evidence, not external time truth.",
+  "split": {
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "unit": "run"
+  },
+  "strata_summary_file": "strata_summary.csv",
+  "study": "S27d",
+  "ticket": "1783809609.5914.003e7f6e",
+  "title": "External run-block replication of ADC quantization timing correction",
+  "traditional": {
+    "ci95": [
+      2.64399304722404,
+      2.64399304722404
+    ],
+    "method": "traditional_template_phase",
+    "sigma68_ns": 2.64399304722404
+  },
+  "winner": {
+    "ci95": [
+      0.6188935052022881,
+      0.6617106317148123
+    ],
+    "metric": "heldout_pairwise_sigma68_ns",
+    "model": "cnn",
+    "value": 0.6366058192119513
+  },
+  "worker": "testbeam-laptop-4"
+}

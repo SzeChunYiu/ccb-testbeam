@@ -1,0 +1,71 @@
+{
+  "ticket_id": "4cf5ba23",
+  "generated_at_unix": 1783594603.8276024,
+  "artifacts": [
+    {
+      "path": "reports/4cf5ba23/REPORT.md",
+      "sha256": "69647eb958786871804602f277a1627dd553ef65649e8718ee49c47281dcde9b",
+      "bytes": 9517
+    },
+    {
+      "path": "reports/4cf5ba23/benchmark_sample_labels.csv",
+      "sha256": "f405d28c8bd38314a55716d4deb2b11d4d4317e076b803d62a2240d1a8dc0586",
+      "bytes": 4387881
+    },
+    {
+      "path": "reports/4cf5ba23/heldout_per_run_metrics.csv",
+      "sha256": "656e8386873686022fed5b86798c19cd09457ad249f8bbd909009436077d7d25",
+      "bytes": 35151
+    },
+    {
+      "path": "reports/4cf5ba23/heldout_predictions.csv.gz",
+      "sha256": "217db4a8b39989aab93488df161b677a9afe5a2249eb35ceef044b4ab5c45b45",
+      "bytes": 6342500
+    },
+    {
+      "path": "reports/4cf5ba23/label_counts.csv",
+      "sha256": "e1355bef6ee037d86d4b114acadaccbcf5405bc62fbddb43b87d38df0d0edaa2",
+      "bytes": 149
+    },
+    {
+      "path": "reports/4cf5ba23/method_summary_all.csv",
+      "sha256": "dff4ca37a6d99d33e61207d1e5412c3ff6033953dcd96a5c5df09b42d7f04cd7",
+      "bytes": 8279
+    },
+    {
+      "path": "reports/4cf5ba23/primary_auc_ci.png",
+      "sha256": "a55592662f494145ecf9919424c7b6d928e4a68476e0007d9c1938022891d730",
+      "bytes": 40782
+    },
+    {
+      "path": "reports/4cf5ba23/primary_method_summary.csv",
+      "sha256": "4b2e0b3601e0e3f6892297091cefaa13c700d115e585af71636f245fd9eeb8db",
+      "bytes": 810
+    },
+    {
+      "path": "reports/4cf5ba23/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/4cf5ba23/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/4cf5ba23/result.json",
+      "sha256": "d9e63953e6c1d9b526ab4830b72647f09a70b514a9f6abe6f36234a4acc00f29",
+      "bytes": 2691
+    },
+    {
+      "path": "reports/4cf5ba23/traditional_feature_families.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/4cf5ba23/traditional_method_summary.csv",
+      "sha256": "8e89fc2ee923f88de248f82a41775e48e874320e2c4409290a359313cc95b964",
+      "bytes": 7731
+    }
+  ]
+}

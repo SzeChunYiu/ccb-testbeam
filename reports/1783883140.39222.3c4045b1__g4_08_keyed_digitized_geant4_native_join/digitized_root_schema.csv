@@ -1,0 +1,8 @@
+branch,present,typename
+daq_run,True,int32_t
+EVENTNO,True,int64_t
+EVT,True,int64_t
+TRIGGER,True,int64_t
+g4_entry,True,int64_t
+digitizer_seed,True,int64_t
+bridge_version,True,int32_t

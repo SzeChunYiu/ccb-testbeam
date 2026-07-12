@@ -1,0 +1,15 @@
+endpoint,method,stave_bias_min,stave_bias_max,max_abs_stave_energy_bias,stave_bias_span,interpretation,median_abs_energy_error,p90_abs_energy_error,median_abs_time_error_ns,p90_abs_time_error_ns
+PID boundary shifts,gradient_boosted_trees,-0.0272513876961068,0.0256566936746368,0.0272513876961068,0.0529080813707436,stave-conditioned energy bias as a PID-boundary proxy,,,,
+PID boundary shifts,template_residual_boosted_stack_new,-0.0304472528449767,0.0196691685922465,0.0304472528449767,0.050116421437223196,stave-conditioned energy bias as a PID-boundary proxy,,,,
+PID boundary shifts,mlp,-0.0095047905005138,0.0471041301243612,0.0471041301243612,0.056608920624875006,stave-conditioned energy bias as a PID-boundary proxy,,,,
+PID boundary shifts,ridge,-0.0485402024413724,0.0448105962495464,0.0485402024413724,0.09335079869091881,stave-conditioned energy bias as a PID-boundary proxy,,,,
+PID boundary shifts,1d_cnn,-0.0600046148909241,0.0546352587213107,0.0600046148909241,0.1146398736122348,stave-conditioned energy bias as a PID-boundary proxy,,,,
+PID boundary shifts,two_pulse_template_cfd_baseline,-0.0601315352526433,0.0403544148295573,0.0601315352526433,0.1004859500822006,stave-conditioned energy bias as a PID-boundary proxy,,,,
+PID boundary shifts,tiny_sequence_transformer,-0.0798189312653782,0.0248010350704126,0.0798189312653782,0.10461996633579079,stave-conditioned energy bias as a PID-boundary proxy,,,,
+event-level closure residuals,ridge,,,,,,0.05136087944177967,0.11678605508593641,7.140189920058523,15.446657080276832
+event-level closure residuals,template_residual_boosted_stack_new,,,,,,0.03930809010536156,0.11877682958304113,5.640965134430411,13.153083973843582
+event-level closure residuals,gradient_boosted_trees,,,,,,0.0419138268198348,0.1316651239348619,5.926782132533974,13.142262686490586
+event-level closure residuals,two_pulse_template_cfd_baseline,,,,,,0.05250520050388832,0.1462076178578284,7.307180621292293,18.95534363828479
+event-level closure residuals,1d_cnn,,,,,,0.06415683251587188,0.14862983705806265,8.512206662185648,14.534728774944234
+event-level closure residuals,tiny_sequence_transformer,,,,,,0.1008650254768719,0.2297149954475462,13.132377963994774,24.860731556508902
+event-level closure residuals,mlp,,,,,,0.09022410091799388,0.23375595717223283,8.904558959634944,23.39829958275084

@@ -1,0 +1,23 @@
+{
+  "ticket_id": "1783827793.6970.25ea5036",
+  "git_commit": "8216c97ac3833b1ae147287c26d0693a87022f84",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-3/.venv/bin/python scripts/s29c_1783827793_6970_25ea5036_pileup_timing_deconvolution_architecture_bakeoff.py",
+  "runtime_seconds": 384.56552720069885,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "be415d7b66da8c091b1f36fc30a7356946452199cb874469618e2bae18597a2a",
+    "claimed_ticket.txt": "6192babd66373acd313565432c35cedb67271b70af97a504c61b5cf2449741c4",
+    "endpoint_metrics_ci.csv": "b8ba74783204f60c7562974c833f7c3abf860c52afd49073e9f5e91d42c97e40",
+    "event_predictions.csv": "37eb5242be473d6a61aab5deed4e262ff55ad8a08a92923b074ac858499f30f8",
+    "injection_source_bootstrap_ci.csv": "2850220eeab29dffbe5e6d05837385572d4b4f5171cb208002477703857a5a3f",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "af93c781bebd50f4efdfcc7b096b42717e44f162bb7bb0ae8ab24961b008344a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "50ea966f200b4b3913929da0d6780207129cbe86ab6110a20674fca3d64cfdf7",
+    "run_heldout_metrics.csv": "1db8506890f5a915fcf87989eb5e5146f69dd1d5271875e6ac59323643513133",
+    "strata_metrics.csv": "7217e9a4b03c399670514d29c4913cfdc9695107a3d482431869779af0630031",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "b5e86c04385151015b983b2e832fb46455154242e3851e5dfd9ed3a1fce46940"
+  }
+}

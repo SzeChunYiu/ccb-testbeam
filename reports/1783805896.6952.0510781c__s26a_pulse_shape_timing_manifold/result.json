@@ -1,0 +1,423 @@
+{
+  "study": "S26A",
+  "ticket_id": "1783805896.6952.0510781c",
+  "worker": "testbeam-laptop-1",
+  "title": "Pulse-shape timing manifold",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "split_type": "complete run held-out"
+  },
+  "bootstrap": {
+    "unit": "held-out run block",
+    "replicates": 300,
+    "interval": "95% percentile"
+  },
+  "winner": {
+    "method": "mlp",
+    "n": 167683,
+    "bias": -0.010931015014648438,
+    "res68": 0.36996081619262694,
+    "mae": 0.6121326945860022,
+    "res68_ci95": [
+      0.3194833109974863,
+      0.4540676560616499
+    ],
+    "bias_ci95": [
+      -0.019207456707954408,
+      -0.00020842477679253537
+    ],
+    "mae_ci95": [
+      0.5221370829940412,
+      0.7032995891407097
+    ],
+    "pid_auc": 0.4096404800554668,
+    "pid_average_precision": 0.34455465479458214
+  },
+  "all_metrics": [
+    {
+      "method": "mlp",
+      "n": 167683,
+      "bias": -0.010931015014648438,
+      "res68": 0.36996081619262694,
+      "mae": 0.6121326945860022,
+      "res68_ci95": [
+        0.3194833109974863,
+        0.4540676560616499
+      ],
+      "bias_ci95": [
+        -0.019207456707954408,
+        -0.00020842477679253537
+      ],
+      "mae_ci95": [
+        0.5221370829940412,
+        0.7032995891407097
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n": 167683,
+      "bias": 0.016442622243608707,
+      "res68": 0.4027491523297435,
+      "mae": 0.45499658782858654,
+      "res68_ci95": [
+        0.3683445696482977,
+        0.4357922094266886
+      ],
+      "bias_ci95": [
+        -0.01261902965843883,
+        0.044550136350526987
+      ],
+      "mae_ci95": [
+        0.40308534726306244,
+        0.511396937515081
+      ]
+    },
+    {
+      "method": "traditional_cfd_timewalk_template",
+      "n": 167683,
+      "bias": -0.033096943714937765,
+      "res68": 0.5485379703006269,
+      "mae": 0.9996159508105473,
+      "res68_ci95": [
+        0.4825756817222639,
+        0.6385077271397555
+      ],
+      "bias_ci95": [
+        -0.10251013086777397,
+        0.0
+      ],
+      "mae_ci95": [
+        0.8550926263234851,
+        1.1246097832928237
+      ]
+    },
+    {
+      "method": "gated_residual_cnn",
+      "n": 167683,
+      "bias": -0.02950751781463623,
+      "res68": 0.9853989431381226,
+      "mae": 1.3508893349443678,
+      "res68_ci95": [
+        0.8583285830283167,
+        1.2248848998248578
+      ],
+      "bias_ci95": [
+        -0.13188612991571433,
+        0.07093397057056403
+      ],
+      "mae_ci95": [
+        1.1708683440528835,
+        1.5361522001260906
+      ]
+    },
+    {
+      "method": "waveform_transformer",
+      "n": 167683,
+      "bias": 0.04658469676971411,
+      "res68": 1.1214621379852294,
+      "mae": 1.4312441794624244,
+      "res68_ci95": [
+        0.9707129472208026,
+        1.4301586535260238
+      ],
+      "bias_ci95": [
+        -0.09262487453222287,
+        0.15986843544244747
+      ],
+      "mae_ci95": [
+        1.2459281565328195,
+        1.6453440166576419
+      ]
+    },
+    {
+      "method": "ridge",
+      "n": 167683,
+      "bias": 0.33023725836853046,
+      "res68": 1.1546012049631464,
+      "mae": 1.3666647951203865,
+      "res68_ci95": [
+        1.060687704529943,
+        1.2900278873917537
+      ],
+      "bias_ci95": [
+        0.1542959363469577,
+        0.4864764858476832
+      ],
+      "mae_ci95": [
+        1.2093214880642715,
+        1.5283936173219947
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "n": 167683,
+      "bias": 0.011200995445251216,
+      "res68": 1.184188652299205,
+      "mae": 1.5145151032882331,
+      "res68_ci95": [
+        0.9976422053027155,
+        1.591990833334206
+      ],
+      "bias_ci95": [
+        -0.14311612512813576,
+        0.1343411739915609
+      ],
+      "mae_ci95": [
+        1.3106098284914791,
+        1.7625172588837323
+      ]
+    },
+    {
+      "method": "analytic_saturation_timewalk",
+      "n": 167683,
+      "bias": -0.11044620788968773,
+      "res68": 1.598876823815881,
+      "mae": 2.399324320569288,
+      "res68_ci95": [
+        1.232270340389334,
+        2.1889789397212485
+      ],
+      "bias_ci95": [
+        -0.3913344435372634,
+        0.12176314261899791
+      ],
+      "mae_ci95": [
+        1.9732692816330657,
+        2.818294959593873
+      ]
+    },
+    {
+      "method": "tail_shape_timing",
+      "n": 167683,
+      "bias": -0.20812692105572328,
+      "res68": 1.9378631511831703,
+      "mae": 2.492806749338776,
+      "res68_ci95": [
+        1.6667645415188734,
+        2.477450713090319
+      ],
+      "bias_ci95": [
+        -0.763618474437406,
+        0.3295675042828166
+      ],
+      "mae_ci95": [
+        2.135504279337203,
+        2.90366947892214
+      ]
+    }
+  ],
+  "torch_status": {
+    "mlp": "trained",
+    "1d_cnn": "trained",
+    "gated_residual_cnn": "trained",
+    "waveform_transformer": "trained"
+  },
+  "feature_names": [
+    "multiplicity",
+    "even_total_charge",
+    "even_max_amp",
+    "saturated_count",
+    "knee_count",
+    "recovery_tail",
+    "early_fraction",
+    "onset_sharpness",
+    "pedestal_iqr_adc",
+    "pedestal_abs_slope_adc",
+    "log_charge_stave_0",
+    "log_charge_stave_1",
+    "log_charge_stave_2",
+    "log_charge_stave_3",
+    "log_amp_stave_0",
+    "log_amp_stave_1",
+    "log_amp_stave_2",
+    "log_amp_stave_3",
+    "peak_stave_0",
+    "peak_stave_1",
+    "peak_stave_2",
+    "peak_stave_3"
+  ],
+  "input_sha256": [
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0031.root",
+      "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0032.root",
+      "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0033.root",
+      "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0034.root",
+      "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0035.root",
+      "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0036.root",
+      "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0037.root",
+      "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0039.root",
+      "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0040.root",
+      "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0041.root",
+      "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0042.root",
+      "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0064.root",
+      "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252"
+    },
+    {
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    }
+  ],
+  "environment": {
+    "git_commit": "3322f12ea491ee90728102cc652feb305cb98437",
+    "python": "3.7.6",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "torch_available": true
+  },
+  "claimed_ticket_text": "S26a pulse-shape timing manifold"
+}

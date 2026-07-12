@@ -1,0 +1,250 @@
+{
+  "study": "G4-07",
+  "ticket_id": "1783799100.16340.13243f64",
+  "worker": "testbeam-laptop-4",
+  "title": "event-aligned run-keyed digitizer closure with external trigger metadata",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "overlay": {
+    "strategy": "controlled deterministic GEANT4 permutation joined to real run/EVENTNO/EVT/TRIGGER keys",
+    "n_pairs": 5600,
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      64,
+      65
+    ],
+    "bootstrap_unit": "heldout_run",
+    "bootstrap_reps": 300
+  },
+  "winner": {
+    "bias_log_charge": 0.0006136037957249485,
+    "res68_log_charge": 0.007037557186891732,
+    "mae_log_charge": 0.013592594180623063,
+    "res68_frac": 0.0007140914237232334,
+    "bias_log_charge_ci95": [
+      0.0006013655720593647,
+      0.0006599385518306633
+    ],
+    "res68_log_charge_ci95": [
+      0.006995891384823099,
+      0.007045398362617875
+    ],
+    "mae_log_charge_ci95": [
+      0.013485385875909599,
+      0.013699802485336525
+    ],
+    "res68_frac_ci95": [
+      0.0007119923688720897,
+      0.0007140914237232334
+    ],
+    "method": "gradient_boosted_trees",
+    "n": 1400
+  },
+  "methods_benchmarked": [
+    "gradient_boosted_trees",
+    "ridge",
+    "mlp",
+    "traditional_run_keyed_affine",
+    "1d_cnn",
+    "metadata_gated_residual_cnn"
+  ],
+  "g4_summary": {
+    "events_with_scibar": 6954,
+    "median_total_edep_mev": 92.68263469999971,
+    "max_total_edep_mev": 166.996998509858,
+    "mean_multiplicity": 2.1873741731377625
+  },
+  "feature_names": [
+    "trigger",
+    "event_order",
+    "real_multiplicity",
+    "real_depth_idx",
+    "real_saturated_count",
+    "g4_log_total_edep",
+    "g4_max_stave_edep",
+    "g4_multiplicity",
+    "g4_depth_idx",
+    "g4_centroid",
+    "g4_first_time_ns",
+    "g4_track_count",
+    "g4_track_length_sum",
+    "real_log_charge_B2",
+    "real_log_charge_B4",
+    "real_log_charge_B6",
+    "real_log_charge_B8",
+    "real_amp_B2",
+    "real_amp_B4",
+    "real_amp_B6",
+    "real_amp_B8",
+    "real_peak_B2",
+    "real_peak_B4",
+    "real_peak_B6",
+    "real_peak_B8",
+    "real_hit_B2",
+    "real_hit_B4",
+    "real_hit_B6",
+    "real_hit_B8",
+    "g4_edep_B2",
+    "g4_edep_B4",
+    "g4_edep_B6",
+    "g4_edep_B8"
+  ],
+  "all_metrics": [
+    {
+      "bias_log_charge": 0.0006136037957249485,
+      "res68_log_charge": 0.007037557186891732,
+      "mae_log_charge": 0.013592594180623063,
+      "res68_frac": 0.0007140914237232334,
+      "bias_log_charge_ci95": [
+        0.0006013655720593647,
+        0.0006599385518306633
+      ],
+      "res68_log_charge_ci95": [
+        0.006995891384823099,
+        0.007045398362617875
+      ],
+      "mae_log_charge_ci95": [
+        0.013485385875909599,
+        0.013699802485336525
+      ],
+      "res68_frac_ci95": [
+        0.0007119923688720897,
+        0.0007140914237232334
+      ],
+      "method": "gradient_boosted_trees",
+      "n": 1400
+    },
+    {
+      "bias_log_charge": -0.008636951446533203,
+      "res68_log_charge": 0.046927680969238286,
+      "mae_log_charge": 0.05772519111633301,
+      "res68_frac": 0.004529484808444977,
+      "bias_log_charge_ci95": [
+        -0.014595508575439453,
+        -0.0023794174194335938
+      ],
+      "res68_log_charge_ci95": [
+        0.04520221710205078,
+        0.048820381164550786
+      ],
+      "mae_log_charge_ci95": [
+        0.05621117725968361,
+        0.059239208698272705
+      ],
+      "res68_frac_ci95": [
+        0.0043664569221436985,
+        0.004692832585424185
+      ],
+      "method": "ridge",
+      "n": 1400
+    },
+    {
+      "bias_log_charge": 0.004281044006347656,
+      "res68_log_charge": 0.10532882690429687,
+      "mae_log_charge": 0.09845340251922607,
+      "res68_frac": 0.010546595975756646,
+      "bias_log_charge_ci95": [
+        0.0008306503295898438,
+        0.006988525390625
+      ],
+      "res68_log_charge_ci95": [
+        0.10196514129638672,
+        0.10932373046875002
+      ],
+      "mae_log_charge_ci95": [
+        0.09559779614210129,
+        0.10130900889635086
+      ],
+      "res68_frac_ci95": [
+        0.010239319689571858,
+        0.010873925983905795
+      ],
+      "method": "mlp",
+      "n": 1400
+    },
+    {
+      "bias_log_charge": -0.062035560607910156,
+      "res68_log_charge": 0.41512168884277345,
+      "mae_log_charge": 0.35834646224975586,
+      "res68_frac": 0.04067366078495979,
+      "bias_log_charge_ci95": [
+        -0.10669088363647461,
+        -0.025531768798828125
+      ],
+      "res68_log_charge_ci95": [
+        0.38453548431396495,
+        0.45029010772705097
+      ],
+      "mae_log_charge_ci95": [
+        0.34353289008140564,
+        0.3731600046157837
+      ],
+      "res68_frac_ci95": [
+        0.03772511795163155,
+        0.045303522497415545
+      ],
+      "method": "traditional_run_keyed_affine",
+      "n": 1400
+    },
+    {
+      "bias_log_charge": 0.45758819580078125,
+      "res68_log_charge": 0.7368051147460938,
+      "mae_log_charge": 0.5999919176101685,
+      "res68_frac": 0.07283961325883866,
+      "bias_log_charge_ci95": [
+        0.4448118209838867,
+        0.46846532821655273
+      ],
+      "res68_log_charge_ci95": [
+        0.7228994369506836,
+        0.7422859954833985
+      ],
+      "mae_log_charge_ci95": [
+        0.5946264863014221,
+        0.6053574085235596
+      ],
+      "res68_frac_ci95": [
+        0.07107519894838336,
+        0.07436685413122178
+      ],
+      "method": "1d_cnn",
+      "n": 1400
+    },
+    {
+      "bias_log_charge": -0.45824718475341797,
+      "res68_log_charge": 0.7508351135253907,
+      "mae_log_charge": 0.7861837148666382,
+      "res68_frac": 0.07477090924978257,
+      "bias_log_charge_ci95": [
+        -0.46326351165771484,
+        -0.4547238349914551
+      ],
+      "res68_log_charge_ci95": [
+        0.7354513168334962,
+        0.7635138702392579
+      ],
+      "mae_log_charge_ci95": [
+        0.7307928204536438,
+        0.8415747284889221
+      ],
+      "res68_frac_ci95": [
+        0.07353783100843429,
+        0.07639969617128374
+      ],
+      "method": "metadata_gated_residual_cnn",
+      "n": 1400
+    }
+  ],
+  "caveat": "controlled overlay, not native GEANT4-to-DAQ event-id join"
+}

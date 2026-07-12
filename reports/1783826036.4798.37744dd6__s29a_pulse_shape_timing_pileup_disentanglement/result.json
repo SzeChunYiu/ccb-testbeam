@@ -1,0 +1,102 @@
+{
+  "ticket_id": "1783826036.4798.37744dd6",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S29a pulse-shape timing pile-up disentanglement bakeoff",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "geant4_truth": {
+    "source": "/home/billy/ccb-geant4/output_30k.root",
+    "tree": "hibeam",
+    "usable_sci_bar_events": 7101,
+    "pid_truth": "dominant Sci_bar PDG: proton vs deuteron",
+    "energy_truth": "sum Sci_bar EDep over B-stack mapped layers",
+    "timing_truth": "Sci_bar energy-weighted hit time",
+    "adc_scale": "250.0 ADC per MeV for digitized benchmark ranking"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 320,
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "strong_traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "joint_sequence_transformer",
+    "additional_new_physics_residual_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out composite GEANT4-truth PID/energy/timing score",
+    "winner_score": 0.22662866620446342,
+    "pid_auc": 0.9175493765861193,
+    "pid_balanced_accuracy": 0.8545459560851816,
+    "pid_efficiency": 0.8962264150943396,
+    "pid_purity": 0.8166189111747851,
+    "energy_fractional_sigma68": 0.08409745605914716,
+    "energy_fractional_sigma68_ci95": [
+      0.07099873221517267,
+      0.10501489451113807
+    ],
+    "time_sigma68_ns": 7.88949718938844,
+    "time_sigma68_ci95": [
+      7.278521224496609,
+      8.822509340736353
+    ],
+    "pileup_miss_rate": 0.2878787878787879,
+    "false_split_rate": 0.25757575757575757
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "geant4_truth_table": "geant4_truth_table.csv",
+    "aligned_truth_events": "benchmark_truth_events.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "pedestal_saturation_pid_energy_sidebands": "pedestal_saturation_pid_energy_sidebands.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Waveform digitization is hybrid: raw residual/template morphology plus GEANT4 event truth.",
+    "ADC/MeV scale is fixed for benchmark ranking and is not an external calibration.",
+    "Bootstrap CIs resample held-out source runs and do not include GEANT4 physics-list uncertainty."
+  ],
+  "execution_command": "/home/billy/anaconda3/bin/python scripts/s29a_1783826036_4798_37744dd6_pulse_shape_timing_pileup_disentanglement.py",
+  "ticket_scope": "pulse-shape timing pile-up disentanglement with pedestal, saturation, energy, and PID sideband checks"
+}

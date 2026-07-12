@@ -1,0 +1,26 @@
+{
+  "ticket_id": "1783826036.4798.37744dd6",
+  "git_commit": "c4ccb946ba67a21c8121d18ba3420adb51d6ecd0",
+  "command": "/home/billy/anaconda3/bin/python scripts/s29a_1783826036_4798_37744dd6_pulse_shape_timing_pileup_disentanglement.py",
+  "runtime_seconds": 63.221521854400635,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "d8bc69c80a8b2f681d61037ca0a6582f76abef7f73b58031a2ff4ac780794fae",
+    "aligned_geant4_rows.csv": "fb51f740f9539903f1e6b1f02de9ed2307c62dd610398491737d259af015d7c8",
+    "benchmark_truth_events.csv": "7bb55df403eb4e63555da0d759ecde0c1430391b8f504cd183d02ebd7fc94300",
+    "claimed_ticket.txt": "4681971f642842424e9ce8e01aa19eeca071630702c0bc7187ef5b270bd279fb",
+    "event_predictions.csv": "8763cbeb489cc0844bba4fe2a2fbe4dd51c74c1fa5e0cff36edc4a50cdc66842",
+    "geant4_truth_summary.csv": "b2dc4f79501bff6e2e9246b742bd1cc2d12224558808d91abd415d057be81210",
+    "geant4_truth_table.csv": "fa30c93cc18728ad30ddaa5d3b41ac60c00279ace17c7c3ee69cf5b664f1d3f2",
+    "input_sha256.csv": "c484e95a8adbe04556806734680dd15b15d0311aba4a9bfa5bdf445814f4945a",
+    "method_metrics.csv": "b09c958a2ad6be76bbd418f2c11459ad302dc3f4f0169d1d09f9a8147c7a8d73",
+    "pedestal_saturation_pid_energy_sidebands.csv": "b735f278a7cc404a2cba1eb21da54647a5bbbca6040ff3b580b4fe96f2e74b2e",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "588c07aadcb17a1b75f0f1e9086660ed4e5302530a69b41ba2861bd76b89b7c3",
+    "run_heldout_metrics.csv": "1e4eab4360f3873794e69642d3586688ac8c66b7cf638e89c665969bbd6c40f3",
+    "strata_metrics.csv": "d050cfbb0ff696a8577e30492e36135dff9aec7ca15fd8888d643c585748c973",
+    "template_summary.csv": "9ea803737e0c59bf5e794b704d65896ff1910a00bfc4bc8feda3115ea6f66038",
+    "winner_ranked_metrics.csv": "66c54efec1a6ff5c37985819cec551290e571777e09c69fdf2fd0add46aec8aa"
+  }
+}

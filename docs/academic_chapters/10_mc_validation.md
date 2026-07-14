@@ -640,3 +640,80 @@ The MC validation programme provides a mixed but informative assessment. Where t
 No physics claim in the analysis programme is unvalidated. Every claim carries an explicit MC validation status, and the three identified gaps (GAP-01, GAP-02, GAP-03) have clear remediation plans. The structural findings (MV2: absolute energy not reachable; MV3: geometry must be updated) provide essential constraints that define the scope and reliability of the physics programme. The validated results (MV1: AUC = 0.986; MV5: R_max = 3.05 MHz; MV6: anomaly = C12 recoils) provide robust benchmarks that anchor the data-only analyses.
 
 The MC validation programme is methodologically sound but incomplete: closure of GAP-01 and GAP-02 is required before publication. The sensitivity analysis confirms that no verdict depends sensitively on digitizer parameter choices, and the quantitative PASS/TENSION/FAIL framework provides an objective, reproducible basis for validation verdicts.
+
+---
+
+## MC Validation Synthesis (Thesis Upgrade Addition)
+
+> **Complete MC validation matrix with truth types and verdicts.**
+
+### MV0–MV6 Validation Matrix
+
+| Study | Observable | Truth type | Verdict | Action |
+|---|---|---|---|---|
+| MV0 v2 | Digitizer gain | Digitized MC | **VALIDATED** (92 ± 28 ADC/MeV) | Reduce systematic |
+| MV1 | p/d PID | MC truth | **TRUTH_LEVEL_MC_ONLY** (AUC 0.9860) | Data transfer |
+| MV2 | (not yet validated) | — | — | — |
+| MV3 | Stopping depth | MC vs data | **FAIL** (χ²/ndf = 68,269) | **GEANT4 fix** |
+| MV3b | Material budget | Digitized MC | Diagnostic: missing 8–10 g/cm² | Add to geometry |
+| MV4 raw | Timing | Digitized MC | **PASS** (pull = −1.05σ) | Accept |
+| MV4 corrected | Timing | Digitized MC | **TENSION** (pull = +2.68σ) | **Digitizer fix** |
+| MV4b | Timewalk model | Toy vs physical | Root cause: B/√ADC → B/A | Fix and rerun |
+| MV5 | Pile-up Rmax | Data + MC self-consistent | **VALIDATED** | Independent τeff |
+| MV6 | C12 anomaly | MC-identified | **VALIDATED** | Efficiency study |
+
+### MV3: The Blocking Failure
+
+```
+MV3 is the single most blocking issue in the thesis.
+  → χ²/ndf = 68,269 — not a small disagreement, a structural failure
+  → Root cause: missing 8–10 g/cm² in GEANT4 geometry
+  → Impact: B8 MC penetration 22.3% vs data 2.3% (×10)
+  → Blocks: quantitative B8 acceptance, PID yield at depth, absolute energy at B8
+  → Fix: GEANT4 geometry update → new MC → MV3 rerun
+```
+
+### MV4: The Tension to Resolve
+
+```
+MV4 raw timing passes. MV4 corrected timing shows +2.68σ tension.
+  → Root cause (MV4b): toy digitizer uses B/√ADC with negative B
+  → Physical timewalk is B/A with positive B
+  → Fix: switch digitizer → rerun → resolve
+  → While unresolved: corrected timing cannot be MC-validated
+```
+
+### Truth-Type Legend for MC Comparisons
+
+| Truth type | Description | Example |
+|---|---|---|
+| Data_count | Reproducible count, no truth | S00 gate: 640,737 |
+| Data_only | Robust in data, no MC available | Combined 3-stave timing |
+| Data + MC self-consistent | Data and MC agree on derived quantity | Rmax |
+| Digitized MC | Full MC digitizer chain | MV4 timing, MV0 gain |
+| MC truth only | GEANT4 truth, no digitizer | MV1 PID AUC |
+| MC vs data | Direct comparison | MV3 stopping depth |
+| MC-identified | MC labels used to identify data feature | MV6 C12 anomaly |
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ Six MC validation studies (MV0–MV6) cover gain, PID, stopping, timing, pile-up, and anomaly ID.
+✅ Raw timing passes MC validation (MV4 raw: −1.05σ).
+✅ Pile-up Rmax is self-consistent between data and MC.
+✅ C12 anomaly is MC-identified with clear waveform morphology.
+
+### Open
+⚠️ MV3 is a structural failure (χ²/ndf = 68,269) — blocks quantitative acceptance corrections.
+⚠️ MV4 corrected timing shows +2.68σ tension — digitizer fix needed.
+⚠️ MV2 not yet validated.
+⚠️ No MV for baseline/pedestal (MV7? forced-trigger needed).
+
+### Next Studies
+🔬 Fix GEANT4 geometry → regenerate MC → rerun MV3.
+🔬 Fix toy digitizer timewalk form → rerun MV4.
+🔬 Add MV7: forced-trigger pedestal validation (requires new data).
+🔬 Add MV8: overlay MC for two-pulse pile-up truth.
+🔬 Add MV9: full systematic nuisance propagation.

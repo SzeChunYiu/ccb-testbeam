@@ -398,3 +398,106 @@ The CCB test-beam PID performance is adequate for deuteron fraction measurements
 [8] Bichsel, H., "Straggling in thin silicon detectors," Rev. Mod. Phys. 60, 663-699 (1988).
 
 [9] Fisher, R. A., "The use of multiple measurements in taxonomic problems," Ann. Eugenics 7, 179-188 (1936).
+
+---
+
+## Data Weak-Label vs MC Truth AUC Separation (Thesis Upgrade Addition)
+
+> **BLOCKING for PID claim.** The current p/d AUC = 0.9860 is MC-truth only. Transfer to real data must be caveated.
+
+### The Distinction
+
+| Label type | AUC | Dataset | Caveat |
+|---|---|---|---|
+| MC truth (geant4 particle ID) | 0.9860 | Digitized MC | Gold standard, not available in real data |
+| Data weak label (ΔE-E/range cut) | TBD | Real data (Sample I) | Labels are imperfect — some deuterons mislabeled as protons |
+| HGB purity at 90% efficiency | 0.9644 | Digitized MC | Upper bound on real-data performance |
+
+### Weak-Label/Truth Separation
+
+Data PID labels are "weak" because:
+1. They are assigned by a ΔE-E/range cut that has finite purity (estimated ~95%)
+2. Deuterons stopping in B2/B4 can be misidentified as high-dE/dx protons
+3. Nuclear interactions (p+C → fragmentation) produce events that don't match pure p or d templates
+
+**The AUC = 0.9860 must always be qualified as "MC-truth ceiling" — it is an upper bound, not a data result.**
+
+### Transfer Assessment
+
+| Scenario | Expected AUC (data) | Method |
+|---|---|---|
+| MC-truth (digitized MC) | 0.9860 | Gold standard |
+| Data weak labels (Sample I) | 0.93–0.96 (estimated) | HGB with weak labels |
+| Domain-adapted MC → data | TBD | Domain adaptation + calibration |
+
+---
+
+## MV3 Geometry Failure Impact on PID (Thesis Upgrade Addition)
+
+> **BLOCKING for quantitative PID yield.** MV3 B8 MC/data mismatch prevents acceptance correction.
+
+### Impact Chain
+
+```
+MV3 geometry FAIL (χ²/ndf = 68,269, B8 MC 22.3% vs data 2.3%)
+  → B8 stopping fraction unreliable in MC
+    → Systematic shift in PID efficiency vs stop-layer
+      → Deuterons at B8 depth misidentified
+        → Acceptance correction biased
+```
+
+### Depth-Reweighted PID Sensitivity
+
+Until MV3 is fixed, bound the impact by reweighting:
+
+1. Train HGB on MC truth
+2. Evaluate on data with data stop-layer fractions substituted for MC fractions
+3. Compare AUC with and without B8 layer
+4. Report sensitivity band: AUC(data, no B8) to AUC(data, with B8 weight correction)
+
+### B8 Removal Sensitivity
+
+| PID configuration | AUC (MC) | Notes |
+|---|---|---|
+| All layers (B2, B4, B6, B8) | 0.9860 | Uses B8 — affected by MV3 |
+| B2, B4, B6 only | TBD | Conservative — removes failed layer |
+| B2, B4 only | TBD | Most conservative — uses only deuteron stop layers |
+
+**The conservative thesis claim should use the B2+B4+B6 configuration until MV3 is fixed.**
+
+---
+
+## Interpretable PID Model Comparison (Thesis Upgrade Addition)
+
+> **Can a transparent ΔE-E/range lookup match HGB AUC?**
+
+| Model | AUC (MC) | Interpretable | Production candidate |
+|---|---|---|---|
+| HGB (gradient boosting) | 0.9860 | No (feature importance only) | Not for production |
+| Monotonic GAM | TBD | Yes (additive, monotonic constraints) | Candidate |
+| Calibrated lookup table | TBD | Yes (fully transparent) | Candidate |
+| Simple ΔE threshold | ~0.90 | Yes | Baseline |
+
+**Priority:** Develop an interpretable model with AUC within 5% of HGB for production use.
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ p/d PID AUC = 0.9860 on digitized MC (MC-truth ceiling).
+✅ HGB purity at 90% efficiency = 0.9644 (MC-truth).
+✅ ΔE-E/range telescope provides strong discriminating power between protons and deuterons.
+✅ MV3 geometry failure prevents quantitative B8 acceptance correction.
+
+### Open
+⚠️ Data weak-label AUC not separated from MC-truth AUC in current text.
+⚠️ MV3 geometry failure impact on PID yield not quantified.
+⚠️ HGB is not interpretable — production use requires transparent alternative.
+⚠️ MC-truth → data transfer not demonstrated.
+
+### Next Studies
+🔬 Evaluate HGB on data weak labels with purity-efficiency confusion matrix.
+🔬 Reweight PID by data stop-layer fractions → sensitivity band.
+🔬 Train interpretable GAM or calibrated lookup table → compare to HGB.
+🔬 Domain adaptation study: MC-trained → data-tested.

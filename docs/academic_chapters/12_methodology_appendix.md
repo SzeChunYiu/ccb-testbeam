@@ -317,3 +317,77 @@ All equations across the 12 academic chapters use a consistent notation. The fol
 | sigma_transport | WLS fibre Gaussian time dispersion | ns | Ch 3 |
 
 All symbols are defined on first use in their respective chapters and used consistently throughout. Greek letters are rendered in Unicode (e.g., sigma for sigma, tau for tau). Mathematical operators follow standard physics notation: mean values denoted by angle brackets or overbars, uncertainties denoted by plus/minus, and statistical estimators denoted by hats where needed.
+
+---
+
+## Reproducibility Checklist (Thesis Upgrade Addition)
+
+> **Every chapter must be reproducible from a command list and artifact list.**
+
+### Per-Chapter Artifact Requirements
+
+| Chapter | Command artifact | Data artifact | Config artifact | Seed |
+|---|---|---|---|---|
+| Executive Summary | (synthesis only) | `docs/claim_ledger.csv` | — | — |
+| Experimental Setup | `scripts/plot_geometry.py` | `krakow_109_8-38deg_4-71deg.root` | `configs/geometry.yaml` | — |
+| Data Pipeline | `scripts/01_build_pulse_table_from_root.py` | Raw ROOT files | `configs/s00_reproduction.yaml` | 20260601 |
+| Timing | `scripts/mv4_timing_study.py` | Pulse table | `configs/mv4_timing.yaml` | 20260601 |
+| Pile-up | `scripts/mv5_pileup_study.py` | Pulse table | `configs/mv5_pileup.yaml` | 20260601 |
+| Pulse Shape ML | `scripts/mv6_pca_canonical_rerun.py` | Pulse table | `configs/mv6_pca.yaml` | 20260601 |
+| Energy Calibration | `scripts/mv0_calibration.py` | MC digitized waveforms | `configs/mv0_calibration.yaml` | 20260601 |
+| PID | `scripts/mv1_pid.py` | MC digitized waveforms | `configs/mv1_pid.yaml` | 20260601 |
+| Anomaly ID | `scripts/mv6_anomaly.py` | Pulse table | `configs/mv6_anomaly.yaml` | 20260601 |
+| MC Validation | (synthesis only) | MV0–MV6 results | — | — |
+| Open Questions | (synthesis only) | STUDY_GAPS.md | — | — |
+| Methodology | (this appendix) | CLAIM_CHECKLIST_INTEGRATION.md | — | — |
+
+---
+
+## Methodology Rules Enforcement (Thesis Upgrade Addition)
+
+### Build/Lint Check Summary
+
+| Check | Script | CI status | Severity |
+|---|---|---|---|
+| Superseded-value scan | `scripts/audit_claim_superseded.py` | Required | **Blocking** |
+| Claim ledger completeness | `scripts/check_claim_ledger_complete.py` | Required | **Blocking** |
+| Broken link checker | `scripts/broken_link_checker.py` | Required | High |
+| Figure source data checker | `scripts/check_figure_source_data.py` | Required | High |
+| ML claim leakage control checker | `scripts/check_ml_leakage_controls.py` | Required | High |
+| MC truth-type checker | `scripts/check_mc_truth_type.py` | Required | Medium |
+| Plot style checker | `scripts/check_plot_style.py` | Recommended | Medium |
+| Table uncertainty checker | `scripts/check_table_uncertainty.py` | Recommended | Medium |
+
+### CI Pipeline
+
+```yaml
+name: Thesis QA
+on: [push, pull_request]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/audit_claim_superseded.py
+      - run: python scripts/broken_link_checker.py
+```
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ Twelve academic chapters follow the thesis architecture standard.
+✅ Claim ledger and figure registry provide cross-chapter auditability.
+✅ Build/lint checks are specified for automated enforcement.
+
+### Open
+⚠️ CI pipeline not yet operational on GitHub Actions.
+⚠️ Some lint scripts are specified but not yet implemented.
+⚠️ Plot regeneration (vector + source data) not yet completed.
+
+### Next Studies
+🔬 Implement remaining CI/lint scripts.
+🔬 Enable GitHub Actions CI pipeline with all 8 checks.
+🔬 Regenerate all figures to paper-grade standards (PDF/SVG vector + 300+ dpi PNG).
+🔬 Build figures/README.md with per-figure regeneration instructions.

@@ -1,0 +1,38 @@
+name: Thesis QA
+
+on:
+  push:
+    paths:
+      - "docs/academic_chapters/**"
+      - "docs/claim_ledger.csv"
+      - "docs/figure_registry.csv"
+      - "WIKI.md"
+      - "scripts/audit_*.py"
+      - "scripts/check_*.py"
+  pull_request:
+    paths:
+      - "docs/academic_chapters/**"
+      - "docs/claim_ledger.csv"
+      - "WIKI.md"
+
+jobs:
+  audit-superseded:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Superseded-value scan
+        run: python scripts/audit_claim_superseded.py
+
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Broken link check
+        run: python scripts/broken_link_checker.py
+
+  check-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Claim ledger completeness
+        run: python scripts/check_claim_ledger_complete.py

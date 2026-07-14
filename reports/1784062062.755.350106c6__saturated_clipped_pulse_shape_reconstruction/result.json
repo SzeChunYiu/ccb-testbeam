@@ -1,0 +1,89 @@
+{
+  "ticket_id": "1784062062.755.350106c6",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S33a saturated and clipped pulse-shape reconstruction",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claimed_ticket_text": "Study pulse-shape reconstruction for saturated and clipped calorimeter waveforms: compare template chi-square fitting and deconvolution against ridge regression, gradient-boosted trees, MLP, 1D-CNN, and transformer encoders; evaluate amplitude, width, tail fraction, and recovered energy with stratified bootstrap CIs across saturation depth and channel.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/.tb-workers/testbeam-laptop-2/data/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "strata": [
+      "saturation_depth",
+      "channel"
+    ],
+    "primary_score": "energy_sigma68 + 0.20*amplitude_sigma68 + 0.08*tail_fraction_sigma68 + 0.015*width50_sigma68_samples + 0.03*pileup_miss_rate + 0.03*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_encoder": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "ridge",
+    "criterion": "minimum held-out composite pulse-shape score with run-block bootstrap CIs",
+    "winner_score": 0.11526672999414883,
+    "recovered_energy_sigma68": 0.06667130409598927,
+    "recovered_energy_sigma68_ci95": [
+      0.05428793732788065,
+      0.07652726558891387
+    ],
+    "amplitude_sigma68": 0.07166413882842947,
+    "tail_fraction_sigma68": 0.052389619513063646,
+    "width50_sigma68_samples": 1.0,
+    "pileup_miss_rate": 0.30952380952380953,
+    "false_split_rate": 0.19285714285714287
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "shape_endpoint_metrics": "shape_endpoint_metrics.csv",
+    "shape_stratified_bootstrap": "shape_stratified_bootstrap.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be interpreted as run-transfer intervals."
+  ]
+}

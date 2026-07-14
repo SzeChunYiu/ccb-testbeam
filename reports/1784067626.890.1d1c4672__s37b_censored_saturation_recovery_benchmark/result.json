@@ -1,0 +1,101 @@
+{
+  "ticket_id": "1784067626.890.1d1c4672",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S37b censored saturation recovery benchmark for clipped pulse energy and PID",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claimed_ticket_text": "S37b: censored saturation recovery benchmark for clipped pulse energy and PID",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "clipped_energy_sigma68 + 0.15*abs(energy_residual_bias) + 0.12*clipped_censor_loss + 0.004*timing_pull_sigma68_ns + 0.003*pileup_separation_sigma68_ns + 0.12*pid_migration_rate + 0.12*pedestal_coupled_bias_span + 0.12*shape_reconstruction_rmse + 0.06*pileup_miss_rate + 0.04*false_split_rate + 0.08*(1-saturation_onset_auc)"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum registered S37b held-out censored clipped-energy, timing, pedestal, pile-up, and PID migration composite score with run-block bootstrap CIs",
+    "winner_score": 0.2251358983921801,
+    "energy_residual_bias": -0.012610348212867446,
+    "clipped_energy_sigma68": 0.06461152936158743,
+    "clipped_energy_sigma68_ci95": [
+      0.0,
+      0.09214226434253323
+    ],
+    "clipped_censor_loss": 0.0,
+    "timing_pull_sigma68_ns": 4.351427996466555,
+    "timing_pull_sigma68_ci95": [
+      4.001632988144452,
+      5.295389895022091
+    ],
+    "pileup_separation_sigma68_ns": 9.086329186711934,
+    "pid_migration_rate": 0.5949367088607594,
+    "pid_migration_rate_ci95": [
+      0.5258358662613982,
+      0.639344262295082
+    ],
+    "pedestal_coupled_bias_span": 0.013877018765319805,
+    "shape_reconstruction_rmse": 0.13475402714092252,
+    "pileup_miss_rate": 0.3130434782608696,
+    "false_split_rate": 0.14565217391304347
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "censored_loss_ablation": "censored_loss_ablation.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is a benchmark stressor, not decoded electronics metadata.",
+    "PID migration is measured with a charge-depth support proxy, not external particle truth.",
+    "Shape RMSE compares predicted templates to injected pre-clipping waveforms.",
+    "Bootstrap CIs resample held-out runs and quantify run-transfer uncertainty."
+  ]
+}

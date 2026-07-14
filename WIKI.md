@@ -265,100 +265,76 @@ Rmax = −ln(0.95) / τeff ≈ 3.05 MHz (5% pile-up tolerance)
 
 ## 8. Particle Identification
 
-> **Key Findings:**
-> - Proton/deuteron separation: **AUC = 0.986** (MC truth ceiling, HGB)
-> - Data methods using weak-label proxies reach within 0.5% of MC ceiling — leakage-safe stress test, not species-truth PID — information is in the data
-> - **Stopping-depth profile: ⛔ MC FAILS** (χ²/ndf = 68,269 (4 bins: B2, B4, B6, B8 fractions; ndf = 3 after normalization; Poisson bin errors)) — missing ~8–10 g/cm² in GEANT4 geometry
-> - Depth ordering (B2 > B4 > B6 > B8) is qualitatively correct in both data and MC
+> **Thesis-grade update (2026-07-14).** Data weak-label vs MC truth AUC separated. See [Full chapter](docs/academic_chapters/08_particle_id.md).
 
-### 8.1 How PID Works (Without Truth)
+### Key Results
 
-With no per-event truth labels in data, we use **physics-driven proxies**:
-- **ΔE–E method:** heavier particles (deuterons) deposit more energy per unit length and stop earlier
-- **Range separation:** deuterons stop in B2/B4; protons reach B6/B8
-- **Sample enrichment:** Sample I = deuteron-enriched (trigger selects early-stopping); Sample II = proton-enriched
-
-### 8.2 MC Truth Validation
-
-![PID Performance](docs/figures/07_pid_auc.png)
-
-**Study:** [Proton/Deuteron PID (MV1)](reports/mv1_mv2_truth_pid_energy/)
-
-On 400,369 GEANT4 truth tracks (150,130 protons, 146,842 deuterons):
-
-| Method | AUC | Purity @ 90% Efficiency |
-|---|---|---|
-| Hist Gradient Boosting (HGB) | **0.9860** | **0.9644** |
-| Logistic Regression | 0.9629 | 0.9489 |
-| Single-cut ΔE | — | 0.8910 |
-
-Data methods reach within 0.5% of the MC ceiling. **The data carries essentially the same separating information as MC truth.**
-
-### 8.3 Stopping-Depth Profile — Structural MC Failure
-
-![Stopping Depth MC vs Data](docs/figures/06_stopping_depth.png)
-
-**Study:** [Stopping-Depth Profile (MV3)](reports/mv3_stopping_depth/)
-
-| Stave | MC Fraction | Data Fraction | Data/MC Ratio |
+| Observable | Value | Status | Caveat |
 |---|---|---|---|
-| B2 | 47.0% | 87.6% | 1.86× |
-| B4 | 18.2% | 6.3% | 0.35× |
-| B6 | 12.5% | 3.9% | 0.31× |
-| B8 | **22.3%** | **2.3%** | **0.10×** ⛔ |
+| p/d PID AUC | 0.9860 | **TRUTH_LEVEL_MC_ONLY** | MC truth only — not a data result |
+| HGB purity at 90% eff. | 0.9644 | **TRUTH_LEVEL_MC_ONLY** | Upper bound on real-data performance |
+| Data weak-label AUC | TBD | Not yet separated | Requires purity-efficiency confusion matrix |
 
-MC overestimates B8 penetration by **10×** relative to data. The qualitative ordering is correct, but the quantitative profile fails catastrophically (χ²/ndf = 68,269 (4 bins: B2, B4, B6, B8 fractions; ndf = 3 after normalization; Poisson bin errors)).
+### Critical Caveats
 
-**Root cause (MV3b):** Missing upstream material budget in GEANT4 geometry — absorbers, support structures, trigger scintillators, beam window, and approximately **8–10 g/cm² of inter-stave dead material** between the beam and B-arm.
+1. **AUC = 0.9860 is an MC-truth ceiling** — do not cite as a data result
+2. **MV3 failure blocks B8 acceptance correction** — PID at B8 depth is unreliable
+3. **Interpretable model needed** — HGB is not suitable for production PID
 
-**Impact:** B8 trigger efficiency calibration cannot be MC-anchored (5–10% effect on tracks entering B8). The PID AUC impact is limited (<3%) because deuterons stop in B2/B4, not B8.
+### MV3 Impact on PID
+
+MV3 geometry FAIL (χ²/ndf = 68,269) → B8 stopping fraction unreliable → PID B8 acceptance biased.
+Conservative recommendation: use B2+B4+B6 only (no B8) until MV3 is fixed.
+
+**[Full chapter:](docs/academic_chapters/08_particle_id.md)**
 
 ---
 
-## 9. Pedestal & Baseline
+## 9. Anomaly Identification
 
-> **Key Findings:**
-> - Adaptive pedestal is biased (−311 ADC vs pretrigger-median reference)
-> - Learned pedestal (HGBR) cuts MAE from 341 to 49 ADC
-> - But: **no true forced/random pedestal sample exists** in current data — all validation is proxy-based
-> - Digitizer gain: **92 ± 28 ADC/MeV** (corrected MV0 v2)
+> **Thesis-grade update (2026-07-14).** Efficiency and false-positive study requirements documented. See [Full chapter](docs/academic_chapters/09_anomaly_id.md).
 
-### 9.1 The Pedestal Problem
+### Key Result
 
-**Study:** [Pedestal/Baseline Validation (S16)](reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/)
-
-The **adaptive pedestal** (positivity-constrained baseline, tolerance scales with amplitude) is the legacy estimator. But against a pretrigger-median reference:
-- **MAE = 341 ADC** (adaptive)
-- **MAE = 48.9 ADC** (learned, HGBR)
-
-**Caveat:** There is no true forced/random pedestal sample in the data — 0 forced/random-tagged entries across exhaustive scans. All validation uses proxy references (pretrigger-median, quiet-proxy). This is a structural data limitation.
-
-### 9.2 Digitizer Gain Calibration
-
-| Version | Gain | Status |
+| Observable | Value | Status |
 |---|---|---|
-| MV0 v1 | ~246 ADC/MeV | ❌ **WRONG** — compared raw amplitude vs MC+digitizer pedestal |
-| MV0 v2 | **92 ± 28 ADC/MeV** | ✅ **CORRECTED** — uses net_ADC = abs(amplitude − baseline) |
+| C12 anomaly fraction | 0.32% of tracks | **VALIDATED** (MC-identified, MV6) |
 
-**Use only the v2 value for energy-scale references.**
+### Required Studies (Not Yet Done)
+
+- Anomaly detection efficiency (synthetic injection)
+- False-positive rate (data sideband validation)
+- Species composition of anomaly cluster
+
+### Veto Impact (Conservative Estimate)
+At 99% efficiency, 5% false-positive: events retained = 99.68%, background passed = 0.016%.
+
+**[Full chapter:](docs/academic_chapters/09_anomaly_id.md)**
 
 ---
 
-## 10. Systematic Uncertainties
+## 10. Monte Carlo Validation
 
-![Systematic Budget](docs/figures/09_systematic_budget.png)
+> **Thesis-grade update (2026-07-14).** Full MV0-MV6 validation matrix documented. See [Full chapter](docs/academic_chapters/10_mc_validation.md).
 
-| Source | Magnitude | Affected Quantities | Status |
+### Validation Matrix
+
+| Study | Observable | Verdict | Action |
 |---|---|---|---|
-| **Gain (MV0)** | **±30%** | Energy scale, dE/dx, ADC→MeV | ✅ MC-validated (v2); needs forced-trigger |
-| **Stopping-depth (MV3)** | Factor 10× on B8 | Depth fractions, B8 acceptance | ⛔ FAIL — needs geometry fix |
-| **Timewalk (MV4)** | +2.68σ pull | σ₆₈ corrected, TOF cuts | 🔶 TENSION — digitizer fix ready |
-| **C12 anomaly (MV6)** | <0.1% after cut | Deuteron count | ✅ Identified, veto available |
-| **Pile-up R_max (MV5)** | Negligible | Rate tolerance | ✅ Validated |
+| MV0 v2 | Digitizer gain | **VALIDATED** | Reduce systematic |
+| MV1 | p/d PID | **TRUTH_LEVEL_MC_ONLY** | Data transfer needed |
+| MV3 | Stopping depth | **FAIL** (χ²/ndf = 68,269) | **GEANT4 fix** |
+| MV4 raw | Timing | **PASS** (−1.05σ) | Accept |
+| MV4 corrected | Timing | **TENSION** (+2.68σ) | **Digitizer fix** |
+| MV5 | Pile-up Rmax | **VALIDATED** | Independent τeff |
+| MV6 | C12 anomaly | **VALIDATED** | Efficiency study |
 
-**Quadrature total for deuteron fraction: ~12%** (dominated by MV0 gain ±30%).
+### Two Blocking Issues
 
----
+1. **MV3: Structural GEANT4 failure** — missing 8–10 g/cm²; blocks acceptance corrections
+2. **MV4: Digitizer timewalk tension** — B/√ADC → B/A fix needed
+
+**[Full chapter:](docs/academic_chapters/10_mc_validation.md)**
 
 ## 11. Open Questions & Next Steps
 

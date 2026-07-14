@@ -1,0 +1,2 @@
+1784064851.786.76994f64
+# S36a clipped-pulse saturation onset shape recovery benchmark

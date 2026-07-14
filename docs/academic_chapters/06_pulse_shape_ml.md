@@ -1284,3 +1284,136 @@ The findings in this chapter are subject to several important caveats. (a) The a
 ## Summary
 
 The pulse shape analysis establishes that the 18-sample HRD waveforms are fundamentally low-dimensional: three PCA components capture 78% of variance, and eight components capture 95%. The autoencoder outperforms PCA only at very low latent dimensions (d = 2-4), with PCA winning at d = 8 due to the bias-variance trade-off. The most important finding is methodological: across 230+ studies, machine learning methods that appeared to outperform traditional physics-anchored approaches were systematically corrected when subjected to three leakage controls — target shuffle, leave-one-run-out cross-validation, and event-block shuffle. The corrected picture is that traditional methods remain competitive or superior in the majority of domains. ML wins only where the truth label is genuinely independent of the input waveform (saturation recovery, duplicate-readout closure) and the missing information is encoded in pulse shape. The C12 nuclear recoil anomaly (0.32% of tracks) was discovered by unsupervised GMM clustering and identified by MC truth, demonstrating the power of combining representation learning with Monte Carlo truth bridging for rare-event discovery in detector physics.
+
+---
+
+## PCA Variance Canonical Rerun (Thesis Upgrade Addition)
+
+> **Status: HIGH. Current PCA variance values are inconsistent across documents.**
+
+### The Problem
+
+| Source | 3 PCs variance | 8 PCs variance | Status |
+|---|---|---|---|
+| Wiki (WIKI.md) | 89% | 99.7% | Declared |
+| Corrected chapter (Chapter 6) | Different value | Different value | Inconsistent |
+| Canonical source | **Not yet produced** | **Not yet produced** | Missing |
+
+The variance explained depends on:
+1. Normalization (per-pulse, per-sample, per-channel)
+2. Preprocessing (baseline subtraction method)
+3. Dataset (Sample I only, Sample II only, combined)
+4. Run splits
+
+Until these are standardised and a single canonical output is produced, both Wiki values are **SUPERSEDED**.
+
+### Required Canonical Rerun
+
+```
+Command:     python scripts/mv6_pca_canonical_rerun.py
+Input:       640,737 selected B-stave pulses (S00 gate)
+Normalization: per-pulse, zero-mean, unit-variance
+Preprocessing: median baseline subtraction (samples 0–3)
+Dataset:     Combined Sample I + II
+Split:       Run-family LORO (leave-one-run-family-out)
+Output:      reports/mv6_canonical_pca/pca_variance.csv
+             reports/mv6_canonical_pca/pca_components.npy
+```
+
+### Action Required
+1. Run canonical PCA with standardised normalization
+2. Update all chapter references to single canonical values
+3. Remove old inconsistent values from Wiki
+4. Regenerate Figure FIG-PS-001
+
+---
+
+## AE/PCA Corrected-Claim Audit (Thesis Upgrade Addition)
+
+> **Status: HIGH. Previous AE superiority claim was leakage overclaim.**
+
+### The Correction
+
+An earlier version of this chapter claimed autoencoder (AE) representations were superior to PCA for downstream tasks. This was **CORRECTED** because:
+
+1. **Feature leakage:** AE latent dimensions were trained on the full dataset including held-out runs
+2. **Unfair comparison:** AE used per-pulse normalization while PCA used global normalization
+3. **Metric mismatch:** AE was evaluated on reconstruction MSE while PCA was evaluated on explained variance — different metrics were compared as if equivalent
+
+### Current Status
+
+| Method | Reconstruction MSE | Downstream timing σ₆₈ | Verdict |
+|---|---|---|---|
+| PCA (n=8) | TBD | TBD | **Baseline** |
+| AE (n=8 latent) | TBD | TBD | **To be re-evaluated under controls** |
+
+The AE-vs-PCA comparison is **NOT VALIDATED** until:
+1. Identical preprocessing pipeline for both methods
+2. LORO holdout for AE training
+3. Event-block shuffle for temporal leakage control
+4. Identical downstream task and metric
+5. Bootstrap CI on the difference
+
+---
+
+## Feature Lineage / Leakage Audit (Thesis Upgrade Addition)
+
+### Feature Dependency Graph
+
+```
+Raw waveform [18 samples]
+  ├──> Direct sample features [s₀..s₁₇]
+  ├──> max(samples) → amplitude ──> saturation flag (amplitude > threshold)
+  ├──> median(s₀..s₃) → baseline ──> corrected amplitude = amplitude − baseline
+  ├──> Σ(samples) → charge (integrated ADC)
+  ├──> CFD20(samples) → time pickoff (timewalk-corrected)
+  ├──> template_phase(samples) → time pickoff (correlated with CFD20)
+  ├──> sample_k / sample_max → saturation proxy (k=0,1,2)
+  ├──> PCA components (k=1..8) → derived from normalized samples
+  └──> AE latent (k=1..8) → learned from normalized samples (LEAKAGE RISK)
+```
+
+### Leakage Risk Register
+
+| Feature | Leakage type | Control | Status |
+|---|---|---|---|
+| AE latent (trained on full data) | Train-test contamination | LORO + event-block shuffle | **FAILED** (original) |
+| template_phase | Correlated with CFD20 target | Feature exclusion | Flagged |
+| saturation proxy | Derived from raw samples | Feature exclusion (if raw samples used) | Flagged |
+| amplitude | Function of max(samples) | Acknowledged redundancy | Acceptable |
+| charge | Linear combination of samples | Acknowledged redundancy | Acceptable |
+
+---
+
+## ML Verdict Matrix (Thesis Upgrade Addition)
+
+| Domain | Traditional | ML | Delta | CI | Leakage controls | Verdict |
+|---|---|---|---|---|---|---|
+| Timewalk correction | Analytic A₀ + B/A | MLP/CNN residual | ~0.1 ns improvement | Overlaps zero after LORO | Failed (temporal leakage) | **Traditional wins** |
+| Duplicate readout | Paired amplitude correlation | ML closure | Significant | CI excludes zero | Passed | **ML wins** (GATED) |
+| Saturation recovery | Clipped-pulse rejection | ML amplitude recovery | Significant | CI excludes zero | Passed (event-block shuffle) | **ML wins** (GATED) |
+| Pile-up recovery | Template deconvolution | CNN two-pulse | Lower RMS, higher failure | Operating curve needed | Pending (need overlay MC) | **GATED** |
+| PID | ΔE-E/range lookup | HGB classifier | AUC 0.986 | MC-truth only | N/A (MC truth) | **ML informative** (TRUTH_LEVEL_MC_ONLY) |
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ PCA and AE are useful diagnostic tools but neither is adopted as a production feature extractor.
+✅ The original AE superiority claim was leakage: CORRECTED.
+✅ ML wins are confirmed in two narrow domains: duplicate readout and saturation recovery.
+✅ Most apparent ML wins fail leakage controls — the primary finding is methodological.
+
+### Open
+⚠️ PCA variance is inconsistent across documents — needs canonical rerun.
+⚠️ AE/PCA downstream comparison under full controls not yet complete.
+⚠️ Feature lineage graph not yet enforced by automated CI check.
+⚠️ ML verdicts are GATED until transfer to A-stack and external data is demonstrated.
+
+### Next Studies
+🔬 Run canonical PCA with standardised normalization → update all references.
+🔬 Re-evaluate AE vs PCA under identical preprocessing, holdout, and metrics.
+🔬 Build automated feature-leakage scanner CI check.
+🔬 Demonstrate ML transfer to A-stack data.
+🔬 Complete MC truth-labelled overlay study for pile-up ML.

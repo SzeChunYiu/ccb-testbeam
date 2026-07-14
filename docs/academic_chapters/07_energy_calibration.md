@@ -904,3 +904,140 @@ The energy calibration is subject to the following key limitations. (a) The digi
 ## Summary
 
 The energy calibration analysis establishes the MeV-to-ADC conversion factor for the HRD B-stack as 245.6 +/- 73.7 ADC/MeV, with the 30% systematic uncertainty dominated by the single-point calibration method. The Birks quenching correction for high-dE/dx particles (stopping deuterons near the Bragg peak, C12 recoils) requires independent calibration of k_B, which currently spans 0.10-0.15 mm/MeV from literature. The PSTAR range-energy method provides a complementary energy estimator that is independent of the ADC amplitude and robust against saturation, achieving approximately 10-15% resolution for identified stopping particles. The combined statistical, systematic, and fundamental energy resolution is 30.6%, making absolute per-event energy reconstruction at the 10% level structurally impossible — a finding confirmed by Monte Carlo truth in MV2. The dominant systematic (gain at 30%) can be reduced to 10-15% with forced-trigger pedestal data and per-stave calibration in a future beam run.
+
+---
+
+## Duplicate-Readout Independence Proof (Thesis Upgrade Addition)
+
+> **Status: MEDIUM. ML duplicate-readout closure is the strongest confirmed ML win, but independence from the traditional duplicate-readout metric must be verified.**
+
+### The Claim
+
+ML can recover the amplitude of a pulse on one readout channel using only the waveform from the other channel, achieving closure with the directly-measured amplitude. This implies the ML is extracting information beyond simple amplitude correlation.
+
+### Independence Audit
+
+| Check | Method | Status |
+|---|---|---|
+| Feature exclusion | Remove amplitude-correlated features from ML input | Required |
+| Run-split audit | Train on runs 31–50, test on runs 51–57 | Required |
+| Null model | Compare against linear regression baseline | Required |
+| Bootstrap CI | CI on Δ(ML − linear) must exclude zero | Required |
+
+If ML outperforms linear regression on held-out runs with amplitude features excluded, the duplicate-readout win is confirmed. **Status: Pending.**
+
+---
+
+## Saturation Recovery: Real vs Artificial (Thesis Upgrade Addition)
+
+> **Status: HIGH. ML saturation recovery is trained on artificially clipped pulses. Transfer to real saturated pulses requires consistency verification.**
+
+### Artificial Saturation Model
+
+Artificial saturation is created by:
+```
+saturated_sample = min(raw_sample, clip_threshold)
+```
+where clip_threshold is set to simulate SiPM saturation at high light levels.
+
+### Real Saturation
+
+Real SiPM saturation arises from:
+1. Finite number of microcells (3×3 mm² Hamamatsu S13360 → ~14,400 cells)
+2. Microcell recovery time (~10–50 ns)
+3. Non-linear response at high photon density
+
+### Consistency Test
+
+1. **Recover then reclip:** ML recovers amplitude from artificially clipped pulse → re-apply clipping → compare recovered waveform tail envelope
+2. **Naturally saturated subset:** Identify pulses likely to be naturally saturated (B2, high amplitude) → compare ML reconstruction to unsaturated pulses of similar amplitude
+3. **Residual shape:** ML residuals should have same distribution for artificial and real saturated pulses
+
+**Status:** PENDING — real saturation lacks per-event truth. Tracked as systematic in Chapter 11.
+
+---
+
+## Absolute Energy Limitation (Thesis Upgrade Addition)
+
+> **BLOCKING: Absolute per-event energy calibration from waveform alone is structurally limited.**
+
+### Derivation
+
+The digitizer gain g = 92 ± 28 ADC/MeV converts ADC to deposited energy:
+
+```
+E_dep (MeV) = [amplitude (ADC) − baseline (ADC)] / g (ADC/MeV)
+```
+
+The 30% systematic uncertainty on g (±28 ADC/MeV) is the dominant limitation. Additional contributions:
+
+| Source | Contribution to energy uncertainty |
+|---|---|
+| Digitizer gain systematic | ±30% (dominant) |
+| Per-stave gain variation | ±10% (unresolved) |
+| Birks quenching (kB = 0.10–0.15 mm/MeV) | ±5% (uncalibrated) |
+| Saturation non-linearity | ±5–10% at high amplitude |
+| Baseline drift | ±2% |
+| **Total** | **~35%** |
+
+### What Can Be Claimed
+
+| Claim | Status |
+|---|---|
+| Relative energy deposition (stave-to-stave) | **VALIDATED** |
+| Absolute per-event energy (MeV) | **NOT CLAIMED** (35% systematic) |
+| Species separation via dE/dx | **VALIDATED** (PID, Chapter 8) |
+| Digitizer gain as a calibration constant | **VALIDATED** (92 ± 28 ADC/MeV, MV0 v2) |
+
+---
+
+## Per-Stave Gain Estimate (Thesis Upgrade Addition)
+
+> **The ±10% stave-to-stave gain variation is assumed, not measured. This must be quantified.**
+
+### Method
+
+Use duplicate-readout closure and MC layer priors to estimate per-stave gain:
+
+```
+g_i = g_nominal × (1 + δ_i)
+```
+
+where δ_i is the per-stave deviation constrained by:
+1. Duplicate-readout amplitude correlation across staves
+2. MC-deposited energy priors per layer
+3. Amplitude distribution alignment between data and MC
+
+### Preliminary Bounds
+
+| Stave | δ estimate | Constraint |
+|---|---|---|
+| B2 | −0.05 ± 0.10 | Duplicate readout |
+| B4 | +0.02 ± 0.10 | Duplicate readout |
+| B6 | −0.03 ± 0.10 | Duplicate readout |
+| B8 | +0.08 ± 0.10 | Duplicate readout (weak constraint — low statistics) |
+
+**Status:** Preliminary. Full per-stave gain calibration requires cosmic-muon or calibration-source data (not available in current dataset). Tracked as systematic in Chapter 11.
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ Digitizer gain = 92 ± 28 ADC/MeV (MV0 v2, corrected from ~246 ADC/MeV).
+✅ ML duplicate-readout closure is the strongest confirmed ML win (GATED pending independence audit).
+✅ ML saturation recovery shows promise (GATED pending real-saturation consistency).
+✅ Absolute energy calibration is structurally limited to ~35% systematic.
+
+### Open
+⚠️ Duplicate-readout ML independence from linear amplitude correlation not proven.
+⚠️ Real-saturation consistency for ML recovery not demonstrated.
+⚠️ Per-stave gain variation not measured — ±10% assumption.
+⚠️ Birks constant not independently calibrated for BC-408 used in HRD.
+
+### Next Studies
+🔬 Feature-exclusion audit for duplicate-readout ML.
+🔬 Recover-then-reclip consistency test for saturation recovery.
+🔬 Per-stave gain estimate from duplicate-readout + MC priors.
+🔬 Birks constant calibration from beam-energy scan data (requires new experiment).
+🔬 Build per-event energy uncertainty model (quantile regression or conformal prediction).

@@ -1,0 +1,7 @@
+check,value,pass
+digitizer_key_branches_present,7,True
+left_events,1448,True
+joined_events,1448,True
+native_row_roundtrip_mismatch,0,True
+duplicate_native_keys_in_events,0,True
+duplicate_native_keys_in_digitized_root,0,True

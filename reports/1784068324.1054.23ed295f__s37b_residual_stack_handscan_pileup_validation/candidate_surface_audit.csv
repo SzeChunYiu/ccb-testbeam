@@ -1,0 +1,8 @@
+item,value,n,notes
+training_current_surface,low_2nA,264,"runs [46, 47]; labels are controlled overlays for supervised fitting"
+frozen_candidate_surface,high_20nA,1056,"runs [44, 45, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]; high-current candidate-like held-out evaluation"
+heldout_overlap_proxy_positive,controlled_overlap_on_high_current_residual,528,proxy positives preserve exact timing/energy truth while using high-current raw residual morphology
+heldout_clean_proxy_negative,single_pulse_high_current_control,528,false-split denominator on high-current raw residual morphology
+handscan_provenance_file,reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/blinded_gallery_adjudication.csv,271029,"existing blinded/reviewer candidate ledger; used to freeze high-current surface, not as an event-level truth join"
+handscan_provenance_file,reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/blinded_candidate_ledger.csv,285565,"existing blinded/reviewer candidate ledger; used to freeze high-current surface, not as an event-level truth join"
+handscan_provenance_file,reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/handscan_feature_table.csv,172459,"existing blinded/reviewer candidate ledger; used to freeze high-current surface, not as an event-level truth join"

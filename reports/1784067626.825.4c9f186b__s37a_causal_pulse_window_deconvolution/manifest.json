@@ -1,0 +1,27 @@
+{
+  "ticket_id": "1784067626.825.4c9f186b",
+  "git_commit": "7afd5d051af3dbe96ba20679945f14b42c322013",
+  "command": "/home/billy/anaconda3/bin/python scripts/s37a_1784067626_825_4c9f186b_causal_pulse_window_deconvolution.py",
+  "runtime_seconds": 467.43071699142456,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "798ae483626969ed69f09416e19d69e5bef6aeb781a14bbbc39de6869e37c7a3",
+    "ablation_stress_slices.csv": "1a2ce1dd340e058974375dec4ca600ec0ff80914a485488121b010767b37291b",
+    "ablation_window_metrics.csv": "c085b1b5d1d56b0c016cd48bd481d1cfd6adde5b10876c742658cbaea697fc72",
+    "claimed_ticket.txt": "205d2b47566d3ad2e885da8c5a158e6db1bbc01981f26d22d9813bc0c04143ad",
+    "detector_heldout_event_predictions.csv": "90ae85137864d22d833b0d70c76ac067d6e8b1d463e1cb2d88aa7b848e30975f",
+    "detector_heldout_ranked_metrics.csv": "633e7ce58cffe525d38151ad6470e4492613a4c705f0b833bab92b27d18ecb0d",
+    "endpoint_metrics_ci.csv": "bbea9950d2f2513db5d8efb23d23303a675c42c9b292176dbcbb9501348b02e1",
+    "event_predictions.csv": "dd21e9ebe56ea78ba3123572479fdea0bdf9e3c70f087bdd7e6f7ca4a716d431",
+    "injection_source_bootstrap_ci.csv": "a6d9618b1197e8ae56f5abf7a3f795e8b4ed66e2fcb90d101d14c9b457c3558d",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "ce1ca98da555a8a38ad9c0a5f10c9e96095b96ce14921a8eea637d94cb1e2574",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "d45f6f9bb7f9f927d5d0dd2b2a3fbde6ee04ba0ea5992e41e5c6d186e7442b10",
+    "run_heldout_metrics.csv": "8d7d215d883960dca7f52e3b4102ed0ecdad97d022e8326206874b6b0a6f9fb1",
+    "strata_metrics.csv": "f7352df52a9afae326d26a3670fcf733b8ba70b8e2fb078419f2404a477b9b0d",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "eb01753672669a41036575267504a11586d92dd784d64fdba6203646d89242a9"
+  }
+}

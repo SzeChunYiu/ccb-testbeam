@@ -1,0 +1,72 @@
+{
+  "ticket_id": "1784065854.140549.01267a91",
+  "generated_at_unix": 1784066552.5813062,
+  "command": "scripts/s36d_1784065854_140549_01267a91_external_pid_pedestal_memory_benchmark.py --config configs/s36d_1784065854_140549_01267a91_external_pid_pedestal_memory_benchmark.json",
+  "artifacts": [
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/REPORT.md",
+      "sha256": "c073ee5b65a8d0da242d99a71f2060331071265eebc3288f1ce697f82beb6a98",
+      "bytes": 18010
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/bootstrap_intervals_long.csv",
+      "sha256": "439bac208af93f7a0d7bbc0dd73b5fb105b383397f821ebda58c41a7a415d34d",
+      "bytes": 2258
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/external_join_features.csv.gz",
+      "sha256": "abf0f4948a61f97e72d23f1dd963b89031ec11373d6561502745bb7f2185ca77",
+      "bytes": 279330
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/external_native_join_audit.csv",
+      "sha256": "ad010779219e0be128c5d03a00e905a8b4fbd74c4f4d9936835a91b46b46ab0c",
+      "bytes": 164
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/heldout_predictions.csv.gz",
+      "sha256": "ea911653b39e96d822cf288abbd30eea4ecf881be7a119d24d481b6bfe9f54af",
+      "bytes": 451038
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/method_summary.csv",
+      "sha256": "afa818fa90dccca9691e8bc2550b692efb978f4fa71a6b0d50fdfe3f099b37ec",
+      "bytes": 2702
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/pedestal_counterfactuals.csv",
+      "sha256": "8a2e84554d6d4ac596087dbd45cc06abb484d7b45ce8b2661a9c900e9c1f4b75",
+      "bytes": 1207
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/reproduction_match_table.csv",
+      "sha256": "d3325c107d2e5a2df7c5c80e0375592216a738d2ba378c7ba7d7d1beb6c25da4",
+      "bytes": 95
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/result.json",
+      "sha256": "8e4dec647c5036217cd4a0f45c15e81339f994fec09af9ed7e1f4cde7254170c",
+      "bytes": 3837
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/run_heldout_metrics.csv",
+      "sha256": "395041a612750cb954060fda5a2ef81562eeb431c3a7d2af72fd267ee8445b97",
+      "bytes": 4246
+    },
+    {
+      "path": "reports/1784065854.140549.01267a91__s36d_external_pid_pedestal_memory_benchmark/strata_assignments.csv",
+      "sha256": "aaeabd8ca30bf2c30cde09f1cfd565162d4d666cc4e2c9995c98e803e32023ec",
+      "bytes": 62388
+    }
+  ]
+}

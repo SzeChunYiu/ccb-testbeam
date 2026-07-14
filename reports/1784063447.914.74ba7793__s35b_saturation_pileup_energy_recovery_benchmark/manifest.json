@@ -1,0 +1,22 @@
+{
+  "ticket_id": "1784063447.914.74ba7793",
+  "git_commit": "c6664782dc34adab1435360e8737be93a8fea58e",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-1/.venv/bin/python scripts/s35b_1784063447_914_74ba7793_saturation_pileup_energy_recovery_benchmark.py",
+  "runtime_seconds": 65.9038290977478,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "4b16ed4db9caeefcf8b3b05280e5e8c74f2a76f46730f873449b95e68b2b68af",
+    "claimed_ticket.txt": "4ad7130b44fea9351ce0f7dc08bc2c2b3a360524202d7882ef3a040b2825a945",
+    "endpoint_metrics_ci.csv": "f5b94a600f293d429155a86d37a68f3dffe409cfca2c6448db4267ce80c9a56a",
+    "event_predictions.csv": "67913f65dcd2f6b572be220e999d27ddeef82662803b63ba7c99b8dcbd69396a",
+    "input_sha256.csv": "07b6d318ddd4c9dd6c883403e78c7a2848358ee5d6e4d9ef6443d72512c84b13",
+    "method_metrics.csv": "c106186dc4306eb032e55d2fee6d2874a8947c004284750a05071a3a4f8a960a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "a65549bdd7c54e7d44761017ac937720f3da5a974492e50067671b0c257eeba1",
+    "run_heldout_metrics.csv": "16d44a77004c007d0574dc68755078fe467f68d739783f51ee5b7d883d893660",
+    "strata_metrics.csv": "d356176d87da2dd4007b24d765a1264f3fc1f5332c54307be5de4f86d7f48a35",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "50e11af1c08ecd903e860eeeb3bb86c21f3e803eb4d156502701cede77aeb459"
+  }
+}

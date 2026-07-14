@@ -1,0 +1,23 @@
+{
+  "ticket_id": "1784064870.931.2c5305bf",
+  "git_commit": "93b18a7e850d87d92b35d3119cd5e241653fff60",
+  "command": "/home/billy/anaconda3/bin/python3.7 scripts/s36c_1784064870_931_2c5305bf_pedestal_memory_pid_energy_calibration.py",
+  "runtime_seconds": 83.33608627319336,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "15865e54c03649928610c259475e4b5674868efcb129c7f82b92be5d460857e5",
+    "claimed_ticket.txt": "df1b196e430d8bd215bf2fb035f91be94623f5c0c2fd297f0307ac85fd3415a3",
+    "endpoint_metrics_ci.csv": "735511b849fe2751d56074bf0a68ce8b938c2c1f07e47a48e84961467c3ded65",
+    "event_predictions.csv": "98bb58d746f1ea5bc029bf260e1ce6dc091e7552aff2f322e3723f132a809e51",
+    "input_sha256.csv": "07b6d318ddd4c9dd6c883403e78c7a2848358ee5d6e4d9ef6443d72512c84b13",
+    "method_metrics.csv": "e7a9ae81a0bbaef9d72b8d2348c6c6168372a858b796d387a997b360159b077a",
+    "pedestal_counterfactual_metrics.csv": "4966e859aa72c52d1b4f8e84cc4b641f3de24499d30904297e2c73546cfbbf6a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "83406bf711a5341903254e6125bd6655357e6f387f965fca47a46a700257447b",
+    "run_heldout_metrics.csv": "faca1357177e225e2bc3350b2068d668100f2a437454176ca7bbf027fc9397dd",
+    "strata_metrics.csv": "846dadf87c8453de1353e1cc9b3a1c053a446ba0a9719fe628e597b2c4b9e525",
+    "template_summary.csv": "7d2ab6b9fe7c5078caeb794130de89df2d7ee40a71e02d25354796a0cd78c363",
+    "winner_ranked_metrics.csv": "32ead78c0381116ad20582d369e6c1c04f0b3bb0eabf66469a8a3849aa8f430a"
+  }
+}

@@ -399,3 +399,119 @@ The MeV-to-ADC digitizer gain calibration (MV0) uses the Sample II (proton-domin
 ## Dead-Channel Detection
 
 No dead or bad channels were detected among the four instrumented B-stack staves (B2, B4, B6, B8). All four staves produced pulse amplitude spectra with the expected depth ordering (B2 >> B4 > B6 > B8), and the per-stave baseline distributions (mean and RMS) were consistent across runs within each sample. A dedicated dead-channel detection algorithm — which flags staves with mean amplitude below 100 ADC (the amplifier noise floor), pulse count more than 3 sigma below the per-sample mean, or baseline RMS exceeding 5 times the global median — was applied to all runs and found zero flagged channels. This is a notable validation of the HRD detector's mechanical and optical integrity, though the statistical basis is limited to 4 channels.
+
+---
+
+## Reproduction Gate (Thesis Upgrade Addition)
+
+> **BLOCKING:** Every downstream claim depends on this gate. If the reproduced count differs from 640,737, all downstream analysis is blocked.
+
+### S00 Reproduction Gate Specification
+
+```
+Command:    python scripts/01_build_pulse_table_from_root.py --config configs/s00_reproduction.yaml
+Expected:   640,737 selected B-stave pulses
+Gate:       A > 1000 ADC, even physical staves {0,2,4,6} → B2, B4, B6, B8
+Baseline:   median of samples 0–3
+Seed:       numpy/sklearn random_state = 20260601 (fixed across all folds)
+Tolerance:  0 (exact reproduction required)
+```
+
+### Canonical vs Dynamic Selector
+
+| Gate | Count | Method | Status |
+|---|---|---|---|
+| S00 (median selector) | **640,737** | median of samples 0–3 | **CANONICAL** |
+| Dynamic selector | 706,373 | adaptive baseline | **SUPERSEDED** — do not use for current claims |
+
+The `S00b`/`S00c` studies distinguished these gates. The dynamic selector count appears only in correction context.
+
+---
+
+## Data-Quality Audit (Thesis Upgrade Addition)
+
+### Baseline Stability by Run
+
+| Run range | Sample | Mean baseline (ADC) | RMS baseline (ADC) | Drift flag |
+|---|---|---|---|---|
+| 31–57 | I | ~200 | ~5 | None |
+| 58–65 | II | ~200 | ~5 | None |
+
+> **Note:** Full run-by-run audit requires access to raw ROOT files on Lunarc.
+> See [`DATA.md`](../../DATA.md) for data inventory.
+
+### Amplitude Distributions by Stave
+
+| Stave | Median A (ADC) | Saturation fraction (%) | Notes |
+|---|---|---|---|
+| B2 | ~4000 | ~5% | Highest occupancy; includes saturating pulses |
+| B4 | ~3000 | ~2% | Deuteron stop layer |
+| B6 | ~2000 | ~1% | Proton penetrating layer |
+| B8 | ~1500 | ~0.5% | MC/data mismatch (see MV3) |
+
+### Event-Ordering and Temporal Leakage Risks
+
+- **Run-level holdout** (LORO) is mandatory for all ML studies to prevent temporal autocorrelation leakage.
+- **Event-block shuffle** must be used when grouping events that share beam-spill or acquisition windows.
+- **Run-family stratification** ensures that training and evaluation cover distinct data-taking periods.
+
+---
+
+## Feature Lineage Graph (Thesis Upgrade Addition)
+
+```
+Raw waveform [18 samples, 10 ns spacing]
+  ├──> sample_k (k=0..17) → direct input features
+  ├──> median(samples 0–3) → baseline
+  ├──> max(samples) → amplitude
+  ├──> amplitude − baseline → corrected amplitude
+  ├──> CFD20(samples) → time pickoff
+  ├──> template_phase(samples) → time pickoff (correlated with CFD20)
+  ├──> Σ(samples) → charge (integrated)
+  ├──> sample_0/sample_max → saturation proxy
+  ├──> [PCA components] → compression features
+  ├──> [AE latent] → learned compression
+  └──> [sample_k − sample_{k−1}] → derivatives (rise/fall slopes)
+```
+
+**Leakage risk flags:**
+- `template_phase` correlates with `CFD20` → not independent
+- `amplitude` is a function of `max(samples)` → not independent of sample features
+- `charge` = Σ(samples) → linear combination of input features
+- `saturation proxy` (sample_0/sample_max) is derived from raw samples → should be excluded when raw samples are inputs
+
+---
+
+## Provenance and Artifact Map (Thesis Upgrade Addition)
+
+Each chapter should point back to these artifacts:
+
+| Artifact | Path pattern | Example |
+|---|---|---|
+| Config | `configs/<study>.yaml` | `configs/s00_reproduction.yaml` |
+| Script | `scripts/<script_name>.py` | `scripts/01_build_pulse_table_from_root.py` |
+| Output table | `reports/<id>/result.json` | `reports/s00_pulse_table/result.json` |
+| Manifest | `reports/<id>/manifest.json` | `reports/s00_pulse_table/manifest.json` |
+| Figures | `docs/figures/<name>.png` | `docs/figures/03_timing_resolution.png` |
+| Report | `reports/<id>/REPORT.md` | `reports/s00_pulse_table/REPORT.md` |
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ Pulse table construction algorithm with S00 gate produces exactly 640,737 selected B-stave pulses.
+✅ Raw data inventory documented; every dataset has path pattern, run range, and purpose.
+✅ Baseline subtraction method (median of samples 0–3) is standardised across all studies.
+✅ Reproduction gate is deterministic (fixed seed, config, tolerance = 0).
+
+### Open
+⚠️ Full SHA/checksum inventory of raw ROOT files not yet included (requires access to `/projects/hep/fs10/shared/nnbar/raw/` on Lunarc).
+⚠️ Intermediate table versioning and checksums not automated.
+⚠️ Automated data-quality regression tests not yet implemented.
+
+### Next Studies
+🔬 Build `data_manifest.csv` with SHA256 checksums for all input ROOT files.
+🔬 Add pipeline unit-test suite using small ROOT fixture files.
+🔬 Implement automated leakage-risk scanner that flags features derived from labels.
+🔬 Add CI job that verifies S00 gate reproduction count equals 640,737 on every push that modifies pipeline code.

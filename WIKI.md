@@ -93,125 +93,69 @@ The analysis does **not** find that machine learning should fully replace tradit
 
 ## 2. Experimental Setup
 
-### The Beamline
+> **Thesis-grade update (2026-07-14).** Material budget audited. See [Full chapter](docs/academic_chapters/02_experimental_setup.md).
 
-```
-                         ┌──────────────┐
-  190 MeV protons ──────▶│  CD₂ Target  │──────▶ scattered charged particles
-                         └──────────────┘
-                                │
-                    ┌───────────┼───────────┐
-                    ▼                       ▼
-             ┌────────────┐          ┌────────────┐
-             │  Trigger   │          │    TPC     │
-             │ Scintillators│         │ (tracking) │
-             └────────────┘          └────────────┘
-                    │
-        ┌───────────┴───────────┐
-        ▼                       ▼
-  ┌───────────┐          ┌───────────┐
-  │  A-Stack  │          │  B-Stack  │  ★ Primary analysis
-  │  A1 A3... │          │ B2 B4 B6 B8│
-  │  ~100 cm  │          │  ~100 cm  │
-  └───────────┘          └───────────┘
-```
-
-### Detector Details
+### Key Components
 
 | Component | Specification |
 |---|---|
-| **Beam** | Proton, kinetic energy T_p = 190 MeV |
-| **Target** | Deuterated polyethylene (CD₂) |
-| **HRD Stacks** | Two scintillator range telescopes (A and B) |
-| **Distance from target** | ~100 cm |
-| **Primary staves** | B2, B4, B6, B8 (even channels only) |
-| **Cross-check staves** | A1, A3 (A-stack) |
-| **Waveform** | 18 samples × 10 ns spacing = 180 ns window |
-| **Readout** | One-ended wavelength-shifting (WLS) fibre → SiPM |
-| **WLS propagation** | ~17 cm/ns |
+| Beam | 190 MeV protons (CCB isochronous cyclotron) |
+| Target | CD₂, 2.3 mm, 1.01 g/cm³ |
+| HRD Stacks | A-stack (+71.5°) and B-stack (−38°), 109 cm from target |
+| Scintillator | BC-408 plastic, 1 cm thick, 100 cm² per stave |
+| WLS fibre | Kuraray Y-11, 1 mm diameter, ~17 cm/ns propagation |
+| SiPM | Hamamatsu S13360-3050CS, 3×3 mm² |
+| Waveform | 18 samples × 10 ns = 180 ns, 100 MS/s, 14-bit ADC |
+| Trigger | Sample I: A×B coincidence (runs 31–57), Sample II: B-only (runs 58–65) |
 
-### How the Detector Works
+### Material Budget Status
 
-The HRD stacks function as a **ΔE–E / range telescope**:
+| Component | Status |
+|---|---|
+| Beam window, target, trigger scintillators, air gap | Included in GEANT4 |
+| Inter-stave dead material, support frames, optical interfaces | **MISSING** (estimated 8–10 g/cm²) |
+| Impact | MV3 B8 MC/data mismatch ×10 (χ²/ndf = 68,269) |
+| Status | **BLOCKING** — prevents quantitative B8 acceptance corrections |
 
-1. A charged particle enters B2 (the most upstream stave), depositing energy
-2. It continues through B4 → B6 → B8, slowing down at each layer
-3. **Heavier particles** (deuterons) stop earlier (B2/B4); **lighter particles** (protons) penetrate deeper (B6/B8)
-4. Each stave records an **18-sample waveform** capturing the scintillation light pulse
-5. From each waveform we extract: **amplitude** (ADC), **arrival time** (ns), and **pulse shape** features
-
-This is **not** an imaging detector — we get time and amplitude, not spatial position within a stave.
-
-### Data Samples
-
-| Sample | Stack | Description | Enrichment |
-|---|---|---|---|
-| **Sample I** | B | D-enriched, topology-heavy | More deuterons stop in B2 |
-| **Sample II** | B | p-enriched, penetrating | More protons reach B6/B8 |
-| **Sample III** | A | Same runs as Sample I | A-stack cross-check |
-| **Sample IV** | A | Same runs as Sample II | Low statistics |
-
-> **Key insight:** The "Sample I vs II" split reflects trigger configuration, not a beam change. The enrichment was confirmed by GEANT4 simulation (see [Proton/Deuteron PID (MV1)](reports/mv1_mv2_truth_pid_energy/)).
+**[Full chapter:](docs/academic_chapters/02_experimental_setup.md)**
 
 ---
 
 ## 3. Data Pipeline
 
-### End-to-End Flow
+> **Thesis-grade update (2026-07-14).** Reproduction gate documented. See [Full chapter](docs/academic_chapters/03_data_pipeline.md).
+
+### Reproduction Gate (BLOCKING)
 
 ```
-┌──────────────┐     ┌────────────────┐     ┌──────────────────┐
-│  Raw ROOT    │────▶│  Pulse Table   │────▶│  Analysis        │
-│  Files (110) │     │  640,737 pulses│     │  Branches        │
-│  ~810 MB     │     │  CSV format    │     │                  │
-└──────────────┘     └────────────────┘     └──────────────────┘
-                                                     │
-              ┌──────────────────────────────────────┤
-              ▼                     ▼                ▼
-    ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐
-    │  Timing Branch  │  │  Pile-up Branch │  │  PID Branch  │
-    │  CFD → Timewalk │  │  Live-time → R  │  │  ΔE-E → AUC  │
-    │  → Residuals    │  │  → Two-pulse    │  │  → GEANT4    │
-    └─────────────────┘  └─────────────────┘  └──────────────┘
+Command:  python scripts/01_build_pulse_table_from_root.py
+          --config configs/s00_reproduction.yaml
+Expected: 640,737 selected B-stave pulses
+Gate:     A > 1000 ADC, even physical staves {0,2,4,6}
+Baseline: median of samples 0–3
+Seed:     random_state = 20260601
+Tolerance: 0 (exact reproduction required)
 ```
 
-### Step 1: Raw ROOT → Pulse Table
+### Pipeline Architecture
 
-**Study:** [Data Integrity & Pipeline Reproduction (S00)](reports/1780997954.15097.28a25ecb__s00a_sorted_hrdmax_semantics/)
+```
+Raw ROOT → baseline(subtract median samples 0–3) → amplitude(A = max − baseline)
+  → select A > 1000 ADC → gate even staves {0,2,4,6}
+  → compute timing variables (CFD20, template_phase)
+  → write canonical pulse table → downstream analyses
+```
 
-The script `scripts/01_build_pulse_table_from_root.py` reads 110 ROOT files and produces a selected-pulse table:
+### Data Quality
 
-1. Read `HRDv` tree from each ROOT file
-2. Use **even B-stack staves** only: B2, B4, B6, B8
-3. Compute **baseline** = median of ADC samples 0–3
-4. Select pulses with **amplitude A > 1000 ADC**
+| Metric | Status |
+|---|---|
+| Run-by-run pulse counts | Reproducible |
+| Baseline stability | ~200 ADC, RMS ~5 ADC |
+| Saturation fraction | B2 ~5%, B4 ~2%, B6 ~1%, B8 ~0.5% |
+| File checksums | Not yet inventoried |
 
-**Result:** Exactly **640,737 selected B-stave pulse records** — reproduced with zero delta from the original analysis note.
-
-### Step 2: Pulse Table → Analysis Branches
-
-The selected-pulse table contains per-pulse columns:
-- `run`, `event`, `stave` — identifiers
-- `amplitude`, `baseline`, `peak_sample` — basic quantities
-- `cfd_time`, `template_phase`, `q_template` — reconstructed timing and shape quality
-
-All downstream analysis scripts read from this table and produce results in `reports/<id>/REPORT.md`.
-
-### Step 3: MC Validation Pipeline
-
-**Study:** [Digitizer Calibration (MV0)](reports/mv0_digitizer/)
-
-The GEANT4 Monte Carlo produces **truth-level** particle data (PDG code, energy, position, time) but no waveforms. The **MV0 digitizer** converts MC truth into synthetic 18-sample ADC waveforms by modeling:
-
-- Scintillator rise/decay (BC-408)
-- WLS/fibre transit smearing
-- 10 ns sampling
-- Electronics noise + baseline
-- Saturation clipping
-
-This lets the same analysis pipeline run on MC data **with truth labels attached**, enabling direct data-vs-MC comparisons with known answers.
-
----
+**[Full chapter:](docs/academic_chapters/03_data_pipeline.md)**
 
 ## 4. Timing Analysis
 

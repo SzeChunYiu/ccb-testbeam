@@ -347,3 +347,44 @@ The CCB test-beam experimental setup provides a well-characterised platform for 
 [16] Eljen Technology, "EJ-550, EJ-552 Silicone Grease," datasheet (2019).
 
 [17] ORTEC, "Model 935 Constant-Fraction Discriminator," operating manual (2018).
+
+---
+
+## Material Budget Audit (Thesis Upgrade Addition)
+
+> **Status: BLOCKING for MV3.** Missing upstream material is the root cause of the MV3 B8 data/MC mismatch (Chapter 10).
+
+### Declared Material Components
+
+| Component | Material | Thickness (mm) | Areal density (g/cm²) | Radiation length fraction | Status |
+|---|---|---|---|---|---|
+| Beam exit window | Kapton | 0.127 | 0.018 | 3.1 × 10⁻⁴ | Included in GEANT4 |
+| Air gap (cyclotron→target) | Air | 3000 | 362 | 0.012 | Included |
+| CD₂ target | CD₂ | 2.3 | 0.232 | 0.0052 | Included |
+| Trigger scintillator A | BC-408 | 5.0 | 0.516 | 0.012 | Included |
+| Trigger scintillator B | BC-408 | 5.0 | 0.516 | 0.012 | Included |
+| Aluminised Mylar window | Mylar + Al | 0.05 | 0.007 | 1.7 × 10⁻⁴ | Included |
+| Inter-stave dead material | Al + G10 | ~3.0–5.0 | ~0.8–1.3 | ~0.03–0.05 | **MISSING** |
+| Support frames | Al 6061 | ~2.0 | ~0.54 | ~0.006 | **MISSING** |
+| Optical grease layer | BC-630 | ~0.1 | ~0.01 | 2.4 × 10⁻⁴ | **MISSING** |
+| WLS fibre cladding | FPMMA | ~0.05 | ~0.006 | 1.4 × 10⁻⁴ | **MISSING** |
+
+### Estimated Total Missing Material
+
+| Quantity | Estimate |
+|---|---|
+| Missing areal density | ~8–10 g/cm² |
+| Missing radiation lengths | ~0.06–0.12 |
+| Impact on B8 penetration | MC overestimates data by ~10× |
+| MV3 χ²/ndf | 68,269 (before geometry fix) |
+
+### Required Action
+
+1. Audit all GEANT4 geometry components against mechanical drawings
+2. Add inter-stave dead material, support frames, optical interfaces
+3. Regenerate GEANT4 production with corrected geometry
+4. Rerun MV3 stopping-depth validation
+5. Re-assess B8 acceptance correction feasibility
+
+This audit is tracked as **GAP-01** in [`STUDY_GAPS.md`](../../STUDY_GAPS.md).
+

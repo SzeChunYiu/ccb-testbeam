@@ -338,152 +338,74 @@ At 99% efficiency, 5% false-positive: events retained = 99.68%, background passe
 
 ## 11. Open Questions & Next Steps
 
-### Closed by MC Validation ✅
+> **Thesis-grade update (2026-07-14).** All gaps now have closure criteria. See [Full chapter](docs/academic_chapters/11_open_questions.md).
 
-| Question | Closed By | Finding |
+### Blocking Issues
+
+| Gap | Issue | Action |
 |---|---|---|
-| What is the early-peak anomaly? | MV6 | C12 nuclear recoils (55%); GMM veto >99% capture |
-| Does R_max ~3 MHz hold vs MC? | MV5 | MC = 3.044 MHz, data = 3.05 MHz (0.2%) |
-| What is the digitizer gain? | MV0 v2 | 92 ± 28 ADC/MeV (net-ADC basis) |
-| Is p/d PID at AUC 0.986 real? | MV1 | Yes; data within 0.5% of MC ceiling |
-| What is the dE/dx mechanism? | MV2 | Birks-law energy deposition; p 23 MeV, d 89 MeV |
-| Does raw timing match MC? | MV4 | Yes — pull = −1.05σ (PASS; pull = (MC−data)/sqrt(σ_MC^2 + σ_data^2) with σ_data = 0.10 ns assumed, not measured) |
+| GAP-01 | MV3 geometry FAIL (χ²/ndf = 68,269) | GEANT4 fix → new MC → rerun MV3 |
+| GAP-06 | Combined timing assumes independence | Covariance-aware estimator |
 
-### Still Open 🔶
+### High-Priority Issues
 
-| Question | Blocker | Severity | Action |
-|---|---|---|---|
-| Stopping-depth profile (chi2/ndf = 68,269) | Missing inter-stave dead material in MC geometry | ⛔ HIGH | Update GEANT4 geometry; new MC production |
-| Timewalk-corrected σ₆₈ at +2.68σ? | Toy digitizer CFD sign error | 🔶 HIGH | Switch B/√ADC→B/amplitude; rerun MV4 |
-| ML two-pulse failure rate on true overlaps? | No truth-labelled overlay MC | ⚠️ MEDIUM | MC overlay study (MV5 extension) |
-| Two-ended √2 projection valid? | Ignores correlated terms | ⚠️ MEDIUM | Measure correlation; validate projection |
-| Forced-pedestal validated? | No forced-trigger in data | ⚠️ MEDIUM | Next beam run acquisition |
-| CFD/OF parameters optimal? | Never systematically scanned | LOW | Grid search over fraction/window |
-| Gaussian-core fits have χ²/ndf? | Reporting omission | LOW | Add goodness-of-fit to all fits |
-| Absolute TOF scale validated? | No independent reference | LOW | Cross-check against TPC/trigger |
+| Gap | Issue | Action |
+|---|---|---|
+| GAP-02 | MV4 corrected timing TENSION | Digitizer timewalk fix |
+| GAP-03 | Gain 30% systematic | Per-stave calibration |
+| GAP-04 | PCA variance inconsistent | Canonical rerun |
+| GAP-05 | PID weak-label not separated | Data evaluation |
+| GAP-09 | ML timing not production | Full leakage controls |
 
-### Missing Studies
+### Closure Criteria
+A gap is CLOSED only when: study produces quantitative result → REPORT.md written → claim ledger updated → chapters updated → gap removed from list.
 
-See [`STUDY_GAPS.md`](STUDY_GAPS.md) for the complete prioritized list. Key items:
+**Current fully-closed gaps:** 0 of 10 catalogued.
 
-1. Multi-stave event reconstruction with proper **covariance modeling** (not assuming independence)
-2. Two-ended readout with **measured** (not assumed) correlation
-3. Full **Birks-law energy calibration** across all staves
-4. Complete **systematic uncertainty propagation** through all derived quantities
-5. **A-stack full reproduction** (currently only A1-A3 timing done)
-6. Beam-rate scan analysis (if multiple currents in data)
+**[Full chapter:](docs/academic_chapters/11_open_questions.md)** | **[STUDY_GAPS.md](STUDY_GAPS.md)**
 
 ---
 
 ## 12. Methodology Appendix
 
-### 12.1 Core Principles
+> **Thesis-grade update (2026-07-14).** Build/lint checks and reproducibility checklist documented. See [Full chapter](docs/academic_chapters/12_methodology_appendix.md).
 
-Every claim obeys **six rules** (from [`docs/REPORT_STANDARD.md`](docs/REPORT_STANDARD.md)):
+### Build/Lint Checks
 
-1. **Reproduce first** — start from the S00 640,737-pulse gate
-2. **Fair comparison** — ML vs strongest traditional baseline, same held-out data, CI excludes zero
-3. **Atomic decomposition** — every step from raw waveform to number is traceable
-4. **Leakage is hunted** — three controls must all pass
-5. **Numbers always paired** — with uncertainty and baseline comparison
-6. **CORRECTED is a finding** — discovering leaked ML wins advances the program
-
-### 12.2 The Three Leakage Controls
-
-```
-1. Target Shuffle         — shuffle labels; if ML still "wins", no signal
-2. Leave-One-Run-Out      — train on runs 31-57, test on 58-65
-3. Event-Block Shuffle    — shuffle in event blocks; catches temporal leakage
-```
-
-**A claim is REJECTED unless it beats the traditional baseline on ALL THREE with a CI excluding zero.**
-
-### 12.3 Confidence Labels
-
-| Label | Meaning |
-|---|---|
-| ✅ **Validated (data + MC)** | Survives leakage controls AND agrees with GEANT4 truth |
-| ⚠️ **Data-only (MC pending)** | Survives leakage controls but MC not yet run |
-| ❌ **CORRECTED** | Failed leakage control or MC cross-check |
-| 🔶 **TENSION** | MC and data disagree beyond tolerance |
-| ⛔ **FAIL** | MC reveals concrete model failure |
-
-### 12.4 Truth Types
-
-| Type | Example | Used For |
+| Check | Script | Severity |
 |---|---|---|
-| **Closure truth** | Injected pile-up, artificial saturation | Injected by us, independent by construction |
-| **Proxy truth** | Duplicate readout | Correlated but physically independent measurement |
-| **Physics truth** | GEANT4 particle ID, energy | Absolute truth from simulation |
+| Superseded-value scan | `scripts/audit_claim_superseded.py` | **Blocking** |
+| Claim ledger completeness | `scripts/check_claim_ledger_complete.py` | **Blocking** |
+| Broken link checker | `scripts/broken_link_checker.py` | High |
+| Figure source data checker | `scripts/check_figure_source_data.py` | High |
+| ML leakage control checker | `scripts/check_ml_leakage_controls.py` | High |
 
-### 12.5 Uncertainty Conventions
+### CI Pipeline
+```yaml
+name: Thesis QA
+on: [push, pull_request]
+jobs:
+  audit: [superseded scan, link check, claim check]
+```
 
-- All σ values are **robust σ₆₈** (half-width of central 68%)
-- CIs use **bootstrap (1000 resamples)** at the **run level**
-- AUC to 4 decimal places (from MV1 truth summary)
-- Every number traceable to a `reports/<id>/REPORT.md`
+### Reproducibility
+Every chapter must be reproducible from: command + config + seed + output table + manifest + figures + report.
+
+**[Full chapter:](docs/academic_chapters/12_methodology_appendix.md)** | **[CLAIM_CHECKLIST_INTEGRATION.md](docs/CLAIM_CHECKLIST_INTEGRATION.md)**
 
 ---
 
 ## Study Catalogue
 
-Every study with a proper descriptive name and hyperlink to its full report.
+> **Thesis-grade update (2026-07-14).** See [Full chapter](docs/academic_chapters/11_open_questions.md) for the complete study catalogue.
 
-### Foundation Studies (S00–S18)
+### Study Categories
 
-| Code | Descriptive Name | Report |
+| Category | Count | Status |
 |---|---|---|
-| **S00** | [Data Integrity & Pipeline Reproduction](reports/1780997954.15097.28a25ecb__s00a_sorted_hrdmax_semantics/) | 640,737 pulses reproduced exactly |
-| **S00a** | Sorted hrdMax Gate Semantics | Sorted proxy over-counts; raw HRDv gate is correct |
-| **S01** | [Amplitude-Adaptive Template Reconstruction](reports/1780997954.15037.36463764__s01_full_dataset_templates/) | Full-dataset templates, per-stave per-amplitude bin |
-| **S02** | [Timing Pickoff Comparison](reports/1780997954.15157.07ef03cf__s02_timing_pickoff/) | CFD20 vs OF vs template phase |
-| **S02b** | Template Timewalk Closure | |
-| **S03** | [Analytic Timewalk Correction](reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction/) | Amplitude timewalk reaches σ₆₈ 1.49–1.55 ns |
-| **S03a** | Amplitude-Binned Monotonic Timewalk | |
-| **S03k** | Gated HGB Timing | σ₆₈ = 1.107 ns (in-fold); needs transfer audit |
-| **S05** | [Hierarchical B-Stack Covariance](reports/) | B2 covariance ~1042 ns² vs downstream ~16 ns² |
-| **S05a** | A-Stack External Control | |
-| **S07** | [ML Rigor Scoreboard](reports/1780997954.15217.702122ea__s07_ml_rigour_scoreboard/) | Most ML "wins" are leaked; CORRECTED claims |
-| **S10** | [Pile-up Rate Model](reports/1780997954.15277.548b01a3__s10_pileup_rate_model/) | τ_eff = 124.8 ns → R_max ≈ 3.05 MHz |
-| **S11** | [Two-Pulse Template + ML Recovery](reports/) | ML wins RMS but higher failure rate |
-| **S14** | Range-Energy Calibration | GEANT4 Birks lookup validated |
-| **S16** | [Pedestal/Baseline Validation](reports/1780997954.15337.77205a71__s16_pedestal_baseline_validation/) | Adaptive pedestal biased −311 ADC |
-| **S18** | [A-Stack Independent Reproduction](reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/) | A1–A3 width 1.39 ns reproduces note's 1.43 ns |
+| Data-driven studies | ~230 | Various completion states |
+| MC validations (MV0-MV6) | 7 | 4 VALIDATED, 1 TENSION, 1 FAIL, 1 TRUTH_LEVEL_MC_ONLY |
+| Diagnostic studies (MV3b, MV4b) | 2 | Root causes identified |
+| GEANT4 simulation studies | ~10 | G4-01 through G4-08 |
 
-### ML Pulse Characterisation (P01–P13)
-
-| Code | Descriptive Name | Report |
-|---|---|---|
-| **P01** | [Self-Supervised Waveform Representation](reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation/) | AE > PCA at d=2–4; PCA catches up at d≥8 |
-| **P02** | [Unsupervised Pulse-Type Discovery](reports/) | ~4% early-peak anomaly found |
-| **P03** | Deep Timing Regression | MLP/CNN on raw waveform |
-| **P04** | [Amplitude & Charge Regression](reports/) | ML wins duplicate-readout: res68 0.003 vs 0.12 |
-| **P05** | Two-Pulse CNN Decomposition | |
-| **P07** | [Saturation Recovery](reports/1780997954.15577.6c203777/) | ML 3–7× better than templates |
-| **P09** | Rare Waveform Anomaly Taxonomy | ~4% → 0.32% after MC identification |
-
-### MC Validation (MV0–MV6)
-
-| Code | Descriptive Name | Report | Verdict |
-|---|---|---|---|
-| **MV0** | [Digitizer Gain Calibration](reports/mv0_digitizer/) | 92 ± 28 ADC/MeV (v2 corrected) | ✅ |
-| **MV1** | [Proton/Deuteron PID Validation](reports/mv1_mv2_truth_pid_energy/) | AUC 0.986, purity 0.964 | ✅ |
-| **MV2** | [Energy/Range Truth Validation](reports/mv1_mv2_truth_pid_energy/) | p 23 MeV, d 89 MeV | ✅ |
-| **MV3** | [Stopping-Depth Profile](reports/mv3_stopping_depth/) | χ²/ndf = 68,269 (4 bins: B2, B4, B6, B8 fractions; ndf = 3 after normalization; Poisson bin errors) | ⛔ |
-| **MV4** | [Timing Resolution Validation](reports/mv4_timing_study/) | Raw PASS, corrected TENSION | 🔶 |
-| **MV5** | [Pile-up Rate Validation](reports/mv5_pileup_study/) | R_max = 3.044 MHz (0.2%) | ✅ |
-| **MV6** | [Representation & Anomaly ID](reports/mv6_representation_study/) | C12 recoils 0.32% | ✅ |
-
----
-
-## See Also
-
-- **[`FINDINGS_SYNTHESIS.md`](FINDINGS_SYNTHESIS.md)** — publication-standard narrative across all ~230 studies
-- **[`PROJECT_REPORT.md`](PROJECT_REPORT.md)** — concise single-page status
-- **[`STUDY_GAPS.md`](STUDY_GAPS.md)** — detailed gap analysis and open questions
-- **[`studies/STUDIES.md`](studies/STUDIES.md)** — master prioritized study list
-- **[`docs/REPORT_STANDARD.md`](docs/REPORT_STANDARD.md)** — reporting rules and methodology
-- **[`docs/METHOD_LOGIC_TRACE.md`](docs/METHOD_LOGIC_TRACE.md)** — step-by-step analysis chain
-- **[`docs/SYSTEMATIC_UNCERTAINTIES.md`](docs/SYSTEMATIC_UNCERTAINTIES.md)** — detailed systematic budget
-- **[`docs/glossary.md`](docs/glossary.md)** — terminology reference
-- **[`DATA.md`](DATA.md)** — data locations and integrity
+See [`STUDY_GAPS.md`](STUDY_GAPS.md) for the full gap inventory with dependency graph.

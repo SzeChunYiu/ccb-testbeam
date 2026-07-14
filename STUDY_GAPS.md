@@ -347,3 +347,24 @@ All 9 original GAPs plus 3 beam-related studies audited. Current status:
 6. Per-stave gain calibration with cosmic muons or known-energy beam (low — GAP-09)
 
 **All gaps now documented. Seven items require new beam time. Zero gaps are undocumented or unquantified. The analysis programme's open questions are fully characterised.**
+
+---
+
+## Thesis Upgrade Closure Tracking (Added 2026-07-14)
+
+> **Source:** `16_master_logic_gap_matrix.md` from thesis upgrade pack.
+
+| Gap ID | Area | Status | Closure artifact | Priority |
+|---|---|---|---|---|
+| GAP-01 | MV3 geometry | **OPEN** | GEANT4 fix + MC rerun | BLOCKING |
+| GAP-02 | MV4 timewalk | **OPEN** | Digitizer fix + rerun | HIGH |
+| GAP-03 | Gain 30% syst. | **OPEN** | Per-stave calibration | HIGH |
+| GAP-04 | PCA variance | **OPEN** | Canonical rerun | HIGH |
+| GAP-05 | PID weak-label | **OPEN** | Data weak-label evaluation | HIGH |
+| GAP-06 | Covariance timing | **OPEN** | Covariance-aware estimator | BLOCKING |
+| GAP-07 | tau_eff cross-check | **OPEN** | 2+ independent methods | MEDIUM |
+| GAP-08 | Censoring syst. | **OPEN** | Tail extrapolation | MEDIUM |
+| GAP-09 | ML timing gate | **OPEN** | Full leakage controls | HIGH |
+| GAP-10 | Pedestal truth | **OPEN** | Forced-trigger run | MEDIUM |
+
+See docs/academic_chapters/11_open_questions.md and docs/claim_ledger.csv for full details.

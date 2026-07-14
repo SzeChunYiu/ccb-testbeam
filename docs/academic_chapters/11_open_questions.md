@@ -240,3 +240,53 @@ This analysis programme provides sufficient material for a doctoral thesis struc
 - **Chapter 11:** Conclusions and Outlook — summary of findings, open questions, future work
 
 The thesis would contribute three original results to the field: (i) the validated timing and pile-up performance of one-ended WLS+SiPM readout for large-area scintillator detectors, (ii) the methodological framework for leakage-controlled ML evaluation in detector physics, and (iii) the complete, reproducible analysis pipeline with Monte Carlo truth bridging.
+
+---
+
+## Status Table with Closure Criteria (Thesis Upgrade Addition)
+
+> **Every open question must have a falsifiable closure criterion, not a vague discussion.**
+
+### Open Questions: Severity-Ranked with Closure Criteria
+
+| ID | Question | Severity | Closure criterion | Current status |
+|---|---|---|---|---|
+| GAP-01 | MV3 geometry: missing material | **BLOCKING** | GEANT4 geometry fix → new MC → MV3 rerun → χ²/ndf < 10 | Not started |
+| GAP-02 | MV4 corrected timing tension | **HIGH** | Toy digitizer B/√ADC → B/A → rerun → pull < 2σ | MV4b diagnosed; fix pending |
+| GAP-03 | Digitizer gain 30% systematic | **HIGH** | Per-stave gain calibration → systematic < 10% | Not started |
+| GAP-04 | PCA variance inconsistent | **HIGH** | Canonical rerun → single value → all docs updated | Not started |
+| GAP-05 | Data weak-label PID AUC not separated | **HIGH** | Evaluate HGB on data weak labels → report purity-efficiency matrix | Not started |
+| GAP-06 | Covariance-aware timing pending | **HIGH** | Compute full covariance estimator → update combined σ | Not started |
+| GAP-07 | τeff cross-checks not done | **MEDIUM** | 2+ independent methods agree within 5 ns | Not started |
+| GAP-08 | Censoring systematic not propagated | **MEDIUM** | Tail extrapolation or MC full-window simulation → propagated | Not started |
+| GAP-09 | ML timing not production-ready | **MEDIUM** | All leakage controls passed → LORO CI excludes zero | Not started |
+| GAP-10 | Forced-pedestal truth missing | **MEDIUM** | Dedicated forced-trigger run → pedestal truth validation | Requires new data |
+
+### Closure Criteria Checklist
+
+A gap is CLOSED only when:
+1. A specific study produces a quantitative result
+2. The result is documented in a REPORT.md
+3. The claim ledger is updated
+4. All affected chapters are updated
+5. The gap is removed from this list
+
+**Current fully-closed gaps:** 0 of 10.
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ Ten high-impact open questions catalogued with severity and closure criteria.
+✅ Two blocking issues identified: MV3 geometry and MV4 digitizer.
+✅ All open questions have falsifiable tests, not vague discussion.
+
+### Open
+⚠️ No gaps are fully closed — this document is a work plan, not a completion report.
+⚠️ Some gaps require new experimental data (forced-trigger).
+
+### Next Studies
+🔬 Prioritize GAP-01 (MV3 geometry) — blocks multiple downstream claims.
+🔬 Prioritize GAP-02 (MV4 digitizer) — prevents MC-validated timing claim.
+🔬 Batch GAP-04 through GAP-09 as a single analysis sprint using existing data.

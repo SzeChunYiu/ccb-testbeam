@@ -1,7 +1,7 @@
 {
   "study": "S33a",
   "ticket_id": "1784062062.882.024708b9",
-  "worker": "testbeam-laptop-1",
+  "worker": "testbeam-laptop-3",
   "raw_reproduction": {
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,

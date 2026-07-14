@@ -1,0 +1,24 @@
+{
+  "ticket_id": "1784064858.859.4e603bae",
+  "git_commit": "93b18a7e850d87d92b35d3119cd5e241653fff60",
+  "command": "/home/billy/anaconda3/bin/python scripts/s36b_1784064858_859_4e603bae_overlapping_pulse_timing_deconvolution_bakeoff.py",
+  "runtime_seconds": 499.1646933555603,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "f6addc1ed7ce424a42dd8c57c3886fc2c8efe5715554222134874f5d8f40e485",
+    "claimed_ticket.txt": "ed9943018ac2ee009967558b4b9b415509daee86fb7ec02148340aa3366058eb",
+    "endpoint_metrics_ci.csv": "bbebb5cbb92d6db294568cebf0e462d543f36a5f5f05013c11dbf18ca3a47539",
+    "event_predictions.csv": "24424e20c40a3cdbe7b188594e2e7da8bb01fcb2431811d092cc7c7eab3e8877",
+    "injection_source_bootstrap_ci.csv": "d918ec90210e9956f7705d8ead6c41dfaf8740937c73335dc708764c89a607ce",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "2da8c6e6d6f4e1a3da81ee733dba0bbdb2083e83fc18787027170cc608c2b4cc",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "32647b4d63dcd75601207beb0b9f2a4655e46ddd22bec84adf9bb3bcd1ef966f",
+    "run_heldout_metrics.csv": "79ef88aac629d50ded657cd9655f87ace8ab6efad8dc3c0adce02f10c394a465",
+    "strata_metrics.csv": "ad972e36070189c877a455cf93b081c2bdaa2a1b3bbb37b9f312c0a476eb5f56",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "uncertainty_calibration.csv": "dbd9f4f2a179e739e5077e441d3ff5b61ad6c3d84fbb786a03a93657d3e3c321",
+    "winner_ranked_metrics.csv": "9435213b994ce36aa504271338368d9e546c5a16f36332596424e91abc787e9f"
+  }
+}

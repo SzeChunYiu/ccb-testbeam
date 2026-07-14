@@ -1,0 +1,103 @@
+{
+  "ticket_id": "1784064858.859.4e603bae",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S36b overlapping-pulse timing deconvolution architecture bakeoff",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "injection_source_bootstrap": "held-out source_run:stave:is_overlap:spacing_bin:ratio_bin percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "registered S36b composite endpoint score"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "temporal_convolution_tcn": "temporal_convolution_tcn",
+    "sequence_transformer": "tiny_sequence_transformer",
+    "transformer_with_pileup_masks": "pileup_mask_transformer_new",
+    "new_architecture": "pileup_mask_transformer_new",
+    "hybrid_new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum registered S36b composite endpoint score with run-block bootstrap CIs",
+    "winner_score": 1.8779364264569312,
+    "leading_edge_time_sigma68_ns": 5.6102122761096265,
+    "leading_edge_time_sigma68_ci95": [
+      4.673016624407385,
+      6.549719465555231
+    ],
+    "secondary_pulse_delay_sigma68_ns": 10.93984036594453,
+    "secondary_pulse_delay_sigma68_ci95": [
+      9.771802179474756,
+      13.287399143115822
+    ],
+    "time_sigma68_ns": 7.736228844040087,
+    "energy_proxy_distortion_sigma68": 0.06952771257859332,
+    "pileup_miss_rate": 0.35555555555555557,
+    "false_split_rate": 0.16111111111111112
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "injection_source_bootstrap_ci": "injection_source_bootstrap_ci.csv",
+    "uncertainty_calibration": "uncertainty_calibration.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "next_tickets": [
+    {
+      "title": "S36c: conformal timing intervals for overlapping-pulse deconvolution",
+      "ticket_id": "1784065616.1187.1fd56f45",
+      "body": "Question: Can run-held-out conformal calibration fix the S36b TCN uncertainty under-coverage while preserving overlap AP and timing sigma68? Compare split-conformal and run-block conformalized intervals on the S36b synthetic-injection and real high-rate strata, report 68/95 coverage, interval width, AP, timing RMSE, energy bias, and PID proxy confusion with bootstrap CIs. Expected information gain: separates architecture error from uncertainty-calibration error for deployable overlapping-pulse deconvolution."
+    }
+  ],
+  "novel_tickets_appended": [
+    "1784065616.1187.1fd56f45: S36c: conformal timing intervals for overlapping-pulse deconvolution"
+  ],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "PID confusion is a stave-conditioned energy-bias proxy, not particle truth."
+  ]
+}

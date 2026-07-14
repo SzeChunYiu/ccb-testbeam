@@ -1,0 +1,48 @@
+{
+  "ticket_id": "1783888776.1513.553b5373",
+  "study_id": "S33b",
+  "worker": "testbeam-laptop-3",
+  "title": "external pedestal-state validation for pulse-shape timing",
+  "output_dir": "reports/1783888776.1513.553b5373__s33b_external_pedestal_state_pulse_timing",
+  "prediction_table": "reports/1783888776.1513.553b5373__s33b_external_pedestal_state_pulse_timing/heldout_predictions.csv.gz",
+  "raw_root_dir": "data/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "bootstrap_replicates": 1000,
+  "random_seed": 20330713,
+  "timing_endpoint": "timing_residual",
+  "external_state_endpoints": [
+    "pedestal_state",
+    "electronics_epoch",
+    "forced_random_surrogate",
+    "late_tail_memory",
+    "saturation_clipping"
+  ],
+  "traditional_method": "traditional_cfd_template_pedestal",
+  "methods": [
+    "traditional_cfd_template_pedestal",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "gated_attention_waveform_new"
+  ],
+  "registered_score": "timing_sigma68_ns + 2 * mean_state_brier + mean(1 - state_auc); lower is better"
+}

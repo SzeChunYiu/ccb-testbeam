@@ -1,0 +1,22 @@
+{
+  "ticket_id": "1784068210.870.38ff282e",
+  "git_commit": "4e5fdbde3bf558bc9b9c7704e660fd74fcea27a1",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-3/.venv/bin/python scripts/s37a_1784068210_870_38ff282e_sparse_ticket_pileup_saturation_frontier.py",
+  "runtime_seconds": 203.3039984703064,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "c5085db79fb6532a34e6e9a661c62b94de92c616d747177c8f6bb1294f097203",
+    "claimed_ticket.txt": "31158bc2812f627b7f3383391e0749bc72a5a512cc8c720e3b4c2304dae6150f",
+    "event_predictions.csv": "88fbf7963e4989ed8d5621c58592c79ccd8c15cee23f2009f7ddc24638ebf0b6",
+    "injection_source_bootstrap_ci.csv": "810f5d159a882a70029fba58577533106e07420cfefa13a4b2e3d4050efa393e",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "bf957ce191d876ec2e140e8bded610f217d50a81fb9a1c073e6082c67fd0217e",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "ebfde803d3ea729773c239cb811e8fb1fe238e5a7dabeee84ad72484b35f54fb",
+    "run_heldout_metrics.csv": "aa1737790dd07dae56c60202456356a2a8174693b85d3b69f9749c7525396fdd",
+    "strata_metrics.csv": "ac43d358cb3a9f7b6a4d3c8261da0a79a2683a2a02da6522143e71e57c1cb6ad",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "0b9c1944317a0987d50dc379482ea1b7a557ab3ff64a6acee938be2315b144fd"
+  }
+}

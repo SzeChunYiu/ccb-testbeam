@@ -2,7 +2,7 @@
 
 | Task | Status | Evidence |
 |---|---|---|
-| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` reported `open=0 claimed=2 done=729 failed=40`; open was under 18. |
-| New study tickets | done | Appended `1784064851.786.76994f64`, `1784064858.859.4e603bae`, and `1784064870.931.2c5305bf`; each names traditional comparators, ridge, gradient-boosted trees, MLP, 1D-CNN, transformer-family models, bootstrap CIs, and pulse-understanding targets. |
-| Current board | done | Final audit: `open=0 claimed=2 done=729 failed=40`; all three new study tickets are now done. |
+| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` first reported `open=0 claimed=0 done=731 failed=40`; open was under 18. |
+| New study tickets | done | Appended `1784067626.825.4c9f186b`, `1784067626.890.1d1c4672`, and `1784067626.954.74700395`; each names a traditional method, ridge, gradient-boosted trees, MLP, 1D-CNN, transformer-family models, bootstrap CIs, and pulse-understanding targets. |
+| Current board | done | Final audit: `open=0 claimed=3 done=731 failed=40`; all three new tickets were claimed by workers. |
 | Report hygiene | done | Scoreboard-only summary, 8 lines. |

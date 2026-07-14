@@ -1,0 +1,22 @@
+{
+  "ticket_id": "1784064851.786.76994f64",
+  "git_commit": "93b18a7e850d87d92b35d3119cd5e241653fff60",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-2/.venv/bin/python scripts/s36a_1784064851_786_76994f64_clipped_pulse_saturation_onset_shape_recovery.py",
+  "runtime_seconds": 69.31144213676453,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "0c5869026e2e0e99f693bef4ddcc7971bcef5b5214cbce96e1f7820564c58053",
+    "claimed_ticket.txt": "620e1e0372c833255c9553374572b1724c597810b014faaeb161b5cedb0b4fac",
+    "endpoint_metrics_ci.csv": "a44249b0c01df5d776d284274b634862e1df2b84dfd56300c3f597aacd8180ed",
+    "event_predictions.csv": "a15442f5a1d730ff3f84f2e186c7890d6881d4de0d55b4f6df0d7864800a17dc",
+    "input_sha256.csv": "c458018bebad210c69df6fff1f0cad247f31f92150f42e4c49d004214400ad7b",
+    "method_metrics.csv": "ccc30b65fcc9043923392568e166af0fc6e2d2a3cfedd65fffe7ed59cfd56ab0",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "3ed1d70951f059ddacd1c7342f6edc8e1af923ccf385add8ff902aca2f76b4fd",
+    "run_heldout_metrics.csv": "d71dab1b97bb6c4acac0c6c2ef167889b529aa0de1fb0899484b056088ccd49d",
+    "strata_metrics.csv": "df25a0bfc651c4b42fdd3c927bf4e09c621071bbeb8e8c374ba1b85afd19636b",
+    "template_summary.csv": "3235862b14b13a07d8a779c0359d2bef8daeb17ac2814b9d3a7c9adf6e22579e",
+    "winner_ranked_metrics.csv": "23425f2df17569c2cc22874b0d583a305419ab8ac27865d05b97b19c84915abb"
+  }
+}

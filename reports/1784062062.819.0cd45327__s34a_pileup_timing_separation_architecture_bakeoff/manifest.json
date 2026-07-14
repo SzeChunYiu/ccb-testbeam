@@ -1,0 +1,23 @@
+{
+  "ticket_id": "1784062062.819.0cd45327",
+  "git_commit": "e2dabfe445a742377f867210ec2c9010b0cc3ee0",
+  "command": "/usr/bin/python3 scripts/s34a_1784062062_819_0cd45327_pileup_timing_separation_architecture_bakeoff.py",
+  "runtime_seconds": 345.3929159641266,
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "outputs_sha256": {
+    "REPORT.md": "da2464f2fafa2efb65a026b507f0422b710ed45669340b1c8cdedcb8461210ae",
+    "claimed_ticket.txt": "0f10d8877de400c90366031819bebdbdb79c2568192639ea544f4d0a77c0e17b",
+    "endpoint_metrics_ci.csv": "bf66bf7551cf139dd32d9cb56f5f9b1b0b61e9e7e3988fcc2f4c4485535221ba",
+    "event_predictions.csv": "c1256117c9e265fc409308a378c7e7caf7bc28cb188e6a186fde3a6d3ff667f2",
+    "injection_source_bootstrap_ci.csv": "a66410200304d3969bdbc67c415ca58f9299d7df8a181ad2d31119b7110c328f",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "2e6f8f88c7bed099586855e963d61550772f587aec6dca381fb03c0b921845d2",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "c6feffa8efcd012f7404550844c62491323178513908b044b20cbe0206bbbc6d",
+    "run_heldout_metrics.csv": "05048d42187bc7ec077dc318a4bce9694c42d7cda6a376af5bdcf1d7b9a6ecd8",
+    "strata_metrics.csv": "d86f2d59eeba706e4ec2aede037f6113a97b8f04528e1a9bbaf345bcd2d7eea1",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068",
+    "winner_ranked_metrics.csv": "30961379aa0827f8dd4f551ceb163d11d72088ee016bf2d5dfc8ddab43a3c5ea"
+  }
+}

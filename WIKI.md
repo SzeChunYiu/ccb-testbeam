@@ -189,7 +189,7 @@ Raw ROOT → baseline(subtract median samples 0–3) → amplitude(A = max − b
 
 ## 5. Pile-up Analysis
 
-> **Thesis-grade update (2026-07-14).** Rmax derivation and censoring systematic documented. See [Full chapter](docs/academic_chapters/05_pileup_analysis.md).
+> **Thesis-grade update (2026-07-14).** Rmax derivation CORRECTED. See [Full chapter](docs/academic_chapters/05_pileup_analysis.md).
 
 ### Key Results
 
@@ -199,21 +199,39 @@ Raw ROOT → baseline(subtract median samples 0–3) → amplitude(A = max − b
 | τeff (effective live-time) | 124.79 ns | **VALIDATED** (corrected from 90 ns) |
 | Two-pulse ML recovery | Lower RMS, higher failure | **GATED** (operating curve pending) |
 
-### Derivation Summary
+### Derivation Summary (CORRECTED 2026-07-14)
+
+The accepted pile-up tolerance is expressed as an **occupancy-quality criterion**, not as a strict 5% probability of any second hit.
+
 ```
-τeff = 124.79 ns (template tail crossing, not 90 ns naive FWHM)
-Rmax = −ln(0.95) / τeff ≈ 3.05 MHz (5% pile-up tolerance)
+τeff = 124.79 ns (template tail crossing; corrected from 90 ns)
+Rmax = μ_max / τeff
 ```
+
+Using the reconstruction-quality threshold from S10/MV5, **μ_max ≈ 0.38**:
+
+```
+Rmax = 0.38 / 124.79 ns = 3.04 MHz
+```
+
+This corresponds to **P(≥1 extra hit) = 1 − exp(−0.38) ≈ 31.6%**, so it must **not** be described as a 5% Poisson pile-up-probability criterion. If one instead imposes P(≥1) = 5%, the rate is:
+
+```
+Rmax(5%) = −ln(0.95) / 124.79 ns = 0.411 MHz
+```
+
+**The previous Wiki text stating `Rmax = −ln(0.95)/τeff ≈ 3.05 MHz` was mathematically incorrect and has been CORRECTED.**
 
 ### Critical Open Issues
 
 1. **τeff cross-checks needed** — at least 2 independent methods (threshold scan, exponential fit)
-2. **Censoring systematic** — 180 ns window truncates ~23% of pulse tail
+2. **Censoring systematic** — 180 ns window truncates ~23% of pulse tail; not propagated to Rmax
 3. **ML score calibration** — classifier output not mapped to physical overlap probability
 4. **MC overlay truth** — two-pulse recovery not validated with truth-labelled overlaps
 
 ### Next Study Priority
-🔬 Measure τeff by alternative methods → confirm robustness
+🔬 S-STAT-003: Resolve canonical Rmax definition (μ_max criterion vs Poisson probability)
+🔬 S-PU-001: Measure τeff by alternative methods → confirm robustness
 🔬 Quantify censoring systematic → propagate to Rmax uncertainty
 
 **[Full chapter:](docs/academic_chapters/05_pileup_analysis.md)**

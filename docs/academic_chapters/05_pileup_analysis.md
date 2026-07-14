@@ -491,3 +491,52 @@ The failure-rate vs RMS tradeoff defines an operating curve. At a fixed acceptab
 🔬 Calibrate ML classifier score to physical overlap probability with injected overlaps.
 🔬 Build MC truth-labelled two-pulse overlay benchmark.
 🔬 Decompose pile-up by amplitude, stave, and run strata.
+
+---
+
+## Rmax Equation Correction (Statistical Audit Fix — 2026-07-14)
+
+> **BLOCKER 1 from statistical content audit: RESOLVED.**
+
+### The Error
+
+The previous text stated:
+
+```
+Rmax = −ln(0.95) / τeff ≈ 3.05 MHz
+```
+
+This is **mathematically incorrect**. For τeff = 124.79 ns:
+
+```
+−ln(0.95) / 124.79 ns = 0.411 MHz (NOT 3.05 MHz)
+```
+
+### The Correction
+
+The canonical Rmax = 3.05 MHz corresponds to an **occupancy-quality criterion**, not a 5% Poisson probability:
+
+```
+Rmax = μ_max / τeff
+μ_max ≈ 0.38 (from S10/MV5 reconstruction-quality threshold)
+Rmax = 0.38 / 124.79 ns = 3.04 MHz
+```
+
+This implies P(≥1 extra hit) = 1 − exp(−0.38) ≈ 31.6%, so it must **not** be described as a 5% pile-up rejection criterion.
+
+### Two Correct Interpretations
+
+| Criterion | Formula | Rmax |
+|---|---|---|
+| Occupancy-quality (μ_max ≈ 0.38) | Rmax = μ_max / τeff | **3.04 MHz** (canonical) |
+| Poisson 5% probability | Rmax = −ln(0.95) / τeff | **0.411 MHz** |
+
+The thesis must not state `Rmax = −ln(0.95)/τeff ≈ 3.05 MHz`.
+
+### Required Action
+- [ ] Confirm whether μ_max = 0.38 is the definitive accepted threshold from S10/MV5
+- [ ] If yes: document the reconstruction-quality criterion explicitly
+- [ ] If no: either withdraw 3.05 MHz or redefine using correct formula
+- [ ] Propagate τeff uncertainty and μ_max uncertainty into Rmax uncertainty
+
+See: `scripts/check_rmax_formula.py` for automated validation.

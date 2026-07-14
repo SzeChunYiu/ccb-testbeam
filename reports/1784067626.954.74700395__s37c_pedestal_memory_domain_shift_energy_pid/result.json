@@ -1,0 +1,133 @@
+{
+  "ticket_id": "1784067626.954.74700395",
+  "claimed_ticket_text": "S37c: pedestal-memory domain shift audit for energy-PID pulse representation",
+  "study_id": "S37c",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "pedestal-memory domain shift audit for energy-PID pulse representation",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_dir": "data/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0
+  },
+  "external_join": {
+    "source_report_dir": "reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join",
+    "joined_rows": 1056,
+    "audit_passed": true
+  },
+  "splits": {
+    "run_held_out": {
+      "train_runs": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "heldout_runs": [
+        58,
+        60,
+        62,
+        64,
+        65
+      ],
+      "bootstrap_unit": "source_run"
+    },
+    "time_blocked": "early/middle/late by raw_selected_event_ordinal within held-out run",
+    "current_rate_stratified": "held-out source_run tertiles by median raw_selected_peak_adc",
+    "bootstrap_replicates": 420
+  },
+  "required_method_coverage": {
+    "strong_traditional": "traditional_ar1_deltaE_over_E",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "pedestal_memory_gated_residual_cnn_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum S37c domain-shift score across PID, energy, pedestal sensitivity, calibration, and split instability",
+    "winner_score": 0.15040320427434625,
+    "pid_auc": 0.8836647850629613,
+    "pid_balanced_accuracy": 0.8239253148067738,
+    "pid_balanced_accuracy_ci95": [
+      0.7958333333333334,
+      0.8591967494921081
+    ],
+    "energy_fractional_sigma68": 0.2678504188596708,
+    "energy_fractional_sigma68_ci95": [
+      0.24113387145387472,
+      0.30107231014803026
+    ],
+    "pedestal_counterfactual_span": 0.011195068143034614,
+    "domain_shift_penalty": 0.04510774180485066
+  },
+  "traditional_comparator": {
+    "pid_auc": 0.829109856708641,
+    "pid_balanced_accuracy": 0.7673903603994789,
+    "pid_ece": 0.14508620857957696,
+    "pid_confusion_tn": 204,
+    "pid_confusion_fp": 41,
+    "pid_confusion_fn": 70,
+    "pid_confusion_tp": 165,
+    "energy_fractional_bias": 0.05497258170468869,
+    "energy_fractional_sigma68": 0.3269242324087376,
+    "n_events": 480,
+    "n_deuteron": 235,
+    "method": "traditional_ar1_deltaE_over_E",
+    "pedestal_counterfactual_span": 0.01764214916963236,
+    "pid_auc_ci_low": 0.8146645539865229,
+    "pid_auc_ci_high": 0.8398569945511123,
+    "pid_balanced_accuracy_ci_low": 0.75286173972675,
+    "pid_balanced_accuracy_ci_high": 0.779994672146435,
+    "pid_ece_ci_low": 0.11789620921652146,
+    "pid_ece_ci_high": 0.1924536257221462,
+    "energy_fractional_bias_ci_low": 0.010977210442767288,
+    "energy_fractional_bias_ci_high": 0.07905755258915084,
+    "energy_fractional_sigma68_ci_low": 0.3073381621931386,
+    "energy_fractional_sigma68_ci_high": 0.3490647566564842,
+    "domain_shift_penalty": 0.037536635676058,
+    "winner_score": 0.18849460872951845
+  },
+  "controls": {
+    "permutation_controls": "permutation_block_controls.csv",
+    "blocked_resampling": "split_bootstrap_intervals_long.csv"
+  },
+  "systematics_covered": [
+    "pedestal memory",
+    "late-tail shape drift",
+    "pile-up leakage",
+    "timing/acquisition order bias",
+    "saturation interactions",
+    "energy calibration transfer",
+    "PID confusion"
+  ],
+  "novel_tickets_appended": [
+    {
+      "ticket_id": "1784068210.870.38ff282e",
+      "title": "testbeam-laptop-1",
+      "body": "",
+      "note": "The local tn-ticket shim accepted the first positional argument as the title; no second ticket was appended because the objective limits this run to at most one appended ticket."
+    }
+  ],
+  "artifacts": {
+    "report": "REPORT.md",
+    "result": "result.json",
+    "method_summary": "method_summary.csv",
+    "split_systematic_metrics": "split_systematic_metrics.csv",
+    "permutation_block_controls": "permutation_block_controls.csv",
+    "heldout_predictions": "heldout_predictions.csv.gz",
+    "reproduction_match_table": "reproduction_match_table.csv"
+  },
+  "runtime_sec": 248.6215901374817,
+  "git_commit": "7afd5d051af3dbe96ba20679945f14b42c322013",
+  "python": "3.7.6"
+}

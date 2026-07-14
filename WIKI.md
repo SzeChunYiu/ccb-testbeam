@@ -220,109 +220,48 @@ Rmax = −ln(0.95) / τeff ≈ 3.05 MHz (5% pile-up tolerance)
 
 ## 6. Pulse Shape & Machine Learning
 
-> **Key Findings:**
-> - Pulse shapes are **low-dimensional**: 3 PCA components capture 89% of variance, 8 capture 99.7%
-> - **Autoencoder beats PCA** at very low latent dim (2–4); PCA catches up at dim ≥ 8
-> - ML genuinely wins where truth is independent and information is in waveform shape
-> - **All representation-superiority claims for downstream tasks: ❌ CORRECTED** (leakage artifact)
-> - The 0.32% anomaly class: **C12 nuclear recoils** — MC-identified (MV6)
-> - **The project's most important finding: most ML "wins" fail leakage controls**
+> **Thesis-grade update (2026-07-14).** PCA variance flagged SUPERSEDED, AE leakage corrected. See [Full chapter](docs/academic_chapters/06_pulse_shape_ml.md).
 
-### 6.1 Where ML Helps vs. Where It Doesn't
+### ML Verdict Matrix
 
-![ML Performance Landscape](docs/figures/10_ml_landscape.png)
-
-| Domain | ML Verdict | Why |
-|---|---|---|
-| **Saturation recovery** | ✅ **ML Wins** (3–7× better) | Truth (true amplitude) independent of input; signal is in waveform rising edge |
-| **Duplicate-readout amplitude** | ✅ **ML Wins** (res68 0.003 vs 0.12) | Truth from duplicate readout; independent of primary channel |
-| **Two-pulse time RMS** | ⚠️ ML wins RMS but higher failure | ML 9–11 ns vs traditional 13–18 ns, but failure rate 0.295 vs 0.168 |
-| **Timewalk correction** | ❌ Tie/Loss | Analytic B/amplitude model already near-optimal |
-| **Pile-up Poisson rate** | ❌ Tie | Analytic Poisson model already optimal |
-| **Deep net timing** | ❌ ML Loses | CNN/MLP on raw waveform loses to analytic timewalk |
-| **PID (data-only)** | ❌ Leakage | D_t/curvature classifiers hit AUC ~1.0 because label = f(input) |
-| **Representation superiority** | ❌ CORRECTED | Apparent AE→P03 win was leakage; failed run-family and event-block shuffle |
-
-### 6.2 Pulse Shape Compression
-
-![PCA vs AE](docs/figures/05_pca_vs_ae.png)
-
-**Study:** [Self-Supervised Waveform Representation (P01)](reports/1780997954.15517.0cbc248c__p01_self_supervised_waveform_representation/)
-
-| Latent Dim | PCA MSE | AE MSE | Winner |
+| Domain | Traditional | ML | Verdict |
 |---|---|---|---|
-| 2 | 0.02622 | 0.01294 | AE +50.6% |
-| 3 | 0.01416 | 0.00841 | AE +40.6% |
-| 4 | 0.00880 | 0.00527 | AE +40.1% |
-| 8 | 0.00166 | 0.00292 | PCA +75.9% |
+| Timewalk correction | Analytic A₀+B/A | MLP/CNN | **Traditional wins** (ML fails LORO) |
+| Duplicate readout | Amplitude correlation | ML closure | **ML wins** (GATED) |
+| Saturation recovery | Clip rejection | ML recovery | **ML wins** (GATED) |
+| Pile-up recovery | Template deconvolution | CNN | **GATED** |
+| PID | ΔE-E/range | HGB | **ML informative** (MC-truth only) |
 
-**Conclusion:** Pulses are simple shapes. The AE helps at very low dimensions (capturing nonlinear manifold), but PCA catches up once sufficient linear components are retained. The representation is compact — there's no deep hidden structure in pulse shape.
+### Key Corrections
 
-### 6.3 The C12 Anomaly
+1. **PCA variance: SUPERSEDED.** Wiki (89% / 99.7%) and corrected chapter differ. Needs canonical rerun.
+2. **AE superiority: CORRECTED.** Original claim was leakage (train-test contamination).
+3. **Most apparent ML "wins" fail leakage controls** — this is the primary methodological finding.
 
-**Study:** [Representation & Anomaly ID (MV6)](reports/mv6_representation_study/) | [MV6 C12 Physics](docs/MV6_C12_PHYSICS.md)
-
-![C12 Anomaly Waveform](docs/figures/08_c12_anomaly.png)
-
-Unsupervised discovery (P09a) found an anomalous class with **early peaking (sample 1–2 instead of sample 5) and near-zero area**. MV6 identified it:
-
-| Observable | Value |
-|---|---|
-| **True anomaly fraction** | **0.32%** (283 / 87,555 tracks) |
-| **Dominant species** | **C12 recoils (55%)** |
-| Secondary: proton | 15% |
-| Secondary: electron | 13% |
-| GMM Cluster 2 capture | >99% of C12-dominated anomalies |
-
-**Physical mechanism:** 190 MeV protons scatter off carbon-12 nuclei in the CD₂ target, producing recoiling C12 ions with ~1–4 MeV. These deposit **all energy in the first ~25 μm of scintillator** — the light is confined to samples 0–1 of the 18-sample window.
-
-**Impact:** Negligible (<0.1% systematic on deuteron count after GMM morphology cut). This removes about 1 in 300 tracks.
+**[Full chapter:](docs/academic_chapters/06_pulse_shape_ml.md)**
 
 ---
 
-## 7. Amplitude, Charge & Energy
+## 7. Amplitude, Charge & Energy Calibration
 
-> **Key Findings:**
-> - ML **decisively wins** duplicate-readout amplitude/charge closure (res68 0.003–0.009 vs 0.12–0.20)
-> - ML recovers saturated B2 pulses to **3–7× better precision** than templates
-> - **Absolute per-event energy is structurally unreachable** from waveform data — GEANT4 Birks lookup remains the best method
-> - Digitizer gain: **92 ± 28 ADC/MeV** (corrected MV0 v2; the v1 value of ~246 ADC/MeV was wrong)
+> **Thesis-grade update (2026-07-14).** Gain correction documented, absolute energy limitation derived. See [Full chapter](docs/academic_chapters/07_energy_calibration.md).
 
-### 7.1 Duplicate-Readout Closure
+### Key Results
 
-**Study:** [Amplitude & Charge Regression (P04)](reports/)
-
-When the same pulse is read out through two independent paths, the "duplicate" measurement provides **independent truth**. ML (HistGradientBoosting/ExtraTrees) achieves:
-- **res68 = 0.003–0.009** (ML)
-- **res68 = 0.12–0.20** (traditional peak/integral)
-
-This is the cleanest demonstration that **waveform shape carries recoverable calibration information** beyond scalar summaries.
-
-### 7.2 Saturation Recovery
-
-**Study:** [Saturation Recovery (P07)](reports/1780997954.15577.6c203777/)
-
-B2 staves in Sample I saturate — ~30–40% of B2 pulses exceed the 7000 ADC ceiling. ML recovers the true amplitude from the **unsaturated rising edge**:
-
-| Method | res68 | Degradation at High Saturation |
+| Observable | Value | Status |
 |---|---|---|
-| ML (ExtraTrees/HGB) | **0.032–0.046** | Graceful |
-| Template (shape fit) | 0.104–0.286 | Severe |
+| Digitizer gain | 92 ± 28 ADC/MeV | **VALIDATED** (MV0 v2, corrected from ~246 ADC/MeV) |
+| KS mismatch (MV0 v2) | 0.158 | **TENSION** (inter-stave variation unresolved) |
+| Absolute energy uncertainty | ~35% | Structural limitation |
+| ML duplicate-readout | Confirmed win domain | **GATED** |
+| ML saturation recovery | Promising | **GATED** |
 
-On **artificial constant-ceiling clips**, ML is 3–7× better. However, natural-saturation recovery carries a **run-dependent timing-tail envelope** that is treated as a systematic.
+### What Is NOT Claimed
+- **No absolute per-event energy calibration** (35% systematic)
+- **No per-stave gain measurement** (±10% assumed, not measured)
+- **No Birks constant calibration** (kB = 0.10–0.15 mm/MeV unverified for this scintillator)
 
-### 7.3 Absolute Energy Limitation
-
-**Study:** [Truth Energy Validation (MV2)](reports/mv1_mv2_truth_pid_energy/)
-
-**There is no per-event energy truth in the data.** Propagated per-event energy reaches res68 ~ 0.19–0.25, failing the 10% threshold.
-
-MC truth (MV2) confirms:
-- Proton edep_tot: **23 MeV**
-- Deuteron edep_tot: **89 MeV** (factor ~4×)
-- The **GEANT4 Birks lookup** remains the best held-out energy method — neural and tree models do not supersede the physics prior
-
----
+**[Full chapter:](docs/academic_chapters/07_energy_calibration.md)**
 
 ## 8. Particle Identification
 

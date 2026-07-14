@@ -1,0 +1,22 @@
+{
+  "ticket_id": "1784062062.755.350106c6",
+  "git_commit": "e2dabfe445a742377f867210ec2c9010b0cc3ee0",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-2/.venv/bin/python scripts/s33a_1784062062_755_350106c6_saturated_clipped_pulse_shape_reconstruction.py",
+  "runtime_seconds": 103.44546413421631,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "b3d496bcdc4f59d989b99306ce4b95909fad757fcfae261b695abcdfb0a2a7e2",
+    "claimed_ticket.txt": "9b10771aef0708172864d8d8bc98ed1271b8f994a442a9a23b37102560ed42eb",
+    "event_predictions.csv": "9b033faaa4c2ab017dad194da6e478ddadbb048deec9d51594c365c850db41f3",
+    "input_sha256.csv": "c458018bebad210c69df6fff1f0cad247f31f92150f42e4c49d004214400ad7b",
+    "method_metrics.csv": "8f64a202172f9ee8327c71e97d573055fbd74f20211a7d6e0858b2be45a01c11",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "9456bbad3bacec731a416f5ecf57703c8ca85c8195f26e5eb3a01f75fcb6b898",
+    "run_heldout_metrics.csv": "527cf4b7f1ac1397686d3e1434095ddf0698f8a94741bbcbeefdd5e5030ee94b",
+    "shape_endpoint_metrics.csv": "8e54ef9fd047bd224cdaff8e6dd341d5c0b4455facaa918976afb432db699db2",
+    "shape_stratified_bootstrap.csv": "580a541206e7481e1eaeec4d836da3f0b8bb14f5ba8984aafeb569332db4382e",
+    "template_summary.csv": "9584ade22ba744a3e5bb9c857a9eadf49e133aabc6cb66347475d4a4565a3433",
+    "winner_ranked_metrics.csv": "17cbd1e8908a56ae18b0e9454240f195e28d6b6fc8fd3bc4c3c536c50ea6af6a"
+  }
+}

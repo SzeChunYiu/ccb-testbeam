@@ -1,0 +1,114 @@
+{
+  "ticket_id": "1784068324.1054.23ed295f",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S37b residual-stack deconvolution on high-current pile-up candidates",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run; held-out is frozen to high-current candidate-source runs",
+    "train_runs": [
+      46,
+      47
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "candidate_surface": "high_20nA source runs used by prior blinded hand-scan candidate studies",
+    "handscan_provenance_sources": [
+      "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/blinded_gallery_adjudication.csv",
+      "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/blinded_candidate_ledger.csv",
+      "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/handscan_feature_table.csv"
+    ],
+    "label_policy": "hand-scan ledgers define the candidate surface; exact timing/energy labels come from controlled overlays on raw high-current residuals",
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "injection_source_bootstrap": "held-out source_run:stave:is_overlap:spacing_bin:ratio_bin percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "source_unit_bootstrap_replicates": 120,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "registered S37b composite endpoint score"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "temporal_convolution_tcn": "temporal_convolution_tcn",
+    "sequence_transformer": "tiny_sequence_transformer",
+    "transformer_with_pileup_masks": "pileup_mask_transformer_new",
+    "new_architecture": "pileup_mask_transformer_new",
+    "hybrid_new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum registered S37b composite endpoint score with run-block bootstrap CIs",
+    "winner_score": 2.665336645106775,
+    "leading_edge_time_sigma68_ns": 8.847150778508333,
+    "leading_edge_time_sigma68_ci95": [
+      8.290443040021541,
+      9.416025430787599
+    ],
+    "secondary_pulse_delay_sigma68_ns": 13.786136637826003,
+    "secondary_pulse_delay_sigma68_ci95": [
+      12.778595828457197,
+      14.663164600758938
+    ],
+    "time_sigma68_ns": 8.893818340731219,
+    "energy_proxy_distortion_sigma68": 0.11500973212677179,
+    "pileup_miss_rate": 0.19696969696969696,
+    "false_split_rate": 0.4090909090909091
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "injection_source_bootstrap_ci": "injection_source_bootstrap_ci.csv",
+    "uncertainty_calibration": "uncertainty_calibration.csv",
+    "candidate_surface_audit": "candidate_surface_audit.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "next_tickets": [
+    {
+      "title": "S37c: event-key hand-scan label join for real pile-up deconvolution",
+      "body": "Question: can reviewer hand-scan candidate rows be joined by event key to raw HRD windows well enough to score S37b deconvolution outputs against real pile-up labels with explicit reviewer-disagreement intervals? Build the join, freeze train/held-out source runs, compare traditional template/CFD, gradient-boosted trees, transformer, and residual stack, and report timing-tail, false-split, accepted-secondary-fraction, energy-bias, and stave/PID-proxy drift CIs. Expected information gain: separates architecture robustness from hand-scan label uncertainty on actual real beam pile-up candidates.",
+      "ticket_id": "1784070153.1596.5f56213c"
+    }
+  ],
+  "novel_tickets_appended": [
+    "1784070153.1596.5f56213c: S37c: event-key hand-scan label join for real pile-up deconvolution"
+  ],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived high-current candidate-surface residuals.",
+    "Hand-scan ledgers define the candidate-source surface but are not an event-level timing truth join.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "PID confusion is a stave-conditioned energy-bias proxy, not particle truth."
+  ]
+}

@@ -1,0 +1,3 @@
+# S37b: validate residual-stack deconvolution on hand-scanned real pile-up candidates
+
+Question: does the S37a template-residual boosted stack remain superior when evaluated on hand-scanned real pile-up-like windows rather than synthetic-over-real doublets? Compare the S37a traditional template/CFD baseline, ridge, gradient-boosted trees, MLP, 1D-CNN, causal-window transformer, and residual stack on a frozen hand-scan or high-current candidate set, split by source run with bootstrap CIs for timing tails, false splits, energy bias, and stave/PID-proxy drift. Expected information gain: separates architecture performance on exact-truth injected closures from robustness to real beam pile-up morphology and hand-scan label uncertainty.

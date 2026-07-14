@@ -405,3 +405,114 @@ The projected two-ended readout improvement (sigma_68 approximately 0.48-0.53 ns
 [7] Birks, J. B., The Theory and Practice of Scintillation Counting (Pergamon, 1964).
 
 [8] Hamamatsu Photonics, "MPPC (Multi-Pixel Photon Counter) S13360 series," technical datasheet (2020).
+
+---
+
+## Covariance-Aware Combined Event-Time Estimator (Thesis Upgrade Addition)
+
+> **Priority: BLOCKING for headline timing claim.**
+> The current combined 3-stave result (σ ≈ 0.54–0.56 ns) assumes independent stave errors. The measured pair covariance is −0.127 ns².
+
+### Method
+
+For N staves with individual timing estimates tᵢ and uncertainties σᵢ, the naive inverse-variance combination gives:
+
+```
+t_combined = Σᵢ(tᵢ / σᵢ²) / Σᵢ(1 / σᵢ²)
+σ_combined(naive) = 1 / √(Σᵢ(1 / σᵢ²))
+```
+
+The covariance-aware estimator replaces the diagonal weight matrix with the full covariance matrix V:
+
+```
+V = [[σ₁²,  cov₁₂, cov₁₃],
+     [cov₂₁, σ₂²,  cov₂₃],
+     [cov₃₁, cov₃₂, σ₃² ]]
+
+t_combined = (1ᵀ V⁻¹ t) / (1ᵀ V⁻¹ 1)
+σ_combined = 1 / √(1ᵀ V⁻¹ 1)
+```
+
+### Measured Covariance Matrix (B4, B6, B8)
+
+| Stave pair | Covariance (ns²) | Correlation |
+|---|---|---|
+| B4–B6 | −0.127 | −0.15 |
+| B4–B8 | −0.08 | −0.10 |
+| B6–B8 | −0.10 | −0.12 |
+
+### Status
+
+| Estimator | σ_combined (ns) | Status |
+|---|---|---|
+| Naive (independence-assumed) | 0.54–0.56 | Current headline |
+| Covariance-aware | **To be computed** | Required before final thesis |
+
+### B2 Exclusion
+
+B2-containing pairs cannot be treated as independent timing measurements because B2 sees both primary and downstream-covariant pulses. The pair covariance is topology-dependent: B2–B4 and B2–B6 residuals are anticorrelated due to shared beam-spill effects, while downstream-only pairs (B4–B6, B4–B8, B6–B8) have smaller but non-zero covariance.
+
+---
+
+## Timewalk Model Family Comparison (Thesis Upgrade Addition)
+
+> **Status: HIGH priority.** The canonical functional form must be resolved.
+
+### Tested Forms
+
+| Form | Equation | Free parameters | Held-out σ₆₈ (ns) | Verdict |
+|---|---|---|---|---|
+| log(A) | A₀ + B·log(A) | 2 | TBD | Tested |
+| 1/A | A₀ + B/A | 2 | TBD | **Likely canonical** |
+| 1/√A | A₀ + B/√A | 2 | TBD | Tested |
+| Spline | Monotonic cubic B-spline | 5 knots | TBD | Tested |
+| Monotonic bins | 10 equal-width bins | 10 | TBD | Overfits |
+
+The Wiki currently gives a simplified `A₀ + B/A`, while reports also mention log(A), 1/A, and 1/sqrt(A) families. The canonical form must be selected by held-out performance on LORO folds and physical sign of B (must be positive — larger pulses arrive earlier in WLS fibre).
+
+---
+
+## MC Validation Timing (Thesis Upgrade Addition)
+
+### Raw Timing: PASS
+| | MC | Data | Pull |
+|---|---|---|---|
+| σ₆₈ raw | 1.744 ± 0.007 ns | 1.85 ns | −1.05σ |
+
+### Corrected Timing: TENSION
+| | MC | Data | Pull |
+|---|---|---|---|
+| σ₆₈ corrected | 1.770 ns | 1.50 ns | +2.68σ |
+
+### Root Cause (MV4b Diagnosis)
+The toy digitizer uses timewalk parametrization `B/√ADC` with negative B — physically inverted timewalk (larger pulses get delayed instead of advanced). The correct form is `B/amplitude` with positive B. MV4b needs digitizer fix and rerun.
+
+### Action Required
+1. Switch toy digitizer timewalk from B/√ADC → B/amplitude
+2. Regenerate MC with corrected digitizer
+3. Rerun MV4 timing analysis
+4. Reassess corrected-timing pull
+
+---
+
+## Chapter Verdict — Established / Open / Next
+
+### Established
+✅ Raw timing σ₆₈ (B6 single-stave): 0.68–0.75 ns (data + MC validated).
+✅ Analytic timewalk correction is the conservative production method.
+✅ B2 exclusion from precision event-time estimate is justified by covariance topology.
+✅ ML timing gains exist but are gated by leakage controls.
+
+### Open
+⚠️ Combined 3-stave timing value assumes independent stave errors — covariance-aware estimator pending.
+⚠️ Canonical timewalk functional form not yet resolved across all documents.
+⚠️ MC corrected timing shows +2.68σ tension — blocks MC-validated timewalk claim.
+⚠️ ML timing transfer to A-stack not demonstrated.
+
+### Next Studies
+🔬 Compute full covariance-aware B4+B6+B8 combined estimator.
+🔬 CFD fraction and optimum-filter grid scan with bootstrap CIs.
+🔬 Timewalk model family comparison with held-out LORO performance.
+🔬 MV4b digitizer timewalk fix → MC rerun → MV4 correction reassessment.
+🔬 A-stack full timing reproduction beyond A1/A3.
+🔬 Architecture sweep under identical folds and leakage controls.

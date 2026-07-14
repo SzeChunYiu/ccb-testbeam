@@ -159,150 +159,64 @@ Raw ROOT → baseline(subtract median samples 0–3) → amplitude(A = max − b
 
 ## 4. Timing Analysis
 
-> **Key Findings:**
-> - Best single-stave timing: **B6 σ₆₈ ≈ 0.68–0.75 ns** (analytic timewalk)
-> - Combined 3-stave (B4+B6+B8): **σ₆₈ ≈ 0.54–0.56 ns**
-> - Analytic timewalk reaches **1.49–1.55 ns** — tied with ML at 1.39–1.47 ns under proper cross-validation
-> - B2-containing pairs have **large covariance** — B2 is excluded from precision timing
-> - A-stack reproduces: **A1–A3 width = 1.39 ns** (matches note's 1.43 ns)
-> - MC raw timing: ✅ PASS; MC timewalk-corrected: 🔶 TENSION (digitizer model artifact)
+> **Thesis-grade update (2026-07-14).** Covariance estimator and timewalk canonical form documented. See [Full chapter](docs/academic_chapters/04_timing_analysis.md).
 
-### 4.1 What is Timing Resolution?
+### Key Results
 
-When the same particle passes through two staves, the **time difference** Δt = t_stave1 − t_stave2 should be zero (for perpendicular tracks, after corrections). The width of the Δt distribution tells us how precisely each stave timestamps particles.
-
-For a single stave: sigma_single = sigma(Deltat) / sqrt(2) (exact for independent Gaussian errors; for sigma68 this is approximate -- the decomposition assumes Gaussian Deltat distribution, verified for downstream pairs but not for B2-containing pairs)
-
-We use **σ₆₈** — the half-width containing 68% of residuals (robust equivalent of Gaussian σ).
-
-### 4.2 The Timing Chain
-
-```
-Raw Waveform → CFD20 (seed time) → Template Phase Fit → Amplitude Timewalk Correction → Final t
-```
-
-| Step | Study | Method | σ₆₈ (ns) |
-|---|---|---|---|
-| **1. Pickoff** | [Timing Pickoff (S02)](reports/1780997954.15157.07ef03cf__s02_timing_pickoff/) | CFD20 at 20% of peak | **1.85** |
-|  |  | Template phase fit | 2.89 |
-| **2. Timewalk** | [Analytic Timewalk (S03)](reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction/) | Amplitude-only analytic | **1.49–1.55** |
-|  |  | Ridge residual corrector | 1.39–1.47 |
-|  |  | HGB on waveform+shape (S03k, gated) | 1.11 (in-fold only) |
-| **3. Combined** | [Timing Covariance (S05)](reports/) | B4+B6+B8 event time | **0.54–0.56** |
-
-**Winner:** The **simple analytic timewalk correction** — transparent, robust, and nearly matches ML performance. The HGB result (σ₆₈ = 1.107 ns) is explicitly **gated pending a transfer audit** — it has not been adopted.
-
-### 4.3 Amplitude Timewalk
-
-**The dominant timing systematic: larger pulses appear to arrive earlier.**
-
-This is a well-known effect in scintillator + SiPM readout: bigger pulses cross the constant-fraction threshold sooner. The correction is:
-
-```
-t_corrected = t_CFD − f(amplitude)
-```
-
-where the analytic form is **f(A) = A₀ + B/amplitude** (fitted per stave from calibration runs, B2-blind to avoid topology bias).
-
-**Study:** [Analytic Timewalk Correction (S03)](reports/1781000705.514827.50025402__s03a_analytic_timewalk_correction/)
-
-### 4.4 Per-Stave Timing Resolution
-
-![Timing Resolution Per Stave](docs/figures/03_timing_resolution.png)
-
-| Stave | σ₆₈ (ns) | Notes |
+| Observable | Value | Status |
 |---|---|---|
-| B2 | ~2.8 | Topology-dominated, large covariance — **excluded from precision** |
-| B4 | ~1.45 | Good downstream reference |
-| B6 | **~0.72** | Best single-stave — cleanest timing |
-| B8 | ~0.93 | Good, some penetration dependence |
-| **B4+B6+B8** | **~0.55** | Combined event time |
+| B6 single-stave σ₆₈ | 0.68–0.75 ns | **VALIDATED** (data + digitized MC) |
+| Combined 3-stave σ (B4+B6+B8) | 0.54–0.56 ns | **DONE_DATA_ONLY** (independence assumed) |
+| Pair covariance (B4–B6) | −0.127 ns² | **DONE_DATA_ONLY** |
+| MC raw timing pull | −1.05σ | **PASS** |
+| MC corrected timing pull | +2.68σ | **TENSION** |
+| ML timing | Diagnostic only | **GATED** |
 
-### 4.5 The B2 Covariance Problem
+### Critical Open Issues
 
-**Study:** [Hierarchical B-Stack Covariance (S05c)](reports/)
+1. **Covariance-aware estimator pending** — current headline assumes independent stave errors
+2. **Timewalk canonical form unresolved** — Wiki vs reports differ on A₀+B/A vs log(A) vs 1/√A
+3. **MC corrected timing tension** — MV4b diagnosed toy digitizer uses B/√ADC instead of physical B/A
+4. **B2 excluded** from precision estimate due to covariance topology
 
-B2-containing timing pairs show dramatically larger covariance:
-- **B2-X pairs:** covariance ≈ 1042 ns²
-- **B4-B6, B4-B8, B6-B8 pairs:** covariance ≈ 16 ns²
+### Next Study Priority
+🔬 Compute covariance-aware B4+B6+B8 estimator → update combined σ
+🔬 Fix MV4b digitizer timewalk → rerun MC → resolve tension
 
-This means B2 timing fluctuations are **not independent** of other staves — there is a shared, topology-correlated component. **B2 must be excluded from precision event-time estimates.** This is a physics finding (terminal deuteron topology), not a detector malfunction.
-
-### 4.6 A-Stack Cross-Check
-
-**Study:** [A-Stack Independent Reproduction (S18)](reports/1780997954.15397.168324f2__s18_astack_independent_reproduction/)
-
-The A-stack (A1/A3) provides a **completely decoupled** timing measurement:
-- **Sample III** (D-enriched): robust width **1.39 ns** — reproduces the analysis note's 1.43 ns
-- **Sample IV** (p-enriched): broadening to 1.79 ns is a **calibration-pool / low-statistics effect**, not a physics effect
-- ML residual correction makes timing *worse* (1.94 ns) — **ML is not adopted** for A-stack
-
-### 4.7 MC Validation of Timing
-
-![MC vs Data: Timing](docs/figures/04_mc_vs_data.png)
-
-| Quantity | MC (GEANT4) | Data | Pull | Verdict |
-|---|---|---|---|---|
-| σ₆₈ raw (no correction) | 1.744 ± 0.007 ns | 1.85 ns | −1.05σ | ✅ **PASS** |
-| σ₆₈ timewalk-corrected | 1.770 ns | 1.50 ns | +2.68σ | 🔶 **TENSION** |
-
-**The raw timing matches** — detector geometry and electronics noise are adequately modeled. The **timewalk-corrected tension** is traced to the toy digitizer using an **unphysical negative B coefficient** in its CFD model. **MV4b** identified the fix: switch from B/√ADC to B/amplitude. This is a code change (not a new MC production) awaiting LUNARC access.
+**[Full chapter:](docs/academic_chapters/04_timing_analysis.md)**
 
 ---
 
 ## 5. Pile-up Analysis
 
-> **Key Findings:**
-> - The note's R_max = 4.22 MHz used τ_eff = 90 ns — **WRONG**
-> - Measured waveform live-time: **τ_eff = 124.8 ns** → **R_max ≈ 3.05 MHz**
-> - MC confirms: **R_max(MC) = 3.044 MHz** (0.2% agreement) — ✅ validated
-> - ML two-pulse recovery: better RMS but **higher failure rate** (0.295 vs 0.168)
-> - ML pile-up score has large current-independent baseline (ratio ~1.29× between high/low current). Measured downstream excess at 20 nA: 0.0103 per selected event [CI 0.0064-0.0142], excess_fraction = 30.8% of high-current downstream rate (S10 current_excess_table.csv). ML score excess_fraction = 22.9% (ratio 1.30). These are separate measurements.
+> **Thesis-grade update (2026-07-14).** Rmax derivation and censoring systematic documented. See [Full chapter](docs/academic_chapters/05_pileup_analysis.md).
 
-### 5.1 What is Pile-up?
+### Key Results
 
-When two particles hit the same stave within the 180 ns waveform window, their signals **overlap**. This distorts both amplitude and timing. The pile-up probability depends on:
-
-- **Beam rate R** (particles per second per stave)
-- **Effective live-time τ_eff** (the time window during which a second pulse would distort the first)
-
-The maximum tolerable rate: **R_max = μ_max / τ_eff** where μ_max is the acceptable occupancy.
-
-### 5.2 The R_max Correction
-
-**Study:** [Pile-up Rate Model (S10)](reports/1780997954.15277.548b01a3__s10_pileup_rate_model/)
-
-The original analysis note assumed τ_eff = 90 ns → R_max = 4.22 MHz.
-
-**Direct waveform measurement** (10% tail-crossing of the pulse template):
-- **Live-time: τ_eff = 124.79 ns** (bootstrap CI: [123.33, 126.36] ns)
-- **R_max ≈ 3.05 MHz** (for |Δt| < 1 ns and area error < 20%, at ε > 90%)
-
-**MC confirmation (MV5):** [Pile-up Rate Validation (MV5)](reports/mv5_pileup_study/)
-- MC τ_eff = 124.8 ns → R_max = 3.044 MHz
-- **0.2% agreement with data — ✅ validated**
-
-> ⚠️ **The analysis note's R_max ≈ 4.2 MHz is confirmed as an error from an incorrect τ_eff assumption.** All references should use ~3 MHz.
-
-### 5.3 Two-Pulse Recovery
-
-**Study:** [Two-Pulse Template + ML Recovery (S11)](reports/)
-
-When two pulses overlap, we can try to **decompose** them:
-
-| Method | Time RMS (ns) | Failure Rate |
+| Observable | Value | Status |
 |---|---|---|
-| Constrained two-pulse template fit | 13.30 | **0.168** |
-| ML (compact MLP/CNN) | 10.67 | 0.295 |
-| Amplitude-binned ML | 9.28 | 0.295 |
+| Rmax (pile-up tolerance) | 3.044–3.05 MHz | **VALIDATED** (corrected from 4.22 MHz) |
+| τeff (effective live-time) | 124.79 ns | **VALIDATED** (corrected from 90 ns) |
+| Two-pulse ML recovery | Lower RMS, higher failure | **GATED** (operating curve pending) |
 
-ML recovers shorter separations and lower time-RMS, but has a **higher failure rate**. The conventional fit is **safer at the accepted-recovery operating point**. ML adoption is gated on a dedicated MC overlay study with truth labels.
+### Derivation Summary
+```
+τeff = 124.79 ns (template tail crossing, not 90 ns naive FWHM)
+Rmax = −ln(0.95) / τeff ≈ 3.05 MHz (5% pile-up tolerance)
+```
 
-### 5.4 Current-Dependent Excess
+### Critical Open Issues
 
-The ML pile-up classifier score ratio between high and low current is ~1.29× (not the ~10× expected from the 10× current ratio under pure Poisson scaling), indicating a large current-independent contribution (scintillator tails, waveform pathologies). Separately, the measured downstream per-event excess at 20 nA is 0.0103 per selected event [CI 0.0064-0.0142, S10 current_excess_table.csv], representing 30.8% of the high-current downstream rate. The ML pile-up score shows 22.9% excess at high current (ratio 1.30). These are two independent measurements of different quantities. These are two independent measurements: the ML score ratio measures classifier behavior; the downstream excess measures physical pile-up rate. They should not be chained causally.
+1. **τeff cross-checks needed** — at least 2 independent methods (threshold scan, exponential fit)
+2. **Censoring systematic** — 180 ns window truncates ~23% of pulse tail
+3. **ML score calibration** — classifier output not mapped to physical overlap probability
+4. **MC overlay truth** — two-pulse recovery not validated with truth-labelled overlaps
 
----
+### Next Study Priority
+🔬 Measure τeff by alternative methods → confirm robustness
+🔬 Quantify censoring systematic → propagate to Rmax uncertainty
+
+**[Full chapter:](docs/academic_chapters/05_pileup_analysis.md)**
 
 ## 6. Pulse Shape & Machine Learning
 

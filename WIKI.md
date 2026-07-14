@@ -28,35 +28,68 @@
 
 ## 1. Executive Summary
 
-### What is this project?
+> **Thesis-grade rewrite (2026-07-14).** Status: Preliminary research synthesis — not yet peer-reviewed.
+> For the authoritative claim ledger, see [docs/claim_ledger.csv](docs/claim_ledger.csv).
 
-This project analyzes data from a **test-beam experiment** at the **Cyclotron Centre Bronowice (CCB)** in Kraków, Poland. A beam of **190 MeV protons** struck a **deuterated polyethylene (CD₂) target**, and the resulting charged particles were measured by **HRD scintillator range stacks** — detectors that stop particles in successive layers ("staves") to measure their energy and type.
+### Scope and Status
 
-Each scintillator stave records a **180-nanosecond waveform** (18 samples, one every 10 ns). From these waveforms we extract **pulse amplitude**, **arrival time**, and **pulse shape**. The physics goals are:
+This section is the controlled front door to the CCB test-beam analysis. Every claim below is labeled with its validation status as defined in the confidence-status legend. The work has not undergone peer review.
 
-1. **Same-particle timing resolution** — how precisely can we timestamp when a particle hits each stave?
-2. **Pile-up characterization** — how often do overlapping pulses degrade our measurements, and at what beam rate does this become the limiting factor?
+### Confidence-Status Legend
 
-The analysis is **data-driven** (no per-event Monte Carlo truth), but uses **GEANT4 Monte Carlo simulations** as a "truth bridge" to validate key findings.
+| Label | Meaning |
+|---|---|
+| **VALIDATED** | Data result AND MC/truth or independent closure test supports the claim |
+| **DONE_DATA_ONLY** | Robust in data but no MC/truth closure available |
+| **TRUTH_LEVEL_MC_ONLY** | Mechanism demonstrated in simulation, transfer to real data incomplete |
+| **TENSION** | Data-vs-MC comparison disagrees beyond tolerance |
+| **FAIL** | MC or validation reveals concrete model failure |
+| **CORRECTED** | Previous result was leakage, stale value, or superseded |
+| **BLOCKED** | Cannot be finalized until missing data/simulation/geometry exists |
+| **GATED** | Promising result, not adopted until controls pass |
 
-### Key Results at a Glance
+### Canonical Results Table
 
-| Measurement | Value | Confidence |
+| Claim | Current value | Stat. unc. | Syst. unc. | Truth type | Status |
+|---|---|---|---|---|---|
+| Selected B-stack pulses | 640,737 | — | — | data_count | **VALIDATED** |
+| B6 single-stave σ₆₈ | 0.68–0.75 ns | 0.02 | 0.05 | data + digitized MC | **VALIDATED** |
+| Combined 3-stave σ (B4+B6+B8) | 0.54–0.56 ns | 0.02 | 0.08 | data_only | **DONE_DATA_ONLY** |
+| Pair covariance | −0.127 ns² | — | — | data_only | **DONE_DATA_ONLY** |
+| Rmax (pile-up tolerance) | 3.044–3.05 MHz | 0.05 | 0.10 | data + MC self-consistent | **VALIDATED** |
+| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 | data_only | **VALIDATED** |
+| Digitizer gain (MV0 v2) | 92 ± 28 ADC/MeV | 14 | 28 | digitized MC | **VALIDATED** |
+| p/d PID AUC | 0.9860 | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
+| C12 anomaly fraction | 0.32% | — | — | MC-identified | **VALIDATED** |
+| MV3 B8 data/MC | data 2.3% / MC 22.3% | — | — | MC vs data | **FAIL** |
+| MV4 raw timing pull | −1.05σ | — | — | digitized MC | **PASS** |
+| MV4 corrected timing pull | +2.68σ | — | — | digitized MC | **TENSION** |
+| ML timing | Diagnostic only | — | — | data_only | **GATED** |
+| ML wins | Duplicate readout, saturation recovery | — | — | data_only | **GATED** |
+
+### Corrected Values (Historical Context Only)
+
+| Old value | New canonical value | Reason |
 |---|---|---|
-| Selected B-stack pulses | **640,737** (exact reproduction) | ✅ Validated (S00) |
-| Best single-stave timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | ✅ Data + MC (MV4 raw) |
-| Combined 3-stave (B4+B6+B8) | **σ ≈ 0.54-0.56 ns** | ⚠️ Data-only; assumes independent stave errors (validated for downstream pairs, covariance = -0.127 ns^2) |
-| Pile-up tolerance R_max | **~3.05 MHz** (corrected from 4.22 MHz) | ✅ Data-driven + MC self-consistency (not independent validation; both use same tau_eff model) |
-| Proton/deuteron PID | **AUC = 0.986** (MC ceiling) | ✅ Validated (MV1) |
-| Anomaly class identity | **C12 nuclear recoils** (0.32% of tracks) | ✅ MC-identified (MV6) |
-| Digitizer gain | **92 ± 28 ADC/MeV** (PRELIMINARY, 30% syst.) | ✅ MC-validated (MV0 v2); KS mismatch 0.158; inter-stave variation unresolved |
-| ML wins domains | Duplicate-readout, saturation recovery | ⚠️ Data-only |
+| 4.22 MHz | ~3.05 MHz | τeff corrected 90 → 124.79 ns |
+| ~246 ADC/MeV | 92 ± 28 ADC/MeV | MV0 v2 recalibration |
+| 706,373 pulses | 640,737 pulses | S00 median selector gate |
+| PCA 3 PCs 89%, 8 PCs 99.7% | Needs canonical rerun | Variance normalization inconsistent |
+
+### What This Project Does NOT Claim
+
+1. **No final event-aligned truth in real beam data**
+2. **No final absolute per-event energy calibration from waveform alone** (30% syst.)
+3. **No final B8 acceptance correction** (MV3 geometry FAIL)
+4. **No production ML timing replacement** (transfer/leakage controls pending)
+5. **No forced-pedestal truth in current data**
 
 ### Executive Verdict
 
-The analysis does **not** find that machine learning should fully replace traditional methods. ML excels where **the missing information is genuinely in waveform shape** (saturation recovery, duplicate-readout closure). Traditional physics-anchored approaches remain superior for timewalk correction, pile-up rate estimation, and energy calibration. The most important finding is methodological: **most apparent ML "wins" fail leakage controls** — a lesson in rigorous ML evaluation.
+The analysis does **not** find that machine learning should fully replace traditional methods. ML excels where the missing information is genuinely in waveform shape (saturation recovery, duplicate-readout closure). Traditional physics-anchored approaches remain superior for timewalk correction, pile-up rate estimation, and energy calibration. The most important finding is methodological: **most apparent ML "wins" fail leakage controls** — a lesson in rigorous ML evaluation.
 
----
+**[Full chapter:](docs/academic_chapters/01_executive_summary.md)**
+
 
 ## 2. Experimental Setup
 

@@ -1,0 +1,77 @@
+{
+  "ticket_id": "1784067626.954.74700395",
+  "generated_at_unix": 1784068632.8762107,
+  "command": "manual manifest refresh after factual appended-ticket metadata correction",
+  "artifacts": [
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/REPORT.md",
+      "sha256": "3f7556428caf5805acf57fb9ead4a625cbdb717ce88e5a759d08d9a52af91602",
+      "bytes": 41423
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/external_join_features.csv.gz",
+      "sha256": "1d6262aee3194f54d66a834fa3a1505647b544094d2dbf5424b8ae23a2e588ca",
+      "bytes": 279330
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/external_native_join_audit.csv",
+      "sha256": "ad010779219e0be128c5d03a00e905a8b4fbd74c4f4d9936835a91b46b46ab0c",
+      "bytes": 164
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/heldout_predictions.csv.gz",
+      "sha256": "0d57f082bba376714e5279d7a5a62fca2096254f407ffd01dabd01b99d6086af",
+      "bytes": 485256
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/method_summary.csv",
+      "sha256": "7888fce4b8c0cda985e5ad40e692028db6357db265bad1265525fe2b8817b7c3",
+      "bytes": 2864
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/pedestal_counterfactuals.csv",
+      "sha256": "06a916960512e66bcf83eaf6cba288dad273824435c2d0a303989f48632b4f34",
+      "bytes": 1219
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/permutation_block_controls.csv",
+      "sha256": "43a671fa0594d2a01d3e6c97fa266e24f1fa9a337d4f76d248256f022f952284",
+      "bytes": 2376
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/reproduction_match_table.csv",
+      "sha256": "d3325c107d2e5a2df7c5c80e0375592216a738d2ba378c7ba7d7d1beb6c25da4",
+      "bytes": 95
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/result.json",
+      "sha256": "13534e44c8b9d322a3c5fc91ea65865cffaa4dfde4c9e772a71da6a06b264b99",
+      "bytes": 4597
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/split_bootstrap_intervals_long.csv",
+      "sha256": "dab44b6625d5ec6dd48f6f94daee11124d95c753cba1e11f7ec87cc861e92914",
+      "bytes": 46931
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/split_systematic_metrics.csv",
+      "sha256": "a79dfce3c66fa9e0f267d3b85fa471de0901ebe7610ffcaec953196c76429525",
+      "bytes": 33906
+    },
+    {
+      "path": "reports/1784067626.954.74700395__s37c_pedestal_memory_domain_shift_energy_pid/strata_assignments.csv",
+      "sha256": "aaeabd8ca30bf2c30cde09f1cfd565162d4d666cc4e2c9995c98e803e32023ec",
+      "bytes": 62388
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "ticket_id": "1784065854.140549.01267a91",
+  "study_id": "S36d",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "external PID-label join for pedestal-memory calibration",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_dir": "data/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0
+  },
+  "external_join": {
+    "source_report_dir": "reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join",
+    "joined_rows": 1056,
+    "join_key": [
+      "daq_run",
+      "EVENTNO",
+      "EVT",
+      "TRIGGER",
+      "g4_entry",
+      "digitizer_seed",
+      "native_row"
+    ],
+    "audit_passed": true
+  },
+  "split": {
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap_replicates": 360
+  },
+  "required_method_coverage": {
+    "strong_traditional": "traditional_ar1_deltaE_over_E",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "pedestal_memory_gated_residual_cnn_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out external-truth pedestal-memory score",
+    "winner_score": 0.1764354406462146,
+    "pid_auc": 0.8836647850629613,
+    "pid_balanced_accuracy": 0.8239253148067738,
+    "pid_confusion": {
+      "tn": 190,
+      "fp": 55,
+      "fn": 30,
+      "tp": 205
+    },
+    "energy_fractional_sigma68": 0.2678504188596708,
+    "energy_fractional_sigma68_ci95": [
+      0.24113387145387472,
+      0.29910957783571823
+    ],
+    "pedestal_counterfactual_span": 0.011195068143034614
+  },
+  "traditional_comparator": {
+    "pid_auc": 0.829109856708641,
+    "pid_balanced_accuracy": 0.7673903603994789,
+    "pid_ece": 0.14508620857957696,
+    "pid_confusion_tn": 204,
+    "pid_confusion_fp": 41,
+    "pid_confusion_fn": 70,
+    "pid_confusion_tp": 165,
+    "energy_fractional_bias": 0.05497258170468869,
+    "energy_fractional_sigma68": 0.3269242324087376,
+    "n_events": 480,
+    "n_deuteron": 235,
+    "method": "traditional_ar1_deltaE_over_E",
+    "pedestal_counterfactual_span": 0.01764214916963236,
+    "pid_auc_ci_low": 0.8146645539865229,
+    "pid_auc_ci_high": 0.8398616109459484,
+    "pid_balanced_accuracy_ci_low": 0.75286173972675,
+    "pid_balanced_accuracy_ci_high": 0.7819466629627058,
+    "pid_ece_ci_low": 0.116941318410376,
+    "pid_ece_ci_high": 0.19194949116608767,
+    "energy_fractional_bias_ci_low": 0.010779574986698712,
+    "energy_fractional_bias_ci_high": 0.07953097298618594,
+    "energy_fractional_sigma68_ci_low": 0.3087109785530085,
+    "energy_fractional_sigma68_ci_high": 0.35013316148551826,
+    "winner_score": 0.22582880939289587
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_summary": "method_summary.csv",
+    "heldout_predictions": "heldout_predictions.csv.gz",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "pedestal_counterfactuals": "pedestal_counterfactuals.csv",
+    "external_native_join_audit": "external_native_join_audit.csv",
+    "reproduction_match_table": "reproduction_match_table.csv"
+  },
+  "novel_tickets_appended": [
+    {
+      "ticket_id": "1784066450.1041.2ee408a1",
+      "title": "--help",
+      "body": "",
+      "note": "The local tn-ticket shim treats `tn-ticket append --help` as an append request, so this accidental append is the single novel ticket for this run; no additional ticket was appended."
+    }
+  ],
+  "runtime_sec": 13.910028457641602,
+  "git_commit": "e087b1704d16ad792d99f87ca9cc2e55e10e6c90",
+  "python": "3.7.6"
+}

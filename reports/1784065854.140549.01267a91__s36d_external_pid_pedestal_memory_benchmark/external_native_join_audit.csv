@@ -1,0 +1,5 @@
+check,value,pass
+external_digitized_rows,1056,True
+native_key_joined_rows,1056,True
+duplicate_native_keys_in_truth,0,True
+duplicate_native_keys_in_digitized,0,True

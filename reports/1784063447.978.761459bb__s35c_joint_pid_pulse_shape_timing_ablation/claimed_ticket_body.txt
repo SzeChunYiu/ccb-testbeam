@@ -1,0 +1,3 @@
+S35c joint PID pulse-shape timing ablation study
+
+Map how pulse shape, timing, pedestal drift, pile-up, saturation, and energy features support PID. Compare traditional deltaE-E/cut-based and likelihood/template-score methods with ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer classifiers/regressors. Provide stratified bootstrap CIs, leave-run-out checks, calibration curves, and ablations isolating waveform windows and nuisance controls.

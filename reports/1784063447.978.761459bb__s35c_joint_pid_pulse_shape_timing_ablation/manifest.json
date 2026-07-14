@@ -1,0 +1,31 @@
+{
+  "ticket_id": "1784063447.978.761459bb",
+  "study": "S35c",
+  "git_commit": "3f7fe7e9dd8dcec73e172dfb52dde300f36f670e",
+  "command": "/home/billy/anaconda3/bin/python scripts/s35c_1784063447_978_761459bb_joint_pid_pulse_shape_timing_ablation.py",
+  "runtime_seconds": 6.644075870513916,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "inputs": {
+    "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+    "s33_panel": "reports/1784062062.882.024708b9__s33a_rate_baseline_energy_pid_benchmark",
+    "s34_panel": "reports/1784062062.819.0cd45327__s34a_pileup_timing_separation_architecture_bakeoff"
+  },
+  "outputs_sha256": {
+    "REPORT.md": "07469fffeae6ff9109a40f6ded785866fb5580dedeb944a8b1fe976c7a8b5e68",
+    "claimed_ticket.txt": "8be43e3daa84d0dc289928636e347970bbad3e3b997f7aa2971c226a416e1b09",
+    "claimed_ticket_body.txt": "973ceccd5fdeb58da7d7899dec81bff62c8bff2533c81281af57d5a76fb2d2fc",
+    "joint_method_ranking.csv": "6f1d90c99d73eaaf56a45e806b60e89f026d9b4b336a614a318903fc315c2132",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "9568510e1727dbbb7b486c0bcdd0aac7b027f45d0c65be7ff0bc1a711b9ff7f3",
+    "s33_composite_method_ranking.csv": "bc523ce2c51867d7aed5e5950698c358509614e15060b8b04d9e4cd9393db4ad",
+    "s33_counts_by_run.csv": "01f9550d25096ef8d54a7898475a2e22bea3501dffc9d6661135bdce283dc902",
+    "s33_energy_metrics.csv": "1ef22b8d9da0d95d97de4ecc412a301d95f32c43ea31df8da50fdb849ecce29b",
+    "s33_pid_metrics.csv": "3258f2f0423656b185682ddca0f6ff3807f182057954b8819774ddb31fae7d04",
+    "s33_run_heldout_summary.csv": "728eeccce89cf1fdf7169366aefe6868039bf13666a0d98ac8f98afda734b4c5",
+    "s34_endpoint_metrics_ci.csv": "bf66bf7551cf139dd32d9cb56f5f9b1b0b61e9e7e3988fcc2f4c4485535221ba",
+    "s34_run_heldout_metrics.csv": "05048d42187bc7ec077dc318a4bce9694c42d7cda6a376af5bdcf1d7b9a6ecd8",
+    "s34_timing_metrics.csv": "2e6f8f88c7bed099586855e963d61550772f587aec6dca381fb03c0b921845d2",
+    "s34_winner_ranked_metrics.csv": "30961379aa0827f8dd4f551ceb163d11d72088ee016bf2d5dfc8ddab43a3c5ea"
+  }
+}

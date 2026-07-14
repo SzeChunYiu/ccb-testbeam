@@ -36,3 +36,31 @@ jobs:
       - uses: actions/checkout@v4
       - name: Claim ledger completeness
         run: python scripts/check_claim_ledger_complete.py
+
+  check-claim-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Claim source path validation
+        run: python scripts/check_claim_links.py docs/claim_ledger.csv
+
+  check-status-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Status label vocabulary check
+        run: python scripts/check_status_labels.py docs/claim_ledger.csv
+
+  check-numeric-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Numeric claims CI check
+        run: python scripts/check_numeric_claims_have_ci.py docs/claim_ledger.csv
+
+  check-rmax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rmax formula consistency check
+        run: python scripts/check_rmax_formula.py

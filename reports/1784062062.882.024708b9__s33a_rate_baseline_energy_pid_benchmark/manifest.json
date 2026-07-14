@@ -1,7 +1,7 @@
 {
   "study": "S33a",
   "ticket_id": "1784062062.882.024708b9",
-  "worker": "testbeam-laptop-1",
+  "worker": "testbeam-laptop-3",
   "git_commit": "e2dabfe445a742377f867210ec2c9010b0cc3ee0",
   "command": "/home/billy/anaconda3/bin/python scripts/s33a_1784062062_882_024708b9_rate_baseline_energy_pid_benchmark.py --config configs/s33a_1784062062_882_024708b9_rate_baseline_energy_pid_benchmark.yaml",
   "config": "configs/s33a_1784062062_882_024708b9_rate_baseline_energy_pid_benchmark.yaml",
@@ -188,7 +188,7 @@
   ],
   "outputs": {
     "REPORT.md": "e2808af028777ca43542509c898fc53a21dff14f9a2798272bfc59861e668690",
-    "result.json": "d06731ba6339042500dd864b6c4b01ae06536ccaf5e4ebcb0e400241750045f7",
+    "result.json": "7c5d5727d56f4ff7ebf90bfa6e24daac316ce5eb2c56e93872af08c3f28c4fdb",
     "input_sha256.csv": "e732a26b74529ebd0a2a1aaab6a9ce174fe0dfdd870b5e12259e8a0436965c02",
     "counts_by_run.csv": "01f9550d25096ef8d54a7898475a2e22bea3501dffc9d6661135bdce283dc902",
     "reproduction_match_table.csv": "6db74f910a5176e5876f75af0b231b05ef9a86ba708d5da634ac88e279f4fa2d",

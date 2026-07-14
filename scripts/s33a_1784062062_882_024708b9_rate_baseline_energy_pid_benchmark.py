@@ -1083,7 +1083,7 @@ def main() -> None:
     result = {
         "study": config["study_id"],
         "ticket_id": config["ticket_id"],
-        "worker": "testbeam-laptop-1",
+        "worker": "testbeam-laptop-3",
         "raw_reproduction": {
             "expected_selected_pulses": expected,
             "reproduced_selected_pulses": total,
@@ -1152,7 +1152,7 @@ def main() -> None:
     manifest = {
         "study": config["study_id"],
         "ticket_id": config["ticket_id"],
-        "worker": "testbeam-laptop-1",
+        "worker": "testbeam-laptop-3",
         "git_commit": git_commit(),
         "command": "/home/billy/anaconda3/bin/python scripts/s33a_1784062062_882_024708b9_rate_baseline_energy_pid_benchmark.py --config configs/s33a_1784062062_882_024708b9_rate_baseline_energy_pid_benchmark.yaml",
         "config": str(config_path.relative_to(ROOT)),

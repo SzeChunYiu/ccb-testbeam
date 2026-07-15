@@ -1,0 +1,375 @@
+{
+  "study": "G4-04-followup",
+  "ticket_id": "1783692400.14526.10306e70",
+  "worker": "testbeam-laptop-3",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "n_pulse_rows_after_valid_charge_cut": 640540,
+  "traditional_response_card": {
+    "light_yield_scale": 1.02,
+    "material_depth_slope": 0.0,
+    "saturation_smear_correction": 0.019999999999999997,
+    "train_res68_frac": 0.020327390602517887,
+    "train_bias_frac": 0.004263228821748966
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "res68_frac": 0.01613488469125098,
+    "res68_ci95": [
+      0.01355739654824799,
+      0.021641595785234544
+    ],
+    "bias_frac": -0.0011678338118797883,
+    "bias_ci95": [
+      -0.0018399808036632817,
+      0.00022572595198839577
+    ],
+    "mae_mev": 0.3178684358983058,
+    "mae_mev_ci95": [
+      0.27588942362858554,
+      0.38047775591039673
+    ]
+  },
+  "gate": {
+    "baseline_method": "traditional_response_scan",
+    "baseline_res68_frac": 0.021762118375721562,
+    "winner_relative_reduction": 0.2585793160076036,
+    "winner_clears_50pct_reduction_gate": false,
+    "status": "FAIL",
+    "tuned_params_path_updated": false
+  },
+  "all_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "bias_frac": -0.0011678338,
+      "res68_frac": 0.0161348847,
+      "mae_mev": 0.3178684359,
+      "res68_ci95": [
+        0.0135573965,
+        0.0216415958
+      ],
+      "bias_ci95": [
+        -0.0018399808,
+        0.000225726
+      ],
+      "mae_mev_ci95": [
+        0.2758894236,
+        0.3804777559
+      ]
+    },
+    {
+      "method": "traditional_response_scan",
+      "family": "traditional_response_card",
+      "n": 332852,
+      "bias_frac": 0.005326434,
+      "res68_frac": 0.0217621184,
+      "mae_mev": 0.8825987256,
+      "res68_ci95": [
+        0.0191342222,
+        0.0264081144
+      ],
+      "bias_ci95": [
+        0.0038279939,
+        0.0069398839
+      ],
+      "mae_mev_ci95": [
+        0.7445481146,
+        1.1063074856
+      ]
+    },
+    {
+      "method": "waveform_gated_response_cnn",
+      "family": "new_neural_waveform_response",
+      "n": 332852,
+      "bias_frac": 0.0040641947,
+      "res68_frac": 0.0277172005,
+      "mae_mev": 0.4792769296,
+      "res68_ci95": [
+        0.0242051845,
+        0.0345514921
+      ],
+      "bias_ci95": [
+        0.003184072,
+        0.0055004425
+      ],
+      "mae_mev_ci95": [
+        0.4279134451,
+        0.5573384437
+      ]
+    },
+    {
+      "method": "geant4_birks_lookup",
+      "family": "traditional_geant4_birks",
+      "n": 332852,
+      "bias_frac": -0.0230986356,
+      "res68_frac": 0.0402439783,
+      "mae_mev": 1.08243596,
+      "res68_ci95": [
+        0.0387538159,
+        0.0415865735
+      ],
+      "bias_ci95": [
+        -0.0268932418,
+        -0.0182407956
+      ],
+      "mae_mev_ci95": [
+        0.9600408253,
+        1.2502300277
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "bias_frac": 0.0166033721,
+      "res68_frac": 0.0723103906,
+      "mae_mev": 1.0854126417,
+      "res68_ci95": [
+        0.0608471263,
+        0.0928667126
+      ],
+      "bias_ci95": [
+        0.0115018815,
+        0.023421616
+      ],
+      "mae_mev_ci95": [
+        0.9606877852,
+        1.2564536246
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "bias_frac": 0.0197504537,
+      "res68_frac": 0.1053886209,
+      "mae_mev": 1.4683061156,
+      "res68_ci95": [
+        0.0859176113,
+        0.1410209747
+      ],
+      "bias_ci95": [
+        0.0127932341,
+        0.0257866987
+      ],
+      "mae_mev_ci95": [
+        1.3476625422,
+        1.647669328
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "bias_frac": 0.0020607719,
+      "res68_frac": 0.1166708724,
+      "mae_mev": 1.6847827144,
+      "res68_ci95": [
+        0.1094821722,
+        0.125536873
+      ],
+      "bias_ci95": [
+        -0.0036352252,
+        0.0097709656
+      ],
+      "mae_mev_ci95": [
+        1.5263481332,
+        1.8017624695
+      ]
+    }
+  ],
+  "response_gap_summary": [
+    {
+      "method": "gradient_boosted_trees",
+      "res68_frac": 0.0161348847,
+      "relative_reduction_vs_traditional_response_scan": 0.258579316,
+      "clears_50pct_gate": false
+    },
+    {
+      "method": "traditional_response_scan",
+      "res68_frac": 0.0217621184,
+      "relative_reduction_vs_traditional_response_scan": 0.0,
+      "clears_50pct_gate": false
+    },
+    {
+      "method": "waveform_gated_response_cnn",
+      "res68_frac": 0.0277172005,
+      "relative_reduction_vs_traditional_response_scan": -0.2736444135,
+      "clears_50pct_gate": false
+    },
+    {
+      "method": "geant4_birks_lookup",
+      "res68_frac": 0.0402439783,
+      "relative_reduction_vs_traditional_response_scan": -0.849267503,
+      "clears_50pct_gate": false
+    },
+    {
+      "method": "ridge",
+      "res68_frac": 0.0723103906,
+      "relative_reduction_vs_traditional_response_scan": -2.3227643254,
+      "clears_50pct_gate": false
+    },
+    {
+      "method": "1d_cnn",
+      "res68_frac": 0.1053886209,
+      "relative_reduction_vs_traditional_response_scan": -3.8427556114,
+      "clears_50pct_gate": false
+    },
+    {
+      "method": "mlp",
+      "res68_frac": 0.1166708724,
+      "relative_reduction_vs_traditional_response_scan": -4.3611909626,
+      "clears_50pct_gate": false
+    }
+  ],
+  "geant4_truth_anchor": {
+    "truth_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+    "truth_tree": "hibeam",
+    "truth_layer_map": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "truth_track_length_to_cm": 0.1,
+    "truth_edep_statistic": "median",
+    "truth_event_summary": {
+      "truth_root": "/home/billy/ccb-geant4/output_krakow_1M.root",
+      "truth_tree_entries": 1000000,
+      "events_with_scibar_hits": 242147,
+      "scibar_hit_count": 1279440,
+      "event_hit_fraction": 0.242147,
+      "event_total_edep_median_mev": 124.8622225385,
+      "event_total_edep_q16_mev": 69.6836964713,
+      "event_total_edep_q84_mev": 140.9035868792,
+      "event_total_edep_q95_mev": 163.9551609273,
+      "event_nhit_median_nonzero": 5.0
+    },
+    "truth_layer_priors": [
+      {
+        "stave": "B2",
+        "stave_idx": 0,
+        "truth_layer_id": 0,
+        "truth_hit_count": 371089,
+        "truth_event_entries": 1000000,
+        "expected_edep_mev": 18.6148954473,
+        "mean_edep_mev": 23.3447089756,
+        "median_edep_mev": 18.6148954473,
+        "q16_edep_mev": 9.937019899,
+        "q84_edep_mev": 41.693333656,
+        "dedx_mev_cm": 2.5601601932,
+        "proton_hit_fraction": 0.4954040675,
+        "deuteron_hit_fraction": 0.3924853607
+      },
+      {
+        "stave": "B4",
+        "stave_idx": 1,
+        "truth_layer_id": 2,
+        "truth_hit_count": 175489,
+        "truth_event_entries": 1000000,
+        "expected_edep_mev": 14.9007767244,
+        "mean_edep_mev": 20.5350038771,
+        "median_edep_mev": 14.9007767244,
+        "q16_edep_mev": 10.588479002,
+        "q84_edep_mev": 39.8428395564,
+        "dedx_mev_cm": 2.1823383178,
+        "proton_hit_fraction": 0.6921459465,
+        "deuteron_hit_fraction": 0.2013630484
+      },
+      {
+        "stave": "B6",
+        "stave_idx": 2,
+        "truth_layer_id": 4,
+        "truth_hit_count": 100797,
+        "truth_event_entries": 1000000,
+        "expected_edep_mev": 17.9510076001,
+        "mean_edep_mev": 16.9447719981,
+        "median_edep_mev": 17.9510076001,
+        "q16_edep_mev": 12.9642558958,
+        "q84_edep_mev": 23.1491795811,
+        "dedx_mev_cm": 1.7048705426,
+        "proton_hit_fraction": 0.8952052144,
+        "deuteron_hit_fraction": 0.0080260325
+      },
+      {
+        "stave": "B8",
+        "stave_idx": 3,
+        "truth_layer_id": 6,
+        "truth_hit_count": 69737,
+        "truth_event_entries": 1000000,
+        "expected_edep_mev": 19.7622958847,
+        "mean_edep_mev": 22.59389224,
+        "median_edep_mev": 19.7622958847,
+        "q16_edep_mev": 9.74040468,
+        "q84_edep_mev": 35.9575629953,
+        "dedx_mev_cm": 2.1581776047,
+        "proton_hit_fraction": 0.9019458824,
+        "deuteron_hit_fraction": 0.0036279163
+      }
+    ],
+    "birks_fit": {
+      "kB_cm_per_MeV": 0.0,
+      "alpha_adc_per_MeV": 2673.2892559519323,
+      "median_abs_log_charge_error": 0.25583678261844334,
+      "n_train_pulses": 263267,
+      "log_residual_mean": -0.3610927497729172,
+      "log_residual_std": 0.8930508459708707,
+      "chi2_log_unit_ndf": 0.9279318073916224,
+      "chi2_definition": "sum(log(Q)-log(Q_model))^2 / (N-2), unit log-charge variance diagnostic"
+    }
+  },
+  "new_architecture": "waveform_gated_response_cnn: 1D convolution over four 18-sample even-channel windows, channel gating from waveform maxima, and multiplicative residual prediction around the train-run traditional response card.",
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. The response-card traditional baseline achieved res68=0.02176. The held-out winner was gradient_boosted_trees with res68=0.01613, a 25.9% reduction relative to the response-card baseline. The 50% gate therefore did not clear.",
+  "next_tickets": [
+    {
+      "title": "G4-05: event-aligned digitized GEANT4 waveform closure",
+      "body": "Build a small digitizer that turns hibeam_g4 Sci_bar hits into HRD-like 18-sample ADC windows with pedestal, saturation, time smearing, and duplicate-readout response. Benchmark the G4-04 follow-up response-card winner and waveform-gated CNN on simulated waveforms with known truth, then compare residual atoms to real held-out runs."
+    }
+  ],
+  "runtime_sec": 89.7
+}

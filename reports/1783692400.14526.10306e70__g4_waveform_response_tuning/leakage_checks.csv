@@ -1,0 +1,9 @@
+check,value,pass
+train_heldout_run_overlap,[],True
+raw_reproduction_exact,640737 of 640737,True
+features_exclude_odd_charge_run_event_id,"multiplicity,depth_idx,even_total_charge,even_max_amp,saturated_count,log_charge_stave_0,log_charge_stave_1,log_charge_stave_2,log_charge_stave_3,log_amp_stave_0,log_amp_stave_1,log_amp_stave_2,log_amp_stave_3,hit_stave_0,hit_stave_1,hit_stave_2,hit_stave_3,peak_stave_0,peak_stave_1,peak_stave_2,peak_stave_3,early_charge_fraction,late_charge_fraction,log_traditional_response_scan,pretrigger_mean,pretrigger_std,tail_charge_fraction,mean_halfheight_width,max_halfheight_width,deep_minus_shallow_charge_asymmetry",True
+cnn_status,trained,True
+waveform_gated_response_cnn_status,trained,True
+requested_prior_artifact_present,reports/1781212364.2054485.44255c27__g4_04_response_tuning,False
+truth_root_used,/home/billy/ccb-geant4/output_krakow_1M.root,True
+truth_layers_mapped_to_even_b_staves,"B2->0,B4->2,B6->4,B8->6",True

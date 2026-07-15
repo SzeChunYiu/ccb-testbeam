@@ -1,0 +1,2 @@
+truth_root,truth_tree_entries,events_with_scibar_hits,scibar_hit_count,event_hit_fraction,event_total_edep_median_mev,event_total_edep_q16_mev,event_total_edep_q84_mev,event_total_edep_q95_mev,event_nhit_median_nonzero
+/home/billy/ccb-geant4/output_krakow_1M.root,1000000,242147,1279440,0.242147,124.86222253845987,69.68369647134571,140.9035868791923,163.95516092732421,5.0

@@ -1,0 +1,285 @@
+{
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "input_sha256.csv",
+    "raw_reproduction_by_run.csv",
+    "class_counts.csv",
+    "method_metrics.csv",
+    "per_species_metrics.csv",
+    "fold_metrics.csv",
+    "confusion_matrix_winner.csv",
+    "leakage_checks.csv",
+    "pid_model_card.json",
+    "pid_model.json",
+    "roc_operating_points.csv",
+    "figures/roc_operating_points.png",
+    "figures/confusion_matrix_winner.png",
+    "figures/method_balanced_accuracy_ci.png"
+  ],
+  "classes": {
+    "deuteron": 1000010020,
+    "proton": 2212
+  },
+  "geant4_input": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "geant4_truth_reproduction": {
+    "delta_truth_deuterons": 0,
+    "delta_truth_protons": 0,
+    "events": 1000000,
+    "expected_truth_deuterons": 314646,
+    "expected_truth_protons": 836534,
+    "passed": true,
+    "per_layer": [
+      {
+        "d_frac": 0.39248536065472167,
+        "hits": 371089,
+        "hits_gt10MeV": 311247,
+        "layer": 0,
+        "mean_edep_MeV": 23.344708975559303,
+        "p_frac": 0.4954040674878533
+      },
+      {
+        "d_frac": 0.3633070811504701,
+        "hits": 288230,
+        "hits_gt10MeV": 245197,
+        "layer": 1,
+        "mean_edep_MeV": 20.907364379187054,
+        "p_frac": 0.5484508899143046
+      },
+      {
+        "d_frac": 0.20136304839619576,
+        "hits": 175489,
+        "hits_gt10MeV": 148042,
+        "layer": 2,
+        "mean_edep_MeV": 20.535003877146956,
+        "p_frac": 0.6921459464695793
+      },
+      {
+        "d_frac": 0.189657333890514,
+        "hits": 143580,
+        "hits_gt10MeV": 122023,
+        "layer": 3,
+        "mean_edep_MeV": 17.717564025450688,
+        "p_frac": 0.7274481125504945
+      },
+      {
+        "d_frac": 0.008026032520809152,
+        "hits": 100797,
+        "hits_gt10MeV": 86361,
+        "layer": 4,
+        "mean_edep_MeV": 16.944771998080075,
+        "p_frac": 0.895205214440906
+      },
+      {
+        "d_frac": 0.005283836878471752,
+        "hits": 95953,
+        "hits_gt10MeV": 81368,
+        "layer": 5,
+        "mean_edep_MeV": 23.224951481136767,
+        "p_frac": 0.8851104186424603
+      },
+      {
+        "d_frac": 0.0036279163141517416,
+        "hits": 69737,
+        "hits_gt10MeV": 58409,
+        "layer": 6,
+        "mean_edep_MeV": 22.59389224001373,
+        "p_frac": 0.9019458823866814
+      },
+      {
+        "d_frac": 0.004223925936641111,
+        "hits": 34565,
+        "hits_gt10MeV": 28013,
+        "layer": 7,
+        "mean_edep_MeV": 19.905209765019737,
+        "p_frac": 0.8865036887024447
+      }
+    ],
+    "source": "geant4/results/sim_summary.json",
+    "truth_deuterons": 314646,
+    "truth_protons": 836534
+  },
+  "leakage_checks": [
+    {
+      "check": "identifier_only_group_heldout_balanced_accuracy",
+      "pass": true,
+      "threshold": 0.55,
+      "value": 0.4903
+    },
+    {
+      "check": "shuffled_label_ridge_balanced_accuracy",
+      "pass": true,
+      "threshold": 0.55,
+      "value": 0.4945
+    }
+  ],
+  "leakage_checks_passed": true,
+  "methods": [
+    {
+      "balanced_accuracy": 0.9955,
+      "balanced_accuracy_ci_high": 0.9970187845303867,
+      "balanced_accuracy_ci_low": 0.9935963384754363,
+      "macro_f1": 0.9954999923949872,
+      "macro_f1_ci_high": 0.9970201181684354,
+      "macro_f1_ci_low": 0.9936197807149414,
+      "macro_precision": 0.9955033496026433,
+      "macro_precision_ci_high": 0.9970215305056934,
+      "macro_precision_ci_low": 0.9936748261483559,
+      "macro_recall": 0.9955,
+      "macro_recall_ci_high": 0.9970187845303867,
+      "macro_recall_ci_low": 0.9935963384754363,
+      "method": "gradient_boosted_trees",
+      "n": 10000
+    },
+    {
+      "balanced_accuracy": 0.9952,
+      "balanced_accuracy_ci_high": 0.9964375690607734,
+      "balanced_accuracy_ci_low": 0.9939420924574209,
+      "macro_f1": 0.9951999767678876,
+      "macro_f1_ci_high": 0.9964242333837663,
+      "macro_f1_ci_low": 0.9939584022735678,
+      "macro_precision": 0.9952095872576093,
+      "macro_precision_ci_high": 0.9964187623515447,
+      "macro_precision_ci_low": 0.9939819482745864,
+      "macro_recall": 0.9952,
+      "macro_recall_ci_high": 0.9964375690607734,
+      "macro_recall_ci_low": 0.9939420924574209,
+      "method": "hybrid_cnn_tabular",
+      "n": 10000
+    },
+    {
+      "balanced_accuracy": 0.9946999999999999,
+      "balanced_accuracy_ci_high": 0.9961588833362054,
+      "balanced_accuracy_ci_low": 0.9924645690093733,
+      "macro_f1": 0.9946999613627182,
+      "macro_f1_ci_high": 0.9961513473238461,
+      "macro_f1_ci_low": 0.9924958240813506,
+      "macro_precision": 0.9947144258726585,
+      "macro_precision_ci_high": 0.9961458550443028,
+      "macro_precision_ci_low": 0.9925794163898962,
+      "macro_recall": 0.9946999999999999,
+      "macro_recall_ci_high": 0.9961588833362054,
+      "macro_recall_ci_low": 0.9924645690093733,
+      "method": "ridge",
+      "n": 10000
+    },
+    {
+      "balanced_accuracy": 0.9944999999999999,
+      "balanced_accuracy_ci_high": 0.9962429360694554,
+      "balanced_accuracy_ci_low": 0.992162851553374,
+      "macro_f1": 0.9944999401043477,
+      "macro_f1_ci_high": 0.9962255997906926,
+      "macro_f1_ci_low": 0.9921994430464471,
+      "macro_precision": 0.9945215413583416,
+      "macro_precision_ci_high": 0.996221551936278,
+      "macro_precision_ci_low": 0.99230804001341,
+      "macro_recall": 0.9944999999999999,
+      "macro_recall_ci_high": 0.9962429360694554,
+      "macro_recall_ci_low": 0.992162851553374,
+      "method": "mlp",
+      "n": 10000
+    },
+    {
+      "balanced_accuracy": 0.9794,
+      "balanced_accuracy_ci_high": 0.9812549329123914,
+      "balanced_accuracy_ci_low": 0.977006774789571,
+      "macro_f1": 0.9793912544727481,
+      "macro_f1_ci_high": 0.9811255559215051,
+      "macro_f1_ci_low": 0.977035200947497,
+      "macro_precision": 0.9802151363810987,
+      "macro_precision_ci_high": 0.9817821408344346,
+      "macro_precision_ci_low": 0.9780658997855333,
+      "macro_recall": 0.9794,
+      "macro_recall_ci_high": 0.9812549329123914,
+      "macro_recall_ci_low": 0.977006774789571,
+      "method": "traditional_bands",
+      "n": 10000
+    },
+    {
+      "balanced_accuracy": 0.8572,
+      "balanced_accuracy_ci_high": 0.8600454638028096,
+      "balanced_accuracy_ci_low": 0.85431000385679,
+      "macro_f1": 0.85440308916677,
+      "macro_f1_ci_high": 0.8569137200434354,
+      "macro_f1_ci_low": 0.8508163689323793,
+      "macro_precision": 0.8869317757386757,
+      "macro_precision_ci_high": 0.8893829648612257,
+      "macro_precision_ci_low": 0.8841608691850493,
+      "macro_recall": 0.8572,
+      "macro_recall_ci_high": 0.8600454638028096,
+      "macro_recall_ci_low": 0.85431000385679,
+      "method": "cnn1d",
+      "n": 10000
+    }
+  ],
+  "n_available_labeled_events": 69231,
+  "n_used_events": 10000,
+  "next_tickets": [],
+  "raw_reproduction": {
+    "delta": 0,
+    "events": 1096728,
+    "expected_selected_pulses": 640737,
+    "passed": true,
+    "raw_root_dir": "data/root/root",
+    "runs": 33,
+    "selected_pulses": 640737,
+    "stave_counts": {
+      "B2": 579424,
+      "B4": 36116,
+      "B6": 17945,
+      "B8": 7252
+    }
+  },
+  "roc_operating_points": [
+    {
+      "balanced_accuracy": 0.9955,
+      "fpr": 0.0031999999999999806,
+      "method": "gradient_boosted_trees",
+      "tpr": 0.9942
+    },
+    {
+      "balanced_accuracy": 0.9952,
+      "fpr": 0.0026000000000000467,
+      "method": "hybrid_cnn_tabular",
+      "tpr": 0.993
+    },
+    {
+      "balanced_accuracy": 0.9947,
+      "fpr": 0.0026000000000000467,
+      "method": "ridge",
+      "tpr": 0.992
+    },
+    {
+      "balanced_accuracy": 0.9945,
+      "fpr": 0.0021999999999999797,
+      "method": "mlp",
+      "tpr": 0.9912
+    },
+    {
+      "balanced_accuracy": 0.9794,
+      "fpr": 0.0,
+      "method": "traditional_bands",
+      "tpr": 0.9588
+    },
+    {
+      "balanced_accuracy": 0.8572,
+      "fpr": 0.2814,
+      "method": "cnn1d",
+      "tpr": 0.9958
+    }
+  ],
+  "runtime_sec": 119.33002090454102,
+  "ticket": "1781212364.2054420.60d57515",
+  "title": "G4-03 Proton/deuteron PID: GEANT4 truth vs dE-E and waveform/ML PID",
+  "truth_definition": "dominant Sci_bar LayerID1==2 deposited energy by target PDG, dominance >= 0.6",
+  "winner": "gradient_boosted_trees",
+  "winner_balanced_accuracy": 0.9955,
+  "winner_balanced_accuracy_ci95": [
+    0.9935963384754363,
+    0.9970187845303867
+  ],
+  "winner_macro_f1": 0.9954999923949872,
+  "winner_metric": "run_block_heldout_balanced_accuracy",
+  "worker": "testbeam-laptop-3"
+}

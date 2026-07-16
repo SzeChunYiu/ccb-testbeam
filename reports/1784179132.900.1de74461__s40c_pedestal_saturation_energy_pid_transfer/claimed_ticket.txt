@@ -1,0 +1,4 @@
+1784179132.900.1de74461
+# S40c pedestal-saturation energy calibration transfer under PID-conditioned shape shifts
+
+Academic-grade study: test whether pedestal state and saturation correction transfer across runs without silently changing energy scale or PID boundaries when pulse shape changes. Compare traditional sideband/adaptive pedestal subtraction, clipped-template charge reconstruction, and range/dE-dx PID cuts against ridge, gradient-boosted trees, MLP, 1D-CNN waveform regressors, multitask PID-energy heads, and a transformer encoder where apt. Use leave-run-family-out validation and bootstrap 95% CIs for energy bias/resolution, saturation knee, pedestal high-minus-low contrast, PID AUC/calibration, timing residuals, pile-up strata, and uncertainty coverage. Deliver concise failure maps that deepen pedestal, saturation, energy, and PID understanding.

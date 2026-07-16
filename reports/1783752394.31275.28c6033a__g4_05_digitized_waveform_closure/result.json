@@ -1,0 +1,68 @@
+{
+  "benchmark": {
+    "bootstrap_reps": 250,
+    "methods": [
+      "gradient_boosted_trees",
+      "ridge",
+      "physics_residual_gated_cnn",
+      "mlp",
+      "cnn_1d",
+      "response_card_winner"
+    ],
+    "metrics_csv": "benchmark_metrics.csv",
+    "n_run_blocks": 6,
+    "per_run_csv": "per_run_metrics.csv",
+    "split": "leave-one-pseudo-run-out"
+  },
+  "geant4": {
+    "b_stack_layer_id1": 2,
+    "digitizer": "pedestal + duplicate response + time smearing + 4095 ADC saturation",
+    "events_used": 1639,
+    "layer_map": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "tree": "hibeam",
+    "truth_root": "/home/billy/ccb-geant4/output_krakow_1M.root"
+  },
+  "next_tickets": [
+    {
+      "description": "Use pulser/noise windows and run-keyed pedestal spectra to replace pseudo-run electronics nuisance terms in the G4 digitizer, then repeat event-aligned closure and real-run residual atom comparison.",
+      "title": "G4-06 run-keyed electronics transfer for digitized GEANT4 HRDv windows"
+    }
+  ],
+  "raw_reproduction": {
+    "amplitude_cut_adc": 1000.0,
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "branch": "HRDv",
+    "channels_zero_based": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "expected_selected_pulses": 640737,
+    "pass": true,
+    "raw_root_dir": "data/root/root",
+    "reproduced_selected_pulses": 640737,
+    "tree": "h101"
+  },
+  "residual_atoms_csv": "residual_atoms.csv",
+  "ticket": "1783752394.31275.28c6033a",
+  "title": "G4-05: event-aligned digitized GEANT4 waveform closure",
+  "winner": "gradient_boosted_trees",
+  "winner_metric": {
+    "ci_high": 0.025345506757911123,
+    "ci_low": 0.02321735084502521,
+    "primary": "res68_frac",
+    "value": 0.02431715669331363
+  },
+  "worker": "testbeam-laptop-4"
+}

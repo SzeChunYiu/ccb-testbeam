@@ -1,0 +1,534 @@
+{
+  "study": "G4-06",
+  "ticket_id": "1783771803.34334.27f75154",
+  "worker": "testbeam-laptop-4",
+  "metric_primary": "res68_frac",
+  "metric_primary_direction": "lower_is_better",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "sim_events_with_scibar_truth": 43422,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "bootstrap_unit": "held-out run_key",
+  "feature_names": [
+    "multiplicity",
+    "depth_idx",
+    "log_total_charge",
+    "log_max_adc",
+    "saturated_count",
+    "early_fraction",
+    "late_fraction",
+    "run_pedestal_median_adc",
+    "run_noise_sigma_adc",
+    "run_common_mode_sigma_adc",
+    "run_pulse_q95_adc",
+    "log_charge_B2",
+    "log_charge_B4",
+    "log_charge_B6",
+    "log_charge_B8",
+    "log_amp_B2",
+    "log_amp_B4",
+    "log_amp_B6",
+    "log_amp_B8",
+    "peak_B2",
+    "peak_B4",
+    "peak_B6",
+    "peak_B8",
+    "hit_B2",
+    "hit_B4",
+    "hit_B6",
+    "hit_B8"
+  ],
+  "electronics_summary": {
+    "run_key": {
+      "count": 33.0,
+      "mean": 48.4545454545,
+      "std": 10.3654802985,
+      "min": 31.0,
+      "25%": 40.0,
+      "50%": 49.0,
+      "75%": 57.0,
+      "max": 65.0
+    },
+    "events": {
+      "count": 33.0,
+      "mean": 33234.1818181818,
+      "std": 12828.0588371121,
+      "min": 1441.0,
+      "25%": 30321.0,
+      "50%": 35943.0,
+      "75%": 39765.0,
+      "max": 57173.0
+    },
+    "pedestal_median_adc": {
+      "count": 33.0,
+      "mean": 6921.8787878788,
+      "std": 2.9155571483,
+      "min": 6914.0,
+      "25%": 6921.0,
+      "50%": 6922.5,
+      "75%": 6923.5,
+      "max": 6928.0
+    },
+    "pedestal_iqr_adc": {
+      "count": 33.0,
+      "mean": 109.6704545455,
+      "std": 6.1021431127,
+      "min": 100.0,
+      "25%": 105.5,
+      "50%": 108.0,
+      "75%": 112.5,
+      "max": 125.5
+    },
+    "noise_sigma_adc": {
+      "count": 33.0,
+      "mean": 5.9528636364,
+      "std": 0.3459600562,
+      "min": 5.1891,
+      "25%": 5.9304,
+      "50%": 5.9304,
+      "75%": 5.9304,
+      "max": 6.6717
+    },
+    "common_mode_sigma_adc": {
+      "count": 33.0,
+      "mean": 267.0668025161,
+      "std": 60.2682286757,
+      "min": 152.7673187256,
+      "25%": 220.204208374,
+      "50%": 274.1098937988,
+      "75%": 326.6368408203,
+      "max": 343.0632324219
+    },
+    "pulse_q50_adc": {
+      "count": 33.0,
+      "mean": 26.7575757576,
+      "std": 2.1510216037,
+      "min": 22.5,
+      "25%": 25.5,
+      "50%": 27.0,
+      "75%": 28.5,
+      "max": 30.5
+    },
+    "pulse_q95_adc": {
+      "count": 33.0,
+      "mean": 5467.3310606061,
+      "std": 1855.8638091852,
+      "min": 2632.625,
+      "25%": 4201.5,
+      "50%": 4896.625,
+      "75%": 7721.5,
+      "max": 8253.0
+    },
+    "pulse_q99_adc": {
+      "count": 33.0,
+      "mean": 7864.2504545455,
+      "std": 1244.8442436571,
+      "min": 5397.305,
+      "25%": 7422.57,
+      "50%": 8343.725,
+      "75%": 8754.565,
+      "max": 9177.425
+    },
+    "pedestal_B2_adc": {
+      "count": 33.0,
+      "mean": 6751.9242424242,
+      "std": 4.8204013256,
+      "min": 6743.0,
+      "25%": 6747.0,
+      "50%": 6753.0,
+      "75%": 6756.0,
+      "max": 6760.5
+    },
+    "noise_B2_adc": {
+      "count": 33.0,
+      "mean": 7.5253181818,
+      "std": 0.4945508698,
+      "min": 6.6717,
+      "25%": 7.413,
+      "50%": 7.413,
+      "75%": 8.1543,
+      "max": 8.1543
+    },
+    "pedestal_B4_adc": {
+      "count": 33.0,
+      "mean": 7020.4696969697,
+      "std": 3.7142870151,
+      "min": 7012.0,
+      "25%": 7018.0,
+      "50%": 7019.5,
+      "75%": 7023.5,
+      "max": 7029.0
+    },
+    "noise_B4_adc": {
+      "count": 33.0,
+      "mean": 4.7173636364,
+      "std": 0.3621281712,
+      "min": 4.4478,
+      "25%": 4.4478,
+      "50%": 4.4478,
+      "75%": 5.1891,
+      "max": 5.1891
+    },
+    "pedestal_B6_adc": {
+      "count": 33.0,
+      "mean": 6930.803030303,
+      "std": 4.5033657447,
+      "min": 6917.0,
+      "25%": 6929.0,
+      "50%": 6930.0,
+      "75%": 6933.5,
+      "max": 6941.5
+    },
+    "noise_B6_adc": {
+      "count": 33.0,
+      "mean": 4.942,
+      "std": 0.3548703575,
+      "min": 4.4478,
+      "25%": 4.4478,
+      "50%": 5.1891,
+      "75%": 5.1891,
+      "max": 5.1891
+    },
+    "pedestal_B8_adc": {
+      "count": 33.0,
+      "mean": 6904.696969697,
+      "std": 3.4571922177,
+      "min": 6894.0,
+      "25%": 6904.0,
+      "50%": 6905.5,
+      "75%": 6907.0,
+      "max": 6909.5
+    },
+    "noise_B8_adc": {
+      "count": 33.0,
+      "mean": 8.2890818182,
+      "std": 0.4708329417,
+      "min": 7.413,
+      "25%": 8.1543,
+      "50%": 8.1543,
+      "75%": 8.1543,
+      "max": 9.6369
+    }
+  },
+  "winner_method": "gradient_boosted_trees",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "res68_frac": 0.3152282451567544,
+    "res68_ci95": [
+      0.3113122316294044,
+      0.31998704068436734
+    ],
+    "bias_frac": -0.03177002745153769,
+    "mae_mev": 17.243231515714054,
+    "mae_mev_ci95": [
+      17.05115100601924,
+      17.449809175795888
+    ]
+  },
+  "all_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 27631,
+      "bias_frac": -0.0317700275,
+      "res68_frac": 0.3152282452,
+      "mae_mev": 17.2432315157,
+      "res68_ci95": [
+        0.3113122316,
+        0.3199870407
+      ],
+      "bias_ci95": [
+        -0.0354778274,
+        -0.0277253896
+      ],
+      "mae_mev_ci95": [
+        17.051151006,
+        17.4498091758
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 27631,
+      "bias_frac": -0.0462390618,
+      "res68_frac": 0.3352056233,
+      "mae_mev": 18.4732331532,
+      "res68_ci95": [
+        0.3317704575,
+        0.3391738192
+      ],
+      "bias_ci95": [
+        -0.0500590958,
+        -0.0419388662
+      ],
+      "mae_mev_ci95": [
+        18.2873197198,
+        18.6434092926
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 27631,
+      "bias_frac": 0.017873129,
+      "res68_frac": 0.3651254615,
+      "mae_mev": 20.4189069594,
+      "res68_ci95": [
+        0.3362743058,
+        0.4071065609
+      ],
+      "bias_ci95": [
+        -0.0451467303,
+        0.1073878505
+      ],
+      "mae_mev_ci95": [
+        18.8300886372,
+        22.2730717899
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 27631,
+      "bias_frac": 0.1237776808,
+      "res68_frac": 0.5273777443,
+      "mae_mev": 30.3973442258,
+      "res68_ci95": [
+        0.4181169149,
+        0.7931854577
+      ],
+      "bias_ci95": [
+        -0.0206870651,
+        0.3532793565
+      ],
+      "mae_mev_ci95": [
+        22.8403293123,
+        39.4379741381
+      ]
+    },
+    {
+      "method": "run_keyed_birks",
+      "family": "traditional_run_keyed_birks",
+      "n": 27631,
+      "bias_frac": -0.9898490828,
+      "res68_frac": 0.9915672787,
+      "mae_mev": 63.436315907,
+      "res68_ci95": [
+        0.991522185,
+        0.9916091614
+      ],
+      "bias_ci95": [
+        -0.9899136828,
+        -0.9898016329
+      ],
+      "mae_mev_ci95": [
+        63.2326730973,
+        63.6361758606
+      ]
+    },
+    {
+      "method": "run_gated_residual_cnn",
+      "family": "neural_run_gated_residual_new",
+      "n": 27631,
+      "bias_frac": -0.9898490828,
+      "res68_frac": 0.9915672787,
+      "mae_mev": 63.436315907,
+      "res68_ci95": [
+        0.9915207266,
+        0.9916073068
+      ],
+      "bias_ci95": [
+        -0.9899130242,
+        -0.9897984812
+      ],
+      "mae_mev_ci95": [
+        63.2237846748,
+        63.673358321
+      ]
+    }
+  ],
+  "real_s24a_reference_metrics": [
+    {
+      "method": "geant4_birks_lookup",
+      "family": "traditional_geant4_birks",
+      "n": 332852,
+      "bias_frac": -0.0230986356,
+      "res68_frac": 0.0402439783,
+      "mae_mev": 1.08243596,
+      "res68_ci95": "[0.03885687265429256, 0.041606317494948857]",
+      "bias_ci95": "[-0.0266749274997614, -0.018225939767685054]",
+      "mae_mev_ci95": "[0.9581666378891074, 1.2490247117015882]"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "bias_frac": -0.0167355872,
+      "res68_frac": 0.0566846322,
+      "mae_mev": 1.0028925714,
+      "res68_ci95": "[0.04880395769058964, 0.06719740156251883]",
+      "bias_ci95": "[-0.020389423104361468, -0.008551688140306596]",
+      "mae_mev_ci95": "[0.8834536125134582, 1.1522014685477935]"
+    },
+    {
+      "method": "physics_residual_mlp",
+      "family": "neural_physics_residual",
+      "n": 332852,
+      "bias_frac": -0.0145744353,
+      "res68_frac": 0.0586801621,
+      "mae_mev": 1.0515086307,
+      "res68_ci95": "[0.049024699196538256, 0.0778824801768244]",
+      "bias_ci95": "[-0.020885696085487543, -0.0047773882153127984]",
+      "mae_mev_ci95": "[0.915232896371761, 1.283148307965791]"
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "bias_frac": -0.0235729459,
+      "res68_frac": 0.0966729355,
+      "mae_mev": 1.4114180809,
+      "res68_ci95": "[0.08871564277716167, 0.11720596181535417]",
+      "bias_ci95": "[-0.0356187950680932, 0.0005685026805842689]",
+      "mae_mev_ci95": "[1.2981406436020448, 1.5619015065797548]"
+    },
+    {
+      "method": "transformer",
+      "family": "neural_waveform_attention",
+      "n": 332852,
+      "bias_frac": 0.0326052852,
+      "res68_frac": 0.1264364896,
+      "mae_mev": 1.9290969292,
+      "res68_ci95": "[0.12036696496072326, 0.14397723058115808]",
+      "bias_ci95": "[0.009215722787804432, 0.043804819038469334]",
+      "mae_mev_ci95": "[1.8155777673132256, 2.028701643452403]"
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "bias_frac": -0.1777390561,
+      "res68_frac": 0.2657039478,
+      "mae_mev": 3.8621139788,
+      "res68_ci95": "[0.24926581203810588, 0.2890790024307048]",
+      "bias_ci95": "[-0.18795890770622958, -0.15251679050833633]",
+      "mae_mev_ci95": "[3.555703160404124, 4.079882043269256]"
+    },
+    {
+      "method": "old_power_law",
+      "family": "traditional_empirical",
+      "n": 332852,
+      "bias_frac": -0.2976285931,
+      "res68_frac": 0.4623578427,
+      "mae_mev": 7.8628000793,
+      "res68_ci95": "[0.44430944738067446, 0.5643754008880238]",
+      "bias_ci95": "[-0.3526494397492081, -0.1294368568998961]",
+      "mae_mev_ci95": "[7.4234201643915005, 8.245179360311488]"
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "bias_frac": -0.5826860884,
+      "res68_frac": 0.6923472493,
+      "mae_mev": 10.6162508173,
+      "res68_ci95": "[0.6842365680562779, 0.6996464636631826]",
+      "bias_ci95": "[-0.5937934430047808, -0.566110948628985]",
+      "mae_mev_ci95": "[9.375327351755741, 11.524740747434535]"
+    }
+  ],
+  "sim_vs_real_residual_structure": [
+    {
+      "method": "gradient_boosted_trees",
+      "sim_res68_frac": 0.3152282452,
+      "real_s24a_res68_frac": 0.0566846322,
+      "delta_sim_minus_real": 0.258543613,
+      "interpretation": "matched to S24a gradient_boosted_trees"
+    },
+    {
+      "method": "ridge",
+      "sim_res68_frac": 0.3352056233,
+      "real_s24a_res68_frac": 0.0966729355,
+      "delta_sim_minus_real": 0.2385326878,
+      "interpretation": "matched to S24a ridge"
+    },
+    {
+      "method": "1d_cnn",
+      "sim_res68_frac": 0.3651254615,
+      "real_s24a_res68_frac": 0.2657039478,
+      "delta_sim_minus_real": 0.0994215137,
+      "interpretation": "matched to S24a 1d_cnn"
+    },
+    {
+      "method": "mlp",
+      "sim_res68_frac": 0.5273777443,
+      "real_s24a_res68_frac": 0.6923472493,
+      "delta_sim_minus_real": -0.164969505,
+      "interpretation": "matched to S24a mlp"
+    },
+    {
+      "method": "run_keyed_birks",
+      "sim_res68_frac": 0.9915672787,
+      "real_s24a_res68_frac": 0.0402439783,
+      "delta_sim_minus_real": 0.9513233004,
+      "interpretation": "matched to S24a geant4_birks_lookup"
+    },
+    {
+      "method": "run_gated_residual_cnn",
+      "sim_res68_frac": 0.9915672787,
+      "real_s24a_res68_frac": 0.0586801621,
+      "delta_sim_minus_real": 0.9328871166,
+      "interpretation": "matched to S24a physics_residual_mlp"
+    }
+  ],
+  "new_architecture": "run_gated_residual_cnn: 1D convolution over B2/B4/B6/B8 HRDv windows gated by run-keyed electronics and shape summaries, trained as a multiplicative correction to run_keyed_birks.",
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. Replacing pseudo-run electronics with run-keyed raw HRDv pedestal/noise/common-mode profiles gives gradient_boosted_trees as the run-held-out winner with res68=0.31523. The transparent run_keyed_birks baseline remains the physics comparator; the S24a real-run residual reference still favors geant4_birks_lookup, so this ticket supports run-keyed electronics transfer as a stronger digitizer stress test but not as a standalone replacement for event-aligned real closure.",
+  "next_tickets": [
+    {
+      "title": "G4-07 event-aligned run-keyed digitizer closure with external trigger metadata",
+      "body": "Join GEANT4 digitized windows to real acquisition trigger metadata or a controlled overlay sample so run-keyed electronics transfer can be tested with paired event residuals rather than scoreboard-level residual atoms."
+    }
+  ],
+  "runtime_sec": 133.5
+}

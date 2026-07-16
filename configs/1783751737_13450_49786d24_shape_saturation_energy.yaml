@@ -1,0 +1,80 @@
+study_id: S25a
+ticket_id: "1783751737.13450.49786d24"
+title: Shape-conditioned saturation and pedestal disentangling for energy closure
+worker: testbeam-laptop-1
+
+raw_root_dir: data/root/root
+geant4_dir: /home/billy/ccb-geant4
+dedx_table: /home/billy/ccb-geant4/dedx_p_in_CD2.txt
+truth_root: /home/billy/ccb-geant4/output_krakow_1M.root
+fallback_truth_root: /home/billy/ccb-geant4/output_30k.root
+reference_s14g_result: reports/0000000003.1.g4energy/result.json
+output_dir: reports/1783751737.13450.49786d24__shape_saturation_energy
+
+report_heading: "S25a: Shape-conditioned saturation and pedestal disentangling for energy closure"
+reproduction_command: "/home/billy/anaconda3/bin/python scripts/s25a_1783751737_13450_49786d24_shape_saturation_energy.py --config configs/1783751737_13450_49786d24_shape_saturation_energy.yaml"
+abstract_text: "This study quantifies how waveform-shape distortion, ADC saturation, and pedestal treatment affect B-stave deposited-energy closure. It first reproduces the raw ROOT S00 selected-pulse number exactly, then compares pedestal-subtracted charge integration, a constrained GEANT4/Birks duplicate-readout template baseline, ridge regression, gradient-boosted trees, a tabular MLP, a 1D-CNN, and a new physics-residual MLP under the same run-blocked split. The target is duplicate odd-readout energy on a GEANT4-truth MeV scale, so the benchmark tests energy closure and response-model stability rather than event-matched GEANT4 truth. The held-out winner is **geant4_birks_lookup**, with res68=0.04024 and run-block bootstrap 95% CI [0.03888, 0.04173]."
+model_panel_text: "All learned models use the same train/held-out split by run. Features are even-readout only: pedestal-subtracted waveform samples, per-stave amplitudes and charges, multiplicity, depth, saturation count, early/late charge fractions, and peak locations. Odd charges, event identifiers, and run labels are excluded from model inputs. The method panel is ridge regression, gradient-boosted trees, a tabular MLP, a 1D-CNN over the four B-stave waveform sequence, and a new physics-residual MLP that learns a multiplicative correction to the GEANT4/Birks baseline. This residual architecture is sensible here because it forces the neural network to explain only saturation/pedestal/shape deviations left by the physically constrained charge-to-energy model."
+systematics_text: "Dominant systematics are the non-alignment of simulated and real events, the assumed mapping from HRD B staves to `Sci_bar_LayerID`, possible mismatch between simulated scintillator energy deposition and HRD light/electronics response, disabled or unvalidated optical/Birks response in the GEANT4 output, ADC saturation above the digitizer ceiling, drift in the four-sample pedestal estimator, and the use of duplicate-readout closure for real-data benchmarking. The absolute MeV scale is therefore truth-anchored but not a full detector-response simulation. The saturation and pedestal terms should be read as closure diagnostics under the raw HRDv preprocessing, not as a final detector calibration."
+caveats_text: "Caveats: this closure target is duplicate odd-readout energy on a GEANT4-truth MeV scale, not event-matched simulated truth or an independently calibrated calorimeter energy. The learned models are deliberately constrained by run-blocked validation and excluded odd-charge/run/event inputs, so their lower scores should be interpreted as limits under leakage-safe closure rather than final architecture capacity. The bootstrap intervals resample held-out runs and cover run-to-run variation in this subset, but they do not include uncertainty from future optical transport, digitization, forced-pedestal, or saturation-injection calibrations."
+finding: "The run-blocked comparison names **geant4_birks_lookup** as the lowest-res68 method in `result.json`. A method is considered physically credible only when its gain survives held-out runs and does not require odd charge, event identifiers, or run labels. The shape-conditioned residual model is interpreted as a diagnostic of saturation/pedestal response left after the constrained GEANT4/Birks baseline, not as proof that unconstrained waveform learning is a better detector model."
+hypothesis: "A production energy estimator should retain the constrained pedestal-subtracted GEANT4/Birks charge model and add only a low-capacity residual correction after external optical-response validation. Future work should add forced/random pedestal runs and saturation-injection tests so saturation recovery can be separated from duplicate-readout closure."
+
+amplitude_cut_adc: 1000.0
+expected_selected_pulses: 640737
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+saturation_adc: 7000.0
+clean_unsaturated_max_adc: 6500.0
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+truth_layer_map:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+truth_track_length_to_cm: 0.1
+truth_edep_statistic: median
+
+duplicate_readout_channels:
+  B2: 1
+  B4: 3
+  B6: 5
+  B8: 7
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+heldout_groups: [sample_i_analysis, sample_ii_analysis]
+nominal_geometry: center_4cm
+geometry_variants:
+  center_4cm:
+    description: newer-note centre spacing, front face halfway before B2
+    stave_centers_cm: {B2: 2.0, B4: 6.0, B6: 10.0, B8: 14.0}
+  center_2cm:
+    description: older-note two cm spacing variant
+    stave_centers_cm: {B2: 1.0, B4: 3.0, B6: 5.0, B8: 7.0}
+  zero_4cm:
+    description: centre positions quoted as 0/4/8/12 cm in notes
+    stave_centers_cm: {B2: 0.5, B4: 4.0, B6: 8.0, B8: 12.0}
+
+beam_energy_mev: 190.0
+stave_thickness_cm: 1.0
+dedx_second_column_units: GeV/mm
+dedx_to_mev_per_cm: 10000.0
+
+random_seed: 2537
+bootstrap_reps: 300
+ml_max_train_events: 2000
+cnn_max_train_events: 12000
+cnn_epochs: 3
+mlp_max_iter: 20

@@ -1,0 +1,70 @@
+{
+  "classes": {
+    "deuteron": 1000010020,
+    "proton": 2212
+  },
+  "confusion_matrix_csv": "confusion_matrix_winner.csv",
+  "implementation": {
+    "config": "configs/1781212364_2054420_60d57515_g4_03_pid_truth.json",
+    "engine": "scripts/pidfull_0000000009_1.py",
+    "estimator": "sklearn HistGradientBoostingClassifier inside run-block cross-validation",
+    "reproducibility_note": "This artifact is a model specification and benchmark card; refit from the listed config and raw inputs to regenerate fold models.",
+    "serialized_weights": null
+  },
+  "input_features": "GEANT4 B-stack Sci_bar layer energies, energy fractions, timing moments, path length, dE/dx proxy, and positions",
+  "model_family": "histogram gradient-boosted decision trees",
+  "model_name": "gradient_boosted_trees",
+  "production_caveat": "simulation-truth model card only; real HRD ROOT has no event-level p/d truth",
+  "purpose": "GEANT4-truth proton/deuteron PID benchmark model specification for B-stack dE-E/waveform-derived features",
+  "roc_operating_point": {
+    "balanced_accuracy": 0.9955,
+    "fpr": 0.0031999999999999806,
+    "method": "gradient_boosted_trees",
+    "tpr": 0.9942
+  },
+  "selection": {
+    "class_balance": {
+      "deuteron": 5000,
+      "proton": 5000
+    },
+    "n_available_labeled_events": 69231,
+    "n_used_events": 10000
+  },
+  "ticket": "1781212364.2054420.60d57515",
+  "title": "G4-03 Proton/deuteron PID: GEANT4 truth vs dE-E and waveform/ML PID",
+  "traditional_baseline_metrics": {
+    "balanced_accuracy": 0.9794,
+    "balanced_accuracy_ci_high": 0.9812549329123914,
+    "balanced_accuracy_ci_low": 0.977006774789571,
+    "macro_f1": 0.979391254472748,
+    "macro_f1_ci_high": 0.9811255559215052,
+    "macro_f1_ci_low": 0.977035200947497,
+    "macro_precision": 0.9802151363810988,
+    "macro_precision_ci_high": 0.9817821408344346,
+    "macro_precision_ci_low": 0.9780658997855332,
+    "macro_recall": 0.9794,
+    "macro_recall_ci_high": 0.9812549329123914,
+    "macro_recall_ci_low": 0.977006774789571,
+    "method": "traditional_bands",
+    "n": 10000
+  },
+  "training_policy": "leave-one-simulation-block-held-out; model refit in each training complement",
+  "truth_definition": "dominant Sci_bar LayerID1==2 deposited energy by target PDG, dominance >= 0.6",
+  "winner_metrics": {
+    "balanced_accuracy": 0.9955,
+    "balanced_accuracy_ci_high": 0.9970187845303868,
+    "balanced_accuracy_ci_low": 0.9935963384754364,
+    "macro_f1": 0.9954999923949872,
+    "macro_f1_ci_high": 0.9970201181684354,
+    "macro_f1_ci_low": 0.9936197807149414,
+    "macro_precision": 0.9955033496026432,
+    "macro_precision_ci_high": 0.9970215305056934,
+    "macro_precision_ci_low": 0.993674826148356,
+    "macro_recall": 0.9955,
+    "macro_recall_ci_high": 0.9970187845303868,
+    "macro_recall_ci_low": 0.9935963384754364,
+    "method": "gradient_boosted_trees",
+    "n": 10000
+  },
+  "worker": "testbeam-laptop-3"
+}

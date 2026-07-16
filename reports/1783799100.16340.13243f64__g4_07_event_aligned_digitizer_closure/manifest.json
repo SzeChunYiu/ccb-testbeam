@@ -1,0 +1,22 @@
+{
+  "ticket_id": "1783799100.16340.13243f64",
+  "created_unix": 1783825206.9897234,
+  "elapsed_s": 15.183994054794312,
+  "git_commit": "e3eb2efc02c365a25c94ff00e2e6998781de9d8f",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "config": "configs/g4_07_1783799100_16340_13243f64_event_aligned_digitizer_closure.yaml",
+  "script": "scripts/g4_07_1783799100_16340_13243f64_event_aligned_digitizer_closure.py",
+  "outputs": [
+    "REPORT.md",
+    "claimed_ticket.txt",
+    "heldout_by_run.csv",
+    "heldout_pair_predictions.csv",
+    "input_sha256.csv",
+    "manifest.json",
+    "method_metrics.csv",
+    "raw_reproduction_by_run.csv",
+    "result.json",
+    "trigger_metadata_inventory.csv"
+  ]
+}

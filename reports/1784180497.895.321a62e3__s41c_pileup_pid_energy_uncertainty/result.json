@@ -1,0 +1,587 @@
+{
+  "study": "S41c",
+  "ticket_id": "1784180497.895.321a62e3",
+  "worker": "testbeam-laptop-4",
+  "title": "Pile-up-aware PID and energy uncertainty calibration benchmark",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "n_events": 584406,
+  "n_pulses": 640540,
+  "pid_proxy": {
+    "coordinate": "log1p(odd_total_charge)-0.42*depth_idx-0.16*pileup_proxy",
+    "low_threshold": 10.590993853205987,
+    "high_threshold": 10.9492087798385
+  },
+  "birks_fit": {
+    "kB_cm_per_MeV": 0.0485,
+    "alpha_adc_per_MeV": 15123.540571357118,
+    "median_abs_log_charge_error": 0.2600660389546121
+  },
+  "winner": {
+    "method": "traditional_template_birks",
+    "family": "traditional_template_likelihood_birks",
+    "selection_metric": "energy_res68_frac + abs(coverage-0.90) + (1 - weak_label_pid_roc_auc)",
+    "composite_loss": 0.053653913836431075,
+    "energy_res68_frac": 0.0402476780185758,
+    "energy_res68_ci95": [
+      0.03888449205648855,
+      0.04178609239424126
+    ],
+    "energy_coverage": 0.8895665340752046,
+    "energy_coverage_ci95": [
+      0.852772107239899,
+      0.9174148792957014
+    ],
+    "pid_roc_auc": 0.9970272301069402,
+    "bias_frac": -0.023105417371831,
+    "mae_mev": 0.22820765571671336
+  },
+  "energy_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "res68_frac": 0.0364833067,
+      "res68_ci95": [
+        0.0317812118,
+        0.0448948706
+      ],
+      "bias_frac": -0.0093394269,
+      "bias_ci95": [
+        -0.0111941545,
+        -0.0058804395
+      ],
+      "coverage": 0.8680314374,
+      "coverage_ci95": [
+        0.8358894746,
+        0.8916410131
+      ],
+      "mae_mev": 0.1592550751,
+      "mae_ci95": [
+        0.1403166283,
+        0.1856663779
+      ],
+      "interval_absolute_halfwidth_mev": 0.2714632498
+    },
+    {
+      "method": "traditional_template_birks",
+      "family": "traditional_template_likelihood_birks",
+      "n": 332852,
+      "res68_frac": 0.040247678,
+      "res68_ci95": [
+        0.0388844921,
+        0.0417860924
+      ],
+      "bias_frac": -0.0231054174,
+      "bias_ci95": [
+        -0.0266880963,
+        -0.0184111279
+      ],
+      "coverage": 0.8895665341,
+      "coverage_ci95": [
+        0.8527721072,
+        0.9174148793
+      ],
+      "mae_mev": 0.2282076557,
+      "mae_ci95": [
+        0.2009715539,
+        0.2636982676
+      ],
+      "interval_absolute_halfwidth_mev": 0.3109026507
+    },
+    {
+      "method": "pileup_transformer_quantile_new",
+      "family": "neural_attention_quantile",
+      "n": 332852,
+      "res68_frac": 0.0708751052,
+      "res68_ci95": [
+        0.0572466069,
+        0.0964824199
+      ],
+      "bias_frac": 0.018003866,
+      "bias_ci95": [
+        0.0145357957,
+        0.0251738732
+      ],
+      "coverage": 0.8722014589,
+      "coverage_ci95": [
+        0.8587507418,
+        0.8826752371
+      ],
+      "mae_mev": 0.2401639305,
+      "mae_ci95": [
+        0.2136681102,
+        0.2781762397
+      ],
+      "interval_absolute_halfwidth_mev": null
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "res68_frac": 0.0958865946,
+      "res68_ci95": [
+        0.076217633,
+        0.136374797
+      ],
+      "bias_frac": -0.0289086808,
+      "bias_ci95": [
+        -0.0372853839,
+        -0.0132030017
+      ],
+      "coverage": 0.865336546,
+      "coverage_ci95": [
+        0.8276237164,
+        0.8975057548
+      ],
+      "mae_mev": 0.3163771722,
+      "mae_ci95": [
+        0.2788883273,
+        0.3605004813
+      ],
+      "interval_absolute_halfwidth_mev": 0.504487301
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "res68_frac": 0.1007380215,
+      "res68_ci95": [
+        0.089915289,
+        0.1237797248
+      ],
+      "bias_frac": -0.0219228494,
+      "bias_ci95": [
+        -0.0322572365,
+        0.0013235823
+      ],
+      "coverage": 0.8636931729,
+      "coverage_ci95": [
+        0.822271972,
+        0.8939907067
+      ],
+      "mae_mev": 0.2997863621,
+      "mae_ci95": [
+        0.2733994397,
+        0.3375172402
+      ],
+      "interval_absolute_halfwidth_mev": 0.4887366105
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "res68_frac": 0.1075487138,
+      "res68_ci95": [
+        0.0951839826,
+        0.1313679732
+      ],
+      "bias_frac": -0.0474738701,
+      "bias_ci95": [
+        -0.055512732,
+        -0.0340511783
+      ],
+      "coverage": 0.864927956,
+      "coverage_ci95": [
+        0.8319296017,
+        0.8905818795
+      ],
+      "mae_mev": 0.3629500705,
+      "mae_ci95": [
+        0.3266425159,
+        0.4091541645
+      ],
+      "interval_absolute_halfwidth_mev": 0.5791282546
+    }
+  ],
+  "pid_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "n": 249408,
+      "roc_auc": 0.9998870513,
+      "roc_auc_ci95": [
+        0.9998413368,
+        0.9999276866
+      ],
+      "average_precision": 0.9997602519,
+      "balanced_accuracy": 0.9984108378,
+      "balanced_accuracy_ci95": [
+        0.9980528179,
+        0.9986897702
+      ],
+      "tn": 131541,
+      "fp": 326,
+      "fn": 83,
+      "tp": 117458
+    },
+    {
+      "method": "pileup_transformer_quantile_new",
+      "n": 249408,
+      "roc_auc": 0.9998456846,
+      "roc_auc_ci95": [
+        0.9997897338,
+        0.9998861833
+      ],
+      "average_precision": 0.9991358157,
+      "balanced_accuracy": 0.9983254663,
+      "balanced_accuracy_ci95": [
+        0.9980359914,
+        0.9985791537
+      ],
+      "tn": 131468,
+      "fp": 399,
+      "fn": 38,
+      "tp": 117503
+    },
+    {
+      "method": "1d_cnn",
+      "n": 249408,
+      "roc_auc": 0.9994790225,
+      "roc_auc_ci95": [
+        0.9994068741,
+        0.9995720399
+      ],
+      "average_precision": 0.9983864896,
+      "balanced_accuracy": 0.997236419,
+      "balanced_accuracy_ci95": [
+        0.9967774223,
+        0.9976496085
+      ],
+      "tn": 131192,
+      "fp": 675,
+      "fn": 48,
+      "tp": 117493
+    },
+    {
+      "method": "mlp",
+      "n": 249408,
+      "roc_auc": 0.999346127,
+      "roc_auc_ci95": [
+        0.9992361488,
+        0.9994585062
+      ],
+      "average_precision": 0.9981989492,
+      "balanced_accuracy": 0.997043872,
+      "balanced_accuracy_ci95": [
+        0.9965512008,
+        0.9974860986
+      ],
+      "tn": 131130,
+      "fp": 737,
+      "fn": 38,
+      "tp": 117503
+    },
+    {
+      "method": "ridge",
+      "n": 249408,
+      "roc_auc": 0.999265624,
+      "roc_auc_ci95": [
+        0.9991093949,
+        0.9994119032
+      ],
+      "average_precision": 0.9978735308,
+      "balanced_accuracy": 0.9969325263,
+      "balanced_accuracy_ci95": [
+        0.9965076401,
+        0.9973929837
+      ],
+      "tn": 131104,
+      "fp": 763,
+      "fn": 41,
+      "tp": 117500
+    },
+    {
+      "method": "traditional_template_birks",
+      "n": 249408,
+      "roc_auc": 0.9970272301,
+      "roc_auc_ci95": [
+        0.9962471704,
+        0.997581543
+      ],
+      "average_precision": 0.993677805,
+      "balanced_accuracy": 0.9927569778,
+      "balanced_accuracy_ci95": [
+        0.9913967009,
+        0.9937345599
+      ],
+      "tn": 130548,
+      "fp": 1319,
+      "fn": 527,
+      "tp": 117014
+    }
+  ],
+  "composite_ranking": [
+    {
+      "method": "traditional_template_birks",
+      "family": "traditional_template_likelihood_birks",
+      "n": 332852,
+      "res68_frac": 0.040247678,
+      "res68_ci95": [
+        0.0388844921,
+        0.0417860924
+      ],
+      "bias_frac": -0.0231054174,
+      "bias_ci95": [
+        -0.0266880963,
+        -0.0184111279
+      ],
+      "coverage": 0.8895665341,
+      "coverage_ci95": [
+        0.8527721072,
+        0.9174148793
+      ],
+      "mae_mev": 0.2282076557,
+      "mae_ci95": [
+        0.2009715539,
+        0.2636982676
+      ],
+      "interval_absolute_halfwidth_mev": 0.3109026507,
+      "roc_auc": 0.9970272301,
+      "composite_loss": 0.0536539138
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "res68_frac": 0.0364833067,
+      "res68_ci95": [
+        0.0317812118,
+        0.0448948706
+      ],
+      "bias_frac": -0.0093394269,
+      "bias_ci95": [
+        -0.0111941545,
+        -0.0058804395
+      ],
+      "coverage": 0.8680314374,
+      "coverage_ci95": [
+        0.8358894746,
+        0.8916410131
+      ],
+      "mae_mev": 0.1592550751,
+      "mae_ci95": [
+        0.1403166283,
+        0.1856663779
+      ],
+      "interval_absolute_halfwidth_mev": 0.2714632498,
+      "roc_auc": 0.9998870513,
+      "composite_loss": 0.068564818
+    },
+    {
+      "method": "pileup_transformer_quantile_new",
+      "family": "neural_attention_quantile",
+      "n": 332852,
+      "res68_frac": 0.0708751052,
+      "res68_ci95": [
+        0.0572466069,
+        0.0964824199
+      ],
+      "bias_frac": 0.018003866,
+      "bias_ci95": [
+        0.0145357957,
+        0.0251738732
+      ],
+      "coverage": 0.8722014589,
+      "coverage_ci95": [
+        0.8587507418,
+        0.8826752371
+      ],
+      "mae_mev": 0.2401639305,
+      "mae_ci95": [
+        0.2136681102,
+        0.2781762397
+      ],
+      "interval_absolute_halfwidth_mev": null,
+      "roc_auc": 0.9998456846,
+      "composite_loss": 0.0988279616
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "res68_frac": 0.0958865946,
+      "res68_ci95": [
+        0.076217633,
+        0.136374797
+      ],
+      "bias_frac": -0.0289086808,
+      "bias_ci95": [
+        -0.0372853839,
+        -0.0132030017
+      ],
+      "coverage": 0.865336546,
+      "coverage_ci95": [
+        0.8276237164,
+        0.8975057548
+      ],
+      "mae_mev": 0.3163771722,
+      "mae_ci95": [
+        0.2788883273,
+        0.3605004813
+      ],
+      "interval_absolute_halfwidth_mev": 0.504487301,
+      "roc_auc": 0.9994790225,
+      "composite_loss": 0.1310710261
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "res68_frac": 0.1007380215,
+      "res68_ci95": [
+        0.089915289,
+        0.1237797248
+      ],
+      "bias_frac": -0.0219228494,
+      "bias_ci95": [
+        -0.0322572365,
+        0.0013235823
+      ],
+      "coverage": 0.8636931729,
+      "coverage_ci95": [
+        0.822271972,
+        0.8939907067
+      ],
+      "mae_mev": 0.2997863621,
+      "mae_ci95": [
+        0.2733994397,
+        0.3375172402
+      ],
+      "interval_absolute_halfwidth_mev": 0.4887366105,
+      "roc_auc": 0.999265624,
+      "composite_loss": 0.1377792245
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "res68_frac": 0.1075487138,
+      "res68_ci95": [
+        0.0951839826,
+        0.1313679732
+      ],
+      "bias_frac": -0.0474738701,
+      "bias_ci95": [
+        -0.055512732,
+        -0.0340511783
+      ],
+      "coverage": 0.864927956,
+      "coverage_ci95": [
+        0.8319296017,
+        0.8905818795
+      ],
+      "mae_mev": 0.3629500705,
+      "mae_ci95": [
+        0.3266425159,
+        0.4091541645
+      ],
+      "interval_absolute_halfwidth_mev": 0.5791282546,
+      "roc_auc": 0.999346127,
+      "composite_loss": 0.1432746309
+    }
+  ],
+  "strata_metrics": [
+    {
+      "stratum": "single_pulse_proxy",
+      "method": "traditional_template_birks",
+      "n": 305087,
+      "res68_frac": 0.0391404594,
+      "coverage": 0.9215469686,
+      "pid_roc_auc": 0.9965354225
+    },
+    {
+      "stratum": "multi_stave_pileup_proxy",
+      "method": "traditional_template_birks",
+      "n": 27765,
+      "res68_frac": 0.1259751764,
+      "coverage": 0.5381595534,
+      "pid_roc_auc": 0.9986066638
+    },
+    {
+      "stratum": "unsaturated",
+      "method": "traditional_template_birks",
+      "n": 226635,
+      "res68_frac": 0.0335218286,
+      "coverage": 0.8807686368,
+      "pid_roc_auc": 0.9985206773
+    },
+    {
+      "stratum": "saturated",
+      "method": "traditional_template_birks",
+      "n": 106217,
+      "res68_frac": 0.0484975858,
+      "coverage": 0.9083385899,
+      "pid_roc_auc": 0.8559737351
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_reproduction_exact",
+      "value": "640737 of 640737",
+      "pass": true
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "features_exclude_run_event_odd_readout",
+      "value": "multiplicity,pileup_proxy,depth_idx,even_total_charge,even_max_amp,saturated_count,late_fraction,log_charge_B0,log_charge_B1,log_charge_B2,log_charge_B3,log_amp_B0,log_amp_B1,log_amp_B2,log_amp_B3,hit_B0,hit_B1,hit_B2,hit_B3,peak_B0,peak_B1,peak_B2,peak_B3,early_fraction",
+      "pass": true
+    },
+    {
+      "check": "pid_truth_branch_absent",
+      "value": "h101 branches used: EVENTNO,EVT,HRDv; no species/PID truth",
+      "pass": true
+    },
+    {
+      "check": "nominal_interval_level",
+      "value": "0.9",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses.  The held-out run-block benchmark winner is traditional_template_birks with energy res68=0.04025, coverage=0.88957, and weak-label PID ROC AUC=0.99703.  The conclusion is a pile-up-aware calibration closure result, not a hidden species-truth PID claim.",
+  "runtime_sec": 162.6
+}

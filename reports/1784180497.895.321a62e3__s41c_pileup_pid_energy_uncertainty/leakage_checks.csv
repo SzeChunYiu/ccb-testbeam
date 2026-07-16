@@ -1,0 +1,6 @@
+check,value,pass
+raw_reproduction_exact,640737 of 640737,True
+train_heldout_run_overlap,[],True
+features_exclude_run_event_odd_readout,"multiplicity,pileup_proxy,depth_idx,even_total_charge,even_max_amp,saturated_count,late_fraction,log_charge_B0,log_charge_B1,log_charge_B2,log_charge_B3,log_amp_B0,log_amp_B1,log_amp_B2,log_amp_B3,hit_B0,hit_B1,hit_B2,hit_B3,peak_B0,peak_B1,peak_B2,peak_B3,early_fraction",True
+pid_truth_branch_absent,"h101 branches used: EVENTNO,EVT,HRDv; no species/PID truth",True
+nominal_interval_level,0.9,True

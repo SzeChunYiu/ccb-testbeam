@@ -1,0 +1,4 @@
+1784180497.766.02892549
+# S41a frequency-domain pulse-shape timing transfer benchmark
+
+Academic-grade study: test whether frequency-domain pulse-shape descriptors improve timing transfer across run, rate, and sensor conditions without leaking pedestal or amplitude state. Compare traditional FFT/template matched filtering, CFD timewalk correction, and wavelet denoising baselines against ridge, gradient-boosted trees, MLP, 1D-CNN, lightweight transformer, and spectrogram/patch transformer variants where apt. Require run-block and event bootstrap 95% CIs for timing bias, sigma68, pulse-shape axis stability, pedestal dependence, pile-up sensitivity, saturation-band failures, energy residuals, and PID-proxy drift. Include ablations for pretrigger-only features, phase randomization, and amplitude-normalized spectra.

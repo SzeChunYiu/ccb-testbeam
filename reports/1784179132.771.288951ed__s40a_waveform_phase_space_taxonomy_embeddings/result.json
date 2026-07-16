@@ -1,0 +1,515 @@
+{
+  "ticket_id": "1784179132.771.288951ed",
+  "study_id": "S40a",
+  "worker": "testbeam-laptop-3",
+  "title": "waveform phase-space pulse-shape taxonomy vs self-supervised sequence embeddings",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "1abd2931a079b20dc466147d0592783c514c8dda",
+  "script_sha256": "b543a5089b832e082493915404e99f914c0f87e594247a0c59bfc64462643044",
+  "config_sha256": "07f1f68e9f24cc5d1aee67c0ceea6c8e2a1af7064d61b91eb63aa7ef7cbdd261",
+  "runtime_sec": 64.00947904586792,
+  "python": "3.7.6",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "raw_number_reproduced_from_root": true
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "train_rows": 15137,
+    "heldout_rows": 5466,
+    "bootstrap_replicates": 500,
+    "split_unit": "run"
+  },
+  "taxonomy": [
+    "rise_curvature",
+    "late_tail",
+    "undershoot",
+    "width_change"
+  ],
+  "methods": [
+    "traditional_pca_cfd_dtw_cluster",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "contrastive_sequence_encoder",
+    "compact_transformer",
+    "residual_gated_shape_cnn_new"
+  ],
+  "primary_metric": "held-out run-block bootstrap selection_score = macro_f1 - 0.15 * max nuisance/proxy normalized mutual information; higher is better",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "selection_score": 0.9585286449293552,
+    "selection_score_ci_low": 0.9525603181095911,
+    "selection_score_ci_high": 0.9622124787384306,
+    "macro_f1": 0.9850473938012492,
+    "macro_f1_ci_low": 0.9821447816969922,
+    "macro_f1_ci_high": 0.9872099639922013,
+    "proxy_coupling_max_nmi": 0.1767916591459597,
+    "proxy_coupling_max_nmi_ci_low": 0.15048352522186562,
+    "proxy_coupling_max_nmi_ci_high": 0.22230428578707817
+  },
+  "metric_table": [
+    {
+      "method": "gradient_boosted_trees",
+      "n": 5466,
+      "accuracy": 0.9835345773874863,
+      "balanced_accuracy": 0.985116169508553,
+      "macro_f1": 0.9850473938012492,
+      "adjusted_rand": 0.9531234721076595,
+      "proxy_coupling_max_nmi": 0.1767916591459597,
+      "selection_score": 0.9585286449293552,
+      "accuracy_ci_low": 0.9804251926652956,
+      "accuracy_ci_high": 0.9861878555905805,
+      "balanced_accuracy_ci_low": 0.9821586633291801,
+      "balanced_accuracy_ci_high": 0.9872515828546445,
+      "macro_f1_ci_low": 0.9821447816969922,
+      "macro_f1_ci_high": 0.9872099639922013,
+      "adjusted_rand_ci_low": 0.9446485112768399,
+      "adjusted_rand_ci_high": 0.9616499863853669,
+      "proxy_coupling_max_nmi_ci_low": 0.15048352522186562,
+      "proxy_coupling_max_nmi_ci_high": 0.22230428578707817,
+      "selection_score_ci_low": 0.9525603181095911,
+      "selection_score_ci_high": 0.9622124787384306
+    },
+    {
+      "method": "mlp",
+      "n": 5466,
+      "accuracy": 0.9714599341383096,
+      "balanced_accuracy": 0.9726018800847641,
+      "macro_f1": 0.9732272848182506,
+      "adjusted_rand": 0.9207284541699137,
+      "proxy_coupling_max_nmi": 0.1739376151850051,
+      "selection_score": 0.9471366425404998,
+      "accuracy_ci_low": 0.9689035698598091,
+      "accuracy_ci_high": 0.9737582058495773,
+      "balanced_accuracy_ci_low": 0.969672151479297,
+      "balanced_accuracy_ci_high": 0.9754413710701589,
+      "macro_f1_ci_low": 0.9703321966349832,
+      "macro_f1_ci_high": 0.9759660007800773,
+      "adjusted_rand_ci_low": 0.9150851131577551,
+      "adjusted_rand_ci_high": 0.9263972299045906,
+      "proxy_coupling_max_nmi_ci_low": 0.149822842772095,
+      "proxy_coupling_max_nmi_ci_high": 0.21266814992000949,
+      "selection_score_ci_low": 0.9395883066699331,
+      "selection_score_ci_high": 0.9510363742882022
+    },
+    {
+      "method": "residual_gated_shape_cnn_new",
+      "n": 5466,
+      "accuracy": 0.7250274423710209,
+      "balanced_accuracy": 0.7486844296054822,
+      "macro_f1": 0.7465212665969001,
+      "adjusted_rand": 0.4144842462759672,
+      "proxy_coupling_max_nmi": 0.2785197697310685,
+      "selection_score": 0.7047433011372398,
+      "accuracy_ci_low": 0.6793590949246245,
+      "accuracy_ci_high": 0.7628791914967565,
+      "balanced_accuracy_ci_low": 0.7196970406613463,
+      "balanced_accuracy_ci_high": 0.7736248209495714,
+      "macro_f1_ci_low": 0.71314259555823,
+      "macro_f1_ci_high": 0.7737565223592348,
+      "adjusted_rand_ci_low": 0.34682392277869084,
+      "adjusted_rand_ci_high": 0.4801890735872667,
+      "proxy_coupling_max_nmi_ci_low": 0.24347263075720996,
+      "proxy_coupling_max_nmi_ci_high": 0.3189275813212417,
+      "selection_score_ci_low": 0.6748163765932513,
+      "selection_score_ci_high": 0.7294280747885876
+    },
+    {
+      "method": "1d_cnn",
+      "n": 5466,
+      "accuracy": 0.6496523966337359,
+      "balanced_accuracy": 0.6733693146027335,
+      "macro_f1": 0.6705065211733511,
+      "adjusted_rand": 0.28017434172088634,
+      "proxy_coupling_max_nmi": 0.27532060401190084,
+      "selection_score": 0.629208430571566,
+      "accuracy_ci_low": 0.6094950378850272,
+      "accuracy_ci_high": 0.6899853216407212,
+      "balanced_accuracy_ci_low": 0.6495770965720424,
+      "balanced_accuracy_ci_high": 0.6971806643393373,
+      "macro_f1_ci_low": 0.6446008405713359,
+      "macro_f1_ci_high": 0.6938923536356901,
+      "adjusted_rand_ci_low": 0.20849638598366835,
+      "adjusted_rand_ci_high": 0.3665727504822953,
+      "proxy_coupling_max_nmi_ci_low": 0.23293229965135087,
+      "proxy_coupling_max_nmi_ci_high": 0.3278377068635085,
+      "selection_score_ci_low": 0.6055435455464484,
+      "selection_score_ci_high": 0.6516658268541862
+    },
+    {
+      "method": "contrastive_sequence_encoder",
+      "n": 5466,
+      "accuracy": 0.6097694840834248,
+      "balanced_accuracy": 0.6486541549228755,
+      "macro_f1": 0.643848952152203,
+      "adjusted_rand": 0.23829377180018055,
+      "proxy_coupling_max_nmi": 0.2719586587517402,
+      "selection_score": 0.6030551533394419,
+      "accuracy_ci_low": 0.5641272008328463,
+      "accuracy_ci_high": 0.6498065841791961,
+      "balanced_accuracy_ci_low": 0.617092088945354,
+      "balanced_accuracy_ci_high": 0.6715609181022011,
+      "macro_f1_ci_low": 0.6108041108858113,
+      "macro_f1_ci_high": 0.6689433469667,
+      "adjusted_rand_ci_low": 0.17604709814541877,
+      "adjusted_rand_ci_high": 0.3072057403146694,
+      "proxy_coupling_max_nmi_ci_low": 0.2550446539580755,
+      "proxy_coupling_max_nmi_ci_high": 0.3072111736561963,
+      "selection_score_ci_low": 0.5679001861513698,
+      "selection_score_ci_high": 0.6274313499259545
+    },
+    {
+      "method": "ridge",
+      "n": 5466,
+      "accuracy": 0.5276253201609953,
+      "balanced_accuracy": 0.5563211040532393,
+      "macro_f1": 0.49430808656513314,
+      "adjusted_rand": 0.20625131600242438,
+      "proxy_coupling_max_nmi": 0.11554367485763013,
+      "selection_score": 0.47697653533648865,
+      "accuracy_ci_low": 0.4769017633694895,
+      "accuracy_ci_high": 0.5730897910621032,
+      "balanced_accuracy_ci_low": 0.515055491441625,
+      "balanced_accuracy_ci_high": 0.5962869259861373,
+      "macro_f1_ci_low": 0.45623121150743146,
+      "macro_f1_ci_high": 0.5243093178108911,
+      "adjusted_rand_ci_low": 0.14344656145093013,
+      "adjusted_rand_ci_high": 0.27706061734739773,
+      "proxy_coupling_max_nmi_ci_low": 0.10036931526856911,
+      "proxy_coupling_max_nmi_ci_high": 0.1367561066128175,
+      "selection_score_ci_low": 0.44067696296200415,
+      "selection_score_ci_high": 0.5044332825918268
+    },
+    {
+      "method": "traditional_pca_cfd_dtw_cluster",
+      "n": 5466,
+      "accuracy": 0.5203073545554336,
+      "balanced_accuracy": 0.545665327714964,
+      "macro_f1": 0.4514053893245687,
+      "adjusted_rand": 0.2260746166022913,
+      "proxy_coupling_max_nmi": 0.21092119969004633,
+      "selection_score": 0.41976720937106177,
+      "accuracy_ci_low": 0.48661828352231773,
+      "accuracy_ci_high": 0.5576000480241751,
+      "balanced_accuracy_ci_low": 0.5393402122925973,
+      "balanced_accuracy_ci_high": 0.5510477764233375,
+      "macro_f1_ci_low": 0.44212790856371853,
+      "macro_f1_ci_high": 0.46107081309893805,
+      "adjusted_rand_ci_low": 0.17356975527072221,
+      "adjusted_rand_ci_high": 0.27920060032836624,
+      "proxy_coupling_max_nmi_ci_low": 0.18573927510362592,
+      "proxy_coupling_max_nmi_ci_high": 0.27740462273826794,
+      "selection_score_ci_low": 0.40564678393094683,
+      "selection_score_ci_high": 0.429687840809067
+    },
+    {
+      "method": "compact_transformer",
+      "n": 5466,
+      "accuracy": 0.48737650933040616,
+      "balanced_accuracy": 0.513946998895651,
+      "macro_f1": 0.4013458124166239,
+      "adjusted_rand": 0.20844831235595038,
+      "proxy_coupling_max_nmi": 0.20710614748900819,
+      "selection_score": 0.3702798902932727,
+      "accuracy_ci_low": 0.43973286562331354,
+      "accuracy_ci_high": 0.5373631046050079,
+      "balanced_accuracy_ci_low": 0.5071344749167136,
+      "balanced_accuracy_ci_high": 0.5199502060086785,
+      "macro_f1_ci_low": 0.37971688328711667,
+      "macro_f1_ci_high": 0.4215391231831279,
+      "adjusted_rand_ci_low": 0.15481123986106257,
+      "adjusted_rand_ci_high": 0.267035994849779,
+      "proxy_coupling_max_nmi_ci_low": 0.14991231747050401,
+      "proxy_coupling_max_nmi_ci_high": 0.2749122350090223,
+      "selection_score_ci_low": 0.3556269126190023,
+      "selection_score_ci_high": 0.384498990277555
+    }
+  ],
+  "taxonomy_axis_table": [
+    {
+      "taxonomy_label": "late_tail",
+      "n": 3586,
+      "axis_z_rise_curvature_median": -0.025765856159308455,
+      "axis_z_late_tail_median": 1.9255928474807675,
+      "axis_z_undershoot_median": 0.8591397412739739,
+      "axis_z_width_change_median": 0.11364295047040437
+    },
+    {
+      "taxonomy_label": "rise_curvature",
+      "n": 6993,
+      "axis_z_rise_curvature_median": 1.0811576950006556,
+      "axis_z_late_tail_median": -0.019570919731337875,
+      "axis_z_undershoot_median": -0.46403308432734997,
+      "axis_z_width_change_median": -0.13720800366161623
+    },
+    {
+      "taxonomy_label": "undershoot",
+      "n": 4984,
+      "axis_z_rise_curvature_median": -0.08206020161996481,
+      "axis_z_late_tail_median": 0.01369330734982228,
+      "axis_z_undershoot_median": -0.980549805661847,
+      "axis_z_width_change_median": -0.19373077892391338
+    },
+    {
+      "taxonomy_label": "width_change",
+      "n": 5040,
+      "axis_z_rise_curvature_median": 0.11027904159974995,
+      "axis_z_late_tail_median": -0.18218543250949282,
+      "axis_z_undershoot_median": 0.2504675362238823,
+      "axis_z_width_change_median": 1.1547573789987298
+    }
+  ],
+  "taxonomy_proxy_coupling": [
+    {
+      "axis": "pileup_separation_bin",
+      "nmi_with_taxonomy": 0.20513625904978858
+    },
+    {
+      "axis": "energy_bin",
+      "nmi_with_taxonomy": 0.15125375471885388
+    },
+    {
+      "axis": "pid_sideband",
+      "nmi_with_taxonomy": 0.04368225064977206
+    },
+    {
+      "axis": "stave",
+      "nmi_with_taxonomy": 0.03736923193049163
+    },
+    {
+      "axis": "run",
+      "nmi_with_taxonomy": 0.0106953812280761
+    },
+    {
+      "axis": "pedestal_drift_bin",
+      "nmi_with_taxonomy": 0.00987453132749914
+    },
+    {
+      "axis": "saturation_onset_bin",
+      "nmi_with_taxonomy": 0.008534587009272324
+    }
+  ],
+  "proxy_coupling_table": [
+    {
+      "method": "residual_gated_shape_cnn_new",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.20466159198692138
+    },
+    {
+      "method": "mlp",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.15556928946723514
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.15099319175284096
+    },
+    {
+      "method": "ridge",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.11554367485763013
+    },
+    {
+      "method": "1d_cnn",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.1006445157218454
+    },
+    {
+      "method": "contrastive_sequence_encoder",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.06198934509939007
+    },
+    {
+      "method": "traditional_pca_cfd_dtw_cluster",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.05593550705691201
+    },
+    {
+      "method": "compact_transformer",
+      "proxy_axis": "energy_bin",
+      "nmi": 0.02708179925462389
+    },
+    {
+      "method": "traditional_pca_cfd_dtw_cluster",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.08876980478241032
+    },
+    {
+      "method": "contrastive_sequence_encoder",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.08235816670888367
+    },
+    {
+      "method": "residual_gated_shape_cnn_new",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.04157821812849202
+    },
+    {
+      "method": "1d_cnn",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.03778479057479001
+    },
+    {
+      "method": "compact_transformer",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.028304959905224778
+    },
+    {
+      "method": "mlp",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.01182560876417391
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.011709328971985995
+    },
+    {
+      "method": "ridge",
+      "proxy_axis": "pedestal_drift_bin",
+      "nmi": 0.007427515731891169
+    },
+    {
+      "method": "contrastive_sequence_encoder",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.22507308596238124
+    },
+    {
+      "method": "traditional_pca_cfd_dtw_cluster",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.18417056067803445
+    },
+    {
+      "method": "residual_gated_shape_cnn_new",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.11760522046067272
+    },
+    {
+      "method": "1d_cnn",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.09967907990854039
+    },
+    {
+      "method": "compact_transformer",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.06459539744108987
+    },
+    {
+      "method": "mlp",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.050769309911067866
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.05033898777588878
+    },
+    {
+      "method": "ridge",
+      "proxy_axis": "pid_sideband",
+      "nmi": 0.033778257452281045
+    },
+    {
+      "method": "residual_gated_shape_cnn_new",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.2785197697310685
+    },
+    {
+      "method": "1d_cnn",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.27532060401190084
+    },
+    {
+      "method": "contrastive_sequence_encoder",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.2719586587517402
+    },
+    {
+      "method": "traditional_pca_cfd_dtw_cluster",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.21092119969004633
+    },
+    {
+      "method": "compact_transformer",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.20710614748900819
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.1767916591459597
+    },
+    {
+      "method": "mlp",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.1739376151850051
+    },
+    {
+      "method": "ridge",
+      "proxy_axis": "pileup_separation_bin",
+      "nmi": 0.055071023625024966
+    },
+    {
+      "method": "compact_transformer",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.02403123375425857
+    },
+    {
+      "method": "ridge",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.019503755381697085
+    },
+    {
+      "method": "traditional_pca_cfd_dtw_cluster",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.019467198409211146
+    },
+    {
+      "method": "contrastive_sequence_encoder",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.01377070051852082
+    },
+    {
+      "method": "1d_cnn",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.01177510602264463
+    },
+    {
+      "method": "residual_gated_shape_cnn_new",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.011547821177449968
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.007460945813319519
+    },
+    {
+      "method": "mlp",
+      "proxy_axis": "saturation_onset_bin",
+      "nmi": 0.0073047376621393585
+    }
+  ],
+  "next_tickets": [
+    {
+      "id": "1784180399.1427.0adb4363",
+      "title": "S40b: validate waveform phase-space taxonomy against independent pulse-shape truth",
+      "note": "Appended exactly one follow-up ticket with tn-ticket append --project testbeam."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "ticket_id": "1784179132.771.288951ed",
+  "outputs": [
+    "REPORT.md",
+    "benchmark_rows.csv.gz",
+    "claimed_ticket.txt",
+    "confusion_counts.csv",
+    "input_sha256.csv",
+    "method_metrics.csv",
+    "predictions.csv.gz",
+    "proxy_coupling_metrics.csv",
+    "reproduction_match_table.csv",
+    "result.json",
+    "run_heldout_metrics.csv",
+    "taxonomy_axis_summary.csv",
+    "taxonomy_proxy_coupling.csv"
+  ],
+  "appended_follow_up_ticket": {
+    "id": "1784180399.1427.0adb4363",
+    "title": "S40b: validate waveform phase-space taxonomy against independent pulse-shape truth"
+  },
+  "reproduction_passed": true,
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "selection_score": 0.9585286449293552,
+    "selection_score_ci_low": 0.9525603181095911,
+    "selection_score_ci_high": 0.9622124787384306,
+    "macro_f1": 0.9850473938012492,
+    "macro_f1_ci_low": 0.9821447816969922,
+    "macro_f1_ci_high": 0.9872099639922013,
+    "proxy_coupling_max_nmi": 0.1767916591459597,
+    "proxy_coupling_max_nmi_ci_low": 0.15048352522186562,
+    "proxy_coupling_max_nmi_ci_high": 0.22230428578707817
+  }
+}

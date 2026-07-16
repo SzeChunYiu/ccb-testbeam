@@ -1,0 +1,2 @@
+1783799100.16340.13243f64
+# event-aligned run-keyed digitizer closure with external trigger metadata

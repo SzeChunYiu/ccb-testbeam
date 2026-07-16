@@ -1,0 +1,114 @@
+{
+  "study": "S39c",
+  "ticket_id": "1784070453.964.25fe633c",
+  "worker": "testbeam-laptop-1",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "required_method_coverage": {
+    "traditional": "traditional_charge_ratio_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "tiny_transformer_multitask and pedestal_tail_fusion_new"
+  },
+  "winner": {
+    "method": "mlp",
+    "family": "neural_tabular",
+    "criterion": "minimum joint PID-energy-timing held-out score",
+    "winner_score": 0.015938801282128576,
+    "pid_auc": 0.9999450632772584,
+    "pid_auc_ci95": [
+      0.9999136740721002,
+      0.9999748771361836
+    ],
+    "energy_sigma68_frac": 0.014959612351406654,
+    "energy_sigma68_ci95": [
+      0.011907618728352427,
+      0.021660685540616474
+    ],
+    "energy_bias_frac": 0.00026157040475586606,
+    "timing_sigma68_ns": 0.08178777512121141,
+    "timing_sigma68_ci95": [
+      0.06618026230451429,
+      0.12284357253174848
+    ]
+  },
+  "pid_proxy": {
+    "source": "duplicate odd-readout charge-depth weak label",
+    "positive_name": "deuteron_like_high_ionization_shallow_range",
+    "negative_name": "proton_like_low_ionization_penetrating",
+    "low_quantile": 0.35,
+    "high_quantile": 0.65,
+    "low_threshold": 10.513969935597421,
+    "high_threshold": 10.869866631512323,
+    "caveat": "No particle-truth branch exists in real HRD ROOT; PID metrics are weak-label robustness diagnostics."
+  },
+  "uncertainty_coverage_90pct": {
+    "nominal": 0.9,
+    "empirical": 0.7506609544181798,
+    "abs_error": 0.1493390455818202,
+    "n": 332852
+  },
+  "null_controls": {
+    "null_label_pid_auc_against_true_heldout_labels": 0.2785671019180972,
+    "permuted_feature_energy_sigma68": 0.050524787880103506
+  },
+  "novel_tickets_appended": [],
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_metrics.csv",
+    "run_heldout_metrics.csv",
+    "strata_metrics.csv",
+    "reproduction_match_table.csv",
+    "null_permutation_controls.csv",
+    "input_sha256.csv"
+  ],
+  "runtime_sec": 306.3
+}

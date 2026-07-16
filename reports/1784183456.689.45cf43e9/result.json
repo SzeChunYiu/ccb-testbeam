@@ -1,0 +1,232 @@
+{
+  "ticket_id": "1784183456.689.45cf43e9",
+  "study_id": "S43a",
+  "title": "trapezoid-template versus neural pulse-shape timing phase study",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_pulses": 581124,
+    "heldout_pulses": 59613,
+    "bootstrap_replicates": 500
+  },
+  "methods_benchmarked": [
+    "trapezoid_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "shape_residual_fusion"
+  ],
+  "winner": {
+    "method": "shape_residual_fusion",
+    "selection_metric": "minimum held-out downstream pair timing sigma68_ns",
+    "timing_sigma68_ns": 1.3392886151954533,
+    "ci_low": 1.2336979559002472,
+    "ci_high": 1.425666657678034
+  },
+  "traditional_method": "trapezoid_template",
+  "trapezoid": {
+    "rise": 2,
+    "flat": 2
+  },
+  "template_grid": {
+    "min": -1.4,
+    "max": 1.4,
+    "step": 0.02
+  },
+  "new_architecture": "shape_residual_fusion",
+  "method_summary": [
+    {
+      "method": "trapezoid_template",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 2.153698749520067,
+      "timing_sigma68_ci_low": 2.023217678070065,
+      "timing_sigma68_ci_high": 2.371520791979833,
+      "median_residual_ns": -3.7976503350354953,
+      "median_residual_ci_low": -3.9906971817016625,
+      "median_residual_ci_high": -3.5843851369468815,
+      "shape_phase_bias_ns": 0.0,
+      "shape_phase_bias_ci_low": 0.0,
+      "shape_phase_bias_ci_high": 0.0,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "ridge",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.5453598445921388,
+      "timing_sigma68_ci_low": 1.3293694307644686,
+      "timing_sigma68_ci_high": 1.6603433064994597,
+      "median_residual_ns": 1.3254814119752432,
+      "median_residual_ci_low": 1.1028827609012808,
+      "median_residual_ci_high": 1.4767522475017145,
+      "shape_phase_bias_ns": 0.9044518127249646,
+      "shape_phase_bias_ci_low": 0.05004298392951867,
+      "shape_phase_bias_ci_high": 1.894579983180428,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.3763665192387118,
+      "timing_sigma68_ci_low": 1.2450932987052745,
+      "timing_sigma68_ci_high": 1.4762354824523172,
+      "median_residual_ns": 1.5824200840703568,
+      "median_residual_ci_low": 1.3391028091905355,
+      "median_residual_ci_high": 1.7931209022035208,
+      "shape_phase_bias_ns": -1.5779084568043018,
+      "shape_phase_bias_ci_low": -1.938074082090214,
+      "shape_phase_bias_ci_high": -1.0308476553874506,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "mlp",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.448831789509862,
+      "timing_sigma68_ci_low": 1.2531324501313001,
+      "timing_sigma68_ci_high": 1.5267940173256551,
+      "median_residual_ns": 1.524257483568853,
+      "median_residual_ci_low": 1.407692755286348,
+      "median_residual_ci_high": 1.6973167219879635,
+      "shape_phase_bias_ns": 0.45167636040544323,
+      "shape_phase_bias_ci_low": -0.25193257355471665,
+      "shape_phase_bias_ci_high": 1.278790344500706,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "cnn_1d",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.5108270276937243,
+      "timing_sigma68_ci_low": 1.3028241137799377,
+      "timing_sigma68_ci_high": 1.6536239981651306,
+      "median_residual_ns": 1.394857033891853,
+      "median_residual_ci_low": 1.2307182201558113,
+      "median_residual_ci_high": 1.5145389852523863,
+      "shape_phase_bias_ns": -7.874344027715676,
+      "shape_phase_bias_ci_low": -7.874344027715676,
+      "shape_phase_bias_ci_high": -7.874344027715672,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "shape_residual_fusion",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.3392886151954533,
+      "timing_sigma68_ci_low": 1.2336979559002472,
+      "timing_sigma68_ci_high": 1.425666657678034,
+      "median_residual_ns": 1.574021004183507,
+      "median_residual_ci_low": 1.3857352915824102,
+      "median_residual_ci_high": 1.7794618003639329,
+      "shape_phase_bias_ns": -2.3849518608859483,
+      "shape_phase_bias_ci_low": -2.8787484639542456,
+      "shape_phase_bias_ci_high": -2.0363860266678273,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_root_reproduction",
+      "pass": true,
+      "value": 640737,
+      "detail": "canonical selected-pulse count must match exactly"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "pass": true,
+      "value": 0,
+      "detail": "split by run"
+    },
+    {
+      "check": "finite_traditional_phase",
+      "pass": true,
+      "value": 59613,
+      "detail": "all held-out pulses must have a traditional phase anchor"
+    },
+    {
+      "check": "training_target_rows",
+      "pass": true,
+      "value": 14646,
+      "detail": "same-event downstream consistency targets from train runs"
+    },
+    {
+      "check": "winner_named_in_result_json",
+      "pass": true,
+      "value": "shape_residual_fusion",
+      "detail": "winner is selected by minimum held-out timing sigma68"
+    }
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 59.5,
+  "git_commit": "b2f2ebb934d87614d52fb7ef08fae4feb82717c4"
+}

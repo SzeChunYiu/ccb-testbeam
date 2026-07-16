@@ -1,0 +1,4 @@
+1784180399.1427.0adb4363
+# S40b: validate waveform phase-space taxonomy against independent pulse-shape truth
+
+Validate the S40a four-axis waveform phase-space taxonomy against an independent hand-scan or simulation-derived pulse-shape label set before treating the labels as physics truth. Compare the traditional PCA/CFD/template clustering baseline against ridge, gradient-boosted trees, MLP, 1D-CNN, compact transformer, and residual-gated sequence encoders with run-heldout bootstrap CIs. Quantify whether rise curvature, late tail, undershoot, and width axes remain separated from timing, pedestal, pile-up, saturation, energy, and PID proxies under the external truth labels.

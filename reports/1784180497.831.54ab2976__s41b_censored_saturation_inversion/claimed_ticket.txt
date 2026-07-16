@@ -1,0 +1,4 @@
+1784180497.831.54ab2976
+# S41b censored saturation inversion for clipped energy and shape recovery
+
+Academic-grade study: recover energy, pulse shape, and timing information from clipped or saturated waveforms using explicit censoring-aware likelihoods and neural inversion. Compare traditional truncated-template fits, Tobit-style censored regression, and charge-tail extrapolation against ridge, gradient-boosted trees, MLP, 1D-CNN autoencoder/regressor heads, masked-sequence transformer, and diffusion/denoising reconstruction where apt. Require event/run bootstrap 95% CIs for energy bias, resolution, saturation-onset threshold, waveform-shape error, timing shift, pile-up confusion, pedestal-state interaction, and PID boundary movement. Include negative controls on unclipped pulses artificially censored at multiple ADC thresholds.

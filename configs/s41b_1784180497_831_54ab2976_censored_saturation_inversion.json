@@ -1,0 +1,25 @@
+{
+  "ticket_id": "1784180497.831.54ab2976",
+  "study_id": "S41b",
+  "worker": "testbeam-laptop-3",
+  "title": "censored saturation inversion for clipped energy and shape recovery",
+  "output_dir": "reports/1784180497.831.54ab2976__s41b_censored_saturation_inversion",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "random_seed": 20410716,
+  "max_clean_pulses_per_run_stave": 112,
+  "injected_per_train_run": 72,
+  "clean_per_train_run": 72,
+  "injected_per_heldout_run": 96,
+  "clean_per_heldout_run": 96,
+  "benchmark_runs": {
+    "train": [50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout": [58, 60, 62, 64, 65]
+  },
+  "ml": {
+    "bootstrap_samples": 500,
+    "cnn_epochs": 90,
+    "cnn_channels": 12,
+    "max_iter": 280
+  },
+  "negative_control_adc_thresholds": [11800.0, 9800.0, 8200.0, 6800.0]
+}

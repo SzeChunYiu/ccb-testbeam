@@ -1,0 +1,39 @@
+{
+  "study_id": "S42b",
+  "ticket_id": "1784181983.717.7f5e7d65",
+  "worker": "testbeam-laptop-3",
+  "title": "S42b overlapping-pulse deconvolution timing and PID frontier",
+  "raw_root_dir": "/home/billy/ccb-data/extracted/root/root",
+  "benchmark_runs": {
+    "train": [50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout": [58, 60, 62, 64, 65]
+  },
+  "selection": {
+    "bstack_channels": ["B2", "B4", "B6", "B8"],
+    "pedestal_samples": [0, 1, 2, 3],
+    "amplitude_threshold_adc": 1000
+  },
+  "benchmark": {
+    "max_clean_pulses_per_run_stave": 96,
+    "injected_per_train_run": 56,
+    "clean_per_train_run": 56,
+    "injected_per_heldout_run": 76,
+    "clean_per_heldout_run": 76,
+    "fixed_fpr_targets": [0.01, 0.05, 0.10],
+    "bootstrap_unit": "heldout source_run",
+    "bootstrap_replicates": 120
+  },
+  "methods_required": [
+    "two_pulse_template_likelihood_traditional",
+    "leading_edge_cfd_traditional",
+    "residual_tail_veto_traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "tiny_sequence_transformer",
+    "causal_window_transformer_new",
+    "template_residual_boosted_stack_new"
+  ],
+  "random_seed": 2026071617
+}

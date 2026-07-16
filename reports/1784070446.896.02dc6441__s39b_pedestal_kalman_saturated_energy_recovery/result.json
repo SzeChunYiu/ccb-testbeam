@@ -1,0 +1,122 @@
+{
+  "ticket_id": "1784070446.896.02dc6441",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "Pedestal-state Kalman correction versus ML baseline memory models for saturated energy recovery",
+  "claimed_ticket_title": "S39b pedestal-state Kalman correction vs ML baseline memory models for saturated energy recovery",
+  "claimed_ticket_body": "Academic-grade study: model pretrigger pedestal memory and baseline drift as latent state variables, then measure their impact on clipped/saturated pulse energy recovery and timing. Compare a traditional Kalman/state-space pedestal tracker with analytic clipped-template charge reconstruction against ridge, gradient-boosted trees, MLP, 1D-CNN encoder, and transformer encoder using causal pretrigger plus pulse samples. Report run-block bootstrap CIs for energy response, saturation knee location, timing bias, pedestal high-minus-low contrast, pile-up leakage, and PID-conditioned residuals; include ablations removing pretrigger, tail, and saturation-mask inputs.",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "injection_source_bootstrap": "held-out source_run:stave:is_overlap:spacing_bin:ratio_bin percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "saturation_onset_proxy": "true_amp1_adc + true_amp2_adc > 11000 ADC",
+    "pedestal_state_proxy": "causal scalar Kalman local-level estimate from the four pretrigger samples",
+    "pid_proxy_migration": "span of median energy residual across B2/B4/B6/B8 staves",
+    "input_ablations": "boosted memory learner refit after removing pretrigger, tail, or saturation-mask feature blocks",
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "kalman_clipped_template_traditional",
+    "traditional_reference": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "masked_token_waveform_transformer": "masked_token_waveform_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite saturation-energy/timing score with run-block and injection-source bootstrap CIs reported",
+    "winner_score": 0.1689467245281356,
+    "energy_fractional_sigma68": 0.07281496193004997,
+    "energy_fractional_sigma68_run_block_ci95": [
+      0.061572990267446545,
+      0.08043604397517634
+    ],
+    "energy_fractional_sigma68_injection_source_ci95": [
+      0.06460350928126371,
+      0.08113558445724377
+    ],
+    "time_sigma68_ns": 7.154842926475231,
+    "time_sigma68_run_block_ci95": [
+      6.164984400053942,
+      7.550377389427053
+    ],
+    "time_sigma68_injection_source_ci95": [
+      6.39814489905256,
+      7.569389241736442
+    ],
+    "pileup_miss_rate": 0.2972222222222222,
+    "false_split_rate": 0.19444444444444445,
+    "ticket_diagnostics": {
+      "charge_fractional_sigma68": 0.07281496193004997,
+      "charge_fractional_sigma68_ci95": [
+        0.06163246769344162,
+        0.0810329026865319
+      ],
+      "energy_proxy_bias": -0.003030420389209107,
+      "saturation_onset_accuracy": 0.9920948616600791,
+      "saturation_onset_calibration_abs": 0.007905138339920952,
+      "pid_proxy_energy_bias_span": 0.029905745186552073,
+      "pileup_merge_rate": 0.2972222222222222,
+      "pileup_false_split_rate": 0.19444444444444445,
+      "pedestal_high_minus_low_contrast": -0.005398921107569213,
+      "saturation_knee_location_adc": 12320.75,
+      "pid_conditioned_residual_span": 0.029905745186552073
+    }
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "injection_source_bootstrap_ci": "injection_source_bootstrap_ci.csv",
+    "ticket_diagnostics": "ticket_diagnostics.csv",
+    "s39b_pedestal_memory_systematics": "s39b_pedestal_memory_systematics.csv",
+    "s39b_input_ablation_metrics": "s39b_input_ablation_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "Injection-source cells are retained provenance units, not exact residual waveform indices.",
+    "The Kalman pedestal state is inferred only from the four causal pretrigger samples."
+  ]
+}

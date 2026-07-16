@@ -1,0 +1,231 @@
+{
+  "ticket_id": "1784181983.690.0d7c7719",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S42a causal pedestal-state pulse-shape calibration benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "geant4_truth": {
+    "source": "/home/billy/ccb-geant4/output_30k.root",
+    "tree": "hibeam",
+    "usable_sci_bar_events": 7101,
+    "pid_truth": "dominant Sci_bar PDG: proton vs deuteron",
+    "energy_truth": "sum Sci_bar EDep over B-stack mapped layers",
+    "timing_truth": "Sci_bar energy-weighted hit time",
+    "adc_scale": "250.0 ADC per MeV for digitized benchmark ranking"
+  },
+  "keyed_digitizer_output": {
+    "root_file": "digitized_g4_08_keyed.root",
+    "tree": "g4_08_digitized",
+    "required_branches": [
+      "daq_run",
+      "EVENTNO",
+      "EVT",
+      "TRIGGER",
+      "g4_entry",
+      "digitizer_seed",
+      "bridge_version"
+    ],
+    "schema_audit": "digitized_root_schema.csv",
+    "native_join_audit": "native_join_audit.csv",
+    "native_join_key": [
+      "daq_run",
+      "EVENTNO",
+      "EVT",
+      "TRIGGER",
+      "g4_entry",
+      "digitizer_seed"
+    ],
+    "native_join_passed": true,
+    "joined_events": 1552,
+    "bridge_version": "g4-08-native-join-v1",
+    "bridge_version_code": 1
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 420,
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional_pedestal_subtracted_template_matching": "deltaE_over_E_likelihood_template",
+    "traditional_cfd_timewalk_correction": "deltaE_over_E_likelihood_template",
+    "traditional_kalman_baseline_ar_filtering": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "temporal_transformer_new_architecture": "joint_sequence_transformer",
+    "residual_stack_new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out composite score with S42a run-block and event bootstrap CIs",
+    "winner_score": 0.2196339843783778,
+    "pid_auc": 0.9222862698798528,
+    "pid_balanced_accuracy": 0.8592610597958192,
+    "pid_efficiency": 0.9146005509641874,
+    "pid_purity": 0.8258706467661692,
+    "energy_fractional_sigma68": 0.08138616993546845,
+    "energy_fractional_sigma68_ci95": [
+      0.07155985160276503,
+      0.10671967594530883
+    ],
+    "time_sigma68_ns": 7.695196828075304,
+    "time_sigma68_ci95": [
+      6.826982890216876,
+      7.951471789026285
+    ],
+    "pileup_miss_rate": 0.3388888888888889,
+    "false_split_rate": 0.18333333333333332,
+    "s42a_timing_sigma68_ns": 7.63399380596686,
+    "s42a_timing_sigma68_run_ci95": [
+      7.057451266500521,
+      8.20930458263533
+    ],
+    "s42a_timing_sigma68_event_ci95": [
+      7.168431007843369,
+      8.24712395356867
+    ],
+    "s42a_pedestal_memory_slope_ns_per_adc": 0.0043063938929457,
+    "s42a_pulse_shape_stability_ns": 3.547550192727492,
+    "s42a_pileup_miss_rate": 0.3388888888888889,
+    "s42a_false_split_rate": 0.18333333333333332,
+    "s42a_saturation_failure_rate": 0.4868913857677903,
+    "s42a_energy_residual_sigma68": 0.19108889798060916,
+    "s42a_pid_proxy_balanced_accuracy": 0.8592610597958192
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "geant4_truth_table": "geant4_truth_table.csv",
+    "aligned_truth_events": "benchmark_truth_events.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "keyed_digitized_root": "digitized_g4_08_keyed.root",
+    "digitized_root_schema": "digitized_root_schema.csv",
+    "native_joined_events": "native_joined_events.csv",
+    "native_join_audit": "native_join_audit.csv",
+    "input_sha256": "input_sha256.csv",
+    "s31b_sidebands": "s31b_pedestal_intervention_sidebands.csv",
+    "s31b_input_view_metrics": "s31b_input_view_metrics.csv",
+    "s42a_heldout_predictions_with_states": "s42a_heldout_predictions_with_states.csv",
+    "s42a_run_block_bootstrap_ci": "s42a_run_block_bootstrap_ci.csv",
+    "s42a_event_bootstrap_ci": "s42a_event_bootstrap_ci.csv",
+    "s42a_systematics_by_state": "s42a_systematics_by_state.csv",
+    "s42a_traditional_method_breakout": "s42a_traditional_method_breakout.csv",
+    "s42a_leakage_and_ablation_controls": "s42a_leakage_and_ablation_controls.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Waveform digitization is hybrid: raw residual/template morphology plus GEANT4 event truth.",
+    "ADC/MeV scale is fixed for benchmark ranking and is not an external calibration.",
+    "Bootstrap CIs resample held-out source runs and do not include GEANT4 physics-list uncertainty."
+  ],
+  "execution_command": "/home/billy/.tb-workers/testbeam-laptop-1/.venv/bin/python scripts/s42a_1784181983_690_0d7c7719_causal_pedestal_pulse_shape_calibration_benchmark.py",
+  "ticket_scope": "causal pedestal-state pulse-shape calibration benchmark",
+  "causal_pedestal_interventions": {
+    "traditional_pretrigger_window_subtraction": "b0 = median(samples 0..3)",
+    "ar_pedestal_extrapolation": "linear pretrigger slope extrapolated into the pulse window",
+    "evidence_table": "s31b_input_view_metrics.csv"
+  },
+  "raw_vs_pedestal_subtracted": {
+    "raw_adc_sequence_view": [
+      "1d_cnn",
+      "joint_sequence_transformer"
+    ],
+    "pedestal_subtracted_feature_view": [
+      "deltaE_over_E_likelihood_template",
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "template_residual_boosted_stack_new"
+    ],
+    "evidence_table": "s31b_input_view_metrics.csv"
+  },
+  "sideband_audits": {
+    "shape_curvature": "curvature_band",
+    "timing_pull": "timing_pull_band",
+    "pileup_sensitivity": "pileup_spacing_band",
+    "saturation_onset": "saturation_onset",
+    "pedestal_drift": "pedestal_drift_band",
+    "amplitude_stratified_folds": "amplitude_stratum",
+    "energy_residuals": "energy_residual_band",
+    "pid_separation": "pid_separation",
+    "evidence_table": "s31b_pedestal_intervention_sidebands.csv"
+  },
+  "completion_audit": {
+    "claimed_ticket": "1784181983.690.0d7c7719",
+    "claim_command_run_once": true,
+    "raw_root_reproduced": true,
+    "required_methods_present": [
+      "deltaE_over_E_likelihood_template",
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "joint_sequence_transformer",
+      "template_residual_boosted_stack_new"
+    ],
+    "traditional_breakout_present": [
+      "pedestal_subtracted_template_matching",
+      "cfd_timewalk_correction",
+      "kalman_baseline_ar_filtering"
+    ],
+    "winner_named": "gradient_boosted_trees",
+    "run_block_bootstrap_cis_reported": true,
+    "event_bootstrap_cis_reported": true,
+    "systematics_reported": [
+      "timing bias and sigma68",
+      "pedestal-memory coefficients",
+      "pulse-shape stability",
+      "pile-up sensitivity",
+      "saturation failures",
+      "energy residuals",
+      "PID-proxy drift"
+    ],
+    "novel_tickets_appended_count": 0
+  },
+  "claimed_ticket_text": "S42a: causal pedestal-state pulse-shape calibration benchmark",
+  "s42a_systematics": {
+    "run_block_bootstrap": "s42a_run_block_bootstrap_ci.csv",
+    "event_bootstrap": "s42a_event_bootstrap_ci.csv",
+    "pedestal_memory_coefficients": "pedestal slope and excited-minus-quiet bias in S42a ledgers",
+    "pulse_shape_stability": "spread of timing sigma68 across pulse-shape quartiles",
+    "pileup_sensitivity": "pile-up miss, false split, and score migration",
+    "saturation_failures": "saturated-slice failure rate and timing penalty",
+    "energy_residuals": "fractional residual bias and sigma68",
+    "pid_proxy_drift": "PID balanced accuracy and PID-slice drift"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "ticket_id": "1784181983.717.7f5e7d65",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "S42b overlapping-pulse deconvolution timing and PID frontier",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "detector_heldout": "nominal predictions evaluated on B8 as detector-slice stress test, with source-run bootstrap on B8",
+    "bootstrap_replicates": 120,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "registered S42b deconvolution frontier composite endpoint score",
+    "fixed_fpr_thresholds": "thresholds frozen on train clean controls and evaluated on held-out source runs",
+    "real_sideband_validation": "held-out clean raw-ROOT control slices by source run and stave",
+    "ablations": [
+      "clean-control pretrigger pedestal sensitivity proxy",
+      "tight synthetic-over-real injected pile-up slice",
+      "high summed-amplitude synthetic-over-real injected pile-up slice",
+      "shuffled second-pulse phase sentinel slice",
+      "amplitude-only high-charge sentinel slice"
+    ]
+  },
+  "required_method_coverage": {
+    "traditional_two_pulse_likelihood": "two_pulse_template_likelihood_traditional",
+    "leading_edge_cfd": "leading_edge_cfd_traditional",
+    "residual_tail_veto": "residual_tail_veto_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "temporal_attention_model": "tiny_sequence_transformer",
+    "causal_transformer": "causal_window_transformer_new",
+    "new_architecture": "causal_window_transformer_new",
+    "hybrid_new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum registered S42b endpoint score with run-block bootstrap CIs; fixed-FPR recall reported as operational tagging endpoint",
+    "winner_score": 1.7276659471971414,
+    "leading_edge_time_bias_ns": 0.8570218725765955,
+    "leading_edge_time_sigma68_ns": 4.943650638185607,
+    "leading_edge_time_sigma68_ci95": [
+      4.707783150197964,
+      5.806861686688957
+    ],
+    "secondary_pulse_delay_bias_ns": -0.5967805459002307,
+    "secondary_pulse_delay_sigma68_ns": 9.731608547048731,
+    "secondary_pulse_delay_sigma68_ci95": [
+      8.882342431055461,
+      11.168283737423614
+    ],
+    "time_sigma68_ns": 6.602272104256128,
+    "energy_proxy_distortion_sigma68": 0.07139666024822157,
+    "pileup_miss_rate": 0.3026315789473684,
+    "false_split_rate": 0.16842105263157894,
+    "false_merge_rate": 0.3026315789473684,
+    "tight_sep_le_15ns_false_merge_rate": 0.42011834319526625,
+    "fixed_fpr_5pct": {
+      "method": "template_residual_boosted_stack_new",
+      "target_train_fpr": 0.05,
+      "frozen_threshold": 0.2363263057619243,
+      "pileup_recall": 0.8289473684210527,
+      "real_clean_sideband_false_split_rate": 0.3368421052631579,
+      "accepted_time_sigma68_ns": 5.254290883943467,
+      "accepted_energy_sigma68": 0.07789885433786042,
+      "n_predicted_positive": 443.0,
+      "bootstrap_unit": "heldout source_run",
+      "bootstrap_replicates": 120,
+      "pileup_recall_ci_low": 0.794671052631579,
+      "pileup_recall_ci_high": 0.8658552631578947,
+      "real_clean_sideband_false_split_rate_ci_low": 0.29736842105263156,
+      "real_clean_sideband_false_split_rate_ci_high": 0.3843421052631578,
+      "accepted_time_sigma68_ns_ci_low": 4.950633819927078,
+      "accepted_time_sigma68_ns_ci_high": 6.045719452134732,
+      "accepted_energy_sigma68_ci_low": 0.07319331536524265,
+      "accepted_energy_sigma68_ci_high": 0.08162385797912261,
+      "n_predicted_positive_ci_low": 419.875,
+      "n_predicted_positive_ci_high": 474.0
+    }
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "config": "../../configs/s42b_1784181983_717_7f5e7d65_overlapping_pulse_deconvolution_timing_pid_frontier.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "fixed_fpr_recall_ci": "fixed_fpr_recall_ci.csv",
+    "real_sideband_validation": "real_sideband_validation.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "detector_heldout_ranked_metrics": "detector_heldout_ranked_metrics.csv",
+    "detector_heldout_event_predictions": "detector_heldout_event_predictions.csv",
+    "ablation_window_metrics": "ablation_window_metrics.csv",
+    "ablation_stress_slices": "ablation_stress_slices.csv"
+  },
+  "next_tickets": [
+    {
+      "ticket_id": "1784182501.1073.51a96809",
+      "title": "S42c: hand-scanned high-current overlap validation for the S42b winner",
+      "body": "Question: does the S42b winner keep its fixed-FPR recall and false-merge advantage on hand-scanned real high-current overlap candidates rather than injected doublets? Expected information gain: converts the controlled synthetic-over-real frontier into a real-pile-up validation or falsifies deployment."
+    }
+  ],
+  "novel_tickets_appended": [
+    "1784182501.1073.51a96809"
+  ],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "PID confusion is a stave-conditioned energy-bias proxy, not particle truth."
+  ]
+}

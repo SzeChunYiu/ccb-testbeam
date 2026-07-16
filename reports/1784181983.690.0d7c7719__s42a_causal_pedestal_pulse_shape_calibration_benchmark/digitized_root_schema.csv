@@ -1,0 +1,8 @@
+branch,present,typename
+daq_run,True,std::int32_t
+EVENTNO,True,std::int64_t
+EVT,True,std::int64_t
+TRIGGER,True,std::int64_t
+g4_entry,True,std::int64_t
+digitizer_seed,True,std::int64_t
+bridge_version,True,std::int32_t

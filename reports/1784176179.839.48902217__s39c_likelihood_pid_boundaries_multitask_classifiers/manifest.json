@@ -1,0 +1,62 @@
+{
+  "ticket_id": "1784176179.839.48902217",
+  "generated_at_unix": 1784177187.4736965,
+  "command": "/home/billy/anaconda3/bin/python scripts/s39c_1784176179_839_48902217_likelihood_pid_boundaries_multitask_classifiers.py --config configs/s39c_1784176179_839_48902217_likelihood_pid_boundaries_multitask_classifiers.json",
+  "artifacts": [
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/REPORT.md",
+      "sha256": "241e16618080d4860f442281c1aa269559166c08bff90cc2f7234286b29f44ad",
+      "bytes": 93001
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/boundary_disagreement_metrics.csv",
+      "sha256": "340e51ec1cafa934afb9a46a88049492080f2a31a308ad288ee5151ccad9fd99",
+      "bytes": 27803
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/claimed_ticket.txt",
+      "sha256": "fc9910b7e2e3c356c82838e0bd845e91880d6a362c7e720ecce594f8fa1d23c0",
+      "bytes": 98
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/method_summary.csv",
+      "sha256": "8c78c6cd07fc1d2c76b46f2322ec16f7a4221b9ad2be323d79bb306cdcdfe824",
+      "bytes": 8245
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/reproduction_counts_by_run.csv",
+      "sha256": "93adda376440c4511478aa45448d8f8fc2d642a2ca25c7bbff977761f61bfb49",
+      "bytes": 1324
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/reproduction_match_table.csv",
+      "sha256": "31478894bc0150f8ff6814a77790a56f39bf99e291cab99ff7259ee4f0019020",
+      "bytes": 249
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/residualization_audit.csv",
+      "sha256": "ff4ae0b971617c0fb27722e6ac4f2d4dcc1d3bdccfce446c7edeaf4faea5ea80",
+      "bytes": 1428
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/result.json",
+      "sha256": "c9e792199d1396b465d548ced5afa0f8be63533d9dd858b9ff2b1797dc074065",
+      "bytes": 5924
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/run_species_bootstrap_metrics.csv",
+      "sha256": "2035879eb7cbc898d10bf9a314452ad08be1bb27595b12e357cc2398cbc374a3",
+      "bytes": 12015
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/source_event_predictions_selected_methods.csv.gz",
+      "sha256": "ed8c9b283561dec8296aa09511c8a43af40db1b38127213f47a5858389fd9f15",
+      "bytes": 1456100
+    },
+    {
+      "path": "reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/stress_strata_metrics.csv",
+      "sha256": "2f7440c7621027318a8a7d2211d48077167f11347412c1ce3fe05a87ae0bcb51",
+      "bytes": 44483
+    }
+  ]
+}

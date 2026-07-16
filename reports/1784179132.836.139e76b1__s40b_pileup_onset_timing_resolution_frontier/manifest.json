@@ -1,0 +1,26 @@
+{
+  "ticket_id": "1784179132.836.139e76b1",
+  "git_commit": "1abd2931a079b20dc466147d0592783c514c8dda",
+  "command": "/usr/bin/python3 scripts/s40b_1784179132_836_139e76b1_pileup_onset_timing_resolution_frontier.py",
+  "runtime_seconds": 97.60209941864014,
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "outputs_sha256": {
+    "REPORT.md": "78af700a4d49f3101ce06566a02f8d13c1b3bdd2d4e593268f28b4fa3e6d3724",
+    "ablation_stress_slices.csv": "3199c86119154ecf2a97ee6e4ff2d63cafadb9e19f82f9ca4476071b25374eaa",
+    "ablation_window_metrics.csv": "c32e64b1cc4551d5735afa1eb0797371242fb1db9cd59defd7d2712895a05ee1",
+    "claimed_ticket.txt": "a9e35663103778808486e823fe010afd61aa6cdac3bb304e476281a4600c9c6f",
+    "detector_heldout_event_predictions.csv": "e99aa30baf50f3d9920d11b5a03ba2ac4ef046460adc7ee6e43b9bca2c2fc16c",
+    "detector_heldout_ranked_metrics.csv": "1349cd1631fe8a730aa9ad7a7bd5ddad879c853532feb53bb75a04bd3524a970",
+    "endpoint_metrics_ci.csv": "b2a998a2a837769e7f11d1a5fd38fb931d6f4949bbaca8aafe8be66f4284b8d8",
+    "event_predictions.csv": "62b80eae40fe5cc02d1196298b996afcf3db3a9a7620f0660b2a6c1de493b77e",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "c5b7a6f143091c47ebb4bf658e540c6693b3bcb6889f76b7d670b786d71f46ca",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "977bfb5fd6210c1b9a7f66a57e70810bbd6fa8f8084a229c318e822183e5ec15",
+    "run_heldout_metrics.csv": "285c649691a8d44bdc95f96e5bec4a927f0548ecda40a03d6324466db1f0519e",
+    "strata_metrics.csv": "3b7990cbdf26fe8a3ff6b01dcd60278be127b67dce708fc81acbfce43aeb1bb9",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "6b551922d523fdd1a7d03e5d7d3125fded7c7cb09f17d9a5b122eb5436bf9369"
+  }
+}

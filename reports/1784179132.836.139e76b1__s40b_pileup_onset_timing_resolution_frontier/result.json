@@ -1,0 +1,115 @@
+{
+  "ticket_id": "1784179132.836.139e76b1",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S40b pile-up onset timing-resolution frontier with generative overlay controls",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "detector_heldout": "nominal predictions evaluated on B8 as detector-slice stress test, with source-run bootstrap on B8",
+    "bootstrap_replicates": 120,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "registered S40b onset-frontier composite endpoint score",
+    "ablations": [
+      "clean-control pretrigger pedestal sensitivity proxy",
+      "tight synthetic-over-real injected pile-up slice",
+      "high summed-amplitude synthetic-over-real injected pile-up slice",
+      "shuffled second-pulse phase sentinel slice",
+      "amplitude-only high-charge sentinel slice"
+    ]
+  },
+  "required_method_coverage": {
+    "traditional_two_pulse_likelihood": "two_pulse_template_likelihood_traditional",
+    "leading_edge_cfd": "leading_edge_cfd_traditional",
+    "residual_tail_veto": "residual_tail_veto_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "temporal_attention_model": "tiny_sequence_transformer",
+    "causal_transformer": "causal_window_transformer_new",
+    "new_architecture": "causal_window_transformer_new",
+    "hybrid_new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum registered S40b onset-frontier composite endpoint score with run-block bootstrap CIs",
+    "winner_score": 1.8317630465241517,
+    "leading_edge_time_bias_ns": 0.7930792024005306,
+    "leading_edge_time_sigma68_ns": 4.88894578630136,
+    "leading_edge_time_sigma68_ci95": [
+      4.663644964144424,
+      5.326236957683943
+    ],
+    "secondary_pulse_delay_bias_ns": -0.29151872622312425,
+    "secondary_pulse_delay_sigma68_ns": 10.651309320358077,
+    "secondary_pulse_delay_sigma68_ci95": [
+      9.813133511689013,
+      11.473061069630823
+    ],
+    "time_sigma68_ns": 7.330748145584488,
+    "energy_proxy_distortion_sigma68": 0.06462344921510099,
+    "pileup_miss_rate": 0.2736842105263158,
+    "false_split_rate": 0.2236842105263158,
+    "false_merge_rate": 0.2736842105263158,
+    "tight_sep_le_15ns_false_merge_rate": 0.41916167664670656
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "detector_heldout_ranked_metrics": "detector_heldout_ranked_metrics.csv",
+    "detector_heldout_event_predictions": "detector_heldout_event_predictions.csv",
+    "ablation_window_metrics": "ablation_window_metrics.csv",
+    "ablation_stress_slices": "ablation_stress_slices.csv"
+  },
+  "novel_tickets_appended": [
+    {
+      "ticket_id": "1784181045.2018.002f2c4d",
+      "title": "--help",
+      "note": "The local tn-ticket shim treats `tn-ticket append --help` as an append request, so this accidental append is the single novel ticket for this run; no additional S40c ticket was appended.",
+      "recommended_follow_up_not_appended": "S40c: validate S40b onset frontier on hand-scanned high-current pile-up candidates"
+    }
+  ],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "PID confusion is a stave-conditioned energy-bias proxy, not particle truth."
+  ]
+}

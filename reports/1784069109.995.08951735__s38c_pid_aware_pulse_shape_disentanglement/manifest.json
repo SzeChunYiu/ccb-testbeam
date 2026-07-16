@@ -1,0 +1,52 @@
+{
+  "ticket_id": "1784069109.995.08951735",
+  "generated_at_unix": 1784175948.5326355,
+  "command": "/home/billy/anaconda3/bin/python scripts/s38c_1784069109_995_08951735_pid_aware_pulse_shape_disentanglement.py --config configs/s38c_1784069109_995_08951735_pid_aware_pulse_shape_disentanglement.json",
+  "artifacts": [
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/REPORT.md",
+      "sha256": "724be7d15382b90a9d436dbac6c7b144e04d788c95b2f98b94ff716fa6c183e5",
+      "bytes": 48545
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/method_summary.csv",
+      "sha256": "ed72104a21c033ada6bdcfd2d89e0059b4682d198c5ac011aea07558d6648fe3",
+      "bytes": 8224
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/reproduction_counts_by_run.csv",
+      "sha256": "93adda376440c4511478aa45448d8f8fc2d642a2ca25c7bbff977761f61bfb49",
+      "bytes": 1324
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/reproduction_match_table.csv",
+      "sha256": "57b2d87b59a3397aa9bc0888787b0efe6288ede777b485e3b44f5f15c5f31445",
+      "bytes": 249
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/residualization_audit.csv",
+      "sha256": "ff4ae0b971617c0fb27722e6ac4f2d4dcc1d3bdccfce446c7edeaf4faea5ea80",
+      "bytes": 1428
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/result.json",
+      "sha256": "d909daaf33fc9f20af8bb6a7068e376c9df19bf8dbf63b2e595db15d0cd62d60",
+      "bytes": 5829
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/run_species_bootstrap_metrics.csv",
+      "sha256": "2035879eb7cbc898d10bf9a314452ad08be1bb27595b12e357cc2398cbc374a3",
+      "bytes": 12015
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/source_event_predictions_selected_methods.csv.gz",
+      "sha256": "d2a844f2f2e33eda211101ea72ad22ea752b90cb1b1ae17ffa1c559385ad38cb",
+      "bytes": 1456100
+    },
+    {
+      "path": "reports/1784069109.995.08951735__s38c_pid_aware_pulse_shape_disentanglement/stress_strata_metrics.csv",
+      "sha256": "2f7440c7621027318a8a7d2211d48077167f11347412c1ce3fe05a87ae0bcb51",
+      "bytes": 44483
+    }
+  ]
+}

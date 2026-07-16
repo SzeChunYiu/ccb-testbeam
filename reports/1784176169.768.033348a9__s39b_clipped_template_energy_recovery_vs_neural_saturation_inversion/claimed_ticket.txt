@@ -1,0 +1,4 @@
+1784176169.768.033348a9
+# S39b: clipped-template energy recovery vs neural saturation inversion
+
+Academic-grade study: test whether a traditional clipped-template likelihood with pedestal-corrected charge integration can recover saturated pulse energy as robustly as learned saturation inversion. Compare the traditional method against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer/temporal-attention models where waveform length permits. Require synthetic injection plus held-out run validation, bootstrap CIs for energy bias/resolution and saturation-onset thresholds, and stratification by pedestal, pile-up proximity, pulse shape, and ADC clipping depth. Emphasize interpretable failure maps that improve understanding of saturation and energy reconstruction.

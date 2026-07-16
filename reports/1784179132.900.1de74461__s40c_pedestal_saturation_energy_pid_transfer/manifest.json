@@ -1,0 +1,21 @@
+{
+  "ticket_id": "1784179132.900.1de74461",
+  "git_commit": "1abd2931a079b20dc466147d0592783c514c8dda",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-2/.venv/bin/python scripts/s40c_1784179132_900_1de74461_pedestal_saturation_energy_pid_transfer.py",
+  "runtime_seconds": 72.75016927719116,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "5291f8a1c17a912309d9c44fc263cc523e132f41b2c0c610354710089242db37",
+    "claimed_ticket.txt": "31f37cd9f29537b730ffa8c1a7634b0c97736d9ab385f46f4ca336e162462770",
+    "event_predictions.csv": "a31757433d3e22268b3efdc4f11306b6355662ed0f65f0f025b39b90ee72103f",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "method_metrics.csv": "283848074e4d6ad6d259a8de5df0fc56009d61245b63d3ee9f15154b20a9f4b6",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "2c1e363a3a8bc966d18e5ae4d318476b3416c39d809ea9bdb7e1129a7c0284cc",
+    "run_heldout_metrics.csv": "0cf0a838edb145fd54caccb0047b3ab3ffd2cf0c83c564057e8b74d4ea2eb6e9",
+    "strata_metrics.csv": "e30c89ff799b5db92a0343f817b9a33fa7aa7838e338b57b5153f220caadcbdf",
+    "template_summary.csv": "7d2ab6b9fe7c5078caeb794130de89df2d7ee40a71e02d25354796a0cd78c363",
+    "winner_ranked_metrics.csv": "4c5ea5a0ef92578b8d37b51477fda062833df3a8a6350ae056c4be287cdb0e6c"
+  }
+}

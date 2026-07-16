@@ -1,0 +1,31 @@
+{
+  "ticket_id": "1784183456.689.45cf43e9",
+  "study": "S43a",
+  "worker": "testbeam-laptop-3",
+  "command": "scripts/s43a_1784183456_689_45cf43e9_trapezoid_neural_timing_phase.py",
+  "script": "scripts/s43a_1784183456_689_45cf43e9_trapezoid_neural_timing_phase.py",
+  "config": "configs/s43a_1784183456_689_45cf43e9_trapezoid_neural_timing_phase.json",
+  "git_commit": "b2f2ebb934d87614d52fb7ef08fae4feb82717c4",
+  "python": "3.13.12",
+  "packages": {
+    "uproot": "5.7.5",
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "torch": "2.13.0+cpu"
+  },
+  "raw_root_dir": "data/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "a2b1ac4623c0366d456d2a5be403fbd9c5f2e058bb171d2456402a15fb387e16",
+    "heldout_pair_residuals.csv": "e06b4e0f31cdf3d8efc1866ea2e1a1350f3f240df643d23c03bbc193564f3a7d",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "leakage_checks.csv": "b89a5b9654c03703b3dbf4380d5c9b3ac78145818088c5fbec590cf151e4f40d",
+    "method_summary.csv": "bf70cb2001a69df93571a617eb0baccfa2417b283f1a31964ae8bf7a8304e8c1",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "0ced25d8605e0815a4016a30caceb712f57ab6a61e3d4e3d005423df1fdf745b",
+    "stratified_errors.csv": "00d9b7dfbf50b67e4a409248d5f0d0692611fab4e855b74971a1f8879c688188",
+    "training_summary.csv": "44ee73e33d3ce30a5c53cfd7f4bd38f6b4311aaa6ca11da8c0cdf7e0e2164e09"
+  }
+}

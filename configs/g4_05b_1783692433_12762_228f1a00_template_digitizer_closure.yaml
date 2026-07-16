@@ -1,0 +1,64 @@
+study_id: G4-05B
+ticket_id: "1783692433.12762.228f1a00"
+title: Real-template digitizer closure for timing truth benchmark
+worker: testbeam-laptop-2
+
+raw_root_dir: data/root/root
+geant4_root: /home/billy/ccb-geant4/output_krakow_1M.root
+fallback_geant4_root: /home/billy/ccb-geant4/output_30k.root
+output_dir: reports/1783692433.12762.228f1a00__g4_05b_template_digitizer_closure
+docs_report: docs/reports/G4_05B_template_digitizer_closure.md
+
+random_seed: 2026071102
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+tof_per_cm_ns: 0.078
+saturation_adc: 7000.0
+expected_selected_pulses: 640737
+max_template_pulses_per_run_stave: 350
+max_sim_events: 70000
+bootstrap_reps: 400
+
+staves: {B2: 0, B4: 2, B6: 4, B8: 6}
+sim_layer_mapping: {B2: 0, B4: 2, B6: 4, B8: 6}
+geometry_centers_cm: {B2: 2.0, B4: 6.0, B6: 10.0, B8: 14.0}
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+timing:
+  downstream_staves: [B4, B6, B8]
+  train_runs: [58, 59, 60, 61]
+  heldout_runs: [62, 63, 65]
+  template_runs: [58, 59, 60, 61, 62, 63, 65]
+  leading_edge_threshold_adc: 500.0
+  cfd_fractions: [0.20, 0.30, 0.40]
+  of_windows: [[1, 9], [2, 10]]
+  template_shift_grid: {min: -1.5, max: 1.5, step: 0.05}
+
+digitizer:
+  amplitude_scale_adc_per_sqrt_mev: 6200.0
+  amplitude_jitter_frac: 0.10
+  baseline_noise_adc: 18.0
+  time_jitter_ns: 0.18
+  reference_time_ns: 55.0
+  min_edep_mev: 0.0001
+  amplitude_bins: [1000, 1600, 2600, 4200, 6500, 10000, 18000]
+
+data_anchors:
+  sigma68_ns: 1.50
+  sigma68_unc_ns: 0.11
+
+ml:
+  ridge_alphas: [0.1, 1.0, 10.0]
+  hgb_learning_rates: [0.04, 0.08]
+  mlp_hidden: [48]
+  torch_epochs: 35
+  torch_lr: 0.003
+  torch_batch_size: 4096
+  torch_weight_decay: 0.0001

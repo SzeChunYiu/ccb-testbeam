@@ -1,0 +1,31 @@
+{
+  "best_traditional": {
+    "ci": [
+      1.861191724823179,
+      1.8634533590617153
+    ],
+    "method": "of_1_9",
+    "sigma68_ns": 1.8619677757847706
+  },
+  "next_tickets": [
+    {
+      "body": "Freeze the G4-05B residual winner and test whether its corrections transfer to raw-data S02/S03 run-held-out pair residuals without GEANT4 truth features, comparing against analytic timewalk with the same run-bootstrap CIs.",
+      "title": "G4-05C truth-free transfer guard for template-digitizer timing residuals"
+    }
+  ],
+  "runtime_seconds": 57.17534828186035,
+  "scientific_summary": "Under the real-template digitizer the point-estimate winner is gradient_boosted_trees with sigma68=0.036 ns. The best traditional method is of_1_9 at 1.862 ns. This is a quantified rank reversal relative to a conservative traditional-only G4-05 interpretation, but it is conditional on GEANT4 truth-supervised residual learning and should not be promoted to real-data calibration without a truth-free transfer guard.",
+  "stable_ranking": false,
+  "study": "G4-05B",
+  "ticket": "1783692433.12762.228f1a00",
+  "winner": {
+    "ci": [
+      0.0358232350876905,
+      0.03645293838842903
+    ],
+    "criterion": "minimum GEANT4-truth residual sigma68 with run-bootstrap CI",
+    "method": "gradient_boosted_trees",
+    "sigma68_ns": 0.036075061865446824
+  },
+  "worker": "testbeam-laptop-2"
+}

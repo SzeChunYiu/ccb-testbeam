@@ -1,0 +1,11 @@
+method,param,val_mae_ns
+analytic_timewalk,cfd20_minus_A_B_over_amp_block_offsets,2.6226514117484268
+ridge,alpha=0.01,0.6681235124898408
+ridge,alpha=0.1,0.6680963690261534
+ridge,alpha=1.0,0.668035793064111
+ridge,alpha=10.0,0.6778903731456501
+ridge,alpha=100.0,0.8137410921227705
+gradient_boosted_trees,fixed_config,0.5388291884566567
+mlp,best_epoch,1.4106996760055353
+1d_cnn,best_epoch,4.5956047894949705
+physics_residual_mlp,analytic_timewalk_plus_mlp_residual,0.4588782118133956

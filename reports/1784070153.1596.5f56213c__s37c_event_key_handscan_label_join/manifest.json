@@ -1,0 +1,23 @@
+{
+  "ticket_id": "1784070153.1596.5f56213c",
+  "git_commit": "4efae2e368ac752e28efc55a8d903c075bac9376",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-1/.venv/bin/python scripts/s37c_1784070153_1596_5f56213c_event_key_handscan_label_join.py",
+  "runtime_seconds": 66.64220404624939,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "080a9c2e9d16fc93cb0ca214ffb74a3961b2609021ae89812d7fa6b28d50aafd",
+    "claimed_ticket.txt": "7034009ff7a815dcccdf49d7e5391fcc7e7463bb9d7e06743d20403cf8bf3030",
+    "event_key_join_audit.csv": "dd649816b7e6fb2689ff5f07f5a608e855bd7caffcee3c53cb98ebb5e1272d8b",
+    "handscan_canonical_labels.csv": "bdc40e35adceaf3579ecac509779065e2ea51a9b19746074ab54eb9738e8b7da",
+    "handscan_source_provenance.csv": "ed96663a600bfd79c614f5f7d42e3c9c56c627468ef1865964c315e7f3aa947d",
+    "input_sha256.csv": "4441071608c8fb41aeb95a4dcd3f8a8d973792b82e78815e093c25c753ef77d2",
+    "real_handscan_event_predictions.csv": "93c944b718d52ea136d8d2a0660da1d36adaab9b8b8b94d243a926afd9bf5aa5",
+    "real_label_method_metrics.csv": "4714a6cffb90a07a61cb68179781a18d25b3a3ecc7aae1fe6fa88090f0c1b306",
+    "real_label_run_metrics.csv": "2aa6d44ae215f0245cf68cee31bb5ac71f1b50ec48ffc5016477319bd2d3fed5",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "4160361285d2a920a0ede09818112a8193f9f9f3971a3300a1bf3f13928efd4a",
+    "synthetic_closure_method_metrics.csv": "d572c32d83017b9dad2b1e908de7a9481c4ce1cdf18b7d74c512e3dc4fc2cd8c",
+    "template_summary.csv": "98452a263ce32d4c10c1ffdf2f4a4f0c48e8f02fd18b41b55ee1a6bfc126f8a4"
+  }
+}

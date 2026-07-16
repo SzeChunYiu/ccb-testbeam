@@ -763,20 +763,39 @@ def make_report(
         if len(comparison)
         else "Reference S14g result file was not available."
     )
+    default_abstract = (
+        "This study anchors the B-stave ADC-to-MeV conversion to hibeam_g4 `Sci_bar_EDep` truth "
+        "from the high-statistics GEANT4 ROOT tree, then benchmarks a strong Birks/duplicate-readout "
+        "traditional calibration against ridge regression, gradient-boosted trees, a tabular MLP, "
+        "a 1D-CNN, and a Birks-residual MLP. The raw ROOT reproduction gate passes "
+        f"exactly at {result['raw_reproduction']['reproduced_selected_pulses']:,} selected B-stave pulses. "
+        f"The held-out winner is **{winner}** with res68={result['winner']['res68_frac']:.5f} "
+        f"and run-block bootstrap 95% CI [{ci[0]:.5f}, {ci[1]:.5f}]."
+    )
+    model_panel_text = str(
+        config.get(
+            "model_panel_text",
+            "All learned models use the same train/held-out split by run. Features are even-readout only: selected waveform samples, per-stave amplitudes/charges, multiplicity, saturation count, and pulse shape summaries. Odd charges, event identifiers, and run labels are excluded from model inputs. The panel is ridge regression, gradient-boosted trees, a tabular MLP, a small 1D-CNN over the four B-stave waveforms, and a new truth-Birks residual MLP that predicts a multiplicative correction to the traditional baseline.",
+        )
+    )
+    systematics_text = str(
+        config.get(
+            "systematics_text",
+            "Dominant systematics are the non-alignment of simulated and real events, the assumed mapping from HRD B staves to `Sci_bar_LayerID`, possible mismatch between simulated scintillator energy deposition and HRD light/electronics response, disabled or unvalidated optical/Birks response in the GEANT4 output, saturation above the ADC ceiling, and the use of duplicate-readout closure for real-data benchmarking. The absolute MeV scale is therefore truth-anchored but not a full detector-response simulation.",
+        )
+    )
+    caveats_text = str(
+        config.get(
+            "caveats_text",
+            "Caveats: this closure target is duplicate odd-readout energy on a truth-calibrated scale, not an independently measured calorimetric truth. Learned models are intentionally low-capacity or short-trained so they test robust run-held-out structure rather than leaderboard-style tuning. Bootstrap intervals resample runs and therefore cover run-to-run variation in this data subset, but they do not include uncertainty from future alignment, optical transport, or electronics-response modeling.",
+        )
+    )
     lines = [
         f"# {report_heading}",
         "",
         "## Abstract",
         "",
-        (
-            "This study anchors the B-stave ADC-to-MeV conversion to hibeam_g4 `Sci_bar_EDep` truth "
-            "from the high-statistics GEANT4 ROOT tree, then benchmarks a strong Birks/duplicate-readout "
-            "traditional calibration against ridge regression, gradient-boosted trees, a tabular MLP, "
-            "a 1D-CNN, and a Birks-residual MLP. The raw ROOT reproduction gate passes "
-            f"exactly at {result['raw_reproduction']['reproduced_selected_pulses']:,} selected B-stave pulses. "
-            f"The held-out winner is **{winner}** with res68={result['winner']['res68_frac']:.5f} "
-            f"and run-block bootstrap 95% CI [{ci[0]:.5f}, {ci[1]:.5f}]."
-        ),
+        str(config.get("abstract_text", default_abstract)),
         "",
         "## Data and Reproduction Gate",
         "",
@@ -814,7 +833,7 @@ def make_report(
         "",
         "## Model Panel",
         "",
-        "All learned models use the same train/held-out split by run. Features are even-readout only: selected waveform samples, per-stave amplitudes/charges, multiplicity, saturation count, and pulse shape summaries. Odd charges, event identifiers, and run labels are excluded from model inputs. The panel is ridge regression, gradient-boosted trees, a tabular MLP, a small 1D-CNN over the four B-stave waveforms, and a new truth-Birks residual MLP that predicts a multiplicative correction to the traditional baseline.",
+        model_panel_text,
         "",
         "## Metrics",
         "",
@@ -846,7 +865,11 @@ def make_report(
         "",
         md_table(leakage, ["check", "value", "pass"]),
         "",
-        "Dominant systematics are the non-alignment of simulated and real events, the assumed mapping from HRD B staves to `Sci_bar_LayerID`, possible mismatch between simulated scintillator energy deposition and HRD light/electronics response, disabled or unvalidated optical/Birks response in the GEANT4 output, saturation above the ADC ceiling, and the use of duplicate-readout closure for real-data benchmarking. The absolute MeV scale is therefore truth-anchored but not a full detector-response simulation.",
+        systematics_text,
+        "",
+        "## Caveats",
+        "",
+        caveats_text,
         "",
         "## Finding",
         "",
@@ -1016,7 +1039,7 @@ def main() -> None:
     result = {
         "study": config["study_id"],
         "ticket_id": config["ticket_id"],
-        "worker": "testbeam-laptop-3",
+        "worker": str(config.get("worker", "testbeam-laptop-3")),
         "raw_reproduction": {
             "expected_selected_pulses": expected,
             "reproduced_selected_pulses": total,
@@ -1051,19 +1074,19 @@ def main() -> None:
         "truth_vs_s14g_delta": json.loads(comparison.to_json(orient="records")),
         "leakage_checks": json.loads(leakage.to_json(orient="records")),
         "new_architecture": "physics_residual_mlp: a neural residual model that predicts a multiplicative correction to the GEANT4-truth Birks baseline from even-readout waveform features.",
-        "finding": (
+        "finding": str(config.get("finding", (
             f"Raw ROOT reproduction passed exactly at {total:,} selected B-stave pulses. "
             f"The direct GEANT4-truth/Birks traditional lookup achieved res68={float(metrics[metrics.method == 'geant4_birks_lookup'].res68_frac.iloc[0]):.5f}; "
             f"the old empirical power law achieved res68={float(metrics[metrics.method == 'old_power_law'].res68_frac.iloc[0]):.5f}. "
             f"Across the ML/NN panel, the held-out winner is {winner_row['method']} with res68={float(winner_row['res68_frac']):.5f}. "
             "The direct Sci_bar truth prior changes the absolute MeV scale relative to the earlier S14g stopping-table anchor, but the ordering is stable: the physics/Birks baseline remains stronger than generic ML on this run-held-out closure task."
-        ),
-        "hypothesis": (
+        ))),
+        "hypothesis": str(config.get("hypothesis", (
             "A layer-level GEANT4 truth prior is already sufficient to fix most of the charge-to-energy nonlinearity, "
             "so remaining held-out error is dominated by real readout effects, saturation, and event topology rather than "
             "a lack of flexible regressors. A digitized GEANT4 response with the HRD sampling chain would test this by "
             "checking whether the residual MLP gain persists when simulation produces ADC-like waveforms."
-        ),
+        ))),
         "next_tickets": [
             {
                 "title": "S17c: digitized GEANT4-to-HRD waveform response closure",
@@ -1098,7 +1121,7 @@ def main() -> None:
     manifest = {
         "study": config["study_id"],
         "ticket_id": config["ticket_id"],
-        "worker": "testbeam-laptop-3",
+        "worker": str(config.get("worker", "testbeam-laptop-3")),
         "git_commit": git_commit(),
         "command": str(
             config.get(

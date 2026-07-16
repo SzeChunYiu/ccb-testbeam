@@ -1,0 +1,16 @@
+{
+  "files": [
+    "axis_metrics.csv",
+    "benchmark_rows.csv.gz",
+    "claimed_ticket.txt",
+    "input_sha256.csv",
+    "method_summary.csv",
+    "nuisance_separation_summary.csv",
+    "nuisance_strata_metrics.csv",
+    "predictions.csv.gz",
+    "reproduction_match_table.csv",
+    "result.json",
+    "run_heldout_metrics.csv"
+  ],
+  "ticket_id": "1784180399.1427.0adb4363"
+}

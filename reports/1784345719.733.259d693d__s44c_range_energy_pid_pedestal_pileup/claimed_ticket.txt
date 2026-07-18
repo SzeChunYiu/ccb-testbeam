@@ -1,0 +1,7 @@
+1784345719.733.259d693d
+# S44c range-energy PID calibration transfer under pedestal pile-up stress
+
+Question: How much PID and calibrated energy information survives pedestal drift, late tails, and mild pile-up after traditional range-energy calibration?
+Traditional baseline: pedestal sideband subtraction plus Bethe-Bloch/dE-E likelihood calibration with run-wise gain constants.
+Compare ridge regression, gradient-boosted trees, MLP, 1D-CNN, and a multitask waveform transformer for joint energy regression and PID.
+Report bootstrap CIs for energy scale/resolution, PID AUC and confusion, pedestal and occupancy strata, saturation flags, and timing-residual correlations.

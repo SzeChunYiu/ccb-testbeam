@@ -1,0 +1,13 @@
+method,event_id,source_run,stave,failure_mode,energy_residual,pileup_separation_error_ns,saturated_sample_count,pedestal_state,morphology_state
+saturation_residual_fusion_new,heldout:62:359,62,B2,missed_pileup,1.398,-15.11,0,shifted,late_tail_low
+saturation_residual_fusion_new,heldout:60:181,60,B4,missed_pileup,0.7711,-6.304,0,shifted,late_tail_low
+saturation_residual_fusion_new,heldout:65:659,65,B2,missed_pileup,0.311,-25.48,0,shifted,late_tail_high
+saturation_residual_fusion_new,heldout:60:195,60,B4,missed_pileup,-0.5536,-0.1588,0,shifted,late_tail_low
+saturation_residual_fusion_new,heldout:62:353,62,B2,missed_pileup,-0.1043,-43.5,0,nominal,late_tail_low
+analytic_clipped_template_sideband_traditional,heldout:64:494,64,B4,missed_pileup,0.351,52.5,0,shifted,late_tail_low
+analytic_clipped_template_sideband_traditional,heldout:60:238,60,B2,missed_pileup,0.1317,55,0,nominal,late_tail_low
+tiny_sequence_transformer,heldout:60:181,60,B4,missed_pileup,2.118,59.18,0,shifted,late_tail_low
+mlp,heldout:60:181,60,B4,missed_pileup,0.7125,80.79,0,shifted,late_tail_low
+ridge,heldout:60:195,60,B4,missed_pileup,-0.9139,14.55,0,shifted,late_tail_low
+1d_cnn,heldout:60:181,60,B4,missed_pileup,3.359,17.84,0,shifted,late_tail_low
+gradient_boosted_trees,heldout:62:359,62,B2,missed_pileup,1.352,-13.52,0,shifted,late_tail_low

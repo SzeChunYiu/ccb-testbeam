@@ -1,0 +1,11 @@
+method,heldout_run,energy_fractional_bias,energy_fractional_sigma68,time_bias_ns,time_sigma68_ns,pileup_miss_rate,false_split_rate
+saturation_residual_fusion_new,58,-0.003413,0.0458,-0.6667,6.803,0.3537,0.2927
+saturation_residual_fusion_new,60,0.01058,0.07223,1.087,6.811,0.3293,0.1707
+saturation_residual_fusion_new,62,0.00858,0.07772,1.459,7.819,0.2805,0.2683
+saturation_residual_fusion_new,64,-0.01622,0.04919,0.292,6.476,0.2805,0.122
+saturation_residual_fusion_new,65,0.003497,0.08026,-1.218,6.788,0.2561,0.122
+analytic_clipped_template_sideband_traditional,58,0.07677,0.05625,-0.9185,8.852,0.561,0.1707
+analytic_clipped_template_sideband_traditional,60,0.09935,0.09869,0.5776,9.281,0.6463,0.2073
+analytic_clipped_template_sideband_traditional,62,0.08989,0.08781,1.205,9.776,0.4756,0.1951
+analytic_clipped_template_sideband_traditional,64,0.02833,0.07476,-1.349,8.44,0.6341,0.2073
+analytic_clipped_template_sideband_traditional,65,0.08211,0.08442,-0.8114,10.82,0.6098,0.1341

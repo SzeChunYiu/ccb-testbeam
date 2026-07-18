@@ -1,0 +1,8 @@
+method,hyperparameter,train_residual_sigma68_ns
+ridge,alpha=0.1,1.6747896054701865
+ridge,alpha=1,1.6698730474647625
+ridge,alpha=10,1.6451777294826502
+gradient_boosted_trees,max_iter=180,1.4319649410987862
+mlp,"hidden=[64, 32]",1.4893846706870082
+cnn_1d,epochs=4,
+compact_waveform_attention,"epochs=5, d_model=24, heads=4",

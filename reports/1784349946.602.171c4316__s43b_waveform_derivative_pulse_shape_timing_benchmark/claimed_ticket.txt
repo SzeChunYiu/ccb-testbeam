@@ -1,0 +1,4 @@
+1784349946.602.171c4316
+# s43b waveform derivative pulse-shape timing benchmark
+
+Academic-grade study: compare a traditional constant-fraction plus template-derivative timing fit against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer for extracting pulse shape and arrival timing under pedestal drift. Use run-held-out splits, ablate derivative/curvature windows, report timing resolution and bias with paired bootstrap 95% CIs, and stratify by amplitude, pedestal state, and late-tail morphology.

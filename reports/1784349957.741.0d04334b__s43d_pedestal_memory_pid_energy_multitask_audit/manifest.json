@@ -1,0 +1,31 @@
+{
+  "ticket_id": "1784349957.741.0d04334b",
+  "study": "S43d",
+  "worker": "testbeam-laptop-1",
+  "command": "scripts/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.py",
+  "script": "scripts/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.py",
+  "config": "configs/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.json",
+  "git_commit": "b3bd8cec665ff3441a984f29e5af0f304fa2b12e",
+  "python": "3.11.14",
+  "packages": {
+    "uproot": "5.7.5",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "torch": "2.13.0+cpu"
+  },
+  "raw_root_dir": "data/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "11daf2ab1423a131043f3200f4007cbbbb65e6ff21c84cea0d5a1d390425fec4",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "leakage_checks.csv": "b89a5b9654c03703b3dbf4380d5c9b3dbf4380d5c9b3ac78145818088c5fbec590cf151e4f40d",
+    "method_summary.csv": "c44feac1c89f8ffcdf199498cb8c95df188e650c6c834cb756a52b1f96e40ebb",
+    "multitask_diagnostics.csv": "4d917c19aae99a6e3d4da3b749c9fb39918130c5cb25a795e0039f8188c8037c",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "0ad4d073b2d7bd0f59e92e4203158cfbd57fbf66374c0c4f600d896ca715fff4",
+    "stratified_errors.csv": "64990acd11a1415f06df182ebe4078ec70311f4c0152e950980de3c72da229c7",
+    "training_summary.csv": "c4fd9058ec1fbe32e28cde48a429a0cda0bc76161b90cfc5f4a954e5e155859e"
+  }
+}

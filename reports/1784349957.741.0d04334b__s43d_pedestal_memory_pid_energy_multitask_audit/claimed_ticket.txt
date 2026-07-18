@@ -1,0 +1,4 @@
+1784349957.741.0d04334b
+# s43d pedestal memory pid energy multitask audit
+
+Academic-grade study: compare traditional pedestal-run correction plus dE/E or likelihood PID calibration against ridge, gradient-boosted trees, MLP, 1D-CNN, and a multitask transformer where appropriate. Evaluate pedestal memory, pulse shape, energy linearity, PID confusion, timing residuals, and pile-up sensitivity on run-held-out folds; report per-species and per-energy-bin metrics with bootstrap 95% CIs and calibration/error-bar coverage checks.

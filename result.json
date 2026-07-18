@@ -1,63 +1,394 @@
 {
-  "artifacts": {
-    "docs_report": "docs/reports/G4_05_timing_validation.md",
-    "metrics": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_method_metrics.csv",
-    "per_method_json": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/per_method_results.json",
-    "predictions": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_predictions.csv.gz",
-    "report": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/REPORT.md"
-  },
-  "primary_metric": "heldout_sigma68_ns",
-  "raw_reproduction_gate": {
-    "delta": 0,
-    "pass": true,
-    "quantity": "S00 selected B-stave pulse records",
-    "report_value": 640737,
-    "reproduced": 640737,
-    "tolerance": 0
+  "ticket_id": "1784349957.741.0d04334b",
+  "study_id": "S43d",
+  "title": "pedestal-memory PID-energy multitask waveform audit",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
   },
   "split": {
-    "bootstrap_samples": 300,
-    "heldout_blocks": [
-      9,
-      10,
-      11
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
     ],
-    "train_blocks": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
     ],
-    "val_blocks": [
-      7,
-      8
-    ]
+    "train_pulses": 581124,
+    "heldout_pulses": 59613,
+    "bootstrap_replicates": 500
   },
-  "study_id": "G4-05",
-  "ticket_id": "1781212364.2054572.5f095c0d",
-  "winner": "gradient_boosted_trees",
-  "winner_family": "ml_nn",
-  "winner_metrics": {
-    "bias_ns": -0.002525511117336766,
-    "bias_ns_ci95": [
-      -0.011235645500850667,
-      0.001908441145621822
-    ],
-    "mae_ns": 0.5567555744502485,
-    "mae_ns_ci95": [
-      0.5508056627307156,
-      0.5629778727856635
-    ],
-    "n": 15000,
-    "p95_abs_ns": 1.774356254264511,
-    "rms_ns": 0.7995650735011278,
-    "sigma68_ns": 0.6098651379938835,
-    "sigma68_ns_ci95": [
-      0.6054375924429805,
-      0.6241904076314753
-    ]
-  }
+  "methods_benchmarked": [
+    "trapezoid_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "shape_residual_fusion"
+  ],
+  "winner": {
+    "method": "shape_residual_fusion",
+    "selection_metric": "minimum held-out downstream pair timing sigma68_ns",
+    "timing_sigma68_ns": 1.3430669509354196,
+    "ci_low": 1.2220208667016337,
+    "ci_high": 1.4099833865035558
+  },
+  "traditional_method": "trapezoid_template",
+  "trapezoid": {
+    "rise": 2,
+    "flat": 2
+  },
+  "template_grid": {
+    "min": -1.4,
+    "max": 1.4,
+    "step": 0.02
+  },
+  "new_architecture": "shape_residual_fusion",
+  "method_summary": [
+    {
+      "method": "trapezoid_template",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 2.153698749520067,
+      "timing_sigma68_ci_low": 2.023217678070065,
+      "timing_sigma68_ci_high": 2.371520791979833,
+      "median_residual_ns": -3.7976503350354953,
+      "median_residual_ci_low": -3.9906971817016625,
+      "median_residual_ci_high": -3.568669051353748,
+      "shape_phase_bias_ns": 0.0,
+      "shape_phase_bias_ci_low": 0.0,
+      "shape_phase_bias_ci_high": 0.0,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "ridge",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.5453598445921388,
+      "timing_sigma68_ci_low": 1.3174353873376847,
+      "timing_sigma68_ci_high": 1.6470678193294266,
+      "median_residual_ns": 1.3254814119752432,
+      "median_residual_ci_low": 1.1042099125225255,
+      "median_residual_ci_high": 1.4767522475017145,
+      "shape_phase_bias_ns": 0.9044518127249646,
+      "shape_phase_bias_ci_low": 0.01739444806107322,
+      "shape_phase_bias_ci_high": 1.894579983180428,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.392192076116819,
+      "timing_sigma68_ci_low": 1.2806050315145612,
+      "timing_sigma68_ci_high": 1.442326098478913,
+      "median_residual_ns": 1.5417873882610422,
+      "median_residual_ci_low": 1.3811076891677985,
+      "median_residual_ci_high": 1.7751238885523861,
+      "shape_phase_bias_ns": -1.6787797756919467,
+      "shape_phase_bias_ci_low": -1.9186773996620623,
+      "shape_phase_bias_ci_high": -1.4863611782290889,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "mlp",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.412046531258965,
+      "timing_sigma68_ci_low": 1.234749002600715,
+      "timing_sigma68_ci_high": 1.5454858855626306,
+      "median_residual_ns": 1.6191730527448627,
+      "median_residual_ci_low": 1.5239265527849462,
+      "median_residual_ci_high": 1.7055684379316922,
+      "shape_phase_bias_ns": 1.3094526450167834,
+      "shape_phase_bias_ci_low": 0.6996986754110033,
+      "shape_phase_bias_ci_high": 2.0748633211311542,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "cnn_1d",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.5972677926139607,
+      "timing_sigma68_ci_low": 1.40310757446289,
+      "timing_sigma68_ci_high": 1.671150999081207,
+      "median_residual_ns": 1.2180333461761492,
+      "median_residual_ci_low": 1.0710883051223412,
+      "median_residual_ci_high": 1.304173049987611,
+      "shape_phase_bias_ns": 7.912674773520081,
+      "shape_phase_bias_ci_low": 7.912674773520081,
+      "shape_phase_bias_ci_high": 7.912674773520081,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "shape_residual_fusion",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.3430669509354196,
+      "timing_sigma68_ci_low": 1.2220208667016337,
+      "timing_sigma68_ci_high": 1.4099833865035558,
+      "median_residual_ns": 1.5509768711818914,
+      "median_residual_ci_low": 1.3277558418356314,
+      "median_residual_ci_high": 1.7803465575694162,
+      "shape_phase_bias_ns": 0.5026865474956494,
+      "shape_phase_bias_ci_low": 0.09787276234049713,
+      "shape_phase_bias_ci_high": 0.7077920977318932,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    }
+  ],
+  "multitask_diagnostics": [
+    {
+      "diagnostic": "energy_proxy_linearity_slope_area_vs_log_amp",
+      "method": "all_methods_input",
+      "value": 3.593565792410155,
+      "ci_low": 2.7741459664460577,
+      "ci_high": 5.059721718985972,
+      "detail": "held-out normalized area slope versus log amplitude"
+    },
+    {
+      "diagnostic": "pid_proxy_area_tercile_confusion_rate",
+      "method": "all_methods_input",
+      "value": 0.5203730729874356,
+      "ci_low": 0.4406534624837357,
+      "ci_high": 0.5894193144467053,
+      "detail": "area-tercile PID proxy versus amplitude-ratio PID proxy"
+    },
+    {
+      "diagnostic": "timing_sigma68_interval_coverage",
+      "method": "trapezoid_template",
+      "value": 0.5980392156862745,
+      "ci_low": 0.5756168790604698,
+      "ci_high": 0.6439393939393939,
+      "detail": "fraction of pair residuals inside median +/- sigma68"
+    },
+    {
+      "diagnostic": "pedestal_memory_high_minus_low_median_time_ns",
+      "method": "trapezoid_template",
+      "value": 0.0,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "held-out pulse-time shift between highest and lowest pedestal bins"
+    },
+    {
+      "diagnostic": "pileup_sigma68_degradation_ns",
+      "method": "trapezoid_template",
+      "value": 0.2778212224840071,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "mild-pileup sigma68 minus single-like sigma68"
+    },
+    {
+      "diagnostic": "timing_sigma68_interval_coverage",
+      "method": "ridge",
+      "value": 0.6911764705882353,
+      "ci_low": 0.6551392891450528,
+      "ci_high": 0.7654320987654321,
+      "detail": "fraction of pair residuals inside median +/- sigma68"
+    },
+    {
+      "diagnostic": "pedestal_memory_high_minus_low_median_time_ns",
+      "method": "ridge",
+      "value": 0.0,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "held-out pulse-time shift between highest and lowest pedestal bins"
+    },
+    {
+      "diagnostic": "pileup_sigma68_degradation_ns",
+      "method": "ridge",
+      "value": 0.561228663046996,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "mild-pileup sigma68 minus single-like sigma68"
+    },
+    {
+      "diagnostic": "timing_sigma68_interval_coverage",
+      "method": "gradient_boosted_trees",
+      "value": 0.6315359477124183,
+      "ci_low": 0.6002865329512894,
+      "ci_high": 0.7054263565891473,
+      "detail": "fraction of pair residuals inside median +/- sigma68"
+    },
+    {
+      "diagnostic": "pedestal_memory_high_minus_low_median_time_ns",
+      "method": "gradient_boosted_trees",
+      "value": 0.0,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "held-out pulse-time shift between highest and lowest pedestal bins"
+    },
+    {
+      "diagnostic": "pileup_sigma68_degradation_ns",
+      "method": "gradient_boosted_trees",
+      "value": 0.01683831017929771,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "mild-pileup sigma68 minus single-like sigma68"
+    },
+    {
+      "diagnostic": "timing_sigma68_interval_coverage",
+      "method": "mlp",
+      "value": 0.6642156862745098,
+      "ci_low": 0.622478386167147,
+      "ci_high": 0.73989898989899,
+      "detail": "fraction of pair residuals inside median +/- sigma68"
+    },
+    {
+      "diagnostic": "pedestal_memory_high_minus_low_median_time_ns",
+      "method": "mlp",
+      "value": 0.0,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "held-out pulse-time shift between highest and lowest pedestal bins"
+    },
+    {
+      "diagnostic": "pileup_sigma68_degradation_ns",
+      "method": "mlp",
+      "value": 0.4478657366910568,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "mild-pileup sigma68 minus single-like sigma68"
+    },
+    {
+      "diagnostic": "timing_sigma68_interval_coverage",
+      "method": "cnn_1d",
+      "value": 0.6887254901960784,
+      "ci_low": 0.6545893719806763,
+      "ci_high": 0.7577389277389276,
+      "detail": "fraction of pair residuals inside median +/- sigma68"
+    },
+    {
+      "diagnostic": "pedestal_memory_high_minus_low_median_time_ns",
+      "method": "cnn_1d",
+      "value": 0.0,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "held-out pulse-time shift between highest and lowest pedestal bins"
+    },
+    {
+      "diagnostic": "pileup_sigma68_degradation_ns",
+      "method": "cnn_1d",
+      "value": 0.8454907888858609,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "mild-pileup sigma68 minus single-like sigma68"
+    },
+    {
+      "diagnostic": "timing_sigma68_interval_coverage",
+      "method": "shape_residual_fusion",
+      "value": 0.6266339869281046,
+      "ci_low": 0.5974212034383954,
+      "ci_high": 0.6821705426356589,
+      "detail": "fraction of pair residuals inside median +/- sigma68"
+    },
+    {
+      "diagnostic": "pedestal_memory_high_minus_low_median_time_ns",
+      "method": "shape_residual_fusion",
+      "value": 0.0,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "held-out pulse-time shift between highest and lowest pedestal bins"
+    },
+    {
+      "diagnostic": "pileup_sigma68_degradation_ns",
+      "method": "shape_residual_fusion",
+      "value": 0.20032353728761532,
+      "ci_low": null,
+      "ci_high": null,
+      "detail": "mild-pileup sigma68 minus single-like sigma68"
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_root_reproduction",
+      "pass": true,
+      "value": 640737,
+      "detail": "canonical selected-pulse count must match exactly"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "pass": true,
+      "value": 0,
+      "detail": "split by run"
+    },
+    {
+      "check": "finite_traditional_phase",
+      "pass": true,
+      "value": 59613,
+      "detail": "all held-out pulses must have a traditional phase anchor"
+    },
+    {
+      "check": "training_target_rows",
+      "pass": true,
+      "value": 14646,
+      "detail": "same-event downstream consistency targets from train runs"
+    },
+    {
+      "check": "winner_named_in_result_json",
+      "pass": true,
+      "value": "shape_residual_fusion",
+      "detail": "winner is selected by minimum held-out timing sigma68"
+    }
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 48.0,
+  "git_commit": "b3bd8cec665ff3441a984f29e5af0f304fa2b12e"
 }

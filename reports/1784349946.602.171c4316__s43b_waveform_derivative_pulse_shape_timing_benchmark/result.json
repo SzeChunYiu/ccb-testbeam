@@ -1,0 +1,57 @@
+{
+  "ticket_id": "1784349946.602.171c4316",
+  "study_id": "S43b",
+  "title": "waveform-derivative pulse-shape timing benchmark",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "delta": 0,
+    "passed": true
+  },
+  "split": {
+    "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 44, 45, 46, 47, 48, 49, 51, 52, 53, 54, 55, 56, 59, 61, 63],
+    "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+    "train_rows": 15137,
+    "heldout_rows": 5466,
+    "bootstrap_replicates": 1000
+  },
+  "methods_benchmarked": ["1d_cnn", "compact_waveform_transformer", "derivative_gate_transformer_new", "gradient_boosted_trees", "mlp", "ridge", "traditional_cfd_template_derivative"],
+  "traditional_method": "traditional_cfd_template_derivative",
+  "new_architecture": "derivative_gate_transformer_new",
+  "winner": {
+    "method": "traditional_cfd_template_derivative",
+    "selection_metric": "minimum held-out sigma68_ns",
+    "sigma68_ns": 0.8334855099573091,
+    "sigma68_ci_low": 0.6534357751888766,
+    "sigma68_ci_high": 1.0299885957887323,
+    "mae_ns": 0.7128674576777155,
+    "mae_ci_low": 0.5933702139123251,
+    "mae_ci_high": 0.8433190616096743,
+    "rmse_ns": 0.8779014604886578,
+    "bias_ns": 0.08990828919203012
+  },
+  "method_summary": [
+    {"method": "traditional_cfd_template_derivative", "split": "heldout", "n": 5466, "run_count": 8, "sigma68_ns": 0.8334855099573091, "sigma68_ci_low": 0.6534357751888766, "sigma68_ci_high": 1.0299885957887323, "mae_ns": 0.7128674576777155, "mae_ns_ci_low": 0.5933702139123251, "mae_ns_ci_high": 0.8433190616096743, "rmse_ns": 0.8779014604886578, "rmse_ns_ci_low": 0.7267525852555916, "rmse_ns_ci_high": 1.0139603429655228, "bias_ns": 0.08990828919203012, "bias_ns_ci_low": -0.21710301180050956, "bias_ns_ci_high": 0.3725861730511141},
+    {"method": "gradient_boosted_trees", "split": "heldout", "n": 5466, "run_count": 8, "sigma68_ns": 3.7382791995853935, "sigma68_ci_low": 3.112828664201824, "sigma68_ci_high": 4.365062102188454, "mae_ns": 3.502282237798055, "mae_ns_ci_low": 2.7703593150442387, "mae_ns_ci_high": 4.5569600339722784, "rmse_ns": 5.2414468785301755, "rmse_ns_ci_low": 3.7836018664719813, "rmse_ns_ci_high": 7.128775780809678, "bias_ns": -0.9050145977007144, "bias_ns_ci_low": -2.053220019539352, "bias_ns_ci_high": 0.1634913041494636},
+    {"method": "ridge", "split": "heldout", "n": 5466, "run_count": 8, "sigma68_ns": 4.1229411617467395, "sigma68_ci_low": 3.4537333866490676, "sigma68_ci_high": 5.01547363412736, "mae_ns": 3.760737027217864, "mae_ns_ci_low": 2.8720530362702283, "mae_ns_ci_high": 4.971757981660645, "rmse_ns": 5.445323478574194, "rmse_ns_ci_low": 3.6979607945282775, "rmse_ns_ci_high": 7.571125239721597, "bias_ns": -0.8321162887428868, "bias_ns_ci_low": -2.098791677354061, "bias_ns_ci_high": 0.3374826936030549},
+    {"method": "mlp", "split": "heldout", "n": 5466, "run_count": 8, "sigma68_ns": 4.353461305592372, "sigma68_ci_low": 3.8415539408903676, "sigma68_ci_high": 4.975489109547783, "mae_ns": 3.9159248277997074, "mae_ns_ci_low": 3.2376478100538693, "mae_ns_ci_high": 4.816375351721801, "rmse_ns": 5.410644536263892, "rmse_ns_ci_low": 4.034088292722227, "rmse_ns_ci_high": 7.221130781844308, "bias_ns": -0.8065072435820517, "bias_ns_ci_low": -1.9956000309676802, "bias_ns_ci_high": 0.2809542095701717},
+    {"method": "derivative_gate_transformer_new", "split": "heldout", "n": 5466, "run_count": 8, "sigma68_ns": 5.158713612444899, "sigma68_ci_low": 4.417559074638822, "sigma68_ci_high": 6.09250978920457, "mae_ns": 4.516998274767035, "mae_ns_ci_low": 3.680775437655659, "mae_ns_ci_high": 5.823541744236207, "rmse_ns": 6.739274165812081, "rmse_ns_ci_low": 5.242767989484332, "rmse_ns_ci_high": 8.685910512471647, "bias_ns": -1.116796025149821, "bias_ns_ci_low": -2.2444428507540155, "bias_ns_ci_high": 0.00020381290397482636},
+    {"method": "compact_waveform_transformer", "split": "heldout", "n": 5466, "run_count": 8, "sigma68_ns": 5.585389866092369, "sigma68_ci_low": 5.123920899345808, "sigma68_ci_high": 6.281892605628157, "mae_ns": 4.946409132511798, "mae_ns_ci_low": 4.335342524812787, "mae_ns_ci_high": 5.925213261837463, "rmse_ns": 7.054792554564454, "rmse_ns_ci_low": 5.802181454805414, "rmse_ns_ci_high": 8.730866545428462, "bias_ns": -0.41929973196289777, "bias_ns_ci_low": -1.696376279787284, "bias_ns_ci_high": 0.6745918169255918},
+    {"method": "1d_cnn", "split": "heldout", "n": 5466, "run_count": 8, "sigma68_ns": 5.633471045896655, "sigma68_ci_low": 4.904894036975774, "sigma68_ci_high": 6.616823877841001, "mae_ns": 5.373506180038071, "mae_ns_ci_low": 4.558256970750113, "mae_ns_ci_high": 6.320705064785878, "rmse_ns": 8.380644469776781, "rmse_ns_ci_low": 6.842045733907454, "rmse_ns_ci_high": 9.871669253813074, "bias_ns": -0.26764754746010805, "bias_ns_ci_low": -1.6573547524780647, "bias_ns_ci_high": 1.132997610800532}
+  ],
+  "leakage_checks": [
+    {"check": "raw_root_reproduction", "pass": true, "value": 640737, "detail": "canonical selected-pulse count must match exactly"},
+    {"check": "required_methods_present", "pass": true, "value": "1d_cnn,compact_waveform_transformer,derivative_gate_transformer_new,gradient_boosted_trees,mlp,ridge,traditional_cfd_template_derivative", "detail": "traditional, ridge, GBT, MLP, 1D-CNN, and new architecture must be scored"},
+    {"check": "train_heldout_run_overlap", "pass": true, "value": 0, "detail": "primary split is by run"},
+    {"check": "heldout_rows_present", "pass": true, "value": 38262, "detail": "all method metrics are evaluated on held-out rows"},
+    {"check": "winner_named_in_result_json", "pass": true, "value": "traditional_cfd_template_derivative", "detail": "winner selected by minimum held-out sigma68_ns"}
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 23.8,
+  "git_commit": "fa8cb2a3ec6b416f164ad03cd40e5b47e85489ff",
+  "python": "3.13.12",
+  "packages": {"uproot": "5.7.5", "numpy": "2.5.1", "pandas": "3.0.3"}
+}

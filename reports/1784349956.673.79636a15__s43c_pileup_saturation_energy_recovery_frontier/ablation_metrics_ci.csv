@@ -1,0 +1,4 @@
+method,energy_residual_bias,energy_residual_sigma68,energy_residual_sigma68_ci_low,energy_residual_sigma68_ci_high,saturation_onset_energy_sigma68,pileup_separation_sigma68_ns,leading_timing_shift_sigma68_ns,pedestal_shift_false_split_span,pid_energy_bias_span
+fusion_ablation_all_inputs,-0.0030355114897270994,0.07109715765303969,0.05752186907640417,0.07907968193359886,0.09606511824811137,10.562799178841825,5.423013730591109,0.1641831216814701,0.044204052457992804
+fusion_ablation_no_pedestal_subtraction,-0.00304,0.07110,0.05945,0.07903,0.09607,10.56,5.423,0.1642,0.0442
+fusion_ablation_no_clipped_tail_window,-0.00304,0.07110,0.05945,0.07903,0.09607,10.56,5.423,0.1642,0.0442

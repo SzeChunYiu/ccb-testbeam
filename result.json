@@ -1,63 +1,105 @@
 {
-  "artifacts": {
-    "docs_report": "docs/reports/G4_05_timing_validation.md",
-    "metrics": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_method_metrics.csv",
-    "per_method_json": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/per_method_results.json",
-    "predictions": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_predictions.csv.gz",
-    "report": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/REPORT.md"
-  },
-  "primary_metric": "heldout_sigma68_ns",
-  "raw_reproduction_gate": {
+  "ticket_id": "1784345719.678.41db1ffe",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S44b tail-kernel pile-up saturation energy recovery benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claimed_ticket_text": "S44b tail-kernel pile-up saturation energy recovery benchmark",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "pass": true,
-    "quantity": "S00 selected B-stave pulse records",
-    "report_value": 640737,
-    "reproduced": 640737,
-    "tolerance": 0
+    "evidence_table": "reproduction_match_table.csv"
   },
-  "split": {
-    "bootstrap_samples": 300,
-    "heldout_blocks": [
-      9,
-      10,
-      11
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
     ],
-    "train_blocks": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
     ],
-    "val_blocks": [
-      7,
-      8
-    ]
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_residual_sigma68 + 0.20*abs(energy_residual_bias) + 0.004*pileup_separation_sigma68_ns + 0.004*leading_timing_shift_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate + 0.08*pedestal_shift_false_split_span + 0.08*pid_energy_bias_span"
   },
-  "study_id": "G4-05",
-  "ticket_id": "1781212364.2054572.5f095c0d",
-  "winner": "gradient_boosted_trees",
-  "winner_family": "ml_nn",
-  "winner_metrics": {
-    "bias_ns": -0.002525511117336766,
-    "bias_ns_ci95": [
-      -0.011235645500850667,
-      0.001908441145621822
+  "required_method_coverage": {
+    "traditional": "tail_kernel_censored_template_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "tail_kernel_residual_fusion_new"
+  },
+  "winner_name": "tail_kernel_residual_fusion_new",
+  "winner": {
+    "name": "tail_kernel_residual_fusion_new",
+    "criterion": "minimum S44b held-out energy-plus-pileup composite score with run-block bootstrap CIs",
+    "winner_score": 0.17027874875587654,
+    "energy_residual_bias": 0.010883631977900347,
+    "energy_residual_sigma68": 0.07003348317432478,
+    "recovered_amplitude_fractional_bias": 0.010883631977900347,
+    "recovered_amplitude_fractional_bias_ci95": [
+      -0.00824392788882084,
+      0.020418122401532224
     ],
-    "mae_ns": 0.5567555744502485,
-    "mae_ns_ci95": [
-      0.5508056627307156,
-      0.5629778727856635
+    "recovered_amplitude_fractional_sigma68": 0.07003348317432478,
+    "energy_residual_sigma68_ci95": [
+      0.06292904601054573,
+      0.07673163356378589
     ],
-    "n": 15000,
-    "p95_abs_ns": 1.774356254264511,
-    "rms_ns": 0.7995650735011278,
-    "sigma68_ns": 0.6098651379938835,
-    "sigma68_ns_ci95": [
-      0.6054375924429805,
-      0.6241904076314753
-    ]
-  }
+    "saturation_depth_bias": -0.12327161547428071,
+    "saturation_depth_bias_ci95": [
+      -0.12822158094056588,
+      -0.11832165000799555
+    ],
+    "saturation_onset_energy_sigma68": 0.0865484899123333,
+    "pileup_separation_sigma68_ns": 11.572031620102535,
+    "pileup_separation_sigma68_ci95": [
+      9.042565476846633,
+      12.59510424228207
+    ],
+    "leading_timing_shift_sigma68_ns": 5.48513304337618,
+    "pedestal_shift_false_split_span": 0.024981833671602893,
+    "pid_energy_bias_span": 0.044663014442522055,
+    "pileup_miss_rate": 0.33170731707317075,
+    "false_split_rate": 0.15365853658536585
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is a benchmark stressor, not decoded electronics metadata.",
+    "PID-dependent failure is represented by stave and charge-support proxies.",
+    "Bootstrap CIs resample held-out runs and quantify run-transfer uncertainty."
+  ]
 }

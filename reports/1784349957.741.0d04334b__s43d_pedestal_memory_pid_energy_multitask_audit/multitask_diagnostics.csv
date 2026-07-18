@@ -1,0 +1,21 @@
+diagnostic,method,value,ci_low,ci_high,detail
+energy_proxy_linearity_slope_area_vs_log_amp,all_methods_input,3.593565792410155,2.7741459664460577,5.059721718985972,held-out normalized area slope versus log amplitude
+pid_proxy_area_tercile_confusion_rate,all_methods_input,0.5203730729874356,0.4406534624837357,0.5894193144467053,area-tercile PID proxy versus amplitude-ratio PID proxy
+timing_sigma68_interval_coverage,trapezoid_template,0.5980392156862745,0.5756168790604698,0.6439393939393939,fraction of pair residuals inside median +/- sigma68
+pedestal_memory_high_minus_low_median_time_ns,trapezoid_template,0.0,,,held-out pulse-time shift between highest and lowest pedestal bins
+pileup_sigma68_degradation_ns,trapezoid_template,0.2778212224840071,,,mild-pileup sigma68 minus single-like sigma68
+timing_sigma68_interval_coverage,ridge,0.6911764705882353,0.6551392891450528,0.7654320987654321,fraction of pair residuals inside median +/- sigma68
+pedestal_memory_high_minus_low_median_time_ns,ridge,0.0,,,held-out pulse-time shift between highest and lowest pedestal bins
+pileup_sigma68_degradation_ns,ridge,0.561228663046996,,,mild-pileup sigma68 minus single-like sigma68
+timing_sigma68_interval_coverage,gradient_boosted_trees,0.6315359477124183,0.6002865329512894,0.7054263565891473,fraction of pair residuals inside median +/- sigma68
+pedestal_memory_high_minus_low_median_time_ns,gradient_boosted_trees,0.0,,,held-out pulse-time shift between highest and lowest pedestal bins
+pileup_sigma68_degradation_ns,gradient_boosted_trees,0.01683831017929771,,,mild-pileup sigma68 minus single-like sigma68
+timing_sigma68_interval_coverage,mlp,0.6642156862745098,0.622478386167147,0.73989898989899,fraction of pair residuals inside median +/- sigma68
+pedestal_memory_high_minus_low_median_time_ns,mlp,0.0,,,held-out pulse-time shift between highest and lowest pedestal bins
+pileup_sigma68_degradation_ns,mlp,0.4478657366910568,,,mild-pileup sigma68 minus single-like sigma68
+timing_sigma68_interval_coverage,cnn_1d,0.6887254901960784,0.6545893719806763,0.7577389277389276,fraction of pair residuals inside median +/- sigma68
+pedestal_memory_high_minus_low_median_time_ns,cnn_1d,0.0,,,held-out pulse-time shift between highest and lowest pedestal bins
+pileup_sigma68_degradation_ns,cnn_1d,0.8454907888858609,,,mild-pileup sigma68 minus single-like sigma68
+timing_sigma68_interval_coverage,shape_residual_fusion,0.6266339869281046,0.5974212034383954,0.6821705426356589,fraction of pair residuals inside median +/- sigma68
+pedestal_memory_high_minus_low_median_time_ns,shape_residual_fusion,0.0,,,held-out pulse-time shift between highest and lowest pedestal bins
+pileup_sigma68_degradation_ns,shape_residual_fusion,0.20032353728761532,,,mild-pileup sigma68 minus single-like sigma68

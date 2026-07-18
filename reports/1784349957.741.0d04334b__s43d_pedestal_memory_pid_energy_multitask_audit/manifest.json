@@ -2,9 +2,10 @@
   "ticket_id": "1784349957.741.0d04334b",
   "study": "S43d",
   "worker": "testbeam-laptop-1",
-  "command": "scripts/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.py",
-  "script": "scripts/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.py",
+  "command": ".venv/bin/python scripts/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.py",
   "config": "configs/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.json",
+  "local_script": "scripts/s43d_1784349957_741_0d04334b_pedestal_memory_pid_energy_multitask_audit.py",
+  "note": "The local worker commit contains the full reproduction script; this PR bundle publishes the report/result/config/evidence tables through the GitHub connector because shell git credentials were unavailable.",
   "git_commit": "b3bd8cec665ff3441a984f29e5af0f304fa2b12e",
   "python": "3.11.14",
   "packages": {
@@ -26,6 +27,6 @@
     "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
     "result.json": "0ad4d073b2d7bd0f59e92e4203158cfbd57fbf66374c0c4f600d896ca715fff4",
     "stratified_errors.csv": "64990acd11a1415f06df182ebe4078ec70311f4c0152e950980de3c72da229c7",
-    "training_summary.csv": "c4fd9058ec1fbe32e28cde48a429a0bc76161b90cfc5f4a954e5e155859e"
+    "training_summary.csv": "c4fd9058ec1fbe32e28cde48a429a0cda0bc76161b90cfc5f4a954e5e155859e"
   }
 }

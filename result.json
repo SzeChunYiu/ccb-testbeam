@@ -1,63 +1,97 @@
 {
-  "artifacts": {
-    "docs_report": "docs/reports/G4_05_timing_validation.md",
-    "metrics": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_method_metrics.csv",
-    "per_method_json": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/per_method_results.json",
-    "predictions": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_predictions.csv.gz",
-    "report": "/home/billy/.tb-workers/testbeam-laptop-4/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/REPORT.md"
-  },
-  "primary_metric": "heldout_sigma68_ns",
-  "raw_reproduction_gate": {
+  "ticket_id": "1784352976.837.09047a5a",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S43a sub-sample pulse-shape timing invariance benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "pass": true,
-    "quantity": "S00 selected B-stave pulse records",
-    "report_value": 640737,
-    "reproduced": 640737,
-    "tolerance": 0
+    "evidence_table": "reproduction_match_table.csv"
   },
-  "split": {
-    "bootstrap_samples": 300,
-    "heldout_blocks": [
-      9,
-      10,
-      11
-    ],
-    "train_blocks": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "val_blocks": [
-      7,
-      8
-    ]
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout_runs": [58, 60, 62, 64, 65],
+    "bootstrap": "held-out run-family and event percentile 95% CI",
+    "bootstrap_replicates": 320,
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
   },
-  "study_id": "G4-05",
-  "ticket_id": "1781212364.2054572.5f095c0d",
-  "winner": "gradient_boosted_trees",
-  "winner_family": "ml_nn",
-  "winner_metrics": {
-    "bias_ns": -0.002525511117336766,
-    "bias_ns_ci95": [
-      -0.011235645500850667,
-      0.001908441145621822
+  "required_method_coverage": {
+    "traditional_constant_fraction_discrimination": "deltaE_over_E_likelihood_template",
+    "traditional_template_chi_square_time_fit": "deltaE_over_E_likelihood_template",
+    "traditional_spline_leading_edge_interpolation": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "compact_waveform_transformer": "joint_sequence_transformer",
+    "new_residual_template_stack": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite score with S43a run-family and event bootstrap CIs",
+    "winner_score": 0.2251133683206813,
+    "time_sigma68_ns": 7.861516728796348,
+    "time_sigma68_run_ci95": [7.28321018732725, 8.183487623432288],
+    "time_sigma68_event_ci95": [7.047533620679285, 8.29785698758314],
+    "pulse_shape_stability_ns": 2.9351700646525325,
+    "pedestal_memory_slope_ns_per_adc": 0.004498479076280747,
+    "pileup_miss_rate": 0.3736842105263158,
+    "false_split_rate": 0.2131578947368421,
+    "saturation_failure_rate": 0.4612546125461255,
+    "energy_residual_sigma68": 0.18614435061476978,
+    "pid_proxy_balanced_accuracy": 0.8581504267819532
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "runner": "scripts/s43a_1784352976_837_09047a5a_subsample_pulse_shape_timing_invariance.py",
+    "raw_reproduction": "reports/1784352976.837.09047a5a__s43a_subsample_pulse_shape_timing_invariance/reproduction_match_table.csv",
+    "method_metrics": "reports/1784352976.837.09047a5a__s43a_subsample_pulse_shape_timing_invariance/winner_ranked_metrics.csv",
+    "run_family_bootstrap": "reports/1784352976.837.09047a5a__s43a_subsample_pulse_shape_timing_invariance/s43a_run_block_bootstrap_ci.csv",
+    "event_bootstrap": "reports/1784352976.837.09047a5a__s43a_subsample_pulse_shape_timing_invariance/s43a_event_bootstrap_ci.csv"
+  },
+  "novel_tickets_appended": [],
+  "completion_audit": {
+    "claimed_ticket": "1784352976.837.09047a5a",
+    "claim_command_run_once": true,
+    "tn_ticket_done_succeeded": true,
+    "raw_root_reproduced": true,
+    "required_methods_present": [
+      "deltaE_over_E_likelihood_template",
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "joint_sequence_transformer",
+      "template_residual_boosted_stack_new"
     ],
-    "mae_ns": 0.5567555744502485,
-    "mae_ns_ci95": [
-      0.5508056627307156,
-      0.5629778727856635
+    "traditional_breakout_present": [
+      "constant_fraction_discrimination",
+      "template_chi_square_time_fit",
+      "spline_leading_edge_interpolation"
     ],
-    "n": 15000,
-    "p95_abs_ns": 1.774356254264511,
-    "rms_ns": 0.7995650735011278,
-    "sigma68_ns": 0.6098651379938835,
-    "sigma68_ns_ci95": [
-      0.6054375924429805,
-      0.6241904076314753
-    ]
-  }
+    "winner_named": "template_residual_boosted_stack_new",
+    "run_family_bootstrap_cis_reported": true,
+    "event_bootstrap_cis_reported": true,
+    "systematics_reported": [
+      "timing bias and sigma68",
+      "shape-coordinate stability",
+      "pedestal dependence",
+      "pile-up sensitivity",
+      "saturation leakage",
+      "energy residuals",
+      "PID-proxy drift",
+      "amplitude normalization",
+      "pretrigger-only controls",
+      "late-tail masking proxy"
+    ],
+    "novel_tickets_appended_count": 0
+  },
+  "claimed_ticket_text": "S43a: sub-sample pulse-shape timing invariance benchmark"
 }

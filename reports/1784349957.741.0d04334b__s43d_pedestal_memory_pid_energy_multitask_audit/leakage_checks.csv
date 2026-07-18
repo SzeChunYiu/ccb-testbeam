@@ -1,0 +1,6 @@
+check,pass,value,detail
+raw_root_reproduction,True,640737,canonical selected-pulse count must match exactly
+train_heldout_run_overlap,True,0,split by run
+finite_traditional_phase,True,59613,all held-out pulses must have a traditional phase anchor
+training_target_rows,True,14646,same-event downstream consistency targets from train runs
+winner_named_in_result_json,True,shape_residual_fusion,winner is selected by minimum held-out timing sigma68

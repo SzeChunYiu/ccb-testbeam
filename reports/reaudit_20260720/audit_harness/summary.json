@@ -1,0 +1,32 @@
+{
+  "root": "/Users/billy/ccb-pr",
+  "files_inventoried": 1024,
+  "findings": 678,
+  "severity_counts": {
+    "P1": 567,
+    "P0": 111
+  },
+  "code_counts": {
+    "ABSOLUTE_PATH": 537,
+    "CLAIM_SOURCE_MISSING": 50,
+    "MC_WEIGHT_NOT_DECLARED": 36,
+    "UNUSED_ARGUMENT": 26,
+    "EVENTNO_ONLY_JOIN": 13,
+    "INDEX_PARITY_SPLIT": 10,
+    "UNSEEDED_RANDOMNESS": 3,
+    "AMPLITUDE_SCHEMA_DOUBLE_SUBTRACTION": 2,
+    "ABSOLUTE_PATH_JSON": 1
+  },
+  "severity_code_counts": {
+    "P1:ABSOLUTE_PATH": 537,
+    "P0:CLAIM_SOURCE_MISSING": 50,
+    "P0:MC_WEIGHT_NOT_DECLARED": 36,
+    "P1:UNUSED_ARGUMENT": 26,
+    "P0:EVENTNO_ONLY_JOIN": 13,
+    "P0:INDEX_PARITY_SPLIT": 10,
+    "P1:UNSEEDED_RANDOMNESS": 3,
+    "P0:AMPLITUDE_SCHEMA_DOUBLE_SUBTRACTION": 2,
+    "P1:ABSOLUTE_PATH_JSON": 1
+  },
+  "p0_count": 111
+}

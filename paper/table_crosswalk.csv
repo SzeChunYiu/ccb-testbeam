@@ -1,0 +1,5 @@
+table_id,description,source,status
+geometry_inventory,Deployed MC volume/material/dimension inventory,CCB-844-GEOM,BLOCKED_COMPUTE
+detector_parameters,Parameter ledger with status labels,research/DETECTOR_PARAMETERS.md,DONE
+optical_tables_provenance,Optical table paths + sha256 + status,geant4/single_stave/optical + <output>.meta.json,DONE
+timing_metrics,Per species/stave/sample timing metrics,CCB-TIMING,BLOCKED_COMPUTE

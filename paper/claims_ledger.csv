@@ -1,0 +1,9 @@
+claim_id,claim_text,result_file,commit,config,input_hash,value,uncertainty,status,notes
+CLM-001,Single-stave geometry matches confirmed parameters (50x5.18x2.0 cm; fibres 2 cm apart in 2 mm holes),geant4/single_stave/ + geometry report,d3b2beb,geant4/single_stave/optical,PENDING,,,VALIDATED_CODE,offline geometry-report test green; G4 render pending CCB-796-RUN
+CLM-002,Deposited energy vs detected PE response (proton/deuteron),PENDING_out/stave_*.root,PENDING,slurm/points_example.csv,PENDING,,,BLOCKED_COMPUTE,needs LUNARC Geant4 run
+CLM-003,Reconstructed energy resolution and bias vs energy,PENDING,PENDING,PENDING,PENDING,,,BLOCKED_COMPUTE,
+CLM-004,Photon collection efficiency and attenuation vs hit position,PENDING,PENDING,PENDING,PENDING,,,BLOCKED_COMPUTE,
+CLM-005,Timing resolution after 1/A correction (sigma68/core-sigma/tail),PENDING,PENDING,scripts/mv4_timing_study.py,PENDING,,,BLOCKED_COMPUTE,load v2 gain + data anchors
+CLM-006,Correct DeltaE-E Sample I/II separation (data & MC),PENDING,PENDING,PENDING,PENDING,,,BLOCKED_EXTERNAL,event key (file_id,run,event); CCB-DELTAE-FIX
+CLM-007,Stopping-depth closure vs deployed geometry (chi2/ndf),PENDING,PENDING,geant4/configs/krakow.geoconf,PENDING,,,BLOCKED_COMPUTE,do not reuse 11.12 g/cm2 as calibrated
+CLM-008,Birks/reflector/PDE/coupling/far-end systematic envelope,PENDING,PENDING,--*-scale scans,PENDING,,,BLOCKED_COMPUTE,run-time systematic knobs staged

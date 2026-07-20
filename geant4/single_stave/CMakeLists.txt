@@ -1,0 +1,72 @@
+cmake_minimum_required(VERSION 3.16)
+project(CCBSingleStave LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Visualization is OPTIONAL. The physics executable must build without Qt/vis
+# to avoid the Qt5/ICU incompatibility reported on the PR (issue #796).
+option(CCB_ENABLE_VIS "Enable Geant4 visualization/UI components" OFF)
+
+if(CCB_ENABLE_VIS)
+  find_package(Geant4 REQUIRED ui_all vis_all)
+else()
+  find_package(Geant4 REQUIRED)
+endif()
+include(${Geant4_USE_FILE})
+
+file(GLOB_RECURSE CCB_STAVE_SOURCES CONFIGURE_DEPENDS
+  "${PROJECT_SOURCE_DIR}/src/*.cc")
+file(GLOB_RECURSE CCB_STAVE_HEADERS CONFIGURE_DEPENDS
+  "${PROJECT_SOURCE_DIR}/include/*.hh")
+
+add_executable(ccb_stave_sim ${CCB_STAVE_SOURCES} ${CCB_STAVE_HEADERS})
+target_include_directories(ccb_stave_sim PRIVATE "${PROJECT_SOURCE_DIR}/include")
+target_link_libraries(ccb_stave_sim PRIVATE ${Geant4_LIBRARIES})
+target_compile_options(ccb_stave_sim PRIVATE -Wall -Wextra -Wpedantic)
+
+if(CCB_ENABLE_VIS)
+  target_compile_definitions(ccb_stave_sim PRIVATE CCB_ENABLE_VIS)
+endif()
+
+# Copy runtime assets (macros + optical tables) next to the build so ctest and
+# ad-hoc runs find them via relative paths.
+file(COPY "${PROJECT_SOURCE_DIR}/macros"  DESTINATION "${CMAKE_BINARY_DIR}")
+file(COPY "${PROJECT_SOURCE_DIR}/optical" DESTINATION "${CMAKE_BINARY_DIR}")
+
+enable_testing()
+
+# 1) Geometry / overlap smoke: the app prints OVERLAP_CHECK_PASS at Initialize().
+add_test(
+  NAME ccb_stave_geometry_smoke
+  COMMAND ccb_stave_sim
+          --macro "${CMAKE_BINARY_DIR}/macros/geometry_check.mac"
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/geometry_smoke.root")
+set_tests_properties(ccb_stave_geometry_smoke PROPERTIES
+  PASS_REGULAR_EXPRESSION "OVERLAP_CHECK_PASS"
+  FAIL_REGULAR_EXPRESSION "OVERLAP_CHECK_FAIL;G4Exception.*Fatal")
+
+# 2) Tiny headless proton run: must reach CCB_STAVE_END without fatal error.
+add_test(
+  NAME ccb_stave_proton_smoke
+  COMMAND ccb_stave_sim
+          --particle proton --energy 100 --nevents 5 --seed 1
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/proton_smoke.root")
+set_tests_properties(ccb_stave_proton_smoke PROPERTIES
+  PASS_REGULAR_EXPRESSION "CCB_STAVE_END"
+  FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
+
+# 3) Python geometry-report assertions on captured stdout (runs if python3 found).
+find_program(CCB_PYTHON3 python3)
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_geometry_report_python
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/check_geometry_report.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical"
+            --macro "${CMAKE_BINARY_DIR}/macros/geometry_check.mac")
+endif()

@@ -72,6 +72,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--coincidence-ns", type=float, default=15.0)
     p.add_argument("--step-size", default="200 MB")
     p.add_argument("--max-events", type=int, default=0)
+    # Momentum branch unit. The deployed krakow MC stores Sci_bar_Momentum_* in
+    # GeV/c (proton |p| ~0.41 -> KE ~85 MeV); assuming MeV/c gives KE~0.
+    p.add_argument("--momentum-unit", choices=["MeV", "GeV"], default="MeV",
+                   help="unit of the Sci_bar momentum branches (krakow MC = GeV)")
     return p.parse_args()
 
 
@@ -161,6 +165,7 @@ def main() -> int:
         "z": select_branch(keys, "z", False),
     }
     have_momentum = all(contract[k] is not None for k in ("px", "py", "pz"))
+    pscale = 1000.0 if args.momentum_unit == "GeV" else 1.0  # -> MeV/c
     if contract["ekin"] is None and not have_momentum:
         raise SystemExit(
             "Need an explicit kinetic-energy branch or all three momentum components."
@@ -233,16 +238,17 @@ def main() -> int:
                     ke_source = contract["ekin"]
                 else:
                     ke = kinetic_from_momentum(
-                        p, float(px[i]), float(py[i]), float(pz[i])
+                        p, float(px[i]) * pscale, float(py[i]) * pscale,
+                        float(pz[i]) * pscale
                     )
-                    ke_source = "computed_from_momentum_assumed_MeV_c"
+                    ke_source = f"computed_from_momentum_{args.momentum_unit}_c"
 
                 p_mag = float("nan")
                 ux = uy = uz = float("nan")
                 if have_momentum:
                     p_mag = float(
                         math.sqrt(px[i] ** 2 + py[i] ** 2 + pz[i] ** 2)
-                    )
+                    ) * pscale
                     if p_mag > 0:
                         ux, uy, uz = (
                             float(px[i] / p_mag),

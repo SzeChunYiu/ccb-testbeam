@@ -20,6 +20,10 @@ import numpy as np
 import pandas as pd
 import pytest
 
+# The dE-E module reads/writes parquet event tables (the analysis format on
+# LUNARC/local). Skip cleanly where no parquet engine is installed (e.g. CI).
+pytest.importorskip("pyarrow")
+
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))

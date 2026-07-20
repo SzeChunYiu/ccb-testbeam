@@ -27,8 +27,9 @@ import audit_mc_weight_usage  # noqa: E402
 def test_event_keys_one_to_one_pass(tmp_path):
     left = pd.DataFrame({'run': [1, 1, 2], 'evt': [10, 11, 20], 'a': [0.1, 0.2, 0.3]})
     right = pd.DataFrame({'run': [1, 1, 2], 'evt': [10, 11, 20], 'b': [1, 2, 3]})
-    lp, rp = tmp_path / 'left.parquet', tmp_path / 'right.parquet'
-    left.to_parquet(lp); right.to_parquet(rp)
+    # CSV (not parquet) so the test runs without a parquet engine in CI.
+    lp, rp = tmp_path / 'left.csv', tmp_path / 'right.csv'
+    left.to_csv(lp, index=False); right.to_csv(rp, index=False)
     res = validate_event_keys.validate(lp, rp, ['run', 'evt'])
     assert res['one_to_one'] is True
     assert res['joined_rows'] == 3
@@ -44,8 +45,8 @@ def test_event_keys_duplicate_fails(tmp_path):
     left = pd.DataFrame({'run': [1, 1, 2], 'evt': [10, 11, 20], 'a': [0.1, 0.2, 0.3]})
     # Inject a duplicate composite key on the right side -> not one_to_one.
     right = pd.DataFrame({'run': [1, 1, 1, 2], 'evt': [10, 10, 11, 20], 'b': [1, 9, 2, 3]})
-    lp, rp = tmp_path / 'left.parquet', tmp_path / 'right.parquet'
-    left.to_parquet(lp); right.to_parquet(rp)
+    lp, rp = tmp_path / 'left.csv', tmp_path / 'right.csv'
+    left.to_csv(lp, index=False); right.to_csv(rp, index=False)
     res = validate_event_keys.validate(lp, rp, ['run', 'evt'])
     assert res['one_to_one'] is False
     assert res['right_duplicate_rows'] == 2
@@ -98,7 +99,7 @@ def test_pulse_schema_clean_passes(tmp_path):
 # audit_mc_weight_usage
 # --------------------------------------------------------------------------- #
 def _write_root(path, arrays):
-    import uproot
+    uproot = pytest.importorskip("uproot")  # skip cleanly if uproot absent (CI)
     with uproot.recreate(path) as f:
         f['hibeam'] = arrays
 

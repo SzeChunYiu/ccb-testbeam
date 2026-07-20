@@ -1,0 +1,38 @@
+{
+  "command": [
+    "python",
+    "tools/generate_completion_report.py"
+  ],
+  "configs": [],
+  "cwd": "/Users/billy/ccb-pr",
+  "environment": {
+    "machine": "arm64",
+    "note": "LUNARC-independent infrastructure build",
+    "numpy_version": "2.4.4",
+    "pandas_version": "2.3.3",
+    "platform": "macOS-26.4-arm64-arm-64bit-Mach-O",
+    "python_implementation": "CPython",
+    "python_version": "3.13.12",
+    "scipy_version": "1.17.1"
+  },
+  "finished_utc": "2026-07-20T07:52:53+00:00",
+  "git_commit": "d3b2beb217c7157693da45e3e8824489c7a8f036",
+  "host": "BillydeMac-mini.local",
+  "inputs": [],
+  "outputs": [
+    {
+      "path": "/Users/billy/ccb-pr/reports/project_completion_20260720T075158Z/closure_matrix.csv",
+      "sha256": "6206b3dc89fc06775d7ea61b62a92c74545a5958fa7091195565987d5e8a5ebc",
+      "size_bytes": 2269
+    },
+    {
+      "path": "/Users/billy/ccb-pr/reports/project_completion_20260720T075158Z/closure_matrix.json",
+      "sha256": "00d7b66577b3149baf3c26e680f6f6c64c4fb70e5f4a63d610f7acebf6262a7a",
+      "size_bytes": 8916
+    }
+  ],
+  "seed_policy": "fixed-seed offline infrastructure build",
+  "slurm_job_id": null,
+  "started_utc": "2026-07-20T07:52:53+00:00",
+  "task_id": "CCB-INFRA-20260720"
+}

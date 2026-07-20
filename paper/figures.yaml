@@ -90,3 +90,131 @@ SCH-01:
     Beamline / detector geometry schematic (Krakow 190 MeV p on CD2, HRD
     stacks A & B). Schematic only -- carries no measured numbers and is not
     quantitative evidence.
+
+# ============================================================================
+# ADDED (2026-07-20): migration of scripts/generate_publication_figures.py off
+# embedded Python constants. Each entry below replaces a block of hand-entered
+# headline numbers that the old monolith plotted directly. The analysis result
+# JSONs are not in this checkout, so quantitative entries are EXTERNAL_BLOCKER
+# (reported BLOCKED, never FAIL) until synced + promoted to VALIDATED / TENSION.
+# Illustrative schematics (simulated / qualitative diagrams) are kind:
+# illustrative and rendered into a SEPARATE illustrative/ directory.
+# See scripts/PUBFIG_MIGRATION.md for the constant -> entry mapping.
+# ----------------------------------------------------------------------------
+
+# --- Pile-up (Rmax / effective live-time) -----------------------------------
+
+PU-01:                        # CL-010 / CL-011 / CL-012, FIG-PU-002 / FIG-PU-003
+  result: reports/mv5_pileup_1782678353/result.json
+  table: reports/mv5_pileup_1782678353/tables/pileup_mc_vs_data.csv
+  uncertainty_key: rmax_mhz_ci95
+  value_key: rmax_mhz
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Pile-up tolerance Rmax (MHz) and effective live-time tau_eff (ns),
+    MC vs data self-consistent, with 95% CI. Replaces the old MC_VS_DATA
+    pile-up constants.
+
+# --- Stopping-depth profile (MV3, data vs MC) -------------------------------
+
+MV3-01:                       # CL-019 / CL-020 / CL-021, FIG-PID-005
+  result: reports/mv3_stopping_v3_1782679272/result.json
+  table: reports/mv3_stopping_v3_1782679272/tables/stopping_fraction_by_stave.csv
+  uncertainty_key: fraction_ci95
+  value_key: b8_fraction_mc
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Stopping-depth profile per B-stave, data vs MC (fraction of events, %),
+    with per-bin binomial CI. B2 data/MC discrepancy (MV3 GAP-01, upstream
+    material budget) stated in the source table. Replaces STOPPING constants.
+
+# --- Proton / deuteron PID (ROC AUC + purity) -------------------------------
+
+PID-01:                       # CL-017 / CL-018, FIG-PID-001
+  result: reports/mv1_pid/result.json
+  table: reports/mv1_pid/tables/pid_auc_purity.csv
+  uncertainty_key: auc_ci95
+  value_key: auc
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Proton/deuteron PID: ROC AUC and purity at 90% efficiency (MC-truth),
+    with grouped-bootstrap / Wilson CI. Replaces PID_DATA constants.
+
+# --- Pulse-shape compression (PCA vs autoencoder) ---------------------------
+
+PS-01:                        # CL-023 / CL-024 (superseded -> canonical rerun), FIG-PS-001
+  result: reports/mv6_representation_1782678362/result.json
+  table: reports/mv6_representation_1782678362/tables/pca_vs_ae_mse.csv
+  uncertainty_key: mse_ci95
+  value_key: ae_mse
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Pulse-shape reconstruction MSE vs latent dimension, PCA vs autoencoder,
+    with CI. Superseded pending canonical rerun; blocked until synced.
+    Replaces PCA_AE constants.
+
+# --- Systematic uncertainty budget ------------------------------------------
+
+SYS-01:                       # CL-013 (gain) / CL-026 (budget), FIG-EN-001
+  result: reports/systematics_budget/result.json
+  table: reports/systematics_budget/tables/systematic_budget.csv
+  uncertainty_key: budget_ci95
+  value_key: total_systematic_pct
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Systematic uncertainty budget by source (gain MV0, stopping-depth MV3,
+    timing MV4, C12 MV6, pile-up MV5), %. Fails the build until the propagated
+    budget result exists. Replaces SYST_BUDGET constants.
+
+# --- Deuteron fraction per B-stave layer (Sample I / II) --------------------
+
+DE-02:                        # trigger-split truth, FIG-PID (deuteron_fraction_vs_layer)
+  result: reports/mc_trigger_split/result.json
+  table: reports/mc_trigger_split/tables/d_fraction_by_layer.csv
+  uncertainty_key: d_fraction_ci95
+  value_key: d_fraction_layer0_sample_I
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    MC-truth deuteron fraction per B-stave layer, Sample I (coincidence) vs
+    Sample II (single-B), with CI. Replaces the inline d_frac_I / d_frac_II
+    constants in fig12.
+
+# --- Illustrative schematics (simulated / qualitative; kept SEPARATE) --------
+
+SCH-02:                       # timewalk correction schematic (simulated scatter)
+  result: docs/figures/06_timewalk_explained.png   # provenance pointer; not read for numbers
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    Amplitude timewalk correction, before/after (f(A) = A0 + B/A). Simulated
+    illustration of the correction mechanism -- carries no measured numbers.
+
+SCH-03:                       # annotated scintillator waveform (simulated pulse)
+  result: docs/figures/03_waveform_annotated.png   # provenance pointer; not read for numbers
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    Annotated scintillator waveform (baseline region, peak sample, CFD
+    threshold). Simulated pulse for illustration -- not quantitative evidence.
+
+SCH-04:                       # ML advantage landscape (qualitative positioning)
+  result: docs/figures/10_ml_landscape.png         # provenance pointer; not read for numbers
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    Qualitative landscape of where ML helps vs where traditional baselines win.
+    Positions are illustrative editorial placements, not measured effect sizes.
+
+SCH-05:                       # Delta-E/E B2-vs-B4 scatter analogue (simulated placeholder)
+  result: docs/figures/17_pid_how_it_works.png     # provenance pointer; not read for numbers
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    Delta-E-E analogue (B2 vs B4 pulse amplitude), Sample I vs II. Simulated
+    placeholder illustrating the PID separation mechanism -- not real data.

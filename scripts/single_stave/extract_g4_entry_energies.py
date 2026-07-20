@@ -53,9 +53,9 @@ CANDIDATES = {
         "Sci_bar_EKin", "Sci_bar_Ekin", "Sci_bar_KE",
         "Sci_bar_KineticEnergy", "SciBar_EKin"
     ],
-    "px": ["Sci_bar_Px", "Sci_bar_MomX", "Sci_bar_PX"],
-    "py": ["Sci_bar_Py", "Sci_bar_MomY", "Sci_bar_PY"],
-    "pz": ["Sci_bar_Pz", "Sci_bar_MomZ", "Sci_bar_PZ"],
+    "px": ["Sci_bar_Px", "Sci_bar_MomX", "Sci_bar_PX", "Sci_bar_Momentum_X"],
+    "py": ["Sci_bar_Py", "Sci_bar_MomY", "Sci_bar_PY", "Sci_bar_Momentum_Y"],
+    "pz": ["Sci_bar_Pz", "Sci_bar_MomZ", "Sci_bar_PZ", "Sci_bar_Momentum_Z"],
     "x": ["Sci_bar_X", "Sci_bar_PosX", "Sci_bar_PositionX"],
     "y": ["Sci_bar_Y", "Sci_bar_PosY", "Sci_bar_PositionY"],
     "z": ["Sci_bar_Z", "Sci_bar_PosZ", "Sci_bar_PositionZ"],

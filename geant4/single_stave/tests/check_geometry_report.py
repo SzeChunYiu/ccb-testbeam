@@ -27,9 +27,9 @@ EXPECTED = {
 }
 FLAGS_MUST_BE_ONE = [
     "fibre_within_hole",
-    "fibre_contained_x",
-    "fibre_contained_y",
-    "fibre_contained_z",
+    "fibre_protrudes_for_readout",
+    "holes_contained_y",
+    "holes_contained_z",
 ]
 TOL = 1e-3
 
@@ -54,10 +54,13 @@ def parse_report(text: str) -> dict:
                     out[key] = float(parts[1])
                 except ValueError:
                     out[key] = parts[1]
-        if s == "OVERLAP_CHECK_PASS":
-            out["_overlap_pass"] = True
-        if s == "OVERLAP_CHECK_FAIL":
-            out["_overlap_pass"] = False
+        if s == "GEOMETRY_SELFCHECK_PASS":
+            out["_selfcheck_pass"] = True
+        if s == "GEOMETRY_SELFCHECK_FAIL":
+            out["_selfcheck_pass"] = False
+        # Geant4's authoritative overlap detection (pSurfChk / geometry test).
+        if "Overlap is detected" in line:
+            out["_g4_overlap"] = True
     return out
 
 
@@ -74,8 +77,10 @@ def check_report(report: dict) -> list[str]:
     for flag in FLAGS_MUST_BE_ONE:
         if report.get(flag) != 1.0:
             problems.append(f"{flag} != 1 (got {report.get(flag)})")
-    if not report.get("_overlap_pass", False):
-        problems.append("OVERLAP_CHECK_PASS not found")
+    if not report.get("_selfcheck_pass", False):
+        problems.append("GEOMETRY_SELFCHECK_PASS not found")
+    if report.get("_g4_overlap", False):
+        problems.append("Geant4 reported 'Overlap is detected'")
     return problems
 
 

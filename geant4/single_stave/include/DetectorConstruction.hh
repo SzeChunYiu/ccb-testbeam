@@ -51,7 +51,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   static constexpr double kCoatingThk = 0.25 * CLHEP::mm;   // TiO2 coating shell
   static constexpr double kHoleRadius = 1.0  * CLHEP::mm;   // 2.0 mm hole
   static constexpr double kFibreRadius = 0.90 * CLHEP::mm;  // 1.8 mm fibre
-  static constexpr double kFibreHalfX  = 24.9 * CLHEP::cm;  // fibre length along x
+  static constexpr double kFibreHalfX  = 26.0 * CLHEP::cm;  // fibre protrudes 1 cm past each bar face for external readout
   static constexpr double kFibreSep    = 2.0  * CLHEP::cm;  // centre-to-centre
   static constexpr double kSensorThk   = 0.10 * CLHEP::mm;  // endcap sensor disc
 

@@ -25,18 +25,18 @@ fibre_diameter_mm 1.8
 hole_diameter_mm 2
 fibre_separation_cm 2
 fibre_within_hole 1
-fibre_contained_x 1
-fibre_contained_y 1
-fibre_contained_z 1
+fibre_protrudes_for_readout 1
+holes_contained_y 1
+holes_contained_z 1
 geometry_hash deadbeef
 GEOMETRY_REPORT_END
-OVERLAP_CHECK_PASS
+GEOMETRY_SELFCHECK_PASS
 """
 
 
 def test_golden_report_passes():
     report = cgr.parse_report(GOLDEN)
-    assert report["_overlap_pass"] is True
+    assert report["_selfcheck_pass"] is True
     assert cgr.check_report(report) == []
 
 
@@ -53,11 +53,28 @@ def test_fibre_outside_hole_is_flagged():
     assert any("fibre_within_hole" in p for p in problems)
 
 
-def test_overlap_fail_token_is_flagged():
-    broken = GOLDEN.replace("OVERLAP_CHECK_PASS", "OVERLAP_CHECK_FAIL")
+def test_fibre_not_protruding_is_flagged():
+    # Fibres must protrude past the bar so sensors read out externally.
+    broken = GOLDEN.replace("fibre_protrudes_for_readout 1\n",
+                            "fibre_protrudes_for_readout 0\n")
+    problems = cgr.check_report(cgr.parse_report(broken))
+    assert any("fibre_protrudes_for_readout" in p for p in problems)
+
+
+def test_selfcheck_fail_token_is_flagged():
+    broken = GOLDEN.replace("GEOMETRY_SELFCHECK_PASS", "GEOMETRY_SELFCHECK_FAIL")
     report = cgr.parse_report(broken)
-    assert report["_overlap_pass"] is False
-    assert any("OVERLAP" in p for p in cgr.check_report(report))
+    assert report["_selfcheck_pass"] is False
+    assert any("SELFCHECK" in p for p in cgr.check_report(report))
+
+
+def test_geant4_overlap_message_is_flagged():
+    # Geant4's real CheckOverlaps message must fail the report (fixes the old
+    # false-PASS where the internal check ignored actual overlaps).
+    broken = GOLDEN + "\n          Overlap is detected for volume Sensor_F1_PlusX\n"
+    report = cgr.parse_report(broken)
+    assert report.get("_g4_overlap") is True
+    assert any("Overlap is detected" in p for p in cgr.check_report(report))
 
 
 def test_missing_key_is_flagged():

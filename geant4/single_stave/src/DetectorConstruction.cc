@@ -7,6 +7,8 @@
 #include "G4MaterialPropertiesTable.hh"
 #include "G4Box.hh"
 #include "G4Tubs.hh"
+#include "G4VSolid.hh"
+#include "G4SubtractionSolid.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4RotationMatrix.hh"
@@ -187,11 +189,17 @@ void DetectorConstruction::BuildCoatingSurface(G4VPhysicalVolume* scintPV,
 }
 
 G4VPhysicalVolume* DetectorConstruction::Construct() {
-  auto* nist = G4NistManager::Instance();
-  G4Material* air = BuildOpticalGap();  // world = air with RINDEX
+  G4Material* air = BuildOpticalGap();  // air w/ RINDEX (world + fibre-hole gaps)
 
-  // --- World ---
-  const double wx = kStaveHalfX + 5 * cm;
+  // Fibre geometry (concentric): core < inner clad < outer clad < hole.
+  const double rCore  = kFibreRadius * 0.94;
+  const double rInner = kFibreRadius * 0.97;
+  const double rOuter = kFibreRadius * 1.00;
+  const double rHole  = kHoleRadius;
+  const std::array<double, 2> yc = {+kFibreSep / 2.0, -kFibreSep / 2.0};
+
+  // --- World: wide enough in x for the protruding fibres + external sensors ---
+  const double wx = kFibreHalfX + 3 * cm;   // fibres reach +-26 cm
   const double wy = kStaveHalfY + 5 * cm;
   const double wz = kStaveHalfZ + 5 * cm;
   auto* worldSolid = new G4Box("World", wx, wy, wz);
@@ -199,73 +207,76 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
   auto* worldPV = new G4PVPlacement(nullptr, {}, worldLV, "World", nullptr,
                                     false, 0, false);
 
-  // --- Scintillator (the 50 x 5.18 x 2.0 cm bar) ---
-  auto* scintSolid = new G4Box("Scintillator", kStaveHalfX, kStaveHalfY, kStaveHalfZ);
-  auto* scintLV = new G4LogicalVolume(scintSolid, BuildScintillator(), "Scintillator");
-  auto* scintPV = new G4PVPlacement(nullptr, {}, scintLV, "Scintillator", worldLV,
-                                    false, 0, true);  // overlap-checked
-
-  // TiO2 coating surface on the scintillator/world boundary.
-  BuildCoatingSurface(scintPV, worldPV);
-
-  // --- Fibre rotation: G4Tubs axis is local z; rotate +90 deg about y -> x ---
+  // Fibre rotation: G4Tubs axis is local z -> rotate +90 deg about y to lie on x.
   auto* fibreRot = new G4RotationMatrix();
   fibreRot->rotateY(90.0 * deg);
 
-  // Radii (concentric): hole(air) > outer clad > inner clad > core.
-  const double rCore  = kFibreRadius * 0.94;   // core
-  const double rInner = kFibreRadius * 0.97;   // + inner clad
-  const double rOuter = kFibreRadius * 1.00;   // + outer clad
-  const double rHole  = kHoleRadius;           // gap wall in scintillator
+  // One long cutting cylinder per fibre channel; longer than every solid so the
+  // Boolean subtraction cleanly removes the channel from coating AND scintillator.
+  const double cutHalf = kFibreHalfX + 1 * cm;
+  auto* cutTub = new G4Tubs("HoleCut", 0, rHole, cutHalf, 0, twopi);
 
+  // --- Coating shell (bar + margin) with both holes subtracted. It hosts the
+  //     TiO2 reflector on the OUTER faces only; the hole walls stay open. ---
+  G4VSolid* coatSolid = new G4Box("CoatBox", kStaveHalfX + kCoatingThk,
+                                  kStaveHalfY + kCoatingThk,
+                                  kStaveHalfZ + kCoatingThk);
+  coatSolid = new G4SubtractionSolid("Coat_h1", coatSolid, cutTub, fibreRot,
+                                     G4ThreeVector(0, yc[0], 0));
+  coatSolid = new G4SubtractionSolid("Coating", coatSolid, cutTub, fibreRot,
+                                     G4ThreeVector(0, yc[1], 0));
+  auto* coatLV = new G4LogicalVolume(coatSolid, air, "Coating");
+  auto* coatPV = new G4PVPlacement(nullptr, {}, coatLV, "Coating", worldLV,
+                                   false, 0, true);
+
+  // --- Scintillator box with both holes subtracted, placed inside the coating.
+  G4VSolid* scintSolid = new G4Box("ScintBox", kStaveHalfX, kStaveHalfY, kStaveHalfZ);
+  scintSolid = new G4SubtractionSolid("Scint_h1", scintSolid, cutTub, fibreRot,
+                                      G4ThreeVector(0, yc[0], 0));
+  scintSolid = new G4SubtractionSolid("Scintillator", scintSolid, cutTub, fibreRot,
+                                      G4ThreeVector(0, yc[1], 0));
+  auto* scintLV = new G4LogicalVolume(scintSolid, BuildScintillator(), "Scintillator");
+  auto* scintPV = new G4PVPlacement(nullptr, {}, scintLV, "Scintillator", coatLV,
+                                    false, 0, true);
+
+  // TiO2 reflector on the scint<->coating border (outer faces only). The hole
+  // walls are scint<->world(air) and stay optically open so scintillation
+  // photons can cross into the fibres.
+  BuildCoatingSurface(scintPV, coatPV);
+
+  // --- Fibres as WORLD daughters: they pass through the holes and PROTRUDE past
+  //     the bar faces so the readout sensors sit outside the scintillator. ---
   G4Material* mCore  = BuildFibreCore();
   G4Material* mInner = BuildFibreInnerClad();
   G4Material* mOuter = BuildFibreOuterClad();
 
-  const std::array<double, 2> yc = {+kFibreSep / 2.0, -kFibreSep / 2.0};
-
   for (int f = 0; f < 2; ++f) {
     std::ostringstream tag; tag << (f == 0 ? "F1" : "F2");
-    const G4ThreeVector centre(0, yc[f], 0);
-
-    // Hole/gap (air) bored through the scintillator along x.
-    auto* holeSolid = new G4Tubs("Hole_" + tag.str(), 0, rHole, kFibreHalfX, 0, twopi);
-    auto* holeLV = new G4LogicalVolume(holeSolid, air, "Hole_" + tag.str());
-    new G4PVPlacement(fibreRot, centre, holeLV, "Hole_" + tag.str(), scintLV,
-                      false, f, true);
-
-    // Outer cladding.
     auto* outSolid = new G4Tubs("OuterClad_" + tag.str(), 0, rOuter, kFibreHalfX, 0, twopi);
     auto* outLV = new G4LogicalVolume(outSolid, mOuter, "OuterClad_" + tag.str());
-    new G4PVPlacement(nullptr, {}, outLV, "OuterClad_" + tag.str(), holeLV,
-                      false, f, true);
+    new G4PVPlacement(fibreRot, G4ThreeVector(0, yc[f], 0), outLV,
+                      "OuterClad_" + tag.str(), worldLV, false, f, true);
 
-    // Inner cladding.
     auto* inSolid = new G4Tubs("InnerClad_" + tag.str(), 0, rInner, kFibreHalfX, 0, twopi);
     auto* inLV = new G4LogicalVolume(inSolid, mInner, "InnerClad_" + tag.str());
     new G4PVPlacement(nullptr, {}, inLV, "InnerClad_" + tag.str(), outLV,
                       false, f, true);
 
-    // Core (Y-11 host).
     auto* coreSolid = new G4Tubs("Core_" + tag.str(), 0, rCore, kFibreHalfX, 0, twopi);
     auto* coreLV = new G4LogicalVolume(coreSolid, mCore, "Core_" + tag.str());
     new G4PVPlacement(nullptr, {}, coreLV, "Core_" + tag.str(), inLV,
                       false, f, true);
 
-    // Endcap sensors at +-x ends of the fibre (named for boundary detection).
-    // Placed in the world just beyond the fibre end so the core->sensor
-    // boundary crossing is well defined.
-    G4Material* sensorMat = mCore;  // index-matched coupling stub
+    // Endcap sensors just beyond the protruding fibre ends, in the world.
     auto* sensSolid = new G4Tubs("Sensor_" + tag.str(), 0, rOuter, kSensorThk / 2.0, 0, twopi);
     for (int end = 0; end < 2; ++end) {
       const double sign = (end == 0 ? +1.0 : -1.0);
-      const double xpos = sign * (kFibreHalfX + kSensorThk / 2.0 + 1 * um);
-      const G4ThreeVector spos(xpos, yc[f], 0);
-      // Sensor id mapping: F1 +x = kReadout(0), F1 -x = 1, F2 +x = 2, F2 -x = 3.
-      const int sid = f * 2 + end;
+      const double xpos = sign * (kFibreHalfX + kSensorThk / 2.0 + 10 * um);
+      const int sid = f * 2 + end;  // F1+x=0(readout) F1-x=1 F2+x=2 F2-x=3
       const std::string sname = SensorNames()[sid];
-      auto* sensLV = new G4LogicalVolume(sensSolid, sensorMat, sname);
-      new G4PVPlacement(fibreRot, spos, sensLV, sname, worldLV, false, sid, true);
+      auto* sensLV = new G4LogicalVolume(sensSolid, mCore, sname);
+      new G4PVPlacement(fibreRot, G4ThreeVector(xpos, yc[f], 0), sensLV, sname,
+                        worldLV, false, sid, true);
     }
   }
 
@@ -275,17 +286,19 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
 }
 
 void DetectorConstruction::PrintGeometryReport() const {
-  // Machine-readable report. The ctest greps for OVERLAP_CHECK_PASS.
-  // G4PVPlacement was constructed with pSurfChk=true above, so Geant4 prints
-  // "G4PVPlacement::CheckOverlaps" warnings if any exist; those are captured by
-  // the wrapper. Here we assert internal geometric sanity of the constants.
-  const double norm_path_cm = 2.0 * kStaveHalfZ / cm;              // 2.0 cm
+  // Machine-readable SELF-CHECK of the driving constants. This is NOT an
+  // overlap check: Geant4's real CheckOverlaps runs via pSurfChk=true on every
+  // placement (and /geometry/test/run in the macro) and prints "Overlap is
+  // detected" on failure, which the ctest treats as a hard failure. Do not
+  // conflate this self-check with Geant4's authoritative overlap result.
+  const double norm_path_cm = 2.0 * kStaveHalfZ / cm;             // 2.0 cm
   const double sep_cm = kFibreSep / cm;                           // 2.0 cm
-  const double fibre_within = (kFibreRadius < kHoleRadius) ? 1 : 0;
-  const double contained_x = (kFibreHalfX <= kStaveHalfX) ? 1 : 0;
-  const double contained_y =
+  const double rOuter = kFibreRadius;                             // fibre outer radius
+  const double fibre_within = (rOuter < kHoleRadius) ? 1 : 0;     // fibre fits the hole
+  const double fibre_protrudes = (kFibreHalfX > kStaveHalfX) ? 1 : 0;  // reads out externally
+  const double holes_in_y =
       (kFibreSep / 2.0 + kHoleRadius <= kStaveHalfY) ? 1 : 0;
-  const double contained_z = (kHoleRadius <= kStaveHalfZ) ? 1 : 0;
+  const double holes_in_z = (kHoleRadius <= kStaveHalfZ) ? 1 : 0;
 
   std::cout << "GEOMETRY_REPORT_BEGIN\n"
             << "stave_length_cm " << 2 * kStaveHalfX / cm << "\n"
@@ -296,14 +309,16 @@ void DetectorConstruction::PrintGeometryReport() const {
             << "hole_diameter_mm " << 2 * kHoleRadius / mm << "\n"
             << "fibre_separation_cm " << sep_cm << "\n"
             << "fibre_within_hole " << fibre_within << "\n"
-            << "fibre_contained_x " << contained_x << "\n"
-            << "fibre_contained_y " << contained_y << "\n"
-            << "fibre_contained_z " << contained_z << "\n"
+            << "fibre_protrudes_for_readout " << fibre_protrudes << "\n"
+            << "holes_contained_y " << holes_in_y << "\n"
+            << "holes_contained_z " << holes_in_z << "\n"
             << "geometry_hash " << geometry_hash_ << "\n"
             << "GEOMETRY_REPORT_END\n";
 
-  const bool ok = fibre_within && contained_x && contained_y && contained_z &&
+  const bool ok = fibre_within && fibre_protrudes && holes_in_y && holes_in_z &&
                   std::abs(norm_path_cm - 2.0) < 1e-6 &&
                   std::abs(sep_cm - 2.0) < 1e-6;
-  std::cout << (ok ? "OVERLAP_CHECK_PASS" : "OVERLAP_CHECK_FAIL") << std::endl;
+  // Distinct token: geometry-constant self-check, NOT the Geant4 overlap verdict.
+  std::cout << (ok ? "GEOMETRY_SELFCHECK_PASS" : "GEOMETRY_SELFCHECK_FAIL")
+            << std::endl;
 }

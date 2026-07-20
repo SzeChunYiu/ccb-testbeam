@@ -15,7 +15,9 @@
 PrimaryGeneratorAction::PrimaryGeneratorAction(const AppConfig& cfg) : cfg_(cfg) {
   gun_ = new G4ParticleGun(1);
   G4ParticleDefinition* def =
-      (cfg_.particle == "deuteron") ? G4Deuteron::Deuteron() : G4Proton::Proton();
+      (cfg_.particle == "deuteron")
+          ? static_cast<G4ParticleDefinition*>(G4Deuteron::Deuteron())
+          : static_cast<G4ParticleDefinition*>(G4Proton::Proton());
   gun_->SetParticleDefinition(def);
   gun_->SetParticleEnergy(cfg_.kinetic_energy_MeV * MeV);
 }

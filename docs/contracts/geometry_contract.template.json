@@ -1,0 +1,47 @@
+{
+  "schema": "ccb-geometry-contract/1",
+  "status": "BLOCKED_COMPUTE",
+  "note": "Field-complete template. Every BLOCKED_COMPUTE value must be filled by inspecting the deployed production ROOT geometry on LUNARC (ROOT/VGM), not copied from prose. See docs/contracts/GEOMETRY_READOUT_MAPPING_CONTRACT.md.",
+  "deployed_root": {
+    "path": "BLOCKED_COMPUTE: e.g. geant4/.../krakow_109_8-38deg_4-71deg.root",
+    "sha256": "BLOCKED_COMPUTE",
+    "creation_time_utc": "BLOCKED_COMPUTE",
+    "builder_source_commit": "BLOCKED_COMPUTE",
+    "builder_config": "BLOCKED_COMPUTE",
+    "builder_macro": "BLOCKED_COMPUTE"
+  },
+  "software_versions": {
+    "geant4": "BLOCKED_COMPUTE",
+    "root": "BLOCKED_COMPUTE",
+    "vgm": "BLOCKED_COMPUTE"
+  },
+  "volume_hierarchy": "BLOCKED_COMPUTE: array of {name, copy_number, shape, params, material, density_g_cm3, global_transform, bbox_cm}",
+  "readout_layers": [
+    {
+      "layer_id": "BLOCKED_COMPUTE",
+      "copy_number": "BLOCKED_COMPUTE",
+      "arm": "BLOCKED_COMPUTE: 1=B, 2=A",
+      "centre_depth_cm": "BLOCKED_COMPUTE",
+      "thickness_cm": "BLOCKED_COMPUTE",
+      "physical_label": "BLOCKED_COMPUTE: e.g. B2/B4/B6/B8",
+      "readout_status": "BLOCKED_COMPUTE: instrumented|passive",
+      "data_channel": "BLOCKED_COMPUTE"
+    }
+  ],
+  "expected_bar_counts": {"B_arm": 8, "A_arm": 4, "source": "steering request (CONFIRMED_EXPERIMENT)"},
+  "material_budget_rays": "BLOCKED_COMPUTE: sampled rays target->stave with per-component areal density g/cm2",
+  "overlap_checks": {
+    "root_checkoverlaps_1e-4cm": "BLOCKED_COMPUTE (S21/S21b reported zero on compact import; re-run+record)",
+    "geant4_post_vgm": "BLOCKED_COMPUTE"
+  },
+  "renderings": {
+    "xy": "BLOCKED_COMPUTE (with 5 cm scale bar)",
+    "xz": "BLOCKED_COMPUTE",
+    "yz": "BLOCKED_COMPUTE"
+  },
+  "mapping_falsification": {
+    "candidates": ["one_to_one", "pair_merge", "instrumented_passive_alternating", "hardware_survey_map"],
+    "selected": "BLOCKED_COMPUTE: chosen by geometry coordinates + readout drawings, NOT by best stopping-fraction fit",
+    "evidence": "BLOCKED_COMPUTE"
+  }
+}

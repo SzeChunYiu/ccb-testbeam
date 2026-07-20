@@ -1,0 +1,77 @@
+{
+  "allow_preliminary": false,
+  "entries": [
+    {
+      "disposition": "BLOCKED",
+      "figure": null,
+      "id": "TIME-01",
+      "kind": "quantitative",
+      "quantitative": true,
+      "reason": "EXTERNAL_BLOCKER: upstream result not yet available",
+      "source_data": null,
+      "status": "EXTERNAL_BLOCKER"
+    },
+    {
+      "disposition": "BLOCKED",
+      "figure": null,
+      "id": "TIME-02",
+      "kind": "quantitative",
+      "quantitative": true,
+      "reason": "EXTERNAL_BLOCKER: upstream result not yet available",
+      "source_data": null,
+      "status": "EXTERNAL_BLOCKER"
+    },
+    {
+      "disposition": "BLOCKED",
+      "figure": null,
+      "id": "TIME-03",
+      "kind": "quantitative",
+      "quantitative": true,
+      "reason": "EXTERNAL_BLOCKER: upstream result not yet available",
+      "source_data": null,
+      "status": "EXTERNAL_BLOCKER"
+    },
+    {
+      "disposition": "BLOCKED",
+      "figure": null,
+      "id": "DE-01",
+      "kind": "quantitative",
+      "quantitative": true,
+      "reason": "EXTERNAL_BLOCKER: upstream result not yet available",
+      "source_data": null,
+      "status": "EXTERNAL_BLOCKER"
+    },
+    {
+      "disposition": "BLOCKED",
+      "figure": null,
+      "id": "SS-01",
+      "kind": "quantitative",
+      "quantitative": true,
+      "reason": "EXTERNAL_BLOCKER: upstream result not yet available",
+      "source_data": null,
+      "status": "EXTERNAL_BLOCKER"
+    },
+    {
+      "disposition": "PASS",
+      "figure": "paper/figures/illustrative/SCH-01.png",
+      "id": "SCH-01",
+      "kind": "illustrative",
+      "quantitative": false,
+      "reason": "illustrative schematic (kept separate)",
+      "source_data": "paper/figures/illustrative/SCH-01_source_data.csv",
+      "status": "ILLUSTRATIVE"
+    }
+  ],
+  "generated_at": "2026-07-20T08:17:30.043285+00:00",
+  "paper_only": true,
+  "registry": "paper/figures.yaml",
+  "summary": {
+    "blocked": 5,
+    "fail": 0,
+    "illustrative_figures": 1,
+    "n_entries": 6,
+    "pass": 1,
+    "quantitative_figures": 0
+  },
+  "validation_problems": []
+}

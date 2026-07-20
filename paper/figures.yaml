@@ -1,0 +1,92 @@
+# CCB test-beam -- paper figure result registry
+# ============================================================================
+# Single source of truth binding every paper figure to a VALIDATED result file
+# (JSON) and, for quantitative figures, a source table + recorded sha256.
+# Build with:
+#     python -m tools.figure_registry.builder --registry paper/figures.yaml --out paper/figures
+#
+# Statuses (allowed): VALIDATED, PRELIMINARY, TENSION, EXTERNAL_BLOCKER, ILLUSTRATIVE
+#   - Quantitative figures are built from the result JSON ONLY (never a literal).
+#   - EXTERNAL_BLOCKER  -> result compute-blocked / not yet on disk -> reported BLOCKED.
+#   - ILLUSTRATIVE      -> schematic (kind: illustrative), kept SEPARATE, clearly labelled.
+#
+# ids / result paths / figure ids below are kept consistent with
+# docs/claim_ledger.csv (CL-00x) and the docs figure index (FIG-*). The
+# analysis result JSONs live in external worker stores and are not present in
+# this checkout, so the quantitative entries are EXTERNAL_BLOCKER for now: the
+# builder reports them BLOCKED (not FAIL) until the results are synced in and
+# their status is promoted to VALIDATED / TENSION.
+# ----------------------------------------------------------------------------
+
+# --- Timing (single stave + combined) --------------------------------------
+
+TIME-01:                      # CL-002 / CL-003, FIG-TIM-001
+  result: reports/mv4_timing_1782678162/result.json
+  table: reports/mv4_timing_1782678162/tables/residual_source.csv
+  uncertainty_key: sigma68_ns_ci95
+  value_key: sigma68_ns
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    B6 single-stave timing resolution (sigma68) with 95% CI. Data-driven
+    residual distribution; N and selection gate recorded in the source table.
+
+TIME-02:                      # CL-004 / CL-005, FIG-TIM-012, S-TIM-001
+  result: reports/mv4_timing_1782678162/result.json
+  table: reports/mv4_timing_1782678162/tables/combined_stave_source.csv
+  uncertainty_key: sigma68_ns_ci95
+  value_key: sigma68_ns
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Combined 3-stave (B4+B6+B8) timing resolution (sigma68) with 95% CI.
+
+TIME-03:                      # CL-007 / CL-008, FIG-TIM-014 (raw vs corrected pull)
+  result: reports/mv4_timing_1782678162/result.json
+  table: reports/mv4_timing_1782678162/tables/mc_pull_source.csv
+  uncertainty_key: pull_ci95
+  value_key: pull_sigma
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    MC timing pull, raw vs corrected (MV4). Data/MC TENSION on timewalk
+    correction: promote to status TENSION (not VALIDATED) once the result is
+    synced; the caption must state the tension.
+
+# --- Delta-E / E deuteron enrichment (Sample I / II) ------------------------
+
+DE-01:                        # ranged-stop / deuteron enrichment, deltae_e_truth_bands
+  result: reports/0000000011.1.rangestop/result.json
+  table: reports/0000000011.1.rangestop/tables/data_sample_I.parquet
+  uncertainty_key: d_fraction_ci95
+  value_key: d_fraction
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Delta-E vs E, Sample I (coincidence, deuteron-enriched). Deuteron fraction
+    0.36-0.39 in layers 0-1 with 95% CI; reproduces the Matthias trigger-split
+    enrichment. Data-only (PRELIMINARY) until the result JSON is synced.
+
+# --- Single-stave selected-pulse population --------------------------------
+
+SS-01:                        # CL-001 selected-pulse population / stave topology
+  result: reports/s00_pulse_table/result.json
+  table: reports/s00_pulse_table/tables/counts_by_group_stave.csv
+  uncertainty_key: count_uncertainty
+  value_key: n_selected_pulses
+  status: EXTERNAL_BLOCKER
+  kind: quantitative
+  caption: >-
+    Selected B-stack pulse population by group/stave (S00 gate). Exact
+    reproduction count with per-bin counting uncertainty.
+
+# --- Illustrative schematic (kept SEPARATE from quantitative figures) -------
+
+SCH-01:
+  result: docs/figures/geometry_tof.png     # provenance pointer; not read for numbers
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    Beamline / detector geometry schematic (Krakow 190 MeV p on CD2, HRD
+    stacks A & B). Schematic only -- carries no measured numbers and is not
+    quantitative evidence.

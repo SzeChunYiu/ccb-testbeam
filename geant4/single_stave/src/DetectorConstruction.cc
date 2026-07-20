@@ -73,7 +73,12 @@ void FillFromCurve(G4MaterialPropertiesTable* mpt, const char* prop,
 G4Material* DetectorConstruction::BuildScintillator() {
   auto* nist = G4NistManager::Instance();
   // Extruded polystyrene scintillator (C8H8)n.
-  G4Material* ps = nist->FindOrBuildMaterial("G4_POLYSTYRENE");
+  // Distinct material instance: the fibre core also derives from polystyrene,
+  // and setting an MPT on the shared NIST G4_POLYSTYRENE singleton would clobber
+  // this scintillation table (verified on Geant4 11.2 -> 0 scint photons). Use a
+  // uniquely-named instance so the scintillation and WLS tables stay independent.
+  G4Material* ps = nist->BuildMaterialWithNewDensity(
+      "CCB_Scintillator", "G4_POLYSTYRENE", 1.06 * CLHEP::g / CLHEP::cm3);
   auto tables = OpticalTables::LoadDir(cfg_.optical_dir);
   auto* mpt = new G4MaterialPropertiesTable();
 
@@ -101,7 +106,8 @@ G4Material* DetectorConstruction::BuildScintillator() {
 
 G4Material* DetectorConstruction::BuildFibreCore() {
   auto* nist = G4NistManager::Instance();
-  G4Material* core = nist->FindOrBuildMaterial("G4_POLYSTYRENE");  // Y-11 PS host
+  G4Material* core = nist->BuildMaterialWithNewDensity(
+      "CCB_Y11Core", "G4_POLYSTYRENE", 1.05 * CLHEP::g / CLHEP::cm3);  // distinct Y-11 PS host
   auto tables = OpticalTables::LoadDir(cfg_.optical_dir);
   auto* mpt = new G4MaterialPropertiesTable();
   std::vector<double> e = {1.5 * eV, 4.0 * eV};

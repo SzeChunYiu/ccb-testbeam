@@ -1,0 +1,100 @@
+#include "SteppingAction.hh"
+#include "EventAction.hh"
+#include "DetectorConstruction.hh"
+#include "SimData.hh"
+
+#include "G4Step.hh"
+#include "G4Track.hh"
+#include "G4OpticalPhoton.hh"
+#include "G4StepPoint.hh"
+#include "G4VPhysicalVolume.hh"
+#include "G4LogicalVolume.hh"
+#include "G4Material.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+#include "Randomize.hh"
+
+#include <cmath>
+
+SteppingAction::SteppingAction(const AppConfig& cfg, const OpticalTables& tables,
+                               EventAction* event_action)
+    : cfg_(cfg), tables_(tables), event_action_(event_action) {}
+
+int SteppingAction::SensorIndexForVolume(const G4String& name) const {
+  const auto& names = DetectorConstruction::SensorNames();
+  for (int i = 0; i < kNSensors; ++i)
+    if (name == names[i]) return i;
+  return -1;
+}
+
+double SteppingAction::PdeAt(double wavelength_nm) const {
+  const OpticalCurve& pde = tables_.Get("sipm_pde");
+  double p = pde.Empty() ? 0.40 : pde.Interp(wavelength_nm);  // 40% fallback
+  p *= cfg_.pde_scale;
+  if (p < 0) p = 0;
+  if (p > 1) p = 1;
+  return p;
+}
+
+void SteppingAction::UserSteppingAction(const G4Step* step) {
+  G4Track* track = step->GetTrack();
+  EventData& d = event_action_->Data();
+
+  const bool is_optical =
+      track->GetDefinition() == G4OpticalPhoton::OpticalPhoton();
+
+  if (!is_optical) {
+    // Charged / non-optical: accumulate Edep + track length in scintillator.
+    G4StepPoint* pre = step->GetPreStepPoint();
+    G4VPhysicalVolume* vol = pre->GetPhysicalVolume();
+    if (vol && vol->GetName() == "Scintillator") {
+      const double edep_raw = step->GetTotalEnergyDeposit();
+      // Visible (Birks-quenched) energy: Geant4 already applies Birks to
+      // GetTotalEnergyDeposit when a Birks constant is set on the material via
+      // the EM ionisation model, but we also record the raw deposit separately.
+      d.edep_scint_raw_MeV += edep_raw / MeV;
+      d.edep_scint_MeV += step->GetTotalEnergyDeposit() / MeV;  // quenched
+      d.track_len_scint_mm += step->GetStepLength() / mm;
+      if (!d.has_entry) {
+        d.has_entry = true;
+        const G4ThreeVector& p = pre->GetPosition();
+        d.entry[0] = p.x() / cm; d.entry[1] = p.y() / cm; d.entry[2] = p.z() / cm;
+      }
+      const G4ThreeVector& q = step->GetPostStepPoint()->GetPosition();
+      d.exit[0] = q.x() / cm; d.exit[1] = q.y() / cm; d.exit[2] = q.z() / cm;
+    }
+    return;
+  }
+
+  // Optical photon: detect a crossing INTO a named sensor volume.
+  G4StepPoint* post = step->GetPostStepPoint();
+  if (post->GetStepStatus() != fGeomBoundary) return;
+  G4VPhysicalVolume* postVol = post->GetPhysicalVolume();
+  if (!postVol) return;
+  const int sid = SensorIndexForVolume(postVol->GetName());
+  if (sid < 0) return;
+
+  // Raw arrival recorded FIRST (before PDE), per the blueprint.
+  const double energy = track->GetKineticEnergy();
+  const double wavelength_nm =
+      (energy > 0) ? (h_Planck * c_light / energy) / nm : 0.0;
+  const double time_ns = post->GetGlobalTime() / ns;
+  const double path_mm = track->GetTrackLength() / mm;
+
+  ++d.n_end_arrival[sid];
+
+  // Detection: PDE(wavelength) * coupling efficiency.
+  const double p_det = PdeAt(wavelength_nm) * cfg_.coupling_efficiency;
+  const bool detected = (G4UniformRand() < p_det);
+  if (detected) ++d.n_detected[sid];
+
+  if (cfg_.mode == SimMode::kOpticalCalibration) {
+    PhotonHit h;
+    h.sensor = sid; h.wavelength_nm = wavelength_nm; h.time_ns = time_ns;
+    h.path_len_mm = path_mm; h.detected = detected;
+    d.photons.push_back(h);
+  }
+
+  // Kill at the (absorbing) sensor to prevent double counting.
+  track->SetTrackStatus(fStopAndKill);
+}

@@ -54,3 +54,17 @@
 - Static checks completed: event-key alignment, branch/schema gates, metadata gates, output and exit-status behavior, and pass/fail test design.
 - Checks not run: Python tests, ruff, Geant4 build, simulation, and real ROOT validation; the environment could not clone GitHub directly and exposed no Geant4/ROOT outputs.
 - Required next action: run pytest and ruff in the repository development environment, build Geant4 11.2.2, generate one-thread/four-thread/forced-thread outputs, execute the new validator, then extend validation to the `photons` tree and multi-seed ensemble.
+
+## 2026-07-21T12:00Z — AUD-G4-001 / AUD-G4-003
+
+- Base: `0005ed0cb2c06617abd36b3bb1e615497e15832a`
+- Branch: `chatgpt/AUD-G4-001-mt-rng-seeding`
+- PR: `#868` (draft).
+- Reviewed the photon ntuple schema in `RunAction.cc`, the event-tree validator, tests, prior handoff, backlog, and visualization matrix.
+- Found that photon rows have no persistent photon ID, so ROOT file row position is not a valid cross-thread comparison key.
+- Added `scripts/compare_single_stave_photon_trees.py`, which validates schema, branch lengths, event foreign keys, sensor/detected domains, wavelength/time/path domains, canonicalizes by every stored field, compares exact photon multisets, records aggregates, and writes JSON plus diagnostic PDF pages.
+- Added `tests/test_compare_single_stave_photon_trees.py` covering reordered-identical multisets, invalid domains and foreign keys, one changed value, one missing row, and output artifacts.
+- Commits: `ccfe739`, `9e0d892`, `72a671e` plus this log/matrix/backlog update.
+- Static checks completed: all recorded photon fields participate in canonical ordering; exact comparison is retained; zero-photon events remain visible in per-event aggregates; no unsupported photon identity is inferred.
+- Checks not run: pytest, ruff, Geant4 build, real ROOT event/photon validation, forced-thread run, multiseed ensemble, or approximately 178 PE/event regeneration.
+- Required next action: execute both validator test modules and lint, generate one-thread/four-thread optical outputs, run event and photon validators, then implement the multiseed ensemble analysis.

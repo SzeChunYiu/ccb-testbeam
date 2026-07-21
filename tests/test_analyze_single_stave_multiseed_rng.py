@@ -42,13 +42,19 @@ def metadata(seed: int, threads: int, n_events: int = 4) -> dict[str, object]:
 
 
 def write_run(path: Path, offset: float) -> None:
-    values = np.asarray([1.0, 2.0, 3.0, 4.0], dtype=np.float64) + offset
+    patterns = {
+        0: np.asarray([1.0, 2.0, 4.0, 8.0]),
+        1: np.asarray([2.0, 8.0, 1.0, 4.0]),
+        2: np.asarray([8.0, 1.0, 4.0, 2.0]),
+        3: np.asarray([4.0, 2.0, 8.0, 1.0]),
+    }
+    key = int(round(offset * 10))
+    values = patterns[key]
     with uproot.recreate(path) as root_file:
         root_file["events"] = {
             "event": np.arange(4, dtype=np.int32),
             "edep_scint_MeV": values,
-            "n_scint_generated": np.asarray([10, 20, 30, 40], dtype=np.int32)
-            + int(offset * 10),
+            "n_scint_generated": (values * 10).astype(np.int32),
         }
 
 
@@ -104,6 +110,7 @@ def test_main_passes_for_two_seed_thread_groups(
     assert not summary["duplicate_seeds_within_effective_thread_group"]
     assert not summary["duplicate_streams_across_different_seeds"]
     assert all(row["pass"] for row in summary["thread_group_effects"])
+    assert all(row["pass"] for row in summary["cross_seed_event_index_correlations"])
     assert output_pdf.stat().st_size > 0
 
 
@@ -125,6 +132,7 @@ def test_detects_exact_duplicate_streams_across_different_seeds(tmp_path: Path) 
         minimum_seeds_per_thread=4,
         max_thread_effect_z=3.0,
         max_seed_outlier_z=10.0,
+        max_cross_seed_correlation_z=10.0,
         allow_different_git_commit=False,
     )
     assert not summary["pass"]
@@ -151,6 +159,7 @@ def test_rejects_duplicate_seed_within_thread_group(tmp_path: Path) -> None:
         minimum_seeds_per_thread=3,
         max_thread_effect_z=3.0,
         max_seed_outlier_z=10.0,
+        max_cross_seed_correlation_z=10.0,
         allow_different_git_commit=False,
     )
     assert not summary["pass"]
@@ -167,6 +176,7 @@ def test_rejects_insufficient_seed_coverage(tmp_path: Path) -> None:
         minimum_seeds_per_thread=4,
         max_thread_effect_z=3.0,
         max_seed_outlier_z=10.0,
+        max_cross_seed_correlation_z=10.0,
         allow_different_git_commit=False,
     )
     assert not summary["pass"]

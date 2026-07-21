@@ -5,6 +5,7 @@
 - **UTC:** 2026-07-21T18:00Z
 - **Task:** AUD-CI-001
 - **Initial remote main:** `3dbfcbaf1babe69b98c94ada34d48b5b7f84024e`
+- **Last verified main before this final handoff update:** `c81beada068886fa11a4ffd3bfe898053b72c665`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **PR reviewed:** #868, branch `chatgpt/AUD-G4-001-mt-rng-seeding`
 
@@ -20,7 +21,22 @@
 
 ## Work landed on main
 
-Established the repository-local audit protocol, master index, backlog, active task, blocker register, and handoff directly on `main`. These are documentation-only, evidence-backed changes and do not import the unvalidated Geant4 implementation from PR #868.
+Established the full repository-local audit coordination layer directly on `main`:
+
+- `README.md`
+- `MASTER_INDEX.md`
+- `BACKLOG.md`
+- `ACTIVE_TASK.md`
+- `HANDOFF.md`
+- `SESSION_LOG.md`
+- `STUDY_REVIEW_LEDGER.md`
+- `CLAIM_EVIDENCE_MATRIX.md`
+- `CODE_RESULT_MAP.md`
+- `VISUALIZATION_MATRIX.md`
+- `BLOCKERS.md`
+- `archive/README.md`
+
+These are documentation-only, evidence-backed changes and do not import the unvalidated Geant4 implementation from PR #868.
 
 ## Checks not run
 

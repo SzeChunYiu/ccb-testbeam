@@ -45,8 +45,9 @@ add_test(
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
           --output "${CMAKE_BINARY_DIR}/geometry_smoke.root")
 set_tests_properties(ccb_stave_geometry_smoke PROPERTIES
-  PASS_REGULAR_EXPRESSION "OVERLAP_CHECK_PASS"
-  FAIL_REGULAR_EXPRESSION "OVERLAP_CHECK_FAIL;G4Exception.*Fatal")
+  PASS_REGULAR_EXPRESSION "GEOMETRY_SELFCHECK_PASS"
+  # Fail on the geometry self-check OR Geant4's authoritative overlap detection.
+  FAIL_REGULAR_EXPRESSION "GEOMETRY_SELFCHECK_FAIL;Overlap is detected;G4Exception.*Fatal")
 
 # 2) Tiny headless proton run: must reach CCB_STAVE_END without fatal error.
 add_test(

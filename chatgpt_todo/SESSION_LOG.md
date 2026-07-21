@@ -40,3 +40,17 @@
 - Commits: `f1a64d0`, `b1ac470`, `7c7ae61`, `fd4589e`, `9dc9046` plus this log update.
 - External evidence: Geant4 release notes document the override; Geant4 11 API documentation exposes virtual `GetNumberOfThreads()` on the base and MT run managers.
 - Required next action: compile, verify `--threads 4` with `G4FORCENUMBEROFTHREADS=2` records requested=4/effective=2, then complete event-keyed 1-vs-4 reproducibility, merged-row integrity, multi-seed, plots, and approximately 178 PE/event regeneration.
+
+## 2026-07-21T11:00Z — AUD-G4-001
+
+- Base: `0005ed0cb2c06617abd36b3bb1e615497e15832a`
+- Branch: `chatgpt/AUD-G4-001-mt-rng-seeding`
+- PR: `#868` (draft, mergeable at start of session).
+- Reviewed the full prior handoff and identified that the required ROOT comparison command referenced a nonexistent script.
+- Added `scripts/compare_single_stave_mt_reproducibility.py` to perform event-ID integrity checks, event-key sorting, schema validation, all-branch comparisons, physics-provenance validation, JSON reporting, and PDF overlays/ratios/difference plots.
+- Corrected a static type-safety flaw found during review: NumPy `equal_nan=True` cannot be applied to string branches, so nonnumeric branches are now compared exactly without NaN handling.
+- Added synthetic uproot regression tests for row reordering, string branches, duplicate/missing IDs, numerical mismatch detection, JSON output, PDF output, and thread-provenance reporting.
+- Added commits: `1067d6a`, `ea30cc3`, `fc801df`, plus handoff/log updates.
+- Static checks completed: event-key alignment, branch/schema gates, metadata gates, output and exit-status behavior, and pass/fail test design.
+- Checks not run: Python tests, ruff, Geant4 build, simulation, and real ROOT validation; the environment could not clone GitHub directly and exposed no Geant4/ROOT outputs.
+- Required next action: run pytest and ruff in the repository development environment, build Geant4 11.2.2, generate one-thread/four-thread/forced-thread outputs, execute the new validator, then extend validation to the `photons` tree and multi-seed ensemble.

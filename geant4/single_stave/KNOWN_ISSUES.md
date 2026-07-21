@@ -1,3 +1,12 @@
+# Single-stave sim — verified state (LUNARC, 2026-07-20/21)
+
+> **UPDATE:** issues A & B below are RESOLVED (commit on feat/g4-optical-collection).
+> Boolean-subtracted holes + world-daughter protruding fibres + external sensors +
+> outer-only TiO2 reflector -> **overlap-free** (all volumes CheckOverlaps OK) and
+> **photon collection works**: 100 MeV p -> arrival_readout mean 585, detected PE
+> mean 178 (~10.6 PE/MeV). Geometry-report is now GEOMETRY_SELFCHECK and the ctest
+> fails on Geant4's real 'Overlap is detected'.
+
 # Single-stave sim — verified state & known issues (LUNARC run, 2026-07-20)
 
 Findings from the first real runs on Geant4 11.2.2 (cosmos3, 100 MeV protons).

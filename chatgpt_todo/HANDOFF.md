@@ -2,137 +2,125 @@
 
 ## Session
 
-- **UTC:** 2026-07-21T14:00Z
-- **Task:** `AUD-G4-001` — CI triage for MT reproducibility validation
+- **UTC:** 2026-07-21T15:00Z
+- **Task:** `AUD-G4-001` — persistent CI failure diagnosis and observability
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Base commit:** `0005ed0cb2c06617abd36b3bb1e615497e15832a`
 - **Branch:** `chatgpt/AUD-G4-001-mt-rng-seeding`
 - **PR:** `#868` (draft)
-- **Current pushed head:** `5d2bde29d29f4b763fde9089963b5179d76d41a4`
-- **Status:** PARTIAL — a demonstrated synthetic-test fixture defect was fixed and documented. A new CI run is still required before Python validation can be marked successful. Geant4/ROOT runtime acceptance remains blocked.
+- **Head before this run:** `6feea8707c9abff6142f1745c3e5d8d01774af24`
+- **Status:** PARTIAL — the first synthetic fixture defect was fixed, but the next CI run still failed. The exact remaining pytest traceback was inaccessible because the connector truncated the large workflow log. Focused pytest-log artifact support is now committed so the next run can be diagnosed without guessing.
 
 ## Work selected
 
-The previous handoff required executing the new validator tests. The latest GitHub Actions run provided the first runtime evidence, and it failed. This run therefore prioritized exact CI diagnosis rather than adding more unexecuted analysis code.
+The highest-priority dependency-resolved work remained `AUD-G4-001`: obtain executable evidence for the new event, photon, and multiseed validators. The recheck CI run failed, so this session did not add more scientific analysis code. It improved CI observability while preserving pytest's true exit status.
 
-## Repository and CI evidence inspected
+## Evidence inspected
 
-- PR `#868`, head before this run: `412726c5e70b828019f006b85592561506092a05`
-- GitHub Actions workflow: `MC Validation CI`
-- Workflow run: `29832957171`
-- Job: `88641969815` (`test`)
-- Failed step: `Run unit tests`
-- Successful prior steps: checkout, Python setup, package installation
-- `tests/test_compare_single_stave_mt_reproducibility.py`
-- `scripts/compare_single_stave_mt_reproducibility.py`
-- Existing `ACTIVE_TASK.md`, `BACKLOG.md`, `SESSION_LOG.md`, and prior handoff
+- PR `#868` metadata and complete changed-file list.
+- Recheck workflow run `29836848008`, workflow `MC Validation CI`.
+- Recheck job `88655291248`, name `test`.
+- Step results:
+  - checkout: success;
+  - Python setup: success;
+  - package installation: success;
+  - unit tests: failure.
+- Retrieved workflow job log through the GitHub connector.
+- Inspected `.github/workflows/mc_validation_ci.yml`.
+- Inspected the three new validator test modules and the multiseed validator implementation.
+- Inspected current `ACTIVE_TASK.md`, `BACKLOG.md`, `BLOCKERS.md`, `SESSION_LOG.md`, and prior handoff.
 
-## Confirmed defect
+## Observed problem
 
-The helper `write_run` in `tests/test_compare_single_stave_mt_reproducibility.py` created three per-event branches:
+The job log contains the pytest failure detail, but the connector response was truncated before the failure summary and traceback. The workflow did not publish a smaller diagnostic artifact. Therefore, the remaining test defect could not be identified with sufficient evidence. No speculative code change was made.
 
-- `event`
-- `edep_scint_MeV`
-- `n_scint_generated`
+## Change committed
 
-The passing row-order-invariance test constructed:
-
-- reference rows with event order `[0, 1, 2]` and energy values `[1, 2, 3]`;
-- candidate rows with event order `[2, 0, 1]` and energy values `[3, 1, 2]`.
-
-However, the helper always wrote `n_scint_generated=[10,20,30]`, independent of the supplied row values. After sorting by event ID, the candidate branch became `[20,30,10]`, while the reference remained `[10,20,30]`. The validator was therefore correct to reject the candidate: the two synthetic event tables were not identical.
-
-This is a test-fixture defect, not evidence of a validator defect and not evidence about Geant4 MT reproducibility.
-
-## Fix committed
+### CI diagnostics
 
 Commit:
 
-- `a39f507a8ce17a580a5b08c0bfd3a98da3776751` — `test(g4): keep reordered synthetic event branches aligned`
+- `18dfa7b72c7b532244b266993b3176e66714bcff` — `ci: preserve pytest diagnostics for audit failures`
 
-Change:
+Workflow behavior now:
 
-```python
-numeric = np.asarray(values, dtype=np.float64)
-...
-"edep_scint_MeV": numeric,
-"n_scint_generated": (numeric * 10).astype(np.int32),
+```yaml
+- name: Run unit tests
+  shell: bash
+  run: |
+    set +e
+    pytest tests/ -q --ignore=tests/integration 2>&1 | tee pytest.log
+    status=${PIPESTATUS[0]}
+    exit "$status"
+- name: Upload pytest diagnostics
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: pytest-log-${{ github.run_id }}-${{ github.run_attempt }}
+    path: pytest.log
+    if-no-files-found: error
+    retention-days: 14
 ```
 
-All synthetic per-event branches now remain attached to the same row when event rows are permuted. An explanatory comment was added to prevent the same fixture-design error from recurring.
+This preserves the pytest exit status while making the complete focused test output downloadable after both successful and failed runs.
 
-Coordination commits:
+### Coordination updates
 
-- `9ad30ce871cd3b778aaa1be1f1a7125e951df1c8` — record the CI diagnosis and fix in `SESSION_LOG.md`
-- `5d2bde29d29f4b763fde9089963b5179d76d41a4` — create `chatgpt_todo/BLOCKERS.md` with exact CI and runtime blockers
+- `27c91a811320f3a9edf521e95a80c4a9e18a74cd` — record the persistent CI blocker and diagnostic strategy in `BLOCKERS.md`.
+- `e7bfdfd5950838d0fd0421c008fbfb4c0e8532aa` — append this session to `SESSION_LOG.md`.
+- This handoff update records the latest state and next exact actions.
+
+## Validation performed
+
+- Confirmed workflow path triggers include tests, configuration, package metadata, and the workflow itself.
+- Confirmed `PIPESTATUS[0]` captures pytest's status rather than `tee`'s status.
+- Confirmed the artifact step uses `if: always()` and therefore runs after a failing pytest step.
+- Confirmed the artifact name is unique by workflow run and attempt.
+- Confirmed missing `pytest.log` is itself treated as an error rather than silently ignored.
+- Confirmed retention is limited to 14 days.
+- Confirmed no raw detector data, ROOT outputs, generated physics plots, credentials, or unrelated files were modified.
 
 ## Evidence classification
 
-- **Observed:** Actions run `29832957171` completed with failure in the unit-test step.
-- **Proven by static reconstruction:** the pass fixture contained a genuine event-keyed mismatch in `n_scint_generated`.
-- **Implemented:** the fixture now derives both numeric branches from the same row-aligned values.
-- **Pending:** a new Actions run must confirm whether this was the only failing test.
-- **Not evaluated:** real Geant4 output, one-thread/four-thread equality, photon multiset equality, multiseed independence diagnostics, and optical yield.
-
-## Validation performed this run
-
-- Inspected the exact CI run, job, and failed step.
-- Confirmed checkout and dependency installation completed before the failure.
-- Reconstructed reference and candidate branch contents before and after event-ID sorting.
-- Confirmed the existing validator should fail the old fixture.
-- Reviewed the replacement helper for row alignment, dtype stability, and preservation of the intentional numeric-mismatch test.
-- Confirmed no raw data, ROOT outputs, generated PDFs, secrets, or unrelated files were changed.
-
-## Validation not yet complete
-
-- No new successful CI conclusion is available yet.
-- Direct local pytest and ruff execution were not available through the GitHub connector session.
-- Geant4 11.2.2 compilation was not performed.
-- No real ROOT files were generated or compared.
-- The approximately 178 PE/event claim was not regenerated.
+- **Observed:** workflow run `29836848008` and job `88655291248` failed in the unit-test step after successful environment setup.
+- **Observed limitation:** connector log output was truncated before the pytest traceback.
+- **Implemented and statically reviewed:** focused pytest artifact upload with preserved failure status.
+- **Pending runtime evidence:** next workflow run and downloadable `pytest-log-*` artifact.
+- **Not evaluated:** validator correctness on real Geant4 ROOT files, one-thread/four-thread equality, photon multiset equality, forced-thread provenance, multiseed independence diagnostics, and the approximately 178 PE/event claim.
 
 ## Required next actions
 
-1. Inspect the next `MC Validation CI` run on a head containing `a39f507a...`.
-2. If it fails, read the exact failing traceback and fix only the demonstrated defect.
-3. When unit tests pass, run or add a dedicated lint check for the three validator scripts and tests.
-4. Build `geant4/single_stave` with supported Geant4 11.2.2.
-5. Generate same-seed one-thread and four-thread optical outputs, plus the forced-thread provenance case.
-6. Run the event-tree and photon-tree validators.
-7. Generate at least four unique seeds per effective-thread group and run the multiseed validator with preregistered thresholds.
-8. Regenerate the approximately 178 PE/event result with uncertainty and full provenance.
-9. Update affected study, claim, figure, table, and wiki records only after runtime evidence exists.
+1. Inspect the workflow run triggered by commit `18dfa7b72c7b532244b266993b3176e66714bcff` or the latest coordination head.
+2. Fetch its workflow artifacts and download `pytest-log-<run>-<attempt>`.
+3. Read the exact pytest failure and traceback.
+4. Fix only the demonstrated defect; add a regression assertion if the defect is not already covered.
+5. Require a subsequent successful CI conclusion before marking Python validation complete.
+6. Add or verify a dedicated ruff step for the three validator scripts and tests.
+7. In a supported Geant4 11.2.2/ROOT environment, build and generate same-seed one-thread, four-thread, and forced-thread outputs.
+8. Run the event and photon validators.
+9. Generate at least four unique seeds per effective-thread group and run the multiseed validator with preregistered thresholds.
+10. Regenerate the approximately 178 PE/event result with uncertainty and full provenance.
 
-## Commands for the next execution environment
+## Artifact retrieval procedure
 
-```bash
-python -m pytest \
-  tests/test_compare_single_stave_mt_reproducibility.py \
-  tests/test_compare_single_stave_photon_trees.py \
-  tests/test_analyze_single_stave_multiseed_rng.py \
-  -q
+After the next workflow run completes:
 
-ruff check \
-  scripts/compare_single_stave_mt_reproducibility.py \
-  scripts/compare_single_stave_photon_trees.py \
-  scripts/analyze_single_stave_multiseed_rng.py \
-  tests/test_compare_single_stave_mt_reproducibility.py \
-  tests/test_compare_single_stave_photon_trees.py \
-  tests/test_analyze_single_stave_multiseed_rng.py
-```
+1. Fetch workflow runs for the latest PR head.
+2. Fetch artifacts for the run.
+3. Select the artifact named `pytest-log-<run-id>-<run-attempt>`.
+4. Download and inspect `pytest.log`.
+5. Record the exact failing test, exception type, traceback, environment, and proposed fix in this handoff and `BLOCKERS.md`.
 
 ## Blockers
 
-See `chatgpt_todo/BLOCKERS.md`:
-
-- `BLK-CI-001`: fix pushed; successful CI recheck pending.
-- `BLK-G4-001`: no supported Geant4/ROOT/LUNARC runtime in this audit session.
+- `BLK-CI-001`: unit tests still fail; focused artifact support is pushed and the next run must be inspected.
+- `BLK-G4-001`: no supported Geant4/ROOT/LUNARC runtime or generated optical outputs are available in this audit environment.
 
 ## Acceptance decision
 
 Keep PR `#868` in draft. Do not merge until:
 
-- the validator unit tests and lint pass;
+- all validator unit tests and lint pass;
 - supported Geant4 compilation succeeds;
 - same-seed event and photon reproducibility is demonstrated across effective thread counts;
 - forced-thread provenance is verified;

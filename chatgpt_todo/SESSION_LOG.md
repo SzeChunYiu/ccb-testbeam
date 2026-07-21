@@ -26,3 +26,17 @@
 - Commits: `c1f1fb3`, `2b34468`, `05b7ad7`, `7572b14`, `a3b4d00` plus this log update.
 - External evidence: official Geant4 MT documentation describes master-generated event seeds and centrally controlled worker processing; release notes document thread-count control and the `G4FORCENUMBEROFTHREADS` override.
 - Required next action: compile with Geant4 11.2.2, run same-seed 1-thread and 4-thread jobs, verify event IDs and event-keyed fields, compare photon distributions, and regenerate the approximately 178 PE/event result.
+
+## 2026-07-21T10:00Z — AUD-G4-001
+
+- Base: `0005ed0cb2c06617abd36b3bb1e615497e15832a`
+- Branch: `chatgpt/AUD-G4-001-mt-rng-seeding`
+- PR: `#868` (draft, mergeable at start of session).
+- Reviewed the requested-thread implementation, `AppConfig`, `main.cc`, `RunAction.cc`, the handoff, and official Geant4 MT/API documentation.
+- Found that metadata still recorded only `threads_requested`, although `G4FORCENUMBEROFTHREADS` can override `SetNumberOfThreads`; thus provenance could state four threads while the run used another count.
+- Added effective-thread capture through `GetNumberOfThreads()`, preserved the exact override environment value, emitted a mismatch warning, and persisted requested/effective/override values to stdout and the metadata sidecar.
+- Static checks completed: finalized configuration is captured before action construction; sequential and MT interface paths are guarded; mismatch information propagates to every action copy.
+- Runtime checks not run: no checked-out Geant4 11.2.2/ROOT environment or generated ROOT data in this connector session.
+- Commits: `f1a64d0`, `b1ac470`, `7c7ae61`, `fd4589e`, `9dc9046` plus this log update.
+- External evidence: Geant4 release notes document the override; Geant4 11 API documentation exposes virtual `GetNumberOfThreads()` on the base and MT run managers.
+- Required next action: compile, verify `--threads 4` with `G4FORCENUMBEROFTHREADS=2` records requested=4/effective=2, then complete event-keyed 1-vs-4 reproducibility, merged-row integrity, multi-seed, plots, and approximately 178 PE/event regeneration.

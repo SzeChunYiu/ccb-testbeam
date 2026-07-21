@@ -145,6 +145,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
      << "  \"threads_requested\": " << cfg_.n_threads << ",\n"
+     << "  \"threads_effective\": " << cfg_.n_threads_effective << ",\n"
+     << "  \"G4FORCENUMBEROFTHREADS\": "
+     << j(cfg_.g4_force_number_of_threads.empty()
+              ? "unset" : cfg_.g4_force_number_of_threads) << ",\n"
      << "  \"particle\": " << j(cfg_.particle) << ",\n"
      << "  \"kinetic_energy_MeV\": " << cfg_.kinetic_energy_MeV << ",\n"
      << "  \"n_events\": " << run->GetNumberOfEvent() << ",\n"

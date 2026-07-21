@@ -40,7 +40,10 @@ std::string AppConfig::Describe() const {
   os << "particle=" << particle
      << " KE_MeV=" << kinetic_energy_MeV
      << " nevents=" << n_events
-     << " threads=" << n_threads
+     << " threads_requested=" << n_threads
+     << " threads_effective=" << n_threads_effective
+     << " g4_force_threads="
+     << (g4_force_number_of_threads.empty() ? "unset" : g4_force_number_of_threads)
      << " seed=" << seed
      << " hit_x_cm=" << hit_x_cm
      << " hit_y_cm=" << hit_y_cm

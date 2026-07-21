@@ -1,62 +1,98 @@
-# Single-stave sim — verified state (LUNARC, 2026-07-20/21)
+# Single-stave simulation — verified and pending evidence
 
-> **UPDATE:** issues A & B below are RESOLVED (commit on feat/g4-optical-collection).
-> Boolean-subtracted holes + world-daughter protruding fibres + external sensors +
-> outer-only TiO2 reflector -> **overlap-free** (all volumes CheckOverlaps OK) and
-> **photon collection works**: 100 MeV p -> arrival_readout mean 585, detected PE
-> mean 178 (~10.6 PE/MeV). Geometry-report is now GEOMETRY_SELFCHECK and the ctest
-> fails on Geant4's real 'Overlap is detected'.
+This document separates **historical defects**, **observed LUNARC results**, and
+**validation still required**. It must not be read as a peer-reviewed calibration
+result.
 
-# Single-stave sim — verified state & known issues (LUNARC run, 2026-07-20)
+## Current evidence summary
 
-Findings from the first real runs on Geant4 11.2.2 (cosmos3, 100 MeV protons).
+| Item | Status | Evidence / limitation |
+|---|---|---|
+| Geant4 11.2.2 build on LUNARC | OBSERVED IN PRIOR RUN | Reported for `cosmos3`; exact build log and environment lockfile are not stored here. |
+| Geometry after Boolean-hole refactor | OBSERVED IN PRIOR RUN | Reported overlap-free with Geant4 checks; rerun is required on the current branch. |
+| Scintillation generation | OBSERVED IN PRIOR RUN | Reported mean `n_scint_generated ≈ 148k/event` for 100 MeV protons. |
+| Readout arrivals | OBSERVED IN PRIOR RUN | Reported mean `arrival_readout ≈ 585/event`; sample size and uncertainty are not documented in this file. |
+| Detected readout PE | PRELIMINARY OBSERVATION | Reported mean `detected_readout ≈ 178/event`; sample size, spread, uncertainty, exact seed, thread count, output hash, and configuration manifest are not documented here. |
+| PE yield per deposited energy | DERIVED FROM REPORTED MEANS | `178 / 16.8 MeV ≈ 10.6 PE/MeV`. The denominator is the **reported mean deposited energy**, not the 100 MeV incident kinetic energy. This ratio is not yet a calibrated detector response. |
+| Thread-count reproducibility | NOT VALIDATED | Requires event-tree and photon-tree comparisons from PR #868. |
+| Multiseed stability | NOT VALIDATED | Requires the preregistered multiseed ensemble analysis from PR #868. |
 
-## Verified working
+## Reported LUNARC configuration context
 
-| Aspect | Evidence |
-|---|---|
-| Build | 100% compile, `ccb_stave_sim` links (after the proton/deuteron cast fix, #861) |
-| ctests | 3/3 pass (geometry smoke, proton smoke, geometry-report) |
-| Charged-particle physics / geometry | `edep_scint = 16.8 MeV` mean for 100 MeV p over 2.0 cm polystyrene — matches dE/dx ≈ 8 MeV/cm; confirms the 2 cm **normal** path length (the audit's key geometry concern) |
-| Scintillation generation | after the distinct-material fix (this commit): `n_scint_generated ≈ 148k`/event (~10k/MeV yield). **Was 0** because the fibre core and scintillator shared the NIST `G4_POLYSTYRENE` singleton, so `BuildFibreCore()` clobbered the scintillation MPT with the WLS table. |
-| Provenance | `<output>.meta.json` records git commit, geometry hash, seed, config, and all 7 optical-table sha256 |
+The historical note describes Geant4 11.2.2 runs on `cosmos3` with 100 MeV
+protons. It reports a mean scintillator energy deposit of approximately 16.8 MeV
+for a 2.0 cm normal path through polystyrene. The geometry change used:
 
-## Open issue A — zero photon collection (P0 for optical calibration)
+- Boolean-subtracted fibre holes in coating and scintillator;
+- fibres placed as world daughters and extended beyond the bar faces;
+- external end sensors;
+- an outer-face TiO2 reflector while leaving hole walls optically open.
 
-`arrival_readout = 0`, `detected_readout = 0` despite 148k photons/event
-generated. Two root causes:
+These statements describe the intended geometry and prior observations. They do
+not replace a current, versioned run manifest or ROOT-level validation artifact.
 
-1. **Sensor/scintillator overlap.** The 4 endcap sensors are placed at
-   `x = ±(kFibreHalfX + …) ≈ ±24.9 cm`, **inside** the ±25 cm scintillator box —
-   Geant4 `CheckOverlaps` reports "Overlap is detected for volume
-   Sensor_F1_PlusX with Scintillator". The degenerate geometry around the
-   sensors prevents clean boundary-crossing detection.
-2. **Fibre ends are buried inside the bar.** Fibres/holes are nested daughters
-   of the scintillator (`kFibreHalfX = 24.9 < kStaveHalfX = 25`), so a photon
-   reaching the fibre end exits into scintillator, not into an external sensor.
+## Historical issue A — zero photon collection
 
-### Required fix (geometry-hierarchy refactor)
-Per the blueprint's "Boolean subtraction of holes … is preferable":
-- Bore the two holes as a `G4SubtractionSolid` **out of** the scintillator solid
-  (so the scintillator genuinely excludes the hole channels).
-- Place the fibre stack (gap → outer/inner clad → core) as **world** daughters,
-  length **> bar** (e.g. half-length 26 cm), passing through the holes and
-  **protruding ±1 cm** beyond the bar faces.
-- Place the readout sensors on the **protruding fibre ends, in the world**
-  (x ≈ ±26 cm), so `SteppingAction` sees a clean core→sensor boundary crossing.
-- Re-verify WLS coupling (blue scint → Y-11 absorption → green re-emission →
-  attenuation → sensor) produces nonzero detected PE, and that
-  `generated ≥ arrival ≥ detected` holds per event.
+**Status: RESOLVED IN THE GEOMETRY IMPLEMENTATION, REVALIDATION PENDING.**
 
-## Open issue B — geometry-report false PASS
+Before the geometry refactor, `arrival_readout = 0` and
+`detected_readout = 0` despite approximately 148k generated photons per event.
+The identified causes were:
 
-`PrintGeometryReport()` emits `OVERLAP_CHECK_PASS` from an **internal
-constants** check; it does **not** reflect Geant4's real `CheckOverlaps`, which
-found the sensor overlap. The report (and the `ccb_stave_geometry_smoke` ctest)
-must parse Geant4's actual overlap output (the `/geometry/test/run` result and
-the `G4PVPlacement` surface-check warnings) and fail on any detected overlap.
+1. Sensor/scintillator overlap: endcap sensors were placed near `x = ±24.9 cm`,
+   inside the ±25 cm scintillator box.
+2. Buried fibre ends: fibres and holes ended inside the scintillator, so photons
+   did not encounter a clean external sensor boundary.
 
-## Status
-CCB-796-RUN: **build + charged-physics + scintillation-generation VERIFIED**;
-**photon-collection readout IN_PROGRESS** (issues A/B above). The optical
-calibration plots require issue A resolved first.
+The implemented correction bored the channels with Boolean subtraction, placed
+long fibres as world daughters, protruded them beyond the bar, and placed sensors
+outside the scintillator. The historical report of nonzero collection is
+consistent with this fix, but the current branch still requires reproducible
+one-thread, multithread, and multiseed validation.
+
+## Historical issue B — geometry-report false PASS
+
+**Status: RESOLVED IN TEST LOGIC, REVALIDATION PENDING.**
+
+The former `OVERLAP_CHECK_PASS` message represented an internal constants check,
+not Geant4's authoritative overlap result. The geometry report was renamed to
+`GEOMETRY_SELFCHECK`, and CTest now fails on Geant4 output containing
+`Overlap is detected` or a fatal exception.
+
+## Historical shared-material defect
+
+The scintillator and fibre core once shared the NIST `G4_POLYSTYRENE` material
+singleton. Updating the fibre-core material-properties table could therefore
+clobber the scintillator table and suppress scintillation generation. The code
+was changed to use distinct materials. The reported restoration to approximately
+148k generated scintillation photons per event is a prior observation that must
+be reproduced with current provenance.
+
+## Required evidence before promoting the 178 PE/event claim
+
+The claim must remain preliminary until all of the following are available:
+
+1. Exact repository commit and clean working-tree state.
+2. Geant4, ROOT/uproot, compiler, OS, and dependency versions.
+3. Complete command line and configuration, including particle, kinetic energy,
+   event count, seed, requested/effective/forced thread counts, mode, geometry
+   hash, and optical-table paths and SHA-256 hashes.
+4. ROOT and metadata file hashes and storage locations.
+5. Event count and readout-PE distribution, not only the mean.
+6. Mean, standard deviation, standard error or confidence interval, median, and
+   robust spread across events and across independent seeds.
+7. Same-seed one-thread versus multithread event and photon validation.
+8. At least four independent seeds per effective-thread group and the multiseed
+   diagnostics defined in `chatgpt_todo/ACTIVE_TASK.md`.
+9. Plots showing the PE distribution, seed-to-seed stability, thread-group
+   comparison, event/photon integrity, and relevant data-versus-simulation
+   comparisons where real data exist.
+
+## Current status
+
+- Geometry and optical collection have **prior positive LUNARC observations**.
+- The numerical values `585 arrivals/event`, `178 detected PE/event`, and
+  `10.6 PE/MeV deposited` are **preliminary and incompletely provenanced**.
+- PR #868 provides the validation infrastructure but must remain draft until its
+  Python CI, Geant4 build, ROOT comparisons, multiseed checks, and optical-yield
+  regeneration are complete.

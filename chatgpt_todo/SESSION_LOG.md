@@ -23,8 +23,6 @@
 - Preserved sequential-build compatibility with `#ifdef G4MULTITHREADED`.
 - Static checks completed: configuration flow, initialization ordering, input validation, and provenance propagation.
 - Runtime checks not run: connector environment has no checked-out Geant4/ROOT build or LUNARC outputs.
-- Commits: `c1f1fb3`, `2b34468`, `05b7ad7`, `7572b14`, `a3b4d00` plus this log update.
-- External evidence: official Geant4 MT documentation describes master-generated event seeds and centrally controlled worker processing; release notes document thread-count control and the `G4FORCENUMBEROFTHREADS` override.
 - Required next action: compile with Geant4 11.2.2, run same-seed 1-thread and 4-thread jobs, verify event IDs and event-keyed fields, compare photon distributions, and regenerate the approximately 178 PE/event result.
 
 ## 2026-07-21T10:00Z — AUD-G4-001
@@ -32,39 +30,38 @@
 - Base: `0005ed0cb2c06617abd36b3bb1e615497e15832a`
 - Branch: `chatgpt/AUD-G4-001-mt-rng-seeding`
 - PR: `#868` (draft, mergeable at start of session).
-- Reviewed the requested-thread implementation, `AppConfig`, `main.cc`, `RunAction.cc`, the handoff, and official Geant4 MT/API documentation.
-- Found that metadata still recorded only `threads_requested`, although `G4FORCENUMBEROFTHREADS` can override `SetNumberOfThreads`; thus provenance could state four threads while the run used another count.
-- Added effective-thread capture through `GetNumberOfThreads()`, preserved the exact override environment value, emitted a mismatch warning, and persisted requested/effective/override values to stdout and the metadata sidecar.
-- Static checks completed: finalized configuration is captured before action construction; sequential and MT interface paths are guarded; mismatch information propagates to every action copy.
-- Runtime checks not run: no checked-out Geant4 11.2.2/ROOT environment or generated ROOT data in this connector session.
-- Commits: `f1a64d0`, `b1ac470`, `7c7ae61`, `fd4589e`, `9dc9046` plus this log update.
-- External evidence: Geant4 release notes document the override; Geant4 11 API documentation exposes virtual `GetNumberOfThreads()` on the base and MT run managers.
-- Required next action: compile, verify `--threads 4` with `G4FORCENUMBEROFTHREADS=2` records requested=4/effective=2, then complete event-keyed 1-vs-4 reproducibility, merged-row integrity, multi-seed, plots, and approximately 178 PE/event regeneration.
+- Found that metadata still recorded only `threads_requested`, although `G4FORCENUMBEROFTHREADS` can override `SetNumberOfThreads`.
+- Added effective-thread capture, exact override environment provenance, mismatch warning, and sidecar persistence.
+- Runtime checks not run: no checked-out Geant4 11.2.2/ROOT environment or generated ROOT data.
 
 ## 2026-07-21T11:00Z — AUD-G4-001
+
+- Added `scripts/compare_single_stave_mt_reproducibility.py` for event-ID integrity, event-key sorting, schema validation, branch comparison, provenance validation, JSON, and PDF diagnostics.
+- Fixed string-branch comparison so NumPy `equal_nan=True` is not incorrectly applied to nonnumeric arrays.
+- Added synthetic uproot regression tests.
+- Checks not run: Python tests, ruff, Geant4 build, simulation, and real ROOT validation.
+
+## 2026-07-21T12:00Z — AUD-G4-001 / AUD-G4-003
+
+- Found that photon rows have no persistent photon ID, so ROOT row position is not a valid cross-thread identity.
+- Added `scripts/compare_single_stave_photon_trees.py` with schema/domain/foreign-key validation, canonical multiset comparison, aggregate metrics, JSON, and PDF output.
+- Added synthetic tests for reordered identical populations, invalid domains, changed values, and missing rows.
+- Checks not run: pytest, ruff, Geant4 build, real ROOT event/photon validation, forced-thread run, multiseed ensemble, or approximately 178 PE/event regeneration.
+
+## 2026-07-21T13:00Z — AUD-G4-001 / AUD-G4-004
 
 - Base: `0005ed0cb2c06617abd36b3bb1e615497e15832a`
 - Branch: `chatgpt/AUD-G4-001-mt-rng-seeding`
 - PR: `#868` (draft, mergeable at start of session).
-- Reviewed the full prior handoff and identified that the required ROOT comparison command referenced a nonexistent script.
-- Added `scripts/compare_single_stave_mt_reproducibility.py` to perform event-ID integrity checks, event-key sorting, schema validation, all-branch comparisons, physics-provenance validation, JSON reporting, and PDF overlays/ratios/difference plots.
-- Corrected a static type-safety flaw found during review: NumPy `equal_nan=True` cannot be applied to string branches, so nonnumeric branches are now compared exactly without NaN handling.
-- Added synthetic uproot regression tests for row reordering, string branches, duplicate/missing IDs, numerical mismatch detection, JSON output, PDF output, and thread-provenance reporting.
-- Added commits: `1067d6a`, `ea30cc3`, `fc801df`, plus handoff/log updates.
-- Static checks completed: event-key alignment, branch/schema gates, metadata gates, output and exit-status behavior, and pass/fail test design.
-- Checks not run: Python tests, ruff, Geant4 build, simulation, and real ROOT validation; the environment could not clone GitHub directly and exposed no Geant4/ROOT outputs.
-- Required next action: run pytest and ruff in the repository development environment, build Geant4 11.2.2, generate one-thread/four-thread/forced-thread outputs, execute the new validator, then extend validation to the `photons` tree and multi-seed ensemble.
-
-## 2026-07-21T12:00Z — AUD-G4-001 / AUD-G4-003
-
-- Base: `0005ed0cb2c06617abd36b3bb1e615497e15832a`
-- Branch: `chatgpt/AUD-G4-001-mt-rng-seeding`
-- PR: `#868` (draft).
-- Reviewed the photon ntuple schema in `RunAction.cc`, the event-tree validator, tests, prior handoff, backlog, and visualization matrix.
-- Found that photon rows have no persistent photon ID, so ROOT file row position is not a valid cross-thread comparison key.
-- Added `scripts/compare_single_stave_photon_trees.py`, which validates schema, branch lengths, event foreign keys, sensor/detected domains, wavelength/time/path domains, canonicalizes by every stored field, compares exact photon multisets, records aggregates, and writes JSON plus diagnostic PDF pages.
-- Added `tests/test_compare_single_stave_photon_trees.py` covering reordered-identical multisets, invalid domains and foreign keys, one changed value, one missing row, and output artifacts.
-- Commits: `ccfe739`, `9e0d892`, `72a671e` plus this log/matrix/backlog update.
-- Static checks completed: all recorded photon fields participate in canonical ordering; exact comparison is retained; zero-photon events remain visible in per-event aggregates; no unsupported photon identity is inferred.
-- Checks not run: pytest, ruff, Geant4 build, real ROOT event/photon validation, forced-thread run, multiseed ensemble, or approximately 178 PE/event regeneration.
-- Required next action: execute both validator test modules and lint, generate one-thread/four-thread optical outputs, run event and photon validators, then implement the multiseed ensemble analysis.
+- Reviewed the active task, backlog, prior event/photon validators, synthetic-test style, PR state, and visualization matrix.
+- Identified that exact same-seed equality alone cannot reveal duplicated streams across different seeds or quantify seed/thread stability.
+- Added `scripts/analyze_single_stave_multiseed_rng.py`, a manifest-driven ensemble validator.
+- The validator requires complete event IDs and comparable physics provenance; tracks requested/effective/forced thread provenance; requires unique seeds within each effective-thread group; hashes complete selected event streams; detects exact stream duplication across different seeds; calculates per-run mean, standard deviation, SEM, extrema, robust seed-mean z scores, event-indexed cross-seed Pearson correlations with Fisher-z significance, seed coverage, and thread-group mean effects.
+- Added JSON summary and PDF pages showing run means with within-run SEM and robust seed-level outlier diagnostics.
+- Added synthetic tests for a passing two-thread-group ensemble, exact duplicate streams across different seeds, duplicate seeds within a thread group, insufficient seed coverage, JSON output, and PDF generation.
+- During static review, corrected the experimental design so the same seeds may be reused across thread configurations for paired reproducibility; uniqueness is enforced within each effective-thread group rather than globally.
+- Added an explicit caveat that these diagnostics do not prove full RNG independence and that thresholds must be preregistered.
+- Commits added: `7dfecc4`, `a311a67`, `82a6d02`, `fbfa1af`, plus coordination updates.
+- Static validation performed: Python syntax was parsed before upload; manifest/schema flow, event sorting, provenance gates, exact hash fields, duplicate detection, threshold gates, exit status, JSON/PDF paths, and synthetic failure cases were reviewed.
+- Checks not executed: pytest, ruff, Geant4 compilation, real multiseed runs, actual correlations, thread effects, and optical-yield regeneration. No runtime success is claimed.
+- Required next action: run all three validator test modules and lint, generate at least four seeds for one-thread and four-thread configurations, execute the event/photon/multiseed validators, inspect multiplicity effects and preregistered thresholds, then regenerate the approximately 178 PE/event claim with uncertainty.

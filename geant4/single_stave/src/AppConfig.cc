@@ -16,6 +16,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --particle NAME          proton|deuteron            (default proton)\n"
     "  --energy MEV             primary kinetic energy MeV  (default 100)\n"
     "  --nevents N              events this invocation      (default 1000)\n"
+    "  --threads N              worker threads              (default 1)\n"
     "  --seed N                 RNG seed                    (default 1)\n"
     "  --hit-x CM               impact x (stave length)     (default 0)\n"
     "  --hit-y CM               impact y (width)            (default 0)\n"
@@ -39,6 +40,7 @@ std::string AppConfig::Describe() const {
   os << "particle=" << particle
      << " KE_MeV=" << kinetic_energy_MeV
      << " nevents=" << n_events
+     << " threads=" << n_threads
      << " seed=" << seed
      << " hit_x_cm=" << hit_x_cm
      << " hit_y_cm=" << hit_y_cm
@@ -71,6 +73,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--particle"))          { if(!(v=need(i)))return false; particle = v; }
     else if (eq(a, "--energy"))            { if(!(v=need(i)))return false; kinetic_energy_MeV = std::atof(v); }
     else if (eq(a, "--nevents"))           { if(!(v=need(i)))return false; n_events = std::atoi(v); }
+    else if (eq(a, "--threads"))           { if(!(v=need(i)))return false; n_threads = std::atoi(v); }
     else if (eq(a, "--seed"))              { if(!(v=need(i)))return false; seed = std::strtoull(v, nullptr, 10); }
     else if (eq(a, "--hit-x"))             { if(!(v=need(i)))return false; hit_x_cm = std::atof(v); }
     else if (eq(a, "--hit-y"))             { if(!(v=need(i)))return false; hit_y_cm = std::atof(v); }
@@ -108,6 +111,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   }
   if (kinetic_energy_MeV <= 0) { std::cerr << "error: --energy must be > 0\n"; return false; }
   if (n_events <= 0)           { std::cerr << "error: --nevents must be > 0\n"; return false; }
+  if (n_threads <= 0)          { std::cerr << "error: --threads must be > 0\n"; return false; }
   if (coupling_efficiency < 0 || coupling_efficiency > 1) {
     std::cerr << "error: --coupling must be in [0,1]\n"; return false;
   }

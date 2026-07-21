@@ -4,7 +4,6 @@
 #include "G4Run.hh"
 #include "G4AnalysisManager.hh"
 #include "G4SystemOfUnits.hh"
-#include "Randomize.hh"
 
 #include <cstdlib>
 #include <fstream>
@@ -72,8 +71,10 @@ void RunAction::DefineNtuples() {
 }
 
 void RunAction::BeginOfRunAction(const G4Run*) {
-  // Seed the engine deterministically from config (reproducibility).
-  CLHEP::HepRandom::setTheSeed(static_cast<long>(cfg_.seed));
+  // Do not reseed here. In multi-threaded mode Geant4 preassigns event seeds
+  // from the master engine, which is seeded before run-manager construction in
+  // main.cc. Resetting CLHEP in each worker here can create correlated streams
+  // and makes results depend on thread scheduling.
   if (IsMaster() || G4Threading::G4GetThreadId() < 0) {
     std::cout << "RUN_CONFIG " << cfg_.Describe() << " geometry_hash="
               << geometry_hash_ << std::endl;

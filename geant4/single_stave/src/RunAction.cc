@@ -20,6 +20,9 @@ RunAction::~RunAction() = default;
 void RunAction::DefineNtuples() {
   auto* am = G4AnalysisManager::Instance();
   am->SetVerboseLevel(0);
+  // Merge worker-thread ntuples into ONE output file (MT runs otherwise emit
+  // per-thread <output>_tN.root). Must be set before OpenFile.
+  am->SetNtupleMerging(true);
   // A single output file, defined once — no per-energy overwrite.
   am->OpenFile(cfg_.output);
 

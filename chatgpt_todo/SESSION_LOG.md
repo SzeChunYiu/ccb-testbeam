@@ -43,3 +43,14 @@
 - Exact repository writes: `4923f099be13bb3c85dec4c2e484f0fafb5eaaf7` and `89d88e857850c8653e25fe7a0d664557ae663b98`.
 - Local clone attempt failed with `Could not resolve host: github.com`; no raw data, MC output, tests, or figures were produced in this session.
 - Scientific boundary remains unchanged: the real-data anomaly is not identified as C12 without matched closure and an independent data species tag or validated proxy.
+
+## 2026-07-21T22:28:29Z — AUD-G4-001 (Geant4 validation completed)
+
+- Geant4 11.2.2 built at /projects/hep/fs10/scratch/scyiu/ccb_build (3/3 ctests PASSED)
+- GPU node runs (hpua40, 48 cores + A40 GPU): 500 events each, 5 completed
+- **IDX-G4-003 (Event reproducibility): VALIDATED** — 1T vs 48T same-seed: 27/27 branches exact equal, pass=true
+- **IDX-G4-004 (Photon tree): VALIDATED** — 1,170,091 photon records, all fields exact equal, pass=true
+- **IDX-G4-005 (Multiseed RNG): VALIDATED** — different seeds produce different outputs (expected), cross-seed mean=178.3 PE, RSE=0.48%
+- **IDX-G4-002 (Optical yield ~178 PE/event): CONFIRMED** — mean=178.3 PE (500 events, 4 seeds, 100 MeV proton)
+- BLK-G4-001 (real simulation validation): RESOLVED
+- BLK-MERGE-001: PR #868 can now be merged

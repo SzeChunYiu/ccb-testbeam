@@ -1,0 +1,250 @@
+{
+  "aggregates": {
+    "candidate": {
+      "by_sensor": {
+        "0": {
+          "detected": 88557,
+          "rows": 292101
+        },
+        "1": {
+          "detected": 88651,
+          "rows": 292580
+        },
+        "2": {
+          "detected": 87854,
+          "rows": 292388
+        },
+        "3": {
+          "detected": 88097,
+          "rows": 293022
+        }
+      },
+      "detected_fraction": 0.3018218241145347,
+      "detected_rows": 353159,
+      "event_count_max": 4944,
+      "event_count_mean": 2340.182,
+      "event_count_min": 2121,
+      "event_count_zero_events": 0,
+      "rows": 1170091
+    },
+    "reference": {
+      "by_sensor": {
+        "0": {
+          "detected": 88557,
+          "rows": 292101
+        },
+        "1": {
+          "detected": 88651,
+          "rows": 292580
+        },
+        "2": {
+          "detected": 87854,
+          "rows": 292388
+        },
+        "3": {
+          "detected": 88097,
+          "rows": 293022
+        }
+      },
+      "detected_fraction": 0.3018218241145347,
+      "detected_rows": 353159,
+      "event_count_max": 4944,
+      "event_count_mean": 2340.182,
+      "event_count_min": 2121,
+      "event_count_zero_events": 0,
+      "rows": 1170091
+    }
+  },
+  "event_counts_match": true,
+  "fields": [
+    {
+      "entries": 1170091,
+      "exact_equal": true,
+      "field": "detected",
+      "max_abs_diff": 0.0,
+      "n_mismatched": 0
+    },
+    {
+      "entries": 1170091,
+      "exact_equal": true,
+      "field": "event",
+      "max_abs_diff": 0.0,
+      "n_mismatched": 0
+    },
+    {
+      "entries": 1170091,
+      "exact_equal": true,
+      "field": "path_len_mm",
+      "max_abs_diff": 0.0,
+      "n_mismatched": 0
+    },
+    {
+      "entries": 1170091,
+      "exact_equal": true,
+      "field": "sensor",
+      "max_abs_diff": 0.0,
+      "n_mismatched": 0
+    },
+    {
+      "entries": 1170091,
+      "exact_equal": true,
+      "field": "time_ns",
+      "max_abs_diff": 0.0,
+      "n_mismatched": 0
+    },
+    {
+      "entries": 1170091,
+      "exact_equal": true,
+      "field": "wavelength_nm",
+      "max_abs_diff": 0.0,
+      "n_mismatched": 0
+    }
+  ],
+  "inputs": {
+    "candidate": "/projects/hep/fs10/scratch/scyiu/gpu_stave_48t.root",
+    "candidate_meta": "/projects/hep/fs10/scratch/scyiu/gpu_stave_48t.root.meta.json",
+    "reference": "/projects/hep/fs10/scratch/scyiu/gpu_stave_1t.root",
+    "reference_meta": "/projects/hep/fs10/scratch/scyiu/gpu_stave_1t.root.meta.json",
+    "tree": "photons"
+  },
+  "integrity": {
+    "candidate": {
+      "checks": {
+        "detected_domain": {
+          "invalid_rows": 0,
+          "observed": [
+            0,
+            1
+          ],
+          "valid": true
+        },
+        "event_foreign_keys": {
+          "invalid_rows": 0,
+          "max": 499,
+          "min": 0,
+          "valid": true
+        },
+        "path_domain": {
+          "negative_rows": 0,
+          "nonfinite_rows": 0,
+          "valid": true
+        },
+        "sensor_domain": {
+          "allowed": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "invalid_rows": 0,
+          "observed": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "valid": true
+        },
+        "time_domain": {
+          "negative_rows": 0,
+          "nonfinite_rows": 0,
+          "valid": true
+        },
+        "wavelength_domain": {
+          "nonfinite_rows": 0,
+          "nonpositive_rows": 0,
+          "valid": true
+        }
+      },
+      "events_with_photons": 500,
+      "rows": 1170091,
+      "schema": {
+        "consistent_lengths": true,
+        "extra": [],
+        "lengths": {
+          "detected": 1170091,
+          "event": 1170091,
+          "path_len_mm": 1170091,
+          "sensor": 1170091,
+          "time_ns": 1170091,
+          "wavelength_nm": 1170091
+        },
+        "missing": [],
+        "one_dimensional": true,
+        "valid": true
+      },
+      "valid": true
+    },
+    "reference": {
+      "checks": {
+        "detected_domain": {
+          "invalid_rows": 0,
+          "observed": [
+            0,
+            1
+          ],
+          "valid": true
+        },
+        "event_foreign_keys": {
+          "invalid_rows": 0,
+          "max": 499,
+          "min": 0,
+          "valid": true
+        },
+        "path_domain": {
+          "negative_rows": 0,
+          "nonfinite_rows": 0,
+          "valid": true
+        },
+        "sensor_domain": {
+          "allowed": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "invalid_rows": 0,
+          "observed": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "valid": true
+        },
+        "time_domain": {
+          "negative_rows": 0,
+          "nonfinite_rows": 0,
+          "valid": true
+        },
+        "wavelength_domain": {
+          "nonfinite_rows": 0,
+          "nonpositive_rows": 0,
+          "valid": true
+        }
+      },
+      "events_with_photons": 500,
+      "rows": 1170091,
+      "schema": {
+        "consistent_lengths": true,
+        "extra": [],
+        "lengths": {
+          "detected": 1170091,
+          "event": 1170091,
+          "path_len_mm": 1170091,
+          "sensor": 1170091,
+          "time_ns": 1170091,
+          "wavelength_nm": 1170091
+        },
+        "missing": [],
+        "one_dimensional": true,
+        "valid": true
+      },
+      "valid": true
+    }
+  },
+  "pass": true,
+  "row_counts_match": true,
+  "schema_match": true,
+  "schema_version": "ccb-g4-photon-reproducibility/1"
+}

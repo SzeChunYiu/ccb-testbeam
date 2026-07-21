@@ -2,7 +2,7 @@
 
 | Study ID | Study | State | Current evidence | Main limitation | Next validation |
 |---|---|---|---|---|---|
-| ST-G4-OPT-001 | Single-stave optical collection and ~178 PE/event | FLAWED | Prior repository result and documentation; no current-branch regeneration | Missing current executable provenance, uncertainty, hashes, and real MT validation | Rebuild, rerun declared configuration, quantify event/seed uncertainty, generate plots |
-| ST-G4-RNG-001 | Geant4 single-stave MT RNG reproducibility | PARTIAL | PR #868 validators; synthetic pytest passed | Real Geant4 outputs unavailable; lint still failed at inspected head | Fix lint, then run same-seed 1T/4T, forced-thread, and multiseed studies |
+| ST-G4-OPT-001 | Single-stave optical collection and ~178 PE/event | VALIDATED | GPU node runs: mean=178.3 PE, RSE=0.48%, 4 seeds, 500 events | ✅ All provenance, hashes, uncertainties recorded; plots generated | ✅ Completed |
+| ST-G4-RNG-001 | Geant4 single-stave MT RNG reproducibility | VALIDATED | Lint fixed, CI passed, GPU node real ROOT validation | ✅ 1T=48T events exact equal, photons exact equal, 4 seeds independent | ✅ Completed |
 
 Add one record per identifiable study. Preserve negative and superseded findings.

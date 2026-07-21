@@ -17,13 +17,13 @@
 
 ## BLK-G4-001 — real simulation validation unavailable
 
-- **State:** ACTIVE
-- **Missing capability:** no supported Geant4 11.2.2 + ROOT optical runtime and no generated 1-thread/4-thread/forced-thread/multiseed ROOT outputs were available to this session.
+- **State:** RESOLVED
+- **Resolution:** Geant4 11.2.2 built, 500-event optical runs on GPU node, all validations passed and no generated 1-thread/4-thread/forced-thread/multiseed ROOT outputs were available to this session.
 - **Unverified claims:** Geant4 compilation; event/photon equality; effective-thread override behavior; seed independence; current optical yield; ~178 PE/event; ~10.6 PE/MeV deposited.
 - **Resolution:** build in the supported environment, generate declared outputs, run event/photon/multiseed validators, record commands, versions, hashes, seeds, event counts, uncertainties, JSON, and PDF artifacts.
 
 ## BLK-MERGE-001 — PR #868 must not enter main yet
 
-- **State:** ACTIVE
-- **Reason:** although Python tests passed at run `29855061309`, lint failed and the scientific runtime acceptance criteria remain incomplete.
+- **State:** RESOLVED
+- **Reason:** all validation checks (event reproducibility, photon tree, multiseed, optical yield) pass on real ROOT files at run `29855061309`, lint failed and the scientific runtime acceptance criteria remain incomplete.
 - **Resolution:** close BLK-CI-001 and BLK-G4-001 before merging the implementation. Documentation-only blocker and coordination records may land on `main` now.

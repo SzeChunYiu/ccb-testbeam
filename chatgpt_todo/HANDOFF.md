@@ -2,137 +2,115 @@
 
 ## Session
 
-- **UTC:** 2026-07-21T13:00Z
-- **Task:** `AUD-G4-001` with implementation progress on `AUD-G4-004`
+- **UTC:** 2026-07-21T14:00Z
+- **Task:** `AUD-G4-001` — CI triage for MT reproducibility validation
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **Base:** `0005ed0cb2c06617abd36b3bb1e615497e15832a`
+- **Base commit:** `0005ed0cb2c06617abd36b3bb1e615497e15832a`
 - **Branch:** `chatgpt/AUD-G4-001-mt-rng-seeding`
 - **PR:** `#868` (draft)
-- **Status:** PARTIAL — RNG ownership, thread provenance, event-tree validation, photon-tree validation, and multiseed ensemble validation are implemented and pushed. Python execution, Geant4 compilation, real ROOT validation, multiseed results, and optical-yield regeneration remain mandatory.
+- **Current pushed head:** `5d2bde29d29f4b763fde9089963b5179d76d41a4`
+- **Status:** PARTIAL — a demonstrated synthetic-test fixture defect was fixed and documented. A new CI run is still required before Python validation can be marked successful. Geant4/ROOT runtime acceptance remains blocked.
 
-## Area reviewed
+## Work selected
 
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/BACKLOG.md`
-- `chatgpt_todo/HANDOFF.md`
-- `chatgpt_todo/SESSION_LOG.md`
-- `chatgpt_todo/VISUALIZATION_MATRIX.md`
-- `scripts/compare_single_stave_mt_reproducibility.py`
+The previous handoff required executing the new validator tests. The latest GitHub Actions run provided the first runtime evidence, and it failed. This run therefore prioritized exact CI diagnosis rather than adding more unexecuted analysis code.
+
+## Repository and CI evidence inspected
+
+- PR `#868`, head before this run: `412726c5e70b828019f006b85592561506092a05`
+- GitHub Actions workflow: `MC Validation CI`
+- Workflow run: `29832957171`
+- Job: `88641969815` (`test`)
+- Failed step: `Run unit tests`
+- Successful prior steps: checkout, Python setup, package installation
 - `tests/test_compare_single_stave_mt_reproducibility.py`
-- `scripts/compare_single_stave_photon_trees.py`
-- `tests/test_compare_single_stave_photon_trees.py`
-- PR `#868`
+- `scripts/compare_single_stave_mt_reproducibility.py`
+- Existing `ACTIVE_TASK.md`, `BACKLOG.md`, `SESSION_LOG.md`, and prior handoff
 
-## New scientific/reproducibility gap
+## Confirmed defect
 
-Exact equality for the same seed across one and multiple thread counts is necessary but not sufficient. It cannot by itself reveal:
+The helper `write_run` in `tests/test_compare_single_stave_mt_reproducibility.py` created three per-event branches:
 
-- accidental reuse of an identical random stream for different configured seeds;
-- repeated seeds within one effective-thread group;
-- seed-specific anomalous means;
-- event-indexed cross-seed dependence;
-- a systematic shift between effective-thread groups;
-- inadequate seed coverage for uncertainty estimation.
+- `event`
+- `edep_scint_MeV`
+- `n_scint_generated`
 
-A multiseed ensemble validator was therefore required before the approximately 178 PE/event claim can be treated as stable after the seeding correction.
+The passing row-order-invariance test constructed:
 
-## New implementation
+- reference rows with event order `[0, 1, 2]` and energy values `[1, 2, 3]`;
+- candidate rows with event order `[2, 0, 1]` and energy values `[3, 1, 2]`.
 
-### `scripts/analyze_single_stave_multiseed_rng.py`
+However, the helper always wrote `n_scint_generated=[10,20,30]`, independent of the supplied row values. After sorting by event ID, the candidate branch became `[20,30,10]`, while the reference remained `[10,20,30]`. The validator was therefore correct to reject the candidate: the two synthetic event tables were not identical.
 
-The manifest-driven validator requires each run's ROOT file and metadata sidecar. It:
+This is a test-fixture defect, not evidence of a validator defect and not evidence about Geant4 MT reproducibility.
 
-1. Validates a nonempty manifest and unique run labels.
-2. Reads declared numeric observables from the `events` tree.
-3. Requires complete, unique integer event IDs exactly in `[0, n_events)`.
-4. Sorts every run by event ID before all event-indexed diagnostics.
-5. Requires comparable physics provenance across the ensemble, while reporting thread provenance separately.
-6. Requires unique seeds within each effective-thread group; the same seed may intentionally appear in different thread groups for paired thread-count validation.
-7. Hashes the complete selected event stream, including branch names, dtypes, shapes, event IDs, and values.
-8. Detects exact stream duplication across different configured seeds.
-9. Reports per-run mean, sample standard deviation, standard error, minimum, and maximum for each observable.
-10. Computes robust median/MAD seed-mean z scores, with standard-deviation fallback when MAD is zero.
-11. Computes event-indexed Pearson correlation for each different-seed run pair and transforms it to a Fisher-z significance diagnostic.
-12. Compares effective-thread groups using run-mean differences and combined seed-level standard errors.
-13. Requires a configurable minimum number of unique seeds per effective-thread group.
-14. Writes a machine-readable JSON summary with every gate and threshold.
-15. Writes a PDF summary plus per-observable seed-mean/SEM and robust-outlier plots.
-16. Returns nonzero status when any acceptance gate fails.
+## Fix committed
 
-Default diagnostic thresholds are:
+Commit:
 
-- at least four unique seeds per effective-thread group;
-- maximum absolute thread-group mean z score: 3;
-- maximum absolute robust seed-outlier z score: 4;
-- maximum absolute event-indexed cross-seed Fisher-z score: 4.
+- `a39f507a8ce17a580a5b08c0bfd3a98da3776751` — `test(g4): keep reordered synthetic event branches aligned`
 
-These are preregistration defaults for the audit, not universal proofs of RNG independence. Threshold changes must be justified before final output inspection.
+Change:
 
-### `tests/test_analyze_single_stave_multiseed_rng.py`
+```python
+numeric = np.asarray(values, dtype=np.float64)
+...
+"edep_scint_MeV": numeric,
+"n_scint_generated": (numeric * 10).astype(np.int32),
+```
 
-Synthetic uproot tests cover:
+All synthetic per-event branches now remain attached to the same row when event rows are permuted. An explanatory comment was added to prevent the same fixture-design error from recurring.
 
-- a passing ensemble with the same two seeds represented in one-thread and four-thread groups;
-- exact duplicate event streams under different seeds;
-- duplicate seed reuse within one effective-thread group;
-- insufficient unique-seed coverage;
-- JSON output;
-- nonempty PDF output;
-- thread-group and cross-seed diagnostic fields.
+Coordination commits:
 
-## Important methodological correction made during implementation
-
-An initial design considered enforcing globally unique seeds across all runs. That would have prevented using the same seed in one-thread and four-thread configurations, which is exactly the paired design needed for thread-count reproducibility. The final implementation enforces uniqueness only within each effective-thread group and permits the same seed across different thread groups.
+- `9ad30ce871cd3b778aaa1be1f1a7125e951df1c8` — record the CI diagnosis and fix in `SESSION_LOG.md`
+- `5d2bde29d29f4b763fde9089963b5179d76d41a4` — create `chatgpt_todo/BLOCKERS.md` with exact CI and runtime blockers
 
 ## Evidence classification
 
-- **Observed repository fact:** the prior handoff had no implemented multiseed ensemble validator.
-- **Static implementation evidence:** the new script and synthetic tests are committed on the PR branch.
-- **Methodological inference:** exact duplicate hashes under different seeds are strong evidence of stream reuse; event-indexed correlations and seed/thread mean diagnostics can reveal additional dependence or instability.
-- **Explicit limitation:** absence of duplicate hashes or significant correlations is not proof of complete RNG independence.
-- **Still unverified:** actual Geant4 outputs, real correlations, thread effects, uncertainty coverage, and the approximately 178 PE/event claim.
+- **Observed:** Actions run `29832957171` completed with failure in the unit-test step.
+- **Proven by static reconstruction:** the pass fixture contained a genuine event-keyed mismatch in `n_scint_generated`.
+- **Implemented:** the fixture now derives both numeric branches from the same row-aligned values.
+- **Pending:** a new Actions run must confirm whether this was the only failing test.
+- **Not evaluated:** real Geant4 output, one-thread/four-thread equality, photon multiset equality, multiseed independence diagnostics, and optical yield.
 
-## Commits added in this session
+## Validation performed this run
 
-- `7dfecc43731e00f1ce0333ed7fb2924349f9e111` — `feat(g4): add multiseed RNG ensemble validator`
-- `a311a676b1b701bf297edf1512f6a73cbe4468cf` — `test(g4): cover multiseed RNG ensemble validator`
-- `82a6d0235680af4290ff49c1b5eba503750fbcca` — `feat(g4): add cross-seed correlation diagnostics`
-- `fbfa1af5a97fcf0056070ff5c537e0f8513b83a9` — `test(g4): cover cross-seed correlation diagnostics`
-- Coordination-file commits follow on the same branch.
+- Inspected the exact CI run, job, and failed step.
+- Confirmed checkout and dependency installation completed before the failure.
+- Reconstructed reference and candidate branch contents before and after event-ID sorting.
+- Confirmed the existing validator should fail the old fixture.
+- Reviewed the replacement helper for row alignment, dtype stability, and preservation of the intentional numeric-mismatch test.
+- Confirmed no raw data, ROOT outputs, generated PDFs, secrets, or unrelated files were changed.
 
-## Static checks performed
+## Validation not yet complete
 
-- Parsed Python syntax before upload.
-- Reviewed manifest normalization and failure paths.
-- Confirmed event IDs are sorted before correlation and hashing.
-- Confirmed stream hashes include dtype, shape, branch name, and values.
-- Confirmed same-seed runs across thread groups are allowed.
-- Confirmed duplicate seeds within one thread group fail.
-- Confirmed exact duplicate streams under different seeds fail.
-- Confirmed provenance mismatch, coverage, outlier, correlation, and thread-effect gates contribute to overall status.
-- Confirmed JSON and PDF parent directories are created and exit status reflects pass/fail.
-- Confirmed no raw data, generated ROOT files, or large binaries were committed.
+- No new successful CI conclusion is available yet.
+- Direct local pytest and ruff execution were not available through the GitHub connector session.
+- Geant4 11.2.2 compilation was not performed.
+- No real ROOT files were generated or compared.
+- The approximately 178 PE/event claim was not regenerated.
 
-## Checks not executed
+## Required next actions
 
-This connector session did not expose a checked-out Python/ROOT/Geant4 environment or generated ROOT files. It therefore does **not** claim:
+1. Inspect the next `MC Validation CI` run on a head containing `a39f507a...`.
+2. If it fails, read the exact failing traceback and fix only the demonstrated defect.
+3. When unit tests pass, run or add a dedicated lint check for the three validator scripts and tests.
+4. Build `geant4/single_stave` with supported Geant4 11.2.2.
+5. Generate same-seed one-thread and four-thread optical outputs, plus the forced-thread provenance case.
+6. Run the event-tree and photon-tree validators.
+7. Generate at least four unique seeds per effective-thread group and run the multiseed validator with preregistered thresholds.
+8. Regenerate the approximately 178 PE/event result with uncertainty and full provenance.
+9. Update affected study, claim, figure, table, and wiki records only after runtime evidence exists.
 
-- pytest passed;
-- ruff passed;
-- the new validator executed successfully;
-- Geant4 compilation succeeded;
-- real same-seed one-thread/four-thread outputs match;
-- real different-seed streams are independent;
-- real seed coverage or thread-effect acceptance passed;
-- approximately 178 PE/event was reproduced.
-
-## Required runtime commands
+## Commands for the next execution environment
 
 ```bash
 python -m pytest \
   tests/test_compare_single_stave_mt_reproducibility.py \
   tests/test_compare_single_stave_photon_trees.py \
-  tests/test_analyze_single_stave_multiseed_rng.py -q
+  tests/test_analyze_single_stave_multiseed_rng.py \
+  -q
 
 ruff check \
   scripts/compare_single_stave_mt_reproducibility.py \
@@ -143,60 +121,20 @@ ruff check \
   tests/test_analyze_single_stave_multiseed_rng.py
 ```
 
-Generate at least four unique seeds for each effective-thread group. Use the same seed set for one-thread and four-thread runs when practical. Create a manifest such as:
+## Blockers
 
-```json
-{
-  "runs": [
-    {"root": "seed101_t1.root", "meta": "seed101_t1.root.meta.json", "label": "seed101-t1"},
-    {"root": "seed102_t1.root", "meta": "seed102_t1.root.meta.json", "label": "seed102-t1"},
-    {"root": "seed103_t1.root", "meta": "seed103_t1.root.meta.json", "label": "seed103-t1"},
-    {"root": "seed104_t1.root", "meta": "seed104_t1.root.meta.json", "label": "seed104-t1"},
-    {"root": "seed101_t4.root", "meta": "seed101_t4.root.meta.json", "label": "seed101-t4"},
-    {"root": "seed102_t4.root", "meta": "seed102_t4.root.meta.json", "label": "seed102-t4"},
-    {"root": "seed103_t4.root", "meta": "seed103_t4.root.meta.json", "label": "seed103-t4"},
-    {"root": "seed104_t4.root", "meta": "seed104_t4.root.meta.json", "label": "seed104-t4"}
-  ]
-}
-```
+See `chatgpt_todo/BLOCKERS.md`:
 
-Then run:
-
-```bash
-python scripts/analyze_single_stave_multiseed_rng.py \
-  --manifest configs/g4_multiseed_manifest.json \
-  --output-json results/g4_multiseed_rng.json \
-  --output-pdf docs/figures/g4_multiseed_rng.pdf \
-  --minimum-seeds-per-thread 4 \
-  --max-thread-effect-z 3 \
-  --max-seed-outlier-z 4 \
-  --max-cross-seed-correlation-z 4
-```
-
-## Acceptance criteria
-
-- All selected runs share declared physics provenance.
-- Every event tree contains exactly one row per event ID in `[0, n_events)`.
-- At least four unique seeds exist in every effective-thread group.
-- No seed is duplicated within one effective-thread group.
-- No complete selected event stream is identical under different seeds.
-- No event-indexed cross-seed correlation exceeds the preregistered Fisher-z threshold without investigation.
-- No seed mean is an unexplained robust outlier.
-- No thread-group mean effect exceeds the preregistered threshold without investigation.
-- JSON and PDF artifacts identify inputs, thresholds, results, and pass/fail gates.
-- Same-seed one-thread/four-thread event and photon validators pass separately.
-- Approximately 178 PE/event is regenerated from the corrected code with event count, seed ensemble, uncertainty, geometry hash, optical-table hashes, and thread provenance.
-
-## Next task
-
-1. Execute all validator tests and lint.
-2. Build supported Geant4 11.2.2.
-3. Generate one-thread/four-thread/forced-thread and multiseed outputs.
-4. Run event, photon, and multiseed validators.
-5. Inspect failing diagnostics before changing thresholds.
-6. Locate and regenerate the approximately 178 PE/event result with uncertainty.
-7. Update headline claims and affected study/wiki text only after runtime evidence exists.
+- `BLK-CI-001`: fix pushed; successful CI recheck pending.
+- `BLK-G4-001`: no supported Geant4/ROOT/LUNARC runtime in this audit session.
 
 ## Acceptance decision
 
-Keep PR #868 in draft. Do not merge until Python checks pass, supported Geant4 compilation succeeds, real event/photon reproducibility passes, forced-thread provenance is verified, the multiseed ensemble is evaluated, and the optical-yield claim is regenerated with uncertainty.
+Keep PR `#868` in draft. Do not merge until:
+
+- the validator unit tests and lint pass;
+- supported Geant4 compilation succeeds;
+- same-seed event and photon reproducibility is demonstrated across effective thread counts;
+- forced-thread provenance is verified;
+- the multiseed ensemble is evaluated without unexplained failures;
+- the approximately 178 PE/event result is regenerated with uncertainty and complete provenance.

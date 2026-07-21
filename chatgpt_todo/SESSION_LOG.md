@@ -65,3 +65,14 @@
 - Static validation performed: Python syntax was parsed before upload; manifest/schema flow, event sorting, provenance gates, exact hash fields, duplicate detection, threshold gates, exit status, JSON/PDF paths, and synthetic failure cases were reviewed.
 - Checks not executed: pytest, ruff, Geant4 compilation, real multiseed runs, actual correlations, thread effects, and optical-yield regeneration. No runtime success is claimed.
 - Required next action: run all three validator test modules and lint, generate at least four seeds for one-thread and four-thread configurations, execute the event/photon/multiseed validators, inspect multiplicity effects and preregistered thresholds, then regenerate the approximately 178 PE/event claim with uncertainty.
+
+## 2026-07-21T14:00Z — AUD-G4-001 CI triage
+
+- Inspected PR `#868` head `412726c5e70b828019f006b85592561506092a05` and GitHub Actions run `29832957171`.
+- Observed fact: `MC Validation CI` completed with failure in job `88641969815`, step `Run unit tests`; checkout and dependency installation succeeded.
+- Audited the newly added synthetic tests before adding more analysis code.
+- Found a deterministic fixture defect in `test_main_passes_for_reordered_identical_events`: the candidate reordered `event` and `edep_scint_MeV`, but `n_scint_generated` remained `[10, 20, 30]` in physical row order. After event-ID sorting, the validator correctly saw a branch mismatch, so the purported pass case was not actually identical.
+- Fixed `write_run` so `n_scint_generated` is derived from the same row-aligned `values` array as `edep_scint_MeV`; added an explanatory comment to prevent recurrence.
+- Commit: `a39f507a8ce17a580a5b08c0bfd3a98da3776751` — `test(g4): keep reordered synthetic event branches aligned`.
+- Evidence classification: CI failure is observed; fixture misalignment is proven by static row-by-row reconstruction; CI success after the fix is pending and must be checked before marking Python validation complete.
+- Runtime Geant4/ROOT validation remains blocked by unavailable generated outputs and build environment.

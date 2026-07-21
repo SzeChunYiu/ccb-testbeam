@@ -76,7 +76,9 @@ def test_event_id_validation_detects_duplicates_and_missing_ids() -> None:
     assert result["missing_ids"] == [2]
 
 
-def test_main_passes_for_reordered_identical_events(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_main_passes_for_reordered_identical_events(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
     reference = tmp_path / "reference.root"
     candidate = tmp_path / "candidate.root"
     write_run(reference, [0, 1, 2], [1.0, 2.0, 3.0])

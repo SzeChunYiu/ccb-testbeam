@@ -361,7 +361,8 @@ def main() -> int:
 
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_pdf.parent.mkdir(parents=True, exist_ok=True)
-    args.output_json.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    output_str = json.dumps(summary, indent=2, sort_keys=True) + "\n"
+    args.output_json.write_text(output_str, encoding="utf-8")
     with PdfPages(args.output_pdf) as pdf:
         plot_summary(pdf, summary)
         if reference_integrity["valid"] and candidate_integrity["valid"] and same_event_count:

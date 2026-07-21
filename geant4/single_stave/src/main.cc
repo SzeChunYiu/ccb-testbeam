@@ -10,6 +10,9 @@
 #include "OpticalTables.hh"
 
 #include "G4RunManagerFactory.hh"
+#ifdef G4MULTITHREADED
+#include "G4MTRunManager.hh"
+#endif
 #include "G4UImanager.hh"
 #include "Randomize.hh"
 
@@ -40,6 +43,14 @@ int main(int argc, char** argv) {
 
   auto* runManager =
       G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
+#ifdef G4MULTITHREADED
+  // Set this before Initialize(), when workers are created. An explicit CLI
+  // value avoids hidden dependence on machine defaults and makes 1-vs-N thread
+  // reproducibility checks exactly repeatable.
+  if (auto* mt = dynamic_cast<G4MTRunManager*>(runManager)) {
+    mt->SetNumberOfThreads(cfg.n_threads);
+  }
+#endif
 
   auto* detector = new DetectorConstruction(cfg);
   runManager->SetUserInitialization(detector);

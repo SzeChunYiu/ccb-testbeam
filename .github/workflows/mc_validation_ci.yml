@@ -33,26 +33,45 @@ jobs:
       - name: Install package with dev extras
         run: pip install -e ".[dev]"
       - name: Lint RNG validation code
+        id: lint
+        shell: bash
         run: |
+          set +e
           ruff check \
             scripts/compare_single_stave_mt_reproducibility.py \
             scripts/compare_single_stave_photon_trees.py \
             scripts/analyze_single_stave_multiseed_rng.py \
             tests/test_compare_single_stave_mt_reproducibility.py \
             tests/test_compare_single_stave_photon_trees.py \
-            tests/test_analyze_single_stave_multiseed_rng.py
+            tests/test_analyze_single_stave_multiseed_rng.py \
+            2>&1 | tee ruff.log
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Run unit tests
+        id: pytest
         shell: bash
         run: |
           set +e
           pytest tests/ -q --ignore=tests/integration 2>&1 | tee pytest.log
-          status=${PIPESTATUS[0]}
-          exit "$status"
-      - name: Upload pytest diagnostics
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Upload validation diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: pytest-log-${{ github.run_id }}-${{ github.run_attempt }}
-          path: pytest.log
+          name: validation-logs-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ruff.log
+            pytest.log
           if-no-files-found: error
           retention-days: 14
+      - name: Enforce validation results
+        if: always()
+        shell: bash
+        env:
+          RUFF_STATUS: ${{ steps.lint.outputs.status }}
+          PYTEST_STATUS: ${{ steps.pytest.outputs.status }}
+        run: |
+          echo "ruff status: ${RUFF_STATUS:-missing}"
+          echo "pytest status: ${PYTEST_STATUS:-missing}"
+          if [[ "${RUFF_STATUS:-1}" != "0" || "${PYTEST_STATUS:-1}" != "0" ]]; then
+            exit 1
+          fi

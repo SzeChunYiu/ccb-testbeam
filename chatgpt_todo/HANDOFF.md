@@ -2,52 +2,65 @@
 
 ## Session
 
-- **UTC:** 2026-07-21T18:00Z
-- **Task:** AUD-CI-001
-- **Initial remote main:** `3dbfcbaf1babe69b98c94ada34d48b5b7f84024e`
-- **Last verified main before this final handoff update:** `c81beada068886fa11a4ffd3bfe898053b72c665`
+- **UTC:** 2026-07-21T20:04:34Z
+- **Task:** AUD-WIKI-001 (partial), with follow-up AUD-ANOM-001
+- **Initial remote main:** `5c3ae82490200262bf871b41d74ae06be7df2e31`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **PR reviewed:** #868, branch `chatgpt/AUD-G4-001-mt-rng-seeding`
+- **Concurrent task avoided:** AUD-REPO-001, claimed by a LUNARC session at 2026-07-21T19:59:15Z
 
-## Verified facts
+## Files and evidence inspected
 
-1. PR #868 was open, mergeable, and draft at head `8f7a43bb77dedc4731c648c965cd48032d21788f` when inspected.
-2. GitHub Actions run `29855061309` completed with failure at the aggregate validation gate.
-3. Job `88717198244` showed checkout, setup, dependency installation, ruff execution, pytest execution, and artifact upload all completed.
-4. Artifact `8504991924` had digest `sha256:c6339f3fff30b504b2424ac6d63efd682aef6593b859df20dfc3daeb071f4a13`.
-5. `pytest.log` reported `147 passed, 1 skipped in 41.64s`.
-6. `ruff.log` reported exactly three E501 findings at the paths and lines recorded in `BLOCKERS.md`.
-7. The repository's `main` branch had no `chatgpt_todo/` coordination system before this session.
+- `WIKI.md`
+- `docs/claim_ledger.csv`
+- `reports/mv6_representation_1782678362/REPORT.md`
+- `docs/academic_chapters/09_anomaly_id.md`
+- `chatgpt_todo/ACTIVE_TASK.md`, `BACKLOG.md`, `MASTER_INDEX.md`, `CLAIM_EVIDENCE_MATRIX.md`, `HANDOFF.md`, and `SESSION_LOG.md`
 
-## Work landed on main
+## Confirmed scientific flaw
 
-Established the full repository-local audit coordination layer directly on `main`:
+The executive wiki and authoritative claim ledger labeled the C12 anomaly fraction as `VALIDATED`, despite the repository's own status definition requiring data plus MC/truth or an independent closure test. The source report is explicitly an MC study:
 
-- `README.md`
-- `MASTER_INDEX.md`
-- `BACKLOG.md`
-- `ACTIVE_TASK.md`
-- `HANDOFF.md`
-- `SESSION_LOG.md`
-- `STUDY_REVIEW_LEDGER.md`
-- `CLAIM_EVIDENCE_MATRIX.md`
-- `CODE_RESULT_MAP.md`
-- `VISUALIZATION_MATRIX.md`
-- `BLOCKERS.md`
-- `archive/README.md`
+- 87,555 truth-labelled MC tracks;
+- 283 MC early-peak tracks, or approximately 0.32%;
+- 156 of the 283 MC early-peak tracks labelled C12, or approximately 55%;
+- the related real-data anomaly is reported near 4%, more than an order of magnitude larger;
+- no event-level particle truth exists for the real-data anomaly in the inspected evidence.
 
-These are documentation-only, evidence-backed changes and do not import the unvalidated Geant4 implementation from PR #868.
+Therefore, the MC result may support a candidate mechanism, but it does not establish that the real-data anomaly is C12.
 
-## Checks not run
+## Work pushed directly to main
 
-- No local checkout was available in the execution container.
-- No local ruff/pytest rerun was performed; the results above are from the downloaded GitHub Actions artifact.
-- No Geant4 11.2.2 build, ROOT simulation, event/photon comparison, forced-thread test, multiseed ensemble, or optical-yield regeneration was performed.
+1. `docs/claim_ledger.csv`
+   - CL-022 renamed to make the MC population explicit;
+   - truth type changed to `mc_truth_only`;
+   - status changed from `VALIDATED` to `TRUTH_LEVEL_MC_ONLY`;
+   - added counts, transfer blocker, and required empirical closure evidence.
+2. `chatgpt_todo/CLAIM_EVIDENCE_MATRIX.md`
+   - added `CL-ANOM-001` with the MC-only evidence boundary.
+3. `chatgpt_todo/MASTER_INDEX.md`
+   - marked `IDX-WIKI-001` PARTIAL;
+   - added `IDX-ANOM-001` as FLAWED;
+   - recorded concurrent ownership of `IDX-REPO-001`.
+4. `chatgpt_todo/BACKLOG.md`
+   - marked `AUD-WIKI-001` PARTIAL;
+   - added `AUD-ANOM-001` for matched data/MC closure.
+5. `chatgpt_todo/SESSION_LOG.md`
+   - appended the complete evidence and command record.
 
-## Merge decision
+## Validation
 
-Do not merge PR #868 yet. First wrap the three demonstrated long lines and obtain passing CI; then complete the real Geant4/ROOT scientific acceptance criteria in `BLOCKERS.md`.
+- Repository source values were cross-checked between the claim ledger and MV6 source report.
+- The status change follows the explicit legend in `WIKI.md`: MC-only mechanism evidence belongs under `TRUTH_LEVEL_MC_ONLY` until real-data transfer is demonstrated.
+- A transcription error in the master index CI run ID was detected during diff review and corrected in a follow-up main commit.
+- No local test suite was run because the container could not resolve `github.com` for cloning. Changes are documentation/claim-governance only.
+- No raw data, simulation files, figures, or generated binaries were modified.
+
+## Acceptance status
+
+- **CL-022 evidence classification correction:** COMPLETE.
+- **Full wiki audit:** PARTIAL.
+- **Empirical C12 identification in real data:** BLOCKED.
 
 ## Next action
 
-Apply the three E501-only fixes on PR #868, rerun CI, inspect the new validation artifact, and record the result on `main`. If CI passes, proceed to the supported Geant4 runtime validation rather than merging immediately.
+Synchronize the public `WIKI.md` and Chapter 9 narrative with the corrected ledger. Then implement AUD-ANOM-001: use identical morphology definitions in data and MC, report data and MC counts with Wilson intervals, quantify the large rate mismatch, test sensitivity to preprocessing and PCA/GMM choices, and avoid species assignment in data unless an event-level or independently validated proxy supports it.

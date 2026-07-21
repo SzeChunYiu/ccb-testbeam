@@ -2,72 +2,76 @@
 
 ## Session
 
-- **UTC:** 2026-07-21T22:09:00Z
+- **UTC:** 2026-07-21T23:00:00Z
 - **Task:** AUD-ANOM-001 (PARTIAL)
-- **Initial remote main:** `88c7d61ea7b59ad293956a93f06cab132f91b832`
+- **Initial remote main:** `674d3a47a43cfe94ae364a7dae96a784d3dda3c2`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **Concurrent task avoided:** AUD-REPO-001, claimed by a LUNARC session at 2026-07-21T19:59:15Z
+- **Write target:** direct to `main`
 
-## Files and evidence inspected
+## Repository state inspected
 
-- `WIKI.md`
-- `docs/academic_chapters/09_anomaly_id.md`
-- `docs/claim_ledger.csv`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/BACKLOG.md`
-- previous `chatgpt_todo/HANDOFF.md` and `SESSION_LOG.md`
-- current `main` history
+- latest remote-main history;
+- `WIKI.md` canonical result table and Section 9;
+- `docs/academic_chapters/09_anomaly_id.md` title, abstract, clustering narrative, MC-truth section, and physical interpretation;
+- prior `chatgpt_todo/HANDOFF.md`;
+- existing closure contract `docs/validation/C12_DATA_MC_CLOSURE_SPEC.md`.
 
-## Confirmed scientific gap
+A direct clone was attempted with:
 
-The authoritative claim ledger now correctly classifies the 0.32% C12-dominated anomaly as truth-labelled MC evidence only, but the public narrative still overstates transfer to real data. The inspected repository evidence establishes:
+```bash
+git clone --depth 1 https://github.com/SzeChunYiu/ccb-testbeam.git /tmp/ccb-testbeam
+```
 
-- 283 early-peak tracks among 87,555 truth-labelled MC tracks, approximately 0.32%;
-- an approximately 55% C12 fraction within that MC-selected anomaly class;
-- a related real-data anomaly reported near 4%, more than an order of magnitude larger;
-- no event-level species truth for the real-data anomaly in the inspected evidence.
+It failed with `Could not resolve host: github.com`. Repository inspection and writes therefore used the authenticated GitHub connector.
 
-Thus C12 is a candidate MC mechanism, not an empirically established data species assignment.
+## Confirmed scientific and documentation flaw
+
+The authoritative ledger classifies the C12 anomaly evidence as `TRUTH_LEVEL_MC_ONLY`, but public documents still overstate it:
+
+- `WIKI.md` labels “C12 anomaly fraction, 0.32%” as `VALIDATED` in both the canonical table and Section 9.
+- Chapter 9 presents C12 discovery and downstream veto/systematic conclusions as established, although the inspected evidence is a truth-labelled MC population.
+
+The supported evidence boundary is:
+
+- 283 anomaly-classified tracks among 87,555 truth-labelled MC tracks, approximately 0.32%;
+- approximately 55% C12 within that MC-selected anomaly class;
+- a related real-data anomaly reported near 4%;
+- no inspected event-level species truth for the real-data anomaly.
+
+Therefore carbon-12 is a simulated candidate mechanism. It is not yet an empirical species assignment in data.
 
 ## Work pushed directly to main
 
-1. Added `docs/validation/C12_DATA_MC_CLOSURE_SPEC.md`.
-   - freezes data/MC populations, preprocessing, PCA/GMM configuration, random seeds, and the cross-domain classifier contract before final plots;
-   - requires counts and two-sided 95% Wilson intervals for data and MC;
-   - requires explicit data/MC rate effect size and goodness-of-fit testing;
-   - requires matched morphology closure with identical binning and uncertainty panels;
-   - separates MC C12 purity from efficiency;
-   - defines preprocessing, model-choice, detector, run, and seed sensitivity studies;
-   - defines negative controls, detector/run holdouts, required JSON/PDF artifacts, and explicit wording gates;
-   - states that `C12 identified in data` requires an independent event-level tag or separately validated proxy with a measured confusion matrix.
-2. Updated `chatgpt_todo/BACKLOG.md`.
-   - changed `AUD-ANOM-001` from READY to PARTIAL;
-   - linked acceptance to the new closure specification.
-3. Appended the complete run record to `chatgpt_todo/SESSION_LOG.md`.
+1. Added `docs/validation/C12_PUBLIC_CLAIM_STATUS.md`.
+   - records supported and unsupported formulations;
+   - identifies the exact stale public statements;
+   - provides conservative replacement wording;
+   - links promotion to `C12_DATA_MC_CLOSURE_SPEC.md`;
+   - explicitly withholds real-data identification, veto performance, and the claimed 0.1% deuteron systematic.
+2. Archived the previous handoff at `chatgpt_todo/archive/2026-07-21T220900Z_AUD-ANOM-001_HANDOFF.md` before replacing the active handoff.
 
-## Commits and main progression
+## Main progression and commits
 
-- `4923f099be13bb3c85dec4c2e484f0fafb5eaaf7` — `docs(validation): specify matched C12 data-MC closure`
-- `89d88e857850c8653e25fe7a0d664557ae663b98` — `docs(audit): link C12 closure acceptance contract`
-- `a5d200ddd30e0fb9f09e1af1baf6a31e4dde2728` — `docs(audit): record C12 closure specification session`
-- This handoff commit is the final remote-main commit for the session and must be confirmed after write.
+- Initial remote main: `674d3a47a43cfe94ae364a7dae96a784d3dda3c2`
+- `5995ee7242026a94240440861b4d3500a340db04` — `docs(validation): quarantine overstated public C12 wording`
+- `24aa0bf843a137d21d136223941ab9090888af37` — `docs(audit): archive prior C12 closure handoff`
+- This handoff update is the final commit of the session and must be verified on remote `main` after write.
 
 ## Validation
 
-- The specification uses only already observed repository counts and evidence boundaries; it introduces no new measured or simulated result.
-- Statistical requirements distinguish binomial interval estimation from a data/MC compatibility test.
-- The method explicitly prevents independently fitted data and MC clusterers from masquerading as a primary closure test.
-- No raw data, MC outputs, figures, cached tables, or generated binaries were modified.
-- A direct local clone was attempted and failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and writes were used instead.
-- No Python, ROOT, Geant4, or data-analysis runtime result is claimed.
+- The correction introduces no new measured or simulated result.
+- Every numerical statement is inherited from the already inspected repository evidence and is explicitly labelled as MC or reported data.
+- No raw data, MC output, code, plots, cached artifacts, or generated binaries were changed.
+- No Python, ROOT, Geant4, or real-data analysis success is claimed.
 
 ## Acceptance status
 
-- **Closure study design:** COMPLETE.
-- **Matched data/MC execution:** NOT_STARTED/BLOCKED on traceable inputs and compute.
-- **Public wiki synchronization:** PARTIAL and still required.
-- **Empirical C12 identification in data:** BLOCKED.
+- Authoritative evidence classification: COMPLETE.
+- Public quarantine notice: COMPLETE.
+- Direct edits to stale `WIKI.md` and Chapter 9: NOT_STARTED; full-file replacement through the connector was not attempted without a local checkout because unrelated content must not be lost.
+- Matched data/MC closure execution: BLOCKED on traceable inputs and compute.
+- Empirical C12 identification in data: BLOCKED.
 
 ## Next action
 
-Implement the frozen study contract using traceable data and MC inputs. First produce a cut-flow/provenance inventory and exact data anomaly count/denominator. Then run the frozen cross-domain morphology classifier, calculate Wilson intervals and data/MC rate effect size, generate the three required PDF artifacts and JSON summary, and update `WIKI.md` plus Chapter 9 only to the level supported by the resulting closure. Until then, retain `TRUTH_LEVEL_MC_ONLY` and hypothesis wording.
+With a working checkout, replace the two stale `VALIDATED` wiki entries with `TRUTH_LEVEL_MC_ONLY`, rewrite Chapter 9's title/abstract and downstream conclusions to distinguish MC truth from data, run documentation/link checks, and push the synchronized text to `main`. Then execute the frozen matched data/MC closure before promoting any C12-in-data claim.

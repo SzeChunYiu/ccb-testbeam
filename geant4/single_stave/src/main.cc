@@ -30,7 +30,9 @@ int main(int argc, char** argv) {
 
   std::cout << "CCB_STAVE_START " << cfg.Describe() << std::endl;
 
-  // Deterministic RNG seed (also re-applied in RunAction::BeginOfRunAction).
+  // Seed the master engine before constructing the run manager. In MT builds,
+  // Geant4 derives per-event worker seeds from this master state so results are
+  // reproducible independently of worker scheduling and thread count.
   CLHEP::HepRandom::setTheSeed(static_cast<long>(cfg.seed));
 
   // Load versioned optical tables once (hashes recorded in output metadata).

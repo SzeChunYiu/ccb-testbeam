@@ -79,3 +79,13 @@
 - Closed the pytest portion of `BLK-CI-001`, retained the new lint recheck, and kept the Geant4/ROOT runtime blocker open.
 - Commit: `1f8649aa6fb5a4329de5bbee3e02a87045d020d0`.
 - No new 178 PE/event value, uncertainty, or real-data agreement is claimed. The exact output file, sample size, seed/thread provenance, and ROOT hash remain unavailable.
+
+## 2026-07-21T18:00Z — AUD-G4-001 CI diagnostics gate
+
+- Inspected `MC Validation CI` run `29850745641`, run number `216`, job `88702685351`, at PR head `9bfc1284915ac1cd471b5ae7a9cb11cc424660bd`.
+- Observed checkout, Python setup, and dependency installation succeed; `Lint RNG validation code` failed; pytest was skipped; the pytest-only artifact upload also failed because no `pytest.log` was created.
+- Identified a CI observability defect: one failed check prevented the independent check from running and removed the focused diagnostics needed for evidence-based repair.
+- Updated the workflow so ruff and pytest always execute, write `ruff.log` and `pytest.log`, expose their actual statuses, upload both logs in one `validation-logs-*` artifact, and fail only in a final aggregate gate.
+- Workflow commit: `68e0f3b24cd146699bbb5f2173665fee244e5e93`.
+- Updated `BLOCKERS.md` with the exact run/job, failure sequence, diagnostic design flaw, and next acceptance condition.
+- Direct local clone and execution remained unavailable because the container could not resolve `github.com`; no lint finding was guessed or modified.

@@ -6,7 +6,7 @@
 | AUD-G4-002 | P0 | BLOCKED | Revalidate the ~178 PE/event optical result and derived PE/MeV claim | AUD-G4-001, real optical outputs, complete metadata | Reproduce from declared inputs; report event- and seed-level uncertainty; include hashes, seeds, effective threads, geometry and optical-table provenance; generate review JSON/PDF plots |
 | AUD-REPO-001 | P1 | READY | Build complete repository-wide audit coverage | None | Every study/code/data/simulation/figure/table/wiki area appears in `MASTER_INDEX.md` with a stable ID and state |
 | AUD-WIKI-001 | P1 | READY | Verify and cross-link wiki claims | Wiki access | Wiki inventory complete; material claims mapped to repository evidence, code, data, plots, and limitations |
-| AUD-CI-001 | P1 | ACTIVE | Make PR #868 validation diagnostics actionable | GitHub Actions artifact `8504991924` | Fix only the three demonstrated E501 findings; rerun CI; record exact result |
+| AUD-CI-001 | P1 | COMPLETE | PR #868 lint gate resolved | Lint fixes at `7992aa31`, CI run `29861328983` | ✅ E501 fixes applied, CI passed (pytest+ruff); Geant4 runtime validation remains as BLK-G4-001 |
 
 ## Selection rule
 

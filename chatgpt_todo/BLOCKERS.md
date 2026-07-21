@@ -2,7 +2,9 @@
 
 ## BLK-CI-001 — PR #868 lint gate
 
-- **State:** ACTIVE
+- **State:** RESOLVED
+- **Resolution commit:** `7992aa31`
+- **Verified run:** GitHub Actions `29861328983` (conclusion=success)
 - **Observed run:** GitHub Actions `29855061309`, job `88717198244`.
 - **Artifact:** `validation-logs-29855061309-1`, artifact ID `8504991924`, digest `sha256:c6339f3fff30b504b2424ac6d63efd682aef6593b859df20dfc3daeb071f4a13`.
 - **Verified pytest result:** `147 passed, 1 skipped in 41.64s`.

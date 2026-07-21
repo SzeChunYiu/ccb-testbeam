@@ -11,3 +11,10 @@
 - Validation: repository and CI facts were confirmed through GitHub metadata and the retained workflow artifact. No local runtime checks were available.
 - Blockers: BLK-CI-001, BLK-G4-001, BLK-MERGE-001.
 - Next: apply only the three demonstrated line-wrap fixes on PR #868 and rerun CI; then execute supported Geant4/ROOT validation.
+
+## 2026-07-21T19:59:15Z — AUD-CI-001 (continued)
+
+- BLK-CI-001 RESOLVED: E501 lint fixes pushed to PR #868 branch, force-pushed clean commit.
+- GitHub Actions run 29861328983 completed with conclusion=success (pytest + ruff pass).
+- PR #868 still draft; Geant4 runtime validation (BLK-G4-001) remains blocked.
+- Next: AUD-REPO-001 repository-wide audit, AUD-WIKI-001 wiki verification.

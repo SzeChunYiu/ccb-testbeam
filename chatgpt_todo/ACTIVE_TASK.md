@@ -1,47 +1,65 @@
 # Active Task
 
-## AUD-G4-001 — Multithreaded RNG seeding audit
+## AUD-G4-001 — Multithreaded RNG seeding and ensemble audit
 
 - **Status:** PARTIAL
 - **Priority:** P0
-- **Session:** 2026-07-21T08:00Z
+- **Session:** 2026-07-21T13:00Z
 - **Base commit:** `0005ed0cb2c06617abd36b3bb1e615497e15832a`
 - **Branch:** `chatgpt/AUD-G4-001-mt-rng-seeding`
+- **PR:** `#868` (draft)
 - **Area:** `geant4/single_stave`
 
 ### Problem
 
-`main.cc` seeds the master CLHEP engine before constructing the Geant4 run manager, which is the correct point for MT event-seed generation. `RunAction::BeginOfRunAction` then reset every thread-local engine to the same configured seed. This can interfere with Geant4's centrally assigned per-event seeds, introduce correlated worker streams, and make results depend on thread scheduling.
+The original code correctly seeded the master CLHEP engine before creating the Geant4 run manager, but then reset each thread-local engine in `RunAction::BeginOfRunAction`. This could interfere with Geant4's centrally assigned event seeds. The repository also lacked explicit requested/effective thread provenance and reproducible validators for event trees, photon trees, and multiseed ensembles.
 
-### Current change
+### Implemented changes
 
-- Removed the worker/master reseed from `RunAction::BeginOfRunAction`.
-- Documented the required master-before-run-manager seed placement in `main.cc`.
+- Removed worker/master reseeding from `BeginOfRunAction`.
+- Added explicit requested, effective, and environment-forced thread provenance.
+- Added event-keyed ROOT reproducibility validation with JSON/PDF output.
+- Added exact canonical photon-multiset validation with JSON/PDF output.
+- Added `scripts/analyze_single_stave_multiseed_rng.py` and synthetic tests.
+- The multiseed validator checks comparable physics provenance, complete event IDs, unique seeds within each effective-thread group, exact duplicate streams across different seeds, event-indexed Pearson/Fisher-z correlations, robust seed-mean outliers, thread-group effects, seed coverage, and machine-readable/visual outputs.
 
 ### Acceptance criteria
 
 - [x] No CLHEP reseeding occurs inside `BeginOfRunAction`.
 - [x] Master engine is seeded before run-manager construction.
-- [ ] Build succeeds with the repository's supported Geant4 version.
-- [ ] Same seed gives identical event-keyed output for 1 and N threads after sorting by event ID.
-- [ ] Different seeds produce statistically independent output.
-- [ ] Event IDs are unique and complete in merged ROOT output.
-- [ ] Validation plots and quantitative comparison are committed.
+- [x] Requested/effective/forced thread provenance is represented in code and metadata.
+- [x] Event-tree validator and synthetic tests are implemented.
+- [x] Photon-tree validator and synthetic tests are implemented.
+- [x] Multiseed ensemble validator and synthetic tests are implemented.
+- [ ] Python test modules and lint pass in the repository environment.
+- [ ] Build succeeds with supported Geant4 11.2.2.
+- [ ] Same seed gives identical event-keyed and photon-multiset output for 1 and N effective threads.
+- [ ] Forced-thread provenance is verified at runtime.
+- [ ] At least four unique seeds per effective-thread group are generated.
+- [ ] No exact duplicate stream occurs across different seeds.
+- [ ] Cross-seed event-indexed correlations stay within preregistered Fisher-z threshold.
+- [ ] Seed means show no unexplained robust outliers.
+- [ ] Thread-group mean effects stay within preregistered threshold.
+- [ ] Approximately 178 PE/event is regenerated with uncertainty and provenance.
+- [ ] JSON and PDF validation artifacts are committed or published according to repository artifact policy.
 
-### Required validation commands
+### Required multiseed command
 
-Adapt executable/configuration names to the repository build instructions:
+Create a JSON manifest containing each ROOT file, metadata sidecar, and stable label, then run:
 
 ```bash
-cmake -S geant4/single_stave -B build/single_stave
-cmake --build build/single_stave -j
-
-# Run the same seed with one and multiple threads.
-# Capture exact commands and environment in HANDOFF.md.
-
-python scripts/compare_single_stave_mt_reproducibility.py \
-  --single-thread one.root --multi-thread many.root \
-  --output docs/figures/g4_mt_rng_reproducibility.png
+python scripts/analyze_single_stave_multiseed_rng.py \
+  --manifest configs/g4_multiseed_manifest.json \
+  --output-json results/g4_multiseed_rng.json \
+  --output-pdf docs/figures/g4_multiseed_rng.pdf \
+  --minimum-seeds-per-thread 4 \
+  --max-thread-effect-z 3 \
+  --max-seed-outlier-z 4 \
+  --max-cross-seed-correlation-z 4
 ```
 
-The comparison script/plot remains a follow-up task because this connector session cannot execute the Geant4 build or access generated ROOT outputs.
+Thresholds are diagnostics rather than universal proofs of independence. Any change must be preregistered and justified before looking at final ensemble results.
+
+### Current blocker
+
+This connector session can edit and push GitHub content but does not expose a checked-out Geant4/ROOT runtime or generated LUNARC outputs. Static implementation is committed; runtime acceptance remains open.

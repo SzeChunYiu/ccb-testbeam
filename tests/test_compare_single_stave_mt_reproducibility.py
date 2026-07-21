@@ -42,12 +42,17 @@ def metadata(n_events: int = 3) -> dict[str, object]:
 
 
 def write_run(path: Path, event_order: list[int], values: list[float]) -> None:
+    numeric = np.asarray(values, dtype=np.float64)
     with uproot.recreate(path) as root_file:
         root_file["events"] = {
             "event": np.asarray(event_order, dtype=np.int32),
             "particle": np.asarray(["proton"] * len(event_order)),
-            "edep_scint_MeV": np.asarray(values, dtype=np.float64),
-            "n_scint_generated": np.asarray([10, 20, 30], dtype=np.int32),
+            "edep_scint_MeV": numeric,
+            # Keep every synthetic branch attached to the same event row.  The
+            # reordered-identical test must reorder all per-event quantities,
+            # otherwise it tests a real branch mismatch rather than row-order
+            # invariance.
+            "n_scint_generated": (numeric * 10).astype(np.int32),
         }
 
 

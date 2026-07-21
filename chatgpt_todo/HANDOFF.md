@@ -2,71 +2,106 @@
 
 ## Session
 
-- **UTC:** 2026-07-21T08:00Z
+- **UTC:** 2026-07-21T09:00Z
 - **Task:** `AUD-G4-001`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Base:** `0005ed0cb2c06617abd36b3bb1e615497e15832a`
 - **Branch:** `chatgpt/AUD-G4-001-mt-rng-seeding`
-- **Status:** PARTIAL — code correction committed to branch; runtime validation still required.
+- **PR:** `#868` (draft)
+- **Status:** PARTIAL — static seeding and thread-configuration corrections are pushed; compilation and runtime validation remain mandatory.
 
 ## Area reviewed
 
-Recent single-stave Geant4 optical-simulation changes, especially PR #867 (`SetNtupleMerging(true)`) and the random-number initialization path in:
+Single-stave Geant4 optical simulation execution and provenance path:
 
+- `geant4/single_stave/include/AppConfig.hh`
+- `geant4/single_stave/src/AppConfig.cc`
 - `geant4/single_stave/src/main.cc`
 - `geant4/single_stave/src/RunAction.cc`
+- recent merged PR #867 (`SetNtupleMerging(true)`)
 
-## Finding
+## Findings
 
-The code seeded CLHEP before constructing the run manager in `main.cc`, then reapplied the identical seed in every `RunAction::BeginOfRunAction`. Geant4 MT pre-generates event seeds on the master and assigns them independently of worker scheduling. Reseeding inside the worker run action can overwrite that state and create correlated streams or thread-count-dependent results.
+### F1 — worker-level RNG reseeding
+
+The code seeded CLHEP before constructing the run manager in `main.cc`, then reapplied the identical seed in every `RunAction::BeginOfRunAction`. Geant4 MT pre-generates event-associated seeds on the master. The worker reseed could interfere with that state and create correlated streams or thread-count-dependent results.
+
+### F2 — thread count was an undeclared execution input
+
+The executable exposed no `--threads` configuration and did not record the requested thread count in its metadata. Therefore the required 1-thread versus N-thread reproducibility experiment could depend on machine defaults or environment variables and could not be reconstructed solely from the command line plus metadata.
 
 ### Evidence classification
 
-- **Repository fact:** identical configured seed was applied before run-manager construction and again in `BeginOfRunAction`.
-- **Official design fact:** Geant4 MT uses master-generated seeds associated with events to provide reproducibility independent of thread scheduling.
-- **Inference requiring runtime confirmation:** the redundant worker reseed may have biased or correlated earlier MT optical-calibration samples. Existing physics results are not declared invalid yet; affected outputs must be regenerated and compared.
+- **Repository facts:** duplicate seeding existed; the CLI had no thread-count option; metadata did not record thread count.
+- **Official Geant4 design facts:** the master generates event-associated seeds before worker processing; worker count is configured on the MT run manager before initialization.
+- **Inference requiring runtime confirmation:** previous optical-calibration outputs may differ after correcting seed ownership. No existing physics claim is declared invalid without rerunning it.
 
-## Changes
+## Changes pushed
 
 1. Removed `CLHEP::HepRandom::setTheSeed` from `RunAction::BeginOfRunAction`.
-2. Removed the now-unused `Randomize.hh` include from `RunAction.cc`.
-3. Clarified in `main.cc` that the seed must be set before run-manager construction.
-4. Created the initial `chatgpt_todo` coordination protocol and active task record.
+2. Kept the single master seed before run-manager construction.
+3. Added `AppConfig::n_threads`, defaulting to one worker for a conservative reproducible default.
+4. Added `--threads N` parsing, usage text, validation (`N > 0`), and `Describe()` output.
+5. In MT builds, dynamically obtain `G4MTRunManager` and call `SetNumberOfThreads(cfg.n_threads)` before `Initialize()`.
+6. Added `threads_requested` to the metadata sidecar.
+7. Updated the repository-local audit handoff.
 
-## Commits on task branch
+## New commits in this session
 
-- `bbeb4bf733cb8cc9e41aac1765b54d8768746947` — `fix(g4): preserve Geant4 MT event seeding`
-- `d2129cfbf5be0ac141bce08915b4abe7f23bc293` — `docs(g4): explain master-before-run-manager seeding`
-- `e0ff48efedc8fe82bf1223ecdc435a8665a980a7` — `chore(chatgpt_todo): establish audit coordination protocol`
-- `bb4664b20a51ae5c362ceda5bf6caf6d9ed5eb54` — `chore(chatgpt_todo): claim MT RNG audit task`
+- `c1f1fb3239afa7de2926a641952fae0c4f25d932` — `feat(g4): make worker thread count explicit in run config`
+- `2b34468ca75a04bf626b831239f839198403f1dd` — `feat(g4): parse and report explicit worker thread count`
+- `05b7ad7988534fcbdbb052e5c9d2708c049e5ad4` — `feat(g4): configure MT workers before initialization`
+- `7572b1413a1f6c8e24a1a1b40d26850c5b9391b6` — `feat(g4): record requested thread count in run metadata`
 
-GitHub contents writes update the remote task branch directly. A pull request should be opened after the remaining coordination files are added.
+## Static validation performed
+
+- Confirmed the new thread setting occurs after run-manager construction but before `Initialize()`, when worker creation is configured.
+- Confirmed sequential builds remain guarded by `#ifdef G4MULTITHREADED` and do not require `G4MTRunManager`.
+- Confirmed invalid zero or negative thread counts are rejected during argument parsing.
+- Confirmed the declared thread count is included in stdout configuration and metadata provenance.
 
 ## Validation not executed
 
-This session had GitHub repository access but no checked-out build environment, Geant4 runtime, ROOT files, or LUNARC data access. Therefore it did **not** claim:
+This connector session did not provide a checked-out compiler environment, Geant4 11.2.2 runtime, ROOT files, or LUNARC data. It therefore does **not** claim:
 
-- successful compilation;
-- runtime correctness;
-- identical one-thread/multi-thread event output;
-- absence of bias in previous calibration outputs;
-- regenerated optical-photon or calibration results.
+- compilation success;
+- runtime success;
+- actual worker count equal to the requested count under all environments (for example, `G4FORCENUMBEROFTHREADS` can override it);
+- identical event-keyed outputs for one and multiple threads;
+- independence across different seeds;
+- regenerated optical-photon yields or calibration results.
 
-## Required next validation
+## Required runtime commands
 
-1. Build with the repository-supported Geant4 11.2.2 environment.
-2. Run identical configuration/seed with 1 and at least 4 worker threads.
-3. Sort event ntuples by event ID and compare all deterministic fields event-by-event.
-4. Verify complete, unique event IDs in the merged ROOT file.
-5. Run multiple seeds and compare photon yield, arrival-time, wavelength, path-length, and detected-PE distributions.
-6. Regenerate the claimed `178 PE/event` sample if it used the old worker reseeding.
-7. Produce:
-   - event-by-event absolute-difference plot;
-   - event-ID completeness/duplication plot;
-   - one-thread versus multi-thread distribution overlays with ratio panels;
-   - seed-to-seed correlation/ensemble summary.
-8. Record commands, Geant4/ROOT/compiler versions, thread counts, seed values, event counts, hashes, quantitative differences, and plot paths.
+Use a Geant4 11.2.2 environment and record compiler, ROOT, CLHEP, and build options:
+
+```bash
+cmake -S geant4/single_stave -B build/single_stave
+cmake --build build/single_stave -j
+
+build/single_stave/ccb_single_stave \
+  --particle proton --energy 100 --nevents 1000 \
+  --threads 1 --seed 20260721 --mode optical \
+  --output mt_rng_t1.root
+
+build/single_stave/ccb_single_stave \
+  --particle proton --energy 100 --nevents 1000 \
+  --threads 4 --seed 20260721 --mode optical \
+  --output mt_rng_t4.root
+```
+
+Also run at least four distinct seeds for an ensemble comparison. Explicitly unset or record `G4FORCENUMBEROFTHREADS`.
+
+## Required quantitative checks and plots
+
+1. Metadata: `threads_requested`, seed, event count, geometry hash, commit, and optical-table hashes must match the intended configuration.
+2. Event IDs: exactly `0..N-1`, no duplicates or omissions, for both outputs.
+3. Event-keyed deterministic comparison after sorting by event ID.
+4. Distribution overlays and ratio panels for deposited energy, generated scintillation photons, arrivals, detected photons, and saturated PE.
+5. Per-photon wavelength, arrival-time, and path-length comparisons.
+6. Seed-ensemble means, variances, confidence intervals, and cross-seed correlations.
+7. Regenerate the recent approximately 178 PE/event result and quantify any change with uncertainty.
 
 ## Acceptance decision
 
-Do not merge until compilation and thread-count reproducibility checks pass. If outputs differ after sorting by event ID, inspect run-manager type, macro thread commands, event seeding, and any nondeterministic output ordering before accepting the fix.
+Keep PR #868 in draft. Do not merge until the supported build passes and the thread-count reproducibility, merged-row integrity, and optical-result regeneration criteria are satisfied. If environment override variables change the actual worker count, add an explicit actual-thread-count field or startup assertion before declaring the provenance contract complete.

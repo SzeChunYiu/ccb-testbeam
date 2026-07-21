@@ -51,24 +51,31 @@
 - Inspected PR `#868` head `6feea8707c9abff6142f1745c3e5d8d01774af24`.
 - Observed Actions run `29836848008` completed with failure in job `88655291248`, step `Run unit tests`; checkout, Python setup, and dependency installation passed.
 - Retrieved the workflow log, but the connector truncated the response before the pytest failure summary. No remaining test defect was guessed or claimed.
-- Reviewed `.github/workflows/mc_validation_ci.yml` and found that failing pytest output was available only in the large job log, with no downloadable focused diagnostic artifact.
-- Added deterministic CI diagnostics: pytest output is now tee'd to `pytest.log`, the pytest exit status is preserved through `PIPESTATUS`, and `actions/upload-artifact@v4` uploads the log even on failure.
-- Commit: `18dfa7b72c7b532244b266993b3176e66714bcff` — `ci: preserve pytest diagnostics for audit failures`.
-- Updated `BLOCKERS.md` in commit `27c91a811320f3a9edf521e95a80c4a9e18a74cd`.
-- Validation performed: reviewed YAML trigger coverage, bash pipeline exit behavior, artifact execution under `if: always()`, artifact naming, missing-file failure behavior, and retention.
-- Validation pending: the next workflow run must complete and its artifact must be downloaded and inspected. No Python-test success is claimed.
-- Geant4/ROOT/LUNARC runtime blocker remains open.
+- Added focused `pytest.log` artifact upload while preserving the pytest exit status.
+- Commit: `18dfa7b72c7b532244b266993b3176e66714bcff`.
+- Geant4/ROOT/LUNARC runtime blocker remained open.
 
 ## 2026-07-21T16:00Z — AUD-G4-001 CI artifact diagnosis
 
-- Inspected PR `#868` head `7ef6b1997e0a0a937a60d74633fefcef1189a2ab`.
-- Observed `MC Validation CI` run `29841567992` failed in job `88671487198`; setup and artifact upload succeeded, while unit tests failed.
-- Downloaded artifact `pytest-log-29841567992-1` (ID `8499645299`, digest `sha256:4419acfc79abc323e0b2e2b5825885739aa84bb48135399a14e5cd41d3f41dac`).
+- Inspected Actions run `29841567992`, job `88671487198`.
+- Downloaded artifact `pytest-log-29841567992-1` (ID `8499645299`, SHA-256 `4419acfc79abc323e0b2e2b5825885739aa84bb48135399a14e5cd41d3f41dac`).
 - Exact result: `1 failed, 146 passed, 1 skipped in 42.40s`.
-- Exact failure: `test_rejects_duplicate_seed_within_thread_group` raised `ValueError: manifest labels must be unique`.
-- Root cause: the fixture intentionally duplicated seed `101` in thread group `1`, but `build_manifest()` used labels `s{seed}-t{threads}`, causing duplicate labels before the intended duplicate-seed diagnostic was evaluated.
-- Fixed the synthetic helper to produce stable unique labels `run{index}-s{seed}-t{threads}` while preserving the duplicated seed/thread values.
-- Commit: `64a5c171de07506ed18326240618a456714d5593` — `test(g4): keep duplicate-seed fixture labels unique`.
-- Updated `BLOCKERS.md` with the artifact identity, exact traceback, root cause, fix, and recheck acceptance condition.
-- No runtime pytest success is claimed until the next CI run completes successfully.
-- Geant4/ROOT/LUNARC validation and regeneration of the approximately 178 PE/event result remain blocked.
+- Fixed the duplicate-seed fixture's accidental duplicate manifest labels.
+- Commit: `64a5c171de07506ed18326240618a456714d5593`.
+
+## 2026-07-21T17:00Z — AUD-G4-001 / AUD-G4-002 claim and CI audit
+
+- Observed `MC Validation CI` run `29846207091` completed successfully at head `cc7b379fba133e15c2101e7aaf6f1bc0e1dc249b`; the Python unit-test gate is therefore satisfied for that head.
+- Reviewed `.github/workflows/mc_validation_ci.yml` and found that changes limited to the three RNG validator scripts did not trigger the workflow and no dedicated ruff step existed.
+- Added all three validator script paths to push/PR triggers and added a targeted ruff check for the scripts and their tests.
+- Commit: `c3fb8822d4db4a9c76602ec8321096a30903f98e`.
+- Audited commit `d51159fc3c41a70c804c5da329b20041617dd506` and `geant4/single_stave/KNOWN_ISSUES.md` for the reported 585 arrivals/event and 178 PE/event result.
+- Found contradictory status language: the header marked issues A/B resolved while lower sections still called them open and the final status said photon collection was in progress.
+- Found denominator ambiguity in the reported `10.6 PE/MeV`: it is `178 / 16.8 MeV deposited`, not `178 / 100 MeV incident`.
+- Rewrote the note to separate prior observations, derived quantities, resolved historical defects, and validation still required.
+- Commit: `1e098d6523783adf5023843e5fed5926ca3d390e`.
+- Created `CLAIM_EVIDENCE_MATRIX.md` mapping the optical claims to current evidence, missing provenance, and required validation.
+- Commit: `28886b8805a2367b4cbf4c3b9fd16f241c8f24b8`.
+- Closed the pytest portion of `BLK-CI-001`, retained the new lint recheck, and kept the Geant4/ROOT runtime blocker open.
+- Commit: `1f8649aa6fb5a4329de5bbee3e02a87045d020d0`.
+- No new 178 PE/event value, uncertainty, or real-data agreement is claimed. The exact output file, sample size, seed/thread provenance, and ROOT hash remain unavailable.

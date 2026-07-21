@@ -1,25 +1,10 @@
 #!/usr/bin/env python3
-"""Compare single-stave Geant4 ROOT outputs across thread configurations.
+"""Validate event-keyed reproducibility of two single-stave Geant4 ROOT runs.
 
-The validator is intentionally event-keyed: Geant4 worker scheduling may change row
-order even when the physical event histories are reproducible. It therefore sorts
-both ``events`` trees by the integer ``event`` column before comparing branches.
-
-Outputs
--------
-* machine-readable JSON summary;
-* a multi-page PDF containing overlays, ratios, and absolute-difference plots;
-* non-zero exit status when structural or configured numerical checks fail.
-
-Example
--------
-python scripts/compare_single_stave_mt_reproducibility.py \
-  --reference mt_rng_t1.root \
-  --candidate mt_rng_t4.root \
-  --reference-meta mt_rng_t1.root.meta.json \
-  --candidate-meta mt_rng_t4.root.meta.json \
-  --output-json results/g4_mt_rng_comparison.json \
-  --output-pdf docs/figures/g4_mt_rng_reproducibility.pdf
+Row order is not a reproducibility criterion in Geant4 MT: worker scheduling can
+change it. This program sorts the ``events`` trees by the integer ``event`` key,
+checks schema and event-ID integrity, compares every branch, verifies metadata,
+and creates a JSON record plus a diagnostic PDF.
 """
 
 from __future__ import annotations
@@ -28,7 +13,7 @@ import argparse
 import json
 import math
 import sys
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
@@ -38,11 +23,8 @@ from matplotlib.backends.backend_pdf import PdfPages
 
 try:
     import uproot
-except ImportError as exc:  # pragma: no cover - environment-dependent failure path
-    raise SystemExit(
-        "uproot is required; install the repository ROOT extra with "
-        "`pip install -e '.[root]'`"
-    ) from exc
+except ImportError as exc:  # pragma: no cover
+    raise SystemExit("Install ROOT support with `pip install -e '.[root]'`") from exc
 
 
 DEFAULT_PLOT_BRANCHES = (
@@ -55,22 +37,7 @@ DEFAULT_PLOT_BRANCHES = (
     "pe_sat_readout",
 )
 
-EXACT_INTEGER_BRANCHES = {
-    "event",
-    "n_scint_generated",
-    "n_wls_generated",
-    "n_cerenkov_generated",
-    "arrival_readout",
-    "arrival_f1far",
-    "arrival_f2near",
-    "arrival_f2far",
-    "detected_readout",
-    "detected_f1far",
-    "detected_f2near",
-    "detected_f2far",
-}
-
-PROVENANCE_KEYS = (
+PHYSICS_PROVENANCE_KEYS = (
     "schema",
     "git_commit",
     "geometry_hash",
@@ -85,6 +52,7 @@ PROVENANCE_KEYS = (
     "pde_scale",
     "coupling_efficiency",
     "sipm_n_cells",
+    "optical_tables",
 )
 
 THREAD_KEYS = (
@@ -97,48 +65,38 @@ THREAD_KEYS = (
 @dataclass(frozen=True)
 class BranchResult:
     branch: str
-    dtype: str
+    reference_dtype: str
+    candidate_dtype: str
     entries: int
     exact_equal: bool
+    allclose: bool
     n_mismatched: int
     max_abs_diff: float | None
     mean_abs_diff: float | None
     rms_diff: float | None
-    allclose: bool
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--reference", required=True, type=Path, help="Reference ROOT file")
-    parser.add_argument("--candidate", required=True, type=Path, help="Candidate ROOT file")
-    parser.add_argument("--reference-meta", type=Path, help="Reference metadata JSON sidecar")
-    parser.add_argument("--candidate-meta", type=Path, help="Candidate metadata JSON sidecar")
-    parser.add_argument("--output-json", required=True, type=Path, help="Summary JSON path")
-    parser.add_argument("--output-pdf", required=True, type=Path, help="Diagnostic PDF path")
-    parser.add_argument("--tree", default="events", help="Event-tree name (default: events)")
-    parser.add_argument(
-        "--rtol", type=float, default=0.0, help="Relative tolerance for floating branches"
-    )
-    parser.add_argument(
-        "--atol", type=float, default=0.0, help="Absolute tolerance for floating branches"
-    )
-    parser.add_argument(
-        "--plot-branches",
-        nargs="*",
-        default=list(DEFAULT_PLOT_BRANCHES),
-        help="Branches to visualize",
-    )
+    parser.add_argument("--reference", required=True, type=Path)
+    parser.add_argument("--candidate", required=True, type=Path)
+    parser.add_argument("--reference-meta", required=True, type=Path)
+    parser.add_argument("--candidate-meta", required=True, type=Path)
+    parser.add_argument("--output-json", required=True, type=Path)
+    parser.add_argument("--output-pdf", required=True, type=Path)
+    parser.add_argument("--tree", default="events")
+    parser.add_argument("--rtol", type=float, default=0.0)
+    parser.add_argument("--atol", type=float, default=0.0)
+    parser.add_argument("--plot-branches", nargs="*", default=list(DEFAULT_PLOT_BRANCHES))
     parser.add_argument(
         "--allow-different-git-commit",
         action="store_true",
-        help="Do not fail when metadata git_commit values differ",
+        help="Permit git_commit to differ while requiring all other physics provenance to match",
     )
     return parser.parse_args()
 
 
-def load_metadata(path: Path | None) -> dict[str, Any] | None:
-    if path is None:
-        return None
+def load_metadata(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8") as handle:
         data = json.load(handle)
     if not isinstance(data, dict):
@@ -146,57 +104,48 @@ def load_metadata(path: Path | None) -> dict[str, Any] | None:
     return data
 
 
-def normalize_branch_name(name: str) -> str:
-    return name.split(";", maxsplit=1)[0]
-
-
-def read_event_tree(path: Path, tree_name: str) -> dict[str, np.ndarray]:
+def read_tree(path: Path, tree_name: str) -> dict[str, np.ndarray]:
     with uproot.open(path) as root_file:
         if tree_name not in root_file:
-            available = sorted(normalize_branch_name(key) for key in root_file.keys())
+            available = sorted(str(key).split(";", 1)[0] for key in root_file.keys())
             raise KeyError(f"tree {tree_name!r} absent from {path}; available={available}")
-        tree = root_file[tree_name]
-        arrays = tree.arrays(library="np")
+        arrays = root_file[tree_name].arrays(library="np", how=dict)
     return {str(name): np.asarray(values) for name, values in arrays.items()}
 
 
-def validate_event_ids(event_ids: np.ndarray, expected_events: int | None) -> dict[str, Any]:
-    ids = np.asarray(event_ids)
+def validate_event_ids(ids: np.ndarray, expected_count: int) -> dict[str, Any]:
     if ids.ndim != 1:
-        raise ValueError(f"event branch must be one-dimensional, got shape={ids.shape}")
+        raise ValueError(f"event branch must be one-dimensional, got {ids.shape}")
     if not np.issubdtype(ids.dtype, np.integer):
-        raise TypeError(f"event branch must be integer-valued, got dtype={ids.dtype}")
-
+        raise TypeError(f"event branch must be integer-valued, got {ids.dtype}")
     unique, counts = np.unique(ids, return_counts=True)
-    duplicates = unique[counts > 1]
-    observed_count = int(ids.size)
-    expected_count = expected_events if expected_events is not None else observed_count
     expected = np.arange(expected_count, dtype=unique.dtype)
-    missing = np.setdiff1d(expected, unique, assume_unique=False)
-    unexpected = np.setdiff1d(unique, expected, assume_unique=False)
-
+    duplicate = unique[counts > 1]
+    missing = np.setdiff1d(expected, unique)
+    unexpected = np.setdiff1d(unique, expected)
+    valid = bool(
+        ids.size == expected_count
+        and unique.size == expected_count
+        and duplicate.size == 0
+        and missing.size == 0
+        and unexpected.size == 0
+    )
     return {
-        "entries": observed_count,
+        "entries": int(ids.size),
         "unique_entries": int(unique.size),
-        "expected_entries": int(expected_count),
-        "duplicate_ids": duplicates.astype(int).tolist(),
+        "expected_entries": expected_count,
+        "duplicate_ids": duplicate.astype(int).tolist(),
         "missing_ids": missing.astype(int).tolist(),
         "unexpected_ids": unexpected.astype(int).tolist(),
-        "valid": bool(
-            observed_count == expected_count
-            and unique.size == expected_count
-            and duplicates.size == 0
-            and missing.size == 0
-            and unexpected.size == 0
-        ),
+        "valid": valid,
     }
 
 
-def sorted_arrays(arrays: dict[str, np.ndarray]) -> tuple[dict[str, np.ndarray], np.ndarray]:
+def sort_by_event(arrays: dict[str, np.ndarray]) -> dict[str, np.ndarray]:
     if "event" not in arrays:
-        raise KeyError("events tree is missing required integer branch 'event'")
+        raise KeyError("events tree is missing required branch 'event'")
     order = np.argsort(arrays["event"], kind="stable")
-    return {name: values[order] for name, values in arrays.items()}, order
+    return {name: values[order] for name, values in arrays.items()}
 
 
 def compare_branch(
@@ -209,81 +158,71 @@ def compare_branch(
 ) -> BranchResult:
     if reference.shape != candidate.shape:
         return BranchResult(
-            branch=name,
-            dtype=f"{reference.dtype}/{candidate.dtype}",
-            entries=int(max(reference.size, candidate.size)),
-            exact_equal=False,
-            n_mismatched=int(max(reference.size, candidate.size)),
-            max_abs_diff=None,
-            mean_abs_diff=None,
-            rms_diff=None,
-            allclose=False,
+            name,
+            str(reference.dtype),
+            str(candidate.dtype),
+            int(max(reference.size, candidate.size)),
+            False,
+            False,
+            int(max(reference.size, candidate.size)),
+            None,
+            None,
+            None,
         )
 
-    exact = np.array_equal(reference, candidate, equal_nan=True)
     numeric = np.issubdtype(reference.dtype, np.number) and np.issubdtype(
         candidate.dtype, np.number
     )
     if not numeric:
-        mismatched = int(np.count_nonzero(reference != candidate))
+        equal_mask = reference == candidate
+        exact = bool(np.all(equal_mask))
         return BranchResult(
-            branch=name,
-            dtype=str(reference.dtype),
-            entries=int(reference.size),
-            exact_equal=bool(exact),
-            n_mismatched=mismatched,
-            max_abs_diff=None,
-            mean_abs_diff=None,
-            rms_diff=None,
-            allclose=bool(exact),
+            name,
+            str(reference.dtype),
+            str(candidate.dtype),
+            int(reference.size),
+            exact,
+            exact,
+            int(np.count_nonzero(~equal_mask)),
+            None,
+            None,
+            None,
         )
 
-    ref_float = reference.astype(np.float64, copy=False)
-    cand_float = candidate.astype(np.float64, copy=False)
-    finite_pair = np.isfinite(ref_float) & np.isfinite(cand_float)
-    same_nonfinite = np.array_equal(np.isnan(ref_float), np.isnan(cand_float)) and np.array_equal(
-        np.isposinf(ref_float), np.isposinf(cand_float)
-    ) and np.array_equal(np.isneginf(ref_float), np.isneginf(cand_float))
-
-    diffs = np.abs(ref_float[finite_pair] - cand_float[finite_pair])
-    close_mask = np.isclose(ref_float, cand_float, rtol=rtol, atol=atol, equal_nan=True)
-    allclose = bool(np.all(close_mask) and same_nonfinite)
-    mismatched = int(np.count_nonzero(~close_mask))
-
+    ref = reference.astype(np.float64, copy=False)
+    cand = candidate.astype(np.float64, copy=False)
+    exact = bool(np.array_equal(ref, cand, equal_nan=True))
+    close = np.isclose(ref, cand, rtol=rtol, atol=atol, equal_nan=True)
+    finite = np.isfinite(ref) & np.isfinite(cand)
+    diff = np.abs(ref[finite] - cand[finite])
     return BranchResult(
-        branch=name,
-        dtype=str(reference.dtype),
-        entries=int(reference.size),
-        exact_equal=bool(exact),
-        n_mismatched=mismatched,
-        max_abs_diff=float(np.max(diffs)) if diffs.size else 0.0,
-        mean_abs_diff=float(np.mean(diffs)) if diffs.size else 0.0,
-        rms_diff=float(math.sqrt(float(np.mean(diffs**2)))) if diffs.size else 0.0,
-        allclose=allclose,
+        name,
+        str(reference.dtype),
+        str(candidate.dtype),
+        int(reference.size),
+        exact,
+        bool(np.all(close)),
+        int(np.count_nonzero(~close)),
+        float(np.max(diff)) if diff.size else 0.0,
+        float(np.mean(diff)) if diff.size else 0.0,
+        float(math.sqrt(float(np.mean(diff**2)))) if diff.size else 0.0,
     )
 
 
 def compare_metadata(
-    reference: dict[str, Any] | None,
-    candidate: dict[str, Any] | None,
+    reference: dict[str, Any],
+    candidate: dict[str, Any],
     *,
     allow_different_git_commit: bool,
 ) -> dict[str, Any]:
-    if reference is None or candidate is None:
-        return {
-            "provided": False,
-            "valid": False,
-            "reason": "both metadata sidecars are required for provenance validation",
-        }
-
-    comparisons: dict[str, dict[str, Any]] = {}
+    physics: dict[str, dict[str, Any]] = {}
     valid = True
-    for key in PROVENANCE_KEYS:
+    for key in PHYSICS_PROVENANCE_KEYS:
         ref_value = reference.get(key)
         cand_value = candidate.get(key)
         equal = ref_value == cand_value
         required_equal = not (key == "git_commit" and allow_different_git_commit)
-        comparisons[key] = {
+        physics[key] = {
             "reference": ref_value,
             "candidate": cand_value,
             "equal": equal,
@@ -291,101 +230,95 @@ def compare_metadata(
         }
         if required_equal and not equal:
             valid = False
-
-    thread_provenance = {
-        key: {"reference": reference.get(key), "candidate": candidate.get(key)}
-        for key in THREAD_KEYS
-    }
     return {
-        "provided": True,
         "valid": valid,
-        "physics_provenance": comparisons,
-        "thread_provenance": thread_provenance,
+        "physics_provenance": physics,
+        "thread_provenance": {
+            key: {"reference": reference.get(key), "candidate": candidate.get(key)}
+            for key in THREAD_KEYS
+        },
     }
 
 
-def choose_bins(reference: np.ndarray, candidate: np.ndarray) -> np.ndarray:
-    values = np.concatenate((reference.ravel(), candidate.ravel())).astype(np.float64)
+def histogram_edges(reference: np.ndarray, candidate: np.ndarray) -> np.ndarray:
+    values = np.concatenate((reference.ravel(), candidate.ravel())).astype(float)
     values = values[np.isfinite(values)]
     if values.size == 0:
         return np.linspace(0.0, 1.0, 21)
-    low, high = np.min(values), np.max(values)
+    low, high = float(np.min(values)), float(np.max(values))
     if low == high:
         pad = max(abs(low) * 0.05, 0.5)
         return np.linspace(low - pad, high + pad, 21)
-    return np.histogram_bin_edges(values, bins="fd")
+    edges = np.histogram_bin_edges(values, bins="fd")
+    return edges if edges.size >= 2 else np.linspace(low, high, 21)
 
 
-def add_branch_plot(
+def plot_branch(
     pdf: PdfPages,
     name: str,
     reference: np.ndarray,
     candidate: np.ndarray,
     result: BranchResult,
 ) -> None:
-    if not np.issubdtype(reference.dtype, np.number):
+    if not (
+        np.issubdtype(reference.dtype, np.number)
+        and np.issubdtype(candidate.dtype, np.number)
+    ):
         return
-    bins = choose_bins(reference, candidate)
-    ref_hist, _ = np.histogram(reference, bins=bins)
-    cand_hist, _ = np.histogram(candidate, bins=bins)
-    centers = 0.5 * (bins[:-1] + bins[1:])
-    widths = np.diff(bins)
+    edges = histogram_edges(reference, candidate)
+    ref_hist, _ = np.histogram(reference, bins=edges)
+    cand_hist, _ = np.histogram(candidate, bins=edges)
+    centers = (edges[:-1] + edges[1:]) / 2.0
     ratio = np.divide(
         cand_hist,
         ref_hist,
         out=np.full(cand_hist.shape, np.nan, dtype=float),
-        where=ref_hist != 0,
+        where=ref_hist > 0,
     )
     differences = candidate.astype(float) - reference.astype(float)
+    differences = differences[np.isfinite(differences)]
 
     figure, axes = plt.subplots(3, 1, figsize=(8.5, 11), constrained_layout=True)
-    axes[0].stairs(ref_hist, bins, label="reference")
-    axes[0].stairs(cand_hist, bins, label="candidate")
+    axes[0].stairs(ref_hist, edges, label="reference")
+    axes[0].stairs(cand_hist, edges, label="candidate")
+    axes[0].set_title(f"{name}: distribution after event-ID alignment")
     axes[0].set_ylabel("Events / bin")
-    axes[0].set_title(f"{name}: event distribution")
     axes[0].legend()
-
-    axes[1].errorbar(centers, ratio, xerr=widths / 2.0, fmt="o", markersize=3)
+    axes[1].plot(centers, ratio, marker="o", linestyle="none", markersize=3)
     axes[1].axhline(1.0, linestyle="--")
     axes[1].set_ylabel("Candidate / reference")
     axes[1].set_xlabel(name)
-
-    finite_diffs = differences[np.isfinite(differences)]
-    diff_bins = np.histogram_bin_edges(finite_diffs, bins="fd") if finite_diffs.size else 20
-    axes[2].hist(finite_diffs, bins=diff_bins)
+    axes[2].hist(differences, bins="fd" if differences.size > 1 else 20)
     axes[2].set_xlabel(f"candidate - reference ({name})")
     axes[2].set_ylabel("Events / bin")
     axes[2].set_title(
-        "Event-keyed differences: "
-        f"mismatch={result.n_mismatched}, max|Δ|={result.max_abs_diff:.6g}, "
+        f"mismatches={result.n_mismatched}; max|Δ|={result.max_abs_diff:.6g}; "
         f"RMS(Δ)={result.rms_diff:.6g}"
     )
     pdf.savefig(figure)
     plt.close(figure)
 
 
-def write_summary_page(pdf: PdfPages, summary: dict[str, Any]) -> None:
+def plot_summary(pdf: PdfPages, summary: dict[str, Any]) -> None:
     figure = plt.figure(figsize=(8.5, 11))
-    figure.text(0.08, 0.95, "Single-stave Geant4 MT reproducibility audit", fontsize=16)
     lines = [
+        "Single-stave Geant4 MT reproducibility audit",
+        "",
         f"Reference: {summary['inputs']['reference']}",
         f"Candidate: {summary['inputs']['candidate']}",
-        f"Tree: {summary['inputs']['tree']}",
         f"Overall pass: {summary['pass']}",
         f"Schema match: {summary['schema']['match']}",
-        f"Reference event IDs valid: {summary['event_ids']['reference']['valid']}",
-        f"Candidate event IDs valid: {summary['event_ids']['candidate']['valid']}",
-        f"Metadata physics provenance valid: {summary['metadata']['valid']}",
-        f"Branches compared: {len(summary['branches'])}",
-        f"Branches passing tolerance: {sum(item['allclose'] for item in summary['branches'])}",
+        f"Reference IDs valid: {summary['event_ids']['reference']['valid']}",
+        f"Candidate IDs valid: {summary['event_ids']['candidate']['valid']}",
+        f"Physics provenance valid: {summary['metadata']['valid']}",
+        f"Branches passing: {sum(row['allclose'] for row in summary['branches'])}/"
+        f"{len(summary['branches'])}",
         "",
-        "Acceptance meaning:",
-        "PASS requires complete/unique event IDs, identical branch schemas,",
-        "matching physics provenance, and every event-keyed branch within",
-        "the configured numerical tolerances. Thread provenance is reported",
-        "but is expected to differ between the compared runs.",
+        "PASS requires complete unique event IDs, identical schemas, matching",
+        "physics provenance, and every event-keyed branch within tolerance.",
+        "Thread provenance is reported and is allowed to differ.",
     ]
-    figure.text(0.08, 0.88, "\n".join(lines), va="top", family="monospace", fontsize=10)
+    figure.text(0.07, 0.95, "\n".join(lines), va="top", family="monospace", fontsize=10)
     pdf.savefig(figure)
     plt.close(figure)
 
@@ -397,50 +330,36 @@ def main() -> int:
 
     reference_meta = load_metadata(args.reference_meta)
     candidate_meta = load_metadata(args.candidate_meta)
-    reference_arrays = read_event_tree(args.reference, args.tree)
-    candidate_arrays = read_event_tree(args.candidate, args.tree)
+    reference = read_tree(args.reference, args.tree)
+    candidate = read_tree(args.candidate, args.tree)
 
-    expected_reference = (
-        int(reference_meta["n_events"])
-        if reference_meta is not None and "n_events" in reference_meta
-        else None
-    )
-    expected_candidate = (
-        int(candidate_meta["n_events"])
-        if candidate_meta is not None and "n_events" in candidate_meta
-        else None
-    )
-    reference_id_check = validate_event_ids(reference_arrays["event"], expected_reference)
-    candidate_id_check = validate_event_ids(candidate_arrays["event"], expected_candidate)
+    reference_ids = validate_event_ids(reference["event"], int(reference_meta["n_events"]))
+    candidate_ids = validate_event_ids(candidate["event"], int(candidate_meta["n_events"]))
+    reference = sort_by_event(reference)
+    candidate = sort_by_event(candidate)
 
-    reference_sorted, _ = sorted_arrays(reference_arrays)
-    candidate_sorted, _ = sorted_arrays(candidate_arrays)
-    reference_branches = set(reference_sorted)
-    candidate_branches = set(candidate_sorted)
-    common_branches = sorted(reference_branches & candidate_branches)
-    schema_match = reference_branches == candidate_branches
-
+    ref_names, cand_names = set(reference), set(candidate)
+    common = sorted(ref_names & cand_names)
     branch_results = [
         compare_branch(
             name,
-            reference_sorted[name],
-            candidate_sorted[name],
+            reference[name],
+            candidate[name],
             rtol=args.rtol,
             atol=args.atol,
         )
-        for name in common_branches
+        for name in common
     ]
-    metadata_result = compare_metadata(
+    metadata = compare_metadata(
         reference_meta,
         candidate_meta,
         allow_different_git_commit=args.allow_different_git_commit,
     )
-
-    overall_pass = bool(
-        schema_match
-        and reference_id_check["valid"]
-        and candidate_id_check["valid"]
-        and metadata_result["valid"]
+    passed = bool(
+        ref_names == cand_names
+        and reference_ids["valid"]
+        and candidate_ids["valid"]
+        and metadata["valid"]
         and all(result.allclose for result in branch_results)
     )
     summary = {
@@ -448,48 +367,36 @@ def main() -> int:
         "inputs": {
             "reference": str(args.reference),
             "candidate": str(args.candidate),
-            "reference_meta": str(args.reference_meta) if args.reference_meta else None,
-            "candidate_meta": str(args.candidate_meta) if args.candidate_meta else None,
+            "reference_meta": str(args.reference_meta),
+            "candidate_meta": str(args.candidate_meta),
             "tree": args.tree,
             "rtol": args.rtol,
             "atol": args.atol,
         },
-        "pass": overall_pass,
+        "pass": passed,
         "schema": {
-            "match": schema_match,
-            "reference_only": sorted(reference_branches - candidate_branches),
-            "candidate_only": sorted(candidate_branches - reference_branches),
+            "match": ref_names == cand_names,
+            "reference_only": sorted(ref_names - cand_names),
+            "candidate_only": sorted(cand_names - ref_names),
         },
-        "event_ids": {
-            "reference": reference_id_check,
-            "candidate": candidate_id_check,
-        },
-        "metadata": metadata_result,
-        "branches": [result.__dict__ for result in branch_results],
+        "event_ids": {"reference": reference_ids, "candidate": candidate_ids},
+        "metadata": metadata,
+        "branches": [asdict(result) for result in branch_results],
     }
 
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_pdf.parent.mkdir(parents=True, exist_ok=True)
-    with args.output_json.open("w", encoding="utf-8") as handle:
-        json.dump(summary, handle, indent=2, sort_keys=True)
-        handle.write("\n")
+    args.output_json.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
-    result_by_name = {result.branch: result for result in branch_results}
+    by_name = {result.branch: result for result in branch_results}
     with PdfPages(args.output_pdf) as pdf:
-        write_summary_page(pdf, summary)
-        for branch in args.plot_branches:
-            if branch not in reference_sorted or branch not in candidate_sorted:
-                continue
-            add_branch_plot(
-                pdf,
-                branch,
-                reference_sorted[branch],
-                candidate_sorted[branch],
-                result_by_name[branch],
-            )
+        plot_summary(pdf, summary)
+        for name in args.plot_branches:
+            if name in reference and name in candidate:
+                plot_branch(pdf, name, reference[name], candidate[name], by_name[name])
 
     print(json.dumps(summary, indent=2, sort_keys=True))
-    return 0 if overall_pass else 1
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":

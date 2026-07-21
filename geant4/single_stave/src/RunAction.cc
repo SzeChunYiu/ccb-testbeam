@@ -71,10 +71,9 @@ void RunAction::DefineNtuples() {
 }
 
 void RunAction::BeginOfRunAction(const G4Run*) {
-  // Do not reseed here. In multi-threaded mode Geant4 preassigns event seeds
-  // from the master engine, which is seeded before run-manager construction in
-  // main.cc. Resetting CLHEP in each worker here can create correlated streams
-  // and makes results depend on thread scheduling.
+  // Do not reseed here: in MT mode Geant4 assigns master-generated per-event
+  // seeds to workers. The master seed is configured once in main.cc before the
+  // run manager is constructed.
   if (IsMaster() || G4Threading::G4GetThreadId() < 0) {
     std::cout << "RUN_CONFIG " << cfg_.Describe() << " geometry_hash="
               << geometry_hash_ << std::endl;
@@ -145,6 +144,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
+     << "  \"threads_requested\": " << cfg_.n_threads << ",\n"
      << "  \"particle\": " << j(cfg_.particle) << ",\n"
      << "  \"kinetic_energy_MeV\": " << cfg_.kinetic_energy_MeV << ",\n"
      << "  \"n_events\": " << run->GetNumberOfEvent() << ",\n"

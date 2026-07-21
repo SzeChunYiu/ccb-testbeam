@@ -65,7 +65,13 @@ def build_manifest(tmp_path: Path, specs: list[tuple[int, int, float]]) -> Path:
         meta = tmp_path / f"run_{index}.root.meta.json"
         write_run(root, offset)
         meta.write_text(json.dumps(metadata(seed, threads)), encoding="utf-8")
-        rows.append({"root": str(root), "meta": str(meta), "label": f"s{seed}-t{threads}"})
+        rows.append(
+            {
+                "root": str(root),
+                "meta": str(meta),
+                "label": f"run{index}-s{seed}-t{threads}",
+            }
+        )
     manifest = tmp_path / "manifest.json"
     manifest.write_text(json.dumps({"runs": rows}), encoding="utf-8")
     return manifest

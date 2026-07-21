@@ -30,3 +30,16 @@
 - No raw data, simulation outputs, figures, or numerical results were regenerated. No claim is made that the real-data anomaly is C12.
 - Local checkout attempt failed because the execution container could not resolve `github.com`; all repository reads/writes were performed through the authenticated GitHub connector.
 - Commits were pushed directly to `main`; no force-push or history rewrite was used.
+
+## 2026-07-21T22:09:00Z — AUD-ANOM-001
+
+- Initial remote main: `88c7d61ea7b59ad293956a93f06cab132f91b832`.
+- Avoided duplicating active `AUD-REPO-001`, owned by the concurrent LUNARC session.
+- Re-read `WIKI.md`, `docs/academic_chapters/09_anomaly_id.md`, `chatgpt_todo/ACTIVE_TASK.md`, `BACKLOG.md`, and the previous handoff.
+- Confirmed that the public narrative still overstates transfer from truth-labelled MC to real data and that the repository lacked a complete preregistered closure contract.
+- Added `docs/validation/C12_DATA_MC_CLOSURE_SPEC.md` directly to `main`.
+- The specification freezes preprocessing, PCA/GMM configuration, cross-domain classifier use, provenance, counts, Wilson intervals, morphology closure, MC purity and efficiency, sensitivity studies, negative controls, holdouts, required JSON/PDF artifacts, and wording gates.
+- Updated `AUD-ANOM-001` from READY to PARTIAL and linked its acceptance criteria to the new specification.
+- Exact repository writes: `4923f099be13bb3c85dec4c2e484f0fafb5eaaf7` and `89d88e857850c8653e25fe7a0d664557ae663b98`.
+- Local clone attempt failed with `Could not resolve host: github.com`; no raw data, MC output, tests, or figures were produced in this session.
+- Scientific boundary remains unchanged: the real-data anomaly is not identified as C12 without matched closure and an independent data species tag or validated proxy.

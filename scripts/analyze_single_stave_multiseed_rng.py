@@ -4,9 +4,9 @@
 The input manifest is JSON with a ``runs`` list. Each run requires ``root`` and
 ``meta`` paths; optional labels are preserved. The program validates comparable
 physics provenance, complete event IDs, unique seeds within each effective-thread
-group, duplicated event streams across different seeds, Monte Carlo convergence,
-seed-to-seed stability, and thread-group consistency. It writes a machine-readable
-JSON summary and a diagnostic PDF.
+group, duplicated event streams across different seeds, event-indexed cross-seed
+correlations, seed-to-seed stability, and thread-group consistency. It writes a
+machine-readable JSON summary and a diagnostic PDF.
 
 Example manifest::
 
@@ -98,6 +98,12 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=4.0,
         help="Maximum absolute robust z score for a run mean within an observable",
+    )
+    parser.add_argument(
+        "--max-cross-seed-correlation-z",
+        type=float,
+        default=4.0,
+        help="Maximum absolute Fisher-z significance for event-indexed correlation",
     )
     parser.add_argument(
         "--allow-different-git-commit",
@@ -232,14 +238,20 @@ def build_summary(
     minimum_seeds_per_thread: int,
     max_thread_effect_z: float,
     max_seed_outlier_z: float,
+    max_cross_seed_correlation_z: float,
     allow_different_git_commit: bool,
 ) -> dict[str, Any]:
     if minimum_seeds_per_thread < 2:
         raise ValueError("minimum seeds per thread group must be at least 2")
-    if max_thread_effect_z <= 0 or max_seed_outlier_z <= 0:
+    if (
+        max_thread_effect_z <= 0
+        or max_seed_outlier_z <= 0
+        or max_cross_seed_correlation_z <= 0
+    ):
         raise ValueError("z-score thresholds must be positive")
 
     runs: list[RunSummary] = []
+    arrays_by_label: dict[str, dict[str, np.ndarray]] = {}
     baseline_meta: dict[str, Any] | None = None
     provenance_mismatches: dict[str, list[str]] = {}
 
@@ -285,6 +297,7 @@ def build_summary(
                 observables=stats,
             )
         )
+        arrays_by_label[row["label"]] = arrays
 
     labels = [run.label for run in runs]
     if len(set(labels)) != len(labels):
@@ -378,6 +391,41 @@ def build_summary(
                     }
                 )
 
+    cross_seed_correlations: list[dict[str, Any]] = []
+    for observable in observables:
+        for index, left in enumerate(runs):
+            for right in runs[index + 1 :]:
+                if left.seed == right.seed:
+                    continue
+                left_values = arrays_by_label[left.label][observable].astype(float)
+                right_values = arrays_by_label[right.label][observable].astype(float)
+                if left_values.size != right_values.size or left_values.size < 4:
+                    correlation = math.nan
+                    fisher_z = math.inf
+                elif np.std(left_values) == 0 or np.std(right_values) == 0:
+                    correlation = 1.0 if np.array_equal(left_values, right_values) else 0.0
+                    fisher_z = math.inf if abs(correlation) == 1.0 else 0.0
+                else:
+                    correlation = float(np.corrcoef(left_values, right_values)[0, 1])
+                    clipped = float(np.clip(correlation, -0.999999999999, 0.999999999999))
+                    fisher_z = float(np.arctanh(clipped) * math.sqrt(left_values.size - 3))
+                cross_seed_correlations.append(
+                    {
+                        "observable": observable,
+                        "left": left.label,
+                        "right": right.label,
+                        "left_seed": left.seed,
+                        "right_seed": right.seed,
+                        "n_events": int(left_values.size),
+                        "pearson_r": correlation,
+                        "fisher_z": fisher_z,
+                        "pass": bool(
+                            math.isfinite(fisher_z)
+                            and abs(fisher_z) <= max_cross_seed_correlation_z
+                        ),
+                    }
+                )
+
     duplicate_seeds_within_thread: list[dict[str, Any]] = []
     for thread, group in sorted(by_thread.items()):
         seen: dict[int, str] = {}
@@ -404,6 +452,7 @@ def build_summary(
         and all_groups_covered
         and not outliers
         and all(row["pass"] for row in thread_effects)
+        and all(row["pass"] for row in cross_seed_correlations)
     )
 
     return {
@@ -412,6 +461,7 @@ def build_summary(
             "minimum_seeds_per_thread": minimum_seeds_per_thread,
             "max_thread_effect_z": max_thread_effect_z,
             "max_seed_outlier_z": max_seed_outlier_z,
+            "max_cross_seed_correlation_z": max_cross_seed_correlation_z,
             "exact_stream_hash_fields": ["event", *sorted(observables)],
         },
         "runs": [asdict(run) for run in runs],
@@ -420,6 +470,7 @@ def build_summary(
         "duplicate_streams_across_different_seeds": duplicate_streams,
         "seed_coverage_by_effective_thread_count": seed_coverage,
         "seed_mean_outliers": outliers,
+        "cross_seed_event_index_correlations": cross_seed_correlations,
         "thread_group_effects": thread_effects,
     }
 
@@ -437,13 +488,16 @@ def plot_summary(pdf: PdfPages, summary: dict[str, Any]) -> None:
         f"{len(summary['duplicate_streams_across_different_seeds'])}",
         f"Physics provenance mismatches: {len(summary['physics_provenance_mismatches'])}",
         f"Seed-mean outliers: {len(summary['seed_mean_outliers'])}",
+        "Failing cross-seed correlations: "
+        f"{sum(not row['pass'] for row in summary['cross_seed_event_index_correlations'])}",
         "Failing thread effects: "
         f"{sum(not row['pass'] for row in summary['thread_group_effects'])}",
         "",
         "PASS requires comparable physics provenance, unique seeds within each",
         "effective-thread group, no exact duplicate streams across different seeds,",
         "adequate seed coverage in every effective-thread group, no extreme",
-        "seed-mean outliers, and no thread-group mean difference beyond the",
+        "seed-mean outliers, no event-indexed cross-seed correlation beyond the",
+        "configured Fisher-z threshold, and no thread-group mean difference beyond the",
         "configured z threshold.",
         "",
         "This is a diagnostic ensemble test, not proof of full RNG independence.",
@@ -501,6 +555,7 @@ def main() -> int:
         minimum_seeds_per_thread=args.minimum_seeds_per_thread,
         max_thread_effect_z=args.max_thread_effect_z,
         max_seed_outlier_z=args.max_seed_outlier_z,
+        max_cross_seed_correlation_z=args.max_cross_seed_correlation_z,
         allow_different_git_commit=args.allow_different_git_commit,
     )
     summary["inputs"] = {

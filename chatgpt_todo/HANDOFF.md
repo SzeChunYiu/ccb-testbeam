@@ -2,74 +2,72 @@
 
 ## Session
 
-- **UTC:** 2026-07-22T13:08:00Z
+- **UTC:** 2026-07-22T14:07:00Z
 - **Task:** AUD-AMP-001 (PARTIAL)
-- **Initial remote main:** `46fb4415323b872ef2a8026edd8d68148ae09f41`
+- **Initial remote main:** `1030da2a132670921de5bf5715c594f587ab12b7`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Write target:** direct to `main`
 
 ## Confirmed engineering finding
 
-Version 2.1.0 of `tools/audit/amplitude_convention_audit.py` used `pandas.to_numeric(...).dropna()` for `amplitude_adc`. IEEE `+inf` and `-inf` are numeric and survive `dropna()`. A malformed table could therefore be classified from nonphysical values, and baseline-relative diagnostics could become infinite.
+Version 2.2.0 of `tools/audit/amplitude_convention_audit.py` counted malformed nonnumeric `amplitude_adc` rows after `pandas.to_numeric(..., errors="coerce")`, but did not emit a warning or fail the aggregate gate. A table containing valid ADC values mixed with malformed strings could therefore be classified from the surviving finite subset and return success.
 
 ## Work pushed directly to main
 
-The auditor is now version 2.2.0 and:
+The auditor is now version 2.3.0 and:
 
-- rejects nonfinite scalar classification values;
-- classifies only finite amplitude rows;
-- records finite, nonfinite, and nonnumeric amplitude-row counts;
-- warns with `NONFINITE_AMPLITUDE_VALUES_EXCLUDED`;
-- fails the aggregate gate when any classified table contains nonfinite amplitudes;
-- rejects tables with no finite numeric amplitude values;
-- removes nonfinite amplitude/baseline pairs before baseline diagnostics;
-- records `finite_amplitude_baseline_pairs` and aggregate `n_nonfinite_tables`;
-- preserves full-table default, explicit prefix rejection, provenance hashes, ambiguity handling, skips, and read-error reporting.
+- emits `NONNUMERIC_AMPLITUDE_VALUES_EXCLUDED` for affected tables;
+- reports aggregate `n_nonnumeric_tables`;
+- includes malformed-table counts in console output;
+- returns nonzero whenever a classified table contains nonnumeric amplitude entries;
+- rejects an amplitude column containing no finite numeric values;
+- records the classification rule as `finite_numeric_values_only`;
+- preserves full-table default behavior, explicit prefix rejection, ambiguity handling, SHA-256 provenance, nonfinite rejection, baseline diagnostics, skipped tables, and read-error reporting.
 
 Regression coverage was expanded in `tests/test_amplitude_convention_audit.py`.
 
 Immutable session record:
 
-- `chatgpt_todo/archive/2026-07-22T130800Z_AUD-AMP-001_NONFINITE_VALUES.md`
+- `chatgpt_todo/archive/2026-07-22T140700Z_AUD-AMP-001_NONNUMERIC_VALUES.md`
 
 ## Validation
 
 Exact temporary copies were executed:
 
 ```text
-python -m pytest /mnt/data/ampfix/tests/test_amplitude_convention_audit.py -q
-11 passed in 0.10s
+python -m py_compile /tmp/ccb_audit/tools/audit/amplitude_convention_audit.py /tmp/ccb_audit/tests/test_amplitude_convention_audit.py
+python -m pytest /tmp/ccb_audit/tests/test_amplitude_convention_audit.py -q
+13 passed in 0.21s
 ```
 
-The focused tests cover normal absolute/net/ambiguous classification, prefix rejection, nonfinite amplitudes, nonfinite baseline pairs, all-nonfinite rejection, skipped tables, parser errors, and invalid thresholds.
-
-An unrelated spreadsheet-runtime warmup emitted an error after Python startup; pytest itself exited successfully.
+New tests verify that mixed numeric/malformed amplitudes fail the aggregate gate and that all-nonnumeric columns are rejected. The existing full-table, prefix, ambiguity, provenance, nonfinite, baseline, skip, parser-error, and threshold regressions remain passing.
 
 ## Main progression
 
-- `46fb4415323b872ef2a8026edd8d68148ae09f41` — initial remote main.
-- `b850e5c947aa8d27e568e145f8ca05e1c7a4991f` — `fix(audit): reject nonfinite amplitude classifications`.
-- `13aa547969a99bb71999742cbb919ebdbf9677e3` — `test(audit): cover nonfinite amplitude handling`.
-- `9c63981d48cea020f00eabc768fd1ee0e2a69d8f` — `docs(audit): archive nonfinite amplitude gate`.
+- `1030da2a132670921de5bf5715c594f587ab12b7` — initial remote main.
+- `e494a436fc316467067dac97899abd7d7e456221` — `fix(audit): fail malformed amplitude-value gates`.
+- `83d92e291b5e3b23e9daaf3ff268e92e6fa07487` — `test(audit): cover malformed amplitude-value gates`.
+- `eb10088ef32a8e701ab5fb6887f2dc36a8858ce5` — `docs(audit): archive nonnumeric amplitude gate`.
+- `5fbc2a779860d1c0c2ed888af111ed4e0d23423e` — `docs(audit): record nonnumeric amplitude gate task`.
 - This handoff update is the final session commit and must be verified as remote `main`.
 
 ## Evidence boundary and blockers
 
 - No real pulse table was available in this execution environment.
-- The prior repository-recorded corpus classification was not rerun with version 2.2.0.
+- The prior repository-recorded corpus classification was not rerun with version 2.3.0.
 - The exact convention of the A-002 source table remains unmeasured here.
 - Historical A-002 stopping outputs remain quarantined.
 - No corrected stopping counts, fractions, CSV, or plot are claimed.
 
 ## Acceptance status
 
-- Finite-value classification and nonfinite rejection: VALIDATED on synthetic regression.
+- Finite-numeric classification and malformed-value rejection: VALIDATED on synthetic regression.
 - Full-table default and partial-mode rejection: VALIDATED on synthetic regression.
 - Provenance/error/ambiguity handling: VALIDATED on synthetic regression.
-- Prior corpus classification: repository-recorded only; rerun required with version 2.2.0 and no `--max-rows`.
+- Prior corpus classification: repository-recorded only; rerun required with version 2.3.0 and no `--max-rows`.
 - A-002 source-table convention: BLOCKED pending exact-table measurement.
 - Corrected A-002 real-data artifacts: BLOCKED.
 
 ## Next action
 
-Run version 2.2.0 against the exact A-002 source table and the prior amplitude-table corpus without `--max-rows`. Commit the generated JSON outputs with hashes, then review every error, `AMBIGUOUS` record, and nonfinite-value warning. Only after that should the measured convention be passed explicitly to `scripts/single_stave/deltaE_E_data_bridge.py` and the quarantined A-002 JSON, CSV, and figure be regenerated under the composite-key and stopping-bin cardinality invariants.
+Run version 2.3.0 against the exact A-002 source table and the prior amplitude-table corpus without `--max-rows`. Commit generated JSON outputs with hashes, then review every error, `AMBIGUOUS` record, nonfinite warning, and nonnumeric warning. Only after that should the measured convention be passed explicitly to `scripts/single_stave/deltaE_E_data_bridge.py` and the quarantined A-002 JSON, CSV, and figure be regenerated under the composite-key and stopping-bin cardinality invariants.

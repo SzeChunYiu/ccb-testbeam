@@ -2,13 +2,13 @@
 
 - **Task ID:** AUD-AMP-001
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-22T14:07:00Z
-- **Base main SHA:** `1030da2a132670921de5bf5715c594f587ab12b7`
-- **Primary scope:** prevent malformed nonnumeric `amplitude_adc` entries from being silently excluded while the convention audit still passes.
-- **Files inspected:** `tools/audit/amplitude_convention_audit.py`, `tests/test_amplitude_convention_audit.py`, `chatgpt_todo/ACTIVE_TASK.md`, and `chatgpt_todo/HANDOFF.md`.
-- **Observed fact:** version 2.2.0 recorded `nonnumeric_amplitude_rows` but did not warn or fail the aggregate gate, unlike its treatment of nonfinite numeric values.
-- **Implementation:** version 2.3.0 emits `NONNUMERIC_AMPLITUDE_VALUES_EXCLUDED`, reports `n_nonnumeric_tables`, fails the gate for affected tables, and rejects all-nonnumeric amplitude columns.
-- **Validation:** syntax checks passed and the focused suite passed with `13 passed in 0.21s`.
+- **Session stamp:** 2026-07-22T15:03:46Z
+- **Base main SHA:** `7d880de8af436634be083649350ce2ed26383424`
+- **Primary scope:** prevent baseline dispersion columns such as `baseline_rms_adc` from being misused as pedestal levels in amplitude-convention diagnostics.
+- **Files inspected:** `tools/audit/amplitude_convention_audit.py`, `tests/test_amplitude_convention_audit.py`, `docs/contracts/PULSE_TABLE_CONTRACT.md`, `chatgpt_todo/ACTIVE_TASK.md`, and `chatgpt_todo/HANDOFF.md`.
+- **Observed fact:** version 2.3.0 selected any sole column containing `baseline`; a lone RMS/noise column could therefore produce a physically meaningless subtraction diagnostic and false `subtract_baseline_correct=true`.
+- **Implementation:** version 2.4.0 separates pedestal-level candidates from RMS/std/sigma/noise/width/variance diagnostics and requires exactly one level candidate.
+- **Validation:** syntax checks passed and the focused suite passed with `16 passed in 0.32s`.
 - **Evidence boundary:** no real pulse table was accessed; the prior corpus and exact A-002 source-table convention were not rerun.
-- **Progress:** code, tests, and immutable archive record are on remote `main`.
-- **Acceptance status:** PARTIAL — malformed-value handling is validated synthetically; real-table classification and regenerated provenance artifacts remain BLOCKED_COMPUTE.
+- **Progress:** code and tests are committed to remote `main`; immutable handoff update follows.
+- **Acceptance status:** PARTIAL — baseline-column semantics are validated synthetically; real-table classification and regenerated provenance artifacts remain BLOCKED_COMPUTE.

@@ -1,0 +1,32 @@
+{
+  "root": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "mapping_primary": {
+    "mapping": "B2/B4/B6/B8 = LayerID 1,3,5,7 (#869)",
+    "layers": [
+      1,
+      3,
+      5,
+      7
+    ],
+    "n_events": 118751,
+    "deltaE_wmedian_MeV": 12.408208586055466,
+    "E_wmedian_MeV": 51.12794996118697,
+    "corr_deltaE_E": -0.46820407641230233
+  },
+  "mapping_alternate": {
+    "mapping": "alt LayerID 0,2,4,6",
+    "layers": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "n_events": 130750,
+    "deltaE_wmedian_MeV": 11.64218012258651,
+    "E_wmedian_MeV": 45.62580307879886,
+    "corr_deltaE_E": -0.2819317255566152
+  },
+  "weight": "PrimaryWeight applied (A-003); event weight = first primary",
+  "note": "deltaE_mc=edep(B2)=LayerID1; E_mc=edep(B4+B6+B8)=LayerID3+5+7. Physical offset (1,3,5,7 vs 0,2,4,6) still to be pinned from DAQ drawings.",
+  "units": "MeV (MC edep; data side is ADC in deltaE_a002)"
+}

@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pandas as pd
 
-TOOL_VERSION = "2.0.0"
+TOOL_VERSION = "2.1.0"
 
 
 def file_sha256(path: Path) -> str:
@@ -31,7 +31,12 @@ def classify(value: float, net_max: float, absolute_min: float) -> str:
     return "AMBIGUOUS"
 
 
-def audit(path: Path, max_rows: int, net_max: float, absolute_min: float) -> dict:
+def audit(
+    path: Path,
+    max_rows: int | None,
+    net_max: float,
+    absolute_min: float,
+) -> dict:
     header = pd.read_csv(path, nrows=0)
     common = {
         "path": str(path),
@@ -44,7 +49,10 @@ def audit(path: Path, max_rows: int, net_max: float, absolute_min: float) -> dic
     baseline_columns = [c for c in header.columns if "baseline" in c.lower()]
     baseline = baseline_columns[0] if len(baseline_columns) == 1 else None
     usecols = ["amplitude_adc"] + ([baseline] if baseline else [])
-    frame = pd.read_csv(path, usecols=usecols, nrows=max_rows)
+    read_rows = max_rows + 1 if max_rows is not None else None
+    loaded = pd.read_csv(path, usecols=usecols, nrows=read_rows)
+    truncated = max_rows is not None and len(loaded) > max_rows
+    frame = loaded.iloc[:max_rows].copy() if truncated else loaded
     amplitude = pd.to_numeric(frame["amplitude_adc"], errors="coerce").dropna()
     if amplitude.empty:
         raise ValueError("amplitude_adc has no numeric values")
@@ -54,7 +62,9 @@ def audit(path: Path, max_rows: int, net_max: float, absolute_min: float) -> dic
     result = {
         **common,
         "status": "CLASSIFIED",
+        "classification_scope": "PREFIX_SAMPLE" if max_rows is not None else "FULL_TABLE",
         "rows_read": len(frame),
+        "input_truncated": truncated,
         "finite_amplitude_rows": len(amplitude),
         "amplitude_adc_median": median,
         "baseline_column": baseline,
@@ -65,6 +75,9 @@ def audit(path: Path, max_rows: int, net_max: float, absolute_min: float) -> dic
             False if convention == "NET" else None
         ),
     }
+    if max_rows is not None:
+        result["max_rows_requested"] = max_rows
+        result["warning"] = "PREFIX_SAMPLE_ROW_ORDER_DEPENDENT"
     if baseline:
         pair = frame[["amplitude_adc", baseline]].apply(
             pd.to_numeric, errors="coerce"
@@ -77,9 +90,9 @@ def audit(path: Path, max_rows: int, net_max: float, absolute_min: float) -> dic
             if not pair.empty else None
         )
     elif len(baseline_columns) > 1:
-        result["warning"] = "MULTIPLE_BASELINE_COLUMNS"
+        result["warning_baseline"] = "MULTIPLE_BASELINE_COLUMNS"
     elif convention == "ABSOLUTE":
-        result["warning"] = "ABSOLUTE_WITHOUT_BASELINE"
+        result["warning_baseline"] = "ABSOLUTE_WITHOUT_BASELINE"
     return result
 
 
@@ -87,11 +100,20 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("inputs", nargs="+", help="Paths or glob patterns")
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--max-rows", type=int, default=40000)
+    parser.add_argument(
+        "--max-rows",
+        type=int,
+        default=None,
+        help=(
+            "Explicitly classify only the first N rows. This mode is row-order "
+            "dependent, is marked PREFIX_SAMPLE, and returns nonzero. By default "
+            "the complete amplitude column is evaluated."
+        ),
+    )
     parser.add_argument("--net-max-adc", type=float, default=3500.0)
     parser.add_argument("--absolute-min-adc", type=float, default=5000.0)
     args = parser.parse_args(argv)
-    if args.max_rows <= 0:
+    if args.max_rows is not None and args.max_rows <= 0:
         raise ValueError("max_rows must be positive")
     classify(0.0, args.net_max_adc, args.absolute_min_adc)
 
@@ -108,6 +130,7 @@ def main(argv: list[str] | None = None) -> int:
 
     classified = [row for row in tables if row["status"] == "CLASSIFIED"]
     counts = {name: sum(row["convention"] == name for row in classified) for name in ("ABSOLUTE", "NET", "AMBIGUOUS")}
+    n_partial = sum(row["classification_scope"] != "FULL_TABLE" for row in classified)
     payload = {
         "tool": "tools/audit/amplitude_convention_audit.py",
         "tool_version": TOOL_VERSION,
@@ -119,6 +142,7 @@ def main(argv: list[str] | None = None) -> int:
         "max_rows": args.max_rows,
         "n_inputs": len(paths),
         "n_classified": len(classified),
+        "n_partial": n_partial,
         "n_skipped": sum(row["status"] == "SKIPPED" for row in tables),
         "n_errors": len(errors),
         "counts": counts,
@@ -127,8 +151,12 @@ def main(argv: list[str] | None = None) -> int:
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    print(f"inputs={len(paths)} absolute={counts['ABSOLUTE']} net={counts['NET']} ambiguous={counts['AMBIGUOUS']} errors={len(errors)}")
-    return 1 if errors or counts["AMBIGUOUS"] else 0
+    print(
+        f"inputs={len(paths)} absolute={counts['ABSOLUTE']} "
+        f"net={counts['NET']} ambiguous={counts['AMBIGUOUS']} "
+        f"partial={n_partial} errors={len(errors)}"
+    )
+    return 1 if errors or counts["AMBIGUOUS"] or n_partial else 0
 
 
 if __name__ == "__main__":

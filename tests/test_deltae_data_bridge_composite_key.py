@@ -37,32 +37,65 @@ def test_composite_key_never_splits_on_eventno() -> None:
     assert not wide.duplicated(["source_file_id", "run", "evt"]).any()
     assert "eventno" not in wide.columns
     assert result["amplitude_column"] == "median_amp_adc"
-    assert result["amplitude_column_explicitly_requested"] is False
+    assert result["amplitude_convention"] == "net"
+    assert result["amplitude_transform"] == "identity"
     assert result["n_events_composite_key"] == 3
     assert result["physical_events_with_multiple_eventno_values"] == 1
     assert result["eventno_values_spanning_multiple_events"] == 1
     assert result["events_that_eventno_only_join_would_corrupt"] == 3
     assert result["stopping_distribution"] == {"B4": 1, "B8": 1, "B2": 1}
     assert result["stopping_distribution_total"] == 3
-    assert sum(result["stopping_distribution"].values()) == 3
 
 
-def test_bare_amplitude_adc_is_rejected_by_default() -> None:
+def test_bare_amplitude_adc_requires_measured_convention() -> None:
     pulses = pd.DataFrame(
         {
             "run": [7],
             "evt": [1],
             "eventno": [1],
             "stave": ["B2"],
-            "amplitude_adc": [201.0],
+            "amplitude_adc": [6750.0],
+            "baseline_adc": [6752.0],
         }
     )
 
-    with pytest.raises(ValueError, match="schema-ambiguous"):
+    with pytest.raises(ValueError, match="table-dependent semantics"):
         MODULE.build_event_table(pulses, source_file_id="fixture")
+    with pytest.raises(ValueError, match="requires amplitude_convention"):
+        MODULE.build_event_table(
+            pulses,
+            source_file_id="fixture",
+            amplitude_column="amplitude_adc",
+        )
 
 
-def test_ambiguous_amplitude_can_only_be_used_by_explicit_override() -> None:
+def test_absolute_amplitude_adc_is_converted_to_net_height() -> None:
+    pulses = pd.DataFrame(
+        {
+            "run": [7, 7],
+            "evt": [1, 2],
+            "eventno": [1, 2],
+            "stave": ["B2", "B2"],
+            "amplitude_adc": [6750.0, 6400.0],
+            "baseline_adc": [6752.0, 6752.0],
+        }
+    )
+
+    wide, result = MODULE.build_event_table(
+        pulses,
+        source_file_id="fixture",
+        threshold_adc=200.0,
+        amplitude_column="amplitude_adc",
+        amplitude_convention="absolute",
+    )
+
+    assert list(wide["amp_B2"]) == [2.0, 352.0]
+    assert result["amplitude_convention"] == "absolute"
+    assert result["amplitude_transform"] == "abs(amplitude_adc - baseline_adc)"
+    assert result["stopping_distribution"] == {"none": 1, "B2": 1}
+
+
+def test_net_amplitude_adc_is_used_without_subtraction() -> None:
     pulses = pd.DataFrame(
         {
             "run": [7, 7],
@@ -78,12 +111,32 @@ def test_ambiguous_amplitude_can_only_be_used_by_explicit_override() -> None:
         source_file_id="fixture",
         threshold_adc=200.0,
         amplitude_column="amplitude_adc",
+        amplitude_convention="net",
     )
 
-    assert list(wide["amp_B4"]) == [0.0, 0.0]
-    assert result["amplitude_column"] == "amplitude_adc"
-    assert result["amplitude_column_explicitly_requested"] is True
-    assert result["stopping_distribution"] == {"none": 1, "B2": 1}
+    assert list(wide["amp_B2"]) == [0.0, 201.0]
+    assert result["amplitude_convention"] == "net"
+    assert result["amplitude_transform"] == "identity"
+
+
+def test_absolute_amplitude_requires_baseline() -> None:
+    pulses = pd.DataFrame(
+        {
+            "run": [1],
+            "evt": [1],
+            "eventno": [1],
+            "stave": ["B2"],
+            "amplitude_adc": [6750.0],
+        }
+    )
+
+    with pytest.raises(ValueError, match="requires baseline_adc"):
+        MODULE.build_event_table(
+            pulses,
+            source_file_id="fixture",
+            amplitude_column="amplitude_adc",
+            amplitude_convention="absolute",
+        )
 
 
 def test_multiple_explicit_amplitude_columns_require_selection() -> None:
@@ -107,4 +160,4 @@ def test_multiple_explicit_amplitude_columns_require_selection() -> None:
         amplitude_column="peak_height_adc",
     )
     assert result["amplitude_column"] == "peak_height_adc"
-    assert result["amplitude_column_explicitly_requested"] is True
+    assert result["amplitude_convention"] == "net"

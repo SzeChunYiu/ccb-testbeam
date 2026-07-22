@@ -68,3 +68,15 @@ def test_check_mode_accepts_synchronized_files(tmp_path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("\n".join(new for _, new in pairs), encoding="utf-8")
         assert sync.synchronize_file(tmp_path, label, check=True) == 0
+
+
+def test_readme_replacements_are_scientifically_qualified() -> None:
+    pairs = sync.REPLACEMENTS["README.md"]
+    source = "\n".join(old for old, _ in pairs)
+    updated, changed = sync.synchronize_text("README.md", source)
+
+    assert changed == 2
+    assert "Truth-labelled MC only" in updated
+    assert "real-data identity unvalidated" in updated
+    assert "✅ MC-validated" not in updated
+    assert "✅ MC-identified" not in updated

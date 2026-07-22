@@ -1,0 +1,161 @@
+{
+  "pedestal_adc": 6752.0,
+  "n_tables": 19,
+  "n_absolute": 17,
+  "n_net": 2,
+  "finding": "A-001 CONFIRMED as INCONSISTENCY: amplitude_adc is stored ABSOLUTE in 17 tables and NET in 2 tables. abs(amplitude_adc - baseline_adc) is CORRECT for ABSOLUTE, a DOUBLE-SUBTRACTION for NET. A consumer cannot know which without this check -> must emit peak_height_adc (net) + peak_code_adc (absolute) per the contract.",
+  "tables": [
+    {
+      "report": "1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest",
+      "file": "s00_selected_b_pulses.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": 6752.5,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1780997954.15037.36463764__s01_full_dataset_templates",
+      "file": "q_template_per_pulse.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781007587.2616.535e78de",
+      "file": "fallback_residual_sample.csv.gz",
+      "amplitude_adc_median": 3419.0,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781007910.1647.505b465f",
+      "file": "timing_pulse_proxy_table.csv.gz",
+      "amplitude_adc_median": 2636.5,
+      "baseline_median": null,
+      "convention": "NET",
+      "subtract_baseline_correct": false
+    },
+    {
+      "report": "1781012359.1143.5d9c3b2a",
+      "file": "timing_pulse_table.csv.gz",
+      "amplitude_adc_median": 2625.0,
+      "baseline_median": null,
+      "convention": "NET",
+      "subtract_baseline_correct": false
+    },
+    {
+      "report": "1781015988.1972.6a842ea9",
+      "file": "heldout_predictions.csv.gz",
+      "amplitude_adc_median": 6509.5,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781015988.1972.6a842ea9",
+      "file": "transfer_eval_pulses.csv.gz",
+      "amplitude_adc_median": 6509.5,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781021837.2028.5a294edc",
+      "file": "selected_pulse_pretrigger_table.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": 6752.5,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781023340.632.43377364",
+      "file": "pulse_axis_table.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781028640.1299.266407ae",
+      "file": "s00_selected_b_pulses.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": 6752.5,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781040960.896.205a0b9d__p12b_pulse_support_tensor",
+      "file": "pulse_support_atoms.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781046830.796.418e6e1f__p12c_pulse_action_decision_matrix",
+      "file": "pulse_action_atoms.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781054026.1869.66191fe9__p12d_consumer_action_conflict_arbitration",
+      "file": "pulse_conflict_atoms.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781054026.1999.7ad97cb0__p09h_baseline_excursion_temporal_subtype_ledger",
+      "file": "baseline_excursion_current_rows.csv.gz",
+      "amplitude_adc_median": 3803.5,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781054026.1999.7ad97cb0__p09h_baseline_excursion_temporal_subtype_ledger",
+      "file": "heldout_subtype_predictions.csv.gz",
+      "amplitude_adc_median": 3803.5,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781062443.571.1e7346af__s05n_pretrigger_covariance_projection_stress",
+      "file": "selected_pulse_pretrigger_table.csv.gz",
+      "amplitude_adc_median": 6729.75,
+      "baseline_median": 6752.5,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781078146.875.034f6846__p10n_peak_phase_counterfactual",
+      "file": "heldout_predictions.csv.gz",
+      "amplitude_adc_median": 3191.0,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1781182678.1624.461c5bb5__p10j_acquisition_window_livetime_falsification",
+      "file": "heldout_predictions.csv.gz",
+      "amplitude_adc_median": 3122.0,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    },
+    {
+      "report": "1783727976.9059.2fa2489b__pedestal_energy_pid_coupling",
+      "file": "heldout_predictions.csv.gz",
+      "amplitude_adc_median": 3096.5,
+      "baseline_median": null,
+      "convention": "ABSOLUTE",
+      "subtract_baseline_correct": true
+    }
+  ]
+}

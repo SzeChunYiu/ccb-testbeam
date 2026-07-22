@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.4.0"
+TOOL_VERSION = "2.5.0"
 BASELINE_DISPERSION_TOKENS = (
     "rms",
     "std",
@@ -99,6 +99,15 @@ def audit(
 
     median = float(amplitude.median())
     convention = classify(median, net_max, absolute_min)
+    baseline_resolution = (
+        "RESOLVED"
+        if convention == "ABSOLUTE" and baseline
+        else "MISSING"
+        if convention == "ABSOLUTE" and not baseline_columns
+        else "AMBIGUOUS"
+        if convention == "ABSOLUTE" and len(baseline_columns) > 1
+        else "NOT_REQUIRED"
+    )
     result = {
         **common,
         "status": "CLASSIFIED",
@@ -113,6 +122,7 @@ def audit(
         "baseline_candidate_count": len(baseline_columns),
         "baseline_candidates": baseline_columns,
         "auxiliary_baseline_columns": auxiliary_baseline_columns,
+        "baseline_resolution": baseline_resolution,
         "convention": convention,
         "subtract_baseline_correct": (
             True if convention == "ABSOLUTE" and baseline else
@@ -205,6 +215,11 @@ def main(argv: list[str] | None = None) -> int:
     n_nonnumeric_tables = sum(
         row["nonnumeric_amplitude_rows"] > 0 for row in classified
     )
+    n_unresolved_absolute_baselines = sum(
+        row["convention"] == "ABSOLUTE"
+        and row["baseline_resolution"] != "RESOLVED"
+        for row in classified
+    )
     payload = {
         "tool": "tools/audit/amplitude_convention_audit.py",
         "tool_version": TOOL_VERSION,
@@ -218,6 +233,7 @@ def main(argv: list[str] | None = None) -> int:
             "candidate": "column name contains baseline",
             "excluded_dispersion_tokens": list(BASELINE_DISPERSION_TOKENS),
             "require_exactly_one_level_candidate_for_subtraction_diagnostic": True,
+            "unresolved_absolute_baseline_is_non_accepting": True,
         },
         "max_rows": args.max_rows,
         "n_inputs": len(paths),
@@ -225,6 +241,7 @@ def main(argv: list[str] | None = None) -> int:
         "n_partial": n_partial,
         "n_nonfinite_tables": n_nonfinite_tables,
         "n_nonnumeric_tables": n_nonnumeric_tables,
+        "n_unresolved_absolute_baselines": n_unresolved_absolute_baselines,
         "n_skipped": sum(row["status"] == "SKIPPED" for row in tables),
         "n_errors": len(errors),
         "counts": counts,
@@ -240,7 +257,9 @@ def main(argv: list[str] | None = None) -> int:
         f"inputs={len(paths)} absolute={counts['ABSOLUTE']} "
         f"net={counts['NET']} ambiguous={counts['AMBIGUOUS']} "
         f"partial={n_partial} nonfinite={n_nonfinite_tables} "
-        f"nonnumeric={n_nonnumeric_tables} errors={len(errors)}"
+        f"nonnumeric={n_nonnumeric_tables} "
+        f"unresolved_absolute_baselines={n_unresolved_absolute_baselines} "
+        f"errors={len(errors)}"
     )
     return 1 if (
         errors
@@ -248,6 +267,7 @@ def main(argv: list[str] | None = None) -> int:
         or n_partial
         or n_nonfinite_tables
         or n_nonnumeric_tables
+        or n_unresolved_absolute_baselines
     ) else 0
 
 

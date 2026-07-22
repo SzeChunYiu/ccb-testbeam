@@ -104,3 +104,17 @@
 - Verified stale public content remains in WIKI and Chapter 9. No public file was overwritten because complete source bytes were unavailable locally and connector responses were truncated; risking data loss was rejected.
 - Direct-to-main commits before this log update: `c7ef6a336918e7b2f859ed2505431bfe31f857e2`, `bccbc220c9b1815c684d72c5ac48367dd1164d07`.
 - No data, simulation, plot, numerical result, or source code changed. This run delivered validated governance corrections and a reproducible blocker record.
+
+## 2026-07-22T04:05:47Z — AUD-DOC-001
+
+- Initial remote main: `a6a8eca4ddebd8db6a6a7f4c32e64ed0179b9bdb`.
+- Inspected current handoff, recent main history, complete WIKI chunks, the C12 synchronizer, its regression tests, and the local DNS limitation.
+- Confirmed the public WIKI remains stale, but complete safe replacement is still unavailable through the local checkout path.
+- Identified an engineering gap: `sync_c12_public_claims.py` could only process all public files together, preventing safe independent synchronization/checking of one complete file.
+- Added repeatable `--path` selection with deterministic repository ordering, duplicate suppression, and explicit unknown-path rejection.
+- Added regression coverage for default-all behavior, selected-path ordering/deduplication, and unknown-path rejection.
+- Local validation on exact temporary copies: `python -m py_compile` passed; `python -m pytest /tmp/test_sync_c12_public_claims.py -q` returned `9 passed in 0.06s`.
+- Direct-to-main commits before this log update: `35f59f22d46378782f9ae8bc5e8327caae782d7d`, `3bc3c3dfdeef1a84536053937f7590b97c55059e`.
+- Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector writes were used.
+- No raw data, MC outputs, scientific numbers, plots, or generated artifacts changed.
+- Next: in a complete checkout, run `python scripts/sync_c12_public_claims.py --path WIKI.md`, review the WIKI-only diff, run `--check`, tests, and link checks, then commit the public wording directly to `main`.

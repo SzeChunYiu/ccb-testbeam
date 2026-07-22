@@ -93,17 +93,38 @@ def synchronize_file(root: Path, relative_path: str, *, check: bool) -> int:
     return changed
 
 
+def selected_paths(requested: list[str] | None) -> tuple[str, ...]:
+    """Return validated paths in deterministic repository order."""
+    if not requested:
+        return tuple(REPLACEMENTS)
+
+    unknown = sorted(set(requested) - set(REPLACEMENTS))
+    if unknown:
+        allowed = ", ".join(REPLACEMENTS)
+        raise ValueError(f"unknown path(s): {', '.join(unknown)}; allowed: {allowed}")
+
+    requested_set = set(requested)
+    return tuple(path for path in REPLACEMENTS if path in requested_set)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--check", action="store_true")
+    parser.add_argument(
+        "--path",
+        action="append",
+        choices=tuple(REPLACEMENTS),
+        help="process only this repository-relative path; repeat for multiple files",
+    )
     args = parser.parse_args()
 
+    paths = selected_paths(args.path)
     total = 0
-    for relative_path in REPLACEMENTS:
+    for relative_path in paths:
         total += synchronize_file(args.root, relative_path, check=args.check)
     mode = "checked" if args.check else "updated"
-    print(f"{mode} {len(REPLACEMENTS)} files; replacements={total}")
+    print(f"{mode} {len(paths)} files; replacements={total}")
     return 0
 
 

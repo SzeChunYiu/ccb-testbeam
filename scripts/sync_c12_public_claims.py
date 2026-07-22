@@ -110,6 +110,42 @@ def synchronize_file(
     return changed
 
 
+def synchronize_paths(
+    root: Path,
+    relative_paths: tuple[str, ...],
+    *,
+    check: bool,
+    show_diff: bool = False,
+) -> int:
+    """Validate every selected file before producing output or writing any file."""
+    prepared: list[tuple[str, Path, str, str, int]] = []
+    for relative_path in relative_paths:
+        path = root / relative_path
+        original = path.read_text(encoding="utf-8")
+        updated, changed = synchronize_text(relative_path, original)
+        prepared.append((relative_path, path, original, updated, changed))
+
+    if show_diff:
+        for relative_path, _, original, updated, changed in prepared:
+            if changed:
+                print(unified_diff(relative_path, original, updated), end="")
+
+    if check:
+        pending = [
+            f"{relative_path} requires {changed} synchronization change(s)"
+            for relative_path, _, _, _, changed in prepared
+            if changed
+        ]
+        if pending:
+            raise RuntimeError("; ".join(pending))
+    elif not show_diff:
+        for _, path, _, updated, changed in prepared:
+            if changed:
+                path.write_text(updated, encoding="utf-8")
+
+    return sum(changed for _, _, _, _, changed in prepared)
+
+
 def selected_paths(requested: list[str] | None) -> tuple[str, ...]:
     """Return validated paths in deterministic repository order."""
     if not requested:
@@ -145,11 +181,9 @@ def main() -> int:
         parser.error("--check and --diff are mutually exclusive")
 
     paths = selected_paths(args.path)
-    total = 0
-    for relative_path in paths:
-        total += synchronize_file(
-            args.root, relative_path, check=args.check, show_diff=args.diff
-        )
+    total = synchronize_paths(
+        args.root, paths, check=args.check, show_diff=args.diff
+    )
     mode = "diffed" if args.diff else "checked" if args.check else "updated"
     print(f"{mode} {len(paths)} files; replacements={total}")
     return 0

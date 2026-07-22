@@ -2,13 +2,13 @@
 
 - **Task ID:** AUD-AMP-001
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-22T12:08:38Z
-- **Base main SHA:** `8bff3f834c9da713996d946de1b16f3777e433a4`
-- **Primary scope:** eliminate hidden file-order dependence from amplitude-convention classification before measuring the exact A-002 source table.
+- **Session stamp:** 2026-07-22T14:07:00Z
+- **Base main SHA:** `1030da2a132670921de5bf5715c594f587ab12b7`
+- **Primary scope:** prevent malformed nonnumeric `amplitude_adc` entries from being silently excluded while the convention audit still passes.
 - **Files inspected:** `tools/audit/amplitude_convention_audit.py`, `tests/test_amplitude_convention_audit.py`, `chatgpt_todo/ACTIVE_TASK.md`, and `chatgpt_todo/HANDOFF.md`.
-- **Observed fact:** version 2.0.0 classified only the first 40,000 rows by default. Reordering identical table rows could therefore change the inferred convention.
-- **Implementation:** full-column classification is now the default; explicit `--max-rows` runs are labelled `PREFIX_SAMPLE`, marked row-order-dependent, recorded as partial, and return nonzero.
-- **Validation:** syntax checks passed and the focused synthetic suite passed with `7 passed in 0.19s`; a regression demonstrates prefix NET versus full-table ABSOLUTE classification for the same ordered values.
-- **Evidence boundary:** no real pulse table was accessed, so the prior 17 ABSOLUTE / 2 NET corpus result and the A-002 source-table convention were not rerun.
+- **Observed fact:** version 2.2.0 recorded `nonnumeric_amplitude_rows` but did not warn or fail the aggregate gate, unlike its treatment of nonfinite numeric values.
+- **Implementation:** version 2.3.0 emits `NONNUMERIC_AMPLITUDE_VALUES_EXCLUDED`, reports `n_nonnumeric_tables`, fails the gate for affected tables, and rejects all-nonnumeric amplitude columns.
+- **Validation:** syntax checks passed and the focused suite passed with `13 passed in 0.21s`.
+- **Evidence boundary:** no real pulse table was accessed; the prior corpus and exact A-002 source-table convention were not rerun.
 - **Progress:** code, tests, and immutable archive record are on remote `main`.
-- **Acceptance status:** PARTIAL — full-table default behavior is validated synthetically; real-table classification and regenerated provenance artifacts remain BLOCKED_COMPUTE.
+- **Acceptance status:** PARTIAL — malformed-value handling is validated synthetically; real-table classification and regenerated provenance artifacts remain BLOCKED_COMPUTE.

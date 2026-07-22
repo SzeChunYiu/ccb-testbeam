@@ -8,3 +8,14 @@
 | VIS-G4-004 | Optical yield and PE/MeV deposited | GPU node ROOT ensemble (4 seeds, 500 events) | analysis scripts | Distribution, run/seed stability | ✅ Mean=178.3 PE, RSE=0.48%; per-seed: 177.1, 178.0, 179.5, 178.5 | VALIDATED |
 
 Every generated plot must record title, axes, units, selections, provenance, normalization, binning, uncertainty meaning, generation command, output path, caption, and failure criteria.
+
+## Audit Summary
+
+| Plot category | Count |
+|---|---|
+| Paper figures (figures.yaml) | See paper/figures.yaml |
+| Figure registry entries | See tools/figure_registry/ |
+| Geant4 validation plots | 2 (event reproducibility, photon tree) |
+| Estimated total figures | 50+ across all reports |
+
+Every generated plot must record title, axes, units, selections, provenance, normalization, binning, uncertainty meaning, generation command, output path, caption, and failure criteria.

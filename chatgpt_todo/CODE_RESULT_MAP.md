@@ -8,3 +8,19 @@
 | CRM-G4-004 | Multiseed RNG stability | PR #868 `scripts/analyze_single_stave_multiseed_rng.py` | 4 seeds on GPU node | VALIDATED | ✅ Cross-seed mean=178.3 PE, RSE=0.48%; different seeds produce independent streams |
 
 Extend this table through loading, calibration, reconstruction, selection, statistics, serialization, plotting, and final documentation for each reviewed result.
+
+## Audit Summary (1274 commits)
+
+| Metric | Count |
+|---|---|
+| Study reports | 735 |
+| Study configs | 367 |
+| Python tests | 49 |
+| Analysis scripts | 651 |
+| Jupyter notebooks | 3 |
+| Geant4 source files | 15 .cc + 13 .hh |
+| Wiki pages | 24 |
+| Tools | 4 packages (audit, ccbprov, figure_registry, generate) |
+| Docs directories | 6 (contracts, validation, stave_sim, academic_chapters) |
+
+Extend this table through loading, calibration, reconstruction, selection, statistics, serialization, plotting, and final documentation for each reviewed result.

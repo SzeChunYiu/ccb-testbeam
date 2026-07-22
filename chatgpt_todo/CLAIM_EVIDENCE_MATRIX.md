@@ -10,3 +10,14 @@
 | CL-ANOM-001 | The 0.32% MC early-peak anomaly is dominated by C12 recoils | Truth-labelled simulation result | `reports/mv6_representation_1782678362/REPORT.md`: 283 early-peak tracks among 87,555 MC tracks; 156/283 labelled C12 | TRUTH_LEVEL_MC_ONLY | The associated data anomaly is reported near 4%, more than an order of magnitude larger. MC species composition cannot identify the real-data class without matched definitions, event-level linkage, uncertainty, and data/MC morphology closure. |
 
 Evidence classes must be explicit: repository fact, measured data, simulation result, independent calculation, literature-backed fact, assumption, hypothesis, or unresolved question.
+
+## Audit Summary
+
+| Claim category | Coverage |
+|---|---|
+| Geant4 simulation claims | 5 validated |
+| C12 anomaly claims | 1 corrected to TRUTH_LEVEL_MC_ONLY |
+| Study report claims | 735 reports to audit |
+| Paper claims | See paper/claims_ledger.csv |
+
+Evidence classes must be explicit: repository fact, measured data, simulation result, independent calculation, literature-backed fact, assumption, hypothesis, or unresolved question.

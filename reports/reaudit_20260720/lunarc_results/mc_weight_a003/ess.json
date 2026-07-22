@@ -1,0 +1,6 @@
+{
+ "branch": "PrimaryWeight", "root": "geant4/data/output_krakow_1M.root",
+ "n": 2000000, "sum_w": 6445162.07, "ess": 694523.68,
+ "ess_fraction": 0.3473, "wmin": 0.126, "wmax": 15.325,
+ "w_p50": 0.652, "w_p99": 14.919, "w_max_over_mean": 4.756
+}

@@ -1,13 +1,14 @@
 # Active Task
 
-- **Task ID:** AUD-REPO-002
+- **Task ID:** AUD-PULSE-001
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-22T07:22:00Z
-- **Base main SHA:** `fbec7a75869b863baf7c34b73c532b46f7531660`
-- **Primary scope:** reconcile repository review states with currently observable GitHub evidence.
-- **Files inspected:** `chatgpt_todo/MASTER_INDEX.md`, `BACKLOG.md`, `ACTIVE_TASK.md`, `HANDOFF.md`, recent main commits, and PR #868 metadata.
-- **Observed facts:** PR #868 is closed and not merged. The master index contains large areas that remain `NOT_STARTED`, including study reports and analysis scripts. Public C12 wording was synchronized on main in commit `d966384231ccf29b7e8e4f1563a46c281ca29782`.
-- **Evidence boundary:** GPU-node and ROOT validation values are retained as repository-recorded results. This session did not execute Geant4 or inspect the underlying ROOT, JSON, or PDF artifacts.
-- **Validation plan:** maintain conservative states until exact main commits and validation artifacts are linked and independently checked.
-- **Progress:** `MASTER_INDEX.md` corrected on main in commit `d85b467350d42f1efc788df0f80605a824da1e11`; handoff updates remain in progress.
-- **Acceptance status:** ACTIVE
+- **Session stamp:** 2026-07-22T08:06:55Z
+- **Base main SHA:** `bcd5762ec8fc10a911e32e60a0b91b0d6fbd6d0c`
+- **Primary scope:** make A-001 pulse-schema validation artifacts traceable to exact input bytes.
+- **Files inspected:** `tools/audit/validate_pulse_schema.py`, `tests/test_audit_tools.py`, A-001 report and JSON artifacts, recent `main` history.
+- **Observed fact:** the committed A-001 JSON used abbreviated table paths and omitted input hashes and byte sizes, so the exact validated compressed table could not be independently identified.
+- **Implementation:** validator now emits input path, byte size, SHA-256, tool path, and tool version; compressed-CSV provenance regression test added.
+- **Validation:** exact temporary copies passed `python -m pytest /tmp/exact_a001/tests/test_pulse_schema_provenance.py -q` with `1 passed in 0.07s`.
+- **Evidence boundary:** no real pulse table, ROOT input, MV0 gain, or MV3 threshold was regenerated in this session.
+- **Progress:** code, regression test, and immutable archive record are present on remote `main`.
+- **Acceptance status:** PARTIAL — implementation validated; real A-001 artifact regeneration remains BLOCKED_COMPUTE.

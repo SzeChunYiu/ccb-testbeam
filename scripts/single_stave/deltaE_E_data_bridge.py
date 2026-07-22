@@ -12,8 +12,10 @@ counts exceed the reported physical-event count. This implementation treats
 physical composite key.
 
 Bare ``amplitude_adc`` is deliberately rejected because the repository schema
-audit classifies it as ambiguous: it may be a peak code or a baseline-subtracted
-height. The bridge requires an explicit amplitude field or caller override.
+audit shows that its semantics vary by table: 17 measured tables store an
+absolute peak code and two timing tables store an already-net amplitude. The
+bridge therefore requires a measured convention and applies baseline
+subtraction only to explicitly absolute input.
 """
 from __future__ import annotations
 
@@ -39,22 +41,46 @@ AMBIGUOUS_AMPLITUDE_COLUMN = "amplitude_adc"
 def resolve_amplitude_column(
     pulses: pd.DataFrame,
     requested: str | None = None,
-) -> str:
-    """Return an explicit amplitude column and reject ambiguous fallbacks.
+    amplitude_convention: str | None = None,
+) -> tuple[str, str]:
+    """Return the source amplitude column and its explicit signal convention.
 
-    ``amplitude_adc`` is accepted only when the caller explicitly requests it.
-    This makes any use of the ambiguous legacy field visible in code, command
-    provenance, and the generated result metadata rather than silently choosing
-    it by fallback.
+    Explicit net-height fields are treated as NET. Legacy ``amplitude_adc``
+    requires the caller to state ``absolute`` or ``net``; for ABSOLUTE input the
+    bridge subtracts ``baseline_adc`` before applying thresholds.
     """
+    convention = amplitude_convention.lower() if amplitude_convention else None
+    if convention not in {None, "absolute", "net"}:
+        raise ValueError("amplitude_convention must be 'absolute' or 'net'")
+
     if requested is not None:
         if requested not in pulses.columns:
             raise ValueError(f"requested amplitude column is missing: {requested}")
-        return requested
+        if requested == AMBIGUOUS_AMPLITUDE_COLUMN:
+            if convention is None:
+                raise ValueError(
+                    "amplitude_adc requires amplitude_convention='absolute' or 'net'"
+                )
+            if convention == "absolute" and "baseline_adc" not in pulses.columns:
+                raise ValueError(
+                    "absolute amplitude_adc requires baseline_adc for conversion"
+                )
+            return requested, convention
+        if convention not in {None, "net"}:
+            raise ValueError(
+                f"{requested} is an explicit net-height field; "
+                "amplitude_convention='absolute' is inconsistent"
+            )
+        return requested, "net"
 
     available = [name for name in SAFE_AMPLITUDE_COLUMNS if name in pulses.columns]
     if len(available) == 1:
-        return available[0]
+        if convention not in {None, "net"}:
+            raise ValueError(
+                f"{available[0]} is an explicit net-height field; "
+                "amplitude_convention='absolute' is inconsistent"
+            )
+        return available[0], "net"
     if len(available) > 1:
         raise ValueError(
             "multiple explicit amplitude columns are present; select one with "
@@ -62,9 +88,9 @@ def resolve_amplitude_column(
         )
     if AMBIGUOUS_AMPLITUDE_COLUMN in pulses.columns:
         raise ValueError(
-            "bare amplitude_adc is schema-ambiguous and cannot be selected "
-            "implicitly; regenerate an explicit peak_height_adc/net_adc field "
-            "or pass amplitude_column='amplitude_adc' with documented semantics"
+            "bare amplitude_adc has table-dependent semantics and cannot be "
+            "selected implicitly; pass amplitude_column='amplitude_adc' plus "
+            "amplitude_convention='absolute' or 'net' from measured provenance"
         )
     raise ValueError(
         "no supported amplitude column found; expected exactly one of "
@@ -78,6 +104,7 @@ def build_event_table(
     source_file_id: str,
     threshold_adc: float = THRESHOLD_ADC,
     amplitude_column: str | None = None,
+    amplitude_convention: str | None = None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     """Build one ΔE-E row per physical ``(source_file_id, run, evt)`` event.
 
@@ -85,14 +112,26 @@ def build_event_table(
     only to quantify how unsafe an eventno-only join would be and how often one
     physical key carries multiple eventno values.
     """
-    ampcol = resolve_amplitude_column(pulses, amplitude_column)
+    ampcol, convention = resolve_amplitude_column(
+        pulses, amplitude_column, amplitude_convention
+    )
     required = {"run", "evt", "eventno", "stave", ampcol}
+    if convention == "absolute":
+        required.add("baseline_adc")
     missing = sorted(required.difference(pulses.columns))
     if missing:
         raise ValueError(f"missing required pulse columns: {missing}")
 
-    df = pulses[["run", "evt", "eventno", "stave", ampcol]].copy()
+    selected = ["run", "evt", "eventno", "stave", ampcol]
+    if convention == "absolute":
+        selected.append("baseline_adc")
+    df = pulses[selected].copy()
     df["stave"] = df["stave"].astype(str)
+    signal_column = "_signal_height_adc"
+    if convention == "absolute":
+        df[signal_column] = (df[ampcol] - df["baseline_adc"]).abs()
+    else:
+        df[signal_column] = df[ampcol]
 
     physical_keys = ["run", "evt"]
     eventno_per_physical = df.groupby(physical_keys, dropna=False)["eventno"].nunique()
@@ -111,7 +150,7 @@ def build_event_table(
     # Aggregate all hits for a physical event and stave before pivoting. Keeping
     # eventno here would split a single physical event into multiple rows.
     agg = (
-        df.groupby([*physical_keys, "stave"], dropna=False)[ampcol]
+        df.groupby([*physical_keys, "stave"], dropna=False)[signal_column]
         .max()
         .reset_index()
     )
@@ -119,7 +158,7 @@ def build_event_table(
         agg.pivot_table(
             index=physical_keys,
             columns="stave",
-            values=ampcol,
+            values=signal_column,
             aggfunc="max",
         )
         .reset_index()
@@ -168,6 +207,12 @@ def build_event_table(
         "source_file_id": source_file_id,
         "key": ["source_file_id", "run", "evt"],
         "amplitude_column": ampcol,
+        "amplitude_convention": convention,
+        "amplitude_transform": (
+            "abs(amplitude_adc - baseline_adc)"
+            if ampcol == AMBIGUOUS_AMPLITUDE_COLUMN and convention == "absolute"
+            else "identity"
+        ),
         "amplitude_column_explicitly_requested": amplitude_column is not None,
         "n_events_composite_key": n_comp,
         "n_eventno_values": int(df["eventno"].nunique(dropna=False)),

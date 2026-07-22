@@ -67,3 +67,17 @@
 - PR #868 was rechecked and is currently `mergeable=false`; it was not merged. Its head is `7992aa318b6f13b5f4bcbd828ad97996075fed4b` and base has advanced.
 - Direct clone again failed with `Could not resolve host: github.com`; repository writes used the authenticated connector.
 - Next: run the synchronizer in a working checkout, review the resulting two-file diff, run documentation/link checks, and commit the synchronized public wording to main. Rebase/update PR #868 before any merge attempt.
+
+## 2026-07-22T00:35:00Z — AUD-ANOM-001
+
+- Initial remote main: `e94f9883ee77e059f08bd4f07e537d47baa57904`.
+- Re-read the synchronizer, its tests, the stale public C12 wording, the latest handoff, and PR #868 metadata.
+- Confirmed implementation defect: the synchronizer claimed to reject partially synchronized files, but it accepted a mixture of old and new snippets because state was checked independently per replacement.
+- Corrected `synchronize_text` to classify all snippets first and reject mixed old/new states before modifying content.
+- Added regression tests for partial-state rejection and for `--check` rejecting unsynchronized files.
+- Validation executed locally on exact temporary copies: `python -m py_compile` passed; `python -m pytest /tmp/test_sync_c12_public_claims.py -q` returned `5 passed in 0.05s`.
+- Direct-to-main commits: `15bbab9c28e4244338d0d1299d8dee6e97931aa3`, `f6a40e0a7f70d6e240d07e422c3754bf15f25807`.
+- No public wording, raw data, MC outputs, numerical results, plots, or generated artifacts were changed.
+- Direct clone still failed with `Could not resolve host: github.com`; authenticated connector writes were used.
+- PR #868 remains open, ready for review, and `mergeable=false` against advanced `main`; it was not merged.
+- Next: execute the now-stricter synchronizer in a working checkout, review the exact two-file diff, run link/documentation checks, and commit synchronized public wording to `main`.

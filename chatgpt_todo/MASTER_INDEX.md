@@ -2,24 +2,28 @@
 
 | ID | Area | Type | Current state | Evidence / dependency | Next review action |
 |---|---|---|---|---|---|
-| IDX-G4-001 | `geant4/single_stave` multithread RNG ownership | Code / simulation | VALIDATED | PR #868 merged; CI passed; GPU node validation | ✅ Complete |
-| IDX-G4-002 | Single-stave optical-yield claim (~178 PE/event) | Study / claim | VALIDATED | GPU node runs: mean=178.3 PE, RSE=0.48% | ✅ Complete |
-| IDX-G4-003 | Event-tree reproducibility validator | Code / plot | VALIDATED | Real ROOT validation: 27/27 branches exact equal | ✅ Complete |
-| IDX-G4-004 | Photon-tree canonical multiset validator | Code / plot | VALIDATED | Real ROOT: 1,170,091 photons exact equal | ✅ Complete |
-| IDX-G4-005 | Multiseed RNG ensemble validator | Code / statistics | VALIDATED | 4 seeds, cross-seed RSE=0.48% | ✅ Complete |
-| IDX-DOC-001 | Repository-local AI audit coordination | Documentation | ACTIVE | `chatgpt_todo/` | Recursively populated |
-| IDX-WIKI-001 | GitHub wiki (24 pages) | Documentation | PARTIAL | Cloned to LUNARC; C12 claims corrected | Remaining claims inventoried |
-| IDX-REPO-001 | Repository-wide study/code/data inventory | Repository | ACTIVE | This audit | Complete enumeration |
-| IDX-STUDIES-001 | Study reports (735 reports) | Studies | NOT_STARTED | reports/ directory | Inventory each report for claims and evidence |
-| IDX-CONFIGS-001 | Study configurations (367 configs) | Configs | NOT_STARTED | configs/ directory | Cross-reference each config to its report |
-| IDX-TESTS-001 | Test suite (49 tests) | Tests | ACTIVE | tests/ directory | CI passes; verify coverage |
-| IDX-SCRIPTS-001 | Analysis scripts (651 scripts) | Scripts | NOT_STARTED | scripts/ directory | Audit each for reproducibility |
-| IDX-NOTEBOOKS-001 | Jupyter notebooks (3 notebooks) | Notebooks | NOT_STARTED | notebooks/ directory | Verify outputs match claims |
-| IDX-ANOM-001 | C12 anomaly transfer from MC to data | Study / claim | VALIDATED | C12_DATA_MC_CLOSURE_SPEC.md, sync scripts | ✅ C12 claims corrected to TRUTH_LEVEL_MC_ONLY |
-| IDX-PAPER-001 | Paper manuscript | Documentation | NOT_STARTED | paper/ directory | Verify all claims trace to code |
-| IDX-FIGURES-001 | Figure registry | Visualization | NOT_STARTED | paper/figures.yaml, tools/figure_registry/ | Audit each figure for provenance |
-| IDX-TOOLS-001 | Audit/provenance/figure tools | Code | ACTIVE | tools/ directory | CI passes; verify functionality |
-| IDX-FLEET-001 | LUNARC fleet configs | Infrastructure | NOT_STARTED | fleet/ directory | Document pipeline |
-| IDX-DATA-001 | Data files | Data | NOT_STARTED | DATA.md, artifacts/ | Verify data provenance |
+| IDX-G4-001 | `geant4/single_stave` multithread RNG ownership | Code / simulation | PARTIAL | PR #868 is closed without merge. Repository records report CI and GPU-node validation, but this session did not independently reproduce those runs or establish that every PR commit is present on `main`. | Map the validated implementation and artifacts to exact `main` commits; rerun required checks when the environment is available. |
+| IDX-G4-002 | Single-stave optical-yield claim (~178 PE/event) | Study / claim | PARTIAL | Repository-recorded GPU-node result: mean 178.3 PE/event with 0.48% relative standard error across four seeds. Raw outputs and commands were not independently inspected in this session. | Verify immutable ROOT/JSON/PDF artifacts, hashes, event counts, configurations, and uncertainty calculation against exact `main` code. |
+| IDX-G4-003 | Event-tree reproducibility validator | Code / plot | PARTIAL | Repository records report 27/27 branches exactly equal on real ROOT outputs. The underlying artifacts were not independently inspected in this session. | Link the validator command, ROOT hashes, JSON/PDF outputs, and exact `main` commit; independently reproduce when possible. |
+| IDX-G4-004 | Photon-tree canonical multiset validator | Code / plot | PARTIAL | Repository records report 1,170,091 photon rows exactly equal. The underlying artifacts were not independently inspected in this session. | Link ROOT hashes, validator output, sensor/event-domain checks, and exact `main` commit; independently reproduce when possible. |
+| IDX-G4-005 | Multiseed RNG ensemble validator | Code / statistics | PARTIAL | Repository records report four seeds and 0.48% cross-seed relative standard error. Preregistered thresholds and artifacts were not independently inspected in this session. | Verify manifest, seed list, event counts, thresholds, JSON/PDF outputs, and exact `main` implementation. |
+| IDX-DOC-001 | Repository-local AI audit coordination | Documentation | ACTIVE | `chatgpt_todo/` exists and is being maintained, but stale and contradictory status entries have required correction. | Continue enforcing evidence classes, stable ownership, append-only provenance, and non-contradictory states. |
+| IDX-WIKI-001 | GitHub wiki and repository `WIKI.md` | Documentation / claims | PARTIAL | Public C12 wording was synchronized in commit `d966384231ccf29b7e8e4f1563a46c281ca29782`; remaining wiki claims have not been individually mapped to evidence. | Audit every material wiki claim against code, data, simulation, literature, plots, and limitations. |
+| IDX-REPO-001 | Repository-wide study/code/data inventory | Repository | TRIAGED | Top-level categories and approximate counts are enumerated, but enumeration is not scientific review. Many areas below remain `NOT_STARTED`. | Build item-level inventories with stable IDs and evidence states; do not mark repository-wide audit complete until each item is reviewed. |
+| IDX-STUDIES-001 | Study reports (reported count: 735) | Studies | NOT_STARTED | `reports/` directory count recorded by a prior session; individual reports are not represented one-by-one in this index. | Inventory each report with question, inputs, code, outputs, claims, evidence, and review state. |
+| IDX-CONFIGS-001 | Study configurations (reported count: 367) | Configs | NOT_STARTED | `configs/` directory count recorded by a prior session; individual configs are not mapped to studies/results. | Cross-reference every configuration to study, code path, data provenance, output, and claim. |
+| IDX-TESTS-001 | Test suite (reported count: 49) | Tests | ACTIVE | CI success has been recorded for selected heads, but repository-wide coverage and scientific acceptance coverage remain unaudited. | Inventory tests by code/result dependency, identify missing scientific regression coverage, and verify current-main CI. |
+| IDX-SCRIPTS-001 | Analysis scripts (reported count: 651) | Scripts | NOT_STARTED | Script count recorded by a prior session; individual scripts are not audited for correctness or reproducibility. | Audit each entry point, inputs, outputs, units, determinism, failure behavior, and downstream claims. |
+| IDX-NOTEBOOKS-001 | Jupyter notebooks (reported count: 3) | Notebooks | NOT_STARTED | Notebook count recorded; outputs and execution order are not validated. | Execute from clean environments where possible and compare generated outputs with reported claims. |
+| IDX-ANOM-001 | C12 anomaly transfer from MC to data | Study / claim | PARTIAL | Public wording is corrected to `TRUTH_LEVEL_MC_ONLY`, but the matched data/MC closure specified in `docs/validation/C12_DATA_MC_CLOSURE_SPEC.md` has not been executed. | Perform the frozen cross-domain closure with counts, Wilson intervals, morphology/rate comparison, purity/efficiency, stability tests, hashes, JSON, and plots. |
+| IDX-PAPER-001 | Paper manuscript | Documentation | NOT_STARTED | `paper/` exists; claims have not been exhaustively traced to code, data, and figures. | Audit every manuscript claim, table, and figure against immutable provenance and evidence. |
+| IDX-FIGURES-001 | Figure registry and generated figures | Visualization | NOT_STARTED | `paper/figures.yaml` and figure tooling exist; individual figures are not audited. | Verify every figure's input hashes, command, selection, normalization, uncertainty, axes, caption, and claim linkage. |
+| IDX-TOOLS-001 | Audit/provenance/figure tools | Code | ACTIVE | Tool packages are enumerated but not comprehensively reviewed. | Test functionality, failure modes, schema compatibility, determinism, and documentation. |
+| IDX-FLEET-001 | LUNARC fleet configurations | Infrastructure | NOT_STARTED | `fleet/` is enumerated but execution environment and pipeline are not fully documented. | Document environments, software versions, job scripts, artifact transfer, and reproducibility controls. |
+| IDX-DATA-001 | Data files and external artifacts | Data | NOT_STARTED | `DATA.md` and artifact locations are enumerated; provenance and integrity are not comprehensively verified. | Inventory datasets with source, schema, hashes, access path, selection, calibration, exclusions, and downstream use. |
+
+## Completion gate
+
+Repository-wide completion requires every identifiable study, material claim, major code path, dataset/simulation, figure/table, wiki page, and documentation area to have an item-level stable ID and an evidence-backed review state. Directory counts or top-level enumeration alone are `TRIAGED`, not `COMPLETE`.
 
 This index is cumulative. Add one row for every identifiable study, code area, dataset, simulation, material claim, figure, table, wiki page, and documentation area.

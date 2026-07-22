@@ -7,6 +7,16 @@ import argparse
 from pathlib import Path
 
 REPLACEMENTS: dict[str, tuple[tuple[str, str], ...]] = {
+    "README.md": (
+        (
+            "| Proton/deuteron PID | **AUC = 0.986** | ✅ MC-validated |",
+            "| Proton/deuteron PID | **AUC = 0.986** | ⚠️ Truth-labelled MC only; data transfer unvalidated |",
+        ),
+        (
+            "| Anomaly identity | **C12 nuclear recoils** (0.32%) | ✅ MC-identified |",
+            "| C12-like anomaly in truth-labelled MC | **283 / 87,555 tracks (0.32%)**; ~55% C12 within the selected MC class | ⚠️ MC mechanism only; real-data identity unvalidated |",
+        ),
+    ),
     "WIKI.md": (
         (
             "| C12 anomaly fraction | 0.32% | — | — | MC-identified | **VALIDATED** |",

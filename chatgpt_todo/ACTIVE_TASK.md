@@ -1,13 +1,12 @@
 # Active Task
 
-- **Task ID:** AUD-AMP-001
+- **Task ID:** AUD-AMP-002
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-22T18:04:00Z
-- **Base main SHA:** `df73792f871073cf716c137ee0810717395a5abf`
-- **Primary scope:** prevent raw-median-only `amplitude_adc` convention labels from being accepted as physical semantics.
-- **Observed fact:** the historical corpus labels several `ABSOLUTE` tables at medians 3096.5–3419 ADC, overlapping the current default `NET` range (`<=3500 ADC`); raw median alone is therefore not an identifying observable.
-- **Implementation:** version 2.6.0 records `PEDESTAL_ANCHORED` versus `RAW_MEDIAN_HEURISTIC`, marks median-only labels `UNANCHORED`, keeps `subtract_baseline_correct` unresolved, counts `n_unanchored_conventions`, and returns nonzero for any unanchored table.
-- **Validation:** exact reconstructed source and focused regression passed `python -m py_compile ...` and `python -m pytest /tmp/amp26/tests -q` with `3 passed in 0.08s`.
-- **Evidence boundary:** no real pulse table was accessed and the historical 17/2 corpus classification was not rerun.
-- **Progress:** code, regression test, and immutable archive are committed directly to remote `main`.
-- **Acceptance status:** PARTIAL — the unanchored-convention gate is validated synthetically; real-table convention evidence and regenerated A-002 artifacts remain blocked.
+- **Session stamp:** 2026-07-22T22:04:00Z
+- **Base main SHA:** `8d4b1d45defb7dcdbb505489a3f09f381efc0274`
+- **Scope:** reconcile the pulse-table contract with the current rule for ambiguous `amplitude_adc` columns.
+- **Finding:** the contract still described raw-median convention labels as actionable, while `tools/audit/amplitude_convention_audit.py` v2.6.0 marks median-only labels unanchored and non-accepting.
+- **Change:** the contract now preserves the historical 17/2 split as heuristic evidence only and requires explicit schema, producer-code, or reviewed pedestal evidence before downstream subtraction decisions.
+- **Validation:** compared the contract text with the v2.6.0 implementation and current handoff.
+- **Boundary:** no real pulse table or A-002 input was rerun; those convention assignments remain unresolved.
+- **Status:** PARTIAL — documentation is reconciled; real-data regeneration remains blocked.

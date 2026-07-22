@@ -2,96 +2,66 @@
 
 ## Session
 
-- **UTC:** 2026-07-22T06:15:00Z
-- **Task:** AUD-DOC-001 (PARTIAL)
-- **Initial remote main:** `0c5fb94272cbf0c35f620d64bc776ea2713a5366`
+- **UTC:** 2026-07-22T07:22:00Z
+- **Task:** AUD-REPO-002 (PARTIAL)
+- **Initial remote main:** `fbec7a75869b863baf7c34b73c532b46f7531660`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Write target:** direct to `main`
 
 ## Repository state inspected
 
-- current remote-main history and repository permissions;
-- `chatgpt_todo/HANDOFF.md` and recent `SESSION_LOG.md` entries;
-- current `WIKI.md` C12 status wording;
-- `scripts/sync_c12_public_claims.py`;
-- `tests/test_sync_c12_public_claims.py`.
+- current recent commits on `main`;
+- PR #868 metadata;
+- `chatgpt_todo/MASTER_INDEX.md`, `BACKLOG.md`, `ACTIVE_TASK.md`, and the previous `HANDOFF.md`;
+- public C12 synchronization commit `d966384231ccf29b7e8e4f1563a46c281ca29782`;
+- repository-wide summary commit `fbec7a75869b863baf7c34b73c532b46f7531660`.
 
-## Confirmed defect
+## Confirmed consistency defects
 
-The multi-file synchronizer validated and wrote files sequentially. If an ambiguity was discovered in a later selected file, an earlier file could already have been modified. This could leave the repository in a partially synchronized public evidence state despite the tool's ambiguity protections.
+1. GitHub reports PR #868 as closed with `merged=false`, while the master index said it was merged.
+2. A recent commit described repository-wide audit coverage as complete, while the same index retained major categories as `NOT_STARTED`, including 735 study reports and 651 analysis scripts.
+3. The C12 public wording correction was classified as validation of data transfer, although the matched data/MC closure remains unexecuted.
+4. Geant4 and ROOT numerical results were presented as fully validated without linking exact `main` commits and immutable artifacts in the index. This session observed those values only as repository-recorded evidence.
 
 ## Work pushed directly to main
 
-1. Added `synchronize_paths(...)`, which reads and validates every selected file before producing any diff or performing any write.
-2. Normal write mode now applies changes only after all selected files validate.
-3. Check mode now reports every selected file that still requires synchronization.
-4. Diff mode validates the entire selected set before printing proposed changes.
-5. Retained `synchronize_file(...)` for focused single-file use and compatibility.
-6. Added regression tests proving that a later ambiguous file leaves earlier files unchanged.
-7. Added regression coverage for aggregate multi-file check diagnostics.
-8. Archived the complete session record at `chatgpt_todo/archive/2026-07-22T061500Z_AUD-DOC-001_TRANSACTIONAL_SYNC.md`.
+- Rewrote `chatgpt_todo/MASTER_INDEX.md` with conservative, evidence-bounded states.
+- Classified directory-level enumeration as `TRIAGED`, not repository-wide completion.
+- Corrected PR #868 integration status.
+- Preserved Geant4 runtime values as repository-recorded evidence while requiring exact main-commit/artifact mapping and independent reproduction.
+- Returned the C12 transfer study to `PARTIAL` pending execution of the frozen closure specification.
+- Added an explicit repository-wide completion gate.
+- Refreshed `ACTIVE_TASK.md` ownership and evidence boundaries.
+- Archived the complete session at `chatgpt_todo/archive/2026-07-22T072200Z_AUD-REPO-002_EVIDENCE_STATE_RECONCILIATION.md`.
 
 ## Validation
 
-Executed on exact temporary copies of the modified script and tests:
+Documentary consistency validation only:
 
-```bash
-python -m pytest tests/test_sync_c12_public_claims.py -q
-```
+- retrieved live PR #868 metadata from GitHub;
+- retrieved current main-branch coordination files;
+- compared completion statements with item-level states;
+- used current blob SHAs for safe contents updates;
+- pushed directly to `main` without force-push or history rewriting.
 
-Result:
-
-```text
-13 passed in 0.08s
-```
-
-The regression suite covers exact replacements, idempotence, duplicate-source rejection, mixed old/new rejection, check mode, README evidence wording, path selection, no-write diff behavior, transactional multi-file failure handling, and aggregate pending-file diagnostics.
-
-No raw data, Monte Carlo outputs, public wording, scientific values, plots, cached artifacts, or generated binaries were changed.
+No Python, ROOT, Geant4, data analysis, simulation, figure generation, or numerical recomputation was performed. No raw data or scientific artifact was changed.
 
 ## Main progression
 
-- Initial remote main: `0c5fb94272cbf0c35f620d64bc776ea2713a5366`
-- `6a849100cce0dd7cfceb52ce789a79542ba27ee1` — `fix(validation): make multi-file claim sync transactional`
-- `bf133df7c836ff402c27dc96b4678ecf1e74e265` — `test(validation): cover transactional multi-file claim sync`
-- `5f2a2fc1315befb9dab80b6e628c9bba41a4e8f4` — `docs(audit): archive transactional claim-sync session`
-- This handoff update is the final session commit and must be verified as the remote-main head.
+- Initial remote main: `fbec7a75869b863baf7c34b73c532b46f7531660`
+- `d85b467350d42f1efc788df0f80605a824da1e11` — `docs(audit): correct false completion and PR merge states`
+- `a2d222b1ef65b2556c7f9257c227401dfbee41ba` — `docs(audit): refresh repository review task`
+- `7a15b148a7e27c355176a04e9c73c3e5ee519a78` — `docs(audit): archive evidence-state reconciliation`
+- This handoff update is the final session commit and must be verified as remote-main head.
 
 ## Acceptance status
 
-- Transactional multi-file validation: COMPLETE.
-- Focused regression validation: COMPLETE.
-- WIKI public wording synchronization: PARTIAL, pending preview review, write, check, tests, and link validation.
-- Chapter 9 synchronization: PARTIAL, pending the same independent workflow.
-- PR #868 integration: OPEN pending reconciliation with current `main` and post-update checks.
-
-## Remaining risks
-
-- The transaction is validation-atomic, but an operating-system or storage failure during the final write loop could still interrupt filesystem writes. Repository commits should therefore continue to review the resulting diff before push.
-- The public WIKI still contains stale C12 evidence wording and an unsupported numerical veto-performance estimate.
-- Chapter 9 still overstates transfer from truth-labelled MC to real beam data.
+- Master-index consistency: COMPLETE.
+- PR #868 merge-state correction: COMPLETE.
+- Repository-wide item-level audit: NOT COMPLETE.
+- Geant4 main-commit/artifact traceability: PARTIAL.
+- C12 matched data/MC closure: PARTIAL.
 
 ## Next action
 
-In a complete checkout based on latest `origin/main`:
-
-```bash
-python scripts/sync_c12_public_claims.py \
-  --path WIKI.md \
-  --path docs/academic_chapters/09_anomaly_id.md \
-  --diff
-
-python scripts/sync_c12_public_claims.py \
-  --path WIKI.md \
-  --path docs/academic_chapters/09_anomaly_id.md
-
-python scripts/sync_c12_public_claims.py \
-  --path WIKI.md \
-  --path docs/academic_chapters/09_anomaly_id.md \
-  --check
-
-python -m pytest tests/test_sync_c12_public_claims.py -q
-python scripts/broken_link_checker.py
-```
-
-Review the combined no-write diff before applying the transaction. Commit synchronized public wording directly to `main` only if the exact diff, focused tests, and link checks pass.
+Select the highest-impact completed study that feeds a manuscript or wiki claim. Create an item-level study ledger entry mapping its exact data, configuration, code, cached artifacts, figures, tables, numerical claims, uncertainties, and limitations. Promote status only after independently reproducible evidence is linked.

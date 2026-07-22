@@ -93,3 +93,14 @@
 - Commits before this log update: `b7a87ad70d080a1fe270340008f53f78d20b9e72`, `23bf0e45e8fcdf230677315369f5de30ac7b39d4`, `bef8e62aab5339a17d4b7fba892a40e5e9c72649`.
 - Direct clone failed again with `Could not resolve host: github.com`; authenticated connector writes were used. No raw data, MC outputs, plots, or numerical results were altered.
 - Remaining public synchronization: WIKI and Chapter 9 still require exact synchronizer execution and diff review in a working checkout.
+
+## 2026-07-22T03:07:07Z — AUD-DOC-001
+
+- Initial remote main: `24471b53045b0d064de96f94425ed6ea6b175243`.
+- Inspected current handoff, active task, blocker register, session history, WIKI C12 entries, Chapter 9 opening claims, and the exact synchronization script.
+- Found a coordination defect: `BLOCKERS.md` marked BLK-MERGE-001 resolved even though later repository records report PR #868 as non-mergeable against advanced `main`; BLK-G4-001 was marked resolved while retaining text that incorrectly said runtime validation was unavailable.
+- Corrected the blocker register to distinguish recorded LUNARC validation from independent reproduction and reopened PR integration until reconciliation with current `main` plus post-update checks.
+- Replaced stale `AUD-REPO-001` ownership with active task `AUD-DOC-001`; recorded the exact connector/DNS limitation preventing safe full-file synchronization.
+- Verified stale public content remains in WIKI and Chapter 9. No public file was overwritten because complete source bytes were unavailable locally and connector responses were truncated; risking data loss was rejected.
+- Direct-to-main commits before this log update: `c7ef6a336918e7b2f859ed2505431bfe31f857e2`, `bccbc220c9b1815c684d72c5ac48367dd1164d07`.
+- No data, simulation, plot, numerical result, or source code changed. This run delivered validated governance corrections and a reproducible blocker record.

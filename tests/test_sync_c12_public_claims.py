@@ -34,6 +34,34 @@ def test_rejects_ambiguous_duplicate_snippet() -> None:
         raise AssertionError("duplicate source snippet was not rejected")
 
 
+def test_rejects_partially_synchronized_file() -> None:
+    label = "WIKI.md"
+    pairs = sync.REPLACEMENTS[label]
+    partial = "\n".join([pairs[0][1], *(old for old, _ in pairs[1:])])
+
+    try:
+        sync.synchronize_text(label, partial)
+    except ValueError as exc:
+        assert "partially synchronized file" in str(exc)
+    else:
+        raise AssertionError("partially synchronized file was not rejected")
+
+
+def test_check_mode_rejects_unsynchronized_files(tmp_path: Path) -> None:
+    label = "WIKI.md"
+    path = tmp_path / label
+    path.write_text(
+        "\n".join(old for old, _ in sync.REPLACEMENTS[label]), encoding="utf-8"
+    )
+
+    try:
+        sync.synchronize_file(tmp_path, label, check=True)
+    except RuntimeError as exc:
+        assert "requires 4 synchronization change(s)" in str(exc)
+    else:
+        raise AssertionError("check mode accepted an unsynchronized file")
+
+
 def test_check_mode_accepts_synchronized_files(tmp_path: Path) -> None:
     for label, pairs in sync.REPLACEMENTS.items():
         path = tmp_path / label

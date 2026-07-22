@@ -32,8 +32,8 @@
 | Best timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | ✅ MC-validated |
 | Combined 3-stave (B4+B6+B8) | **σ₆₈ ≈ 0.54–0.56 ns** | ⚠️ Data-only |
 | Pile-up tolerance | **R_max ≈ 3.05 MHz** (corrected from 4.22 MHz) | ✅ MC-validated |
-| Proton/deuteron PID | **AUC = 0.986** | ✅ MC-validated |
-| Anomaly identity | **C12 nuclear recoils** (0.32%) | ✅ MC-identified |
+| Proton/deuteron PID | **AUC = 0.986** | ⚠️ Truth-labelled MC only; data transfer unvalidated |
+| C12-like anomaly in truth-labelled MC | **283 / 87,555 tracks (0.32%)**; ~55% C12 within the selected MC class | ⚠️ MC mechanism only; real-data identity unvalidated |
 
 ## Repository Layout
 

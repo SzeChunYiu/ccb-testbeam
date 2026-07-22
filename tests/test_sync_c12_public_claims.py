@@ -25,7 +25,6 @@ def test_applies_all_replacements_and_is_idempotent() -> None:
 def test_rejects_ambiguous_duplicate_snippet() -> None:
     label = "WIKI.md"
     old, _ = sync.REPLACEMENTS[label][0]
-
     try:
         sync.synchronize_text(label, f"{old}\n{old}")
     except ValueError as exc:
@@ -38,7 +37,6 @@ def test_rejects_partially_synchronized_file() -> None:
     label = "WIKI.md"
     pairs = sync.REPLACEMENTS[label]
     partial = "\n".join([pairs[0][1], *(old for old, _ in pairs[1:])])
-
     try:
         sync.synchronize_text(label, partial)
     except ValueError as exc:
@@ -53,7 +51,6 @@ def test_check_mode_rejects_unsynchronized_files(tmp_path: Path) -> None:
     path.write_text(
         "\n".join(old for old, _ in sync.REPLACEMENTS[label]), encoding="utf-8"
     )
-
     try:
         sync.synchronize_file(tmp_path, label, check=True)
     except RuntimeError as exc:
@@ -74,7 +71,6 @@ def test_readme_replacements_are_scientifically_qualified() -> None:
     pairs = sync.REPLACEMENTS["README.md"]
     source = "\n".join(old for old, _ in pairs)
     updated, changed = sync.synchronize_text("README.md", source)
-
     assert changed == 2
     assert "Truth-labelled MC only" in updated
     assert "real-data identity unvalidated" in updated
@@ -100,3 +96,26 @@ def test_selected_paths_rejects_unknown_paths() -> None:
         assert "WIKI.md" in str(exc)
     else:
         raise AssertionError("unknown path was not rejected")
+
+
+def test_unified_diff_is_reviewable_and_stable() -> None:
+    label = "WIKI.md"
+    source = "\n".join(old for old, _ in sync.REPLACEMENTS[label]) + "\n"
+    updated, changed = sync.synchronize_text(label, source)
+    diff = sync.unified_diff(label, source, updated)
+    assert changed == 4
+    assert diff.startswith("--- a/WIKI.md\n+++ b/WIKI.md\n")
+    assert "-" + sync.REPLACEMENTS[label][0][0] in diff
+    assert "+" + sync.REPLACEMENTS[label][0][1] in diff
+
+
+def test_diff_mode_does_not_modify_file(tmp_path: Path, capsys) -> None:
+    label = "WIKI.md"
+    source = "\n".join(old for old, _ in sync.REPLACEMENTS[label]) + "\n"
+    path = tmp_path / label
+    path.write_text(source, encoding="utf-8")
+    changed = sync.synchronize_file(tmp_path, label, check=False, show_diff=True)
+    captured = capsys.readouterr().out
+    assert changed == 4
+    assert captured.startswith("--- a/WIKI.md\n+++ b/WIKI.md\n")
+    assert path.read_text(encoding="utf-8") == source

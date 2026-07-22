@@ -8,9 +8,10 @@ import hashlib
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.1.0"
+TOOL_VERSION = "2.2.0"
 
 
 def file_sha256(path: Path) -> str:
@@ -24,6 +25,8 @@ def file_sha256(path: Path) -> str:
 def classify(value: float, net_max: float, absolute_min: float) -> str:
     if net_max >= absolute_min:
         raise ValueError("net_max must be less than absolute_min")
+    if not np.isfinite(value):
+        raise ValueError("classification value must be finite")
     if value <= net_max:
         return "NET"
     if value >= absolute_min:
@@ -53,9 +56,18 @@ def audit(
     loaded = pd.read_csv(path, usecols=usecols, nrows=read_rows)
     truncated = max_rows is not None and len(loaded) > max_rows
     frame = loaded.iloc[:max_rows].copy() if truncated else loaded
-    amplitude = pd.to_numeric(frame["amplitude_adc"], errors="coerce").dropna()
+
+    numeric_amplitude = pd.to_numeric(frame["amplitude_adc"], errors="coerce")
+    finite_mask = np.isfinite(
+        numeric_amplitude.to_numpy(dtype=float, na_value=np.nan)
+    )
+    amplitude = numeric_amplitude[finite_mask]
+    nonfinite_amplitude_rows = int(
+        (numeric_amplitude.notna() & ~finite_mask).sum()
+    )
+    nonnumeric_amplitude_rows = int(numeric_amplitude.isna().sum())
     if amplitude.empty:
-        raise ValueError("amplitude_adc has no numeric values")
+        raise ValueError("amplitude_adc has no finite numeric values")
 
     median = float(amplitude.median())
     convention = classify(median, net_max, absolute_min)
@@ -66,6 +78,8 @@ def audit(
         "rows_read": len(frame),
         "input_truncated": truncated,
         "finite_amplitude_rows": len(amplitude),
+        "nonfinite_amplitude_rows": nonfinite_amplitude_rows,
+        "nonnumeric_amplitude_rows": nonnumeric_amplitude_rows,
         "amplitude_adc_median": median,
         "baseline_column": baseline,
         "baseline_candidate_count": len(baseline_columns),
@@ -75,13 +89,19 @@ def audit(
             False if convention == "NET" else None
         ),
     }
+    warnings = []
     if max_rows is not None:
         result["max_rows_requested"] = max_rows
-        result["warning"] = "PREFIX_SAMPLE_ROW_ORDER_DEPENDENT"
+        warnings.append("PREFIX_SAMPLE_ROW_ORDER_DEPENDENT")
+    if nonfinite_amplitude_rows:
+        warnings.append("NONFINITE_AMPLITUDE_VALUES_EXCLUDED")
+    if warnings:
+        result["warnings"] = warnings
+
     if baseline:
         pair = frame[["amplitude_adc", baseline]].apply(
             pd.to_numeric, errors="coerce"
-        ).dropna()
+        ).replace([np.inf, -np.inf], np.nan).dropna()
         result["baseline_median"] = (
             float(pair[baseline].median()) if not pair.empty else None
         )
@@ -89,6 +109,7 @@ def audit(
             float((pair["amplitude_adc"] - pair[baseline]).abs().median())
             if not pair.empty else None
         )
+        result["finite_amplitude_baseline_pairs"] = len(pair)
     elif len(baseline_columns) > 1:
         result["warning_baseline"] = "MULTIPLE_BASELINE_COLUMNS"
     elif convention == "ABSOLUTE":
@@ -117,20 +138,38 @@ def main(argv: list[str] | None = None) -> int:
         raise ValueError("max_rows must be positive")
     classify(0.0, args.net_max_adc, args.absolute_min_adc)
 
-    paths = sorted({Path(p) for pattern in args.inputs for p in glob.glob(pattern, recursive=True) if Path(p).is_file()})
+    paths = sorted({
+        Path(p)
+        for pattern in args.inputs
+        for p in glob.glob(pattern, recursive=True)
+        if Path(p).is_file()
+    })
     if not paths:
         raise FileNotFoundError("no input files matched")
 
     tables, errors = [], []
     for path in paths:
         try:
-            tables.append(audit(path, args.max_rows, args.net_max_adc, args.absolute_min_adc))
+            tables.append(
+                audit(path, args.max_rows, args.net_max_adc, args.absolute_min_adc)
+            )
         except Exception as exc:
-            errors.append({"path": str(path), "error": f"{type(exc).__name__}: {exc}"})
+            errors.append({
+                "path": str(path),
+                "error": f"{type(exc).__name__}: {exc}",
+            })
 
     classified = [row for row in tables if row["status"] == "CLASSIFIED"]
-    counts = {name: sum(row["convention"] == name for row in classified) for name in ("ABSOLUTE", "NET", "AMBIGUOUS")}
-    n_partial = sum(row["classification_scope"] != "FULL_TABLE" for row in classified)
+    counts = {
+        name: sum(row["convention"] == name for row in classified)
+        for name in ("ABSOLUTE", "NET", "AMBIGUOUS")
+    }
+    n_partial = sum(
+        row["classification_scope"] != "FULL_TABLE" for row in classified
+    )
+    n_nonfinite_tables = sum(
+        row["nonfinite_amplitude_rows"] > 0 for row in classified
+    )
     payload = {
         "tool": "tools/audit/amplitude_convention_audit.py",
         "tool_version": TOOL_VERSION,
@@ -138,11 +177,13 @@ def main(argv: list[str] | None = None) -> int:
             "NET": f"median <= {args.net_max_adc}",
             "ABSOLUTE": f"median >= {args.absolute_min_adc}",
             "AMBIGUOUS": "between thresholds; manual review required",
+            "finite_values_only": True,
         },
         "max_rows": args.max_rows,
         "n_inputs": len(paths),
         "n_classified": len(classified),
         "n_partial": n_partial,
+        "n_nonfinite_tables": n_nonfinite_tables,
         "n_skipped": sum(row["status"] == "SKIPPED" for row in tables),
         "n_errors": len(errors),
         "counts": counts,
@@ -150,13 +191,22 @@ def main(argv: list[str] | None = None) -> int:
         "errors": errors,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(
+        json.dumps(payload, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(
         f"inputs={len(paths)} absolute={counts['ABSOLUTE']} "
         f"net={counts['NET']} ambiguous={counts['AMBIGUOUS']} "
-        f"partial={n_partial} errors={len(errors)}"
+        f"partial={n_partial} nonfinite={n_nonfinite_tables} "
+        f"errors={len(errors)}"
     )
-    return 1 if errors or counts["AMBIGUOUS"] or n_partial else 0
+    return 1 if (
+        errors
+        or counts["AMBIGUOUS"]
+        or n_partial
+        or n_nonfinite_tables
+    ) else 0
 
 
 if __name__ == "__main__":

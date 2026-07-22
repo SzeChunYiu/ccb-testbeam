@@ -1,4 +1,12 @@
-# ΔE–E composite-key rerun on real data (A-002 / CCB-DELTAE-FIX, DONE)
+# ΔE–E composite-key rerun on real data (A-002 / CCB-DELTAE-FIX, FLAWED)
+
+> **Audit correction (2026-07-22):** the approximately 38% `eventno`-collision
+> diagnostic remains internally consistent, but the committed stopping profile,
+> event CSV row count, and ΔE–E density are invalid. The bridge retained
+> `eventno` in the pivot index, so one physical `(run, evt)` could become multiple
+> rows. The report declares 385,984 physical events while its stopping bins sum
+> to 632,939. See `AUDIT_INVALIDATION.md`; corrected real-table outputs require a
+> rerun with the fixed bridge on current `main`.
 
 Reruns the ΔE–E event build on **real data** with the composite key
 `(source_file_id, run, evt)` per `scripts/single_stave/deltaE_E.py`, and quantifies
@@ -20,26 +28,34 @@ Nearly **4 in 10 events** would be wrongly merged by the old `eventno`-only join
 This is the concrete confirmation that the prior eventno-only ΔE–E outputs were
 correctly labelled `INVALID_PENDING_RERUN`.
 
-## Valid stopping / penetration profile (composite-key events, threshold 200 ADC)
+## Quarantined stopping / penetration profile
 
-| deepest B-layer passing threshold | events |
+The following historical counts are retained only to document the invalidated
+artifact. They are **not** a valid event-level stopping distribution because they
+sum to 632,939 rather than 385,984 physical events.
+
+| deepest B-layer passing threshold | historical rows (invalid) |
 |---|--:|
-| B2 (stops in ΔE) | 567,925 |
+| B2 | 567,925 |
 | B4 | 26,978 |
 | B6 | 14,586 |
-| B8 (punch-through) | 8,575 |
+| B8 | 8,575 |
 | none | 14,875 |
 
-The expected penetration cascade (most events stop in B2, a falling tail reaches
-B4→B8). ΔE = amp(B2), E = amp(B4+B6+B8), units **ADC** (never relabeled MeV).
-Figure `DE-01_deltaE_E_data.png` is the 2D ΔE–E density over the valid events.
+The previously described penetration cascade and `DE-01_deltaE_E_data.png` must
+not be interpreted until regenerated with one row per physical composite key.
+ΔE remains defined as amp(B2), E as amp(B4+B6+B8), in **ADC**.
 
 ## Status & remaining
-- A-002 **rerun complete on real data**: composite key validated, corruption
-  quantified, valid stopping distribution + ΔE–E density produced
-  (`result.json`, `deltaE_E_events_data.csv`, `DE-01`).
-- Data-side only. The full data/MC ΔE–E closure additionally needs the MC side
-  (`edep_B2/B4/B6/B8` under the geometry/readout mapping contract) and the
-  digitized-MC comparison — still `BLOCKED_COMPUTE`.
-- The ~13 `EVENTNO_ONLY_JOIN` scripts the auditor flagged should adopt this
-  composite key; each then needs re-validation against its own inputs.
+
+- A-002 eventno-collision diagnosis: **retained**.
+- Stopping distribution, event CSV cardinality, and ΔE–E density: **FLAWED**.
+- Corrected bridge and synthetic regression test are on `main`.
+- Required rerun: regenerate `result.json`, `deltaE_E_events_data.csv`, and
+  `DE-01_deltaE_E_data.png`; verify composite-key uniqueness and exact cardinality
+  closure; record source hash, code SHA, environment, and exact command.
+- Data-side only. Full data/MC ΔE–E closure additionally needs the MC side
+  (`edep_B2/B4/B6/B8` under the geometry/readout mapping contract) and digitized
+  MC comparison.
+- The approximately 13 `EVENTNO_ONLY_JOIN` scripts flagged by the auditor should
+  adopt the composite key and be revalidated against their own inputs.

@@ -81,3 +81,15 @@
 - Direct clone still failed with `Could not resolve host: github.com`; authenticated connector writes were used.
 - PR #868 remains open, ready for review, and `mergeable=false` against advanced `main`; it was not merged.
 - Next: execute the now-stricter synchronizer in a working checkout, review the exact two-file diff, run link/documentation checks, and commit synchronized public wording to `main`.
+
+## 2026-07-22T02:10:31Z — AUD-ANOM-001
+
+- Initial remote main: `7047be4e49d4ed27356b235dc10c071ea6378024`.
+- Re-read `README.md`, the C12 claim synchronizer, its tests, the stale WIKI/Chapter 9 wording, the latest handoff, and recent main history.
+- Confirmed an additional public evidence mismatch: README labelled proton/deuteron PID as `MC-validated` and the C12 anomaly identity as `MC-identified`, despite both lacking demonstrated transfer to real beam data.
+- Extended `scripts/sync_c12_public_claims.py` with exact README replacements and added a dedicated regression asserting removal of the two overclaim phrases.
+- Local validation on exact temporary copies: `python -m py_compile` passed; `python -m pytest /tmp/test_sync_c12_public_claims.py -q` returned `6 passed in 0.05s`.
+- Updated README directly on `main` to classify PID as truth-labelled-MC-only and the C12-like population as an MC mechanism with real-data identity unvalidated.
+- Commits before this log update: `b7a87ad70d080a1fe270340008f53f78d20b9e72`, `23bf0e45e8fcdf230677315369f5de30ac7b39d4`, `bef8e62aab5339a17d4b7fba892a40e5e9c72649`.
+- Direct clone failed again with `Could not resolve host: github.com`; authenticated connector writes were used. No raw data, MC outputs, plots, or numerical results were altered.
+- Remaining public synchronization: WIKI and Chapter 9 still require exact synchronizer execution and diff review in a working checkout.

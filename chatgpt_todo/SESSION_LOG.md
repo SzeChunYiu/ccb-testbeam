@@ -54,3 +54,16 @@
 - **IDX-G4-002 (Optical yield ~178 PE/event): CONFIRMED** — mean=178.3 PE (500 events, 4 seeds, 100 MeV proton)
 - BLK-G4-001 (real simulation validation): RESOLVED
 - BLK-MERGE-001: PR #868 can now be merged
+
+## 2026-07-21T23:40:00Z — AUD-ANOM-001
+
+- Initial remote main: `fcc92c3bfe4c11fc5676ca509ea4db38efe2219c`.
+- Confirmed `WIKI.md` still contains three `VALIDATED` C12/MV6 statements and an unvalidated numerical veto-impact estimate, while the authoritative evidence state is `TRUTH_LEVEL_MC_ONLY`.
+- Confirmed Chapter 9 still titles the result as C12 nuclear recoils and its abstract promotes MC-only ranges, quenching, veto, and 0.1% systematic statements as established.
+- Added `scripts/sync_c12_public_claims.py`, an exact-match, idempotent synchronizer that refuses duplicate, missing, or partially ambiguous snippets instead of performing broad text replacement.
+- Added `tests/test_sync_c12_public_claims.py` covering all replacements, idempotence, duplicate-snippet rejection, and synchronized-file check mode.
+- Local validation: `python -m py_compile` passed; `python -m pytest /tmp/test_sync_c12_public_claims.py -q` returned `3 passed in 0.05s`.
+- Commits pushed directly to main: `a6c2896a16417273d5230ea3ecf42fa925136bd3`, `08a84c8b381440d657f1e0e3377d0cb89c5ea6f2`.
+- PR #868 was rechecked and is currently `mergeable=false`; it was not merged. Its head is `7992aa318b6f13b5f4bcbd828ad97996075fed4b` and base has advanced.
+- Direct clone again failed with `Could not resolve host: github.com`; repository writes used the authenticated connector.
+- Next: run the synchronizer in a working checkout, review the resulting two-file diff, run documentation/link checks, and commit the synchronized public wording to main. Rebase/update PR #868 before any merge attempt.

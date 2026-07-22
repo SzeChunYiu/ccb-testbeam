@@ -21,10 +21,12 @@ def write_csv(
     path: Path,
     amplitude: list[float | str],
     baseline: list[float] | None = None,
+    **extra_columns: list[float | str],
 ) -> None:
     data: dict[str, list[float | str]] = {"amplitude_adc": amplitude}
     if baseline is not None:
         data["baseline_adc"] = baseline
+    data.update(extra_columns)
     pd.DataFrame(data).to_csv(path, index=False)
 
 
@@ -42,6 +44,60 @@ def test_absolute_classification_records_provenance(tmp_path: Path) -> None:
     assert result["finite_amplitude_baseline_pairs"] == 3
     assert result["size_bytes"] == path.stat().st_size
     assert result["sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def test_baseline_rms_is_not_used_as_pedestal_level(tmp_path: Path) -> None:
+    path = tmp_path / "rms_only.csv"
+    write_csv(
+        path,
+        [6700, 6750, 6800],
+        baseline_rms_adc=[2.0, 2.1, 2.2],
+    )
+
+    result = MODULE.audit(path, None, 3500.0, 5000.0)
+
+    assert result["convention"] == "ABSOLUTE"
+    assert result["baseline_column"] is None
+    assert result["baseline_candidate_count"] == 0
+    assert result["auxiliary_baseline_columns"] == ["baseline_rms_adc"]
+    assert result["subtract_baseline_correct"] is None
+    assert result["warning_baseline"] == "ABSOLUTE_WITHOUT_BASELINE_LEVEL"
+    assert "median_abs_amplitude_minus_baseline" not in result
+
+
+def test_pedestal_level_selected_when_rms_is_also_present(tmp_path: Path) -> None:
+    path = tmp_path / "level_and_rms.csv"
+    write_csv(
+        path,
+        [6700, 6750, 6800],
+        [6752, 6752, 6752],
+        baseline_rms_adc=[2.0, 2.1, 2.2],
+    )
+
+    result = MODULE.audit(path, None, 3500.0, 5000.0)
+
+    assert result["baseline_column"] == "baseline_adc"
+    assert result["baseline_candidates"] == ["baseline_adc"]
+    assert result["auxiliary_baseline_columns"] == ["baseline_rms_adc"]
+    assert result["subtract_baseline_correct"] is True
+    assert result["median_abs_amplitude_minus_baseline"] == pytest.approx(48.0)
+
+
+def test_multiple_baseline_levels_are_not_chosen_implicitly(tmp_path: Path) -> None:
+    path = tmp_path / "multiple_levels.csv"
+    write_csv(
+        path,
+        [6700, 6750, 6800],
+        [6752, 6752, 6752],
+        baseline_mean_adc=[6751, 6751, 6751],
+    )
+
+    result = MODULE.audit(path, None, 3500.0, 5000.0)
+
+    assert result["baseline_column"] is None
+    assert result["baseline_candidate_count"] == 2
+    assert result["subtract_baseline_correct"] is None
+    assert result["warning_baseline"] == "MULTIPLE_BASELINE_LEVEL_COLUMNS"
 
 
 def test_net_and_ambiguous_are_distinct(tmp_path: Path) -> None:

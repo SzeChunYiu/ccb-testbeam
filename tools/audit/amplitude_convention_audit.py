@@ -11,7 +11,16 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.3.0"
+TOOL_VERSION = "2.4.0"
+BASELINE_DISPERSION_TOKENS = (
+    "rms",
+    "std",
+    "sigma",
+    "noise",
+    "width",
+    "variance",
+    "var",
+)
 
 
 def file_sha256(path: Path) -> str:
@@ -34,6 +43,23 @@ def classify(value: float, net_max: float, absolute_min: float) -> str:
     return "AMBIGUOUS"
 
 
+def identify_baseline_columns(columns: list[str]) -> tuple[list[str], list[str]]:
+    """Separate pedestal-level candidates from baseline dispersion diagnostics."""
+    baseline_like = [column for column in columns if "baseline" in column.lower()]
+    level_candidates = [
+        column
+        for column in baseline_like
+        if not any(
+            token in column.lower()
+            for token in BASELINE_DISPERSION_TOKENS
+        )
+    ]
+    auxiliary = [
+        column for column in baseline_like if column not in level_candidates
+    ]
+    return level_candidates, auxiliary
+
+
 def audit(
     path: Path,
     max_rows: int | None,
@@ -49,7 +75,9 @@ def audit(
     if "amplitude_adc" not in header.columns:
         return {**common, "status": "SKIPPED", "reason": "NO_AMPLITUDE_ADC"}
 
-    baseline_columns = [c for c in header.columns if "baseline" in c.lower()]
+    baseline_columns, auxiliary_baseline_columns = identify_baseline_columns(
+        list(header.columns)
+    )
     baseline = baseline_columns[0] if len(baseline_columns) == 1 else None
     usecols = ["amplitude_adc"] + ([baseline] if baseline else [])
     read_rows = max_rows + 1 if max_rows is not None else None
@@ -83,6 +111,8 @@ def audit(
         "amplitude_adc_median": median,
         "baseline_column": baseline,
         "baseline_candidate_count": len(baseline_columns),
+        "baseline_candidates": baseline_columns,
+        "auxiliary_baseline_columns": auxiliary_baseline_columns,
         "convention": convention,
         "subtract_baseline_correct": (
             True if convention == "ABSOLUTE" and baseline else
@@ -113,9 +143,9 @@ def audit(
         )
         result["finite_amplitude_baseline_pairs"] = len(pair)
     elif len(baseline_columns) > 1:
-        result["warning_baseline"] = "MULTIPLE_BASELINE_COLUMNS"
+        result["warning_baseline"] = "MULTIPLE_BASELINE_LEVEL_COLUMNS"
     elif convention == "ABSOLUTE":
-        result["warning_baseline"] = "ABSOLUTE_WITHOUT_BASELINE"
+        result["warning_baseline"] = "ABSOLUTE_WITHOUT_BASELINE_LEVEL"
     return result
 
 
@@ -183,6 +213,11 @@ def main(argv: list[str] | None = None) -> int:
             "ABSOLUTE": f"median >= {args.absolute_min_adc}",
             "AMBIGUOUS": "between thresholds; manual review required",
             "finite_numeric_values_only": True,
+        },
+        "baseline_level_rule": {
+            "candidate": "column name contains baseline",
+            "excluded_dispersion_tokens": list(BASELINE_DISPERSION_TOKENS),
+            "require_exactly_one_level_candidate_for_subtraction_diagnostic": True,
         },
         "max_rows": args.max_rows,
         "n_inputs": len(paths),

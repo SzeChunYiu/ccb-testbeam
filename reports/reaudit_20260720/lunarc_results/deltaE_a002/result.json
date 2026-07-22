@@ -1,0 +1,29 @@
+{
+  "source": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1781014251.574.7a497937/pulse_taxonomy_table.csv.gz",
+  "source_file_id": "1781014251.574.7a497937",
+  "key": [
+    "source_file_id",
+    "run",
+    "evt"
+  ],
+  "n_events_composite_key": 385984,
+  "n_eventno_values": 559841,
+  "eventno_values_spanning_multiple_events": 73098,
+  "events_that_eventno_only_join_would_corrupt": 146196,
+  "threshold_adc": 200.0,
+  "stopping_distribution": {
+    "B2": 567925,
+    "B4": 26978,
+    "none": 14875,
+    "B6": 14586,
+    "B8": 8575
+  },
+  "staves_present": [
+    "B2",
+    "B4",
+    "B6",
+    "B8"
+  ],
+  "units": "ADC (data); never relabeled MeV",
+  "note": "B6 absent in this table -> amp_B6=0 (module fills missing bars to 0 AFTER composite-key validation)."
+}

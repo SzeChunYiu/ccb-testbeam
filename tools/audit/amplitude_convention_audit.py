@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.2.0"
+TOOL_VERSION = "2.3.0"
 
 
 def file_sha256(path: Path) -> str:
@@ -95,6 +95,8 @@ def audit(
         warnings.append("PREFIX_SAMPLE_ROW_ORDER_DEPENDENT")
     if nonfinite_amplitude_rows:
         warnings.append("NONFINITE_AMPLITUDE_VALUES_EXCLUDED")
+    if nonnumeric_amplitude_rows:
+        warnings.append("NONNUMERIC_AMPLITUDE_VALUES_EXCLUDED")
     if warnings:
         result["warnings"] = warnings
 
@@ -170,6 +172,9 @@ def main(argv: list[str] | None = None) -> int:
     n_nonfinite_tables = sum(
         row["nonfinite_amplitude_rows"] > 0 for row in classified
     )
+    n_nonnumeric_tables = sum(
+        row["nonnumeric_amplitude_rows"] > 0 for row in classified
+    )
     payload = {
         "tool": "tools/audit/amplitude_convention_audit.py",
         "tool_version": TOOL_VERSION,
@@ -177,13 +182,14 @@ def main(argv: list[str] | None = None) -> int:
             "NET": f"median <= {args.net_max_adc}",
             "ABSOLUTE": f"median >= {args.absolute_min_adc}",
             "AMBIGUOUS": "between thresholds; manual review required",
-            "finite_values_only": True,
+            "finite_numeric_values_only": True,
         },
         "max_rows": args.max_rows,
         "n_inputs": len(paths),
         "n_classified": len(classified),
         "n_partial": n_partial,
         "n_nonfinite_tables": n_nonfinite_tables,
+        "n_nonnumeric_tables": n_nonnumeric_tables,
         "n_skipped": sum(row["status"] == "SKIPPED" for row in tables),
         "n_errors": len(errors),
         "counts": counts,
@@ -199,13 +205,14 @@ def main(argv: list[str] | None = None) -> int:
         f"inputs={len(paths)} absolute={counts['ABSOLUTE']} "
         f"net={counts['NET']} ambiguous={counts['AMBIGUOUS']} "
         f"partial={n_partial} nonfinite={n_nonfinite_tables} "
-        f"errors={len(errors)}"
+        f"nonnumeric={n_nonnumeric_tables} errors={len(errors)}"
     )
     return 1 if (
         errors
         or counts["AMBIGUOUS"]
         or n_partial
         or n_nonfinite_tables
+        or n_nonnumeric_tables
     ) else 0
 
 

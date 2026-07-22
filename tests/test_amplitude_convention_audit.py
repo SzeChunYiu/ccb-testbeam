@@ -5,6 +5,7 @@ import importlib.util
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -38,6 +39,7 @@ def test_absolute_classification_records_provenance(tmp_path: Path) -> None:
     assert result["input_truncated"] is False
     assert result["subtract_baseline_correct"] is True
     assert result["median_abs_amplitude_minus_baseline"] == pytest.approx(48.0)
+    assert result["finite_amplitude_baseline_pairs"] == 3
     assert result["size_bytes"] == path.stat().st_size
     assert result["sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -64,7 +66,7 @@ def test_full_table_default_avoids_prefix_order_bias(tmp_path: Path) -> None:
     assert prefix["convention"] == "NET"
     assert prefix["classification_scope"] == "PREFIX_SAMPLE"
     assert prefix["input_truncated"] is True
-    assert prefix["warning"] == "PREFIX_SAMPLE_ROW_ORDER_DEPENDENT"
+    assert "PREFIX_SAMPLE_ROW_ORDER_DEPENDENT" in prefix["warnings"]
 
 
 def test_prefix_mode_is_non_accepting(tmp_path: Path) -> None:
@@ -80,6 +82,43 @@ def test_prefix_mode_is_non_accepting(tmp_path: Path) -> None:
     assert code == 1
     assert payload["n_partial"] == 1
     assert payload["tables"][0]["classification_scope"] == "PREFIX_SAMPLE"
+
+
+def test_nonfinite_amplitudes_are_excluded_and_fail_gate(tmp_path: Path) -> None:
+    path = tmp_path / "nonfinite.csv"
+    output = tmp_path / "audit.json"
+    write_csv(path, [100.0, 200.0, np.inf, -np.inf])
+
+    result = MODULE.audit(path, None, 3500.0, 5000.0)
+    code = MODULE.main([str(path), "--output", str(output)])
+    payload = json.loads(output.read_text(encoding="utf-8"))
+
+    assert result["convention"] == "NET"
+    assert result["finite_amplitude_rows"] == 2
+    assert result["nonfinite_amplitude_rows"] == 2
+    assert "NONFINITE_AMPLITUDE_VALUES_EXCLUDED" in result["warnings"]
+    assert code == 1
+    assert payload["n_nonfinite_tables"] == 1
+
+
+def test_nonfinite_baseline_pairs_do_not_corrupt_diagnostics(tmp_path: Path) -> None:
+    path = tmp_path / "baseline_nonfinite.csv"
+    write_csv(path, [6700.0, 6800.0, np.inf], [6752.0, np.inf, 6752.0])
+
+    result = MODULE.audit(path, None, 3500.0, 5000.0)
+
+    assert result["convention"] == "ABSOLUTE"
+    assert result["finite_amplitude_baseline_pairs"] == 1
+    assert result["baseline_median"] == pytest.approx(6752.0)
+    assert result["median_abs_amplitude_minus_baseline"] == pytest.approx(52.0)
+
+
+def test_only_nonfinite_values_are_rejected(tmp_path: Path) -> None:
+    path = tmp_path / "only_nonfinite.csv"
+    write_csv(path, [np.inf, -np.inf])
+
+    with pytest.raises(ValueError, match="no finite numeric values"):
+        MODULE.audit(path, None, 3500.0, 5000.0)
 
 
 def test_missing_amplitude_is_explicit_skip(tmp_path: Path) -> None:
@@ -111,3 +150,8 @@ def test_main_records_read_errors_and_returns_nonzero(tmp_path: Path) -> None:
 def test_invalid_threshold_gap_is_rejected() -> None:
     with pytest.raises(ValueError, match="net_max"):
         MODULE.classify(100.0, 3000.0, 3000.0)
+
+
+def test_nonfinite_classification_value_is_rejected() -> None:
+    with pytest.raises(ValueError, match="must be finite"):
+        MODULE.classify(np.inf, 3500.0, 5000.0)

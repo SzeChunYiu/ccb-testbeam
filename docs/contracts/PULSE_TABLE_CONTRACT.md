@@ -56,30 +56,35 @@ from an amplitude column.
 
 ---
 
-## CORRECTION (2026-07-22, from real-data measurement) — A-001 downgraded
+## CORRECTION (2026-07-22) — historical corpus result is heuristic-only
 
-An empirical scan of 19 real report pulse tables
-(`tools/audit/amplitude_convention_audit.py`,
+An empirical scan of 19 report pulse tables
+(`tools/audit/amplitude_convention_audit.py`, historical artifact
 `reports/reaudit_20260720/lunarc_results/pulse_schema_a001/amplitude_convention_audit.json`)
-**falsifies the original "MV3/MV0 double-subtracts" framing**:
+reported 17 tables as `ABSOLUTE` and 2 timing tables as `NET`. That scan was
+useful evidence that the legacy name `amplitude_adc` carries inconsistent
+semantics across the repository, but its convention labels were inferred from
+raw amplitude medians and are **not accepted physical convention assignments**.
 
-- **17 / 19 tables store `amplitude_adc` ABSOLUTE** (median near the hardware
-  pedestal ~6752 ADC), **including the canonical S00 selected table**
-  (`amplitude_adc` median = 6730). For these, `abs(amplitude_adc - baseline_adc)`
-  is the **correct** v2 net signal — exactly what `mv3_stopping_v2/v3.py` and the
-  `mv0` v2 calibration compute. **These are NOT double-subtraction bugs.**
-- **Only 2 / 19 tables store NET** `amplitude_adc` (median ~2630) — the two
-  `timing_pulse_table` variants. For those, re-subtracting baseline *would* be a
-  double subtraction; they are not the MV3 stopping inputs.
+Subsequent audit work found that the historical labels overlap the former raw
+median thresholds: several tables labelled `ABSOLUTE` have medians in the range
+3096.5–3419 ADC, while another lies in the current ambiguous interval. Therefore,
+a raw `amplitude_adc` median does not uniquely identify whether the values are
+absolute ADC codes or baseline-subtracted amplitudes.
 
-So A-001 is **downgraded** from "P0 double-subtraction in the canonical pipeline"
-to "**naming ambiguity + 2 inconsistent tables**": `amplitude_adc` genuinely
-carries both conventions across the report tree, so a blind consumer can still get
-it wrong. The fix (emit `peak_height_adc` = net and `peak_code_adc` = absolute)
-remains warranted for disambiguation, and `amplitude_convention_audit.py` lets any
-consumer classify a table before use (ABSOLUTE if median > 3000 ADC → subtract
-baseline; NET otherwise → use as-is).
+Current acceptance rule (`amplitude_convention_audit.py` v2.6.0 or later):
 
-**Do not "fix" the MV3 subtraction** — it is correct for its absolute-amplitude
-input. The earlier A-001 flag (assuming net) was based on an incorrect schema
-assumption; the measured pedestal-relative distribution corrects it.
+- a median-only label is `RAW_MEDIAN_HEURISTIC`, `UNANCHORED`, and non-accepting;
+- an accepted convention requires independent schema or producer-code provenance,
+  or a uniquely identified pedestal-level field with a physically reviewed
+  relationship to the amplitude column;
+- prefix-only scans, malformed or nonfinite values, ambiguous medians, missing or
+  multiple pedestal candidates, and unanchored conventions all return nonzero;
+- the historical `17 ABSOLUTE / 2 NET` split must not be used to authorize
+  subtraction or non-subtraction in downstream physics code.
+
+Accordingly, do not "fix" or preserve an MV3 subtraction merely from the old
+median classification. The exact input table must be hashed and its convention
+established from explicit schema, producer code, or independently validated
+pedestal evidence before use. The long-term fix remains to emit
+`peak_height_adc` (net) and `peak_code_adc` (absolute) under a versioned schema.

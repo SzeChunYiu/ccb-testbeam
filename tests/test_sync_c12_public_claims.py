@@ -80,3 +80,23 @@ def test_readme_replacements_are_scientifically_qualified() -> None:
     assert "real-data identity unvalidated" in updated
     assert "✅ MC-validated" not in updated
     assert "✅ MC-identified" not in updated
+
+
+def test_selected_paths_defaults_to_all_in_repository_order() -> None:
+    assert sync.selected_paths(None) == tuple(sync.REPLACEMENTS)
+    assert sync.selected_paths([]) == tuple(sync.REPLACEMENTS)
+
+
+def test_selected_paths_filters_and_deduplicates_in_repository_order() -> None:
+    selected = sync.selected_paths(["WIKI.md", "README.md", "WIKI.md"])
+    assert selected == ("README.md", "WIKI.md")
+
+
+def test_selected_paths_rejects_unknown_paths() -> None:
+    try:
+        sync.selected_paths(["docs/unknown.md"])
+    except ValueError as exc:
+        assert "unknown path(s): docs/unknown.md" in str(exc)
+        assert "WIKI.md" in str(exc)
+    else:
+        raise AssertionError("unknown path was not rejected")

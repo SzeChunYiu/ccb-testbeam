@@ -1,0 +1,16 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/pidfull_0000000009_1.py --config configs/1783744185_18861_10947fe9_waveform_pid_controls.json",
+  "config": "configs/1783744185_18861_10947fe9_waveform_pid_controls.json",
+  "git_commit": "1b004f4cb6f99ad458107ead6881b5086cef303b",
+  "packages": {
+    "awkward": "2.2.4",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117",
+    "uproot": "5.0.9"
+  },
+  "python": "3.7.6",
+  "runtime_sec": 133.72928071022034,
+  "script": "scripts/pidfull_0000000009_1.py",
+  "ticket": "1783744185.18861.10947fe9"
+}

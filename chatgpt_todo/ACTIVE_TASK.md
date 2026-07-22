@@ -1,13 +1,13 @@
 # Active Task
 
-- **Task ID:** AUD-DOC-001
+- **Task ID:** AUD-REPO-002
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-22T03:07:07Z
-- **Base main SHA:** `24471b53045b0d064de96f94425ed6ea6b175243`
-- **Primary scope:** correct stale coordination state and safely synchronize public C12 evidence wording without truncating files or overwriting concurrent work.
-- **Files inspected:** `chatgpt_todo/HANDOFF.md`, `BLOCKERS.md`, `SESSION_LOG.md`, `ACTIVE_TASK.md`, `WIKI.md`, `docs/academic_chapters/09_anomaly_id.md`, and `scripts/sync_c12_public_claims.py`.
-- **Observed facts:** the Geant4 validation session is recorded complete; PR #868 integration remains open because current `main` advanced and the PR was reported non-mergeable; WIKI and Chapter 9 remain stale.
-- **Current blocker:** connector-only file replacement is unsafe for the 431-line WIKI and 725-line chapter because full bytes are unavailable locally and DNS resolution fails.
-- **Validation plan:** use the exact synchronizer in a complete checkout, run `--check`, its regression tests, and the broken-link checker, then review the exact diff before direct-to-main commit.
-- **Progress:** stale blocker states and task ownership corrected on `main`; public-file synchronization remains blocked.
-- **Acceptance status:** PARTIAL
+- **Session stamp:** 2026-07-22T07:22:00Z
+- **Base main SHA:** `fbec7a75869b863baf7c34b73c532b46f7531660`
+- **Primary scope:** reconcile repository review states with currently observable GitHub evidence.
+- **Files inspected:** `chatgpt_todo/MASTER_INDEX.md`, `BACKLOG.md`, `ACTIVE_TASK.md`, `HANDOFF.md`, recent main commits, and PR #868 metadata.
+- **Observed facts:** PR #868 is closed and not merged. The master index contains large areas that remain `NOT_STARTED`, including study reports and analysis scripts. Public C12 wording was synchronized on main in commit `d966384231ccf29b7e8e4f1563a46c281ca29782`.
+- **Evidence boundary:** GPU-node and ROOT validation values are retained as repository-recorded results. This session did not execute Geant4 or inspect the underlying ROOT, JSON, or PDF artifacts.
+- **Validation plan:** maintain conservative states until exact main commits and validation artifacts are linked and independently checked.
+- **Progress:** `MASTER_INDEX.md` corrected on main in commit `d85b467350d42f1efc788df0f80605a824da1e11`; handoff updates remain in progress.
+- **Acceptance status:** ACTIVE

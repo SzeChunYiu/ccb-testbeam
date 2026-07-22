@@ -60,7 +60,7 @@ This section is the controlled front door to the CCB test-beam analysis. Every c
 | τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 | data_only | **VALIDATED** |
 | Digitizer gain (MV0 v2) | 92 ± 28 ADC/MeV | 14 | 28 | digitized MC | **VALIDATED** |
 | p/d PID AUC | 0.9860 | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
-| C12 anomaly fraction | 0.32% | — | — | MC-identified | **VALIDATED** |
+| C12-like anomaly fraction in truth-labelled MC | 283 / 87,555 tracks (0.32%) | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
 | MV3 B8 data/MC | data 2.3% / MC 22.3% | — | — | MC vs data | **FAIL** |
 | MV4 raw timing pull | −1.05σ | — | — | digitized MC | **PASS** |
 | MV4 corrected timing pull | +2.68σ | — | — | digitized MC | **TENSION** |
@@ -316,7 +316,7 @@ Conservative recommendation: use B2+B4+B6 only (no B8) until MV3 is fixed.
 
 | Observable | Value | Status |
 |---|---|---|
-| C12 anomaly fraction | 0.32% of tracks | **VALIDATED** (MC-identified, MV6) |
+| C12-like anomaly fraction in truth-labelled MC | 283 / 87,555 tracks (0.32%) | **TRUTH_LEVEL_MC_ONLY** (MV6; transfer to data unvalidated) |
 
 ### Required Studies (Not Yet Done)
 
@@ -324,8 +324,8 @@ Conservative recommendation: use B2+B4+B6 only (no B8) until MV3 is fixed.
 - False-positive rate (data sideband validation)
 - Species composition of anomaly cluster
 
-### Veto Impact (Conservative Estimate)
-At 99% efficiency, 5% false-positive: events retained = 99.68%, background passed = 0.016%.
+### Veto Impact
+No data-veto performance is claimed. Efficiency, false-positive rate, and retained-event fraction require the preregistered matched data/MC closure and independent data sidebands.
 
 **[Full chapter:](docs/academic_chapters/09_anomaly_id.md)**
 
@@ -345,7 +345,7 @@ At 99% efficiency, 5% false-positive: events retained = 99.68%, background passe
 | MV4 raw | Timing | **PASS** (−1.05σ) | Accept |
 | MV4 corrected | Timing | **TENSION** (+2.68σ) | **Digitizer fix** |
 | MV5 | Pile-up Rmax | **VALIDATED** | Independent τeff |
-| MV6 | C12 anomaly | **VALIDATED** | Efficiency study |
+| MV6 | C12-like anomaly in truth-labelled MC | **TRUTH_LEVEL_MC_ONLY** | Matched data/MC closure and efficiency study |
 
 ### Two Blocking Issues
 

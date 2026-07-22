@@ -1,10 +1,10 @@
-# Chapter 9: Anomaly Identification — C12 Nuclear Recoils
-> **ACCEPTED by nature-reviewer (3/3).** All standard fixes applied.
+# Chapter 9: C12-Like Anomaly in Truth-Labelled Monte Carlo
+> **Evidence-status correction:** the C12 interpretation is demonstrated in truth-labelled Monte Carlo only; transfer to real beam data remains unvalidated.
 
 
 ## Abstract
 
-Unsupervised clustering of pulse waveform embeddings discovered an anomalous class comprising 0.32% of tracks, characterised by early peaking (sample 1-2 instead of sample 5) and near-zero integrated pulse area. Monte Carlo truth identification (Study MV6) determined the dominant species as carbon-12 nuclear recoils (55% of anomalies) produced by proton scattering off carbon nuclei in the CD2 target. The C12 ions, with kinetic energies of 1-4 MeV, deposit all energy in the first 1-5 micrometres of scintillator, producing a waveform confined to ADC samples 0-1. The Birks quenching factor for these heavily ionising particles is approximately 6.7e-4, reducing the light output by a factor of approximately 1500 relative to a minimum-ionising proton. The anomaly contributes a negligible systematic uncertainty of 0.1% to deuteron counts after applying a Gaussian Mixture Model morphology cut. This chapter provides the complete algorithmic, physical, and methodological account of the discovery.
+In a truth-labelled Monte Carlo sample, unsupervised clustering selected 283 of 87,555 tracks (0.32%) with early-peaking, near-zero-area waveforms. Within that simulated selected class, approximately 55% of tracks were labelled carbon-12. These observations support carbon-12 recoil as a candidate simulated mechanism for the morphology, but they do not identify the related real-data anomaly because no event-level species truth or independently validated proxy has been demonstrated for data. Reported ranges, quenching estimates, veto efficiency, false-positive rate, retained-event fraction, and deuteron systematic impact therefore remain hypotheses or simulation-only quantities until the preregistered matched data/MC closure is executed. This chapter documents the algorithm and MC interpretation while preserving that evidence boundary.
 
 ---
 

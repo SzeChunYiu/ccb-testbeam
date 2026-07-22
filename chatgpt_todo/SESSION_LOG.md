@@ -118,3 +118,15 @@
 - Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector writes were used.
 - No raw data, MC outputs, scientific numbers, plots, or generated artifacts changed.
 - Next: in a complete checkout, run `python scripts/sync_c12_public_claims.py --path WIKI.md`, review the WIKI-only diff, run `--check`, tests, and link checks, then commit the public wording directly to `main`.
+
+## 2026-07-22T05:10:32Z — AUD-DOC-001
+
+- Initial remote main: `09fc2d57710cf5a412eb53c55d6550a3bfa2f215`.
+- Re-read the current handoff, `WIKI.md`, `scripts/sync_c12_public_claims.py`, and `tests/test_sync_c12_public_claims.py`.
+- Confirmed the public WIKI remains unsynchronized and that safe review required a no-write preview mode.
+- Added `--diff`, which emits a stable unified diff and never modifies files; `--check` and `--diff` are mutually exclusive.
+- Added focused tests for diff headers, old/new reviewed snippets, and byte-for-byte non-modification of the source file.
+- Validation on exact temporary copies: `python -m py_compile` passed; `python -m pytest /tmp/test_sync_c12_public_claims.py -q` returned `11 passed in 0.06s`.
+- Direct-to-main commits before this log update: `b6cefbba7b58f5782c6b6ffe05e7d127d4835ad0`, `5004ad6cd99e9e43a703cbfb7102a220607642c9`.
+- No raw data, MC outputs, scientific values, public wording, plots, or generated artifacts changed.
+- Next: in a complete checkout, run `python scripts/sync_c12_public_claims.py --path WIKI.md --diff`, review the output, then run the write, `--check`, focused tests, and broken-link checks before committing the WIKI synchronization to `main`.

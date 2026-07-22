@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import difflib
 from pathlib import Path
 
 REPLACEMENTS: dict[str, tuple[tuple[str, str], ...]] = {
@@ -81,14 +82,30 @@ def synchronize_text(path_label: str, text: str) -> tuple[str, int]:
     return result, len(replacements)
 
 
-def synchronize_file(root: Path, relative_path: str, *, check: bool) -> int:
+def unified_diff(relative_path: str, original: str, updated: str) -> str:
+    """Return a stable unified diff for review without modifying the file."""
+    return "".join(
+        difflib.unified_diff(
+            original.splitlines(keepends=True),
+            updated.splitlines(keepends=True),
+            fromfile=f"a/{relative_path}",
+            tofile=f"b/{relative_path}",
+        )
+    )
+
+
+def synchronize_file(
+    root: Path, relative_path: str, *, check: bool, show_diff: bool = False
+) -> int:
     path = root / relative_path
     original = path.read_text(encoding="utf-8")
     updated, changed = synchronize_text(relative_path, original)
+    if show_diff and changed:
+        print(unified_diff(relative_path, original, updated), end="")
     if check:
         if changed:
             raise RuntimeError(f"{relative_path} requires {changed} synchronization change(s)")
-    elif changed:
+    elif changed and not show_diff:
         path.write_text(updated, encoding="utf-8")
     return changed
 
@@ -112,6 +129,11 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--check", action="store_true")
     parser.add_argument(
+        "--diff",
+        action="store_true",
+        help="print a unified diff without modifying files",
+    )
+    parser.add_argument(
         "--path",
         action="append",
         choices=tuple(REPLACEMENTS),
@@ -119,11 +141,16 @@ def main() -> int:
     )
     args = parser.parse_args()
 
+    if args.check and args.diff:
+        parser.error("--check and --diff are mutually exclusive")
+
     paths = selected_paths(args.path)
     total = 0
     for relative_path in paths:
-        total += synchronize_file(args.root, relative_path, check=args.check)
-    mode = "checked" if args.check else "updated"
+        total += synchronize_file(
+            args.root, relative_path, check=args.check, show_diff=args.diff
+        )
+    mode = "diffed" if args.diff else "checked" if args.check else "updated"
     print(f"{mode} {len(paths)} files; replacements={total}")
     return 0
 

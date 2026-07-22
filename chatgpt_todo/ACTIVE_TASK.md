@@ -2,13 +2,13 @@
 
 - **Task ID:** AUD-AMP-001
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-22T15:03:46Z
-- **Base main SHA:** `7d880de8af436634be083649350ce2ed26383424`
-- **Primary scope:** prevent baseline dispersion columns such as `baseline_rms_adc` from being misused as pedestal levels in amplitude-convention diagnostics.
-- **Files inspected:** `tools/audit/amplitude_convention_audit.py`, `tests/test_amplitude_convention_audit.py`, `docs/contracts/PULSE_TABLE_CONTRACT.md`, `chatgpt_todo/ACTIVE_TASK.md`, and `chatgpt_todo/HANDOFF.md`.
-- **Observed fact:** version 2.3.0 selected any sole column containing `baseline`; a lone RMS/noise column could therefore produce a physically meaningless subtraction diagnostic and false `subtract_baseline_correct=true`.
-- **Implementation:** version 2.4.0 separates pedestal-level candidates from RMS/std/sigma/noise/width/variance diagnostics and requires exactly one level candidate.
-- **Validation:** syntax checks passed and the focused suite passed with `16 passed in 0.32s`.
+- **Session stamp:** 2026-07-22T17:01:05Z
+- **Base main SHA:** `9033b4a0b8b69914451e5c44e8b4f7d6a3b8c78b`
+- **Primary scope:** make unresolved pedestal subtraction non-accepting for tables classified as absolute-code amplitude.
+- **Files inspected:** `tools/audit/amplitude_convention_audit.py`, `tests/test_amplitude_convention_audit.py`, `chatgpt_todo/ACTIVE_TASK.md`, and `chatgpt_todo/HANDOFF.md`.
+- **Observed fact:** version 2.4.0 reported `ABSOLUTE_WITHOUT_BASELINE_LEVEL` or `MULTIPLE_BASELINE_LEVEL_COLUMNS`, but its aggregate exit status still returned success when no other gate failed.
+- **Implementation:** version 2.5.0 records `baseline_resolution` as `RESOLVED`, `MISSING`, `AMBIGUOUS`, or `NOT_REQUIRED`; counts unresolved absolute baselines; and returns nonzero for any unresolved absolute table.
+- **Validation:** exact reconstructed source and the new regression file passed `python -m py_compile ...` and `python -m pytest /tmp/ampgate/tests -q` with `3 passed in 0.07s`.
 - **Evidence boundary:** no real pulse table was accessed; the prior corpus and exact A-002 source-table convention were not rerun.
-- **Progress:** code and tests are committed to remote `main`; immutable handoff update follows.
-- **Acceptance status:** PARTIAL — baseline-column semantics are validated synthetically; real-table classification and regenerated provenance artifacts remain BLOCKED_COMPUTE.
+- **Progress:** code and focused regression are committed directly to remote `main`; immutable handoff is recorded.
+- **Acceptance status:** PARTIAL — the aggregate baseline-resolution gate is validated synthetically; real-table classification and regenerated provenance artifacts remain BLOCKED_COMPUTE.

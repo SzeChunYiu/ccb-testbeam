@@ -45,22 +45,30 @@ REPLACEMENTS: dict[str, tuple[tuple[str, str], ...]] = {
 def synchronize_text(path_label: str, text: str) -> tuple[str, int]:
     """Apply exact replacements, rejecting ambiguous or partially synchronized inputs."""
     replacements = REPLACEMENTS[path_label]
-    changed = 0
-    result = text
+    states: list[str] = []
     for old, new in replacements:
-        old_count = result.count(old)
-        new_count = result.count(new)
+        old_count = text.count(old)
+        new_count = text.count(new)
         if old_count == 1 and new_count == 0:
-            result = result.replace(old, new)
-            changed += 1
+            states.append("old")
         elif old_count == 0 and new_count == 1:
-            continue
+            states.append("new")
         else:
             raise ValueError(
                 f"{path_label}: expected exactly one old or one new snippet; "
                 f"found old={old_count}, new={new_count}"
             )
-    return result, changed
+
+    if len(set(states)) > 1:
+        raise ValueError(f"{path_label}: partially synchronized file; states={states}")
+
+    if states[0] == "new":
+        return text, 0
+
+    result = text
+    for old, new in replacements:
+        result = result.replace(old, new)
+    return result, len(replacements)
 
 
 def synchronize_file(root: Path, relative_path: str, *, check: bool) -> int:

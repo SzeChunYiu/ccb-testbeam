@@ -30,7 +30,7 @@ A mutually exclusive stopping classification must sum exactly to the number of p
 
 ## Code correction
 
-`script/single_stave/deltaE_E_data_bridge.py` was corrected on `main` to:
+`scripts/single_stave/deltaE_E_data_bridge.py` was corrected on `main` to:
 
 - aggregate hits by `(run, evt, stave)`;
 - exclude `eventno` from the event-table key;

@@ -19,10 +19,10 @@ SPEC.loader.exec_module(MODULE)
 
 def write_csv(
     path: Path,
-    amplitude: list[float],
+    amplitude: list[float | str],
     baseline: list[float] | None = None,
 ) -> None:
-    data: dict[str, list[float]] = {"amplitude_adc": amplitude}
+    data: dict[str, list[float | str]] = {"amplitude_adc": amplitude}
     if baseline is not None:
         data["baseline_adc"] = baseline
     pd.DataFrame(data).to_csv(path, index=False)
@@ -99,6 +99,31 @@ def test_nonfinite_amplitudes_are_excluded_and_fail_gate(tmp_path: Path) -> None
     assert "NONFINITE_AMPLITUDE_VALUES_EXCLUDED" in result["warnings"]
     assert code == 1
     assert payload["n_nonfinite_tables"] == 1
+
+
+def test_nonnumeric_amplitudes_are_excluded_and_fail_gate(tmp_path: Path) -> None:
+    path = tmp_path / "nonnumeric.csv"
+    output = tmp_path / "audit.json"
+    write_csv(path, [100.0, "bad-adc", 300.0])
+
+    result = MODULE.audit(path, None, 3500.0, 5000.0)
+    code = MODULE.main([str(path), "--output", str(output)])
+    payload = json.loads(output.read_text(encoding="utf-8"))
+
+    assert result["convention"] == "NET"
+    assert result["finite_amplitude_rows"] == 2
+    assert result["nonnumeric_amplitude_rows"] == 1
+    assert "NONNUMERIC_AMPLITUDE_VALUES_EXCLUDED" in result["warnings"]
+    assert code == 1
+    assert payload["n_nonnumeric_tables"] == 1
+
+
+def test_only_nonnumeric_values_are_rejected(tmp_path: Path) -> None:
+    path = tmp_path / "only_nonnumeric.csv"
+    write_csv(path, ["bad", "missing"])
+
+    with pytest.raises(ValueError, match="no finite numeric values"):
+        MODULE.audit(path, None, 3500.0, 5000.0)
 
 
 def test_nonfinite_baseline_pairs_do_not_corrupt_diagnostics(tmp_path: Path) -> None:

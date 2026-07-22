@@ -119,3 +119,43 @@ def test_diff_mode_does_not_modify_file(tmp_path: Path, capsys) -> None:
     assert changed == 4
     assert captured.startswith("--- a/WIKI.md\n+++ b/WIKI.md\n")
     assert path.read_text(encoding="utf-8") == source
+
+
+def test_multi_file_write_is_atomic_on_validation_failure(tmp_path: Path) -> None:
+    first = "README.md"
+    second = "WIKI.md"
+    first_source = "\n".join(old for old, _ in sync.REPLACEMENTS[first])
+    second_pairs = sync.REPLACEMENTS[second]
+    ambiguous_second = "\n".join(
+        [second_pairs[0][0], second_pairs[0][0], *(old for old, _ in second_pairs[1:])]
+    )
+
+    (tmp_path / first).write_text(first_source, encoding="utf-8")
+    (tmp_path / second).write_text(ambiguous_second, encoding="utf-8")
+
+    try:
+        sync.synchronize_paths(tmp_path, (first, second), check=False, show_diff=False)
+    except ValueError as exc:
+        assert "old=2" in str(exc)
+    else:
+        raise AssertionError("ambiguous later file was not rejected")
+
+    assert (tmp_path / first).read_text(encoding="utf-8") == first_source
+
+
+def test_multi_file_check_reports_all_pending_files(tmp_path: Path) -> None:
+    paths = ("README.md", "WIKI.md")
+    for label in paths:
+        (tmp_path / label).write_text(
+            "\n".join(old for old, _ in sync.REPLACEMENTS[label]),
+            encoding="utf-8",
+        )
+
+    try:
+        sync.synchronize_paths(tmp_path, paths, check=True)
+    except RuntimeError as exc:
+        message = str(exc)
+        assert "README.md requires 2 synchronization change(s)" in message
+        assert "WIKI.md requires 4 synchronization change(s)" in message
+    else:
+        raise AssertionError("check mode accepted unsynchronized files")

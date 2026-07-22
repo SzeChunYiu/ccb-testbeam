@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.6.0"
+TOOL_VERSION = "2.7.0"
 BASELINE_DISPERSION_TOKENS = (
     "rms", "std", "sigma", "noise", "width", "variance", "var",
 )
@@ -114,25 +114,35 @@ def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float)
         warnings.append("NONNUMERIC_AMPLITUDE_VALUES_EXCLUDED")
     if not baseline:
         warnings.append("UNANCHORED_AMPLITUDE_CONVENTION")
-    if warnings:
-        result["warnings"] = warnings
 
     if baseline:
-        pair = (
-            frame[["amplitude_adc", baseline]]
-            .apply(pd.to_numeric, errors="coerce")
-            .replace([np.inf, -np.inf], np.nan)
-            .dropna()
-        )
+        numeric_pair = frame[["amplitude_adc", baseline]].apply(pd.to_numeric, errors="coerce")
+        pair = numeric_pair.replace([np.inf, -np.inf], np.nan).dropna()
+        finite_pairs = len(pair)
+        missing_baseline_for_finite_amplitude = len(amplitude) - finite_pairs
         result["baseline_median"] = float(pair[baseline].median()) if not pair.empty else None
         result["median_abs_amplitude_minus_baseline"] = (
             float((pair["amplitude_adc"] - pair[baseline]).abs().median()) if not pair.empty else None
         )
-        result["finite_amplitude_baseline_pairs"] = len(pair)
+        result["finite_amplitude_baseline_pairs"] = finite_pairs
+        result["finite_amplitude_rows_without_finite_baseline"] = missing_baseline_for_finite_amplitude
+        result["baseline_pair_coverage"] = finite_pairs / len(amplitude)
+        if missing_baseline_for_finite_amplitude:
+            result["baseline_data_quality"] = "INCOMPLETE"
+            result["convention_acceptance"] = "BASELINE_DATA_INVALID"
+            result["subtract_baseline_correct"] = None
+            warnings.append("INCOMPLETE_BASELINE_FOR_FINITE_AMPLITUDES")
+        else:
+            result["baseline_data_quality"] = "COMPLETE"
     elif len(baseline_columns) > 1:
         result["warning_baseline"] = "MULTIPLE_BASELINE_LEVEL_COLUMNS"
+        result["baseline_data_quality"] = "AMBIGUOUS_COLUMN"
     else:
         result["warning_baseline"] = "AMPLITUDE_CONVENTION_WITHOUT_BASELINE_LEVEL"
+        result["baseline_data_quality"] = "MISSING_COLUMN"
+
+    if warnings:
+        result["warnings"] = warnings
     return result
 
 
@@ -173,7 +183,10 @@ def main(argv: list[str] | None = None) -> int:
     n_unresolved_absolute_baselines = sum(
         row["convention"] == "ABSOLUTE" and row["baseline_resolution"] != "RESOLVED" for row in classified
     )
-    n_unanchored_conventions = sum(row["convention_acceptance"] != "ACCEPTABLE" for row in classified)
+    n_unanchored_conventions = sum(row["convention_acceptance"] == "UNANCHORED" for row in classified)
+    n_invalid_baseline_data_tables = sum(
+        row["convention_acceptance"] == "BASELINE_DATA_INVALID" for row in classified
+    )
     payload = {
         "tool": "tools/audit/amplitude_convention_audit.py",
         "tool_version": TOOL_VERSION,
@@ -188,7 +201,9 @@ def main(argv: list[str] | None = None) -> int:
             "candidate": "column name contains baseline",
             "excluded_dispersion_tokens": list(BASELINE_DISPERSION_TOKENS),
             "require_exactly_one_level_candidate_for_accepted_convention": True,
+            "require_finite_baseline_for_every_finite_amplitude": True,
             "unanchored_convention_is_non_accepting": True,
+            "incomplete_baseline_data_is_non_accepting": True,
         },
         "max_rows": args.max_rows,
         "n_inputs": len(paths),
@@ -198,6 +213,7 @@ def main(argv: list[str] | None = None) -> int:
         "n_nonnumeric_tables": n_nonnumeric_tables,
         "n_unresolved_absolute_baselines": n_unresolved_absolute_baselines,
         "n_unanchored_conventions": n_unanchored_conventions,
+        "n_invalid_baseline_data_tables": n_invalid_baseline_data_tables,
         "n_skipped": sum(row["status"] == "SKIPPED" for row in tables),
         "n_errors": len(errors),
         "counts": counts,
@@ -210,11 +226,13 @@ def main(argv: list[str] | None = None) -> int:
         f"inputs={len(paths)} absolute={counts['ABSOLUTE']} net={counts['NET']} "
         f"ambiguous={counts['AMBIGUOUS']} partial={n_partial} nonfinite={n_nonfinite_tables} "
         f"nonnumeric={n_nonnumeric_tables} unresolved_absolute_baselines={n_unresolved_absolute_baselines} "
-        f"unanchored_conventions={n_unanchored_conventions} errors={len(errors)}"
+        f"unanchored_conventions={n_unanchored_conventions} "
+        f"invalid_baseline_data={n_invalid_baseline_data_tables} errors={len(errors)}"
     )
     return 1 if (
         errors or counts["AMBIGUOUS"] or n_partial or n_nonfinite_tables or n_nonnumeric_tables
         or n_unresolved_absolute_baselines or n_unanchored_conventions
+        or n_invalid_baseline_data_tables
     ) else 0
 
 

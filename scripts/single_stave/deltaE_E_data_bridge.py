@@ -10,6 +10,10 @@ split one physical event into multiple output rows and made the stopping-layer
 counts exceed the reported physical-event count. This implementation treats
 ``eventno`` only as a collision diagnostic and enforces one output row per
 physical composite key.
+
+Bare ``amplitude_adc`` is deliberately rejected because the repository schema
+audit classifies it as ambiguous: it may be a peak code or a baseline-subtracted
+height. The bridge requires an explicit amplitude field or caller override.
 """
 from __future__ import annotations
 
@@ -28,6 +32,44 @@ SRC = R / "reports/1781014251.574.7a497937/pulse_taxonomy_table.csv.gz"
 OUT = Path("/projects/hep/fs10/shared/nnbar/billy/ccb_deltae_rerun")
 THRESHOLD_ADC = 200.0
 LAYERS = ("B2", "B4", "B6", "B8")
+SAFE_AMPLITUDE_COLUMNS = ("median_amp_adc", "peak_height_adc", "net_adc")
+AMBIGUOUS_AMPLITUDE_COLUMN = "amplitude_adc"
+
+
+def resolve_amplitude_column(
+    pulses: pd.DataFrame,
+    requested: str | None = None,
+) -> str:
+    """Return an explicit amplitude column and reject ambiguous fallbacks.
+
+    ``amplitude_adc`` is accepted only when the caller explicitly requests it.
+    This makes any use of the ambiguous legacy field visible in code, command
+    provenance, and the generated result metadata rather than silently choosing
+    it by fallback.
+    """
+    if requested is not None:
+        if requested not in pulses.columns:
+            raise ValueError(f"requested amplitude column is missing: {requested}")
+        return requested
+
+    available = [name for name in SAFE_AMPLITUDE_COLUMNS if name in pulses.columns]
+    if len(available) == 1:
+        return available[0]
+    if len(available) > 1:
+        raise ValueError(
+            "multiple explicit amplitude columns are present; select one with "
+            f"amplitude_column=...: {available}"
+        )
+    if AMBIGUOUS_AMPLITUDE_COLUMN in pulses.columns:
+        raise ValueError(
+            "bare amplitude_adc is schema-ambiguous and cannot be selected "
+            "implicitly; regenerate an explicit peak_height_adc/net_adc field "
+            "or pass amplitude_column='amplitude_adc' with documented semantics"
+        )
+    raise ValueError(
+        "no supported amplitude column found; expected exactly one of "
+        f"{list(SAFE_AMPLITUDE_COLUMNS)}"
+    )
 
 
 def build_event_table(
@@ -35,6 +77,7 @@ def build_event_table(
     *,
     source_file_id: str,
     threshold_adc: float = THRESHOLD_ADC,
+    amplitude_column: str | None = None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     """Build one ΔE-E row per physical ``(source_file_id, run, evt)`` event.
 
@@ -42,7 +85,7 @@ def build_event_table(
     only to quantify how unsafe an eventno-only join would be and how often one
     physical key carries multiple eventno values.
     """
-    ampcol = "median_amp_adc" if "median_amp_adc" in pulses.columns else "amplitude_adc"
+    ampcol = resolve_amplitude_column(pulses, amplitude_column)
     required = {"run", "evt", "eventno", "stave", ampcol}
     missing = sorted(required.difference(pulses.columns))
     if missing:
@@ -124,6 +167,8 @@ def build_event_table(
     result: dict[str, object] = {
         "source_file_id": source_file_id,
         "key": ["source_file_id", "run", "evt"],
+        "amplitude_column": ampcol,
+        "amplitude_column_explicitly_requested": amplitude_column is not None,
         "n_events_composite_key": n_comp,
         "n_eventno_values": int(df["eventno"].nunique(dropna=False)),
         "eventno_values_spanning_multiple_events": collide,

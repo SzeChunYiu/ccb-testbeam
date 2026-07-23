@@ -130,3 +130,18 @@
 - Direct-to-main commits before this log update: `b6cefbba7b58f5782c6b6ffe05e7d127d4835ad0`, `5004ad6cd99e9e43a703cbfb7102a220607642c9`.
 - No raw data, MC outputs, scientific values, public wording, plots, or generated artifacts changed.
 - Next: in a complete checkout, run `python scripts/sync_c12_public_claims.py --path WIKI.md --diff`, review the output, then run the write, `--check`, focused tests, and broken-link checks before committing the WIKI synchronization to `main`.
+
+## 2026-07-23T06:09:08Z — AUD-AMP-009
+
+- Initial remote main: `1b00e612cd9358486f2d9db0164def1ec09fec20`.
+- Fetched current `main`, recent history, PR #868, open PR inventory, the amplitude validator/auditor, focused tests, and all required `chatgpt_todo/` coordination files.
+- Confirmed a provenance defect: `evidence_reference_sha256` was syntax-checked but never measured against the referenced supporting artifact, while the convention auditor could use that unchecked declaration for physics authorization.
+- Upgraded `validate_amplitude_evidence_map.py` to v1.2.0 with controlled-root path resolution, missing/escape rejection, streaming SHA-256 measurement, and declared-versus-measured byte equality.
+- Upgraded `amplitude_convention_audit.py` to v3.1.0 so only a verified evidence map can authorize physics use; raw programmatic maps remain non-authorizing and emit `EVIDENCE_REFERENCE_BYTES_UNVERIFIED`.
+- Updated six focused test modules to use real supporting files and cover digest mismatch, mutation, missing files, path escape, verified acceptance, and programmatic bypass prevention.
+- Exact local reconstruction validation: `python -m py_compile` passed; focused pytest returned `35 passed in 0.12s`; changed-file line-length scan passed. Ruff, complete repository tests, and GitHub Actions were not available and are not claimed.
+- Direct-to-main implementation/test commits: `eec5aa761a075dc422558dabf6beaec9ae009f43`, `e37f61bc6b50342d4565b0df33eb6d751d25cfa3`, `c8bc2ad8a3855815d50adb726817c6dc1a08faa5`, `d32aff3a4e74435c8bcac8d32c0054553508e6f2`, `54d80bded56b763c7642879de9b33d2f5e9786a0`, `382de1f501edf850ca52aa787ca78c262540a839`, `7b246c55d7141f45ce9a720879de871360e60cd0`, `a15b9dd29f186bf0b6967e7073d96a98cbda2dc0`.
+- Coordination commits before this log update: `579805fa00e76daaaa3391752fff8ef04532b93e`, `b7a27eeef046c86efe51996a8da86a42ba3013b7`, `5f8ffb356fbf08d633eae0c2ee9452b211db39d1`, `fc9c9a8efeca4564fd5c852cfe6f4b927ef6aea1`, `f1430c313eb47f7dcee3603f0a1f445c01ad47fe`, `0bef449b92fa364b5d730d1b4a7cbb81c2d2b135`.
+- PR #868 is closed, not merged, and non-mergeable; it was not reopened or merged.
+- No real A-002 table or evidence artifact was available. No convention, stopping result, CSV, plot, calibration, or detector-performance result was regenerated. Historical A-002 outputs remain quarantined under `BLK-AMP-001`.
+- Next: verify exact A-002 table and supporting-artifact bytes under a controlled evidence root, then run the full-table convention audit and regenerate outputs only after `physics_acceptance=ACCEPTABLE`.

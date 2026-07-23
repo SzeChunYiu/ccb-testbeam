@@ -38,7 +38,15 @@ module load GCC/12.3.0 Geant4/11.2.2
 
 BUILD="${1:?build dir}"
 OUTROOT="${2:?output root dir}"
-POINTS="${3:-$(cd "$(dirname "$0")" && pwd)/points_sample_regen.csv}"
+# points csv: arg 3, else $CCB_POINTS_CSV, else next to this script.
+# (Under sbatch, $0 is the spool copy, so dirname "$0" is NOT the script dir;
+#  pass an absolute path or set CCB_POINTS_CSV when submitting via sbatch.)
+POINTS="${3:-${CCB_POINTS_CSV:-}}"
+if [[ -z "${POINTS}" ]]; then
+  _cand="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd)/points_sample_regen.csv"
+  [[ -f "${_cand}" ]] && POINTS="${_cand}"
+fi
+[[ -z "${POINTS}" ]] && { echo "error: provide points csv (arg 3) or set CCB_POINTS_CSV" >&2; exit 2; }
 VERSION="${CCB_SAMPLE_VERSION:-v1}"
 OUTDIR="${OUTROOT}/sample_${VERSION}"
 mkdir -p "${OUTDIR}"

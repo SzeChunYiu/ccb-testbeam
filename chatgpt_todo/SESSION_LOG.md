@@ -183,3 +183,12 @@
 - Coordination commits before this log update: `f95b28c9ec764ebfe0a9c3983d69b5aa138a6ebb`, `92cb21bfe54ad0fb165eac3d5265559dc2137a7e`, `a1b83fd8ea275b369830d36c2b39f84af3fb5166`, `8d7e741eb4312af216dbf034b061b74fc7d8374c`, `05b9f00430827e8c06220d3560014b86154ccd59`, `79f333215272622c6a44a15e25c0ed9e6539702e`.
 - Direct clone failed with `Could not resolve host: github.com`; repository operations used the authenticated connector. No raw data, simulation, ROOT file, plot, calibration, stopping output, or detector-performance result changed.
 - Acceptance: current-main amplitude Python CI gate restored and merged. PR #868 remains closed and unmerged. A-002 scientific regeneration remains blocked under `BLK-AMP-001`.
+
+## 2026-07-23T09:09:36Z — AUD-CI-002 (concurrent main reconciliation)
+
+- PR #886 merged concurrently as `98f74d1c9a79abbedfcc9d4e934deb9e40ee3e97` and removed the full pre-existing `chatgpt_todo/` tree together with separate factory, fleet, supervisor, and ticket infrastructure.
+- The active scheduled scientific-review requirement still mandates `chatgpt_todo/`; the minimum scientific-review protocol and ledgers were recreated separately from the removed infrastructure.
+- Restored commits: `b752bd42b88798969e89e24df1adc1d6f66cd8c8` (`README.md`), `2aa0675e2760e3dae4f87ef82e9804118cb1d674` (`CLAIM_EVIDENCE_MATRIX.md`), `e1cd9900dc772c1c8221db4db10823e55e38fada` (`STUDY_REVIEW_LEDGER.md`), `ce2d10549a0680f47c51667dc03dc1c846a05593` (`VISUALIZATION_MATRIX.md`). Current task, backlog, index, code-result map, blockers, log, handoff, and the current archive record had already been recreated by this run's later writes.
+- Older archive records deleted by PR #886 were not blindly restored; they remain recoverable from Git history and are tracked under `BLK-COORD-001`.
+- PR #888 also merged concurrently as `35009240aa156a70c57d0f1b0ff38706ccf14a63`; its head workflow `29994419166` succeeded. This session did not independently review its 71-file scientific implementation or claim Geant4 runtime validation from that Python workflow.
+- No raw data, simulation, plot, calibration, stopping result, or detector-performance result was generated during reconciliation.

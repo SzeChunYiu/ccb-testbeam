@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-008",
+  "session_utc": "2026-07-23T12:14:45Z",
+  "base_main_sha": "9681e44d94fa825bb8db6c84af31448df0ec0689",
+  "scope": "Fail-closed handling of quenched visible-energy input in the PSTAR diagnostic",
+  "confirmed_defect": {
+    "pre_change_behavior": "Quenched-only energy deposit silently entered the raw PSTAR tolerance gate after a warning",
+    "synthetic_rows": 1,
+    "synthetic_ratio": 1.0,
+    "synthetic_within_tolerance": true,
+    "evidence_type": "targeted reproduction of the pre-change fallback path"
+  },
+  "accepted_semantics": {
+    "UNQUENCHED_RAW": {
+      "raw_pstar_comparable": true,
+      "eligible_for_numeric_tolerance": true
+    },
+    "QUENCHED_PROXY": {
+      "raw_pstar_comparable": false,
+      "eligible_for_numeric_tolerance": false,
+      "default_cli_status": 2,
+      "explicit_diagnostic_cli_status": 1
+    },
+    "mixed_raw_and_quenched": {
+      "accepted": false,
+      "reason": "aggregate energy-deposit convention is undefined"
+    }
+  },
+  "validation": {
+    "python_compile": "pass",
+    "focused_pytest": {
+      "result": "18 passed in 2.86s",
+      "modules": [
+        "tests/test_compare_stopping_power_reference_path.py",
+        "tests/test_compare_stopping_power_energy_range.py",
+        "tests/test_compare_stopping_power_reference_integrity.py",
+        "tests/test_compare_stopping_power_quenched_proxy.py"
+      ]
+    },
+    "new_tests": 4,
+    "real_geant4_run": false,
+    "complete_pstar_table_executed": false,
+    "github_actions_run": false
+  },
+  "primary_sources": [
+    {
+      "authority": "Geant4 Collaboration",
+      "title": "Birks Quenching",
+      "url": "https://geant4.web.cern.ch/documentation/dev/bfad_html/ForApplicationDevelopers/Detector/birks.html",
+      "supports": "Quenching is a nonlinear conversion from deposited energy to observed detector signal"
+    },
+    {
+      "authority": "NIST",
+      "title": "Description of PSTAR and ASTAR databases",
+      "url": "https://physics.nist.gov/PhysRefData/Star/Text/programs.html",
+      "supports": "PSTAR reports electronic, nuclear, and total mass stopping powers"
+    },
+    {
+      "authority": "NIST",
+      "title": "Significance of Calculated Quantities",
+      "url": "https://physics.nist.gov/PhysRefData/Star/Text/appendix.html",
+      "supports": "Total proton stopping power is collision plus nuclear energy loss per path length"
+    }
+  ],
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "acceptance": "COMPLETE for quenched-proxy fail-closed gate; PARTIAL for stopping-power closure"
+}

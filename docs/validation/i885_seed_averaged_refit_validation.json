@@ -1,0 +1,102 @@
+{
+  "focused_tests": {
+    "command": "python -m pytest tests/test_refit_i885_campaign.py -q",
+    "failed": 0,
+    "passed": 6
+  },
+  "input": {
+    "path": "geant4/single_stave/results/i885_v1/i885_per_config.csv",
+    "sha256": "1a712157f1cba06f9d3b3847217c381c31bdc581337612c92b02ccc82a1691d4",
+    "size_bytes": 3698
+  },
+  "limitations": [
+    "partial simulation campaign: 14/72 files and 7/20 main-grid energy points",
+    "only two seeds per observed energy",
+    "goodness-of-fit assumes independent Gaussian uncertainties and no model/systematic term",
+    "no real detector data or data/MC closure"
+  ],
+  "measured": {
+    "accepted_fits": 0,
+    "fit_rejections": {
+      "edep_scint_MeV_vs_KE_proton": {
+        "accepted": false,
+        "chi2": 100174.97620670462,
+        "energy_max_MeV": 20.0,
+        "energy_min_MeV": 2.0,
+        "fit_basis": "seed_averaged_unique_energy",
+        "fit_status": "LINEAR_MODEL_REJECTED",
+        "goodness_of_fit_assumptions": "independent Gaussian seed-averaged uncertainties; no model/systematic term",
+        "goodness_of_fit_p_value": 0.0,
+        "goodness_of_fit_p_value_underflow": true,
+        "intercept": -0.5599109667330434,
+        "intercept_std": 0.07716008618208511,
+        "max_abs_residual": 2.0302921800305906,
+        "n": 5,
+        "n_energy_points": 5,
+        "n_files": 10,
+        "r2": 0.9422477635260198,
+        "reduced_chi2": 33391.658735568206,
+        "residual_dof": 3,
+        "rmse": 0.9325327405775461,
+        "slope": 0.49705846813249177,
+        "slope_std": 0.034232345752311176,
+        "uncertainty_method": "quadrature(propagated_within_file_sem, between_seed_sem)",
+        "weighted": true
+      },
+      "pe_sat_readout_vs_KE_proton": {
+        "accepted": false,
+        "chi2": 1073.9617978471306,
+        "energy_max_MeV": 20.0,
+        "energy_min_MeV": 2.0,
+        "fit_basis": "seed_averaged_unique_energy",
+        "fit_status": "LINEAR_MODEL_REJECTED",
+        "goodness_of_fit_assumptions": "independent Gaussian seed-averaged uncertainties; no model/systematic term",
+        "goodness_of_fit_p_value": 1.6217989326963065e-232,
+        "goodness_of_fit_p_value_underflow": false,
+        "intercept": -8.507931016538638,
+        "intercept_std": 1.794974273587827,
+        "max_abs_residual": 8.258163503203107,
+        "n": 5,
+        "n_energy_points": 5,
+        "n_files": 10,
+        "r2": 0.986790398438059,
+        "reduced_chi2": 357.98726594904355,
+        "residual_dof": 3,
+        "rmse": 5.131274944124334,
+        "slope": 6.589015127176813,
+        "slope_std": 0.33569563313171613,
+        "uncertainty_method": "quadrature(propagated_within_file_sem, between_seed_sem)",
+        "weighted": true
+      }
+    },
+    "fit_skips": {
+      "edep_scint_MeV_vs_KE_deuteron": {
+        "fit_basis": "seed_averaged_unique_energy",
+        "minimum_energy_points": 3,
+        "n_energy_points": 2,
+        "n_files": 4,
+        "status": "SKIPPED_INSUFFICIENT_ENERGY_POINTS"
+      },
+      "pe_sat_readout_vs_KE_deuteron": {
+        "fit_basis": "seed_averaged_unique_energy",
+        "minimum_energy_points": 3,
+        "n_energy_points": 2,
+        "n_files": 4,
+        "status": "SKIPPED_INSUFFICIENT_ENERGY_POINTS"
+      }
+    },
+    "rejected_fits": 2,
+    "skipped_fits": 2
+  },
+  "method": {
+    "acceptance_p_value_minimum": 0.01,
+    "fit_basis": "seed_averaged_unique_energy",
+    "minimum_energy_points": 3,
+    "tool": "scripts/single_stave/refit_i885_campaign.py",
+    "tool_version": "1.0.0",
+    "uncertainty": "quadrature(propagated_within_file_sem, between_seed_sem)"
+  },
+  "session_utc": "2026-07-23T14:23:31Z",
+  "status": "VALIDATED_DIAGNOSTIC_NO_ACCEPTED_CALIBRATION",
+  "task_id": "AUD-I885-002"
+}

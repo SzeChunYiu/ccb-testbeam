@@ -90,7 +90,7 @@ def test_cli_fails_instead_of_clamping_out_of_range_energy(tmp_path):
     assert "NUMERICAL TOLERANCE: PASS" not in proc.stdout
 
 
-def test_valid_result_records_reference_lookup_and_range(tmp_path):
+def test_deuteron_result_records_range_but_is_nonaccepting(tmp_path):
     module = load_module()
     ref = tmp_path / "reference.csv"
     sim = tmp_path / "sim.csv"
@@ -98,16 +98,28 @@ def test_valid_result_records_reference_lookup_and_range(tmp_path):
     write_reference(ref)
     write_sim(sim, "deuteron", 4.0, mass_stopping=5.0)
 
-    results, ok = module.run_compare(sim, ref, 1.0, out, 1e-9)
+    results, ok = module.run_compare(
+        sim,
+        ref,
+        1.0,
+        out,
+        1e-9,
+        allow_deuteron_proxy=True,
+    )
 
-    assert ok is True
+    assert ok is False
     assert len(results) == 1
     result = results[0]
     assert result["reference_lookup_energy_MeV"] == 2.0
     assert result["reference_range_min_MeV"] == 1.0
     assert result["reference_range_max_MeV"] == 10.0
     assert result["reference_in_range"] is True
+    assert result["reference_basis"] == module.DEUTERON_REFERENCE_PROXY
+    assert result["reference_direct_pstar_comparable"] is False
+    assert result["physics_comparable"] is False
+    assert result["numeric_within_tolerance"] is True
+    assert result["within_tolerance"] is False
     header = out.read_text().splitlines()[0]
     assert "reference_lookup_energy_MeV" in header
-    assert "reference_range_min_MeV" in header
-    assert "reference_range_max_MeV" in header
+    assert "reference_basis" in header
+    assert "physics_comparable" in header

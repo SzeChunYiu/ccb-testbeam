@@ -2,110 +2,94 @@
 
 ## Session
 
-- **UTC:** `2026-07-23T20:28:12Z`
-- **Task:** `AUD-G4-015`
+- **UTC:** `2026-07-23T21:05:42Z`
+- **Task:** `AUD-G4-016`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **Initial remote main:** `905a83ce1723b10dafab46887a76aa48378f2234`
-- **Validated implementation/evidence head:** `08f615f6b6edefa363eee086930e1eb0867474bb`
-- **Coordination/archive head before this handoff:** `21294243b5d8a3bdd8dca3d207e959d79d68ab15`
+- **Initial remote main:** `5c64e283594f1ef23d0685eac7b8249d45f1670b`
+- **Validated implementation/evidence head:** `cff8a9f076f334333e938444a34168e4643f1e5f`
+- **Remote main immediately before this handoff:** `ae573a82e038a131be0793e308c9339fb1109518`
 - **Destination:** direct to `main`
-- **Acceptance:** COMPLETE for fail-closed point-estimate uncertainty authorization, focused regression, visual evidence, coordination, and immutable archive; accepted stopping-power physics closure remains PARTIAL/BLOCKED.
+- **Acceptance:** COMPLETE for exact floating-point identity in stopping-power reports; accepted stopping-power physics closure remains PARTIAL/BLOCKED.
 
 ## Start-of-run and concurrent-work review
 
-- Inspected current remote-main history, permissions, PR #868, canonical stopping-power code, shared simulation/PSTAR validators, focused tests, validation records, and mandatory `chatgpt_todo/` files.
-- PR #868 is closed, unmerged, and non-mergeable. It was not reopened, modified, or merged.
-- `AUD-REPO-001` remains owned by a concurrent LUNARC session and was not duplicated.
-- A direct clone was attempted and failed with `Could not resolve host: github.com`; exact source/test bytes were reconstructed through authenticated GitHub reads and verified with Git blob hashes.
-- No task branch, pull request, force-push, history rewrite, unrelated deletion, raw-data edit, simulation-output edit, or fabricated result was used.
+- Inspected current remote-main history, repository permissions, PR #868, canonical stopping-power code, shared simulation/PSTAR validators, focused tests, validation records, and all mandatory `chatgpt_todo/` files.
+- `AUD-REPO-001` remained owned by a concurrent session and was not duplicated.
+- A direct clone was unavailable because this runtime could not resolve `github.com`; exact source and test bytes were reconstructed through authenticated GitHub reads and checked with Git blob hashes.
+- Concurrent non-overlapping PR #910 merged as `536d632a2ce446cc95fcf7c635b3597ee99eae13` after the first coordination writes. It changed Geant4 WLS configuration, not this task's stopping-power code/evidence. Subsequent writes used the advanced remote `main` without force-push or history rewrite.
+- PR #868 remains closed, unmerged, and non-mergeable. It was not reopened, modified, or merged.
+- No task branch, pull request, force-push, history rewrite, unrelated deletion, or destructive source-data edit was used.
 
-## Confirmed scientific-method defect
+## Confirmed numerical-traceability defect
 
-The previous direct-proton acceptance logic required only:
+The comparison had already been corrected to group events by exact parsed numeric energy, but its machine-readable output serialized every float with six significant digits:
 
-1. unquenched raw deposited-energy input;
-2. a direct proton PSTAR reference;
-3. a point-estimate ratio inside the selected percentage tolerance.
+```python
+f"{result[key]:.6g}"
+```
 
-It evaluated no statistical or systematic uncertainty. A synthetic one-event ratio of exactly `1.0` therefore set `within_tolerance=true`, printed `PASS` and `NUMERICAL TOLERANCE: PASS`, and returned status `0`. Forty repeated identical rows produced the same acceptance without providing independent uncertainty information.
+and its terminal table displayed configured energy with two decimal places.
 
-Exact pre-change script provenance:
+Two separate results at `1.0000001 MeV` and `1.0000002 MeV` were therefore written as the identical CSV token `1` and shown as the identical terminal token `1.00`. A downstream reader could not reconstruct which exact configured-energy point produced each row, despite `energy_grouping=EXACT_CONFIGURED_ENERGY`. Other floating-point fields were also truncated by the same output rule.
 
-- Git blob: `8b9c0c530b6414c774601286a0d67f13500aa532`
-- SHA-256: `768d4136bf59ee10c5074298bd7fa8195adb3d680e291802b520c88f97911260`
+Exact pre-change provenance:
 
-Running the new four-test regression against those exact old bytes produced `4 failed`, confirming all former fail-open cases.
-
-## Methodological source
-
-Recorded primary methodological source:
-
-- B. N. Taylor and C. E. Kuyatt, *Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results*, NIST Technical Note 1297 (1994), DOI `10.6028/NIST.tn.1297`.
-- Sections 2, 5, and 7 support quantitative uncertainty reporting, classification of statistically evaluated and other components, combination, and transparent reporting.
-
-This source is used as a reporting-method standard. It does not transform the local-deposition simulation proxy into a physical measurement.
+- Git blob: `c3884d953a38b0dad69f50e3a9dc787bc1f29fd0`
+- File bytes: `18742`
+- New-test negative control: `2 failed, 1 passed`
+- Measured former close-energy CSV tokens: `["1", "1"]`
 
 ## Validated correction
 
-`compare_stopping_power.py` now:
+`scripts/single_stave/compare_stopping_power.py` now:
 
-- preserves `numeric_within_tolerance` as a point-estimate diagnostic;
-- records `uncertainty_method=NOT_EVALUATED`;
-- records `uncertainty_evaluated=false`;
-- records explicit `acceptance_status` values;
-- keeps `within_tolerance=false` until a validated uncertainty method exists;
-- prints a numerical match as `POINT_ONLY`, never `PASS`;
-- prints `NUMERICAL TOLERANCE: POINT_ESTIMATE_ONLY_NOT_ACCEPTED`;
-- prints `UNCERTAINTY EVALUATION: NOT_EVALUATED`;
-- returns CLI status `1` for point-estimate-only output;
-- keeps the built-in self-test explicitly arithmetic/path-wiring only: it can return success for exact synthetic arithmetic but reports the non-accepting scientific state.
+- defines `REPORT_FLOAT_SERIALIZATION=PYTHON_REPR_ROUND_TRIP`;
+- writes every finite float using Python's shortest round-trip `repr`;
+- rejects a nonfinite value at the report boundary;
+- records `report_float_serialization` in result dictionaries and CSV rows;
+- prints configured energy using the same round-trip representation;
+- preserves the existing canonical input parsers, reference component identity, range rejection, exact grouping, raw/quenched gate, deuteron proxy gate, and uncertainty non-acceptance.
 
-No uncertainty number or interval was invented.
+Parsing a written float token now reproduces the same binary float used by the calculation. This is a serialization-identity correction, not a claim that the diagnostic is an accepted measurement or closure.
 
 ## Regression and validation
 
 Added:
 
-- `tests/test_compare_stopping_power_uncertainty_gate.py`
+- `tests/test_compare_stopping_power_report_precision.py`
 
-Updated:
-
-- `tests/test_compare_stopping_power_energy_grouping.py`
-- `tests/test_compare_stopping_power_quenched_proxy.py`
-- `tests/test_compare_stopping_power_pstar_component_integration.py`
-- `tests/test_compare_stopping_power_deuteron_proxy.py`
-
-Executed on exact local reconstructions of the committed blobs:
+Executed on exact local reconstructions:
 
 ```text
 python -m py_compile \
   scripts/single_stave/compare_stopping_power.py \
-  tools/audit/validate_pstar_component_sum.py \
-  tools/audit/validate_stopping_power_sim_table.py \
-  tests/test_compare_stopping_power_uncertainty_gate.py \
-  tests/test_compare_stopping_power_energy_grouping.py \
-  tests/test_compare_stopping_power_quenched_proxy.py \
-  tests/test_compare_stopping_power_pstar_component_integration.py \
-  tests/test_compare_stopping_power_deuteron_proxy.py
+  tests/test_compare_stopping_power_report_precision.py
 
-python -m pytest \
-  tests/test_compare_stopping_power_uncertainty_gate.py \
-  tests/test_compare_stopping_power_energy_grouping.py \
-  tests/test_compare_stopping_power_quenched_proxy.py \
-  tests/test_compare_stopping_power_pstar_component_integration.py \
-  tests/test_compare_stopping_power_deuteron_proxy.py -q
+python -m pytest tests/test_compare_stopping_power_report_precision.py -q
 
-19 passed in 3.77s
+3 passed in 0.03s
 ```
+
+Coverage verifies:
+
+- the historical `.6g` collision;
+- distinct post-change CSV tokens `1.0000001` and `1.0000002`;
+- exact round-trip recovery for every float field;
+- distinct terminal energy labels;
+- explicit serialization-contract metadata;
+- fail-closed nonfinite output.
 
 Additional passed checks:
 
 - exact old Git blob reconstruction;
-- exact committed Git blob identities for all changed Python files;
-- old-bytes negative control: `4 failed` as expected;
-- JSON parse;
+- exact current Git blob identities;
+- script blob `5081da0b77bcfeba07dca95e5087c4b2057c362f`;
+- test blob `0003cb29cb5a31a38186b589e030ad29263b5a4b`;
+- script SHA-256 `838cdee5921f65f38e9cf8e0a1e7f39f94f62cc31815ce9315dbd46778571caa`;
+- test SHA-256 `b226f2b947585efbe3141fb40accc0c1788995bed35d2fff93bf3b1a78b3d180`;
+- validation JSON parse;
 - SVG XML parse;
-- maximum changed Python line length: 97 characters.
+- maximum changed Python line length: 93 characters.
 
 Not run:
 
@@ -116,45 +100,43 @@ Not run:
 - real simulation execution;
 - GitHub Actions.
 
-No broader CI or stopping-power agreement is claimed.
+No broader CI, simulation, or physics-closure success is claimed.
 
 ## Reproducible evidence
 
 Added:
 
-- `docs/validation/stopping_power_uncertainty_gate_audit.md`
-- `docs/validation/stopping_power_uncertainty_gate_validation.json`
-- `docs/validation/stopping_power_uncertainty_gate.svg`
+- `docs/validation/stopping_power_report_precision_audit.md`
+- `docs/validation/stopping_power_report_precision_validation.json`
+- `docs/validation/stopping_power_report_precision.svg`
 
-The SVG is explicitly labelled synthetic regression evidence, not detector data. It contrasts the former PASS/exit-0 state with the corrected `POINT_ONLY`/exit-1 state using text, line style, position, and a crossed-out former state rather than color alone.
+The SVG is explicitly labelled synthetic regression evidence, not detector data. It shows the former two-floats-to-one-token collision and the corrected two distinct round-trip tokens using text, position, line routing, boxes, and a crossed-out former state rather than relying on color.
 
 ## Direct-to-main commit sequence
 
-Implementation, tests, and evidence:
+Implementation, test, and evidence:
 
-- `2ace1e6c74b0cd95f76365ed8c9d29d8eb1b9416` — `fix(single-stave): fail closed without uncertainty evaluation`
-- `acbeaecf0302c993648a1c84ca30211f31d10eb2` — `test(single-stave): gate point estimates without uncertainty`
-- `565bf55b3508ef645902e2e66b02dec843722adc` — energy-grouping acceptance regression
-- `4db637b1ac3cec34ecab52e534fc05e134e4aad3` — raw/quenched acceptance regression
-- `c85deddbaaadc0568c6058dbe52b2dd308a1a018` — PSTAR-provenance acceptance regression
-- `448df29b559eac246681e47d0aaf66100a077d97` — proton/deuteron acceptance regression
-- `306461d189eceb135ac6f6a969ec747c7610d6d1` — audit report
-- `401cb5bcbf0883e426d07ce1bdb5844a28c270f2` — machine-readable validation
-- `08f615f6b6edefa363eee086930e1eb0867474bb` — visual evidence
+- `212d3db82fb920d1dfc2e39de7867b37971d97c8` — `fix(single-stave): preserve round-trip report precision`
+- `12c2b88a2aa7557fe9a7b4d9c33e47adbaf2b351` — `test(single-stave): cover round-trip report precision`
+- `ee88f8325d92086bca25af2a158938e38684339e` — audit Markdown
+- `310945dbcef99ae28ae0e3de2cf644628a174d3d` — validation JSON
+- `cff8a9f076f334333e938444a34168e4643f1e5f` — visual evidence
 
 Coordination and immutable provenance:
 
-- `9edd7b85b24e76b5022d194c50194fba1bf2d749` — active task
-- `c9c8fc64fd4564f8bad9380c60de14c4a9eba908` — backlog
-- `5ca3ec50f195cdab5388670c159704173c931bee` — master index
-- `cd63a759c51f36f0cc5b9d3de9fe90ed8aa78f43` — claim matrix
-- `80943b7fbae8b385296358ab62045fc1a3dc71f2` — code-result map
-- `dafa4080dffd9567b879dc4dc2877cec3bd8a77b` — study ledger
-- `1cd43d79196cf385aff2fb6b1188e65ac2ccb4b2` — visualization matrix
-- `8e16214d317102c4ad85f580edb80c960ebe91d2` — blocker refinement
-- `21294243b5d8a3bdd8dca3d207e959d79d68ab15` — immutable archive
+- `5948b9a19eef068ca99fc48bb135cbeec98daf72` — active task
+- `cf5b805f2628d5d7443e9aeaff68f66a5fb50d16` — backlog
+- `b01ec286a2a9fbf5cb6eca3ec762f7ce4eb79f3c` — master index
+- `638a16890e7e9b69e1ee5b42fc0ec82f7e1ab1d5` — code-result map
+- concurrent `536d632a2ce446cc95fcf7c635b3597ee99eae13` — non-overlapping PR #910 merge
+- `d07f72643f84fb24c2148e38ab8120a177e42301` — study ledger
+- `340f9c812b54b1445550a7e64272f13848acc0db` — claim matrix
+- `34ba8ce6bbd1f50222b76f3d4cfa807c07554861` — visualization matrix
+- `6aab30077530c399b4fb188b13182a3b1f9fb057` — blocker refinement
+- `d46aa58d73820b7926591d3f6314424355a03fef` — immutable archive
+- `ae573a82e038a131be0793e308c9339fb1109518` — append-only session log
 
-All GitHub contents operations returned successful direct-main commits. Remote history was re-read after the writes and showed the sequence consecutively on `main`. No branch or PR transport was required.
+All session-owned GitHub contents operations returned successful direct-main commits. The final handoff commit is confirmed separately by remote-main history after this write.
 
 ## `chatgpt_todo/` updates
 
@@ -168,16 +150,15 @@ Updated:
 - `CLAIM_EVIDENCE_MATRIX.md`
 - `VISUALIZATION_MATRIX.md`
 - `BLOCKERS.md`
+- `SESSION_LOG.md`
 - `HANDOFF.md`
 
 Added immutable session record:
 
-- `chatgpt_todo/archive/2026-07-23T202812Z_AUD-G4-015_UNCERTAINTY_GATE.md`
-
-`SESSION_LOG.md` was inspected but not replaced: the connector exposes complete-file replacement rather than a safe append operation, and the append-only file is large. Replacing it from paged/truncated retrieval risked destroying prior provenance. The immutable archive contains the complete session entry and this limitation is explicit here.
+- `chatgpt_todo/archive/2026-07-23T210542Z_AUD-G4-016_REPORT_PRECISION.md`
 
 ## Scientific boundary and next task
 
-This run does not implement an uncertainty budget and does not claim accepted Geant4/PSTAR agreement. No exact real event table, ROOT output, `G4EmCalculator` calculation, projectile entry/exit-energy closure, calibration, or detector-performance result was generated.
+No exact real Geant4 event table, ROOT output, accepted projectile total-energy-loss observable, quantitative uncertainty budget, stopping-power closure, calibration, or detector-performance result was generated.
 
-The next accepted unit is `AUD-G4-005`/`AUD-G4-011`: validate immutable real exports and an accepted projectile-energy-loss observable, then preregister and propagate event/replicate Type A uncertainty, between-seed/run/configuration variation, deposit/path covariance, material-density/reference uncertainty, production-cut/physics-list/material/geometry sensitivity, secondary escape, and particle-energy evolution before evaluating a closure interval.
+`AUD-G4-016` is COMPLETE. The next accepted stopping-power work remains `AUD-G4-005` and `AUD-G4-011`: validate immutable real exports and an accepted projectile-loss observable, quantify secondary escape and energy evolution, then preregister and propagate statistical/systematic uncertainty before evaluating any closure interval.

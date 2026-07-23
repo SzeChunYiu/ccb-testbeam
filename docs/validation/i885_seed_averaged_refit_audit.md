@@ -23,6 +23,8 @@ A weighted straight line is attempted only with at least three independent energ
 
 The p-value assumes independent Gaussian seed-averaged uncertainties and contains no model or systematic term. Rejection therefore establishes incompatibility with this stated linear/statistical model; it does not select a replacement response model.
 
+`scripts/single_stave/render_i885_refit_svg.py` v1.0.0 is the canonical renderer for the committed SVG. It reads the regenerated fit JSON and seed-averaged-point CSV, refuses to render a bundle containing an accepted calibration fit, requires both rejected proton diagnostics and both deuteron coverage skips, and emits deterministic compact SVG. The renderer output was verified byte-for-byte against the committed `P5_seed_averaged_calibration.svg` (SHA-256 `725b592d9d217f43cf8624ca7682575a35cf5f4f1ec06d9ea7266a7a4f8a3332`).
+
 ## Results
 
 | response | species | files | independent energies | residual dof | reduced chi-square | p-value | status |
@@ -39,18 +41,31 @@ No calibration fit is accepted. High R-squared alone would have hidden the proto
 ```bash
 python -m py_compile \
   scripts/single_stave/refit_i885_campaign.py \
-  tests/test_refit_i885_campaign.py
+  scripts/single_stave/render_i885_refit_svg.py \
+  tests/test_refit_i885_campaign.py \
+  tests/test_render_i885_refit_svg.py
 
-python -m pytest tests/test_refit_i885_campaign.py -q
+python -m pytest \
+  tests/test_refit_i885_campaign.py \
+  tests/test_render_i885_refit_svg.py -q
 
 python scripts/single_stave/refit_i885_campaign.py \
   --observed geant4/single_stave/results/i885_v1/i885_per_config.csv \
   --output-json geant4/single_stave/results/i885_v1/i885_fits.json \
-  --output-svg geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg \
+  --output-svg /tmp/i885_refit_matplotlib_preview.svg \
   --output-points geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv
+
+python scripts/single_stave/render_i885_refit_svg.py \
+  --fits geant4/single_stave/results/i885_v1/i885_fits.json \
+  --points geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv \
+  --output geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg
 ```
 
-Focused result: `6 passed`.
+Focused results:
+
+- refit suite: `6 passed`;
+- deterministic renderer suite: `3 passed`;
+- renderer output matched the committed SVG byte-for-byte.
 
 ## Interpretation and next method comparison
 

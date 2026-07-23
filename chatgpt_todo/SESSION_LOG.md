@@ -236,3 +236,17 @@
 - PR #868 remained closed, unmerged, and non-mergeable and was not modified.
 - Full repository pytest, ruff, Geant4/CTest, real simulation processing, and GitHub Actions were not run. No stopping-power closure, calibration, or detector-performance result is claimed.
 - Acceptance: exact committed-table component identity and standalone validator are validated; task remains PARTIAL because `compare_stopping_power.py` can still bypass the new cross-column gate. Next: integrate one canonical reference parser and add a direct-CLI modified-total rejection test.
+
+## 2026-07-23T18:15:39Z — AUD-G4-012 (canonical integration)
+
+- Initial remote main: `bf295c1e7d295698673ffa7bb4c668c19015df49`.
+- Inspected current main history, open PRs, PR #868, repository permissions, comparison/reference/simulation parsers, focused tests, exact PSTAR metadata, and all mandatory coordination records.
+- Confirmed the standalone-gate bypass: `compare_stopping_power.py` independently parsed finite, positive, ordered reference rows without checking `total = electronic + nuclear`; `1,9,1,8` could reach a numerical ratio.
+- Upgraded `validate_pstar_component_sum.py` to v1.1.0 with `read_validated_pstar_table()`, returning canonical rows plus exact-decimal provenance. The canonical comparison now imports that parser and records reference SHA-256, bytes, validated rows, validator version, identity, and consistency.
+- Added direct-CLI and programmatic integration tests plus Markdown/JSON/SVG evidence. Invalid component input exits 2, writes no output CSV, and prints no numerical PASS.
+- Validation: `python -m py_compile` passed; combined focused pytest returned `42 passed in 4.22s`; JSON and SVG parsed; maximum changed Python line length was 97.
+- Implementation/evidence commits: `b1b0d4b180c5a125a222c11795e4ada46adce2dc`, `f13d9d9f1e845c7e15b6ae79d08b269dc67fed54`, `a9c4c161715a02dbbe0efedb71734de70154e7e5`, `fbedabdfed0d8588aa7dfdf0eea597d0372fdb56`, `1ec2487c70b70191c81cd7f2340ed425aacae7a3`, `9c1271134c7ae08173d3acc079a0f1d57fc4aa6b`, `084b753685e5dc22a978482eef71f7649e352d3b`.
+- Coordination/archive head before this append: `dd157ec98f176f785a9a3cacde3272671778836e`; all writes were direct to remote `main` without force-push or history rewrite.
+- PR #868 remained closed, unmerged, and non-mergeable and was not modified. Open concurrent PRs were inspected for overlap; no active completed task was duplicated.
+- Full repository pytest, ruff, Geant4/CTest, ROOT processing, real simulation execution, and GitHub Actions were not run; no broad CI or physics-closure claim is made.
+- Acceptance: `AUD-G4-012` COMPLETE and `BLK-G4-SP-002` RESOLVED. External NIST transcription/material provenance remains independently unverified; exact real-export execution and accepted stopping-power closure remain open under `AUD-G4-011` and `AUD-G4-005`.

@@ -7,7 +7,41 @@ from typing import Any
 import numpy as np
 
 from ccb_mc_validation.constants import A_ARM, B_ARM
+from ccb_mc_validation.exceptions import ConfigurationError, DataContractError
 from ccb_mc_validation.truth.pdg import is_charged
+
+
+def _validate_coinc_ns(coinc_ns: float) -> float:
+    """Coincidence window must be a finite, strictly-positive number of ns."""
+    c = float(coinc_ns)
+    if not np.isfinite(c):
+        raise ConfigurationError(f"coinc_ns must be finite, got {coinc_ns!r}")
+    if c <= 0.0:
+        raise ConfigurationError(f"coinc_ns must be > 0 ns, got {c}")
+    return c
+
+
+def _validate_event_row(
+    layer: np.ndarray, layer1: np.ndarray, pdg: np.ndarray, time: np.ndarray
+) -> None:
+    """Validate per-event jagged shapes and finite/range constraints (TRU-010)."""
+    names = ("layer", "layer1", "pdg", "time")
+    arrays = (layer, layer1, pdg, time)
+    n = int(np.asarray(layer).size)
+    for name, arr in zip(names, arrays):
+        a = np.asarray(arr)
+        if int(a.size) != n:
+            raise DataContractError(
+                f"jagged length mismatch: layer has {n} entries but {name} has {int(a.size)}"
+            )
+    t = np.asarray(time, dtype=float)
+    if t.size and not np.all(np.isfinite(t)):
+        raise DataContractError("non-finite value in Sci_bar_Time for event")
+    # Layer/arm indices are small non-negative integers; flag corruption.
+    for name, arr in (("layer", layer), ("layer1", layer1)):
+        a = np.asarray(arr)
+        if a.size and (np.nanmin(a.astype(float)) < 0 or not np.all(np.isfinite(a.astype(float)))):
+            raise DataContractError(f"non-finite/negative value in {name} for event")
 
 
 def classify_event(
@@ -25,12 +59,20 @@ def classify_event(
     - **Sample I** — charged B entry **and** charged A entry with
       ``|tA - tB| < coinc_ns`` (strict less-than; equality is excluded).
     """
-    coinc = bool(enterB and enterA and abs(float(tA) - float(tB)) < float(coinc_ns))
+    coinc_ns = _validate_coinc_ns(coinc_ns)
+    if not (enterB and enterA):
+        coinc = False
+    else:
+        ta = float(tA)
+        tb = float(tB)
+        if not (np.isfinite(ta) and np.isfinite(tb)):
+            raise DataContractError(f"non-finite trigger time(s): tA={tA!r} tB={tB!r}")
+        coinc = abs(ta - tb) < coinc_ns
     return {
         "enter_B": bool(enterB),
         "enter_A": bool(enterA),
         "sample_II": bool(enterB),
-        "sample_I": coinc,
+        "sample_I": bool(coinc),
     }
 
 
@@ -72,14 +114,23 @@ def process_chunk(
     layer, layer1, pdg, time:
         Per-event jagged arrays (object dtype or list-like), one row per MC event.
     coinc_ns:
-        Coincidence window [ns] for Sample I.
+        Coincidence window [ns] for Sample I (must be finite and > 0).
 
     Returns
     -------
     dict
         Boolean/int arrays keyed by ``sample_I``, ``sample_II``, ``enter_B``,
         ``enter_A`` with length ``len(layer)``.
+
+    Raises
+    ------
+    ConfigurationError
+        If ``coinc_ns`` is non-finite or non-positive.
+    DataContractError
+        If per-event jagged lengths disagree or any time/arm value is
+        non-finite (TRU-010).
     """
+    coinc_ns = _validate_coinc_ns(coinc_ns)
     n_events = len(layer)
     sample_i = np.zeros(n_events, dtype=bool)
     sample_ii = np.zeros(n_events, dtype=bool)
@@ -87,14 +138,24 @@ def process_chunk(
     enter_a = np.zeros(n_events, dtype=bool)
 
     for i in range(n_events):
-        l = np.asarray(layer[i])
-        if l.size == 0:
+        layer_i = np.asarray(layer[i])
+        l1 = np.asarray(layer1[i])
+        pd = np.asarray(pdg[i])
+        tm = np.asarray(time[i])
+        if layer_i.size == 0:
+            # Empty event: validate the sibling arrays are also empty, then
+            # leave all trigger flags at their (False) defaults.
+            if l1.size or pd.size or tm.size:
+                raise DataContractError(
+                    f"event {i}: layer is empty but a sibling branch is non-empty"
+                )
             continue
+        _validate_event_row(layer_i, l1, pd, tm)
         eb, ea, ta, tb = _event_enter_flags(
-            l,
-            np.asarray(layer1[i]),
-            np.asarray(pdg[i]),
-            np.asarray(time[i]),
+            layer_i,
+            l1,
+            pd,
+            tm,
             b_arm=b_arm,
             a_arm=a_arm,
         )

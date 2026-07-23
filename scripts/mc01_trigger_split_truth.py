@@ -34,9 +34,20 @@ Trigger mimicry (per the supervisor):
 Usage:
   python3 mc01_trigger_split_truth.py --mc output_krakow_1M.root --out <dir> [--coinc-ns 15]
 """
-import argparse, json, os, sys
-from functools import lru_cache
+import argparse
+import json
+import os
+import sys
+
 import numpy as np
+
+from ccb_mc_validation.truth.pdg import (
+    DEFAULT_MOMENTUM_UNIT,
+    is_charged,
+    kinetic_energy_from_branch_momentum,
+    pdg_charge,
+    species_label,
+)
 
 B_ARM, A_ARM = 1, 2
 NB_LAYERS = 8
@@ -131,52 +142,28 @@ def effective_sample_size(w):
     s2 = np.sum(w * w)
     return float(sw * sw / s2) if s2 > 0 else 0.0
 
-PDG_NAME = {
-    2212: "p", 1000010020: "d", 1000010030: "t",
-    1000020030: "He3", 1000020040: "alpha",
-    2112: "n", 22: "gamma", 11: "e-", -11: "e+",
-    211: "pi+", -211: "pi-", 13: "mu-", -13: "mu+",
-}
+# Canonical PDG / charge / unit-aware KE are imported at the top of this module
+# from the package so this script cannot diverge from truth/track_builder.py
+# (TRU-002).  The deployed krakow MC stores Sci_bar_Momentum_* in GeV/c
+# (reaudit #864); KE is computed via kinetic_energy_from_branch_momentum which
+# converts GeV/c -> MeV/c once.
 
-MASS = {2212: 938.272, 1000010020: 1875.613, 1000010030: 2808.921,
-        1000020030: 2808.391, 1000020040: 3727.379}
-
-
-@lru_cache(maxsize=None)
-def mass_of(pdg):
-    pdg = int(pdg)
-    if pdg in MASS:
-        return MASS[pdg]
-    if abs(pdg) > 1_000_000_000:
-        A = (abs(pdg) // 10) % 1000
-        return A * 931.494
-    return 0.511 if abs(pdg) == 11 else 139.57
+#: Residual KE [MeV] at the last observed hit below which a track is "stop".
+STOP_KE_THRESHOLD_MEV = 1.0
 
 
-@lru_cache(maxsize=None)
-def pdg_charge(pdg):
-    pdg = int(pdg)
-    apdg = abs(pdg)
-    if apdg > 1_000_000_000:
-        Z = (apdg // 10_000) % 1000
-        return float(Z)
-    table = {2212: 1, 2112: 0, 22: 0, 11: -1, -11: 1, 13: -1, -13: 1,
-             211: 1, -211: -1, 111: 0, 130: 0, 310: 0, 321: 1, -321: -1,
-             12: 0, 14: 0, 16: 0, -12: 0, -14: 0, -16: 0}
-    if pdg in table:
-        return float(table[pdg])
-    if apdg in table:
-        return -float(table[apdg]) if pdg < 0 else float(table[apdg])
-    return 0.0
+def infer_termination(last_observed_layer, ekin_last_mev, *, n_b_layers):
+    """Infer stop/escape/censored from KE at the last observed hit (TRU-003).
 
-
-@lru_cache(maxsize=None)
-def is_charged(pdg):
-    return abs(pdg_charge(int(pdg))) > 0.5
-
-
-def species_label(pdg):
-    return PDG_NAME.get(int(pdg), f"pdg{int(pdg)}")
+    Mirrors truth/track_builder.py: the deepest *observed* layer is NOT assumed
+    to be the stopping layer.  A track is 'stop' only if its residual KE at the
+    last hit is <= STOP_KE_THRESHOLD_MEV; otherwise 'escape' if it reached the
+    outermost layer, else 'censored'."""
+    if ekin_last_mev <= STOP_KE_THRESHOLD_MEV:
+        return "stop"
+    if int(last_observed_layer) >= int(n_b_layers) - 1:
+        return "escape"
+    return "censored"
 
 
 def main():
@@ -195,6 +182,10 @@ def main():
     ap.add_argument(
         "--no-weight", dest="apply_weight", action="store_false",
         help="Disable PrimaryWeight weighting (emit weights=1; legacy mode).")
+    ap.add_argument(
+        "--momentum-unit", choices=["MeV", "GeV"], default=DEFAULT_MOMENTUM_UNIT,
+        help="Unit of the Sci_bar_Momentum_* branches (krakow MC = GeV, "
+             "reaudit #864). Converted to MeV/c before KE.")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
 
@@ -215,7 +206,8 @@ def main():
 
     def new_track_acc():
         return {"pdg": [], "ekin": [], "edep_l0": [], "edep_l1": [],
-                "edep_tot": [], "stop_layer": [], "nlayers": [],
+                "edep_tot": [], "stop_layer": [], "last_observed_layer": [],
+                "termination": [], "nlayers": [],
                 "tracklen": [], "edep_per_layer": [], "weight": []}
 
     samples = {
@@ -345,8 +337,17 @@ def main():
                         entry_idx = np.where(trk_mask)[0][order[0]]
                         px, py, pz = MX[i][entry_idx], MY[i][entry_idx], MZ[i][entry_idx]
                         pmag = float(np.sqrt(px * px + py * py + pz * pz))
-                        mm = mass_of(p0)
-                        ekin = float(np.sqrt(pmag * pmag + mm * mm) - mm)
+                        ekin = kinetic_energy_from_branch_momentum(
+                            pmag, p0, momentum_unit=args.momentum_unit)
+                        # Residual KE at the last observed hit drives stop/escape (TRU-003).
+                        last_idx = np.where(trk_mask)[0][order[-1]]
+                        lpx, lpy, lpz = MX[i][last_idx], MY[i][last_idx], MZ[i][last_idx]
+                        pmag_last = float(np.sqrt(lpx * lpx + lpy * lpy + lpz * lpz))
+                        ekin_last = kinetic_energy_from_branch_momentum(
+                            pmag_last, p0, momentum_unit=args.momentum_unit)
+                        last_observed_layer = int(layers.max())
+                        termination = infer_termination(
+                            last_observed_layer, ekin_last, n_b_layers=NB_LAYERS)
                         el = {}
                         for lay, e in zip(layers, eds):
                             el[int(lay)] = el.get(int(lay), 0.0) + float(e)
@@ -356,7 +357,12 @@ def main():
                         T["edep_l0"].append(el.get(0, 0.0))
                         T["edep_l1"].append(el.get(1, 0.0))
                         T["edep_tot"].append(float(eds.sum()))
-                        T["stop_layer"].append(int(layers.max()))
+                        # stop_layer is the *inferred* stopping layer (None/->nan
+                        # for escape/censored); last_observed_layer is the observable.
+                        T["stop_layer"].append(
+                            last_observed_layer if termination == "stop" else None)
+                        T["last_observed_layer"].append(last_observed_layer)
+                        T["termination"].append(termination)
                         T["nlayers"].append(int(len(set(layers.tolist()))))
                         T["tracklen"].append(float(TL[i][trk_mask].sum()))
                         T["edep_per_layer"].append(el)
@@ -370,8 +376,10 @@ def main():
                             psw = per_stave_species_w[s]
                             psw.setdefault(stave_name, {}).setdefault(sp, []).append(w_evt)
 
-                        stop_l = int(layers.max())
-                        stopping_depth[s].setdefault(sp, []).append(stop_l)
+                        # Stopping-depth distribution includes STOPPING tracks only
+                        # (escape/censored are not stopping -- TRU-003).
+                        if termination == "stop":
+                            stopping_depth[s].setdefault(sp, []).append(last_observed_layer)
 
                         if 0 in el and 1 in el:
                             deltaE_E[s]["edep_l0"].append(el[0])
@@ -384,6 +392,8 @@ def main():
         for k in samples[s]["tracks"]:
             if k == "edep_per_layer":
                 continue  # list of dicts, not numeric
+            if k == "termination":
+                continue  # list of str labels, not numeric
             samples[s]["tracks"][k] = np.asarray(samples[s]["tracks"][k], dtype=float)
         for k in deltaE_E[s]:
             deltaE_E[s][k] = np.asarray(deltaE_E[s][k], dtype=float)

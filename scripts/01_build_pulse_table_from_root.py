@@ -6,9 +6,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, Iterable, List, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple
 
 import matplotlib
 
@@ -23,6 +24,33 @@ import yaml
 def load_config(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as handle:
         return yaml.safe_load(handle)
+
+
+#: Env-var name used to override the amplitude cut without editing the YAML.
+#: The canonical value lives in configs/s00_reproduction.yaml; CLI and env only
+#: OVERRIDE it (no hardcoded default inside the script), per the repo rule that
+#: every numeric parameter be config/env/CLI-addressable.
+AMPLITUDE_CUT_ENV = "CCB_AMPLITUDE_CUT_ADC"
+
+
+def resolve_amplitude_cut(config: dict, cli_value: Optional[float]) -> Tuple[float, str]:
+    """Resolve the amplitude cut [ADC] with provenance: CLI > env > config.
+
+    Returns (effective_cut, source) so the manifest records where the value
+    came from. The YAML config remains the single documented default.
+    """
+    cfg_val = float(config["amplitude_cut_adc"])
+    env_raw = os.environ.get(AMPLITUDE_CUT_ENV)
+    if cli_value is not None:
+        if cli_value < 0:
+            raise ValueError(f"amplitude cut must be non-negative, got {cli_value}")
+        return float(cli_value), f"cli(--amplitude-cut-adc={cli_value})"
+    if env_raw is not None and env_raw.strip() != "":
+        env_val = float(env_raw)
+        if env_val < 0:
+            raise ValueError(f"{AMPLITUDE_CUT_ENV} must be non-negative, got {env_raw}")
+        return env_val, f"env({AMPLITUDE_CUT_ENV}={env_raw})"
+    return cfg_val, f"config({cfg_val})"
 
 
 def sha256_file(path: Path, block_size: int = 1024 * 1024) -> str:
@@ -409,11 +437,15 @@ def make_figures(counts_by_run: pd.DataFrame, selected: pd.DataFrame, out_dir: P
     plt.close(fig)
 
 
-def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path) -> None:
+def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path,
+                   amplitude_cut_adc: float, amplitude_cut_source: str) -> None:
     manifest = {
         "config": str(config_path),
         "count_match_passed": bool(comparison["pass"].all()),
         "selected_pulse_table": str(selected_path),
+        "amplitude_cut_adc": float(amplitude_cut_adc),
+        "amplitude_cut_source": amplitude_cut_source,
+        "amplitude_cut_env_var": AMPLITUDE_CUT_ENV,
         "artifacts": sorted(path.name for path in out_dir.iterdir() if path.is_file()),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
@@ -424,9 +456,21 @@ def main() -> int:
     parser.add_argument("--config", default="configs/s00_reproduction.yaml", type=Path)
     parser.add_argument("--skip-ml", action="store_true", help="Skip the run-split ML sanity check.")
     parser.add_argument("--skip-sha256", action="store_true", help="Skip checksum manifest generation.")
+    parser.add_argument(
+        "--amplitude-cut-adc",
+        type=float,
+        default=None,
+        help="Override the config amplitude_cut_adc [ADC]. Precedence: this flag "
+             "> env CCB_AMPLITUDE_CUT_ADC > the YAML config value.",
+    )
     args = parser.parse_args()
 
     config = load_config(args.config)
+    # Resolve the amplitude cut once and propagate it into the in-memory config
+    # so every consumer (scan_raw, sorted_crosscheck, run_ml_check) reads the
+    # SAME overridden value. The YAML file is never modified.
+    cut, cut_source = resolve_amplitude_cut(config, args.amplitude_cut_adc)
+    config["amplitude_cut_adc"] = cut
     out_dir = Path(config["output_dir"])
     out_dir.mkdir(parents=True, exist_ok=True)
     selected_path = Path(config["pulse_table_path"])
@@ -452,7 +496,7 @@ def main() -> int:
         run_ml_check(config, ml_rows, out_dir)
     if not args.skip_sha256:
         write_checksums(config, out_dir)
-    write_manifest(out_dir, args.config, comparison, selected_path)
+    write_manifest(out_dir, args.config, comparison, selected_path, cut, cut_source)
 
     print(comparison.to_string(index=False))
     print(f"\nselected pulse table: {selected_path}")

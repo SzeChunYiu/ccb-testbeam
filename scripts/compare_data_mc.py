@@ -29,6 +29,30 @@ def load_json(d, name):
         return json.load(fh)
 
 
+def _wmedian(x, w):
+    """Weighted median via cumulative weight; falls back to median if no weights."""
+    x = np.asarray(x, dtype=float)
+    if w is None:
+        return float(np.median(x)) if x.size else 0.0
+    w = np.asarray(w, dtype=float)
+    if w.size != x.size or w.sum() <= 0:
+        return float(np.median(x)) if x.size else 0.0
+    o = np.argsort(x)
+    xs, ws = x[o], w[o]
+    cw = np.cumsum(ws) / ws.sum()
+    return float(np.interp(0.5, cw, xs))
+
+
+def _whist(x, bins, weights=None):
+    """Weighted (or unweighted) density histogram, matching np.histogram density=True."""
+    x = np.asarray(x, dtype=float)
+    if weights is None:
+        return np.histogram(x, bins=bins, density=True)[0]
+    w = np.asarray(weights, dtype=float)
+    h, _ = np.histogram(x, bins=bins, weights=w, density=True)
+    return h
+
+
 def ks_stat(data, model, n_bootstrap=200):
     """Two-sample KS statistic D and approximate p-value via bootstrap."""
     from scipy import stats as sc_stats
@@ -68,9 +92,17 @@ def main():
 
     mcI, mcII = mc_edep["sampleI"], mc_edep["sampleII"]
     daI, daII = da_amp["sampleI"], da_amp["sampleII"]
+    # PrimaryWeight per-event (issue #880). Legacy files lack these arrays; the
+    # _weights guard makes weighted consumers fall back to unweighted silently.
+    mcI_w = mc_edep["sampleI_weights"] if "sampleI_weights" in mc_edep.files else None
+    mcII_w = mc_edep["sampleII_weights"] if "sampleII_weights" in mc_edep.files else None
+    weights_applied = mc.get("apply_weight", False) and mcI_w is not None
 
-    # MeV -> ADC scale (Sample II proton-dominated median)
-    mc_ref = float(np.median(mcII)) if mcII.size else 1.0
+    # MeV -> ADC scale (Sample II proton-dominated median). Use the WEIGHTED
+    # median on the MC side when PrimaryWeight is available, since the flux
+    # composition is weight-dependent (deuterons carry different weight than
+    # protons). Data side has no per-event weight -> plain median.
+    mc_ref = float(_wmedian(mcII, mcII_w)) if mcII.size else 1.0
     da_ref = float(np.median(daII)) if daII.size else 1.0
     mev_to_adc = da_ref / mc_ref if mc_ref else 1.0
     scale_lo = mev_to_adc * (1 - args.scale_uncertainty)
@@ -98,9 +130,15 @@ def main():
     }
 
     # ── KS tests ─────────────────────────────────────────────────────────
+    # NOTE: the two-sample KS statistic is inherently unweighted (it compares
+    # empirical CDFs of equal-weight draws); we keep it so. The bin-by-bin
+    # residuals and all overlay histograms below DO use PrimaryWeight on the MC
+    # side (issue #880) when weights are present.
     ks_results = {}
     bins_common = np.linspace(0, 12000, 80)
+    mc_weights = {"I": mcI_w, "II": mcII_w}
     for s, mcv, dav, label in (("I", mcI, daI, "Sample I"), ("II", mcII, daII, "Sample II")):
+        mw = mc_weights[s]
         # Downsample to equal sizes for fair KS test (MC >> data typically)
         n_min = min(len(mcv), len(dav))
         rng = np.random.default_rng(42)
@@ -108,12 +146,15 @@ def main():
         da_sub = rng.choice(dav, n_min, replace=False)
         ks = ks_stat(da_sub, mc_sub)
         ks["sample"] = label
-        ks["note"] = "Data vs MC (MC scaled by mev_to_adc, equal-N subsampled)"
+        ks["note"] = ("Data vs MC (MC scaled by mev_to_adc, equal-N subsampled); "
+                      "KS is unweighted by construction; bin residuals use PrimaryWeight."
+                      if weights_applied else
+                      "Data vs MC (MC scaled by mev_to_adc, equal-N subsampled)")
         ks_results[label] = ks
 
-        # Bin-by-bin residuals (normalised)
+        # Bin-by-bin residuals (normalised) — MC side weighted when available.
         da_hist, _ = np.histogram(dav, bins=bins_common, density=True)
-        mc_hist, _ = np.histogram(mcv * mev_to_adc, bins=bins_common, density=True)
+        mc_hist = _whist(mcv * mev_to_adc, bins_common, mw)
         residual = da_hist - mc_hist
         ks_results[label]["bin_residual_rms"] = float(np.sqrt(np.mean(residual**2)))
         ks_results[label]["bin_residual_max"] = float(np.max(np.abs(residual)))
@@ -148,7 +189,11 @@ def main():
         "mev_to_adc_scale_lo": scale_lo,
         "mev_to_adc_scale_hi": scale_hi,
         "scale_uncertainty_fraction": args.scale_uncertainty,
-        "scale_reference": "Sample-II first-B-layer median (proton-dominated), ±30% systematic from MV0 digitizer gain",
+        "scale_reference": ("Sample-II first-B-layer weighted median (MC, PrimaryWeighted), "
+                             "±30% systematic from MV0 digitizer gain"
+                             if weights_applied else
+                             "Sample-II first-B-layer median (proton-dominated), ±30% systematic from MV0 digitizer gain"),
+        "mc_primary_weight_applied": bool(weights_applied),
         "first_B_layer": {
             "MC": {
                 "sampleI_d_fraction": mc["samples"]["I"]["B_layers"][0]["pid_fraction"].get("d", 0.0),
@@ -215,16 +260,18 @@ def main():
                 (mcI, daI, "Sample I (A&B coincidence)"),
                 (mcII, daII, "Sample II (single B)")]):
             ax = axes[k]
+            mw = mc_weights["I"] if "I" in ttl else mc_weights["II"]
             # Data
             ax.hist(dav, bins=bins, density=True, histtype="step", lw=2,
                     label=f"DATA B2 (n={dav.size:,})", color="k")
-            # MC central
-            mc_hist, _ = np.histogram(mcv * mev_to_adc, bins=bins, density=True)
+            # MC central (weighted by PrimaryWeight when available, #880)
+            mc_hist = _whist(mcv * mev_to_adc, bins, mw)
+            wtag = " (PrimaryWeight)" if weights_applied else ""
             ax.step(bin_centers, mc_hist, where="mid", lw=2,
-                    label=f"MC EDep ×{mev_to_adc:.0f} (n={mcv.size:,})", color="C3")
+                    label=f"MC EDep ×{mev_to_adc:.0f}{wtag} (n={mcv.size:,})", color="C3")
             # MC ±30% band
-            mc_hi, _ = np.histogram(mcv * scale_hi, bins=bins, density=True)
-            mc_lo, _ = np.histogram(mcv * scale_lo, bins=bins, density=True)
+            mc_hi = _whist(mcv * scale_hi, bins, mw)
+            mc_lo = _whist(mcv * scale_lo, bins, mw)
             ax.fill_between(bin_centers, mc_lo, mc_hi, alpha=0.2, color="C3",
                             label=f"MC ±{args.scale_uncertainty*100:.0f}% scale")
             # KS stats text
@@ -256,14 +303,15 @@ def main():
         for k, (mcv, dav, ttl) in enumerate([
                 (mcI, daI, "Sample I"), (mcII, daII, "Sample II")]):
             ax = axes[k]
+            mw = mc_weights["I"] if ttl.endswith("I") else mc_weights["II"]
             da_hist, _ = np.histogram(dav, bins=bins, density=True)
-            mc_hist, _ = np.histogram(mcv * mev_to_adc, bins=bins, density=True)
+            mc_hist = _whist(mcv * mev_to_adc, bins, mw)
             res = da_hist - mc_hist
             ax.bar(bin_centers, res, width=bins[1]-bins[0], color="C0", alpha=0.5, edgecolor="C0", linewidth=0.3)
             ax.axhline(0, color="k", linewidth=0.8)
             # Fill the ±30% band effect
-            mc_hi, _ = np.histogram(mcv * scale_hi, bins=bins, density=True)
-            mc_lo, _ = np.histogram(mcv * scale_lo, bins=bins, density=True)
+            mc_hi = _whist(mcv * scale_hi, bins, mw)
+            mc_lo = _whist(mcv * scale_lo, bins, mw)
             ax.fill_between(bin_centers, da_hist - mc_hi, da_hist - mc_lo,
                             alpha=0.15, color="gray", label=f"±{args.scale_uncertainty*100:.0f}% scale band")
             rms = float(np.sqrt(np.mean(res**2)))

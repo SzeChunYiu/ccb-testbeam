@@ -2,64 +2,55 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T00:10:19Z
-- **Task:** AUD-AMP-004 (PARTIAL)
-- **Initial remote main:** `b72a9061ce1411e64521e6c71ef099c4c92e15d6`
+- **UTC:** 2026-07-23T01:05:04Z
+- **Task:** AUD-AMP-005 (PARTIAL)
+- **Initial remote main:** `947df912016b97d7d21160c1f4e8f2b075c4cbda`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Write target:** direct to `main`
 
 ## Confirmed scientific/provenance defect
 
-`tools/audit/amplitude_convention_audit.py` v2.7.0 treated the coexistence of a complete, uniquely named pedestal column with bare `amplitude_adc` as sufficient for an accepted amplitude convention. That is not identifying evidence: an absolute peak code and an already baseline-subtracted height may both coexist with a pedestal diagnostic. The repository contract requires explicit schema metadata, producer-code provenance, or independently reviewed evidence.
+`tools/audit/amplitude_convention_audit.py` v2.8.0 treated the existence of a hash-bound evidence record as sufficient for `physics_acceptance=ACCEPTABLE`. For evidence authorizing `ABSOLUTE`, this could pass even when the table lacked a unique pedestal-level column or had incomplete pedestal values, so the required subtraction could not be executed reproducibly. The aggregate gate also followed the heuristic convention rather than the evidence-authorized physics convention. Conversely, incomplete optional pedestal diagnostics could incorrectly reject a hash-bound `NET` table even though no subtraction is required.
 
 ## Work pushed directly to main
 
-Version 2.8.0 adds an optional `--evidence-map` keyed by the exact input SHA-256. Accepted records must specify `ABSOLUTE` or `NET` and one of:
+Version 2.9.0 makes the execution gate convention-specific:
 
-- `EXPLICIT_SCHEMA_METADATA`
-- `PRODUCER_CODE_PROVENANCE`
-- `INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE`
+- hash-bound `NET` evidence is accepted without requiring optional pedestal diagnostics and sets `physics_subtract_baseline_correct=false`;
+- hash-bound `ABSOLUTE` evidence requires exactly one pedestal-level column;
+- every finite amplitude row must have a finite pedestal value before `ABSOLUTE` is accepted;
+- unresolved schema produces `BASELINE_SCHEMA_UNRESOLVED` and `HASH_BOUND_ABSOLUTE_WITHOUT_UNIQUE_BASELINE`;
+- incomplete data produces `BASELINE_DATA_INVALID` and `HASH_BOUND_ABSOLUTE_WITH_INVALID_BASELINE_DATA`;
+- `n_nonaccepted_physics_conventions` counts every classified table not in the `ACCEPTABLE` physics state and is included in the CLI failure gate;
+- `n_invalid_baseline_data_tables` now follows physics acceptance, so optional incomplete pedestal diagnostics do not falsely reject an accepted `NET` convention.
 
-The JSON now separates heuristic diagnostics from physics authorization:
+Added regression coverage:
 
-- `heuristic_convention`
-- `physics_convention`
-- `physics_convention_evidence`
-- `physics_acceptance`
-- `physics_subtract_baseline_correct`
-
-Without exact hash-bound evidence, the CLI emits `NO_HASH_BOUND_CONVENTION_EVIDENCE`, increments `n_unverified_conventions`, and exits nonzero. A changed file hash invalidates the evidence automatically.
-
-Added and updated regression coverage:
-
-- `tests/test_hash_bound_amplitude_evidence.py`
-- `tests/test_amplitude_convention_anchor_gate.py`
-- `tests/test_amplitude_baseline_acceptance_gate.py`
+- `tests/test_amplitude_physics_baseline_gate.py`
 
 Immutable session record:
 
-- `chatgpt_todo/archive/2026-07-23T001019Z_AUD-AMP-004_HASH_BOUND_EVIDENCE.md`
+- `chatgpt_todo/archive/2026-07-23T010504Z_AUD-AMP-005_PHYSICS_BASELINE_GATE.md`
 
 ## Validation
 
 Executed on exact local reconstructions:
 
 ```text
-python -m py_compile tools/audit/amplitude_convention_audit.py tests/test_hash_bound_amplitude_evidence.py
-python -m pytest tests -q
-11 passed in 0.09s
+python -m py_compile tools/audit/amplitude_convention_audit.py tests/test_amplitude_physics_baseline_gate.py
+python -m pytest tests/test_amplitude_physics_baseline_gate.py -q
+3 passed in 0.04s
 ```
 
-The focused suite covers missing evidence, exact accepted evidence, mutation invalidation, invalid evidence bases, pedestal-only diagnostics, unresolved baselines, and net/absolute evidence paths.
+The focused regression covers missing pedestal schema for hash-bound `ABSOLUTE`, incomplete pedestal data for hash-bound `ABSOLUTE`, and an accepted hash-bound `NET` table with incomplete optional pedestal diagnostics.
 
 ## Main progression
 
-- `b72a9061ce1411e64521e6c71ef099c4c92e15d6` — initial remote main.
-- `39d7a4ab509a8213954bd677907410ea5b0d0dae` — `fix(audit): require hash-bound amplitude convention evidence`.
-- `5c2a07f580920d0728a998716e4af885bf65de0f` — `test(audit): cover hash-bound amplitude evidence`.
-- `275b543e536d6ef6f5555dd19f0a9ccc1a236048` — `test(audit): require evidence beyond pedestal coexistence`.
-- `063ba946d6b6fb9a6a6b1db1bd04a0f2e5ca036e` — `test(audit): gate physics use on hash-bound evidence`.
-- `62037cf3031b8c308b649e28924864ebc353d69a` — `docs(audit): archive hash-bound convention evidence gate`.
+- `947df912016b97d7d21160c1f4e8f2b075c4cbda` — initial remote main.
+- `926b24f56b696249c94ecadd193131f433efbf97` — `fix(audit): gate absolute evidence on executable pedestal data`.
+- `138f763679f172feab45c3598ff6c46902bd19cc` — `test(audit): cover physics pedestal acceptance gate`.
+- `2eeb00b660fa181b60a6381327de9880a0ac7eda` — `docs(audit): archive physics baseline execution gate`.
+- `3e75fc9e77624044586fd28c922fa7e6f30fb746` — `docs(audit): claim physics baseline execution gate`.
 - This handoff update is the final session commit and must be verified on remote `main`.
 
 ## Evidence boundary and blockers
@@ -74,10 +65,10 @@ The focused suite covers missing evidence, exact accepted evidence, mutation inv
 
 ## Acceptance status
 
-- Hash-bound convention-evidence gate: VALIDATED by focused synthetic regression.
+- Physics baseline execution gate: VALIDATED by focused synthetic regression.
 - Real-table amplitude convention: BLOCKED on exact data access and reviewed evidence.
 - A-002 regenerated outputs: BLOCKED.
 
 ## Next action
 
-Hash the exact A-002 table, trace its producer/schema provenance, and create a reviewed evidence-map entry only if the convention is demonstrated. Run v2.8.0 without `--max-rows`. Do not pass a convention to `scripts/single_stave/deltaE_E_data_bridge.py` unless `physics_acceptance=ACCEPTABLE` and every malformed, nonfinite, ambiguity, and baseline-quality gate passes.
+Hash the exact A-002 table and trace its producer/schema provenance. For an `ABSOLUTE` evidence record, require one unique pedestal-level column and complete finite pedestal coverage before passing the convention to `scripts/single_stave/deltaE_E_data_bridge.py`. Run v2.9.0 without `--max-rows`, review every non-acceptable physics state and malformed-value warning, and regenerate the quarantined outputs only after all gates pass.

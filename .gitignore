@@ -66,3 +66,12 @@ reports/mv0_digitizer_skeleton/
 RUN_BLOCKED.md
 src/ccb_mc_validation.egg-info/
 *.parquet.tmp
+
+# ---- Generated study reports & publication builds (REP-002) ---------------
+# Canonical outputs are rebuildable from scripts/ and must not be committed.
+# Existing tracked artifacts are NOT mass-deleted (out of scope); these rules
+# only prevent NEW generated outputs from being added. See REPORTS_HYGIENE.md.
+/reports/data01_sample_split*/
+/reports/mv3_stopping_v2*/
+/reports/mv3_stopping_v3*/
+/paper/figures/

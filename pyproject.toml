@@ -6,7 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "ccb-mc-validation"
 version = "0.1.0"
 description = "Monte Carlo validation framework for CCB HiBeam testbeam analysis"
-requires-python = ">=3.9"
+# Narrowed to the version actually exercised in CI (3.11); the
+# matrix does not test 3.9/3.10, so claiming >=3.9 would be dishonest.
+requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.23",
     "pandas>=1.5",
@@ -36,7 +38,7 @@ pythonpath = ["src"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py39"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]

@@ -16,10 +16,16 @@ import sys
 import time
 from pathlib import Path
 
-# Ensure the package is importable
-sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+# Ensure the repo-root src/ package is importable when this script is run
+# directly. NOTE: this launcher is DEPRECATED for headline/publication figures
+# — use the canonical, sha256-gated registry driver instead:
+#     python -m tools.figure_registry.builder --registry paper/figures.yaml --out paper/figures
+# (scripts/ lives one level below the repo root, so the package dir is
+# <repo>/src, i.e. parent.parent / "src" — NOT parent / "src".)
+_repo_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_repo_root / "src"))
 
-from ccb_figures.figures import (
+from ccb_figures.figures import (  # noqa: E402
     fig01_setup,
     fig02_pipeline,
     fig03_timing,
@@ -80,7 +86,7 @@ def main() -> int:
         targets = REGISTRY
 
     print(f"Generating {len(targets)} CCB Test-Beam publication figures...")
-    print(f"Output: docs/figures/*.{{png,svg,pdf}}\n")
+    print("Output: docs/figures/*.{png,svg,pdf}\n")
 
     ok = 0
     fail = 0

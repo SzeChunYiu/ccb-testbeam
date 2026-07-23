@@ -6,7 +6,7 @@
 
 [![Studies](https://img.shields.io/badge/studies-~230-blue)](studies/STUDIES.md)
 [![MC Validations](https://img.shields.io/badge/MC%20validations-6-green)](studies/MC_VALIDATION_PROGRAM.md)
-[![Python](https://img.shields.io/badge/python-3.11-3776AB)](pyproject.toml)
+[![Python](https://img.shields.io/badge/python->=3.11-3776AB)](pyproject.toml)
 [![Status](https://img.shields.io/badge/status-research%20in%20progress-yellow)](WIKI.md)
 
 ---
@@ -26,14 +26,24 @@
 
 ## Headline Results
 
-| Measurement | Value | Confidence |
+> **All results are preliminary and study-scoped, not publication-validated.**
+> The MC validation program is partially blocked: **MV3 stopping-depth is FAIL**
+> (χ²/ndf ≈ 68k, blocked by the GEANT4 geometry fix → new MC production), and
+> **MV4–MV8 production release is BLOCKED** pending calibrated digitized-MC /
+> systematic-production artifacts. Quantitative figures in `paper/figures.yaml`
+> are `EXTERNAL_BLOCKER` until those result bundles are synced. The authoritative
+> per-claim state lives in [`docs/claim_ledger.csv`](docs/claim_ledger.csv);
+> this table mirrors it and must not advertise a stronger status than the ledger.
+
+| Measurement | Value | Ledger claim / status |
 |---|---|---|
-| Selected pulses | **640,737** (exact reproduction) | ✅ |
-| Best timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | ✅ MC-validated |
-| Combined 3-stave (B4+B6+B8) | **σ₆₈ ≈ 0.54–0.56 ns** | ⚠️ Data-only |
-| Pile-up tolerance | **R_max ≈ 3.05 MHz** (corrected from 4.22 MHz) | ✅ MC-validated |
-| Proton/deuteron PID | **AUC = 0.986** | ⚠️ Truth-labelled MC only; data transfer unvalidated |
-| C12-like anomaly in truth-labelled MC | **283 / 87,555 tracks (0.32%)**; ~55% C12 within the selected MC class | ⚠️ MC mechanism only; real-data identity unvalidated |
+| Selected pulses (S00 gate) | **640,737** (exact reproduction) | CL-001 — VALIDATED |
+| Best timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | CL-002/003 — VALIDATED (MV4 release BLOCKED) |
+| Combined 3-stave (B4+B6+B8) | **σ₆₈ ≈ 0.54–0.56 ns** | CL-004/005 — DONE_DATA_ONLY |
+| Pile-up tolerance | **R_max ≈ 3.05 MHz** (corrected from 4.22 MHz) | CL-010 — VALIDATED (MV5 release BLOCKED) |
+| Proton/deuteron PID | **AUC = 0.986** | CL-017 — TRUTH_LEVEL_MC_ONLY (data transfer unvalidated) |
+| C12-like anomaly in truth-labelled MC | **283 / 87,555 tracks (0.32%)**; ~55% C12 within the selected MC class | CL-022 — TRUTH_LEVEL_MC_ONLY (real-data identity unvalidated) |
+| MV3 stopping-depth (MC vs data) | **FAIL** — χ²/ndf ≈ 68,269 | CL-019/020/021 — FAIL (geometry blocker) |
 
 ## Repository Layout
 

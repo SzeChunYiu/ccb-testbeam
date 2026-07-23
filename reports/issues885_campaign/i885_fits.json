@@ -1,0 +1,32 @@
+{
+  "fits": {
+    "pe_sat_readout_vs_KE_proton": {
+      "slope": 0.7205501319992381,
+      "intercept": 44.75827393442917,
+      "r2": 0.5735004402357131,
+      "n": 14
+    },
+    "pe_sat_readout_vs_KE_deuteron": {
+      "slope": 4.15030386304037,
+      "intercept": -5.361252735037176,
+      "r2": 0.9909210912249061,
+      "n": 6
+    },
+    "edep_scint_MeV_vs_KE_proton": {
+      "slope": 0.06217197556858714,
+      "intercept": 3.8578480808906788,
+      "r2": 0.5696038470238294,
+      "n": 14
+    },
+    "edep_scint_MeV_vs_KE_deuteron": {
+      "slope": 0.353901261712353,
+      "intercept": -0.4570563226579838,
+      "r2": 0.9926866124397989,
+      "n": 6
+    }
+  },
+  "readout_end_x_cm": 25.0,
+  "default_hit_x_cm": 0.0,
+  "n_configs": 20,
+  "n_events_total": 10000
+}

@@ -1,0 +1,88 @@
+
+Inactive Modules:
+  1) IPython/8.17.2                 8) cryptography/41.0.5
+  2) JupyterLab/4.2.0               9) jedi/0.19.1
+  3) JupyterNotebook/7.2.0         10) jupyter-server/2.14.0
+  4) PyYAML/6.0.1                  11) libsodium/1.0.19
+  5) PyZMQ/25.1.2                  12) lxml/4.9.3
+  6) Python-bundle-PyPI/2023.10    13) tornado/6.4
+  7) ZeroMQ/4.3.5                  14) virtualenv/20.24.6
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) BeautifulSoup/4.12.2     6) cffi/1.15.1        11) ncurses/6.4
+  2) OpenPGM/5.2.122          7) libffi/3.4.4       12) util-linux/2.39
+  3) Tcl/8.6.13               8) libreadline/8.2    13) zlib/1.2.13
+  4) binutils/2.40            9) libxslt/1.1.38
+  5) bzip2/1.0.8             10) libyaml/0.2.5
+
+The following have been reloaded with a version change:
+  1) GCCcore/13.2.0 => GCCcore/12.3.0     4) XZ/5.4.4 => XZ/5.4.2
+  2) Python/3.11.5 => Python/3.11.3       5) libxml2/2.11.5 => libxml2/2.11.4
+  3) SQLite/3.43.1 => SQLite/3.42.0
+
+geant4 version: 11.2.2
+-- The CXX compiler identification is GNU 12.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /sw/easybuild_milan/software/GCCcore/12.3.0/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found EXPAT: /sw/easybuild_milan/software/expat/2.5.0-GCCcore-12.3.0/lib/libexpat.so (found suitable version "2.5.0", minimum required is "2.5.0")
+-- Found ZLIB: /sw/easybuild_milan/software/zlib/1.2.13-GCCcore-12.3.0/lib/libz.so (found suitable version "1.2.13", minimum required is "1.2.13")
+CMake Deprecation Warning at /sw/easybuild_milan/software/Geant4/11.2.2-GCC-12.3.0/lib64/cmake/Geant4/PTL/PTLConfig.cmake:30 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)
+  /sw/easybuild_milan/software/Geant4/11.2.2-GCC-12.3.0/lib64/cmake/Geant4/Geant4Config.cmake:286 (find_dependency)
+  CMakeLists.txt:15 (find_package)
+
+
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found XercesC: /sw/easybuild_milan/software/Xerces-C++/3.2.4-GCCcore-12.3.0/lib/libxerces-c.so (found suitable version "3.2.4", minimum required is "3.2.4")
+-- Found X11: /sw/easybuild_milan/software/X11/20230603-GCCcore-12.3.0/include
+-- Looking for XOpenDisplay in /sw/easybuild_milan/software/X11/20230603-GCCcore-12.3.0/lib/libX11.so;/sw/easybuild_milan/software/X11/20230603-GCCcore-12.3.0/lib/libXext.so
+-- Looking for XOpenDisplay in /sw/easybuild_milan/software/X11/20230603-GCCcore-12.3.0/lib/libX11.so;/sw/easybuild_milan/software/X11/20230603-GCCcore-12.3.0/lib/libXext.so - found
+-- Looking for gethostbyname
+-- Looking for gethostbyname - found
+-- Looking for connect
+-- Looking for connect - found
+-- Looking for remove
+-- Looking for remove - found
+-- Looking for shmat
+-- Looking for shmat - found
+-- Looking for IceConnectionNumber in ICE
+-- Looking for IceConnectionNumber in ICE - found
+-- Found OpenGL: /sw/easybuild_milan/software/libglvnd/1.6.0-GCCcore-12.3.0/lib/libOpenGL.so
+-- Found Geant4: /sw/easybuild_milan/software/Geant4/11.2.2-GCC-12.3.0/lib64/cmake/Geant4/Geant4Config.cmake (found version "11.2.2")
+-- Configuring done (6.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-i885/geant4/single_stave/build
+[  7%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/ActionInitialization.cc.o
+[ 14%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/AppConfig.cc.o
+[ 21%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/DetectorConstruction.cc.o
+[ 28%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/DetectorMessenger.cc.o
+[ 35%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/EventAction.cc.o
+[ 50%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/PhysicsList.cc.o
+[ 50%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/PrimaryGeneratorAction.cc.o
+[ 57%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/OpticalTables.cc.o
+[ 64%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/RunAction.cc.o
+[ 71%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/Sha256.cc.o
+[ 78%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/SteppingAction.cc.o
+[ 85%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/TrackingAction.cc.o
+[ 92%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/main.cc.o
+[100%] Linking CXX executable ccb_stave_sim
+[100%] Built target ccb_stave_sim
+--- ctest (geometry + smoke) ---
+Internal ctest changing into directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-i885/geant4/single_stave/build
+Test project /projects/hep/fs10/shared/nnbar/billy/ccb-wt-i885/geant4/single_stave/build
+    Start 1: ccb_stave_geometry_smoke
+1/4 Test #1: ccb_stave_geometry_smoke .............   Passed    0.50 sec
+    Start 2: ccb_stave_proton_smoke
+slurmstepd: error: *** JOB 3408044 ON cx09 CANCELLED AT 2026-07-23T14:22:21 ***

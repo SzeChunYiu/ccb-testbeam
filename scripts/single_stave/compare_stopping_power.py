@@ -11,17 +11,18 @@ Method
 * Simulated MASS stopping power, per (particle, energy):
     S_sim [MeV cm^2/g] = (sum edep_scint_raw_MeV / sum track_len_scint_mm)
                          * 10 [mm->cm] / rho [g/cm^3]
-  The UNQUENCED edep (edep_scint_raw_MeV) is used, because PSTAR tabulates the
-  total (collision + nuclear) stopping of the charged particle -- i.e. the raw
-  energy deposit, before scintillator light-yield quenching (Birks).
+  The UNQUENCHED local energy deposit (edep_scint_raw_MeV) is used as a
+  diagnostic proxy. It is not generally identical to the projectile's total
+  energy loss when generated secondaries escape the scored volume.
 * Reference (polystyrene, rho = 1.060 g/cm^3):
     proton   : linear interpolation of the PSTAR total table in log-log at E.
     deuteron : velocity scaling -- a deuteron of energy E has the same speed as
                a proton of energy E/2 (same charge z=1), so to leading order
                S_deuteron(E) ~= S_proton(E/2). This is the standard Bragg-rule/
                effective-charge approximation; NIST PSTAR has no deuteron table.
-* Report: per-energy ratio S_sim/S_ref, delta %, and a pass/fail against an
-  env-overridable tolerance (CCB_STOPPING_TOLERANCE_PCT, default 10%).
+* Report: per-energy ratio S_sim/S_ref, delta %, and a numerical tolerance
+  check (CCB_STOPPING_TOLERANCE_PCT, default 10%). This is DIAGNOSTIC_ONLY,
+  not an accepted stopping-power closure.
 
 Input (sim event CSV, comment lines starting with '#'): one row per event with
 the sim's per-event columns. Flexible aliases are accepted:
@@ -46,6 +47,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import math
 import os
 import statistics
@@ -57,7 +59,17 @@ from pathlib import Path
 DEFAULT_RHO = float(os.environ.get("CCB_POLYSTYRENE_RHO", "1.060"))   # g/cm^3 (NIST PSTAR polystyrene)
 DEFAULT_TOL = float(os.environ.get("CCB_STOPPING_TOLERANCE_PCT", "10.0"))
 HERE = Path(__file__).resolve().parent
-DEFAULT_REF = HERE.parents[2] / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
+REPO_ROOT = HERE.parents[1]
+DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
+
+
+def sha256_file(path: Path) -> str:
+    """Return a lowercase SHA-256 digest for provenance."""
+    digest = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def read_reference(path: Path) -> list[tuple[float, float, float, float]]:
@@ -86,7 +98,6 @@ def interp_loglog(table: list[tuple[float, float, float, float]], x: float) -> f
         return table[0][3]
     if x >= table[-1][0]:
         return table[-1][3]
-    lx, ly = math.log(x), None
     # find bracketing
     for i in range(len(table) - 1):
         e0, _, _, y0 = table[i]
@@ -206,10 +217,10 @@ def run_compare(sim_path: Path, ref_path: Path, rho: float, out_path: Path | Non
                 w.writerow({k: (f"{d[k]:.6g}" if isinstance(d[k], float) else d[k]) for k in cols})
         print(f"wrote {out_path}")
 
-    print(f"\nStopping-power comparison (material=polystyrene, rho={rho} g/cm^3, "
+    print(f"\nDeposited-energy proxy vs PSTAR (material=polystyrene, rho={rho} g/cm^3, "
           f"tolerance=+/-{tol_pct:g}%):")
     print(f"{'particle':<9}{'E[MeV]':>9}{'n':>7}{'sim':>12}{'ref':>12}"
-          f"{'ratio':>9}{'delta%':>9}  ok")
+          f"{'ratio':>9}{'delta%':>9}  numerical")
     for d in results:
         print(f"{d['particle']:<9}{d['energy_MeV']:>9.2f}{d['n_events']:>7d}"
               f"{d['sim_total_MeV_cm2_g']:>12.4f}{d['ref_total_MeV_cm2_g']:>12.4f}"
@@ -220,45 +231,38 @@ def run_compare(sim_path: Path, ref_path: Path, rho: float, out_path: Path | Non
         by_spec.setdefault(d["particle"], []).append(d["ratio"])
     for sp, rs in by_spec.items():
         print(f"  mean ratio [{sp}] = {statistics.mean(rs):.4f} over {len(rs)} energy point(s)")
-    print("OVERALL:", "PASS" if all_pass and results else "FAIL")
+    print("NUMERICAL TOLERANCE:", "PASS" if all_pass and results else "FAIL")
+    print("SCIENTIFIC STATUS: DIAGNOSTIC_ONLY")
     return results, all_pass and bool(results)
 
 
-def self_test() -> int:
-    """Build synthetic sim events that exactly reproduce PSTAR, expect ratio~1."""
-    ref = DEFAULT_REF if DEFAULT_REF.is_file() else None
-    if ref is None:
-        # fall back to a tiny inline reference so the self-test runs anywhere
-        td = Path(tempfile.mkdtemp())
-        ref = td / "ref.csv"
-        ref.write_text(
-            "# inline test reference\n"
-            "energy_MeV,electronic_MeV_cm2_g,nuclear_MeV_cm2_g,total_MeV_cm2_g,"
-            "csda_range_g_cm2,projected_range_g_cm2,detour_factor\n"
-            "10,45.0,2.0,47.0,0.01,0.009,0.9\n"
-            "30,12.0,0.5,12.5,0.1,0.09,0.9\n"
-            "50,8.5,0.3,8.8,0.3,0.27,0.9\n"
-            "100,7.14,0.1,7.24,1.0,0.9,0.9\n"
-            "200,5.1,0.05,5.15,5.0,4.5,0.9\n"
-        )
+def self_test(ref_path: Path = DEFAULT_REF) -> int:
+    """Exercise arithmetic and the selected committed-reference path."""
+    ref = ref_path.resolve()
+    if not ref.is_file():
+        print(f"SELF-TEST: FAIL -- reference table not found: {ref}", file=sys.stderr)
+        return 1
     table = read_reference(ref)
+    print(f"reference={ref} sha256={sha256_file(ref)} rows={len(table)}")
     rho = DEFAULT_RHO
-    # synthesize: for proton at E, deuteron at E -> edep = ref(E)*rho/10 over 1 mm.
-    sim = Path(tempfile.mkstemp()[1])
-    cases = [("proton", 60.0), ("proton", 100.0), ("proton", 150.0),
-             ("deuteron", 100.0), ("deuteron", 200.0)]
-    with sim.open("w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["particle", "ke_MeV", "edep_scint_raw_MeV", "track_len_scint_mm"])
-        for part, e in cases:
-            ref_val = reference_for(part, e, table)
-            edep = ref_val * rho / 10.0  # gives dE/dx = ref_val*rho/10 MeV/mm -> mass = ref_val
-            for _ in range(40):
-                w.writerow([part, e, f"{edep:.6f}", "1.0"])
-    print("=== self-test on synthetic events (expected ratio ~ 1.0) ===")
-    results, ok = run_compare(sim, ref, rho, None, tol_pct=2.0)
+    with tempfile.TemporaryDirectory() as td:
+        sim = Path(td) / "synthetic_stopping_power.csv"
+        cases = [("proton", 60.0), ("proton", 100.0), ("proton", 150.0),
+                 ("deuteron", 100.0), ("deuteron", 200.0)]
+        with sim.open("w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["particle", "ke_MeV", "edep_scint_raw_MeV", "track_len_scint_mm"])
+            for part, e in cases:
+                ref_val = reference_for(part, e, table)
+                # Gives dE/dx = ref_val*rho/10 MeV/mm -> mass proxy = ref_val.
+                edep = ref_val * rho / 10.0
+                for _ in range(40):
+                    w.writerow([part, e, f"{edep:.9f}", "1.0"])
+        print("=== self-test on synthetic events (expected ratio ~ 1.0) ===")
+        results, ok = run_compare(sim, ref, rho, None, tol_pct=2.0)
     maxerr = max(abs(d["ratio"] - 1.0) for d in results)
     print(f"\nmax |ratio-1| = {maxerr:.2e}")
+    print("SELF-TEST SCOPE: arithmetic and committed-reference path only")
     if maxerr < 1e-6 and ok:
         print("SELF-TEST: PASS")
         return 0
@@ -281,7 +285,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
 
     if args.self_test:
-        return self_test()
+        return self_test(args.reference)
     if not args.sim:
         p.error("--sim is required (or use --self-test)")
     _, ok = run_compare(args.sim, args.reference, args.material_density,

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-013",
+  "status": "VALIDATED",
+  "scope": "synthetic regression; not detector data",
+  "initial_remote_main": "d880c7474b2ba3f981fa6e402d1723d1c450e22d",
+  "concurrent_main_before_write": "6fd458150fd7f7eff1be044c40b0675031935547",
+  "prechange_script_blob": "d525bf6b74a18d135b38434dd5085123b995132a",
+  "prechange_reconstruction_blob_match": true,
+  "confirmed_defect": {
+    "former_group_key": "(particle, round(energy_MeV, 1))",
+    "input_energies_MeV": [1.01, 1.04],
+    "former_output_energies_MeV": [1.025],
+    "former_output_rows": 1,
+    "expected_output_rows": 2,
+    "old_regression_result": "2 failed, 1 passed in 0.57s"
+  },
+  "validated_change": {
+    "group_key": "(particle, energy_MeV)",
+    "energy_grouping": "EXACT_CONFIGURED_ENERGY",
+    "output_energies_MeV": [1.01, 1.04],
+    "output_rows": 2,
+    "identical_numeric_tokens_group": true
+  },
+  "validation": {
+    "focused_pytest": "19 passed in 3.22s",
+    "py_compile": "PASS",
+    "max_python_line_length": {
+      "scripts/single_stave/compare_stopping_power.py": 91,
+      "tests/test_compare_stopping_power_energy_grouping.py": 84
+    },
+    "changed_file_sha256": {
+      "scripts/single_stave/compare_stopping_power.py": "15cdc5d0ed128b84a4fd47e3d665a899356702338ddebbe1aff4240a88c712a1",
+      "tests/test_compare_stopping_power_energy_grouping.py": "fa4098be552361c91fce93e9d19a7dfc902fd8514e293042ecd5ca76c28de485"
+    }
+  },
+  "limitations": [
+    "No real Geant4 event table was available.",
+    "No Geant4/PSTAR physics closure was run.",
+    "Local deposited energy remains a diagnostic proxy.",
+    "The deuteron proton-equivalent mapping remains approximate."
+  ]
+}

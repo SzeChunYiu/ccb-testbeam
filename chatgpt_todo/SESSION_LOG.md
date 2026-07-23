@@ -158,3 +158,16 @@
 - PR #868 remains closed, not merged, and non-mergeable; it was not reopened or merged. No status checks or workflow runs were attached to the code/test head.
 - No real A-002 table or evidence artifact was available. No amplitude convention, stopping result, CSV, plot, calibration, or detector-performance result was regenerated. Historical A-002 outputs remain quarantined under `BLK-AMP-001`.
 - Next: create a real evidence map with exact table and supporting-artifact hashes plus either a whole-file reference or exact verified line range; run the full-table audit and regenerate outputs only after `physics_acceptance=ACCEPTABLE`.
+
+## 2026-07-23T08:04:59Z — AUD-DELTAE-002
+
+- Initial remote main: `7d226ec55a640c5ac4c9e16d378f496ea808ef0a`.
+- Inspected current main history, PR #868, open PRs including non-overlapping PR #881, the A-002 bridge/test, pulse-table contract, and required coordination files.
+- Confirmed a scientific conversion defect: `abs(amplitude_adc - baseline_adc)` erased pulse polarity, allowing an opposite-side excursion or wrong polarity assumption to become a positive threshold-passing deposit.
+- Changed the bridge to require explicit positive/negative polarity for absolute ADC input, use the corresponding signed pedestal subtraction, reject opposite-polarity and nonfinite rows, and record the polarity plus exact formula.
+- Expanded the focused regression to cover required polarity, positive- and negative-going conversion, opposite-polarity rejection, nonfinite rejection, net pass-through, and existing cardinality/schema gates.
+- Exact local reconstruction validation: compilation passed; focused pytest returned `10 passed in 2.78s`; no changed line exceeded 100 characters; local Git blob hashes matched GitHub content SHAs.
+- Direct-to-main code/test commits: `4fc261dc83c5463c23392f6cf71e04735471ee2c`, `dd7ffbba6da463e1c63a9a7c71bd43f33f23f147`.
+- Coordination commits before this log update: `e15fe84827a6c2901e08326d9fbab0cfc6fe3020`, `4ac3b109d0a53bc75f82f3bf0b2d55d2a0976449`, `7e6d89efa7d24ca477566722e35a61e583b373b7`, `bbd16416641158de1346d39a5abc499a004848d7`, `65f083907cb08736f87212051e5375dbeb29e4f5`, `3d3996a834602b64b21387bc00f9c53b0b378854`.
+- No exact A-002 table or immutable polarity evidence was available. No stopping count, fraction, CSV, plot, calibration, or detector-performance result was regenerated. Historical A-002 outputs remain quarantined.
+- Next: obtain hash-bound convention and polarity evidence, run the full-table audit and bridge, require zero polarity violations plus cardinality closure, and regenerate all quarantined outputs with full provenance.

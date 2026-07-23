@@ -73,7 +73,7 @@ def test_direct_cli_rejects_component_inconsistent_reference(tmp_path):
     assert not output.exists()
 
 
-def test_valid_output_records_reference_validation_provenance(tmp_path):
+def test_valid_output_records_reference_validation_and_uncertainty_state(tmp_path):
     module = load_module()
     reference = tmp_path / "reference.csv"
     simulation = tmp_path / "events.csv"
@@ -81,7 +81,7 @@ def test_valid_output_records_reference_validation_provenance(tmp_path):
     reference.write_text(HEADER + "1,9,1,10\n2,4,1,5\n")
     write_sim(simulation)
     results, ok = module.run_compare(simulation, reference, 1.0, output, 1e-9)
-    assert ok is True
+    assert ok is False
     result = results[0]
     assert result["reference_rows_validated"] == 2
     assert result["reference_input_bytes"] == reference.stat().st_size
@@ -89,9 +89,13 @@ def test_valid_output_records_reference_validation_provenance(tmp_path):
     assert result["reference_validator_version"] == "1.1.0"
     assert result["reference_component_identity"] == "total = electronic + nuclear"
     assert result["reference_component_consistent"] is True
+    assert result["numeric_within_tolerance"] is True
+    assert result["uncertainty_evaluated"] is False
+    assert result["within_tolerance"] is False
     header = output.read_text().splitlines()[0]
     assert "reference_input_sha256" in header
     assert "reference_validator_version" in header
+    assert "uncertainty_method" in header
 
 
 def test_wrapper_translates_validator_errors_to_comparison_errors(tmp_path):

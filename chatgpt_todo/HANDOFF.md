@@ -2,175 +2,147 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T12:14:45Z
-- **Task:** `AUD-G4-008`
-- **Initial remote main:** `9681e44d94fa825bb8db6c84af31448df0ec0689`
-- **Validated implementation/evidence head:** `eb8791bd795d11a101d72a5d383a60baf0e19606`
-- **Coordination/archive/session-log head before this handoff:** `7da55fb22112d1b42c1114703b441775f689194f`
+- **UTC:** 2026-07-23T13:21:12Z
+- **Task:** `AUD-I885-001`
+- **Initial remote main:** `2986da32c6b01d6f3f1b6ec90231ab5eeee436b1`
+- **Validated implementation/evidence head:** `467c007cd3526a762258a7f1d3f00563a37db8a8`
+- **Coordination/archive head before this handoff:** `036079211edcd6021e9fdf73c603ca57908776b7`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Destination:** `main`
-- **Acceptance:** COMPLETE for fail-closed quenched-proxy handling; PARTIAL for accepted stopping-power physics closure.
+- **Acceptance:** COMPLETE for independent validation, coverage correction, quarantine, focused tests, and audit evidence; PARTIAL / BLOCKED for regenerated and scientifically accepted calibration curves.
 
-## Start-of-run review and concurrency
+## Start-of-run review
 
-- A direct clone remained unavailable because the runtime could not resolve `github.com`; authenticated GitHub connector reads and direct-to-main writes were used.
-- Inspected current main history and concurrent changes, repository metadata, open pull requests, PR #890, commit status, the stopping-power script and focused tests, prior validation records, and every mandatory `chatgpt_todo/` coordination file.
-- The previous handoff head was `4bef9d97657c91ec5771830743629d5cda5eb95e`. A concurrent non-overlapping merge advanced main to session base `9681e44d94fa825bb8db6c84af31448df0ec0689` before implementation. Later concurrent documentation/QA merges were preserved because every contents write applied to the then-current `main`; no history was rewritten or force-pushed.
-- The selected stopping-power script was unchanged by the concurrent base update and remained pre-change blob `7c3c05f12a1311d5ead8d1d45e0f5fea91dc92ce`.
-- No status checks were attached to the initial or implementation/evidence heads. No GitHub Actions success is claimed.
-- PR #868 remains closed and unmerged and was not modified.
+- Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and writes were used.
+- Inspected current main history, merged PR #898, issue #885, open PRs, commit status, campaign plotter, manifest, partial CSV, fit JSON, summary, generated-result descriptions, and all mandatory `chatgpt_todo/` ledgers.
+- The session based its work on main commit `2986da32c6b01d6f3f1b6ec90231ab5eeee436b1`; no concurrent main change appeared during the direct-write sequence.
+- No branch, PR, force-push, history rewrite, or unrelated-file replacement was used.
+- PR #868 remains closed/unmerged and was not modified.
+- No status checks were attached to the initial or delivered heads; no GitHub Actions success is claimed.
 
-## Confirmed defect
+## Scientific reconstruction and confirmed defects
 
-The former simulation reader preferred unquenched fields `edep_scint_raw_MeV` / `edep_raw_MeV`, but silently fell back to quenched visible-energy fields `edep_scint_MeV` / `edep_MeV` after printing a warning. The quenched value then passed through the same raw-PSTAR tolerance gate and could report `within_tolerance=True`.
+The issue #885 manifest defines 72 files:
 
-A targeted reproduction of the exact old fallback path with one quenched-only synthetic event produced:
+- 40 main-grid files: two particles × ten energies × two seeds at `hit_x_cm = 0`;
+- 32 attenuation/timing files: two particles × two energies × four positions × two seeds.
 
-```text
-WARNING: edep_scint_raw_MeV absent -- using the QUENCHED edep_scint_MeV; ratios vs raw PSTAR will look low.
-rows=1 ratio=1.0 within_tolerance=True
-```
+The committed partial result contains 14 files / 7,000 events, all on the main grid:
 
-This is a physics-semantics error, not merely a missing warning. Geant4 Birks quenching is a nonlinear conversion from deposited energy to visible detector response, while NIST PSTAR total stopping power is collision plus nuclear projectile energy loss per unit path length. A quenched visible-energy proxy is not raw stopping power even when the numbers happen to agree.
+- proton: 2, 5, 8, 12, 20 MeV, two seeds each — 10 files / 5 independent energies;
+- deuteron: 2, 5 MeV, two seeds each — 4 files / 2 independent energies;
+- attenuation/timing: no committed configurations.
 
-Primary method references reviewed:
+Confirmed defects:
 
-- Geant4 Collaboration, *Birks Quenching*, Book for Application Developers 11.4: `https://geant4.web.cern.ch/documentation/dev/bfad_html/ForApplicationDevelopers/Detector/birks.html`
-- NIST, *Description of PSTAR and ASTAR databases*: `https://physics.nist.gov/PhysRefData/Star/Text/programs.html`
-- NIST, *Significance of Calculated Quantities*: `https://physics.nist.gov/PhysRefData/Star/Text/appendix.html`
+1. `SUMMARY.md` reported `14/72 main-grid files`; 72 is the total campaign, while the main-grid denominator is 40.
+2. `Covered: deuteron, proton @ 2-20 MeV` collapsed unequal species coverage.
+3. `plot_i885_campaign.py` plots seed-averaged points but computes P5/P5b fits from the unaveraged per-seed rows.
+4. `i885_fits.json` reports `n=10` for five independent proton energies and `n=4` for two independent deuteron energies.
+5. A straight line through two deuteron energy points has zero residual degrees of freedom after seed averaging; its near-unity R² cannot validate a calibration.
+6. P6/P7 have no committed attenuation/timing coverage in the current bundle.
 
-## Validated change
+The listed per-file simulation means remain partial repository-recorded simulation outputs. Calibration slopes, intercepts, R² values, P5/P5b overlays, and completed/shared-coverage wording are quarantined.
 
-`scripts/single_stave/compare_stopping_power.py` now:
+## Validated implementation
 
-- rejects quenched-only input by default with `StoppingPowerInputError` and CLI status 2;
-- adds `--allow-quenched-proxy` only for explicitly labelled diagnostic output;
-- rejects a file mixing raw and quenched rows because the aggregate has no single energy-deposit convention;
-- records `energy_deposit_basis` as `UNQUENCHED_RAW` or `QUENCHED_PROXY`;
-- records `raw_pstar_comparable`;
-- separates arithmetic-only `numeric_within_tolerance` from accepted `within_tolerance`;
-- forces accepted `within_tolerance=False` for every quenched proxy;
-- prints `NUMERICAL TOLERANCE: NOT_ACCEPTED_QUENCHED_PROXY` and exits nonzero in explicit proxy mode;
-- preserves normal diagnostic numeric behavior for unquenched raw input.
+Added `tools/audit/validate_i885_campaign_results.py` v1.0.0. It:
 
-Added:
+- strictly parses the campaign manifest and observed result CSV;
+- checks unique configuration keys and observed-manifest membership;
+- derives total/main coverage and exact per-species energy lists;
+- audits summary numerator/denominator/species wording;
+- audits fit basis, file count, independent-energy count, legacy `n`, and minimum independent energies;
+- records exact paths, byte sizes, and SHA-256 for every input;
+- treats incomplete campaign coverage as a warning but returns nonzero for acceptance defects.
 
-- `tests/test_compare_stopping_power_quenched_proxy.py`
-- `docs/validation/stopping_power_quenched_proxy_audit.md`
-- `docs/validation/stopping_power_quenched_proxy_validation.json`
-- `docs/validation/stopping_power_quenched_proxy.svg`
+Added `tests/test_validate_i885_campaign_results.py` covering the current failure modes, a valid partial campaign, an out-of-manifest configuration, and CLI provenance/status.
 
-The four new tests cover default rejection, explicit labelled/non-accepting output plus CSV provenance, mixed-semantics rejection, and unchanged raw-input acceptance.
+Corrected and added:
+
+- `geant4/single_stave/results/i885_v1/SUMMARY.md`
+- `geant4/single_stave/results/i885_v1/AUDIT_INVALIDATION.md`
+- `docs/validation/i885_campaign_acceptance_audit.md`
+- `docs/validation/i885_campaign_acceptance_validation.json`
+- `docs/validation/i885_campaign_acceptance.svg`
+
+The SVG is explicitly a synthetic repository-audit schematic, not detector data, and communicates differences using text/shapes in addition to color.
 
 ## Reproducible validation
 
 ```text
 python -m py_compile \
-  scripts/single_stave/compare_stopping_power.py \
-  tests/test_compare_stopping_power_reference_path.py \
-  tests/test_compare_stopping_power_energy_range.py \
-  tests/test_compare_stopping_power_reference_integrity.py \
-  tests/test_compare_stopping_power_quenched_proxy.py
+  tools/audit/validate_i885_campaign_results.py \
+  tests/test_validate_i885_campaign_results.py
 
-python -m pytest \
-  tests/test_compare_stopping_power_reference_path.py \
-  tests/test_compare_stopping_power_energy_range.py \
-  tests/test_compare_stopping_power_reference_integrity.py \
-  tests/test_compare_stopping_power_quenched_proxy.py -q
-
-18 passed in 2.86s
+python -m pytest tests/test_validate_i885_campaign_results.py -q
+4 passed in 0.60s
 ```
 
-Additional checks:
+Exact reconstructed inputs matched Git blobs:
 
-- exact old fallback reproduced a quenched-only ratio `1.0` with `within_tolerance=True`;
-- no changed Python line exceeded 100 characters;
-- validation JSON parsed successfully;
-- validation SVG parsed successfully as XML;
-- committed script blob `ef535a47ee36b2706f6b720f0231648c23bc11a7` matches the validated local Git blob;
-- committed test blob `af282789ce2e47ba680fa29296cdb81a7c45287f` matches the validated local Git blob;
-- reconstructed pre-append `SESSION_LOG.md` matched existing blob `87a06b62c74c6b29445cc0d590b84f73ee34cf9f`, and the append produced blob `5188115b58a863275c62df7930e35428a9f66f65` without changing prior bytes.
+- manifest `15c4bb9ac99c1742e35225687ddcdf4341cae451`;
+- per-config CSV `d38a42b0696d106d1f15068f8d81ed76f91b1040`;
+- fit JSON `49bf41b359fbab42e4c583acacba7df2aac401c8`;
+- pre-correction summary `3ea2a10f0751a3a7bcbc3db79c6a9d73bd956ca4`.
 
-The local reference fixture contained the energies required by the existing synthetic tests. The complete committed PSTAR table, real Geant4 event files, full repository pytest, ruff, CTest, real simulation processing, and GitHub Actions were not run.
+Measured validator results:
 
-## Visual evidence
+```text
+pre-correction bundle: status=FLAWED issues=20 warnings=1 exit=1
+corrected-summary bundle: status=FLAWED issues=18 warnings=1 exit=1
+```
 
-`docs/validation/stopping_power_quenched_proxy.svg` is explicitly labelled as a synthetic regression schematic and not detector data. It contrasts:
+The summary correction removed the two coverage issues. The remaining 18 issues are fit-independence/provenance defects across four fit records. JSON parsed, SVG parsed as XML, and changed Python lines were within 100 characters.
 
-- the former quenched-field fallback, warning, and possible numerical PASS;
-- default status-2 rejection;
-- explicit `QUENCHED_PROXY` diagnostic output with `NOT_ACCEPTED_QUENCHED_PROXY`.
-
-The distinction is communicated by labels and layout, not color alone.
-
-## Scientific interpretation
-
-The correction prevents a quenched detector-response proxy from masquerading as raw PSTAR agreement. It does not establish Geant4-to-PSTAR closure.
-
-Still unresolved under `AUD-G4-005` / `BLK-G4-SP-001`:
-
-- local deposited energy may differ from projectile total energy loss when generated secondaries escape;
-- projectile energy evolves along the scored path;
-- material, density, production cuts, and physics list affect the result;
-- deuteron `S_d(E) ≈ S_p(E/2)` remains an approximation;
-- the committed PSTAR transcription was not independently refreshed in this session.
-
-No Geant4 executable, ROOT file, real simulation, stopping-power measurement, calibration, or detector-performance output was generated.
+No Geant4 executable, ROOT file, real data, simulation rerun, accepted calibration, or detector-performance output was generated. Full repository pytest, ruff, CTest, and GitHub Actions were not run.
 
 ## Direct-to-main commits
 
 Implementation and validation evidence:
 
-- `4b93451980ee116a1d11aa0ac513d3aa21b9fb0f` — `fix(single-stave): reject quenched PSTAR proxy acceptance`
-- `0aba2ed3eb40403da9169c51cf1ca299a25845b1` — `test(single-stave): cover quenched PSTAR proxy gate`
-- `6c1ee31c302ffc2ae925807ba950451832a09cf4` — `docs(validation): record quenched PSTAR proxy audit`
-- `1a4696418344db25b05d9a82ad208edc58d43153` — `docs(validation): add quenched PSTAR proxy record`
-- `eb8791bd795d11a101d72a5d383a60baf0e19606` — `docs(validation): visualize quenched PSTAR proxy gate`
+- `189d785e068d9fec85796fdfb097bd2a3dc1fcea` — `feat(audit): validate issue 885 campaign acceptance`
+- `583fa57c9277262dcc72de0f1fa749b1419a3a5d` — `test(audit): cover issue 885 campaign acceptance`
+- `6945bbb4e314e3e57c8b181ba79468258c3ca7aa` — `docs(validation): record issue 885 campaign audit`
+- `1a66794b9a3ac3163a5efa3f4aeee2f9d0ebf02c` — `docs(i885): correct partial coverage and quarantine fits`
+- `a90a326c7f94ca210836aad0594fac59905db1f6` — `docs(i885): quarantine partial calibration fits`
+- `52f9f38b8dd733fd17e7993b4a918473f48d9a0d` — `docs(validation): add issue 885 campaign record`
+- `467c007cd3526a762258a7f1d3f00563a37db8a8` — `docs(validation): visualize issue 885 acceptance gate`
 
 Coordination and provenance:
 
-- `5126bf426bcfa1a379b82f7e78983aeba22a21b5` — `docs(audit): claim quenched PSTAR proxy gate`
-- `7b51eb86229bfea4f34b20084f4b4dac5c8cff25` — `docs(audit): track quenched PSTAR proxy gate`
-- `f19412297dd148e5917366942975037900881669` — `docs(audit): index quenched PSTAR proxy risk`
-- `f25d9963ddb59a1810d4ab26795c43e6dc02763b` — `docs(audit): map quenched proxy to PSTAR output`
-- `3ab7667b556e2ee94023f21186a7ae80b0ce1340` — `docs(audit): update stopping study input semantics`
-- `17762a456415dd3bd3c30a6171b2c8771493f6d9` — `docs(audit): classify quenched PSTAR proxy claim`
-- `6cc3272eaf43fa0cb9225f527896542ccbe372d0` — `docs(audit): register quenched PSTAR proxy visual`
-- `49a253646dc5613dba4ecfb963b206ccbaa48817` — `docs(audit): refine stopping blocker with quenched proxy gate`
-- `4975030e86cc1d46eceeedca61c08ea88119c0e6` — `docs(audit): archive quenched PSTAR proxy gate`
-- `7da55fb22112d1b42c1114703b441775f689194f` — `docs(audit): append quenched PSTAR proxy session`
+- `c40abd2a5d9e5b932950059d71247c796034a9cf` — `docs(audit): claim issue 885 campaign acceptance task`
+- `c4bcd928b8c720086db9eb7ec73f664f4be300ce` — `docs(audit): track issue 885 calibration acceptance`
+- `c65dd3b8d9f29a9efa1ae3205e57f721cb2bece7` — `docs(audit): index issue 885 campaign defects`
+- `61adf3403838c24971fe382e4e1dcf876f983c58` — `docs(audit): map issue 885 result dependencies`
+- `9a7960c9c3cc728c2f729a2f93a3ada0dd11e096` — `docs(audit): record issue 885 study review`
+- `84385fdbf983080f2706cec1c289300c9a5a9341` — `docs(audit): classify issue 885 calibration claims`
+- `8088a19e37114f09bfd926b7fa7a5e90c9d741fb` — `docs(audit): register issue 885 visual evidence`
+- `8a0e148bcbb9cb646c2d62f101ff47d7a995313f` — `docs(audit): block unvalidated issue 885 calibration`
+- `036079211edcd6021e9fdf73c603ca57908776b7` — `docs(audit): archive issue 885 campaign acceptance`
 
-Push/output record: every GitHub contents write returned a successful commit SHA directly on `main`. Recent remote history confirmed these commits in order while preserving concurrent non-overlapping commits. No task branch, draft PR, force-push, or history rewrite was used.
+Every write returned a successful direct-main commit SHA. Remote history confirmed the commits consecutively. `SESSION_LOG.md` was not overwritten because the connector has no safe append primitive and replacing an append-only file from partial retrieval could destroy prior records. The complete immutable session entry is retained at:
 
-## Repository-local records
+`chatgpt_todo/archive/2026-07-23T132112Z_AUD-I885-001_CAMPAIGN_ACCEPTANCE.md`
 
-Updated:
+## Updated repository-local records
 
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/BACKLOG.md`
-- `chatgpt_todo/MASTER_INDEX.md`
-- `chatgpt_todo/CODE_RESULT_MAP.md`
-- `chatgpt_todo/STUDY_REVIEW_LEDGER.md`
-- `chatgpt_todo/CLAIM_EVIDENCE_MATRIX.md`
-- `chatgpt_todo/VISUALIZATION_MATRIX.md`
-- `chatgpt_todo/BLOCKERS.md`
-- `chatgpt_todo/SESSION_LOG.md`
-- `chatgpt_todo/HANDOFF.md`
-
-Added immutable provenance:
-
-- `chatgpt_todo/archive/2026-07-23T121445Z_AUD-G4-008_QUENCHED_PROXY_GATE.md`
+- `ACTIVE_TASK.md`
+- `BACKLOG.md`
+- `MASTER_INDEX.md`
+- `CODE_RESULT_MAP.md`
+- `STUDY_REVIEW_LEDGER.md`
+- `CLAIM_EVIDENCE_MATRIX.md`
+- `VISUALIZATION_MATRIX.md`
+- `BLOCKERS.md`
+- `HANDOFF.md`
 
 ## Acceptance and next action
 
-- Exact pre-change failure reproduction: COMPLETE.
-- Default quenched-input rejection: COMPLETE.
-- Explicit proxy labelling and non-acceptance: COMPLETE.
-- Mixed-semantics rejection: COMPLETE.
-- Raw-input compatibility: COMPLETE.
-- Focused synthetic regression: COMPLETE (`18 passed`).
-- Markdown/JSON/SVG evidence: COMPLETE.
-- Direct-to-main implementation/evidence: COMPLETE.
-- Accepted stopping-power closure: PARTIAL / BLOCKED.
+- Independent validator and focused regression: COMPLETE (`4 passed`).
+- Coverage reconstruction and corrected public summary: COMPLETE.
+- Calibration-fit quarantine and visual evidence: COMPLETE.
+- Direct-to-main delivery: COMPLETE.
+- Corrected plotter/fits/P5/P5b regeneration: PARTIAL / BLOCKED under `BLK-I885-001`.
 
-Next task: execute `AUD-G4-005` in a clean Geant4 environment. Start with proton-only `G4EmCalculator::ComputeTotalDEDX` at exact reference energies and exact material/physics/cut configuration, then add primary entry/exit-energy and secondary-escape diagnostics. Retain exact versions, commands, seeds, event counts, hashes, statistical/systematic uncertainties, overlays, ratios, and failure interpretation. Keep the deuteron approximation separate.
+Next: modify `plot_i885_campaign.py` so all coverage is manifest-derived, fit inputs are seed-averaged unique energies, `n_files` and `n_energy_points` are distinct, fewer than three energies do not generate an accepted line, and fit range/residual/uncertainty diagnostics are retained. Regenerate P5/P5b and `i885_fits.json` from declared inputs and require zero validator issues before publishing calibration claims.

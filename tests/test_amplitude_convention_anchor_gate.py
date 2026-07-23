@@ -16,8 +16,6 @@ assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
-REFERENCE_SHA256 = "b" * 64
-
 
 def write(path: Path, amplitude: list[float], baseline: list[float] | None = None) -> None:
     data = {"amplitude_adc": amplitude}
@@ -60,6 +58,9 @@ def test_unique_pedestal_is_diagnostic_not_convention_proof(tmp_path: Path) -> N
     path = tmp_path / "anchored.csv"
     output = tmp_path / "audit.json"
     evidence = tmp_path / "evidence.json"
+    reference = tmp_path / "pulse_contract.md"
+    reference.write_text("explicit amplitude schema metadata\n", encoding="utf-8")
+    reference_digest = hashlib.sha256(reference.read_bytes()).hexdigest()
     write(path, [6700.0, 6750.0, 6800.0], [6752.0, 6752.0, 6752.0])
     code = MODULE.main([str(path), "--output", str(output)])
     payload = json.loads(output.read_text(encoding="utf-8"))
@@ -74,8 +75,8 @@ def test_unique_pedestal_is_diagnostic_not_convention_proof(tmp_path: Path) -> N
     evidence.write_text(json.dumps({digest: {
         "convention": "ABSOLUTE",
         "evidence_basis": "INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE",
-        "evidence_reference": "docs/contracts/PULSE_TABLE_CONTRACT.md",
-        "evidence_reference_sha256": REFERENCE_SHA256,
+        "evidence_reference": reference.name,
+        "evidence_reference_sha256": reference_digest,
     }}), encoding="utf-8")
     assert MODULE.main([
         str(path), "--output", str(output), "--evidence-map", str(evidence)

@@ -76,6 +76,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --pde-scale V            SiPM PDE scale              (default 1.0)\n"
     "  --coupling V             fibre-end->sensor coupling  (default 1.0)\n"
     "  --far-end MODE           absorb|mirror               (default absorb)\n"
+    "  --wls-time-profile P     exponential|delta           (default exponential)\n"
     "  --mode MODE              optical                     (default; fast kernel not yet implemented)\n"
     "  --optical-dir DIR        optical CSV table directory (default optical)\n"
     "  --strict-optical         abort if required optical tables are missing/malformed (or CCB_STRICT_OPTICAL=1)\n"
@@ -104,6 +105,7 @@ std::string AppConfig::Describe() const {
      << " pde_scale=" << pde_scale
      << " coupling=" << coupling_efficiency
      << " far_end=" << (far_end_boundary_absorb ? "absorb" : "mirror")
+     << " wls_time_profile=" << wls_time_profile
      << " mode=" << (mode == SimMode::kOpticalCalibration ? "optical" : "fast")
      << " optical_dir=" << optical_dir
      << " strict_optical=" << (strict_optical ? 1 : 0)
@@ -143,6 +145,12 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
       if (eq(v, "absorb")) far_end_boundary_absorb = true;
       else if (eq(v, "mirror")) far_end_boundary_absorb = false;
       else { std::cerr << "error: --far-end must be absorb|mirror\n"; return false; }
+    }
+    else if (eq(a, "--wls-time-profile")) {
+      if(!(v=need(i)))return false;
+      if (eq(v, "exponential")) wls_time_profile = "exponential";
+      else if (eq(v, "delta")) wls_time_profile = "delta";
+      else { std::cerr << "error: --wls-time-profile must be exponential|delta\n"; return false; }
     }
     else if (eq(a, "--mode")) {
       if(!(v=need(i)))return false;

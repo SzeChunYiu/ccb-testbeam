@@ -9,7 +9,8 @@
 #include <iostream>
 
 G4VModularPhysicsList* PhysicsList::Build(const G4String& reference,
-                                          G4double optical_cut_mm) {
+                                          G4double optical_cut_mm,
+                                          const G4String& wls_time_profile) {
   G4PhysListFactory factory;
   G4VModularPhysicsList* physics = nullptr;
   if (factory.IsReferencePhysList(reference)) {
@@ -28,7 +29,7 @@ G4VModularPhysicsList* PhysicsList::Build(const G4String& reference,
   auto* op = G4OpticalParameters::Instance();
   op->SetScintTrackSecondariesFirst(true);
   op->SetScintByParticleType(false);
-  op->SetWLSTimeProfile("delta");
+  op->SetWLSTimeProfile(wls_time_profile);
 
   physics->SetDefaultCutValue(optical_cut_mm * CLHEP::mm);
   return physics;

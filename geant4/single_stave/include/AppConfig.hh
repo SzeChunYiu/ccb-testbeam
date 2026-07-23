@@ -66,6 +66,7 @@ struct AppConfig {
   // --- Sensor spec (Hamamatsu S13360-3050CS public spec) ---
   int    sipm_n_cells = 3600;   // microcells (saturation model)
   double sipm_overvoltage_V = 3.0; // recorded; PDE table is OV-tagged
+  std::string wls_time_profile = "exponential"; // WLS delay profile: exponential|delta (SIPM-P0-001)
 
   // Parse argv. Returns false on --help or a parse error (prints usage).
   bool ParseArgs(int argc, char** argv);

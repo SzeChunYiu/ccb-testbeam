@@ -60,6 +60,19 @@ set_tests_properties(ccb_stave_proton_smoke PROPERTIES
   PASS_REGULAR_EXPRESSION "CCB_STAVE_END"
   FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
 
+# 5) WLS time profile (SIPM-P0-001): --wls-time-profile exponential is accepted
+#    and recorded in RUN_CONFIG (configurable + metadata).
+add_test(
+  NAME ccb_stave_wls_profile
+  COMMAND ccb_stave_sim
+          --particle proton --energy 100 --nevents 5 --seed 1
+          --wls-time-profile exponential
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/wls_profile.root")
+set_tests_properties(ccb_stave_wls_profile PROPERTIES
+  PASS_REGULAR_EXPRESSION "wls_time_profile=exponential"
+  FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
+
 # 3) Python geometry-report assertions on captured stdout (runs if python3 found).
 find_program(CCB_PYTHON3 python3)
 if(CCB_PYTHON3)

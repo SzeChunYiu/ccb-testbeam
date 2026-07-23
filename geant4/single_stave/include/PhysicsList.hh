@@ -14,7 +14,8 @@ class PhysicsList {
   // Factory helper: returns a reference list with optical physics registered
   // and optical parameters configured. Caller passes it to the run manager.
   static G4VModularPhysicsList* Build(const G4String& reference = "QGSP_BIC",
-                                      G4double optical_cut_mm = 0.1);
+                                      G4double optical_cut_mm = 0.1,
+                                      const G4String& wls_time_profile = "exponential");
 };
 
 #endif  // CCB_PHYSICSLIST_HH

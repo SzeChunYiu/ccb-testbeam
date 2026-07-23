@@ -1,12 +1,59 @@
 #include "AppConfig.hh"
 
-#include <cstring>
+#include <cerrno>
+#include <climits>
+#include <cmath>
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <sstream>
 
 namespace {
 bool eq(const char* a, const char* b) { return std::strcmp(a, b) == 0; }
+
+// Checked double parse: rejects empty input, trailing garbage, errno range
+// errors, and non-finite results (inf/nan).  Returns true on success.
+bool parse_double(const char* s, double& out) {
+  if (s == nullptr || *s == '\0') return false;
+  errno = 0;
+  char* end = nullptr;
+  double val = std::strtod(s, &end);
+  if (errno == ERANGE) return false;
+  if (end == s || *end != '\0') return false;  // empty parse or trailing junk
+  if (!std::isfinite(val)) return false;
+  out = val;
+  return true;
+}
+
+// Checked integer parse: rejects empty input, trailing garbage, errno range
+// errors, and values outside [INT_MIN, INT_MAX].  Returns true on success.
+bool parse_int(const char* s, int& out) {
+  if (s == nullptr || *s == '\0') return false;
+  errno = 0;
+  char* end = nullptr;
+  long val = std::strtol(s, &end, 10);
+  if (errno == ERANGE) return false;
+  if (end == s || *end != '\0') return false;  // empty parse or trailing junk
+  if (val < INT_MIN || val > INT_MAX) return false;
+  out = static_cast<int>(val);
+  return true;
+}
+
+// Checked unsigned-64 parse: rejects empty input, trailing garbage, errno
+// range errors, and negative values.  Returns true on success.
+bool parse_ull(const char* s, unsigned long long& out) {
+  if (s == nullptr || *s == '\0') return false;
+  errno = 0;
+  char* end = nullptr;
+  // Reject a leading sign: strtoull silently wraps negatives, which is not
+  // meaningful for a seed.
+  if (*s == '-' || *s == '+') return false;
+  unsigned long long val = std::strtoull(s, &end, 10);
+  if (errno == ERANGE) return false;
+  if (end == s || *end != '\0') return false;  // empty parse or trailing junk
+  out = val;
+  return true;
+}
 }  // namespace
 
 void AppConfig::PrintUsage(const char* prog) {
@@ -69,18 +116,18 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     const char* v = nullptr;
     if (eq(a, "-h") || eq(a, "--help")) { PrintUsage(argv[0]); return false; }
     else if (eq(a, "--particle"))          { if(!(v=need(i)))return false; particle = v; }
-    else if (eq(a, "--energy"))            { if(!(v=need(i)))return false; kinetic_energy_MeV = std::atof(v); }
-    else if (eq(a, "--nevents"))           { if(!(v=need(i)))return false; n_events = std::atoi(v); }
-    else if (eq(a, "--seed"))              { if(!(v=need(i)))return false; seed = std::strtoull(v, nullptr, 10); }
-    else if (eq(a, "--hit-x"))             { if(!(v=need(i)))return false; hit_x_cm = std::atof(v); }
-    else if (eq(a, "--hit-y"))             { if(!(v=need(i)))return false; hit_y_cm = std::atof(v); }
-    else if (eq(a, "--theta"))             { if(!(v=need(i)))return false; theta_deg = std::atof(v); }
-    else if (eq(a, "--phi"))               { if(!(v=need(i)))return false; phi_deg = std::atof(v); }
-    else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; birks_kB_mm_per_MeV = std::atof(v); }
-    else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; reflectivity_scale = std::atof(v); }
-    else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; attenuation_scale = std::atof(v); }
-    else if (eq(a, "--pde-scale"))         { if(!(v=need(i)))return false; pde_scale = std::atof(v); }
-    else if (eq(a, "--coupling"))          { if(!(v=need(i)))return false; coupling_efficiency = std::atof(v); }
+    else if (eq(a, "--energy"))            { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --energy requires a finite number, got '"<<v<<"'\n";return false;} kinetic_energy_MeV = t; }
+    else if (eq(a, "--nevents"))           { if(!(v=need(i)))return false; int t; if(!parse_int(v,t)){std::cerr<<"error: --nevents requires an integer, got '"<<v<<"'\n";return false;} n_events = t; }
+    else if (eq(a, "--seed"))              { if(!(v=need(i)))return false; unsigned long long t; if(!parse_ull(v,t)){std::cerr<<"error: --seed requires a non-negative integer, got '"<<v<<"'\n";return false;} seed = t; }
+    else if (eq(a, "--hit-x"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --hit-x requires a finite number, got '"<<v<<"'\n";return false;} hit_x_cm = t; }
+    else if (eq(a, "--hit-y"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --hit-y requires a finite number, got '"<<v<<"'\n";return false;} hit_y_cm = t; }
+    else if (eq(a, "--theta"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --theta requires a finite number, got '"<<v<<"'\n";return false;} theta_deg = t; }
+    else if (eq(a, "--phi"))               { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --phi requires a finite number, got '"<<v<<"'\n";return false;} phi_deg = t; }
+    else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --birks-kB requires a finite number, got '"<<v<<"'\n";return false;} birks_kB_mm_per_MeV = t; }
+    else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }
+    else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; }
+    else if (eq(a, "--pde-scale"))         { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --pde-scale requires a finite number, got '"<<v<<"'\n";return false;} pde_scale = t; }
+    else if (eq(a, "--coupling"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --coupling requires a finite number, got '"<<v<<"'\n";return false;} coupling_efficiency = t; }
     else if (eq(a, "--far-end")) {
       if(!(v=need(i)))return false;
       if (eq(v, "absorb")) far_end_boundary_absorb = true;

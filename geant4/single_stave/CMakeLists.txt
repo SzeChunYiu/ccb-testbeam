@@ -71,3 +71,22 @@ if(CCB_PYTHON3)
             --optical-dir "${CMAKE_BINARY_DIR}/optical"
             --macro "${CMAKE_BINARY_DIR}/macros/geometry_check.mac")
 endif()
+
+# 4) Birks visible-energy regression (review defect 2). Proves the
+#    edep_scint_MeV (visible, G4EmSaturation) and edep_scint_raw_MeV (raw)
+#    branches are not silently identical: distinct when --birks-kB > 0, equal
+#    when --birks-kB 0. Runs the sim twice with a handful of proton events and
+#    parses the events ntuple via uproot. Exits 77 (SKIP) when uproot is absent
+#    so the test runs where the [root] extra is installed and skips elsewhere.
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_birks_visible_regression
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_birks_visible_regression.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical"
+            --work-dir "${CMAKE_BINARY_DIR}/birks_regression")
+  set_tests_properties(ccb_stave_birks_visible_regression PROPERTIES
+    TIMEOUT 300
+    FAIL_REGULAR_EXPRESSION "defect 2 has regressed")
+endif()

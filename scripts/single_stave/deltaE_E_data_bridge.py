@@ -12,10 +12,9 @@ counts exceed the reported physical-event count. This implementation treats
 physical composite key.
 
 Bare ``amplitude_adc`` is deliberately rejected because the repository schema
-audit shows that its semantics vary by table: 17 measured tables store an
-absolute peak code and two timing tables store an already-net amplitude. The
-bridge therefore requires a measured convention and applies baseline
-subtraction only to explicitly absolute input.
+audit shows that its semantics vary by table. The bridge requires a measured
+absolute/net convention. Absolute ADC codes additionally require an explicit
+pulse polarity; the signed pedestal conversion is never replaced by ``abs``.
 """
 from __future__ import annotations
 
@@ -46,8 +45,8 @@ def resolve_amplitude_column(
     """Return the source amplitude column and its explicit signal convention.
 
     Explicit net-height fields are treated as NET. Legacy ``amplitude_adc``
-    requires the caller to state ``absolute`` or ``net``; for ABSOLUTE input the
-    bridge subtracts ``baseline_adc`` before applying thresholds.
+    requires the caller to state ``absolute`` or ``net``. Absolute conversion
+    also requires an explicit polarity in :func:`build_event_table`.
     """
     convention = amplitude_convention.lower() if amplitude_convention else None
     if convention not in {None, "absolute", "net"}:
@@ -98,6 +97,42 @@ def resolve_amplitude_column(
     )
 
 
+def _convert_absolute_codes(
+    frame: pd.DataFrame,
+    amplitude_column: str,
+    polarity: str,
+) -> pd.Series:
+    """Convert absolute ADC codes to signed positive signal heights.
+
+    ``positive`` means pulses rise above the pedestal and uses
+    ``amplitude - baseline``. ``negative`` means pulses fall below the pedestal
+    and uses ``baseline - amplitude``. Rows on the opposite side fail closed;
+    taking an absolute value would silently convert a polarity mismatch into a
+    large positive energy deposit.
+    """
+    numeric = frame[[amplitude_column, "baseline_adc"]].apply(
+        pd.to_numeric, errors="coerce"
+    )
+    finite = np.isfinite(numeric.to_numpy(dtype=float, na_value=np.nan)).all(axis=1)
+    if not finite.all():
+        bad = int((~finite).sum())
+        raise ValueError(
+            f"absolute amplitude conversion requires finite numeric values; {bad} rows fail"
+        )
+
+    if polarity == "positive":
+        signal = numeric[amplitude_column] - numeric["baseline_adc"]
+    else:
+        signal = numeric["baseline_adc"] - numeric[amplitude_column]
+
+    violations = int((signal < 0).sum())
+    if violations:
+        raise ValueError(
+            f"{violations} absolute amplitude rows violate {polarity}-going pulse polarity"
+        )
+    return signal
+
+
 def build_event_table(
     pulses: pd.DataFrame,
     *,
@@ -105,6 +140,7 @@ def build_event_table(
     threshold_adc: float = THRESHOLD_ADC,
     amplitude_column: str | None = None,
     amplitude_convention: str | None = None,
+    amplitude_polarity: str | None = None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     """Build one ΔE-E row per physical ``(source_file_id, run, evt)`` event.
 
@@ -115,6 +151,17 @@ def build_event_table(
     ampcol, convention = resolve_amplitude_column(
         pulses, amplitude_column, amplitude_convention
     )
+    polarity = amplitude_polarity.lower() if amplitude_polarity else None
+    if polarity not in {None, "positive", "negative"}:
+        raise ValueError("amplitude_polarity must be 'positive' or 'negative'")
+    if convention == "absolute" and polarity is None:
+        raise ValueError(
+            "absolute amplitude conversion requires amplitude_polarity='positive' "
+            "or 'negative' from measured provenance"
+        )
+    if convention != "absolute" and polarity is not None:
+        raise ValueError("amplitude_polarity is only valid for absolute amplitude input")
+
     required = {"run", "evt", "eventno", "stave", ampcol}
     if convention == "absolute":
         required.add("baseline_adc")
@@ -129,7 +176,8 @@ def build_event_table(
     df["stave"] = df["stave"].astype(str)
     signal_column = "_signal_height_adc"
     if convention == "absolute":
-        df[signal_column] = (df[ampcol] - df["baseline_adc"]).abs()
+        assert polarity is not None
+        df[signal_column] = _convert_absolute_codes(df, ampcol, polarity)
     else:
         df[signal_column] = df[ampcol]
 
@@ -208,9 +256,12 @@ def build_event_table(
         "key": ["source_file_id", "run", "evt"],
         "amplitude_column": ampcol,
         "amplitude_convention": convention,
+        "amplitude_polarity": polarity,
         "amplitude_transform": (
-            "abs(amplitude_adc - baseline_adc)"
-            if ampcol == AMBIGUOUS_AMPLITUDE_COLUMN and convention == "absolute"
+            f"{ampcol} - baseline_adc"
+            if convention == "absolute" and polarity == "positive"
+            else f"baseline_adc - {ampcol}"
+            if convention == "absolute" and polarity == "negative"
             else "identity"
         ),
         "amplitude_column_explicitly_requested": amplitude_column is not None,

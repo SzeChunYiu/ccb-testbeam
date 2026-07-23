@@ -38,6 +38,7 @@ def test_composite_key_never_splits_on_eventno() -> None:
     assert "eventno" not in wide.columns
     assert result["amplitude_column"] == "median_amp_adc"
     assert result["amplitude_convention"] == "net"
+    assert result["amplitude_polarity"] is None
     assert result["amplitude_transform"] == "identity"
     assert result["n_events_composite_key"] == 3
     assert result["physical_events_with_multiple_eventno_values"] == 1
@@ -69,7 +70,28 @@ def test_bare_amplitude_adc_requires_measured_convention() -> None:
         )
 
 
-def test_absolute_amplitude_adc_is_converted_to_net_height() -> None:
+def test_absolute_amplitude_requires_measured_polarity() -> None:
+    pulses = pd.DataFrame(
+        {
+            "run": [7],
+            "evt": [1],
+            "eventno": [1],
+            "stave": ["B2"],
+            "amplitude_adc": [6400.0],
+            "baseline_adc": [6752.0],
+        }
+    )
+
+    with pytest.raises(ValueError, match="requires amplitude_polarity"):
+        MODULE.build_event_table(
+            pulses,
+            source_file_id="fixture",
+            amplitude_column="amplitude_adc",
+            amplitude_convention="absolute",
+        )
+
+
+def test_negative_going_absolute_codes_are_converted_without_abs() -> None:
     pulses = pd.DataFrame(
         {
             "run": [7, 7],
@@ -87,12 +109,84 @@ def test_absolute_amplitude_adc_is_converted_to_net_height() -> None:
         threshold_adc=200.0,
         amplitude_column="amplitude_adc",
         amplitude_convention="absolute",
+        amplitude_polarity="negative",
     )
 
     assert list(wide["amp_B2"]) == [2.0, 352.0]
     assert result["amplitude_convention"] == "absolute"
-    assert result["amplitude_transform"] == "abs(amplitude_adc - baseline_adc)"
+    assert result["amplitude_polarity"] == "negative"
+    assert result["amplitude_transform"] == "baseline_adc - amplitude_adc"
     assert result["stopping_distribution"] == {"none": 1, "B2": 1}
+
+
+def test_positive_going_absolute_codes_are_converted_without_abs() -> None:
+    pulses = pd.DataFrame(
+        {
+            "run": [7],
+            "evt": [1],
+            "eventno": [1],
+            "stave": ["B2"],
+            "amplitude_adc": [7105.0],
+            "baseline_adc": [6752.0],
+        }
+    )
+
+    wide, result = MODULE.build_event_table(
+        pulses,
+        source_file_id="fixture",
+        threshold_adc=200.0,
+        amplitude_column="amplitude_adc",
+        amplitude_convention="absolute",
+        amplitude_polarity="positive",
+    )
+
+    assert list(wide["amp_B2"]) == [353.0]
+    assert result["amplitude_transform"] == "amplitude_adc - baseline_adc"
+    assert result["stopping_distribution"] == {"B2": 1}
+
+
+def test_absolute_conversion_rejects_opposite_polarity_rows() -> None:
+    pulses = pd.DataFrame(
+        {
+            "run": [7],
+            "evt": [1],
+            "eventno": [1],
+            "stave": ["B2"],
+            "amplitude_adc": [6400.0],
+            "baseline_adc": [6752.0],
+        }
+    )
+
+    with pytest.raises(ValueError, match="violate positive-going pulse polarity"):
+        MODULE.build_event_table(
+            pulses,
+            source_file_id="fixture",
+            amplitude_column="amplitude_adc",
+            amplitude_convention="absolute",
+            amplitude_polarity="positive",
+        )
+
+
+def test_absolute_conversion_rejects_nonfinite_rows() -> None:
+    pulses = pd.DataFrame(
+        {
+            "run": [7],
+            "evt": [1],
+            "eventno": [1],
+            "stave": ["B2"],
+            "amplitude_adc": [float("nan")],
+            "baseline_adc": [6752.0],
+        }
+    )
+
+    with pytest.raises(ValueError, match="requires finite numeric values"):
+        MODULE.build_event_table(
+            pulses,
+            source_file_id="fixture",
+            amplitude_column="amplitude_adc",
+            amplitude_convention="absolute",
+            amplitude_polarity="negative",
+        )
 
 
 def test_net_amplitude_adc_is_used_without_subtraction() -> None:
@@ -116,7 +210,17 @@ def test_net_amplitude_adc_is_used_without_subtraction() -> None:
 
     assert list(wide["amp_B2"]) == [0.0, 201.0]
     assert result["amplitude_convention"] == "net"
+    assert result["amplitude_polarity"] is None
     assert result["amplitude_transform"] == "identity"
+
+    with pytest.raises(ValueError, match="only valid for absolute"):
+        MODULE.build_event_table(
+            pulses,
+            source_file_id="fixture",
+            amplitude_column="amplitude_adc",
+            amplitude_convention="net",
+            amplitude_polarity="negative",
+        )
 
 
 def test_absolute_amplitude_requires_baseline() -> None:
@@ -136,6 +240,7 @@ def test_absolute_amplitude_requires_baseline() -> None:
             source_file_id="fixture",
             amplitude_column="amplitude_adc",
             amplitude_convention="absolute",
+            amplitude_polarity="negative",
         )
 
 

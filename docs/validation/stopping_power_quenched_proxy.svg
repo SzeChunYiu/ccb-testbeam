@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <title>Stopping-power quenched-proxy acceptance gate</title>
+  <desc>Synthetic regression schematic, not detector data.</desc>
+  <rect width="1200" height="600" fill="white"/>
+  <text x="600" y="45" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="bold">
+    PSTAR input-semantics gate
+  </text>
+  <text x="600" y="75" text-anchor="middle" font-family="sans-serif" font-size="16">
+    Synthetic regression schematic — not detector data
+  </text>
+
+  <rect x="55" y="125" width="500" height="370" rx="18" fill="#f7f7f7" stroke="#333" stroke-width="2"/>
+  <text x="305" y="165" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">
+    Pre-change path
+  </text>
+  <rect x="105" y="205" width="400" height="65" rx="10" fill="#fff4cc" stroke="#8a6d00"/>
+  <text x="305" y="233" text-anchor="middle" font-family="monospace" font-size="16">edep_scint_MeV only</text>
+  <text x="305" y="255" text-anchor="middle" font-family="sans-serif" font-size="14">quenched visible-energy signal</text>
+  <path d="M305 270 V315" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="105" y="315" width="400" height="65" rx="10" fill="#ffe0e0" stroke="#9c1c1c"/>
+  <text x="305" y="343" text-anchor="middle" font-family="sans-serif" font-size="16">warning, then silent fallback</text>
+  <text x="305" y="365" text-anchor="middle" font-family="sans-serif" font-size="14">same raw-PSTAR tolerance gate</text>
+  <path d="M305 380 V425" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="105" y="425" width="400" height="45" rx="10" fill="#ffd6d6" stroke="#9c1c1c" stroke-width="2"/>
+  <text x="305" y="454" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold">
+    ratio 1.0 could report PASS
+  </text>
+
+  <rect x="645" y="125" width="500" height="370" rx="18" fill="#f7f7f7" stroke="#333" stroke-width="2"/>
+  <text x="895" y="165" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">
+    Corrected path
+  </text>
+  <rect x="695" y="205" width="400" height="65" rx="10" fill="#fff4cc" stroke="#8a6d00"/>
+  <text x="895" y="233" text-anchor="middle" font-family="monospace" font-size="16">edep_scint_MeV only</text>
+  <text x="895" y="255" text-anchor="middle" font-family="sans-serif" font-size="14">quenched visible-energy signal</text>
+  <path d="M895 270 V315" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="695" y="315" width="400" height="65" rx="10" fill="#dff2ff" stroke="#176b8f"/>
+  <text x="895" y="341" text-anchor="middle" font-family="sans-serif" font-size="16">default: input error, status 2</text>
+  <text x="895" y="365" text-anchor="middle" font-family="sans-serif" font-size="14">explicit mode: labelled diagnostic only</text>
+  <path d="M895 380 V425" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="695" y="425" width="400" height="45" rx="10" fill="#dff5df" stroke="#1d6f1d" stroke-width="2"/>
+  <text x="895" y="454" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold">
+    NOT_ACCEPTED_QUENCHED_PROXY
+  </text>
+
+  <text x="600" y="545" text-anchor="middle" font-family="sans-serif" font-size="16">
+    Quenched signal may be retained for diagnostics, but cannot establish raw stopping-power agreement.
+  </text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

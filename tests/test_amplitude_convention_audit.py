@@ -61,7 +61,7 @@ def test_baseline_rms_is_not_used_as_pedestal_level(tmp_path: Path) -> None:
     assert result["baseline_candidate_count"] == 0
     assert result["auxiliary_baseline_columns"] == ["baseline_rms_adc"]
     assert result["subtract_baseline_correct"] is None
-    assert result["warning_baseline"] == "ABSOLUTE_WITHOUT_BASELINE_LEVEL"
+    assert result["warning_baseline"] == "AMPLITUDE_CONVENTION_WITHOUT_BASELINE_LEVEL"
     assert "median_abs_amplitude_minus_baseline" not in result
 
 

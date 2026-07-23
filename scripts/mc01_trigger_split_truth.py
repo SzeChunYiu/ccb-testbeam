@@ -42,6 +42,95 @@ B_ARM, A_ARM = 1, 2
 NB_LAYERS = 8
 COINC_DEFAULT = 15.0  # ns
 
+#: Branch carrying the per-primary MC event weight (issue #880). The event
+#: weight used throughout is the first primary's weight (the beam primary),
+#: identical to scripts/single_stave/deltaE_E_mc.py (A-003).
+PRIMARY_WEIGHT_BRANCH = "PrimaryWeight"
+
+
+def _wmean(x, w):
+    """Weighted mean; returns 0.0 for empty / all-zero-weight input."""
+    x = np.asarray(x, dtype=float)
+    w = np.asarray(w, dtype=float)
+    if x.size == 0:
+        return 0.0
+    sw = w.sum()
+    if not np.isfinite(sw) or sw <= 0:
+        return float(np.mean(x)) if x.size else 0.0
+    return float(np.sum(w * x) / sw)
+
+
+def _wmedian(x, w):
+    """Weighted median via cumulative-weight interpolation."""
+    x = np.asarray(x, dtype=float)
+    w = np.asarray(w, dtype=float)
+    if x.size == 0:
+        return 0.0
+    sw = w.sum()
+    if not np.isfinite(sw) or sw <= 0:
+        return float(np.median(x)) if x.size else 0.0
+    o = np.argsort(x)
+    xs, ws = x[o], w[o]
+    cw = np.cumsum(ws) / sw
+    return float(np.interp(0.5, cw, xs))
+
+
+def _wpercentile(x, w, q):
+    """Weighted percentile (q in [0,100])."""
+    x = np.asarray(x, dtype=float)
+    w = np.asarray(w, dtype=float)
+    if x.size == 0:
+        return 0.0
+    sw = w.sum()
+    if not np.isfinite(sw) or sw <= 0:
+        return float(np.percentile(x, q)) if x.size else 0.0
+    o = np.argsort(x)
+    xs, ws = x[o], w[o]
+    cw = np.cumsum(ws) / sw
+    return float(np.interp(q / 100.0, cw, xs))
+
+
+def _wfrac_large(x, w, thr):
+    """Weighted fraction of x exceeding thr."""
+    x = np.asarray(x, dtype=float)
+    w = np.asarray(w, dtype=float)
+    if x.size == 0:
+        return 0.0
+    sw = w.sum()
+    if not np.isfinite(sw) or sw <= 0:
+        return float(np.mean(x > thr)) if x.size else 0.0
+    return float(np.sum(w[x > thr]) / sw)
+
+
+def _wcorr(x, y, w):
+    """Weighted Pearson correlation."""
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    w = np.asarray(w, dtype=float)
+    if x.size < 2:
+        return 0.0
+    sw = w.sum()
+    if not np.isfinite(sw) or sw <= 0:
+        return float(np.corrcoef(x, y)[0, 1]) if x.size > 1 else 0.0
+    mx = np.sum(w * x) / sw
+    my = np.sum(w * y) / sw
+    cx, cy = x - mx, y - my
+    cov = np.sum(w * cx * cy) / sw
+    vx = np.sum(w * cx * cx) / sw
+    vy = np.sum(w * cy * cy) / sw
+    den = np.sqrt(vx * vy)
+    return float(cov / den) if den > 0 else 0.0
+
+
+def effective_sample_size(w):
+    """Kish ESS = (sum w)^2 / sum(w^2); measures the weight spread impact."""
+    w = np.asarray(w, dtype=float)
+    if w.size == 0:
+        return 0.0
+    sw = w.sum()
+    s2 = np.sum(w * w)
+    return float(sw * sw / s2) if s2 > 0 else 0.0
+
 PDG_NAME = {
     2212: "p", 1000010020: "d", 1000010030: "t",
     1000020030: "He3", 1000020040: "alpha",
@@ -98,23 +187,36 @@ def main():
     ap.add_argument("--tree", default="hibeam")
     ap.add_argument("--max-events", type=int, default=0, help="0 = all")
     ap.add_argument("--edep-large-mev", type=float, default=15.0)
+    ap.add_argument(
+        "--apply-weight", dest="apply_weight", action="store_true", default=True,
+        help="Apply PrimaryWeight as a per-event weight to every MC summary "
+             "(default ON; matches deltaE_E_mc.py A-003). Use --no-weight to "
+             "reproduce the legacy unweighted numbers.")
+    ap.add_argument(
+        "--no-weight", dest="apply_weight", action="store_false",
+        help="Disable PrimaryWeight weighting (emit weights=1; legacy mode).")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
 
     import uproot
+    import awkward as ak
     branches = ["Sci_bar_LayerID", "Sci_bar_LayerID1", "Sci_bar_PDG",
                 "Sci_bar_EDep", "Sci_bar_Time", "Sci_bar_TrackID",
                 "Sci_bar_Momentum_X", "Sci_bar_Momentum_Y", "Sci_bar_Momentum_Z",
-                "Sci_bar_TrackLength"]
+                "Sci_bar_TrackLength", PRIMARY_WEIGHT_BRANCH]
 
     def new_layer_acc():
+        # edep_w holds the per-hit event weight (parallel to edep) so all layer
+        # statistics can be computed weighted. wsum = sum of event weights of
+        # events that deposited here; pid_w = weighted species counts.
         return {"hits": 0, "sum_edep": 0.0, "n_charged": 0,
-                "pid": {}, "edep": []}
+                "pid": {}, "edep": [], "edep_w": [], "pid_w": {},
+                "wsum": 0.0}
 
     def new_track_acc():
         return {"pdg": [], "ekin": [], "edep_l0": [], "edep_l1": [],
                 "edep_tot": [], "stop_layer": [], "nlayers": [],
-                "tracklen": [], "edep_per_layer": []}
+                "tracklen": [], "edep_per_layer": [], "weight": []}
 
     samples = {
         "I": {"n_events": 0,
@@ -130,8 +232,13 @@ def main():
     per_stave_species = {"I": {f"B{(l+1)*2}": {} for l in range(NB_LAYERS)},
                          "II": {f"B{(l+1)*2}": {} for l in range(NB_LAYERS)}}
     stopping_depth = {"I": {}, "II": {}}
-    deltaE_E = {"I": {"edep_l0": [], "edep_l1": [], "pdg": []},
-                "II": {"edep_l0": [], "edep_l1": [], "pdg": []}}
+    deltaE_E = {"I": {"edep_l0": [], "edep_l1": [], "pdg": [], "weight": []},
+                "II": {"edep_l0": [], "edep_l1": [], "pdg": [], "weight": []}}
+    # Weighted enter-pid counters and per-stave weighted edep stores.
+    enter_pid_w = {"I": {"B": {}, "A": {}}, "II": {"B": {}, "A": {}}}
+    per_stave_species_w = {"I": {f"B{(l+1)*2}": {} for l in range(NB_LAYERS)},
+                           "II": {f"B{(l+1)*2}": {} for l in range(NB_LAYERS)}}
+    all_event_weights = []  # every event that entered B (Sample II superset)
 
     EDEP_CAP = 600_000
     n_total = 0
@@ -154,12 +261,19 @@ def main():
         MY = chunk["Sci_bar_Momentum_Y"]
         MZ = chunk["Sci_bar_Momentum_Z"]
         TL = chunk["Sci_bar_TrackLength"]
+        # PrimaryWeight is a per-event variable-length array (one per primary);
+        # take the first (beam primary), matching deltaE_E_mc.py.
+        PWC = chunk[PRIMARY_WEIGHT_BRANCH]
         nev = len(L)
         for i in range(nev):
             n_total += 1
             l, l1, pd, ed, tm = L[i], L1[i], PD[i], ED[i], TM[i]
             if len(l) == 0:
                 continue
+            pw_i = PWC[i]
+            w_evt = float(pw_i[0]) if (len(pw_i) > 0 and np.isfinite(float(pw_i[0]))) else 1.0
+            if not args.apply_weight:
+                w_evt = 1.0
             charged = np.array([is_charged(p) for p in pd], dtype=bool)
             isB = (l1 == B_ARM)
             isA = (l1 == A_ARM)
@@ -187,10 +301,16 @@ def main():
             for s in belongs:
                 S = samples[s]
                 S["n_events"] += 1
+                if s == "II":
+                    all_event_weights.append(w_evt)
                 for p in pd[firstB]:
                     bump(S["enterB_pid"], species_label(p))
+                    enter_pid_w[s]["B"][species_label(p)] = \
+                        enter_pid_w[s]["B"].get(species_label(p), 0.0) + w_evt
                 for p in pd[firstA]:
                     bump(S["enterA_pid"], species_label(p))
+                    enter_pid_w[s]["A"][species_label(p)] = \
+                        enter_pid_w[s]["A"].get(species_label(p), 0.0) + w_evt
 
                 for lid in range(NB_LAYERS):
                     mask = isB & (l == lid) & charged
@@ -201,10 +321,14 @@ def main():
                     acc["hits"] += int(mask.sum())
                     acc["n_charged"] += int(mask.sum())
                     acc["sum_edep"] += float(e.sum())
+                    acc["wsum"] += w_evt
                     if len(acc["edep"]) < EDEP_CAP:
                         acc["edep"].extend(e.tolist())
+                        acc["edep_w"].extend([w_evt] * int(mask.sum()))
                     for p in pd[mask]:
                         bump(acc["pid"], species_label(p))
+                        acc["pid_w"][species_label(p)] = \
+                            acc["pid_w"].get(species_label(p), 0.0) + w_evt
 
                 # ── per-track reconstruction ──
                 b_hits = isB & charged
@@ -236,12 +360,15 @@ def main():
                         T["nlayers"].append(int(len(set(layers.tolist()))))
                         T["tracklen"].append(float(TL[i][trk_mask].sum()))
                         T["edep_per_layer"].append(el)
+                        T["weight"].append(w_evt)
 
                         sp = species_label(p0)
                         for lay_int, edep_val in el.items():
                             stave_name = f"B{(lay_int + 1) * 2}"
                             ps = per_stave_species[s]
                             ps[stave_name].setdefault(sp, []).append(edep_val)
+                            psw = per_stave_species_w[s]
+                            psw.setdefault(stave_name, {}).setdefault(sp, []).append(w_evt)
 
                         stop_l = int(layers.max())
                         stopping_depth[s].setdefault(sp, []).append(stop_l)
@@ -250,6 +377,7 @@ def main():
                             deltaE_E[s]["edep_l0"].append(el[0])
                             deltaE_E[s]["edep_l1"].append(el[1])
                             deltaE_E[s]["pdg"].append(p0)
+                            deltaE_E[s]["weight"].append(w_evt)
 
     # ── convert accumulators to arrays ───────────────────────────────────
     for s in ("I", "II"):
@@ -262,6 +390,7 @@ def main():
 
     def layer_summary(acc, large_mev):
         e = np.asarray(acc["edep"], dtype=float)
+        ew = np.asarray(acc["edep_w"], dtype=float) if acc["edep_w"] else np.ones_like(e)
         d = {
             "hits": acc["hits"],
             "mean_edep_MeV": float(e.mean()) if e.size else 0.0,
@@ -269,10 +398,22 @@ def main():
             "p95_edep_MeV": float(np.percentile(e, 95)) if e.size else 0.0,
             "frac_large": float((e > large_mev).mean()) if e.size else 0.0,
             "pid_fraction": {},
+            # Weighted (PrimaryWeight, issue #880). These are the physically
+            # correct flux-weighted quantities; the unweighted fields above are
+            # retained for traceability.
+            "weighted_sum_event_weight": float(acc["wsum"]),
+            "mean_edep_MeV_weighted": _wmean(e, ew),
+            "median_edep_MeV_weighted": _wmedian(e, ew),
+            "p95_edep_MeV_weighted": _wpercentile(e, ew, 95),
+            "frac_large_weighted": _wfrac_large(e, ew, large_mev),
+            "pid_fraction_weighted": {},
         }
         tot = sum(acc["pid"].values()) or 1
         for k, v in sorted(acc["pid"].items(), key=lambda kv: -kv[1]):
             d["pid_fraction"][k] = round(v / tot, 4)
+        wtot = sum(acc["pid_w"].values()) or 1.0
+        for k, v in sorted(acc["pid_w"].items(), key=lambda kv: -kv[1]):
+            d["pid_fraction_weighted"][k] = round(v / wtot, 4)
         return d
 
     out = {
@@ -281,43 +422,84 @@ def main():
         "coinc_ns": args.coinc_ns,
         "edep_large_mev": args.edep_large_mev,
         "n_events_read": n_total,
+        "weighting": ("PrimaryWeight applied (A-003, issue #880); per-event weight "
+                      "= first primary PrimaryWeight (beam primary), as in "
+                      "deltaE_E_mc.py. Every *_weighted field uses it; plain fields "
+                      "are retained unweighted for traceability.")
+                     if args.apply_weight else "unweighted (--no-weight)",
+        "apply_weight": bool(args.apply_weight),
         "trigger_counts": {"enter_B": n_enterB, "enter_A": n_enterA,
                            "coincidence_AB": n_coinc},
         "samples": {},
     }
+    if all_event_weights:
+        aw = np.asarray(all_event_weights, dtype=float)
+        out["primary_weight_stats"] = {
+            "n_weighted_events": int(aw.size),
+            "min": float(aw.min()), "max": float(aw.max()),
+            "mean": float(aw.mean()), "std": float(aw.std()),
+            "effective_sample_size": effective_sample_size(aw),
+            "ess_fraction_of_nominal": float(effective_sample_size(aw) / max(aw.size, 1)),
+        }
 
     per_stave_summary = {}
     for s in ("I", "II"):
         per_stave_summary[s] = {}
         for stave_name in per_stave_species[s]:
             sp_dict = per_stave_species[s][stave_name]
+            spw_dict = per_stave_species_w[s].get(stave_name, {})
             per_stave_summary[s][stave_name] = {}
             for sp_name, edep_list in sp_dict.items():
                 arr = np.asarray(edep_list, dtype=float)
+                warr = np.asarray(spw_dict.get(sp_name, []), dtype=float)
+                if warr.size != arr.size:
+                    warr = np.ones_like(arr)
                 per_stave_summary[s][stave_name][sp_name] = {
                     "count": int(len(arr)),
                     "mean_edep_MeV": float(arr.mean()) if len(arr) > 0 else 0.0,
                     "median_edep_MeV": float(np.median(arr)) if len(arr) > 0 else 0.0,
                     "std_edep_MeV": float(arr.std()) if len(arr) > 0 else 0.0,
+                    "mean_edep_MeV_weighted": _wmean(arr, warr),
+                    "median_edep_MeV_weighted": _wmedian(arr, warr),
                 }
 
     stopping_summary = {}
     for s in ("I", "II"):
         stopping_summary[s] = {}
+        T = samples[s]["tracks"]
+        tpdg = np.asarray(T["pdg"], dtype=float)
+        tstop = np.asarray(T["stop_layer"], dtype=float)
+        tw = np.asarray(T["weight"], dtype=float)
         for sp_name, stop_layers in stopping_depth[s].items():
             arr = np.asarray(stop_layers, dtype=int)
+            # weighted counterpart from the track table (carries event weight)
+            sp_pdg = {"p": 2212, "d": 1000010020}.get(sp_name)
+            if sp_pdg is not None:
+                wmask = tpdg == sp_pdg
+                warr = tstop[wmask]; ww = tw[wmask]
+            else:
+                warr = np.empty(0); ww = np.empty(0)
+            stop_dist_w = {}
+            if warr.size:
+                sw = ww.sum()
+                for ll in range(NB_LAYERS):
+                    stop_dist_w[int(ll)] = float(np.sum(ww[warr == ll]) / sw) if sw > 0 else 0.0
             stopping_summary[s][sp_name] = {
                 "count": int(len(arr)),
                 "mean_stop_layer": float(arr.mean()) if len(arr) > 0 else 0.0,
                 "median_stop_layer": float(np.median(arr)) if len(arr) > 0 else 0.0,
                 "stop_distribution": {int(l): int((arr == l).sum())
                                       for l in range(NB_LAYERS)},
+                "mean_stop_layer_weighted": _wmean(warr, ww),
+                "stop_distribution_weighted": stop_dist_w,
             }
 
     for s in ("I", "II"):
         S = samples[s]
         tot_b = sum(S["enterB_pid"].values()) or 1
         tot_a = sum(S["enterA_pid"].values()) or 1
+        wtot_b = sum(enter_pid_w[s]["B"].values()) or 1.0
+        wtot_a = sum(enter_pid_w[s]["A"].values()) or 1.0
         T = S["tracks"]
         out["samples"][s] = {
             "n_events": S["n_events"],
@@ -326,6 +508,10 @@ def main():
                                      for k, v in sorted(S["enterB_pid"].items(), key=lambda kv: -kv[1])},
             "enter_A_pid_fraction": {k: round(v / tot_a, 4)
                                      for k, v in sorted(S["enterA_pid"].items(), key=lambda kv: -kv[1])},
+            "enter_B_pid_fraction_weighted": {k: round(v / wtot_b, 4)
+                                              for k, v in sorted(enter_pid_w[s]["B"].items(), key=lambda kv: -kv[1])},
+            "enter_A_pid_fraction_weighted": {k: round(v / wtot_a, 4)
+                                              for k, v in sorted(enter_pid_w[s]["A"].items(), key=lambda kv: -kv[1])},
             "B_layers": [layer_summary(S["B_layers"][l], args.edep_large_mev)
                          for l in range(NB_LAYERS)],
             "per_stave_species": per_stave_summary[s],
@@ -336,6 +522,7 @@ def main():
         arr0 = deltaE_E[s]["edep_l0"]
         arr1 = deltaE_E[s]["edep_l1"]
         pdg_arr = deltaE_E[s]["pdg"]
+        warr = deltaE_E[s]["weight"]
         is_d = pdg_arr == 1000010020
         n_d_total = int(is_d.sum())
         n_d_both = int((is_d & (arr0 > 0) & (arr1 > 0)).sum())
@@ -347,6 +534,9 @@ def main():
             "correlation_pearson": r_val,
             "n_deuterons_total_in_sample": n_d_total,
             "n_deuterons_with_both_layer_hits": n_d_both,
+            "edep_l0_mean_MeV_weighted": _wmean(arr0, warr),
+            "edep_l1_mean_MeV_weighted": _wmean(arr1, warr),
+            "correlation_pearson_weighted": _wcorr(arr0, arr1, warr),
             "low_r_note": (
                 "Low Pearson r (≈0) for Sample I is expected physics: "
                 "most deuterons stop at layer 0 (mean stop layer ~0.8) "
@@ -367,6 +557,12 @@ def main():
         "sampleII_frac_large": l0_II["frac_large"],
         "sampleI_mean_edep_MeV": l0_I["mean_edep_MeV"],
         "sampleII_mean_edep_MeV": l0_II["mean_edep_MeV"],
+        "sampleI_d_fraction_weighted": l0_I["pid_fraction_weighted"].get("d", 0.0),
+        "sampleII_d_fraction_weighted": l0_II["pid_fraction_weighted"].get("d", 0.0),
+        "sampleI_frac_large_weighted": l0_I["frac_large_weighted"],
+        "sampleII_frac_large_weighted": l0_II["frac_large_weighted"],
+        "sampleI_mean_edep_MeV_weighted": l0_I["mean_edep_MeV_weighted"],
+        "sampleII_mean_edep_MeV_weighted": l0_II["mean_edep_MeV_weighted"],
     }
 
     with open(os.path.join(args.out, "mc_trigger_split_summary.json"), "w") as fh:
@@ -376,12 +572,19 @@ def main():
         os.path.join(args.out, "first_B_layer_edep.npz"),
         sampleI=np.asarray(samples["I"]["B_layers"][0]["edep"], dtype=np.float32),
         sampleII=np.asarray(samples["II"]["B_layers"][0]["edep"], dtype=np.float32),
+        # Per-event PrimaryWeight parallel to sampleI/sampleII (issue #880),
+        # so downstream consumers (compare_data_mc.py) can build weighted
+        # histograms. Absent in legacy files -> consumers must guard.
+        sampleI_weights=np.asarray(samples["I"]["B_layers"][0]["edep_w"], dtype=np.float32),
+        sampleII_weights=np.asarray(samples["II"]["B_layers"][0]["edep_w"], dtype=np.float32),
     )
     for s in ("I", "II"):
         ps_data = {}
         for stave_name in per_stave_species[s]:
             for sp_name, edep_list in per_stave_species[s][stave_name].items():
                 ps_data[f"{stave_name}_{sp_name}"] = np.asarray(edep_list, dtype=np.float32)
+                wlist = per_stave_species_w[s].get(stave_name, {}).get(sp_name, [])
+                ps_data[f"{stave_name}_{sp_name}_weights"] = np.asarray(wlist, dtype=np.float32)
         np.savez_compressed(os.path.join(args.out, f"per_stave_species_edep_{s}.npz"), **ps_data)
     for s in ("I", "II"):
         np.savez_compressed(
@@ -389,6 +592,7 @@ def main():
             edep_l0=deltaE_E[s]["edep_l0"].astype(np.float32),
             edep_l1=deltaE_E[s]["edep_l1"].astype(np.float32),
             pdg=deltaE_E[s]["pdg"].astype(np.int64),
+            weight=deltaE_E[s]["weight"].astype(np.float32),
         )
 
     # ═══════════════════════════════════════════════════════════════════════

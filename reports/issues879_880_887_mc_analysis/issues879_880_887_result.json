@@ -1,0 +1,159 @@
+{
+  "study": "issues879_880_887_mc_analysis",
+  "generated_utc": "2026-07-23T12:55:21.037385+00:00",
+  "root": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "n_events": 1000000,
+  "primary_weight": {
+    "min": 0.12600022887853715,
+    "max": 15.32528372266508,
+    "mean": 3.222581036484033,
+    "std": 4.4181943902685585,
+    "ess": 347261.8375452912,
+    "ess_fraction": 0.34726183754529116
+  },
+  "issue_879_readout_pattern": {
+    "ODD_1357": {
+      "layers": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "deltaE_layer_id": 1,
+      "E_layer_ids": [
+        3,
+        5,
+        7
+      ],
+      "n_events_deltaE_and_E": 118751,
+      "deltaE_wmedian_MeV": 12.408208586055466,
+      "E_wmedian_MeV": 51.127949961186964,
+      "corr_deltaE_E_weighted": -0.18294015517326756,
+      "corr_deltaE_E_unweighted": -0.46820407641230233,
+      "invisible_energy_fraction_weighted": 0.5594935246270882,
+      "bragg_peak_in_readout_fraction_weighted": 0.06571166823235045
+    },
+    "EVEN_0246": {
+      "layers": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "deltaE_layer_id": 0,
+      "E_layer_ids": [
+        2,
+        4,
+        6
+      ],
+      "n_events_deltaE_and_E": 130750,
+      "deltaE_wmedian_MeV": 11.64218012258651,
+      "E_wmedian_MeV": 45.62580307879886,
+      "corr_deltaE_E_weighted": -0.10430844367779471,
+      "corr_deltaE_E_unweighted": -0.2819317255566152,
+      "invisible_energy_fraction_weighted": 0.4405064753729118,
+      "bragg_peak_in_readout_fraction_weighted": 0.9342883317676495
+    },
+    "_comparison": {
+      "corr_Odd_minus_Even": -0.07863171149547285,
+      "invisible_Odd_minus_Even": 0.11898704925417641,
+      "bragg_readout_Odd_minus_Even": -0.868576663535299,
+      "note": "Shifting the readout set by one stave (1,3,5,7 -> 0,2,4,6) moves the Bragg-peak (stopping) layer in/out of the readout. The \u0394E-E correlation and the median \u0394E both shift because the highest-dE/dx stave is now the \u0394E layer (EVEN) instead of an E layer (ODD), or vice-versa. The invisible-energy fraction is the share of B-arm EDep lost to non-readout (interleaved) staves -- the direct measure of the segmentation/pointing sensitivity Dave describes."
+    }
+  },
+  "issue_880_weight_audit": {
+    "n_events": 1000000,
+    "primary_weight_stats": {
+      "min": 0.12600022887853715,
+      "max": 15.32528372266508,
+      "mean": 3.222581036484033,
+      "std": 4.4181943902685585,
+      "ess": 347261.8375452912,
+      "ess_fraction": 0.34726183754529116
+    },
+    "first_B_layer_mean_MeV": {
+      "unweighted": 6.674567424757,
+      "weighted": 2.134364334727324
+    },
+    "first_B_layer_median_MeV": {
+      "unweighted": 0.0,
+      "weighted": 0.0
+    },
+    "deuteron_fraction_entering_B": {
+      "unweighted": 0.5719111928400914,
+      "weighted": 0.16606032425392264
+    },
+    "deltaE_E_corr_layer0_vs_layer1": {
+      "unweighted": 0.6089905440548583,
+      "weighted": 0.6382498889473651
+    },
+    "bias_summary": {
+      "first_B_layer_mean_rel_bias_pct": -68.02243203341332,
+      "deuteron_fraction_abs_bias_pp": -40.585086858616876
+    },
+    "note": "PrimaryWeight spans a large range (min..max), so the effective sample size (ESS) is far below the nominal event count. The *_rel_bias_pct fields show how much the legacy UNWEIGHTED summaries were off; this is why mc01_trigger_split_truth.py now applies PrimaryWeight throughout (#880). Deuteron fraction uses the entering-B species (Sci_bar first charged hit at B-arm LayerID 0), as in mc01."
+  },
+  "issue_887_amplitude_cut_scan": {
+    "mev_to_adc": 245.6,
+    "mev_to_adc_source": "reports/sampleI_II_trigger_split_*/compare/data_mc_comparison.json (data-calibrated Sample-II first-B-layer median); override via --mev-to-adc or env CCB_MEV_TO_ADC",
+    "cuts_adc": [
+      500.0,
+      1000.0,
+      1500.0
+    ],
+    "per_cut": {
+      "500.0": {
+        "retained_event_fraction_weighted": 0.09043503883895568,
+        "retained_event_fraction_unweighted": 0.117114,
+        "n_retained": 117114,
+        "per_stave_fire_fraction": {
+          "B2_deltaE_fire_frac_weighted": 0.110150994158954,
+          "B4_fire_frac_weighted": 0.09040785260749873,
+          "B6_fire_frac_weighted": 0.07967754121363657,
+          "B8_fire_frac_weighted": 0.04160029122479708
+        },
+        "deuteron_fraction_retained_weighted": 0.01774018158123416,
+        "deltaE_median_proton_ADC": 3037.1015661269416,
+        "deltaE_median_deuteron_ADC": 6903.848418292272,
+        "pid_separation_1_minus_BC": 0.9193214532313349,
+        "deltaE_median_weighted_ADC": 3047.4545993621473,
+        "deltaE_E_corr_weighted": -0.1530120443184623
+      },
+      "1000.0": {
+        "retained_event_fraction_weighted": 0.09002328717523603,
+        "retained_event_fraction_unweighted": 0.11647,
+        "n_retained": 116470,
+        "per_stave_fire_fraction": {
+          "B2_deltaE_fire_frac_weighted": 0.10956911216684627,
+          "B4_fire_frac_weighted": 0.09000928921430286,
+          "B6_fire_frac_weighted": 0.07929622723359128,
+          "B8_fire_frac_weighted": 0.0412154514455854
+        },
+        "deuteron_fraction_retained_weighted": 0.017574262184058314,
+        "deltaE_median_proton_ADC": 3037.9526135005826,
+        "deltaE_median_deuteron_ADC": 6900.175699070253,
+        "pid_separation_1_minus_BC": 0.9260854208006626,
+        "deltaE_median_weighted_ADC": 3047.9820414321593,
+        "deltaE_E_corr_weighted": -0.14816325951121273
+      },
+      "1500.0": {
+        "retained_event_fraction_weighted": 0.08966272311366667,
+        "retained_event_fraction_unweighted": 0.115802,
+        "n_retained": 115802,
+        "per_stave_fire_fraction": {
+          "B2_deltaE_fire_frac_weighted": 0.10899823286532839,
+          "B4_fire_frac_weighted": 0.08964910688950142,
+          "B6_fire_frac_weighted": 0.07896979801222107,
+          "B8_fire_frac_weighted": 0.04072712226751957
+        },
+        "deuteron_fraction_retained_weighted": 0.017360448536235123,
+        "deltaE_median_proton_ADC": 3038.527402777076,
+        "deltaE_median_deuteron_ADC": 6894.25216342541,
+        "pid_separation_1_minus_BC": 0.9264534068256055,
+        "deltaE_median_weighted_ADC": 3048.48889707704,
+        "deltaE_E_corr_weighted": -0.14458508269410922
+      }
+    },
+    "note": "MC-truth has no pedestal/noise, so this scan shows the GEOMETRY/PHYSICS effect of the cut (retained fraction + p/d PID separation), not the data noise-rejection. The real-data retained fractions at cut=1000 ADC are anchored in reports/S00_*/counts_by_group.csv (events_with_selected/events_total). To run the literal data scan on the raw waveforms, set CCB_AMPLITUDE_CUT_ADC and re-run scripts/01_build_pulse_table_from_root.py (raw ROOT files are not on LUNARC). PID separation uses entering-B species (p vs d secondaries); null when too few d."
+  }
+}

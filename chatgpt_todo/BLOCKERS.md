@@ -39,8 +39,8 @@
 ## BLK-AMP-001 — real A-002 amplitude authorization and regeneration
 
 - **State:** OPEN
-- **Tasks:** `AUD-AMP-009`, `AUD-DELTAE-001`.
-- **Reason:** no exact A-002 pulse-table bytes or independently reviewable schema, producer-code, or pedestal-evidence artifact bytes were accessible in this session. A digest declaration alone is no longer accepted.
-- **Validated tooling:** `validate_amplitude_evidence_map.py` v1.2.0 resolves each relative evidence reference beneath a controlled root and compares its measured SHA-256 with the map. `amplitude_convention_audit.py` v3.1.0 authorizes physics use only from such a verified map; raw programmatic dictionaries remain non-authorizing.
-- **Resolution:** obtain and hash the exact A-002 table and supporting artifact, create a map with both digests and the accepted evidence basis, run the validator and full-table auditor without `--max-rows`, resolve all warnings/errors, then regenerate the quarantined A-002 JSON, event CSV, stopping fractions, and DeltaE-E plot with cardinality and provenance checks.
+- **Tasks:** `AUD-AMP-009`, `AUD-AMP-010`, `AUD-DELTAE-001`.
+- **Reason:** no exact A-002 pulse-table bytes or independently reviewable schema, producer-code, or pedestal-evidence artifact bytes were accessible in this session. A digest declaration or decorative fragment alone is not accepted.
+- **Validated tooling:** `validate_amplitude_evidence_map.py` v1.3.0 resolves each relative evidence reference beneath a controlled root, compares its measured SHA-256 with the map, and verifies any optional fragment as a canonical existing line or line range. `amplitude_convention_audit.py` v3.1.0 authorizes physics use only from such a verified map; raw programmatic dictionaries remain non-authorizing.
+- **Resolution:** obtain and hash the exact A-002 table and supporting artifact, create a map with both digests, the accepted evidence basis, and either a whole-file reference or exact `#L<start>[-L<end>]` scope; run the validator and full-table auditor without `--max-rows`, resolve all warnings/errors, then regenerate the quarantined A-002 JSON, event CSV, stopping fractions, and DeltaE-E plot with cardinality and provenance checks.
 - **Do not claim until resolved:** whether A-002 `amplitude_adc` is absolute or net, whether pedestal subtraction is correct, or any corrected stopping distribution or detector-performance conclusion.

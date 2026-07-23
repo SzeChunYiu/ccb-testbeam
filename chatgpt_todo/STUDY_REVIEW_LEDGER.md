@@ -1,0 +1,11 @@
+# Study Review Ledger
+
+| Study ID | Study | State | Current evidence | Main limitation | Next validation |
+|---|---|---|---|---|---|
+| ST-G4-OPT-001 | Single-stave optical collection and approximately 178 PE/event | PARTIAL | Repository-recorded mean 178.3 PE, 0.48% RSE, four seeds, 500 events per seed | Raw immutable outputs, commands, hashes, uncertainty derivation, and exact current-main implementation were not independently inspected in this session | Reconstruct complete provenance and independently rerun where supported. |
+| ST-G4-RNG-001 | Geant4 single-stave multithread RNG reproducibility | PARTIAL | Repository records report same-seed 1T/48T event and photon equality plus different-seed diagnostics | PR #868 is closed without merge and exact current-main integration/artifact mapping remains incomplete | Map validated code and artifacts to current `main`, then rerun required checks. |
+| ST-ANOM-001 | MV6 early-peak anomaly and C12-labelled MC mechanism | PARTIAL | Truth-labelled MC source reports 283/87,555 selected tracks and 156 C12 labels | Data anomaly identity is unvalidated; matched data/MC closure has not been executed | Execute `docs/validation/C12_DATA_MC_CLOSURE_SPEC.md` without strengthening empirical wording beforehand. |
+| ST-DELTAE-001 | A-002 data stopping-layer and ΔE–E reconstruction | FLAWED | Historical result was invalidated after event-row cardinality and polarity-blind amplitude conversion defects were confirmed | Exact source table, immutable amplitude convention/polarity evidence, corrected outputs, and full provenance are unavailable | Run the full-table audit and signed bridge only after hash-bound authorization; regenerate JSON, CSV, counts, uncertainty, and plot with closure checks. |
+| ST-CI-002 | Amplitude convention audit current-main CI restoration | COMPLETE | Exact PR #884 patch reviewed; workflow run `29993563323` succeeded; merge commit `4f857f508160bbbe059d936866b426a45788c9bd` verified on main | Python CI success is not scientific data validation | Preserve the regression while continuing item-level scientific review. |
+
+Add one record per identifiable study. Preserve negative, null, flawed, superseded, and blocked findings.

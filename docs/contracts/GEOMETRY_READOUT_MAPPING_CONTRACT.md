@@ -16,6 +16,34 @@ metrology/DAQ readout label. Arm convention (confirmed elsewhere in the audit):
 `Sci_bar_LayerID1 == 1 -> B arm`, `== 2 -> A arm`; steering requests **8 B bars,
 4 A bars**.
 
+## Versioned code-level policy (GEO-001 fix)
+
+The *physical* bar→stave assignment (which real copy number is `B2`, etc.) is
+still `BLOCKED_COMPUTE` below. To stop code modules from silently diverging in
+the meantime, the **code-level** layer-merge policy is fixed in exactly one
+place and versioned:
+
+| constant | location | value |
+|---|---|---|
+| `READOUT_CONTRACT_VERSION` | `src/ccb_mc_validation/truth/geometry.py` | `2026.0-truth-geometry` |
+| `DEFAULT_LAYER_MERGE_POLICY` | `src/ccb_mc_validation/truth/geometry.py` | `pair_merge` |
+| `DEFAULT_B_STAVES` | `src/ccb_mc_validation/truth/geometry.py` | `{"B2":0,"B4":2,"B6":4,"B8":6}` |
+
+`GeometryRegistry` (`truth/geometry.py`) reads **this** contract: with
+`NB_LAYERS == 8` B layers and 4 instrumented staves, `pair_merge` maps adjacent
+MC layers `{0,1}->B2, {2,3}->B4, {4,5}->B6, {6,7}->B8`. If a caller passes a
+configuration whose layer/stave counts are inconsistent with the declared
+policy, the builder **fails closed** (`ConfigurationError`) rather than guessing
+a one-to-one map (the historical GEO-001 defect).
+
+**Every other module MUST obtain its layer→stave mapping from
+`GeometryRegistry` / `build_layer_to_stave`** (or the constants above), not
+re-derive one. Coordination note (out of scope for the truth/geometry PR):
+`scripts/mc01_trigger_split_truth.py` already pair-merges via
+`f"B{(lay_int+1)*2}"`; `studies/` MV3 owns its own copy and must be migrated to
+import `GeometryRegistry` in a follow-up by the studies/ owner. Bumping the
+contract version requires updating this table and the constant together.
+
 ## Falsification procedure (do NOT fit-to-stopping)
 
 Produce one row per simulated bar: `copy_number, LayerID, centre_depth_cm,
@@ -58,7 +86,9 @@ compare areal density component-by-component (this is the `#844` stopping work,
 | item | status | blocker |
 |---|---|---|
 | Publish mapping contract + procedure | **DONE** (this file) | — |
+| Versioned code-level policy enforced in `geometry.py` (GEO-001) | **DONE** | — |
 | `geometry_contract.json` template | **DONE** (template) | — |
 | Populate from deployed ROOT (VGM/ROOT inspection) | **BLOCKED_COMPUTE** | ROOT + LUNARC |
 | Falsify competing mappings on coordinates | **BLOCKED_COMPUTE** | deployed ROOT |
 | Material-budget ray trace | **BLOCKED_COMPUTE** | Geant4 + LUNARC |
+| Migrate `studies/` MV3 to `GeometryRegistry` | TODO | studies/ owner |

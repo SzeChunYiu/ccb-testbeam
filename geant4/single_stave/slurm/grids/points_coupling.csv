@@ -1,0 +1,8 @@
+# Systematic grid: fibre-end -> sensor optical coupling efficiency [0,1].
+# Nominal = 1.0 (perfect). Degrade to probe light-loss sensitivity.
+# Columns: value,label,seed
+value,label,seed
+0.70,coup070,11
+0.85,coup085,11
+1.00,coup100,11
+0.85,coup085,12

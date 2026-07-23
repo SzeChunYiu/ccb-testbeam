@@ -222,3 +222,17 @@
 - No complete PSTAR-table execution, real Geant4 run, ROOT file, stopping-power measurement, calibration, or detector-performance output was generated. Full repository pytest, ruff, CTest, and GitHub Actions were not run.
 - Acceptance: quenched-proxy fail-closed gate COMPLETE; scientific stopping-power closure PARTIAL under `AUD-G4-005` / `BLK-G4-SP-001`.
 - Next: run proton-only `G4EmCalculator::ComputeTotalDEDX` or a primary entry/exit-energy closure with exact material, physics-list, cut, version, command, seed, event-count, hash, uncertainty, secondary-escape, overlay, ratio, and failure-interpretation provenance. Treat the deuteron approximation separately.
+
+## 2026-07-23T17:41:35Z — AUD-G4-012
+
+- Initial remote main: `ccc61c04b16000d338939b3bf04c03fa8ec6f56c`.
+- Inspected current main history, repository permissions, PR #868, the canonical stopping-power comparison, strict reference and simulation parsers, the exact committed PSTAR table, prior validation records, and all mandatory `chatgpt_todo/` files.
+- Confirmed a cross-column integrity gap: existing reference validation checks each required field independently but does not verify the NIST identity `total = electronic + nuclear`; a finite positive ordered row with an incorrect total could bias every ratio while passing structural checks.
+- Added `tools/audit/validate_pstar_component_sum.py` v1.0.0. It parses exact decimal tokens, derives half-unit-in-last-written-place intervals, requires overlap between the component-sum and declared-total intervals, and records exact bytes, SHA-256, row count, and overlap margins.
+- Added `tests/test_validate_pstar_component_sum.py` and Markdown/JSON/SVG evidence. Focused compile passed and pytest returned `8 passed in 1.21s`; JSON and SVG parsed; maximum changed Python line length was 87.
+- Reconstructed exact Git blob `7e953dd346caedcee6da54180fb636b890a64040` byte-for-byte and ran the validator: 7413 bytes, SHA-256 `bc4d8b018115fd0892fe4ea22b6ec3da7be8ab65afa7595337c491ae6ed869dd`, 141 rows, all component-consistent under written decimal rounding; minimum overlap width `0.0002615` and maximum `0.110 MeV cm^2/g`.
+- Implementation/evidence commits: `4af6004ac52b236561d525a390f9218015be373f`, `2cf9c7ff37fe5e53c6b4ea2d9e6b34eeeadcc2f5`, `dc929c5c339914f7679323e79be0326bf6a57a1d`, `ae95c20b0f7621dd8eb04e4ba0bf7090e11c9dfb`, `1f3d4d4813890254d0990008b425a26c1a5a7bf2`.
+- Coordination commits before this log update: `a7cf64a642b150a55b56dc13c2e6a7759657685f`, `818f407dba3c2a67998f156dcf732f1b38b8ed33`, `b7ec04b7c3f78518a25c3caa87a1c1d982c20282`, `3fccd2afb24453952bb2437f27488c289cbfe336`, `a9010b49e6fa8b6ffce1230563b0d99125aabaad`, `850e7baee56b8271f5486acde5d7d53014d6df5d`, `e29958818344a2796e7bfd152d106eb7b2847ce4`, `b8a16ff032567afb7e7c0c7b2c32da41bf0a1028`.
+- PR #868 remained closed, unmerged, and non-mergeable and was not modified.
+- Full repository pytest, ruff, Geant4/CTest, real simulation processing, and GitHub Actions were not run. No stopping-power closure, calibration, or detector-performance result is claimed.
+- Acceptance: exact committed-table component identity and standalone validator are validated; task remains PARTIAL because `compare_stopping_power.py` can still bypass the new cross-column gate. Next: integrate one canonical reference parser and add a direct-CLI modified-total rejection test.

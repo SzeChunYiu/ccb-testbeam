@@ -1,12 +1,14 @@
 #include "OpticalTables.hh"
 
 #include <algorithm>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <functional>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 namespace fs = std::filesystem;
 
@@ -153,10 +155,16 @@ OpticalCurve OpticalTables::LoadCsv(const std::string& path) {
   return c;
 }
 
-OpticalTables OpticalTables::LoadDir(const std::string& dir) {
+OpticalTables OpticalTables::LoadDir(const std::string& dir, bool strict) {
   OpticalTables t;
   if (!fs::exists(dir)) {
-    std::cerr << "warning: optical dir not found: " << dir << "\n";
+    // G4-003: do NOT throw here. Returning empty curves lets the caller
+    // (DetectorConstruction::EnforceOpticalTables) convert the resulting
+    // "required table missing" errors into a clean G4Exception(FatalException)
+    // abort in strict mode, or a warning in dev mode. Throwing here would
+    // bypass Geant4 and terminate the process uncleanly.
+    std::cerr << (strict ? "error[strict]: " : "warning: ")
+              << "optical table directory not found: " << dir << "\n";
     return t;
   }
   for (const auto& e : fs::directory_iterator(dir)) {
@@ -166,6 +174,72 @@ OpticalTables OpticalTables::LoadDir(const std::string& dir) {
     }
   }
   return t;
+}
+
+namespace {
+// G4-003 schema checks for one loaded curve. x is wavelength [nm] per the
+// documented table contract; catches missing/empty tables, missing unit
+// provenance, non-finite points, gross unit/range errors (table given in
+// meters or Angstrom instead of nm), and non-monotonic x.
+std::vector<std::string> CurveSchemaErrors(const OpticalCurve& c,
+                                           const std::string& key) {
+  std::vector<std::string> errs;
+  if (c.Empty()) {
+    errs.push_back("required optical table '" + key +
+                   "' is missing or empty (no usable rows)");
+    return errs;
+  }
+  if (c.units_x.empty())
+    errs.push_back("table '" + key +
+                   "' has no '# units_x:' provenance header (x units ambiguous)");
+  if (c.units_y.empty())
+    errs.push_back("table '" + key +
+                   "' has no '# units_y:' provenance header (y units ambiguous)");
+  for (size_t i = 0; i < c.x.size(); ++i) {
+    if (!std::isfinite(c.x[i]) || !std::isfinite(c.y[i])) {
+      errs.push_back("table '" + key + "' has a non-finite point at row " +
+                     std::to_string(i));
+      break;
+    }
+  }
+  // Wavelength [nm] physical window. Header documents x as wavelength_nm;
+  // values outside [100, 2000] nm signal a unit/range error (meters ~1e-7,
+  // Angstrom ~1e4, or a stray zero/negative).
+  for (double xv : c.x) {
+    if (xv < 100.0 || xv > 2000.0) {
+      errs.push_back("table '" + key + "' x=" + std::to_string(xv) +
+                     " nm is outside the valid wavelength range [100,2000] "
+                     "(unit/range error)");
+      break;
+    }
+  }
+  // LoadCsv normalizes a descending grid to ascending; non-monotonic x here
+  // is a schema violation that would corrupt interpolation.
+  for (size_t i = 1; i < c.x.size(); ++i) {
+    if (c.x[i] <= c.x[i - 1]) {
+      errs.push_back("table '" + key +
+                     "' x is not strictly ascending at row " + std::to_string(i));
+      break;
+    }
+  }
+  return errs;
+}
+}  // namespace
+
+std::vector<std::string> OpticalTables::ValidateRequired(
+    const std::vector<std::string>& required_keys) const {
+  std::vector<std::string> errs;
+  for (const auto& key : required_keys) {
+    auto it = curves_.find(key);
+    if (it == curves_.end()) {
+      errs.push_back("required optical table '" + key +
+                     "' is missing (no '" + key + ".csv' was loaded)");
+    } else {
+      auto ce = CurveSchemaErrors(it->second, key);
+      errs.insert(errs.end(), ce.begin(), ce.end());
+    }
+  }
+  return errs;
 }
 
 const OpticalCurve& OpticalTables::Get(const std::string& key) const {

@@ -26,7 +26,18 @@ class OpticalTables {
  public:
   // Loads every *.csv in dir keyed by stem (e.g. "sipm_pde"). Missing files are
   // tolerated (curve is Empty); callers decide whether that is fatal.
-  static OpticalTables LoadDir(const std::string& dir);
+  // Loads every *.csv in dir keyed by stem (e.g. "sipm_pde"). When ``strict``
+  // is false (default, dev) a missing directory is tolerated (warning + empty
+  // curves); when true (production, G4-003) a missing directory is fatal
+  // (throws std::runtime_error). Use ValidateRequired() to enforce that
+  // individual required tables are present and schema-valid.
+  static OpticalTables LoadDir(const std::string& dir, bool strict = false);
+
+  // G4-003: validate required tables are present + schema-valid. Returns a
+  // list of human-readable error strings (empty == OK). Pure: does not abort;
+  // the caller decides whether violations are fatal (strict) or advisory.
+  std::vector<std::string> ValidateRequired(
+      const std::vector<std::string>& required_keys) const;
 
   const OpticalCurve& Get(const std::string& key) const;
   bool Has(const std::string& key) const { return curves_.count(key) > 0; }

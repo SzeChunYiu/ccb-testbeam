@@ -78,6 +78,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --far-end MODE           absorb|mirror               (default absorb)\n"
     "  --mode MODE              optical                     (default; fast kernel not yet implemented)\n"
     "  --optical-dir DIR        optical CSV table directory (default optical)\n"
+    "  --strict-optical         abort if required optical tables are missing/malformed (or CCB_STRICT_OPTICAL=1)\n"
     "  --output FILE            ntuple output (.root)       (default ccb_stave.root)\n"
     "  --macro FILE             run a macro then exit\n"
     "  -h, --help               this message\n";
@@ -105,6 +106,7 @@ std::string AppConfig::Describe() const {
      << " far_end=" << (far_end_boundary_absorb ? "absorb" : "mirror")
      << " mode=" << (mode == SimMode::kOpticalCalibration ? "optical" : "fast")
      << " optical_dir=" << optical_dir
+     << " strict_optical=" << (strict_optical ? 1 : 0)
      << " output=" << output;
   return os.str();
 }
@@ -153,6 +155,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
       else { std::cerr << "error: --mode must be optical|fast\n"; return false; }
     }
     else if (eq(a, "--optical-dir")) { if(!(v=need(i)))return false; optical_dir = v; }
+    else if (eq(a, "--strict-optical")) { strict_optical = true; }
     else if (eq(a, "--output"))      { if(!(v=need(i)))return false; output = v; }
     else if (eq(a, "--macro"))       { if(!(v=need(i)))return false; macro = v; }
     else {
@@ -174,6 +177,13 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   }
   if (pde_scale < 0 || reflectivity_scale < 0 || attenuation_scale < 0) {
     std::cerr << "error: scale factors must be >= 0\n"; return false;
+  }
+  // G4-003: env override for strict optical-table validation (production).
+  if (!strict_optical) {
+    if (const char* e = std::getenv("CCB_STRICT_OPTICAL")) {
+      strict_optical = (std::strcmp(e, "1") == 0 || std::strcmp(e, "true") == 0 ||
+                        std::strcmp(e, "TRUE") == 0 || std::strcmp(e, "yes") == 0);
+    }
   }
   return true;
 }

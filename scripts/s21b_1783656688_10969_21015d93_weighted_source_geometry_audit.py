@@ -50,17 +50,47 @@ def git_commit(path: Path) -> str:
         return "unavailable"
 
 
-def run(cmd: str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
+def run(argv, cwd: Path | None = None, env: dict | None = None) -> subprocess.CompletedProcess[str]:
+    """Run *argv* with shell=False (SEC-001: no shell injection surface)."""
     return subprocess.run(
-        cmd,
+        argv,
         cwd=cwd or ROOT,
-        shell=True,
-        executable="/bin/bash",
+        shell=False,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         check=True,
+        env=env,
     )
+
+
+# --- SEC-001: injection-safe ROOT invocation --------------------------------
+# All variable data (file paths, the macro path, the ROOT setup script) flows
+# through the subprocess *environment*. The bash script below is a STATIC literal
+# that only reads its inputs via quoted env-var references, and the ROOT macros
+# read data paths via gSystem->Getenv. A path containing spaces or shell/C++
+# metacharacters therefore cannot inject into the shell command or the generated
+# C++: it is carried verbatim as an environment value, never string-interpolated.
+_ROOT_BASH_SCRIPT = 'source "$CCB_ROOT_SETUP" && exec root -l -b -q "$CCB_MACRO"'
+
+
+def root_command() -> list[str]:
+    """Argv for an injection-safe headless ROOT run (SEC-001).
+
+    The returned argv is a static ``["bash", "-c", script]``: the script literal
+    holds NO user data. Variable inputs are passed via the process environment,
+    so paths with spaces / shell metacharacters cannot inject into the command.
+    """
+    return ["bash", "-c", _ROOT_BASH_SCRIPT]
+
+
+def _controlled_env(**extra: str) -> dict[str, str]:
+    """Fresh per-call env copy (ROOT setup + extras); isolates concurrent runs."""
+    env = dict(os.environ)
+    env["CCB_ROOT_SETUP"] = str(ROOT_SETUP)
+    for k, v in extra.items():
+        env[k] = str(v)
+    return env
 
 
 def load_two_col(path: Path) -> pd.DataFrame:
@@ -90,10 +120,14 @@ def interp(x: np.ndarray, xp: np.ndarray, fp: np.ndarray) -> np.ndarray:
 def extract_root_event_csv(root_file: Path, out_csv: Path, max_events: int = 250000) -> dict:
     macro = f"""
 #include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <vector>
 void extract_s21b() {{
-  TFile f("{root_file}");
+  const char* _rf = gSystem->Getenv("CCB_ROOT_FILE");
+  const char* _oc = gSystem->Getenv("CCB_OUT_CSV");
+  const char* _me = gSystem->Getenv("CCB_MAX_EVENTS");
+  TFile f(_rf ? _rf : "");
   auto t = (TTree*)f.Get("hibeam");
   std::vector<int>* pdg = nullptr;
   std::vector<double>* ekin = nullptr;
@@ -113,10 +147,11 @@ void extract_s21b() {{
   t->SetBranchAddress("PrimaryPosX", &vx);
   t->SetBranchAddress("PrimaryPosY", &vy);
   t->SetBranchAddress("PrimaryPosZ", &vz);
-  std::ofstream out("{out_csv}");
+  std::ofstream out(_oc ? _oc : "");
   out << "event,particle_index,pdg,ekin,px,py,pz,theta_lab_deg,phi_deg,weight,x_cm,y_cm,z_cm\\n";
   Long64_t n = t->GetEntries();
-  Long64_t lim = std::min<Long64_t>(n, {max_events});
+  Long64_t _cap = _me ? std::atoll(_me) : 250000;
+  Long64_t lim = std::min<Long64_t>(n, _cap);
   for (Long64_t i = 0; i < lim; ++i) {{
     t->GetEntry(i);
     for (size_t j = 0; j < pdg->size(); ++j) {{
@@ -135,7 +170,13 @@ void extract_s21b() {{
     with tempfile.TemporaryDirectory() as td:
         macro_path = Path(td) / "extract_s21b.C"
         macro_path.write_text(macro, encoding="utf-8")
-        cp = run(f"source {ROOT_SETUP} && root -l -b -q {macro_path}")
+        env = _controlled_env(
+            CCB_MACRO=str(macro_path),
+            CCB_ROOT_FILE=str(root_file),
+            CCB_OUT_CSV=str(out_csv),
+            CCB_MAX_EVENTS=str(int(max_events)),
+        )
+        cp = run(root_command(), env=env)
     text = cp.stdout
     meta = {"root_file": str(root_file), "root_stdout": text}
     for token in text.replace("\n", " ").split():
@@ -152,14 +193,16 @@ def geometry_audit(geom_file: Path, out_dir: Path) -> dict:
 #include <fstream>
 #include <set>
 void geom_s21b() {{
-  TFile f("{geom_file}");
+  const char* _gf = gSystem->Getenv("CCB_GEOM_FILE");
+  const char* _jp = gSystem->Getenv("CCB_GEOM_JSON");
+  TFile f(_gf ? _gf : "");
   auto g = (TGeoManager*)f.Get("geometry");
   if (!g) g = gGeoManager;
   g->CheckOverlaps(1e-4);
   g->PrintOverlaps();
   auto vols = g->GetListOfVolumes();
   auto top_nodes = g->GetTopVolume()->GetNodes();
-  std::ofstream out("{json_path}");
+  std::ofstream out(_jp ? _jp : "");
   out << "{{\\n";
   out << "  \\"top_volume\\": \\"" << g->GetTopVolume()->GetName() << "\\",\\n";
   out << "  \\"n_volumes\\": " << vols->GetEntries() << ",\\n";
@@ -181,7 +224,12 @@ void geom_s21b() {{
     with tempfile.TemporaryDirectory() as td:
         macro_path = Path(td) / "geom_s21b.C"
         macro_path.write_text(macro, encoding="utf-8")
-        cp = run(f"source {ROOT_SETUP} && root -l -b -q {macro_path}")
+        env = _controlled_env(
+            CCB_MACRO=str(macro_path),
+            CCB_GEOM_FILE=str(geom_file),
+            CCB_GEOM_JSON=str(json_path),
+        )
+        cp = run(root_command(), env=env)
     data = json.loads(json_path.read_text())
     data["root_stdout"] = cp.stdout
     return data

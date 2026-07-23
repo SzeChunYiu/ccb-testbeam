@@ -37,6 +37,7 @@ from tools.audit.validate_stopping_power_sim_table import (  # noqa: E402
 
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
 PstarRow = tuple[float, float, float, float]
+ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
 
 
 class StoppingPowerInputError(ValueError):
@@ -135,34 +136,33 @@ def aggregate(
     rho: float,
     energy_deposit_basis: str = RAW_BASIS,
 ) -> list[dict[str, object]]:
-    """Group rows by canonical particle and rounded energy."""
+    """Group rows by canonical particle and exact configured energy."""
     if not math.isfinite(rho) or rho <= 0:
         raise StoppingPowerInputError(
             f"material density must be finite and positive, got {rho!r} g/cm^3"
         )
     accumulator: dict[tuple[str, float], list[float]] = {}
     event_counts: dict[tuple[str, float], int] = {}
-    energies: dict[tuple[str, float], list[float]] = {}
     for particle, energy, deposit, track_mm in sim_rows:
-        key = (particle, round(energy, 1))
+        key = (particle, energy)
         totals = accumulator.setdefault(key, [0.0, 0.0])
         totals[0] += deposit
         totals[1] += track_mm
         event_counts[key] = event_counts.get(key, 0) + 1
-        energies.setdefault(key, []).append(energy)
 
     output: list[dict[str, object]] = []
-    for (particle, energy_bin), (deposit_sum, track_sum) in accumulator.items():
+    for (particle, energy), (deposit_sum, track_sum) in accumulator.items():
         if track_sum <= 0:
             raise StoppingPowerInputError(
-                f"nonpositive aggregated track length for {particle} at {energy_bin:g} MeV"
+                f"nonpositive aggregated track length for {particle} at {energy:g} MeV"
             )
         mass_stopping = (deposit_sum / track_sum) * 10.0 / rho
         output.append(
             {
                 "particle": particle,
-                "energy_MeV": statistics.mean(energies[(particle, energy_bin)]),
-                "n_events": event_counts[(particle, energy_bin)],
+                "energy_MeV": energy,
+                "energy_grouping": ENERGY_GROUPING,
+                "n_events": event_counts[(particle, energy)],
                 "energy_deposit_basis": energy_deposit_basis,
                 "raw_pstar_comparable": energy_deposit_basis == RAW_BASIS,
                 "sim_total_MeV_cm2_g": mass_stopping,
@@ -235,6 +235,7 @@ def run_compare(
         columns = [
             "particle",
             "energy_MeV",
+            "energy_grouping",
             "reference_lookup_energy_MeV",
             "reference_range_min_MeV",
             "reference_range_max_MeV",
@@ -308,6 +309,7 @@ def run_compare(
         f"SIM INPUT VALIDATION: rows={sim_summary['rows_validated']} "
         f"sha256={sim_summary['input_sha256']} validator={SIM_TABLE_VALIDATOR_VERSION}"
     )
+    print(f"ENERGY GROUPING: {ENERGY_GROUPING}")
     print(
         f"PSTAR REFERENCE VALIDATION: rows={ref_summary['rows_validated']} "
         f"sha256={ref_summary['input_sha256']} validator={PSTAR_VALIDATOR_VERSION} "

@@ -57,6 +57,14 @@
 - **Resolution:** run a clean, provenance-retained proton closure using `G4EmCalculator::ComputeTotalDEDX` or primary entry/exit kinetic energy plus path-length/reference integration; quantify escaping secondary energy and production-cut dependence; preserve exact material, density, physics list, cuts, versions, commands, seeds, event counts, hashes, uncertainty, and overlay/ratio/diagnostic plots. Treat deuterons separately with a documented approximation or authoritative reference.
 - **Do not claim until resolved:** that local deposited-energy agreement within a numerical tolerance validates Geant4 total stopping power or deuteron stopping power.
 
+## BLK-I885-001 — accepted issue #885 calibration unavailable
+
+- **State:** OPEN
+- **Observed defects:** the committed summary used 72 total campaign files as the main-grid denominator and collapsed unequal species coverage. The plotter displays seed-averaged points but fits per-seed rows; fit metadata reports file counts as `n`; proton has five independent energies while deuteron has only two. A two-parameter deuteron line therefore has zero residual degrees of freedom after seed averaging.
+- **Validated boundary:** `validate_i885_campaign_results.py` measured 14/72 total files, 14/40 main-grid files, and 7/20 independent main-grid energy points. Focused tests passed. The summary is corrected, P5/P5b and all four fit records are quarantined, and Markdown/JSON/SVG audit evidence is committed.
+- **Resolution:** modify `plot_i885_campaign.py` to derive all denominators and per-species coverage from the manifest, seed-average before fitting, record `fit_basis`, `n_files`, `n_energy_points`, fit range, residuals and uncertainty method, refuse linear fits below three independent energies, regenerate fits/figures from declared inputs, and rerun the validator to zero issues.
+- **Do not claim until resolved:** validated proton/deuteron calibration slopes, accepted R² values, completed 2–20 MeV shared coverage, attenuation/timing performance, or completion of the 72-file campaign.
+
 ## BLK-MERGE-001 — PR #868 integration into current main
 
 - **State:** OPEN

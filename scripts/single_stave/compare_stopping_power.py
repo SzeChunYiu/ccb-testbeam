@@ -38,6 +38,7 @@ from tools.audit.validate_stopping_power_sim_table import (  # noqa: E402
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
 PstarRow = tuple[float, float, float, float]
 ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
+MASS_STOPPING_ESTIMATOR = "RATIO_OF_SUMS_TRACK_LENGTH_WEIGHTED"
 DIRECT_PROTON_REFERENCE = "DIRECT_PSTAR_PROTON"
 DEUTERON_REFERENCE_PROXY = "VELOCITY_SCALED_PROTON_PROXY"
 UNCERTAINTY_METHOD = "NOT_EVALUATED"
@@ -188,6 +189,10 @@ def aggregate(
                 "n_events": event_counts[(particle, energy)],
                 "energy_deposit_basis": energy_deposit_basis,
                 "raw_pstar_comparable": energy_deposit_basis == RAW_BASIS,
+                "deposit_sum_MeV": deposit_sum,
+                "track_length_sum_mm": track_sum,
+                "material_density_g_cm3": rho,
+                "mass_stopping_estimator": MASS_STOPPING_ESTIMATOR,
                 "sim_total_MeV_cm2_g": mass_stopping,
             }
         )
@@ -269,6 +274,7 @@ def run_compare(
                 "ref_total_MeV_cm2_g": reference,
                 "ratio": ratio,
                 "delta_percent": delta,
+                "tolerance_percent": tol_pct,
                 "numeric_within_tolerance": numeric_ok,
                 "uncertainty_method": UNCERTAINTY_METHOD,
                 "uncertainty_evaluated": uncertainty_evaluated,
@@ -294,6 +300,10 @@ def run_compare(
             "n_events",
             "energy_deposit_basis",
             "raw_pstar_comparable",
+            "deposit_sum_MeV",
+            "track_length_sum_mm",
+            "material_density_g_cm3",
+            "mass_stopping_estimator",
             "simulation_input_sha256",
             "simulation_input_bytes",
             "simulation_rows_validated",
@@ -308,6 +318,7 @@ def run_compare(
             "ref_total_MeV_cm2_g",
             "ratio",
             "delta_percent",
+            "tolerance_percent",
             "numeric_within_tolerance",
             "uncertainty_method",
             "uncertainty_evaluated",
@@ -359,6 +370,7 @@ def run_compare(
         f"sha256={sim_summary['input_sha256']} validator={SIM_TABLE_VALIDATOR_VERSION}"
     )
     print(f"ENERGY GROUPING: {ENERGY_GROUPING}")
+    print(f"MASS STOPPING ESTIMATOR: {MASS_STOPPING_ESTIMATOR}")
     print(f"REPORT FLOAT SERIALIZATION: {REPORT_FLOAT_SERIALIZATION}")
     print(
         f"PSTAR REFERENCE VALIDATION: rows={ref_summary['rows_validated']} "

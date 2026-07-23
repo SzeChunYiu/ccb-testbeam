@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-006
+- **Task ID:** AUD-G4-007
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T10:29:57Z
-- **Initial observed main SHA:** `6d1d982e0eb6764cc3cc036aa1df76b8f3fe35c7`
-- **Concurrent main incorporated:** `9521eca866a42a02d17a26dffbaaf0f21d6d8eb7`
-- **Scope:** independently review whether the PR #890 stopping-power diagnostic uses the committed PSTAR reference only inside its supported energy domain.
-- **Confirmed defect:** `interp_loglog()` silently clamped lookup energies below or above the table to an endpoint. Unsupported simulation energies could therefore reuse an unrelated edge value and potentially pass the numerical tolerance. Deuteron beam energy maps to proton-equivalent `E/2`, so the transformed lookup also requires an explicit range gate.
-- **Validated change:** require finite positive lookup energy, accept exact endpoints, reject extrapolation, report proton-equivalent lookup and table bounds, return CLI status 2 without a numerical PASS, and add focused regression plus Markdown/JSON/SVG evidence.
-- **Files:** `scripts/single_stave/compare_stopping_power.py`, `tests/test_compare_stopping_power_energy_range.py`, and `docs/validation/stopping_power_reference_domain_*`.
-- **Commands:** `python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py`; focused pytest over the two stopping-power test modules; changed-file line-length scan; JSON and SVG parse checks.
-- **Validation:** exact pre-change reconstruction matched Git blob `d9282a5c26b8bc86427356f51dfe7e5ecba769d8`; focused suite returned `7 passed in 1.15s`; committed script/test blobs match the validated local files.
-- **Boundary:** this is a reference-domain and failure-mode correction only. No Geant4 executable, ROOT file, real simulation, accepted stopping-power closure, calibration, or detector-performance result was generated.
-- **Status:** COMPLETE for fail-closed reference-domain handling and remote-main delivery; PARTIAL for scientific stopping-power closure under `AUD-G4-005` / `BLK-G4-SP-001`.
+- **Session stamp:** 2026-07-23T11:06:11Z
+- **Initial main SHA:** `9dc4005dd030e78d2523d8094fa16adffcfc0bd1`
+- **Implementation/evidence head:** `00dd74cda709a7f5c6489721f3c96077136b40e5`
+- **Scope:** independently review whether the PR #890 stopping-power diagnostic validates every committed PSTAR CSV row before interpolation and tolerance reporting.
+- **Confirmed defect:** the legacy parser silently skipped missing or nonnumeric rows, sorted surviving rows, and accepted duplicate/out-of-order energies plus nonfinite or nonphysical stopping values. A malformed middle row could disappear and the CLI could still print a numerical PASS.
+- **Validated change:** require all columns and rows, finite physical values, strictly increasing declared energies, and at least two rows; malformed references raise `StoppingPowerInputError`, return CLI status 2, and print no numerical PASS.
+- **Files:** `scripts/single_stave/compare_stopping_power.py`, `tests/test_compare_stopping_power_reference_integrity.py`, and `docs/validation/stopping_power_reference_integrity_*`.
+- **Commands:** `python -m py_compile` over the stopping-power script and three focused test modules; focused pytest over reference-path, reference-domain, and reference-integrity tests; changed-file line-length and JSON/SVG parse checks.
+- **Validation:** the exact pre-change blob `0436fb390476697cfc83f88208322a99d7792a1c` produced six expected regression failures; the corrected focused suite returned `14 passed in 2.94s`; committed script blob `7c3c05f12a1311d5ead8d1d45e0f5fea91dc92ce` matches the validated file.
+- **Boundary:** this validates local reference-table structure and fail-closed parsing only. It does not verify the NIST source transcription, Geant4 stopping-power physics, deuteron scaling, real simulation output, calibration, or detector performance.
+- **Status:** COMPLETE for PSTAR reference-integrity handling and direct-to-main delivery; PARTIAL for scientific stopping-power closure under `AUD-G4-005` / `BLK-G4-SP-001`.

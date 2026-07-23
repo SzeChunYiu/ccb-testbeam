@@ -1,6 +1,6 @@
 # Issue #885 — single-stave proton/deuteron calibration campaign (v1)
 
-Status: **PARTIAL** — proton main KE-scan plotted from completed files; the full
+Status: **PARTIAL (12/72 files: proton 2-20 MeV + deuteron 2 MeV)** — proton KE-scan + cross-species Birks comparison plotted; the full
 72-point array (job 3408050) is still draining on LUNARC. Plots in this directory
 are regenerated from whatever has landed; re-run the plotter (below) once the
 array finishes for the complete picture.
@@ -33,17 +33,28 @@ entry/exit, scint/WLS/Cerenkov photon counts and per-sensor arrival/detected/pe.
 - Output dir: `/projects/hep/fs10/shared/nnbar/billy/ccb-runs/i885_v1/`
   (one `stave_<part>_<E>MeV_x<hx>_s<seed>.root` + `.meta.json` per point).
 
-## Physics validation (proton, completed subset)
+## Physics validation (completed subset: proton 2-20 MeV + deuteron 2 MeV)
 
-| KE (MeV) | raw edep (MeV) | Birks-visible (MeV) | quench vis/raw | track len (mm) | SiPM pe (readout) |
-|----------|---------------:|--------------------:|---------------:|---------------:|------------------:|
-| 2        | 1.984          | 0.438               | 0.221          | 0.071          | 5.2               |
-| 5        | 4.992          | 1.690               | 0.339          | 0.344          | 19.7              |
-| 12       | 11.996         | 5.800               | 0.483          | 1.625          | 67.5              |
+Seed-averaged per-config means (500 ev/seed, 2 seeds):
 
-Birks suppression weakens with energy (higher-E -> lower dE/dx -> less quench),
-exactly as expected. Proton SiPM calibration (pe_sat_readout vs KE): linear,
-**6.26 pe/MeV, R² = 0.992** (8 files, low-E). Birks-visible vs KE: 0.540 MeV/MeV.
+| species | KE (MeV) | raw edep (MeV) | Birks-visible (MeV) | quench vis/raw | track len (mm) | SiPM pe (readout) |
+|---------|---------:|---------------:|--------------------:|---------------:|---------------:|------------------:|
+| deuteron| 2        | 1.972          | 0.303               | 0.154          | 0.045          | 3.6               |
+| proton  | 2        | 1.984          | 0.438               | 0.221          | 0.071          | 5.2               |
+| proton  | 5        | 4.991          | 1.689               | 0.339          | 0.343          | 20.0              |
+| proton  | 8        | 7.989          | 3.304               | 0.413          | 0.786          | 38.4              |
+| proton  | 12       | 11.996         | 5.802               | 0.483          | 1.626          | 67.6              |
+| proton  | 20       | 19.959         | 11.412              | 0.572          | 4.061          | 131.5             |
+
+At 2 MeV the **deuteron is quenched more strongly than the proton** (0.154 vs
+0.221, d/p = 0.70): its ~half-velocity, higher-dE/dx Bragg deposit suppresses
+more scintillation, and its track is shorter (0.045 vs 0.071 mm). This is the
+physical reason separate p/d calibration curves are required. Proton quench
+weakens monotonically with energy (0.221 -> 0.572 over 2-20 MeV) as dE/dx falls.
+
+Fits (this subset): proton SiPM calibration **7.12 pe/MeV, R^2 = 0.993** (10
+files, 5 energies); Birks-visible vs KE **0.619 MeV/MeV, R^2 = 0.992**. Deuteron
+calibration needs more energies (only 2 MeV landed so far).
 
 ## Plots (this directory)
 

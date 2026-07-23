@@ -6,7 +6,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "scripts" / "single_stave" / "compare_stopping_power.py"
 REFERENCE_HEADER = (
@@ -63,9 +62,7 @@ def test_deuteron_proxy_is_rejected_by_default(tmp_path):
     output = tmp_path / "result.csv"
     write_reference(reference)
     write_sim(simulation, [["deuteron", 2.0, 1.0, 1.0]])
-
     process = run_cli(simulation, reference, "--out", str(output))
-
     assert process.returncode == 2
     assert "unvalidated equal-velocity proxy" in process.stderr
     assert "--allow-deuteron-proxy" in process.stderr
@@ -80,7 +77,6 @@ def test_explicit_deuteron_proxy_is_labelled_and_nonaccepting(tmp_path):
     output = tmp_path / "result.csv"
     write_reference(reference)
     write_sim(simulation, [["deuteron", 2.0, 1.0, 1.0]])
-
     results, ok = module.run_compare(
         simulation,
         reference,
@@ -89,9 +85,7 @@ def test_explicit_deuteron_proxy_is_labelled_and_nonaccepting(tmp_path):
         1e-9,
         allow_deuteron_proxy=True,
     )
-
     assert ok is False
-    assert len(results) == 1
     result = results[0]
     assert result["reference_lookup_energy_MeV"] == 1.0
     assert result["reference_basis"] == module.DEUTERON_REFERENCE_PROXY
@@ -99,15 +93,14 @@ def test_explicit_deuteron_proxy_is_labelled_and_nonaccepting(tmp_path):
     assert result["raw_pstar_comparable"] is True
     assert result["physics_comparable"] is False
     assert result["numeric_within_tolerance"] is True
+    assert result["uncertainty_evaluated"] is False
     assert result["within_tolerance"] is False
-
     row = next(csv.DictReader(output.open()))
     assert row["reference_basis"] == module.DEUTERON_REFERENCE_PROXY
     assert row["reference_direct_pstar_comparable"] == "False"
     assert row["physics_comparable"] == "False"
     assert row["numeric_within_tolerance"] == "True"
     assert row["within_tolerance"] == "False"
-
     process = run_cli(simulation, reference, "--allow-deuteron-proxy")
     assert process.returncode == 1
     assert "DEUTERON REFERENCE BASIS: VELOCITY_SCALED_PROTON_PROXY" in process.stdout
@@ -115,21 +108,21 @@ def test_explicit_deuteron_proxy_is_labelled_and_nonaccepting(tmp_path):
     assert "NUMERICAL TOLERANCE: PASS" not in process.stdout
 
 
-def test_direct_proton_reference_remains_acceptable(tmp_path):
+def test_direct_proton_reference_is_point_estimate_only(tmp_path):
     module = load_module()
     reference = tmp_path / "reference.csv"
     simulation = tmp_path / "sim.csv"
     write_reference(reference)
     write_sim(simulation, [["proton", 1.0, 1.0, 1.0]])
-
     results, ok = module.run_compare(simulation, reference, 1.0, None, 1e-9)
-
-    assert ok is True
+    assert ok is False
     result = results[0]
     assert result["reference_basis"] == module.DIRECT_PROTON_REFERENCE
     assert result["reference_direct_pstar_comparable"] is True
     assert result["physics_comparable"] is True
-    assert result["within_tolerance"] is True
+    assert result["numeric_within_tolerance"] is True
+    assert result["uncertainty_evaluated"] is False
+    assert result["within_tolerance"] is False
 
 
 def test_mixed_proton_and_deuteron_result_is_nonaccepting(tmp_path):
@@ -144,7 +137,6 @@ def test_mixed_proton_and_deuteron_result_is_nonaccepting(tmp_path):
             ["deuteron", 2.0, 1.0, 1.0],
         ],
     )
-
     results, ok = module.run_compare(
         simulation,
         reference,
@@ -153,9 +145,9 @@ def test_mixed_proton_and_deuteron_result_is_nonaccepting(tmp_path):
         1e-9,
         allow_deuteron_proxy=True,
     )
-
     assert ok is False
     by_particle = {result["particle"]: result for result in results}
-    assert by_particle["proton"]["within_tolerance"] is True
+    assert by_particle["proton"]["numeric_within_tolerance"] is True
+    assert by_particle["proton"]["within_tolerance"] is False
     assert by_particle["deuteron"]["numeric_within_tolerance"] is True
     assert by_particle["deuteron"]["within_tolerance"] is False

@@ -10,6 +10,9 @@
 #include "OpticalTables.hh"
 
 #include "G4RunManagerFactory.hh"
+#ifdef G4MULTITHREADED
+#include "G4MTRunManager.hh"
+#endif
 #include "G4UImanager.hh"
 #include "Randomize.hh"
 
@@ -18,6 +21,7 @@
 #include "G4UIExecutive.hh"
 #endif
 
+#include <cstdlib>
 #include <iostream>
 
 int main(int argc, char** argv) {
@@ -28,9 +32,9 @@ int main(int argc, char** argv) {
                          std::string(argv[1]) == "--help")) ? 0 : 2;
   }
 
-  std::cout << "CCB_STAVE_START " << cfg.Describe() << std::endl;
-
-  // Deterministic RNG seed (also re-applied in RunAction::BeginOfRunAction).
+  // Seed the master engine before constructing the run manager. In MT builds,
+  // Geant4 derives per-event worker seeds from this master state so results are
+  // reproducible independently of worker scheduling and thread count.
   CLHEP::HepRandom::setTheSeed(static_cast<long>(cfg.seed));
 
   // Load versioned optical tables once (hashes recorded in output metadata).
@@ -38,6 +42,34 @@ int main(int argc, char** argv) {
 
   auto* runManager =
       G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
+#ifdef G4MULTITHREADED
+  // Set this before Initialize(), when workers are created. Geant4 may ignore
+  // the request when G4FORCENUMBEROFTHREADS is set, so read the effective value
+  // back from the run manager and preserve both values in run provenance.
+  if (auto* mt = dynamic_cast<G4MTRunManager*>(runManager)) {
+    mt->SetNumberOfThreads(cfg.n_threads);
+    cfg.n_threads_effective = mt->GetNumberOfThreads();
+  } else {
+    cfg.n_threads_effective = runManager->GetNumberOfThreads();
+  }
+#else
+  cfg.n_threads_effective = runManager->GetNumberOfThreads();
+#endif
+  if (const char* forced = std::getenv("G4FORCENUMBEROFTHREADS")) {
+    cfg.g4_force_number_of_threads = forced;
+  }
+
+  std::cout << "CCB_STAVE_START " << cfg.Describe() << std::endl;
+  if (cfg.n_threads_effective != cfg.n_threads) {
+    std::cerr << "warning: requested " << cfg.n_threads
+              << " worker threads but Geant4 configured "
+              << cfg.n_threads_effective;
+    if (!cfg.g4_force_number_of_threads.empty()) {
+      std::cerr << " (G4FORCENUMBEROFTHREADS="
+                << cfg.g4_force_number_of_threads << ")";
+    }
+    std::cerr << std::endl;
+  }
 
   auto* detector = new DetectorConstruction(cfg);
   runManager->SetUserInitialization(detector);

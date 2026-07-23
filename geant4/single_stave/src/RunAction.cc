@@ -4,7 +4,6 @@
 #include "G4Run.hh"
 #include "G4AnalysisManager.hh"
 #include "G4SystemOfUnits.hh"
-#include "Randomize.hh"
 
 #include <cstdlib>
 #include <fstream>
@@ -74,8 +73,9 @@ void RunAction::DefineNtuples() {
 }
 
 void RunAction::BeginOfRunAction(const G4Run*) {
-  // Seed the engine deterministically from config (reproducibility).
-  CLHEP::HepRandom::setTheSeed(static_cast<long>(cfg_.seed));
+  // Do not reseed here: in MT mode Geant4 assigns master-generated per-event
+  // seeds to workers. The master seed is configured once in main.cc before the
+  // run manager is constructed.
   if (IsMaster() || G4Threading::G4GetThreadId() < 0) {
     std::cout << "RUN_CONFIG " << cfg_.Describe() << " geometry_hash="
               << geometry_hash_ << std::endl;
@@ -174,6 +174,11 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
+     << "  \"threads_requested\": " << cfg_.n_threads << ",\n"
+     << "  \"threads_effective\": " << cfg_.n_threads_effective << ",\n"
+     << "  \"G4FORCENUMBEROFTHREADS\": "
+     << j(cfg_.g4_force_number_of_threads.empty()
+              ? "unset" : cfg_.g4_force_number_of_threads) << ",\n"
      << "  \"particle\": " << j(cfg_.particle) << ",\n"
      << "  \"kinetic_energy_MeV\": " << cfg_.kinetic_energy_MeV << ",\n"
      << "  \"n_events\": " << run->GetNumberOfEvent() << ",\n"

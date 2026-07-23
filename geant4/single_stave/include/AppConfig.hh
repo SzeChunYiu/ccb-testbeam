@@ -22,6 +22,13 @@ struct AppConfig {
   double kinetic_energy_MeV = 100.0; // primary kinetic energy
   int    n_events = 1000;            // events for this invocation
 
+  // --- Execution ---
+  // Requested value comes from the CLI. Effective value is read back from the
+  // constructed run manager because G4FORCENUMBEROFTHREADS may override it.
+  int    n_threads = 1;
+  int    n_threads_effective = 1;
+  std::string g4_force_number_of_threads = "";
+
   // --- Incidence (detector-local, see DetectorConstruction coordinate note) ---
   // Normal incidence: primary launched at (hit_x, hit_y, z = -half_z - eps),
   // direction (0,0,+1). theta/phi tilt the direction away from +z.

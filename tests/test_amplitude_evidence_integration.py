@@ -29,7 +29,7 @@ def write_table(path: Path) -> str:
 
 
 def write_reference(path: Path) -> str:
-    path.write_text("producer contract v1\n", encoding="utf-8")
+    path.write_text("producer contract v1\namplitude is net\n", encoding="utf-8")
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
@@ -97,7 +97,7 @@ def test_traceable_map_is_normalized_verified_and_exposed(tmp_path: Path) -> Non
     reference_file = tmp_path / "producer_contract.md"
     digest = write_table(table)
     reference_digest = write_reference(reference_file)
-    reference = f"{reference_file.name}#amplitude-semantics"
+    reference = f"{reference_file.name}#L2"
     evidence.write_text(json.dumps({digest: {
         "convention": "NET",
         "evidence_basis": "PRODUCER_CODE_PROVENANCE",
@@ -115,8 +115,31 @@ def test_traceable_map_is_normalized_verified_and_exposed(tmp_path: Path) -> Non
     assert row["physics_evidence_reference_sha256"] == reference_digest
     assert row["physics_evidence_reference_verified"] is True
     assert row["evidence_record"]["evidence_reference_verified"] is True
+    assert row["evidence_record"]["evidence_reference_fragment_verified"] is True
+    assert row["evidence_record"]["evidence_reference_line_start"] == 2
+    assert row["evidence_record"]["evidence_reference_line_end"] == 2
     assert row["evidence_record"]["evidence_reference_measured_sha256"] == reference_digest
     assert row["evidence_record"]["sha256"] == digest
+
+
+def test_cli_rejects_non_line_fragment(tmp_path: Path) -> None:
+    table = tmp_path / "table.csv"
+    output = tmp_path / "audit.json"
+    evidence = tmp_path / "evidence.json"
+    reference_file = tmp_path / "producer_contract.md"
+    digest = write_table(table)
+    reference_digest = write_reference(reference_file)
+    evidence.write_text(json.dumps({digest: {
+        "convention": "NET",
+        "evidence_basis": "PRODUCER_CODE_PROVENANCE",
+        "evidence_reference": f"{reference_file.name}#amplitude-semantics",
+        "evidence_reference_sha256": reference_digest,
+    }}), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="canonical line fragment"):
+        MODULE.main([
+            str(table), "--output", str(output), "--evidence-map", str(evidence)
+        ])
 
 
 def test_cli_rejects_mutated_supporting_artifact(tmp_path: Path) -> None:

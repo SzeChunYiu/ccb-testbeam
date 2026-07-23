@@ -1,0 +1,47 @@
+{
+  "correction": {
+    "classification_formula": "abs(delta_percent) <= tolerance_percent",
+    "formula": "(deposit_sum_MeV / track_length_sum_mm) * 10 / material_density_g_cm3",
+    "mass_stopping_estimator": "RATIO_OF_SUMS_TRACK_LENGTH_WEIGHTED",
+    "script_bytes": 19755,
+    "script_git_blob": "79ea276741807d896cc6d2a99e8071605cc238f0",
+    "script_sha256": "5946901c0aa10fdc5f4e8e55d867927f6476ec03db4d58d75bd498d004687213",
+    "test_bytes": 4207,
+    "test_git_blob": "37595f083c2a12b5de7c42253cffb007874c7b7c",
+    "test_sha256": "90105dd7b4cb2a588c24997d9b7b350ceb74a65ac09b120a75f1217a176ce24e"
+  },
+  "defect": {
+    "missing_fields": [
+      "deposit_sum_MeV",
+      "track_length_sum_mm",
+      "material_density_g_cm3",
+      "tolerance_percent",
+      "mass_stopping_estimator"
+    ],
+    "negative_control": "2 failed",
+    "old_script_bytes": 19191,
+    "old_script_git_blob": "5081da0b77bcfeba07dca95e5087c4b2057c362f",
+    "old_script_sha256": "838cdee5921f65f38e9cf8e0a1e7f39f94f62cc31815ce9315dbd46778571caa"
+  },
+  "limitations": [
+    "synthetic regression only",
+    "no real Geant4 event export",
+    "no uncertainty budget",
+    "no accepted projectile energy-loss observable",
+    "no Geant4/PSTAR closure claim"
+  ],
+  "schema_version": 1,
+  "scientific_scope": "report traceability only; not a stopping-power closure",
+  "session_utc": "2026-07-23T21:31:26Z",
+  "status": "VALIDATED_SYNTHETIC_REGRESSION",
+  "task_id": "AUD-G4-017",
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_report_precision.py tests/test_compare_stopping_power_report_reproducibility.py",
+      "python -m pytest tests/test_compare_stopping_power_report_precision.py tests/test_compare_stopping_power_report_reproducibility.py -q"
+    ],
+    "max_changed_python_line_length": 93,
+    "old_blob_negative_control": "2 failed in 0.11s",
+    "result": "5 passed in 0.07s"
+  }
+}

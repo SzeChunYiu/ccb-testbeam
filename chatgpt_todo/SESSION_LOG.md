@@ -145,3 +145,16 @@
 - PR #868 is closed, not merged, and non-mergeable; it was not reopened or merged.
 - No real A-002 table or evidence artifact was available. No convention, stopping result, CSV, plot, calibration, or detector-performance result was regenerated. Historical A-002 outputs remain quarantined under `BLK-AMP-001`.
 - Next: verify exact A-002 table and supporting-artifact bytes under a controlled evidence root, then run the full-table convention audit and regenerate outputs only after `physics_acceptance=ACCEPTABLE`.
+
+## 2026-07-23T07:05:54Z — AUD-AMP-010
+
+- Initial remote main: `7021e5491fc60ae2f59645ffb62f156d578b0947`.
+- Inspected current `main`, recent commits, PR #868, open PR inventory, validator/auditor code, focused tests, and required `chatgpt_todo/` files.
+- Confirmed that validator v1.2.0 discarded every `evidence_reference` fragment after `#`; a nonexistent claim anchor was accepted whenever the supporting file hash matched.
+- Upgraded the validator to v1.3.0. Whole-file references remain valid; fragments must be canonical `#L<start>` or `#L<start>-L<end>`, have positive ordered bounds, and exist within the measured supporting artifact.
+- Added normalized scope, line-bound, line-count, fragment-verification, and validator-version fields. Added focused auditor-integration and fragment regression coverage.
+- Exact local reconstruction validation: compilation passed; focused pytest returned `36 passed in 0.06s`; changed-file line-length scan passed; local Git blob hashes matched GitHub content SHAs for the updated validator and integration test.
+- Direct-to-main implementation/test commits: `816af6419517ffbe5a189630b1b8a66a78f12de0`, `8e71aea1fb59218f711cab4bd69e42153a43f1db`, `357153ad421d47b98cdbca17d4f3aacc169142ee`.
+- PR #868 remains closed, not merged, and non-mergeable; it was not reopened or merged. No status checks or workflow runs were attached to the code/test head.
+- No real A-002 table or evidence artifact was available. No amplitude convention, stopping result, CSV, plot, calibration, or detector-performance result was regenerated. Historical A-002 outputs remain quarantined under `BLK-AMP-001`.
+- Next: create a real evidence map with exact table and supporting-artifact hashes plus either a whole-file reference or exact verified line range; run the full-table audit and regenerate outputs only after `physics_acceptance=ACCEPTABLE`.

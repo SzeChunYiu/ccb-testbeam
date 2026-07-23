@@ -2,165 +2,168 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T15:02:28Z
-- **Task:** `AUD-G4-009`
-- **First observed remote main:** `e6dd97da2d50cc81e9f49f8dab7cb2c8395fa6eb`
-- **Concurrent current-main handoff before writes:** `abb8a34ec47b6d62fae2ec07b837b71d2077bece`
-- **Validated implementation/evidence head:** `28345eb2417fdbd87d595984a82a513cfa26af2e`
-- **Coordination/archive head before this handoff:** `f893a859e42c028775560afb8c1c28af26b349c3`
+- **UTC:** 2026-07-23T16:06:03Z
+- **Task:** `AUD-G4-010`
+- **Initial remote main:** `b7a3a4d73537ee036c506658f5331a6ac4f5e999`
+- **Validated implementation/evidence head:** `1237fbcdfd530ea637cde27acc39c5c94b25600b`
+- **Coordination/archive head before this handoff:** `10f858986019b0e27f5d1353cbcdedeeddacf031`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Destination:** `main`
-- **Acceptance:** PARTIAL — fail-closed standalone event-table preflight, 17 focused tests, provenance output, and synthetic visual evidence are validated and delivered directly to `main`; canonical comparison integration and validation on real exported simulation tables remain open.
+- **Acceptance:** COMPLETE for canonical simulation-parser integration, focused regression, provenance propagation, visual evidence, coordination records, and direct-to-main delivery; PARTIAL for exact real-table execution and accepted stopping-power closure.
 
 ## Start-of-run and concurrent-work review
 
-- Direct Git clone/fetch failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and direct writes were used.
-- Inspected current `main`, recent history, PR #868, the latest issue #885 handoff, stopping-power code/history, validation records, and mandatory `chatgpt_todo/` files.
-- Concurrent issue #885 work was detected and not duplicated. The selected unit was the unresolved simulation-event CSV ingestion path feeding the PSTAR diagnostic.
-- PR #868 remains closed, unmerged, and non-mergeable; it was not modified.
-- No task branch, pull request, force-push, history rewrite, source-data modification, or unrelated deletion was used.
+- Inspected current `main`, recent history, repository permissions, current stopping-power code/tests/data, previous `AUD-G4-009` handoff, and mandatory `chatgpt_todo/` records.
+- PR #868 was rechecked and remains closed, unmerged, and non-mergeable. It was not modified or merged.
+- No status checks were attached to the initial head.
+- No task branch, pull request, force-push, history rewrite, raw-data change, or unrelated deletion was used.
 
 ## Confirmed defect
 
-The current `scripts/single_stave/compare_stopping_power.py` reader can silently omit noncomment rows when:
+`AUD-G4-009` added a strict standalone simulation-table validator, but the canonical `scripts/single_stave/compare_stopping_power.py` still used a separate permissive reader. That reader silently skipped rows with missing particle, energy, deposit, track length, or nonpositive track length and selected the first populated alias.
 
-- `particle` is missing;
-- no supported energy-deposit value is populated;
-- energy or track length is missing;
-- track length is nonpositive.
-
-Its alias helper also uses the first populated alias and does not reject multiple simultaneously populated aliases. Therefore, an incomplete or ambiguous simulation sample can reach aggregation without a row-accounting failure.
-
-Exact synthetic reproduction of the reviewed control flow used three event rows with a missing energy in the middle row:
+A synthetic three-row reproduction with a missing middle-row energy measured:
 
 ```json
-{"input_data_rows": 3, "returned_rows": 2, "basis": "UNQUENCHED_RAW", "skipped_rows": 1}
+{"input_rows": 3, "returned_rows": 2, "silently_skipped": 1}
 ```
 
-This is parser-regression evidence, not detector data and not a Geant4/PSTAR agreement result.
+Thus a malformed event table could become an undocumented selected subset before PSTAR aggregation.
 
 ## Validated implementation
 
-Added `tools/audit/validate_stopping_power_sim_table.py` v1.0.0. It:
+### Shared parser v1.1.0
 
-- validates every noncomment row;
-- requires one supported particle (`p|proton|d|deuteron`);
-- requires exactly one populated alias for energy, deposit, and track length;
-- requires finite positive energy, finite nonnegative deposit, and finite positive track length;
-- validates centimetre-to-millimetre track conversion;
-- rejects simultaneous raw and quenched deposits in one row;
-- rejects mixed raw/quenched semantics across rows;
-- rejects quenched-only input by default;
-- permits explicit quenched proxy input only as `DIAGNOSTIC_ONLY` with nonzero exit;
-- rejects empty/duplicate headers and excess fields;
-- records exact input path, byte size, SHA-256, header, row count, particle counts, energy range, basis, and comparability;
-- returns input-error status 2 without writing validation JSON when validation fails.
+`tools/audit/validate_stopping_power_sim_table.py` now exposes `read_validated_simulation_table(...)`, which returns normalized event rows plus provenance after validating every noncomment row. It:
 
-Added `tests/test_validate_stopping_power_sim_table.py` with 17 focused tests for valid provenance, malformed/missing/nonfinite/nonphysical values, unsupported particles, ambiguous aliases, raw/quenched mixing, non-accepting quenched mode, malformed-middle-row CLI behavior, and supported centimetre track lengths.
+- canonicalizes proton/deuteron labels;
+- requires exactly one energy, deposit, and track-length alias;
+- converts centimetre track lengths to millimetres;
+- rejects missing, nonnumeric, nonfinite, and nonphysical values;
+- rejects raw/quenched mixing and ambiguous aliases;
+- records exact path, byte size, SHA-256, header, validated rows, particle counts, energy range, basis, and tool version.
 
-Added reproducible evidence:
+### Canonical comparison integration
 
-- `docs/validation/stopping_power_sim_input_integrity_audit.md`
-- `docs/validation/stopping_power_sim_input_integrity_validation.json`
-- `docs/validation/stopping_power_sim_input_integrity.svg`
+`compare_stopping_power.py` now imports the shared parser and no longer uses the legacy silent-skip logic. It:
 
-The SVG explicitly states `synthetic regression evidence — not detector data` and shows the former three-to-two-row silent path versus the new status-2 rejection.
+- returns input-error status 2 for malformed or ambiguous simulation input;
+- emits no numerical PASS after an input error;
+- aggregates only normalized validated rows;
+- propagates simulation input SHA-256, bytes, validated-row count, basis, and validator version into result rows and output CSV;
+- preserves fail-closed reference integrity/domain behavior and non-accepting quenched-proxy behavior;
+- remains explicitly `DIAGNOSTIC_ONLY`.
+
+Added `tests/test_compare_stopping_power_sim_input_integration.py` covering malformed middle-row rejection, ambiguous alias rejection, CLI failure behavior, normalization, row accounting, provenance, and output columns.
 
 ## Reproducible validation
 
 ```text
 python -m py_compile \
+  scripts/single_stave/compare_stopping_power.py \
   tools/audit/validate_stopping_power_sim_table.py \
-  tests/test_validate_stopping_power_sim_table.py
+  tests/test_compare_stopping_power_reference_path.py \
+  tests/test_compare_stopping_power_energy_range.py \
+  tests/test_compare_stopping_power_reference_integrity.py \
+  tests/test_validate_stopping_power_sim_table.py \
+  tests/test_compare_stopping_power_sim_input_integration.py
 
-python -m pytest tests/test_validate_stopping_power_sim_table.py -q
-17 passed in 1.31s
+python -m pytest \
+  tests/test_compare_stopping_power_reference_path.py \
+  tests/test_compare_stopping_power_energy_range.py \
+  tests/test_compare_stopping_power_reference_integrity.py \
+  tests/test_validate_stopping_power_sim_table.py \
+  tests/test_compare_stopping_power_sim_input_integration.py -q
+
+35 passed in 4.34s
 ```
 
 Additional completed checks:
 
 - validation JSON parsed;
 - SVG parsed as XML;
-- changed Python lines were no longer than 100 characters;
-- committed tool and test were re-read from `main` after writes.
-
-Validated local SHA-256 identities:
-
-- tool: `198a06459d6eb2c143dc850c1f5f5e48f54b89ce40ef382fc6b6c18b06e09dd2`
-- test: `a878d5240faaed55fe67bce054975dbf709ee9e31cda4aae3ec5ab49596db9db`
-- audit Markdown: `0d65d512a25c93c29e01c74d3c52c008d485b0adb2c187d03c9514b8c03eb8dd`
-- validation JSON: `fefbf127a5bd5594398877dfae3e276842fc3517569cbffbf5e51c27cebfe63e`
-- SVG: `09be4c16e4bca9f3a58e99959a9628d00723b012fa3182c6fcde5df90ad01ac7`
+- maximum changed Python line lengths were 91, 91, and 99 characters;
+- local SHA-256 values were recorded in the immutable archive and validation JSON.
 
 Not run:
 
+- ruff, because it was unavailable;
 - full repository pytest;
-- ruff;
-- Geant4 build or CTest;
+- Geant4 build/CTest;
 - ROOT or real simulation processing;
 - GitHub Actions.
 
-No broader CI, stopping-power closure, or detector-performance result is claimed.
+No broader CI, real stopping-power closure, calibration, or detector-performance result is claimed.
+
+## Reproducible evidence
+
+Added:
+
+- `docs/validation/stopping_power_sim_input_integration_audit.md`;
+- `docs/validation/stopping_power_sim_input_integration_validation.json`;
+- `docs/validation/stopping_power_sim_input_integration.svg`.
+
+The SVG explicitly states that it is synthetic regression evidence and not detector data. It contrasts the former three-to-two-row silent path with integrated status-2 rejection and no numerical PASS.
 
 ## Direct-to-main commits
 
 Implementation, tests, and evidence:
 
-- `442ff0c68c16564cc9bdd4ab3476718d2b5f2acd` — `feat(audit): validate stopping-power simulation inputs`
-- `b8f9e2873028ca0e1ef31b64eb6e6ec6afc2dc60` — `test(audit): cover stopping-power simulation input integrity`
-- `4f3a41e4f4131fccfcf2eb6a515614723b63b6ac` — `docs(validation): record stopping-power simulation input audit`
-- `028814362354c1c559a490b63220d2d2fa1a6667` — `docs(validation): add stopping-power simulation input record`
-- `28345eb2417fdbd87d595984a82a513cfa26af2e` — `docs(validation): visualize stopping-power input integrity gate`
+- `99f276fe38592f709542e03fb79c783e88dffc27` — `fix(single-stave): integrate fail-closed simulation parser`
+- `b4cbc0399d679bfbb8fd2f30d35f10ed211a1550` — `refactor(audit): expose canonical stopping-power rows`
+- `8debfbae9c846f078316b2bc9c0b6e58a82dbb03` — `test(single-stave): cover shared simulation parser integration`
+- `b72c2b147663efc428fad2927b359146c0bed7eb` — `docs(validation): record stopping-power parser integration`
+- `3804be1dfaba40f99e171ca4b1156d1314bea13e` — `docs(validation): add stopping-power parser integration record`
+- `1237fbcdfd530ea637cde27acc39c5c94b25600b` — `docs(validation): visualize stopping-power parser integration`
 
 Coordination and provenance:
 
-- `3e527bba859f0255738aa30cc231af454b94ea64` — `docs(audit): track stopping-power simulation input integrity`
-- `2c76750f0c55ec0d726356b51cad9ba8d78881e3` — `docs(audit): claim stopping-power simulation input integrity`
-- `aa2ea366857d59bb8d63d9867bf896670b435f4b` — `docs(audit): map stopping-power simulation input preflight`
-- `4d2ad16dec7e136f2886cadfd139bf2b315085ce` — `docs(audit): refine stopping blocker with sim-input preflight`
-- `dfe5812a343e7da30e750dbfb2525ab25867cc0f` — `docs(audit): register stopping-power input-integrity visual`
-- `7c96aad83aab29ab86b1ef9f33bde48dbdd8c8f4` — `docs(audit): record stopping-power input-integrity study`
-- `a65f29554ec556be43f23209c0a966e8033ba25d` — `docs(audit): classify stopping-power simulation input integrity`
-- `b421ece6867c6dc3dd5182d1c00910484df90078` — `docs(audit): index stopping-power simulation input integrity`
-- `f893a859e42c028775560afb8c1c28af26b349c3` — `docs(audit): archive stopping-power simulation input integrity`
+- `efb909a1e7446ee0ba38bb3c4f8bc4b59ff1b22c` — `docs(audit): track stopping-power parser integration`
+- `a4251f561ab012c1a5a1b9dfccea2e3b6b8c48f2` — `docs(audit): index stopping-power parser integration`
+- `73c37b4c40bd3d3d12f47bcd8faa47dd8cfc70bb` — `docs(audit): map canonical stopping-power parser integration`
+- `f4882e8e6c524502add2c018ed0a4fe47b2ab2e8` — `docs(audit): record canonical stopping-power parser study`
+- `ff4b94f5843050c2cd264255a4100a1c7511f5fe` — `docs(audit): classify stopping-power parser integration`
+- `907d87deb16e2bd575d0960ff214afe619ab2a3b` — `docs(audit): register stopping-power parser integration visual`
+- `095fb4e6b82cfb9be45009cfda51664c19d91858` — `docs(audit): resolve stopping-power parser integration blocker`
+- `83eeddf44a4a80aa2c3646e4919039de9f17c4ac` — `docs(audit): claim stopping-power parser integration`
+- `10f858986019b0e27f5d1353cbcdedeeddacf031` — `docs(audit): archive stopping-power parser integration`
 
-Every write above returned a successful direct-main commit SHA. Remote history was checked during the sequence. This handoff update follows directly on `main`; its returned commit SHA is verified as remote head after creation.
+Every write above returned a successful direct-main commit SHA. This handoff update is the final direct-main write for the session and its returned SHA must be confirmed as remote `main` in the final delivery report.
 
 ## Repository-local records
 
 Updated:
 
-- `ACTIVE_TASK.md`
-- `BACKLOG.md`
-- `MASTER_INDEX.md`
-- `CODE_RESULT_MAP.md`
-- `STUDY_REVIEW_LEDGER.md`
-- `CLAIM_EVIDENCE_MATRIX.md`
-- `VISUALIZATION_MATRIX.md`
-- `BLOCKERS.md`
-- `HANDOFF.md`
+- `ACTIVE_TASK.md`;
+- `BACKLOG.md`;
+- `MASTER_INDEX.md`;
+- `CODE_RESULT_MAP.md`;
+- `STUDY_REVIEW_LEDGER.md`;
+- `CLAIM_EVIDENCE_MATRIX.md`;
+- `VISUALIZATION_MATRIX.md`;
+- `BLOCKERS.md`;
+- `HANDOFF.md`.
 
 Added immutable provenance:
 
-- `archive/2026-07-23T150228Z_AUD-G4-009_SIM_INPUT_INTEGRITY.md`
+- `archive/2026-07-23T160603Z_AUD-G4-010_SIM_INPUT_INTEGRATION.md`.
 
-`SESSION_LOG.md` was not replaced because the connector exposes complete-file replacement but no safe append primitive, and only a partial read of the long append-only file was available. Replacing it from incomplete bytes could destroy earlier provenance. The immutable archive above is the complete session record.
+`SESSION_LOG.md` was not replaced. It is append-only, the connector offers complete-file replacement but no safe append primitive, and only partial paged reads of the long file were available. Replacing it from reconstructed bytes could destroy prior provenance. The immutable archive is the complete session record, and this limitation is explicitly documented rather than concealed.
 
 ## Scientific boundary and next action
 
-The standalone preflight prevents malformed simulation tables from silently becoming smaller analysis samples when it is run. It does not validate:
+This session validates software ingestion and integration only. It does not establish:
 
-- any real exported Geant4 event table;
-- the PSTAR source transcription;
-- local deposition as projectile total energy loss;
-- escaping-secondary accounting;
-- material, production-cut, or physics-list systematics;
-- the deuteron `S_d(E) ≈ S_p(E/2)` approximation;
-- any detector calibration or performance claim.
+- that any exact real Geant4 event table satisfies the schema;
+- that the external PSTAR transcription is independently correct;
+- that local deposited energy equals projectile total energy loss;
+- that escaping-secondary energy and production-cut dependence are negligible;
+- that the deuteron `S_d(E) ≈ S_p(E/2)` approximation is accurate;
+- any detector calibration or performance conclusion.
 
 Next:
 
-1. integrate the validated parser into `compare_stopping_power.py` without duplicating schema logic;
-2. run the reference-path, domain, reference-integrity, quenched-proxy, and input-integrity suites together;
-3. validate and hash exact real exported event CSVs and retain validation JSON beside comparison output;
-4. pursue the separate accepted proton closure under `AUD-G4-005`.
+1. run the integrated CLI on exact real exported event CSVs;
+2. retain input/output hashes, validated-row count, particle/energy coverage, basis, command, environment, and code commit;
+3. inspect any rejected rows rather than filtering them silently;
+4. execute the separate accepted proton closure under `AUD-G4-005` / `BLK-G4-SP-001`.

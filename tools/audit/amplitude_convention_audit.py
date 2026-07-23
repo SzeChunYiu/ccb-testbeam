@@ -12,15 +12,21 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.9.0"
+try:
+    from tools.audit.validate_amplitude_evidence_map import (
+        ACCEPTED_EVIDENCE_BASES,
+        validate_payload,
+    )
+except ModuleNotFoundError:  # Direct script execution from tools/audit.
+    from validate_amplitude_evidence_map import (
+        ACCEPTED_EVIDENCE_BASES,
+        validate_payload,
+    )
+
+TOOL_VERSION = "3.0.0"
 BASELINE_DISPERSION_TOKENS = (
     "rms", "std", "sigma", "noise", "width", "variance", "var",
 )
-ACCEPTED_EVIDENCE_BASES = {
-    "EXPLICIT_SCHEMA_METADATA",
-    "PRODUCER_CODE_PROVENANCE",
-    "INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE",
-}
 
 
 def file_sha256(path: Path) -> str:
@@ -55,25 +61,11 @@ def identify_baseline_columns(columns: list[str]) -> tuple[list[str], list[str]]
 
 
 def load_evidence_map(path: Path | None) -> dict[str, dict[str, Any]]:
+    """Load and fully validate traceable, hash-bound convention evidence."""
     if path is None:
         return {}
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict):
-        raise ValueError("evidence map must be a JSON object keyed by SHA-256")
-    result: dict[str, dict[str, Any]] = {}
-    for digest, record in payload.items():
-        if not isinstance(digest, str) or len(digest) != 64:
-            raise ValueError("evidence-map keys must be 64-character SHA-256 strings")
-        if not isinstance(record, dict):
-            raise ValueError(f"evidence record for {digest} must be an object")
-        convention = record.get("convention")
-        basis = record.get("evidence_basis")
-        if convention not in {"ABSOLUTE", "NET"}:
-            raise ValueError(f"evidence record for {digest} has invalid convention")
-        if basis not in ACCEPTED_EVIDENCE_BASES:
-            raise ValueError(f"evidence record for {digest} has invalid evidence_basis")
-        result[digest.lower()] = record
-    return result
+    return validate_payload(payload)
 
 
 def audit(
@@ -83,6 +75,8 @@ def audit(
     absolute_min: float,
     evidence_map: dict[str, dict[str, Any]] | None = None,
 ) -> dict:
+    # Programmatic callers receive the same fail-closed validation as the CLI.
+    validated_evidence_map = validate_payload(evidence_map or {})
     header = pd.read_csv(path, nrows=0)
     digest = file_sha256(path)
     common = {"path": str(path), "size_bytes": path.stat().st_size, "sha256": digest}
@@ -110,7 +104,7 @@ def audit(
     baseline_resolution = (
         "RESOLVED" if baseline else "MISSING" if not baseline_columns else "AMBIGUOUS"
     )
-    evidence_record = (evidence_map or {}).get(digest.lower())
+    evidence_record = validated_evidence_map.get(digest)
     accepted_convention = evidence_record.get("convention") if evidence_record else None
     convention = heuristic_convention
     convention_evidence = "PEDESTAL_ANCHORED" if baseline else "RAW_MEDIAN_HEURISTIC"
@@ -138,6 +132,7 @@ def audit(
         "evidence_record": evidence_record,
         "physics_convention": accepted_convention,
         "physics_convention_evidence": evidence_record.get("evidence_basis") if evidence_record else None,
+        "physics_evidence_reference": evidence_record.get("evidence_reference") if evidence_record else None,
         "physics_acceptance": "UNVERIFIED",
         "subtract_baseline_correct": (
             True if heuristic_convention == "ABSOLUTE" and baseline
@@ -183,10 +178,6 @@ def audit(
         result["warning_baseline"] = "AMPLITUDE_CONVENTION_WITHOUT_BASELINE_LEVEL"
         result["baseline_data_quality"] = "MISSING_COLUMN"
 
-    # Hash-bound convention evidence authorizes the interpretation, but an
-    # ABSOLUTE convention additionally requires a unique, complete pedestal
-    # column to make the mandated subtraction executable. NET evidence does
-    # not depend on optional pedestal diagnostics.
     if evidence_record:
         if accepted_convention == "NET":
             result["physics_acceptance"] = "ACCEPTABLE"
@@ -201,8 +192,6 @@ def audit(
             result["physics_acceptance"] = "ACCEPTABLE"
             result["physics_subtract_baseline_correct"] = True
 
-    if evidence_record and evidence_record.get("sha256", digest).lower() != digest.lower():
-        raise ValueError("evidence record sha256 does not match evidence-map key")
     if warnings:
         result["warnings"] = warnings
     return result
@@ -260,7 +249,7 @@ def main(argv: list[str] | None = None) -> int:
             "heuristic_NET": f"median <= {args.net_max_adc}",
             "heuristic_ABSOLUTE": f"median >= {args.absolute_min_adc}",
             "heuristic_AMBIGUOUS": "between thresholds; manual review required",
-            "accepted_convention": "requires SHA-256 keyed evidence map",
+            "accepted_convention": "requires validated SHA-256 keyed evidence with reference",
             "finite_numeric_values_only": True,
         },
         "accepted_evidence_bases": sorted(ACCEPTED_EVIDENCE_BASES),

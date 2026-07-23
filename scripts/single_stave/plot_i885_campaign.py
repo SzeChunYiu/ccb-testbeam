@@ -94,7 +94,12 @@ def read_readout_times(root_path):
 def collect(indir, readout_end_x_cm, want_timing):
     rows = []
     timing = []
+    # only read COMPLETE files: RunAction writes the .meta.json sidecar LAST, so a
+    # .root without its sibling .meta.json is still being written and would crash
+    # uproot. This makes the plotter safe to run while the array is still draining.
     for root in sorted(glob.glob(str(Path(indir) / "*.root"))):
+        if not Path(root + ".meta.json").is_file():
+            continue
         m = FNAME_RE.search(Path(root).name)
         if not m:
             continue

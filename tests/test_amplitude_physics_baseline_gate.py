@@ -16,6 +16,8 @@ assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
+REFERENCE_SHA256 = "b" * 64
+
 
 def evidence_for(path: Path, convention: str) -> dict[str, dict[str, str]]:
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -23,6 +25,7 @@ def evidence_for(path: Path, convention: str) -> dict[str, dict[str, str]]:
         "convention": convention,
         "evidence_basis": "PRODUCER_CODE_PROVENANCE",
         "evidence_reference": "tests/fixtures/producer_contract.md",
+        "evidence_reference_sha256": REFERENCE_SHA256,
     }}
 
 

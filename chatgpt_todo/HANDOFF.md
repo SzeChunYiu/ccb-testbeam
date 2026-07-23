@@ -7,29 +7,45 @@
 - Repository: `SzeChunYiu/ccb-testbeam`
 - Initial remote main: `eec220db6807d3d3615d92c6d39d4fb2e18e4335`
 - Validated implementation/evidence head: `807febe85c35b537c53a5acdf1795ee9a67d7cb2`
-- Remote main before handoff: `b29e86b5aec0cc0493e6b795cb7877c00d174f77`
+- Remote main immediately before final handoff: `149e5cb6d8a3fed65505c5243c875b7a9637053b`
 - Destination: direct to `main`
-- Acceptance: COMPLETE for simulation input byte-snapshot provenance; stopping-power physics closure remains PARTIAL/BLOCKED.
+- Acceptance: COMPLETE for simulation-table parse/provenance byte-snapshot identity; accepted stopping-power physics closure remains PARTIAL/BLOCKED.
 
-## Review and finding
+## Start-of-run and concurrent-work review
 
-The run inspected current main history, repository permissions, the canonical stopping-power comparison, shared simulation parser, parser tests, mandatory audit records, commit status, and PR #868. PR #868 remains closed, unmerged, and non-mergeable and was not modified. A direct clone failed because the runtime could not resolve `github.com`; authenticated GitHub reads and writes were used.
+- Fetched current remote-main history and confirmed repository admin/push permission.
+- Inspected the canonical stopping-power comparison, shared simulation parser, parser tests, previous handoff, active task, backlog, master index, code-result map, study ledger, claim matrix, visualization matrix, blocker register, PR #868, and commit status.
+- `AUD-REPO-001` remained owned by a concurrent session and was not duplicated.
+- PR #868 remains closed, unmerged, and non-mergeable. It was not reopened, changed, or merged.
+- A direct clone/fetch attempt failed with `Could not resolve host: github.com`; exact source/test bytes were reconstructed through authenticated GitHub reads.
+- Every session write targeted current `main`; no force push, history rewrite, task branch, or unrelated rollback was used.
 
-Validator v1.1.0 parsed CSV rows with `Path.read_text()`, then later measured byte size and SHA-256 through separate path reads. A replaced input path could therefore yield normalized rows from bytes A but provenance from bytes B. Invalid UTF-8 also escaped as an uncontrolled decoder exception.
+## Confirmed provenance defect
+
+`tools/audit/validate_stopping_power_sim_table.py` v1.1.0 used separate path reads for scientific content and provenance:
+
+1. `Path.read_text()` supplied the CSV rows;
+2. `Path.stat().st_size` later supplied byte count;
+3. `sha256_file()` later streamed the path again for the digest.
+
+If the path was replaced between these operations, normalized event rows could describe bytes A while the recorded byte count and SHA-256 described bytes B. The parser also allowed invalid UTF-8 to escape as an uncaught `UnicodeDecodeError` rather than the documented status-2 input failure.
 
 ## Validated correction
 
-`tools/audit/validate_stopping_power_sim_table.py` v1.2.0 now:
+Validator v1.2.0 now:
 
-1. reads exact bytes once;
+1. reads exact input bytes once;
 2. decodes and parses that byte string;
-3. derives byte count and SHA-256 from the same bytes;
-4. records `input_snapshot_method=SINGLE_READ_EXACT_BYTES`;
-5. converts invalid UTF-8 into controlled `SimulationTableError` status 2.
+3. calculates byte count from `len(input_bytes)`;
+4. calculates SHA-256 from the same byte string;
+5. records `input_snapshot_method=SINGLE_READ_EXACT_BYTES`;
+6. maps invalid UTF-8 to `SimulationTableError`, so the CLI returns status 2 without a validation success line.
 
-Existing particle, energy, deposit, track-length, alias, physical-value, completeness, and raw/quenched gates are retained.
+All existing particle, energy, energy-deposit, track-length, alias, finite-value, physical-value, raw/quenched, and complete-row gates are retained.
 
-## Validation
+## Regression and validation
+
+Added `tests/test_validate_stopping_power_sim_snapshot.py`.
 
 ```text
 python -m py_compile \
@@ -43,32 +59,68 @@ python -m pytest \
 19 passed in 2.01s
 ```
 
-The former algorithm fails both new tests: provenance follows replacement bytes, and invalid UTF-8 raises an uncaught decoder exception. JSON and SVG parsing passed. Changed Python lines are at most 94 characters. The committed implementation blob `6a57b93d6fb4f63a7b714b858d379f02b5a7eda0` matches the locally validated blob.
+The deterministic mutation regression replaces the path after data-line formation and verifies that returned rows, size, and digest remain bound to the original byte snapshot. The exact former algorithm fails both new assertions: provenance follows replacement bytes, and invalid UTF-8 raises an uncaught decoder exception.
 
-Not run: full repository pytest, ruff, Geant4/CTest, ROOT processing, real simulation, or GitHub Actions.
+Additional passed checks:
 
-## Evidence
+- validation JSON parse;
+- SVG XML parse;
+- maximum changed Python line length 94;
+- committed implementation blob `6a57b93d6fb4f63a7b714b858d379f02b5a7eda0` equals the locally validated blob;
+- implementation SHA-256 `35068d8dd59680ab12ac9f4f595cbc00fb406713d09c931a7071ca7caf317bee`.
+
+Not run: full repository pytest, ruff, Geant4/CTest, ROOT processing, real simulation execution, or GitHub Actions. No broader CI, simulation, or physics-closure success is claimed.
+
+## Reproducible evidence
 
 - `docs/validation/stopping_power_sim_snapshot_audit.md`
 - `docs/validation/stopping_power_sim_snapshot_validation.json`
 - `docs/validation/stopping_power_sim_snapshot.svg`
-- `chatgpt_todo/archive/2026-07-23T230825Z_AUD-G4-019_SIM_INPUT_SNAPSHOT.md`
 
-The SVG is synthetic software regression evidence, not detector data.
+The SVG is explicitly synthetic software regression evidence, not detector data. It contrasts the former split-read path with the corrected one-snapshot path using text, position, and cross-out rather than color alone.
 
-## Direct-main commits
+## Direct-to-main commit sequence
 
-- `efc9610bd382ea52f6bbc8e53be87af6c74766fa` — implementation
-- `76b5e1dcf5e8fb3ad9c66a9646dd8ddab3d3dcea` — regression tests
-- `964042dc25b1b0abcd0eac0ec35e4f1b3268abe7` — audit report
+- `efc9610bd382ea52f6bbc8e53be87af6c74766fa` — `fix(audit): bind simulation rows to one byte snapshot`
+- `76b5e1dcf5e8fb3ad9c66a9646dd8ddab3d3dcea` — `test(audit): cover simulation byte-snapshot provenance`
+- `964042dc25b1b0abcd0eac0ec35e4f1b3268abe7` — validation audit Markdown
 - `f28049ce952bf5e8194f7c3936adab2401d713b6` — validation JSON
-- `807febe85c35b537c53a5acdf1795ee9a67d7cb2` — visual evidence
+- `807febe85c35b537c53a5acdf1795ee9a67d7cb2` — validation SVG
 - `17322a138cc160eef09beadd2ede6df5a4076625` — active task
 - `462738e51fdfc93cb5eaef34e0de1d8260369c83` — backlog
 - `b29e86b5aec0cc0493e6b795cb7877c00d174f77` — immutable archive
+- `c9e5b50c0026b356972c21e9230af00507e683d2` — preliminary handoff
+- `29e4180d42c57930e912dc4bb935f3759bdba979` — master index
+- `5c77fbcc5a9edf98446c5fcf89af8ed4578ae6bf` — code-result map
+- `a5a0cf92441a7aa67b7e3a8cf7bf8184c13167a4` — study ledger
+- `42b63d60890a06af44a243c1471358a4157955eb` — claim matrix
+- `efa495871170032a9476fcf35313f2e770dea70e` — visualization matrix
+- `149e5cb6d8a3fed65505c5243c875b7a9637053b` — blocker register
 
-`SESSION_LOG.md` was not replaced because the connector has no safe append primitive and complete byte-safe current content was unavailable. Replacing the append-only file could destroy prior provenance. The immutable archive contains the complete run record.
+Every contents write returned a successful direct-main commit. The commit containing this final handoff is confirmed separately through remote-main history after the write.
 
-## Scientific boundary
+## `chatgpt_todo/` updates
 
-This validates parser/provenance identity only. No real Geant4 export, accepted projectile-energy-loss observable, uncertainty budget, stopping-power closure, calibration, or detector-performance result was produced. `BLK-G4-SP-001` remains open. The next work remains immutable real-export validation (`AUD-G4-011`) and accepted projectile-loss closure (`AUD-G4-005`).
+Updated:
+
+- `ACTIVE_TASK.md`
+- `BACKLOG.md`
+- `MASTER_INDEX.md`
+- `CODE_RESULT_MAP.md`
+- `STUDY_REVIEW_LEDGER.md`
+- `CLAIM_EVIDENCE_MATRIX.md`
+- `VISUALIZATION_MATRIX.md`
+- `BLOCKERS.md`
+- `HANDOFF.md`
+
+Added immutable session record:
+
+- `chatgpt_todo/archive/2026-07-23T230825Z_AUD-G4-019_SIM_INPUT_SNAPSHOT.md`
+
+`SESSION_LOG.md` was not replaced because it is append-only, the connector exposes complete-file replacement rather than a safe append primitive, and a complete byte-safe current payload was not available. Replacing it could destroy prior provenance. The immutable archive is the complete reproducible session record; this coordination limitation is not a scientific acceptance claim.
+
+## Scientific boundary and next task
+
+This establishes that normalized simulation rows and their reported input digest derive from one exact byte snapshot. It does not validate a real Geant4 export, establish that local deposited energy equals projectile total energy loss, quantify secondary escape or energy evolution, implement an uncertainty budget, or demonstrate Geant4/PSTAR agreement.
+
+`AUD-G4-019` is COMPLETE. `BLK-G4-SP-001` remains OPEN. The next accepted stopping-power work remains `AUD-G4-011` and `AUD-G4-005`: validate immutable real exports and an accepted projectile-loss observable, quantify secondary escape and energy evolution, then preregister and propagate uncertainty before evaluating closure.

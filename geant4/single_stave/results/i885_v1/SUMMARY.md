@@ -47,7 +47,7 @@ The proton values reject a straight-line response under the recorded statistical
 
 ## Plots
 
-P1-P4 and P8 are partial simulation diagnostics. `P5_seed_averaged_calibration.svg` shows seed-averaged independent-energy points and the rejected proton linear diagnostics. It is explicitly labelled as Geant4 simulation output, not detector data. P6/P7 have no committed attenuation/timing coverage in this bundle.
+P1-P4 and P8 are partial simulation diagnostics. `P5_seed_averaged_calibration.svg` shows seed-averaged independent-energy points and the rejected proton linear diagnostics. It is explicitly labelled as Geant4 simulation output, not detector data. The canonical SVG is generated deterministically from the fit JSON and point CSV by `render_i885_refit_svg.py`; its SHA-256 is `725b592d9d217f43cf8624ca7682575a35cf5f4f1ec06d9ea7266a7a4f8a3332`. P6/P7 have no committed attenuation/timing coverage in this bundle.
 
 ## Regenerate and validate
 
@@ -55,8 +55,17 @@ P1-P4 and P8 are partial simulation diagnostics. `P5_seed_averaged_calibration.s
 python scripts/single_stave/refit_i885_campaign.py \
   --observed geant4/single_stave/results/i885_v1/i885_per_config.csv \
   --output-json geant4/single_stave/results/i885_v1/i885_fits.json \
-  --output-svg geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg \
+  --output-svg /tmp/i885_refit_matplotlib_preview.svg \
   --output-points geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv
+
+python scripts/single_stave/render_i885_refit_svg.py \
+  --fits geant4/single_stave/results/i885_v1/i885_fits.json \
+  --points geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv \
+  --output geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg
+
+python -m pytest \
+  tests/test_refit_i885_campaign.py \
+  tests/test_render_i885_refit_svg.py -q
 
 python tools/audit/validate_i885_campaign_results.py \
   --manifest geant4/single_stave/slurm/points_i885_campaign.csv \

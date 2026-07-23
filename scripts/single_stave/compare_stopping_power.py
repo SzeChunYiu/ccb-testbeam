@@ -38,6 +38,8 @@ from tools.audit.validate_stopping_power_sim_table import (  # noqa: E402
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
 PstarRow = tuple[float, float, float, float]
 ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
+DIRECT_PROTON_REFERENCE = "DIRECT_PSTAR_PROTON"
+DEUTERON_REFERENCE_PROXY = "VELOCITY_SCALED_PROTON_PROXY"
 
 
 class StoppingPowerInputError(ValueError):
@@ -59,16 +61,24 @@ def read_reference(path: Path) -> list[PstarRow]:
     return rows
 
 
-def reference_lookup_energy(particle: str, energy_mev: float) -> float:
-    """Return the proton-equivalent PSTAR lookup energy for a particle."""
+def reference_basis(particle: str) -> str:
+    """Return the provenance basis used for the reference stopping power."""
     normalized = particle.strip().lower()
     if normalized.startswith("p"):
-        return energy_mev
+        return DIRECT_PROTON_REFERENCE
     if normalized.startswith("d"):
-        return energy_mev / 2.0
+        return DEUTERON_REFERENCE_PROXY
     raise StoppingPowerInputError(
         f"unsupported particle '{particle}' (use proton|deuteron)"
     )
+
+
+def reference_lookup_energy(particle: str, energy_mev: float) -> float:
+    """Return the proton-equivalent PSTAR lookup energy for a particle."""
+    basis = reference_basis(particle)
+    if basis == DIRECT_PROTON_REFERENCE:
+        return energy_mev
+    return energy_mev / 2.0
 
 
 def interp_loglog(table: list[PstarRow], x: float) -> float:
@@ -179,6 +189,7 @@ def run_compare(
     out_path: Path | None,
     tol_pct: float,
     allow_quenched_proxy: bool = False,
+    allow_deuteron_proxy: bool = False,
 ) -> tuple[list[dict[str, object]], bool]:
     """Run a validated diagnostic comparison and optionally write a CSV report."""
     if not math.isfinite(tol_pct) or tol_pct < 0:
@@ -187,6 +198,13 @@ def run_compare(
         )
     table, ref_summary = _read_reference_with_summary(ref_path)
     rows, sim_summary = _read_sim_with_summary(sim_path, allow_quenched_proxy)
+    has_deuteron = any(particle == "deuteron" for particle, *_ in rows)
+    if has_deuteron and not allow_deuteron_proxy:
+        raise StoppingPowerInputError(
+            "deuteron comparison maps E to proton PSTAR at E/2 using an "
+            "unvalidated equal-velocity proxy; use --allow-deuteron-proxy only "
+            "for labelled, non-accepting diagnostics"
+        )
     basis = str(sim_summary["energy_deposit_basis"])
     aggregated = aggregate(rows, rho, energy_deposit_basis=basis)
     results: list[dict[str, object]] = []
@@ -196,13 +214,16 @@ def run_compare(
     for result in aggregated:
         energy = float(result["energy_MeV"])
         particle = str(result["particle"])
+        ref_basis = reference_basis(particle)
+        direct_reference = ref_basis == DIRECT_PROTON_REFERENCE
         lookup_energy = reference_lookup_energy(particle, energy)
         reference = reference_for(particle, energy, table)
         ratio = float(result["sim_total_MeV_cm2_g"]) / reference
         delta = (ratio - 1.0) * 100.0
         numeric_ok = abs(delta) <= tol_pct
-        comparable = bool(result["raw_pstar_comparable"])
-        accepted_ok = numeric_ok and comparable
+        raw_comparable = bool(result["raw_pstar_comparable"])
+        physics_comparable = raw_comparable and direct_reference
+        accepted_ok = numeric_ok and physics_comparable
         all_pass = all_pass and accepted_ok
         result.update(
             {
@@ -218,6 +239,9 @@ def run_compare(
                 "reference_component_consistent": ref_summary[
                     "all_rows_component_consistent"
                 ],
+                "reference_basis": ref_basis,
+                "reference_direct_pstar_comparable": direct_reference,
+                "physics_comparable": physics_comparable,
                 "reference_lookup_energy_MeV": lookup_energy,
                 "reference_range_min_MeV": ref_min,
                 "reference_range_max_MeV": ref_max,
@@ -236,6 +260,9 @@ def run_compare(
             "particle",
             "energy_MeV",
             "energy_grouping",
+            "reference_basis",
+            "reference_direct_pstar_comparable",
+            "physics_comparable",
             "reference_lookup_energy_MeV",
             "reference_range_min_MeV",
             "reference_range_max_MeV",
@@ -288,7 +315,7 @@ def run_compare(
     for result in results:
         status = (
             "NONCOMPARABLE"
-            if not result["raw_pstar_comparable"]
+            if not result["physics_comparable"]
             else ("PASS" if result["within_tolerance"] else "FAIL")
         )
         print(
@@ -315,9 +342,14 @@ def run_compare(
         f"sha256={ref_summary['input_sha256']} validator={PSTAR_VALIDATOR_VERSION} "
         "component_sum=VALIDATED"
     )
+    if has_deuteron:
+        print(f"DEUTERON REFERENCE BASIS: {DEUTERON_REFERENCE_PROXY}")
     if basis == QUENCHED_BASIS:
         print("ENERGY DEPOSIT BASIS: QUENCHED_PROXY")
         print("NUMERICAL TOLERANCE: NOT_ACCEPTED_QUENCHED_PROXY")
+    elif has_deuteron:
+        print("ENERGY DEPOSIT BASIS: UNQUENCHED_RAW")
+        print("NUMERICAL TOLERANCE: NOT_ACCEPTED_DEUTERON_PROXY")
     else:
         print("ENERGY DEPOSIT BASIS: UNQUENCHED_RAW")
         print("NUMERICAL TOLERANCE:", "PASS" if all_pass and results else "FAIL")
@@ -326,7 +358,7 @@ def run_compare(
 
 
 def self_test(ref_path: Path | None = None) -> int:
-    """Build synthetic events against the selected committed reference table."""
+    """Build synthetic proton events against the selected committed reference table."""
     reference_path = DEFAULT_REF if ref_path is None else ref_path
     if not reference_path.is_file():
         print(
@@ -348,8 +380,6 @@ def self_test(ref_path: Path | None = None) -> int:
         ("proton", 60.0),
         ("proton", 100.0),
         ("proton", 150.0),
-        ("deuteron", 100.0),
-        ("deuteron", 200.0),
     ]
     with tempfile.TemporaryDirectory() as directory:
         simulation_path = Path(directory) / "synthetic_events.csv"
@@ -363,7 +393,7 @@ def self_test(ref_path: Path | None = None) -> int:
                 deposit = reference * DEFAULT_RHO / 10.0
                 for _ in range(40):
                     writer.writerow([particle, energy, f"{deposit:.9f}", "1.0"])
-        print("=== self-test on synthetic events (expected ratio ~ 1.0) ===")
+        print("=== self-test on synthetic proton events (expected ratio ~ 1.0) ===")
         results, ok = run_compare(
             simulation_path,
             reference_path,
@@ -393,6 +423,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="permit labelled, non-accepting quenched diagnostic output",
     )
+    parser.add_argument(
+        "--allow-deuteron-proxy",
+        action="store_true",
+        help="permit labelled, non-accepting deuteron E/2 PSTAR proxy output",
+    )
     parser.add_argument("--self-test", action="store_true")
     return parser.parse_args(argv)
 
@@ -411,6 +446,7 @@ def main(argv: list[str] | None = None) -> int:
             args.out,
             args.tolerance_pct,
             allow_quenched_proxy=args.allow_quenched_proxy,
+            allow_deuteron_proxy=args.allow_deuteron_proxy,
         )
         return 0 if ok else 1
     except StoppingPowerInputError as exc:

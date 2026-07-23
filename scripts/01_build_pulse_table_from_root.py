@@ -52,6 +52,158 @@ def resolve_amplitude_cut(config: dict, cli_value: Optional[float]) -> Tuple[flo
         return env_val, f"env({AMPLITUDE_CUT_ENV}={env_raw})"
     return cfg_val, f"config({cfg_val})"
 
+# --- S00 implementation-consistency check (audit S00-001 / S00-002 / STAT-002) ------------
+# The S00 "ML check" is NOT a scientific benchmark: the label is defined
+# deterministically by the amplitude cut (``selected = amplitude > cut``), so
+# the column ``amplitude_adc`` cannot be used as a prediction feature without
+# making every metric trivially perfect. The output is therefore reframed as
+# an *implementation consistency check* and a leakage guard is enforced below.
+TARGET_DEFINING_COLUMN = "amplitude_adc"
+ML_FEATURES_DEFAULT = ("area_adc_samples", "peak_sample", "baseline_adc")
+
+#: Env vars that override case-control sampling rates and the bootstrap
+#: replicate count without editing the YAML (repo rule: no arbitrary hardcoded
+#: numbers in code; the YAML remains the documented default when present).
+CASE_CONTROL_KEEP_SELECTED_ENV = "CCB_ML_CASE_CONTROL_KEEP_SELECTED"
+CASE_CONTROL_KEEP_REJECTED_ENV = "CCB_ML_CASE_CONTROL_KEEP_REJECTED"
+ML_BOOTSTRAP_REPS_ENV = "CCB_ML_BOOTSTRAP_REPS"
+
+
+def resolve_ml_features(config: dict) -> List[str]:
+    """Feature columns for the implementation-consistency check.
+
+    Fail-closed leakage guard (audit S00-001): the label is
+    ``amplitude_adc > cut``, so ``amplitude_adc`` (the target-defining column)
+    MUST NOT appear in the feature set -- otherwise every metric is perfect by
+    construction. Raises ``ValueError`` on any leak.
+    """
+    raw = config.get("ml_check", {}).get("features")
+    features = list(ML_FEATURES_DEFAULT) if raw is None else [str(c) for c in raw]
+    leaked = sorted(set(features) & {TARGET_DEFINING_COLUMN})
+    if leaked:
+        raise ValueError(
+            "Feature-target leakage (S00-001): the label is defined by "
+            f"'{TARGET_DEFINING_COLUMN} > cut', so these feature(s) make any "
+            f"metric trivially perfect: {leaked}. Remove them from "
+            "ml_check.features."
+        )
+    return features
+
+
+def resolve_case_control_keep(config: dict) -> Tuple[float, float]:
+    """Return ``(keep_selected, keep_rejected)`` case-control sampling rates.
+
+    Precedence: env > config > documented default (0.20, 0.05). The defaults
+    are the historical S00 design values; they are surfaced here so callers can
+    build inverse-probability weights that restore population prevalence
+    (audit S00-002).
+    """
+    ml = config.get("ml_check", {}).get("case_control_keep", {})
+    sel_default = float(ml.get("selected", 0.20)) if isinstance(ml, dict) else 0.20
+    rej_default = float(ml.get("rejected", 0.05)) if isinstance(ml, dict) else 0.05
+
+    def _resolve(env_var: str, default: float, what: str) -> float:
+        raw = os.environ.get(env_var)
+        value = default if raw is None or str(raw).strip() == "" else float(raw)
+        if not np.isfinite(value) or not (0.0 < value <= 1.0):
+            raise ValueError(f"{what} must satisfy 0 < p <= 1, got {raw!r}")
+        return value
+
+    return _resolve(CASE_CONTROL_KEEP_SELECTED_ENV, sel_default, "keep_selected"), _resolve(
+        CASE_CONTROL_KEEP_REJECTED_ENV, rej_default, "keep_rejected"
+    )
+
+
+def resolve_ml_bootstrap_reps(config: dict) -> int:
+    """Return the bootstrap replicate count (env > config > default 300)."""
+    default = int(config.get("ml_check", {}).get("bootstrap_reps", 300))
+    raw = os.environ.get(ML_BOOTSTRAP_REPS_ENV)
+    value = default if raw is None or str(raw).strip() == "" else int(raw)
+    if value < 1:
+        raise ValueError(f"bootstrap_reps must be >= 1, got {value}")
+    return value
+
+
+def case_control_sampling_weight(
+    selected_mask: np.ndarray, keep_selected: float, keep_rejected: float
+) -> np.ndarray:
+    """Inverse-probability-of-inclusion weight for the case-control design.
+
+    Each kept row represents ``1 / p(class)`` population rows, so multiplying
+    any held-out evaluation by these weights restores population prevalence
+    (audit S00-002). ``selected_mask`` is the boolean label of the KEPT sample.
+    """
+    sel = np.asarray(selected_mask, dtype=bool)
+    return np.where(sel, 1.0 / float(keep_selected), 1.0 / float(keep_rejected))
+
+
+def make_run_event_clusters(runs: np.ndarray, eventnos: np.ndarray) -> np.ndarray:
+    """Build a ``(run, event)`` cluster label array for the cluster bootstrap.
+
+    Rows sharing both ``run`` and ``event`` are one cluster (audit STAT-002):
+    pulses from the same DAQ event share baseline / physics and must move
+    together under resampling.
+    """
+    runs = np.asarray(runs)
+    eventnos = np.asarray(eventnos)
+    if runs.shape != eventnos.shape:
+        raise ValueError(
+            f"runs shape {runs.shape} must match eventnos shape {eventnos.shape}"
+        )
+    # 1-D object array of (run, event) TUPLES (not a 2-D array): each element
+    # is a single hashable/comparable cluster label so np.unique and
+    # ``clusters == k`` behave as cluster-level (not element-wise) operations.
+    labels = np.empty(runs.shape[0], dtype=object)
+    labels[:] = [tuple(z) for z in zip(runs.tolist(), eventnos.tolist())]
+    return labels
+
+
+def build_ml_rows_for_batch(
+    *,
+    run: int,
+    group: str,
+    event_numbers: np.ndarray,
+    stave_grid: np.ndarray,
+    amplitude: np.ndarray,
+    area: np.ndarray,
+    peak_sample: np.ndarray,
+    baseline: np.ndarray,
+    selected_mask: np.ndarray,
+    keep_mask: np.ndarray,
+    keep_selected: float,
+    keep_rejected: float,
+) -> pd.DataFrame:
+    """Pure helper: build per-batch implementation-consistency rows.
+
+    Carries ``eventno`` (needed for the ``(run, event)`` cluster bootstrap,
+    STAT-002) and ``sampling_weight`` (inverse-probability weight that restores
+    population prevalence under case-control sampling, S00-002). Factored out
+    of ``scan_raw`` so it is unit-testable without raw ROOT data.
+    """
+    n_staves = int(stave_grid.shape[0])
+    flat_stave = np.tile(np.arange(n_staves), len(event_numbers))
+    flat_event = np.repeat(np.arange(len(event_numbers)), n_staves)
+    kept_event = flat_event[keep_mask]
+    kept_stave = flat_stave[keep_mask]
+    kept_selected = selected_mask.ravel()[keep_mask].astype(bool)
+    n_kept = int(keep_mask.sum())
+    return pd.DataFrame(
+        {
+            "run": np.full(n_kept, int(run), dtype=int),
+            "group": np.full(n_kept, str(group), dtype=object),
+            "eventno": event_numbers[kept_event].astype(int),
+            "stave": stave_grid[kept_stave],
+            "amplitude_adc": amplitude[kept_event, kept_stave],
+            "area_adc_samples": area[kept_event, kept_stave],
+            "peak_sample": peak_sample[kept_event, kept_stave].astype(int),
+            "baseline_adc": baseline[kept_event, kept_stave],
+            "selected": kept_selected.astype(int),
+            "sampling_weight": case_control_sampling_weight(
+                kept_selected, keep_selected, keep_rejected
+            ),
+        }
+    )
+
 
 def sha256_file(path: Path, block_size: int = 1024 * 1024) -> str:
     digest = hashlib.sha256()
@@ -120,6 +272,12 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
     counts_by_run: List[dict] = []
     counts_by_group: Dict[str, dict] = defaultdict(init_count_dict)
     selected_frames: List[pd.DataFrame] = []
+    # Population prevalence accumulators (pre-case-control-subsampling) so the
+    # implementation-consistency check can document/report population prevalence
+    # and de-bias case-control evaluation (audit S00-002).
+    pop_total = 0
+    pop_selected = 0
+    keep_selected, keep_rejected = resolve_case_control_keep(config)
     ml_frames: List[pd.DataFrame] = []
     max_sample = int(config["ml_check"]["max_train_per_class"]) + int(config["ml_check"]["max_test_per_class"])
     stave_names = list(staves.keys())
@@ -173,26 +331,31 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
                 )
 
             flat_selected = selected_mask.ravel()
-            # Keep a bounded random sample for the ML sanity check; the final cap is applied
-            # after all runs so held-out runs remain represented.
-            keep_probability = np.where(flat_selected, 0.20, 0.05)
+            # Case-control subsample for the bounded implementation-consistency
+            # check; the per-class cap is applied after all runs so held-out runs
+            # remain represented. The keep rates are config/env-driven
+            # (resolve_case_control_keep) and each kept row carries an
+            # inverse-probability sampling_weight so held-out evaluation can
+            # restore population prevalence (audit S00-002).
+            pop_total += int(flat_selected.shape[0])
+            pop_selected += int(flat_selected.sum())
+            keep_probability = np.where(flat_selected, keep_selected, keep_rejected)
             keep = rng.random(flat_selected.shape[0]) < keep_probability
             if keep.any():
-                flat_stave = np.tile(np.arange(len(stave_names)), len(event_numbers))
-                flat_event = np.repeat(np.arange(len(event_numbers)), len(stave_names))
-                kept_event = flat_event[keep]
-                kept_stave = flat_stave[keep]
                 ml_frames.append(
-                    pd.DataFrame(
-                        {
-                            "run": run,
-                            "stave": stave_grid[kept_stave],
-                            "amplitude_adc": amplitude[kept_event, kept_stave],
-                            "area_adc_samples": area[kept_event, kept_stave],
-                            "peak_sample": peak_sample[kept_event, kept_stave].astype(int),
-                            "baseline_adc": baseline[kept_event, kept_stave],
-                            "selected": flat_selected[keep].astype(int),
-                        }
+                    build_ml_rows_for_batch(
+                        run=run,
+                        group=group,
+                        event_numbers=event_numbers,
+                        stave_grid=stave_grid,
+                        amplitude=amplitude,
+                        area=area,
+                        peak_sample=peak_sample,
+                        baseline=baseline,
+                        selected_mask=selected_mask,
+                        keep_mask=keep,
+                        keep_selected=keep_selected,
+                        keep_rejected=keep_rejected,
                     )
                 )
 
@@ -224,8 +387,21 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
     for selected_value, subset in ml_rows.groupby("selected"):
         n = min(len(subset), max_sample)
         capped.append(subset.sample(n=n, random_state=int(config["ml_check"]["random_seed"]) + int(selected_value)))
-    ml_rows = pd.concat(capped, ignore_index=True)
-    return pd.DataFrame(counts_by_run), pd.DataFrame(group_rows), counts_by_group, selected, ml_rows
+    if capped:
+        ml_rows = pd.concat(capped, ignore_index=True)
+    population_prevalence = {
+        "selected": int(pop_selected),
+        "total": int(pop_total),
+        "prevalence": float(pop_selected / pop_total) if pop_total else float("nan"),
+    }
+    return (
+        pd.DataFrame(counts_by_run),
+        pd.DataFrame(group_rows),
+        counts_by_group,
+        selected,
+        ml_rows,
+        population_prevalence,
+    )
 
 
 def compare_expected(config: dict, counts_by_group: pd.DataFrame) -> pd.DataFrame:
@@ -303,7 +479,24 @@ def sorted_crosscheck(config: dict) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def run_ml_check(config: dict, ml_rows: pd.DataFrame, out_dir: Path) -> pd.DataFrame:
+def run_ml_check(
+    config: dict,
+    ml_rows: pd.DataFrame,
+    out_dir: Path,
+    *,
+    population_prevalence: Optional[dict] = None,
+) -> pd.DataFrame:
+    """S00 *implementation consistency check* (NOT a scientific benchmark).
+
+    The label is deterministic (``selected = amplitude > cut``), so this checks
+    that the run-split logistic fit is *consistent* with the deterministic rule
+    using only NON-target-defining features (``amplitude_adc`` is excluded by
+    :func:`resolve_ml_features` -- leakage guard, audit S00-001). Metrics are
+    reported both raw (case-control, prevalence-distorted) and inverse-probability
+    weighted so the population prevalence is restored (audit S00-002). The
+    accuracy interval uses a ``(run, event)`` cluster bootstrap so pulses from
+    one DAQ event move together (audit STAT-002).
+    """
     from sklearn.calibration import CalibratedClassifierCV, calibration_curve
     from sklearn.linear_model import LogisticRegression
     from sklearn.metrics import average_precision_score, brier_score_loss, roc_auc_score
@@ -311,12 +504,20 @@ def run_ml_check(config: dict, ml_rows: pd.DataFrame, out_dir: Path) -> pd.DataF
     from sklearn.pipeline import make_pipeline
     from sklearn.preprocessing import StandardScaler
 
+    from ccb_mc_validation.statistics.bootstrap import cluster_bootstrap
+
+    # S00-001 leakage guard: raises if amplitude_adc (target-defining) is a feature.
+    features = resolve_ml_features(config)
+    n_boot = resolve_ml_bootstrap_reps(config)
     heldout = set(int(run) for run in config["ml_check"]["heldout_runs"])
     train = ml_rows[~ml_rows["run"].isin(heldout)].copy()
     test = ml_rows[ml_rows["run"].isin(heldout)].copy()
-    features = ["amplitude_adc", "area_adc_samples", "peak_sample", "baseline_adc"]
     c_values = [float(value) for value in config["ml_check"]["regularization_c"]]
     cv = StratifiedKFold(n_splits=int(config["ml_check"]["cv_folds"]), shuffle=True, random_state=int(config["ml_check"]["random_seed"]))
+
+    w_train = train["sampling_weight"].to_numpy(dtype=float) if "sampling_weight" in train else None
+    w_test = test["sampling_weight"].to_numpy(dtype=float) if "sampling_weight" in test else None
+    sw = w_test
 
     cv_rows = []
     for c_value in c_values:
@@ -327,57 +528,114 @@ def run_ml_check(config: dict, ml_rows: pd.DataFrame, out_dir: Path) -> pd.DataF
 
     base = make_pipeline(StandardScaler(), LogisticRegression(C=best_c, max_iter=1000, solver="lbfgs"))
     calibrated = CalibratedClassifierCV(base, cv=3, method="isotonic")
-    calibrated.fit(train[features], train["selected"])
+    try:
+        calibrated.fit(train[features], train["selected"], sample_weight=w_train)
+    except TypeError:
+        # Older sklearn: CalibratedClassifierCV.fit has no sample_weight kwarg.
+        calibrated.fit(train[features], train["selected"])
     probability = calibrated.predict_proba(test[features])[:, 1]
     predicted = probability >= 0.5
     y_test = test["selected"].to_numpy()
-    deterministic = test["amplitude_adc"].to_numpy() > float(config["amplitude_cut_adc"])
 
+    # ---- Prevalence bookkeeping (audit S00-002) ----
+    pop = population_prevalence or {}
+    cc_prevalence = float(np.mean(y_test)) if len(y_test) else float("nan")
+    if sw is not None and len(y_test) and float(np.sum(sw)) > 0:
+        weighted_prevalence = float(np.sum(sw * y_test) / np.sum(sw))
+    else:
+        weighted_prevalence = cc_prevalence
+
+    # ---- Weighted held-out metrics (S00-002: restore population prevalence) ----
+    kw = {"sample_weight": sw} if sw is not None else {}
+    weighted_accuracy = (
+        float(np.sum(sw * (predicted == y_test)) / np.sum(sw))
+        if sw is not None else float(np.mean(predicted == y_test))
+    )
+    weighted_brier = float(brier_score_loss(y_test, probability, **kw))
+    weighted_roc_auc = float(roc_auc_score(y_test, probability, **kw))
+    weighted_ap = float(average_precision_score(y_test, probability, **kw))
+
+    # ---- (run, event) cluster bootstrap of accuracy (audit STAT-002) ----
     rng = np.random.default_rng(int(config["ml_check"]["random_seed"]))
-    boot = []
-    for _ in range(300):
-        idx = rng.integers(0, len(test), len(test))
-        boot.append(float(np.mean(predicted[idx] == y_test[idx])))
-    lo, hi = np.quantile(boot, [0.025, 0.975])
+    correctness = (predicted == y_test).astype(float)
+    if len(correctness) and len(test):
+        clusters = make_run_event_clusters(test["run"].to_numpy(), test["eventno"].to_numpy())
+        try:
+            lo, hi = cluster_bootstrap(
+                correctness, clusters, np.mean, rng, n_boot=n_boot, alpha=0.05
+            )
+        except ValueError:
+            lo = hi = weighted_accuracy  # degenerate test set; fall back to point
+    else:
+        lo = hi = float("nan")
+
+    # ---- Reference rule (label = rule; trivially perfect by construction) ----
+    deterministic = test["amplitude_adc"].to_numpy() > float(config["amplitude_cut_adc"])
 
     ml_summary = pd.DataFrame(
         [
             {
-                "method": "traditional threshold",
+                "method": "reference: deterministic amplitude-cut rule (label=rule, tautological)",
                 "heldout_runs": ",".join(str(run) for run in sorted(heldout)),
                 "metric": "selection accuracy",
-                "value": float(np.mean(deterministic == y_test)),
-                "ci_low": 1.0,
-                "ci_high": 1.0,
-                "roc_auc": 1.0,
-                "average_precision": 1.0,
-                "brier": 0.0,
-                "notes": "Deterministic A>1000 ADC rule.",
+                "value": float(np.mean(deterministic == y_test)) if len(y_test) else float("nan"),
+                "ci_low": float("nan"),
+                "ci_high": float("nan"),
+                "roc_auc": float("nan"),
+                "average_precision": float("nan"),
+                "brier": float("nan"),
+                "weighted_value": float("nan"),
+                "notes": (
+                    "Implementation-consistency reference, NOT a benchmark: the label "
+                    "is DEFINED as amplitude > cut, so this rule reproduces it with "
+                    "probability 1 by construction. Excluded from scientific claims."
+                ),
             },
             {
-                "method": "calibrated logistic regression",
+                "method": "implementation-consistency: calibrated logistic regression",
                 "heldout_runs": ",".join(str(run) for run in sorted(heldout)),
                 "metric": "selection accuracy",
-                "value": float(np.mean(predicted == y_test)),
-                "ci_low": float(lo),
-                "ci_high": float(hi),
-                "roc_auc": float(roc_auc_score(y_test, probability)),
-                "average_precision": float(average_precision_score(y_test, probability)),
-                "brier": float(brier_score_loss(y_test, probability)),
-                "notes": f"Run-split sanity check; C={best_c}. Not used for the gate count.",
+                "value": float(np.mean(predicted == y_test)) if len(y_test) else float("nan"),
+                "ci_low": lo,
+                "ci_high": hi,
+                "roc_auc": weighted_roc_auc,
+                "average_precision": weighted_ap,
+                "brier": weighted_brier,
+                "weighted_value": weighted_accuracy,
+                "features": ",".join(features),
+                "n_boot": int(n_boot),
+                "cluster_unit": "(run,event)",
+                "cc_prevalence": cc_prevalence,
+                "weighted_prevalence": weighted_prevalence,
+                "population_prevalence": float(pop.get("prevalence", float("nan"))),
+                "notes": (
+                    "Implementation-consistency check, NOT a scientific benchmark. "
+                    "Features exclude the target-defining column (amplitude_adc). "
+                    "Metrics are inverse-probability weighted to restore population "
+                    f"prevalence (case-control design); CI uses a (run,event) cluster "
+                    f"bootstrap with n_boot={n_boot}."
+                ),
             },
         ]
     )
     pd.DataFrame(cv_rows).to_csv(out_dir / "ml_cv_scan.csv", index=False)
-    ml_summary.to_csv(out_dir / "ml_benchmark.csv", index=False)
+    ml_summary.to_csv(out_dir / "implementation_consistency.csv", index=False)
 
-    frac_pos, mean_pred = calibration_curve(y_test, probability, n_bins=10, strategy="quantile")
+    try:
+        frac_pos, mean_pred = calibration_curve(
+            y_test, probability, n_bins=10, strategy="quantile", **kw
+        )
+    except TypeError:
+        frac_pos, mean_pred = calibration_curve(y_test, probability, n_bins=10, strategy="quantile")
     fig, ax = plt.subplots(figsize=(5, 4))
     ax.plot([0, 1], [0, 1], color="black", lw=1, linestyle="--")
     ax.plot(mean_pred, frac_pos, marker="o")
-    ax.set_xlabel("Mean predicted probability")
+    ax.set_xlabel("Mean predicted probability (case-control subsample)")
     ax.set_ylabel("Observed selected fraction")
-    ax.set_title("S00 ML sanity-check calibration")
+    ax.set_title(
+        "S00 implementation-consistency calibration\n"
+        f"cc prevalence={cc_prevalence:.3f} vs weighted={weighted_prevalence:.3f}"
+    )
     fig.tight_layout()
     fig.savefig(out_dir / "fig_ml_reliability.png", dpi=160)
     plt.close(fig)
@@ -476,7 +734,7 @@ def main() -> int:
     selected_path = Path(config["pulse_table_path"])
     selected_path.parent.mkdir(parents=True, exist_ok=True)
 
-    counts_by_run, counts_by_group, _, selected, ml_rows = scan_raw(config)
+    counts_by_run, counts_by_group, _, selected, ml_rows, population_prevalence = scan_raw(config)
     comparison = compare_expected(config, counts_by_group)
     sorted_counts = sorted_crosscheck(config)
     sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
@@ -493,7 +751,7 @@ def main() -> int:
     make_figures(counts_by_run, selected, out_dir)
 
     if not args.skip_ml:
-        run_ml_check(config, ml_rows, out_dir)
+        run_ml_check(config, ml_rows, out_dir, population_prevalence=population_prevalence)
     if not args.skip_sha256:
         write_checksums(config, out_dir)
     write_manifest(out_dir, args.config, comparison, selected_path, cut, cut_source)

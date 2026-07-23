@@ -299,7 +299,9 @@ def main(argv: list[str] | None = None) -> int:
         row["physics_acceptance"] == "UNVERIFIED" for row in classified
     )
     n_invalid_baseline_data_tables = sum(
-        row["physics_acceptance"] == "BASELINE_DATA_INVALID" for row in classified
+        row.get("convention_acceptance") == "BASELINE_DATA_INVALID"
+        and row.get("convention") != "NET"
+        for row in classified
     )
     n_nonaccepted_physics_conventions = sum(
         row["physics_acceptance"] != "ACCEPTABLE" for row in classified

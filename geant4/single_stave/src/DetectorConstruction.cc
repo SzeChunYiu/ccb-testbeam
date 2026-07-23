@@ -292,16 +292,56 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     new G4PVPlacement(nullptr, {}, coreLV, "Core_" + tag.str(), inLV,
                       false, f, true);
 
-    // Endcap sensors just beyond the protruding fibre ends, in the world.
+    // Endcap sensors / terminations just beyond the protruding fibre ends.
     auto* sensSolid = new G4Tubs("Sensor_" + tag.str(), 0, rOuter, kSensorThk / 2.0, 0, twopi);
-    for (int end = 0; end < 2; ++end) {
-      const double sign = (end == 0 ? +1.0 : -1.0);
-      const double xpos = sign * (kFibreHalfX + kSensorThk / 2.0 + 10 * um);
-      const int sid = f * 2 + end;  // F1+x=0(readout) F1-x=1 F2+x=2 F2-x=3
+
+    // +x (readout) sensor — ALWAYS present (physical readout channel).
+    {
+      const double xpos = kFibreHalfX + kSensorThk / 2.0 + 10 * um;
+      const int sid = f * 2;  // F1+x=0(readout) F2+x=2(near)
       const std::string sname = SensorNames()[sid];
       auto* sensLV = new G4LogicalVolume(sensSolid, mCore, sname);
       new G4PVPlacement(fibreRot, G4ThreeVector(xpos, yc[f], 0), sensLV, sname,
                         worldLV, false, sid, true);
+    }
+
+    // -x (far) end — CONDITIONAL on far_end_mode (SIPM-P0-002).
+    {
+      const double xpos = -(kFibreHalfX + kSensorThk / 2.0 + 10 * um);
+      const int sid = f * 2 + 1;  // F1-x=1(far) F2-x=3(far)
+
+      if (cfg_.far_end_mode == "instrumented") {
+        // Sensor at the far end (simulation control channel).
+        const std::string sname = SensorNames()[sid];
+        auto* sensLV = new G4LogicalVolume(sensSolid, mCore, sname);
+        new G4PVPlacement(fibreRot, G4ThreeVector(xpos, yc[f], 0), sensLV, sname,
+                          worldLV, false, sid, true);
+      } else if (cfg_.far_end_mode == "mirror" ||
+                 cfg_.far_end_mode == "absorb") {
+        // Reflective / absorbing cap: thin disc with dielectric-metal surface.
+        const bool is_mirror = (cfg_.far_end_mode == "mirror");
+        const double reflectivity = is_mirror ? 1.0 : 0.0;
+        const std::string capName =
+            (is_mirror ? "MirrorCap_" : "AbsorbCap_") + tag.str();
+        auto* capSolid =
+            new G4Tubs(capName, 0, rOuter, kSensorThk / 2.0, 0, twopi);
+        auto* capLV = new G4LogicalVolume(capSolid, air, capName);
+        new G4PVPlacement(fibreRot, G4ThreeVector(xpos, yc[f], 0), capLV,
+                          capName, worldLV, false, sid, true);
+
+        // Optical surface: dielectric-metal so photons either reflect or absorb.
+        auto* capSurf = new G4OpticalSurface(capName + "_Surf");
+        capSurf->SetType(dielectric_metal);
+        capSurf->SetModel(unified);
+        capSurf->SetFinish(polished);
+        auto* capMpt = new G4MaterialPropertiesTable();
+        std::vector<double> capEnergy = {1.5 * eV, 4.0 * eV};
+        std::vector<double> capRefl = {reflectivity, reflectivity};
+        capMpt->AddProperty("REFLECTIVITY", capEnergy, capRefl);
+        capSurf->SetMaterialPropertiesTable(capMpt);
+        new G4LogicalSkinSurface(capName + "_Skin", capLV, capSurf);
+      }
+      // "open": no volume at the far end — fibre terminates into world air.
     }
   }
 

@@ -75,7 +75,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --attenuation-scale V    Y-11 attenuation scale      (default 1.0)\n"
     "  --pde-scale V            SiPM PDE scale              (default 1.0)\n"
     "  --coupling V             fibre-end->sensor coupling  (default 1.0)\n"
-    "  --far-end MODE           absorb|mirror               (default absorb)\n"
+    "  --far-end MODE           absorb|open|mirror|instrumented (default instrumented)\n"
     "  --wls-time-profile P     exponential|delta           (default exponential)\n"
     "  --mode MODE              optical                     (default; fast kernel not yet implemented)\n"
     "  --optical-dir DIR        optical CSV table directory (default optical)\n"
@@ -104,7 +104,7 @@ std::string AppConfig::Describe() const {
      << " attenuation_scale=" << attenuation_scale
      << " pde_scale=" << pde_scale
      << " coupling=" << coupling_efficiency
-     << " far_end=" << (far_end_boundary_absorb ? "absorb" : "mirror")
+     << " far_end=" << far_end_mode
      << " wls_time_profile=" << wls_time_profile
      << " mode=" << (mode == SimMode::kOpticalCalibration ? "optical" : "fast")
      << " optical_dir=" << optical_dir
@@ -142,9 +142,9 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--coupling"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --coupling requires a finite number, got '"<<v<<"'\n";return false;} coupling_efficiency = t; }
     else if (eq(a, "--far-end")) {
       if(!(v=need(i)))return false;
-      if (eq(v, "absorb")) far_end_boundary_absorb = true;
-      else if (eq(v, "mirror")) far_end_boundary_absorb = false;
-      else { std::cerr << "error: --far-end must be absorb|mirror\n"; return false; }
+      if (eq(v, "absorb") || eq(v, "open") || eq(v, "mirror") || eq(v, "instrumented"))
+        far_end_mode = v;
+      else { std::cerr << "error: --far-end must be absorb|open|mirror|instrumented\n"; return false; }
     }
     else if (eq(a, "--wls-time-profile")) {
       if(!(v=need(i)))return false;

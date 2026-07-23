@@ -189,6 +189,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"pde_scale\": " << cfg_.pde_scale << ",\n"
      << "  \"coupling_efficiency\": " << cfg_.coupling_efficiency << ",\n"
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
+     << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
      << "  \"optical_tables\": {\n";
   // Record each optical table path + hash.
   size_t k = 0, n = tables_.All().size();

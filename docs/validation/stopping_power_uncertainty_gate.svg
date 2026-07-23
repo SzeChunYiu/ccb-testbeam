@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" role="img" aria-labelledby="title desc">
+  <title id="title">Stopping-power point-estimate uncertainty acceptance gate</title>
+  <desc id="desc">Synthetic regression schematic comparing the former pass from a ratio of one without uncertainty with the corrected point-only nonaccepting state.</desc>
+  <rect width="1000" height="560" fill="white"/>
+  <text x="500" y="42" text-anchor="middle" font-family="sans-serif" font-size="25" font-weight="bold">Stopping-power uncertainty gate</text>
+  <text x="500" y="70" text-anchor="middle" font-family="sans-serif" font-size="16">Synthetic regression evidence — not detector data</text>
+  <rect x="70" y="115" width="380" height="330" rx="18" fill="#f5f5f5" stroke="#333" stroke-width="3"/>
+  <text x="260" y="155" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">Former behavior</text>
+  <text x="105" y="205" font-family="monospace" font-size="18">ratio = 1.000</text>
+  <text x="105" y="240" font-family="monospace" font-size="18">tolerance = ±10%</text>
+  <text x="105" y="275" font-family="monospace" font-size="18">uncertainty = absent</text>
+  <path d="M120 320 H400" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="150" y="345" width="220" height="62" fill="#e5e5e5" stroke="#111" stroke-width="3"/>
+  <text x="260" y="384" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">PASS / exit 0</text>
+  <line x1="155" y1="350" x2="365" y2="402" stroke="#111" stroke-width="4"/>
+  <line x1="365" y1="350" x2="155" y2="402" stroke="#111" stroke-width="4"/>
+  <rect x="550" y="115" width="380" height="330" rx="18" fill="#f5f5f5" stroke="#333" stroke-width="3"/>
+  <text x="740" y="155" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">Corrected behavior</text>
+  <text x="585" y="205" font-family="monospace" font-size="18">ratio = 1.000</text>
+  <text x="585" y="240" font-family="monospace" font-size="18">numeric match = true</text>
+  <text x="585" y="275" font-family="monospace" font-size="18">uncertainty = NOT_EVALUATED</text>
+  <path d="M600 320 H880" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="610" y="345" width="260" height="62" fill="white" stroke="#111" stroke-width="3" stroke-dasharray="10 7"/>
+  <text x="740" y="372" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">POINT_ONLY</text>
+  <text x="740" y="397" text-anchor="middle" font-family="sans-serif" font-size="17">not accepted / exit 1</text>
+  <text x="500" y="490" text-anchor="middle" font-family="sans-serif" font-size="17">Acceptance requires a preregistered uncertainty model and an accepted physics observable.</text>
+  <text x="500" y="520" text-anchor="middle" font-family="sans-serif" font-size="15">Repeated identical synthetic rows do not establish statistical or systematic uncertainty.</text>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#333"/></marker></defs>
+</svg>

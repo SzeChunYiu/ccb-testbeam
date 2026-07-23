@@ -1,14 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-004
+- **Task ID:** AUD-G4-006
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T10:04:54Z
-- **Initial main SHA:** `5a4bdfc3f0099f2b6e8c3891b5a2a05f57ecf770`
-- **Scope:** independently review the PR #890 PSTAR comparison entry point, reference-data path, self-test provenance, and scientific interpretation.
-- **Confirmed defect:** `scripts/single_stave/compare_stopping_power.py` used `HERE.parents[2]`, which resolves one directory above the repository for a script under `scripts/single_stave`. Its self-test silently substituted an inline table, so a zero exit status did not exercise the committed PSTAR CSV.
-- **Validated change:** resolve the default from `HERE.parents[1]`, fail closed when the selected reference is absent, print its path/SHA-256/row count, remove the inline fallback, and label the deposited-energy ratio as `DIAGNOSTIC_ONLY` rather than accepted stopping-power closure.
-- **Files:** `scripts/single_stave/compare_stopping_power.py`, `tests/test_compare_stopping_power_reference_path.py`, and `docs/validation/stopping_power_reference_path_*`.
-- **Commands:** `python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_reference_path.py`; `python -m pytest tests/test_compare_stopping_power_reference_path.py -q`; changed-file line-length scan.
-- **Validation:** focused local reconstruction returned `3 passed in 0.55s`; the committed script blob is `d9282a5c26b8bc86427356f51dfe7e5ecba769d8` and the committed test blob is `ab6265ef398ac0ad7cf3110d173c85cbd6d8f987`.
-- **Boundary:** the local run used a minimal reference fixture containing the five PSTAR points exercised by the self-test because a complete checkout was unavailable. No Geant4/ROOT execution or accepted stopping-power closure is claimed. Local energy deposit is not automatically projectile total energy loss; deuteron velocity scaling remains approximate.
-- **Status:** COMPLETE for reference selection, fail-closed self-test behavior, provenance output, regression coverage, and remote-main delivery; PARTIAL for scientific stopping-power closure (`AUD-G4-005`).
+- **Session stamp:** 2026-07-23T10:29:57Z
+- **Initial observed main SHA:** `6d1d982e0eb6764cc3cc036aa1df76b8f3fe35c7`
+- **Concurrent main incorporated:** `9521eca866a42a02d17a26dffbaaf0f21d6d8eb7`
+- **Scope:** independently review whether the PR #890 stopping-power diagnostic uses the committed PSTAR reference only inside its supported energy domain.
+- **Confirmed defect:** `interp_loglog()` silently clamped lookup energies below or above the table to an endpoint. Unsupported simulation energies could therefore reuse an unrelated edge value and potentially pass the numerical tolerance. Deuteron beam energy maps to proton-equivalent `E/2`, so the transformed lookup also requires an explicit range gate.
+- **Validated change:** require finite positive lookup energy, accept exact endpoints, reject extrapolation, report proton-equivalent lookup and table bounds, return CLI status 2 without a numerical PASS, and add focused regression plus Markdown/JSON/SVG evidence.
+- **Files:** `scripts/single_stave/compare_stopping_power.py`, `tests/test_compare_stopping_power_energy_range.py`, and `docs/validation/stopping_power_reference_domain_*`.
+- **Commands:** `python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py`; focused pytest over the two stopping-power test modules; changed-file line-length scan; JSON and SVG parse checks.
+- **Validation:** exact pre-change reconstruction matched Git blob `d9282a5c26b8bc86427356f51dfe7e5ecba769d8`; focused suite returned `7 passed in 1.15s`; committed script/test blobs match the validated local files.
+- **Boundary:** this is a reference-domain and failure-mode correction only. No Geant4 executable, ROOT file, real simulation, accepted stopping-power closure, calibration, or detector-performance result was generated.
+- **Status:** COMPLETE for fail-closed reference-domain handling and remote-main delivery; PARTIAL for scientific stopping-power closure under `AUD-G4-005` / `BLK-G4-SP-001`.

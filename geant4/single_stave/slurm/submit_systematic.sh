@@ -39,6 +39,14 @@
 # CCB_BASE_HIT_X (0), CCB_BASE_HIT_Y (0), CCB_BASE_NEVENTS (2000).
 set -euo pipefail
 
+# --- runtime env: self-contained (Geant4 libs are NOT on the default linker
+# path; the binary needs GCC/12.3.0 + Geant4/11.2.2 loaded to run). ---
+if [ -z "${MODULESHOME:-}" ]; then
+  source /etc/profile.d/modules.sh 2>/dev/null || true
+fi
+module purge 2>/dev/null || true
+module load GCC/12.3.0 Geant4/11.2.2
+
 BUILD="${1:?build dir (contains ccb_stave_sim + optical/)}"
 GRID="${2:?grid csv (columns: value,label,seed)}"
 OUTDIR="${3:?output dir}"

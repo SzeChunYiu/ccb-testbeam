@@ -1,12 +1,12 @@
 # Active Task
 
-- **Task ID:** AUD-AMP-005
+- **Task ID:** AUD-AMP-006
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T01:05:04Z
-- **Base main SHA:** `947df912016b97d7d21160c1f4e8f2b075c4cbda`
-- **Scope:** require the pedestal data needed to execute a hash-bound `ABSOLUTE` amplitude convention while avoiding false rejection of hash-bound `NET` tables.
-- **Finding:** v2.8.0 accepted any hash-bound convention without checking whether an `ABSOLUTE` table had one unique, complete pedestal column. Its aggregate gate followed heuristic baseline state and could also reject `NET` evidence because an optional pedestal diagnostic was incomplete.
-- **Change:** v2.9.0 makes physics acceptance convention-specific: `ABSOLUTE` requires a unique complete pedestal, while `NET` requires no subtraction. Every non-acceptable physics state is counted by `n_nonaccepted_physics_conventions` and fails the CLI.
-- **Validation:** `python -m py_compile` passed and focused pytest returned `3 passed in 0.04s` on exact local reconstructions.
-- **Boundary:** no real pulse table or A-002 input was available; convention assignments and quarantined A-002 outputs remain unresolved.
-- **Status:** PARTIAL — code and synthetic regression validated; real-table audit remains blocked on exact data and reviewed evidence.
+- **Session stamp:** 2026-07-23T02:05:18Z
+- **Base main SHA:** `5e00ec10368a893d3ae4d92398f18dc777e4f044`
+- **Scope:** require every hash-bound amplitude-convention record to identify the actual schema, producer-code, or reviewed pedestal artifact supporting the physics convention.
+- **Finding:** v2.9.0 of `amplitude_convention_audit.py` can accept an evidence record containing only `convention` and `evidence_basis`; the record need not identify a reviewable source. Its loader also accepts noncanonical 64-character digest keys.
+- **Change:** added `tools/audit/validate_amplitude_evidence_map.py` v1.0.0, which requires canonical lowercase hexadecimal SHA-256 keys, accepted convention/basis values, a non-empty `evidence_reference`, and a matching optional embedded digest.
+- **Validation:** `python -m py_compile` passed and focused pytest returned `7 passed in 0.06s` on exact local files.
+- **Boundary:** the new tool is currently a standalone preflight validator; direct convention-auditor invocation does not yet import it. No real evidence map or pulse table was available.
+- **Status:** PARTIAL — standalone traceability gate and regression tests validated; integration into the main auditor and real A-002 evidence remain open.

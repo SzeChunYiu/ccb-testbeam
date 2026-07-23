@@ -51,6 +51,19 @@ ALLOWED_CONTEXTS = [
     r"→",
     r"corrected from",
     r"SUPERSEDED",
+    r"correcting",
+    r"original (analysis|note|measurement|result|value)",
+    r"error in (the )?original",
+    r"mistake",
+    r"was previously",
+    r"previously reported",
+    r"was wrong",
+    r"was rounded|rounded to|rounding",
+    r"recalibration|recalibrated",
+    r"discrepancy",
+    r"artefact|artifact",
+    r"needs canonical|recomputed|rerun",
+    r"compared to| vs |versus",
 ]
 
 
@@ -77,6 +90,9 @@ def scan_file(filepath: str) -> list[dict]:
 
         for old_val, (new_val, desc) in SUPERSEDED_MAP.items():
             if old_val not in line:
+                continue
+            # old + canonical on the same line => a comparison/correction row
+            if new_val and new_val in line:
                 continue
             # Check if in an allowed context
             safe = any(re.search(ctx, line, re.IGNORECASE) for ctx in ALLOWED_CONTEXTS)

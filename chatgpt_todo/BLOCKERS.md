@@ -39,6 +39,15 @@
 - **Important limitation:** the present connector-only session did not independently access the LUNARC files or rerun the simulation. The resolution is therefore repository-recorded evidence from that session, not a new independent reproduction here.
 - **Required provenance retention:** preserve commands, versions, ROOT/JSON/PDF artifact paths, hashes, seeds, event counts, and uncertainty calculations in the Geant4 handoff and claim-evidence records.
 
+## BLK-G4-BUILD-001 — tracked generated build tree from PR #888
+
+- **State:** RESOLVED
+- **Observed change:** PR #888 added 66 files under `geant4/single_stave/build/`, including CMake cache/generator files, compiler probes, object/dependency files, a linked executable, copied macros and optical tables, and a generated metadata sidecar.
+- **Why it was unsafe:** the cache embeds absolute LUNARC worktree/toolchain paths; binaries and object files are platform-specific; copied runtime assets duplicate canonical source; a committed build tree can be mistaken for reproducible validation evidence even though PR #888 CI ran Python unit tests only.
+- **Resolution:** commit `c7cdd653c5fef08b1e70cb33db9c574f7e7e0de9` removed the complete tracked build tree, added `geant4/**/build/` to `.gitignore`, and added `tests/test_no_tracked_geant4_build_artifacts.py`.
+- **Validation:** the regression failed against a synthetic tracked `CMakeCache.txt` and passed after removal plus ignore configuration; the candidate Git commit was inspected before fast-forwarding `main`, and source files from PR #888 plus concurrent PR #889 remained present.
+- **Remaining scientific limitation:** removal of generated artifacts does not validate or invalidate the scientific source fixes in PR #888/#889. Clean Geant4 builds, CTests, runtime outputs, and immutable result provenance still require independent review.
+
 ## BLK-MERGE-001 — PR #868 integration into current main
 
 - **State:** OPEN

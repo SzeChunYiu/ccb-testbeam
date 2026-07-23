@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-TOOL_VERSION = "1.0.0"
+TOOL_VERSION = "1.1.0"
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 ACCEPTED_CONVENTIONS = {"ABSOLUTE", "NET"}
 ACCEPTED_EVIDENCE_BASES = {
@@ -16,6 +16,14 @@ ACCEPTED_EVIDENCE_BASES = {
     "PRODUCER_CODE_PROVENANCE",
     "INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE",
 }
+
+
+def _validate_sha256(value: Any, field: str, digest: str) -> str:
+    if not isinstance(value, str) or not SHA256_RE.fullmatch(value):
+        raise ValueError(
+            f"evidence record for {digest} requires canonical lowercase hexadecimal {field}"
+        )
+    return value
 
 
 def validate_record(digest: str, record: Any) -> dict[str, Any]:
@@ -41,12 +49,17 @@ def validate_record(digest: str, record: Any) -> dict[str, Any]:
             f"evidence record for {digest} requires a non-empty evidence_reference"
         )
 
+    reference_sha256 = _validate_sha256(
+        record.get("evidence_reference_sha256"), "evidence_reference_sha256", digest
+    )
+
     embedded_digest = record.get("sha256")
     if embedded_digest is not None and embedded_digest != digest:
         raise ValueError(f"evidence record for {digest} has mismatched sha256")
 
     normalized = dict(record)
     normalized["evidence_reference"] = reference.strip()
+    normalized["evidence_reference_sha256"] = reference_sha256
     normalized["sha256"] = digest
     return normalized
 

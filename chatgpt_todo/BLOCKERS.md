@@ -23,6 +23,15 @@
 - **Resolution on main:** squash merge commit `4f857f508160bbbe059d936866b426a45788c9bd`; post-merge file reads confirm the synchronized warning assertion and convention-level non-NET invalid-baseline counter.
 - **Scientific boundary:** the repair restores Python audit-gate consistency. It does not validate a real pulse table, amplitude convention, pedestal subtraction, polarity, stopping distribution, simulation, or detector-performance claim.
 
+## BLK-COORD-001 — concurrent deletion of scientific-review coordination records
+
+- **State:** PARTIAL
+- **Observed change:** PR #886 merged during this run as `98f74d1c9a79abbedfcc9d4e934deb9e40ee3e97` and intentionally deleted the entire pre-existing `chatgpt_todo/` tree together with separate factory, fleet, supervisor, and ticket infrastructure.
+- **Conflict:** the active scheduled scientific-review requirement explicitly mandates the repository-local `chatgpt_todo/` handoff system. This requirement is separate from the removed factory/fleet/ticket system.
+- **Resolution completed:** recreated the minimum mandatory scientific-review protocol and ledgers (`README.md`, `CLAIM_EVIDENCE_MATRIX.md`, `STUDY_REVIEW_LEDGER.md`, `VISUALIZATION_MATRIX.md`) and retained/recreated the current task, backlog, index, code-result map, blockers, session log, handoff, and current immutable archive record.
+- **Remaining limitation:** older archive files removed by PR #886 were not blindly restored. Their bytes remain recoverable from Git history before `98f74d1c9a79abbedfcc9d4e934deb9e40ee3e97`, but current-tree restoration requires a deliberate provenance review to avoid overturning unrelated operator intent.
+- **Do not claim:** that the historical archive directory has been fully reconstructed on current `main`.
+
 ## BLK-G4-001 — real simulation validation unavailable
 
 - **State:** RESOLVED

@@ -677,7 +677,7 @@ The anomaly contributes a systematic uncertainty of 0.1% to deuteron counts, whi
 
 | Quantity | Value | Method | Status |
 |---|---|---|---|
-| C12 anomaly fraction | 0.32% of tracks | MC-identified (MV6) | **VALIDATED** |
+| C12-like anomaly fraction (truth-labelled MC) | 283 / 87,555 tracks (0.32%) | MC truth (MV6) | **TRUTH_LEVEL_MC_ONLY** |
 | Detection efficiency | TBD | Synthetic injection | Required |
 | False-positive rate | TBD | Sideband validation | Required |
 | Species purity | TBD | MC truth composition | Required |

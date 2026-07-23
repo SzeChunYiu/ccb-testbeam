@@ -13,7 +13,7 @@ def find_md_files(root):
 
 def extract_links(filepath):
     links = []
-    with open(filepath) as f:
+    with open(filepath, encoding="utf-8", errors="replace") as f:
         for i, line in enumerate(f, 1):
             for m in re.finditer(r'\[([^\]]*)\]\(([^)]+)\)', line):
                 links.append((i, m.group(1), m.group(2)))
@@ -42,7 +42,7 @@ def main():
                 broken += 1
 
     if broken:
-        print(f"\n{boken} broken link(s) found.")
+        print(f"\n{broken} broken link(s) found.")
         sys.exit(1)
     print("✓ All internal links valid.")
     sys.exit(0)

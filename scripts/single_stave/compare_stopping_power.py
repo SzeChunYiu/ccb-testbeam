@@ -41,10 +41,22 @@ ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
 DIRECT_PROTON_REFERENCE = "DIRECT_PSTAR_PROTON"
 DEUTERON_REFERENCE_PROXY = "VELOCITY_SCALED_PROTON_PROXY"
 UNCERTAINTY_METHOD = "NOT_EVALUATED"
+REPORT_FLOAT_SERIALIZATION = "PYTHON_REPR_ROUND_TRIP"
 
 
 class StoppingPowerInputError(ValueError):
     """Raised when a comparison would use invalid or unsupported inputs."""
+
+
+def _serialize_report_value(value: object) -> object:
+    """Serialize floats without losing their Python round-trip identity."""
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise StoppingPowerInputError(
+                f"report output cannot serialize nonfinite float {value!r}"
+            )
+        return repr(value)
+    return value
 
 
 def _read_reference_with_summary(
@@ -262,6 +274,7 @@ def run_compare(
                 "uncertainty_evaluated": uncertainty_evaluated,
                 "acceptance_status": acceptance_status,
                 "within_tolerance": accepted_ok,
+                "report_float_serialization": REPORT_FLOAT_SERIALIZATION,
             }
         )
         results.append(result)
@@ -300,6 +313,7 @@ def run_compare(
             "uncertainty_evaluated",
             "acceptance_status",
             "within_tolerance",
+            "report_float_serialization",
         ]
         out_path.parent.mkdir(parents=True, exist_ok=True)
         with out_path.open("w", newline="") as handle:
@@ -307,14 +321,7 @@ def run_compare(
             writer.writeheader()
             for result in results:
                 writer.writerow(
-                    {
-                        key: (
-                            f"{result[key]:.6g}"
-                            if isinstance(result[key], float)
-                            else result[key]
-                        )
-                        for key in columns
-                    }
+                    {key: _serialize_report_value(result[key]) for key in columns}
                 )
         print(f"wrote {out_path}")
 
@@ -323,7 +330,7 @@ def run_compare(
         f"rho={rho} g/cm^3, tolerance=+/-{tol_pct:g}%):"
     )
     print(
-        f"{'particle':<9}{'E[MeV]':>9}{'n':>7}{'sim':>12}{'ref':>12}"
+        f"{'particle':<9}{'E[MeV]':>18}{'n':>7}{'sim':>12}{'ref':>12}"
         f"{'ratio':>9}{'delta%':>9}  status"
     )
     for result in results:
@@ -332,8 +339,9 @@ def run_compare(
             if not result["physics_comparable"]
             else ("POINT_ONLY" if result["numeric_within_tolerance"] else "FAIL")
         )
+        energy_text = repr(float(result["energy_MeV"]))
         print(
-            f"{result['particle']:<9}{result['energy_MeV']:>9.2f}"
+            f"{result['particle']:<9}{energy_text:>18}"
             f"{result['n_events']:>7d}{result['sim_total_MeV_cm2_g']:>12.4f}"
             f"{result['ref_total_MeV_cm2_g']:>12.4f}{result['ratio']:>9.4f}"
             f"{result['delta_percent']:>9.2f}  {status}"
@@ -351,6 +359,7 @@ def run_compare(
         f"sha256={sim_summary['input_sha256']} validator={SIM_TABLE_VALIDATOR_VERSION}"
     )
     print(f"ENERGY GROUPING: {ENERGY_GROUPING}")
+    print(f"REPORT FLOAT SERIALIZATION: {REPORT_FLOAT_SERIALIZATION}")
     print(
         f"PSTAR REFERENCE VALIDATION: rows={ref_summary['rows_validated']} "
         f"sha256={ref_summary['input_sha256']} validator={PSTAR_VALIDATOR_VERSION} "

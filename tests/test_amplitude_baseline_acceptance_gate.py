@@ -16,19 +16,28 @@ assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
-REFERENCE_SHA256 = "b" * 64
-
 
 def write(path: Path, **columns: list[float]) -> None:
     pd.DataFrame(columns).to_csv(path, index=False)
 
 
-def evidence_record(convention: str, basis: str) -> dict[str, str]:
+def write_reference(tmp_path: Path) -> tuple[str, str]:
+    reference = tmp_path / "pulse_contract.md"
+    reference.write_text("amplitude convention contract v1\n", encoding="utf-8")
+    return reference.name, hashlib.sha256(reference.read_bytes()).hexdigest()
+
+
+def evidence_record(
+    convention: str,
+    basis: str,
+    reference: str,
+    reference_sha256: str,
+) -> dict[str, str]:
     return {
         "convention": convention,
         "evidence_basis": basis,
-        "evidence_reference": "docs/contracts/PULSE_TABLE_CONTRACT.md",
-        "evidence_reference_sha256": REFERENCE_SHA256,
+        "evidence_reference": reference,
+        "evidence_reference_sha256": reference_sha256,
     }
 
 
@@ -67,8 +76,9 @@ def test_unique_pedestal_still_requires_hash_bound_evidence(tmp_path: Path) -> N
     assert payload["n_unverified_conventions"] == 1
     assert payload["tables"][0]["baseline_resolution"] == "RESOLVED"
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    reference, reference_sha256 = write_reference(tmp_path)
     evidence.write_text(json.dumps({digest: evidence_record(
-        "ABSOLUTE", "EXPLICIT_SCHEMA_METADATA"
+        "ABSOLUTE", "EXPLICIT_SCHEMA_METADATA", reference, reference_sha256
     )}), encoding="utf-8")
     assert MODULE.main([
         str(path), "--output", str(output), "--evidence-map", str(evidence)
@@ -82,8 +92,9 @@ def test_net_table_requires_hash_bound_evidence(tmp_path: Path) -> None:
     write(path, amplitude_adc=[100, 200, 300])
     assert MODULE.main([str(path), "--output", str(output)]) == 1
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    reference, reference_sha256 = write_reference(tmp_path)
     evidence.write_text(json.dumps({digest: evidence_record(
-        "NET", "PRODUCER_CODE_PROVENANCE"
+        "NET", "PRODUCER_CODE_PROVENANCE", reference, reference_sha256
     )}), encoding="utf-8")
     assert MODULE.main([
         str(path), "--output", str(output), "--evidence-map", str(evidence)

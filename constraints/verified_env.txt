@@ -1,0 +1,227 @@
+# Verified Python environment for ccb-testbeam (REP-001).
+# Snapshot of the LUNARC venv used to pass 'pytest tests/' on py3.11.
+# Pinned versions of the declared runtime + dev dependencies and their
+# transitive closure. Install reproduceably with:
+#   pip install -c constraints/verified_env.txt -e ".[dev]"
+# Note: pytest and PyYAML resolve via the EasyBuild system Python bundle
+# (PYTHONPATH) on LUNARC and are therefore not emitted by the venv freeze.
+# Captured 2026-07-23T18:51:22Z from: /projects/hep/fs10/shared/nnbar/billy/ccb-py/bin/python
+#
+alabaster @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/alabaster/alabaster-0.7.13
+anyio @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/anyio/anyio-4.3.0
+appdirs @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/appdirs/appdirs-1.4.4
+argon2-cffi @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/argon2_cffi/argon2_cffi-23.1.0
+argon2-cffi-bindings @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/argon2cffibindings/argon2-cffi-bindings-21.2.0
+asn1crypto @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/asn1crypto/asn1crypto-1.5.1
+asttokens @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/asttokens/asttokens-2.4.1
+async-lru @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/asynclru/async-lru-2.0.4
+atomicwrites @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/atomicwrites/atomicwrites-1.4.1
+attrs @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/attrs/attrs-23.1.0
+awkward==2.11.0
+awkward-pandas==2023.8.0
+awkward_cpp==54
+Babel @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/Babel/Babel-2.13.1
+backcall @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/backcall/backcall-0.2.0
+backports.entry-points-selectable @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/backportsentrypointsselectable/backports.entry_points_selectable-1.2.0
+backports.functools-lru-cache @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/backportsfunctools_lru_cache/backports.functools_lru_cache-1.6.6
+beautifulsoup4 @ file:///local/easybuild_milan/build/BeautifulSoup/4.12.2/GCCcore-13.2.0/BeautifulSoup/beautifulsoup4-4.12.2
+bitarray @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/bitarray/bitarray-2.8.2
+bitstring @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/bitstring/bitstring-4.1.2
+bleach @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/bleach/bleach-6.1.0
+blist @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/blist/blist-1.3.6
+CacheControl @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/cachecontrol/cachecontrol-0.13.1
+cachy @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/cachy/cachy-0.3.0
+certifi @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/certifi/certifi-2023.7.22
+cffi @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/cffi/cffi-1.16.0
+chardet @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/chardet/chardet-5.2.0
+charset-normalizer @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/charsetnormalizer/charset-normalizer-3.3.1
+cleo @ file:///home/swadmin/.local/easybuild/sources/p/Python-bundle-PyPI/extensions/cleo-2.0.1-py3-none-any.whl#sha256=6eb133670a3ed1f3b052d53789017b6e50fca66d1287e6e6696285f4cb8ea448
+click @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/click/click-8.1.7
+cloudpickle @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/cloudpickle/cloudpickle-3.0.0
+colorama @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/colorama/colorama-0.4.6
+comm @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/comm/comm-0.2.2
+commonmark @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/commonmark/commonmark-0.9.1
+contourpy==1.3.3
+cramjam==2.11.0
+crashtest @ file:///home/swadmin/.local/easybuild/sources/p/Python-bundle-PyPI/extensions/crashtest-0.4.1-py3-none-any.whl#sha256=8d23eac5fa660409f57472e3851dab7ac18aba459a8d19cbbba86d3d5aecd2a5
+cryptography @ file:///local/easybuild_milan/build/cryptography/41.0.5/GCCcore-13.2.0/cryptography-41.0.5
+cycler==0.12.1
+Cython @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/Cython/Cython-3.0.4
+debugpy @ file:///home/swadmin/.local/easybuild/sources/j/jupyter-server/extensions/debugpy-1.8.1-py2.py3-none-any.whl#sha256=28acbe2241222b87e255260c76741e1fbf04fdc3b6d094fcf57b6c6f75ce1242
+decorator @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/decorator/decorator-5.1.1
+defusedxml @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/defusedxml/defusedxml-0.7.1
+deprecation @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/deprecation/deprecation-2.1.0
+distlib @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/distlib/distlib-0.3.7
+distro @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/distro/distro-1.8.0
+docopt @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/docopt/docopt-0.6.2
+docutils @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/docutils/docutils-0.20.1
+doit @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/doit/doit-0.36.0
+dulwich @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/dulwich/dulwich-0.21.6
+ecdsa @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/ecdsa/ecdsa-0.18.0
+editables @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/editables/editables-0.5
+exceptiongroup @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/exceptiongroup/exceptiongroup-1.1.3
+execnet @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/execnet/execnet-2.0.2
+executing @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/executing/executing-2.0.1
+fastjsonschema @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/fastjsonschema/fastjsonschema-2.19.1
+filelock @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/filelock/filelock-3.13.0
+fonttools==4.63.0
+fsspec @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/fsspec/fsspec-2023.10.0
+future @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/future/future-0.18.3
+glob2 @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/glob2/glob2-0.7
+h11 @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/h11/h11-0.14.0
+html5lib @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/html5lib/html5lib-1.1
+httpcore @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/httpcore/httpcore-1.0.5
+httpx @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/httpx/httpx-0.27.0
+idna @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/idna/idna-3.4
+imagesize @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/imagesize/imagesize-1.4.1
+importlib-metadata @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/importlib_metadata/importlib_metadata-6.8.0
+importlib-resources @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/importlib_resources/importlib_resources-6.1.0
+iniconfig @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/iniconfig/iniconfig-2.0.0
+intervaltree @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/intervaltree/intervaltree-3.1.0
+intreehooks @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/intreehooks/intreehooks-1.0
+ipaddress @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/ipaddress/ipaddress-1.0.23
+ipykernel @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/ipykernel/ipykernel-6.29.4
+ipython @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/ipython/ipython-8.17.2
+ipython-genutils @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/ipython_genutils/ipython_genutils-0.2.0
+ipywidgets @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/ipywidgets/ipywidgets-8.1.2
+jaraco.classes @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/jaracoclasses/jaraco.classes-3.3.0
+jedi @ file:///local/easybuild_milan/build/jedi/0.19.1/GCCcore-13.2.0/jedi/jedi-0.19.1
+jeepney @ file:///home/swadmin/.local/easybuild/sources/p/Python-bundle-PyPI/extensions/jeepney-0.8.0-py3-none-any.whl#sha256=c0a454ad016ca575060802ee4d590dd912e35c122fa04e70306de3d076cce755
+Jinja2 @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/Jinja2/Jinja2-3.1.2
+joblib @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/joblib/joblib-1.3.2
+json5 @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/json5/json5-0.9.25
+jsonschema @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jsonschema/jsonschema-4.22.0
+jsonschema-specifications @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jsonschema_specifications/jsonschema_specifications-2023.12.1
+jupyter-events @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyter_events/jupyter_events-0.10.0
+jupyter-lsp @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/jupyterlsp/jupyter-lsp-2.2.5
+jupyter_client @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyter_client/jupyter_client-8.6.1
+jupyter_core @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyter_core/jupyter_core-5.7.2
+jupyter_packaging @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyter_packaging/jupyter_packaging-0.12.3
+jupyter_server @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyter_server/jupyter_server-2.14.0
+jupyter_server_terminals @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyter_server_terminals/jupyter_server_terminals-0.5.3
+jupyterlab @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/jupyterlab/jupyterlab-4.2.0
+jupyterlab-widgets @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyterlab_widgets/jupyterlab_widgets-3.0.10
+jupyterlab_pygments @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/jupyterlab_pygments/jupyterlab_pygments-0.3.0
+jupyterlab_server @ file:///local/easybuild_milan/build/JupyterLab/4.2.0/GCCcore-13.2.0/jupyterlab_server/jupyterlab_server-2.27.1
+keyring @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/keyring/keyring-24.2.0
+keyrings.alt @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/keyringsalt/keyrings.alt-5.0.0
+kiwisolver==1.5.0
+liac-arff @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/liacarff/liac-arff-2.5.0
+lockfile @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/lockfile/lockfile-0.12.2
+lxml @ file:///local/easybuild_milan/build/lxml/4.9.3/GCCcore-13.2.0/lxml-4.9.3
+markdown-it-py @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/markdownitpy/markdown-it-py-3.0.0
+MarkupSafe @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/MarkupSafe/MarkupSafe-2.1.3
+matplotlib==3.11.1
+matplotlib-inline @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/matplotlibinline/matplotlib-inline-0.1.6
+mdurl @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/mdurl/mdurl-0.1.2
+mistune @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/mistune/mistune-3.0.2
+mock @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/mock/mock-5.1.0
+more-itertools @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/moreitertools/more-itertools-10.1.0
+msgpack @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/msgpack/msgpack-1.0.7
+narwhals==2.24.0
+nbclient @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/nbclient/nbclient-0.10.0
+nbconvert @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/nbconvert/nbconvert-7.16.4
+nbformat @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/nbformat/nbformat-5.10.4
+nest-asyncio @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/nest_asyncio/nest_asyncio-1.6.0
+netaddr @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/netaddr/netaddr-0.9.0
+netifaces @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/netifaces/netifaces-0.11.0
+notebook @ file:///local/easybuild_milan/build/JupyterNotebook/7.2.0/GCCcore-13.2.0/notebook-7.2.0
+notebook_shim @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/notebook_shim/notebook_shim-0.2.4
+numpy==2.4.6
+overrides @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/overrides/overrides-7.7.0
+packaging @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/packaging/packaging-23.2
+pandas==3.0.5
+pandocfilters @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/pandocfilters/pandocfilters-1.5.1
+parso @ file:///local/easybuild_milan/build/jedi/0.19.1/GCCcore-13.2.0/parso/parso-0.8.3
+pastel @ file:///home/swadmin/.local/easybuild/sources/p/Python-bundle-PyPI/extensions/pastel-0.2.1-py2.py3-none-any.whl#sha256=4349225fcdf6c2bb34d483e523475de5bb04a5c10ef711263452cb37d7dd4364
+pathlib2 @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pathlib2/pathlib2-2.3.7.post1
+pathspec @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pathspec/pathspec-0.11.2
+pbr @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pbr/pbr-5.11.1
+pexpect @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pexpect/pexpect-4.8.0
+pickleshare @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/pickleshare/pickleshare-0.7.5
+pillow==12.3.0
+pkginfo @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pkginfo/pkginfo-1.9.6
+platformdirs @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/platformdirs/platformdirs-3.11.0
+pluggy @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pluggy/pluggy-1.3.0
+pooch @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pooch/pooch-1.8.0
+prometheus-client @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/prometheus_client/prometheus_client-0.20.0
+prompt-toolkit @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/prompt_toolkit/prompt_toolkit-3.0.41
+psutil @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/psutil/psutil-5.9.6
+ptyprocess @ file:///home/swadmin/.local/easybuild/sources/p/Python-bundle-PyPI/extensions/ptyprocess-0.7.0-py2.py3-none-any.whl#sha256=4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35
+pure-eval @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/pure_eval/pure_eval-0.2.2
+py @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/py/py-1.11.0
+py-expression-eval @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/py_expression_eval/py_expression_eval-0.3.14
+pyasn1 @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pyasn1/pyasn1-0.5.0
+pycparser @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pycparser/pycparser-2.21
+pycryptodome @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pycryptodome/pycryptodome-3.19.0
+pydevtool @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pydevtool/pydevtool-0.3.0
+Pygments @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/Pygments/Pygments-2.16.1
+pylev @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pylev/pylev-1.4.0
+PyNaCl @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/PyNaCl/PyNaCl-1.5.0
+pyparsing @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pyparsing/pyparsing-3.1.1
+pyrsistent @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pyrsistent/pyrsistent-0.20.0
+pytest @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pytest/pytest-7.4.3
+pytest-xdist @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pytestxdist/pytest-xdist-3.3.1
+python-dateutil @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pythondateutil/python-dateutil-2.8.2
+python-json-logger @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/pythonjsonlogger/python-json-logger-2.0.7
+pytoml @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pytoml/pytoml-0.1.21
+pytz @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/pytz/pytz-2023.3.post1
+PyYAML @ file:///local/easybuild_milan/build/PyYAML/6.0.1/GCCcore-13.2.0/PyYAML-6.0.1
+pyzmq @ file:///local/easybuild_milan/build/PyZMQ/25.1.2/GCCcore-13.2.0/pyzmq-25.1.2
+rapidfuzz @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/rapidfuzz/rapidfuzz-2.15.2
+referencing @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/referencing/referencing-0.35.1
+regex @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/regex/regex-2023.10.3
+requests @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/requests/requests-2.31.0
+requests-toolbelt @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/requeststoolbelt/requests-toolbelt-1.0.0
+rfc3339-validator @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/rfc3339_validator/rfc3339_validator-0.1.4
+rfc3986-validator @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/rfc3986_validator/rfc3986_validator-0.1.1
+rich @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/rich/rich-13.6.0
+rich-click @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/richclick/rich-click-1.7.0
+rpds-py @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/rpds_py/rpds_py-0.18.1
+ruff==0.15.22
+scandir @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/scandir/scandir-1.10.0
+scikit-learn==1.9.0
+scipy==1.17.1
+SecretStorage @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/SecretStorage/SecretStorage-3.3.3
+semantic-version @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/semantic_version/semantic_version-2.10.0
+Send2Trash @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/Send2Trash/Send2Trash-1.8.3
+shellingham @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/shellingham/shellingham-1.5.4
+simplegeneric @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/simplegeneric/simplegeneric-0.8.1
+simplejson @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/simplejson/simplejson-3.19.2
+six @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/six/six-1.16.0
+sniffio @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/sniffio/sniffio-1.3.1
+snowballstemmer @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/snowballstemmer/snowballstemmer-2.2.0
+sortedcontainers @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sortedcontainers/sortedcontainers-2.4.0
+soupsieve @ file:///local/easybuild_milan/build/BeautifulSoup/4.12.2/GCCcore-13.2.0/soupsieve/soupsieve-2.5
+Sphinx @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinx/sphinx-7.2.6
+sphinx-bootstrap-theme @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxbootstraptheme/sphinx-bootstrap-theme-0.8.1
+sphinxcontrib-applehelp @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxcontrib_applehelp/sphinxcontrib_applehelp-1.0.7
+sphinxcontrib-devhelp @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxcontrib_devhelp/sphinxcontrib_devhelp-1.0.5
+sphinxcontrib-htmlhelp @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxcontrib_htmlhelp/sphinxcontrib_htmlhelp-2.0.4
+sphinxcontrib-jsmath @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxcontribjsmath/sphinxcontrib-jsmath-1.0.1
+sphinxcontrib-qthelp @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxcontrib_qthelp/sphinxcontrib_qthelp-1.0.6
+sphinxcontrib-serializinghtml @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxcontrib_serializinghtml/sphinxcontrib_serializinghtml-1.1.9
+sphinxcontrib-websupport @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/sphinxcontrib_websupport/sphinxcontrib_websupport-1.2.6
+stack-data @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/stack_data/stack_data-0.6.3
+tabulate @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/tabulate/tabulate-0.9.0
+terminado @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/terminado/terminado-0.18.1
+threadpoolctl @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/threadpoolctl/threadpoolctl-3.2.0
+tinycss2 @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/tinycss2/tinycss2-1.3.0
+toml @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/toml/toml-0.10.2
+tomli @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/tomli/tomli-2.0.1
+tomli_w @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/tomli_w/tomli_w-1.0.0
+tomlkit @ file:///home/swadmin/.local/easybuild/sources/p/Python-bundle-PyPI/extensions/tomlkit-0.12.1-py3-none-any.whl#sha256=712cbd236609acc6a3e2e97253dfc52d4c2082982a88f61b640ecf0817eab899
+tornado @ file:///local/easybuild_milan/build/tornado/6.4/GCCcore-13.2.0/tornado-6.4
+traitlets @ file:///local/easybuild_milan/build/IPython/8.17.2/GCCcore-13.2.0/traitlets/traitlets-5.13.0
+ujson @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/ujson/ujson-5.8.0
+uproot==5.7.5
+urllib3 @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/urllib3/urllib3-2.0.7
+virtualenv @ file:///local/easybuild_milan/build/virtualenv/20.24.6/GCCcore-13.2.0/virtualenv/virtualenv-20.24.6
+wcwidth @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/wcwidth/wcwidth-0.2.8
+webencodings @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/webencodings/webencodings-0.5.1
+websocket-client @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/websocket_client/websocket_client-1.8.0
+widgetsnbextension @ file:///local/easybuild_milan/build/jupyterserver/2.14.0/GCCcore-13.2.0/widgetsnbextension/widgetsnbextension-4.0.10
+xlrd @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/xlrd/xlrd-2.0.1
+xxhash==3.8.1
+zipfile36 @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/zipfile36/zipfile36-0.1.3
+zipp @ file:///local/easybuild_milan/build/PythonbundlePyPI/2023.10/GCCcore-13.2.0/zipp/zipp-3.17.0

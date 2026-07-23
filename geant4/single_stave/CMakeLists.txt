@@ -110,3 +110,19 @@ if(CCB_PYTHON3)
     SKIP_RETURN_CODE 77
     FAIL_REGULAR_EXPRESSION "defect 2 has regressed")
 endif()
+
+# 6) Far-end modes (SIPM-P0-002): --far-end absorb|open|mirror|instrumented
+#    are accepted, recorded in RUN_CONFIG, and produce valid geometry.
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_far_end_modes
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_far_end_modes.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical"
+            --macro "${CMAKE_BINARY_DIR}/macros/geometry_check.mac"
+            --work-dir "${CMAKE_BINARY_DIR}/far_end_modes")
+  set_tests_properties(ccb_stave_far_end_modes PROPERTIES
+    TIMEOUT 600
+    FAIL_REGULAR_EXPRESSION "SOME FAR-END MODES FAILED")
+endif()

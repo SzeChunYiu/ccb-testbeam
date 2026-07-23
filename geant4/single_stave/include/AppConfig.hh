@@ -43,7 +43,7 @@ struct AppConfig {
   double attenuation_scale  = 1.0;    // scales Y-11 bulk attenuation length
   double pde_scale          = 1.0;    // scales the SiPM PDE table
   double coupling_efficiency = 1.0;   // fibre-end -> sensor optical coupling [0,1]
-  bool   far_end_boundary_absorb = true; // true: far end absorbs; false: mirror
+  std::string far_end_mode = "instrumented";  // absorb|open|mirror|instrumented (SIPM-P0-002)
 
   // --- Provenance / reproducibility ---
   std::uint64_t seed = 1;             // primary RNG seed

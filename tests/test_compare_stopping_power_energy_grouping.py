@@ -69,7 +69,7 @@ def test_identical_numeric_energy_tokens_still_group_together(tmp_path):
     assert results[0]["n_events"] == 2
 
 
-def test_cli_writes_one_row_per_exact_energy(tmp_path):
+def test_cli_writes_one_row_per_exact_energy_but_remains_nonaccepting(tmp_path):
     reference = tmp_path / "reference.csv"
     simulation = tmp_path / "events.csv"
     output = tmp_path / "result.csv"
@@ -96,11 +96,14 @@ def test_cli_writes_one_row_per_exact_energy(tmp_path):
         check=False,
     )
 
-    assert process.returncode == 0, process.stderr
+    assert process.returncode == 1, process.stderr
     rows = list(csv.DictReader(output.open()))
     assert [float(row["energy_MeV"]) for row in rows] == pytest.approx([1.01, 1.04])
     assert [int(row["n_events"]) for row in rows] == [1, 1]
     assert {row["energy_grouping"] for row in rows} == {
         "EXACT_CONFIGURED_ENERGY"
     }
+    assert {row["uncertainty_method"] for row in rows} == {"NOT_EVALUATED"}
+    assert {row["within_tolerance"] for row in rows} == {"False"}
     assert "ENERGY GROUPING: EXACT_CONFIGURED_ENERGY" in process.stdout
+    assert "NUMERICAL TOLERANCE: PASS" not in process.stdout

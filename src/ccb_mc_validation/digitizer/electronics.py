@@ -28,16 +28,44 @@ def add_noise(
     return adc + rng.normal(0.0, cfg.noise_adc_rms, size=adc.shape)
 
 
+def _adc_dtype(adc_bits: int) -> np.dtype:
+    """Smallest signed integer dtype that holds the ADC's full-scale range."""
+    if adc_bits < 1 or adc_bits > 63:
+        raise ValueError(f"adc_bits must be in [1, 63], got {adc_bits}")
+    if adc_bits <= 7:
+        return np.dtype(np.int8)
+    if adc_bits <= 15:
+        return np.dtype(np.int16)
+    if adc_bits <= 31:
+        return np.dtype(np.int32)
+    return np.dtype(np.int64)
+
+
 def quantize_adc(
     adc: np.ndarray,
     cfg: ElectronicsConfig,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """
-    Quantize to integer ADC counts with saturation flag.
+    """Quantize to integer ADC counts with a saturation flag.
 
-    Returns (adc_int, saturated_mask).
+    The effective ceiling is ``min(adc_ceiling, 2**adc_bits - 1)``; BOTH the
+    clipping and the saturation flag use this single effective ceiling so they
+    can never disagree.  The output dtype is selected from ``adc_bits`` (smallest
+    signed integer that holds the full scale).  Non-finite input is rejected.
     """
+    arr = np.asarray(adc, dtype=np.float64)
+    if not np.all(np.isfinite(arr)):
+        raise ValueError("quantize_adc input contains non-finite values")
+    if cfg.adc_bits < 1 or cfg.adc_bits > 63:
+        raise ValueError(f"adc_bits must be in [1, 63], got {cfg.adc_bits}")
     full_scale = (1 << cfg.adc_bits) - 1
-    clipped = np.clip(adc, 0.0, min(cfg.adc_ceiling, full_scale))
-    saturated = adc > cfg.adc_ceiling
-    return np.rint(clipped).astype(np.int16), saturated.astype(np.uint8)
+    effective_ceiling = min(int(cfg.adc_ceiling), int(full_scale))
+    clipped = np.clip(arr, 0.0, float(effective_ceiling))
+    saturated = arr > float(effective_ceiling)
+    out = np.rint(clipped).astype(_adc_dtype(cfg.adc_bits))
+    # Validate legal bit range (defensive; clip already enforces this).
+    if out.size and (int(out.min()) < 0 or int(out.max()) > full_scale):
+        raise ValueError(
+            f"quantized ADC {int(out.min())}..{int(out.max())} exceeds "
+            f"legal range [0, {full_scale}] for adc_bits={cfg.adc_bits}"
+        )
+    return out, saturated.astype(np.uint8)

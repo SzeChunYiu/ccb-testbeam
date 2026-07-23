@@ -127,7 +127,7 @@ G4Material* DetectorConstruction::BuildFibreCore() {
 
 G4Material* DetectorConstruction::BuildFibreInnerClad() {
   auto* nist = G4NistManager::Instance();
-  G4Material* pmma = nist->FindOrBuildMaterial("G4_PLEXIGLASS");  // PMMA n~1.49
+  G4Material* pmma = nist->BuildMaterialWithNewDensity("CCB_FibreInnerClad", "G4_PLEXIGLASS", 1.19 * CLHEP::g / CLHEP::cm3);  // distinct PMMA instance (n~1.49)
   auto* mpt = new G4MaterialPropertiesTable();
   std::vector<double> e = {1.5 * eV, 4.0 * eV};
   std::vector<double> n = {1.49, 1.49};
@@ -139,7 +139,7 @@ G4Material* DetectorConstruction::BuildFibreInnerClad() {
 G4Material* DetectorConstruction::BuildFibreOuterClad() {
   // Fluorinated PMMA n~1.42. Approximate as a custom low-index acrylic.
   auto* nist = G4NistManager::Instance();
-  G4Material* fclad = nist->FindOrBuildMaterial("G4_PLEXIGLASS");
+  G4Material* fclad = nist->BuildMaterialWithNewDensity("CCB_FibreOuterClad", "G4_PLEXIGLASS", 1.19 * CLHEP::g / CLHEP::cm3);  // distinct fluorinated-PMMA instance (n~1.42)
   auto* mpt = new G4MaterialPropertiesTable();
   std::vector<double> e = {1.5 * eV, 4.0 * eV};
   std::vector<double> n = {1.42, 1.42};

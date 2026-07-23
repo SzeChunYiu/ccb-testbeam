@@ -10,6 +10,8 @@
 #include "G4VPhysicalVolume.hh"
 #include "G4LogicalVolume.hh"
 #include "G4Material.hh"
+#include "G4LossTableManager.hh"
+#include "G4EmSaturation.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "Randomize.hh"
@@ -49,11 +51,17 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
     G4VPhysicalVolume* vol = pre->GetPhysicalVolume();
     if (vol && vol->GetName() == "Scintillator") {
       const double edep_raw = step->GetTotalEnergyDeposit();
-      // Visible (Birks-quenched) energy: Geant4 already applies Birks to
-      // GetTotalEnergyDeposit when a Birks constant is set on the material via
-      // the EM ionisation model, but we also record the raw deposit separately.
-      d.edep_scint_raw_MeV += edep_raw / MeV;
-      d.edep_scint_MeV += step->GetTotalEnergyDeposit() / MeV;  // quenched
+      d.edep_scint_raw_MeV += edep_raw / MeV;  // true raw (unquenched) deposit
+      // Birks is NOT applied to GetTotalEnergyDeposit (it stays raw); Geant4
+      // applies Birks to the scintillation yield. Record a dedicated visible
+      // estimator via the EM saturation service (same Birks path as
+      // G4Scintillation), using the material kB set in BuildScintillator. With
+      // kB>0 this is strictly < raw for heavily ionising steps; kB==0 -> raw.
+      const G4EmSaturation* em_sat =
+          G4LossTableManager::Instance()->EmSaturation();
+      const double edep_visible =
+          em_sat ? em_sat->VisibleEnergyDepositionAtAStep(step) : edep_raw;
+      d.edep_scint_MeV += edep_visible / MeV;  // Birks-visible
       d.track_len_scint_mm += step->GetStepLength() / mm;
       if (!d.has_entry) {
         d.has_entry = true;

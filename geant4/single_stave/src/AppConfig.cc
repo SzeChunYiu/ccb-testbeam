@@ -27,7 +27,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --pde-scale V            SiPM PDE scale              (default 1.0)\n"
     "  --coupling V             fibre-end->sensor coupling  (default 1.0)\n"
     "  --far-end MODE           absorb|mirror               (default absorb)\n"
-    "  --mode MODE              optical|fast                (default optical)\n"
+    "  --mode MODE              optical                     (default; fast kernel not yet implemented)\n"
     "  --optical-dir DIR        optical CSV table directory (default optical)\n"
     "  --output FILE            ntuple output (.root)       (default ccb_stave.root)\n"
     "  --macro FILE             run a macro then exit\n"
@@ -90,7 +90,11 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--mode")) {
       if(!(v=need(i)))return false;
       if (eq(v, "optical")) mode = SimMode::kOpticalCalibration;
-      else if (eq(v, "fast")) mode = SimMode::kFastKernel;
+      else if (eq(v, "fast")) {
+        std::cerr << "error: --mode fast (response kernel) is not implemented yet;"
+                     " use --mode optical (kernel tracked as validation step 7).\n";
+        return false;
+      }
       else { std::cerr << "error: --mode must be optical|fast\n"; return false; }
     }
     else if (eq(a, "--optical-dir")) { if(!(v=need(i)))return false; optical_dir = v; }

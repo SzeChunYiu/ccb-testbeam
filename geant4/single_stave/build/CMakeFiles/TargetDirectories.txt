@@ -1,0 +1,4 @@
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/CMakeFiles/ccb_stave_sim.dir
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/CMakeFiles/test.dir
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/CMakeFiles/edit_cache.dir
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/CMakeFiles/rebuild_cache.dir

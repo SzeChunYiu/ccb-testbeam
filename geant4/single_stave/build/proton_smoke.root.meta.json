@@ -1,0 +1,25 @@
+{
+  "schema": "ccb-stave-run-meta/1",
+  "git_commit": "unknown",
+  "geometry_hash": "d05ae2327548c322",
+  "seed": 1,
+  "particle": "proton",
+  "kinetic_energy_MeV": 100,
+  "n_events": 5,
+  "mode": "optical",
+  "birks_kB_mm_per_MeV": 0.126,
+  "reflectivity_scale": 1,
+  "attenuation_scale": 1,
+  "pde_scale": 1,
+  "coupling_efficiency": 1,
+  "sipm_n_cells": 3600,
+  "optical_tables": {
+    "scintillator_absorption": {"path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/optical/scintillator_absorption.csv", "sha256": "bc260086a6c82dadaf69de4e6d4ad453a180c3657cc08b892229af7b0f6e6e8b"},
+    "scintillator_emission": {"path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/optical/scintillator_emission.csv", "sha256": "9007ec5272208fa21c72811474572f9a41fbb463a2502c1c9c43d4b3d97d32ee"},
+    "sipm_pde": {"path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/optical/sipm_pde.csv", "sha256": "f15b77d4b82c7f2f1b4ea92bd113afda219461968be07967e920c5bc46c9840b"},
+    "tio2_reflectivity": {"path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/optical/tio2_reflectivity.csv", "sha256": "ad6ad0ba7e3ed6a2c49457c9e4eba71b076dfda2fa636530b3fbe7c4e496fc35"},
+    "y11_absorption": {"path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/optical/y11_absorption.csv", "sha256": "f11e2e73698d4569180bc9538df1a1fb3a26b9b890d9f9b67117106b13210634"},
+    "y11_bulk_attenuation": {"path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/optical/y11_bulk_attenuation.csv", "sha256": "7ef689180d32fc69eab67307d98493414fa5575d23ca1682b70194d70d5308ca"},
+    "y11_emission": {"path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-defects/geant4/single_stave/build/optical/y11_emission.csv", "sha256": "fdfca95d3af46a7e6113f871dc865c1980a8f8f8ac024c6d447ce3503b65b12f"}
+  }
+}

@@ -28,6 +28,11 @@ def write_table(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def write_reference(path: Path) -> str:
+    path.write_text("producer contract v1\n", encoding="utf-8")
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def test_cli_rejects_evidence_without_reference(tmp_path: Path) -> None:
     table = tmp_path / "table.csv"
     output = tmp_path / "audit.json"
@@ -65,21 +70,39 @@ def test_programmatic_audit_rejects_unbound_reference(tmp_path: Path) -> None:
         MODULE.audit(table, None, 3500.0, 5000.0, {digest: {
             "convention": "NET",
             "evidence_basis": "PRODUCER_CODE_PROVENANCE",
-            "evidence_reference": "docs/contracts/PULSE_TABLE_CONTRACT.md",
+            "evidence_reference": "producer_contract.md",
         }})
 
 
-def test_traceable_map_is_normalized_and_exposed(tmp_path: Path) -> None:
+def test_raw_programmatic_map_cannot_authorize_unverified_reference_bytes(tmp_path: Path) -> None:
+    table = tmp_path / "table.csv"
+    digest = write_table(table)
+    result = MODULE.audit(table, None, 3500.0, 5000.0, {digest: {
+        "convention": "NET",
+        "evidence_basis": "PRODUCER_CODE_PROVENANCE",
+        "evidence_reference": "producer_contract.md",
+        "evidence_reference_sha256": REFERENCE_SHA256,
+    }})
+    assert result["evidence_record"]["evidence_reference_verified"] is False
+    assert result["physics_acceptance"] == "UNVERIFIED"
+    assert result["physics_convention"] is None
+    assert result["physics_evidence_reference_verified"] is False
+    assert "EVIDENCE_REFERENCE_BYTES_UNVERIFIED" in result["warnings"]
+
+
+def test_traceable_map_is_normalized_verified_and_exposed(tmp_path: Path) -> None:
     table = tmp_path / "table.csv"
     output = tmp_path / "audit.json"
     evidence = tmp_path / "evidence.json"
+    reference_file = tmp_path / "producer_contract.md"
     digest = write_table(table)
-    reference = "docs/contracts/PULSE_TABLE_CONTRACT.md#amplitude-semantics"
+    reference_digest = write_reference(reference_file)
+    reference = f"{reference_file.name}#amplitude-semantics"
     evidence.write_text(json.dumps({digest: {
         "convention": "NET",
         "evidence_basis": "PRODUCER_CODE_PROVENANCE",
         "evidence_reference": f"  {reference}  ",
-        "evidence_reference_sha256": REFERENCE_SHA256,
+        "evidence_reference_sha256": reference_digest,
     }}), encoding="utf-8")
 
     assert MODULE.main([
@@ -89,5 +112,29 @@ def test_traceable_map_is_normalized_and_exposed(tmp_path: Path) -> None:
     row = payload["tables"][0]
     assert row["physics_acceptance"] == "ACCEPTABLE"
     assert row["physics_evidence_reference"] == reference
-    assert row["evidence_record"]["evidence_reference_sha256"] == REFERENCE_SHA256
+    assert row["physics_evidence_reference_sha256"] == reference_digest
+    assert row["physics_evidence_reference_verified"] is True
+    assert row["evidence_record"]["evidence_reference_verified"] is True
+    assert row["evidence_record"]["evidence_reference_measured_sha256"] == reference_digest
     assert row["evidence_record"]["sha256"] == digest
+
+
+def test_cli_rejects_mutated_supporting_artifact(tmp_path: Path) -> None:
+    table = tmp_path / "table.csv"
+    output = tmp_path / "audit.json"
+    evidence = tmp_path / "evidence.json"
+    reference_file = tmp_path / "producer_contract.md"
+    digest = write_table(table)
+    reference_digest = write_reference(reference_file)
+    evidence.write_text(json.dumps({digest: {
+        "convention": "NET",
+        "evidence_basis": "PRODUCER_CODE_PROVENANCE",
+        "evidence_reference": reference_file.name,
+        "evidence_reference_sha256": reference_digest,
+    }}), encoding="utf-8")
+    reference_file.write_text("producer contract v2\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="evidence_reference_sha256 mismatch"):
+        MODULE.main([
+            str(table), "--output", str(output), "--evidence-map", str(evidence)
+        ])

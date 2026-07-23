@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Deuteron PSTAR proxy acceptance gate</title>
+  <desc id="desc">Synthetic schematic contrasting pre-change numerical acceptance with post-change labelled non-acceptance.</desc>
+  <rect width="1200" height="650" fill="white"/>
+  <text x="600" y="48" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="bold">Deuteron PSTAR proxy acceptance gate</text>
+  <text x="600" y="78" text-anchor="middle" font-family="sans-serif" font-size="16">Synthetic regression schematic — not detector data</text>
+
+  <rect x="55" y="125" width="500" height="400" rx="18" fill="#fff4f4" stroke="#9b1c1c" stroke-width="3"/>
+  <text x="305" y="165" text-anchor="middle" font-family="sans-serif" font-size="23" font-weight="bold">Pre-change</text>
+  <text x="90" y="215" font-family="monospace" font-size="19">deuteron E = 2 MeV</text>
+  <text x="90" y="255" font-family="monospace" font-size="19">lookup proton PSTAR at E/2 = 1 MeV</text>
+  <text x="90" y="295" font-family="monospace" font-size="19">numeric ratio = 1.000</text>
+  <text x="90" y="335" font-family="monospace" font-size="19">raw deposit = comparable</text>
+  <path d="M305 365 L305 410" stroke="#333" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="145" y="415" width="320" height="70" rx="12" fill="#ffd6d6" stroke="#9b1c1c" stroke-width="3"/>
+  <text x="305" y="447" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">NUMERICAL PASS</text>
+  <text x="305" y="475" text-anchor="middle" font-family="sans-serif" font-size="16">proxy authorized as if direct</text>
+
+  <rect x="645" y="125" width="500" height="400" rx="18" fill="#f2fbf5" stroke="#176b37" stroke-width="3"/>
+  <text x="895" y="165" text-anchor="middle" font-family="sans-serif" font-size="23" font-weight="bold">Validated gate</text>
+  <text x="680" y="215" font-family="monospace" font-size="19">reference_basis =</text>
+  <text x="680" y="247" font-family="monospace" font-size="18">VELOCITY_SCALED_PROTON_PROXY</text>
+  <text x="680" y="295" font-family="monospace" font-size="19">numeric ratio = 1.000</text>
+  <text x="680" y="335" font-family="monospace" font-size="19">physics_comparable = false</text>
+  <path d="M895 365 L895 410" stroke="#333" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="720" y="415" width="350" height="70" rx="12" fill="#d9f3e2" stroke="#176b37" stroke-width="3"/>
+  <text x="895" y="447" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="bold">NOT ACCEPTED</text>
+  <text x="895" y="475" text-anchor="middle" font-family="sans-serif" font-size="16">labelled diagnostic only</text>
+
+  <text x="600" y="575" text-anchor="middle" font-family="sans-serif" font-size="18">Default deuteron input: status 2, no CSV, no numerical PASS</text>
+  <text x="600" y="607" text-anchor="middle" font-family="sans-serif" font-size="16">Opt-in preserves arithmetic diagnostics without upgrading the approximation to physics evidence.</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L6,3 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

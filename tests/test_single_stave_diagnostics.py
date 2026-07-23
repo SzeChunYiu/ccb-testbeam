@@ -7,7 +7,7 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE_PATH = ROOT / "scripts" / "single_stave_diagnostics.py"
+MODULE_PATH = ROOT / "scripts" / "single_stave" / "single_stave_diagnostics.py"
 spec = importlib.util.spec_from_file_location("single_stave_diagnostics", MODULE_PATH)
 mod = importlib.util.module_from_spec(spec)
 assert spec and spec.loader

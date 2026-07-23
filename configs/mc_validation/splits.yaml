@@ -1,16 +1,53 @@
-default_split: legacy_parity
+# Train/test split definitions for MC validation studies.
+#
+# ML-002 contract: any study that publishes a production ML number MUST use a
+# group-disjoint split (group_holdout / group_kfold) keyed by an immutable
+# group (event_id / run / source). Row-index strategies (legacy_parity,
+# deterministic_index) leak whenever two rows share a group and are retained
+# only for back-comparison with scripts/mv1_mv2_truth_pid_energy.py; they MUST
+# NOT be used as the default for production ML evaluation.
+#
+# group_key names the immutable column the split is keyed on (records[field]).
+default_split: group_holdout
+group_key: event_id
 
 splits:
+  # DEFAULT — group-disjoint holdout (sklearn GroupShuffleSplit semantics).
+  # Whole event_id groups move into train or test together; zero group overlap.
+  group_holdout:
+    strategy: group_holdout
+    train_fraction: 0.5
+    seed: 171101
+    description: >
+      Group-disjoint holdout keyed by group_key (event_id). Whole groups move
+      into train/test together via sklearn GroupShuffleSplit; disjointness is
+      enforced by assert_group_disjoint (raises SplitLeakageError on overlap).
+
+  # Group-disjoint K-fold (sklearn GroupKFold); first fold held out as test.
+  group_kfold:
+    strategy: group_kfold
+    n_splits: 5
+    train_fraction: 0.8
+    seed: 171101
+    description: >
+      Group-disjoint K-fold (GroupKFold). The first fold is the held-out test
+      set; the union of the remaining folds' test sets forms the train set.
+      Disjointness enforced by assert_group_disjoint.
+
+  # LEGACY — row-index parity. NOT group-aware; leaks for multi-track events.
+  # Retained only for back-comparison with the original MV1/MV2 script.
   legacy_parity:
     strategy: legacy_parity
     train_fraction: 0.5
     seed: 0
     description: >
-      Deterministic index parity (idx % 2 == 0 train). Legacy parity with
-      scripts/mv1_mv2_truth_pid_energy.py.
+      Row-index parity (idx % 2 == 0 train). NOT group-aware: leaks information
+      whenever two tracks share an event. Do NOT use for production ML numbers.
 
   seeded_holdout:
     strategy: deterministic_index
     train_fraction: 0.5
     seed: 171101
-    description: Permutation holdout driven by SplitRegistry seed.
+    description: >
+      Row-index permutation holdout (deterministic_index). NOT group-aware;
+      retained for legacy parity. Prefer group_holdout for production.

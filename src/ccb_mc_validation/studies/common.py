@@ -14,12 +14,43 @@ class StudyStatus(str, Enum):
 
     NOT_RUN = "NOT_RUN"
     BLOCKED = "BLOCKED"
+    FAILED = "FAILED"
     FIXTURE = "FIXTURE"
     PRODUCTION = "PRODUCTION"
 
 
 class StudyBlockedError(Exception):
     """Raised when a study cannot proceed (missing dependency, config, etc.)."""
+
+
+# ML-003 fail-closed contract: a PRODUCTION StudyResult must NEVER carry an
+# error/skip diagnostic. These markers indicate the model path did not complete
+# cleanly; promoting such a result to PRODUCTION hides a failed/skipped model
+# behind a passing status. The validation layer (write_study_result) rejects
+# any PRODUCTION result carrying one of these markers.
+ERROR_SKIP_MARKERS: tuple[str, ...] = ("_ml_error", "skipped_ml")
+
+
+class ProductionIntegrityError(Exception):
+    """Raised when a PRODUCTION result carries error/skip markers (ML-003)."""
+
+
+def reject_error_skip_markers(result: StudyResult) -> None:
+    """Fail-closed gate: reject PRODUCTION results that carry error/skip markers.
+
+    A PRODUCTION study result must be the output of a fully-completed model run.
+    ``_ml_error`` (model exception swallowed) and ``skipped_ml`` (precondition
+    unmet) are incompatible with PRODUCTION status. FAILED/BLOCKED/FIXTURE
+    results may legitimately carry these markers as diagnostics.
+    """
+    if result.status != StudyStatus.PRODUCTION:
+        return
+    offenders = [m for m in ERROR_SKIP_MARKERS if m in result.metrics]
+    if offenders:
+        raise ProductionIntegrityError(
+            f"PRODUCTION result {result.study_id!r} carries error/skip markers "
+            f"{offenders}; downgrade to FAILED/BLOCKED before publishing."
+        )
 
 
 @dataclass
@@ -57,7 +88,12 @@ class CutflowRecorder:
 
 
 def write_study_result(result: StudyResult, out_dir: str | Path) -> Path:
-    """Write ``StudyResult`` JSON to ``out_dir/study_result.json``."""
+    """Write ``StudyResult`` JSON to ``out_dir/study_result.json``.
+
+    Fail-closed (ML-003): a PRODUCTION result carrying error/skip markers is
+    rejected before it can be published as a production number.
+    """
+    reject_error_skip_markers(result)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     path = out / "study_result.json"

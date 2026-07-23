@@ -432,6 +432,13 @@ class PipelineOrchestrator:
     def fixture(self, workers: int = 1, shards: int = 1) -> str:
         return self.smoke(studies="MV0,MV1,MV2,MV3,MV9", fixture=True, workers=workers, shards=shards)
 
+    @staticmethod
+    def _aggregate_smoke_status(results: dict[str, Any]) -> str:
+        """FAIL-closed gate: PASS only if every study result is PASS (and at least one ran)."""
+        if not results:
+            return "FAIL"
+        return "PASS" if all(r.get("status") == "PASS" for r in results.values()) else "FAIL"
+
     def smoke(self, studies: str = "all", fixture: bool = True, workers: int = 1, shards: int = 1) -> str:
         run_path = self._ensure_run()
         seed = int(self.config.seeds.get("global", 424242))
@@ -461,9 +468,10 @@ class PipelineOrchestrator:
             except Exception as exc:  # keep smoke gate honest but non-fatal for missing registry
                 synth_out.write_text(f"# MV9 synthesis\n\nBLOCKED: {exc}\n", encoding="utf-8")
             results["MV9"] = {"status": STATUS_SMOKE, "artifact": str(synth_out)}
-        gate = {"run_id": self.run_id, "status": "PASS", "mode": STATUS_FIXTURE if fixture else STATUS_SMOKE, "studies": results, "workers": workers, "shards": shards, "not_for_physics": True}
+        gate_status = self._aggregate_smoke_status(results)
+        gate = {"run_id": self.run_id, "status": gate_status, "mode": STATUS_FIXTURE if fixture else STATUS_SMOKE, "studies": results, "workers": workers, "shards": shards, "not_for_physics": True}
         atomic_write_json(run_path / "SMOKE_GATE.json", gate)
-        (run_path / "SMOKE_GATE.md").write_text(f"# Smoke gate\n\nStatus: **PASS** ({gate['mode']}; not for physics)\n\nRun ID: `{self.run_id}`\n", encoding="utf-8")
+        (run_path / "SMOKE_GATE.md").write_text(f"# Smoke gate\n\nStatus: **{gate_status}** ({gate['mode']}; not for physics)\n\nRun ID: `{self.run_id}`\n", encoding="utf-8")
         self._event("smoke", "PASS", {"studies": list(results)})
         return str(self.run_id)
 

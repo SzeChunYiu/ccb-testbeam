@@ -20,6 +20,8 @@ Method
                a proton of energy E/2 (same charge z=1), so to leading order
                S_deuteron(E) ~= S_proton(E/2). This is the standard Bragg-rule/
                effective-charge approximation; NIST PSTAR has no deuteron table.
+    Reference lookup energies outside the committed PSTAR range are rejected;
+    the tool never clamps to an endpoint or extrapolates silently.
 * Report: per-energy ratio S_sim/S_ref, delta %, and a numerical tolerance
   check (CCB_STOPPING_TOLERANCE_PCT, default 10%). This is DIAGNOSTIC_ONLY,
   not an accepted stopping-power closure.
@@ -63,6 +65,10 @@ REPO_ROOT = HERE.parents[1]
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
 
 
+class StoppingPowerInputError(ValueError):
+    """Raised when a comparison would use undefined or out-of-range inputs."""
+
+
 def sha256_file(path: Path) -> str:
     """Return a lowercase SHA-256 digest for provenance."""
     digest = hashlib.sha256()
@@ -92,33 +98,58 @@ def read_reference(path: Path) -> list[tuple[float, float, float, float]]:
     return rows
 
 
+def reference_lookup_energy(particle: str, energy_mev: float) -> float:
+    """Return the proton-equivalent PSTAR lookup energy for a particle."""
+    normalized = particle.strip().lower()
+    if normalized.startswith("p"):
+        return energy_mev
+    if normalized.startswith("d"):
+        return energy_mev / 2.0
+    raise StoppingPowerInputError(
+        f"unsupported particle '{particle}' (use proton|deuteron)"
+    )
+
+
 def interp_loglog(table: list[tuple[float, float, float, float]], x: float) -> float:
-    """Linear interpolation in log-log of the total stopping power; clamp edges."""
-    if x <= table[0][0]:
+    """Linear interpolation in log-log of total stopping power, without extrapolation."""
+    if not math.isfinite(x) or x <= 0:
+        raise StoppingPowerInputError(
+            f"reference lookup energy must be finite and positive, got {x!r} MeV"
+        )
+    e_min = table[0][0]
+    e_max = table[-1][0]
+    if x < e_min or x > e_max:
+        raise StoppingPowerInputError(
+            f"reference lookup energy {x:g} MeV is outside the committed PSTAR "
+            f"range [{e_min:g}, {e_max:g}] MeV"
+        )
+    if x == e_min:
         return table[0][3]
-    if x >= table[-1][0]:
+    if x == e_max:
         return table[-1][3]
-    # find bracketing
     for i in range(len(table) - 1):
         e0, _, _, y0 = table[i]
         e1, _, _, y1 = table[i + 1]
         if e0 <= x <= e1:
             if y0 <= 0 or y1 <= 0:
-                # fall back to linear where a log would break (shouldn't happen here)
                 return y0 + (y1 - y0) * (x - e0) / (e1 - e0)
             t = (math.log(x) - math.log(e0)) / (math.log(e1) - math.log(e0))
             return math.exp(math.log(y0) + t * (math.log(y1) - math.log(y0)))
-    return table[-1][3]
+    raise StoppingPowerInputError(
+        f"failed to bracket reference lookup energy {x:g} MeV"
+    )
 
 
 def reference_for(particle: str, energy_mev: float, table) -> float:
     """PSTAR-equivalent total stopping for the species."""
-    if particle.lower().startswith("p"):
-        return interp_loglog(table, energy_mev)
-    if particle.lower().startswith("d"):
-        # velocity scaling: deuteron(E) ~ proton(E/2)
-        return interp_loglog(table, energy_mev / 2.0)
-    sys.exit(f"unsupported particle '{particle}' (use proton|deuteron)")
+    lookup_energy = reference_lookup_energy(particle, energy_mev)
+    try:
+        return interp_loglog(table, lookup_energy)
+    except StoppingPowerInputError as exc:
+        raise StoppingPowerInputError(
+            f"{particle} energy {energy_mev:g} MeV maps to proton-equivalent "
+            f"energy {lookup_energy:g} MeV: {exc}"
+        ) from exc
 
 
 def _pick(d: dict, aliases):
@@ -193,13 +224,20 @@ def run_compare(sim_path: Path, ref_path: Path, rho: float, out_path: Path | Non
     agg = aggregate(rows, rho)
     results = []
     all_pass = True
+    ref_min = table[0][0]
+    ref_max = table[-1][0]
     for d in agg:
+        lookup_energy = reference_lookup_energy(d["particle"], d["energy_MeV"])
         ref = reference_for(d["particle"], d["energy_MeV"], table)
         ratio = d["sim_total_MeV_cm2_g"] / ref if ref > 0 else float("nan")
         delta = (ratio - 1.0) * 100.0
         ok = abs(delta) <= tol_pct
         all_pass = all_pass and ok
         d.update({
+            "reference_lookup_energy_MeV": lookup_energy,
+            "reference_range_min_MeV": ref_min,
+            "reference_range_max_MeV": ref_max,
+            "reference_in_range": True,
             "ref_total_MeV_cm2_g": ref,
             "ratio": ratio,
             "delta_percent": delta,
@@ -208,8 +246,11 @@ def run_compare(sim_path: Path, ref_path: Path, rho: float, out_path: Path | Non
         results.append(d)
 
     if out_path is not None:
-        cols = ["particle", "energy_MeV", "n_events", "sim_total_MeV_cm2_g",
-                "ref_total_MeV_cm2_g", "ratio", "delta_percent", "within_tolerance"]
+        cols = ["particle", "energy_MeV", "reference_lookup_energy_MeV",
+                "reference_range_min_MeV", "reference_range_max_MeV",
+                "reference_in_range", "n_events", "sim_total_MeV_cm2_g",
+                "ref_total_MeV_cm2_g", "ratio", "delta_percent",
+                "within_tolerance"]
         with out_path.open("w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=cols)
             w.writeheader()
@@ -290,13 +331,17 @@ def main(argv: list[str] | None = None) -> int:
                    help="run a synthetic check against the selected reference table")
     args = p.parse_args(argv)
 
-    if args.self_test:
-        return self_test(args.reference)
-    if not args.sim:
-        p.error("--sim is required (or use --self-test)")
-    _, ok = run_compare(args.sim, args.reference, args.material_density,
-                        args.out, args.tolerance_pct)
-    return 0 if ok else 1
+    try:
+        if args.self_test:
+            return self_test(args.reference)
+        if not args.sim:
+            p.error("--sim is required (or use --self-test)")
+        _, ok = run_compare(args.sim, args.reference, args.material_density,
+                            args.out, args.tolerance_pct)
+        return 0 if ok else 1
+    except StoppingPowerInputError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":

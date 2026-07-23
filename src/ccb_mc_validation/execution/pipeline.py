@@ -420,6 +420,14 @@ class PipelineOrchestrator:
     def test(self, scope: str = "unit", strict: bool = False) -> dict[str, Any]:
         run_path = self._ensure_run()
         cmd = [sys.executable, "-m", "pytest", "-q"]
+        if scope == "integration":
+            cmd.append("tests/integration")
+        elif scope == "all":
+            cmd.append("tests/")
+        else:  # "unit" (default) -- exclude integration
+            cmd += ["tests/", "--ignore=tests/integration"]
+        if strict:
+            cmd += ["-x", "--strict-markers"]
         started = datetime.now(tz=timezone.utc).isoformat()
         proc = subprocess.run(cmd, cwd=self.repo_root, capture_output=True, text=True)
         log_path = run_path / "execution" / "pytest.log"

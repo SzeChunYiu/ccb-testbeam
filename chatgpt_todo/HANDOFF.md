@@ -2,158 +2,162 @@
 
 ## Session
 
-- **UTC:** `2026-07-23T19:01:30Z`
-- **Task:** `AUD-G4-013`
+- **UTC:** `2026-07-23T20:19:05Z`
+- **Task:** `AUD-G4-014`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **Initial observed remote main:** `d880c7474b2ba3f981fa6e402d1723d1c450e22d`
-- **Concurrent main observed before first write:** `6fd458150fd7f7eff1be044c40b0675031935547`
-- **Additional concurrent main observed after evidence writes:** `2604129517e9241584cb91bea63aec1ceb1073a5`
-- **Validated implementation/evidence head:** `2a29ffcfc0f645cede8b7ef621b1f17ac57a6bb7`
-- **Coordination/archive head before this handoff:** `e991726e098166d0e48273e027d25960ab76a2dd`
+- **Initial remote main:** `f147160f2c3be0df59f45c77cf209d2982547d04`
+- **Validated implementation/evidence head:** `b24260118f25d1d36fbee118fb4ed1891377ef6c`
+- **Coordination/archive head before this handoff:** `7d0de67e4e262e86700db4db64938aee8de0d2b8`
 - **Destination:** direct to `main`
-- **Acceptance:** COMPLETE for exact configured-energy grouping, focused regression, visual evidence, coordination, and immutable archive; accepted stopping-power physics closure remains PARTIAL.
+- **Acceptance:** COMPLETE for deuteron-reference fail-closed authorization, focused regression, visual evidence, coordination, and immutable archive; accepted stopping-power physics closure remains PARTIAL.
 
 ## Start-of-run and concurrent-work review
 
-- A direct clone was attempted and failed because this runtime could not resolve `github.com`; authenticated GitHub connector reads and writes were used.
-- Inspected remote-main history and divergence, repository permissions, PR #868, canonical stopping-power code, simulation and PSTAR validators, focused tests, validation records, and all mandatory `chatgpt_todo/` files.
+- A direct clone was attempted and failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and direct-main writes were used.
+- Inspected remote-main history, repository permissions, PR #868, canonical stopping-power code, strict simulation/PSTAR validators, focused tests, validation records, and all mandatory `chatgpt_todo/` files.
 - PR #868 remains closed, unmerged, and non-mergeable. It was not reopened, modified, or merged.
-- Concurrent commits were inspected before and during the run. The stopping-power file blob was unchanged by those commits, and no active completed task was duplicated.
-- No task branch, pull request, force-push, history rewrite, unrelated deletion, or raw-data modification was used.
+- No overlapping active/completed task was duplicated. No task branch, pull request, force-push, history rewrite, unrelated deletion, or raw-data modification was used.
 
-## Confirmed numerical-method defect
+## Confirmed scientific-method defect
 
-The former stopping-power aggregator used:
+The canonical diagnostic mapped deuterons to proton PSTAR at half the configured energy:
 
 ```python
-key = (particle, round(energy, 1))
+if normalized.startswith("d"):
+    return energy_mev / 2.0
 ```
 
-It then pooled deposited energy and path length and reported the arithmetic mean of the original energies. Synthetic events at `1.01 MeV` and `1.04 MeV` therefore became one comparison row at `1.025 MeV`.
+Acceptance then used only the unquenched-deposit flag and numerical tolerance. A raw deuteron row could therefore set `within_tolerance=true`, print `NUMERICAL TOLERANCE: PASS`, and return status 0 even though its reference was an unvalidated equal-velocity proton proxy rather than a direct deuteron stopping-power datum.
 
-This is not a harmless display transformation. PSTAR is energy dependent and evaluated with nonlinear log-log interpolation, so the implicit merge changed both the simulation statistic and reference energy without a declared binning, weighting, or integration rule.
+Authoritative scope:
 
-The exact pre-change reconstruction matched Git blob:
+- NIST PSTAR provides stopping-power and range tables for protons, not deuterons.
+- Brolley and Ribe, Phys. Rev. 98, 1112 (1955), DOI `10.1103/PhysRev.98.1112`, measured equal-velocity proton/deuteron stopping in selected gases, demonstrating that the relationship is an empirical, material-specific question rather than a provenance-free identity.
 
-```text
-d525bf6b74a18d135b38434dd5085123b995132a
-```
+Exact pre-change script blob:
 
-Running the new regression against that exact blob produced:
+`3c492b172669f2cdca160c52e1acc495a319973e`
 
-```text
-2 failed, 1 passed in 0.57s
-```
+Synthetic defect case:
 
-Both failures measured the former `[1.01, 1.04] -> [1.025]` coalescence.
+- deuteron configured energy: `2 MeV`;
+- proton PSTAR lookup energy: `1 MeV`;
+- simulated deposited-energy/path proxy: `10 MeV cm2/g`;
+- proton reference: `10 MeV cm2/g`;
+- numerical ratio: `1.0`;
+- pre-change acceptance: true;
+- corrected physics comparability: false.
 
 ## Validated correction
 
-`aggregate()` now keys on the exact validated numeric energy:
+`compare_stopping_power.py` now:
 
-```python
-key = (particle, energy)
-```
-
-Consequences:
-
-- distinct configured energies remain distinct comparison points;
-- numerically equivalent tokens such as `1.0` and `1.00` still group after canonical float parsing;
-- no arithmetic-mean energy is introduced;
-- each result row records `energy_grouping=EXACT_CONFIGURED_ENERGY`;
-- output CSVs include `energy_grouping`;
-- the CLI prints `ENERGY GROUPING: EXACT_CONFIGURED_ENERGY`.
+- distinguishes `DIRECT_PSTAR_PROTON` from `VELOCITY_SCALED_PROTON_PROXY`;
+- rejects deuteron input by default before writing an output CSV or printing a numerical PASS;
+- permits `--allow-deuteron-proxy` only for labelled, non-accepting diagnostics;
+- records `reference_basis`, `reference_direct_pstar_comparable`, and `physics_comparable` in results and CSVs;
+- requires numerical tolerance, unquenched input, and a direct proton reference before setting `within_tolerance=true`;
+- makes mixed proton/deuteron output non-accepting;
+- uses proton cases only in the built-in self-test.
 
 ## Regression and validation
 
 Added:
 
-- `tests/test_compare_stopping_power_energy_grouping.py`
+- `tests/test_compare_stopping_power_deuteron_proxy.py`
 
-The test covers:
+Updated:
 
-1. `1.01` and `1.04 MeV` remain separate;
-2. `1.0` and `1.00 MeV` still group;
-3. the direct CLI emits one row per exact energy and records grouping metadata.
+- `tests/test_compare_stopping_power_energy_range.py`
+
+Coverage:
+
+1. default deuteron status-2 rejection, no output CSV, and no numerical PASS;
+2. explicit proxy output with exact arithmetic ratio `1.0` but `within_tolerance=false`;
+3. propagated reference-basis and physics-comparability fields;
+4. direct proton acceptance remains available;
+5. mixed proton/deuteron output remains non-accepting;
+6. deuteron range checks still use proton-equivalent `E/2` but cannot authorize physics acceptance;
+7. existing quenched-proxy behavior remains non-accepting.
 
 Executed on exact local reconstructions:
 
 ```text
 python -m py_compile \
   scripts/single_stave/compare_stopping_power.py \
-  tests/test_compare_stopping_power_energy_grouping.py \
+  tests/test_compare_stopping_power_deuteron_proxy.py \
   tests/test_compare_stopping_power_energy_range.py \
-  tests/test_compare_stopping_power_sim_input_integration.py \
-  tests/test_compare_stopping_power_pstar_component_integration.py \
   tests/test_compare_stopping_power_quenched_proxy.py
 
 python -m pytest \
-  tests/test_compare_stopping_power_energy_grouping.py \
+  tests/test_compare_stopping_power_deuteron_proxy.py \
   tests/test_compare_stopping_power_energy_range.py \
-  tests/test_compare_stopping_power_sim_input_integration.py \
-  tests/test_compare_stopping_power_pstar_component_integration.py \
   tests/test_compare_stopping_power_quenched_proxy.py -q
 
-19 passed in 3.22s
+9 passed in 5.78s
 ```
 
 Additional passed checks:
 
-- exact pre-change Git-blob identity;
-- JSON parse;
+- exact changed-file Git blob identity;
+- validation JSON parse;
 - SVG XML parse;
 - maximum changed Python line length: 91;
 - local changed-file SHA-256 capture.
 
-Changed-file SHA-256 values:
+Changed-file provenance:
 
-- `scripts/single_stave/compare_stopping_power.py`: `15cdc5d0ed128b84a4fd47e3d665a899356702338ddebbe1aff4240a88c712a1`
-- `tests/test_compare_stopping_power_energy_grouping.py`: `fa4098be552361c91fce93e9d19a7dfc902fd8514e293042ecd5ca76c28de485`
+| File | Bytes | SHA-256 | Git blob |
+|---|---:|---|---|
+| `scripts/single_stave/compare_stopping_power.py` | 17865 | `768d4136bf59ee10c5074298bd7fa8195adb3d680e291802b520c88f97911260` | `8b9c0c530b6414c774601286a0d67f13500aa532` |
+| `tests/test_compare_stopping_power_deuteron_proxy.py` | 5103 | `135bf0b620a6bf5721329b29cf1fbd6e26e64e0b3200e0d5c2502b707a684b01` | `6febfc382a10d11194be1a57f99f41cf85bdcd48` |
+| `tests/test_compare_stopping_power_energy_range.py` | 3859 | `479976f772e51c376ce6c3b12b42b9a8066ba2ce34156ebf9b8b6298948067e9` | `026b6a12a4ea27e499f2fc2baf3e98020d65a58a` |
 
 Not run:
 
 - full repository pytest;
 - ruff, which was unavailable;
-- Geant4 build and CTest;
+- Geant4 build/CTest;
 - ROOT processing;
 - real simulation execution;
 - GitHub Actions.
 
-No broader CI or stopping-power agreement is claimed.
+No broader CI, deuteron-reference accuracy, or stopping-power agreement is claimed.
 
 ## Reproducible evidence
 
 Added:
 
-- `docs/validation/stopping_power_energy_grouping_audit.md`
-- `docs/validation/stopping_power_energy_grouping_validation.json`
-- `docs/validation/stopping_power_energy_grouping.svg`
+- `docs/validation/stopping_power_deuteron_proxy_audit.md`
+- `docs/validation/stopping_power_deuteron_proxy_validation.json`
+- `docs/validation/stopping_power_deuteron_proxy.svg`
 
-The SVG is explicitly labelled synthetic regression evidence, not detector data. It contrasts the former pooled `1.025 MeV` point with two exact-energy rows and states the `DIAGNOSTIC_ONLY` scientific boundary.
+The SVG is explicitly labelled synthetic regression evidence, not detector data. It contrasts the former numerical-PASS authorization with the corrected labelled, non-accepting proxy path.
 
 ## Direct-to-main commits
 
 Implementation, tests, and evidence:
 
-- `e5a5dab83cbddbc8c65341043a21c11ea37d8d06` — `fix(single-stave): preserve exact configured energies`
-- `ee141c4e1daea7fa9c862191e418954ebc2e3a95` — `test(single-stave): cover exact configured-energy grouping`
-- `05c5b03098c36399abbced190cac71b1e9e4db36` — `docs(validation): record stopping-power energy grouping audit`
-- `d3294ae5b477ffdf125aa404b9e397b7701b3ebc` — `docs(validation): add stopping-power energy grouping record`
-- `2a29ffcfc0f645cede8b7ef621b1f17ac57a6bb7` — `docs(validation): visualize stopping-power energy grouping gate`
+- `24e83639c0d99e667283a0bc46513cd8a739695e` — `fix(single-stave): fail closed on deuteron PSTAR proxy`
+- `9ae8ab04fe671f7c3ae6fc021cf3f082234ea5e8` — `test(single-stave): gate deuteron PSTAR proxy`
+- `2ad66f1016652a01a1adc44f3e9761024c9f621e` — `test(single-stave): mark deuteron range checks nonaccepting`
+- `4cac6e22dc0e92576df8c334954ecd7aafdaea79` — `docs(validation): record deuteron PSTAR proxy audit`
+- `590addf67b3e31b22af944bb64afcc58c33c708a` — `docs(validation): add deuteron proxy validation record`
+- `b24260118f25d1d36fbee118fb4ed1891377ef6c` — `docs(validation): visualize deuteron proxy acceptance gate`
 
 Coordination and provenance:
 
-- `9d484db1d57679820c4d9e90356fa35e40b08a99` — active task completion
-- `658bc765d1b1e5e9aa93655526aec916cb91e701` — backlog completion
-- `c30af2e5b98e0c3c6e39a22d6e19cb04a6f458e9` — master index update
-- `c58d474d604fbb4c1e2d20718bc502b81f6034cb` — code-result mapping
-- `fecd9572ece372a9a11da99facc042a1358a8dec` — study ledger update
-- `096606cf6497e6ad4d24b4210a539c75670f21a6` — claim matrix update
-- `da85305b2fcc2cebe789b1551dfcd8bdfff2e925` — visualization matrix update
-- `02117b84f41df0f19d7f38fa5ebee03c1b46fafb` — stopping-power blocker refinement
-- `e991726e098166d0e48273e027d25960ab76a2dd` — immutable session archive
+- `f30047711f549de57dec139324191242fc05dbfd` — active-task completion
+- `4491635ad537bbfaa9c60407157cfa75039d55c7` — backlog completion
+- `44c14791df3ae3ae7f75526fd456852bb65ca7e6` — master-index entry
+- `33c12595c930879febcd1c29f6dd6c81ab4d5c13` — code-result mapping
+- `846bcfe2d3377fb02c5f7c0fefe3bca337fede6e` — study-ledger entry
+- `0663db8f4f4fc9a3388adbfc46857eb652cbfc57` — claim classification
+- `6655f4a64954ccd564e51513fefe16b404467a59` — visualization entry
+- `d500c4d5900d6146aedefd937a07fe86a2aca9b6` — stopping-power blocker refinement
+- `7d0de67e4e262e86700db4db64938aee8de0d2b8` — immutable session archive
 
-Every listed write returned a successful direct-main commit SHA. This handoff update is the final repository write for the session and must be re-read at remote-main head before delivery is reported.
+Every listed write returned a successful direct-main commit SHA from GitHub's contents API. This handoff update is the final repository write for the session and must be re-read at remote-main head before delivery is reported. No git-push console transcript exists in this connector execution; the exact write result is the returned commit SHA and subsequent remote-main readback.
 
 ## Repository-local records
 
@@ -171,22 +175,23 @@ Updated:
 
 Added immutable provenance:
 
-- `chatgpt_todo/archive/2026-07-23T190130Z_AUD-G4-013_EXACT_ENERGY_GROUPING.md`
+- `chatgpt_todo/archive/2026-07-23T201905Z_AUD-G4-014_DEUTERON_PROXY_GATE.md`
 
-`SESSION_LOG.md` was inspected in complete non-overlapping line ranges, but the available connector exposes complete-file replacement rather than append. Because concurrent main activity continued and replacing an append-only log carries avoidable provenance-loss risk, it was not rewritten. The immutable archive above contains the complete session entry and this limitation is explicit rather than concealed.
+`SESSION_LOG.md` is append-only. It was inspected in complete non-overlapping ranges, but the connector exposes complete-file replacement rather than append. Replacing it from manually reconstructed chunks would create avoidable provenance-loss risk, so it was not rewritten. The immutable archive contains the complete session entry and this limitation is explicit rather than concealed.
 
 ## Blockers and next action
 
 ### Resolved
 
-`AUD-G4-013` is COMPLETE. The canonical stopping-power comparison no longer silently pools distinct configured energies through 0.1 MeV rounding.
+`AUD-G4-014` is COMPLETE. Proton PSTAR evaluated at `E_d/2` can no longer masquerade as a direct, accepting deuteron reference.
 
 ### Still open
 
 - `AUD-G4-011`: run the integrated CLI on exact immutable real Geant4 exports with complete input/output/environment provenance.
-- `AUD-G4-005` / `BLK-G4-SP-001`: establish an accepted proton closure using `G4EmCalculator` or primary entry/exit energy plus path/reference integration, quantify escaping-secondary energy and production-cut dependence, and treat deuterons separately.
+- `AUD-G4-005` / `BLK-G4-SP-001`: establish an accepted proton closure using `G4EmCalculator` or primary entry/exit energy plus path/reference integration and quantify escaping-secondary energy and production-cut dependence.
+- For deuterons, obtain an authoritative deuteron stopping-power reference or independently validate a bounded approximation for the exact material and energy domain.
 - External PSTAR transcription/material provenance remains independently unverified.
 
 ## Scientific boundary
 
-This session validates exact configured-energy aggregation and its traceable software enforcement. It does not establish that local deposited energy equals projectile total energy loss, does not validate the deuteron approximation, and does not establish Geant4/PSTAR agreement, calibration, or detector performance. No Geant4 executable, ROOT file, real event table, stopping-power closure, calibration, or detector-performance output was generated.
+This session validates fail-closed reference-basis authorization and its traceable software enforcement. It does not establish the accuracy of the deuteron equal-velocity approximation for polystyrene, does not establish that local deposited energy equals projectile total energy loss, and does not establish Geant4/PSTAR agreement, calibration, or detector performance. No Geant4 executable, ROOT file, real event table, stopping-power closure, calibration, or detector-performance output was generated.

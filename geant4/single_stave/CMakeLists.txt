@@ -24,12 +24,18 @@ file(GLOB_RECURSE CCB_STAVE_HEADERS CONFIGURE_DEPENDS
 # Clean-room SiPM response core (submodule ccb-sipm-core). Geant4-independent;
 # built as part of the project when present. See https://github.com/SzeChunYiu/ccb-sipm-core
 if(EXISTS "${PROJECT_SOURCE_DIR}/sipm/CMakeLists.txt")
+  # Enable the Geant4 adapter so ccb_stave_sim can use Geant4BoundaryCollector.
+  set(CCB_SIPM_WITH_GEANT4 ON CACHE BOOL "Build optional Geant4 adapter" FORCE)
   add_subdirectory(sipm)
 endif()
 
 add_executable(ccb_stave_sim ${CCB_STAVE_SOURCES} ${CCB_STAVE_HEADERS})
 target_include_directories(ccb_stave_sim PRIVATE "${PROJECT_SOURCE_DIR}/include")
 target_link_libraries(ccb_stave_sim PRIVATE ${Geant4_LIBRARIES})
+# SiPM core + Geant4 adapter (SIPM-P1-001: boundary-arrival collection).
+if(TARGET CCB::sipm_geant4)
+  target_link_libraries(ccb_stave_sim PRIVATE CCB::sipm_geant4)
+endif()
 target_compile_options(ccb_stave_sim PRIVATE -Wall -Wextra -Wpedantic)
 
 if(CCB_ENABLE_VIS)
@@ -126,3 +132,14 @@ if(CCB_PYTHON3)
     TIMEOUT 600
     FAIL_REGULAR_EXPRESSION "SOME FAR-END MODES FAILED")
 endif()
+
+# 7) SiPM boundary-arrival collection (SIPM-P1-001): arrivals populated.
+add_test(
+  NAME ccb_stave_sipm_arrivals
+  COMMAND ccb_stave_sim
+          --particle proton --energy 100 --nevents 5 --seed 1
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/sipm_arrivals.root")
+set_tests_properties(ccb_stave_sipm_arrivals PROPERTIES
+  PASS_REGULAR_EXPRESSION "SIPM_ARRIVALS.*total=[1-9]"
+  FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")

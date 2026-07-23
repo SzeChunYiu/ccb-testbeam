@@ -4,6 +4,7 @@
 #define CCB_SIMDATA_HH
 
 #include "DetectorConstruction.hh"  // kNSensors, SensorId
+#include "ccb/sipm/Types.hh"  // PhotonArrival (SIPM-P1-001)
 #include <array>
 #include <vector>
 
@@ -37,6 +38,10 @@ struct EventData {
   // SiPM saturation-corrected detected PE per sensor (occupancy model).
   std::array<double, kNSensors> pe_saturated{{0, 0, 0, 0}};
 
+  // Per-sensor photon arrivals for the ccb-sipm-core ResponseSimulator
+  // (SIPM-P1-001). Filled in SteppingAction; consumed in TASK 3.
+  std::array<std::vector<ccb::sipm::PhotonArrival>, kNSensors> sipm_arrivals;
+
   // Optional per-photon detail (calibration mode only; guarded by config).
   std::vector<PhotonHit> photons;
 
@@ -48,6 +53,7 @@ struct EventData {
     n_end_arrival.fill(0);
     n_detected.fill(0);
     pe_saturated.fill(0.0);
+    for (int i = 0; i < kNSensors; ++i) sipm_arrivals[i].clear();
     photons.clear();
   }
 };

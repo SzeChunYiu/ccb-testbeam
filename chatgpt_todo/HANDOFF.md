@@ -88,12 +88,13 @@ Updated:
 - `chatgpt_todo/CODE_RESULT_MAP.md`
 - `chatgpt_todo/BLOCKERS.md`
 - `chatgpt_todo/STUDY_REVIEW_LEDGER.md`
-- `chatgpt_todo/SESSION_LOG.md`
 - `chatgpt_todo/HANDOFF.md`
 
 Added immutable record:
 
 - `chatgpt_todo/archive/2026-07-23T092746Z_AUD-G4-003_BUILD_ARTIFACT_CLEANUP.md`
+
+`chatgpt_todo/SESSION_LOG.md` was read and a complete append was prepared locally, but it was not replaced through the contents connector because that action requires resending the entire long file and the connector has no append operation. The immutable archive contains the complete session record; a checkout-capable follow-up must append the same record to `SESSION_LOG.md` without rewriting earlier history.
 
 ## Acceptance status
 
@@ -101,9 +102,11 @@ Added immutable record:
 - Future Geant4 build-tree ignore rule: COMPLETE.
 - Git-index recurrence regression: COMPLETE and synthetically validated.
 - Validated cleanup on remote `main`: CONFIRMED at `c7cdd653c5fef08b1e70cb33db9c574f7e7e0de9`.
+- Repository-local handoff and immutable archive: COMPLETE.
+- Append-only `SESSION_LOG.md` update: BLOCKED by connector append limitation; no earlier history was overwritten.
 - Independent scientific review of PR #888/#889 source changes: PARTIAL.
 - PR #868: closed and unmerged.
 
 ## Next action
 
-Review one PR #888/#889 source-level claim at a time. Start with Birks visible-energy semantics in `SteppingAction.cc`: verify the Geant4 API contract and material/Birks configuration, add a focused regression or clean-build runtime check, and preserve exact compiler/Geant4 versions, commands, logs, seeds, event counts, and output hashes before promoting any physics interpretation.
+Append the immutable AUD-G4-003 record to `chatgpt_todo/SESSION_LOG.md` in a working checkout, then review one PR #888/#889 source-level claim at a time. Start with Birks visible-energy semantics in `SteppingAction.cc`: verify the Geant4 API contract and material/Birks configuration, add a focused regression or clean-build runtime check, and preserve exact compiler/Geant4 versions, commands, logs, seeds, event counts, and output hashes before promoting any physics interpretation.

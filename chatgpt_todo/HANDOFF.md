@@ -2,108 +2,99 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T07:05:54Z
-- **Task:** AUD-AMP-010 (VALIDATED tooling increment; real-data work BLOCKED)
-- **Initial remote main:** `7021e5491fc60ae2f59645ffb62f156d578b0947`
-- **Validated code/test head:** `357153ad421d47b98cdbca17d4f3aacc169142ee`
-- **Remote main observed after coordination/archive/log updates and before this handoff write:** `8076d96a039a4a528b80ddf6f2dcf88553348eb1`
+- **UTC:** 2026-07-23T08:04:59Z
+- **Task:** AUD-DELTAE-002 (VALIDATED tooling increment; real A-002 rerun BLOCKED)
+- **Initial remote main:** `7d226ec55a640c5ac4c9e16d378f496ea808ef0a`
+- **Validated code/test head:** `dd7ffbba6da463e1c63a9a7c71bd43f33f23f147`
+- **Remote main after coordination, archive, and append-only log updates and before this handoff write:** `8c9dc39eef3468220c2e417ef2beb60d4a319390`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Write target:** direct to `main`
 
 ## Start-of-run review
 
-- Confirmed current remote `main` and recent history before editing.
+- Confirmed repository admin/push access, current `main`, and recent commit order before editing.
 - A direct clone was attempted, but this runtime could not resolve `github.com`; authenticated GitHub connector reads and writes were used.
 - Inspected PR #868: closed, not merged, non-mergeable, head `7992aa318b6f13b5f4bcbd828ad97996075fed4b`; no reopen, merge, force push, or history rewrite was attempted.
-- Inspected the open PR inventory for concurrent work.
-- Read `tools/audit/validate_amplitude_evidence_map.py`, `tools/audit/amplitude_convention_audit.py`, focused evidence tests, and the required `chatgpt_todo/` coordination files.
+- Inspected open PRs for concurrent work. PR #881 changes only separate single-stave review/handoff documents and does not overlap the bridge or regression test.
+- Read `scripts/single_stave/deltaE_E_data_bridge.py`, `tests/test_deltae_data_bridge_composite_key.py`, the pulse-table contract, and the required `chatgpt_todo/` records.
 
-## Confirmed defect
+## Confirmed scientific defect
 
-Validator v1.2.0 verified the SHA-256 of the supporting file but discarded everything after `#` in `evidence_reference` when resolving the file.
+The A-002 bridge converted absolute ADC codes with:
 
-A record such as:
-
-```text
-producer_contract.md#claim-that-does-not-exist
+```python
+df[signal_column] = (df[ampcol] - df["baseline_adc"]).abs()
 ```
 
-was accepted whenever `producer_contract.md` existed and its hash matched. The retained reference appeared claim-specific, but the claimed location was never shown to exist. A decorative or stale fragment could therefore masquerade as line-level scientific provenance.
+Absolute versus net convention does not identify pulse polarity. The absolute value silently accepted samples on either side of the pedestal and could convert an opposite-polarity excursion, wrong convention, or malformed pedestal relation into a positive signal exceeding the stopping threshold.
+
+The existing synthetic absolute-input test itself used samples below the pedestal, while the canonical pulse-table contract defines optional `peak_code_adc` as the waveform maximum. That mismatch confirmed that polarity was not represented explicitly and must not be inferred from the word `absolute`.
 
 ## Work pushed directly to main
 
-### `tools/audit/validate_amplitude_evidence_map.py` v1.3.0
+### `scripts/single_stave/deltaE_E_data_bridge.py`
 
-- Whole-file references remain valid.
-- Optional fragments must be canonical line references:
-  - `#L<start>`
-  - `#L<start>-L<end>`
-- Line numbers must be positive.
-- Range end must not precede range start.
-- The referenced end line must exist in the measured supporting artifact.
-- Empty, semantic-only, malformed, reversed, and out-of-range fragments fail closed.
-- Normalized records now include:
-  - `evidence_reference_file`
-  - `evidence_reference_scope`
-  - `evidence_reference_line_start`
-  - `evidence_reference_line_end`
-  - `evidence_reference_line_count`
-  - `evidence_reference_fragment_verified`
-  - `evidence_validator_version`
-- CLI summaries now include `n_verified_line_fragments`.
-
-The convention auditor consumes the shared validator, so invalid fragments are rejected before a map can authorize `ABSOLUTE` or `NET` physics processing.
+- Absolute ADC input now requires `amplitude_polarity="positive"` or `"negative"`.
+- Positive-going pulses use `amplitude - baseline`.
+- Negative-going pulses use `baseline - amplitude`.
+- The polarity-blind `abs` conversion was removed.
+- Any converted signal below zero fails closed as a polarity violation.
+- Nonnumeric or nonfinite amplitude/baseline rows fail closed before aggregation.
+- Supplying polarity for net input is rejected.
+- Result metadata records `amplitude_polarity` and the exact signed `amplitude_transform`.
+- Existing composite-key and stopping-distribution cardinality invariants are preserved.
 
 ### Regression coverage
 
-Updated:
+Updated `tests/test_deltae_data_bridge_composite_key.py` to cover:
 
-- `tests/test_amplitude_evidence_integration.py`
-
-Added:
-
-- `tests/test_amplitude_evidence_reference_fragments.py`
-
-Coverage includes whole-file references, exact single-line and multi-line ranges, empty fragments, semantic-only fragments, zero line numbers, malformed and reversed ranges, ranges beyond the file, and propagation of verified scope and bounds into auditor output.
+- one row per `(source_file_id, run, evt)` despite `eventno` collisions;
+- ambiguous `amplitude_adc` convention rejection;
+- required polarity for absolute input;
+- positive-going signed conversion;
+- negative-going signed conversion;
+- opposite-polarity rejection;
+- nonfinite conversion-input rejection;
+- net-amplitude pass-through and polarity rejection on net input;
+- missing pedestal rejection;
+- multiple explicit amplitude-column selection.
 
 ## Validation
 
-Executed on exact local reconstructions of the committed implementation and focused tests:
+Executed on exact local reconstructions of the committed bridge and focused test:
 
 ```text
 python -m py_compile \
-  tools/audit/validate_amplitude_evidence_map.py \
-  tools/audit/amplitude_convention_audit.py \
-  tests/test_validate_amplitude_evidence_map.py \
-  tests/test_amplitude_evidence_reference_fragments.py \
-  tests/test_amplitude_evidence_integration.py
+  scripts/single_stave/deltaE_E_data_bridge.py \
+  tests/test_deltae_data_bridge_composite_key.py
 
-python -m pytest \
-  tests/test_validate_amplitude_evidence_map.py \
-  tests/test_amplitude_evidence_reference_fragments.py \
-  tests/test_amplitude_evidence_integration.py -q
+python -m pytest tests/test_deltae_data_bridge_composite_key.py -q
 
-36 passed in 0.06s
+10 passed in 2.78s
 ```
 
-A changed-file line-length scan passed. Local Git blob hashes matched the GitHub-returned content SHAs for the updated validator and integration test. Ruff was not installed. The complete repository suite and GitHub Actions were not run; no broader CI success is claimed. GitHub returned no status checks or workflow runs for the code/test head.
+A changed-file scan found no lines over 100 characters. Local Git blob hashes exactly matched the GitHub-returned content SHAs:
+
+- bridge: `7f50ce667a6cde07e94717d0187831da4d8459ac`
+- test: `3b59a793f5d67e6a0d3c7117c42ec41ad7b84a90`
+
+The complete repository suite, ruff, real-data analysis, and GitHub Actions were not run; no broader validation success is claimed. No status checks were attached to the initial main head.
 
 ## Main progression and push confirmation
 
 GitHub contents writes returned these direct-to-`main` commits in order:
 
-- `816af6419517ffbe5a189630b1b8a66a78f12de0` — `fix(audit): verify evidence reference line ranges`
-- `8e71aea1fb59218f711cab4bd69e42153a43f1db` — `test(audit): require verifiable evidence line fragments`
-- `357153ad421d47b98cdbca17d4f3aacc169142ee` — `test(audit): cover evidence reference line ranges`
-- `16f4a8c3a1d6cd746f945cf9f76db368d3493d1d` — `docs(audit): claim evidence fragment verification`
-- `9a364cc7f939016406b0bc01b5b400847c626a5a` — `docs(audit): track evidence fragment verification`
-- `9ad3fcfea422884c8b4074af5365f3c1de624a32` — `docs(audit): index evidence fragment traceability`
-- `6707e184cf6950ff34fcad78573308035a7f641a` — `docs(audit): map evidence fragments to physics authorization`
-- `e9da4932dab8c6989ac2729a8c1876c98b87140e` — `docs(audit): refine amplitude evidence blocker`
-- `07381a1d5bb7318aa4d516d2da572c733feea4bf` — `docs(audit): archive evidence fragment verification`
-- `8076d96a039a4a528b80ddf6f2dcf88553348eb1` — `docs(audit): append evidence fragment verification session`
+- `4fc261dc83c5463c23392f6cf71e04735471ee2c` — `fix(deltae): require explicit absolute pulse polarity`
+- `dd7ffbba6da463e1c63a9a7c71bd43f33f23f147` — `test(deltae): cover absolute pulse polarity gate`
+- `e15fe84827a6c2901e08326d9fbab0cfc6fe3020` — `docs(audit): claim A-002 pulse polarity gate`
+- `4ac3b109d0a53bc75f82f3bf0b2d55d2a0976449` — `docs(audit): track A-002 pulse polarity gate`
+- `7e6d89efa7d24ca477566722e35a61e583b373b7` — `docs(audit): index A-002 pulse polarity risk`
+- `bbd16416641158de1346d39a5abc499a004848d7` — `docs(audit): map A-002 polarity to stopping outputs`
+- `65f083907cb08736f87212051e5375dbeb29e4f5` — `docs(audit): refine A-002 amplitude blocker with polarity`
+- `3d3996a834602b64b21387bc00f9c53b0b378854` — `docs(audit): archive A-002 pulse polarity gate`
+- `8c9dc39eef3468220c2e417ef2beb60d4a319390` — `docs(audit): append A-002 pulse polarity session`
 
-The contents API returned successful commit SHAs for every write. A final recent-commit query after this handoff write must confirm the new remote-main head. No force push was used.
+Every write returned a successful commit SHA. No force push was used. A final recent-commit query after this handoff write must confirm the handoff commit as the remote-main head.
 
 ## Coordination updates
 
@@ -118,25 +109,26 @@ Updated:
 
 Added immutable session record:
 
-- `chatgpt_todo/archive/2026-07-23T070554Z_AUD-AMP-010_EVIDENCE_FRAGMENT_VERIFICATION.md`
+- `chatgpt_todo/archive/2026-07-23T080459Z_AUD-DELTAE-002_PULSE_POLARITY.md`
 
 ## Evidence boundary and blockers
 
-- No exact A-002 pulse table or supporting evidence artifact was available.
-- No amplitude convention, stopping count, stopping fraction, event CSV, DeltaE-E plot, calibration, or detector-performance result was regenerated.
-- Historical A-002 outputs remain quarantined.
-- Real A-002 authorization and regeneration remain blocked by `BLK-AMP-001`.
-- PR #868 remains closed and unmerged; no task was reported as delivered through that PR.
+- No exact A-002 pulse table was available.
+- No immutable schema/producer evidence establishing A-002 pulse polarity was available.
+- This session does not claim that A-002 is absolute or net, positive- or negative-going, or that any historical stopping count, fraction, event CSV, or ΔE–E plot is correct.
+- No corrected scientific numerical result or visual artifact was generated.
+- Historical A-002 outputs remain quarantined under `BLK-AMP-001`.
+- PR #868 remains closed and unmerged.
 
 ## Acceptance status
 
-- Supporting-artifact measured SHA-256 gate: VALIDATED by prior focused synthetic regression.
-- Evidence-reference line-fragment existence and range gate: VALIDATED by focused synthetic regression.
-- Whole-file evidence references: preserved and covered.
+- Polarity-safe signed absolute conversion: VALIDATED by focused synthetic regression.
+- Opposite-polarity and nonfinite failure gates: VALIDATED by focused synthetic regression.
+- Composite-key and stopping-bin cardinality regression: PASSED in the focused module.
 - Full repository lint/tests/CI: NOT RUN.
-- Real A-002 convention: BLOCKED.
-- A-002 regenerated outputs and plots: BLOCKED.
+- Real A-002 convention and polarity authorization: BLOCKED.
+- Corrected A-002 JSON/CSV/plot and stopping distribution: BLOCKED.
 
 ## Next action
 
-Obtain and hash the exact A-002 table and exact supporting artifact. Create the evidence map under a controlled root with both digests, an accepted evidence basis, and either a whole-file reference or the exact supporting `#L<start>[-L<end>]` range. Run `validate_amplitude_evidence_map.py` and the full-table `amplitude_convention_audit.py` without `--max-rows`, resolve every warning/error, and regenerate the quarantined JSON, CSV, stopping profile, and DeltaE-E figure only after the evidence scope is verified and `physics_acceptance=ACCEPTABLE`.
+Obtain and hash the exact A-002 table and immutable producer/schema evidence that identifies both amplitude convention and pulse polarity. Validate the evidence map, run the full-table convention audit without `--max-rows`, and execute the bridge with the authorized polarity. Require zero polarity violations, one row per composite physical key, stopping-bin totals equal to the physical-event count, and complete input/code/environment/command provenance before regenerating or promoting the quarantined JSON, CSV, stopping fractions, and ΔE–E figure.

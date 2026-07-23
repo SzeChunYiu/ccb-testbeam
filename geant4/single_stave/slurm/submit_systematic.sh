@@ -69,7 +69,9 @@ case "${KNOB}" in
 esac
 
 # Read the IDX-th data line (skip blank/comment lines).
-LINE="$(grep -vE '^\s*(#|$)' "${GRID}" | sed -n "$((IDX+1))p")"
+# Select the IDX-th DATA row: skip comments/blanks AND a literal header
+# row (first field == "value"), so a bare or commented header both work.
+LINE="$(awk -F',' 'NF>=3 && $1!="value" && !/^[[:space:]]*#/ && !/^[[:space:]]*$/ {print}' "${GRID}" | sed -n "$((IDX+1))p")"
 if [[ -z "${LINE}" ]]; then echo "no grid point at index ${IDX} in ${GRID}" >&2; exit 1; fi
 IFS=',' read -r VALUE LABEL SEED <<< "${LINE}"
 

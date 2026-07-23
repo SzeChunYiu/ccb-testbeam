@@ -1,7 +1,6 @@
 # Systematic grid: Y-11 fibre bulk attenuation LENGTH scale (>1 = longer
 # attenuation length = less loss). Nominal = 1.0. Log-spaced around nominal.
 # Columns: value,label,seed
-value,label,seed
 0.70,att070,11
 0.85,att085,11
 1.00,att100,11

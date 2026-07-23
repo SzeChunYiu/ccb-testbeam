@@ -2,7 +2,6 @@
 # the sim clamps the product to <=1.0). Nominal = 1.0. Points below nominal
 # degrade the coating; 1.05 probes the clamp behaviour. Same seed discipline.
 # Columns: value,label,seed
-value,label,seed
 0.80,refl080,11
 0.90,refl090,11
 1.00,refl100,11

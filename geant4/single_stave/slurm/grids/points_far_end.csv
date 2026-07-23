@@ -1,7 +1,6 @@
 # Systematic grid: far-end fibre boundary condition (categorical).
 # Nominal = absorb. Mirror reflects non-readout-end light back. Both seeds.
 # Columns: value,label,seed  (value is absorb|mirror)
-value,label,seed
 absorb,farabs,11
 mirror,farmir,11
 absorb,farabs,12

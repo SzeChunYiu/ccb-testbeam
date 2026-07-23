@@ -4,7 +4,6 @@
 # the base seed (11); nominal is repeated at a second seed (12) to size the
 # seed spread vs the knob effect. All values env-overridable in the submit driver.
 # Columns: value,label,seed  (one row = one array task)
-value,label,seed
 0.100,kB0100,11
 0.126,kB0126,11
 0.160,kB0160,11

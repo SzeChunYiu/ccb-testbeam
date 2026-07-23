@@ -5,7 +5,6 @@
 # other agents own src/). The submit driver detects the missing flag and fails
 # with guidance; once the flag is added this grid runs unchanged.
 # Columns: value,label,seed
-value,label,seed
 1800,sipm1800,11
 3600,sipm3600,11
 7200,sipm7200,11

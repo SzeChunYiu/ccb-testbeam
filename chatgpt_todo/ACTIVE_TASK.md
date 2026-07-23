@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-018
+- **Task ID:** AUD-G4-019
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T220759Z
-- **Initial remote main SHA:** `c0a5d46d8a14bb933aa401514ee2f7408276ae0b`
-- **Validated implementation/evidence head:** `768e13daa5056dd06f9b962e66b004fa5d9c4d97`
-- **Scope:** remove CSV row-order dependence from stopping-power grouped sufficient statistics and make the numerical summation method explicit in machine-readable and terminal reports.
-- **Confirmed defect:** repeated binary64 `+=` aggregation produced different deposited-energy sums and mass-stopping proxies for the same validated event multiset when rows were reordered.
-- **Validated change:** collect deposits and track lengths per exact particle/energy group, evaluate both with `math.fsum`, record `summation_method=MATH_FSUM_PER_GROUP` in results/CSV, and print the method in terminal output.
-- **Commands:** focused `py_compile`; focused pytest for order invariance, report precision, and report reproducibility; exact pre-change Git-blob reconstruction and negative control; SHA-256/blob and line-length checks.
-- **Validation:** `8 passed in 0.06s`; exact old blob `79ea2767...` produced `2 failed, 1 passed`; changed Python lines are at most 100 characters; old and new Git blobs were verified.
-- **Evidence:** `docs/validation/stopping_power_order_invariance_audit.md`, `stopping_power_order_invariance_validation.json`, and `stopping_power_order_invariance.svg`.
-- **Boundary:** numerical aggregation is order-stable, but no real export, uncertainty budget, accepted projectile-energy-loss observable, or stopping-power closure was produced.
-- **Status:** COMPLETE for `AUD-G4-018`; accepted stopping-power physics closure remains PARTIAL/BLOCKED.
+- **Session stamp:** 2026-07-23T230825Z
+- **Initial remote main SHA:** `eec220db6807d3d3615d92c6d39d4fb2e18e4335`
+- **Validated implementation/evidence head:** `807febe85c35b537c53a5acdf1795ee9a67d7cb2`
+- **Scope:** bind canonical stopping-power simulation rows, byte count, and SHA-256 to one exact in-memory input snapshot and make invalid UTF-8 a controlled input failure.
+- **Confirmed defect:** validator v1.1.0 parsed with `read_text()`, then later re-read the path for `stat()` and SHA-256; a replaced path could produce rows from bytes A with provenance from bytes B. Invalid UTF-8 escaped as an uncaught decoder exception.
+- **Validated change:** validator v1.2.0 reads exact bytes once, decodes/parses and derives size/hash from that byte string, records `SINGLE_READ_EXACT_BYTES`, and maps invalid UTF-8 to status-2 `SimulationTableError`.
+- **Commands:** focused `py_compile`; existing plus new validator pytest; exact former-algorithm negative control; JSON/SVG parse; Git-blob and line-length checks.
+- **Validation:** `19 passed in 2.01s`; former algorithm produced `2 failed`; changed Python lines are at most 94 characters; committed implementation blob matches validated local blob `6a57b93d...`.
+- **Evidence:** `docs/validation/stopping_power_sim_snapshot_audit.md`, `stopping_power_sim_snapshot_validation.json`, and `stopping_power_sim_snapshot.svg`.
+- **Boundary:** parser/provenance integrity is validated synthetically, but no real export, accepted projectile-loss observable, uncertainty budget, or stopping-power closure was produced.
+- **Status:** COMPLETE for `AUD-G4-019`; accepted stopping-power physics closure remains PARTIAL/BLOCKED.

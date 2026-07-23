@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -32,9 +33,10 @@ def test_raw_median_net_label_without_pedestal_is_non_accepting(tmp_path: Path) 
     assert result["convention"] == "NET"
     assert result["convention_evidence"] == "RAW_MEDIAN_HEURISTIC"
     assert result["convention_acceptance"] == "UNANCHORED"
-    assert result["subtract_baseline_correct"] is None
-    assert "UNANCHORED_AMPLITUDE_CONVENTION" in result["warnings"]
+    assert result["physics_acceptance"] == "UNVERIFIED"
+    assert result["physics_subtract_baseline_correct"] is None
     assert payload["n_unanchored_conventions"] == 1
+    assert payload["n_unverified_conventions"] == 1
     assert code == 1
 
 
@@ -47,15 +49,16 @@ def test_raw_median_absolute_label_without_pedestal_is_non_accepting(tmp_path: P
     payload = json.loads(output.read_text(encoding="utf-8"))
 
     assert payload["tables"][0]["convention"] == "ABSOLUTE"
-    assert payload["tables"][0]["convention_acceptance"] == "UNANCHORED"
+    assert payload["tables"][0]["physics_acceptance"] == "UNVERIFIED"
     assert payload["n_unresolved_absolute_baselines"] == 1
-    assert payload["n_unanchored_conventions"] == 1
+    assert payload["n_unverified_conventions"] == 1
     assert code == 1
 
 
-def test_unique_pedestal_anchor_allows_acceptance(tmp_path: Path) -> None:
+def test_unique_pedestal_is_diagnostic_not_convention_proof(tmp_path: Path) -> None:
     path = tmp_path / "anchored.csv"
     output = tmp_path / "audit.json"
+    evidence = tmp_path / "evidence.json"
     write(path, [6700.0, 6750.0, 6800.0], [6752.0, 6752.0, 6752.0])
 
     code = MODULE.main([str(path), "--output", str(output)])
@@ -64,6 +67,16 @@ def test_unique_pedestal_anchor_allows_acceptance(tmp_path: Path) -> None:
 
     assert result["convention_evidence"] == "PEDESTAL_ANCHORED"
     assert result["convention_acceptance"] == "ACCEPTABLE"
+    assert result["physics_acceptance"] == "UNVERIFIED"
     assert result["baseline_resolution"] == "RESOLVED"
-    assert payload["n_unanchored_conventions"] == 0
-    assert code == 0
+    assert payload["n_unverified_conventions"] == 1
+    assert code == 1
+
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    evidence.write_text(json.dumps({digest: {
+        "convention": "ABSOLUTE",
+        "evidence_basis": "INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE",
+    }}), encoding="utf-8")
+    assert MODULE.main([
+        str(path), "--output", str(output), "--evidence-map", str(evidence)
+    ]) == 0

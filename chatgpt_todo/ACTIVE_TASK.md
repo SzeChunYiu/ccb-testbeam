@@ -1,13 +1,13 @@
 # Active Task
 
-- **Task ID:** AUD-CI-002
+- **Task ID:** AUD-G4-003
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T09:06:39Z
-- **Base main SHA:** `345d82d1daccbe1d8eafcf525ab51fd19ab20832`
-- **Scope:** restore the current-main amplitude-audit unit-test gate without changing scientific interpretation or weakening fail-closed amplitude authorization.
-- **Confirmed findings:** the missing-pedestal warning was renamed in production code but one regression still asserted the obsolete name; the aggregate invalid-baseline counter inspected evidence-gated `physics_acceptance`, so a no-evidence heuristic ABSOLUTE table with incomplete pedestal values was omitted despite `convention_acceptance=BASELINE_DATA_INVALID`.
-- **Files reviewed:** `tools/audit/amplitude_convention_audit.py`, `tests/test_amplitude_convention_audit.py`, `tests/test_amplitude_baseline_data_quality.py`, PR #884, Actions run `29993563323`, PR #868, open PR inventory, and required `chatgpt_todo/` records.
-- **Validated change:** synchronize the test with `AMPLITUDE_CONVENTION_WITHOUT_BASELINE_LEVEL`; count non-NET rows whose unconditional convention state is `BASELINE_DATA_INVALID`; retain the convention-specific physics gate that allows hash-authorized NET input to ignore optional incomplete pedestal diagnostics.
-- **Validation:** PR #884 changed only two files by four additions and two deletions. MC Validation CI run `29993563323`, job `89161772967`, completed successfully on head `9750d0fddc626a76f0c954fa09065db05ac83f32`. The reviewed head was squash-merged into `main` as `4f857f508160bbbe059d936866b426a45788c9bd`, and the resulting main files were re-read to confirm both exact changes.
-- **Boundary:** no raw data, pulse table, simulation, plot, calibration, stopping count, or detector-performance result changed. No Geant4/ROOT validation is inferred from this Python CI repair.
-- **Status:** COMPLETE — validated PR transport is present on remote `main`; current-main CI regression is repaired. Active scientific A-002 regeneration remains blocked under `BLK-AMP-001`.
+- **Session stamp:** 2026-07-23T09:27:46Z
+- **Initial main SHA:** `3ecefa27002e370f57001399d27a88244e0aa523`
+- **Concurrent main SHA incorporated before the validated change:** `aea19386b7d2f25e5a0b5d64bb585f3fe0f1a2ef`
+- **Scope:** independently review the repository impact of merged PR #888 and remove generated Geant4 build products without altering its scientific source changes.
+- **Confirmed finding:** PR #888 added 71 files, of which 66 were under `geant4/single_stave/build/`. They included CMake cache/generator files, object files, compiler probes, a linked executable, copied macros/optical tables, and a generated metadata sidecar. `CMakeLists.txt` explicitly creates those runtime copies in the binary directory, so they are build products rather than canonical source.
+- **Validated change:** removed the tracked build tree, ignored future `geant4/**/build/` trees, and added a Git-index regression test that fails whenever a Geant4 build artifact is tracked.
+- **Validation:** the regression was compiled and exercised in a synthetic Git checkout: it failed with a tracked `CMakeCache.txt`, then passed after removal plus the ignore rule (`1 passed in 0.03s`). The candidate commit was inspected before updating `main`; the build path returned 404 while PR #888/PR #889 source files remained present. Remote `main` contains `c7cdd653c5fef08b1e70cb33db9c574f7e7e0de9`.
+- **Boundary:** no PR #888 or PR #889 scientific source change was reverted. No Geant4 executable was run, no ROOT file or detector result was regenerated, and the four PR #888 scientific fixes remain only partially independently reviewed.
+- **Status:** COMPLETE for repository hygiene and recurrence prevention; PARTIAL for independent scientific review of PR #888 source claims.

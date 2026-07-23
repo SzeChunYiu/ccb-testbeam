@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import hashlib
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
-from typing import Any, Callable, Mapping, Sequence
+from typing import Any
 
 import numpy as np
 
@@ -23,6 +25,29 @@ from ccb_mc_validation.digitizer.transport import smear_time
 
 StageFn = Callable[[Mapping[str, Any], np.random.Generator, dict[str, Any]], Mapping[str, Any]]
 
+# Schema fields required on every hit.  Missing fields or non-finite values are a
+# hard error -- silently defaulting them to zero would corrupt the physics.
+REQUIRED_HIT_FIELDS: tuple[str, ...] = ("edep_mev", "time_ns")
+
+# Stochastic stages that consume RNG; each receives its own independent
+# deterministic stream derived from (global_seed, source, run, event, channel).
+_STOCHASTIC_STAGES: tuple[str, ...] = ("transport", "electronics")
+
+
+def _hash_to_int(token: Any) -> int:
+    """Stably hash an arbitrary identifier (int or str) into a 32-bit seed word.
+
+    Python's ``hash()`` is salted per-process for strings, so we use a stable
+    digest to keep RNG streams reproducible across runs and machines.
+    """
+    if isinstance(token, bool):
+        return int(token)
+    if isinstance(token, (int, np.integer)):
+        return int(token) & 0xFFFFFFFF
+    s = str(token)
+    h = hashlib.blake2b(s.encode("utf-8"), digest_size=4).hexdigest()
+    return int(h, 16)
+
 
 @dataclass
 class DigitizerPipeline:
@@ -32,6 +57,11 @@ class DigitizerPipeline:
     and ADC quantisation are then applied exactly once to the final channel
     waveform.  This prevents a zero-signal multi-hit channel from accumulating
     multiple pedestal/noise realisations.
+
+    Random numbers are drawn from independent deterministic streams keyed on
+    ``(global_seed, source_id, run_id, event_id, channel_id)`` so that distinct
+    channels/stages of the same event never share RNG state, while the same
+    inputs always reproduce the same waveform.
     """
 
     n_samples: int = DEFAULT_N_SAMPLES
@@ -41,10 +71,46 @@ class DigitizerPipeline:
     tau_decay_ns: float = 35.0
     transport_sigma_ns: float = 0.5
     apply_birks: bool = False
+    global_seed: int = 0
     stages: list[str] = field(
         default_factory=lambda: ["birks", "scintillation", "transport", "sampling"]
     )
 
+    # ------------------------------------------------------------------
+    # schema validation
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _require_field(
+        hit: Mapping[str, Any],
+        key: str,
+        *,
+        event_id: Any,
+        channel_id: Any,
+    ) -> float:
+        if key not in hit:
+            raise ValueError(
+                f"digitizer hit missing required field {key!r} "
+                f"(event_id={event_id!r}, channel_id={channel_id!r}); "
+                f"schema requires {REQUIRED_HIT_FIELDS}"
+            )
+        val = hit[key]
+        try:
+            f = float(val)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                f"digitizer hit field {key!r} not coercible to float "
+                f"(event_id={event_id!r}, channel_id={channel_id!r}): {val!r}"
+            ) from exc
+        if not np.isfinite(f):
+            raise ValueError(
+                f"digitizer hit field {key!r} is non-finite "
+                f"(event_id={event_id!r}, channel_id={channel_id!r}): {f}"
+            )
+        return f
+
+    # ------------------------------------------------------------------
+    # stages
+    # ------------------------------------------------------------------
     def _stage_birks(
         self,
         hit: Mapping[str, Any],
@@ -53,7 +119,21 @@ class DigitizerPipeline:
     ) -> Mapping[str, Any]:
         out = dict(hit)
         if self.apply_birks:
-            out["edep_mev"] = birks_quench(float(hit.get("edep_mev", 0.0)))
+            edep = self._require_field(
+                hit, "edep_mev", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
+            )
+            try:
+                out["edep_mev"] = birks_quench(
+                    edep,
+                    step_length_cm=hit.get("step_length_cm"),
+                    dedx_mev_per_cm=hit.get("dedx_mev_per_cm"),
+                )
+            except ValueError as exc:
+                raise ValueError(
+                    f"birks stage cannot run (event_id={ctx['event_id']!r}, "
+                    f"channel_id={ctx['channel_id']!r}): {exc}. Provide "
+                    f"step_length_cm/dedx_mev_per_cm on the hit or disable apply_birks."
+                ) from exc
         return out
 
     def _stage_scintillation(
@@ -62,9 +142,8 @@ class DigitizerPipeline:
         rng: np.random.Generator,
         ctx: dict[str, Any],
     ) -> Mapping[str, Any]:
-        # Current implementation keeps the light yield in MeV-equivalent units;
-        # calibration determines the ADC/MeV gain.  No electronics noise belongs
-        # in this stage.
+        # Light yield stays in MeV-equivalent units; calibration determines the
+        # ADC/MeV gain.  No electronics noise belongs in this stage.
         return dict(hit)
 
     def _stage_transport(
@@ -74,7 +153,10 @@ class DigitizerPipeline:
         ctx: dict[str, Any],
     ) -> Mapping[str, Any]:
         out = dict(hit)
-        out["time_ns"] = float(smear_time([float(hit.get("time_ns", 0.0))], rng, self.transport_sigma_ns)[0])
+        t = self._require_field(
+            hit, "time_ns", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
+        )
+        out["time_ns"] = float(smear_time([t], rng, self.transport_sigma_ns)[0])
         return out
 
     def _stage_sampling(
@@ -84,9 +166,15 @@ class DigitizerPipeline:
         ctx: dict[str, Any],
     ) -> Mapping[str, Any]:
         out = dict(hit)
+        edep = self._require_field(
+            hit, "edep_mev", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
+        )
+        t = self._require_field(
+            hit, "time_ns", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
+        )
         ctx["light_curve_mev"] = integrate_samples(
-            float(hit.get("edep_mev", 0.0)),
-            float(hit.get("time_ns", 0.0)),
+            edep,
+            t,
             sample_spacing_ns=self.sample_spacing_ns,
             n_samples=self.n_samples,
             tau_rise_ns=self.tau_rise_ns,
@@ -109,9 +197,15 @@ class DigitizerPipeline:
         """
         light = ctx.get("light_curve_mev")
         if light is None:
+            edep = self._require_field(
+                hit, "edep_mev", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
+            )
+            t = self._require_field(
+                hit, "time_ns", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
+            )
             light = integrate_samples(
-                float(hit.get("edep_mev", 0.0)),
-                float(hit.get("time_ns", 0.0)),
+                edep,
+                t,
                 sample_spacing_ns=self.sample_spacing_ns,
                 n_samples=self.n_samples,
                 tau_rise_ns=self.tau_rise_ns,
@@ -132,21 +226,94 @@ class DigitizerPipeline:
             raise KeyError(f"unknown digitizer stage {stage_name!r}")
         return table[stage_name]
 
-    def run(self, hits: Sequence[Mapping[str, Any]], event_id: int) -> dict[str, Any]:
-        """Process truth hits for one channel/event into a summed ADC waveform."""
-        rng = np.random.default_rng(int(event_id))
-        analog_adc_sum = np.zeros(self.n_samples, dtype=np.float64)
+    # ------------------------------------------------------------------
+    # RNG plumbing
+    # ------------------------------------------------------------------
+    def _seed_sequence(
+        self,
+        *,
+        event_id: Any,
+        source_id: Any,
+        run_id: Any,
+        channel_id: Any,
+    ) -> np.random.SeedSequence:
+        entropy = [
+            int(self.global_seed),
+            _hash_to_int(source_id),
+            _hash_to_int(run_id),
+            _hash_to_int(event_id),
+            _hash_to_int(channel_id),
+        ]
+        return np.random.SeedSequence(entropy)
 
+    def _stage_rngs(
+        self,
+        *,
+        event_id: Any,
+        source_id: Any,
+        run_id: Any,
+        channel_id: Any,
+    ) -> dict[str, np.random.Generator]:
+        """Independent deterministic ``Generator`` per stochastic stage."""
+        seed_seq = self._seed_sequence(
+            event_id=event_id,
+            source_id=source_id,
+            run_id=run_id,
+            channel_id=channel_id,
+        )
+        children = seed_seq.spawn(len(_STOCHASTIC_STAGES))
+        return {
+            name: np.random.default_rng(child) for name, child in zip(_STOCHASTIC_STAGES, children)
+        }
+
+    # ------------------------------------------------------------------
+    # run
+    # ------------------------------------------------------------------
+    def run(
+        self,
+        hits: Sequence[Mapping[str, Any]],
+        event_id: Any,
+        *,
+        source_id: Any = 0,
+        run_id: Any = 0,
+        channel_id: Any = 0,
+    ) -> dict[str, Any]:
+        """Process truth hits for one channel/event into a summed ADC waveform.
+
+        Independent RNG streams are derived from
+        ``(global_seed, source_id, run_id, event_id, channel_id)`` so that
+        different channels/stages of the same event do not collide, while the
+        same identifying tuple reproduces the same waveform exactly.
+        """
+        stage_rng = self._stage_rngs(
+            event_id=event_id,
+            source_id=source_id,
+            run_id=run_id,
+            channel_id=channel_id,
+        )
+        # Deterministic stages receive a generator they must not call.
+        idle_rng = np.random.default_rng(
+            np.random.SeedSequence([int(self.global_seed), _hash_to_int(event_id), 0xBAD])
+        )
+
+        analog_adc_sum = np.zeros(self.n_samples, dtype=np.float64)
         for hit in hits:
-            ctx_hit: dict[str, Any] = {}
+            ctx_hit: dict[str, Any] = {"event_id": event_id, "channel_id": channel_id}
             current: Mapping[str, Any] = hit
             for stage_name in self.stages:
-                current = self._dispatch(stage_name)(current, rng, ctx_hit)
+                rng_for_stage = stage_rng.get(stage_name, idle_rng)
+                current = self._dispatch(stage_name)(current, rng_for_stage, ctx_hit)
             light = ctx_hit.get("light_curve_mev")
             if light is None:
+                edep = self._require_field(
+                    current, "edep_mev", event_id=event_id, channel_id=channel_id
+                )
+                t = self._require_field(
+                    current, "time_ns", event_id=event_id, channel_id=channel_id
+                )
                 light = integrate_samples(
-                    float(current.get("edep_mev", 0.0)),
-                    float(current.get("time_ns", 0.0)),
+                    edep,
+                    t,
                     sample_spacing_ns=self.sample_spacing_ns,
                     n_samples=self.n_samples,
                     tau_rise_ns=self.tau_rise_ns,
@@ -155,20 +322,21 @@ class DigitizerPipeline:
             analog_adc_sum += apply_gain(light, self.electronics)
 
         waveform = analog_adc_sum + self.electronics.pedestal_adc
-        waveform = add_noise(waveform, rng, self.electronics)
+        waveform = add_noise(waveform, stage_rng["electronics"], self.electronics)
         adc_final, sat_final = quantize_adc(waveform, self.electronics)
         return {
-            "event_id": int(event_id),
+            "event_id": event_id,
             "adc": adc_final,
             "saturated": sat_final,
             "n_hits": len(hits),
         }
 
     @classmethod
-    def from_config(cls, config: Mapping[str, Any]) -> "DigitizerPipeline":
+    def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:
         elec = ElectronicsConfig(
             gain_adc_per_mev=float(config.get("gain_adc_per_mev", 120.0)),
             noise_adc_rms=float(config.get("noise_adc_rms", 8.0)),
+            adc_bits=int(config.get("adc_bits", 14)),
             adc_ceiling=int(config.get("adc_ceiling", 7000)),
             pedestal_adc=float(config.get("pedestal_adc", 300.0)),
         )
@@ -181,5 +349,6 @@ class DigitizerPipeline:
             tau_decay_ns=float(config.get("tau_decay_ns", 35.0)),
             transport_sigma_ns=float(config.get("transport_sigma_ns", 0.5)),
             apply_birks=bool(config.get("apply_birks", False)),
+            global_seed=int(config.get("global_seed", 0)),
             stages=stages,
         )

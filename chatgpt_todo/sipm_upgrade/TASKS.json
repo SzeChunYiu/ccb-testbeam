@@ -1,0 +1,208 @@
+{
+  "schema": "ccb-sipm-task-system/1",
+  "created": "2026-07-23",
+  "research_review_commit": "f147160f2c3be0df59f45c77cf209d2982547d04",
+  "branch_base_commit": "2ad66f1016652a01a1adc44f3e9761024c9f621e",
+  "state_definitions": {
+    "READY": "Can start after checking concurrent work and current main.",
+    "BLOCKED_DATA": "Requires measurements or authoritative parameter evidence.",
+    "PLANNED": "Depends on prior accepted model stages.",
+    "COMPLETE": "All acceptance evidence, provenance and limitations are recorded.",
+    "REJECTED": "Tested and rejected; evidence must remain available."
+  },
+  "tasks": [
+    {
+      "id": "SIPM-P0-001",
+      "priority": "P0",
+      "state": "READY",
+      "title": "Correct and validate the WLS time profile",
+      "files": [
+        "geant4/single_stave/src/PhysicsList.cc",
+        "geant4/single_stave/include/AppConfig.hh",
+        "geant4/single_stave/src/AppConfig.cc",
+        "geant4/single_stave/src/RunAction.cc"
+      ],
+      "acceptance": [
+        "profile is configurable and fail-closed",
+        "effective profile and time constant are recorded in metadata",
+        "exponential mode passes a distribution-level statistical regression",
+        "delta mode remains explicitly labelled regression-only if retained"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "SIPM-P0-002",
+      "priority": "P0",
+      "state": "READY",
+      "title": "Implement explicit far-end boundary modes",
+      "files": [
+        "geant4/single_stave/src/DetectorConstruction.cc",
+        "geant4/single_stave/include/AppConfig.hh",
+        "geant4/single_stave/src/AppConfig.cc"
+      ],
+      "acceptance": [
+        "absorb/open/mirror/instrumented have explicit geometry and optical semantics",
+        "unsupported values abort",
+        "geometry tests pass",
+        "photon count and timing spectra satisfy mode-specific expectations",
+        "mode is recorded in metadata"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "SIPM-P0-003",
+      "priority": "P0",
+      "state": "READY",
+      "title": "Add a clean-room Geant4-independent C++17 SiPM core target",
+      "files": [
+        "geant4/single_stave/sipm/",
+        "geant4/single_stave/CMakeLists.txt"
+      ],
+      "acceptance": [
+        "core has no Geant4/ROOT/Boost/UI dependency",
+        "configuration domain tests pass",
+        "first-fire cell begins fully charged",
+        "deterministic event/sensor seed tests pass",
+        "static occupancy and recovery analytic limits pass"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "SIPM-P0-004",
+      "priority": "P0",
+      "state": "BLOCKED_DATA",
+      "title": "Replace representative PDE with a provenance-backed model",
+      "files": [
+        "geant4/single_stave/optical/",
+        "device profile registry",
+        "run metadata"
+      ],
+      "acceptance": [
+        "source revision URL retrieval date units and hash are recorded",
+        "overvoltage and temperature applicability are explicit",
+        "interpolation and extrapolation fail closed",
+        "held-out wavelength/operating-point validation passes"
+      ],
+      "depends_on": [
+        "authoritative digitisation permission or CCB device-characterisation data"
+      ]
+    },
+    {
+      "id": "SIPM-P1-001",
+      "priority": "P1",
+      "state": "READY",
+      "title": "Collect complete optical boundary arrival records",
+      "files": [
+        "geant4/single_stave/src/SteppingAction.cc",
+        "geant4/single_stave/include/SimData.hh"
+      ],
+      "acceptance": [
+        "SteppingAction no longer samples PDE in microcell mode",
+        "arrival time wavelength local position incidence and boundary state are available",
+        "event/sensor/track identity and creator provenance are preserved",
+        "detail output is configurable and memory bounded"
+      ],
+      "depends_on": [
+        "SIPM-P0-003"
+      ]
+    },
+    {
+      "id": "SIPM-P1-002",
+      "priority": "P1",
+      "state": "READY",
+      "title": "Run the SiPM core per sensor at event end",
+      "files": [
+        "geant4/single_stave/src/EventAction.cc",
+        "geant4/single_stave/src/RunAction.cc"
+      ],
+      "acceptance": [
+        "primary and correlated avalanche summaries are persisted",
+        "unique cells charge peak and timing observables are persisted",
+        "legacy mode remains available only as a labelled regression",
+        "one-thread and 48-thread canonical outputs satisfy deterministic/statistical gates"
+      ],
+      "depends_on": [
+        "SIPM-P1-001"
+      ]
+    },
+    {
+      "id": "SIPM-P1-003",
+      "priority": "P1",
+      "state": "BLOCKED_DATA",
+      "title": "Calibrate dark noise crosstalk afterpulsing recovery and SPTR",
+      "acceptance": [
+        "parameter definitions include thresholds windows voltage and temperature",
+        "calibration and validation runs are disjoint",
+        "charge timing recovery and dark-rate distributions close on held-out data",
+        "rejected parameterisations remain recorded"
+      ],
+      "depends_on": [
+        "dark and pulsed-light waveform data",
+        "SIPM-P1-002"
+      ]
+    },
+    {
+      "id": "SIPM-P1-004",
+      "priority": "P1",
+      "state": "BLOCKED_DATA",
+      "title": "Implement measured electronics and waveform digitisation",
+      "acceptance": [
+        "single-PE impulse and noise provenance are recorded",
+        "sampling ADC clipping threshold and estimator match the real analysis",
+        "injected-pulse transfer and dark-baseline/PSD closure pass",
+        "amplitude polarity and baseline conventions are unambiguous"
+      ],
+      "depends_on": [
+        "waveform samples and electronics documentation",
+        "SIPM-P1-002"
+      ]
+    },
+    {
+      "id": "SIPM-P1-005",
+      "priority": "P1",
+      "state": "PLANNED",
+      "title": "Execute full stave position energy species and pileup validation",
+      "acceptance": [
+        "campaign manifest has complete independent coverage",
+        "held-out positions and energies are used",
+        "full distributions and uncertainty close or the model is rejected",
+        "all plots have source tables and immutable provenance"
+      ],
+      "depends_on": [
+        "SIPM-P1-003",
+        "SIPM-P1-004"
+      ]
+    },
+    {
+      "id": "SIPM-P2-001",
+      "priority": "P2",
+      "state": "PLANNED",
+      "title": "Perform global sensitivity and uncertainty analysis",
+      "acceptance": [
+        "physically justified parameter ranges are recorded",
+        "Morris screening precedes Sobol analysis",
+        "parameter correlations and model discrepancy are reported",
+        "uncertainty budget is propagated to detector observables"
+      ],
+      "depends_on": [
+        "accepted parameter definitions and validation model"
+      ]
+    },
+    {
+      "id": "SIPM-P2-002",
+      "priority": "P2",
+      "state": "PLANNED",
+      "title": "Evaluate response kernels and GPU optical transport",
+      "acceptance": [
+        "accepted detailed CPU reference is frozen",
+        "wavelength time path boundary and detector-response distributions pass gates",
+        "batching conversion wall time peak memory and hardware are reported",
+        "speedup is not claimed from unmatched physics configurations"
+      ],
+      "depends_on": [
+        "accepted CPU reference",
+        "supported NVIDIA/OptiX environment for GPU option"
+      ]
+    }
+  ]
+}

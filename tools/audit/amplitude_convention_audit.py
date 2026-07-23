@@ -12,7 +12,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.8.0"
+TOOL_VERSION = "2.9.0"
 BASELINE_DISPERSION_TOKENS = (
     "rms", "std", "sigma", "noise", "width", "variance", "var",
 )
@@ -115,7 +115,6 @@ def audit(
     convention = heuristic_convention
     convention_evidence = "PEDESTAL_ANCHORED" if baseline else "RAW_MEDIAN_HEURISTIC"
     convention_acceptance = "ACCEPTABLE" if baseline else "UNANCHORED"
-    physics_acceptance = "ACCEPTABLE" if evidence_record else "UNVERIFIED"
 
     result = {
         **common,
@@ -139,17 +138,13 @@ def audit(
         "evidence_record": evidence_record,
         "physics_convention": accepted_convention,
         "physics_convention_evidence": evidence_record.get("evidence_basis") if evidence_record else None,
-        "physics_acceptance": physics_acceptance,
+        "physics_acceptance": "UNVERIFIED",
         "subtract_baseline_correct": (
             True if heuristic_convention == "ABSOLUTE" and baseline
             else False if heuristic_convention == "NET" and baseline
             else None
         ),
-        "physics_subtract_baseline_correct": (
-            True if accepted_convention == "ABSOLUTE"
-            else False if accepted_convention == "NET"
-            else None
-        ),
+        "physics_subtract_baseline_correct": None,
     }
     warnings: list[str] = []
     if max_rows is not None:
@@ -177,9 +172,7 @@ def audit(
         if missing_baseline_for_finite_amplitude:
             result["baseline_data_quality"] = "INCOMPLETE"
             result["convention_acceptance"] = "BASELINE_DATA_INVALID"
-            result["physics_acceptance"] = "BASELINE_DATA_INVALID"
             result["subtract_baseline_correct"] = None
-            result["physics_subtract_baseline_correct"] = None
             warnings.append("INCOMPLETE_BASELINE_FOR_FINITE_AMPLITUDES")
         else:
             result["baseline_data_quality"] = "COMPLETE"
@@ -189,6 +182,24 @@ def audit(
     else:
         result["warning_baseline"] = "AMPLITUDE_CONVENTION_WITHOUT_BASELINE_LEVEL"
         result["baseline_data_quality"] = "MISSING_COLUMN"
+
+    # Hash-bound convention evidence authorizes the interpretation, but an
+    # ABSOLUTE convention additionally requires a unique, complete pedestal
+    # column to make the mandated subtraction executable. NET evidence does
+    # not depend on optional pedestal diagnostics.
+    if evidence_record:
+        if accepted_convention == "NET":
+            result["physics_acceptance"] = "ACCEPTABLE"
+            result["physics_subtract_baseline_correct"] = False
+        elif baseline_resolution != "RESOLVED":
+            result["physics_acceptance"] = "BASELINE_SCHEMA_UNRESOLVED"
+            warnings.append("HASH_BOUND_ABSOLUTE_WITHOUT_UNIQUE_BASELINE")
+        elif result.get("baseline_data_quality") != "COMPLETE":
+            result["physics_acceptance"] = "BASELINE_DATA_INVALID"
+            warnings.append("HASH_BOUND_ABSOLUTE_WITH_INVALID_BASELINE_DATA")
+        else:
+            result["physics_acceptance"] = "ACCEPTABLE"
+            result["physics_subtract_baseline_correct"] = True
 
     if evidence_record and evidence_record.get("sha256", digest).lower() != digest.lower():
         raise ValueError("evidence record sha256 does not match evidence-map key")
@@ -238,7 +249,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     n_unanchored_conventions = sum(row["convention_acceptance"] == "UNANCHORED" for row in classified)
     n_unverified_conventions = sum(row["physics_acceptance"] == "UNVERIFIED" for row in classified)
-    n_invalid_baseline_data_tables = sum(row["convention_acceptance"] == "BASELINE_DATA_INVALID" for row in classified)
+    n_invalid_baseline_data_tables = sum(row["physics_acceptance"] == "BASELINE_DATA_INVALID" for row in classified)
+    n_nonaccepted_physics_conventions = sum(
+        row["physics_acceptance"] != "ACCEPTABLE" for row in classified
+    )
     payload = {
         "tool": "tools/audit/amplitude_convention_audit.py",
         "tool_version": TOOL_VERSION,
@@ -261,6 +275,7 @@ def main(argv: list[str] | None = None) -> int:
         "n_unanchored_conventions": n_unanchored_conventions,
         "n_unverified_conventions": n_unverified_conventions,
         "n_invalid_baseline_data_tables": n_invalid_baseline_data_tables,
+        "n_nonaccepted_physics_conventions": n_nonaccepted_physics_conventions,
         "n_skipped": sum(row["status"] == "SKIPPED" for row in tables),
         "n_errors": len(errors),
         "counts": counts,
@@ -274,11 +289,12 @@ def main(argv: list[str] | None = None) -> int:
         f"ambiguous={counts['AMBIGUOUS']} partial={n_partial} nonfinite={n_nonfinite_tables} "
         f"nonnumeric={n_nonnumeric_tables} unanchored={n_unanchored_conventions} "
         f"unverified_physics={n_unverified_conventions} "
+        f"nonaccepted_physics={n_nonaccepted_physics_conventions} "
         f"invalid_baseline_data={n_invalid_baseline_data_tables} errors={len(errors)}"
     )
     return 1 if (
         errors or counts["AMBIGUOUS"] or n_partial or n_nonfinite_tables or n_nonnumeric_tables
-        or n_unverified_conventions or n_invalid_baseline_data_tables
+        or n_nonaccepted_physics_conventions or n_invalid_baseline_data_tables
     ) else 0
 
 

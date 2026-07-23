@@ -2,137 +2,139 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T10:04:54Z
-- **Task:** `AUD-G4-004`
-- **Initial remote main:** `5a4bdfc3f0099f2b6e8c3891b5a2a05f57ecf770`
-- **Validated implementation/evidence head:** `e4e7f8b8e61cdbd0e45304a4fdf80d917139e522`
-- **Append-only session-log head before this handoff:** `ea0349094a9f0bec503b471e65f30eb8b55c2405`
+- **UTC:** 2026-07-23T10:29:57Z
+- **Task:** `AUD-G4-006`
+- **Initial observed remote main:** `6d1d982e0eb6764cc3cc036aa1df76b8f3fe35c7`
+- **Concurrent main incorporated before writes:** `9521eca866a42a02d17a26dffbaaf0f21d6d8eb7`
+- **Implementation/evidence head:** `ddae4a4db15a58745dbbb95bb0abcc02bc973b4c`
+- **Coordination/archive head before this handoff:** `4dfa7b0d0ba2e7aa03b2c523f2219f3c28f043fd`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Canonical destination:** `main`
-- **Acceptance:** COMPLETE for reference-path/self-test provenance; PARTIAL for accepted stopping-power physics closure.
+- **Acceptance:** COMPLETE for fail-closed PSTAR reference-domain handling; PARTIAL for accepted stopping-power physics closure.
 
 ## Start-of-run review
 
-- Fetched current `main`, recent commits, PR #890 and its merge commit, combined status, the PSTAR comparison script/reference, `RunAction.cc`, and all mandatory `chatgpt_todo/` records.
-- Detected recent PR #890/#891 and PR #882 integration before selecting non-duplicative work.
-- Direct clone/raw download remained unavailable because the runtime could not resolve GitHub hosts. Authenticated GitHub connector reads and direct-to-main writes were used; no force-push or history rewrite occurred.
-- No combined status checks were attached to the initial or delivered heads, so no GitHub Actions result is claimed for this session.
+- A direct clone was attempted and failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and direct-to-main writes were used.
+- Inspected current history, current-main status, PR #868, the latest mandatory `chatgpt_todo/` files, the PR #890 stopping-power script and regression, and the committed PSTAR reference table.
+- PR #868 remains closed and unmerged (`merged=false`, head `7992aa318b6f13b5f4bcbd828ad97996075fed4b`); it was not modified or merged.
+- No status checks were attached to the pre-change head, so no GitHub Actions success is claimed.
+- Concurrent main advanced from the first observed head to `9521eca866a42a02d17a26dffbaaf0f21d6d8eb7`; all writes followed that current head through GitHub's contents API. No force-push or history rewrite occurred.
 
-## Confirmed defects
+## Confirmed defect
 
-### Repository path
+`interp_loglog()` silently clamped every lookup below the first PSTAR energy to the first stopping-power value and every lookup above the last energy to the last value.
 
-For a script at `<repo>/scripts/single_stave/compare_stopping_power.py`:
+A simulation point outside the committed reference domain could therefore reuse an unrelated endpoint value and potentially pass the numerical tolerance. For deuterons the relevant lookup is the transformed proton-equivalent energy `E/2`, so the range gate must apply after that transformation.
 
-```text
-HERE.parents[0] = <repo>/scripts
-HERE.parents[1] = <repo>
-HERE.parents[2] = <parent-of-repo>
-```
-
-The previous default used `HERE.parents[2]`, so it looked for the PSTAR CSV outside the repository instead of reading `data/reference/stopping_power/pstar_polystyrene.csv`.
-
-### Masked self-test
-
-When that incorrect path was absent, `self_test()` silently generated a tiny inline reference and returned success. A synthetic checkout reproduced:
+Synthetic two-point reproduction for a 1--10 MeV reference:
 
 ```text
-DEFAULT_REF /tmp/data/reference/stopping_power/pstar_polystyrene.csv
-default exists False
-self_test 0
+old lookup 0.5 MeV -> reused 1 MeV endpoint
+old lookup 20 MeV  -> reused 10 MeV endpoint
 ```
 
-Thus the old pass did not establish that the committed reference existed, was readable, or was exercised.
+Endpoint reuse is neither interpolation nor supported extrapolation.
 
 ## Validated change
 
 `scripts/single_stave/compare_stopping_power.py` now:
 
-- defines `REPO_ROOT = HERE.parents[1]`;
-- resolves the default reference below the repository root;
-- fails closed when the selected reference is missing;
-- removes the inline reference fallback;
-- prints resolved path, SHA-256, and parsed row count;
-- cleans synthetic files with `TemporaryDirectory`;
-- labels the numerical comparison `SCIENTIFIC STATUS: DIAGNOSTIC_ONLY`;
-- documents local unquenched deposited energy as a proxy rather than automatic projectile total-energy loss.
+- requires a finite, positive proton-equivalent lookup energy;
+- accepts exact reference endpoints;
+- performs log-log interpolation only inside the table domain;
+- rejects below- and above-range lookups instead of clamping;
+- reports particle beam energy and transformed proton-equivalent lookup energy in failures;
+- writes lookup energy, reference minimum/maximum energy, and in-range state to output CSV;
+- returns CLI status 2 and does not print a numerical PASS when the range gate fails.
 
 Added:
 
-- `tests/test_compare_stopping_power_reference_path.py`;
-- `docs/validation/stopping_power_reference_path_audit.md`;
-- `docs/validation/stopping_power_reference_path_validation.json`;
-- `docs/validation/stopping_power_reference_path.svg`.
+- `tests/test_compare_stopping_power_energy_range.py`;
+- `docs/validation/stopping_power_reference_domain_audit.md`;
+- `docs/validation/stopping_power_reference_domain_validation.json`;
+- `docs/validation/stopping_power_reference_domain.svg`.
 
-Exact remote blobs:
+## Reproducible validation
 
-- script: `d9282a5c26b8bc86427356f51dfe7e5ecba769d8`;
-- regression test: `ab6265ef398ac0ad7cf3110d173c85cbd6d8f987`;
-- reference table inspected before change: `7e953dd346caedcee6da54180fb636b890a64040`.
+The pre-change script was reconstructed exactly. Its local Git blob was:
 
-## Validation
+```text
+d9282a5c26b8bc86427356f51dfe7e5ecba769d8
+```
 
-Executed on a local exact reconstruction of the committed script/test:
+This exactly matched the remote pre-change blob.
+
+Commands:
 
 ```text
 python -m py_compile \
   scripts/single_stave/compare_stopping_power.py \
-  tests/test_compare_stopping_power_reference_path.py
+  tests/test_compare_stopping_power_reference_path.py \
+  tests/test_compare_stopping_power_energy_range.py
 
-python -m pytest tests/test_compare_stopping_power_reference_path.py -q
+python -m pytest \
+  tests/test_compare_stopping_power_reference_path.py \
+  tests/test_compare_stopping_power_energy_range.py -q
 ```
 
 Result:
 
 ```text
-3 passed in 0.55s
+7 passed in 1.15s
 ```
 
-The changed Python files had no line longer than 100 characters. The remote script/test Git blobs matched the validated local blobs.
+Additional validation:
 
-The local reconstruction used a minimal reference fixture containing the five PSTAR rows exercised by the self-test. The complete committed table was confirmed through the connector but was not executed locally because a complete checkout/raw-file download was unavailable. Full repository pytest, ruff, Geant4, CTest, ROOT, Slurm, and GitHub Actions were not run.
+- no changed Python line exceeded 100 characters;
+- JSON evidence parsed successfully;
+- SVG parsed successfully as XML;
+- remote post-change script blob `0436fb390476697cfc83f88208322a99d7792a1c` matched the validated local script;
+- remote new-test blob `12f3ad78f5a261ebd427e5a37b62db7ccab81b10` matched the validated local test.
+
+The local fixture was synthetic and minimal. Full repository pytest, ruff, Geant4, CTest, ROOT, real simulation comparison, and GitHub Actions were not run.
+
+## Visual and machine-readable evidence
+
+- `docs/validation/stopping_power_reference_domain.svg` labels the below-range and above-range regions `REJECT`, shows the supported interpolation interval, and depicts former endpoint reuse with dashed lines. It explicitly states that it is a synthetic regression schematic rather than detector data.
+- `docs/validation/stopping_power_reference_domain_validation.json` records task/session identifiers, initial/concurrent SHAs, reviewed blobs, exact commands, focused result, validated behavior, unrun checks, and `DIAGNOSTIC_ONLY` scientific status.
 
 ## Scientific interpretation
 
-NIST defines stopping power as projectile energy loss per path length. Geant4 local energy deposit is not necessarily the projectile's full energy loss when generated secondaries carry energy out of the scored volume. The current event ntuple records configured incident kinetic energy, not primary energy sampled continuously along the scored track.
+The correction prevents unsupported reference reuse. It does not establish a stopping-power closure.
 
-Therefore:
+Still unresolved under `AUD-G4-005` / `BLK-G4-SP-001`:
 
-- `sum(edep_scint_raw_MeV) / sum(track_len_scint_mm)` is a useful deposited-energy diagnostic;
-- passing a numerical tolerance against PSTAR is not yet an accepted stopping-power closure;
-- the deuteron `S_d(E) ≈ S_p(E/2)` relation is an approximation and must be separated from the direct proton PSTAR comparison.
+- local deposited energy may differ from projectile total energy loss when generated secondaries escape;
+- particle energy evolves along the scored path;
+- material, density, production cuts, and physics list affect the comparison;
+- a direct proton closure has not been run here;
+- `S_d(E) ~= S_p(E/2)` remains an approximation rather than a direct deuteron PSTAR datum.
 
-`AUD-G4-005` and `BLK-G4-SP-001` now require one or more controlled methods:
-
-1. `G4EmCalculator::ComputeTotalDEDX` for the exact particle, material, energy, production cuts, and physics list;
-2. primary entry/exit kinetic energy with measured path length and a reference integral over the actual energy interval;
-3. containment and explicit accounting of energy carried by generated secondaries.
-
-Required accepted evidence includes exact versions, commands, cuts, physics list, seeds, event counts, input/output hashes, uncertainty, proton overlay/ratio, energy/path scan, secondary-escape diagnostics, and separately labelled deuteron approximation.
+No Geant4 executable, ROOT file, simulation output, calibration, stopping-power value, or detector-performance result was generated or changed.
 
 ## Direct-to-main commits
 
 Implementation and validation evidence:
 
-- `05d9d1e41dbe18db4786e6be73e41ddef55809e9` — `fix(single-stave): exercise committed PSTAR reference`
-- `31a36feae3819df391e46915a473085ca082f948` — `style(single-stave): keep PSTAR diagnostic within lint limit`
-- `434e1ad1acf688f89d233a4686fdd86428d277ce` — `test(single-stave): cover PSTAR reference path and self-test`
-- `be06f890f4b7361f7446f74c498524a6259b6488` — `docs(validation): record PSTAR reference-path audit`
-- `afd900025020722592cca8064f1dc45ab814b05e` — `docs(validation): add PSTAR path validation record`
-- `e4e7f8b8e61cdbd0e45304a4fdf80d917139e522` — `docs(validation): visualize PSTAR reference resolution`
+- `3f290bf64d9d47734ca6b9309249d27cc00ce8a0` — `fix(single-stave): reject unsupported PSTAR extrapolation`
+- `237b67301355f37b2a26fec4fc02a858648be419` — `test(single-stave): cover PSTAR reference-domain gate`
+- `72f60f61a3d88674b8d7bfa8d5ace7a01a1438fa` — `docs(validation): record PSTAR reference-domain audit`
+- `7e1eb981848671302ef49c4c578d6a4ffa7fb487` — `docs(validation): add PSTAR domain validation record`
+- `ddae4a4db15a58745dbbb95bb0abcc02bc973b4c` — `docs(validation): visualize PSTAR reference-domain gate`
 
-Coordination/provenance:
+Coordination and provenance:
 
-- `9b3fabf86de28912ed172a5cf14737df0aa35070` — active task
-- `2e3bbb77e66f78f973792658c3efa14992577724` — backlog
-- `85dcc38b297b8c5ce84a8dc1b0252ff66403647c` — master index
-- `746f314ced43eb5e0001b3fec2104a5239e7eb9d` — code-result map
-- `8a9ce1f68880f560d33ebdef13138fc4c74171a5` — study ledger
-- `9d09e0e0832f6a8e3f8170952c3847e475748170` — claim matrix
-- `1c825d66d207e72d4881a930ecdb442db866b755` — visualization matrix
-- `89009b14e0995c55e783440f037fd440044441bc` — blocker register
-- `6d1d982e0eb6764cc3cc036aa1df76b8f3fe35c7` — immutable archive
-- `ea0349094a9f0bec503b471e65f30eb8b55c2405` — append-only session log
+- `a7f60d6008feccaaace51d798d6e9f90128b6551` — active task
+- `663eedd58b1cc4e37e6e253bb8f7c34ec211c3fc` — backlog
+- `cb1d72cd12dc188e760e6d94f37a49d54fdde52f` — master index
+- `353c1a47c5a14eb6122c49cfef508988468e70d0` — code-result map
+- `533853a7e4d392c2b0a9c015018d737cf40cc809` — study ledger
+- `d2034c47c0be6809a62c7acb1c7d1e4181e5e9d6` — claim matrix
+- `8be9e3dd776d96e39f328315dcf57642b7e3c34c` — visualization matrix
+- `8c861bb67b207be4678a2f077555dd69f178fc8a` — blocker register
+- `4dfa7b0d0ba2e7aa03b2c523f2219f3c28f043fd` — immutable archive
+
+Every write returned a successful commit SHA on `main`. The remote head must be queried after this handoff write to record final confirmation in the user-facing report.
 
 ## Repository-local records
 
@@ -146,15 +148,23 @@ Updated:
 - `chatgpt_todo/CLAIM_EVIDENCE_MATRIX.md`
 - `chatgpt_todo/VISUALIZATION_MATRIX.md`
 - `chatgpt_todo/BLOCKERS.md`
-- `chatgpt_todo/SESSION_LOG.md`
 - `chatgpt_todo/HANDOFF.md`
 
-Added:
+Added immutable record:
 
-- `chatgpt_todo/archive/2026-07-23T100454Z_AUD-G4-004_PSTAR_REFERENCE_PATH.md`
+- `chatgpt_todo/archive/2026-07-23T102957Z_AUD-G4-006_PSTAR_REFERENCE_DOMAIN.md`
 
-## Boundary and next action
+`chatgpt_todo/SESSION_LOG.md` is append-only. The connector provides complete-file replacement but no append operation; replacing the log without a checkout would risk changing prior history. The immutable archive contains the complete session entry. A checkout-capable follow-up should append it verbatim without changing earlier entries.
 
-No Geant4 executable, ROOT file, Slurm job, simulation output, accepted stopping-power result, calibration, or detector-performance number was generated. No scientific result from PR #890 is promoted by this session.
+## Acceptance and next action
 
-Next task: execute `AUD-G4-005` in a clean Geant4 environment, beginning with a proton-only `G4EmCalculator::ComputeTotalDEDX` comparison at exact reference energies, followed by entry/exit-energy and secondary-escape diagnostics. Preserve immutable artifacts and do not interpret the deposited-energy proxy as validated total stopping power beforehand.
+- Reference-domain failure mode: COMPLETE.
+- Exact endpoint handling: COMPLETE.
+- Deuteron transformed-energy gate: COMPLETE.
+- CSV domain provenance: COMPLETE.
+- Focused synthetic regression: COMPLETE.
+- Visual and JSON evidence: COMPLETE.
+- Remote-main implementation/evidence: COMPLETE.
+- Accepted stopping-power closure: PARTIAL / BLOCKED.
+
+Next task: execute `AUD-G4-005` in a clean Geant4 environment. Start with proton-only `G4EmCalculator::ComputeTotalDEDX` at exact reference energies and exact material/physics/cut configuration, then add primary entry/exit energy and secondary-escape diagnostics. Retain exact versions, commands, seeds, event counts, hashes, uncertainties, overlays/ratios, and failure interpretation. Keep the deuteron approximation separate.

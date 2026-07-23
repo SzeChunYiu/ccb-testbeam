@@ -250,3 +250,17 @@
 - PR #868 remained closed, unmerged, and non-mergeable and was not modified. Open concurrent PRs were inspected for overlap; no active completed task was duplicated.
 - Full repository pytest, ruff, Geant4/CTest, ROOT processing, real simulation execution, and GitHub Actions were not run; no broad CI or physics-closure claim is made.
 - Acceptance: `AUD-G4-012` COMPLETE and `BLK-G4-SP-002` RESOLVED. External NIST transcription/material provenance remains independently unverified; exact real-export execution and accepted stopping-power closure remain open under `AUD-G4-011` and `AUD-G4-005`.
+
+## 2026-07-23T21:05:42Z — AUD-G4-016
+
+- Initial remote main: `5c64e283594f1ef23d0685eac7b8249d45f1670b`.
+- Inspected current main history, concurrent work, PR #868, the canonical stopping-power comparison, shared validators, focused tests, validation records, and all mandatory scientific-review ledgers.
+- Confirmed a serialization defect: exact configured-energy rows at `1.0000001` and `1.0000002` MeV remained separate internally but former `.6g` CSV output wrote both as `1`, while terminal `.2f` output displayed both as `1.00`.
+- Corrected all finite CSV float fields to Python shortest round-trip representation, rejected nonfinite report values, recorded `PYTHON_REPR_ROUND_TRIP`, and printed configured energy with the same exact representation.
+- Exact pre-change Git blob `c3884d953a38b0dad69f50e3a9dc787bc1f29fd0` failed the new identity regression (`2 failed, 1 passed`); current focused tests returned `3 passed in 0.03s`.
+- Current script blob `5081da0b77bcfeba07dca95e5087c4b2057c362f` and test blob `0003cb29cb5a31a38186b589e030ad29263b5a4b` matched the locally validated files. JSON/SVG parsing and the 93-character line-length gate passed.
+- Implementation/evidence commits: `212d3db82fb920d1dfc2e39de7867b37971d97c8`, `12c2b88a2aa7557fe9a7b4d9c33e47adbaf2b351`, `ee88f8325d92086bca25af2a158938e38684339e`, `310945dbcef99ae28ae0e3de2cf644628a174d3d`, `cff8a9f076f334333e938444a34168e4643f1e5f`.
+- Coordination commits before this log update: `5948b9a19eef068ca99fc48bb135cbeec98daf72`, `cf5b805f2628d5d7443e9aeaff68f66a5fb50d16`, `b01ec286a2a9fbf5cb6eca3ec762f7ce4eb79f3c`, `638a16890e7e9b69e1ee5b42fc0ec82f7e1ab1d5`, `d07f72643f84fb24c2148e38ab8120a177e42301`, `340f9c812b54b1445550a7e64272f13848acc0db`, `34ba8ce6bbd1f50222b76f3d4cfa807c07554861`, `6aab30077530c399b4fb188b13182a3b1f9fb057`, `d46aa58d73820b7926591d3f6314424355a03fef`.
+- Concurrent non-overlapping PR #910 merged as `536d632a2ce446cc95fcf7c635b3597ee99eae13`; subsequent writes were based on the advanced main without force-push or history rewrite. PR #868 remains closed, unmerged, and non-mergeable and was not modified.
+- No real event CSV, ROOT output, Geant4 execution, uncertainty budget, stopping-power closure, calibration, or detector-performance result was produced. Full repository pytest, ruff, Geant4/CTest, and GitHub Actions were not run.
+- Acceptance: `AUD-G4-016` COMPLETE. `AUD-G4-005`, `AUD-G4-011`, and `BLK-G4-SP-001` remain open for immutable real exports, an accepted projectile-loss observable, secondary-escape/energy-evolution treatment, and statistical/systematic uncertainty.

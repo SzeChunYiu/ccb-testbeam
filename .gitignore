@@ -53,6 +53,9 @@ tmp/
 geant4/jobs/*.out
 geant4/jobs/*.err
 
+# Generated CMake/Geant4 build trees are local, environment-specific artifacts.
+geant4/**/build/
+
 # MC validation ephemeral artifacts
 reports/mc_validation_fixture/
 reports/mc_validation/mv0_digitizer/

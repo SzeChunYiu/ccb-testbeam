@@ -3,6 +3,7 @@
 import csv
 import re
 import sys
+import os
 from pathlib import Path
 
 # Patterns that indicate a quantitative claim

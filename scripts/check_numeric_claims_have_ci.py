@@ -25,7 +25,7 @@ for i, row in enumerate(rows, start=2):
     if not re.search(r"[-+]?\d", value):
         continue
 
-    ci_status = row.get("ci_status", "").strip()
+    ci_status = (row.get("ci_status") or "").strip()
     stat = row.get("uncertainty_stat") or row.get("stat_unc") or ""
     syst = row.get("uncertainty_syst") or row.get("syst_unc") or ""
     ci_low = row.get("ci_low", "")

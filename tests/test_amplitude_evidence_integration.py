@@ -17,6 +17,8 @@ assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
+REFERENCE_SHA256 = "b" * 64
+
 
 def write_table(path: Path) -> str:
     pd.DataFrame({
@@ -34,6 +36,7 @@ def test_cli_rejects_evidence_without_reference(tmp_path: Path) -> None:
     evidence.write_text(json.dumps({digest: {
         "convention": "NET",
         "evidence_basis": "PRODUCER_CODE_PROVENANCE",
+        "evidence_reference_sha256": REFERENCE_SHA256,
     }}), encoding="utf-8")
 
     with pytest.raises(ValueError, match="evidence_reference"):
@@ -50,6 +53,19 @@ def test_programmatic_audit_rejects_untraceable_map(tmp_path: Path) -> None:
         MODULE.audit(table, None, 3500.0, 5000.0, {digest: {
             "convention": "NET",
             "evidence_basis": "PRODUCER_CODE_PROVENANCE",
+            "evidence_reference_sha256": REFERENCE_SHA256,
+        }})
+
+
+def test_programmatic_audit_rejects_unbound_reference(tmp_path: Path) -> None:
+    table = tmp_path / "table.csv"
+    digest = write_table(table)
+
+    with pytest.raises(ValueError, match="evidence_reference_sha256"):
+        MODULE.audit(table, None, 3500.0, 5000.0, {digest: {
+            "convention": "NET",
+            "evidence_basis": "PRODUCER_CODE_PROVENANCE",
+            "evidence_reference": "docs/contracts/PULSE_TABLE_CONTRACT.md",
         }})
 
 
@@ -63,6 +79,7 @@ def test_traceable_map_is_normalized_and_exposed(tmp_path: Path) -> None:
         "convention": "NET",
         "evidence_basis": "PRODUCER_CODE_PROVENANCE",
         "evidence_reference": f"  {reference}  ",
+        "evidence_reference_sha256": REFERENCE_SHA256,
     }}), encoding="utf-8")
 
     assert MODULE.main([
@@ -72,4 +89,5 @@ def test_traceable_map_is_normalized_and_exposed(tmp_path: Path) -> None:
     row = payload["tables"][0]
     assert row["physics_acceptance"] == "ACCEPTABLE"
     assert row["physics_evidence_reference"] == reference
+    assert row["evidence_record"]["evidence_reference_sha256"] == REFERENCE_SHA256
     assert row["evidence_record"]["sha256"] == digest

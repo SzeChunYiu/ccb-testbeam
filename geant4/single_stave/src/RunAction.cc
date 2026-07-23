@@ -10,6 +10,8 @@
 #include <fstream>
 #include <iostream>
 #include <ctime>
+#include <cstdio>
+#include <string>
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
                      const std::string& geometry_hash)
@@ -137,7 +139,35 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
   const std::string meta = cfg_.output + ".meta.json";
   std::ofstream os(meta);
   if (!os) { std::cerr << "warning: cannot write " << meta << "\n"; return; }
-  auto j = [](const std::string& s) { return "\"" + s + "\""; };
+  auto j = [](const std::string& s) -> std::string {
+    // Fully robust JSON string escaping (RFC 8259).  Escapes \" \\ and all
+    // control characters (< 0x20), using short forms for the common ones
+    // (\n \r \t \b \f) and \uXXXX for the rest.
+    std::string out;
+    out.reserve(s.size() + 2);
+    out += '"';
+    for (unsigned char c : s) {
+      switch (c) {
+        case '"':  out += "\\\""; break;
+        case '\\': out += "\\\\"; break;
+        case '\n': out += "\\n"; break;
+        case '\r': out += "\\r"; break;
+        case '\t': out += "\\t"; break;
+        case '\b': out += "\\b"; break;
+        case '\f': out += "\\f"; break;
+        default:
+          if (c < 0x20) {
+            char buf[8];
+            std::snprintf(buf, sizeof(buf), "\\u%04x", c);
+            out += buf;
+          } else {
+            out += static_cast<char>(c);
+          }
+      }
+    }
+    out += '"';
+    return out;
+  };
   const char* git = std::getenv("CCB_GIT_COMMIT");
   os << "{\n"
      << "  \"schema\": \"ccb-stave-run-meta/1\",\n"

@@ -24,7 +24,7 @@
 #include <array>
 #include <iostream>
 #include <sstream>
-#include <functional>
+#include "Sha256.hh"  // SHA-256 geometry digest (defect #7)
 
 // Coordinate convention: x=length(+-25cm), y=width(+-2.59cm), z=thickness(+-1cm).
 // Primary travels +z through the 2 cm normal thickness. Fibres run along x
@@ -40,9 +40,7 @@ DetectorConstruction::DetectorConstruction(const AppConfig& cfg) : cfg_(cfg) {
   gs << kStaveHalfX << kStaveHalfY << kStaveHalfZ << kHoleRadius << kFibreRadius
      << kFibreHalfX << kFibreSep << rCore << rInner << rOuter
      << cfg_.birks_kB_mm_per_MeV;
-  std::ostringstream hx;
-  hx << std::hex << std::hash<std::string>{}(gs.str());
-  geometry_hash_ = hx.str();
+  geometry_hash_ = Sha256::hex(gs.str());
 }
 DetectorConstruction::~DetectorConstruction() { delete messenger_; }
 
@@ -180,8 +178,9 @@ void DetectorConstruction::BuildCoatingSurface(G4VPhysicalVolume* scintPV,
     mpt->AddProperty("REFLECTIVITY", e, r);
   } else {
     std::vector<double> e = {1.5 * eV, 4.0 * eV};
-    std::vector<double> r = {0.90 * cfg_.reflectivity_scale,
-                             0.90 * cfg_.reflectivity_scale};
+    // Clamp after scaling, matching the table-driven path's clamping (defect #10).
+    const double r_fb = std::min(1.0, 0.90 * cfg_.reflectivity_scale);
+    std::vector<double> r = {r_fb, r_fb};
     mpt->AddProperty("REFLECTIVITY", e, r);
   }
   surf->SetMaterialPropertiesTable(mpt);

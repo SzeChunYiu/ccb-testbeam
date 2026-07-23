@@ -48,6 +48,15 @@
 - **Validation:** the regression failed against a synthetic tracked `CMakeCache.txt` and passed after removal plus ignore configuration; the candidate Git commit was inspected before fast-forwarding `main`, and source files from PR #888 plus concurrent PR #889 remained present.
 - **Remaining scientific limitation:** removal of generated artifacts does not validate or invalidate the scientific source fixes in PR #888/#889. Clean Geant4 builds, CTests, runtime outputs, and immutable result provenance still require independent review.
 
+## BLK-G4-SP-001 — accepted stopping-power closure unavailable
+
+- **State:** OPEN
+- **Observed defects:** PR #890's comparison default resolved one directory above the repository and its synthetic self-test silently substituted an inline table. Those path/provenance defects are now fixed. The remaining comparison divides local unquenched deposited energy by scored path length and evaluates PSTAR at configured incident energy.
+- **Why scientific acceptance remains blocked:** NIST stopping power is projectile energy loss per path length. Geant4 local energy deposit can exclude energy carried away by generated secondaries, and the particle energy evolves along the track. The deuteron `S_d(E) ≈ S_p(E/2)` reference is an approximation rather than a direct PSTAR datum.
+- **Validated boundary:** current output is explicitly `DIAGNOSTIC_ONLY`; the synthetic self-test establishes arithmetic and committed-reference wiring only.
+- **Resolution:** run a clean, provenance-retained proton closure using `G4EmCalculator::ComputeTotalDEDX` or primary entry/exit kinetic energy plus path-length/reference integration; quantify escaping secondary energy and production-cut dependence; preserve exact material, density, physics list, cuts, versions, commands, seeds, event counts, hashes, uncertainty, and overlay/ratio/diagnostic plots. Treat deuterons separately with a documented approximation or authoritative reference.
+- **Do not claim until resolved:** that local deposited-energy agreement within a numerical tolerance validates Geant4 total stopping power or deuteron stopping power.
+
 ## BLK-MERGE-001 — PR #868 integration into current main
 
 - **State:** OPEN

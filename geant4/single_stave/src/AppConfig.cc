@@ -64,6 +64,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --energy MEV             primary kinetic energy MeV  (default 100)\n"
     "  --nevents N              events this invocation      (default 1000)\n"
     "  --threads N              worker threads              (default 1)\n"
+    "  --sipm-n-cells N        SiPM microcells (saturation) (default 3600)\n"
     "  --seed N                 RNG seed                    (default 1)\n"
     "  --hit-x CM               impact x (stave length)     (default 0)\n"
     "  --hit-y CM               impact y (width)            (default 0)\n"
@@ -124,6 +125,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--energy"))            { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --energy requires a finite number, got '"<<v<<"'\n";return false;} kinetic_energy_MeV = t; }
     else if (eq(a, "--nevents"))           { if(!(v=need(i)))return false; int t; if(!parse_int(v,t)){std::cerr<<"error: --nevents requires an integer, got '"<<v<<"'\n";return false;} n_events = t; }
     else if (eq(a, "--threads"))           { if(!(v=need(i)))return false; int t; if(!parse_int(v,t)){std::cerr<<"error: --threads requires an integer, got '"<<v<<"'\n";return false;} n_threads = t; }
+    else if (eq(a, "--sipm-n-cells"))           { if(!(v=need(i)))return false; int t; if(!parse_int(v,t)){std::cerr<<"error: --sipm-n-cells requires an integer, got '"<<v<<"'\n";return false;} sipm_n_cells = t; }
     else if (eq(a, "--seed"))              { if(!(v=need(i)))return false; unsigned long long t; if(!parse_ull(v,t)){std::cerr<<"error: --seed requires a non-negative integer, got '"<<v<<"'\n";return false;} seed = t; }
     else if (eq(a, "--hit-x"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --hit-x requires a finite number, got '"<<v<<"'\n";return false;} hit_x_cm = t; }
     else if (eq(a, "--hit-y"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --hit-y requires a finite number, got '"<<v<<"'\n";return false;} hit_y_cm = t; }
@@ -166,6 +168,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   if (kinetic_energy_MeV <= 0) { std::cerr << "error: --energy must be > 0\n"; return false; }
   if (n_events <= 0)           { std::cerr << "error: --nevents must be > 0\n"; return false; }
   if (n_threads <= 0)          { std::cerr << "error: --threads must be > 0\n"; return false; }
+  if (sipm_n_cells <= 0)      { std::cerr << "error: --sipm-n-cells must be > 0\n"; return false; }
   if (coupling_efficiency < 0 || coupling_efficiency > 1) {
     std::cerr << "error: --coupling must be in [0,1]\n"; return false;
   }

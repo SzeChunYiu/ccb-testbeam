@@ -40,6 +40,7 @@ PstarRow = tuple[float, float, float, float]
 ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
 DIRECT_PROTON_REFERENCE = "DIRECT_PSTAR_PROTON"
 DEUTERON_REFERENCE_PROXY = "VELOCITY_SCALED_PROTON_PROXY"
+UNCERTAINTY_METHOD = "NOT_EVALUATED"
 
 
 class StoppingPowerInputError(ValueError):
@@ -223,7 +224,14 @@ def run_compare(
         numeric_ok = abs(delta) <= tol_pct
         raw_comparable = bool(result["raw_pstar_comparable"])
         physics_comparable = raw_comparable and direct_reference
-        accepted_ok = numeric_ok and physics_comparable
+        uncertainty_evaluated = False
+        accepted_ok = numeric_ok and physics_comparable and uncertainty_evaluated
+        if not physics_comparable:
+            acceptance_status = "NONCOMPARABLE_INPUT_OR_REFERENCE"
+        elif not numeric_ok:
+            acceptance_status = "POINT_ESTIMATE_OUTSIDE_TOLERANCE"
+        else:
+            acceptance_status = "NOT_ACCEPTED_NO_UNCERTAINTY"
         all_pass = all_pass and accepted_ok
         result.update(
             {
@@ -250,6 +258,9 @@ def run_compare(
                 "ratio": ratio,
                 "delta_percent": delta,
                 "numeric_within_tolerance": numeric_ok,
+                "uncertainty_method": UNCERTAINTY_METHOD,
+                "uncertainty_evaluated": uncertainty_evaluated,
+                "acceptance_status": acceptance_status,
                 "within_tolerance": accepted_ok,
             }
         )
@@ -285,6 +296,9 @@ def run_compare(
             "ratio",
             "delta_percent",
             "numeric_within_tolerance",
+            "uncertainty_method",
+            "uncertainty_evaluated",
+            "acceptance_status",
             "within_tolerance",
         ]
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -316,7 +330,7 @@ def run_compare(
         status = (
             "NONCOMPARABLE"
             if not result["physics_comparable"]
-            else ("PASS" if result["within_tolerance"] else "FAIL")
+            else ("POINT_ONLY" if result["numeric_within_tolerance"] else "FAIL")
         )
         print(
             f"{result['particle']:<9}{result['energy_MeV']:>9.2f}"
@@ -329,7 +343,7 @@ def run_compare(
         grouped.setdefault(str(result["particle"]), []).append(float(result["ratio"]))
     for species, ratios in grouped.items():
         print(
-            f"  mean ratio [{species}] = {statistics.mean(ratios):.4f} "
+            f"  mean point-estimate ratio [{species}] = {statistics.mean(ratios):.4f} "
             f"over {len(ratios)} energy point(s)"
         )
     print(
@@ -352,7 +366,11 @@ def run_compare(
         print("NUMERICAL TOLERANCE: NOT_ACCEPTED_DEUTERON_PROXY")
     else:
         print("ENERGY DEPOSIT BASIS: UNQUENCHED_RAW")
-        print("NUMERICAL TOLERANCE:", "PASS" if all_pass and results else "FAIL")
+        if results and all(result["numeric_within_tolerance"] for result in results):
+            print("NUMERICAL TOLERANCE: POINT_ESTIMATE_ONLY_NOT_ACCEPTED")
+        else:
+            print("NUMERICAL TOLERANCE: FAIL")
+    print(f"UNCERTAINTY EVALUATION: {UNCERTAINTY_METHOD}")
     print("SCIENTIFIC STATUS: DIAGNOSTIC_ONLY")
     return results, all_pass and bool(results)
 
@@ -394,7 +412,7 @@ def self_test(ref_path: Path | None = None) -> int:
                 for _ in range(40):
                     writer.writerow([particle, energy, f"{deposit:.9f}", "1.0"])
         print("=== self-test on synthetic proton events (expected ratio ~ 1.0) ===")
-        results, ok = run_compare(
+        results, _ = run_compare(
             simulation_path,
             reference_path,
             DEFAULT_RHO,
@@ -403,7 +421,7 @@ def self_test(ref_path: Path | None = None) -> int:
         )
     max_error = max(abs(float(result["ratio"]) - 1.0) for result in results)
     print(f"\nmax |ratio-1| = {max_error:.2e}")
-    if max_error < 1e-6 and ok:
+    if max_error < 1e-6:
         print("SELF-TEST SCOPE: arithmetic and committed-reference path only")
         print("SELF-TEST: PASS")
         return 0

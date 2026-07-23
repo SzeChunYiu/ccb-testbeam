@@ -20,6 +20,17 @@ P1  REPORT_SECTION_MISSING               REPORT.md lacks a required section
 P1  DUPLICATE_STUDY_ID                   same study id claimed by multiple reports
 P1  READ_ERROR / JSON_INVALID / PYTHON_SYNTAX_ERROR
 P2  AUTO_GENERATED_DISCLOSURE            auto-generated report needs independent review
+
+Language coverage (AUD-002)
+---------------------------
+The auditor fully covers Python (source + AST), REPORT.md, JSON, and the claim
+ledger CSV. Other languages present in a scientific HEP repo (C++/Geant4,
+CMake, YAML configs, Jupyter notebooks, shell) are INVENTORIED (path + sha256)
+and reported as explicitly *unaudited* via ``summarize_coverage`` rather than
+silently skipped. Each unaudited language has a suppression record in
+``COVERAGE_SUPPRESSIONS`` documenting why it is out of scope and where its
+review lives. Adding a new Python check (AST-based) is the path to expand
+coverage; do not widen the regex layer for non-Python files.
 """
 from __future__ import annotations
 import argparse, ast, csv, hashlib, json, os, re
@@ -30,6 +41,60 @@ REQ_SECTIONS = ["reproduction", "method", "result", "provenance"]
 MC_BRANCH_HINTS = ("Sci_bar_", "hibeam", "PrimaryPDG", "output_krakow")
 # Directory names always skipped during the walk (VCS / caches / virtualenvs).
 DEFAULT_SKIP_PARTS = {'.git', '.venv', 'venv', '__pycache__'}
+
+# --- AUD-002: explicit language coverage policy ----------------------------
+# Suffixes (and special filenames) that receive a real static check here.
+# Everything else is inventoried for provenance but recorded as unaudited.
+AUDITED_SUFFIXES = {'.py'}
+AUDITED_NAMES = {'REPORT.md'}      # prose report structural check
+AUDITED_JSON = {'.json'}           # absolute-path + validity check
+AUDITED_LEDGER = 'docs/claim_ledger.csv'
+
+# Suppression records: WHY each unaudited language is not statically checked
+# here and WHERE its authoritative review lives. Surfaced in every coverage
+# report so "not covered" is an explicit, documented decision — never silent.
+COVERAGE_SUPPRESSIONS = {
+    'cpp':   ('Geant4 / VGM C++ (.cc/.cpp/.hh/.hpp): no C++ static analysis in this '
+              'tool. Geometry/optics/physics code is covered by the Geant4 ctest '
+              'suite (geant4/single_stave) + the single_stave build.'),
+    'cmake': ('CMake / CTestLists (.cmake/CMakeLists.txt): build-config review is '
+              'manual; no schema/semantics to audit here.'),
+    'yaml':  ('YAML configs (.yaml/.yml): validated by their consumers (pydantic / '
+              'config loaders) at load time, not statically here.'),
+    'shell': ('Shell scripts (.sh/.bash): injection-surface scripts are reviewed by '
+              'the dedicated shell-safety review (e.g. SEC tickets); not regex-audited.'),
+    'notebook': ('Jupyter notebooks (.ipynb): executed outputs are validated by the '
+                 'report provenance / ccbprov manifest layer; static NB lint is out of scope.'),
+    'markdown': ('Plain Markdown (non-REPORT): documentation; no scientific claim to audit.'),
+    'text':  ('Plain text / data tables (.txt/.dat/.csv data): content is hashed for '
+              'provenance; semantic audit belongs to the relevant study tool.'),
+    'other': ('Binary / build artifacts / other: inventoried (sha256) for provenance only.'),
+}
+
+def _language_of(rel: Path) -> str:
+    """Coarse language bucket for coverage reporting (AUD-002)."""
+    name = rel.name
+    if name == 'CMakeLists.txt' or rel.suffix == '.cmake':
+        return 'cmake'
+    if rel.suffix in {'.cc', '.cpp', '.cxx', '.hh', '.hpp', '.hxx', '.c', '.h'}:
+        return 'cpp'
+    if rel.suffix in {'.yaml', '.yml'}:
+        return 'yaml'
+    if rel.suffix in {'.sh', '.bash'}:
+        return 'shell'
+    if rel.suffix == '.ipynb':
+        return 'notebook'
+    if rel.suffix == '.py':
+        return 'python'
+    if name == 'REPORT.md':
+        return 'report'
+    if rel.suffix == '.md':
+        return 'markdown'
+    if rel.suffix == '.json':
+        return 'json'
+    if rel.suffix in {'.txt', '.dat', '.csv'}:
+        return 'text'
+    return 'other'
 
 def sha256(path: Path) -> str:
     h=hashlib.sha256()
@@ -67,7 +132,7 @@ def audit_python(path: Path, rows):
     # hard-coded absolute paths
     for m in re.finditer(r"['\"]/(?:home|projects|scratch|tmp)/[^'\"]+", text):
         add(rows,'P1','ABSOLUTE_PATH',path,text[:m.start()].count('\n')+1,'Committed absolute path reduces portability',m.group(0)[:160])
-    # parser options referenced only once (definition only)
+    # parser options referenced only once (definition only) — AST-based (AUD-002: Python AST coverage)
     try:
         tree=ast.parse(text)
         opts=[]
@@ -128,6 +193,10 @@ def collect(repo: Path, extra_excludes=None, *, hash_files=True):
 
     ``extra_excludes`` is a list of repo-relative directory prefixes to skip
     (in addition to the always-skipped .git/.venv/__pycache__).
+
+    Each inventory row is enriched (AUD-002) with ``language`` and ``audited``
+    so coverage is explicit: unaudited languages are recorded, never silently
+    dropped. Use ``summarize_coverage(inventory)`` for the coverage report.
     """
     repo = Path(repo).resolve()
     extra_excludes = list(extra_excludes or [])
@@ -139,13 +208,18 @@ def collect(repo: Path, extra_excludes=None, *, hash_files=True):
         if _skip(rel, extra_excludes):
             continue
         size = path.stat().st_size
-        inventory.append({'path': str(rel), 'bytes': size,
+        language = _language_of(rel)
+        audited = (language == 'python' or rel.name in AUDITED_NAMES
+                   or rel.suffix in AUDITED_JSON
+                   or rel.as_posix() == AUDITED_LEDGER)
+        inventory.append({'path': str(rel), 'bytes': size, 'language': language,
+                          'audited': audited,
                           'sha256': sha256(path) if (hash_files and size < 100_000_000) else ''})
-        if path.suffix == '.py': audit_python(path, rows)
-        elif path.name == 'REPORT.md': audit_report(path, rows)
-        elif path.suffix == '.json': audit_json(path, rows)
-    ledger = repo/'docs/claim_ledger.csv'
-    if ledger.exists() and not _skip(Path('docs/claim_ledger.csv'), extra_excludes):
+        if language == 'python': audit_python(path, rows)
+        elif rel.name == 'REPORT.md': audit_report(path, rows)
+        elif rel.suffix == '.json': audit_json(path, rows)
+    ledger = repo/AUDITED_LEDGER
+    if ledger.exists() and not _skip(Path(AUDITED_LEDGER), extra_excludes):
         audit_claim_ledger(ledger, repo, rows)
     # Duplicate study IDs based on report headers/directory prefixes
     ids = defaultdict(list)
@@ -162,15 +236,44 @@ def collect(repo: Path, extra_excludes=None, *, hash_files=True):
         if len(paths)>1: add(rows,'P1','DUPLICATE_STUDY_ID',Path(paths[0]),1,f'{sid} appears in {len(paths)} reports',';'.join(paths[:10]))
     return rows, inventory
 
+def summarize_coverage(inventory):
+    """AUD-002: explicit per-language coverage report.
+
+    Returns a dict with the count of files actually checked vs. files that were
+    only inventoried, broken down by language, plus the suppression rationale
+    for every unaudited language. This makes "not covered" an explicit, recorded
+    decision instead of a silent gap.
+    """
+    covered = Counter()
+    uncovered = Counter()
+    for row in inventory:
+        lang = row.get('language', 'other')
+        if row.get('audited'):
+            covered[lang] += 1
+        else:
+            uncovered[lang] += 1
+    return {
+        'covered_by_language': dict(covered.most_common()),
+        'uncovered_by_language': dict(uncovered.most_common()),
+        'covered_files': int(sum(covered.values())),
+        'uncovered_files': int(sum(uncovered.values())),
+        'uncovered_suppressions': COVERAGE_SUPPRESSIONS,
+    }
+
 def write_outputs(out: Path, repo: Path, rows, inventory):
     out.mkdir(parents=True, exist_ok=True)
     fields=['severity','code','path','line','message','evidence']
     with (out/'findings.csv').open('w',newline='') as f: w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(rows)
-    with (out/'inventory.csv').open('w',newline='') as f: w=csv.DictWriter(f,fieldnames=['path','bytes','sha256']); w.writeheader(); w.writerows(inventory)
+    inv_fields=['path','bytes','language','audited','sha256']
+    with (out/'inventory.csv').open('w',newline='') as f: w=csv.DictWriter(f,fieldnames=inv_fields); w.writeheader(); w.writerows(inventory)
     counts=Counter(r['severity'] for r in rows)
-    summary={'repo':str(repo),'files':len(inventory),'findings':len(rows),'severity_counts':dict(counts)}
+    coverage=summarize_coverage(inventory)
+    summary={'repo':str(repo),'files':len(inventory),'findings':len(rows),
+             'severity_counts':dict(counts),'coverage':coverage}
     (out/'summary.json').write_text(json.dumps(summary,indent=2))
-    md=['# Repository re-audit findings','',f"Files inventoried: {len(inventory)}",f"Findings: {len(rows)}",'', '## Severity counts','']+[f"- {k}: {v}" for k,v in sorted(counts.items())]+['','## Findings','']
+    (out/'coverage.json').write_text(json.dumps(coverage,indent=2))
+    md=['# Repository re-audit findings','',f"Files inventoried: {len(inventory)}",
+        f"Findings: {len(rows)}",'', '## Severity counts','']+[f"- {k}: {v}" for k,v in sorted(counts.items())]+['','## Findings','']
     md += [f"- **{r['severity']} {r['code']}** `{r['path']}:{r['line']}` — {r['message']}" for r in rows]
     (out/'REPORT.md').write_text('\n'.join(md)+'\n')
     return summary

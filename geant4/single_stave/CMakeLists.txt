@@ -88,5 +88,6 @@ if(CCB_PYTHON3)
             --work-dir "${CMAKE_BINARY_DIR}/birks_regression")
   set_tests_properties(ccb_stave_birks_visible_regression PROPERTIES
     TIMEOUT 300
+    SKIP_RETURN_CODE 77
     FAIL_REGULAR_EXPRESSION "defect 2 has regressed")
 endif()

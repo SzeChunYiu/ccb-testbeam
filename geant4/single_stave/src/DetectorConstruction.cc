@@ -1,6 +1,7 @@
 #include "DetectorConstruction.hh"
 #include "DetectorMessenger.hh"
 #include "OpticalTables.hh"
+#include "G4Exception.hh"
 
 #include "G4NistManager.hh"
 #include "G4Material.hh"
@@ -68,6 +69,28 @@ void FillFromCurve(G4MaterialPropertiesTable* mpt, const char* prop,
   }
   mpt->AddProperty(prop, e, v);
 }
+
+// G4-003: enforce optical-table presence + schema. In strict (production)
+// mode a missing required table or a schema/unit/range violation aborts the
+// run via a FatalException BEFORE the event loop (these builders run during
+// Initialize()). In permissive (dev) mode violations are advisory warnings
+// and the historic fail-open fallbacks apply.
+void EnforceOpticalTables(const OpticalTables& tables, const AppConfig& cfg,
+                          const std::vector<std::string>& required) {
+  auto errs = tables.ValidateRequired(required);
+  if (errs.empty()) return;
+  std::string msg = "G4-003 optical-table validation failed:\n";
+  for (const auto& e : errs) msg += "  - " + e + "\n";
+  if (cfg.strict_optical) {
+    msg += "Run aborted in strict mode (--strict-optical / CCB_STRICT_OPTICAL)."
+           " Supply valid optical CSV tables, or drop --strict-optical for dev.";
+    G4Exception("DetectorConstruction::Construct", "OPT_TABLES_001",
+                FatalException, msg.c_str());
+  } else {
+    std::cerr << "warning: " << msg
+              << "Continuing in permissive mode (built-in fallbacks apply).\n";
+  }
+}
 }  // namespace
 
 G4Material* DetectorConstruction::BuildScintillator() {
@@ -79,7 +102,7 @@ G4Material* DetectorConstruction::BuildScintillator() {
   // uniquely-named instance so the scintillation and WLS tables stay independent.
   G4Material* ps = nist->BuildMaterialWithNewDensity(
       "CCB_Scintillator", "G4_POLYSTYRENE", 1.06 * CLHEP::g / CLHEP::cm3);
-  auto tables = OpticalTables::LoadDir(cfg_.optical_dir);
+  auto tables = OpticalTables::LoadDir(cfg_.optical_dir, cfg_.strict_optical);
   auto* mpt = new G4MaterialPropertiesTable();
 
   // RINDEX (constant n=1.59 across the emission band, tabulated at 2 points).
@@ -87,6 +110,7 @@ G4Material* DetectorConstruction::BuildScintillator() {
   std::vector<double> rindex = {1.59, 1.59};
   mpt->AddProperty("RINDEX", e, rindex);
 
+  EnforceOpticalTables(tables, cfg_, {"scintillator_emission", "scintillator_absorption"});
   // Emission and absorption from versioned tables (fall back to a broad band).
   FillFromCurve(mpt, "SCINTILLATIONCOMPONENT1", tables.Get("scintillator_emission"), 1.0, 1.0);
   FillFromCurve(mpt, "ABSLENGTH", tables.Get("scintillator_absorption"),
@@ -108,11 +132,12 @@ G4Material* DetectorConstruction::BuildFibreCore() {
   auto* nist = G4NistManager::Instance();
   G4Material* core = nist->BuildMaterialWithNewDensity(
       "CCB_Y11Core", "G4_POLYSTYRENE", 1.05 * CLHEP::g / CLHEP::cm3);  // distinct Y-11 PS host
-  auto tables = OpticalTables::LoadDir(cfg_.optical_dir);
+  auto tables = OpticalTables::LoadDir(cfg_.optical_dir, cfg_.strict_optical);
   auto* mpt = new G4MaterialPropertiesTable();
   std::vector<double> e = {1.5 * eV, 4.0 * eV};
   std::vector<double> rindex = {1.59, 1.59};
   mpt->AddProperty("RINDEX", e, rindex);
+  EnforceOpticalTables(tables, cfg_, {"y11_absorption", "y11_emission", "y11_bulk_attenuation"});
   // WLS absorption (Y-11 uptake) and emission spectra, plus bulk attenuation.
   FillFromCurve(mpt, "WLSABSLENGTH", tables.Get("y11_absorption"), 1.0, CLHEP::mm);
   FillFromCurve(mpt, "WLSCOMPONENT", tables.Get("y11_emission"), 1.0, 1.0);
@@ -161,12 +186,13 @@ void DetectorConstruction::BuildCoatingSurface(G4VPhysicalVolume* scintPV,
                                                G4VPhysicalVolume* worldPV) {
   // TiO2 diffuse reflective external coating modelled as a border surface on the
   // scintillator/world boundary (blueprint prefers explicit border surfaces).
-  auto tables = OpticalTables::LoadDir(cfg_.optical_dir);
+  auto tables = OpticalTables::LoadDir(cfg_.optical_dir, cfg_.strict_optical);
   auto* surf = new G4OpticalSurface("TiO2_Coating");
   surf->SetType(dielectric_metal);
   surf->SetModel(unified);
   surf->SetFinish(groundfrontpainted);
   surf->SetSigmaAlpha(0.1);
+  EnforceOpticalTables(tables, cfg_, {"tio2_reflectivity"});
   auto* mpt = new G4MaterialPropertiesTable();
   const OpticalCurve& refl = tables.Get("tio2_reflectivity");
   if (!refl.Empty()) {

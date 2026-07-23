@@ -52,6 +52,13 @@ struct AppConfig {
   // --- Optical input tables (versioned CSV, path recorded + hashed) ---
   std::string optical_dir = "optical";
 
+  // --- Optical validation mode (G4-003) ---
+  // false (default, dev): missing/malformed optical tables warn and fall back
+  // to built-in constants (historic fail-open). true (production): missing
+  // required tables or schema/unit/range violations abort the run BEFORE the
+  // event loop. Enabled by --strict-optical or env CCB_STRICT_OPTICAL=1.
+  bool strict_optical = false;
+
   // --- I/O ---
   std::string output = "ccb_stave.root"; // ntuple output (ROOT via g4tools)
   std::string macro  = "";                // optional macro to /control/execute

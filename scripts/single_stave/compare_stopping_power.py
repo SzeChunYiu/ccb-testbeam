@@ -2,14 +2,12 @@
 """Compare simulated proton/deuteron deposited-energy dE/dx with NIST PSTAR.
 
 The calculation is a diagnostic proxy, not an accepted stopping-power closure.
-Simulation CSV ingestion is delegated to the repository's fail-closed canonical
-validator so malformed or ambiguous event rows cannot be silently omitted.
+Simulation and PSTAR CSV ingestion both use repository fail-closed validators.
 """
 from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import math
 import os
 import statistics
@@ -24,6 +22,11 @@ REPO_ROOT = HERE.parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from tools.audit.validate_pstar_component_sum import (  # noqa: E402
+    PstarComponentError,
+    TOOL_VERSION as PSTAR_VALIDATOR_VERSION,
+    read_validated_pstar_table,
+)
 from tools.audit.validate_stopping_power_sim_table import (  # noqa: E402
     QUENCHED_BASIS,
     RAW_BASIS,
@@ -33,94 +36,25 @@ from tools.audit.validate_stopping_power_sim_table import (  # noqa: E402
 )
 
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
-REFERENCE_COLUMNS = (
-    "energy_MeV",
-    "electronic_MeV_cm2_g",
-    "nuclear_MeV_cm2_g",
-    "total_MeV_cm2_g",
-)
+PstarRow = tuple[float, float, float, float]
 
 
 class StoppingPowerInputError(ValueError):
     """Raised when a comparison would use invalid or unsupported inputs."""
 
 
-def sha256_file(path: Path) -> str:
-    """Return a lowercase SHA-256 digest for provenance."""
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def read_reference(path: Path) -> list[tuple[float, float, float, float]]:
-    """Return a strictly validated PSTAR table in declared energy order."""
+def _read_reference_with_summary(
+    path: Path,
+) -> tuple[list[PstarRow], dict[str, object]]:
     try:
-        with path.open() as handle:
-            data_lines = [
-                (line_no, line)
-                for line_no, line in enumerate(handle, start=1)
-                if line.strip() and not line.lstrip().startswith("#")
-            ]
-    except OSError as exc:
-        raise StoppingPowerInputError(
-            f"cannot read reference table {path}: {exc}"
-        ) from exc
-    if not data_lines:
-        raise StoppingPowerInputError(f"reference table has no CSV header: {path}")
+        return read_validated_pstar_table(path)
+    except PstarComponentError as exc:
+        raise StoppingPowerInputError(str(exc)) from exc
 
-    header_line, header_text = data_lines[0]
-    try:
-        header = next(csv.reader([header_text]))
-    except csv.Error as exc:
-        raise StoppingPowerInputError(
-            f"reference table {path} line {header_line} has an invalid CSV header"
-        ) from exc
-    missing = [column for column in REFERENCE_COLUMNS if column not in header]
-    if missing:
-        raise StoppingPowerInputError(
-            f"reference table {path} line {header_line} is missing required "
-            f"column(s): {', '.join(missing)}"
-        )
 
-    rows: list[tuple[float, float, float, float]] = []
-    previous_energy: float | None = None
-    reader = csv.DictReader([line for _, line in data_lines])
-    for (line_no, _), row in zip(data_lines[1:], reader, strict=True):
-        if None in row:
-            raise StoppingPowerInputError(
-                f"reference table {path} line {line_no} has excess fields"
-            )
-        try:
-            values = tuple(float(row[column]) for column in REFERENCE_COLUMNS)
-        except (KeyError, TypeError, ValueError) as exc:
-            raise StoppingPowerInputError(
-                f"reference table {path} line {line_no} has a missing or "
-                "nonnumeric required value"
-            ) from exc
-        energy, electronic, nuclear, total = values
-        if not all(math.isfinite(value) for value in values):
-            raise StoppingPowerInputError(
-                f"reference table {path} line {line_no} contains a nonfinite value"
-            )
-        if energy <= 0 or electronic < 0 or nuclear < 0 or total <= 0:
-            raise StoppingPowerInputError(
-                f"reference table {path} line {line_no} has nonphysical values "
-                f"energy={energy!r}, electronic={electronic!r}, "
-                f"nuclear={nuclear!r}, total={total!r}"
-            )
-        if previous_energy is not None and energy <= previous_energy:
-            raise StoppingPowerInputError(
-                f"reference table {path} line {line_no} energy {energy:g} MeV is not "
-                f"strictly greater than previous energy {previous_energy:g} MeV"
-            )
-        rows.append((energy, electronic, nuclear, total))
-        previous_energy = energy
-    if len(rows) < 2:
-        raise StoppingPowerInputError(
-            f"reference table must contain at least two validated rows: {path}"
-        )
+def read_reference(path: Path) -> list[PstarRow]:
+    """Return canonical rows after structural and component-sum validation."""
+    rows, _ = _read_reference_with_summary(path)
     return rows
 
 
@@ -136,7 +70,7 @@ def reference_lookup_energy(particle: str, energy_mev: float) -> float:
     )
 
 
-def interp_loglog(table: list[tuple[float, float, float, float]], x: float) -> float:
+def interp_loglog(table: list[PstarRow], x: float) -> float:
     """Interpolate total stopping power in log-log space without extrapolation."""
     if not math.isfinite(x) or x <= 0:
         raise StoppingPowerInputError(
@@ -159,12 +93,10 @@ def interp_loglog(table: list[tuple[float, float, float, float]], x: float) -> f
         if e0 <= x <= e1:
             fraction = (math.log(x) - math.log(e0)) / (math.log(e1) - math.log(e0))
             return math.exp(math.log(y0) + fraction * (math.log(y1) - math.log(y0)))
-    raise StoppingPowerInputError(
-        f"failed to bracket reference lookup energy {x:g} MeV"
-    )
+    raise StoppingPowerInputError(f"failed to bracket reference lookup energy {x:g} MeV")
 
 
-def reference_for(particle: str, energy_mev: float, table) -> float:
+def reference_for(particle: str, energy_mev: float, table: list[PstarRow]) -> float:
     """Return the PSTAR-equivalent total stopping power for one species."""
     lookup_energy = reference_lookup_energy(particle, energy_mev)
     try:
@@ -253,7 +185,7 @@ def run_compare(
         raise StoppingPowerInputError(
             f"tolerance must be finite and nonnegative, got {tol_pct!r}%"
         )
-    table = read_reference(ref_path)
+    table, ref_summary = _read_reference_with_summary(ref_path)
     rows, sim_summary = _read_sim_with_summary(sim_path, allow_quenched_proxy)
     basis = str(sim_summary["energy_deposit_basis"])
     aggregated = aggregate(rows, rho, energy_deposit_basis=basis)
@@ -278,6 +210,14 @@ def run_compare(
                 "simulation_input_bytes": sim_summary["input_bytes"],
                 "simulation_rows_validated": sim_summary["rows_validated"],
                 "simulation_validator_version": sim_summary["tool_version"],
+                "reference_input_sha256": ref_summary["input_sha256"],
+                "reference_input_bytes": ref_summary["input_bytes"],
+                "reference_rows_validated": ref_summary["rows_validated"],
+                "reference_validator_version": ref_summary["tool_version"],
+                "reference_component_identity": ref_summary["component_identity"],
+                "reference_component_consistent": ref_summary[
+                    "all_rows_component_consistent"
+                ],
                 "reference_lookup_energy_MeV": lookup_energy,
                 "reference_range_min_MeV": ref_min,
                 "reference_range_max_MeV": ref_max,
@@ -306,6 +246,12 @@ def run_compare(
             "simulation_input_bytes",
             "simulation_rows_validated",
             "simulation_validator_version",
+            "reference_input_sha256",
+            "reference_input_bytes",
+            "reference_rows_validated",
+            "reference_validator_version",
+            "reference_component_identity",
+            "reference_component_consistent",
             "sim_total_MeV_cm2_g",
             "ref_total_MeV_cm2_g",
             "ratio",
@@ -362,6 +308,11 @@ def run_compare(
         f"SIM INPUT VALIDATION: rows={sim_summary['rows_validated']} "
         f"sha256={sim_summary['input_sha256']} validator={SIM_TABLE_VALIDATOR_VERSION}"
     )
+    print(
+        f"PSTAR REFERENCE VALIDATION: rows={ref_summary['rows_validated']} "
+        f"sha256={ref_summary['input_sha256']} validator={PSTAR_VALIDATOR_VERSION} "
+        "component_sum=VALIDATED"
+    )
     if basis == QUENCHED_BASIS:
         print("ENERGY DEPOSIT BASIS: QUENCHED_PROXY")
         print("NUMERICAL TOLERANCE: NOT_ACCEPTED_QUENCHED_PROXY")
@@ -381,10 +332,15 @@ def self_test(ref_path: Path | None = None) -> int:
             file=sys.stderr,
         )
         return 1
-    table = read_reference(reference_path)
+    try:
+        table, ref_summary = _read_reference_with_summary(reference_path)
+    except StoppingPowerInputError as exc:
+        print(f"SELF-TEST: FAIL ({exc})", file=sys.stderr)
+        return 1
     print(
-        f"reference={reference_path.resolve()} sha256={sha256_file(reference_path)} "
-        f"rows={len(table)}"
+        f"reference={reference_path.resolve()} "
+        f"sha256={ref_summary['input_sha256']} rows={len(table)} "
+        f"validator={PSTAR_VALIDATOR_VERSION} component_sum=VALIDATED"
     )
     cases = [
         ("proton", 60.0),

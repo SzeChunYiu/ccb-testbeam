@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-014",
+  "status": "VALIDATED_SOFTWARE_GATE",
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "initial_remote_main": "f147160f2c3be0df59f45c77cf209d2982547d04",
+  "prechange_script_blob": "3c492b172669f2cdca160c52e1acc495a319973e",
+  "commits": {
+    "implementation": "24e83639c0d99e667283a0bc46513cd8a739695e",
+    "new_regression": "9ae8ab04fe671f7c3ae6fc021cf3f082234ea5e8",
+    "range_regression_update": "2ad66f1016652a01a1adc44f3e9761024c9f621e"
+  },
+  "changed_files": {
+    "scripts/single_stave/compare_stopping_power.py": {
+      "bytes": 17865,
+      "sha256": "768d4136bf59ee10c5074298bd7fa8195adb3d680e291802b520c88f97911260",
+      "git_blob": "8b9c0c530b6414c774601286a0d67f13500aa532"
+    },
+    "tests/test_compare_stopping_power_deuteron_proxy.py": {
+      "bytes": 5103,
+      "sha256": "135bf0b620a6bf5721329b29cf1fbd6e26e64e0b3200e0d5c2502b707a684b01",
+      "git_blob": "6febfc382a10d11194be1a57f99f41cf85bdcd48"
+    },
+    "tests/test_compare_stopping_power_energy_range.py": {
+      "bytes": 3859,
+      "sha256": "479976f772e51c376ce6c3b12b42b9a8066ba2ce34156ebf9b8b6298948067e9",
+      "git_blob": "026b6a12a4ea27e499f2fc2baf3e98020d65a58a"
+    }
+  },
+  "synthetic_case": {
+    "particle": "deuteron",
+    "energy_MeV": 2.0,
+    "reference_lookup_energy_MeV": 1.0,
+    "sim_total_MeV_cm2_g": 10.0,
+    "ref_total_MeV_cm2_g": 10.0,
+    "ratio": 1.0,
+    "numeric_within_tolerance": true,
+    "prechange_within_tolerance": true,
+    "postchange_reference_basis": "VELOCITY_SCALED_PROTON_PROXY",
+    "postchange_physics_comparable": false,
+    "postchange_within_tolerance": false
+  },
+  "validation": {
+    "py_compile": "PASS",
+    "focused_pytest": "9 passed in 5.78s",
+    "max_changed_python_line_length": 91,
+    "ruff": "NOT_RUN_UNAVAILABLE",
+    "full_repository_pytest": "NOT_RUN",
+    "github_actions": "NOT_RUN"
+  },
+  "sources": [
+    {
+      "identifier": "NIST PSTAR",
+      "url": "https://physics.nist.gov/PhysRefData/Star/Text/PSTAR.html",
+      "supports": "PSTAR provides proton stopping-power and range tables."
+    },
+    {
+      "identifier": "doi:10.1103/PhysRev.98.1112",
+      "supports": "Equal-velocity proton/deuteron stopping comparisons are empirical and material-specific."
+    }
+  ],
+  "limitations": [
+    "No real Geant4 event table was processed.",
+    "No deuteron-specific stopping-power reference for polystyrene was validated.",
+    "Local deposited energy remains a diagnostic proxy for projectile total energy loss.",
+    "No detector-performance or calibration result is claimed."
+  ]
+}

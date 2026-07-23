@@ -18,6 +18,7 @@ MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
 REFERENCE = "tests/fixtures/producer_contract.md"
+REFERENCE_SHA256 = "b" * 64
 
 
 def write_table(path: Path, amplitude: list[float], baseline: list[float]) -> str:
@@ -30,6 +31,7 @@ def record(convention: str, basis: str) -> dict[str, str]:
         "convention": convention,
         "evidence_basis": basis,
         "evidence_reference": REFERENCE,
+        "evidence_reference_sha256": REFERENCE_SHA256,
     }
 
 
@@ -53,6 +55,7 @@ def test_hash_bound_evidence_accepts_exact_table(tmp_path: Path) -> None:
     assert result["physics_subtract_baseline_correct"] is False
     assert result["physics_convention_evidence"] == "PRODUCER_CODE_PROVENANCE"
     assert result["physics_evidence_reference"] == REFERENCE
+    assert result["evidence_record"]["evidence_reference_sha256"] == REFERENCE_SHA256
 
 
 def test_evidence_does_not_transfer_after_file_change(tmp_path: Path) -> None:
@@ -89,6 +92,7 @@ def test_invalid_evidence_basis_is_rejected(tmp_path: Path) -> None:
         "convention": "NET",
         "evidence_basis": "RAW_MEDIAN",
         "evidence_reference": REFERENCE,
+        "evidence_reference_sha256": REFERENCE_SHA256,
     }}), encoding="utf-8")
     with pytest.raises(ValueError, match="invalid evidence_basis"):
         MODULE.load_evidence_map(evidence_path)

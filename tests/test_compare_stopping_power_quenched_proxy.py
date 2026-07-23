@@ -8,7 +8,6 @@ from pathlib import Path
 
 import pytest
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "scripts" / "single_stave" / "compare_stopping_power.py"
 REFERENCE_HEADER = (
@@ -64,9 +63,7 @@ def test_quenched_only_input_is_rejected_by_default(tmp_path):
         ["particle", "ke_MeV", "edep_scint_MeV", "track_len_scint_mm"],
         [["proton", 1.0, 1.0, 1.0]],
     )
-
     process = run_cli(simulation, reference)
-
     assert process.returncode == 2
     assert "provides only quenched energy deposit" in process.stderr
     assert "NUMERICAL TOLERANCE: PASS" not in process.stdout
@@ -83,7 +80,6 @@ def test_explicit_quenched_proxy_is_labelled_and_nonaccepting(tmp_path):
         ["particle", "ke_MeV", "edep_scint_MeV", "track_len_scint_mm"],
         [["proton", 1.0, 1.0, 1.0]],
     )
-
     results, ok = module.run_compare(
         simulation,
         reference,
@@ -92,18 +88,17 @@ def test_explicit_quenched_proxy_is_labelled_and_nonaccepting(tmp_path):
         1e-9,
         allow_quenched_proxy=True,
     )
-
     assert ok is False
     assert results[0]["energy_deposit_basis"] == "QUENCHED_PROXY"
     assert results[0]["raw_pstar_comparable"] is False
     assert results[0]["numeric_within_tolerance"] is True
+    assert results[0]["uncertainty_evaluated"] is False
     assert results[0]["within_tolerance"] is False
     row = next(csv.DictReader(output.open()))
     assert row["energy_deposit_basis"] == "QUENCHED_PROXY"
     assert row["raw_pstar_comparable"] == "False"
     assert row["numeric_within_tolerance"] == "True"
     assert row["within_tolerance"] == "False"
-
     process = run_cli(
         simulation,
         reference,
@@ -136,7 +131,6 @@ def test_mixed_raw_and_quenched_rows_are_rejected_even_when_opted_in(tmp_path):
             ["proton", 1.0, "", 1.0, 1.0],
         ],
     )
-
     with pytest.raises(module.StoppingPowerInputError, match="mixes unquenched and quenched"):
         module.run_compare(
             simulation,
@@ -148,7 +142,7 @@ def test_mixed_raw_and_quenched_rows_are_rejected_even_when_opted_in(tmp_path):
         )
 
 
-def test_raw_input_remains_numerically_acceptable(tmp_path):
+def test_raw_input_is_point_estimate_only_and_nonaccepting(tmp_path):
     module = load_module()
     reference = tmp_path / "reference.csv"
     simulation = tmp_path / "sim.csv"
@@ -158,11 +152,11 @@ def test_raw_input_remains_numerically_acceptable(tmp_path):
         ["particle", "ke_MeV", "edep_scint_raw_MeV", "track_len_scint_mm"],
         [["proton", 1.0, 1.0, 1.0]],
     )
-
     results, ok = module.run_compare(simulation, reference, 1.0, None, 1e-9)
-
-    assert ok is True
+    assert ok is False
     assert results[0]["energy_deposit_basis"] == "UNQUENCHED_RAW"
     assert results[0]["raw_pstar_comparable"] is True
     assert results[0]["numeric_within_tolerance"] is True
-    assert results[0]["within_tolerance"] is True
+    assert results[0]["uncertainty_evaluated"] is False
+    assert results[0]["acceptance_status"] == "NOT_ACCEPTED_NO_UNCERTAINTY"
+    assert results[0]["within_tolerance"] is False

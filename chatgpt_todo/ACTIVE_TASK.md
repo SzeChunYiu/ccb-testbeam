@@ -1,15 +1,16 @@
 # Active Task
 
-- **Task ID:** AUD-G4-009
+- **Task ID:** AUD-G4-010
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T15:02:28Z
-- **Initial observed main SHA:** `e6dd97da2d50cc81e9f49f8dab7cb2c8395fa6eb`
-- **Latest main before writes:** `abb8a34ec47b6d62fae2ec07b837b71d2077bece`
-- **Implementation/evidence head:** `28345eb2417fdbd87d595984a82a513cfa26af2e`
-- **Scope:** audit simulation-event CSV ingestion used before the PSTAR deposited-energy diagnostic; prevent malformed rows, ambiguous aliases, unsupported particles, and mixed raw/quenched semantics from being silently omitted or misinterpreted.
-- **Confirmed defect:** current `compare_stopping_power.py` silently continues past rows with missing particle, energy, deposit, or nonpositive/missing track length and chooses the first populated alias. A synthetic three-row table with a missing middle-row energy returned two usable rows with no failure.
-- **Validated change:** added `validate_stopping_power_sim_table.py` v1.0.0, 17 focused tests, Markdown/JSON evidence, and a deterministic synthetic SVG. The preflight validates every noncomment row, exact alias occupancy, finite physical values, consistent deposit semantics, and input byte/SHA-256 provenance.
-- **Commands:** `python -m py_compile tools/audit/validate_stopping_power_sim_table.py tests/test_validate_stopping_power_sim_table.py`; `python -m pytest tests/test_validate_stopping_power_sim_table.py -q`; JSON/XML parsing and changed-file line-length scan.
-- **Validation:** `17 passed in 1.31s`; JSON/SVG parse passed; changed Python lines are at most 100 characters; local tool/test SHA-256 values are recorded in the session archive.
-- **Boundary:** this is a standalone preflight. The legacy comparison CLI does not invoke it automatically, and no real event CSV, Geant4 run, PSTAR closure, calibration, or detector-performance claim was validated.
-- **Status:** PARTIAL — validator, tests, provenance output, and visual evidence are validated on `main`; remaining acceptance requires canonical CLI integration plus validation on real exported event tables.
+- **Session stamp:** 2026-07-23T16:06:03Z
+- **Initial remote main SHA:** `b7a3a4d73537ee036c506658f5331a6ac4f5e999`
+- **Validated implementation head:** `1237fbcdfd530ea637cde27acc39c5c94b25600b`
+- **Latest coordination head before this record:** `095fb4e6b82cfb9be45009cfda51664c19d91858`
+- **Scope:** integrate the strict stopping-power simulation-table parser into `scripts/single_stave/compare_stopping_power.py` so the canonical CLI cannot silently omit malformed rows or select ambiguous aliases.
+- **Confirmed defect:** the canonical comparison still used a duplicated permissive reader even after `AUD-G4-009` added a strict standalone validator. A synthetic three-row table with a missing middle-row energy returned two rows without failure.
+- **Validated change:** shared validator v1.1.0 now returns normalized rows plus provenance; the canonical CLI delegates to it, propagates input SHA-256/bytes/validated-row count/version to output, and returns status 2 before numerical PASS on malformed or ambiguous input.
+- **Commands:** `python -m py_compile` over the comparison, validator, three existing stopping-power suites, standalone-validator tests, and integration tests; `python -m pytest` over the same five focused test modules; JSON/XML parsing and changed-file line-length scan.
+- **Validation:** `35 passed in 4.34s`; compile passed; validation JSON and SVG parsed; maximum changed Python line lengths are 91, 91, and 99 characters; ruff was unavailable.
+- **Evidence:** `docs/validation/stopping_power_sim_input_integration_audit.md`, `stopping_power_sim_input_integration_validation.json`, and `stopping_power_sim_input_integration.svg`.
+- **Boundary:** no exact real Geant4 event table, ROOT output, simulation run, accepted PSTAR closure, calibration, or detector-performance result was produced. Local deposited energy remains a diagnostic proxy and deuteron velocity scaling remains approximate.
+- **Status:** COMPLETE for the focused parser-integration unit; PARTIAL scientific stopping-power program remains under `AUD-G4-005`, `AUD-G4-011`, and `BLK-G4-SP-001`.

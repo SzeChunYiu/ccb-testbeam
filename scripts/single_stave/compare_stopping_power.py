@@ -39,6 +39,7 @@ DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polys
 PstarRow = tuple[float, float, float, float]
 ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
 MASS_STOPPING_ESTIMATOR = "RATIO_OF_SUMS_TRACK_LENGTH_WEIGHTED"
+SUMMATION_METHOD = "MATH_FSUM_PER_GROUP"
 DIRECT_PROTON_REFERENCE = "DIRECT_PSTAR_PROTON"
 DEUTERON_REFERENCE_PROXY = "VELOCITY_SCALED_PROTON_PROXY"
 UNCERTAINTY_METHOD = "NOT_EVALUATED"
@@ -160,22 +161,22 @@ def aggregate(
     rho: float,
     energy_deposit_basis: str = RAW_BASIS,
 ) -> list[dict[str, object]]:
-    """Group rows by canonical particle and exact configured energy."""
+    """Group rows by particle/energy with compensated, order-stable sums."""
     if not math.isfinite(rho) or rho <= 0:
         raise StoppingPowerInputError(
             f"material density must be finite and positive, got {rho!r} g/cm^3"
         )
-    accumulator: dict[tuple[str, float], list[float]] = {}
-    event_counts: dict[tuple[str, float], int] = {}
+    accumulator: dict[tuple[str, float], tuple[list[float], list[float]]] = {}
     for particle, energy, deposit, track_mm in sim_rows:
         key = (particle, energy)
-        totals = accumulator.setdefault(key, [0.0, 0.0])
-        totals[0] += deposit
-        totals[1] += track_mm
-        event_counts[key] = event_counts.get(key, 0) + 1
+        deposits, tracks = accumulator.setdefault(key, ([], []))
+        deposits.append(deposit)
+        tracks.append(track_mm)
 
     output: list[dict[str, object]] = []
-    for (particle, energy), (deposit_sum, track_sum) in accumulator.items():
+    for (particle, energy), (deposits, tracks) in accumulator.items():
+        deposit_sum = math.fsum(deposits)
+        track_sum = math.fsum(tracks)
         if track_sum <= 0:
             raise StoppingPowerInputError(
                 f"nonpositive aggregated track length for {particle} at {energy:g} MeV"
@@ -186,13 +187,14 @@ def aggregate(
                 "particle": particle,
                 "energy_MeV": energy,
                 "energy_grouping": ENERGY_GROUPING,
-                "n_events": event_counts[(particle, energy)],
+                "n_events": len(deposits),
                 "energy_deposit_basis": energy_deposit_basis,
                 "raw_pstar_comparable": energy_deposit_basis == RAW_BASIS,
                 "deposit_sum_MeV": deposit_sum,
                 "track_length_sum_mm": track_sum,
                 "material_density_g_cm3": rho,
                 "mass_stopping_estimator": MASS_STOPPING_ESTIMATOR,
+                "summation_method": SUMMATION_METHOD,
                 "sim_total_MeV_cm2_g": mass_stopping,
             }
         )
@@ -304,6 +306,7 @@ def run_compare(
             "track_length_sum_mm",
             "material_density_g_cm3",
             "mass_stopping_estimator",
+            "summation_method",
             "simulation_input_sha256",
             "simulation_input_bytes",
             "simulation_rows_validated",
@@ -371,6 +374,7 @@ def run_compare(
     )
     print(f"ENERGY GROUPING: {ENERGY_GROUPING}")
     print(f"MASS STOPPING ESTIMATOR: {MASS_STOPPING_ESTIMATOR}")
+    print(f"SUMMATION METHOD: {SUMMATION_METHOD}")
     print(f"REPORT FLOAT SERIALIZATION: {REPORT_FLOAT_SERIALIZATION}")
     print(
         f"PSTAR REFERENCE VALIDATION: rows={ref_summary['rows_validated']} "

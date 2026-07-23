@@ -432,6 +432,13 @@ class PipelineOrchestrator:
     def fixture(self, workers: int = 1, shards: int = 1) -> str:
         return self.smoke(studies="MV0,MV1,MV2,MV3,MV9", fixture=True, workers=workers, shards=shards)
 
+    @staticmethod
+    def _aggregate_smoke_status(results: dict[str, Any]) -> str:
+        """FAIL-closed gate: PASS only if every study result is PASS (and at least one ran)."""
+        if not results:
+            return "FAIL"
+        return "PASS" if all(r.get("status") == "PASS" for r in results.values()) else "FAIL"
+
     def smoke(self, studies: str = "all", fixture: bool = True, workers: int = 1, shards: int = 1) -> str:
         run_path = self._ensure_run()
         seed = int(self.config.seeds.get("global", 424242))
@@ -461,9 +468,10 @@ class PipelineOrchestrator:
             except Exception as exc:  # keep smoke gate honest but non-fatal for missing registry
                 synth_out.write_text(f"# MV9 synthesis\n\nBLOCKED: {exc}\n", encoding="utf-8")
             results["MV9"] = {"status": STATUS_SMOKE, "artifact": str(synth_out)}
-        gate = {"run_id": self.run_id, "status": "PASS", "mode": STATUS_FIXTURE if fixture else STATUS_SMOKE, "studies": results, "workers": workers, "shards": shards, "not_for_physics": True}
+        gate_status = self._aggregate_smoke_status(results)
+        gate = {"run_id": self.run_id, "status": gate_status, "mode": STATUS_FIXTURE if fixture else STATUS_SMOKE, "studies": results, "workers": workers, "shards": shards, "not_for_physics": True}
         atomic_write_json(run_path / "SMOKE_GATE.json", gate)
-        (run_path / "SMOKE_GATE.md").write_text(f"# Smoke gate\n\nStatus: **PASS** ({gate['mode']}; not for physics)\n\nRun ID: `{self.run_id}`\n", encoding="utf-8")
+        (run_path / "SMOKE_GATE.md").write_text(f"# Smoke gate\n\nStatus: **{gate_status}** ({gate['mode']}; not for physics)\n\nRun ID: `{self.run_id}`\n", encoding="utf-8")
         self._event("smoke", "PASS", {"studies": list(results)})
         return str(self.run_id)
 
@@ -666,7 +674,18 @@ class PipelineOrchestrator:
 
     def plot(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        if (path / "VALIDATION.json").is_file():
+        val_path = path / "VALIDATION.json"
+        if val_path.is_file():
+            # Fail-closed (VAL-003): plots require a PASSING validation, not just a file.
+            try:
+                _val = json.loads(val_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                _val = {}
+            if _val.get("status") != "PASS":
+                result = {"status": STATUS_BLOCKED, "reason": f"plotting gated on VALIDATION.status==PASS (got {_val.get('status')!r})"}
+                atomic_write_json(path / "figures" / "PLOT_BLOCKED.json", result)
+                self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
+                return result
             artifacts = generate_run_summary(path)
             figure_manifest = generate_summary_figure_manifest(path)
             visual_review = generate_summary_visual_review(path)

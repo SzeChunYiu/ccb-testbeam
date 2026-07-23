@@ -69,7 +69,7 @@ class ManifestRecord:
     git_branch: str
     python_version: str
     inputs: tuple[tuple[str, str], ...]
-    outputs: tuple[str, ...]
+    outputs: tuple[dict[str, Any], ...]
 
     def as_dict(self) -> dict[str, Any]:
         return {

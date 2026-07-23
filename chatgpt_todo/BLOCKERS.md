@@ -51,21 +51,20 @@
 ## BLK-G4-SP-001 — accepted stopping-power closure unavailable
 
 - **State:** OPEN
-- **Resolved engineering defects:** reference path and self-test provenance (`AUD-G4-004`), reference-domain rejection (`AUD-G4-006`), strict reference parsing (`AUD-G4-007`), quenched-proxy rejection (`AUD-G4-008`), reusable strict event-table parsing (`AUD-G4-009`), and canonical CLI integration (`AUD-G4-010`) are validated. The integrated CLI now validates every simulation row through one shared parser, rejects malformed/ambiguous input before aggregation, and records exact table SHA-256, bytes, validated-row count, basis, and validator version.
-- **Resolved integration defect:** the legacy silent-skip reader is no longer used by `compare_stopping_power.py`. Combined focused regression returned `35 passed`; malformed CLI input exits 2 without numerical PASS. No separate preflight command is required for parser safety, although standalone JSON validation remains useful for provenance.
+- **Resolved engineering defects:** reference path and self-test provenance (`AUD-G4-004`), reference-domain rejection (`AUD-G4-006`), strict reference parsing (`AUD-G4-007`), quenched-proxy rejection (`AUD-G4-008`), reusable strict event-table parsing (`AUD-G4-009`), canonical simulation-parser integration (`AUD-G4-010`), and canonical PSTAR component-identity enforcement (`AUD-G4-012`) are validated. Both simulation and reference inputs now use shared fail-closed parsers and carry exact provenance.
 - **Remaining data-provenance blocker:** no exact real exported Geant4 event table was available in this run. Before interpreting any ratio, run the integrated CLI on immutable exports and retain path, byte size, SHA-256, row count, particle/energy coverage, basis, code commit, command, environment, output hash, and any rejection.
 - **Why scientific acceptance remains blocked:** NIST stopping power is projectile energy loss per path length. Geant4 local energy deposit can exclude energy carried away by generated secondaries, and the particle energy evolves along the track. The deuteron `S_d(E) ≈ S_p(E/2)` reference is an approximation rather than a direct PSTAR datum.
-- **Validated boundary:** current output remains explicitly `DIAGNOSTIC_ONLY`; synthetic tests establish arithmetic, reference wiring/integrity/domain handling, deposit convention gating, and canonical simulation-input integrity only.
+- **Validated boundary:** current output remains explicitly `DIAGNOSTIC_ONLY`; synthetic tests establish arithmetic, reference wiring/integrity/domain/component handling, deposit convention gating, and canonical simulation-input integrity only.
 - **Resolution:** validate exact real exports, then run a clean provenance-retained proton closure using `G4EmCalculator::ComputeTotalDEDX` or primary entry/exit kinetic energy plus path-length/reference integration; quantify escaping secondary energy and production-cut dependence; preserve exact material, density, physics list, cuts, versions, commands, seeds, event counts, hashes, uncertainty, and overlay/ratio/diagnostic plots. Treat deuterons separately with a documented approximation or authoritative reference.
 - **Do not claim until resolved:** that local deposited-energy agreement within a numerical tolerance validates Geant4 total stopping power or deuteron stopping power.
 
 ## BLK-G4-SP-002 — canonical PSTAR component-sum gate unavailable
 
-- **State:** OPEN
-- **Resolved evidence:** `tools/audit/validate_pstar_component_sum.py` v1.0.0 validates the exact decimal identity `total = electronic + nuclear` using half-unit-in-last-written-place intervals. Byte-identical committed blob `7e953dd...` has 141/141 consistent rows; exact bytes/SHA-256 and interval margins are recorded; focused regression returned `8 passed`.
-- **Remaining integration blocker:** the validator is standalone. `compare_stopping_power.py` still parses the reference independently and can compare against a modified table whose total column is finite, positive, and ordered but inconsistent with its component columns.
-- **Resolution:** expose one canonical validated PSTAR parser or invoke the component-sum validator from the comparison path; add a direct-CLI regression that mutates one total field and requires status 2 with no numerical PASS; rerun all stopping-power reference and simulation-input suites together.
-- **Do not claim until resolved:** that arbitrary reference input passed to the canonical comparison has been checked for the NIST total-component identity.
+- **State:** RESOLVED
+- **Original defect:** the standalone exact-decimal validator checked `total = electronic + nuclear`, but `compare_stopping_power.py` parsed references independently and could accept a modified finite, positive, ordered total.
+- **Resolution:** `validate_pstar_component_sum.py` v1.1.0 exposes `read_validated_pstar_table()`, and the canonical comparison imports it directly. No second PSTAR reference parser remains in the comparison path.
+- **Validation:** a direct CLI reference containing `1,9,1,8` returns status 2, writes no result CSV, and prints no numerical PASS; valid output records reference SHA-256, bytes, validated rows, validator version, identity, and consistency. Combined focused regression returned `42 passed in 4.22s`; integration Markdown/JSON/SVG evidence is on `main`.
+- **Remaining independent question:** external NIST transcription/material provenance has not been independently re-queried in this session. That limitation does not reopen the canonical software integration gate.
 
 ## BLK-I885-001 — accepted issue #885 calibration unavailable
 

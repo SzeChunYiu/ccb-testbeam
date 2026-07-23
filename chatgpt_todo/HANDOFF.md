@@ -2,81 +2,137 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T09:27:46Z
-- **Task:** AUD-G4-003 (repository hygiene COMPLETE; PR #888 scientific source review PARTIAL)
-- **Initial remote main:** `3ecefa27002e370f57001399d27a88244e0aa523`
-- **Concurrent main incorporated:** `aea19386b7d2f25e5a0b5d64bb585f3fe0f1a2ef` (PR #889)
-- **Validated cleanup on remote main:** `c7cdd653c5fef08b1e70cb33db9c574f7e7e0de9`
-- **Commit message:** `fix(repo): remove tracked Geant4 build artifacts`
+- **UTC:** 2026-07-23T10:04:54Z
+- **Task:** `AUD-G4-004`
+- **Initial remote main:** `5a4bdfc3f0099f2b6e8c3891b5a2a05f57ecf770`
+- **Validated implementation/evidence head:** `e4e7f8b8e61cdbd0e45304a4fdf80d917139e522`
+- **Append-only session-log head before this handoff:** `ea0349094a9f0bec503b471e65f30eb8b55c2405`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Canonical destination:** `main`
+- **Acceptance:** COMPLETE for reference-path/self-test provenance; PARTIAL for accepted stopping-power physics closure.
 
 ## Start-of-run review
 
-- Confirmed admin/push access and `main` as the default branch.
-- Attempted a direct clone; DNS resolution of `github.com` failed, so authenticated GitHub connector reads/writes were used.
-- Read the current handoff, active task, backlog, master index, blocker register, code-result map, study ledger, session-log tail, current history, PR #868 status, and merged PR #888 metadata/files/CI.
-- PR #868 remains closed and unmerged; it was not modified.
-- A concurrent PR #889 merged after the run began. The cleanup was rebuilt on its exact main commit before pushing, preserving all concurrent source changes.
+- Fetched current `main`, recent commits, PR #890 and its merge commit, combined status, the PSTAR comparison script/reference, `RunAction.cc`, and all mandatory `chatgpt_todo/` records.
+- Detected recent PR #890/#891 and PR #882 integration before selecting non-duplicative work.
+- Direct clone/raw download remained unavailable because the runtime could not resolve GitHub hosts. Authenticated GitHub connector reads and direct-to-main writes were used; no force-push or history rewrite occurred.
+- No combined status checks were attached to the initial or delivered heads, so no GitHub Actions result is claimed for this session.
 
-## Independent PR #888 finding
+## Confirmed defects
 
-PR #888 changed 71 files. Exactly 66 were added below `geant4/single_stave/build/`, including:
+### Repository path
 
-- `CMakeCache.txt` and generated CMake/Make files;
-- compiler-identification executables and ABI probes;
-- `.o`, `.o.d`, dependency, and linker-command files;
-- the linked `ccb_stave_sim` executable;
-- copied `macros/` and `optical/` runtime assets;
-- a generated `proton_smoke.root.meta.json` sidecar.
+For a script at `<repo>/scripts/single_stave/compare_stopping_power.py`:
 
-The cache embedded absolute LUNARC worktree, compiler, Python, Geant4, Qt, and library paths. `geant4/single_stave/CMakeLists.txt` explicitly copies source `macros/` and `optical/` directories into the binary directory, confirming those copies are generated build products rather than canonical source. The source and build copies of `proton_point.mac` had the same Git blob SHA before cleanup.
+```text
+HERE.parents[0] = <repo>/scripts
+HERE.parents[1] = <repo>
+HERE.parents[2] = <parent-of-repo>
+```
 
-PR #888 workflow run `29994419166` completed successfully, but its only job installed Python and ran unit tests. It did not independently establish a clean Geant4 build or runtime physics validation.
+The previous default used `HERE.parents[2]`, so it looked for the PSTAR CSV outside the repository instead of reading `data/reference/stopping_power/pstar_polystyrene.csv`.
+
+### Masked self-test
+
+When that incorrect path was absent, `self_test()` silently generated a tiny inline reference and returned success. A synthetic checkout reproduced:
+
+```text
+DEFAULT_REF /tmp/data/reference/stopping_power/pstar_polystyrene.csv
+default exists False
+self_test 0
+```
+
+Thus the old pass did not establish that the committed reference existed, was readable, or was exercised.
 
 ## Validated change
 
-Remote-main commit `c7cdd653c5fef08b1e70cb33db9c574f7e7e0de9`:
+`scripts/single_stave/compare_stopping_power.py` now:
 
-- removed the complete tracked `geant4/single_stave/build/` tree;
-- added `geant4/**/build/` to `.gitignore`;
-- added `tests/test_no_tracked_geant4_build_artifacts.py`, which inspects the Git index with `:(glob)geant4/**/build/**` and fails if any generated build path is tracked.
+- defines `REPO_ROOT = HERE.parents[1]`;
+- resolves the default reference below the repository root;
+- fails closed when the selected reference is missing;
+- removes the inline reference fallback;
+- prints resolved path, SHA-256, and parsed row count;
+- cleans synthetic files with `TemporaryDirectory`;
+- labels the numerical comparison `SCIENTIFIC STATUS: DIAGNOSTIC_ONLY`;
+- documents local unquenched deposited energy as a proxy rather than automatic projectile total-energy loss.
 
-No PR #888 or PR #889 scientific source file was reverted.
+Added:
+
+- `tests/test_compare_stopping_power_reference_path.py`;
+- `docs/validation/stopping_power_reference_path_audit.md`;
+- `docs/validation/stopping_power_reference_path_validation.json`;
+- `docs/validation/stopping_power_reference_path.svg`.
+
+Exact remote blobs:
+
+- script: `d9282a5c26b8bc86427356f51dfe7e5ecba769d8`;
+- regression test: `ab6265ef398ac0ad7cf3110d173c85cbd6d8f987`;
+- reference table inspected before change: `7e953dd346caedcee6da54180fb636b890a64040`.
 
 ## Validation
 
-Executed locally in a synthetic Git checkout:
+Executed on a local exact reconstruction of the committed script/test:
 
 ```text
-python -m py_compile tests/test_no_tracked_geant4_build_artifacts.py
-python -m pytest tests/test_no_tracked_geant4_build_artifacts.py -q
+python -m py_compile \
+  scripts/single_stave/compare_stopping_power.py \
+  tests/test_compare_stopping_power_reference_path.py
+
+python -m pytest tests/test_compare_stopping_power_reference_path.py -q
 ```
 
-The regression first failed as designed with a tracked `geant4/demo/build/CMakeCache.txt`. After removing that path and adding the ignore rule, it returned:
+Result:
 
 ```text
-1 passed in 0.03s
+3 passed in 0.55s
 ```
 
-`git check-ignore -v geant4/demo/build/CMakeCache.txt` matched `geant4/**/build/`.
+The changed Python files had no line longer than 100 characters. The remote script/test Git blobs matched the validated local blobs.
 
-Before advancing `main`, the candidate commit was inspected by SHA:
+The local reconstruction used a minimal reference fixture containing the five PSTAR rows exercised by the self-test. The complete committed table was confirmed through the connector but was not executed locally because a complete checkout/raw-file download was unavailable. Full repository pytest, ruff, Geant4, CTest, ROOT, Slurm, and GitHub Actions were not run.
 
-- `.gitignore` contained the new rule;
-- the new regression file matched the validated local copy;
-- `geant4/single_stave/build/CMakeCache.txt` returned 404;
-- `geant4/single_stave/src/SteppingAction.cc` remained present with the merged PR #888 source change.
+## Scientific interpretation
 
-GitHub `update_ref` returned `success=true`. A subsequent remote history query confirmed `c7cdd653c5fef08b1e70cb33db9c574f7e7e0de9` at the head of `main` before coordination writes.
+NIST defines stopping power as projectile energy loss per path length. Geant4 local energy deposit is not necessarily the projectile's full energy loss when generated secondaries carry energy out of the scored volume. The current event ntuple records configured incident kinetic energy, not primary energy sampled continuously along the scored track.
 
-## Scientific boundary
+Therefore:
 
-- No Geant4 executable was run in this session.
-- No CTest, ROOT analysis, detector simulation, plot, table, calibration, or numerical detector-performance result was generated or changed.
-- Removing environment-specific build products neither validates nor invalidates the source-level claims in PR #888 or PR #889.
-- The four PR #888 fixes and four PR #889 fixes remain PARTIAL until reviewed against primary Geant4/software documentation and exercised in a clean build with retained logs and immutable outputs.
-- Historical A-002 outputs remain quarantined under `BLK-AMP-001`.
+- `sum(edep_scint_raw_MeV) / sum(track_len_scint_mm)` is a useful deposited-energy diagnostic;
+- passing a numerical tolerance against PSTAR is not yet an accepted stopping-power closure;
+- the deuteron `S_d(E) ≈ S_p(E/2)` relation is an approximation and must be separated from the direct proton PSTAR comparison.
+
+`AUD-G4-005` and `BLK-G4-SP-001` now require one or more controlled methods:
+
+1. `G4EmCalculator::ComputeTotalDEDX` for the exact particle, material, energy, production cuts, and physics list;
+2. primary entry/exit kinetic energy with measured path length and a reference integral over the actual energy interval;
+3. containment and explicit accounting of energy carried by generated secondaries.
+
+Required accepted evidence includes exact versions, commands, cuts, physics list, seeds, event counts, input/output hashes, uncertainty, proton overlay/ratio, energy/path scan, secondary-escape diagnostics, and separately labelled deuteron approximation.
+
+## Direct-to-main commits
+
+Implementation and validation evidence:
+
+- `05d9d1e41dbe18db4786e6be73e41ddef55809e9` — `fix(single-stave): exercise committed PSTAR reference`
+- `31a36feae3819df391e46915a473085ca082f948` — `style(single-stave): keep PSTAR diagnostic within lint limit`
+- `434e1ad1acf688f89d233a4686fdd86428d277ce` — `test(single-stave): cover PSTAR reference path and self-test`
+- `be06f890f4b7361f7446f74c498524a6259b6488` — `docs(validation): record PSTAR reference-path audit`
+- `afd900025020722592cca8064f1dc45ab814b05e` — `docs(validation): add PSTAR path validation record`
+- `e4e7f8b8e61cdbd0e45304a4fdf80d917139e522` — `docs(validation): visualize PSTAR reference resolution`
+
+Coordination/provenance:
+
+- `9b3fabf86de28912ed172a5cf14737df0aa35070` — active task
+- `2e3bbb77e66f78f973792658c3efa14992577724` — backlog
+- `85dcc38b297b8c5ce84a8dc1b0252ff66403647c` — master index
+- `746f314ced43eb5e0001b3fec2104a5239e7eb9d` — code-result map
+- `8a9ce1f68880f560d33ebdef13138fc4c74171a5` — study ledger
+- `9d09e0e0832f6a8e3f8170952c3847e475748170` — claim matrix
+- `1c825d66d207e72d4881a930ecdb442db866b755` — visualization matrix
+- `89009b14e0995c55e783440f037fd440044441bc` — blocker register
+- `6d1d982e0eb6764cc3cc036aa1df76b8f3fe35c7` — immutable archive
+- `ea0349094a9f0bec503b471e65f30eb8b55c2405` — append-only session log
 
 ## Repository-local records
 
@@ -86,27 +142,19 @@ Updated:
 - `chatgpt_todo/BACKLOG.md`
 - `chatgpt_todo/MASTER_INDEX.md`
 - `chatgpt_todo/CODE_RESULT_MAP.md`
-- `chatgpt_todo/BLOCKERS.md`
 - `chatgpt_todo/STUDY_REVIEW_LEDGER.md`
+- `chatgpt_todo/CLAIM_EVIDENCE_MATRIX.md`
+- `chatgpt_todo/VISUALIZATION_MATRIX.md`
+- `chatgpt_todo/BLOCKERS.md`
+- `chatgpt_todo/SESSION_LOG.md`
 - `chatgpt_todo/HANDOFF.md`
 
-Added immutable record:
+Added:
 
-- `chatgpt_todo/archive/2026-07-23T092746Z_AUD-G4-003_BUILD_ARTIFACT_CLEANUP.md`
+- `chatgpt_todo/archive/2026-07-23T100454Z_AUD-G4-004_PSTAR_REFERENCE_PATH.md`
 
-`chatgpt_todo/SESSION_LOG.md` was read and a complete append was prepared locally, but it was not replaced through the contents connector because that action requires resending the entire long file and the connector has no append operation. The immutable archive contains the complete session record; a checkout-capable follow-up must append the same record to `SESSION_LOG.md` without rewriting earlier history.
+## Boundary and next action
 
-## Acceptance status
+No Geant4 executable, ROOT file, Slurm job, simulation output, accepted stopping-power result, calibration, or detector-performance number was generated. No scientific result from PR #890 is promoted by this session.
 
-- Removal of 66 tracked generated build files: COMPLETE.
-- Future Geant4 build-tree ignore rule: COMPLETE.
-- Git-index recurrence regression: COMPLETE and synthetically validated.
-- Validated cleanup on remote `main`: CONFIRMED at `c7cdd653c5fef08b1e70cb33db9c574f7e7e0de9`.
-- Repository-local handoff and immutable archive: COMPLETE.
-- Append-only `SESSION_LOG.md` update: BLOCKED by connector append limitation; no earlier history was overwritten.
-- Independent scientific review of PR #888/#889 source changes: PARTIAL.
-- PR #868: closed and unmerged.
-
-## Next action
-
-Append the immutable AUD-G4-003 record to `chatgpt_todo/SESSION_LOG.md` in a working checkout, then review one PR #888/#889 source-level claim at a time. Start with Birks visible-energy semantics in `SteppingAction.cc`: verify the Geant4 API contract and material/Birks configuration, add a focused regression or clean-build runtime check, and preserve exact compiler/Geant4 versions, commands, logs, seeds, event counts, and output hashes before promoting any physics interpretation.
+Next task: execute `AUD-G4-005` in a clean Geant4 environment, beginning with a proton-only `G4EmCalculator::ComputeTotalDEDX` comparison at exact reference energies, followed by entry/exit-energy and secondary-escape diagnostics. Preserve immutable artifacts and do not interpret the deposited-energy proxy as validated total stopping power beforehand.

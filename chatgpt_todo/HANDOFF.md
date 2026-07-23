@@ -7,7 +7,7 @@
 - Repository: `SzeChunYiu/ccb-testbeam`
 - Initial remote main: `eec220db6807d3d3615d92c6d39d4fb2e18e4335`
 - Validated implementation/evidence head: `807febe85c35b537c53a5acdf1795ee9a67d7cb2`
-- Remote main immediately before final handoff: `149e5cb6d8a3fed65505c5243c875b7a9637053b`
+- Remote main immediately before final handoff: `d213721e6b6e8b3a50394d18529ef07237e42b06`
 - Destination: direct to `main`
 - Acceptance: COMPLETE for simulation-table parse/provenance byte-snapshot identity; accepted stopping-power physics closure remains PARTIAL/BLOCKED.
 
@@ -81,23 +81,34 @@ The SVG is explicitly synthetic software regression evidence, not detector data.
 
 ## Direct-to-main commit sequence
 
+Core implementation, test, and evidence:
+
 - `efc9610bd382ea52f6bbc8e53be87af6c74766fa` — `fix(audit): bind simulation rows to one byte snapshot`
 - `76b5e1dcf5e8fb3ad9c66a9646dd8ddab3d3dcea` — `test(audit): cover simulation byte-snapshot provenance`
 - `964042dc25b1b0abcd0eac0ec35e4f1b3268abe7` — validation audit Markdown
 - `f28049ce952bf5e8194f7c3936adab2401d713b6` — validation JSON
 - `807febe85c35b537c53a5acdf1795ee9a67d7cb2` — validation SVG
+
+Coordination and provenance:
+
 - `17322a138cc160eef09beadd2ede6df5a4076625` — active task
 - `462738e51fdfc93cb5eaef34e0de1d8260369c83` — backlog
 - `b29e86b5aec0cc0493e6b795cb7877c00d174f77` — immutable archive
 - `c9e5b50c0026b356972c21e9230af00507e683d2` — preliminary handoff
-- `29e4180d42c57930e912dc4bb935f3759bdba979` — master index
-- `5c77fbcc5a9edf98446c5fcf89af8ed4578ae6bf` — code-result map
-- `a5a0cf92441a7aa67b7e3a8cf7bf8184c13167a4` — study ledger
-- `42b63d60890a06af44a243c1471358a4157955eb` — claim matrix
-- `efa495871170032a9476fcf35313f2e770dea70e` — visualization matrix
+- `29e4180d42c57930e912dc4bb935f3759bdba979` — initial master-index update
+- `5c77fbcc5a9edf98446c5fcf89af8ed4578ae6bf` — initial code-result-map update
+- `a5a0cf92441a7aa67b7e3a8cf7bf8184c13167a4` — initial study-ledger update
+- `42b63d60890a06af44a243c1471358a4157955eb` — initial claim-matrix update
+- `efa495871170032a9476fcf35313f2e770dea70e` — initial visualization-matrix update
 - `149e5cb6d8a3fed65505c5243c875b7a9637053b` — blocker register
+- `dee38edb723f0ace9faa283824e3393aa018c270` — prior final handoff
+- `97b5c487d22c8c68bfdab3e9a37f53557516e734` — preserve all pre-existing master-index detail while retaining new row
+- `67a7f7a2ef4df7c1bac40ee54c1d272de44cec14` — preserve all pre-existing code-result-map detail while retaining new row
+- `928814ccbfb23c7eda4c7a97f7d576ee8970a827` — preserve all pre-existing study-ledger detail while retaining new row
+- `65b18a66f7d9286a189ff29d4f9df3ffa7c622bf` — preserve all pre-existing claim-matrix detail while retaining new row
+- `d213721e6b6e8b3a50394d18529ef07237e42b06` — preserve all pre-existing visualization-matrix detail while retaining new row
 
-Every contents write returned a successful direct-main commit. The commit containing this final handoff is confirmed separately through remote-main history after the write.
+The preservation commits correct an over-broad first coordination rewrite and ensure unrelated existing audit detail remains intact. Every contents write returned a successful direct-main commit. The commit containing this final handoff is confirmed separately through remote-main history after the write.
 
 ## `chatgpt_todo/` updates
 

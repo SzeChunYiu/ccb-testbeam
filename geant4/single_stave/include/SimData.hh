@@ -38,6 +38,10 @@ struct EventData {
   // SiPM saturation-corrected detected PE per sensor (occupancy model).
   std::array<double, kNSensors> pe_saturated{{0, 0, 0, 0}};
 
+  // Peak ADC above baseline from the ccb-sipm-core ResponseSimulator
+  // (SIPM-P1-002). One value per sensor channel.
+  std::array<double, kNSensors> adc{{0, 0, 0, 0}};
+
   // Per-sensor photon arrivals for the ccb-sipm-core ResponseSimulator
   // (SIPM-P1-001). Filled in SteppingAction; consumed in TASK 3.
   std::array<std::vector<ccb::sipm::PhotonArrival>, kNSensors> sipm_arrivals;
@@ -53,6 +57,7 @@ struct EventData {
     n_end_arrival.fill(0);
     n_detected.fill(0);
     pe_saturated.fill(0.0);
+    adc.fill(0.0);
     for (int i = 0; i < kNSensors; ++i) sipm_arrivals[i].clear();
     photons.clear();
   }

@@ -143,3 +143,15 @@ add_test(
 set_tests_properties(ccb_stave_sipm_arrivals PROPERTIES
   PASS_REGULAR_EXPRESSION "SIPM_ARRIVALS.*total=[1-9]"
   FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
+
+# 8) SiPM core ADC output (SIPM-P1-002): adc_* columns populated.
+add_test(
+  NAME ccb_stave_sipm_adc
+  COMMAND ccb_stave_sim
+          --particle proton --energy 100 --nevents 5 --seed 1
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/sipm_adc.root")
+set_tests_properties(ccb_stave_sipm_adc PROPERTIES
+  TIMEOUT 300
+  PASS_REGULAR_EXPRESSION "SIPM_ADC.*readout=[1-9]"
+  FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")

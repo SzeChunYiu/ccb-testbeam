@@ -57,6 +57,11 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleDColumn("pe_sat_f1far");
   am->CreateNtupleDColumn("pe_sat_f2near");
   am->CreateNtupleDColumn("pe_sat_f2far");
+  // SiPM core ADC (peak above baseline) per sensor (SIPM-P1-002).
+  am->CreateNtupleDColumn("adc_readout");
+  am->CreateNtupleDColumn("adc_f1far");
+  am->CreateNtupleDColumn("adc_f2near");
+  am->CreateNtupleDColumn("adc_f2far");
   am->FinishNtuple(nt_event_);
 
   // Per-photon ntuple (calibration mode: arrival wavelength/time preserved).
@@ -107,6 +112,8 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
     am->FillNtupleIColumn(nt_event_, c++, (int)e.n_detected[i]);
   for (int i = 0; i < kNSensors; ++i)
     am->FillNtupleDColumn(nt_event_, c++, e.pe_saturated[i]);
+  for (int i = 0; i < kNSensors; ++i)
+    am->FillNtupleDColumn(nt_event_, c++, e.adc[i]);
   am->AddNtupleRow(nt_event_);
 
   if (cfg_.mode == SimMode::kOpticalCalibration && nt_photon_ >= 0) {

@@ -34,6 +34,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib
+import tempfile, os
+os.environ.setdefault("MPLCONFIGDIR", tempfile.gettempdir())
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -191,8 +193,10 @@ def main():
     fig, ax = plt.subplots(figsize=(6.5, 4.8))
     for p in ["proton", "deuteron"]:
         g = scan[scan["particle"] == p].sort_values("energy_MeV")
+        if not len(g):
+            continue
         ax.errorbar(g["energy_MeV"], g["edep_scint_MeV_mean"], yerr=g["edep_scint_MeV_sem"],
-                    c=COLORS[p], marker=MARKERS[p], ls="-", lw=1.3, capsize=3, label=f"{p} ({len(g)// (g['seed'].nunique()) } pts)")
+                    c=COLORS[p], marker=MARKERS[p], ls="-", lw=1.3, capsize=3, label=f"{p} ({len(g)} files)")
     ax.set_xlabel("kinetic energy (MeV)")
     ax.set_ylabel("Birks-visible light, edep_scint_MeV")
     ax.set_title(f"P1  KE vs Birks-visible light produced  [{partial}]")
@@ -203,6 +207,8 @@ def main():
     fig, ax = plt.subplots(figsize=(6.5, 4.8))
     for p in ["proton", "deuteron"]:
         g = scan[scan["particle"] == p].sort_values("energy_MeV")
+        if not len(g):
+            continue
         ax.errorbar(g["energy_MeV"], g["n_scint_generated_mean"], yerr=g["n_scint_generated_sem"],
                     c=COLORS[p], marker=MARKERS[p], ls="-", lw=1.3, capsize=3, label=p)
     ax.set_xlabel("kinetic energy (MeV)")
@@ -215,6 +221,8 @@ def main():
     fig, ax = plt.subplots(figsize=(6.5, 4.8))
     for p in ["proton", "deuteron"]:
         g = scan[scan["particle"] == p]
+        if not len(g):
+            continue
         ax.errorbar(g["edep_scint_raw_MeV_mean"], g["edep_scint_MeV_mean"],
                     xerr=g["edep_scint_raw_MeV_sem"], yerr=g["edep_scint_MeV_sem"],
                     c=COLORS[p], marker=MARKERS[p], ls="", capsize=3, label=p)
@@ -230,6 +238,8 @@ def main():
     fig, ax = plt.subplots(figsize=(6.5, 4.8))
     for p in ["proton", "deuteron"]:
         g = scan[scan["particle"] == p].sort_values("energy_MeV")
+        if not len(g):
+            continue
         ax.errorbar(g["energy_MeV"], g["pe_sat_readout_mean"], yerr=g["pe_sat_readout_sem"],
                     c=COLORS[p], marker=MARKERS[p], ls="-", lw=1.3, capsize=3, label=p)
     ax.set_xlabel("kinetic energy (MeV)")
@@ -324,6 +334,8 @@ def main():
     fig, ax = plt.subplots(figsize=(6.5, 4.8))
     for p in ["proton", "deuteron"]:
         g = scan[scan["particle"] == p].sort_values("energy_MeV")
+        if not len(g):
+            continue
         ax.errorbar(g["energy_MeV"], g["track_len_scint_mm_mean"], yerr=g["track_len_scint_mm_sem"],
                     c=COLORS[p], marker=MARKERS[p], ls="-", lw=1.3, capsize=3, label=p)
     ax.set_xlabel("kinetic energy (MeV)")

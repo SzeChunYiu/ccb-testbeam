@@ -1,0 +1,20 @@
+{
+  "fits": {
+    "pe_sat_readout_vs_KE_proton": {
+      "slope": 6.2627896397292675,
+      "intercept": -9.497498361133198,
+      "r2": 0.9921269637705395,
+      "n": 8
+    },
+    "edep_scint_MeV_vs_KE_proton": {
+      "slope": 0.5397392133575223,
+      "intercept": -0.8349847179761658,
+      "r2": 0.99218655854414,
+      "n": 8
+    }
+  },
+  "readout_end_x_cm": 25.0,
+  "default_hit_x_cm": 0.0,
+  "n_configs": 8,
+  "n_events_total": 4000
+}

@@ -9,8 +9,9 @@ import re
 from pathlib import Path
 from typing import Any
 
-TOOL_VERSION = "1.2.0"
+TOOL_VERSION = "1.3.0"
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+LINE_FRAGMENT_RE = re.compile(r"^L([1-9][0-9]*)(?:-L([1-9][0-9]*))?$")
 ACCEPTED_CONVENTIONS = {"ABSOLUTE", "NET"}
 ACCEPTED_EVIDENCE_BASES = {
     "EXPLICIT_SCHEMA_METADATA",
@@ -48,12 +49,39 @@ def _validate_sha256(value: Any, field: str, digest: str) -> str:
     return value
 
 
-def _resolve_reference_path(reference: str, evidence_root: Path, digest: str) -> Path:
-    reference_file = reference.split("#", 1)[0].strip()
+def _parse_reference(
+    reference: str,
+    digest: str,
+) -> tuple[str, tuple[int, int] | None]:
+    reference_file, separator, fragment = reference.partition("#")
+    reference_file = reference_file.strip()
     if not reference_file:
         raise ValueError(
             f"evidence record for {digest} has no file path before evidence_reference fragment"
         )
+    if not separator:
+        return reference_file, None
+    if not fragment:
+        raise ValueError(
+            f"evidence record for {digest} has an empty evidence_reference fragment"
+        )
+    match = LINE_FRAGMENT_RE.fullmatch(fragment)
+    if not match:
+        raise ValueError(
+            f"evidence record for {digest} must use a canonical line fragment "
+            "(#L<start> or #L<start>-L<end>)"
+        )
+    start = int(match.group(1))
+    end = int(match.group(2) or start)
+    if end < start:
+        raise ValueError(
+            f"evidence record for {digest} has an evidence_reference line range "
+            "whose end precedes its start"
+        )
+    return reference_file, (start, end)
+
+
+def _resolve_reference_path(reference_file: str, evidence_root: Path, digest: str) -> Path:
     relative = Path(reference_file)
     if relative.is_absolute():
         raise ValueError(
@@ -72,6 +100,22 @@ def _resolve_reference_path(reference: str, evidence_root: Path, digest: str) ->
             f"evidence record for {digest} references missing file {reference_file!r}"
         )
     return resolved
+
+
+def _verify_line_range(
+    resolved: Path,
+    line_range: tuple[int, int],
+    digest: str,
+) -> int:
+    with resolved.open("rb") as handle:
+        line_count = sum(1 for _ in handle)
+    start, end = line_range
+    if end > line_count:
+        raise ValueError(
+            f"evidence record for {digest} references lines {start}-{end}, "
+            f"but the supporting artifact has only {line_count} lines"
+        )
+    return line_count
 
 
 def validate_record(
@@ -101,6 +145,7 @@ def validate_record(
             f"evidence record for {digest} requires a non-empty evidence_reference"
         )
     reference = reference.strip()
+    reference_file, line_range = _parse_reference(reference, digest)
 
     reference_sha256 = _validate_sha256(
         record.get("evidence_reference_sha256"), "evidence_reference_sha256", digest
@@ -112,12 +157,21 @@ def validate_record(
 
     normalized = dict(record)
     normalized["evidence_reference"] = reference
+    normalized["evidence_reference_file"] = reference_file
+    normalized["evidence_reference_scope"] = (
+        "LINE_RANGE" if line_range is not None else "WHOLE_FILE"
+    )
     normalized["evidence_reference_sha256"] = reference_sha256
     normalized["sha256"] = digest
+    normalized["evidence_validator_version"] = TOOL_VERSION
     normalized["evidence_reference_verified"] = False
+    normalized["evidence_reference_fragment_verified"] = False
+    if line_range is not None:
+        normalized["evidence_reference_line_start"] = line_range[0]
+        normalized["evidence_reference_line_end"] = line_range[1]
 
     if evidence_root is not None:
-        resolved = _resolve_reference_path(reference, evidence_root, digest)
+        resolved = _resolve_reference_path(reference_file, evidence_root, digest)
         actual_reference_sha256 = file_sha256(resolved)
         if actual_reference_sha256 != reference_sha256:
             raise ValueError(
@@ -127,6 +181,13 @@ def validate_record(
         normalized["evidence_reference_verified"] = True
         normalized["evidence_reference_resolved_path"] = str(resolved)
         normalized["evidence_reference_measured_sha256"] = actual_reference_sha256
+        if line_range is not None:
+            normalized["evidence_reference_line_count"] = _verify_line_range(
+                resolved,
+                line_range,
+                digest,
+            )
+            normalized["evidence_reference_fragment_verified"] = True
 
     return normalized
 
@@ -155,7 +216,8 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help=(
             "Root directory for evidence_reference paths. Defaults to the evidence-map "
-            "directory. References must resolve to files beneath this root."
+            "directory. References must resolve to files beneath this root. Optional "
+            "fragments must be canonical line ranges such as #L12 or #L12-L18."
         ),
     )
     parser.add_argument("--output", type=Path, default=None)
@@ -174,6 +236,10 @@ def main(argv: list[str] | None = None) -> int:
             bool(record["evidence_reference_verified"])
             for record in normalized.values()
         ),
+        "n_verified_line_fragments": sum(
+            bool(record["evidence_reference_fragment_verified"])
+            for record in normalized.values()
+        ),
         "records": normalized,
     }
     if args.output:
@@ -181,7 +247,8 @@ def main(argv: list[str] | None = None) -> int:
         args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(
         f"records={len(normalized)} "
-        f"verified_references={result['n_verified_references']} validated=true"
+        f"verified_references={result['n_verified_references']} "
+        f"verified_line_fragments={result['n_verified_line_fragments']} validated=true"
     )
     return 0
 

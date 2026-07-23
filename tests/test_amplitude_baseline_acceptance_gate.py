@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -40,30 +41,43 @@ def test_absolute_tables_with_unresolved_baselines_fail_gate(tmp_path: Path) -> 
     ]
 
 
-def test_absolute_table_with_unique_pedestal_passes_gate(tmp_path: Path) -> None:
+def test_unique_pedestal_still_requires_hash_bound_evidence(tmp_path: Path) -> None:
     path = tmp_path / "resolved.csv"
     output = tmp_path / "audit.json"
+    evidence = tmp_path / "evidence.json"
     write(
         path,
         amplitude_adc=[6700, 6750, 6800],
         baseline_adc=[6752, 6752, 6752],
     )
 
-    code = MODULE.main([str(path), "--output", str(output)])
+    assert MODULE.main([str(path), "--output", str(output)]) == 1
     payload = json.loads(output.read_text(encoding="utf-8"))
-
-    assert code == 0
-    assert payload["n_unresolved_absolute_baselines"] == 0
+    assert payload["n_unverified_conventions"] == 1
     assert payload["tables"][0]["baseline_resolution"] == "RESOLVED"
 
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    evidence.write_text(json.dumps({digest: {
+        "convention": "ABSOLUTE",
+        "evidence_basis": "EXPLICIT_SCHEMA_METADATA",
+    }}), encoding="utf-8")
+    assert MODULE.main([
+        str(path), "--output", str(output), "--evidence-map", str(evidence)
+    ]) == 0
 
-def test_net_table_does_not_require_pedestal_column(tmp_path: Path) -> None:
+
+def test_net_table_requires_hash_bound_evidence(tmp_path: Path) -> None:
     path = tmp_path / "net.csv"
     output = tmp_path / "audit.json"
+    evidence = tmp_path / "evidence.json"
     write(path, amplitude_adc=[100, 200, 300])
 
-    code = MODULE.main([str(path), "--output", str(output)])
-    payload = json.loads(output.read_text(encoding="utf-8"))
-
-    assert code == 0
-    assert payload["tables"][0]["baseline_resolution"] == "NOT_REQUIRED"
+    assert MODULE.main([str(path), "--output", str(output)]) == 1
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    evidence.write_text(json.dumps({digest: {
+        "convention": "NET",
+        "evidence_basis": "PRODUCER_CODE_PROVENANCE",
+    }}), encoding="utf-8")
+    assert MODULE.main([
+        str(path), "--output", str(output), "--evidence-map", str(evidence)
+    ]) == 0

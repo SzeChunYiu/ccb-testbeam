@@ -2,147 +2,158 @@
 
 ## Session
 
-- **UTC:** `2026-07-23T18:15:39Z`
-- **Task:** `AUD-G4-012`
+- **UTC:** `2026-07-23T19:01:30Z`
+- **Task:** `AUD-G4-013`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **Initial remote main:** `bf295c1e7d295698673ffa7bb4c668c19015df49`
-- **Validated implementation/evidence head:** `084b753685e5dc22a978482eef71f7649e352d3b`
-- **Coordination/archive/session-log head before this handoff:** `3719b3ad713cd0e2023366279bea7cf866a60086`
+- **Initial observed remote main:** `d880c7474b2ba3f981fa6e402d1723d1c450e22d`
+- **Concurrent main observed before first write:** `6fd458150fd7f7eff1be044c40b0675031935547`
+- **Additional concurrent main observed after evidence writes:** `2604129517e9241584cb91bea63aec1ceb1073a5`
+- **Validated implementation/evidence head:** `2a29ffcfc0f645cede8b7ef621b1f17ac57a6bb7`
+- **Coordination/archive head before this handoff:** `e991726e098166d0e48273e027d25960ab76a2dd`
 - **Destination:** direct to `main`
-- **Acceptance:** COMPLETE for canonical PSTAR component-identity integration, focused regression, visual evidence, coordination, archive, and append-only log; scientific stopping-power closure remains PARTIAL.
+- **Acceptance:** COMPLETE for exact configured-energy grouping, focused regression, visual evidence, coordination, and immutable archive; accepted stopping-power physics closure remains PARTIAL.
 
 ## Start-of-run and concurrent-work review
 
-- Inspected current `main`, recent commits, repository permissions, open PR inventory, PR #868, the canonical stopping-power code, standalone reference and simulation validators, focused tests, exact PSTAR reference metadata, prior validation records, and every mandatory `chatgpt_todo/` file.
-- PR #868 is closed, unmerged, and non-mergeable. It was not reopened, modified, or merged.
-- Direct local clone remained unavailable because the runtime could not resolve `github.com`; authenticated connector reads and direct-main writes were used.
+- A direct clone was attempted and failed because this runtime could not resolve `github.com`; authenticated GitHub connector reads and writes were used.
+- Inspected remote-main history and divergence, repository permissions, PR #868, canonical stopping-power code, simulation and PSTAR validators, focused tests, validation records, and all mandatory `chatgpt_todo/` files.
+- PR #868 remains closed, unmerged, and non-mergeable. It was not reopened, modified, or merged.
+- Concurrent commits were inspected before and during the run. The stopping-power file blob was unchanged by those commits, and no active completed task was duplicated.
 - No task branch, pull request, force-push, history rewrite, unrelated deletion, or raw-data modification was used.
 
-## Confirmed defect
+## Confirmed numerical-method defect
 
-The prior run added a fail-closed exact-decimal validator for the PSTAR identity
+The former stopping-power aggregator used:
 
-```text
-total_MeV_cm2_g = electronic_MeV_cm2_g + nuclear_MeV_cm2_g
+```python
+key = (particle, round(energy, 1))
 ```
 
-but `scripts/single_stave/compare_stopping_power.py` retained an independent float parser. It rejected malformed, nonfinite, nonphysical, duplicate-energy, and out-of-order rows, but did not enforce the cross-column identity. A finite positive ordered row such as `1,9,1,8` could therefore enter a numerical simulation/reference ratio.
+It then pooled deposited energy and path length and reported the arithmetic mean of the original energies. Synthetic events at `1.01 MeV` and `1.04 MeV` therefore became one comparison row at `1.025 MeV`.
+
+This is not a harmless display transformation. PSTAR is energy dependent and evaluated with nonlinear log-log interpolation, so the implicit merge changed both the simulation statistic and reference energy without a declared binning, weighting, or integration rule.
+
+The exact pre-change reconstruction matched Git blob:
+
+```text
+d525bf6b74a18d135b38434dd5085123b995132a
+```
+
+Running the new regression against that exact blob produced:
+
+```text
+2 failed, 1 passed in 0.57s
+```
+
+Both failures measured the former `[1.01, 1.04] -> [1.025]` coalescence.
 
 ## Validated correction
 
-### Canonical reference parser
-
-`tools/audit/validate_pstar_component_sum.py` is now version `1.1.0` and exposes:
+`aggregate()` now keys on the exact validated numeric energy:
 
 ```python
-read_validated_pstar_table(path)
+key = (particle, energy)
 ```
 
-The function validates every noncomment row and returns both canonical float rows and exact provenance. It requires:
+Consequences:
 
-- valid unique headers and all four required fields;
-- exact Decimal parsing of written values;
-- finite and physical values;
-- strictly increasing energy in declared file order;
-- overlap between the declared-total rounding interval and the electronic-plus-nuclear interval, using one half-unit in the last written decimal place.
+- distinct configured energies remain distinct comparison points;
+- numerically equivalent tokens such as `1.0` and `1.00` still group after canonical float parsing;
+- no arithmetic-mean energy is introduced;
+- each result row records `energy_grouping=EXACT_CONFIGURED_ENERGY`;
+- output CSVs include `energy_grouping`;
+- the CLI prints `ENERGY GROUPING: EXACT_CONFIGURED_ENERGY`.
 
-### Canonical comparison integration
+## Regression and validation
 
-`compare_stopping_power.py` now imports that parser directly. No second PSTAR reference parser remains in the comparison path. Valid result rows and output CSVs record:
+Added:
 
-- `reference_input_sha256`;
-- `reference_input_bytes`;
-- `reference_rows_validated`;
-- `reference_validator_version`;
-- `reference_component_identity`;
-- `reference_component_consistent`.
+- `tests/test_compare_stopping_power_energy_grouping.py`
 
-The CLI prints one `PSTAR REFERENCE VALIDATION` line before any numerical tolerance statement. The self-test uses the same validated reference path.
+The test covers:
 
-### Fail-closed direct CLI behavior
+1. `1.01` and `1.04 MeV` remain separate;
+2. `1.0` and `1.00 MeV` still group;
+3. the direct CLI emits one row per exact energy and records grouping metadata.
 
-A synthetic reference containing `1,9,1,8` now:
-
-- exits with status 2;
-- reports the component inconsistency;
-- writes no result CSV;
-- prints no `NUMERICAL TOLERANCE: PASS`.
-
-## Reproducible validation
+Executed on exact local reconstructions:
 
 ```text
 python -m py_compile \
   scripts/single_stave/compare_stopping_power.py \
-  tools/audit/validate_pstar_component_sum.py \
-  tests/test_validate_pstar_component_sum.py \
-  tests/test_compare_stopping_power_pstar_component_integration.py
+  tests/test_compare_stopping_power_energy_grouping.py \
+  tests/test_compare_stopping_power_energy_range.py \
+  tests/test_compare_stopping_power_sim_input_integration.py \
+  tests/test_compare_stopping_power_pstar_component_integration.py \
+  tests/test_compare_stopping_power_quenched_proxy.py
 
 python -m pytest \
-  tests/test_validate_pstar_component_sum.py \
-  tests/test_compare_stopping_power_pstar_component_integration.py \
-  tests/test_compare_stopping_power_reference_integrity.py \
+  tests/test_compare_stopping_power_energy_grouping.py \
   tests/test_compare_stopping_power_energy_range.py \
-  tests/test_compare_stopping_power_quenched_proxy.py \
   tests/test_compare_stopping_power_sim_input_integration.py \
-  tests/test_validate_stopping_power_sim_table.py -q
+  tests/test_compare_stopping_power_pstar_component_integration.py \
+  tests/test_compare_stopping_power_quenched_proxy.py -q
 
-42 passed in 4.22s
+19 passed in 3.22s
 ```
 
 Additional passed checks:
 
-- validation JSON parsing;
-- SVG XML parsing;
-- maximum changed Python line length: 97;
-- local SHA-256 values recorded in the validation JSON.
+- exact pre-change Git-blob identity;
+- JSON parse;
+- SVG XML parse;
+- maximum changed Python line length: 91;
+- local changed-file SHA-256 capture.
+
+Changed-file SHA-256 values:
+
+- `scripts/single_stave/compare_stopping_power.py`: `15cdc5d0ed128b84a4fd47e3d665a899356702338ddebbe1aff4240a88c712a1`
+- `tests/test_compare_stopping_power_energy_grouping.py`: `fa4098be552361c91fce93e9d19a7dfc902fd8514e293042ecd5ca76c28de485`
 
 Not run:
 
 - full repository pytest;
-- ruff;
+- ruff, which was unavailable;
 - Geant4 build and CTest;
 - ROOT processing;
 - real simulation execution;
 - GitHub Actions.
 
-No broader CI result or scientific stopping-power agreement is claimed.
+No broader CI or stopping-power agreement is claimed.
 
 ## Reproducible evidence
 
 Added:
 
-- `docs/validation/pstar_component_sum_integration_audit.md`;
-- `docs/validation/pstar_component_sum_integration_validation.json`;
-- `docs/validation/pstar_component_sum_integration.svg`.
+- `docs/validation/stopping_power_energy_grouping_audit.md`
+- `docs/validation/stopping_power_energy_grouping_validation.json`
+- `docs/validation/stopping_power_energy_grouping.svg`
 
-The SVG is explicitly labelled synthetic regression evidence, not detector data. It contrasts the former independent-parser path with shared exact-decimal status-2 rejection and no numerical PASS.
+The SVG is explicitly labelled synthetic regression evidence, not detector data. It contrasts the former pooled `1.025 MeV` point with two exact-energy rows and states the `DIAGNOSTIC_ONLY` scientific boundary.
 
 ## Direct-to-main commits
 
 Implementation, tests, and evidence:
 
-- `b1b0d4b180c5a125a222c11795e4ada46adce2dc` — `fix(single-stave): integrate PSTAR component identity gate`
-- `f13d9d9f1e845c7e15b6ae79d08b269dc67fed54` — `refactor(audit): expose canonical validated PSTAR rows`
-- `a9c4c161715a02dbbe0efedb71734de70154e7e5` — `test(audit): cover canonical PSTAR row return`
-- `fbedabdfed0d8588aa7dfdf0eea597d0372fdb56` — `test(single-stave): integrate PSTAR component identity gate`
-- `1ec2487c70b70191c81cd7f2340ed425aacae7a3` — `docs(validation): record PSTAR component integration audit`
-- `9c1271134c7ae08173d3acc079a0f1d57fc4aa6b` — `docs(validation): add PSTAR component integration record`
-- `084b753685e5dc22a978482eef71f7649e352d3b` — `docs(validation): visualize PSTAR component integration gate`
+- `e5a5dab83cbddbc8c65341043a21c11ea37d8d06` — `fix(single-stave): preserve exact configured energies`
+- `ee141c4e1daea7fa9c862191e418954ebc2e3a95` — `test(single-stave): cover exact configured-energy grouping`
+- `05c5b03098c36399abbced190cac71b1e9e4db36` — `docs(validation): record stopping-power energy grouping audit`
+- `d3294ae5b477ffdf125aa404b9e397b7701b3ebc` — `docs(validation): add stopping-power energy grouping record`
+- `2a29ffcfc0f645cede8b7ef621b1f17ac57a6bb7` — `docs(validation): visualize stopping-power energy grouping gate`
 
 Coordination and provenance:
 
-- `36616f358291800d2f5fd97e9a353d6ee87f7cda` — active task completion
-- `ea54802219b80123db0746befa9dac3640f4f992` — backlog completion
-- `28a564545c9d0ef96f1197d8429e49d32e908237` — master index update
-- `6744f91cc5b3560f4b96f2c9a8fc241c7f456d4a` — code-result mapping
-- `8038e8458c4c89936dddec1e0beeaad24439004b` — study ledger update
-- `672407761297f707f061fca8ca6ff6e1cecc7ca7` — claim matrix update
-- `df85cbd960157ec420caf73dc96757d495a1541f` — visualization matrix update
-- `d867cf8d769be2ef9bbb07a9b53c8c1d6e295e48` — blocker resolution
-- `dd157ec98f176f785a9a3cacde3272671778836e` — immutable archive
-- `3719b3ad713cd0e2023366279bea7cf866a60086` — append-only session log
+- `9d484db1d57679820c4d9e90356fa35e40b08a99` — active task completion
+- `658bc765d1b1e5e9aa93655526aec916cb91e701` — backlog completion
+- `c30af2e5b98e0c3c6e39a22d6e19cb04a6f458e9` — master index update
+- `c58d474d604fbb4c1e2d20718bc502b81f6034cb` — code-result mapping
+- `fecd9572ece372a9a11da99facc042a1358a8dec` — study ledger update
+- `096606cf6497e6ad4d24b4210a539c75670f21a6` — claim matrix update
+- `da85305b2fcc2cebe789b1551dfcd8bdfff2e925` — visualization matrix update
+- `02117b84f41df0f19d7f38fa5ebee03c1b46fafb` — stopping-power blocker refinement
+- `e991726e098166d0e48273e027d25960ab76a2dd` — immutable session archive
 
-Every write above returned a successful direct-main commit SHA. This handoff update is the final write for the session; its returned SHA must be re-read as remote `main` before delivery is reported.
+Every listed write returned a successful direct-main commit SHA. This handoff update is the final repository write for the session and must be re-read at remote-main head before delivery is reported.
 
 ## Repository-local records
 
@@ -156,27 +167,26 @@ Updated:
 - `CLAIM_EVIDENCE_MATRIX.md`
 - `VISUALIZATION_MATRIX.md`
 - `BLOCKERS.md`
-- `SESSION_LOG.md`
 - `HANDOFF.md`
 
 Added immutable provenance:
 
-- `chatgpt_todo/archive/2026-07-23T181539Z_AUD-G4-012_PSTAR_COMPONENT_INTEGRATION.md`
+- `chatgpt_todo/archive/2026-07-23T190130Z_AUD-G4-013_EXACT_ENERGY_GROUPING.md`
+
+`SESSION_LOG.md` was inspected in complete non-overlapping line ranges, but the available connector exposes complete-file replacement rather than append. Because concurrent main activity continued and replacing an append-only log carries avoidable provenance-loss risk, it was not rewritten. The immutable archive above contains the complete session entry and this limitation is explicit rather than concealed.
 
 ## Blockers and next action
 
 ### Resolved
 
-`BLK-G4-SP-002` is RESOLVED. The canonical comparison can no longer bypass the PSTAR component identity.
+`AUD-G4-013` is COMPLETE. The canonical stopping-power comparison no longer silently pools distinct configured energies through 0.1 MeV rounding.
 
 ### Still open
 
-`BLK-G4-SP-001` remains OPEN. Local unquenched deposited energy is a diagnostic proxy and may differ from projectile total energy loss when secondaries escape or energy evolves along the path. The deuteron `S_d(E) ≈ S_p(E/2)` mapping remains approximate.
-
-`AUD-G4-011` remains PARTIAL because no exact real exported Geant4 event table was available. A future real-table run must retain path, bytes, SHA-256, validated rows, particle/energy coverage, deposit basis, code commit, command, environment, output hash, and any rejection.
-
-External NIST transcription/material provenance was not independently re-queried in this session.
+- `AUD-G4-011`: run the integrated CLI on exact immutable real Geant4 exports with complete input/output/environment provenance.
+- `AUD-G4-005` / `BLK-G4-SP-001`: establish an accepted proton closure using `G4EmCalculator` or primary entry/exit energy plus path/reference integration, quantify escaping-secondary energy and production-cut dependence, and treat deuterons separately.
+- External PSTAR transcription/material provenance remains independently unverified.
 
 ## Scientific boundary
 
-This session validates internal PSTAR component identity and its canonical software enforcement. It does not establish Geant4/PSTAR agreement, a detector calibration, or detector performance. No Geant4 executable, ROOT file, real event table, stopping-power closure, calibration, or detector-performance output was generated.
+This session validates exact configured-energy aggregation and its traceable software enforcement. It does not establish that local deposited energy equals projectile total energy loss, does not validate the deuteron approximation, and does not establish Geant4/PSTAR agreement, calibration, or detector performance. No Geant4 executable, ROOT file, real event table, stopping-power closure, calibration, or detector-performance output was generated.

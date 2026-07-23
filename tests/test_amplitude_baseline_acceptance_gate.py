@@ -16,6 +16,8 @@ assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
+REFERENCE_SHA256 = "b" * 64
+
 
 def write(path: Path, **columns: list[float]) -> None:
     pd.DataFrame(columns).to_csv(path, index=False)
@@ -26,6 +28,7 @@ def evidence_record(convention: str, basis: str) -> dict[str, str]:
         "convention": convention,
         "evidence_basis": basis,
         "evidence_reference": "docs/contracts/PULSE_TABLE_CONTRACT.md",
+        "evidence_reference_sha256": REFERENCE_SHA256,
     }
 
 

@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-AMP-010
+- **Task ID:** AUD-DELTAE-002
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T07:05:54Z
-- **Base main SHA:** `7021e5491fc60ae2f59645ffb62f156d578b0947`
-- **Scope:** require every optional amplitude-evidence fragment to identify an existing, immutable line or line range in the byte-verified supporting artifact.
-- **Assumption under test:** hashing a supporting file is insufficient traceability when `evidence_reference` may include an unchecked decorative or nonexistent fragment.
-- **Confirmed finding:** validator v1.2.0 discarded everything after `#`, so `producer_contract.md#claim-that-does-not-exist` was accepted whenever the file hash matched.
-- **Files:** `tools/audit/validate_amplitude_evidence_map.py`, `tests/test_amplitude_evidence_integration.py`, `tests/test_amplitude_evidence_reference_fragments.py`, and `chatgpt_todo/` coordination records.
-- **Change:** validator v1.3.0 accepts whole-file references or canonical `#L<start>` / `#L<start>-L<end>` fragments, rejects malformed/reversed/out-of-range fragments, records scope and verified line bounds, and exposes the validator version in every normalized evidence record.
-- **Validation plan executed:** compile the validator, convention auditor, and focused tests; run validator and auditor-integration pytest modules; scan changed files for lines over 100 characters; compare local Git blob hashes with returned GitHub content SHAs; inspect remote commit order.
-- **Validation result:** exact local reconstruction returned `36 passed in 0.06s`; compilation and line-length scan passed; local blob hashes matched the GitHub-updated validator and integration-test blobs. Ruff, the complete repository suite, and GitHub Actions were not run and are not claimed.
-- **Boundary:** no real A-002 pulse table or supporting evidence artifact was available. No amplitude convention, stopping profile, CSV, plot, calibration, or detector-performance result was regenerated.
-- **Status:** PARTIAL — fragment traceability tooling and focused synthetic regression are validated; real A-002 authorization and regenerated scientific outputs remain BLOCKED.
+- **Session stamp:** 2026-07-23T08:04:59Z
+- **Base main SHA:** `7d226ec55a640c5ac4c9e16d378f496ea808ef0a`
+- **Scope:** remove polarity ambiguity from the A-002 absolute-ADC conversion before any stopping-layer or ΔE–E rerun.
+- **Assumption under test:** `abs(amplitude_adc - baseline_adc)` is an acceptable conversion once a table is classified as absolute ADC code.
+- **Confirmed finding:** absolute/net convention does not identify pulse polarity. The prior absolute-value conversion silently mapped either side of the pedestal to positive energy and could turn a polarity mismatch into a threshold-passing deposit.
+- **Files:** `scripts/single_stave/deltaE_E_data_bridge.py`, `tests/test_deltae_data_bridge_composite_key.py`, and `chatgpt_todo/` coordination records.
+- **Change:** absolute input now requires explicit `amplitude_polarity` (`positive` or `negative`), uses the corresponding signed pedestal subtraction, rejects opposite-polarity rows and nonfinite conversion inputs, and records polarity plus the exact transformation in result metadata.
+- **Validation plan executed:** compile the modified bridge and test module; run the focused pytest module; scan both files for lines over 100 characters; compare local Git blob hashes with GitHub content SHAs; inspect current-main commit order.
+- **Validation result:** `10 passed in 2.78s`; compilation and line-length scan passed; local blob hashes exactly matched GitHub content SHAs `7f50ce667a6cde07e94717d0187831da4d8459ac` and `3b59a793f5d67e6a0d3c7117c42ec41ad7b84a90`. Full repository tests, ruff, real-data rerun, and GitHub Actions were not run and are not claimed.
+- **Boundary:** no exact A-002 table or hash-bound polarity evidence was available. No stopping distribution, event CSV, ΔE–E plot, calibration, or detector-performance result was regenerated.
+- **Status:** PARTIAL — polarity-safe code and focused synthetic regression are validated; real A-002 polarity authorization and output regeneration remain BLOCKED.

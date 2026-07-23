@@ -24,8 +24,8 @@
 ## BLK-MERGE-001 — PR #868 integration into current main
 
 - **State:** OPEN
-- **Reason:** runtime and CI acceptance were recorded as passing on the PR branch, but `main` advanced substantially afterward and the PR was later reported `mergeable=false`. The implementation must be reconciled with current `main`, conflict-resolved without history rewriting, and all checks rerun at the reconciled head before merge.
-- **Resolution:** update the PR branch from current `main` using a safe merge or rebase permitted by repository policy, inspect the resulting diff for duplicated `chatgpt_todo/` and documentation changes, rerun CI and the required scientific checks, then merge only if GitHub reports it mergeable and all acceptance gates pass.
+- **Reason:** runtime and CI acceptance were recorded as passing on the PR branch, but `main` advanced substantially afterward and PR #868 is now closed without merge. The implementation must be mapped to exact commits already present on `main` or recovered through a new, current-main-based transport branch; no closed branch may be assumed integrated.
+- **Resolution:** compare the closed PR head with current `main`, identify every validated code and artifact commit already integrated, transport only missing validated work onto current `main`, rerun required checks, and record the resulting main-branch SHAs. Do not reopen or merge stale conflicting coordination files blindly.
 
 ## BLK-DOC-001 — public C12 wording synchronization
 
@@ -35,3 +35,12 @@
 - **Available validated tool:** `scripts/sync_c12_public_claims.py`; synthetic regression suite previously passed (`6 passed`).
 - **Current execution blocker:** this environment cannot resolve `github.com` for a local checkout or raw-file download. The GitHub contents connector requires complete replacement content for updates; using truncated file responses would risk data loss and is prohibited.
 - **Resolution:** run the synchronizer in a complete checkout based on current `origin/main`, execute `--check`, run its tests and `scripts/broken_link_checker.py`, inspect the exact WIKI/Chapter 9 diff, and commit the reviewed changes directly to `main`.
+
+## BLK-AMP-001 — real A-002 amplitude authorization and regeneration
+
+- **State:** OPEN
+- **Tasks:** `AUD-AMP-009`, `AUD-DELTAE-001`.
+- **Reason:** no exact A-002 pulse-table bytes or independently reviewable schema, producer-code, or pedestal-evidence artifact bytes were accessible in this session. A digest declaration alone is no longer accepted.
+- **Validated tooling:** `validate_amplitude_evidence_map.py` v1.2.0 resolves each relative evidence reference beneath a controlled root and compares its measured SHA-256 with the map. `amplitude_convention_audit.py` v3.1.0 authorizes physics use only from such a verified map; raw programmatic dictionaries remain non-authorizing.
+- **Resolution:** obtain and hash the exact A-002 table and supporting artifact, create a map with both digests and the accepted evidence basis, run the validator and full-table auditor without `--max-rows`, resolve all warnings/errors, then regenerate the quarantined A-002 JSON, event CSV, stopping fractions, and DeltaE-E plot with cardinality and provenance checks.
+- **Do not claim until resolved:** whether A-002 `amplitude_adc` is absolute or net, whether pedestal subtraction is correct, or any corrected stopping distribution or detector-performance conclusion.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Classify legacy amplitude_adc tables with explicit provenance."""
+"""Classify legacy amplitude_adc tables with explicit, hash-bound provenance."""
 from __future__ import annotations
 
 import argparse
@@ -7,14 +7,20 @@ import glob
 import hashlib
 import json
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
-TOOL_VERSION = "2.7.0"
+TOOL_VERSION = "2.8.0"
 BASELINE_DISPERSION_TOKENS = (
     "rms", "std", "sigma", "noise", "width", "variance", "var",
 )
+ACCEPTED_EVIDENCE_BASES = {
+    "EXPLICIT_SCHEMA_METADATA",
+    "PRODUCER_CODE_PROVENANCE",
+    "INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE",
+}
 
 
 def file_sha256(path: Path) -> str:
@@ -48,9 +54,38 @@ def identify_baseline_columns(columns: list[str]) -> tuple[list[str], list[str]]
     return level_candidates, auxiliary
 
 
-def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float) -> dict:
+def load_evidence_map(path: Path | None) -> dict[str, dict[str, Any]]:
+    if path is None:
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("evidence map must be a JSON object keyed by SHA-256")
+    result: dict[str, dict[str, Any]] = {}
+    for digest, record in payload.items():
+        if not isinstance(digest, str) or len(digest) != 64:
+            raise ValueError("evidence-map keys must be 64-character SHA-256 strings")
+        if not isinstance(record, dict):
+            raise ValueError(f"evidence record for {digest} must be an object")
+        convention = record.get("convention")
+        basis = record.get("evidence_basis")
+        if convention not in {"ABSOLUTE", "NET"}:
+            raise ValueError(f"evidence record for {digest} has invalid convention")
+        if basis not in ACCEPTED_EVIDENCE_BASES:
+            raise ValueError(f"evidence record for {digest} has invalid evidence_basis")
+        result[digest.lower()] = record
+    return result
+
+
+def audit(
+    path: Path,
+    max_rows: int | None,
+    net_max: float,
+    absolute_min: float,
+    evidence_map: dict[str, dict[str, Any]] | None = None,
+) -> dict:
     header = pd.read_csv(path, nrows=0)
-    common = {"path": str(path), "size_bytes": path.stat().st_size, "sha256": file_sha256(path)}
+    digest = file_sha256(path)
+    common = {"path": str(path), "size_bytes": path.stat().st_size, "sha256": digest}
     if "amplitude_adc" not in header.columns:
         return {**common, "status": "SKIPPED", "reason": "NO_AMPLITUDE_ADC"}
 
@@ -71,14 +106,16 @@ def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float)
         raise ValueError("amplitude_adc has no finite numeric values")
 
     median = float(amplitude.median())
-    convention = classify(median, net_max, absolute_min)
+    heuristic_convention = classify(median, net_max, absolute_min)
     baseline_resolution = (
-        "RESOLVED" if baseline
-        else "MISSING" if not baseline_columns
-        else "AMBIGUOUS"
+        "RESOLVED" if baseline else "MISSING" if not baseline_columns else "AMBIGUOUS"
     )
+    evidence_record = (evidence_map or {}).get(digest.lower())
+    accepted_convention = evidence_record.get("convention") if evidence_record else None
+    convention = heuristic_convention
     convention_evidence = "PEDESTAL_ANCHORED" if baseline else "RAW_MEDIAN_HEURISTIC"
     convention_acceptance = "ACCEPTABLE" if baseline else "UNANCHORED"
+    physics_acceptance = "ACCEPTABLE" if evidence_record else "UNVERIFIED"
 
     result = {
         **common,
@@ -90,6 +127,7 @@ def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float)
         "nonfinite_amplitude_rows": nonfinite_amplitude_rows,
         "nonnumeric_amplitude_rows": nonnumeric_amplitude_rows,
         "amplitude_adc_median": median,
+        "heuristic_convention": heuristic_convention,
         "baseline_column": baseline,
         "baseline_candidate_count": len(baseline_columns),
         "baseline_candidates": baseline_columns,
@@ -98,9 +136,18 @@ def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float)
         "convention": convention,
         "convention_evidence": convention_evidence,
         "convention_acceptance": convention_acceptance,
+        "evidence_record": evidence_record,
+        "physics_convention": accepted_convention,
+        "physics_convention_evidence": evidence_record.get("evidence_basis") if evidence_record else None,
+        "physics_acceptance": physics_acceptance,
         "subtract_baseline_correct": (
-            True if convention == "ABSOLUTE" and baseline
-            else False if convention == "NET" and baseline
+            True if heuristic_convention == "ABSOLUTE" and baseline
+            else False if heuristic_convention == "NET" and baseline
+            else None
+        ),
+        "physics_subtract_baseline_correct": (
+            True if accepted_convention == "ABSOLUTE"
+            else False if accepted_convention == "NET"
             else None
         ),
     }
@@ -112,8 +159,8 @@ def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float)
         warnings.append("NONFINITE_AMPLITUDE_VALUES_EXCLUDED")
     if nonnumeric_amplitude_rows:
         warnings.append("NONNUMERIC_AMPLITUDE_VALUES_EXCLUDED")
-    if not baseline:
-        warnings.append("UNANCHORED_AMPLITUDE_CONVENTION")
+    if not evidence_record:
+        warnings.append("NO_HASH_BOUND_CONVENTION_EVIDENCE")
 
     if baseline:
         numeric_pair = frame[["amplitude_adc", baseline]].apply(pd.to_numeric, errors="coerce")
@@ -130,7 +177,9 @@ def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float)
         if missing_baseline_for_finite_amplitude:
             result["baseline_data_quality"] = "INCOMPLETE"
             result["convention_acceptance"] = "BASELINE_DATA_INVALID"
+            result["physics_acceptance"] = "BASELINE_DATA_INVALID"
             result["subtract_baseline_correct"] = None
+            result["physics_subtract_baseline_correct"] = None
             warnings.append("INCOMPLETE_BASELINE_FOR_FINITE_AMPLITUDES")
         else:
             result["baseline_data_quality"] = "COMPLETE"
@@ -141,6 +190,8 @@ def audit(path: Path, max_rows: int | None, net_max: float, absolute_min: float)
         result["warning_baseline"] = "AMPLITUDE_CONVENTION_WITHOUT_BASELINE_LEVEL"
         result["baseline_data_quality"] = "MISSING_COLUMN"
 
+    if evidence_record and evidence_record.get("sha256", digest).lower() != digest.lower():
+        raise ValueError("evidence record sha256 does not match evidence-map key")
     if warnings:
         result["warnings"] = warnings
     return result
@@ -150,6 +201,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("inputs", nargs="+", help="Paths or glob patterns")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--evidence-map", type=Path, default=None)
     parser.add_argument(
         "--max-rows", type=int, default=None,
         help=("Explicitly classify only the first N rows. This mode is row-order dependent, "
@@ -161,6 +213,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.max_rows is not None and args.max_rows <= 0:
         raise ValueError("max_rows must be positive")
     classify(0.0, args.net_max_adc, args.absolute_min_adc)
+    evidence_map = load_evidence_map(args.evidence_map)
 
     paths = sorted({
         Path(p) for pattern in args.inputs for p in glob.glob(pattern, recursive=True) if Path(p).is_file()
@@ -171,7 +224,7 @@ def main(argv: list[str] | None = None) -> int:
     tables, errors = [], []
     for path in paths:
         try:
-            tables.append(audit(path, args.max_rows, args.net_max_adc, args.absolute_min_adc))
+            tables.append(audit(path, args.max_rows, args.net_max_adc, args.absolute_min_adc, evidence_map))
         except Exception as exc:
             errors.append({"path": str(path), "error": f"{type(exc).__name__}: {exc}"})
 
@@ -184,27 +237,20 @@ def main(argv: list[str] | None = None) -> int:
         row["convention"] == "ABSOLUTE" and row["baseline_resolution"] != "RESOLVED" for row in classified
     )
     n_unanchored_conventions = sum(row["convention_acceptance"] == "UNANCHORED" for row in classified)
-    n_invalid_baseline_data_tables = sum(
-        row["convention_acceptance"] == "BASELINE_DATA_INVALID" for row in classified
-    )
+    n_unverified_conventions = sum(row["physics_acceptance"] == "UNVERIFIED" for row in classified)
+    n_invalid_baseline_data_tables = sum(row["convention_acceptance"] == "BASELINE_DATA_INVALID" for row in classified)
     payload = {
         "tool": "tools/audit/amplitude_convention_audit.py",
         "tool_version": TOOL_VERSION,
         "classification_rule": {
-            "NET": f"median <= {args.net_max_adc}",
-            "ABSOLUTE": f"median >= {args.absolute_min_adc}",
-            "AMBIGUOUS": "between thresholds; manual review required",
+            "heuristic_NET": f"median <= {args.net_max_adc}",
+            "heuristic_ABSOLUTE": f"median >= {args.absolute_min_adc}",
+            "heuristic_AMBIGUOUS": "between thresholds; manual review required",
+            "accepted_convention": "requires SHA-256 keyed evidence map",
             "finite_numeric_values_only": True,
-            "raw_median_without_unique_pedestal_is_heuristic_only": True,
         },
-        "baseline_level_rule": {
-            "candidate": "column name contains baseline",
-            "excluded_dispersion_tokens": list(BASELINE_DISPERSION_TOKENS),
-            "require_exactly_one_level_candidate_for_accepted_convention": True,
-            "require_finite_baseline_for_every_finite_amplitude": True,
-            "unanchored_convention_is_non_accepting": True,
-            "incomplete_baseline_data_is_non_accepting": True,
-        },
+        "accepted_evidence_bases": sorted(ACCEPTED_EVIDENCE_BASES),
+        "evidence_map": str(args.evidence_map) if args.evidence_map else None,
         "max_rows": args.max_rows,
         "n_inputs": len(paths),
         "n_classified": len(classified),
@@ -213,6 +259,7 @@ def main(argv: list[str] | None = None) -> int:
         "n_nonnumeric_tables": n_nonnumeric_tables,
         "n_unresolved_absolute_baselines": n_unresolved_absolute_baselines,
         "n_unanchored_conventions": n_unanchored_conventions,
+        "n_unverified_conventions": n_unverified_conventions,
         "n_invalid_baseline_data_tables": n_invalid_baseline_data_tables,
         "n_skipped": sum(row["status"] == "SKIPPED" for row in tables),
         "n_errors": len(errors),
@@ -225,14 +272,13 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"inputs={len(paths)} absolute={counts['ABSOLUTE']} net={counts['NET']} "
         f"ambiguous={counts['AMBIGUOUS']} partial={n_partial} nonfinite={n_nonfinite_tables} "
-        f"nonnumeric={n_nonnumeric_tables} unresolved_absolute_baselines={n_unresolved_absolute_baselines} "
-        f"unanchored_conventions={n_unanchored_conventions} "
+        f"nonnumeric={n_nonnumeric_tables} unanchored={n_unanchored_conventions} "
+        f"unverified_physics={n_unverified_conventions} "
         f"invalid_baseline_data={n_invalid_baseline_data_tables} errors={len(errors)}"
     )
     return 1 if (
         errors or counts["AMBIGUOUS"] or n_partial or n_nonfinite_tables or n_nonnumeric_tables
-        or n_unresolved_absolute_baselines or n_unanchored_conventions
-        or n_invalid_baseline_data_tables
+        or n_unverified_conventions or n_invalid_baseline_data_tables
     ) else 0
 
 

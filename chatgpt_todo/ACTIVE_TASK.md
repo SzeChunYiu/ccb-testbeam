@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-008
+- **Task ID:** AUD-I885-001
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T12:14:45Z
-- **Initial main SHA:** `9681e44d94fa825bb8db6c84af31448df0ec0689`
-- **Implementation/evidence head:** `eb8791bd795d11a101d72a5d383a60baf0e19606`
-- **Scope:** independently review whether the PR #890 stopping-power diagnostic can accept quenched visible-energy output as if it were unquenched energy loss comparable with raw PSTAR total stopping power.
-- **Confirmed defect:** the legacy reader silently fell back from `edep_scint_raw_MeV` / `edep_raw_MeV` to quenched `edep_scint_MeV` / `edep_MeV` after a warning, then passed the value through the same tolerance gate. A one-row quenched-only synthetic table produced ratio `1.0` and `within_tolerance=True`.
-- **Validated change:** reject quenched-only input by default; permit it only through `--allow-quenched-proxy` as explicitly labelled, non-accepting diagnostic output; reject mixed raw/quenched semantics; record the deposit basis, raw-PSTAR comparability, arithmetic-only tolerance, and accepted tolerance separately.
-- **Files:** `scripts/single_stave/compare_stopping_power.py`, `tests/test_compare_stopping_power_quenched_proxy.py`, and `docs/validation/stopping_power_quenched_proxy_*`.
-- **Commands:** `python -m py_compile` over the stopping-power script and four focused test modules; focused pytest over reference path, reference domain, reference integrity, and quenched-proxy semantics; changed-file line-length plus JSON/SVG parse checks.
-- **Validation:** the exact pre-change fallback path was reproduced with a quenched-only ratio `1.0` accepted by the old tolerance gate; the corrected focused suite returned `18 passed in 2.86s`; committed script blob `ef535a47ee36b2706f6b720f0231648c23bc11a7` and test blob `af282789ce2e47ba680fa29296cdb81a7c45287f` match the validated files.
-- **Boundary:** this validates energy-deposit convention handling and fail-closed acceptance only. It does not verify the NIST transcription, Geant4 stopping-power physics, particle energy evolution, secondary escape, deuteron scaling, real simulation output, calibration, or detector performance.
-- **Status:** COMPLETE for the quenched-proxy acceptance gate and direct-to-main delivery; PARTIAL for scientific stopping-power closure under `AUD-G4-005` / `BLK-G4-SP-001`.
+- **Session stamp:** 2026-07-23T13:21:12Z
+- **Initial main SHA:** `2986da32c6b01d6f3f1b6ec90231ab5eeee436b1`
+- **Implementation/evidence head:** `467c007cd3526a762258a7f1d3f00563a37db8a8`
+- **Scope:** independently review the merged issue #885 proton/deuteron calibration campaign, its manifest, partial outputs, coverage wording, fit statistics, plots, and acceptance claims.
+- **Confirmed defects:** the summary used 72 total campaign files as the main-grid denominator; it collapsed unequal proton/deuteron energy coverage; the plotter displayed seed-averaged points but fitted per-seed rows; fit `n` counted files rather than independent energies; the deuteron line used only two independent energies and therefore has zero residual degrees of freedom after seed averaging.
+- **Validated change:** added a strict campaign-result validator with input hashes and focused tests; corrected the committed summary; quarantined P5/P5b and fit claims; added Markdown/JSON/SVG evidence.
+- **Files:** `tools/audit/validate_i885_campaign_results.py`, `tests/test_validate_i885_campaign_results.py`, `geant4/single_stave/results/i885_v1/{SUMMARY.md,AUDIT_INVALIDATION.md}`, and `docs/validation/i885_campaign_acceptance_*`.
+- **Commands:** `python -m py_compile`; focused `pytest`; validator runs against exact reconstructed manifest/CSV/fits/summary; JSON and SVG parse checks; Git blob hash comparisons.
+- **Validation:** focused tests returned `4 passed`; exact pre-correction bundle returned `FLAWED`, 20 issues and one partial-coverage warning; corrected-summary bundle returned `FLAWED`, 18 fit issues and one warning; measured coverage is 14/72 total files, 14/40 main-grid files, and 7/20 independent main-grid energy points.
+- **Boundary:** no Geant4 job or ROOT file was rerun. Per-file means remain partial simulation outputs. Calibration slopes, R² values, and P5/P5b remain quarantined until the generator seed-averages before fitting, records independent counts, requires at least three energies, and regenerates the bundle.
+- **Status:** COMPLETE for independent validation, coverage correction, quarantine, evidence, and direct-to-main delivery; PARTIAL for corrected campaign generation and scientific calibration acceptance.

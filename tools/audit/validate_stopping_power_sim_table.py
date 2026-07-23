@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Fail-closed validation for stopping-power simulation event CSV inputs.
 
-This tool validates the event-table contract used by
-``scripts/single_stave/compare_stopping_power.py`` without performing a PSTAR
-comparison. It is intended as a mandatory preflight while the legacy comparison
-entry point still accepts and silently skips some malformed rows.
+The parser in this module is the canonical simulation-table ingestion path for
+``scripts/single_stave/compare_stopping_power.py``. It validates every
+noncomment event row before any aggregation or PSTAR comparison is allowed.
 """
 from __future__ import annotations
 
@@ -18,7 +17,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Iterable
 
-TOOL_VERSION = "1.0.0"
+TOOL_VERSION = "1.1.0"
 ENERGY_ALIASES = ("ke_MeV", "kinetic_energy_MeV", "energy_MeV")
 RAW_EDEP_ALIASES = ("edep_scint_raw_MeV", "edep_raw_MeV")
 QUENCHED_EDEP_ALIASES = ("edep_scint_MeV", "edep_MeV")
@@ -32,6 +31,7 @@ PARTICLE_NAMES = {
 }
 RAW_BASIS = "UNQUENCHED_RAW"
 QUENCHED_BASIS = "QUENCHED_PROXY"
+NormalizedRow = tuple[str, float, float, float]
 
 
 class SimulationTableError(ValueError):
@@ -39,6 +39,7 @@ class SimulationTableError(ValueError):
 
 
 def sha256_file(path: Path) -> str:
+    """Return a lowercase SHA-256 digest of the exact input bytes."""
     digest = hashlib.sha256()
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
@@ -46,7 +47,10 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def populated_aliases(row: dict[str | None, str | None], aliases: Iterable[str]) -> list[str]:
+def populated_aliases(
+    row: dict[str | None, str | None], aliases: Iterable[str]
+) -> list[str]:
+    """Return aliases with nonempty values in the current CSV row."""
     return [
         alias
         for alias in aliases
@@ -62,6 +66,7 @@ def require_single_alias(
     line_no: int,
     quantity: str,
 ) -> str:
+    """Require exactly one populated alias for one physical quantity."""
     populated = populated_aliases(row, aliases)
     if not populated:
         raise SimulationTableError(
@@ -83,6 +88,7 @@ def parse_finite(
     line_no: int,
     quantity: str,
 ) -> float:
+    """Parse one required finite numeric field."""
     try:
         value = float(row[column])
     except (KeyError, TypeError, ValueError) as exc:
@@ -98,17 +104,11 @@ def parse_finite(
     return value
 
 
-def validate_simulation_table(
-    path: Path,
-    *,
-    allow_quenched_proxy: bool = False,
-) -> dict[str, object]:
-    """Validate every noncomment event row and return a provenance summary."""
+def _read_data_lines(path: Path) -> list[tuple[int, str]]:
     try:
         raw_lines = path.read_text().splitlines(keepends=True)
     except OSError as exc:
         raise SimulationTableError(f"cannot read simulation table {path}: {exc}") from exc
-
     data_lines = [
         (line_no, line)
         for line_no, line in enumerate(raw_lines, start=1)
@@ -116,7 +116,10 @@ def validate_simulation_table(
     ]
     if not data_lines:
         raise SimulationTableError(f"simulation table has no CSV header: {path}")
+    return data_lines
 
+
+def _validate_header(path: Path, data_lines: list[tuple[int, str]]) -> list[str]:
     header_line, header_text = data_lines[0]
     try:
         header = next(csv.reader([header_text]))
@@ -143,11 +146,23 @@ def validate_simulation_table(
             raise SimulationTableError(
                 f"simulation table {path} is missing a supported {quantity} column"
             )
+    return header
+
+
+def read_validated_simulation_table(
+    path: Path,
+    *,
+    allow_quenched_proxy: bool = False,
+) -> tuple[list[NormalizedRow], dict[str, object]]:
+    """Return normalized rows plus provenance after validating every event row."""
+    path = Path(path)
+    data_lines = _read_data_lines(path)
+    header = _validate_header(path, data_lines)
 
     particles: Counter[str] = Counter()
     energies: list[float] = []
     bases: set[str] = set()
-    rows_validated = 0
+    normalized_rows: list[NormalizedRow] = []
     reader = csv.DictReader([line for _, line in data_lines])
     for (line_no, _), row in zip(data_lines[1:], reader, strict=True):
         if None in row:
@@ -251,9 +266,9 @@ def validate_simulation_table(
         particles[particle] += 1
         energies.append(energy)
         bases.add(basis)
-        rows_validated += 1
+        normalized_rows.append((particle, energy, deposit, track_mm))
 
-    if rows_validated == 0:
+    if not normalized_rows:
         raise SimulationTableError(f"simulation table has no event rows: {path}")
     if len(bases) != 1:
         raise SimulationTableError(
@@ -261,7 +276,7 @@ def validate_simulation_table(
             "semantics across rows"
         )
     basis = next(iter(bases))
-    return {
+    summary: dict[str, object] = {
         "schema_version": 1,
         "tool": "tools/audit/validate_stopping_power_sim_table.py",
         "tool_version": TOOL_VERSION,
@@ -270,7 +285,7 @@ def validate_simulation_table(
         "input_bytes": path.stat().st_size,
         "input_sha256": sha256_file(path),
         "header": header,
-        "rows_validated": rows_validated,
+        "rows_validated": len(normalized_rows),
         "particle_counts": dict(sorted(particles.items())),
         "energy_min_MeV": min(energies),
         "energy_max_MeV": max(energies),
@@ -278,7 +293,22 @@ def validate_simulation_table(
         "raw_pstar_comparable": basis == RAW_BASIS,
         "all_noncomment_rows_validated": True,
         "silent_row_skipping_permitted": False,
+        "normalized_rows_returned": len(normalized_rows),
     }
+    return normalized_rows, summary
+
+
+def validate_simulation_table(
+    path: Path,
+    *,
+    allow_quenched_proxy: bool = False,
+) -> dict[str, object]:
+    """Validate every event row and return provenance without returning row data."""
+    _, summary = read_validated_simulation_table(
+        path,
+        allow_quenched_proxy=allow_quenched_proxy,
+    )
+    return summary
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:

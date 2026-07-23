@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -16,26 +17,45 @@ DIGEST = "a" * 64
 REFERENCE_DIGEST = "b" * 64
 
 
-def valid_record() -> dict[str, str]:
+def valid_record(
+    reference: str = "producer_contract.md",
+    reference_digest: str = REFERENCE_DIGEST,
+) -> dict[str, str]:
     return {
         "convention": "NET",
         "evidence_basis": "PRODUCER_CODE_PROVENANCE",
-        "evidence_reference": "src/pulse_builder.py@0123456789abcdef",
-        "evidence_reference_sha256": REFERENCE_DIGEST,
+        "evidence_reference": reference,
+        "evidence_reference_sha256": reference_digest,
     }
 
 
-def test_accepts_traceable_hash_bound_record(tmp_path: Path) -> None:
+def test_accepts_and_verifies_traceable_hash_bound_record(tmp_path: Path) -> None:
+    reference = tmp_path / "producer_contract.md"
+    reference.write_text("producer contract v1\n", encoding="utf-8")
+    reference_digest = hashlib.sha256(reference.read_bytes()).hexdigest()
     evidence = tmp_path / "evidence.json"
     output = tmp_path / "validated.json"
-    evidence.write_text(json.dumps({DIGEST: valid_record()}), encoding="utf-8")
+    evidence.write_text(
+        json.dumps({DIGEST: valid_record(reference.name, reference_digest)}),
+        encoding="utf-8",
+    )
 
     assert MODULE.main([str(evidence), "--output", str(output)]) == 0
     result = json.loads(output.read_text(encoding="utf-8"))
     record = result["records"][DIGEST]
     assert record["sha256"] == DIGEST
-    assert record["evidence_reference"] == "src/pulse_builder.py@0123456789abcdef"
-    assert record["evidence_reference_sha256"] == REFERENCE_DIGEST
+    assert record["evidence_reference"] == reference.name
+    assert record["evidence_reference_sha256"] == reference_digest
+    assert record["evidence_reference_measured_sha256"] == reference_digest
+    assert record["evidence_reference_verified"] is True
+    assert record["evidence_reference_resolved_path"] == str(reference.resolve())
+    assert result["n_verified_references"] == 1
+
+
+def test_schema_only_validation_cannot_claim_reference_verification() -> None:
+    record = MODULE.validate_payload({DIGEST: valid_record()})[DIGEST]
+    assert record["evidence_reference_verified"] is False
+    assert "evidence_reference_measured_sha256" not in record
 
 
 def test_rejects_record_without_evidence_reference() -> None:
@@ -54,8 +74,7 @@ def test_rejects_record_without_evidence_reference_digest() -> None:
 
 @pytest.mark.parametrize("reference_digest", ["B" * 64, "z" * 64, "b" * 63])
 def test_rejects_noncanonical_evidence_reference_digest(reference_digest: str) -> None:
-    record = valid_record()
-    record["evidence_reference_sha256"] = reference_digest
+    record = valid_record(reference_digest=reference_digest)
     with pytest.raises(ValueError, match="evidence_reference_sha256"):
         MODULE.validate_payload({DIGEST: record})
 
@@ -78,3 +97,35 @@ def test_rejects_invalid_basis() -> None:
     record["evidence_basis"] = "RAW_MEDIAN"
     with pytest.raises(ValueError, match="invalid evidence_basis"):
         MODULE.validate_payload({DIGEST: record})
+
+
+def test_rejects_declared_digest_that_does_not_match_reference_bytes(tmp_path: Path) -> None:
+    reference = tmp_path / "producer_contract.md"
+    reference.write_text("actual bytes\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="evidence_reference_sha256 mismatch"):
+        MODULE.validate_payload(
+            {DIGEST: valid_record(reference.name, "b" * 64)},
+            evidence_root=tmp_path,
+        )
+
+
+def test_rejects_missing_reference_file(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="references missing file"):
+        MODULE.validate_payload(
+            {DIGEST: valid_record("missing.md", "b" * 64)},
+            evidence_root=tmp_path,
+        )
+
+
+def test_rejects_reference_path_escape(tmp_path: Path) -> None:
+    outside = tmp_path.parent / "outside-reference.md"
+    outside.write_text("outside\n", encoding="utf-8")
+    outside_digest = hashlib.sha256(outside.read_bytes()).hexdigest()
+    try:
+        with pytest.raises(ValueError, match="escapes the configured evidence root"):
+            MODULE.validate_payload(
+                {DIGEST: valid_record(f"../{outside.name}", outside_digest)},
+                evidence_root=tmp_path,
+            )
+    finally:
+        outside.unlink(missing_ok=True)

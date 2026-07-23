@@ -2,128 +2,166 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T13:21:12Z
-- **Task:** `AUD-I885-001`
-- **Initial remote main:** `2986da32c6b01d6f3f1b6ec90231ab5eeee436b1`
-- **Validated implementation/evidence head:** `467c007cd3526a762258a7f1d3f00563a37db8a8`
-- **Coordination/archive head before this handoff:** `036079211edcd6021e9fdf73c603ca57908776b7`
+- **UTC:** 2026-07-23T14:23:31Z
+- **Task:** `AUD-I885-002`
+- **Initial remote main:** `27993fce7556e65decf8c760ac6f3a9d2928e0c7`
+- **Validated implementation/evidence head:** `84e901c0f0e649b2a635b4ff567b2ce4464c9690`
+- **Coordination/archive head before this handoff:** `b2d092c14d975babfee2f34bdf33f6c69576dde8`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Destination:** `main`
-- **Acceptance:** COMPLETE for independent validation, coverage correction, quarantine, focused tests, and audit evidence; PARTIAL / BLOCKED for regenerated and scientifically accepted calibration curves.
+- **Acceptance:** COMPLETE for seed-independence correction, partial-bundle regeneration, focused tests, model rejection, visual evidence, and direct-to-main delivery; PARTIAL / BLOCKED for an accepted proton/deuteron detector calibration.
 
 ## Start-of-run review
 
-- Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and writes were used.
-- Inspected current main history, merged PR #898, issue #885, open PRs, commit status, campaign plotter, manifest, partial CSV, fit JSON, summary, generated-result descriptions, and all mandatory `chatgpt_todo/` ledgers.
-- The session based its work on main commit `2986da32c6b01d6f3f1b6ec90231ab5eeee436b1`; no concurrent main change appeared during the direct-write sequence.
-- No branch, PR, force-push, history rewrite, or unrelated-file replacement was used.
-- PR #868 remains closed/unmerged and was not modified.
-- No status checks were attached to the initial or delivered heads; no GitHub Actions success is claimed.
+- Direct clone/fetch through system Git failed because the runtime could not resolve `github.com`; authenticated GitHub connector reads and direct writes were used.
+- Fetched latest `main`, recent history, PR #868, the issue #885 manifest, partial result CSV, legacy fit JSON, plotter, existing validator/tests, summary/invalidation, and mandatory `chatgpt_todo/` records.
+- Work was based on remote main `27993fce7556e65decf8c760ac6f3a9d2928e0c7`. Main was rechecked during the write sequence; no overlapping concurrent change was observed.
+- No branch, pull request, force-push, history rewrite, source-data modification, or unrelated-file deletion was used.
+- PR #868 is still closed, unmerged, and non-mergeable; it was not modified.
 
-## Scientific reconstruction and confirmed defects
+## Scientific reconstruction
 
-The issue #885 manifest defines 72 files:
+The manifest specifies 72 simulation files:
 
-- 40 main-grid files: two particles × ten energies × two seeds at `hit_x_cm = 0`;
+- 40 main-grid files: two particles × ten energies × two seeds;
 - 32 attenuation/timing files: two particles × two energies × four positions × two seeds.
 
-The committed partial result contains 14 files / 7,000 events, all on the main grid:
+The committed partial bundle contains 14 files / 7,000 simulated events:
 
-- proton: 2, 5, 8, 12, 20 MeV, two seeds each — 10 files / 5 independent energies;
-- deuteron: 2, 5 MeV, two seeds each — 4 files / 2 independent energies;
-- attenuation/timing: no committed configurations.
+- proton: 2, 5, 8, 12, 20 MeV, two seeds each — 10 files / five independent energies;
+- deuteron: 2, 5 MeV, two seeds each — four files / two independent energies;
+- no committed attenuation/timing configurations.
 
-Confirmed defects:
+Exact analysis input:
 
-1. `SUMMARY.md` reported `14/72 main-grid files`; 72 is the total campaign, while the main-grid denominator is 40.
-2. `Covered: deuteron, proton @ 2-20 MeV` collapsed unequal species coverage.
-3. `plot_i885_campaign.py` plots seed-averaged points but computes P5/P5b fits from the unaveraged per-seed rows.
-4. `i885_fits.json` reports `n=10` for five independent proton energies and `n=4` for two independent deuteron energies.
-5. A straight line through two deuteron energy points has zero residual degrees of freedom after seed averaging; its near-unity R² cannot validate a calibration.
-6. P6/P7 have no committed attenuation/timing coverage in the current bundle.
+- path: `geant4/single_stave/results/i885_v1/i885_per_config.csv`
+- bytes: 3,698
+- SHA-256: `1a712157f1cba06f9d3b3847217c381c31bdc581337612c92b02ccc82a1691d4`.
 
-The listed per-file simulation means remain partial repository-recorded simulation outputs. Calibration slopes, intercepts, R² values, P5/P5b overlays, and completed/shared-coverage wording are quarantined.
+## Confirmed defects
+
+1. The former P5/P5b plotter displayed seed-averaged points but performed regressions on unaveraged seed rows.
+2. Legacy fit `n` counted files rather than independent energies.
+3. The deuteron line used four files but only two energies; after seed averaging a two-parameter line has zero residual degrees of freedom.
+4. Fit records did not retain residual degrees of freedom, chi-square, p-value, coefficient uncertainty, range, or an explicit statistical model.
+5. High R-squared values masked severe failure of the global proton straight-line model relative to the recorded statistical errors.
 
 ## Validated implementation
 
-Added `tools/audit/validate_i885_campaign_results.py` v1.0.0. It:
+Added `scripts/single_stave/refit_i885_campaign.py` v1.0.0. It:
 
-- strictly parses the campaign manifest and observed result CSV;
-- checks unique configuration keys and observed-manifest membership;
-- derives total/main coverage and exact per-species energy lists;
-- audits summary numerator/denominator/species wording;
-- audits fit basis, file count, independent-energy count, legacy `n`, and minimum independent energies;
-- records exact paths, byte sizes, and SHA-256 for every input;
-- treats incomplete campaign coverage as a warning but returns nonzero for acceptance defects.
+- strictly validates columns, finite values, positive event counts, nonnegative SEMs, and unique `(particle, energy_MeV, hit_x_cm, seed)` rows;
+- forms exactly one point per particle and energy;
+- combines propagated within-file SEM and between-seed SEM in quadrature;
+- refuses a line below three independent energies;
+- performs weighted least squares when combined uncertainties are finite and positive;
+- records slope/intercept covariance and uncertainties, range, residual dof, chi-square, reduced chi-square, p-value, R-squared, RMSE, maximum residual, file count, energy count, fit basis, and assumptions;
+- accepts a line only when the preregistered goodness-of-fit p-value is at least 0.01;
+- separates accepted `fits`, `fit_rejections`, and insufficient-coverage `fit_skips`;
+- records exact input path, byte size, and SHA-256;
+- emits a deterministic, explicitly simulation-only SVG plus the seed-averaged-point CSV.
 
-Added `tests/test_validate_i885_campaign_results.py` covering the current failure modes, a valid partial campaign, an out-of-manifest configuration, and CLI provenance/status.
+Added `tests/test_refit_i885_campaign.py` with focused coverage for:
 
-Corrected and added:
+- independent-energy versus file counts;
+- deuteron skip at two energies;
+- fitting energy means rather than weighting energies by seed-row count;
+- nonlinear-model rejection;
+- duplicate configuration rejection;
+- traceable CLI JSON/SVG/CSV outputs.
 
+Regenerated/corrected:
+
+- `geant4/single_stave/results/i885_v1/i885_fits.json`
+- `geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv`
+- `geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg`
 - `geant4/single_stave/results/i885_v1/SUMMARY.md`
 - `geant4/single_stave/results/i885_v1/AUDIT_INVALIDATION.md`
-- `docs/validation/i885_campaign_acceptance_audit.md`
-- `docs/validation/i885_campaign_acceptance_validation.json`
-- `docs/validation/i885_campaign_acceptance.svg`
+- `docs/validation/i885_seed_averaged_refit_audit.md`
+- `docs/validation/i885_seed_averaged_refit_validation.json`.
 
-The SVG is explicitly a synthetic repository-audit schematic, not detector data, and communicates differences using text/shapes in addition to color.
+The accepted `fits` object is empty. Legacy coefficients no longer appear as accepted calibration records.
+
+## Quantitative result
+
+| response | species | files | independent energies | residual dof | reduced chi-square | goodness-of-fit p | status |
+|---|---|---:|---:|---:|---:|---:|---|
+| SiPM pe vs kinetic energy | proton | 10 | 5 | 3 | 357.9873 | `1.6218e-232` | LINEAR_MODEL_REJECTED |
+| Birks-visible vs kinetic energy | proton | 10 | 5 | 3 | 33391.6587 | below double-precision range | LINEAR_MODEL_REJECTED |
+| SiPM pe vs kinetic energy | deuteron | 4 | 2 | 0 | — | — | SKIPPED_INSUFFICIENT_ENERGY_POINTS |
+| Birks-visible vs kinetic energy | deuteron | 4 | 2 | 0 | — | — | SKIPPED_INSUFFICIENT_ENERGY_POINTS |
+
+The proton SiPM diagnostic still has R-squared 0.9868 and the Birks-visible diagnostic R-squared 0.9422. These values demonstrate that R-squared alone cannot authorize calibration.
+
+The rejection is conditional on independent Gaussian combined uncertainties and no systematic/model term. It is evidence against the stated global linear model, not proof of a particular nonlinear replacement.
 
 ## Reproducible validation
 
 ```text
 python -m py_compile \
-  tools/audit/validate_i885_campaign_results.py \
-  tests/test_validate_i885_campaign_results.py
+  scripts/single_stave/refit_i885_campaign.py \
+  tests/test_refit_i885_campaign.py
 
-python -m pytest tests/test_validate_i885_campaign_results.py -q
-4 passed in 0.60s
+python -m pytest tests/test_refit_i885_campaign.py -q
+6 passed
+
+python scripts/single_stave/refit_i885_campaign.py \
+  --observed geant4/single_stave/results/i885_v1/i885_per_config.csv \
+  --output-json geant4/single_stave/results/i885_v1/i885_fits.json \
+  --output-svg geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg \
+  --output-points geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv
+
+i885 refit: status=PARTIAL accepted=0 rejected=2 skipped=2
 ```
 
-Exact reconstructed inputs matched Git blobs:
+Additional checks completed:
 
-- manifest `15c4bb9ac99c1742e35225687ddcdf4341cae451`;
-- per-config CSV `d38a42b0696d106d1f15068f8d81ed76f91b1040`;
-- fit JSON `49bf41b359fbab42e4c583acacba7df2aac401c8`;
-- pre-correction summary `3ea2a10f0751a3a7bcbc3db79c6a9d73bd956ca4`.
+- generated JSON parsed;
+- SVG parsed and was visually inspected;
+- the plot states axes, units, provenance, uncertainty meaning, model rejection, deuteron skip, and `not detector data`;
+- marker shape and line style supplement visual distinctions;
+- repeated SVG generation was deterministic in the validation environment;
+- changed Python lines were no longer than 100 characters;
+- reconstructed relevant Git blobs matched the GitHub content identities used for review.
 
-Measured validator results:
+Not run:
 
-```text
-pre-correction bundle: status=FLAWED issues=20 warnings=1 exit=1
-corrected-summary bundle: status=FLAWED issues=18 warnings=1 exit=1
-```
+- full repository pytest;
+- ruff;
+- Geant4 compilation/CTest;
+- ROOT or raw simulation regeneration;
+- GitHub Actions.
 
-The summary correction removed the two coverage issues. The remaining 18 issues are fit-independence/provenance defects across four fit records. JSON parsed, SVG parsed as XML, and changed Python lines were within 100 characters.
-
-No Geant4 executable, ROOT file, real data, simulation rerun, accepted calibration, or detector-performance output was generated. Full repository pytest, ruff, CTest, and GitHub Actions were not run.
+No broader CI or detector-performance result is claimed.
 
 ## Direct-to-main commits
 
-Implementation and validation evidence:
+Implementation, tests, results, and evidence:
 
-- `189d785e068d9fec85796fdfb097bd2a3dc1fcea` — `feat(audit): validate issue 885 campaign acceptance`
-- `583fa57c9277262dcc72de0f1fa749b1419a3a5d` — `test(audit): cover issue 885 campaign acceptance`
-- `6945bbb4e314e3e57c8b181ba79468258c3ca7aa` — `docs(validation): record issue 885 campaign audit`
-- `1a66794b9a3ac3163a5efa3f4aeee2f9d0ebf02c` — `docs(i885): correct partial coverage and quarantine fits`
-- `a90a326c7f94ca210836aad0594fac59905db1f6` — `docs(i885): quarantine partial calibration fits`
-- `52f9f38b8dd733fd17e7993b4a918473f48d9a0d` — `docs(validation): add issue 885 campaign record`
-- `467c007cd3526a762258a7f1d3f00563a37db8a8` — `docs(validation): visualize issue 885 acceptance gate`
+- `5e88f2e0ef668e3decd0b5f3befed8a455dbfd0a` — `feat(i885): seed-average and validate calibration refits`
+- `6a0e81de1f48b6c3cb31228a65efbd4a6a91839a` — `test(i885): cover seed-averaged calibration refits`
+- `bacb74854150686c707baf339b60952c3c293691` — `data(i885): replace legacy fits with seed-averaged diagnostics`
+- `9eceb957d181584501bf5038512b7f5559d29282` — `data(i885): record seed-averaged calibration points`
+- `b5ab119cc1b4ec8346c5bbc8abb64aa6293c3ce9` — `docs(validation): record seed-averaged issue 885 refit audit`
+- `612adfcfcc0f028421e17753679372a806d5593e` — `docs(validation): add issue 885 refit validation record`
+- `3390495253c3f529efa7a0ff5c0718a5e16ea948` — `docs(i885): report rejected seed-averaged linear models`
+- `163dfb0c0c64b279cc6ee5c75d025645d254835d` — `fix(i885): stabilize compact SVG output`
+- `68891d39418950368af9421da558b36de415587b` — `docs(i885): visualize seed-averaged calibration rejection`
+- `84e901c0f0e649b2a635b4ff567b2ce4464c9690` — `docs(i885): supersede invalid per-seed calibration fits`.
 
 Coordination and provenance:
 
-- `c40abd2a5d9e5b932950059d71247c796034a9cf` — `docs(audit): claim issue 885 campaign acceptance task`
-- `c4bcd928b8c720086db9eb7ec73f664f4be300ce` — `docs(audit): track issue 885 calibration acceptance`
-- `c65dd3b8d9f29a9efa1ae3205e57f721cb2bece7` — `docs(audit): index issue 885 campaign defects`
-- `61adf3403838c24971fe382e4e1dcf876f983c58` — `docs(audit): map issue 885 result dependencies`
-- `9a7960c9c3cc728c2f729a2f93a3ada0dd11e096` — `docs(audit): record issue 885 study review`
-- `84385fdbf983080f2706cec1c289300c9a5a9341` — `docs(audit): classify issue 885 calibration claims`
-- `8088a19e37114f09bfd926b7fa7a5e90c9d741fb` — `docs(audit): register issue 885 visual evidence`
-- `8a0e148bcbb9cb646c2d62f101ff47d7a995313f` — `docs(audit): block unvalidated issue 885 calibration`
-- `036079211edcd6021e9fdf73c603ca57908776b7` — `docs(audit): archive issue 885 campaign acceptance`
+- `24e5a831db33bfe21e511052fa187e39e8b16b58` — `docs(audit): claim issue 885 seed-averaged refit task`
+- `31290cb1bb4dbd4e2ab6d64531d57faed85f6562` — `docs(audit): track issue 885 model-validation backlog`
+- `0d26d13bcee8a9453017534076a6d6647258b445` — `docs(audit): index issue 885 seed-averaged refit`
+- `943efa17da1e4488cb8a80d0d974a8d353c35f2f` — `docs(audit): map issue 885 seed-averaged diagnostics`
+- `c4077f74c6e70ec6e53e18ea18116159fe6bb536` — `docs(audit): classify issue 885 linear-model rejection`
+- `9993651fadeda62f741c3cb91c05ee656d78de95` — `docs(audit): register issue 885 model-rejection visual`
+- `47c4a5254962f543bf3af560f11fbd6269594a81` — `docs(audit): record issue 885 model rejection study`
+- `024f3f977111f2e8a836c36fdb1af746052d1601` — `docs(audit): refine issue 885 calibration blocker`
+- `b2d092c14d975babfee2f34bdf33f6c69576dde8` — `docs(audit): archive issue 885 seed-averaged refit`.
 
-Every write returned a successful direct-main commit SHA. Remote history confirmed the commits consecutively. `SESSION_LOG.md` was not overwritten because the connector has no safe append primitive and replacing an append-only file from partial retrieval could destroy prior records. The complete immutable session entry is retained at:
-
-`chatgpt_todo/archive/2026-07-23T132112Z_AUD-I885-001_CAMPAIGN_ACCEPTANCE.md`
+All writes returned successful direct-main commit SHAs. Remote history was checked throughout the sequence. No force-push or history rewrite occurred.
 
 ## Updated repository-local records
 
@@ -136,13 +174,17 @@ Every write returned a successful direct-main commit SHA. Remote history confirm
 - `VISUALIZATION_MATRIX.md`
 - `BLOCKERS.md`
 - `HANDOFF.md`
+- immutable archive `archive/2026-07-23T142331Z_AUD-I885-002_SEED_AVERAGED_REFIT.md`.
+
+`SESSION_LOG.md` was not replaced because the connector lacks a safe append operation and returned the long append-only file in truncated chunks. Reconstructing and replacing it from incomplete bytes could destroy prior provenance. The immutable archive above contains the complete session entry.
 
 ## Acceptance and next action
 
-- Independent validator and focused regression: COMPLETE (`4 passed`).
-- Coverage reconstruction and corrected public summary: COMPLETE.
-- Calibration-fit quarantine and visual evidence: COMPLETE.
-- Direct-to-main delivery: COMPLETE.
-- Corrected plotter/fits/P5/P5b regeneration: PARTIAL / BLOCKED under `BLK-I885-001`.
+- Seed-independence correction and focused regression: COMPLETE (`6 passed`).
+- Partial-bundle fit/point/visual regeneration: COMPLETE.
+- Global proton linear model: REJECTED under the stated statistical model.
+- Deuteron calibration fit: BLOCKED by only two independent energies.
+- Direct-to-main delivery: COMPLETE through the coordination/archive head above; this handoff commit follows directly on `main`.
+- Accepted calibration function and detector interpretation: BLOCKED under `BLK-I885-001` / `AUD-I885-003`.
 
-Next: modify `plot_i885_campaign.py` so all coverage is manifest-derived, fit inputs are seed-averaged unique energies, `n_files` and `n_energy_points` are distinct, fewer than three energies do not generate an accepted line, and fit range/residual/uncertainty diagnostics are retained. Regenerate P5/P5b and `i885_fits.json` from declared inputs and require zero validator issues before publishing calibration claims.
+Next: complete the campaign or freeze an independent validation subset, preregister physical nonlinear/saturation/quenching models and restricted energy ranges, compare them using held-out or newly generated energies, quantify seed/run/systematic uncertainty and coverage, and perform real-data closure before accepting calibration constants.

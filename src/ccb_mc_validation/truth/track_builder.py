@@ -168,6 +168,9 @@ def build_track_records(
                     "edep_l0": edep_by_layer.get(0, 0.0),
                     "edep_l1": edep_by_layer.get(1, 0.0),
                     "edep_tot": float(eds.sum()),
+                    # Per-layer edep vector (MV3-002 occupancy uses this as the actual
+                    # per-layer hit mask via >0; unblocks the fail-closed MV3 gate).
+                    "edep_per_layer": [edep_by_layer.get(lid, 0.0) for lid in range(int(n_b_layers))],
                     # stopping inference (TRU-003: observed != stopping)
                     "last_observed_layer": last_observed_layer,
                     "stop_layer": stop_layer,

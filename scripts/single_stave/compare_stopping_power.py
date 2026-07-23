@@ -21,7 +21,8 @@ Method
                S_deuteron(E) ~= S_proton(E/2). This is the standard Bragg-rule/
                effective-charge approximation; NIST PSTAR has no deuteron table.
     Reference lookup energies outside the committed PSTAR range are rejected;
-    the tool never clamps to an endpoint or extrapolates silently.
+    the tool never clamps to an endpoint or extrapolates silently. Reference
+    rows must be complete, finite, physical, and strictly increasing in energy.
 * Report: per-energy ratio S_sim/S_ref, delta %, and a numerical tolerance
   check (CCB_STOPPING_TOLERANCE_PCT, default 10%). This is DIAGNOSTIC_ONLY,
   not an accepted stopping-power closure.
@@ -63,6 +64,12 @@ DEFAULT_TOL = float(os.environ.get("CCB_STOPPING_TOLERANCE_PCT", "10.0"))
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
+REFERENCE_COLUMNS = (
+    "energy_MeV",
+    "electronic_MeV_cm2_g",
+    "nuclear_MeV_cm2_g",
+    "total_MeV_cm2_g",
+)
 
 
 class StoppingPowerInputError(ValueError):
@@ -79,22 +86,66 @@ def sha256_file(path: Path) -> str:
 
 
 def read_reference(path: Path) -> list[tuple[float, float, float, float]]:
-    """Return sorted [(energy_MeV, electronic, nuclear, total)] MeV cm^2/g."""
+    """Return a strictly validated PSTAR table in declared energy order."""
+    try:
+        with path.open() as f:
+            data_lines = [
+                (line_no, line)
+                for line_no, line in enumerate(f, start=1)
+                if line.strip() and not line.lstrip().startswith("#")
+            ]
+    except OSError as exc:
+        raise StoppingPowerInputError(
+            f"cannot read reference table {path}: {exc}"
+        ) from exc
+    if not data_lines:
+        raise StoppingPowerInputError(f"reference table has no CSV header: {path}")
+
+    header_line, header_text = data_lines[0]
+    header = next(csv.reader([header_text]))
+    missing = [column for column in REFERENCE_COLUMNS if column not in header]
+    if missing:
+        raise StoppingPowerInputError(
+            f"reference table {path} line {header_line} is missing required "
+            f"column(s): {', '.join(missing)}"
+        )
+
     rows = []
-    with path.open() as f:
-        rdr = csv.DictReader((ln for ln in f if not ln.lstrip().startswith("#")))
-        for r in rdr:
-            try:
-                e = float(r["energy_MeV"])
-                el = float(r["electronic_MeV_cm2_g"])
-                nu = float(r["nuclear_MeV_cm2_g"])
-                tot = float(r["total_MeV_cm2_g"])
-            except (KeyError, ValueError):
-                continue
-            rows.append((e, el, nu, tot))
+    previous_energy = None
+    rdr = csv.DictReader([line for _, line in data_lines])
+    for (line_no, _), row in zip(data_lines[1:], rdr, strict=True):
+        if None in row:
+            raise StoppingPowerInputError(
+                f"reference table {path} line {line_no} has excess fields"
+            )
+        try:
+            values = tuple(float(row[column]) for column in REFERENCE_COLUMNS)
+        except (KeyError, TypeError, ValueError) as exc:
+            raise StoppingPowerInputError(
+                f"reference table {path} line {line_no} has a missing or "
+                "nonnumeric required value"
+            ) from exc
+        e, el, nu, tot = values
+        if not all(math.isfinite(value) for value in values):
+            raise StoppingPowerInputError(
+                f"reference table {path} line {line_no} contains a nonfinite value"
+            )
+        if e <= 0 or el < 0 or nu < 0 or tot <= 0:
+            raise StoppingPowerInputError(
+                f"reference table {path} line {line_no} has nonphysical values "
+                f"energy={e!r}, electronic={el!r}, nuclear={nu!r}, total={tot!r}"
+            )
+        if previous_energy is not None and e <= previous_energy:
+            raise StoppingPowerInputError(
+                f"reference table {path} line {line_no} energy {e:g} MeV is not "
+                f"strictly greater than previous energy {previous_energy:g} MeV"
+            )
+        rows.append((e, el, nu, tot))
+        previous_energy = e
     if len(rows) < 2:
-        sys.exit(f"reference table too small: {path}")
-    rows.sort(key=lambda t: t[0])
+        raise StoppingPowerInputError(
+            f"reference table must contain at least two validated rows: {path}"
+        )
     return rows
 
 

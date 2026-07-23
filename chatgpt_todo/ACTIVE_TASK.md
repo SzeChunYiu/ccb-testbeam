@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-007
+- **Task ID:** AUD-G4-008
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T11:06:11Z
-- **Initial main SHA:** `9dc4005dd030e78d2523d8094fa16adffcfc0bd1`
-- **Implementation/evidence head:** `00dd74cda709a7f5c6489721f3c96077136b40e5`
-- **Scope:** independently review whether the PR #890 stopping-power diagnostic validates every committed PSTAR CSV row before interpolation and tolerance reporting.
-- **Confirmed defect:** the legacy parser silently skipped missing or nonnumeric rows, sorted surviving rows, and accepted duplicate/out-of-order energies plus nonfinite or nonphysical stopping values. A malformed middle row could disappear and the CLI could still print a numerical PASS.
-- **Validated change:** require all columns and rows, finite physical values, strictly increasing declared energies, and at least two rows; malformed references raise `StoppingPowerInputError`, return CLI status 2, and print no numerical PASS.
-- **Files:** `scripts/single_stave/compare_stopping_power.py`, `tests/test_compare_stopping_power_reference_integrity.py`, and `docs/validation/stopping_power_reference_integrity_*`.
-- **Commands:** `python -m py_compile` over the stopping-power script and three focused test modules; focused pytest over reference-path, reference-domain, and reference-integrity tests; changed-file line-length and JSON/SVG parse checks.
-- **Validation:** the exact pre-change blob `0436fb390476697cfc83f88208322a99d7792a1c` produced six expected regression failures; the corrected focused suite returned `14 passed in 2.94s`; committed script blob `7c3c05f12a1311d5ead8d1d45e0f5fea91dc92ce` matches the validated file.
-- **Boundary:** this validates local reference-table structure and fail-closed parsing only. It does not verify the NIST source transcription, Geant4 stopping-power physics, deuteron scaling, real simulation output, calibration, or detector performance.
-- **Status:** COMPLETE for PSTAR reference-integrity handling and direct-to-main delivery; PARTIAL for scientific stopping-power closure under `AUD-G4-005` / `BLK-G4-SP-001`.
+- **Session stamp:** 2026-07-23T12:14:45Z
+- **Initial main SHA:** `9681e44d94fa825bb8db6c84af31448df0ec0689`
+- **Implementation/evidence head:** `eb8791bd795d11a101d72a5d383a60baf0e19606`
+- **Scope:** independently review whether the PR #890 stopping-power diagnostic can accept quenched visible-energy output as if it were unquenched energy loss comparable with raw PSTAR total stopping power.
+- **Confirmed defect:** the legacy reader silently fell back from `edep_scint_raw_MeV` / `edep_raw_MeV` to quenched `edep_scint_MeV` / `edep_MeV` after a warning, then passed the value through the same tolerance gate. A one-row quenched-only synthetic table produced ratio `1.0` and `within_tolerance=True`.
+- **Validated change:** reject quenched-only input by default; permit it only through `--allow-quenched-proxy` as explicitly labelled, non-accepting diagnostic output; reject mixed raw/quenched semantics; record the deposit basis, raw-PSTAR comparability, arithmetic-only tolerance, and accepted tolerance separately.
+- **Files:** `scripts/single_stave/compare_stopping_power.py`, `tests/test_compare_stopping_power_quenched_proxy.py`, and `docs/validation/stopping_power_quenched_proxy_*`.
+- **Commands:** `python -m py_compile` over the stopping-power script and four focused test modules; focused pytest over reference path, reference domain, reference integrity, and quenched-proxy semantics; changed-file line-length plus JSON/SVG parse checks.
+- **Validation:** the exact pre-change fallback path was reproduced with a quenched-only ratio `1.0` accepted by the old tolerance gate; the corrected focused suite returned `18 passed in 2.86s`; committed script blob `ef535a47ee36b2706f6b720f0231648c23bc11a7` and test blob `af282789ce2e47ba680fa29296cdb81a7c45287f` match the validated files.
+- **Boundary:** this validates energy-deposit convention handling and fail-closed acceptance only. It does not verify the NIST transcription, Geant4 stopping-power physics, particle energy evolution, secondary escape, deuteron scaling, real simulation output, calibration, or detector performance.
+- **Status:** COMPLETE for the quenched-proxy acceptance gate and direct-to-main delivery; PARTIAL for scientific stopping-power closure under `AUD-G4-005` / `BLK-G4-SP-001`.

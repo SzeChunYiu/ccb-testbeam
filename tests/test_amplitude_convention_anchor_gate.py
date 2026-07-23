@@ -16,6 +16,8 @@ assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
+REFERENCE_SHA256 = "b" * 64
+
 
 def write(path: Path, amplitude: list[float], baseline: list[float] | None = None) -> None:
     data = {"amplitude_adc": amplitude}
@@ -73,6 +75,7 @@ def test_unique_pedestal_is_diagnostic_not_convention_proof(tmp_path: Path) -> N
         "convention": "ABSOLUTE",
         "evidence_basis": "INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE",
         "evidence_reference": "docs/contracts/PULSE_TABLE_CONTRACT.md",
+        "evidence_reference_sha256": REFERENCE_SHA256,
     }}), encoding="utf-8")
     assert MODULE.main([
         str(path), "--output", str(output), "--evidence-map", str(evidence)

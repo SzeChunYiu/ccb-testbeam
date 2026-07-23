@@ -2,109 +2,145 @@
 
 ## Session
 
-- **UTC:** 2026-07-23T11:06:11Z
-- **Task:** `AUD-G4-007`
-- **Initial remote main:** `9dc4005dd030e78d2523d8094fa16adffcfc0bd1`
-- **Implementation/evidence head:** `00dd74cda709a7f5c6489721f3c96077136b40e5`
-- **Coordination/archive head before this handoff:** `d825bbc1d465ce2c258a44356afdea08618eff9b`
+- **UTC:** 2026-07-23T12:14:45Z
+- **Task:** `AUD-G4-008`
+- **Initial remote main:** `9681e44d94fa825bb8db6c84af31448df0ec0689`
+- **Validated implementation/evidence head:** `eb8791bd795d11a101d72a5d383a60baf0e19606`
+- **Coordination/archive/session-log head before this handoff:** `7da55fb22112d1b42c1114703b441775f689194f`
 - **Repository:** `SzeChunYiu/ccb-testbeam`
 - **Destination:** `main`
-- **Acceptance:** COMPLETE for fail-closed PSTAR reference integrity; PARTIAL for accepted stopping-power physics closure.
+- **Acceptance:** COMPLETE for fail-closed quenched-proxy handling; PARTIAL for accepted stopping-power physics closure.
 
-## Start-of-run review
+## Start-of-run review and concurrency
 
-- A direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and direct-to-main writes were used.
-- Inspected current history/status, PR #890, the stopping-power script, reference-path/range tests, committed PSTAR CSV, and all relevant `chatgpt_todo/` records.
-- Initial head had no attached status checks. No GitHub Actions success is claimed.
-- No concurrent main commits appeared between the initial review and implementation writes. No force-push, branch rewrite, or unrelated-file deletion occurred.
+- A direct clone remained unavailable because the runtime could not resolve `github.com`; authenticated GitHub connector reads and direct-to-main writes were used.
+- Inspected current main history and concurrent changes, repository metadata, open pull requests, PR #890, commit status, the stopping-power script and focused tests, prior validation records, and every mandatory `chatgpt_todo/` coordination file.
+- The previous handoff head was `4bef9d97657c91ec5771830743629d5cda5eb95e`. A concurrent non-overlapping merge advanced main to session base `9681e44d94fa825bb8db6c84af31448df0ec0689` before implementation. Later concurrent documentation/QA merges were preserved because every contents write applied to the then-current `main`; no history was rewritten or force-pushed.
+- The selected stopping-power script was unchanged by the concurrent base update and remained pre-change blob `7c3c05f12a1311d5ead8d1d45e0f5fea91dc92ce`.
+- No status checks were attached to the initial or implementation/evidence heads. No GitHub Actions success is claimed.
+- PR #868 remains closed and unmerged and was not modified.
 
 ## Confirmed defect
 
-The former `read_reference()` silently skipped rows whose required values were missing or nonnumeric and then sorted the surviving rows. It also accepted duplicate or out-of-order energies, nonfinite values, negative stopping components, and nonpositive total stopping power.
+The former simulation reader preferred unquenched fields `edep_scint_raw_MeV` / `edep_raw_MeV`, but silently fell back to quenched visible-energy fields `edep_scint_MeV` / `edep_MeV` after printing a warning. The quenched value then passed through the same raw-PSTAR tolerance gate and could report `within_tolerance=True`.
 
-The exact pre-change blob was `0436fb390476697cfc83f88208322a99d7792a1c`. A synthetic three-row table with a malformed middle row demonstrated that the CLI could discard the row, return success, and print `NUMERICAL TOLERANCE: PASS`. The new regression produced six expected failures against the exact old implementation.
+A targeted reproduction of the exact old fallback path with one quenched-only synthetic event produced:
+
+```text
+WARNING: edep_scint_raw_MeV absent -- using the QUENCHED edep_scint_MeV; ratios vs raw PSTAR will look low.
+rows=1 ratio=1.0 within_tolerance=True
+```
+
+This is a physics-semantics error, not merely a missing warning. Geant4 Birks quenching is a nonlinear conversion from deposited energy to visible detector response, while NIST PSTAR total stopping power is collision plus nuclear projectile energy loss per unit path length. A quenched visible-energy proxy is not raw stopping power even when the numbers happen to agree.
+
+Primary method references reviewed:
+
+- Geant4 Collaboration, *Birks Quenching*, Book for Application Developers 11.4: `https://geant4.web.cern.ch/documentation/dev/bfad_html/ForApplicationDevelopers/Detector/birks.html`
+- NIST, *Description of PSTAR and ASTAR databases*: `https://physics.nist.gov/PhysRefData/Star/Text/programs.html`
+- NIST, *Significance of Calculated Quantities*: `https://physics.nist.gov/PhysRefData/Star/Text/appendix.html`
 
 ## Validated change
 
-`scripts/single_stave/compare_stopping_power.py` now requires:
+`scripts/single_stave/compare_stopping_power.py` now:
 
-- all four required reference columns;
-- every noncomment data row to contain parseable required values;
-- finite values only;
-- positive energy and total stopping power;
-- nonnegative electronic and nuclear components;
-- strictly increasing energy in declared file order;
-- at least two validated rows.
-
-Malformed reference data raises `StoppingPowerInputError`. The CLI returns status 2 and does not print a numerical PASS.
+- rejects quenched-only input by default with `StoppingPowerInputError` and CLI status 2;
+- adds `--allow-quenched-proxy` only for explicitly labelled diagnostic output;
+- rejects a file mixing raw and quenched rows because the aggregate has no single energy-deposit convention;
+- records `energy_deposit_basis` as `UNQUENCHED_RAW` or `QUENCHED_PROXY`;
+- records `raw_pstar_comparable`;
+- separates arithmetic-only `numeric_within_tolerance` from accepted `within_tolerance`;
+- forces accepted `within_tolerance=False` for every quenched proxy;
+- prints `NUMERICAL TOLERANCE: NOT_ACCEPTED_QUENCHED_PROXY` and exits nonzero in explicit proxy mode;
+- preserves normal diagnostic numeric behavior for unquenched raw input.
 
 Added:
 
-- `tests/test_compare_stopping_power_reference_integrity.py`
-- `docs/validation/stopping_power_reference_integrity_audit.md`
-- `docs/validation/stopping_power_reference_integrity_validation.json`
-- `docs/validation/stopping_power_reference_integrity.svg`
+- `tests/test_compare_stopping_power_quenched_proxy.py`
+- `docs/validation/stopping_power_quenched_proxy_audit.md`
+- `docs/validation/stopping_power_quenched_proxy_validation.json`
+- `docs/validation/stopping_power_quenched_proxy.svg`
+
+The four new tests cover default rejection, explicit labelled/non-accepting output plus CSV provenance, mixed-semantics rejection, and unchanged raw-input acceptance.
 
 ## Reproducible validation
 
 ```text
-python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py tests/test_compare_stopping_power_reference_integrity.py
-python -m pytest tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py tests/test_compare_stopping_power_reference_integrity.py -q
-14 passed in 2.94s
+python -m py_compile \
+  scripts/single_stave/compare_stopping_power.py \
+  tests/test_compare_stopping_power_reference_path.py \
+  tests/test_compare_stopping_power_energy_range.py \
+  tests/test_compare_stopping_power_reference_integrity.py \
+  tests/test_compare_stopping_power_quenched_proxy.py
+
+python -m pytest \
+  tests/test_compare_stopping_power_reference_path.py \
+  tests/test_compare_stopping_power_energy_range.py \
+  tests/test_compare_stopping_power_reference_integrity.py \
+  tests/test_compare_stopping_power_quenched_proxy.py -q
+
+18 passed in 2.86s
 ```
 
 Additional checks:
 
-- exact old-script regression: `6 failed, 1 passed in 1.08s` as expected;
+- exact old fallback reproduced a quenched-only ratio `1.0` with `within_tolerance=True`;
 - no changed Python line exceeded 100 characters;
-- JSON evidence parsed successfully;
-- SVG parsed successfully as XML;
-- validated script blob: `7c3c05f12a1311d5ead8d1d45e0f5fea91dc92ce`;
-- validated test blob: `31afa0144e18f7f9e598b60c8850fa6b9269b03e`.
+- validation JSON parsed successfully;
+- validation SVG parsed successfully as XML;
+- committed script blob `ef535a47ee36b2706f6b720f0231648c23bc11a7` matches the validated local Git blob;
+- committed test blob `af282789ce2e47ba680fa29296cdb81a7c45287f` matches the validated local Git blob;
+- reconstructed pre-append `SESSION_LOG.md` matched existing blob `87a06b62c74c6b29445cc0d590b84f73ee34cf9f`, and the append produced blob `5188115b58a863275c62df7930e35428a9f66f65` without changing prior bytes.
 
-The reference-path test used a synthetic local table covering self-test energies. The committed PSTAR CSV was inspected through GitHub but not materialized in the execution container. Full repository pytest, ruff, Geant4, ROOT, CTest, real simulation processing, and GitHub Actions were not run.
+The local reference fixture contained the energies required by the existing synthetic tests. The complete committed PSTAR table, real Geant4 event files, full repository pytest, ruff, CTest, real simulation processing, and GitHub Actions were not run.
 
 ## Visual evidence
 
-`docs/validation/stopping_power_reference_integrity.svg` is explicitly labelled as a synthetic regression schematic. It contrasts the former skip/sort path and possible numerical PASS with strict row rejection, status 2, and no numerical PASS. It is not detector data.
+`docs/validation/stopping_power_quenched_proxy.svg` is explicitly labelled as a synthetic regression schematic and not detector data. It contrasts:
+
+- the former quenched-field fallback, warning, and possible numerical PASS;
+- default status-2 rejection;
+- explicit `QUENCHED_PROXY` diagnostic output with `NOT_ACCEPTED_QUENCHED_PROXY`.
+
+The distinction is communicated by labels and layout, not color alone.
 
 ## Scientific interpretation
 
-The correction prevents corrupted or reordered local reference data from silently changing the numerical comparison. It does not establish a stopping-power closure or independently validate the external PSTAR transcription.
+The correction prevents a quenched detector-response proxy from masquerading as raw PSTAR agreement. It does not establish Geant4-to-PSTAR closure.
 
 Still unresolved under `AUD-G4-005` / `BLK-G4-SP-001`:
 
-- local deposited energy may differ from projectile total energy loss when secondaries escape;
-- particle energy evolves along the scored path;
-- material, density, production cuts, and physics list affect the comparison;
-- no direct proton closure was run here;
-- `S_d(E) ≈ S_p(E/2)` remains an approximation.
+- local deposited energy may differ from projectile total energy loss when generated secondaries escape;
+- projectile energy evolves along the scored path;
+- material, density, production cuts, and physics list affect the result;
+- deuteron `S_d(E) ≈ S_p(E/2)` remains an approximation;
+- the committed PSTAR transcription was not independently refreshed in this session.
 
-No Geant4 executable, ROOT file, real simulation, stopping-power measurement, calibration, or detector-performance result was generated.
+No Geant4 executable, ROOT file, real simulation, stopping-power measurement, calibration, or detector-performance output was generated.
 
 ## Direct-to-main commits
 
 Implementation and validation evidence:
 
-- `3174a0532b8cce11ff011b1992ec29d9a277ab13` — `fix(single-stave): validate PSTAR reference rows strictly`
-- `d927142cc28090be4739a29db288fb5336b23f95` — `test(single-stave): cover PSTAR reference-integrity gate`
-- `ef11a038e2d4f20403dbc95295819f12557fc4bc` — `docs(validation): record PSTAR reference-integrity audit`
-- `821df3c1dc52b696ab25b6c926b4eaf83919587e` — `docs(validation): add PSTAR reference-integrity record`
-- `00dd74cda709a7f5c6489721f3c96077136b40e5` — `docs(validation): visualize PSTAR reference-integrity gate`
+- `4b93451980ee116a1d11aa0ac513d3aa21b9fb0f` — `fix(single-stave): reject quenched PSTAR proxy acceptance`
+- `0aba2ed3eb40403da9169c51cf1ca299a25845b1` — `test(single-stave): cover quenched PSTAR proxy gate`
+- `6c1ee31c302ffc2ae925807ba950451832a09cf4` — `docs(validation): record quenched PSTAR proxy audit`
+- `1a4696418344db25b05d9a82ad208edc58d43153` — `docs(validation): add quenched PSTAR proxy record`
+- `eb8791bd795d11a101d72a5d383a60baf0e19606` — `docs(validation): visualize quenched PSTAR proxy gate`
 
 Coordination and provenance:
 
-- `462865b60ae1771229e3d4477916664d0cebeb65` — active task
-- `a06be9556c2135725244846804f94ddb1284ca28` — backlog
-- `f11206df4a0d034ce65975f528ba4ba988f51c6d` — master index
-- `50478adc6a74058f49fea1bcadc8283b1129d8e8` — code-result map
-- `f69fa4af0a050a07c6699d962b88b1d7a1d4abaf` — study ledger
-- `9a9660c50e77a5f03440d4776097dc1459182b62` — claim matrix
-- `5db94f9e919ebc8ebf3d39e9ce746033cb95ad0f` — visualization matrix
-- `eab90835adce5a2b05ac5a235417c29c505a40dc` — blocker register
-- `d825bbc1d465ce2c258a44356afdea08618eff9b` — immutable archive
+- `5126bf426bcfa1a379b82f7e78983aeba22a21b5` — `docs(audit): claim quenched PSTAR proxy gate`
+- `7b51eb86229bfea4f34b20084f4b4dac5c8cff25` — `docs(audit): track quenched PSTAR proxy gate`
+- `f19412297dd148e5917366942975037900881669` — `docs(audit): index quenched PSTAR proxy risk`
+- `f25d9963ddb59a1810d4ab26795c43e6dc02763b` — `docs(audit): map quenched proxy to PSTAR output`
+- `3ab7667b556e2ee94023f21186a7ae80b0ce1340` — `docs(audit): update stopping study input semantics`
+- `17762a456415dd3bd3c30a6171b2c8771493f6d9` — `docs(audit): classify quenched PSTAR proxy claim`
+- `6cc3272eaf43fa0cb9225f527896542ccbe372d0` — `docs(audit): register quenched PSTAR proxy visual`
+- `49a253646dc5613dba4ecfb963b206ccbaa48817` — `docs(audit): refine stopping blocker with quenched proxy gate`
+- `4975030e86cc1d46eceeedca61c08ea88119c0e6` — `docs(audit): archive quenched PSTAR proxy gate`
+- `7da55fb22112d1b42c1114703b441775f689194f` — `docs(audit): append quenched PSTAR proxy session`
 
-Every write returned a successful commit SHA on `main`. The remote head must be queried after this handoff write for final confirmation.
+Push/output record: every GitHub contents write returned a successful commit SHA directly on `main`. Recent remote history confirmed these commits in order while preserving concurrent non-overlapping commits. No task branch, draft PR, force-push, or history rewrite was used.
 
 ## Repository-local records
 
@@ -118,23 +154,23 @@ Updated:
 - `chatgpt_todo/CLAIM_EVIDENCE_MATRIX.md`
 - `chatgpt_todo/VISUALIZATION_MATRIX.md`
 - `chatgpt_todo/BLOCKERS.md`
+- `chatgpt_todo/SESSION_LOG.md`
 - `chatgpt_todo/HANDOFF.md`
 
-Added:
+Added immutable provenance:
 
-- `chatgpt_todo/archive/2026-07-23T110611Z_AUD-G4-007_PSTAR_REFERENCE_INTEGRITY.md`
-
-`SESSION_LOG.md` is append-only. The connector exposes complete-file replacement but no safe append primitive; replacing it without a checkout would risk changing prior history. The immutable archive contains the complete session entry. A checkout-capable follow-up should append it verbatim.
+- `chatgpt_todo/archive/2026-07-23T121445Z_AUD-G4-008_QUENCHED_PROXY_GATE.md`
 
 ## Acceptance and next action
 
-- Reference-row integrity gate: COMPLETE.
-- Declared-order and duplicate-energy gate: COMPLETE.
-- Nonfinite/nonphysical-value gate: COMPLETE.
-- CLI fail-closed behavior: COMPLETE.
-- Focused synthetic regression: COMPLETE.
+- Exact pre-change failure reproduction: COMPLETE.
+- Default quenched-input rejection: COMPLETE.
+- Explicit proxy labelling and non-acceptance: COMPLETE.
+- Mixed-semantics rejection: COMPLETE.
+- Raw-input compatibility: COMPLETE.
+- Focused synthetic regression: COMPLETE (`18 passed`).
 - Markdown/JSON/SVG evidence: COMPLETE.
-- Remote-main implementation/evidence: COMPLETE.
+- Direct-to-main implementation/evidence: COMPLETE.
 - Accepted stopping-power closure: PARTIAL / BLOCKED.
 
-Next task: execute `AUD-G4-005` in a clean Geant4 environment. Start with proton-only `G4EmCalculator::ComputeTotalDEDX` at exact reference energies and exact material/physics/cut configuration, then add primary entry/exit energy and secondary-escape diagnostics. Retain exact versions, commands, seeds, event counts, hashes, uncertainties, overlays/ratios, and failure interpretation. Keep the deuteron approximation separate.
+Next task: execute `AUD-G4-005` in a clean Geant4 environment. Start with proton-only `G4EmCalculator::ComputeTotalDEDX` at exact reference energies and exact material/physics/cut configuration, then add primary entry/exit-energy and secondary-escape diagnostics. Retain exact versions, commands, seeds, event counts, hashes, statistical/systematic uncertainties, overlays, ratios, and failure interpretation. Keep the deuteron approximation separate.

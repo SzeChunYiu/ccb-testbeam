@@ -77,3 +77,89 @@ def test_raw_visible_equality_is_warning_not_fake_quenching():
     result = mod.validate_events(df)
     assert result["passed"]
     assert any("exactly equal" in x for x in result["warnings"])
+
+
+def test_calibration_reports_uncertainties_and_model_comparison():
+    # Synthetic PE = 10*Edep + 0.5*x + noise across 4 runs / 2 species so that
+    # run-held-out, species-aware and position-aware models are all exercisable.
+    rng = np.random.default_rng(42)
+    n = 240
+    edep = rng.uniform(2.0, 40.0, n)
+    xpos = rng.uniform(-10.0, 10.0, n)
+    pe = 10.0 * edep + 0.5 * xpos + rng.normal(0.0, 1.0, n)
+    df = pd.DataFrame(
+        {
+            "run_id": np.array(["r0", "r1", "r2", "r3"])[np.arange(n) % 4],
+            "event_id": np.arange(n),
+            "species": np.where(np.arange(n) % 2 == 0, "proton", "deuteron"),
+            "kinetic_energy_MeV": 100.0,
+            "edep_scint_MeV": edep,
+            "edep_scint_raw_MeV": edep * 1.05,
+            "n_detected_pe": pe,
+            "entry_x_cm": xpos,
+            "n_scint_generated": (edep * 10000).astype(int),
+            "n_wls_generated": (edep * 500).astype(int),
+            "n_cerenkov_generated": 0,
+            "n_end_selected": (pe * 3).astype(int),
+        }
+    )
+    _, res = mod.heldout_calibration(df)
+    assert res["status"] == "ok"
+    assert res["split"] == "run-held-out"  # >=4 runs -> whole runs held out
+    u = res["unconstrained"]
+    assert np.isfinite(u["slope_se"]) and u["slope_se"] > 0
+    assert np.isfinite(u["intercept_se"]) and u["intercept_se"] > 0
+    assert abs(u["slope_pe_per_MeV"] - 10.0) < 1.0
+    o = res["through_origin"]
+    assert np.isfinite(o["slope_se"]) and o["slope_se"] > 0
+    assert res["model_comparison"]["line"]
+    assert "pooled_linear" in res["model_comparison"]["models"]
+    assert len(res["species_aware"]["per_species"]) == 2
+    assert res["position_aware"]["edep_slope_pe_per_MeV"] > 0
+
+
+def test_n_end_bound_uses_total_optical_categories():
+    # n_end_selected exceeds scintillation-only but is below the total over all
+    # generated optical-track categories -> must pass the defensible bound.
+    base = {
+        "run_id": ["r", "r"],
+        "event_id": [0, 1],
+        "species": ["proton", "proton"],
+        "kinetic_energy_MeV": [100.0, 100.0],
+        "edep_scint_MeV": [10.0, 10.0],
+        "n_scint_generated": [100, 100],
+        "n_wls_generated": [200, 200],
+        "n_cerenkov_generated": [50, 50],
+        "n_detected_pe": [10, 10],
+    }
+    ok = pd.DataFrame(base | {"n_end_selected": [150, 300]})  # both < 350 total
+    res_ok = mod.validate_events(ok)
+    assert res_ok["passed"]
+    assert res_ok["metrics"]["optical_bound_categories"] == [
+        "n_scint_generated",
+        "n_wls_generated",
+        "n_cerenkov_generated",
+    ]
+
+    bad = pd.DataFrame(base | {"n_end_selected": [150, 400]})  # 400 > 350 total
+    res_bad = mod.validate_events(bad)
+    assert not res_bad["passed"]
+    assert any("total generated optical" in f for f in res_bad["failures"])
+
+    # Only scintillation recorded -> an excess is not a hard failure (WLS/
+    # Cerenkov unrecorded), it is a warning.
+    scint_only = pd.DataFrame(
+        {
+            "run_id": ["r"],
+            "event_id": [0],
+            "species": ["proton"],
+            "kinetic_energy_MeV": [100.0],
+            "edep_scint_MeV": [10.0],
+            "n_scint_generated": [100],
+            "n_end_selected": [150],
+            "n_detected_pe": [10],
+        }
+    )
+    res_partial = mod.validate_events(scint_only)
+    assert res_partial["passed"]
+    assert any("bound is partial" in w for w in res_partial["warnings"])

@@ -353,13 +353,39 @@ def validate_events(df: pd.DataFrame) -> dict:
     if (df["n_detected_pe"] > df["n_end_selected"]).any():
         failures.append("n_detected_pe exceeds selected-end arrivals")
 
-    # Current event tree contains all generated optical categories.
+    # Defensible optical-chain bound: readout-end arrivals cannot exceed the
+    # TOTAL generated optical-track population, summed across every creator
+    # process the simulation records:
+    #   * scintillation (n_scint_generated)  -- always present
+    #   * wavelength-shifting re-emission (n_wls_generated)
+    #   * Cherenkov (n_cerenkov_generated)
+    # The older n_end_selected <= n_scint_generated inequality is NOT a general
+    # contract because WLS and Cerenkov tracks also feed the readout end. We sum
+    # only the categories actually present. When WLS/Cerenkov are recorded the
+    # total is a complete inventory and a violation is a hard failure; when only
+    # scintillation is present the comparison is necessarily partial (unrecorded
+    # WLS/Cerenkov could explain an excess), so it is downgraded to a warning.
     total_generated_cols = [
         c for c in ["n_scint_generated", "n_wls_generated", "n_cerenkov_generated"] if c in df
     ]
+    categories_present = list(total_generated_cols)
+    complete_bound = any(c in df for c in ("n_wls_generated", "n_cerenkov_generated"))
     total_generated = df[total_generated_cols].sum(axis=1)
+    bounded = total_generated > 0
+    if bounded.any():
+        ratio = df.loc[bounded, "n_end_selected"] / total_generated[bounded]
+        metrics["n_end_over_total_generated_max"] = float(ratio.max())
+        metrics["optical_bound_categories"] = categories_present
     if (df["n_end_selected"] > total_generated).any():
-        failures.append("selected-end arrivals exceed total generated optical tracks")
+        msg = (
+            "selected-end arrivals exceed total generated optical tracks ("
+            + "+".join(c.replace("_generated", "").replace("n_", "") for c in categories_present)
+            + ")"
+        )
+        if complete_bound:
+            failures.append(msg)
+        else:
+            warnings.append(msg + " -- only scintillation category recorded; bound is partial")
 
     for suffix in SENSOR_SUFFIXES:
         a, d, s = f"arrival_{suffix}", f"detected_{suffix}", f"pe_sat_{suffix}"
@@ -545,16 +571,118 @@ def group_summary(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["species", "kinetic_energy_MeV"])
 
 
+def _sigma68(x: np.ndarray) -> float:
+    """Half the central 68th-percentile width — a robust 1-sigma-like spread."""
+    if x.size == 0:
+        return float("nan")
+    return float((np.quantile(x, 0.84) - np.quantile(x, 0.16)) / 2.0)
+
+
+def _linear_fit_uncertain(x: np.ndarray, y: np.ndarray) -> dict:
+    """Unconstrained OLS y = slope*x + intercept with parameter standard errors.
+
+    Uncertainties come from numpy.polyfit's covariance (scaled by chi2/dof); a
+    closed-form OLS fallback is used if the covariance is unavailable.
+    """
+    n = int(len(x))
+    slope, intercept = np.polyfit(x, y, 1)
+    slope_se = math.nan
+    intercept_se = math.nan
+    if n > 2:
+        try:
+            (_s, _i), cov = np.polyfit(x, y, 1, cov=True)
+            if cov is not None and np.all(np.isfinite(cov)):
+                slope_se = float(np.sqrt(cov[0, 0]))
+                intercept_se = float(np.sqrt(cov[1, 1]))
+        except (TypeError, ValueError, np.linalg.LinAlgError):
+            pass
+    if not (np.isfinite(slope_se) and np.isfinite(intercept_se)):
+        xbar = float(np.mean(x))
+        sxx = float(np.sum((x - xbar) ** 2))
+        resid = y - (slope * x + intercept)
+        if n > 2 and sxx > 0:
+            sigma2 = float(np.dot(resid, resid) / (n - 2))
+            slope_se = float(np.sqrt(sigma2 / sxx))
+            intercept_se = float(np.sqrt(sigma2 * (1.0 / n + xbar**2 / sxx)))
+    return {
+        "slope_pe_per_MeV": float(slope),
+        "intercept_pe": float(intercept),
+        "slope_se": slope_se,
+        "intercept_se": intercept_se,
+        "n": n,
+    }
+
+
+def _origin_fit_uncertain(x: np.ndarray, y: np.ndarray) -> dict:
+    """Through-origin OLS y = slope*x with the standard error on the slope."""
+    n = int(len(x))
+    sxx = float(np.dot(x, x))
+    slope = float(np.dot(x, y) / sxx) if sxx > 0 else float("nan")
+    slope_se = math.nan
+    if n > 1 and sxx > 0:
+        resid = y - slope * x
+        sigma2 = float(np.dot(resid, resid) / (n - 1))
+        slope_se = float(np.sqrt(sigma2 / sxx))
+    return {"slope_pe_per_MeV": slope, "slope_se": slope_se, "n": n}
+
+
+def _position_aware_fit(x: np.ndarray, pos: np.ndarray, y: np.ndarray) -> dict | None:
+    """Multivariate OLS y = a*edep + b*position + c (position-decorrelated yield).
+
+    Returns None when the design matrix is rank-deficient (e.g. single position).
+    """
+    n = int(len(x))
+    if n <= 3 or np.ptp(pos) == 0:
+        return None
+    X = np.column_stack([x, pos, np.ones(n)])
+    try:
+        xtX = X.T @ X
+        cov_scale = np.linalg.inv(xtX)
+    except np.linalg.LinAlgError:
+        return None
+    coef, *_ = np.linalg.lstsq(X, y, rcond=None)
+    resid = X @ coef - y
+    dof = max(n - 3, 1)
+    sigma2 = float(np.dot(resid, resid) / dof)
+    se = np.sqrt(np.maximum(np.diag(sigma2 * cov_scale), 0.0))
+    return {
+        "edep_slope_pe_per_MeV": float(coef[0]),
+        "position_slope_pe_per_cm": float(coef[1]),
+        "intercept_pe": float(coef[2]),
+        "edep_slope_se": float(se[0]),
+        "position_slope_se": float(se[1]),
+        "intercept_se": float(se[2]),
+        "n": n,
+    }
+
+
 def heldout_calibration(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """Held-out PE<->Edep calibration with several models and a comparison line.
+
+    Models fit on a deterministic train split and compared on the held-out test
+    fraction by PE-space RMSE:
+      * pooled unconstrained linear  (PE = slope*E + intercept)
+      * pooled through-origin        (PE = slope*E)
+      * species-aware unconstrained  (one line per species)
+      * position-aware multivariate  (PE = a*E + b*x + c)
+    All reported fits carry parameter standard errors, and a human-readable
+    model-comparison line is returned for logging.
+    """
     d = df[
         np.isfinite(df["edep_scint_MeV"])
         & np.isfinite(df["n_detected_pe"])
         & (df["edep_scint_MeV"] > 0)
     ].copy()
     if len(d) < 100:
-        return d, {"status": "insufficient_events"}
+        return d, {
+            "status": "insufficient_events",
+            "model_comparison": {
+                "line": "insufficient events for calibration (<100 depositing)",
+                "models": {},
+            },
+        }
 
-    # Run-aware deterministic split. Whole runs are preferred when multiple runs exist.
+    # Run-aware deterministic split. Whole runs are held out when >=4 runs exist.
     run_values = sorted(d["run_id"].astype(str).unique())
     if len(run_values) >= 4:
         test_runs = {r for i, r in enumerate(run_values) if i % 4 == 0}
@@ -567,48 +695,101 @@ def heldout_calibration(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
         train = (key % 5) != 0
         split = "event-key-held-out"
 
-    x = d.loc[train, "edep_scint_MeV"].to_numpy(float)
-    y = d.loc[train, "n_detected_pe"].to_numpy(float)
-
-    # Report both unconstrained and origin-constrained models.
-    slope, intercept = np.polyfit(x, y, 1)
-    slope0 = float(np.dot(x, y) / np.dot(x, x))
     d["is_calibration_train"] = train
-    d["reco_edep_linear_MeV"] = (d["n_detected_pe"] - intercept) / slope
-    d["reco_edep_origin_MeV"] = d["n_detected_pe"] / slope0
+    x_tr = d.loc[train, "edep_scint_MeV"].to_numpy(float)
+    y_tr = d.loc[train, "n_detected_pe"].to_numpy(float)
+
+    # --- Pooled unconstrained + through-origin (with parameter uncertainties) ---
+    lin = _linear_fit_uncertain(x_tr, y_tr)
+    ori = _origin_fit_uncertain(x_tr, y_tr)
+    d["reco_edep_linear_MeV"] = (d["n_detected_pe"] - lin["intercept_pe"]) / lin["slope_pe_per_MeV"]
+    d["reco_edep_origin_MeV"] = d["n_detected_pe"] / ori["slope_pe_per_MeV"]
     for model in ("linear", "origin"):
         reco = d[f"reco_edep_{model}_MeV"]
         d[f"relative_residual_{model}"] = (reco - d["edep_scint_MeV"]) / d["edep_scint_MeV"]
 
-    test = d.loc[~train]
+    # Build train/test views AFTER the derived residual columns exist on d.
+    tr = d.loc[train]
+    te = d.loc[~train].copy()
+
+    def _pe_rmse(pred: np.ndarray) -> float:
+        return float(np.sqrt(np.mean((pred - te["n_detected_pe"].to_numpy(float)) ** 2)))
+
+    models: dict[str, dict] = {}
+
+    # Pooled unconstrained.
+    lin_pred = lin["slope_pe_per_MeV"] * te["edep_scint_MeV"].to_numpy(float) + lin["intercept_pe"]
+    lin_rel = te["relative_residual_linear"].to_numpy(float)
+    models["pooled_linear"] = {
+        **lin,
+        "test_rmse_pe": _pe_rmse(lin_pred),
+        "test_bias_median_fraction": float(np.median(lin_rel)),
+        "test_resolution_sigma68_fraction": _sigma68(lin_rel),
+    }
+
+    # Pooled through-origin.
+    ori_pred = ori["slope_pe_per_MeV"] * te["edep_scint_MeV"].to_numpy(float)
+    ori_rel = te["relative_residual_origin"].to_numpy(float)
+    models["through_origin"] = {
+        **ori,
+        "test_rmse_pe": _pe_rmse(ori_pred),
+        "test_bias_median_fraction": float(np.median(ori_rel)),
+        "test_resolution_sigma68_fraction": _sigma68(ori_rel),
+    }
+
+    # --- Species-aware unconstrained (one fit per species, >=30 train events) ---
+    species_fits: dict[str, dict] = {}
+    sp_pred = np.full(len(te), np.nan)
+    for species, g in tr.groupby("species", dropna=False):
+        if len(g) < 30:
+            continue
+        xf = g["edep_scint_MeV"].to_numpy(float)
+        yf = g["n_detected_pe"].to_numpy(float)
+        fit = _linear_fit_uncertain(xf, yf)
+        species_fits[str(species)] = fit
+        mask = te["species"].to_numpy() == species
+        if mask.any():
+            sp_pred[mask] = fit["slope_pe_per_MeV"] * te.loc[mask, "edep_scint_MeV"].to_numpy(float) + fit["intercept_pe"]
+    if species_fits and np.isfinite(sp_pred).any():
+        finite = np.isfinite(sp_pred)
+        sp_rel = ((sp_pred[finite] - te["n_detected_pe"].to_numpy(float)[finite])
+                  / sp_pred[finite])  # fractional PE residual (symmetric form)
+        models["species_aware"] = {
+            "per_species": species_fits,
+            "test_rmse_pe": float(np.sqrt(np.mean((sp_pred[finite] - te["n_detected_pe"].to_numpy(float)[finite]) ** 2))),
+            "test_bias_median_fraction": float(np.median(sp_rel)),
+        }
+
+    # --- Position-aware multivariate (PE = a*E + b*x + c) ---
+    if "entry_x_cm" in tr.columns:
+        pos_fit = _position_aware_fit(
+            x_tr, tr["entry_x_cm"].to_numpy(float), y_tr
+        )
+        if pos_fit is not None:
+            pa_pred = (
+                pos_fit["edep_slope_pe_per_MeV"] * te["edep_scint_MeV"].to_numpy(float)
+                + pos_fit["position_slope_pe_per_cm"] * te["entry_x_cm"].to_numpy(float)
+                + pos_fit["intercept_pe"]
+            )
+            models["position_aware"] = {
+                **pos_fit,
+                "test_rmse_pe": _pe_rmse(pa_pred),
+            }
+
+    comparison = " | ".join(
+        f"{name}: RMSE={m.get('test_rmse_pe', float('nan')):.1f} PE"
+        for name, m in models.items()
+    )
     return d, {
         "status": "ok",
         "split": split,
         "n_train": int(train.sum()),
         "n_test": int((~train).sum()),
-        "unconstrained": {
-            "slope_pe_per_MeV": float(slope),
-            "intercept_pe": float(intercept),
-            "test_bias_median_fraction": float(test["relative_residual_linear"].median()),
-            "test_resolution_sigma68_fraction": float(
-                (
-                    np.quantile(test["relative_residual_linear"], 0.84)
-                    - np.quantile(test["relative_residual_linear"], 0.16)
-                )
-                / 2
-            ),
-        },
-        "through_origin": {
-            "slope_pe_per_MeV": slope0,
-            "test_bias_median_fraction": float(test["relative_residual_origin"].median()),
-            "test_resolution_sigma68_fraction": float(
-                (
-                    np.quantile(test["relative_residual_origin"], 0.84)
-                    - np.quantile(test["relative_residual_origin"], 0.16)
-                )
-                / 2
-            ),
-        },
+        "unconstrained": models["pooled_linear"],
+        "through_origin": models["through_origin"],
+        "species_aware": models.get("species_aware", {"status": "insufficient_per_species"}),
+        "position_aware": models.get("position_aware", {"status": "position_column_absent"}),
+        "model_comparison": {"line": comparison, "models": models},
     }
 
 
@@ -684,7 +865,8 @@ def make_event_plots(
     # SS-03 detected PE versus deposited energy
     d = df[np.isfinite(df["edep_scint_MeV"]) & np.isfinite(df["n_detected_pe"])].copy()
     fig, ax = plt.subplots(figsize=(8, 5))
-    hb = ax.hexbin(d["edep_scint_MeV"], d["n_detected_pe"], gridsize=60, mincnt=1, bins="log")
+    ds = downsample(d, max_points, seed)
+    hb = ax.hexbin(ds["edep_scint_MeV"], ds["n_detected_pe"], gridsize=60, mincnt=1, bins="log")
     fig.colorbar(hb, ax=ax, label="log10(events/bin)")
     slope, intercept = np.polyfit(d["edep_scint_MeV"], d["n_detected_pe"], 1)
     xline = np.linspace(d["edep_scint_MeV"].min(), d["edep_scint_MeV"].max(), 100)
@@ -699,22 +881,25 @@ def make_event_plots(
     d = df.copy()
     d["n_optical_generated_total"] = d[total_cols].sum(axis=1)
     fig, ax = plt.subplots(figsize=(8, 5))
-    hb = ax.hexbin(d["n_optical_generated_total"], d["n_end_selected"], gridsize=60, mincnt=1, bins="log")
+    ds = downsample(d, max_points, seed)
+    hb = ax.hexbin(ds["n_optical_generated_total"], ds["n_end_selected"], gridsize=60, mincnt=1, bins="log")
     fig.colorbar(hb, ax=ax, label="log10(events/bin)")
     ax.set_xlabel("Generated optical tracks (scintillation + WLS + Cerenkov)")
     ax.set_ylabel("Readout-end arrivals")
     add("SS-04", "Optical collection chain", fig, "arrival_vs_generated", d[["species", "kinetic_energy_MeV", "n_optical_generated_total", "n_end_selected"]])
 
     # SS-05 detected versus arrived
+    d = df[np.isfinite(df["n_end_selected"]) & np.isfinite(df["n_detected_pe"])].copy()
     fig, ax = plt.subplots(figsize=(8, 5))
-    hb = ax.hexbin(df["n_end_selected"], df["n_detected_pe"], gridsize=60, mincnt=1, bins="log")
+    ds = downsample(d, max_points, seed)
+    hb = ax.hexbin(ds["n_end_selected"], ds["n_detected_pe"], gridsize=60, mincnt=1, bins="log")
     fig.colorbar(hb, ax=ax, label="log10(events/bin)")
-    lim = max(float(df["n_end_selected"].max()), 1)
+    lim = max(float(d["n_end_selected"].max()), 1)
     ax.plot([0, lim], [0, lim], linestyle="--", label="100%")
     ax.set_xlabel("Readout-end arrivals")
     ax.set_ylabel("Detected readout PE")
     ax.legend()
-    add("SS-05", "Detection stage response", fig, "detected_vs_arrival", df[["species", "kinetic_energy_MeV", "n_end_selected", "n_detected_pe"]])
+    add("SS-05", "Detection stage response", fig, "detected_vs_arrival", d[["species", "kinetic_energy_MeV", "n_end_selected", "n_detected_pe"]])
 
     # SS-06 collection efficiency
     d = df[d["n_scint_generated"] > 0].copy()
@@ -918,6 +1103,61 @@ def make_event_plots(
         ax.tick_params(axis="x", rotation=25)
         add("SS-20", "Optical-arrival sharing among sensors", fig, "sensor_arrival_shares", shares)
 
+    # SS-27 detected-PE response distribution (fundamental response shape per species)
+    d = df[np.isfinite(df["n_detected_pe"]) & (df["n_detected_pe"] >= 0)].copy()
+    fig, ax = plt.subplots(figsize=(8, 5))
+    rows = []
+    for species, g in d.groupby("species"):
+        vals = g["n_detected_pe"].to_numpy(float)
+        ax.hist(vals, bins=60, histtype="step", linewidth=1.5, label=f"{species} (n={len(vals)})")
+        rows.extend({"species": species, "n_detected_pe": float(v)} for v in vals)
+    ax.set_xlabel("Detected readout PE")
+    ax.set_ylabel("Events")
+    ax.set_yscale("log")
+    ax.legend()
+    add("SS-27", "Detected-PE response distribution", fig, "pe_distribution", pd.DataFrame(rows))
+
+    # SS-28 Birks suppression profile: binned visible/raw vs raw dE/dx, with the
+    # theoretical Birks factor 1/(1+kB*dE/dx) overlaid. Directly exercises the
+    # defect-2 separation between edep_scint_MeV (visible) and edep_scint_raw_MeV.
+    if {"edep_scint_raw_MeV", "track_length_scint_mm"}.issubset(df.columns):
+        d = df[
+            np.isfinite(df["edep_scint_raw_MeV"])
+            & np.isfinite(df["edep_scint_MeV"])
+            & np.isfinite(df["track_length_scint_mm"])
+            & (df["edep_scint_raw_MeV"] > 0)
+            & (df["track_length_scint_mm"] > 0)
+        ].copy()
+        d["dEdx_raw_MeV_per_mm"] = d["edep_scint_raw_MeV"] / d["track_length_scint_mm"]
+        d["visible_over_raw"] = d["edep_scint_MeV"] / d["edep_scint_raw_MeV"]
+        prof = quantile_profile(d, "dEdx_raw_MeV_per_mm", "visible_over_raw", bins)
+        fig, ax = plt.subplots(figsize=(8, 5))
+        ds = downsample(d, max_points, seed)
+        ax.scatter(ds["dEdx_raw_MeV_per_mm"], ds["visible_over_raw"], s=4, alpha=0.2, label="events")
+        theoretical_label = None
+        if not prof.empty:
+            ax.plot(prof["x_median"], prof["y_median"], color="crimson", marker="o", lw=2, label="median profile")
+            ax.fill_between(prof["x_median"], prof["y_p16"], prof["y_p84"], color="crimson", alpha=0.15)
+            # Theoretical Birks factor. Prefer the run's own kB if recorded per
+            # event; otherwise the polystyrene simulation default (AppConfig.hh).
+            if "birks_kB_mm_per_MeV" in d.columns and d["birks_kB_mm_per_MeV"].notna().any():
+                kB = float(d["birks_kB_mm_per_MeV"].dropna().median())
+                theoretical_label = f"Birks 1/(1+kB·dE/dx), kB={kB:g}"
+            else:
+                kB = 0.126  # AppConfig.hh polystyrene default (mm/MeV)
+                theoretical_label = "Birks 1/(1+kB·dE/dx), kB=0.126 (sim default)"
+            xs = np.linspace(float(d["dEdx_raw_MeV_per_mm"].min()), float(d["dEdx_raw_MeV_per_mm"].max()), 200)
+            ax.plot(xs, 1.0 / (1.0 + kB * xs), color="black", linestyle="--", label=theoretical_label)
+        ax.axhline(1.0, color="grey", linewidth=0.8)
+        ax.set_xlabel("Raw dE/dx [MeV/mm]")
+        ax.set_ylabel("Recorded visible/raw deposited energy")
+        ax.legend()
+        src = prof if not prof.empty else d[["species", "kinetic_energy_MeV", "edep_scint_raw_MeV", "edep_scint_MeV", "dEdx_raw_MeV_per_mm", "visible_over_raw"]]
+        add(
+            "SS-28", "Birks suppression profile", fig, "birks_suppression_profile", src,
+            "Median visible/raw should track 1/(1+kB·dE/dx); a flat 1.0 exposes the raw/visible bookkeeping bug.",
+        )
+
     return records, summary, cal_result
 
 
@@ -1100,6 +1340,9 @@ def main() -> int:
     }
     (args.output / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True))
     write_manifest(args.output, event_paths + photon_paths, args)
+
+    if calibration.get("model_comparison", {}).get("line"):
+        print("MODEL_COMPARISON " + calibration["model_comparison"]["line"], file=sys.stderr)
 
     print(json.dumps(result, indent=2))
     if result["status"] == "FAIL":

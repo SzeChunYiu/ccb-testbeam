@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-015
+- **Task ID:** AUD-G4-016
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T202812Z
-- **Initial remote main SHA:** `905a83ce1723b10dafab46887a76aa48378f2234`
-- **Validated implementation/evidence head:** `08f615f6b6edefa363eee086930e1eb0867474bb`
-- **Scope:** prevent a stopping-power point estimate inside an arbitrary percentage tolerance from masquerading as accepted agreement when no uncertainty has been evaluated.
-- **Confirmed defect:** a one-event direct-proton synthetic ratio of exactly 1.0 set `within_tolerance=true`, printed `NUMERICAL TOLERANCE: PASS`, and returned status 0 despite having no statistical or systematic uncertainty model. Forty repeated identical rows produced the same acceptance.
-- **Validated change:** retain the numerical point-estimate diagnostic, but record `uncertainty_method=NOT_EVALUATED`, `uncertainty_evaluated=false`, explicit acceptance state, `within_tolerance=false`, row status `POINT_ONLY`, non-accepting CLI status 1, and an arithmetic-only self-test boundary.
-- **Commands:** focused `py_compile`; focused pytest over uncertainty, energy grouping, quenched proxy, PSTAR component provenance, and deuteron proxy modules; exact old-blob regression; JSON/SVG parsing; line-length and hash checks.
-- **Validation:** `19 passed in 3.77s`; the new four-test module produced `4 failed` against exact pre-change blob `8b9c0c...`; JSON and SVG parsed; maximum changed Python line length is 97 characters.
-- **Evidence:** `docs/validation/stopping_power_uncertainty_gate_audit.md`, `stopping_power_uncertainty_gate_validation.json`, and `stopping_power_uncertainty_gate.svg`.
-- **Boundary:** no uncertainty budget, real Geant4 event table, projectile-energy-loss closure, calibration, or detector-performance result was produced. A future accepted result requires preregistered statistical/systematic uncertainty and an accepted physics observable.
-- **Status:** COMPLETE for `AUD-G4-015`; real-export execution and accepted physics closure remain PARTIAL/BLOCKED.
+- **Session stamp:** 2026-07-23T210542Z
+- **Initial remote main SHA:** `5c64e283594f1ef23d0685eac7b8249d45f1670b`
+- **Validated implementation/evidence head:** `cff8a9f076f334333e938444a34168e4643f1e5f`
+- **Scope:** prevent six-significant-digit report serialization from destroying the identity of exact configured-energy comparison points and other floating-point results.
+- **Confirmed defect:** exact-energy grouping retained distinct floats `1.0000001` and `1.0000002`, but CSV `.6g` serialization wrote both as `1` and the terminal table printed both as `1.00`, making downstream reconstruction and visual distinction impossible.
+- **Validated change:** use Python round-trip `repr` for every finite float in the CSV, reject nonfinite output, record `PYTHON_REPR_ROUND_TRIP`, and print configured energies with the same round-trip representation.
+- **Commands:** focused `py_compile`; focused pytest; exact pre-change Git-blob reconstruction and negative control; JSON/SVG parsing; line-length and Git-blob checks.
+- **Validation:** `3 passed in 0.03s`; exact old blob `c3884d9...` produced `2 failed, 1 passed`; changed Python lines are at most 93 characters; generated JSON and SVG parsed.
+- **Evidence:** `docs/validation/stopping_power_report_precision_audit.md`, `stopping_power_report_precision_validation.json`, and `stopping_power_report_precision.svg`.
+- **Boundary:** serialization identity is corrected, but no uncertainty budget, real Geant4 export, accepted projectile-energy-loss observable, calibration, or detector-performance result was produced.
+- **Status:** COMPLETE for `AUD-G4-016`; accepted stopping-power physics closure remains PARTIAL/BLOCKED.

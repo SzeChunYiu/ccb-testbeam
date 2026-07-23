@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620">
+  <rect width="1120" height="620" fill="white"/>
+  <text x="560" y="42" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="bold">Canonical PSTAR component-sum gate</text>
+  <text x="560" y="72" text-anchor="middle" font-family="sans-serif" font-size="16">Synthetic regression evidence — not detector data</text>
+
+  <rect x="55" y="115" width="460" height="410" rx="12" fill="#f7f7f7" stroke="#333" stroke-width="2"/>
+  <text x="285" y="150" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="bold">Former independent parser</text>
+  <rect x="100" y="185" width="370" height="66" rx="8" fill="#fff" stroke="#555"/>
+  <text x="285" y="214" text-anchor="middle" font-family="monospace" font-size="16">reference row: 1, 9, 1, 8</text>
+  <text x="285" y="238" text-anchor="middle" font-family="sans-serif" font-size="15">finite + positive + ordered</text>
+  <path d="M285 252 L285 305" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="125" y="310" width="320" height="70" rx="8" fill="#fff4d6" stroke="#7a5a00" stroke-width="2"/>
+  <text x="285" y="340" text-anchor="middle" font-family="sans-serif" font-size="17">Cross-column identity not checked</text>
+  <text x="285" y="365" text-anchor="middle" font-family="monospace" font-size="16">9 + 1 ≠ 8</text>
+  <path d="M285 381 L285 430" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="125" y="435" width="320" height="60" rx="8" fill="#ffdede" stroke="#8b0000" stroke-width="2"/>
+  <text x="285" y="471" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">Could reach numerical ratio</text>
+
+  <rect x="605" y="115" width="460" height="410" rx="12" fill="#f7f7f7" stroke="#333" stroke-width="2"/>
+  <text x="835" y="150" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="bold">Shared canonical validator v1.1.0</text>
+  <rect x="650" y="185" width="370" height="66" rx="8" fill="#fff" stroke="#555"/>
+  <text x="835" y="214" text-anchor="middle" font-family="monospace" font-size="16">reference row: 1, 9, 1, 8</text>
+  <text x="835" y="238" text-anchor="middle" font-family="sans-serif" font-size="15">exact written decimals retained</text>
+  <path d="M835 252 L835 305" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="675" y="310" width="320" height="70" rx="8" fill="#e8f1ff" stroke="#1f4e79" stroke-width="2"/>
+  <text x="835" y="338" text-anchor="middle" font-family="sans-serif" font-size="17">Rounding intervals compared</text>
+  <text x="835" y="365" text-anchor="middle" font-family="monospace" font-size="16">electronic + nuclear vs total</text>
+  <path d="M835 381 L835 430" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="675" y="435" width="320" height="60" rx="8" fill="#e4f7e4" stroke="#1b6b1b" stroke-width="2"/>
+  <text x="835" y="462" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">Status 2 — no output CSV</text>
+  <text x="835" y="486" text-anchor="middle" font-family="sans-serif" font-size="15">No “NUMERICAL TOLERANCE: PASS”</text>
+
+  <line x1="55" y1="555" x2="1065" y2="555" stroke="#777"/>
+  <text x="560" y="583" text-anchor="middle" font-family="sans-serif" font-size="15">Acceptance: one parser, exact input SHA-256/bytes/row count/version, fail closed on inconsistent totals</text>
+  <text x="560" y="606" text-anchor="middle" font-family="sans-serif" font-size="14">Scientific boundary: parser integrity only; Geant4 stopping-power closure remains DIAGNOSTIC_ONLY</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

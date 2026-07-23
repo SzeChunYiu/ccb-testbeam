@@ -674,7 +674,18 @@ class PipelineOrchestrator:
 
     def plot(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        if (path / "VALIDATION.json").is_file():
+        val_path = path / "VALIDATION.json"
+        if val_path.is_file():
+            # Fail-closed (VAL-003): plots require a PASSING validation, not just a file.
+            try:
+                _val = json.loads(val_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                _val = {}
+            if _val.get("status") != "PASS":
+                result = {"status": STATUS_BLOCKED, "reason": f"plotting gated on VALIDATION.status==PASS (got {_val.get('status')!r})"}
+                atomic_write_json(path / "figures" / "PLOT_BLOCKED.json", result)
+                self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
+                return result
             artifacts = generate_run_summary(path)
             figure_manifest = generate_summary_figure_manifest(path)
             visual_review = generate_summary_visual_review(path)

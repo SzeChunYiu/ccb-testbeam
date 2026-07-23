@@ -1,0 +1,17 @@
+# vis_raytracer.mac - headless Geant4 RayTracer render of the single stave.
+# Build with -DCCB_ENABLE_VIS=ON, then:
+#   ccb_stave_sim --macro macros/vis_raytracer.mac --optical-dir optical \
+#                 --output /tmp/vis_dummy.root
+# RayTracer is a pure-software (CPU) renderer: it writes a JPEG with no X
+# display, so this runs on a headless batch node. Output: g4RayTracer.viewer-0_0000.jpeg
+# (geometry too long/thin to resolve the sub-mm cladding at stave scale; see
+#  figures/geometry/ for the dimensionally-exact cross-section schematics and
+#  ccb_stave_geometry.wrl for the full interactive VRML2 export).
+/vis/open RayTracer
+/vis/drawVolume
+/vis/viewer/set/viewpointThetaPhi 60 28
+/vis/viewer/set/style surface
+/vis/viewer/set/lineSegmentsPerCircle 120
+/vis/viewer/zoom 2.0
+/vis/scene/add/axes 0 0 0 4 cm
+/vis/viewer/flush

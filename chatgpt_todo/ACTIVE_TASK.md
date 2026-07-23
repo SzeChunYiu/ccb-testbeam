@@ -1,12 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-AMP-006
+- **Task ID:** AUD-AMP-009
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T02:05:18Z
-- **Base main SHA:** `5e00ec10368a893d3ae4d92398f18dc777e4f044`
-- **Scope:** require every hash-bound amplitude-convention record to identify the actual schema, producer-code, or reviewed pedestal artifact supporting the physics convention.
-- **Finding:** v2.9.0 of `amplitude_convention_audit.py` can accept an evidence record containing only `convention` and `evidence_basis`; the record need not identify a reviewable source. Its loader also accepts noncanonical 64-character digest keys.
-- **Change:** added `tools/audit/validate_amplitude_evidence_map.py` v1.0.0, which requires canonical lowercase hexadecimal SHA-256 keys, accepted convention/basis values, a non-empty `evidence_reference`, and a matching optional embedded digest.
-- **Validation:** `python -m py_compile` passed and focused pytest returned `7 passed in 0.06s` on exact local files.
-- **Boundary:** the new tool is currently a standalone preflight validator; direct convention-auditor invocation does not yet import it. No real evidence map or pulse table was available.
-- **Status:** PARTIAL — standalone traceability gate and regression tests validated; integration into the main auditor and real A-002 evidence remain open.
+- **Session stamp:** 2026-07-23T06:09:08Z
+- **Base main SHA:** `1b00e612cd9358486f2d9db0164def1ec09fec20`
+- **Scope:** require amplitude-convention authorization to measure the bytes of every supporting schema, producer-code, or pedestal-evidence artifact rather than trusting a declared digest string.
+- **Assumption under test:** an `evidence_reference_sha256` field is not immutable provenance unless the referenced file is resolved under a controlled root and its measured SHA-256 equals the declaration.
+- **Confirmed finding:** v1.1.0 of `validate_amplitude_evidence_map.py` validated digest syntax only, while v3.0.0 of `amplitude_convention_audit.py` could use that unchecked declaration to authorize `ABSOLUTE` or `NET` physics processing.
+- **Files:** `tools/audit/validate_amplitude_evidence_map.py`, `tools/audit/amplitude_convention_audit.py`, six focused test modules, `chatgpt_todo/` coordination records.
+- **Change:** added controlled reference-path resolution, measured supporting-artifact SHA-256 comparison, path-containment and missing-file gates, verified-evidence state, and fail-closed treatment of raw programmatic maps whose reference bytes were not resolved.
+- **Validation plan executed:** compile both tools and affected tests; run the six focused pytest modules; scan changed files for lines over 100 characters; inspect staged-equivalent content and remote commit sequence.
+- **Validation result:** focused local reconstruction returned `35 passed in 0.12s`; all changed files compiled; no over-100-character lines remained. Ruff, the complete repository suite, and GitHub Actions were unavailable and are not claimed.
+- **Boundary:** no real A-002 pulse table or supporting evidence artifact was available. No amplitude convention, stopping profile, CSV, plot, calibration, or detector-performance result was regenerated.
+- **Status:** PARTIAL — reference-byte verification tooling and synthetic regression are validated; real A-002 authorization and regenerated scientific outputs remain BLOCKED.

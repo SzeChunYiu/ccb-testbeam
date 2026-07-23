@@ -56,7 +56,7 @@ import tempfile
 from pathlib import Path
 
 # ---- defaults (all env-overridable; no magic numbers without an escape hatch) ----
-DEFAULT_RHO = float(os.environ.get("CCB_POLYSTYRENE_RHO", "1.060"))   # g/cm^3 (NIST PSTAR polystyrene)
+DEFAULT_RHO = float(os.environ.get("CCB_POLYSTYRENE_RHO", "1.060"))  # g/cm^3
 DEFAULT_TOL = float(os.environ.get("CCB_STOPPING_TOLERANCE_PCT", "10.0"))
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
@@ -217,10 +217,10 @@ def run_compare(sim_path: Path, ref_path: Path, rho: float, out_path: Path | Non
                 w.writerow({k: (f"{d[k]:.6g}" if isinstance(d[k], float) else d[k]) for k in cols})
         print(f"wrote {out_path}")
 
-    print(f"\nDeposited-energy proxy vs PSTAR (material=polystyrene, rho={rho} g/cm^3, "
-          f"tolerance=+/-{tol_pct:g}%):")
+    print(f"\nDeposited-energy proxy vs PSTAR (material=polystyrene, "
+          f"rho={rho} g/cm^3, tolerance=+/-{tol_pct:g}%):")
     print(f"{'particle':<9}{'E[MeV]':>9}{'n':>7}{'sim':>12}{'ref':>12}"
-          f"{'ratio':>9}{'delta%':>9}  numerical")
+          f"{'ratio':>9}{'delta%':>9}  ok")
     for d in results:
         print(f"{d['particle']:<9}{d['energy_MeV']:>9.2f}{d['n_events']:>7d}"
               f"{d['sim_total_MeV_cm2_g']:>12.4f}{d['ref_total_MeV_cm2_g']:>12.4f}"
@@ -236,34 +236,39 @@ def run_compare(sim_path: Path, ref_path: Path, rho: float, out_path: Path | Non
     return results, all_pass and bool(results)
 
 
-def self_test(ref_path: Path = DEFAULT_REF) -> int:
-    """Exercise arithmetic and the selected committed-reference path."""
-    ref = ref_path.resolve()
+def self_test(ref_path: Path | None = None) -> int:
+    """Build synthetic events against the selected committed reference table."""
+    ref = DEFAULT_REF if ref_path is None else ref_path
     if not ref.is_file():
-        print(f"SELF-TEST: FAIL -- reference table not found: {ref}", file=sys.stderr)
+        print(f"SELF-TEST: FAIL (reference table not found: {ref})", file=sys.stderr)
         return 1
+
     table = read_reference(ref)
-    print(f"reference={ref} sha256={sha256_file(ref)} rows={len(table)}")
+    ref_hash = sha256_file(ref)
+    print(f"reference={ref.resolve()} sha256={ref_hash} rows={len(table)}")
     rho = DEFAULT_RHO
+    cases = [("proton", 60.0), ("proton", 100.0), ("proton", 150.0),
+             ("deuteron", 100.0), ("deuteron", 200.0)]
+
     with tempfile.TemporaryDirectory() as td:
-        sim = Path(td) / "synthetic_stopping_power.csv"
-        cases = [("proton", 60.0), ("proton", 100.0), ("proton", 150.0),
-                 ("deuteron", 100.0), ("deuteron", 200.0)]
+        sim = Path(td) / "synthetic_events.csv"
         with sim.open("w", newline="") as f:
             w = csv.writer(f)
-            w.writerow(["particle", "ke_MeV", "edep_scint_raw_MeV", "track_len_scint_mm"])
+            w.writerow(["particle", "ke_MeV", "edep_scint_raw_MeV",
+                        "track_len_scint_mm"])
             for part, e in cases:
                 ref_val = reference_for(part, e, table)
-                # Gives dE/dx = ref_val*rho/10 MeV/mm -> mass proxy = ref_val.
+                # Gives dE/dx = ref_val*rho/10 MeV/mm -> mass = ref_val.
                 edep = ref_val * rho / 10.0
                 for _ in range(40):
-                    w.writerow([part, e, f"{edep:.9f}", "1.0"])
+                    w.writerow([part, e, f"{edep:.6f}", "1.0"])
         print("=== self-test on synthetic events (expected ratio ~ 1.0) ===")
         results, ok = run_compare(sim, ref, rho, None, tol_pct=2.0)
+
     maxerr = max(abs(d["ratio"] - 1.0) for d in results)
     print(f"\nmax |ratio-1| = {maxerr:.2e}")
-    print("SELF-TEST SCOPE: arithmetic and committed-reference path only")
     if maxerr < 1e-6 and ok:
+        print("SELF-TEST SCOPE: arithmetic and committed-reference path only")
         print("SELF-TEST: PASS")
         return 0
     print("SELF-TEST: FAIL")
@@ -281,7 +286,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--out", type=Path, default=None, help="output report CSV")
     p.add_argument("--tolerance-pct", type=float, default=DEFAULT_TOL,
                    help=f"pass/fail tolerance on delta%% (default {DEFAULT_TOL})")
-    p.add_argument("--self-test", action="store_true", help="run on synthetic input")
+    p.add_argument("--self-test", action="store_true",
+                   help="run a synthetic check against the selected reference table")
     args = p.parse_args(argv)
 
     if args.self_test:

@@ -2,6 +2,7 @@
 #include "EventAction.hh"
 #include "DetectorConstruction.hh"
 #include "SimData.hh"
+#include "ccb/sipm/Geant4BoundaryCollector.hh"  // SIPM-P1-001
 
 #include "G4Step.hh"
 #include "G4Track.hh"
@@ -90,6 +91,15 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
   const double path_mm = track->GetTrackLength() / mm;
 
   ++d.n_end_arrival[sid];
+
+  // Collect per-sensor SiPM boundary arrival for core consumption
+  // (SIPM-P1-001). Local position, time, and wavelength extracted via the
+  // submodule adapter so the ResponseSimulator gets exactly what it expects.
+  auto boundary = ccb::sipm::Geant4BoundaryCollector::FromStep(
+      *step, sid, postVol);
+  if (boundary) {
+    d.sipm_arrivals[sid].push_back(*boundary);
+  }
 
   // Detection: PDE(wavelength) * coupling efficiency.
   const double p_det = PdeAt(wavelength_nm) * cfg_.coupling_efficiency;

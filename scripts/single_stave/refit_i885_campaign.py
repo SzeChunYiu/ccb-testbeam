@@ -24,6 +24,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 matplotlib.rcParams["svg.hashsalt"] = "i885-seed-averaged-v1"
+matplotlib.rcParams["svg.fonttype"] = "none"
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd

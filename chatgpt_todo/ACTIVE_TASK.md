@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-017
+- **Task ID:** AUD-G4-018
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T213126Z
-- **Initial remote main SHA:** `5b6907d646527078c45ec615e0153f977f3214c5`
-- **Validated implementation/evidence head:** `1d7e44a23516617b0ec9cf7deac27b052944b925`
-- **Scope:** make stopping-power CSV reports independently reconstructable by recording the central-value sufficient statistics and numerical configuration used by the diagnostic.
-- **Confirmed defect:** the report exposed derived stopping power, ratio, and status but omitted summed deposited energy, summed track length, material density, tolerance percentage, and estimator identity. Different density or tolerance settings could therefore change values/status without appearing in the machine-readable report.
-- **Validated change:** record `deposit_sum_MeV`, `track_length_sum_mm`, `material_density_g_cm3`, `tolerance_percent`, and `mass_stopping_estimator=RATIO_OF_SUMS_TRACK_LENGTH_WEIGHTED` in every result/CSV row; print the estimator in terminal output; preserve round-trip float serialization and all prior fail-closed gates.
-- **Commands:** focused `py_compile`; focused pytest for report precision and report reproducibility; exact pre-change Git-blob reconstruction and negative control; JSON/SVG parsing; line-length and Git-blob checks.
-- **Validation:** `5 passed in 0.07s`; exact old blob `5081da0...` produced `2 failed in 0.11s`; changed Python lines are at most 93 characters; generated JSON and SVG parsed.
-- **Evidence:** `docs/validation/stopping_power_report_reproducibility_audit.md`, `stopping_power_report_reproducibility_validation.json`, and `stopping_power_report_reproducibility.svg`.
-- **Boundary:** the report is numerically self-describing, but no uncertainty budget, real Geant4 export, accepted projectile-energy-loss observable, calibration, or detector-performance result was produced.
-- **Status:** COMPLETE for `AUD-G4-017`; accepted stopping-power physics closure remains PARTIAL/BLOCKED.
+- **Session stamp:** 2026-07-23T220759Z
+- **Initial remote main SHA:** `c0a5d46d8a14bb933aa401514ee2f7408276ae0b`
+- **Validated implementation/evidence head:** `768e13daa5056dd06f9b962e66b004fa5d9c4d97`
+- **Scope:** remove CSV row-order dependence from stopping-power grouped sufficient statistics and make the numerical summation method explicit in machine-readable and terminal reports.
+- **Confirmed defect:** repeated binary64 `+=` aggregation produced different deposited-energy sums and mass-stopping proxies for the same validated event multiset when rows were reordered.
+- **Validated change:** collect deposits and track lengths per exact particle/energy group, evaluate both with `math.fsum`, record `summation_method=MATH_FSUM_PER_GROUP` in results/CSV, and print the method in terminal output.
+- **Commands:** focused `py_compile`; focused pytest for order invariance, report precision, and report reproducibility; exact pre-change Git-blob reconstruction and negative control; SHA-256/blob and line-length checks.
+- **Validation:** `8 passed in 0.06s`; exact old blob `79ea2767...` produced `2 failed, 1 passed`; changed Python lines are at most 100 characters; old and new Git blobs were verified.
+- **Evidence:** `docs/validation/stopping_power_order_invariance_audit.md`, `stopping_power_order_invariance_validation.json`, and `stopping_power_order_invariance.svg`.
+- **Boundary:** numerical aggregation is order-stable, but no real export, uncertainty budget, accepted projectile-energy-loss observable, or stopping-power closure was produced.
+- **Status:** COMPLETE for `AUD-G4-018`; accepted stopping-power physics closure remains PARTIAL/BLOCKED.

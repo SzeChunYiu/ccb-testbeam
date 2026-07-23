@@ -10,7 +10,7 @@ Coverage by species:
 - deuteron: 2, 5 MeV, two seeds each;
 - attenuation/timing: no committed files.
 
-> **Audit warning:** the P5/P5b calibration fits and the fit values in `i885_fits.json` are not accepted calibration results. They fit per-seed rows while displaying seed-averaged points, report seed-file counts as `n`, and include deuteron fits with only two independent energies. See `AUDIT_INVALIDATION.md` and `docs/validation/i885_campaign_acceptance_audit.md`.
+> **Calibration status:** the legacy per-seed fits have been replaced by a seed-averaged refit. No linear calibration is accepted from the current partial bundle. Deuteron fits are skipped because only two independent energies exist. Proton linear models are retained only as rejected diagnostics because their weighted goodness-of-fit tests fail.
 
 ## Campaign (`slurm/points_i885_campaign.csv`, 72 files)
 
@@ -36,30 +36,28 @@ At the shared 2 MeV point, the repository-recorded simulation gives a lower visi
 
 ## Calibration-fit status
 
-The following legacy values are retained in `i885_fits.json` for provenance but are **FLAWED / quarantined**:
+`i885_fits.json` now separates accepted fits, rejected model diagnostics, and insufficient-coverage skips:
 
-- proton SiPM fit: 10 seed files but 5 independent energies;
-- deuteron SiPM fit: 4 seed files but 2 independent energies;
-- proton Birks-visible fit: 10 seed files but 5 independent energies;
-- deuteron Birks-visible fit: 4 seed files but 2 independent energies.
+- accepted calibration fits: **none**;
+- deuteron SiPM and Birks-visible fits: skipped at 2 independent energies, below the preregistered minimum of 3;
+- proton SiPM linear diagnostic: 5 independent energies, residual dof = 3, reduced chi-square = 357.99, goodness-of-fit p = 1.62 x 10^-232;
+- proton Birks-visible linear diagnostic: 5 independent energies, residual dof = 3, reduced chi-square = 33391.66, p below double-precision range.
 
-A corrected generator must seed-average before fitting, record `n_files` and `n_energy_points`, set `fit_basis = "seed_averaged_unique_energy"`, and refuse a linear fit below three independent energies.
+The proton values reject a straight-line response under the recorded statistical-uncertainty model. They are not calibration constants. A nonlinear or restricted-range model must be specified and validated after wider campaign coverage; model choice must not be selected solely to improve fit quality on this partial sample.
 
 ## Plots
 
-P1–P4 and P8 are partial simulation diagnostics. P5/P5b fit overlays are quarantined. P6/P7 have no committed attenuation/timing coverage in this bundle.
+P1-P4 and P8 are partial simulation diagnostics. `P5_seed_averaged_calibration.svg` shows seed-averaged independent-energy points and the rejected proton linear diagnostics. It is explicitly labelled as Geant4 simulation output, not detector data. P6/P7 have no committed attenuation/timing coverage in this bundle.
 
 ## Regenerate and validate
 
 ```bash
-# GCC/12.3.0 + Geant4/11.2.2 + SciPy-bundle, from geant4/single_stave/
-python3 ../../scripts/single_stave/plot_i885_campaign.py \
-  --indir <ccb-runs/i885_v1> \
-  --outdir results/i885_v1 \
-  --expected 72 \
-  --summary
+python scripts/single_stave/refit_i885_campaign.py \
+  --observed geant4/single_stave/results/i885_v1/i885_per_config.csv \
+  --output-json geant4/single_stave/results/i885_v1/i885_fits.json \
+  --output-svg geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg \
+  --output-points geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv
 
-cd ../..
 python tools/audit/validate_i885_campaign_results.py \
   --manifest geant4/single_stave/slurm/points_i885_campaign.csv \
   --observed geant4/single_stave/results/i885_v1/i885_per_config.csv \
@@ -68,4 +66,4 @@ python tools/audit/validate_i885_campaign_results.py \
   --output docs/validation/i885_campaign_acceptance_validation.json
 ```
 
-Do not publish regenerated calibration-fit claims until the validator exits successfully with zero issues.
+Do not publish a calibration function until campaign coverage, model specification, residual diagnostics, uncertainty treatment, and independent validation are complete.

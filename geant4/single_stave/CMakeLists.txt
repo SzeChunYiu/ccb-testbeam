@@ -21,6 +21,12 @@ file(GLOB_RECURSE CCB_STAVE_SOURCES CONFIGURE_DEPENDS
 file(GLOB_RECURSE CCB_STAVE_HEADERS CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/include/*.hh")
 
+# Clean-room SiPM response core (submodule ccb-sipm-core). Geant4-independent;
+# built as part of the project when present. See https://github.com/SzeChunYiu/ccb-sipm-core
+if(EXISTS "${PROJECT_SOURCE_DIR}/sipm/CMakeLists.txt")
+  add_subdirectory(sipm)
+endif()
+
 add_executable(ccb_stave_sim ${CCB_STAVE_SOURCES} ${CCB_STAVE_HEADERS})
 target_include_directories(ccb_stave_sim PRIVATE "${PROJECT_SOURCE_DIR}/include")
 target_link_libraries(ccb_stave_sim PRIVATE ${Geant4_LIBRARIES})

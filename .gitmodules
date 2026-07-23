@@ -1,0 +1,3 @@
+[submodule "geant4/single_stave/sipm"]
+	path = geant4/single_stave/sipm
+	url = https://github.com/SzeChunYiu/ccb-sipm-core.git

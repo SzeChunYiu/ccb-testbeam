@@ -1,28 +1,22 @@
 # Audit status for issue #885 partial campaign results
 
-Status: **PARTIAL simulation output; coverage summary and calibration fits are not accepted.**
+Status: **PARTIAL simulation output; no calibration function is accepted.**
 
-The committed per-config CSV contains 14 valid-looking main-grid files, but the current summary and fit metadata fail the independent campaign validator:
+The original P5/P5b fits were invalid because repeated seed files were treated as independent energy points and deuteron lines were fit through only two independent energies. Those legacy fit records have been superseded by `scripts/single_stave/refit_i885_campaign.py` and are no longer present in `i885_fits.json`.
 
-```bash
-python tools/audit/validate_i885_campaign_results.py \
-  --manifest geant4/single_stave/slurm/points_i885_campaign.csv \
-  --observed geant4/single_stave/results/i885_v1/i885_per_config.csv \
-  --fits geant4/single_stave/results/i885_v1/i885_fits.json \
-  --summary geant4/single_stave/results/i885_v1/SUMMARY.md \
-  --output docs/validation/i885_campaign_acceptance_validation.json
-```
-
-Measured state:
+Current measured state:
 
 - 14/72 total campaign files;
 - 14/40 main-grid files;
-- proton coverage: 2, 5, 8, 12, 20 MeV;
-- deuteron coverage: 2, 5 MeV;
+- proton coverage: 2, 5, 8, 12, 20 MeV, two seeds each;
+- deuteron coverage: 2, 5 MeV, two seeds each;
 - no committed attenuation/timing files;
-- proton fits use 10 seed files but only 5 independent energies;
-- deuteron fits use 4 seed files but only 2 independent energies.
+- every fit input is seed-averaged to one point per energy;
+- deuteron fits are skipped because two energies leave zero residual degrees of freedom;
+- proton linear diagnostics are rejected by weighted goodness-of-fit tests.
 
-The deuteron R² values are not calibration-validation evidence because a seed-averaged line through two distinct energies has zero residual degrees of freedom. All P5/P5b fit lines, slopes, intercepts, R² values, and associated calibration wording are quarantined until the generator seed-averages the data, records independent-point counts, requires at least three energies, and regenerates the result bundle.
+For the proton SiPM response, the seed-averaged five-point line has reduced χ² = 357.99 for 3 residual degrees of freedom and p = 1.62 × 10⁻²³². For the proton Birks-visible response, reduced χ² = 33391.66 and the p-value underflows double precision. These results are evidence against a single straight-line response under the recorded uncertainty model, not accepted calibration constants.
 
-The per-file means and the direct 2 MeV proton/deuteron quench comparison remain repository-recorded simulation outputs, subject to the wider simulation and detector-model limitations. They are not real-data calibration results.
+`i885_fits.json` therefore contains an empty `fits` object, rejected proton diagnostics under `fit_rejections`, and deuteron coverage failures under `fit_skips`. `P5_seed_averaged_calibration.svg` displays the same state with explicit simulation-only labelling.
+
+The per-file means and direct 2 MeV proton/deuteron quench comparison remain repository-recorded simulation outputs subject to detector-model, physics-list, optical-transport, and incomplete-coverage limitations. They are not real-data calibration results.

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-010",
+  "status": "VALIDATED_SYNTHETIC_REGRESSION",
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "evidence_type": "synthetic parser regression",
+  "not_detector_data": true,
+  "confirmed_prechange_behavior": {
+    "input_rows": 3,
+    "returned_rows": 2,
+    "silently_skipped_rows": 1,
+    "cause": "missing energy in middle row"
+  },
+  "implementation": {
+    "comparison": "scripts/single_stave/compare_stopping_power.py",
+    "comparison_sha256": "f2a7ae1c6434bf705c19f47f89670a0e4ef1e81bc7195f12a70f2d20e8ab6ae9",
+    "shared_validator": "tools/audit/validate_stopping_power_sim_table.py",
+    "shared_validator_version": "1.1.0",
+    "shared_validator_sha256": "24fae560a345eb6b211e4d09cc79c2cce69ccbe75c2f4dc85c49fb5bb2c8c218",
+    "integration_test": "tests/test_compare_stopping_power_sim_input_integration.py",
+    "integration_test_sha256": "f3eb911c5aa94e711cc0860ba6aff4da411cd1a826463e4953bbcea421231ce5"
+  },
+  "validation": {
+    "python_compile": "PASS",
+    "pytest": "35 passed in 4.34s",
+    "ruff": "NOT_RUN_UNAVAILABLE",
+    "max_line_lengths": {
+      "comparison": 91,
+      "shared_validator": 91,
+      "integration_test": 99
+    }
+  },
+  "acceptance": {
+    "all_noncomment_rows_validated": true,
+    "silent_row_skipping_permitted": false,
+    "ambiguous_aliases_rejected": true,
+    "canonical_cli_uses_shared_parser": true,
+    "malformed_cli_exit_code": 2,
+    "numerical_pass_suppressed_on_input_error": true,
+    "real_simulation_table_validated": false
+  }
+}

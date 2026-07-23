@@ -17,7 +17,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Iterable
 
-TOOL_VERSION = "1.1.0"
+TOOL_VERSION = "1.2.0"
+INPUT_SNAPSHOT_METHOD = "SINGLE_READ_EXACT_BYTES"
 ENERGY_ALIASES = ("ke_MeV", "kinetic_energy_MeV", "energy_MeV")
 RAW_EDEP_ALIASES = ("edep_scint_raw_MeV", "edep_raw_MeV")
 QUENCHED_EDEP_ALIASES = ("edep_scint_MeV", "edep_MeV")
@@ -104,11 +105,22 @@ def parse_finite(
     return value
 
 
-def _read_data_lines(path: Path) -> list[tuple[int, str]]:
+def _read_input_bytes(path: Path) -> bytes:
+    """Read the exact input bytes once for parsing and provenance."""
     try:
-        raw_lines = path.read_text().splitlines(keepends=True)
+        return path.read_bytes()
     except OSError as exc:
         raise SimulationTableError(f"cannot read simulation table {path}: {exc}") from exc
+
+
+def _read_data_lines(path: Path, input_bytes: bytes) -> list[tuple[int, str]]:
+    try:
+        text = input_bytes.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise SimulationTableError(
+            f"simulation table {path} is not valid UTF-8: {exc}"
+        ) from exc
+    raw_lines = text.splitlines(keepends=True)
     data_lines = [
         (line_no, line)
         for line_no, line in enumerate(raw_lines, start=1)
@@ -156,7 +168,8 @@ def read_validated_simulation_table(
 ) -> tuple[list[NormalizedRow], dict[str, object]]:
     """Return normalized rows plus provenance after validating every event row."""
     path = Path(path)
-    data_lines = _read_data_lines(path)
+    input_bytes = _read_input_bytes(path)
+    data_lines = _read_data_lines(path, input_bytes)
     header = _validate_header(path, data_lines)
 
     particles: Counter[str] = Counter()
@@ -282,8 +295,9 @@ def read_validated_simulation_table(
         "tool_version": TOOL_VERSION,
         "status": "VALIDATED" if basis == RAW_BASIS else "DIAGNOSTIC_ONLY",
         "input_path": str(path),
-        "input_bytes": path.stat().st_size,
-        "input_sha256": sha256_file(path),
+        "input_bytes": len(input_bytes),
+        "input_sha256": hashlib.sha256(input_bytes).hexdigest(),
+        "input_snapshot_method": INPUT_SNAPSHOT_METHOD,
         "header": header,
         "rows_validated": len(normalized_rows),
         "particle_counts": dict(sorted(particles.items())),

@@ -3,11 +3,14 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
 
-SCRIPT = Path(__file__).parents[1] / "tools" / "audit" / "amplitude_convention_audit.py"
+ROOT = Path(__file__).parents[1]
+sys.path.insert(0, str(ROOT))
+SCRIPT = ROOT / "tools" / "audit" / "amplitude_convention_audit.py"
 SPEC = importlib.util.spec_from_file_location("amplitude_convention_audit", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -25,11 +28,9 @@ def test_raw_median_net_label_without_pedestal_is_non_accepting(tmp_path: Path) 
     path = tmp_path / "unanchored_net.csv"
     output = tmp_path / "audit.json"
     write(path, [2600.0, 2625.0, 2650.0])
-
     result = MODULE.audit(path, None, 3500.0, 5000.0)
     code = MODULE.main([str(path), "--output", str(output)])
     payload = json.loads(output.read_text(encoding="utf-8"))
-
     assert result["convention"] == "NET"
     assert result["convention_evidence"] == "RAW_MEDIAN_HEURISTIC"
     assert result["convention_acceptance"] == "UNANCHORED"
@@ -44,10 +45,8 @@ def test_raw_median_absolute_label_without_pedestal_is_non_accepting(tmp_path: P
     path = tmp_path / "unanchored_absolute.csv"
     output = tmp_path / "audit.json"
     write(path, [6700.0, 6750.0, 6800.0])
-
     code = MODULE.main([str(path), "--output", str(output)])
     payload = json.loads(output.read_text(encoding="utf-8"))
-
     assert payload["tables"][0]["convention"] == "ABSOLUTE"
     assert payload["tables"][0]["physics_acceptance"] == "UNVERIFIED"
     assert payload["n_unresolved_absolute_baselines"] == 1
@@ -60,22 +59,20 @@ def test_unique_pedestal_is_diagnostic_not_convention_proof(tmp_path: Path) -> N
     output = tmp_path / "audit.json"
     evidence = tmp_path / "evidence.json"
     write(path, [6700.0, 6750.0, 6800.0], [6752.0, 6752.0, 6752.0])
-
     code = MODULE.main([str(path), "--output", str(output)])
     payload = json.loads(output.read_text(encoding="utf-8"))
     result = payload["tables"][0]
-
     assert result["convention_evidence"] == "PEDESTAL_ANCHORED"
     assert result["convention_acceptance"] == "ACCEPTABLE"
     assert result["physics_acceptance"] == "UNVERIFIED"
     assert result["baseline_resolution"] == "RESOLVED"
     assert payload["n_unverified_conventions"] == 1
     assert code == 1
-
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     evidence.write_text(json.dumps({digest: {
         "convention": "ABSOLUTE",
         "evidence_basis": "INDEPENDENTLY_REVIEWED_PEDESTAL_EVIDENCE",
+        "evidence_reference": "docs/contracts/PULSE_TABLE_CONTRACT.md",
     }}), encoding="utf-8")
     assert MODULE.main([
         str(path), "--output", str(output), "--evidence-map", str(evidence)

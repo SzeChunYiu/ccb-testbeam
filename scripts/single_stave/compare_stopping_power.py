@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import math
 import os
 import sys
@@ -46,6 +47,50 @@ REPORT_FLOAT_SERIALIZATION = "PYTHON_REPR_ROUND_TRIP"
 CROSS_ENERGY_COMBINATION_POLICY = (
     "NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL"
 )
+REPORT_PUBLICATION_POLICY = "NO_INPUT_OUTPUT_ALIAS_AND_ATOMIC_REPORT_WRITE"
+REPORT_COLUMNS = [
+    "particle",
+    "energy_MeV",
+    "energy_grouping",
+    "reference_basis",
+    "reference_direct_pstar_comparable",
+    "physics_comparable",
+    "reference_lookup_energy_MeV",
+    "reference_range_min_MeV",
+    "reference_range_max_MeV",
+    "reference_in_range",
+    "n_events",
+    "energy_deposit_basis",
+    "raw_pstar_comparable",
+    "deposit_sum_MeV",
+    "track_length_sum_mm",
+    "material_density_g_cm3",
+    "mass_stopping_estimator",
+    "summation_method",
+    "simulation_input_sha256",
+    "simulation_input_bytes",
+    "simulation_rows_validated",
+    "simulation_validator_version",
+    "reference_input_sha256",
+    "reference_input_bytes",
+    "reference_rows_validated",
+    "reference_validator_version",
+    "reference_component_identity",
+    "reference_component_consistent",
+    "sim_total_MeV_cm2_g",
+    "ref_total_MeV_cm2_g",
+    "ratio",
+    "delta_percent",
+    "tolerance_percent",
+    "numeric_within_tolerance",
+    "uncertainty_method",
+    "uncertainty_evaluated",
+    "cross_energy_combination_policy",
+    "report_publication_policy",
+    "acceptance_status",
+    "within_tolerance",
+    "report_float_serialization",
+]
 
 
 class StoppingPowerInputError(ValueError):
@@ -61,6 +106,95 @@ def _serialize_report_value(value: object) -> object:
             )
         return repr(value)
     return value
+
+
+def _resolved_path(path: Path) -> Path:
+    """Resolve a path without requiring the final component to exist."""
+    return path.expanduser().resolve(strict=False)
+
+
+def _paths_alias(left: Path, right: Path) -> bool:
+    """Return whether resolved paths name the same file, including hard links."""
+    if left == right:
+        return True
+    try:
+        return left.exists() and right.exists() and os.path.samefile(left, right)
+    except OSError:
+        return False
+
+
+def _validate_output_path(out_path: Path, sim_path: Path, ref_path: Path) -> Path:
+    """Reject report paths that could overwrite either validated input."""
+    resolved_output = _resolved_path(out_path)
+    inputs = {
+        "simulation input": _resolved_path(sim_path),
+        "PSTAR reference input": _resolved_path(ref_path),
+    }
+    for label, resolved_input in inputs.items():
+        if _paths_alias(resolved_output, resolved_input):
+            raise StoppingPowerInputError(
+                f"report output path {resolved_output} aliases {label} {resolved_input}"
+            )
+    return resolved_output
+
+
+def _sha256_path(path: Path) -> str:
+    """Return the SHA-256 digest of one completed file."""
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _write_report_atomically(
+    out_path: Path,
+    columns: list[str],
+    results: list[dict[str, object]],
+) -> dict[str, object]:
+    """Serialize completely, then atomically publish a same-directory report."""
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    temp_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            newline="",
+            prefix=f".{out_path.name}.",
+            suffix=".tmp",
+            dir=out_path.parent,
+            delete=False,
+        ) as handle:
+            temp_path = Path(handle.name)
+            writer = csv.DictWriter(handle, fieldnames=columns)
+            writer.writeheader()
+            for result in results:
+                writer.writerow(
+                    {key: _serialize_report_value(result[key]) for key in columns}
+                )
+            handle.flush()
+            os.fsync(handle.fileno())
+        report_bytes = temp_path.stat().st_size
+        report_sha256 = _sha256_path(temp_path)
+        os.replace(temp_path, out_path)
+        temp_path = None
+    except Exception as exc:
+        if temp_path is not None:
+            try:
+                temp_path.unlink(missing_ok=True)
+            except OSError:
+                pass
+        raise StoppingPowerInputError(
+            f"failed to publish report atomically to {out_path}: {exc}"
+        ) from exc
+    return {
+        "report_output_path": str(out_path),
+        "report_output_bytes": report_bytes,
+        "report_output_sha256": report_sha256,
+        "report_atomic_publication": True,
+        "report_input_alias_checked": True,
+        "report_publication_policy": REPORT_PUBLICATION_POLICY,
+    }
 
 
 def _read_reference_with_summary(
@@ -218,6 +352,11 @@ def run_compare(
         raise StoppingPowerInputError(
             f"tolerance must be finite and nonnegative, got {tol_pct!r}%"
         )
+    resolved_output = (
+        _validate_output_path(out_path, sim_path, ref_path)
+        if out_path is not None
+        else None
+    )
     table, ref_summary = _read_reference_with_summary(ref_path)
     rows, sim_summary = _read_sim_with_summary(sim_path, allow_quenched_proxy)
     has_deuteron = any(particle == "deuteron" for particle, *_ in rows)
@@ -283,6 +422,7 @@ def run_compare(
                 "uncertainty_method": UNCERTAINTY_METHOD,
                 "uncertainty_evaluated": uncertainty_evaluated,
                 "cross_energy_combination_policy": CROSS_ENERGY_COMBINATION_POLICY,
+                "report_publication_policy": REPORT_PUBLICATION_POLICY,
                 "acceptance_status": acceptance_status,
                 "within_tolerance": accepted_ok,
                 "report_float_serialization": REPORT_FLOAT_SERIALIZATION,
@@ -290,58 +430,20 @@ def run_compare(
         )
         results.append(result)
 
-    if out_path is not None:
-        columns = [
-            "particle",
-            "energy_MeV",
-            "energy_grouping",
-            "reference_basis",
-            "reference_direct_pstar_comparable",
-            "physics_comparable",
-            "reference_lookup_energy_MeV",
-            "reference_range_min_MeV",
-            "reference_range_max_MeV",
-            "reference_in_range",
-            "n_events",
-            "energy_deposit_basis",
-            "raw_pstar_comparable",
-            "deposit_sum_MeV",
-            "track_length_sum_mm",
-            "material_density_g_cm3",
-            "mass_stopping_estimator",
-            "summation_method",
-            "simulation_input_sha256",
-            "simulation_input_bytes",
-            "simulation_rows_validated",
-            "simulation_validator_version",
-            "reference_input_sha256",
-            "reference_input_bytes",
-            "reference_rows_validated",
-            "reference_validator_version",
-            "reference_component_identity",
-            "reference_component_consistent",
-            "sim_total_MeV_cm2_g",
-            "ref_total_MeV_cm2_g",
-            "ratio",
-            "delta_percent",
-            "tolerance_percent",
-            "numeric_within_tolerance",
-            "uncertainty_method",
-            "uncertainty_evaluated",
-            "cross_energy_combination_policy",
-            "acceptance_status",
-            "within_tolerance",
-            "report_float_serialization",
-        ]
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        with out_path.open("w", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=columns)
-            writer.writeheader()
-            for result in results:
-                writer.writerow(
-                    {key: _serialize_report_value(result[key]) for key in columns}
-                )
-        print(f"wrote {out_path}")
+    if resolved_output is not None:
+        report_summary = _write_report_atomically(
+            resolved_output,
+            REPORT_COLUMNS,
+            results,
+        )
+        for result in results:
+            result.update(report_summary)
+        print(f"wrote {resolved_output}")
+        print(
+            f"REPORT OUTPUT VALIDATION: bytes={report_summary['report_output_bytes']} "
+            f"sha256={report_summary['report_output_sha256']} "
+            f"policy={REPORT_PUBLICATION_POLICY}"
+        )
 
     print(
         "\nDeposited-energy proxy vs PSTAR (material=polystyrene, "
@@ -382,6 +484,7 @@ def run_compare(
     print(f"MASS STOPPING ESTIMATOR: {MASS_STOPPING_ESTIMATOR}")
     print(f"SUMMATION METHOD: {SUMMATION_METHOD}")
     print(f"REPORT FLOAT SERIALIZATION: {REPORT_FLOAT_SERIALIZATION}")
+    print(f"REPORT PUBLICATION POLICY: {REPORT_PUBLICATION_POLICY}")
     print(
         f"PSTAR REFERENCE VALIDATION: rows={ref_summary['rows_validated']} "
         f"sha256={ref_summary['input_sha256']} validator={PSTAR_VALIDATOR_VERSION} "

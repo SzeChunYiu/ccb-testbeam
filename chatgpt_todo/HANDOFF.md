@@ -7,8 +7,8 @@
 - Unit: MV0 gain provenance and uncertainty chain (`CL-013`, `CL-014`, `FIG-EN-001`)
 - Repository: `SzeChunYiu/ccb-testbeam`
 - Initial remote `main`: `712adba593c9b84e4617c1fe8013873cd0c5f753`
-- Validated implementation/evidence head: `0c27a7d24f225a38ed6471a7fc9c0ea701436dd5`
-- Coordination/archive head before this final handoff: `16e92e0113831045b7ecdeb96b44d1a7c75afe8b`
+- Validated implementation/evidence head: `9b035104c9ff92878e6c21cf494c9e4f0bc7475a`
+- Coordination/archive head before the exact-byte publication correction: `a909113a37aaf36d0748adda2ea812396efbc10d`
 - Destination: direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite
 - Acceptance: audit tooling/evidence `VALIDATED`; the 92 ADC/MeV calibration claim is `WITHHELD`; `AUD-LEDGER-001` remains `PARTIAL`
 
@@ -83,6 +83,8 @@ PYTHONPATH=. python -m pytest \
 
 The current-like fixture returned status 1 with ten findings. The corrected-chain fixture returned `VALIDATED`. JSON and SVG parsing passed. Maximum changed Python line lengths were 100 and 87 characters.
 
+The exact locally tested files were checked with Git's blob algorithm. The committed test blob is `5e8772a6be623525b532582a086f4bab667cb90b`; the final committed audit-tool blob is `38a1ea1e91c84692d33b0f667d10968c4198845d`. Both match the locally validated files exactly. The initial audit-tool publication was corrected in commit `9b035104c9ff92878e6c21cf494c9e4f0bc7475a` after this comparison detected a byte mismatch; no unvalidated implementation bytes are treated as the delivered head.
+
 Ruff, full repository pytest, raw-data processing, ROOT/NPZ processing, calibration execution, KS recomputation, bootstrapping, WIKI/link/figure checks, and GitHub Actions were not run.
 
 ## Direct-main commits
@@ -94,8 +96,10 @@ Ruff, full repository pytest, raw-data processing, ROOT/NPZ processing, calibrat
 5. `0c27a7d24f225a38ed6471a7fc9c0ea701436dd5` — `docs(validation): visualize MV0 gain provenance break`
 6. `6f6160c2dd4829f6ce3cfe071379a7b623668018` — `docs(audit): track MV0 gain provenance conflict`
 7. `16e92e0113831045b7ecdeb96b44d1a7c75afe8b` — `docs(audit): archive MV0 gain provenance audit`
+8. `a909113a37aaf36d0748adda2ea812396efbc10d` — `docs(audit): hand off MV0 gain provenance conflict`
+9. `9b035104c9ff92878e6c21cf494c9e4f0bc7475a` — `fix(audit): publish exact validated MV0 audit bytes`
 
-Every connector write returned a successful direct-main commit. The user-facing completion records the final handoff commit after a fresh recent-main confirmation.
+Every connector write returned a successful direct-main commit. A fresh recent-main search confirmed the sequence through `9b035104c9ff92878e6c21cf494c9e4f0bc7475a` on remote `main`; the user-facing completion records this final handoff commit after one more remote-head confirmation.
 
 ## Files changed
 

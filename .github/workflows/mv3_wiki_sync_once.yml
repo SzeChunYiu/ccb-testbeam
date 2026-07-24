@@ -1,0 +1,111 @@
+name: One-time MV3 WIKI synchronization
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/mv3_wiki_sync_once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  synchronize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install focused test dependency
+        run: python -m pip install --quiet pytest
+      - name: Apply exact fail-closed WIKI replacements
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("WIKI.md")
+          text = path.read_text(encoding="utf-8")
+          replacements = {
+              "| MV3 legacy B8 fractions / profile statistic | data 2.3%; MC 22.3%; reported χ²/ndf label 68269.4 | — | — | legacy data/MC profile diagnostic | **FLAWED** |":
+              "| MV3 legacy B8 fractions / profile statistic | data 7051/306745 = 0.02298651974767315; MC 55619/249484 = 0.22293614019335908; Pearson χ² = 204808.2179684494, ndf = 3, χ²/ndf = 68269.40598948313 | — | — | legacy data/MC profile diagnostic | **FLAWED** |",
+              "| Impact | Legacy MV3 B8 fractions differ strongly; the reported χ²/ndf label is not reconstructable |":
+              "| Impact | Legacy MV3 B8 fractions differ strongly; the exact tracked summary reconstructs the Pearson diagnostic, but geometry and systematic closure remain unresolved |",
+              "The legacy MV3 report labels a profile statistic as χ²/ndf = 68,269.4 without the underlying χ², ndf, bin variances, covariance, or exact counts; the diagnostic is FLAWED and B8 acceptance remains unresolved.":
+              "The tracked MV3 summary records data B8 = 7051/306745 (0.02298651974767315), thresholded-MC B8 = 55619/249484 (0.22293614019335908), Pearson χ² = 204808.2179684494, ndf = 3, and χ²/ndf = 68269.40598948313. The fixed-source arithmetic is reproducible, but the diagnostic remains FLAWED under BLK-MV3-LEGACY-001 and B8 acceptance remains unresolved because geometry, trigger/selection transfer, gain response, covariance, p-value interpretation, and detector/model systematics are not closed.",
+              "| MV3 | Legacy stopping-profile diagnostic | **FLAWED** | Recover exact counts/statistic and rerun strict stopping-depth path |":
+              "| MV3 | Legacy stopping-profile diagnostic | **FLAWED** | Exact tracked counts/statistic recovered; fix geometry and rerun strict stopping-depth closure |",
+              "1. **MV3: Strict stopping-profile closure is absent** — geometry and exact statistic/count provenance remain unresolved":
+              "1. **MV3: Strict stopping-profile closure is absent** — exact fixed-source arithmetic is resolved, but geometry, selection transfer, response, covariance, and detector/model systematics remain unresolved",
+              "| GAP-01 | MV3 geometry FAIL (χ²/ndf = 68,269) | GEANT4 fix → new MC → rerun MV3 |":
+              "| GAP-01 | MV3 geometry FAIL: data B8 7051/306745; MC B8 55619/249484; Pearson χ²/ndf 68269.40598948313 | GEANT4 fix → new MC → rerun MV3 with matched selection and accepted uncertainty model |",
+          }
+          states = []
+          for old, new in replacements.items():
+              old_count = text.count(old)
+              new_count = text.count(new)
+              if old_count == 1 and new_count == 0:
+                  states.append("old")
+              elif old_count == 0 and new_count == 1:
+                  states.append("new")
+              else:
+                  raise SystemExit(
+                      f"ambiguous replacement: old={old_count}, new={new_count}, old text={old!r}"
+                  )
+          if len(set(states)) != 1:
+              raise SystemExit(f"mixed WIKI synchronization state: {states}")
+          if states[0] == "old":
+              for old, new in replacements.items():
+                  text = text.replace(old, new)
+              path.write_text(text, encoding="utf-8")
+          print(f"WIKI synchronization state: {states[0]}")
+          PY
+      - name: Run focused validation gate
+        shell: bash
+        run: |
+          python -m py_compile \
+            tools/audit/validate_wiki_mv3_summary.py \
+            tools/audit/render_wiki_mv3_summary_evidence.py \
+            tests/test_validate_wiki_mv3_summary.py
+          PYTHONPATH=. python -m pytest tests/test_validate_wiki_mv3_summary.py -q
+          python tools/audit/validate_wiki_mv3_summary.py \
+            --wiki WIKI.md \
+            --ledger docs/claim_ledger.csv \
+            --summary reports/mv3_stopping_v3_1782679272/mv3_summary.json \
+            --json docs/validation/wiki_mv3_summary_validation.json
+          python tools/audit/render_wiki_mv3_summary_evidence.py \
+            --validation-json docs/validation/wiki_mv3_summary_validation.json \
+            --output docs/validation/wiki_mv3_summary.svg
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          wiki = Path("WIKI.md")
+          targets = re.findall(r"\[[^\]]*\]\(([^)]+)\)", wiki.read_text(encoding="utf-8"))
+          checked = 0
+          for target in targets:
+              if target.startswith(("http://", "https://", "#")):
+                  continue
+              path = target.split("#", 1)[0]
+              if not path:
+                  continue
+              resolved = (wiki.parent / path).resolve()
+              if not resolved.exists():
+                  raise SystemExit(f"broken WIKI target: {target} -> {resolved}")
+              checked += 1
+          print(f"validated {checked} internal WIKI targets")
+          PY
+      - name: Publish validated WIKI and evidence to main
+        shell: bash
+        run: |
+          rm .github/workflows/mv3_wiki_sync_once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add WIKI.md \
+            docs/validation/wiki_mv3_summary_validation.json \
+            docs/validation/wiki_mv3_summary.svg \
+            .github/workflows/mv3_wiki_sync_once.yml
+          git commit -m "docs(wiki): synchronize exact MV3 tracked summary"
+          git push origin HEAD:main

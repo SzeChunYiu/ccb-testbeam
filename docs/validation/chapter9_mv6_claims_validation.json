@@ -1,0 +1,77 @@
+{
+  "status": "VALIDATED",
+  "policy": "CHAPTER9_MUST_MATCH_TRACKED_MV6_PRODUCER_AND_SUMMARY",
+  "validator_version": "1.0.0",
+  "session_stamp_utc": "2026-07-24T132532Z",
+  "repository": "SzeChunYiu/ccb-testbeam",
+  "pre_change_main_sha": "a4420ed5ecb51074bff68d9e0d2265e6b6bee978",
+  "source_provenance": {
+    "chapter_pre_change_blob": "409abcdefe686edf9c2ac5c5c6ba02aae9c9a331",
+    "producer_blob": "f965823518b22908f3e8974f280bff5c970368d0",
+    "summary_blob": "26c187cbe05d8dadbe588c6ed9062d25658a80a9",
+    "historical_report_blob": "2c531703755b28a0c576e978531b81374edf8ab4",
+    "claim_ledger_blob": "e489555f3a520c7cc64b8a7d858a0e93622b9de6",
+    "source_commit_recorded_by_ledger": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170"
+  },
+  "corrected_artifacts_before_commit": {
+    "chapter": {
+      "bytes": 11332,
+      "sha256": "d91effd7b4a6a210591832a8c57443da12e55c46897884c0adba007491183d23"
+    },
+    "validator": {
+      "bytes": 13639,
+      "sha256": "f5f42a8a28a331958bd787e40ddfb26315c30861b5cb10544af352d4287246f5"
+    },
+    "test": {
+      "bytes": 7959,
+      "sha256": "645014b7df8a92da2d98e288a7e4e907c51f5f4f0455ca9317e524aad69dd4c1"
+    }
+  },
+  "metrics": {
+    "events_scanned": 220000,
+    "retained_tracks": 87555,
+    "early_peak_tracks": 283,
+    "low_area_tracks": 0,
+    "c12_tracks": 7302,
+    "c12_early_peak_tracks": 156,
+    "early_peak_rate": 0.003232254011764034,
+    "early_peak_rate_wilson_95": [
+      0.002877452112691542,
+      0.003630645177388446
+    ],
+    "c12_share_of_early_peak": 0.5512367491166078,
+    "c12_share_wilson_95": [
+      0.4929885941153212,
+      0.6081125511627331
+    ],
+    "early_peak_rate_within_c12": 0.021364009860312245,
+    "within_c12_wilson_95": [
+      0.018290520583369645,
+      0.024940838952822255
+    ],
+    "pca_cumulative_at_4": 0.745517570480533,
+    "pca_cumulative_at_8": 0.821883926913117,
+    "gmm_components": 4,
+    "gmm_input_pcs": 4,
+    "bic_scan": false
+  },
+  "validation": {
+    "py_compile": "PASS",
+    "pytest": "6 passed in 1.15s",
+    "direct_source_review": "PASS",
+    "json_parse": "PASS",
+    "svg_xml_parse": "PASS"
+  },
+  "execution_scope": {
+    "tests": "controlled source-contract fixtures",
+    "repository_source_review": "authenticated GitHub exact file/blob reads",
+    "root_or_model_rerun": false
+  },
+  "limitations": [
+    "truth-labelled simulation only",
+    "no matched beam-data closure",
+    "no empirical efficiency or false-positive rate",
+    "no generator or detector-model uncertainty",
+    "no ROOT rerun or package-version reproduction"
+  ]
+}

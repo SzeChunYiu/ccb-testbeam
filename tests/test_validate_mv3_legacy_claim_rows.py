@@ -19,16 +19,17 @@ mv3 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mv3)
 
 
-def paths() -> tuple[Path, Path, Path]:
+def paths() -> tuple[Path, Path, Path, Path]:
     return (
         ROOT / "docs/claim_ledger.csv",
         ROOT / "reports/mv3_stopping_v3_1782679272/REPORT.md",
+        ROOT / "reports/mv3_stopping_v3_1782679272/mv3_summary.json",
         ROOT / "src/ccb_mc_validation/studies/mv3_stopping_depth.py",
     )
 
 
 def mutate_ledger(tmp_path: Path, claim_id: str, field: str, value: str) -> Path:
-    ledger, _, _ = paths()
+    ledger, _, _, _ = paths()
     rows = list(csv.reader(io.StringIO(ledger.read_text(encoding="utf-8"))))
     index = {name: pos for pos, name in enumerate(rows[0])}
     for row in rows[1:]:
@@ -45,52 +46,53 @@ def test_exact_current_contract_validates() -> None:
     result = mv3.validate(*paths())
     assert result["status"] == "VALIDATED"
     assert result["n_issues"] == 0
-    assert result["source_contract"]["data_fraction_sum"] == 1.001
-    assert result["rounding_identifiability"]["mc_b8"]["possible_numerator_count"] == 249
-    assert result["rounding_identifiability"]["data_b8"]["possible_numerator_count"] == 307
+    contract = result["source_contract"]
+    assert contract["mc_counts"]["B8"] == 55619
+    assert contract["data_counts"]["B8"] == 7051
+    assert contract["reconstructed_chi2"] == contract["stated_chi2"]
+    assert contract["reconstructed_chi2_per_ndf"] == contract["stated_chi2_per_ndf"]
 
 
-def test_old_width_mismatch_fails_closed() -> None:
-    ledger, report, remediation = paths()
-    result = mv3.validate(ROOT / "docs/claim_ledger.current.csv", report, remediation)
+def test_old_rounded_contract_fails_closed(tmp_path: Path) -> None:
+    ledger = mutate_ledger(tmp_path, "CL-019", "current_value", "0.223")
+    _, report, summary, remediation = paths()
+    result = mv3.validate(ledger, report, summary, remediation)
     assert result["status"] == "FLAWED"
-    assert {issue["code"] for issue in result["issues"]} == {"ROW_WIDTH"}
+    assert any(issue["code"] == "FIELD_CURRENT_VALUE" for issue in result["issues"])
 
 
-def test_exact_numerator_is_rejected_when_source_omits_it(tmp_path: Path) -> None:
-    ledger = mutate_ledger(tmp_path, "CL-019", "numerator", "55635")
-    _, report, remediation = paths()
-    result = mv3.validate(ledger, report, remediation)
+def test_exact_numerator_mutation_is_detected(tmp_path: Path) -> None:
+    ledger = mutate_ledger(tmp_path, "CL-020", "numerator", "7052")
+    _, report, summary, remediation = paths()
+    result = mv3.validate(ledger, report, summary, remediation)
     assert result["status"] == "FLAWED"
-    assert any(issue["code"] == "UNSUPPORTED_QUANTITATIVE_FIELD" for issue in result["issues"])
+    assert any(issue["code"] == "FIELD_NUMERATOR" for issue in result["issues"])
 
 
-def test_chi2_label_mutation_is_detected(tmp_path: Path) -> None:
-    ledger = mutate_ledger(tmp_path, "CL-021", "current_value", "68269")
-    _, report, remediation = paths()
-    result = mv3.validate(ledger, report, remediation)
+def test_summary_chi2_mutation_is_detected(tmp_path: Path) -> None:
+    ledger, report, summary_path, remediation = paths()
+    payload = json.loads(summary_path.read_text(encoding="utf-8"))
+    payload["chi2_mc_vs_data_all"] += 1.0
+    altered = tmp_path / "mv3_summary.json"
+    altered.write_text(json.dumps(payload), encoding="utf-8")
+    result = mv3.validate(ledger, report, altered, remediation)
     assert result["status"] == "FLAWED"
-    assert any(issue["claim_id"] == "CL-021" for issue in result["issues"])
-
-
-def test_report_mutation_is_detected(tmp_path: Path) -> None:
-    ledger, report, remediation = paths()
-    altered = tmp_path / "REPORT.md"
-    altered.write_text(
-        report.read_text(encoding="utf-8").replace("| B8 | 0.223", "| B8 | 0.224"),
-        encoding="utf-8",
-    )
-    result = mv3.validate(ledger, altered, remediation)
-    assert result["status"] == "FLAWED"
-    assert any(issue["code"] == "MC_B8" for issue in result["issues"])
+    assert any(issue["code"] == "SUMMARY_CHI2_MISMATCH" for issue in result["issues"])
 
 
 def test_cli_invalid_utf8_is_controlled(tmp_path: Path) -> None:
-    _, report, remediation = paths()
+    _, report, summary, remediation = paths()
     bad = tmp_path / "bad.csv"
     bad.write_bytes(b"\xff\xfe")
     completed = subprocess.run(
-        [sys.executable, str(VALIDATOR_PATH), str(bad), str(report), str(remediation)],
+        [
+            sys.executable,
+            str(VALIDATOR_PATH),
+            str(bad),
+            str(report),
+            str(summary),
+            str(remediation),
+        ],
         check=False,
         capture_output=True,
         text=True,
@@ -111,3 +113,6 @@ def test_rendered_svg_is_well_formed(tmp_path: Path) -> None:
     assert completed.returncode == 0
     root = ET.parse(svg_path).getroot()
     assert root.tag.endswith("svg")
+    text = svg_path.read_text(encoding="utf-8")
+    assert "55619/249484" in text
+    assert "7051/306745" in text

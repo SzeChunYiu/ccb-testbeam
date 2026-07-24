@@ -117,3 +117,13 @@
 - **Resolution:** source blob `043dbd8cae7362dede199b42b28aeb383bccde8d` resolves paths, rejects equality and existing-file identity with either validated input, serializes the complete CSV to a unique same-directory temporary file, flushes and fsyncs it, measures bytes/SHA-256, publishes with `os.replace`, and removes temporary files on failure while preserving any prior final report.
 - **Validation:** direct CLI simulation/reference alias regressions preserve exact input bytes; a resolved symlink alias is rejected; injected serialization and replacement failures preserve an existing output and leave no temporary files; successful output returns exact bytes/SHA-256 and records the policy. Focused compatible suite returned `12 passed in 0.07s`; AST audit returned `VALIDATED`; source/test Git blobs match locally validated files; Markdown/JSON/SVG evidence is on `main`.
 - **Scientific boundary:** this resolves artifact publication integrity only. It does not validate a real Geant4 event export, accepted projectile total-energy-loss observable, uncertainty budget, calibration, or detector performance.
+
+## BLK-LEDGER-001 — canonical claim-ledger row-width and field alignment
+
+- **State:** OPEN
+- **Task:** `AUD-LEDGER-001`.
+- **Observed defect:** `docs/claim_ledger.csv` has a 43-column header, but the original 26 data rows had only 35--40 columns. Late values therefore shifted into the wrong named fields under standard CSV parsing.
+- **Bounded remediation:** `CL-007` and `CL-011` were reconstructed to exactly 43 columns for `AUD-WIKI-002`, preserving their non-empty values and restoring intended truth type, status, sources, CI state, supersession, and notes.
+- **Remaining scope:** 24 rows still have 35--40 columns. Their late status, truth type, source, figure/table, CI, blocker, supersession, commit, or notes fields cannot be assumed to match the header.
+- **Resolution:** reconstruct every row from source reports/scripts/data and intended schema; require exactly 43 fields; add a strict fail-closed validator and focused tests; review semantic mappings and non-empty value preservation; rerun WIKI, claim, link, and figure/source checks.
+- **Do not claim until resolved:** that all canonical claim-ledger late fields are correctly aligned or that downstream tools using those fields are reading the intended values.

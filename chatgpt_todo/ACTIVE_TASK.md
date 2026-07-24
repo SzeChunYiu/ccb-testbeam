@@ -1,13 +1,13 @@
 # Active Task
 
-- **Task ID:** AUD-G4-021
+- **Task ID:** AUD-WIKI-002
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-24T030404Z
-- **Initial remote main SHA:** `da94ca3f494b08209ed2d8f1d6d2cdc3ad85ac2c`
-- **Validated code/test/evidence head:** `625c38af6380a4950de323779242293331df7972`
-- **Scope:** prevent the canonical stopping-power report from overwriting validated simulation/reference inputs or leaving a partial final artifact.
-- **Resolved defect:** source blob `360f3e46db664f4eead48021536f210e2f7a85c9` wrote directly through `out_path.open("w")`. Current source blob `043dbd8cae7362dede199b42b28aeb383bccde8d` rejects resolved/same-file aliases, writes a unique same-directory temporary file, flushes and fsyncs it, measures bytes/SHA-256, and publishes with `os.replace`.
-- **Validated work:** direct CLI alias regressions; symlink alias regression; injected serialization and replacement failures preserve an existing report and remove temporary files; successful publication reports exact bytes/SHA-256; AST audit returns `VALIDATED`; Markdown/JSON/SVG evidence added.
-- **Validation:** focused `py_compile`; `12 passed in 0.07s`; AST audit `VALIDATED`; JSON and SVG parsed; source/test Git blobs match the locally validated files; maximum Python line lengths 91 and 93 characters.
-- **Boundary:** no real Geant4 export, accepted projectile-energy-loss closure, uncertainty budget, calibration, or detector-performance result was produced. Full repository pytest, ruff, Geant4/CTest, ROOT processing, and GitHub Actions were not run.
-- **Status:** COMPLETE for report publication safety. Broader stopping-power physics remains open under `AUD-G4-005`, `AUD-G4-011`, and `BLK-G4-SP-001`.
+- **Session stamp:** 2026-07-24T033502Z
+- **Initial remote main SHA:** `e8b01b4414d2a797c5f97fe3ee98f88e99ad254a`
+- **Validated code/test/evidence head:** `57dee4451352b27fc191cbc36805a2d0316600ff`
+- **Scope:** audit the public WIKI front door against canonical claim-ledger status, truth-type, and uncertainty provenance.
+- **Confirmed defects:** MV4 raw timing is labelled `PASS` three times although `PASS` is outside the WIKI legend and ledger claim `CL-007` is `VALIDATED`; effective live-time is labelled `data_only` although `CL-011` is `data_mc_self_consistent`; the front matter says every number has uncertainty although the ledger contains `CI_MISSING_BLOCKING` fields.
+- **Validated work:** added a fail-closed validator, five focused tests, a Markdown audit, machine-readable JSON, and labelled SVG evidence. Exact cited WIKI lines plus exact ledger rows produced status `FLAWED`, process status 1, and eight issues.
+- **Validation:** `py_compile`; `5 passed in 0.03s`; JSON and SVG parsed; maximum Python line lengths 91 and 92 characters.
+- **Boundary:** no WIKI remediation, timing recalculation, pile-up recalculation, uncertainty completion, data processing, or simulation was performed.
+- **Status:** PARTIAL. Correct the complete current `WIKI.md`, run the validator on full exact files, and require `VALIDATED` before completing this task.

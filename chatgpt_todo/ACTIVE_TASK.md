@@ -1,13 +1,13 @@
 # Active Task
 
-- **Task ID:** AUD-WIKI-001
+- **Task ID:** AUD-MERGE-001
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-24T221537Z
-- **Initial remote main SHA:** `e844e779c9c431c6fcfe144b5cc5d856323c7bcf`
-- **Latest validated evidence head:** `cfe88a6216bd069232e7693ed1e383f9a70bd864`
-- **Scope:** synchronize the public root WIKI with exact tracked MV3 counts and Pearson arithmetic while retaining the `FLAWED` scientific boundary; add a fail-closed source/ledger/WIKI validator, focused regressions, machine-readable evidence, and visual evidence.
-- **Completed:** validator v1.0.0, evidence renderer, five focused tests, exact replacement contract, negative control, audit Markdown/JSON/SVG, and removal of the non-triggered one-time transport workflow are on remote `main`.
-- **Validation:** Python compilation passed; focused pytest returned `5 passed in 0.04s`; a locally patched exact WIKI candidate returned `VALIDATED` with zero issues; the exact remote/pre-change WIKI returned `FLAWED` with 12 findings; JSON and SVG parsing passed; link-target sequence remained unchanged at 44 targets.
-- **Scientific boundary:** exact fixed-source arithmetic is reproducible, but geometry/material modelling, trigger and selection transfer, gain response, covariance, p-value interpretation, and detector/model systematics remain unresolved under `BLK-MV3-LEGACY-001`.
-- **Remaining primary action:** publish the exact 24,023-byte candidate WIKI through a byte-safe complete-file write, rerun the new validator and existing front-door/link gates against remote bytes, and require zero issues.
-- **Status:** PARTIAL — the reproducible synchronization gate and candidate are validated; the public root WIKI remains stale on remote `main` and the remediation is not delivered.
+- **Session stamp:** 2026-07-24T224320Z
+- **Initial remote main SHA:** `1e99395ee2bdf0907f82782e5b2b0b2680a3c90f`
+- **Latest validated evidence head:** `2dcbbdc86450707c0d6d8c1d3fe5ccc0c57e5fa1`
+- **Scope:** map the validated implementation from closed PR #868 to current `main`, correct the contradictory single-stave known-issues document, add a fail-closed source/status validator, focused regressions, machine-readable evidence, and visual evidence without merging the stale branch.
+- **Completed:** six PR #868 scientific scripts/tests are exact blob matches on current `main`; RNG/thread configuration and provenance are current-main semantic supersets; the MC validation workflow covers those paths; `KNOWN_ISSUES.md` now matches the repository-recorded Geant4 11.2.2 runtime evidence and retains calibration/stopping-power boundaries.
+- **Validation:** Python compilation passed; focused pytest returned `5 passed in 0.05s`; the exact former known-issues text returned `FLAWED` with 19 findings and status 1; corrected files returned `VALIDATED` with zero issues; JSON and SVG parsing passed; changed Python lines are at most 97 characters.
+- **Scientific boundary:** this validates repository integration and documentation consistency. It does not independently rerun Geant4 or inspect the original ROOT files, and it does not establish detector calibration, PE/MeV transfer, stopping-power closure, or beam-data agreement. `BLK-G4-SP-001` remains open.
+- **Remaining primary action:** publish the already validated exact root-WIKI MV3 candidate from the previous `AUD-WIKI-001` handoff through a byte-safe complete-file write, then rerun its source/ledger/WIKI and link gates against remote bytes.
+- **Status:** COMPLETE — PR #868 requires no stale-branch merge for the mapped validated implementation; current-main status documentation and fail-closed evidence are delivered.

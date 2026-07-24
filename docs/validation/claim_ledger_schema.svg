@@ -1,107 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="820" height="784" viewBox="0 0 820 784" role="img" aria-labelledby="title desc">
-<title id="title">Claim-ledger row width audit</title>
-<desc id="desc">Actual CSV column count for every claim row compared with the canonical 43-column schema. Mismatched rows are hatched and labelled.</desc>
-<defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#555" stroke-width="2"/></pattern></defs>
-<rect width="100%" height="100%" fill="white"/>
-<text x="20" y="28" font-family="sans-serif" font-size="20" font-weight="bold">Exact current claim-ledger row widths</text>
-<text x="20" y="50" font-family="sans-serif" font-size="13">Repository schema evidence; physics values are not interpreted for mismatched rows.</text>
-<line x1="707.1" y1="60" x2="707.1" y2="694" stroke="black" stroke-width="2"/>
-<text x="703.1" y="63" text-anchor="end" font-family="sans-serif" font-size="12">expected 43</text>
-<text x="20" y="85" font-family="monospace" font-size="12">CL-001</text>
-<rect x="150" y="73" width="557.1" height="15" fill="#d9d9d9" stroke="black"/>
-<text x="714.1" y="85" font-family="sans-serif" font-size="11">43 — EXACT</text>
-<text x="20" y="109" font-family="monospace" font-size="12">CL-002</text>
-<rect x="150" y="97" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="109" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="133" font-family="monospace" font-size="12">CL-003</text>
-<rect x="150" y="121" width="385.7" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="542.7" y="133" font-family="sans-serif" font-size="11">39 — MISMATCH</text>
-<text x="20" y="157" font-family="monospace" font-size="12">CL-004</text>
-<rect x="150" y="145" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="157" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="181" font-family="monospace" font-size="12">CL-005</text>
-<rect x="150" y="169" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="181" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="205" font-family="monospace" font-size="12">CL-006</text>
-<rect x="150" y="193" width="385.7" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="542.7" y="205" font-family="sans-serif" font-size="11">39 — MISMATCH</text>
-<text x="20" y="229" font-family="monospace" font-size="12">CL-007</text>
-<rect x="150" y="217" width="557.1" height="15" fill="#d9d9d9" stroke="black"/>
-<text x="714.1" y="229" font-family="sans-serif" font-size="11">43 — EXACT</text>
-<text x="20" y="253" font-family="monospace" font-size="12">CL-008</text>
-<rect x="150" y="241" width="300.0" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="457.0" y="253" font-family="sans-serif" font-size="11">37 — MISMATCH</text>
-<text x="20" y="277" font-family="monospace" font-size="12">CL-009</text>
-<rect x="150" y="265" width="300.0" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="457.0" y="277" font-family="sans-serif" font-size="11">37 — MISMATCH</text>
-<text x="20" y="301" font-family="monospace" font-size="12">CL-010</text>
-<rect x="150" y="289" width="557.1" height="15" fill="#d9d9d9" stroke="black"/>
-<text x="714.1" y="301" font-family="sans-serif" font-size="11">43 — EXACT</text>
-<text x="20" y="325" font-family="monospace" font-size="12">CL-011</text>
-<rect x="150" y="313" width="557.1" height="15" fill="#d9d9d9" stroke="black"/>
-<text x="714.1" y="325" font-family="sans-serif" font-size="11">43 — EXACT</text>
-<text x="20" y="349" font-family="monospace" font-size="12">CL-012</text>
-<rect x="150" y="337" width="557.1" height="15" fill="#d9d9d9" stroke="black"/>
-<text x="714.1" y="349" font-family="sans-serif" font-size="11">43 — EXACT</text>
-<text x="20" y="373" font-family="monospace" font-size="12">CL-013</text>
-<rect x="150" y="361" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="373" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="397" font-family="monospace" font-size="12">CL-014</text>
-<rect x="150" y="385" width="300.0" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="457.0" y="397" font-family="sans-serif" font-size="11">37 — MISMATCH</text>
-<text x="20" y="421" font-family="monospace" font-size="12">CL-015</text>
-<rect x="150" y="409" width="557.1" height="15" fill="#d9d9d9" stroke="black"/>
-<text x="714.1" y="421" font-family="sans-serif" font-size="11">43 — EXACT</text>
-<text x="20" y="445" font-family="monospace" font-size="12">CL-016</text>
-<rect x="150" y="433" width="557.1" height="15" fill="#d9d9d9" stroke="black"/>
-<text x="714.1" y="445" font-family="sans-serif" font-size="11">43 — EXACT</text>
-<text x="20" y="469" font-family="monospace" font-size="12">CL-017</text>
-<rect x="150" y="457" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="469" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="493" font-family="monospace" font-size="12">CL-018</text>
-<rect x="150" y="481" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="493" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="517" font-family="monospace" font-size="12">CL-019</text>
-<rect x="150" y="505" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="517" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="541" font-family="monospace" font-size="12">CL-020</text>
-<rect x="150" y="529" width="342.9" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="499.9" y="541" font-family="sans-serif" font-size="11">38 — MISMATCH</text>
-<text x="20" y="565" font-family="monospace" font-size="12">CL-021</text>
-<rect x="150" y="553" width="257.1" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="414.1" y="565" font-family="sans-serif" font-size="11">36 — MISMATCH</text>
-<text x="20" y="589" font-family="monospace" font-size="12">CL-022</text>
-<rect x="150" y="577" width="385.7" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="542.7" y="589" font-family="sans-serif" font-size="11">39 — MISMATCH</text>
-<text x="20" y="613" font-family="monospace" font-size="12">CL-023</text>
-<rect x="150" y="601" width="300.0" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="457.0" y="613" font-family="sans-serif" font-size="11">37 — MISMATCH</text>
-<text x="20" y="637" font-family="monospace" font-size="12">CL-024</text>
-<rect x="150" y="625" width="300.0" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="457.0" y="637" font-family="sans-serif" font-size="11">37 — MISMATCH</text>
-<text x="20" y="661" font-family="monospace" font-size="12">CL-025</text>
-<rect x="150" y="649" width="300.0" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="457.0" y="661" font-family="sans-serif" font-size="11">37 — MISMATCH</text>
-<text x="20" y="685" font-family="monospace" font-size="12">CL-026</text>
-<rect x="150" y="673" width="214.3" height="15" fill="url(#hatch)" stroke="black"/>
-<text x="371.3" y="685" font-family="sans-serif" font-size="11">35 — MISMATCH</text>
-<line x1="150" y1="712" x2="750" y2="712" stroke="black"/>
-<line x1="150.0" y1="712" x2="150.0" y2="717" stroke="black"/>
-<text x="150.0" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">30</text>
-<line x1="235.7" y1="712" x2="235.7" y2="717" stroke="black"/>
-<text x="235.7" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">32</text>
-<line x1="321.4" y1="712" x2="321.4" y2="717" stroke="black"/>
-<text x="321.4" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">34</text>
-<line x1="407.1" y1="712" x2="407.1" y2="717" stroke="black"/>
-<text x="407.1" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">36</text>
-<line x1="492.9" y1="712" x2="492.9" y2="717" stroke="black"/>
-<text x="492.9" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">38</text>
-<line x1="578.6" y1="712" x2="578.6" y2="717" stroke="black"/>
-<text x="578.6" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">40</text>
-<line x1="664.3" y1="712" x2="664.3" y2="717" stroke="black"/>
-<text x="664.3" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">42</text>
-<line x1="750.0" y1="712" x2="750.0" y2="717" stroke="black"/>
-<text x="750.0" y="732" text-anchor="middle" font-family="sans-serif" font-size="11">44</text>
-<text x="450.0" y="754" text-anchor="middle" font-family="sans-serif" font-size="13">CSV columns</text>
-<text x="20" y="766" font-family="sans-serif" font-size="12">Status: FLAWED; exact rows: 7/26; policy: NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+<title id="title">Claim-ledger exact-width coverage after CL-022 repair</title>
+<desc id="desc">Eight of twenty-six claim rows have the canonical forty-three columns. Eighteen malformed rows remain withheld from field interpretation.</desc>
+<defs>
+  <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="black" stroke-width="2"/>
+  </pattern>
+</defs>
+<rect width="900" height="360" fill="white"/>
+<text x="30" y="38" font-family="sans-serif" font-size="22" font-weight="bold">Claim-ledger schema coverage</text>
+<text x="30" y="65" font-family="sans-serif" font-size="14">Canonical width: 43 columns; field interpretation is withheld for every mismatched row.</text>
+<rect x="180" y="105" width="600" height="54" fill="white" stroke="black"/>
+<rect x="180" y="105" width="184.62" height="54" fill="white" stroke="black" stroke-width="2"/>
+<rect x="364.62" y="105" width="415.38" height="54" fill="url(#hatch)" stroke="black" stroke-width="2"/>
+<text x="272" y="137" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">8 exact</text>
+<text x="572" y="137" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">18 withheld</text>
+<text x="180" y="186" font-family="sans-serif" font-size="13">Exact-width rows (8/26 = 30.8%):</text>
+<text x="180" y="210" font-family="monospace" font-size="13">CL-001, CL-007, CL-010, CL-011, CL-012, CL-015, CL-016, CL-022</text>
+<text x="180" y="246" font-family="sans-serif" font-size="13">Width histogram:</text>
+<text x="180" y="270" font-family="monospace" font-size="13">35:1 · 36:1 · 37:6 · 38:8 · 39:2 · 43:8</text>
+<text x="30" y="316" font-family="sans-serif" font-size="13">CL-022 advanced from 39 to 43 columns; no other row was reinterpreted.</text>
+<text x="30" y="340" font-family="sans-serif" font-size="12">Status: FLAWED repository-wide; policy: NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS</text>
 </svg>

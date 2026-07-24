@@ -2,7 +2,7 @@
 
 > **A self-contained guide to the CCB test-beam analysis, written for readers with and without prior knowledge of particle physics instrumentation.**
 >
-> Every study has a **descriptive name** and a **hyperlink** to its full report. Every claim is traceable to source. Every number has uncertainty.
+> Every study has a **descriptive name** and a **hyperlink** to its full report. Every claim is traceable to source. Uncertainty coverage is tracked in the canonical claim ledger; entries marked `CI_MISSING_BLOCKING` remain incomplete.
 >
 > **Repository:** [SzeChunYiu/ccb-testbeam](https://github.com/SzeChunYiu/ccb-testbeam) | **Started:** 2026-06 | **Status:** Research synthesis (preliminary, not yet peer-reviewed)
 
@@ -57,12 +57,12 @@ This section is the controlled front door to the CCB test-beam analysis. Every c
 | Combined 3-stave σ (B4+B6+B8) | 0.54–0.56 ns | 0.02 | 0.08 | data_only | **DONE_DATA_ONLY** |
 | Pair covariance | −0.127 ns² | — | — | data_only | **DONE_DATA_ONLY** |
 | Rmax (pile-up tolerance) | 3.044–3.05 MHz | 0.05 | 0.10 | data + MC self-consistent | **VALIDATED** |
-| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 | data_only | **VALIDATED** |
+| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 | data + MC self-consistent | **VALIDATED** |
 | Digitizer gain (MV0 v2) | 92 ± 28 ADC/MeV | 14 | 28 | digitized MC | **VALIDATED** |
 | p/d PID AUC | 0.9860 | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
 | C12-like anomaly fraction in truth-labelled MC | 283 / 87,555 tracks (0.32%) | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
 | MV3 B8 data/MC | data 2.3% / MC 22.3% | — | — | MC vs data | **FAIL** |
-| MV4 raw timing pull | −1.05σ | — | — | digitized MC | **PASS** |
+| MV4 raw timing pull | −1.05σ | — | — | digitized MC | **VALIDATED** |
 | MV4 corrected timing pull | +2.68σ | — | — | digitized MC | **TENSION** |
 | ML timing | Diagnostic only | — | — | data_only | **GATED** |
 | ML wins | Duplicate readout, saturation recovery | — | — | data_only | **GATED** |
@@ -168,7 +168,7 @@ Raw ROOT → baseline(subtract median samples 0–3) → amplitude(A = max − b
 | B6 single-stave σ₆₈ | 0.68–0.75 ns | **VALIDATED** (data + digitized MC) |
 | Combined 3-stave σ (B4+B6+B8) | 0.54–0.56 ns | **DONE_DATA_ONLY** (independence assumed) |
 | Pair covariance (B4–B6) | −0.127 ns² | **DONE_DATA_ONLY** |
-| MC raw timing pull | −1.05σ | **PASS** |
+| MC raw timing pull | −1.05σ | **VALIDATED** |
 | MC corrected timing pull | +2.68σ | **TENSION** |
 | ML timing | Diagnostic only | **GATED** |
 
@@ -342,7 +342,7 @@ No data-veto performance is claimed. Efficiency, false-positive rate, and retain
 | MV0 v2 | Digitizer gain | **VALIDATED** | Reduce systematic |
 | MV1 | p/d PID | **TRUTH_LEVEL_MC_ONLY** | Data transfer needed |
 | MV3 | Stopping depth | **FAIL** (χ²/ndf = 68,269) | **GEANT4 fix** |
-| MV4 raw | Timing | **PASS** (−1.05σ) | Accept |
+| MV4 raw | Timing | **VALIDATED** (−1.05σ) | Accept |
 | MV4 corrected | Timing | **TENSION** (+2.68σ) | **Digitizer fix** |
 | MV5 | Pile-up Rmax | **VALIDATED** | Independent τeff |
 | MV6 | C12-like anomaly in truth-labelled MC | **TRUTH_LEVEL_MC_ONLY** | Matched data/MC closure and efficiency study |

@@ -1,10 +1,44 @@
 {
   "auditor": "audit_mv4_legacy_claim_rows.py",
   "claim_ledger": {
-    "bytes": 18183,
+    "bytes": 21486,
     "path": "docs/claim_ledger.csv",
-    "sha256": "cfdfc8b38e53158fee5cb32a61165d2fc8c2e2370d81580e5f75fe369963fbcb",
+    "sha256": "e7e560a66df43a9cacdf5041361aaffa0995927144adae3701b5c60e0433c26b",
     "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "claim_states": {
+    "CL-002": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-003": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-004": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-005": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-006": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-007": {
+      "current_value": "-1.054403396247793",
+      "status": "GATED"
+    },
+    "CL-008": {
+      "current_value": "2.680528799917713",
+      "status": "GATED"
+    },
+    "CL-009": {
+      "current_value": "REVIEW",
+      "status": "REVIEW"
+    }
   },
   "current_contract": {
     "bytes": 4441,
@@ -12,85 +46,7 @@
     "sha256": "55608d6a3f72bf65877a2be81acb66db20ca4df9517b12e20b22dec57e01f4e1",
     "snapshot_method": "SINGLE_READ_EXACT_BYTES"
   },
-  "issues": [
-    {
-      "actual_columns": 38,
-      "claim_id": "CL-002",
-      "code": "ROW_WIDTH_MISMATCH",
-      "expected_columns": 43
-    },
-    {
-      "actual_columns": 39,
-      "claim_id": "CL-003",
-      "code": "ROW_WIDTH_MISMATCH",
-      "expected_columns": 43
-    },
-    {
-      "actual_columns": 38,
-      "claim_id": "CL-004",
-      "code": "ROW_WIDTH_MISMATCH",
-      "expected_columns": 43
-    },
-    {
-      "actual_columns": 38,
-      "claim_id": "CL-005",
-      "code": "ROW_WIDTH_MISMATCH",
-      "expected_columns": 43
-    },
-    {
-      "actual_columns": 39,
-      "claim_id": "CL-006",
-      "code": "ROW_WIDTH_MISMATCH",
-      "expected_columns": 43
-    },
-    {
-      "actual_columns": 37,
-      "claim_id": "CL-008",
-      "code": "ROW_WIDTH_MISMATCH",
-      "expected_columns": 43
-    },
-    {
-      "actual_columns": 37,
-      "claim_id": "CL-009",
-      "code": "ROW_WIDTH_MISMATCH",
-      "expected_columns": 43
-    },
-    {
-      "claim_id": "CL-002",
-      "code": "VALUE_ABSENT_FROM_CITED_SOURCE",
-      "legacy_value": "0.68"
-    },
-    {
-      "claim_id": "CL-003",
-      "code": "VALUE_ABSENT_FROM_CITED_SOURCE",
-      "legacy_value": "0.75"
-    },
-    {
-      "claim_id": "CL-004",
-      "code": "VALUE_ABSENT_FROM_CITED_SOURCE",
-      "legacy_value": "0.54"
-    },
-    {
-      "claim_id": "CL-005",
-      "code": "VALUE_ABSENT_FROM_CITED_SOURCE",
-      "legacy_value": "0.56"
-    },
-    {
-      "claim_id": "CL-006",
-      "code": "VALUE_ABSENT_FROM_CITED_SOURCE",
-      "legacy_value": "-0.127"
-    },
-    {
-      "claim_id": "CL-007",
-      "code": "TOY_PULL_OVERCLAIMED",
-      "detail": "pull uses hard-coded anchor and assumed 0.10 ns uncertainty"
-    },
-    {
-      "claim_id": "CL-009",
-      "code": "ML_METHOD_NOT_IN_SOURCE",
-      "detail": "source tests CFD20 and analytic A+B/sqrt(amplitude) only"
-    }
-  ],
+  "issues": [],
   "legacy_report": {
     "bytes": 2342,
     "path": "reports/mv4_timing_1782678162/REPORT.md",
@@ -103,21 +59,24 @@
     "sha256": "29ea729663a29288af686a59a63ddd2bd4f22a6001e2591cb7a4994066173ea9",
     "snapshot_method": "SINGLE_READ_EXACT_BYTES"
   },
-  "missing_cited_paths": [
-    "results.json",
-    "configs/mv4_timing.yaml"
-  ],
-  "n_issues": 14,
+  "n_issues": 0,
   "policy": "LEGACY_MV4_TIMING_REQUIRES_STRICT_INPUTS_AND_SOURCE_BOUND_CLAIMS",
   "row_widths": {
-    "CL-002": 38,
-    "CL-003": 39,
-    "CL-004": 38,
-    "CL-005": 38,
-    "CL-006": 39,
+    "CL-002": 43,
+    "CL-003": 43,
+    "CL-004": 43,
+    "CL-005": 43,
+    "CL-006": 43,
     "CL-007": 43,
-    "CL-008": 37,
-    "CL-009": 37
+    "CL-008": 43,
+    "CL-009": 43
+  },
+  "source_absence_confirmed": {
+    "CL-002": true,
+    "CL-003": true,
+    "CL-004": true,
+    "CL-005": true,
+    "CL-006": true
   },
   "source_facts": {
     "assumed_data_unc_ns": 0.1,
@@ -131,7 +90,7 @@
     "raw_pull": -1.054403396247793,
     "raw_sigma68_ns": 1.744319343085384
   },
-  "status": "FLAWED",
+  "status": "VALIDATED",
   "target_claim_ids": [
     "CL-002",
     "CL-003",
@@ -142,5 +101,5 @@
     "CL-008",
     "CL-009"
   ],
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

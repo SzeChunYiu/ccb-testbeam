@@ -123,8 +123,8 @@
 - **State:** OPEN
 - **Task:** `AUD-LEDGER-001`.
 - **Observed defect:** `docs/claim_ledger.csv` has a 43-column header, but the original 26 data rows had only 35--40 columns. Late values therefore shifted into the wrong named fields under standard CSV parsing.
-- **Bounded remediation:** `CL-001`, `CL-007`, `CL-010`, `CL-011`, `CL-012`, and `CL-015` are reconstructed to exactly 43 columns from source evidence. `CL-010`/`CL-012` explicitly quarantine an internally conflicted Rmax; `CL-015` preserves the reported P04p metric but gates model selection because the coverage-threshold uncertainty rule is unspecified.
-- **Remaining scope:** 20 rows still have 35--39 columns. Their late status, truth type, source, figure/table, CI, blocker, supersession, commit, or notes fields cannot be assumed to match the header.
+- **Bounded remediation:** `CL-001`, `CL-007`, `CL-010`, `CL-011`, `CL-012`, `CL-015`, and `CL-016` are reconstructed to exactly 43 columns from source evidence. `CL-010`/`CL-012` explicitly quarantine an internally conflicted Rmax; `CL-015` gates P04p winner selection; `CL-016` withholds P07e ML saturation correction because external duplicate closure is worse and historical producer bytes are unbound.
+- **Remaining scope:** 19 rows still have 35--39 columns. Their late status, truth type, source, figure/table, CI, blocker, supersession, commit, or notes fields cannot be assumed to match the header.
 - **Resolution:** reconstruct every row from source reports/scripts/data and intended schema; require exactly 43 fields; review semantic mappings and non-empty value preservation; rerun WIKI, claim, link, and figure/source checks.
 - **Do not claim until resolved:** that all canonical claim-ledger late fields are correctly aligned or that downstream tools using those fields are reading the intended values.
 
@@ -137,6 +137,16 @@
 - **Validated containment:** `CL-015` is exact-width and `GATED`; audit tooling returns `FLAWED` for the source-faithful fixture and `VALIDATED` for a corrected preregistered synthetic contract; focused tests returned `6 passed in 1.14s`; Markdown/JSON/SVG evidence is on `main`.
 - **Resolution:** preregister the coverage-uncertainty eligibility rule and multiplicity/model-family search, freeze an independent selection sample, validate transfer to new runs and B4/B6/B8, and only then designate a production model and update the claim status.
 - **Do not claim until resolved:** that GBT is a robust production winner, that the MLP sensitivity winner is canonical, that B2 external duplicate-readout closure establishes truth-energy performance, or that the result transfers to other staves or runs.
+
+## BLK-P07E-001 — historical P07e producer bytes and saturation-transfer authorization
+
+- **State:** OPEN
+- **Task:** `AUD-LEDGER-001`; claim `CL-016`.
+- **Measured scientific result:** synthetic pseudo-saturation ML charge res68 is `0.03669062665507541`, but external held-out odd-duplicate closure gives ML `0.1763577793605039` with run-block 95% interval `[0.17304334869529975,0.18060166173702746]`, versus raw `0.12079374117700271` with `[0.11700387021774719,0.12536373643016782]`. The ML-minus-raw degradation is `+0.05556403818350119`, and the intervals do not overlap.
+- **Provenance defect:** the manifest execution commit `f20e1b0bceac4eeae4532c9e871a363d6dce08d7` predates the P07e producer path. The manifest records output and raw-input hashes but neither producer SHA-256 nor clean/dirty worktree state, so exact historical producer bytes are not recoverable from the manifest alone.
+- **Validated containment:** `CL-016` is exact-width, `GATED`, and uses `data_external_duplicate_readout`; the audit policy is `P07E_EXTERNAL_DUPLICATE_CLOSURE_OVERRIDES_PSEUDO_SATURATION`; the scientific decision is `WITHHOLD_ML_CORRECTION`; focused tests returned `4 passed in 0.62s`; Markdown/JSON/SVG evidence is on `main`.
+- **Resolution:** recover a content-addressed producer snapshot or rerun from a clean exact commit with producer/config/input/output hashes; preregister and execute cross-stave and independent new-run transfer validation before any production correction is authorized.
+- **Do not claim until resolved:** that synthetic pseudo-saturation recovery validates real high-amplitude pulses, that the ML correction improves external duplicate closure, that the historical run is exactly reproducible from the recorded commit, or that the method transfers to other staves or future runs.
 
 ## BLK-PU-RMAX-001 — canonical pile-up Rmax definition is internally conflicted
 

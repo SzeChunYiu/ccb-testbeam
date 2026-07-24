@@ -1,4 +1,5 @@
 name: One-time MV3 WIKI synchronization
+# retriggered through the contents API after the Git-data ref update produced no run
 
 on:
   push:

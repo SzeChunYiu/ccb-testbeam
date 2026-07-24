@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Root WIKI Rmax and ML claim-gate validation</title>
+  <desc id="desc">Synthetic documentation-governance evidence. The former validator bound two claims and missed stale Rmax and ML-win wording. Version 1.2 binds six exact-width claims and reports 21 current findings.</desc>
+  <rect width="1200" height="720" fill="white"/>
+  <text x="60" y="65" font-family="sans-serif" font-size="30" font-weight="700">Root WIKI Rmax and ML claim gate</text>
+  <text x="60" y="100" font-family="sans-serif" font-size="18">Software/documentation evidence — not detector data or a physics result</text>
+  <rect x="60" y="145" width="485" height="430" rx="18" fill="#f4f4f4" stroke="#222" stroke-width="2"/>
+  <text x="90" y="195" font-family="sans-serif" font-size="24" font-weight="700">Former v1.1 scope</text>
+  <text x="90" y="240" font-family="sans-serif" font-size="20">Bound claims: CL-007, CL-011</text>
+  <text x="90" y="282" font-family="sans-serif" font-size="20">No exact 43-column row gate</text>
+  <text x="90" y="324" font-family="sans-serif" font-size="20">No Rmax / P04p / P07e bindings</text>
+  <text x="90" y="366" font-family="sans-serif" font-size="20">Stale synthetic fixture: VALIDATED</text>
+  <line x1="90" y1="405" x2="505" y2="405" stroke="#222" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="90" y="450" font-family="sans-serif" font-size="20">Public values could diverge from</text>
+  <text x="90" y="482" font-family="sans-serif" font-size="20">canonical blocked/gated records.</text>
+  <text x="90" y="535" font-family="sans-serif" font-size="24" font-weight="700">FAIL-OPEN COVERAGE GAP</text>
+  <rect x="655" y="145" width="485" height="430" rx="18" fill="#fafafa" stroke="#222" stroke-width="2"/>
+  <text x="685" y="195" font-family="sans-serif" font-size="24" font-weight="700">Validated v1.2 gate</text>
+  <text x="685" y="240" font-family="sans-serif" font-size="20">Six claims, each exactly 43 columns</text>
+  <text x="685" y="282" font-family="sans-serif" font-size="20">Status + truth + withheld-value checks</text>
+  <text x="685" y="324" font-family="sans-serif" font-size="20">Rmax and ML phrase/caveat policy</text>
+  <text x="685" y="366" font-family="sans-serif" font-size="20">Current claim excerpt: FLAWED</text>
+  <line x1="685" y1="405" x2="1100" y2="405" stroke="#222" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="685" y="450" font-family="sans-serif" font-size="20">21 findings; publication remains</text>
+  <text x="685" y="482" font-family="sans-serif" font-size="20">blocked until full WIKI remediation.</text>
+  <text x="685" y="535" font-family="sans-serif" font-size="24" font-weight="700">FAIL-CLOSED CLAIM GATE</text>
+  <path d="M555 360 L640 360" stroke="#222" stroke-width="4"/>
+  <path d="M640 360 L615 345 M640 360 L615 375" stroke="#222" stroke-width="4" fill="none"/>
+  <text x="60" y="625" font-family="sans-serif" font-size="18">Policy: WIKI_FRONT_DOOR_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS</text>
+  <text x="60" y="660" font-family="sans-serif" font-size="18">Focused tests: 10 passed in 0.04 s · Current exact claim-bearing excerpt: 21 findings</text>
+  <text x="60" y="695" font-family="sans-serif" font-size="16">Required outcome: withhold Rmax; separate and gate P04p/P07e; authorize no production correction.</text>
+</svg>

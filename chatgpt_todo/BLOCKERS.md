@@ -123,10 +123,20 @@
 - **State:** OPEN
 - **Task:** `AUD-LEDGER-001`.
 - **Observed defect:** `docs/claim_ledger.csv` has a 43-column header, but the original 26 data rows had only 35--40 columns. Late values therefore shifted into the wrong named fields under standard CSV parsing.
-- **Bounded remediation:** `CL-001`, `CL-007`, `CL-010`, `CL-011`, and `CL-012` are reconstructed to exactly 43 columns from source evidence. `CL-010`/`CL-012` explicitly quarantine an internally conflicted Rmax instead of preserving a false canonical value.
-- **Remaining scope:** 21 rows still have 35--39 columns. Their late status, truth type, source, figure/table, CI, blocker, supersession, commit, or notes fields cannot be assumed to match the header.
+- **Bounded remediation:** `CL-001`, `CL-007`, `CL-010`, `CL-011`, `CL-012`, and `CL-015` are reconstructed to exactly 43 columns from source evidence. `CL-010`/`CL-012` explicitly quarantine an internally conflicted Rmax; `CL-015` preserves the reported P04p metric but gates model selection because the coverage-threshold uncertainty rule is unspecified.
+- **Remaining scope:** 20 rows still have 35--39 columns. Their late status, truth type, source, figure/table, CI, blocker, supersession, commit, or notes fields cannot be assumed to match the header.
 - **Resolution:** reconstruct every row from source reports/scripts/data and intended schema; require exactly 43 fields; review semantic mappings and non-empty value preservation; rerun WIKI, claim, link, and figure/source checks.
 - **Do not claim until resolved:** that all canonical claim-ledger late fields are correctly aligned or that downstream tools using those fields are reading the intended values.
+
+## BLK-P04P-001 — duplicate-readout model winner depends on an unspecified coverage-uncertainty rule
+
+- **State:** OPEN
+- **Task:** `AUD-LEDGER-001`; claim `CL-015`.
+- **Measured instability:** the reported GBT accepted-coverage point estimate is `0.5016432417313474`, only `0.001643` above the hard 0.50 eligibility gate, while its run-bootstrap 95% interval is `[0.4781032287979763,0.5382552094265317]`. The committed result does not declare whether point coverage, a confidence bound, or another uncertainty criterion controls eligibility.
+- **Sensitivity result:** requiring the lower 95% coverage bound to meet 0.50 excludes GBT and makes MLP the first eligible method (`coverage=0.5470846194571808`, lower bound `0.5225633159229767`, accepted charge res68 `0.04055070702536622`). This is a sensitivity analysis, not a replacement canonical winner.
+- **Validated containment:** `CL-015` is exact-width and `GATED`; audit tooling returns `FLAWED` for the source-faithful fixture and `VALIDATED` for a corrected preregistered synthetic contract; focused tests returned `6 passed in 1.14s`; Markdown/JSON/SVG evidence is on `main`.
+- **Resolution:** preregister the coverage-uncertainty eligibility rule and multiplicity/model-family search, freeze an independent selection sample, validate transfer to new runs and B4/B6/B8, and only then designate a production model and update the claim status.
+- **Do not claim until resolved:** that GBT is a robust production winner, that the MLP sensitivity winner is canonical, that B2 external duplicate-readout closure establishes truth-energy performance, or that the result transfers to other staves or runs.
 
 ## BLK-PU-RMAX-001 — canonical pile-up Rmax definition is internally conflicted
 

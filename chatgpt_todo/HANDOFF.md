@@ -1,128 +1,153 @@
 # Latest Scientific Review Handoff
 
-## Session
+## Session identity
 
-- UTC stamp: `2026-07-24T072257Z`
+- UTC stamp: `2026-07-24T081929Z`
 - Task: `AUD-LEDGER-001`
-- Unit: MV0 gain provenance and uncertainty chain (`CL-013`, `CL-014`, `FIG-EN-001`)
+- Added focused task record: `AUD-P04P-001`
+- Unit: P04p B2 duplicate-readout winner robustness and exact-width reconstruction of `CL-015`
 - Repository: `SzeChunYiu/ccb-testbeam`
-- Initial remote `main`: `712adba593c9b84e4617c1fe8013873cd0c5f753`
-- Validated implementation/evidence head: `9b035104c9ff92878e6c21cf494c9e4f0bc7475a`
-- Coordination/archive head before the exact-byte publication correction: `a909113a37aaf36d0748adda2ea812396efbc10d`
+- Initial remote `main`: `251353ffb0e200bd3c495b92c854f60593f44279`
+- Validated delivery head before this handoff update: `93a6dd4f54ab6eac8624403ff65d99c52a7c8c42`
 - Destination: direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite
-- Acceptance: audit tooling/evidence `VALIDATED`; the 92 ADC/MeV calibration claim is `WITHHELD`; `AUD-LEDGER-001` remains `PARTIAL`
+- Acceptance: audit tooling/evidence `VALIDATED`; source-like P04p result state `FLAWED`; `CL-015` and the production-winner claim remain `GATED`; `AUD-LEDGER-001` and `AUD-P04P-001` remain `PARTIAL`
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads reviewed repository permissions/default branch, recent `main` history, open PRs, PR #868, current commit status, mandatory `chatgpt_todo/` records, `docs/claim_ledger.csv`, the MV0 report, committed calibration artifact, tracked producer script at its cited source commit, and `docs/figure_registry.csv`. The initial head was preserved. PR #868 remains closed, unmerged, and non-mergeable and was not modified.
+Authenticated GitHub reads inspected repository permissions/default branch, recent `main`, open/closed PR state, PR #868, commit status, mandatory `chatgpt_todo/` records, the canonical claim ledger, and the complete P04p report/result/manifest/script/config chain. PR #868 is closed, unmerged, and non-mergeable and was not modified.
 
-A direct clone was attempted but failed because the runtime could not resolve `github.com`. Repository facts were therefore established through authenticated exact GitHub blob reads. Executable validation used source-faithful reduced fixtures; no result from those fixtures is represented as detector data.
+A direct clone was attempted but the runtime could not resolve `github.com`. Repository facts were therefore established through authenticated GitHub blob reads. Executable validation used exact locally constructed files and a source-faithful reduced P04p fixture; no fixture result is represented as detector data.
 
-No status checks were attached to the initial reviewed head. No GitHub Actions success is inferred.
+No status checks were attached to the initial reviewed head. No GitHub Actions success is inferred for this unit.
 
 ## Exact repository evidence
 
-- claim ledger blob: `009f48e218b2439f80b2cebf8ebb06a845488089`
-- MV0 report blob: `bc607eb0ae2639c06ab840ff234160958ada60a5`
-- MV0 calibration JSON blob: `74e490753d3e821b0a1353490764a5ede0e9bf75`
-- tracked producer blob: `fd911daf3f0fd80df20f4112f4f0f40bf3383afd`
-- producer source commit: `3c5ff5cf587c8ca9cefda20cb220ba29effd2170`
-- figure registry blob: `1a7b6cbdc18bcc742f0578647a5c785aea78582a`
+- pre-change claim-ledger blob: `009f48e218b2439f80b2cebf8ebb06a845488089`
+- P04p report blob: `b9029f1c7f8d8d87499b8a7a88d807692b56ae71`
+- P04p result blob: `e2c75352b5c66f70923ef525d8251be3af9cfdc8`
+- P04p manifest blob: `00b244470bb9dbd4060769e69e720b79c07f756d`
+- P04p producer blob: `6f3bbf1638b8729e425088e6b1f8a0663b3a5615`
+- P04p config blob: `d11592ba547a7028527dea3ac5fc3329362cb9a4`
+- producer/result source commit: `c31b40fdadff23272b13e3824e769f518c53b38e`
 
-## Confirmed provenance and scientific-reporting defects
+## Confirmed model-selection flaw
 
-1. `CL-013` has 38 fields and `CL-014` has 37 fields under the canonical 43-column ledger header. Their late fields remain withheld under `NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS`.
-2. The report and committed calibration artifact declare the v2 data observable as `abs(amplitude_adc - baseline_adc)`.
-3. The tracked producer at the recorded source commit instead assigns raw `amplitude_adc` to both the global and per-stave fit arrays. It does not implement the methodology claimed by the artifact.
-4. The report's reproduce command uses `--data`, while the producer requires `--data-csv`, and omits required `--truth-npz`.
-5. The producer's output schema lacks artifact fields `gain_method`, `gain_systematic_unc_pct`, and `ks_at_median_gain`; the tracked code and committed JSON cannot be one direct execution chain as written.
-6. The ledger and `FIG-EN-001` cite stale/nonexistent `scripts/mv0_calibration.py` and `reports/mv0_calibration_1782677847/results.json`. The tracked items are `scripts/mv0_calibrate_from_data.py` and `calibration.json`.
-7. The artifact supports the rounded central value 92 ADC/MeV, a stated 30% systematic, KS=0.1577 at the median-matched gain, `n_data=579424`, and `n_mc=321130` for B2. It does not provide a statistical uncertainty, confidence interval, confidence level, or interval construction.
-8. Ledger values `stat_unc=14`, `total_unc=31.3`, and interval `[60,124]` are therefore unsupported by the committed calibration artifact and cannot be promoted canonically from it.
+The committed rule selects methods whose accepted-coverage point estimate is at least `0.50`, then minimizes accepted charge res68, timing abs68, and calibration ECE. The reported GBT has:
 
-## Independent calculation
+- accepted coverage `0.5016432417313474`;
+- run-block-bootstrap 95% coverage interval `[0.4781032287979763,0.5382552094265317]`;
+- accepted charge res68 `0.03902452880489024`.
 
-The central value can be independently reproduced from the committed artifact's stated numbers:
+The point estimate is only `0.001643` above the gate, while the interval crosses below it. The result does not declare whether eligibility is controlled by point coverage, a confidence bound, or another uncertainty criterion.
+
+A conservative sensitivity calculation that requires the lower 95% coverage bound to satisfy the same gate excludes GBT. MLP is then first eligible:
+
+- accepted coverage `0.5470846194571808`;
+- lower 95% bound `0.5225633159229767`;
+- accepted charge res68 `0.04055070702536622`.
+
+This sensitivity result does **not** designate MLP as canonical because the lower-bound rule was not preregistered. Registered policy:
 
 ```text
-1781 ADC / (26.44 MeV × 0.733) = 91.89639906462777 ADC/MeV
+COVERAGE_GATE_MUST_USE_PREDECLARED_UNCERTAINTY_RULE
 ```
 
-This calculation supports rounding to 92 only. It does not establish the fit's shape adequacy, a statistical uncertainty, an interval, coverage, detector calibration validity, or downstream performance.
+## Ledger reconstruction
+
+`CL-015` previously had 36 fields under the 43-column header. It now has exactly 43 fields with:
+
+- claim: B2 duplicate-readout harm-veto accepted charge res68;
+- value `0.03902452880489024`;
+- 95% run-block-bootstrap interval `[0.03566372530746706,0.042719761350795714]`;
+- `100107` events and `8` evaluation runs;
+- traditional-rule baseline `0.07854122474166687`;
+- delta `-0.03951669593677663`;
+- truth type `data_external_duplicate_readout`;
+- status `GATED`;
+- exact current report/script/result/config/manifest paths and source commit;
+- blocker `BLK-P04P-001`.
+
+Ledger schema progress is now 6/26 exact-width rows. Twenty rows remain withheld under `NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS`.
 
 ## Validation delivered
 
 Added:
 
-- `tools/audit/audit_mv0_gain_provenance.py` v1.0.0;
-- `tests/test_audit_mv0_gain_provenance.py`;
-- `docs/validation/mv0_gain_provenance_audit.md`;
-- `docs/validation/mv0_gain_provenance_validation.json`;
-- `docs/validation/mv0_gain_provenance.svg`.
+- `tools/audit/audit_p04p_winner_robustness.py` v1.0.0;
+- `tests/test_audit_p04p_winner_robustness.py`;
+- `tests/test_claim_ledger_p04p_row.py`;
+- `docs/validation/p04p_winner_robustness_audit.md`;
+- `docs/validation/p04p_winner_robustness_fixture.json`;
+- `docs/validation/p04p_winner_robustness_validation.json`;
+- `docs/validation/p04p_winner_robustness.svg`.
 
-Policy:
-
-```text
-MV0_GAIN_NOT_CANONICAL_UNTIL_PRODUCER_AND_ARTIFACT_REPRODUCE
-```
-
-The audit checks exact target-row widths, stale source tokens, the artifact's declared observable and central-value contract, producer-script syntax/observable/CLI/output schema, report-command compatibility, and exact-byte fixture provenance. It returns 0 for an aligned chain, 1 for measured inconsistencies, and 2 for controlled input/encoding/schema failures.
-
-Commands and results:
+Commands:
 
 ```text
 PYTHONPATH=. python -m py_compile \
-  tools/audit/audit_mv0_gain_provenance.py \
-  tests/test_audit_mv0_gain_provenance.py
+  tools/audit/audit_p04p_winner_robustness.py \
+  tests/test_audit_p04p_winner_robustness.py \
+  tests/test_claim_ledger_p04p_row.py
 
 PYTHONPATH=. python -m pytest \
-  tests/test_audit_mv0_gain_provenance.py -q
+  tests/test_audit_p04p_winner_robustness.py \
+  tests/test_claim_ledger_p04p_row.py -q
 
-4 passed in 0.64s
+6 passed in 1.14s
 ```
 
-The current-like fixture returned status 1 with ten findings. The corrected-chain fixture returned `VALIDATED`. JSON and SVG parsing passed. Maximum changed Python line lengths were 100 and 87 characters.
+Additional checks:
 
-The exact locally tested files were checked with Git's blob algorithm. The committed test blob is `5e8772a6be623525b532582a086f4bab667cb90b`; the final committed audit-tool blob is `38a1ea1e91c84692d33b0f667d10968c4198845d`. Both match the locally validated files exactly. The initial audit-tool publication was corrected in commit `9b035104c9ff92878e6c21cf494c9e4f0bc7475a` after this comparison detected a byte mismatch; no unvalidated implementation bytes are treated as the delivered head.
+- source-faithful current-like fixture: status `FLAWED` with `COVERAGE_GATE_UNCERTAINTY_POLICY_MISSING` and `WINNER_CHANGES_UNDER_CI_LOWER_BOUND_GATE`;
+- corrected preregistered synthetic contract: `VALIDATED`;
+- JSON parsing passed;
+- SVG XML parsing passed;
+- maximum changed Python line length: 100;
+- committed auditor blob `faea3340ef55b9e1fd5f84c1813d65e88d4cce2a` matches locally validated bytes;
+- locally validated audit-test blob `c913edafb1f65ca8c8fb58f5e61fedfe6a2565a0`;
+- locally validated ledger-test blob `0a762b80f477f897cd6dbdba9fea22d38cf0318b`;
+- corrected ledger blob `4dc46181f48211e017ba0d2ff29bdac2c6f21897`.
 
-Ruff, full repository pytest, raw-data processing, ROOT/NPZ processing, calibration execution, KS recomputation, bootstrapping, WIKI/link/figure checks, and GitHub Actions were not run.
+Full repository pytest, ruff, raw ROOT processing, classifier training, bootstrap regeneration, cross-stave validation, broken-link checking, and GitHub Actions were not run.
 
-## Direct-main commits
+## Direct-main commit sequence
 
-1. `e2389381254560e017b82b5a89eca54329ba182e` — `feat(audit): detect unreproducible MV0 gain provenance`
-2. `2cb38204db5b20012cee884d06de786a07b2e9e6` — `test(audit): cover MV0 gain provenance contract`
-3. `4fe2a778588b9b081fc2acd90ad79b133ded00f4` — `docs(validation): record MV0 gain provenance conflict`
-4. `76f2ae68f81968faac787c25661ab441ccf11de8` — `docs(validation): add MV0 gain provenance record`
-5. `0c27a7d24f225a38ed6471a7fc9c0ea701436dd5` — `docs(validation): visualize MV0 gain provenance break`
-6. `6f6160c2dd4829f6ce3cfe071379a7b623668018` — `docs(audit): track MV0 gain provenance conflict`
-7. `16e92e0113831045b7ecdeb96b44d1a7c75afe8b` — `docs(audit): archive MV0 gain provenance audit`
-8. `a909113a37aaf36d0748adda2ea812396efbc10d` — `docs(audit): hand off MV0 gain provenance conflict`
-9. `9b035104c9ff92878e6c21cf494c9e4f0bc7475a` — `fix(audit): publish exact validated MV0 audit bytes`
+1. `faeea505fd618d151c1880cc65906eaee52eb40a` — `feat(audit): assess P04p winner robustness`
+2. `20da314c59e7221374fd5a2d4314a92c99e789a1` — `test(audit): cover P04p coverage-gate robustness`
+3. `f88ffebd923b713e1cc7a520b9e66510ed9b159d` — `test(ledger): cover source-backed P04p claim row`
+4. `c17f6ef3e53ca150fce1afe27cc44718a3c93530` — validation audit
+5. `756004131737b13b567af94048fbb890c87787ca` — validation JSON
+6. `ba1ebc36073452f87284f6ce21b1a3d369d43f75` — source-faithful fixture
+7. `8a0934a91ec69a12ce29430f2521997177938e9c` — visual evidence
+8. `70172e12c7eec0a8a9200b45bd1aa8b53415541c` — exact-width `CL-015`
+9. `3c6a6347858b212f26b4eefd20c91724a04283a9` — ledger schema JSON
+10. `3767e2c55fdaba7a279ecd917481bb7b5b03e8e4` — ledger schema SVG
+11. `99e546a58f42167e255fa5f501b3eb3bc913671a` — active-task state
+12. `e024b56cb4210e805b870a83741d10db706f5c03` — blocker registration
+13. `38d80b9d9b7cb164744101125cb4d5665afe7e38` — immutable archive
+14. `c7e07c677bbfa7792113f0916eb2bbd17b45beea` — backlog update
+15. `489da1d60f90b12d0abbaa0aa06c89ecbc3d2583` — master index
+16. `67e87f17782b43dd54cee0e51586cec79a63c064` — study ledger
+17. `83f12563ff09aad7aef2d93e28a0a49d1d808437` — claim-evidence matrix
+18. `71907c86124f2ac0e5c4ee9fd4acc05967a02268` — visualization matrix
+19. `93a6dd4f54ab6eac8624403ff65d99c52a7c8c42` — code-result map
 
-Every connector write returned a successful direct-main commit. A fresh recent-main search confirmed the sequence through `9b035104c9ff92878e6c21cf494c9e4f0bc7475a` on remote `main`; the user-facing completion records this final handoff commit after one more remote-head confirmation.
+Every write returned a successful direct-main commit. The immutable full record is:
 
-## Files changed
+`chatgpt_todo/archive/2026-07-24T081929Z_AUD-LEDGER-001_P04P_WINNER_ROBUSTNESS.md`
 
-- `tools/audit/audit_mv0_gain_provenance.py`
-- `tests/test_audit_mv0_gain_provenance.py`
-- `docs/validation/mv0_gain_provenance_audit.md`
-- `docs/validation/mv0_gain_provenance_validation.json`
-- `docs/validation/mv0_gain_provenance.svg`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/HANDOFF.md`
-- `chatgpt_todo/archive/2026-07-24T072257Z_AUD-LEDGER-001_MV0_GAIN_PROVENANCE.md`
+## Session-log limitation
 
-## Scientific boundary and next task
+`SESSION_LOG.md` was not replaced. The connector exposes complete-file replacement rather than a byte-safe append, while the long append-only blob could not be retrieved as one independently verified complete text snapshot. Reconstructing it from truncated responses would risk deleting prior provenance. The complete session is preserved in the immutable archive and this handoff; no append is fabricated.
 
-No raw pulse table, ROOT file, NPZ truth file, calibration rerun, accepted KS comparison, bootstrap, simulation, detector calibration, or detector-performance result was produced. The visual evidence is a provenance-chain schematic, explicitly not detector data.
+## Scientific boundary and next action
 
-Before restoring `CL-013` or `CL-014` as canonical validated claims:
+No raw ROOT file, waveform, retrained model, regenerated bootstrap ensemble, independent holdout, new-run sample, cross-stave transfer sample, truth-energy target, calibration, or detector-performance result was produced. Do not claim GBT as a robust production winner or promote MLP from the sensitivity calculation.
 
-1. recover or repair producer code that implements the documented net-amplitude observable;
-2. align the reproduce command and JSON schema with that producer;
-3. rerun on immutable pulse/ROOT/NPZ inputs and retain exact input/output hashes, software environment, command, code SHA, selections, event/pulse counts, and fit diagnostics;
-4. preregister and calculate statistical/systematic uncertainty and interval construction with coverage checks;
-5. reconstruct both ledger rows to exactly 43 fields and repair `FIG-EN-001` provenance;
-6. rerun ledger, claim, WIKI, link, table, and figure validation before promotion.
+Resolution requires:
 
-`SESSION_LOG.md` was not replaced because the connector provides whole-file replacement rather than a byte-safe append, and the long append-only file was not available as one independently verified complete byte snapshot. Replacing partial reconstructed bytes would risk destroying prior provenance. The complete session is preserved in the immutable archive and this handoff rather than fabricating a log append.
+1. preregister the uncertainty-aware coverage eligibility rule and model-family multiplicity treatment;
+2. freeze independent model-selection and validation runs;
+3. validate transfer to B4/B6/B8 and new runs;
+4. retain exact data/code/config/output hashes and environment provenance;
+5. rerun ledger, claim, figure, link, and WIKI gates before changing `CL-015` from `GATED`.

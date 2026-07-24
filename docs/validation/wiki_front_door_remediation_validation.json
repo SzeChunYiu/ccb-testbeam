@@ -1,0 +1,48 @@
+{
+  "acceptance": "VALIDATED",
+  "broken_link_focused_status": "PASS",
+  "candidate_wiki_bytes": 21368,
+  "candidate_wiki_git_blob": "9d8110893adeae482b2439c4187b53f94174a55e",
+  "candidate_wiki_sha256": "baaa9dbd3585870c7d9c0807493e9afce81f9767f3be68d581502d62496c59d4",
+  "claim_ledger_bytes": 12077,
+  "claim_ledger_git_blob": "853d955f449268ec614ac61f33f243d30cf473e0",
+  "claim_ledger_sha256": "c0e283e6d43a1013a9565f2697c4f99f7b47d639245b9926a8ddc83786602e19",
+  "initial_main_sha": "c254e767bbc225d98f9c839d50251c511ca69a98",
+  "integration_test_result": "2 passed in 0.05s",
+  "limitations": [
+    "Direct clone unavailable because github.com DNS resolution failed.",
+    "Executable validation used the byte-identical corrected WIKI and exact-width current required rows extracted from the current claim-ledger blob.",
+    "Complete repository pytest, ruff, repository-wide broken-link checking, ROOT processing, model reruns, and GitHub Actions were not run.",
+    "No scientific result was regenerated."
+  ],
+  "policy": "WIKI_FRONT_DOOR_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS",
+  "prechange_wiki_git_blob": "04781e1107075e1e57c08e6dd4e1f48d9a131763",
+  "required_claim_ids": [
+    "CL-007",
+    "CL-010",
+    "CL-011",
+    "CL-012",
+    "CL-015",
+    "CL-016"
+  ],
+  "required_claim_widths": {
+    "CL-007": 43,
+    "CL-010": 43,
+    "CL-011": 43,
+    "CL-012": 43,
+    "CL-015": 43,
+    "CL-016": 43
+  },
+  "session_stamp": "2026-07-24T103118Z",
+  "stale_mutation_findings": [
+    "WITHHELD_RMAX_VALUE_PUBLISHED",
+    "STATUS_LEDGER_MISMATCH",
+    "VALUE_PRESENT_WHEN_LEDGER_WITHHOLDS"
+  ],
+  "task_id": "AUD-WIKI-001",
+  "unit": "root_wiki_remediation",
+  "validator": "validate_wiki_claim_front_door.py",
+  "validator_issue_count": 0,
+  "validator_status": "VALIDATED",
+  "validator_version": "1.2.0"
+}

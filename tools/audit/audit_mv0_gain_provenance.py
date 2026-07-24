@@ -167,12 +167,7 @@ def audit(
 
     unsupported_uncertainty_fields = [
         field
-        for field in (
-            "gain_statistical_unc",
-            "gain_ci_low",
-            "gain_ci_high",
-            "gain_ci_method",
-        )
+        for field in ("gain_statistical_unc", "gain_ci_low", "gain_ci_high", "gain_ci_method")
         if field not in calibration_block
     ]
 

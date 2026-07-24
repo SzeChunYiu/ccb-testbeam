@@ -6,7 +6,8 @@
 - **Task:** `AUD-LEDGER-002`
 - **Unit:** MV3 tracked-summary provenance contradiction and correction gate
 - **Initial remote `main`:** `ad5a19a2dece0f0973573362004d558eb1a4cad5`
-- **Remote head before final handoff:** `87be921069218f293e771539b84f5ba5be13b5e6`
+- **Validated delivery commit:** `0962878bdeb0568d4d62f11eccb9991b27b18750`
+- **Remote `main` confirmation:** recent-history read showed `0962878bdeb0568d4d62f11eccb9991b27b18750` as the remote head containing the complete focused delivery
 - **Destination:** direct sequential commits to `main`
 - **Acceptance:** defect, independent reconstruction, fail-closed auditor, tests, and evidence are `VALIDATED`; canonical ledger/public-prose remediation remains `PARTIAL`
 
@@ -125,10 +126,11 @@ Remote source blobs recorded in the validation JSON:
 - `e6f313f211fe005187e50d864ad05bd3719a1706` — visual evidence
 - `f7035417386d74d742a9ba9e2a940ce495042e09` — active-task update
 - `87be921069218f293e771539b84f5ba5be13b5e6` — immutable archive
+- `0962878bdeb0568d4d62f11eccb9991b27b18750` — complete delivery handoff
 
 The contents API returned successful commit SHAs instead of conventional textual
-`git push` stdout. A post-write recent-history read is required to confirm the final
-handoff commit on remote `main`.
+`git push` stdout. Post-write recent history confirmed the complete delivery on remote
+`main`; this metadata update records that confirmation.
 
 ## Required next correction
 

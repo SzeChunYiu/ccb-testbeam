@@ -60,8 +60,10 @@ def test_short_cl001_row_fails_closed(tmp_path: Path) -> None:
 
 def test_count_mismatch_is_rejected(tmp_path: Path) -> None:
     root = copy_fixture(tmp_path)
+
     def mutate(rows):
         rows[1][4] = "640736"
+
     rewrite_csv(root / "docs/claim_ledger.csv", mutate)
     payload = MOD.audit(root)
     assert "LEDGER_FIELD_MISMATCH" in {issue["code"] for issue in payload["issues"]}
@@ -69,8 +71,10 @@ def test_count_mismatch_is_rejected(tmp_path: Path) -> None:
 
 def test_stale_figure_registry_is_rejected(tmp_path: Path) -> None:
     root = copy_fixture(tmp_path)
+
     def mutate(rows):
         rows[1][3] = "scripts/s00_selector.py"
+
     rewrite_csv(root / "docs/figure_registry.csv", mutate)
     payload = MOD.audit(root)
     assert "FIGURE_REGISTRY_MISMATCH" in {issue["code"] for issue in payload["issues"]}

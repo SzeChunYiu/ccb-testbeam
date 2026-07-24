@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
-<title id="title">Claim-ledger exact-width coverage after CL-022 repair</title>
-<desc id="desc">Eight of twenty-six claim rows have the canonical forty-three columns. Eighteen malformed rows remain withheld from field interpretation.</desc>
+<title id="title">Claim-ledger exact-width coverage after CL-023 and CL-024 repair</title>
+<desc id="desc">Ten of twenty-six claim rows have the canonical forty-three columns. Sixteen malformed rows remain withheld from field interpretation.</desc>
 <defs>
   <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
     <line x1="0" y1="0" x2="0" y2="8" stroke="black" stroke-width="2"/>
@@ -10,14 +10,13 @@
 <text x="30" y="38" font-family="sans-serif" font-size="22" font-weight="bold">Claim-ledger schema coverage</text>
 <text x="30" y="65" font-family="sans-serif" font-size="14">Canonical width: 43 columns; field interpretation is withheld for every mismatched row.</text>
 <rect x="180" y="105" width="600" height="54" fill="white" stroke="black"/>
-<rect x="180" y="105" width="184.62" height="54" fill="white" stroke="black" stroke-width="2"/>
-<rect x="364.62" y="105" width="415.38" height="54" fill="url(#hatch)" stroke="black" stroke-width="2"/>
-<text x="272" y="137" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">8 exact</text>
-<text x="572" y="137" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">18 withheld</text>
-<text x="180" y="186" font-family="sans-serif" font-size="13">Exact-width rows (8/26 = 30.8%):</text>
-<text x="180" y="210" font-family="monospace" font-size="13">CL-001, CL-007, CL-010, CL-011, CL-012, CL-015, CL-016, CL-022</text>
+<rect x="180" y="105" width="230.77" height="54" fill="white" stroke="black" stroke-width="2"/>
+<rect x="410.77" y="105" width="369.23" height="54" fill="url(#hatch)" stroke="black" stroke-width="2"/>
+<text x="295" y="137" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">10 exact</text>
+<text x="595" y="137" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">16 withheld</text>
+<text x="180" y="186" font-family="sans-serif" font-size="13">Exact-width rows (10/26 = 38.5%):</text>
+<text x="180" y="210" font-family="monospace" font-size="13">CL-001, CL-007, CL-010, CL-011, CL-012, CL-015, CL-016, CL-022, CL-023, CL-024</text>
 <text x="180" y="246" font-family="sans-serif" font-size="13">Width histogram:</text>
-<text x="180" y="270" font-family="monospace" font-size="13">35:1 · 36:1 · 37:6 · 38:8 · 39:2 · 43:8</text>
-<text x="30" y="316" font-family="sans-serif" font-size="13">CL-022 advanced from 39 to 43 columns; no other row was reinterpreted.</text>
-<text x="30" y="340" font-family="sans-serif" font-size="12">Status: FLAWED repository-wide; policy: NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS</text>
+<text x="180" y="270" font-family="monospace" font-size="13">35:1 · 36:1 · 37:4 · 38:8 · 39:2 · 43:10</text>
+<text x="30" y="325" font-family="sans-serif" font-size="13">Schema/provenance evidence only; no scientific field is interpreted for the remaining mismatched rows.</text>
 </svg>

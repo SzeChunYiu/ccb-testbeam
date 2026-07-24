@@ -1,0 +1,19 @@
+{
+  "findings": [],
+  "literature_basis": {
+    "identifier": "doi:10.6028/NIST.tn.1297",
+    "supported_statement": "measurement-result combination requires identified uncertainty components and an established documented propagation method"
+  },
+  "policy": "NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL",
+  "report_label_lines": [],
+  "required_remediation": "remove the cross-energy arithmetic mean; report individual energy points and descriptive bounds only until a preregistered uncertainty, covariance, and combination model is implemented",
+  "schema_version": 1,
+  "source_bytes": 20270,
+  "source_path": "scripts/single_stave/compare_stopping_power.py",
+  "source_sha256": "15653bb4d4b1a3e4a1b2296dc8c61bb7813bf29bbdbe6c05ea65731d106ee3ca",
+  "statistics_mean_lines": [],
+  "status": "VALIDATED",
+  "tool": "tools/audit/audit_stopping_power_cross_energy_summary.py",
+  "tool_version": "1.0.0",
+  "unsupported_cross_energy_mean_present": false
+}

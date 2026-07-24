@@ -1,0 +1,60 @@
+{
+  "audit_id": "AUD-WIKI-002",
+  "base_main_sha": "c9ff3196a1c5a4441119e6b19b592db1a8b5763b",
+  "claim_ledger": {
+    "corrected_bound_rows": [
+      "CL-007",
+      "CL-011"
+    ],
+    "corrected_bytes": 8971,
+    "corrected_git_blob": "0c7ea56d00ed44bd976e4ba8e05a84cb4c6eb63e",
+    "corrected_sha256": "3ef63ee3836ce67c8b9f4538f754737cdcf53bc67d9a746210a0ea9e81e41d2d",
+    "header_columns": 43,
+    "original_git_blob": "6f4d4023814b42a566826912bcef7df9903c41e7",
+    "original_rows_matching_header": 0,
+    "original_rows_total": 26,
+    "remaining_rows_mismatching_header": 24,
+    "rows_matching_header_after_bounded_remediation": 2
+  },
+  "commands": [
+    "python -m py_compile tools/audit/validate_wiki_claim_front_door.py tests/test_validate_wiki_claim_front_door.py",
+    "python -m pytest tests/test_validate_wiki_claim_front_door.py -q",
+    "python tools/audit/validate_wiki_claim_front_door.py WIKI.md docs/claim_ledger.csv --output docs/validation/wiki_claim_front_door_remediation_validation.json",
+    "python scripts/broken_link_checker.py"
+  ],
+  "corrected_validator_result": {
+    "bindings_checked": 4,
+    "issues": 0,
+    "legend_statuses": 8,
+    "process_status": 0,
+    "status": "VALIDATED",
+    "version": "1.1.0"
+  },
+  "focused_internal_link_check": {
+    "process_status": 0,
+    "scope": "WIKI.md plus a local mirror of the 16 unique internal targets verified on GitHub",
+    "status": "VALIDATED",
+    "unique_internal_targets": 16
+  },
+  "policy": "WIKI_FRONT_DOOR_MUST_MATCH_CANONICAL_LEDGER",
+  "scientific_boundary": "Documentation and provenance only; no timing, live-time, pile-up, confidence interval, data, or simulation value was recalculated.",
+  "session_utc": "2026-07-24T041806Z",
+  "tests": {
+    "focused_pytest": "5 passed in 0.03s",
+    "py_compile": "passed"
+  },
+  "validator": {
+    "git_blob": "99d2f579c98563969df26dbf1f946d8454c8ba00",
+    "sha256": "3d82e6e57f97b9396392dc83423edee559f077c71acf5d03712a2656ded80912",
+    "version": "1.1.0"
+  },
+  "wiki": {
+    "corrected_bytes": 19279,
+    "corrected_git_blob": "04781e1107075e1e57c08e6dd4e1f48d9a131763",
+    "corrected_sha256": "c739c0791a47ae6f9dadddd790b223e1cf728d0db0945500d6d7f851df885620",
+    "original_bytes": 19159,
+    "original_git_blob": "c27a1e555145cb248e253f17a6f6d1cfe64542a8",
+    "original_sha256": "62385f61aa5742b9a522efe1bd8a2ab576638a0cfc1cfdf28ad59f53c78f5181",
+    "public_statements_changed": 5
+  }
+}

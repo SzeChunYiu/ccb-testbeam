@@ -81,9 +81,7 @@ def _repo(tmp_path: Path) -> Path:
             "deuteron": 1,
         },
     }
-    (out / "mv6_representation_summary.json").write_text(
-        json.dumps(summary), encoding="utf-8"
-    )
+    (out / "mv6_representation_summary.json").write_text(json.dumps(summary), encoding="utf-8")
     script = root / "scripts/mv6_representation_study.py"
     script.parent.mkdir()
     script.write_text("# fixture\n", encoding="utf-8")

@@ -10,7 +10,6 @@ import argparse
 import csv
 import math
 import os
-import statistics
 import sys
 import tempfile
 from pathlib import Path
@@ -44,6 +43,9 @@ DIRECT_PROTON_REFERENCE = "DIRECT_PSTAR_PROTON"
 DEUTERON_REFERENCE_PROXY = "VELOCITY_SCALED_PROTON_PROXY"
 UNCERTAINTY_METHOD = "NOT_EVALUATED"
 REPORT_FLOAT_SERIALIZATION = "PYTHON_REPR_ROUND_TRIP"
+CROSS_ENERGY_COMBINATION_POLICY = (
+    "NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL"
+)
 
 
 class StoppingPowerInputError(ValueError):
@@ -280,6 +282,7 @@ def run_compare(
                 "numeric_within_tolerance": numeric_ok,
                 "uncertainty_method": UNCERTAINTY_METHOD,
                 "uncertainty_evaluated": uncertainty_evaluated,
+                "cross_energy_combination_policy": CROSS_ENERGY_COMBINATION_POLICY,
                 "acceptance_status": acceptance_status,
                 "within_tolerance": accepted_ok,
                 "report_float_serialization": REPORT_FLOAT_SERIALIZATION,
@@ -325,6 +328,7 @@ def run_compare(
             "numeric_within_tolerance",
             "uncertainty_method",
             "uncertainty_evaluated",
+            "cross_energy_combination_policy",
             "acceptance_status",
             "within_tolerance",
             "report_float_serialization",
@@ -365,9 +369,11 @@ def run_compare(
         grouped.setdefault(str(result["particle"]), []).append(float(result["ratio"]))
     for species, ratios in grouped.items():
         print(
-            f"  mean point-estimate ratio [{species}] = {statistics.mean(ratios):.4f} "
-            f"over {len(ratios)} energy point(s)"
+            f"  descriptive point-estimate ratio range [{species}] = "
+            f"[{min(ratios):.4f}, {max(ratios):.4f}] over "
+            f"{len(ratios)} energy point(s); no combined estimate"
         )
+    print(f"CROSS-ENERGY COMBINATION POLICY: {CROSS_ENERGY_COMBINATION_POLICY}")
     print(
         f"SIM INPUT VALIDATION: rows={sim_summary['rows_validated']} "
         f"sha256={sim_summary['input_sha256']} validator={SIM_TABLE_VALIDATOR_VERSION}"

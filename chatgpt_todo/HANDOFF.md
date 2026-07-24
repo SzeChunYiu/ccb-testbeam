@@ -2,192 +2,196 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T132532Z`
-- **Task:** `AUD-ANOM-001`
-- **Unit:** Chapter 9 MV6 producer/summary source synchronization
-- **Initial remote `main`:** `a4420ed5ecb51074bff68d9e0d2265e6b6bee978`
-- **Validated scientific delivery head before this handoff:** `b7f7584c6650dfcc349fc05df99fade1f511ee9f`
+- **UTC stamp:** `2026-07-24T140810Z`
+- **Task:** `AUD-LEDGER-001`
+- **Unit:** source-backed reconstruction of MV6 PCA claim rows `CL-023` and `CL-024`
+- **Initial remote `main`:** `c9c432f5b96eae0fd11550be7833f18221019b1a`
+- **Validated delivery head before this handoff:** `9eb46b098beda92b705db12c930dec13c5cf6bba`
 - **Destination:** direct sequential commits to `main`
-- **Acceptance:** this Chapter 9 documentation/method-traceability unit is `VALIDATED`; matched data/MC anomaly closure remains `PARTIAL`
+- **Acceptance:** this two-row reconstruction unit is `VALIDATED`; ledger-wide `AUD-LEDGER-001` and anomaly transfer `AUD-ANOM-001` remain `PARTIAL`
 
-## Start-of-run, repository and concurrency review
+## Start-of-run and concurrency review
 
 Authenticated GitHub reads inspected current `main`, recent history, repository
-permissions, status/workflow attachments, PR #868, repository coordination
-instructions, mandatory `chatgpt_todo/` files, `docs/claim_ledger.csv`, the
-academic Chapter 9, the tracked MV6 producer, exact summary and historical
-report. The run based all writes on initial remote head
-`a4420ed5ecb51074bff68d9e0d2265e6b6bee978`.
+metadata, open pull requests, PR #868, commit status, mandatory
+`chatgpt_todo/` coordination files, the claim ledger and schema gate, the tracked
+MV6 producer, exact summary JSON, historical report, Chapter 6, and the previous
+Chapter 9 correction. The scientific sequence was based on remote head
+`c9c432f5b96eae0fd11550be7833f18221019b1a`.
 
-No concurrent non-session commit appeared during the focused sequence. A local
-checkout could not reach GitHub because the runtime could not resolve
-`github.com`; authenticated connector reads and contents-API writes were used.
-The connector reports successful direct-main commit SHAs rather than
-conventional textual `git push` stdout.
+No non-session commit appeared during the focused write sequence. The connector
+returned successful direct-main commit SHAs rather than conventional textual
+`git push` stdout. Remote history was re-read after publication.
 
 PR #868 remains closed, unmerged and non-mergeable and was not modified. No
-status checks or workflow runs were attached to the initial head, so no GitHub
-Actions success is inferred.
+status checks were attached to the initial commit, so no GitHub Actions success
+is inferred.
 
-## Confirmed method and claim defects
+## Confirmed defects
 
-The pre-change Chapter 9 blob
-`409abcdefe686edf9c2ac5c5c6ba02aae9c9a331` described an eight-dimensional,
-K=7, BIC-selected GMM with 99.7% cumulative variance at eight PCs, a
-127-iteration convergence result, named physical meanings for every PC,
-alternative-detector benchmarks, manual review, physical production and
-stopping calculations, optical-response estimates, and veto-performance
-numbers.
+The pre-change claim-ledger blob
+`e489555f3a520c7cc64b8a7d858a0e93622b9de6` contained only 37 columns for
+`CL-023` and `CL-024`. Their late fields were therefore shifted and withheld by
+the canonical 43-column gate. The rows also published superseded cumulative PCA
+fractions `0.89` and `0.997` while citing a noncanonical
+`scripts/mv6_pca.py` / `results.json` chain.
 
-Those statements are not present in the tracked MV6 analysis contract. The
-producer blob `f965823518b22908f3e8974f280bff5c970368d0`:
+The tracked source chain is:
 
-- selects charged B-arm tracks with summed deposited energy above 0.02 MeV;
-- builds 18-sample synthetic waveforms with seed 42 and explicit historical
-  response constants;
-- peak-normalizes pedestal-subtracted waveforms;
-- fits PCA with up to ten components;
-- fits exactly one `GaussianMixture(n_components=4, random_state=42, n_init=3)`
-  on the first four PCs;
-- runs no BIC scan.
+- producer `scripts/mv6_representation_study.py`, blob
+  `f965823518b22908f3e8974f280bff5c970368d0`;
+- summary `reports/mv6_representation_1782678362/`
+  `mv6_representation_summary.json`, blob
+  `26c187cbe05d8dadbe588c6ed9062d25658a80a9`;
+- report `reports/mv6_representation_1782678362/REPORT.md`, blob
+  `2c531703755b28a0c576e978531b81374edf8ab4`;
+- producing commit recorded by the source chain:
+  `3c5ff5cf587c8ca9cefda20cb220ba29effd2170`.
 
-The exact summary blob `26c187cbe05d8dadbe588c6ed9062d25658a80a9`
-records cumulative PCA variance 0.745517570480533 at four PCs and
-0.821883926913117 at eight PCs. The former chapter mixed source-backed facts,
-unsupported reconstructions and hypotheses as if they were one validated
-study.
+The producer subtracts the 350-ADC pedestal, peak-normalizes each 18-sample
+synthetic waveform, fits ten PCA components, and uses a four-component GMM on
+the first four PCs. The summary records seed 42, 220,000 scanned events and
+87,555 charged B-arm MC tracks.
 
-## Source-backed counts and calculations
+## Independent reconstruction
 
-Tracked fixed-output facts:
+The first eight explained-variance ratios are:
 
-- events scanned: `220000`;
-- retained charged B-arm tracks: `87555`;
-- early-peak tracks: `283`;
-- low-area tracks: `0`;
-- carbon-12-labelled tracks: `7302`;
-- carbon-12-labelled early-peak tracks: `156`.
+```text
+0.6397275304111596
+0.05803144748933653
+0.027701235443287935
+0.02005735713674897
+0.01943928056747368
+0.01915966934733869
+0.01891806012034366
+0.018849346397427923
+```
 
-Independent Wilson 95% intervals:
+Using `math.fsum`:
 
-| Quantity | Counts | Estimate | Interval |
-|---|---:|---:|---:|
-| Early-peak rate among retained MC tracks | 283 / 87555 | 0.003232254011764034 | [0.002877452112691542, 0.003630645177388446] |
-| Carbon-12 share of early-peak class | 156 / 283 | 0.5512367491166078 | [0.4929885941153212, 0.6081125511627331] |
-| Early-peak rate within carbon-12 | 156 / 7302 | 0.021364009860312245 | [0.018290520583369645, 0.024940838952822255] |
+```text
+3-PC cumulative fraction = 0.7254602133437841
+4-PC cumulative fraction = 0.745517570480533
+8-PC cumulative fraction = 0.821883926913117
+```
 
-These are different binomial estimands and cannot be interchanged. The
-historical producer's `binom_ci` returns a normal-approximate half-width rather
-than Wilson lower and upper bounds.
-
-The four recorded GMM clusters contain 22,345, 28,191, 14,587 and 22,432
-tracks. Cluster 2 contains 282 of 283 early-peak tracks, but its carbon-12
-truth-label purity is only 0.4450538150407897. Cluster dominant-species purity,
-cluster morphology composition and carbon-12 share of the selected early-peak
-class are separate quantities.
+The eight-component reconstruction exactly matches the summary's recorded
+`pca_cumulative_at_8` field.
 
 ## Delivered changes
 
-Updated:
+Corrected `docs/claim_ledger.csv` so both records have exactly 43 columns:
 
-- `docs/academic_chapters/09_anomaly_id.md`;
-- `chatgpt_todo/ACTIVE_TASK.md`;
-- this `HANDOFF.md`.
+- `CL-023` = `0.7254602133437841`, superseding `0.89`;
+- `CL-024` = `0.821883926913117`, superseding `0.997`.
+
+Both rows now use truth type `synthetic_waveform_mc`, status
+`TRUTH_LEVEL_MC_ONLY`, canonical source paths, the exact producing commit,
+220,000 scanned events, 87,555 MC tracks, and explicit wording that these are
+fixed synthetic-waveform outputs rather than beam-data PCA or uncertainty
+claims.
+
+The corrected ledger was committed as
+`bf584eec7d64c6f78cd782b7b1ff84387d0f2bfe`, Git blob
+`d33180f144cca10a6e310b3e89b5ab1d065d7e66`, SHA-256
+`3a08d0d561de0ad11f2bbbf4a6cc1284af2315e30bbb3ded39be308b6d5125ff`.
 
 Added:
 
-- `tools/audit/validate_chapter9_mv6_claims.py`;
-- `tests/test_validate_chapter9_mv6_claims.py`;
-- `docs/validation/chapter9_mv6_claims_audit.md`;
-- `docs/validation/chapter9_mv6_claims_validation.json`;
-- `docs/validation/chapter9_mv6_claims.svg`;
-- `chatgpt_todo/archive/2026-07-24T132532Z_AUD-ANOM-001_CHAPTER9_MV6_SOURCE_SYNC.md`.
+- `tools/audit/validate_mv6_pca_claim_rows.py`;
+- `tests/test_validate_mv6_pca_claim_rows.py`;
+- `docs/validation/mv6_pca_claim_rows_audit.md`;
+- `docs/validation/mv6_pca_claim_rows_validation.json`;
+- `docs/validation/mv6_pca_claim_rows.svg`;
+- `chatgpt_todo/archive/2026-07-24T140810Z_AUD-LEDGER-001_MV6_PCA_CLAIMS.md`.
 
-The corrected chapter documents the actual selection, waveform constants,
-taxonomy, PCA and GMM configuration, separates the three denominators, reports
-independent finite-count intervals, explicitly quarantines unsupported method
-and performance claims, and specifies the matched data/MC closure required by
-`AUD-ANOM-001`.
+Updated cumulative schema evidence:
 
-Policy: `CHAPTER9_MUST_MATCH_TRACKED_MV6_PRODUCER_AND_SUMMARY`.
+- `docs/validation/claim_ledger_schema_audit.md`;
+- `docs/validation/claim_ledger_schema_validation.json`;
+- `docs/validation/claim_ledger_schema.svg`;
+- `chatgpt_todo/ACTIVE_TASK.md`;
+- this handoff.
+
+The ledger now has 10 exact-width rows and 16 malformed rows. The global schema
+validator correctly remains `FLAWED`/status 1 because the remaining rows are
+still withheld from field interpretation.
+
+Policies:
+
+- `MV6_PCA_CLAIMS_MUST_MATCH_TRACKED_SYNTHETIC_WAVEFORM_OUTPUT`;
+- `NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS`.
 
 ## Validation
 
+Executed locally:
+
 ```text
-python -m py_compile \
-  tools/audit/validate_chapter9_mv6_claims.py \
-  tests/test_validate_chapter9_mv6_claims.py
+PYTHONPATH=. python -m py_compile \
+  tools/audit/validate_mv6_pca_claim_rows.py \
+  tests/test_validate_mv6_pca_claim_rows.py
 
-python -m pytest tests/test_validate_chapter9_mv6_claims.py -q
+PYTHONPATH=. python -m pytest \
+  tests/test_validate_mv6_pca_claim_rows.py -q
 
-6 passed in 1.15s
+7 passed in 1.39s
 ```
 
-The regression covers a valid source contract, the former K=7/BIC claim, the
-former 99.7% claim, a mutated PCA summary value, missing producer contract,
-machine-readable status-1 flaw output, and invalid-UTF-8 status-2 failure.
-Validation JSON parsed, the SVG parsed as XML, and changed Python line lengths
-were within the repository's 100-character convention.
+The focused regression covers valid rows, the superseded values, row-width
+failure, corrupted summary cumulative values, missing producer normalization,
+machine-readable JSON/SVG generation, and invalid UTF-8 status-2 handling.
+Validation JSON parsed, both SVG files parsed as XML, and changed Python files
+met the repository's 100-character line convention.
 
-Exact source blobs:
+The exact pre-change ledger reconstruction matched SHA-256
+`9a099f76609c51b7400c8615a46c5e873058ac00e0fa9e3a0e2877a1d5e5db5c`.
+The exact summary reconstruction matched SHA-256
+`62c574fad724688e1fb9d455aec14ea273d089708c5593a2324e38e3eadc3be4`.
 
-- historical chapter: `409abcdefe686edf9c2ac5c5c6ba02aae9c9a331`;
-- producer: `f965823518b22908f3e8974f280bff5c970368d0`;
-- summary: `26c187cbe05d8dadbe588c6ed9062d25658a80a9`;
-- historical report: `2c531703755b28a0c576e978531b81374edf8ab4`;
-- canonical ledger: `e489555f3a520c7cc64b8a7d858a0e93622b9de6`.
+The runtime could not resolve `github.com` for a clone. Complete producer bytes
+were inspected through authenticated GitHub full-file and ranged reads; local
+executable validation used an exact PCA/GMM contract excerpt. This scope is
+explicit in the machine-readable record.
 
-Exact committed correction blobs re-fetched from `main`:
+Full repository pytest, ruff, ROOT processing, PCA reruns, repository-wide link
+checking and GitHub Actions were not run.
 
-- corrected chapter: `c54753c58b0eb9e68a7e2b908d4e31310b0c991f`;
-- validator: `fbb9d9423ad2fc6130656d6cdfa11345e738f095`;
-- regression test: `ebc61f19916baf8a9dee1a86aa7deb9b08ecb259`.
+## Direct-main commit sequence
 
-The corrected chapter and validator blobs matched the locally validated
-candidates. ROOT processing, model reruns, full repository pytest, ruff,
-repository-wide broken-link checking and GitHub Actions were not run.
+1. `bf584eec7d64c6f78cd782b7b1ff84387d0f2bfe` — `fix(ledger): reconstruct MV6 PCA claims from source`
+2. `d730dfb79ed1814af7852a4bb32d1445fd55a07d` — `feat(audit): validate MV6 PCA claim rows`
+3. `12d2a8d93ff9385ee5fb5af0bc4b9cc3b1a78541` — `test(audit): cover MV6 PCA claim reconstruction`
+4. `b6b85afdac36215e63e47b019a24ac078dd57249` — `docs(validation): record MV6 PCA claim-row audit`
+5. `edc7ad219ab31d646392009435b451cfa2b289fb` — `docs(validation): add MV6 PCA claim validation record`
+6. `3f0a75c566953f74aed457a6becce011011f244e` — `docs(validation): visualize MV6 PCA claim reconstruction`
+7. `30e20ece5971b1837b4e6b51ece457e366ee0ade` — `docs(validation): refresh ledger audit after PCA repair`
+8. `e91186672b32a158a49e411e501d59e66613bac6` — `docs(validation): refresh ledger schema record after PCA repair`
+9. `e8b3a67c3b79ab919053563dfafffeaee3d0105f` — `docs(validation): visualize ten exact ledger rows`
+10. `a9575a99bac67e07496ef07db16d9dbb9c8127d3` — `docs(audit): complete MV6 PCA ledger reconstruction unit`
+11. `9eb46b098beda92b705db12c930dec13c5cf6bba` — `docs(audit): archive MV6 PCA ledger reconstruction`
 
-## Direct-main commit and publication sequence
+Every commit is a sequential descendant of the initial main head. A post-write
+history read must confirm this handoff publication as the remote head.
 
-1. `b646af9dcc6e4af719c7773cc30135e9e5a5e3b2` — `fix(docs): align Chapter 9 with tracked MV6 method`
-2. `ed37eb208671a93658204d80d04a96043c61719c` — `feat(audit): validate Chapter 9 MV6 source claims`
-3. `ca4b2391180a8998a6fe701fb1f9bdd6b18490bc` — `test(audit): cover Chapter 9 MV6 claim gate`
-4. `0954e2453559ac54fd0f190c9ffac0550260a6d8` — `docs(validation): record Chapter 9 MV6 claims audit`
-5. `985c79039feb50153df162c5792f2930824ef1e4` — `docs(validation): add Chapter 9 MV6 validation record`
-6. `45ba154e65dcc92b26e8d9556587c39428b12633` — `docs(validation): visualize Chapter 9 MV6 correction`
-7. `57e3e24ab8d1984cf67f9383cdb90a6910b326f8` — `docs(audit): track validated Chapter 9 MV6 correction`
-8. `4ea6dbff80701aeafba66051135dd457cadf9295` — `docs(validation): correct Chapter 9 artifact provenance`
-9. `84c5a09c3a58f16806c8e9f0e94873abab410e34` — `docs(validation): bind Chapter 9 evidence to committed blobs`
-10. `b7f7584c6650dfcc349fc05df99fade1f511ee9f` — `docs(audit): archive validated Chapter 9 MV6 correction`
+## Scientific boundary and next work
 
-Each contents-API write returned a successful commit SHA and advanced remote
-`main`. Remote history was re-read after the scientific/evidence sequence and
-confirmed the commits as consecutive descendants of the initial head. The
-post-handoff history read must confirm this handoff commit as the remote head.
+This unit does not rerun ROOT processing, PCA, waveform simulation or beam-data
+analysis. It does not validate confidence intervals, data/MC transfer,
+individual-PC physical interpretations, autoencoder comparisons, calibration or
+detector performance.
 
-## Scientific boundary and unresolved risk
+Chapter 6 still contains a full PCA spectrum, sample-size statements, named PC
+interpretations and method comparisons that do not match the tracked MV6
+producer and summary. The next source-governance unit should correct Chapter 6
+and add an exact-current validator. `AUD-ANOM-001` still requires the
+preregistered matched data/MC closure.
 
-This unit does **not**:
+`AUD-LEDGER-001` remains `PARTIAL`: 16 of 26 rows remain malformed and must be
+reconstructed from exact source evidence before late fields may be interpreted.
 
-- identify the beam-data anomaly as carbon-12;
-- validate an independent data species tag;
-- measure efficiency, purity, false-positive rate or veto impact in data;
-- quantify generator, geometry, detector-response or waveform-model
-  uncertainty;
-- reproduce the historical ROOT processing environment;
-- authorize a detector-performance or physics-yield correction.
-
-`AUD-ANOM-001` remains `PARTIAL`. The next scientific unit is the
-preregistered matched data/MC closure in
-`docs/validation/C12_DATA_MC_CLOSURE_SPEC.md`.
-
-Ledger-wide `AUD-LEDGER-001` also remains `PARTIAL`. Malformed `CL-023` and
-`CL-024` should be reconstructed using the exact PCA source values, and Chapter
-6 plus remaining public summaries should be checked for superseded 0.89/0.997
-representation claims.
-
-`SESSION_LOG.md` was not replaced because the connector exposes whole-file
-replacement rather than a byte-safe append operation and a complete current
-byte snapshot was not safely reconstructed. Replacing the append-only log could
-destroy prior provenance. The immutable archive and this handoff contain the
-complete session record.
+`SESSION_LOG.md` was not replaced because the connector provides whole-file
+replacement rather than byte-safe append and only paged/truncated current
+snapshots were available. Replacing the append-only file without a complete
+byte-identical reconstruction could destroy prior provenance. The immutable
+archive and this handoff contain the complete session record.

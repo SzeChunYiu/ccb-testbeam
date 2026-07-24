@@ -1,0 +1,45 @@
+{
+  "audit_tool": "tools/audit/audit_stopping_power_cross_energy_summary.py",
+  "audit_tool_version": "1.0.0",
+  "base_main_sha": "b8e83fa39209d5e627c3e5c15834a10f80fcbcd2",
+  "current_behavior": "statistics.mean(ratios) is printed across distinct configured energies",
+  "exact_repository_source_execution": {
+    "performed": false,
+    "reason": "container DNS could not resolve github.com; exact source was inspected through authenticated GitHub file reads rather than executed locally"
+  },
+  "finding_id": "UNWEIGHTED_CROSS_ENERGY_MEAN",
+  "focused_tests": {
+    "command": "PYTHONPATH=. python -m pytest tests/test_audit_stopping_power_cross_energy_summary.py -q",
+    "result": "4 passed in 0.03s"
+  },
+  "literature": {
+    "identifier": "doi:10.6028/NIST.tn.1297",
+    "publisher": "National Institute of Standards and Technology",
+    "statement_supported": "combined results require identified uncertainty components and an established documented propagation method"
+  },
+  "repository": "SzeChunYiu/ccb-testbeam",
+  "required_remediation": "remove the arithmetic mean and report points separately until a preregistered uncertainty/covariance combination model exists",
+  "schema_version": 1,
+  "scientific_boundary": "source-level audit and synthetic regression only; no real Geant4 export or stopping-power closure was evaluated",
+  "scientific_problem": "no per-energy uncertainty, covariance, weighting model, or combined measurand is defined",
+  "session_utc": "2026-07-24T00:13:55Z",
+  "source_git_blob_sha1": "4e45e55b48c1d51320b9e6d0959b0b8423d0b2fc",
+  "source_lines_inspected": {
+    "grouping_block": [
+      365,
+      372
+    ],
+    "report_label": 370,
+    "statistics_mean_call": 370
+  },
+  "source_path": "scripts/single_stave/compare_stopping_power.py",
+  "static_checks": {
+    "max_test_line_length": 81,
+    "max_tool_line_length": 90,
+    "py_compile": "passed",
+    "svg_xml_parse": "passed"
+  },
+  "status": "FLAWED",
+  "task_id": "AUD-G4-020",
+  "unsupported_cross_energy_mean_present": true
+}

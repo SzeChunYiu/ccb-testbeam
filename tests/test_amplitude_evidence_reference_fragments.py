@@ -34,12 +34,30 @@ def test_verifies_exact_supporting_line_range(tmp_path: Path) -> None:
         evidence_root=tmp_path,
     )[DIGEST]
 
+    expected_fragment = b"amplitude is net\nlimitations\n"
     assert normalized["evidence_reference_scope"] == "LINE_RANGE"
     assert normalized["evidence_reference_line_start"] == 2
     assert normalized["evidence_reference_line_end"] == 3
     assert normalized["evidence_reference_line_count"] == 3
     assert normalized["evidence_reference_fragment_verified"] is True
-    assert normalized["evidence_validator_version"] == "1.3.0"
+    assert normalized["evidence_reference_fragment_size_bytes"] == len(expected_fragment)
+    assert normalized["evidence_reference_fragment_nonblank_lines"] == 2
+    assert normalized["evidence_reference_fragment_sha256"] == hashlib.sha256(
+        expected_fragment
+    ).hexdigest()
+    assert normalized["evidence_validator_version"] == "1.4.0"
+
+
+def test_rejects_whitespace_only_supporting_line(tmp_path: Path) -> None:
+    reference = tmp_path / "producer_contract.md"
+    reference.write_bytes(b"header\n \t \nactual statement\n")
+    reference_digest = hashlib.sha256(reference.read_bytes()).hexdigest()
+
+    with pytest.raises(ValueError, match="only blank or whitespace"):
+        MODULE.validate_payload(
+            {DIGEST: record(f"{reference.name}#L2", reference_digest)},
+            evidence_root=tmp_path,
+        )
 
 
 @pytest.mark.parametrize(

@@ -1,60 +1,62 @@
 # SiPM / WLS simulation upgrade handoff
 
-**Prepared:** 2026-07-23  
-**Research review snapshot:** `f147160f2c3be0df59f45c77cf209d2982547d04`  
-**Handoff branch base:** `2ad66f1016652a01a1adc44f3e9761024c9f621e`  
-**Status:** independent public-project plan and validated synthetic reference scaffold; no new Geant4 or detector-data result is claimed.
+**Prepared:** 2026-07-24  
+**Current source review:** `251353ffb0e200bd3c495b92c854f60593f44279`  
+**SiPM core review:** `SzeChunYiu/ccb-sipm-core@b38e3dcbce696e487a6b455ada23e99518b8bb21`  
+**Status:** v3 source, analysis, claim and figure re-audit; no new Geant4 execution or detector-validation claim.
 
-## Current direction
+## Current functional statement
 
-Build the SiPM device/electronics response as an independent public clean-room project. Keep optical transport, stave geometry, WLS/fibre materials and experiment-specific calibration in `ccb-testbeam`. Connect them through a stable photon-arrival schema and a thin Geant4 adapter.
+Repository history records a clean LUNARC GCC 12.3 / Geant4 11.2.2 build with passing SiPM-arrival and ADC smoke CTests at commit `a0e498852a3275f8bdfe2b5aeb50fb4860c24dd9`. Current `main` is 31 commits later, but the compared changes do not modify Geant4 or SiPM source.
 
-The independent project may implement the same published physical mechanisms as G4SiPM. It must cite the physics and independently design/write the code; it must not copy G4SiPM source, comments, class structure, tests, data files or documentation expression.
+This session did not rerun Geant4 or open the LUNARC ROOT artifacts. Geant4 11.4.2 is not tested. The accurate state is therefore repository-recorded operational PASS on 11.2.2, current-head independent reproduction NOT RUN, and scientific model acceptance PARTIAL/BLOCKED.
 
-## Important v2 state-of-the-art correction
+## Important fixes already present
 
-The public project must not be positioned only against historical G4SiPM. `EdoPro98/SimSiPM` is an active MIT-licensed C++/Python project with July-2026 work on tests, benchmarks, JSON configuration, interactive examples and value-type storage. It already models spectral PDE, DCR, prompt/delayed crosstalk, afterpulsing, recovery and waveforms.
+- WLS time profile is configurable; default is `exponential`.
+- far-end modes `instrumented|mirror|absorb|open` are implemented.
+- photon arrivals are passed to the independent `ccb-sipm-core`.
+- four ADC peak branches are written.
 
-The new project therefore differentiates through actual Geant4 local-boundary truth, process-keyed deterministic random streams, selectable model families, global-bias/external-crosstalk extensions, device-data provenance, and formal verification/validation/UQ and claim-evidence records.
+## New P0 findings
 
-## Current CCB model boundary
+1. Empty-arrival events skip the core, so dark/noise-only ADC and false triggers are forced to zero.
+2. Legacy Bernoulli PDE/static occupancy and microcell-core ADC models run in parallel in one event schema.
+3. Overvoltage/temperature still do not drive PDE, gain, DCR, crosstalk, afterpulsing or recovery.
+4. Exact PDE/recovery/DCR/CT/AP defaults have over-broad manufacturer provenance.
+5. Sensitivity values are confounded with one unique seed each; no common replicated seed set exists.
+6. The nominal zero-DCR grid point is not applied because the wrapper only accepts values `>0`.
+7. `--sipm-n-cells` changes the legacy occupancy model but not the 60x60 microcell core.
+8. Core errors/candidate caps are fail-open and detailed core validity is not persisted.
+9. Core/submodule/model metadata are absent from the stave run sidecar.
+10. Random draws are one stateful stream and arrival ordering can perturb results.
 
-The reviewed stave code currently provides:
+## Claim and documentation state
 
-1. Geant4 scintillation/WLS/optical transport;
-2. wavelength-dependent Bernoulli PDE times scalar coupling at a named end volume;
-3. the expected static occupancy formula `Ncell * (1 - exp(-Ndet/Ncell))`.
+The canonical claim ledger remains structurally flawed. Public wiki/executive/MC-validation documents still label quarantined Rmax, blocked gain and dependent timing claims as validated. The old MC chapter retains a superseded `245.6 ADC/MeV` chain and unsupported acceptance wording. These surfaces must be quarantined and regenerated fail-closed from a repaired claim ledger.
 
-It does not yet provide an empirically validated explicit microcell/device/electronics model.
+## Figure and analysis upgrade
 
-## Immediate P0 findings
+The external v3 ZIP contains:
 
-- `PhysicsList.cc` hard-codes `SetWLSTimeProfile("delta")`; timing studies require a validated physical profile and distribution-level regression.
-- `--far-end` is parsed/described but is not wired into detector construction or boundary behaviour.
-- `sipm_overvoltage_V` does not drive the current response path or complete metadata.
-- `sipm_pde.csv` is representative, not a calibrated `PDE(lambda,Vov,T)` surface.
-- issue 885 has no accepted response calibration.
-- the optical gap builder mutates the shared NIST `G4_AIR` material table.
+- fixed 89 mm / 183 mm quantitative figure layouts;
+- PDF, SVG and 600-dpi PNG output;
+- editable/embedded fonts and accessible colors;
+- one exact source CSV per figure;
+- exact n/error-definition metadata;
+- robust spike/outlier, clipping, occupancy and waveform diagnostics;
+- a common-replicated-seed sensitivity replacement that rejects seed/value confounding.
+
+The 800-event synthetic demonstration generated 22 figure specifications and 66 files. File dimensions, fonts, SVG text, hashes and source tables passed validation. The anomaly pass found zero hard failures, four expected structures and one recovery-genealogy review event. All remain `SYNTHETIC_SOFTWARE_TEST`.
 
 ## Read order
 
-1. `PUBLIC_PROJECT_V2.md`
-2. `IMPLEMENTATION_PLAN.md`
-3. `AUDIT_AND_RESEARCH.md`
-4. `TASKS.json`
+1. `REVIEW_V3.md`
+2. `TASKS_V3.json`
+3. `PUBLIC_CLAIM_AUDIT_V3.md`
+4. `NATURE_PLOT_STANDARD.md`
+5. existing v2 plan and research files for historical context
 
-## External package v2
+## Scientific boundary
 
-The updated ZIP now contains a ready-to-publish Apache-2.0 working scaffold named `SiPMForge` with governance, clean-room records, schemas, CI/sanitizer workflows, literature/software matrices, a 23-task roadmap, project-wide analysis-quality guidance, and a C++17 reference core.
-
-Package-runtime validation records:
-
-- GCC debug/release and Clang release builds/CTest: PASS;
-- ASan/UBSan CTest: PASS;
-- installed CMake consumer: PASS;
-- statistical PDE and DCR tests: PASS;
-- deterministic input-order and waveform-stream isolation tests: PASS;
-- synthetic campaign: 800 events, 23,843 avalanches and 21 source-backed plots;
-- scaffold and source-checksum validation: PASS.
-
-All generated outputs are `SYNTHETIC_SOFTWARE_TEST`. The Geant4 adapter was not compiled in that runtime, and no device, beam, detector-accuracy or speed-superiority claim is made.
+An executable smoke test is not detector validation. Do not launch a sensitivity, calibration, timing or publication campaign until empty-arrival behavior, response-model exclusivity, configuration/provenance, deterministic streams, claim-ledger structure and current-head Geant4 reruns are resolved.

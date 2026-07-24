@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="620" viewBox="0 0 1100 620" role="img" aria-labelledby="title desc">
+  <title id="title">Stopping-power report publication safety remediation</title>
+  <desc id="desc">Synthetic software-provenance diagram contrasting unsafe direct final-path writing with alias rejection, temporary serialization, verification, and atomic replacement.</desc>
+  <rect x="1" y="1" width="1098" height="618" fill="white" stroke="black"/>
+  <text x="550" y="38" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="bold">Stopping-power report publication safety</text>
+  <text x="550" y="65" text-anchor="middle" font-family="sans-serif" font-size="15">Synthetic software/provenance regression — not detector data</text>
+
+  <rect x="45" y="105" width="455" height="390" fill="none" stroke="black" stroke-width="2"/>
+  <text x="272" y="135" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">Former path: unsafe</text>
+  <rect x="95" y="175" width="355" height="65" fill="white" stroke="black"/>
+  <text x="272" y="202" text-anchor="middle" font-family="monospace" font-size="15">validated sim / PSTAR inputs</text>
+  <text x="272" y="224" text-anchor="middle" font-family="sans-serif" font-size="14">output path not compared with inputs</text>
+  <line x1="272" y1="240" x2="272" y2="290" stroke="black" stroke-width="2"/>
+  <polygon points="272,300 265,286 279,286" fill="black"/>
+  <rect x="95" y="305" width="355" height="72" fill="white" stroke="black"/>
+  <text x="272" y="335" text-anchor="middle" font-family="monospace" font-size="15">out_path.open(&quot;w&quot;)</text>
+  <text x="272" y="359" text-anchor="middle" font-family="sans-serif" font-size="14">final name truncated before completion</text>
+  <line x1="115" y1="395" x2="430" y2="455" stroke="black" stroke-width="5"/>
+  <line x1="430" y1="395" x2="115" y2="455" stroke="black" stroke-width="5"/>
+  <text x="272" y="480" text-anchor="middle" font-family="sans-serif" font-size="15">input overwrite or partial final artifact</text>
+
+  <rect x="600" y="105" width="455" height="390" fill="none" stroke="black" stroke-width="2"/>
+  <text x="827" y="135" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">Current path: fail closed</text>
+  <rect x="650" y="165" width="355" height="55" fill="white" stroke="black"/>
+  <text x="827" y="198" text-anchor="middle" font-family="monospace" font-size="14">resolve + reject input aliases</text>
+  <line x1="827" y1="220" x2="827" y2="250" stroke="black" stroke-width="2"/>
+  <polygon points="827,260 820,246 834,246" fill="black"/>
+  <rect x="650" y="265" width="355" height="55" fill="white" stroke="black"/>
+  <text x="827" y="298" text-anchor="middle" font-family="monospace" font-size="14">same-directory unique temporary file</text>
+  <line x1="827" y1="320" x2="827" y2="350" stroke="black" stroke-width="2"/>
+  <polygon points="827,360 820,346 834,346" fill="black"/>
+  <rect x="650" y="365" width="355" height="55" fill="white" stroke="black"/>
+  <text x="827" y="388" text-anchor="middle" font-family="monospace" font-size="14">flush + fsync + bytes + SHA-256</text>
+  <text x="827" y="408" text-anchor="middle" font-family="sans-serif" font-size="13">failure removes temp; old final remains</text>
+  <line x1="827" y1="420" x2="827" y2="450" stroke="black" stroke-width="2"/>
+  <polygon points="827,460 820,446 834,446" fill="black"/>
+  <rect x="650" y="465" width="355" height="55" fill="white" stroke="black"/>
+  <text x="827" y="498" text-anchor="middle" font-family="monospace" font-size="15">os.replace(temp, final)</text>
+
+  <text x="550" y="555" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold">Policy: NO_INPUT_OUTPUT_ALIAS_AND_ATOMIC_REPORT_WRITE</text>
+  <text x="550" y="582" text-anchor="middle" font-family="sans-serif" font-size="14">Acceptance: aliases rejected; previous final preserved on injected failures; final bytes and SHA-256 reported</text>
+</svg>

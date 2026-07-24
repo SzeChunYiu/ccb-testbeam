@@ -9,7 +9,8 @@
 - **Validated evidence head:** `72f295425fee337a63d94364e1e3c27376f0a4ab`
 - **Coordination/archive head before handoff:** `4431c5089df2226a1817a8f959aaa98621c4c73b`
 - **Final validated main SHA before metadata-only confirmation:** `8278e689b9bdbc99e1ccb82a4d014389802fdc19`
-- **Remote-main confirmation:** a post-write history read confirmed `8278e689b9bdbc99e1ccb82a4d014389802fdc19` on remote `main`; this record adds confirmation metadata only
+- **Post-handoff cleanup head:** `593eed0ec0feb032e57d641ecdc410d704a2381f` — reintroduced inactive workflow removed; no scientific files changed
+- **Remote-main confirmation:** post-write history confirmed both `8278e689b9bdbc99e1ccb82a4d014389802fdc19` and cleanup `593eed0ec0feb032e57d641ecdc410d704a2381f` on remote `main`; this record adds confirmation metadata only
 - **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or PR transport
 - **Acceptance:** canonical MV3 rows, exact-source validator, regressions, machine-readable evidence, and visual evidence are validated; root-WIKI synchronization and scientific stopping-profile closure remain partial
 
@@ -104,7 +105,10 @@ The validation JSON explicitly distinguishes an exact locally reconstructed ledg
 - `72f295425fee337a63d94364e1e3c27376f0a4ab` — visual evidence.
 - `bb0c7651b5c70970dd89055843d9040b2986032e` — active-task update.
 - `4431c5089df2226a1817a8f959aaa98621c4c73b` — immutable archive.
+- `f16fb196145a7dce8d45f508ede426d2e73c4e33` — inactive workflow was reintroduced by concurrent activity; no run was claimed.
 - `8278e689b9bdbc99e1ccb82a4d014389802fdc19` — complete remediation handoff.
+- `f7f4bbc93688feeb6725683f64522eeca5b175a1` — delivery-SHA confirmation metadata.
+- `593eed0ec0feb032e57d641ecdc410d704a2381f` — reintroduced workflow removed; current tree contains no remediation workflow file.
 
 The contents connector returned successful commit SHAs rather than conventional textual `git push` stdout. Recent-history reads confirmed these commits on remote `main` in order. No broad GitHub Actions success is claimed.
 

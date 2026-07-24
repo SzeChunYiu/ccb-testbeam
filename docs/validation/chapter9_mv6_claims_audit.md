@@ -72,17 +72,23 @@ source facts were independently inspected through authenticated GitHub reads.
 
 ## Provenance
 
-- pre-change chapter blob: `409abcdefe686edf9c2ac5c5c6ba02aae9c9a331`;
-- tracked producer blob: `f965823518b22908f3e8974f280bff5c970368d0`;
-- tracked summary blob: `26c187cbe05d8dadbe588c6ed9062d25658a80a9`;
-- historical report blob: `2c531703755b28a0c576e978531b81374edf8ab4`;
-- canonical ledger blob: `e489555f3a520c7cc64b8a7d858a0e93622b9de6`;
-- corrected chapter SHA-256 before commit:
-  `d91effd7b4a6a210591832a8c57443da12e55c46897884c0adba007491183d23`;
-- validator SHA-256 before commit:
-  `f5f42a8a28a331958bd787e40ddfb26315c30861b5cb10544af352d4287246f5`;
-- test SHA-256 before commit:
-  `645014b7df8a92da2d98e288a7e4e907c51f5f4f0455ca9317e524aad69dd4c1`.
+Source blobs:
+
+- pre-change chapter: `409abcdefe686edf9c2ac5c5c6ba02aae9c9a331`;
+- tracked producer: `f965823518b22908f3e8974f280bff5c970368d0`;
+- tracked summary: `26c187cbe05d8dadbe588c6ed9062d25658a80a9`;
+- historical report: `2c531703755b28a0c576e978531b81374edf8ab4`;
+- canonical ledger: `e489555f3a520c7cc64b8a7d858a0e93622b9de6`.
+
+Committed correction blobs, re-fetched from `main`:
+
+- corrected chapter: `c54753c58b0eb9e68a7e2b908d4e31310b0c991f`;
+- validator: `fbb9d9423ad2fc6130656d6cdfa11345e738f095`;
+- regression test: `ebc61f19916baf8a9dee1a86aa7deb9b08ecb259`.
+
+The chapter and validator committed blobs matched the locally validated
+candidates. The test was also re-fetched as the complete committed UTF-8 file;
+its committed blob is the canonical identity retained here.
 
 ## Scientific boundary
 

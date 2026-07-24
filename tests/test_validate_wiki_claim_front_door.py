@@ -73,6 +73,7 @@ def wiki_text(*, raw_status: str, tau_truth: str, overclaim: bool) -> str:
 ### Key Results
 | Observable | Value | Status |
 |---|---|---|
+| τeff (effective live-time) | 124.79 ns | **VALIDATED** |
 | MC raw timing pull | −1.05σ | **{raw_status}** |
 
 ### Validation Matrix

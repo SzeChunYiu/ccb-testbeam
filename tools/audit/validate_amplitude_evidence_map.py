@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-TOOL_VERSION = "1.3.0"
+TOOL_VERSION = "1.4.0"
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 LINE_FRAGMENT_RE = re.compile(r"^L([1-9][0-9]*)(?:-L([1-9][0-9]*))?$")
 ACCEPTED_CONVENTIONS = {"ABSOLUTE", "NET"}
@@ -106,16 +106,29 @@ def _verify_line_range(
     resolved: Path,
     line_range: tuple[int, int],
     digest: str,
-) -> int:
-    with resolved.open("rb") as handle:
-        line_count = sum(1 for _ in handle)
+) -> dict[str, int | str]:
+    lines = resolved.read_bytes().splitlines(keepends=True)
+    line_count = len(lines)
     start, end = line_range
     if end > line_count:
         raise ValueError(
             f"evidence record for {digest} references lines {start}-{end}, "
             f"but the supporting artifact has only {line_count} lines"
         )
-    return line_count
+    selected_lines = lines[start - 1:end]
+    selected_bytes = b"".join(selected_lines)
+    nonblank_lines = sum(bool(line.strip()) for line in selected_lines)
+    if nonblank_lines == 0:
+        raise ValueError(
+            f"evidence record for {digest} references lines {start}-{end} containing "
+            "only blank or whitespace content"
+        )
+    return {
+        "line_count": line_count,
+        "size_bytes": len(selected_bytes),
+        "nonblank_lines": nonblank_lines,
+        "sha256": hashlib.sha256(selected_bytes).hexdigest(),
+    }
 
 
 def validate_record(
@@ -182,11 +195,13 @@ def validate_record(
         normalized["evidence_reference_resolved_path"] = str(resolved)
         normalized["evidence_reference_measured_sha256"] = actual_reference_sha256
         if line_range is not None:
-            normalized["evidence_reference_line_count"] = _verify_line_range(
-                resolved,
-                line_range,
-                digest,
-            )
+            fragment = _verify_line_range(resolved, line_range, digest)
+            normalized["evidence_reference_line_count"] = fragment["line_count"]
+            normalized["evidence_reference_fragment_size_bytes"] = fragment["size_bytes"]
+            normalized["evidence_reference_fragment_nonblank_lines"] = fragment[
+                "nonblank_lines"
+            ]
+            normalized["evidence_reference_fragment_sha256"] = fragment["sha256"]
             normalized["evidence_reference_fragment_verified"] = True
 
     return normalized

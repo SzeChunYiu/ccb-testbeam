@@ -1,0 +1,107 @@
+{
+  "ticket_id": "1783825724.33022.709b07a8",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "Native GEANT4-to-DAQ event-id bridge audit and run-keyed closure benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "native_bridge": {
+    "positive_native_eventid_bridge_available": false,
+    "reason": "GEANT4 hibeam tree has no run, EVENTNO, EVT, or TRIGGER branch.",
+    "daq_key_inventory": "daq_event_key_inventory.csv",
+    "geant4_key_inventory": "geant4_event_key_inventory.csv",
+    "bridge_contract": "native_bridge_contract.csv",
+    "future_metadata_export_contract": "future_metadata_export_contract.csv",
+    "exact_native_event_matches": 0
+  },
+  "alignment_policy": {
+    "name": "run_keyed_geant4_pseudo_bridge",
+    "description": "GEANT4 truth rows are sampled only within source-run-matched contiguous simulation blocks; no exact deterministic event overlay is used.",
+    "summary_file": "alignment_policy_summary.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 320,
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "strong_traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "joint_sequence_transformer",
+    "additional_new_physics_residual_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum held-out composite GEANT4-truth PID/energy/timing score",
+    "winner_score": 0.21695942724596032,
+    "pid_auc": 0.9075774971297359,
+    "pid_balanced_accuracy": 0.8611940298507463,
+    "pid_efficiency": 0.9223880597014925,
+    "pid_purity": 0.8262032085561497,
+    "energy_fractional_sigma68": 0.07528987643447536,
+    "energy_fractional_sigma68_ci95": [
+      0.0678937902270802,
+      0.08207771615892867
+    ],
+    "time_sigma68_ns": 7.939230069841397,
+    "time_sigma68_ci95": [
+      6.818854970774145,
+      9.065470739014508
+    ],
+    "pileup_miss_rate": 0.30303030303030304,
+    "false_split_rate": 0.24848484848484848
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "bridge_contract": "native_bridge_contract.csv",
+    "future_metadata_export_contract": "future_metadata_export_contract.csv"
+  },
+  "novel_tickets_appended": [
+    {
+      "ticket_id": "1783883140.39222.3c4045b1",
+      "title": "Persist DAQ event keys in GEANT4 digitizer output",
+      "body": "Add daq_run, EVENTNO, EVT, TRIGGER, g4_entry, digitizer_seed, and bridge_version branches to the GEANT4-to-HRD digitizer output, then rerun G4-08 as an exact native join rather than a run-keyed pseudo-bridge."
+    }
+  ],
+  "caveats": [
+    "No visible GEANT4 ROOT branch stores DAQ event keys, so exact event-by-event closure is blocked.",
+    "Run-keyed pseudo-bridge removes exact deterministic overlay but leaves within-run truth assignment uncertainty.",
+    "Bootstrap CIs resample held-out source runs and do not include GEANT4 physics-list uncertainty."
+  ]
+}

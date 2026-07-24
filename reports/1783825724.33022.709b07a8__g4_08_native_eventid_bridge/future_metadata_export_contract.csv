@@ -1,0 +1,8 @@
+field,dtype,required,description
+daq_run,int32,True,HRD acquisition run number
+EVENTNO,int64,True,DAQ event counter copied from h101
+EVT,int64,True,DAQ event/trigger key copied from h101
+TRIGGER,int32,True,DAQ trigger word before any reduction
+g4_entry,int64,True,GEANT4 event index after simulation
+digitizer_seed,uint64,True,seed linking digitized windows to simulation event
+bridge_version,string,True,schema version for reproducible joins

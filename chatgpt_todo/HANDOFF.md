@@ -2,168 +2,148 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T084518Z`
-- **Task:** `AUD-LEDGER-001`
-- **Focused task:** `AUD-P07E-001`
-- **Unit:** P07e B2 saturation ratio-transfer evidence hierarchy, historical producer provenance, and exact-width reconstruction of `CL-016`
+- **UTC stamp:** `2026-07-24T090650Z`
+- **Task:** `AUD-WIKI-001`
+- **Unit:** academic executive-summary claim consistency and fail-closed exact-width ledger gate
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **Initial remote `main`:** `71907c86124f2ac0e5c4ee9fd4acc05967a02268`
-- **Validated delivery head before this handoff update:** `ace4fe0e77afa1a938084e016e36bf9201cb121c`
+- **First observed remote `main`:** `0f0e79031777faa203c086860d6a163d10c838ae`
+- **Concurrent P07e completion incorporated before writes:** `5e7f9c96ac604eef63be356da0131fc492b5173d`
+- **Validated delivery head before this handoff update:** `482b615648f91630e15723a1e44958d2938f28b6`
 - **Destination:** direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite
-- **Acceptance:** audit implementation and evidence `VALIDATED`; `CL-016` and production saturation correction remain `GATED`; `AUD-LEDGER-001` and `AUD-P07E-001` remain `PARTIAL`
+- **Acceptance:** executive-summary correction, validator, focused tests, Markdown/JSON/SVG evidence, and immutable archive are `VALIDATED`; `AUD-WIKI-001` remains `PARTIAL` because root `WIKI.md` still needs the same Rmax and P04p/P07e synchronization
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads inspected current `main`, recent repository history, the active P04p handoff, mandatory `chatgpt_todo/` records, the canonical 43-column claim ledger, the P07e report/result/manifest/script/config chain, and the relevant historical commits. Concurrent P04p commits were preserved and no active unit was duplicated.
+Authenticated GitHub reads inspected repository metadata and permissions, recent main history, current commit status, PR #868, mandatory `chatgpt_todo/` files, `WIKI.md`, the academic executive summary, the canonical claim ledger, existing WIKI validation tooling, and the completed P04p/P07e evidence records. Concurrent P07e commits were allowed to finish and were incorporated before this unit wrote to main.
 
-A local clone was not available because the runtime could not resolve `github.com`. Repository facts were therefore established through authenticated GitHub file/blob/commit reads. Executable validation used source-faithful reduced fixtures with exact recorded P07e metric values; fixtures are not detector data.
+A direct clone was attempted but failed because the runtime could not resolve `github.com`. Repository facts were established with authenticated GitHub file/blob/commit reads. Executable validation used exact locally constructed source and test files plus an exact 43-column extraction of the five current ledger rows used by the gate.
 
-## Study and claim reviewed
+PR #868 remains closed, unmerged, and non-mergeable and was not modified. No status checks were attached to the reviewed current-main head; no GitHub Actions success is inferred.
 
-P07e ticket `1781018174.2030.05ac1ce2` tests a ratio-transfer model for high-amplitude B2 waveforms. Its result contains two scientifically different evidence layers:
+## Confirmed public-documentation defects
 
-1. synthetic pseudo-saturation closure on clean pulses;
-2. external leave-one-run-out validation against the paired odd duplicate channel.
+The pre-change academic executive summary blob was:
 
-The generic malformed ledger text `Saturation recovery ML` did not identify which layer controlled scientific authorization and did not preserve metric, interval, baseline, sample size, source paths, or provenance limitations.
+`eb8c2f5d287ff227a15522754f48a0c75c1336ca`
 
-## Quantitative reconstruction
+The reviewed canonical claim-ledger blob was:
 
-Exact committed result values:
+`853d955f449268ec614ac61f33f243d30cf473e0`
 
-- pseudo-saturation ML charge res68: `0.03669062665507541`;
-- external validation rows: `183132`;
-- held-out runs: `33`;
-- external ML charge res68: `0.1763577793605039`;
-- ML run-block 95% interval: `[0.17304334869529975,0.18060166173702746]`;
-- external raw charge res68: `0.12079374117700271`;
-- raw run-block 95% interval: `[0.11700387021774719,0.12536373643016782]`;
-- traditional-template external charge res68: `0.12077766801970549`;
-- independently reconstructed ML-minus-raw degradation: `+0.05556403818350119`.
+The chapter contradicted canonical or already-audited claim state:
 
-The ML lower interval bound exceeds the raw upper interval bound. Under the recorded run-block bootstrap and metric definition, external duplicate charge closure is worse after the ML correction.
+1. **Rmax:** displayed `3.044–3.05 MHz` as `VALIDATED`, while exact-width `CL-010` is `BLOCKED` and withholds the value. `CL-012` retains 3.044 MHz only as superseded correction history.
+2. **Effective live-time:** used truth type `data_only`, while exact-width `CL-011` records `data_mc_self_consistent`.
+3. **MV4 raw timing:** used `PASS`, outside the canonical status vocabulary; exact-width `CL-007` records `VALIDATED`.
+4. **P04p/P07e:** combined duplicate readout and saturation recovery as `ML wins (confirmed)`. Exact-width `CL-015` has no canonical winner because the P04p coverage interval crosses the eligibility gate. Exact-width `CL-016` withholds P07e because external held-out duplicate closure is worse than raw.
+5. **C12-like anomaly:** presented the 0.32% truth-labelled MC fraction as an established empirical result rather than `TRUTH_LEVEL_MC_ONLY`.
 
-- **Policy:** `P07E_EXTERNAL_DUPLICATE_CLOSURE_OVERRIDES_PSEUDO_SATURATION`
-- **Scientific decision:** `WITHHOLD_ML_CORRECTION`
+## Quantitative claim state retained
 
-The pseudo-saturation result remains useful as a synthetic closure test, but it does not authorize production application to real high-amplitude pulses when the external duplicate test contradicts it.
+No new detector calculation was performed. The summary now preserves the already source-backed values and limitations:
 
-## Provenance finding
+- P04p GBT accepted coverage: `0.5016432417313474`;
+- P04p run-bootstrap 95% interval: `[0.4781032287979763,0.5382552094265317]`;
+- P07e external ML charge res68: `0.1763577793605039` with `[0.17304334869529975,0.18060166173702746]`;
+- P07e raw charge res68: `0.12079374117700271` with `[0.11700387021774719,0.12536373643016782]`;
+- P07e ML-minus-raw degradation: `+0.05556403818350119`.
 
-The P07e manifest records execution commit:
+## Correction delivered
 
-`f20e1b0bceac4eeae4532c9e871a363d6dce08d7`
+Updated `docs/academic_chapters/01_executive_summary.md` to:
 
-That commit is an earlier S05e rate-study commit and does not contain the recorded P07e producer path. The P07e producer and output bundle were introduced later by:
-
-`d30d91bc4b2988d3b1fffa8d7d44e58e1130603b`
-
-The manifest hash-binds output files and lists 33 raw ROOT input hashes, but it records neither the producer script SHA-256 nor clean/dirty worktree state. Exact historical producer bytes are therefore not recoverable from the manifest alone.
-
-Registered blocker:
-
-- **`BLK-P07E-001` — historical P07e producer bytes and saturation-transfer authorization**
-
-Resolution requires either recovery of a content-addressed producer snapshot or a clean exact-commit rerun with producer/config/input/output hashes, followed by preregistered cross-stave and independent new-run transfer validation.
-
-## Code, tests, evidence, and ledger changes
+- withhold Rmax pending S-STAT-003;
+- use the canonical status vocabulary;
+- restore the effective-live-time truth type;
+- label the C12-like fraction as truth-labelled MC only;
+- replace the combined ML-win row with separate P04p and P07e gated rows;
+- state explicitly that no production duplicate-readout or saturation correction is authorized;
+- propagate those boundaries into historical corrections, excluded claims, established results, open issues, and next studies;
+- fix chapter-relative links to the claim ledger, figure registry, and claim checklist.
 
 Added:
 
-- `tools/audit/audit_p07e_saturation_claim.py` v1.0.0;
-- `tests/test_audit_p07e_saturation_claim.py`;
-- `docs/validation/p07e_saturation_claim_audit.md`;
-- `docs/validation/p07e_saturation_claim_validation.json`;
-- `docs/validation/p07e_saturation_claim.svg`;
-- `chatgpt_todo/archive/2026-07-24T084518Z_AUD-LEDGER-001_P07E_SATURATION_CLAIM.md`.
+- `tools/audit/validate_executive_summary_claims.py` v1.0.0;
+- `tests/test_validate_executive_summary_claims.py`;
+- `docs/validation/executive_summary_claim_consistency_audit.md`;
+- `docs/validation/executive_summary_claims_validation.json`;
+- `docs/validation/executive_summary_claim_consistency.svg`;
+- `chatgpt_todo/archive/2026-07-24T090650Z_AUD-WIKI-001_EXECUTIVE_SUMMARY_CLAIMS.md`.
 
 Updated:
 
-- `docs/claim_ledger.csv` — `CL-016` is now exactly 43 fields;
-- `docs/validation/claim_ledger_schema_validation.json`;
-- `docs/validation/claim_ledger_schema.svg`;
 - `chatgpt_todo/ACTIVE_TASK.md`;
-- `BACKLOG.md`;
-- `BLOCKERS.md`;
-- `CLAIM_EVIDENCE_MATRIX.md`;
-- `STUDY_REVIEW_LEDGER.md`;
-- `VISUALIZATION_MATRIX.md`;
 - this handoff.
 
-`CL-016` now records:
+## Fail-closed gate
 
-- claim: `B2 saturation ratio-transfer duplicate charge res68`;
-- value, interval, 183132 rows, 33 runs, raw baseline, and signed delta;
-- truth type `data_external_duplicate_readout`;
-- status `GATED`;
-- current report/script/result/config/manifest paths;
-- CI state `CI_AVAILABLE_PRODUCER_BYTES_UNBOUND`;
-- blocker `BLK-P07E-001`.
+Policy:
 
-Claim-ledger width progress advanced from `6/26` to `7/26` exact rows. Nineteen malformed rows remain fail-closed and their late fields remain withheld.
+```text
+EXECUTIVE_SUMMARY_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS
+```
+
+The validator requires `CL-007`, `CL-010`, `CL-011`, `CL-015`, and `CL-016` to each have exactly 43 columns before their fields may authorize the executive summary. It checks required rows, statuses, value caveats, truth-language, and former unsupported Rmax/C12/ML-win statements.
 
 ## Validation performed
 
 ```text
-python -m py_compile \
-  tools/audit/audit_p07e_saturation_claim.py \
-  tests/test_audit_p07e_saturation_claim.py
+PYTHONPATH=. python -m py_compile \
+  tools/audit/validate_executive_summary_claims.py \
+  tests/test_validate_executive_summary_claims.py
 
-python -m pytest tests/test_audit_p07e_saturation_claim.py -q
+PYTHONPATH=. python -m pytest \
+  tests/test_validate_executive_summary_claims.py -q
 
-4 passed in 0.62s
+5 passed in 0.03s
 ```
 
-Additional validation:
+Additional checks:
 
-- malformed current-like ledger plus unbound producer fixture returned `FLAWED` with controlled findings;
-- aligned hash-bound synthetic chain returned `VALIDATED`;
-- mutated manifest output hash failed closed;
-- CLI nonzero status, JSON output, and SVG output were checked;
+- stale pre-change-like fixture returned `FLAWED` with controlled mismatch findings;
+- corrected fixture returned `VALIDATED` with zero issues;
+- required 42-column `CL-016` fixture failed closed;
+- invalid UTF-8 returned controlled status 2;
+- corrected chapter validated with zero issues against an exact 43-column extraction of the five current ledger rows;
+- corrected chapter SHA-256: `af76aa164cc5a7f994a135acaf4f15961d30e53d4d27346ec21443444b2f15d1`;
 - validation JSON parsed;
 - SVG parsed as XML;
-- maximum changed Python line length: 100 characters;
-- reconstructed ledger bytes match committed Git blob `853d955f449268ec614ac61f33f243d30cf473e0`.
+- maximum changed Python line length: 96;
+- committed chapter blob `c3205e4ffe5eacbdf24191aba7f0a130ab0bca88` matches locally validated bytes;
+- committed validator blob `7cf0ca76f14c071192d28bd340024c929efa3277` matches locally validated bytes;
+- committed test blob `3e2880209625db0292701d06ebf6a39837e5c5d0` matches locally validated bytes.
 
-## Direct-to-main commit sequence
+Full repository pytest, ruff, complete broken-link checking, raw ROOT processing, model training, bootstrap regeneration, Rmax physics derivation, and GitHub Actions were not run.
 
-- `3ad52b6cfa72f818d4dab2f79ec7705767e557a9` — `feat(audit): validate P07e saturation claim hierarchy`
-- `0dbcca7179bb081eb5b20c42ade449d0b984ae22` — `test(audit): cover P07e evidence hierarchy`
-- `50736732ce6c394c4ab5779d1a227525b2a6c11f` — `docs(validation): record P07e saturation claim audit`
-- `06edd1acf843a0874e84e1d73ffa40a1799dd95c` — `docs(validation): add P07e saturation validation record`
-- `b20d503be2c8c99e468ed6e6ddac3d25ea3d4bb8` — `docs(validation): visualize P07e evidence hierarchy`
-- `787938208d37061ab0a5e35678b34b2dbb50e027` — `fix(ledger): reconstruct P07e saturation claim`
-- `2b297c715ba72df98b85f0aa493b2ec01a9a98be` — `docs(validation): advance ledger width audit to seven rows`
-- `961fdde6020bbabf8165e61d6e9c8a9af5e911eb` — `docs(validation): refresh ledger width visualization`
-- `a4105467dd5db61bfb9e8de585170050b453e4fe` — `docs(audit): track P07e claim reconstruction`
-- `6659a1ea653342f589cae43effbddf1dbe45fae2` — `docs(audit): archive P07e saturation claim review`
-- `9bf6c17db7221adf82c69a461f2b97c48d1ffd31` — `docs(audit): register P07e provenance blocker`
-- `1d9529528e270172f5e442601c5d1533e63092d3` — `docs(audit): advance ledger audit through P07e`
-- `0f0e79031777faa203c086860d6a163d10c838ae` — `docs(audit): add P07e claim evidence gate`
-- `02f4cfceefe6a36193cfa0d66e6b90728c376c66` — `docs(audit): register P07e evidence visualization`
-- `ace4fe0e77afa1a938084e016e36bf9201cb121c` — `docs(audit): record P07e study review`
+## Direct-main commit sequence
 
-All writes returned successful direct-main commit results through the authenticated GitHub connector. A recent-main query confirmed the ordered commit chain through `ace4fe0e77afa1a938084e016e36bf9201cb121c` before this handoff update.
+1. `ba24773be4ff465ae57f2255dcb7ef4391d2ee91` — `fix(docs): align executive summary with canonical claims`
+2. `1530cfcff6ae82318cceea36a54caa0af0c82202` — `feat(audit): validate executive summary claim alignment`
+3. `7f7a2dabefa183d14c24d494ba2f3c32a870110a` — `test(audit): cover executive claim consistency`
+4. `a962ae9e1bc45b6ff750ee3840bde97843a3a1c0` — `docs(validation): record executive claim consistency audit`
+5. `c25c0783beac66270160cbc99ebd0b37f9f74e94` — `docs(validation): add executive claim validation record`
+6. `e01e5c96cf4aa633fc155b465ad851b866bc18a1` — `docs(validation): visualize executive claim correction`
+7. `130bffa265c2a025bd83bb1935631465318226de` — `docs(audit): track executive claim remediation`
+8. `482b615648f91630e15723a1e44958d2938f28b6` — `docs(audit): archive executive claim remediation`
 
-## Unrun checks and scientific boundary
+Every write returned a successful direct-main commit result through the authenticated GitHub connector. A final recent-main read must confirm this handoff update and the full sequence on remote main.
 
-Not run or unavailable:
+## Scientific boundary and remaining risks
 
-- raw ROOT extraction and event-selection reproduction;
-- ExtraTrees/Huber model refit;
-- bootstrap ensemble regeneration;
-- cross-stave or independent new-run transfer validation;
-- full repository pytest and ruff;
-- GitHub Actions for this commit sequence;
-- calibration or detector-performance validation.
+This documentation-governance unit does not:
 
-No raw data, source waveform table, model output, or detector result was modified. No claim is made that the P07e correction improves real charge reconstruction or is production-ready.
+- resolve the Rmax physical criterion or uncertainty model;
+- establish a robust P04p production winner;
+- authorize P07e saturation recovery;
+- identify C12 in real data;
+- repair the remaining 19 malformed claim-ledger rows;
+- produce a calibration or detector-performance result.
 
-`SESSION_LOG.md` was not replaced. The connector exposes complete-file replacement but returned only truncated views of the long append-only file; reconstructing it manually would create an avoidable provenance-loss risk. The complete session record is retained in the immutable archive above and in this handoff. This is an explicit unresolved compliance limitation, not a claim that the append occurred.
+`SESSION_LOG.md` was not replaced. The connector exposes complete-file replacement, while only truncated reads of the long append-only file were available. Reconstructing it manually would risk deleting prior provenance. The complete session record is preserved in the immutable archive and this handoff; no append is fabricated.
 
 ## Next actions
 
-1. Recover or cleanly reproduce content-addressed P07e producer provenance.
-2. Preregister and run cross-stave plus independent new-run saturation validation without tuning on the final validation sample.
-3. Keep `CL-016` `GATED` and withhold the correction until external closure and provenance gates pass.
-4. Continue source-backed reconstruction of the remaining 19 malformed claim-ledger rows.
+1. Synchronize root `WIKI.md` with the same Rmax and P04p/P07e corrections and extend the WIKI validator bindings.
+2. Continue source-backed reconstruction of the 19 malformed ledger rows.
+3. Resolve S-STAT-003 before restoring any Rmax value.
+4. Resolve P04p/P07e uncertainty, provenance, and independent-transfer blockers before production use.

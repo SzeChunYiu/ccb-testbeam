@@ -6,8 +6,9 @@
 - Task: `AUD-LEDGER-001`
 - Repository: `SzeChunYiu/ccb-testbeam`
 - Initial remote `main`: `72fccaa8f4d6c00665c60fd0a94884c87cdd544b`
-- Main after validated work/archive: `5113230b9d065f3a672f0b72e85fadcf311124e2`
-- Remote confirmation before this handoff update: recent-main search returned `292f5ad6e55438e155dec756b9bf257a723a3524` at head; the subsequent archive write succeeded as `5113230b9d065f3a672f0b72e85fadcf311124e2`.
+- Validated implementation/evidence head: `5113230b9d065f3a672f0b72e85fadcf311124e2`
+- Coordination head before this final handoff: `3699683ce631118b01725fb0c909904564561522`
+- Remote confirmation: recent-main search confirmed the earlier handoff `93619616c7ad868b302e47ebfe41d8c693e592b8` and its implementation/evidence ancestors on remote `main`; the subsequent backlog and blocker writes succeeded as `68717a3c90dcfec777cb8b0315cbd83c5d41f8e8` and `3699683ce631118b01725fb0c909904564561522`.
 - Destination: direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite
 - Acceptance: `AUD-LEDGER-001 = PARTIAL`; `CL-010` is blocked, `CL-012` is superseded, and 21 malformed ledger rows remain
 
@@ -15,7 +16,7 @@
 
 Reviewed repository permissions/default branch, recent main history, open PRs, PR #868, commit status/workflow state, mandatory `chatgpt_todo/` records, claim and figure registries, WIKI, MV5 report/summary/script, academic pile-up chapter, source commit, and tracked MV5 figure. The initial head was the concurrent SiPM campaign merge `72fccaa8f4d6c00665c60fd0a94884c87cdd544b`; it was preserved. A direct clone failed because the runtime could not resolve `github.com`, so authenticated GitHub connector reads/writes were used. PR #868 remains closed, unmerged, and non-mergeable and was not modified.
 
-No status checks or pull-request workflow runs were attached to the initial head. No CI success is inferred.
+No status checks or pull-request workflow runs were attached to the initial or final reviewed heads. No CI success is inferred.
 
 ## Confirmed source conflict
 
@@ -37,6 +38,8 @@ No status checks or pull-request workflow runs were attached to the initial head
 - `CL-012` is now exactly 43 fields, `status=SUPERSEDED`, current value blank, `ci_status=SUPERSEDED_DO_NOT_USE`, and retained only as correction history.
 - Both rows cite the tracked MV5 report, script, summary JSON, source commit `3c5ff5cf587c8ca9cefda20cb220ba29effd2170`, and `FIG-PU-003`.
 - `FIG-PU-003` now points to `reports/mv5_pileup_1782678353/mv5_pileup_summary.json` and `reports/mv5_pileup_1782678353/mv5_pileup.png`, with explicit non-acceptance language.
+- `BACKLOG.md` now records the 5/26 exact-width state and the Rmax quarantine.
+- `BLOCKERS.md` now records 21 remaining malformed rows and adds `BLK-PU-RMAX-001` with the exact resolution gate.
 
 No accepted Rmax value or uncertainty remains in the canonical claim ledger.
 
@@ -91,8 +94,11 @@ Ruff, full repository pytest, ROOT processing, simulation execution, the WIKI va
 10. `f9ce6c9eb3a02e90e1f1826b7ffe9304a93303cb` — `docs(validation): refresh ledger width visualization`
 11. `292f5ad6e55438e155dec756b9bf257a723a3524` — `docs(audit): advance ledger reconstruction through Rmax claims`
 12. `5113230b9d065f3a672f0b72e85fadcf311124e2` — `docs(audit): archive Rmax ledger quarantine`
+13. `93619616c7ad868b302e47ebfe41d8c693e592b8` — `docs(audit): hand off Rmax ledger quarantine`
+14. `68717a3c90dcfec777cb8b0315cbd83c5d41f8e8` — `docs(audit): record Rmax ledger quarantine progress`
+15. `3699683ce631118b01725fb0c909904564561522` — `docs(audit): register conflicted Rmax definition blocker`
 
-Every connector write returned a successful direct-main commit. A final recent-main search must confirm this handoff commit and its ancestors on remote `main`; the user-facing completion reports that final SHA.
+Every connector write returned a successful direct-main commit. The user-facing completion reports the final remote-main SHA after confirming this final handoff commit.
 
 ## Files changed
 
@@ -107,6 +113,8 @@ Every connector write returned a successful direct-main commit. A final recent-m
 - `docs/validation/claim_ledger_schema_validation.json`
 - `docs/validation/claim_ledger_schema.svg`
 - `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/BACKLOG.md`
+- `chatgpt_todo/BLOCKERS.md`
 - `chatgpt_todo/HANDOFF.md`
 - `chatgpt_todo/archive/2026-07-24T061758Z_AUD-LEDGER-001_RMAX_QUARANTINE.md`
 

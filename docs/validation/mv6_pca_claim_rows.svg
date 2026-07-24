@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+<title id="title">MV6 PCA claim reconstruction</title>
+<desc id="desc">Synthetic software evidence comparing superseded PCA claims with values recomputed from the tracked MV6 summary. Not detector data.</desc>
+<defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#555" stroke-width="2"/></pattern></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="35" font-family="sans-serif" font-size="23" font-weight="bold">CL-023 / CL-024 source reconstruction</text>
+<text x="30" y="62" font-family="sans-serif" font-size="14">Synthetic software/provenance evidence — not beam data or a transfer claim</text>
+<line x1="110" y1="390.0" x2="810" y2="390.0" stroke="#cccccc" stroke-width="1"/>
+<text x="98" y="395.0" text-anchor="end" font-family="sans-serif" font-size="12">0.0</text>
+<line x1="110" y1="332.0" x2="810" y2="332.0" stroke="#cccccc" stroke-width="1"/>
+<text x="98" y="337.0" text-anchor="end" font-family="sans-serif" font-size="12">0.2</text>
+<line x1="110" y1="274.0" x2="810" y2="274.0" stroke="#cccccc" stroke-width="1"/>
+<text x="98" y="279.0" text-anchor="end" font-family="sans-serif" font-size="12">0.4</text>
+<line x1="110" y1="216.0" x2="810" y2="216.0" stroke="#cccccc" stroke-width="1"/>
+<text x="98" y="221.0" text-anchor="end" font-family="sans-serif" font-size="12">0.6</text>
+<line x1="110" y1="158.0" x2="810" y2="158.0" stroke="#cccccc" stroke-width="1"/>
+<text x="98" y="163.0" text-anchor="end" font-family="sans-serif" font-size="12">0.8</text>
+<line x1="110" y1="100.0" x2="810" y2="100.0" stroke="#cccccc" stroke-width="1"/>
+<text x="98" y="105.0" text-anchor="end" font-family="sans-serif" font-size="12">1.0</text>
+<rect x="188" y="131.9" width="72" height="258.1" fill="url(#hatch)" stroke="black"/>
+<text x="224.0" y="123.9" text-anchor="middle" font-family="monospace" font-size="12">0.890000</text>
+<text x="224.0" y="412.0" text-anchor="middle" font-family="sans-serif" font-size="11">superseded</text>
+<rect x="270" y="179.6" width="72" height="210.4" fill="#d9d9d9" stroke="black"/>
+<text x="306.0" y="171.6" text-anchor="middle" font-family="monospace" font-size="12">0.725460</text>
+<text x="306.0" y="412.0" text-anchor="middle" font-family="sans-serif" font-size="11">tracked MV6</text>
+<text x="265" y="442" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold">3 PCs</text>
+<rect x="438" y="100.9" width="72" height="289.1" fill="url(#hatch)" stroke="black"/>
+<text x="474.0" y="92.9" text-anchor="middle" font-family="monospace" font-size="12">0.997000</text>
+<text x="474.0" y="412.0" text-anchor="middle" font-family="sans-serif" font-size="11">superseded</text>
+<rect x="520" y="151.7" width="72" height="238.3" fill="#d9d9d9" stroke="black"/>
+<text x="556.0" y="143.7" text-anchor="middle" font-family="monospace" font-size="12">0.821884</text>
+<text x="556.0" y="412.0" text-anchor="middle" font-family="sans-serif" font-size="11">tracked MV6</text>
+<text x="515" y="442" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold">8 PCs</text>
+<line x1="110" y1="390" x2="810" y2="390" stroke="black" stroke-width="2"/>
+<line x1="110" y1="100" x2="110" y2="390" stroke="black" stroke-width="2"/>
+<text x="28" y="245.0" transform="rotate(-90 28 245.0)" text-anchor="middle" font-family="sans-serif" font-size="14">cumulative explained-variance fraction</text>
+<text x="30" y="480" font-family="sans-serif" font-size="13">Status: VALIDATED; exact row width: 43; policy: MV6_PCA_CLAIMS_MUST_MATCH_TRACKED_SYNTHETIC_WAVEFORM_OUTPUT</text>
+</svg>

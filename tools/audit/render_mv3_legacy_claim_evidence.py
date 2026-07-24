@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render an accessible SVG for the legacy MV3 claim-governance audit."""
+"""Render accessible SVG evidence for exact MV3 claim governance."""
 
 from __future__ import annotations
 
@@ -12,63 +12,64 @@ from typing import Any
 
 def render(payload: dict[str, Any], output: Path) -> None:
     contract = payload["source_contract"]
-    rounding = payload["rounding_identifiability"]
-    mc = float(contract["b8_mc_fraction"])
-    data = float(contract["b8_data_fraction"])
-    width = 980
-    height = 500
-    left = 120
-    scale = 700
-    mc_w = mc * scale
-    data_w = data * scale
+    mc_count = int(contract["mc_counts"]["B8"])
+    mc_n = int(contract["mc_n"])
+    data_count = int(contract["data_counts"]["B8"])
+    data_n = int(contract["data_n"])
+    mc_fraction = float(contract["mc_fractions"]["B8"])
+    data_fraction = float(contract["data_fractions"]["B8"])
+    ratio = float(contract["stated_chi2_per_ndf"])
+    width = 1040
+    height = 560
+    left = 170
+    scale = 720
+    mc_w = mc_fraction * scale
+    data_w = data_fraction * scale
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
-        '<title id="title">Legacy MV3 stopping-profile claim audit</title>',
-        '<desc id="desc">The fixed report shows rounded B8 fractions of 0.223 in MC and '
-        '0.023 in data, while exact counts and a decomposed chi-square statistic are absent. '
-        'The current implementation uses fail-closed sample and per-layer inputs.</desc>',
+        '<title id="title">Exact legacy MV3 source-governance validation</title>',
+        '<desc id="desc">The tracked summary contains exact B8 counts and an exactly '
+        'reconstructable Pearson chi-square diagnostic. The diagnostic remains scientifically '
+        'non-accepting because geometry, selection transfer, covariance and systematics are '
+        'unresolved.</desc>',
         '<defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" '
         'patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" '
         'stroke="#444" stroke-width="2"/></pattern></defs>',
         '<rect width="100%" height="100%" fill="white"/>',
         '<text x="30" y="38" font-family="sans-serif" font-size="24" '
-        'font-weight="bold">Legacy MV3 v3: fixed rounded outputs, not an accepted closure</text>',
+        'font-weight="bold">Legacy MV3: exact tracked arithmetic, flawed physics closure</text>',
         '<text x="30" y="66" font-family="sans-serif" font-size="14">'
-        'Synthetic documentation/provenance visualization — not detector data.</text>',
-        '<text x="30" y="108" font-family="sans-serif" font-size="18" '
-        'font-weight="bold">Reported B8 fractions</text>',
-        '<text x="30" y="156" font-family="sans-serif" font-size="15">MC</text>',
-        f'<rect x="{left}" y="136" width="{mc_w:.1f}" height="28" '
+        'Software/documentation validation — not a new detector-data result.</text>',
+        '<text x="30" y="110" font-family="sans-serif" font-size="18" '
+        'font-weight="bold">Exact B8 fractions from tracked counts</text>',
+        '<text x="30" y="160" font-family="sans-serif" font-size="15">Thresholded MC</text>',
+        f'<rect x="{left}" y="140" width="{mc_w:.1f}" height="30" '
         'fill="url(#hatch)" stroke="black"/>',
-        f'<text x="{left + mc_w + 10:.1f}" y="157" font-family="monospace" '
-        f'font-size="15">{mc:.3f}</text>',
-        '<text x="30" y="206" font-family="sans-serif" font-size="15">Data</text>',
-        f'<rect x="{left}" y="186" width="{data_w:.1f}" height="28" '
+        f'<text x="{left + mc_w + 10:.1f}" y="162" font-family="monospace" '
+        f'font-size="14">{mc_count}/{mc_n} = {mc_fraction:.17g}</text>',
+        '<text x="30" y="215" font-family="sans-serif" font-size="15">Selected data</text>',
+        f'<rect x="{left}" y="195" width="{data_w:.1f}" height="30" '
         'fill="#d9d9d9" stroke="black"/>',
-        f'<text x="{left + data_w + 10:.1f}" y="207" font-family="monospace" '
-        f'font-size="15">{data:.3f}</text>',
-        f'<text x="30" y="250" font-family="sans-serif" font-size="13">'
-        f'MC exact numerator is unidentified: {rounding["mc_b8"]["possible_numerator_min"]}–'
-        f'{rounding["mc_b8"]["possible_numerator_max"]} are all compatible with '
-        '0.223 at 3 d.p.</text>',
-        f'<text x="30" y="274" font-family="sans-serif" font-size="13">'
-        f'Data exact numerator is unidentified: {rounding["data_b8"]["possible_numerator_min"]}–'
-        f'{rounding["data_b8"]["possible_numerator_max"]} are all compatible with '
-        '0.023 at 3 d.p.</text>',
-        '<line x1="30" y1="304" x2="950" y2="304" stroke="black"/>',
-        '<text x="30" y="338" font-family="sans-serif" font-size="18" '
-        'font-weight="bold">Goodness-of-fit label</text>',
-        f'<text x="30" y="370" font-family="monospace" font-size="17">χ²/ndf = '
-        f'{contract["chi2_ndf_label"]}</text>',
-        '<text x="300" y="370" font-family="sans-serif" font-size="14">'
-        'χ², ndf, p-value, bin errors and covariance are not reported.</text>',
+        f'<text x="{left + data_w + 10:.1f}" y="217" font-family="monospace" '
+        f'font-size="14">{data_count}/{data_n} = {data_fraction:.17g}</text>',
+        '<line x1="30" y1="260" x2="1010" y2="260" stroke="black"/>',
+        '<text x="30" y="300" font-family="sans-serif" font-size="18" '
+        'font-weight="bold">Reconstructed fixed-source diagnostic</text>',
+        f'<text x="30" y="334" font-family="monospace" font-size="16">Pearson χ² = '
+        f'{contract["stated_chi2"]}; ndf = {contract["stated_ndf"]}; χ²/ndf = '
+        f'{ratio:.14f}</text>',
+        '<text x="30" y="370" font-family="sans-serif" font-size="14">'
+        'Expected counts use selected-data total × exact thresholded-MC fractions.</text>',
         '<text x="30" y="410" font-family="sans-serif" font-size="18" '
-        'font-weight="bold">Accepted software policy</text>',
-        '<text x="30" y="438" font-family="sans-serif" font-size="14">'
-        'Require explicit sample_label + per-layer hit/energy masks; block instead of '
-        'event-parity or stop_layer occupancy proxies.</text>',
-        f'<text x="30" y="472" font-family="sans-serif" font-size="12">Status: '
+        'font-weight="bold">Acceptance boundary</text>',
+        '<text x="30" y="440" font-family="sans-serif" font-size="14">'
+        'Exact arithmetic does not repair geometry/material modelling, trigger and selection '
+        'transfer, gain response, covariance, or detector/model systematics.</text>',
+        '<text x="30" y="470" font-family="sans-serif" font-size="14">'
+        'Strict current MV3 remains fail-closed without sample_label and per-layer hit '
+        'masks.</text>',
+        f'<text x="30" y="525" font-family="sans-serif" font-size="12">Status: '
         f'{html.escape(str(payload["status"]))}; policy: '
         f'{html.escape(str(payload["policy"]))}</text>',
         '</svg>',

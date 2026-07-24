@@ -1,0 +1,192 @@
+name: Repair MV4 ledger once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/repair_mv4_ledger_once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Reconstruct exact-width MV4 rows
+        shell: bash
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+
+          path = Path("docs/claim_ledger.csv")
+          with path.open(newline="", encoding="utf-8") as handle:
+              rows = list(csv.reader(handle, strict=True))
+          header = rows[0]
+          assert len(header) == 43
+          index = {name: pos for pos, name in enumerate(header)}
+          by_id = {row[0]: row for row in rows[1:]}
+
+          source_report = "reports/mv4_timing_1782678162/REPORT.md"
+          source_script = "scripts/mv4_timing_study.py"
+          source_data = "reports/mv4_timing_1782678162/mv4_summary.json"
+          source_commit = "3c5ff5cf587c8ca9cefda20cb220ba29effd2170"
+          blocker = "BLK-MV4-LEGACY-001"
+
+          def row(claim_id, claim_text, unit, truth_type, status, ci_status, supersedes, notes):
+              values = [""] * len(header)
+              fields = {
+                  "claim_id": claim_id,
+                  "chapter": "Timing",
+                  "section": "4",
+                  "claim_text": claim_text,
+                  "unit": unit,
+                  "truth_type": truth_type,
+                  "status": status,
+                  "allowed_status_validated": "NO",
+                  "source_report": source_report,
+                  "source_script": source_script,
+                  "source_data": source_data,
+                  "source_commit": source_commit,
+                  "link_validated": "YES",
+                  "ci_status": ci_status,
+                  "blocked_by": blocker,
+                  "supersedes": supersedes,
+                  "notes": notes,
+              }
+              for key, value in fields.items():
+                  values[index[key]] = value
+              return values
+
+          withheld = {
+              "CL-002": (
+                  "B6 single-stave timing sigma68 claim withheld",
+                  "0.68 ns legacy ledger value",
+                  "The exact tracked MV4 report and summary contain no B6-specific sigma68 value, no B6 event count, and no B6 uncertainty. The former 0.68 ns entry is withheld pending a strict rerun with current calibration bytes, measured data anchors, run/block bootstrap, and source-bound per-stave outputs.",
+              ),
+              "CL-003": (
+                  "B6 single-stave timing upper-bound claim withheld",
+                  "0.75 ns legacy ledger value",
+                  "The exact tracked MV4 report and summary contain no B6-specific upper bound, confidence interval, or systematic envelope. The former 0.75 ns entry is withheld pending a strict source-bound per-stave rerun and an accepted uncertainty model.",
+              ),
+              "CL-004": (
+                  "Combined B4+B6+B8 timing sigma68 claim withheld",
+                  "0.54 ns legacy ledger value",
+                  "The exact tracked MV4 report and summary contain no combined-stave timing estimator, stave covariance matrix, event count, or uncertainty. The former 0.54 ns entry is withheld; an independence assumption cannot replace a measured covariance-aware combination.",
+              ),
+              "CL-005": (
+                  "Combined B4+B6+B8 timing upper-bound claim withheld",
+                  "0.56 ns legacy ledger value",
+                  "The exact tracked MV4 report and summary contain no combined-stave upper bound or confidence interval. The former 0.56 ns entry is withheld pending a source-bound covariance-aware combination with run/block uncertainty.",
+              ),
+              "CL-006": (
+                  "B4-B6 timing covariance claim withheld",
+                  "-0.127 ns^2 legacy ledger value",
+                  "The exact tracked MV4 report and summary contain no B4-B6 covariance or full 3x3 covariance matrix. The former -0.127 ns^2 entry is withheld pending event-matched stave residuals, a declared covariance estimator, and run/block bootstrap uncertainty.",
+              ),
+          }
+          for claim_id, (claim_text, supersedes, notes) in withheld.items():
+              unit = "ns^2" if claim_id == "CL-006" else "ns"
+              by_id[claim_id] = row(
+                  claim_id,
+                  claim_text,
+                  unit,
+                  "legacy_claim_source_unresolved",
+                  "BLOCKED",
+                  "NOT_APPLICABLE_VALUE_WITHHELD_SOURCE_ABSENT",
+                  supersedes,
+                  notes,
+              )
+
+          def diagnostic(claim_id, text, value, baseline, figure, supersedes, notes):
+              values = row(
+                  claim_id,
+                  text,
+                  "sigma",
+                  "legacy_toy_digitizer_diagnostic",
+                  "GATED",
+                  "NOT_APPLICABLE_ASSUMED_DATA_UNCERTAINTY_AND_IID_TRACK_BOOTSTRAP_SE",
+                  supersedes,
+                  notes,
+              )
+              updates = {
+                  "current_value": value,
+                  "ci_method": "fixed_source_formula_with_iid_track_bootstrap_se",
+                  "n_events": "241487",
+                  "n_mc": "80000",
+                  "baseline_value": baseline,
+                  "baseline_unc": "0.10",
+                  "figure_ids": figure,
+              }
+              for key, item in updates.items():
+                  values[index[key]] = item
+              return values
+
+          by_id["CL-007"] = diagnostic(
+              "CL-007",
+              "Legacy toy-digitizer raw timing pull (MV4)",
+              "-1.054403396247793",
+              "1.85",
+              "FIG-TIM-014",
+              "-1.05 sigma validated/PASS ledger entry",
+              "Fixed legacy toy output: MC raw sigma68 1.744319343085384 ns with i.i.d. track-bootstrap SE 0.006755405549476786 ns, compared with a hard-coded 1.85 ns data anchor and assumed 0.10 ns uncertainty. The pull is not a beam-data validation result and is non-authorizing until strict current calibration, measured anchor uncertainty, run/block resampling, and input provenance are supplied.",
+          )
+          by_id["CL-008"] = diagnostic(
+              "CL-008",
+              "Legacy toy-digitizer analytic timewalk-corrected timing pull (MV4)",
+              "2.680528799917713",
+              "1.50",
+              "FIG-TIM-015",
+              "+2.68 sigma tension ledger entry",
+              "Fixed legacy toy output: held-out analytic A+B/sqrt(amplitude) corrected MC sigma68 1.7696154242198858 ns with i.i.d. track-bootstrap SE 0.010813166729502352 ns, compared with a hard-coded 1.50 ns data anchor and assumed 0.10 ns uncertainty. The row-index parity split and absent strict input provenance make this a non-authorizing diagnostic, not an empirical detector-timing tension claim.",
+          )
+
+          verdict = row(
+              "CL-009",
+              "Legacy analytic CFD20/timewalk timing verdict",
+              "diagnostic",
+              "legacy_toy_digitizer_diagnostic",
+              "REVIEW",
+              "NOT_APPLICABLE_QUALITATIVE_DIAGNOSTIC",
+              "ML timing verdict",
+              "The historical producer evaluates CFD20 plus an analytic A+B/sqrt(amplitude) timewalk correction; it contains no machine-learning model. The report's overall verdict is REVIEW. The verdict is a non-authorizing legacy toy-digitizer diagnostic and does not authorize a production timing method without strict current calibration, measured data anchors, run/block validation, and source-bound outputs.",
+          )
+          verdict[index["current_value"]] = "REVIEW"
+          verdict[index["table_ids"]] = "TAB-TIM-003"
+          by_id["CL-009"] = verdict
+
+          output = [header] + [by_id[row[0]] for row in rows[1:]]
+          assert len(output) == 27
+          assert all(len(item) == 43 for item in output)
+          assert by_id["CL-002"][index["current_value"]] == ""
+          assert by_id["CL-007"][index["status"]] == "GATED"
+          assert by_id["CL-009"][index["status"]] == "REVIEW"
+          with path.open("w", newline="", encoding="utf-8") as handle:
+              csv.writer(handle, lineterminator="\n").writerows(output)
+          PY
+      - name: Validate exact-width ledger
+        shell: bash
+        run: |
+          python tools/audit/validate_claim_ledger_schema.py docs/claim_ledger.csv \
+            --output /tmp/claim_ledger_schema_validation.json
+          python - <<'PY'
+          import json
+          payload = json.load(open('/tmp/claim_ledger_schema_validation.json'))
+          assert payload['status'] == 'VALIDATED'
+          assert payload['exact_width_rows'] == 26
+          assert payload['n_issues'] == 0
+          PY
+          git diff --check
+      - name: Commit repaired ledger and remove one-time workflow
+        shell: bash
+        run: |
+          rm .github/workflows/repair_mv4_ledger_once.yml
+          git config user.name "scheduled-scientific-review"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A docs/claim_ledger.csv .github/workflows/repair_mv4_ledger_once.yml
+          git commit -m "fix(ledger): complete exact-width MV4 repair"
+          git push origin HEAD:main

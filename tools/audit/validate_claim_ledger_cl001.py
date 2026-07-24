@@ -48,6 +48,12 @@ def snapshot(path: Path) -> tuple[str, dict[str, Any]]:
     }
 
 
+def relative_prov(prov: dict[str, Any], root: Path) -> dict[str, Any]:
+    normalized = dict(prov)
+    normalized["path"] = str(Path(prov["path"]).relative_to(root))
+    return normalized
+
+
 def csv_rows(text: str, label: str) -> list[list[str]]:
     try:
         return list(csv.reader(io.StringIO(text), strict=True))
@@ -85,6 +91,7 @@ def audit(root: Path) -> dict[str, Any]:
     registry_path = root / "docs/figure_registry.csv"
 
     ledger_text, ledger_prov = snapshot(ledger_path)
+    ledger_prov = relative_prov(ledger_prov, root)
     rows = csv_rows(ledger_text, str(ledger_path))
     if not rows or rows[0] != FIELDS:
         raise InputError("claim ledger header is not the canonical 43-column schema")
@@ -104,6 +111,7 @@ def audit(root: Path) -> dict[str, Any]:
     claim = dict(zip(FIELDS, row))
 
     config_text, config_prov = snapshot(config_path)
+    config_prov = relative_prov(config_prov, root)
     try:
         config = yaml.safe_load(config_text)
         expected = int(config["expected_counts"]["total_selected_pulses"])
@@ -112,13 +120,17 @@ def audit(root: Path) -> dict[str, Any]:
         raise InputError(f"invalid S00 config: {exc}") from exc
 
     report, report_prov = snapshot(report_path)
+    report_prov = relative_prov(report_prov, root)
     count, count_prov = one_dict_row(count_path, "quantity", "total selected B-stave pulses")
+    count_prov = relative_prov(count_prov, root)
     manifest_text, manifest_prov = snapshot(manifest_path)
+    manifest_prov = relative_prov(manifest_prov, root)
     try:
         manifest = json.loads(manifest_text)
     except json.JSONDecodeError as exc:
         raise InputError(f"invalid manifest JSON: {exc}") from exc
     figure, figure_prov = one_dict_row(registry_path, "figure_id", "FIG-GL-001")
+    figure_prov = relative_prov(figure_prov, root)
 
     expected_fields = {
         "current_value": str(expected),

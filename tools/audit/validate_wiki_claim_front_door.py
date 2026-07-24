@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 from typing import Any, NamedTuple
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 MISSING_UNCERTAINTY_TOKEN = "CI_MISSING_BLOCKING"
 
 
@@ -167,6 +167,7 @@ def audit(wiki_path: Path, ledger_path: Path) -> dict[str, Any]:
                 "claim_id": binding.claim_id,
             })
             continue
+        truth_type_checked = False
         for cells in rows:
             status = _row_status(cells)
             if status is None:
@@ -192,14 +193,9 @@ def audit(wiki_path: Path, ledger_path: Path) -> dict[str, Any]:
                     "wiki_status": status,
                     "ledger_status": ledger_row["status"],
                 })
-            if binding.check_truth_type:
-                if len(cells) < 6:
-                    issues.append({
-                        "code": "MISSING_WIKI_TRUTH_TYPE",
-                        "wiki_label": binding.wiki_label,
-                        "claim_id": binding.claim_id,
-                    })
-                elif not _truth_types_match(ledger_row["truth_type"], cells[-2]):
+            if binding.check_truth_type and len(cells) >= 6:
+                truth_type_checked = True
+                if not _truth_types_match(ledger_row["truth_type"], cells[-2]):
                     issues.append({
                         "code": "TRUTH_TYPE_LEDGER_MISMATCH",
                         "wiki_label": binding.wiki_label,
@@ -207,6 +203,12 @@ def audit(wiki_path: Path, ledger_path: Path) -> dict[str, Any]:
                         "wiki_truth_type": cells[-2],
                         "ledger_truth_type": ledger_row["truth_type"],
                     })
+        if binding.check_truth_type and not truth_type_checked:
+            issues.append({
+                "code": "MISSING_WIKI_TRUTH_TYPE",
+                "wiki_label": binding.wiki_label,
+                "claim_id": binding.claim_id,
+            })
 
     overclaim = "Every number has uncertainty." in wiki_text
     if overclaim and _ledger_has_missing_uncertainty(ledger):

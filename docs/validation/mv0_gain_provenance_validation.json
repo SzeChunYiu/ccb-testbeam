@@ -1,0 +1,147 @@
+{
+  "acceptance": "WITHHOLD_CANONICAL_GAIN",
+  "calibration_claim": {
+    "formal_confidence_interval_available": false,
+    "gain_adc_per_mev": 92.0,
+    "independently_recomputed_gain_adc_per_mev": 91.89639906462777,
+    "recompute_inputs": {
+      "data_b2_net_median_adc": 1781.0,
+      "mc_b2_edep_median_mev": 26.44,
+      "peak_fraction": 0.733
+    },
+    "systematic_uncertainty_percent": 30,
+    "unsupported_uncertainty_fields": [
+      "gain_statistical_unc",
+      "gain_ci_low",
+      "gain_ci_high",
+      "gain_ci_method"
+    ]
+  },
+  "issues": [
+    {
+      "actual_columns": 38,
+      "claim_id": "CL-013",
+      "code": "LEDGER_ROW_WIDTH_MISMATCH",
+      "expected_columns": 43,
+      "field_interpretation": "WITHHELD"
+    },
+    {
+      "actual_columns": 37,
+      "claim_id": "CL-014",
+      "code": "LEDGER_ROW_WIDTH_MISMATCH",
+      "expected_columns": 43,
+      "field_interpretation": "WITHHELD"
+    },
+    {
+      "code": "NONEXISTENT_OR_STALE_PRODUCER_PATH",
+      "token": "scripts/mv0_calibration.py"
+    },
+    {
+      "code": "NONEXISTENT_RESULT_PATH",
+      "token": "reports/mv0_calibration_1782677847/results.json"
+    },
+    {
+      "code": "PRODUCER_DOES_NOT_IMPLEMENT_NET_AMPLITUDE"
+    },
+    {
+      "code": "PRODUCER_USES_RAW_GLOBAL_AMPLITUDE"
+    },
+    {
+      "code": "PRODUCER_USES_RAW_STAVE_AMPLITUDE"
+    },
+    {
+      "code": "PRODUCER_OUTPUT_SCHEMA_MISMATCH",
+      "missing_contract_flags": [
+        "emits_gain_method",
+        "emits_gain_systematic_unc_pct",
+        "emits_ks_at_median_gain"
+      ]
+    },
+    {
+      "code": "REPORT_COMMAND_OMITS_DATA_CSV_ARGUMENT"
+    },
+    {
+      "code": "REPORT_COMMAND_OMITS_TRUTH_NPZ_ARGUMENT"
+    }
+  ],
+  "ledger_header_columns": 43,
+  "n_issues": 10,
+  "policy": "MV0_GAIN_NOT_CANONICAL_UNTIL_PRODUCER_AND_ARTIFACT_REPRODUCE",
+  "producer_contract": {
+    "declares_data_csv_argument": true,
+    "declares_truth_npz_argument": true,
+    "emits_gain_method": false,
+    "emits_gain_systematic_unc_pct": false,
+    "emits_ks_at_median_gain": false,
+    "implements_net_amplitude": false,
+    "syntax_valid": true,
+    "uses_raw_amplitude_for_global_fit": true,
+    "uses_raw_amplitude_for_stave_fit": true
+  },
+  "provenance": {
+    "calibration_json": {
+      "bytes": 711,
+      "path": "validation_fixture/calibration.json",
+      "sha256": "329534e7ab0cd172a45706c14d1fbaad977cedb108b8b8ada7cfae86b7438356",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "claim_ledger": {
+      "bytes": 1151,
+      "path": "validation_fixture/claim_ledger.csv",
+      "sha256": "84309b2f5572290cec493023616e30811f5cbff2c3be31669a79cc4288d6f171",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "producer_script": {
+      "bytes": 778,
+      "path": "validation_fixture/producer.py",
+      "sha256": "93311e04db5b25157e7ac068dca90e6f0894cf4835aa790642f94bb879fd0816",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "report": {
+      "bytes": 739,
+      "path": "validation_fixture/REPORT.md",
+      "sha256": "e089f2bca7dd680873232db7291ba055dfef066754a3d21744f8dcc8a9597b73",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "report_command_contract": {
+    "uses_data_csv_argument": false,
+    "uses_truth_npz_argument": false
+  },
+  "repository_observations": {
+    "authenticated_read_findings": [
+      "calibration artifact declares abs(amplitude_adc - baseline_adc)",
+      "producer script uses raw amplitude_adc for global and per-stave fits",
+      "report reproduce command uses --data and omits required --truth-npz",
+      "ledger and FIG-EN-001 cite scripts/mv0_calibration.py and results.json rather than tracked producer and calibration.json",
+      "calibration artifact supplies 30% systematic uncertainty but no statistical uncertainty or formal confidence interval"
+    ],
+    "calibration_blob_sha": "74e490753d3e821b0a1353490764a5ede0e9bf75",
+    "claim_ledger_blob_sha": "009f48e218b2439f80b2cebf8ebb06a845488089",
+    "claim_row_widths": {
+      "CL-013": 38,
+      "CL-014": 37
+    },
+    "execution_scope": "SOURCE_FAITHFUL_REDUCED_FIXTURE_PLUS_AUTHENTICATED_EXACT_BLOB_INSPECTION",
+    "figure_registry_blob_sha": "1a7b6cbdc18bcc742f0578647a5c785aea78582a",
+    "main_base_sha": "712adba593c9b84e4617c1fe8013873cd0c5f753",
+    "producer_script_blob_sha": "fd911daf3f0fd80df20f4112f4f0f40bf3383afd",
+    "report_blob_sha": "bc607eb0ae2639c06ab840ff234160958ada60a5",
+    "source_commit": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170"
+  },
+  "status": "FLAWED",
+  "target_claims": {
+    "CL-013": {
+      "actual_columns": 38,
+      "field_interpretation": "WITHHELD",
+      "schema_state": "WIDTH_MISMATCH"
+    },
+    "CL-014": {
+      "actual_columns": 37,
+      "field_interpretation": "WITHHELD",
+      "schema_state": "WIDTH_MISMATCH"
+    }
+  },
+  "validator": "audit_mv0_gain_provenance.py",
+  "version": "1.0.0"
+}

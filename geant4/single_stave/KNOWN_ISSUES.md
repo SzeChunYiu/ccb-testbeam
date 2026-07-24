@@ -1,62 +1,77 @@
-# Single-stave sim — verified state (LUNARC, 2026-07-20/21)
+# Single-stave simulation — validated state and remaining scientific limits
 
-> **UPDATE:** issues A & B below are RESOLVED (commit on feat/g4-optical-collection).
-> Boolean-subtracted holes + world-daughter protruding fibres + external sensors +
-> outer-only TiO2 reflector -> **overlap-free** (all volumes CheckOverlaps OK) and
-> **photon collection works**: 100 MeV p -> arrival_readout mean 585, detected PE
-> mean 178 (~10.6 PE/MeV). Geometry-report is now GEOMETRY_SELFCHECK and the ctest
-> fails on Geant4's real 'Overlap is detected'.
+This file separates resolved implementation defects, validated repository-recorded
+runtime evidence, and scientific questions that remain open. It is not a
+peer-reviewed detector calibration result.
 
-# Single-stave sim — verified state & known issues (LUNARC run, 2026-07-20)
+## Current acceptance state
 
-Findings from the first real runs on Geant4 11.2.2 (cosmos3, 100 MeV protons).
+- **Implementation/runtime status:** VALIDATED for the recorded Geant4 11.2.2
+  single-stave reproducibility and optical-yield checks.
+- **Scientific interpretation status:** PARTIAL. Geometry-specific runtime checks
+  and fixed-configuration optical output do not establish a calibrated detector
+  response, stopping-power closure, or transfer to beam data.
+- **Canonical evidence:** `docs/validation/G4_VALIDATION_RESULTS.md`.
 
-## Verified working
+## Resolved implementation defects
 
-| Aspect | Evidence |
-|---|---|
-| Build | 100% compile, `ccb_stave_sim` links (after the proton/deuteron cast fix, #861) |
-| ctests | 3/3 pass (geometry smoke, proton smoke, geometry-report) |
-| Charged-particle physics / geometry | `edep_scint = 16.8 MeV` mean for 100 MeV p over 2.0 cm polystyrene — matches dE/dx ≈ 8 MeV/cm; confirms the 2 cm **normal** path length (the audit's key geometry concern) |
-| Scintillation generation | after the distinct-material fix (this commit): `n_scint_generated ≈ 148k`/event (~10k/MeV yield). **Was 0** because the fibre core and scintillator shared the NIST `G4_POLYSTYRENE` singleton, so `BuildFibreCore()` clobbered the scintillation MPT with the WLS table. |
-| Provenance | `<output>.meta.json` records git commit, geometry hash, seed, config, and all 7 optical-table sha256 |
+1. **Zero photon collection from buried fibre ends and sensor overlap — RESOLVED.**
+   The geometry uses Boolean-subtracted channels, protruding world-daughter
+   fibres, external sensors, and an outer-only TiO2 reflector. Repository-recorded
+   Geant4 overlap checks passed and photon collection became nonzero.
+2. **Geometry-report false PASS — RESOLVED.** `GEOMETRY_SELFCHECK` and CTest now
+   fail on Geant4's authoritative `Overlap is detected` output or a fatal
+   exception rather than relying on an internal constants-only message.
+3. **Shared scintillator/fibre-core material properties — RESOLVED.** Distinct
+   materials prevent the fibre WLS material-properties table from overwriting
+   the scintillator table.
+4. **Worker-level RNG reseeding and missing thread provenance — RESOLVED.** The
+   master engine owns the seed; worker `BeginOfRunAction` does not reseed. Run
+   metadata records requested, effective, and `G4FORCENUMBEROFTHREADS` values.
 
-## Open issue A — zero photon collection (P0 for optical calibration)
+## Validated repository-recorded runtime evidence
 
-`arrival_readout = 0`, `detected_readout = 0` despite 148k photons/event
-generated. Two root causes:
+The 2026-07-21 LUNARC record used Geant4 11.2.2 with GCC 12.3.0 on `hpua40`,
+100 MeV protons, and 500 events per run.
 
-1. **Sensor/scintillator overlap.** The 4 endcap sensors are placed at
-   `x = ±(kFibreHalfX + …) ≈ ±24.9 cm`, **inside** the ±25 cm scintillator box —
-   Geant4 `CheckOverlaps` reports "Overlap is detected for volume
-   Sensor_F1_PlusX with Scintillator". The degenerate geometry around the
-   sensors prevents clean boundary-crossing detection.
-2. **Fibre ends are buried inside the bar.** Fibres/holes are nested daughters
-   of the scintillator (`kFibreHalfX = 24.9 < kStaveHalfX = 25`), so a photon
-   reaching the fibre end exits into scintillator, not into an external sensor.
+| Check | Result | Acceptance |
+|---|---|---|
+| Same-seed event tree, 1 thread vs 48 threads | 27/27 branches exact equal for all 500 events; event IDs complete and unique | **VALIDATED** |
+| Same-seed photon tree, 1 thread vs 48 threads | 1,170,091 records; all 6 stored fields exact equal | **VALIDATED** |
+| Multiseed independence | Seeds 1–4 produce distinct event streams | **VALIDATED** |
+| Optical yield | Cross-seed mean 178.3 PE/event; seed-mean spread 0.9 PE and RSE 0.48% | **VALIDATED FOR THIS FIXED SIMULATION CONFIGURATION** |
 
-### Required fix (geometry-hierarchy refactor)
-Per the blueprint's "Boolean subtraction of holes … is preferable":
-- Bore the two holes as a `G4SubtractionSolid` **out of** the scintillator solid
-  (so the scintillator genuinely excludes the hole channels).
-- Place the fibre stack (gap → outer/inner clad → core) as **world** daughters,
-  length **> bar** (e.g. half-length 26 cm), passing through the holes and
-  **protruding ±1 cm** beyond the bar faces.
-- Place the readout sensors on the **protruding fibre ends, in the world**
-  (x ≈ ±26 cm), so `SteppingAction` sees a clean core→sensor boundary crossing.
-- Re-verify WLS coupling (blue scint → Y-11 absorption → green re-emission →
-  attenuation → sensor) produces nonzero detected PE, and that
-  `generated ≥ arrival ≥ detected` holds per event.
+The four recorded seed means are 177.1, 178.0, 179.5, and 178.5 PE/event.
+The associated event/photon validators and their focused tests are present on
+`main`. PR #868 remains closed and unmerged; its validated implementation is
+already represented by current-main code, so the stale branch must not be merged.
 
-## Open issue B — geometry-report false PASS
+## Provenance boundary
 
-`PrintGeometryReport()` emits `OVERLAP_CHECK_PASS` from an **internal
-constants** check; it does **not** reflect Geant4's real `CheckOverlaps`, which
-found the sensor overlap. The report (and the `ccb_stave_geometry_smoke` ctest)
-must parse Geant4's actual overlap output (the `/geometry/test/run` result and
-the `G4PVPlacement` surface-check warnings) and fail on any detected overlap.
+This status is based on repository-recorded LUNARC evidence and GitHub Actions
+validation. A connector-only review does not independently rerun Geant4 or open
+the original ROOT files. The canonical record identifies the run context and
+output filenames; long-term preservation still requires immutable artifact
+locations and hashes wherever those outputs are retained.
 
-## Status
-CCB-796-RUN: **build + charged-physics + scintillation-generation VERIFIED**;
-**photon-collection readout IN_PROGRESS** (issues A/B above). The optical
-calibration plots require issue A resolved first.
+## Remaining open scientific questions
+
+1. **Stopping power:** `BLK-G4-SP-001` remains open. Local deposited energy is
+   not automatically projectile total energy loss, and secondary escape,
+   production cuts, energy evolution, reference scope, and uncertainty remain
+   unresolved.
+2. **Detector calibration:** 178.3 PE/event is a fixed-configuration simulation
+   output, not an absolute beam-data calibration or a validated PE/MeV response.
+3. **Data/MC transfer:** optical collection, gain, material, coupling, PDE,
+   attenuation, geometry, and electronics-response systematics require matched
+   real-data closure.
+4. **Uncertainty scope:** the reported 0.48% RSE quantifies the four recorded seed
+   means only; it does not cover model, material, optical-table, detector, or
+   calibration uncertainty.
+
+## Current status
+
+Photon collection, same-seed 1T/48T event and photon reproducibility, multiseed
+stream independence, and the approximately 178.3 PE/event fixed-configuration
+simulation output are validated in the repository record. This is not a detector calibration. These results must not be cited as a
+stopping-power validation or a peer-reviewed performance result.

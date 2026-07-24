@@ -2,147 +2,150 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T103118Z`
-- **Task:** `AUD-WIKI-001`
-- **Unit:** complete root-WIKI canonical-claim remediation
-- **Repository:** `SzeChunYiu/ccb-testbeam`
-- **Initial remote `main`:** `c254e767bbc225d98f9c839d50251c511ca69a98`
-- **Validated remote-main delivery head before this handoff:** `03c4e4bf5bfa91bda275c89db83d5c8d25217805`
-- **Destination:** direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite
-- **Acceptance:** complete root-front-door remediation, focused integration regression, exact WIKI provenance, Markdown/JSON/SVG evidence, and immutable archive are `VALIDATED`; repository-wide WIKI coverage remains `PARTIAL`
+- **UTC stamp:** `2026-07-24T111232Z`
+- **Task:** `AUD-LEDGER-001`
+- **Unit:** source-backed reconstruction of `CL-022`
+- **Initial remote `main`:** `5085866208586443d7ccdb9004e6d0898a2d20a0`
+- **Validated delivery head before this handoff:** `14e1b2570edc189c8b8913d4c612ea586404fe21`
+- **Destination:** direct sequential commits to `main`
+- **Acceptance:** this CL-022 unit is `VALIDATED`; ledger-wide work remains `PARTIAL`
 
-## Start-of-run and concurrency review
+## Review and concurrency
 
-Authenticated GitHub reads inspected repository permissions, latest main history, current commit status/workflow attachments, PR #868, `WIKI.md`, `docs/claim_ledger.csv`, the WIKI validator and tests, and mandatory `chatgpt_todo/` coordination records. The run based its writes on the latest observed remote head `c254e767bbc225d98f9c839d50251c511ca69a98`.
+Authenticated GitHub reads inspected recent main history, PR #868, status/workflow
+attachments, repository instructions, mandatory `chatgpt_todo/` records, the
+claim ledger/schema audit, the MV6 report/summary/producer, README, WIKI,
+Chapter 9, and the public-claim synchronization code. No concurrent commit
+appeared during this focused sequence.
 
-PR #868 remains closed, unmerged, and non-mergeable and was not modified. No status checks or workflow runs were attached to the implementation/test head, so no GitHub Actions success is inferred.
+PR #868 remains closed and unmerged and was not modified. No status checks or
+workflow runs were attached to the initial or validated delivery head, so no
+GitHub Actions success is inferred. A local checkout could not reach GitHub;
+repository reads/writes used the authenticated connector.
 
-A direct clone was retried and failed because the runtime could not resolve `github.com`. Repository reads and direct-main writes therefore used the authenticated GitHub connector.
+## Confirmed defects
 
-## Public claim conflicts corrected
+The former CL-022 row had 39 fields under the canonical 43-column header. It
+called `283/87555` a C12 anomaly fraction, although these counts are the total
+early-peak morphology rate among all selected truth-labelled MC tracks. It had
+no confidence interval and cited nonexistent `scripts/mv6_anomaly.py` and
+`reports/mv6_representation_1782678362/results.json` paths.
 
-The pre-change root WIKI blob `04781e1107075e1e57c08e6dd4e1f48d9a131763` contradicted exact-width canonical ledger records:
+README repeated the ambiguous wording and still advertised numerical Rmax as
+validated despite exact-width CL-010 withholding it pending `S-STAT-003`.
 
-1. `CL-010` is `BLOCKED`, has no accepted numerical Rmax, and is blocked by `S-STAT-003`; the WIKI published `3.044–3.05 MHz` as `VALIDATED`.
-2. `CL-012` is `SUPERSEDED`; the WIKI presented approximately 3.05 MHz as a new canonical value and repeated the unresolved 0.38-based derivation.
-3. `CL-015` is `GATED` because the P04p coverage interval crosses the model-eligibility threshold; the WIKI called duplicate readout an ML win or confirmed-win domain.
-4. `CL-016` is `GATED`; external P07e held-out duplicate closure is worse than raw and producer bytes are unbound; the WIKI called saturation recovery an ML win or promising domain.
-5. The MV5 matrix labelled numerical Rmax `VALIDATED` despite the canonical blocker.
+## Source evidence and calculations
 
-## Correction delivered
+Tracked source facts:
 
-The complete root `WIKI.md` was rewritten while preserving unrelated sections. It now:
+- events: `220000`;
+- selected MC tracks: `87555`;
+- early-peak tracks: `283`;
+- `low_area`: `0`;
+- C12-labelled tracks: `7302`;
+- C12-labelled early-peak tracks: `156`.
 
-- withholds numerical Rmax pending `S-STAT-003` and marks it `BLOCKED`;
-- retains `3.0448717948717947 MHz` only as explicitly `SUPERSEDED` history;
-- preserves `tau_eff = 124.79 ns` as `VALIDATED` with the canonical data-plus-MC truth type;
-- separates the P04p duplicate-readout and P07e saturation-recovery statements;
-- marks both production decisions `GATED` with their distinct evidence limitations;
-- states: `No production duplicate-readout or saturation correction is authorized.`;
-- removes combined/domain-level ML-win language;
-- marks MV5 numerical Rmax `BLOCKED`;
-- propagates `S-STAT-003`, `BLK-P04P-001`, and `BLK-P07E-001` into open issues.
+Independent Wilson 95% intervals:
 
-Added:
+| Quantity | Counts | Estimate | Interval |
+|---|---:|---:|---:|
+| Total early-peak rate | 283 / 87555 | 0.003232254011764034 | [0.002877452112691542, 0.003630645177388446] |
+| C12 share of early-peak class | 156 / 283 | 0.5512367491166078 | [0.4929885941153212, 0.6081125511627331] |
+| Early-peak rate within C12 | 156 / 7302 | 0.021364009860312245 | [0.018290520583369645, 0.024940838952822255] |
 
-- `tests/test_wiki_claim_front_door_current.py`;
-- `docs/validation/wiki_front_door_remediation_audit.md`;
-- `docs/validation/wiki_front_door_remediation_validation.json`;
-- `docs/validation/wiki_front_door_remediation.svg`;
-- `chatgpt_todo/archive/2026-07-24T103118Z_AUD-WIKI-001_ROOT_WIKI_REMEDIATION.md`.
+These are three different binomial quantities and cannot be interchanged.
+
+Source provenance:
+
+- report blob `2c531703755b28a0c576e978531b81374edf8ab4`, SHA-256 `01c9dc9b27de46d1057420e7161d727db413481987d7fb1fd6f3e4310df92577`;
+- summary blob `26c187cbe05d8dadbe588c6ed9062d25658a80a9`, SHA-256 `eda47b436430b7663ad88bd87b2ed2b027b3ac1568bc82d899a51c55dc669720`;
+- producer blob `f965823518b22908f3e8974f280bff5c970368d0`, source commit `3c5ff5cf587c8ca9cefda20cb220ba29effd2170`.
+
+## Delivered changes
 
 Updated:
 
-- `WIKI.md`;
-- `chatgpt_todo/ACTIVE_TASK.md`;
-- this handoff.
+- `docs/claim_ledger.csv`: CL-022 is exactly 43 columns, has correct source
+  paths/counts/Wilson interval, and remains `TRUTH_LEVEL_MC_ONLY`;
+- `README.md`: Rmax is withheld; total early-peak rate and C12 composition are
+  reported separately; real-data identity remains unvalidated;
+- `scripts/sync_c12_public_claims.py` and its regression;
+- repository-wide schema JSON/SVG, now 8/26 exact rows and 18 withheld rows;
+- `chatgpt_todo/ACTIVE_TASK.md`.
 
-## Exact provenance and quantitative result
+Added:
 
-- Corrected WIKI bytes: `21368`
-- Corrected WIKI SHA-256: `baaa9dbd3585870c7d9c0807493e9afce81f9767f3be68d581502d62496c59d4`
-- Corrected WIKI Git blob: `9d8110893adeae482b2439c4187b53f94174a55e`
-- Claim-ledger bytes: `12077`
-- Claim-ledger SHA-256: `c0e283e6d43a1013a9565f2697c4f99f7b47d639245b9926a8ddc83786602e19`
-- Claim-ledger Git blob: `853d955f449268ec614ac61f33f243d30cf473e0`
-- Required canonical records: `CL-007`, `CL-010`, `CL-011`, `CL-012`, `CL-015`, `CL-016`
-- Required width: exactly `43` columns for each record
-- Validator: `validate_wiki_claim_front_door.py` v1.2.0
-- Policy: `WIKI_FRONT_DOOR_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS`
-- Corrected-state validator result: `VALIDATED`, zero issues
+- `tools/audit/validate_claim_ledger_cl022.py`;
+- `tests/test_validate_claim_ledger_cl022.py`;
+- `docs/validation/claim_ledger_cl022_audit.md`;
+- `docs/validation/claim_ledger_cl022_validation.json`;
+- `docs/validation/claim_ledger_cl022.svg`;
+- `chatgpt_todo/archive/2026-07-24T111232Z_AUD-LEDGER-001_CL022_SEMANTICS.md`.
 
-No scientific number was newly calculated. The numerical evidence in this run is documentation/provenance validation only.
+Policy: `SEPARATE_EARLY_PEAK_RATE_FROM_C12_COMPOSITION`.
 
-## Validation performed
+## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/validate_wiki_claim_front_door.py \
-  tests/test_wiki_claim_front_door_current.py
+  tools/audit/validate_claim_ledger_cl022.py \
+  scripts/sync_c12_public_claims.py \
+  tests/test_validate_claim_ledger_cl022.py \
+  tests/test_sync_c12_public_claims.py
 
-python -m pytest tests/test_wiki_claim_front_door_current.py -q
+python -m pytest \
+  tests/test_validate_claim_ledger_cl022.py \
+  tests/test_sync_c12_public_claims.py -q
 
-2 passed in 0.02s
+19 passed in 0.06s
 ```
 
-A prior identical integration run returned `2 passed in 0.05s`; both results are retained without selecting a preferred runtime.
+Also passed: corrected-state validator (`VALIDATED`, zero issues), former
+39-column negative control, README synchronization check, JSON parsing, SVG XML
+parsing, and changed-Python line-length checks. Ruff, full repository pytest,
+ROOT processing, model reruns, matched data/MC closure, and Actions were not run.
 
-Direct validator output:
+Exact corrected artifacts:
 
-```text
-status: VALIDATED
-issues: 0
-wiki bytes: 21368
-wiki sha256: baaa9dbd3585870c7d9c0807493e9afce81f9767f3be68d581502d62496c59d4
-required claim widths: 43, 43, 43, 43, 43, 43
-```
+- ledger blob `e489555f3a520c7cc64b8a7d858a0e93622b9de6`, 12264 bytes, SHA-256 `9a099f76609c51b7400c8615a46c5e873058ac00e0fa9e3a0e2877a1d5e5db5c`;
+- README blob `cd54ede2a63b9ae5ddafafc98f7c5d612fe080d0`, 4967 bytes, SHA-256 `ebf79ebc9ca4d56907d35f36472bc145fbf14b7c4338a45bdc02da8c7a315916`;
+- validator blob `fe576c3a4539de9db94533677b7611238af9db32`.
 
-The stale-Rmax mutation regression returned `FLAWED` and included:
+## Direct-main commits
 
-- `WITHHELD_RMAX_VALUE_PUBLISHED`;
-- `STATUS_LEDGER_MISMATCH`;
-- `VALUE_PRESENT_WHEN_LEDGER_WITHHOLDS`.
+1. `bb41b2d24dae6fe4a28f23551ef21174cc701f95` — initial ledger repair
+2. `65200b2238dfbccd938def676af9125db360434e` — restored one accidentally changed CL-015 path
+3. `3849b2952ed5b6f905c33a7cfc16f7d8edb28560` — README correction
+4. `a4bef49f0d2b7ef00652075bbdd9fbb746cc8aa2` — synchronizer correction
+5. `27a3e442fa9107dc1de1d3f18770dac3f0ee96b9` — synchronizer tests
+6. `0967f1b83bc5aff268f0679f8873a6c581352219` — CL-022 validator
+7. `b0eda31c06fe0295acfca64f56542e3f0c4bc4d0` — CL-022 tests
+8. `f24d8e3e3b0769b1e9add23a0adf2654a7ff69a0` — audit report
+9. `b732c0cfb3ba9bc703f3f173bd5d4fcc878607a0` — validation JSON
+10. `5af6ad490da53156f7238471440aa9f3326fc96b` — CL-022 SVG
+11. `29b9b1d3239de5c1e7504f86517e5ed299057c08` — schema JSON
+12. `68a6381e6ea4fd692cd0b6f05be99a9cb7e025d1` — schema SVG
+13. `2b88dcb730f82e390e70d51f4a5474b632a1ca18` — aligned regression fixture
+14. `8e74ff357fd359b743524316ac360703d52deb7e` — active-task record
+15. `14e1b2570edc189c8b8913d4c612ea586404fe21` — immutable archive
 
-Additional checks:
+The connector returns commit SHAs rather than textual push output. Remote history
+was re-read and confirmed the archive commit as the delivery head before this
+handoff.
 
-- local corrected WIKI Git blob matched the connector-returned committed blob exactly;
-- committed integration-test Git blob matched the locally validated file;
-- validation JSON parsed;
-- SVG parsed as XML;
-- a focused reconstructed-tree run of the repository broken-link checker covered all 16 internal file targets referenced by the WIKI and returned `All internal links valid`;
-- the corrected WIKI introduces no new internal file target.
+## Boundary and next work
 
-A full repository-wide link scan was not run because the checkout was unavailable. Full repository pytest, ruff, ROOT processing, model reruns, and GitHub Actions were also not run.
+This unit does not identify the real-data anomaly as C12, validate a data
+species tag, establish efficiency/false-positive rate/veto impact, or regenerate
+detector results. `AUD-ANOM-001` and ledger-wide `AUD-LEDGER-001` remain
+`PARTIAL`.
 
-## Direct-to-main commit and push sequence
+Chapter 9 remains method-inconsistent: it describes an eight-dimensional/K=7
+BIC-selected GMM and 99.7% PCA coverage, while the tracked producer uses K=4 on
+four PCs and the summary records 82.188% cumulative variance at eight PCs. That
+requires a separate source-backed correction.
 
-Each authenticated connector write returned a successful direct-main commit result:
-
-1. `eb690f38d6032257876678c3d5d046b764230b39` — `fix(docs): align root WIKI with canonical gated claims`
-2. `c2b4ff39a31deb33f807208c18be0341c16f7c4b` — `test(audit): validate exact current root WIKI claims`
-3. `e724845987bdf2f6f8072821aab1b147fab0a59a` — `docs(validation): record root WIKI remediation audit`
-4. `dd90701b22499619976a23b727a88e5186f727ab` — `docs(validation): add root WIKI remediation record`
-5. `055e0019a5057307629b575e20ff09ccb34be4da` — `docs(validation): visualize root WIKI remediation`
-6. `e426af16ab8bb8592a38bec5f6fdb304dee51acc` — `docs(audit): track validated root WIKI remediation`
-7. `03c4e4bf5bfa91bda275c89db83d5c8d25217805` — `docs(audit): archive validated root WIKI remediation`
-
-The connector does not return textual `git push` stdout; each successful contents-API write advanced remote `main` and returned the listed commit SHA. A post-handoff history read must confirm the handoff commit as remote head.
-
-## Scientific boundary and unresolved risk
-
-This documentation-governance unit does **not**:
-
-- determine an accepted Rmax or resolve `S-STAT-003`;
-- select a P04p production model or resolve `BLK-P04P-001`;
-- authorize P07e saturation recovery or resolve `BLK-P07E-001`;
-- repair the remaining 19 malformed claim-ledger rows;
-- establish evidence completeness for every other WIKI statement;
-- regenerate detector data, simulation, fits, uncertainties, calibration, or detector-performance results.
-
-`AUD-WIKI-001` remains `PARTIAL` at repository-wide scope. The complete root-front-door remediation unit is `VALIDATED` and complete.
-
-`SESSION_LOG.md` was not replaced because the connector exposes whole-file replacement rather than a byte-safe append operation and a complete current byte snapshot was not safely available. Replacing the append-only file from partial reads could destroy prior provenance. The complete session record is retained in the immutable archive and this handoff.
-
-## Next validated unit
-
-Continue `AUD-WIKI-001` by mapping and reviewing remaining material WIKI claims. In parallel, repair the 19 malformed `docs/claim_ledger.csv` rows under `AUD-CLAIM-001`. Do not restore numerical Rmax or authorize P04p/P07e production use until the named blockers are resolved.
+`SESSION_LOG.md` was not replaced because only paged/truncated reads and
+whole-file replacement are available; replacing the append-only provenance file
+would risk data loss. The complete record is retained in the immutable archive
+and this handoff.

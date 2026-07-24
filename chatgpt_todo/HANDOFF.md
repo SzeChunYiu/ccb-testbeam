@@ -2,153 +2,202 @@
 
 ## Session
 
-- UTC: `2026-07-24T030404Z`
-- Task: `AUD-G4-021`
+- UTC: `2026-07-24T033502Z`
+- Task: `AUD-WIKI-002`
 - Repository: `SzeChunYiu/ccb-testbeam`
-- Initial remote main: `da94ca3f494b08209ed2d8f1d6d2cdc3ad85ac2c`
-- Validated code/test/evidence head: `625c38af6380a4950de323779242293331df7972`
-- Remote main after coordination and append-only session log, immediately before this final handoff: `ee808f4d78531eb69b2b56761a3516006ca6f039`
+- Initial remote main: `e8b01b4414d2a797c5f97fe3ee98f88e99ad254a`
+- Validated code/test/evidence head: `57dee4451352b27fc191cbc36805a2d0316600ff`
+- Remote main after concurrent work and archive, immediately before this handoff: `ba6aaa95dec282928879a6ba3ed5c1bf3df6f277`
 - Destination: direct to `main`
-- Acceptance: COMPLETE for stopping-power output/input alias rejection and atomic report publication. Broader stopping-power physics closure remains open.
+- Acceptance: `PARTIAL`; the public WIKI inconsistency and checking tool are validated, but the complete WIKI has not yet been remediated and revalidated.
 
 ## Start-of-run and concurrent-work review
 
-- Confirmed repository admin/push permission, default branch `main`, recent history, open PR inventory, current coordination records, and initial commit status.
-- Based the implementation on current remote `main`; no task branch, pull request, force push, history rewrite, unrelated rollback, or destructive source-data change was used.
+- Confirmed repository admin/push permission, default branch `main`, recent history, current coordination records, and PR #868 status.
 - PR #868 remains closed, unmerged, and non-mergeable. It was not modified or merged.
 - `AUD-REPO-001` remains owned by another active session and was not duplicated.
-- A direct clone failed because the runtime could not resolve `github.com`; exact files were reconstructed from authenticated GitHub contents and all repository writes were direct-main connector commits.
-- A concurrent non-overlapping WIKI audit advanced `main` during this session. Subsequent coordination and session-log writes were based on the advanced remote head; no concurrent commit was discarded.
+- A concurrent non-overlapping `AUD-G4-021` remediation advanced `main` during this run. Later writes incorporated its final handoff commit `6338aed736deee7ac4496981ae04da2b01722ed4`; no concurrent commit was discarded.
+- No task branch, pull request, force push, history rewrite, unrelated rollback, or destructive data edit was used.
+- A direct checkout was unavailable because the runtime could not resolve GitHub hosts. Exact repository text was inspected through authenticated GitHub contents/ranged reads, and repository writes were direct-main connector commits.
 
-## Confirmed artifact-integrity defect
+## Repository evidence inspected
 
-Pre-change source:
+### Public front door
 
-- path: `scripts/single_stave/compare_stopping_power.py`
-- Git blob SHA-1: `360f3e46db664f4eead48021536f210e2f7a85c9`
+- `WIKI.md`
+- Git blob SHA-1: `c27a1e555145cb248e253f17a6f6d1cfe64542a8`
+- Reviewed front matter, confidence-status legend, canonical results table, timing key-results table, and Monte Carlo validation matrix.
 
-After validating and reading simulation and PSTAR inputs, the reporter opened the requested final output directly with `out_path.open("w")`. The path had no explicit equality/identity check against either validated input and no temporary-file plus atomic-replacement publication path.
+### Canonical claim state
 
-Consequences:
+- `docs/claim_ledger.csv`
+- Git blob SHA-1: `6f4d4023814b42a566826912bcef7df9903c41e7`
+- Reviewed authoritative records `CL-007` and `CL-011`.
 
-1. `--out` equal to `--sim` or `--reference`, including a resolving symlink or existing-file alias, could destroy the exact scientific input bytes required to reproduce the calculation.
-2. A serialization, process, encoding, or filesystem failure after opening the final path could leave a truncated CSV under the canonical requested filename.
+### Coordination and history
 
-This was a software/provenance defect. It did not by itself establish or invalidate stopping-power physics.
+- `chatgpt_todo/README.md`
+- `MASTER_INDEX.md`
+- `BACKLOG.md`
+- `ACTIVE_TASK.md`
+- `HANDOFF.md`
+- `BLOCKERS.md`
+- `CLAIM_EVIDENCE_MATRIX.md`
+- recent commits and PR #868 metadata.
 
-## Corrected method
+## Confirmed public claim-state defects
 
-Current validated source:
+### 1. Status outside the published legend and inconsistent with the ledger
 
-- Git blob SHA-1: `043dbd8cae7362dede199b42b28aeb383bccde8d`
-- file bytes: `23541`
-- SHA-256: `aa9b2f854f2eb2cb9120399e045969b5b8b4dadf939fc186afbcd2650cb397f7`
+The WIKI labels the MV4 raw timing-pull claim `PASS` in three public tables:
+
+- canonical results table;
+- timing key-results table;
+- Monte Carlo validation matrix.
+
+However:
+
+- `PASS` is not defined in the WIKI confidence-status legend;
+- canonical claim-ledger record `CL-007` classifies the claim as `VALIDATED`.
+
+Measured validator findings:
+
+- `STATUS_OUTSIDE_LEGEND`: 3
+- `STATUS_LEDGER_MISMATCH`: 3
+
+### 2. Effective live-time truth-type mismatch
+
+The WIKI canonical results table labels `τeff` as `data_only`. Canonical claim-ledger record `CL-011` uses `data_mc_self_consistent` and notes that the truth classification was upgraded during review.
+
+Measured validator finding:
+
+- `TRUTH_TYPE_LEDGER_MISMATCH`: 1
+
+### 3. Unsupported uncertainty-completeness statement
+
+The WIKI front matter says:
+
+`Every number has uncertainty.`
+
+The canonical claim ledger still contains explicit `CI_MISSING_BLOCKING` fields, including for the reviewed raw timing-pull and effective live-time records. The public sentence therefore overstates the completeness of the uncertainty inventory.
+
+Measured validator finding:
+
+- `OVERSTATED_UNCERTAINTY_COMPLETENESS`: 1
+
+Total measured issues in the exact cited reconstruction: 8.
+
+These are documentation and claim-governance defects. They do not alter the numerical values or constitute a new timing, pile-up, data, or simulation result.
+
+## Better method and policy
 
 Registered policy:
 
-`NO_INPUT_OUTPUT_ALIAS_AND_ATOMIC_REPORT_WRITE`
+`WIKI_FRONT_DOOR_MUST_MATCH_CANONICAL_LEDGER`
 
-The canonical reporter now:
+A complete remediation must:
 
-1. expands and resolves output and input paths without requiring the final output to exist;
-2. rejects resolved equality with either input;
-3. additionally rejects identity between existing files through `os.path.samefile`, covering hard-link aliases;
-4. performs the alias gate before reading either input;
-5. serializes the complete CSV to a uniquely named `NamedTemporaryFile` in the destination directory;
-6. flushes and `fsync`s the temporary file;
-7. measures the completed temporary file's byte size and SHA-256;
-8. publishes only with `os.replace(temp_path, out_path)`;
-9. removes the temporary file after serialization or replacement failure and leaves any previous final report unchanged;
-10. records the publication policy in every CSV row and returns/prints final path, byte size, SHA-256, alias-check state, and atomic-publication state.
+1. replace all three MV4 raw `PASS` labels with the canonical `VALIDATED` state;
+2. align the effective live-time truth type with `data_mc_self_consistent`, using readable WIKI wording;
+3. replace the blanket uncertainty statement with wording that explicitly points to unresolved ledger fields;
+4. run the validator against the complete exact current WIKI and claim ledger;
+5. require status `VALIDATED` before marking `AUD-WIKI-002` complete;
+6. preserve the caveat that `CL-007` still lacks a complete uncertainty reconstruction despite its claim-state label.
 
-The final digest is returned and printed after publication. It is intentionally not embedded as the digest of its own containing CSV, which would be self-referential.
-
-## Regression, validation, and evidence
+## Added code, tests, and evidence
 
 Added:
 
-- `tests/test_compare_stopping_power_output_safety.py`
-- `docs/validation/stopping_power_output_safety_remediation_audit.md`
-- `docs/validation/stopping_power_output_safety_remediation_validation.json`
-- `docs/validation/stopping_power_output_safety_remediation.svg`
+- `tools/audit/validate_wiki_claim_front_door.py` v1.0.0
+- `tests/test_validate_wiki_claim_front_door.py`
+- `docs/validation/wiki_claim_front_door_audit.md`
+- `docs/validation/wiki_claim_front_door_validation.json`
+- `docs/validation/wiki_claim_front_door.svg`
 
-The SVG is explicitly labelled synthetic software/provenance evidence, not detector data, and distinguishes paths using text, position, arrows, and cross-out marks rather than color alone.
+The validator:
 
-Focused regression covers:
+- reads WIKI and ledger bytes once and records byte count and SHA-256;
+- validates the claim-ledger schema and duplicate IDs;
+- extracts the confidence-status vocabulary from the WIKI;
+- binds the three raw-timing rows to `CL-007` and `τeff` to `CL-011`;
+- checks status vocabulary, canonical state, truth type, and uncertainty-completeness wording;
+- emits machine-readable JSON;
+- returns 0 for `VALIDATED`, 1 for `FLAWED`, and 2 for controlled input/schema/UTF-8 errors.
 
-- direct CLI output equal to the simulation input;
-- direct CLI output equal to the PSTAR reference input;
-- resolved symlink output alias;
-- injected CSV serialization failure;
-- injected `os.replace` failure;
-- exact preservation of input bytes and a pre-existing final report;
-- cleanup of all temporary files after failure;
-- exact final report byte-size and SHA-256 provenance;
-- retention of the policy in machine-readable output;
-- AST confirmation that the canonical reporter has an alias guard and atomic helper and no direct final-path write.
+The SVG explicitly labels itself as synthetic documentation/provenance evidence, not detector data, and uses text, layout, and arrows rather than color alone.
 
-Executed on exact local files whose Git blobs match committed `main`:
+## Validation commands and results
+
+Executed in a local reconstruction of the committed new files:
 
 ```text
-PYTHONPATH=. python -m py_compile \
-  scripts/single_stave/compare_stopping_power.py \
-  tools/audit/audit_stopping_power_output_safety.py \
-  tests/test_compare_stopping_power_output_safety.py \
-  tests/test_compare_stopping_power_report_reproducibility.py \
-  tests/test_compare_stopping_power_report_precision.py
+python -m py_compile \
+  tools/audit/validate_wiki_claim_front_door.py \
+  tests/test_validate_wiki_claim_front_door.py
 
-PYTHONPATH=. python -m pytest \
-  tests/test_compare_stopping_power_output_safety.py \
-  tests/test_compare_stopping_power_report_reproducibility.py \
-  tests/test_compare_stopping_power_report_precision.py -q
+python -m pytest tests/test_validate_wiki_claim_front_door.py -q
 
-12 passed in 0.07s
-
-PYTHONPATH=. python tools/audit/audit_stopping_power_output_safety.py \
-  scripts/single_stave/compare_stopping_power.py
-
-OUTPUT-SAFETY AUDIT: status=VALIDATED
+5 passed in 0.03s
 ```
 
-Exact committed test:
+Focused coverage:
 
-- Git blob SHA-1: `776cbec3923ee4883bace045724ed652957afa59`
-- SHA-256: `29087d41927af1e0f932c329cdbffbc5e975c76fff6a2427caf00ce91e087139`
+- current-like public inconsistencies produce eight expected issues;
+- a corrected front door returns `VALIDATED`;
+- missing required canonical claim IDs raise controlled errors;
+- the CLI writes machine-readable flaw output and returns status 1;
+- invalid UTF-8 returns status 2.
+
+Exact cited reconstruction:
+
+- WIKI excerpt SHA-256: `7ff43954b0ae435d161ae6b6c96b9178f5aeda0d870857047e2e446fc1a28f14`
+- ledger excerpt SHA-256: `e89519ff2099af61c68cea2151918fd61db506387b4247927daa0ac1d59d50e9`
+- status: `FLAWED`
+- process status: 1
+- issue count: 8
+
+Committed new-file SHA-256 values recorded by the validation:
+
+- validator: `d8bc0f814d2855501b599d54d691d5a7e3939a58040690e7825364823773639f`
+- test: `b118e7ab1287a11d3fae097eea57789dd4616538672d0af06127c4348916fc74`
 
 Additional passed checks:
 
 - validation JSON parse;
 - SVG XML parse;
-- maximum changed source line length: 91 characters;
-- maximum new test line length: 93 characters;
-- exact Git-blob identity for source and focused test.
+- maximum validator line length: 91 characters;
+- maximum test line length: 92 characters.
 
-Not run: full repository pytest, ruff, Geant4/CTest, ROOT processing, real simulation execution, or GitHub Actions. No broad CI or physics-closure success is claimed.
+Not run:
+
+- complete exact-file validator execution in a checkout;
+- WIKI remediation;
+- broken-link checker;
+- full repository pytest;
+- ruff;
+- ROOT/data processing;
+- simulation;
+- GitHub Actions.
+
+No CI success is claimed. No status checks were attached to the validated code/test/evidence head.
 
 ## Direct-to-main commit sequence
 
 Implementation and evidence:
 
-- `b5ca01bba7b3dc0e3ee89e9939ad77f7998ab3e9` — `fix(single-stave): publish stopping-power reports atomically`
-- `a99dfba46cf36c196566b08301b98fbe980aa2ba` — `test(single-stave): cover atomic report publication`
-- `3b43970ee65db5fdcc9104d233765ae0a1e6b354` — `docs(validation): record atomic report publication`
-- `48b7ad23ea7dd6cf5e81c055d84f973a0b47316d` — `docs(validation): add atomic report publication record`
-- `625c38af6380a4950de323779242293331df7972` — `docs(validation): visualize atomic report publication`
+- `ad582c6dc09e3c790e435ebe1506963f62e2d685` — `feat(audit): validate WIKI front-door claims`
+- `cd1bbb5eb2be2c1d189c0b0fbe803d4f12104294` — `test(audit): cover WIKI front-door claim consistency`
+- `45aebc50067ce8f7a9c216646d12cb9e7ac24791` — `docs(validation): record WIKI claim front-door audit`
+- `03bbb9df5a8b3b64fc1e3931e65fa9dea142e992` — `docs(validation): add WIKI front-door validation record`
+- `57dee4451352b27fc191cbc36805a2d0316600ff` — `docs(validation): visualize WIKI claim front-door inconsistencies`
 
 Coordination and provenance:
 
-- `4c0c6570be67660a61c184120036415b7ae902e5` — `docs(audit): complete atomic report publication task`
-- `5868ae5022e580952b16f47b48892c741fbbac0b` — `docs(audit): close atomic report publication backlog`
-- `871b1e09921614e902928b51abcd6a9a2e02736c` — `docs(audit): map atomic report publication`
-- `2a894c89e48af90286fe922852b1a20f5151b6e4` — `docs(audit): ledger atomic report publication`
-- `770ba0ab041b624d4fe9707dc95cc542da545b07` — `docs(audit): validate atomic report publication claim`
-- `e7435804b73aff6074c88ddfde76d28226030bd1` — `docs(audit): update atomic report publication visual`
-- `965f706aab15e3413d455a63ff07e5adc5527065` — `docs(audit): index atomic report publication`
-- `822a5dcb5d1adff7a093518fd35135411962c47f` — `docs(audit): resolve atomic report publication blocker`
-- `e8b01b4414d2a797c5f97fe3ee98f88e99ad254a` — `docs(audit): archive atomic report publication remediation`
-- `ee808f4d78531eb69b2b56761a3516006ca6f039` — `docs(audit): append atomic report publication session`
+- `85e17a502949c6ccbb9875e5ca60e351ac912423` — `docs(audit): activate WIKI front-door consistency task`
+- `846c1883d4a3568f177e831787216383fe3e9f54` — `docs(audit): register WIKI front-door consistency task`
+- `ba6aaa95dec282928879a6ba3ed5c1bf3df6f277` — `docs(audit): archive WIKI front-door consistency audit`
 
-All operations returned successful direct-main GitHub commits. A local `git push` transcript is unavailable because DNS prevented a checkout; authenticated GitHub commit responses and subsequent remote-main reads are the push evidence. The commit containing this handoff is the final remote-main verification target and is confirmed separately after the write.
+All operations returned successful direct-main GitHub commits. A local `git push` transcript is unavailable because no checkout/network path was available; authenticated write responses and subsequent remote-main reads are the push evidence. The commit containing this handoff is the final remote-main verification target.
 
 ## `chatgpt_todo/` updates
 
@@ -156,44 +205,28 @@ Updated:
 
 - `ACTIVE_TASK.md`
 - `BACKLOG.md`
-- `MASTER_INDEX.md`
-- `CODE_RESULT_MAP.md`
-- `STUDY_REVIEW_LEDGER.md`
-- `CLAIM_EVIDENCE_MATRIX.md`
-- `VISUALIZATION_MATRIX.md`
-- `BLOCKERS.md`
-- `SESSION_LOG.md`
 - `HANDOFF.md`
 
-Stable records now show:
+Added stable task:
 
-- `AUD-G4-021`: COMPLETE
-- `IDX-G4-023`: COMPLETE
-- `CRM-G4-021`: COMPLETE
-- `ST-G4-STOP-013`: COMPLETE
-- `CL-G4-022`: COMPLETE
-- `VIS-G4-021`: COMPLETE
-- `BLK-G4-SP-004`: RESOLVED
+- `AUD-WIKI-002`: `PARTIAL`
 
 Added immutable session record:
 
-- `chatgpt_todo/archive/2026-07-24T030404Z_AUD-G4-021_OUTPUT_SAFETY_REMEDIATION.md`
+- `chatgpt_todo/archive/2026-07-24T033502Z_AUD-WIKI-002_FRONT_DOOR_CONSISTENCY.md`
 
-`SESSION_LOG.md` was reconstructed from complete non-overlapping ranged reads of the same Git blob and appended without altering its prior bytes. Commit `ee808f4d78531eb69b2b56761a3516006ca6f039` records the append.
+`SESSION_LOG.md` was not replaced in this session. Although a prior concurrent session reconstructed and appended its own entry from complete ranged reads, repeating a complete-file replacement while `main` was changing would add avoidable provenance-loss and lost-update risk. The immutable archive and this handoff contain the full run record; the missing append is an explicit coordination limitation to be reconciled in a byte-safe checkout or subsequent complete snapshot append.
 
 ## Scientific boundary and next action
 
 This run did not:
 
-- process a real Geant4 event export or ROOT output;
-- establish local deposited energy as projectile total energy loss;
-- quantify energy carried by escaping generated secondaries;
-- integrate projectile energy evolution along the path;
-- evaluate statistical/systematic uncertainty or covariance;
-- validate the deuteron equal-velocity proxy;
-- establish Geant4/PSTAR agreement;
-- produce calibration or detector-performance results.
+- recalculate the MV4 raw pull;
+- recalculate effective live-time or pile-up rate;
+- complete missing confidence intervals or uncertainty components;
+- process beam data or ROOT files;
+- execute simulation;
+- change the canonical claim ledger;
+- change the public WIKI text.
 
-`AUD-G4-021` is COMPLETE and `BLK-G4-SP-004` is RESOLVED. Accepted stopping-power closure remains open under `AUD-G4-005`, `AUD-G4-011`, and `BLK-G4-SP-001`.
-
-The next accepted unit is to run the integrated CLI on immutable real proton exports and then perform a clean projectile-total-energy-loss closure using `G4EmCalculator::ComputeTotalDEDX` or primary entry/exit kinetic energy with path/reference integration, secondary-escape accounting, exact material/physics-list/cut/version provenance, a preregistered uncertainty budget, and required overlay/ratio/failure-diagnostic plots.
+`AUD-WIKI-002` remains `PARTIAL`. The next unit is to edit the complete current `WIKI.md`, run the validator against complete exact current files, execute focused tests and the broken-link checker, inspect the exact diff, update the relevant claim/index/visual ledgers, and mark the task complete only when the validator returns `VALIDATED`.

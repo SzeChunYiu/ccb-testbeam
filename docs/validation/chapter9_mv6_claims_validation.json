@@ -13,19 +13,10 @@
     "claim_ledger_blob": "e489555f3a520c7cc64b8a7d858a0e93622b9de6",
     "source_commit_recorded_by_ledger": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170"
   },
-  "corrected_artifacts_before_commit": {
-    "chapter": {
-      "bytes": 11332,
-      "sha256": "d91effd7b4a6a210591832a8c57443da12e55c46897884c0adba007491183d23"
-    },
-    "validator": {
-      "bytes": 13639,
-      "sha256": "f5f42a8a28a331958bd787e40ddfb26315c30861b5cb10544af352d4287246f5"
-    },
-    "test": {
-      "bytes": 7959,
-      "sha256": "645014b7df8a92da2d98e288a7e4e907c51f5f4f0455ca9317e524aad69dd4c1"
-    }
+  "committed_artifact_blobs": {
+    "chapter": "c54753c58b0eb9e68a7e2b908d4e31310b0c991f",
+    "validator": "fbb9d9423ad2fc6130656d6cdfa11345e738f095",
+    "test": "ebc61f19916baf8a9dee1a86aa7deb9b08ecb259"
   },
   "metrics": {
     "events_scanned": 220000,
@@ -59,6 +50,7 @@
     "py_compile": "PASS",
     "pytest": "6 passed in 1.15s",
     "direct_source_review": "PASS",
+    "committed_blob_refetch": "PASS",
     "json_parse": "PASS",
     "svg_xml_parse": "PASS"
   },

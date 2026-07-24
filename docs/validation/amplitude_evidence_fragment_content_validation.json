@@ -1,0 +1,37 @@
+{
+  "task_id": "AUD-AMP-011",
+  "status": "VALIDATED",
+  "policy": "EVIDENCE_LINE_FRAGMENT_MUST_CONTAIN_NONWHITESPACE_CONTENT",
+  "initial_main_sha": "e215a4cd44ca6ed2eff3ec45921fcc72faa1e115",
+  "old_validator_blob_sha": "d0b5daaefb53f026c842eeebb1e6d2f07d5c2d8d",
+  "implementation_commit": "8df26b33253b7364a8caf9afa6dab35148260f12",
+  "test_commit": "7abe8871c6fa5f782d2bbbf009ab0aa0d69ee716",
+  "validator": {
+    "path": "tools/audit/validate_amplitude_evidence_map.py",
+    "version": "1.4.0",
+    "bytes": 10102,
+    "sha256": "a1f547c8ee7d52c1a71dbaa16c031f2a06ea68d63e9269f51c39ba11a37dd095"
+  },
+  "test": {
+    "path": "tests/test_amplitude_evidence_reference_fragments.py",
+    "bytes": 3292,
+    "sha256": "d2c78c6fc4044ae84b5828efa590ee92184e6a84b4690c85b1de73a32ffff699"
+  },
+  "negative_control": {
+    "validator_version": "1.3.0",
+    "result": "2 failed, 6 passed in 0.10s",
+    "demonstrated_failures": [
+      "whitespace-only line fragment was accepted",
+      "fragment byte size and SHA-256 were absent"
+    ]
+  },
+  "validated_checks": {
+    "py_compile": "PASS",
+    "pytest": "23 passed in 0.05s",
+    "changed_python_max_line_length": 100,
+    "fragment_example_bytes": 29,
+    "fragment_example_sha256": "2574a91c9368c20f6ae926794a5a37285b264197d248084c3b63306f8cadfa5a",
+    "fragment_example_nonblank_lines": 2
+  },
+  "scientific_boundary": "Synthetic software/provenance validation only; no A-002 data convention or detector result was validated."
+}

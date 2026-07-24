@@ -1,8 +1,0 @@
-# Systematic grid: SiPM photon-detection-efficiency scale (multiplies the PDE
-# table). Nominal = 1.0. +/-10-20% spans vendor tolerances.
-# Columns: value,label,seed
-0.80,pde080,11
-0.90,pde090,11
-1.00,pde100,11
-1.10,pde110,11
-1.00,pde100,12

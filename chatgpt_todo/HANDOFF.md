@@ -2,124 +2,93 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T170218Z`
+- **UTC stamp:** `2026-07-24T173757Z`
 - **Task:** `AUD-LEDGER-001`
-- **Unit:** source-backed reconstruction of legacy MV1 PID claims `CL-017` and `CL-018`
-- **Initial remote `main`:** `86fb70f4408a9bb5c0bb6dc24c016a9428e1dd0b`
-- **Validated delivery head before this handoff:** `eb69a1c4132439edc33bf54aa8546c7ae2b14d6e`
+- **Unit:** source-backed reconstruction of legacy MV3 claims `CL-019`, `CL-020`, and `CL-021`
+- **Initial remote `main`:** `1e44fd19a02c33377e727bd5d85be7a8aa96b587`
+- **Validated implementation/evidence head before coordination:** `e2e99cf2981df30dfa25cd87d794f9d81149204f`
 - **Destination:** direct sequential commits to `main`
-- **Acceptance:** this two-row reconstruction and validation unit is `VALIDATED`; both PID values remain `GATED`; ledger-wide `AUD-LEDGER-001` remains `PARTIAL`
+- **Acceptance:** this three-row reconstruction is `VALIDATED`; ledger-wide `AUD-LEDGER-001` remains `PARTIAL`
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads inspected current `main`, recent repository history, PR #868,
-commit status, mandatory `chatgpt_todo/` records, the canonical claim ledger and schema
-evidence, the legacy MV1 producer/output and introducing commit, the current MV1
-implementation, the current Chapter 8 narrative, and the engineering commit that
-introduced group-disjoint fail-closed ML evaluation.
+Authenticated GitHub reads inspected current `main`, recent history, repository permissions, PR #868, the canonical ledger, cumulative schema evidence, mandatory coordination files, the exact legacy MV3 report, the current fail-closed MV3 implementation, and source history. The run incorporated the immediately preceding MV1 handoff at `1e44fd19...` and based all writes on current remote `main`. No force push, history rewrite, task branch, stale PR merge, or unrelated-file deletion was used.
 
-The write sequence was based on current remote head
-`86fb70f4408a9bb5c0bb6dc24c016a9428e1dd0b`. No concurrent non-session commit appeared
-during the focused sequence. No force push, history rewrite, task branch, deletion, or
-replacement of unrelated contributor work was used. The connector returned successful
-direct-main commit SHAs rather than conventional textual `git push` output.
-
-PR #868 remains closed, unmerged, and non-mergeable and was not modified. No workflow
-or status checks were attached to the starting head, so no GitHub Actions success is
-claimed for this unit.
+PR #868 remains closed, unmerged, and non-mergeable and was not modified.
 
 ## Confirmed defects
 
-The claim ledger has 43 named fields, but both legacy PID rows had only 38 columns.
-Their late truth type, status, source, link, CI, blocker, supersession, and notes fields
-were therefore correctly withheld by the repository's fail-closed schema policy.
+The 43-column ledger contained:
 
-The former rows also cited nonexistent paths:
+- `CL-019`: 38 columns;
+- `CL-020`: 38 columns;
+- `CL-021`: 36 columns.
 
-- `reports/mv1_pid/REPORT.md`;
-- `scripts/mv1_pid.py`;
-- `reports/mv1_pid/results.json`.
+Their late truth, status, source, CI, blocker, supersession, and note fields were therefore withheld. The former rows also cited absent paths `scripts/mv3_stopping.py` and `reports/mv3_stopping_v3_1782679272/results.json`.
 
-The real tracked source uses row-index parity for train/test splitting after building a
-track-level table that may contain multiple tracks from one event. It does not retain
-`event_id`, so event groups can cross the split. The HGB estimator has no explicit
-`random_state`; no environment/input manifest or exact ROOT digest is recorded; AUC and
-purity carry no uncertainty. The purity summary does not retain the selected and
-true-positive counts needed to reconstruct a binomial interval.
+The tracked report contains only rounded three-decimal fractions and the combined label `chi2/ndf = 68269.4`. It does not contain exact per-stave counts, separate chi-square and ndf, a p-value, bin variances, covariance, or a machine-readable result.
 
-## Exact source evidence and fixed outputs
+## Exact source evidence
 
-Legacy producer:
+Legacy report:
 
-- path: `scripts/mv1_mv2_truth_pid_energy.py`;
-- Git blob: `4f3632e59ede59bcf27e053265908ddca77b4386`;
-- bytes: `10508`;
-- SHA-256: `534c70a754dba6a7017b35bc9074111d7d8db8e43795240848ea312a25c6e6ee`.
+- path `reports/mv3_stopping_v3_1782679272/REPORT.md`;
+- Git blob `b72eed4f7eb3237040a1346d7253080c098c8986`;
+- 2232 bytes;
+- SHA-256 `a1027e168d1f0321a334c44f1a1d59176a17869b5239991709b861db7962fa0f`;
+- introducing commit `3c5ff5cf587c8ca9cefda20cb220ba29effd2170`.
 
-Legacy output:
-
-- path: `reports/mv1_mv2_truth_pid_energy_1782220258/mv1_mv2_truth_summary.json`;
-- Git blob: `9e49af48025b9699d957e932d06901dd47a45321`;
-- bytes: `4129`;
-- SHA-256: `ecf7c6209728899b641484a0409a3f4e2d2e403491d2c113b0e5a29f0f2df4bb`.
-
-Introducing source commit:
-
-`3539ae3aad222284bd7be100802a2651c0e064de`
-
-Fixed output values:
+Fixed report outputs:
 
 | Quantity | Value |
 |---|---:|
-| all charged B-arm tracks | 400369 |
-| proton tracks | 150130 |
-| deuteron tracks | 146842 |
-| binary proton/deuteron tracks | 296972 |
-| HGB ROC AUC | 0.9859658513538254 |
-| HGB purity at nominal 90% efficiency | 0.9644090769970706 |
+| MC tracks above threshold | 249484 |
+| Data events | 306745 |
+| MC B8 fraction | 0.223, rounded to 3 decimals |
+| Data B8 fraction | 0.023, rounded to 3 decimals |
+| Reported profile label | `chi2/ndf = 68269.4` |
 
-These are truth-labelled simulation outputs. They are not beam-data PID performance.
+The reported MC fraction is compatible with 249 distinct integer numerators, 55511–55759. The reported data fraction is compatible with 307 numerators, 6902–7208. Exact counts and exact binomial intervals cannot be recovered from the rounded table.
+
+Current remediation:
+
+- path `src/ccb_mc_validation/studies/mv3_stopping_depth.py`;
+- Git blob `9b0dfeaa6e74401345bc78c7ab82b33d7868b665`;
+- SHA-256 `6f5d206caed1b54d0b6e2d0a9ef558e8f0e298bcb2683ccedd6fe33ff8e7bc43`;
+- requires explicit `sample_label` and per-layer hit/energy masks;
+- blocks rather than synthesizing Sample I/II from parity or occupancy from `stop_layer >= layer`.
 
 ## Delivered correction
 
-`CL-017` and `CL-018` now have exactly 43 columns and record:
+`CL-019` and `CL-020` now have exactly 43 fields, retain only the rounded fixed outputs, leave unsupported count/uncertainty fields empty, use `allowed_status_validated=NO`, and remain `GATED` under `BLK-MV3-LEGACY-001`.
 
-- the full-precision fixed output;
-- `truth_type=mc_truth_only`;
-- `status=GATED` and `allowed_status_validated=NO`;
-- the real producer/output paths and source commit;
-- `n_mc=296972`;
-- `ci_status=NOT_EVALUATED_LEGACY_ROW_INDEX_SPLIT`;
-- blocker `BLK-MV1-001`;
-- explicit event-group leakage, determinism, provenance, uncertainty, and empirical-use
-  boundaries.
+`CL-021` now records the exact literal source label `68269.4` but is `FLAWED`, not a calibrated goodness-of-fit result. It explicitly states that chi-square, ndf, p-value, bin errors, and covariance are unavailable.
 
-The repository's current `src/ccb_mc_validation/studies/mv1_pid.py` uses group-disjoint
-splitting, explicit estimator seeds, recorded versions, and fail-closed statuses. Commit
-`ee3d9f93ab8b12757e5bfc5006dda7be74bb4c33` documents those engineering corrections.
-The old 400369-track sample has not been rerun through that corrected path, so the
-legacy outputs do not inherit its validation status.
+Corrected ledger:
 
-Cumulative ledger state after this unit:
+- Git blob `58d70cdd7b90c256b2aa268c425de0e1dadbb3f6`;
+- 18183 bytes;
+- SHA-256 `cfdfc8b38e53158fee5cb32a61165d2fc8c2e2370d81580e5f75fe369963fbcb`.
 
-- exact-width rows: `16/26`;
-- malformed and withheld rows: `10/26`;
-- ledger bytes: `16393`;
-- ledger SHA-256: `e607d042b7f6c6d1a62bf8fddb3c42e20e1e6429dc38a366696062330fb8eeb7`;
-- width histogram: `36:1, 37:2, 38:5, 39:2, 43:16`;
-- global schema status: intentionally `FLAWED` until all rows are repaired.
+Cumulative state:
 
-## New and updated files
+- exact-width rows `19/26`;
+- malformed and withheld rows `7/26`;
+- width histogram `37:2, 38:3, 39:2, 43:19`;
+- remaining malformed rows `CL-002`–`CL-006`, `CL-008`, and `CL-009`;
+- global schema status remains intentionally `FLAWED` until all rows are reconstructed.
+
+## Files and evidence
 
 Added:
 
-- `tools/audit/validate_mv1_legacy_claim_rows.py`;
-- `tools/audit/render_mv1_split_leakage_evidence.py`;
-- `tests/test_validate_mv1_legacy_claim_rows.py`;
-- `docs/validation/mv1_legacy_claim_rows_audit.md`;
-- `docs/validation/mv1_legacy_claim_rows_validation.json`;
-- `docs/validation/mv1_legacy_split_leakage.svg`;
-- `chatgpt_todo/archive/2026-07-24T170218Z_AUD-LEDGER-001_MV1_PID_CLAIMS.md`.
+- `tools/audit/validate_mv3_legacy_claim_rows.py`;
+- `tools/audit/render_mv3_legacy_claim_evidence.py`;
+- `tests/test_validate_mv3_legacy_claim_rows.py`;
+- `docs/validation/mv3_legacy_claim_rows_audit.md`;
+- `docs/validation/mv3_legacy_claim_rows_validation.json`;
+- `docs/validation/mv3_legacy_claim_rows.svg`;
+- `chatgpt_todo/archive/2026-07-24T173757Z_AUD-LEDGER-001_MV3_CLAIMS.md`.
 
 Updated:
 
@@ -128,102 +97,52 @@ Updated:
 - `docs/validation/claim_ledger_schema_validation.json`;
 - `docs/validation/claim_ledger_schema.svg`;
 - `chatgpt_todo/ACTIVE_TASK.md`;
-- `chatgpt_todo/HANDOFF.md`.
+- this handoff.
 
 Policies:
 
-- `LEGACY_MV1_PID_OUTPUTS_REQUIRE_GROUP_DISJOINT_RERUN_AND_UNCERTAINTY`;
+- `LEGACY_MV3_PROFILE_REQUIRES_EXACT_COUNTS_AND_FAIL_CLOSED_RERUN`;
 - `NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS`.
 
 ## Validation
 
-Executed locally against exact repository-byte reconstructions. The committed validator
-blob was reconstructed exactly after publication and rerun with the committed test
-blob:
-
 ```text
 python -m py_compile \
-  tools/audit/validate_mv1_legacy_claim_rows.py \
-  tools/audit/render_mv1_split_leakage_evidence.py \
-  tests/test_validate_mv1_legacy_claim_rows.py
+  tools/audit/validate_mv3_legacy_claim_rows.py \
+  tools/audit/render_mv3_legacy_claim_evidence.py \
+  tests/test_validate_mv3_legacy_claim_rows.py
 
-PYTHONPATH=. python -m pytest \
-  tests/test_validate_mv1_legacy_claim_rows.py -q
-
-6 passed in 0.57s
-
-PYTHONPATH=. python tools/audit/validate_mv1_legacy_claim_rows.py \
-  docs/claim_ledger.csv \
-  reports/mv1_mv2_truth_pid_energy_1782220258/mv1_mv2_truth_summary.json \
-  scripts/mv1_mv2_truth_pid_energy.py \
-  --output /tmp/mv1_check.json
-
-direct validator: VALIDATED; issues: 0
+PYTHONPATH=. python -m pytest tests/test_validate_mv3_legacy_claim_rows.py -q
+7 passed in 1.05s
 ```
 
-Additional checks:
-
-- corrected ledger Git blob equals local validated blob
-  `9a8d4ab0c4985db31ceb48488c325570f18f0425`;
-- committed validator Git blob equals the exact rerun blob
-  `9565b458e15d17572a1b82e11e4d413c627ee8a2`;
-- committed test Git blob equals the exact rerun blob
-  `529d9f1534ecffbae4d7992300a12dfbb9f02f9a`;
-- validation JSON parsed;
-- both SVG files parsed as XML;
-- maximum Python line lengths were 86, 95, and 97 characters.
-
-Full repository pytest, ruff, ROOT processing, simulation reruns, beam-data processing,
-repository-wide link checking, and GitHub Actions were not run. No broader CI success is
-claimed.
+The direct validator returned `VALIDATED` with zero issues. The regression suite covers the former width mismatch, fabricated exact numerator, modified profile value, modified report, controlled invalid UTF-8, and SVG parsing. Both validation JSON files parse; both SVGs parse as XML; no changed Python line exceeds 100 characters. Remote committed validator/renderer/test blobs equal the local validated Git blobs.
 
 ## Direct-main commit sequence
 
-1. `f3d70a8f33a9ecdaeb05178b3f0269c1a1cd02d4` — `fix(ledger): reconstruct legacy MV1 PID claims`
-2. `888049a626be4eac259907e2d8081ffad5d3a4d3` — `feat(audit): validate legacy MV1 PID claim rows`
-3. `54b4ff27b26d949d6cfb407d2bc65fbe788dfc1d` — `test(audit): cover legacy MV1 PID claim governance`
-4. `f27341ee153e2af336d877086d3a68d5969ea01a` — `feat(audit): render MV1 split-leakage evidence`
-5. `5e316080c248bed8c4032264747e38eef6eaab4f` — `docs(validation): record legacy MV1 PID claim audit`
-6. `1e3d3e05e5a3e5de69f1ec75ab368d344ff714c2` — `docs(validation): add legacy MV1 PID machine record`
-7. `47cef61739e98bcb4ddc70aef6211d4dff94eb84` — `docs(validation): visualize legacy MV1 split gate`
-8. `41b82458704baace02b60b87aa872c73a38bf971` — `docs(validation): record sixteen exact ledger rows`
-9. `d864ce091f30389ab5ca87a5d34c593e9dbea55d` — `docs(validation): update cumulative ledger schema record`
-10. `b7c61195828b6ec543917da884a0b764cb5faa07` — `docs(validation): visualize sixteen exact ledger rows`
-11. `7d3ada0f8a140c31f90e7efe3f52c48f2c33b846` — `docs(audit): complete legacy MV1 claim-row unit`
-12. `eb69a1c4132439edc33bf54aa8546c7ae2b14d6e` — `docs(audit): archive legacy MV1 claim-row reconstruction`
-13. this handoff commit — `docs(audit): hand off legacy MV1 claim reconstruction`
+- `7f22ba7157dfa9272eed39e2048149121fffc99b` — `fix(ledger): reconstruct legacy MV3 profile claims`
+- `d45f6c338998123b0f4efb5771d471eb3e9521b1` — `feat(audit): validate legacy MV3 claim rows`
+- `4a80586ffdf437a9e602cf68913b73fdf4fabf4e` — `feat(audit): render legacy MV3 claim evidence`
+- `982d436d6478880382f02b85ea78a792429b3ed2` — `test(audit): cover legacy MV3 claim governance`
+- `a5595f428860dcd872bc5dc8f0f840394f48330f` — `docs(validation): audit legacy MV3 claim rows`
+- `e02b4ffe441058a1b33c777f941fcfe17286dbfc` — `docs(validation): record legacy MV3 claim validation`
+- `a88e427dfc6031c361f2c237fe131a2e3dc2261e` — `docs(validation): visualize legacy MV3 claim limits`
+- `3e8058bff3417ff3d23b986003932a062a055832` — `docs(validation): update cumulative ledger schema record`
+- `a822e5a7aa242677028cba9b8005f5504b9dd1a3` — `docs(validation): audit nineteen exact ledger rows`
+- `e2e99cf2981df30dfa25cd87d794f9d81149204f` — `docs(validation): visualize nineteen exact ledger rows`
+- `b3f9f576aeec607267d0bb576a6cfb98bdd2dc13` — `docs(audit): complete legacy MV3 claim-row unit`
+- `3336d028bfa6b00ea1f20b7495f19a240ec3a324` — `docs(audit): archive legacy MV3 claim reconstruction`
 
-A post-write history read confirmed commits 1--12 as consecutive on remote `main`. The
-connector exposes the resulting commit SHAs rather than textual push stdout.
+The authenticated contents API returned successful direct-main commit SHAs rather than conventional textual `git push` output. A post-write history read is required after this handoff to confirm final remote head containment.
 
-## Scientific boundary and blockers
+## Coordination limitation
 
-This unit does not establish an accepted truth-MC ceiling, empirical proton/deuteron
-PID performance, a production model, or a confidence interval. It does not measure the
-size of the row-index leakage effect.
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, and the other large shared matrices were not replaced from partial/ranged reads. This connector exposes whole-file replacement rather than a byte-safe append/patch action; reconstructing a long concurrently edited file from incomplete output could erase unrelated provenance. The complete run is retained in the immutable archive, latest handoff, active task, canonical ledger, and validation artifacts. `BLK-MV3-LEGACY-001` is present in all three reconstructed canonical rows and its resolution contract is stated below.
 
-`BLK-MV1-001` remains open. Resolution requires immutable ROOT/event-group provenance,
-a clean group-disjoint rerun, content-addressed code/config/input/output, explicit
-versions and seeds, grouped AUC and operating-point uncertainty, repeated split/seed
-sensitivity, an independent final holdout, detector/physics sensitivity, and separate
-beam-data closure.
+## Blocker and next scientific action
 
-Chapter 8 still contains unconditional wording that calls the legacy outputs an
-established MC truth ceiling. It must be synchronized in a dedicated complete-document
-unit rather than overwritten from a truncated response.
+`BLK-MV3-LEGACY-001` remains open. Resolution requires a clean current-code rerun with immutable input files and hashes, explicit Sample I/II labels, real per-layer masks, exact per-stave counts, documented threshold/gain/pulse-model transfer, a preregistered profile statistic with valid uncertainty/covariance treatment, and retained machine-readable results and plots. Do not infer an exact B8 count, binomial interval, p-value, material-budget error, or detector performance from the legacy rounded report.
 
-Ten claim rows remain malformed: `CL-002` through `CL-006`, `CL-008`, `CL-009`, and
-`CL-019` through `CL-021`.
+## Scientific boundary
 
-## Coordination limitation and next action
-
-`SESSION_LOG.md`, `BACKLOG.md`, and `BLOCKERS.md` are long shared coordination files.
-The available connector supports whole-file replacement but not a byte-safe append or
-patch operation. This run did not replace them from partial ranged responses because
-that could destroy concurrent provenance. The complete session and blocker definition
-are retained in this handoff and immutable archive, while the canonical claim rows
-record `BLK-MV1-001` directly.
-
-Next recommended focused unit: reconstruct the source-coherent malformed MV3 group
-`CL-019`--`CL-021`, while separately registering Chapter 8 public-wording synchronization
-against the exact full document.
+No ROOT, Geant4, beam-data, calibration, threshold scan, or stopping-depth analysis was rerun. No exact B8 counts, confidence intervals, valid chi-square statistic, p-value, data/MC closure, or detector-performance result is claimed. Full repository pytest, ruff, ROOT processing, and GitHub Actions were not run. PR #868 remains closed and unmerged.

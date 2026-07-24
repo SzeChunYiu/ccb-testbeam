@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate source-backed governance for legacy MV3 stopping-profile claim rows."""
+"""Validate exact tracked-source governance for legacy MV3 claim rows."""
 
 from __future__ import annotations
 
@@ -9,23 +9,19 @@ import hashlib
 import io
 import json
 import math
-import re
 import sys
 from pathlib import Path
 from typing import Any
 
-VERSION = "1.0.0"
-POLICY = "LEGACY_MV3_PROFILE_REQUIRES_EXACT_COUNTS_AND_FAIL_CLOSED_RERUN"
+VERSION = "2.0.0"
+POLICY = "TRACKED_MV3_SUMMARY_EXACT_COUNTS_WITH_FAIL_CLOSED_STRICT_RERUN"
 EXPECTED_COLUMNS = 43
 CLAIM_IDS = ("CL-019", "CL-020", "CL-021")
 SOURCE_COMMIT = "3c5ff5cf587c8ca9cefda20cb220ba29effd2170"
 SOURCE_REPORT = "reports/mv3_stopping_v3_1782679272/REPORT.md"
+SOURCE_SUMMARY = "reports/mv3_stopping_v3_1782679272/mv3_summary.json"
 BLOCKER = "BLK-MV3-LEGACY-001"
-MC_TRACKS = 249_484
-DATA_EVENTS = 306_745
-MC_B8 = 0.223
-DATA_B8 = 0.023
-CHI2_NDF_LABEL = 68_269.4
+STAVES = ("B2", "B4", "B6", "B8")
 
 
 class Mv3ClaimError(ValueError):
@@ -52,7 +48,7 @@ def _decode(raw: bytes, path: Path) -> str:
         raise Mv3ClaimError(f"{path} is not valid UTF-8") from exc
 
 
-def _load_ledger(text: str) -> tuple[list[str], dict[str, list[str]]]:
+def _load_ledger(text: str) -> tuple[list[str], dict[str, dict[str, str]]]:
     try:
         rows = list(csv.reader(io.StringIO(text), strict=True))
     except csv.Error as exc:
@@ -60,44 +56,67 @@ def _load_ledger(text: str) -> tuple[list[str], dict[str, list[str]]]:
     if not rows:
         raise Mv3ClaimError("claim ledger is empty")
     header = rows[0]
-    selected: dict[str, list[str]] = {}
+    if len(header) != EXPECTED_COLUMNS:
+        raise Mv3ClaimError(
+            f"claim-ledger header has {len(header)} columns, expected {EXPECTED_COLUMNS}"
+        )
+    selected: dict[str, dict[str, str]] = {}
     for row in rows[1:]:
-        if row and row[0] in CLAIM_IDS:
-            if row[0] in selected:
-                raise Mv3ClaimError(f"duplicate claim row {row[0]}")
-            selected[row[0]] = row
+        if not row or row[0] not in CLAIM_IDS:
+            continue
+        if row[0] in selected:
+            raise Mv3ClaimError(f"duplicate claim row {row[0]}")
+        if len(row) != EXPECTED_COLUMNS:
+            raise Mv3ClaimError(
+                f"{row[0]} has {len(row)} columns, expected {EXPECTED_COLUMNS}"
+            )
+        selected[row[0]] = dict(zip(header, row, strict=True))
     missing = [claim_id for claim_id in CLAIM_IDS if claim_id not in selected]
     if missing:
-        raise Mv3ClaimError(f"missing required claim rows: {', '.join(missing)}")
+        raise Mv3ClaimError(f"missing required rows: {', '.join(missing)}")
     return header, selected
 
 
-def _reported_contract(report: str) -> dict[str, Any]:
-    mc_match = re.search(r"MC tracks above threshold:\s*(\d+)", report)
-    data_match = re.search(r"Data events:\s*(\d+)", report)
-    chi_match = re.search(r"χ²/ndf\s*=\s*([0-9.]+)", report)
-    b8_match = re.search(
-        r"\|\s*B8\s*\|\s*([0-9.]+)\s*\|\s*([0-9.]+)\s*\|",
-        report,
+def _load_summary(text: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise Mv3ClaimError(f"invalid MV3 summary JSON: {exc}") from exc
+    try:
+        mc = payload["mc"]
+        data = payload["data"]["all"]
+        mc_counts = {stave: int(mc["counts"][stave]) for stave in STAVES}
+        data_counts = {stave: int(data["counts"][stave]) for stave in STAVES}
+        mc_fractions = {stave: float(mc["fractions"][stave]) for stave in STAVES}
+        data_fractions = {stave: float(data["fractions"][stave]) for stave in STAVES}
+        mc_n = int(mc["n_above_threshold"])
+        data_n = int(data["n_events"])
+        stated_chi2 = float(payload["chi2_mc_vs_data_all"])
+        stated_ndf = int(payload["chi2_ndf"])
+        stated_ratio = float(payload["chi2_per_ndf"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise Mv3ClaimError(f"MV3 summary schema mismatch: {exc}") from exc
+
+    expected = {stave: data_n * mc_fractions[stave] for stave in STAVES}
+    reconstructed_chi2 = math.fsum(
+        (data_counts[stave] - expected[stave]) ** 2 / expected[stave]
+        for stave in STAVES
     )
-    table_rows = re.findall(
-        r"\|\s*B[2468]\s*\|\s*([0-9.]+)\s*\|\s*([0-9.]+)\s*\|",
-        report,
-    )
-    if not all((mc_match, data_match, chi_match, b8_match)) or len(table_rows) != 4:
-        raise Mv3ClaimError("legacy report does not match the audited MV3 contract")
-    mc_values = [float(row[0]) for row in table_rows]
-    data_values = [float(row[1]) for row in table_rows]
+    reconstructed_ndf = len(STAVES) - 1
     return {
-        "mc_tracks_above_threshold": int(mc_match.group(1)),
-        "data_events": int(data_match.group(1)),
-        "chi2_ndf_label": float(chi_match.group(1)),
-        "b8_mc_fraction": float(b8_match.group(1)),
-        "b8_data_fraction": float(b8_match.group(2)),
-        "mc_fraction_sum": math.fsum(mc_values),
-        "data_fraction_sum": math.fsum(data_values),
-        "exact_per_stave_counts_present": False,
-        "separate_chi2_ndf_p_value_present": False,
+        "mc_counts": mc_counts,
+        "data_counts": data_counts,
+        "mc_fractions": mc_fractions,
+        "data_fractions": data_fractions,
+        "mc_n": mc_n,
+        "data_n": data_n,
+        "stated_chi2": stated_chi2,
+        "stated_ndf": stated_ndf,
+        "stated_chi2_per_ndf": stated_ratio,
+        "reconstructed_expected_data_counts": expected,
+        "reconstructed_chi2": reconstructed_chi2,
+        "reconstructed_ndf": reconstructed_ndf,
+        "reconstructed_chi2_per_ndf": reconstructed_chi2 / reconstructed_ndf,
     }
 
 
@@ -114,19 +133,16 @@ def _remediation_contract(source: str) -> dict[str, bool]:
     }
 
 
-def _rounding_count_range(value: float, denominator: int) -> dict[str, Any]:
-    lower_fraction = value - 0.0005
-    upper_fraction = value + 0.0005
-    minimum = math.ceil(lower_fraction * denominator)
-    maximum = math.ceil(upper_fraction * denominator) - 1
-    return {
-        "reported_fraction": value,
-        "denominator": denominator,
-        "rounding_decimals": 3,
-        "possible_numerator_min": minimum,
-        "possible_numerator_max": maximum,
-        "possible_numerator_count": maximum - minimum + 1,
-    }
+def _issue(
+    issues: list[dict[str, Any]],
+    code: str,
+    detail: str,
+    claim_id: str | None = None,
+) -> None:
+    item: dict[str, Any] = {"code": code, "detail": detail}
+    if claim_id is not None:
+        item["claim_id"] = claim_id
+    issues.append(item)
 
 
 def _expect(
@@ -136,125 +152,138 @@ def _expect(
     detail: str,
     claim_id: str | None = None,
 ) -> None:
-    if condition:
-        return
-    issue: dict[str, Any] = {"code": code, "detail": detail}
-    if claim_id is not None:
-        issue["claim_id"] = claim_id
-    issues.append(issue)
+    if not condition:
+        _issue(issues, code, detail, claim_id)
 
 
-def validate(ledger_path: Path, report_path: Path, remediation_path: Path) -> dict[str, Any]:
-    ledger_raw, ledger_prov = _snapshot(ledger_path)
-    report_raw, report_prov = _snapshot(report_path)
-    remediation_raw, remediation_prov = _snapshot(remediation_path)
-    header, rows = _load_ledger(_decode(ledger_raw, ledger_path))
-    report_contract = _reported_contract(_decode(report_raw, report_path))
-    remediation_contract = _remediation_contract(_decode(remediation_raw, remediation_path))
-    issues: list[dict[str, Any]] = []
+def _close(left: float, right: float, tolerance: float = 1e-12) -> bool:
+    return math.isclose(left, right, rel_tol=tolerance, abs_tol=tolerance)
 
-    _expect(issues, len(header) == EXPECTED_COLUMNS, "HEADER_WIDTH", "header must have 43 fields")
+
+def _check_summary(summary: dict[str, Any], issues: list[dict[str, Any]]) -> None:
     _expect(
         issues,
-        report_contract["mc_tracks_above_threshold"] == MC_TRACKS,
-        "MC_TRACKS",
-        "legacy report MC-track count changed",
+        sum(summary["mc_counts"].values()) == summary["mc_n"],
+        "SUMMARY_MC_COUNT_SUM",
+        "MC stave counts do not sum to n_above_threshold",
     )
     _expect(
         issues,
-        report_contract["data_events"] == DATA_EVENTS,
-        "DATA_EVENTS",
-        "legacy report data-event count changed",
+        sum(summary["data_counts"].values()) == summary["data_n"],
+        "SUMMARY_DATA_COUNT_SUM",
+        "data stave counts do not sum to n_events",
     )
-    _expect(
-        issues,
-        report_contract["b8_mc_fraction"] == MC_B8,
-        "MC_B8",
-        "legacy report MC B8 fraction changed",
-    )
-    _expect(
-        issues,
-        report_contract["b8_data_fraction"] == DATA_B8,
-        "DATA_B8",
-        "legacy report data B8 fraction changed",
-    )
-    _expect(
-        issues,
-        report_contract["chi2_ndf_label"] == CHI2_NDF_LABEL,
-        "CHI2_LABEL",
-        "legacy report chi2/ndf label changed",
-    )
-    for key, present in remediation_contract.items():
-        _expect(issues, present, "REMEDIATION_CONTRACT", f"missing remediation contract: {key}")
-
-    index = {name: pos for pos, name in enumerate(header)}
-    expected = {
-        "CL-019": {
-            "claim_text": "Legacy MV3 v3 rounded B8 fraction in thresholded MC",
-            "current_value": "0.223",
-            "n_data": "",
-            "n_mc": str(MC_TRACKS),
-            "truth_type": "legacy_thresholded_mc_summary",
-            "status": "GATED",
-            "ci_status": "NOT_RECONSTRUCTABLE_ROUNDED_FRACTION_EXACT_COUNT_OMITTED",
-        },
-        "CL-020": {
-            "claim_text": "Legacy MV3 v3 rounded B8 fraction in selected data",
-            "current_value": "0.023",
-            "n_data": str(DATA_EVENTS),
-            "n_mc": "",
-            "truth_type": "legacy_selected_data_summary",
-            "status": "GATED",
-            "ci_status": "NOT_RECONSTRUCTABLE_ROUNDED_FRACTION_EXACT_COUNT_OMITTED",
-        },
-        "CL-021": {
-            "claim_text": "Legacy MV3 v3 reported profile chi2/ndf label",
-            "current_value": "68269.4",
-            "n_data": str(DATA_EVENTS),
-            "n_mc": str(MC_TRACKS),
-            "truth_type": "legacy_data_mc_profile_diagnostic",
-            "status": "FLAWED",
-            "ci_status": "NOT_RECONSTRUCTABLE_CHI2_NDF_P_VALUE_AND_BIN_ERRORS_OMITTED",
-        },
-    }
-    note_fragments = {
-        "CL-019": (
-            "rounded to three decimals",
-            "omits exact per-stave counts",
-            "no binomial confidence interval",
-            "not an accepted production stopping-profile measurement",
-        ),
-        "CL-020": (
-            "rounded to three decimals",
-            "omits exact per-stave counts",
-            "no binomial confidence interval",
-            "not an accepted production stopping-profile measurement",
-        ),
-        "CL-021": (
-            "does not provide the underlying chi2",
-            "data fractions sum to 1.001",
-            "stop_layer occupancy inference",
-            "not a calibrated goodness-of-fit statistic",
-        ),
-    }
-
-    for claim_id, row in rows.items():
+    for stave in STAVES:
         _expect(
             issues,
-            len(row) == EXPECTED_COLUMNS,
-            "ROW_WIDTH",
-            f"row has {len(row)} columns rather than 43",
-            claim_id,
+            _close(
+                summary["mc_counts"][stave] / summary["mc_n"],
+                summary["mc_fractions"][stave],
+            ),
+            "SUMMARY_MC_FRACTION",
+            f"MC count/fraction mismatch for {stave}",
         )
-        if len(row) != EXPECTED_COLUMNS:
-            continue
-        values = {name: row[pos] for name, pos in index.items()}
-        for field, expected_value in expected[claim_id].items():
+        _expect(
+            issues,
+            _close(
+                summary["data_counts"][stave] / summary["data_n"],
+                summary["data_fractions"][stave],
+            ),
+            "SUMMARY_DATA_FRACTION",
+            f"data count/fraction mismatch for {stave}",
+        )
+    _expect(
+        issues,
+        _close(summary["reconstructed_chi2"], summary["stated_chi2"]),
+        "SUMMARY_CHI2_MISMATCH",
+        "stored Pearson chi2 is not reproduced from tracked counts and fractions",
+    )
+    _expect(
+        issues,
+        summary["reconstructed_ndf"] == summary["stated_ndf"],
+        "SUMMARY_NDF_MISMATCH",
+        "stored ndf is not number of stave bins minus one",
+    )
+    _expect(
+        issues,
+        _close(
+            summary["reconstructed_chi2_per_ndf"],
+            summary["stated_chi2_per_ndf"],
+        ),
+        "SUMMARY_RATIO_MISMATCH",
+        "stored chi2/ndf is not reproduced",
+    )
+
+
+def _expected_rows(summary: dict[str, Any]) -> dict[str, dict[str, str]]:
+    return {
+        "CL-019": {
+            "claim_text": "Legacy MV3 v3 exact B8 fraction in thresholded MC",
+            "current_value": repr(summary["mc_fractions"]["B8"]),
+            "n_data": "",
+            "n_mc": str(summary["mc_n"]),
+            "numerator": str(summary["mc_counts"]["B8"]),
+            "denominator": str(summary["mc_n"]),
+            "ci_method": "fixed_exact_summary_count_fraction",
+            "truth_type": "legacy_thresholded_mc_summary",
+            "status": "GATED",
+            "ci_status": "NOT_APPLICABLE_FIXED_EXACT_COUNTS_SYSTEMATICS_UNEVALUATED",
+        },
+        "CL-020": {
+            "claim_text": "Legacy MV3 v3 exact B8 fraction in selected data",
+            "current_value": repr(summary["data_fractions"]["B8"]),
+            "n_data": str(summary["data_n"]),
+            "n_mc": "",
+            "numerator": str(summary["data_counts"]["B8"]),
+            "denominator": str(summary["data_n"]),
+            "ci_method": "fixed_exact_summary_count_fraction",
+            "truth_type": "legacy_selected_data_summary",
+            "status": "GATED",
+            "ci_status": "NOT_APPLICABLE_FIXED_EXACT_COUNTS_SYSTEMATICS_UNEVALUATED",
+        },
+        "CL-021": {
+            "claim_text": "Legacy MV3 v3 exact Pearson profile chi2/ndf diagnostic",
+            "current_value": repr(summary["stated_chi2_per_ndf"]),
+            "n_data": str(summary["data_n"]),
+            "n_mc": str(summary["mc_n"]),
+            "numerator": "",
+            "denominator": "",
+            "ci_method": "pearson_chi2_from_data_counts_vs_mc_fraction_expected_counts",
+            "truth_type": "legacy_data_mc_profile_diagnostic",
+            "status": "FLAWED",
+            "ci_status": "NOT_APPLICABLE_FIXED_PEARSON_CHI2_SYSTEMATICS_UNEVALUATED",
+        },
+    }
+
+
+def _check_rows(
+    rows: dict[str, dict[str, str]],
+    summary: dict[str, Any],
+    issues: list[dict[str, Any]],
+) -> None:
+    required_notes = {
+        "CL-019": ("tracked summary", "55619/249484", "systematics", "not an accepted"),
+        "CL-020": ("tracked summary", "7051/306745", "systematics", "not an accepted"),
+        "CL-021": (
+            "204808.2179684494",
+            "3 degrees of freedom",
+            "pearson",
+            "not a calibrated goodness-of-fit",
+        ),
+    }
+    forbidden_notes = {
+        "CL-019": ("omits exact per-stave counts", "exact numerator can be reconstructed"),
+        "CL-020": ("omits exact per-stave counts", "exact numerator can be reconstructed"),
+        "CL-021": ("does not provide the underlying chi2", "no machine-readable result"),
+    }
+    for claim_id, expected in _expected_rows(summary).items():
+        row = rows[claim_id]
+        for field, expected_value in expected.items():
             _expect(
                 issues,
-                values[field] == expected_value,
+                row[field] == expected_value,
                 f"FIELD_{field.upper()}",
-                f"{field} mismatch",
+                f"{field} must be {expected_value!r}, found {row[field]!r}",
                 claim_id,
             )
         for field in (
@@ -264,80 +293,82 @@ def validate(ledger_path: Path, report_path: Path, remediation_path: Path) -> di
             "ci_low",
             "ci_high",
             "ci_level",
-            "numerator",
-            "denominator",
             "p_value",
         ):
             _expect(
                 issues,
-                values[field] == "",
+                row[field] == "",
                 "UNSUPPORTED_QUANTITATIVE_FIELD",
                 f"{field} must remain empty",
                 claim_id,
             )
-        expected_method = (
-            "reported_fixed_profile_statistic_label"
-            if claim_id == "CL-021"
-            else "reported_fraction_rounded_3dp"
-        )
-        _expect(
-            issues,
-            values["ci_method"] == expected_method,
-            "CI_METHOD",
-            "method label mismatch",
-            claim_id,
-        )
-        _expect(
-            issues,
-            values["allowed_status_validated"] == "NO",
-            "ALLOWED",
-            "legacy claim must not be authorized",
-            claim_id,
-        )
-        _expect(
-            issues,
-            values["source_report"] == SOURCE_REPORT,
-            "SOURCE_REPORT",
-            "source report mismatch",
-            claim_id,
-        )
-        _expect(
-            issues,
-            values["source_script"] == "" and values["source_data"] == "",
-            "MISSING_SOURCE_PATHS_MUST_NOT_BE_CITED",
-            "unavailable historical producer/results paths must remain empty",
-            claim_id,
-        )
-        _expect(
-            issues,
-            values["source_commit"] == SOURCE_COMMIT,
-            "SOURCE_COMMIT",
-            "source commit mismatch",
-            claim_id,
-        )
-        _expect(
-            issues,
-            values["link_validated"] == "YES",
-            "LINK",
-            "tracked report link must be validated",
-            claim_id,
-        )
-        _expect(
-            issues,
-            values["blocked_by"] == BLOCKER,
-            "BLOCKER",
-            "blocker mismatch",
-            claim_id,
-        )
-        note = values["notes"].lower()
-        for fragment in note_fragments[claim_id]:
+        common = {
+            "allowed_status_validated": "NO",
+            "source_report": SOURCE_REPORT,
+            "source_script": "",
+            "source_data": SOURCE_SUMMARY,
+            "source_commit": SOURCE_COMMIT,
+            "link_validated": "YES",
+            "blocked_by": BLOCKER,
+        }
+        for field, expected_value in common.items():
+            _expect(
+                issues,
+                row[field] == expected_value,
+                f"FIELD_{field.upper()}",
+                f"{field} must be {expected_value!r}",
+                claim_id,
+            )
+        note = row["notes"].lower()
+        for fragment in required_notes[claim_id]:
             _expect(
                 issues,
                 fragment in note,
                 "NOTE_CAVEAT",
-                f"notes must include '{fragment}'",
+                f"notes must include {fragment!r}",
                 claim_id,
             )
+        for fragment in forbidden_notes[claim_id]:
+            _expect(
+                issues,
+                fragment not in note,
+                "NOTE_DENIES_TRACKED_SUMMARY",
+                f"notes must not include {fragment!r}",
+                claim_id,
+            )
+
+
+def validate(
+    ledger_path: Path,
+    report_path: Path,
+    summary_path: Path,
+    remediation_path: Path,
+) -> dict[str, Any]:
+    ledger_raw, ledger_prov = _snapshot(ledger_path)
+    report_raw, report_prov = _snapshot(report_path)
+    summary_raw, summary_prov = _snapshot(summary_path)
+    remediation_raw, remediation_prov = _snapshot(remediation_path)
+    _, rows = _load_ledger(_decode(ledger_raw, ledger_path))
+    report = _decode(report_raw, report_path)
+    summary = _load_summary(_decode(summary_raw, summary_path))
+    remediation = _remediation_contract(_decode(remediation_raw, remediation_path))
+    issues: list[dict[str, Any]] = []
+
+    _check_summary(summary, issues)
+    _expect(
+        issues,
+        "χ²/ndf = 68269.4" in report,
+        "REPORT_ROUNDED_LABEL",
+        "legacy report rounded chi2/ndf label changed",
+    )
+    for key, present in remediation.items():
+        _expect(
+            issues,
+            present,
+            "REMEDIATION_CONTRACT",
+            f"strict remediation contract is missing {key}",
+        )
+    _check_rows(rows, summary, issues)
 
     return {
         "validator": "validate_mv3_legacy_claim_rows.py",
@@ -345,48 +376,42 @@ def validate(ledger_path: Path, report_path: Path, remediation_path: Path) -> di
         "policy": POLICY,
         "status": "VALIDATED" if not issues else "FLAWED",
         "claims": list(CLAIM_IDS),
-        "source_contract": report_contract,
-        "remediation_contract": remediation_contract,
-        "rounding_identifiability": {
-            "mc_b8": _rounding_count_range(MC_B8, MC_TRACKS),
-            "data_b8": _rounding_count_range(DATA_B8, DATA_EVENTS),
-        },
+        "source_contract": summary,
+        "remediation_contract": remediation,
         "inputs": {
             "claim_ledger": ledger_prov,
-            "legacy_report": {
-                **report_prov,
-                "git_blob": "b72eed4f7eb3237040a1346d7253080c098c8986",
-            },
-            "current_remediation": {
-                **remediation_prov,
-                "git_blob": "9b0dfeaa6e74401345bc78c7ab82b33d7868b665",
-            },
+            "legacy_report": report_prov,
+            "tracked_summary": summary_prov,
+            "strict_remediation": remediation_prov,
         },
         "issues": issues,
         "n_issues": len(issues),
     }
 
 
-def _write_json(path: Path, result: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-
-
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("claim_ledger", type=Path)
     parser.add_argument("legacy_report", type=Path)
-    parser.add_argument("current_remediation", type=Path)
+    parser.add_argument("tracked_summary", type=Path)
+    parser.add_argument("strict_remediation", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     try:
-        result = validate(args.claim_ledger, args.legacy_report, args.current_remediation)
+        result = validate(
+            args.claim_ledger,
+            args.legacy_report,
+            args.tracked_summary,
+            args.strict_remediation,
+        )
     except Mv3ClaimError as exc:
         print(f"INPUT ERROR: {exc}", file=sys.stderr)
         return 2
+    rendered = json.dumps(result, indent=2, sort_keys=True) + "\n"
     if args.output:
-        _write_json(args.output, result)
-    print(json.dumps(result, indent=2, sort_keys=True))
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(rendered, encoding="utf-8")
+    print(rendered, end="")
     return 0 if result["status"] == "VALIDATED" else 1
 
 

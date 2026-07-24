@@ -72,10 +72,21 @@ def test_readme_replacements_are_scientifically_qualified() -> None:
     source = "\n".join(old for old, _ in pairs)
     updated, changed = sync.synchronize_text("README.md", source)
     assert changed == 2
-    assert "Truth-labelled MC only" in updated
+    assert "Withheld pending S-STAT-003" in updated
+    assert "CL-010 — BLOCKED" in updated
+    assert "Early-peak morphology rate" in updated
+    assert "Wilson 95% CI 0.288–0.363%" in updated
+    assert "156 / 283 (55.1%)" in updated
     assert "real-data identity unvalidated" in updated
-    assert "✅ MC-validated" not in updated
-    assert "✅ MC-identified" not in updated
+    assert "R_max ≈ 3.05 MHz" not in updated
+    assert "~55% C12" not in updated
+
+
+def test_current_readme_state_is_idempotent() -> None:
+    current = "\n".join(new for _, new in sync.REPLACEMENTS["README.md"])
+    updated, changed = sync.synchronize_text("README.md", current)
+    assert changed == 0
+    assert updated == current
 
 
 def test_selected_paths_defaults_to_all_in_repository_order() -> None:

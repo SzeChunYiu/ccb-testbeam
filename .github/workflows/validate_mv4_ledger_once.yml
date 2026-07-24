@@ -1,0 +1,97 @@
+name: Validate MV4 ledger once
+
+on:
+  push:
+    paths:
+      - ".github/workflows/validate_mv4_ledger_once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Run exact focused validation
+        shell: bash
+        run: |
+          python -m py_compile \
+            tools/audit/audit_mv4_legacy_claim_rows.py \
+            tests/test_audit_mv4_legacy_claim_rows.py
+          PYTHONPATH=. python -m pytest \
+            tests/test_audit_mv4_legacy_claim_rows.py -q
+          PYTHONPATH=. python tools/audit/audit_mv4_legacy_claim_rows.py \
+            --ledger docs/claim_ledger.csv \
+            --report reports/mv4_timing_1782678162/REPORT.md \
+            --summary reports/mv4_timing_1782678162/mv4_summary.json \
+            --contract scripts/MV4_TIMING_README.md \
+            --output-json docs/validation/mv4_legacy_claim_rows_audit_validation.json \
+            --output-svg docs/validation/mv4_legacy_claim_rows_audit.svg
+          PYTHONPATH=. python tools/audit/validate_claim_ledger_schema.py \
+            docs/claim_ledger.csv \
+            --output docs/validation/claim_ledger_schema_validation.json \
+            --svg docs/validation/claim_ledger_schema.svg
+          python - <<'PY'
+          import json
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          mv4 = json.loads(Path(
+              'docs/validation/mv4_legacy_claim_rows_audit_validation.json'
+          ).read_text())
+          schema = json.loads(Path(
+              'docs/validation/claim_ledger_schema_validation.json'
+          ).read_text())
+          assert mv4['status'] == 'VALIDATED'
+          assert mv4['n_issues'] == 0
+          assert schema['status'] == 'VALIDATED'
+          assert schema['exact_width_rows'] == 26
+          assert schema['width_mismatch_rows'] == 0
+          ET.parse('docs/validation/mv4_legacy_claim_rows_audit.svg')
+          ET.parse('docs/validation/claim_ledger_schema.svg')
+          provenance = schema['claim_ledger']
+          text = f'''# Claim-ledger exact-width audit
+
+The canonical ledger contains 26 claim rows and 43 named fields. Field
+interpretation is permitted only after exact-width validation.
+
+After source-backed reconstruction of `CL-002` through `CL-009`, the exact
+current state is:
+
+- exact-width rows: **{schema['exact_width_rows']}/{schema['data_rows']}**;
+- withheld malformed rows: **{schema['width_mismatch_rows']}/{schema['data_rows']}**;
+- ledger bytes: **{provenance['bytes']}**;
+- ledger SHA-256: `{provenance['sha256']}`;
+- width histogram: `43:{schema['exact_width_rows']}`;
+- policy: `{schema['policy']}`;
+- validator status: **{schema['status']}**.
+
+All current rows now meet the structural schema. This does not upgrade any
+scientific claim: blocked, gated, tension, review, superseded, and truth-level
+states retain their evidence boundaries.
+
+This is repository schema/provenance evidence. It does not validate any detector
+measurement, simulation, calibration, or physics conclusion by itself.
+'''
+          Path('docs/validation/claim_ledger_schema_audit.md').write_text(text)
+          PY
+          git diff --check
+      - name: Commit validated evidence and remove workflow
+        shell: bash
+        run: |
+          rm .github/workflows/validate_mv4_ledger_once.yml
+          git config user.name "scheduled-scientific-review"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A \
+            .github/workflows/validate_mv4_ledger_once.yml \
+            docs/validation/mv4_legacy_claim_rows_audit_validation.json \
+            docs/validation/mv4_legacy_claim_rows_audit.svg \
+            docs/validation/claim_ledger_schema_validation.json \
+            docs/validation/claim_ledger_schema.svg \
+            docs/validation/claim_ledger_schema_audit.md
+          git commit -m "docs(validation): validate exact MV4 ledger remediation"
+          git push origin HEAD:main

@@ -1,0 +1,47 @@
+{
+  "claims": [
+    "CL-017",
+    "CL-018"
+  ],
+  "inputs": {
+    "claim_ledger": {
+      "bytes": 16393,
+      "path": "docs/claim_ledger.csv",
+      "sha256": "e607d042b7f6c6d1a62bf8fddb3c42e20e1e6429dc38a366696062330fb8eeb7",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "producer": {
+      "bytes": 10508,
+      "path": "scripts/mv1_mv2_truth_pid_energy.py",
+      "sha256": "534c70a754dba6a7017b35bc9074111d7d8db8e43795240848ea312a25c6e6ee",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "producer_git_blob": "4f3632e59ede59bcf27e053265908ddca77b4386",
+    "producer_source_commit": "3539ae3aad222284bd7be100802a2651c0e064de",
+    "summary": {
+      "bytes": 4129,
+      "path": "reports/mv1_mv2_truth_pid_energy_1782220258/mv1_mv2_truth_summary.json",
+      "sha256": "ecf7c6209728899b641484a0409a3f4e2d2e403491d2c113b0e5a29f0f2df4bb",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "issues": [],
+  "legacy_source_contract": {
+    "event_id_recorded": false,
+    "hgb_random_state_explicit": false,
+    "row_index_parity_split": true
+  },
+  "n_issues": 0,
+  "policy": "LEGACY_MV1_PID_OUTPUTS_REQUIRE_GROUP_DISJOINT_RERUN_AND_UNCERTAINTY",
+  "source_values": {
+    "hgb_auc": 0.9859658513538254,
+    "hgb_purity_at_90eff": 0.9644090769970706,
+    "n_binary_pid": 296972,
+    "n_deuteron": 146842,
+    "n_proton": 150130,
+    "n_tracks": 400369
+  },
+  "status": "VALIDATED",
+  "validator": "validate_mv1_legacy_claim_rows.py",
+  "version": "1.0.0"
+}

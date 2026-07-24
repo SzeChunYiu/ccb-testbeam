@@ -101,12 +101,8 @@ Additional checks:
 - invalid UTF-8, malformed CSV, noncanonical headers, duplicate IDs, middle-field
   shifts, short rows, JSON output, and accessible SVG output are covered.
 
-Committed-file SHA-256 values before GitHub publication:
-
-- validator: `9954ec1c25ca7c324daa535ab4a68ab65432f65dde74c81d7973ae4230c3c31d`
-- tests: `545686c13dc8e195b947dfc47cec90f33ffb34566a33222bfd9de4c934919713`
-- validation JSON: `c0e8314eaf907efadcb4b31ddc29c30447a813b54a8efe4d39771d478d6b3c92`
-- validation SVG: `f7465d88f8781696b8d61ec53e16c52c77ddcd5cf71b1180f6fb2dc14a03c276`
+Exact source and evidence blob IDs are recorded in the session handoff after remote
+publication. The machine-readable JSON is the authoritative row-by-row inventory.
 
 ## Acceptance state and required remediation
 

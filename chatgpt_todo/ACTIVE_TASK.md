@@ -1,13 +1,12 @@
 # Active Task
 
-- **Task ID:** AUD-G4-020
+- **Task ID:** AUD-G4-021
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-24T011158Z
-- **Initial remote main SHA:** `6460d5f1479163d000d9fbbe260ba4e3ce0db7d7`
-- **Validated code/test/evidence head:** `6ef9962fe8c5795d862728ad4d02c47138efc14f`
-- **Scope:** remove the unsupported arithmetic mean across distinct stopping-power energies and make the no-combination policy explicit in terminal and machine-readable reports.
-- **Corrected behavior:** the canonical reporter retains each exact energy point, emits only descriptive minimum/maximum point-estimate bounds labelled `no combined estimate`, removes the `statistics.mean` path, and records `NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL` in every result and CSV row.
-- **Validation:** exact committed source/test Git blobs matched locally validated files; focused `py_compile`; `6 passed in 0.04s`; source audit returned `VALIDATED`; JSON and SVG parsed; changed Python lines were at most 91 characters.
-- **Evidence:** `docs/validation/stopping_power_cross_energy_remediation_audit.md`, `stopping_power_cross_energy_remediation_validation.json`, and `stopping_power_cross_energy_remediation.svg`.
-- **Boundary:** no uncertainty model, covariance, real Geant4 export, total-energy-loss closure, or Geant4/PSTAR agreement was produced. Descriptive bounds are not an accepted combined estimate.
-- **Status:** COMPLETE for removal of the unsupported cross-energy mean; broader stopping-power physics closure remains blocked separately.
+- **Session stamp:** 2026-07-24T020230Z
+- **Initial remote main SHA:** `cdaf032c13f9967ad2a02c420987058b8a57a61b`
+- **Scope:** audit whether the canonical stopping-power report can overwrite its simulation/reference inputs or leave a partial report when writing fails.
+- **Confirmed source risk under review:** `run_compare()` writes directly with `out_path.open("w")` after reading the inputs, without an explicit output/input alias rejection or atomic temporary-file replacement.
+- **Files:** `scripts/single_stave/compare_stopping_power.py`, new source-audit tool/tests, validation Markdown/JSON/SVG, and mandatory `chatgpt_todo/` ledgers.
+- **Validation plan:** AST-based exact-pattern audit; synthetic vulnerable/fixed controls; focused `py_compile` and pytest; JSON and SVG parsing; line-length scan; exact current-source blob and limitations recorded.
+- **Boundary:** this session can validate the software/provenance defect and remediation specification. It does not validate a real Geant4 export or accepted stopping-power closure.
+- **Status:** ACTIVE

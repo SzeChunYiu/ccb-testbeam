@@ -7,6 +7,7 @@
 - **Unit:** MV3 public-WIKI section-binding validation
 - **Initial remote `main`:** `4480ca889250e1915d963e7c646cd5ebf923a201`
 - **Validated implementation/evidence head:** `cf6b891550b1d50323fb0508ed3843f32d4cfa1b`
+- **Remote-main delivery confirmation:** `5a71a479a59065b8bb3985747bd8c62f7b57557d` was confirmed as remote head after the complete validated delivery; this update records confirmation metadata only
 - **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or PR transport
 - **Acceptance:** **COMPLETE** for the validator/evidence unit; public WIKI remediation remains open
 
@@ -141,12 +142,12 @@ The SVG is explicitly software/documentation evidence, not detector data.
 - `fa42afc80fe603c15d8179bb6d9e0dc00691395b` — audit report;
 - `6e63520af23ffa01585667570c10f90bfe9240d5` — visual evidence;
 - `86d5fdfbbedf5860de196dbada412f8a1733396e` — immutable archive;
-- `cf6b891550b1d50323fb0508ed3843f32d4cfa1b` — active-task completion.
+- `cf6b891550b1d50323fb0508ed3843f32d4cfa1b` — active-task completion;
+- `5a71a479a59065b8bb3985747bd8c62f7b57557d` — complete delivery handoff, confirmed on remote `main`.
 
 The GitHub contents connector returned successful direct-main commit SHAs rather
-than conventional textual `git push` stdout. A post-write history read must confirm
-this handoff and the sequence on remote `main`; the resulting remote head is reported
-to the user.
+than conventional textual `git push` stdout. Post-write history confirmed the
+complete sequence on remote `main`.
 
 ## Scientific boundary
 

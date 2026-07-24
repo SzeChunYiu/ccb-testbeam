@@ -1,0 +1,162 @@
+name: Apply validated MV3 tracked-summary remediation
+
+on:
+  push:
+    paths:
+      - .github/workflows/mv3_summary_remediation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.repository == 'SzeChunYiu/ccb-testbeam'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Reconstruct, validate, commit, and push
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INITIAL_MAIN: a52ea7c3f76eddff204e8ebb990a55cfe8793e7f
+          SESSION_STAMP: 2026-07-24T210523Z
+          PAYLOAD_BLOBS: >-
+            5c547355735ff1aeff710a6651c49fe9e32eba74
+            baec3f389d626cbb3052fdcab2bcf1ef4579060d
+            d05509a1ff49c730540f686b2514ccca733b72ce
+            8e56937aba74b0626ecae03c1f26a1002111000e
+            5c896bb147dae7105764130e8d59f746afb825ee
+            a641916d6215060deca8e2eab0fce934f576dd9f
+            7af5980e707a78333d6329340b13fd21c4a536d2
+            a4a2f2c8db6e75337803ca952cdf2022b9a24c22
+            2d1785c2d1ddda7652a74a13ec15aa04feaf12cd
+          COORD_BLOBS: >-
+            e9e65acf1bf0fc249282557987e20739db87633b
+            95ae255997439b697a81f1d25844a98cc45ceb0a
+            40211408f09d024f033b2de09c084ca7839424a4
+            194dd31a91291b101781aa39c18b22977a2620c6
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "scheduled-scientific-review"
+          git config user.email "actions@users.noreply.github.com"
+
+          git show "${INITIAL_MAIN}:docs/claim_ledger.csv" > /tmp/former_claim_ledger.csv
+
+          : > /tmp/payload.raw
+          for sha in ${PAYLOAD_BLOBS}; do
+            gh api "repos/${GITHUB_REPOSITORY}/git/blobs/${sha}" --jq .content \
+              | tr -d '\n' | base64 -d >> /tmp/payload.raw
+          done
+          tr -d '[:space:]' < /tmp/payload.raw > /tmp/mv3_payload.b64
+          test "$(sha256sum /tmp/mv3_payload.b64 | cut -d' ' -f1)" = \
+            "73dc7a4ea6ddeb635d8c85b1c046897d71f88ae15c0ecfe73df19aa9043a043f"
+          base64 -d /tmp/mv3_payload.b64 > /tmp/mv3_payload.tar.gz
+          test "$(sha256sum /tmp/mv3_payload.tar.gz | cut -d' ' -f1)" = \
+            "b0a7fdf24b8316a1dbe9507b6439e059c248889d1d5c4e842493ed15432068fb"
+
+          : > /tmp/coord.raw
+          for sha in ${COORD_BLOBS}; do
+            gh api "repos/${GITHUB_REPOSITORY}/git/blobs/${sha}" --jq .content \
+              | tr -d '\n' | base64 -d >> /tmp/coord.raw
+          done
+          tr -d '[:space:]' < /tmp/coord.raw > /tmp/coord_mv3.b64
+          test "$(sha256sum /tmp/coord_mv3.b64 | cut -d' ' -f1)" = \
+            "a012e75888b733df53df705e94fdbadb91f2f4df5d5d684112a4b1684c913ea0"
+          base64 -d /tmp/coord_mv3.b64 > /tmp/coord_mv3.py
+          test "$(sha256sum /tmp/coord_mv3.py | cut -d' ' -f1)" = \
+            "a7bfff1df7ca558f4dd129b36a881bf513645ba0adb97b2a85af184b264888a4"
+
+          tar -xzf /tmp/mv3_payload.tar.gz
+
+          python -m py_compile \
+            tools/audit/validate_mv3_legacy_claim_rows.py \
+            tools/audit/audit_mv3_summary_provenance.py \
+            tools/audit/render_mv3_legacy_claim_evidence.py \
+            tests/test_validate_mv3_legacy_claim_rows.py \
+            tests/test_audit_mv3_summary_provenance.py \
+            tests/test_mv3_wiki_summary_sync.py
+
+          PYTHONPATH=. python -m pytest \
+            tests/test_validate_mv3_legacy_claim_rows.py \
+            tests/test_audit_mv3_summary_provenance.py \
+            tests/test_mv3_wiki_summary_sync.py -q \
+            | tee /tmp/focused_pytest.log
+
+          python tools/audit/validate_mv3_legacy_claim_rows.py \
+            docs/claim_ledger.csv \
+            reports/mv3_stopping_v3_1782679272/REPORT.md \
+            reports/mv3_stopping_v3_1782679272/mv3_summary.json \
+            src/ccb_mc_validation/studies/mv3_stopping_depth.py \
+            --output /tmp/current_validation.json > /tmp/current_validation.stdout
+
+          set +e
+          python tools/audit/validate_mv3_legacy_claim_rows.py \
+            /tmp/former_claim_ledger.csv \
+            reports/mv3_stopping_v3_1782679272/REPORT.md \
+            reports/mv3_stopping_v3_1782679272/mv3_summary.json \
+            src/ccb_mc_validation/studies/mv3_stopping_depth.py \
+            --output /tmp/former_validation.json > /tmp/former_validation.stdout
+          former_status=$?
+          set -e
+          test "${former_status}" -eq 1
+
+          python - <<'PY'
+          import csv
+          import json
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          current = json.loads(Path('/tmp/current_validation.json').read_text())
+          former = json.loads(Path('/tmp/former_validation.json').read_text())
+          assert current['status'] == 'VALIDATED' and current['n_issues'] == 0
+          assert former['status'] == 'FLAWED' and former['n_issues'] == 33
+          evidence = json.loads(
+              Path('docs/validation/mv3_summary_remediation_validation.json').read_text()
+          )
+          assert evidence['validation']['focused_pytest']['passed'] == 13
+          ET.parse('docs/validation/mv3_summary_remediation.svg')
+          with Path('docs/claim_ledger.csv').open(newline='', encoding='utf-8') as handle:
+              rows = list(csv.reader(handle))
+          assert len(rows) == 27
+          assert all(len(row) == 43 for row in rows)
+          for name in (
+              'tools/audit/validate_mv3_legacy_claim_rows.py',
+              'tools/audit/audit_mv3_summary_provenance.py',
+              'tools/audit/render_mv3_legacy_claim_evidence.py',
+              'tests/test_validate_mv3_legacy_claim_rows.py',
+              'tests/test_audit_mv3_summary_provenance.py',
+              'tests/test_mv3_wiki_summary_sync.py',
+          ):
+              assert max(map(len, Path(name).read_text().splitlines())) <= 100
+          PY
+
+          git diff --check
+          git add \
+            docs/claim_ledger.csv WIKI.md \
+            tools/audit/validate_mv3_legacy_claim_rows.py \
+            tools/audit/audit_mv3_summary_provenance.py \
+            tools/audit/render_mv3_legacy_claim_evidence.py \
+            tests/test_validate_mv3_legacy_claim_rows.py \
+            tests/test_audit_mv3_summary_provenance.py \
+            tests/test_mv3_wiki_summary_sync.py \
+            docs/validation/mv3_summary_remediation_audit.md \
+            docs/validation/mv3_summary_remediation_validation.json \
+            docs/validation/mv3_summary_remediation.svg
+          git commit -m "fix(audit): reconcile MV3 tracked summary claims"
+          git fetch origin main
+          git rebase origin/main
+          export CORE_SHA="$(git rev-parse HEAD)"
+          git push origin HEAD:main 2>&1 | tee /tmp/core_push.log
+
+          python /tmp/coord_mv3.py
+          git diff --check
+          git add chatgpt_todo
+          git commit -m "docs(audit): hand off MV3 exact-summary remediation"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main 2>&1 | tee /tmp/coordination_push.log

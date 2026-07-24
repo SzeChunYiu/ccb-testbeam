@@ -2,133 +2,136 @@
 
 ## Session
 
-- UTC: `2026-07-24T033502Z`
-- Task: `AUD-WIKI-002`
+- UTC: `2026-07-24T041806Z`
+- Completed task: `AUD-WIKI-002`
 - Repository: `SzeChunYiu/ccb-testbeam`
-- Initial remote main: `e8b01b4414d2a797c5f97fe3ee98f88e99ad254a`
-- Validated code/test/evidence head: `57dee4451352b27fc191cbc36805a2d0316600ff`
-- Remote main after concurrent work and archive, immediately before this handoff: `ba6aaa95dec282928879a6ba3ed5c1bf3df6f277`
-- Destination: direct to `main`
-- Acceptance: `PARTIAL`; the public WIKI inconsistency and checking tool are validated, but the complete WIKI has not yet been remediated and revalidated.
+- Initial remote `main`: `c9ff3196a1c5a4441119e6b19b592db1a8b5763b`
+- WIKI remediation implementation/evidence head: `ef5a2167934f414e7cf064c210ddd22bb401ce20`
+- Immutable WIKI archive commit: `0024b78178827eae25a97c9ca17f02fad2610802`
+- Remote `main` immediately before this handoff: `02102fae6897170c3b37aa1485c67ba0819e1101`
+- Destination: direct commits to `main`; no task branch, force-push, or history rewrite
+- Acceptance: `AUD-WIKI-002 = COMPLETE`
+- Concurrent state preserved: `AUD-LEDGER-001` is active and has added a fail-closed schema validator/evidence after this run registered the remaining ledger defect. Its work was not overwritten or claimed as this session's work.
 
-## Start-of-run and concurrent-work review
+## Start-of-run review
 
-- Confirmed repository admin/push permission, default branch `main`, recent history, current coordination records, and PR #868 status.
-- PR #868 remains closed, unmerged, and non-mergeable. It was not modified or merged.
-- `AUD-REPO-001` remains owned by another active session and was not duplicated.
-- A concurrent non-overlapping `AUD-G4-021` remediation advanced `main` during this run. Later writes incorporated its final handoff commit `6338aed736deee7ac4496981ae04da2b01722ed4`; no concurrent commit was discarded.
-- No task branch, pull request, force push, history rewrite, unrelated rollback, or destructive data edit was used.
-- A direct checkout was unavailable because the runtime could not resolve GitHub hosts. Exact repository text was inspected through authenticated GitHub contents/ranged reads, and repository writes were direct-main connector commits.
+Reviewed current `main`, recent history and concurrent activity, repository permissions,
+PR #868, WIKI and claim-ledger content, the prior front-door validator/tests,
+internal-link checking, and all mandatory `chatgpt_todo/` records.
 
-## Repository evidence inspected
+PR #868 remains closed, unmerged, and non-mergeable. It was not modified.
 
-### Public front door
+A direct checkout was attempted and failed with:
+
+```text
+Could not resolve host: github.com
+```
+
+Authenticated GitHub connector reads and direct-main writes were used. Successful
+write responses and subsequent remote reads are the push evidence; no local `git
+push` transcript exists.
+
+## Confirmed defects
+
+### Public WIKI
+
+1. `MV4 raw timing pull`, `MC raw timing pull`, and `MV4 raw` used `PASS`, although
+   `PASS` is absent from the published legend and canonical `CL-007` is `VALIDATED`.
+2. The canonical effective-live-time row used `data_only`; canonical `CL-011` is
+   `data_mc_self_consistent`.
+3. The WIKI stated `Every number has uncertainty.` while the canonical ledger still
+   contains explicit `CI_MISSING_BLOCKING` entries.
+
+### Exact claim-ledger schema
+
+Exact-file validation exposed a deeper issue:
+
+- canonical header width: `43` columns;
+- original data rows: `26`;
+- original exact-width rows: `0`;
+- original row widths: `35` to `40` columns.
+
+`CL-007` and `CL-011` placed their intended late values five fields early. Standard
+CSV parsing therefore did not expose their intended truth type/status/source fields.
+
+### Validator behavior
+
+Validator v1.0.0 attempted a truth-type check on every matching effective-live-time
+row, including a three-column summary row that has no truth-type column. This caused
+a false missing-truth issue after correcting the canonical row.
+
+## Remediation delivered
+
+### `WIKI.md`
+
+Exactly five statements changed:
+
+- the blanket uncertainty-completeness sentence now points to the canonical ledger
+  and explicitly states that `CI_MISSING_BLOCKING` entries remain incomplete;
+- effective-live-time truth type is now `data + MC self-consistent`;
+- all three raw-MV4 labels are now `VALIDATED`.
+
+No scientific number, uncertainty value, formula, event selection, plot, or
+interpretation was recalculated.
+
+### `docs/claim_ledger.csv`
+
+Only the two bound rows were reconstructed to the 43-column schema, preserving all
+non-empty values:
+
+- `CL-007`: `truth_type=digitized_mc`, `status=VALIDATED`;
+- `CL-011`: `truth_type=data_mc_self_consistent`, `status=VALIDATED`.
+
+The remaining 24 malformed rows were not guessed or silently padded. They remain
+blocked under `AUD-LEDGER-001` / `BLK-LEDGER-001`.
+
+### Validator and tests
+
+`tools/audit/validate_wiki_claim_front_door.py` is now v1.1.0:
+
+- status checks still apply to every bound summary/canonical row;
+- truth type is checked only on matching rows with six or more table fields;
+- at least one truth-type-bearing row is required for a truth binding.
+
+The focused fixture now includes a duplicate three-column effective-live-time summary
+row to prevent recurrence.
+
+## Exact provenance
+
+### Original files
 
 - `WIKI.md`
-- Git blob SHA-1: `c27a1e555145cb248e253f17a6f6d1cfe64542a8`
-- Reviewed front matter, confidence-status legend, canonical results table, timing key-results table, and Monte Carlo validation matrix.
+  - Git blob: `c27a1e555145cb248e253f17a6f6d1cfe64542a8`
+  - bytes: `19159`
+  - SHA-256:
+    `62385f61aa5742b9a522efe1bd8a2ab576638a0cfc1cfdf28ad59f53c78f5181`
+- original claim ledger Git blob:
+  `6f4d4023814b42a566826912bcef7df9903c41e7`
 
-### Canonical claim state
+### Corrected files
 
+- `WIKI.md`
+  - Git blob: `04781e1107075e1e57c08e6dd4e1f48d9a131763`
+  - bytes: `19279`
+  - SHA-256:
+    `c739c0791a47ae6f9dadddd790b223e1cf728d0db0945500d6d7f851df885620`
 - `docs/claim_ledger.csv`
-- Git blob SHA-1: `6f4d4023814b42a566826912bcef7df9903c41e7`
-- Reviewed authoritative records `CL-007` and `CL-011`.
+  - Git blob: `0c7ea56d00ed44bd976e4ba8e05a84cb4c6eb63e`
+  - bytes: `8971`
+  - SHA-256:
+    `3ef63ee3836ce67c8b9f4538f754737cdcf53bc67d9a746210a0ea9e81e41d2d`
+- validator
+  - Git blob: `99d2f579c98563969df26dbf1f946d8454c8ba00`
+  - SHA-256:
+    `3d82e6e57f97b9396392dc83423edee559f077c71acf5d03712a2656ded80912`
+- test
+  - Git blob: `068333d2db2873044f0599e9ab3c884dfb870ea5`
+  - SHA-256:
+    `ca43f22839ed80d80365ff6d5b3f26d186130f0c6374eaea2a98de6c8707c9d3`
 
-### Coordination and history
+## Validation
 
-- `chatgpt_todo/README.md`
-- `MASTER_INDEX.md`
-- `BACKLOG.md`
-- `ACTIVE_TASK.md`
-- `HANDOFF.md`
-- `BLOCKERS.md`
-- `CLAIM_EVIDENCE_MATRIX.md`
-- recent commits and PR #868 metadata.
-
-## Confirmed public claim-state defects
-
-### 1. Status outside the published legend and inconsistent with the ledger
-
-The WIKI labels the MV4 raw timing-pull claim `PASS` in three public tables:
-
-- canonical results table;
-- timing key-results table;
-- Monte Carlo validation matrix.
-
-However:
-
-- `PASS` is not defined in the WIKI confidence-status legend;
-- canonical claim-ledger record `CL-007` classifies the claim as `VALIDATED`.
-
-Measured validator findings:
-
-- `STATUS_OUTSIDE_LEGEND`: 3
-- `STATUS_LEDGER_MISMATCH`: 3
-
-### 2. Effective live-time truth-type mismatch
-
-The WIKI canonical results table labels `τeff` as `data_only`. Canonical claim-ledger record `CL-011` uses `data_mc_self_consistent` and notes that the truth classification was upgraded during review.
-
-Measured validator finding:
-
-- `TRUTH_TYPE_LEDGER_MISMATCH`: 1
-
-### 3. Unsupported uncertainty-completeness statement
-
-The WIKI front matter says:
-
-`Every number has uncertainty.`
-
-The canonical claim ledger still contains explicit `CI_MISSING_BLOCKING` fields, including for the reviewed raw timing-pull and effective live-time records. The public sentence therefore overstates the completeness of the uncertainty inventory.
-
-Measured validator finding:
-
-- `OVERSTATED_UNCERTAINTY_COMPLETENESS`: 1
-
-Total measured issues in the exact cited reconstruction: 8.
-
-These are documentation and claim-governance defects. They do not alter the numerical values or constitute a new timing, pile-up, data, or simulation result.
-
-## Better method and policy
-
-Registered policy:
-
-`WIKI_FRONT_DOOR_MUST_MATCH_CANONICAL_LEDGER`
-
-A complete remediation must:
-
-1. replace all three MV4 raw `PASS` labels with the canonical `VALIDATED` state;
-2. align the effective live-time truth type with `data_mc_self_consistent`, using readable WIKI wording;
-3. replace the blanket uncertainty statement with wording that explicitly points to unresolved ledger fields;
-4. run the validator against the complete exact current WIKI and claim ledger;
-5. require status `VALIDATED` before marking `AUD-WIKI-002` complete;
-6. preserve the caveat that `CL-007` still lacks a complete uncertainty reconstruction despite its claim-state label.
-
-## Added code, tests, and evidence
-
-Added:
-
-- `tools/audit/validate_wiki_claim_front_door.py` v1.0.0
-- `tests/test_validate_wiki_claim_front_door.py`
-- `docs/validation/wiki_claim_front_door_audit.md`
-- `docs/validation/wiki_claim_front_door_validation.json`
-- `docs/validation/wiki_claim_front_door.svg`
-
-The validator:
-
-- reads WIKI and ledger bytes once and records byte count and SHA-256;
-- validates the claim-ledger schema and duplicate IDs;
-- extracts the confidence-status vocabulary from the WIKI;
-- binds the three raw-timing rows to `CL-007` and `τeff` to `CL-011`;
-- checks status vocabulary, canonical state, truth type, and uncertainty-completeness wording;
-- emits machine-readable JSON;
-- returns 0 for `VALIDATED`, 1 for `FLAWED`, and 2 for controlled input/schema/UTF-8 errors.
-
-The SVG explicitly labels itself as synthetic documentation/provenance evidence, not detector data, and uses text, layout, and arrows rather than color alone.
-
-## Validation commands and results
-
-Executed in a local reconstruction of the committed new files:
+Executed on exact local reconstructions:
 
 ```text
 python -m py_compile \
@@ -138,95 +141,107 @@ python -m py_compile \
 python -m pytest tests/test_validate_wiki_claim_front_door.py -q
 
 5 passed in 0.03s
+
+python tools/audit/validate_wiki_claim_front_door.py \
+  WIKI.md docs/claim_ledger.csv \
+  --output docs/validation/wiki_claim_front_door_remediation_validation.json
 ```
 
-Focused coverage:
+Exact corrected-file result:
 
-- current-like public inconsistencies produce eight expected issues;
-- a corrected front door returns `VALIDATED`;
-- missing required canonical claim IDs raise controlled errors;
-- the CLI writes machine-readable flaw output and returns status 1;
-- invalid UTF-8 returns status 2.
+- process status: `0`;
+- status: `VALIDATED`;
+- issues: `0`;
+- bindings checked: `4`;
+- legend statuses: `8`.
 
-Exact cited reconstruction:
+Focused link validation:
 
-- WIKI excerpt SHA-256: `7ff43954b0ae435d161ae6b6c96b9178f5aeda0d870857047e2e446fc1a28f14`
-- ledger excerpt SHA-256: `e89519ff2099af61c68cea2151918fd61db506387b4247927daa0ac1d59d50e9`
-- status: `FLAWED`
-- process status: 1
-- issue count: 8
+```text
+python scripts/broken_link_checker.py
 
-Committed new-file SHA-256 values recorded by the validation:
+✓ All internal links valid.
+```
 
-- validator: `d8bc0f814d2855501b599d54d691d5a7e3939a58040690e7825364823773639f`
-- test: `b118e7ab1287a11d3fae097eea57789dd4616538672d0af06127c4348916fc74`
+The link check used the exact corrected WIKI and a local mirror of all 16 unique
+internal targets whose existence was verified on GitHub. It was not a full scan of
+every repository Markdown file.
 
-Additional passed checks:
-
-- validation JSON parse;
-- SVG XML parse;
-- maximum validator line length: 91 characters;
-- maximum test line length: 92 characters.
+JSON parsing and SVG XML parsing also passed.
 
 Not run:
 
-- complete exact-file validator execution in a checkout;
-- WIKI remediation;
-- broken-link checker;
 - full repository pytest;
 - ruff;
 - ROOT/data processing;
 - simulation;
 - GitHub Actions.
 
-No CI success is claimed. No status checks were attached to the validated code/test/evidence head.
+No broad CI success is claimed. No status checks were attached to the WIKI archive
+commit.
 
-## Direct-to-main commit sequence
+## Evidence added
 
-Implementation and evidence:
+- `docs/validation/wiki_claim_front_door_remediation_audit.md`
+- `docs/validation/wiki_claim_front_door_remediation_validation.json`
+- `docs/validation/wiki_claim_front_door_remediation.svg`
+- `chatgpt_todo/archive/2026-07-24T041806Z_AUD-WIKI-002_FRONT_DOOR_REMEDIATION.md`
 
-- `ad582c6dc09e3c790e435ebe1506963f62e2d685` — `feat(audit): validate WIKI front-door claims`
-- `cd1bbb5eb2be2c1d189c0b0fbe803d4f12104294` — `test(audit): cover WIKI front-door claim consistency`
-- `45aebc50067ce8f7a9c216646d12cb9e7ac24791` — `docs(validation): record WIKI claim front-door audit`
-- `03bbb9df5a8b3b64fc1e3931e65fa9dea142e992` — `docs(validation): add WIKI front-door validation record`
-- `57dee4451352b27fc191cbc36805a2d0316600ff` — `docs(validation): visualize WIKI claim front-door inconsistencies`
+The SVG explicitly labels itself synthetic documentation/provenance evidence, not
+detector data, and shows the remaining 24-row ledger limitation.
 
-Coordination and provenance:
+## Direct-to-main WIKI commit sequence
 
-- `85e17a502949c6ccbb9875e5ca60e351ac912423` — `docs(audit): activate WIKI front-door consistency task`
-- `846c1883d4a3568f177e831787216383fe3e9f54` — `docs(audit): register WIKI front-door consistency task`
-- `ba6aaa95dec282928879a6ba3ed5c1bf3df6f277` — `docs(audit): archive WIKI front-door consistency audit`
+- `e2f7da44d437459db9cb56de2e1944102039f2d0` — `docs(wiki): align front-door claims with ledger`
+- `0534463eaab3b6d794135d6782b976fd73d461b4` — `fix(docs): align bound claim-ledger rows`
+- `210a33c4ff39ef1ee87a246a9a364f1d9d8f8a5b` — `fix(audit): handle WIKI summary rows in truth checks`
+- `787c5e7e45401aea11e17fcd7abc0f176863b25b` — `test(audit): cover duplicate WIKI summary rows`
+- `acb1789f4694840c12e1c6b4819110f485a24266` — remediation audit
+- `a3f4f39679221c5e65578e1669f6cbb86fec3984` — validation JSON
+- `eee766e554ac8520b3c69212effd853063a34afe` — visual evidence
+- `ddcad3a63b007861f50dd7b33c35301251a1a845` — active-task completion
+- `6a0268b46cc7c848096019ea466b73901df1605b` — backlog completion and ledger-task registration
+- `f303c938804f1a28942298e714a261c940d365d5` — master-index update
+- `5916896ed187dc383fd749f5963fa3ca80b2e014` — claim-evidence update
+- `e1039b75af5c5d6dff3863b4fef737e85d864d78` — ledger blocker registration
+- `9cd287117092b720e72cb01143f5004b056e5772` — code-result mapping
+- `3f7a9d23b43d5e421c82949c59aa2b9f9fb6fd3e` — visualization mapping
+- `ef5a2167934f414e7cf064c210ddd22bb401ce20` — study-ledger update
+- `0024b78178827eae25a97c9ca17f02fad2610802` — immutable archive
 
-All operations returned successful direct-main GitHub commits. A local `git push` transcript is unavailable because no checkout/network path was available; authenticated write responses and subsequent remote-main reads are the push evidence. The commit containing this handoff is the final remote-main verification target.
+Every listed commit is present in the remote `main` history. Concurrent
+`AUD-LEDGER-001` commits based on the advanced main were preserved.
 
-## `chatgpt_todo/` updates
+## Coordination state
 
-Updated:
+- `AUD-WIKI-002`: `COMPLETE`
+- `IDX-WIKI-002`: `COMPLETE`
+- `CL-WIKI-001`: `COMPLETE`
+- `CRM-WIKI-001`: `COMPLETE`
+- `VIS-WIKI-001`: `COMPLETE`
+- `ST-WIKI-001`: `COMPLETE`
+- `AUD-LEDGER-001`: active follow-on
+- `BLK-LEDGER-001`: open
 
-- `ACTIVE_TASK.md`
-- `BACKLOG.md`
-- `HANDOFF.md`
+`ACTIVE_TASK.md` now belongs to the concurrent `AUD-LEDGER-001` session and was not
+overwritten during final reconciliation.
 
-Added stable task:
+`SESSION_LOG.md` remains unchanged in this WIKI session because it is append-only,
+the connector exposes whole-file replacement rather than an append primitive, and a
+concurrent session began updating the same coordination system. Replacing 282 lines
+while `main` was advancing would create an avoidable lost-update/provenance risk.
+The complete WIKI session record is preserved in the immutable archive and this
+handoff. This is an explicit coordination limitation, not a claim that the mandatory
+append occurred.
 
-- `AUD-WIKI-002`: `PARTIAL`
+## Scientific boundary and next work
 
-Added immutable session record:
+This session did not recalculate timing pulls, effective live-time, pile-up rate,
+confidence intervals, data, simulation, calibration, or detector performance.
 
-- `chatgpt_todo/archive/2026-07-24T033502Z_AUD-WIKI-002_FRONT_DOOR_CONSISTENCY.md`
+The WIKI front-door unit is complete. Repository-wide WIKI verification remains open
+under `AUD-WIKI-001`.
 
-`SESSION_LOG.md` was not replaced in this session. Although a prior concurrent session reconstructed and appended its own entry from complete ranged reads, repeating a complete-file replacement while `main` was changing would add avoidable provenance-loss and lost-update risk. The immutable archive and this handoff contain the full run record; the missing append is an explicit coordination limitation to be reconciled in a byte-safe checkout or subsequent complete snapshot append.
-
-## Scientific boundary and next action
-
-This run did not:
-
-- recalculate the MV4 raw pull;
-- recalculate effective live-time or pile-up rate;
-- complete missing confidence intervals or uncertainty components;
-- process beam data or ROOT files;
-- execute simulation;
-- change the canonical claim ledger;
-- change the public WIKI text.
-
-`AUD-WIKI-002` remains `PARTIAL`. The next unit is to edit the complete current `WIKI.md`, run the validator against complete exact current files, execute focused tests and the broken-link checker, inspect the exact diff, update the relevant claim/index/visual ledgers, and mark the task complete only when the validator returns `VALIDATED`.
+The follow-on claim-ledger task must reconstruct 24 remaining width-mismatched rows
+from source-backed semantics and require 26/26 exact 43-column rows before late fields
+are interpreted. No missing values or field placement may be guessed.

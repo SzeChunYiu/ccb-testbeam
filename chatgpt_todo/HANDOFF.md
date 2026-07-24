@@ -2,161 +2,118 @@
 
 ## Session
 
-- UTC stamp: `2026-07-24T050822Z`
+- UTC stamp: `2026-07-24T061758Z`
 - Task: `AUD-LEDGER-001`
 - Repository: `SzeChunYiu/ccb-testbeam`
-- Initial remote `main`: `1c982d65a0b742c3b6d4f78201cfed37fa3094c4`
-- Validated work/archive head: `089d02f622c86c8350ce9f7ab40df61e57c23aa3`
-- Remote confirmation: recent-main search returned `089d02f622c86c8350ce9f7ab40df61e57c23aa3` as the current head before this handoff update.
-- Destination: direct commits to `main`; no task branch, pull request, force-push, or history rewrite
-- Acceptance: `AUD-LEDGER-001 = PARTIAL`; `CL-001` is validated, 23 malformed ledger rows remain
+- Initial remote `main`: `72fccaa8f4d6c00665c60fd0a94884c87cdd544b`
+- Main after validated work/archive: `5113230b9d065f3a672f0b72e85fadcf311124e2`
+- Remote confirmation before this handoff update: recent-main search returned `292f5ad6e55438e155dec756b9bf257a723a3524` at head; the subsequent archive write succeeded as `5113230b9d065f3a672f0b72e85fadcf311124e2`.
+- Destination: direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite
+- Acceptance: `AUD-LEDGER-001 = PARTIAL`; `CL-010` is blocked, `CL-012` is superseded, and 21 malformed ledger rows remain
 
 ## Start-of-run and concurrency review
 
-Reviewed repository permissions/default branch, recent main history, open PRs, commit
-status, PR #868 state, all mandatory coordination records, the strict ledger-schema
-gate, and the complete S00 evidence chain. A direct clone failed with `Could not
-resolve host: github.com`; authenticated GitHub connector reads/writes were used.
+Reviewed repository permissions/default branch, recent main history, open PRs, PR #868, commit status/workflow state, mandatory `chatgpt_todo/` records, claim and figure registries, WIKI, MV5 report/summary/script, academic pile-up chapter, source commit, and tracked MV5 figure. The initial head was the concurrent SiPM campaign merge `72fccaa8f4d6c00665c60fd0a94884c87cdd544b`; it was preserved. A direct clone failed because the runtime could not resolve `github.com`, so authenticated GitHub connector reads/writes were used. PR #868 remains closed, unmerged, and non-mergeable and was not modified.
 
-Concurrent commit `a0e498852a3275f8bdfe2b5aeb50fb4860c24dd9` landed during the run. It was
-preserved; no unrelated commit or working tree was overwritten. PR #868 remains closed,
-unmerged, and non-mergeable and was not modified.
+No status checks or pull-request workflow runs were attached to the initial head. No CI success is inferred.
 
-## Confirmed defects
+## Confirmed source conflict
 
-1. `CL-001` contained 40 values under the canonical 43-column header, so ordinary
-   positional parsing shifted late fields.
-2. The row cited stale/nonexistent paths:
-   - `reports/s00_pulse_table/REPORT.md`;
-   - `data/pulse_table.parquet`.
-3. `FIG-GL-001` cited stale/nonexistent paths:
-   - `scripts/s00_selector.py`;
-   - `data/s00_counts.csv`;
-   - `docs/figures/s00_gate.png`.
+1. `CL-010` had 37 fields and `CL-012` had 36 fields under the canonical 43-column header, so their late fields were not safely interpretable.
+2. The tracked MV5 summary records `tau_eff_new_ns=124.8` and `duty=0.38`. Its headline is exactly:
+
+```text
+(1 / 124.8 ns) × 0.38 = 3.0448717948717947 MHz
+```
+
+`0.38` is named as the beam duty factor in source and summary; the reviewed repository evidence does not establish it as an occupancy-quality threshold.
+3. The academic chapter instead uses `mu_max=0.1`, derives `0.801 MHz` per stave and `3.20 MHz` for four staves, then calls `3.05 MHz` a rounding. `3.05` is not a rounding of `3.20`.
+4. The MV5 JSON records `rmax_from_failure_ceiling_mhz=null`. The maximum simulated recovery failure fraction is `0.03475`, below the recorded ceiling `0.17`; no recovery crossing or lower bound at `3.044 MHz` was demonstrated.
+5. `FIG-PU-003` cited nonexistent `results.json` and `docs/figures/rmax_comparison.png` paths instead of the tracked `mv5_pileup_summary.json` and `mv5_pileup.png` artifacts.
 
 ## Source-backed correction
 
-The row is now bound to:
+- `CL-010` is now exactly 43 fields, `status=BLOCKED`, `truth_type=derived_model_conflicted`, `allowed_status_validated=NO`, current value blank, `ci_status=NOT_APPLICABLE_WITH_REASON`, and `blocked_by=S-STAT-003`.
+- `CL-012` is now exactly 43 fields, `status=SUPERSEDED`, current value blank, `ci_status=SUPERSEDED_DO_NOT_USE`, and retained only as correction history.
+- Both rows cite the tracked MV5 report, script, summary JSON, source commit `3c5ff5cf587c8ca9cefda20cb220ba29effd2170`, and `FIG-PU-003`.
+- `FIG-PU-003` now points to `reports/mv5_pileup_1782678353/mv5_pileup_summary.json` and `reports/mv5_pileup_1782678353/mv5_pileup.png`, with explicit non-acceptance language.
 
-- `configs/s00_reproduction.yaml`;
-- `scripts/01_build_pulse_table_from_root.py`;
-- `reports/S00_data_integrity_pipeline_reproduction/REPORT.md`;
-- `reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv`;
-- `reports/S00_data_integrity_pipeline_reproduction/manifest.json`;
-- `reports/S00_data_integrity_pipeline_reproduction/fig_counts_by_group_stave.png`;
-- source commit `dcde28d37b9adee4f56ee0348d090006c53d2fa1`.
-
-The 43-field row records `640737 pulses`, 33 configured runs, `n_data=640737`,
-`truth_type=data_count`, `status=VALIDATED`, exact source paths, full source commit,
-`FIG-GL-001`, `TAB-GL-001`, and `ci_status=EXACT_COUNT_FIXED_INPUTS`.
-
-The `0/0/0` uncertainty entries are scoped to exact deterministic count reproduction
-for fixed repository-declared input files and algorithm. They are not a population
-confidence interval. The generated selected-pulse CSV remains intentionally untracked.
+No accepted Rmax value or uncertainty remains in the canonical claim ledger.
 
 ## Validation delivered
 
 Added:
 
-- `tools/audit/validate_claim_ledger_cl001.py` v1.0.0;
-- `tests/test_validate_claim_ledger_cl001.py`;
-- `docs/validation/claim_ledger_cl001_audit.md`;
-- `docs/validation/claim_ledger_cl001_validation.json`;
-- `docs/validation/claim_ledger_cl001.svg`.
+- `tools/audit/validate_claim_ledger_cl010.py` v1.0.0;
+- `tests/test_validate_claim_ledger_cl010.py`;
+- `docs/validation/claim_ledger_cl010_audit.md`;
+- `docs/validation/claim_ledger_cl010_validation.json`;
+- `docs/validation/claim_ledger_cl010.svg`.
 
-The validator checks the exact ledger/config/report/count-table/manifest/figure-registry
-chain, count and run cardinality, count-table closure, report scope, commit linkage,
-manifest contract, tracked source paths, and figure registry. It returns 0 for
-`VALIDATED`, 1 for measured inconsistencies, and 2 for controlled input/schema errors.
+The validator requires exact 43-field quarantine rows, checks source paths and producing commit, independently recomputes the duty-scaled reciprocal, verifies the null recovery crossing and failure ceiling, identifies the chapter's incompatible derivation, and validates repaired figure provenance. It returns 0 for `VALIDATED`, 1 for measured inconsistencies, and 2 for controlled input/schema/UTF-8 errors.
 
 Commands and results:
 
 ```text
 python -m py_compile \
-  tools/audit/validate_claim_ledger_cl001.py \
-  tests/test_validate_claim_ledger_cl001.py
+  tools/audit/validate_claim_ledger_cl010.py \
+  tests/test_validate_claim_ledger_cl010.py
 
-PYTHONPATH=. python -m pytest tests/test_validate_claim_ledger_cl001.py -q
+PYTHONPATH=. python -m pytest tests/test_validate_claim_ledger_cl010.py -q
 
-5 passed in 0.59s
-
-PYTHONPATH=. python tools/audit/validate_claim_ledger_cl001.py \
-  --output docs/validation/claim_ledger_cl001_validation.json \
-  --svg docs/validation/claim_ledger_cl001.svg
-
-status: VALIDATED
-issues: 0
-configured runs: 33
-count: 640737
+6 passed in 0.04s
 ```
 
-JSON and SVG parsing passed. Maximum changed Python line lengths were 96 and 95
-characters. Ruff, full repository pytest, ROOT processing, simulation, and GitHub
-Actions were not run; no broader CI success is claimed. No status checks were attached
-to the initial head.
+The source-faithful fixture validator returned `VALIDATED` with zero issues. JSON and SVG parsing passed. Maximum changed Python line length was 92 characters. The tests cover corrected quarantine, attempted re-promotion to `VALIDATED`, attempted insertion of a canonical value, a future recovery-crossing change, stale figure paths, and controlled invalid UTF-8.
 
-## Cumulative claim-ledger state
+The exact proposed ledger bytes were parsed independently:
 
-- canonical columns: 43
-- data rows: 26
-- exact rows: 3 (`CL-001`, `CL-007`, `CL-011`)
-- width-mismatched rows: 23
-- schema state: `FLAWED` by required fail-closed policy
-- malformed-row late fields: `WITHHELD`
+- file size: `10097` bytes;
+- SHA-256: `809e03162f04f94235fe36612c0ec8a3ccf4ae054a5d87341bdd5e26ad3c57d6`;
+- data rows: 26;
+- exact-width rows: 5 (`CL-001`, `CL-007`, `CL-010`, `CL-011`, `CL-012`);
+- width-mismatched rows: 21;
+- schema status: `FLAWED` by required fail-closed policy.
 
-Cumulative schema Markdown/JSON/SVG evidence was refreshed to the 3/26 state.
+Ruff, full repository pytest, ROOT processing, simulation execution, the WIKI validator, broken-link checker, and GitHub Actions were not run. Repository facts were inspected through authenticated GitHub blob reads; no real data or simulation output was regenerated.
 
 ## Direct-main commits
 
-1. `b301216f014df325b3a211e21c1e8720206dd6b4` — `docs(ledger): reconstruct CL-001 from S00 evidence`
-2. `561f40945c35583216dcd8c6d0c307a5da4ef5d3` — `docs(figures): repair FIG-GL-001 provenance`
-3. `6aa5d3f80cf223127a32c2e6b6343808f307d7bb` — `feat(audit): validate CL-001 source chain`
-4. `0493463a62e6a70ca3bf0bbd944467795cac3da7` — `test(audit): cover CL-001 source reconstruction`
-5. `40191cb2b813fafbd02e01998b11a7e51a4a9b1d` — `fix(audit): normalize CL-001 evidence paths`
-6. `be1803f4f42b77af3e4e4b7810496fbf96688e7d` — `docs(validation): add CL-001 reconstruction record`
-7. `a51a9f9468ab32a4b8aa88600f8193f22bc7e8d1` — `docs(validation): visualize CL-001 source chain`
-8. `1d97c0636cc004ea5d2bd4b38c1d2ba51ca978b7` — `docs(validation): record CL-001 reconstruction audit`
-9. `47c22f4bd19ff581179958963f76e03b2fd9eceb` — `docs(validation): refresh claim-ledger schema record`
-10. `97cfadf8ee9303821e48d66e7f35e99e0321805d` — `docs(validation): update cumulative ledger schema audit`
-11. `5f90a64a29facf473fc1ba6c4e88c741a333ff0f` — `docs(validation): refresh ledger width visualization`
-12. `c26239ad2074d1fa354515ec18b051c2149cbcfe` — `style(test): format CL-001 regression helpers`
-13. `b96d89f459f6662796a31224c472e841c23e9d0c` — `docs(audit): advance ledger reconstruction to CL-001`
-14. `3a2032a3fddebf81f7dff6347f5e5c16ca6f3f92` — `docs(audit): record CL-001 ledger progress`
-15. `089d02f622c86c8350ce9f7ab40df61e57c23aa3` — `docs(audit): archive CL-001 ledger reconstruction`
+1. `d9aeff21544f84fc01485510d5ac2476c251966a` — `fix(ledger): quarantine conflicted Rmax claims`
+2. `6b45cfd2b6fcf8ac4c60bd401549bab7d1ea6008` — `fix(ledger): repair Rmax figure provenance`
+3. `44e4d7fcf9cb65c2e20e142c4b2eaad3a2bcc84f` — `feat(audit): validate conflicted Rmax claim quarantine`
+4. `be637cbca0a3d879eab12b7f7c808bf2aeac6e45` — `test(audit): cover conflicted Rmax ledger gate`
+5. `21c4fdd483d8484453c7b72c159f7166d81e2c2c` — `docs(validation): record Rmax claim quarantine`
+6. `97168267bd7f4319f1912dd5d882b819230407d1` — `docs(validation): add Rmax quarantine record`
+7. `509df1f3d02356e755d4d7c8fc7e6a1a98498891` — `docs(validation): visualize Rmax claim conflict`
+8. `6e965555933720717e8ee1223fd21260a2809989` — `docs(validation): advance ledger width audit to five rows`
+9. `0bc21206270cd25d7947ffbd41b9636f0ba02904` — `docs(validation): refresh five-row ledger schema record`
+10. `f9ce6c9eb3a02e90e1f1826b7ffe9304a93303cb` — `docs(validation): refresh ledger width visualization`
+11. `292f5ad6e55438e155dec756b9bf257a723a3524` — `docs(audit): advance ledger reconstruction through Rmax claims`
+12. `5113230b9d065f3a672f0b72e85fadcf311124e2` — `docs(audit): archive Rmax ledger quarantine`
 
-Each write response reported a successful commit on `main`; the subsequent recent-main
-search confirmed the archive commit at remote head before this handoff update.
+Every connector write returned a successful direct-main commit. A final recent-main search must confirm this handoff commit and its ancestors on remote `main`; the user-facing completion reports that final SHA.
 
 ## Files changed
 
 - `docs/claim_ledger.csv`
 - `docs/figure_registry.csv`
-- `tools/audit/validate_claim_ledger_cl001.py`
-- `tests/test_validate_claim_ledger_cl001.py`
-- `docs/validation/claim_ledger_cl001_audit.md`
-- `docs/validation/claim_ledger_cl001_validation.json`
-- `docs/validation/claim_ledger_cl001.svg`
+- `tools/audit/validate_claim_ledger_cl010.py`
+- `tests/test_validate_claim_ledger_cl010.py`
+- `docs/validation/claim_ledger_cl010_audit.md`
+- `docs/validation/claim_ledger_cl010_validation.json`
+- `docs/validation/claim_ledger_cl010.svg`
 - `docs/validation/claim_ledger_schema_audit.md`
 - `docs/validation/claim_ledger_schema_validation.json`
 - `docs/validation/claim_ledger_schema.svg`
 - `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/BACKLOG.md`
 - `chatgpt_todo/HANDOFF.md`
-- `chatgpt_todo/archive/2026-07-24T050822Z_AUD-LEDGER-001_CL001_RECONSTRUCTION.md`
+- `chatgpt_todo/archive/2026-07-24T061758Z_AUD-LEDGER-001_RMAX_QUARANTINE.md`
 
 ## Scientific boundary and next task
 
-No raw ROOT file, generated pulse table, numerical count, uncertainty, figure,
-calibration, simulation, or detector-performance result was regenerated. This run
-corrected claim provenance and schema for one evidence-backed exact-count claim.
+No beam-rate measurement, tau_eff result, pile-up recovery result, confidence interval, simulation result, calibration, or detector-performance result was recalculated. This run corrects claim status, provenance, and schema and prevents an internally conflicted rate definition from remaining canonically accepted.
 
-Next: reconstruct the highest-impact remaining malformed claim from exact source
-reports/scripts/data/configuration/history. Do not infer field placement from current
-positional CSV parsing. Completion requires 26/26 exact rows followed by WIKI, claim,
-internal-link, figure, and table checks.
+`AUD-LEDGER-001` remains `PARTIAL`. Resolve `S-STAT-003` by preregistering the rate measurand, per-stave/total normalization, occupancy criterion, beam-duty treatment, uncertainty budget, falsifiers, and independent validation strategy. Then synchronize the complete WIKI and academic chapter and continue source-backed reconstruction of the remaining 21 malformed ledger rows. Do not restore `3.044`, `3.05`, or `3.20 MHz` as an accepted Rmax without that evidence.
 
-`SESSION_LOG.md` was not replaced because the connector provides whole-file replacement
-rather than a byte-safe append and the long append-only file was only available through
-paged/truncated reads. Replacing reconstructed partial bytes would risk destroying
-prior provenance. The complete session is preserved in the immutable archive and this
-handoff; this limitation remains explicit rather than fabricating a log append.
+`SESSION_LOG.md` was not replaced because the connector provides whole-file replacement rather than a byte-safe append and the long append-only file was only available through paged/truncated reads. Replacing reconstructed partial bytes would risk destroying prior provenance. The complete run is preserved in the immutable archive and this handoff; this limitation is explicit rather than fabricating a log append.

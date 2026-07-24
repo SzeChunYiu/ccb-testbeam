@@ -1,0 +1,33 @@
+{
+  "task_id": "AUD-G4-021",
+  "session_utc": "2026-07-24T020230Z",
+  "initial_remote_main": "cdaf032c13f9967ad2a02c420987058b8a57a61b",
+  "policy": "NO_INPUT_OUTPUT_ALIAS_AND_ATOMIC_REPORT_WRITE",
+  "repository_source": {
+    "path": "scripts/single_stave/compare_stopping_power.py",
+    "git_blob_sha1": "360f3e46db664f4eead48021536f210e2f7a85c9",
+    "inspection_method": "authenticated complete ranged GitHub content reads",
+    "exact_full_source_executed_locally": false,
+    "observed_direct_write": "with out_path.open(\"w\", newline=\"\")",
+    "output_input_alias_guard_observed": false,
+    "atomic_replace_observed": false,
+    "findings": [
+      "DIRECT_REPORT_WRITE_TO_FINAL_PATH",
+      "OUTPUT_PATH_ALIAS_NOT_REJECTED",
+      "REPORT_WRITE_NOT_ATOMIC"
+    ]
+  },
+  "synthetic_regression": {
+    "tool_version": "1.0.0",
+    "pytest_result": "5 passed in 1.63s",
+    "vulnerable_fixture_status": "FLAWED",
+    "fixed_fixture_status": "VALIDATED",
+    "invalid_utf8_status": 2,
+    "maximum_tool_line_length": 91,
+    "maximum_test_line_length": 92
+  },
+  "scientific_interpretation": "The current report path can destroy validated input provenance or leave a partial final artifact. This audit does not evaluate stopping-power physics.",
+  "acceptance": "PARTIAL",
+  "canonical_reporter_remediated": false,
+  "required_next_action": "Reject output/input path aliasing and publish reports by atomic temporary-file replacement, then add direct CLI regressions and output hash provenance."
+}

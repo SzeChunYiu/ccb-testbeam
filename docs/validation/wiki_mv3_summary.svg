@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="1200" height="720" fill="white"/>
+<text x="50" y="55" font-family="sans-serif" font-size="28" font-weight="bold">MV3 public-summary provenance remediation</text>
+<text x="50" y="88" font-family="sans-serif" font-size="17" font-weight="normal">Synthetic software/documentation validation — not detector data</text>
+<rect x="50" y="125" width="500" height="230" fill="#f4f4f4" stroke="black" stroke-width="2"/>
+<text x="75" y="165" font-family="sans-serif" font-size="22" font-weight="bold">Former public wording</text>
+<text x="75" y="205" font-family="sans-serif" font-size="19" font-weight="normal">Rounded-only B8 fractions</text>
+<text x="75" y="240" font-family="sans-serif" font-size="19" font-weight="normal">χ²/ndf label reported as 68,269.4</text>
+<text x="75" y="275" font-family="sans-serif" font-size="19" font-weight="normal">Claimed exact counts/statistic were absent</text>
+<text x="75" y="325" font-family="sans-serif" font-size="19" font-weight="bold">Status: provenance narrative FLAWED</text>
+<path d="M570 240 L635 240" stroke="black" stroke-width="5"/>
+<path d="M635 240 L615 225 M635 240 L615 255" stroke="black" stroke-width="5" fill="none"/>
+<rect x="660" y="125" width="490" height="430" fill="white" stroke="black" stroke-width="2"/>
+<text x="685" y="165" font-family="sans-serif" font-size="22" font-weight="bold">Validated candidate wording</text>
+<text x="685" y="210" font-family="sans-serif" font-size="19" font-weight="normal">Data B8: 7051/306745</text>
+<text x="685" y="245" font-family="sans-serif" font-size="18" font-weight="normal">Fraction: 0.02298651974767315</text>
+<text x="685" y="295" font-family="sans-serif" font-size="19" font-weight="normal">MC B8: 55619/249484</text>
+<text x="685" y="330" font-family="sans-serif" font-size="18" font-weight="normal">Fraction: 0.22293614019335908</text>
+<text x="685" y="380" font-family="sans-serif" font-size="18" font-weight="normal">Pearson χ²: 204808.2179684494</text>
+<text x="685" y="415" font-family="sans-serif" font-size="18" font-weight="normal">ndf: 3</text>
+<text x="685" y="450" font-family="sans-serif" font-size="18" font-weight="normal">χ²/ndf: 68269.40598948313</text>
+<text x="685" y="505" font-family="sans-serif" font-size="20" font-weight="bold">Boundary retained: FLAWED</text>
+<text x="685" y="535" font-family="sans-serif" font-size="17" font-weight="normal">Candidate not published in this run</text>
+<rect x="50" y="590" width="1100" height="80" fill="#f4f4f4" stroke="black" stroke-width="2"/>
+<text x="75" y="625" font-family="sans-serif" font-size="18" font-weight="normal">Interpretation: fixed-source arithmetic is reproducible; geometry, selection,</text>
+<text x="75" y="654" font-family="sans-serif" font-size="18" font-weight="normal">response, covariance, p-value interpretation, and systematics remain unresolved.</text>
+</svg>

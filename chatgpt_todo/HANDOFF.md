@@ -6,13 +6,14 @@
 - **Task:** `AUD-AMP-011`
 - **Unit:** exact-content validation for hash-bound amplitude-evidence line fragments
 - **Initial remote `main`:** `e215a4cd44ca6ed2eff3ec45921fcc72faa1e115`
-- **Remote `main` before final handoff update:** `33aff10959a2e491942624883f7d0862d3547b27`
+- **Validated delivery commit:** `e15747b3dd9d3327aeeecb072ac4da91db6ebb9b`
+- **Remote `main` confirmation:** recent-history read showed `e15747b3dd9d3327aeeecb072ac4da91db6ebb9b` as the remote head containing all focused work
 - **Destination:** direct sequential commits to `main`
-- **Acceptance:** focused implementation, tests, and evidence are `VALIDATED`; real A-002 physics use remains `BLOCKED`
+- **Acceptance:** implementation, focused regression, and evidence are `VALIDATED`; real A-002 physics use remains `BLOCKED`
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads inspected current `main`, recent commits, PR #868, the amplitude-convention auditor, the shared evidence-map validator, focused tests, validation records, and the mandatory `chatgpt_todo/` files. `AUD-REPO-001` remained owned by another active session and was not duplicated.
+Authenticated GitHub reads inspected current `main`, recent commits, PR #868, the amplitude-convention auditor, shared evidence-map validator, focused tests, validation records, and mandatory `chatgpt_todo/` files. `AUD-REPO-001` remained owned by another active session and was not duplicated.
 
 Concurrent WIKI and claim-ledger work advanced non-overlapping files and was preserved. Every write used current blob SHAs and direct contents-API commits to `main`; no force push, history rewrite, task branch, PR transport, or unrelated deletion was used. PR #868 remains closed, unmerged, and non-mergeable and was not modified.
 
@@ -20,38 +21,23 @@ A direct clone remained unavailable because this runtime could not resolve `gith
 
 ## Confirmed defect
 
-`tools/audit/validate_amplitude_evidence_map.py` v1.3.0 required canonical `#L<start>` or `#L<start>-L<end>` syntax, verified the complete supporting-file SHA-256, and required the selected line numbers to exist. It nevertheless accepted a selected range containing only spaces or tabs.
+Validator v1.3.0 required canonical `#L<start>` or `#L<start>-L<end>` syntax, verified the complete supporting-file SHA-256, and required selected line numbers to exist. It nevertheless accepted a selected range containing only spaces or tabs.
 
-That allowed a byte-verified file plus a semantically empty citation to set `evidence_reference_fragment_verified=true`, after which the amplitude auditor could authorize an `ABSOLUTE` or `NET` convention. The validator also retained no byte count or SHA-256 for the exact selected fragment.
+A byte-verified file plus a semantically empty citation could therefore set `evidence_reference_fragment_verified=true`, after which the amplitude auditor could authorize an `ABSOLUTE` or `NET` convention. The validator also retained no byte count or SHA-256 for the exact selected fragment.
 
-The exact v1.3.0 source was run against the new regression:
-
-```text
-2 failed, 6 passed in 0.10s
-```
-
-The failures demonstrated whitespace-only acceptance and absent exact-fragment provenance.
+The exact v1.3.0 source run against the new regression returned `2 failed, 6 passed in 0.10s`, demonstrating whitespace-only acceptance and absent exact-fragment provenance.
 
 ## Correction delivered
 
-`tools/audit/validate_amplitude_evidence_map.py` is now version `1.4.0`. For line-range references it:
-
-1. reads the supporting artifact bytes;
-2. selects the exact requested line bytes with line endings retained;
-3. counts selected nonblank lines;
-4. rejects the fragment when that count is zero;
-5. records selected byte count, nonblank-line count, and SHA-256;
-6. sets `evidence_reference_fragment_verified=true` only after all checks pass.
+`tools/audit/validate_amplitude_evidence_map.py` is now version `1.4.0`. For line-range references it reads the supporting bytes, selects the exact requested lines with line endings retained, counts nonblank lines, rejects zero-nonblank selections, records selected byte count/nonblank count/SHA-256, and sets the fragment-verified flag only after all checks pass.
 
 Whole-file references remain supported and unchanged.
 
 Policy: `EVIDENCE_LINE_FRAGMENT_MUST_CONTAIN_NONWHITESPACE_CONTENT`.
 
-## Regression and quantitative validation
+## Validation
 
-The updated fragment regression verifies exact line bounds, complete-file line count, exact selected bytes, digest, and whitespace-only rejection. The accepted example is 29 bytes, contains two nonblank lines, and has SHA-256 `2574a91c9368c20f6ae926794a5a37285b264197d248084c3b63306f8cadfa5a`.
-
-Executed against exact local reconstructions:
+The updated regression verifies exact line bounds, complete-file line count, exact selected bytes, digest, and whitespace-only rejection. The accepted example is 29 bytes, contains two nonblank lines, and has SHA-256 `2574a91c9368c20f6ae926794a5a37285b264197d248084c3b63306f8cadfa5a`.
 
 ```text
 python -m py_compile \
@@ -68,7 +54,7 @@ python -m pytest \
 
 Changed Python lines are no longer than 100 characters.
 
-Exact validated local files:
+Exact validated files:
 
 - validator: 10,102 bytes; SHA-256 `a1f547c8ee7d52c1a71dbaa16c031f2a06ea68d63e9269f51c39ba11a37dd095`;
 - test: 3,292 bytes; SHA-256 `d2c78c6fc4044ae84b5828efa590ee92184e6a84b4690c85b1de73a32ffff699`.
@@ -100,22 +86,20 @@ The SVG is explicitly labelled synthetic software/provenance evidence, not detec
 - `29369505632cf707be7cd0d9d1fdcb16c05aa3df` — visual evidence
 - `ca69c2f8e9cc705777000d09a8e3e4e76bb497d3` — active-task completion
 - `03a4ad101f961650e4a53cc3819e344903fe335a` — immutable archive
-- `ae205ce9d911bb083384ef7ea4eaef6ff90672c1` — first coordination workflow attempt
-- `ca12b41d9ef27a74ed1f353b5c171a8a6cf12525` — coordination retry attempt
 - `cb5d966c901a3aa41e8d01637725083992eec925` — initial handoff
-- `1689a1b9a93eaa98bb874a883daba6243c941429` — remove unused workflow
-- `33aff10959a2e491942624883f7d0862d3547b27` — remove unused retry
+- `1689a1b9a93eaa98bb874a883daba6243c941429` and `33aff10959a2e491942624883f7d0862d3547b27` — remove unused coordination workflows
+- `e15747b3dd9d3327aeeecb072ac4da91db6ebb9b` — finalized delivery handoff
 
-The contents API returned successful direct-main commit SHAs rather than conventional textual `git push` stdout. Post-write recent-history reads confirmed these commits on remote `main` while concurrent work was preserved.
+The contents API returned successful direct-main commit SHAs instead of conventional textual `git push` stdout. Post-write history confirmed the listed work on remote `main` while preserving concurrent commits. No status checks are attached to the delivery commit, so no broad CI success is claimed.
 
 ## Coordination limitation
 
-`ACTIVE_TASK.md`, the immutable archive, validation artifacts, and this handoff contain the complete session. `SESSION_LOG.md` and `BACKLOG.md` were not replaced: this connector exposes complete-file replacement rather than an append/line-patch operation, and the available current responses were ranged or truncated. Replacing long shared files from reconstructed partial text could erase unrelated provenance. Two one-time workflow attempts did not produce a remote coordination commit and were removed rather than left as repository debris.
+`ACTIVE_TASK.md`, the immutable archive, validation artifacts, and this handoff contain the complete session. `SESSION_LOG.md` and `BACKLOG.md` were not replaced: the connector exposes whole-file replacement rather than append/line patch, and the available current responses were ranged or truncated. Replacing long shared files from reconstructed partial text could erase unrelated provenance. Two attempted exact-checkout coordination workflows produced no remote coordination commit and were removed rather than left as repository debris.
 
-Therefore the focused gate is delivered and reproducible, but aggregate `SESSION_LOG.md` and `BACKLOG.md` synchronization remains explicitly incomplete. No claim is made that those two files contain this run.
+Thus the focused gate is delivered and reproducible, but aggregate `SESSION_LOG.md` and `BACKLOG.md` synchronization remains explicitly incomplete. No claim is made that those two files contain this run.
 
 ## Scientific boundary and next action
 
-This work validates only software and provenance behavior. It does not determine whether the real A-002 `amplitude_adc` field is absolute or net, establish pulse polarity, validate a pedestal distribution, repair event cardinality, regenerate a stopping profile or DeltaE-E figure, or establish calibration or detector performance.
+This validates software and provenance behavior only. It does not determine whether real A-002 `amplitude_adc` is absolute or net, establish pulse polarity, validate a pedestal distribution, repair event cardinality, regenerate stopping/DeltaE-E outputs, or establish calibration or detector performance.
 
-Real-data progress remains blocked under `AUD-AMP-009`, `AUD-DELTAE-001`, and `AUD-DELTAE-002` until exact A-002 table bytes and exact schema/producer/pedestal/polarity evidence are hash-bound and accepted. Full repository pytest, ruff, ROOT processing, real-data regeneration, and broad GitHub Actions CI were not run; no such success is claimed.
+Real-data progress remains blocked under `AUD-AMP-009`, `AUD-DELTAE-001`, and `AUD-DELTAE-002` until exact A-002 table bytes and exact schema/producer/pedestal/polarity evidence are hash-bound and accepted. Full repository pytest, ruff, ROOT processing, real-data regeneration, and broad GitHub Actions CI were not run.

@@ -2,102 +2,139 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T150603Z`
+- **UTC stamp:** `2026-07-24T160450Z`
 - **Task:** `AUD-LEDGER-001`
-- **Unit:** source-backed reconstruction of governance claim rows `CL-025` and `CL-026`
-- **Initial remote `main`:** `818246402ae7665bbd7ea699825ea3dbb4f68b04`
-- **Validated delivery head before this handoff:** `72775358abff7c5663249689082889ae5256df82`
+- **Unit:** source-backed reconstruction of MV0 claim rows `CL-013` and `CL-014`
+- **First observed remote `main`:** `ec4ab24ffdbcdeeae76c1e8be615cc3a6e4324d4`
+- **Concurrent base incorporated before writes:** `9e1ccc57fee369293be0f090141831e0f65216b8`
+- **Validated delivery head before this handoff:** `d112421d0cd56bb1b7336b4782d1bef749d9af84`
 - **Destination:** direct sequential commits to `main`
 - **Acceptance:** this two-row reconstruction and validation unit is `VALIDATED`; ledger-wide `AUD-LEDGER-001` remains `PARTIAL`
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads inspected current `main`, recent history, repository
-metadata, PR #868, mandatory scientific-review coordination files, the canonical
-claim ledger, its exact-width validator and evidence, the systematic-uncertainty
-source document, and its introducing commit. The write sequence was based on
-remote head `818246402ae7665bbd7ea699825ea3dbb4f68b04`.
+Authenticated GitHub reads inspected repository metadata, recent history, current `main`,
+mandatory scientific-review coordination files, the canonical claim ledger, cumulative
+schema evidence, the MV0 report, calibration JSON, tracked producer, source-introducing
+commit, PR #868, and current commit-check state.
 
-No concurrent non-session commit appeared during the focused sequence. The
-runtime could not resolve `github.com` for a local clone, so exact repository
-bytes were reconstructed from authenticated GitHub file reads and validated
-locally. The connector returned successful direct-main commit SHAs rather than
-conventional textual `git push` stdout.
+The first observed head was `ec4ab24...`. Before writes, concurrent G4-07 work advanced
+`main` to `9e1ccc57...`; the complete MV0 sequence is based on and descends from that
+newer head. No force push, history rewrite, branch-only delivery, or deletion of
+unrelated work was used.
 
-PR #868 remains closed, unmerged, and non-mergeable and was not modified. No
-GitHub Actions success is inferred for this unit.
+PR #868 is closed, unmerged, and non-mergeable. It was not modified or merged. The
+connector returned successful direct-main contents-API commit SHAs rather than
+conventional textual `git push` stdout. A post-write history read showed the complete
+focused sequence as consecutive commits on remote `main`.
 
 ## Confirmed defects
 
-The pre-change ledger was Git blob
-`d33180f144cca10a6e310b3e89b5ab1d065d7e66`, SHA-256
-`3a08d0d561de0ad11f2bbbf4a6cc1284af2315e30bbb3ded39be308b6d5125ff`.
+The pre-change claim ledger had a 43-column header, but:
 
-- `CL-025` had 37 columns rather than the canonical 43.
-- `CL-026` had 35 columns rather than the canonical 43.
+- `CL-013` had 38 columns;
+- `CL-014` had 37 columns.
 
-The canonical fail-closed policy therefore withheld the late fields in both
-records. Status, truth type, source, link state, CI state, blocker, supersession,
-and notes could not safely be interpreted.
+The repository's fail-closed schema policy therefore withheld their late fields,
+including truth type, status, source paths, link state, CI state, blocker,
+supersession, and notes.
 
-## Exact source evidence and interpretation
+The former records also contained scientific/provenance defects:
 
-Source document:
+- they cited `scripts/mv0_calibration.py` rather than the tracked producer path
+  `scripts/mv0_calibrate_from_data.py`;
+- they cited a non-existent `results.json` rather than the tracked
+  `calibration.json`;
+- `CL-013` represented a source-described 30% heuristic systematic range as separate
+  statistical and systematic uncertainty with interval-like fields;
+- `CL-014` contained shifted count and p-value-like fields not supported by the source.
 
-- path: `docs/SYSTEMATIC_UNCERTAINTIES.md`;
-- Git blob: `54088968264c3b714f03a7305fbf69dcc77b196e`;
-- SHA-256: `2c2c9c44c57cddae3fb956281e70842627140e8b3a1b510c946385e8f4ec7ace`;
-- introducing commit: `779740b15c66842144fd191e304a28d7eb31bad5`.
+## Exact source evidence
 
-The source explicitly states that no forced-trigger zero-signal events exist in
-the current dataset and that a future forced-trigger S16 pedestal sample is
-required. It also contains component estimates and a simple quadrature summary,
-but does not provide a claim-specific nuisance model, covariance treatment,
-hash-bound inputs, reproducible propagation implementation, or coverage study.
-Several numerical statements in that document are stale and tracked elsewhere;
-this unit uses the document only to support negative governance claims.
+Introducing source commit:
+
+`3c5ff5cf587c8ca9cefda20cb220ba29effd2170`
+
+Tracked report:
+
+- path: `reports/mv0_calibration_1782677847/REPORT.md`;
+- Git blob: `34ad9f8b477390adb13f7781fbd31fb5a8f1d1d6`;
+- bytes: `3733`;
+- SHA-256: `dc5b74056f7cac76e9c279e8e81c181453c854fd051dd82856c645c52a48b518`.
+
+Tracked calibration result:
+
+- path: `reports/mv0_calibration_1782677847/calibration.json`;
+- Git blob: `74e490753d3e821b0a1353490764a5ede0e9bf75`;
+- bytes: `2644`;
+- SHA-256: `78a905473db33311b6ccfc7ef440fc076b5d210de07d09e1f868f9fdf05cd18b`.
+
+Source-supported values:
+
+| Quantity | Value |
+|---|---:|
+| B2 median-matched gain | 92 ADC/MeV |
+| Gain systematic description | heuristic 30% envelope, rounded to 28 ADC/MeV |
+| B2 data pulses | 579424 |
+| MC tracks with B2 hit | 321130 |
+| KS statistic at gain 92 | 0.1577 |
+| KS-optimal scan point | gain 60 ADC/MeV, D = 0.1188 |
+| Former erroneous v1 gain | 110 ADC/MeV |
+
+The report supplies no statistical gain uncertainty and no confidence interval. The
+KS p-value is not reported. It explicitly documents unresolved shape, pile-up,
+polarity, and selection mismatches. No content-addressed manifest binds the historical
+producer and exact data bytes.
 
 ## Delivered changes
 
-`CL-025` is now an exact 43-column `data_availability` record with:
+`CL-013` is now an exact 43-column `data_mc_calibration_proxy` record:
 
-- status `BLOCKED`;
+- value `92 ADC/MeV`;
+- status `GATED`;
 - `allowed_status_validated=NO`;
-- blocker `BLK-PED-001`;
-- exact source path and introducing commit;
-- `NOT_APPLICABLE_WITH_REASON` CI state;
-- no numerical value, uncertainty, count, or interval;
-- explicit wording that a fixed baseline is not independently measured pedestal
-  truth and no pedestal-truth number is authorized.
+- source-supported systematic field `28 ADC/MeV` only;
+- blank statistical, total-uncertainty, and confidence-interval fields;
+- `ci_method=systematic_envelope`;
+- `ci_status=SYSTEMATIC_ENVELOPE_NOT_CONFIDENCE_INTERVAL`;
+- `n_data=579424`, `n_mc=321130`;
+- former v1 gain 110 recorded as superseded context;
+- blocker `BLK-MV0-001`;
+- explicit wording that the proxy is not an authorized precision calibration.
 
-`CL-026` is now an exact 43-column `uncertainty_budget_incomplete` record with:
+`CL-014` is now an exact 43-column `data_mc_calibration_proxy` diagnostic:
 
-- status `BLOCKED`;
-- `allowed_status_validated=NO`;
-- blocker `BLK-SYST-001`;
-- exact source path and introducing commit;
-- `NOT_APPLICABLE_WITH_REASON` CI state;
-- no numerical value, uncertainty, count, or interval;
-- explicit withholding of blanket authorization from the simple component
-  inventory and quadrature summary.
+- D = `0.1577` at the median-matched gain;
+- status `TENSION`;
+- comparator D = `0.1188` at the scan optimum;
+- descriptive difference `0.0389`;
+- `n_data=579424`, `n_mc=321130`;
+- `ci_status=NOT_APPLICABLE_FIXED_OUTPUT_P_VALUE_NOT_REPORTED`;
+- blocker `BLK-MV0-001`;
+- explicit wording that no p-value or calibrated goodness-of-fit probability is
+  established.
 
 Corrected ledger:
 
-- Git blob: `66468fbef18cdf0d4777a985d8a7afe7df9adc98`;
-- size: `14220` bytes;
-- SHA-256: `d7231b66b477fffb3766bab68129ab8e4e56f37d3e84630d89bf5016023dfb79`.
+- Git blob: `1964fadd5a1078c534cc14bdc30e63a38f1d73c8`;
+- bytes: `15274`;
+- SHA-256: `30a1f5fd03d82366df3201a9d0d37be54572f13fd6c990d92b6bd5a9feab69a5`.
 
-The cumulative ledger state is now 12/26 exact-width rows and 14/26 malformed,
-withheld rows. The global schema validator correctly remains `FLAWED`/status 1.
+Cumulative ledger state:
+
+- exact-width rows: `14/26`;
+- malformed and withheld rows: `12/26`;
+- width histogram: `36:1, 37:2, 38:7, 39:2, 43:14`;
+- global schema state remains intentionally `FLAWED` until every row is reconstructed.
 
 Added:
 
-- `tools/audit/validate_pedestal_systematics_claim_rows.py`;
-- `tests/test_validate_pedestal_systematics_claim_rows.py`;
-- `docs/validation/pedestal_systematics_claim_rows_audit.md`;
-- `docs/validation/pedestal_systematics_claim_rows_validation.json`;
-- `docs/validation/pedestal_systematics_claim_rows.svg`;
-- `chatgpt_todo/archive/2026-07-24T150603Z_AUD-LEDGER-001_PEDESTAL_SYSTEMATICS.md`.
+- `tools/audit/validate_mv0_claim_rows.py`;
+- `tests/test_validate_mv0_claim_rows.py`;
+- `docs/validation/mv0_claim_rows_audit.md`;
+- `docs/validation/mv0_claim_rows_validation.json`;
+- `docs/validation/mv0_claim_rows.svg`;
+- `chatgpt_todo/archive/2026-07-24T160450Z_AUD-LEDGER-001_MV0_CLAIMS.md`.
 
 Updated:
 
@@ -110,80 +147,69 @@ Updated:
 
 Policies:
 
-- `BLOCKED_GOVERNANCE_CLAIMS_REQUIRE_EXACT_WIDTH_AND_SOURCE_EVIDENCE`;
+- `MV0_CLAIMS_REQUIRE_EXACT_WIDTH_AND_SOURCE_BACKED_LIMITATIONS`;
 - `NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS`.
 
 ## Validation
 
-Executed locally against the exact corrected ledger and source snapshot:
+Executed locally against exact reconstructions before publication:
 
 ```text
 python -m py_compile \
-  tools/audit/validate_pedestal_systematics_claim_rows.py \
-  tests/test_validate_pedestal_systematics_claim_rows.py
+  tools/audit/validate_mv0_claim_rows.py \
+  tests/test_validate_mv0_claim_rows.py
 
 PYTHONPATH=. python -m pytest \
-  tests/test_validate_pedestal_systematics_claim_rows.py -q
+  tests/test_validate_mv0_claim_rows.py -q
 
-7 passed in 0.70s
-
-python tools/audit/validate_pedestal_systematics_claim_rows.py \
-  docs/claim_ledger.csv \
-  docs/SYSTEMATIC_UNCERTAINTIES.md \
-  --output docs/validation/pedestal_systematics_claim_rows_validation.json \
-  --svg docs/validation/pedestal_systematics_claim_rows.svg
+5 passed in 0.03s
 ```
 
-The direct claim-row validator returned `VALIDATED` with zero issues. JSON and
-SVG XML parsing passed. Exact pre-change and corrected Git blob identities
-matched. Maximum changed Python line length was 99 characters.
+The direct claim-row validator returned `VALIDATED` with zero issues. Regression
+coverage includes valid exact-width rows, wrong-gain rejection, required-caveat
+enforcement, 42-column fail-closed handling, and controlled invalid-UTF-8 input. JSON
+parsing, SVG XML parsing, source Git-blob matching, and the 100-character Python line
+convention passed.
 
-Regression coverage includes exact-width acceptance, 42-column fail-closed
-rejection, prevention of numerical publication from a blocked row, missing
-source-evidence detection, wrong-status detection, invalid-UTF-8 handling, and
-CLI JSON/SVG publication.
-
-Full repository pytest, ruff, ROOT processing, beam-data reprocessing,
-simulation, repository-wide links, and GitHub Actions were not run.
+Not run: full repository pytest, ruff, ROOT processing, historical calibration rerun,
+beam-data reprocessing, simulation, repository-wide link checking, or GitHub Actions.
+No broader CI success is claimed; no status checks were attached to the observed head.
 
 ## Direct-main commit sequence
 
-1. `87d63d7cde95b25f047eaf68762315ee4d1aca1f` — `fix(ledger): reconstruct pedestal and systematics blockers`
-2. `80f1973e2c10590e147ed91cbfa0ba4c0733c000` — `feat(audit): validate blocked ledger governance rows`
-3. `ef8ab39030d4033e34decfb4f0999f92c5aabde0` — `test(audit): cover pedestal and systematics claim rows`
-4. `df61521ff16d6daf3a7c76092ee522e6da190c2e` — `docs(validation): record pedestal and systematics claim audit`
-5. `bc91d3509c85ec674831b29f51d6a39acd3ae76b` — `docs(validation): add pedestal and systematics claim record`
-6. `32341e58a9b4e2a955a859b308699e633d8b3960` — `docs(validation): visualize blocked claim-row repair`
-7. `83aecea6e0c7b12e12be304bf23430164c133e1d` — `docs(validation): refresh ledger schema after blocker repair`
-8. `00945f027fd6e8d8066c0c685a2757041baee2fc` — `docs(validation): update ledger schema machine record`
-9. `d029ec6195c11ad4bde3300c131c7da07554a24e` — `docs(validation): visualize twelve exact ledger rows`
-10. `b1ed41fa5981899dde5f1941d18b63a46f999211` — `docs(audit): complete pedestal and systematics ledger unit`
-11. `72775358abff7c5663249689082889ae5256df82` — `docs(audit): archive pedestal and systematics ledger repair`
+1. `b4a55d38d35641c1784b71bcdf49a13c1c1ae9c5` — `fix(ledger): reconstruct MV0 gain and KS claims`
+2. `aae50fe46e24f4d0d6bcf7473bac0071c7f97894` — `feat(audit): validate MV0 claim rows`
+3. `e5268a1fed1d260eb994e50a84f8d841b32e2797` — `test(audit): cover MV0 claim-row reconstruction`
+4. `779ff38d4a6a48a589067f981e2fd243f75e14b9` — `docs(validation): add MV0 claim-row record`
+5. `dddb270387f7b6125d0df0fa14729901798f4be9` — `docs(validation): visualize MV0 claim-row reconstruction`
+6. `ff73bfe1ec350508b68bf5fc3e6fd3b9f7ff0073` — `docs(validation): record MV0 claim-row audit`
+7. `82925c2b79b0cb19767d56cc301b8e89e8e36e71` — `docs(validation): refresh ledger schema after MV0 repair`
+8. `9a6dd560e0c1ce8b8a83bcd6d10fbef6e1b5b496` — `docs(validation): update ledger schema machine record`
+9. `62d0b95cb517493e4fd70c8a26e1a6645d283e27` — `docs(validation): visualize fourteen exact ledger rows`
+10. `484f0616f263636b372a4a075f0e83e33ec65736` — `docs(audit): complete MV0 claim-row unit`
+11. `d112421d0cd56bb1b7336b4782d1bef749d9af84` — `docs(audit): archive MV0 claim-row reconstruction`
 
-Every listed commit is a sequential descendant of the initial `main` head. A
-post-write history read is required to confirm this handoff commit as the remote
-head.
+Every listed commit is a sequential descendant of the concurrent base
+`9e1ccc57fee369293be0f090141831e0f65216b8`. The contents-API write responses reported
+success for every commit, and remote-history reads confirmed the sequence on `main`.
 
 ## Scientific boundary and next work
 
-No forced-trigger run, zero-signal waveform sample, pedestal distribution,
-baseline estimator comparison, nuisance parameter model, covariance matrix,
-Monte Carlo ensemble, coverage study, or end-to-end uncertainty propagation was
-produced. These are validated blocked governance records, not detector results.
+This unit does not establish a precision gain calibration, reproduce historical
+ROOT/data inputs, validate pulse-selection transfer, provide a confidence interval,
+resolve the data/MC shape mismatch, or produce a detector-performance result.
 
-Resolving `BLK-PED-001` requires immutable forced-trigger data, run inventory,
-selection, estimator comparison, stability plots, exact provenance, and
-uncertainty. Resolving `BLK-SYST-001` requires claim-specific nuisance models,
-correlations/covariance, hash-bound inputs and code, reproducible propagation,
-coverage or sensitivity validation, and regenerated downstream claims.
+Resolving `BLK-MV0-001` requires exact producer, configuration, and input hashes; a
+clean-environment rerun; explicit pulse-selection, threshold, baseline, and polarity
+closure; preregistered alternative calibration methods; independent validation data;
+and an accepted statistical/systematic uncertainty model.
 
-`AUD-LEDGER-001` remains `PARTIAL`; 14 malformed rows still require source-backed
-reconstruction before late fields can be interpreted.
+`AUD-LEDGER-001` remains `PARTIAL`; 12 malformed rows still require source-backed
+reconstruction before late fields can be interpreted. The next unit should select a
+source-coherent pair and preserve the fail-closed policy.
 
 `SESSION_LOG.md`, `BACKLOG.md`, and `BLOCKERS.md` were not replaced during this
-connector-only unit because their long current states are exposed through
-whole-file/paged operations and replacing a partially reconstructed concurrent
-coordination file could destroy unrelated provenance. The immutable archive and
-this handoff contain the complete session record; the exact claim rows carry the
-new stable blocker IDs. A complete-checkout coordination pass must synchronize
-those aggregate files without overwriting unrelated work.
+connector-only unit. Their current states require complete whole-file replacement, and
+reconstructing them while concurrent main work is active could erase unrelated
+provenance. The immutable archive and this handoff preserve the complete run; the exact
+claim rows carry the stable blocker ID `BLK-MV0-001`.

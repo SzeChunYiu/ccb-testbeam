@@ -123,7 +123,16 @@
 - **State:** OPEN
 - **Task:** `AUD-LEDGER-001`.
 - **Observed defect:** `docs/claim_ledger.csv` has a 43-column header, but the original 26 data rows had only 35--40 columns. Late values therefore shifted into the wrong named fields under standard CSV parsing.
-- **Bounded remediation:** `CL-007` and `CL-011` were reconstructed to exactly 43 columns for `AUD-WIKI-002`, preserving their non-empty values and restoring intended truth type, status, sources, CI state, supersession, and notes.
-- **Remaining scope:** 24 rows still have 35--40 columns. Their late status, truth type, source, figure/table, CI, blocker, supersession, commit, or notes fields cannot be assumed to match the header.
-- **Resolution:** reconstruct every row from source reports/scripts/data and intended schema; require exactly 43 fields; add a strict fail-closed validator and focused tests; review semantic mappings and non-empty value preservation; rerun WIKI, claim, link, and figure/source checks.
+- **Bounded remediation:** `CL-001`, `CL-007`, `CL-010`, `CL-011`, and `CL-012` are reconstructed to exactly 43 columns from source evidence. `CL-010`/`CL-012` explicitly quarantine an internally conflicted Rmax instead of preserving a false canonical value.
+- **Remaining scope:** 21 rows still have 35--39 columns. Their late status, truth type, source, figure/table, CI, blocker, supersession, commit, or notes fields cannot be assumed to match the header.
+- **Resolution:** reconstruct every row from source reports/scripts/data and intended schema; require exactly 43 fields; review semantic mappings and non-empty value preservation; rerun WIKI, claim, link, and figure/source checks.
 - **Do not claim until resolved:** that all canonical claim-ledger late fields are correctly aligned or that downstream tools using those fields are reading the intended values.
+
+## BLK-PU-RMAX-001 — canonical pile-up Rmax definition is internally conflicted
+
+- **State:** OPEN
+- **Task:** `AUD-LEDGER-001`; prerequisite `S-STAT-003`.
+- **Measured conflict:** the MV5 JSON value `3.0448717948717947 MHz` is `(1/124.8 ns) × 0.38`, where `0.38` is the recorded beam duty factor. The academic chapter instead uses `mu_max=0.1`, derives `3.20 MHz` for four staves, and then substitutes `3.05 MHz` as a purported rounding. The recovery summary records no failure-ceiling crossing (`null`) because the maximum simulated failure fraction `0.03475` is below the ceiling `0.17`.
+- **Validated containment:** `CL-010` is exact-width and `BLOCKED`; `CL-012` is exact-width and `SUPERSEDED`; both accepted values are blank; focused validator tests returned `6 passed`; source-conflict Markdown/JSON/SVG evidence and repaired FIG-PU-003 provenance are on `main`.
+- **Resolution:** preregister the rate measurand, per-stave versus total normalization, occupancy-quality criterion, beam-duty treatment, recovery-curve acceptance rule, uncertainty budget, falsifiers, and independent validation. Recompute from exact inputs, then synchronize WIKI and Chapter 5 only if the gate passes.
+- **Do not claim until resolved:** that `3.044`, `3.05`, or `3.20 MHz` is an accepted pile-up tolerance, that the recovery method crossed its ceiling, or that the two definitions agree independently.

@@ -2,172 +2,128 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T180301Z`
-- **Task:** `AUD-LEDGER-001`
-- **Unit:** exact-source audit of legacy MV4 timing claims `CL-002` through `CL-009`
-- **Initial remote `main`:** `fca51ba5f932846c8ab57bf9d60b03cf5e32983c`
-- **Validated audit/evidence head before this handoff:** `73e63f9cb7cf4537dbf9efa4c7d7ba7904624fed`
-- **Destination:** direct sequential commits to `main`
-- **Acceptance:** audit, tests, and evidence are `VALIDATED`; claim-ledger remediation remains `PARTIAL`
+- **UTC stamp:** `2026-07-24T190317Z`
+- **Task:** `AUD-WIKI-003`
+- **Unit:** public WIKI canonical-results synchronization to exact-width claim-ledger records
+- **First observed remote `main`:** `d34f99513550892e98f3e396a279952618f8623c`
+- **Latest remote base before focused implementation:** `51b63d9ffad4c9eb9f95cbfbfe14516c1e5780f2`
+- **Validated content/archive head before this handoff:** `de077272d9f4581c2261681e0f8e1dfba18d6c6c`
+- **Destination:** direct sequential commits to `main`; no force-push, history rewrite, branch-only delivery, or PR transport
+- **Acceptance:** canonical-results remediation unit `VALIDATED` / `COMPLETE`; repository-wide WIKI review remains `PARTIAL`
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads inspected current `main`, recent history, open pull requests, commit
-status, PR #868, the mandatory `chatgpt_todo/` records, the canonical claim ledger and cumulative
-schema evidence, the exact legacy MV4 report and summary, the historical producer at commit
-`3c5ff5cf587c8ca9cefda20cb220ba29effd2170`, and the current fail-closed MV4 contract.
+Authenticated GitHub reads inspected current `main`, recent history, repository instructions, the mandatory `chatgpt_todo/` records, the exact WIKI, the 43-field claim ledger and cumulative schema evidence, existing WIKI validators/tests, commit status metadata, and PR #868. Concurrent MV4-ledger and amplitude-evidence sessions advanced non-overlapping files while this unit was active; their changes were preserved.
 
-The run based its writes on remote head `fca51ba5f932846c8ab57bf9d60b03cf5e32983c` and used
-direct contents-API commits to `main`. No force push, history rewrite, task branch, stale PR merge,
-or unrelated deletion was used. PR #868 remains closed, unmerged, and non-mergeable and was not
-modified. No status checks were attached to the starting head.
+PR #868 was rechecked on 2026-07-24 and remained closed, unmerged, and non-mergeable. It was not modified.
 
-## Confirmed defects
+## Confirmed defect
 
-The canonical ledger header has 43 fields, but the remaining legacy timing rows have:
+The exact pre-remediation WIKI blob `9d8110893adeae482b2439c4187b53f94174a55e` (21,368 bytes; SHA-256 `baaa9dbd3585870c7d9c0807493e9afce81f9767f3be68d581502d62496c59d4`) produced 31 findings against 11 exact-width canonical claim bindings:
 
-| Claim | Columns | Former claim |
-|---|---:|---|
-| CL-002 | 38 | B6 sigma68 0.68 ns |
-| CL-003 | 39 | B6 upper bound 0.75 ns |
-| CL-004 | 38 | B4+B6+B8 sigma68 0.54 ns |
-| CL-005 | 38 | combined upper bound 0.56 ns |
-| CL-006 | 39 | B4-B6 covariance -0.127 ns² |
-| CL-008 | 37 | corrected pull +2.68 sigma |
-| CL-009 | 37 | ML timing verdict |
+- `CL-002`, `CL-004`, and `CL-006` source-absent timing values were published as accepted measurements;
+- MV0 was given an unsupported statistical uncertainty and `VALIDATED` status;
+- legacy truth-MC PID was promoted above its `GATED` leakage-risk state;
+- the `FLAWED` MV3 legacy profile record was absent;
+- MV4 toy pulls were described as detector validation/tension;
+- the analytic CFD20/timewalk source was labelled as ML;
+- the public legend lacked `REVIEW` and the fixed MV6 synthetic-MC PCA values were missing.
 
-The cited report and `mv4_summary.json` do not contain the five B6/combined/covariance values.
-They contain only global toy-digitizer raw and corrected timing outputs. The former ledger paths
-`results.json` and `configs/mv4_timing.yaml` are absent.
+## Correction and code-to-claim traceability
 
-`CL-007` is already 43 fields but overclaims its raw pull as `VALIDATED/PASS`. The pull uses a
-hard-coded data anchor and an assumed `0.10 ns` data uncertainty. `CL-009` calls the source an ML
-verdict, but the historical producer tests CFD20 plus an analytic `A+B/sqrt(amplitude)`
-correction and contains no ML model.
+Added `tools/audit/validate_wiki_canonical_results.py` v1.0.0 with policy:
 
-## Exact source evidence
+`WIKI_CANONICAL_RESULTS_MUST_MATCH_EXACT_WIDTH_LEDGER_ROWS`
 
-Starting ledger:
+The validator checks exact row width, current value or explicit withholding, statistical/systematic uncertainty support, truth type, canonical status, public legend membership, and the fixed source-backed PCA correction for:
 
-- Git blob `58d70cdd7b90c256b2aa268c425de0e1dadbb3f6`;
-- 18,183 bytes;
-- SHA-256 `cfdfc8b38e53158fee5cb32a61165d2fc8c2e2370d81580e5f75fe369963fbcb`;
-- cumulative width state `19/26` exact and `7/26` malformed.
+`CL-002`, `CL-004`, `CL-006`, `CL-011`, `CL-013`, `CL-017`, `CL-022`, `CL-021`, `CL-007`, `CL-008`, and `CL-009`.
 
-Legacy report:
+Added focused tests and rebound the exact-current WIKI integration test to this validator. Updated `WIKI.md` so the canonical front door and repeated high-level summaries now:
 
-- path `reports/mv4_timing_1782678162/REPORT.md`;
-- 2,342 bytes;
-- SHA-256 `004e1269ede4f60d43eaf1ef3d0087e4ebc9168a4ff09df2a7ae5199fd081bec`.
+- withhold B6, combined-stave, and covariance values under `BLK-MV4-LEGACY-001`;
+- show MV0 as a `GATED` data/MC calibration proxy with a 28 ADC/MeV heuristic envelope and no statistical CI;
+- retain legacy truth-MC PID as `GATED`;
+- label the MV3 profile statistic a `FLAWED` non-reconstructable legacy diagnostic;
+- classify MV4 raw and corrected pulls as `GATED` toy-digitizer diagnostics;
+- identify the historical timing verdict as analytic `REVIEW`, not ML;
+- record MV6 synthetic-waveform PCA as 72.546% at three PCs and 82.188% at eight PCs;
+- preserve the Rmax, duplicate-readout, saturation, and anomaly scientific boundaries.
 
-Legacy summary:
+## Exact validation
 
-- path `reports/mv4_timing_1782678162/mv4_summary.json`;
-- 1,204 bytes;
-- SHA-256 `29ea729663a29288af686a59a63ddd2bd4f22a6001e2591cb7a4994066173ea9`.
-
-Exact fixed source outputs:
-
-| Quantity | Value |
-|---|---:|
-| tracks | 80000 |
-| scanned events | 241487 |
-| gain | 110 ADC/MeV |
-| raw sigma68 | 1.744319343085384 ns |
-| raw i.i.d. track-bootstrap SE | 0.006755405549476786 ns |
-| corrected held-out sigma68 | 1.7696154242198858 ns |
-| corrected i.i.d. track-bootstrap SE | 0.010813166729502352 ns |
-| raw pull | -1.054403396247793 |
-| corrected pull | 2.680528799917713 |
-| assumed data uncertainty | 0.10 ns |
-
-The train/application split is row-index parity. The run does not bind calibration bytes,
-data-anchor result bytes, configuration, manifest, run inventory, or detector-response
-systematics. The current `scripts/MV4_TIMING_README.md` explicitly labels the path
-`TOY_DIAGNOSTIC` and requires current calibration and measured anchors under `--strict`, with
-run/block validation.
-
-## Delivered audit and evidence
-
-Added:
-
-- `tools/audit/audit_mv4_legacy_claim_rows.py`;
-- `tests/test_audit_mv4_legacy_claim_rows.py`;
-- `docs/validation/mv4_legacy_claim_rows_source_audit.md`;
-- `docs/validation/mv4_legacy_claim_rows_audit_validation.json`;
-- `docs/validation/mv4_legacy_claim_rows_audit.svg`;
-- `chatgpt_todo/archive/2026-07-24T180301Z_AUD-LEDGER-001_MV4_TIMING_SOURCE_AUDIT.md`.
-
-Updated:
-
-- `chatgpt_todo/ACTIVE_TASK.md`;
-- this handoff.
-
-Policy:
-
-`LEGACY_MV4_TIMING_REQUIRES_STRICT_INPUTS_AND_SOURCE_BOUND_CLAIMS`
-
-The visual is explicitly labelled software/provenance evidence, not detector data.
-
-## Validation
-
-Executed locally against exact repository-byte reconstructions:
+Executed locally on exact remote WIKI bytes and exact 43-field binding rows fetched from current `main`:
 
 ```text
 python -m py_compile \
-  tools/audit/audit_mv4_legacy_claim_rows.py \
-  tests/test_audit_mv4_legacy_claim_rows.py
+  tools/audit/validate_wiki_canonical_results.py \
+  tests/test_validate_wiki_canonical_results.py \
+  tests/test_wiki_claim_front_door_current.py
 
-PYTHONPATH=. python -m pytest tests/test_audit_mv4_legacy_claim_rows.py -q
-4 passed in 0.03s
+PYTHONPATH=. python -m pytest \
+  tests/test_validate_wiki_canonical_results.py \
+  tests/test_wiki_claim_front_door_current.py -q
 
-PYTHONPATH=. python tools/audit/audit_mv4_legacy_claim_rows.py \
-  --ledger docs/claim_ledger.csv \
-  --report reports/mv4_timing_1782678162/REPORT.md \
-  --summary reports/mv4_timing_1782678162/mv4_summary.json \
-  --contract scripts/MV4_TIMING_README.md \
-  --output-json docs/validation/mv4_legacy_claim_rows_audit_validation.json
-exit status 1; status FLAWED; findings 14
+8 passed in 1.14s
 ```
 
-The nonzero result is the validated outcome of the source audit. The gate was not weakened.
-The JSON parsed, the SVG parsed as XML, and changed Python lines were at most 97 characters.
-Full repository pytest, ruff, ROOT processing, and GitHub Actions were not run.
+Measured validation state:
+
+- pre-remediation validator: exit 1, `FLAWED`, 31 findings;
+- post-remediation validator: exit 0, `VALIDATED`, zero findings;
+- current WIKI Git blob: `fee0e1a15243904dbeb46254878ade4650a8e1f6`;
+- current WIKI bytes: `23355`;
+- current WIKI SHA-256: `c0e8c8f7aa0c6b8f024ea9821dcb046b77376aecc95c81301afaf40248417680`;
+- current ledger Git blob: `bb552aa5ed70e7d81dcda888c5aa61402c01e03c`;
+- current ledger bytes: `21486`;
+- current ledger SHA-256: `e7e560a66df43a9cacdf5041361aaffa0995927144adae3701b5c60e0433c26b`;
+- cumulative schema evidence: 26/26 rows at exactly 43 fields;
+- maximum changed Python line lengths: 96, 98, and 93 characters;
+- validation JSON parsed and SVG XML parsed.
+
+The exact full ledger could not be downloaded as one local file through the available connector path. The executable validation used exact 43-field binding rows fetched from current `main`; independent cumulative evidence establishes 26/26 exact-width rows. This limitation is explicit in the machine-readable record.
+
+## Evidence
+
+- `docs/validation/wiki_canonical_results_audit.md`
+- `docs/validation/wiki_canonical_results_validation.json`
+- `docs/validation/wiki_canonical_results.svg`
+- `chatgpt_todo/archive/2026-07-24T190317Z_AUD-WIKI-003_CANONICAL_RESULTS_SYNC.md`
+
+The SVG is explicitly documentation/provenance evidence and not detector data.
 
 ## Direct-main commit sequence
 
-- `a6bcd6b73f6afeabfd7dbed28f41f84dbd46de8e` — `feat(audit): detect unsupported legacy MV4 timing claims`
-- `27078a39776ebfe10c56dcb9adffbba1c7e9f0de` — `test(audit): cover legacy MV4 claim-source failures`
-- `48cb05fe9cb984e47bd394321d000ce972e9e2df` — `docs(validation): record legacy MV4 timing claim flaws`
-- `f1a652d9ed8b7c179558042538b4dc91c35d54f7` — `docs(validation): visualize legacy MV4 claim gaps`
-- `e0a83ebe689d4704ef65b7301ef9a70f46684e05` — `docs(validation): audit legacy MV4 timing claim sources`
-- `a407daee106836c71c7fa67909a36c86950a8584` — `docs(audit): activate legacy MV4 claim-source audit`
-- `73e63f9cb7cf4537dbf9efa4c7d7ba7904624fed` — `docs(audit): archive legacy MV4 timing source audit`
+- `9cbd0666d8c1a54c33ff02666d0ab54d3ddb8b9b` — `feat(audit): validate WIKI canonical result claims`
+- `7ad1798c856f75d021817113c8e8df166ecd53c3` — `test(audit): cover WIKI canonical result drift`
+- `e215a4cd44ca6ed2eff3ec45921fcc72faa1e115` — `docs(wiki): synchronize public claims with canonical ledger`
+- `64b59439d65505f7fc69bc5cdd990b796aad0be0` — `test(wiki): bind current front door to canonical ledger validator`
+- `0405d85412cd1b036082e9d3a99ca6966f61bdaa` — `docs(validation): record WIKI canonical claim remediation`
+- `8e0275beccd61aa9626b2cd988d1c381e8a8810c` — `docs(validation): explain WIKI canonical claim remediation`
+- `09a735ed8e8bcc12c27e83415ac8c252b7457813` — `docs(validation): visualize WIKI canonical claim remediation`
+- `9cda31bd5b0c54dc5b767573264ab813d029684f` — remove unused first remediation workflow
+- `4518ade7192d3236fb80753d719bc7b72ac1f5ba` — remove unused retry workflow
+- `c76c254dd167beab24aaee813a59dc28d8aba84e` — complete active-task record
+- `de077272d9f4581c2261681e0f8e1dfba18d6c6c` — immutable session archive
 
-The authenticated contents API returned successful direct-main commit SHAs rather than
-conventional textual `git push` output. A post-write history read must confirm that remote `main`
-contains the handoff commit and all listed progress commits.
+The GitHub contents API returned each commit SHA as the push result. Post-write history reads confirmed that these commits were present on remote `main`; conventional textual `git push` stdout is not exposed by this connector.
 
-## Blocker and exact next action
+Two one-time workflow commits (`d91e0313...` and `e5a2144c...`) were created to test whether contents-API writes would trigger Actions. They produced no remediation commit and were removed. No CI success is inferred from them.
 
-The ledger replacement is not claimed as delivered. A local checkout could not resolve
-`github.com`; the connector exposes complete-file replacement rather than a line patch. Replacing
-the 18 kB ledger or long shared coordination files from partial responses would risk erasing
-concurrent provenance.
+## Scientific boundary and unresolved risks
 
-The next unit must use a complete current ledger snapshot to reconstruct `CL-002` through
-`CL-009` to exactly 43 fields, withhold the five unsupported values under
-`BLK-MV4-LEGACY-001`, retain the two pulls only as non-authorizing toy diagnostics, replace the
-false ML label with analytic `REVIEW`, rerun this audit and the cumulative schema validator,
-refresh the schema Markdown/JSON/SVG, and commit the exact corrected ledger directly to `main`.
+This run did not create or validate a B6 timing resolution, combined-stave timing resolution, covariance estimate, precision gain calibration, beam-data PID performance, reconstructable MV3 goodness-of-fit statistic, real-data species identification, ROOT output, or simulation result.
 
-`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and other long shared matrices
-were not replaced from partial/ranged reads. The complete session is preserved in the immutable
-archive, this handoff, the active task, and the validation artifacts.
+One residual WIKI prose item remains outside the validated canonical table: GAP-01 still uses a coarse MV3 geometry-failure shorthand based on the non-reconstructable legacy statistic. The next focused documentation task should synchronize that line to the exact `CL-021` boundary.
 
-## Scientific boundary
+Full repository pytest, ruff, ROOT processing, simulation reruns, repository-wide broken-link checking, and GitHub Actions were not run. No broad CI success is claimed.
 
-No ROOT processing, detector timing measurement, B6 or combined-stave resolution, covariance
-matrix, timing calibration, uncertainty closure, or detector-performance result was produced.
-The five unsupported values remain unverified, and the recorded pulls remain legacy
-toy-digitizer diagnostics rather than empirical timing validation.
+## Coordination limitation
+
+`SESSION_LOG.md` was not replaced because the connector exposes whole-file replacement but no byte-safe append operation, and only truncated/paged views of the concurrently changing append-only file were available. Replacing it from a partial reconstruction could destroy prior provenance. The immutable archive and this handoff contain the complete session record.
+
+Long aggregate `BACKLOG.md`, `MASTER_INDEX.md`, `CLAIM_EVIDENCE_MATRIX.md`, `CODE_RESULT_MAP.md`, `STUDY_REVIEW_LEDGER.md`, `VISUALIZATION_MATRIX.md`, and `BLOCKERS.md` were likewise not replaced from partial snapshots. The stable task ID, evidence paths, residual, and acceptance state are fully recorded here and in `ACTIVE_TASK.md`.
+
+## Next validated unit
+
+`AUD-WIKI-004`: replace the GAP-01 MV3 shorthand with the exact `CL-021` limitation, add it to the fail-closed WIKI validator, run focused tests and a repository-wide link check, and update the aggregate audit ledgers through a complete checked-out snapshot or byte-safe append mechanism.

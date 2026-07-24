@@ -2,129 +2,118 @@
 
 ## Session
 
-- UTC: `2026-07-24T00:13:55Z`
+- UTC: `2026-07-24T011158Z`
 - Task: `AUD-G4-020`
 - Repository: `SzeChunYiu/ccb-testbeam`
-- Initial remote main: `b8e83fa39209d5e627c3e5c15834a10f80fcbcd2`
-- Validated tool/test/evidence head: `81c02634e36a7111a9fe9f15d496203bf8c0e74f`
-- Remote main immediately before final handoff: `51c5cce25b35b461e01c74e2bfd4c22d2ba180bc`
+- Initial remote main: `6460d5f1479163d000d9fbbe260ba4e3ce0db7d7`
+- Validated code/test/evidence head: `6ef9962fe8c5795d862728ad4d02c47138efc14f`
+- Remote main immediately before final handoff: `82e3b0dc47183ea125f06b29bf4bf518af2f6a09`
 - Destination: direct to `main`
-- Acceptance: VALIDATED source-audit gate and visual evidence; canonical cross-energy reporting remains FLAWED, so `AUD-G4-020` is PARTIAL.
+- Acceptance: COMPLETE for removal of the unsupported cross-energy mean; broader stopping-power physics closure remains blocked.
 
 ## Start-of-run and concurrent-work review
 
-- Confirmed repository admin/push permission, fetched current remote-main history, and based every write on current `main`.
-- Inspected the canonical stopping-power comparison, shared simulation parser, recent stopping-power evidence, all mandatory `chatgpt_todo/` coordination files, open pull requests, PR #868, and commit status.
-- `AUD-REPO-001` remained owned by a concurrent session and was not duplicated.
-- PR #868 remains closed, unmerged, and non-mergeable. It was not reopened, changed, or merged.
-- A direct clone/fetch attempt failed with `Could not resolve host: github.com`. Exact current source was inspected through authenticated GitHub reads; the new audit code and tests were executed in the local session workspace.
-- Every repository write targeted `main`; no force push, history rewrite, task branch, or unrelated rollback was used.
-- No status checks were attached to the start-of-run main commit.
+- Confirmed repository admin/push permission, default branch `main`, recent history, source blob, commit status, open coordination records, and the previous `AUD-G4-020` handoff.
+- Based work on current remote `main`; no task branch, PR, force push, history rewrite, or unrelated rollback was used.
+- PR #868 remains closed, unmerged, and non-mergeable. It was not modified or merged.
+- Start-of-run main had no attached status checks.
+- A direct clone failed with `Could not resolve host: github.com`; exact source was read/written through the authenticated GitHub connector and validated in a reconstructed local workspace.
+- `AUD-REPO-001` remains owned by a concurrent session and was not duplicated.
 
-## Confirmed statistical/reporting flaw
+## Confirmed reporting flaw
 
-The canonical reporter groups ratios by particle species and prints:
+The prior canonical reporter grouped point-estimate simulation/PSTAR ratios by particle species and printed:
 
 ```python
 statistics.mean(ratios)
 ```
 
-as `mean point-estimate ratio [species]` across distinct exact configured energies. At the same time, every comparison point records:
+as `mean point-estimate ratio` across distinct exact configured energies. Every contributing point simultaneously recorded `uncertainty_method=NOT_EVALUATED`; no common measurand, point uncertainty, covariance, weighting rule, likelihood, energy-grid sensitivity, or coverage model existed.
 
-```text
-uncertainty_method=NOT_EVALUATED
-```
-
-The reporter defines no combined measurand, point uncertainty, covariance, weighting rule, likelihood, or energy-grid sensitivity study. The equal-weight arithmetic mean is therefore not an accepted combined stopping-power closure estimate. It can conceal energy-dependent bias and changes when the configured energy grid changes.
-
-Exact repository source inspected:
+Pre-change source:
 
 - path: `scripts/single_stave/compare_stopping_power.py`
 - Git blob SHA-1: `4e45e55b48c1d51320b9e6d0959b0b8423d0b2fc`
-- grouping/report block: approximately lines 365–372
-- arithmetic mean call and label: approximately line 370
 
-## Literature-backed method basis
+The arithmetic mean could conceal energy dependence and change with the configured grid. It was not an accepted combined stopping-power closure estimate.
 
-- National Institute of Standards and Technology, Technical Note 1297.
-- Persistent identifier: `doi:10.6028/NIST.tn.1297`.
-- Statement supported: combination of measurement results requires identified uncertainty components and an established, documented propagation/combination method, with covariance considered where relevant.
+## Corrected behavior
 
-This is a reporting-method basis only. It does not validate the repository's Geant4 observable, PSTAR comparison, or numerical result.
+The canonical reporter now:
 
-## Validated audit tooling and evidence
+1. removes the `statistics` import and arithmetic mean;
+2. retains every exact configured energy point separately;
+3. emits only descriptive minimum and maximum point-estimate ratio bounds per species;
+4. labels those bounds `no combined estimate`;
+5. prints `NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL`;
+6. records that policy in every result dictionary and output CSV row.
+
+Descriptive bounds remain non-accepting and are not presented as an estimator of a common parameter.
+
+## Regression and evidence
 
 Added:
 
-- `tools/audit/audit_stopping_power_cross_energy_summary.py` v1.0.0
-- `tests/test_audit_stopping_power_cross_energy_summary.py`
-- `docs/validation/stopping_power_cross_energy_summary_audit.md`
-- `docs/validation/stopping_power_cross_energy_summary_validation.json`
-- `docs/validation/stopping_power_cross_energy_summary.svg`
+- `tests/test_compare_stopping_power_cross_energy_policy.py`
+- `docs/validation/stopping_power_cross_energy_remediation_audit.md`
+- `docs/validation/stopping_power_cross_energy_remediation_validation.json`
+- `docs/validation/stopping_power_cross_energy_remediation.svg`
 
-The audit tool:
+Synthetic points:
 
-1. reads one exact source snapshot;
-2. parses the Python AST;
-3. detects the conjunction of a `statistics.mean` call and the exact `mean point-estimate ratio` report label;
-4. records source byte size and SHA-256;
-5. emits `UNWEIGHTED_CROSS_ENERGY_MEAN` and returns status 1;
-6. converts read, UTF-8, and Python-parse failures into controlled status 2.
+- proton, 1 MeV: ratio `1.0`;
+- proton, 2 MeV: ratio `0.8`.
 
-Policy identifier:
+The reporter emitted `[0.8000, 1.0000]`, `no combined estimate`, and the explicit policy; it emitted no `mean point-estimate ratio`. Both machine-readable rows retained the policy. The SVG is synthetic software-method evidence, not detector data.
 
-`NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL`
+## Validation commands and results
 
-The SVG is explicitly synthetic software-method evidence, not detector data. It shows separate energy points and crosses out the arithmetic mean using position, text, and linework rather than color alone.
-
-## Regression and validation
-
-Executed in `/mnt/data/audit_run`:
+Executed in a reconstructed exact-source workspace:
 
 ```text
 PYTHONPATH=. python -m py_compile \
+  scripts/single_stave/compare_stopping_power.py \
   tools/audit/audit_stopping_power_cross_energy_summary.py \
-  tests/test_audit_stopping_power_cross_energy_summary.py
+  tests/test_audit_stopping_power_cross_energy_summary.py \
+  tests/test_compare_stopping_power_cross_energy_policy.py
 
 PYTHONPATH=. python -m pytest \
-  tests/test_audit_stopping_power_cross_energy_summary.py -q
+  tests/test_audit_stopping_power_cross_energy_summary.py \
+  tests/test_compare_stopping_power_cross_energy_policy.py -q
 
-4 passed in 0.03s
+6 passed in 0.04s
+
+PYTHONPATH=. python tools/audit/audit_stopping_power_cross_energy_summary.py \
+  scripts/single_stave/compare_stopping_power.py \
+  --output docs/validation/stopping_power_cross_energy_remediation_validation.json
+
+CROSS-ENERGY SUMMARY AUDIT: status=VALIDATED
 ```
 
 Additional passed checks:
 
-- SVG XML parse;
-- maximum audit-tool line length: 90 characters;
-- maximum test line length: 81 characters.
+- source local Git blob matched committed blob `360f3e46db664f4eead48021536f210e2f7a85c9`;
+- test local Git blob matched committed blob `a46f092cccc8624db2078bd8da9eb8d5023c3386`;
+- source SHA-256: `15653bb4d4b1a3e4a1b2296dc8c61bb7813bf29bbdbe6c05ea65731d106ee3ca`;
+- maximum changed Python line length: 91 characters;
+- validation JSON parse;
+- SVG XML parse.
 
-The exact repository reporter was not executed locally because a current checkout could not be obtained. The machine-readable validation record explicitly distinguishes authenticated source inspection from local execution.
-
-Not run: full repository pytest, ruff, Geant4/CTest, ROOT processing, real simulation execution, or GitHub Actions. No broader CI, simulation, uncertainty, or physics-closure success is claimed.
+Not run: full repository pytest, ruff, Geant4/CTest, ROOT processing, real simulation execution, or GitHub Actions. No broader CI or physics-closure success is claimed.
 
 ## Direct-to-main commit sequence
 
-Implementation, test, and evidence:
+- `fd6fd6dc383ccb69b5fde9fbcd7e306cb86eded8` — `fix(single-stave): remove unsupported cross-energy mean`
+- `cc1f9832e6b4c6018de90caedc48743289d65cf7` — `test(single-stave): cover noncombined cross-energy reporting`
+- `4d0a421c95593141f1a5e82ff4921a1a5e9f6aad` — `docs(validation): record cross-energy reporting remediation`
+- `4f3e01dfdd58b7558b282fe8f76e9717870a715a` — `docs(validation): add cross-energy remediation record`
+- `6ef9962fe8c5795d862728ad4d02c47138efc14f` — `docs(validation): visualize cross-energy remediation`
+- `80f1379adc2ed1117c291602091903720cdd4c14` — `docs(audit): complete cross-energy summary remediation`
+- `99367ae52cd90066878d43faa7fd59aebdaa39dd` — `docs(audit): close cross-energy summary backlog task`
+- `4ab4a33025abb1e66289b994ad03f28ec3e12589` — `docs(audit): resolve cross-energy mean blocker`
+- `82e3b0dc47183ea125f06b29bf4bf518af2f6a09` — `docs(audit): archive cross-energy reporting remediation`
 
-- `a5985de2167a49a968190fd9505bd98db6e89218` — `feat(audit): detect unsupported cross-energy stopping means`
-- `c13849fe7a23adbe8cb008b25233385b9d9f56b1` — `test(audit): cover cross-energy summary gate`
-- `f83c12aafd7a3ae0389592e4b37a335e4cc553b6` — `docs(validation): record cross-energy summary flaw`
-- `91957de2c5b1c93eb708ac2668b7709e1d756c62` — `docs(validation): add cross-energy summary audit record`
-- `81c02634e36a7111a9fe9f15d496203bf8c0e74f` — `docs(validation): visualize cross-energy summary gate`
-
-Coordination and provenance:
-
-- `f34c528f12e0703600d736251111d8886a9b4649` — active task
-- `83d0af4ea0f354bcc50672ca58509970171f0748` — backlog
-- `db5158a0925d2d5b11440e45656c8dbf07279437` — master index
-- `e99f96c55616a957e8cfaf7ce2d057dc6d02e2fb` — code-result map
-- `eb6ca260d84aa2329095a76a3c113ace2fc7c710` — study ledger
-- `70d1ad559866418e2744a8895fde71c8e384ba29` — claim matrix
-- `d584c6a15a80e4a2a8cf89720bbb2365cadad5d2` — visualization matrix
-- `740b7baa0e15e25a68aca50ed9b7f8969fb0ebc1` — blocker register
-- `51c5cce25b35b461e01c74e2bfd4c22d2ba180bc` — immutable archive
-
-Every contents write returned a successful direct-main commit. The commit containing this handoff must be confirmed separately as the final remote-main head.
+Every write returned a successful direct-main commit. The commit containing this handoff must be confirmed separately as the final remote-main head.
 
 ## `chatgpt_todo/` updates
 
@@ -132,39 +121,28 @@ Updated:
 
 - `ACTIVE_TASK.md`
 - `BACKLOG.md`
-- `MASTER_INDEX.md`
-- `CODE_RESULT_MAP.md`
-- `STUDY_REVIEW_LEDGER.md`
-- `CLAIM_EVIDENCE_MATRIX.md`
-- `VISUALIZATION_MATRIX.md`
 - `BLOCKERS.md`
 - `HANDOFF.md`
 
 Added immutable session record:
 
-- `chatgpt_todo/archive/2026-07-24T001355Z_AUD-G4-020_CROSS_ENERGY_SUMMARY.md`
+- `chatgpt_todo/archive/2026-07-24T011158Z_AUD-G4-020_CROSS_ENERGY_REMEDIATION.md`
 
-`SESSION_LOG.md` was not replaced. The connector returned only a truncated portion of the long append-only file and exposes complete-file replacement rather than a byte-safe append primitive. Replacing it from incomplete bytes could destroy earlier provenance. The immutable archive and this handoff preserve the complete run record; the missing append is an explicit coordination limitation, not a scientific acceptance claim.
+`SESSION_LOG.md` was not replaced because the connector returned only a truncated portion of the long append-only file and exposes complete-file replacement rather than a byte-safe append primitive. Replacing it from incomplete bytes could destroy earlier provenance. The immutable archive and this handoff preserve the complete run record; this missing append is an explicit coordination limitation.
 
 ## Scientific boundary
 
 This run did not:
 
-- remove the arithmetic mean from the canonical reporter;
-- run a real Geant4 event export;
-- estimate statistical or systematic uncertainty;
-- define or validate covariance or weighting;
+- define or estimate statistical/systematic uncertainty;
+- define covariance, weighting, likelihood, or a combined measurand;
+- validate exact real Geant4 exports;
 - establish local deposited energy as projectile total energy loss;
-- establish proton or deuteron stopping-power agreement;
-- produce a detector calibration or performance result.
+- establish proton or deuteron Geant4/PSTAR agreement;
+- produce calibration or detector-performance results.
 
-The canonical output remains `DIAGNOSTIC_ONLY`. `BLK-G4-SP-001` remains open, and new blocker `BLK-G4-SP-003` records the unsupported mean.
+`BLK-G4-SP-003` is RESOLVED. `AUD-G4-020` is COMPLETE. Accepted stopping-power closure remains open under `BLK-G4-SP-001`, `AUD-G4-005`, and `AUD-G4-011`.
 
 ## Required next action
 
-1. Remove `statistics.mean(ratios)` and `mean point-estimate ratio` from `compare_stopping_power.py`.
-2. Report each energy point separately and, if useful, descriptive minimum/maximum bounds only.
-3. Print and record `NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL`.
-4. Add canonical reporter regressions proving no cross-energy combination is emitted.
-5. Run the source audit and all supported stopping-power test modules.
-6. Only define a future combined value after preregistering the measurand, point uncertainties, covariance, weighting or likelihood, energy-grid sensitivity, and coverage validation.
+Obtain immutable real Geant4 exports and validate a projectile-energy-loss observable or `G4EmCalculator::ComputeTotalDEDX`. Preregister and validate point uncertainty, covariance, configuration sensitivity, coverage, and acceptance criteria before any accepted Geant4/PSTAR agreement or combined result.

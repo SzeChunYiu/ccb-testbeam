@@ -1,7 +1,11 @@
-# Systematic grid: far-end fibre boundary condition (categorical).
-# Nominal = absorb. Mirror reflects non-readout-end light back. Both seeds.
-# Columns: value,label,seed  (value is absorb|mirror)
-absorb,farabs,11
-mirror,farmir,11
-absorb,farabs,12
-mirror,farmir,12
+# knob: far_end
+# channel: cli  target: --far-end  unit: mode
+# rationale: Far-end boundary; absorb|open|mirror|instrumented (near/far split).
+# base_cli: --particle proton --energy 10 --hit-x 0 --hit-y 0 --theta 0 --phi 0
+# default_nevents: 60
+# columns: label,seed,nevents,cli_args,env_vars
+label,seed,nevents,cli_args,env_vars
+far_end=absorb,1000,60,--far-end absorb,
+far_end=open,1001,60,--far-end open,
+far_end=mirror,1002,60,--far-end mirror,
+far_end=instrumented,1003,60,--far-end instrumented,

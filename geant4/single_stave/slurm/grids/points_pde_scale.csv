@@ -1,0 +1,12 @@
+# knob: pde_scale
+# channel: cli  target: --pde-scale  unit: x PDE table
+# rationale: +/-40% spans the OV range + device spread (S13360-3050CS ~25-50% peak).
+# base_cli: --particle proton --energy 10 --hit-x 0 --hit-y 0 --theta 0 --phi 0
+# default_nevents: 60
+# columns: label,seed,nevents,cli_args,env_vars
+label,seed,nevents,cli_args,env_vars
+pde_scale=0.6,1000,60,--pde-scale 0.6,
+pde_scale=0.8,1001,60,--pde-scale 0.8,
+pde_scale=1,1002,60,--pde-scale 1,
+pde_scale=1.2,1003,60,--pde-scale 1.2,
+pde_scale=1.4,1004,60,--pde-scale 1.4,

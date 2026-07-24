@@ -2,155 +2,169 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T221537Z`
-- **Task:** `AUD-WIKI-001`
-- **Unit:** MV3 exact tracked-summary public-WIKI synchronization gate
-- **Initial remote `main`:** `e844e779c9c431c6fcfe144b5cc5d856323c7bcf`
-- **Validated evidence head:** `cfe88a6216bd069232e7693ed1e383f9a70bd864`
-- **Coordination/archive head before handoff:** `7365f0167bbfaf5b4d8896f32882c85475bcdbf5`
-- **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or draft PR transport
-- **Acceptance:** **PARTIAL** — the validator, regressions, exact candidate replacement contract, machine-readable evidence, visual evidence, and immutable archive are validated; the public root WIKI remains stale on remote `main` and the remediation is not delivered.
+- **UTC stamp:** `2026-07-24T224320Z`
+- **Task:** `AUD-MERGE-001`
+- **Unit:** PR #868 current-main mapping and single-stave status synchronization
+- **Initial remote `main`:** `1e99395ee2bdf0907f82782e5b2b0b2680a3c90f`
+- **Validated evidence head:** `2dcbbdc86450707c0d6d8c1d3fe5ccc0c57e5fa1`
+- **Coordination/archive head before handoff:** `18ed01724728cf722473a54d815fb1acbae910d2`
+- **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or stale-PR merge
+- **Acceptance:** **COMPLETE** for this integration/documentation unit
 
 ## Start-of-run review and concurrency
 
-Authenticated GitHub reads inspected recent `main` history, repository metadata, current root WIKI, exact-width `CL-019`/`CL-020`/`CL-021`, the tracked MV3 summary, previous validator/evidence/handoff, backlog, blockers, active task, session log, and PR #868. No concurrent active task was duplicated. PR #868 remained closed, unmerged, non-mergeable, and untouched.
+Authenticated GitHub reads inspected recent `main` history, repository metadata,
+open PRs, PR #868 and its file inventory, the successful PR workflow job, current
+single-stave C++ implementation, three validation scripts and tests, the MC
+validation workflow, canonical Geant4 results, `KNOWN_ISSUES.md`, and the
+repository-local coordination system.
 
-Initial WIKI/ledger/summary blobs:
+A concurrent `AUD-WIKI-001` session was actively working on the exact MV3 public
+WIKI gate. This run did not duplicate or alter that candidate and selected the
+independent `BLK-MERGE-001` integration question.
 
-- WIKI: `fee0e1a15243904dbeb46254878ade4650a8e1f6`
-- claim ledger: `8135794d6f0b22da6b760bf6234bb8e1cae795fb`
-- MV3 summary: `2bb4b34e499642dfdf8ceb13e2f6351ff6e5cc6d`
+## PR #868 disposition
+
+PR #868 remains closed, unmerged, and non-mergeable. Its head is
+`7992aa318b6f13b5f4bcbd828ad97996075fed4b`.
+
+The validated technical implementation is already represented on current main:
+
+### Exact blob matches
+
+- multiseed RNG analyzer: `a92d79b593cc7de6b1d6a34a2733fb9148331b55`
+- event comparator: `c4e379f209ee1513b2b33c08e91903bda744c892`
+- photon comparator: `849456e492f55af63cfdf8e030fa9980f69dd4c0`
+- multiseed tests: `bd9f3a5d76ba76fe8c0a9dbe0a5998c661b77f69`
+- event-comparator tests: `cdcf8d7c58997ade812ab2c48f458d98a287238b`
+- photon-comparator tests: `deb1e85189c96ffc4c427a6051ec67edba1ce5ce`
+
+### Current-main semantic supersets
+
+- requested/effective/forced thread fields and CLI are present;
+- current numeric parsing is stricter than the PR version;
+- master-owned RNG seeding is configured before run-manager construction;
+- worker `BeginOfRunAction` does not reseed;
+- requested/effective/`G4FORCENUMBEROFTHREADS` provenance is recorded;
+- the MC validation workflow covers all six exact-matched scripts/tests and the
+  broader non-integration unit suite.
+
+The PR branch is therefore not needed as a transport mechanism and must not be
+merged over current coordination or later scientific changes. `BLK-MERGE-001` is
+resolved by the file-level mapping and retained CI/runtime evidence.
+
+## PR validation evidence
+
+- GitHub Actions run: `29861328983`
+- job: `88738491575`
+- conclusion: success
+- recorded tests: `147 passed, 1 skipped in 41.64s`
+- completed stages: lint, unit tests, artifact upload, result enforcement
 
 ## Confirmed documentation flaw
 
-The tracked summary and canonical ledger contain exact MV3 counts and Pearson arithmetic, but the public WIKI still publishes rounded-only `2.3%`, `22.3%`, and `68,269.4` summaries and says the exact counts/statistic are absent or not reconstructable.
+The former `geant4/single_stave/KNOWN_ISSUES.md` contradicted itself:
 
-Exact source-backed values:
+- the opening update said photon collection and overlap testing were resolved;
+- the body still had `Open issue A` and `Open issue B`;
+- the final status said `photon-collection readout IN_PROGRESS`;
+- exact 1T/48T and four-seed evidence was absent.
 
-- selected-data B8: `7051 / 306745 = 0.02298651974767315`;
-- thresholded-MC B8: `55619 / 249484 = 0.22293614019335908`;
-- Pearson chi-square: `204808.2179684494`;
-- ndf: `3`;
-- chi-square/ndf: `68269.40598948313`.
+The exact former text failed the new validator with status 1, `FLAWED`, and 19
+findings: 12 missing current-status tokens, four missing seed means, and three
+stale resolved-issue narratives.
 
-Independent reconstruction used MC fractions to form expected data counts and calculated `sum((observed-expected)^2/expected)` over B2/B4/B6/B8. The binary64 result exactly matches the tracked summary.
-
-The exact remote/pre-change WIKI fails the new gate with 12 findings:
-
-- seven `MISSING_EXACT_WIKI_TOKEN` findings;
-- five `STALE_MV3_ABSENCE_NARRATIVE` findings.
-
-## Work delivered
-
-Added:
-
-- `tools/audit/validate_wiki_mv3_summary.py` v1.0.0;
-- `tools/audit/render_wiki_mv3_summary_evidence.py`;
-- `tests/test_validate_wiki_mv3_summary.py`;
-- `docs/validation/wiki_mv3_summary_audit.md`;
-- `docs/validation/wiki_mv3_summary_validation.json`;
-- `docs/validation/wiki_mv3_summary.svg`;
-- `chatgpt_todo/archive/2026-07-24T221537Z_AUD-WIKI-001_MV3_PUBLIC_SYNC_GATE.md`.
+## Correction delivered
 
 Updated:
 
-- `chatgpt_todo/ACTIVE_TASK.md`;
-- this handoff.
+- `geant4/single_stave/KNOWN_ISSUES.md`
+- `chatgpt_todo/ACTIVE_TASK.md`
+- this handoff
+
+Added:
+
+- `tools/audit/validate_single_stave_known_issues.py`
+- `tests/test_validate_single_stave_known_issues.py`
+- `docs/validation/single_stave_known_issues_audit.md`
+- `docs/validation/single_stave_known_issues_validation.json`
+- `docs/validation/single_stave_known_issues.svg`
+- `chatgpt_todo/archive/2026-07-24T224320Z_AUD-MERGE-001_PR868_MAIN_MAPPING.md`
 
 Policy:
 
-`WIKI_MV3_MUST_REPORT_EXACT_TRACKED_SUMMARY_WITH_FLAWED_BOUNDARY`
+`KNOWN_ISSUES_MUST_MATCH_REPOSITORY_RECORDED_G4_VALIDATION`
 
-The validator requires exact-width canonical rows, exact counts/fractions/status/blocker, independently reconstructs Pearson arithmetic, checks exact public tokens, requires the non-acceptance boundary, rejects stale absence narratives, records byte provenance, and returns controlled status 0/1/2.
+The corrected document records:
 
-## Candidate public correction
+- Geant4 11.2.2 / GCC 12.3.0 / `hpua40`;
+- 100 MeV protons and 500 events per run;
+- 27/27 event branches exact equal for same-seed 1T/48T;
+- 1,170,091 photon records with all six stored fields exact equal;
+- seed means 177.1, 178.0, 179.5, and 178.5 PE/event;
+- cross-seed mean 178.3 PE/event and seed-mean RSE 0.48%.
 
-A complete exact snapshot of `WIKI.md` was patched locally through six exact fail-closed replacements covering:
-
-1. canonical result table;
-2. material-budget impact;
-3. MV3/PID narrative;
-4. validation matrix action;
-5. blocking issue wording;
-6. GAP-01 wording.
-
-Candidate provenance:
-
-- bytes: `24,023`;
-- SHA-256: `89537456afc070e2aa39cd15ac9c91d55526d35f719d85e5fe55b178a2d45fec`;
-- validator: `VALIDATED`, zero issues;
-- link target sequence: unchanged at 44 targets;
-- scientific status retained: `FLAWED` under `BLK-MV3-LEGACY-001`.
-
-The candidate was **not** published to remote `main` in this run.
+It explicitly states that this is not a detector calibration and retains
+`BLK-G4-SP-001`.
 
 ## Validation commands and results
 
 ```text
 python -m py_compile \
-  tools/audit/validate_wiki_mv3_summary.py \
-  tools/audit/render_wiki_mv3_summary_evidence.py \
-  tests/test_validate_wiki_mv3_summary.py
+  tools/audit/validate_single_stave_known_issues.py \
+  tests/test_validate_single_stave_known_issues.py
 
 PYTHONPATH=. python -m pytest \
-  tests/test_validate_wiki_mv3_summary.py -q
+  tests/test_validate_single_stave_known_issues.py -q
 
-5 passed in 0.04s
+5 passed in 0.05s
 ```
 
 Additional checks:
 
-- candidate direct validation: `VALIDATED`, zero issues;
-- exact remote/pre-change negative control: `FLAWED`, 12 findings, exit status 1;
+- exact former-text negative control: `FLAWED`, 19 findings, status 1;
+- corrected direct validation: `VALIDATED`, zero issues;
 - validation JSON parse: PASS;
 - SVG XML parse: PASS;
-- link target sequence: unchanged, 44 targets;
-- maximum changed Python line lengths: 93, 98, and 93 characters;
-- environment: Python `3.13.5`, pytest `9.0.2`, Linux `6.12.13`.
-
-## Transport result
-
-A one-time GitHub Actions transport was staged at `b3d674a1d9b9cb22bac1072b4574e0be6cc6f59f` and retriggered through the contents API at `c9548f1abb8d8de465e618255f0c835987e8141f`. No workflow-generated follow-up commit was observed; a WIKI re-read still returned blob `fee0e1a15243904dbeb46254878ade4650a8e1f6`. The temporary workflow was removed at `d4aa241ac2f56834f4ad6638f8f4406f8edb72a2` rather than left as an unvalidated mutation path.
-
-No claim is made that the public WIKI was synchronized.
+- maximum changed Python line lengths: 97 and 93 characters.
 
 ## Direct-main commit sequence
 
-- `b3d674a1d9b9cb22bac1072b4574e0be6cc6f59f` — stage validator, renderer, tests, and one-time transport;
-- `c9548f1abb8d8de465e618255f0c835987e8141f` — retrigger one-time transport;
-- `3e92d81d291daa7cb4f136ace591f54a81505b45` — validation audit;
-- `fd18463c58e4479c08ed6713fde3a43cb7049618` — machine-readable validation record;
-- `cfe88a6216bd069232e7693ed1e383f9a70bd864` — synthetic visual evidence;
-- `d4aa241ac2f56834f4ad6638f8f4406f8edb72a2` — remove non-triggered transport workflow;
-- `1963d30c2690d599509f6ecbd9d5538f45864f12` — active task;
-- `7365f0167bbfaf5b4d8896f32882c85475bcdbf5` — immutable archive.
+- `f3c68c77098274ba77934021cd84ebcc70edbae2` — synchronize status document;
+- `d7b50b5baa36445b950474feafb37858c6367cae` — fail-closed validator;
+- `745931d565a985288bb06c3629a02702b993082a` — focused tests;
+- `57e4d30fd654a1d467b456756a72ef303f0bfed9` — validation JSON;
+- `01294ceb2f0151f2af36dece2e0af25f6645e493` — audit report;
+- `2dcbbdc86450707c0d6d8c1d3fe5ccc0c57e5fa1` — visual evidence;
+- `e4be24e39e2c2c881b5e16f3a41bd74e5407ffd7` — active-task completion;
+- `18ed01724728cf722473a54d815fb1acbae910d2` — immutable archive.
 
-The connector returned direct-main commit SHAs rather than conventional textual `git push` stdout. Recent history reads confirmed the sequence on remote `main` before this handoff update.
-
-## Coordination limitation
-
-`SESSION_LOG.md` was not replaced. It is append-only, while the connector exposes whole-file replacement rather than a byte-safe append primitive. Reconstructing the long file manually under concurrent activity could destroy unrelated provenance. The immutable archive and this handoff retain the complete run. This is an unmet coordination requirement and is disclosed explicitly.
-
-`BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were not replaced because no new task ID or scientific blocker was needed; `AUD-WIKI-001` and `BLK-MV3-LEGACY-001` already cover the open state.
+The connector returned successful direct-main commit SHAs rather than
+conventional textual `git push` stdout. A post-write recent-history read must
+confirm this handoff commit and the sequence on remote `main`; that confirmation
+is reported to the user with the resulting remote head.
 
 ## Scientific boundary
 
-This is documentation/provenance validation. It does not establish:
+This unit validates repository integration and documentation consistency. It
+does not independently rerun Geant4, inspect the original ROOT files, validate
+PE/MeV transfer, establish beam-data closure, validate stopping power, or quantify
+model/material/detector systematics. The 0.48% RSE covers the four recorded seed
+means only.
 
-- correct Geant4 geometry or material model;
-- matched trigger or event-selection transfer;
-- calibrated gain/response closure;
-- covariance-aware inference;
-- a meaningful p-value or goodness-of-fit acceptance rule;
-- detector/model systematics;
-- an accepted B8 correction;
-- calibration or detector performance.
+## Coordination limitation
 
-The MV3 diagnostic remains `FLAWED` under `BLK-MV3-LEGACY-001`.
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were not
+replaced because their current contents are shared long-lived records and the
+connector exposes whole-file replacement rather than a byte-safe append/patch.
+Another scheduled session was concurrently updating coordination. Reconstructing
+or replacing those files risked lost updates. The complete append-equivalent
+record is preserved in the immutable archive and this handoff; the aggregate
+`BLK-MERGE-001` section may remain stale until a byte-safe coordination update.
 
 ## Next exact action
 
-1. Publish the validated 24,023-byte candidate WIKI through a byte-safe complete-file operation.
-2. Confirm the exact remote WIKI blob and SHA-256.
-3. Run `validate_wiki_mv3_summary.py`, `validate_wiki_claim_front_door.py`, focused pytest, JSON/SVG parsing, and the WIKI internal-link checker against remote-equivalent bytes.
-4. Require zero findings and retain `FLAWED`/`BLK-MV3-LEGACY-001` before marking the public synchronization unit validated.
+Publish the validated 24,023-byte root-WIKI MV3 candidate recorded by the prior
+`AUD-WIKI-001` handoff through a byte-safe complete-file write, then require zero
+findings from the new MV3 validator, the existing front-door gates, and the WIKI
+internal-link check against remote-equivalent bytes.

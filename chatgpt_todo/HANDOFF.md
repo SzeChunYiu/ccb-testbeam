@@ -2,227 +2,161 @@
 
 ## Session
 
-- UTC: `2026-07-24T042917Z`
+- UTC stamp: `2026-07-24T050822Z`
 - Task: `AUD-LEDGER-001`
 - Repository: `SzeChunYiu/ccb-testbeam`
-- Initial observed remote `main`: `6a0268b46cc7c848096019ea466b73901df1605b`
-- Concurrent base incorporated before first write: `ef5a2167934f414e7cf064c210ddd22bb401ce20`
-- Validated implementation/test/evidence head before final coordination: `9df04ab62e3c8eaa84db22a7e9a779feb3621efc`
-- Remote `main` after backlog, visualization, archive, and active-task updates, immediately before this handoff: `bd9771b753c2e04f7c07ab305045b17875732957`
-- Destination: direct commits to `main`
-- Acceptance: `AUD-LEDGER-001 = PARTIAL`; the fail-closed gate is validated, but 24 malformed ledger rows remain unreconstructed.
+- Initial remote `main`: `1c982d65a0b742c3b6d4f78201cfed37fa3094c4`
+- Validated work/archive head: `089d02f622c86c8350ce9f7ab40df61e57c23aa3`
+- Remote confirmation: recent-main search returned `089d02f622c86c8350ce9f7ab40df61e57c23aa3` as the current head before this handoff update.
+- Destination: direct commits to `main`; no task branch, pull request, force-push, or history rewrite
+- Acceptance: `AUD-LEDGER-001 = PARTIAL`; `CL-001` is validated, 23 malformed ledger rows remain
 
-## Start-of-run and concurrent-work review
+## Start-of-run and concurrency review
 
-- Confirmed repository admin/push permission, default branch `main`, recent history, open pull requests, repository coordination records, and PR #868 status.
-- PR #868 remains closed, unmerged, and non-mergeable. It was not modified or merged.
-- `AUD-REPO-001` remains owned by another active session and was not duplicated.
-- Concurrent WIKI remediation advanced `main` during this session. Its final handoff commit `658d058d721912fc7746b354c01c90ee8964df11` was preserved and incorporated; no concurrent commit was discarded.
-- A direct clone was attempted but failed with `Could not resolve host: github.com`. Exact repository bytes were reconstructed from authenticated GitHub content reads; writes were successful authenticated direct-main commits.
-- No task branch, pull request, force-push, history rewrite, unrelated rollback, destructive data edit, or raw-data modification was used.
+Reviewed repository permissions/default branch, recent main history, open PRs, commit
+status, PR #868 state, all mandatory coordination records, the strict ledger-schema
+gate, and the complete S00 evidence chain. A direct clone failed with `Could not
+resolve host: github.com`; authenticated GitHub connector reads/writes were used.
 
-## Repository evidence inspected
+Concurrent commit `a0e498852a3275f8bdfe2b5aeb50fb4860c24dd9` landed during the run. It was
+preserved; no unrelated commit or working tree was overwritten. PR #868 remains closed,
+unmerged, and non-mergeable and was not modified.
 
-- `docs/claim_ledger.csv`
-- `WIKI.md` remediation state and `tools/audit/validate_wiki_claim_front_door.py`
-- `chatgpt_todo/README.md`
-- `MASTER_INDEX.md`
-- `BACKLOG.md`
-- `ACTIVE_TASK.md`
-- `HANDOFF.md`
-- `BLOCKERS.md`
-- `CLAIM_EVIDENCE_MATRIX.md`
-- `CODE_RESULT_MAP.md`
-- `STUDY_REVIEW_LEDGER.md`
-- `VISUALIZATION_MATRIX.md`
-- `SESSION_LOG.md`
-- recent commits, open PRs, and PR #868 metadata.
+## Confirmed defects
 
-## Exact claim-ledger provenance
+1. `CL-001` contained 40 values under the canonical 43-column header, so ordinary
+   positional parsing shifted late fields.
+2. The row cited stale/nonexistent paths:
+   - `reports/s00_pulse_table/REPORT.md`;
+   - `data/pulse_table.parquet`.
+3. `FIG-GL-001` cited stale/nonexistent paths:
+   - `scripts/s00_selector.py`;
+   - `data/s00_counts.csv`;
+   - `docs/figures/s00_gate.png`.
 
-- Path: `docs/claim_ledger.csv`
-- Git blob SHA-1: `0c7ea56d00ed44bd976e4ba8e05a84cb4c6eb63e`
-- Bytes: `8971`
-- SHA-256: `3ef63ee3836ce67c8b9f4538f754737cdcf53bc67d9a746210a0ea9e81e41d2d`
-- Snapshot method: `SINGLE_READ_EXACT_BYTES`
-- Header fields: `43`
-- Data rows: `26`
-- The local reconstruction's Git blob matched the authenticated GitHub blob before execution.
+## Source-backed correction
 
-## Confirmed schema and claim-governance defect
+The row is now bound to:
 
-Only two records match the canonical 43-column header:
+- `configs/s00_reproduction.yaml`;
+- `scripts/01_build_pulse_table_from_root.py`;
+- `reports/S00_data_integrity_pipeline_reproduction/REPORT.md`;
+- `reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv`;
+- `reports/S00_data_integrity_pipeline_reproduction/manifest.json`;
+- `reports/S00_data_integrity_pipeline_reproduction/fig_counts_by_group_stave.png`;
+- source commit `dcde28d37b9adee4f56ee0348d090006c53d2fa1`.
 
-- `CL-007`
-- `CL-011`
+The 43-field row records `640737 pulses`, 33 configured runs, `n_data=640737`,
+`truth_type=data_count`, `status=VALIDATED`, exact source paths, full source commit,
+`FIG-GL-001`, `TAB-GL-001`, and `ci_status=EXACT_COUNT_FIXED_INPUTS`.
 
-The other 24 rows contain 35--40 columns:
+The `0/0/0` uncertainty entries are scoped to exact deterministic count reproduction
+for fixed repository-declared input files and algorithm. They are not a population
+confidence interval. The generated selected-pulse CSV remains intentionally untracked.
 
-| Width | Rows | Claim IDs |
-|---:|---:|---|
-| 35 | 1 | `CL-026` |
-| 36 | 4 | `CL-012`, `CL-015`, `CL-016`, `CL-021` |
-| 37 | 7 | `CL-008`, `CL-009`, `CL-010`, `CL-014`, `CL-023`, `CL-024`, `CL-025` |
-| 38 | 8 | `CL-002`, `CL-004`, `CL-005`, `CL-013`, `CL-017`, `CL-018`, `CL-019`, `CL-020` |
-| 39 | 3 | `CL-003`, `CL-006`, `CL-022` |
-| 40 | 1 | `CL-001` |
-| 43 | 2 | `CL-007`, `CL-011` |
-
-A short row is not safely equivalent to a row with only trailing empty fields. Missing commas can shift every later value into a different header position. Exact-byte examples under ordinary positional `csv.DictReader` parsing include:
-
-- `CL-001`: `status` becomes `data/pulse_table.parquet`; `ci_status` becomes `Exact reproduction count`.
-- `CL-002`: `truth_type` becomes the results JSON path; `status` becomes the config path; `source_report` becomes `FIG-TIM-001`.
-- `CL-026`: `source_report` becomes `NOT_APPLICABLE_WITH_REASON`.
-
-These are parser artifacts, not source-backed claim semantics. Therefore, status, truth type, source paths, figure/table IDs, CI state, blockers, supersession, source commit, and notes are withheld for malformed rows until each row is reconstructed from evidence.
-
-## Added fail-closed validator
-
-Added `tools/audit/validate_claim_ledger_schema.py` version `1.0.0`.
-
-Policy:
-
-`NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS`
-
-The validator:
-
-- reads the input bytes once and records byte size and SHA-256;
-- requires the exact canonical 43-field header;
-- uses strict UTF-8 and strict CSV parsing;
-- checks every row width before mapping claim fields;
-- detects missing and duplicate claim IDs;
-- records row number, claim ID, actual width, missing/excess fields, schema state, and field-interpretation state;
-- explicitly records `field_interpretation=WITHHELD` for malformed rows;
-- emits deterministic JSON and accessible SVG evidence;
-- returns 0 for `VALIDATED`, 1 for measured flaws, and 2 for controlled input/schema/UTF-8 errors.
-
-Remote validator Git blob SHA-1: `1961e63756b734db30a4a9a8037a756c291afe25`.
-
-## Regression tests
-
-Added `tests/test_validate_claim_ledger_schema.py`.
-
-Coverage includes:
-
-- exact canonical rows;
-- short rows and withheld interpretation;
-- explicit missing-middle-field shift under `DictReader`;
-- duplicate IDs;
-- noncanonical header;
-- malformed CSV;
-- machine-readable flaw output;
-- accessible SVG output;
-- invalid UTF-8 and controlled status 2.
-
-Remote test Git blob SHA-1: `74e19fa9842f89a81910acf7121e587e727398df`.
-
-## Validation commands and results
-
-Executed on exact local copies of the committed implementation and tests:
-
-```text
-python -m py_compile \
-  tools/audit/validate_claim_ledger_schema.py \
-  tests/test_validate_claim_ledger_schema.py
-
-python -m pytest tests/test_validate_claim_ledger_schema.py -q
-
-9 passed in 0.04s
-```
-
-Executed against the exact current ledger:
-
-```text
-python tools/audit/validate_claim_ledger_schema.py \
-  docs/claim_ledger.csv \
-  --output docs/validation/claim_ledger_schema_validation.json \
-  --svg docs/validation/claim_ledger_schema.svg
-```
-
-Measured result:
-
-```text
-process status: 1
-status: FLAWED
-data rows: 26
-exact-width rows: 2
-width-mismatched rows: 24
-```
-
-The nonzero status is the required fail-closed result for the repository's current malformed ledger. It is not a validator test failure.
-
-Additional passed checks:
-
-- validation JSON parsed successfully;
-- SVG parsed as XML;
-- remote implementation, test, and SVG Git blobs match the locally validated files;
-- maximum validator line length: 91 characters;
-- maximum test line length: 90 characters.
-
-Not run:
-
-- full repository pytest;
-- ruff;
-- broken-link checker;
-- ROOT/data processing;
-- simulation;
-- GitHub Actions.
-
-No broader CI success is claimed.
-
-## Reproducible evidence
+## Validation delivered
 
 Added:
 
+- `tools/audit/validate_claim_ledger_cl001.py` v1.0.0;
+- `tests/test_validate_claim_ledger_cl001.py`;
+- `docs/validation/claim_ledger_cl001_audit.md`;
+- `docs/validation/claim_ledger_cl001_validation.json`;
+- `docs/validation/claim_ledger_cl001.svg`.
+
+The validator checks the exact ledger/config/report/count-table/manifest/figure-registry
+chain, count and run cardinality, count-table closure, report scope, commit linkage,
+manifest contract, tracked source paths, and figure registry. It returns 0 for
+`VALIDATED`, 1 for measured inconsistencies, and 2 for controlled input/schema errors.
+
+Commands and results:
+
+```text
+python -m py_compile \
+  tools/audit/validate_claim_ledger_cl001.py \
+  tests/test_validate_claim_ledger_cl001.py
+
+PYTHONPATH=. python -m pytest tests/test_validate_claim_ledger_cl001.py -q
+
+5 passed in 0.59s
+
+PYTHONPATH=. python tools/audit/validate_claim_ledger_cl001.py \
+  --output docs/validation/claim_ledger_cl001_validation.json \
+  --svg docs/validation/claim_ledger_cl001.svg
+
+status: VALIDATED
+issues: 0
+configured runs: 33
+count: 640737
+```
+
+JSON and SVG parsing passed. Maximum changed Python line lengths were 96 and 95
+characters. Ruff, full repository pytest, ROOT processing, simulation, and GitHub
+Actions were not run; no broader CI success is claimed. No status checks were attached
+to the initial head.
+
+## Cumulative claim-ledger state
+
+- canonical columns: 43
+- data rows: 26
+- exact rows: 3 (`CL-001`, `CL-007`, `CL-011`)
+- width-mismatched rows: 23
+- schema state: `FLAWED` by required fail-closed policy
+- malformed-row late fields: `WITHHELD`
+
+Cumulative schema Markdown/JSON/SVG evidence was refreshed to the 3/26 state.
+
+## Direct-main commits
+
+1. `b301216f014df325b3a211e21c1e8720206dd6b4` — `docs(ledger): reconstruct CL-001 from S00 evidence`
+2. `561f40945c35583216dcd8c6d0c307a5da4ef5d3` — `docs(figures): repair FIG-GL-001 provenance`
+3. `6aa5d3f80cf223127a32c2e6b6343808f307d7bb` — `feat(audit): validate CL-001 source chain`
+4. `0493463a62e6a70ca3bf0bbd944467795cac3da7` — `test(audit): cover CL-001 source reconstruction`
+5. `40191cb2b813fafbd02e01998b11a7e51a4a9b1d` — `fix(audit): normalize CL-001 evidence paths`
+6. `be1803f4f42b77af3e4e4b7810496fbf96688e7d` — `docs(validation): add CL-001 reconstruction record`
+7. `a51a9f9468ab32a4b8aa88600f8193f22bc7e8d1` — `docs(validation): visualize CL-001 source chain`
+8. `1d97c0636cc004ea5d2bd4b38c1d2ba51ca978b7` — `docs(validation): record CL-001 reconstruction audit`
+9. `47c22f4bd19ff581179958963f76e03b2fd9eceb` — `docs(validation): refresh claim-ledger schema record`
+10. `97cfadf8ee9303821e48d66e7f35e99e0321805d` — `docs(validation): update cumulative ledger schema audit`
+11. `5f90a64a29facf473fc1ba6c4e88c741a333ff0f` — `docs(validation): refresh ledger width visualization`
+12. `c26239ad2074d1fa354515ec18b051c2149cbcfe` — `style(test): format CL-001 regression helpers`
+13. `b96d89f459f6662796a31224c472e841c23e9d0c` — `docs(audit): advance ledger reconstruction to CL-001`
+14. `3a2032a3fddebf81f7dff6347f5e5c16ca6f3f92` — `docs(audit): record CL-001 ledger progress`
+15. `089d02f622c86c8350ce9f7ab40df61e57c23aa3` — `docs(audit): archive CL-001 ledger reconstruction`
+
+Each write response reported a successful commit on `main`; the subsequent recent-main
+search confirmed the archive commit at remote head before this handoff update.
+
+## Files changed
+
+- `docs/claim_ledger.csv`
+- `docs/figure_registry.csv`
+- `tools/audit/validate_claim_ledger_cl001.py`
+- `tests/test_validate_claim_ledger_cl001.py`
+- `docs/validation/claim_ledger_cl001_audit.md`
+- `docs/validation/claim_ledger_cl001_validation.json`
+- `docs/validation/claim_ledger_cl001.svg`
 - `docs/validation/claim_ledger_schema_audit.md`
 - `docs/validation/claim_ledger_schema_validation.json`
 - `docs/validation/claim_ledger_schema.svg`
+- `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/BACKLOG.md`
+- `chatgpt_todo/HANDOFF.md`
+- `chatgpt_todo/archive/2026-07-24T050822Z_AUD-LEDGER-001_CL001_RECONSTRUCTION.md`
 
-The JSON records all 26 rows and every mismatch. The SVG shows each claim ID, actual width, expected width 43, exact/mismatch labels, hatching, and the explicit non-physics interpretation boundary. Remote SVG Git blob SHA-1: `7df5d9cef2b43601c498148970ddf87acdc29193`.
+## Scientific boundary and next task
 
-## Direct-to-main commit sequence
+No raw ROOT file, generated pulse table, numerical count, uncertainty, figure,
+calibration, simulation, or detector-performance result was regenerated. This run
+corrected claim provenance and schema for one evidence-backed exact-count claim.
 
-- `dc2941513d643f2fe91828106e3f65a72dfff366` — `docs(audit): activate claim-ledger schema gate`
-- `4ca689f788f76d51a768ea2272f8a1c36367f442` — `feat(audit): validate claim-ledger row alignment`
-- `dd45b4274773d5d6f4c03e2d50202aa413a42cbe` — `test(audit): cover claim-ledger schema gate`
-- `5138378935d651fa435523684a2d199c1f8c65db` — `docs(validation): record claim-ledger schema audit`
-- `c798351d5d75a737621d705e1ea39acc3f244b55` — `docs(validation): add claim-ledger schema record`
-- `02102fae6897170c3b37aa1485c67ba0819e1101` — `docs(validation): visualize claim-ledger width defects`
-- `9df04ab62e3c8eaa84db22a7e9a779feb3621efc` — `docs(validation): clarify claim-ledger artifact hashes`
-- `b170ea7d74e24ef0b6a2bf4e5732038187443125` — `docs(audit): advance claim-ledger schema task`
-- `9a76e9c0061e106ba26210b39fa58609e00c72e2` — `docs(audit): register claim-ledger schema visualization`
-- `2a40bfb98af1bac1eb7637d3814697500104dde8` — `docs(audit): archive claim-ledger schema gate`
-- `bd9771b753c2e04f7c07ab305045b17875732957` — `docs(audit): hand off active ledger remediation`
+Next: reconstruct the highest-impact remaining malformed claim from exact source
+reports/scripts/data/configuration/history. Do not infer field placement from current
+positional CSV parsing. Completion requires 26/26 exact rows followed by WIKI, claim,
+internal-link, figure, and table checks.
 
-All writes returned successful direct-main GitHub commit responses. A local `git push` transcript is unavailable because the checkout network path was unavailable. Subsequent remote-main history and file reads confirm the commits are on remote `main`.
-
-## `chatgpt_todo/` updates
-
-Updated:
-
-- `ACTIVE_TASK.md`: `AUD-LEDGER-001` is `PARTIAL` with exact measured state and remaining acceptance work.
-- `BACKLOG.md`: records the validated gate, nine tests, evidence, and 24-row remediation boundary.
-- `VISUALIZATION_MATRIX.md`: added `VIS-LEDGER-001` for the exact row-width diagnostic.
-- `HANDOFF.md`: this self-contained current handoff.
-
-Preserved existing cross-links:
-
-- `IDX-LEDGER-001`
-- `CRM-LEDGER-001`
-- `ST-LEDGER-001`
-- `CL-LEDGER-001`
-- `BLK-LEDGER-001`
-
-Added immutable session record:
-
-- `chatgpt_todo/archive/2026-07-24T042917Z_AUD-LEDGER-001_SCHEMA_GATE.md`
-
-`SESSION_LOG.md` was not replaced. The connector exposes whole-file replacement rather than a byte-safe append primitive, the append-only file is 282 lines, and `main` changed concurrently. Reconstructing and replacing it from ranged responses would create an avoidable lost-update/provenance-loss risk. The immutable archive and this handoff contain the complete run record; the missing append remains explicit.
-
-## Acceptance state and next action
-
-This unit establishes and validates the schema gate; it does not repair the canonical ledger. `AUD-LEDGER-001` remains `PARTIAL`, and `BLK-LEDGER-001` remains open.
-
-Completion requires source-backed reconstruction of all 24 malformed rows to exactly 43 fields. For each row, inspect its report, script, data, configuration, figures/tables, history, and claim context; preserve every intended nonempty value and caveat; represent unresolved fields explicitly; require 26/26 exact-width validation; then rerun WIKI, claim, link, and figure/source checks.
-
-No claim value, truth classification, uncertainty, calibration, data result, simulation result, or detector-performance metric was recalculated or promoted in this session.
+`SESSION_LOG.md` was not replaced because the connector provides whole-file replacement
+rather than a byte-safe append and the long append-only file was only available through
+paged/truncated reads. Replacing reconstructed partial bytes would risk destroying
+prior provenance. The complete session is preserved in the immutable archive and this
+handoff; this limitation remains explicit rather than fabricating a log append.

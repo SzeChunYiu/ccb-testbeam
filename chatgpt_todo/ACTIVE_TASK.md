@@ -1,15 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-G4-019
+- **Task ID:** AUD-G4-020
 - **Owner:** scheduled ChatGPT audit session
-- **Session stamp:** 2026-07-23T230825Z
-- **Initial remote main SHA:** `eec220db6807d3d3615d92c6d39d4fb2e18e4335`
-- **Validated implementation/evidence head:** `807febe85c35b537c53a5acdf1795ee9a67d7cb2`
-- **Scope:** bind canonical stopping-power simulation rows, byte count, and SHA-256 to one exact in-memory input snapshot and make invalid UTF-8 a controlled input failure.
-- **Confirmed defect:** validator v1.1.0 parsed with `read_text()`, then later re-read the path for `stat()` and SHA-256; a replaced path could produce rows from bytes A with provenance from bytes B. Invalid UTF-8 escaped as an uncaught decoder exception.
-- **Validated change:** validator v1.2.0 reads exact bytes once, decodes/parses and derives size/hash from that byte string, records `SINGLE_READ_EXACT_BYTES`, and maps invalid UTF-8 to status-2 `SimulationTableError`.
-- **Commands:** focused `py_compile`; existing plus new validator pytest; exact former-algorithm negative control; JSON/SVG parse; Git-blob and line-length checks.
-- **Validation:** `19 passed in 2.01s`; former algorithm produced `2 failed`; changed Python lines are at most 94 characters; committed implementation blob matches validated local blob `6a57b93d...`.
-- **Evidence:** `docs/validation/stopping_power_sim_snapshot_audit.md`, `stopping_power_sim_snapshot_validation.json`, and `stopping_power_sim_snapshot.svg`.
-- **Boundary:** parser/provenance integrity is validated synthetically, but no real export, accepted projectile-loss observable, uncertainty budget, or stopping-power closure was produced.
-- **Status:** COMPLETE for `AUD-G4-019`; accepted stopping-power physics closure remains PARTIAL/BLOCKED.
+- **Session stamp:** 2026-07-24T001355Z
+- **Initial remote main SHA:** `b8e83fa39209d5e627c3e5c15834a10f80fcbcd2`
+- **Validated tool/test/evidence head:** `81c02634e36a7111a9fe9f15d496203bf8c0e74f`
+- **Scope:** prevent an arithmetic mean across distinct stopping-power energy points from masquerading as a combined closure estimate when per-point uncertainty, covariance, weighting, and a combined measurand are undefined.
+- **Confirmed defect:** `compare_stopping_power.py` prints `statistics.mean(ratios)` as `mean point-estimate ratio [species]` across distinct configured energies even though every point records `uncertainty_method=NOT_EVALUATED`.
+- **Validated progress:** added a fail-closed source audit, four focused tests, Markdown/JSON evidence, and an accessible SVG demonstrating why a cross-energy mean is unsupported.
+- **Commands:** focused `py_compile`; `pytest`; SVG XML parse; changed-file line-length checks; authenticated GitHub inspection of the exact current source blob.
+- **Validation:** `4 passed in 0.03s`; tool maximum line length 90; test maximum line length 81; SVG parsed successfully.
+- **Evidence:** `docs/validation/stopping_power_cross_energy_summary_audit.md`, `stopping_power_cross_energy_summary_validation.json`, and `stopping_power_cross_energy_summary.svg`.
+- **Boundary:** the audit gate is validated, but the canonical reporter still emits the unsupported mean. No real Geant4 export, uncertainty budget, or accepted stopping-power closure was produced.
+- **Status:** PARTIAL / FLAWED canonical behavior; next action is to remove the mean from `compare_stopping_power.py`, emit only individual points plus descriptive bounds, and integrate this audit into regression/CI.

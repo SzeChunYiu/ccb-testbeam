@@ -40,9 +40,9 @@
 | Selected pulses (S00 gate) | **640,737** (exact reproduction) | CL-001 — VALIDATED |
 | Best timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | CL-002/003 — VALIDATED (MV4 release BLOCKED) |
 | Combined 3-stave (B4+B6+B8) | **σ₆₈ ≈ 0.54–0.56 ns** | CL-004/005 — DONE_DATA_ONLY |
-| Pile-up tolerance | **R_max ≈ 3.05 MHz** (corrected from 4.22 MHz) | CL-010 — VALIDATED (MV5 release BLOCKED) |
+| Pile-up tolerance | **Withheld pending S-STAT-003** | CL-010 — BLOCKED |
 | Proton/deuteron PID | **AUC = 0.986** | CL-017 — TRUTH_LEVEL_MC_ONLY (data transfer unvalidated) |
-| C12-like anomaly in truth-labelled MC | **283 / 87,555 tracks (0.32%)**; ~55% C12 within the selected MC class | CL-022 — TRUTH_LEVEL_MC_ONLY (real-data identity unvalidated) |
+| Early-peak morphology rate in truth-labelled MC | **283 / 87,555 tracks (0.323%; Wilson 95% CI 0.288–0.363%)**; C12 labels are **156 / 283 (55.1%)** within that selected MC class | CL-022 — TRUTH_LEVEL_MC_ONLY (real-data identity unvalidated) |
 | MV3 stopping-depth (MC vs data) | **FAIL** — χ²/ndf ≈ 68,269 | CL-019/020/021 — FAIL (geometry blocker) |
 
 ## Repository Layout

@@ -1,0 +1,79 @@
+{
+  "claim_id": "CL-022",
+  "inputs": {
+    "ledger": {
+      "bytes": 12264,
+      "path": "docs/claim_ledger.csv",
+      "sha256": "9a099f76609c51b7400c8615a46c5e873058ac00e0fa9e3a0e2877a1d5e5db5c",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "readme": {
+      "bytes": 4967,
+      "path": "README.md",
+      "sha256": "ebf79ebc9ca4d56907d35f36472bc145fbf14b7c4338a45bdc02da8c7a315916",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "source_data": {
+      "bytes": 5069,
+      "path": "reports/mv6_representation_1782678362/mv6_representation_summary.json",
+      "sha256": "eda47b436430b7663ad88bd87b2ed2b027b3ac1568bc82d899a51c55dc669720",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "source_report": {
+      "bytes": 2822,
+      "path": "reports/mv6_representation_1782678362/REPORT.md",
+      "sha256": "01c9dc9b27de46d1057420e7161d727db413481987d7fb1fd6f3e4310df92577",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "source_script": {
+      "expected_git_blob": "f965823518b22908f3e8974f280bff5c970368d0",
+      "path": "scripts/mv6_representation_study.py",
+      "source_commit": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170",
+      "validator_scope": "PATH_EXISTS_ONLY"
+    }
+  },
+  "issues": [],
+  "limitations": [
+    "The three binomial quantities have different denominators and meanings.",
+    "Truth-labelled MC does not identify the related real-data anomaly.",
+    "Matched data/MC morphology closure and independent data species evidence remain required."
+  ],
+  "metrics": {
+    "c12_share_of_early_peak": {
+      "ci_high": 0.6081125511627331,
+      "ci_level": 0.95,
+      "ci_low": 0.4929885941153212,
+      "ci_method": "Wilson_score",
+      "denominator": 283,
+      "estimate": 0.5512367491166078,
+      "interpretation": "species composition inside selected MC class",
+      "numerator": 156
+    },
+    "early_peak_rate_within_c12": {
+      "ci_high": 0.024940838952822255,
+      "ci_level": 0.95,
+      "ci_low": 0.018290520583369645,
+      "ci_method": "Wilson_score",
+      "denominator": 7302,
+      "estimate": 0.021364009860312245,
+      "interpretation": "C12-labelled MC tracks only",
+      "numerator": 156
+    },
+    "total_early_peak_rate": {
+      "ci_high": 0.003630645177388446,
+      "ci_level": 0.95,
+      "ci_low": 0.002877452112691542,
+      "ci_method": "Wilson_score",
+      "denominator": 87555,
+      "estimate": 0.003232254011764034,
+      "interpretation": "all truth-labelled MC tracks",
+      "numerator": 283
+    }
+  },
+  "n_issues": 0,
+  "policy": "SEPARATE_EARLY_PEAK_RATE_FROM_C12_COMPOSITION",
+  "scientific_acceptance": "TRUTH_LEVEL_MC_ONLY",
+  "status": "VALIDATED",
+  "validator": "validate_claim_ledger_cl022.py",
+  "version": "1.0.0"
+}

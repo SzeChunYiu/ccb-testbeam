@@ -1,149 +1,193 @@
-# Latest Scientific Review Handoff
+# Latest Scientific-Review Handoff
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T090650Z`
+- **UTC stamp:** `2026-07-24T102230Z`
 - **Task:** `AUD-WIKI-001`
-- **Unit:** academic executive-summary claim consistency and fail-closed exact-width ledger gate
+- **Unit:** root-WIKI Rmax, duplicate-readout, and saturation-recovery fail-closed claim gate
 - **Repository:** `SzeChunYiu/ccb-testbeam`
-- **First observed remote `main`:** `0f0e79031777faa203c086860d6a163d10c838ae`
-- **Concurrent P07e completion incorporated before writes:** `5e7f9c96ac604eef63be356da0131fc492b5173d`
-- **Validated delivery head before this handoff update:** `482b615648f91630e15723a1e44958d2938f28b6`
+- **Initial remote `main`:** `74966884f40e6dbc8ac6243d4983eaa7dfb395ae`
+- **Validated remote-main delivery head before this handoff:** `fcb3297762339a098d8a99bc7aa1c8417eb71130`
 - **Destination:** direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite
-- **Acceptance:** executive-summary correction, validator, focused tests, Markdown/JSON/SVG evidence, and immutable archive are `VALIDATED`; `AUD-WIKI-001` remains `PARTIAL` because root `WIKI.md` still needs the same Rmax and P04p/P07e synchronization
+- **Acceptance:** validator, focused tests, exact ledger-byte check, Markdown/JSON/SVG evidence, and immutable archive are `VALIDATED`; root `WIKI.md` remediation remains `PARTIAL`
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads inspected repository metadata and permissions, recent main history, current commit status, PR #868, mandatory `chatgpt_todo/` files, `WIKI.md`, the academic executive summary, the canonical claim ledger, existing WIKI validation tooling, and the completed P04p/P07e evidence records. Concurrent P07e commits were allowed to finish and were incorporated before this unit wrote to main.
+Authenticated GitHub reads inspected repository metadata and permissions, recent
+main history, current commit status, PR #868, `WIKI.md`,
+`docs/claim_ledger.csv`, the current WIKI validator and tests, the latest
+executive-summary handoff, and all mandatory `chatgpt_todo/` coordination
+records. No concurrent commit appeared while the implementation and evidence
+sequence was written.
 
-A direct clone was attempted but failed because the runtime could not resolve `github.com`. Repository facts were established with authenticated GitHub file/blob/commit reads. Executable validation used exact locally constructed source and test files plus an exact 43-column extraction of the five current ledger rows used by the gate.
+PR #868 remains closed, unmerged, and non-mergeable and was not modified. No
+status checks were attached to the initial or validated delivery head, so no
+GitHub Actions success is inferred.
 
-PR #868 remains closed, unmerged, and non-mergeable and was not modified. No status checks were attached to the reviewed current-main head; no GitHub Actions success is inferred.
+A direct clone was attempted but the runtime could not resolve `github.com`.
+Repository reads and direct-main writes therefore used the authenticated GitHub
+connector. Exact current ledger bytes were reconstructed locally and matched
+the authenticated Git blob. The executable current-WIKI finding used an exact
+claim-bearing excerpt reconstructed from authenticated line reads; it is not
+claimed to be a complete local WIKI byte snapshot.
 
-## Confirmed public-documentation defects
+## Confirmed claim-gate bypass
 
-The pre-change academic executive summary blob was:
+`tools/audit/validate_wiki_claim_front_door.py` v1.1.0 bound only:
 
-`eb8c2f5d287ff227a15522754f48a0c75c1336ca`
+- `CL-007` — MV4 raw timing pull;
+- `CL-011` — effective live-time.
 
-The reviewed canonical claim-ledger blob was:
+It did not require canonical 43-column width for a bound claim and did not bind
+Rmax, P04p duplicate readout, or P07e saturation recovery. A source-faithful
+stale fixture returned `VALIDATED` when the new validator was deliberately
+restricted to the former binding and phrase-check scope. The former gate could
+therefore miss the reviewed public conflicts.
 
-`853d955f449268ec614ac61f33f243d30cf473e0`
+## Current public conflicts measured
 
-The chapter contradicted canonical or already-audited claim state:
+The exact current claim ledger has 43 columns for all six required records:
 
-1. **Rmax:** displayed `3.044–3.05 MHz` as `VALIDATED`, while exact-width `CL-010` is `BLOCKED` and withholds the value. `CL-012` retains 3.044 MHz only as superseded correction history.
-2. **Effective live-time:** used truth type `data_only`, while exact-width `CL-011` records `data_mc_self_consistent`.
-3. **MV4 raw timing:** used `PASS`, outside the canonical status vocabulary; exact-width `CL-007` records `VALIDATED`.
-4. **P04p/P07e:** combined duplicate readout and saturation recovery as `ML wins (confirmed)`. Exact-width `CL-015` has no canonical winner because the P04p coverage interval crosses the eligibility gate. Exact-width `CL-016` withholds P07e because external held-out duplicate closure is worse than raw.
-5. **C12-like anomaly:** presented the 0.32% truth-labelled MC fraction as an established empirical result rather than `TRUTH_LEVEL_MC_ONLY`.
+`CL-007`, `CL-010`, `CL-011`, `CL-012`, `CL-015`, `CL-016`.
 
-## Quantitative claim state retained
+The root WIKI claim-bearing excerpt returned process status 1, `FLAWED`, with
+21 findings:
 
-No new detector calculation was performed. The summary now preserves the already source-backed values and limitations:
+- three status/ledger mismatches;
+- three values published despite blank canonical values;
+- three unsupported ML-win phrase findings;
+- two missing canonical model rows;
+- two missing WIKI statuses;
+- two withheld-Rmax phrase findings;
+- two missing required public caveats;
+- one truth-type mismatch;
+- one unresolved Rmax threshold;
+- one unresolved Rmax derivation;
+- one unsupported combined ML-win claim.
 
-- P04p GBT accepted coverage: `0.5016432417313474`;
-- P04p run-bootstrap 95% interval: `[0.4781032287979763,0.5382552094265317]`;
-- P07e external ML charge res68: `0.1763577793605039` with `[0.17304334869529975,0.18060166173702746]`;
-- P07e raw charge res68: `0.12079374117700271` with `[0.11700387021774719,0.12536373643016782]`;
-- P07e ML-minus-raw degradation: `+0.05556403818350119`.
+Specific evidence conflicts:
+
+1. `CL-010` is `BLOCKED`, has no canonical value, and is blocked by
+   `S-STAT-003`; WIKI publishes `3.044–3.05 MHz` as `VALIDATED` in two tables
+   and repeats `mu_max = 0.38` plus the derived 3.04 MHz value.
+2. `CL-012` is `SUPERSEDED` with no accepted value; WIKI presents
+   approximately 3.05 MHz as the new canonical value.
+3. `CL-015` is `GATED` because the P04p accepted-coverage interval crosses the
+   selection threshold; WIKI still describes duplicate readout as an ML-win or
+   confirmed-win domain.
+4. `CL-016` is `GATED`; P07e external held-out duplicate closure is worse for
+   ML than raw and producer bytes are unbound; WIKI still describes saturation
+   recovery as an ML-win or promising domain.
 
 ## Correction delivered
 
-Updated `docs/academic_chapters/01_executive_summary.md` to:
-
-- withhold Rmax pending S-STAT-003;
-- use the canonical status vocabulary;
-- restore the effective-live-time truth type;
-- label the C12-like fraction as truth-labelled MC only;
-- replace the combined ML-win row with separate P04p and P07e gated rows;
-- state explicitly that no production duplicate-readout or saturation correction is authorized;
-- propagate those boundaries into historical corrections, excluded claims, established results, open issues, and next studies;
-- fix chapter-relative links to the claim ledger, figure registry, and claim checklist.
-
-Added:
-
-- `tools/audit/validate_executive_summary_claims.py` v1.0.0;
-- `tests/test_validate_executive_summary_claims.py`;
-- `docs/validation/executive_summary_claim_consistency_audit.md`;
-- `docs/validation/executive_summary_claims_validation.json`;
-- `docs/validation/executive_summary_claim_consistency.svg`;
-- `chatgpt_todo/archive/2026-07-24T090650Z_AUD-WIKI-001_EXECUTIVE_SUMMARY_CLAIMS.md`.
-
-Updated:
-
-- `chatgpt_todo/ACTIVE_TASK.md`;
-- this handoff.
-
-## Fail-closed gate
-
-Policy:
+Upgraded `tools/audit/validate_wiki_claim_front_door.py` to **v1.2.0** with
+policy:
 
 ```text
-EXECUTIVE_SUMMARY_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS
+WIKI_FRONT_DOOR_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS
 ```
 
-The validator requires `CL-007`, `CL-010`, `CL-011`, `CL-015`, and `CL-016` to each have exactly 43 columns before their fields may authorize the executive summary. It checks required rows, statuses, value caveats, truth-language, and former unsupported Rmax/C12/ML-win statements.
+The validator now:
+
+- requires exactly 43 unique ledger columns;
+- refuses to interpret a required claim unless that row is exactly 43 columns;
+- binds `CL-007`, `CL-010`, `CL-011`, `CL-012`, `CL-015`, and `CL-016`;
+- checks public status and truth-type alignment;
+- rejects unit-bearing Rmax values when the canonical value is withheld;
+- rejects the stale Rmax threshold and derivation;
+- rejects combined or domain-level ML-win wording;
+- requires explicit statements that Rmax is withheld pending S-STAT-003 and
+  that no production duplicate-readout model or saturation correction is
+  authorized.
+
+Added or updated:
+
+- `tools/audit/validate_wiki_claim_front_door.py`;
+- `tests/test_validate_wiki_claim_front_door.py`;
+- `docs/validation/wiki_rmax_ml_claim_gate_audit.md`;
+- `docs/validation/wiki_rmax_ml_claim_gate_validation.json`;
+- `docs/validation/wiki_rmax_ml_claim_gate.svg`;
+- `chatgpt_todo/ACTIVE_TASK.md`;
+- `chatgpt_todo/archive/2026-07-24T102230Z_AUD-WIKI-001_ROOT_RMAX_ML_GATE.md`;
+- this handoff.
 
 ## Validation performed
 
 ```text
-PYTHONPATH=. python -m py_compile \
-  tools/audit/validate_executive_summary_claims.py \
-  tests/test_validate_executive_summary_claims.py
+python -m py_compile \
+  tools/audit/validate_wiki_claim_front_door.py \
+  tests/test_validate_wiki_claim_front_door.py
 
-PYTHONPATH=. python -m pytest \
-  tests/test_validate_executive_summary_claims.py -q
+python -m pytest tests/test_validate_wiki_claim_front_door.py -q
 
-5 passed in 0.03s
+10 passed in 0.04s
 ```
 
-Additional checks:
+Additional validated checks:
 
-- stale pre-change-like fixture returned `FLAWED` with controlled mismatch findings;
-- corrected fixture returned `VALIDATED` with zero issues;
-- required 42-column `CL-016` fixture failed closed;
-- invalid UTF-8 returned controlled status 2;
-- corrected chapter validated with zero issues against an exact 43-column extraction of the five current ledger rows;
-- corrected chapter SHA-256: `af76aa164cc5a7f994a135acaf4f15961d30e53d4d27346ec21443444b2f15d1`;
+- exact ledger Git blob:
+  `853d955f449268ec614ac61f33f243d30cf473e0`;
+- ledger bytes: `12077`;
+- ledger SHA-256:
+  `c0e283e6d43a1013a9565f2697c4f99f7b47d639245b9926a8ddc83786602e19`;
+- committed validator blob:
+  `6ae2df1018abde8d93a7bb04d787786ade95622a`;
+- committed test blob:
+  `ecaa4acd6d46e56861c83a32b071678cf4f3960f`;
 - validation JSON parsed;
 - SVG parsed as XML;
-- maximum changed Python line length: 96;
-- committed chapter blob `c3205e4ffe5eacbdf24191aba7f0a130ab0bca88` matches locally validated bytes;
-- committed validator blob `7cf0ca76f14c071192d28bd340024c929efa3277` matches locally validated bytes;
-- committed test blob `3e2880209625db0292701d06ebf6a39837e5c5d0` matches locally validated bytes.
+- maximum changed Python line lengths: 91 and 98 characters.
 
-Full repository pytest, ruff, complete broken-link checking, raw ROOT processing, model training, bootstrap regeneration, Rmax physics derivation, and GitHub Actions were not run.
+Full repository pytest, ruff, complete broken-link checking, ROOT processing,
+model reruns, Rmax physics derivation, and GitHub Actions were not run.
 
-## Direct-main commit sequence
+## Direct-to-main commit and push sequence
 
-1. `ba24773be4ff465ae57f2255dcb7ef4391d2ee91` — `fix(docs): align executive summary with canonical claims`
-2. `1530cfcff6ae82318cceea36a54caa0af0c82202` — `feat(audit): validate executive summary claim alignment`
-3. `7f7a2dabefa183d14c24d494ba2f3c32a870110a` — `test(audit): cover executive claim consistency`
-4. `a962ae9e1bc45b6ff750ee3840bde97843a3a1c0` — `docs(validation): record executive claim consistency audit`
-5. `c25c0783beac66270160cbc99ebd0b37f9f74e94` — `docs(validation): add executive claim validation record`
-6. `e01e5c96cf4aa633fc155b465ad851b866bc18a1` — `docs(validation): visualize executive claim correction`
-7. `130bffa265c2a025bd83bb1935631465318226de` — `docs(audit): track executive claim remediation`
-8. `482b615648f91630e15723a1e44958d2938f28b6` — `docs(audit): archive executive claim remediation`
+Each authenticated connector write returned a successful direct-main commit:
 
-Every write returned a successful direct-main commit result through the authenticated GitHub connector. A final recent-main read must confirm this handoff update and the full sequence on remote main.
+1. `b088178443f68691dec285bcf4a098dc1553fd71` — `fix(audit): gate root WIKI Rmax and ML claims`
+2. `c9ad71b03765f32a11d7bf82a847c780503150cc` — `test(audit): cover exact-width WIKI claim gate`
+3. `f8ae60d70e8152e924e052ddc69baebeafda85c2` — `docs(validation): record root WIKI claim-gate audit`
+4. `7aecb8dbd631b6eb27aaca6d364cf7dbc05ec6d7` — `docs(validation): add root WIKI claim-gate record`
+5. `a13cc69c69d0119ffc93993b87d9dfe116a95eda` — `docs(validation): visualize root WIKI claim gate`
+6. `a222221cac062e0f07d35fb7b3618ac59af949e1` — `docs(audit): track root WIKI claim gate`
+7. `fcb3297762339a098d8a99bc7aa1c8417eb71130` — `docs(audit): archive root WIKI claim gate`
 
-## Scientific boundary and remaining risks
+A post-write remote history read confirmed these commits consecutively on
+remote `main`, with `fcb3297762339a098d8a99bc7aa1c8417eb71130`
+as the delivery head before this handoff update.
 
-This documentation-governance unit does not:
+## Scientific boundary and unresolved risk
 
-- resolve the Rmax physical criterion or uncertainty model;
-- establish a robust P04p production winner;
-- authorize P07e saturation recovery;
-- identify C12 in real data;
-- repair the remaining 19 malformed claim-ledger rows;
-- produce a calibration or detector-performance result.
+This documentation-governance unit does **not**:
 
-`SESSION_LOG.md` was not replaced. The connector exposes complete-file replacement, while only truncated reads of the long append-only file were available. Reconstructing it manually would risk deleting prior provenance. The complete session record is preserved in the immutable archive and this handoff; no append is fabricated.
+- determine an accepted Rmax;
+- resolve S-STAT-003;
+- select a P04p production model;
+- authorize the P07e saturation correction;
+- regenerate detector data, simulation, fit, uncertainty interval, calibration,
+  or detector-performance results.
 
-## Next actions
+The root WIKI itself was not rewritten. `AUD-WIKI-001` therefore remains
+`PARTIAL`. `CL-010` remains `BLOCKED`; `CL-012` remains `SUPERSEDED`; `CL-015`
+and `CL-016` remain `GATED`.
 
-1. Synchronize root `WIKI.md` with the same Rmax and P04p/P07e corrections and extend the WIKI validator bindings.
-2. Continue source-backed reconstruction of the 19 malformed ledger rows.
-3. Resolve S-STAT-003 before restoring any Rmax value.
-4. Resolve P04p/P07e uncertainty, provenance, and independent-transfer blockers before production use.
+`SESSION_LOG.md` was not replaced because the connector exposes whole-file
+replacement rather than a byte-safe append operation and a complete current
+byte snapshot was not safely assembled. Replacing the append-only file from
+partial ranged reads could destroy prior provenance. The complete run is
+retained in the immutable archive and this handoff.
+
+## Next validated unit
+
+1. Retrieve the exact complete current `WIKI.md` from latest `origin/main`.
+2. Withhold every numerical Rmax pending S-STAT-003 and retain 3.0448717948717947
+   MHz only in explicitly superseded correction history.
+3. Replace combined/domain ML-win wording with separate P04p and P07e `GATED`
+   statements and their exact limitations.
+4. State that no production duplicate-readout model or saturation correction is
+   authorized.
+5. Run validator v1.2.0 against the exact complete WIKI and ledger, focused
+   tests, and the broken-link checker.
+6. Require validator status `VALIDATED` before closing `AUD-WIKI-001`.

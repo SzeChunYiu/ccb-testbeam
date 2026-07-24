@@ -2,104 +2,162 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T192915Z`
-- **Task:** `AUD-AMP-011`
-- **Unit:** exact-content validation for hash-bound amplitude-evidence line fragments
-- **Initial remote `main`:** `e215a4cd44ca6ed2eff3ec45921fcc72faa1e115`
-- **Validated delivery commit:** `e15747b3dd9d3327aeeecb072ac4da91db6ebb9b`
-- **Remote `main` confirmation:** recent-history read showed `e15747b3dd9d3327aeeecb072ac4da91db6ebb9b` as the remote head containing all focused work
+- **UTC stamp:** `2026-07-24T200310Z`
+- **Task:** `AUD-LEDGER-002`
+- **Unit:** MV3 tracked-summary provenance contradiction and correction gate
+- **Initial remote `main`:** `ad5a19a2dece0f0973573362004d558eb1a4cad5`
+- **Remote head before final handoff:** `87be921069218f293e771539b84f5ba5be13b5e6`
 - **Destination:** direct sequential commits to `main`
-- **Acceptance:** implementation, focused regression, and evidence are `VALIDATED`; real A-002 physics use remains `BLOCKED`
+- **Acceptance:** defect, independent reconstruction, fail-closed auditor, tests, and evidence are `VALIDATED`; canonical ledger/public-prose remediation remains `PARTIAL`
 
 ## Start-of-run and concurrency review
 
-Authenticated GitHub reads inspected current `main`, recent commits, PR #868, the amplitude-convention auditor, shared evidence-map validator, focused tests, validation records, and mandatory `chatgpt_todo/` files. `AUD-REPO-001` remained owned by another active session and was not duplicated.
+Authenticated GitHub reads inspected repository metadata, recent `main` history, root WIKI
+MV3/GAP-01 prose, the canonical claim ledger, the legacy MV3 report and tracked summary,
+the current MV3 ledger validator/tests, mandatory coordination files, and PR #868.
+A direct clone was attempted and failed because this runtime could not resolve
+`github.com`; repository access and commands were not fabricated.
 
-Concurrent WIKI and claim-ledger work advanced non-overlapping files and was preserved. Every write used current blob SHAs and direct contents-API commits to `main`; no force push, history rewrite, task branch, PR transport, or unrelated deletion was used. PR #868 remains closed, unmerged, and non-mergeable and was not modified.
+The observed initial head remained stable while the focused files were added. Every
+write used the current default branch through the authenticated contents API. No force
+push, branch rewrite, task branch, PR transport, or unrelated deletion was used.
+PR #868 is closed, unmerged, and non-mergeable and was not modified.
 
-A direct clone remained unavailable because this runtime could not resolve `github.com`. Exact source and test bytes were reconstructed locally from authenticated repository reads for execution.
+## Confirmed source contradiction
 
-## Confirmed defect
+Canonical rows `CL-019`, `CL-020`, and `CL-021`, and
+`tools/audit/validate_mv3_legacy_claim_rows.py` v1.0, assert that the legacy MV3 source
+omits exact per-stave counts, exact B8 numerators, underlying chi-square components, and
+a machine-readable result.
 
-Validator v1.3.0 required canonical `#L<start>` or `#L<start>-L<end>` syntax, verified the complete supporting-file SHA-256, and required selected line numbers to exist. It nevertheless accepted a selected range containing only spaces or tabs.
+The tracked file
+`reports/mv3_stopping_v3_1782679272/mv3_summary.json` contains:
 
-A byte-verified file plus a semantically empty citation could therefore set `evidence_reference_fragment_verified=true`, after which the amplitude auditor could authorize an `ABSOLUTE` or `NET` convention. The validator also retained no byte count or SHA-256 for the exact selected fragment.
+- thresholded-MC B2/B4/B6/B8 counts `117213/45507/31145/55619`;
+- selected-data B2/B4/B6/B8 counts `268576/19284/11834/7051`;
+- denominators `249484` MC tracks and `306745` data events;
+- Pearson chi-square `204808.2179684494`;
+- ndf `3`;
+- chi-square/ndf `68269.40598948313`.
 
-The exact v1.3.0 source run against the new regression returned `2 failed, 6 passed in 0.10s`, demonstrating whitespace-only acceptance and absent exact-fragment provenance.
+The report itself prints only rounded fractions and rounded
+`χ²/ndf = 68269.4`, but the tracked summary preserves the exact machine-readable
+components. Therefore the current absence narrative is false.
 
-## Correction delivered
+## Independent calculation
 
-`tools/audit/validate_amplitude_evidence_map.py` is now version `1.4.0`. For line-range references it reads the supporting bytes, selects the exact requested lines with line endings retained, counts nonblank lines, rejects zero-nonblank selections, records selected byte count/nonblank count/SHA-256, and sets the fragment-verified flag only after all checks pass.
-
-Whole-file references remain supported and unchanged.
-
-Policy: `EVIDENCE_LINE_FRAGMENT_MUST_CONTAIN_NONWHITESPACE_CONTENT`.
-
-## Validation
-
-The updated regression verifies exact line bounds, complete-file line count, exact selected bytes, digest, and whitespace-only rejection. The accepted example is 29 bytes, contains two nonblank lines, and has SHA-256 `2574a91c9368c20f6ae926794a5a37285b264197d248084c3b63306f8cadfa5a`.
+The auditor reconstructs the profile statistic from exact tracked counts and fractions:
 
 ```text
-python -m py_compile \
-  tools/audit/validate_amplitude_evidence_map.py \
-  tests/test_validate_amplitude_evidence_map.py \
-  tests/test_amplitude_evidence_reference_fragments.py
-
-python -m pytest \
-  tests/test_validate_amplitude_evidence_map.py \
-  tests/test_amplitude_evidence_reference_fragments.py -q
-
-23 passed in 0.05s
+expected_i = 306745 * mc_fraction_i
+chi2 = sum((data_count_i - expected_i)^2 / expected_i)
+ndf = 4 - 1 = 3
 ```
 
-Changed Python lines are no longer than 100 characters.
+Result:
 
-Exact validated files:
+```text
+chi2 = 204808.2179684494
+chi2/ndf = 68269.40598948313
+```
 
-- validator: 10,102 bytes; SHA-256 `a1f547c8ee7d52c1a71dbaa16c031f2a06ea68d63e9269f51c39ba11a37dd095`;
-- test: 3,292 bytes; SHA-256 `d2c78c6fc4044ae84b5828efa590ee92184e6a84b4690c85b1de73a32ffff699`.
+The reconstructed values exactly match the stored summary values in binary64
+arithmetic.
 
-## Evidence and files
+This establishes reconstructability, not accepted detector closure. Geometry,
+trigger/selection transfer, gain response, covariance, and detector/model systematics
+remain unresolved. `CL-021` should remain `FLAWED`, but for those scientific reasons
+rather than absent source data.
+
+## Work delivered
 
 Added:
 
-- `docs/validation/amplitude_evidence_fragment_content_audit.md`;
-- `docs/validation/amplitude_evidence_fragment_content_validation.json`;
-- `docs/validation/amplitude_evidence_fragment_content.svg`;
-- `chatgpt_todo/archive/2026-07-24T192915Z_AUD-AMP-011_NONBLANK_FRAGMENT_CONTENT.md`.
+- `tools/audit/audit_mv3_summary_provenance.py`;
+- `tests/test_audit_mv3_summary_provenance.py`;
+- `docs/validation/mv3_summary_provenance_audit.md`;
+- `docs/validation/mv3_summary_provenance_validation.json`;
+- `docs/validation/mv3_summary_provenance.svg`;
+- `chatgpt_todo/archive/2026-07-24T200310Z_AUD-LEDGER-002_MV3_SUMMARY_PROVENANCE.md`.
 
-Updated:
+Updated `chatgpt_todo/ACTIVE_TASK.md` and this handoff.
 
-- `tools/audit/validate_amplitude_evidence_map.py`;
-- `tests/test_amplitude_evidence_reference_fragments.py`;
-- `chatgpt_todo/ACTIVE_TASK.md`;
-- this handoff.
+The SVG is explicitly labelled software/documentation validation, not detector data.
 
-The SVG is explicitly labelled synthetic software/provenance evidence, not detector data.
+## Validation
+
+```text
+python -m py_compile \
+  tools/audit/audit_mv3_summary_provenance.py \
+  tests/test_audit_mv3_summary_provenance.py
+
+PYTHONPATH=. python -m pytest \
+  tests/test_audit_mv3_summary_provenance.py -q
+
+5 passed in 0.70s
+```
+
+The current-like exact row fixture returns `FLAWED` with 32 explicit findings. A
+corrected fixture returns `VALIDATED` with zero findings. Mutated summary chi-square and
+fraction values fail closed. Invalid UTF-8 returns controlled status 2. Validation JSON
+and SVG XML parsing passed. Changed Python lines are no longer than 100 characters.
+
+Validated file hashes:
+
+- auditor: 10,658 bytes; SHA-256
+  `2549a29913c6384c19addfb7cfe93ae4a0d2417499aa6f5cbf5fd9495c394753`;
+- test: 5,955 bytes; SHA-256
+  `6a9db439b6a7cc07bdc188646763fadcd8563a9878c61aa974fa10e2bc775b77`.
+
+Remote source blobs recorded in the validation JSON:
+
+- claim ledger: `bb552aa5ed70e7d81dcda888c5aa61402c01e03c`;
+- legacy report: `b72eed4f7eb3237040a1346d7253080c098c8986`;
+- tracked summary: `2bb4b34e499642dfdf8ceb13e2f6351ff6e5cc6d`;
+- old validator: `aad4d1cb9fbbd81ec6e20cbca5250ef06c9f2d8a`.
 
 ## Direct-main commit sequence
 
-- `8df26b33253b7364a8caf9afa6dab35148260f12` — implementation
-- `7abe8871c6fa5f782d2bbbf009ab0aa0d69ee716` — regression tests
-- `20f65542e203ab4161b4e0ffe8834ac8baaa7932` — validation JSON
-- `a9fe61ddd66c8e5666d9e4fcf98e13939d8ccd2e` — audit report
-- `29369505632cf707be7cd0d9d1fdcb16c05aa3df` — visual evidence
-- `ca69c2f8e9cc705777000d09a8e3e4e76bb497d3` — active-task completion
-- `03a4ad101f961650e4a53cc3819e344903fe335a` — immutable archive
-- `cb5d966c901a3aa41e8d01637725083992eec925` — initial handoff
-- `1689a1b9a93eaa98bb874a883daba6243c941429` and `33aff10959a2e491942624883f7d0862d3547b27` — remove unused coordination workflows
-- `e15747b3dd9d3327aeeecb072ac4da91db6ebb9b` — finalized delivery handoff
+- `4005bb56a495baf89ef3e6bc8432e439e82ba2fb` — auditor
+- `c42ba214c8925ff3d5e37d473e2e8a0208a2a107` — focused tests
+- `fab453452c724f6dcd505f5a61153ffa97e8d277` — validation JSON
+- `01faaf199551ab1f5ea644122ebc6b101f21eda1` — audit report
+- `e6f313f211fe005187e50d864ad05bd3719a1706` — visual evidence
+- `f7035417386d74d742a9ba9e2a940ce495042e09` — active-task update
+- `87be921069218f293e771539b84f5ba5be13b5e6` — immutable archive
 
-The contents API returned successful direct-main commit SHAs instead of conventional textual `git push` stdout. Post-write history confirmed the listed work on remote `main` while preserving concurrent commits. No status checks are attached to the delivery commit, so no broad CI success is claimed.
+The contents API returned successful commit SHAs instead of conventional textual
+`git push` stdout. A post-write recent-history read is required to confirm the final
+handoff commit on remote `main`.
+
+## Required next correction
+
+1. Update `CL-019` with exact B8 `55619/249484`, exact fraction
+   `0.22293614019335908`, and the tracked summary path.
+2. Update `CL-020` with exact B8 `7051/306745`, exact fraction
+   `0.02298651974767315`, and the tracked summary path.
+3. Update `CL-021` with exact chi-square/ndf `68269.40598948313`, the Pearson
+   construction, and the tracked summary path; retain `FLAWED` and the blocker.
+4. Replace the old validator contract that rejects exact numerators and denies the
+   tracked summary.
+5. Synchronize WIKI GAP-01 and related public prose to describe an exact but flawed
+   legacy Pearson diagnostic rather than a non-reconstructable geometry-only proof.
+6. Run both MV3 focused suites and WIKI claim validators together before closing the
+   task.
 
 ## Coordination limitation
 
-`ACTIVE_TASK.md`, the immutable archive, validation artifacts, and this handoff contain the complete session. `SESSION_LOG.md` and `BACKLOG.md` were not replaced: the connector exposes whole-file replacement rather than append/line patch, and the available current responses were ranged or truncated. Replacing long shared files from reconstructed partial text could erase unrelated provenance. Two attempted exact-checkout coordination workflows produced no remote coordination commit and were removed rather than left as repository debris.
+`ACTIVE_TASK.md`, the immutable archive, validation artifacts, and this handoff contain
+the complete session. `SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, and the aggregate
+matrices were not replaced because this connector offers whole-file replacement while
+current long-file reads are paged or truncated. Replacing a partial reconstruction
+could erase unrelated append-only provenance. No claim is made that those aggregate
+files contain this run.
 
-Thus the focused gate is delivered and reproducible, but aggregate `SESSION_LOG.md` and `BACKLOG.md` synchronization remains explicitly incomplete. No claim is made that those two files contain this run.
+## Scientific boundary
 
-## Scientific boundary and next action
-
-This validates software and provenance behavior only. It does not determine whether real A-002 `amplitude_adc` is absolute or net, establish pulse polarity, validate a pedestal distribution, repair event cardinality, regenerate stopping/DeltaE-E outputs, or establish calibration or detector performance.
-
-Real-data progress remains blocked under `AUD-AMP-009`, `AUD-DELTAE-001`, and `AUD-DELTAE-002` until exact A-002 table bytes and exact schema/producer/pedestal/polarity evidence are hash-bound and accepted. Full repository pytest, ruff, ROOT processing, real-data regeneration, and broad GitHub Actions CI were not run.
+No raw ROOT input, GEANT4 rerun, geometry correction, threshold-transfer validation,
+gain calibration, p-value, confidence interval, covariance model, or detector/model
+systematic propagation was produced. Accepted stopping-depth closure remains blocked
+under `BLK-MV3-LEGACY-001`. Full repository pytest, ruff, ROOT processing, real-data/MC
+regeneration, and broad GitHub Actions were not run; no such success is claimed.

@@ -44,9 +44,11 @@ This section is the controlled front door to the CCB test-beam analysis. Every c
 | **TRUTH_LEVEL_MC_ONLY** | Mechanism demonstrated in simulation, transfer to real data incomplete |
 | **TENSION** | Data-vs-MC comparison disagrees beyond tolerance |
 | **FAIL** | MC or validation reveals concrete model failure |
+| **FLAWED** | Tracked evidence or method is demonstrably invalid for the stated claim |
 | **CORRECTED** | Previous result was leakage, stale value, or superseded |
 | **BLOCKED** | Cannot be finalized until missing data/simulation/geometry exists |
 | **GATED** | Promising result, not adopted until controls pass |
+| **REVIEW** | Source-backed qualitative diagnostic requiring further review; not an accepted production result |
 | **SUPERSEDED** | Retained only as correction history; not an accepted current result |
 
 ### Canonical Results Table
@@ -54,18 +56,18 @@ This section is the controlled front door to the CCB test-beam analysis. Every c
 | Claim | Current value | Stat. unc. | Syst. unc. | Truth type | Status |
 |---|---|---|---|---|---|
 | Selected B-stack pulses | 640,737 | — | — | data_count | **VALIDATED** |
-| B6 single-stave σ₆₈ | 0.68–0.75 ns | 0.02 | 0.05 | data + digitized MC | **VALIDATED** |
-| Combined 3-stave σ (B4+B6+B8) | 0.54–0.56 ns | 0.02 | 0.08 | data_only | **DONE_DATA_ONLY** |
-| Pair covariance | −0.127 ns² | — | — | data_only | **DONE_DATA_ONLY** |
+| B6 single-stave σ₆₈ | Withheld pending BLK-MV4-LEGACY-001 | — | — | legacy claim source unresolved | **BLOCKED** |
+| Combined 3-stave σ (B4+B6+B8) | Withheld pending BLK-MV4-LEGACY-001 | — | — | legacy claim source unresolved | **BLOCKED** |
+| Pair covariance | Withheld pending BLK-MV4-LEGACY-001 | — | — | legacy claim source unresolved | **BLOCKED** |
 | Rmax (pile-up tolerance) | Withheld pending S-STAT-003 | — | — | derived model conflicted | **BLOCKED** |
 | τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 | data + MC self-consistent | **VALIDATED** |
-| Digitizer gain (MV0 v2) | 92 ± 28 ADC/MeV | 14 | 28 | digitized MC | **VALIDATED** |
-| p/d PID AUC | 0.9860 | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
+| Digitizer gain (MV0 v2) | 92 ADC/MeV | — | 28 | data + MC calibration proxy | **GATED** |
+| p/d PID AUC | 0.9860 | — | — | MC truth only | **GATED** |
 | C12-like anomaly fraction in truth-labelled MC | 283 / 87,555 tracks (0.32%) | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
-| MV3 B8 data/MC | data 2.3% / MC 22.3% | — | — | MC vs data | **FAIL** |
-| MV4 raw timing pull | −1.05σ | — | — | digitized MC | **VALIDATED** |
-| MV4 corrected timing pull | +2.68σ | — | — | digitized MC | **TENSION** |
-| ML timing | Diagnostic only | — | — | data_only | **GATED** |
+| MV3 legacy B8 fractions / profile statistic | data 2.3%; MC 22.3%; reported χ²/ndf label 68269.4 | — | — | legacy data/MC profile diagnostic | **FLAWED** |
+| MV4 raw timing pull | −1.05σ | — | — | legacy toy-digitizer diagnostic | **GATED** |
+| MV4 corrected timing pull | +2.68σ | — | — | legacy toy-digitizer diagnostic | **GATED** |
+| ML timing | REVIEW diagnostic | — | — | legacy toy-digitizer diagnostic | **REVIEW** |
 | Duplicate-readout model | No production model selected | — | — | data external duplicate readout | **GATED** |
 | Saturation-recovery model | External held-out closure is worse than raw | — | — | data external duplicate readout | **GATED** |
 
@@ -77,14 +79,14 @@ Rmax is withheld pending S-STAT-003. No production duplicate-readout or saturati
 |---|---|---|
 | 4.22 MHz | Superseded; accepted replacement withheld pending S-STAT-003 | Former rate and later replacement use unresolved criteria |
 | 3.0448717948717947 MHz | Superseded history only; do not use as an accepted result | Derived from the recorded 0.38 duty factor, not a validated occupancy-quality threshold |
-| ~246 ADC/MeV | 92 ± 28 ADC/MeV | MV0 v2 recalibration |
+| ~246 ADC/MeV | 92 ADC/MeV with 28 ADC/MeV heuristic envelope | MV0 v2 proxy; no statistical CI |
 | 706,373 pulses | 640,737 pulses | S00 median selector gate |
-| PCA 3 PCs 89%, 8 PCs 99.7% | Needs canonical rerun | Variance normalization inconsistent |
+| PCA 3 PCs 89%, 8 PCs 99.7% | PCA 3 PCs 72.546%, 8 PCs 82.188% (synthetic-waveform MC only) | Source-backed fixed MV6 synthetic-waveform output; no beam-data transfer claim |
 
 ### What This Project Does NOT Claim
 
 1. **No final event-aligned truth in real beam data**
-2. **No final absolute per-event energy calibration from waveform alone** (30% syst.)
+2. **No final absolute per-event energy calibration from waveform alone** (the 30% value is a heuristic envelope, not a confidence interval)
 3. **No final B8 acceptance correction** (MV3 geometry FAIL)
 4. **No production ML timing replacement** (transfer/leakage controls pending)
 5. **No forced-pedestal truth in current data**
@@ -121,7 +123,7 @@ The analysis does **not** find that machine learning should fully replace tradit
 |---|---|
 | Beam window, target, trigger scintillators, air gap | Included in GEANT4 |
 | Inter-stave dead material, support frames, optical interfaces | **MISSING** (estimated 8–10 g/cm²) |
-| Impact | MV3 B8 MC/data mismatch ×10 (χ²/ndf = 68,269) |
+| Impact | Legacy MV3 B8 fractions differ strongly; the reported χ²/ndf label is not reconstructable |
 | Status | **BLOCKING** — prevents quantitative B8 acceptance corrections |
 
 **[Full chapter:](docs/academic_chapters/02_experimental_setup.md)**
@@ -166,29 +168,29 @@ Raw ROOT → baseline(subtract median samples 0–3) → amplitude(A = max − b
 
 ## 4. Timing Analysis
 
-> **Thesis-grade update (2026-07-14).** Covariance estimator and timewalk canonical form documented. See [Full chapter](docs/academic_chapters/04_timing_analysis.md).
+> **Claim-governance update (2026-07-24).** Legacy timing values were source-audited; source-absent per-stave, combined, and covariance claims are withheld. See [Full chapter](docs/academic_chapters/04_timing_analysis.md).
 
 ### Key Results
 
 | Observable | Value | Status |
 |---|---|---|
-| B6 single-stave σ₆₈ | 0.68–0.75 ns | **VALIDATED** (data + digitized MC) |
-| Combined 3-stave σ (B4+B6+B8) | 0.54–0.56 ns | **DONE_DATA_ONLY** (independence assumed) |
-| Pair covariance (B4–B6) | −0.127 ns² | **DONE_DATA_ONLY** |
-| MC raw timing pull | −1.05σ | **VALIDATED** |
-| MC corrected timing pull | +2.68σ | **TENSION** |
-| ML timing | Diagnostic only | **GATED** |
+| B6 single-stave σ₆₈ | Withheld pending BLK-MV4-LEGACY-001 | **BLOCKED** |
+| Combined 3-stave σ (B4+B6+B8) | Withheld pending BLK-MV4-LEGACY-001 | **BLOCKED** |
+| Pair covariance (B4–B6) | Withheld pending BLK-MV4-LEGACY-001 | **BLOCKED** |
+| Legacy toy-digitizer raw timing pull | −1.05σ | **GATED** |
+| Legacy analytic timewalk-corrected timing pull | +2.68σ | **GATED** |
+| Legacy analytic CFD20/timewalk verdict | REVIEW | **REVIEW** |
 
 ### Critical Open Issues
 
-1. **Covariance-aware estimator pending** — current headline assumes independent stave errors
-2. **Timewalk canonical form unresolved** — Wiki vs reports differ on A₀+B/A vs log(A) vs 1/√A
-3. **MC corrected timing tension** — MV4b diagnosed toy digitizer uses B/√ADC instead of physical B/A
-4. **B2 excluded** from precision estimate due to covariance topology
+1. **Source-bound per-stave and combined timing outputs are absent** — former headline values are withheld
+2. **Covariance matrix is absent** — no combined-stave precision claim is authorized
+3. **Legacy pulls are toy diagnostics** — they use hard-coded data anchors, assumed uncertainty, and non-current calibration semantics
+4. **Timewalk transfer remains unresolved** — the historical source is analytic CFD20 plus A+B/√amplitude, not ML
 
 ### Next Study Priority
-🔬 Compute covariance-aware B4+B6+B8 estimator → update combined σ
-🔬 Fix MV4b digitizer timewalk → rerun MC → resolve tension
+🔬 Rerun per-stave timing with exact current calibration, run/block resampling, and measured anchors
+🔬 Produce the full event-matched covariance matrix before any combined-stave estimate
 
 **[Full chapter:](docs/academic_chapters/04_timing_analysis.md)**
 
@@ -229,7 +231,7 @@ The historical value `3.0448717948717947 MHz` is retained only in the superseded
 
 ## 6. Pulse Shape & Machine Learning
 
-> **Claim-governance update (2026-07-24).** PCA variance remains superseded; P04p and P07e production decisions remain gated. See [Full chapter](docs/academic_chapters/06_pulse_shape_ml.md).
+> **Claim-governance update (2026-07-24).** Source-bound synthetic-MC PCA values remain non-transferable; P04p and P07e production decisions remain gated. See [Full chapter](docs/academic_chapters/06_pulse_shape_ml.md).
 
 ### ML Verdict Matrix
 
@@ -243,7 +245,7 @@ The historical value `3.0448717948717947 MHz` is retained only in the superseded
 
 ### Key Corrections
 
-1. **PCA variance: SUPERSEDED.** Wiki (89% / 99.7%) and corrected chapter differ. Needs canonical rerun.
+1. **PCA variance: CORRECTED FOR TRACKED MV6 SYNTHETIC MC.** The exact fixed output is 72.546% at 3 PCs and 82.188% at 8 PCs; beam-data transfer and an independent rerun remain unresolved.
 2. **AE superiority: CORRECTED.** Original claim was leakage (train-test contamination).
 3. **Duplicate readout: GATED.** The reported GBT point estimate barely clears the coverage threshold, but its run-bootstrap interval crosses the gate; a lower-bound rule changes the eligible model.
 4. **Saturation recovery: GATED.** Pseudo-saturation closure is synthetic, while external held-out duplicate closure degrades from raw `0.120794` to ML `0.176358` charge res68.
@@ -261,14 +263,14 @@ The historical value `3.0448717948717947 MHz` is retained only in the superseded
 
 | Observable | Value | Status |
 |---|---|---|
-| Digitizer gain | 92 ± 28 ADC/MeV | **VALIDATED** (MV0 v2, corrected from ~246 ADC/MeV) |
+| Digitizer gain | 92 ADC/MeV with 28 ADC/MeV heuristic envelope | **GATED** (MV0 v2 proxy; no statistical CI) |
 | KS mismatch (MV0 v2) | 0.158 | **TENSION** (inter-stave variation unresolved) |
 | Absolute energy uncertainty | ~35% | Structural limitation |
 | ML duplicate-readout | No canonical production winner | **GATED** — selection interval crosses the coverage gate |
 | ML saturation recovery | External held-out closure worse than raw | **GATED** — producer bytes and transfer validation incomplete |
 
 ### What Is NOT Claimed
-- **No absolute per-event energy calibration** (35% systematic)
+- **No absolute per-event energy calibration** (the reported envelope is heuristic and not a confidence interval)
 - **No per-stave gain measurement** (±10% assumed, not measured)
 - **No Birks constant calibration** (kB = 0.10–0.15 mm/MeV unverified for this scintillator)
 - **No production duplicate-readout model or saturation correction**
@@ -283,19 +285,19 @@ The historical value `3.0448717948717947 MHz` is retained only in the superseded
 
 | Observable | Value | Status | Caveat |
 |---|---|---|---|
-| p/d PID AUC | 0.9860 | **TRUTH_LEVEL_MC_ONLY** | MC truth only — not a data result |
-| HGB purity at 90% eff. | 0.9644 | **TRUTH_LEVEL_MC_ONLY** | Upper bound on real-data performance |
+| p/d PID AUC | 0.9860 | **GATED** | Legacy truth-MC row-index split; not a data result |
+| HGB purity at 90% eff. | 0.9644 | **GATED** | Legacy truth-MC row-index split; uncertainty not evaluated |
 | Data weak-label AUC | TBD | Not yet separated | Requires purity-efficiency confusion matrix |
 
 ### Critical Caveats
 
-1. **AUC = 0.9860 is an MC-truth ceiling** — do not cite as a data result
+1. **AUC = 0.9860 is a legacy truth-MC diagnostic** — row-index splitting creates event-group leakage risk; do not cite as a data result
 2. **MV3 failure blocks B8 acceptance correction** — PID at B8 depth is unreliable
 3. **Interpretable model needed** — HGB is not suitable for production PID
 
 ### MV3 Impact on PID
 
-MV3 geometry FAIL (χ²/ndf = 68,269) → B8 stopping fraction unreliable → PID B8 acceptance biased.
+The legacy MV3 report labels a profile statistic as χ²/ndf = 68,269.4 without the underlying χ², ndf, bin variances, covariance, or exact counts; the diagnostic is FLAWED and B8 acceptance remains unresolved.
 Conservative recommendation: use B2+B4+B6 only (no B8) until MV3 is fixed.
 
 **[Full chapter:](docs/academic_chapters/08_particle_id.md)**
@@ -327,24 +329,25 @@ No data-veto performance is claimed. Efficiency, false-positive rate, and retain
 
 ## 10. Monte Carlo Validation
 
-> **Claim-governance update (2026-07-24).** Full MV0–MV6 validation matrix retained; MV5 numerical Rmax is withheld. See [Full chapter](docs/academic_chapters/10_mc_validation.md).
+> **Claim-governance update (2026-07-24).** MV0–MV6 rows are synchronized to their canonical claim states; MV5 numerical Rmax is withheld. See [Full chapter](docs/academic_chapters/10_mc_validation.md).
 
 ### Validation Matrix
 
 | Study | Observable | Verdict | Action |
 |---|---|---|---|
-| MV0 v2 | Digitizer gain | **VALIDATED** | Reduce systematic |
-| MV1 | p/d PID | **TRUTH_LEVEL_MC_ONLY** | Data transfer needed |
-| MV3 | Stopping depth | **FAIL** (χ²/ndf = 68,269) | **GEANT4 fix** |
-| MV4 raw | Timing | **VALIDATED** (−1.05σ) | Accept |
-| MV4 corrected | Timing | **TENSION** (+2.68σ) | **Digitizer fix** |
+| MV0 v2 | Digitizer gain proxy | **GATED** | Recover producer/input provenance and validate independently |
+| MV1 | Legacy truth-MC p/d PID | **GATED** | Group-disjoint rerun and data transfer needed |
+| MV3 | Legacy stopping-profile diagnostic | **FLAWED** | Recover exact counts/statistic and rerun strict stopping-depth path |
+| MV4 raw | Legacy toy timing pull | **GATED** (−1.05σ) | Strict current-input rerun |
+| MV4 corrected | Legacy analytic timing pull | **GATED** (+2.68σ) | Strict current-input rerun |
 | MV5 | Pile-up Rmax | **BLOCKED** | Resolve S-STAT-003 before restoring a value |
 | MV6 | C12-like anomaly in truth-labelled MC | **TRUTH_LEVEL_MC_ONLY** | Matched data/MC closure and efficiency study |
 
-### Two Blocking Issues
+### Three Blocking Issues
 
-1. **MV3: Structural GEANT4 failure** — missing 8–10 g/cm²; blocks acceptance corrections
-2. **MV5: Canonical Rmax criterion unresolved** — numerical value and uncertainty are withheld pending S-STAT-003
+1. **MV3: Strict stopping-profile closure is absent** — geometry and exact statistic/count provenance remain unresolved
+2. **MV4: Source-bound current timing closure is absent** — per-stave, covariance, and measured-anchor outputs are withheld
+3. **MV5: Canonical Rmax criterion unresolved** — numerical value and uncertainty are withheld pending S-STAT-003
 
 **[Full chapter:](docs/academic_chapters/10_mc_validation.md)**
 
@@ -357,18 +360,18 @@ No data-veto performance is claimed. Efficiency, false-positive rate, and retain
 | Gap | Issue | Action |
 |---|---|---|
 | GAP-01 | MV3 geometry FAIL (χ²/ndf = 68,269) | GEANT4 fix → new MC → rerun MV3 |
-| GAP-06 | Combined timing assumes independence | Covariance-aware estimator |
+| GAP-06 | Per-stave/combined timing and covariance source outputs absent | Strict current-input rerun plus event-matched covariance |
 | S-STAT-003 | Numerical Rmax criterion unresolved | Preregister criterion, derivation, uncertainty, and closure |
 
 ### High-Priority Issues
 
 | Gap | Issue | Action |
 |---|---|---|
-| GAP-02 | MV4 corrected timing TENSION | Digitizer timewalk fix |
-| GAP-03 | Gain 30% systematic | Per-stave calibration |
-| GAP-04 | PCA variance inconsistent | Canonical rerun |
-| GAP-05 | PID weak-label not separated | Data evaluation |
-| GAP-09 | ML timing not production | Full leakage controls |
+| GAP-02 | Legacy corrected timing pull is non-authorizing | Strict current-input timing rerun with measured anchors |
+| GAP-03 | Gain has a 30% heuristic envelope, not a CI | Per-stave calibration and accepted uncertainty model |
+| GAP-04 | PCA variance has synthetic-MC-only source values | Independent rerun and beam-data transfer |
+| GAP-05 | Legacy PID uses row-index truth-MC split; data transfer absent | Group-disjoint rerun and data evaluation |
+| GAP-09 | Historical timing source was analytic, not ML | Source-bound timing-method audit and independent validation |
 | BLK-P04P-001 | Duplicate-readout selection uncertainty | Preregister coverage rule and validate transfer |
 | BLK-P07E-001 | Saturation producer provenance and external closure | Recover bytes and validate new runs/staves |
 
@@ -418,8 +421,8 @@ Every chapter must be reproducible from: command + config + seed + output table 
 
 | Category | Count | Status |
 |---|---|---|
-| Data-driven studies | ~230 | Various completion states |
-| MC validations (MV0-MV6) | 7 | 3 VALIDATED, 1 TENSION, 1 FAIL, 1 BLOCKED, 1 TRUTH_LEVEL_MC_ONLY |
+| Data-driven studies | ~230 | Claim-specific states; see canonical ledger |
+| MC validations (MV0-MV6) | 7 | Mixed BLOCKED, GATED, FLAWED, and truth-only states; see canonical ledger |
 | Diagnostic studies (MV3b, MV4b) | 2 | Root causes identified |
 | GEANT4 simulation studies | ~10 | G4-01 through G4-08 |
 

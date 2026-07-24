@@ -2,15 +2,16 @@
 
 - **Task ID:** AUD-WIKI-001
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-24T090650Z
-- **First observed remote main SHA:** `0f0e79031777faa203c086860d6a163d10c838ae`
-- **Accepted latest-main base after concurrent P07e completion:** `5e7f9c96ac604eef63be356da0131fc492b5173d`
-- **Scope completed in this unit:** corrected the linked academic executive-summary front door so Rmax, effective live-time truth type, MV4 raw timing status, C12 truth scope, P04p duplicate-readout selection, and P07e saturation recovery match exact-width canonical claim state and existing source-backed audits.
-- **Implemented files:** corrected `docs/academic_chapters/01_executive_summary.md`; added `tools/audit/validate_executive_summary_claims.py` v1.0.0, focused tests, Markdown audit, machine-readable JSON, and accessible SVG evidence.
-- **Validation:** `py_compile` passed; focused pytest returned `5 passed in 0.03s`; corrected summary validated with zero issues against an exact 43-column extraction of `CL-007`, `CL-010`, `CL-011`, `CL-015`, and `CL-016`; JSON and SVG parsed; changed Python lines are at most 96 characters; committed source/test blobs match locally validated bytes.
-- **Scientific decisions:** Rmax is withheld under S-STAT-003; MV4 raw status is `VALIDATED`, not `PASS`; C12 remains truth-labelled MC only; no canonical P04p winner is named; P07e saturation correction remains withheld because external duplicate closure is worse than raw.
-- **Public wording removed:** `ML wins (confirmed)`, established `Rmax ≈ 3.05 MHz`, and empirical-sounding C12 wording.
-- **Evidence policy:** `EXECUTIVE_SUMMARY_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS`.
-- **Scientific boundary:** no raw ROOT data, waveform extraction, model refit, bootstrap regeneration, Rmax physics derivation, C12 data identification, calibration, or detector-performance result was generated.
-- **Remaining work:** synchronize the root `WIKI.md` Rmax and P04p/P07e wording; continue source-backed reconstruction of the 19 malformed ledger rows; resolve S-STAT-003 and the P04p/P07e validation blockers before changing their statuses.
-- **Status:** COMPLETE for the executive-summary chapter correction; `AUD-WIKI-001` remains PARTIAL repository-wide.
+- **Session stamp:** 2026-07-24T102230Z
+- **Initial remote main SHA:** `74966884f40e6dbc8ac6243d4983eaa7dfb395ae`
+- **Scope completed in this unit:** extended the root-WIKI claim gate from MV4/tau-only coverage to exact-width canonical bindings for Rmax, P04p duplicate readout, and P07e saturation recovery.
+- **Confirmed defect:** validator v1.1.0 bound only `CL-007` and `CL-011`, so a source-faithful WIKI with a blocked-but-published Rmax and unsupported ML-win wording could return `VALIDATED`.
+- **Implemented files:** upgraded `tools/audit/validate_wiki_claim_front_door.py` to v1.2.0; expanded focused tests; added Markdown, JSON, and SVG validation evidence.
+- **Canonical bindings:** `CL-007`, `CL-010`, `CL-011`, `CL-012`, `CL-015`, and `CL-016`, each required to have exactly 43 columns before interpretation.
+- **Measured current state:** an exact claim-bearing WIKI excerpt plus the exact current ledger returned `FLAWED` with 21 findings; all six required claim rows were exactly 43 columns.
+- **Validation:** `py_compile` passed; focused pytest returned `10 passed in 0.04s`; JSON and SVG parsed; maximum changed Python line lengths are 91 and 98 characters; exact current ledger bytes matched Git blob `853d955f449268ec614ac61f33f243d30cf473e0`.
+- **Evidence policy:** `WIKI_FRONT_DOOR_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS`.
+- **Required remediation:** withhold numerical Rmax pending S-STAT-003; retain 3.0448717948717947 MHz only as superseded history; replace combined/domain ML-win wording with separate GATED P04p/P07e statements; authorize no production duplicate-readout model or saturation correction.
+- **Scientific boundary:** no detector data, simulation, fit, Rmax calculation, uncertainty interval, model training, calibration, or detector-performance result was generated.
+- **Remaining work:** rewrite the complete current `WIKI.md`, run validator v1.2.0 on the exact full WIKI and ledger, run broken-link checks, and require `VALIDATED` before closing `AUD-WIKI-001`.
+- **Status:** PARTIAL; audit gate and evidence are VALIDATED, public root WIKI remediation remains open.

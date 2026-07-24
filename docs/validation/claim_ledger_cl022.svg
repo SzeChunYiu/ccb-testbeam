@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" role="img" aria-labelledby="title desc">
+<title id="title">CL-022 distinct-binomial-quantity audit</title>
+<desc id="desc">Three separately scaled Wilson intervals distinguish the overall early-peak rate, C12 composition of the selected class, and the early-peak rate among C12-labelled tracks.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<text x="24" y="34" font-family="sans-serif" font-size="21" font-weight="bold">CL-022: do not conflate rate, composition, and within-species rate</text>
+<text x="24" y="58" font-family="sans-serif" font-size="13">Repository/source-count validation; truth-labelled MC only, not detector-data identification.</text>
+<text x="24" y="107.0" font-family="sans-serif" font-size="15" font-weight="bold">Total early-peak rate</text>
+<text x="24" y="129.0" font-family="sans-serif" font-size="12">denominator: all MC tracks; n=283/87555</text>
+<line x1="330.0" y1="125.0" x2="900.0" y2="125.0" stroke="black" stroke-width="1"/>
+<line x1="658.03" y1="125.0" x2="743.89" y2="125.0" stroke="black" stroke-width="6"/>
+<line x1="658.03" y1="115.0" x2="658.03" y2="135.0" stroke="black" stroke-width="2"/>
+<line x1="743.89" y1="115.0" x2="743.89" y2="135.0" stroke="black" stroke-width="2"/>
+<circle cx="698.48" cy="125.0" r="7" fill="white" stroke="black" stroke-width="3"/>
+<text x="330.0" y="153.0" font-family="sans-serif" font-size="11">0%</text>
+<text x="900.0" y="153.0" text-anchor="end" font-family="sans-serif" font-size="11">0.5%</text>
+<text x="330.0" y="110.0" font-family="monospace" font-size="12">0.3232% [0.2877, 0.3631]%</text>
+<text x="24" y="232.0" font-family="sans-serif" font-size="15" font-weight="bold">C12 share of early-peak</text>
+<text x="24" y="254.0" font-family="sans-serif" font-size="12">denominator: selected early-peak class; n=156/283</text>
+<line x1="330.0" y1="250.0" x2="900.0" y2="250.0" stroke="black" stroke-width="1"/>
+<line x1="506.68" y1="250.0" x2="725.41" y2="250.0" stroke="black" stroke-width="6"/>
+<line x1="506.68" y1="240.0" x2="506.68" y2="260.0" stroke="black" stroke-width="2"/>
+<line x1="725.41" y1="240.0" x2="725.41" y2="260.0" stroke="black" stroke-width="2"/>
+<circle cx="617.35" cy="250.0" r="7" fill="white" stroke="black" stroke-width="3"/>
+<text x="330.0" y="278.0" font-family="sans-serif" font-size="11">40%</text>
+<text x="900.0" y="278.0" text-anchor="end" font-family="sans-serif" font-size="11">70%</text>
+<text x="330.0" y="235.0" font-family="monospace" font-size="12">55.1237% [49.2989, 60.8113]%</text>
+<text x="24" y="357.0" font-family="sans-serif" font-size="15" font-weight="bold">Early-peak rate within C12</text>
+<text x="24" y="379.0" font-family="sans-serif" font-size="12">denominator: C12-labelled MC tracks; n=156/7302</text>
+<line x1="330.0" y1="375.0" x2="900.0" y2="375.0" stroke="black" stroke-width="1"/>
+<line x1="590.64" y1="375.0" x2="685.41" y2="375.0" stroke="black" stroke-width="6"/>
+<line x1="590.64" y1="365.0" x2="590.64" y2="385.0" stroke="black" stroke-width="2"/>
+<line x1="685.41" y1="365.0" x2="685.41" y2="385.0" stroke="black" stroke-width="2"/>
+<circle cx="634.44" cy="375.0" r="7" fill="white" stroke="black" stroke-width="3"/>
+<text x="330.0" y="403.0" font-family="sans-serif" font-size="11">0%</text>
+<text x="900.0" y="403.0" text-anchor="end" font-family="sans-serif" font-size="11">4%</text>
+<text x="330.0" y="360.0" font-family="monospace" font-size="12">2.1364% [1.8291, 2.4941]%</text>
+<text x="24" y="475" font-family="sans-serif" font-size="12">Status: VALIDATED; policy: SEPARATE_EARLY_PEAK_RATE_FROM_C12_COMPOSITION</text>
+</svg>

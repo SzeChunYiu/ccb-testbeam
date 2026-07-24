@@ -1,0 +1,41 @@
+{
+  "calibration_json": {
+    "bytes": 2644,
+    "path": "reports/mv0_calibration_1782677847/calibration.json",
+    "sha256": "78a905473db33311b6ccfc7ef440fc076b5d210de07d09e1f868f9fdf05cd18b",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "claim_ledger": {
+    "bytes": 15274,
+    "path": "docs/claim_ledger.csv",
+    "sha256": "30a1f5fd03d82366df3201a9d0d37be54572f13fd6c990d92b6bd5a9feab69a5",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "expected_columns": 43,
+  "issues": [],
+  "n_issues": 0,
+  "policy": "MV0_CLAIMS_REQUIRE_EXACT_WIDTH_AND_SOURCE_BACKED_LIMITATIONS",
+  "report": {
+    "bytes": 3733,
+    "path": "reports/mv0_calibration_1782677847/REPORT.md",
+    "sha256": "dc5b74056f7cac76e9c279e8e81c181453c854fd051dd82856c645c52a48b518",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "source_commit_required": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170",
+  "source_values": {
+    "gain_adc_per_mev": 92.0,
+    "gain_systematic_unc_pct": 30,
+    "ks_at_median_gain": 0.1577,
+    "ks_best": 0.1188,
+    "ks_best_gain": 60.0,
+    "n_data_b2": 579424,
+    "n_mc_b2_tracks": 321130
+  },
+  "status": "VALIDATED",
+  "validated_claim_ids": [
+    "CL-013",
+    "CL-014"
+  ],
+  "validator": "validate_mv0_claim_rows.py",
+  "version": "1.0.0"
+}

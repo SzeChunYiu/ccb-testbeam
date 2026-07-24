@@ -1,0 +1,65 @@
+{
+  "audit": "audit_mv3_summary_provenance.py",
+  "version": "1.0.0",
+  "policy": "TRACKED_MV3_SUMMARY_OVERRIDES_ROUNDED_REPORT_PROSE",
+  "session": {
+    "task_id": "AUD-LEDGER-002",
+    "utc_stamp": "2026-07-24T200310Z",
+    "initial_remote_main": "ad5a19a2dece0f0973573362004d558eb1a4cad5"
+  },
+  "remote_git_blobs": {
+    "docs/claim_ledger.csv": "bb552aa5ed70e7d81dcda888c5aa61402c01e03c",
+    "reports/mv3_stopping_v3_1782679272/REPORT.md": "b72eed4f7eb3237040a1346d7253080c098c8986",
+    "reports/mv3_stopping_v3_1782679272/mv3_summary.json": "2bb4b34e499642dfdf8ceb13e2f6351ff6e5cc6d",
+    "tools/audit/validate_mv3_legacy_claim_rows.py": "aad4d1cb9fbbd81ec6e20cbca5250ef06c9f2d8a"
+  },
+  "source_contract": {
+    "mc_counts": {"B2": 117213, "B4": 45507, "B6": 31145, "B8": 55619},
+    "data_counts": {"B2": 268576, "B4": 19284, "B6": 11834, "B8": 7051},
+    "mc_n": 249484,
+    "data_n": 306745,
+    "mc_b8_fraction": 0.22293614019335908,
+    "data_b8_fraction": 0.02298651974767315,
+    "stored_chi2": 204808.2179684494,
+    "stored_ndf": 3,
+    "stored_chi2_per_ndf": 68269.40598948313,
+    "reconstructed_chi2": 204808.2179684494,
+    "reconstructed_chi2_per_ndf": 68269.40598948313
+  },
+  "current_state": {
+    "status": "FLAWED",
+    "issue_count": 32,
+    "issue_counts": {
+      "LEDGER_MISSING_SOURCE_CAVEAT": 10,
+      "LEDGER_DENIES_TRACKED_SUMMARY": 6,
+      "LEDGER_CURRENT_VALUE": 3,
+      "LEDGER_SOURCE_DATA": 3,
+      "LEDGER_CI_METHOD": 3,
+      "LEDGER_CI_STATUS": 3,
+      "LEDGER_NUMERATOR": 2,
+      "LEDGER_DENOMINATOR": 2
+    },
+    "interpretation": "The tracked summary contains exact counts and reconstructable Pearson chi-square components, contradicting the current CL-019/020/021 absence narrative."
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/audit/audit_mv3_summary_provenance.py tests/test_audit_mv3_summary_provenance.py",
+      "PYTHONPATH=. python -m pytest tests/test_audit_mv3_summary_provenance.py -q"
+    ],
+    "focused_tests": "5 passed in 0.70s",
+    "audit_exit_status": 1,
+    "audit_exit_interpretation": "Expected current-ledger flaw; corrected fixture returns VALIDATED with zero issues.",
+    "max_python_line_length": 100
+  },
+  "validated_files": {
+    "tools/audit/audit_mv3_summary_provenance.py": {
+      "bytes": 10658,
+      "sha256": "2549a29913c6384c19addfb7cfe93ae4a0d2417499aa6f5cbf5fd9495c394753"
+    },
+    "tests/test_audit_mv3_summary_provenance.py": {
+      "bytes": 5955,
+      "sha256": "6a9db439b6a7cc07bdc188646763fadcd8563a9878c61aa974fa10e2bc775b77"
+    }
+  },
+  "scientific_boundary": "Exact source provenance and arithmetic reconstruction only. No accepted geometry closure, selection transfer, covariance, p-value, confidence interval, or detector-systematics model is established."
+}

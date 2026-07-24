@@ -1,16 +1,15 @@
 # Active Task
 
-- **Task ID:** AUD-LEDGER-001 / CL-019 through CL-021 legacy MV3 reconstruction unit
+- **Task ID:** AUD-LEDGER-001 / CL-002 through CL-009 legacy MV4 timing source-audit unit
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-24T173757Z
-- **Initial remote main SHA:** `1e44fd19a02c33377e727bd5d85be7a8aa96b587`
-- **Scope completed in this unit:** reconstructed malformed `CL-019`, `CL-020`, and `CL-021` from the exact tracked legacy MV3 v3 report and current fail-closed remediation; added a validator, focused tests, machine-readable evidence, visual evidence, and refreshed cumulative row-width evidence.
-- **Confirmed defects:** row widths were 38, 38, and 36 rather than 43; former rows cited untracked producer/result paths; rounded fractions omitted exact per-stave counts; the report exposed only the label `chi2/ndf = 68269.4` without chi-square, ndf, p-value, bin variances, or covariance.
-- **Source-backed result:** fixed rounded B8 fractions are MC `0.223` from 249484 thresholded tracks and data `0.023` from 306745 selected events. The rounded outputs identify 249 and 307 possible integer numerators respectively, so exact binomial intervals cannot be reconstructed.
-- **Implemented files:** corrected `docs/claim_ledger.csv`; added `tools/audit/validate_mv3_legacy_claim_rows.py`, `tools/audit/render_mv3_legacy_claim_evidence.py`, focused tests, and Markdown/JSON/SVG evidence; refreshed cumulative schema Markdown/JSON/SVG evidence.
-- **Validation:** changed Python files compiled; focused suite returned `7 passed in 1.05s`; the exact corrected ledger/report/current-source contract returned `VALIDATED` with zero issues; JSON and SVG parsed; committed Python blobs match the locally validated Git blobs; changed Python lines meet the repository 100-character convention.
-- **Evidence policy:** `LEGACY_MV3_PROFILE_REQUIRES_EXACT_COUNTS_AND_FAIL_CLOSED_RERUN` plus `NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS`.
-- **Cumulative ledger state:** `19/26` exact-width claim rows and `7/26` withheld malformed rows. The schema validator remains intentionally `FLAWED`/status 1 until all rows are reconstructed.
-- **Scientific boundary:** this unit performs no ROOT rerun, beam-data processing, exact stopping-count recovery, uncertainty calculation, profile goodness-of-fit reconstruction, detector-response closure, or accepted stopping-profile measurement. `CL-019` and `CL-020` remain `GATED`; `CL-021` is `FLAWED`; all are blocked under `BLK-MV3-LEGACY-001`.
-- **Remaining work:** rerun MV3 from immutable inputs with explicit Sample I/II labels and per-layer masks; retain exact counts and a preregistered statistic/uncertainty model; reconstruct the seven remaining malformed timing rows; complete repository-wide inventory and anomaly closure.
-- **Status:** VALIDATED for this three-row reconstruction unit; ledger-wide `AUD-LEDGER-001` remains PARTIAL.
+- **Session stamp:** 2026-07-24T180301Z
+- **Initial remote main SHA:** `fca51ba5f932846c8ab57bf9d60b03cf5e32983c`
+- **Scope completed in this unit:** audited the seven remaining malformed timing rows plus the already exact-width raw-pull row against the exact tracked MV4 report, machine-readable summary, historical producer, and current fail-closed execution contract; added an executable auditor, focused tests, machine-readable evidence, and an accessible SVG.
+- **Confirmed defects:** `CL-002`, `CL-003`, `CL-004`, `CL-005`, `CL-006`, `CL-008`, and `CL-009` have 37–39 columns rather than 43; the cited sources do not contain the B6 0.68/0.75 ns, combined-stave 0.54/0.56 ns, or covariance -0.127 ns² claims; `CL-007` overstates a toy pull as `VALIDATED/PASS`; `CL-009` calls an analytic CFD/timewalk source an ML verdict.
+- **Source-backed fixed outputs:** 80000 tracks from 241487 scanned events; raw sigma68 `1.744319343085384 ns`, corrected held-out sigma68 `1.7696154242198858 ns`, raw pull `-1.054403396247793`, corrected pull `2.680528799917713`, gain `110 ADC/MeV`, and assumed data uncertainty `0.10 ns`.
+- **Implemented files:** `tools/audit/audit_mv4_legacy_claim_rows.py`; `tests/test_audit_mv4_legacy_claim_rows.py`; `docs/validation/mv4_legacy_claim_rows_source_audit.md`; `docs/validation/mv4_legacy_claim_rows_audit_validation.json`; `docs/validation/mv4_legacy_claim_rows_audit.svg`.
+- **Validation:** changed Python files compiled; focused suite returned `4 passed in 0.03s`; direct audit returned status `FLAWED` and exit 1 with 14 source/schema findings; JSON and SVG parsed; changed Python lines are at most 97 characters.
+- **Evidence policy:** `LEGACY_MV4_TIMING_REQUIRES_STRICT_INPUTS_AND_SOURCE_BOUND_CLAIMS`.
+- **Scientific boundary:** no ROOT processing, detector timing measurement, B6/combined-stave estimate, covariance reconstruction, calibration, or detector-performance closure was produced. This unit validates the audit and exact remediation contract, not the legacy numerical claims.
+- **Remaining work:** reconstruct `CL-002` through `CL-009` to exactly 43 fields; withhold unsupported per-stave/combined/covariance values; retain pulls only as gated toy diagnostics; replace the false ML label with analytic `REVIEW`; refresh cumulative schema evidence and aggregate coordination records.
+- **Status:** PARTIAL. The audit/evidence unit is VALIDATED; `docs/claim_ledger.csv` remains FLAWED until the source-backed row replacement is committed.

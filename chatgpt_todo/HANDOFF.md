@@ -7,7 +7,9 @@
 - **Unit:** MV3 exact tracked-summary ledger and validator remediation
 - **Initial remote `main`:** `a52ea7c3f76eddff204e8ebb990a55cfe8793e7f`
 - **Validated evidence head:** `72f295425fee337a63d94364e1e3c27376f0a4ab`
-- **Coordination/archive head before this handoff:** `4431c5089df2226a1817a8f959aaa98621c4c73b`
+- **Coordination/archive head before handoff:** `4431c5089df2226a1817a8f959aaa98621c4c73b`
+- **Final validated main SHA before metadata-only confirmation:** `8278e689b9bdbc99e1ccb82a4d014389802fdc19`
+- **Remote-main confirmation:** a post-write history read confirmed `8278e689b9bdbc99e1ccb82a4d014389802fdc19` on remote `main`; this record adds confirmation metadata only
 - **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or PR transport
 - **Acceptance:** canonical MV3 rows, exact-source validator, regressions, machine-readable evidence, and visual evidence are validated; root-WIKI synchronization and scientific stopping-profile closure remain partial
 
@@ -102,6 +104,7 @@ The validation JSON explicitly distinguishes an exact locally reconstructed ledg
 - `72f295425fee337a63d94364e1e3c27376f0a4ab` — visual evidence.
 - `bb0c7651b5c70970dd89055843d9040b2986032e` — active-task update.
 - `4431c5089df2226a1817a8f959aaa98621c4c73b` — immutable archive.
+- `8278e689b9bdbc99e1ccb82a4d014389802fdc19` — complete remediation handoff.
 
 The contents connector returned successful commit SHAs rather than conventional textual `git push` stdout. Recent-history reads confirmed these commits on remote `main` in order. No broad GitHub Actions success is claimed.
 

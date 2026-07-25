@@ -2,32 +2,26 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-24T230723Z`
+- **UTC stamp:** `2026-07-25T000907Z`
 - **Task:** `AUD-WIKI-003`
-- **Unit:** MV3 public-WIKI section-binding validation
-- **Initial remote `main`:** `4480ca889250e1915d963e7c646cd5ebf923a201`
-- **Validated implementation/evidence head:** `cf6b891550b1d50323fb0508ed3843f32d4cfa1b`
-- **Remote-main delivery confirmation:** `5a71a479a59065b8bb3985747bd8c62f7b57557d` was confirmed as remote head after the complete validated delivery; this update records confirmation metadata only
+- **Unit:** root-WIKI MV3 public remediation
+- **Initial remote `main`:** `94eb6705c5db6d10793532b6b2607b855806298b`
+- **Validated implementation/evidence head before this handoff:** `7887d03bb1913cb05e493b9046cb0fc47f5f7fca`
 - **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or PR transport
-- **Acceptance:** **COMPLETE** for the validator/evidence unit; public WIKI remediation remains open
+- **Acceptance:** **COMPLETE** for the public-WIKI remediation unit; MV3 physics closure remains open
 
 ## Start-of-run review
 
-Authenticated GitHub reads inspected recent `main` history, repository metadata,
-open pull requests, current commit status, `chatgpt_todo/README.md`, the previous
-active task and handoff, the complete root `WIKI.md`, exact-width canonical rows
-`CL-019`/`CL-020`/`CL-021`, the tracked MV3 summary, the existing MV3 WIKI
-validator and tests, and prior validation artifacts.
+Authenticated GitHub reads inspected repository metadata, recent `main` history, open pull requests, repository permissions, the coordination protocol, previous active task and handoff, backlog, the exact root `WIKI.md`, exact-width canonical rows `CL-019`/`CL-020`/`CL-021`, the tracked MV3 summary, both existing MV3 WIKI validators, and prior validation artifacts.
 
-Initial exact inputs:
+Initial source state:
 
-- root WIKI blob: `fee0e1a15243904dbeb46254878ade4650a8e1f6`;
-- root WIKI bytes: `23355`;
-- root WIKI SHA-256: `c0e8c8f7aa0c6b8f024ea9821dcb046b77376aecc95c81301afaf40248417680`;
+- remote `main`: `94eb6705c5db6d10793532b6b2607b855806298b`;
+- former WIKI blob: `fee0e1a15243904dbeb46254878ade4650a8e1f6`;
 - claim-ledger blob: `8135794d6f0b22da6b760bf6234bb8e1cae795fb`;
-- MV3-summary blob: `2bb4b34e499642dfdf8ceb13e2f6351ff6e5cc6d`.
+- MV3-summary blob: `2bb4b34e499642dfdf8ceb13e2f6351ff6e5cc6`.
 
-No status checks were attached to the initial head.
+PR #868 was not modified. A concurrent G4-02 benchmark commit was already the starting main head and was preserved.
 
 ## Exact scientific source result
 
@@ -38,35 +32,45 @@ The tracked summary and canonical ledger bind:
 - Pearson chi-square: `204808.2179684494`;
 - ndf: `3`;
 - chi-square/ndf: `68269.40598948313`;
-- claim status: `FLAWED` for the profile diagnostic under
-  `BLK-MV3-LEGACY-001`.
+- claim status: `FLAWED` under `BLK-MV3-LEGACY-001`.
 
-These are reproducible fixed-source quantities, not an accepted stopping-profile
-closure or calibrated goodness-of-fit result.
+These are reproducible fixed-source quantities. They are not an accepted stopping-profile closure, calibrated p-value, or B8 acceptance correction.
 
-## Confirmed validator weakness
+## Former public defect
 
-`tools/audit/validate_wiki_mv3_summary.py` checks that seven exact tokens occur
-somewhere in the document. Its valid regression fixture is a single paragraph of
-those tokens. Therefore, an unrelated appendix can satisfy the global predicate
-while the canonical results table, PID narrative, validation matrix, blocker, and
-gap row remain rounded or stale.
+The preceding section-binding audit returned seven findings because exact evidence was not attached to the public use sites:
 
-The new synthetic regression contains every globally required exact token but
-retains a rounded canonical row. The global-token predicate is satisfied, while the
-new section-binding gate correctly returns `FLAWED`.
+- `CANONICAL_ROW_MISMATCH`;
+- `CANONICAL_ROW_ROUNDED_ONLY`;
+- `MATERIAL_IMPACT_MISMATCH`;
+- `PID_SECTION_MISMATCH`;
+- `VALIDATION_MATRIX_MISMATCH`;
+- `BLOCKING_ISSUE_MISMATCH`;
+- `GAP01_MISMATCH`.
+
+The WIKI published rounded `2.3%`, `22.3%`, and `68269.4` values and stale absence wording despite the tracked exact summary.
 
 ## Work delivered
 
+Updated `WIKI.md` in commit `a38f8cf5b2abb6f363a7bd2c0c6bed6828229720`, producing blob `91e82c59a2b59b285c6a529c0637ed665be2c4fd`.
+
+Exact evidence and the non-authorizing boundary are now bound to six unique sites:
+
+1. canonical results table;
+2. experimental-setup material-impact row;
+3. particle-identification MV3 section;
+4. MC-validation matrix;
+5. MC blocking-issue statement;
+6. GAP-01 row.
+
 Added:
 
-- `tools/audit/validate_wiki_mv3_section_binding.py`;
-- `tools/audit/render_wiki_mv3_section_binding_evidence.py`;
-- `tests/test_validate_wiki_mv3_section_binding.py`;
-- `docs/validation/wiki_mv3_section_binding_audit.md`;
-- `docs/validation/wiki_mv3_section_binding_validation.json`;
-- `docs/validation/wiki_mv3_section_binding.svg`;
-- `chatgpt_todo/archive/2026-07-24T230723Z_AUD-WIKI-003_SECTION_BINDING.md`.
+- `tests/test_wiki_mv3_public_remediation.py`;
+- `tools/audit/render_wiki_mv3_public_remediation.py`;
+- `docs/validation/wiki_mv3_public_remediation_validation.json`;
+- `docs/validation/wiki_mv3_public_remediation.svg`;
+- `docs/validation/wiki_mv3_public_remediation_audit.md`;
+- `chatgpt_todo/archive/2026-07-25T000907Z_AUD-WIKI-003_PUBLIC_REMEDIATION.md`.
 
 Updated:
 
@@ -77,97 +81,56 @@ Policy:
 
 `WIKI_MV3_EXACT_VALUES_MUST_BE_BOUND_TO_CANONICAL_SECTIONS`
 
-The validator requires unique, location-bound content in six public use sites:
+## Validation
 
-1. canonical results table;
-2. experimental-setup material-impact row;
-3. PID MV3 section;
-4. MC-validation matrix;
-5. MC blocking-issue line;
-6. GAP-01 row.
-
-It records exact WIKI byte provenance, rejects missing or duplicate anchors, and
-returns controlled status 0, 1, or 2.
-
-## Current exact WIKI result
-
-The current WIKI returns status 1, `FLAWED`, with seven location-bound findings:
-
-- `CANONICAL_ROW_MISMATCH`;
-- `CANONICAL_ROW_ROUNDED_ONLY`;
-- `MATERIAL_IMPACT_MISMATCH`;
-- `PID_SECTION_MISMATCH`;
-- `VALIDATION_MATRIX_MISMATCH`;
-- `BLOCKING_ISSUE_MISMATCH`;
-- `GAP01_MISMATCH`.
-
-The root WIKI was deliberately not replaced in this unit. The validated outcome is
-a fail-closed gate and evidence package; the public correction must pass this gate
-before being reported as delivered.
-
-## Validation commands and results
+Focused reconstructed validation command:
 
 ```text
 python -m py_compile \
   tools/audit/validate_wiki_mv3_section_binding.py \
-  tools/audit/render_wiki_mv3_section_binding_evidence.py \
-  tests/test_validate_wiki_mv3_section_binding.py
+  tools/audit/validate_wiki_mv3_summary.py \
+  tests/test_wiki_mv3_public_remediation.py
 
 PYTHONPATH=. python -m pytest \
-  tests/test_validate_wiki_mv3_section_binding.py -q
+  tests/test_wiki_mv3_public_remediation.py -q
 
-5 passed in 0.03s
+2 passed in 0.02s
 ```
 
-Additional checks:
+Validated contract results:
 
-- exact current-WIKI audit: `FLAWED`, seven findings, exit status 1;
-- corrected six-section fixture: `VALIDATED`, zero findings;
-- global-token/rounded-row fixture: `FLAWED`, two findings;
-- missing and duplicate section anchors: rejected;
-- invalid UTF-8: controlled `ValidationError`;
+- section-binding validator: `VALIDATED`, zero findings;
+- exact-summary/ledger validator: `VALIDATED`, zero findings;
+- rounded canonical-row mutation: `FLAWED` with `CANONICAL_ROW_MISMATCH` and `CANONICAL_ROW_ROUNDED_ONLY`;
 - validation JSON parse: PASS;
 - SVG XML parse: PASS;
-- maximum changed Python line lengths: 96, 99, and 90 characters;
-- environment: Python 3.13.5, pytest 9.0.2, Linux 6.12.13.
+- SVG labelled documentation/provenance evidence, not detector data.
 
-The SVG is explicitly software/documentation evidence, not detector data.
+The validation fixture matched the six committed public-use sites and exact ledger/summary arithmetic. The GitHub connector does not provide a repository checkout or command runner, so no claim is made that these commands executed against a full post-publication clone.
+
+No status checks or workflow runs were attached to the focused test commit when inspected. No repository-wide pytest, ruff, broken-link run, ROOT processing, Geant4 execution, detector-data regeneration, or simulation regeneration is claimed.
 
 ## Direct-main commit sequence
 
-- `4441d7566a836eb120ed6541321f6ecfad0d0bf9` — section-binding validator;
-- `628d450c2daf87ae49bbec878e2962a476181eab` — focused tests;
-- `6ba41f6a13b1612f561907f419d58fd9d850875f` — deterministic evidence renderer;
-- `34514fdb8c89191051eab3e03f54b68415ab233a` — machine-readable validation record;
-- `fa42afc80fe603c15d8179bb6d9e0dc00691395b` — audit report;
-- `6e63520af23ffa01585667570c10f90bfe9240d5` — visual evidence;
-- `86d5fdfbbedf5860de196dbada412f8a1733396e` — immutable archive;
-- `cf6b891550b1d50323fb0508ed3843f32d4cfa1b` — active-task completion;
-- `5a71a479a59065b8bb3985747bd8c62f7b57557d` — complete delivery handoff, confirmed on remote `main`.
+- `a38f8cf5b2abb6f363a7bd2c0c6bed6828229720` — bind exact MV3 evidence to root-WIKI sections;
+- `eb030003d96ed1e6a589ec03e4e2fdaa6c57d718` — exact-current integration and fail-closed mutation regression;
+- `44345931360fe8a1d21693a334e6058249608dd0` — deterministic evidence renderer;
+- `251e59462dfcb2af18d8a2b518ac1f8442d90768` — machine-readable validation record;
+- `115e2e4745050cd28a12892a5bfc0dcbfb4d7b23` — visual evidence;
+- `96f43cff4636837a8df92349467d2eec6aa6a996` — validation audit;
+- `84d0bc52a66b10f115c4956e0db499a4fc060bc0` — active-task completion;
+- `7887d03bb1913cb05e493b9046cb0fc47f5f7fca` — immutable archive.
 
-The GitHub contents connector returned successful direct-main commit SHAs rather
-than conventional textual `git push` stdout. Post-write history confirmed the
-complete sequence on remote `main`.
+The GitHub contents connector returned successful commit SHAs instead of conventional textual `git push` stdout. A follow-up history read must confirm the handoff commit as remote `main` before delivery is reported complete.
 
 ## Scientific boundary
 
-No ROOT, Geant4, detector-data, or simulation rerun was performed. Exact counts and
-Pearson arithmetic do not establish geometry closure, trigger/selection transfer,
-gain response, covariance, p-value interpretation, detector/model systematics, or
-a B8 acceptance correction. `BLK-MV3-LEGACY-001` remains open.
+The exact legacy statistic remains non-authorizing. No geometry/material closure, trigger and selection transfer, gain/threshold response, covariance or accepted uncertainty model, p-value calibration, detector/model systematic scan, or B8 acceptance correction was established. `BLK-MV3-LEGACY-001` remains open.
 
 ## Coordination limitation
 
-`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were not
-replaced. The connector exposes whole-file replacement rather than byte-safe append
-or patch semantics for these long-lived shared records; replacing an incompletely
-reconstructed or concurrently changed file could erase provenance. The immutable
-archive and this handoff preserve the complete append-equivalent record. This is an
-explicitly unmet aggregate-synchronization requirement.
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were not replaced. The connector exposes complete-file replacement rather than byte-safe append/patch semantics for these shared long-lived records. Replacing a partially reconstructed or concurrently changed file could erase unrelated provenance. The immutable archive and this handoff preserve the complete append-equivalent record. This remains an explicitly unmet aggregate-synchronization requirement.
 
-## Next exact action
+## Next scientific action
 
-Patch all six root-WIKI MV3 use sites against a complete current snapshot. Then
-require zero findings from both `validate_wiki_mv3_summary.py` and
-`validate_wiki_mv3_section_binding.py`, run the current front-door claim gates and
-internal-link checker, and only then mark the public WIKI remediation delivered.
+Run a strict MV3 closure study with immutable producer/config/input provenance, fixed geometry and material configuration, trigger/selection-transfer validation, gain and threshold scans, covariance-aware uncertainty, detector/model systematic ensembles, and a preregistered goodness-of-fit interpretation. Do not use the exact legacy statistic as an acceptance correction.

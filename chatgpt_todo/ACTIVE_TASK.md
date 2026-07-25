@@ -1,12 +1,12 @@
 # Active Task
 
-- **Task ID:** AUD-DOC-003
+- **Task ID:** AUD-MC-001
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T010711Z
-- **Initial remote main SHA:** `bf46fe4ef69a5fdf24d39f264d90218b0335f491`
-- **Scope:** repair and harden the repository Markdown link checker so invalid UTF-8, missing local targets, and repository-root escapes produce deterministic fail-closed findings instead of interpreter crashes or false passes.
-- **Repository evidence:** former `scripts/broken_link_checker.py` blob `0cc64c1e54291af0eed70ce3d4cfada976250e75` used implicit text decoding and referenced undefined variable `boken`; open PR #883 contains a partial stale fix and was not merged or modified.
-- **Files:** `scripts/broken_link_checker.py`; `tests/test_broken_link_checker.py`; deterministic evidence renderer; validation JSON/SVG/audit; immutable archive; latest handoff.
-- **Validation:** exact former source reproduced `NameError` after a missing-link finding and uncaught `UnicodeDecodeError` at byte 6; corrected compilation passed; focused pytest returned `6 passed in 2.55s`; valid, missing, invalid-UTF-8, root-escape, percent-encoded, and atomic-JSON cases passed; JSON and SVG parsed; changed Python lines are at most 100 characters; committed script/test blobs match validated bytes.
-- **Scientific boundary:** documentation integrity tooling cannot validate detector data, simulations, numerical physics, or external URLs; link presence alone does not establish scientific correctness. Reference-style links and heading-anchor validation remain outside this unit.
-- **Status:** COMPLETE — fail-closed Markdown link audit and reproducible evidence delivered directly to remote `main`.
+- **Session stamp:** 2026-07-25T021422Z
+- **Initial remote main SHA:** `f01b16fba39bcd21bb57a10638d36dcfe521b01f`
+- **Scope:** harden `tools/audit/audit_mc_weight_usage.py` so effective-sample-size reports cannot silently discard invalid weights, flatten non-event-aligned arrays, select an ambiguous branch, or overwrite the exact ROOT input.
+- **Repository evidence:** exact former blob `9b2375b98fd76784ce3fb961e4dcdbf169f7495e` filters nonfinite values, reshapes arbitrary arrays, selects the first recognized branch when several exist, omits input-byte provenance, and writes JSON directly to the requested path without an input/output alias gate.
+- **Files:** `tools/audit/audit_mc_weight_usage.py`; `docs/contracts/MC_WEIGHT_POLICY.md`; focused tests; deterministic validation JSON/SVG/audit; immutable archive; latest handoff.
+- **Validation plan:** reconstruct the former blob exactly; demonstrate false `OK` results for nonfinite, ambiguous, and matrix-valued inputs plus destructive input/output aliasing; compile corrected code; run focused pytest; parse JSON/SVG; check line lengths and committed blob identities.
+- **Scientific boundary:** a valid weight vector and ESS report do not prove that downstream analyses actually consume the weights or that a weighted model closes against data. Production ROOT bytes and downstream reruns remain external/compute blockers.
+- **Status:** ACTIVE

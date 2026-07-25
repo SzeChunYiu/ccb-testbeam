@@ -1,0 +1,53 @@
+{
+  "commands": [
+    "python -m py_compile scripts/single_stave/analyze_single_stave.py tests/test_analyze_single_stave_optical_contract.py tools/audit/render_single_stave_analyzer_optical_evidence.py",
+    "PYTHONPATH=. pytest -q tests/test_analyze_single_stave_optical_contract.py",
+    "python scripts/single_stave/analyze_single_stave.py --input tmp/current.csv --output tmp/out --bins 6"
+  ],
+  "environment": {
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, May  5 2026, 21:05:52) [GCC 14.2.0]"
+  },
+  "files": {
+    "geant4/single_stave/README.md": "75d8e13b214a0d27de12404c69db998e78ae587224efe8231103e887cb1f2cbb",
+    "scripts/single_stave/EVENT_CONTRACT.md": "904ce80f7854f7e4baaa53b88a4a6618b8529bc99536eeb34510cbf2d1d3f68b",
+    "scripts/single_stave/analyze_single_stave.py": "7a084661979a5e5533ef3d21af39b5fe81deec8527f2b152e61e6ab96055aab2",
+    "tests/test_analyze_single_stave_optical_contract.py": "afc11dbdb5b39ca2b7888283f8aae1c2e925b15cc74a2e5c7b91397f5eb14332",
+    "tools/audit/render_single_stave_analyzer_optical_evidence.py": "9fe939d3026792c2414df3dedf76f9b394b12c75e1352bd6a470cec9bf396637"
+  },
+  "initial_main_sha": "48e3192dc69dd8c9408930171ed66f7a0627979e",
+  "policy": "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL",
+  "remaining": [
+    "execute adapter-to-analyzer path on immutable real ROOT bytes",
+    "record producer sidecar and row/hash closure",
+    "review real generated diagnostics"
+  ],
+  "repository_facts": {
+    "former_analyzer_blob": "5a3fdd88757bec8b8f39b2ca9f7be889b70e848c",
+    "former_behavior": "n_end_selected bounded by n_scint_generated and G4S-03 divided by n_scint_generated",
+    "producer_blob": "2e10565aa41182618083634cd18b6ddae89660da"
+  },
+  "schema": "ccb-single-stave-analyzer-optical-validation/1",
+  "scientific_boundary": "synthetic software/provenance validation only; no real ROOT, Geant4 rerun, calibration, optical yield, resolution, PID, or detector-performance result",
+  "session_stamp": "2026-07-25T141517Z",
+  "synthetic_control": {
+    "correct_total_ratio": 0.7333333333333333,
+    "interpretation": "former ratio can exceed one despite valid WLS-inclusive bookkeeping",
+    "legacy_scintillation_ratio": 1.1,
+    "n_cerenkov_generated": 0,
+    "n_end_selected": 11,
+    "n_optical_generated_total": 15,
+    "n_scint_generated": 10,
+    "n_wls_generated": 5
+  },
+  "task_id": "AUD-G4-022",
+  "validation": {
+    "end_to_end_synthetic": "PASS_SMOKE; CURRENT_COMPONENT_SUM; G4S-03 denominator n_optical_generated_total",
+    "focused_pytest": "9 passed in 0.12s",
+    "json_parse": "passed",
+    "max_python_line_length": 100,
+    "py_compile": "passed",
+    "status": "VALIDATED",
+    "svg_parse": "passed after rendering"
+  }
+}

@@ -7,8 +7,14 @@
 - **Initial remote `main`:** `39378e21c436344b43e9f659f5a76bce2bca1228`
 - **Concurrent non-overlapping merge:**
   `c39aba2c55091aec501acbe402523e2d94be2c58`
+- **Later concurrent data-side merge:**
+  `f283e61fd64b0826215251c92c9495428476a808` added a separate raw-beam event-level
+  study while this remediation was being finalized. It did not modify the corrected Cluster A
+  script or summary. Its Rmax/claim-ledger upgrades were not accepted by this focused unit.
 - **Validated implementation/evidence/archive head:**
   `6ce94adeb54c521f03a2b4f84b5a985e1ddff7f7`
+- **Validated delivery handoff / after-SHA:**
+  `0db10040dc53bfc235233a03163a40ee74f5053c`
 - **Destination:** direct GitHub contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport.
 - **Push-output boundary:** successful commit SHAs were returned rather than conventional
@@ -21,9 +27,15 @@ row/event-key semantics, MC plot weighting, repository history, open PRs, PR #86
 coordination files. The reviewed former script blob was
 `ccdc21dd967d0a25694261d488f959d89286a88d`.
 
-The production derived CSV and Krakow ROOT were unavailable in the execution environment.
+The production derived CSV and Krakow ROOT were unavailable in this execution environment.
 Exact source bytes were reconstructed for focused software validation. No production result
 or figure was regenerated.
+
+The later raw-beam study reports a distinct one-row-per-event B2/B4 sample and therefore does
+not authorize reinterpreting the audited multi-row derived table as event-level. Its report
+uses `Rmax = 0.38 / 130 ns` while describing the result as occupancy-grounded; the numerator
+and live-time are still model/convention inputs. That adjacent claim needs a separate
+source-bound estimand and uncertainty audit before acceptance.
 
 ## Confirmed defects
 
@@ -55,7 +67,7 @@ or figure was regenerated.
 
 `reports/studies/clusterA/SUMMARY.md` now classifies the +0.18 correlation and stave counts as
 row-level descriptive quantities, not event-level stopping fractions or accepted data/MC
-closure. Existing data-side PNGs are marked stale until regenerated.
+closure. Existing Cluster A data-side PNGs are marked stale until regenerated.
 
 ## Validation
 
@@ -101,7 +113,7 @@ Added:
 
 The SVG is synthetic software/provenance evidence, not detector data.
 
-## Direct-main sequence before this handoff
+## Direct-main sequence
 
 - `ae015d281a3791894a6098c4127b1dd5d5021a77` — initial implementation
 - `64f20672ae9d9ceba6506b47ac7cd6eaa06a1919` — initial focused tests
@@ -120,19 +132,25 @@ The SVG is synthetic software/provenance evidence, not detector data.
 - `ec1ca0827e2dfe4620f66b53c11411960caec832` — final audit report
 - `a26a3cc257e2b34ab16684ee07c64acedfd40137` — final active task
 - `6ce94adeb54c521f03a2b4f84b5a985e1ddff7f7` — final immutable archive
+- `0db10040dc53bfc235233a03163a40ee74f5053c` — delivery handoff
 
 ## Acceptance boundary and next action
 
 Focused software remediation is `VALIDATED`; cumulative `AUD-DATA-001` is `PARTIAL`.
 
-No production CSV/ROOT execution, production figure, correlation, stopping distribution,
-data/MC closure, beam-data PID, calibration, or detector-performance quantity was
-regenerated or accepted. The next unit must bind immutable input hashes, rerun the corrected
-row-level path, review regenerated metadata and figures, and separately execute the canonical
-composite merge before making event-level statements.
+No production execution of the corrected Cluster A path, regenerated Cluster A figure,
+correlation, stopping distribution, data/MC closure, beam-data PID, calibration, or detector-
+performance quantity was accepted. The next unit must bind immutable input hashes, rerun the
+corrected row-level path, review regenerated metadata and figures, and separately execute the
+canonical composite merge before making event-level statements.
 
-Repository-wide pytest/ruff, broad link checking, and GitHub Actions were not run. PR #868
-remains closed, unmerged, and untouched.
+The concurrent raw-beam study should be audited separately before retaining its CL-010
+upgrade: distinguish measured occupancy from the assumed `mu_max=0.38` and live-time model,
+recompute with the exact CL-011 estimand where applicable, define uncertainty and correlation,
+and do not label a derived convention as an absolute data measurement.
+
+Repository-wide pytest/ruff, broad link checking, and GitHub Actions were not run. No status
+checks were attached to the delivery handoff. PR #868 remains closed, unmerged, and untouched.
 
 `SESSION_LOG.md`, `MASTER_INDEX.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were
 not replaced because complete current bytes are returned through paged/truncated views while

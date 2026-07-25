@@ -2,131 +2,112 @@
 
 ## Session
 
-- **Task:** `AUD-MV3-SEL-001`
-- **Stamp:** `2026-07-25T220218Z`
-- **Initial remote main:** `701116061eb3346a3ae2b31e2946ca450d6120e2`
-- **Validated delivery/handoff commit:**
-  `712e446e7f31daee9dbd926283547e4780677c7f`
-- **Remote-main confirmation:** post-write history confirmed the delivery commit as the
-  remote `main` head before this confirmation record.
-- **Destination:** direct GitHub contents-API commits to `main`; no force-push, history
-  rewrite, task branch, or PR transport.
-- **Push-output boundary:** successful commit SHAs were returned rather than conventional
-  textual `git push` stdout.
-- **Acceptance:** focused audit gate `VALIDATED`; merged production follow-up `FLAWED`;
-  cumulative task `PARTIAL`.
+- **Task:** `AUD-MV3-SEL-002`
+- **Stamp:** `2026-07-25T230502Z`
+- **Initial remote main:** `feddba9e3cc488fd77e7bc015f80af9d78f6edd1`
+- **Remote main before this handoff update:** `0aa777457fff37a817bce29a7ea1656683210ddf`
+- **Destination:** direct contents-API commits to `main`; no force-push, history rewrite, task
+  branch, or PR transport.
+- **Push-output boundary:** GitHub returned successful commit SHAs rather than terminal `git push`
+  stdout. Recent remote history was re-read after the focused sequence.
+- **Acceptance:** producer contract and source-report quarantine `VALIDATED/PARTIAL`; production
+  weighted result `BLOCKED`; canonical `CL-021` remains `FLAWED`.
 
-## Area reviewed
+## Review and finding
 
-The newly merged MV3 selection-matched stopping-depth follow-up, exact summary/report/plots,
-canonical `CL-021`, source-specific `PrimaryWeight` contract, canonical PDG charge helper,
-trigger-split implementation, PR #932 history, PR #868 disposition, and required coordination
-records.
+Reviewed the former producer, retained summary and report, prior MV3 audit/evidence, canonical PDG
+charge helper, claim ledger state, recent main history, PR inventory, PR #868, and commit status.
+The former producer read `PrimaryWeight` but did not apply it, silently substituted 1.0 for invalid
+weights, selected only positive charge, and reported an improvement that changed the data target.
+Its source report then called the residual shape matched despite chi-square/ndf
+`5590.089500522007`, B2 residual `7.735323559398211` percentage points, and TVD
+`0.07735323559398212`.
 
-## Exact repository facts
+Holding Sample-I data fixed changes the former improvement from `16.602672795596263x` to
+`16.114635239581606x`. These are retained diagnostic calculations, not weighted production results.
 
-PR #932 merged as `701116061eb3346a3ae2b31e2946ca450d6120e2`. Its study reports
-MC Sample-I B2 fraction `0.8669236675912432` versus data `0.9442769031852253`,
-Pearson chi2/ndf `5590.089500522007`, and an advertised improvement factor
-`16.602672795596263`. Canonical `CL-021` remains `FLAWED` under
-`BLK-MV3-LEGACY-001`. PR #868 remained closed, unmerged, non-mergeable, and untouched.
-No status checks were attached to the initial or delivery commit.
+## Delivered correction
 
-## Confirmed defects
+`scripts/studies/mv3_selection_matched.py` now:
 
-1. The producer loads `PrimaryWeight`, defaults invalid/missing weight to `1.0`, and never
-   applies the resulting event weight to the stopping profile or other advertised MC results.
-2. The report rejects PrimaryWeight even though the repository weight contract states it is
-   the generated-source cross-section factor and that unweighted truth distributions are not
-   physical production distributions.
-3. The charged mask uses `pdg_charge(int(p)) >= 1`, excluding negatively charged particles
-   rather than using canonical `is_charged()`.
-4. The advertised improvement changes the data target. Holding Sample-I data fixed gives
-   `16.114635239581606x`, not `16.602672795596263x`.
-5. Matched chi2/ndf remains `5590.089500522007`; B2 residual is
-   `7.735323559398211` percentage points and total-variation distance is
-   `0.07735323559398212`. “Gap gone” / “shape matches” is unsupported.
-6. The summary lacks input hashes, source commit/command, weight sums/ESS,
-   uncertainty/covariance, and gain/threshold/coincidence/weighting sensitivities.
-7. The public verdict outruns the canonical ledger state.
+1. requires exactly one finite nonnegative `PrimaryWeight` per event and never substitutes 1.0;
+2. uses `ccb_mc_validation.truth.pdg.is_charged` for both charge signs;
+3. publishes weighted primary and unweighted sensitivity profiles;
+4. records `sum_w`, `sum_w2`, ESS, and zero-weight counts per selection;
+5. calculates weighted correlations and weighted entry-energy quantiles;
+6. holds Sample-I data fixed for the selection-ablation ratio;
+7. records exact input/script SHA-256, full source commit, and generation command;
+8. rejects input/output aliasing and publishes JSON atomically;
+9. emits a non-authorizing diagnostic verdict with explicit missing covariance and scans.
 
-## Work delivered
+`reports/studies/mv3_selection_matched/REPORT.md` now classifies the existing JSON/PNG files as
+`SUPERSEDED_UNWEIGHTED_OUTPUTS`. They are preserved for provenance but are not accepted physical
+closure evidence.
 
-- `tools/audit/audit_mv3_selection_claim.py`
-- `tests/test_audit_mv3_selection_claim.py`
-- `tools/audit/render_mv3_selection_claim_evidence.py`
-- `docs/validation/mv3_selection_claim_validation.json`
-- `docs/validation/mv3_selection_claim.svg`
-- `docs/validation/mv3_selection_claim_audit.md`
-- `chatgpt_todo/archive/2026-07-25T220218Z_AUD-MV3-SEL-001_WEIGHTED_SELECTION_SEMANTICS.md`
-- updated `chatgpt_todo/ACTIVE_TASK.md`
+## Validation and visual evidence
 
-Policy:
-
-`MV3_SELECTION_CLAIM_REQUIRES_WEIGHTED_SIGNED_CHARGE_AND_SAME_TARGET_VALIDATION`
-
-The executable current-like contract returns `FLAWED` with 16 findings; a corrected contract
-fixture returns `VALIDATED` with zero findings.
-
-## Validation
+Executed on prepared exact files:
 
 ```text
 python -m py_compile \
-  tools/audit/audit_mv3_selection_claim.py \
-  tests/test_audit_mv3_selection_claim.py \
-  tools/audit/render_mv3_selection_claim_evidence.py
+  scripts/studies/mv3_selection_matched.py \
+  tests/test_mv3_selection_weighted_contract.py \
+  tools/audit/render_mv3_selection_weighted_remediation_evidence.py
 
-pytest -q tests/test_audit_mv3_selection_claim.py
-7 passed in 0.07s
+pytest -q tests/test_mv3_selection_weighted_contract.py
+6 passed in 0.04s
 ```
 
-JSON and SVG parsing passed. Changed Python lines are at most 99 characters. Regressions cover
-the observed fail-open contract, corrected acceptance, count/fraction mutation, duplicate
-`CL-021`, invalid UTF-8, destructive output aliasing, and atomic JSON publication.
+The exact committed test blob `4f81f85a387ae75ce81627fbb1da22de2fb6cc66` was reconstructed
+from the GitHub base64 response and also returned `6 passed in 0.04s` against the prepared producer.
+JSON and SVG parsing passed. Prepared Python lines were at most 99 characters.
 
-A complete checkout could not be obtained because the runtime could not resolve `github.com`.
-Exact GitHub blobs were inspected through the authenticated connector, and a byte-local
-executable fixture reproduced the observed contracts. No exact-repository local CLI execution,
-ROOT rerun, or broad CI result is claimed.
+The synthetic visual uses event weights 1 and 9 and demonstrates the contract distinction:
+weighted B2/B8 `0.1/0.9`, unweighted sensitivity `0.5/0.5`, `sum_w=10`, `sum_w2=82`, ESS
+`1.2195121951219512`. It is explicitly software/provenance evidence, not detector data.
 
-## Direct-main commits
+Evidence paths:
 
-- `b7ff8d887146cb1222eac318dc0afc0f4b943e61` — task claim
-- `257e3eee09142f65de4e70aca0a9b1bfac76f668` — auditor
-- `68390a96c4370b020fbeb44ba57076635ca85c30` — tests
-- `332031fc0f98f3694933ca8a01b7df60056df41b` — renderer
-- `1d561ba6b41a10d8eec37f175c32250f97f0b67e` — machine-readable evidence
-- `c94f4135a8ec6b25e79170198fdbc348297494c4` — visual evidence
-- `f7d89238557ce91eb55c56f857af3522c658c544` — audit report
-- `bb0ae8fa92e78fe4e1c80895c122287296264d17` — active-task completion
-- `63993988242b3d28affa8c8b106ebd72d143c8bc` — immutable archive
-- `712e446e7f31daee9dbd926283547e4780677c7f` — validated delivery handoff
+- `docs/validation/mv3_selection_weighted_remediation_validation.json`
+- `docs/validation/mv3_selection_weighted_remediation.svg`
+- `docs/validation/mv3_selection_weighted_remediation_audit.md`
+- `chatgpt_todo/archive/2026-07-25T230502Z_AUD-MV3-SEL-002_WEIGHTED_PRODUCER_REMEDIATION.md`
 
-GitHub contents writes advanced `main` directly and returned commit SHAs rather than terminal
-`git push` output. Remote history confirmed the complete focused sequence on `main` before
-this delivery-confirmation update.
+The runtime could not establish a network checkout or retrieve the remote raw producer bytes.
+Exact committed producer-blob pytest is therefore not claimed. Post-write connector inspection
+confirmed the delivered contract in Git blob `cd787ab64408228d67536b88bcc617fe32d0ec5a`.
 
-## Scientific boundary and unresolved risks
+## Direct-main commits before handoff
 
-No ROOT file was reprocessed. No weighted stopping profile, scattering-model correction,
-material correction, calibration, PID result, or detector-performance result was produced.
-The existing summary and PNGs remain diagnostic and non-authorizing. The report's residual
-attribution is a hypothesis until weighted and controlled scattering/material ablations are
-run.
+- `f4436a3d462a0dc533f0a4b70bfd7d2cf9b331ec` — task claim
+- `6f8cb36633b4340499229e4029cd8fb6087dcf3c` — producer correction
+- `e35c047d47308b4726b8a1da28a4dfc09a25514b` — tests
+- `463fea2c516458bff516ed1de49a6d5e5a4d891a` — report quarantine
+- `b0c1d0a386e4f717253e6c9ff0142a86c9a744e5` — evidence renderer
+- `7db754a9f16f7243698fbfd665d550f863f8e966` — validation JSON
+- `84e09864bf15faa9d39fed10e14be7695e40963f` — initial SVG
+- `9b87af84ad33bc363d72d9b6313525c4ad9b2f2d` — audit report
+- `3a78d88db5d7110d1c461695109f065ac9315cf8` — exact test-blob binding
+- `59477eed02405c0391f24ecb930daa011006a657` — synchronized SVG status
+- `2bbb2c26c1715bf6a6bfdf4b2822edba3d0394b1` — immutable archive
+- `0aa777457fff37a817bce29a7ea1656683210ddf` — active-task completion
 
-## Required next action
+No status checks were attached to the initial or current head. PR #868 remains closed, unmerged,
+non-mergeable, and untouched.
 
-Correct the producer and report together: validate/apply one finite nonnegative PrimaryWeight
-per event, use canonical signed-charge selection, emit weighted primary and unweighted
-sensitivity results with weight ESS and profile covariance, hold the data target fixed,
-preregister gain/threshold/coincidence/aggregation/weighting scans, regenerate all artifacts
-from immutable inputs with full hashes, and synchronize all public claims only after the
-exact-repository audit returns zero findings.
+## Scientific boundary, blockers, and next task
 
-## Coordination limitation
+No production ROOT, pulse-table, or event-table file was rerun. No weighted production profile,
+covariance, sensitivity scan, material/scattering correction, calibration, PID result, or detector
+performance is claimed. `BLK-MV3-LEGACY-001` remains open.
 
-`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate matrices were
-reviewed but not replaced because the connector exposes whole-file replacement while complete
-shared bytes are available only in pages. Replacing a partial reconstruction could erase
-append-only or concurrent provenance. The immutable archive and this handoff retain the full
-append-equivalent record; aggregate synchronization remains explicitly unmet.
+Next: execute the corrected producer from an immutable commit on content-addressed production inputs;
+require one validated weight per event, weighted/unweighted outputs, weight sums and ESS, four-bin
+covariance, fixed-target metrics, preregistered gain/threshold/coincidence/aggregation scans,
+regenerated hashes and figures, then a zero-finding claim audit before any ledger or public upgrade.
+
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate matrices were reviewed
+but not replaced because only whole-file replacement was available while complete current contents
+were paged or truncated. Partial reconstruction could erase append-only or concurrent provenance.
+The immutable archive and this handoff preserve the complete append-equivalent record; mandatory
+aggregate synchronization remains unresolved.

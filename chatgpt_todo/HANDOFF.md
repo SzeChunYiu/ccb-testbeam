@@ -2,40 +2,36 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-25T030239Z`
-- **Task:** `AUD-MC-002`
-- **Unit:** issue #880 fail-closed event-weight handling and directional bias semantics
-- **Initial remote `main`:** `a4b996ccbdfeea120e6deaead863f19d468d1091`
-- **Validated implementation/evidence head:** `ddbb9614a6e4b8b58f5b7cf91839fd1708bc41c8`
-- **Immutable archive:** `chatgpt_todo/archive/2026-07-25T030239Z_AUD-MC-002_WEIGHT_SEMANTICS.md`
-- **Complete delivery handoff:** `ae3cae4360f973d3c3368d75568d9ac5596a4074` was confirmed as remote `main` head; this update records confirmation metadata only
+- **UTC stamp:** `2026-07-25T040311Z`
+- **Task:** `AUD-MC-003`
+- **Unit:** strict fail-closed, content-addressed issue #880 producer remediation
+- **Initial remote `main`:** `2868b1a7aaa15cd6a03970c2385c2b7ab53c5598`
+- **Validated implementation/evidence head:** `7506eecfc54f550f2583bad24d0c85de383bbbde`
+- **Active-task completion:** `d7ef92fc1320b3e44fb8de1e802f34cf1f71d8c9`
+- **Immutable archive:** `chatgpt_todo/archive/2026-07-25T040311Z_AUD-MC-003_STRICT_PRODUCER.md`
+- **Archive commit:** `0a1de05bc16352fa2406cf85decf55f3ce59ad97`
 - **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or PR transport
-- **Acceptance:** **PARTIAL** — audit/evidence validated; retained issue #880 study remains `FLAWED`
+- **Acceptance:** **PARTIAL** — code and synthetic evidence validated; exact production rerun remains blocked
 
 ## Start-of-run review
 
-Authenticated GitHub reads inspected repository metadata and permissions, current `main`,
-recent commits, open pull requests, head status checks, issue #880 and its existing comment,
-merged PR #897, `chatgpt_todo/ACTIVE_TASK.md`, `BACKLOG.md`, `HANDOFF.md`, the strict MC
-weight policy, the issue #880 producer, its retained result JSON, and related MC scripts.
+Authenticated GitHub reads inspected repository metadata and permissions, current `main`, recent
+history, open pull requests, issue #880, `chatgpt_todo` coordination, the historical issue
+#879/#880/#887 producer, and its retained result. The exact initial remote head was
+`2868b1a7aaa15cd6a03970c2385c2b7ab53c5598`. No concurrent commit was interleaved through the
+validated implementation/evidence sequence.
 
-Initial facts:
-
-- remote `main`: `a4b996ccbdfeea120e6deaead863f19d468d1091`;
-- no status checks were attached to that head;
-- issue #880 remains open;
-- PR #897 was merged on 2026-07-23 and introduced the retained weighted/unweighted study;
-- open PRs were reviewed for collision risk and were not modified;
-- PR #868 was not reopened, extended, or merged.
+Issue #880 remains open and asks that MC event weights be used correctly. PR #868 was not reopened,
+extended, or merged.
 
 ## Exact repository evidence
 
-The audited producer is:
+Historical producer:
 
 - path: `scripts/single_stave/issues879_880_887_mc_study.py`;
 - Git blob: `bc1220fdfe1010989fd8ab273f8c1b1fcf708b2c`.
 
-The retained result is:
+Retained result:
 
 - path: `reports/issues879_880_887_mc_analysis/issues879_880_887_result.json`;
 - Git blob: `37d69e2c697a7ce7c9e1eff9aeff48539551d922`;
@@ -44,136 +40,154 @@ The retained result is:
 
 ## Confirmed defects
 
-The producer has fail-open event-weight behavior:
+The historical producer can silently create plausible output from an invalid weight state:
 
-1. `load_mc` converts nonfinite event weights to `1.0` with
-   `np.where(np.isfinite(w_evt), w_evt, 1.0)`;
-2. `wmean` falls back to an ordinary mean when the total weight is not positive;
-3. `wmedian` and `wfrac` likewise fall back to unweighted estimators;
-4. `wcorr` falls back to ordinary Pearson correlation.
+1. nonfinite `PrimaryWeight` values are replaced by `1.0`;
+2. weighted mean, median, fraction, and correlation helpers can return unweighted estimates;
+3. a relative comparison uses an epsilon denominator rather than declaring an undefined relative
+   quantity;
+4. signed bias fields do not unambiguously name comparison direction and denominator;
+5. the result omits exact ROOT SHA-256, producer commit, command/environment, and policy version.
 
-The retained reporting also has direction/denominator ambiguity:
+## Correction delivered
 
-- `first_B_layer_mean_rel_bias_pct` is
-  `100 × (weighted − unweighted) / unweighted`;
-- `deuteron_fraction_abs_bias_pp` is
-  `100 × (weighted − unweighted)`;
-- the note says those fields show how far the legacy unweighted summaries were off, without
-  naming the direction and denominator.
+Added `scripts/single_stave/strict_event_weights.py` under policy:
 
-The retained result records a filesystem path and generation time but omits the exact ROOT
-SHA-256, producer commit, generation command/environment, and weight-validation policy.
+`MC_WEIGHT_VECTOR_MUST_BE_UNAMBIGUOUS_FINITE_NONNEGATIVE_AND_EVENT_ALIGNED`
+
+It provides strict one-dimensional/event-aligned weight validation, rejection of nonfinite,
+negative, empty, and all-zero vectors, `math.fsum` weighted primitives, fail-closed median/fraction/
+correlation, direction-explicit comparisons with zero denominators represented by JSON `null`, file
+hashing, and protected atomic JSON publication.
+
+Added `scripts/single_stave/issues879_880_887_mc_study_strict.py` under policy:
+
+`ISSUE880_STRICT_CONTENT_ADDRESSED_WEIGHTED_RERUN`
+
+The strict entry point:
+
+- requires exactly one `PrimaryWeight` and `PrimaryPDG` per loaded event;
+- checks the event count against ROOT metadata and `--entry-stop`;
+- rejects nonfinite or negative scintillator energy deposits;
+- requires identical ROOT byte count/SHA-256 before and after the ROOT read;
+- refuses a tracked-dirty checkout;
+- installs strict estimators into the retained #879/#887 logic;
+- publishes explicit weighted-minus-unweighted and legacy-minus-weighted #880 fields;
+- records git commit, exact argv/shell command, runtime versions, and all producer hashes;
+- requires explicit `--overwrite` before replacing a prior artifact set;
+- publishes the result JSON atomically and protects ROOT/code paths from aliasing.
+
+The historical entry point remains only for provenance and shared non-weight-specific study/plot
+logic; it is not accepted for a new scientific rerun.
 
 ## Independent arithmetic reconstruction
 
-Tracked values:
+Tracked endpoint values were independently reconstructed:
 
-| Quantity | Legacy unweighted | PrimaryWeighted |
-|---|---:|---:|
-| First B-layer mean EDep | `6.674567424757 MeV` | `2.134364334727324 MeV` |
-| Entering-B deuteron fraction | `0.5719111928400914` | `0.16606032425392264` |
+- first-B mean unweighted: `6.674567424757 MeV`;
+- first-B mean weighted: `2.134364334727324 MeV`;
+- weighted change relative to `|unweighted|`: `-68.02243203341332%`;
+- legacy unweighted overstatement relative to `|weighted|`: `+212.7192164972955%`;
+- deuteron fraction unweighted: `0.5719111928400914`;
+- deuteron fraction weighted: `0.16606032425392264`;
+- legacy-minus-weighted: `+40.585086858616876 percentage points`;
+- legacy overstatement relative to `|weighted|`: `+244.39966043037631%`.
 
-Independent calculations:
+No arithmetic mismatch was found in these retained endpoints. The correction addresses invalid
+weight handling, semantic ambiguity, and missing provenance.
 
-- weighted first-B change relative to unweighted:
-  `-68.02243203341332%`;
-- legacy first-B overstatement relative to weighted:
-  `+212.7192164972955%`;
-- weighted-minus-unweighted deuteron shift:
-  `-40.585086858616876 percentage points`;
-- legacy-minus-weighted deuteron shift:
-  `+40.585086858616876 percentage points`;
-- legacy deuteron overstatement relative to weighted:
-  `+244.39966043037631%`.
-
-No arithmetic mismatch was found. The confirmed problem is that the retained field names and
-prose make the sign and denominator easy to misinterpret.
-
-## Audit gate and evidence delivered
+## Files added or updated
 
 Added:
 
-- `tools/audit/audit_issue880_weight_semantics.py`;
-- `tests/test_audit_issue880_weight_semantics.py`;
-- `tools/audit/render_issue880_weight_semantics_evidence.py`;
-- `docs/validation/issue880_weight_semantics_audit.md`;
-- `docs/validation/issue880_weight_semantics_validation.json`;
-- `docs/validation/issue880_weight_semantics.svg`;
-- `chatgpt_todo/archive/2026-07-25T030239Z_AUD-MC-002_WEIGHT_SEMANTICS.md`.
+- `scripts/single_stave/strict_event_weights.py`;
+- `scripts/single_stave/issues879_880_887_mc_study_strict.py`;
+- `scripts/single_stave/ISSUE880_STRICT_RERUN.md`;
+- `tests/test_strict_event_weights.py`;
+- `tests/test_issues879_880_887_strict_producer.py`;
+- `tools/audit/render_issue880_strict_producer_evidence.py`;
+- `docs/validation/issue880_strict_producer_audit.md`;
+- `docs/validation/issue880_strict_producer_validation.json`;
+- `docs/validation/issue880_strict_producer.svg`;
+- `chatgpt_todo/archive/2026-07-25T040311Z_AUD-MC-003_STRICT_PRODUCER.md`.
 
-Updated `chatgpt_todo/ACTIVE_TASK.md` and this handoff.
+Updated:
 
-The policy is:
-
-`ISSUE880_WEIGHTS_MUST_FAIL_CLOSED_AND_BIAS_DIRECTION_MUST_BE_EXPLICIT`
-
-The validator checks fail-open source patterns, independently reconstructs both directions of
-the retained comparison, requires direction-explicit fields, checks required provenance, uses
-strict UTF-8, publishes JSON atomically, and rejects an input/output alias.
+- `chatgpt_todo/ACTIVE_TASK.md`;
+- `chatgpt_todo/BACKLOG.md`;
+- this handoff.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_issue880_weight_semantics.py \
-  tests/test_audit_issue880_weight_semantics.py \
-  tools/audit/render_issue880_weight_semantics_evidence.py
+  scripts/single_stave/strict_event_weights.py \
+  scripts/single_stave/issues879_880_887_mc_study_strict.py \
+  tests/test_strict_event_weights.py \
+  tests/test_issues879_880_887_strict_producer.py \
+  tools/audit/render_issue880_strict_producer_evidence.py
 
-PYTHONPATH=. pytest -q tests/test_audit_issue880_weight_semantics.py
+PYTHONPATH=. pytest -q \
+  tests/test_strict_event_weights.py \
+  tests/test_issues879_880_887_strict_producer.py
 
-6 passed in 0.04s
+17 passed in 0.04s
 ```
 
-Coverage includes current-like fail-open behavior, a strict direction-explicit accepted
-fixture, arithmetic mutation detection, controlled invalid UTF-8, atomic JSON publication,
-and destructive alias prevention. JSON parsing and SVG XML parsing passed. Changed Python
-lines were no longer than 99 characters.
+JSON parsing and SVG XML parsing passed. Changed Python files were no longer than 100 characters per
+line. The committed strict module and wrapper were re-read from remote `main` as Git blobs
+`1e87372f0db109b9428cd2c56576a46cbd45a259` and
+`5c0138904db3ce2ea743dd0d75cb1cd0751bcf1d`.
 
-Authenticated GitHub reads supplied the exact repository blobs. Because the connector does
-not materialize those blobs into the local runtime, executable tests used a faithful source
-excerpt plus the exact retained numeric values; no exact full-repository-file local execution
-or production ROOT rerun is claimed.
+The exact historical source was inspected through its GitHub blob. Connector-returned repository
+bytes were not materialized into the local runtime, so local wrapper tests used a minimal
+API-compatible historical fixture. The committed test imports the actual sibling producer in a
+complete checkout. No repository-wide pytest, ROOT execution, or GitHub Actions success is claimed.
+No status checks were attached to implementation head `7506eecfc54f550f2583bad24d0c85de383bbbde`.
 
 ## Direct-main commit sequence
 
-- `0a8d73cb1d285b0595ade5eaddc107e672fb471d` — task claim;
-- `9cf2a16cb388e053cd085e9d99dd5f8159294b9d` — audit gate;
-- `7944b8044f3f922942a45423f692c03cb9ca2804` — focused tests;
-- `9141cf9d1b9189400d4ec11703fe061be9cdacb7` — evidence renderer;
-- `e6d0620f18da3dbcc061db7f9a14515c9dfff864` — validation JSON;
-- `ea8fa290936d796aad0b4cb2368d6fbe9e6070e0` — SVG evidence;
-- `2bd9357e6db11f884709d652cfcac7dcdc065316` — validation audit;
-- `ddbb9614a6e4b8b58f5b7cf91839fd1708bc41c8` — immutable archive;
-- `ae3cae4360f973d3c3368d75568d9ac5596a4074` — complete handoff, confirmed on remote `main`.
+- `4b0116d127fe1e2c80287644812eac3944f81afb` — task claim;
+- `5365c4a000e7df5e7c9fc1a30d3bed0070203b62` — strict weighted statistics;
+- `b86ab5880e0e6d88933620c7cbc3aa187b173ac4` — strict rerun entry point;
+- `371d56ec7d17678a0ddd55b336f86033ed8c6466` — strict primitive tests;
+- `3804df82b0cd01881efa615151881a12103cdfe7` — strict producer tests;
+- `f669c62ad586d4b9a7fe277d601f7e7951e982f2` — evidence renderer;
+- `8fff914f8c98d28f9e0b9bc495270fc9c92eb62b` — validation JSON;
+- `3c18646f6f77237573a522813e99d251dd74af27` — SVG evidence;
+- `a3808ecf348953e125b1e4d361106981fcc0f1bb` — validation audit;
+- `2caff6a499a1f26d2677eba52335b19cfb4d1a8f` — rerun instructions;
+- `7506eecfc54f550f2583bad24d0c85de383bbbde` — backlog registration;
+- `d7ef92fc1320b3e44fb8de1e802f34cf1f71d8c9` — active-task completion;
+- `0a1de05bc16352fa2406cf85decf55f3ce59ad97` — immutable archive.
 
 The connector returned successful direct-main commit SHAs rather than conventional textual
-`git push` stdout. Post-write history confirmed the complete handoff and the focused sequence
-on remote `main` without an interleaved concurrent commit.
+`git push` stdout. A following confirmation-only handoff update records the complete delivery SHA
+and verifies that remote `main` contains it.
 
 ## Scientific boundary
 
-This is software/reporting governance and independent arithmetic from tracked summary values.
-It does not rerun the one-million-event ROOT study, prove that the first primary is the
-scientifically correct event-weight carrier, estimate weighted uncertainty, validate weight
-tails under selection, or establish data/MC closure.
+This is validated software/provenance remediation plus independent arithmetic from tracked summary
+values. It does not rerun the exact one-million-event ROOT study, prove the first-primary weight
+definition, estimate weighted uncertainty, evaluate high-weight-tail stability, regenerate the
+production artifact bundle, validate selection transfer, or establish calibration, species
+identification, or data/MC closure.
 
-The retained issue #880 comparison remains a flagged diagnostic rather than an accepted
-physics result until the producer fails closed and exact content-addressed outputs are
-regenerated.
+The retained result remains `FLAWED`; `AUD-MC-003` remains `PARTIAL`. Closing issue #880 requires a
+clean content-addressed run of the strict producer on the exact ROOT input, uncertainty and tail
+stability, regenerated plots, and scientific closure.
 
 ## Coordination limitation
 
-`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and aggregate matrices were reviewed but
-not replaced because the connector provides whole-file replacement rather than byte-safe
-append or patch semantics for shared long-lived files. Replacing a partial or concurrently
-changing reconstruction could erase unrelated provenance. The immutable archive and this
-handoff preserve the append-equivalent record; aggregate synchronization remains explicitly
-unmet.
+`SESSION_LOG.md` is append-only and its complete current bytes were not safely available for a
+byte-preserving append. The connector exposes whole-file replacement rather than append semantics;
+replacing a partial reconstruction could erase unrelated provenance. It was not replaced. The
+immutable archive and this handoff preserve the complete append-equivalent record. No claim is made
+that `MASTER_INDEX.md` or every aggregate matrix was synchronized in this focused unit.
 
 ## Next action
 
-Replace unit-weight coercion and all unweighted fallbacks with strict weight validation in the
-issue #880 producer and related downstream scripts. Emit direction-explicit comparison fields,
-record the exact ROOT SHA-256/producer commit/command/environment/policy, rerun on the exact
-one-million-event input, add weighted uncertainty and tail-stability diagnostics, regenerate
-all figures, and require data/MC closure before restoring affected claims.
+Execute the command in `scripts/single_stave/ISSUE880_STRICT_RERUN.md` from a clean checkout on the
+exact one-million-event ROOT file. Retain input/output hashes, command/environment, strict producer
+commit, weighted uncertainty, weight-tail and selection-stability diagnostics, all plots, and a
+data/MC closure review before resolving issue #880 or restoring affected claims.

@@ -49,6 +49,13 @@ struct EventData {
   // Optional per-photon detail (calibration mode only; guarded by config).
   std::vector<PhotonHit> photons;
 
+  // GPU optical path: optical-photon secondaries captured from the Geant4
+  // Scintillation process, in Opticks sphoton layout (16 floats/photon):
+  // q0(pos.xyz,time_ns) q1(mom.xyz,0) q2(pol.xyz,wavelength_nm) q3(0,0,0,0).
+  // Positions in mm, time in ns, wavelength in nm (matches the GDML/CSGFoundry).
+  std::vector<float> gpu_photons;
+  long n_gpu_photons = 0;
+
   void Reset() {
     edep_scint_MeV = edep_scint_raw_MeV = track_len_scint_mm = 0.0;
     has_entry = false;
@@ -60,6 +67,8 @@ struct EventData {
     adc.fill(0.0);
     for (int i = 0; i < kNSensors; ++i) sipm_arrivals[i].clear();
     photons.clear();
+    gpu_photons.clear();
+    n_gpu_photons = 0;
   }
 };
 

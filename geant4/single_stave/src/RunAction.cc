@@ -1,5 +1,6 @@
 #include "RunAction.hh"
 #include "SimData.hh"
+#include "NpyWriter.hh"
 
 #include "G4Run.hh"
 #include "G4AnalysisManager.hh"
@@ -11,6 +12,7 @@
 #include <ctime>
 #include <cstdio>
 #include <string>
+#include <sys/stat.h>
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
                      const std::string& geometry_hash)
@@ -86,6 +88,63 @@ void RunAction::BeginOfRunAction(const G4Run*) {
               << geometry_hash_ << std::endl;
   }
   DefineNtuples();
+  if (cfg_.gpu_optical) {
+    EnsureOpticalOutDir();
+  }
+}
+
+void RunAction::EnsureOpticalOutDir() {
+  // Resolve the output dir for GPU input-photon npy files.
+  std::string dir = cfg_.optical_out;
+  if (dir.empty()) {
+    std::string out = cfg_.output;
+    std::string::size_type slash = out.find_last_of('/');
+    dir = (slash == std::string::npos) ? "optical_gpu"
+                                        : out.substr(0, slash) + "/optical_gpu";
+  }
+  std::string::size_type pos = 0;
+  while ((pos = dir.find('/', pos + 1)) != std::string::npos) {
+    ::mkdir(dir.substr(0, pos).c_str(), 0775);
+  }
+  ::mkdir(dir.c_str(), 0775);
+  optical_out_dir_ = dir;
+}
+
+void RunAction::WriteGpuPhotons(const EventData& e, int event_id) {
+  // Emit captured scintillation photons as NumPy (N,4,4) float32 in Opticks
+  // sphoton layout. Writes an empty (0,4,4) when none captured so the harness
+  // still sees a file.
+  if (optical_out_dir_.empty()) EnsureOpticalOutDir();
+  const size_t n16 = e.gpu_photons.size();      // 16 floats per photon
+  const size_t nph = n16 / 16;
+  char path[512];
+  std::snprintf(path, sizeof(path), "%s/event_%06d.npy",
+                optical_out_dir_.c_str(), event_id);
+  std::vector<size_t> shape = (nph > 0) ? std::vector<size_t>{nph, 4, 4}
+                                        : std::vector<size_t>{0, 4, 4};
+  CCB::write_npy_f32(path, e.gpu_photons.data(), shape);
+  std::cout << "CCB_GPU_PHOTONS event=" << event_id
+            << " n_photons=" << nph << " -> " << path << std::endl;
+}
+
+void RunAction::WriteCpuArrivals(const EventData& e, int event_id) {
+  // CPU reference side of the parity diagnostic. Emits the named-sensor
+  // arrival photons (pre-PDE, matching the GPU hit convention) as a NumPy
+  // (M,4) float32 array: [sensor, wavelength_nm, time_ns, path_mm].
+  if (optical_out_dir_.empty()) EnsureOpticalOutDir();
+  std::vector<float> buf;
+  buf.reserve(e.photons.size() * 4);
+  for (const PhotonHit& p : e.photons) {
+    buf.push_back(static_cast<float>(p.sensor));
+    buf.push_back(static_cast<float>(p.wavelength_nm));
+    buf.push_back(static_cast<float>(p.time_ns));
+    buf.push_back(static_cast<float>(p.path_len_mm));
+  }
+  char path[512];
+  std::snprintf(path, sizeof(path), "%s/cpu_event_%06d.npy",
+                optical_out_dir_.c_str(), event_id);
+  std::vector<size_t> shape = std::vector<size_t>{e.photons.size(), 4};
+  CCB::write_npy_f32(path, buf.data(), shape);
 }
 
 void RunAction::FillEvent(const EventData& e, int event_id) {

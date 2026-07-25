@@ -25,11 +25,20 @@ class RunAction : public G4UserRunAction {
 
   // Called by EventAction at end of event to fill the per-event ntuple.
   void FillEvent(const EventData& e, int event_id);
+  // GPU optical path: write the event's captured input-photon array to
+  // <optical_out>/event_<id>.npy (sphoton (N,4,4) float32). No-op unless
+  // cfg.gpu_optical.
+  void WriteGpuPhotons(const EventData& e, int event_id);
+  // CPU reference: dump the per-sensor arrival photons (sensor, wavelength,
+  // time, path) to <optical_out>/cpu_event_<id>.npy, for the GPU-vs-CPU
+  // parity diagnostic. No-op unless optical_out is set on a CPU run.
+  void WriteCpuArrivals(const EventData& e, int event_id);
 
   const AppConfig& Config() const { return cfg_; }
 
  private:
   void DefineNtuples();
+  void EnsureOpticalOutDir();                          // mkdir -p optical_out
   void WriteMetadataSidecar(const G4Run* run) const;  // <output>.meta.json
 
   AppConfig cfg_;
@@ -38,6 +47,7 @@ class RunAction : public G4UserRunAction {
 
   int nt_event_ = -1;   // per-event ntuple id
   int nt_photon_ = -1;  // per-photon ntuple id (calibration mode)
+  std::string optical_out_dir_;  // resolved dir for GPU input-photon npy
 };
 
 #endif  // CCB_RUNACTION_HH

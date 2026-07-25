@@ -4,6 +4,7 @@
 #include "EventAction.hh"
 #include "SteppingAction.hh"
 #include "TrackingAction.hh"
+#include "StackingAction.hh"
 
 ActionInitialization::ActionInitialization(const AppConfig& cfg,
                                            const OpticalTables& tables,
@@ -22,4 +23,5 @@ void ActionInitialization::Build() const {
   SetUserAction(event_action);
   SetUserAction(new TrackingAction(event_action));
   SetUserAction(new SteppingAction(cfg_, tables_, event_action));
+  SetUserAction(new StackingAction(cfg_));
 }

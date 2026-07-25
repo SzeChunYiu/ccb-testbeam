@@ -8,6 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Visualization is OPTIONAL. The physics executable must build without Qt/vis
 # to avoid the Qt5/ICU incompatibility reported on the PR (issue #796).
 option(CCB_ENABLE_VIS "Enable Geant4 visualization/UI components" OFF)
+option(CCB_ENABLE_OPTICKS "Build the OPTIONAL Opticks GPU optical bridge (needs OPTICKS_PREFIX)" OFF)
 
 if(CCB_ENABLE_VIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
@@ -49,6 +50,11 @@ file(COPY "${PROJECT_SOURCE_DIR}/optical" DESTINATION "${CMAKE_BINARY_DIR}")
 
 enable_testing()
 
+# Optional out-of-tree Opticks GPU bridge (CCB_ENABLE_OPTICKS). Built only
+# when explicitly enabled AND OPTICKS_PREFIX is set. Never a dependency of
+# the CPU physics target or ctest.
+add_subdirectory(opticks)
+
 # 1) Geometry / overlap smoke: the app prints OVERLAP_CHECK_PASS at Initialize().
 add_test(
   NAME ccb_stave_geometry_smoke
@@ -86,6 +92,31 @@ set_tests_properties(ccb_stave_wls_profile PROPERTIES
   FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
 
 # 3) Python geometry-report assertions on captured stdout (runs if python3 found).
+# 4) GDML export option (--dump-gdml): production geometry -> GDML.
+add_test(
+  NAME ccb_stave_gdml_export
+  COMMAND ccb_stave_sim
+          --dump-gdml "${CMAKE_BINARY_DIR}/exported.gdml"
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/gdml_export.root"
+          --nevents 1)
+set_tests_properties(ccb_stave_gdml_export PROPERTIES
+  PASS_REGULAR_EXPRESSION "CCB_GDML_WROTE"
+  FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
+
+# 5) GPU optical path (CCB_GPU_OPTICAL=1): scintillation photons are
+#    captured to npy and CPU optical transport is skipped (proton-only).
+add_test(
+  NAME ccb_stave_gpu_optical_capture
+  COMMAND ${CMAKE_COMMAND} -E env CCB_GPU_OPTICAL=1 ccb_stave_sim
+          --particle proton --energy 100 --nevents 1 --seed 1
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/gpu_optical.root"
+          --optical-out "${CMAKE_BINARY_DIR}/optical_gpu_ctest")
+set_tests_properties(ccb_stave_gpu_optical_capture PROPERTIES
+  PASS_REGULAR_EXPRESSION "CCB_GPU_PHOTONS"
+  FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
+
 find_program(CCB_PYTHON3 python3)
 if(CCB_PYTHON3)
   add_test(

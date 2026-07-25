@@ -14,6 +14,9 @@
 #include "G4MTRunManager.hh"
 #endif
 #include "G4UImanager.hh"
+#include "G4TransportationManager.hh"
+#include "G4VPhysicalVolume.hh"
+#include "G4GDMLParser.hh"
 #include "Randomize.hh"
 
 #ifdef CCB_ENABLE_VIS
@@ -80,6 +83,22 @@ int main(int argc, char** argv) {
 
   // Construct geometry + physics; prints the geometry report (OVERLAP_CHECK_PASS).
   runManager->Initialize();
+
+  // Optional: serialize the PRODUCTION geometry to GDML (for Opticks ingestion)
+  // and exit. The spike's dump_gdml promoted to a first-class main option, so
+  // production geometry -> Opticks reproducibly (booleans + TiO2 preserved).
+  if (!cfg.dump_gdml.empty()) {
+    G4GDMLParser parser;
+    parser.SetRegionExport(false);
+    G4VPhysicalVolume* world =
+        G4TransportationManager::GetTransportationManager()
+            ->GetNavigatorForTracking()->GetWorldVolume();
+    parser.Write(cfg.dump_gdml, world);
+    std::cout << "CCB_GDML_WROTE " << cfg.dump_gdml
+              << " world=" << world->GetName() << std::endl;
+    delete runManager;
+    return 0;
+  }
 
   auto* ui = G4UImanager::GetUIpointer();
 

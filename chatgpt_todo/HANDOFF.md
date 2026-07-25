@@ -9,10 +9,13 @@
 - **Initial remote `main`:** `0e32bf3f5956162d30259489d6d99295280e06fb`
 - **Core remediation commit:**
   `0e32bf3f5956162d30259489d6d99295280e06fb`
-- **Evidence/archive head before this handoff:**
-  `852040143547d08db8c619d7469410652d69065c`
+- **Complete delivery handoff / recorded after-SHA:**
+  `f28d04ec9742e3e42a78d054836309611384ce68`
 - **Destination:** direct focused commits to remote `main`; no force-push,
   branch transport, PR, or history rewrite
+- **Push result:** GitHub contents writes returned successful direct-main commit
+  SHAs; post-write history confirmed
+  `f28d04ec9742e3e42a78d054836309611384ce68` on remote `main`
 - **Acceptance:** **COMPLETE** for `AUD-WIKI-004`; the cumulative repository-wide
   WIKI audit remains open for unrelated claims and links
 - **Immutable archive:**
@@ -95,11 +98,9 @@ exists and labels the result `DONE_DATA_ONLY` while withholding numerical Rmax.
 - `0105418655613486b7c74fe072847852f936986b` — machine-readable evidence;
 - `cd535220b5eba5b805711413aea6d5a2a4dab342` — visual evidence;
 - `e4ed90b2befad8a8b44d17014827f0dfc4c11674` — active-task completion;
-- `852040143547d08db8c619d7469410652d69065c` — immutable archive.
-
-GitHub contents writes returned successful direct-main commit SHAs. A final
-post-write history read must record this handoff commit as present on remote
-`main`.
+- `852040143547d08db8c619d7469410652d69065c` — immutable archive;
+- `f28d04ec9742e3e42a78d054836309611384ce68` — complete delivery handoff,
+  confirmed on remote `main`.
 
 ## Checks not run
 

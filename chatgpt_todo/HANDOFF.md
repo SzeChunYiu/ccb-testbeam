@@ -1,17 +1,12 @@
-# Latest Handoff — AUD-CLD-002 Cluster D canonical PSTAR binding
+# Latest Handoff — AUD-G4-024 NPY writer contract remediation
 
 ## Delivery identity
 
-- **Session stamp:** `2026-07-25T173220Z`
-- **Task ID:** `AUD-CLD-002`
-- **Initial remote `main`:** `64c3841ccb522589e6866d835889e797ea342e24`
+- **Session stamp:** `2026-07-25T180216Z`
+- **Task ID:** `AUD-G4-024`
+- **Initial remote `main`:** `a5b108fc8ead2f644c8b362f3a8732ef1d0528fc`
 - **Validated implementation/evidence/archive head:**
-  `bff941c6047ec589ded038d7afcb554b3abcb63c`
-- **Validated delivery handoff / after-SHA:**
-  `2a81915477741651fa08a5b7e754383a790e196a`
-- **Remote-main confirmation:** this update is based on fetched handoff blob
-  `5d2101a66749a5aafc31d51c84a8f6b732155391`, proving remote `main` already
-  contained delivery commit `2a81915477741651fa08a5b7e754383a790e196a`.
+  `b8f132ddf473c5026f4a5d1236a9ccdb7bb00e59`
 - **Destination:** direct GitHub contents-API commits to remote `main`; no
   force-push, history rewrite, task branch, or PR transport.
 - **Push-output boundary:** the connector returned successful commit SHAs rather
@@ -20,140 +15,118 @@
 
 ## Reviewed repository state
 
-Fetched current `main`, recent history, open PRs, PR #868, Cluster D summary and
-reproducer, campaign plot helpers, the historical VIS-MC diagnostics, canonical
-PSTAR CSV/parser, and repository-local coordination records. The preceding
-Cluster D handoff named this focused migration as the next action.
+Fetched current `main`, recent history and CI status, open PRs, PR #868, merged
+Opticks PR #920, repository-local coordination records, the single-stave CMake
+configuration, NPY writer, and its RunAction/EventAction/SteppingAction/
+StackingAction/TrackingAction consumers.
 
-## Confirmed defect
+The execution container could not resolve `github.com`, so a complete clone was
+unavailable. Exact source bytes were fetched through the GitHub connector; the
+focused standalone C++/Python validation files were reconstructed and executed
+locally.
 
-`_common.py` carried a second 20-row PSTAR-like table while the repository already
-contained a 141-row canonical table and exact-decimal validator. The historical
-VIS-MC-002 caption incorrectly said the canonical CSV was absent. The embedded
-total stopping-power values were high relative to the canonical column by:
+## Confirmed defects
 
-| Energy | Embedded | Canonical | Relative difference |
-|---:|---:|---:|---:|
-| 10 MeV | 50.5 | 45.0 | +12.2222% |
-| 50 MeV | 19.8 | 12.21 | +62.1622% |
-| 100 MeV | 12.9 | 7.14 | +80.6723% |
-| 150 MeV | 9.74 | 5.331 | +82.7049% |
+Former writer blob `21ab586666daa978e4befa3b7b3387e808d76495`:
 
-The historical panel also displayed an unsupported chi-square despite lacking an
-accepted measurand, complete uncertainty model, covariance, and detector/model
-systematics. These are reference differences, not detector measurements.
+1. copied the NumPy v1.0 header length in native byte order even though the
+   format requires a little-endian unsigned short;
+2. declared payload dtype `<f4` while writing native float bytes;
+3. did not check shape-product overflow;
+4. accepted a null payload for a non-empty array;
+5. ignored stream open, write, and flush state.
+
+The exact former algorithm returned status `0` while an unwritable target
+produced no output file. In the calling path this could allow a successful
+`CCB_GPU_PHOTONS` message without a reusable artifact.
+
+Authoritative format reference:
+<https://numpy.org/doc/2.0/reference/generated/numpy.lib.format.html>.
 
 ## Validated remediation
 
-- Removed the embedded PSTAR table from the campaign helper.
-- Reused `read_validated_pstar_table()` v1.1.0 and `total_MeV_cm2_g`.
-- Bound conversion to density 1.060 g/cm3, log interpolation, and fail-closed
-  reference-domain checks.
-- Added a dedicated renderer with exact-energy grouping,
-  `RATIO_OF_SUMS_TRACK_LENGTH_WEIGHTED`, `math.fsum` sufficient statistics,
-  canonical reference provenance, external run paths, plot bytes/SHA-256,
-  `uncertainty_method=NOT_EVALUATED`, and `acceptance_statistic=NONE`.
-- Added the canonical renderer to the Cluster D reproducer.
-- Marked `VIS-MC-002_transport_vs_pstar.png` `SUPERSEDED`; documented the
-  canonical PNG/JSON and diagnostic-only scientific boundary.
-- Added a fail-closed validator, focused tests, JSON, SVG, and audit report.
+Commit `e54f1f5d8c3a3175e3bce56e459d461c523e01cc`:
 
-## Exact canonical reference
+- emits the v1.0 header length explicitly as little-endian bytes;
+- emits little-endian float32 bytes on both little- and big-endian hosts;
+- requires at least one shape dimension;
+- rejects shape-product overflow;
+- rejects a null payload for a non-empty array;
+- checks output open, write, and flush state and throws before the caller can
+  report successful publication.
 
-- Path: `data/reference/stopping_power/pstar_polystyrene.csv`
-- Git blob: `7e953dd346caedcee6da54180fb636b890a64040`
-- Bytes: 7,413
-- SHA-256:
-  `bc4d8b018115fd0892fe4ea22b6ec3da7be8ab65afa7595337c491ae6ed869dd`
-- Rows: 141
-- Identity: `total = electronic + nuclear`
+Corrected header identity:
+
+- Git blob: `0db837e3614eb725571e3863fce3a15855c52f03`
+- bytes: `3473`
+- SHA-256: `84df93606b6b2e3e5011806c2f2e652b9a2fb8e0c92008e9347c20163cb31b9d`
 
 ## Validation
 
 ```text
 python -m py_compile \
-  scripts/single_stave/campaign_plots/_common.py \
-  scripts/single_stave/campaign_plots/vis_mc_002_transport.py \
-  tools/audit/validate_clusterd_pstar_binding.py \
-  tests/test_clusterd_pstar_binding.py \
-  tools/audit/render_clusterd_pstar_binding_evidence.py
+  tests/test_npy_writer_contract.py \
+  tools/audit/render_npy_writer_contract_evidence.py
 
-PYTHONPATH=. pytest -q tests/test_clusterd_pstar_binding.py
-5 passed in 2.08s
+pytest -q tests/test_npy_writer_contract.py
+6 passed in 0.36s
 ```
 
-The exact 141-row reference and binding audit returned `VALIDATED` with zero
-findings. Reintroduced embedded data, below-domain lookup, invalid UTF-8, and an
-output/input alias failed closed. JSON and SVG parsing passed. Maximum changed
-Python line length was 97 characters.
+The compiled C++ helper and NumPy loader validated exact float32 values and
+shape, explicit little-endian header bytes, valid empty `(0,4,4)` arrays, and
+fail-closed null, overflow, and unwritable-path controls. JSON and SVG parsing
+passed. Maximum changed line lengths were 82 characters for C++ and 92 for
+Python.
 
 ## Files and evidence
 
 Updated:
 
-- `scripts/single_stave/campaign_plots/_common.py`
-- `reports/studies/clusterD/run_campaign_aggregation.sh`
-- `reports/studies/clusterD/SUMMARY.md`
+- `geant4/single_stave/include/NpyWriter.hh`
 - `chatgpt_todo/ACTIVE_TASK.md`
 - `chatgpt_todo/HANDOFF.md`
 
 Added:
 
-- `scripts/single_stave/campaign_plots/vis_mc_002_transport.py`
-- `tools/audit/validate_clusterd_pstar_binding.py`
-- `tests/test_clusterd_pstar_binding.py`
-- `tools/audit/render_clusterd_pstar_binding_evidence.py`
-- `docs/validation/clusterd_pstar_binding_validation.json`
-- `docs/validation/clusterd_pstar_binding.svg`
-- `docs/validation/clusterd_pstar_binding_audit.md`
-- `chatgpt_todo/archive/2026-07-25T173220Z_AUD-CLD-002_PSTAR_BINDING.md`
+- `tests/test_npy_writer_contract.py`
+- `tools/audit/render_npy_writer_contract_evidence.py`
+- `docs/validation/npy_writer_contract_validation.json`
+- `docs/validation/npy_writer_contract.svg`
+- `docs/validation/npy_writer_contract_audit.md`
+- `chatgpt_todo/archive/2026-07-25T180216Z_AUD-G4-024_NPY_WRITER_CONTRACT.md`
 
-## Direct-main sequence through delivery
+## Direct-main sequence through archive
 
-- `dddd200a924ad6339a3bfc4626c88746efb2ba22` — task claim
-- `20452fd4ad0bafac3e38783b05061de063798120` — campaign helper
-- `00b34a197cc9664c0133b265979380387ff7f035` — dedicated renderer
-- `624c0b666f3f19a3e85ab95b152db50463f464f1` — reproducer
-- `096e6120e9223faf5a845a59d5f9312f9f8c3ddb` — summary quarantine
-- `5715d134d3ae1452cfc8be02bc55b80dd543a0c5` — validator
-- `ef70ec5ef33ca578162335bcb6e1288c2d75428e` — tests
-- `46522c6d3c09e444309a0afed88ef3d5ae141850` — evidence renderer
-- `87b565f76df34b96d10e4304ab86f117d6ceb305` — validation JSON
-- `41790203b465fe9ad2fd79f575966828784db868` — SVG evidence
-- `093688598dd837053db90d4f53891ad599d28d44` — audit report
-- `2aca9f1c21149c649e75fb1b76e873f662617672` — immutable archive
-- `bff941c6047ec589ded038d7afcb554b3abcb63c` — active completion
-- `2a81915477741651fa08a5b7e754383a790e196a` — delivery handoff
+- `e54f1f5d8c3a3175e3bce56e459d461c523e01cc` — fail-closed writer
+- `09d4409e2b9091718b563b98da186376ce22cad6` — compiled regression
+- `b3dfbf5ab5a5710b5ada0e634c1ccfd6324269e8` — initial renderer
+- `5e064ca5bca2b1472679cf22071ef375dc3a8d8c` — valid SVG renderer
+- `c81ebf5e3ef42440429aae01f6712af491ce013e` — validation JSON
+- `1aea4a30415a8fb95dd12d91ed8c30fb07c6e64b` — visual evidence
+- `c8f0cbca9033010861c7982c1358d17d3e80c945` — audit report
+- `6444cc6693bd3c5183c9f88e4f25adbf24c1cc97` — active completion
+- `b8f132ddf473c5026f4a5d1236a9ccdb7bb00e59` — immutable archive
 
-## Scientific boundary and blockers
+## Scientific boundary and next action
 
-Focused software/reference migration is `VALIDATED`; cumulative work is
-`PARTIAL`. No external i885 ROOT bytes were available, so the canonical campaign
-PNG/JSON was not generated. Local deposited energy per scored track length is not
-projectile total energy loss. No uncertainty budget, stopping-power closure,
-deuteron result, calibration, or detector-performance claim is made.
-`BLK-G4-SP-001` remains open.
+Focused serialization remediation is `VALIDATED`; cumulative GPU optical work
+is `PARTIAL`. No Geant4 event, Opticks propagation, hit gathering, optical
+yield, calibration, or detector-performance result was produced.
 
-A complete local clone was unavailable because the runtime could not resolve
-`github.com`. Repository-wide pytest, ruff, Geant4 build/CTest, ROOT processing,
-broad link checking, and GitHub Actions were not run; no broad CI success is
-claimed.
+Next, validate `(N,4,4)` vector cardinality against event counters, distinguish
+scintillation/Cerenkov/other input-photon creator processes, record GPU-vs-CPU
+transport mode in run metadata, fail closed on output-directory creation, retain
+per-event content hashes, and complete a preregistered CPU/GPU parity analysis
+only after successful GPU hit gather.
 
-## Mandatory coordination limitation
+## Unrun checks and coordination limitation
 
-`ACTIVE_TASK.md`, this handoff, and the immutable archive were updated. Shared
-aggregate files requiring byte-safe append or patch semantics (`SESSION_LOG.md`,
-`MASTER_INDEX.md`, `BACKLOG.md`, `BLOCKERS.md`, `STUDY_REVIEW_LEDGER.md`,
-`CLAIM_EVIDENCE_MATRIX.md`, `CODE_RESULT_MAP.md`, and `VISUALIZATION_MATRIX.md`)
-were read but not replaced. Connector responses were paged/truncated and the
-write API exposes whole-file replacement; replacing a partial reconstruction
-could destroy unrelated or append-only provenance. This is an explicitly unmet
-mandatory synchronization step.
+Geant4 build/CTest, Opticks A40 execution, real input-photon regeneration,
+repository-wide pytest/ruff, broad link checking, and GitHub Actions were not
+run. No broad CI success is claimed.
 
-## Next action
-
-Run the dedicated renderer on immutable, content-addressed i885 ROOT inputs in a
-complete current-main checkout. Record input hashes, environment, command,
-counts, sufficient statistics, and generated PNG/JSON hashes, then review the
-plot. Continue `AUD-G4-005` / `BLK-G4-SP-001` with an accepted projectile-loss
-observable and preregistered uncertainty model.
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate
+matrices were read but not replaced. The connector exposes whole-file
+replacement while complete shared records are paged/truncated; replacing a
+partial reconstruction could erase unrelated append-only provenance. The
+immutable archive and this handoff preserve the append-equivalent record.

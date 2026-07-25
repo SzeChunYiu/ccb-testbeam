@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+<rect width="1400" height="900" fill="#fafafa"/>
+<text x="55" y="65" font-family="sans-serif" font-size="30" font-weight="bold">Issue #880 strict event-weight producer remediation</text>
+<text x="55" y="100" font-family="sans-serif" font-size="18" font-weight="normal">Synthetic software/provenance evidence — not detector data</text>
+<rect x="55" y="145" width="610" height="270" rx="12" fill="#ffe8e8" stroke="#222" stroke-width="2"/>
+<text x="85" y="190" font-family="sans-serif" font-size="24" font-weight="bold">Retained producer (blocked)</text>
+<text x="85" y="230" font-family="sans-serif" font-size="19" font-weight="normal">• nonfinite PrimaryWeight → 1.0</text>
+<text x="85" y="265" font-family="sans-serif" font-size="19" font-weight="normal">• weighted helpers may fall back to unweighted</text>
+<text x="85" y="300" font-family="sans-serif" font-size="19" font-weight="normal">• relative-bias direction/denominator ambiguous</text>
+<text x="85" y="335" font-family="sans-serif" font-size="19" font-weight="normal">• ROOT digest and producer commit absent</text>
+<text x="85" y="380" font-family="sans-serif" font-size="15" font-weight="normal">historical blob: bc1220fdfe1010989fd8ab273f8c1b1fcf708b2c</text>
+<rect x="735" y="145" width="610" height="270" rx="12" fill="#e7f7ea" stroke="#222" stroke-width="2"/>
+<text x="765" y="190" font-family="sans-serif" font-size="24" font-weight="bold">Strict replacement (validated code)</text>
+<text x="765" y="230" font-family="sans-serif" font-size="19" font-weight="normal">• exactly one finite nonnegative weight per event</text>
+<text x="765" y="265" font-family="sans-serif" font-size="19" font-weight="normal">• no epsilon or unweighted estimator fallback</text>
+<text x="765" y="300" font-family="sans-serif" font-size="19" font-weight="normal">• both comparison directions name denominators</text>
+<text x="765" y="335" font-family="sans-serif" font-size="19" font-weight="normal">• ROOT SHA-256 checked before and after read</text>
+<text x="765" y="370" font-family="sans-serif" font-size="19" font-weight="normal">• clean git commit + script hashes + atomic JSON</text>
+<text x="765" y="400" font-family="sans-serif" font-size="17" font-weight="bold">focused tests: 17 passed in 0.04s</text>
+<rect x="55" y="465" width="1290" height="235" rx="12" fill="#eef3ff" stroke="#222" stroke-width="2"/>
+<text x="85" y="510" font-family="sans-serif" font-size="23" font-weight="bold">Independent reconstruction of retained directional semantics</text>
+<text x="85" y="555" font-family="sans-serif" font-size="19" font-weight="normal">First-B mean: weighted change vs unweighted = -68.022432%</text>
+<text x="85" y="595" font-family="sans-serif" font-size="19" font-weight="normal">First-B mean: legacy unweighted overstatement vs weighted = +212.719216%</text>
+<text x="85" y="635" font-family="sans-serif" font-size="19" font-weight="normal">Deuteron fraction: legacy-minus-weighted = +40.585087 percentage points</text>
+<text x="85" y="675" font-family="sans-serif" font-size="19" font-weight="normal">Deuteron fraction: legacy overstatement vs weighted = +244.399660%</text>
+<rect x="55" y="745" width="1290" height="105" rx="12" fill="#fff6d8" stroke="#222" stroke-width="2"/>
+<text x="85" y="790" font-family="sans-serif" font-size="22" font-weight="bold">Acceptance boundary</text>
+<text x="85" y="825" font-family="sans-serif" font-size="17" font-weight="normal">Code and synthetic regressions are validated; exact 1M-event ROOT rerun, weighted uncertainty, tail stability, and data/MC closure remain required.</text>
+</svg>

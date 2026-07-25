@@ -74,7 +74,7 @@ Every claim in this thesis is labeled with one of the following statuses:
 | p/d PID AUC (HGB truth ceiling) | 0.986 | TRUTH_LEVEL_MC_ONLY | 🟡 GATED | CL-017 (BLK-MV1-001) |
 | PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED | raw ROOT not staged |
 | Anomaly / C12 identity | truth-MC only; data anomaly **not** ID'd as C12 | TRUTH_LEVEL_MC_ONLY | ⛔ BLOCKED | CL-022 (AUD-ANOM-001) |
-| Stopping-depth data/MC | χ²/ndf ≈ 6.8e4 — FAIL | MC_DIAGNOSTIC | 🟠 TENSION | CL-021 (BLK-MV3-LEGACY-001) |
+| Stopping-depth data/MC | selection-matched: MC B2 0.46→0.87 (16.6× χ² improvement, shape matches data); residual ~8 pp | MC_DIAGNOSTIC | 🟠 PARTIALLY RESOLVED (selection-matched) | CL-021 — legacy 6.8e4 was unselected-MC vs trigger-selected-data (invalid); residual = scattering model + GAP-01 material |
 | MV4 raw timing pull (toy digitizer) | −1.05σ | legacy_toy_digitizer_diagnostic | GATED | CL-007 (BLK-MV4-LEGACY-001) |
 | MV4 corrected timing pull (toy) | +2.68σ | legacy_toy_digitizer_diagnostic | GATED | CL-008 |
 | ML duplicate-readout selection | no canonical winner (coverage interval crosses gate) | data external duplicate readout | GATED | P04p (BLK-P04P-001) |

@@ -1,156 +1,125 @@
-# Latest Handoff — AUD-LEDGER-004 data-side Rmax occupancy semantics
+# Latest Handoff
 
-## Delivery identity
+## Session
 
-- **Session stamp:** `2026-07-25T210216Z`
-- **Task ID:** `AUD-LEDGER-004`
-- **Initial remote `main`:** `5f4847036ab6d3ee8fb268f9ed96abc36852bbc4`
-- **Validated delivery/handoff commit:**
-  `b7548074f34f2ac8e8d442a959ceab2113581a57`
-- **Remote-main confirmation:** post-write history confirmed the delivery/handoff commit is
-  present as the remote `main` head before this confirmation record.
-- **Destination:** direct GitHub contents-API commits to remote `main`; no force-push,
-  history rewrite, task branch, or PR transport.
-- **Push-output boundary:** successful commit SHAs were returned rather than conventional
-  textual `git push` stdout.
+- **Task:** `AUD-MV3-SEL-001`
+- **Stamp:** `2026-07-25T220218Z`
+- **Initial remote main:** `701116061eb3346a3ae2b31e2946ca450d6120e2`
+- **Remote main immediately before this handoff:**
+  `63993988242b3d28affa8c8b106ebd72d143c8bc`
+- **Acceptance:** focused audit gate `VALIDATED`; merged production follow-up `FLAWED`;
+  cumulative task `PARTIAL`.
 
-## Reviewed state
+## Area reviewed
 
-Reviewed repository history, open PRs, closed PR #868, the canonical claim ledger, the
-new raw-beam data-side producer and report, the exact S10b `CL-011` live-time record, the
-existing `CL-010` quarantine validator, and current coordination records.
+The newly merged MV3 selection-matched stopping-depth follow-up, exact summary/report/plots,
+canonical `CL-021`, source-specific `PrimaryWeight` contract, canonical PDG charge helper,
+trigger-split implementation, PR #932 history, PR #868 disposition, and required coordination
+records.
 
-Exact reviewed source identities:
+## Exact repository facts
 
-- `docs/claim_ledger.csv` blob `83238de4b244b741bd2227986455edf04bff3265`;
-- `scripts/studies/data_side_real_beam.py` blob
-  `22a86dd5c5c8fa9f993e501abd426791034ac16c`;
-- `reports/studies/data_side/REPORT.md` blob
-  `daf9ba94b66eac6988f748597fa0fae799f6aea4`.
+PR #932 merged as `701116061eb3346a3ae2b31e2946ca450d6120e2`. Its study reports
+MC Sample-I B2 fraction `0.8669236675912432` versus data `0.9442769031852253`,
+Pearson chi2/ndf `5590.089500522007`, and an advertised improvement factor
+`16.602672795596263`. Canonical `CL-021` remains `FLAWED` under
+`BLK-MV3-LEGACY-001`. PR #868 remained closed, unmerged, non-mergeable, and untouched.
+No status checks were attached to the initial commit.
 
-No open PR existed. PR #868 remained closed, unmerged, and non-mergeable and was not
-modified.
+## Confirmed defects
 
-## Confirmed scientific-governance defect
+1. The producer loads `PrimaryWeight`, defaults invalid/missing weight to `1.0`, and never
+   applies the resulting event weight to the stopping profile or other advertised MC results.
+2. The report rejects PrimaryWeight even though the repository weight contract states it is
+   the generated-source cross-section factor and that unweighted truth distributions are not
+   physical production distributions.
+3. The charged mask uses `pdg_charge(int(p)) >= 1`, excluding negatively charged particles
+   rather than using canonical `is_charged()`.
+4. The advertised improvement changes the data target. Holding Sample-I data fixed gives
+   `16.114635239581606x`, not `16.602672795596263x`.
+5. Matched chi2/ndf remains `5590.089500522007`; B2 residual is
+   `7.735323559398211` percentage points and total-variation distance is
+   `0.07735323559398212`. “Gap gone” / “shape matches” is unsupported.
+6. The summary lacks input hashes, source commit/command, weight sums/ESS,
+   uncertainty/covariance, and gain/threshold/coincidence/weighting sensitivities.
+7. The public verdict outruns the canonical ledger state.
 
-The raw-beam study measures selected B-stave pulse multiplicity over composite
-`(run,eventno)` keys: 640,737 selected pulses over 584,602 events, or mean multiplicity
-`1.0960225931488432`. This is useful descriptive occupancy evidence. It does not provide
-run exposure, event-arrival rate, trigger live-time accounting, luminosity, or an
-independently measured maximum acceptable pile-up mean.
+## Work delivered
 
-The producer nevertheless sets `mu_max=0.38`, assumes `tau_eff=130 ns`, calculates
-`2.923076923076923 MHz`, calls the result data-derived, and says occupancy grounds the
-convention. The `CL-010` row then publishes `2.92 MHz`, adds unsupported `0.10` and
-`0.20 MHz` uncertainty components, changes status to `DONE_DATA_ONLY`, points to this
-study, and removes blocker `S-STAT-003`.
+- `tools/audit/audit_mv3_selection_claim.py`
+- `tests/test_audit_mv3_selection_claim.py`
+- `tools/audit/render_mv3_selection_claim_evidence.py`
+- `docs/validation/mv3_selection_claim_validation.json`
+- `docs/validation/mv3_selection_claim.svg`
+- `docs/validation/mv3_selection_claim_audit.md`
+- `chatgpt_todo/archive/2026-07-25T220218Z_AUD-MV3-SEL-001_WEIGHTED_SELECTION_SEMANTICS.md`
+- updated `chatgpt_todo/ACTIVE_TASK.md`
 
-That upgrade conflicts with the tracked source-conflict quarantine: `0.38` is a legacy
-duty-factor convention, the recovery-failure ceiling was not crossed, and the exact S10b
-`CL-011` estimand is `124.79018394263471 ns`, not the ad hoc `130 ns` value.
+Policy:
 
-## Independent calculation
+`MV3_SELECTION_CLAIM_REQUIRES_WEIGHTED_SIGNED_CHARGE_AND_SAME_TARGET_VALIDATION`
 
-```text
-0.38 / 124.79018394263471 ns = 3.045111305987686 MHz
-0.38 / 130 ns               = 2.923076923076923 MHz
-```
-
-The former 130 ns choice differs by `-0.12203438291076338 MHz`, or
-`-4.007550813357915%`, from the exact-CL-011 model calculation. Both values remain
-model/convention sensitivities. Neither becomes a data-derived absolute rate because a
-selected-pulse occupancy histogram is available.
-
-## Delivered audit gate
-
-Added policy:
-
-`OCCUPANCY_DOES_NOT_IDENTIFY_ABSOLUTE_RMAX_WITHOUT_RATE_EXPOSURE`
-
-The validator:
-
-- reads exact bytes once with strict UTF-8 and records SHA-256 and size;
-- enforces the canonical 43-column ledger schema and unique `CL-010`/`CL-011` rows;
-- requires the existing source-conflict quarantine for `CL-010`;
-- binds `CL-011` to the exact S10b data-only estimand and blocker;
-- rejects producer/report language that authorizes absolute Rmax from occupancy;
-- requires a future fail-closed contract with `rmax_authorized=false` and `Rmax withheld`;
-- reconstructs both reciprocal calculations independently;
-- publishes JSON atomically and rejects destructive output aliases.
+The executable current-like contract returns `FLAWED` with 16 findings; a corrected contract
+fixture returns `VALIDATED` with zero findings.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_data_side_rmax_semantics.py \
-  tests/test_audit_data_side_rmax_semantics.py \
-  tools/audit/render_data_side_rmax_semantics_evidence.py
+  tools/audit/audit_mv3_selection_claim.py \
+  tests/test_audit_mv3_selection_claim.py \
+  tools/audit/render_mv3_selection_claim_evidence.py
 
-pytest -q tests/test_audit_data_side_rmax_semantics.py
-6 passed in 0.03s
+pytest -q tests/test_audit_mv3_selection_claim.py
+7 passed in 0.07s
 ```
 
-Additional results:
+JSON and SVG parsing passed. Changed Python lines are at most 99 characters. Regressions cover
+the observed fail-open contract, corrected acceptance, count/fraction mutation, duplicate
+`CL-021`, invalid UTF-8, destructive output aliasing, and atomic JSON publication.
 
-- executable current-like fixture matching the observed contract: `FLAWED`, 34 findings;
-- corrected contract fixture: `VALIDATED`, zero findings;
-- altered exact `CL-011` tau: rejected;
-- duplicate `CL-010`: controlled input error;
-- invalid UTF-8: controlled status 2;
-- destructive input/output alias: rejected;
-- JSON parse: PASS;
-- SVG XML parse: PASS;
-- maximum changed Python line length: 93 characters.
+A complete checkout could not be obtained because the runtime could not resolve `github.com`.
+Exact GitHub blobs were inspected through the authenticated connector, and a byte-local
+executable fixture reproduced the observed contracts. No exact-repository local CLI execution,
+ROOT rerun, or broad CI result is claimed.
 
-This environment did not contain a full repository checkout, so the exact GitHub files
-were inspected through repository reads and represented by the executable current-like
-fixture; no claim is made that the new CLI was run against locally cloned production bytes.
+## Direct-main commits
 
-## Delivered files
+- `b7ff8d887146cb1222eac318dc0afc0f4b943e61` — task claim
+- `257e3eee09142f65de4e70aca0a9b1bfac76f668` — auditor
+- `68390a96c4370b020fbeb44ba57076635ca85c30` — tests
+- `332031fc0f98f3694933ca8a01b7df60056df41b` — renderer
+- `1d561ba6b41a10d8eec37f175c32250f97f0b67e` — machine-readable evidence
+- `c94f4135a8ec6b25e79170198fdbc348297494c4` — visual evidence
+- `f7d89238557ce91eb55c56f857af3522c658c544` — audit report
+- `bb0ae8fa92e78fe4e1c80895c122287296264d17` — active-task completion
+- `63993988242b3d28affa8c8b106ebd72d143c8bc` — immutable archive
 
-- `tools/audit/audit_data_side_rmax_semantics.py`
-- `tests/test_audit_data_side_rmax_semantics.py`
-- `tools/audit/render_data_side_rmax_semantics_evidence.py`
-- `docs/validation/data_side_rmax_semantics_validation.json`
-- `docs/validation/data_side_rmax_semantics.svg`
-- `docs/validation/data_side_rmax_semantics_audit.md`
-- `chatgpt_todo/archive/2026-07-25T210216Z_AUD-LEDGER-004_RMAX_OCCUPANCY_SEMANTICS.md`
-- updated `chatgpt_todo/ACTIVE_TASK.md`
-- updated `chatgpt_todo/HANDOFF.md`
+GitHub contents writes advanced `main` directly and returned commit SHAs rather than terminal
+`git push` output. Remote history was re-read after the implementation/evidence sequence and
+confirmed the commits on `main`.
 
-The SVG is software/documentation provenance evidence, not detector-rate data.
+## Scientific boundary and unresolved risks
 
-## Direct-main sequence
+No ROOT file was reprocessed. No weighted stopping profile, scattering-model correction,
+material correction, calibration, PID result, or detector-performance result was produced.
+The existing summary and PNGs remain diagnostic and non-authorizing. The report's residual
+attribution is a hypothesis until weighted and controlled scattering/material ablations are
+run.
 
-- `c00a81ab9621aad5f718b20eb896554416262482` — audit gate
-- `37191d19adc165b9d4f43414ab0ead348a0be049` — focused tests
-- `40bf2765ead988817e4b15423b2cbb728f8030cf` — evidence renderer
-- `2c9c5497178d104c48e86a4edb375b855ae9cfd4` — machine-readable evidence
-- `370cf3b2adf1e57c181e4f1628ee6e2016f9a844` — visual evidence
-- `d91b106cc0153cda7fa5ee7a07aa173362763811` — audit report
-- `3ce00819b46f31aa164db081a813afb0bcee8904` — immutable archive
-- `58c89c26a05e58489a9db48762365f0ab7cb1690` — active-task record
-- `b7548074f34f2ac8e8d442a959ceab2113581a57` — delivery handoff
+## Required next action
 
-## Acceptance boundary and next action
+Correct the producer and report together: validate/apply one finite nonnegative PrimaryWeight
+per event, use canonical signed-charge selection, emit weighted primary and unweighted
+sensitivity results with weight ESS and profile covariance, hold the data target fixed,
+preregister gain/threshold/coincidence/aggregation/weighting scans, regenerate all artifacts
+from immutable inputs with full hashes, and synchronize all public claims only after the
+exact-repository audit returns zero findings.
 
-The audit implementation, tests, arithmetic reconstruction, machine-readable record,
-visual evidence, archive, and coordination handoff are `VALIDATED`. The production
-`CL-010` claim remains `BLOCKED`; `accepted_rmax_mhz` is null.
+## Coordination limitation
 
-The next focused unit must remediate `scripts/studies/data_side_real_beam.py`,
-`reports/studies/data_side/REPORT.md`, the occupancy figure/metadata, and the `CL-010`
-ledger row together. It must preserve the measured multiplicity as descriptive evidence,
-remove unsupported uncertainty components, restore `S-STAT-003`, and require both this
-validator and `tools/audit/validate_claim_ledger_cl010.py` to return zero findings.
-
-No raw ROOT data were rerun. No absolute event rate, live exposure, luminosity, pile-up
-tolerance, recovery ceiling, calibration, or detector-performance result was produced.
-Repository-wide pytest/ruff, broad link checking, production figure regeneration, and
-GitHub Actions were not run.
-
-`SESSION_LOG.md`, `MASTER_INDEX.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices
-were not replaced because their complete append-only bytes were available only through
-paged or truncated views while the connector offers whole-file replacement rather than a
-byte-safe append. Replacing a partial reconstruction could erase unrelated provenance.
-The immutable archive and this handoff preserve the complete append-equivalent record.
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate matrices were
+reviewed but not replaced because the connector exposes whole-file replacement while complete
+shared bytes are available only in pages. Replacing a partial reconstruction could erase
+append-only or concurrent provenance. The immutable archive and this handoff retain the full
+append-equivalent record; aggregate synchronization remains explicitly unmet.

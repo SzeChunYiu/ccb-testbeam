@@ -5,10 +5,13 @@
 - **Task:** `AUD-MV3-SEL-003`
 - **Stamp:** `2026-07-25T233022Z`
 - **Initial remote main:** `0aa777457fff37a817bce29a7ea1656683210ddf`
+- **Validated delivery/handoff commit:** `6be5f05a3f925329d7faac67f89a15fb624754f3`
+- **Remote-main confirmation:** recent history confirmed the delivery commit and its complete focused
+  ancestry on remote `main` before this confirmation update.
 - **Destination:** direct GitHub contents-API commits to `main`; no force-push, history rewrite,
   task branch, or pull-request transport.
 - **Push-output boundary:** GitHub returned successful commit SHAs rather than terminal `git push`
-  stdout. Remote history was re-read during delivery.
+  stdout. Remote history was re-read during and after delivery.
 - **Acceptance:** audit gate and evidence `VALIDATED`; current producer statistical contract
   `FLAWED`; weighted production result and canonical closure `BLOCKED/PARTIAL`.
 
@@ -85,7 +88,7 @@ retains producer blob `cd787ab64408228d67536b88bcc617fe32d0ec5a`, auditor blob
 `0d17e06d281983ef767a26d8df0b49cb779ec7ac`, and test blob
 `1eb60e1e6fa8169cbb15795e2b7eec52e228bafa`.
 
-## Direct-main commits before handoff
+## Direct-main commits
 
 - `8004104c36c3edd1866e992bb98181bfc2ee82dc` — task claim
 - `4cc9c71c68a66c4e297a4a36b260139f2c4933a6` — audit gate
@@ -96,6 +99,7 @@ retains producer blob `cd787ab64408228d67536b88bcc617fe32d0ec5a`, auditor blob
 - `23c40d88ee572419f27b90d31fbd7b53bfc1887e` — audit report
 - `c186d363a6f0e9cd251a7d5ad2d23d79f531b300` — immutable archive
 - `1b87f780e32c259ce9720578fe6d6be5f4e410f4` — active-task completion
+- `6be5f05a3f925329d7faac67f89a15fb624754f3` — validated delivery handoff
 
 ## Scientific boundary and next action
 
@@ -108,6 +112,10 @@ the exact-source audit to return zero findings, then execute the corrected weigh
 immutable content-addressed inputs. Canonical review still requires covariance and preregistered
 sensitivity scans.
 
-`SESSION_LOG.md` is append-only and is being synchronized separately from this handoff. Long aggregate
-ledgers were reviewed but not rewritten in this focused statistical unit; no claim-status upgrade was
-made.
+## Coordination limitation
+
+`SESSION_LOG.md` was reviewed but not replaced. The connector exposes whole-file replacement rather
+than byte-safe append, while the complete append-only bytes were returned only through paged or
+truncated views. Reconstructing and replacing that shared log risked erasing provenance. The immutable
+archive and this handoff preserve the complete append-equivalent session record. The requested
+`SESSION_LOG.md` append remains explicitly unmet rather than being fabricated.

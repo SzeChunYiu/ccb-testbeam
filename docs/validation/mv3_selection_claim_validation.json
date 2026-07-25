@@ -1,0 +1,193 @@
+{
+  "acceptance": {
+    "cl021_canonical_state_preserved": "FLAWED",
+    "focused_audit_gate": "VALIDATED",
+    "production_claim": "FLAWED_PENDING_WEIGHTED_SIGNED_CHARGE_RERUN"
+  },
+  "findings": [
+    {
+      "code": "PRIMARY_WEIGHT_READ_BUT_NOT_APPLIED",
+      "message": "PrimaryWeight is read but no weighted stopping-profile accumulator is emitted."
+    },
+    {
+      "code": "PRIMARY_WEIGHT_FAIL_OPEN_DEFAULT",
+      "message": "Missing or nonfinite PrimaryWeight is silently replaced with 1.0."
+    },
+    {
+      "code": "POSITIVE_CHARGE_ONLY_MASK",
+      "message": "The charged-hit mask excludes negatively charged particles."
+    },
+    {
+      "code": "CANONICAL_CHARGE_HELPER_DIVERGENCE",
+      "message": "The study bypasses the canonical signed-charge predicate is_charged()."
+    },
+    {
+      "code": "UNWEIGHTED_PHYSICAL_CLAIM_CONTRADICTS_WEIGHT_CONTRACT",
+      "message": "The report rejects PrimaryWeight even though the repository contract says it carries the cross-section factor and unweighted truth is not physical."
+    },
+    {
+      "code": "RESIDUAL_ATTRIBUTION_IGNORES_AVAILABLE_WEIGHT",
+      "message": "The report attributes the residual to missing angular weighting while the available cross-section weight is loaded and discarded."
+    },
+    {
+      "code": "SUMMARY_WEIGHT_CONTRACT_MISSING",
+      "message": "Summary lacks an accepting PrimaryWeight policy and weighted-result flag."
+    },
+    {
+      "code": "SUMMARY_WEIGHT_SUFFICIENT_STATISTICS_MISSING",
+      "message": "Summary omits sum_w, sum_w2, and effective sample size."
+    },
+    {
+      "code": "CONTENT_ADDRESSED_PROVENANCE_MISSING",
+      "message": "Summary does not bind MC, data, script, commit, and command provenance."
+    },
+    {
+      "code": "IMPROVEMENT_CHANGES_DATA_TARGET",
+      "message": "Reported improvement divides unselected-vs-all by selected-vs-Sample-I; a controlled selection ablation must hold the data target fixed."
+    },
+    {
+      "code": "REPORTED_IMPROVEMENT_NOT_SAME_TARGET",
+      "message": "reported=16.6026727956, same-target=16.1146352396"
+    },
+    {
+      "code": "VERDICT_OUTRUNS_CANONICAL_LEDGER",
+      "message": "Summary/report upgrade conflicts with canonical CL-021 status FLAWED."
+    },
+    {
+      "code": "SHAPE_MATCH_CLAIM_WITH_REJECTED_CHI2",
+      "message": "Sample-I Pearson chi2/ndf remains 5590.09."
+    },
+    {
+      "code": "SHAPE_MATCH_CLAIM_WITH_MATERIAL_TVD",
+      "message": "Sample-I total-variation distance is 0.0773532."
+    },
+    {
+      "code": "PREREGISTERED_SENSITIVITY_SCAN_MISSING",
+      "message": "No gain/threshold/coincidence/weighting sensitivity result is recorded."
+    },
+    {
+      "code": "MC_DATA_UNCERTAINTY_NOT_EVALUATED",
+      "message": "Finite weighted-MC and data uncertainty/covariance are not evaluated."
+    }
+  ],
+  "independent_calculations": {
+    "chi2_per_ndf_selected_vs_sample_i": 5590.089500522007,
+    "chi2_per_ndf_unselected_vs_all": 92810.42687526504,
+    "chi2_per_ndf_unselected_vs_sample_i": 90082.25325752707,
+    "reported_improvement_factor": 16.602672795596263,
+    "same_target_unselected_vs_selected_improvement": 16.114635239581606,
+    "sample_i_b2_residual_percentage_points": 7.735323559398211,
+    "sample_i_total_variation_distance": 0.07735323559398212
+  },
+  "inputs": {
+    "ledger": {
+      "path": "fixture/ledger",
+      "sha256": "fdc1e20eea79d690fd19211b68326dab46cb24a41c16c8ea4c0da76fc152006f",
+      "size_bytes": 582
+    },
+    "pdg_helper": {
+      "path": "fixture/pdg_helper",
+      "sha256": "cd82cf0058ae51acd12e76fb5707a3c72d6564be4a53f875ff27f8a044738dc3",
+      "size_bytes": 64
+    },
+    "report": {
+      "path": "fixture/report",
+      "sha256": "bbaa00b72c964b673cb037e5c7fd03684b647697b928b298ca2122a82163b30e",
+      "size_bytes": 152
+    },
+    "script": {
+      "path": "fixture/script",
+      "sha256": "38ddb43fe52efcd59c698b8596c431f62db8becca5a7065fc47e41fc1ebbeb0f",
+      "size_bytes": 150
+    },
+    "summary": {
+      "path": "fixture/summary",
+      "sha256": "281c9572878ccf8ce24d89129d042f088c8b72392d27eed871a61166b1ffead9",
+      "size_bytes": 1002
+    },
+    "weight_contract": {
+      "path": "fixture/weight_contract",
+      "sha256": "c16998cc865d12cbbde756279c3bf95621f6e88c6ac5c009b41cf584c32d6126",
+      "size_bytes": 100
+    }
+  },
+  "ledger": {
+    "cl021_blocked_by": "BLK-MV3-LEGACY-001",
+    "cl021_status": "FLAWED",
+    "cl021_truth_type": "legacy_data_mc_profile_diagnostic",
+    "header_width": 43
+  },
+  "n_findings": 16,
+  "policy": "MV3_SELECTION_CLAIM_REQUIRES_WEIGHTED_SIGNED_CHARGE_AND_SAME_TARGET_VALIDATION",
+  "repository_snapshot": {
+    "audit_mode": "EXACT_GITHUB_BLOBS_INSPECTED_EXECUTABLE_FIXTURE_REPRODUCES_CONTRACT",
+    "files": {
+      "docs/claim_ledger.csv": {
+        "git_blob": "83238de4b244b741bd2227986455edf04bff3265"
+      },
+      "docs/validation/mc_weight_vector_validation_audit.md": {
+        "git_blob": "3cf001dd7cc8ff489c7a804bd5aa53f8d663153a"
+      },
+      "reports/studies/mv3_selection_matched/REPORT.md": {
+        "git_blob": "7d0608e473bc85df7c1e5a8f2010ba01074d8ba8"
+      },
+      "reports/studies/mv3_selection_matched/mv3_selection_matched_summary.json": {
+        "git_blob": "bb659df56eacf6c7a9f0d3f56df3cf31043019ba"
+      },
+      "scripts/mc01_trigger_split_truth.py": {
+        "git_blob": "6173fe27f3a7beaf74d3b3442153207b16d95074"
+      },
+      "scripts/studies/mv3_selection_matched.py": {
+        "git_blob": "32c2c9d480aa5bd02ecc6a73ddc4c0654dae21ca"
+      },
+      "src/ccb_mc_validation/truth/pdg.py": {
+        "git_blob": "8c484b131ec07f3af2e2bd4726b83cd64601190c"
+      }
+    },
+    "main_sha": "701116061eb3346a3ae2b31e2946ca450d6120e2",
+    "pr_868": {
+      "mergeable": false,
+      "merged": false,
+      "state": "closed"
+    },
+    "pr_932": {
+      "merge_commit": "701116061eb3346a3ae2b31e2946ca450d6120e2",
+      "merged": true
+    },
+    "repository": "SzeChunYiu/ccb-testbeam"
+  },
+  "schema": "ccb-mv3-selection-claim-audit/1",
+  "scientific_boundary": "This audit validates claim semantics and software/provenance contracts. It does not regenerate weighted production MC or establish detector closure.",
+  "status": "FLAWED",
+  "validated_files": {
+    "tests/test_audit_mv3_selection_claim.py": {
+      "max_line_length": 92,
+      "sha256": "cb2bd50d7c1c825098c2481f8ec3f242b488275265987401bab28ba9bed3cc0b",
+      "size_bytes": 9894
+    },
+    "tools/audit/audit_mv3_selection_claim.py": {
+      "max_line_length": 99,
+      "sha256": "1ae6ef0e43b8b1008669d211161b470842dc4fdc639d3c0b1b11e2e97ae2a2f0",
+      "size_bytes": 16772
+    },
+    "tools/audit/render_mv3_selection_claim_evidence.py": {
+      "max_line_length": 89,
+      "sha256": "d17644c9e1e322aacf9ec239922dab389434a63835fe1c983dad7f11e0103c9f",
+      "size_bytes": 2593
+    }
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/audit/audit_mv3_selection_claim.py tests/test_audit_mv3_selection_claim.py tools/audit/render_mv3_selection_claim_evidence.py",
+      "pytest -q tests/test_audit_mv3_selection_claim.py"
+    ],
+    "exact_repository_cli_run": false,
+    "exact_repository_cli_run_reason": "Execution runtime had no network-resolvable full checkout; exact GitHub blobs were inspected and a byte-local contract fixture reproduced the observed semantics.",
+    "json_parse": "PASS",
+    "numpy": "2.3.5",
+    "pytest": "9.0.2",
+    "pytest_result": "7 passed in 0.07s",
+    "python": "3.13.5",
+    "svg_xml_parse": "PASS"
+  }
+}

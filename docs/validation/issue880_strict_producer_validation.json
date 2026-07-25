@@ -1,0 +1,65 @@
+{
+  "acceptance": "PARTIAL",
+  "independent_retained_arithmetic": {
+    "deuteron_legacy_minus_weighted_percentage_points": 40.585086858616876,
+    "deuteron_legacy_overstatement_pct_of_abs_weighted": 244.39966043037631,
+    "deuteron_unweighted_fraction": 0.5719111928400914,
+    "deuteron_weighted_fraction": 0.16606032425392264,
+    "first_B_legacy_overstatement_pct_of_abs_weighted": 212.7192164972955,
+    "first_B_unweighted_mean_MeV": 6.674567424757,
+    "first_B_weighted_mean_MeV": 2.134364334727324,
+    "first_B_weighted_minus_unweighted_pct_of_abs_unweighted": -68.02243203341332
+  },
+  "initial_remote_main": "2868b1a7aaa15cd6a03970c2385c2b7ab53c5598",
+  "policy": "ISSUE880_STRICT_CONTENT_ADDRESSED_WEIGHTED_RERUN",
+  "repository_inputs": {
+    "historical_producer_blob": "bc1220fdfe1010989fd8ab273f8c1b1fcf708b2c",
+    "historical_producer_path": "scripts/single_stave/issues879_880_887_mc_study.py",
+    "retained_result_blob": "37d69e2c697a7ce7c9e1eff9aeff48539551d922",
+    "retained_result_path": "reports/issues879_880_887_mc_analysis/issues879_880_887_result.json"
+  },
+  "scientific_boundary": {
+    "data_mc_closure": "NOT_RUN",
+    "exact_root_bytes_available": false,
+    "production_rerun": "NOT_RUN",
+    "weight_tail_stability": "NOT_EVALUATED",
+    "weighted_uncertainty": "NOT_EVALUATED"
+  },
+  "session_stamp_utc": "2026-07-25T040311Z",
+  "status": "VALIDATED_CODE_WITH_BLOCKED_PRODUCTION_RERUN",
+  "validated_files": {
+    "scripts/single_stave/issues879_880_887_mc_study_strict.py": {
+      "sha256": "fa8219f65f6b026f8a971e1b8803154ca32ecf79a6fe07e89ddb394397355158"
+    },
+    "scripts/single_stave/strict_event_weights.py": {
+      "sha256": "b2195c58e09f57554b72c0a2e7db0e1a624a2bf4e2607786a1512ad3c771e814"
+    },
+    "tests/test_issues879_880_887_strict_producer.py": {
+      "sha256": "a6f8e2245ce0d29f7708fad7c95fe3d31743ba04ba4ce03dda4ccb42c172fd62"
+    },
+    "tests/test_strict_event_weights.py": {
+      "sha256": "1971c302adcbfb32e1c3b03bfecfc356bf63176a2100ee511b912c1734048ebf"
+    },
+    "tools/audit/render_issue880_strict_producer_evidence.py": {
+      "sha256": "663144675f4a378ef431bcbd63612611171b3945adc2806e0f32b3765889f5a2"
+    }
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/single_stave/strict_event_weights.py scripts/single_stave/issues879_880_887_mc_study_strict.py tests/test_strict_event_weights.py tests/test_issues879_880_887_strict_producer.py tools/audit/render_issue880_strict_producer_evidence.py",
+      "PYTHONPATH=. pytest -q tests/test_strict_event_weights.py tests/test_issues879_880_887_strict_producer.py"
+    ],
+    "environment": {
+      "numpy": "2.3.5",
+      "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+      "pytest": "9.0.2",
+      "python": "3.13.5"
+    },
+    "historical_import_fixture": "minimal local API-compatible stub; exact historical source inspected through GitHub blob bc1220fdfe1010989fd8ab273f8c1b1fcf708b2c",
+    "json_parse": "PASS",
+    "max_python_line_length": 100,
+    "py_compile": "PASS",
+    "pytest": "17 passed in 0.04s",
+    "svg_xml_parse": "PASS"
+  }
+}

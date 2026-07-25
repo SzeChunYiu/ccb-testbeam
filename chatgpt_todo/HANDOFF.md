@@ -1,133 +1,130 @@
-# Latest Handoff — AUD-REP-001 Cluster E canonical binding audit
+# Latest Handoff — AUD-DATA-001 Cluster A row and weight semantics
 
 ## Delivery identity
 
-- **Session stamp:** `2026-07-25T190251Z`
-- **Task ID:** `AUD-REP-001`
-- **Initial remote `main`:** `8ceda40d2f71d53a93bb02568c8e90509c973e0c`
-- **Concurrent main reconciliation:** publication-facing commit
-  `ed28eb8ed9e3f15016c1a4bf0021293e813ee01c` landed before the first audit
-  write. It did not change the audited Cluster E dashboard blob
-  `49f35e9593e5896bea28ffaaf13f46b7863ed3b9`; the exact current dashboard was
-  re-read after delivery and still contains the confirmed conflicts.
+- **Session stamp:** `2026-07-25T200019Z`
+- **Task ID:** `AUD-DATA-001`
+- **Initial remote `main`:** `39378e21c436344b43e9f659f5a76bce2bca1228`
+- **Concurrent change:** `c39aba2c55091aec501acbe402523e2d94be2c58` merged a
+  separate single-stave documentation review during this run. It did not alter the Cluster A
+  code, summary, tests, or validation evidence changed here.
 - **Validated implementation/evidence/archive head:**
-  `2300d39f92d01cb73e545f6f68c6ad6c7641ed86`
-- **Validated delivery handoff / after-SHA:**
-  `1dc7d81d9cb26bb047e6839089fef93e8b51daed`
-- **First remote confirmation commit:**
-  `604b2785b40182b055021a62acf03a17c074b8c7`
-- **Destination:** direct GitHub contents-API commits to remote `main`; no
-  force-push, history rewrite, task branch, or PR transport.
-- **Push-output boundary:** successful commit SHAs were returned rather than
-  conventional textual `git push` stdout.
+  `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa`
+- **Destination:** direct GitHub contents-API commits to remote `main`; no force-push,
+  history rewrite, task branch, or PR transport.
+- **Push-output boundary:** successful commit SHAs were returned rather than conventional
+  textual `git push` stdout.
 
 ## Reviewed state
 
-Fetched current `main`, recent history, status checks, open PRs, mandatory
-coordination records, `docs/claim_ledger.csv`, Cluster D summary and MV0/MV3
-outputs, Cluster E generator, dashboard, summary, claims table, metrics,
-provenance, and the Opticks summary. No status checks were attached to initial
-head. A complete clone was unavailable because the execution container could not
-resolve `github.com`; exact GitHub blobs were reviewed and focused reconstructed
-Python files were executed locally.
+Reviewed the new Cluster A data-side merge, its exact source blob, public study summary,
+row/event-key semantics, MC comparison, recent history, open pull requests, PR #868, and the
+repository-local coordination records. The original script blob was
+`ccdc21dd967d0a25694261d488f959d89286a88d`.
 
-## Canonical facts versus distinct Cluster D diagnostics
-
-Canonical ledger:
-
-- `CL-013 = 92 ADC/MeV`, with a `28 ADC/MeV` heuristic systematic envelope,
-  `data_mc_calibration_proxy`, `GATED`;
-- `CL-021 = 68269.40598948313` Pearson chi2/ndf,
-  `legacy_data_mc_profile_diagnostic`, `FLAWED`;
-- `CL-022 = 283/87555 = 0.003232254011764034`, `mc_truth_only`,
-  `TRUTH_LEVEL_MC_ONLY`.
-
-Distinct Cluster D outputs are MV0 `110 ADC/MeV` (KS
-`0.10773131550396098`), MV3 chi2/ndf `86135.4707883642`, and the MV6 toy C12
-subset `25/38`. Cluster D documentation says these do not silently supersede
-canonical cross-domain claims.
+The execution container could not access the production derived CSV or Krakow ROOT. Exact
+GitHub source bytes were reconstructed locally for focused software tests. No production
+result was regenerated.
 
 ## Confirmed defects
 
-The exact current Cluster E bundle is `FLAWED` with 13 findings:
+1. The data parser converted malformed numeric cells to `0.0`; NaN and infinity were not
+   rejected.
+2. The MC comparison loaded `PrimaryWeight` but plotted an unweighted hexbin. For two events
+   with weights 1 and 100 in one bin, the former plot value was 2 instead of 101.
+3. The data table contains 632,939 rows but 385,984 unique composite keys. Row-level stave
+   counts and correlation were described with event and stopping-distribution language
+   without a one-row-per-event composite merge.
+4. Input bytes and SHA-256 were absent from the result contract; JSON publication was not
+   atomic; importing the module executed the full analysis.
 
-1. dashboard, summary, and claims CSV substitute `110 ADC/MeV` for canonical
-   `CL-013=92 ADC/MeV` and its `28 ADC/MeV` envelope;
-2. dashboard/summary conflate the MV3 rerun with `CL-021`; the CSV changes the
-   exact canonical value/status to rounded `6.8e4` and `TENSION`;
-3. dashboard/summary/CSV substitute the toy `25/38` C12 subset for canonical
-   `CL-022=283/87555` and alter its status;
-4. provenance uses `(worktree HEAD)`, 12-character digests, and omits used
-   Opticks and MV3 sources;
-5. the generator hardcodes the conflicts, so regeneration reproduces them.
+## Delivered remediation
 
-The dashboard's statement that it is consistent with the ledger is not currently
-true. The concurrent publication-facing update propagates the dashboard/claims
-CSV framing but does not repair their source contradiction.
+`scripts/studies/clusterA_data_side.py` now follows policy
+`DATA_ROWS_MUST_BE_FINITE_AND_ROW_LEVEL_RESULTS_MUST_NOT_POSE_AS_EVENTS`:
 
-## Delivered files
+- strict UTF-8 single-read CSV input;
+- required-column, integer, finite numeric, and nonnegative-weight validation;
+- explicit row versus composite-event denominators;
+- `event_level_claims_authorized=false` until canonical composite merge;
+- exact data and MC byte count plus full SHA-256;
+- exact event-index alignment of `PrimaryWeight`;
+- `C=PrimaryWeight` and `reduce_C_function=np.sum` for MC hexbin density;
+- row-labelled data plots and explicit different-statistical-unit comparison;
+- atomic JSON, CLI options, and a main guard.
 
-Added:
-
-- `tools/audit/validate_clusterE_canonical_binding.py`
-- `tests/test_validate_clusterE_canonical_binding.py`
-- `tools/audit/render_clusterE_canonical_binding_evidence.py`
-- `docs/validation/clusterE_canonical_binding_validation.json`
-- `docs/validation/clusterE_canonical_binding.svg`
-- `docs/validation/clusterE_canonical_binding_audit.md`
-- `chatgpt_todo/archive/2026-07-25T190251Z_AUD-REP-001_CLUSTERE_CANONICAL_BINDING.md`
-
-Updated `chatgpt_todo/ACTIVE_TASK.md` and `HANDOFF.md`.
-
-The validator enforces single-read strict UTF-8 snapshots, exact 43-column ledger
-rows and unique IDs, location-bound claim checks, separation of canonical CL-021
-from the MV3 rerun, full base-commit and input-digest provenance, controlled
-invalid-input handling, destructive-alias rejection, and atomic JSON publication.
+`reports/studies/clusterA/SUMMARY.md` now states that the published +0.18 correlation and
+stave counts are row-level descriptive quantities, not event-level stopping fractions or
+accepted data/MC closure. Existing data-side PNGs are marked stale until regenerated.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/validate_clusterE_canonical_binding.py \
-  tests/test_validate_clusterE_canonical_binding.py \
-  tools/audit/render_clusterE_canonical_binding_evidence.py
+  scripts/studies/clusterA_data_side.py \
+  tests/test_clusterA_data_side_contract.py \
+  tools/audit/render_clusterA_data_side_semantics_evidence.py
 
-pytest -q tests/test_validate_clusterE_canonical_binding.py
-6 passed in 0.05s
+pytest -q tests/test_clusterA_data_side_contract.py
+6 passed in 0.31s
 ```
 
-The corrected fixture returned zero findings. Current-like substitution,
-truncated digests, malformed row width, invalid UTF-8, and atomic publication
-were covered. JSON and SVG parsing passed; changed Python lines are at most 100
-characters. Exact full-checkout execution and PNG regeneration were not run.
+Additional results:
 
-## Direct-main sequence
+- malformed numeric, NaN, infinity, invalid weight shape/range, and event-index mismatch
+  failed closed;
+- exact weight control changed one-bin value from former 2 to correct 101;
+- JSON parsing: PASS;
+- SVG XML parsing: PASS;
+- maximum changed Python line lengths: script 95, tests 89, renderer 89 characters.
 
-- `d7098e6e33bedf0eda4b09f7f57b48c63e4cc12e` — audit gate
-- `13cae5e72a15c5124c886edbe21b4eced33d0352` — tests
-- `18e1b8cb3b2f441e1bdab922262f102860e59b37` — renderer
-- `0a32012361d4f8aa4d533e2c5f82a2b0816ccb1b` — JSON evidence
-- `9a4181c4517b98862e09b4af8190aa21d4c9366a` — SVG evidence
-- `72384a4f764a87c3aacafe87f13198129624e457` — audit report
-- `ea51ebd80daee410074f9cf4eb37e0599aafa4fc` — active task
-- `2300d39f92d01cb73e545f6f68c6ad6c7641ed86` — archive
-- `1dc7d81d9cb26bb047e6839089fef93e8b51daed` — delivery handoff
-- `604b2785b40182b055021a62acf03a17c074b8c7` — first confirmation
+## Delivered files
+
+Updated:
+
+- `scripts/studies/clusterA_data_side.py`
+- `reports/studies/clusterA/SUMMARY.md`
+- `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/HANDOFF.md`
+
+Added:
+
+- `tests/test_clusterA_data_side_contract.py`
+- `tools/audit/render_clusterA_data_side_semantics_evidence.py`
+- `docs/validation/clusterA_data_side_semantics_validation.json`
+- `docs/validation/clusterA_data_side_semantics.svg`
+- `docs/validation/clusterA_data_side_semantics_audit.md`
+- `chatgpt_todo/archive/2026-07-25T200019Z_AUD-DATA-001_CLUSTERA_ROW_WEIGHT_SEMANTICS.md`
+
+The SVG is synthetic software/provenance evidence, not detector data.
+
+## Direct-main sequence before this handoff
+
+- `ae015d281a3791894a6098c4127b1dd5d5021a77` — implementation
+- `64f20672ae9d9ceba6506b47ac7cd6eaa06a1919` — focused tests
+- `37806271b196d0f78401690482612a6cb1841c61` — evidence renderer
+- `fd1431a4d0ad2c36b852179d261f136588f8833f` — validation JSON
+- `8417ee4eb4aed41b173f8653792f235cc8544409` — SVG evidence
+- `ef9d748327c67a773205978cd875c3fd9bbc8c2b` — audit report
+- `35fe7d8de23d333e285894678c608dfd4fd7d2c4` — summary correction
+- `78b47bd7611277d7597acd71cdc53b297412adbf` — active task
+- `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa` — immutable archive
 
 ## Acceptance boundary and next action
 
-Focused audit/evidence is `VALIDATED`; cumulative `AUD-REP-001` is `PARTIAL`.
-Derive canonical fields in the generator, show rerun/toy outputs separately,
-emit full hashes, regenerate all Markdown/CSV/JSON/PNG artifacts together, and
-require the exact validator, link checks, focused tests, and available CI to pass.
+Focused software remediation is `VALIDATED`; cumulative `AUD-DATA-001` is `PARTIAL`.
 
-No detector performance, data/MC transfer, precision calibration, C12 identity,
-or accepted stopping-profile closure was established. Repository-wide
-pytest/ruff, PNG regeneration, full link inventory, and GitHub Actions were not
-run.
+No production CSV/ROOT execution, production figure, correlation, stopping distribution,
+data/MC closure, beam-data PID, calibration, or detector-performance quantity was
+regenerated or accepted. The next unit must bind immutable input hashes, rerun the corrected
+row-level diagnostic, review regenerated source metadata and figures, then separately run the
+canonical composite merge before making event-level statements.
 
-`SESSION_LOG.md`, `MASTER_INDEX.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate
-matrices were not replaced because complete current bytes were only available
-through paged/truncated views; partial replacement could erase append-only or
-concurrent provenance. The immutable archive and this handoff preserve the full
-append-equivalent run record.
+Repository-wide pytest/ruff, broad link checking, and GitHub Actions were not run. PR #868
+remains closed, unmerged, and untouched.
+
+`SESSION_LOG.md`, `MASTER_INDEX.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were
+not replaced because their complete current bytes are returned through paged/truncated views
+while the connector exposes whole-file replacement rather than byte-safe append. Replacing a
+partial reconstruction could erase append-only or concurrent provenance. The immutable
+archive and this handoff preserve the complete append-equivalent record.

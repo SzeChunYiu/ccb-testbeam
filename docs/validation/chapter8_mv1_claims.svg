@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="720" viewBox="0 0 1120 720">
+<rect width="1120" height="720" fill="white"/>
+<rect x="28" y="28" width="1064" height="664" fill="none" stroke="black" stroke-width="2"/>
+<text x="54" y="70" font-family="DejaVu Sans, sans-serif" font-size="28" font-weight="bold">Chapter 8 MV1 claim remediation</text>
+<text x="54" y="102" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">Software/documentation evidence — not beam-data PID performance</text>
+<line x1="54" y1="122" x2="1066" y2="122" stroke="black"/>
+<text x="54" y="160" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="bold">Former chapter: source-contract violations</text>
+<text x="72" y="192" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">• Rounded cut purity 0.891 was labelled as an AUC although the producer reports no cut AUC.</text>
+<text x="72" y="221" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">• Logistic-regression truth-MC output was described as a data weak-label leave-one-run-out result.</text>
+<text x="72" y="250" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">• HGB point estimates were promoted as a truth ceiling and irreducible detector limit.</text>
+<text x="72" y="279" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">• Sample-I/Sample-II stopping-depth tables and a combined decision-tree operating point were not in the tracked MV1 summary.</text>
+<text x="72" y="308" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">• A plus/minus 4 percent PID systematic budget was asserted without a tracked propagation model.</text>
+<text x="72" y="337" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">• The source uses row-index parity and does not retain event IDs, so event-group leakage cannot be excluded.</text>
+<text x="72" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">• MV2 mean_ekin_MeV values are about 1e-4 MeV; the momentum-unit conversion is not bound and range-energy interpretation is blocked.</text>
+<line x1="54" y1="410" x2="1066" y2="410" stroke="black"/>
+<text x="54" y="448" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="bold">Tracked MV1 fixed outputs</text>
+<text x="72" y="482" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">p/d tracks: 296,972 of 400,369 charged B-arm tracks</text>
+<text x="72" y="512" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">Logistic regression: AUC 0.9628868703282414; purity 0.9488978818667125</text>
+<text x="72" y="542" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">HGB: AUC 0.9859658513538254; purity 0.9644090769970706</text>
+<text x="72" y="572" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">Traditional cut: purity 0.8909863556160177; efficiency 0.900961577750235</text>
+<text x="54" y="616" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="bold">Acceptance boundary</text>
+<text x="72" y="646" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">GATED / truth-labelled MC / row-index parity split / no CI / BLK-MV1-001</text>
+<text x="72" y="676" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">Focused regression: 7 passed in 0.04s; accepted issues: 0; stale issues: 8</text>
+</svg>

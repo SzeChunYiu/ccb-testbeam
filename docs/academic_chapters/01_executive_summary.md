@@ -48,27 +48,43 @@ Every claim in this thesis is labeled with one of the following statuses:
 
 ## 4. Canonical Results Table
 
-| Claim | Current value | Stat. unc. | Syst. unc. | Truth type | Source study | Status |
-|---|---|---|---|---|---|---|
-| Selected B-stack pulses | 640,737 | — | — | data_count | S00 gate | **VALIDATED** |
-| B6 single-stave σ₆₈ | 0.68–0.75 ns | 0.02 | 0.05 | data + digitized MC | MV4 raw | **VALIDATED** |
-| Combined 3-stave σ (B4+B6+B8) | 0.54–0.56 ns | 0.02 | 0.08 | data_only | MV4 combined | **DONE_DATA_ONLY** |
-| Pair covariance | −0.127 ns² | — | — | data_only | MV4 covariance | **DONE_DATA_ONLY** |
-| Rmax (pile-up tolerance) | Withheld — canonical μmax criterion unresolved | — | — | derived model (conflicted) | S-STAT-003 / MV5 | **BLOCKED** |
-| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 | data + MC self-consistent | MV5 | **VALIDATED** |
-| Digitizer gain (MV0 v2) | 92 ± 28 ADC/MeV | 14 | 28 | digitized MC | MV0 v2 | **VALIDATED** |
-| p/d PID AUC | 0.9860 | — | — | MC truth only | MV1 | **TRUTH_LEVEL_MC_ONLY** |
-| HGB p/d purity at 90% eff. | 0.9644 | — | — | MC truth only | MV1 | **TRUTH_LEVEL_MC_ONLY** |
-| C12-like anomaly fraction in truth-labelled MC | 283 / 87,555 tracks (0.32%) | — | — | MC truth only | MV6 | **TRUTH_LEVEL_MC_ONLY** |
-| MV3 B8 fraction (MC) | 22.3% | — | — | MC truth | MV3 | **FAIL** |
-| MV3 B8 fraction (data) | 2.3% | — | — | data | MV3 | **FAIL** |
-| MV3 χ²/ndf | 68,269 | — | — | MC vs data | MV3 | **FAIL** |
-| MV4 raw timing pull | −1.05σ | — | — | digitized MC | MV4 raw | **VALIDATED** |
-| MV4 corrected timing pull | +2.68σ | — | — | digitized MC | MV4 corrected | **TENSION** |
-| ML timing | Diagnostic only | — | — | data_only | MV4 | **GATED** |
-| ML duplicate-readout selection | No canonical winner; coverage interval crosses the eligibility gate | — | — | data external duplicate readout | P04p | **GATED** |
-| ML saturation recovery | Withheld; held-out duplicate closure is worse than raw (0.176 vs 0.121 res68) | — | — | data external duplicate readout | P07e | **GATED** |
-| PCA variance | Inconsistent across docs | — | — | MC truth | MV6 | **SUPERSEDED** |
+> **Dashboard-aligned (2026-07-25).** Regenerated from
+> [`reports/studies/clusterE/claims_table.csv`](../../reports/studies/clusterE/claims_table.csv);
+> it supersedes the 2026-06-28 version, which labelled several since-downgraded rows
+> VALIDATED (B6/combined timing, τeff, MV0 gain, MV4 raw pull). Where this table and
+> [`docs/claim_ledger.csv`](../claim_ledger.csv) disagree, **the ledger wins.** The
+> MC-closure rows (clusters A–D) are the "the method works" results; the
+> detector-performance rows remain BLOCKED_DATA / GATED.
+
+| Claim | Current value | Evidence class | Status | Source |
+|---|---|---|---|---|
+| Selected B-stack pulses (S00) | 640,737 | DATA_MEASUREMENT | ✅ VALIDATED | CL-001 |
+| Combined timing σ₆₈ (4-sensor, MC) | 0.089 ns | MC_METHOD_CLOSURE | ✅ PASS | clusterB #918 |
+| PID p-vs-d AUC (realistic chain, MC) | 0.898 | SIMULATION_RESULT | ✅ PASS | clusterA #921 |
+| ADC calibration (digitizer gain, MC) | 119.17 ADC/MeV | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Birks kB (per-track dE/dx, MC) | 0.0156 cm/MeV | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Digitizer-domain Rmax (0% gate, MC) | 0.605 MHz | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Opticks GPU/CPU parity | 0 GPU hits / 4592 CPU; CPU ctest 9/9 | SIMULATION_RESULT | 🟡 PARTIAL | opticks #920 |
+| B6 / combined detector timing (data) | withheld | BLOCKED_DATA | ⛔ BLOCKED | CL-002..006 (BLK-MV4-LEGACY-001) |
+| Pair covariance (B4–B6) | withheld | BLOCKED_DATA | ⛔ BLOCKED | CL-006 |
+| τeff (effective live-time) | 124.79 ns [123.33, 126.36] (run-bootstrap) | data_measurement | DONE_DATA_ONLY | CL-011 |
+| Digitizer gain (MV0 data/MC proxy) | 110 ADC/MeV (±30% heuristic) | DATA_MC_PROXY | 🟡 GATED | CL-013 (BLK-MV0-001) |
+| Canonical pile-up Rmax | withheld | BLOCKED | ⛔ BLOCKED | CL-010 (S-STAT-003) |
+| Legacy Rmax = 3.044 MHz | SUPERSEDED | SUPERSEDED | 🚫 SUPERSEDED | CL-012 (do not use) |
+| p/d PID AUC (HGB truth ceiling) | 0.986 | TRUTH_LEVEL_MC_ONLY | 🟡 GATED | CL-017 (BLK-MV1-001) |
+| PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED | raw ROOT not staged |
+| Anomaly / C12 identity | truth-MC only; data anomaly **not** ID'd as C12 | TRUTH_LEVEL_MC_ONLY | ⛔ BLOCKED | CL-022 (AUD-ANOM-001) |
+| Stopping-depth data/MC | χ²/ndf ≈ 6.8e4 — FAIL | MC_DIAGNOSTIC | 🟠 TENSION | CL-021 (BLK-MV3-LEGACY-001) |
+| MV4 raw timing pull (toy digitizer) | −1.05σ | legacy_toy_digitizer_diagnostic | GATED | CL-007 (BLK-MV4-LEGACY-001) |
+| MV4 corrected timing pull (toy) | +2.68σ | legacy_toy_digitizer_diagnostic | GATED | CL-008 |
+| ML duplicate-readout selection | no canonical winner (coverage interval crosses gate) | data external duplicate readout | GATED | P04p (BLK-P04P-001) |
+| ML saturation recovery | held-out duplicate closure worse than raw (0.176 vs 0.121 res68) | data external duplicate readout | GATED | P07e (BLK-P07E-001) |
+| Systematic uncertainty budget | incomplete | BLOCKED | ⛔ BLOCKED | CL-026 (BLK-SYST-001) |
+
+The ±30% MV0 envelope is a heuristic, **not a confidence interval**. The 0.986 HGB
+PID is a truth-level ceiling, **not** the realistic-chain 0.898 result and not a
+beam-data result. The data anomaly near 4% is **not** identified as C12 (CL-022).
+
 
 ### Corrected values (shown only for historical context)
 
@@ -111,16 +127,25 @@ Raw ROOT files → Pulse table (640,737 selected B-pulses)
 
 ## 7. Established Results
 
-✅ S00 reproduction gate (640,737 pulses) is canonical and reproducible.
-✅ B6 single-stave timing resolution σ₆₈ ≈ 0.68–0.75 ns is data + digitized-MC validated.
-✅ Combined 3-stave timing σ ≈ 0.54–0.56 ns is a data-only result; a covariance-aware estimate is pending.
-✅ Effective live-time τeff = 124.79 ns is the current validated data + MC self-consistent value.
-✅ Digitizer gain 92 ± 28 ADC/MeV is established through the MV0 v2 digitized-MC calibration.
-✅ The C12-like 0.32% fraction is a truth-labelled MC result only, not an empirical data identification.
-✅ Traditional methods remain superior for timewalk, pile-up rate estimation, and energy calibration under the current evidence.
-✅ Most apparent ML “wins” require stronger leakage, uncertainty, and transfer controls before production use.
+✅ S00 reproduction gate (640,737 pulses) is canonical, exact, and reproducible (CL-001).
+✅ **MC method closure (clusters A–D, 2026-07-25):** on the Krakow 1M-event Geant4 MC
+   the full analysis chain closes — combined timing σ₆₈ = **0.089 ns** (clusterB #918),
+   PID AUC = **0.898** on the realistic ΔE-E chain (clusterA #921), ADC = **119.17
+   ADC/MeV** and Birks kB = **0.0156 cm/MeV** (clusterC #917), digitizer-domain
+   Rmax = **0.605 MHz** (clusterC #917).
+✅ Opticks GPU/CPU optical-photon parity proven through GDML ingestion, 4-SiPM
+   annotation, and 148,697 photons/event upload; CPU ctest 9/9 PASS (opticks #920,
+   PARTIAL — device→host gather is the open last mile).
+⚠️ **Detector performance on beam data is BLOCKED_DATA** (raw `hrdb_run_*.root` not
+   staged); device/electronics calibration is an operator-bench item. The 0.68 / 0.54
+   ns detector-timing values formerly listed here as VALIDATED are **withheld
+   (BLOCKED, CL-002..006)**; the MV0 gain is **GATED** (CL-013, ±30% heuristic
+   envelope, not a CI); τeff = 124.79 ns is **DONE_DATA_ONLY** (CL-011), not VALIDATED.
+⚠️ Canonical Rmax undefined (CL-010); legacy 3.044 MHz **SUPERSEDED** (CL-012). The
+   0.986 HGB PID is a TRUTH_LEVEL_MC_ONLY ceiling (CL-017), not a data result.
+⚠️ Traditional methods remain competitive on the legacy data-side studies, but those
+   studies are not the current headline; the MC closure above is.
 
----
 
 ## 8. Remaining Open Issues
 

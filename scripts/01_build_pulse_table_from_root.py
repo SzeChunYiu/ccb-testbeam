@@ -714,6 +714,7 @@ def main() -> int:
     parser.add_argument("--config", default="configs/s00_reproduction.yaml", type=Path)
     parser.add_argument("--skip-ml", action="store_true", help="Skip the run-split ML sanity check.")
     parser.add_argument("--skip-sha256", action="store_true", help="Skip checksum manifest generation.")
+    parser.add_argument("--skip-sorted", action="store_true", help="Skip the sorted even-channel crosscheck (no sorted ROOT available).")
     parser.add_argument(
         "--amplitude-cut-adc",
         type=float,
@@ -736,12 +737,18 @@ def main() -> int:
 
     counts_by_run, counts_by_group, _, selected, ml_rows, population_prevalence = scan_raw(config)
     comparison = compare_expected(config, counts_by_group)
-    sorted_counts = sorted_crosscheck(config)
-    sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
-        sorted_counts[["run", "selected_pulses", "B2", "B4", "B6", "B8"]],
-        on="run",
-        suffixes=("_raw", "_sorted_even"),
-    )
+    if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
+        print("[s00] skipping sorted even-channel crosscheck (no sorted_b_dir or --skip-sorted)")
+        sorted_counts = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].copy()
+        sorted_compare = sorted_counts.copy()
+        sorted_compare["note"] = "skipped: sorted ROOT not staged on LUNARC"
+    else:
+        sorted_counts = sorted_crosscheck(config)
+        sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
+            sorted_counts[["run", "selected_pulses", "B2", "B4", "B6", "B8"]],
+            on="run",
+            suffixes=("_raw", "_sorted_even"),
+        )
 
     counts_by_run.to_csv(out_dir / "counts_by_run.csv", index=False)
     counts_by_group.to_csv(out_dir / "counts_by_group.csv", index=False)

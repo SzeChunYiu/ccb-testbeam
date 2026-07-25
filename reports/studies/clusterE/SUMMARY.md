@@ -24,9 +24,9 @@ The script inlines the house rcParams so it needs no `src/` import.)
 `docs/claim_ledger.csv` (2026-07-25, 26 rows). Where the legacy
 `PROJECT_REPORT.md` / `FINDINGS_SYNTHESIS.md` (2026-06-28) still call a number
 "PASS", the ledger has since **downgraded** it; this synthesis uses the ledger
-state, not the stale prose. Concretely: CL-010 Rmax **BLOCKED**, CL-012
+state, not the stale prose. Concretely: CL-010 Rmax **DONE_DATA_ONLY** (data-derived 2.92 MHz), CL-012
 Rmax=3.044 MHz **SUPERSEDED**, CL-013 MV0 gain **GATED**, CL-017/018 PID truth
-ceiling **GATED**, CL-002..006 detector timing **BLOCKED**, CL-022 anomaly
+ceiling **GATED**, CL-002..006 detector timing **GATED** (raw-format-limited, measured), CL-022 anomaly
 **TRUTH_LEVEL_MC_ONLY**, CL-026 systematic budget **BLOCKED**.
 
 ---
@@ -35,10 +35,18 @@ ceiling **GATED**, CL-002..006 detector timing **BLOCKED**, CL-022 anomaly
 
 **The analysis chain works end-to-end on Monte Carlo.** That is what this
 programme proves. The detector-performance claims that would transfer that to
-data are **BLOCKED_DATA**, because the raw beam ROOT (`hrdb_run_*.root`) is not
-staged on LUNARC (only the Krakow 1M MC and the derived `s00_selected_b_pulses`
-table are). Device/electronics calibration is an operator-bench item, not
-something LUNARC can settle.
+data are **STAGED & MEASURED on real beam data (2026-07-25)**: the raw
+`hrdb_run_*.root` (runs 12–65, 748 MB) is now at
+`/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/` and analysed directly
+(see `reports/studies/data_side/REPORT.md`). Provenance is verified by an
+event-level exact match to canonical S00 (617,377/640,737 composite-key overlap).
+**ΔE-E** measured: corr +0.221 (33,966 evts) vs MC −0.533. **Detector timing σ₆₈**
+is INFEASIBLE on the raw 16-sample (100 MS/s) format — measured σ₆₈ ≥ 38 ns,
+sampling-limited (B6 peak-times bimodal at samples 0/7/15); CL-002..006 move
+BLOCKED→**GATED** with this evidence and need the median-gated 18-sample waveforms
++ a template/OF pickoff. **Rmax** is corroborated by real-data occupancy at
+2.92 MHz (canonical 3.05 MHz). Device/electronics calibration remains an
+operator-bench item.
 
 | Verdict | What is proven (with the number) |
 |---|---|
@@ -75,7 +83,7 @@ something LUNARC can settle.
 |---|---|---|---|---|
 | Selected B-stack pulses (S00 gate) | 640,737 | DATA_MEASUREMENT | ✅ VALIDATED | CL-001 |
 | Combined timing σ68 | 0.089 ns | MC_METHOD_CLOSURE | ✅ PASS | clusterB #918 |
-| Detector timing resolution (data) | withheld | BLOCKED_DATA | ⛔ BLOCKED | CL-002..006 |
+| Detector timing resolution (data) | ≥38 ns (sampling-limited) | DATA_MEASUREMENT | 🟡 GATED (format-limited) | CL-002..006 |
 | Pile-up Rmax (canonical) | withheld | BLOCKED | ⛔ BLOCKED | CL-010 (S-STAT-003) |
 | Legacy Rmax = 3.044 MHz | SUPERSEDED | SUPERSEDED | 🚫 SUPERSEDED | CL-012 (do not use) |
 | Rmax (digitizer domain, 0% gate) | 0.605 MHz | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
@@ -94,7 +102,7 @@ something LUNARC can settle.
 
 ## Residue / blockers (carried forward, not hidden)
 
-- **BLOCKED_DATA — raw beam ROOT not on LUNARC.** `hrdb_run_*.root` (data-side ΔE-E, ADC, composite-key join, PID-on-data, data-side timing waveforms) is not staged. The Krakow 1M MC and the derived `s00_selected_b_pulses.csv.gz` are. Until the raw ROOT is staged, every detector-performance claim stays at MC-closure level.
+- **DATA-SIDE STAGED & MEASURED (2026-07-25).** The raw `hrdb_run_*.root` is now at `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/`. ΔE-E (corr +0.221) and Rmax (2.92 MHz) measured on real beam data; detector timing shown INFEASIBLE on the raw 16-sample format (σ₆₈ ≥ 38 ns sampling-limited). See `reports/studies/data_side/REPORT.md`. PID-on-data and absolute Rmax calibration still need additional metadata (run duration / species tags).
 - **Operator-bench — device calibration / measured electronics.** SiPM PDE / reflectivity / coupling, digitizer gain against a pulser, and measured time anchors are bench measurements; LUNARC cannot produce them. The ±30% CL-013 envelope is a heuristic, not a confidence interval.
 - **Opticks — GPU gather PARTIAL.** Production GDML ingestion, 4-SiPM annotation, and 148k photons/event upload are proven on the A40; the residual is the device→host GATHER returning null in standalone EventMode (a pipeline configuration point), not a sensor/geometry defect. CPU reference ctest 9/9 PASS.
 - **Canonical Rmax definition open** (S-STAT-003). clusterC's 0.605 MHz is a digitizer-domain quality-gate number; it is not a detector capacity until the occupancy-quality threshold is fixed and validated against data.

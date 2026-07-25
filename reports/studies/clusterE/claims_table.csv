@@ -15,3 +15,7 @@ Anomaly / C12 identity,25/38 toy early-peak C12,TRUTH_LEVEL_MC_ONLY,BLOCKED,MV6 
 Stopping-depth data/MC closure,χ²/ndf ≈ 6.8e4  FAIL,MC_DIAGNOSTIC,TENSION,MV3 / CL-021 (BLK-MV3-LEGACY-001),mv3_stop_frac.png,CL-021
 Opticks GPU-vs-CPU parity,0 GPU hits / 4592 CPU,SIMULATION_RESULT,PARTIAL,opticks (#920),opticks_gpu_vs_cpu_parity.png,—
 Systematic uncertainty budget,incomplete,BLOCKED,BLOCKED,CL-026 (BLK-SYST-001),docs/SYSTEMATIC_UNCERTAINTIES.md,CL-026
+S00 raw-data provenance verified,640737 (96.4% overlap),DATA_MEASUREMENT,VALIDATED,data_side/REPORT.md,reports/studies/data_side/s00_rebuild,CL-001
+ΔE-E correlation (real data),+0.221,DATA_MEASUREMENT,DONE_DATA_ONLY,data_side/REPORT.md,VIS-DE-001-DATA_deltaE_E_real.png,CL-DATA-DEE
+Detector timing σ₆₈ (raw 16-sample),>=38 ns (sampling-limited),DATA_MEASUREMENT,GATED,data_side/REPORT.md,VIS-TIM-DATA_sampling_limited.png,CL-002
+Rmax (data-derived),2.92 MHz,DATA_MEASUREMENT,DONE_DATA_ONLY,data_side/REPORT.md,VIS-PU-DATA_occupancy_rmax.png,CL-010

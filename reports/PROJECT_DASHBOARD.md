@@ -5,7 +5,7 @@ numbers), what is BLOCKED, and the MC-validation status. Synthesised from the
 four analysis clusters (A-D) + Opticks, all merged on `origin/main`.
 
 - **Status:** research in progress. All numbers **preliminary, not peer-reviewed**.
-- **Last updated:** 2026-07-25 (Cluster E synthesis; canonical state `docs/claim_ledger.csv`).
+- **Last updated:** 2026-07-25 (Cluster E synthesis + real-beam data-side study; canonical state `docs/claim_ledger.csv`).
 - **Reading order:** this dashboard → `reports/studies/clusterE/SUMMARY.md` (synthesis
   figures + claim table) → per-cluster `reports/studies/cluster{A,B,C,D}/SUMMARY.md` →
   `docs/claim_ledger.csv` (canonical row-by-row status).
@@ -31,7 +31,7 @@ table are. Device/electronics calibration is an operator-bench item.
 | **What** | CCB test-beam analysis (190 MeV protons on CD2, HRD scintillator range stacks) cross-validated against the Krakow 1M-event Geant4 MC. |
 | **Proven on MC (PASS)** | combined timing **σ68 = 0.089 ns** (4-sensor) · PID p-vs-d **AUC = 0.898** · ADC **119.17 ADC/MeV** · Birks **kB = 0.0156 cm/MeV** · digitizer-domain **Rmax = 0.605 MHz** · Opticks CPU `ctest 9/9`. |
 | **Proven on data (VALIDATED)** | S00 selected B-stack pulses = **640,737** (CL-001, the one data-pipeline PASS). |
-| **BLOCKED_DATA** | detector timing resolution · data-side PID · raw `hrdb_run_*.root` not staged. |
+| **DATA-SIDE (MEASURED 2026-07-25)** | raw `hrdb_run_*.root` now staged & analysed: ΔE-E corr +0.221 (33,966 evts); Rmax data-derived **2.92 MHz** (corroborates CL-010 3.05). Detector timing **INFEASIBLE** on raw 16-sample format (σ₆₈ ≥ 38 ns sampling-limited) → CL-002..006 now GATED. See `reports/studies/data_side/REPORT.md`. |
 | **BLOCKED / GATED (canonical)** | canonical Rmax (CL-010) · MV0 gain (CL-013 GATED) · systematic budget (CL-026) · anomaly/C12 ID (CL-022) · MV3 stopping TENSION. |
 | **SUPERSEDED** | legacy Rmax = 3.044 MHz (CL-012 — do **not** use). |
 | **PARTIAL** | Opticks GPU gather — proven up to the device→host GATHER (EventMode config point); 0 GPU hits gathered. |

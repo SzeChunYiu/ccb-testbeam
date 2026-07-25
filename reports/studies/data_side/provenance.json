@@ -1,0 +1,44 @@
+{
+  "canonical_table": "reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz",
+  "canonical_rows": 640737,
+  "canonical_count_CL001": 640737,
+  "rebuilt_table": "reports/studies/data_side/s00_rebuild/s00_selected_b_pulses.csv.gz",
+  "rebuilt_rows": 709003,
+  "documented_dynamic_range_selected_s00c": 706373,
+  "documented_median_first_four_selected_s00c": 640737,
+  "raw_dir": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root",
+  "nsamp_per_channel": 16,
+  "layout": "channel-major (8,16); verified by exact baseline/amplitude match",
+  "composite_key_overlap": 617377,
+  "rebuilt_only": 91626,
+  "canonical_only": 23360,
+  "event_31_391389_B2_canonical_amp": 7858.5,
+  "event_31_391389_B2_rebuilt_amp": 7858.5,
+  "event_31_391389_B2_baseline_match_exact": true,
+  "canonical_run_range": [
+    31,
+    65
+  ],
+  "n_runs_used": 33,
+  "raw_input_sha256": [
+    {
+      "run": 31,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0031.root",
+      "sha256": "0986c8263d7445eda3633578fc606902d487a6c8ffb4b4ccd68336e6d140c268",
+      "bytes": 10493094
+    },
+    {
+      "run": 32,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0032.root",
+      "sha256": "6a070aa1881d39ba660f566496503b6e96b104af3594d04ce8ffbfe586820693",
+      "bytes": 10955325
+    },
+    {
+      "run": 33,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0033.root",
+      "sha256": "f08c8e8cf9a6ff53deb1b3a58413e009a00ffbaf5ed13e1cda10304619bcd87a",
+      "bytes": 15148919
+    }
+  ],
+  "raw_input_sha256_count": 33
+}

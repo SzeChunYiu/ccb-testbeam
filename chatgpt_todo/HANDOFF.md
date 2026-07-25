@@ -1,134 +1,94 @@
-# Latest Scientific-Review Handoff
+# Latest Handoff — AUD-PID-001 Chapter 8 MV1 source synchronization
 
-## Session identity
+## Delivery identity
 
-- **UTC stamp:** `2026-07-25T121422Z`
-- **Task:** `AUD-WIKI-004`
-- **Unit:** close the evidence and coordination gap for the exact S10b live-time
-  public-WIKI remediation
-- **Initial remote `main`:** `0e32bf3f5956162d30259489d6d99295280e06fb`
-- **Core remediation commit:**
-  `0e32bf3f5956162d30259489d6d99295280e06fb`
-- **Complete delivery handoff / recorded after-SHA:**
-  `f28d04ec9742e3e42a78d054836309611384ce68`
-- **Destination:** direct focused commits to remote `main`; no force-push,
-  branch transport, PR, or history rewrite
-- **Push result:** GitHub contents writes returned successful direct-main commit
-  SHAs; post-write history confirmed
-  `f28d04ec9742e3e42a78d054836309611384ce68` on remote `main`
-- **Acceptance:** **COMPLETE** for `AUD-WIKI-004`; the cumulative repository-wide
-  WIKI audit remains open for unrelated claims and links
+- **Session stamp:** `2026-07-25T131727Z`
+- **Initial remote `main`:** `8cb0516e80f641d9f00d01d968ed0389ca48cac3`
+- **Task-claim commit:** `bcdd9bb82d118ccfa8562956a61563ca6d82873b`
+- **Validated core commit:** `2f653429c2b7ead1d35752a23f3bb908506dd23d`
+- **Destination:** direct fast-forward commits to remote `main`; no force-push,
+  history rewrite, task branch, or PR transport
+- **Acceptance:** focused Chapter 8 documentation and fail-closed source binding
+  COMPLETE; scientific `CL-017`/`CL-018` claims remain `GATED`
 - **Immutable archive:**
-  `chatgpt_todo/archive/2026-07-25T121422Z_AUD-WIKI-004_PUBLIC_REMEDIATION.md`
+  `chatgpt_todo/archive/2026-07-25T131727Z_AUD-PID-001_CHAPTER8_SOURCE_SYNC.md`
 
-## Start-of-run review
+## What was corrected
 
-Inspected current `main`, recent history and concurrent changes, repository
-permissions, open PRs, closed PR #868, the corrected root WIKI, exact-width
-`CL-011`, Chapter 5, the integration regression, the prior location-bound
-validator, and the mandatory coordination files.
+The former Chapter 8 contradicted the tracked producer and summary. It labelled
+traditional-cut purity as AUC, described truth-MC row-index output as beam-data
+leave-one-run-out, promoted an HGB point estimate as an irreducible performance
+ceiling, published untracked stopping-depth/combined-rule/systematic claims, and
+interpreted MV2 quantities without a bound momentum-unit conversion.
 
-No active task was duplicated. PR #868 remained closed, unmerged, and
-non-mergeable and was not modified. The core remediation commit had no attached
-status checks.
+The replacement chapter now reports only the tracked fixed outputs:
 
-## Canonical scientific contract
+- `400369` charged B-arm tracks;
+- `150130` protons and `146842` deuterons;
+- `296972` proton/deuteron tracks;
+- traditional threshold `13.287866011130776 MeV`, purity
+  `0.8909863556160177`, efficiency `0.900961577750235`;
+- logistic AUC `0.9628868703282414`, purity `0.9488978818667125`;
+- HGB AUC `0.9859658513538254`, purity `0.9644090769970706`.
 
-The public claim is bound to the tracked S10b data-only estimand:
+It binds the result to exact-width `CL-017` and `CL-018`, records
+`truth_type=mc_truth_only`, `status=GATED`, blocker `BLK-MV1-001`, and states
+that no beam-data PID performance metric is established.
 
-- S10b run-average 10% template live-time relative to CFD20;
-- `124.79018394263471 ns`;
-- run-bootstrap 95% interval
-  `[123.33094981246663, 126.35875117626817] ns`;
-- 14 runs and 252266 selected pulses;
-- `truth_type=data_measurement`;
-- `status=DONE_DATA_ONLY`;
-- blocker `BLK-S10B-001`;
-- no separate statistical, systematic, or total uncertainty components.
+## Source traceability
 
-The pile-up narrative states that this is a threshold-, selection-, and
-run-weighting-specific estimand rather than a detector-wide universal dead time,
-and that MV5 reuses it as an input rather than independently validating it.
-Numerical Rmax remains withheld under `S-STAT-003`.
+- former chapter blob: `5ad66ea8e7bfb22ca0cf4c1baf1e0b2cb759e527`
+- claim-ledger blob: `254dc5b64945260193d6b1bd4146bd6400ad28cf`
+- producer blob: `4f3632e59ede59bcf27e053265908ddca77b4386`
+- summary blob: `9e49af48025b9699d957e932d06901dd47a45321`
+- source commit: `3539ae3aad222284bd7be100802a2651c0e064de`
 
-## Exact remote identities
+## Files delivered in the core commit
 
-- corrected WIKI blob: `001e091f82756f45339fe5e48256a951b6331295`;
-- canonical ledger blob: `254dc5b64945260193d6b1bd4146bd6400ad28cf`;
-- integration-test blob: `fb049a100501d5091f85daab7d4cd715a9107586`;
-- Chapter 5 blob: `02a9ba538b1627e1ef3cda78594a4f08446fbffe`.
+- `docs/academic_chapters/08_particle_id.md`
+- `tools/audit/validate_chapter8_mv1_claims.py`
+- `tests/test_validate_chapter8_mv1_claims.py`
+- `tools/audit/render_chapter8_mv1_claims_evidence.py`
+- `docs/validation/chapter8_mv1_claims_audit.md`
+- `docs/validation/chapter8_mv1_claims_validation.json`
+- `docs/validation/chapter8_mv1_claims.svg`
 
-## Independent validation
-
-A full network checkout remained unavailable because the execution container
-could not resolve `github.com`. The exact GitHub-fetched canonical-table section,
-pile-up section, and ledger header plus `CL-011` were reconstructed locally and
-checked independently.
+## Validation
 
 ```text
 python -m py_compile \
-  tests/test_wiki_tau_eff_public_remediation.py \
-  tools/validate_remediation_snapshot.py
+  tools/audit/validate_chapter8_mv1_claims.py \
+  tests/test_validate_chapter8_mv1_claims.py \
+  tools/audit/render_chapter8_mv1_claims_evidence.py
 
-python tools/validate_remediation_snapshot.py
+PYTHONPATH=. pytest -q tests/test_validate_chapter8_mv1_claims.py
 
-status: VALIDATED
-issues: 0
+7 passed in 0.04s
 ```
 
-The exact committed integration-test source compiled successfully. Its longest
-line was 85 characters. The validation JSON records exact snapshot SHA-256
-values. The SVG parsed successfully as XML, and the linked Chapter 5 target
-exists and labels the result `DONE_DATA_ONLY` while withholding numerical Rmax.
+The accepted fixture returned `VALIDATED` with zero issues. The stale chapter
+fixture returned `FLAWED` with eight issues. Mutated ledger status, summary AUC,
+and row-parity source contract failed. Invalid UTF-8 and output/input aliasing
+returned controlled status 2. JSON and SVG parsing passed; changed Python lines
+were at most 100 characters.
 
-## Evidence delivered
+## Scientific boundary
 
-- `docs/validation/wiki_tau_eff_public_remediation_audit.md`
-- `docs/validation/wiki_tau_eff_public_remediation_validation.json`
-- `docs/validation/wiki_tau_eff_public_remediation.svg`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- immutable archive listed above
-- this handoff
+No ROOT input was opened, no classifier was retrained, no beam-data label was
+constructed, and no new uncertainty, range-energy closure, calibration,
+stopping-depth result, or detector-performance claim was produced. A larger HGB
+point AUC alone does not authorize the model.
 
-## Direct-main commit sequence
+## Required next work
 
-- `0e32bf3f5956162d30259489d6d99295280e06fb` — corrected both public WIKI
-  locations and added the integration regression;
-- `0eb523905aecea718b752c5aba9959b068cadf2f` — audit report;
-- `0105418655613486b7c74fe072847852f936986b` — machine-readable evidence;
-- `cd535220b5eba5b805711413aea6d5a2a4dab342` — visual evidence;
-- `e4ed90b2befad8a8b44d17014827f0dfc4c11674` — active-task completion;
-- `852040143547d08db8c619d7469410652d69065c` — immutable archive;
-- `f28d04ec9742e3e42a78d054836309611384ce68` — complete delivery handoff,
-  confirmed on remote `main`.
+1. Recover or regenerate immutable ROOT provenance and execution environment.
+2. Retain event/run identifiers and use event/run-group-disjoint validation.
+3. Freeze seeds and model versions; run repeated-split and event/run bootstrap.
+4. Compare transparent physics baselines, calibrated flexible models, and
+   failure slices with uncertainty and multiplicity controls.
+5. Validate data/MC feature transfer before publishing beam-data PID metrics.
+6. Establish exact MV2 momentum branch units before range-energy interpretation.
 
-## Checks not run
-
-- repository-wide pytest and ruff;
-- exact three-validator integration pytest in a complete checkout;
-- repository-wide broken-link inventory;
-- GitHub Actions;
-- ROOT waveform reprocessing or an S10b fit rerun.
-
-No broader CI or physics closure is claimed.
-
-## Coordination boundary
-
-`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate
-matrices were reviewed but not replaced. The connector provides whole-file
-replacement rather than a byte-safe append or patch, and the shared records are
-long-lived and partly stale relative to many later immutable archives. Replacing
-a partial reconstruction could erase unrelated provenance. This handoff and the
-immutable archive provide the complete append-equivalent record; aggregate
-synchronization remains an explicit repository-governance gap.
-
-## Scientific boundary and next work
-
-This unit validates public documentation and provenance only. It does not
-establish a detector-wide universal dead time, accepted numerical Rmax, a new
-uncertainty model, calibration, or detector performance. Independent S10b
-closure/systematic studies remain under `BLK-S10B-001`; Rmax remains under
-`S-STAT-003`.
-
-The next non-duplicative WIKI unit should audit another still-unmapped public
-claim or link rather than revisiting `CL-011`.
+PR #868 remains closed, unmerged, non-mergeable, and untouched. Repository-wide
+pytest, ruff, ROOT processing, classifier rerun, and GitHub Actions were not run;
+no broad CI or scientific-performance success is claimed.

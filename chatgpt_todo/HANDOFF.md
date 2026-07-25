@@ -7,6 +7,7 @@
 - **Unit:** fail-closed Markdown link-checker correction
 - **Initial remote `main`:** `bf46fe4ef69a5fdf24d39f264d90218b0335f491`
 - **Validated implementation/evidence head:** `24208f68995c84555969e6c0a514b8f05501ba89`
+- **Complete delivery handoff:** `1475422c30f07c4a97e25ec70fc973d129bfc5d2` was confirmed as remote `main` head; this update records confirmation metadata only
 - **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or PR transport
 - **Acceptance:** **COMPLETE** for the focused software/documentation-provenance unit
 
@@ -49,16 +50,10 @@ as the more traceable method.
 
 `MARKDOWN_LINK_TARGETS_MUST_BE_UTF8_AND_REPOSITORY_LOCAL`
 
-The tool now:
-
-- reads exact bytes and decodes strict UTF-8;
-- emits `INVALID_UTF8` rather than crashing or altering bytes;
-- resolves percent-encoded repository-local paths;
-- rejects outside-root targets with `TARGET_ESCAPES_ROOT`;
-- reports absent targets with `MISSING_TARGET`;
-- sorts files and findings deterministically;
-- optionally writes deterministic JSON through same-directory temporary publication;
-- returns 0 for no findings, 1 for validated findings, and 2 for audit I/O failure.
+The tool now reads exact bytes, reports strict UTF-8 failures without altering source,
+resolves percent-encoded paths, rejects outside-root targets, reports missing targets,
+sorts results deterministically, writes optional JSON atomically, and returns controlled
+status codes 0/1/2.
 
 Added:
 
@@ -73,8 +68,6 @@ Updated `chatgpt_todo/ACTIVE_TASK.md` and this handoff.
 
 ## Validation
 
-Executed on exact reconstructed files:
-
 ```text
 python -m py_compile \
   scripts/broken_link_checker.py \
@@ -86,14 +79,8 @@ pytest -q tests/test_broken_link_checker.py
 6 passed in 2.55s
 ```
 
-Regression coverage includes:
-
-- valid local, external, and fragment-only examples;
-- missing target with clean status 1 and structured JSON;
-- controlled invalid-UTF-8 finding;
-- root escape rejection even when the outside file exists;
-- percent-encoded path resolution;
-- deterministic atomic JSON publication.
+Coverage includes valid links, missing targets, invalid UTF-8, root escapes,
+percent-encoded paths, and deterministic atomic JSON publication.
 
 Committed bytes match local validation:
 
@@ -111,38 +98,37 @@ Geant4 execution, or detector-data regeneration is claimed.
 ## Direct-main commit sequence
 
 - `95421705ea9a9606433c3b047e31d78d0378cc01` — claim task;
-- `74333e8a97712c9007de38b70baa49aaa75f688b` — fail-closed implementation;
-- `b993128fdfd6976ecad3932a41391a6be6c9d75b` — focused tests;
-- `1038c5dbae72dd28c830f4cacb6762583dbdb633` — deterministic evidence renderer;
-- `634560d83be831d592900a84e5a76d361ba99379` — machine-readable validation;
-- `7614347d89af030952a9e564d5e16cece8eff83f` — visual evidence;
+- `74333e8a97712c9007de38b70baa49aaa75f688b` — implementation;
+- `b993128fdfd6976ecad3932a41391a6be6c9d75b` — tests;
+- `1038c5dbae72dd28c830f4cacb6762583dbdb633` — renderer;
+- `634560d83be831d592900a84e5a76d361ba99379` — validation JSON;
+- `7614347d89af030952a9e564d5e16cece8eff83f` — SVG evidence;
 - `925ae74bcebba8bb2ad671043c4d80d718312706` — audit report;
-- `1f06250b0be54daef915b2fe5c111ba4cc4def28` — active-task completion;
-- `24208f68995c84555969e6c0a514b8f05501ba89` — immutable archive.
+- `1f06250b0be54daef915b2fe5c111ba4cc4def28` — task completion;
+- `24208f68995c84555969e6c0a514b8f05501ba89` — immutable archive;
+- `1475422c30f07c4a97e25ec70fc973d129bfc5d2` — complete handoff, confirmed on remote `main`.
 
-The GitHub contents connector returned commit SHAs rather than conventional textual
-`git push` output. Recent-history inspection confirmed the sequence on remote `main`
-before this handoff write.
+The connector returned successful commit SHAs instead of conventional textual `git push`
+stdout. Post-write history confirmed the complete delivery handoff on remote `main`.
 
 ## Scientific boundary
 
 This validates documentation-path and source-byte handling only. Link existence does not
 establish that a linked scientific claim, dataset, simulation, plot, table, or conclusion
-is correct. The tool does not parse reference-style link definitions, verify Markdown
-heading anchors, test case-sensitive portability, or request external URLs.
+is correct. Reference-style link definitions, heading anchors, case-sensitive portability,
+and external URL availability remain outside this unit.
 
 ## Coordination limitation
 
 `SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and aggregate matrices were reviewed
-but not replaced. They are shared long-lived files, and this connector provides whole-file
-replacement rather than byte-safe append or patch semantics. Replacing a partially
-reconstructed or concurrently changed file could erase unrelated provenance. The
-immutable archive and this handoff preserve the complete append-equivalent record; the
-aggregate synchronization requirement remains explicitly unmet.
+but not replaced because the connector provides whole-file replacement rather than
+byte-safe append/patch semantics for these shared long-lived files. The immutable archive
+and this handoff preserve the complete append-equivalent record. This remains an explicit
+unmet aggregate-synchronization requirement.
 
 ## Next action
 
-Extend the checker only through separate focused regressions for reference-style links,
-heading anchors, and case-sensitive portability, then run a complete checkout-wide link
-inventory under the repository's Python 3.11 CI environment. Keep external URL checking
-separate from deterministic repository-local provenance validation.
+Add separately tested support for reference-style links, heading anchors, and
+case-sensitive portability, then run a complete checkout-wide inventory in the
+repository's Python 3.11 CI environment. Keep external URL checks separate from
+deterministic repository-local provenance validation.

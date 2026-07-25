@@ -11,7 +11,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 POLICY = "ADAPTER_METADATA_MUST_MATCH_CURRENT_ANALYZER_OPTICAL_CONTRACT"
 EXPECTED_ANALYZER_VERSION = "2.0.0"
 EXPECTED_ANALYZER_POLICY = (
@@ -161,15 +161,15 @@ def audit_sources(adapter: str, analyzer: str, contract: str) -> dict[str, Any]:
                 }
             )
 
-    contract_lower = contract.lower()
-    if "analyzer version 2.0.0" not in contract_lower:
+    contract_normalized = " ".join(contract.lower().split())
+    if "analyzer version 2.0.0" not in contract_normalized:
         findings.append(
             {
                 "code": "CONTRACT_ANALYZER_VERSION_MISSING",
                 "detail": "EVENT_CONTRACT.md does not bind analyzer version 2.0.0",
             }
         )
-    if "uses the exact total-optical count" not in contract_lower:
+    if "uses the exact total-optical count" not in contract_normalized:
         findings.append(
             {
                 "code": "CONTRACT_TOTAL_DENOMINATOR_MISSING",

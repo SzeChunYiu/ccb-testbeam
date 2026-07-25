@@ -7,6 +7,11 @@
 - **Initial remote `main`:** `8ceda40d2f71d53a93bb02568c8e90509c973e0c`
 - **Validated implementation/evidence/archive head:**
   `2300d39f92d01cb73e545f6f68c6ad6c7641ed86`
+- **Validated delivery handoff / after-SHA:**
+  `1dc7d81d9cb26bb047e6839089fef93e8b51daed`
+- **Remote-main confirmation:** a post-write history read returned
+  `1dc7d81d9cb26bb047e6839089fef93e8b51daed` as remote `main` head before this
+  confirmation-only metadata update.
 - **Destination:** direct GitHub contents-API commits to remote `main`; no
   force-push, history rewrite, task branch, or PR transport.
 - **Push-output boundary:** the connector returned successful commit SHAs rather
@@ -25,12 +30,6 @@ resolve `github.com`, so a complete clone was unavailable. Exact source blobs we
 fetched through the authenticated connector; focused Python files were reconstructed
 and executed locally.
 
-## Scientific question
-
-Does Cluster E's new executive synthesis faithfully bind public values, evidence
-classes, statuses, and provenance to the canonical ledger while keeping later
-Cluster D reruns and toy studies separate?
-
 ## Canonical facts and distinct diagnostics
 
 Canonical ledger:
@@ -48,7 +47,7 @@ Distinct Cluster D outputs:
 - MV3 rerun chi2/ndf `86135.4707883642`;
 - MV6 toy early-peak C12 subset `25/38`.
 
-Cluster D documentation says these outputs do not silently supersede the canonical
+Cluster D documentation says these outputs do not silently supersede canonical
 cross-domain claim rows.
 
 ## Confirmed defects
@@ -58,8 +57,7 @@ The exact current Cluster E bundle is `FLAWED` with 13 findings:
 1. dashboard, summary, and claims CSV substitute the Cluster D `110 ADC/MeV`
    rerun for canonical `CL-013=92 ADC/MeV` with the `28 ADC/MeV` envelope;
 2. dashboard and summary conflate the Cluster D MV3 rerun with canonical `CL-021`;
-   the CSV also changes the exact canonical value/status to rounded `6.8e4` and
-   `TENSION` instead of `FLAWED`;
+   the CSV changes the exact canonical value/status to rounded `6.8e4`/`TENSION`;
 3. dashboard, summary, and CSV substitute the MV6 toy `25/38` C12 subset for
    canonical `CL-022=283/87555` and alter its status;
 4. provenance uses literal `(worktree HEAD)`, only 12 digest characters, and omits
@@ -87,10 +85,10 @@ Updated:
 - `chatgpt_todo/HANDOFF.md`
 
 The validator snapshots strict UTF-8 bytes once, enforces the exact 43-column
-ledger contract and unique IDs, validates the three canonical rows, checks the
-actual dashboard/summary/CSV claim locations, separates canonical CL-021 from the
-MV3 rerun, requires a full base commit and full input SHA-256 mappings, rejects
-malformed input and destructive aliases, and publishes JSON atomically.
+ledger contract and unique IDs, validates the three canonical rows, checks actual
+claim locations, separates canonical CL-021 from the MV3 rerun, requires a full
+base commit and full input SHA-256 mappings, rejects malformed input and destructive
+aliases, and publishes JSON atomically.
 
 ## Validation
 
@@ -110,10 +108,10 @@ publication were covered. JSON and SVG parsing passed; changed Python lines are 
 longer than 100 characters.
 
 Exact current-repository end-to-end execution and PNG regeneration were not run
-because a complete checkout was unavailable. The machine-readable record explicitly
-separates exact GitHub-blob inspection from executable synthetic controls.
+because a complete checkout was unavailable. The machine-readable record separates
+exact GitHub-blob inspection from executable synthetic controls.
 
-## Direct-main sequence through archive
+## Direct-main sequence through delivery
 
 - `d7098e6e33bedf0eda4b09f7f57b48c63e4cc12e` — fail-closed audit gate
 - `13cae5e72a15c5124c886edbe21b4eced33d0352` — focused tests
@@ -123,12 +121,13 @@ separates exact GitHub-blob inspection from executable synthetic controls.
 - `72384a4f764a87c3aacafe87f13198129624e457` — audit report
 - `ea51ebd80daee410074f9cf4eb37e0599aafa4fc` — active task
 - `2300d39f92d01cb73e545f6f68c6ad6c7641ed86` — immutable archive
+- `1dc7d81d9cb26bb047e6839089fef93e8b51daed` — delivery handoff
 
 ## Acceptance and next action
 
 The focused audit gate/evidence is `VALIDATED`; cumulative `AUD-REP-001` is
 `PARTIAL`. Correct the generator to derive canonical fields, display later rerun/toy
-outputs as separate diagnostics, emit full hashes, transactionally regenerate every
+outputs separately, emit full hashes, transactionally regenerate every
 Markdown/CSV/JSON/PNG artifact, and require the exact repository validator plus link
 and focused test gates to return zero findings.
 

@@ -18,7 +18,7 @@ def render(record: dict[str, object]) -> str:
             f'<text x="930" y="{y}" font-size="20" font-weight="bold">{status}</text>'
         )
     height = 230 + len(checks) * 44
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="{height}"'
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="{height}"
  viewBox="0 0 1200 {height}">
 <rect width="1200" height="{height}" fill="white"/>
 <text x="52" y="54" font-size="30" font-weight="bold">NPY writer integrity validation</text>

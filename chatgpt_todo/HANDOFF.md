@@ -1,138 +1,143 @@
-# Latest Handoff — AUD-G4-024 NPY writer contract remediation
+# Latest Handoff — AUD-REP-001 Cluster E canonical binding audit
 
 ## Delivery identity
 
-- **Session stamp:** `2026-07-25T180216Z`
-- **Task ID:** `AUD-G4-024`
-- **Initial remote `main`:** `a5b108fc8ead2f644c8b362f3a8732ef1d0528fc`
+- **Session stamp:** `2026-07-25T190251Z`
+- **Task ID:** `AUD-REP-001`
+- **Initial remote `main`:** `8ceda40d2f71d53a93bb02568c8e90509c973e0c`
 - **Validated implementation/evidence/archive head:**
-  `b8f132ddf473c5026f4a5d1236a9ccdb7bb00e59`
-- **Validated delivery handoff / after-SHA:**
-  `e8186e585dba4345d540574169ad012e72ccbbe6`
-- **Remote-main confirmation:** this update is based on fetched handoff blob
-  `bdad0708f0bf6533c5a8b9f226b4c8e92806897a` and a post-write history read
-  whose head was `e8186e585dba4345d540574169ad012e72ccbbe6`.
+  `2300d39f92d01cb73e545f6f68c6ad6c7641ed86`
 - **Destination:** direct GitHub contents-API commits to remote `main`; no
   force-push, history rewrite, task branch, or PR transport.
 - **Push-output boundary:** the connector returned successful commit SHAs rather
   than conventional textual `git push` stdout.
-- **PR #868:** closed, unmerged, non-mergeable, and untouched.
 
 ## Reviewed repository state
 
-Fetched current `main`, recent history and CI status, open PRs, PR #868, merged
-Opticks PR #920, repository-local coordination records, the single-stave CMake
-configuration, NPY writer, and its RunAction/EventAction/SteppingAction/
-StackingAction/TrackingAction consumers.
+Fetched current `main`, recent history, combined status, open pull requests,
+mandatory coordination records, `docs/claim_ledger.csv`, Cluster D summary and
+MV0/MV3 outputs, Cluster E generator, project dashboard, Cluster E summary,
+claims table, metrics, provenance, and the Opticks summary.
 
-The execution container could not resolve `github.com`, so a complete clone was
-unavailable. Exact source bytes were fetched through the GitHub connector; the
-focused standalone C++/Python validation files were reconstructed and executed
-locally.
+No status checks were attached to initial head
+`8ceda40d2f71d53a93bb02568c8e90509c973e0c`. The execution container could not
+resolve `github.com`, so a complete clone was unavailable. Exact source blobs were
+fetched through the authenticated connector; focused Python files were reconstructed
+and executed locally.
+
+## Scientific question
+
+Does Cluster E's new executive synthesis faithfully bind public values, evidence
+classes, statuses, and provenance to the canonical ledger while keeping later
+Cluster D reruns and toy studies separate?
+
+## Canonical facts and distinct diagnostics
+
+Canonical ledger:
+
+- `CL-013 = 92 ADC/MeV`, with a `28 ADC/MeV` heuristic systematic envelope,
+  `data_mc_calibration_proxy`, `GATED`;
+- `CL-021 = 68269.40598948313` Pearson chi2/ndf,
+  `legacy_data_mc_profile_diagnostic`, `FLAWED`;
+- `CL-022 = 283/87555 = 0.003232254011764034`, `mc_truth_only`,
+  `TRUTH_LEVEL_MC_ONLY`.
+
+Distinct Cluster D outputs:
+
+- MV0 rerun `110 ADC/MeV`, KS `0.10773131550396098`;
+- MV3 rerun chi2/ndf `86135.4707883642`;
+- MV6 toy early-peak C12 subset `25/38`.
+
+Cluster D documentation says these outputs do not silently supersede the canonical
+cross-domain claim rows.
 
 ## Confirmed defects
 
-Former writer blob `21ab586666daa978e4befa3b7b3387e808d76495`:
+The exact current Cluster E bundle is `FLAWED` with 13 findings:
 
-1. copied the NumPy v1.0 header length in native byte order even though the
-   format requires a little-endian unsigned short;
-2. declared payload dtype `<f4` while writing native float bytes;
-3. did not check shape-product overflow;
-4. accepted a null payload for a non-empty array;
-5. ignored stream open, write, and flush state.
+1. dashboard, summary, and claims CSV substitute the Cluster D `110 ADC/MeV`
+   rerun for canonical `CL-013=92 ADC/MeV` with the `28 ADC/MeV` envelope;
+2. dashboard and summary conflate the Cluster D MV3 rerun with canonical `CL-021`;
+   the CSV also changes the exact canonical value/status to rounded `6.8e4` and
+   `TENSION` instead of `FLAWED`;
+3. dashboard, summary, and CSV substitute the MV6 toy `25/38` C12 subset for
+   canonical `CL-022=283/87555` and alter its status;
+4. provenance uses literal `(worktree HEAD)`, only 12 digest characters, and omits
+   used Opticks and MV3 sources;
+5. the generator hardcodes these conflicts, so reruns reproduce them.
 
-The exact former algorithm returned status `0` while an unwritable target
-produced no output file. In the calling path this could allow a successful
-`CCB_GPU_PHOTONS` message without a reusable artifact.
+The dashboard's statement that it is consistent with the ledger is therefore not
+currently true.
 
-Authoritative format reference:
-<https://numpy.org/doc/2.0/reference/generated/numpy.lib.format.html>.
+## Delivered gate and evidence
 
-## Validated remediation
+Added:
 
-Commit `e54f1f5d8c3a3175e3bce56e459d461c523e01cc`:
+- `tools/audit/validate_clusterE_canonical_binding.py`
+- `tests/test_validate_clusterE_canonical_binding.py`
+- `tools/audit/render_clusterE_canonical_binding_evidence.py`
+- `docs/validation/clusterE_canonical_binding_validation.json`
+- `docs/validation/clusterE_canonical_binding.svg`
+- `docs/validation/clusterE_canonical_binding_audit.md`
+- `chatgpt_todo/archive/2026-07-25T190251Z_AUD-REP-001_CLUSTERE_CANONICAL_BINDING.md`
 
-- emits the v1.0 header length explicitly as little-endian bytes;
-- emits little-endian float32 bytes on both little- and big-endian hosts;
-- requires at least one shape dimension;
-- rejects shape-product overflow;
-- rejects a null payload for a non-empty array;
-- checks output open, write, and flush state and throws before the caller can
-  report successful publication.
+Updated:
 
-Corrected header identity:
+- `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/HANDOFF.md`
 
-- Git blob: `0db837e3614eb725571e3863fce3a15855c52f03`
-- bytes: `3473`
-- SHA-256: `84df93606b6b2e3e5011806c2f2e652b9a2fb8e0c92008e9347c20163cb31b9d`
+The validator snapshots strict UTF-8 bytes once, enforces the exact 43-column
+ledger contract and unique IDs, validates the three canonical rows, checks the
+actual dashboard/summary/CSV claim locations, separates canonical CL-021 from the
+MV3 rerun, requires a full base commit and full input SHA-256 mappings, rejects
+malformed input and destructive aliases, and publishes JSON atomically.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tests/test_npy_writer_contract.py \
-  tools/audit/render_npy_writer_contract_evidence.py
+  tools/audit/validate_clusterE_canonical_binding.py \
+  tests/test_validate_clusterE_canonical_binding.py \
+  tools/audit/render_clusterE_canonical_binding_evidence.py
 
-pytest -q tests/test_npy_writer_contract.py
-6 passed in 0.36s
+pytest -q tests/test_validate_clusterE_canonical_binding.py
+6 passed in 0.05s
 ```
 
-The compiled C++ helper and NumPy loader validated exact float32 values and
-shape, explicit little-endian header bytes, valid empty `(0,4,4)` arrays, and
-fail-closed null, overflow, and unwritable-path controls. JSON and SVG parsing
-passed. Maximum changed line lengths were 82 characters for C++ and 92 for
-Python.
+The corrected fixture returned `VALIDATED` with zero findings. Current-like
+substitution, truncated digest, malformed row width, invalid UTF-8, and atomic JSON
+publication were covered. JSON and SVG parsing passed; changed Python lines are no
+longer than 100 characters.
 
-## Files and evidence
+Exact current-repository end-to-end execution and PNG regeneration were not run
+because a complete checkout was unavailable. The machine-readable record explicitly
+separates exact GitHub-blob inspection from executable synthetic controls.
 
-Updated:
+## Direct-main sequence through archive
 
-- `geant4/single_stave/include/NpyWriter.hh`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/HANDOFF.md`
+- `d7098e6e33bedf0eda4b09f7f57b48c63e4cc12e` — fail-closed audit gate
+- `13cae5e72a15c5124c886edbe21b4eced33d0352` — focused tests
+- `18e1b8cb3b2f441e1bdab922262f102860e59b37` — evidence renderer
+- `0a32012361d4f8aa4d533e2c5f82a2b0816ccb1b` — machine-readable evidence
+- `9a4181c4517b98862e09b4af8190aa21d4c9366a` — visual evidence
+- `72384a4f764a87c3aacafe87f13198129624e457` — audit report
+- `ea51ebd80daee410074f9cf4eb37e0599aafa4fc` — active task
+- `2300d39f92d01cb73e545f6f68c6ad6c7641ed86` — immutable archive
 
-Added:
+## Acceptance and next action
 
-- `tests/test_npy_writer_contract.py`
-- `tools/audit/render_npy_writer_contract_evidence.py`
-- `docs/validation/npy_writer_contract_validation.json`
-- `docs/validation/npy_writer_contract.svg`
-- `docs/validation/npy_writer_contract_audit.md`
-- `chatgpt_todo/archive/2026-07-25T180216Z_AUD-G4-024_NPY_WRITER_CONTRACT.md`
+The focused audit gate/evidence is `VALIDATED`; cumulative `AUD-REP-001` is
+`PARTIAL`. Correct the generator to derive canonical fields, display later rerun/toy
+outputs as separate diagnostics, emit full hashes, transactionally regenerate every
+Markdown/CSV/JSON/PNG artifact, and require the exact repository validator plus link
+and focused test gates to return zero findings.
 
-## Direct-main sequence through delivery
+No detector performance, data/MC transfer, precision calibration, C12 identity, or
+accepted stopping-profile closure was established.
 
-- `e54f1f5d8c3a3175e3bce56e459d461c523e01cc` — fail-closed writer
-- `09d4409e2b9091718b563b98da186376ce22cad6` — compiled regression
-- `b3dfbf5ab5a5710b5ada0e634c1ccfd6324269e8` — initial renderer
-- `5e064ca5bca2b1472679cf22071ef375dc3a8d8c` — valid SVG renderer
-- `c81ebf5e3ef42440429aae01f6712af491ce013e` — validation JSON
-- `1aea4a30415a8fb95dd12d91ed8c30fb07c6e64b` — visual evidence
-- `c8f0cbca9033010861c7982c1358d17d3e80c945` — audit report
-- `6444cc6693bd3c5183c9f88e4f25adbf24c1cc97` — active completion
-- `b8f132ddf473c5026f4a5d1236a9ccdb7bb00e59` — immutable archive
-- `e8186e585dba4345d540574169ad012e72ccbbe6` — delivery handoff
-
-## Scientific boundary and next action
-
-Focused serialization remediation is `VALIDATED`; cumulative GPU optical work
-is `PARTIAL`. No Geant4 event, Opticks propagation, hit gathering, optical
-yield, calibration, or detector-performance result was produced.
-
-Next, validate `(N,4,4)` vector cardinality against event counters, distinguish
-scintillation/Cerenkov/other input-photon creator processes, record GPU-vs-CPU
-transport mode in run metadata, fail closed on output-directory creation, retain
-per-event content hashes, and complete a preregistered CPU/GPU parity analysis
-only after successful GPU hit gather.
-
-## Unrun checks and coordination limitation
-
-Geant4 build/CTest, Opticks A40 execution, real input-photon regeneration,
-repository-wide pytest/ruff, broad link checking, and GitHub Actions were not
-run. No broad CI success is claimed.
-
-`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate
-matrices were read but not replaced. The connector exposes whole-file
-replacement while complete shared records are paged/truncated; replacing a
-partial reconstruction could erase unrelated append-only provenance. The
-immutable archive and this handoff preserve the append-equivalent record.
+Repository-wide pytest/ruff, Cluster E PNG regeneration, complete link inventory,
+and GitHub Actions were not run. `SESSION_LOG.md`, `MASTER_INDEX.md`, `BACKLOG.md`,
+`BLOCKERS.md`, and aggregate matrices were not replaced because complete current
+bytes were returned only through paged/truncated views; partial replacement could
+erase unrelated append-only provenance. The immutable archive and this handoff retain
+the complete append-equivalent record.

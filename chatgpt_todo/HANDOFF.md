@@ -6,8 +6,13 @@
 - **Initial remote `main`:** `1e284f8109e927aea67d0eaf2246477982a6dcc7`
 - **Validated implementation/evidence/archive head:**
   `a3d1e23e29e6578df0f5db2607710d1b3a65cd7b`
+- **Validated delivery handoff / recorded after-SHA:**
+  `81f34fec8ecca49f59e684171ace17a0b67b3bc7`
 - **Destination:** direct contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport
+- **Push result:** every contents write returned a successful commit SHA;
+  post-write remote history confirmed `81f34fec8ecca49f59e684171ace17a0b67b3bc7`
+  and all focused predecessors on `main`
 - **Focused remediation acceptance:** `VALIDATED`
 - **Cumulative task status:** `PARTIAL`
 - **Immutable archive:**
@@ -91,10 +96,10 @@ Python files are at most 100 characters per line.
 - `f9ab5666ab37078ee320a031f9b82ffac50daa3a` — audit report
 - `80bb4e37ed2ffa892f1cfaa1e3a856f2fa28487a` — active-task update
 - `a3d1e23e29e6578df0f5db2607710d1b3a65cd7b` — immutable archive
+- `81f34fec8ecca49f59e684171ace17a0b67b3bc7` — complete handoff
 
 The connector returns successful commit SHAs rather than conventional textual
-`git push` output. A post-write history read must confirm this handoff and all
-focused predecessors on remote `main`.
+`git push` output. Remote history confirmed the delivery handoff on `main`.
 
 ## Scientific boundary
 

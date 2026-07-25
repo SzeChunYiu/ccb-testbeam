@@ -82,8 +82,8 @@ sensor, wavelength_nm, time_ns, path_len_mm, detected)`. `<output>.meta.json`
 records the git commit, geometry hash, seed, configuration, and every optical
 input-table SHA-256.
 
-The current producer and `scripts/single_stave/analyze_single_stave.py` do not
-share identical branch names or count semantics. First read
+The current producer and `scripts/single_stave/analyze_single_stave.py` use
+different branch names and units. First read
 `scripts/single_stave/EVENT_CONTRACT.md` and run the explicit converter:
 
 ```bash
@@ -93,11 +93,12 @@ python scripts/single_stave/adapt_geant4_events.py \
   --output stave_p100.normalized.parquet
 ```
 
-The adapter validates the current schema and optical-count bookkeeping, but the
-legacy analyzer still uses a scintillation-only arrival bound. Direct current-
-ROOT analysis therefore remains blocked until that downstream check and its
-collection-efficiency denominator use the explicit total-optical counter and
-the integrated path is rerun on immutable ROOT bytes.
+Analyzer version 2.0.0 preserves the scintillation, WLS, and Cerenkov counters,
+verifies their exact total, and uses `n_optical_generated_total` for arrival
+bounds and collection-efficiency plots. This establishes schema/bookkeeping
+compatibility for normalized inputs. Scientific acceptance still requires an
+end-to-end execution on immutable real ROOT bytes with row-count and hash
+closure plus review of all generated diagnostics.
 
 ## Parameter provenance & status
 

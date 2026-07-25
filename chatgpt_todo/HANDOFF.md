@@ -10,11 +10,9 @@
 - **Later concurrent data-side merge:**
   `f283e61fd64b0826215251c92c9495428476a808` added a separate raw-beam event-level
   study while this remediation was being finalized. It did not modify the corrected Cluster A
-  script or summary. Its Rmax/claim-ledger upgrades were not accepted by this focused unit.
-- **Validated implementation/evidence/archive head:**
-  `6ce94adeb54c521f03a2b4f84b5a985e1ddff7f7`
-- **Validated delivery handoff / after-SHA:**
-  `0db10040dc53bfc235233a03163a40ee74f5053c`
+  script. Its Rmax/claim-ledger upgrades were not accepted by this focused unit.
+- **Validated code, tests, evidence, archive, and summary / after-SHA:**
+  `34a2677132aec6bead99059b76c3e233b5d6aa9c`
 - **Destination:** direct GitHub contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport.
 - **Push-output boundary:** successful commit SHAs were returned rather than conventional
@@ -67,7 +65,9 @@ source-bound estimand and uncertainty audit before acceptance.
 
 `reports/studies/clusterA/SUMMARY.md` now classifies the +0.18 correlation and stave counts as
 row-level descriptive quantities, not event-level stopping fractions or accepted data/MC
-closure. Existing Cluster A data-side PNGs are marked stale until regenerated.
+closure. Existing Cluster A data-side PNGs are marked stale until regenerated. The summary
+also distinguishes the later raw-beam event-level study and withholds acceptance of its Rmax
+upgrade pending a separate estimand audit.
 
 ## Validation
 
@@ -121,7 +121,7 @@ The SVG is synthetic software/provenance evidence, not detector data.
 - `fd1431a4d0ad2c36b852179d261f136588f8833f` — initial JSON evidence
 - `8417ee4eb4aed41b173f8653792f235cc8544409` — SVG evidence
 - `ef9d748327c67a773205978cd875c3fd9bbc8c2b` — initial audit report
-- `35fe7d8de23d333e285894678c608dfd4fd7d2c4` — summary correction
+- `35fe7d8de23d333e285894678c608dfd4fd7d2c4` — initial summary correction
 - `78b47bd7611277d7597acd71cdc53b297412adbf` — initial active task
 - `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa` — preliminary archive
 - `ec14003be6b789c5dc3b48bb3d65851cb25bc502` — preliminary handoff
@@ -132,7 +132,9 @@ The SVG is synthetic software/provenance evidence, not detector data.
 - `ec1ca0827e2dfe4620f66b53c11411960caec832` — final audit report
 - `a26a3cc257e2b34ab16684ee07c64acedfd40137` — final active task
 - `6ce94adeb54c521f03a2b4f84b5a985e1ddff7f7` — final immutable archive
-- `0db10040dc53bfc235233a03163a40ee74f5053c` — delivery handoff
+- `0db10040dc53bfc235233a03163a40ee74f5053c` — first final handoff
+- `8094baa6e59aeac4787fff36cbf6d95d27c5793b` — concurrent-publication reconciliation
+- `34a2677132aec6bead99059b76c3e233b5d6aa9c` — final summary synchronization
 
 ## Acceptance boundary and next action
 
@@ -150,7 +152,7 @@ recompute with the exact CL-011 estimand where applicable, define uncertainty an
 and do not label a derived convention as an absolute data measurement.
 
 Repository-wide pytest/ruff, broad link checking, and GitHub Actions were not run. No status
-checks were attached to the delivery handoff. PR #868 remains closed, unmerged, and untouched.
+checks were attached to the delivery commits. PR #868 remains closed, unmerged, and untouched.
 
 `SESSION_LOG.md`, `MASTER_INDEX.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were
 not replaced because complete current bytes are returned through paged/truncated views while

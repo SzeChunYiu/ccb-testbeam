@@ -1,12 +1,12 @@
 # Active Task
 
-- **Task ID:** AUD-WIKI-003
+- **Task ID:** AUD-DOC-003
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T000907Z
-- **Initial remote main SHA:** `94eb6705c5db6d10793532b6b2607b855806298b`
-- **Scope:** remediate the six root-WIKI MV3 public use sites so exact tracked counts and Pearson arithmetic are location-bound while the `FLAWED` scientific boundary remains explicit.
-- **Files:** `WIKI.md`; exact-current integration test; deterministic SVG renderer; validation JSON, SVG, audit report; immutable archive; latest handoff.
-- **Validation:** both existing MV3 WIKI validator contracts require zero findings; rounded canonical-row mutation fails closed; Python compilation and two focused tests passed in a reconstructed exact-contract fixture; JSON and SVG parsed.
-- **Result:** canonical table, material-impact row, PID narrative, MC validation matrix, blocking issue, and GAP-01 now contain exact source evidence and retain `BLK-MV3-LEGACY-001`.
-- **Scientific boundary:** exact fixed-source arithmetic is reproducible but does not establish geometry, selection-transfer, gain, covariance, p-value, detector-model, or B8 acceptance closure.
-- **Status:** COMPLETE — validated public-WIKI remediation and reproducible evidence delivered directly to remote `main`.
+- **Session stamp:** 2026-07-25T010711Z
+- **Initial remote main SHA:** `bf46fe4ef69a5fdf24d39f264d90218b0335f491`
+- **Scope:** repair and harden the repository Markdown link checker so invalid UTF-8, missing local targets, and repository-root escapes produce deterministic fail-closed findings instead of interpreter crashes or false passes.
+- **Repository evidence:** current `scripts/broken_link_checker.py` blob `0cc64c1e54291af0eed70ce3d4cfada976250e75` uses implicit text decoding and references undefined variable `boken`; open PR #883 proposes a partial stale fix but its Chapter 9 patch no longer applies to current `main`.
+- **Files:** `scripts/broken_link_checker.py`; focused tests; validation JSON/SVG/audit; relevant `chatgpt_todo/` ledgers, immutable archive, session log, and handoff.
+- **Validation plan:** reproduce both former crashes from exact current source; compile changed Python; run focused pytest; validate missing-link, invalid-UTF-8, root-escape, percent-encoding, valid-link, and atomic JSON cases; parse JSON/SVG; enforce 100-character Python lines; confirm remote `main` contains the delivery commit.
+- **Scientific boundary:** documentation integrity tooling cannot validate detector data, simulations, numerical physics, or external URLs; link presence alone does not establish scientific correctness.
+- **Status:** ACTIVE.

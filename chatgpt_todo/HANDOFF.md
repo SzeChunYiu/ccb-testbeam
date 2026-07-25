@@ -5,14 +5,10 @@
 - **Session stamp:** `2026-07-25T200019Z`
 - **Task ID:** `AUD-DATA-001`
 - **Initial remote `main`:** `39378e21c436344b43e9f659f5a76bce2bca1228`
-- **Concurrent change:** `c39aba2c55091aec501acbe402523e2d94be2c58` merged a
-  separate single-stave documentation review during this run. It did not alter the Cluster A
-  code, summary, tests, or validation evidence changed here.
+- **Concurrent non-overlapping merge:**
+  `c39aba2c55091aec501acbe402523e2d94be2c58`
 - **Validated implementation/evidence/archive head:**
-  `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa`
-- **Validated delivery handoff / after-SHA:**
-  `ec14003be6b789c5dc3b48bb3d65851cb25bc502`
-- **Status checks on delivery handoff:** none attached; no broad CI success is claimed.
+  `6ce94adeb54c521f03a2b4f84b5a985e1ddff7f7`
 - **Destination:** direct GitHub contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport.
 - **Push-output boundary:** successful commit SHAs were returned rather than conventional
@@ -20,45 +16,46 @@
 
 ## Reviewed state
 
-Reviewed the new Cluster A data-side merge, its exact source blob, public study summary,
-row/event-key semantics, MC comparison, recent history, open pull requests, PR #868, and the
-repository-local coordination records. The original script blob was
+Reviewed the newly merged Cluster A data-side script, its source blob, study summary,
+row/event-key semantics, MC plot weighting, repository history, open PRs, PR #868, and
+coordination files. The reviewed former script blob was
 `ccdc21dd967d0a25694261d488f959d89286a88d`.
 
-The execution container could not access the production derived CSV or Krakow ROOT. Exact
-GitHub source bytes were reconstructed locally for focused software tests. No production
-result was regenerated.
+The production derived CSV and Krakow ROOT were unavailable in the execution environment.
+Exact source bytes were reconstructed for focused software validation. No production result
+or figure was regenerated.
 
 ## Confirmed defects
 
-1. The data parser converted malformed numeric cells to `0.0`; NaN and infinity were not
-   rejected.
-2. The MC comparison loaded `PrimaryWeight` but plotted an unweighted hexbin. For two events
-   with weights 1 and 100 in one bin, the former plot value was 2 instead of 101.
-3. The data table contains 632,939 rows but 385,984 unique composite keys. Row-level stave
-   counts and correlation were described with event and stopping-distribution language
-   without a one-row-per-event composite merge.
-4. Input bytes and SHA-256 were absent from the result contract; JSON publication was not
-   atomic; importing the module executed the full analysis.
+1. Malformed numeric cells were converted to zero, and NaN/infinity were not rejected.
+2. `PrimaryWeight` was loaded but ignored in the MC hexbin. Two events with weights 1 and
+   100 yielded a plotted bin value of 2 instead of the correct weighted sum 101.
+3. The data table contains 632,939 rows and 385,984 composite keys. Row-level stave counts
+   and correlation were presented with event/stopping-distribution language without the
+   canonical one-row-per-event composite merge.
+4. Input identities were not content-addressed; JSON publication was non-atomic; importing
+   the module executed the analysis.
+5. An empty positive-ΔE/E selection could emit undefined medians rather than fail closed.
 
 ## Delivered remediation
 
-`scripts/studies/clusterA_data_side.py` now follows policy
+`scripts/studies/clusterA_data_side.py` now enforces policy
 `DATA_ROWS_MUST_BE_FINITE_AND_ROW_LEVEL_RESULTS_MUST_NOT_POSE_AS_EVENTS`:
 
-- strict UTF-8 single-read CSV input;
-- required-column, integer, finite numeric, and nonnegative-weight validation;
-- explicit row versus composite-event denominators;
-- `event_level_claims_authorized=false` until canonical composite merge;
-- exact data and MC byte count plus full SHA-256;
-- exact event-index alignment of `PrimaryWeight`;
-- `C=PrimaryWeight` and `reduce_C_function=np.sum` for MC hexbin density;
-- row-labelled data plots and explicit different-statistical-unit comparison;
+- strict UTF-8 single-read CSV snapshot;
+- required-column, integer, finite-numeric, and selected-sample validation;
+- explicit row and composite-key denominators;
+- `event_level_claims_authorized=false` pending canonical composite merge;
+- exact CSV/ROOT byte count and full SHA-256;
+- finite nonnegative `PrimaryWeight` aligned by absolute event index;
+- rejection of a selected MC weight vector with no positive weight;
+- MC bins equal to summed `PrimaryWeight`;
+- row-labelled data plots and explicit statistical-unit mismatch;
 - atomic JSON, CLI options, and a main guard.
 
-`reports/studies/clusterA/SUMMARY.md` now states that the published +0.18 correlation and
-stave counts are row-level descriptive quantities, not event-level stopping fractions or
-accepted data/MC closure. Existing data-side PNGs are marked stale until regenerated.
+`reports/studies/clusterA/SUMMARY.md` now classifies the +0.18 correlation and stave counts as
+row-level descriptive quantities, not event-level stopping fractions or accepted data/MC
+closure. Existing data-side PNGs are marked stale until regenerated.
 
 ## Validation
 
@@ -69,18 +66,19 @@ python -m py_compile \
   tools/audit/render_clusterA_data_side_semantics_evidence.py
 
 pytest -q tests/test_clusterA_data_side_contract.py
-6 passed in 0.31s
+7 passed in 0.36s
 ```
 
-Additional results:
+Additional checks:
 
-- malformed numeric, NaN, infinity, invalid weight shape/range, and event-index mismatch
-  failed closed;
-- exact weight control changed one-bin value from former 2 to correct 101;
-- JSON parsing: PASS;
-- SVG XML parsing: PASS;
-- maximum changed Python line lengths: script 95, tests 89, renderer 89 characters;
-- corrected script Git blob: `897024e70ce57474606c3011d85c06310866a173`.
+- malformed numeric, NaN, infinity, empty selected data, invalid weight shape/range, and
+  event-index mismatch fail closed;
+- synthetic weight control: former bin 2, corrected bin 101;
+- JSON parse: PASS;
+- SVG XML parse: PASS;
+- maximum changed Python line length: 96 characters;
+- validated script blob: `8bda06c55dc00c1af3e025411fcc55df43f1487e`;
+- validated test blob: `21d3c9ecdd2f9837cd8776adc69fccf5a9a11b63`.
 
 ## Delivered files
 
@@ -99,21 +97,29 @@ Added:
 - `docs/validation/clusterA_data_side_semantics.svg`
 - `docs/validation/clusterA_data_side_semantics_audit.md`
 - `chatgpt_todo/archive/2026-07-25T200019Z_AUD-DATA-001_CLUSTERA_ROW_WEIGHT_SEMANTICS.md`
+- `chatgpt_todo/archive/2026-07-25T200019Z_AUD-DATA-001_CLUSTERA_ROW_WEIGHT_SEMANTICS_FINAL.md`
 
 The SVG is synthetic software/provenance evidence, not detector data.
 
-## Direct-main sequence
+## Direct-main sequence before this handoff
 
-- `ae015d281a3791894a6098c4127b1dd5d5021a77` — implementation
-- `64f20672ae9d9ceba6506b47ac7cd6eaa06a1919` — focused tests
-- `37806271b196d0f78401690482612a6cb1841c61` — evidence renderer
-- `fd1431a4d0ad2c36b852179d261f136588f8833f` — validation JSON
+- `ae015d281a3791894a6098c4127b1dd5d5021a77` — initial implementation
+- `64f20672ae9d9ceba6506b47ac7cd6eaa06a1919` — initial focused tests
+- `37806271b196d0f78401690482612a6cb1841c61` — renderer
+- `fd1431a4d0ad2c36b852179d261f136588f8833f` — initial JSON evidence
 - `8417ee4eb4aed41b173f8653792f235cc8544409` — SVG evidence
-- `ef9d748327c67a773205978cd875c3fd9bbc8c2b` — audit report
+- `ef9d748327c67a773205978cd875c3fd9bbc8c2b` — initial audit report
 - `35fe7d8de23d333e285894678c608dfd4fd7d2c4` — summary correction
-- `78b47bd7611277d7597acd71cdc53b297412adbf` — active task
-- `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa` — immutable archive
-- `ec14003be6b789c5dc3b48bb3d65851cb25bc502` — delivery handoff
+- `78b47bd7611277d7597acd71cdc53b297412adbf` — initial active task
+- `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa` — preliminary archive
+- `ec14003be6b789c5dc3b48bb3d65851cb25bc502` — preliminary handoff
+- `ad8584fcd6479025a6eff96dc7cf2bc662dc5122` — preliminary confirmation
+- `22b0b5bf610bae8eab496d2b7b618d2884c28408` — empty-sample/positive-weight gate
+- `6034f47a5acad6a3eacc278e3408e6c9abfb9e98` — final regression
+- `e6c457bb322fe59013d13f3c073f036509d84849` — final JSON evidence
+- `ec1ca0827e2dfe4620f66b53c11411960caec832` — final audit report
+- `a26a3cc257e2b34ab16684ee07c64acedfd40137` — final active task
+- `6ce94adeb54c521f03a2b4f84b5a985e1ddff7f7` — final immutable archive
 
 ## Acceptance boundary and next action
 
@@ -122,14 +128,14 @@ Focused software remediation is `VALIDATED`; cumulative `AUD-DATA-001` is `PARTI
 No production CSV/ROOT execution, production figure, correlation, stopping distribution,
 data/MC closure, beam-data PID, calibration, or detector-performance quantity was
 regenerated or accepted. The next unit must bind immutable input hashes, rerun the corrected
-row-level diagnostic, review regenerated source metadata and figures, then separately run the
-canonical composite merge before making event-level statements.
+row-level path, review regenerated metadata and figures, and separately execute the canonical
+composite merge before making event-level statements.
 
 Repository-wide pytest/ruff, broad link checking, and GitHub Actions were not run. PR #868
 remains closed, unmerged, and untouched.
 
 `SESSION_LOG.md`, `MASTER_INDEX.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were
-not replaced because their complete current bytes are returned through paged/truncated views
-while the connector exposes whole-file replacement rather than byte-safe append. Replacing a
-partial reconstruction could erase append-only or concurrent provenance. The immutable
-archive and this handoff preserve the complete append-equivalent record.
+not replaced because complete current bytes are returned through paged/truncated views while
+the connector lacks byte-safe append. Replacing a partial reconstruction could erase
+append-only or concurrent provenance. The immutable archives and this handoff preserve the
+complete append-equivalent record.

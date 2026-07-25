@@ -1,0 +1,55 @@
+{
+  "acceptance": "VALIDATED_PUBLIC_REMEDIATION_EVIDENCE",
+  "artifact_sha256": {
+    "svg": "d9df96ee6b0295d97b178784a77861a06fa24311059e1ba3d07a6325e54ad70d"
+  },
+  "chapter_link": {
+    "exists": true,
+    "path": "docs/academic_chapters/05_pileup_analysis.md",
+    "remote_blob": "02a9ba538b1627e1ef3cda78594a4f08446fbffe"
+  },
+  "checks": [
+    {
+      "command": "python -m py_compile tests/test_wiki_tau_eff_public_remediation.py",
+      "result": "PASS"
+    },
+    {
+      "command": "python tools/validate_remediation_snapshot.py",
+      "result": "VALIDATED; 0 issues"
+    },
+    {
+      "command": "xml.etree.ElementTree.parse(docs/validation/wiki_tau_eff_public_remediation.svg)",
+      "result": "PASS"
+    }
+  ],
+  "ci_statuses_attached_to_core_commit": 0,
+  "issues": [],
+  "local_sha256": {
+    "canonical_excerpt": "ff155d1676d8b1f6e621f77c1cb0df33e41cf2bd10772205248c66702afb67fa",
+    "integration_test": "183b213b9abf03c8d46bfd98abb474fa0b902c5bff0852448cacd65180c46f88",
+    "ledger_excerpt": "efd028d22eed19c9a45b0e07a0bcc5d05a4e6205118e5ddeb5e72e997540af77",
+    "pileup_excerpt": "b9d8f0f5a2226c5f3462fee9b9696a65774328237cfaf30559039e882f410f9c"
+  },
+  "n_issues": 0,
+  "policy": "WIKI_TAU_EFF_REMEDIATION_EXACT_SECTION_SNAPSHOT",
+  "remote_ledger_blob": "254dc5b64945260193d6b1bd4146bd6400ad28cf",
+  "remote_main_commit": "0e32bf3f5956162d30259489d6d99295280e06fb",
+  "remote_test_blob": "fb049a100501d5091f85daab7d4cd715a9107586",
+  "remote_wiki_blob": "001e091f82756f45339fe5e48256a951b6331295",
+  "scientific_boundary": "Documentation/provenance validation only. No universal detector dead time, accepted Rmax, new uncertainty model, calibration, or detector-performance result is established.",
+  "session_stamp_utc": "2026-07-25T121422Z",
+  "snapshot_sources": {
+    "canonical_lines": "WIKI.md:54-75",
+    "ledger": "docs/claim_ledger.csv header + CL-011",
+    "pileup_lines": "WIKI.md:198-235"
+  },
+  "status": "VALIDATED",
+  "task_id": "AUD-WIKI-004",
+  "unrun_checks": [
+    "Repository-wide pytest",
+    "Exact three-validator integration pytest in a full checkout",
+    "Repository-wide broken-link inventory",
+    "Ruff and GitHub Actions",
+    "ROOT waveform reprocessing or fit rerun"
+  ]
+}

@@ -119,6 +119,17 @@ def test_contract_must_bind_version_and_total_semantics():
     assert "CONTRACT_TOTAL_DENOMINATOR_MISSING" in codes
 
 
+def test_wrapped_contract_prose_is_normalized():
+    mod = _load()
+    wrapped = (
+        "Analyzer version\n2.0.0 preserves all components and uses the\n"
+        "exact total-optical count for collection efficiency."
+    )
+    result = mod.audit_sources(_corrected_adapter(), _analyzer(), wrapped)
+    assert result["status"] == "VALIDATED"
+    assert result["finding_count"] == 0
+
+
 def test_cli_writes_atomic_json_and_status_one_for_stale_fixture(tmp_path: Path):
     adapter = tmp_path / "adapter.py"
     analyzer = tmp_path / "analyzer.py"
@@ -195,7 +206,7 @@ def test_invalid_utf8_and_output_alias_fail_closed(tmp_path: Path):
     assert "must not alias" in proc.stderr
 
 
-def test_current_repository_sources_when_available():
+def test_current_repository_sources_validate():
     root = Path(__file__).resolve().parents[1]
     adapter = root / "scripts" / "single_stave" / "adapt_geant4_events.py"
     analyzer = root / "scripts" / "single_stave" / "analyze_single_stave.py"
@@ -208,8 +219,5 @@ def test_current_repository_sources_when_available():
         analyzer.read_text(encoding="utf-8"),
         contract.read_text(encoding="utf-8"),
     )
-    assert result["status"] == "FLAWED"
-    assert any(
-        finding["code"] == "STALE_ANALYZER_BLOCKER_PUBLISHED"
-        for finding in result["findings"]
-    )
+    assert result["status"] == "VALIDATED"
+    assert result["finding_count"] == 0

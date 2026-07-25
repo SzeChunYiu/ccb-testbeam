@@ -1,0 +1,9 @@
+observable,variant,value,unit,is_nominal,source
+timing_sigma68,CFD,0.15058444895489473,ns,False,clusterB
+timing_sigma68,template,0.45081042102230556,ns,False,clusterB
+timing_sigma68,lead,0.7651163597838773,ns,False,clusterB
+timing_sigma68,combined,0.08934297497668915,ns,True,clusterB
+pid_auc_slice,entry KE [MeV],0.687393097865781,AUC,False,clusterA
+pid_auc_slice,last observed layer,0.042350650794745724,AUC,False,clusterA
+pid_auc_slice,dE [MeV] (saturation proxy),0.029318225384387858,AUC,False,clusterA
+pid_auc_slice,global,0.8976036882035276,AUC,True,clusterA

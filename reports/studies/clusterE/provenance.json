@@ -1,0 +1,14 @@
+{
+  "base_commit": "(worktree HEAD)",
+  "input_digests_sha256_12": {
+    "reports/studies/clusterA/counts.json": "bb27a25f814a",
+    "reports/studies/clusterB/metrics.json": "c176d13ac01a",
+    "reports/studies/clusterC/metrics.json": "8acdb7991dee",
+    "reports/studies/clusterD/figures/fig_sipm_summary.json": "27496e598940",
+    "reports/studies/clusterD/figures/fig_birks_summary.json": "6bfdd4dda30a",
+    "reports/studies/clusterD/figures/fig_i885_summary.json": "4bb57fa2e029",
+    "docs/claim_ledger.csv": "e532f3af57c2"
+  },
+  "claim_ledger_rows": 26,
+  "note": "All headline numbers trace to the files listed in source_files; no physics recomputation in this synthesis."
+}

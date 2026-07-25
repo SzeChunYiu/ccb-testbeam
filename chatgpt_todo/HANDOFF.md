@@ -6,12 +6,13 @@
 - **Initial remote `main`:** `9104fc1c0a6b1e3ce3323a08869444e1b68d6c16`
 - **Validated implementation/evidence/archive head:**
   `920813e245c3bf74c585325d5e8e8a414a982101`
-- **Validated delivery handoff / recorded after-SHA:** pending this contents write
+- **Validated delivery handoff / recorded after-SHA:**
+  `80e82c451aac50147621073aa5a02a3f014e94df`
 - **Destination:** direct contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport
-- **Push result:** every completed contents write returned a successful commit
-  SHA; a post-write history read must confirm this handoff and all focused
-  predecessors on remote `main`
+- **Push result:** every contents write returned a successful commit SHA;
+  post-write remote history confirmed `80e82c451aac50147621073aa5a02a3f014e94df`
+  and all focused predecessors on `main`
 - **Focused audit-gate acceptance:** `VALIDATED`
 - **Current adapter metadata status:** `FLAWED`
 - **Cumulative task status:** `PARTIAL`
@@ -123,9 +124,10 @@ No claim is made that the current-source CLI audit ran in a complete checkout.
 - `5ff3edb0a85f83c76892c59d21128b1e27d860f3` — audit report
 - `b4e732224bf61ebe23d6579fb98fd35920b6aedf` — active-task update
 - `920813e245c3bf74c585325d5e8e8a414a982101` — immutable archive
+- `80e82c451aac50147621073aa5a02a3f014e94df` — complete handoff
 
 The connector returns commit SHAs rather than conventional textual `git push`
-stdout. A final remote-history read is required to record this handoff commit.
+stdout. Remote history confirmed the delivery handoff on `main`.
 
 ## Checks not run
 

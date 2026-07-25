@@ -18,12 +18,18 @@ fractions or closure results without the canonical composite merge.
 `scripts/studies/clusterA_data_side.py` now:
 
 - performs one strict UTF-8 input snapshot and records byte count and SHA-256;
-- rejects missing columns, nonnumeric cells, NaN, and infinity;
+- rejects missing columns, nonnumeric cells, NaN, infinity, and an empty selected sample;
 - labels data outputs as row-level and withholds event-level authorization;
 - aligns one finite nonnegative `PrimaryWeight` to each selected MC event;
+- rejects a selected MC weight vector with no positive weight;
 - plots MC density with `C=PrimaryWeight` and `reduce_C_function=np.sum`;
 - publishes atomic machine-readable provenance and an explicit scientific boundary;
 - exposes a CLI and main guard so the contract is independently testable.
+
+Validated Git blobs:
+
+- script: `8bda06c55dc00c1af3e025411fcc55df43f1487e`;
+- tests: `21d3c9ecdd2f9837cd8776adc69fccf5a9a11b63`.
 
 ## Validation
 
@@ -34,7 +40,7 @@ python -m py_compile \
   tools/audit/render_clusterA_data_side_semantics_evidence.py
 
 pytest -q tests/test_clusterA_data_side_contract.py
-6 passed
+7 passed in 0.36s
 ```
 
 Production beam CSV and Krakow ROOT bytes were unavailable, so no production plot,

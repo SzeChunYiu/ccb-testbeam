@@ -55,6 +55,17 @@ def test_summary_is_explicitly_row_level(tmp_path: Path) -> None:
     assert "corrupt" not in json.dumps(result).lower()
 
 
+def test_summary_rejects_no_selected_rows(tmp_path: Path) -> None:
+    path = tmp_path / "zero.csv"
+    write_csv(
+        path,
+        [["1", "10", "100", "fileA", "0", "0", "0", "0", "0", "0", "", ""]],
+    )
+    arrays, _ = module.load_data_rows(path)
+    with pytest.raises(module.InputError, match="no data rows"):
+        module.summarize_data(arrays, 200.0)
+
+
 def test_primary_weight_alignment_is_exact() -> None:
     event_indices = np.array([100, 102, 103])
     weights = np.array([1.0, 2.0, 3.0, 4.0])

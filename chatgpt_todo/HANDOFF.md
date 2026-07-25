@@ -2,133 +2,169 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-25T060608Z`
-- **Task:** `AUD-DELTAE-003`
-- **Unit:** fail-closed remediation of nonfinite net-amplitude rows in the A-002 ΔE-E bridge
-- **Initial remote `main`:** `421aafd6894b6ba3b92b98f616141084742b6812`
-- **Complete delivery handoff / recorded after-SHA:** `238fff56a58a0ab5264682a819d76c8347dc190d`
+- **UTC stamp:** `2026-07-25T070705Z`
+- **Task:** `AUD-LEDGER-003`
+- **Unit:** fail-closed audit of canonical `CL-011` effective-live-time source binding, estimand, counts, uncertainty, and validation semantics
+- **Initial remote `main`:** `53bf42c8d414c9d11bcc1f9d5ab2d088da5a7600`
+- **Validated implementation/evidence head before this handoff:** `e323a268d889673757cd3b2b9f21b74e3e890113`
 - **Destination:** direct sequential commits to remote `main`; no force-push, branch transport, PR, or history rewrite
-- **Push result:** GitHub contents writes returned successful direct-main commit SHAs; post-write history confirmed `238fff56a58a0ab5264682a819d76c8347dc190d` on remote `main`
-- **Acceptance:** **COMPLETE** for the net-input software remediation; A-002 scientific acceptance remains blocked
-- **Immutable archive:** `chatgpt_todo/archive/2026-07-25T060608Z_AUD-DELTAE-003_NET_INPUT_REMEDIATION.md`
-
-This confirmation update records that the complete remediation delivery is present
-on remote `main`. It does not change the scientific acceptance boundary.
+- **Acceptance:** **PARTIAL** — defect, arithmetic reconstruction, audit gate, tests, and evidence validated; canonical claim/public remediation remains open
+- **Immutable archive:** `chatgpt_todo/archive/2026-07-25T070705Z_AUD-LEDGER-003_TAU_EFF_BINDING.md`
 
 ## Start-of-run state
 
-Remote `main` began at `421aafd6894b6ba3b92b98f616141084742b6812`.
-Recent history, current coordination records, the canonical bridge, strict runner,
-focused tests, audit evidence, status checks, and PR #868 were inspected. PR #868
-was closed, unmerged, and non-mergeable and was not modified. The initial main
-commit had no attached combined status checks.
-
+Remote `main` began at `53bf42c8d414c9d11bcc1f9d5ab2d088da5a7600`.
+Repository metadata, recent history, open PRs, current status checks, mandatory
+coordination records, the canonical claim ledger, root WIKI, primary S10b bundle,
+and secondary MV5 bundle were inspected. The initial commit had no combined
+status checks. PR #868 remained closed, unmerged, non-mergeable, and untouched.
 No concurrent remote-main commit appeared during the focused write sequence.
 
-## Confirmed former defect
+## Primary scientific evidence
 
-Former canonical source Git blob:
+The effective-live-time measurement originates in the tracked S10b bundle at
+source commit `da9651c56ef6495ce9656d84b69b600daa6d8f86`, not in the later MV5
+pile-up study.
 
-`7f50ce667a6cde07e94717d0187831da4d8459ac`
+Primary tracked files:
 
-The net-amplitude branch copied the selected source column directly into the
-aggregation value. A NaN B2 row in an otherwise finite event could disappear in
-`pivot_table` and later become `amp_B2 = 0.0` through missing-layer filling.
-Positive infinity remained in the event table. Both outcomes could silently
-alter stopping-layer classification and the ΔE coordinate.
+- `reports/1781000867.546870.5c124aaf/REPORT.md`;
+- `reports/1781000867.546870.5c124aaf/s10b_tau_eff_template_fit.py`;
+- `reports/1781000867.546870.5c124aaf/result.json`;
+- `reports/1781000867.546870.5c124aaf/manifest.json`;
+- `reports/1781000867.546870.5c124aaf/heldout_run_summary.csv`.
 
-## Correction delivered
+The primary manifest records Python 3.7.6, random seed 10102, exact SHA-256 values
+for fourteen ROOT inputs, and output hashes.
 
-The bridge now:
+## Independent reconstruction
 
-1. converts selected net amplitudes using `pd.to_numeric(errors="coerce")`;
-2. rejects every nonfinite or nonnumeric present row using `np.isfinite` before
-   event/stave aggregation, pivoting, or zero filling;
-3. preserves zero only for genuinely absent stave measurements after finite-row
-   validation;
-4. records `amplitude_validation` and `missing_layer_policy` in the result.
+The held-out summary contains fourteen unique run rows and 252,266 selected
+pulses. The reported central value is an equal-weight mean of fourteen run-level
+10% template-crossing estimates relative to CFD20:
 
-Implementation provenance:
+`124.79018394263471 ns`.
 
-- commit: `910efe6b37b3d16a31275e9c0502ee2bd5512ab9`;
-- source Git blob: `2820c461508990d743cc53754c33ec2934a3c9ad`;
-- source bytes: `13225`;
-- source SHA-256: `8295d117b068795ea48015c14cbd7531094dae5931283e5e9205121d5eaa8011`.
+The exact RNG stream was reconstructed. Replaying the producer's pre-bootstrap
+60,000-of-63,067 choice and 252,266-element shuffle, followed by 5,000 bootstrap
+draws of fourteen run units, reproduces the tracked percentile interval exactly:
 
-## Tests and visual evidence
+`[123.33094981246663, 126.35875117626817] ns`.
 
-Added `tests/test_deltae_net_input_remediation.py`. It covers NaN, positive and
-negative infinity, nonnumeric input, finite-value preservation, genuine
-missing-layer zero filling, audit acceptance, and strict-runner rejection before
-publication.
+The result is therefore reproducible from tracked derived artifacts in binary64
+arithmetic. This run did not reprocess the raw ROOT inputs.
+
+## Confirmed `CL-011` defects
+
+The current exact-width row returns 30 fail-closed findings. Material defects are:
+
+1. It cites the later MV5 report/producer instead of primary S10b evidence.
+2. Its cited source-data path `reports/mv5_pileup_1782678353/results.json` does
+   not exist.
+3. It rounds the estimate and interval to `124.79`, `[123.5, 126.0]`.
+4. It publishes unsupported `stat_unc=0.5`, `syst_unc=1.0`, and
+   `total_unc=1.12`; the primary source has no such decomposition.
+5. It omits `n_runs=14` and gives `n_data=213843` instead of 252,266 selected
+   pulses.
+6. It obscures the equal-weight run-average, 10%-crossing, CFD20-relative
+   estimand.
+7. It labels the result `data_mc_self_consistent` and `VALIDATED`, even though
+   MV5 hard-codes rounded 124.8 ns as an input rather than independently
+   validating it.
+8. It omits the primary manifest, source commit, exact CI method, caveats, and
+   blocker.
+
+## Required remediation contract
+
+A corrected row must bind the S10b report, producer, result, manifest, and source
+commit; record the exact value and interval; record 14 runs and 252,266 selected
+pulses; leave statistical/systematic/total uncertainty components empty; use
+`truth_type=data_measurement` and `status=DONE_DATA_ONLY`; explicitly state that
+MV5 reuses the value; and state that the result is not a detector-wide universal
+dead time.
+
+The row remains blocked under `BLK-S10B-001` pending an accepted estimand decision,
+waveform-threshold and run-weighting sensitivity, systematic uncertainty studies,
+a clean independent rerun, and non-circular cross-method or external closure.
+Dependent WIKI, executive-summary, pile-up chapter, LaTeX, and figure metadata
+must be synchronized in the remediation unit.
+
+## Audit gate, tests, and visual evidence
+
+Added:
+
+- `tools/audit/audit_tau_eff_claim_binding.py`;
+- `tests/test_audit_tau_eff_claim_binding.py`;
+- `docs/validation/tau_eff_claim_binding_audit.md`;
+- `docs/validation/tau_eff_claim_binding_validation.json`;
+- `docs/validation/tau_eff_claim_binding.svg`.
+
+Policy:
+
+`TAU_EFF_CLAIM_MUST_BIND_TO_PRIMARY_S10B_MEASUREMENT`.
+
+The audit uses strict UTF-8 single-read snapshots, exact SHA-256 provenance,
+exact 43-column claim interpretation, manifest-output hash verification,
+independent central-value and RNG-stream CI reconstruction, duplicate-row
+rejection, protected atomic JSON/SVG output, and input/output alias rejection.
 
 Executed:
 
 ```text
 python -m py_compile \
-  scripts/single_stave/deltaE_E_data_bridge.py \
-  tools/audit/audit_deltae_net_input_integrity.py \
-  tests/test_deltae_net_input_remediation.py
+  tools/audit/audit_tau_eff_claim_binding.py \
+  tests/test_audit_tau_eff_claim_binding.py
 
-pytest -q \
-  tests/test_deltae_data_bridge_composite_key.py \
-  tests/test_deltae_net_input_remediation.py
+PYTHONPATH=. pytest -q tests/test_audit_tau_eff_claim_binding.py
 
-17 passed in 0.31s
+6 passed in 1.22s
 ```
 
-The executable audit returned `VALIDATED` with zero issues: the finite control
-was accepted while NaN and positive infinity were rejected. JSON and SVG XML
-parsing passed. Changed Python lines are at most 95 characters.
+The corrected contract fixture returned `VALIDATED` with zero findings. Current-
+like evidence returned `FLAWED` with 30 findings. Manifest mutation, duplicate
+`CL-011`, invalid UTF-8, and destructive output aliases failed closed. JSON and
+SVG XML parsing passed. Changed Python lines are at most 100 characters.
 
-Updated evidence:
+Environment: Python 3.13.5, NumPy 2.3.5, pytest 9.0.2.
 
-- `docs/validation/deltae_net_input_integrity_audit.md`;
-- `docs/validation/deltae_net_input_integrity_validation.json`;
-- `docs/validation/deltae_net_input_integrity.svg`;
-- `tools/audit/render_deltae_net_input_integrity_evidence.py`.
+Committed blob identities matched the locally validated files:
 
-The SVG explicitly represents synthetic software/provenance evidence and not
-detector data.
+- validator `7c9dde11905e56e60d49f3147a5e511cb7526948`;
+- tests `a602870b3c9fac806694b390c11526785cb61964`;
+- report `44e4150073f20f9da1a9088a9b91a0cf990e3f81`;
+- JSON `c8bc797782bda99be749d63ac02bf641df4717d5`;
+- SVG `354908c8717c29b1897fa245d837a5d98b145c86`.
 
-## Direct-main commit sequence
+## Direct-main commit sequence before handoff
 
-- `910efe6b37b3d16a31275e9c0502ee2bd5512ab9` — canonical bridge correction;
-- `64f486988252145d3d6744ddc4a1a0c828e59cf1` — focused remediation tests;
-- `20bc4b7b36c6942578264fee5d9126aefaf6ff06` — evidence renderer;
-- `ce05cb0d29adda547c4260f39f0d72383903269f` — machine-readable validation;
-- `ef9d29d79945fd1898ae462c0a4312819097559c` — visual evidence;
-- `2ce21a737fc01f05b1dab8669a13a2bcaecf58c8` — remediation audit report;
-- `eb7c816b32ed9e1d40ca3860bb8fad35cad0ce18` — immutable archive;
-- `42f64ac28a8f0410c9ba408d996b6e9d3213aaaa` — active-task completion;
-- `238fff56a58a0ab5264682a819d76c8347dc190d` — complete delivery handoff, confirmed on remote `main`.
+- `877b1cb816f0c567ab8f346be9ab1994a1ccbe20` — audit implementation;
+- `66cd6412fa65295cf79037493a2d60f2d7aa5852` — focused tests;
+- `b15689de4beda4b3c015e51999f5a7a6999da0d1` — audit report;
+- `775d306d97083ddfa23c9f85f19826c91aa939e5` — machine-readable evidence;
+- `9838a5c50fedf6777194f2e70b6c249f9be16e09` — visual evidence;
+- `3b3804ea2f1b94af932fa10e3aab8bff48f8ff2b` — active-task update;
+- `e323a268d889673757cd3b2b9f21b74e3e890113` — immutable archive.
 
 GitHub contents writes returned successful direct-main commit SHAs rather than
-conventional textual `git push` output. A post-write history read confirmed the
-sequence above on remote `main`.
+conventional textual `git push` output. Post-write history confirmed this
+sequence on remote `main`.
 
-## Scientific boundary and remaining work
+## Scientific boundary and unresolved risks
 
-This is software and provenance validation. No exact A-002 pulse-table bytes,
-measured amplitude convention or polarity evidence, production rerun, stopping
-distribution, uncertainty budget, ΔE-E PID, calibration, or detector-performance
-result was produced.
+No raw ROOT file was opened, no pulse selection or waveform fit was rerun, no new
+uncertainty component was estimated, and no detector-wide dead time, accepted
+Rmax, pile-up capacity, calibration, or detector-performance claim is produced.
+The audit validates tracked derived-artifact arithmetic and exposes claim binding
+problems; it does not upgrade scientific acceptance.
 
-A-002 scientific acceptance remains blocked under `BLK-AMP-001`,
-`AUD-DELTAE-001`, and `AUD-DELTAE-002`. The next scientific step is a hash-bound
-amplitude/polarity evidence map followed by the strict content-addressed
-production rerun and independent closure review.
-
-Full repository pytest, ruff, ROOT processing, LUNARC execution, and GitHub
-Actions were not run; no broad CI success is claimed.
+Full repository pytest, ruff, ROOT processing, repository-wide link checking,
+and GitHub Actions were not run. No broad CI success is claimed.
 
 ## Coordination limitation
 
-`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate
-matrices were reviewed but not replaced. The connector exposes whole-file
-replacement rather than a byte-safe append or line patch, while the current
-shared state was returned in paged/truncated responses. Replacing a partial
-reconstruction could destroy unrelated or append-only provenance. This handoff
-and the immutable archive retain the complete append-equivalent record; the
-aggregate synchronization requirement remains explicitly unmet rather than
-being fabricated or applied destructively.
+`ACTIVE_TASK.md`, this immutable archive, and this handoff were updated. Shared
+long-lived records requiring complete whole-file replacement (`SESSION_LOG.md`,
+`BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate matrices) were
+reviewed but not overwritten from partial or paged reconstructions because doing
+so could erase unrelated or append-only provenance. This unmet synchronization
+step is explicitly recorded rather than represented as completed.

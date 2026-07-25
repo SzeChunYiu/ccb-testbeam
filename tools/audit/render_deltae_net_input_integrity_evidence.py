@@ -26,13 +26,13 @@ def render(validation: Path, output: Path) -> None:
     bars = ax.bar(labels, accepted)
     ax.set_ylim(0, 1.25)
     ax.set_ylabel("Bridge accepted synthetic event (1=yes)")
-    ax.set_title("ΔE-E net-amplitude input-integrity control")
+    ax.set_title("ΔE-E net-amplitude input-integrity remediation")
     ax.set_yticks([0, 1], labels=["rejected", "accepted"])
     for bar, value in zip(bars, accepted, strict=True):
         ax.text(bar.get_x() + bar.get_width() / 2, value + 0.04, str(value), ha="center")
     note = (
-        "Synthetic software evidence only. Current control: NaN B2 is dropped during pivot "
-        "and zero-filled when B4 is finite; +infinity is retained."
+        "Synthetic software evidence only. Finite input is retained; NaN and +infinity "
+        "are rejected before event/stave aggregation and missing-layer zero filling."
     )
     fig.text(0.01, 0.01, note, fontsize=7, wrap=True)
     fig.tight_layout(rect=(0, 0.09, 1, 1))

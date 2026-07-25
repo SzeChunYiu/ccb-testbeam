@@ -156,6 +156,8 @@ def summarize_data(arrays: dict[str, np.ndarray], threshold_adc: float) -> dict[
     selected = (de > 0.0) & (energy > 0.0)
     selected_de = de[selected]
     selected_energy = energy[selected]
+    if selected_de.size == 0:
+        raise InputError("no data rows have both positive deltaE and E")
     correlation = (
         float(np.corrcoef(selected_de, selected_energy)[0, 1])
         if selected_de.size > 1
@@ -283,6 +285,8 @@ def load_mc_arrays(path: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict
     de_all = np.concatenate(de_chunks)
     e_all = np.concatenate(e_chunks)
     w_all = np.concatenate(weight_chunks)
+    if not np.any(w_all > 0.0):
+        raise InputError("selected MC PrimaryWeight vector has no positive weight")
     return de_all, e_all, w_all, {
         "path": str(path),
         "bytes": path.stat().st_size,
@@ -305,11 +309,13 @@ def plot_data(arrays: dict[str, np.ndarray], summary: dict[str, Any], output: Pa
     ax.set_ylabel("ΔE = amp_B2 [ADC]")
     ax.set_title("VIS-DE-001-DATA derived beam-data rows (not unique events)")
     fig.colorbar(image, ax=ax, fraction=0.046).set_label("row count (log)")
+    correlation = summary["corr_dE_E_across_rows"]
+    corr_text = "undefined (one selected row)" if correlation is None else f"{correlation:+.3f}"
     text = (
         f"rows={summary['n_rows']:,}; unique composite keys="
         f"{summary['n_unique_composite_keys']:,}\n"
         f"selected rows={summary['selected_rows_dE_E']:,}; "
-        f"corr across rows={summary['corr_dE_E_across_rows']:+.3f}\n"
+        f"corr across rows={corr_text}\n"
         "Event-level claims BLOCKED pending canonical composite merge."
     )
     ax.text(

@@ -6,12 +6,20 @@
 - **Task:** `AUD-WIKI-004`
 - **Unit:** exact root-WIKI binding of the canonical S10b live10 claim
 - **Initial remote `main`:** `dcd30497d7e83a35d686b8835aefdb2537fbcf02`
+- **Complete delivery handoff / recorded after-SHA:**
+  `1154859523e8aca9a4fa5ec8433cefe9913b0828`
 - **Destination:** direct focused commits to remote `main`; no force-push,
   branch transport, PR, or history rewrite
+- **Push result:** GitHub contents writes returned successful direct-main commit
+  SHAs; post-write history confirmed
+  `1154859523e8aca9a4fa5ec8433cefe9913b0828` on remote `main`
 - **Acceptance:** **PARTIAL** — the defect, gate, tests, and evidence are
   validated; root-WIKI remediation remains open
 - **Immutable archive:**
   `chatgpt_todo/archive/2026-07-25T102318Z_AUD-WIKI-004_TAU_EFF_PUBLIC_BINDING.md`
+
+This confirmation records that the complete focused delivery is present on
+remote `main`. It does not broaden the scientific acceptance boundary.
 
 ## Start-of-run review
 
@@ -118,10 +126,9 @@ Remote source identities recorded in the validation record:
 - `70c6eed4916c559f509e8b47edde42efebc71b50` — visual evidence;
 - `18b38d59b23b7fe7f6b5216690acb3841e435627` — audit report;
 - `a66925193f4c498fd2946ab70a2a9baea2fd2b4c` — active-task update;
-- `672084c9a3aeb96519841ab740e875c7032bbfbd` — immutable archive.
-
-GitHub contents writes returned successful direct-main commit SHAs. The final
-handoff commit and subsequent confirmation SHA are recorded after publication.
+- `672084c9a3aeb96519841ab740e875c7032bbfbd` — immutable archive;
+- `1154859523e8aca9a4fa5ec8433cefe9913b0828` — complete delivery handoff,
+  confirmed on remote `main`.
 
 ## Next exact unit
 

@@ -60,7 +60,7 @@ This section is the controlled front door to the CCB test-beam analysis. Every c
 | Combined 3-stave σ (B4+B6+B8) | Withheld pending BLK-MV4-LEGACY-001 | — | — | legacy claim source unresolved | **BLOCKED** |
 | Pair covariance | Withheld pending BLK-MV4-LEGACY-001 | — | — | legacy claim source unresolved | **BLOCKED** |
 | Rmax (pile-up tolerance) | Withheld pending S-STAT-003 | — | — | derived model conflicted | **BLOCKED** |
-| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 | data + MC self-consistent | **VALIDATED** |
+| τeff (effective live-time) | 124.79018394263471 ns; run-bootstrap 95% CI [123.33094981246663, 126.35875117626817] ns | — | — | data_measurement | **DONE_DATA_ONLY** |
 | Digitizer gain (MV0 v2) | 92 ADC/MeV | — | 28 | data + MC calibration proxy | **GATED** |
 | p/d PID AUC | 0.9860 | — | — | MC truth only | **GATED** |
 | C12-like anomaly fraction in truth-labelled MC | 283 / 87,555 tracks (0.32%) | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
@@ -198,19 +198,19 @@ Raw ROOT → baseline(subtract median samples 0–3) → amplitude(A = max − b
 
 ## 5. Pile-up Analysis
 
-> **Claim-governance update (2026-07-24).** τeff remains validated; numerical Rmax is withheld pending S-STAT-003. See [Full chapter](docs/academic_chapters/05_pileup_analysis.md).
+> **Claim-governance update (2026-07-25).** τeff is an S10b data-only run-average with a run-bootstrap interval; numerical Rmax is withheld pending S-STAT-003. See [Full chapter](docs/academic_chapters/05_pileup_analysis.md).
 
 ### Key Results
 
 | Observable | Value | Status |
 |---|---|---|
 | Rmax (pile-up tolerance) | Withheld pending S-STAT-003 | **BLOCKED** |
-| τeff (effective live-time) | 124.79 ns | **VALIDATED** (corrected from 90 ns) |
+| τeff (effective live-time) | 124.79018394263471 ns; run-bootstrap 95% CI [123.33094981246663, 126.35875117626817] ns | **DONE_DATA_ONLY** |
 | Two-pulse ML recovery | Lower RMS, higher failure | **GATED** (operating curve pending) |
 
 ### Rmax Status
 
-The effective live-time estimate remains `124.79 ns`, but the accepted occupancy-quality threshold is unresolved. The recorded `0.38` value is a beam duty factor, not a justified reconstruction-quality threshold, and the MV5 summary records no recovery-failure-ceiling crossing. Numerical Rmax values are therefore withheld until S-STAT-003 preregisters and validates the criterion, derivation, and uncertainty treatment.
+The S10b run-average 10% template live-time relative to CFD20 is `124.79018394263471 ns` with a run-bootstrap 95% interval `[123.33094981246663, 126.35875117626817] ns`, based on 14 runs and 252266 selected pulses. This threshold- and selection-specific estimand is not a detector-wide universal dead time. MV5 uses the value as an input rather than independently validating it. Independent closure and a complete systematic model remain blocked by BLK-S10B-001. The accepted occupancy-quality threshold is also unresolved: the recorded `0.38` value is a beam duty factor, not a justified reconstruction-quality threshold, and the MV5 summary records no recovery-failure-ceiling crossing. Numerical Rmax values are therefore withheld until S-STAT-003 preregisters and validates the criterion, derivation, and uncertainty treatment.
 
 The historical value `3.0448717948717947 MHz` is retained only in the superseded table above. It must not be cited as an accepted pile-up tolerance or as a validated lower bound.
 

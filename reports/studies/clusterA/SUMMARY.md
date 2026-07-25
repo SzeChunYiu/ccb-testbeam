@@ -41,10 +41,15 @@ The previously published B2/B4/B6/B8 row counts and the +0.18 ΔE-E correlation 
 accepted data/MC topology-closure test. Event-level inference remains blocked until the
 canonical composite merge is run on immutable, hash-bound inputs.
 
-The corrected data-side script now rejects missing, nonnumeric, NaN, and infinite values;
-records exact input size and SHA-256; labels row and event denominators separately; and
-withholds event-level authorization. The MC panel now sums `PrimaryWeight` within each
-hexbin instead of silently drawing an unweighted density.
+The corrected data-side script now rejects missing, nonnumeric, NaN, infinite, and empty
+selected samples; records exact input size and SHA-256; labels row and event denominators
+separately; and withholds event-level authorization. The MC panel now sums `PrimaryWeight`
+within each hexbin instead of silently drawing an unweighted density.
+
+A later, separate raw-beam study under `reports/studies/data_side/` constructs a distinct
+one-row-per-event B2/B4 sample. Its results and claim-ledger upgrades are not substitutes for
+this multi-row-table contract and require their own estimand, uncertainty, and provenance
+audit.
 
 ## Visual evidence
 
@@ -60,8 +65,8 @@ hexbin instead of silently drawing an unweighted density.
 | VIS-STOP-001 | `VIS-STOP-001_geometry_material.png` | Nominal B-arm geometry/material diagnostic. |
 | VIS-STOP-002 | `VIS-STOP-002_stopping_censoring.png` | MC stopping/escape/censoring diagnostic. |
 
-The existing data-side PNGs predate the corrected script and are stale for acceptance
-purposes. They must be regenerated from immutable source bytes before use.
+The existing Cluster A data-side PNGs predate the corrected script and are stale for
+acceptance purposes. They must be regenerated from immutable source bytes before use.
 
 ## Validation of the software correction
 
@@ -72,7 +77,7 @@ python -m py_compile \
   tools/audit/render_clusterA_data_side_semantics_evidence.py
 
 pytest -q tests/test_clusterA_data_side_contract.py
-6 passed
+7 passed in 0.36s
 ```
 
 See:
@@ -90,3 +95,5 @@ See:
    correlations, efficiency, or data/MC comparisons.
 5. Validate beam-data PID and detector transfer on independent data; simulation closure alone
    is insufficient.
+6. Audit the separate raw-beam Rmax claim so measured occupancy is not conflated with the
+   assumed `mu_max` and live-time model.

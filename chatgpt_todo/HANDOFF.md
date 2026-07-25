@@ -6,11 +6,14 @@
 - **Task:** `AUD-DELTAE-001`
 - **Unit:** fail-closed, content-addressed and transactional A-002 ΔE-E rerun path
 - **Initial remote `main`:** `86c6e086d3716ab3ac10481fae92f1a316adf2d3`
-- **Validated delivery head / recorded after-SHA:** `93a5589c8957d13a1774093586a5ed968049a2c0`
+- **Validated implementation/evidence head:** `93a5589c8957d13a1774093586a5ed968049a2c0`
+- **Complete delivery handoff / recorded after-SHA:** `d6c1a65a13765e045555791f7168c119a79abd15`
 - **Immutable archive:** `chatgpt_todo/archive/2026-07-25T042815Z_AUD-DELTAE-001_STRICT_RERUN.md`
 - **Destination:** direct sequential commits to remote `main`; no force-push, branch transport, PR, or history rewrite
-- **Push result:** GitHub contents writes returned successful direct-main commit SHAs through `93a5589c8957d13a1774093586a5ed968049a2c0`; post-write history is required to confirm the handoff update itself
+- **Push result:** GitHub contents writes returned successful direct-main commit SHAs; post-write history confirmed `d6c1a65a13765e045555791f7168c119a79abd15` on remote `main`
 - **Acceptance:** **PARTIAL** — software/provenance gate validated; exact evidence-authorized A-002 production rerun remains blocked
+
+This confirmation-only update records that the complete delivery handoff is present on remote `main`. It does not change the scientific implementation or acceptance state.
 
 ## Repository evidence and confirmed defect
 
@@ -95,7 +98,8 @@ No repository-wide pytest, ruff, real bridge run, ROOT processing, or GitHub Act
 - `b2b1aea516ad8579de9b7f6f0a990b2c0fa5a496` — audit report;
 - `165169d38fda6e3d1dc6dd828522cb1029cf473b` — backlog progress;
 - `2606d00c377746b991c12824911f89012357d739` — immutable archive;
-- `93a5589c8957d13a1774093586a5ed968049a2c0` — active-task completion and validated delivery head.
+- `93a5589c8957d13a1774093586a5ed968049a2c0` — active-task completion and validated implementation/evidence head;
+- `d6c1a65a13765e045555791f7168c119a79abd15` — complete delivery handoff, confirmed on remote `main`.
 
 ## Scientific boundary and next action
 

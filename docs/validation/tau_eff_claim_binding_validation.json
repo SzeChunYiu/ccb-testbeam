@@ -1,0 +1,273 @@
+{
+  "claim_id": "CL-011",
+  "inputs": {
+    "heldout": {
+      "bytes": 452,
+      "path": "evidence_inputs/heldout_run_summary.csv",
+      "sha256": "42ca83dac7ab557cae3505e226e9227a1f557f624a56bb13fefb96ed04089db5",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "ledger": {
+      "bytes": 899,
+      "path": "evidence_inputs/claim_ledger.csv",
+      "sha256": "6919e4c9cc6a76cf4330b3c1284799ce803196c634f64133b486efe4294f4801",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "manifest": {
+      "bytes": 457,
+      "path": "evidence_inputs/manifest.json",
+      "sha256": "c59fc4aee26b92bef65d8ed3962ac44439e32ae8ef9c6c1dcfe0ef2642008014",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "report": {
+      "bytes": 33,
+      "path": "evidence_inputs/REPORT.md",
+      "sha256": "f41cb5117b4de10c9676d701fff5781a9d388ec762a96dd594a29b6247896211",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "result": {
+      "bytes": 282,
+      "path": "evidence_inputs/result.json",
+      "sha256": "3b9cd8ad21974696d80e3b0e247df8c4c08a8399780de165318fa926f8921762",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "issues": [
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "S10b run-average 10% template live-time relative to CFD20",
+      "field": "claim_text",
+      "observed": "Effective live-time tau_eff"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "run_mean_nonparametric_bootstrap_percentile",
+      "field": "ci_method",
+      "observed": "bootstrap"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "14",
+      "field": "n_runs",
+      "observed": ""
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "252266",
+      "field": "n_data",
+      "observed": "213843"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "data_measurement",
+      "field": "truth_type",
+      "observed": "data_mc_self_consistent"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "DONE_DATA_ONLY",
+      "field": "status",
+      "observed": "VALIDATED"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "NO",
+      "field": "allowed_status_validated",
+      "observed": "YES"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "reports/1781000867.546870.5c124aaf/REPORT.md",
+      "field": "source_report",
+      "observed": "reports/mv5_pileup_1782678353/REPORT.md"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "reports/1781000867.546870.5c124aaf/s10b_tau_eff_template_fit.py",
+      "field": "source_script",
+      "observed": "scripts/mv5_pileup_study.py"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "reports/1781000867.546870.5c124aaf/result.json",
+      "field": "source_data",
+      "observed": "reports/mv5_pileup_1782678353/results.json"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "reports/1781000867.546870.5c124aaf/manifest.json",
+      "field": "source_manifest",
+      "observed": ""
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "da9651c56ef6495ce9656d84b69b600daa6d8f86",
+      "field": "source_commit",
+      "observed": ""
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "YES",
+      "field": "link_validated",
+      "observed": ""
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "CI_AVAILABLE_RUN_BOOTSTRAP_METHOD_LIMITATIONS",
+      "field": "ci_status",
+      "observed": "CI_MISSING_BLOCKING"
+    },
+    {
+      "code": "CL011_FIELD_MISMATCH",
+      "expected": "BLK-S10B-001",
+      "field": "blocked_by",
+      "observed": ""
+    },
+    {
+      "code": "CL011_NUMERIC_MISMATCH",
+      "expected": "124.79018394263471",
+      "field": "current_value",
+      "observed": "124.79"
+    },
+    {
+      "code": "CL011_NUMERIC_MISMATCH",
+      "expected": "123.33094981246663",
+      "field": "ci_low",
+      "observed": "123.5"
+    },
+    {
+      "code": "CL011_NUMERIC_MISMATCH",
+      "expected": "126.35875117626817",
+      "field": "ci_high",
+      "observed": "126.0"
+    },
+    {
+      "code": "UNSUPPORTED_UNCERTAINTY_DECOMPOSITION",
+      "field": "stat_unc",
+      "observed": "0.5"
+    },
+    {
+      "code": "UNSUPPORTED_UNCERTAINTY_DECOMPOSITION",
+      "field": "syst_unc",
+      "observed": "1.0"
+    },
+    {
+      "code": "UNSUPPORTED_UNCERTAINTY_DECOMPOSITION",
+      "field": "total_unc",
+      "observed": "1.12"
+    },
+    {
+      "code": "CL011_REQUIRED_CAVEAT_MISSING",
+      "phrase": "run-average estimand"
+    },
+    {
+      "code": "CL011_REQUIRED_CAVEAT_MISSING",
+      "phrase": "14 runs"
+    },
+    {
+      "code": "CL011_REQUIRED_CAVEAT_MISSING",
+      "phrase": "252266 selected pulses"
+    },
+    {
+      "code": "CL011_REQUIRED_CAVEAT_MISSING",
+      "phrase": "not a detector-wide universal dead time"
+    },
+    {
+      "code": "CL011_REQUIRED_CAVEAT_MISSING",
+      "phrase": "MV5 uses the value as an input rather than independently validating it"
+    },
+    {
+      "code": "CL011_REQUIRED_CAVEAT_MISSING",
+      "phrase": "no statistical/systematic uncertainty decomposition"
+    },
+    {
+      "code": "SECONDARY_MV5_REPORT_USED_AS_PRIMARY_SOURCE"
+    },
+    {
+      "code": "NONEXISTENT_LEDGER_SOURCE_DATA_PATH"
+    },
+    {
+      "code": "INDEPENDENT_CLOSURE_OVERSTATED"
+    }
+  ],
+  "n_issues": 30,
+  "policy": "TAU_EFF_CLAIM_MUST_BIND_TO_PRIMARY_S10B_MEASUREMENT",
+  "repository_review": {
+    "claim_ledger": {
+      "git_blob": "8135794d6f0b22da6b760bf6234bb8e1cae795fb",
+      "path": "docs/claim_ledger.csv"
+    },
+    "exact_current_row_basis": "Header and CL-011 extracted without field reinterpretation from the exact current ledger blob; executable fixture preserves all 43 current field values.",
+    "initial_main_sha": "53bf42c8d414c9d11bcc1f9d5ab2d088da5a7600",
+    "primary_heldout_summary": {
+      "git_blob": "71bc0cbe761c831c79efa5242191a9d2bd9ab78e",
+      "path": "reports/1781000867.546870.5c124aaf/heldout_run_summary.csv"
+    },
+    "primary_manifest": {
+      "git_blob": "cc3713c2615bc5a5d2b5e493ef58a2b460e1aa92",
+      "path": "reports/1781000867.546870.5c124aaf/manifest.json"
+    },
+    "primary_producer": {
+      "git_blob": "7805c39db6dab458f4ea40412454a770d0f944c7",
+      "path": "reports/1781000867.546870.5c124aaf/s10b_tau_eff_template_fit.py"
+    },
+    "primary_report": {
+      "git_blob": "dd33a29d2ccb62fd367a5b19a152fa36f669e69d",
+      "path": "reports/1781000867.546870.5c124aaf/REPORT.md"
+    },
+    "primary_result": {
+      "git_blob": "57d82d091b1f21d9d4c400cf92c9db2893aa7ffb",
+      "path": "reports/1781000867.546870.5c124aaf/result.json"
+    },
+    "secondary_mv5_report": {
+      "git_blob": "96ede7778cdb30cfab420abeb69c23f0a98b6974",
+      "path": "reports/mv5_pileup_1782678353/REPORT.md"
+    },
+    "secondary_mv5_summary": {
+      "git_blob": "646d55e027f3ddc6def4ca43514c46ef9935e6d4",
+      "path": "reports/mv5_pileup_1782678353/mv5_pileup_summary.json"
+    }
+  },
+  "scientific_boundary": "Tracked derived-artifact and provenance audit only; raw ROOT inputs were not reprocessed and no new detector measurement was made.",
+  "source_facts": {
+    "bootstrap_rng_reconstruction": {
+      "bootstrap_draws": 5000,
+      "bootstrap_unit_count": 14,
+      "generator": "numpy.default_rng_PCG64",
+      "pre_bootstrap_choice_population": 63067,
+      "pre_bootstrap_choice_size": 60000,
+      "pre_bootstrap_shuffle_length": 252266,
+      "seed": 10102
+    },
+    "ci95_ns": [
+      123.33094981246663,
+      126.35875117626817
+    ],
+    "estimand": "equal-weight mean of 14 run-level template live10 estimates",
+    "estimate_ns": 124.79018394263471,
+    "primary_commit": "da9651c56ef6495ce9656d84b69b600daa6d8f86",
+    "primary_paths": {
+      "heldout": "reports/1781000867.546870.5c124aaf/heldout_run_summary.csv",
+      "manifest": "reports/1781000867.546870.5c124aaf/manifest.json",
+      "report": "reports/1781000867.546870.5c124aaf/REPORT.md",
+      "result": "reports/1781000867.546870.5c124aaf/result.json",
+      "script": "reports/1781000867.546870.5c124aaf/s10b_tau_eff_template_fit.py"
+    },
+    "reconstructed_ci95_ns": [
+      123.33094981246663,
+      126.35875117626817
+    ],
+    "reconstructed_estimate_ns": 124.79018394263471,
+    "run_count": 14,
+    "secondary_mv5_role": "uses rounded 124.8 ns as an input; not independent validation",
+    "selected_pulse_count": 252266
+  },
+  "status": "FLAWED",
+  "validation_environment": {
+    "numpy": "2.3.5",
+    "pytest": "9.0.2",
+    "python": "3.13.5"
+  },
+  "validator": "audit_tau_eff_claim_binding.py",
+  "version": "1.0.0"
+}

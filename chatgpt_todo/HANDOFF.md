@@ -10,6 +10,9 @@
   code, summary, tests, or validation evidence changed here.
 - **Validated implementation/evidence/archive head:**
   `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa`
+- **Validated delivery handoff / after-SHA:**
+  `ec14003be6b789c5dc3b48bb3d65851cb25bc502`
+- **Status checks on delivery handoff:** none attached; no broad CI success is claimed.
 - **Destination:** direct GitHub contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport.
 - **Push-output boundary:** successful commit SHAs were returned rather than conventional
@@ -76,7 +79,8 @@ Additional results:
 - exact weight control changed one-bin value from former 2 to correct 101;
 - JSON parsing: PASS;
 - SVG XML parsing: PASS;
-- maximum changed Python line lengths: script 95, tests 89, renderer 89 characters.
+- maximum changed Python line lengths: script 95, tests 89, renderer 89 characters;
+- corrected script Git blob: `897024e70ce57474606c3011d85c06310866a173`.
 
 ## Delivered files
 
@@ -98,7 +102,7 @@ Added:
 
 The SVG is synthetic software/provenance evidence, not detector data.
 
-## Direct-main sequence before this handoff
+## Direct-main sequence
 
 - `ae015d281a3791894a6098c4127b1dd5d5021a77` — implementation
 - `64f20672ae9d9ceba6506b47ac7cd6eaa06a1919` — focused tests
@@ -109,6 +113,7 @@ The SVG is synthetic software/provenance evidence, not detector data.
 - `35fe7d8de23d333e285894678c608dfd4fd7d2c4` — summary correction
 - `78b47bd7611277d7597acd71cdc53b297412adbf` — active task
 - `2a67f5e3bac9cd7e5bdb45574b489c0cf0389daa` — immutable archive
+- `ec14003be6b789c5dc3b48bb3d65851cb25bc502` — delivery handoff
 
 ## Acceptance boundary and next action
 

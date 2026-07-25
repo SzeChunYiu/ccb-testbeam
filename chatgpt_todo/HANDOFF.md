@@ -2,99 +2,128 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-25T050141Z`
+- **UTC stamp:** `2026-07-25T060608Z`
 - **Task:** `AUD-DELTAE-003`
-- **Unit:** fail-closed net-amplitude input integrity for the A-002 ΔE-E bridge
-- **Initial remote `main`:** `67a7cdd6ef0dc64f00a9ebb43077d2acc1a7418e`
-- **Complete delivery handoff / recorded after-SHA:** `b7ff0db25056421ddbd0c6035b5068c784dfd1d4`
-- **Canonical source inspected:** `scripts/single_stave/deltaE_E_data_bridge.py`, Git blob `7f50ce667a6cde07e94717d0187831da4d8459ac`
+- **Unit:** fail-closed remediation of nonfinite net-amplitude rows in the A-002 ΔE-E bridge
+- **Initial remote `main`:** `421aafd6894b6ba3b92b98f616141084742b6812`
+- **Validated implementation/evidence head before this handoff:** `42f64ac28a8f0410c9ba408d996b6e9d3213aaaa`
 - **Destination:** direct sequential commits to remote `main`; no force-push, branch transport, PR, or history rewrite
-- **Push result:** GitHub contents writes returned successful direct-main commit SHAs; post-write history confirmed `b7ff0db25056421ddbd0c6035b5068c784dfd1d4` on remote `main`
-- **Acceptance:** **PARTIAL** — defect, audit gate, focused tests, JSON, SVG, and documentation validated; canonical bridge fix remains open
-- **Immutable archive:** `chatgpt_todo/archive/2026-07-25T050141Z_AUD-DELTAE-003_NET_INPUT_INTEGRITY.md`
+- **Acceptance:** **COMPLETE** for the net-input software remediation; A-002 scientific acceptance remains blocked
+- **Immutable archive:** `chatgpt_todo/archive/2026-07-25T060608Z_AUD-DELTAE-003_NET_INPUT_REMEDIATION.md`
 
-This confirmation update records that the complete audit delivery is present on remote `main`. It does not change the scientific acceptance boundary.
+## Start-of-run state
 
-## Confirmed defect
+Remote `main` began at `421aafd6894b6ba3b92b98f616141084742b6812`.
+Recent history, current coordination records, the canonical bridge, strict runner,
+focused tests, audit evidence, status checks, and PR #868 were inspected. PR #868
+was closed, unmerged, and non-mergeable and was not modified. The initial main
+commit had no attached combined status checks.
 
-The bridge validates finite numeric values for absolute-code conversion, but the
-net path directly assigns `df[signal_column] = df[ampcol]`. It then aggregates
-with `groupby(...).max()`, pivots by stave, and fills missing layers with zero.
-Consequently, a NaN B2 row in an otherwise finite event can disappear during
-pivoting and become an indistinguishable `amp_B2=0.0`; positive infinity can be
-retained. This is a fail-open transformation that can change stopping-layer and
-ΔE classification.
+No concurrent remote-main commit appeared during the focused write sequence.
 
-Exact source locations inspected:
+## Confirmed former defect
 
-- direct net assignment: lines 183-184;
-- aggregation and pivot: lines 200-215;
-- zero filling: lines 218-221.
+Former canonical source Git blob:
 
-## Work delivered
+`7f50ce667a6cde07e94717d0187831da4d8459ac`
 
-Added:
+The net-amplitude branch copied the selected source column directly into the
+aggregation value. A NaN B2 row in an otherwise finite event could disappear in
+`pivot_table` and later become `amp_B2 = 0.0` through missing-layer filling.
+Positive infinity remained in the event table. Both outcomes could silently
+alter stopping-layer classification and the ΔE coordinate.
 
-- `tools/audit/audit_deltae_net_input_integrity.py`;
-- `tests/test_audit_deltae_net_input_integrity.py`;
-- `tools/audit/render_deltae_net_input_integrity_evidence.py`;
-- `docs/validation/deltae_net_input_integrity_audit.md`;
-- `docs/validation/deltae_net_input_integrity_validation.json`;
-- `docs/validation/deltae_net_input_integrity.svg`;
-- immutable archive listed above.
+## Correction delivered
 
-Policy:
+The bridge now:
 
-`DELTAE_NET_AMPLITUDE_ROWS_MUST_BE_FINITE_NUMERIC_BEFORE_AGGREGATION`
+1. converts selected net amplitudes using `pd.to_numeric(errors="coerce")`;
+2. rejects every nonfinite or nonnumeric present row using `np.isfinite` before
+   event/stave aggregation, pivoting, or zero filling;
+3. preserves zero only for genuinely absent stave measurements after finite-row
+   validation;
+4. records `amplitude_validation` and `missing_layer_policy` in the result.
 
-The audit imports a candidate bridge and executes finite, NaN, and infinity
-controls. It records source bytes/SHA-256, atomically publishes JSON, rejects
-source/output aliasing, and returns controlled status 0, 1, or 2.
+Implementation provenance:
 
-## Validation
+- commit: `910efe6b37b3d16a31275e9c0502ee2bd5512ab9`;
+- source Git blob: `2820c461508990d743cc53754c33ec2934a3c9ad`;
+- source bytes: `13225`;
+- source SHA-256: `8295d117b068795ea48015c14cbd7531094dae5931283e5e9205121d5eaa8011`.
+
+## Tests and visual evidence
+
+Added `tests/test_deltae_net_input_remediation.py`. It covers NaN, positive and
+negative infinity, nonnumeric input, finite-value preservation, genuine
+missing-layer zero filling, audit acceptance, and strict-runner rejection before
+publication.
+
+Executed:
 
 ```text
 python -m py_compile \
+  scripts/single_stave/deltaE_E_data_bridge.py \
   tools/audit/audit_deltae_net_input_integrity.py \
-  tests/test_audit_deltae_net_input_integrity.py \
-  tools/audit/render_deltae_net_input_integrity_evidence.py
+  tests/test_deltae_net_input_remediation.py
 
-pytest -q tests/test_audit_deltae_net_input_integrity.py
+pytest -q \
+  tests/test_deltae_data_bridge_composite_key.py \
+  tests/test_deltae_net_input_remediation.py
 
-5 passed in 0.12s
+17 passed in 0.31s
 ```
 
-The vulnerable fixture returned three findings and reproduced NaN-to-zero plus
-infinity acceptance. A corrected fixture that coerces and rejects nonfinite net
-amplitudes returned `VALIDATED`. Invalid UTF-8 and output/source aliasing fail
-closed. JSON and SVG XML parsing passed; changed Python lines are at most 95
-characters.
+The executable audit returned `VALIDATED` with zero issues: the finite control
+was accepted while NaN and positive infinity were rejected. JSON and SVG XML
+parsing passed. Changed Python lines are at most 95 characters.
 
-## Direct-main commit sequence
+Updated evidence:
 
-- `8a365278b66e10d6aa2a3ad29e606fada7cf64bf` — audit implementation;
-- `0bcbff633ac73f1df29763bcdacf9271a95f2e72` — focused tests;
-- `88ec2676a3484eb232c8b7ff563004c3a995dc7e` — evidence renderer;
-- `20575a5c31f12024ae13d5fb9b6ce370fbd1bcb1` — machine-readable validation;
-- `507b6db8bb5bfd904c8b0ec43957c7ac22bd93f5` — visual evidence;
-- `bc54d8a4dc184a907a425b8d96a46964fb595d1a` — audit report;
-- `e99d366f9bc29d1555e4a29e4fa934981e919e83` — immutable archive;
-- `f422b1ed7176f3decd4bf3020a2068f5b68de83e` — active task;
-- `b7ff0db25056421ddbd0c6035b5068c784dfd1d4` — complete delivery handoff, confirmed on remote `main`.
+- `docs/validation/deltae_net_input_integrity_audit.md`;
+- `docs/validation/deltae_net_input_integrity_validation.json`;
+- `docs/validation/deltae_net_input_integrity.svg`;
+- `tools/audit/render_deltae_net_input_integrity_evidence.py`.
 
-## Required remediation and boundary
+The SVG explicitly represents synthetic software/provenance evidence and not
+detector data.
 
-Before an evidence-authorized A-002 production rerun, the canonical bridge must
-coerce the selected net column to numeric, reject every nonfinite row before
-aggregation, distinguish absent staves from invalid measurements, and pass
-bridge plus strict-runner integration regressions. Then regenerate this audit.
+## Direct-main commit sequence before handoff
 
-No exact A-002 pulse table, convention/polarity authorization, production rerun,
-stopping distribution, ΔE-E PID result, uncertainty budget, calibration, or
-detector-performance claim was produced.
+- `910efe6b37b3d16a31275e9c0502ee2bd5512ab9` — canonical bridge correction;
+- `64f486988252145d3d6744ddc4a1a0c828e59cf1` — focused remediation tests;
+- `20bc4b7b36c6942578264fee5d9126aefaf6ff06` — evidence renderer;
+- `ce05cb0d29adda547c4260f39f0d72383903269f` — machine-readable validation;
+- `ef9d29d79945fd1898ae462c0a4312819097559c` — visual evidence;
+- `2ce21a737fc01f05b1dab8669a13a2bcaecf58c8` — remediation audit report;
+- `eb7c816b32ed9e1d40ca3860bb8fad35cad0ce18` — immutable archive;
+- `42f64ac28a8f0410c9ba408d996b6e9d3213aaaa` — active-task completion.
 
-`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, and aggregate matrices were not
-replaced because the available connector action replaces whole files and the
-current shared state was exposed through paged/truncated responses. The complete
-append-equivalent record is retained in the immutable archive and this handoff;
-that mandatory aggregate synchronization remains unmet for this unit.
+GitHub contents writes returned successful direct-main commit SHAs rather than
+conventional textual `git push` output. A post-write history read confirmed the
+sequence above on remote `main`.
+
+## Scientific boundary and remaining work
+
+This is software and provenance validation. No exact A-002 pulse-table bytes,
+measured amplitude convention or polarity evidence, production rerun, stopping
+distribution, uncertainty budget, ΔE-E PID, calibration, or detector-performance
+result was produced.
+
+A-002 scientific acceptance remains blocked under `BLK-AMP-001`,
+`AUD-DELTAE-001`, and `AUD-DELTAE-002`. The next scientific step is a hash-bound
+amplitude/polarity evidence map followed by the strict content-addressed
+production rerun and independent closure review.
+
+Full repository pytest, ruff, ROOT processing, LUNARC execution, and GitHub
+Actions were not run; no broad CI success is claimed.
+
+## Coordination limitation
+
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate
+matrices were reviewed but not replaced. The connector exposes whole-file
+replacement rather than a byte-safe append or line patch, while the current
+shared state was returned in paged/truncated responses. Replacing a partial
+reconstruction could destroy unrelated or append-only provenance. This handoff
+and the immutable archive retain the complete append-equivalent record; the
+aggregate synchronization requirement remains explicitly unmet rather than
+being fabricated or applied destructively.

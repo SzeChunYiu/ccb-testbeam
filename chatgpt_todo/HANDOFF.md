@@ -8,6 +8,7 @@
 - **Initial remote `main`:** `f01b16fba39bcd21bb57a10638d36dcfe521b01f`
 - **Validated implementation/evidence head:** `f97063a81a2dc7c9b903e99261cdea1d50729b5b`
 - **Immutable archive:** `ae2fe82c04358f3ef983b50ff39a150e73f8af26`
+- **Complete delivery handoff:** `cb932d9266d108be7a3cdea6de9be3a7eef0ea77` was confirmed as remote `main` head; this update records confirmation metadata only
 - **Destination:** direct sequential commits to remote `main`; no force-push, history rewrite, task branch, or PR transport
 - **Acceptance:** **COMPLETE** for the focused software/provenance unit
 
@@ -116,11 +117,12 @@ is claimed.
 - `e8698364327f51771a12e6bfc7597530cbe73b92` — SVG evidence;
 - `472db185a3851244db2407a8343ca6dac8bb42e3` — validation audit;
 - `f97063a81a2dc7c9b903e99261cdea1d50729b5b` — task completion;
-- `ae2fe82c04358f3ef983b50ff39a150e73f8af26` — immutable archive.
+- `ae2fe82c04358f3ef983b50ff39a150e73f8af26` — immutable archive;
+- `cb932d9266d108be7a3cdea6de9be3a7eef0ea77` — complete handoff, confirmed on remote `main`.
 
 The connector returned successful direct-main commit SHAs instead of conventional textual
-`git push` stdout. Recent-history inspection showed the focused sequence was consecutive
-on remote `main` without an interleaved concurrent commit.
+`git push` stdout. Post-write history confirmed the complete handoff and the focused
+sequence on remote `main` without an interleaved concurrent commit.
 
 ## Scientific boundary
 

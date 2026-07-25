@@ -36,5 +36,6 @@ $PY scripts/single_stave/campaign_plots/sipm_sensitivity.py "$FIG"
 
 echo "[clusterD] VIS-MC diagnostics"
 $PY scripts/single_stave/campaign_plots/single_stave_diagnostics.py "$FIG"
+$PY scripts/single_stave/campaign_plots/vis_mc_002_transport.py "$FIG"
 
 echo "[clusterD] ALL DONE"

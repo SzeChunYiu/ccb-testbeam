@@ -1,0 +1,94 @@
+{
+  "n_knobs": 11,
+  "source": "parsed from ccb-runs/sipm-p2-001/<knob>/SUMMARY.md",
+  "knobs": [
+    {
+      "knob": "afterpulse",
+      "unit": "prob",
+      "elasticity_adc": 0.016,
+      "adc_min": 2622.3,
+      "adc_max": 2806.7,
+      "frac_clipped_mean": 0.016
+    },
+    {
+      "knob": "attenuation",
+      "unit": "x attenuation len",
+      "elasticity_adc": 0.226,
+      "adc_min": 2048.6,
+      "adc_max": 3055.4,
+      "frac_clipped_mean": 0.006
+    },
+    {
+      "knob": "birks_kB",
+      "unit": "mm/MeV",
+      "elasticity_adc": -0.398,
+      "adc_min": 1924.7,
+      "adc_max": 3895.0,
+      "frac_clipped_mean": 0.21600000000000003
+    },
+    {
+      "knob": "coupling",
+      "unit": "frac",
+      "elasticity_adc": 0.939,
+      "adc_min": 1422.8,
+      "adc_max": 2744.2,
+      "frac_clipped_mean": 0.01
+    },
+    {
+      "knob": "crosstalk",
+      "unit": "prob",
+      "elasticity_adc": 0.074,
+      "adc_min": 2622.3,
+      "adc_max": 3143.1,
+      "frac_clipped_mean": 0.041999999999999996
+    },
+    {
+      "knob": "dark_count",
+      "unit": "Hz",
+      "elasticity_adc": 0.01,
+      "adc_min": 2625.9,
+      "adc_max": 2810.2,
+      "frac_clipped_mean": 0.01
+    },
+    {
+      "knob": "pde_scale",
+      "unit": "x PDE table",
+      "elasticity_adc": 0.891,
+      "adc_min": 1639.9,
+      "adc_max": 3615.6,
+      "frac_clipped_mean": 0.09
+    },
+    {
+      "knob": "recovery_time",
+      "unit": "ns",
+      "elasticity_adc": 0.007,
+      "adc_min": 2632.3,
+      "adc_max": 2810.2,
+      "frac_clipped_mean": 0.016
+    },
+    {
+      "knob": "reflectivity",
+      "unit": "x TiO2",
+      "elasticity_adc": 3.484,
+      "adc_min": 691.1,
+      "adc_max": 3773.3,
+      "frac_clipped_mean": 0.138
+    },
+    {
+      "knob": "sipm_n_cells",
+      "unit": "cells",
+      "elasticity_adc": 0.033,
+      "adc_min": 2622.3,
+      "adc_max": 2810.2,
+      "frac_clipped_mean": 0.016
+    },
+    {
+      "knob": "window_end",
+      "unit": "ns",
+      "elasticity_adc": 0.01,
+      "adc_min": 2624.5,
+      "adc_max": 2810.2,
+      "frac_clipped_mean": 0.016
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "n_runs": 72,
+  "particles": [
+    "deuteron",
+    "proton"
+  ],
+  "kes_MeV": [
+    2,
+    5,
+    8,
+    12,
+    20,
+    30,
+    50,
+    80,
+    120,
+    150
+  ],
+  "seeds": [
+    101,
+    102
+  ],
+  "per_particle_ke_mean_n_scint": {
+    "deuteron_2": 3034.656,
+    "deuteron_5": 12074.474,
+    "deuteron_8": 24263.546,
+    "deuteron_12": 43708.794,
+    "deuteron_20": 89968.605,
+    "deuteron_30": 155440.1508,
+    "deuteron_50": 299445.049,
+    "deuteron_80": 309605.8682,
+    "deuteron_120": 216534.232,
+    "deuteron_150": 181234.489,
+    "proton_2": 4386.848,
+    "proton_5": 16897.571,
+    "proton_8": 33041.658,
+    "proton_12": 58014.632,
+    "proton_20": 114114.607,
+    "proton_30": 190803.368,
+    "proton_50": 305528.474,
+    "proton_80": 178810.6272,
+    "proton_120": 129103.208,
+    "proton_150": 111598.612
+  }
+}

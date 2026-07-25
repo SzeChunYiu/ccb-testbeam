@@ -1,0 +1,145 @@
+{
+  "study": "MV5_pileup",
+  "truth_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clD/reports/studies/clusterD/mv_runs/mv1_mv2/truth_tracks.npz",
+  "seed": 42,
+  "constants": {
+    "tau_eff_old_ns": 90.0,
+    "tau_eff_new_ns": 124.8,
+    "tau_eff_ipcw_ns": 179.0,
+    "duty": 0.38,
+    "gain": 246.0,
+    "noise": 50.0,
+    "tau_rise": 2.5,
+    "tau_decay": 42.0
+  },
+  "n_proton_tracks": 23452,
+  "n_deuteron_tracks": 27838,
+  "pileup_vs_rate": [
+    {
+      "rate_mhz": 0.5,
+      "pileup_frac_mc_new": 0.06,
+      "pileup_frac_analytic_new": 0.06049299118302098,
+      "pileup_frac_mc_old": 0.0418,
+      "pileup_frac_analytic_old": 0.04400251816690004,
+      "pileup_frac_ci95": 0.006582799404508692
+    },
+    {
+      "rate_mhz": 1.0,
+      "pileup_frac_mc_new": 0.121,
+      "pileup_frac_analytic_new": 0.11732658038377286,
+      "pileup_frac_mc_old": 0.088,
+      "pileup_frac_analytic_old": 0.08606881472877181,
+      "pileup_frac_ci95": 0.009039786882443633
+    },
+    {
+      "rate_mhz": 2.0,
+      "pileup_frac_mc_new": 0.2154,
+      "pileup_frac_analytic_new": 0.22088763430299585,
+      "pileup_frac_mc_old": 0.159,
+      "pileup_frac_analytic_old": 0.164729788588728,
+      "pileup_frac_ci95": 0.01139509815792738
+    },
+    {
+      "rate_mhz": 3.0,
+      "pileup_frac_mc_new": 0.3124,
+      "pileup_frac_analytic_new": 0.3122982239049369,
+      "pileup_frac_mc_old": 0.2386,
+      "pileup_frac_analytic_old": 0.23662050566314685,
+      "pileup_frac_ci95": 0.012846786770114929
+    },
+    {
+      "rate_mhz": 4.0,
+      "pileup_frac_mc_new": 0.4102,
+      "pileup_frac_analytic_new": 0.39298392161801776,
+      "pileup_frac_mc_old": 0.3148,
+      "pileup_frac_analytic_old": 0.302323673928969,
+      "pileup_frac_ci95": 0.013633936951123105
+    }
+  ],
+  "recovery_failure_vs_rate": [
+    {
+      "rate_mhz": 0.5,
+      "n_pairs": 296,
+      "n_eval": 4,
+      "failure_rate": 0.0,
+      "ci95": 0.0
+    },
+    {
+      "rate_mhz": 1.0,
+      "n_pairs": 580,
+      "n_eval": 4,
+      "failure_rate": 0.0,
+      "ci95": 0.0
+    },
+    {
+      "rate_mhz": 2.0,
+      "n_pairs": 1102,
+      "n_eval": 4,
+      "failure_rate": 0.0,
+      "ci95": 0.0
+    },
+    {
+      "rate_mhz": 3.0,
+      "n_pairs": 1517,
+      "n_eval": 4,
+      "failure_rate": 0.0,
+      "ci95": 0.0
+    },
+    {
+      "rate_mhz": 4.0,
+      "n_pairs": 1951,
+      "n_eval": 4,
+      "failure_rate": 0.0,
+      "ci95": 0.0
+    }
+  ],
+  "rmax_by_tau_eff": [
+    {
+      "tau_eff_ns": 90.0,
+      "rmax_reciprocal_mhz": 11.11111111111111,
+      "rmax_duty_corrected_mhz": 4.222222222222222
+    },
+    {
+      "tau_eff_ns": 124.8,
+      "rmax_reciprocal_mhz": 8.012820512820513,
+      "rmax_duty_corrected_mhz": 3.0448717948717947
+    },
+    {
+      "tau_eff_ns": 179.0,
+      "rmax_reciprocal_mhz": 5.5865921787709505,
+      "rmax_duty_corrected_mhz": 2.122905027932961
+    }
+  ],
+  "rmax_from_failure_ceiling_mhz": null,
+  "failure_ceiling": 0.17,
+  "data_comparison": [
+    {
+      "observed": "raw_4.2pct",
+      "observed_frac": 0.042,
+      "tau_eff_ns": 90.0,
+      "implied_operating_rate_mhz": 0.47675001123640615
+    },
+    {
+      "observed": "raw_4.2pct",
+      "observed_frac": 0.042,
+      "tau_eff_ns": 124.8,
+      "implied_operating_rate_mhz": 0.34381010425702363
+    },
+    {
+      "observed": "stratified_2.025pct",
+      "observed_frac": 0.02025,
+      "tau_eff_ns": 90.0,
+      "implied_operating_rate_mhz": 0.2273093544710689
+    },
+    {
+      "observed": "stratified_2.025pct",
+      "observed_frac": 0.02025,
+      "tau_eff_ns": 124.8,
+      "implied_operating_rate_mhz": 0.16392501524355932
+    }
+  ],
+  "pileup_at_rmax_3p05": {
+    "tau_eff_new": 0.31657612206459695,
+    "tau_eff_old": 0.24004799575107727
+  }
+}

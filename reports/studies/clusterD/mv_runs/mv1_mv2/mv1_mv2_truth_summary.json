@@ -1,0 +1,135 @@
+{
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "n_tracks": 79881,
+  "n_proton": 30087,
+  "n_deuteron": 29300,
+  "MV1_pid": {
+    "deltaE_E_medians": {
+      "proton": {
+        "edep_l0": 11.417135839985846,
+        "edep_l1": 11.958857851939865,
+        "edep_tot": 100.9901249892745,
+        "stop_layer": 5.0
+      },
+      "deuteron": {
+        "edep_l0": 35.864215913842145,
+        "edep_l1": 26.580205007388514,
+        "edep_tot": 73.28106498243653,
+        "stop_layer": 1.0
+      }
+    },
+    "logreg_auc": 0.9618394008184847,
+    "logreg_purity_at_90eff": 0.945480631276901,
+    "hgb_auc": 0.9852273589427909,
+    "hgb_purity_at_90eff": 0.9615665110851809,
+    "cut_edep_l0_thr_MeV": 13.272169979907199,
+    "cut_purity": 0.8868756946081569,
+    "cut_efficiency": 0.8987713310580204
+  },
+  "MV2_range_energy": {
+    "proton_stoplayer_vs_ekin": {
+      "0": {
+        "n": 3373,
+        "mean_ekin_MeV": 3.239217609961418e-05,
+        "mean_edep_tot_MeV": 10.162565330673145,
+        "mean_tracklen_mm": 27.910424722217552
+      },
+      "1": {
+        "n": 3021,
+        "mean_ekin_MeV": 5.331695206392575e-05,
+        "mean_edep_tot_MeV": 18.795351023953817,
+        "mean_tracklen_mm": 60.46673019152037
+      },
+      "2": {
+        "n": 2278,
+        "mean_ekin_MeV": 6.54020630329144e-05,
+        "mean_edep_tot_MeV": 23.905832101824174,
+        "mean_tracklen_mm": 123.83251345029899
+      },
+      "3": {
+        "n": 1906,
+        "mean_ekin_MeV": 7.455611024758496e-05,
+        "mean_edep_tot_MeV": 32.544015865430445,
+        "mean_tracklen_mm": 193.53577846327715
+      },
+      "4": {
+        "n": 1818,
+        "mean_ekin_MeV": 8.516672931627299e-05,
+        "mean_edep_tot_MeV": 45.442058621381804,
+        "mean_tracklen_mm": 291.8962486307811
+      },
+      "5": {
+        "n": 4891,
+        "mean_ekin_MeV": 0.00011325710622856067,
+        "mean_edep_tot_MeV": 102.7565661365237,
+        "mean_tracklen_mm": 572.5098591539
+      },
+      "6": {
+        "n": 6645,
+        "mean_ekin_MeV": 0.00012948430919132995,
+        "mean_edep_tot_MeV": 124.26288031372368,
+        "mean_tracklen_mm": 751.33901189363
+      },
+      "7": {
+        "n": 6155,
+        "mean_ekin_MeV": 0.0001531953626031773,
+        "mean_edep_tot_MeV": 121.89489001898907,
+        "mean_tracklen_mm": 890.9076914453613
+      }
+    },
+    "deuteron_stoplayer_vs_ekin": {
+      "0": {
+        "n": 7661,
+        "mean_ekin_MeV": 5.848345143883549e-05,
+        "mean_edep_tot_MeV": 41.226062862842845,
+        "mean_tracklen_mm": 98.98896535852852
+      },
+      "1": {
+        "n": 14175,
+        "mean_ekin_MeV": 7.587097798699932e-05,
+        "mean_edep_tot_MeV": 72.81360916600428,
+        "mean_tracklen_mm": 212.7896845839182
+      },
+      "2": {
+        "n": 1798,
+        "mean_ekin_MeV": 9.905980878630727e-05,
+        "mean_edep_tot_MeV": 76.43014181841133,
+        "mean_tracklen_mm": 256.7722321479623
+      },
+      "3": {
+        "n": 5348,
+        "mean_ekin_MeV": 0.00012014756604897215,
+        "mean_edep_tot_MeV": 121.82337919866474,
+        "mean_tracklen_mm": 433.2620672218554
+      },
+      "4": {
+        "n": 148,
+        "mean_ekin_MeV": 1.988485842416963e-05,
+        "mean_edep_tot_MeV": 19.2600817167547,
+        "mean_tracklen_mm": 0.4250019006972673
+      },
+      "5": {
+        "n": 96,
+        "mean_ekin_MeV": 1.74394824696833e-05,
+        "mean_edep_tot_MeV": 16.844776713754488,
+        "mean_tracklen_mm": 0.28950769028462914
+      },
+      "6": {
+        "n": 44,
+        "mean_ekin_MeV": 1.1557006726806405e-05,
+        "mean_edep_tot_MeV": 11.884836927384857,
+        "mean_tracklen_mm": 5.656650106891878
+      },
+      "7": {
+        "n": 30,
+        "mean_ekin_MeV": 1.593031182286116e-05,
+        "mean_edep_tot_MeV": 15.550938063346337,
+        "mean_tracklen_mm": 8.327872317299924
+      }
+    },
+    "proton_ekin_recon_res68": 0.1883110825951563,
+    "proton_ekin_mean_MeV": 0.00010626239385112061,
+    "deuteron_ekin_recon_res68": 0.1262971086919568,
+    "deuteron_ekin_mean_MeV": 8.13521368536508e-05
+  }
+}

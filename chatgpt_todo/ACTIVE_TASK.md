@@ -1,25 +1,34 @@
 # Active Task
 
-- **Task ID:** AUD-G4-023
+- **Task ID:** AUD-CLD-001
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T160331Z
-- **Initial remote main SHA:** `1e284f8109e927aea67d0eaf2246477982a6dcc7`
-- **Scope:** remediate the single-stave Geant4 adapter metadata so it accurately
-  describes the current analyzer optical-bookkeeping contract, and correct the
-  audit gate discovered to be whitespace-sensitive.
-- **Confirmed defects:** adapter v1.0.0 published `SCHEMA_ADAPTER_ONLY` and a
-  completed-work blocker; audit v1.0.0 rejected the exact wrapped
-  `EVENT_CONTRACT.md` wording through literal substring matching.
-- **Validated changes:** adapter v1.1.0 / metadata schema 2, explicit analyzer
-  contract, stale blocker removal, retained real-ROOT boundary, whitespace-
-  normalized audit v1.1.0, exact CLI assertions, current-source audit regression,
-  machine-readable JSON, SVG evidence, and audit report.
-- **Validation:** focused `py_compile` passed; focused pytest returned
-  `20 passed, 1 skipped in 3.77s`; exact metadata audit returned `VALIDATED`
-  with zero findings; JSON and SVG parsing passed; Python lines are at most 100
-  characters.
-- **Scientific boundary:** software/provenance only. No immutable real ROOT file,
-  Geant4 event, optical yield, calibration, resolution, PID, or detector-
-  performance quantity was generated or changed.
+- **Session stamp:** 2026-07-25T170507Z
+- **Initial remote main SHA:** `5367ec7bbf5f37989cd29eedd0700bd77542049b`
+- **Scope:** review the newly merged Cluster D MV0–MV6 and single-stave campaign
+  bundle, reconcile its public scientific statuses with exact tracked outputs and
+  the canonical claim ledger, add a fail-closed regression gate, and retain
+  reproducible visual/machine-readable evidence.
+- **Confirmed defects:** MV0 was labelled production despite marginal KS, huge
+  chi-square, per-stave mismatch, and unbound inputs; MV2 claimed absolute-energy
+  closure from truth tables; MV5 treated a duty-factor product as accepted Rmax
+  despite a null recovery-ceiling result; MV6 transferred a 25/38 truth-MC
+  composition to beam-data identity; VIS-MC language called internal/toy plots
+  proof that the simulation works.
+- **Validated changes:** corrected Cluster D summary plus MV0/MV5/MV6 reports;
+  policy `CLUSTERD_PUBLIC_STATUS_MUST_NOT_OVERRIDE_CANONICAL_CLAIM_GATES`;
+  strict validator, focused regression tests, validation JSON, SVG renderer/output,
+  and detailed audit report.
+- **Validation:** exact corrected Markdown blobs matched the repo-shaped validation
+  fixture; `py_compile` passed; focused pytest returned `6 passed in 1.63s`;
+  corrected fixture returned `VALIDATED` with zero findings; stale wording,
+  non-null failure-ceiling Rmax, invalid UTF-8, and output aliasing failed closed;
+  JSON and SVG parsing passed.
+- **Unrun check:** complete-checkout execution of the current-repository integration
+  test was unavailable because the container could not resolve `github.com`.
+  Repository-wide tests, lint, ROOT/Geant4, and broad CI are not claimed.
+- **Scientific boundary:** documentation and source-binding only. No new data,
+  simulation, gain calibration, absolute-energy closure, Rmax, PID performance, or
+  beam-data anomaly identity was produced.
 - **Focused remediation status:** VALIDATED.
-- **Cumulative status:** PARTIAL pending immutable real-ROOT end-to-end closure.
+- **Cumulative status:** PARTIAL pending external-input provenance and the open
+  scientific blockers `BLK-MV0-001`, `S-STAT-003`, and `AUD-ANOM-001`.

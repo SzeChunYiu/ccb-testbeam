@@ -107,6 +107,10 @@ digitizer gain vs pulser, measured time anchors) is an operator-bench item; LUNA
 cannot produce it.
 
 
+### 2026-07-25 Real-Beam Data-Side Update
+
+The raw beam ROOT (`hrdb_run_*.root`, runs 12–65) is now staged on LUNARC at `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/` and analysed directly. Provenance verified vs canonical S00 (event-level exact match; 617,377/640,737 composite-key overlap). **Measured:** ΔE-E corr +0.221 (33,966 evts, vs MC −0.533); Rmax 2.92 MHz (data-derived, corroborates CL-010 3.05 MHz). **Timing σ₆₈ is NOT measurable on the raw 16-sample (100 MS/s) format** (σ₆₈ ≥ 38 ns sampling-limited; B6 peak-times bimodal at samples 0/7/15); the prior 0.68 ns was a toy-digitizer MC estimate. See `reports/studies/data_side/REPORT.md` and `docs/claim_ledger.csv` (canonical). The ledger is authoritative where it conflicts with this wiki.
+
 ### Corrected Values (Historical Context Only)
 
 | Old value | New canonical value | Reason |

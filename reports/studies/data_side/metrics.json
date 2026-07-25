@@ -1,0 +1,70 @@
+{
+  "provenance_summary": {
+    "canonical_table": "reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz",
+    "canonical_rows": 640737,
+    "canonical_count_CL001": 640737,
+    "rebuilt_table": "reports/studies/data_side/s00_rebuild/s00_selected_b_pulses.csv.gz",
+    "rebuilt_rows": 709003,
+    "documented_dynamic_range_selected_s00c": 706373,
+    "documented_median_first_four_selected_s00c": 640737,
+    "raw_dir": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root",
+    "nsamp_per_channel": 16,
+    "layout": "channel-major (8,16); verified by exact baseline/amplitude match",
+    "composite_key_overlap": 617377,
+    "rebuilt_only": 91626,
+    "canonical_only": 23360,
+    "event_31_391389_B2_canonical_amp": 7858.5,
+    "event_31_391389_B2_rebuilt_amp": 7858.5,
+    "event_31_391389_B2_baseline_match_exact": true,
+    "canonical_run_range": [
+      31,
+      65
+    ],
+    "n_runs_used": 33,
+    "raw_input_sha256_count": 33
+  },
+  "VIS-DE-001-DATA": {
+    "n_events_both_B2_B4": 33966,
+    "corr_dE_E_data": 0.22129939493493417,
+    "corr_dE_E_mc": -0.533,
+    "composite_key_duplicates": 0,
+    "E_B2_wmedian_ADC": 3385.0,
+    "dE_B4_wmedian_ADC": 2962.5
+  },
+  "VIS-TIM-DATA": {
+    "verdict": "INFEASIBLE_ON_RAW_FORMAT: sampling-limited; not a detector-resolution measurement. CL-002..006 remain GATED (need median-gated 18-sample waveforms + template/OF pickoff).",
+    "n_B4B6_with_times": 5207,
+    "residual_sigma68_B4B6_ns_sampling_limited": 37.98835833483121,
+    "B4_argmax_mode_sample": 3,
+    "B6_argmax_modes_sample": [
+      0,
+      7,
+      15
+    ],
+    "clean_inwindow_subset_size": 334,
+    "clean_subset_sigma68_ns": 42.86353278188645,
+    "sample_period_ns": 10.0,
+    "acq_window_ns": 160.0,
+    "mc_combined_sigma68_ns_for_reference": 0.089,
+    "canonical_B6_CL002_ns_was_mc_toy": 0.68,
+    "note": "The B4-B6 residual sigma68 is tens of ns, dominated by 10 ns sampling + trigger-phase variance; B4/B6 pulse-times are uncorrelated event-to-event (B6 argmax bimodal at sample 7 and 15). This is a measured data-format limitation, not a detector resolution."
+  },
+  "VIS-PU-DATA": {
+    "mean_selected_pulses_per_event": 1.0960225931488432,
+    "frac_events_ge3_pulses": 0.025489136198644548,
+    "acq_window_ns": 160.0,
+    "tau_eff_assumed_ns": 130.0,
+    "tau_eff_canonical_CL011_ns": 124.79,
+    "mu_max_convention": 0.38,
+    "Rmax_data_derived_Hz": 2923076.923076923,
+    "Rmax_canonical_CL010_MHz": 3.05,
+    "Rmax_clusterC_digitizer_Hz": 625000.0,
+    "caveat": "Absolute Rmax normalization assumes the 16-sample (160 ns) acquisition window as live-time and mu_max=0.38; no run-duration/luminosity in ccb_data, so this is data-DERIVED, not absolutely calibrated."
+  },
+  "MC_anchors": {
+    "combined_sigma68_ns": 0.089,
+    "cfd_sigma68_ns": 0.151,
+    "deltaE_E_corr": -0.533
+  },
+  "elapsed_s": 16.0
+}

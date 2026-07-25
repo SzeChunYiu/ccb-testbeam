@@ -1,23 +1,26 @@
 # Active Task
 
-- **Task ID:** AUD-PID-001
+- **Task ID:** AUD-G4-022
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T131727Z
-- **Initial remote main SHA:** `8cb0516e80f641d9f00d01d968ed0389ca48cac3`
-- **Task-claim commit:** `bcdd9bb82d118ccfa8562956a61563ca6d82873b`
-- **Validated delivery commit:** `2f653429c2b7ead1d35752a23f3bb908506dd23d`
-- **Scope:** source-bind Chapter 8 proton/deuteron claims to the tracked MV1
-  producer, summary, and exact-width canonical rows `CL-017` and `CL-018`.
-- **Confirmed corrections:** removed the false traditional-cut AUC, beam-data
-  leave-one-run-out, performance-ceiling, irreducible-information-loss,
-  untracked stopping-depth/combined-rule, and unsupported systematic claims;
-  quarantined MV2 range-energy interpretation pending branch-unit closure.
-- **Validation:** strict UTF-8 and exact-byte provenance; exact 43-column ledger
-  interpretation; source-contract and stale-claim regressions; `py_compile`;
-  focused pytest `7 passed in 0.04s`; JSON and SVG parse; Python line limit.
-- **Scientific boundary:** documentation and source-contract validation only; no
-  ROOT rerun, classifier retraining, beam-data PID measurement, uncertainty,
-  range-energy closure, calibration, or detector-performance claim.
-- **Acceptance:** COMPLETE for the focused Chapter 8 correction and validation
-  gate. The underlying MV1 claims remain `GATED` under `BLK-MV1-001`.
-- **Status:** COMPLETE.
+- **Session stamp:** 2026-07-25T133443Z
+- **Initial remote main SHA:** `2f653429c2b7ead1d35752a23f3bb908506dd23d`
+- **Scope:** bind the current single-stave Geant4 `events` tree to an explicit,
+  fail-closed normalized analysis contract and correct public documentation that
+  implied direct analyzer compatibility and an implemented fast mode.
+- **Confirmed defects:** current `RunAction.cc` writes `arrival_readout`,
+  `detected_readout`, and `track_len_scint_mm`, while the analyzer expects
+  different names/units; the analyzer's arrival bound ignores separately
+  recorded WLS and Cerenkov optical tracks; the Geant4 README advertised direct
+  analysis and a fast mode that the CLI rejects.
+- **Validated work:** explicit converter, source-bound focused tests, contract
+  documentation, corrected Geant4 README, machine-readable JSON, SVG evidence,
+  and audit report are present on `main`.
+- **Validation:** `py_compile` passed; focused pytest `12 passed in 1.59s`; JSON
+  and SVG parsing passed; changed Python line length is at most 95 characters.
+- **Scientific boundary:** synthetic software/provenance validation only; no
+  Geant4 production event, ROOT sample, calibration, optical yield, resolution,
+  or detector-performance quantity was generated or reinterpreted.
+- **Remaining acceptance:** update `analyze_single_stave.py` to consume the
+  component and total optical counters without semantic renaming, add an
+  integrated current-ROOT regression, and execute on immutable real ROOT bytes.
+- **Status:** PARTIAL.

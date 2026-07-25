@@ -6,10 +6,14 @@
 - **Task:** `AUD-DELTAE-003`
 - **Unit:** fail-closed remediation of nonfinite net-amplitude rows in the A-002 ΔE-E bridge
 - **Initial remote `main`:** `421aafd6894b6ba3b92b98f616141084742b6812`
-- **Validated implementation/evidence head before this handoff:** `42f64ac28a8f0410c9ba408d996b6e9d3213aaaa`
+- **Complete delivery handoff / recorded after-SHA:** `238fff56a58a0ab5264682a819d76c8347dc190d`
 - **Destination:** direct sequential commits to remote `main`; no force-push, branch transport, PR, or history rewrite
+- **Push result:** GitHub contents writes returned successful direct-main commit SHAs; post-write history confirmed `238fff56a58a0ab5264682a819d76c8347dc190d` on remote `main`
 - **Acceptance:** **COMPLETE** for the net-input software remediation; A-002 scientific acceptance remains blocked
 - **Immutable archive:** `chatgpt_todo/archive/2026-07-25T060608Z_AUD-DELTAE-003_NET_INPUT_REMEDIATION.md`
+
+This confirmation update records that the complete remediation delivery is present
+on remote `main`. It does not change the scientific acceptance boundary.
 
 ## Start-of-run state
 
@@ -87,7 +91,7 @@ Updated evidence:
 The SVG explicitly represents synthetic software/provenance evidence and not
 detector data.
 
-## Direct-main commit sequence before handoff
+## Direct-main commit sequence
 
 - `910efe6b37b3d16a31275e9c0502ee2bd5512ab9` — canonical bridge correction;
 - `64f486988252145d3d6744ddc4a1a0c828e59cf1` — focused remediation tests;
@@ -96,7 +100,8 @@ detector data.
 - `ef9d29d79945fd1898ae462c0a4312819097559c` — visual evidence;
 - `2ce21a737fc01f05b1dab8669a13a2bcaecf58c8` — remediation audit report;
 - `eb7c816b32ed9e1d40ca3860bb8fad35cad0ce18` — immutable archive;
-- `42f64ac28a8f0410c9ba408d996b6e9d3213aaaa` — active-task completion.
+- `42f64ac28a8f0410c9ba408d996b6e9d3213aaaa` — active-task completion;
+- `238fff56a58a0ab5264682a819d76c8347dc190d` — complete delivery handoff, confirmed on remote `main`.
 
 GitHub contents writes returned successful direct-main commit SHAs rather than
 conventional textual `git push` output. A post-write history read confirmed the

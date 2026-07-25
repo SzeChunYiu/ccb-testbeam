@@ -1,48 +1,285 @@
 #!/usr/bin/env python3
-"""Audit PrimaryWeight usage and summarize weighted effective sample size.
+"""Audit one event-aligned MC weight vector and report weighted ESS.
 
-Opens a ROOT tree and looks for a weight branch (PrimaryWeight/weight/EventWeight).
-If none exists, status is P0_NO_WEIGHT_BRANCH (nonzero exit): an MC truth reader
-that ignores event weights biases every downstream physics number. Otherwise it
-reports the effective sample size ESS = (sum w)^2 / sum(w^2).
+The audit is fail-closed for missing or ambiguous weight branches, non-vector data,
+entry-count mismatches, nonfinite or negative weights, and zero total weight.
 """
 from __future__ import annotations
-import argparse, json
+
+import argparse
+import hashlib
+import json
+import math
+import os
+import tempfile
 from pathlib import Path
+from typing import Any
+
 import numpy as np
 
-WEIGHT_CANDIDATES = ('PrimaryWeight', 'weight', 'EventWeight')
+VERSION = "2.0.0"
+POLICY = "MC_WEIGHT_VECTOR_MUST_BE_UNAMBIGUOUS_FINITE_NONNEGATIVE_AND_EVENT_ALIGNED"
+WEIGHT_CANDIDATES = ("PrimaryWeight", "weight", "EventWeight")
+VALIDATION_FAILURES = {
+    "P0_NO_WEIGHT_BRANCH",
+    "P0_AMBIGUOUS_WEIGHT_BRANCHES",
+    "P0_WEIGHT_SHAPE_INVALID",
+    "P0_WEIGHT_LENGTH_MISMATCH",
+    "P0_NONFINITE_WEIGHT",
+    "P0_NEGATIVE_WEIGHT",
+    "P0_EMPTY_WEIGHT_VECTOR",
+    "P0_ZERO_TOTAL_WEIGHT",
+}
 
-def audit(root: Path, tree: str):
-    """Return the weight-usage result dict for ``tree`` inside ROOT file ``root``."""
-    import uproot
-    t = uproot.open(root)[tree]
-    keys = set(k.split(';')[0] for k in t.keys())
-    candidates = [k for k in WEIGHT_CANDIDATES if k in keys]
-    if not candidates:
-        return {'status': 'P0_NO_WEIGHT_BRANCH', 'tree': tree, 'tree_keys_sample': sorted(keys)[:100]}
-    name = candidates[0]
-    w = np.asarray(t[name].array(library='np'), dtype=float).reshape(-1)
-    w = w[np.isfinite(w)]
-    sw = float(w.sum()); sw2 = float(np.square(w).sum())
-    ess = sw * sw / sw2 if sw2 else 0.0
-    return {'status': 'OK', 'tree': tree, 'branch': name, 'n': len(w), 'sum_w': sw,
-            'ess': ess, 'ess_fraction': ess / len(w) if len(w) else 0.0,
-            'min': float(w.min()) if len(w) else 0.0, 'max': float(w.max()) if len(w) else 0.0,
-            'quantiles': {str(q): float(np.quantile(w, q)) for q in (0, .01, .5, .99, 1)} if len(w) else {}}
 
-def main(argv=None):
-    ap = argparse.ArgumentParser(description='Check a ROOT MC tree for an event-weight branch and report the effective sample size (ESS).')
-    ap.add_argument('root', type=Path, help='ROOT file to inspect.')
-    ap.add_argument('--tree', default='hibeam', help='Tree name inside the ROOT file (default: hibeam).')
-    ap.add_argument('--out', type=Path, required=True, help='Output JSON path for the weight-usage report.')
-    args = ap.parse_args(argv)
+def _sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(chunk_size), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _base_result(root: Path, tree: str) -> dict[str, Any]:
+    return {
+        "validator": "audit_mc_weight_usage",
+        "validator_version": VERSION,
+        "policy": POLICY,
+        "input_path": str(root),
+        "input_size_bytes": root.stat().st_size,
+        "input_sha256": _sha256_file(root),
+        "tree": tree,
+    }
+
+
+def _failure(base: dict[str, Any], status: str, **details: Any) -> dict[str, Any]:
+    return {**base, "status": status, **details}
+
+
+def _summarize_weight_vector(
+    base: dict[str, Any],
+    branch: str,
+    weights: np.ndarray,
+    n_entries: int,
+) -> dict[str, Any]:
+    if weights.ndim != 1:
+        return _failure(
+            base,
+            "P0_WEIGHT_SHAPE_INVALID",
+            branch=branch,
+            weight_shape=list(weights.shape),
+        )
+
+    n_weights = int(weights.size)
+    if n_weights != n_entries:
+        return _failure(
+            base,
+            "P0_WEIGHT_LENGTH_MISMATCH",
+            branch=branch,
+            n_entries=n_entries,
+            n_weights=n_weights,
+        )
+    if n_weights == 0:
+        return _failure(
+            base,
+            "P0_EMPTY_WEIGHT_VECTOR",
+            branch=branch,
+            n_entries=n_entries,
+            n_weights=0,
+        )
+
+    finite = np.isfinite(weights)
+    n_nonfinite = int((~finite).sum())
+    if n_nonfinite:
+        return _failure(
+            base,
+            "P0_NONFINITE_WEIGHT",
+            branch=branch,
+            n_entries=n_entries,
+            n_weights=n_weights,
+            n_nonfinite=n_nonfinite,
+        )
+
+    negative = weights < 0.0
+    n_negative = int(negative.sum())
+    if n_negative:
+        return _failure(
+            base,
+            "P0_NEGATIVE_WEIGHT",
+            branch=branch,
+            n_entries=n_entries,
+            n_weights=n_weights,
+            n_negative=n_negative,
+            min=float(weights.min()),
+        )
+
+    sum_w = math.fsum(float(value) for value in weights)
+    sum_w2 = math.fsum(float(value) * float(value) for value in weights)
+    if not math.isfinite(sum_w) or not math.isfinite(sum_w2):
+        return _failure(
+            base,
+            "P0_NONFINITE_WEIGHT",
+            branch=branch,
+            n_entries=n_entries,
+            n_weights=n_weights,
+            reason="nonfinite sufficient statistic",
+        )
+    if sum_w <= 0.0 or sum_w2 <= 0.0:
+        return _failure(
+            base,
+            "P0_ZERO_TOTAL_WEIGHT",
+            branch=branch,
+            n_entries=n_entries,
+            n_weights=n_weights,
+            sum_w=sum_w,
+            sum_w2=sum_w2,
+        )
+
+    ess = sum_w * sum_w / sum_w2
+    mean = sum_w / n_weights
+    quantiles = {
+        str(q): float(np.quantile(weights, q)) for q in (0.0, 0.01, 0.5, 0.99, 1.0)
+    }
+    return {
+        **base,
+        "status": "OK",
+        "branch": branch,
+        "n": n_weights,
+        "n_entries": n_entries,
+        "n_weights": n_weights,
+        "n_zero": int((weights == 0.0).sum()),
+        "n_positive": int((weights > 0.0).sum()),
+        "sum_w": sum_w,
+        "sum_w2": sum_w2,
+        "ess": ess,
+        "ess_fraction": ess / n_weights,
+        "mean": mean,
+        "min": float(weights.min()),
+        "max": float(weights.max()),
+        "max_over_mean": float(weights.max()) / mean,
+        "quantiles": quantiles,
+        "summation_method": "PYTHON_MATH_FSUM_BINARY64",
+    }
+
+
+def audit(root: Path, tree: str) -> dict[str, Any]:
+    """Return a fail-closed weight-vector audit for ``tree`` inside ``root``."""
+    base = _base_result(root, tree)
+    try:
+        import uproot
+
+        with uproot.open(root) as root_file:
+            root_tree = root_file[tree]
+            keys = {key.split(";")[0] for key in root_tree.keys()}
+            candidates = [name for name in WEIGHT_CANDIDATES if name in keys]
+            if not candidates:
+                return _failure(
+                    base,
+                    "P0_NO_WEIGHT_BRANCH",
+                    tree_keys_sample=sorted(keys)[:100],
+                )
+            if len(candidates) != 1:
+                return _failure(
+                    base,
+                    "P0_AMBIGUOUS_WEIGHT_BRANCHES",
+                    weight_branch_candidates=candidates,
+                )
+
+            branch = candidates[0]
+            raw = root_tree[branch].array(library="np")
+            try:
+                weights = np.asarray(raw, dtype=np.float64)
+            except (TypeError, ValueError) as exc:
+                return _failure(
+                    base,
+                    "P0_WEIGHT_SHAPE_INVALID",
+                    branch=branch,
+                    reason=f"{type(exc).__name__}: {exc}",
+                )
+            return _summarize_weight_vector(
+                base,
+                branch,
+                weights,
+                int(root_tree.num_entries),
+            )
+    except Exception as exc:
+        return _failure(
+            base,
+            "INPUT_ERROR",
+            error_type=type(exc).__name__,
+            error=str(exc),
+        )
+
+
+def _publish_json(path: Path, result: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(result, indent=2, sort_keys=True) + "\n"
+    with tempfile.NamedTemporaryFile(
+        "w",
+        encoding="utf-8",
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        delete=False,
+    ) as handle:
+        temporary = Path(handle.name)
+        try:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+            os.replace(temporary, path)
+        except Exception:
+            temporary.unlink(missing_ok=True)
+            raise
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(
+        description="Validate one event-aligned MC weight branch and report weighted ESS."
+    )
+    parser.add_argument("root", type=Path, help="ROOT file to inspect.")
+    parser.add_argument(
+        "--tree",
+        default="hibeam",
+        help="Tree name inside the ROOT file (default: hibeam).",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        required=True,
+        help="Output JSON path for the weight-usage report.",
+    )
+    args = parser.parse_args(argv)
+
     if not args.root.is_file():
-        raise SystemExit(f'ROOT file does not exist: {args.root}')
-    res = audit(args.root, args.tree)
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(res, indent=2))
-    print(json.dumps(res, indent=2))
-    raise SystemExit(0 if res['status'] == 'OK' else 1)
+        result = {
+            "validator": "audit_mc_weight_usage",
+            "validator_version": VERSION,
+            "policy": POLICY,
+            "status": "INPUT_ERROR",
+            "input_path": str(args.root),
+            "error": "ROOT file does not exist",
+        }
+    elif args.root.resolve() == args.out.resolve():
+        result = {
+            "validator": "audit_mc_weight_usage",
+            "validator_version": VERSION,
+            "policy": POLICY,
+            "status": "INPUT_OUTPUT_ALIAS",
+            "input_path": str(args.root),
+            "output_path": str(args.out),
+        }
+    else:
+        result = audit(args.root, args.tree)
+        _publish_json(args.out, result)
 
-if __name__ == '__main__': main()
+    print(json.dumps(result, indent=2, sort_keys=True))
+    if result["status"] == "OK":
+        raise SystemExit(0)
+    if result["status"] in VALIDATION_FAILURES:
+        raise SystemExit(1)
+    raise SystemExit(2)
+
+
+if __name__ == "__main__":
+    main()

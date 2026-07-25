@@ -2,7 +2,7 @@
 <defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="8" stroke="#555" stroke-width="2"/></pattern></defs>
 <rect width="760" height="590" fill="white"/>
 <text x="380" y="42" text-anchor="middle" font-size="25" font-weight="bold">MV3 weighting-contract synthetic control</text>
-<text x="380" y="72" text-anchor="middle" font-size="16">VALIDATED_PREPARED_BYTES_REMOTE_DELIVERY_PARTIAL</text>
+<text x="380" y="72" text-anchor="middle" font-size="16">VALIDATED_PREPARED_SCRIPT_REMOTE_DELIVERY_PARTIAL</text>
 <line x1="80" y1="430" x2="680" y2="430" stroke="#111"/>
 <line x1="80" y1="130" x2="80" y2="430" stroke="#111"/>
 <text x="32" y="285" transform="rotate(-90 32 285)" text-anchor="middle" font-size="17">Profile fraction</text>

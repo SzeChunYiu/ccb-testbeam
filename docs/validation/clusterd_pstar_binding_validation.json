@@ -1,0 +1,85 @@
+{
+  "finding_count": 0,
+  "findings": [],
+  "former_vs_canonical_reference": {
+    "10": {
+      "canonical_total_MeV_cm2_g": 45.0,
+      "former_embedded_total_MeV_cm2_g": 50.5,
+      "former_relative_bias_percent": 12.222222222222223
+    },
+    "100": {
+      "canonical_total_MeV_cm2_g": 7.14,
+      "former_embedded_total_MeV_cm2_g": 12.9,
+      "former_relative_bias_percent": 80.67226890756302
+    },
+    "150": {
+      "canonical_total_MeV_cm2_g": 5.331,
+      "former_embedded_total_MeV_cm2_g": 9.74,
+      "former_relative_bias_percent": 82.70493340836616
+    },
+    "50": {
+      "canonical_total_MeV_cm2_g": 12.21,
+      "former_embedded_total_MeV_cm2_g": 19.8,
+      "former_relative_bias_percent": 62.16216216216215
+    }
+  },
+  "inputs": {
+    "SUMMARY.md": {
+      "bytes": 7828,
+      "path": "reports/studies/clusterD/SUMMARY.md",
+      "sha256": "7869268d7630a44431fab445640e3e861f0391d850ba6972a9b822a37950a134"
+    },
+    "_common.py": {
+      "bytes": 6915,
+      "path": "scripts/single_stave/campaign_plots/_common.py",
+      "sha256": "db58c4e9da7e9cc3beecf7a18fd0060f5c6683d5d9a7ed2b11a37d81050e01e2"
+    },
+    "pstar_polystyrene.csv": {
+      "bytes": 7413,
+      "path": "data/reference/stopping_power/pstar_polystyrene.csv",
+      "sha256": "bc4d8b018115fd0892fe4ea22b6ec3da7be8ab65afa7595337c491ae6ed869dd"
+    },
+    "run_campaign_aggregation.sh": {
+      "bytes": 2086,
+      "path": "reports/studies/clusterD/run_campaign_aggregation.sh",
+      "sha256": "7840d13a3aab8546344e3a61444cbfe2daa6786c9db642935882e1dbfbbf8111"
+    },
+    "vis_mc_002_transport.py": {
+      "bytes": 9257,
+      "path": "scripts/single_stave/campaign_plots/vis_mc_002_transport.py",
+      "sha256": "82415d8be8a07417af5793f361d3105ad33e8f3f2743f3e47fb42f7ab96a8d0d"
+    }
+  },
+  "policy": "CLUSTERD_VIS_MC_002_MUST_USE_CANONICAL_VALIDATED_PSTAR_REFERENCE",
+  "reference_validation": {
+    "all_rows_component_consistent": true,
+    "component_identity": "total = electronic + nuclear",
+    "input_bytes": 7413,
+    "input_path": "data/reference/stopping_power/pstar_polystyrene.csv",
+    "input_sha256": "bc4d8b018115fd0892fe4ea22b6ec3da7be8ab65afa7595337c491ae6ed869dd",
+    "rows_validated": 141,
+    "status": "VALIDATED",
+    "tool_version": "1.1.0"
+  },
+  "repository_state": {
+    "canonical_parser_blob": "97ddf069f421c147370fe661b451d15c512d7621",
+    "canonical_reference_git_blob": "7e953dd346caedcee6da54180fb636b890a64040",
+    "former_common_blob": "4715435602ce076a7ff069e0ec162dcc16574a33",
+    "former_diagnostics_blob": "caa44eebe7b5ad43fbc4aa190a9af8cc4986d436",
+    "initial_main_sha": "64c3841ccb522589e6866d835889e797ea342e24"
+  },
+  "schema_version": 1,
+  "scientific_boundary": "Software/reference provenance only. Existing external ROOT paths were not reprocessed, and no accepted stopping-power closure is claimed.",
+  "status": "VALIDATED",
+  "tool": "tools/audit/validate_clusterd_pstar_binding.py",
+  "tool_version": "1.0.0",
+  "validation_execution": {
+    "campaign_root_rerun": false,
+    "json_parse": "PASS",
+    "maximum_changed_python_line_length": 97,
+    "py_compile": "PASS",
+    "pytest_command": "PYTHONPATH=. pytest -q tests/test_clusterd_pstar_binding.py",
+    "pytest_result": "5 passed in 2.08s",
+    "svg_xml_parse": "PASS"
+  }
+}

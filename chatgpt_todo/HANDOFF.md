@@ -8,12 +8,13 @@
   `0b4e05b2432284cb0d2d06fffcdae98a27087cd3`
 - **Immutable archive commit:**
   `b9c976759c054797273cf1367821e7ee5dafd370`
-- **Validated delivery handoff / recorded after-SHA:** pending this contents write
+- **Validated delivery handoff / recorded after-SHA:**
+  `a67a84fcfe206de5e091966226e1a67024cc1ada`
 - **Destination:** direct contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport
-- **Push result:** every completed contents write returned a successful commit
-  SHA; post-write remote history must confirm this handoff and all focused
-  predecessors on `main`
+- **Push result:** every contents write returned a successful commit SHA;
+  post-write remote history confirmed `a67a84fcfe206de5e091966226e1a67024cc1ada`
+  and all focused predecessors on `main`
 - **Focused remediation acceptance:** `VALIDATED`
 - **Cumulative task status:** `PARTIAL`
 - **Immutable archive:**
@@ -102,9 +103,10 @@ outputs. JSON and SVG parsing passed. Maximum changed Python line length was
 - `f2477309b4ac7e6ed15946752c70747b67837eed` — audit report
 - `b9c976759c054797273cf1367821e7ee5dafd370` — immutable archive
 - `0b4e05b2432284cb0d2d06fffcdae98a27087cd3` — active-task update
+- `a67a84fcfe206de5e091966226e1a67024cc1ada` — complete handoff
 
 The connector returns commit SHAs rather than conventional textual `git push`
-stdout. A final remote-history read is required to record the delivery handoff.
+stdout. Remote history confirmed the delivery handoff on `main`.
 
 ## Checks not run
 

@@ -6,7 +6,7 @@
   "n_issues": 0,
   "initial_main_sha": "5367ec7bbf5f37989cd29eedd0700bd77542049b",
   "validated_code_head_sha": "18f6aabc2daf5f1e6c24e42eec3a199bfdc55f3b",
-  "delivery_main_sha": "18f6aabc2daf5f1e6c24e42eec3a199bfdc55f3b",
+  "delivery_main_sha": "fd3212db157efae56986ffa626257b73facdfb87",
   "source_merge": {
     "pull_request": 919,
     "merge_commit": "5367ec7bbf5f37989cd29eedd0700bd77542049b",

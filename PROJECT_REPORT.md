@@ -3,6 +3,23 @@
 **One document with everything a human needs to know about this project: the science, what has been
 done, the results, the current state, what is blocking us, and what comes next.**
 
+> **⚠️ STALE (2026-06-28) — superseded by the project dashboard (2026-07-25).**
+> This file predates the cluster A–D + Opticks synthesis and still labels several
+> since-downgraded claims "PASS" / "VALIDATED". The canonical entry point is now
+> [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md); the publication
+> narrative is [`docs/PUBLICATION_NARRATIVE.md`](docs/PUBLICATION_NARRATIVE.md);
+> the row-by-row authority is [`docs/claim_ledger.csv`](docs/claim_ledger.csv).
+>
+> **Specific downgrades vs this file's body:** the legacy pile-up R_max = 3.044 MHz
+> is **SUPERSEDED** (CL-012 — do not use) and the canonical Rmax is **BLOCKED**
+> (CL-010 / S-STAT-003); the realistic-chain p/d PID is **AUC = 0.898** (clusterA
+> #921, PASS) — the 0.986 HGB value is a TRUTH_LEVEL_MC_ONLY ceiling (**GATED**,
+> CL-017), not a data result; detector timing (the 0.68 / 0.54 ns values and the
+> MV4 "PASS") is **BLOCKED** (CL-002..006, toy-digitizer); "MV5 PASS" → **BLOCKED**;
+> "MV6 C12 identified" → **TRUTH_LEVEL_MC_ONLY** (data anomaly **not** identified as
+> C12, CL-022); "MV3 FAIL" → **TENSION** (χ²/ndf ≈ 6.8e4, CL-021). Where the body
+> below conflicts with the dashboard, **the dashboard wins.**
+
 - **Last updated:** 2026-06-28 (MV0–MV6 + MV3b/MV4b diagnostic studies complete)
 - **Repository:** `SzeChunYiu/ccb-testbeam` (branch `main`); canonical tree on LUNARC at
   `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/`
@@ -23,8 +40,9 @@ done, the results, the current state, what is blocking us, and what comes next.*
 | **Data** | 640,737 selected B-stack pulses (median selector) / 706,373 (dynamic selector), 18-sample waveforms @ 10 ns. ~6.4 GB, stored **outside git**, immutable. |
 | **Method discipline** | Reproduce-first, traditional **and** ML head-to-head, atomic decomposition, three leakage controls, explicit MC verdict per study. See `docs/REPORT_STANDARD.md`. |
 | **Done so far** | ~230 data-driven studies complete; **all 6 MC validations done (MV0–MV6)**; Sample I/II trigger split reproduced. MV9 synthesis complete. |
-| **Headline science** | Analytic timewalk wins timing (sigma68 ~1.49-1.55 ns); pile-up R_max revised down 4.2 -> ~3.05 MHz; ML wins shape-closure tasks; **p/d PID MC-closed at AUC 0.986.** |
-| **Biggest open item** | MV3 stopping-depth FAIL (structural: missing upstream material budget in MC geometry — B8 fraction 22% MC vs 2% data). MV4 timing corrected σ₆₈ in TENSION (+2.7σ; toy timewalk unphysical B coefficient). MV6 anomaly CLOSED: C12 heavy-ion recoils from CD₂ (0.32% of tracks, not 4%). |
+| **MC closure (clusters A–D, 2026-07-25)** | On the Krakow 1M-event Geant4 MC the full chain closes: combined timing **σ₆₈ = 0.089 ns** (clusterB #918), PID **AUC = 0.898** (clusterA #921), ADC **119.17 ADC/MeV**, Birks **kB = 0.0156 cm/MeV**, digitizer-domain **Rmax = 0.605 MHz** (clusterC #917); Opticks CPU ctest 9/9, GPU gather PARTIAL. |
+| **Headline science (corrected)** | Detector-performance on beam data is **pending raw-data staging + bench calibration** (raw `hrdb_run_*.root` not on LUNARC). Legacy R_max 3.044 MHz is **SUPERSEDED** (CL-012); canonical Rmax **BLOCKED** (CL-010). The 0.986 PID is a GATED truth ceiling (CL-017); the realistic-chain MC AUC is 0.898. |
+| **Biggest open item** | Stage raw beam ROOT → unblocks data-side timing / PID / ΔE-E. MV3 stopping-depth **TENSION** (χ²/ndf ≈ 6.8e4, missing upstream material budget, CL-021). Resolve S-STAT-003 (Rmax criterion). Operator bench: SiPM PDE / coupling / digitizer gain vs pulser / measured time anchors. |
 
 ---
 
@@ -111,9 +129,9 @@ All six MV studies are now complete. Numbers are from SLURM job JSON outputs (`r
 
 | # | Finding | Number (with uncertainty) | Confidence | Source |
 |---|---|---|---|---|
-| 1 | Pile-up R_max revised down ~30% | 4.222 -> ~3.05 MHz (live10 124.79 ns, CI [123.33,126.36]) | ⚠️ data-only (MV5 pending) | S10b/c |
-| 2 | p/d PID is MC-closed | AUC 0.9860 (HGB), data ~0.985 | ✅ validated (data+MC) | MV1 |
-| 3 | Analytic timewalk wins timing | sigma68 1.494-1.551 ns (LORO); best trad 1.343 ns | ⚠️ data-only (MV4 pending) | S03/S02d+S16e |
+| 1 | MC method closure (clusters A–D) | timing σ₆₈ 0.089 ns · PID AUC 0.898 · ADC 119.17 · Birks 0.0156 · Rmax 0.605 MHz (all MC) | ✅ PASS (MC) | A–D / #917–921 |
+| 2 | Pile-up R_max | legacy 3.044 MHz **SUPERSEDED** (CL-012); canonical **BLOCKED** (CL-010 / S-STAT-003) | 🚫 / ⛔ | S10b/c + clusterC |
+| 3 | p/d PID | realistic-chain MC AUC 0.898 (PASS); 0.986 HGB = GATED truth ceiling (CL-017); data BLOCKED | ✅ / 🟡 / ⛔ | clusterA / MV1 |
 | 4 | Duplicate-readout amplitude closure | res68 0.003-0.009 vs 0.12-0.20 | ⚠️ data-only | P04 |
 | 5 | Saturation recovery by ML | res68 0.032-0.046 vs template 0.104-0.286 | ⚠️ data-only | P07 |
 | 6 | Absolute energy unreachable from data | res68 0.19-0.25 (fails 10%) | ✅ limitation MC-confirmed | S14/MV2 |

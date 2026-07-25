@@ -16,6 +16,7 @@
 | You want to... | Read this |
 |---|---|
 | **Understand the whole project** | → **[`WIKI.md`](WIKI.md)** — illustrated, comprehensive, self-contained |
+| **Canonical one-screen dashboard** | → **[`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md)** — proven vs BLOCKED at a glance |
 | **See the key results** | → [WIKI.md §1 Executive Summary](WIKI.md#1-executive-summary) |
 | **See what's missing / what to do next** | → **[`STUDY_GAPS.md`](STUDY_GAPS.md)** — gap analysis & open questions |
 | **Get the one-page status** | → [`PROJECT_REPORT.md`](PROJECT_REPORT.md) |
@@ -26,24 +27,42 @@
 
 ## Headline Results
 
-> **All results are preliminary and study-scoped, not publication-validated.**
-> The MC validation program is partially blocked: **MV3 stopping-depth is FAIL**
-> (χ²/ndf ≈ 68k, blocked by the GEANT4 geometry fix → new MC production), and
-> **MV4–MV8 production release is BLOCKED** pending calibrated digitized-MC /
-> systematic-production artifacts. Quantitative figures in `paper/figures.yaml`
-> are `EXTERNAL_BLOCKER` until those result bundles are synced. The authoritative
-> per-claim state lives in [`docs/claim_ledger.csv`](docs/claim_ledger.csv);
-> this table mirrors it and must not advertise a stronger status than the ledger.
+> **All results are preliminary and study-scoped, not peer-reviewed.**
+> Canonical entry point: [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md).
+> The row-by-row authority is [`docs/claim_ledger.csv`](docs/claim_ledger.csv); this
+> section mirrors [`reports/studies/clusterE/claims_table.csv`](reports/studies/clusterE/claims_table.csv)
+> and must not advertise a stronger status than the ledger.
 
-| Measurement | Value | Ledger claim / status |
-|---|---|---|
-| Selected pulses (S00 gate) | **640,737** (exact reproduction) | CL-001 — VALIDATED |
-| Best timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | CL-002/003 — VALIDATED (MV4 release BLOCKED) |
-| Combined 3-stave (B4+B6+B8) | **σ₆₈ ≈ 0.54–0.56 ns** | CL-004/005 — DONE_DATA_ONLY |
-| Pile-up tolerance | **Withheld pending S-STAT-003** | CL-010 — BLOCKED |
-| Proton/deuteron PID | **AUC = 0.986** | CL-017 — TRUTH_LEVEL_MC_ONLY (data transfer unvalidated) |
-| Early-peak morphology rate in truth-labelled MC | **283 / 87,555 tracks (0.323%; Wilson 95% CI 0.288–0.363%)**; C12 labels are **156 / 283 (55.1%)** within that selected MC class | CL-022 — TRUTH_LEVEL_MC_ONLY (real-data identity unvalidated) |
-| MV3 stopping-depth (MC vs data) | **FAIL** — χ²/ndf ≈ 68,269 | CL-019/020/021 — FAIL (geometry blocker) |
+**MC method closure proven; detector-performance on beam data pending raw-data
+staging + bench calibration.** The full analysis chain — timing, ΔE-E PID, ADC/Birks
+energy calibration, and pile-up — is demonstrated end-to-end on the Krakow 1M-event
+Geant4 Monte Carlo (clusters A–D + Opticks, all merged on `origin/main`). The
+detector-performance claims that would transfer those MC results onto beam data are
+**BLOCKED_DATA**: the raw beam ROOT (`hrdb_run_*.root`) is not staged on LUNARC, and
+device/electronics calibration is an operator-bench item.
+
+| Claim | Value | Evidence class | Status | Source |
+|---|---|---|---|---|
+| Selected B-stack pulses (S00 gate) | **640,737** | DATA_MEASUREMENT | ✅ VALIDATED | CL-001 |
+| Combined timing σ₆₈ (4-sensor, MC) | **0.089 ns** | MC_METHOD_CLOSURE | ✅ PASS | clusterB #918 |
+| PID p-vs-d AUC (realistic chain, MC) | **0.898** | SIMULATION_RESULT | ✅ PASS | clusterA #921 |
+| ADC calibration (digitizer gain, MC) | **119.17 ADC/MeV** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Birks kB (per-track dE/dx, MC) | **0.0156 cm/MeV** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Digitizer-domain Rmax (0% gate, MC) | **0.605 MHz** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Opticks GPU/CPU parity | 0 GPU hits / 4592 CPU; CPU ctest 9/9 | SIMULATION_RESULT | 🟡 PARTIAL | opticks #920 |
+| Detector timing resolution (data) | withheld | BLOCKED_DATA | ⛔ BLOCKED | CL-002..006 |
+| Canonical pile-up Rmax | withheld | BLOCKED | ⛔ BLOCKED | CL-010 (S-STAT-003) |
+| Legacy Rmax = 3.044 MHz | SUPERSEDED | SUPERSEDED | 🚫 SUPERSEDED | CL-012 (do not use) |
+| ADC gain (data/MC proxy, MV0) | 110 ADC/MeV (±30%) | DATA_MC_PROXY | 🟡 GATED | CL-013 |
+| PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED | raw ROOT not staged |
+| Stopping-depth data/MC | χ²/ndf ≈ 6.8e4 — FAIL | MC_DIAGNOSTIC | 🟠 TENSION | CL-021 |
+
+**Read the statuses literally.** The ±30% MV0 envelope is a heuristic, **not a
+confidence interval**. The data anomaly near 4% is **not** identified as C12
+(CL-022). The systematic budget is incomplete (CL-026). For the publication narrative
+see [`docs/PUBLICATION_NARRATIVE.md`](docs/PUBLICATION_NARRATIVE.md); for the
+synthesis figures see [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md).
+
 
 ## Repository Layout
 

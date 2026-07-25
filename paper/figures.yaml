@@ -1,220 +1,254 @@
 # CCB test-beam -- paper figure result registry
 # ============================================================================
-# Single source of truth binding every paper figure to a VALIDATED result file
-# (JSON) and, for quantitative figures, a source table + recorded sha256.
+# Single source of truth binding every paper figure to its source artifact.
+# Regenerated 2026-07-25 from the cluster A-D + Opticks + E synthesis programme
+# (canonical claim state: reports/studies/clusterE/claims_table.csv +
+# docs/claim_ledger.csv). No headline number is hand-entered: every quantitative
+# entry points `result:` at the on-disk cluster metrics/counts JSON and reads its
+# `value_key:`, and every `source_figure:` is a real PNG on origin/main.
+#
 # Build with:
 #     python -m tools.figure_registry.builder --registry paper/figures.yaml --out paper/figures
 #
-# Statuses (allowed): VALIDATED, PRELIMINARY, TENSION, EXTERNAL_BLOCKER, ILLUSTRATIVE
-#   - Quantitative figures are built from the result JSON ONLY (never a literal).
-#   - EXTERNAL_BLOCKER  -> result compute-blocked / not yet on disk -> reported BLOCKED.
-#   - ILLUSTRATIVE      -> schematic (kind: illustrative), kept SEPARATE, clearly labelled.
+# Statuses (allowed):
+#   VALIDATED            data result + MC/truth or independent closure supports it
+#   SIMULATION_RESULT    proven on Monte Carlo only (cluster MC closure)
+#   MC_METHOD_CLOSURE    analysis-chain closure on MC (strongest SIMULATION_RESULT)
+#   PARTIAL              proven up to a defined last-mile gap (e.g. Opticks gather)
+#   GATED                candidate withheld until a named control passes
+#   TENSION              data/MC comparison disagrees beyond tolerance
+#   BLOCKED              canonical value withheld pending a named criterion
+#   BLOCKED_DATA         underlying beam data not staged (no figure can be built)
+#   SUPERSEDED           retained only as correction history; do not use
+#   EXTERNAL_BLOCKER     result artifact compute-blocked / not on disk -> BLOCKED
+#   ILLUSTRATIVE         schematic only; carries no measured numbers
 #
-# ids / result paths / figure ids below are kept consistent with
-# docs/claim_ledger.csv (CL-00x) and the docs figure index (FIG-*). The
-# analysis result JSONs live in external worker stores and are not present in
-# this checkout, so the quantitative entries are EXTERNAL_BLOCKER for now: the
-# builder reports them BLOCKED (not FAIL) until the results are synced in and
-# their status is promoted to VALIDATED / TENSION.
+# Rules:
+#   - Quantitative figures read `value_key` from `result` (a cluster metrics JSON)
+#     ONLY (never a hand-entered literal).
+#   - figure_sourced entries: the rendered PNG / REPORT is the primary artifact (no
+#     single metrics JSON to read); the caption quotes claims_table.csv directly.
+#   - BLOCKED_DATA / EXTERNAL_BLOCKER entries carry NO headline number and are
+#     reported BLOCKED by the builder until the underlying data/artifact is staged.
+#   - claim_id / evidence_class mirror reports/studies/clusterE/claims_table.csv.
 # ----------------------------------------------------------------------------
 
-# --- Timing (single stave + combined) --------------------------------------
+# === MC method closure (clusters A-D) -- proven on simulation =================
 
-TIME-01:                      # CL-002 / CL-003, FIG-TIM-001
-  result: reports/mv4_timing_1782678162/result.json
-  table: reports/mv4_timing_1782678162/tables/residual_source.csv
-  uncertainty_key: sigma68_ns_ci95
-  value_key: sigma68_ns
+TIMING-MC:                   # clusterB #918, VIS-TIM-005 -- combined timing closure
+  result: reports/studies/clusterB/metrics.json
+  value_key: VIS-TIM-005/combined_sigma68_ns
+  source_figure: reports/studies/clusterB/VIS-TIM-005_combined_estimator.png
+  claim_id: clusterB/#918
+  evidence_class: MC_METHOD_CLOSURE
+  status: MC_METHOD_CLOSURE
+  kind: quantitative
+  caption: >-
+    4-sensor inverse-variance combined timing resolution on the Krakow MC,
+    sigma68 = 0.089 ns (RMS 0.112 ns, condition kappa~1.2, leave-one-sensor-out
+    ~0.10 ns, pull |z|<1 = 0.683 exact). MC closure; NOT a beam-data timing result.
+
+PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
+  result: reports/studies/clusterA/counts.json
+  value_key: pid_full_auc
+  source_figure: reports/studies/clusterA/VIS-PID-001_roc_pr.png
+  claim_id: clusterA/#921
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    Proton/deuteron PID on the realistic dE-E chain (MC), full AUC = 0.898
+    (5-fold 0.898 +/- 0.01; AP 0.47; Brier 0.017). The legacy 0.986 HGB truth
+    ceiling is GATED (CL-017) and is NOT this number.
+
+ADC-MC:                      # clusterC #917, VIS-ENE-001 -- digitizer gain
+  result: reports/studies/clusterC/metrics.json
+  value_key: VIS-ENE-001/proton/slope_adc_per_MeV
+  source_figure: reports/studies/clusterC/VIS-ENE-001_adc_calibration.png
+  claim_id: clusterC/#917
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    ADC calibration (digitizer gain) = 119.17 ADC/MeV (proton = deuteron;
+    pulls mu ~ 0). MC closure; the 110 ADC/MeV MV0 data/MC proxy is GATED (CL-013).
+
+BIRKS-MC:                    # clusterC #917, VIS-ENE-002 -- Birks quenching
+  result: reports/studies/clusterC/metrics.json
+  value_key: VIS-ENE-002/kB_best_per_track_dEdx
+  source_figure: reports/studies/clusterC/VIS-ENE-002_birks_quenching.png
+  claim_id: clusterC/#917
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    Birks kB from per-track dE/dx = 0.0156 cm/MeV (vs 0.0127 total-edep proxy,
+    0.008 digitizer default). MC closure.
+
+RMAX-MC:                     # clusterC #917, VIS-PU-002 -- digitizer-domain Rmax
+  result: reports/studies/clusterC/metrics.json
+  value_key: VIS-PU-002/Rmax_quality_Hz
+  source_figure: reports/studies/clusterC/VIS-PU-002_pileup_occupancy_rate.png
+  claim_id: clusterC/#917
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    Digitizer-domain Rmax = 0.605 MHz at the 0% quality gate (0.289 MHz at 5%
+    overlap). SIMULATION_RESULT only; the canonical detector Rmax is BLOCKED
+    (CL-010/S-STAT-003) and the legacy 3.044 MHz is SUPERSEDED (CL-012).
+
+# === The single VALIDATED data row ===========================================
+
+S00-COUNT:                   # CL-001 -- S00 selected-pulse reproduction
+  result: reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv
+  source_figure: reports/S00_data_integrity_pipeline_reproduction/REPORT.md
+  claim_id: CL-001
+  evidence_class: DATA_MEASUREMENT
+  status: VALIDATED
+  kind: figure_sourced
+  caption: >-
+    Selected B-stack pulses (S00 median gate) = 640,737, exact deterministic
+    reproduction for fixed raw inputs. The ONLY VALIDATED data row in the ledger.
+
+# === Opticks GPU/CPU parity -- PARTIAL =======================================
+
+OPTICKS-PARITY:              # opticks #920 -- GPU/CPU optical-photon parity
+  result: figures/opticks/opticks_gpu_vs_cpu_parity.png
+  source_figure: figures/opticks/opticks_gpu_vs_cpu_parity.png
+  source_summary: figures/opticks/SUMMARY.md
+  claim_id: opticks/#920
+  evidence_class: SIMULATION_RESULT
+  status: PARTIAL
+  kind: figure_sourced
+  caption: >-
+    Opticks GPU/CPU optical-photon parity (2 events, identical seed). CPU Geant4
+    reference 4592 arrivals (2296/evt); GPU path proven through GDML ingestion,
+    4-SiPM annotation, 148,697 photons/event upload; device->host GATHER returns
+    null (EventMode config point) -> 0 GPU hits. CPU ctest 9/9 PASS. NO GPU
+    speedup is claimed (undefined with 0 gathered hits).
+
+# === BLOCKED_DATA -- raw beam ROOT not staged (no figure can be built) =======
+
+TIMING-DATA:                 # CL-002..006 -- detector timing on beam data
+  result: data/raw/hrdb_run_not_staged
+  claim_id: CL-002..006
+  evidence_class: BLOCKED_DATA
+  blocked_by: BLK-MV4-LEGACY-001
   status: EXTERNAL_BLOCKER
   kind: quantitative
   caption: >-
-    B6 single-stave timing resolution (sigma68) with 95% CI. Data-driven
-    residual distribution; N and selection gate recorded in the source table.
+    Detector timing resolution on beam data (B6 single-stave, combined 3-stave,
+    pair covariance). BLOCKED_DATA: raw hrdb_run_*.root waveforms are not staged
+    on LUNARC. Reported BLOCKED; no headline value.
 
-TIME-02:                      # CL-004 / CL-005, FIG-TIM-012, S-TIM-001
-  result: reports/mv4_timing_1782678162/result.json
-  table: reports/mv4_timing_1782678162/tables/combined_stave_source.csv
-  uncertainty_key: sigma68_ns_ci95
-  value_key: sigma68_ns
+PID-DATA:                    # PID on beam data
+  result: data/raw/hrdb_run_not_staged
+  claim_id: PID-on-data
+  evidence_class: BLOCKED_DATA
+  blocked_by: raw_ROOT_not_staged
   status: EXTERNAL_BLOCKER
   kind: quantitative
   caption: >-
-    Combined 3-stave (B4+B6+B8) timing resolution (sigma68) with 95% CI.
+    Proton/deuteron PID transferred onto beam data. BLOCKED_DATA: raw
+    hrdb_run_*.root not staged. Reported BLOCKED; no headline value.
 
-TIME-03:                      # CL-007 / CL-008, FIG-TIM-014 (raw vs corrected pull)
-  result: reports/mv4_timing_1782678162/result.json
-  table: reports/mv4_timing_1782678162/tables/mc_pull_source.csv
-  uncertainty_key: pull_ci95
-  value_key: pull_sigma
-  status: EXTERNAL_BLOCKER
+# === GATED / TENSION / BLOCKED / SUPERSEDED ==================================
+
+MV0-GAIN:                    # CL-013 -- digitizer gain data/MC proxy
+  result: reports/studies/clusterE/systematic_budget.csv
+  source_figure: reports/studies/clusterE/VIS-SYS-001_systematic_budget.png
+  claim_id: CL-013
+  evidence_class: DATA_MC_PROXY
+  blocked_by: BLK-MV0-001
+  status: GATED
   kind: quantitative
   caption: >-
-    MC timing pull, raw vs corrected (MV4). Data/MC TENSION on timewalk
-    correction: promote to status TENSION (not VALIDATED) once the result is
-    synced; the caption must state the tension.
+    MV0 data/MC gain proxy = 110 ADC/MeV with a +-30% HEURISTIC envelope (NOT a
+    confidence interval). GATED pending operator-bench per-stave calibration.
 
-# --- Delta-E / E deuteron enrichment (Sample I / II) ------------------------
-
-DE-01:                        # ranged-stop / deuteron enrichment, deltae_e_truth_bands
-  result: reports/0000000011.1.rangestop/result.json
-  table: reports/0000000011.1.rangestop/tables/data_sample_I.parquet
-  uncertainty_key: d_fraction_ci95
-  value_key: d_fraction
-  status: EXTERNAL_BLOCKER
+MV3-STOP:                    # CL-021 -- stopping-depth data/MC
+  result: reports/studies/clusterA/counts.json
+  value_key: termination_unweighted
+  source_figure: reports/studies/clusterA/VIS-STOP-001_geometry_material.png
+  claim_id: CL-021
+  evidence_class: MC_DIAGNOSTIC
+  blocked_by: BLK-MV3-LEGACY-001
+  status: TENSION
   kind: quantitative
   caption: >-
-    Delta-E vs E, Sample I (coincidence, deuteron-enriched). Deuteron fraction
-    0.36-0.39 in layers 0-1 with 95% CI; reproduces the Matthias trigger-split
-    enrichment. Data-only (PRELIMINARY) until the result JSON is synced.
+    Stopping-depth data/MC profile disagrees at chi2/ndf ~ 6.8e4 (CL-021:
+    68,269). TENSION: ~8-10 g/cm2 of upstream material budget missing from the
+    MC geometry. All quantitative MC stopping-depth claims unreliable until fix.
 
-# --- Single-stave selected-pulse population --------------------------------
-
-SS-01:                        # CL-001 selected-pulse population / stave topology
-  result: reports/s00_pulse_table/result.json
-  table: reports/s00_pulse_table/tables/counts_by_group_stave.csv
-  uncertainty_key: count_uncertainty
-  value_key: n_selected_pulses
-  status: EXTERNAL_BLOCKER
+RMAX-CANONICAL:              # CL-010 -- canonical pile-up Rmax
+  result: reports/mv5_pileup_1782678353/mv5_pileup_summary.json
+  claim_id: CL-010
+  evidence_class: BLOCKED
+  blocked_by: S-STAT-003
+  status: BLOCKED
   kind: quantitative
   caption: >-
-    Selected B-stack pulse population by group/stave (S00 gate). Exact
-    reproduction count with per-bin counting uncertainty.
+    Canonical pile-up Rmax. BLOCKED: 0.38 is the beam duty factor, not a justified
+    occupancy-quality threshold (S-STAT-003). No canonical value or uncertainty.
 
-# --- Illustrative schematic (kept SEPARATE from quantitative figures) -------
+RMAX-LEGACY:                 # CL-012 -- superseded legacy Rmax
+  result: reports/mv5_pileup_1782678353/mv5_pileup_summary.json
+  claim_id: CL-012
+  evidence_class: SUPERSEDED
+  status: SUPERSEDED
+  kind: quantitative
+  caption: >-
+    Legacy Rmax = 3.044 MHz = (1/tau_eff)*0.38 duty-factor arithmetic. SUPERSEDED;
+    do NOT use (supersedes CL-010 history). Retained only as correction history.
+
+SYST-BUDGET:                 # CL-026 -- systematic uncertainty budget
+  result: reports/studies/clusterE/systematic_budget.csv
+  source_figure: reports/studies/clusterE/VIS-SYS-001_systematic_budget.png
+  claim_id: CL-026
+  evidence_class: BLOCKED
+  blocked_by: BLK-SYST-001
+  status: BLOCKED
+  kind: quantitative
+  caption: >-
+    Systematic uncertainty budget. BLOCKED: no per-claim nuisance model,
+    covariance, hash-bound inputs, or coverage study. Component estimates are not
+    blanket authorisation (CL-026).
+
+# === Synthesis figures (cluster E) -- status mirrors the claim dashboard ======
+
+CLAIM-DASHBOARD:
+  source_figure: reports/studies/clusterE/VIS-CLAIM-001_claim_dashboard.png
+  claim_id: clusterE
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    The 16 headline claims with evidence class and status, colour-coded
+    PASS / GATED / BLOCKED / PARTIAL / SUPERSEDED. Machine-readable twin:
+    reports/studies/clusterE/claims_table.csv.
+
+DASHBOARD-OVERVIEW:
+  source_figure: reports/studies/clusterE/PROJECT_DASHBOARD_OVERVIEW.png
+  claim_id: clusterE
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    Single-image executive summary (also embedded in reports/PROJECT_DASHBOARD.md).
+
+# === Illustrative schematics (kept SEPARATE from quantitative figures) =======
 
 SCH-01:
-  result: docs/figures/geometry_tof.png     # provenance pointer; not read for numbers
+  source_figure: docs/figures/geometry_tof.png
   status: ILLUSTRATIVE
   kind: illustrative
-  caption: >-
-    Beamline / detector geometry schematic (Krakow 190 MeV p on CD2, HRD
-    stacks A & B). Schematic only -- carries no measured numbers and is not
-    quantitative evidence.
-
-# ============================================================================
-# ADDED (2026-07-20): migration of scripts/generate_publication_figures.py off
-# embedded Python constants. Each entry below replaces a block of hand-entered
-# headline numbers that the old monolith plotted directly. The analysis result
-# JSONs are not in this checkout, so quantitative entries are EXTERNAL_BLOCKER
-# (reported BLOCKED, never FAIL) until synced + promoted to VALIDATED / TENSION.
-# Illustrative schematics (simulated / qualitative diagrams) are kind:
-# illustrative and rendered into a SEPARATE illustrative/ directory.
-# See scripts/PUBFIG_MIGRATION.md for the constant -> entry mapping.
-# ----------------------------------------------------------------------------
-
-# --- Pile-up (Rmax / effective live-time) -----------------------------------
-
-PU-01:                        # CL-010 / CL-011 / CL-012, FIG-PU-002 / FIG-PU-003
-  result: reports/mv5_pileup_1782678353/result.json
-  table: reports/mv5_pileup_1782678353/tables/pileup_mc_vs_data.csv
-  uncertainty_key: rmax_mhz_ci95
-  value_key: rmax_mhz
-  status: EXTERNAL_BLOCKER
-  kind: quantitative
-  caption: >-
-    Pile-up tolerance Rmax (MHz) and effective live-time tau_eff (ns),
-    MC vs data self-consistent, with 95% CI. Replaces the old MC_VS_DATA
-    pile-up constants.
-
-# --- Stopping-depth profile (MV3, data vs MC) -------------------------------
-
-MV3-01:                       # CL-019 / CL-020 / CL-021, FIG-PID-005
-  result: reports/mv3_stopping_v3_1782679272/result.json
-  table: reports/mv3_stopping_v3_1782679272/tables/stopping_fraction_by_stave.csv
-  uncertainty_key: fraction_ci95
-  value_key: b8_fraction_mc
-  status: EXTERNAL_BLOCKER
-  kind: quantitative
-  caption: >-
-    Stopping-depth profile per B-stave, data vs MC (fraction of events, %),
-    with per-bin binomial CI. B2 data/MC discrepancy (MV3 GAP-01, upstream
-    material budget) stated in the source table. Replaces STOPPING constants.
-
-# --- Proton / deuteron PID (ROC AUC + purity) -------------------------------
-
-PID-01:                       # CL-017 / CL-018, FIG-PID-001
-  result: reports/mv1_pid/result.json
-  table: reports/mv1_pid/tables/pid_auc_purity.csv
-  uncertainty_key: auc_ci95
-  value_key: auc
-  status: EXTERNAL_BLOCKER
-  kind: quantitative
-  caption: >-
-    Proton/deuteron PID: ROC AUC and purity at 90% efficiency (MC-truth),
-    with grouped-bootstrap / Wilson CI. Replaces PID_DATA constants.
-
-# --- Pulse-shape compression (PCA vs autoencoder) ---------------------------
-
-PS-01:                        # CL-023 / CL-024 (superseded -> canonical rerun), FIG-PS-001
-  result: reports/mv6_representation_1782678362/result.json
-  table: reports/mv6_representation_1782678362/tables/pca_vs_ae_mse.csv
-  uncertainty_key: mse_ci95
-  value_key: ae_mse
-  status: EXTERNAL_BLOCKER
-  kind: quantitative
-  caption: >-
-    Pulse-shape reconstruction MSE vs latent dimension, PCA vs autoencoder,
-    with CI. Superseded pending canonical rerun; blocked until synced.
-    Replaces PCA_AE constants.
-
-# --- Systematic uncertainty budget ------------------------------------------
-
-SYS-01:                       # CL-013 (gain) / CL-026 (budget), FIG-EN-001
-  result: reports/systematics_budget/result.json
-  table: reports/systematics_budget/tables/systematic_budget.csv
-  uncertainty_key: budget_ci95
-  value_key: total_systematic_pct
-  status: EXTERNAL_BLOCKER
-  kind: quantitative
-  caption: >-
-    Systematic uncertainty budget by source (gain MV0, stopping-depth MV3,
-    timing MV4, C12 MV6, pile-up MV5), %. Fails the build until the propagated
-    budget result exists. Replaces SYST_BUDGET constants.
-
-# --- Deuteron fraction per B-stave layer (Sample I / II) --------------------
-
-DE-02:                        # trigger-split truth, FIG-PID (deuteron_fraction_vs_layer)
-  result: reports/mc_trigger_split/result.json
-  table: reports/mc_trigger_split/tables/d_fraction_by_layer.csv
-  uncertainty_key: d_fraction_ci95
-  value_key: d_fraction_layer0_sample_I
-  status: EXTERNAL_BLOCKER
-  kind: quantitative
-  caption: >-
-    MC-truth deuteron fraction per B-stave layer, Sample I (coincidence) vs
-    Sample II (single-B), with CI. Replaces the inline d_frac_I / d_frac_II
-    constants in fig12.
-
-# --- Illustrative schematics (simulated / qualitative; kept SEPARATE) --------
-
-SCH-02:                       # timewalk correction schematic (simulated scatter)
-  result: docs/figures/06_timewalk_explained.png   # provenance pointer; not read for numbers
+  caption: Beamline / detector geometry schematic. Carries no measured numbers.
+SCH-02:
+  source_figure: docs/figures/06_timewalk_explained.png
   status: ILLUSTRATIVE
   kind: illustrative
-  caption: >-
-    Amplitude timewalk correction, before/after (f(A) = A0 + B/A). Simulated
-    illustration of the correction mechanism -- carries no measured numbers.
-
-SCH-03:                       # annotated scintillator waveform (simulated pulse)
-  result: docs/figures/03_waveform_annotated.png   # provenance pointer; not read for numbers
+  caption: Amplitude timewalk correction mechanism (simulated). Not quantitative.
+SCH-03:
+  source_figure: docs/figures/03_waveform_annotated.png
   status: ILLUSTRATIVE
   kind: illustrative
-  caption: >-
-    Annotated scintillator waveform (baseline region, peak sample, CFD
-    threshold). Simulated pulse for illustration -- not quantitative evidence.
-
-SCH-04:                       # ML advantage landscape (qualitative positioning)
-  result: docs/figures/10_ml_landscape.png         # provenance pointer; not read for numbers
-  status: ILLUSTRATIVE
-  kind: illustrative
-  caption: >-
-    Qualitative landscape of where ML helps vs where traditional baselines win.
-    Positions are illustrative editorial placements, not measured effect sizes.
-
-SCH-05:                       # Delta-E/E B2-vs-B4 scatter analogue (simulated placeholder)
-  result: docs/figures/17_pid_how_it_works.png     # provenance pointer; not read for numbers
-  status: ILLUSTRATIVE
-  kind: illustrative
-  caption: >-
-    Delta-E-E analogue (B2 vs B4 pulse amplitude), Sample I vs II. Simulated
-    placeholder illustrating the PID separation mechanism -- not real data.
+  caption: Annotated scintillator waveform (simulated). Not quantitative.

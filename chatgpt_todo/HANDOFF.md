@@ -7,6 +7,11 @@
 - **Initial remote `main`:** `a5b108fc8ead2f644c8b362f3a8732ef1d0528fc`
 - **Validated implementation/evidence/archive head:**
   `b8f132ddf473c5026f4a5d1236a9ccdb7bb00e59`
+- **Validated delivery handoff / after-SHA:**
+  `e8186e585dba4345d540574169ad012e72ccbbe6`
+- **Remote-main confirmation:** this update is based on fetched handoff blob
+  `bdad0708f0bf6533c5a8b9f226b4c8e92806897a` and a post-write history read
+  whose head was `e8186e585dba4345d540574169ad012e72ccbbe6`.
 - **Destination:** direct GitHub contents-API commits to remote `main`; no
   force-push, history rewrite, task branch, or PR transport.
 - **Push-output boundary:** the connector returned successful commit SHAs rather
@@ -95,7 +100,7 @@ Added:
 - `docs/validation/npy_writer_contract_audit.md`
 - `chatgpt_todo/archive/2026-07-25T180216Z_AUD-G4-024_NPY_WRITER_CONTRACT.md`
 
-## Direct-main sequence through archive
+## Direct-main sequence through delivery
 
 - `e54f1f5d8c3a3175e3bce56e459d461c523e01cc` — fail-closed writer
 - `09d4409e2b9091718b563b98da186376ce22cad6` — compiled regression
@@ -106,6 +111,7 @@ Added:
 - `c8f0cbca9033010861c7982c1358d17d3e80c945` — audit report
 - `6444cc6693bd3c5183c9f88e4f25adbf24c1cc97` — active completion
 - `b8f132ddf473c5026f4a5d1236a9ccdb7bb00e59` — immutable archive
+- `e8186e585dba4345d540574169ad012e72ccbbe6` — delivery handoff
 
 ## Scientific boundary and next action
 

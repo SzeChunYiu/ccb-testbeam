@@ -2,14 +2,15 @@
 
 ## Status
 
-The event tree written by `geant4/single_stave/src/RunAction.cc` and the
-normalized table consumed by `analyze_single_stave.py` are different contracts.
-Do not point the current ROOT file directly at the analyzer and interpret a
-schema failure or a passing legacy fixture as scientific validation.
+The `events` tree written by `geant4/single_stave/src/RunAction.cc` and the
+normalized table consumed by `analyze_single_stave.py` use different branch
+names and units. Do not bypass the explicit adapter.
 
-`adapt_geant4_events.py` provides an explicit, fail-closed conversion layer.
-It is validated for schema and bookkeeping semantics only; it is not a detector
-calibration or a validation of the existing analyzer's calibration model.
+`adapt_geant4_events.py` provides the fail-closed mapping. Analyzer version
+2.0.0 now preserves the scintillation, WLS, and Cerenkov counters and uses the
+exact total-optical count for arrival bounds and collection-efficiency plots.
+This establishes schema and bookkeeping compatibility; it is not detector
+calibration or real-ROOT physics closure.
 
 ## Explicit mapping
 
@@ -22,21 +23,27 @@ calibration or a validation of the existing analyzer's calibration model.
 | `detected_readout` | `n_detected_pe` | PDE/coupling detections at the same sensor |
 | `track_len_scint_mm` | `track_length_scint_cm` | Explicit unit conversion, mm / 10 |
 
-The adapter retains the producer's scintillation, WLS, and Cerenkov counters and
-adds
+The adapter retains the producer component counters and adds
 
 ```text
 n_optical_generated_total =
     n_scint_generated + n_wls_generated + n_cerenkov_generated
 ```
 
-The defensible arrival-count bookkeeping gate is
-`n_end_selected <= n_optical_generated_total`, followed by
-`n_detected_pe <= n_end_selected`. It is not valid to bound all readout arrivals
-against the scintillation-only counter when WLS and Cerenkov optical tracks are
-also recorded.
+The analyzer requires all three components and the declared total whenever any
+current-contract optical field is present. It verifies the exact row-wise sum,
+then applies
 
-## Reproduce the conversion
+```text
+n_end_selected <= n_optical_generated_total
+n_detected_pe <= n_end_selected
+```
+
+The G4S-03 source table and plot metadata record the denominator and contract.
+Legacy tables lacking WLS/Cerenkov fields remain readable only under the
+explicit `LEGACY_SCINTILLATION_ONLY` label.
+
+## Reproduce the normalized path
 
 ```bash
 python scripts/single_stave/adapt_geant4_events.py \
@@ -45,28 +52,22 @@ python scripts/single_stave/adapt_geant4_events.py \
   --run-id proton_100MeV_seed1 \
   --output stave_p100.normalized.parquet \
   --metadata stave_p100.normalized.meta.json
+
+python scripts/single_stave/analyze_single_stave.py \
+  --input stave_p100.normalized.parquet \
+  --output analysis/proton_100MeV_seed1
 ```
 
-The converter records the input and output SHA-256, byte counts, row count,
-selected-sensor semantics, exact field mapping, and the generated-track bound.
-It rejects missing or ambiguous columns, nonfinite/noninteger counts, negative
-counts, duplicate event keys, invalid count ordering, changed input bytes,
-destructive path aliases, and accidental overwrite.
+The adapter records input/output SHA-256, byte counts, row count, selected
+sensor, exact mapping, and generated-track bound. The analyzer records its
+policy/version, exact input identity, component/total summaries, denominator,
+source tables, result, and output hashes.
 
-## Remaining downstream blocker
+## Remaining scientific blocker
 
-The existing analyzer still checks `n_end_selected <= n_scint_generated` and
-uses that scintillation-only denominator in a collection-efficiency plot. The
-adapter therefore reports `analysis_compatibility=SCHEMA_ADAPTER_ONLY`. Before a
-current Geant4 ROOT file is accepted for scientific analysis, the analyzer must
-be updated to use the explicit total-optical counter (while retaining the three
-component counters), and that integrated path must be exercised on immutable
-real ROOT bytes.
-
-## Validation scope
-
-Focused synthetic tests bind the adapter to the exact current `RunAction.cc`
-branch declarations and cover mapping, unit conversion, WLS-inclusive count
-semantics, malformed counts, ambiguity, atomic output, and alias/overwrite
-protection. No Geant4 event, ROOT production sample, calibration, optical yield,
-resolution, or detector-performance quantity is produced by this contract unit.
+The complete adapter-to-analyzer path is regression-tested with synthetic
+current-contract tables. It still must be executed on immutable real ROOT bytes
+with producer commit, sidecar, ROOT hash, normalized-table hash, row-count
+closure, result/manifest hashes, and review of the generated plots before any
+optical-yield, calibration, resolution, PID, or detector-performance claim is
+accepted.

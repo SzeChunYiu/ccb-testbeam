@@ -1,0 +1,90 @@
+{
+  "controls": {
+    "nonunit_model_profile": {
+      "chi2": 5.0,
+      "chi2_per_ndf": 2.5,
+      "ndf": 2,
+      "outcome": "RETURNED"
+    },
+    "positive_observed_zero_expected": {
+      "chi2": 1.0,
+      "chi2_per_ndf": 1.0,
+      "ndf": 1,
+      "outcome": "RETURNED"
+    },
+    "valid_four_bin": {
+      "chi2": 0.0,
+      "chi2_per_ndf": 0.0,
+      "ndf": 3,
+      "outcome": "RETURNED"
+    },
+    "zero_expected_zero_observed": {
+      "chi2": 0.0,
+      "chi2_per_ndf": 0.0,
+      "ndf": 1,
+      "outcome": "RETURNED"
+    }
+  },
+  "execution_scope": {
+    "fixture_sha256": "e1dbc2005ca386f267e1216c1a183f2f8338b195a6c45f0127b18a8e9a261966",
+    "kind": "EXACT_FUNCTION_RECONSTRUCTION",
+    "limitation": "The full remote source blob could not be downloaded into the runtime because github.com DNS resolution failed; the exact _chi2 implementation was reconstructed from connector-returned source lines."
+  },
+  "finding_count": 2,
+  "findings": [
+    {
+      "code": "OBSERVED_MASS_OUTSIDE_MODEL_SUPPORT_NOT_REJECTED",
+      "detail": "The B6 control has observed=10 and expected=0. Pearson chi-square is not finite under that model and must fail closed instead of dropping the bin."
+    },
+    {
+      "code": "NONUNIT_MODEL_PROFILE_NOT_REJECTED",
+      "detail": "The model fractions sum to 0.95 and must not be used as probabilities."
+    }
+  ],
+  "initial_remote_main": "0aa777457fff37a817bce29a7ea1656683210ddf",
+  "policy": "PEARSON_CHI2_MUST_REJECT_OUT_OF_SUPPORT_DATA_AND_NONUNIT_PROFILES",
+  "repository_source": {
+    "git_blob": "cd787ab64408228d67536b88bcc617fe32d0ec5a",
+    "inspection": "authenticated GitHub connector",
+    "path": "scripts/studies/mv3_selection_matched.py",
+    "relevant_lines": "123-136"
+  },
+  "required_remediation": [
+    "Require model fractions to sum to 1 within a declared tolerance before forming expected counts.",
+    "Reject any bin with observed > 0 and expected == 0 as outside model support.",
+    "Permit expected == observed == 0 bins to be omitted while deriving ndf from supported bins.",
+    "Add regression coverage before any production weighted MV3 rerun."
+  ],
+  "schema": "ccb-mv3-chi2-support-audit/1",
+  "scientific_boundary": "Synthetic software/statistical validation only; no production ROOT or beam-data profile, covariance, closure, calibration, PID, or detector result is established.",
+  "session_stamp": "2026-07-25T233022Z",
+  "source": {
+    "bytes": 823,
+    "path": "current_chi2_fixture.py",
+    "sha256": "e1dbc2005ca386f267e1216c1a183f2f8338b195a6c45f0127b18a8e9a261966"
+  },
+  "status": "FLAWED",
+  "task_id": "AUD-MV3-SEL-003",
+  "unrun_checks": [
+    "full repository pytest and ruff",
+    "exact full remote producer-blob execution",
+    "production ROOT/data rerun",
+    "GitHub Actions"
+  ],
+  "validation": {
+    "auditor_exit_status": 1,
+    "commands": [
+      "python -m py_compile audit_mv3_chi2_support.py test_audit_mv3_chi2_support.py render_mv3_chi2_support_evidence.py",
+      "pytest -q test_audit_mv3_chi2_support.py",
+      "python audit_mv3_chi2_support.py --source current_chi2_fixture.py --output mv3_chi2_support_validation.json",
+      "python render_mv3_chi2_support_evidence.py --input mv3_chi2_support_validation.json --output mv3_chi2_support.svg"
+    ],
+    "json_parse": "PASS",
+    "max_python_line_length": 100,
+    "numpy": "2.3.5",
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest": "6 passed in 0.03s",
+    "python": "3.13.5",
+    "svg_xml_parse": "PASS"
+  }
+}

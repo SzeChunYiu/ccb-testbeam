@@ -1,550 +1,687 @@
 #!/usr/bin/env python3
-"""
-mv3_selection_matched.py
-========================
-MV3 stopping-depth resolution via SELECTION MATCHING (CL-021 / GAP-01 follow-up).
+"""Weighted, selection-matched MV3 stopping-depth diagnostic.
 
-HYPOTHESIS
-----------
-The MV3 data/MC stopping-depth discrepancy (data B2=87.6% sharp peak vs MC B2=47%
-broad; chi2/ndf ~ 6.8e4) is a SELECTION ARTIFACT, not a physics defect.
-
-Two selection mismatches exist in the legacy MV3 v3 comparison:
-  (1) TRACK-vs-EVENT granularity: v3 counts one stopping depth per *charged B-arm
-      track* (including e/mu/pi/K secondaries and delta-rays), while the data counts
-      one stopping depth per *event* (the deepest stave with a pulse above threshold).
-  (2) TRIGGER: v3 applies NO hardware-trigger selection to MC. The data is split by
-      the hardware trigger encoded in the `group` column:
-        sample_i_*  = A & B coincidence trigger  (large-angle scatter -> low-E -> stop early)
-        sample_ii_* = single B trigger           (beam-on-B)
-      Sample-I data is 93% B2-stopped; Sample-II is 69%; the MC (no trigger) is 47%.
-
-This script applies the DATA's trigger logic to the MC (the same logic already
-implemented in scripts/mc01_trigger_split_truth.py) AND switches to event-level
-per-stave energy-summing (matching the data's total-light-per-stave observable).
-
-If the selection-matched MC matches data -> the discrepancy is a selection artifact
--> CL-021 upgraded from TENSION to RESOLVED (selection-matched).
-
-PARAMETERS (env-configurable; defaults traceable to MV3 v3 / mc01 / MV0 v2)
---------------------------------------------------------------------------
-  MV3_COINC_NS        coincidence window [ns]         (mc01 COINC_DEFAULT = 15.0)
-  MV3_GAIN            ADC/MeV                          (MV0 v2 median = 92.0)
-  MV3_PEAK_FRAC       peak-bin fraction                (digitizer tau_r=2.5, tau_d=42 -> 0.7330)
-  MV3_THRESHOLD_ADC   net-amplitude threshold [ADC]    (data S00 selection = 1000.0)
-  MV3_STOP_KE_MEV     residual KE for truth 'stop'     (track_builder = 1.0)
+The primary MC result applies exactly one finite, non-negative ``PrimaryWeight``
+per event and uses the canonical signed-charge predicate.  Unweighted outputs
+are retained only as labelled sensitivities.  A single run is diagnostic: it
+cannot upgrade canonical CL-021 without immutable-input reruns, covariance and
+parameter scans, and claim-ledger review.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
 import os
+import shlex
 import sys
+import tempfile
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Iterable
 
 import numpy as np
 
-# --- configurable parameters (defaults traceable to existing studies) ----------
 COINC_NS = float(os.environ.get("MV3_COINC_NS", "15.0"))
 GAIN = float(os.environ.get("MV3_GAIN", "92.0"))
 PEAK_FRAC = float(os.environ.get("MV3_PEAK_FRAC", "0.7330"))
 THRESHOLD_ADC = float(os.environ.get("MV3_THRESHOLD_ADC", "1000.0"))
 STOP_KE_MEV = float(os.environ.get("MV3_STOP_KE_MEV", "1.0"))
 
-STAVES = ["B2", "B4", "B6", "B8"]
+STAVES = ("B2", "B4", "B6", "B8")
 LAYER_TO_STAVE_IDX = {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3}
 B_ARM = 1
 A_ARM = 2
 NB_LAYERS = 8
-# Charged species that produce scintillation light in the B arm.
-CHARGED_PDGS = {2212, 1000010020, 11, 13, 211, 321, 1000010030, 1000020030, 1000020040}
+POLICY = "MV3_SELECTION_WEIGHTED_SIGNED_CHARGE_SAME_TARGET_V2"
 
 
-def _frac(counts: dict) -> dict:
-    total = sum(counts.values())
-    return {s: counts.get(s, 0) / total if total > 0 else 0.0 for s in STAVES}
+class ContractError(RuntimeError):
+    """Controlled scientific-input or publication-contract failure."""
 
 
-def _chi2(mc_frac: dict, data_counts: dict) -> tuple[float, int, float]:
-    mc_f = np.array([mc_frac.get(s, 0.0) for s in STAVES], float)
-    obs = np.array([data_counts.get(s, 0) for s in STAVES], float)
-    n = obs.sum()
-    exp = mc_f * n
-    with np.errstate(invalid="ignore", divide="ignore"):
-        c = float(np.nansum((obs - exp) ** 2 / np.where(exp > 0, exp, np.nan)))
-    ndf = int((mc_f > 0).sum()) - 1
-    return c, ndf, c / max(ndf, 1)
+def _finite_float(value: Any, label: str) -> float:
+    try:
+        result = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ContractError(f"NONNUMERIC:{label}:{value!r}") from exc
+    if not math.isfinite(result):
+        raise ContractError(f"NONFINITE:{label}:{value!r}")
+    return result
 
 
-# ---------------------------------------------------------------------------
-# MC event-stream analysis: trigger classification + event-level per-stave EDep
-# ---------------------------------------------------------------------------
-def analyze_mc(mc_path: str, tree: str = "hibeam", max_events: int = 0) -> dict:
-    """Stream the MC and build, PER EVENT:
-       - trigger class (unselected / Sample-II enterB / Sample-I coincidence)
-       - event-level per-stave total EDep (sum over all charged B-arm hits)
-       - observable stopping depth (deepest stave with peak_adc > threshold)
-       - truth stopping depth (dominant track termination == stop)
-       - dE (B2 edep) and E (B4+B6+B8 edep) for the deltaE-E plane
-    Returns per-selection aggregates.
-    """
+def _event_weight(raw: Any, event_index: int) -> float:
+    values = np.asarray(raw, dtype=float).reshape(-1)
+    if values.size != 1:
+        raise ContractError(
+            f"PRIMARYWEIGHT_CARDINALITY:event={event_index}:observed={values.size}:expected=1"
+        )
+    weight = _finite_float(values[0], f"PrimaryWeight[{event_index}]")
+    if weight < 0.0:
+        raise ContractError(f"NEGATIVE_PRIMARYWEIGHT:event={event_index}:value={weight}")
+    return weight
+
+
+def _profile_fraction(counts: dict[str, float]) -> dict[str, float]:
+    total = math.fsum(float(counts.get(stave, 0.0)) for stave in STAVES)
+    if total <= 0.0:
+        return {stave: 0.0 for stave in STAVES}
+    return {stave: float(counts.get(stave, 0.0)) / total for stave in STAVES}
+
+
+def _weighted_mean(values: np.ndarray, weights: np.ndarray) -> float:
+    if values.size == 0:
+        return float("nan")
+    total = math.fsum(float(value) for value in weights)
+    if total <= 0.0:
+        return float("nan")
+    return math.fsum(float(value * weight) for value, weight in zip(values, weights)) / total
+
+
+def _weighted_corr(x: Iterable[float], y: Iterable[float], w: Iterable[float]) -> float:
+    xa = np.asarray(list(x), dtype=float)
+    ya = np.asarray(list(y), dtype=float)
+    wa = np.asarray(list(w), dtype=float)
+    mask = np.isfinite(xa) & np.isfinite(ya) & np.isfinite(wa) & (wa >= 0.0)
+    xa = xa[mask]
+    ya = ya[mask]
+    wa = wa[mask]
+    if xa.size < 3 or math.fsum(float(value) for value in wa) <= 0.0:
+        return float("nan")
+    mx = _weighted_mean(xa, wa)
+    my = _weighted_mean(ya, wa)
+    cov = math.fsum(float(weight * (xv - mx) * (yv - my)) for xv, yv, weight in zip(xa, ya, wa))
+    vx = math.fsum(float(weight * (xv - mx) ** 2) for xv, weight in zip(xa, wa))
+    vy = math.fsum(float(weight * (yv - my) ** 2) for yv, weight in zip(ya, wa))
+    if vx <= 0.0 or vy <= 0.0:
+        return float("nan")
+    return cov / math.sqrt(vx * vy)
+
+
+def _weighted_quantile(values: Iterable[float], weights: Iterable[float], q: float) -> float:
+    va = np.asarray(list(values), dtype=float)
+    wa = np.asarray(list(weights), dtype=float)
+    mask = np.isfinite(va) & np.isfinite(wa) & (wa >= 0.0)
+    va = va[mask]
+    wa = wa[mask]
+    if va.size == 0 or not 0.0 <= q <= 1.0:
+        return float("nan")
+    order = np.argsort(va, kind="mergesort")
+    va = va[order]
+    wa = wa[order]
+    total = float(wa.sum())
+    if total <= 0.0:
+        return float("nan")
+    cumulative = np.cumsum(wa)
+    index = int(np.searchsorted(cumulative, q * total, side="left"))
+    return float(va[min(index, va.size - 1)])
+
+
+def _chi2(mc_frac: dict[str, float], data_counts: dict[str, float]) -> tuple[float, int, float]:
+    mc = np.asarray([mc_frac.get(stave, 0.0) for stave in STAVES], dtype=float)
+    observed = np.asarray([data_counts.get(stave, 0.0) for stave in STAVES], dtype=float)
+    if not np.all(np.isfinite(mc)) or not np.all(np.isfinite(observed)):
+        raise ContractError("NONFINITE_CHI2_INPUT")
+    if np.any(mc < 0.0) or np.any(observed < 0.0):
+        raise ContractError("NEGATIVE_CHI2_INPUT")
+    expected = mc * observed.sum()
+    positive = expected > 0.0
+    ndf = int(positive.sum()) - 1
+    if ndf <= 0:
+        raise ContractError("NONPOSITIVE_CHI2_NDF")
+    chi2 = float(np.sum((observed[positive] - expected[positive]) ** 2 / expected[positive]))
+    return chi2, ndf, chi2 / ndf
+
+
+def _new_bag() -> dict[str, Any]:
+    return {
+        "n_events": 0,
+        "n_no_fire": 0,
+        "n_zero_weight": 0,
+        "sum_w": 0.0,
+        "sum_w2": 0.0,
+        "stop_depth_counts": {stave: 0.0 for stave in STAVES},
+        "unweighted_stop_depth_counts": {stave: 0 for stave in STAVES},
+        "truth_stop_counts": {stave: 0.0 for stave in STAVES},
+        "unweighted_truth_stop_counts": {stave: 0 for stave in STAVES},
+        "truth_n_stop": 0,
+        "truth_n_escape_censored": 0,
+        "dE_mev": [],
+        "E_mev": [],
+        "weights": [],
+        "entry_ekin_mev": [],
+        "entry_ekin_weights": [],
+    }
+
+
+def _accumulate(
+    bag: dict[str, Any],
+    *,
+    weight: float,
+    observable_depth: str | None,
+    truth_depth: str | None,
+    truth_term: str,
+    d_e: float,
+    e_res: float,
+    entry_ekin: float,
+) -> None:
+    bag["n_events"] += 1
+    bag["sum_w"] += weight
+    bag["sum_w2"] += weight * weight
+    if weight == 0.0:
+        bag["n_zero_weight"] += 1
+    if observable_depth is None:
+        bag["n_no_fire"] += 1
+    else:
+        bag["stop_depth_counts"][observable_depth] += weight
+        bag["unweighted_stop_depth_counts"][observable_depth] += 1
+    bag["dE_mev"].append(d_e)
+    bag["E_mev"].append(e_res)
+    bag["weights"].append(weight)
+    if truth_term == "stop" and truth_depth is not None:
+        bag["truth_stop_counts"][truth_depth] += weight
+        bag["unweighted_truth_stop_counts"][truth_depth] += 1
+        bag["truth_n_stop"] += 1
+    else:
+        bag["truth_n_escape_censored"] += 1
+    if math.isfinite(entry_ekin):
+        bag["entry_ekin_mev"].append(entry_ekin)
+        bag["entry_ekin_weights"].append(weight)
+
+
+def _finalize_bag(bag: dict[str, Any]) -> dict[str, Any]:
+    sum_w = float(bag["sum_w"])
+    sum_w2 = float(bag["sum_w2"])
+    if sum_w <= 0.0 or sum_w2 <= 0.0:
+        raise ContractError("NONPOSITIVE_SELECTION_WEIGHT_SUM")
+    d_e = np.asarray(bag["dE_mev"], dtype=float)
+    e_res = np.asarray(bag["E_mev"], dtype=float)
+    weights = np.asarray(bag["weights"], dtype=float)
+    both = (d_e > 0.0) & (e_res > 0.0)
+    entry = bag["entry_ekin_mev"]
+    entry_w = bag["entry_ekin_weights"]
+    return {
+        "n_events": int(bag["n_events"]),
+        "n_no_fire": int(bag["n_no_fire"]),
+        "n_zero_weight": int(bag["n_zero_weight"]),
+        "sum_w": sum_w,
+        "sum_w2": sum_w2,
+        "effective_sample_size": sum_w * sum_w / sum_w2,
+        "stop_depth_counts": {stave: float(bag["stop_depth_counts"][stave]) for stave in STAVES},
+        "stop_depth_frac": _profile_fraction(bag["stop_depth_counts"]),
+        "unweighted_stop_depth_counts": {
+            stave: int(bag["unweighted_stop_depth_counts"][stave]) for stave in STAVES
+        },
+        "unweighted_stop_depth_frac": _profile_fraction(bag["unweighted_stop_depth_counts"]),
+        "truth_stop_counts": {stave: float(bag["truth_stop_counts"][stave]) for stave in STAVES},
+        "truth_stop_frac": _profile_fraction(bag["truth_stop_counts"]),
+        "unweighted_truth_stop_counts": {
+            stave: int(bag["unweighted_truth_stop_counts"][stave]) for stave in STAVES
+        },
+        "unweighted_truth_stop_frac": _profile_fraction(
+            bag["unweighted_truth_stop_counts"]
+        ),
+        "truth_n_stop": int(bag["truth_n_stop"]),
+        "truth_n_escape_censored": int(bag["truth_n_escape_censored"]),
+        "dE_E_n_both_fire": int(both.sum()),
+        "dE_E_corr_both_fire": _weighted_corr(d_e[both], e_res[both], weights[both]),
+        "dE_E_corr_both_fire_unweighted": (
+            float(np.corrcoef(d_e[both], e_res[both])[0, 1]) if both.sum() > 2 else float("nan")
+        ),
+        "entry_ekin_median_mev": _weighted_quantile(entry, entry_w, 0.5),
+        "entry_ekin_p10_mev": _weighted_quantile(entry, entry_w, 0.1),
+        "entry_ekin_p90_mev": _weighted_quantile(entry, entry_w, 0.9),
+    }
+
+
+def analyze_mc(mc_path: str, tree: str = "hibeam", max_events: int = 0) -> dict[str, Any]:
+    """Build weighted physical and unweighted sensitivity profiles per selection."""
     import uproot
     from ccb_mc_validation.truth.pdg import (
+        DEFAULT_MOMENTUM_UNIT,
+        is_charged,
         kinetic_energy_from_branch_momentum,
-        pdg_charge,
     )
 
     branches = [
-        "Sci_bar_LayerID", "Sci_bar_LayerID1", "Sci_bar_PDG", "Sci_bar_EDep",
-        "Sci_bar_Time", "Sci_bar_TrackID",
-        "Sci_bar_Momentum_X", "Sci_bar_Momentum_Y", "Sci_bar_Momentum_Z",
-        "PrimaryWeight", "PrimaryPDG",
+        "Sci_bar_LayerID",
+        "Sci_bar_LayerID1",
+        "Sci_bar_PDG",
+        "Sci_bar_EDep",
+        "Sci_bar_Time",
+        "Sci_bar_TrackID",
+        "Sci_bar_Momentum_X",
+        "Sci_bar_Momentum_Y",
+        "Sci_bar_Momentum_Z",
+        "PrimaryWeight",
     ]
     tree_obj = uproot.open(mc_path)[tree]
     entry_stop = max_events if max_events > 0 else None
+    bags = {name: _new_bag() for name in ("unselected", "sample_ii", "sample_i")}
+    counters = {"n_total_events": 0, "n_enterB": 0, "n_enterA": 0, "n_coincidence": 0}
 
-    # per-selection stores
-    def new_bag():
-        return {
-            "stop_depth_counts": {s: 0 for s in STAVES},   # observable (threshold)
-            "n_no_fire": 0,                                  # events with no stave above thr
-            "n_events": 0,
-            "dE_mev": [], "E_mev": [],                       # for deltaE-E (event-level)
-            "truth_stop_counts": {s: 0 for s in STAVES},     # truth-based stop (dominant trk)
-            "truth_n_stop": 0, "truth_n_escape_censored": 0,
-            "entry_ekin_mev": [],                            # primary KE entering B
-        }
-
-    bags = {"unselected": new_bag(), "sample_ii": new_bag(), "sample_i": new_bag()}
-    n_total = 0
-    n_enterB = n_enterA = n_coinc = 0
-
-    for ch in tree_obj.iterate(branches, step_size="200 MB", library="np",
-                               entry_stop=entry_stop):
-        L = ch["Sci_bar_LayerID"]; L1 = ch["Sci_bar_LayerID1"]
-        PD = ch["Sci_bar_PDG"]; ED = ch["Sci_bar_EDep"]; TM = ch["Sci_bar_Time"]
-        TID = ch["Sci_bar_TrackID"]
-        MX = ch["Sci_bar_Momentum_X"]; MY = ch["Sci_bar_Momentum_Y"]; MZ = ch["Sci_bar_Momentum_Z"]
-        PWC = ch["PrimaryWeight"]
-        nev = len(L)
-        for i in range(nev):
-            n_total += 1
-            l = L[i]; l1 = L1[i]; pd = PD[i]; ed = ED[i]; tm = TM[i]
-            if len(l) == 0:
+    for chunk in tree_obj.iterate(
+        branches, step_size="200 MB", library="np", entry_stop=entry_stop
+    ):
+        layer = chunk["Sci_bar_LayerID"]
+        arm = chunk["Sci_bar_LayerID1"]
+        pdg = chunk["Sci_bar_PDG"]
+        edep = chunk["Sci_bar_EDep"]
+        time = chunk["Sci_bar_Time"]
+        track_id = chunk["Sci_bar_TrackID"]
+        mx = chunk["Sci_bar_Momentum_X"]
+        my = chunk["Sci_bar_Momentum_Y"]
+        mz = chunk["Sci_bar_Momentum_Z"]
+        primary_weight = chunk["PrimaryWeight"]
+        for index in range(len(layer)):
+            counters["n_total_events"] += 1
+            arrays = [
+                layer[index], arm[index], pdg[index], edep[index], time[index],
+                track_id[index], mx[index], my[index], mz[index],
+            ]
+            lengths = {len(values) for values in arrays}
+            if len(lengths) != 1:
+                raise ContractError(
+                    f"HIT_BRANCH_CARDINALITY:event={index}:lengths={sorted(lengths)}"
+                )
+            weight = _event_weight(primary_weight[index], counters["n_total_events"] - 1)
+            if len(arrays[0]) == 0:
                 continue
-            # event weight = first primary (beam), matching deltaE_E_mc.py / mc01 (A-003).
-            pw = PWC[i]
-            w_evt = float(pw[0]) if (len(pw) > 0 and np.isfinite(float(pw[0]))) else 1.0
-
-            charged = np.array([pdg_charge(int(p)) >= 1 for p in pd], dtype=bool)
-            isB = (l1 == B_ARM)
-            isA = (l1 == A_ARM)
-
-            # ---- trigger classification (matches mc01_trigger_split_truth.py) ----
-            firstB = isB & (l == 0) & charged
-            firstA = isA & (l == 0) & charged
-            enterB = bool(firstB.any())
-            enterA = bool(firstA.any())
-            tB = float(tm[firstB].min()) if enterB else np.nan
-            tA = float(tm[firstA].min()) if enterA else np.nan
-            coinc = enterB and enterA and (np.isfinite(tA) and np.isfinite(tB)
-                                           and abs(tA - tB) < COINC_NS)
-            if enterB:
-                n_enterB += 1
-            if enterA:
-                n_enterA += 1
+            l, a, p, e, t, tid, px, py, pz = arrays
+            if not np.all(np.isfinite(np.asarray(e, dtype=float))):
+                raise ContractError(f"NONFINITE_EDEP:event={index}")
+            charged = np.asarray([is_charged(int(value)) for value in p], dtype=bool)
+            is_b = np.asarray(a) == B_ARM
+            is_a = np.asarray(a) == A_ARM
+            first_b = is_b & (np.asarray(l) == 0) & charged
+            first_a = is_a & (np.asarray(l) == 0) & charged
+            enter_b = bool(first_b.any())
+            enter_a = bool(first_a.any())
+            t_b = float(np.min(np.asarray(t)[first_b])) if enter_b else float("nan")
+            t_a = float(np.min(np.asarray(t)[first_a])) if enter_a else float("nan")
+            coinc = enter_b and enter_a and abs(t_a - t_b) < COINC_NS
+            counters["n_enterB"] += int(enter_b)
+            counters["n_enterA"] += int(enter_a)
+            counters["n_coincidence"] += int(coinc)
+            selections = ["unselected"]
+            if enter_b:
+                selections.append("sample_ii")
             if coinc:
-                n_coinc += 1
+                selections.append("sample_i")
 
-            belongs = ["unselected"]
-            if enterB:
-                belongs.append("sample_ii")
-            if coinc:
-                belongs.append("sample_i")
-
-            # ---- event-level per-stave EDep: MAX over tracks (matches the data
-            #      observable, which is the MAX pulse amplitude per stave per
-            #      event; data01 takes groupby max). For each track, sum EDep
-            #      over the two layers within the stave; then take the max over
-            #      tracks. Empirically max==sum here (one dominant track/event).)
-            b_charged = isB & charged
+            b_charged = is_b & charged
             if not b_charged.any():
-                continue  # event has no charged B-arm energy deposit (matches data: invisible)
+                continue
+            stave_edep = np.zeros(4, dtype=float)
+            for track in np.unique(np.asarray(tid)[b_charged]):
+                mask = b_charged & (np.asarray(tid) == track)
+                track_edep = np.zeros(4, dtype=float)
+                for layer_id, value in zip(np.asarray(l)[mask], np.asarray(e)[mask]):
+                    stave_index = LAYER_TO_STAVE_IDX.get(int(layer_id), -1)
+                    if stave_index >= 0:
+                        track_edep[stave_index] += float(value)
+                stave_edep = np.maximum(stave_edep, track_edep)
+            above = np.flatnonzero(stave_edep * GAIN * PEAK_FRAC > THRESHOLD_ADC)
+            observable_depth = STAVES[int(above.max())] if above.size else None
 
-            edep_max_stave = np.zeros(4)   # max over tracks, per stave
-            for trk in np.unique(TID[i][b_charged]):
-                m_trk = b_charged & (TID[i] == trk)
-                es = np.zeros(4)
-                for lyr, e in zip(l[m_trk], ed[m_trk]):
-                    si = LAYER_TO_STAVE_IDX.get(int(lyr), -1)
-                    if si >= 0:
-                        es[si] += float(e)
-                edep_max_stave = np.maximum(edep_max_stave, es)
-
-            peak_adc = edep_max_stave * GAIN * PEAK_FRAC
-            above = np.where(peak_adc > THRESHOLD_ADC)[0]
-            observable_depth = STAVES[int(above.max())] if above.size > 0 else None
-
-            # ---- truth-based stopping depth (dominant-energy track) ----
-            b_tids = TID[i][b_charged]
             truth_depth = None
-            truth_term = "escape"  # default if no reconstructible track
-            # dominant track = max total edep among charged B tracks
-            if len(b_tids) > 0:
-                utid = np.unique(b_tids)
-                best_e = -1.0
-                best_layers = None
-                best_term = "escape"
-                for trk in utid:
-                    m = b_charged & (TID[i] == trk)
-                    layers_trk = l[m]
-                    e_trk = float(ed[m].sum())
-                    if e_trk <= 0:
-                        continue
-                    if e_trk > best_e:
-                        best_e = e_trk
-                        order = np.argsort(layers_trk)
-                        idxs = np.where(m)[0][order]
-                        last_idx = idxs[-1]
-                        pmag_last = float(np.sqrt(MX[i][last_idx] ** 2 + MY[i][last_idx] ** 2
-                                                  + MZ[i][last_idx] ** 2))
-                        # unit-correct KE (krakow MC stores GeV/c)
-                        from ccb_mc_validation.truth.pdg import DEFAULT_MOMENTUM_UNIT
-                        ekin_last = kinetic_energy_from_branch_momentum(
-                            pmag_last, int(pd[m][0]), momentum_unit=DEFAULT_MOMENTUM_UNIT)
-                        last_obs = int(layers_trk.max())
-                        if ekin_last <= STOP_KE_MEV:
-                            best_term = "stop"
-                        elif last_obs >= NB_LAYERS - 1:
-                            best_term = "escape"
-                        else:
-                            best_term = "censored"
-                        best_layers = last_obs
-                if best_term == "stop" and best_layers is not None:
-                    truth_depth = STAVES[LAYER_TO_STAVE_IDX.get(int(best_layers), 0)]
+            truth_term = "escape"
+            best_energy = -1.0
+            for track in np.unique(np.asarray(tid)[b_charged]):
+                mask = b_charged & (np.asarray(tid) == track)
+                track_energy = float(np.sum(np.asarray(e)[mask]))
+                if track_energy <= best_energy or track_energy <= 0.0:
+                    continue
+                best_energy = track_energy
+                hit_indices = np.flatnonzero(mask)
+                last_index = hit_indices[np.argmax(np.asarray(l)[mask])]
+                momentum = math.sqrt(float(px[last_index]) ** 2 + float(py[last_index]) ** 2 +
+                                     float(pz[last_index]) ** 2)
+                last_ke = kinetic_energy_from_branch_momentum(
+                    momentum, int(p[last_index]), momentum_unit=DEFAULT_MOMENTUM_UNIT
+                )
+                last_layer = int(l[last_index])
+                if last_ke <= STOP_KE_MEV:
                     truth_term = "stop"
+                    truth_depth = STAVES[LAYER_TO_STAVE_IDX[last_layer]]
+                elif last_layer >= NB_LAYERS - 1:
+                    truth_term = "escape"
+                    truth_depth = None
                 else:
-                    truth_term = best_term
+                    truth_term = "censored"
+                    truth_depth = None
 
-            dE = edep_max_stave[0]                      # B2 edep [MeV] (max over tracks)
-            E_res = float(edep_max_stave[1:].sum())     # B4+B6+B8 edep [MeV]
-            # primary KE entering B (first charged B hit, layer 0)
             entry_ekin = float("nan")
-            if enterB:
-                eidx = np.where(firstB)[0][0]
-                pmag0 = float(np.sqrt(MX[i][eidx] ** 2 + MY[i][eidx] ** 2 + MZ[i][eidx] ** 2))
-                from ccb_mc_validation.truth.pdg import DEFAULT_MOMENTUM_UNIT
+            if enter_b:
+                first_index = int(np.flatnonzero(first_b)[0])
+                momentum = math.sqrt(float(px[first_index]) ** 2 + float(py[first_index]) ** 2 +
+                                     float(pz[first_index]) ** 2)
                 entry_ekin = kinetic_energy_from_branch_momentum(
-                    pmag0, int(pd[eidx]), momentum_unit=DEFAULT_MOMENTUM_UNIT)
+                    momentum, int(p[first_index]), momentum_unit=DEFAULT_MOMENTUM_UNIT
+                )
+            for selection in selections:
+                _accumulate(
+                    bags[selection],
+                    weight=weight,
+                    observable_depth=observable_depth,
+                    truth_depth=truth_depth,
+                    truth_term=truth_term,
+                    d_e=float(stave_edep[0]),
+                    e_res=float(stave_edep[1:].sum()),
+                    entry_ekin=entry_ekin,
+                )
 
-            for sel in belongs:
-                b = bags[sel]
-                b["n_events"] += 1
-                # UNWEIGHTED event count (data is unweighted; matches MV3 v3).
-                if observable_depth is not None:
-                    b["stop_depth_counts"][observable_depth] += 1
-                else:
-                    b["n_no_fire"] += 1
-                b["dE_mev"].append(dE)
-                b["E_mev"].append(E_res)
-                if truth_term == "stop" and truth_depth is not None:
-                    b["truth_stop_counts"][truth_depth] += 1
-                    b["truth_n_stop"] += 1
-                else:
-                    b["truth_n_escape_censored"] += 1
-                if np.isfinite(entry_ekin):
-                    b["entry_ekin_mev"].append(entry_ekin)
-
-    # finalize: weighted fractions + correlations
-    out = {
-        "mc_file": mc_path, "n_total_events": n_total,
-        "n_enterB": n_enterB, "n_enterA": n_enterA, "n_coincidence": n_coinc,
-        "coinc_ns": COINC_NS, "gain": GAIN, "peak_frac": PEAK_FRAC,
-        "threshold_adc": THRESHOLD_ADC, "stop_ke_mev": STOP_KE_MEV,
+    output: dict[str, Any] = {
+        **counters,
+        "mc_file": mc_path,
+        "coinc_ns": COINC_NS,
+        "gain": GAIN,
+        "peak_frac": PEAK_FRAC,
+        "threshold_adc": THRESHOLD_ADC,
+        "stop_ke_mev": STOP_KE_MEV,
         "threshold_edep_mev": THRESHOLD_ADC / (GAIN * PEAK_FRAC),
+        "primaryweight_applied": True,
+        "unweighted_outputs_are_sensitivity_only": True,
+        "charge_selection": "ccb_mc_validation.truth.pdg.is_charged",
     }
-    for sel, b in bags.items():
-        dE = np.array(b["dE_mev"], float); E = np.array(b["E_mev"], float)
-        mboth = (dE > 0) & (E > 0)
-        corr_both = float(np.corrcoef(dE[mboth], E[mboth])[0, 1]) if mboth.sum() > 2 else float("nan")
-        # weighted stopping fractions (event weights applied; w_evt added per event)
-        out[sel] = {
-            "n_events": b["n_events"],
-            "n_no_fire": int(b["n_no_fire"]),
-            "stop_depth_counts": {s: float(b["stop_depth_counts"][s]) for s in STAVES},
-            "stop_depth_frac": _frac({s: float(b["stop_depth_counts"][s]) for s in STAVES}),
-            "truth_stop_counts": {s: float(b["truth_stop_counts"][s]) for s in STAVES},
-            "truth_stop_frac": _frac({s: float(b["truth_stop_counts"][s]) for s in STAVES}),
-            "truth_n_stop": int(b["truth_n_stop"]),
-            "truth_n_escape_censored": int(b["truth_n_escape_censored"]),
-            "dE_E_n_both_fire": int(mboth.sum()),
-            "dE_E_corr_both_fire": corr_both,
-            "dE_E_corr_all": float(np.corrcoef(dE, E)[0, 1]) if dE.size > 2 else float("nan"),
-            "entry_ekin_median_mev": float(np.median(b["entry_ekin_mev"]))
-                                     if b["entry_ekin_mev"] else float("nan"),
-            "entry_ekin_p10_mev": float(np.percentile(b["entry_ekin_mev"], 10))
-                                  if b["entry_ekin_mev"] else float("nan"),
-            "entry_ekin_p90_mev": float(np.percentile(b["entry_ekin_mev"], 90))
-                                  if b["entry_ekin_mev"] else float("nan"),
-        }
-    return out
+    for name, bag in bags.items():
+        output[name] = _finalize_bag(bag)
+    return output
 
 
-# ---------------------------------------------------------------------------
-# DATA: event-level stopping depth + deltaE-E from the canonical pulse table
-# ---------------------------------------------------------------------------
-def analyze_data(pulse_table: str, event_csv: str | None = None) -> dict:
-    """Per-event deepest stave with net amplitude > threshold, split by sample.
-    Uses the canonical S00 pulse table (group encodes the hardware trigger).
-    """
+def analyze_data(pulse_table: str, event_csv: str | None = None) -> dict[str, Any]:
+    """Construct finite event-level data profiles from the canonical pulse table."""
     import pandas as pd
-    df = pd.read_csv(pulse_table)
-    # net amplitude: amplitude_adc is already baseline-subtracted per the pulse
-    # producer (PulseTable contract v1); we use it directly (NOT re-subtracting
-    # baseline_adc, which is the A-001 double-subtraction bug).
-    df["net_adc"] = df["amplitude_adc"].abs()
-    df = df[df["net_adc"] > THRESHOLD_ADC].copy()
-    df["sample"] = np.where(df["group"].str.startswith("sample_i_"), "I",
-                    np.where(df["group"].str.startswith("sample_ii_"), "II", "other"))
-    rank = {"B2": 0, "B4": 1, "B6": 2, "B8": 3}
-    df["rank"] = df["stave"].map(rank)
 
-    out = {"pulse_table": pulse_table, "threshold_adc": THRESHOLD_ADC,
-           "n_pulses_above_thr": int(len(df))}
-    splits = {"all": df, "sample_i": df[df["sample"] == "I"],
-              "sample_ii": df[df["sample"] == "II"]}
-    # Event key: (run, evt) matches the canonical MV3 v3 (scripts/mv3_stopping_v3.py
-    # groups by ["run","evt"]). eventno is NOT globally unique across runs.
-    key_cols = ["run", "evt"] if "evt" in df.columns else ["run", "eventno"]
-    for name, sub in splits.items():
-        if len(sub) == 0:
-            out[name] = {"n_events": 0, "stop_depth_counts": {s: 0 for s in STAVES},
-                         "stop_depth_frac": {s: 0 for s in STAVES}}
-            continue
-        ev_deep = sub.groupby(key_cols, sort=False)["rank"].max().reset_index()
-        r2s = {v: k for k, v in rank.items()}
-        ev_deep["last_stave"] = ev_deep["rank"].map(r2s)
-        counts = {s: int((ev_deep["last_stave"] == s).sum()) for s in STAVES}
-        out[name] = {
-            "n_events": int(len(ev_deep)),
+    frame = pd.read_csv(pulse_table)
+    required = {"run", "group", "stave", "amplitude_adc"}
+    missing = sorted(required - set(frame.columns))
+    if missing:
+        raise ContractError(f"DATA_MISSING_COLUMNS:{','.join(missing)}")
+    event_column = "evt" if "evt" in frame.columns else "eventno"
+    if event_column not in frame.columns:
+        raise ContractError("DATA_MISSING_EVENT_COLUMN")
+    frame["amplitude_adc"] = pd.to_numeric(frame["amplitude_adc"], errors="coerce")
+    if not np.all(np.isfinite(frame["amplitude_adc"].to_numpy(float))):
+        raise ContractError("DATA_NONFINITE_AMPLITUDE")
+    frame["net_adc"] = frame["amplitude_adc"].abs()
+    frame = frame[frame["net_adc"] > THRESHOLD_ADC].copy()
+    frame["sample"] = np.where(
+        frame["group"].astype(str).str.startswith("sample_i_"),
+        "I",
+        np.where(frame["group"].astype(str).str.startswith("sample_ii_"), "II", "other"),
+    )
+    rank = {stave: index for index, stave in enumerate(STAVES)}
+    frame["rank"] = frame["stave"].map(rank)
+    if frame["rank"].isna().any():
+        raise ContractError("DATA_UNKNOWN_STAVE")
+    output: dict[str, Any] = {
+        "pulse_table": pulse_table,
+        "threshold_adc": THRESHOLD_ADC,
+        "n_pulses_above_thr": int(len(frame)),
+    }
+    key_columns = ["run", event_column]
+    splits = {
+        "all": frame,
+        "sample_i": frame[frame["sample"] == "I"],
+        "sample_ii": frame[frame["sample"] == "II"],
+    }
+    for name, subset in splits.items():
+        if subset.empty:
+            raise ContractError(f"EMPTY_DATA_SELECTION:{name}")
+        deepest = subset.groupby(key_columns, sort=False)["rank"].max().to_numpy(dtype=int)
+        counts = {stave: int(np.sum(deepest == index)) for index, stave in enumerate(STAVES)}
+        output[name] = {
+            "n_events": int(deepest.size),
             "stop_depth_counts": counts,
-            "stop_depth_frac": _frac(counts),
+            "stop_depth_frac": _profile_fraction(counts),
         }
+    output["deltaE_E"] = {}
+    if event_csv:
+        events = pd.read_csv(event_csv)
+        for column in ("deltaE_data_adc", "E_data_adc"):
+            if column not in events.columns:
+                raise ContractError(f"EVENT_CSV_MISSING_COLUMN:{column}")
+            events[column] = pd.to_numeric(events[column], errors="coerce")
+        values = events[["deltaE_data_adc", "E_data_adc"]].to_numpy(float)
+        if not np.all(np.isfinite(values)):
+            raise ContractError("EVENT_CSV_NONFINITE_VALUE")
+        both = (values[:, 0] > 0.0) & (values[:, 1] > 0.0)
+        output["deltaE_E"] = {
+            "n_both_fire": int(both.sum()),
+            "corr_both_fire": (
+                float(np.corrcoef(values[both, 0], values[both, 1])[0, 1])
+                if both.sum() > 2
+                else float("nan")
+            ),
+        }
+    return output
 
-    # deltaE-E correlation from the event CSV (amp_B2 vs amp_B4+B6+B8), if provided
-    out["deltaE_E"] = {}
-    if event_csv and os.path.exists(event_csv):
-        dfe = pd.read_csv(event_csv)
-        de = dfe["deltaE_data_adc"].to_numpy(float)
-        e = dfe["E_data_adc"].to_numpy(float)
-        mboth = (de > 0) & (e > 0)
-        out["deltaE_E"]["n_both_fire"] = int(mboth.sum())
-        out["deltaE_E"]["corr_both_fire"] = float(np.corrcoef(de[mboth], e[mboth])[0, 1]) \
-            if mboth.sum() > 2 else float("nan")
-        out["deltaE_E"]["threshold_adc_note"] = (
-            "event-csv deltaE/E are per-event max amplitudes (ADC); selection dE>0 & E>0 "
-            "mirrors VIS-DE-001-DATA (n_both_B2_B4).")
-    return out
+
+def _same_target_metrics(mc: dict[str, Any], data: dict[str, Any]) -> dict[str, Any]:
+    unselected_same = _chi2(
+        mc["unselected"]["stop_depth_frac"],
+        data["sample_i"]["stop_depth_counts"],
+    )
+    matched = _chi2(mc["sample_i"]["stop_depth_frac"], data["sample_i"]["stop_depth_counts"])
+    data_fraction = data["sample_i"]["stop_depth_frac"]
+    mc_fraction = mc["sample_i"]["stop_depth_frac"]
+    total_variation = 0.5 * math.fsum(
+        abs(data_fraction[stave] - mc_fraction[stave]) for stave in STAVES
+    )
+    return {
+        "comparison_policy": "SAME_DATA_TARGET_FOR_SELECTION_ABLATION",
+        "unselected_vs_sample_i": {
+            "chi2": unselected_same[0],
+            "ndf": unselected_same[1],
+            "chi2_per_ndf": unselected_same[2],
+        },
+        "sample_i_vs_sample_i": {
+            "chi2": matched[0],
+            "ndf": matched[1],
+            "chi2_per_ndf": matched[2],
+        },
+        "chi2_improvement_factor": unselected_same[2] / matched[2],
+        "sample_i_b2_residual_percentage_points": 100.0 * (
+            data_fraction["B2"] - mc_fraction["B2"]
+        ),
+        "sample_i_total_variation_distance": total_variation,
+    }
 
 
-# ---------------------------------------------------------------------------
-# plotting
-# ---------------------------------------------------------------------------
-def make_plots(out_dir: str, mc: dict, data: dict) -> None:
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _atomic_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            json.dump(payload, handle, indent=2, sort_keys=True, allow_nan=False)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+
+
+def make_plots(
+    out_dir: Path,
+    mc: dict[str, Any],
+    data: dict[str, Any],
+    metrics: dict[str, Any],
+) -> None:
     import matplotlib
+
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    # ---------- (a) stopping-depth overlay ----------
-    fig, ax = plt.subplots(figsize=(10, 5.6))
-    x = np.arange(4)
+    x = np.arange(len(STAVES))
+    fig, ax = plt.subplots(figsize=(10, 5.8))
     series = [
-        ("Data (all)", [data["all"]["stop_depth_frac"][s] for s in STAVES], "#2ecc71", "//"),
-        ("Data Sample-I (A&B coinc)", [data["sample_i"]["stop_depth_frac"][s] for s in STAVES], "#27ae60", ""),
-        ("Data Sample-II (single B)", [data["sample_ii"]["stop_depth_frac"][s] for s in STAVES], "#16a085", ""),
-        ("MC unselected (event-level)", [mc["unselected"]["stop_depth_frac"][s] for s in STAVES], "#e74c3c", ""),
-        ("MC Sample-II matched (enterB)", [mc["sample_ii"]["stop_depth_frac"][s] for s in STAVES], "#3498db", ""),
-        ("MC Sample-I matched (A&B coinc)", [mc["sample_i"]["stop_depth_frac"][s] for s in STAVES], "#9b59b6", ""),
+        ("Data Sample-I", data["sample_i"]["stop_depth_frac"], "//"),
+        ("MC unselected weighted", mc["unselected"]["stop_depth_frac"], ""),
+        ("MC Sample-I weighted", mc["sample_i"]["stop_depth_frac"], ""),
+        ("MC Sample-I unweighted sensitivity", mc["sample_i"]["unweighted_stop_depth_frac"], "xx"),
     ]
-    w = 0.13
-    for k, (lbl, vals, col, hatch) in enumerate(series):
-        offs = (k - 2.5) * w
-        ax.bar(x + offs, vals, width=w, label=lbl, color=col, alpha=0.85,
-               edgecolor="k", linewidth=0.4, hatch=hatch)
-    ax.set_xticks(x); ax.set_xticklabels(STAVES)
-    ax.set_xlabel("Deepest stave above threshold (stopping-depth proxy)")
-    ax.set_ylabel("Fraction of events")
-    chi_uns = _chi2(mc["unselected"]["stop_depth_frac"], data["all"]["stop_depth_counts"])
-    chi_ii = _chi2(mc["sample_ii"]["stop_depth_frac"], data["sample_ii"]["stop_depth_counts"])
-    chi_i = _chi2(mc["sample_i"]["stop_depth_frac"], data["sample_i"]["stop_depth_counts"])
-    ax.set_title((f"MV3 selection-matched stopping depth\n"
-                  f"unselected chi2/ndf={chi_uns[2]:.0f} | "
-                  f"S-II matched={chi_ii[2]:.1f} | S-I matched={chi_i[2]:.1f}"))
-    ax.legend(fontsize=8.5, ncol=2, loc="upper right"); ax.set_ylim(0, 1.05)
-    ax.grid(axis="y", lw=0.4, alpha=0.4)
+    width = 0.19
+    for index, (label, profile, hatch) in enumerate(series):
+        values = [profile[stave] for stave in STAVES]
+        ax.bar(x + (index - 1.5) * width, values, width=width, label=label, hatch=hatch,
+               edgecolor="black", linewidth=0.5, alpha=0.85)
+    ax.set_xticks(x)
+    ax.set_xticklabels(STAVES)
+    ax.set_ylabel("Fraction of selected events")
+    ax.set_xlabel("Deepest stave above threshold")
+    ax.set_ylim(0.0, 1.05)
+    ax.set_title(
+        "MV3 weighted selection diagnostic\n"
+        f"same-target χ²/ndf={metrics['sample_i_vs_sample_i']['chi2_per_ndf']:.2f}; "
+        f"TVD={metrics['sample_i_total_variation_distance']:.4f}"
+    )
+    ax.grid(axis="y", alpha=0.35)
+    ax.legend(fontsize=8)
     fig.tight_layout()
-    fig.savefig(os.path.join(out_dir, "fig_mv3a_stopping_depth_overlay.png"), dpi=160)
-    plt.close(fig)
-
-    # ---------- (b) deltaE-E correlation bar + scatter ----------
-    fig, (axL, axR) = plt.subplots(1, 2, figsize=(12, 5.2),
-                                   gridspec_kw={"width_ratios": [1, 1.4]})
-    labels = ["Data\n(B2&B4)", "MC unselected", "MC Sample-II", "MC Sample-I"]
-    vals = [
-        data.get("deltaE_E", {}).get("corr_both_fire", float("nan")),
-        mc["unselected"]["dE_E_corr_both_fire"],
-        mc["sample_ii"]["dE_E_corr_both_fire"],
-        mc["sample_i"]["dE_E_corr_both_fire"],
-    ]
-    cols = ["#2ecc71", "#e74c3c", "#3498db", "#9b59b6"]
-    axL.bar(labels, vals, color=cols, edgecolor="k", alpha=0.85)
-    axL.axhline(0, color="k", lw=0.8)
-    axL.set_ylabel("corr(ΔE, E) on both-fire events")
-    axL.set_title("ΔE-E correlation: selection matching")
-    for lbl, v in zip(labels, vals):
-        axL.text(lbl, v + (0.02 if v >= 0 else -0.04), f"{v:+.2f}", ha="center", fontsize=9)
-    axL.set_ylim(min(-0.7, min(vals) - 0.1), max(0.4, max(vals) + 0.1))
-
-    # scatter: MC sample-II matched dE-E (MeV) vs data sketch (median-anchored)
-    # (event-level MC edep in MeV; data is ADC — show MC truth plane by selection)
-    axR.set_title("MC ΔE-E plane (event-level edep, MeV)")
-    axR.set_xlabel("E = edep(B4+B6+B8) [MeV]")
-    axR.set_ylabel("ΔE = edep(B2) [MeV]")
-    axR.text(0.02, 0.98,
-             f"corr: unselected={mc['unselected']['dE_E_corr_both_fire']:+.2f}\n"
-             f"      S-II={mc['sample_ii']['dE_E_corr_both_fire']:+.2f}\n"
-             f"      S-I ={mc['sample_i']['dE_E_corr_both_fire']:+.2f}\n"
-             f"  data = {data.get('deltaE_E', {}).get('corr_both_fire', float('nan')):+.2f}",
-             transform=axR.transAxes, va="top", fontsize=9,
-             bbox=dict(boxstyle="round", fc="white", alpha=0.85))
-    axR.grid(lw=0.4, alpha=0.4)
-    fig.tight_layout()
-    fig.savefig(os.path.join(out_dir, "fig_mv3b_deltaE_E_corr.png"), dpi=160)
-    plt.close(fig)
-
-    # ---------- (c) trigger / scattering diagnostics ----------
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4.8))
-    # trigger pie
-    ax = axes[0]
-    trig = {"enter B (S-II)": mc["n_enterB"], "enter A": mc["n_enterA"],
-            "A&B coinc (S-I)": mc["n_coincidence"], "no B entry": mc["n_total_events"] - mc["n_enterB"]}
-    trig = {k: v for k, v in trig.items() if v > 0}
-    ax.bar(list(trig.keys()), list(trig.values()), color=["#3498db", "#e67e22", "#9b59b6", "#bdc3c7"],
-           edgecolor="k", alpha=0.85)
-    ax.set_ylabel("events"); ax.set_title("MC trigger-classification counts")
-    ax.tick_params(axis="x", rotation=15)
-    for k, v in trig.items():
-        ax.text(k, v, f"{v:,}", ha="center", va="bottom", fontsize=8)
-    # entry KE per sample
-    ax = axes[1]
-    parts = []
-    labels2 = []
-    for sel, col, lbl in [("unselected", "#e74c3c", "unselected"),
-                          ("sample_ii", "#3498db", "S-II"),
-                          ("sample_i", "#9b59b6", "S-I")]:
-        # re-extract from the stored percentiles — show median bar
-        med = mc[sel]["entry_ekin_median_mev"]
-        p10 = mc[sel]["entry_ekin_p10_mev"]
-        p90 = mc[sel]["entry_ekin_p90_mev"]
-        ax.bar(lbl, med, color=col, edgecolor="k", alpha=0.85)
-        ax.errorbar(lbl, med, yerr=[[med - p10], [p90 - med]], fmt="none", ecolor="k", lw=1.2)
-        ax.text(lbl, med, f"{med:.0f}", ha="center", va="bottom", fontsize=9)
-    ax.set_ylabel("primary KE entering B [MeV]")
-    ax.set_title("MC entry energy (median + p10-p90); lower E -> stops earlier")
-    ax.grid(axis="y", lw=0.4, alpha=0.4)
-    fig.tight_layout()
-    fig.savefig(os.path.join(out_dir, "fig_mv3c_trigger_scattering.png"), dpi=160)
+    fig.savefig(out_dir / "fig_mv3a_stopping_depth_overlay.png", dpi=160)
     plt.close(fig)
 
 
-# ---------------------------------------------------------------------------
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--mc", required=True)
-    ap.add_argument("--data-pulse-table", required=True,
-                    help="s00_selected_b_pulses.csv.gz (group encodes hardware trigger)")
-    ap.add_argument("--data-event-csv", default="",
-                    help="deltaE_E_events_data.csv (for deltaE-E correlation)")
-    ap.add_argument("--out", required=True)
-    ap.add_argument("--tree", default="hibeam")
-    ap.add_argument("--max-events", type=int, default=0)
-    args = ap.parse_args()
-    os.makedirs(args.out, exist_ok=True)
-
-    stamp = datetime.now(timezone.utc).isoformat()
-    print(f"[mv3-sel] start={stamp}")
-    print(f"[mv3-sel] coinc_ns={COINC_NS} gain={GAIN} peak_frac={PEAK_FRAC} "
-          f"threshold={THRESHOLD_ADC} stop_ke={STOP_KE_MEV}")
-
-    mc = analyze_mc(args.mc, args.tree, args.max_events)
-    print(f"[mv3-sel] MC n_total={mc['n_total_events']} enterB={mc['n_enterB']} "
-          f"enterA={mc['n_enterA']} coinc={mc['n_coincidence']}")
-    for sel in ["unselected", "sample_ii", "sample_i"]:
-        s = mc[sel]
-        print(f"[mv3-sel] MC[{sel}] n_ev={s['n_events']} no_fire={s['n_no_fire']} "
-              "  ".join(f"{st}={s['stop_depth_frac'][st]:.3f}" for st in STAVES) +
-              f"  dE-E-corr(both)={s['dE_E_corr_both_fire']:+.3f}")
-
-    data = analyze_data(args.data_pulse_table, args.data_event_csv or None)
-    print(f"[mv3-sel] DATA n_pulses>{THRESHOLD_ADC:.0f}={data['n_pulses_above_thr']}")
-    for nm in ["all", "sample_i", "sample_ii"]:
-        d = data[nm]
-        print(f"[mv3-sel] DATA[{nm}] n_ev={d['n_events']} " +
-              "  ".join(f"{st}={d['stop_depth_frac'][st]:.3f}" for st in STAVES))
-    print(f"[mv3-sel] DATA deltaE-E corr(both)={data.get('deltaE_E', {}).get('corr_both_fire')}")
-
-    # chi2 table
-    print("\n=== SELECTION-MATCHED chi2/ndf ===")
-    comparisons = [
-        ("MC-unselected  vs DATA-all",      mc["unselected"]["stop_depth_frac"],  data["all"]["stop_depth_counts"]),
-        ("MC-Sample-II   vs DATA-Sample-II", mc["sample_ii"]["stop_depth_frac"],  data["sample_ii"]["stop_depth_counts"]),
-        ("MC-Sample-I    vs DATA-Sample-I",  mc["sample_i"]["stop_depth_frac"],   data["sample_i"]["stop_depth_counts"]),
-    ]
-    chi_results = {}
-    for lbl, mf, dc in comparisons:
-        c, ndf, cpndf = _chi2(mf, dc)
-        chi_results[lbl] = {"chi2": c, "ndf": ndf, "chi2_per_ndf": cpndf}
-        print(f"  {lbl:38s} chi2/ndf = {cpndf:.2f}")
-
-    # VERDICT
-    chi_ii = chi_results["MC-Sample-II   vs DATA-Sample-II"]["chi2_per_ndf"]
-    chi_i = chi_results["MC-Sample-I    vs DATA-Sample-I"]["chi2_per_ndf"]
-    chi_uns = chi_results["MC-unselected  vs DATA-all"]["chi2_per_ndf"]
-    corr_i_match = abs(mc["sample_i"]["dE_E_corr_both_fire"] - data.get("deltaE_E", {}).get("corr_both_fire", 9))
-    improvement = chi_uns / max(min(chi_i, chi_ii), 1e-6)
-    if min(chi_i, chi_ii) < 5:
-        verdict = "RESOLVED (selection-matched)"
-    elif min(chi_i, chi_ii) < chi_uns * 0.1:
-        verdict = "PARTIALLY RESOLVED (selection-matched, residual remains)"
+def build_summary(
+    *,
+    mc_path: Path,
+    pulse_path: Path,
+    event_path: Path | None,
+    output_dir: Path,
+    source_commit: str,
+    mc: dict[str, Any],
+    data: dict[str, Any],
+    command: str,
+) -> dict[str, Any]:
+    metrics = _same_target_metrics(mc, data)
+    matched_chi2 = metrics["sample_i_vs_sample_i"]["chi2_per_ndf"]
+    tvd = metrics["sample_i_total_variation_distance"]
+    if matched_chi2 <= 5.0 and tvd <= 0.02:
+        verdict = "CANDIDATE_CLOSURE_REQUIRES_CANONICAL_REVIEW"
     else:
-        verdict = "TENSION REMAINS (selection matching insufficient -> scattering/straggling)"
-    print(f"\n=== VERDICT: {verdict} ===")
-    print(f"  chi2/ndf improvement (unselected -> best matched): {improvement:.1f}x")
-
-    summary = {
+        verdict = "FLAWED_SELECTION_DIAGNOSTIC_RESIDUAL_REMAINS"
+    return {
+        "schema": "ccb-mv3-selection-matched/2",
         "study_id": "MV3-selection-matched",
-        "generated_utc": stamp,
-        "parameters": {"coinc_ns": COINC_NS, "gain": GAIN, "peak_frac": PEAK_FRAC,
-                       "threshold_adc": THRESHOLD_ADC, "stop_ke_mev": STOP_KE_MEV},
-        "mc": mc, "data": data,
-        "chi2_results": chi_results,
-        "dE_E_corr": {
-            "data_both_fire": data.get("deltaE_E", {}).get("corr_both_fire"),
-            "mc_unselected": mc["unselected"]["dE_E_corr_both_fire"],
-            "mc_sample_ii": mc["sample_ii"]["dE_E_corr_both_fire"],
-            "mc_sample_i": mc["sample_i"]["dE_E_corr_both_fire"],
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "policy": POLICY,
+        "claim_authorization": "NON_AUTHORIZING_DIAGNOSTIC",
+        "canonical_claim": {
+            "claim_id": "CL-021",
+            "required_status": "FLAWED",
+            "blocked_by": "BLK-MV3-LEGACY-001",
         },
+        "parameters": {
+            "coinc_ns": COINC_NS,
+            "gain": GAIN,
+            "peak_frac": PEAK_FRAC,
+            "threshold_adc": THRESHOLD_ADC,
+            "stop_ke_mev": STOP_KE_MEV,
+        },
+        "weighting": {
+            "primaryweight_applied": True,
+            "policy": "EXACTLY_ONE_FINITE_NONNEGATIVE_PRIMARYWEIGHT_PER_EVENT",
+            "unweighted_result_role": "SENSITIVITY_ONLY",
+            "sum_w": mc["unselected"]["sum_w"],
+            "sum_w2": mc["unselected"]["sum_w2"],
+            "effective_sample_size": mc["unselected"]["effective_sample_size"],
+        },
+        "comparison_policy": metrics["comparison_policy"],
+        "chi2_improvement_factor": metrics["chi2_improvement_factor"],
+        "same_target_metrics": metrics,
+        "mc": mc,
+        "data": data,
         "verdict": verdict,
-        "chi2_improvement_factor": improvement,
+        "sensitivity": {
+            "status": "NOT_RUN_SINGLE_POINT_ONLY",
+            "gain": [GAIN],
+            "threshold_adc": [THRESHOLD_ADC],
+            "coinc_ns": [COINC_NS],
+            "weighting": ["weighted_primary", "unweighted_sensitivity"],
+            "required_future_axes": ["aggregation", "material", "scattering_model"],
+        },
+        "uncertainty": {
+            "mc_data_covariance_evaluated": False,
+            "status": "NOT_ESTIMATED_PRODUCTION_RERUN_REQUIRED",
+        },
+        "provenance": {
+            "mc_path": str(mc_path),
+            "mc_sha256": _sha256(mc_path),
+            "data_pulse_path": str(pulse_path),
+            "data_pulse_sha256": _sha256(pulse_path),
+            "data_event_path": str(event_path) if event_path else None,
+            "data_event_sha256": _sha256(event_path) if event_path else None,
+            "script_path": str(Path(__file__).resolve()),
+            "script_sha256": _sha256(Path(__file__).resolve()),
+            "source_commit": source_commit,
+            "command": command,
+            "output_dir": str(output_dir),
+        },
+        "scientific_boundary": (
+            "A single weighted rerun is diagnostic. Canonical closure requires finite covariance, "
+            "preregistered sensitivity scans, immutable inputs, and CL-021 ledger review."
+        ),
     }
-    with open(os.path.join(args.out, "mv3_selection_matched_summary.json"), "w") as fh:
-        json.dump(summary, fh, indent=2)
-    print(f"[mv3-sel] wrote {os.path.join(args.out, 'mv3_selection_matched_summary.json')}")
 
-    make_plots(args.out, mc, data)
-    print(f"[mv3-sel] plots written to {args.out}")
-    print(f"[mv3-sel] done={datetime.now(timezone.utc).isoformat()}")
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mc", type=Path, required=True)
+    parser.add_argument("--data-pulse-table", type=Path, required=True)
+    parser.add_argument("--data-event-csv", type=Path)
+    parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--tree", default="hibeam")
+    parser.add_argument("--max-events", type=int, default=0)
+    parser.add_argument("--source-commit", required=True)
+    args = parser.parse_args(argv)
+    if len(args.source_commit) != 40 or any(
+        char not in "0123456789abcdef" for char in args.source_commit
+    ):
+        raise ContractError("SOURCE_COMMIT_MUST_BE_FULL_LOWERCASE_SHA1")
+    input_paths = [args.mc, args.data_pulse_table]
+    if args.data_event_csv is not None:
+        input_paths.append(args.data_event_csv)
+    summary_path = args.out / "mv3_selection_matched_summary.json"
+    if any(
+        summary_path.resolve(strict=False) == path.resolve(strict=False)
+        for path in input_paths
+    ):
+        raise ContractError("OUTPUT_ALIASES_INPUT")
+    args.out.mkdir(parents=True, exist_ok=True)
+    mc = analyze_mc(str(args.mc), args.tree, args.max_events)
+    data = analyze_data(
+        str(args.data_pulse_table),
+        str(args.data_event_csv) if args.data_event_csv is not None else None,
+    )
+    command = shlex.join([sys.executable, str(Path(__file__).resolve()), *(argv or sys.argv[1:])])
+    summary = build_summary(
+        mc_path=args.mc,
+        pulse_path=args.data_pulse_table,
+        event_path=args.data_event_csv,
+        output_dir=args.out,
+        source_commit=args.source_commit,
+        mc=mc,
+        data=data,
+        command=command,
+    )
+    _atomic_json(summary_path, summary)
+    make_plots(args.out, mc, data, summary["same_target_metrics"])
+    print(json.dumps({"status": summary["verdict"], "summary": str(summary_path)}, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -1,68 +1,92 @@
-# Cluster A — ΔE-E / PID / stopping-depth diagnostic study (Krakow MC + real-beam data side)
+# Cluster A — ΔE-E / PID / stopping-depth diagnostic study
 
-**Scripts:** `scripts/studies/clusterA_dE_PID_stopping.py` (MC) ·
-`scripts/studies/clusterA_data_side.py` (data side, ADC + composite-key validation)
-**Inputs:** `geant4/data/output_krakow_1M.root` (MC, 1,000,000 events) ·
-`/projects/hep/fs10/shared/nnbar/billy/ccb_deltae_rerun/deltaE_E_events_data.csv` (data side,
-632,939 rows, derived from `reports/1781014251.574.7a497937/pulse_taxonomy_table.csv.gz`)
-**Quantities:** `reports/studies/clusterA/counts.json`
+This study contains two distinct evidence domains:
 
-## Headline physics (the chain works — MC and data side)
+- a Krakow Monte Carlo event-level analysis in MeV;
+- a derived beam-data table in ADC that contains multiple rows per composite event key.
 
-- **Beam = pure protons** (`PrimaryPDG==2212` for every primary) on CD2. CD2 breakup feeds
-  **recoil deuterons** (24.6 % of `Sci_bar` steps, ≈14.5 % of events), alphas (4.0 %) and
-  heavier ions into the B-arm bars. The **dE-E band identity is the energy-weighted dominant
-  depositing species per event** (proton vs deuteron) — this is what the PID targets.
-- **MC dE-E** (canonical GEO-001 pair_merge, ΔE=edep(B2), E=edep(B4+B6+B8)): 131,198 selected;
-  weighted medians ΔE=24.13 MeV, E=101.03 MeV, **corr(ΔE,E)=−0.533** (Bragg signature).
-- **PID (p vs d), out-of-fold:** full AUC = **0.898**, 5-fold run-disjoint-proxy mean 0.898,
-  AP=0.47 vs weighted prevalence 0.029, Brier=0.017; grouped-bootstrap CI; max-wF1 op-point.
-  **Worst-slice AUC reported** (≈0.03–0.07 in saturated-ΔE / deepest-layer slices).
-- **Stopping/censoring (TRU-003):** stop 2.3 % / escape 22 % / censored 76 %. The deepest
-  observed layer is **never** labelled a stop without truth (residual-KE ≤ 1.0 MeV rule).
-- **Data side delivered (ADC):** the real-beam dE-E is built from the derived event table and
-  **reproduces `de_run.txt` exactly** — 632,939 rows → **385,984 unique composite keys**
-  (`source_file_id`,`run`,`evt`); eventno-only join corrupts **73,098** rows; data
-  stopping-layer B2=567,925 (89.9 %), B4=26,978, B6=14,586, B8=8,575, none=14,875. Data
-  corr(ΔE,E)=**+0.18** vs MC −0.53 — the genuine MC-vs-data topology gap (data is B2-dominated;
-  matches the known MV3 material-budget discrepancy, `mv3b_material_budget.py`).
+**Scripts:** `scripts/studies/clusterA_dE_PID_stopping.py` (MC) and
+`scripts/studies/clusterA_data_side.py` (data-row diagnostics).
 
-## Plots (each carries counts + units; all rendered from the runs above)
+**Inputs:** `geant4/data/output_krakow_1M.root` and the derived
+`deltaE_E_events_data.csv` produced from
+`reports/1781014251.574.7a497937/pulse_taxonomy_table.csv.gz`.
 
-| ID | File | What it shows |
-|----|------|---------------|
-| VIS-DE-001     | `VIS-DE-001_dE_E_density_quantiles.png`     | MC ΔE-E PrimaryWeighted hexbin + conditional 10/25/50/75/90 %iles; N, medians, corr, key-uniqueness. |
-| VIS-DE-001-DATA| `VIS-DE-001-DATA_deltaE_E_adc.png`          | Real-beam ΔE-E hexbin (ADC) + quantiles; composite-key validation (385,984 unique / 632,939 rows; reproduces de_run.txt). |
-| VIS-DE-002     | `VIS-DE-002_species_bands.png`              | ΔE-E (log-log) by dominant species (p/d/α/other) + band-assignment purity proxy. |
-| VIS-DE-003     | `VIS-DE-003_mc_vs_data.png`                 | MC (MeV) vs DATA (ADC) ΔE-E side-by-side — topology comparison (different units). |
-| VIS-PID-001    | `VIS-PID-001_roc_pr.png`                    | ROC (AUC + 95 % grouped-bootstrap CI) + PR (AP); 5-fold; max-wF1 op-point + confusion. |
-| VIS-PID-002    | `VIS-PID-002_calibration.png`               | Reliability diagram + score distributions + purity/efficiency vs threshold. |
-| VIS-PID-003    | `VIS-PID-003_robustness.png`                | Slice AUC by entry-KE / last-layer / ΔE — **worst slice reported, not only global**. |
-| VIS-STOP-001   | `VIS-STOP-001_geometry_material.png`        | B-arm sketch (B2/B4/B6/B8 @ 0/4/8/12 cm) + areal-density ladder + PSTAR range markers + last-layer occupancy. |
-| VIS-STOP-002   | `VIS-STOP-002_stopping_censoring.png`       | Termination category (stop/escape/censored) by species + last-layer violin. |
+## Evidence-backed results
 
-## Carried fixes (from origin/main)
+### Monte Carlo event-level diagnostics
 
-GeV→MeV (`kinetic_energy_from_branch_momentum`, reaudit #864) · PrimaryWeight propagation
-(#880) · stop-vs-escape censoring (TRU-003, STOP_KE=1.0 MeV) · canonical GEO-001 pair_merge
-readout (`GeometryRegistry`: (0,1)→B2, (2,3)→B4, (4,5)→B6, (6,7)→B8) · per-layer edep from
-canonical `build_track_records` · data-side composite key (`source_file_id`+`run`+`evt`,
-`deltaE_E.py` KEY_COLS). Pure numpy/matplotlib/uproot/csv (no pandas/sklearn — shared venv
-not mutated; the system PyPI bundle is kept on the path by prepending rather than replacing
-`PYTHONPATH`).
+- The beam primaries are protons on CD2. Recoil deuterons, alphas, and heavier ions can
+  deposit energy in the B arm; the PID target is the energy-dominant depositing species,
+  not the beam-particle label.
+- The canonical GEO-001 pair-merge selection contains 131,198 ΔE-E events. The reported
+  PrimaryWeight-weighted medians are ΔE = 24.13 MeV and E = 101.03 MeV, with
+  corr(ΔE,E) = -0.533.
+- The truth-labelled-MC proton-versus-deuteron classifier has full AUC 0.898. Its poor
+  saturated-ΔE and deepest-layer slices remain explicit limitations.
+- Stopping, escaping, and censored categories use the TRU-003 residual-energy rule; the
+  deepest observed layer is not automatically labelled as a stop.
 
-## Honest limitations / residues
+These are simulation diagnostics. They do not establish beam-data PID transfer or detector
+performance.
 
-1. **Raw `hrdb_run_*.root` still absent on LUNARC** — but the **derived data event table IS
-   staged**, so the data-side ΔE-E (ADC), stopping-layer, and composite-key validation are
-   delivered here (VIS-DE-001-DATA, VIS-DE-003). The raw hrdb files are only needed to
-   *re-derive* the table or extend the data PID; the existing taxonomy table covers this run.
-2. **Data table is multi-row per event** (632,939 rows / 385,984 keys). Row-level ΔE-E is
-   shown (consistent with `de_run.txt`'s stopping_distribution); one-row-per-event aggregation
-   for data PID needs the canonical `composite_merge` (`deltaE_E.py`) — not re-implemented here.
-3. **Worst PID slices are poor (AUC ≈ 0.03–0.07)** in the saturated-ΔE / deepest-layer slices
-   (small, proton-dominated). Reported explicitly (VIS-PID-003), not averaged away.
-4. **Depth axis is the nominal B-arm pitch**, not `Sci_bar_GlobalPosition_Z` (a non-monotonic
-   tilted-arm projection; recorded in `counts.json` for audit).
-5. **PID "run-disjoint" split is a pseudo-run proxy** (contiguous 2000-event blocks, 5-fold):
-   the MC has no `run` column. The true run-disjoint test belongs on the data side.
+### Derived beam-data row diagnostics
+
+The staged table has 632,939 rows but only 385,984 unique
+`(source_file_id, run, evt)` composite keys. It is therefore a multi-row table, not a
+one-row-per-event sample.
+
+The previously published B2/B4/B6/B8 row counts and the +0.18 ΔE-E correlation are
+**row-level descriptive quantities**. They are not event-level stopping fractions or an
+accepted data/MC topology-closure test. Event-level inference remains blocked until the
+canonical composite merge is run on immutable, hash-bound inputs.
+
+The corrected data-side script now rejects missing, nonnumeric, NaN, and infinite values;
+records exact input size and SHA-256; labels row and event denominators separately; and
+withholds event-level authorization. The MC panel now sums `PrimaryWeight` within each
+hexbin instead of silently drawing an unweighted density.
+
+## Visual evidence
+
+| ID | File | Interpretation |
+|---|---|---|
+| VIS-DE-001 | `VIS-DE-001_dE_E_density_quantiles.png` | MC event-level, PrimaryWeight-aware ΔE-E diagnostic. |
+| VIS-DE-001-DATA | `VIS-DE-001-DATA_deltaE_E_adc.png` | Derived beam-data **row** distribution in ADC; not unique events. |
+| VIS-DE-002 | `VIS-DE-002_species_bands.png` | Truth-labelled-MC species-band diagnostic. |
+| VIS-DE-003 | `VIS-DE-003_mc_vs_data.png` | Topology display with different units and different statistical units; not a scale or closure test. |
+| VIS-PID-001 | `VIS-PID-001_roc_pr.png` | Truth-labelled-MC ROC/precision-recall diagnostic. |
+| VIS-PID-002 | `VIS-PID-002_calibration.png` | Truth-labelled-MC score calibration diagnostic. |
+| VIS-PID-003 | `VIS-PID-003_robustness.png` | MC slice robustness, including failure slices. |
+| VIS-STOP-001 | `VIS-STOP-001_geometry_material.png` | Nominal B-arm geometry/material diagnostic. |
+| VIS-STOP-002 | `VIS-STOP-002_stopping_censoring.png` | MC stopping/escape/censoring diagnostic. |
+
+The existing data-side PNGs predate the corrected script and are stale for acceptance
+purposes. They must be regenerated from immutable source bytes before use.
+
+## Validation of the software correction
+
+```text
+python -m py_compile \
+  scripts/studies/clusterA_data_side.py \
+  tests/test_clusterA_data_side_contract.py \
+  tools/audit/render_clusterA_data_side_semantics_evidence.py
+
+pytest -q tests/test_clusterA_data_side_contract.py
+6 passed
+```
+
+See:
+
+- `docs/validation/clusterA_data_side_semantics_audit.md`;
+- `docs/validation/clusterA_data_side_semantics_validation.json`;
+- `docs/validation/clusterA_data_side_semantics.svg`.
+
+## Remaining scientific work
+
+1. Preserve and record immutable hashes for the production derived CSV and Krakow ROOT.
+2. Regenerate the corrected row-level plots and inspect their source metadata.
+3. Run the canonical composite merge to obtain exactly one accepted event record per key.
+4. Define selections and denominators before computing event-level stopping fractions,
+   correlations, efficiency, or data/MC comparisons.
+5. Validate beam-data PID and detector transfer on independent data; simulation closure alone
+   is insufficient.

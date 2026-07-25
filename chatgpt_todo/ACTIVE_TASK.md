@@ -1,37 +1,31 @@
 # Active Task
 
-- **Task ID:** AUD-CLD-002
+- **Task ID:** AUD-G4-024
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T173220Z
-- **Initial remote main SHA:** `64c3841ccb522589e6866d835889e797ea342e24`
-- **Scope:** migrate Cluster D VIS-MC-002 from a second embedded coarse PSTAR
-  table to the repository's canonical exact-decimal PSTAR parser and committed
-  reference bytes; quarantine the historical plot; add a dedicated diagnostic
-  renderer, fail-closed regression gate, machine-readable evidence, visual
-  evidence, and repository-local handoff.
-- **Confirmed defect:** `_common.py` carried a conflicting 20-row reference and
-  the historical plot stated that the canonical CSV did not exist. Relative to
-  the committed total stopping-power column, the embedded values were high by
-  12.22% at 10 MeV, 62.16% at 50 MeV, 80.67% at 100 MeV, and 82.70% at 150 MeV.
-- **Validated changes:** removed the embedded table; reused the canonical parser
-  and 141-row reference; added fail-closed range checks and provenance; added a
-  dedicated ratio-of-sums renderer with sufficient statistics, compensated sums,
-  plot hash, no uncertainty evaluation, and no acceptance statistic; migrated
-  the reproducer; quarantined the legacy plot; added tests and Markdown/JSON/SVG
-  evidence.
-- **Validation:** exact canonical reference returned `VALIDATED`; binding audit
-  returned zero findings; focused pytest returned `5 passed in 2.08s`;
-  py_compile, JSON parse, SVG XML parse, and line-length checks passed; embedded
-  table, out-of-range lookup, invalid UTF-8, and destructive alias controls failed
-  closed.
-- **Unrun checks:** external i885 ROOT regeneration, repository-wide pytest/ruff,
-  Geant4 build/CTest, ROOT processing, broad link inventory, and GitHub Actions.
-- **Scientific boundary:** local raw deposit per scored track length remains a
-  diagnostic proxy, not projectile total energy loss. No uncertainty budget,
-  deuteron validation, calibration, or detector-performance result was produced.
-- **Immutable record:**
-  `chatgpt_todo/archive/2026-07-25T173220Z_AUD-CLD-002_PSTAR_BINDING.md`.
+- **Session stamp:** 2026-07-25T180216Z
+- **Initial remote main SHA:** `a5b108fc8ead2f644c8b362f3a8732ef1d0528fc`
+- **Scope:** review and remediate the minimal NumPy v1.0 writer used by the
+  optional single-stave Opticks input-photon path.
+- **Confirmed defects:** former code wrote the header length and float payload
+  in native byte order while declaring NumPy little-endian data; did not check
+  shape multiplication, non-empty null payloads, or stream failures; and could
+  return success without creating an artifact.
+- **Validated changes:** explicit little-endian header and float32 payload,
+  shape and pointer validation, open/write/flush failure checks, compiled C++
+  regression, NumPy load verification, JSON evidence, SVG evidence, and audit
+  report.
+- **Validation:** focused pytest returned `6 passed in 0.36s`; py_compile,
+  valid/empty array loading, little-endian header inspection, null/overflow/
+  unwritable controls, JSON parse, SVG XML parse, and line-length checks passed.
+- **Negative control:** exact former algorithm returned status `0` while an
+  unwritable target produced no file.
+- **Unrun checks:** Geant4 build/CTest, Opticks A40 execution, real photon
+  artifact regeneration, repository-wide pytest/ruff, link inventory, and
+  GitHub Actions.
+- **Scientific boundary:** serialization and artifact-failure handling only;
+  no GPU transport, hit gathering, optical-yield, calibration, or detector
+  performance result was validated.
 - **Focused status:** VALIDATED.
-- **Cumulative status:** PARTIAL until immutable external i885 ROOT inputs are
-  content-addressed, the canonical plot is regenerated and reviewed, and
-  `BLK-G4-SP-001` is resolved with an accepted observable and uncertainty model.
+- **Cumulative status:** PARTIAL until GPU capture/transport provenance,
+  creator-process accounting, immutable artifacts, hit gathering, and CPU/GPU
+  parity with uncertainty are validated.

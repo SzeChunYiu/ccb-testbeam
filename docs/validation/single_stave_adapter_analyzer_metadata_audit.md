@@ -1,57 +1,41 @@
-# Single-stave adapter/analyzer metadata consistency audit
+# Single-stave adapter/analyzer metadata remediation audit
 
-**Task:** `AUD-G4-023`  
-**Status:** `FLAWED` for the current adapter metadata; audit gate `VALIDATED`  
-**Policy:** `ADAPTER_METADATA_MUST_MATCH_CURRENT_ANALYZER_OPTICAL_CONTRACT`
+## Scope and evidence class
 
-## Question
+This is a software and provenance validation unit for `AUD-G4-023`. It does not
+contain detector data and does not establish an optical yield, calibration,
+resolution, PID, or detector-performance result.
 
-Does the metadata emitted by `adapt_geant4_events.py` accurately describe the
-current downstream analyzer contract after the analyzer optical-bookkeeping
-remediation?
+Initial remote `main` was
+`1e284f8109e927aea67d0eaf2246477982a6dcc7`. The inspected pre-remediation
+adapter blob was `d7b1e797188ea4d20de9a010d040eb578908d418`.
 
-## Repository facts
+## Confirmed metadata defect
 
-The current adapter is version 1.0.0. Its normalized table already preserves
-scintillation, WLS, and Cerenkov generated-track counts, constructs
-`n_optical_generated_total`, and rejects selected-end arrivals above that total.
-However, its metadata still publishes:
-
-- `analysis_compatibility = SCHEMA_ADAPTER_ONLY`; and
-- a `downstream_blocker` saying that `analyze_single_stave.py` still validates
-  arrivals against `n_scint_generated` alone and must be changed to use the
-  total.
-
-That statement was true when the adapter was introduced, but it is no longer
-true on current `main`.
+The adapter already retained scintillation, WLS, and Cerenkov generated-track
+counts, constructed `n_optical_generated_total`, and rejected selected-end
+arrivals above that total. Its metadata nevertheless published
+`SCHEMA_ADAPTER_ONLY` and a stale blocker claiming that the analyzer still used
+`n_scint_generated` alone.
 
 The current analyzer is version 2.0.0 under policy
 `ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL`. For the
-current component-sum contract it returns `n_optical_generated_total` as the
-arrival and collection-efficiency denominator. `EVENT_CONTRACT.md` already
-states this corrected behavior.
+`CURRENT_COMPONENT_SUM` contract it uses `n_optical_generated_total` as the
+arrival bound and the G4S-03 collection-efficiency denominator.
 
-## Confirmed defect
+## Additional validator defect found
 
-A successful current adapter run therefore emits a machine-readable record that
-contradicts both the code that consumes its output and the repository's current
-contract documentation. This is a provenance defect: a downstream reviewer or
-automated gate could incorrectly infer that the normalized table remains
-incompatible, while a stale blocker can hide the actual remaining boundary,
-which is execution on immutable real ROOT bytes.
+The audit gate used literal substring matching on `EVENT_CONTRACT.md`. The exact
+current document wraps `Analyzer version` and `2.0.0` across a newline. The
+former validator therefore rejected the correct current contract even after the
+adapter metadata was fixed. Version 1.1.0 now lowercases and collapses all
+whitespace before checking the two contract statements. A focused regression
+covers wrapped prose.
 
-The exact current source inspection yields eight fail-closed findings:
+## Remediation
 
-1. stale compatibility label;
-2. three stale-blocker statements;
-3. missing analyzer version;
-4. missing analyzer policy;
-5. missing current optical-contract identity; and
-6. missing explicit software-valid/real-ROOT-pending acceptance state.
-
-## Better contract
-
-The adapter metadata should be versioned and should publish:
+`adapt_geant4_events.py` is now version 1.1.0 and writes schema
+`ccb-single-stave-event-adapter/2`. Its metadata publishes:
 
 ```json
 {
@@ -66,44 +50,44 @@ The adapter metadata should be versioned and should publish:
 }
 ```
 
-The obsolete blocker should be removed and replaced by the actual scientific
-boundary: no immutable production ROOT file has completed the full
-adapter-to-analyzer path with producer sidecar, hashes, row-count closure,
-result/manifest hashes, and reviewed plots.
+The obsolete analyzer blocker was removed. A separate `scientific_boundary`
+field preserves the real remaining gate: immutable production ROOT execution
+with producer sidecar/commit, input and normalized hashes, row-count closure,
+result/manifest hashes, and reviewed diagnostics.
 
-## Validation delivered
+## Validation
 
-Added a reusable strict-UTF-8 audit tool and focused regression suite. The gate
-checks analyzer version/policy, total-denominator semantics, section-level
-contract documentation, stale blocker phrases, required adapter metadata, exact
-input byte hashes when run in a checkout, atomic JSON publication, invalid
-UTF-8, and destructive output aliasing.
+Executed on the reconstructed exact changed files and the current analyzer
+contract semantics:
 
 ```text
 python -m py_compile \
+  scripts/single_stave/adapt_geant4_events.py \
   tools/audit/audit_single_stave_adapter_analyzer_metadata.py \
+  tests/test_adapt_geant4_events.py \
   tests/test_audit_single_stave_adapter_analyzer_metadata.py \
   tools/audit/render_single_stave_adapter_analyzer_metadata_evidence.py
 
 PYTHONPATH=. pytest -q \
-  tests/test_audit_single_stave_adapter_analyzer_metadata.py
+  tests/test_adapt_geant4_events.py \
+  tests/test_audit_single_stave_adapter_analyzer_metadata.py \
+  tests/test_adapt_geant4_events_metadata_contract.py
 
-6 passed, 1 skipped in 1.96s
+20 passed, 1 skipped in 3.77s
 ```
 
-The skipped test is the exact-current-source integration check, because this
-execution container has no complete checkout and cannot resolve `github.com`.
-Exact current Git blobs and relevant line ranges are retained in the JSON. The
-corrected fixture validates with zero findings; the current-like stale fixture
-fails closed. JSON and SVG parsing passed, and changed Python lines are no
-longer than 100 characters.
+The skip is the existing `RunAction.cc` branch-name integration check because
+the isolated validation fixture did not contain the Geant4 source tree. The
+adapter CLI test executed and verified the complete metadata payload, output
+hashing, atomic publication, current analyzer contract, absence of the stale
+blocker, and the retained real-ROOT boundary.
 
-## Acceptance boundary
+The exact-source metadata audit returned `VALIDATED` with zero findings. JSON
+parsing and SVG XML parsing passed. Changed Python files are at most 100
+characters per line.
 
-This unit validates the defect and the remediation gate. It deliberately does
-not rewrite the adapter metadata in the same audit step. `AUD-G4-023` remains
-`PARTIAL` until the adapter payload and its focused CLI regression are corrected
-and the exact current-source audit returns `VALIDATED`.
+## Acceptance state
 
-No Geant4 event, ROOT file, optical yield, calibration, resolution, PID, or
-detector-performance quantity was generated or changed.
+The focused software remediation is `VALIDATED`. `AUD-G4-023` remains `PARTIAL`
+scientifically until the immutable real-ROOT adapter-to-analyzer path is run and
+reviewed. No Geant4 event or ROOT file was generated in this unit.

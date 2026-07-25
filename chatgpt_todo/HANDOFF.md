@@ -5,8 +5,14 @@
 - **Task:** `AUD-MV3-SEL-001`
 - **Stamp:** `2026-07-25T220218Z`
 - **Initial remote main:** `701116061eb3346a3ae2b31e2946ca450d6120e2`
-- **Remote main immediately before this handoff:**
-  `63993988242b3d28affa8c8b106ebd72d143c8bc`
+- **Validated delivery/handoff commit:**
+  `712e446e7f31daee9dbd926283547e4780677c7f`
+- **Remote-main confirmation:** post-write history confirmed the delivery commit as the
+  remote `main` head before this confirmation record.
+- **Destination:** direct GitHub contents-API commits to `main`; no force-push, history
+  rewrite, task branch, or PR transport.
+- **Push-output boundary:** successful commit SHAs were returned rather than conventional
+  textual `git push` stdout.
 - **Acceptance:** focused audit gate `VALIDATED`; merged production follow-up `FLAWED`;
   cumulative task `PARTIAL`.
 
@@ -24,7 +30,7 @@ MC Sample-I B2 fraction `0.8669236675912432` versus data `0.9442769031852253`,
 Pearson chi2/ndf `5590.089500522007`, and an advertised improvement factor
 `16.602672795596263`. Canonical `CL-021` remains `FLAWED` under
 `BLK-MV3-LEGACY-001`. PR #868 remained closed, unmerged, non-mergeable, and untouched.
-No status checks were attached to the initial commit.
+No status checks were attached to the initial or delivery commit.
 
 ## Confirmed defects
 
@@ -94,10 +100,11 @@ ROOT rerun, or broad CI result is claimed.
 - `f7d89238557ce91eb55c56f857af3522c658c544` — audit report
 - `bb0ae8fa92e78fe4e1c80895c122287296264d17` — active-task completion
 - `63993988242b3d28affa8c8b106ebd72d143c8bc` — immutable archive
+- `712e446e7f31daee9dbd926283547e4780677c7f` — validated delivery handoff
 
 GitHub contents writes advanced `main` directly and returned commit SHAs rather than terminal
-`git push` output. Remote history was re-read after the implementation/evidence sequence and
-confirmed the commits on `main`.
+`git push` output. Remote history confirmed the complete focused sequence on `main` before
+this delivery-confirmation update.
 
 ## Scientific boundary and unresolved risks
 

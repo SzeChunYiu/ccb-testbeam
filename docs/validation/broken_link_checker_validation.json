@@ -1,0 +1,59 @@
+{
+  "task_id": "AUD-DOC-003",
+  "session_stamp_utc": "2026-07-25T010711Z",
+  "repository": "SzeChunYiu/ccb-testbeam",
+  "initial_remote_main_sha": "bf46fe4ef69a5fdf24d39f264d90218b0335f491",
+  "policy": "MARKDOWN_LINK_TARGETS_MUST_BE_UTF8_AND_REPOSITORY_LOCAL",
+  "status": "VALIDATED",
+  "repository_facts": {
+    "former_script_path": "scripts/broken_link_checker.py",
+    "former_git_blob_sha": "0cc64c1e54291af0eed70ce3d4cfada976250e75",
+    "former_sha256": "2da08281f4a600358cdf239f1c4c4c711e32c70e1f711bf5c2831ede5821d9fa",
+    "former_size_bytes": 1534,
+    "current_script_git_blob_sha": "0076b5cfdfbcbb6db322c9ae4ca01d7e2686651b",
+    "current_script_sha256": "f198f4cb5521343da1e541641c704cab6b53d4f3865868b89d99de0f83ba99e0",
+    "current_script_size_bytes": 7408,
+    "test_git_blob_sha": "327469c6c8299ec20825148a8040f93e09079c6c",
+    "test_sha256": "359dc28a5f17d8e6e7058ed2897a1ecf49e04ccba3be76f7f421b175f4699414",
+    "test_size_bytes": 3898,
+    "renderer_git_blob_sha": "4b7f19e0fde3cb2e10f3df53c041afd7846d63c9",
+    "renderer_sha256": "a1fd9c2c1297f6c2964138fc680662cdfe549081de616e913f9c1c1216c026da"
+  },
+  "validation": {
+    "environment": {
+      "python": "3.13.5",
+      "pytest": "9.0.2",
+      "ruff": "not installed in the execution container"
+    },
+    "commands": [
+      "python -m py_compile scripts/broken_link_checker.py tests/test_broken_link_checker.py tools/audit/render_broken_link_checker_evidence.py",
+      "pytest -q tests/test_broken_link_checker.py"
+    ],
+    "focused_test_result": "6 passed in 2.55s",
+    "changed_python_max_line_length": 100,
+    "cases": {
+      "old_missing_target": "NameError after BROKEN finding",
+      "new_missing_target": "status 1 / MISSING_TARGET",
+      "old_invalid_utf8": "uncaught UnicodeDecodeError",
+      "new_invalid_utf8": "status 1 / INVALID_UTF8",
+      "new_repository_escape": "status 1 / TARGET_ESCAPES_ROOT",
+      "new_valid_target": "status 0 / VALIDATED"
+    },
+    "additional_checks": [
+      "percent-encoded local path resolves",
+      "external and fragment-only links are skipped by declared policy",
+      "JSON publication is deterministic and leaves no temporary file",
+      "committed script and test Git blobs match locally validated bytes",
+      "validation JSON parses",
+      "SVG parses as XML"
+    ]
+  },
+  "limitations": [
+    "The audit validates inline Markdown links and image targets only; reference-style links remain unparsed.",
+    "Fragment-only links and target heading anchors are not checked.",
+    "External URLs are not requested.",
+    "No detector data, simulation output, calibration, or physics claim was validated.",
+    "The full repository link inventory was not executed because the automation container has no network checkout of the repository."
+  ],
+  "scientific_interpretation": "This is a software and documentation-provenance gate. A valid link target does not establish that the linked scientific claim is correct."
+}

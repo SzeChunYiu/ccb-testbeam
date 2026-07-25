@@ -1,58 +1,55 @@
-# MV5 -- Pile-up Validation (MC)
+# MV5 — Pile-up toy diagnostic
 
-**Generated:** 2026-07-25 18:34:49
-**Truth file:** `truth_tracks.npz`  (23452 p, 27838 d single-stave amplitudes)
-**Seed:** 42
+- status: **BLOCKED / TOY_DIAGNOSTIC**
+- generated: 2026-07-25 18:34:49
+- truth file: `truth_tracks.npz` (23,452 proton and 27,838 deuteron single-stave amplitudes)
+- seed: 42
 
-## Question
-The data note assumed dead-time tau_eff = 90 ns -> Rmax = 4.2 MHz. Direct waveform
-fitting (template "live10") measured tau_eff = 124.8 ns, implying a *lower* Rmax.
-This MC study quantifies the pile-up consequences and pins Rmax.
+## Question and boundary
 
-## Rmax under three tau_eff assumptions
-| tau_eff [ns] | 1/tau_eff [MHz] | x duty (0.38) [MHz] |
-| --- | --- | --- |
-| 90.0 (note) | 11.11 | **4.22** |
-| 124.8 (measured) | 8.01 | **3.04** |
-| 179.0 (IPCW) | 5.59 | **2.12** |
+This study checks analytic exponential-gap pile-up arithmetic and a toy two-pulse
+overlay. It reuses the rounded S10b live-time value `124.8 ns`; it does not
+independently validate that data measurement and does not define or validate Rmax.
+Canonical Rmax remains withheld by `CL-010` under `S-STAT-003`.
 
-The measured tau_eff = 124.8 ns x 0.38 duty -> **3.04 MHz**, reproducing the
-data-corrected **Rmax = 3.05 MHz**. The note's 90 ns gives 4.22 MHz (= the
-old 4.2 MHz assumption). The 90 -> 124.8 ns dead-time correction *is* the
-4.2 -> 3.05 MHz Rmax correction.
+## Duty-factor products under three live-time inputs
 
-R* from the two-pulse recovery failure ceiling (0.17): not reached within [0.5, 4.0] MHz (recovery stays below ceiling).
+| tau_eff [ns] | 1/tau_eff [MHz] | multiplied by 0.38 [MHz] |
+|---:|---:|---:|
+| 90.0 | 11.11 | 4.22 |
+| 124.8 | 8.01 | 3.0448717948717947 |
+| 179.0 | 5.59 | 2.12 |
 
-## Pile-up fraction vs rate (MC vs analytic)
-p_pile = 1 - exp(-R x tau_eff / 1e3). MC (exponential-gap draw) matches analytic
-within binomial error at every rate; see plot panel (a).
+The 3.0448717948717947 MHz number is arithmetic `(1/tau_eff) × 0.38`. The
+tracked ledger classifies it as `SUPERSEDED`; the 0.38 beam duty factor is not an
+accepted occupancy-quality threshold. In the machine-readable result,
+`rmax_from_failure_ceiling_mhz is null` because the stated recovery-failure
+ceiling is not reached in the scanned range.
 
-## Data comparison
-At Rmax = 3.05 MHz the *raw* coincidence probability is
-31.7% (tau=124.8ns) -- far above the data-observed
-4.2% anomalous fraction. Inverting the observed fractions:
+## Pile-up fraction versus rate
 
-| observed | tau_eff | implied avg in-spill rate |
-| --- | --- | --- |
-| raw_4.2pct | 90.0 ns | 0.477 MHz |
-| raw_4.2pct | 124.8 ns | 0.344 MHz |
-| stratified_2.025pct | 90.0 ns | 0.227 MHz |
-| stratified_2.025pct | 124.8 ns | 0.164 MHz |
+The toy draws exponential inter-arrival gaps and reproduces
+`1 - exp(-R × tau_eff)` within finite toy statistics. This is a closure test of
+code against the same analytic model, not empirical detector validation.
 
-**Interpretation:** the observed pile-up fractions imply an *average* in-spill
-rate of ~0.16-0.48 MHz -- about 10x below the 3.05 MHz capacity. This is
-self-consistent: Rmax is the instantaneous handling *ceiling*, not the mean
-operating rate; the beam is bunched, so most of the spill runs well under
-capacity while brief peaks approach Rmax. The 4% anomaly is therefore not bulk
-pile-up but a sub-population (handed to MV6 for species identification).
+## Data-comparison arithmetic
+
+Inverting an observed anomaly fraction through the same Poisson model gives a
+model-dependent implied average rate. It does not prove that the data anomaly is
+pile-up or not pile-up because the anomaly selection, time structure, trigger
+acceptance, and recovery model are not closed against data.
 
 ## Artifacts
+
 - `mv5_pileup_summary.json`
-- `mv5_pileup.png` (6-panel: fraction, failure, Rmax, overlaps, separation, summary)
-- `mv5_example_waveforms.png` (p+p / p+d recovery at 20/40/60/80 ns)
+- `mv5_pileup.png`
+- `mv5_example_waveforms.png`
 
 ## Verdict
-MC **confirms** the data-corrected dead-time picture: tau_eff = 124.8 ns is the
-physically consistent value, yielding Rmax = 3.05 MHz, and the note's 90 ns /
-4.2 MHz is the over-optimistic assumption. Observed anomaly fractions are
-consistent with an operating rate ~10x below capacity, not raw pile-up.
+
+The analytic/toy calculations are reproducible diagnostics. They do not authorize
+an Rmax value, do not establish the instantaneous spill-rate distribution, and do
+not exclude pile-up as a contributor to the beam-data anomaly. Resolve
+`S-STAT-003`, use the exact S10b estimand and interval, define an accepted capacity
+criterion, and validate a production waveform/recovery model before publishing a
+capacity claim.

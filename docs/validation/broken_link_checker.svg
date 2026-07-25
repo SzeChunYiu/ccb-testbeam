@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="370" viewBox="0 0 1120 370">
+<rect width="1120" height="370" fill="white"/>
+<text x="40" y="42" font-family="sans-serif" font-size="24" font-weight="bold">Markdown link-checker failure-mode evidence</text>
+<text x="40" y="70" font-family="sans-serif" font-size="14">Synthetic software/provenance validation — not detector data</text>
+<text x="40" y="96" font-family="sans-serif" font-size="14" font-weight="bold">Case</text>
+<text x="390" y="96" font-family="sans-serif" font-size="14" font-weight="bold">Former current-main behavior</text>
+<text x="760" y="96" font-family="sans-serif" font-size="14" font-weight="bold">Validated behavior</text>
+<line x1="40" y1="105" x2="1080" y2="105" stroke="#999"/>
+<text x="40" y="139" font-family="sans-serif" font-size="15">Missing local target</text>
+<text x="390" y="139" font-family="monospace" font-size="14">NameError after BROKEN finding</text>
+<text x="760" y="139" font-family="monospace" font-size="14">status 1 / MISSING_TARGET</text>
+<line x1="40" y1="163" x2="1080" y2="163" stroke="#999"/>
+<text x="40" y="197" font-family="sans-serif" font-size="15">Invalid UTF-8</text>
+<text x="390" y="197" font-family="monospace" font-size="14">uncaught UnicodeDecodeError</text>
+<text x="760" y="197" font-family="monospace" font-size="14">status 1 / INVALID_UTF8</text>
+<line x1="40" y1="221" x2="1080" y2="221" stroke="#999"/>
+<text x="40" y="255" font-family="sans-serif" font-size="15">Repository escape</text>
+<text x="390" y="255" font-family="monospace" font-size="14">not checked</text>
+<text x="760" y="255" font-family="monospace" font-size="14">status 1 / TARGET_ESCAPES_ROOT</text>
+<line x1="40" y1="279" x2="1080" y2="279" stroke="#999"/>
+<text x="40" y="313" font-family="sans-serif" font-size="15">Valid local target</text>
+<text x="390" y="313" font-family="monospace" font-size="14">pass</text>
+<text x="760" y="313" font-family="monospace" font-size="14">status 0 / VALIDATED</text>
+<line x1="40" y1="337" x2="1080" y2="337" stroke="#999"/>
+<text x="40" y="362" font-family="sans-serif" font-size="12">Policy: MARKDOWN_LINK_TARGETS_MUST_BE_UTF8_AND_REPOSITORY_LOCAL</text>
+</svg>

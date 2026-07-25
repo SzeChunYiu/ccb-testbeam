@@ -2,7 +2,7 @@
   "acceptance": {
     "canonical_cl021": "FLAWED",
     "production_weighted_result": "NOT_RUN",
-    "software_contract": "VALIDATED_ON_PREPARED_BYTES",
+    "software_contract": "VALIDATED_ON_PREPARED_SCRIPT_AND_EXACT_COMMITTED_TEST_BYTES",
     "source_report_quarantine": "COMPLETE"
   },
   "local_validation": {
@@ -11,16 +11,17 @@
       "pytest -q tests/test_mv3_selection_weighted_contract.py",
       "python tools/audit/render_mv3_selection_weighted_remediation_evidence.py --validation docs/validation/mv3_selection_weighted_remediation_validation.json --out docs/validation/mv3_selection_weighted_remediation.svg"
     ],
-    "exact_remote_blob_execution": false,
-    "exact_remote_blob_execution_reason": "The runtime could not establish a network checkout or download raw GitHub bytes; authenticated connector writes and post-write source inspection were used.",
+    "exact_committed_test_blob_execution": true,
+    "exact_committed_test_sha256": "f0b60ec4599ac14830e2d596b104763ae905efcaae3478f2c1f76bc760945dfa",
+    "exact_committed_test_size_bytes": 3032,
+    "exact_remote_script_blob_execution": false,
+    "exact_remote_script_blob_execution_reason": "The runtime could not establish a network checkout or download the remote raw source bytes; authenticated connector writes and post-write source inspection were used.",
     "json_parse": "PASS",
     "max_python_line_length": 99,
     "prepared_renderer_sha256": "a8ebc213dffa936a19338a10b6a6f58daa4e724f3b8bd425a6e5313decfa075b",
     "prepared_renderer_size_bytes": 5441,
     "prepared_script_sha256": "55828b4230738841bad852c687cc54ac3c451f28c2aca01f8e6cfe2872d45b0b",
     "prepared_script_size_bytes": 27495,
-    "prepared_test_sha256": "da6729228b57f48d7b571c68916775ce97865fb2e1dcc00855fd4b01e466086e",
-    "prepared_test_size_bytes": 3024,
     "pytest_result": "6 passed in 0.04s",
     "svg_xml_parse": "PASS"
   },
@@ -45,7 +46,7 @@
   },
   "schema": "ccb-mv3-selection-weighted-remediation/1",
   "scientific_boundary": "No production ROOT/data rerun; existing summary and plots remain superseded unweighted diagnostics. No closure, calibration, PID, or detector result is claimed.",
-  "status": "VALIDATED_PREPARED_BYTES_REMOTE_DELIVERY_PARTIAL",
+  "status": "VALIDATED_PREPARED_SCRIPT_REMOTE_DELIVERY_PARTIAL",
   "synthetic_control": {
     "effective_sample_size": 1.2195121951219512,
     "sum_w": 10.0,

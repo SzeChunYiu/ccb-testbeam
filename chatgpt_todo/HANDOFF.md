@@ -6,10 +6,14 @@
 - **Task:** `AUD-LEDGER-003`
 - **Unit:** fail-closed audit of canonical `CL-011` effective-live-time source binding, estimand, counts, uncertainty, and validation semantics
 - **Initial remote `main`:** `53bf42c8d414c9d11bcc1f9d5ab2d088da5a7600`
-- **Validated implementation/evidence head before this handoff:** `e323a268d889673757cd3b2b9f21b74e3e890113`
+- **Complete delivery handoff / recorded after-SHA:** `3cf800b9868e9c27000daf14c1295ddcbdb4fa4c`
 - **Destination:** direct sequential commits to remote `main`; no force-push, branch transport, PR, or history rewrite
+- **Push result:** GitHub contents writes returned successful direct-main commit SHAs; post-write history confirmed `3cf800b9868e9c27000daf14c1295ddcbdb4fa4c` on remote `main`
 - **Acceptance:** **PARTIAL** — defect, arithmetic reconstruction, audit gate, tests, and evidence validated; canonical claim/public remediation remains open
 - **Immutable archive:** `chatgpt_todo/archive/2026-07-25T070705Z_AUD-LEDGER-003_TAU_EFF_BINDING.md`
+
+This confirmation update records that the complete audit delivery is present on
+remote `main`. It does not change the scientific acceptance boundary.
 
 ## Start-of-run state
 
@@ -135,7 +139,7 @@ Committed blob identities matched the locally validated files:
 - JSON `c8bc797782bda99be749d63ac02bf641df4717d5`;
 - SVG `354908c8717c29b1897fa245d837a5d98b145c86`.
 
-## Direct-main commit sequence before handoff
+## Direct-main commit sequence
 
 - `877b1cb816f0c567ab8f346be9ab1994a1ccbe20` — audit implementation;
 - `66cd6412fa65295cf79037493a2d60f2d7aa5852` — focused tests;
@@ -143,7 +147,8 @@ Committed blob identities matched the locally validated files:
 - `775d306d97083ddfa23c9f85f19826c91aa939e5` — machine-readable evidence;
 - `9838a5c50fedf6777194f2e70b6c249f9be16e09` — visual evidence;
 - `3b3804ea2f1b94af932fa10e3aab8bff48f8ff2b` — active-task update;
-- `e323a268d889673757cd3b2b9f21b74e3e890113` — immutable archive.
+- `e323a268d889673757cd3b2b9f21b74e3e890113` — immutable archive;
+- `3cf800b9868e9c27000daf14c1295ddcbdb4fa4c` — complete delivery handoff, confirmed on remote `main`.
 
 GitHub contents writes returned successful direct-main commit SHAs rather than
 conventional textual `git push` output. Post-write history confirmed this

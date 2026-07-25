@@ -1,0 +1,140 @@
+{
+  "source_files": {
+    "clusterA": "reports/studies/clusterA/counts.json",
+    "clusterB": "reports/studies/clusterB/metrics.json",
+    "clusterC": "reports/studies/clusterC/metrics.json",
+    "clusterD_sipm": "reports/studies/clusterD/figures/fig_sipm_summary.json",
+    "claim_ledger": "docs/claim_ledger.csv",
+    "opticks": "figures/opticks/SUMMARY.md"
+  },
+  "headline_PASS": {
+    "timing_combined_sigma68_ns": 0.08934297497668915,
+    "pid_auc_realistic_chain": 0.8976036882035276,
+    "adc_per_MeV_digitizer": 119.16753164952195,
+    "birks_kB_per_track_cm_per_MeV": 0.015615126050420166,
+    "rmax_digitizer_0pct_gate_MHz": 0.6045512820512821,
+    "s00_pulses_validated": 640737
+  },
+  "headline_BLOCKED": {
+    "detector_timing_resolution": "CL-002..006 (BLK-MV4-LEGACY-001)",
+    "canonical_Rmax": "CL-010 (S-STAT-003)",
+    "data_side_PID": "raw hrdb_run_*.root not staged",
+    "systematic_budget": "CL-026 (BLK-SYST-001)",
+    "anomaly_identity": "CL-022 (AUD-ANOM-001)",
+    "opticks_gpu_gather": "EventMode/component-save config (PARTIAL)"
+  },
+  "headline_SUPERSEDED": {
+    "legacy_Rmax_3p044_MHz": "CL-012 (do not use)"
+  },
+  "opticks": {
+    "source": "figures/opticks/SUMMARY.md",
+    "pr": "#920",
+    "commit": "2c0afcd6",
+    "n_events": 2,
+    "cpu_arrivals_total": 4592,
+    "cpu_arrivals_per_event": 2296,
+    "gpu_input_photons_per_event": 148697,
+    "gpu_hits": 0,
+    "ctest_pass": "9/9",
+    "status": "PARTIAL",
+    "residual": "device->host GATHER returns null (EventMode/component-save config point)"
+  },
+  "provenance": {
+    "clusterA": {
+      "pr": "#921",
+      "commit": "9096345d",
+      "script": "scripts/studies/clusterA_dE_PID_stopping.py",
+      "inputs": [
+        "geant4/data/output_krakow_1M.root (hibeam, 1M ev)"
+      ],
+      "seeds": [
+        "event_index (MC, no run col)"
+      ],
+      "config": [
+        "STOP_KE=1.0 MeV",
+        "GEO-001 pair_merge"
+      ],
+      "status": "PASS_MC"
+    },
+    "clusterB": {
+      "pr": "#918",
+      "commit": "96c72ad0",
+      "script": "scripts/clusterB/clusterB_timing_study.py",
+      "inputs": [
+        "ccb-runs/i885_v1 (72 files)",
+        "ccb-runs/an3/sys_birks_smoke2 (3)",
+        "geant4/data/output_krakow_1M.root"
+      ],
+      "seeds": [
+        "s101",
+        "s102"
+      ],
+      "config": [
+        "DT=0.25 ns",
+        "CFD_FRAC=0.2",
+        "LE_THRESH=5 PE",
+        "MIN_PE_VALID=15",
+        "T_RANGE=[0,100] ns"
+      ],
+      "status": "PASS_MC"
+    },
+    "clusterC": {
+      "pr": "#917",
+      "commit": "276eb5b1",
+      "script": "scripts/clusterC/clusterC_pileup_energy_study.py",
+      "inputs": [
+        "ccb-runs/i885_v1 (36+36 files, 36k ev)",
+        "geant4/data/output_krakow_1M.root (xcheck)"
+      ],
+      "seeds": [
+        "(env-configurable params, defaults from digitizer config)"
+      ],
+      "config": [
+        "os.environ.get overridable",
+        "acq_window=180 ns",
+        "gain=120 ADC/MeV",
+        "adc_ceiling=7000"
+      ],
+      "status": "PASS_MC"
+    },
+    "clusterD": {
+      "pr": "#919",
+      "commit": "5367ec7b",
+      "script": "scripts/mv*.py + scripts/single_stave/campaign_plots/",
+      "inputs": [
+        "geant4/data/output_krakow_1M.root",
+        "reports/1780917628.449525.085b2dc0__*/s00_selected_b_pulses.csv.gz",
+        "ccb-runs/{i885_v1,sys_birks_smoke2,sipm-p2-001}"
+      ],
+      "seeds": [
+        "mv4 seed=20260720",
+        "mv5 seed=42",
+        "mv6 seed=42"
+      ],
+      "config": [
+        "gain=92 ADC/MeV (MV0 v2)",
+        "peak_frac=0.75",
+        "thr=100 ADC",
+        "tau_rise=2.5 tau_decay=42 ns"
+      ],
+      "status": "GOVERNED"
+    },
+    "opticks": {
+      "pr": "#920",
+      "commit": "2c0afcd6",
+      "script": "geant4/single_stave/opticks/opticks_parity.py",
+      "inputs": [
+        "single-stave GDML",
+        "Geant4 scintillation yield (2 ev, same seed)"
+      ],
+      "seeds": [
+        "identical seed CPU vs GPU"
+      ],
+      "config": [
+        "A40 target",
+        "CSGFoundry sensor_count=4"
+      ],
+      "status": "PARTIAL"
+    }
+  }
+}

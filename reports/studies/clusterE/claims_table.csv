@@ -1,0 +1,17 @@
+claim,headline,evidence_class,status,source,figure,claim_id
+Selected B-stack pulses (S00 gate),"640,737 pulses",DATA_MEASUREMENT,VALIDATED,S00 / CL-001,reports/SUMMARY.md,CL-001
+Combined timing resolution σ68,0.089 ns,MC_METHOD_CLOSURE,PASS,clusterB (#918) VIS-TIM-005,VIS-TIM-005_combined_estimator.png,—
+Detector timing resolution (data),withheld,BLOCKED_DATA,BLOCKED,CL-002..006 (BLK-MV4-LEGACY-001),—,CL-002
+Pile-up tolerance Rmax (canonical),withheld,BLOCKED,BLOCKED,CL-010 (S-STAT-003),—,CL-010
+Legacy Rmax = 3.044 MHz,SUPERSEDED,SUPERSEDED,SUPERSEDED,CL-012 (do not use),—,CL-012
+"Rmax (digitizer domain, 0% gate)",0.605 MHz,SIMULATION_RESULT,PASS,clusterC (#917) VIS-PU-002,VIS-PU-002_pileup_occupancy_rate.png,—
+"PID p-vs-d AUC (realistic chain, MC)",0.898,SIMULATION_RESULT,PASS,clusterA (#921) VIS-PID-001,VIS-PID-001_roc_pr.png,—
+PID p-vs-d AUC (truth ceiling HGB),0.986,TRUTH_LEVEL_MC_ONLY,GATED,MV1 / CL-017 (BLK-MV1-001),—,CL-017
+PID on beam data,deferred,BLOCKED_DATA,BLOCKED_DATA,raw ROOT not staged,—,—
+ADC calibration (digitizer gain),119.17 ADC/MeV,SIMULATION_RESULT,PASS,clusterC (#917) VIS-ENE-001,VIS-ENE-001_adc_calibration.png,—
+"ADC gain (data/MC proxy, MV0)",110 ADC/MeV (±30%),DATA_MC_PROXY,GATED,MV0 / CL-013 (BLK-MV0-001),mv0_gain_scan.png,CL-013
+Birks kB (per-track dE/dx fit),0.0156 cm/MeV,SIMULATION_RESULT,PASS,clusterC (#917) VIS-ENE-002,VIS-ENE-002_birks_quenching.png,—
+Anomaly / C12 identity,25/38 toy early-peak C12,TRUTH_LEVEL_MC_ONLY,BLOCKED,MV6 / CL-022 (AUD-ANOM-001),mv6_representation.png,CL-022
+Stopping-depth data/MC closure,χ²/ndf ≈ 6.8e4  FAIL,MC_DIAGNOSTIC,TENSION,MV3 / CL-021 (BLK-MV3-LEGACY-001),mv3_stop_frac.png,CL-021
+Opticks GPU-vs-CPU parity,0 GPU hits / 4592 CPU,SIMULATION_RESULT,PARTIAL,opticks (#920),opticks_gpu_vs_cpu_parity.png,—
+Systematic uncertainty budget,incomplete,BLOCKED,BLOCKED,CL-026 (BLK-SYST-001),docs/SYSTEMATIC_UNCERTAINTIES.md,CL-026

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="610" viewBox="0 0 1100 610">
+<rect width="1100" height="100%" fill="white"/>
+<text x="40" y="48" font-family="sans-serif" font-size="26" font-weight="bold">MV3 selection-matched claim audit</text>
+<text x="40" y="78" font-family="sans-serif" font-size="15">Software and provenance evidence — not detector-performance data</text>
+<text x="55" y="118" font-family="monospace" font-size="16">Status                             FLAWED</text>
+<text x="55" y="146" font-family="monospace" font-size="16">Findings                           16</text>
+<text x="55" y="174" font-family="monospace" font-size="16">Reported χ² improvement            16.603×</text>
+<text x="55" y="202" font-family="monospace" font-size="16">Same-target improvement            16.115×</text>
+<text x="55" y="230" font-family="monospace" font-size="16">Matched χ²/ndf                     5590.1</text>
+<text x="55" y="258" font-family="monospace" font-size="16">B2 residual                        7.735 pp</text>
+<text x="55" y="286" font-family="monospace" font-size="16">Total-variation distance           0.0774</text>
+<text x="40" y="326" font-family="sans-serif" font-size="18" font-weight="bold">Fail-closed findings</text>
+<text x="55" y="356" font-family="monospace" font-size="14">• PRIMARY_WEIGHT_READ_BUT_NOT_APPLIED</text>
+<text x="55" y="381" font-family="monospace" font-size="14">• PRIMARY_WEIGHT_FAIL_OPEN_DEFAULT</text>
+<text x="55" y="406" font-family="monospace" font-size="14">• POSITIVE_CHARGE_ONLY_MASK</text>
+<text x="55" y="431" font-family="monospace" font-size="14">• CANONICAL_CHARGE_HELPER_DIVERGENCE</text>
+<text x="55" y="456" font-family="monospace" font-size="14">• UNWEIGHTED_PHYSICAL_CLAIM_CONTRADICTS_WEIGHT_CONTRACT</text>
+<text x="55" y="481" font-family="monospace" font-size="14">• RESIDUAL_ATTRIBUTION_IGNORES_AVAILABLE_WEIGHT</text>
+<text x="55" y="506" font-family="monospace" font-size="14">• SUMMARY_WEIGHT_CONTRACT_MISSING</text>
+<text x="55" y="531" font-family="monospace" font-size="14">• SUMMARY_WEIGHT_SUFFICIENT_STATISTICS_MISSING</text>
+</svg>

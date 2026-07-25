@@ -55,7 +55,7 @@ detailed findings follow in the per-section narrative.
 | **MV0 v2** | Digitizer gain calibration (corrected) | ✅ PASS | Gain = 92 ± 28 ADC/MeV (PRELIMINARY — KS shape mismatch 0.158, inter-stave variation unresolved, 30% systematic dominates deuteron-fraction budget) |
 | **MV1** | Particle ID (proton vs deuteron) | ✅ PASS (MV3 sensitivity: unquantified) | MC AUC = 0.986; data within 0.5% of ceiling; p/d separation at B2 (where deuterons stop) may be less affected by MV3 stopping-depth error |
 | **MV2** | Range-energy calibration | ✅ PASS (limitation confirmed) | Absolute energy unreachable; p/d range ordering validated |
-| **MV3 v3** | Stopping-depth profile | ⛔ FAIL | χ²/ndf = 68,269 (4 stave bins, ndf = 3); MC overestimates B8 penetration 10×; missing upstream material budget |
+| **MV3 v3** | Stopping-depth profile | 🟠 PARTIALLY RESOLVED (selection-matched) | Legacy χ²/ndf=68,269 was **unselected MC vs hardware-trigger-selected data** (invalid comparison). Applying the data's A&B-coincidence / single-B trigger to the MC ([selection-matched study](reports/studies/mv3_selection_matched/REPORT.md)) recovers the sharp B2 peak: B2 0.46→0.87, **16.6× χ² improvement**, shape now matches data (0.94). Residual ~8 pp B2 + ΔE-E corr sign = scattering model (uniform CM angle, no σ_pd weight) + GAP-01 material deficit. |
 | **MV4** | Single-stave timing | ✅ PASS (raw) / 🔶 TENSION (timewalk) | Raw: pull = −1.05σ; timewalk-corrected: pull = +2.68σ |
 | **MV5** | Pile-up / R_max | ✅ PASS (self-consistency, not independent) | MC reproduces data tau_eff (124.8 ns); R_max agreement is model self-consistency, not independent validation |
 | **MV6** | Representation & anomaly ID | ✅ DONE | 0.32% early-peak; C12 recoils dominant (55%); GMM captures >99% |
@@ -368,7 +368,10 @@ data carries essentially the same separating information once a true label exist
 | Depth occupancy ordering | B2 >> B4 > B6 > B8 | Sci_bar hits fall layer 0->7 | qualitative match |
 | Sample I/II trigger split | deuteron-enriched (Matthias) | trigger-split reproduces enrichment | confirmed |
 
-### 6.2 Stopping-depth profile — structural FAIL (MV3)
+### 6.2 Stopping-depth profile — PARTIALLY RESOLVED, selection-matched (MV3)
+
+> **UPDATE (CL-021, selection-matched follow-up):** the legacy "structural FAIL" below compared **unselected MC** against **hardware-trigger-selected data** — an invalid comparison. When the data's A&B-coincidence / single-B trigger is applied identically to the MC (`scripts/studies/mv3_selection_matched.py`), the MC develops the same sharp B2 peak (**B2: 0.46 → 0.87**, data 0.94; **16.6× χ²/ndf improvement**; shape matches). The qualitative "MC broad, data sharp" discrepancy is GONE. A residual ~8 pp B2 deficit and the ΔE-E correlation sign mismatch remain, attributed to (a) the p+d scattering model (`ScatteringGenerator.cc` samples the CM angle **uniformly**, without the physical `sigma_pd_cm` cross-section) and (b) the unresolved GAP-01 upstream-material deficit. The historical analysis is retained below for provenance. See [MV3 selection-matched REPORT](reports/studies/mv3_selection_matched/REPORT.md).
+
 
 MV3 v3 (threshold-corrected) compared the MC and data stave-occupancy profiles quantitatively.
 Result: **χ²/ndf = 68,269 (4 stave bins, ndf = 3)** — a catastrophic failure, not a tension.

@@ -58,7 +58,7 @@ model; they are not global causal rankings or measured detector uncertainties.
 | Figure | What it checks | Acceptance boundary |
 |---|---|---|
 | VIS-MC-001 | Configured generator spectra, positions, angles, and weights | Configuration/internal consistency only. |
-| VIS-MC-002 | Deposited-energy proxy versus a PSTAR table | The plotter uses an embedded coarse table rather than the committed CSV bytes. It is not source-bound to the canonical reference parser and does not establish stopping-power closure or deuteron validity. |
+| VIS-MC-002 | Local raw deposited-energy/track-length proxy versus canonical PSTAR total stopping power | The historical `VIS-MC-002_transport_vs_pstar.png` used an embedded coarse table and is **SUPERSEDED**. Regenerate `VIS-MC-002_transport_vs_pstar_canonical.png` plus its JSON sidecar with `vis_mc_002_transport.py`; the canonical CSV/parser and SHA-256 are recorded. The comparison remains diagnostic because local deposit is not projectile total energy loss and the uncertainty model is incomplete. |
 | VIS-MC-003 | Optical-generation and detected-photon distributions | Simulation-internal bookkeeping; no beam-data optical closure. |
 | VIS-MC-004 | Two-seed distribution comparison | Two seeds and a fixed four-thread campaign are not the dedicated thread-invariance or multiseed acceptance study. |
 | VIS-MC-005 | Gain×truth plus injected Gaussian-noise closure | MC-internal and unbiased by construction; no single-stave beam-data input. |

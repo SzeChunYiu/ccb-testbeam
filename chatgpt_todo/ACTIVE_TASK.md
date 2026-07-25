@@ -1,12 +1,13 @@
 # Active Task
 
-- **Task ID:** AUD-MC-001
+- **Task ID:** AUD-MC-002
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T021422Z
-- **Initial remote main SHA:** `f01b16fba39bcd21bb57a10638d36dcfe521b01f`
-- **Scope:** harden `tools/audit/audit_mc_weight_usage.py` so effective-sample-size reports cannot silently discard invalid weights, flatten non-event-aligned arrays, select an ambiguous branch, or overwrite the exact ROOT input.
-- **Repository evidence:** exact former blob `9b2375b98fd76784ce3fb961e4dcdbf169f7495e` filtered nonfinite values, reshaped arbitrary arrays, selected the first recognized branch when several existed, omitted input-byte provenance, and wrote JSON directly to the requested path without an input/output alias gate.
-- **Files:** strict validator v2.0.0; MC weight policy v2; focused tests; deterministic renderer; validation JSON/SVG/audit; immutable archive; latest handoff.
-- **Validation:** exact former-source negative controls reproduced false `OK` results for a NaN-containing vector, simultaneous `PrimaryWeight`/`EventWeight`, and a 2×2 array, plus destructive input/output aliasing with exit zero; corrected compilation passed; focused pytest returned `8 passed in 0.04s`; JSON and SVG parsed; changed Python lines are at most 100 characters; committed script/test/renderer/contract blobs match validated bytes.
-- **Scientific boundary:** a valid weight vector and ESS report do not prove downstream analyses consume the weights or close against data. The exact production ROOT file, weighted downstream reruns, uncertainty propagation, and data/MC closure remain external/compute blockers.
-- **Status:** COMPLETE — strict event-aligned weight validation, reproducible evidence, and policy correction delivered directly to remote `main`.
+- **Session stamp:** 2026-07-25T030239Z
+- **Initial remote main SHA:** `a4b996ccbdfeea120e6deaead863f19d468d1091`
+- **Scope:** audit issue #880 event-weight failure handling, bias direction/denominator semantics, and retained result provenance.
+- **Repository evidence:** producer blob `bc1220fdfe1010989fd8ab273f8c1b1fcf708b2c`; result blob `37d69e2c697a7ce7c9e1eff9aeff48539551d922`; merged PR #897; open issue #880.
+- **Confirmed defects:** nonfinite weights become `1.0`; four weighted helpers can fall back to unweighted estimators; signed fields use weighted-minus-unweighted while prose describes legacy bias; ROOT hash, producer commit, generation command, and policy/version are absent.
+- **Independent calculation:** first-B weighted change relative to unweighted is `-68.022432%`, whereas legacy overstatement relative to weighted is `+212.719216%`; deuteron legacy-minus-weighted is `+40.585087 pp` and `+244.399660%` relative to weighted.
+- **Validation:** focused py_compile passed; pytest returned `6 passed in 0.04s`; JSON and SVG parsed; changed Python lines are at most 99 characters.
+- **Scientific boundary:** exact ROOT bytes were unavailable; no production rerun, uncertainty propagation, event-weight-definition proof, or data/MC closure is claimed.
+- **Status:** PARTIAL — audit gate and visual evidence validated; retained study remains FLAWED pending strict content-addressed rerun.

@@ -19,7 +19,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 POLICY = "CURRENT_GEANT4_EVENT_TREE_MUST_MAP_EXPLICITLY_TO_ANALYSIS_CONTRACT"
 
 CURRENT_TO_NORMALIZED = {
@@ -265,7 +265,7 @@ def main() -> int:
         raise SystemExit(f"event-contract conversion failed: {exc}") from exc
 
     payload = {
-        "schema": "ccb-single-stave-event-adapter/1",
+        "schema": "ccb-single-stave-event-adapter/2",
         "version": VERSION,
         "policy": POLICY,
         "input": {
@@ -291,11 +291,20 @@ def main() -> int:
         "generated_optical_bound": (
             "n_scint_generated + n_wls_generated + n_cerenkov_generated"
         ),
-        "analysis_compatibility": "SCHEMA_ADAPTER_ONLY",
-        "downstream_blocker": (
-            "analyze_single_stave.py still validates arrivals against "
-            "n_scint_generated alone; it must use n_optical_generated_total "
-            "before direct current-ROOT analysis is scientifically accepted"
+        "analysis_compatibility": "SCHEMA_AND_OPTICAL_BOOKKEEPING_COMPATIBLE",
+        "downstream_analyzer_contract": {
+            "version": "2.0.0",
+            "policy": (
+                "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL"
+            ),
+            "optical_generation_contract": "CURRENT_COMPONENT_SUM",
+            "collection_efficiency_denominator": "n_optical_generated_total",
+            "acceptance": "SOFTWARE_CONTRACT_VALIDATED_REAL_ROOT_PENDING",
+        },
+        "scientific_boundary": (
+            "Immutable real ROOT adapter-to-analyzer execution with producer sidecar, "
+            "content hashes, row-count closure, result/manifest hashes, and reviewed "
+            "diagnostics remains required before physics claims."
         ),
         "status": "VALIDATED",
     }

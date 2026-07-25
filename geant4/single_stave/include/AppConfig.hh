@@ -63,6 +63,18 @@ struct AppConfig {
   std::string output = "ccb_stave.root"; // ntuple output (ROOT via g4tools)
   std::string macro  = "";                // optional macro to /control/execute
 
+  // --- Optional GPU optical path (Opticks) ---
+  // When enabled, optical-photon secondaries from the Geant4 Scintillation
+  // process (authoritative yield/spectrum/positioning) are captured and
+  // emitted as Opticks "input photon" arrays (.npy, sphoton layout) for GPU
+  // transport; CPU optical-photon tracking is suppressed (proton-only, fast).
+  // The CPU reference (flag OFF) is byte-for-byte unchanged. Also env
+  // CCB_GPU_OPTICAL=1. Default OFF.
+  bool   gpu_optical = false;             // --gpu-optical / CCB_GPU_OPTICAL=1
+  std::string optical_out = "";           // dir for per-event input-photon npy
+  std::string dump_gdml = "";             // write production geometry to GDML
+                                          //  after Initialize, then exit
+
   // --- Sensor spec (Hamamatsu S13360-3050CS public spec) ---
   int    sipm_n_cells = 3600;   // microcells (saturation model)
   double sipm_overvoltage_V = 3.0; // recorded; PDE table is OV-tagged

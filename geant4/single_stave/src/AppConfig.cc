@@ -82,6 +82,11 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --strict-optical         abort if required optical tables are missing/malformed (or CCB_STRICT_OPTICAL=1)\n"
     "  --output FILE            ntuple output (.root)       (default ccb_stave.root)\n"
     "  --macro FILE             run a macro then exit\n"
+    "  --gpu-optical            GPU optical path: emit Opticks input photons,\n"
+    "                           skip CPU optical transport (env CCB_GPU_OPTICAL=1)\n"
+    "  --optical-out DIR        dir for per-event input-photon .npy\n"
+    "                           (default: alongside --output)\n"
+    "  --dump-gdml FILE         write production geometry to GDML and exit\n"
     "  -h, --help               this message\n";
 }
 
@@ -109,7 +114,10 @@ std::string AppConfig::Describe() const {
      << " mode=" << (mode == SimMode::kOpticalCalibration ? "optical" : "fast")
      << " optical_dir=" << optical_dir
      << " strict_optical=" << (strict_optical ? 1 : 0)
-     << " output=" << output;
+     << " output=" << output
+     << " gpu_optical=" << (gpu_optical ? 1 : 0)
+     << " optical_out=" << optical_out
+     << " dump_gdml=" << dump_gdml;
   return os.str();
 }
 
@@ -166,12 +174,20 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--strict-optical")) { strict_optical = true; }
     else if (eq(a, "--output"))      { if(!(v=need(i)))return false; output = v; }
     else if (eq(a, "--macro"))       { if(!(v=need(i)))return false; macro = v; }
+    else if (eq(a, "--gpu-optical")) { gpu_optical = true; }
+    else if (eq(a, "--optical-out")) { if(!(v=need(i)))return false; optical_out = v; }
+    else if (eq(a, "--dump-gdml"))   { if(!(v=need(i)))return false; dump_gdml = v; }
     else {
       std::cerr << "error: unknown argument '" << a << "'\n";
       PrintUsage(argv[0]);
       return false;
     }
   }
+  // Env override: CCB_GPU_OPTICAL=1 enables the GPU optical path (factory flag).
+  const char* gpu_env = std::getenv("CCB_GPU_OPTICAL");
+  if (gpu_env && (eq(gpu_env, "1") || eq(gpu_env, "true") || eq(gpu_env, "yes")))
+    gpu_optical = true;
+
   // --- validation ---
   if (particle != "proton" && particle != "deuteron") {
     std::cerr << "error: --particle must be proton|deuteron\n"; return false;

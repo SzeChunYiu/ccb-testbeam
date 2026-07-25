@@ -75,3 +75,17 @@ src/ccb_mc_validation.egg-info/
 /reports/mv3_stopping_v2*/
 /reports/mv3_stopping_v3*/
 /paper/figures/
+
+# ---- Opticks GPU integration build + scratch (never in git) ----
+build/
+build-gpu/
+build-*/
+# keep figures/opticks/SUMMARY.md + the committed diagnostic png is re-added explicitly below
+parity/
+opticks_probe/
+optical_gpu*/
+*.npy
+*_probe/
+ccb_dump_gdml
+export_check.gdml
+exported.gdml

@@ -87,7 +87,13 @@ void EventAction::EndOfEventAction(const G4Event* event) {
               << std::endl;
   }
 
-  if (run_action_) run_action_->FillEvent(data_, event->GetEventID());
+  if (run_action_) {
+    run_action_->FillEvent(data_, event->GetEventID());
+    if (cfg_.gpu_optical)
+      run_action_->WriteGpuPhotons(data_, event->GetEventID());
+    else if (!cfg_.optical_out.empty())
+      run_action_->WriteCpuArrivals(data_, event->GetEventID());
+  }
 }
 
 ccb::sipm::ModelConfig EventAction::BuildSipmConfig() const {

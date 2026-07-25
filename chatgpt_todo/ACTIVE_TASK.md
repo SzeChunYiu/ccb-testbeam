@@ -2,25 +2,32 @@
 
 - **Task ID:** AUD-G4-022
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T133443Z
-- **Initial remote main SHA:** `2f653429c2b7ead1d35752a23f3bb908506dd23d`
-- **Scope:** bind the current single-stave Geant4 `events` tree to an explicit,
-  fail-closed normalized analysis contract and correct public documentation that
-  implied direct analyzer compatibility and an implemented fast mode.
-- **Confirmed defects:** current `RunAction.cc` writes `arrival_readout`,
-  `detected_readout`, and `track_len_scint_mm`, while the analyzer expects
-  different names/units; the analyzer's arrival bound ignores separately
-  recorded WLS and Cerenkov optical tracks; the Geant4 README advertised direct
-  analysis and a fast mode that the CLI rejects.
-- **Validated work:** explicit converter, source-bound focused tests, contract
-  documentation, corrected Geant4 README, machine-readable JSON, SVG evidence,
-  and audit report are present on `main`.
-- **Validation:** `py_compile` passed; focused pytest `12 passed in 1.59s`; JSON
-  and SVG parsing passed; changed Python line length is at most 95 characters.
+- **Session stamp:** 2026-07-25T141517Z
+- **Initial remote main SHA:** `48e3192dc69dd8c9408930171ed66f7a0627979e`
+- **Scope:** correct the single-stave analyzer's generated-optical bookkeeping so
+  the current normalized Geant4 contract preserves scintillation, WLS, and
+  Cerenkov components and uses their exact total for arrival bounds and G4S-03.
+- **Confirmed defect:** the former analyzer bounded `n_end_selected` by
+  `n_scint_generated` and divided collection efficiency by that scintillation-
+  only count, although the producer records additional WLS and Cerenkov optical
+  tracks. A valid synthetic event gave former ratio `11/10 = 1.1` and correct
+  total-optical ratio `11/15 = 0.7333333333333333`.
+- **Validated work:** analyzer v2.0.0 now rejects partial or malformed current
+  contracts, verifies the exact component sum, uses
+  `n_optical_generated_total`, labels legacy input explicitly, and records the
+  contract/denominator/components in result, summary, plot-source, and manifest
+  outputs. Focused tests, documentation, JSON, SVG, audit, and immutable archive
+  are present on `main`.
+- **Validation:** `py_compile` passed; focused pytest `9 passed in 0.08s`; a
+  120-row synthetic end-to-end run returned `PASS_SMOKE`,
+  `CURRENT_COMPONENT_SUM`, and G4S-03 denominator
+  `n_optical_generated_total`; JSON and SVG parsing passed; changed Python line
+  length is at most 100 characters. Ruff was unavailable.
 - **Scientific boundary:** synthetic software/provenance validation only; no
-  Geant4 production event, ROOT sample, calibration, optical yield, resolution,
-  or detector-performance quantity was generated or reinterpreted.
-- **Remaining acceptance:** update `analyze_single_stave.py` to consume the
-  component and total optical counters without semantic renaming, add an
-  integrated current-ROOT regression, and execute on immutable real ROOT bytes.
-- **Status:** PARTIAL.
+  Geant4 production event, immutable ROOT sample, calibration, optical yield,
+  resolution, PID, or detector-performance quantity was generated or changed.
+- **Remaining acceptance:** execute the adapter-to-analyzer path on immutable
+  real current-ROOT bytes and record producer sidecar/commit, ROOT and normalized
+  hashes, row-count closure, result/manifest hashes, and reviewed diagnostics.
+- **Focused remediation status:** VALIDATED.
+- **Cumulative status:** PARTIAL.

@@ -6,10 +6,14 @@
 - **Task:** `AUD-DELTAE-003`
 - **Unit:** fail-closed net-amplitude input integrity for the A-002 ΔE-E bridge
 - **Initial remote `main`:** `67a7cdd6ef0dc64f00a9ebb43077d2acc1a7418e`
+- **Complete delivery handoff / recorded after-SHA:** `b7ff0db25056421ddbd0c6035b5068c784dfd1d4`
 - **Canonical source inspected:** `scripts/single_stave/deltaE_E_data_bridge.py`, Git blob `7f50ce667a6cde07e94717d0187831da4d8459ac`
 - **Destination:** direct sequential commits to remote `main`; no force-push, branch transport, PR, or history rewrite
+- **Push result:** GitHub contents writes returned successful direct-main commit SHAs; post-write history confirmed `b7ff0db25056421ddbd0c6035b5068c784dfd1d4` on remote `main`
 - **Acceptance:** **PARTIAL** — defect, audit gate, focused tests, JSON, SVG, and documentation validated; canonical bridge fix remains open
 - **Immutable archive:** `chatgpt_todo/archive/2026-07-25T050141Z_AUD-DELTAE-003_NET_INPUT_INTEGRITY.md`
+
+This confirmation update records that the complete audit delivery is present on remote `main`. It does not change the scientific acceptance boundary.
 
 ## Confirmed defect
 
@@ -75,7 +79,8 @@ characters.
 - `507b6db8bb5bfd904c8b0ec43957c7ac22bd93f5` — visual evidence;
 - `bc54d8a4dc184a907a425b8d96a46964fb595d1a` — audit report;
 - `e99d366f9bc29d1555e4a29e4fa934981e919e83` — immutable archive;
-- `f422b1ed7176f3decd4bf3020a2068f5b68de83e` — active task.
+- `f422b1ed7176f3decd4bf3020a2068f5b68de83e` — active task;
+- `b7ff0db25056421ddbd0c6035b5068c784dfd1d4` — complete delivery handoff, confirmed on remote `main`.
 
 ## Required remediation and boundary
 

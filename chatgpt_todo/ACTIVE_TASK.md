@@ -13,12 +13,15 @@
   were accepted; `PrimaryWeight` was loaded but ignored by the MC hexbin; and a table with
   632,939 rows but 385,984 composite event keys was described with event-count and stopping-
   distribution language.
-- **Validated progress:** the script now performs a strict UTF-8 snapshot, rejects malformed
-  or nonfinite numeric values, distinguishes row and event denominators, withholds event-level
-  authorization, aligns finite nonnegative `PrimaryWeight` values to selected MC events,
-  sums them in plotted bins, records full source hashes, and publishes JSON atomically.
-- **Validation:** `python -m py_compile` passed; focused pytest returned `6 passed in 0.31s`;
-  JSON and SVG parsing passed; changed Python lines are at most 95 characters.
+- **Validated progress:** the script now performs a strict UTF-8 snapshot, rejects malformed,
+  nonfinite, or empty selected data samples, distinguishes row and event denominators,
+  withholds event-level authorization, aligns finite nonnegative `PrimaryWeight` values to
+  selected MC events, rejects an all-zero selected weight vector, sums weights in plotted
+  bins, records full source hashes, and publishes JSON atomically.
+- **Validation:** `python -m py_compile` passed; focused pytest returned `7 passed in 0.36s`;
+  JSON and SVG parsing passed; changed Python lines are at most 96 characters.
+- **Validated blobs:** script `8bda06c55dc00c1af3e025411fcc55df43f1487e` and tests
+  `21d3c9ecdd2f9837cd8776adc69fccf5a9a11b63`.
 - **Evidence:** `docs/validation/clusterA_data_side_semantics_audit.md`, matching JSON and
   SVG, and `tests/test_clusterA_data_side_contract.py` are committed directly to `main`.
 - **Unrun checks:** production CSV/ROOT execution, regeneration of production PNGs, canonical

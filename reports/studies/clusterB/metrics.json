@@ -1,0 +1,129 @@
+{
+  "VIS-TIM-001": {
+    "success_fraction": {
+      "cfd": 0.9295525624452692,
+      "templ": 0.9295525624452692,
+      "lead": 0.7534631583336808
+    },
+    "sigma68_residual_ns": {
+      "cfd": 0.15058444895489473,
+      "templ": 0.45081042102230556,
+      "lead": 0.7651163597838773
+    },
+    "failure_counts": {
+      "lead_no_cross": 21114,
+      "low_pe": 8447
+    }
+  },
+  "VIS-TIM-002": {
+    "fit_form": "a+b/N_PE",
+    "fit_params_train": {
+      "a": 0.048821273318492675,
+      "b": -7.0609556279604115
+    },
+    "heldout_slope_ns_per_PE": 8.124038793567715e-05,
+    "heldout_slope_ci": [
+      7.568804107305334e-05,
+      8.768925020079928e-05
+    ],
+    "criterion_slope_approx_0_passes": true
+  },
+  "VIS-TIM-003": {
+    "RMS_ns": 0.19380441039438465,
+    "sigma68_ns": 0.14581559251417567,
+    "gauss_core_sigma_ns": 0.09240013300599435,
+    "tail_fraction_3sigma": 0.10489152864756231,
+    "N": 111458
+  },
+  "VIS-TIM-004": {
+    "covariance_summary": {
+      "readout": {
+        "var": 0.03296587059118286,
+        "ci68": [
+          0.03125261230550951,
+          0.03464555864458191
+        ]
+      },
+      "f1far": {
+        "var": 0.03386667191205393,
+        "ci68": [
+          0.032875039339666255,
+          0.03490967517010415
+        ]
+      },
+      "f2near": {
+        "var": 0.03189483027557894,
+        "ci68": [
+          0.03014916707688783,
+          0.033417899393988364
+        ]
+      },
+      "f2far": {
+        "var": 0.03643815807245557,
+        "ci68": [
+          0.03404857462176724,
+          0.038823954240123595
+        ]
+      }
+    },
+    "krakow_topology_figure": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clB/reports/studies/clusterB/VIS-TIM-004b_krakow_topology.png",
+    "krakow": {
+      "edep_bins": [
+        "20-80 MeV",
+        "<20 MeV"
+      ],
+      "frac_deposits_at_t0": 0.9788029101338338,
+      "max_deposit_time_ns": 8.247487813080554,
+      "note": "Krakow TARGET deposits are a delta at t0=0 (annihilation at rest); no intrinsic timing resolution. Truth anchor topology-stable; resolution measured by single-stave photon arm."
+    }
+  },
+  "VIS-TIM-005": {
+    "weights": {
+      "readout": 0.2556440260163288,
+      "f1far": 0.2488442885958254,
+      "f2near": 0.26422864791088174,
+      "f2far": 0.2312830374769641
+    },
+    "combined_sigma68_ns": 0.08934297497668915,
+    "combined_RMS_ns": 0.11171107743495662,
+    "eigenvalues": [
+      0.03119913869632857,
+      0.0331451935085468,
+      0.03355923596911737,
+      0.03726691397699108
+    ],
+    "leave_one_sensor_out_sigma68_ns": {
+      "readout": 0.10099681854452008,
+      "f1far": 0.10038787511444636,
+      "f2near": 0.10163543466584365,
+      "f2far": 0.09892039584733676
+    },
+    "pull_coverage": {
+      "1": 0.6827838827838828,
+      "2": 0.9085347985347986,
+      "3": 0.9787912087912088
+    },
+    "covariance_closes": true,
+    "blocker_note": ""
+  },
+  "figures": [
+    "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clB/reports/studies/clusterB/VIS-TIM-001_pickoff_construction.png",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clB/reports/studies/clusterB/VIS-TIM-002_timewalk.png",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clB/reports/studies/clusterB/VIS-TIM-003_distributions.png",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clB/reports/studies/clusterB/VIS-TIM-004_stability.png",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clB/reports/studies/clusterB/VIS-TIM-005_combined_estimator.png"
+  ],
+  "n_groups": 119905,
+  "n_files": 75,
+  "wall_seconds": 83.82813739776611,
+  "constants": {
+    "DT_ns": 0.25,
+    "CFD_FRAC": 0.2,
+    "LE_THRESH_PE": 5.0,
+    "MIN_PE_VALID": 15,
+    "T_RANGE_NS": [
+      0.0,
+      100.0
+    ]
+  }
+}

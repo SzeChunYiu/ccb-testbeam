@@ -6,9 +6,13 @@
 - **Initial remote `main`:** `5367ec7bbf5f37989cd29eedd0700bd77542049b`
 - **Validated implementation/evidence/archive head:**
   `6baa52245af439fc87f6b0ae3194a6ed26382d82`
-- **Validated delivery handoff / after-SHA:** pending this contents write
+- **Validated delivery handoff / after-SHA:**
+  `fd3212db157efae56986ffa626257b73facdfb87`
 - **Destination:** direct contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport
+- **Push result:** every contents write returned a successful commit SHA; this
+  confirmation write was based on the fetched delivery handoff blob, proving that
+  remote `main` already contained `fd3212db157efae56986ffa626257b73facdfb87`
 - **Focused remediation acceptance:** `VALIDATED`
 - **Cumulative task status:** `PARTIAL`
 - **Immutable archive:**
@@ -134,9 +138,11 @@ ruff, ROOT/Geant4 reruns, link inventory, and broad CI are not claimed.
 - `090257c842f48fadb9ff9c28d3364431879c0328` — audit report
 - `7c7fbb41dd30ede1bc543a404fb3d64e03583a0c` — active task
 - `6baa52245af439fc87f6b0ae3194a6ed26382d82` — immutable archive
+- `fd3212db157efae56986ffa626257b73facdfb87` — delivery handoff
 
 The connector returned a successful direct-main commit SHA for each contents write
-rather than conventional textual `git push` output.
+rather than conventional textual `git push` output. Fetching the handoff blob after
+that write confirmed the delivery commit on remote `main`.
 
 ## Scientific boundary
 

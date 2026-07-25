@@ -1,9 +1,11 @@
 # CCB single-stave optical simulation (issue #796)
 
 A from-scratch Geant4 application that replaces the merged prototype
-`scripts/stave_sim.cc`. It fixes every defect catalogued in
-`audit/KNOWN_CODE_DEFECTS.md` and follows
-`starter_code/single_stave/GEANT4_IMPLEMENTATION_BLUEPRINT.md`.
+`scripts/stave_sim.cc`. It implements the repaired geometry, optical transport,
+provenance, and test infrastructure described in
+`starter_code/single_stave/GEANT4_IMPLEMENTATION_BLUEPRINT.md`. Remaining
+analysis and detector-validation boundaries are documented below rather than
+being treated as completed physics validation.
 
 ## What was wrong with the prototype, and how this fixes it
 
@@ -27,8 +29,8 @@ include/  src/       C++ (AppConfig, DetectorConstruction, PhysicsList,
 macros/              geometry_check, vis, proton_point, deuteron_point
 optical/             versioned CSV tables (each has a provenance header)
 slurm/               build.sh, submit_calibration.sh, points_example.csv
-tests/               check_geometry_report.py + offline pytest
-CMakeLists.txt       headless-by-default build + 3 ctests
+tests/               geometry, Birks, far-end, arrival, and ADC checks
+CMakeLists.txt       headless-by-default build + CTest registration
 ```
 
 ## Build & test (LUNARC, needs Geant4 + optical physics)
@@ -39,8 +41,11 @@ cd geant4/single_stave
 bash slurm/build.sh build     # cmake + build + ctest
 ```
 
-Three ctests: geometry/overlap smoke (`OVERLAP_CHECK_PASS`), a 5-event proton
-run, and the Python geometry-report assertions.
+CTest covers geometry/overlap, a small proton run, the geometry-report parser,
+Birks visible-energy behavior, WLS profile configuration, far-end modes, SiPM
+boundary arrivals, and SiPM ADC output. Some tests skip when optional Python
+ROOT dependencies are unavailable; inspect the complete CTest output rather
+than reporting only the process exit code.
 
 ## Run a calibration point
 
@@ -57,27 +62,42 @@ sbatch --array=0-$(( $(grep -cvE '^\s*(#|$)' slurm/points_example.csv) - 1 )) \
        slurm/submit_calibration.sh build slurm/points_example.csv out/
 ```
 
-## Two simulation modes
+## Simulation modes
 
-* `--mode optical` — full optical transport, keeps per-photon wavelength/time in
-  the `photons` ntuple. Used to derive the response kernel. Run each point until
-  the bootstrap uncertainty on mean detected PE is below the pre-registered
-  threshold (analysis-side loop, not a blind photon count).
-* `--mode fast` — optical detail suppressed; the analysis layer applies a
-  pre-derived response kernel to large full-detector samples. Validate the
-  kernel against held-out `optical` points.
+* `--mode optical` — full optical transport, with per-photon wavelength/time in
+  the `photons` ntuple. Run each point until its preregistered statistical and
+  stability criteria are met; a fixed event count alone is not acceptance.
+* `--mode fast` — **not implemented**. The CLI rejects this option. A future
+  response-kernel path requires held-out optical closure, uncertainty coverage,
+  and a measured speedup before it can be enabled or used for physics.
 
-## Outputs
+## Outputs and analysis contract
 
-`events` ntuple (per event): quenched + raw Edep, scintillator track length,
-entry/exit, generated scintillation/WLS/Cerenkov photon counts, and per-channel
-arrival / detected PE / saturated PE for all four conceptual channels
-(readout = fibre 1, +x end; the other three are simulation controls). In
-`optical` mode a `photons` ntuple stores `(event, sensor, wavelength_nm,
-time_ns, path_len_mm, detected)`. `<output>.meta.json` records the git commit,
-geometry hash, seed, config, and every optical-table sha256.
+The `events` ntuple stores quenched and raw Edep, scintillator track length,
+entry/exit coordinates, generated scintillation/WLS/Cerenkov photon counts, and
+per-channel arrival, detected-PE, saturated-PE, and ADC values for four
+conceptual channels. The physical readout is fibre 1, +x; the other three are
+simulation controls. In optical mode the `photons` ntuple stores `(event,
+sensor, wavelength_nm, time_ns, path_len_mm, detected)`. `<output>.meta.json`
+records the git commit, geometry hash, seed, configuration, and every optical
+input-table SHA-256.
 
-Analyze with `scripts/single_stave/analyze_single_stave.py`.
+The current producer and `scripts/single_stave/analyze_single_stave.py` do not
+share identical branch names or count semantics. First read
+`scripts/single_stave/EVENT_CONTRACT.md` and run the explicit converter:
+
+```bash
+python scripts/single_stave/adapt_geant4_events.py \
+  --input stave_p100.root --tree events \
+  --run-id proton_100MeV_seed1 \
+  --output stave_p100.normalized.parquet
+```
+
+The adapter validates the current schema and optical-count bookkeeping, but the
+legacy analyzer still uses a scintillation-only arrival bound. Direct current-
+ROOT analysis therefore remains blocked until that downstream check and its
+collection-efficiency denominator use the explicit total-optical counter and
+the integrated path is rerun on immutable ROOT bytes.
 
 ## Parameter provenance & status
 

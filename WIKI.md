@@ -64,7 +64,7 @@ This section is the controlled front door to the CCB test-beam analysis. Every c
 | Digitizer gain (MV0 v2) | 92 ADC/MeV | — | 28 | data + MC calibration proxy | **GATED** |
 | p/d PID AUC | 0.9860 | — | — | MC truth only | **GATED** |
 | C12-like anomaly fraction in truth-labelled MC | 283 / 87,555 tracks (0.32%) | — | — | MC truth only | **TRUTH_LEVEL_MC_ONLY** |
-| MV3 legacy B8 fractions / profile statistic | data 2.3%; MC 22.3%; reported χ²/ndf label 68269.4 | — | — | legacy data/MC profile diagnostic | **FLAWED** |
+| MV3 legacy B8 fractions / profile statistic | selected data 7051/306745 = 0.02298651974767315; thresholded MC 55619/249484 = 0.22293614019335908; Pearson χ² = 204808.2179684494; ndf = 3; χ²/ndf = 68269.40598948313 | — | — | legacy data/MC profile diagnostic | **FLAWED** |
 | MV4 raw timing pull | −1.05σ | — | — | legacy toy-digitizer diagnostic | **GATED** |
 | MV4 corrected timing pull | +2.68σ | — | — | legacy toy-digitizer diagnostic | **GATED** |
 | ML timing | REVIEW diagnostic | — | — | legacy toy-digitizer diagnostic | **REVIEW** |
@@ -123,7 +123,7 @@ The analysis does **not** find that machine learning should fully replace tradit
 |---|---|
 | Beam window, target, trigger scintillators, air gap | Included in GEANT4 |
 | Inter-stave dead material, support frames, optical interfaces | **MISSING** (estimated 8–10 g/cm²) |
-| Impact | Legacy MV3 B8 fractions differ strongly; the reported χ²/ndf label is not reconstructable |
+| Impact | Exact tracked MV3 B8 counts and Pearson arithmetic are reproducible, but the diagnostic remains FLAWED under BLK-MV3-LEGACY-001; geometry, trigger and selection transfer, gain response, covariance, and detector/model systematics remain unresolved |
 | Status | **BLOCKING** — prevents quantitative B8 acceptance corrections |
 
 **[Full chapter:](docs/academic_chapters/02_experimental_setup.md)**
@@ -247,7 +247,7 @@ The historical value `3.0448717948717947 MHz` is retained only in the superseded
 
 1. **PCA variance: CORRECTED FOR TRACKED MV6 SYNTHETIC MC.** The exact fixed output is 72.546% at 3 PCs and 82.188% at 8 PCs; beam-data transfer and an independent rerun remain unresolved.
 2. **AE superiority: CORRECTED.** Original claim was leakage (train-test contamination).
-3. **Duplicate readout: GATED.** The reported GBT point estimate barely clears the coverage threshold, but its run-bootstrap interval crosses the gate; a lower-bound rule changes the eligible model.
+3. **Duplicate readout: GATED.** The reported GBT point estimate barely clears the coverage threshold, but its run-bootstrap interval crosses the gate; a lower-bound rule changes the eligible winner.
 4. **Saturation recovery: GATED.** Pseudo-saturation closure is synthetic, while external held-out duplicate closure degrades from raw `0.120794` to ML `0.176358` charge res68.
 5. **No production duplicate-readout or saturation correction is authorized.**
 
@@ -297,7 +297,7 @@ The historical value `3.0448717948717947 MHz` is retained only in the superseded
 
 ### MV3 Impact on PID
 
-The legacy MV3 report labels a profile statistic as χ²/ndf = 68,269.4 without the underlying χ², ndf, bin variances, covariance, or exact counts; the diagnostic is FLAWED and B8 acceptance remains unresolved.
+The tracked MV3 summary gives selected-data B8 7051/306745 = 0.02298651974767315 and thresholded-MC B8 55619/249484 = 0.22293614019335908. From the four-stave profile, Pearson χ² = 204808.2179684494, ndf = 3, and χ²/ndf = 68269.40598948313. These fixed-source quantities are reproducible, but the diagnostic remains FLAWED under BLK-MV3-LEGACY-001 because geometry, trigger and selection transfer, gain response, covariance, p-value interpretation, and detector/model systematics are unresolved.
 Conservative recommendation: use B2+B4+B6 only (no B8) until MV3 is fixed.
 
 **[Full chapter:](docs/academic_chapters/08_particle_id.md)**
@@ -337,7 +337,7 @@ No data-veto performance is claimed. Efficiency, false-positive rate, and retain
 |---|---|---|---|
 | MV0 v2 | Digitizer gain proxy | **GATED** | Recover producer/input provenance and validate independently |
 | MV1 | Legacy truth-MC p/d PID | **GATED** | Group-disjoint rerun and data transfer needed |
-| MV3 | Legacy stopping-profile diagnostic | **FLAWED** | Recover exact counts/statistic and rerun strict stopping-depth path |
+| MV3 | Legacy stopping-profile diagnostic | **FLAWED** | exact tracked counts/statistic are reproducible; rerun strict stopping-depth path with geometry and transfer closure |
 | MV4 raw | Legacy toy timing pull | **GATED** (−1.05σ) | Strict current-input rerun |
 | MV4 corrected | Legacy analytic timing pull | **GATED** (+2.68σ) | Strict current-input rerun |
 | MV5 | Pile-up Rmax | **BLOCKED** | Resolve S-STAT-003 before restoring a value |
@@ -345,7 +345,7 @@ No data-veto performance is claimed. Efficiency, false-positive rate, and retain
 
 ### Three Blocking Issues
 
-1. **MV3: Strict stopping-profile closure is absent** — geometry and exact statistic/count provenance remain unresolved
+1. **MV3: Strict stopping-profile closure is absent** — exact fixed-source arithmetic is available, but geometry, trigger and selection transfer, gain response, covariance, p-value interpretation, and detector/model systematics remain unresolved
 2. **MV4: Source-bound current timing closure is absent** — per-stave, covariance, and measured-anchor outputs are withheld
 3. **MV5: Canonical Rmax criterion unresolved** — numerical value and uncertainty are withheld pending S-STAT-003
 
@@ -359,7 +359,7 @@ No data-veto performance is claimed. Efficiency, false-positive rate, and retain
 
 | Gap | Issue | Action |
 |---|---|---|
-| GAP-01 | MV3 geometry FAIL (χ²/ndf = 68,269) | GEANT4 fix → new MC → rerun MV3 |
+| GAP-01 | MV3 profile diagnostic is FLAWED under BLK-MV3-LEGACY-001 despite exact fixed-source arithmetic | Resolve geometry and transfer systematics → strict MV3 rerun |
 | GAP-06 | Per-stave/combined timing and covariance source outputs absent | Strict current-input rerun plus event-matched covariance |
 | S-STAT-003 | Numerical Rmax criterion unresolved | Preregister criterion, derivation, uncertainty, and closure |
 

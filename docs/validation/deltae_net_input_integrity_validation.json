@@ -1,0 +1,98 @@
+{
+  "executable_reproduction": {
+    "nan_B2_with_finite_B4": "accepted as one event with amp_B2=0.0",
+    "positive_infinity_B2_with_finite_B4": "accepted with amp_B2=inf",
+    "scope": "synthetic fixture preserving the exact relevant assignment/groupby/pivot/zero-fill operations"
+  },
+  "issue_count": 3,
+  "issues": [
+    {
+      "code": "NONFINITE_NET_ROW_NOT_REJECTED",
+      "message": "A NaN net-amplitude row was accepted before event aggregation."
+    },
+    {
+      "code": "NONFINITE_NET_ROW_BECAME_ZERO",
+      "message": "The NaN B2 row disappeared during pivoting and was indistinguishable from an absent stave after zero filling."
+    },
+    {
+      "code": "INFINITE_NET_ROW_NOT_REJECTED",
+      "message": "An infinite net-amplitude row was accepted before aggregation."
+    }
+  ],
+  "policy": "DELTAE_NET_AMPLITUDE_ROWS_MUST_BE_FINITE_NUMERIC_BEFORE_AGGREGATION",
+  "repository_source": {
+    "exact_observed_operations": [
+      "net branch assigns df[signal_column] = df[ampcol] without numeric/finite validation",
+      "groupby(...).max() and pivot_table omit an all-NaN stave cell",
+      "missing layer columns/cells are filled with 0.0 after pivoting"
+    ],
+    "git_blob": "7f50ce667a6cde07e94717d0187831da4d8459ac",
+    "inspected_main_commit": "67a7cdd6ef0dc64f00a9ebb43077d2acc1a7418e",
+    "line_ranges": {
+      "aggregation_and_pivot": "200-215",
+      "direct_net_assignment": "183-184",
+      "zero_fill": "218-221"
+    },
+    "path": "scripts/single_stave/deltaE_E_data_bridge.py"
+  },
+  "scientific_boundary": "Synthetic software-integrity validation only; no detector data, calibration, stopping profile, or particle-identification result is established.",
+  "session": {
+    "initial_main": "67a7cdd6ef0dc64f00a9ebb43077d2acc1a7418e",
+    "task_id": "AUD-DELTAE-003",
+    "utc_stamp": "2026-07-25T050141Z"
+  },
+  "source": {
+    "bytes": 1695,
+    "path": "/mnt/data/audit_deltae/current_control_fixture.py",
+    "sha256": "ad913c50567d45e44a778368b5d1ac9a5a98a5097a1749954e35e25bcd19d294"
+  },
+  "source_indicators": {
+    "direct_net_assignment_present": true,
+    "net_finite_validation_language_present": false
+  },
+  "status": "FLAWED",
+  "synthetic_controls": {
+    "finite": {
+      "amp_B2": [
+        "250.0"
+      ],
+      "label": "finite_control",
+      "rejected": false,
+      "rows": 1,
+      "stopping_distribution": {
+        "B4": 1
+      }
+    },
+    "nan": {
+      "amp_B2": [
+        "0.0"
+      ],
+      "label": "nan_net_amplitude",
+      "rejected": false,
+      "rows": 1,
+      "stopping_distribution": {
+        "B4": 1
+      }
+    },
+    "positive_infinity": {
+      "amp_B2": [
+        "inf"
+      ],
+      "label": "positive_infinity_net_amplitude",
+      "rejected": false,
+      "rows": 1,
+      "stopping_distribution": {
+        "B4": 1
+      }
+    }
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile audit_deltae_net_input_integrity.py test_audit_deltae_net_input_integrity.py render_deltae_net_input_integrity_evidence.py",
+      "pytest -q test_audit_deltae_net_input_integrity.py"
+    ],
+    "python": "3.13.5",
+    "result": "5 passed in 0.12s"
+  },
+  "validator_version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+<rect width="1280" height="760" fill="white"/>
+<text x="55" y="58" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="bold">MV3 public-WIKI claim remediation</text>
+<text x="55" y="96" font-family="DejaVu Sans, sans-serif" font-size="19" font-weight="normal">Documentation/provenance evidence only — not detector data or physics closure</text>
+<rect x="55" y="140" width="560" height="450" fill="#f2f2f2" stroke="#222" stroke-width="2"/>
+<rect x="665" y="140" width="560" height="450" fill="#f8f8f8" stroke="#222" stroke-width="2"/>
+<text x="85" y="185" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="bold">Before</text>
+<text x="695" y="185" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="bold">After</text>
+<text x="85" y="235" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold">Section-binding status: FLAWED</text>
+<text x="85" y="275" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="normal">Location-bound findings: 7</text>
+<text x="85" y="325" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="normal">Rounded values and absence prose</text>
+<text x="85" y="365" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="normal">Exact tracked evidence not bound to use sites</text>
+<text x="695" y="235" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold">Section-binding status: VALIDATED</text>
+<text x="695" y="275" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="normal">Location-bound findings: 0</text>
+<text x="695" y="325" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="normal">Exact counts and Pearson arithmetic</text>
+<text x="695" y="365" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="normal">FLAWED boundary retained at six use sites</text>
+<text x="695" y="415" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold">B8 acceptance correction remains blocked</text>
+<text x="55" y="630" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">Policy: WIKI_MV3_EXACT_VALUES_MUST_BE_BOUND_TO_CANONICAL_SECTIONS</text>
+<text x="55" y="665" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">Committed WIKI blob: 91e82c59a2b59b285c6a529c0637ed665be2c4fd</text>
+<text x="55" y="700" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">Generation command: python tools/audit/render_wiki_mv3_public_remediation.py --json docs/validation/wiki_mv3_public_remediation_validation.json --out docs/validation/wiki_mv3_public_remediation.svg</text>
+</svg>

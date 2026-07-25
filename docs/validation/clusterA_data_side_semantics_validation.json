@@ -4,6 +4,8 @@
   "status": "VALIDATED",
   "finding_count": 0,
   "reviewed_old_blob": "ccdc21dd967d0a25694261d488f959d89286a88d",
+  "validated_script_blob": "8bda06c55dc00c1af3e025411fcc55df43f1487e",
+  "validated_test_blob": "21d3c9ecdd2f9837cd8776adc69fccf5a9a11b63",
   "confirmed_defects": [
     "invalid numeric cells were converted to zero and nonfinite values were not rejected",
     "the MC comparison loaded PrimaryWeight but plotted an unweighted hexbin",
@@ -22,7 +24,8 @@
   },
   "validation": {
     "py_compile": "PASS",
-    "pytest": "6 passed",
+    "pytest": "7 passed in 0.36s",
+    "empty_selected_sample": "REJECTED",
     "json_parse": "PASS",
     "svg_parse": "PASS"
   },

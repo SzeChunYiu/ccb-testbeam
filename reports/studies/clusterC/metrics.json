@@ -1,0 +1,108 @@
+{
+  "VIS-PU-001": {
+    "n_pulses": 1500,
+    "ref_edep_MeV": 5.0,
+    "tau_decay_fit_ns": 36.014197622311286,
+    "tau_decay_kernel_ns": 35.0,
+    "one_e_cross_mean_ns": 42.53600855883727,
+    "half_cross_mean_ns": 32.35004328253761,
+    "tau_from_1e_crossing_ns": 42.53600855883727,
+    "captured_in_acq_window_frac": 0.993834641255956,
+    "tail_lost_frac": 0.006165358744044003,
+    "live_time_above_LE_frac": 0.2222222222222222,
+    "acq_window_ns": 180.0
+  },
+  "VIS-PU-002": {
+    "N_evt_per_rate": 3000,
+    "T_acq_ns": 180.0,
+    "observed_overlap_at_max_rate": 0.159,
+    "poisson_overlap_at_max_rate": 0.164729788588728,
+    "Rmax_quality_Hz": 604551.282051282,
+    "quality_overlap_thr": 0.1,
+    "rate_at_5pct_overlap_Hz": 288702.56410256407
+  },
+  "VIS-PU-003": {
+    "n_per_cell": 80,
+    "rate_Hz": 0.0,
+    "delays_ns": [
+      5.0,
+      8.0,
+      12.0,
+      18.0,
+      25.0,
+      35.0,
+      50.0,
+      70.0,
+      95.0,
+      125.0,
+      160.0
+    ],
+    "amp_ratios": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "lsq_eff_at_25ns_ar1": 1.0,
+    "lsq_catastrophic_at_12ns_ar1": 0.0
+  },
+  "VIS-PU-004": {
+    "windows_ns": [
+      20.0,
+      40.0,
+      60.0,
+      80.0,
+      120.0,
+      160.0,
+      200.0,
+      260.0,
+      320.0,
+      400.0
+    ],
+    "recovered_tail_at_ref_delay": 0.9166666666666666,
+    "rmax_at_acq_window_Hz": 625000.0,
+    "ref_delay_ns": 50.0
+  },
+  "VIS-ENE-001": {
+    "deuteron": {
+      "slope_adc_per_MeV": 119.16782167742097,
+      "intercept_adc": -2.153957621545323,
+      "n_files": 36,
+      "n_events": 18000,
+      "single_event_resolution_adc": 50.90817898483207,
+      "pull_mean": -0.0001509841941170708,
+      "pull_rms": 0.7196810756730664,
+      "edep_range_MeV": [
+        0.016404978925662474,
+        57.47013168739397
+      ]
+    },
+    "proton": {
+      "slope_adc_per_MeV": 119.16753164952195,
+      "intercept_adc": -2.1190881981004974,
+      "n_files": 36,
+      "n_events": 18000,
+      "single_event_resolution_adc": 82.96074812367877,
+      "pull_mean": -1.7660510397973696e-05,
+      "pull_rms": 0.6011934437471822,
+      "edep_range_MeV": [
+        0.0137661541219862,
+        65.72909780503237
+      ]
+    }
+  },
+  "VIS-ENE-002": {
+    "n_events": 36000,
+    "kB_best_total_edep_proxy": 0.012679831932773108,
+    "kB_best_per_track_dEdx": 0.015615126050420166,
+    "kB_digitizer_default": 0.008,
+    "note": "sys_birks_smoke2 unavailable; used i885_v1 raw/visible pair (stronger dataset)."
+  },
+  "VIS-ENE-003": {
+    "adc_ceiling": 7000,
+    "gain_adc_per_MeV": 120.0,
+    "edep_at_50pct_saturation_MeV": 274.5598944923644,
+    "analytic_clipping_edep_MeV": 55833333.333333336,
+    "observed_peak_plateau_adc": 7000.0,
+    "sat_prob_at_max_edep": 1.0
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "audit_id": "AUD-WIKI-004",
+  "base_main_sha": "dcd30497d7e83a35d686b8835aefdb2537fbcf02",
+  "changed_python_max_line_length": 95,
+  "corrected_contract_fixture_result": {
+    "claim_id": "CL-011",
+    "claim_ledger": {
+      "bytes": 1234,
+      "path": "current_claim_ledger.csv",
+      "sha256": "cc703ca9cdf1e33f3f7b86cd271d0e0054b499103fb32d5d7ca47ddfbc2aedef",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "expected_contract": {
+      "allowed_status_validated": "NO",
+      "blocked_by": "BLK-S10B-001",
+      "bootstrap_unit": "run",
+      "ci_high": "126.35875117626817",
+      "ci_level": "0.95",
+      "ci_low": "123.33094981246663",
+      "ci_method": "run_mean_nonparametric_bootstrap_percentile",
+      "claim_text": "S10b run-average 10% template live-time relative to CFD20",
+      "current_value": "124.79018394263471",
+      "n_data": "252266",
+      "n_runs": "14",
+      "source_commit": "da9651c56ef6495ce9656d84b69b600daa6d8f86",
+      "status": "DONE_DATA_ONLY",
+      "truth_type": "data_measurement",
+      "unit": "ns"
+    },
+    "forbidden_stale_phrases": [
+      "τeff remains validated",
+      "data + MC self-consistent",
+      "| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 |",
+      "| τeff (effective live-time) | 124.79 ns | **VALIDATED**",
+      "The effective live-time estimate remains `124.79 ns`"
+    ],
+    "issues": [],
+    "ledger_columns": 43,
+    "n_issues": 0,
+    "policy": "WIKI_TAU_EFF_MUST_BIND_EXACT_S10B_ESTIMAND_AND_INTERVAL",
+    "required_pileup_phrases": [
+      "124.79018394263471 ns",
+      "[123.33094981246663, 126.35875117626817] ns",
+      "run-bootstrap 95% interval",
+      "14 runs",
+      "252266 selected pulses",
+      "run-average",
+      "not a detector-wide universal dead time",
+      "MV5 uses the value as an input rather than independently validating it",
+      "BLK-S10B-001"
+    ],
+    "status": "VALIDATED",
+    "validator": "validate_wiki_tau_eff_public_binding.py",
+    "version": "1.0.0",
+    "wiki": {
+      "bytes": 923,
+      "path": "corrected_wiki_fixture.md",
+      "sha256": "8ab1bca5261ecce24f31c5eb20e6a607b06291bcc69bde886d6f233d0c85cc12",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "current_exact_excerpt_result": {
+    "claim_id": "CL-011",
+    "claim_ledger": {
+      "bytes": 1234,
+      "path": "current_claim_ledger.csv",
+      "sha256": "cc703ca9cdf1e33f3f7b86cd271d0e0054b499103fb32d5d7ca47ddfbc2aedef",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "expected_contract": {
+      "allowed_status_validated": "NO",
+      "blocked_by": "BLK-S10B-001",
+      "bootstrap_unit": "run",
+      "ci_high": "126.35875117626817",
+      "ci_level": "0.95",
+      "ci_low": "123.33094981246663",
+      "ci_method": "run_mean_nonparametric_bootstrap_percentile",
+      "claim_text": "S10b run-average 10% template live-time relative to CFD20",
+      "current_value": "124.79018394263471",
+      "n_data": "252266",
+      "n_runs": "14",
+      "source_commit": "da9651c56ef6495ce9656d84b69b600daa6d8f86",
+      "status": "DONE_DATA_ONLY",
+      "truth_type": "data_measurement",
+      "unit": "ns"
+    },
+    "forbidden_stale_phrases": [
+      "τeff remains validated",
+      "data + MC self-consistent",
+      "| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 |",
+      "| τeff (effective live-time) | 124.79 ns | **VALIDATED**",
+      "The effective live-time estimate remains `124.79 ns`"
+    ],
+    "issues": [
+      {
+        "code": "CANONICAL_ROW_VALUE_BINDING_MISSING",
+        "observed": "124.79 ns",
+        "required": "124.79018394263471 ns"
+      },
+      {
+        "code": "CANONICAL_ROW_VALUE_BINDING_MISSING",
+        "observed": "124.79 ns",
+        "required": "[123.33094981246663, 126.35875117626817] ns"
+      },
+      {
+        "code": "CANONICAL_ROW_VALUE_BINDING_MISSING",
+        "observed": "124.79 ns",
+        "required": "run-bootstrap 95% CI"
+      },
+      {
+        "code": "CANONICAL_ROW_UNSUPPORTED_COMPONENTS",
+        "stat_unc": "0.5",
+        "syst_unc": "1.0"
+      },
+      {
+        "code": "CANONICAL_ROW_TRUTH_TYPE_MISMATCH",
+        "expected": "data_measurement",
+        "observed": "data + MC self-consistent"
+      },
+      {
+        "code": "CANONICAL_ROW_STATUS_MISMATCH",
+        "expected": "**DONE_DATA_ONLY**",
+        "observed": "**VALIDATED**"
+      },
+      {
+        "code": "PILEUP_ROW_VALUE_BINDING_MISSING",
+        "observed": "124.79 ns",
+        "required": "124.79018394263471 ns"
+      },
+      {
+        "code": "PILEUP_ROW_VALUE_BINDING_MISSING",
+        "observed": "124.79 ns",
+        "required": "[123.33094981246663, 126.35875117626817] ns"
+      },
+      {
+        "code": "PILEUP_ROW_VALUE_BINDING_MISSING",
+        "observed": "124.79 ns",
+        "required": "run-bootstrap 95% CI"
+      },
+      {
+        "code": "PILEUP_ROW_STATUS_MISMATCH",
+        "expected": "**DONE_DATA_ONLY**",
+        "observed": "**VALIDATED**"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "124.79018394263471 ns"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "[123.33094981246663, 126.35875117626817] ns"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "run-bootstrap 95% interval"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "14 runs"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "252266 selected pulses"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "run-average"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "not a detector-wide universal dead time"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "MV5 uses the value as an input rather than independently validating it"
+      },
+      {
+        "code": "PILEUP_SECTION_CAVEAT_MISSING",
+        "required": "BLK-S10B-001"
+      },
+      {
+        "code": "STALE_TAU_EFF_PUBLIC_TEXT",
+        "occurrences": 1,
+        "phrase": "τeff remains validated"
+      },
+      {
+        "code": "STALE_TAU_EFF_PUBLIC_TEXT",
+        "occurrences": 1,
+        "phrase": "data + MC self-consistent"
+      },
+      {
+        "code": "STALE_TAU_EFF_PUBLIC_TEXT",
+        "occurrences": 1,
+        "phrase": "| τeff (effective live-time) | 124.79 ns | 0.5 | 1.0 |"
+      },
+      {
+        "code": "STALE_TAU_EFF_PUBLIC_TEXT",
+        "occurrences": 1,
+        "phrase": "| τeff (effective live-time) | 124.79 ns | **VALIDATED**"
+      },
+      {
+        "code": "STALE_TAU_EFF_PUBLIC_TEXT",
+        "occurrences": 1,
+        "phrase": "The effective live-time estimate remains `124.79 ns`"
+      }
+    ],
+    "ledger_columns": 43,
+    "n_issues": 24,
+    "policy": "WIKI_TAU_EFF_MUST_BIND_EXACT_S10B_ESTIMAND_AND_INTERVAL",
+    "required_pileup_phrases": [
+      "124.79018394263471 ns",
+      "[123.33094981246663, 126.35875117626817] ns",
+      "run-bootstrap 95% interval",
+      "14 runs",
+      "252266 selected pulses",
+      "run-average",
+      "not a detector-wide universal dead time",
+      "MV5 uses the value as an input rather than independently validating it",
+      "BLK-S10B-001"
+    ],
+    "status": "FLAWED",
+    "validator": "validate_wiki_tau_eff_public_binding.py",
+    "version": "1.0.0",
+    "wiki": {
+      "bytes": 482,
+      "path": "current_wiki_excerpt.md",
+      "sha256": "56af330661d129d230f515346dddf4575a6e2e70d6c31e0abaaf2bd77636cc5c",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "focused_tests": {
+    "command": "PYTHONPATH=. pytest -q tests/test_validate_wiki_tau_eff_public_binding.py",
+    "result": "7 passed in 1.63s"
+  },
+  "policy": "WIKI_TAU_EFF_MUST_BIND_EXACT_S10B_ESTIMAND_AND_INTERVAL",
+  "py_compile": {
+    "status": "PASS"
+  },
+  "remote_sources": {
+    "chapter5_commit": "dcd30497d7e83a35d686b8835aefdb2537fbcf02",
+    "claim_ledger": {
+      "git_blob": "254dc5b64945260193d6b1bd4146bd6400ad28cf",
+      "path": "docs/claim_ledger.csv"
+    },
+    "wiki": {
+      "git_blob": "91e82c59a2b59b285c6a529c0637ed665be2c4fd",
+      "path": "WIKI.md"
+    }
+  },
+  "scientific_boundary": "Documentation/provenance audit only; no raw ROOT reprocessing, waveform fit, new uncertainty estimate, detector-wide dead time, Rmax, calibration, or performance result.",
+  "session_stamp": "2026-07-25T102318Z"
+}

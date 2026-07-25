@@ -5,8 +5,10 @@
 - **Session stamp:** `2026-07-25T210216Z`
 - **Task ID:** `AUD-LEDGER-004`
 - **Initial remote `main`:** `5f4847036ab6d3ee8fb268f9ed96abc36852bbc4`
-- **Validated audit/evidence through:**
-  `58c89c26a05e58489a9db48762365f0ab7cb1690`
+- **Validated delivery/handoff commit:**
+  `b7548074f34f2ac8e8d442a959ceab2113581a57`
+- **Remote-main confirmation:** post-write history confirmed the delivery/handoff commit is
+  present as the remote `main` head before this confirmation record.
 - **Destination:** direct GitHub contents-API commits to remote `main`; no force-push,
   history rewrite, task branch, or PR transport.
 - **Push-output boundary:** successful commit SHAs were returned rather than conventional
@@ -128,6 +130,7 @@ The SVG is software/documentation provenance evidence, not detector-rate data.
 - `d91b106cc0153cda7fa5ee7a07aa173362763811` — audit report
 - `3ce00819b46f31aa164db081a813afb0bcee8904` — immutable archive
 - `58c89c26a05e58489a9db48762365f0ab7cb1690` — active-task record
+- `b7548074f34f2ac8e8d442a959ceab2113581a57` — delivery handoff
 
 ## Acceptance boundary and next action
 

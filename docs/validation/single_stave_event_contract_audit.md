@@ -38,6 +38,12 @@ legacy analyzer still applies the scintillation-only inequality internally.
 This prevents the conversion layer from being mistaken for end-to-end
 scientific acceptance.
 
+The public Geant4 README was corrected at commit
+`39d9dc0aacccc93d2e4d0ae86ef5da8d58c1f4c1`. It no longer states that the
+current ROOT file can be analyzed directly, no longer presents `--mode fast` as
+implemented, and links the explicit contract and converter. The corrected
+README Git blob is `a0d2cc0ab61562ba9c6d58dcc9bb53fcdba9f3d0`.
+
 ## Validation
 
 ```text
@@ -64,8 +70,10 @@ The validation record binds:
 
 - producer Git blob `2e10565aa41182618083634cd18b6ddae89660da`;
 - analyzer Git blob `5a3fdd88757bec8b8f39b2ca9f7be889b70e848c`;
-- exact adapter, test, and renderer SHA-256 values in
-  `single_stave_event_contract_validation.json`.
+- exact adapter, test, renderer, event-contract documentation, and audit
+  SHA-256 values in `single_stave_event_contract_validation.json`;
+- corrected public README Git blob
+  `a0d2cc0ab61562ba9c6d58dcc9bb53fcdba9f3d0`.
 
 ## Scientific boundary and next gate
 

@@ -133,6 +133,18 @@ def _convert_absolute_codes(
     return signal
 
 
+def _coerce_net_heights(frame: pd.DataFrame, amplitude_column: str) -> pd.Series:
+    """Return finite numeric net amplitudes before any aggregation or zero fill."""
+    numeric = pd.to_numeric(frame[amplitude_column], errors="coerce")
+    finite = np.isfinite(numeric.to_numpy(dtype=float, na_value=np.nan))
+    if not finite.all():
+        bad = int((~finite).sum())
+        raise ValueError(
+            f"net amplitude input requires finite numeric values; {bad} rows fail"
+        )
+    return numeric
+
+
 def build_event_table(
     pulses: pd.DataFrame,
     *,
@@ -178,8 +190,10 @@ def build_event_table(
     if convention == "absolute":
         assert polarity is not None
         df[signal_column] = _convert_absolute_codes(df, ampcol, polarity)
+        amplitude_validation = "FINITE_NUMERIC_AND_POLARITY_VALIDATED_BEFORE_AGGREGATION"
     else:
-        df[signal_column] = df[ampcol]
+        df[signal_column] = _coerce_net_heights(df, ampcol)
+        amplitude_validation = "FINITE_NUMERIC_NET_HEIGHT_VALIDATED_BEFORE_AGGREGATION"
 
     physical_keys = ["run", "evt"]
     eventno_per_physical = df.groupby(physical_keys, dropna=False)["eventno"].nunique()
@@ -264,6 +278,10 @@ def build_event_table(
             if convention == "absolute" and polarity == "negative"
             else "identity"
         ),
+        "amplitude_validation": amplitude_validation,
+        "missing_layer_policy": (
+            "ZERO_FILL_ONLY_AFTER_FINITE_ROW_VALIDATION_AND_EVENT_STAVE_AGGREGATION"
+        ),
         "amplitude_column_explicitly_requested": amplitude_column is not None,
         "n_events_composite_key": n_comp,
         "n_eventno_values": int(df["eventno"].nunique(dropna=False)),
@@ -290,8 +308,8 @@ def main() -> None:
     )
     result["source"] = str(SRC)
     result["note"] = (
-        "Missing B layers are filled with zero only after composite-key "
-        "aggregation and cardinality validation."
+        "Missing B layers are filled with zero only after finite row validation, "
+        "composite-key aggregation, and cardinality validation."
     )
 
     with (OUT / "result.json").open("w", encoding="utf-8") as fh:

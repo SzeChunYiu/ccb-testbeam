@@ -5,7 +5,9 @@
 - **Task:** `AUD-MV3-SEL-002`
 - **Stamp:** `2026-07-25T230502Z`
 - **Initial remote main:** `feddba9e3cc488fd77e7bc015f80af9d78f6edd1`
-- **Remote main before this handoff update:** `0aa777457fff37a817bce29a7ea1656683210ddf`
+- **Validated delivery/handoff commit:** `35f8f6f12cc174be792c17ba56cdbe23e2ebad6b`
+- **Remote-main confirmation:** post-write history confirmed the delivery commit as remote `main`
+  before this confirmation update.
 - **Destination:** direct contents-API commits to `main`; no force-push, history rewrite, task
   branch, or PR transport.
 - **Push-output boundary:** GitHub returned successful commit SHAs rather than terminal `git push`
@@ -91,6 +93,7 @@ confirmed the delivered contract in Git blob `cd787ab64408228d67536b88bcc617fe32
 - `59477eed02405c0391f24ecb930daa011006a657` — synchronized SVG status
 - `2bbb2c26c1715bf6a6bfdf4b2822edba3d0394b1` — immutable archive
 - `0aa777457fff37a817bce29a7ea1656683210ddf` — active-task completion
+- `35f8f6f12cc174be792c17ba56cdbe23e2ebad6b` — validated delivery handoff
 
 No status checks were attached to the initial or current head. PR #868 remains closed, unmerged,
 non-mergeable, and untouched.

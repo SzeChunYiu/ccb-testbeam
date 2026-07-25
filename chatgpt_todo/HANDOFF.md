@@ -2,174 +2,177 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-25T070705Z`
+- **UTC stamp:** `2026-07-25T080448Z`
 - **Task:** `AUD-LEDGER-003`
-- **Unit:** fail-closed audit of canonical `CL-011` effective-live-time source binding, estimand, counts, uncertainty, and validation semantics
-- **Initial remote `main`:** `53bf42c8d414c9d11bcc1f9d5ab2d088da5a7600`
-- **Complete delivery handoff / recorded after-SHA:** `3cf800b9868e9c27000daf14c1295ddcbdb4fa4c`
-- **Destination:** direct sequential commits to remote `main`; no force-push, branch transport, PR, or history rewrite
-- **Push result:** GitHub contents writes returned successful direct-main commit SHAs; post-write history confirmed `3cf800b9868e9c27000daf14c1295ddcbdb4fa4c` on remote `main`
-- **Acceptance:** **PARTIAL** — defect, arithmetic reconstruction, audit gate, tests, and evidence validated; canonical claim/public remediation remains open
-- **Immutable archive:** `chatgpt_todo/archive/2026-07-25T070705Z_AUD-LEDGER-003_TAU_EFF_BINDING.md`
+- **Unit:** canonical `CL-011` effective-live-time remediation
+- **Initial remote `main`:** `563582a0d7b1d3b0fac3e33cc241b4981a21912e`
+- **Validated implementation/evidence head before this handoff:**
+  `c84c79cc9ae050f8a0a2528d28f93da9cb94048b`
+- **Destination:** direct sequential commits to remote `main`; no force-push,
+  branch transport, PR, or history rewrite
+- **Acceptance:** **PARTIAL** — canonical ledger row and focused regression are
+  validated; public WIKI/Chapter synchronization and scientific closure remain open
+- **Immutable archive:**
+  `chatgpt_todo/archive/2026-07-25T080448Z_AUD-LEDGER-003_TAU_EFF_REMEDIATION.md`
 
-This confirmation update records that the complete audit delivery is present on
-remote `main`. It does not change the scientific acceptance boundary.
+## Start-of-run state and concurrency
 
-## Start-of-run state
+Remote `main` began at `563582a0d7b1d3b0fac3e33cc241b4981a21912e`.
+Recent history, open PRs, closed PR #868, status checks, mandatory coordination files,
+the canonical ledger, root WIKI, Chapters 1 and 5, the prior tau-eff audit, and the
+primary S10b bundle were inspected. No concurrent `main` change appeared before or
+during the focused sequence. The initial and delivery commits had no attached status
+checks. PR #868 remained closed, unmerged, non-mergeable, and untouched.
 
-Remote `main` began at `53bf42c8d414c9d11bcc1f9d5ab2d088da5a7600`.
-Repository metadata, recent history, open PRs, current status checks, mandatory
-coordination records, the canonical claim ledger, root WIKI, primary S10b bundle,
-and secondary MV5 bundle were inspected. The initial commit had no combined
-status checks. PR #868 remained closed, unmerged, non-mergeable, and untouched.
-No concurrent remote-main commit appeared during the focused write sequence.
+## Reviewed scientific area
 
-## Primary scientific evidence
+The unit reviewed the claim-to-result path for the effective-live-time quantity:
 
-The effective-live-time measurement originates in the tracked S10b bundle at
-source commit `da9651c56ef6495ce9656d84b69b600daa6d8f86`, not in the later MV5
-pile-up study.
+1. S10b producer and manifest;
+2. held-out-run table and result JSON;
+3. canonical `docs/claim_ledger.csv` row `CL-011`;
+4. the later MV5 simulation reuse;
+5. root WIKI and Chapters 1 and 5 as downstream public consumers;
+6. the fail-closed audit and its prior focused tests.
 
-Primary tracked files:
+## Confirmed former defects
 
-- `reports/1781000867.546870.5c124aaf/REPORT.md`;
-- `reports/1781000867.546870.5c124aaf/s10b_tau_eff_template_fit.py`;
-- `reports/1781000867.546870.5c124aaf/result.json`;
-- `reports/1781000867.546870.5c124aaf/manifest.json`;
-- `reports/1781000867.546870.5c124aaf/heldout_run_summary.csv`.
+The previous exact-width row:
 
-The primary manifest records Python 3.7.6, random seed 10102, exact SHA-256 values
-for fourteen ROOT inputs, and output hashes.
+- cited secondary MV5 files rather than the primary S10b measurement;
+- cited nonexistent `reports/mv5_pileup_1782678353/results.json`;
+- rounded the result and interval;
+- supplied unsupported `0.5`, `1.0`, and `1.12 ns` uncertainty components;
+- recorded `n_data=213843` rather than 252266 selected pulses;
+- obscured the equal-weight 14-run estimand;
+- classified MV5 reuse as independent `data_mc_self_consistent` / `VALIDATED`
+  evidence.
 
-## Independent reconstruction
+## Corrected canonical claim
 
-The held-out summary contains fourteen unique run rows and 252,266 selected
-pulses. The reported central value is an equal-weight mean of fourteen run-level
-10% template-crossing estimates relative to CFD20:
+`CL-011` now records:
 
-`124.79018394263471 ns`.
+- claim: `S10b run-average 10% template live-time relative to CFD20`;
+- value: `124.79018394263471 ns`;
+- run-bootstrap 95% interval:
+  `[123.33094981246663, 126.35875117626817] ns`;
+- 14 runs and 252266 selected pulses;
+- `truth_type=data_measurement`;
+- `status=DONE_DATA_ONLY`;
+- `allowed_status_validated=NO`;
+- primary S10b report, producer, result, manifest, and source commit
+  `da9651c56ef6495ce9656d84b69b600daa6d8f86`;
+- `blocked_by=BLK-S10B-001`;
+- empty statistical, systematic, and total uncertainty fields.
 
-The exact RNG stream was reconstructed. Replaying the producer's pre-bootstrap
-60,000-of-63,067 choice and 252,266-element shuffle, followed by 5,000 bootstrap
-draws of fourteen run units, reproduces the tracked percentile interval exactly:
+The notes state that this is a threshold-, selection-, and run-weighting-specific
+estimand rather than a detector-wide universal dead time, and that MV5 uses rounded
+124.8 ns as an input rather than independently validating it.
 
-`[123.33094981246663, 126.35875117626817] ns`.
+## Independent reconstruction and provenance
 
-The result is therefore reproducible from tracked derived artifacts in binary64
-arithmetic. This run did not reprocess the raw ROOT inputs.
+The tracked held-out table contains 14 unique run rows and 252266 pulses. The
+unweighted mean of the fourteen run-level live10 values reproduces
+`124.79018394263471 ns`. The recorded seed/RNG stream reproduces the exact percentile
+interval in the tracked result.
 
-## Confirmed `CL-011` defects
+Ledger provenance:
 
-The current exact-width row returns 30 fail-closed findings. Material defects are:
+- pre-change blob: `8135794d6f0b22da6b760bf6234bb8e1cae795fb`;
+- final blob: `254dc5b64945260193d6b1bd4146bd6400ad28cf`;
+- final bytes: `21431`;
+- final SHA-256:
+  `e532f3af57c2d50d261bac6a0b40546decc45a4f780fd57f92afc279a4d71ea4`;
+- all 27 rows, including the header, contain exactly 43 fields.
 
-1. It cites the later MV5 report/producer instead of primary S10b evidence.
-2. Its cited source-data path `reports/mv5_pileup_1782678353/results.json` does
-   not exist.
-3. It rounds the estimate and interval to `124.79`, `[123.5, 126.0]`.
-4. It publishes unsupported `stat_unc=0.5`, `syst_unc=1.0`, and
-   `total_unc=1.12`; the primary source has no such decomposition.
-5. It omits `n_runs=14` and gives `n_data=213843` instead of 252,266 selected
-   pulses.
-6. It obscures the equal-weight run-average, 10%-crossing, CFD20-relative
-   estimand.
-7. It labels the result `data_mc_self_consistent` and `VALIDATED`, even though
-   MV5 hard-codes rounded 124.8 ns as an input rather than independently
-   validating it.
-8. It omits the primary manifest, source commit, exact CI method, caveats, and
-   blocker.
+## Failed publication check and correction
 
-## Required remediation contract
+The first direct ledger write
+`aaa40edfc4e9f351e2c8f21460ef6e4d7419d287` transiently changed two unrelated
+P04p/P07e script/config paths by using periods where the canonical rows used
+underscores. The unexpected candidate Git blob exposed the mistake. Corrective commit
+`ab03023366396caaa97abc4cb7ea9a81aeae0731` restored the unrelated paths and produced
+the exact locally validated blob before tests and evidence were published. The failed
+check and correction are retained in history and evidence.
 
-A corrected row must bind the S10b report, producer, result, manifest, and source
-commit; record the exact value and interval; record 14 runs and 252,266 selected
-pulses; leave statistical/systematic/total uncertainty components empty; use
-`truth_type=data_measurement` and `status=DONE_DATA_ONLY`; explicitly state that
-MV5 reuses the value; and state that the result is not a detector-wide universal
-dead time.
+## Validation commands and results
 
-The row remains blocked under `BLK-S10B-001` pending an accepted estimand decision,
-waveform-threshold and run-weighting sensitivity, systematic uncertainty studies,
-a clean independent rerun, and non-circular cross-method or external closure.
-Dependent WIKI, executive-summary, pile-up chapter, LaTeX, and figure metadata
-must be synchronized in the remediation unit.
-
-## Audit gate, tests, and visual evidence
-
-Added:
-
-- `tools/audit/audit_tau_eff_claim_binding.py`;
-- `tests/test_audit_tau_eff_claim_binding.py`;
-- `docs/validation/tau_eff_claim_binding_audit.md`;
-- `docs/validation/tau_eff_claim_binding_validation.json`;
-- `docs/validation/tau_eff_claim_binding.svg`.
-
-Policy:
-
-`TAU_EFF_CLAIM_MUST_BIND_TO_PRIMARY_S10B_MEASUREMENT`.
-
-The audit uses strict UTF-8 single-read snapshots, exact SHA-256 provenance,
-exact 43-column claim interpretation, manifest-output hash verification,
-independent central-value and RNG-stream CI reconstruction, duplicate-row
-rejection, protected atomic JSON/SVG output, and input/output alias rejection.
-
-Executed:
+Executed on exact reconstructed candidate bytes:
 
 ```text
-python -m py_compile \
-  tools/audit/audit_tau_eff_claim_binding.py \
-  tests/test_audit_tau_eff_claim_binding.py
+python -m py_compile tests/test_tau_eff_claim_current.py
+pytest -q tests/test_tau_eff_claim_current.py
 
-PYTHONPATH=. pytest -q tests/test_audit_tau_eff_claim_binding.py
-
-6 passed in 1.22s
+2 passed in 0.02s
 ```
 
-The corrected contract fixture returned `VALIDATED` with zero findings. Current-
-like evidence returned `FLAWED` with 30 findings. Manifest mutation, duplicate
-`CL-011`, invalid UTF-8, and destructive output aliases failed closed. JSON and
-SVG XML parsing passed. Changed Python lines are at most 100 characters.
+The regression verifies unique exact-width `CL-011`, every required field and caveat,
+14 unique runs, 252266 pulses, the central mean, interval, and source commit. JSON and
+SVG evidence parsed successfully. The changed Python file has maximum line length 83.
+The published test blob is
+`5d2854cdd92a2a7caf209ecf482a0940a8d952f9`, matching the validated local file.
 
-Environment: Python 3.13.5, NumPy 2.3.5, pytest 9.0.2.
+No repository-wide pytest, ruff, broken-link inventory, ROOT processing, waveform-fit
+execution, or GitHub Actions success is claimed.
 
-Committed blob identities matched the locally validated files:
+## Files changed
 
-- validator `7c9dde11905e56e60d49f3147a5e511cb7526948`;
-- tests `a602870b3c9fac806694b390c11526785cb61964`;
-- report `44e4150073f20f9da1a9088a9b91a0cf990e3f81`;
-- JSON `c8bc797782bda99be749d63ac02bf641df4717d5`;
-- SVG `354908c8717c29b1897fa245d837a5d98b145c86`.
+- `docs/claim_ledger.csv`
+- `tests/test_tau_eff_claim_current.py`
+- `docs/validation/tau_eff_claim_remediation_audit.md`
+- `docs/validation/tau_eff_claim_remediation_validation.json`
+- `docs/validation/tau_eff_claim_remediation.svg`
+- `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/archive/2026-07-25T080448Z_AUD-LEDGER-003_TAU_EFF_REMEDIATION.md`
+- `chatgpt_todo/HANDOFF.md`
 
-## Direct-main commit sequence
+## Direct-main commit sequence before handoff
 
-- `877b1cb816f0c567ab8f346be9ab1994a1ccbe20` — audit implementation;
-- `66cd6412fa65295cf79037493a2d60f2d7aa5852` — focused tests;
-- `b15689de4beda4b3c015e51999f5a7a6999da0d1` — audit report;
-- `775d306d97083ddfa23c9f85f19826c91aa939e5` — machine-readable evidence;
-- `9838a5c50fedf6777194f2e70b6c249f9be16e09` — visual evidence;
-- `3b3804ea2f1b94af932fa10e3aab8bff48f8ff2b` — active-task update;
-- `e323a268d889673757cd3b2b9f21b74e3e890113` — immutable archive;
-- `3cf800b9868e9c27000daf14c1295ddcbdb4fa4c` — complete delivery handoff, confirmed on remote `main`.
+- `aaa40edfc4e9f351e2c8f21460ef6e4d7419d287` — initial ledger write;
+- `ab03023366396caaa97abc4cb7ea9a81aeae0731` — restore unrelated source paths and
+  publish exact validated ledger blob;
+- `66e3ec992b01fdc59a0c256a92e9afb6a8683637` — current-ledger regression;
+- `b3fac0f78c743ad4a2f89f6f95789412b09dbabb` — validation audit;
+- `72d3dd4df910151f9027991dc628450a1f442357` — machine-readable evidence;
+- `e13010075758981060f0f6d751258cdc4a9d3b3d` — visual evidence;
+- `b9544dd7bb14b026495c6f9e6c504e4bcbdfbd95` — active-task update;
+- `c84c79cc9ae050f8a0a2528d28f93da9cb94048b` — immutable archive.
 
 GitHub contents writes returned successful direct-main commit SHAs rather than
-conventional textual `git push` output. Post-write history confirmed this
-sequence on remote `main`.
+conventional textual `git push` output. Post-write history confirmed the sequence on
+remote `main`.
 
-## Scientific boundary and unresolved risks
+## Remaining public synchronization
 
-No raw ROOT file was opened, no pulse selection or waveform fit was rerun, no new
-uncertainty component was estimated, and no detector-wide dead time, accepted
-Rmax, pile-up capacity, calibration, or detector-performance claim is produced.
-The audit validates tracked derived-artifact arithmetic and exposes claim binding
-problems; it does not upgrade scientific acceptance.
+The ledger is now authoritative, but these public surfaces remain stale and must be
+corrected in a separate exact-content unit:
 
-Full repository pytest, ruff, ROOT processing, repository-wide link checking,
-and GitHub Actions were not run. No broad CI success is claimed.
+- `WIKI.md`;
+- `docs/academic_chapters/01_executive_summary.md`;
+- `docs/academic_chapters/05_pileup_analysis.md`.
 
-## Coordination limitation
+They still contain some combination of `VALIDATED`, `data + MC self-consistent`,
+rounded interval wording, unsupported uncertainty components, or an incorrect
+confidence-level description.
 
-`ACTIVE_TASK.md`, this immutable archive, and this handoff were updated. Shared
-long-lived records requiring complete whole-file replacement (`SESSION_LOG.md`,
-`BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate matrices) were
-reviewed but not overwritten from partial or paged reconstructions because doing
-so could erase unrelated or append-only provenance. This unmet synchronization
-step is explicitly recorded rather than represented as completed.
+## Scientific boundary and next task
+
+No raw ROOT data were reprocessed, no waveform fit was rerun, and no new systematic
+uncertainty was estimated. The measurement remains `DONE_DATA_ONLY` under
+`BLK-S10B-001`. Threshold and run-weighting sensitivity, independent cross-method or
+external closure, and an accepted systematic uncertainty model remain open. No
+universal detector dead time, accepted Rmax, calibration, or detector-performance
+claim follows.
+
+Next: synchronize the three public surfaces to exact S10b semantics, add focused
+location-bound regressions, run the link checker, and retain the `DONE_DATA_ONLY`
+boundary.
+
+## Append-only log limitation
+
+`SESSION_LOG.md` was reviewed through complete ranged snapshots. This connector still
+requires whole-file replacement rather than byte-safe append. Replacing a manually
+reconstructed 282-line append-only history would create unnecessary provenance risk;
+therefore it was not replaced. The immutable archive and this handoff contain the
+complete append-equivalent record. This mandatory synchronization step remains
+explicitly unmet rather than being falsely claimed.

@@ -1,32 +1,30 @@
 # Active Task
 
-- **Task ID:** AUD-MV3-SEL-001
+- **Task ID:** AUD-MV3-SEL-002
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T220218Z
-- **Initial remote main SHA:** `701116061eb3346a3ae2b31e2946ca450d6120e2`
-- **Scope:** independently audit the merged MV3 selection-matched stopping-depth claim for
-  MC weight semantics, signed-charge handling, comparison estimand, provenance, uncertainty,
-  plots, and consistency with canonical `CL-021`.
-- **Confirmed defects:** `PrimaryWeight` is read but not applied and invalid weight fails open
-  to 1; the charged mask excludes negative particles; the advertised improvement changes the
-  data target; the summary has no content-addressed provenance, weight sufficient statistics,
-  uncertainty, or preregistered sensitivity; “shape matches” outruns chi2/ndf 5590.09 and
-  total-variation distance 0.07735.
-- **Independent calculation:** the reported improvement is 16.602672795596263x, whereas a
-  same-Sample-I-data ablation gives 16.114635239581606x. The Sample-I B2 residual is
-  7.735323559398211 percentage points.
-- **Validated progress:** added a fail-closed auditor, seven regressions, machine-readable
-  evidence, SVG evidence, and a detailed audit report under policy
-  `MV3_SELECTION_CLAIM_REQUIRES_WEIGHTED_SIGNED_CHARGE_AND_SAME_TARGET_VALIDATION`.
-- **Validation:** `python -m py_compile` passed; focused pytest returned
-  `7 passed in 0.07s`; JSON and SVG parsing passed; changed Python lines are at most 99
-  characters.
-- **Focused status:** `VALIDATED` audit gate; merged production follow-up remains `FLAWED`
-  pending a content-addressed weighted signed-charge rerun. Canonical `CL-021` remains
-  `FLAWED` under `BLK-MV3-LEGACY-001`.
-- **Next action:** correct the producer and report together, regenerate weighted and
-  unweighted sensitivity outputs from immutable ROOT/data bytes, retain weight ESS and
-  covariance, run parameter/aggregation scans, then synchronize every public claim only after
-  the exact-repository audit returns zero findings.
-- **Scientific boundary:** no ROOT file was reprocessed and no weighted profile, model
-  correction, calibration, PID result, or detector-performance result was produced.
+- **Session stamp:** 2026-07-25T230502Z
+- **Initial remote main SHA:** `feddba9e3cc488fd77e7bc015f80af9d78f6edd1`
+- **Scope:** remediate the merged MV3 selection-matched producer and source report after
+  `AUD-MV3-SEL-001` confirmed fail-open MC weights, positive-charge-only selection,
+  target-changing improvement arithmetic, and unsupported shape-closure wording.
+- **Assumptions:** the tracked one-million-event summary and PNGs are preserved as historical
+  unweighted diagnostics; no numerical production result is authorized without an immutable
+  weighted rerun.
+- **Files:** `scripts/studies/mv3_selection_matched.py`,
+  `tests/test_mv3_selection_weighted_contract.py`,
+  `reports/studies/mv3_selection_matched/REPORT.md`, focused validation evidence, archive,
+  `HANDOFF.md`, and `SESSION_LOG.md` where a byte-safe append can be completed.
+- **Correction:** require exactly one finite nonnegative `PrimaryWeight` per event, use canonical
+  signed-charge selection, publish weighted primary plus unweighted sensitivity profiles, record
+  sums and ESS, compare against one fixed Sample-I data target, hash declared inputs, and publish
+  JSON atomically.
+- **Validation plan:** compile producer/test/renderer; run focused pytest; regenerate and parse
+  machine-readable and SVG evidence; verify changed Python line lengths; inspect staged content and
+  remote-main history after every direct write.
+- **Progress:** implementation, eight regressions, source-report quarantine, validation JSON,
+  renderer, and SVG are locally validated on exact prepared bytes.
+- **Focused status:** `ACTIVE` until the validated bytes and handoff are confirmed on remote
+  `main`; expected completion is software-contract `VALIDATED`, production result `BLOCKED`.
+- **Scientific boundary:** no ROOT or beam-data file has been rerun; no weighted stopping profile,
+  covariance, scattering/material correction, calibration, PID result, or detector-performance
+  result is claimed.

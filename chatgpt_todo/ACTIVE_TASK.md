@@ -1,25 +1,25 @@
 # Active Task
 
-- **Task ID:** AUD-LEDGER-004
+- **Task ID:** AUD-MV3-SEL-001
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** 2026-07-25T210216Z
-- **Initial remote main SHA:** `5f4847036ab6d3ee8fb268f9ed96abc36852bbc4`
-- **Scope:** audit the new real-beam occupancy-to-Rmax claim upgrade for estimand,
-  uncertainty, source, and public-report integrity.
-- **Confirmed defect:** selected-pulse multiplicity was used to authorize an absolute
-  `Rmax=2.92 MHz` even though `mu_max=0.38` and `tau=130 ns` are assumed inputs and no
-  event-arrival exposure or luminosity is present. The ledger also added unsupported
-  `0.10` and `0.20 MHz` uncertainty components and removed blocker `S-STAT-003`.
-- **Validated progress:** added a fail-closed validator, six focused regressions,
-  machine-readable evidence, SVG evidence, an audit report, and immutable handoff.
-- **Independent calculation:** the exact `CL-011` estimand gives
-  `0.38 / 124.79018394263471 ns = 3.045111305987686 MHz`; this remains a model-only
-  sensitivity, not a data-derived rate.
-- **Validation:** `python -m py_compile` passed; focused pytest returned
-  `6 passed in 0.03s`; JSON and SVG parsing passed.
-- **Current repository audit:** `FLAWED` with 34 current-like contract findings.
-- **Focused status:** `VALIDATED` audit gate; production claim remains `BLOCKED`.
-- **Next action:** remediate the producer, report, figure metadata, and `CL-010` row in
-  one content-addressed unit and require both Rmax validators to return zero findings.
-- **Scientific boundary:** no raw ROOT rerun, exposure measurement, absolute rate,
-  accepted Rmax, calibration, or detector-performance result was produced.
+- **Session stamp:** 2026-07-25T220218Z
+- **Initial remote main SHA:** `701116061eb3346a3ae2b31e2946ca450d6120e2`
+- **Scope:** independently audit the newly merged MV3 selection-matched stopping-depth
+  claim for MC weight semantics, signed-charge handling, comparison estimand, provenance,
+  uncertainty, plots, and consistency with canonical `CL-021`.
+- **Assumptions:** the repository-specific `PrimaryWeight` stores the generated-source
+  cross-section factor; unweighted output may be retained only as a labelled sensitivity.
+- **Files under review:** `scripts/studies/mv3_selection_matched.py`, its report/summary/
+  figures, `docs/claim_ledger.csv`, `scripts/mc01_trigger_split_truth.py`, the MC-weight
+  audit, and the canonical PDG charge helper.
+- **Validation plan:** implement a strict UTF-8/content-addressed fail-closed auditor;
+  independently reconstruct same-target Pearson comparisons and profile residuals; test
+  current-like and corrected contracts, malformed fractions, duplicate claims, invalid
+  UTF-8, destructive aliases, and atomic JSON publication; emit JSON/Markdown/SVG evidence.
+- **Progress:** ACTIVE. Confirmed that the merged producer reads `PrimaryWeight` but does
+  not apply it, defaults invalid weight to 1, uses a positive-charge-only mask, changes the
+  data target in its advertised improvement factor, and declares shape agreement while
+  Sample-I Pearson chi2/ndf remains about 5590.
+- **Acceptance boundary:** this unit may validate an audit gate and blocker record. It may
+  not authorize the production claim without a content-addressed weighted signed-charge
+  rerun, uncertainty/sensitivity evaluation, regenerated figures, and zero audit findings.

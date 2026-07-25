@@ -84,7 +84,21 @@ Generator: `scripts/single_stave/campaign_plots/single_stave_diagnostics.py`. Al
 ## Verification
 
 * **Python offline unit tests** (`geant4/single_stave/tests/test_geometry_report_offline.py`): **7/7 PASS** (golden report parse, wrong-thickness, fibre-outside-hole, fibre-not-protruding, selfcheck-fail, Geant4-overlap-message, missing-key). Ran on the login node with `PYTHONNOUSERSITE=1`.
-* **ctest (single-stave Geant4 binary):** requires Geant4/11.2.2 (compute-node only). Build+ctest submitted as `sbatch` job `3415923` (account `hep2023-1-3`, partition `hep`); see `geant4/single_stave/ccb_clD_build2_*.out` for output. The 3 ctest cases are `ccb_stave_geometry_smoke`, `ccb_stave_proton_smoke`, `ccb_stave_wls_profile` (CMakeLists.txt).
+* **ctest (single-stave Geant4 binary):** **100% tests passed, 0 tests failed out of 9** (test 5 intentionally skipped). Built with `module load GCC/12.3.0 Geant4/11.2.2` on `cx04` (account `hep2023-1-3`, partition `hep`); total ctest time 461.84 s.
+
+  | # | Test | Result | Time (s) |
+  |---|------|--------|----------|
+  | 1 | ccb_stave_geometry_smoke | PASS | 0.74 |
+  | 2 | ccb_stave_proton_smoke | PASS | 86.40 |
+  | 3 | ccb_stave_wls_profile | PASS | 86.80 |
+  | 4 | ccb_stave_geometry_report_python | PASS | 1.45 |
+  | 5 | ccb_stave_birks_visible_regression | SKIPPED (intentional) | 110.45 |
+  | 6 | ccb_stave_far_end_modes | PASS | 2.20 |
+  | 7 | ccb_stave_sipm_arrivals | PASS | 87.10 |
+  | 8 | ccb_stave_sipm_adc | PASS | 86.65 |
+  | 9 | ccb_sipm_core_tests | PASS | 0.02 |
+
+  Build log: `geant4/single_stave/ccb_clD_build2_3415923.out` (not committed; lives in the worktree).
 * **Standalone study scripts** all return rc=0 with JSON + PNG + REPORT.md emitted; no swallowed exceptions.
 
 ## Residue (kept out of this PR)

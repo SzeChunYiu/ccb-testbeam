@@ -2,146 +2,148 @@
 
 ## Session identity
 
-- **UTC stamp:** `2026-07-25T080448Z`
-- **Task:** `AUD-LEDGER-003`
-- **Unit:** canonical `CL-011` effective-live-time remediation
-- **Initial remote `main`:** `563582a0d7b1d3b0fac3e33cc241b4981a21912e`
-- **Complete delivery handoff / recorded after-SHA:**
-  `d7901b06ecdd45238744a88ec453821a89650f06`
-- **Destination:** direct sequential commits to remote `main`; no force-push,
+- **UTC stamp:** `2026-07-25T102318Z`
+- **Task:** `AUD-WIKI-004`
+- **Unit:** exact root-WIKI binding of the canonical S10b live10 claim
+- **Initial remote `main`:** `dcd30497d7e83a35d686b8835aefdb2537fbcf02`
+- **Destination:** direct focused commits to remote `main`; no force-push,
   branch transport, PR, or history rewrite
-- **Push result:** GitHub contents writes returned successful direct-main commit SHAs;
-  post-write history confirmed `d7901b06ecdd45238744a88ec453821a89650f06`
-  on remote `main`
-- **Acceptance:** **PARTIAL** — canonical ledger row and focused regression are
-  validated; public WIKI/Chapter synchronization and scientific closure remain open
+- **Acceptance:** **PARTIAL** — the defect, gate, tests, and evidence are
+  validated; root-WIKI remediation remains open
 - **Immutable archive:**
-  `chatgpt_todo/archive/2026-07-25T080448Z_AUD-LEDGER-003_TAU_EFF_REMEDIATION.md`
-
-This confirmation records that the complete focused delivery is present on remote
-`main`. It does not broaden the scientific acceptance boundary.
+  `chatgpt_todo/archive/2026-07-25T102318Z_AUD-WIKI-004_TAU_EFF_PUBLIC_BINDING.md`
 
 ## Start-of-run review
 
-Inspected current `main`, recent history, open PRs, closed PR #868, status checks,
-mandatory coordination records, the canonical ledger, WIKI, Chapters 1 and 5, the
-prior tau-eff audit, and primary S10b result/manifest/held-out table. No concurrent
-`main` change appeared during the focused sequence. The initial and delivery commits
-had no attached status checks. PR #868 remained closed, unmerged, non-mergeable, and
-untouched.
+Inspected current main and recent history, the root WIKI, exact-width `CL-011`,
+Chapter 5, existing WIKI validators, mandatory coordination files, open PRs,
+closed PR #868, and current-head status checks. Commit
+`dcd30497d7e83a35d686b8835aefdb2537fbcf02` had just corrected Chapter 5, so
+this session avoided duplicating that work and audited the still-stale public
+WIKI. PR #868 remained closed, unmerged, non-mergeable, and untouched. The
+initial head had no attached status checks.
 
-## Confirmed former defects
+## Canonical contract
 
-The old exact-width `CL-011` row cited MV5 instead of primary S10b evidence, pointed
-to nonexistent `reports/mv5_pileup_1782678353/results.json`, rounded the value and
-interval, supplied unsupported `0.5/1.0/1.12 ns` components, recorded `n_data=213843`,
-obscured the equal-weight 14-run estimand, and called MV5 reuse independent
-`data_mc_self_consistent` / `VALIDATED` closure.
+`CL-011` binds S10b run-average live10 relative to CFD20 to:
 
-## Corrected canonical claim
-
-`CL-011` now records:
-
-- `S10b run-average 10% template live-time relative to CFD20`;
 - `124.79018394263471 ns`;
 - run-bootstrap 95% interval
   `[123.33094981246663, 126.35875117626817] ns`;
 - 14 runs and 252266 selected pulses;
-- `truth_type=data_measurement`;
-- `status=DONE_DATA_ONLY`, `allowed_status_validated=NO`;
-- primary S10b report, producer, result, manifest, and commit
+- `data_measurement`, `DONE_DATA_ONLY`, validation not authorized;
+- primary source commit
   `da9651c56ef6495ce9656d84b69b600daa6d8f86`;
-- `blocked_by=BLK-S10B-001`;
+- blocker `BLK-S10B-001`;
 - no statistical/systematic/total uncertainty decomposition.
 
-The notes explicitly state that this is a threshold-, selection-, and run-weighting-
-specific estimand, not a detector-wide universal dead time, and that MV5 uses rounded
-124.8 ns as an input rather than independently validating it.
+The result is threshold-, selection-, and run-weighting-specific, not a
+universal detector dead time. MV5 reuses it as an input rather than independently
+validating it.
 
-## Independent reconstruction and exact provenance
+## Confirmed WIKI defects
 
-The held-out table has 14 unique runs and 252266 pulses. The unweighted mean of the
-14 run-level live10 estimates reproduces `124.79018394263471 ns`; the recorded RNG
-stream reproduces the tracked percentile interval.
+The canonical-results row publishes rounded `124.79 ns`, unsupported `0.5` and
+`1.0` components, `data + MC self-consistent`, and `VALIDATED`.
 
-- Pre-change ledger blob:
-  `8135794d6f0b22da6b760bf6234bb8e1cae795fb`
-- Final ledger blob: `254dc5b64945260193d6b1bd4146bd6400ad28cf`
-- Final ledger bytes: `21431`
-- Final SHA-256:
-  `e532f3af57c2d50d261bac6a0b40546decc45a4f780fd57f92afc279a4d71ea4`
-- Schema check: all 27 rows, including the header, have exactly 43 fields
+The pile-up section states that tau-eff remains validated, publishes rounded
+`124.79 ns` with `VALIDATED`, and omits the exact interval, run/pulse counts,
+run-average estimand, non-universal caveat, MV5 reuse distinction, and
+`BLK-S10B-001`.
 
-## Failed check retained in history
+## Delivered method
 
-Initial contents write `aaa40edfc4e9f351e2c8f21460ef6e4d7419d287`
-transiently mistranscribed two unrelated P04p/P07e script/config paths with periods
-instead of underscores. The unexpected candidate blob exposed the error. Commit
-`ab03023366396caaa97abc4cb7ea9a81aeae0731` restored those unrelated paths and
-produced the exact validated ledger blob before tests/evidence publication. The failed
-check is recorded rather than concealed.
+Added policy
+`WIKI_TAU_EFF_MUST_BIND_EXACT_S10B_ESTIMAND_AND_INTERVAL` through:
+
+- `tools/audit/validate_wiki_tau_eff_public_binding.py`;
+- `tests/test_validate_wiki_tau_eff_public_binding.py`;
+- `tools/audit/render_wiki_tau_eff_public_binding_evidence.py`.
+
+The gate reads exact bytes once with strict UTF-8, requires one exact 43-column
+`CL-011`, binds checks to unique canonical-table and pile-up-section anchors,
+rejects decoy global tokens, and verifies the exact central value, interval,
+counts, uncertainty semantics, truth type, status, blocker, and source
+interpretation. It publishes JSON atomically and rejects input/output aliases.
 
 ## Validation
 
-Executed on exact reconstructed candidate bytes:
-
 ```text
-python -m py_compile tests/test_tau_eff_claim_current.py
-pytest -q tests/test_tau_eff_claim_current.py
+python -m py_compile \
+  tools/audit/validate_wiki_tau_eff_public_binding.py \
+  tests/test_validate_wiki_tau_eff_public_binding.py \
+  tools/audit/render_wiki_tau_eff_public_binding_evidence.py
 
-2 passed in 0.02s
+PYTHONPATH=. pytest -q tests/test_validate_wiki_tau_eff_public_binding.py
+
+7 passed in 1.63s
 ```
 
-The regression checks unique exact-width `CL-011`, required fields/caveats, 14 unique
-runs, 252266 pulses, central mean, interval, and source commit. JSON and SVG parsed.
-Maximum changed Python line length was 83. Published test blob
-`5d2854cdd92a2a7caf209ecf482a0940a8d952f9` matches the validated local file.
+The exact current public excerpts returned `FLAWED` with 24 findings across
+these families:
 
-No repository-wide pytest, ruff, broken-link inventory, ROOT processing, waveform-fit
-execution, or GitHub Actions success is claimed.
+- canonical exact-value/interval binding missing;
+- canonical unsupported uncertainty components;
+- canonical truth-type and status mismatch;
+- pile-up exact-value/interval binding missing;
+- pile-up status mismatch;
+- pile-up scientific caveats missing;
+- stale public phrases present.
 
-## Files changed
+A corrected two-location fixture returned `VALIDATED` with zero findings. A
+fixture containing all exact tokens in a decoy location still failed the stale
+claim sites. Invalid UTF-8, duplicate anchors, malformed ledger contracts, and
+destructive aliases failed closed. JSON and SVG parsed; changed Python lines
+were at most 95 characters.
 
-- `docs/claim_ledger.csv`
-- `tests/test_tau_eff_claim_current.py`
-- `docs/validation/tau_eff_claim_remediation_audit.md`
-- `docs/validation/tau_eff_claim_remediation_validation.json`
-- `docs/validation/tau_eff_claim_remediation.svg`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/archive/2026-07-25T080448Z_AUD-LEDGER-003_TAU_EFF_REMEDIATION.md`
-- `chatgpt_todo/HANDOFF.md`
+## Evidence files
+
+- `docs/validation/wiki_tau_eff_public_binding_audit.md`
+- `docs/validation/wiki_tau_eff_public_binding_validation.json`
+- `docs/validation/wiki_tau_eff_public_binding.svg`
+
+Remote source identities recorded in the validation record:
+
+- WIKI blob: `91e82c59a2b59b285c6a529c0637ed665be2c4fd`;
+- claim-ledger blob: `254dc5b64945260193d6b1bd4146bd6400ad28cf`;
+- Chapter 5 correction commit:
+  `dcd30497d7e83a35d686b8835aefdb2537fbcf02`.
 
 ## Direct-main commit sequence
 
-- `aaa40edfc4e9f351e2c8f21460ef6e4d7419d287` — initial ledger write;
-- `ab03023366396caaa97abc4cb7ea9a81aeae0731` — restore unrelated paths and
-  publish exact validated ledger;
-- `66e3ec992b01fdc59a0c256a92e9afb6a8683637` — current-ledger regression;
-- `b3fac0f78c743ad4a2f89f6f95789412b09dbabb` — audit report;
-- `72d3dd4df910151f9027991dc628450a1f442357` — machine-readable evidence;
-- `e13010075758981060f0f6d751258cdc4a9d3b3d` — visual evidence;
-- `b9544dd7bb14b026495c6f9e6c504e4bcbdfbd95` — active-task update;
-- `c84c79cc9ae050f8a0a2528d28f93da9cb94048b` — immutable archive;
-- `d7901b06ecdd45238744a88ec453821a89650f06` — complete delivery handoff,
-  confirmed on remote `main`.
+- `1ba37eb9c47fc3e1c95891b6e35f6709e5f3a093` — validator;
+- `a618463cac98d930625f3e6cd0b2600c7df6ed69` — focused tests;
+- `1cad8900d21e356fed9c117d2adf6d5bd67233df` — evidence renderer;
+- `e353bb4cc9217c9091ec68af744a820d147fb37e` — machine-readable evidence;
+- `70c6eed4916c559f509e8b47edde42efebc71b50` — visual evidence;
+- `18b38d59b23b7fe7f6b5216690acb3841e435627` — audit report;
+- `a66925193f4c498fd2946ab70a2a9baea2fd2b4c` — active-task update;
+- `672084c9a3aeb96519841ab740e875c7032bbfbd` — immutable archive.
 
-## Remaining public synchronization and scientific boundary
+GitHub contents writes returned successful direct-main commit SHAs. The final
+handoff commit and subsequent confirmation SHA are recorded after publication.
 
-`WIKI.md`, Chapter 1, and Chapter 5 remain stale and require an exact-content unit with
-location-bound regressions and link checks. They still contain some combination of
-`VALIDATED`, `data + MC self-consistent`, rounded interval wording, unsupported
-uncertainty components, or an incorrect confidence-level description.
+## Next exact unit
 
-No raw ROOT data were reprocessed, no waveform fit was rerun, and no new systematic
-uncertainty was estimated. The result remains `DONE_DATA_ONLY` under `BLK-S10B-001`.
-Threshold/run-weighting sensitivity, independent cross-method or external closure, and
-an accepted systematic model remain open. No universal dead time, accepted Rmax,
-calibration, or detector-performance claim follows.
+Rewrite both root-WIKI claim locations to the exact S10b contract, then run:
 
-## Append-only log limitation
+1. `validate_wiki_tau_eff_public_binding.py`;
+2. `validate_wiki_claim_front_door.py`;
+3. `validate_wiki_canonical_results.py`;
+4. the current broken-link checker.
 
-`SESSION_LOG.md` was reviewed through complete ranged snapshots. The connector
-requires whole-file replacement rather than byte-safe append. Replacing a manually
-reconstructed 282-line append-only history would create avoidable provenance risk, so
-it was not replaced. The immutable archive and this handoff contain the complete
-append-equivalent record. This mandatory synchronization step remains explicitly unmet.
+Do not mark the public synchronization complete until all pass on the exact
+committed WIKI and ledger bytes.
+
+## Scientific boundary
+
+No ROOT bytes were reprocessed, no waveform fit was rerun, and no new
+uncertainty, detector-wide dead time, accepted Rmax, calibration, or detector-
+performance result was produced.
+
+`SESSION_LOG.md`, `BACKLOG.md`, `BLOCKERS.md`, `MASTER_INDEX.md`, and aggregate
+matrices were not replaced because only whole-file replacement was available
+for these shared records. Replacing a partial reconstruction could erase
+concurrent or append-only provenance. The immutable archive and this handoff
+contain the complete append-equivalent record; this synchronization gap remains
+explicitly open.

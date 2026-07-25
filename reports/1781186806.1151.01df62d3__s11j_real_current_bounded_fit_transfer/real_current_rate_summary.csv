@@ -1,0 +1,2 @@
+n_runs,total_clean_sideband,total_real_high_current,mean_real_per_clean_by_run,median_real_per_clean_by_run,max_real_per_clean_by_run
+7,579,22,0.027118048932713124,0.03508771929824561,0.053763440860215055

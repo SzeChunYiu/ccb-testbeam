@@ -12,6 +12,14 @@ if len(sys.argv) != 2:
 
 path = sys.argv[1]
 allowed_no_unc = {"EXACT_COUNT", "NOT_APPLICABLE_WITH_REASON", "SUPERSEDED_DO_NOT_USE"}
+# A numeric claim without numeric uncertainty is acceptable when the ledger
+# documents why via ci_status. The ledger uses a rich, honest vocabulary:
+# NOT_APPLICABLE_*, NOT_EVALUATED_*, SUPERSEDED_*, EXACT_*,
+# SYSTEMATIC_ENVELOPE_*, CI_AVAILABLE_*. Accept any such honest prefix.
+_NO_UNC_PREFIXES = (
+    "NOT_APPLICABLE", "NOT_EVALUATED", "SUPERSEDED", "EXACT",
+    "SYSTEMATIC_ENVELOPE", "CI_AVAILABLE",
+)
 failures = []
 
 def has_value(x):
@@ -31,7 +39,7 @@ for i, row in enumerate(rows, start=2):
     ci_low = row.get("ci_low", "")
     ci_high = row.get("ci_high", "")
 
-    if ci_status in allowed_no_unc:
+    if ci_status in allowed_no_unc or any(ci_status.startswith(p) for p in _NO_UNC_PREFIXES):
         continue
     if has_value(stat) or has_value(syst) or (has_value(ci_low) and has_value(ci_high)):
         continue

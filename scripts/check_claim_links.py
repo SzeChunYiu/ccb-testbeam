@@ -11,7 +11,10 @@ if len(sys.argv) != 2:
     sys.exit(2)
 
 root = pathlib.Path(".")
-fields = ["source_report", "source_script", "source_data", "source_config", "source_manifest"]
+# source_data is intentionally excluded: it documents where input data lives
+# (often large binaries or LUNARC-hosted paths), not a path that must exist in
+# the repository checkout. The other four fields are repo-relative text artifacts.
+fields = ["source_report", "source_script", "source_config", "source_manifest"]
 missing = []
 with open(sys.argv[1], newline="") as f:
     for i, row in enumerate(csv.DictReader(f), start=2):

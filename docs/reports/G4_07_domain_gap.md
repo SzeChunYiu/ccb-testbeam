@@ -80,7 +80,7 @@ The table reports direction-folded univariate domain AUC.  Values above 0.70 are
 | hit_B2         |                0.505281 |           -0.110249  | False                       |
 | log_q_B6       |                0.501401 |           -0.0525687 | False                       |
 
-![G4-07 domain gap heatmap](../../figures/reports/1781212365.2054704.7c540934__g4_07_domain_gap/g4_07_domain_gap_heatmap.png)
+![G4-07 domain gap heatmap](../figures/reports/1781212365.2054704.7c540934__g4_07_domain_gap/g4_07_domain_gap_heatmap.png)
 
 ## Systematics
 

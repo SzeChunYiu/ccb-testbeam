@@ -76,5 +76,5 @@ The first-order model matches the data amplitude range within uncertainties.
 
 ## Related
 - [Issue #796](https://github.com/SzeChunYiu/ccb-testbeam/issues/796)
-- [MV0 calibration](reports/mv0_calibration_1782677847/REPORT.md)
-- [G4-08 truth bridge](reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join/)
+- [MV0 calibration](../../reports/mv0_calibration_1782677847/REPORT.md)
+- [G4-08 truth bridge](../../reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join/)

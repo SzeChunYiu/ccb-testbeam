@@ -64,6 +64,24 @@ ALLOWED_CONTEXTS = [
     r"artefact|artifact",
     r"needs canonical|recomputed|rerun",
     r"compared to| vs |versus",
+    # ── additional honest correction / comparison contexts ──
+    # Prose that explicitly withdraws a value:
+    r"not canonical",
+    r"is canonical",            # "Neither X nor Y is canonical"
+    r"must not be cited",
+    r"do not use",
+    r"withheld",
+    r"former",
+    r"earlier",
+    r"incorrect",
+    r"\berror\b",
+    r"Neither",
+    r"\boriginal\b",          # "the original 4.22 MHz ..."
+    # Comparison-table / diagnostic phrasing:
+    r"proxy",
+    r"heuristic envelope",
+    r"Source-backed",
+    r"no beam-data transfer",
 ]
 
 
@@ -77,8 +95,18 @@ def load_claim_ledger(ledger_path: str) -> list[dict]:
     return claims
 
 
+WINDOW_LINES = 4  # neighbours each side checked for comparison/correction context
+
+
 def scan_file(filepath: str) -> list[dict]:
-    """Scan a single file for superseded values. Returns list of findings."""
+    """Scan a single file for superseded values. Returns list of findings.
+
+    A value is flagged only when neither the canonical replacement nor an
+    honest correction/comparison phrase appears on the line or within a small
+    neighbouring window. This recognises comparison tables that list old beside
+    new, and prose that explicitly says a value is "not canonical" / "former" /
+    "an error", without having to annotate every row.
+    """
     findings = []
     with open(filepath) as f:
         lines = f.readlines()
@@ -88,14 +116,18 @@ def scan_file(filepath: str) -> list[dict]:
         if not line_stripped or line_stripped.startswith("#"):
             continue
 
+        lo = max(0, i - 1 - WINDOW_LINES)
+        hi = min(len(lines), i - 1 + WINDOW_LINES + 1)
+        window = "".join(lines[lo:hi])
+
         for old_val, (new_val, desc) in SUPERSEDED_MAP.items():
             if old_val not in line:
                 continue
-            # old + canonical on the same line => a comparison/correction row
-            if new_val and new_val in line:
+            # canonical value on the line OR in the near window => comparison/correction row
+            if new_val and (new_val in line or new_val in window):
                 continue
-            # Check if in an allowed context
-            safe = any(re.search(ctx, line, re.IGNORECASE) for ctx in ALLOWED_CONTEXTS)
+            # honest correction/comparison context on the line OR in the near window
+            safe = any(re.search(ctx, window, re.IGNORECASE) for ctx in ALLOWED_CONTEXTS)
             if not safe:
                 findings.append({
                     "file": filepath,

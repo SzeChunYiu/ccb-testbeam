@@ -1,6 +1,6 @@
 # Data-Side Analysis on Real Beam Data (LUNARC ccb_data)
 
-**Status:** MEASURED_DATA (provenance verified) + GATED (timing, format-limited).
+**Status:** MEASURED_DATA (provenance verified) + GATED (timing, format-limited) + BLOCKED (absolute Rmax).
 **Branch:** `studies/data-side-analysis` · **Driver:** `scripts/studies/data_side_real_beam.py`
 **Raw source:** `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/` (`hrdb_run_*.root`, runs 12–65; 748 MB)
 **Inputs:** canonical S00 table `reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz` (640,737 rows) + raw HRDv waveforms.
@@ -77,34 +77,32 @@ on the raw 8×16 @ 100 MS/s (10 ns/sample) waveforms, on the B4∧B6 coincidence
 The B4 and B6 pulse-times are essentially **uncorrelated event-by-event**: B6 peaks either
 at sample 0 (rising edge outside the window), sample 7, or sample 15, while B4 spreads over
 samples 3–15. The ~38 ns residual is dominated by the 10 ns sampling quantisation +
-arbitrary trigger phase + the missing samples 16–17 (which carry many deep-stave pulse
-peaks in the canonical 18-sample data). **This is the concrete, measured reason CL-002..006
-were BLOCKED, and they remain GATED on this raw format.** A real-data timing resolution
-needs the median-gated 18-sample waveforms (laptop-only `data/root/root`) plus a
-template/optimal-filter pickoff exploiting the full pulse shape. Figure:
+arbitrary trigger phase + the missing samples 16–17. **This is a measured data-format
+limitation, not detector resolution.** A real-data timing resolution needs the median-gated
+18-sample waveforms plus a template/optimal-filter pickoff. Figure:
 `VIS-TIM-DATA_sampling_limited.png`.
 
-## 3. VIS-PU-DATA — Rmax from real-data occupancy (corroborates canonical CL-010)
+## 3. VIS-PU-DATA — selected-pulse occupancy; absolute Rmax is withheld
 
-From the per-event selected-pulse occupancy of the 4-stave B array (640,737 pulses /
-584,602 events):
+The selected table contains 640,737 B-stave pulses grouped into 584,602 composite events.
+It measures selected-pulse multiplicity only:
 
 | Quantity | Value |
 |---|---|
 | Mean selected pulses / event | **1.096** |
-| Fraction of events with ≥3 pulses | 2.55% |
-| Acquisition window (16 samples × 10 ns) | 160 ns |
-| τ_eff assumed (160 ns − 30 ns rise) | 130 ns (canonical CL-011: 124.79 ns) |
-| **Rmax (data-derived, μ_max = 0.38 convention)** | **2.92 MHz** |
-| Canonical CL-010 Rmax | 3.05 MHz |
-| clusterC digitizer-domain Rmax | 0.625 MHz |
+| Fraction of events with ≥3 selected pulses | 2.55% |
+| Measured arrival-rate exposure | **absent** |
+| Accepted `mu_max` quality threshold | **unresolved** |
+| Accepted absolute Rmax | **withheld** |
 
-The data-derived **Rmax = 2.92 MHz corroborates the canonical 3.05 MHz within 4%**, using
-the same μ_max = 0.38 convention but now grounded in the measured real-data occupancy
-rather than the recorded beam duty factor alone. **Caveat:** this is data-DERIVED, not
-absolutely calibrated — the absolute rate normalisation assumes the 160 ns acquisition
-window as the live-time, and run-duration/luminosity metadata are absent from ccb_data.
-Figure: `VIS-PU-DATA_occupancy_rmax.png`.
+Rmax is withheld because this occupancy does not measure event-arrival rate, live exposure,
+luminosity, an independently determined pile-up ceiling, or a detector-wide live window.
+The value `mu_max = 0.38` is a legacy duty-factor convention, not an occupancy measurement.
+Using it with the exact CL-011 estimand gives
+`0.38 / 124.79018394263471 ns = 3.045111305987686 MHz`; this is a **model sensitivity
+only**, not a data-derived rate. The former `0.38 / 130 ns = 2.923076923076923 MHz` is a
+second convention-dependent sensitivity. CL-010 remains BLOCKED under `S-STAT-003`.
+Figure: `VIS-PU-DATA_occupancy_rmax.png` is descriptive occupancy evidence only.
 
 ## 4. Data/MC closure summary
 
@@ -112,15 +110,16 @@ Figure: `VIS-PU-DATA_occupancy_rmax.png`.
 |---|---|---|---|
 | ΔE-E corr(ΔE,E) | +0.221 | −0.533 | **TENSION** (B2-dominated data; material budget) |
 | Combined timing σ₆₈ | ≥38 ns (format-limited) | 0.089 ns | **INFEASIBLE** on raw 16-sample |
-| Rmax | 2.92 MHz (derived) | 0.605 MHz (digitizer) / 3.05 (τ_eff-corrected) | **CONSISTENT** |
+| Absolute Rmax | withheld | model sensitivities only | **BLOCKED** (`S-STAT-003`) |
 
-## 5. Claim upgrades
+## 5. Claim status
 
-| Claim | Was | Now | Evidence |
-|---|---|---|---|
-| CL-001 (S00 pulses) | VALIDATED | VALIDATED (+ raw provenance confirmed) | event-level exact match, 617,377/640,737 |
-| CL-002..006 (timing σ₆₈) | BLOCKED (BLK-MV4-LEGACY-001) | **GATED** (data-format-limited, measured) | σ₆₈ ≥ 38 ns sampling-limited on raw 16-sample; needs 18-sample + template pickoff |
-| CL-010 (Rmax) | BLOCKED (S-STAT-003) | **DONE_DATA_ONLY** (data-derived corroboration) | 2.92 MHz from real occupancy, corroborates 3.05 MHz |
+| Claim | Status | Evidence |
+|---|---|---|
+| CL-001 (S00 pulses) | VALIDATED (+ raw provenance confirmed) | event-level exact match, 617,377/640,737 |
+| CL-002..004 (timing σ₆₈) | GATED / data-format-limited | sampling-limited raw-format residual; no detector resolution |
+| CL-005..006 (timing combination/covariance) | BLOCKED | source-bound covariance and uncertainty absent |
+| CL-010 (Rmax) | **BLOCKED** (`S-STAT-003`) | occupancy is descriptive; rate exposure and accepted quality criterion absent |
 
 Artifacts: `metrics.json`, `provenance.json`, `VIS-DE-001-DATA_deltaE_E_real.png`,
 `VIS-TIM-DATA_sampling_limited.png`, `VIS-PU-DATA_occupancy_rmax.png`,

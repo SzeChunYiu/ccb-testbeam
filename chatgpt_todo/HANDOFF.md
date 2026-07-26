@@ -2,84 +2,89 @@
 
 ## Session
 
-- **Task:** `AUD-DELTAE-007`
-- **Stamp:** `2026-07-26T050335Z`
+- **Task:** `AUD-DELTAE-008`
+- **Stamp:** `2026-07-26T052912Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `6c25424ae2507396d352d0b7e45d737752b2872d`
-- **Validated delivery/handoff commit:** `be4aec3d3dc5ee67014799dc07ce7f03ec8f2cbb`
-- **Remote main after validated delivery:** `be4aec3d3dc5ee67014799dc07ce7f03ec8f2cbb`
+- **Initial remote main:** `ed3633055695184bd5ef68ab90bb6951e81d9354`
+- **Validated implementation/evidence head before handoff:** `122baac3bb3bb704a2ab97f5efd76843a24439b2`
 - **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, PR merge, or deletion of unrelated work.
-- **Focused acceptance:** canonical present-signal input boundary `VALIDATED / COMPLETE`.
+- **Focused acceptance:** canonical event-table output boundary `VALIDATED / COMPLETE`.
 - **Scientific acceptance:** A-002 physics remains `PARTIAL / BLOCKED`.
 
 ## Start-of-run review
 
 Fetched current `main`, recent history, repository permissions, open draft PR #933, closed PR #868,
 commit status, mandatory coordination records, the canonical DeltaE front door and retained numerical
-core, existing DeltaE tests, prior CSV-key and Parquet-provenance evidence, backlog, blockers, and the
-previous handoff. No active or completed task duplicated this input-integrity defect.
+core, prior CSV-key/Parquet/signal-value audits, focused tests, backlog, blockers, master index, and the
+latest handoff. No existing active or complete task represented this output-publication defect.
 
 PR #933 remained draft, open, non-mergeable, and blocked by its red repository-wide gate. PR #868
 remained closed, unmerged, and non-mergeable. Neither PR was modified or merged.
 
 ## Confirmed defect
 
-Retained numerical-core blob `fe5dd5e4673f32fa5a4b94776531f2b392e12414` used
-`pd.to_numeric(..., errors="coerce").fillna(0.0)` for supported B-layer signals. A malformed or
-missing-value cell in an existing column could therefore become zero, while positive or negative
-infinity remained. Extra MC `edep_B*` columns discovered dynamically for full-energy and stopping
-calculations were not all finite-validated.
+Former front-door blob `be00a58dbbc3c2b9de424c80bea3b5a4be6fe119` delegated event-table
+publication to retained-core blob `fe5dd5e4673f32fa5a4b94776531f2b392e12414`. The retained
+`_write_table()` wrote to a final Parquet path, caught every `Exception`, then wrote a different final
+CSV path. It did not:
 
-Exact former canonical front-door blob: `a5c255a971a7cf672f011f84b91a3c7b64d1f209`.
+- distinguish a missing optional Parquet engine from permission, data, filesystem, or serialization
+  failure;
+- reject output paths that alias exact validated input snapshots;
+- publish through a completed same-directory temporary file and atomic replacement;
+- reject a stale alternate-format output.
 
-A present invalid measurement and a wholly absent detector-layer column are not equivalent data
-states. Only the absent-column case is eligible for the established zero-fill convention.
+A deterministic control injected `PermissionError` after writing partial Parquet bytes. The former
+algorithm then published `events.csv.gz` and left the partial `events.parquet`, creating two
+contradictory artifacts while converting a real failure into apparent format fallback.
 
 Policy:
 
-`DELTAE_PRESENT_SIGNAL_CELLS_MUST_BE_FINITE_NUMERIC`
-
-Missing-layer policy:
-
-`ZERO_ONLY_WHEN_SUPPORTED_COLUMN_IS_ABSENT`
+`DELTAE_EVENT_TABLE_OUTPUT_MUST_FAIL_CLOSED_AND_NOT_ALIAS_INPUT`
 
 ## Remediation
 
-The canonical front door now:
+The canonical front door now overrides `_core._write_table` and:
 
-1. coerces every present data `amp_B2/B4/B6/B8` cell to numeric;
-2. rejects nonnumeric, missing-value, NaN, positive-infinite, and negative-infinite present cells;
-3. discovers and validates every present MC `edep_B*` column, including optional deeper layers;
-4. fills zero only when a supported downstream column is wholly absent;
-5. reports the affected column, invalid count, and first row indices in `SignalValueError`;
-6. installs strict preparation functions into the retained core's production hooks;
-7. publishes both policies in result and manifest reader contracts.
+1. resolves both output candidates and rejects equality or `samefile()` aliasing with any retained
+   input snapshot;
+2. rejects a stale alternate-format final without deleting unreviewed bytes;
+3. writes to a unique same-directory temporary path;
+4. verifies temporary-file creation, fsyncs it, and publishes with `os.replace`;
+5. removes failed temporaries while preserving a previous final file;
+6. permits CSV-gzip fallback only for a recognized missing Parquet engine;
+7. fails closed on every other Parquet or CSV publication error;
+8. records the event-table output contract in both result and manifest metadata.
+
+The full output directory is not one atomic transaction in this focused unit. The existing
+content-addressed strict runner remains the production bundle gate.
 
 ## Files changed
 
 - `scripts/single_stave/deltaE_E.py`
-- `tests/test_deltae_signal_value_contract.py`
-- `tools/audit/audit_deltae_signal_value_contract.py`
-- `tests/test_audit_deltae_signal_value_contract.py`
-- `tools/audit/render_deltae_signal_value_evidence.py`
-- `docs/validation/deltae_signal_value_contract_validation.json`
-- `docs/validation/deltae_signal_value_contract.svg`
-- `docs/validation/deltae_signal_value_contract_audit.md`
+- `tests/test_deltae_table_output_contract.py`
+- `tools/audit/audit_deltae_table_output_contract.py`
+- `tests/test_audit_deltae_table_output_contract.py`
+- `tools/audit/render_deltae_table_output_contract_evidence.py`
+- `docs/validation/deltae_table_output_contract_validation.json`
+- `docs/validation/deltae_table_output_contract.svg`
+- `docs/validation/deltae_table_output_contract_audit.md`
 - `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/BACKLOG.md`
-- `chatgpt_todo/archive/2026-07-26T050335Z_AUD-DELTAE-007_SIGNAL_VALUE_INTEGRITY.md`
+- `chatgpt_todo/archive/2026-07-26T052912Z_AUD-DELTAE-008_TABLE_OUTPUT_INTEGRITY.md`
 - this handoff.
 
 ## Exact identities
 
-- former front-door blob: `a5c255a971a7cf672f011f84b91a3c7b64d1f209`;
+- former front-door blob: `be00a58dbbc3c2b9de424c80bea3b5a4be6fe119`;
 - retained-core blob: `fe5dd5e4673f32fa5a4b94776531f2b392e12414`;
-- corrected front-door blob: `be00a58dbbc3c2b9de424c80bea3b5a4be6fe119`, 10,349 bytes,
-  SHA-256 `ef51bec47aa15eada369a4e46f4036dfe4ba54409030aa18adf1a3d951165548`;
-- direct-test SHA-256: `569f53a27d302f6f005e6e87969bb36dcf35dac1eb1d69ce4e0484763d38b43c`;
-- auditor SHA-256: `7bcf2874840a6728a7d45aff48513fbf3aa722382634e2fc50b40292503d4aa4`;
-- audit-test SHA-256: `4823264f0a7a15dbae9c494cb1c409c5de5c9c353ebfef19c2625c49ac6dbeae`;
-- renderer SHA-256: `1468e9ae3ee384ab1dbbe000f988f28046553570c457b90fb6f59100876783f1`.
+- corrected front-door blob: `71e32dd2acdb70c6b57d3b88fbfac3771f40b52f`, 14,703 bytes,
+  SHA-256 `a0ad0b288cd4b5494fa8461089d9a0d192049690a9b8bc15f0cd3036e61b876d`;
+- direct-test blob: `a3539bf31f9a100baff64754f0bec5f7da141375`, 6,278 bytes,
+  SHA-256 `7289e3effab00838ebec2aca33195f0287e8aec60ccb1b89a6605213f5657407`;
+- auditor blob: `a46598fb6fb27f33b7ec84ec71ea36805ce797c8`, 9,095 bytes,
+  SHA-256 `ed3030ab649a3113108d6dc5eb842a7f0905e4363daa62c072a14693aa49d712`;
+- audit-test expected blob: `858b02abc85d1b32d925533c8a25234469517094`, 3,220 bytes,
+  SHA-256 `510a41bc6b46c9ac5b608247330d6c815f5bd3dc8f292697f1001a535c8a95a4`.
 
 ## Validation
 
@@ -88,71 +93,70 @@ Executed against the exact proposed front door, tests, audit gate, and renderer:
 ```text
 python -m py_compile \
   scripts/single_stave/deltaE_E.py \
-  tools/audit/audit_deltae_signal_value_contract.py \
-  tests/test_deltae_signal_value_contract.py \
-  tests/test_audit_deltae_signal_value_contract.py \
-  tools/audit/render_deltae_signal_value_evidence.py
+  tests/test_deltae_table_output_contract.py \
+  tools/audit/audit_deltae_table_output_contract.py \
+  tests/test_audit_deltae_table_output_contract.py \
+  tools/audit/render_deltae_table_output_contract_evidence.py
 
 PYTHONPATH=. pytest -q \
-  tests/test_deltae_signal_value_contract.py \
-  tests/test_audit_deltae_signal_value_contract.py
+  tests/test_deltae_table_output_contract.py \
+  tests/test_audit_deltae_table_output_contract.py
 
-19 passed in 3.06s
+14 passed in 0.05s
 ```
 
 Environment: Python `3.13.5`, pandas `2.2.3`, NumPy `2.3.5`.
 
 Validated controls:
 
-- malformed present data cell fails closed rather than becoming zero;
-- NaN and both infinities fail closed;
-- invalid required and optional MC layers, including `edep_B10`, fail closed;
-- wholly absent supported downstream columns still zero-fill;
-- finite numeric strings preserve their values;
-- result and manifest contain both policies;
-- retained-core production hooks point at the strict functions;
-- exact-source audit returns `VALIDATED` with zero findings;
-- malformed-contract mutation, invalid UTF-8, and destructive output alias fail closed;
-- JSON is atomically replaced; JSON and SVG parse; Python lines are at most 100 characters.
+- atomic Parquet success;
+- CSV-gzip fallback only for a missing Parquet engine;
+- no fallback after arbitrary Parquet failure;
+- preservation of a prior final after serialization or replacement failure;
+- direct and symlink input/output aliases;
+- stale alternate-format rejection without deletion;
+- result-contract publication;
+- exact-source zero-finding audit;
+- malformed-contract, invalid UTF-8, audit alias, and atomic audit-JSON controls;
+- JSON and SVG parsing; Python lines at most 100 characters.
 
-The networkless validation checkout used the exact proposed front door/tests/auditor/renderer and a
-minimal retained-core stub to exercise this focused boundary. A complete clone could not be
-materialized because `github.com` DNS resolution failed. Repository-wide pytest/ruff, actual ROOT or
-Parquet processing, GitHub Actions, and the full link inventory were not run and are not claimed.
+The focused reconstruction used the exact proposed front door/tests/auditor/renderer and a minimal
+retained-core stub. A complete clone could not be materialized because `github.com` DNS resolution
+failed. Repository-wide pytest/ruff, ROOT or production Parquet processing, GitHub Actions, and the
+full link inventory were not run and are not claimed.
 
 ## Better-method decision
 
-Continuing zero fill was rejected because it conceals invalid measurements. Dropping invalid rows was
-rejected as the default because it silently changes event cardinality and can introduce selection
-bias. The selected method fails closed on every present invalid signal and preserves zero fill only
-for a wholly absent supported downstream layer.
+Catching all Parquet failures and publishing CSV was rejected because it conceals real errors.
+Unconditional Parquet was not selected because the repository intentionally supports environments
+without an optional engine. Automatic deletion of stale alternate output was rejected because it
+would destroy unreviewed provenance. Explicit missing-engine fallback with fail-closed alias/stale
+checks and atomic file publication was selected. Transactional whole-bundle publication remains a
+separate higher-level method already represented by the strict runner.
 
-## Direct-main commits
+## Direct-main commits before handoff
 
-- `6dc2d50c4d8d6a10f99ff2c5ab351c515d86cd18` — task claim;
-- `63348699fe3a507fb9008ee582b193c28c7a7b20` — implementation;
-- `03439cbb7b66e300a21eeadb4e8f880b8a10620c` — direct tests;
-- `c08f1e23bc82eb8bcedf78694907e67133e621f3` — fail-closed audit;
-- `cff6e38e947855a06bec096be07db37208697a15` — audit tests;
-- `f38c2eb713d802ea3bbbde4f4c288989ad0f1c32` — evidence renderer;
-- `115e2c7b3905d07d5c5d847b974961bdc85f8f5a` — validation JSON;
-- `cf21c48f3231d3c6167a57f227d5c22d5a69d47b` — visual evidence;
-- `bd4d1fc72c2d51e03cecadd21aa49523511d5a7f` — audit report;
-- `ac029b8ffbb5efa2995ce942783bf571cc1642f7` — backlog synchronization;
-- `b1348234f019ffb0a620ee75e94987bbad739616` — immutable archive;
-- `54256005790b46d11ec0d025d14fab4f844402e3` — active-task completion;
-- `be4aec3d3dc5ee67014799dc07ce7f03ec8f2cbb` — validated delivery handoff.
+- `80ec61f6de1187301a5205197b9dfe2ec63e3fc1` — task claim;
+- `4745faec729b35d7018c2df9ed39bedce72567c9` — implementation;
+- `0c1138dba5cbd9940b728c5aaa5e7fb0f1603587` — direct tests;
+- `244ffbd840627d70fb04b883a521441b51b40940` — fail-closed audit;
+- `0485990f0a9093a734b5052f8e6e5ad4ec8f1369` — audit tests;
+- `8bb9ff358c51c611df76211006b5e792f7e46b75` — evidence renderer;
+- `b8ea33a6b3de1c8dc29d4f499fb49e5c3bf89f02` — validation JSON;
+- `3fe3acc179e49d44d36589c530a7113016af0847` — visual evidence;
+- `e24f7e6226bea22ac2ed7b8b5e56f7d2acf12f2b` — audit report;
+- `44aeef79cb928c3f2dd5f8438b399494c872453a` — immutable archive;
+- `122baac3bb3bb704a2ab97f5efd76843a24439b2` — active-task completion.
 
-GitHub returned successful direct-main commit SHAs for every write. Post-write history confirmed the
-validated handoff and all focused ancestors consecutively on remote `main`; no force update was used.
+GitHub returned successful direct-main commit SHAs for every write. No force update was used.
 
 ## Coordination limitation
 
-`SESSION_LOG.md` was not appended. The connector exposes complete-file replacement rather than a
-byte-safe append operation, while the complete append-only file could not be materialized in the
-networkless checkout. Replacing a partial reconstruction could erase prior provenance. This unmet
-mandatory step is recorded explicitly here and in the immutable archive rather than reported as
-complete.
+`BACKLOG.md`, `MASTER_INDEX.md`, and `SESSION_LOG.md` were reviewed but not replaced before this
+handoff. The connector exposes complete-file replacement rather than byte-safe patch/append, and the
+long shared files were available only in paged or truncated responses. Replacing a partial
+reconstruction could erase unrelated or append-only provenance. This unmet mandatory synchronization
+step is recorded explicitly here and in the immutable archive rather than reported as complete.
 
 ## Scientific boundary and next action
 
@@ -161,5 +165,5 @@ DeltaE-E PID result, uncertainty budget, calibration, or detector-performance re
 `AUD-DELTAE-001`, `AUD-DELTAE-002`, `AUD-AMP-009`, `AUD-AMP-010`, and `BLK-AMP-001` remain open.
 
 Next, obtain hash-bound convention and polarity evidence and execute a content-addressed production
-rerun through the strict input boundary, followed by event-cardinality, uncertainty, plot, and claim
-validation.
+rerun through the strict reader/value/output boundaries, followed by event-cardinality, uncertainty,
+plot, and claim validation.

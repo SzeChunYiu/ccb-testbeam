@@ -2,148 +2,150 @@
 
 ## Session
 
-- **Task:** `AUD-CI-003`
-- **Stamp:** `2026-07-26T011234Z`
-- **Initial remote main:** `b969c0cef71bebbab71728d0dc278cb7e284ce59`
-- **Validated delivery/handoff commit:** `7991cb4b4cefb542a110de5d7ddb0f2defc9ca52`
-- **Remote-main confirmation:** recent history confirmed the delivery commit and its complete focused
-  ancestry on remote `main` before this confirmation update.
-- **Destination:** direct GitHub contents-API commits to `main`; no force-push or history rewrite.
-- **Acceptance:** CI failure-ledger implementation and evidence `VALIDATED`; PR #933 producer
-  integration remains `BLOCKED / PARTIAL`.
+- **Task:** `AUD-DELTAE-004`
+- **Stamp:** `2026-07-26T021210Z`
+- **Initial remote main:** `303da4b0d96b703de002d53abd98f0ca9c964250`
+- **Validated implementation through:** `80749ab9d3d8355b8cab8bd28560876a08e1c1ad`
+- **Destination:** direct GitHub contents-API commits to `main`; no force-push, history rewrite,
+  task branch, or pull request.
+- **Focused acceptance:** `VALIDATED / COMPLETE`.
+- **Repository-wide integration:** `PARTIAL`; no push-triggered workflow result was visible through
+  the available connector, so broad CI success is not claimed.
 
 ## Start-of-run review
 
-Fetched current `main`, recent history, PR #933, PR #868, mandatory coordination records, the
-repository-wide workflow/job, its exact artifact, and relevant stopping-power code/tests. PR #933
-remains draft and unmerged. PR #868 remains closed, unmerged, non-mergeable, and untouched.
+Fetched current `main`, recent history, PR #933, closed PR #868, repository instructions, the
+mandatory `chatgpt_todo/` records, the repository-wide workflow, the exact failing CI log, and the
+strict DeltaE runner/tests. PR #933 remained draft, open, unmergeable, and unmerged. PR #868
+remained closed, unmerged, non-mergeable, and untouched.
 
-## Confirmed governance defect
+## Demonstrated defect
 
-The previous handoff called the 42 repository-wide failures “pre-existing cross-area failures.” The
-available evidence contains only the candidate workflow run. Zero failures in the three named MV3
-candidate test modules is useful ownership evidence but does not prove that all other failures
-pre-date, or are causally independent of, the candidate.
+GitHub Actions run `30181818642`, job `89739575939`, installed Python 3.11 and pandas 3.0.5. The
+repository-wide test
+`tests/test_deltae_data_bridge_strict.py::test_valid_bundle_is_content_addressed_and_reconstructable`
+failed because default `pandas.read_csv` inference loaded the all-digit synthetic Git commit
+`1111111111111111111111111111111111111111` as an integer while the regression expected the exact
+string.
+
+The strict runner writes the commit as text to authoritative `result.json` and copies the same token
+to `deltaE_E_events_data.csv`. The defect is therefore a consumer-schema failure, not evidence that
+the producer generated a different commit. Untyped numeric inference can irreversibly erase leading
+zeros, so casting after reading is not an adequate repair.
 
 Policy:
 
-`REPOSITORY_CI_BLOCKER_MUST_HAVE_CONTENT_ADDRESSED_FAILURE_LEDGER`
+`DELTAE_CSV_IDENTIFIERS_MUST_USE_AN_EXPLICIT_TEXT_READER_CONTRACT`
 
-The validated causal-attribution state is `UNRESOLVED_SINGLE_RUN`. Introduced, resolved, persistent,
-and changed-signature labels require exact same-environment base and candidate logs.
+## Remediation
 
-## Exact evidence
+Added `docs/contracts/deltae_event_csv_reader.json`, which:
 
-- Workflow: `MC Validation CI`
-- Run: `30181818642`
-- Job: `89739575939`
-- Artifact: `8625795443`
-- Artifact SHA-256:
-  `d16b0db6177e79fb30bcc682160d5460c30ea17f685b4a709c454f6c565adafa`
-- Exact `pytest.log` bytes: `85803`
-- Exact `pytest.log` SHA-256:
-  `c48e98e20e5606b0d98a41f03f586dc8d012338fc7cc7f7cffb1847155d707ae`
-- Ruff: `All checks passed!`
-- Pytest: `42 failed, 775 passed, 1 skipped, 6 warnings in 60.43s`
+- identifies `result.json` as the authoritative typed bundle metadata;
+- identifies `deltaE_E_events_data.csv` as the human-review table;
+- requires nine provenance columns to be loaded as text;
+- forbids using automatic numeric inference to validate Git or SHA-256 identifiers.
 
-## Measured failure inventory
+Updated `tests/test_deltae_data_bridge_strict.py` to load the version-controlled dtype contract
+before comparing provenance. Added `tests/test_deltae_csv_reader_contract.py`, which verifies the
+complete column set and preserves both an all-digit commit and a leading-zero commit.
 
-The exact terminal summary contains 42 unique failing node IDs:
+## Better-method comparison
 
-- stopping-power comparison: 23
-- public WIKI claim binding: 6
-- MV6 PCA claim rows: 4
-- MV4 legacy claim rows: 2
-- figure registry: 2
-- Cluster D claim governance: 2
-- DeltaE bridge: 1
-- Chapter 8 claim validator: 1
-- MV3 legacy claim rows: 1
-
-None begins with:
-
-- `tests/test_mv3_chi2_producer_contract.py`
-- `tests/test_mv3_selection_weighted_contract.py`
-- `tests/test_audit_mv3_chi2_support.py`
-
-The ledger records `direct_candidate_test_failure_count=0` without converting that observation into an
-unsupported causal claim.
-
-## Work delivered
-
-- `tools/audit/classify_ci_failure_log.py`
-- `tests/test_classify_ci_failure_log.py`
-- `tools/audit/render_ci_failure_ledger_evidence.py`
-- `docs/validation/mv3_repository_ci_failure_ledger.json`
-- `docs/validation/mv3_repository_ci_failure_ledger.svg`
-- `docs/validation/mv3_repository_ci_failure_ledger_audit.md`
-- `chatgpt_todo/archive/2026-07-26T011234Z_AUD-CI-003_MV3_FAILURE_LEDGER.md`
-- `chatgpt_todo/ACTIVE_TASK.md`
-
-The classifier snapshots strict UTF-8 bytes once, verifies failed-count closure against unique
-`FAILED` node IDs, records full SHA-256 provenance, groups failure families/signatures, fails closed
-on malformed or duplicate diagnostics, publishes JSON atomically, and rejects input/output aliases.
-With paired logs it reports introduced, resolved, persistent, and changed-signature failures.
+- Post-read string casting was rejected because it cannot restore leading zeros.
+- Prefixing every CSV identifier would work but would change the established artifact schema.
+- JSON/Parquet-only publication would supply stronger typing but remove the established review CSV.
+- The selected method keeps JSON authoritative, preserves the CSV, and makes reader semantics
+  explicit and testable with minimal coupling.
 
 ## Validation
 
+Executed in the available local environment:
+
 ```text
 python -m py_compile \
-  tools/audit/classify_ci_failure_log.py \
-  tests/test_classify_ci_failure_log.py \
-  tools/audit/render_ci_failure_ledger_evidence.py
+  tests/test_deltae_csv_reader_contract.py \
+  tools/audit/render_deltae_csv_reader_evidence.py
 
-PYTHONPATH=. pytest -q tests/test_classify_ci_failure_log.py
-7 passed in 2.26s
+pytest -q tests/test_deltae_csv_reader_contract.py
+3 passed in 0.03s
 ```
 
-Exact artifact result:
+Environment:
 
-- status: `VALIDATED`
-- unique failures: `42`
-- direct candidate-test failures: `0`
-- attribution: `UNRESOLVED_SINGLE_RUN`
+- Python `3.13.5`
+- pandas `2.2.3`
 
-JSON parsing and SVG XML parsing passed. Changed Python lines are at most 98 characters.
+The exact pandas 3.0.5 behavior is retained from the content-addressed CI log. The focused test
+validates semantics independently of whether the local pandas version performs the problematic
+inference. The validation JSON parsed, the SVG parsed as XML, and changed Python lines are at most
+89 characters in the renderer and 85 characters in the new focused test.
+
+## Version-controlled evidence
+
+- `docs/contracts/deltae_event_csv_reader.json`
+  - blob `3721a06aca5c228dbd38ba502c6b5a5bdd521f0d`
+  - 991 bytes
+  - SHA-256 `f6c07e245ce2fdd83f7190f9c2aa2bb0b633f9e5c61cd437ba01cb32d1934fbb`
+- `tests/test_deltae_csv_reader_contract.py`
+  - blob `3e580de8a3b29ab1950fd6e4bbea94ee9c59f681`
+  - 2,003 bytes
+  - SHA-256 `a5c8b68a203d6e3beb46f513a937efd115246f7358ce144933e68e2cb154461f`
+- `tests/test_deltae_data_bridge_strict.py`
+  - blob `8e85937fec304aa801c5da6527495f80b56976e9`
+- `scripts/single_stave/deltaE_E_data_bridge_strict.py`
+  - inspected unchanged blob `76f7ffda2c2af92b400ca61f2f12c2b34fff7dba`
+
+Evidence files:
+
+- `docs/validation/deltae_csv_reader_contract_validation.json`
+- `docs/validation/deltae_csv_reader_contract.svg`
+- `docs/validation/deltae_csv_reader_contract_audit.md`
+- `chatgpt_todo/archive/2026-07-26T021210Z_AUD-DELTAE-004_CSV_READER_CONTRACT.md`
 
 ## Direct-main commits
 
-- `84e8c31f4718433bef90288070286f069cbfe24c` — failure-ledger implementation
-- `069500f48caf1a07c5cc3601a4085e6fc00ca96f` — focused regressions
-- `b8e62b740bcfaa9cfb08f75ab1ea55d39a5982d3` — evidence renderer
-- `b587309b4bf11a099fffc55d616ab24c5eeae82c` — machine-readable ledger
-- `1e93620e9581015da2082ca539262920fbed9ea4` — visual evidence
-- `cca8a5d4972533889c09cd2fade1ace0b697b758` — audit report
-- `fc64a8a20cdd4cb93f3ecebe58047183a39ac018` — immutable archive
-- `1c2788b99e6320739ba9937fd44c3abeb2cdcac9` — active-task completion
-- `7991cb4b4cefb542a110de5d7ddb0f2defc9ca52` — delivery handoff
+- `bf4ffcbe1395baca2b48e5717d6e6a1e3f82fb33` — task claim
+- `d0a90ba1bbec7690b827a7e43e3e03e54ad6b4b9` — explicit dtype integration
+- `63a267edabd773b46300be4b74d2258d0e3e4c58` — reader contract
+- `167b5fe240a186e4f00bdb6cf48c008583236852` — focused contract tests
+- `0a586af65587ecd738073697c97569b8471e710d` — evidence renderer
+- `50893871187728d3cb1c9a02e099147ffa0d48d2` — machine-readable evidence
+- `2b72a03a209070b24bf87b43cbfd4cdca1cea3ad` — visual evidence
+- `fdc85e6bb25580a590a4c8203a8286d688383f33` — audit report
+- `13c5cac3801f4cc40002d2d79337ebd489ca3435` — immutable archive
+- `80749ab9d3d8355b8cab8bd28560876a08e1c1ad` — active-task completion
 
 GitHub returned successful direct-main commit SHAs rather than conventional terminal `git push`
-stdout. Post-write history confirmed the delivery handoff and its focused ancestry on remote `main`.
-
-## PR #933 disposition
-
-The PR description was corrected to preserve the exact hashes and family counts while stating that
-causal attribution is unresolved. PR #933 remains draft transport only and must not be merged while
-the repository-wide gate is red. Its producer code is not delivered to `main` by this unit.
+stdout. The next history read must confirm this handoff commit and all focused ancestors on remote
+`main`; do not report delivery if that confirmation is absent.
 
 ## Scientific boundary
 
-This is software and CI-governance validation. No production ROOT or beam-data file was rerun. No
-weighted stopping profile, covariance, sensitivity scan, material/scattering correction, calibration,
-PID, closure claim, or detector-performance result was produced. Canonical `CL-021` remains `FLAWED`
-under `BLK-MV3-LEGACY-001`.
+No exact A-002 pulse table was processed. No amplitude convention, pulse polarity, stopping
+fraction, DeltaE-E particle-identification result, uncertainty budget, calibration, or detector
+performance is established. `BLK-AMP-001`, `AUD-DELTAE-001`, and `AUD-DELTAE-002` remain the physics
+acceptance gates.
+
+## Unrun checks and resulting uncertainty
+
+- No exact push-triggered GitHub Actions run was visible through the available connector.
+- The complete strict bridge test module was not executed locally because a full checkout could not
+  be obtained through the execution container's DNS path.
+- Repository-wide pytest, ruff, ROOT processing, and the full link inventory were not run.
+
+The focused contract is validated, but repository-wide integration remains uncertain until the
+current head runs in the declared Python 3.11 environment.
 
 ## Next action
 
-Run the exact merge-base/base SHA and updated PR candidate in the same workflow environment. Feed
-both exact content-addressed logs to the classifier, then remediate demonstrated introduced or
-persistent failures without weakening the gate. Merge only after all required focused and
-repository-wide checks pass on the exact integration head.
+Run the exact full repository gate on the current integration head. Audit all downstream readers of
+`deltaE_E_events_data.csv`; every machine consumer must use the declared dtype contract or an
+equivalent lossless text parser.
 
 ## Coordination limitation
 
-`SESSION_LOG.md` was not appended. The connector exposes whole-file replacement rather than a
-byte-safe append, while the complete append-only file is available only through paged/truncated
-responses. Replacing a partial reconstruction could erase provenance. This mandatory step remains
-explicitly unmet rather than fabricated.
+`SESSION_LOG.md` was not appended. The connector provides whole-file replacement while the complete
+append-only file is exposed only through truncated responses; replacing a partial reconstruction
+could erase provenance. The immutable archive and this handoff retain the complete append-equivalent
+record, and the unmet mandatory append is reported explicitly rather than fabricated.

@@ -1,0 +1,5 @@
+/run/initialize
+/ElGen/E 190. MeV
+/ElGen/TargetThickness 2.3 mm
+/ElGen/Beamspot 10 mm
+/run/beamOn 100000

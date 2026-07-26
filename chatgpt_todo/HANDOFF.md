@@ -2,146 +2,161 @@
 
 ## Session
 
-- **Task:** `AUD-DELTAE-006`
-- **Stamp:** `2026-07-26T043100Z`
+- **Task:** `AUD-DELTAE-007`
+- **Stamp:** `2026-07-26T050335Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `a29cc75dc403a9af2e804e55a53e8b037efd8942`
-- **Validated delivery/handoff commit:** `cf24b86b927be036b922f7845047077c20017b9c`
-- **Remote-main/session-log confirmation:** `bbe3e8b7eab38337e003271a1f37eabd582cf71b`
-- **Remote main after validated delivery:** `bbe3e8b7eab38337e003271a1f37eabd582cf71b`
-- **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, PR merge, or
-  deletion of unrelated work.
-- **Focused acceptance:** canonical Parquet reader and same-snapshot provenance
-  `VALIDATED / COMPLETE`.
+- **Initial remote main:** `6c25424ae2507396d352d0b7e45d737752b2872d`
+- **Validated implementation/evidence head before handoff:** `54256005790b46d11ec0d025d14fab4f844402e3`
+- **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, PR merge, or deletion of unrelated work.
+- **Focused acceptance:** canonical present-signal input boundary `VALIDATED / COMPLETE`.
 - **Scientific acceptance:** A-002 physics remains `PARTIAL / BLOCKED`.
 
 ## Start-of-run review
 
-Fetched current `main`, recent history, repository permissions, open PR #933, closed PR #868,
-commit status, all mandatory coordination records, the canonical DeltaE front door and retained
-numerical core, existing CSV-key tests/audit evidence, backlog, blockers, master index, result map,
-claim matrix, and visualization matrix. A concurrent non-overlapping session-log provenance commit
-advanced `main` to `a29cc75dc403a9af2e804e55a53e8b037efd8942` before implementation; work was based on that
-head. PR #933 remained draft, open, unmergeable, and red at its repository-wide validation gate.
-PR #868 remained closed and unmerged.
+Fetched current `main`, recent history, repository permissions, open draft PR #933, closed PR #868,
+commit status, mandatory coordination records, the canonical DeltaE front door and retained numerical
+core, existing DeltaE tests, prior CSV-key and Parquet-provenance evidence, backlog, blockers, and the
+previous handoff. No active or completed task duplicated this input-integrity defect.
+
+PR #933 remained draft, open, non-mergeable, and blocked by its red repository-wide gate. PR #868
+remained closed, unmerged, and non-mergeable. Neither PR was modified or merged.
 
 ## Confirmed defect
 
-Former front-door Git blob `90e0709f5f065062bb4dc9f990975992a53d76b1` read `.parquet` and
-`.pq` inputs using `pandas.read_parquet(path)`. It did not retain the bytes that supplied the rows.
-During manifest creation, `_input_manifest_record()` therefore fell back to `POST_READ_FILE_HASH`,
-measuring the path after analysis rather than the parsed artifact.
+Retained numerical-core blob `fe5dd5e4673f32fa5a4b94776531f2b392e12414` used
+`pd.to_numeric(..., errors="coerce").fillna(0.0)` for supported B-layer signals. A malformed or
+missing-value cell in an existing column could therefore become zero, while positive or negative
+infinity remained. Extra MC `edep_B*` columns discovered dynamically for full-energy and stopping
+calculations were not all finite-validated.
 
-A deterministic path-replacement control parsed original bytes with SHA-256
-`0c7231e4128cb270b7021358c50c8a26c53616544d34f9c036b1db48aaada52b`, then replaced the path
-with bytes whose SHA-256 was
-`780ae58dca72ba8a47ad0c126f2f113b8ed5800826b73b714fafe144c2c9936e`. The former reader paired
-rows from the first artifact with provenance from the second. Exact former-source audit status was
-`FLAWED` with seven findings.
+Exact former canonical front-door blob: `a5c255a971a7cf672f011f84b91a3c7b64d1f209`.
+
+A present invalid measurement and a wholly absent detector-layer column are not equivalent data
+states. Only the absent-column case is eligible for the established zero-fill convention.
 
 Policy:
 
-`DELTAE_PARQUET_ROWS_AND_PROVENANCE_MUST_SHARE_ONE_BYTE_SNAPSHOT`
+`DELTAE_PRESENT_SIGNAL_CELLS_MUST_BE_FINITE_NUMERIC`
+
+Missing-layer policy:
+
+`ZERO_ONLY_WHEN_SUPPORTED_COLUMN_IS_ABSENT`
 
 ## Remediation
 
 The canonical front door now:
 
-1. reads `.parquet` and `.pq` paths once with `Path.read_bytes()`;
-2. parses `pandas.read_parquet(io.BytesIO(raw))`;
-3. retains byte count and SHA-256 from the same bytes;
-4. reuses that retained snapshot in manifest input records;
-5. publishes the policy and `SINGLE_READ_EXACT_BYTES` in result and manifest reader contracts.
-
-CSV strict-UTF-8/lossless-key behavior and the established numerical/plotting core remain
-unchanged.
+1. coerces every present data `amp_B2/B4/B6/B8` cell to numeric;
+2. rejects nonnumeric, missing-value, NaN, positive-infinite, and negative-infinite present cells;
+3. discovers and validates every present MC `edep_B*` column, including optional deeper layers;
+4. fills zero only when a supported downstream column is wholly absent;
+5. reports the affected column, invalid count, and first row indices in `SignalValueError`;
+6. installs strict preparation functions into the retained core's production hooks;
+7. publishes both policies in result and manifest reader contracts.
 
 ## Files changed
 
 - `scripts/single_stave/deltaE_E.py`
-- `tools/audit/audit_deltae_parquet_snapshot.py`
-- `tests/test_deltae_parquet_snapshot_contract.py`
-- `tools/audit/render_deltae_parquet_snapshot_evidence.py`
-- `docs/validation/deltae_parquet_snapshot_validation.json`
-- `docs/validation/deltae_parquet_snapshot.svg`
-- `docs/validation/deltae_parquet_snapshot_audit.md`
+- `tests/test_deltae_signal_value_contract.py`
+- `tools/audit/audit_deltae_signal_value_contract.py`
+- `tests/test_audit_deltae_signal_value_contract.py`
+- `tools/audit/render_deltae_signal_value_evidence.py`
+- `docs/validation/deltae_signal_value_contract_validation.json`
+- `docs/validation/deltae_signal_value_contract.svg`
+- `docs/validation/deltae_signal_value_contract_audit.md`
 - `chatgpt_todo/ACTIVE_TASK.md`
 - `chatgpt_todo/BACKLOG.md`
-- `chatgpt_todo/SESSION_LOG.md`
-- `chatgpt_todo/archive/2026-07-26T043100Z_AUD-DELTAE-006_PARQUET_SNAPSHOT.md`
+- `chatgpt_todo/archive/2026-07-26T050335Z_AUD-DELTAE-007_SIGNAL_VALUE_INTEGRITY.md`
 - this handoff.
 
 ## Exact identities
 
-- former front-door blob: `90e0709f5f065062bb4dc9f990975992a53d76b1`, 5,854 bytes,
-  SHA-256 `edbf8f5513a39c95fdab7a6f895c7b5a4868ee1dad0b41148f195ceeab1c9c21`;
-- corrected front-door blob: `a5c255a971a7cf672f011f84b91a3c7b64d1f209`, 6,958 bytes,
-  SHA-256 `fc6f049afc0514f0fdc6a95208e8cb4c5c56c2b9ddae5d72914a790ad76f5eea`;
-- audit blob: `ad68cabca6e4bcc379d782cf4aece59af70d7438`, 9,412 bytes,
-  SHA-256 `efde6376f539164e5471b9ba2dadcd0c5d1eed4eb094d0299c9af42bf38f5ea2`;
-- focused-test blob: `d663a1e4103b0b661fd24d8909ae12cdde7080bf`, 5,632 bytes,
-  SHA-256 `b3b7768e84ef4659a4ec6ee5f2339e0d70873f5bc7c52e94a7318738d3126d3a`;
-- renderer blob: `bff50bb72812a8cf8a72680f2a8fd18af72bead7`, 3,885 bytes,
-  SHA-256 `9c8ddec507380ffb5ae060dadb4394d560ab9777ef89c0159b46731305ee55ea`.
+- former front-door blob: `a5c255a971a7cf672f011f84b91a3c7b64d1f209`;
+- retained-core blob: `fe5dd5e4673f32fa5a4b94776531f2b392e12414`;
+- corrected front-door blob: `be00a58dbbc3c2b9de424c80bea3b5a4be6fe119`, 10,349 bytes,
+  SHA-256 `ef51bec47aa15eada369a4e46f4036dfe4ba54409030aa18adf1a3d951165548`;
+- direct-test SHA-256: `569f53a27d302f6f005e6e87969bb36dcf35dac1eb1d69ce4e0484763d38b43c`;
+- auditor SHA-256: `7bcf2874840a6728a7d45aff48513fbf3aa722382634e2fc50b40292503d4aa4`;
+- audit-test SHA-256: `4823264f0a7a15dbae9c494cb1c409c5de5c9c353ebfef19c2625c49ac6dbeae`;
+- renderer SHA-256: `1468e9ae3ee384ab1dbbe000f988f28046553570c457b90fb6f59100876783f1`.
 
 ## Validation
 
-Executed:
+Executed against the exact proposed front door, tests, audit gate, and renderer:
 
 ```text
 python -m py_compile \
   scripts/single_stave/deltaE_E.py \
-  tools/audit/audit_deltae_parquet_snapshot.py \
-  tests/test_deltae_parquet_snapshot_contract.py \
-  tools/audit/render_deltae_parquet_snapshot_evidence.py
+  tools/audit/audit_deltae_signal_value_contract.py \
+  tests/test_deltae_signal_value_contract.py \
+  tests/test_audit_deltae_signal_value_contract.py \
+  tools/audit/render_deltae_signal_value_evidence.py
 
-PYTHONPATH=. pytest -q tests/test_deltae_parquet_snapshot_contract.py
+PYTHONPATH=. pytest -q \
+  tests/test_deltae_signal_value_contract.py \
+  tests/test_audit_deltae_signal_value_contract.py
 
-7 passed in 0.04s
+19 passed in 3.06s
 ```
 
 Environment: Python `3.13.5`, pandas `2.2.3`, NumPy `2.3.5`.
 
-Validated behavior:
+Validated controls:
 
-- deterministic path replacement fails former rows/manifest identity and passes current identity;
-- both `.parquet` and `.pq` use `io.BytesIO` and retain the exact snapshot;
-- exact current-source audit returns `VALIDATED` with zero findings;
-- exact former source returns `FLAWED` with seven findings;
-- invalid UTF-8 audit source and destructive output aliasing fail closed;
-- audit JSON publication is atomic;
-- JSON and SVG parsing and changed-file line-length checks pass.
+- malformed present data cell fails closed rather than becoming zero;
+- NaN and both infinities fail closed;
+- invalid required and optional MC layers, including `edep_B10`, fail closed;
+- wholly absent supported downstream columns still zero-fill;
+- finite numeric strings preserve their values;
+- result and manifest contain both policies;
+- retained-core production hooks point at the strict functions;
+- exact-source audit returns `VALIDATED` with zero findings;
+- malformed-contract mutation, invalid UTF-8, and destructive output alias fail closed;
+- JSON is atomically replaced; JSON and SVG parse; Python lines are at most 100 characters.
 
-A real Parquet engine/file was not executed. The behavioral regression monkeypatched
-`pandas.read_parquet` to test the acquisition/provenance boundary independently of an optional
-backend. Repository-wide pytest/ruff, ROOT processing, GitHub Actions, and the complete link
-inventory were not run and are not claimed.
+The networkless validation checkout used the exact proposed front door/tests/auditor/renderer and a
+minimal retained-core stub to exercise this focused boundary. A complete clone could not be
+materialized because `github.com` DNS resolution failed. Repository-wide pytest/ruff, actual ROOT or
+Parquet processing, GitHub Actions, and the full link inventory were not run and are not claimed.
 
-## Direct-main commits
+## Better-method decision
 
-- `e33e331d71dc74de5586a914a6081ec9faead825` — `fix(deltae): bind Parquet rows to exact input bytes`;
-- `b528409639cf506a86c9e19945dadb85d454a4ee` — `audit(deltae): enforce Parquet snapshot provenance`;
-- `9ad3fff4255c9d284d0529b5929bbb3e2b902976` — `test(deltae): cover Parquet snapshot provenance`;
-- `9469c443617852b82edf05f4fbd6426091b1632a` — evidence renderer;
-- `4564bc727ebf645ad52d251800bc44e3eee3898c` — validation JSON;
-- `233fb5aa2268521f036939d85d502ca0b6346ac0` — visual evidence;
-- `54c4f28a5ebad834b12118f767d47f0ddb7462d0` — audit report;
-- `7e5c3a71069c81f6a60cbc2cdfc471345f2852fc` — active-task completion;
-- `95c8bda66442938f4fdcf48ec1c5b6f9c4206033` — immutable archive;
-- `1e7a9a80a10a9b726e536febf5517b47e898b6cd` — backlog synchronization;
-- `cf24b86b927be036b922f7845047077c20017b9c` — validated delivery handoff;
-- `bbe3e8b7eab38337e003271a1f37eabd582cf71b` — append-only session log and remote-main confirmation.
+Continuing zero fill was rejected because it conceals invalid measurements. Dropping invalid rows was
+rejected as the default because it silently changes event cardinality and can introduce selection
+bias. The selected method fails closed on every present invalid signal and preserves zero fill only
+for a wholly absent supported downstream layer.
 
-GitHub returned successful direct-main commit SHAs for every write. Post-write history confirmed
-`cf24b86b927be036b922f7845047077c20017b9c`,
-`bbe3e8b7eab38337e003271a1f37eabd582cf71b`, and all focused ancestors consecutively on remote
-`main`; no force update was used.
+## Direct-main commits before handoff
+
+- `6dc2d50c4d8d6a10f99ff2c5ab351c515d86cd18` — task claim;
+- `63348699fe3a507fb9008ee582b193c28c7a7b20` — implementation;
+- `03439cbb7b66e300a21eeadb4e8f880b8a10620c` — direct tests;
+- `c08f1e23bc82eb8bcedf78694907e67133e621f3` — fail-closed audit;
+- `cff6e38e947855a06bec096be07db37208697a15` — audit tests;
+- `f38c2eb713d802ea3bbbde4f4c288989ad0f1c32` — evidence renderer;
+- `115e2c7b3905d07d5c5d847b974961bdc85f8f5a` — validation JSON;
+- `cf21c48f3231d3c6167a57f227d5c22d5a69d47b` — visual evidence;
+- `bd4d1fc72c2d51e03cecadd21aa49523511d5a7f` — audit report;
+- `ac029b8ffbb5efa2995ce942783bf571cc1642f7` — backlog synchronization;
+- `b1348234f019ffb0a620ee75e94987bbad739616` — immutable archive;
+- `54256005790b46d11ec0d025d14fab4f844402e3` — active-task completion.
+
+GitHub returned successful direct-main commit SHAs for every write. No force update was used.
+
+## Coordination limitation
+
+`SESSION_LOG.md` was not appended. The connector exposes complete-file replacement rather than a
+byte-safe append operation, while the complete append-only file could not be materialized in the
+networkless checkout. Replacing a partial reconstruction could erase prior provenance. This unmet
+mandatory step is recorded explicitly here and in the immutable archive rather than reported as
+complete.
 
 ## Scientific boundary and next action
 
 No exact A-002 pulse table, ROOT file, amplitude convention, pulse polarity, stopping fraction,
 DeltaE-E PID result, uncertainty budget, calibration, or detector-performance result was produced.
 `AUD-DELTAE-001`, `AUD-DELTAE-002`, `AUD-AMP-009`, `AUD-AMP-010`, and `BLK-AMP-001` remain open.
-The next scientific step is to bind immutable convention/polarity evidence and execute a
-content-addressed production rerun through this strict input boundary, followed by event-cardinality,
-uncertainty, plot, and claim validation.
+
+Next, obtain hash-bound convention and polarity evidence and execute a content-addressed production
+rerun through the strict input boundary, followed by event-cardinality, uncertainty, plot, and claim
+validation.

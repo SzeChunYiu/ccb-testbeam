@@ -1,0 +1,105 @@
+{
+  "controls": {
+    "corrected_cleanup_model": {
+      "blocked": {
+        "managed_after": [],
+        "managed_before": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "stale_count": 0
+      },
+      "failed": {
+        "managed_after": [],
+        "managed_before": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "stale_count": 0
+      },
+      "removed": {
+        "managed_after": [],
+        "managed_before": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "stale_count": 0
+      }
+    },
+    "current_no_cleanup_model": {
+      "blocked": {
+        "managed_after": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "managed_before": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "stale_count": 2
+      },
+      "failed": {
+        "managed_after": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "managed_before": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "stale_count": 2
+      },
+      "removed": {
+        "managed_after": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "managed_before": [
+          "Q.png",
+          "Q_source_data.csv"
+        ],
+        "stale_count": 2
+      }
+    }
+  },
+  "findings": [
+    {
+      "code": "NO_ENTRY_OUTPUT_CLEANUP",
+      "detail": "_process_entry has no managed-artifact cleanup call."
+    },
+    {
+      "code": "NONPASS_DISPOSITION_CAN_RETAIN_STALE_ARTIFACTS",
+      "detail": "BLOCKED or QUARANTINED entries return without removing prior figure/source-data outputs."
+    },
+    {
+      "code": "FAILED_ENTRY_CAN_RETAIN_STALE_ARTIFACTS",
+      "detail": "The per-entry FigureRegistryError handler records FAIL without removing prior managed outputs."
+    },
+    {
+      "code": "REMOVED_ENTRY_CAN_RETAIN_STALE_ARTIFACTS",
+      "detail": "build does not reconcile prior managed outputs against current registry entry IDs."
+    }
+  ],
+  "interpretation": "A non-PASS or removed entry must not leave an older paper artifact at a managed output path. The audit is a software/provenance check and does not validate any scientific value.",
+  "policy": "FIGURE_REGISTRY_BUILD_MUST_NOT_LEAVE_STALE_ARTIFACTS",
+  "required_remediation": [
+    "Define the complete set of managed output paths per registry entry.",
+    "Remove or quarantine prior managed outputs before recording non-PASS.",
+    "Reconcile outputs for entry IDs removed from the current registry.",
+    "Publish the report and managed artifact set as one fail-closed build state.",
+    "Add regressions for PASS-to-BLOCKED, PASS-to-FAIL, and removed entries."
+  ],
+  "schema": "ccb-figure-registry-stale-artifact-audit/1",
+  "source": {
+    "path": "docs/validation/fixtures/figure_registry_builder_stale_artifact_current.py",
+    "sha256": "a4d7490428b48467f101a2b9847799ac1594885d599adf7cb416421c66b76538",
+    "size_bytes": 1796,
+    "snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES"
+  },
+  "source_contract": {
+    "build_cleanup_calls": [],
+    "failure_handler_cleanup_calls": [],
+    "process_cleanup_calls": []
+  },
+  "status": "FLAWED"
+}

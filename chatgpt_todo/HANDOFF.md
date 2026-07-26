@@ -2,138 +2,162 @@
 
 ## Session
 
-- **Task ID:** `AUD-TIMING-002`
-- **Stamp:** `2026-07-26T130822Z`
+- **Task ID:** `AUD-TIMING-003`
+- **Stamp:** `2026-07-26T143114Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `0f7a8e50960d01156ea87cac435f6e25925cd1d9`
-- **Validated implementation/evidence through:** `040f9c6c2d767d40029b3cc0a5339652c749a672`
+- **Initial remote main:** `f4b5f193838effbf0ab9c82911a4fb8652eced8a`
+- **Validated implementation/evidence through:** `0c807f553ac38dd55de2e7574eb9d29f69163e13`
 - **Destination:** sequential commits directly to `main`; no task branch, pull-request transport, force-push, or history rewrite.
 - **Push result:** each GitHub contents write returned a successful direct-main commit SHA. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** audit gate, tests, fixtures, JSON, SVG, report, active-task record, immutable archive, and this handoff are `VALIDATED / COMPLETE`.
-- **Scientific acceptance:** PR #939 residual visualization and broader timing claim remain `FLAWED / PARTIAL`.
+- **Focused acceptance:** audit gate, tests, fixtures, deterministic controls, JSON, SVG, report, active-task record, immutable archive, and this handoff are `VALIDATED / COMPLETE`.
+- **Scientific acceptance:** PR #939 single-stave inference and broader timing claim remain `FLAWED / PARTIAL`.
 
 ## Repository and review state
 
-At run start, remote `main` was `0f7a8e50960d01156ea87cac435f6e25925cd1d9` and had no attached combined status checks. PR #939 was open, non-mergeable, unmerged, and had no attached status checks. Its reviewed head was `ce81f22ef57c5db0b658737c0d9ced4c7fc69949`.
+At run start, remote `main` was `f4b5f193838effbf0ab9c82911a4fb8652eced8a` and had no attached combined status checks. PR #939 was open, unmerged, mergeable, and had no attached status checks. Its reviewed head was `ce81f22ef57c5db0b658737c0d9ced4c7fc69949`.
 
 Reviewed PR identities:
 
 - `scripts/real_data_cfd_timing.py` blob `ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7`;
 - `reports/real_data_cfd_timing/result.json` blob `debc5c45d84a210f8425bab5c9f87d8b61fd279b`.
 
-The existing `AUD-TIMING-001` event-identity audit was read before task selection. This run deliberately reviewed a separate visualization failure rather than duplicating that active evidence. PR #868 remained closed, non-mergeable, unmerged, and untouched.
+The previous `AUD-TIMING-001` event-identity and `AUD-TIMING-002` residual-visualization audits were read before task selection. This run reviewed a distinct statistical-identifiability defect rather than duplicating those tasks. PR #868 was not modified or merged.
 
-## Defect and quantitative result
+## Policy and confirmed defect
 
 Policy:
 
-`REAL_DATA_CFD_RESIDUAL_PLOTS_MUST_COVER_THE_REPORTED_DISTRIBUTION`
+`PAIR_SIGMA68_DIV_SQRT2_REQUIRES_VALIDATED_IDENTICAL_INDEPENDENT_GAUSSIAN_OR_EXPLICIT_DECONVOLUTION`
 
-The PR plots the uncentered B6-B8 residual vector with:
+The PR computes:
 
 ```python
-ax.hist(v, bins=80, range=(-10, 10), ...)
+single = best_sigma68["sigma68_ns"] / np.sqrt(2)
 ```
 
-but the legend reports `sigma68(v)` from the complete vector. Values outside the fixed range are absent from the histogram while contributing to the label.
+and publishes the result as a single-stave estimate consistent with `CL-002`.
+For a variance estimator,
 
-Exact reported values for the plotted distributions:
+```text
+Var(t6 - t8) = Var(t6) + Var(t8) - 2 Cov(t6, t8).
+```
 
-| sample | method | n | median (ns) | sigma68 (ns) |
-|---|---|---:|---:|---:|
-| Sample II | CFD10 | 1888 | 59.60530122976422 | 0.8985129399585929 |
-| Sample II | CFD20 | 1888 | 63.55902020874973 | 15.433838062158472 |
-| task runs | CFD10 | 675 | -31.827483483483483 | 3.5480843306636647 |
-| task runs | CFD20 | 675 | -28.576323232323233 | 6.72995931053074 |
+Dividing a pair standard deviation by `sqrt(2)` identifies a common individual standard deviation only under equal-variance and zero-covariance assumptions. The PR instead applies the transformation to `sigma68`, a robust interquantile width that has no general quadrature-deconvolution law.
 
-The reused definition is `sigma68=(q84-q16)/2`. Because `q16 <= median <= q84`, the result records give conservative bounds:
+The PR result records no independent B6/B8 resolution constraint, external reference, covariance/common-mode model, distributional deconvolution, or machine-readable single-stave authorization and uncertainty state.
 
-| sample | method | q16 lower bound (ns) | q84 upper bound (ns) | consequence |
-|---|---|---:|---:|---|
-| Sample II | CFD10 | 57.80827534984704 | 61.40232710968141 | at least 84% above +10 ns |
-| Sample II | CFD20 | 32.691344084432785 | 94.42669633306667 | at least 84% above +10 ns |
-| task runs | CFD10 | -38.923652144810816 | -24.731314822156154 | at least 84% below -10 ns |
-| task runs | CFD20 | -42.03624185338471 | -15.116404611261753 | at least 84% below -10 ns |
+## Quantitative result
 
-Thus all four displayed distributions have at least 84% of their events guaranteed outside the visible range, without Gaussian assumptions or access to the raw residual vector. The existing PNGs cannot visually demonstrate their labels. This does not prove the numerical widths false; it establishes that the visual evidence is invalid and truncated.
+The headline B6-B8 pair record contains:
 
-## Better method and required remediation
+- `n = 1888`;
+- `sigma68 = 0.8985129399585929 ns`;
+- pair bootstrap interval `[0.8123935669551073, 1.0723601562332614] ns`;
+- tail fraction beyond 5 ns `0.15889830508474576`;
+- full RMS `9.69875913667869 ns`;
+- `RMS / sigma68 = 10.794`.
 
-Before merge or scientific use, PR #939 must:
+The PR's assumption-dependent conversion is:
 
-1. use collision-safe `(run,event_id)` keys throughout, as required by `AUD-TIMING-001`;
-2. median-center residuals before a fixed deviation plot, or select a range covering the full distribution;
-3. report displayed, total, underflow, and overflow counts;
-4. label the exact raw/centered/calibrated residual convention;
-5. overlay the median, q16, q84, and tail threshold used by the table;
-6. provide a full-range panel plus an optional centered core inset;
-7. regenerate all figures/results from immutable ROOT bytes with complete content-addressed provenance.
+```text
+0.8985129399585929 / sqrt(2) = 0.6353445928285822 ns
+```
+
+That number is not independently identified as B6 resolution by the pair data.
+The source states `assume equal`, while the same result records B6/B8 selected-pulse counts of 17,197/10,619 and median pulse widths above 10% of 8/10 samples. These differences do not prove unequal timing resolution, but they show equality was not established by the recorded diagnostics.
+
+The fail-closed audit returns `FLAWED` with eight finding families:
+
+1. `PAIR_SIGMA68_DIVIDED_BY_SQRT2`;
+2. `PAIR_ONLY_RESULT_PROMOTED_TO_SINGLE_STAVE_CLAIM`;
+3. `SINGLE_STAVE_INFERENCE_NOT_MACHINE_READABLE`;
+4. `NO_COVARIANCE_OR_COMMON_MODE_MODEL`;
+5. `NO_INDIVIDUAL_STAVE_DECONVOLUTION`;
+6. `NON_GAUSSIAN_PAIR_WIDTH_USED_FOR_SQRT2_SCALING`;
+7. `SINGLE_STAVE_UNCERTAINTY_NOT_PROPAGATED`;
+8. `EQUAL_STAVE_ASSUMPTION_UNVALIDATED`.
+
+## Independent controls and better method
+
+Fixed-seed controls quantify failure of the naive transformation relative to stave-A `sigma68`:
+
+| control | relative error |
+|---|---:|
+| independent identical normal | -0.53% |
+| independent identical Laplace | +10.65% |
+| independent identical heavy-tail mixture | +21.73% |
+| unequal independent normal | +57.42% |
+| equal normal with correlation 0.5 | -29.31% |
+
+The current result must remain pair-only and record
+`single_stave_inference.authorized=false`. An individual-stave result requires a validated three-detector/multi-pair solution, an independently calibrated external reference, or a hierarchical/deconvolution model that records individual constraints, covariance/common-mode treatment, uncertainty propagation, assumption sensitivity, and injection/recovery or held-out closure.
 
 ## Work delivered
 
-- `tools/audit/audit_real_data_cfd_residual_visualization.py`
-- `tests/test_audit_real_data_cfd_residual_visualization.py`
-- `tools/audit/render_real_data_cfd_residual_visualization_evidence.py`
-- `docs/validation/fixtures/pr939_real_data_cfd_timing_relevant.py`
-- `docs/validation/fixtures/pr939_real_data_cfd_timing_result_subset.json`
-- `docs/validation/real_data_cfd_residual_visualization_validation.json`
-- `docs/validation/real_data_cfd_residual_visualization.svg`
-- `docs/validation/real_data_cfd_residual_visualization_audit.md`
+- `tools/audit/audit_real_data_cfd_single_stave_inference.py`
+- `tests/test_audit_real_data_cfd_single_stave_inference.py`
+- `tools/audit/render_real_data_cfd_single_stave_inference_evidence.py`
+- `docs/validation/fixtures/pr939_real_data_cfd_single_stave_relevant.py`
+- `docs/validation/fixtures/pr939_real_data_cfd_single_stave_result_subset.json`
+- `docs/validation/real_data_cfd_single_stave_inference_validation.json`
+- `docs/validation/real_data_cfd_single_stave_inference.svg`
+- `docs/validation/real_data_cfd_single_stave_inference_audit.md`
 - `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/archive/2026-07-26T130822Z_AUD-TIMING-002_RESIDUAL_VISUALIZATION.md`
+- `chatgpt_todo/archive/2026-07-26T143114Z_AUD-TIMING-003_SINGLE_STAVE_INFERENCE.md`
 - this handoff.
 
-The two fixtures are explicitly version-controlled connector-inspected relevant copies, not a full PR checkout or raw ROOT data.
+The fixtures are explicitly connector-inspected relevant copies, not a complete PR checkout or raw ROOT data.
 
-Implementation identities:
+Implementation SHA-256 identities:
 
-- auditor blob `41d92f8ceae38517bae28a65dc329769294f6a31`;
-- focused-test blob `d684d4182a1f1bd4fb734acdcb79c949b8c48029`;
-- source fixture SHA-256 `7e001aa9f8fa72f9ebff33b7f882f0b6349514ff94f7492bfbc3e6be306c403c`;
-- result fixture SHA-256 `94c037941d65e2957b24ab209ac517048eb478245b89d1cfab2d7eb103889205`;
-- validation JSON SHA-256 `5f4c89377417ceaca6aee9cac9b4fad49941b84a275cbc05825d3881d8a0697f`;
-- SVG SHA-256 `e2693d69052fcf86349aae5bf54509d803b3230a210a46a3f4b7c31515d14d22`.
+- auditor `d70d5bc996a0c139bf1dbbea27a0a9971c7ef259cb8cb967e3ce8678cb4eb75e`;
+- focused tests `070be227742138b3bdbaa57ded4f23b87453fc8a8c0e25c681b07f131af1ba1c`;
+- renderer `74c8bd93cc60913ae69c210b7cefa28e782b16f3763a3c5ba4dd05b8a78b8468`;
+- source fixture `63676dbb0a995f9663df5dae2b40a8b98f188ceb5b57a094f8ac1b67ba4c5600`;
+- result fixture `465cc4de72860cd17022cac7b7f4be6da476ba593ca0c8fd5f0e9464676ab9e7`;
+- validation JSON `8d1dd4129b8bbbe3b077c18d16ee49c9bef202eafc300e1ebba1a548d871dd17`;
+- SVG `04d2196399bab7bf0902b5c4e3628b8a00e8985e0942a5c0df0529f665e98c8a`.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_real_data_cfd_residual_visualization.py \
-  tests/test_audit_real_data_cfd_residual_visualization.py \
-  tools/audit/render_real_data_cfd_residual_visualization_evidence.py
+  tools/audit/audit_real_data_cfd_single_stave_inference.py \
+  tests/test_audit_real_data_cfd_single_stave_inference.py \
+  tools/audit/render_real_data_cfd_single_stave_inference_evidence.py
 
 PYTHONPATH=. pytest -q \
-  tests/test_audit_real_data_cfd_residual_visualization.py
+  tests/test_audit_real_data_cfd_single_stave_inference.py
 
-6 passed in 0.08s
+6 passed in 0.24s
 ```
 
-Environment: Python 3.13.5, pytest 9.0.2.
+Environment: Python 3.13.5, pytest 9.0.2, NumPy 2.4.2.
 
-The current fixture returned exit 1 and `FLAWED` with six findings. Centered and dynamic-range fixtures returned `VALIDATED` with zero findings. Duplicate method records, invalid UTF-8, and destructive output aliasing fail closed. An injected JSON publication failure preserved the prior target and removed the temporary file. JSON and SVG parsing passed. Changed Python lines are at most 100 characters.
+The current-like fixture returned `FLAWED` with eight findings. A corrected pair-only fixture with `single_stave_inference.authorized=false` returned `VALIDATED` with zero findings. Invalid UTF-8 and destructive output aliasing failed closed. An injected JSON publication failure preserved the previous target and removed the temporary file. JSON and SVG parsing passed. Changed Python lines are at most 100 characters.
 
 ## Direct-main sequence
 
-- `c85c249dabfe7bae3280bf886a6639db1f7f6877` — audit gate;
-- `68e98a44608cb3c9f872f6e9b2af982957092f45` — focused regressions;
-- `10d7ce773d6ecf5eed40d9361f7e5fdfe6b11d6b` — evidence renderer;
-- `b02405ea9126c49d4130a9b28b2d199b4eef955a` — inspected source fixture;
-- `a3f774d5f85904b42fde992c8ac19f97f86c02b9` — inspected result fixture;
-- `0761e353958c80f3ff018ec82cf1c879f445ba3d` — validation JSON;
-- `5a331ed835b378547fd92dbc999d104c157d7743` — SVG evidence;
-- `963ef9175debe6258f264442c9cc9c55f8a86e71` — audit report;
-- `70dcad8c9aa0d38f561d03ee411947b478efeb6e` — active-task completion;
-- `040f9c6c2d767d40029b3cc0a5339652c749a672` — immutable archive;
+- `64bdc694abc47df601f4309ae0ca90d8d2f518a4` — inspected source fixture;
+- `a8751e25075a58aadaaacf6645e38047038f1db9` — inspected result fixture;
+- `0e6c8d13d32215e525ea07c79ce0d419fe657699` — audit gate;
+- `45c32e82c17b0a08aca3978909a0a4ee43ff82ac` — focused regressions;
+- `8958d534a04218f68b4d991b766cec3dede3d446` — evidence renderer;
+- `5cad1668c69fcb61a35c0515d6c933b6a56b7e5b` — validation JSON;
+- `064461857e3603cfa02c3f3eeafb3d81ce1887fd` — SVG evidence;
+- `d1f6ec66df9a2e55e0e03ef2fb4ae6ba84ab8044` — audit report;
+- `be2c50253aa6066d8822e44bd142d9f99fa4ce0c` — active-task completion;
+- `0c807f553ac38dd55de2e7574eb9d29f69163e13` — immutable archive;
 - this handoff commit.
 
 ## Scientific boundary and unrun checks
 
-No ROOT file was reprocessed. No event identity, channel mapping, pedestal subtraction, CFD estimator, in-time selection, bootstrap coverage, equal/independent-stave assumption, single-stave resolution, `CL-002` status, or detector-performance result was validated or changed.
+No ROOT file was reprocessed. No event identity, channel mapping, pedestal subtraction, CFD estimator, in-time selection, bootstrap coverage, pair timing width, single-stave resolution, `CL-002` status, or detector-performance result was validated or changed.
 
-Repository-wide pytest and ruff, a complete PR checkout, the producer rerun, documentation/link inventory, and GitHub Actions were not run and are not claimed as passing. PR #939 must remain unmerged until its demonstrated event-identity and visualization failures are fixed and scientific acceptance criteria are rerun.
+Repository-wide pytest and ruff, a complete PR checkout, producer rerun, documentation/link inventory, and GitHub Actions were not run and are not claimed as passing. PR #939 must remain unmerged until its demonstrated event-identity, residual-visualization, and single-stave-identifiability failures are fixed and scientific acceptance criteria are rerun.
 
-`SESSION_LOG.md` was reviewed but not safely appended. Connector reads are paged/truncated while writes replace the complete file; reconstructing it manually could erase append-only provenance. The immutable archive and this handoff retain the full append-equivalent record without claiming that the mandatory append succeeded.
+`SESSION_LOG.md` was reviewed but not safely appended. Connector reads are paged/truncated while writes replace the complete file; reconstructing it manually could erase append-only provenance. The immutable archive and this handoff retain the complete append-equivalent record without claiming that the mandatory append succeeded.
 
 ## Next action
 
-Repair the producer's composite event key and residual visualization together, regenerate content-addressed figures/results from immutable ROOT inputs, add direct producer regressions for underflow/overflow and visual-statistic support, and rerun the timing validation before any merge or public claim.
+Correct PR #939 to retain pair-only wording and a machine-readable unauthorized single-stave state; fix composite event keys and residual visualization; then regenerate content-addressed results from immutable ROOT inputs. Pursue individual-stave inference only through validated multi-pair or external-reference deconvolution with explicit covariance and uncertainty.

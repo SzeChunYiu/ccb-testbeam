@@ -3,8 +3,13 @@
   "task_id": "AUD-MV3-SEL-003",
   "policy": "PEARSON_CHI2_MUST_REJECT_OUT_OF_SUPPORT_DATA_AND_NONUNIT_PROFILES",
   "status": "PARTIAL",
-  "delivery_status": "BLOCKED_NOT_ON_MAIN",
+  "delivery_status": "CORE_CODE_BLOCKED_EVIDENCE_ON_MAIN",
   "initial_remote_main": "54a899d82c1991747218a5b3a5a0835c51991420",
+  "main_documentation": {
+    "evidence_commit": "13ddd66f1b5280a960336d6f855631398d7db090",
+    "handoff_commit": "fae320327fc157ffa362ad139df568b311201372",
+    "core_code_present": false
+  },
   "transport": {
     "pull_request": 933,
     "branch": "chatgpt/AUD-MV3-SEL-003-chi2-remediation-20260726T002131Z",
@@ -69,7 +74,7 @@
       "artifact_id": 8625795443,
       "artifact_digest": "sha256:d16b0db6177e79fb30bcc682160d5460c30ea17f685b4a709c454f6c565adafa",
       "candidate_test_failures": 0,
-      "blocker": "The repository-wide validation gate remains red on 42 pre-existing cross-area failures. The candidate was not merged and main was not advanced."
+      "blocker": "The repository-wide validation gate remains red on 42 pre-existing cross-area failures. Candidate producer code was not merged. Main advanced only with validated blocker documentation and evidence."
     }
   },
   "scientific_boundary": "Software and statistical-contract validation only. No production ROOT or beam-data file was rerun; no weighted profile, covariance, sensitivity scan, calibration, PID, closure, or detector-performance result is established. Canonical CL-021 remains FLAWED under BLK-MV3-LEGACY-001."

@@ -61,7 +61,7 @@ explicit producer constants are:
 
 | Parameter | Value |
 |---|---:|
-| ADC gain used by this producer | 246 ADC/MeV |
+| ADC gain used by this producer | 246 ADC/MeV (producer constant; superseded as a physics gain — canonical calibrated MV0 digitizer gain is 92 ± 28 ADC/MeV, see WIKI correction table) |
 | Gaussian sample noise | 50 ADC |
 | Pedestal | 350 ADC |
 | Rise constant | 2.5 ns |

@@ -27,13 +27,36 @@ class Finding:
     detail: str
 
 
+IGNORE_DIR_PARTS = {
+    ".git", "artifacts", "node_modules", "__pycache__", ".venv", "venv", ".claude",
+}
+# Generated pipeline output dirs, named "<epoch>.<run>.<hex>__<study>"
+# (e.g. 1781068159.1612.2426717d__p05f_two_pulse_risk_coverage_sidebands).
+GENERATED_DIR_RE = re.compile(r"^\d{8,}\.\d+\.")
+
+
 def find_markdown_files(root: Path) -> list[Path]:
-    """Return Markdown files in deterministic repository-relative order."""
-    return sorted(
-        path
-        for path in root.rglob("*.md")
-        if ".git" not in path.relative_to(root).parts and path.is_file()
-    )
+    """Return curated Markdown files in deterministic repository-relative order.
+
+    Generated content is excluded so the audit covers hand-maintained docs only:
+      * artifacts/        - timestamped pipeline snapshot bundles
+      * reports/<epoch>.  - generated per-run pipeline reports
+      * ._*.md            - macOS AppleDouble resource-fork junk
+    """
+    out = []
+    for path in root.rglob("*.md"):
+        parts = path.relative_to(root).parts
+        if ".git" in parts:
+            continue
+        if any(part in IGNORE_DIR_PARTS for part in parts):
+            continue
+        if any(GENERATED_DIR_RE.match(part) for part in parts):
+            continue
+        if any(part.startswith("._") for part in parts):
+            continue
+        if path.is_file():
+            out.append(path)
+    return sorted(out)
 
 
 def decode_markdown(path: Path, root: Path) -> tuple[str | None, Finding | None]:

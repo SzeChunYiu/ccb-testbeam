@@ -2,8 +2,8 @@
 
 > **The honest one-page story.** What the simulation chain proves, where the Opticks
 > GPU bridge stands, what the SiPM core contributes, and exactly what remains open.
-> Every number below is reproduced from [`reports/PROJECT_DASHBOARD.md`](../PROJECT_DASHBOARD.md)
-> and [`reports/studies/clusterE/claims_table.csv`](clusterE/claims_table.csv) — no
+> Every number below is reproduced from [`reports/PROJECT_DASHBOARD.md`](../reports/PROJECT_DASHBOARD.md)
+> and [`reports/studies/clusterE/claims_table.csv`](../reports/studies/clusterE/claims_table.csv) — no
 > value is hand-entered. Where the legacy `PROJECT_REPORT.md` / `FINDINGS_SYNTHESIS.md`
 > (2026-06-28) conflict with this narrative, **this file and the dashboard win**.
 >
@@ -120,8 +120,8 @@ claimed** — a speedup is undefined when 0 GPU hits are gathered.
 
 ## 6. How to read the rest of the repository
 
-- One-screen canonical status → [`reports/PROJECT_DASHBOARD.md`](../PROJECT_DASHBOARD.md)
-- Claim-by-claim table → [`reports/studies/clusterE/claims_table.csv`](clusterE/claims_table.csv)
+- One-screen canonical status → [`reports/PROJECT_DASHBOARD.md`](../reports/PROJECT_DASHBOARD.md)
+- Claim-by-claim table → [`reports/studies/clusterE/claims_table.csv`](../reports/studies/clusterE/claims_table.csv)
 - Row-by-row authority → [`docs/claim_ledger.csv`](claim_ledger.csv)
 - Illustrated wiki → [`WIKI.md`](../WIKI.md)
 - Per-cluster detail → `reports/studies/cluster{A,B,C,D}/SUMMARY.md`, `figures/opticks/SUMMARY.md`

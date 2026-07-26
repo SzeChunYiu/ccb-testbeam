@@ -2,127 +2,135 @@
 
 ## Session
 
-- **Task ID:** `AUD-FIG-003`
-- **Stamp:** `2026-07-26T110505Z`
+- **Task ID:** `AUD-FIG-003-R1`
+- **Stamp:** `2026-07-26T120901Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `cc0f39560f7e98b1c1c130748d268103ea08754a`
-- **Validated delivery/handoff commit:** `059a6b137b49fb3734e5941f4ba44be3a124d5f9`
-- **Remote main after validated delivery:** `059a6b137b49fb3734e5941f4ba44be3a124d5f9`
+- **Initial remote main:** `1c1e17958568d336b667304c651054ff88d03393`
+- **Validated implementation/evidence head before handoff:** `d5ab93afbe022e24f73b3199d0e696a7c8e97f02`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
-- **Push result:** GitHub contents API returned a successful direct-main commit SHA for every write. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** audit gate, tests, JSON, SVG, report, active-task record, immutable archive, and handoff `VALIDATED`; production quantitative PNG publication remains `FLAWED / PARTIAL` and unchanged.
-- **Scientific acceptance:** no paper figure value, uncertainty, or detector-performance claim was authorized or changed.
+- **Push result:** each GitHub contents write returned a successful direct-main commit SHA. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
+- **Focused acceptance:** quantitative PNG publication remediation, direct regressions, JSON, SVG, report, active-task record, and immutable archive are `VALIDATED / COMPLETE`.
+- **Scientific acceptance:** no paper-figure value, uncertainty, timing result, calibration, PID result, stopping profile, pile-up rate, or detector-performance claim was authorized or changed.
 
-## Finding
+## Defect and remediation
 
 Policy:
 
 `QUANTITATIVE_FIGURE_PUBLICATION_MUST_BE_ATOMIC_AND_FAILURE_SAFE`
 
-Current builder blob `cc56e548b54fd8f2692182de6114ee3bcfe196c4` calls
-`fig.savefig(figure_path)` on the final PNG and calls `plt.close(fig)` only afterward.
-An injected partial-write failure changed a prior target from SHA-256
-`ecceab87413dd631c1fc00a41fba8604cfeb1effcbc20ec138839f035ea96099` to
-`e32e4ac9d2e88987ca18b1ffe3331c1e64ff326d7780f5da24a2c2b8865e241d`.
-The post-failure artifact contained 14 partial bytes.
+The former `_emit_quantitative` rendered directly to the final PNG. An exception
+after truncation could destroy a prior validated artifact, and `plt.close(fig)` was
+bypassed when `savefig` failed.
 
-The corrected temporary-render control preserved the prior target, left zero temporary
-files, and atomically published complete replacement bytes on success. The successful
-replacement and final-target SHA-256 were both
-`6dff689f32b725810bc49ca04fc688cbe2960613646c8060abb206209bdb0317`.
+The production path now:
 
-## Audit result
+1. creates a same-directory temporary render path with `tempfile.mkstemp`;
+2. renders with explicit `format="png"`;
+3. reads the completed render bytes once into a content-addressed snapshot;
+4. atomically publishes those retained bytes through the existing flush/fsync/
+   `os.replace` helper;
+5. verifies final byte count and SHA-256;
+6. closes the Matplotlib figure in `finally`;
+7. removes render temporaries on every exit path;
+8. records render-snapshot and publication contracts in source-data CSV.
 
-The current-like exact function excerpt returned `FLAWED` with:
+Implementation identity:
 
-1. `QUANTITATIVE_RENDER_WRITES_FINAL_PATH_DIRECTLY`;
-2. `QUANTITATIVE_FIGURE_HAS_NO_ATOMIC_PUBLICATION_BOUNDARY`;
-3. `QUANTITATIVE_FIGURE_NOT_CLOSED_ON_RENDER_FAILURE`.
+- commit `31a81736be727e7decd555ae53655cf7465aaba8`;
+- builder blob `822572726b65bb116f3f275af84312b526da4b23`;
+- 17,571 bytes;
+- SHA-256 `fe001a5b2ddef15fcfbe3a33d50909dfea57dee8b41ac2251442d6788b18fe56`.
 
-A corrected fixture returned `VALIDATED` with zero findings.
+Regression identity:
+
+- commit `98d8a4fdf691cc46cc4cf679c74569a43af07d1d`;
+- test blob `5fdb48f3b56c22aa7f19049648b1c6242864ab8a`;
+- 4,242 bytes;
+- SHA-256 `b4e0f81f0d221d59066e0713ed84474f79787470b37569f7354de917a15e2234`.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_figure_quantitative_publication.py \
-  tests/test_audit_figure_quantitative_publication.py \
-  tools/audit/render_figure_quantitative_publication_evidence.py
+  tools/figure_registry/builder.py \
+  tests/test_figure_registry_quantitative_publication_remediation.py
 
-PYTHONPATH=. pytest -q tests/test_audit_figure_quantitative_publication.py
+PYTHONPATH=. pytest -q \
+  tests/test_figure_registry_snapshot_remediation.py \
+  tests/test_figure_registry_quantitative_publication_remediation.py
 
-7 passed in 1.38s
+8 passed in 0.56s
 ```
 
-Additional checks:
+Environment: Python 3.13.5, pytest 9.0.2, Matplotlib 3.10.8, PyYAML 6.0.3.
+The two changed source/test files were reconstructed byte-for-byte from their
+committed Git blobs before execution. Maximum changed Python line length was 100.
+Validation JSON parsed and the SVG parsed as XML.
 
-- invalid UTF-8: controlled status 2;
-- source/output alias: rejected without source modification;
-- injected evidence `os.replace` failure: prior JSON preserved and temporary removed;
-- validation JSON parsed;
-- SVG parsed as XML;
-- maximum changed Python line length: 96;
-- environment: Python 3.13.5, pytest 9.0.2.
+Behavioral controls:
+
+- injected partial `savefig` failure preserved the prior final target;
+- the Matplotlib figure closed after that failure;
+- render temporary count after failure was zero;
+- injected final `os.replace` failure preserved the prior target;
+- publication temporary count after failure was zero;
+- successful PNG had signature `89504e470d0a1a0a` and exact digest/size closure in
+  source-data metadata;
+- existing result/source snapshot race regressions remained passing;
+- exact-source publication contract returned zero findings.
+
+Synthetic successful output was 21,772 bytes with SHA-256
+`9ab29f98f32314acee01d9125f2028a3f297b5d33cfe7ab22f371ab4040bf09b`.
+That digest is environment-specific software evidence, not a physics result.
 
 ## Work delivered
 
-- `tools/audit/audit_figure_quantitative_publication.py`
-- `tests/test_audit_figure_quantitative_publication.py`
-- `tools/audit/render_figure_quantitative_publication_evidence.py`
-- `docs/validation/figure_quantitative_publication_validation.json`
-- `docs/validation/figure_quantitative_publication.svg`
-- `docs/validation/figure_quantitative_publication_audit.md`
+- `tools/figure_registry/builder.py`
+- `tests/test_figure_registry_quantitative_publication_remediation.py`
+- `tools/audit/render_figure_quantitative_publication_remediation_evidence.py`
+- `docs/validation/figure_quantitative_publication_remediation_validation.json`
+- `docs/validation/figure_quantitative_publication_remediation.svg`
+- `docs/validation/figure_quantitative_publication_remediation_audit.md`
 - `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/archive/2026-07-26T110505Z_AUD-FIG-003_QUANTITATIVE_PUBLICATION.md`
+- `chatgpt_todo/archive/2026-07-26T120901Z_AUD-FIG-003-R1_QUANTITATIVE_PUBLICATION_REMEDIATION.md`
 - this handoff.
-
-## Primary software sources
-
-- Python `tempfile.mkstemp`: secure creation and caller-managed cleanup.
-  https://docs.python.org/3/library/tempfile.html#tempfile.mkstemp
-- Python `os.replace`: successful same-filesystem replacement is atomic.
-  https://docs.python.org/3/library/os.html#os.replace
-- Matplotlib `Figure.savefig`: supplied path/file-like destination and explicit format.
-  https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.savefig.html
 
 ## Direct-main sequence
 
-- `a2a6f49c23b3c3f3f7f00acb2cb40480969c618a` — audit gate;
-- `eb404a466de3b5c07ca199331dba95e6d637ccb8` — focused regressions;
-- `addb94fd51a5b494924a347baf9434b0a28ba353` — evidence renderer;
-- `12d083d6b89a2e7cc6a879c43ab2baeb74a21fc0` — machine-readable evidence;
-- `8950bf7df4e5e95314e7b89fdff486d7fa1d2291` — visual evidence;
-- `59b92d8726c0ae4591cb8465cdceb468094d45fd` — audit report;
-- `ebc5ce0b7457a462fd814332575296db016961b8` — immutable archive;
-- `f814ef01170dc76f11df122cd72c8334cd9782c8` — active-task update;
-- `059a6b137b49fb3734e5941f4ba44be3a124d5f9` — validated delivery handoff.
+- `31a81736be727e7decd555ae53655cf7465aaba8` — production remediation;
+- `98d8a4fdf691cc46cc4cf679c74569a43af07d1d` — direct regressions;
+- `e885c2f465420c9f7ce9a7d40af4c938c1d04b60` — evidence renderer;
+- `1070035f06189a23da1251f40cc2e9d54c8e0471` — machine-readable evidence;
+- `c77554cd65e6517d24f08cff44244c68d0da0dfe` — visual evidence;
+- `22a3ac9b45cbf6ac0e5b43a01c0e4de65dcc2970` — audit report;
+- `6eaf854bbb895759697498cf4e601d6e596dfc45` — immutable archive;
+- `d5ab93afbe022e24f73b3199d0e696a7c8e97f02` — active-task completion.
 
-## Unrun checks and unresolved coordination
+## Repository and PR state
 
-Repository-wide pytest and ruff, the complete shipped figure-registry build, the paper
-build, repository-wide link inventory, and GitHub Actions were not run and are not
-claimed as passing. The initial main commit had no attached status checks.
+At run start, `main` was `1c1e17958568d336b667304c651054ff88d03393`
+and had no attached combined status checks. PR #939 was open, non-mergeable, and had
+no attached status checks; it was not modified or merged. PR #868 remained closed,
+unmerged, and non-mergeable; it was not modified.
 
-The runtime could not resolve `github.com`; repository reads and direct-main writes used
-the authenticated connector. Focused tests ran on the committed new tool/test bytes and
-an exact connector-reconstructed current `_emit_quantitative` excerpt bound to the full
-builder Git blob.
+No concurrent remote-main commit appeared between the initial read and the focused
+implementation/test writes.
 
-`SESSION_LOG.md` was reviewed but not safely appended. The connector writes complete
-file replacements while the append-only file is available only through paged reads; a
-partial transcription could erase historical provenance. The immutable archive and this
-handoff preserve the complete append-equivalent record. Shared backlog/index/matrix files
-were not partially replaced for the same reason.
+## Unrun checks and coordination limitation
 
-PR #939 remained open, non-mergeable, and unmerged. PR #868 remained closed,
-non-mergeable, and unmerged. Neither was modified.
+Repository-wide pytest, repository-wide ruff, the complete shipped figure registry,
+the paper build, repository-wide link inventory, and GitHub Actions were not run and
+are not claimed as passing. The runtime could not resolve `github.com`, so the full
+repository could not be cloned; authenticated connector reads and writes were used.
 
-## Scientific boundary and next action
+`SESSION_LOG.md` and long aggregate ledgers were reviewed but not safely appended.
+The connector exposes paged reads while writes replace the entire file; reconstructing
+a partial append-only file could erase unrelated history. The immutable archive and
+this handoff retain the complete append-equivalent record without claiming the
+mandatory append succeeded.
 
-No paper figure was regenerated and no scientific value, uncertainty, calibration, PID,
-timing, stopping profile, pile-up rate, or detector-performance claim was changed.
+## Next action
 
-Next: render quantitative PNGs to a same-directory temporary path with explicit PNG
-format, close figures in `finally`, retain complete rendered bytes, publish through the
-existing atomic helper, verify the final target, and add direct production-path failure
-regressions before running the complete shipped registry.
+Run the complete shipped figure registry and paper build in a full checkout, inspect
+all generated quantitative/source artifacts and build reports, and resolve any
+remaining registry/build failures before broader paper integration is accepted.

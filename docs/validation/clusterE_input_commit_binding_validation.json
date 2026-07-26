@@ -1,0 +1,54 @@
+{
+  "deterministic_control": {
+    "committed_bytes": 22,
+    "committed_git_blob_sha1": "f80f50c325b2c99bb467c4758a4c23535d133162",
+    "dirty_bytes": 39,
+    "dirty_git_blob_sha1": "6a11afca199b1afb42510881f24df961e085ddf9",
+    "dirty_matches_base_commit": false,
+    "expected_gate": "INPUT_NOT_AT_BASE_COMMIT"
+  },
+  "finding_count": 0,
+  "findings": [],
+  "inputs": {
+    "source": {
+      "bytes": 13910,
+      "path": "scripts/clusterE/clusterE_canonical_frontdoor.py",
+      "sha256": "230df0122c6a56cdf6a6d99870cf16e254da7467580d630363b2eeb2f681fee8"
+    },
+    "tests": [
+      {
+        "bytes": 9234,
+        "path": "tests/test_clusterE_canonical_frontdoor.py",
+        "sha256": "d11ade4f7b0de3596860f3af30c7b3df84ca28ef43147b23f7c840293ce47cf6"
+      },
+      {
+        "bytes": 10923,
+        "path": "tools/audit/validate_clusterE_canonical_binding_v2.py",
+        "sha256": "42e9c6a676d215aa8f546bcd32bf9bb0617398eafcced2cdf76cd928a8530aa5"
+      },
+      {
+        "bytes": 6228,
+        "path": "tests/test_validate_clusterE_canonical_binding_v2.py",
+        "sha256": "85def154c01f8f77673c6ed20c6fb714d15f3dff60c0a07f3c12e49d9e47003c"
+      }
+    ]
+  },
+  "policy": "INPUT_BYTES_MUST_MATCH_BASE_COMMIT_BLOBS",
+  "renderer_version": "1.0.0",
+  "schema": "ccb-clusterE-input-commit-binding-validation/1",
+  "scientific_boundary": "Software provenance authorization only; no calibration, closure, C12 identity, or detector-performance result is established.",
+  "source_contract_checks": {
+    "authorization_policy": true,
+    "commit_digest_record": true,
+    "commit_match_record": true,
+    "commit_tree_lookup": true,
+    "dirty_input_rejection": true,
+    "former_path_hash_removed": true,
+    "retained_byte_blob_function": true
+  },
+  "status": "VALIDATED",
+  "validation_commands": [
+    "python -m py_compile scripts/clusterE/clusterE_canonical_frontdoor.py tools/audit/validate_clusterE_canonical_binding_v2.py tests/test_clusterE_canonical_frontdoor.py tests/test_validate_clusterE_canonical_binding_v2.py tools/audit/render_clusterE_input_commit_binding_evidence.py",
+    "PYTHONPATH=. pytest -q tests/test_clusterE_canonical_frontdoor.py tests/test_validate_clusterE_canonical_binding_v2.py"
+  ]
+}

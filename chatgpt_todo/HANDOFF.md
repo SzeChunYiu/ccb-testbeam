@@ -2,115 +2,146 @@
 
 ## Session
 
-- **Task ID:** `AUD-FIG-001`
-- **Stamp:** `2026-07-26T061216Z`
+- **Task ID:** `AUD-FIG-002`
+- **Stamp:** `2026-07-26T073041Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `d046259666a08dbf9188e8a80d5a3b0cbced5765`
-- **Validated delivery/handoff commit:** `2cb5bcb70461c66e04927945af564344db79de8b`
-- **Remote main after validated delivery:** `2cb5bcb70461c66e04927945af564344db79de8b`
-- **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, or PR merge.
-- **Focused acceptance:** audit tooling and evidence `VALIDATED / COMPLETE`.
-- **Repository acceptance:** figure-registry schema remains `FLAWED / PARTIAL`.
+- **Initial remote main:** `67e019d5359d76cc82fa0634a8ae2161dd2a464c`
+- **Validated implementation/evidence through:** `bed2267f0eaa7c1699bf6708ffd2f8a956250811`
+- **Remote main after validated delivery:** `bed2267f0eaa7c1699bf6708ffd2f8a956250811`
+- **Destination:** direct sequential commits to `main`; no task branch, PR merge, force-push, or history rewrite.
+- **Focused acceptance:** figure-registry remediation `VALIDATED / COMPLETE`.
+- **Repository acceptance:** cumulative paper-figure scientific review remains `PARTIAL`.
 
 ## Work completed
 
-Added a fail-closed audit for the paper figure registry's controlled vocabulary and structural contract.
+The prior `AUD-FIG-001` audit established that the shipped registry could not satisfy its own validator. This unit remediated the production registry and builder under policy:
 
-Policy:
+`FIGURE_REGISTRY_STATUS_MUST_MAP_EXPLICITLY_TO_BUILD_DISPOSITION`
 
-`FIGURE_REGISTRY_SCHEMA_MUST_ACCEPT_ITS_SHIPPED_VOCABULARY`
+The controlled vocabulary now contains eleven statuses and three kinds. Scientific state is mapped explicitly to build behavior:
 
-The current implementation accepts five statuses and two kinds. The shipped `paper/figures.yaml` uses ten statuses and three kinds. It uses six unsupported statuses and the unsupported kind `figure_sourced`. Five illustrative entries intentionally carry `source_figure` without `result`, but the validator requires `result` unconditionally. The existing test freezes the obsolete five-status set while separately asserting the shipped registry validates.
+- `VALIDATED`, `TENSION` -> `BUILD`;
+- `PRELIMINARY` -> `CONDITIONAL`;
+- `EXTERNAL_BLOCKER` -> `BLOCKED`;
+- `ILLUSTRATIVE` -> `ILLUSTRATIVE`;
+- `SIMULATION_RESULT`, `MC_METHOD_CLOSURE`, `PARTIAL`, `GATED`, `BLOCKED`, and `SUPERSEDED` -> `QUARANTINED`.
 
-## Quantitative audit result
+This prevents a file's existence from silently authorizing a blocked, gated, partial, superseded, or MC-only scientific state.
 
-- Used statuses: 10.
-- Allowed statuses: 5.
-- Unsupported used statuses: 6.
-- Used kinds: 3.
-- Allowed kinds: 2.
-- Unsupported used kinds: 1.
-- Illustrative entries rejected by the false result requirement: 5.
-- Current-like audit findings: 9.
-- Corrected-contract findings: 0.
+## Code and result traceability
 
-Finding families:
+Updated production code:
 
-- `REGISTRY_STATUS_UNSUPPORTED`
-- `REGISTRY_KIND_UNSUPPORTED`
-- `ILLUSTRATIVE_RESULT_FALSE_REQUIREMENT`
-- `TEST_FREEZES_OBSOLETE_STATUS_SET`
+- `tools/figure_registry/registry.py`
+  - supports `quantitative`, `figure_sourced`, and `illustrative`;
+  - records the full controlled status vocabulary;
+  - applies path requirements conditionally by kind and scientific disposition;
+  - exposes `Entry.disposition` and source-artifact semantics.
+- `tools/figure_registry/builder.py`
+  - records scientific and runtime disposition separately;
+  - does not open numerical files for `BLOCKED` or `QUARANTINED` states;
+  - requires finite central values and uncertainty only for build-authorized quantitative entries;
+  - supports slash-delimited nested result keys;
+  - copies source-only and illustrative artifacts into separate locations with SHA-256 and byte-count provenance;
+  - preserves source-table SHA-256 checks;
+  - publishes `build_report.json` atomically;
+  - reports `PASS`, `FAIL`, `BLOCKED`, and `QUARANTINED` separately.
+- `tools/figure_registry/__init__.py`
+  - exports `STATUS_DISPOSITIONS`.
+- `tests/test_figure_registry.py`
+  - replaces the temporary governance-only relaxation from commit `67e019d...` with exact disposition-aware regressions and exact shipped-registry structural validation.
+
+Pre-change blobs:
+
+- registry: `0828d42c50e697bdc793d46d8bd23c4a57e3054d`;
+- builder: `de0a84ca4bde2c66f2482f1ff8ce2ffbdcbe95d2`;
+- public exports: `3b918efcc9a7f9263cfc707eddeadfc64eaf5440`;
+- tests: `60d6368e27a51ac6630b46d4a2333c55e961c3f9`;
+- shipped registry: `5d03f284fd2e018fcda786313f46c64ea7a20105`.
+
+Committed remediation blobs:
+
+- registry: `b1381ccc471eb4711251cb2d0471950f60610c68`;
+- builder: `ef6e11cfac3e9eacdabfb146ec7586e8764fceb1`;
+- public exports: `5ae7cb1d3549216b510552b2d97a63450e9ce7dc`;
+- tests: `1d0037ae33be3d6f56728682209dd41aa791c35e`;
+- evidence renderer: `a51193ed438ba20ac3c1aba9b64de6b0407ffc2a`.
 
 ## Validation
 
+Executed:
+
 ```text
 python -m py_compile \
-  tools/audit/audit_figure_registry_schema_alignment.py \
-  tests/test_audit_figure_registry_schema_alignment.py \
-  tools/audit/render_figure_registry_schema_evidence.py
+  tools/figure_registry/registry.py \
+  tools/figure_registry/builder.py \
+  tools/figure_registry/__init__.py \
+  tests/test_figure_registry.py \
+  tools/audit/render_figure_registry_schema_remediation_evidence.py
 
-pytest -q tests/test_audit_figure_registry_schema_alignment.py
+pytest -q tests/test_figure_registry.py
 
-5 passed
+...........                                                              [100%]
+11 passed in 0.52s
 ```
 
-Also passed: corrected zero-finding fixture, controlled invalid UTF-8, destructive output alias rejection, atomic JSON publication, JSON parse, and SVG XML parse.
+Also passed:
 
-## Files
+- validation JSON parse;
+- SVG XML parse;
+- maximum changed Python line length 97 characters;
+- all 19 shipped entry IDs and all structural fields consumed by `validate_registry` represented in the connector-inspected structural fixture;
+- build-authorized quantitative, source-only, illustrative, preliminary, external-blocker, quarantined, invalid-status/kind, duplicate-ID, uncertainty, finite-value, and source-hash cases.
 
-Added:
+Environment:
 
-- `tools/audit/audit_figure_registry_schema_alignment.py`
-- `tests/test_audit_figure_registry_schema_alignment.py`
-- `tools/audit/render_figure_registry_schema_evidence.py`
-- `docs/validation/figure_registry_schema_alignment_validation.json`
-- `docs/validation/figure_registry_schema_alignment.svg`
-- `docs/validation/figure_registry_schema_alignment_audit.md`
-- `chatgpt_todo/archive/2026-07-26T061216Z_AUD-FIG-001_SCHEMA_ALIGNMENT.md`
+- Python `3.13.5`;
+- PyYAML `6.0.3`;
+- pandas `2.2.3`;
+- matplotlib `3.10.8`;
+- Linux `6.12.13-x86_64`.
 
-Updated:
+The execution container could not resolve `github.com`. The local shipped-registry fixture is therefore labelled `CONNECTOR_INSPECTED_STRUCTURAL_FIELD_COPY`, not a byte-identical checkout. The exact shipped-file regression is committed for execution in a complete repository checkout.
 
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/HANDOFF.md`
+## Evidence
 
-## Repository provenance
+- `docs/validation/figure_registry_schema_remediation_validation.json`
+- `docs/validation/figure_registry_schema_remediation.svg`
+- `docs/validation/figure_registry_schema_remediation_audit.md`
+- `tools/audit/render_figure_registry_schema_remediation_evidence.py`
+- `chatgpt_todo/archive/2026-07-26T073041Z_AUD-FIG-002_SCHEMA_REMEDIATION.md`
 
-- `tools/figure_registry/registry.py` blob: `0828d42c50e697bdc793d46d8bd23c4a57e3054d`
-- `paper/figures.yaml` blob: `5d03f284fd2e018fcda786313f46c64ea7a20105`
-- `tests/test_figure_registry.py` blob: `1546b8b6896fdbbdce28cfb53fccc8d727479436`
+## Direct-main commit sequence
 
-The container could not resolve `github.com`. Current repository semantics were reconstructed from authenticated connector reads and labelled as a semantic excerpt, not a byte-identical local checkout.
+- `6b5b8d4d8262a9b0021b91908867cda96ccbd6dc` — `fix(figures): align registry schema with scientific states`;
+- `413c7d931fde80b65d587803dfab9181b8d5b507` — `fix(figures): map scientific states to build dispositions`;
+- `bd7f41d9ed4e0d6b26fc4ddc500c9f68e79ec15d` — `fix(figures): export disposition contract`;
+- `bd46218b36c1169bacdd904844edab7385693f40` — `test(figures): cover disposition-aware registry builder`;
+- `d9b0637e734edf4ee5f7d00ced94adc114a18adb` — `docs(validation): add figure-registry remediation renderer`;
+- `4e1657d102da9c7308bd0965baf2262c3c41dd46` — `docs(validation): record figure-registry remediation`;
+- `95c4af313e33f2f190a3878ffdaffe22ab067fda` — `docs(validation): add figure-registry remediation visual`;
+- `ce9a647f93126aeb55545627ce98c86da16f9c8c` — `docs(validation): document figure-registry remediation`;
+- `1433af6ad11d348bdc79a637cf715dad9d2a09a2` — `docs(audit): complete figure-registry remediation task`;
+- `bed2267f0eaa7c1699bf6708ffd2f8a956250811` — `docs(audit): archive figure-registry remediation`.
 
-## Direct-main commits
-
-- `e51e06686069d0bc6db44fccbee4bbdd4cc83675` — audit gate;
-- `312c312db89c3b8a790132fca3dee7a5043b9787` — focused tests;
-- `a399d38dc345ebca92bf9d76387770b6bb607ff3` — evidence renderer;
-- `b5dc555317df494f7e93af241f3873ce918d3747` — machine-readable evidence;
-- `6cd783490d03559e84ac58452a75432b95251537` — visual evidence;
-- `3b9ca56daea084f54bf05fa25e033541e8f94809` — audit report;
-- `a117edc54fc04025d3ffb858f5c547d6e638fdcf` — immutable archive;
-- `a8cc8edc031148dcef8129defb8b472bed6b8a60` — active-task update;
-- `2cb5bcb70461c66e04927945af564344db79de8b` — validated delivery handoff.
-
-GitHub returned successful direct-main commit SHAs for every write. Post-write history confirmed the handoff and all focused ancestors consecutively on remote `main`; no force update was used.
-
-## Next exact unit
-
-Remediate the registry and builder together:
-
-1. define the complete status vocabulary;
-2. map statuses explicitly to build dispositions;
-3. support a source-figure-only kind;
-4. make path requirements conditional on kind and disposition;
-5. update tests without downgrading scientific states;
-6. require the exact shipped registry to validate;
-7. run focused builder tests and the repository-wide gate.
+GitHub returned a successful commit SHA for each direct-main contents write. Post-write history showed the sequence consecutively on remote `main`. There was no terminal-style `git push` output because delivery used authenticated GitHub contents writes; no force update was used.
 
 ## Scientific boundary
 
-No figure was regenerated. No source value, uncertainty, calibration, PID result, timing result, stopping profile, pile-up rate, or detector-performance claim was validated or changed.
+This is software-governance and artifact-provenance validation. No paper figure was regenerated from production inputs. No figure value, uncertainty, calibration, PID metric, timing resolution, stopping profile, pile-up rate, simulation-to-data transfer, or detector-performance claim was validated or changed.
+
+## Unrun checks and unresolved risks
+
+- repository-wide pytest and ruff were not run in this isolated environment;
+- no GitHub Actions result was attached to the delivered commits at handoff time;
+- no production paper build was executed;
+- scientific authorization and content-addressed provenance of every individual registry entry remain separate review tasks;
+- source-artifact copying intentionally preserves bytes but does not validate the artifact's scientific content.
+
+## Next exact unit
+
+Run the exact shipped registry and builder in a complete checkout, inspect repository-wide CI, then audit each `BUILD` entry's source value, uncertainty, result hash, source artifact, and paper-caption semantics before regenerating publication artifacts.
 
 ## Coordination limitation
 
-`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and aggregate matrices were not replaced. Only whole-file replacement is available while their complete current contents are paged or truncated; a partial reconstruction could erase append-only or concurrent provenance. The immutable archive contains the append-equivalent record. This mandatory synchronization gap remains explicit.
+`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and aggregate matrices were reviewed but not replaced. The connector exposes whole-file replacement while complete append-only contents are returned through paged or truncated views; a partial reconstruction could erase unrelated or concurrent provenance. The immutable archive contains the complete append-equivalent record. This mandatory synchronization gap remains explicit and is not reported as completed.

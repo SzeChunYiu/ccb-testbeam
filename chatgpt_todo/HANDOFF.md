@@ -6,7 +6,8 @@
 - **Stamp:** `2026-07-26T050335Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `6c25424ae2507396d352d0b7e45d737752b2872d`
-- **Validated implementation/evidence head before handoff:** `54256005790b46d11ec0d025d14fab4f844402e3`
+- **Validated delivery/handoff commit:** `be4aec3d3dc5ee67014799dc07ce7f03ec8f2cbb`
+- **Remote main after validated delivery:** `be4aec3d3dc5ee67014799dc07ce7f03ec8f2cbb`
 - **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, PR merge, or deletion of unrelated work.
 - **Focused acceptance:** canonical present-signal input boundary `VALIDATED / COMPLETE`.
 - **Scientific acceptance:** A-002 physics remains `PARTIAL / BLOCKED`.
@@ -126,7 +127,7 @@ rejected as the default because it silently changes event cardinality and can in
 bias. The selected method fails closed on every present invalid signal and preserves zero fill only
 for a wholly absent supported downstream layer.
 
-## Direct-main commits before handoff
+## Direct-main commits
 
 - `6dc2d50c4d8d6a10f99ff2c5ab351c515d86cd18` — task claim;
 - `63348699fe3a507fb9008ee582b193c28c7a7b20` — implementation;
@@ -139,9 +140,11 @@ for a wholly absent supported downstream layer.
 - `bd4d1fc72c2d51e03cecadd21aa49523511d5a7f` — audit report;
 - `ac029b8ffbb5efa2995ce942783bf571cc1642f7` — backlog synchronization;
 - `b1348234f019ffb0a620ee75e94987bbad739616` — immutable archive;
-- `54256005790b46d11ec0d025d14fab4f844402e3` — active-task completion.
+- `54256005790b46d11ec0d025d14fab4f844402e3` — active-task completion;
+- `be4aec3d3dc5ee67014799dc07ce7f03ec8f2cbb` — validated delivery handoff.
 
-GitHub returned successful direct-main commit SHAs for every write. No force update was used.
+GitHub returned successful direct-main commit SHAs for every write. Post-write history confirmed the
+validated handoff and all focused ancestors consecutively on remote `main`; no force update was used.
 
 ## Coordination limitation
 

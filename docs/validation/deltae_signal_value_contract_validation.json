@@ -1,0 +1,115 @@
+{
+  "finding_count": 0,
+  "findings": [],
+  "former_source": {
+    "confirmed_patterns": [
+      "pd.to_numeric(..., errors=coerce) followed by fillna(0.0) for present supported layers",
+      "extra present MC edep_B* columns could reach stopping/full-energy logic without a finite gate"
+    ],
+    "git_blob": "a5c255a971a7cf672f011f84b91a3c7b64d1f209"
+  },
+  "implementation_commit": "63348699fe3a507fb9008ee582b193c28c7a7b20",
+  "initial_remote_main": "6c25424ae2507396d352d0b7e45d737752b2872d",
+  "missing_layer_policy": "ZERO_ONLY_WHEN_SUPPORTED_COLUMN_IS_ABSENT",
+  "policy": "DELTAE_PRESENT_SIGNAL_CELLS_MUST_BE_FINITE_NUMERIC",
+  "schema": "ccb-deltae-signal-value-validation/1",
+  "scientific_boundary": "No exact A-002 table, amplitude convention, pulse polarity, stopping fraction, DeltaE-E PID, uncertainty budget, calibration, or detector-performance result was produced.",
+  "scientific_interpretation": "Present measured signal cells and wholly absent supported layers are distinct data states. Only the latter may be represented by the documented zero-fill convention.",
+  "session_stamp": "2026-07-26T050335Z",
+  "source": {
+    "bytes": 10349,
+    "git_blob": "be00a58dbbc3c2b9de424c80bea3b5a4be6fe119",
+    "max_line_length": 85,
+    "path": "scripts/single_stave/deltaE_E.py",
+    "sha256": "ef51bec47aa15eada369a4e46f4036dfe4ba54409030aa18adf1a3d951165548"
+  },
+  "status": "VALIDATED",
+  "synthetic_controls": {
+    "absent_column_fill_authorized": true,
+    "corrected_infinity_finite_mask": [
+      false
+    ],
+    "corrected_malformed_finite_mask": [
+      false,
+      true
+    ],
+    "details": {
+      "absent_supported_downstream_column": {
+        "current": "zero-filled",
+        "former": "zero-filled"
+      },
+      "finite_numeric_string": {
+        "current": "coerced without value change",
+        "former": "coerced"
+      },
+      "malformed_present_data_cell": {
+        "current": "SignalValueError",
+        "former": "coerced to NaN then zero"
+      },
+      "positive_infinite_extra_mc_layer_edep_B10": {
+        "current": "SignalValueError",
+        "former": "retained and used"
+      },
+      "positive_infinite_present_data_cell": {
+        "current": "SignalValueError",
+        "former": "retained as +inf"
+      }
+    },
+    "former_infinity_remained_infinite": true,
+    "former_malformed_cell_became_zero": true
+  },
+  "task_id": "AUD-DELTAE-007",
+  "unrun_checks": [
+    "repository-wide pytest",
+    "ruff",
+    "ROOT processing",
+    "real Parquet engine/file execution",
+    "GitHub Actions",
+    "repository-wide link inventory"
+  ],
+  "validation": {
+    "audit_findings": 0,
+    "audit_status": "VALIDATED",
+    "commands": [
+      "python -m py_compile scripts/single_stave/deltaE_E.py tools/audit/audit_deltae_signal_value_contract.py tests/test_deltae_signal_value_contract.py tests/test_audit_deltae_signal_value_contract.py tools/audit/render_deltae_signal_value_evidence.py",
+      "PYTHONPATH=. pytest -q tests/test_deltae_signal_value_contract.py tests/test_audit_deltae_signal_value_contract.py",
+      "python tools/audit/audit_deltae_signal_value_contract.py scripts/single_stave/deltaE_E.py --output docs/validation/deltae_signal_value_contract_validation.json",
+      "python tools/audit/render_deltae_signal_value_evidence.py docs/validation/deltae_signal_value_contract_validation.json docs/validation/deltae_signal_value_contract.svg"
+    ],
+    "environment": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "python": "3.13.5"
+    },
+    "files": {
+      "scripts/single_stave/deltaE_E.py": {
+        "bytes": 10349,
+        "max_line_length": 85,
+        "sha256": "ef51bec47aa15eada369a4e46f4036dfe4ba54409030aa18adf1a3d951165548"
+      },
+      "tests/test_audit_deltae_signal_value_contract.py": {
+        "bytes": 2343,
+        "max_line_length": 85,
+        "sha256": "4823264f0a7a15dbae9c494cb1c409c5de5c9c353ebfef19c2625c49ac6dbeae"
+      },
+      "tests/test_deltae_signal_value_contract.py": {
+        "bytes": 4819,
+        "max_line_length": 95,
+        "sha256": "569f53a27d302f6f005e6e87969bb36dcf35dac1eb1d69ce4e0484763d38b43c"
+      },
+      "tools/audit/audit_deltae_signal_value_contract.py": {
+        "bytes": 5398,
+        "max_line_length": 90,
+        "sha256": "7bcf2874840a6728a7d45aff48513fbf3aa722382634e2fc50b40292503d4aa4"
+      },
+      "tools/audit/render_deltae_signal_value_evidence.py": {
+        "bytes": 3962,
+        "max_line_length": 100,
+        "sha256": "1468e9ae3ee384ab1dbbe000f988f28046553570c457b90fb6f59100876783f1"
+      }
+    },
+    "json_parse": "PASS",
+    "pytest": "19 passed in 3.06s",
+    "svg_xml_parse": "PASS"
+  }
+}

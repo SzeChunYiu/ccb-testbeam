@@ -6,8 +6,9 @@
 - **Stamp:** `2026-07-26T040516Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `87e81a490dd9889901fbfb18604685bc2e437d27`
-- **Latest confirmed remote-main commit before this handoff write:**
-  `1ffddad85558e1008e5e7f61b3622b8121f8d78f`
+- **Validated delivery/handoff commit:** `df3d3dd341fc16f925c3a3f8689aacb65cd74c66`
+- **Remote-main confirmation:** post-write history confirmed the delivery commit and every focused
+  ancestor consecutively on remote `main`.
 - **Destination:** direct commits to `main`; every `update_ref` used `force=false` and returned
   `success=true`; no task branch, force-push, history rewrite, or PR transport.
 - **Focused acceptance:** canonical CSV reader and same-snapshot provenance `VALIDATED / COMPLETE`.
@@ -93,7 +94,7 @@ executed because the networkless container could not materialize the retained co
 implementation commit preserves it by exact Git blob identity. No Actions run or attached status
 check was available; repository-wide pytest and ruff are not claimed.
 
-## Direct-main commits before this handoff
+## Direct-main commits
 
 - `746789f640d9d066b9aa4749784073288ca1a248` — `fix(deltae): preserve CSV composite-key identity`;
 - `0565f4bc29c5d8230cd84c767339105adc28e5d6` —
@@ -101,11 +102,12 @@ check was available; repository-wide pytest and ruff are not claimed.
 - `43e7181235864a7a7f93d920aee7ac04917f2528` —
   `docs(validation): record DeltaE CSV key remediation`;
 - `1ffddad85558e1008e5e7f61b3622b8121f8d78f` —
-  `docs(audit): archive DeltaE CSV key remediation`.
+  `docs(audit): archive DeltaE CSV key remediation`;
+- `df3d3dd341fc16f925c3a3f8689aacb65cd74c66` —
+  `docs(audit): hand off DeltaE CSV key remediation`.
 
-GitHub returned `success=true` for each non-forced `main` ref update. Recent remote history confirmed
-`1ffddad85558e1008e5e7f61b3622b8121f8d78f` and all focused ancestors consecutively on `main` before
-this handoff write.
+GitHub returned `success=true` for each non-forced `main` ref update. Post-write remote history
+confirmed `df3d3dd341fc16f925c3a3f8689aacb65cd74c66` and all focused ancestors consecutively on `main`.
 
 ## Scientific boundary and next action
 

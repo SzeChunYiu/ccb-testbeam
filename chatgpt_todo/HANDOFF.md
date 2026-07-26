@@ -6,8 +6,10 @@
 - **Stamp:** `2026-07-26T091312Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `a5d66f563029183e170c24f5412fffc4e336d602`
-- **Delivery head before this handoff:** `ba44bcb0e9ca1ec63c5e0dad0be686d5918b8a60`
+- **Validated delivery/handoff commit:** `1c01dc385e75e1a74aa6b306384ee5715cc72177`
+- **Remote main after validated delivery:** `1c01dc385e75e1a74aa6b306384ee5715cc72177`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
+- **Push result:** GitHub contents API returned successful direct-main commit SHAs for every write; recent history confirmed the consecutive sequence on remote `main`. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
 - **Focused acceptance:** producer/report/ledger remediation `VALIDATED / COMPLETE`.
 - **Scientific acceptance:** accepted absolute Rmax remains `BLOCKED` under `S-STAT-003`.
 
@@ -85,7 +87,8 @@ Additional results:
 - exact local Git blob hashes matched remote content blobs;
 - validation JSON parsed;
 - evidence renderer compiled and reproduced the SVG;
-- SVG parsed as XML.
+- SVG parsed as XML;
+- no combined commit statuses are attached to the validated delivery commit, so broad CI success is not claimed.
 
 Validated blobs:
 
@@ -96,7 +99,7 @@ Validated blobs:
 | ledger | `d666d9db6e7026c8d4ba0d69cc1fb301adf5c306` | `67673cb00fb2a4704a04438cbfc87133eadda39413e65a62aa324272f2008563` | 22,276 |
 | regression | `a5ec0a18ae3e246f60ad8875249e2a10df3ba0f8` | `b8c4654948554492d2e5465f28428ae4ab0131e79517bd554d26a287918cd3fc` | 1,739 |
 
-## Direct-main sequence through active-task completion
+## Direct-main sequence
 
 - `676549430e33994ca66b709ba102bfdc8998cf57` — task claim;
 - `512671d35aa25c9830e80cd9ff525fd43254e608` — producer remediation;
@@ -108,15 +111,16 @@ Validated blobs:
 - `e55a3de0043faa86db6cd05826d745180fcc9270` — visual evidence;
 - `78c56e05c93f664688502d2f4fd7c3490dc74f7a` — audit report;
 - `9c08aedf4bfeab90d6b4650aec84246a6ec1d285` — immutable archive;
-- `ba44bcb0e9ca1ec63c5e0dad0be686d5918b8a60` — active-task completion.
-
-GitHub contents writes returned a successful direct-main commit SHA for each update. Recent remote history confirmed the consecutive sequence on `main`. The connector does not return a conventional terminal `git push` transcript; none is claimed.
+- `ba44bcb0e9ca1ec63c5e0dad0be686d5918b8a60` — active-task completion;
+- `1c01dc385e75e1a74aa6b306384ee5715cc72177` — validated delivery handoff.
 
 ## Scientific boundary
 
 No raw ROOT file was reprocessed. No event-arrival exposure, luminosity, accepted `mu_max`, recovery-failure ceiling, universal dead time, calibration, PID result, or detector-performance quantity was produced. Repository-wide pytest, ruff, ROOT processing, complete link checking, and GitHub Actions were not run and are not claimed as passing.
 
-PR #939 remained open and unmerged. PR #868 remained closed and unmerged.
+PR #939 remained open, non-mergeable, and unmerged. PR #868 remained closed, non-mergeable, and unmerged.
+
+`SESSION_LOG.md` was read completely through paged connector ranges, but the available write operation is whole-file replacement rather than a byte-safe append. Reconstructing the complete historical file inside one write payload risked transcription damage. The mandatory append was therefore not reported as completed; the immutable archive and this handoff retain the full append-equivalent record.
 
 ## Next action
 

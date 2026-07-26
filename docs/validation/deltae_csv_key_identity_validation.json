@@ -1,0 +1,97 @@
+{
+  "acceptance": {
+    "expected_distinct_keys": 2,
+    "expected_false_cross_file_matches": 0,
+    "required_key_dtypes": {
+      "event_id": "string",
+      "run_id": "string",
+      "source_file_id": "string"
+    },
+    "required_snapshot": "SINGLE_READ_STRICT_UTF8"
+  },
+  "controls": {
+    "default_distinct_composite_keys": 1,
+    "default_false_cross_file_matches": 1,
+    "default_inferred_tokens": [
+      "1",
+      "1"
+    ],
+    "lossless_cross_file_matches": 0,
+    "lossless_distinct_composite_keys": 2,
+    "lossless_text_tokens": [
+      "001",
+      "1"
+    ],
+    "pandas_version": "2.2.3",
+    "raw_source_file_tokens": [
+      "001",
+      "1"
+    ]
+  },
+  "environment": {
+    "pandas": "2.2.3",
+    "python": "3.13.5"
+  },
+  "execution_scope": {
+    "fixture": "exact behavioral excerpt of the current KEY_COLS/read_table contract",
+    "fixture_sha256": "128e6e95120c907e6c231bde803a2616f56a1bbed1c5377b7c53984c7a285257",
+    "full_repository_source_executed": false,
+    "reason": "networkless execution container; repository bytes were inspected through GitHub connector"
+  },
+  "findings": [
+    {
+      "code": "CSV_KEY_DTYPE_MISSING",
+      "message": "read_table() calls pandas.read_csv without an explicit key dtype."
+    },
+    {
+      "code": "CSV_NOT_SINGLE_READ_STRICT_UTF8",
+      "message": "CSV bytes are not snapshotted once and decoded as strict UTF-8 before parsing."
+    },
+    {
+      "code": "CSV_KEY_POLICY_MISSING",
+      "message": "source does not declare policy DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT."
+    },
+    {
+      "code": "DISTINCT_COMPOSITE_KEYS_COLLAPSE",
+      "message": "default CSV inference collapses exact source_file_id tokens '001' and '1' into one composite key."
+    },
+    {
+      "code": "FALSE_CROSS_FILE_MATCH",
+      "message": "default CSV inference creates a false data/MC match between distinct exact source_file_id tokens."
+    }
+  ],
+  "policy": "DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT",
+  "reader_contract": {
+    "all_key_tokens_present": true,
+    "policy_present": false,
+    "read_csv_has_dtype": false,
+    "single_read_bytes_present": false,
+    "strict_decode_present": false
+  },
+  "repository_snapshot": {
+    "branch": "main",
+    "git_blob": "fe5dd5e4673f32fa5a4b94776531f2b392e12414",
+    "inspected_lines": "KEY_COLS declaration and read_table() CSV branch",
+    "main_sha": "f1a615d5b591b63c91b03124d243daf8372b61cd",
+    "observed_contract": "return pd.read_csv(path) with no dtype or exact-byte snapshot",
+    "path": "scripts/single_stave/deltaE_E.py",
+    "repository": "SzeChunYiu/ccb-testbeam"
+  },
+  "schema": "ccb-deltae-csv-key-identity-audit/1",
+  "scientific_boundary": "This audit validates event-identifier integrity only; it does not validate A-002 amplitudes, stopping fractions, PID, calibration, or detector performance.",
+  "source": {
+    "bytes": 496,
+    "path": "current_source_excerpt.py",
+    "sha256": "128e6e95120c907e6c231bde803a2616f56a1bbed1c5377b7c53984c7a285257",
+    "snapshot_policy": "SINGLE_READ_STRICT_UTF8"
+  },
+  "status": "FLAWED",
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/audit/audit_deltae_csv_key_identity.py tests/test_audit_deltae_csv_key_identity.py tools/audit/render_deltae_csv_key_identity_evidence.py",
+      "pytest -q tests/test_audit_deltae_csv_key_identity.py"
+    ],
+    "python": "3.13.5",
+    "result": "6 passed in 0.09s"
+  }
+}

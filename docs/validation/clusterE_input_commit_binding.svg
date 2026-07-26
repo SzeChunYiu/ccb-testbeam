@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" role="img" aria-labelledby="title desc">
+<title id="title">Cluster E input-to-commit provenance gate</title>
+<desc id="desc">Retained input bytes must have the same Git blob identity as the declared base commit tree.</desc>
+<rect width="1200" height="520" fill="white"/>
+<g font-family="sans-serif" fill="black">
+<text x="40" y="55" font-size="28" font-weight="bold">Cluster E input/base-commit binding — VALIDATED</text>
+<rect x="70" y="110" width="300" height="105" fill="#eef3f8" stroke="black"/>
+<text x="95" y="145" font-size="20" font-weight="bold">Single retained byte snapshot</text>
+<text x="95" y="178" font-size="17">strict UTF-8 · SHA-256 · byte count</text>
+<rect x="450" y="110" width="300" height="105" fill="#eef3f8" stroke="black"/>
+<text x="475" y="145" font-size="20" font-weight="bold">Measured Git blob</text>
+<text x="475" y="178" font-size="17">blob(len || NUL || bytes)</text>
+<rect x="830" y="110" width="300" height="105" fill="#eef3f8" stroke="black"/>
+<text x="855" y="145" font-size="20" font-weight="bold">Base commit tree blob</text>
+<text x="855" y="178" font-size="17">rev-parse commit:path</text>
+<path d="M370 162 H450" stroke="black" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M750 162 H830" stroke="black" stroke-width="3" marker-end="url(#arrow)"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+<path d="M0 0 L10 5 L0 10 z" fill="black"/>
+</marker></defs>
+<rect x="170" y="285" width="360" height="125" fill="#edf8ed" stroke="black"/>
+<text x="195" y="325" font-size="20" font-weight="bold">Committed control: ACCEPT</text>
+<text x="195" y="360" font-size="17">measured = commit = f80f50c325b2…</text>
+<rect x="670" y="285" width="360" height="125" fill="#fdeeee" stroke="black"/>
+<text x="695" y="325" font-size="20" font-weight="bold">Dirty control: REJECT</text>
+<text x="695" y="360" font-size="17">dirty 6a11afca199b… ≠ base f80f50c325b2…</text>
+<text x="40" y="475" font-size="17">Policy: INPUT_BYTES_MUST_MATCH_BASE_COMMIT_BLOBS · provenance is authorized only after exact blob equality.</text>
+</g></svg>

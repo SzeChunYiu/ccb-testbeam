@@ -37,12 +37,15 @@ source $SPIKE/env.sh
 export HOME=$BASE/opticks_home
 export GEOM=CCBStave
 mkdir -p \$HOME/.opticks/GEOM/CCBStave
-$CCB_BUILD/ccb_stave_sim --dump-gdml \$HOME/.opticks/GEOM/CCBStave/origin.gdml \
+CCB_GPU_GEOM=1 $CCB_BUILD/ccb_stave_sim --dump-gdml \$HOME/.opticks/GEOM/CCBStave/origin.gdml \
   --optical-dir $CCB_BUILD/optical --output $BASE/_gdml.root --nevents 1
 export CCBStave_GDMLPathFromGEOM=\$HOME/.opticks/GEOM/CCBStave/origin.gdml
 unset CCBStave_CFBaseFromGEOM
 export G4CXOpticks__setGeometry_saveGeometry=\$HOME/.opticks/GEOM/CCBStave
+# Sensor-annotated ingest (CCBSensorIdentifier -> sensor_count=4) BEFORE the bridge runs.
+$SPIKE/opticks-install/build/g4cx/tests/ccb_setGeometry
 export OPTICKS_RUNNING_MODE=SRM_INPUT_PHOTON OPTICKS_NUM_EVENT=1
+export OPTICKS_EVENT_MODE=HitPhoton
 export OPTICKS_MAX_PHOTON=100000000 OPTICKS_MAX_SLOT=2000000
 $SPIKE/opticks-install/build/g4cx/tests/ccb_opticks_gpu $BASE/optical_gpu $BASE/gpu_hits
 SB

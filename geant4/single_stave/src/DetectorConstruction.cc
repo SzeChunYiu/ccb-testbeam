@@ -20,6 +20,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4GeometryManager.hh"
+#include <cstdlib>
 #include "G4SolidStore.hh"
 
 #include <array>
@@ -213,6 +214,29 @@ void DetectorConstruction::BuildCoatingSurface(G4VPhysicalVolume* scintPV,
   new G4LogicalBorderSurface("TiO2_Border", scintPV, worldPV, surf);
 }
 
+// GPU-only SiPM detect surface. Opticks classifies a boundary by the FIRST CHAR
+// of its OpticalSurfaceName: a '#' prefix -> Surface_zplus_sensor_A, the Opticks
+// sensor-detection surface type, so photons crossing into the SiPM are flagged
+// (SURFACE_DETECT / EFFICIENCY_COLLECT). The CPU Geant4 reference detects via
+// SteppingAction boundary-crossing counting and does NOT need (nor define) this
+// surface, so it is gated behind CCB_GPU_GEOM (set only for the --dump-gdml GPU
+// export) -> the CPU path and ctest 9/9 are bit-for-bit unchanged. The EFFICIENCY
+// property (1.0) also populates the Opticks icdf texture used by EC gathering.
+static void AttachGpuSensorDetect(G4LogicalVolume* sensLV, const std::string& sname) {
+  if (!sensLV || !std::getenv("CCB_GPU_GEOM")) return;
+  auto* detSurf = new G4OpticalSurface("#" + sname + "_Detect");
+  detSurf->SetType(dielectric_dielectric);
+  detSurf->SetModel(unified);
+  detSurf->SetFinish(polished);
+  auto* mpt = new G4MaterialPropertiesTable();
+  std::vector<double> e = {1.5 * eV, 4.0 * eV};
+  std::vector<double> eff = {1.0, 1.0};  // ideal SiPM detection (parity reference)
+  mpt->AddProperty("EFFICIENCY", e, eff);
+  detSurf->SetMaterialPropertiesTable(mpt);
+  new G4LogicalSkinSurface("#" + sname + "_DetectSkin", sensLV, detSurf);
+}
+
+
 G4VPhysicalVolume* DetectorConstruction::Construct() {
   G4Material* air = BuildOpticalGap();  // air w/ RINDEX (world + fibre-hole gaps)
 
@@ -303,6 +327,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
       auto* sensLV = new G4LogicalVolume(sensSolid, mCore, sname);
       new G4PVPlacement(fibreRot, G4ThreeVector(xpos, yc[f], 0), sensLV, sname,
                         worldLV, false, sid, true);
+      AttachGpuSensorDetect(sensLV, sname);
     }
 
     // -x (far) end — CONDITIONAL on far_end_mode (SIPM-P0-002).
@@ -316,6 +341,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
         auto* sensLV = new G4LogicalVolume(sensSolid, mCore, sname);
         new G4PVPlacement(fibreRot, G4ThreeVector(xpos, yc[f], 0), sensLV, sname,
                           worldLV, false, sid, true);
+        AttachGpuSensorDetect(sensLV, sname);
       } else if (cfg_.far_end_mode == "mirror" ||
                  cfg_.far_end_mode == "absorb") {
         // Reflective / absorbing cap: thin disc with dielectric-metal surface.

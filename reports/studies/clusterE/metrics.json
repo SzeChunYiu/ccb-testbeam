@@ -1,140 +1,148 @@
 {
-  "source_files": {
-    "clusterA": "reports/studies/clusterA/counts.json",
-    "clusterB": "reports/studies/clusterB/metrics.json",
-    "clusterC": "reports/studies/clusterC/metrics.json",
-    "clusterD_sipm": "reports/studies/clusterD/figures/fig_sipm_summary.json",
-    "claim_ledger": "docs/claim_ledger.csv",
-    "opticks": "figures/opticks/SUMMARY.md"
-  },
-  "headline_PASS": {
-    "timing_combined_sigma68_ns": 0.08934297497668915,
-    "pid_auc_realistic_chain": 0.8976036882035276,
-    "adc_per_MeV_digitizer": 119.16753164952195,
-    "birks_kB_per_track_cm_per_MeV": 0.015615126050420166,
-    "rmax_digitizer_0pct_gate_MHz": 0.6045512820512821,
-    "s00_pulses_validated": 640737
-  },
-  "headline_BLOCKED": {
-    "detector_timing_resolution": "CL-002..006 (BLK-MV4-LEGACY-001)",
-    "canonical_Rmax": "CL-010 (S-STAT-003)",
-    "data_side_PID": "raw hrdb_run_*.root not staged",
-    "systematic_budget": "CL-026 (BLK-SYST-001)",
-    "anomaly_identity": "CL-022 (AUD-ANOM-001)",
-    "opticks_gpu_gather": "EventMode/component-save config (PARTIAL)"
-  },
-  "headline_SUPERSEDED": {
-    "legacy_Rmax_3p044_MHz": "CL-012 (do not use)"
-  },
-  "opticks": {
-    "source": "figures/opticks/SUMMARY.md",
-    "pr": "#920",
-    "commit": "2c0afcd6",
-    "n_events": 2,
-    "cpu_arrivals_total": 4592,
-    "cpu_arrivals_per_event": 2296,
-    "gpu_input_photons_per_event": 148697,
-    "gpu_hits": 0,
-    "ctest_pass": "9/9",
-    "status": "PARTIAL",
-    "residual": "device->host GATHER returns null (EventMode/component-save config point)"
-  },
-  "provenance": {
-    "clusterA": {
-      "pr": "#921",
-      "commit": "9096345d",
-      "script": "scripts/studies/clusterA_dE_PID_stopping.py",
-      "inputs": [
-        "geant4/data/output_krakow_1M.root (hibeam, 1M ev)"
-      ],
-      "seeds": [
-        "event_index (MC, no run col)"
-      ],
-      "config": [
-        "STOP_KE=1.0 MeV",
-        "GEO-001 pair_merge"
-      ],
-      "status": "PASS_MC"
+  "base_commit": "12b8aaaa6dd635be999fb5395cbe61f4f81dafde",
+  "canonical_claims": {
+    "CL-013": {
+      "allowed_status_validated": "NO",
+      "baseline_unc": "",
+      "baseline_value": "110",
+      "blocked_by": "BLK-MV0-001",
+      "bootstrap_unit": "",
+      "chapter": "Energy",
+      "ci_high": "",
+      "ci_level": "",
+      "ci_low": "",
+      "ci_method": "systematic_envelope",
+      "ci_status": "SYSTEMATIC_ENVELOPE_NOT_CONFIDENCE_INTERVAL",
+      "claim_id": "CL-013",
+      "claim_text": "Digitizer gain MV0 v2 median-matching estimate",
+      "current_value": "92",
+      "delta_ci_high": "",
+      "delta_ci_low": "",
+      "delta_vs_baseline": "-18",
+      "denominator": "",
+      "effect_size": "",
+      "figure_ids": "FIG-EN-001",
+      "link_validated": "YES",
+      "n_data": "579424",
+      "n_events": "",
+      "n_mc": "321130",
+      "n_runs": "",
+      "notes": "The source reports 92 ADC/MeV from B2 median matching and a 30% heuristic systematic envelope (rounded to 28 ADC/MeV). The envelope is not a confidence interval and no statistical uncertainty is supplied. The tracked producer path differs from the former ledger path, and the exact producer/data manifest is absent; the value is a data-MC calibration proxy and is not authorized as a precision calibration until BLK-MV0-001 is resolved.",
+      "numerator": "",
+      "p_value": "",
+      "section": "7",
+      "source_commit": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170",
+      "source_config": "",
+      "source_data": "reports/mv0_calibration_1782677847/calibration.json",
+      "source_manifest": "",
+      "source_report": "reports/mv0_calibration_1782677847/REPORT.md",
+      "source_script": "scripts/mv0_calibrate_from_data.py",
+      "stat_unc": "",
+      "status": "GATED",
+      "supersedes": "110 ADC/MeV v1",
+      "syst_unc": "28",
+      "table_ids": "TAB-EN-001",
+      "total_unc": "",
+      "truth_type": "data_mc_calibration_proxy",
+      "unit": "ADC/MeV"
     },
-    "clusterB": {
-      "pr": "#918",
-      "commit": "96c72ad0",
-      "script": "scripts/clusterB/clusterB_timing_study.py",
-      "inputs": [
-        "ccb-runs/i885_v1 (72 files)",
-        "ccb-runs/an3/sys_birks_smoke2 (3)",
-        "geant4/data/output_krakow_1M.root"
-      ],
-      "seeds": [
-        "s101",
-        "s102"
-      ],
-      "config": [
-        "DT=0.25 ns",
-        "CFD_FRAC=0.2",
-        "LE_THRESH=5 PE",
-        "MIN_PE_VALID=15",
-        "T_RANGE=[0,100] ns"
-      ],
-      "status": "PASS_MC"
+    "CL-021": {
+      "allowed_status_validated": "NO",
+      "baseline_unc": "",
+      "baseline_value": "",
+      "blocked_by": "BLK-MV3-LEGACY-001",
+      "bootstrap_unit": "",
+      "chapter": "PID",
+      "ci_high": "",
+      "ci_level": "",
+      "ci_low": "",
+      "ci_method": "pearson_chi2_from_data_counts_vs_mc_fraction_expected_counts",
+      "ci_status": "NOT_APPLICABLE_FIXED_PEARSON_CHI2_SYSTEMATICS_UNEVALUATED",
+      "claim_id": "CL-021",
+      "claim_text": "Legacy MV3 v3 exact Pearson profile chi2/ndf diagnostic",
+      "current_value": "68269.40598948313",
+      "delta_ci_high": "",
+      "delta_ci_low": "",
+      "delta_vs_baseline": "",
+      "denominator": "",
+      "effect_size": "",
+      "figure_ids": "FIG-PID-005",
+      "link_validated": "YES",
+      "n_data": "306745",
+      "n_events": "",
+      "n_mc": "249484",
+      "n_runs": "",
+      "notes": "The tracked summary records Pearson chi2 204808.2179684494 with 3 degrees of freedom, giving chi2/ndf 68269.40598948313 from exact data counts and MC-fraction expected counts. The calculation is reproducible but remains a flawed legacy diagnostic, not a calibrated goodness-of-fit, because geometry, trigger and selection transfer, gain response, covariance, p-value interpretation, and detector/model systematics are unresolved.",
+      "numerator": "",
+      "p_value": "",
+      "section": "8",
+      "source_commit": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170",
+      "source_config": "",
+      "source_data": "reports/mv3_stopping_v3_1782679272/mv3_summary.json",
+      "source_manifest": "",
+      "source_report": "reports/mv3_stopping_v3_1782679272/REPORT.md",
+      "source_script": "",
+      "stat_unc": "",
+      "status": "FLAWED",
+      "supersedes": "legacy integer 68269 entry",
+      "syst_unc": "",
+      "table_ids": "",
+      "total_unc": "",
+      "truth_type": "legacy_data_mc_profile_diagnostic",
+      "unit": "dimensionless"
     },
-    "clusterC": {
-      "pr": "#917",
-      "commit": "276eb5b1",
-      "script": "scripts/clusterC/clusterC_pileup_energy_study.py",
-      "inputs": [
-        "ccb-runs/i885_v1 (36+36 files, 36k ev)",
-        "geant4/data/output_krakow_1M.root (xcheck)"
-      ],
-      "seeds": [
-        "(env-configurable params, defaults from digitizer config)"
-      ],
-      "config": [
-        "os.environ.get overridable",
-        "acq_window=180 ns",
-        "gain=120 ADC/MeV",
-        "adc_ceiling=7000"
-      ],
-      "status": "PASS_MC"
-    },
-    "clusterD": {
-      "pr": "#919",
-      "commit": "5367ec7b",
-      "script": "scripts/mv*.py + scripts/single_stave/campaign_plots/",
-      "inputs": [
-        "geant4/data/output_krakow_1M.root",
-        "reports/1780917628.449525.085b2dc0__*/s00_selected_b_pulses.csv.gz",
-        "ccb-runs/{i885_v1,sys_birks_smoke2,sipm-p2-001}"
-      ],
-      "seeds": [
-        "mv4 seed=20260720",
-        "mv5 seed=42",
-        "mv6 seed=42"
-      ],
-      "config": [
-        "gain=92 ADC/MeV (MV0 v2)",
-        "peak_frac=0.75",
-        "thr=100 ADC",
-        "tau_rise=2.5 tau_decay=42 ns"
-      ],
-      "status": "GOVERNED"
-    },
-    "opticks": {
-      "pr": "#920",
-      "commit": "2c0afcd6",
-      "script": "geant4/single_stave/opticks/opticks_parity.py",
-      "inputs": [
-        "single-stave GDML",
-        "Geant4 scintillation yield (2 ev, same seed)"
-      ],
-      "seeds": [
-        "identical seed CPU vs GPU"
-      ],
-      "config": [
-        "A40 target",
-        "CSGFoundry sensor_count=4"
-      ],
-      "status": "PARTIAL"
+    "CL-022": {
+      "allowed_status_validated": "YES",
+      "baseline_unc": "",
+      "baseline_value": "",
+      "blocked_by": "AUD-ANOM-001",
+      "bootstrap_unit": "",
+      "chapter": "Anomaly",
+      "ci_high": "0.003630645177388446",
+      "ci_level": "0.95",
+      "ci_low": "0.002877452112691542",
+      "ci_method": "Wilson_score",
+      "ci_status": "CI_AVAILABLE_SOURCE_COUNTS_WILSON",
+      "claim_id": "CL-022",
+      "claim_text": "Early-peak anomaly fraction in truth-labelled MC",
+      "current_value": "0.003232254011764034",
+      "delta_ci_high": "",
+      "delta_ci_low": "",
+      "delta_vs_baseline": "",
+      "denominator": "87555",
+      "effect_size": "",
+      "figure_ids": "FIG-AN-001",
+      "link_validated": "YES",
+      "n_data": "",
+      "n_events": "220000",
+      "n_mc": "87555",
+      "n_runs": "1",
+      "notes": "This row is the total early-peak morphology rate, not a C12-specific rate. Source counts are 283/87555; low_area=0. C12 accounts for 156/283 of early-peak tracks (0.551236749116608; Wilson 95% [0.492988594115321,0.608112551162733]); the C12 early-peak rate is 156/7302 (0.0213640098603122; Wilson 95% [0.0182905205833696,0.0249408389528223]). The related data anomaly near 4% is not identified as C12; matched data/MC closure and independent data species evidence remain required.",
+      "numerator": "283",
+      "p_value": "",
+      "section": "9",
+      "source_commit": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170",
+      "source_config": "",
+      "source_data": "reports/mv6_representation_1782678362/mv6_representation_summary.json",
+      "source_manifest": "",
+      "source_report": "reports/mv6_representation_1782678362/REPORT.md",
+      "source_script": "scripts/mv6_representation_study.py",
+      "stat_unc": "",
+      "status": "TRUTH_LEVEL_MC_ONLY",
+      "supersedes": "",
+      "syst_unc": "",
+      "table_ids": "",
+      "total_unc": "",
+      "truth_type": "mc_truth_only",
+      "unit": "fraction"
     }
-  }
+  },
+  "distinct_diagnostics": {
+    "clusterD_mv3": {
+      "chi2_per_ndf": 86135.4707883642,
+      "interpretation": "does not supersede CL-021"
+    }
+  },
+  "policy": "CLUSTERE_HEADLINES_MUST_BIND_CANONICAL_LEDGER_AND_FULL_PROVENANCE",
+  "schema": "ccb-clusterE-canonical-frontdoor/2"
 }

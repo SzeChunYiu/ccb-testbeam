@@ -38,7 +38,7 @@ Every finding is traceable to a specific report or source file.
 
 #### GAP-01: Stopping-Depth Profile — PARTIALLY RESOLVED (selection-matched; residual open)
 - **Severity:** 🟠 **PARTIALLY RESOLVED** (was ⛔ BLOCKING)
-- **Source:** [MV3 Stopping-Depth Profile](reports/mv3_stopping_depth/REPORT.md) (legacy) + [MV3 selection-matched](reports/studies/mv3_selection_matched/REPORT.md) (this update).
+- **Source:** [MV3 Stopping-Depth Profile](reports/mv3_stopping_v3_1782679272/REPORT.md) (legacy) + [MV3 selection-matched](reports/studies/mv3_selection_matched/REPORT.md) (this update).
 - **Legacy finding:** χ²/ndf = 68,269 — but this compared **unselected MC** to **hardware-trigger-selected data** (invalid comparison).
 - **Selection-matched result:** applying the data's A&B-coincidence / single-B trigger to the MC recovers the sharp B2 peak (**B2 0.46→0.87**, data 0.94; **16.6× χ²/ndf improvement**). The "MC broad vs data sharp" discrepancy is DOMINANTLY a selection artifact. Material budget alone (GAP-01 inter-stave dead material) gave only 1.03× — because it was treating a selection artifact as a material deficit.
 - **Residual (~8 pp B2 + ΔE-E correlation sign):** (a) p+d scattering model — `ScatteringGenerator.cc` samples the CM angle **uniformly in [0,π]** (line 118), with NO `sigma_pd_cm` differential-cross-section weighting (the file is absent from the build); (b) the unresolved upstream-material deficit.
@@ -47,7 +47,7 @@ Every finding is traceable to a specific report or source file.
 
 #### GAP-02: Timewalk Correction — MC Tension
 - **Severity:** 🔶 **HIGH** (2.68σ pull, but raw timing passes)
-- **Source:** [MV4 Timing Resolution](reports/mv4_timing_study/REPORT.md), MV4b
+- **Source:** [MV4 Timing Resolution](reports/mv4_timing_1782678162/REPORT.md), MV4b
 - **Finding:** Raw timing passes (pull = −1.05σ), but timewalk-corrected σ₆₈ shows +2.68σ tension.
 - **Root cause:** Toy digitizer uses B/√ADC with negative B — physically inverted timewalk. MV4b diagnosed; correct form is B/amplitude.
 - **Action:** Switch toy digitizer timewalk parametrization from B/√ADC → B/amplitude → rerun MV4.
@@ -57,7 +57,7 @@ Every finding is traceable to a specific report or source file.
 
 #### GAP-03: Digitizer Gain — ±30% Uncertainty
 - **Severity:** ⚠️ **HIGH** (dominant systematic for deuteron fraction)
-- **Source:** [MV0 Digitizer Calibration](reports/mv0_digitizer/REPORT.md), MV0 v2
+- **Source:** [MV0 Digitizer Calibration](reports/mv0_calibration_1782677847/REPORT.md), MV0 v2
 - **Finding:** Gain = 92 ± 28 ADC/MeV (±30% relative). v1 (~246 ADC/MeV) was wrong due to baseline mismatch.
 - **Sub-sources:** Methodology approximation (±15%), missing forced-pedestal sample (±10%), MC digitizer fidelity (±10%), single-stave calibration point (±10%).
 - **Action:** Acquire forced-trigger pedestal data in next beam run → reduce to ~±10–15%.

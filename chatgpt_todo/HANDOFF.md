@@ -6,7 +6,8 @@
 - **Stamp:** `2026-07-26T061216Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `d046259666a08dbf9188e8a80d5a3b0cbced5765`
-- **Validated implementation/evidence head before handoff:** `a8cc8edc031148dcef8129defb8b472bed6b8a60`
+- **Validated delivery/handoff commit:** `2cb5bcb70461c66e04927945af564344db79de8b`
+- **Remote main after validated delivery:** `2cb5bcb70461c66e04927945af564344db79de8b`
 - **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, or PR merge.
 - **Focused acceptance:** audit tooling and evidence `VALIDATED / COMPLETE`.
 - **Repository acceptance:** figure-registry schema remains `FLAWED / PARTIAL`.
@@ -50,7 +51,7 @@ python -m py_compile \
 
 pytest -q tests/test_audit_figure_registry_schema_alignment.py
 
-5 passed in 0.07s
+5 passed
 ```
 
 Also passed: corrected zero-finding fixture, controlled invalid UTF-8, destructive output alias rejection, atomic JSON publication, JSON parse, and SVG XML parse.
@@ -80,7 +81,7 @@ Updated:
 
 The container could not resolve `github.com`. Current repository semantics were reconstructed from authenticated connector reads and labelled as a semantic excerpt, not a byte-identical local checkout.
 
-## Direct-main commits before handoff
+## Direct-main commits
 
 - `e51e06686069d0bc6db44fccbee4bbdd4cc83675` — audit gate;
 - `312c312db89c3b8a790132fca3dee7a5043b9787` — focused tests;
@@ -89,9 +90,10 @@ The container could not resolve `github.com`. Current repository semantics were 
 - `6cd783490d03559e84ac58452a75432b95251537` — visual evidence;
 - `3b9ca56daea084f54bf05fa25e033541e8f94809` — audit report;
 - `a117edc54fc04025d3ffb858f5c547d6e638fdcf` — immutable archive;
-- `a8cc8edc031148dcef8129defb8b472bed6b8a60` — active-task update.
+- `a8cc8edc031148dcef8129defb8b472bed6b8a60` — active-task update;
+- `2cb5bcb70461c66e04927945af564344db79de8b` — validated delivery handoff.
 
-GitHub returned successful direct-main commit SHAs for every write. No force update was used.
+GitHub returned successful direct-main commit SHAs for every write. Post-write history confirmed the handoff and all focused ancestors consecutively on remote `main`; no force update was used.
 
 ## Next exact unit
 

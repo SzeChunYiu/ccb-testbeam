@@ -6,10 +6,11 @@
 - **Stamp:** `2026-07-26T092835Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `770fa6e8ba305b29c539e64f1f151c4cf5dc1053`
-- **Delivery head before this handoff:** `134670e02f2c7115af98a1fc9adb8011a1d50c0c`
+- **Validated delivery/handoff commit:** `3b1de01862a68f15a8adfa8d31bf1c2a20580e4a`
+- **Remote main after validated delivery:** `72458c33e79df28a3f6684826a3dbaed77c37d72`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
 - **Push result:** GitHub contents API returned a successful direct-main commit SHA for every write. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** audit implementation, tests, calculations, JSON, SVG, report, and immutable archive `VALIDATED`.
+- **Focused acceptance:** audit implementation, tests, calculations, JSON, SVG, report, archive, and hash-correction addendum `VALIDATED`.
 - **Production acceptance:** paper-figure builder remains `FLAWED / PARTIAL` pending a single-read exact-byte remediation.
 
 ## Finding
@@ -55,6 +56,7 @@ Added:
 - `docs/validation/figure_registry_snapshot_provenance.svg`
 - `docs/validation/figure_registry_snapshot_provenance_audit.md`
 - `chatgpt_todo/archive/2026-07-26T092835Z_AUD-FIG-002_SNAPSHOT_PROVENANCE.md`
+- `chatgpt_todo/archive/2026-07-26T092835Z_AUD-FIG-002_HASH_CORRECTION.md`
 
 Updated:
 
@@ -71,7 +73,7 @@ python -m py_compile \
 
 PYTHONPATH=. pytest -q tests/test_audit_figure_registry_snapshot_provenance.py
 
-5 passed in 0.10s
+5 passed in 0.04s
 ```
 
 Additional results:
@@ -84,17 +86,19 @@ Additional results:
 - validation JSON parsed;
 - SVG parsed as XML.
 
-Validated local SHA-256 values:
+Validated identities:
 
-| Artifact | SHA-256 |
-|---|---|
-| auditor | `e00f21ed1d936d603b80b07b053dd6488b4f45095d60ae3a2cad04fa20ee8308` |
-| tests | `11bd9a8a07f61c4ddb8d74d87e44b448722142772dde4e73a750c70e964400bf` |
-| renderer | `0f13ded4f9f5f80c20ecfb01229e6b9f9354fcba8e8cf2a9e98e180db2f55e5b` |
-| validation JSON | `818555ab3491e1d156678fbd11b58797c4ad629e0f36792cc395c7d741eeeab0` |
-| SVG | `36ada9d68a446236c02235d219f9f60c822130dd6b30a1176243f8f23543e669` |
+| Artifact | Git blob | SHA-256 |
+|---|---|---|
+| auditor | `bb545abbfb52bfad680dcb4fa69fa177c1b025ee` | `e00f21ed1d936d603b80b07b053dd6488b4f45095d60ae3a2cad04fa20ee8308` |
+| tests | `88630c60e4fe7f5c6e16b4c52478c77969bf08e5` | `11bd9a8a07f61c4ddb8d74d87e44b448722142772dde4e73a750c70e964400bf` |
+| renderer | `4302d108a045afc043d267bd69a25546ba6e4126` | `0f13ded4f9f5f80c20ecfb01229e6b9f9354fcba8e8cf2a9e98e180db2f55e5b` |
+| validation JSON | `80dff731ac06cfcfd35e20623cee521ada778018` | `e42ddb438a3c97a9ef9c5fadef61e1a3563c41599a179a15b28e517eff45f9be` |
+| SVG | retained on `main` | `36ada9d68a446236c02235d219f9f60c822130dd6b30a1176243f8f23543e669` |
 
-## Direct-main sequence through task completion
+The immutable correction addendum records that an earlier archive entry contained an incorrect validation-JSON digest; no audit conclusion changed.
+
+## Direct-main sequence
 
 - `f5593cbb4a06bd1301b5423e1e113c1d2894f383` — task claim;
 - `50ab80d716200d1ce73fff8c008814cab84fa72f` — fail-closed audit gate;
@@ -104,7 +108,9 @@ Validated local SHA-256 values:
 - `45e8bc4297271ad7015ff0be0a2addeec54ba0be` — visual evidence;
 - `1b05fedbf4ef950535a135fb0b83e2e4f6092615` — audit report;
 - `ce4f35b14d479f5d3c5cd92bf013a2ed78cbd9d4` — immutable archive;
-- `134670e02f2c7115af98a1fc9adb8011a1d50c0c` — active-task completion.
+- `134670e02f2c7115af98a1fc9adb8011a1d50c0c` — active-task completion;
+- `3b1de01862a68f15a8adfa8d31bf1c2a20580e4a` — validated delivery handoff;
+- `72458c33e79df28a3f6684826a3dbaed77c37d72` — hash-correction addendum.
 
 ## Required remediation
 

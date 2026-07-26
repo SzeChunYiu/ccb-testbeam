@@ -1,17 +1,20 @@
 # Active Task
 
-- **Task ID:** `AUD-FIG-005`
+- **Task ID:** `AUD-FIG-006`
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T170400Z`
-- **Initial remote main SHA:** `03851ff128a5a351f39c7754e47ac35fe80e0fa0`
-- **Scope:** bind every paper-figure `build_report.json` to the exact duplicate-key-safe registry byte snapshot used for parsing, and convert registry format failures into controlled CLI diagnostics.
-- **Policy:** `FIGURE_BUILD_REPORT_MUST_BIND_TO_EXACT_REGISTRY_SNAPSHOT`.
-- **Delivered:** builder snapshot integration; five-field registry provenance; controlled format-error boundary; six focused regressions; JSON/SVG/Markdown evidence; immutable archive.
-- **Validation:** combined duplicate-key and report-provenance suites `12 passed in 0.28s`; exact remote builder/test blobs match locally validated bytes; replacement-after-read, duplicate-key, invalid-UTF8, structural-invalid, and one-read controls passed; JSON/SVG parsing passed; maximum implementation/test Python line length 93.
-- **Implementation commits:** `db1a05a5ce9003cd45e10df4f247c55733a06dc2`, `bd81bce0fa0714f7473ae946db221e3bbdb918a5`.
-- **Evidence through:** `d3b126961d32291f3756dfe3a1f4614e8f15815c`.
-- **Acceptance:** focused software/provenance remediation `VALIDATED / COMPLETE`.
-- **Scientific boundary:** no registry entry, paper figure, central value, uncertainty, calibration, timing, PID, stopping profile, pile-up rate, or detector-performance claim was revalidated.
+- **Session stamp:** `2026-07-26T180117Z`
+- **Initial remote main SHA:** `8acfc727a1479ff5b616042e65743b0652900c25`
+- **Scope:** determine whether the paper-figure builder can leave older managed artifacts after an entry becomes BLOCKED, QUARANTINED, fails, or is removed from the registry.
+- **Policy:** `FIGURE_REGISTRY_BUILD_MUST_NOT_LEAVE_STALE_ARTIFACTS`.
+- **Repository source inspected:** `tools/figure_registry/builder.py` blob `39dcd3b13d3886c43f3e9111291d420f86cc7c85`, especially `_process_entry` and `build`.
+- **Finding:** current production contract is `FLAWED`; it has no entry-output cleanup, no failure-path cleanup, and no removed-ID reconciliation.
+- **Deterministic control:** two prior managed files remain in each BLOCKED, failed, and removed-entry scenario; the corrected cleanup model leaves zero.
+- **Delivered:** fail-closed AST auditor, six regressions, connector-inspected source fixture, machine-readable JSON, SVG evidence, Markdown audit, and immutable archive.
+- **Validation:** `python -m py_compile` passed; focused pytest `6 passed in 0.05s`; current-like fixture `FLAWED` with four findings; corrected fixture `VALIDATED` with zero findings; invalid UTF-8, alias rejection, atomic JSON failure preservation, JSON parse, and SVG parse passed.
+- **Evidence commits:** `9e01ccea849e1a8d731a8a302785e8fdd1e220a5`, `6b88476c722d1bd88bc619c373540e95796b4671`, `7974953481366cd82d5514c822b5d77c37065388`, `6bec3d85e56605e68bf66834112992182d342a3f`, `f6563409ffa6b2470135df21916b7e15d7a6cf11`, `3dac03cca404ef934d1e5db0e6f07bce684ae1db`, `b7c037e08a65753f7913186030c24026974ee1a5`, `c151045a8f09c1dc1cf29d27a95dec711d47e29d`.
+- **Acceptance:** audit gate/evidence `VALIDATED / COMPLETE`; production builder remediation `PARTIAL / NOT IMPLEMENTED`.
+- **Scientific boundary:** no paper figure or scientific result was regenerated or revalidated.
 - **Unrun checks:** repository-wide pytest/ruff, complete shipped-registry build, paper build, link inventory, and GitHub Actions.
-- **Coordination limitation:** byte-safe append was unavailable, so `SESSION_LOG.md` and long aggregate matrices were not partially reconstructed; the immutable archive preserves the append-equivalent record.
+- **Coordination limitation:** `SESSION_LOG.md` and long aggregate matrices were not partially reconstructed because paged reads plus whole-file replacement could erase append-only provenance; the immutable archive is the append-equivalent record.
+- **Next:** implement a complete managed-output inventory and staged fail-closed reconciliation, then run direct transition regressions and the complete registry/paper build.
 - **Status:** `COMPLETE`

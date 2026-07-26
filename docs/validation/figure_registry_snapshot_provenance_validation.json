@@ -1,0 +1,70 @@
+{
+  "behavioral_controls": {
+    "result_path_replacement": {
+      "bytes_used_sha256": "33066bb044c6d3dc3c6afe6ca68d0104cf7f29a9735659cccf650018f5b24c78",
+      "corrected_hash_matches_used_bytes": true,
+      "corrected_numeric_value": 1.0,
+      "corrected_reported_sha256": "33066bb044c6d3dc3c6afe6ca68d0104cf7f29a9735659cccf650018f5b24c78",
+      "interpretation": "Reading JSON first and hashing the path later can pair a figure value with replacement bytes. Parsing and hashing one retained byte snapshot keeps the value and provenance identical.",
+      "later_hash_matches_used_bytes": false,
+      "later_reported_sha256": "3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7",
+      "numeric_value_used": 1.0
+    },
+    "source_artifact_replacement": {
+      "copied_target_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
+      "corrected_metadata_matches_target": true,
+      "corrected_reported_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
+      "corrected_target_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
+      "interpretation": "Copying a source path and hashing/statting it later can describe different bytes from the copied artifact. A single retained source snapshot avoids that time-of-check/time-of-use provenance split.",
+      "later_metadata_matches_copied_target": false,
+      "later_reported_source_sha256": "5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7",
+      "later_reported_source_size": 38
+    }
+  },
+  "finding_count": 3,
+  "findings": [
+    {
+      "code": "RESULT_VALUE_AND_HASH_CAN_REFERENCE_DIFFERENT_BYTES",
+      "detail": "The result JSON is parsed from one path read, but provenance is later computed by hashing the path again."
+    },
+    {
+      "code": "COPIED_SOURCE_AND_HASH_CAN_REFERENCE_DIFFERENT_BYTES",
+      "detail": "The source artifact is copied before the source path is hashed again."
+    },
+    {
+      "code": "COPIED_SOURCE_AND_SIZE_CAN_REFERENCE_DIFFERENT_BYTES",
+      "detail": "The copied artifact is produced before the source path is statted again."
+    }
+  ],
+  "policy": "FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES",
+  "repository_context": {
+    "initial_main": "770fa6e8ba305b29c539e64f1f151c4cf5dc1053",
+    "repository": "SzeChunYiu/ccb-testbeam",
+    "source_path": "tools/figure_registry/builder.py"
+  },
+  "required_remediation": {
+    "publication": "Do not let a later path replacement alter metadata for an already rendered or copied artifact.",
+    "result_json": "Read exact bytes once, decode and parse those bytes, and record byte count and SHA-256 from the retained snapshot used for numeric extraction.",
+    "source_artifact": "Read exact bytes once, hash and size that snapshot, publish the target atomically from those bytes, and record the same snapshot provenance."
+  },
+  "schema": "ccb-figure-registry-snapshot-provenance-audit/1",
+  "scientific_boundary": "This audit validates paper-artifact byte provenance and publication semantics. It does not validate any underlying scientific value, uncertainty, calibration, PID, timing, stopping profile, or detector-performance claim.",
+  "source": {
+    "bytes": 614,
+    "git_blob": "ef6e11cfac3e9eacdabfb146ec7586e8764fceb1",
+    "path": "current_builder_excerpt.py",
+    "repository_ref": "770fa6e8ba305b29c539e64f1f151c4cf5dc1053",
+    "scope": "CONNECTOR_INSPECTED_EXACT_RELEVANT_SOURCE_EXCERPT",
+    "sha256": "04980f26aaaa7f53051fa71f6989e98301e3fc68a5303d9056d370abe11e0d5e",
+    "snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES"
+  },
+  "source_contract_observation": {
+    "load_result_reads_path": true,
+    "result_rehashed_later": true,
+    "source_copied_from_path": true,
+    "source_rehashed_later": true,
+    "source_restat_later": true
+  },
+  "status": "FLAWED",
+  "version": "1.0.0"
+}

@@ -5,7 +5,7 @@ import importlib.util
 import json
 from pathlib import Path
 
-PATH = Path(__file__).resolve().parents[1] / "tools/audit/validate_clusterE_canonical_binding.py"
+PATH = Path(__file__).resolve().parents[1] / "tools/audit/validate_clusterE_canonical_binding_v2.py"
 spec = importlib.util.spec_from_file_location("cluster_e_validator", PATH)
 assert spec and spec.loader
 mod = importlib.util.module_from_spec(spec)
@@ -52,7 +52,7 @@ def test_v2_identity_contract_validates(tmp_path: Path) -> None:
         writer.writerow(["Stopping-depth data/MC closure", "68269.40598948313", "x", "FLAWED", "x", "x", "CL-021"])
         writer.writerow(["Anomaly / C12 identity", "283/87555", "x", "TRUTH_LEVEL_MC_ONLY", "x", "x", "CL-022"])
     provenance = tmp_path / "provenance.json"
-    provenance.write_text(json.dumps({"base_commit": "a" * 40, "input_identities": {path: {"algorithm": "git_blob_sha1", "digest": "b" * 40, "sha256": "c" * 64} for path in mod.CURRENT_REQUIRED_IDENTITIES}}))
+    provenance.write_text(json.dumps({"base_commit": "a" * 40, "input_identities": {path: {"algorithm": "git_blob_sha1", "digest": "b" * 40, "sha256": "c" * 64, "bytes": 1} for path in mod.REQUIRED_IDENTITIES}}))
     mv3 = tmp_path / "mv3.json"
     mv3.write_text(json.dumps({"chi2_per_ndf": 86135.4707883642}))
     result = mod.audit(ledger, dashboard, summary, table, provenance, mv3)

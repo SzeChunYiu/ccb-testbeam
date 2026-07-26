@@ -97,7 +97,7 @@ def test_valid_comparison_records_shared_validator_provenance(tmp_path):
     assert result["simulation_rows_validated"] == 2
     assert result["simulation_input_bytes"] == simulation.stat().st_size
     assert result["simulation_input_sha256"] == hashlib.sha256(simulation.read_bytes()).hexdigest()
-    assert result["simulation_validator_version"] == "1.1.0"
+    assert result["simulation_validator_version"] == "1.2.0"  # sim-table TOOL_VERSION bumped
     header = output.read_text().splitlines()[0]
     assert "simulation_input_sha256" in header
     assert "simulation_rows_validated" in header

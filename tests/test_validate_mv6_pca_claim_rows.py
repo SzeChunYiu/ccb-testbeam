@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -48,8 +49,8 @@ def summary_text() -> str:
         "n_tracks": 87555,
         "seed": 42,
         "pca_explained_variance_ratio": RATIOS,
-        "pca_cumulative_at_4": sum(RATIOS[:4]),
-        "pca_cumulative_at_8": sum(RATIOS[:8]),
+        "pca_cumulative_at_4": math.fsum(RATIOS[:4]),
+        "pca_cumulative_at_8": math.fsum(RATIOS[:8]),
     })
 
 
@@ -89,8 +90,8 @@ def row(claim_id: str, value: str, components: int, superseded: str) -> list[str
 
 
 def ledger_text(value_3: str | None = None, value_8: str | None = None) -> str:
-    value_3 = value_3 or repr(sum(RATIOS[:3]))
-    value_8 = value_8 or repr(sum(RATIOS[:8]))
+    value_3 = value_3 or repr(math.fsum(RATIOS[:3]))
+    value_8 = value_8 or repr(math.fsum(RATIOS[:8]))
     handle = io.StringIO(newline="")
     writer = csv.writer(handle, lineterminator="\n")
     writer.writerow(validator.EXPECTED_FIELDS)
@@ -103,8 +104,8 @@ def test_valid_rows_match_tracked_mv6_output() -> None:
     result = validator.validate_texts(ledger_text(), summary_text(), PRODUCER)
     assert result["status"] == "VALIDATED"
     assert result["n_issues"] == 0
-    assert result["claims"]["CL-023"]["source_value"] == sum(RATIOS[:3])
-    assert result["claims"]["CL-024"]["source_value"] == sum(RATIOS[:8])
+    assert result["claims"]["CL-023"]["source_value"] == math.fsum(RATIOS[:3])
+    assert result["claims"]["CL-024"]["source_value"] == math.fsum(RATIOS[:8])
 
 
 def test_superseded_values_fail_semantic_gate() -> None:

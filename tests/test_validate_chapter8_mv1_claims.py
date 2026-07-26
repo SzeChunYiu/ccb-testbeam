@@ -204,4 +204,4 @@ def test_rejects_output_alias(tmp_path: Path) -> None:
     chapter, ledger, script, summary = fixture(tmp_path)
     status, payload = MODULE.run(chapter, ledger, script, summary, chapter)
     assert status == 2
-    assert payload["issues"][0]["code"] == "OUTPUT_ALIASES_INPUT"
+    assert payload["issues"][0]["code"] == "OUTPUT_ALIAS_INPUT"

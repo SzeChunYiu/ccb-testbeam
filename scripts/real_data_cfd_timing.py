@@ -69,28 +69,38 @@ def atomic_text(path: Path, text: str) -> None:
     temp = Path(handle.name)
     try:
         with handle:
-            handle.write(text); handle.flush(); os.fsync(handle.fileno())
+            handle.write(text)
+            handle.flush()
+            os.fsync(handle.fileno())
         os.replace(temp, path)
     except Exception:
-        temp.unlink(missing_ok=True); raise
+        temp.unlink(missing_ok=True)
+        raise
 
 
 def load_waveforms(runs: list[int], staves: list[str]) -> pd.DataFrame:
-    channels = np.asarray([STAVE_CHANNEL[s] for s in staves]); frames = []
+    channels = np.asarray([STAVE_CHANNEL[s] for s in staves])
+    frames = []
     for run in runs:
         path = DATA_DIR / f"hrdb_run_{run:04d}.root"
-        if not path.exists(): log(f"run {run}: missing, skip"); continue
+        if not path.exists():
+            log(f"run {run}: missing, skip")
+            continue
         tree = uproot.open(path)["h101"]
-        if tree.num_entries == 0: log(f"run {run}: empty, skip"); continue
+        if tree.num_entries == 0:
+            log(f"run {run}: empty, skip")
+            continue
         for batch in tree.iterate(["EVENTNO", "HRDv"], step_size=20000, library="np"):
             event = np.asarray(batch["EVENTNO"], dtype=np.int64)
             allw = np.stack(batch["HRDv"]).astype(float).reshape(-1, N_CHANNELS, SAMPLES)
             wave = allw[:, channels, :]
             baseline = np.median(wave[:, :, BASELINE], axis=-1)
             corrected = wave - baseline[:, :, None]
-            amp = corrected.max(axis=-1); peak = corrected.argmax(axis=-1)
+            amp = corrected.max(axis=-1)
+            peak = corrected.argmax(axis=-1)
             event_i, stave_i = np.where(amp > AMP_CUT)
-            if len(event_i) == 0: continue
+            if len(event_i) == 0:
+                continue
             frames.append(pd.DataFrame({
                 "run": run, "event_id": event[event_i],
                 "stave": [staves[i] for i in stave_i],
@@ -99,16 +109,20 @@ def load_waveforms(runs: list[int], staves: list[str]) -> pd.DataFrame:
                 "waveform": [corrected[i, j].astype(np.float32)
                              for i, j in zip(event_i, stave_i, strict=True)],
             }))
-    if not frames: raise RuntimeError(f"No data for runs {runs}")
+    if not frames:
+        raise RuntimeError(f"No data for runs {runs}")
     return pd.concat(frames, ignore_index=True)
 
 
 def pulse_shape(df: pd.DataFrame, staves: list[str]) -> dict[str, dict]:
-    wave = np.vstack(df["waveform"].to_numpy()); amp = df["amplitude_adc"].to_numpy()
+    wave = np.vstack(df["waveform"].to_numpy())
+    amp = df["amplitude_adc"].to_numpy()
     output = {}
     for stave in staves:
         mask = df["stave"].to_numpy() == stave
-        if not mask.any(): output[stave] = {"n": 0}; continue
+        if not mask.any():
+            output[stave] = {"n": 0}
+            continue
         above = (wave[mask] > 0.1 * amp[mask, None]).sum(axis=1)
         output[stave] = {
             "n": int(mask.sum()), "amp_median_adc": float(np.median(amp[mask])),
@@ -123,37 +137,64 @@ def tof_map() -> dict[str, float]:
             "B8": 3 * SPACING_CM * TOF_PER_CM_NS}
 
 
+def _required_finite(name: str, value: float) -> float:
+    number = float(value)
+    if not np.isfinite(number):
+        raise ValueError(f"{name} must be finite")
+    return number
+
+
+def _optional_finite(value: float) -> float | None:
+    number = float(value)
+    return number if np.isfinite(number) else None
+
+
 def pair_result(df, column, offsets, rng) -> dict | None:
     vector = pair_residual_vector(df, column, *PAIR, tof_map(), offsets, PERIOD_NS)
-    if not len(vector): return None
-    fit = s02.core_fit(vector); ci = s02.bootstrap_ci(vector, rng, BOOTSTRAP_N)
-    q16, q84 = np.quantile(vector, [0.16, 0.84]); median = np.median(vector)
+    if not len(vector):
+        return None
+    fit = s02.core_fit(vector)
+    ci = s02.bootstrap_ci(vector, rng, BOOTSTRAP_N)
+    q16, q84 = np.quantile(vector, [0.16, 0.84])
+    median = np.median(vector)
     return {
-        "n": int(len(vector)), "median_ns": float(median),
-        "q16_ns": float(q16), "q84_ns": float(q84),
-        "sigma68_ns": float(s02.sigma68(vector)),
-        "ci68_ns": [float(ci[0]), float(ci[1])],
-        "core_sigma_ns": float(fit["core_sigma_ns"]),
-        "core_chi2_ndf": float(fit["chi2_ndf"]),
-        "tail_frac_gt5ns": float(np.mean(np.abs(vector - median) > 5)),
-        "full_rms_ns": float(s02.full_rms(vector)),
+        "n": int(len(vector)),
+        "median_ns": _required_finite("median_ns", median),
+        "q16_ns": _required_finite("q16_ns", q16),
+        "q84_ns": _required_finite("q84_ns", q84),
+        "sigma68_ns": _required_finite("sigma68_ns", s02.sigma68(vector)),
+        "ci68_ns": [
+            _required_finite("ci68_low_ns", ci[0]),
+            _required_finite("ci68_high_ns", ci[1]),
+        ],
+        "core_sigma_ns": _optional_finite(fit["core_sigma_ns"]),
+        "core_chi2_ndf": _optional_finite(fit["chi2_ndf"]),
+        "tail_frac_gt5ns": _required_finite(
+            "tail_frac_gt5ns", np.mean(np.abs(vector - median) > 5)
+        ),
+        "full_rms_ns": _required_finite("full_rms_ns", s02.full_rms(vector)),
     }
 
 
 def evaluate(df, offsets, rng) -> list[dict]:
-    wave = np.vstack(df["waveform"].to_numpy()); amp = df["amplitude_adc"].to_numpy()
+    wave = np.vstack(df["waveform"].to_numpy())
+    amp = df["amplitude_adc"].to_numpy()
     rows = []
     for fraction in FRACTIONS:
         column = f"t_cfd{int(round(fraction * 100)):02d}"
         df[column] = PERIOD_NS * s02.cfd_time_samples(wave, amp, fraction)
         result = pair_result(df, column, offsets, rng)
-        if result: result.update(method=column, fraction=fraction); rows.append(result)
+        if result:
+            result.update(method=column, fraction=fraction)
+            rows.append(result)
     try:
         templates = s02.build_templates(df, list(PAIR))
         df["t_template"] = PERIOD_NS * s02.template_phase_time(
             df, templates, np.arange(-1.5, 1.55, 0.05))
         result = pair_result(df, "t_template", offsets, rng)
-        if result: result.update(method="template", fraction=None); rows.append(result)
+        if result:
+            result.update(method="template", fraction=None)
+            rows.append(result)
     except Exception as error:
         log(f"template skipped: {error}")
     return rows
@@ -163,21 +204,27 @@ def residual_payload(df, offsets) -> list[tuple[str, np.ndarray, dict]]:
     requested = [f"t_cfd{int(round(FRACTIONS[0] * 100)):02d}", "t_cfd20"]
     output = []
     for column in requested:
-        if column not in df: continue
+        if column not in df:
+            continue
         vector = pair_residual_vector(df, column, *PAIR, tof_map(), offsets, PERIOD_NS)
-        if not len(vector): continue
+        if not len(vector):
+            continue
         centered, record = residual_plot_record(vector, column)
         output.append((column, centered, record.to_dict()))
     return output
 
 
 def make_figures(df, rows, offsets, tag) -> tuple[list[str], list[dict]]:
-    OUT_DIR.mkdir(parents=True, exist_ok=True); figures = []
-    wave = np.vstack(df["waveform"].to_numpy()); amp = df["amplitude_adc"].to_numpy()
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    figures = []
+    wave = np.vstack(df["waveform"].to_numpy())
+    amp = df["amplitude_adc"].to_numpy()
     fig, axes = plt.subplots(1, 2, figsize=(11, 4))
     for stave in sorted(df.stave.unique()):
-        sub = df[df.stave == stave]; w = np.vstack(sub.waveform.to_numpy())[:400]
-        amplitudes = sub.amplitude_adc.to_numpy()[:400]; peaks = sub.peak_sample.to_numpy()[:400]
+        sub = df[df.stave == stave]
+        w = np.vstack(sub.waveform.to_numpy())[:400]
+        amplitudes = sub.amplitude_adc.to_numpy()[:400]
+        peaks = sub.peak_sample.to_numpy()[:400]
         aligned = [x[int(p)-4:int(p)+5] / max(a, 1.0)
                    for x, a, p in zip(w, amplitudes, peaks, strict=True)
                    if int(p) - 4 >= 0 and int(p) + 5 <= SAMPLES]
@@ -191,11 +238,17 @@ def make_figures(df, rows, offsets, tag) -> tuple[list[str], list[dict]]:
                 title=f"Peak-aligned mean pulse [{tag}]")
     axes[1].set(xlabel="samples above 10% of peak", ylabel="pulses",
                 title="Pulse width (CFD applicability)")
-    for axis in axes: axis.grid(alpha=0.3); axis.legend()
-    fig.tight_layout(); path = OUT_DIR / f"pulse_shape_{tag}.png"
-    fig.savefig(path, dpi=120); plt.close(fig); figures.append(str(path))
+    for axis in axes:
+        axis.grid(alpha=0.3)
+        axis.legend()
+    fig.tight_layout()
+    path = OUT_DIR / f"pulse_shape_{tag}.png"
+    fig.savefig(path, dpi=120)
+    plt.close(fig)
+    figures.append(str(path))
 
-    payload = residual_payload(df, offsets); metadata = [item[2] for item in payload]
+    payload = residual_payload(df, offsets)
+    metadata = [item[2] for item in payload]
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
     for method, centered, meta in payload:
         axes[0].hist(centered, bins=80, range=tuple(meta["full_range_ns"]),
@@ -210,9 +263,14 @@ def make_figures(df, rows, offsets, tag) -> tuple[list[str], list[dict]]:
     axes[1].set_title(f"Median-centered core view [{tag}]")
     for axis in axes:
         axis.set(xlabel=f"{'-'.join(PAIR)} residual minus median (ns)", ylabel="events")
-        axis.axvline(0, color="k", lw=0.5); axis.grid(alpha=0.3); axis.legend(fontsize=8)
-    fig.tight_layout(); path = OUT_DIR / f"residuals_{tag}.png"
-    fig.savefig(path, dpi=120); plt.close(fig); figures.append(str(path))
+        axis.axvline(0, color="k", lw=0.5)
+        axis.grid(alpha=0.3)
+        axis.legend(fontsize=8)
+    fig.tight_layout()
+    path = OUT_DIR / f"residuals_{tag}.png"
+    fig.savefig(path, dpi=120)
+    plt.close(fig)
+    figures.append(str(path))
 
     cfd = [row for row in rows if row["fraction"] is not None]
     fig, axis = plt.subplots(figsize=(6, 4))
@@ -222,13 +280,20 @@ def make_figures(df, rows, offsets, tag) -> tuple[list[str], list[dict]]:
                       yerr=[[row["sigma68_ns"]-row["ci68_ns"][0] for row in cfd],
                             [row["ci68_ns"][1]-row["sigma68_ns"] for row in cfd]],
                       marker="o", label="pair sigma68")
-        axis.plot(x, [row["core_sigma_ns"] for row in cfd], marker="s",
-                  label="Gaussian core sigma")
+        core = [
+            np.nan if row["core_sigma_ns"] is None else row["core_sigma_ns"]
+            for row in cfd
+        ]
+        axis.plot(x, core, marker="s", label="Gaussian core sigma")
         axis.set(xlabel="CFD fraction", ylabel=f"{'-'.join(PAIR)} pair width (ns)",
                  title=f"CFD fraction sensitivity [{tag}]")
-        axis.grid(alpha=0.3); axis.legend()
-    fig.tight_layout(); path = OUT_DIR / f"sigma_vs_fraction_{tag}.png"
-    fig.savefig(path, dpi=120); plt.close(fig); figures.append(str(path))
+        axis.grid(alpha=0.3)
+        axis.legend()
+    fig.tight_layout()
+    path = OUT_DIR / f"sigma_vs_fraction_{tag}.png"
+    fig.savefig(path, dpi=120)
+    plt.close(fig)
+    figures.append(str(path))
     return figures, metadata
 
 
@@ -280,7 +345,8 @@ A content-addressed ROOT rerun is required before accepting any pair metric.
 
 
 def main() -> int:
-    start = time.time(); rng = np.random.default_rng(RNG_SEED)
+    start = time.time()
+    rng = np.random.default_rng(RNG_SEED)
     result = {
         "schema": "ccb-real-data-cfd-timing/2", "producer_version": VERSION,
         "study": "real_data_cfd_timing", "policy": POLICY,

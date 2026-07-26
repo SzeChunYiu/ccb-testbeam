@@ -129,7 +129,7 @@ def test_atomic_snapshot_publication_preserves_previous_target_on_failure(
         raise OSError("injected replacement failure")
 
     monkeypatch.setattr(os, "replace", fail_replace)
-    with pytest.raises(OSError, match="injected replacement failure"):
+    with pytest.raises(builder.FigureRegistryError, match="injected replacement failure"):
         builder._atomic_publish_snapshot(target, snapshot)
     assert target.read_bytes() == b"previous"
     assert not list(tmp_path.glob(".target.bin.*.tmp"))

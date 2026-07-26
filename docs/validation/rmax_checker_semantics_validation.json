@@ -1,0 +1,59 @@
+{
+  "accepted_rmax_mhz": null,
+  "calculations": {
+    "five_percent_poisson_rate_mhz": 0.4110362912128549,
+    "five_percent_probability": 0.05,
+    "interpretation": "All rates in this block are arithmetic or model sensitivities. Selected-pulse occupancy does not identify live exposure, an event-arrival rate, mu_max, or an accepted absolute Rmax.",
+    "legacy_mu_convention": 0.38,
+    "legacy_mu_model_sensitivity_mhz": 3.045111305987686,
+    "reference_rate_implied_mu": 0.3806100610250359,
+    "reference_rate_implied_probability_ge_one": 0.31655566074793173,
+    "reference_rate_mhz": 3.05,
+    "tau_cl011_ns": 124.79018394263471
+  },
+  "controls": {
+    "corrected": {
+      "expected_cli_status": 0,
+      "n_issues": 0,
+      "status": "VALIDATED"
+    },
+    "current_like": {
+      "expected_cli_status": 1,
+      "issue_codes": [
+        "WIKI_OVERAUTHORIZES_RMAX"
+      ],
+      "n_issues": 1,
+      "status": "FLAWED"
+    }
+  },
+  "initial_main_sha": "9c576de392c4f81aaea369b4612e16841eeef730",
+  "limitations": [
+    "The exact repository WIKI remains stale and is expected to fail the remediated gate.",
+    "No live exposure, event-arrival rate, mu_max, or recovery-failure ceiling was measured.",
+    "The controls are synthetic fixtures reproducing the exact inspected wording and ledger contract."
+  ],
+  "policy": "RMAX_CHECK_MUST_VALIDATE_CLAIM_STATE_AND_NEVER_INFER_RATE_FROM_OCCUPANCY",
+  "renderer": "render_rmax_checker_semantics_evidence.py",
+  "scientific_acceptance": "BLOCKED",
+  "session_stamp": "2026-07-26T200250Z",
+  "source_observations": {
+    "claim_ledger_blob": "d666d9db6e7026c8d4ba0d69cc1fb301adf5c306",
+    "current_wiki_overclaim": "Rmax 2.92 MHz (data-derived, corroborates CL-010 3.05 MHz)",
+    "former_checker_behavior": "PRINTS_PASS_THEN_EXITS_1",
+    "former_checker_blob": "147a691d9c96aec1f527ad9eb4944b438f3fa0e9",
+    "former_checker_evidence_binding": "NONE",
+    "former_checker_overclaim": "3.05_MHZ_MEASURED_OCCUPANCY",
+    "wiki_blob": "841222816dc60f5fb90ada51ee027a71e0994254",
+    "workflow_blob": "1ff08332c29f095df87a4805658f30f8c373b1cf"
+  },
+  "status": "VALIDATED",
+  "validation": {
+    "json_parse": "PASS",
+    "maximum_python_line_length": 93,
+    "py_compile": "PASS",
+    "pytest": "7 passed in 0.04s",
+    "python": "3.13.5",
+    "svg_xml_parse": "PASS"
+  },
+  "version": "1.0.0"
+}

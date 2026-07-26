@@ -1,35 +1,25 @@
 # Active Task
 
-- **Task ID:** `AUD-CI-003`
+- **Task ID:** `AUD-DELTAE-004`
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T011234Z`
-- **Initial remote main SHA:** `b969c0cef71bebbab71728d0dc278cb7e284ce59`
-- **Scope:** make the repository-wide CI blocker for MV3 transport PR #933 independently
-  reproducible, classify its exact failure inventory, and correct unsupported causal attribution.
-- **Policy:**
-  `REPOSITORY_CI_BLOCKER_MUST_HAVE_CONTENT_ADDRESSED_FAILURE_LEDGER`.
-- **Exact evidence:** workflow `30181818642`, job `89739575939`, artifact `8625795443`, artifact
-  SHA-256 `d16b0db6177e79fb30bcc682160d5460c30ea17f685b4a709c454f6c565adafa`, exact
-  `pytest.log` bytes `85803`, and exact log SHA-256
-  `c48e98e20e5606b0d98a41f03f586dc8d012338fc7cc7f7cffb1847155d707ae`.
-- **Measured result:** `42 failed, 775 passed, 1 skipped, 6 warnings in 60.43s`; 23 failures are
-  stopping-power comparison tests, 6 public-WIKI binding tests, 4 MV6 PCA tests, and 9 span other
-  claim/figure/bridge families. None of the three named MV3 candidate test modules failed.
-- **Attribution correction:** a single candidate log cannot establish that cross-area failures are
-  pre-existing. The validated attribution state is `UNRESOLVED_SINGLE_RUN`; exact same-environment
-  base and candidate logs are required for introduced/resolved/persistent classification.
-- **Files delivered:** classifier, seven focused regressions, evidence renderer, machine-readable
-  ledger, SVG, audit report, immutable archive, this task record, and latest handoff.
-- **Validation:** Python compilation passed; focused pytest returned `7 passed in 2.26s`; exact
-  artifact ledger returned `VALIDATED`, 42 unique failures, zero direct candidate-test failures, and
-  `UNRESOLVED_SINGLE_RUN`; JSON/SVG parsing passed; Python lines are at most 98 characters.
-- **Focused status:** failure-ledger unit `VALIDATED / COMPLETE`; repository-wide integration and
-  producer delivery remain `BLOCKED / PARTIAL`.
-- **Transport status:** PR #933 remains draft, open, and unmerged. PR #868 remains closed, unmerged,
-  non-mergeable, and untouched.
-- **Next action:** run the exact base SHA and updated candidate in the same workflow environment,
-  compare their content-addressed logs, remediate demonstrated introduced or persistent failures,
-  and merge only after required focused and repository-wide checks pass.
-- **Scientific boundary:** no ROOT or beam-data file was rerun; no weighted profile, covariance,
-  sensitivity scan, material/scattering correction, calibration, PID, closure, or detector-performance
-  result is claimed. `CL-021` remains `FLAWED` under `BLK-MV3-LEGACY-001`.
+- **Session stamp:** `2026-07-26T021210Z`
+- **Initial remote main SHA:** `303da4b0d96b703de002d53abd98f0ca9c964250`
+- **Scope:** diagnose and correct the Python/pandas-version-dependent provenance-identifier
+  failure in the strict A-002 DeltaE-E CSV regression without weakening content-addressing.
+- **Observed failure:** repository CI under Python 3.11 / pandas 3.0.5 loaded an all-digit
+  40-character Git commit token as an integer, while the test expected the exact string.
+- **Scientific risk:** an untyped CSV reader can change identifier type and can erase leading
+  zeros, making a provenance column ambiguous even when the authoritative JSON remains exact.
+- **Policy:** `DELTAE_CSV_IDENTIFIERS_MUST_USE_AN_EXPLICIT_TEXT_READER_CONTRACT`.
+- **Files in scope:**
+  - `tests/test_deltae_data_bridge_strict.py`
+  - `docs/contracts/deltae_event_csv_reader.json`
+  - focused compatibility regression and validation evidence under `tests/`, `tools/audit/`,
+    `docs/validation/`, and `chatgpt_todo/archive/`
+- **Validation plan:** compile changed Python, run focused synthetic identifier tests locally,
+  require the exact repository-wide GitHub Actions gate to pass or document every remaining
+  failure, parse JSON/SVG evidence, and verify remote `main` contains the delivery commit.
+- **Acceptance boundary:** this unit may establish a stable CSV reader contract and restore the
+  provenance regression across pandas versions. It does not authorize A-002 amplitude semantics,
+  stopping fractions, DeltaE-E PID, calibration, or detector performance.
+- **Status:** `ACTIVE`

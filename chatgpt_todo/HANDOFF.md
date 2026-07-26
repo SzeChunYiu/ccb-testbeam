@@ -6,10 +6,11 @@
 - **Stamp:** `2026-07-26T100542Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `8b460728fce2f550d63bed078f17c2285e0c2b2a`
-- **Delivery head before this handoff:** `f3116cc6d21fbb714ffb4ad4d79cdf09cd073bf0`
+- **Validated delivery/handoff commit:** `92c453723c3014621a63c00f0b4242d0b24a0ef9`
+- **Remote main after validated delivery:** `92c453723c3014621a63c00f0b4242d0b24a0ef9`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
 - **Push result:** GitHub contents API returned a successful direct-main commit SHA for every write. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** implementation, tests, replacement controls, JSON, SVG, report, active-task completion, and immutable archive `VALIDATED / COMPLETE`.
+- **Focused acceptance:** implementation, tests, replacement controls, JSON, SVG, report, active-task completion, immutable archive, and handoff `VALIDATED / COMPLETE`.
 - **Scientific acceptance:** no scientific paper value, uncertainty, or detector-performance claim was authorized or changed.
 
 ## Finding and correction
@@ -100,7 +101,7 @@ Validated identities:
 | validation JSON | `c9b543797b620385c4599dcb245ef61f3eb512cd` | 4134 | `516146d2101ce422fb66c22b5198e25320ae9ea361339b56423ffcdce30c8976` |
 | SVG | `80f566fdb19924c7967ca4ee4d07b50c76ed2f19` | 2466 | `e09c040c6dde91caaf67a7b535a296f5a9ae33df5383bf5427130847dc4bf1d9` |
 
-## Direct-main sequence through active completion
+## Direct-main sequence
 
 - `bd1b34493f98dfa6b6cefedb736ce9a10f207538` — task claim;
 - `bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f` — exact-byte snapshot implementation;
@@ -114,7 +115,8 @@ Validated identities:
 - `2033c983de88c026b27e1b3e00b121bb9628e333` — synchronized final evidence;
 - `4858b5aa105927855ac4a59bd5e06038910b02aa` — finalized audit report;
 - `605866376ef1ac783da226d126df55ca2e082a50` — immutable archive;
-- `f3116cc6d21fbb714ffb4ad4d79cdf09cd073bf0` — active-task completion.
+- `f3116cc6d21fbb714ffb4ad4d79cdf09cd073bf0` — active-task completion;
+- `92c453723c3014621a63c00f0b4242d0b24a0ef9` — validated delivery handoff.
 
 ## Unrun checks and unresolved coordination
 

@@ -22,10 +22,21 @@ MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
 FAKE_COMMIT = "1" * 40
+CSV_READER_CONTRACT = (
+    Path(__file__).parents[1]
+    / "docs"
+    / "contracts"
+    / "deltae_event_csv_reader.json"
+)
 
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _read_event_csv(path: Path) -> pd.DataFrame:
+    contract = json.loads(CSV_READER_CONTRACT.read_text(encoding="utf-8"))
+    return pd.read_csv(path, dtype=contract["pandas_read_csv_dtype"])
 
 
 def _write_input(path: Path) -> None:
@@ -144,7 +155,7 @@ def test_valid_bundle_is_content_addressed_and_reconstructable(
     input_path, bridge_path, output_dir, payload = _run(tmp_path, monkeypatch)
 
     result = json.loads((output_dir / MODULE.OUTPUT_JSON).read_text(encoding="utf-8"))
-    events = pd.read_csv(output_dir / MODULE.OUTPUT_CSV)
+    events = _read_event_csv(output_dir / MODULE.OUTPUT_CSV)
     svg = (output_dir / MODULE.OUTPUT_SVG).read_text(encoding="utf-8")
 
     assert result["status"] == "VALIDATED_SOFTWARE_RERUN_OUTPUT"

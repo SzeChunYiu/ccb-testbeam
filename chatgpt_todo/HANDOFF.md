@@ -2,155 +2,122 @@
 
 ## Session
 
-- **Task ID:** `AUD-TIMING-001`
-- **Stamp:** `2026-07-26T083435Z`
+- **Task ID:** `AUD-LEDGER-004-R1`
+- **Stamp:** `2026-07-26T091312Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `a8c446732e9a73d6880b313939868162ec4e2d74`
-- **Validated delivery/handoff commit:** `5defb96def46ed432260adf5322857c469f7074b`
-- **Study-ledger synchronization commit:** `f125e962d6c2b144a4ad29c555cc6a9b1a13524e`
-- **Remote-main delivery confirmation commit:** `746650dcdfdac5594294b6b932848976ff9e8741`
-- **Remote main after confirmed delivery:** `746650dcdfdac5594294b6b932848976ff9e8741`
-- **Reviewed PR:** #939, head `ce81f22ef57c5db0b658737c0d9ced4c7fc69949`
-- **Reviewed source blob:** `ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7`
+- **Initial remote main:** `a5d66f563029183e170c24f5412fffc4e336d602`
+- **Delivery head before this handoff:** `ba44bcb0e9ca1ec63c5e0dad0be686d5918b8a60`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
-- **Focused acceptance:** event-identity audit tooling/evidence `VALIDATED / COMPLETE`.
-- **Production acceptance:** PR #939 event-pairing contract `FLAWED / PARTIAL`; no merge is authorized by this handoff.
+- **Focused acceptance:** producer/report/ledger remediation `VALIDATED / COMPLETE`.
+- **Scientific acceptance:** accepted absolute Rmax remains `BLOCKED` under `S-STAT-003`.
 
 ## Finding
 
 Policy:
 
-`REAL_DATA_CFD_EVENTS_MUST_USE_RUN_AND_EVENT_ID_TOGETHER`
+`OCCUPANCY_DOES_NOT_IDENTIFY_ABSOLUTE_RMAX_WITHOUT_RATE_EXPOSURE`
 
-The PR producer retains `run`, `event_id`, and `stave` on each selected pulse, but subsequently:
+The selected table measures 640,737 selected B-stave pulses over 584,602 composite events, with mean selected multiplicity `1.0960225931488432`. It does not measure event-arrival exposure, luminosity, run live time, an accepted pile-up-quality ceiling, or a detector-wide live window.
 
-- pivots aligned peak samples on `event_id` alone in `select_in_time`;
-- reapplies selected keys with `df["event_id"].isin(keep)`;
-- pivots corrected pair times on `event_id` alone in `pair_analysis`;
-- repeats the event-id-only pivot in residual plotting.
-
-For multi-run input, `EVENTNO` must be treated as run-local unless immutable input evidence proves
-global uniqueness. Dropping `run` permits cross-run stave pairing and duplicate-index failure.
-
-## Independent controls
-
-### False cross-run pair
-
-`run58/event7/B6` plus `run59/event7/B8` yields:
-
-- current event-id-only pair count: `1`;
-- composite `(run,event_id)` pair count: `0`.
-
-### Duplicate run-local EVENTNO
-
-Two complete B6/B8 pairs in runs 58 and 59 sharing `event_id=9` yield:
-
-- current event-id-only pivot: `ValueError`;
-- composite-key pair count: `2`.
-
-These controls demonstrate the code-path failure modes. They do not establish that the retained
-production sample actually collided, because exact ROOT/event-ID bytes were unavailable.
+The former producer nevertheless calculated `0.38 / 130 ns = 2.923076923076923 MHz`, labelled it data-derived, and the report said occupancy corroborated an accepted rate. Canonical `CL-010` then published `2.92 MHz`, unsupported `0.10` and `0.20 MHz` uncertainty components, status `DONE_DATA_ONLY`, and no blocker.
 
 ## Work delivered
 
-Added:
-
-- `tools/audit/audit_real_data_cfd_event_identity.py`
-- `tests/test_audit_real_data_cfd_event_identity.py`
-- `tools/audit/render_real_data_cfd_event_identity_evidence.py`
-- `docs/validation/real_data_cfd_event_identity_validation.json`
-- `docs/validation/real_data_cfd_event_identity.svg`
-- `docs/validation/real_data_cfd_event_identity_audit.md`
-- `chatgpt_todo/archive/2026-07-26T083435Z_AUD-TIMING-001_EVENT_IDENTITY.md`
-
 Updated:
 
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/STUDY_REVIEW_LEDGER.md`
-- `chatgpt_todo/HANDOFF.md`
+- `scripts/studies/data_side_real_beam.py`
+  - occupancy is descriptive only;
+  - `rmax_authorized=false`;
+  - `rmax_status=BLOCKED`;
+  - `accepted_rmax_mhz=null`;
+  - exact `CL-011` value `124.79018394263471 ns`;
+  - `mu_max=0.38` labelled legacy convention;
+  - `3.045111305987686 MHz` labelled model sensitivity only;
+  - occupancy plot title states `Rmax withheld pending S-STAT-003`.
+- `reports/studies/data_side/REPORT.md`
+  - removes data-derived/corroboration wording;
+  - distinguishes measured occupancy from model assumptions;
+  - states `CL-010 remains BLOCKED`.
+- `docs/claim_ledger.csv`
+  - accepted value and uncertainty fields blank;
+  - `truth_type=derived_model_conflicted`;
+  - `status=BLOCKED`;
+  - `blocked_by=S-STAT-003`;
+  - source-conflict quarantine restored against tracked MV5 artifacts.
+- `chatgpt_todo/ACTIVE_TASK.md` — focused unit complete.
 
-A review comment was posted on PR #939 with the exact defect, evidence paths, remediation conditions,
-and scientific boundary. A post-comment PR read confirmed it remained open, unmerged, head
-`ce81f22ef57c5db0b658737c0d9ced4c7fc69949`, and reported non-mergeable.
+Added:
+
+- `tests/test_data_side_rmax_quarantine.py`
+- `tools/audit/render_data_side_rmax_remediation_evidence.py`
+- `docs/validation/data_side_rmax_remediation_validation.json`
+- `docs/validation/data_side_rmax_remediation.svg`
+- `docs/validation/data_side_rmax_remediation_audit.md`
+- `chatgpt_todo/archive/2026-07-26T091312Z_AUD-LEDGER-004_RMAX_REMEDIATION.md`
+
+## Independent calculations
+
+```text
+640737 / 584602 = 1.0960225931488432 selected pulses per composite event
+0.38 / 124.79018394263471 ns = 3.045111305987686 MHz
+0.38 / 130 ns = 2.923076923076923 MHz
+former minus exact = -0.1220343829107633 MHz
+```
+
+Both rates are convention/model sensitivities and are non-authorizing.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_real_data_cfd_event_identity.py \
-  tests/test_audit_real_data_cfd_event_identity.py \
-  tools/audit/render_real_data_cfd_event_identity_evidence.py
+  scripts/studies/data_side_real_beam.py \
+  tests/test_data_side_rmax_quarantine.py
 
-PYTHONPATH=. pytest -q tests/test_audit_real_data_cfd_event_identity.py
+pytest -q tests/test_data_side_rmax_quarantine.py
 
-6 passed in 0.06s
+2 passed in 0.32s
 ```
 
-Additional outcomes:
+Additional results:
 
-- current-like source contract: `FLAWED`, six findings, expected exit `1`;
-- corrected composite-key fixture: `VALIDATED`, zero findings;
-- invalid UTF-8: controlled exit `2`;
-- source/output alias: rejected with source unchanged;
-- injected `os.replace` failure: previous output preserved, zero temporary files remain;
-- JSON parse: passed;
-- SVG XML parse: passed;
-- maximum changed Python line length: 99 characters.
+- exact producer/report/ledger contract: `VALIDATED`, zero findings;
+- claim ledger: 26 records, every record exactly 43 columns;
+- exact local Git blob hashes matched remote content blobs;
+- validation JSON parsed;
+- evidence renderer compiled and reproduced the SVG;
+- SVG parsed as XML.
 
-Local validation environment: Python 3.13.5, pandas 2.2.3, pytest 9.0.2.
+Validated blobs:
 
-The complete PR checkout could not be materialized because the execution container could not resolve
-`github.com`. The audit input is explicitly labelled
-`CONNECTOR_INSPECTED_EXACT_RELEVANT_SOURCE_COPY`; exact PR head and full source Git blob are recorded.
+| Artifact | Git blob | SHA-256 | Bytes |
+|---|---|---:|---:|
+| producer | `ae5b7474a38c0b1df5cf683ab1c6de82a789b913` | `eb6fa133377c91f6804bfcb237fd5eb8aa708cdb3ae57b4b35dbee8f483ab7dc` | 13,724 |
+| report | `b3a9c3d96a8df3b6f85be381aa6b004914eb6bf6` | `c7867e0ebfe3299486d95abf6acef4b6588a5fcae11bc1ee0cca0f38d8fe90c4` | 7,113 |
+| ledger | `d666d9db6e7026c8d4ba0d69cc1fb301adf5c306` | `67673cb00fb2a4704a04438cbfc87133eadda39413e65a62aa324272f2008563` | 22,276 |
+| regression | `a5ec0a18ae3e246f60ad8875249e2a10df3ba0f8` | `b8c4654948554492d2e5465f28428ae4ab0131e79517bd554d26a287918cd3fc` | 1,739 |
 
-## Direct-main sequence
+## Direct-main sequence through active-task completion
 
-- `2c0165367f8567a03c629ff6926bac38442a9a5f` — task claim;
-- `c6c74990ac3f2e031a7d17320b58970b4518a7c1` — audit gate;
-- `7bd52d0e293dc81f8383e1db4f0c964ffbabcb5f` — focused regressions;
-- `934d4682969223e04d5a104398e2d80918d8754b` — evidence renderer;
-- `ce73e8bc98f011b5eaaa20aeab463a010f208f3f` — machine-readable evidence;
-- `d52123f052c8fb4291aa0e2ed0cae81455b25a9d` — visual evidence;
-- `f9d26d018177bdf13f649edaa5338aca93c3e0eb` — audit report;
-- `60566b36f2fb931bdc47663d480142c1f837e420` — immutable archive;
-- `15bf294136c19d4b9fb0ac4a6c2ea0fa424c965e` — active-task completion;
-- `5defb96def46ed432260adf5322857c469f7074b` — validated delivery handoff;
-- `f125e962d6c2b144a4ad29c555cc6a9b1a13524e` — study-ledger synchronization;
-- `746650dcdfdac5594294b6b932848976ff9e8741` — remote-main delivery confirmation.
+- `676549430e33994ca66b709ba102bfdc8998cf57` — task claim;
+- `512671d35aa25c9830e80cd9ff525fd43254e608` — producer remediation;
+- `6255a1a263adc3f33c12f9af62ca8dafafdaf3b3` — report remediation;
+- `25a058b4438ab17a5fcad5de49f8e1716cd917de` — ledger remediation;
+- `d82585d006c984d03126bbe6b583dca4ddbb7f80` — focused regression;
+- `f739c0b17b5821022e8cd6b103345a82a11ce4c3` — evidence renderer;
+- `4d3c1a798e3f02e5a72204198a2b43ee3094ad57` — machine-readable evidence;
+- `e55a3de0043faa86db6cd05826d745180fcc9270` — visual evidence;
+- `78c56e05c93f664688502d2f4fd7c3490dc74f7a` — audit report;
+- `9c08aedf4bfeab90d6b4650aec84246a6ec1d285` — immutable archive;
+- `ba44bcb0e9ca1ec63c5e0dad0be686d5918b8a60` — active-task completion.
 
-GitHub contents writes returned a successful direct-main commit SHA for each file. Recent remote
-history confirmed the focused sequence through `746650dcdfdac5594294b6b932848976ff9e8741` on `main`.
-The connector does not return a conventional terminal `git push` transcript; none is claimed.
-
-## Required remediation
-
-Before accepting or merging the timing study:
-
-1. define `EVENT_KEY = ["run", "event_id"]` and use it in every pivot, selection, merge, residual,
-   count, and plot;
-2. reject duplicate `(run,event_id,stave)` rows;
-3. content-address every ROOT input with path, bytes, SHA-256, tree, entries, and per-run key counts;
-4. report row and composite-key cut flow at each selection stage;
-5. regenerate JSON, Markdown, and figures as one reproducible bundle;
-6. compare current and corrected event membership and timing widths;
-7. keep `pair/sqrt(2)` conditional on equal independent stave resolutions and negligible correlated
-   jitter.
+GitHub contents writes returned a successful direct-main commit SHA for each update. Recent remote history confirmed the consecutive sequence on `main`. The connector does not return a conventional terminal `git push` transcript; none is claimed.
 
 ## Scientific boundary
 
-No raw ROOT file was processed. No channel mapping, waveform calibration, pulse polarity, baseline,
-CFD estimator bias, selection efficiency, bootstrap coverage, core-fit model, pair resolution,
-single-stave resolution, or canonical `CL-002` claim was validated or changed. The audit does not
-assert that the reported 0.899 ns value is false; it establishes that current source cannot prove the
-multi-run identity of its contributing events.
+No raw ROOT file was reprocessed. No event-arrival exposure, luminosity, accepted `mu_max`, recovery-failure ceiling, universal dead time, calibration, PID result, or detector-performance quantity was produced. Repository-wide pytest, ruff, ROOT processing, complete link checking, and GitHub Actions were not run and are not claimed as passing.
 
-Repository-wide pytest/ruff, full PR tests, ROOT processing, result/figure regeneration, complete link
-inventory, and GitHub Actions were not run. PR #939 had no attached combined commit statuses at
-inspection time. PR #868 was not changed or merged.
+PR #939 remained open and unmerged. PR #868 remained closed and unmerged.
 
-`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, `BLOCKERS.md`, `CLAIM_EVIDENCE_MATRIX.md`,
-`CODE_RESULT_MAP.md`, and `VISUALIZATION_MATRIX.md` were not replaced because their complete current
-bytes are available only through paged connector responses and the available write operation is
-whole-file replacement. Partial reconstruction could erase unrelated or append-only provenance. The
-immutable archive and this handoff retain the complete append-equivalent record; the focused study
-ledger was safely synchronized from a complete current read.
+## Next action
+
+Keep `CL-010` value-withheld until a preregistered pile-up-quality estimand, immutable exposure/rate inputs, recovery-ceiling crossing, and uncertainty model are validated. Separately regenerate the descriptive occupancy figure with the corrected producer when the immutable input environment is available; do not reinterpret it as an absolute-rate measurement.

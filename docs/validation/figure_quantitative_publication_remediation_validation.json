@@ -1,0 +1,103 @@
+{
+  "schema": "ccb-figure-quantitative-publication-remediation/1",
+  "task_id": "AUD-FIG-003-R1",
+  "session_stamp": "2026-07-26T120901Z",
+  "policy": "QUANTITATIVE_FIGURE_PUBLICATION_MUST_BE_ATOMIC_AND_FAILURE_SAFE",
+  "status": "VALIDATED",
+  "repository": {
+    "name": "SzeChunYiu/ccb-testbeam",
+    "initial_main": "1c1e17958568d336b667304c651054ff88d03393",
+    "implementation_commit": "31a81736be727e7decd555ae53655cf7465aaba8",
+    "test_commit": "98d8a4fdf691cc46cc4cf679c74569a43af07d1d"
+  },
+  "sources": {
+    "builder": {
+      "path": "tools/figure_registry/builder.py",
+      "git_blob": "822572726b65bb116f3f275af84312b526da4b23",
+      "bytes": 17571,
+      "sha256": "fe001a5b2ddef15fcfbe3a33d50909dfea57dee8b41ac2251442d6788b18fe56"
+    },
+    "tests": {
+      "path": "tests/test_figure_registry_quantitative_publication_remediation.py",
+      "git_blob": "5fdb48f3b56c22aa7f19049648b1c6242864ab8a",
+      "bytes": 4242,
+      "sha256": "b4e0f81f0d221d59066e0713ed84474f79787470b37569f7354de917a15e2234"
+    }
+  },
+  "implementation_contract": {
+    "render_destination": "SAME_DIRECTORY_MKSTEMP_RENDER_PATH",
+    "render_format": "PNG_EXPLICIT",
+    "render_snapshot": "COMPLETE_TEMPORARY_BYTES_RETAINED_BEFORE_PUBLICATION",
+    "publication": "SAME_DIRECTORY_TEMP_FLUSH_FSYNC_OS_REPLACE",
+    "final_verification": "BYTE_COUNT_AND_SHA256_MATCH_RETAINED_RENDER",
+    "figure_cleanup": "PLT_CLOSE_IN_FINALLY",
+    "failure_semantics": "FIGURE_REGISTRY_ERROR_WITH_PRIOR_TARGET_PRESERVED"
+  },
+  "behavioral_controls": {
+    "former": {
+      "algorithm": "SAVEFIG_DIRECT_TO_FINAL_PATH",
+      "injected_partial_bytes": 14,
+      "prior_preserved": false,
+      "interpretation": "A render exception after truncation can destroy a previously validated PNG."
+    },
+    "render_failure": {
+      "algorithm": "SAVEFIG_TO_SAME_DIRECTORY_TEMPORARY_PATH",
+      "injected_error": "injected savefig failure",
+      "prior_preserved": true,
+      "temporary_files_remaining": 0
+    },
+    "publish_failure": {
+      "algorithm": "ATOMIC_PUBLISH_RETAINED_RENDER_SNAPSHOT",
+      "injected_error": "injected publication failure",
+      "prior_preserved": true,
+      "temporary_files_remaining": 0
+    },
+    "success": {
+      "png_magic_hex": "89504e470d0a1a0a",
+      "png_bytes": 21772,
+      "png_sha256": "9ab29f98f32314acee01d9125f2028a3f297b5d33cfe7ab22f371ab4040bf09b",
+      "digest_matches_metadata": true,
+      "temporary_files_remaining": 0,
+      "note": "Synthetic one-entry control in the recorded local environment; the exact PNG digest is environment-specific and is not a physics result."
+    }
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/figure_registry/builder.py tests/test_figure_registry_quantitative_publication_remediation.py",
+      "PYTHONPATH=. pytest -q tests/test_figure_registry_snapshot_remediation.py tests/test_figure_registry_quantitative_publication_remediation.py"
+    ],
+    "focused_tests": {
+      "result": "8 passed in 0.56s",
+      "covered": [
+        "result snapshot replacement isolation",
+        "source artifact replacement isolation",
+        "atomic snapshot publication failure",
+        "source/output alias rejection",
+        "savefig partial-write failure",
+        "quantitative final-target replacement failure",
+        "successful hash-bound PNG publication",
+        "zero-finding source contract"
+      ]
+    },
+    "environment": {
+      "python": "3.13.5",
+      "pytest": "9.0.2",
+      "matplotlib": "3.10.8",
+      "pyyaml": "6.0.3"
+    },
+    "line_length": {
+      "builder_max": 93,
+      "test_max": 90,
+      "renderer_max": 100
+    }
+  },
+  "scientific_boundary": "This remediation validates publication integrity and provenance of quantitative PNG artifacts only. It does not validate or change any plotted central value, uncertainty, timing result, calibration, PID result, stopping profile, pile-up rate, or detector-performance claim.",
+  "unrun": [
+    "repository-wide pytest",
+    "repository-wide ruff",
+    "complete shipped figure registry build",
+    "paper build",
+    "repository-wide link inventory",
+    "GitHub Actions"
+  ]
+}

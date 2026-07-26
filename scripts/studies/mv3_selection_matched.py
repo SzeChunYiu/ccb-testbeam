@@ -126,6 +126,15 @@ def _chi2(mc_frac: dict[str, float], data_counts: dict[str, float]) -> tuple[flo
     if np.any(mc < 0.0) or np.any(observed < 0.0):
         raise ContractError("NEGATIVE_CHI2_INPUT")
     expected = mc * observed.sum()
+    # Pearson model support (salvaged from chatgpt PR #933): fail-closed when
+    # observed data has counts where the model predicts zero probability, and
+    # when model fractions are not normalized.
+    if not np.isclose(mc.sum(), 1.0, atol=1e-6):
+        raise ContractError(f"UNNORMALIZED_MODEL_FRACTIONS: sum={mc.sum():.6f}")
+    unsupported = (expected == 0.0) & (observed > 0.0)
+    if np.any(unsupported):
+        bad = [STAVES[i] for i in range(len(STAVES)) if unsupported[i]]
+        raise ContractError(f"UNSUPPORTED_OBSERVED_CATEGORIES:{bad}")
     positive = expected > 0.0
     ndf = int(positive.sum()) - 1
     if ndf <= 0:

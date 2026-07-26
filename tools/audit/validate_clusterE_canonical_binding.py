@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed audit for Cluster E canonical claim and provenance binding."""
+"""Fail-closed audit for Cluster E canonical claim/provenance binding."""
 from __future__ import annotations
 
 import argparse
@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 POLICY = "CLUSTERE_HEADLINES_MUST_BIND_CANONICAL_LEDGER_AND_FULL_PROVENANCE"
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 EXPECTED_COLUMNS = 43
 REQUIRED_PROVENANCE_INPUTS = {
     "docs/claim_ledger.csv",
@@ -26,314 +26,154 @@ REQUIRED_PROVENANCE_INPUTS = {
     "reports/studies/clusterD/mv_runs/mv3/mv3_summary.json",
     "figures/opticks/SUMMARY.md",
 }
+CURRENT_REQUIRED_IDENTITIES = {
+    "docs/claim_ledger.csv",
+    "reports/mv0_calibration_1782677847/calibration.json",
+    "reports/mv3_stopping_v3_1782679272/mv3_summary.json",
+    "reports/mv6_representation_1782678362/mv6_representation_summary.json",
+    "reports/studies/clusterD/mv_runs/mv3/mv3_summary.json",
+    "scripts/clusterE/clusterE_canonical_frontdoor.py",
+}
 
 
 class AuditInputError(RuntimeError):
-    """Controlled invalid-input failure."""
+    pass
 
 
-def snapshot_text(path: Path) -> tuple[str, dict[str, Any]]:
-    data = path.read_bytes()
+def snapshot(path: Path) -> tuple[str, dict[str, Any]]:
+    raw = path.read_bytes()
     try:
-        text = data.decode("utf-8", errors="strict")
+        text = raw.decode("utf-8", errors="strict")
     except UnicodeDecodeError as exc:
         raise AuditInputError(f"invalid UTF-8 in {path}: {exc}") from exc
-    return text, {
-        "path": str(path),
-        "bytes": len(data),
-        "sha256": hashlib.sha256(data).hexdigest(),
-        "snapshot_policy": "SINGLE_READ_EXACT_BYTES",
-    }
+    return text, {"path": str(path), "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
 
 
 def load_json(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
-    text, provenance = snapshot_text(path)
+    text, prov = snapshot(path)
     try:
         value = json.loads(text)
     except json.JSONDecodeError as exc:
         raise AuditInputError(f"invalid JSON in {path}: {exc}") from exc
     if not isinstance(value, dict):
-        raise AuditInputError(f"JSON root must be an object: {path}")
-    return value, provenance
+        raise AuditInputError(f"JSON root must be object: {path}")
+    return value, prov
 
 
 def load_ledger(path: Path) -> tuple[dict[str, dict[str, str]], dict[str, Any]]:
-    text, provenance = snapshot_text(path)
+    text, prov = snapshot(path)
     rows = list(csv.reader(text.splitlines()))
-    if not rows:
-        raise AuditInputError("claim ledger is empty")
-    header = rows[0]
-    if len(header) != EXPECTED_COLUMNS:
-        raise AuditInputError(
-            f"claim ledger header has {len(header)} columns, expected {EXPECTED_COLUMNS}"
-        )
+    if not rows or len(rows[0]) != EXPECTED_COLUMNS:
+        raise AuditInputError "claim ledger header width mismatch"
     out: dict[str, dict[str, str]] = {}
-    for line_no, row in enumerate(rows[1:], start=2):
+    for line_no, row in enumerate(rows[1:], 2):
         if len(row) != EXPECTED_COLUMNS:
-            raise AuditInputError(
-                f"claim ledger line {line_no} has {len(row)} columns, expected {EXPECTED_COLUMNS}"
-            )
-        item = dict(zip(header, row, strict=True))
+            raise AuditInputError(f"claim ledger line {line_no} width mismatch")
+        item = dict(zip(rows[0], row, strict=True))
         claim_id = item["claim_id"]
-        if not claim_id:
-            raise AuditInputError(f"claim ledger line {line_no} has empty claim_id")
-        if claim_id in out:
-            raise AuditInputError(f"duplicate claim_id {claim_id}")
+        if not claim_id or claim_id in out:
+            raise AuditInputError(f"duplicate or empty claim_id {claim_id}")
         out[claim_id] = item
-    provenance["rows"] = len(out)
-    provenance["columns"] = len(header)
-    return out, provenance
+    prov.update({"rows": len(out), "columns": EXPECTED_COLUMNS})
+    return out, prov
 
 
-def finding(code: str, message: str, *, artifact: str, evidence: Any = None) -> dict[str, Any]:
-    item: dict[str, Any] = {"code": code, "artifact": artifact, "message": message}
-    if evidence is not None:
-        item["evidence"] = evidence
-    return item
+def _finding(code: str, artifact: str, message: str = "") -> dict[str, str]:
+    return {"code": code, "artifact": artifact, "message": message}
 
 
-def require_claim(
-    claims: dict[str, dict[str, str]],
-    claim_id: str,
-    expected: dict[str, str],
-    findings: list[dict[str, Any]],
-) -> None:
-    row = claims.get(claim_id)
+def _require(claims: dict[str, dict[str, str]], claim: str, expected: dict[str, str], findings: list[dict[str, str]]) -> None:
+    row = claims.get(claim)
     if row is None:
-        findings.append(finding("CLAIM_MISSING", f"missing {claim_id}", artifact="ledger"))
+        findings.append(_finding("CLAIM_MISSING", "ledger", claim))
         return
     for field, value in expected.items():
         if row.get(field) != value:
-            findings.append(
-                finding(
-                    "CLAIM_FIELD_MISMATCH",
-                    f"{claim_id}.{field}={row.get(field)!r}, expected {value!r}",
-                    artifact="ledger",
-                )
-            )
+            findings.append(_finding("CLAIM_FIELD_MISMATCH", "ledger", f"{claim}.{field}"))
 
 
-def find_row(rows: list[dict[str, str]], claim: str) -> dict[str, str] | None:
-    for row in rows:
-        if row.get("claim") == claim:
-            return row
-    return None
-
-
-def audit(
-    ledger_path: Path,
-    dashboard_path: Path,
-    summary_path: Path,
-    claims_table_path: Path,
-    provenance_path: Path,
-    mv3_path: Path,
-) -> dict[str, Any]:
-    claims, ledger_prov = load_ledger(ledger_path)
-    dashboard, dashboard_prov = snapshot_text(dashboard_path)
-    summary, summary_prov = snapshot_text(summary_path)
-    claims_table_text, claims_table_prov = snapshot_text(claims_table_path)
-    provenance, provenance_prov = load_json(provenance_path)
-    mv3, mv3_prov = load_json(mv3_path)
-
-    findings: list[dict[str, Any]] = []
-    require_claim(
-        claims,
-        "CL-013",
-        {
-            "current_value": "92",
-            "unit": "ADC/MeV",
-            "syst_unc": "28",
-            "truth_type": "data_mc_calibration_proxy",
-            "status": "GATED",
-        },
-        findings,
-    )
-    require_claim(
-        claims,
-        "CL-021",
-        {
-            "current_value": "68269.40598948313",
-            "status": "FLAWED",
-            "truth_type": "legacy_data_mc_profile_diagnostic",
-        },
-        findings,
-    )
-    require_claim(
-        claims,
-        "CL-022",
-        {
-            "current_value": "0.003232254011764034",
-            "numerator": "283",
-            "denominator": "87555",
-            "truth_type": "mc_truth_only",
-            "status": "TRUTH_LEVEL_MC_ONLY",
-        },
-        findings,
-    )
-
-    documents = {"dashboard": dashboard, "summary": summary}
+def _documents(documents: dict[str, str], findings: list[dict[str, str]]) -> None:
     for artifact, text in documents.items():
         if re.search(r"CL-013[^\n]{0,120}\b110(?:\.0)?\b", text):
-            findings.append(
-                finding(
-                    "CL013_CANONICAL_VALUE_MISMATCH",
-                    "CL-013 is bound to 110 instead of the canonical 92 ADC/MeV",
-                    artifact=artifact,
-                )
-            )
+            findings.append(_finding("CL013_CANONICAL_VALUE_MISMATCH", artifact))
         if "92 ADC/MeV" not in text or "28 ADC/MeV" not in text:
-            findings.append(
-                finding(
-                    "CL013_EXACT_BINDING_MISSING",
-                    "canonical 92 ADC/MeV and 28 ADC/MeV envelope are not both bound",
-                    artifact=artifact,
-                )
-            )
-        if re.search(r"CL-021[^\n]{0,140}(?:8\.6e4|86135|6\.8e4)", text, re.IGNORECASE):
-            findings.append(
-                finding(
-                    "CL021_CLUSTERD_RERUN_CONFLATED",
-                    "a Cluster D rerun/rounded value is cited as canonical CL-021",
-                    artifact=artifact,
-                    evidence={
-                        "canonical": 68269.40598948313,
-                        "clusterD_rerun": mv3.get("chi2_per_ndf"),
-                    },
-                )
-            )
+            findings.append(_finding("CL013_EXACT_BINDING_MISSING", artifact))
+        if re.search(r"CL-021[^\n]{0,140}(?:8\.6e4|86135|6\.8e4)", text, re.I):
+            findings.append(_finding("CL021_CLUSTERD_RERUN_CONFLATED", artifact))
         if "68269.40598948313" not in text:
-            findings.append(
-                finding(
-                    "CL021_EXACT_BINDING_MISSING",
-                    "exact canonical CL-021 chi2/ndf is absent",
-                    artifact=artifact,
-                )
-            )
+            findings.append(_finding("CL021_EXACT_BINDING_MISSING", artifact))
         if "25/38 toy early-peak C12" in text:
-            findings.append(
-                finding(
-                    "CL022_TOY_COUNTS_SUBSTITUTED",
-                    "Cluster D toy counts replace canonical CL-022 283/87555 morphology rate",
-                    artifact=artifact,
-                )
-            )
+            findings.append(_finding("CL022_TOY_COUNTS_SUBSTITUTED", artifact))
         if "283/87555" not in text:
-            findings.append(
-                finding(
-                    "CL022_EXACT_COUNTS_MISSING",
-                    "canonical CL-022 counts 283/87555 are absent",
-                    artifact=artifact,
-                )
-            )
+            findings.append(_finding("CL022_EXACT_COUNTS_MISSING", artifact))
+        caveats = ("does not supersede CL-021", "does **not supersede CL-021**")
+        if not any(token in text for token in caveats):
+            findings.append(_finding("CL021_DISTINCT_DIAGNOSTIC_CAVEAT_MISSING", artifact))
 
-    table_rows = list(csv.DictReader(claims_table_text.splitlines()))
-    required_columns = {
-        "claim",
-        "headline",
-        "evidence_class",
-        "status",
-        "source",
-        "figure",
-        "claim_id",
-    }
-    if set(table_rows[0]) != required_columns if table_rows else True:
-        findings.append(
-            finding(
-                "CLAIMS_TABLE_SCHEMA_INVALID",
-                "claims table schema is missing or unexpected",
-                artifact="claims_table",
-            )
-        )
-    else:
-        mv0 = find_row(table_rows, "ADC gain (data/MC proxy, MV0)")
-        if not mv0 or "92" not in mv0["headline"] or "28" not in mv0["headline"]:
-            findings.append(
-                finding(
-                    "CLAIMS_TABLE_CL013_MISMATCH",
-                    "MV0 claim-table row is not bound to 92 ADC/MeV with 28 ADC/MeV envelope",
-                    artifact="claims_table",
-                )
-            )
-        anomaly = find_row(table_rows, "Anomaly / C12 identity")
-        if not anomaly or "283/87555" not in anomaly["headline"]:
-            findings.append(
-                finding(
-                    "CLAIMS_TABLE_CL022_MISMATCH",
-                    "anomaly row is not bound to canonical 283/87555 counts",
-                    artifact="claims_table",
-                )
-            )
-        elif anomaly["status"] != "TRUTH_LEVEL_MC_ONLY":
-            findings.append(
-                finding(
-                    "CLAIMS_TABLE_CL022_STATUS_MISMATCH",
-                    "anomaly row status does not match CL-022",
-                    artifact="claims_table",
-                )
-            )
-        stopping = find_row(table_rows, "Stopping-depth data/MC closure")
-        if not stopping or "68269.40598948313" not in stopping["headline"]:
-            findings.append(
-                finding(
-                    "CLAIMS_TABLE_CL021_MISMATCH",
-                    "stopping row is not bound to exact canonical CL-021 value",
-                    artifact="claims_table",
-                )
-            )
-        elif stopping["status"] != "FLAWED":
-            findings.append(
-                finding(
-                    "CLAIMS_TABLE_CL021_STATUS_MISMATCH",
-                    "stopping row status does not match CL-021 FLAWED",
-                    artifact="claims_table",
-                )
-            )
 
-    base_commit = provenance.get("base_commit")
-    if not isinstance(base_commit, str) or re.fullmatch(r"[0-9a-f]{40}", base_commit) is None:
-        findings.append(
-            finding(
-                "PROVENANCE_BASE_COMMIT_UNBOUND",
-                "base_commit is not a full 40-hex commit SHA",
-                artifact="provenance",
-                evidence=base_commit,
-            )
-        )
-    digest_map = provenance.get("input_sha256")
-    if not isinstance(digest_map, dict):
-        findings.append(
-            finding(
-                "PROVENANCE_FULL_SHA256_MISSING",
-                "input_sha256 mapping with full digests is absent",
-                artifact="provenance",
-            )
-        )
-        digest_map = {}
+def _table(text: str, findings: list[dict[str, str]]) -> None:
+    rows = list(csv.DictReader(text.splitlines()))
+    columns = {"claim", "headline", "evidence_class", "status", "source", "figure", "claim_id"}
+    if not rows or set(rows[0]) != columns:
+        findings.append(_finding("CLAIMS_TABLE_SCHEMA_INVALID", "claims_table"))
+        return
+    by_claim = {row["claim"]: row for row in rows}
+    checks = [
+        ("ADC gain (data/MC proxy, MV0)", ("92", "28"), "GATED", "CL013"),
+        ("Stopping-depth data/MC closure", ("68269.40598948313",), "FLAWED", "CL021"),
+        ("Anomaly / C12 identity", ("283/87555",), "TRUTH_LEVEL_MC_ONLY", "CL022"),
+    ]
+    for name, tokens, status, label in checks:
+        row = by_claim.get(name)
+        if not row or not all(token in row["headline"] for token in tokens):
+            findings.append(_finding(f"CLAIMS_TABLE_{label}_MISMATCH", "claims_table"))
+        elif row["status"] != status:
+            findings.append(_finding(f"CLAIMS_TABLE_{label}_STATUS_MISMATCH", "claims_table"))
+
+
+def _provenance(value: dict[str, Any], findings: list[dict[str, str]]) -> None:
+    commit = value.get("base_commit")
+    if not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit):
+        findings.append(_finding("PROVENANCE_BASE_COMMIT_UNBOUND", "provenance"))
+    identities = value.get("input_identities")
+    if isinstance(identities, dict):
+        for path in sorted(CURRENT_REQUIRED_IDENTITIES):
+            item = identities.get(path)
+            valid = isinstance(item, dict)
+            valid = valid and item.get("algorithm") == "git_blob_sha1"
+            valid = valid and isinstance(item.get("digest"), str) and bool(re.fullmatch(r"[0-9a-f]{40}", item["digest"]))
+            valid = valid and isinstance(item.get("sha256"), str) and bool(re.fullmatch(r"[0-9a-f]{64}", item["sha256"]))
+            if not valid:
+                findings.append(_finding("PROVENANCE_INPUT_UNBOUND", "provenance", path))
+        return
+    legacy = value.get("input_sha256")
+    if not isinstance(legacy, dict):
+        findings.append(_finding("PROVENANCE_FULL_SHA256_MISSING", "provenance"))
+        return
     for path in sorted(REQUIRED_PROVENANCE_INPUTS):
-        digest = digest_map.get(path)
-        if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
-            findings.append(
-                finding(
-                    "PROVENANCE_INPUT_UNBOUND",
-                    f"missing full SHA-256 for {path}",
-                    artifact="provenance",
-                )
-            )
+        digest = legacy.get(path)
+        if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+            findings.append(_finding("PROVENANCE_INPUT_UNBOUND", "provenance", path))
 
+
+def audit(ledger_path: Path, dashboard_path: Path, summary_path: Path, claims_table_path: Path, provenance_path: Path, mv3_path: Path) -> dict[str, Any]:
+    claims, ledger_prov = load_ledger(ledger_path)
+    dashboard, dashboard_prov = snapshot(dashboard_path)
+    summary, summary_prov = snapshot(summary_path)
+    table, table_prov = snapshot(claims_table_path)
+    provenance, provenance_prov = load_json(provenance_path)
+    mv3, mv3_prov = load_json(mv3_path)
+    findings: list[dict[str, str]] = []
+    _require(claims, "CL-013", {"current_value": "92", "unit": "ADC/MeV", "syst_unc": "28", "truth_type": "data_mc_calibration_proxy", "status": "GATED"}, findings)
+    _require(claims, "CL-021", {"current_value": "68269.40598948313", "truth_type": "legacy_data_mc_profile_diagnostic", "status": "FLAWED"}, findings)
+    _require(claims, "CL-022", {"current_value": "0.003232254011764034", "numerator": "283", "denominator": "87555", "truth_type": "mc_truth_only", "status": "TRUTH_LEVEL_MC_ONLY"}, findings)
+    _documents({"dashboard": dashboard, "summary": summary}, findings)
+    _table(table, findings)
+    _provenance(provenance, findings)
     canonical = float(claims["CL-021"]["current_value"])
     rerun = mv3.get("chi2_per_ndf")
-    comparison = {
-        "canonical_cl021_chi2_per_ndf": canonical,
-        "clusterD_rerun_chi2_per_ndf": rerun,
-        "absolute_difference": None if not isinstance(rerun, (int, float)) else rerun - canonical,
-        "scientific_interpretation": (
-            "distinct source-bound diagnostics; the Cluster D rerun does not "
-            "silently supersede CL-021"
-        ),
-    }
-
     return {
-        "schema": "ccb-clusterE-canonical-binding-audit/1",
+        "schema": "ccb-clusterE-canonical-binding-audit/2",
         "validator_version": VERSION,
         "policy": POLICY,
         "status": "VALIDATED" if not findings else "FLAWED",
@@ -342,48 +182,35 @@ def audit(
         "canonical_values": {
             "CL-013": {"value": 92.0, "syst_envelope_adc_per_mev": 28.0, "status": "GATED"},
             "CL-021": {"chi2_per_ndf": canonical, "status": "FLAWED"},
-            "CL-022": {
-                "rate": 0.003232254011764034,
-                "numerator": 283,
-                "denominator": 87555,
-                "status": "TRUTH_LEVEL_MC_ONLY",
-            },
+            "CL-022": {"rate": 0.003232254011764034, "numerator": 283, "denominator": 87555, "status": "TRUTH_LEVEL_MC_ONLY"},
         },
-        "mv3_source_comparison": comparison,
-        "inputs": {
-            "ledger": ledger_prov,
-            "dashboard": dashboard_prov,
-            "summary": summary_prov,
-            "claims_table": claims_table_prov,
-            "provenance": provenance_prov,
-            "clusterD_mv3": mv3_prov,
+        "mv3_source_comparison": {
+            "canonical_cl021_chi2_per_ndf": canonical,
+            "clusterD_rerun_chi2_per_ndf": rerun,
+            "absolute_difference": None if not isinstance(rerun, (int, float)) else rerun - canonical,
+            "scientific_interpretation": "distinct diagnostics; rerun does not supersede CL-021",
         },
-        "scientific_boundary": (
-            "This audit validates claim/provenance binding only; it does not validate detector "
-            "performance, data/MC transfer, calibration, or an accepted stopping-profile closure."
-        ),
+        "inputs": {"ledger": ledger_prov, "dashboard": dashboard_prov, "summary": summary_prov, "claims_table": table_prov, "provenance": provenance_prov, "clusterD_mv3": mv3_prov},
+        "scientific_boundary": "Claim/provenance binding only; no detector performance or accepted closure.",
     }
 
 
 def atomic_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fd, temp_name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
+    fd, name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             json.dump(payload, handle, indent=2, sort_keys=True)
             handle.write("\n")
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temp_name, path)
+        os.replace(name, path)
     except Exception:
-        try:
-            os.unlink(temp_name)
-        except FileNotFoundError:
-            pass
+        Path(name).unlink(missing_ok=True)
         raise
 
 
-def parse_args() -> argparse.Namespace:
+def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ledger", type=Path, required=True)
     parser.add_argument("--dashboard", type=Path, required=True)
@@ -392,24 +219,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--provenance", type=Path, required=True)
     parser.add_argument("--cluster-d-mv3", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    return parser.parse_args()
-
-
-def main() -> int:
-    args = parse_args()
-    inputs = [
-        args.ledger,
-        args.dashboard,
-        args.summary,
-        args.claims_table,
-        args.provenance,
-        args.cluster_d_mv3,
-    ]
-    output_resolved = args.output.resolve(strict=False)
-    for input_path in inputs:
-        if input_path.resolve(strict=False) == output_resolved:
-            print(f"ERROR: output aliases input: {input_path}")
-            return 2
+    args = parser.parse_args()
+    inputs = [args.ledger, args.dashboard, args.summary, args.claims_table, args.provenance, args.cluster_d_mv3]
+    if any(path.resolve(strict=False) == args.output.resolve(strict=False) for path in inputs):
+        print("ERROR: output aliases input")
+        return 2
     try:
         payload = audit(*inputs)
         atomic_json(args.output, payload)

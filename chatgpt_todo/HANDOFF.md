@@ -7,7 +7,9 @@
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `8acfc727a1479ff5b616042e65743b0652900c25`
 - **Validated evidence/archive/active-task head:** `cdc2c0d204eced6ec012d6f8c2e8c946646bf130`
+- **Validated handoff commit:** `b13743b7f6084fee00848205e97364d51a845334`
 - **Destination:** authenticated sequential commits directly to `main`; no force-push, branch transport, or history rewrite.
+- **Push result:** GitHub contents writes returned successful commit SHAs. Post-write remote history confirmed the audit, tests, fixture, renderer, machine evidence, visual evidence, report, archive, active-task record, and handoff commit consecutively on `main`.
 - **Acceptance:** audit implementation/evidence `VALIDATED / COMPLETE`; production builder contract `FLAWED / PARTIAL`.
 
 ## Defect
@@ -66,6 +68,7 @@ The inspected current builder blob is `39dcd3b13d3886c43f3e9111291d420f86cc7c85`
 - `b7c037e08a65753f7913186030c24026974ee1a5` — audit report
 - `c151045a8f09c1dc1cf29d27a95dec711d47e29d` — immutable archive
 - `cdc2c0d204eced6ec012d6f8c2e8c946646bf130` — completed active task
+- `b13743b7f6084fee00848205e97364d51a845334` — validated handoff
 
 ## Required remediation
 

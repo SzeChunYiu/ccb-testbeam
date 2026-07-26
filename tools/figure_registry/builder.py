@@ -20,7 +20,13 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-from .registry import Entry, load_registry, validate_registry  # noqa: E402
+from .registry import (  # noqa: E402
+    Entry,
+    RegistryFormatError,
+    RegistrySnapshot,
+    load_registry_snapshot,
+    validate_registry,
+)
 
 
 class FigureRegistryError(RuntimeError):
@@ -403,6 +409,18 @@ def _process_entry(
     return record
 
 
+def _registry_provenance(snapshot: RegistrySnapshot) -> dict[str, Any]:
+    """Return report metadata bound to the exact registry bytes used for parsing."""
+
+    return {
+        "path": snapshot.path,
+        "sha256": snapshot.sha256,
+        "size_bytes": snapshot.size_bytes,
+        "snapshot_method": snapshot.snapshot_method,
+        "entry_count": len(snapshot.entries),
+    }
+
+
 def build(
     registry_path: str | Path,
     out_dir: str | Path,
@@ -411,11 +429,16 @@ def build(
 ) -> dict[str, Any]:
     output = Path(out_dir)
     output.mkdir(parents=True, exist_ok=True)
-    entries = load_registry(registry_path)
+    try:
+        snapshot = load_registry_snapshot(registry_path)
+    except RegistryFormatError as exc:
+        raise FigureRegistryError(f"registry format error: {exc}") from exc
+    entries = list(snapshot.entries)
     problems = validate_registry(entries)
     report: dict[str, Any] = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "registry": str(registry_path),
+        "registry": snapshot.path,
+        "registry_provenance": _registry_provenance(snapshot),
         "paper_only": paper_only,
         "allow_preliminary": allow_preliminary,
         "validation_problems": problems,

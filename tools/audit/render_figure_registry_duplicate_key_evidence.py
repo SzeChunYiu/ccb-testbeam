@@ -81,7 +81,7 @@ def _duplicate_controls(root: Path) -> list[dict[str, Any]]:
             load_registry_snapshot(path)
         except RegistryFormatError as exc:
             corrected_rejected = True
-            corrected_error = str(exc)
+            corrected_error = str(exc).replace(str(root), "<tmp>")
         results.append(
             {
                 "name": control["name"],

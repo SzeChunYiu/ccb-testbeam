@@ -72,7 +72,9 @@ def _read_file_snapshot(path: Path, *, entry_id: str, label: str) -> ByteSnapsho
     try:
         raw = path.read_bytes()
     except OSError as exc:
-        raise FigureRegistryError(f"{entry_id}: could not read {label} {path}: {exc}") from exc
+        raise FigureRegistryError(
+            f"{entry_id}: could not read {label} {path}: {exc}"
+        ) from exc
     return ByteSnapshot(raw=raw, sha256=_sha256_bytes(raw), size_bytes=len(raw))
 
 
@@ -84,7 +86,6 @@ def _atomic_publish_snapshot(
     label: str = "artifact",
 ) -> ByteSnapshot:
     """Publish retained bytes atomically and verify the final target independently."""
-
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temp_name = tempfile.mkstemp(
         prefix=f".{path.name}.", suffix=".tmp", dir=path.parent
@@ -97,14 +98,12 @@ def _atomic_publish_snapshot(
             os.fsync(handle.fileno())
         os.replace(temporary, path)
     except Exception as exc:
-        try:
-            temporary.unlink(missing_ok=True)
-        finally:
-            if isinstance(exc, FigureRegistryError):
-                raise
-            raise FigureRegistryError(
-                f"{entry_id}: could not publish {label} {path}: {exc}"
-            ) from exc
+        temporary.unlink(missing_ok=True)
+        if isinstance(exc, FigureRegistryError):
+            raise
+        raise FigureRegistryError(
+            f"{entry_id}: could not publish {label} {path}: {exc}"
+        ) from exc
 
     published = _read_file_snapshot(
         path, entry_id=entry_id, label=f"published {label}"
@@ -224,9 +223,7 @@ def _write_source_csv(path: Path, row: dict[str, Any]) -> None:
     writer.writerow(row)
     raw = stream.getvalue().encode("utf-8")
     snapshot = ByteSnapshot(raw=raw, sha256=_sha256_bytes(raw), size_bytes=len(raw))
-    _atomic_publish_snapshot(
-        path, snapshot, entry_id="source-data", label="CSV"
-    )
+    _atomic_publish_snapshot(path, snapshot, entry_id="source-data", label="CSV")
 
 
 def _emit_quantitative(
@@ -244,22 +241,45 @@ def _emit_quantitative(
             f"nonfinite, or nonnumeric in {entry.result}"
         )
 
-    fig, axis = plt.subplots(figsize=(6.0, 4.0), dpi=150)
-    axis.errorbar([0], [value], yerr=[uncertainty], fmt="o", capsize=4)
-    axis.set_xlim(-0.5, 0.5)
-    axis.set_xticks([0])
-    axis.set_xticklabels([entry.id])
-    axis.set_ylabel(value_name)
-    axis.set_title(f"{entry.id} [{entry.status}]")
-    axis.grid(True, linewidth=0.5)
-    fig.text(0.5, 0.01, entry.caption, ha="center", fontsize=7, wrap=True)
-    fig.tight_layout(rect=(0, 0.04, 1, 1))
     figure_path = out_dir / f"{entry.id}.png"
-    fig.savefig(figure_path)
-    plt.close(fig)
-    figure_snapshot = _read_file_snapshot(
-        figure_path, entry_id=entry.id, label="rendered figure"
-    )
+    render_path: Path | None = None
+    fig, axis = plt.subplots(figsize=(6.0, 4.0), dpi=150)
+    try:
+        axis.errorbar([0], [value], yerr=[uncertainty], fmt="o", capsize=4)
+        axis.set_xlim(-0.5, 0.5)
+        axis.set_xticks([0])
+        axis.set_xticklabels([entry.id])
+        axis.set_ylabel(value_name)
+        axis.set_title(f"{entry.id} [{entry.status}]")
+        axis.grid(True, linewidth=0.5)
+        fig.text(0.5, 0.01, entry.caption, ha="center", fontsize=7, wrap=True)
+        fig.tight_layout(rect=(0, 0.04, 1, 1))
+
+        fd, render_name = tempfile.mkstemp(
+            prefix=f".{figure_path.name}.", suffix=".render.png", dir=figure_path.parent
+        )
+        os.close(fd)
+        render_path = Path(render_name)
+        fig.savefig(render_path, format="png")
+        rendered = _read_file_snapshot(
+            render_path, entry_id=entry.id, label="temporary rendered figure"
+        )
+        figure_snapshot = _atomic_publish_snapshot(
+            figure_path,
+            rendered,
+            entry_id=entry.id,
+            label="quantitative figure",
+        )
+    except FigureRegistryError:
+        raise
+    except Exception as exc:
+        raise FigureRegistryError(
+            f"{entry.id}: could not render quantitative figure {figure_path}: {exc}"
+        ) from exc
+    finally:
+        plt.close(fig)
+        if render_path is not None:
+            render_path.unlink(missing_ok=True)
 
     source_path = out_dir / f"{entry.id}_source_data.csv"
     _write_source_csv(
@@ -278,6 +298,8 @@ def _emit_quantitative(
             "result_snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES",
             "figure_sha256": figure_snapshot.sha256,
             "figure_size_bytes": figure_snapshot.size_bytes,
+            "figure_snapshot_method": "TEMP_RENDER_EXPLICIT_PNG_RETAINED_BYTES",
+            "figure_publication": "SAME_DIRECTORY_TEMP_FLUSH_FSYNC_OS_REPLACE",
             "table_path": entry.table or "",
             "input_sha256": entry.input_sha256 or "",
         },
@@ -299,10 +321,7 @@ def _emit_existing_artifact(
     target = target_dir / f"{entry.id}{suffix}"
     if _same_file(source, target):
         raise FigureRegistryError(f"{entry.id}: output aliases source artifact")
-
-    source_snapshot = _read_file_snapshot(
-        source, entry_id=entry.id, label="source artifact"
-    )
+    source_snapshot = _read_file_snapshot(source, entry_id=entry.id, label="source artifact")
     published_snapshot = _atomic_publish_snapshot(
         target, source_snapshot, entry_id=entry.id, label="source artifact"
     )
@@ -348,7 +367,6 @@ def _process_entry(
 ) -> dict[str, Any]:
     record = _base_record(entry)
     disposition = entry.disposition
-
     if disposition == "BLOCKED":
         record["disposition"] = "BLOCKED"
         record["reason"] = "scientific status EXTERNAL_BLOCKER is non-buildable"
@@ -380,7 +398,6 @@ def _process_entry(
         record["reason"] = f"built from {entry.result}"
     else:
         raise FigureRegistryError(f"{entry.id}: unsupported kind {entry.kind!r}")
-
     record["figure"] = str(figure)
     record["source_data"] = str(source_data)
     return record
@@ -424,9 +441,7 @@ def build(
         report["entries"].append(record)
 
     counts = {name: 0 for name in ("PASS", "FAIL", "BLOCKED", "QUARANTINED")}
-    quantitative = 0
-    illustrative = 0
-    source_only = 0
+    quantitative = illustrative = source_only = 0
     for record in report["entries"]:
         counts[record["disposition"]] = counts.get(record["disposition"], 0) + 1
         if record["disposition"] == "PASS":
@@ -449,8 +464,7 @@ def build(
     _atomic_write_json(output / "build_report.json", report)
     if failures:
         raise FigureRegistryError(
-            f"{len(failures)} figure(s) failed to build:\n  - "
-            + "\n  - ".join(failures)
+            f"{len(failures)} figure(s) failed to build:\n  - " + "\n  - ".join(failures)
         )
     return report
 

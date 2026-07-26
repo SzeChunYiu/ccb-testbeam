@@ -1,0 +1,110 @@
+{
+  "acceptance": {
+    "required_parquet_reader": "pandas.read_parquet(io.BytesIO(snapshot))",
+    "required_rows_manifest_match": true,
+    "required_snapshot_policy": "SINGLE_READ_EXACT_BYTES"
+  },
+  "behavioral_control": {
+    "current": {
+      "manifest_sha256": "0c7231e4128cb270b7021358c50c8a26c53616544d34f9c036b1db48aaada52b",
+      "parsed_sha256": "0c7231e4128cb270b7021358c50c8a26c53616544d34f9c036b1db48aaada52b",
+      "rows_manifest_match": true,
+      "snapshot_policy": "SINGLE_READ_EXACT_BYTES",
+      "source_git_blob": "a5c255a971a7cf672f011f84b91a3c7b64d1f209"
+    },
+    "former": {
+      "manifest_sha256": "780ae58dca72ba8a47ad0c126f2f113b8ed5800826b73b714fafe144c2c9936e",
+      "parsed_sha256": "0c7231e4128cb270b7021358c50c8a26c53616544d34f9c036b1db48aaada52b",
+      "rows_manifest_match": false,
+      "snapshot_policy": "POST_READ_FILE_HASH",
+      "source_git_blob": "90e0709f5f065062bb4dc9f990975992a53d76b1"
+    },
+    "input_original_sha256": "0c7231e4128cb270b7021358c50c8a26c53616544d34f9c036b1db48aaada52b",
+    "method": "monkeypatched pandas.read_parquet with deterministic path replacement after parse input acquisition",
+    "replacement_sha256": "780ae58dca72ba8a47ad0c126f2f113b8ed5800826b73b714fafe144c2c9936e"
+  },
+  "controls": {
+    "former_post_read_manifest_sha256": "48710c41d054a141cca7ad44ccd9220a9967a4533dcf75349e27916dd267b680",
+    "former_rows_manifest_match": false,
+    "parsed_bytes": 19,
+    "parsed_sha256": "cb5a07a121db54d52c5c7c785aa4f5275f5ec6b8dfdb4bd7ad8f0719a2758d0a",
+    "replacement_bytes": 19,
+    "replacement_sha256": "48710c41d054a141cca7ad44ccd9220a9967a4533dcf75349e27916dd267b680",
+    "single_snapshot_manifest_sha256": "cb5a07a121db54d52c5c7c785aa4f5275f5ec6b8dfdb4bd7ad8f0719a2758d0a",
+    "single_snapshot_rows_manifest_match": true
+  },
+  "environment": {
+    "python": "3.13.5"
+  },
+  "file_identities": {
+    "scripts/single_stave/deltaE_E.py": {
+      "bytes": 6958,
+      "git_blob": "a5c255a971a7cf672f011f84b91a3c7b64d1f209",
+      "sha256": "fc6f049afc0514f0fdc6a95208e8cb4c5c56c2b9ddae5d72914a790ad76f5eea"
+    },
+    "tests/test_deltae_parquet_snapshot_contract.py": {
+      "bytes": 5632,
+      "git_blob": "d663a1e4103b0b661fd24d8909ae12cdde7080bf",
+      "sha256": "b3b7768e84ef4659a4ec6ee5f2339e0d70873f5bc7c52e94a7318738d3126d3a"
+    },
+    "tools/audit/audit_deltae_parquet_snapshot.py": {
+      "bytes": 9412,
+      "git_blob": "ad68cabca6e4bcc379d782cf4aece59af70d7438",
+      "sha256": "efde6376f539164e5471b9ba2dadcd0c5d1eed4eb094d0299c9af42bf38f5ea2"
+    },
+    "tools/audit/render_deltae_parquet_snapshot_evidence.py": {
+      "bytes": 3885,
+      "git_blob": "bff50bb72812a8cf8a72680f2a8fd18af72bead7",
+      "sha256": "9c8ddec507380ffb5ae060dadb4394d560ab9777ef89c0159b46731305ee55ea"
+    }
+  },
+  "findings": [],
+  "policy": "DELTAE_PARQUET_ROWS_AND_PROVENANCE_MUST_SHARE_ONE_BYTE_SNAPSHOT",
+  "previous_source": {
+    "bytes": 5854,
+    "finding_codes": [
+      "PARQUET_PATH_READ_NOT_SNAPSHOTTED",
+      "PARQUET_READER_NOT_BOUND_TO_BYTES",
+      "PARQUET_SNAPSHOT_NOT_RETAINED",
+      "PARQUET_POLICY_MISSING",
+      "PARQUET_SNAPSHOT_POLICY_MISSING",
+      "RESULT_CONTRACT_OMITS_PARQUET_POLICY",
+      "MANIFEST_CONTRACT_OMITS_PARQUET_POLICY"
+    ],
+    "finding_count": 7,
+    "git_blob": "90e0709f5f065062bb4dc9f990975992a53d76b1",
+    "sha256": "edbf8f5513a39c95fdab7a6f895c7b5a4868ee1dad0b41148f195ceeab1c9c21",
+    "status": "FLAWED"
+  },
+  "reader_contract": {
+    "manifest_contract_records_policy": true,
+    "manifest_uses_retained_snapshot": true,
+    "parquet_branch_reads_bytes": true,
+    "parquet_snapshot_retained": true,
+    "policy_declared": true,
+    "read_parquet_uses_bytesio": true,
+    "result_contract_records_policy": true,
+    "snapshot_policy_declared": true
+  },
+  "schema": "ccb-deltae-parquet-snapshot-audit/1",
+  "scientific_boundary": "This audit validates table-byte provenance only; it does not validate A-002 amplitudes, stopping fractions, PID, calibration, or detector performance.",
+  "source": {
+    "bytes": 6958,
+    "path": "scripts/single_stave/deltaE_E.py",
+    "sha256": "fc6f049afc0514f0fdc6a95208e8cb4c5c56c2b9ddae5d72914a790ad76f5eea",
+    "snapshot_policy": "SINGLE_READ_STRICT_UTF8"
+  },
+  "status": "VALIDATED",
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/single_stave/deltaE_E.py tools/audit/audit_deltae_parquet_snapshot.py tests/test_deltae_parquet_snapshot_contract.py tools/audit/render_deltae_parquet_snapshot_evidence.py",
+      "PYTHONPATH=. pytest -q tests/test_deltae_parquet_snapshot_contract.py",
+      "PYTHONPATH=. python deterministic_old_vs_current_parquet_path_replacement_control.py"
+    ],
+    "json_parse": "PASS",
+    "new_source_audit": "VALIDATED: 0 finding(s)",
+    "old_source_audit": "FLAWED: 7 finding(s)",
+    "pytest": "7 passed in 0.04s",
+    "svg_xml_parse": "PASS"
+  }
+}

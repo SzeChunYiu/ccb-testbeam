@@ -2,63 +2,70 @@
 
 ## Session
 
-- **Task:** `AUD-DELTAE-004`
-- **Stamp:** `2026-07-26T021210Z`
-- **Initial remote main:** `303da4b0d96b703de002d53abd98f0ca9c964250`
-- **Validated delivery/handoff commit:** `0652ee75e1fd37a5306911c7c932144f1dc78ba1`
-- **Remote-main confirmation:** post-write history confirmed the delivery commit and its complete
-  focused ancestry consecutively on remote `main`.
-- **Destination:** direct GitHub contents-API commits to `main`; no force-push, history rewrite,
-  task branch, or pull request.
-- **Focused acceptance:** `VALIDATED / COMPLETE`.
-- **Repository-wide integration:** `PARTIAL`; no push-triggered workflow result was visible through
-  the available connector, so broad CI success is not claimed.
+- **Task:** `AUD-DELTAE-005`
+- **Stamp:** `2026-07-26T030223Z`
+- **Owner:** scheduled scientific-review session
+- **Initial remote main:** `f1a615d5b591b63c91b03124d243daf8372b61cd`
+- **Validated delivery/handoff commit:** pending this contents-API write
+- **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, or PR.
+- **Focused acceptance:** audit implementation, tests, JSON, SVG, report, and archive `VALIDATED`.
+- **Production reader state:** `FLAWED / PARTIAL`; the canonical reader was not modified in this unit.
 
 ## Start-of-run review
 
-Fetched current `main`, recent history, PR #933, closed PR #868, repository instructions, the
-mandatory `chatgpt_todo/` records, the repository-wide workflow, the exact failing CI log, and the
-strict DeltaE runner/tests. PR #933 remained draft, open, unmergeable, and unmerged. PR #868
-remained closed, unmerged, non-mergeable, and untouched.
+Fetched current `main`, recent history, combined status, open PR #933, closed PR #868, the
+mandatory `chatgpt_todo/` records, DeltaE scripts/tests/contracts, and downstream consumers. PR
+#933 remained draft, open, unmergeable, and unmerged. PR #868 remained closed, unmerged,
+non-mergeable, and untouched. No status checks were attached to the initial main commit.
 
-## Demonstrated defect
+## Confirmed defect
 
-GitHub Actions run `30181818642`, job `89739575939`, installed Python 3.11 and pandas 3.0.5. The
-repository-wide test
-`tests/test_deltae_data_bridge_strict.py::test_valid_bundle_is_content_addressed_and_reconstructable`
-failed because default `pandas.read_csv` inference loaded the all-digit synthetic Git commit
-`1111111111111111111111111111111111111111` as an integer while the regression expected the exact
-string.
+The canonical source blob `fe5dd5e4673f32fa5a4b94776531f2b392e12414` declares the event key
+`(source_file_id, run_id, event_id)` but its CSV branch calls default `pandas.read_csv(path)` with
+no text dtype for the key and no single-read strict-UTF-8 snapshot.
 
-The strict runner writes the commit as text to authoritative `result.json` and copies the same token
-to `deltaE_E_events_data.csv`. The defect is therefore a consumer-schema failure, not evidence that
-the producer generated a different commit. Untyped numeric inference can irreversibly erase leading
-zeros, so casting after reading is not an adequate repair.
+A deterministic two-row control used exact source identifiers `001` and `1` with equal run/event
+values. Under pandas 2.2.3 default inference:
+
+- parsed identifiers became `1` and `1`;
+- two exact composite keys collapsed to one parsed key;
+- one false data/MC inner-join match was created.
+
+With all three key columns parsed as text, two exact keys remained and the false-match count was
+zero. This can change event cardinality or cross-contaminate rows before stopping or DeltaE-E
+statistics are calculated.
 
 Policy:
 
-`DELTAE_CSV_IDENTIFIERS_MUST_USE_AN_EXPLICIT_TEXT_READER_CONTRACT`
+`DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT`
 
-## Remediation
+## Downstream review
 
-Added `docs/contracts/deltae_event_csv_reader.json`, which:
-
-- identifies `result.json` as the authoritative typed bundle metadata;
-- identifies `deltaE_E_events_data.csv` as the human-review table;
-- requires nine provenance columns to be loaded as text;
-- forbids using automatic numeric inference to validate Git or SHA-256 identifiers.
-
-Updated `tests/test_deltae_data_bridge_strict.py` to load the version-controlled dtype contract
-before comparing provenance. Added `tests/test_deltae_csv_reader_contract.py`, which verifies the
-complete column set and preserves both an all-digit commit and a leading-zero commit.
+The strict bundle test introduced by `AUD-DELTAE-004` applies an explicit text contract to
+provenance columns. `scripts/studies/clusterA_data_side.py` reads one strict-UTF-8 byte snapshot
+with `csv.DictReader` and preserves `source_file_id` as text. The vulnerable boundary identified
+here is the generic canonical `scripts/single_stave/deltaE_E.py` CSV input path.
 
 ## Better-method comparison
 
-- Post-read string casting was rejected because it cannot restore leading zeros.
-- Prefixing every CSV identifier would work but would change the established artifact schema.
-- JSON/Parquet-only publication would supply stronger typing but remove the established review CSV.
-- The selected method keeps JSON authoritative, preserves the CSV, and makes reader semantics
-  explicit and testable with minimal coupling.
+- Post-read string casting was rejected because it cannot restore leading zeros or undo a false
+  match already created by inference.
+- Protecting only `source_file_id` was rejected as an incomplete composite-key contract.
+- Parquet-only input would strengthen typing but remove the supported CSV workflow.
+- Required remediation is one strict-UTF-8 byte snapshot plus text dtypes for all three key columns;
+  numeric physics fields remain independently coercible and validated.
+
+## Files added
+
+- `tools/audit/audit_deltae_csv_key_identity.py`
+- `tests/test_audit_deltae_csv_key_identity.py`
+- `tools/audit/render_deltae_csv_key_identity_evidence.py`
+- `docs/validation/deltae_csv_key_identity_validation.json`
+- `docs/validation/deltae_csv_key_identity.svg`
+- `docs/validation/deltae_csv_key_identity_audit.md`
+- `chatgpt_todo/archive/2026-07-26T030223Z_AUD-DELTAE-005_CSV_KEY_IDENTITY.md`
+
+Updated `chatgpt_todo/ACTIVE_TASK.md` and this handoff.
 
 ## Validation
 
@@ -66,11 +73,12 @@ Executed in the available local environment:
 
 ```text
 python -m py_compile \
-  tests/test_deltae_csv_reader_contract.py \
-  tools/audit/render_deltae_csv_reader_evidence.py
+  tools/audit/audit_deltae_csv_key_identity.py \
+  tests/test_audit_deltae_csv_key_identity.py \
+  tools/audit/render_deltae_csv_key_identity_evidence.py
 
-pytest -q tests/test_deltae_csv_reader_contract.py
-3 passed in 0.03s
+pytest -q tests/test_audit_deltae_csv_key_identity.py
+6 passed in 0.09s
 ```
 
 Environment:
@@ -78,77 +86,57 @@ Environment:
 - Python `3.13.5`
 - pandas `2.2.3`
 
-The exact pandas 3.0.5 behavior is retained from the content-addressed CI log. The focused test
-validates semantics independently of whether the local pandas version performs the problematic
-inference. The validation JSON parsed, the SVG parsed as XML, and changed Python lines are at most
-89 characters in the renderer and 85 characters in the new focused test.
+The current-like executable contract returned `FLAWED` with five findings. A corrected fixture
+returned `VALIDATED` with zero findings. Invalid UTF-8, missing reader definitions, and destructive
+output aliasing failed closed. Atomic JSON publication passed. The JSON parsed, the SVG parsed as
+XML, and changed Python lines are at most 100 characters.
 
-## Version-controlled evidence
+The execution container could not clone GitHub. The exact current source was inspected through the
+GitHub connector and bound by its Git blob; the executable control used the exact relevant reader
+behavior excerpt. Full-source execution is not claimed.
 
-- `docs/contracts/deltae_event_csv_reader.json`
-  - blob `3721a06aca5c228dbd38ba502c6b5a5bdd521f0d`
-  - 991 bytes
-  - SHA-256 `f6c07e245ce2fdd83f7190f9c2aa2bb0b633f9e5c61cd437ba01cb32d1934fbb`
-- `tests/test_deltae_csv_reader_contract.py`
-  - blob `3e580de8a3b29ab1950fd6e4bbea94ee9c59f681`
-  - 2,003 bytes
-  - SHA-256 `a5c8b68a203d6e3beb46f513a937efd115246f7358ce144933e68e2cb154461f`
-- `tests/test_deltae_data_bridge_strict.py`
-  - blob `8e85937fec304aa801c5da6527495f80b56976e9`
-- `scripts/single_stave/deltaE_E_data_bridge_strict.py`
-  - inspected unchanged blob `76f7ffda2c2af92b400ca61f2f12c2b34fff7dba`
+## Findings
 
-Evidence files:
+- `CSV_KEY_DTYPE_MISSING`
+- `CSV_NOT_SINGLE_READ_STRICT_UTF8`
+- `CSV_KEY_POLICY_MISSING`
+- `DISTINCT_COMPOSITE_KEYS_COLLAPSE`
+- `FALSE_CROSS_FILE_MATCH`
 
-- `docs/validation/deltae_csv_reader_contract_validation.json`
-- `docs/validation/deltae_csv_reader_contract.svg`
-- `docs/validation/deltae_csv_reader_contract_audit.md`
-- `chatgpt_todo/archive/2026-07-26T021210Z_AUD-DELTAE-004_CSV_READER_CONTRACT.md`
+## Direct-main commits before handoff
 
-## Direct-main commits
+- `7c9b9a063cf5115e4dee9c6c9c8797b6a7577ffc` — task claim
+- `0e05c2cfeda5d46c35f0a31d7b01fe4f769ca51a` — fail-closed auditor
+- `22c312c58a3b5d6339113dc31b5774f4d76102a7` — focused regressions
+- `171e3506f2b274548d63be299cab7cec9bd83d5c` — evidence renderer
+- `2173af69f7d1a564695c5c696da8e5accbfc3907` — validation JSON
+- `29a2229361b174ba2a34da92ee668837b448de75` — visual evidence
+- `0b542e6c8844f3aaf1e3469c808620bf3a3d0d38` — audit report
+- `8f706d05b97e2e032bef7813cb34b48dd4bcdea7` — immutable archive
+- `f3ecace79fbb1c8f68c380af604ce59f218aacd5` — active-task completion
 
-- `bf4ffcbe1395baca2b48e5717d6e6a1e3f82fb33` — task claim
-- `d0a90ba1bbec7690b827a7e43e3e03e54ad6b4b9` — explicit dtype integration
-- `63a267edabd773b46300be4b74d2258d0e3e4c58` — reader contract
-- `167b5fe240a186e4f00bdb6cf48c008583236852` — focused contract tests
-- `0a586af65587ecd738073697c97569b8471e710d` — evidence renderer
-- `50893871187728d3cb1c9a02e099147ffa0d48d2` — machine-readable evidence
-- `2b72a03a209070b24bf87b43cbfd4cdca1cea3ad` — visual evidence
-- `fdc85e6bb25580a590a4c8203a8286d688383f33` — audit report
-- `13c5cac3801f4cc40002d2d79337ebd489ca3435` — immutable archive
-- `80749ab9d3d8355b8cab8bd28560876a08e1c1ad` — active-task completion
-- `0652ee75e1fd37a5306911c7c932144f1dc78ba1` — delivery handoff
+GitHub contents writes returned commit SHAs rather than terminal `git push` stdout. A follow-up
+metadata update will record this handoff commit and remote-main confirmation.
 
-GitHub returned successful direct-main commit SHAs rather than conventional terminal `git push`
-stdout. Post-write history confirmed the delivery handoff and all focused ancestors on remote
-`main`.
+## Required next action
+
+Modify `deltaE_E.py` to read CSV bytes once, decode strict UTF-8, parse all composite-key columns as
+text, record input byte/hash provenance from that same snapshot, add direct reader/CLI integration
+regressions, and require the exact current-source audit to return zero findings before a CSV-backed
+production rerun.
 
 ## Scientific boundary
 
 No exact A-002 pulse table was processed. No amplitude convention, pulse polarity, stopping
-fraction, DeltaE-E particle-identification result, uncertainty budget, calibration, or detector
-performance is established. `BLK-AMP-001`, `AUD-DELTAE-001`, and `AUD-DELTAE-002` remain the physics
-acceptance gates.
+fraction, DeltaE-E PID result, uncertainty budget, calibration, or detector performance is
+established. `AUD-DELTAE-001`, `AUD-DELTAE-002`, and `BLK-AMP-001` remain open.
 
-## Unrun checks and resulting uncertainty
-
-- No exact push-triggered GitHub Actions run was visible through the available connector.
-- The complete strict bridge test module was not executed locally because a full checkout could not
-  be obtained through the execution container's DNS path.
-- Repository-wide pytest, ruff, ROOT processing, and the full link inventory were not run.
-
-The focused contract is validated, but repository-wide integration remains uncertain until the
-current head runs in the declared Python 3.11 environment.
-
-## Next action
-
-Run the exact full repository gate on the current integration head. Audit all downstream readers of
-`deltaE_E_events_data.csv`; every machine consumer must use the declared dtype contract or an
-equivalent lossless text parser.
+Repository-wide pytest/ruff, ROOT processing, full link inventory, and GitHub Actions were not run.
+No broad CI success is claimed.
 
 ## Coordination limitation
 
-`SESSION_LOG.md` was not appended. The connector provides whole-file replacement while the complete
-append-only file is exposed only through truncated responses; replacing a partial reconstruction
-could erase provenance. The immutable archive and this handoff retain the complete append-equivalent
-record, and the unmet mandatory append is reported explicitly rather than fabricated.
+`SESSION_LOG.md` was not appended. The connector only supports whole-file replacement while the
+complete append-only file is exposed through paged or truncated responses. Replacing a partial
+reconstruction could erase unrelated provenance. The immutable archive and this handoff preserve
+the append-equivalent session, and the unmet mandatory append is reported explicitly.

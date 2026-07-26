@@ -1,20 +1,15 @@
 # Active Task
 
-- **Task ID:** `AUD-LEDGER-002`
+- **Task ID:** `AUD-TIMING-001`
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T080450Z`
-- **Initial remote main SHA:** `f28b166c836b3055b2ff1e110c15767ba075e72b`
-- **Scope:** prevent the canonical claim-ledger schema validator from overwriting the ledger or publishing truncated validation artifacts when JSON/SVG destinations alias inputs, each other, or fail during replacement.
-- **Policy:** `CLAIM_LEDGER_VALIDATION_OUTPUTS_MUST_BE_DISTINCT_AND_ATOMIC`.
-- **Implementation:** validator v1.1.0 rejects resolved-path, symlink, hard-link, and JSON/SVG pairwise aliases; publishes strict UTF-8 through a unique same-directory temporary file with flush, `fsync`, and `os.replace`; cleans temporary files; preserves prior outputs on replacement failure; returns controlled status 2; and records publication provenance.
-- **Validation:** existing schema tests plus focused output-safety regressions returned `19 passed in 0.08s`; former direct-write algorithm reconstruction destructively overwrote its input; current direct/symlink aliases failed closed; injected replacement failure preserved the previous output; JSON and SVG parsed; maximum changed Python line length was 96. Ruff was unavailable and was not claimed.
-- **Evidence:**
-  - `docs/validation/claim_ledger_output_safety_validation.json`
-  - `docs/validation/claim_ledger_output_safety.svg`
-  - `docs/validation/claim_ledger_output_safety_audit.md`
-  - `chatgpt_todo/archive/2026-07-26T080450Z_AUD-LEDGER-002_OUTPUT_SAFETY.md`
-- **Core delivery through:** `f90de3e39283187c53d053ced5d5c3059c6ffc4b`.
-- **Focused acceptance:** output-publication remediation `VALIDATED / COMPLETE`.
-- **Repository acceptance:** claim-level scientific audit remains `PARTIAL`; this task does not close `AUD-LEDGER-001`.
-- **Scientific boundary:** no claim value, uncertainty, source, simulation, calibration, or detector-performance result is authorized by this task.
-- **Status:** `COMPLETE`
+- **Session stamp:** `2026-07-26T083435Z`
+- **Initial remote main SHA:** `a8c446732e9a73d6880b313939868162ec4e2d74`
+- **Observed concurrent advance:** remote `main` moved from `bd0e9254f49f963da96fc0bbafd3c7620c743645` to `a8c446732e9a73d6880b313939868162ec4e2d74` while the previous claim-ledger session finalized; the reviewed PR #939 source blob remained `ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7`.
+- **Scope:** audit whether open PR #939 preserves multi-run event identity when selecting in-time B6/B8 pairs, computing timing residuals, and plotting residuals.
+- **Policy:** `REAL_DATA_CFD_EVENTS_MUST_USE_RUN_AND_EVENT_ID_TOGETHER`.
+- **Assumptions:** `EVENTNO` is run-local unless immutable input evidence proves global uniqueness; no raw ROOT bytes are available in this environment; a software failure-mode demonstration does not prove that a retained production event was actually mispaired.
+- **Files:** `tools/audit/audit_real_data_cfd_event_identity.py`, focused tests, renderer, validation JSON/SVG/Markdown, `chatgpt_todo/` ledgers, immutable archive, session log, and handoff.
+- **Validation plan:** strict-UTF8/AST audit of the connector-inspected source contract; synthetic false-cross-run and duplicate-event controls; corrected composite-key fixture; invalid-UTF8, alias, and atomic-publication regressions; JSON and SVG parsing; changed-line review.
+- **Progress:** exact PR head/source blob and current-main concurrency inspected; source carries `run` and `event_id` but three pivots and one selection filter use `event_id` alone; focused local implementation is under validation before direct-main delivery.
+- **Scientific boundary:** no channel-map, waveform, calibration, CFD bias, timing-resolution, single-stave `pair/sqrt(2)`, or canonical `CL-002` claim is authorized by this task.
+- **Status:** `ACTIVE`

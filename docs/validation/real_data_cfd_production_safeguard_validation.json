@@ -1,0 +1,85 @@
+{
+  "schema": "ccb-real-data-cfd-production-safeguards/1",
+  "policy": "REAL_DATA_CFD_REQUIRES_COMPOSITE_EVENT_KEYS_AND_PAIR_ONLY_INFERENCE",
+  "status": "VALIDATED",
+  "findings": [],
+  "base_main_sha": "be97e1a1e77de3bba6305f28802d1c876d2d1605",
+  "controls": {
+    "composite_event_identity": {
+      "input_rows": 4,
+      "unique_event_ids_without_run": 1,
+      "unique_composite_events": 2,
+      "pair_residuals_ns": [1.0, 1.0],
+      "event_key": ["run", "event_id"]
+    },
+    "residual_visualization": {
+      "input_ns": [-100.0, -2.0, -1.0, 0.0, 1.0, 2.0, 100.0],
+      "method": "synthetic_tail_control",
+      "n_total": 7,
+      "median_ns": 0.0,
+      "q16_centered_ns": -5.9200000000000035,
+      "q84_centered_ns": 5.9200000000000035,
+      "sigma68_ns": 5.9200000000000035,
+      "full_range_ns": [-100.0, 100.0],
+      "full_underflow": 0,
+      "full_overflow": 0,
+      "core_range_ns": [-5.0, 5.0],
+      "core_displayed": 5,
+      "core_underflow": 1,
+      "core_overflow": 1
+    },
+    "single_stave_inference": {
+      "authorized": false,
+      "scope": "B6-B8 pair residual only",
+      "policy": "REAL_DATA_CFD_REQUIRES_COMPOSITE_EVENT_KEYS_AND_PAIR_ONLY_INFERENCE",
+      "reason": "A pair sigma68 does not identify either individual stave resolution. Division by sqrt(2) would require validated equal variances, zero covariance, and an estimator with a demonstrated quadrature-deconvolution law.",
+      "required_for_individual_stave": [
+        "multi-pair or external-reference deconvolution",
+        "explicit covariance/common-mode model",
+        "propagated uncertainty and assumption sensitivity",
+        "closure or injection-recovery validation"
+      ]
+    },
+    "legacy_bundle": {
+      "acceptance": {
+        "status": "FLAWED_LEGACY_OUTPUT_QUARANTINED",
+        "reason": "The merged producer joined multiple runs by event_id alone, inferred an individual-stave value from pair sigma68 / sqrt(2), and plotted uncentered residuals in a fixed range that excluded most events.",
+        "rerun_required": true,
+        "replacement_producer_version": "2.0.0",
+        "replacement_policy": "REAL_DATA_CFD_REQUIRES_COMPOSITE_EVENT_KEYS_AND_PAIR_ONLY_INFERENCE"
+      },
+      "residual_pngs_authorized": false
+    }
+  },
+  "files": {
+    "scripts/real_data_cfd_timing.py": {
+      "bytes": 15159,
+      "sha256": "83422ea881d34c777928d30b548ad553c25b0ace3a324d6204246ade9f96825e"
+    },
+    "scripts/real_data_cfd_contract.py": {
+      "bytes": 7067,
+      "sha256": "ae1386a80389787e41620e9351c72a1d091e22bba6c8969636014f67ccd320bd"
+    },
+    "tests/test_real_data_cfd_production_safeguards.py": {
+      "bytes": 4443,
+      "sha256": "e2306704e16ccf89a47a8f41d55902b48ff214d9e186cf8022b5015565415ef7"
+    },
+    "reports/real_data_cfd_timing/REPORT.md": {
+      "bytes": 2759,
+      "sha256": "79cbcb5bcb0cf480ed03bc52f7261bbd5f9d156c8d92ef78dfa722f89acef8c5"
+    },
+    "reports/real_data_cfd_timing/result.json": {
+      "bytes": 8466,
+      "sha256": "0eb33e7dd41f9a382aff3eacdf9f901de0c60f8c7301ef28cbac64c8ae1b6d02"
+    }
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/real_data_cfd_contract.py scripts/real_data_cfd_timing.py tests/test_real_data_cfd_production_safeguards.py tools/audit/render_real_data_cfd_production_safeguard_evidence.py",
+      "PYTHONPATH=. pytest -q tests/test_real_data_cfd_production_safeguards.py"
+    ],
+    "focused_pytest": "8 passed",
+    "root_data_reprocessed": false,
+    "scientific_acceptance": "PAIR_ONLY_PENDING_CONTENT_ADDRESSED_RERUN"
+  }
+}

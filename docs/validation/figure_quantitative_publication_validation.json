@@ -1,0 +1,127 @@
+{
+  "behavioral_controls": {
+    "corrected_atomic_success": {
+      "interpretation": "Only a complete rendered snapshot is moved onto the final path.",
+      "published_matches_replacement": true,
+      "published_sha256": "6dff689f32b725810bc49ca04fc688cbe2960613646c8060abb206209bdb0317",
+      "replacement_sha256": "6dff689f32b725810bc49ca04fc688cbe2960613646c8060abb206209bdb0317"
+    },
+    "corrected_temporary_failure": {
+      "injected_error": "injected render failure",
+      "interpretation": "Rendering to a same-directory temporary file and deleting it on failure preserves the prior target and leaves no partial publication.",
+      "post_failure_sha256": "ecceab87413dd631c1fc00a41fba8604cfeb1effcbc20ec138839f035ea96099",
+      "previous_sha256": "ecceab87413dd631c1fc00a41fba8604cfeb1effcbc20ec138839f035ea96099",
+      "previous_target_preserved": true,
+      "temporary_files_remaining": 0
+    },
+    "former_direct_target_failure": {
+      "injected_error": "injected render failure",
+      "interpretation": "Writing the rendered PNG directly to the final path can destroy a previous validated artifact when rendering fails after truncation.",
+      "post_failure_bytes": 14,
+      "post_failure_sha256": "e32e4ac9d2e88987ca18b1ffe3331c1e64ff326d7780f5da24a2c2b8865e241d",
+      "previous_sha256": "ecceab87413dd631c1fc00a41fba8604cfeb1effcbc20ec138839f035ea96099",
+      "previous_target_preserved": false
+    }
+  },
+  "finding_count": 3,
+  "findings": [
+    {
+      "code": "QUANTITATIVE_RENDER_WRITES_FINAL_PATH_DIRECTLY",
+      "detail": "_emit_quantitative passes the final figure path directly to savefig; a failed render can truncate or partially replace prior evidence."
+    },
+    {
+      "code": "QUANTITATIVE_FIGURE_HAS_NO_ATOMIC_PUBLICATION_BOUNDARY",
+      "detail": "The quantitative PNG is not rendered to retained temporary bytes and atomically published to the final target."
+    },
+    {
+      "code": "QUANTITATIVE_FIGURE_NOT_CLOSED_ON_RENDER_FAILURE",
+      "detail": "The matplotlib figure is closed only after savefig returns; a render exception can bypass cleanup in long registry builds."
+    }
+  ],
+  "policy": "QUANTITATIVE_FIGURE_PUBLICATION_MUST_BE_ATOMIC_AND_FAILURE_SAFE",
+  "primary_software_references": [
+    {
+      "source": "Python os.replace documentation",
+      "statement_supported": "If successful, replacement is atomic; keeping the temporary file in the target directory avoids a cross-filesystem move.",
+      "url": "https://docs.python.org/3/library/os.html#os.replace"
+    },
+    {
+      "source": "Python tempfile.mkstemp documentation",
+      "statement_supported": "mkstemp securely creates the temporary file and requires explicit cleanup.",
+      "url": "https://docs.python.org/3/library/tempfile.html#tempfile.mkstemp"
+    },
+    {
+      "source": "Matplotlib Figure.savefig documentation",
+      "statement_supported": "savefig writes to the supplied path or file-like object; an explicit format can decouple rendering format from a temporary filename suffix.",
+      "url": "https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.savefig.html"
+    }
+  ],
+  "repository_context": {
+    "initial_main": "cc0f39560f7e98b1c1c130748d268103ea08754a",
+    "repository": "SzeChunYiu/ccb-testbeam",
+    "source_path": "tools/figure_registry/builder.py"
+  },
+  "repository_observation": {
+    "current_call": "fig.savefig(figure_path)",
+    "current_cleanup": "plt.close(fig) occurs only after savefig returns",
+    "evidence_scope": "The executable audit input is an exact connector-reconstructed function excerpt; the Git blob identifies the full current file.",
+    "function_lines": "_emit_quantitative, source lines 234-287 in current builder",
+    "source_git_blob": "cc56e548b54fd8f2692182de6114ee3bcfe196c4",
+    "source_path": "tools/figure_registry/builder.py"
+  },
+  "required_remediation": {
+    "cleanup": "Close the matplotlib figure in a finally block so render errors cannot leak figure resources across a registry build.",
+    "publication": "Atomically publish the retained render snapshot to the final path with flush, fsync, os.replace, cleanup, and final-target digest verification.",
+    "regression": "Inject save and replacement failures and prove that a pre-existing validated target remains byte-identical and no temporary file remains.",
+    "render": "Render each quantitative PNG to a same-directory temporary file with an explicit PNG format, then read and retain the complete bytes."
+  },
+  "schema": "ccb-figure-quantitative-publication-audit/1",
+  "scientific_boundary": "This audit validates quantitative figure-publication integrity only. It does not validate any plotted scientific value, uncertainty, calibration, PID, timing, stopping profile, pile-up rate, or detector-performance claim.",
+  "session": {
+    "initial_remote_main": "cc0f39560f7e98b1c1c130748d268103ea08754a",
+    "owner": "scheduled scientific-review session",
+    "repository": "SzeChunYiu/ccb-testbeam",
+    "stamp": "2026-07-26T110505Z",
+    "task_id": "AUD-FIG-003"
+  },
+  "source": {
+    "bytes": 1320,
+    "git_blob": "cc56e548b54fd8f2692182de6114ee3bcfe196c4",
+    "path": "current_emit_quantitative.py",
+    "repository_ref": "cc0f39560f7e98b1c1c130748d268103ea08754a",
+    "scope": "GITHUB_CONNECTOR_EXACT_FUNCTION_EXCERPT",
+    "sha256": "6a23fe23b8da13774f79a9b4fdc308559fdbf2cdc28e11eaf66b1629a71254db",
+    "snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES"
+  },
+  "source_contract_observation": {
+    "atomic_figure_publish": false,
+    "close_in_finally": false,
+    "direct_final_save": true,
+    "savefig_calls": [
+      "fig.savefig(figure_path)"
+    ],
+    "temporary_render": false
+  },
+  "status": "FLAWED",
+  "unrun_checks": [
+    "repository-wide pytest and ruff",
+    "complete shipped figure-registry build",
+    "paper build and link inventory",
+    "GitHub Actions",
+    "scientific regeneration of any plotted quantity"
+  ],
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/audit/audit_figure_quantitative_publication.py tests/test_audit_figure_quantitative_publication.py tools/audit/render_figure_quantitative_publication_evidence.py",
+      "PYTHONPATH=. pytest -q tests/test_audit_figure_quantitative_publication.py",
+      "python tools/audit/render_figure_quantitative_publication_evidence.py docs/validation/figure_quantitative_publication_validation.json docs/validation/figure_quantitative_publication.svg"
+    ],
+    "json_parse": "PASS",
+    "max_changed_python_line_length": 96,
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest": "7 passed in 1.38s",
+    "python": "3.13.5",
+    "svg_xml_parse": "PASS"
+  },
+  "version": "1.0.0"
+}

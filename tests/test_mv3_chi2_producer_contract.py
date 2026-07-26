@@ -79,13 +79,13 @@ def test_summary_records_both_source_snapshots(tmp_path):
     pulse_file.write_text("synthetic-pulse\n", encoding="utf-8")
     mc = {
         "unselected": {
-            "stop_depth_frac": dict(B2=0.50, B4=0.30, B6=0.15, B8=0.05),
+            "stop_depth_frac": dict(B2=0.25, B4=0.25, B6=0.25, B8=0.25),
             "sum_w": 100.0,
             "sum_w2": 100.0,
             "effective_sample_size": 100.0,
         },
         "sample_i": {
-            "stop_depth_frac": dict(B2=0.50, B4=0.30, B6=0.15, B8=0.05),
+            "stop_depth_frac": dict(B2=0.49, B4=0.31, B6=0.15, B8=0.05),
         },
     }
     data = {

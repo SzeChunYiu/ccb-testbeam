@@ -6,8 +6,9 @@
 - **Stamp:** `2026-07-26T080450Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `f28b166c836b3055b2ff1e110c15767ba075e72b`
-- **Validated delivery through:** `bd0e9254f49f963da96fc0bbafd3c7620c743645`
-- **Remote main after validated delivery:** `bd0e9254f49f963da96fc0bbafd3c7620c743645`
+- **Validated delivery/handoff commit:** `60fdeb3b1cb05bab91de88c3cdc3d9a60fa75728`
+- **Remote-main confirmation commit:** `4fb75a0bc8119521314bfc4139b2e4abb6381997`
+- **Remote main after validated delivery confirmation:** `4fb75a0bc8119521314bfc4139b2e4abb6381997`
 - **Destination:** direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite.
 - **Focused acceptance:** claim-ledger schema-validator output safety `VALIDATED / COMPLETE`.
 - **Repository acceptance:** claim-level scientific review remains `PARTIAL` under `AUD-LEDGER-001`.
@@ -117,11 +118,14 @@ Additional results:
 - `0a94cf23ed92a0ef82a8a5e2a9d53dd26f636ddf` — task completion;
 - `76edb4196f12664b2eded72ec292aa2af8d648ae` — backlog synchronization;
 - `7a2111291726685d0c2dddff95ee1e2e6ae3b9b6` — master-index synchronization;
-- `bd0e9254f49f963da96fc0bbafd3c7620c743645` — append session log.
+- `bd0e9254f49f963da96fc0bbafd3c7620c743645` — append session record;
+- `60fdeb3b1cb05bab91de88c3cdc3d9a60fa75728` — validated delivery handoff;
+- `4fb75a0bc8119521314bfc4139b2e4abb6381997` — delivery confirmation in append-only session log.
 
 GitHub returned a successful direct-main commit SHA for every contents write.
-Recent remote history confirmed the sequence on `main`. The connector does not
-produce conventional terminal `git push` text; no such output is claimed.
+Recent remote history confirmed the sequence and confirmation commit on `main`.
+The connector does not produce conventional terminal `git push` text; no such
+output is claimed.
 
 ## Scientific boundary and unresolved work
 

@@ -6,10 +6,12 @@
 - **Stamp:** `2026-07-26T120901Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `1c1e17958568d336b667304c651054ff88d03393`
-- **Validated implementation/evidence head before handoff:** `d5ab93afbe022e24f73b3199d0e696a7c8e97f02`
+- **Validated delivery/handoff commit:** `11210286598ddbeaea63d218fdcaae86f7c0ff24`
+- **Remote main after validated delivery:** `11210286598ddbeaea63d218fdcaae86f7c0ff24`
+- **Remote confirmation:** post-write repository history returned the delivery commit as the head of `main` before this confirmation update.
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
 - **Push result:** each GitHub contents write returned a successful direct-main commit SHA. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** quantitative PNG publication remediation, direct regressions, JSON, SVG, report, active-task record, and immutable archive are `VALIDATED / COMPLETE`.
+- **Focused acceptance:** quantitative PNG publication remediation, direct regressions, JSON, SVG, report, active-task record, immutable archive, and this handoff are `VALIDATED / COMPLETE`.
 - **Scientific acceptance:** no paper-figure value, uncertainty, timing result, calibration, PID result, stopping profile, pile-up rate, or detector-performance claim was authorized or changed.
 
 ## Defect and remediation
@@ -19,7 +21,7 @@ Policy:
 `QUANTITATIVE_FIGURE_PUBLICATION_MUST_BE_ATOMIC_AND_FAILURE_SAFE`
 
 The former `_emit_quantitative` rendered directly to the final PNG. An exception
-after truncation could destroy a prior validated artifact, and `plt.close(fig)` was
+after truncation could destroy prior validated evidence, and `plt.close(fig)` was
 bypassed when `savefig` failed.
 
 The production path now:
@@ -63,21 +65,16 @@ PYTHONPATH=. pytest -q \
 ```
 
 Environment: Python 3.13.5, pytest 9.0.2, Matplotlib 3.10.8, PyYAML 6.0.3.
-The two changed source/test files were reconstructed byte-for-byte from their
-committed Git blobs before execution. Maximum changed Python line length was 100.
-Validation JSON parsed and the SVG parsed as XML.
+The changed builder and test were reconstructed byte-for-byte from their committed
+Git blobs before execution. Maximum changed Python line length was 100. Validation
+JSON parsed and the SVG parsed as XML.
 
-Behavioral controls:
-
-- injected partial `savefig` failure preserved the prior final target;
-- the Matplotlib figure closed after that failure;
-- render temporary count after failure was zero;
-- injected final `os.replace` failure preserved the prior target;
-- publication temporary count after failure was zero;
-- successful PNG had signature `89504e470d0a1a0a` and exact digest/size closure in
-  source-data metadata;
-- existing result/source snapshot race regressions remained passing;
-- exact-source publication contract returned zero findings.
+Controls proved that partial `savefig` failure and final `os.replace` failure both
+preserve the prior target and leave no temporary files. The figure closes on render
+failure. Successful output has PNG signature `89504e470d0a1a0a`, and source-data
+SHA-256 and byte count match the final target exactly. Existing result/source
+snapshot-race regressions remained passing, and the exact-source publication contract
+returned zero findings.
 
 Synthetic successful output was 21,772 bytes with SHA-256
 `9ab29f98f32314acee01d9125f2028a3f297b5d33cfe7ab22f371ab4040bf09b`.
@@ -104,7 +101,8 @@ That digest is environment-specific software evidence, not a physics result.
 - `c77554cd65e6517d24f08cff44244c68d0da0dfe` — visual evidence;
 - `22a3ac9b45cbf6ac0e5b43a01c0e4de65dcc2970` — audit report;
 - `6eaf854bbb895759697498cf4e601d6e596dfc45` — immutable archive;
-- `d5ab93afbe022e24f73b3199d0e696a7c8e97f02` — active-task completion.
+- `d5ab93afbe022e24f73b3199d0e696a7c8e97f02` — active-task completion;
+- `11210286598ddbeaea63d218fdcaae86f7c0ff24` — validated delivery handoff.
 
 ## Repository and PR state
 

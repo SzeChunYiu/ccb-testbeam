@@ -8,17 +8,23 @@
   serialization failures as permission to publish a different CSV artifact, overwriting a validated
   input path, or leaving stale alternate-format tables that can be mistaken for current output.
 - **Policy:** `DELTAE_EVENT_TABLE_OUTPUT_MUST_FAIL_CLOSED_AND_NOT_ALIAS_INPUT`.
-- **Repository facts under review:** `_deltaE_E_core._write_table()` catches every exception from
-  `DataFrame.to_parquet()` and falls back to `to_csv()`; output candidates are not compared with the
-  exact input snapshots; publication is not atomic and an old alternate format is not reconciled.
-- **Files in scope:** `scripts/single_stave/deltaE_E.py`, focused tests/audit tooling, validation
-  JSON/SVG/Markdown, and matching coordination records.
-- **Validation plan:** reproduce broad-exception fallback and input-alias behavior with deterministic
-  controls; implement explicit engine-unavailable fallback only; use same-directory temporary files,
-  flush/fsync, and `os.replace`; preserve previous final files on failure; remove only the stale
-  alternate table after successful publication; record output policy in result/manifest contracts;
-  run focused pytest, syntax, JSON/SVG, line-length, and exact-source audit checks.
-- **Scientific boundary:** this is artifact-integrity engineering. It does not authorize an A-002
-  amplitude convention, pulse polarity, stopping distribution, DeltaE-E PID result, calibration,
-  uncertainty budget, or detector-performance claim.
-- **Status:** `ACTIVE`
+- **Implementation:** both event-table output candidates are checked against retained exact input
+  snapshots; stale alternate formats fail closed; completed same-directory temporary artifacts are
+  fsynced and published with `os.replace`; failed temporaries are removed; CSV-gzip fallback is
+  permitted only for a recognized missing Parquet engine; result and manifest metadata record the
+  output contract.
+- **Validation:** syntax passed; focused tests returned `14 passed in 0.05s`; exact-source audit
+  returned `VALIDATED` with zero findings; arbitrary failure, engine-only fallback, prior-final
+  preservation, direct/symlink alias, stale alternate, replacement failure, malformed source,
+  invalid UTF-8, atomic audit JSON, JSON/SVG parsing, and line-length controls passed.
+- **Evidence:**
+  - `docs/validation/deltae_table_output_contract_validation.json`
+  - `docs/validation/deltae_table_output_contract.svg`
+  - `docs/validation/deltae_table_output_contract_audit.md`
+  - `chatgpt_todo/archive/2026-07-26T052912Z_AUD-DELTAE-008_TABLE_OUTPUT_INTEGRITY.md`
+- **Focused acceptance:** event-table output boundary `VALIDATED / COMPLETE`.
+- **Scientific boundary:** no exact A-002 table, amplitude convention, pulse polarity, stopping
+  fraction, DeltaE-E PID, uncertainty, calibration, or detector-performance result is authorized.
+- **Next action:** resolve `AUD-DELTAE-001`, `AUD-DELTAE-002`, `AUD-AMP-009`, `AUD-AMP-010`, and
+  `BLK-AMP-001`, then run the content-addressed production table through the full scientific gate.
+- **Status:** `COMPLETE`

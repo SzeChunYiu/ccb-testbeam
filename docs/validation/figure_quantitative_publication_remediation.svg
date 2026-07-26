@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650">
+<rect width="1100" height="650" fill="white"/>
+<text x="45" y="55" font-family="sans-serif" font-size="25" font-weight="bold">AUD-FIG-003-R1: quantitative PNG publication remediation</text>
+<text x="45" y="88" font-family="sans-serif" font-size="15" font-weight="normal">QUANTITATIVE_FIGURE_PUBLICATION_MUST_BE_ATOMIC_AND_FAILURE_SAFE</text>
+<text x="45" y="120" font-family="sans-serif" font-size="17" font-weight="bold">status: VALIDATED | focused tests: 8 passed in 0.56s</text>
+<rect x="45" y="150" width="1010" height="72" rx="8" fill="#f5f5f5" stroke="#222"/>
+<text x="70" y="175" font-family="sans-serif" font-size="18" font-weight="bold">Direct final-path render</text>
+<text x="70" y="204" font-family="sans-serif" font-size="15" font-weight="normal">DESTROYS PRIOR TARGET</text>
+<text x="930" y="185" font-family="sans-serif" font-size="19" font-weight="bold">FAIL</text>
+<rect x="45" y="242" width="1010" height="72" rx="8" fill="#f5f5f5" stroke="#222"/>
+<text x="70" y="267" font-family="sans-serif" font-size="18" font-weight="bold">Temporary PNG render failure</text>
+<text x="70" y="296" font-family="sans-serif" font-size="15" font-weight="normal">PRESERVES PRIOR TARGET</text>
+<text x="930" y="277" font-family="sans-serif" font-size="19" font-weight="bold">PASS</text>
+<rect x="45" y="334" width="1010" height="72" rx="8" fill="#f5f5f5" stroke="#222"/>
+<text x="70" y="359" font-family="sans-serif" font-size="18" font-weight="bold">Atomic publication failure</text>
+<text x="70" y="388" font-family="sans-serif" font-size="15" font-weight="normal">PRESERVES PRIOR TARGET</text>
+<text x="930" y="369" font-family="sans-serif" font-size="19" font-weight="bold">PASS</text>
+<rect x="45" y="426" width="1010" height="72" rx="8" fill="#f5f5f5" stroke="#222"/>
+<text x="70" y="451" font-family="sans-serif" font-size="18" font-weight="bold">Successful publication</text>
+<text x="70" y="480" font-family="sans-serif" font-size="15" font-weight="normal">HASH-BOUND PNG</text>
+<text x="930" y="461" font-family="sans-serif" font-size="19" font-weight="bold">PASS</text>
+<text x="45" y="570" font-family="sans-serif" font-size="14" font-weight="normal">builder blob: 822572726b65bb116f3f275af84312b526da4b23</text>
+<text x="45" y="596" font-family="sans-serif" font-size="14" font-weight="normal">builder sha256: fe001a5b2ddef15fcfbe3a33d50909dfea57dee8b41ac2251442d6788b18fe56</text>
+<text x="45" y="622" font-family="sans-serif" font-size="14" font-weight="normal">Scientific boundary: artifact integrity only; no plotted physics value was revalidated.</text>
+</svg>

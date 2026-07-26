@@ -115,7 +115,7 @@
 - Added regression coverage for default-all behavior, selected-path ordering/deduplication, and unknown-path rejection.
 - Local validation on exact temporary copies: `python -m py_compile` passed; `python -m pytest /tmp/test_sync_c12_public_claims.py -q` returned `9 passed in 0.06s`.
 - Direct-to-main commits before this log update: `35f59f22d46378782f9ae8bc5e8327caae782d7d`, `3bc3c3dfdeef1a84536053937f7590b97c55059e`.
-- Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector writes were used.
+- Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and direct-to-main writes were used.
 - No raw data, MC outputs, scientific numbers, plots, or generated artifacts changed.
 - Next: in a complete checkout, run `python scripts/sync_c12_public_claims.py --path WIKI.md`, review the WIKI-only diff, run `--check`, tests, and link checks, then commit the public wording directly to `main`.
 
@@ -278,3 +278,17 @@
 - All repository writes were direct commits to `main`; no force-push, history rewrite, task branch, or PR transport was used. A direct clone remained unavailable because `github.com` could not be resolved.
 - No real Geant4 export, ROOT output, accepted projectile-energy-loss closure, uncertainty budget, calibration, or detector-performance result was generated. Full repository pytest, ruff, Geant4/CTest, real simulation processing, and GitHub Actions were not run.
 - Acceptance: `AUD-G4-021` COMPLETE and `BLK-G4-SP-004` RESOLVED. Accepted stopping-power closure remains open under `AUD-G4-005`, `AUD-G4-011`, and `BLK-G4-SP-001`.
+
+## 2026-07-26T040516Z — AUD-DELTAE-005 (CSV key remediation)
+
+- Initial remote main: `87e81a490dd9889901fbfb18604685bc2e437d27`.
+- Reviewed current history, open PR #933, closed PR #868, commit status, mandatory coordination files, canonical DeltaE source/tests, the existing key-identity audit, and its evidence.
+- Confirmed default CSV inference collapsed exact key tokens `001` and `1`, reducing two exact composite keys to one and creating one false data/MC inner-join match.
+- Preserved the complete former numerical/plotting implementation as exact Git blob `fe5dd5e4673f32fa5a4b94776531f2b392e12414` under `_deltaE_E_core.py`; installed a canonical front door that reads one byte snapshot, decodes strict UTF-8, parses all three key columns as strings, and reuses same-snapshot bytes/SHA-256 in the manifest.
+- Front-door blob `90e0709f5f065062bb4dc9f990975992a53d76b1`, 5854 bytes, SHA-256 `edbf8f5513a39c95fdab7a6f895c7b5a4868ee1dad0b41148f195ceeab1c9c21`; regression blob `0c9fdf933e4749a2fbbd585c4a831cdc428ae599`.
+- Local exact-front-door validation: compilation passed; isolated boundary regression returned `4 passed in 0.03s`; AST-equivalent reader checks all passed; JSON/SVG parsing and line-length checks passed.
+- Full retained-core CLI and exact-source repository tests were not executed locally because the networkless container could not materialize the retained core, although it is preserved by exact Git blob in the implementation commit. No Actions run or attached status check was available; repository-wide pytest/ruff are not claimed.
+- Direct-main implementation/evidence commits: `746789f640d9d066b9aa4749784073288ca1a248`, `0565f4bc29c5d8230cd84c767339105adc28e5d6`, `43e7181235864a7a7f93d920aee7ac04917f2528`.
+- Archive and active-task commit: `1ffddad85558e1008e5e7f61b3622b8121f8d78f`.
+- Every `main` ref update used `force=false` and GitHub returned `success=true`; no branch or PR transport was used.
+- Acceptance: focused CSV reader/provenance remediation `VALIDATED / COMPLETE`. No exact A-002 table, amplitude convention, polarity, stopping fraction, PID, uncertainty, calibration, or detector-performance result was produced; `AUD-DELTAE-001`, `AUD-DELTAE-002`, and `BLK-AMP-001` remain open.

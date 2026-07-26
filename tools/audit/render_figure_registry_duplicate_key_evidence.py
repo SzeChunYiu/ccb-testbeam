@@ -101,30 +101,78 @@ def _svg(payload: dict[str, Any]) -> str:
     controls = payload["controls"]
     legacy_accepted = sum(not item["legacy_safe_load_rejected"] for item in controls)
     corrected_rejected = sum(item["corrected_rejected"] for item in controls)
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520">
-  <rect width="1000" height="520" fill="white"/>
-  <text x="50" y="58" font-family="sans-serif" font-size="28" font-weight="bold">Figure-registry duplicate-key integrity</text>
-  <text x="50" y="90" font-family="sans-serif" font-size="16">Policy: {POLICY}</text>
-  <text x="50" y="122" font-family="sans-serif" font-size="15">Two deterministic ambiguous YAML controls</text>
-  <text x="50" y="182" font-family="sans-serif" font-size="18">Legacy yaml.safe_load silently accepted</text>
-  <rect x="420" y="155" width="{legacy_accepted * 220}" height="38" fill="#c44"/>
-  <text x="880" y="182" font-family="sans-serif" font-size="18" text-anchor="end">{legacy_accepted}/2</text>
-  <text x="50" y="252" font-family="sans-serif" font-size="18">Corrected loader rejected before validation/build</text>
-  <rect x="420" y="225" width="{corrected_rejected * 220}" height="38" fill="#287a3d"/>
-  <text x="880" y="252" font-family="sans-serif" font-size="18" text-anchor="end">{corrected_rejected}/2</text>
-  <line x1="420" y1="145" x2="420" y2="285" stroke="black"/>
-  <line x1="640" y1="145" x2="640" y2="285" stroke="#999" stroke-dasharray="4 4"/>
-  <line x1="860" y1="145" x2="860" y2="285" stroke="#999" stroke-dasharray="4 4"/>
-  <text x="420" y="310" font-family="sans-serif" font-size="14" text-anchor="middle">0</text>
-  <text x="640" y="310" font-family="sans-serif" font-size="14" text-anchor="middle">1</text>
-  <text x="860" y="310" font-family="sans-serif" font-size="14" text-anchor="middle">2 controls</text>
-  <text x="50" y="365" font-family="sans-serif" font-size="16" font-weight="bold">Scientific interpretation</text>
-  <text x="50" y="396" font-family="sans-serif" font-size="15">Duplicate figure IDs or nested status/result fields can silently replace earlier evidence under standard PyYAML loading.</text>
-  <text x="50" y="424" font-family="sans-serif" font-size="15">The corrected loader rejects ambiguity at every mapping depth and binds parsed entries to one strict-UTF-8 byte snapshot.</text>
-  <text x="50" y="470" font-family="monospace" font-size="13">Base main: {BASE_MAIN}</text>
-  <text x="50" y="494" font-family="monospace" font-size="13">Status: {payload['status']} | focused tests: {payload['validation']['pytest']}</text>
-</svg>
-"""
+    lines = [
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520"',
+        ' viewBox="0 0 1000 520">',
+        '  <rect width="1000" height="520" fill="white"/>',
+        (
+            '  <text x="50" y="58" font-family="sans-serif" font-size="28" '
+            'font-weight="bold">Figure-registry duplicate-key integrity</text>'
+        ),
+        (
+            '  <text x="50" y="90" font-family="sans-serif" font-size="16">'
+            f'Policy: {POLICY}</text>'
+        ),
+        (
+            '  <text x="50" y="122" font-family="sans-serif" font-size="15">'
+            'Two deterministic ambiguous YAML controls</text>'
+        ),
+        (
+            '  <text x="50" y="182" font-family="sans-serif" font-size="18">'
+            'Legacy safe_load silently accepted</text>'
+        ),
+        (
+            f'  <rect x="420" y="155" width="{legacy_accepted * 220}" height="38" '
+            'fill="#c44"/>'
+        ),
+        (
+            '  <text x="880" y="182" font-family="sans-serif" font-size="18" '
+            f'text-anchor="end">{legacy_accepted}/2</text>'
+        ),
+        (
+            '  <text x="50" y="252" font-family="sans-serif" font-size="18">'
+            'Corrected loader rejected before build</text>'
+        ),
+        (
+            f'  <rect x="420" y="225" width="{corrected_rejected * 220}" height="38" '
+            'fill="#287a3d"/>'
+        ),
+        (
+            '  <text x="880" y="252" font-family="sans-serif" font-size="18" '
+            f'text-anchor="end">{corrected_rejected}/2</text>'
+        ),
+        '  <line x1="420" y1="145" x2="420" y2="285" stroke="black"/>',
+        (
+            '  <line x1="640" y1="145" x2="640" y2="285" stroke="#999" '
+            'stroke-dasharray="4 4"/>'
+        ),
+        (
+            '  <line x1="860" y1="145" x2="860" y2="285" stroke="#999" '
+            'stroke-dasharray="4 4"/>'
+        ),
+        (
+            '  <text x="50" y="365" font-family="sans-serif" font-size="16" '
+            'font-weight="bold">Scientific interpretation</text>'
+        ),
+        (
+            '  <text x="50" y="396" font-family="sans-serif" font-size="15">'
+            'Duplicate IDs or fields can silently replace evidence.</text>'
+        ),
+        (
+            '  <text x="50" y="424" font-family="sans-serif" font-size="15">'
+            'Strict loading rejects ambiguity at every mapping depth.</text>'
+        ),
+        (
+            '  <text x="50" y="470" font-family="monospace" font-size="13">'
+            f'Base main: {BASE_MAIN}</text>'
+        ),
+        (
+            '  <text x="50" y="494" font-family="monospace" font-size="13">'
+            f'Status: {payload["status"]}; tests: {payload["validation"]["pytest"]}</text>'
+        ),
+        '</svg>',
+    ]
+    return "\n".join(lines) + "\n"
 
 
 def build_payload() -> dict[str, Any]:

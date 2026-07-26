@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500">
+<rect width="1200" height="500" fill="white"/>
+<text x="60" y="70" font-size="28" font-family="sans-serif" font-weight="bold">Rmax checker semantics</text>
+<text x="60" y="122" font-size="18" font-family="sans-serif" font-weight="bold">Current public state: FLAWED / gate must fail</text>
+<text x="60" y="174" font-size="18" font-family="sans-serif" font-weight="bold">Corrected checker contract: VALIDATED / claim remains BLOCKED</text>
+<text x="60" y="226" font-size="18" font-family="sans-serif" font-weight="normal">Poisson 5% arithmetic sensitivity: 0.411036291 MHz</text>
+<text x="60" y="278" font-size="18" font-family="sans-serif" font-weight="normal">Legacy mu=0.38 sensitivity: 3.045111306 MHz</text>
+<text x="60" y="330" font-size="18" font-family="sans-serif" font-weight="normal">3.05 MHz implies P(&gt;=1)=0.316555661</text>
+<text x="60" y="382" font-size="18" font-family="sans-serif" font-weight="normal">Occupancy does not identify exposure, arrival rate, mu_max, or absolute Rmax.</text>
+</svg>

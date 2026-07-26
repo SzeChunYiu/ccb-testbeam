@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import ast
-import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -102,6 +101,13 @@ def test_producer_source_has_no_single_stave_division_or_event_id_only_pivot() -
     assert "select_in_time_rows" in source
     assert "pair_residual_vector" in source
     assert '"individual_stave_authorized": False' in source
+    assert "allow_nan=False" in source
+
+
+def test_optional_nonfinite_fit_metrics_are_serialized_as_null() -> None:
+    source = PRODUCER_PATH.read_text(encoding="utf-8")
+    assert "def _optional_finite" in source
+    assert '"core_sigma_ns": _optional_finite' in source
     assert "allow_nan=False" in source
 
 

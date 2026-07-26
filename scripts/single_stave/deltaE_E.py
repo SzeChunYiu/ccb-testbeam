@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Canonical DeltaE-E front door with lossless CSV composite-key handling.
+"""Canonical DeltaE-E front door with lossless table input handling.
 
 The numerical and plotting implementation is retained in ``_deltaE_E_core``.
-This front door owns the input boundary so CSV event identifiers are decoded
-from one exact UTF-8 byte snapshot and parsed as text before any uniqueness
-check, sample selection, or data/MC join.
+This front door owns the input boundary so CSV event identifiers and Parquet
+rows are parsed from one exact byte snapshot before any uniqueness check,
+sample selection, or data/MC join.
 """
 from __future__ import annotations
 
@@ -36,6 +36,10 @@ for _name in dir(_core):
 
 CSV_KEY_POLICY = "DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT"
 CSV_SNAPSHOT_POLICY = "SINGLE_READ_STRICT_UTF8"
+PARQUET_PROVENANCE_POLICY = (
+    "DELTAE_PARQUET_ROWS_AND_PROVENANCE_MUST_SHARE_ONE_BYTE_SNAPSHOT"
+)
+PARQUET_SNAPSHOT_POLICY = "SINGLE_READ_EXACT_BYTES"
 CSV_KEY_DTYPES: dict[str, str] = {key: "string" for key in KEY_COLS}
 _INPUT_SNAPSHOTS: dict[Path, dict[str, Any]] = {}
 _CORE_ANALYZE = _core.analyze
@@ -48,33 +52,64 @@ def input_snapshot(path: Path) -> dict[str, Any] | None:
     return dict(record) if record is not None else None
 
 
+def _retain_snapshot(
+    path: Path,
+    raw: bytes,
+    *,
+    table_format: str,
+    snapshot_policy: str,
+    extra: dict[str, Any] | None = None,
+) -> None:
+    resolved = Path(path).resolve()
+    record: dict[str, Any] = {
+        "path": str(resolved),
+        "format": table_format,
+        "bytes": len(raw),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "snapshot_policy": snapshot_policy,
+    }
+    if extra:
+        record.update(extra)
+    _INPUT_SNAPSHOTS[resolved] = record
+
+
 def read_table(path: Path) -> pd.DataFrame:
-    """Read Parquet directly or CSV from one strict UTF-8, lossless-key snapshot."""
+    """Read supported tables from one exact byte snapshot."""
     path = Path(path)
     if not path.exists():
         raise SystemExit(f"Input table not found: {path}")
     suffix = path.suffix.lower()
     if suffix in {".parquet", ".pq"}:
-        return pd.read_parquet(path)
+        raw = path.read_bytes()
+        table = pd.read_parquet(io.BytesIO(raw))
+        _retain_snapshot(
+            path,
+            raw,
+            table_format="parquet",
+            snapshot_policy=PARQUET_SNAPSHOT_POLICY,
+            extra={"reader": "pandas.read_parquet(io.BytesIO)"},
+        )
+        return table
     if suffix in {".csv", ".txt", ".dat"}:
         raw = path.read_bytes()
         try:
             text = raw.decode("utf-8", errors="strict")
         except UnicodeDecodeError as exc:
             raise SystemExit(f"CSV input is not valid UTF-8: {path}: {exc}") from exc
-        resolved = path.resolve()
-        _INPUT_SNAPSHOTS[resolved] = {
-            "path": str(resolved),
-            "format": "csv",
-            "bytes": len(raw),
-            "sha256": hashlib.sha256(raw).hexdigest(),
-            "snapshot_policy": CSV_SNAPSHOT_POLICY,
-            "encoding": "utf-8",
-            "decode_errors": "strict",
-            "key_policy": CSV_KEY_POLICY,
-            "key_dtypes": dict(CSV_KEY_DTYPES),
-        }
-        return pd.read_csv(io.StringIO(text), dtype=CSV_KEY_DTYPES)
+        table = pd.read_csv(io.StringIO(text), dtype=CSV_KEY_DTYPES)
+        _retain_snapshot(
+            path,
+            raw,
+            table_format="csv",
+            snapshot_policy=CSV_SNAPSHOT_POLICY,
+            extra={
+                "encoding": "utf-8",
+                "decode_errors": "strict",
+                "key_policy": CSV_KEY_POLICY,
+                "key_dtypes": dict(CSV_KEY_DTYPES),
+            },
+        )
+        return table
     raise SystemExit(f"Unsupported input extension: {suffix} (use .parquet or .csv)")
 
 
@@ -98,6 +133,8 @@ def analyze(
     bundle["result"]["input_reader_contract"] = {
         "csv_key_policy": CSV_KEY_POLICY,
         "csv_snapshot_policy": CSV_SNAPSHOT_POLICY,
+        "parquet_provenance_policy": PARQUET_PROVENANCE_POLICY,
+        "parquet_snapshot_policy": PARQUET_SNAPSHOT_POLICY,
         "csv_key_dtypes": dict(CSV_KEY_DTYPES),
     }
     return bundle
@@ -119,7 +156,7 @@ def _input_manifest_record(path: Path) -> dict[str, Any]:
 
 
 def write_manifest(out: Path, args, inputs: list[Path]) -> None:
-    """Write the established manifest with same-snapshot CSV byte provenance."""
+    """Write the established manifest with same-snapshot table provenance."""
     manifest = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "git_commit": _core.git_commit(),
@@ -143,6 +180,8 @@ def write_manifest(out: Path, args, inputs: list[Path]) -> None:
         "input_reader_contract": {
             "csv_key_policy": CSV_KEY_POLICY,
             "csv_snapshot_policy": CSV_SNAPSHOT_POLICY,
+            "parquet_provenance_policy": PARQUET_PROVENANCE_POLICY,
+            "parquet_snapshot_policy": PARQUET_SNAPSHOT_POLICY,
             "csv_key_dtypes": dict(CSV_KEY_DTYPES),
         },
         "inputs": [_input_manifest_record(path) for path in inputs],

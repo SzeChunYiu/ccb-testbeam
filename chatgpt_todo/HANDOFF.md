@@ -6,7 +6,9 @@
 - **Stamp:** `2026-07-26T043100Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `a29cc75dc403a9af2e804e55a53e8b037efd8942`
-- **Validated implementation/evidence head before handoff:** `1e7a9a80a10a9b726e536febf5517b47e898b6cd`
+- **Validated delivery/handoff commit:** `cf24b86b927be036b922f7845047077c20017b9c`
+- **Remote-main/session-log confirmation:** `bbe3e8b7eab38337e003271a1f37eabd582cf71b`
+- **Remote main after validated delivery:** `bbe3e8b7eab38337e003271a1f37eabd582cf71b`
 - **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, PR merge, or
   deletion of unrelated work.
 - **Focused acceptance:** canonical Parquet reader and same-snapshot provenance
@@ -65,8 +67,9 @@ unchanged.
 - `docs/validation/deltae_parquet_snapshot_audit.md`
 - `chatgpt_todo/ACTIVE_TASK.md`
 - `chatgpt_todo/BACKLOG.md`
+- `chatgpt_todo/SESSION_LOG.md`
 - `chatgpt_todo/archive/2026-07-26T043100Z_AUD-DELTAE-006_PARQUET_SNAPSHOT.md`
-- matching `SESSION_LOG.md` entry and this handoff.
+- this handoff.
 
 ## Exact identities
 
@@ -114,7 +117,7 @@ A real Parquet engine/file was not executed. The behavioral regression monkeypat
 backend. Repository-wide pytest/ruff, ROOT processing, GitHub Actions, and the complete link
 inventory were not run and are not claimed.
 
-## Direct-main commits before handoff
+## Direct-main commits
 
 - `e33e331d71dc74de5586a914a6081ec9faead825` — `fix(deltae): bind Parquet rows to exact input bytes`;
 - `b528409639cf506a86c9e19945dadb85d454a4ee` — `audit(deltae): enforce Parquet snapshot provenance`;
@@ -125,10 +128,14 @@ inventory were not run and are not claimed.
 - `54c4f28a5ebad834b12118f767d47f0ddb7462d0` — audit report;
 - `7e5c3a71069c81f6a60cbc2cdfc471345f2852fc` — active-task completion;
 - `95c8bda66442938f4fdcf48ec1c5b6f9c4206033` — immutable archive;
-- `1e7a9a80a10a9b726e536febf5517b47e898b6cd` — backlog synchronization.
+- `1e7a9a80a10a9b726e536febf5517b47e898b6cd` — backlog synchronization;
+- `cf24b86b927be036b922f7845047077c20017b9c` — validated delivery handoff;
+- `bbe3e8b7eab38337e003271a1f37eabd582cf71b` — append-only session log and remote-main confirmation.
 
-GitHub returned successful direct-main commit SHAs for every write. Recent remote history confirmed
-the focused sequence consecutively on `main`; no force update was used.
+GitHub returned successful direct-main commit SHAs for every write. Post-write history confirmed
+`cf24b86b927be036b922f7845047077c20017b9c`,
+`bbe3e8b7eab38337e003271a1f37eabd582cf71b`, and all focused ancestors consecutively on remote
+`main`; no force update was used.
 
 ## Scientific boundary and next action
 

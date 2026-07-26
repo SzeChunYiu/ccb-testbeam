@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560">
+<rect width="960" height="560" fill="white"/>
+<text x="48" y="52" font-size="26" font-weight="bold">Real-data CFD event identity audit</text>
+<text x="48" y="82" font-size="15">Policy: REAL_DATA_CFD_EVENTS_MUST_USE_RUN_AND_EVENT_ID_TOGETHER</text>
+<text x="48" y="112" font-size="18" font-weight="bold">Status: FLAWED · findings: 6</text>
+<text x="48" y="158" font-size="18" font-weight="bold">Synthetic cross-run collision</text>
+<text x="48" y="182" font-size="14">event_id-only false pair count: 1</text><rect x="48" y="190" width="700" height="24" fill="#e5e7eb"/><rect x="48" y="190" width="350" height="24" fill="#4b5563"/>
+<text x="48" y="240" font-size="14">(run,event_id) false pair count: 0</text><rect x="48" y="248" width="700" height="24" fill="#e5e7eb"/><rect x="48" y="248" width="0" height="24" fill="#4b5563"/>
+<text x="48" y="318" font-size="18" font-weight="bold">Duplicate run-local EVENTNO control</text>
+<text x="48" y="350" font-size="14">event_id-only pivot outcome: ValueError</text>
+<text x="48" y="374" font-size="14">composite-key valid pair count: 2</text><rect x="48" y="382" width="700" height="24" fill="#e5e7eb"/><rect x="48" y="382" width="700" height="24" fill="#4b5563"/>
+<text x="48" y="456" font-size="15">Interpretation: event identity is run-local unless proven otherwise.</text>
+<text x="48" y="486" font-size="15">A timing residual must never pair staves from different runs.</text>
+<text x="48" y="526" font-size="12">Synthetic software/provenance evidence; not detector timing data.</text>
+</svg>

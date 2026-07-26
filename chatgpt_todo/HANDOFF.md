@@ -8,7 +8,8 @@
 - **Initial remote main:** `a8c446732e9a73d6880b313939868162ec4e2d74`
 - **Validated delivery/handoff commit:** `5defb96def46ed432260adf5322857c469f7074b`
 - **Study-ledger synchronization commit:** `f125e962d6c2b144a4ad29c555cc6a9b1a13524e`
-- **Remote main confirmed through:** `f125e962d6c2b144a4ad29c555cc6a9b1a13524e`
+- **Remote-main delivery confirmation commit:** `746650dcdfdac5594294b6b932848976ff9e8741`
+- **Remote main after confirmed delivery:** `746650dcdfdac5594294b6b932848976ff9e8741`
 - **Reviewed PR:** #939, head `ce81f22ef57c5db0b658737c0d9ced4c7fc69949`
 - **Reviewed source blob:** `ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
@@ -114,10 +115,11 @@ The complete PR checkout could not be materialized because the execution contain
 - `60566b36f2fb931bdc47663d480142c1f837e420` — immutable archive;
 - `15bf294136c19d4b9fb0ac4a6c2ea0fa424c965e` — active-task completion;
 - `5defb96def46ed432260adf5322857c469f7074b` — validated delivery handoff;
-- `f125e962d6c2b144a4ad29c555cc6a9b1a13524e` — study-ledger synchronization.
+- `f125e962d6c2b144a4ad29c555cc6a9b1a13524e` — study-ledger synchronization;
+- `746650dcdfdac5594294b6b932848976ff9e8741` — remote-main delivery confirmation.
 
 GitHub contents writes returned a successful direct-main commit SHA for each file. Recent remote
-history confirmed the focused sequence through `f125e962d6c2b144a4ad29c555cc6a9b1a13524e` on `main`.
+history confirmed the focused sequence through `746650dcdfdac5594294b6b932848976ff9e8741` on `main`.
 The connector does not return a conventional terminal `git push` transcript; none is claimed.
 
 ## Required remediation

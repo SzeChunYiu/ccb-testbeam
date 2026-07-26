@@ -2,9 +2,10 @@
 """Canonical DeltaE-E front door with lossless table input handling.
 
 The numerical and plotting implementation is retained in ``_deltaE_E_core``.
-This front door owns the input boundary so CSV event identifiers and Parquet
-rows are parsed from one exact byte snapshot before any uniqueness check,
-sample selection, or data/MC join.
+This front door owns the input boundary so CSV event identifiers, Parquet rows,
+and present detector-signal cells are validated from one exact byte snapshot
+before any uniqueness check, sample selection, stopping statistic, or data/MC
+join.
 """
 from __future__ import annotations
 
@@ -29,7 +30,8 @@ else:
     from scripts.single_stave import _deltaE_E_core as _core
 
 # Preserve the established public module surface while replacing only the
-# input/provenance boundary. Single-underscore helpers remain import-compatible.
+# input/provenance and signal-value boundaries. Single-underscore helpers
+# remain import-compatible.
 for _name in dir(_core):
     if not _name.startswith("__"):
         globals()[_name] = getattr(_core, _name)
@@ -40,10 +42,16 @@ PARQUET_PROVENANCE_POLICY = (
     "DELTAE_PARQUET_ROWS_AND_PROVENANCE_MUST_SHARE_ONE_BYTE_SNAPSHOT"
 )
 PARQUET_SNAPSHOT_POLICY = "SINGLE_READ_EXACT_BYTES"
+SIGNAL_VALUE_POLICY = "DELTAE_PRESENT_SIGNAL_CELLS_MUST_BE_FINITE_NUMERIC"
+MISSING_LAYER_POLICY = "ZERO_ONLY_WHEN_SUPPORTED_COLUMN_IS_ABSENT"
 CSV_KEY_DTYPES: dict[str, str] = {key: "string" for key in KEY_COLS}
 _INPUT_SNAPSHOTS: dict[Path, dict[str, Any]] = {}
 _CORE_ANALYZE = _core.analyze
 _CORE_SHA256 = _core.sha256
+
+
+class SignalValueError(ValueError):
+    """Raised when a present detector-signal cell is not finite numeric input."""
 
 
 def input_snapshot(path: Path) -> dict[str, Any] | None:
@@ -113,6 +121,78 @@ def read_table(path: Path) -> pd.DataFrame:
     raise SystemExit(f"Unsupported input extension: {suffix} (use .parquet or .csv)")
 
 
+def _coerce_present_finite_signals(
+    df: pd.DataFrame,
+    columns: Sequence[str],
+    *,
+    table_name: str,
+) -> pd.DataFrame:
+    """Coerce present signal columns and reject every nonfinite or malformed cell."""
+    out = df.copy()
+    for column in columns:
+        if column not in out.columns:
+            continue
+        numeric = pd.to_numeric(out[column], errors="coerce")
+        values = numeric.to_numpy(dtype=float, na_value=np.nan)
+        invalid = ~np.isfinite(values)
+        if invalid.any():
+            positions = np.flatnonzero(invalid)
+            row_labels = [str(out.index[int(pos)]) for pos in positions[:5]]
+            raise SignalValueError(
+                f"{table_name}: column {column!r} contains {len(positions)} "
+                "nonnumeric or nonfinite value(s); first row indices "
+                f"{row_labels}"
+            )
+        out[column] = values
+    return out
+
+
+def fill_missing_layers(df: pd.DataFrame, cols: Sequence[str]) -> pd.DataFrame:
+    """Fill only wholly absent supported layers; present cells must be finite."""
+    out = _coerce_present_finite_signals(
+        df,
+        cols,
+        table_name="signal table",
+    )
+    for column in cols:
+        if column not in out.columns:
+            out[column] = 0.0
+    return out
+
+
+def prepare_data_side(raw: pd.DataFrame) -> pd.DataFrame:
+    """Validate data keys and present ADC cells before any absent-layer fill."""
+    missing = [column for column in REQUIRED_DATA if column not in raw.columns]
+    if missing:
+        raise SystemExit(f"DATA table missing required columns: {missing}")
+    validate_event_keys(raw, "DATA")
+    signal_columns = ("amp_B2", *FILLABLE_DATA_LAYERS)
+    validated = _coerce_present_finite_signals(
+        raw,
+        signal_columns,
+        table_name="DATA",
+    )
+    data = fill_missing_layers(validated, FILLABLE_DATA_LAYERS)
+    data = fill_missing_flags(data, DATA_SAT_COLS)
+    data = fill_missing_flags(data, DATA_THRPASS_COLS)
+    return derive_data_columns(data)
+
+
+def prepare_mc_side(raw: pd.DataFrame) -> pd.DataFrame:
+    """Validate MC keys and every present ``edep_B*`` cell before layer fill."""
+    missing = [column for column in REQUIRED_MC if column not in raw.columns]
+    if missing:
+        raise SystemExit(f"MC table missing required columns: {missing}")
+    validate_event_keys(raw, "MC")
+    validated = _coerce_present_finite_signals(
+        raw,
+        mc_layer_columns(raw),
+        table_name="MC",
+    )
+    mc = fill_missing_layers(validated, FILLABLE_MC_LAYERS)
+    return derive_mc_columns(mc)
+
+
 def analyze(
     data_raw: pd.DataFrame,
     mc_raw: pd.DataFrame,
@@ -121,7 +201,7 @@ def analyze(
     sample: str,
     seed: int,
 ) -> dict:
-    """Run the established analysis and publish the reader contract in ``result``."""
+    """Run the established analysis and publish the reader/value contract."""
     bundle = _CORE_ANALYZE(
         data_raw,
         mc_raw,
@@ -136,6 +216,8 @@ def analyze(
         "parquet_provenance_policy": PARQUET_PROVENANCE_POLICY,
         "parquet_snapshot_policy": PARQUET_SNAPSHOT_POLICY,
         "csv_key_dtypes": dict(CSV_KEY_DTYPES),
+        "signal_value_policy": SIGNAL_VALUE_POLICY,
+        "missing_layer_policy": MISSING_LAYER_POLICY,
     }
     return bundle
 
@@ -183,6 +265,8 @@ def write_manifest(out: Path, args, inputs: list[Path]) -> None:
             "parquet_provenance_policy": PARQUET_PROVENANCE_POLICY,
             "parquet_snapshot_policy": PARQUET_SNAPSHOT_POLICY,
             "csv_key_dtypes": dict(CSV_KEY_DTYPES),
+            "signal_value_policy": SIGNAL_VALUE_POLICY,
+            "missing_layer_policy": MISSING_LAYER_POLICY,
         },
         "inputs": [_input_manifest_record(path) for path in inputs],
         "outputs": [],
@@ -199,12 +283,18 @@ def write_manifest(out: Path, args, inputs: list[Path]) -> None:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Clear stale snapshots, then run the established CLI with the strict boundary."""
+    """Clear stale snapshots, then run the established CLI with strict boundaries."""
     _INPUT_SNAPSHOTS.clear()
-    return _core.main(argv)
+    try:
+        return _core.main(argv)
+    except SignalValueError as exc:
+        raise SystemExit(f"Signal-value validation failed: {exc}") from exc
 
 
 _core.read_table = read_table
+_core.fill_missing_layers = fill_missing_layers
+_core.prepare_data_side = prepare_data_side
+_core.prepare_mc_side = prepare_mc_side
 _core.analyze = analyze
 _core.write_manifest = write_manifest
 

@@ -1,0 +1,52 @@
+{
+  "acceptance": "VALIDATED_FOCUSED_SOFTWARE_CONTRACT",
+  "files": {
+    "contract": {
+      "bytes": 991,
+      "git_blob": "3721a06aca5c228dbd38ba502c6b5a5bdd521f0d",
+      "path": "docs/contracts/deltae_event_csv_reader.json",
+      "sha256": "f6c07e245ce2fdd83f7190f9c2aa2bb0b633f9e5c61cd437ba01cb32d1934fbb"
+    },
+    "contract_test": {
+      "bytes": 2003,
+      "git_blob": "3e580de8a3b29ab1950fd6e4bbea94ee9c59f681",
+      "path": "tests/test_deltae_csv_reader_contract.py",
+      "sha256": "a5c8b68a203d6e3beb46f513a937efd115246f7358ce144933e68e2cb154461f"
+    },
+    "integration_test": {
+      "git_blob": "8e85937fec304aa801c5da6527495f80b56976e9",
+      "path": "tests/test_deltae_data_bridge_strict.py"
+    },
+    "producer": {
+      "git_blob": "76f7ffda2c2af92b400ca61f2f12c2b34fff7dba",
+      "path": "scripts/single_stave/deltaE_E_data_bridge_strict.py"
+    }
+  },
+  "initial_main_sha": "303da4b0d96b703de002d53abd98f0ca9c964250",
+  "observed_ci_failure": {
+    "inferred_type": "integer",
+    "job_id": 89739575939,
+    "pandas": "3.0.5",
+    "python": "3.11",
+    "required_type": "string",
+    "run_id": 30181818642,
+    "test_node": "tests/test_deltae_data_bridge_strict.py::test_valid_bundle_is_content_addressed_and_reconstructable"
+  },
+  "policy": "DELTAE_CSV_IDENTIFIERS_MUST_USE_AN_EXPLICIT_TEXT_READER_CONTRACT",
+  "scientific_boundary": "No amplitude convention, pulse polarity, stopping distribution, DeltaE-E PID, calibration, or detector-performance claim is authorized.",
+  "session_stamp": "2026-07-26T021210Z",
+  "task_id": "AUD-DELTAE-004",
+  "validation": {
+    "all_digit_preserved": true,
+    "authoritative_metadata": "result.json",
+    "commands": [
+      "python -m py_compile tests/test_deltae_csv_reader_contract.py",
+      "pytest -q tests/test_deltae_csv_reader_contract.py"
+    ],
+    "leading_zero_preserved": true,
+    "pandas": "2.2.3",
+    "pytest_result": "3 passed in 0.03s",
+    "python": "3.13.5",
+    "text_column_count": 9
+  }
+}

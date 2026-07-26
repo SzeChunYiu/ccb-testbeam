@@ -1,0 +1,72 @@
+name: MV3 Pearson Contract CI
+
+on:
+  push:
+    paths:
+      - "scripts/studies/mv3_selection_matched.py"
+      - "scripts/studies/_internal/mv3_selection_matched_impl.py.inc"
+      - "tools/audit/audit_mv3_chi2_support.py"
+      - "tests/test_mv3_chi2_producer_contract.py"
+      - "tests/test_mv3_selection_weighted_contract.py"
+      - "tests/test_audit_mv3_chi2_support.py"
+      - ".github/workflows/mv3_chi2_contract_ci.yml"
+  pull_request:
+    paths:
+      - "scripts/studies/mv3_selection_matched.py"
+      - "scripts/studies/_internal/mv3_selection_matched_impl.py.inc"
+      - "tools/audit/audit_mv3_chi2_support.py"
+      - "tests/test_mv3_chi2_producer_contract.py"
+      - "tests/test_mv3_selection_weighted_contract.py"
+      - "tests/test_audit_mv3_chi2_support.py"
+      - ".github/workflows/mv3_chi2_contract_ci.yml"
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Compile focused Python sources
+        run: |
+          python -m py_compile \
+            scripts/studies/mv3_selection_matched.py \
+            tools/audit/audit_mv3_chi2_support.py \
+            tests/test_mv3_chi2_producer_contract.py \
+            tests/test_mv3_selection_weighted_contract.py \
+            tests/test_audit_mv3_chi2_support.py
+      - name: Run focused Pearson and producer regressions
+        run: |
+          pytest -q \
+            tests/test_mv3_chi2_producer_contract.py \
+            tests/test_mv3_selection_weighted_contract.py \
+            tests/test_audit_mv3_chi2_support.py
+      - name: Audit exact canonical source
+        run: |
+          python tools/audit/audit_mv3_chi2_support.py \
+            --source scripts/studies/mv3_selection_matched.py \
+            --output /tmp/mv3_chi2_support.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("/tmp/mv3_chi2_support.json").read_text())
+          assert payload["status"] == "VALIDATED"
+          assert payload["finding_count"] == 0
+          PY
+      - name: Enforce focused line length
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          paths = (
+              Path("scripts/studies/mv3_selection_matched.py"),
+              Path("tests/test_mv3_chi2_producer_contract.py"),
+          )
+          longest = max(len(line) for path in paths for line in path.read_text().splitlines())
+          print(f"maximum focused line length: {longest}")
+          assert longest <= 100
+          PY

@@ -6,7 +6,9 @@
 - **Stamp:** `2026-07-26T030223Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `f1a615d5b591b63c91b03124d243daf8372b61cd`
-- **Validated delivery/handoff commit:** pending this contents-API write
+- **Validated delivery/handoff commit:** `47a1c69656eb4045f835492b5e0c4db6752d4f3a`
+- **Remote-main confirmation:** post-write history confirmed the delivery commit and its complete
+  focused ancestry consecutively on remote `main`.
 - **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, or PR.
 - **Focused acceptance:** audit implementation, tests, JSON, SVG, report, and archive `VALIDATED`.
 - **Production reader state:** `FLAWED / PARTIAL`; the canonical reader was not modified in this unit.
@@ -103,7 +105,7 @@ behavior excerpt. Full-source execution is not claimed.
 - `DISTINCT_COMPOSITE_KEYS_COLLAPSE`
 - `FALSE_CROSS_FILE_MATCH`
 
-## Direct-main commits before handoff
+## Direct-main commits
 
 - `7c9b9a063cf5115e4dee9c6c9c8797b6a7577ffc` — task claim
 - `0e05c2cfeda5d46c35f0a31d7b01fe4f769ca51a` — fail-closed auditor
@@ -114,9 +116,10 @@ behavior excerpt. Full-source execution is not claimed.
 - `0b542e6c8844f3aaf1e3469c808620bf3a3d0d38` — audit report
 - `8f706d05b97e2e032bef7813cb34b48dd4bcdea7` — immutable archive
 - `f3ecace79fbb1c8f68c380af604ce59f218aacd5` — active-task completion
+- `47a1c69656eb4045f835492b5e0c4db6752d4f3a` — delivery handoff
 
-GitHub contents writes returned commit SHAs rather than terminal `git push` stdout. A follow-up
-metadata update will record this handoff commit and remote-main confirmation.
+GitHub contents writes returned commit SHAs rather than terminal `git push` stdout. Post-write
+history confirmed the delivery handoff and all focused ancestors on remote `main`.
 
 ## Required next action
 

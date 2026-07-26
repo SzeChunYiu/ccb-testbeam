@@ -9,13 +9,16 @@ import hashlib
 import html
 import io
 import json
+import os
 import sys
+import tempfile
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 POLICY = "NO_FIELD_INTERPRETATION_FROM_WIDTH_MISMATCHED_ROWS"
+OUTPUT_POLICY = "CLAIM_LEDGER_VALIDATION_OUTPUTS_MUST_BE_DISTINCT_AND_ATOMIC"
 EXPECTED_FIELDS = (
     "claim_id",
     "chapter",
@@ -64,7 +67,7 @@ EXPECTED_FIELDS = (
 
 
 class ClaimLedgerSchemaError(ValueError):
-    """Controlled input or schema error."""
+    """Controlled input, schema, or output-publication error."""
 
 
 def _read_utf8_snapshot(path: Path) -> tuple[str, dict[str, Any]]:
@@ -129,19 +132,16 @@ def validate_text(text: str) -> dict[str, Any]:
         else:
             seen_ids.add(claim_id)
 
+        exact = width == len(EXPECTED_FIELDS)
         row_widths.append({
             "row_number": row_number,
             "claim_id": claim_id or None,
             "actual_columns": width,
-            "schema_state": (
-                "EXACT_WIDTH" if width == len(EXPECTED_FIELDS) else "WIDTH_MISMATCH"
-            ),
-            "field_interpretation": (
-                "PERMITTED" if width == len(EXPECTED_FIELDS) else "WITHHELD"
-            ),
+            "schema_state": "EXACT_WIDTH" if exact else "WIDTH_MISMATCH",
+            "field_interpretation": "PERMITTED" if exact else "WITHHELD",
         })
 
-        if width != len(EXPECTED_FIELDS):
+        if not exact:
             issues.append({
                 "code": "ROW_WIDTH_MISMATCH",
                 "row_number": row_number,
@@ -163,6 +163,7 @@ def validate_text(text: str) -> dict[str, Any]:
         "version": VERSION,
         "status": "VALIDATED" if not issues else "FLAWED",
         "policy": POLICY,
+        "output_policy": OUTPUT_POLICY,
         "expected_columns": len(EXPECTED_FIELDS),
         "header": header,
         "data_rows": len(rows) - 1,
@@ -185,7 +186,7 @@ def audit(path: Path) -> dict[str, Any]:
     return result
 
 
-def _write_svg(path: Path, payload: dict[str, Any]) -> None:
+def _svg_text(payload: dict[str, Any]) -> str:
     rows = payload["row_widths"]
     left = 150
     top = 70
@@ -199,8 +200,7 @@ def _write_svg(path: Path, payload: dict[str, Any]) -> None:
 
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="820" height="{height}" '
-        'viewBox="0 0 820 {height}" role="img" '
-        'aria-labelledby="title desc">'.replace("{height}", str(height)),
+        f'viewBox="0 0 820 {height}" role="img" aria-labelledby="title desc">',
         '<title id="title">Claim-ledger row width audit</title>',
         '<desc id="desc">Actual CSV column count for every claim row compared with '
         'the canonical 43-column schema. Mismatched rows are hatched and labelled.</desc>',
@@ -257,16 +257,79 @@ def _write_svg(path: Path, payload: dict[str, Any]) -> None:
         f'{payload["data_rows"]}; policy: {html.escape(payload["policy"])}</text>',
         '</svg>',
     ])
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(parts) + "\n", encoding="utf-8")
+    return "\n".join(parts) + "\n"
 
 
-def _write_json(path: Path, payload: dict[str, Any]) -> None:
+def _paths_alias(first: Path, second: Path) -> bool:
+    if first.resolve(strict=False) == second.resolve(strict=False):
+        return True
+    try:
+        return first.exists() and second.exists() and os.path.samefile(first, second)
+    except OSError:
+        return False
+
+
+def _validate_output_paths(
+    claim_ledger: Path,
+    output: Path | None,
+    svg: Path | None,
+) -> None:
+    named = [("claim ledger", claim_ledger)]
+    if output is not None:
+        named.append(("JSON output", output))
+    if svg is not None:
+        named.append(("SVG output", svg))
+    for index, (first_name, first_path) in enumerate(named):
+        for second_name, second_path in named[index + 1:]:
+            if _paths_alias(first_path, second_path):
+                raise ClaimLedgerSchemaError(
+                    f"{first_name} and {second_name} must not alias: {first_path}"
+                )
+
+
+def _atomic_write_text(path: Path, text: str) -> dict[str, Any]:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(payload, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    temp_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            newline="",
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as handle:
+            temp_path = Path(handle.name)
+            handle.write(text)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temp_path, path)
+        temp_path = None
+    except OSError as exc:
+        raise ClaimLedgerSchemaError(f"cannot publish {path}: {exc}") from exc
+    finally:
+        if temp_path is not None:
+            try:
+                temp_path.unlink()
+            except FileNotFoundError:
+                pass
+    raw = path.read_bytes()
+    return {
+        "path": str(path),
+        "bytes": len(raw),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "publication_method": "SAME_DIRECTORY_TEMP_FSYNC_OS_REPLACE",
+    }
+
+
+def _write_svg(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
+    return _atomic_write_text(path, _svg_text(payload))
+
+
+def _write_json(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
+    text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
+    return _atomic_write_text(path, text)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -277,15 +340,16 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
+        _validate_output_paths(args.claim_ledger, args.output, args.svg)
         result = audit(args.claim_ledger)
+        if args.output:
+            _write_json(args.output, result)
+        if args.svg:
+            _write_svg(args.svg, result)
     except ClaimLedgerSchemaError as exc:
         print(f"INPUT ERROR: {exc}", file=sys.stderr)
         return 2
 
-    if args.output:
-        _write_json(args.output, result)
-    if args.svg:
-        _write_svg(args.svg, result)
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0 if result["status"] == "VALIDATED" else 1
 

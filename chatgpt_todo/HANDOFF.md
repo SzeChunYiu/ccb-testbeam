@@ -5,7 +5,9 @@
 - **Task:** `AUD-DELTAE-004`
 - **Stamp:** `2026-07-26T021210Z`
 - **Initial remote main:** `303da4b0d96b703de002d53abd98f0ca9c964250`
-- **Validated implementation through:** `80749ab9d3d8355b8cab8bd28560876a08e1c1ad`
+- **Validated delivery/handoff commit:** `0652ee75e1fd37a5306911c7c932144f1dc78ba1`
+- **Remote-main confirmation:** post-write history confirmed the delivery commit and its complete
+  focused ancestry consecutively on remote `main`.
 - **Destination:** direct GitHub contents-API commits to `main`; no force-push, history rewrite,
   task branch, or pull request.
 - **Focused acceptance:** `VALIDATED / COMPLETE`.
@@ -115,10 +117,11 @@ Evidence files:
 - `fdc85e6bb25580a590a4c8203a8286d688383f33` — audit report
 - `13c5cac3801f4cc40002d2d79337ebd489ca3435` — immutable archive
 - `80749ab9d3d8355b8cab8bd28560876a08e1c1ad` — active-task completion
+- `0652ee75e1fd37a5306911c7c932144f1dc78ba1` — delivery handoff
 
 GitHub returned successful direct-main commit SHAs rather than conventional terminal `git push`
-stdout. The next history read must confirm this handoff commit and all focused ancestors on remote
-`main`; do not report delivery if that confirmation is absent.
+stdout. Post-write history confirmed the delivery handoff and all focused ancestors on remote
+`main`.
 
 ## Scientific boundary
 

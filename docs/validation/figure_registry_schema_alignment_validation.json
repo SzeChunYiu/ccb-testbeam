@@ -1,0 +1,173 @@
+{
+  "acceptance_boundary": "This audit validates schema alignment only. It does not validate any figure's scientific claim, source value, uncertainty, or detector performance.",
+  "focused_tests": "5 passed in 0.07s",
+  "inputs": {
+    "registry_source": {
+      "path": ".snapshot/registry.py",
+      "sha256": "e8b7e2988df61036b9160d6a6fdbb201b5c91149a49fc938b1429250198f0264",
+      "size_bytes": 352,
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "registry_yaml": {
+      "path": ".snapshot/figures.yaml",
+      "sha256": "a3ff20bfd8f7bb07ba40aea462d5a57f13595d8c4a2a539a156ca0fcf04e22fe",
+      "size_bytes": 1980,
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "test_source": {
+      "path": ".snapshot/test_registry.py",
+      "sha256": "55529e9be4387682ce6f18b31f766f5825b18953ac97ef6e3548a5177d1af7ff",
+      "size_bytes": 168,
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "issues": [
+    {
+      "code": "REGISTRY_STATUS_UNSUPPORTED",
+      "details": {
+        "status": "BLOCKED"
+      },
+      "message": "shipped registry uses status 'BLOCKED' outside ALLOWED_STATUSES"
+    },
+    {
+      "code": "REGISTRY_STATUS_UNSUPPORTED",
+      "details": {
+        "status": "GATED"
+      },
+      "message": "shipped registry uses status 'GATED' outside ALLOWED_STATUSES"
+    },
+    {
+      "code": "REGISTRY_STATUS_UNSUPPORTED",
+      "details": {
+        "status": "MC_METHOD_CLOSURE"
+      },
+      "message": "shipped registry uses status 'MC_METHOD_CLOSURE' outside ALLOWED_STATUSES"
+    },
+    {
+      "code": "REGISTRY_STATUS_UNSUPPORTED",
+      "details": {
+        "status": "PARTIAL"
+      },
+      "message": "shipped registry uses status 'PARTIAL' outside ALLOWED_STATUSES"
+    },
+    {
+      "code": "REGISTRY_STATUS_UNSUPPORTED",
+      "details": {
+        "status": "SIMULATION_RESULT"
+      },
+      "message": "shipped registry uses status 'SIMULATION_RESULT' outside ALLOWED_STATUSES"
+    },
+    {
+      "code": "REGISTRY_STATUS_UNSUPPORTED",
+      "details": {
+        "status": "SUPERSEDED"
+      },
+      "message": "shipped registry uses status 'SUPERSEDED' outside ALLOWED_STATUSES"
+    },
+    {
+      "code": "REGISTRY_KIND_UNSUPPORTED",
+      "details": {
+        "kind": "figure_sourced"
+      },
+      "message": "shipped registry uses kind 'figure_sourced' outside ALLOWED_KINDS"
+    },
+    {
+      "code": "ILLUSTRATIVE_RESULT_FALSE_REQUIREMENT",
+      "details": {
+        "entries": [
+          "CLAIM-DASHBOARD",
+          "DASHBOARD-OVERVIEW",
+          "SCH-01",
+          "SCH-02",
+          "SCH-03"
+        ]
+      },
+      "message": "illustrative source_figure entries are rejected for lacking a result path"
+    },
+    {
+      "code": "TEST_FREEZES_OBSOLETE_STATUS_SET",
+      "details": {
+        "excluded": [
+          "BLOCKED",
+          "GATED",
+          "MC_METHOD_CLOSURE",
+          "PARTIAL",
+          "SIMULATION_RESULT",
+          "SUPERSEDED"
+        ]
+      },
+      "message": "test freezes a status vocabulary that excludes shipped registry statuses"
+    }
+  ],
+  "policy": "FIGURE_REGISTRY_SCHEMA_MUST_ACCEPT_ITS_SHIPPED_VOCABULARY",
+  "repository_inputs": {
+    "base_main_sha": "d046259666a08dbf9188e8a80d5a3b0cbced5765",
+    "registry_source": {
+      "evidence": "GitHub fetch lines 30-44 and 155-192",
+      "git_blob": "0828d42c50e697bdc793d46d8bd23c4a57e3054d",
+      "path": "tools/figure_registry/registry.py"
+    },
+    "registry_yaml": {
+      "evidence": "GitHub fetch lines 15-35 and 40-256",
+      "git_blob": "5d03f284fd2e018fcda786313f46c64ea7a20105",
+      "path": "paper/figures.yaml"
+    },
+    "snapshot_scope": "CONNECTOR_RECONSTRUCTED_SEMANTIC_EXCERPT_NOT_FULL_BYTE_COPY",
+    "test_source": {
+      "evidence": "GitHub fetch lines 66-79 of final section",
+      "git_blob": "1546b8b6896fdbbdce28cfb53fccc8d727479436",
+      "path": "tests/test_figure_registry.py"
+    }
+  },
+  "status": "FLAWED",
+  "summary": {
+    "allowed_kinds": [
+      "illustrative",
+      "quantitative"
+    ],
+    "allowed_statuses": [
+      "EXTERNAL_BLOCKER",
+      "ILLUSTRATIVE",
+      "PRELIMINARY",
+      "TENSION",
+      "VALIDATED"
+    ],
+    "frozen_test_statuses": [
+      "EXTERNAL_BLOCKER",
+      "ILLUSTRATIVE",
+      "PRELIMINARY",
+      "TENSION",
+      "VALIDATED"
+    ],
+    "missing_result_illustrative_entries": [
+      "CLAIM-DASHBOARD",
+      "DASHBOARD-OVERVIEW",
+      "SCH-01",
+      "SCH-02",
+      "SCH-03"
+    ],
+    "used_kinds": [
+      "figure_sourced",
+      "illustrative",
+      "quantitative"
+    ],
+    "used_statuses": [
+      "BLOCKED",
+      "EXTERNAL_BLOCKER",
+      "GATED",
+      "ILLUSTRATIVE",
+      "MC_METHOD_CLOSURE",
+      "PARTIAL",
+      "SIMULATION_RESULT",
+      "SUPERSEDED",
+      "TENSION",
+      "VALIDATED"
+    ]
+  },
+  "tool_version": "1.0.0",
+  "validation_environment": {
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "pyyaml": "6.0.3"
+  }
+}

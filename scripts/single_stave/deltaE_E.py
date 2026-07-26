@@ -42,28 +42,6 @@ _CORE_ANALYZE = _core.analyze
 _CORE_SHA256 = _core.sha256
 
 
-def _snapshot_csv(path: Path) -> str:
-    """Read one exact CSV byte snapshot, decode strict UTF-8, and retain provenance."""
-    raw = path.read_bytes()
-    try:
-        text = raw.decode("utf-8", errors="strict")
-    except UnicodeDecodeError as exc:
-        raise SystemExit(f"CSV input is not valid UTF-8: {path}: {exc}") from exc
-    resolved = path.resolve()
-    _INPUT_SNAPSHOTS[resolved] = {
-        "path": str(resolved),
-        "format": "csv",
-        "bytes": len(raw),
-        "sha256": hashlib.sha256(raw).hexdigest(),
-        "snapshot_policy": CSV_SNAPSHOT_POLICY,
-        "encoding": "utf-8",
-        "decode_errors": "strict",
-        "key_policy": CSV_KEY_POLICY,
-        "key_dtypes": dict(CSV_KEY_DTYPES),
-    }
-    return text
-
-
 def input_snapshot(path: Path) -> dict[str, Any] | None:
     """Return a copy of the retained same-snapshot provenance for ``path``."""
     record = _INPUT_SNAPSHOTS.get(Path(path).resolve())
@@ -79,7 +57,23 @@ def read_table(path: Path) -> pd.DataFrame:
     if suffix in {".parquet", ".pq"}:
         return pd.read_parquet(path)
     if suffix in {".csv", ".txt", ".dat"}:
-        text = _snapshot_csv(path)
+        raw = path.read_bytes()
+        try:
+            text = raw.decode("utf-8", errors="strict")
+        except UnicodeDecodeError as exc:
+            raise SystemExit(f"CSV input is not valid UTF-8: {path}: {exc}") from exc
+        resolved = path.resolve()
+        _INPUT_SNAPSHOTS[resolved] = {
+            "path": str(resolved),
+            "format": "csv",
+            "bytes": len(raw),
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "snapshot_policy": CSV_SNAPSHOT_POLICY,
+            "encoding": "utf-8",
+            "decode_errors": "strict",
+            "key_policy": CSV_KEY_POLICY,
+            "key_dtypes": dict(CSV_KEY_DTYPES),
+        }
         return pd.read_csv(io.StringIO(text), dtype=CSV_KEY_DTYPES)
     raise SystemExit(f"Unsupported input extension: {suffix} (use .parquet or .csv)")
 

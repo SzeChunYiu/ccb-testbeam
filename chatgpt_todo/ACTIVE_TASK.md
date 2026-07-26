@@ -4,6 +4,7 @@
 - **Owner:** scheduled scientific-review session
 - **Session stamp:** `2026-07-26T143114Z`
 - **Initial remote main SHA:** `f4b5f193838effbf0ab9c82911a4fb8652eced8a`
+- **Validated handoff commit on remote main:** `e8d34d04bd8469de2c1794be9c5959e55246bf02`
 - **Scope:** audit whether PR #939 can convert the B6-B8 pair `sigma68` to a B6 single-stave resolution by dividing by `sqrt(2)`.
 - **Policy:** `PAIR_SIGMA68_DIV_SQRT2_REQUIRES_VALIDATED_IDENTICAL_INDEPENDENT_GAUSSIAN_OR_EXPLICIT_DECONVOLUTION`.
 - **Finding:** PR #939 promotes a pair-only robust width to `0.635 ns` single-stave resolution without individual B6/B8 constraints, covariance/common-mode treatment, distributional deconvolution, or propagated single-stave uncertainty. Its own diagnostics are strongly non-Gaussian (`RMS/sigma68 = 10.794`, tail fraction `0.159`).

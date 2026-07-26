@@ -8,8 +8,9 @@
 - **Initial remote main:** `03851ff128a5a351f39c7754e47ac35fe80e0fa0`
 - **Validated implementation/test head:** `bd81bce0fa0714f7473ae946db221e3bbdb918a5`
 - **Validated evidence/archive/active-task head:** `987eea3cb0e5a0efd5259a1b216ca0467781cc01`
+- **Validated handoff commit:** `485ba1b8db2cb3302ccdd4b09e70440f9b40ff54`
 - **Destination:** authenticated sequential commits directly to `main`; no force-push or history rewrite.
-- **Push result:** GitHub contents writes returned successful commit SHAs. Post-write history confirmed all focused files through `987eea3cb0e5a0efd5259a1b216ca0467781cc01` on remote `main`.
+- **Push result:** GitHub contents writes returned successful commit SHAs. Post-write history confirmed the focused implementation, tests, evidence, archive, active-task record, and handoff commit on remote `main`.
 - **Acceptance:** focused software/provenance remediation `VALIDATED / COMPLETE`.
 
 ## Defect and remediation
@@ -55,6 +56,7 @@ Environment: Python 3.13.5, pytest 9.0.2, Matplotlib 3.10.8, PyYAML 6.0.3.
 - `e457f071796ca62cd68ac567354a72bbad1ba3ec` — audit report
 - `d3b126961d32291f3756dfe3a1f4614e8f15815c` — immutable archive
 - `987eea3cb0e5a0efd5259a1b216ca0467781cc01` — completed active task
+- `485ba1b8db2cb3302ccdd4b09e70440f9b40ff54` — validated handoff
 
 ## Scientific boundary and limitations
 

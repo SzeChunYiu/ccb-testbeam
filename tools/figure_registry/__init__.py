@@ -6,15 +6,22 @@ from .registry import (
     ALLOWED_KINDS,
     ALLOWED_STATUSES,
     DEFAULT_UNCERTAINTY_KEY,
+    REGISTRY_SNAPSHOT_METHOD,
     STATUS_DISPOSITIONS,
     Entry,
+    RegistryFormatError,
+    RegistrySnapshot,
     load_registry,
+    load_registry_snapshot,
     validate_registry,
 )
 
 __all__ = [
     "Entry",
+    "RegistryFormatError",
+    "RegistrySnapshot",
     "load_registry",
+    "load_registry_snapshot",
     "validate_registry",
     "build",
     "main",
@@ -24,4 +31,5 @@ __all__ = [
     "ALLOWED_KINDS",
     "STATUS_DISPOSITIONS",
     "DEFAULT_UNCERTAINTY_KEY",
+    "REGISTRY_SNAPSHOT_METHOD",
 ]

@@ -7,17 +7,22 @@
 - **Scope:** prevent present malformed, missing-value, NaN, or infinite DeltaE signal cells from being
   silently converted to zero before stopping-layer, energy-sum, join, plotting, or result publication.
 - **Policy:** `DELTAE_PRESENT_SIGNAL_CELLS_MUST_BE_FINITE_NUMERIC`.
-- **Repository facts under review:** the current numerical core uses `pd.to_numeric(..., errors="coerce")`
-  followed by `fillna(0.0)` for present B-layer columns; extra MC `edep_B*` columns participate in
-  stopping and full-downstream energy but are not all validated for finiteness.
-- **Assumption:** a wholly absent supported downstream layer may retain the documented zero-fill
-  convention, but a present cell is measured input and must not be reclassified as an absent layer.
-- **Planned files:** canonical DeltaE front door, focused tests, fail-closed audit, machine-readable
-  validation, SVG evidence, audit report, backlog/session log, immutable archive, and handoff.
-- **Validation plan:** compile exact proposed Python; run synthetic finite, malformed, NaN, infinity,
-  extra-MC-layer, missing-column, metadata, CLI-failure, UTF-8, atomic-output, and alias controls;
-  parse JSON/SVG; inspect line lengths and exact Git blobs; re-read remote `main` before final handoff.
-- **Scientific boundary:** this software-integrity unit does not authorize the A-002 amplitude
-  convention, pulse polarity, stopping fractions, DeltaE-E PID, uncertainty, calibration, or detector
-  performance.
-- **Status:** `ACTIVE`
+- **Implementation:** every present data `amp_B2/B4/B6/B8` and every present MC `edep_B*` cell must
+  coerce to finite numeric input; only a wholly absent supported downstream column is zero-filled.
+  The strict functions replace the retained core's production hooks, and result/manifest contracts
+  publish both the signal-value and missing-layer policies.
+- **Validation:** exact proposed Python compiled; focused tests returned `19 passed in 3.06s`; exact
+  source audit returned `VALIDATED` with zero findings; malformed, NaN, both infinities, optional MC
+  layers, missing columns, metadata, UTF-8, atomic-output, and alias controls passed; JSON/SVG parsing
+  and line-length checks passed.
+- **Evidence:**
+  - `docs/validation/deltae_signal_value_contract_validation.json`
+  - `docs/validation/deltae_signal_value_contract.svg`
+  - `docs/validation/deltae_signal_value_contract_audit.md`
+  - `chatgpt_todo/archive/2026-07-26T050335Z_AUD-DELTAE-007_SIGNAL_VALUE_INTEGRITY.md`
+- **Focused acceptance:** canonical present-signal input boundary `VALIDATED / COMPLETE`.
+- **Scientific boundary:** no exact A-002 table, amplitude convention, pulse polarity, stopping
+  fraction, DeltaE-E PID, uncertainty, calibration, or detector-performance result is authorized.
+- **Next action:** resolve `AUD-DELTAE-001`, `AUD-DELTAE-002`, `AUD-AMP-009`, `AUD-AMP-010`, and
+  `BLK-AMP-001`, then run a content-addressed production table through the full scientific gate.
+- **Status:** `COMPLETE`

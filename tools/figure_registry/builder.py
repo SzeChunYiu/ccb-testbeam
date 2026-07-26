@@ -13,7 +13,7 @@ import sys
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import matplotlib
 
@@ -26,6 +26,10 @@ from .registry import (  # noqa: E402
     RegistrySnapshot,
     load_registry_snapshot,
     validate_registry,
+)
+
+MANAGED_ARTIFACT_POLICY = (
+    "PREVIOUS_REPORT_RECONCILIATION_NONPASS_REMOVAL_REPORT_ROLLBACK"
 )
 
 
@@ -261,6 +265,7 @@ def _emit_quantitative(
         fig.text(0.5, 0.01, entry.caption, ha="center", fontsize=7, wrap=True)
         fig.tight_layout(rect=(0, 0.04, 1, 1))
 
+        figure_path.parent.mkdir(parents=True, exist_ok=True)
         fd, render_name = tempfile.mkstemp(
             prefix=f".{figure_path.name}.", suffix=".render.png", dir=figure_path.parent
         )
@@ -361,8 +366,271 @@ def _base_record(entry: Entry) -> dict[str, Any]:
         "reason": "",
         "figure": None,
         "source_data": None,
+        "managed_artifacts": [],
         "quantitative": entry.is_quantitative,
     }
+
+
+def _valid_managed_relative(path: Path, entry_id: str) -> bool:
+    parts = path.parts
+    if len(parts) == 1:
+        return parts[0] in {f"{entry_id}.png", f"{entry_id}_source_data.csv"}
+    if len(parts) != 2 or parts[0] not in {"source", "illustrative"}:
+        return False
+    name = parts[1]
+    return name == f"{entry_id}_source_data.csv" or name.startswith(f"{entry_id}.")
+
+
+def _managed_path_from_text(output: Path, value: str, entry_id: str) -> Path:
+    raw = Path(value)
+    root = output.resolve()
+    candidates = [raw.resolve()]
+    if not raw.is_absolute():
+        candidates.append((output / raw).resolve())
+    resolved: Path | None = None
+    for candidate in candidates:
+        try:
+            candidate.relative_to(root)
+        except ValueError:
+            continue
+        resolved = candidate
+        break
+    if resolved is None:
+        raise FigureRegistryError(
+            f"{entry_id}: prior managed artifact escapes output directory: {value}"
+        )
+    relative = resolved.relative_to(root)
+    if not _valid_managed_relative(relative, entry_id):
+        raise FigureRegistryError(
+            f"{entry_id}: prior report path is not a canonical managed artifact: {value}"
+        )
+    return output / relative
+
+
+def _relative_managed_path(output: Path, path: Path, entry_id: str) -> str:
+    root = output.resolve()
+    resolved = path.resolve()
+    try:
+        relative = resolved.relative_to(root)
+    except ValueError as exc:
+        raise FigureRegistryError(
+            f"{entry_id}: managed artifact escapes output directory: {path}"
+        ) from exc
+    if not _valid_managed_relative(relative, entry_id):
+        raise FigureRegistryError(
+            f"{entry_id}: noncanonical managed artifact path: {path}"
+        )
+    return relative.as_posix()
+
+
+def _expected_entry_output_paths(entry: Entry, out_dir: Path) -> set[Path]:
+    if entry.is_quantitative:
+        return {
+            out_dir / f"{entry.id}.png",
+            out_dir / f"{entry.id}_source_data.csv",
+        }
+    if entry.kind in {"illustrative", "figure_sourced"}:
+        subdirectory = "illustrative" if entry.is_illustrative else "source"
+        source = Path(entry.source_figure or "")
+        suffix = source.suffix or ".artifact"
+        target_dir = out_dir / subdirectory
+        return {
+            target_dir / f"{entry.id}{suffix}",
+            target_dir / f"{entry.id}_source_data.csv",
+        }
+    return set()
+
+
+def _protected_input_paths(entry: Entry) -> tuple[Path, ...]:
+    values = [entry.result, entry.source_figure, entry.table]
+    return tuple(Path(value) for value in values if value)
+
+
+def _remove_paths(
+    paths: Iterable[Path],
+    *,
+    entry: Entry | None,
+    output: Path,
+    entry_id: str | None = None,
+) -> list[str]:
+    removed: list[str] = []
+    protected = _protected_input_paths(entry) if entry is not None else ()
+    entry_id = entry.id if entry is not None else (entry_id or "removed-entry")
+    for path in sorted(set(paths), key=lambda item: str(item)):
+        if path.is_symlink():
+            raise FigureRegistryError(
+                f"{entry_id}: refusing to manage symbolic-link output {path}"
+            )
+        if any(_same_file(path, source) for source in protected):
+            continue
+        if path.exists():
+            if not path.is_file():
+                raise FigureRegistryError(
+                    f"{entry_id}: managed output is not a regular file: {path}"
+                )
+            path.unlink()
+            removed.append(_relative_managed_path(output, path, entry_id))
+    return removed
+
+
+def _remove_managed_entry_outputs(
+    entry: Entry,
+    out_dir: Path,
+    prior_paths: Iterable[Path] = (),
+    keep_paths: Iterable[Path] = (),
+) -> list[str]:
+    """Remove canonical current/prior outputs without touching declared inputs."""
+    keep = set(keep_paths)
+    candidates = set(prior_paths) | _expected_entry_output_paths(entry, out_dir)
+    return _remove_paths(candidates - keep, entry=entry, output=out_dir)
+
+
+def _load_previous_build_report(output: Path) -> dict[str, Any] | None:
+    path = output / "build_report.json"
+    if not path.exists():
+        return None
+    snapshot = _read_file_snapshot(path, entry_id="build-report", label="prior report")
+    try:
+        text = snapshot.raw.decode("utf-8", errors="strict")
+        payload = json.loads(text)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise FigureRegistryError(f"could not decode prior build report {path}: {exc}") from exc
+    if not isinstance(payload, dict) or not isinstance(payload.get("entries"), list):
+        raise FigureRegistryError(f"prior build report {path} has no entries list")
+    return payload
+
+
+def _bootstrap_previous_outputs(
+    output: Path,
+    entries: list[Entry],
+) -> dict[str, set[Path]]:
+    """Adopt only exact current canonical paths when no prior report exists."""
+    expected = {
+        entry.id: _expected_entry_output_paths(entry, output) for entry in entries
+    }
+    candidates = list(output.glob("*.png")) + list(
+        output.glob("*_source_data.csv")
+    )
+    candidates += [
+        path for path in (output / "source").glob("*") if not path.name.startswith(".")
+    ]
+    candidates += [
+        path
+        for path in (output / "illustrative").glob("*")
+        if not path.name.startswith(".")
+    ]
+    adopted: dict[str, set[Path]] = {entry.id: set() for entry in entries}
+    for candidate in candidates:
+        owners = [entry_id for entry_id, paths in expected.items() if candidate in paths]
+        if len(owners) != 1:
+            raise FigureRegistryError(
+                "existing canonical figure artifact cannot be attributed without "
+                f"build_report.json: {candidate}"
+            )
+        adopted[owners[0]].add(candidate)
+    return {entry_id: paths for entry_id, paths in adopted.items() if paths}
+
+
+def _paths_from_previous_record(output: Path, record: dict[str, Any]) -> set[Path]:
+    entry_id = record.get("id")
+    if not isinstance(entry_id, str) or not entry_id:
+        raise FigureRegistryError("prior build report contains an entry without a valid id")
+    raw_paths: list[str] = []
+    managed = record.get("managed_artifacts")
+    if managed is not None:
+        if not isinstance(managed, list) or not all(isinstance(item, str) for item in managed):
+            raise FigureRegistryError(
+                f"{entry_id}: prior managed_artifacts must be a list of strings"
+            )
+        raw_paths.extend(managed)
+    else:
+        for key in ("figure", "source_data"):
+            value = record.get(key)
+            if isinstance(value, str) and value:
+                raw_paths.append(value)
+    return {
+        _managed_path_from_text(output, value, entry_id)
+        for value in raw_paths
+    }
+
+
+def _previous_managed_outputs(
+    output: Path,
+    report: dict[str, Any] | None,
+) -> dict[str, set[Path]]:
+    if report is None:
+        return {}
+    previous: dict[str, set[Path]] = {}
+    for item in report["entries"]:
+        if not isinstance(item, dict):
+            raise FigureRegistryError("prior build report entries must be objects")
+        entry_id = item.get("id")
+        if not isinstance(entry_id, str) or not entry_id:
+            raise FigureRegistryError("prior build report contains an entry without a valid id")
+        if entry_id in previous:
+            raise FigureRegistryError(f"prior build report duplicates entry id {entry_id}")
+        previous[entry_id] = _paths_from_previous_record(output, item)
+    return previous
+
+
+def _snapshot_managed_state(paths: Iterable[Path]) -> dict[Path, ByteSnapshot | None]:
+    state: dict[Path, ByteSnapshot | None] = {}
+    for path in set(paths):
+        if path.is_symlink():
+            raise FigureRegistryError(f"refusing to snapshot symbolic-link output {path}")
+        if path.exists():
+            if not path.is_file():
+                raise FigureRegistryError(f"managed output is not a regular file: {path}")
+            state[path] = _read_file_snapshot(
+                path, entry_id="build-transaction", label="managed artifact"
+            )
+        else:
+            state[path] = None
+    return state
+
+
+def _restore_managed_state(state: dict[Path, ByteSnapshot | None]) -> None:
+    errors: list[str] = []
+    for path, snapshot in state.items():
+        try:
+            if snapshot is None:
+                if path.is_symlink():
+                    raise FigureRegistryError(
+                        f"refusing to remove symbolic-link output during rollback: {path}"
+                    )
+                path.unlink(missing_ok=True)
+            else:
+                _atomic_publish_snapshot(
+                    path,
+                    snapshot,
+                    entry_id="build-rollback",
+                    label="managed artifact",
+                )
+        except Exception as exc:  # pragma: no cover - catastrophic filesystem failure
+            errors.append(f"{path}: {exc}")
+    if errors:
+        raise FigureRegistryError(
+            "could not restore managed artifact state:\n  - " + "\n  - ".join(errors)
+        )
+
+
+def _reconcile_registry_outputs(
+    entries: list[Entry],
+    out_dir: Path,
+    previous: dict[str, set[Path]],
+) -> list[str]:
+    """Remove outputs for IDs no longer present in the current registry."""
+    current_ids = {entry.id for entry in entries}
+    removed: list[str] = []
+    for entry_id, paths in previous.items():
+        if entry_id in current_ids:
+            continue
+        removed.extend(
+            _remove_paths(
+                paths, entry=None, output=out_dir, entry_id=entry_id
+            )
+        )
+    return removed
 
 
 def _process_entry(
@@ -370,23 +638,27 @@ def _process_entry(
     out_dir: Path,
     paper_only: bool,
     allow_preliminary: bool,
-) -> dict[str, Any]:
+    prior_paths: Iterable[Path] = (),
+) -> tuple[dict[str, Any], list[str]]:
     record = _base_record(entry)
     disposition = entry.disposition
     if disposition == "BLOCKED":
+        removed = _remove_managed_entry_outputs(entry, out_dir, prior_paths)
         record["disposition"] = "BLOCKED"
         record["reason"] = "scientific status EXTERNAL_BLOCKER is non-buildable"
-        return record
+        return record, removed
     if disposition == "QUARANTINED":
+        removed = _remove_managed_entry_outputs(entry, out_dir, prior_paths)
         record["disposition"] = "QUARANTINED"
         record["reason"] = (
             f"scientific status {entry.status} is retained but not paper-authorizing"
         )
-        return record
+        return record, removed
     if disposition == "CONDITIONAL" and paper_only and not allow_preliminary:
+        removed = _remove_managed_entry_outputs(entry, out_dir, prior_paths)
         record["disposition"] = "BLOCKED"
         record["reason"] = "PRELIMINARY excluded unless --allow-preliminary is set"
-        return record
+        return record, removed
 
     if disposition == "ILLUSTRATIVE":
         figure, source_data = _emit_existing_artifact(entry, out_dir, "illustrative")
@@ -404,9 +676,17 @@ def _process_entry(
         record["reason"] = f"built from {entry.result}"
     else:
         raise FigureRegistryError(f"{entry.id}: unsupported kind {entry.kind!r}")
+
+    current = {figure, source_data}
+    removed = _remove_managed_entry_outputs(
+        entry, out_dir, prior_paths, keep_paths=current
+    )
     record["figure"] = str(figure)
     record["source_data"] = str(source_data)
-    return record
+    record["managed_artifacts"] = sorted(
+        _relative_managed_path(out_dir, path, entry.id) for path in current
+    )
+    return record, removed
 
 
 def _registry_provenance(snapshot: RegistrySnapshot) -> dict[str, Any]:
@@ -435,61 +715,121 @@ def build(
         raise FigureRegistryError(f"registry format error: {exc}") from exc
     entries = list(snapshot.entries)
     problems = validate_registry(entries)
+    previous_report = _load_previous_build_report(output)
+    if previous_report is None:
+        previous = _bootstrap_previous_outputs(output, entries)
+    else:
+        previous = _previous_managed_outputs(output, previous_report)
+    transaction_paths = set().union(*previous.values()) if previous else set()
+    for entry in entries:
+        transaction_paths.update(_expected_entry_output_paths(entry, output))
+    before = _snapshot_managed_state(transaction_paths)
+
     report: dict[str, Any] = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "registry": snapshot.path,
         "registry_provenance": _registry_provenance(snapshot),
         "paper_only": paper_only,
         "allow_preliminary": allow_preliminary,
+        "managed_artifact_policy": MANAGED_ARTIFACT_POLICY,
+        "previous_report_present": previous_report is not None,
         "validation_problems": problems,
         "entries": [],
+        "cleanup": {"removed": [], "removed_count": 0},
         "summary": {},
     }
-    if problems:
-        report["summary"] = {"status": "INVALID_REGISTRY", "n_problems": len(problems)}
+    removed: list[str] = []
+    report_published = False
+    try:
+        if problems:
+            for entry_id, paths in previous.items():
+                removed.extend(
+                    _remove_paths(
+                        paths, entry=None, output=output, entry_id=entry_id
+                    )
+                )
+            report["cleanup"] = {
+                "removed": sorted(set(removed)),
+                "removed_count": len(set(removed)),
+            }
+            report["summary"] = {
+                "status": "INVALID_REGISTRY",
+                "n_problems": len(problems),
+            }
+            _atomic_write_json(output / "build_report.json", report)
+            report_published = True
+            raise FigureRegistryError(
+                "registry failed validation:\n  - " + "\n  - ".join(problems)
+            )
+
+        removed.extend(_reconcile_registry_outputs(entries, output, previous))
+        failures: list[str] = []
+        for entry in entries:
+            prior_paths = previous.get(entry.id, set())
+            try:
+                record, entry_removed = _process_entry(
+                    entry,
+                    output,
+                    paper_only,
+                    allow_preliminary,
+                    prior_paths,
+                )
+                removed.extend(entry_removed)
+            except FigureRegistryError as exc:
+                removed.extend(
+                    _remove_managed_entry_outputs(entry, output, prior_paths)
+                )
+                record = _base_record(entry)
+                record["disposition"] = "FAIL"
+                record["reason"] = str(exc)
+                failures.append(str(exc))
+            report["entries"].append(record)
+
+        counts = {name: 0 for name in ("PASS", "FAIL", "BLOCKED", "QUARANTINED")}
+        quantitative = illustrative = source_only = 0
+        for record in report["entries"]:
+            counts[record["disposition"]] = counts.get(record["disposition"], 0) + 1
+            if record["disposition"] == "PASS":
+                if record["kind"] == "quantitative":
+                    quantitative += 1
+                elif record["kind"] == "illustrative":
+                    illustrative += 1
+                elif record["kind"] == "figure_sourced":
+                    source_only += 1
+        report["cleanup"] = {
+            "removed": sorted(set(removed)),
+            "removed_count": len(set(removed)),
+        }
+        report["summary"] = {
+            "n_entries": len(entries),
+            "pass": counts["PASS"],
+            "fail": counts["FAIL"],
+            "blocked": counts["BLOCKED"],
+            "quarantined": counts["QUARANTINED"],
+            "quantitative_figures": quantitative,
+            "illustrative_figures": illustrative,
+            "source_artifacts": source_only,
+        }
         _atomic_write_json(output / "build_report.json", report)
-        raise FigureRegistryError(
-            "registry failed validation:\n  - " + "\n  - ".join(problems)
-        )
-
-    failures: list[str] = []
-    for entry in entries:
+        report_published = True
+        if failures:
+            raise FigureRegistryError(
+                f"{len(failures)} figure(s) failed to build:\n  - "
+                + "\n  - ".join(failures)
+            )
+        return report
+    except FigureRegistryError:
+        if not report_published:
+            _restore_managed_state(before)
+        raise
+    except Exception as exc:
         try:
-            record = _process_entry(entry, output, paper_only, allow_preliminary)
-        except FigureRegistryError as exc:
-            record = _base_record(entry)
-            record["disposition"] = "FAIL"
-            record["reason"] = str(exc)
-            failures.append(str(exc))
-        report["entries"].append(record)
-
-    counts = {name: 0 for name in ("PASS", "FAIL", "BLOCKED", "QUARANTINED")}
-    quantitative = illustrative = source_only = 0
-    for record in report["entries"]:
-        counts[record["disposition"]] = counts.get(record["disposition"], 0) + 1
-        if record["disposition"] == "PASS":
-            if record["kind"] == "quantitative":
-                quantitative += 1
-            elif record["kind"] == "illustrative":
-                illustrative += 1
-            elif record["kind"] == "figure_sourced":
-                source_only += 1
-    report["summary"] = {
-        "n_entries": len(entries),
-        "pass": counts["PASS"],
-        "fail": counts["FAIL"],
-        "blocked": counts["BLOCKED"],
-        "quarantined": counts["QUARANTINED"],
-        "quantitative_figures": quantitative,
-        "illustrative_figures": illustrative,
-        "source_artifacts": source_only,
-    }
-    _atomic_write_json(output / "build_report.json", report)
-    if failures:
-        raise FigureRegistryError(
-            f"{len(failures)} figure(s) failed to build:\n  - " + "\n  - ".join(failures)
-        )
-    return report
+            _restore_managed_state(before)
+        except FigureRegistryError as rollback_exc:
+            raise FigureRegistryError(
+                f"build failed and managed-artifact rollback failed: {rollback_exc}"
+            ) from exc
+        raise FigureRegistryError(f"could not publish coherent build state: {exc}") from exc
 
 
 def _build_parser() -> argparse.ArgumentParser:

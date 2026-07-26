@@ -76,7 +76,13 @@ def _read_file_snapshot(path: Path, *, entry_id: str, label: str) -> ByteSnapsho
     return ByteSnapshot(raw=raw, sha256=_sha256_bytes(raw), size_bytes=len(raw))
 
 
-def _atomic_publish_snapshot(path: Path, snapshot: ByteSnapshot) -> ByteSnapshot:
+def _atomic_publish_snapshot(
+    path: Path,
+    snapshot: ByteSnapshot,
+    *,
+    entry_id: str = "publication",
+    label: str = "artifact",
+) -> ByteSnapshot:
     """Publish retained bytes atomically and verify the final target independently."""
 
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -90,13 +96,19 @@ def _atomic_publish_snapshot(path: Path, snapshot: ByteSnapshot) -> ByteSnapshot
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, path)
-    except Exception:
+    except Exception as exc:
         try:
             temporary.unlink(missing_ok=True)
         finally:
-            raise
+            if isinstance(exc, FigureRegistryError):
+                raise
+            raise FigureRegistryError(
+                f"{entry_id}: could not publish {label} {path}: {exc}"
+            ) from exc
 
-    published = _read_file_snapshot(path, entry_id="publication", label="target")
+    published = _read_file_snapshot(
+        path, entry_id=entry_id, label=f"published {label}"
+    )
     if published.sha256 != snapshot.sha256 or published.size_bytes != snapshot.size_bytes:
         raise FigureRegistryError(
             f"published target {path} does not match retained source snapshot"
@@ -212,7 +224,9 @@ def _write_source_csv(path: Path, row: dict[str, Any]) -> None:
     writer.writerow(row)
     raw = stream.getvalue().encode("utf-8")
     snapshot = ByteSnapshot(raw=raw, sha256=_sha256_bytes(raw), size_bytes=len(raw))
-    _atomic_publish_snapshot(path, snapshot)
+    _atomic_publish_snapshot(
+        path, snapshot, entry_id="source-data", label="CSV"
+    )
 
 
 def _emit_quantitative(
@@ -289,7 +303,9 @@ def _emit_existing_artifact(
     source_snapshot = _read_file_snapshot(
         source, entry_id=entry.id, label="source artifact"
     )
-    published_snapshot = _atomic_publish_snapshot(target, source_snapshot)
+    published_snapshot = _atomic_publish_snapshot(
+        target, source_snapshot, entry_id=entry.id, label="source artifact"
+    )
     metadata = target_dir / f"{entry.id}_source_data.csv"
     _write_source_csv(
         metadata,

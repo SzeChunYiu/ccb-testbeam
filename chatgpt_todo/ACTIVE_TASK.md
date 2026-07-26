@@ -7,9 +7,15 @@
 - **Observed concurrent advance:** remote `main` moved from `bd0e9254f49f963da96fc0bbafd3c7620c743645` to `a8c446732e9a73d6880b313939868162ec4e2d74` while the previous claim-ledger session finalized; the reviewed PR #939 source blob remained `ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7`.
 - **Scope:** audit whether open PR #939 preserves multi-run event identity when selecting in-time B6/B8 pairs, computing timing residuals, and plotting residuals.
 - **Policy:** `REAL_DATA_CFD_EVENTS_MUST_USE_RUN_AND_EVENT_ID_TOGETHER`.
-- **Assumptions:** `EVENTNO` is run-local unless immutable input evidence proves global uniqueness; no raw ROOT bytes are available in this environment; a software failure-mode demonstration does not prove that a retained production event was actually mispaired.
-- **Files:** `tools/audit/audit_real_data_cfd_event_identity.py`, focused tests, renderer, validation JSON/SVG/Markdown, `chatgpt_todo/` ledgers, immutable archive, session log, and handoff.
-- **Validation plan:** strict-UTF8/AST audit of the connector-inspected source contract; synthetic false-cross-run and duplicate-event controls; corrected composite-key fixture; invalid-UTF8, alias, and atomic-publication regressions; JSON and SVG parsing; changed-line review.
-- **Progress:** exact PR head/source blob and current-main concurrency inspected; source carries `run` and `event_id` but three pivots and one selection filter use `event_id` alone; focused local implementation is under validation before direct-main delivery.
-- **Scientific boundary:** no channel-map, waveform, calibration, CFD bias, timing-resolution, single-stave `pair/sqrt(2)`, or canonical `CL-002` claim is authorized by this task.
-- **Status:** `ACTIVE`
+- **Confirmed defect:** input rows retain `run` and `event_id`, but three multi-stave pivots use `event_id` alone and the accepted-key filter reapplies `event_id.isin(...)`. Synthetic controls produce one false cross-run pair and a duplicate-index `ValueError`; `(run,event_id)` produces zero false pairs and preserves two valid run-local pairs.
+- **Validation:** compilation passed; focused tests returned `6 passed in 0.06s`; current-like source returned `FLAWED` with six findings; corrected composite fixture returned `VALIDATED` with zero findings; invalid UTF-8 and aliasing failed closed; injected replacement failure preserved the prior output; JSON and SVG parsed; maximum changed Python line length was 99 characters.
+- **Evidence:**
+  - `docs/validation/real_data_cfd_event_identity_validation.json`
+  - `docs/validation/real_data_cfd_event_identity.svg`
+  - `docs/validation/real_data_cfd_event_identity_audit.md`
+  - `chatgpt_todo/archive/2026-07-26T083435Z_AUD-TIMING-001_EVENT_IDENTITY.md`
+- **Core delivery through:** `60566b36f2fb931bdc47663d480142c1f837e420`.
+- **Focused acceptance:** audit implementation and evidence `VALIDATED / COMPLETE`.
+- **Production acceptance:** PR #939 event-identity contract `FLAWED / PARTIAL`; no merge is authorized pending composite-key remediation and content-addressed rerun.
+- **Scientific boundary:** no raw ROOT file, channel map, waveform calibration, CFD bias, selection efficiency, timing resolution, single-stave `pair/sqrt(2)` estimate, or canonical `CL-002` claim is validated or changed.
+- **Status:** `COMPLETE`

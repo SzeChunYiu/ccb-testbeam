@@ -1,10 +1,11 @@
 """Paper-figure registry schema and scientific build dispositions.
 
-The registry separates scientific evidence state from build behaviour.  A status
-is never silently promoted merely because a result or image exists on disk.
+The registry separates scientific evidence state from build behaviour. A status is
+never silently promoted merely because a result or image exists on disk.
 """
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -61,6 +62,45 @@ _QUARANTINED_STATUSES: frozenset[str] = frozenset(
 )
 
 DEFAULT_UNCERTAINTY_KEY = "uncertainty"
+REGISTRY_SNAPSHOT_METHOD = "SINGLE_READ_STRICT_UTF8_DUPLICATE_KEY_REJECTING_YAML"
+
+
+class RegistryFormatError(ValueError):
+    """Raised when registry bytes cannot be interpreted without ambiguity."""
+
+
+class _UniqueKeySafeLoader(yaml.SafeLoader):
+    """Safe YAML loader that rejects duplicate mapping keys at every depth."""
+
+    def construct_mapping(self, node: yaml.MappingNode, deep: bool = False) -> dict[Any, Any]:
+        if not isinstance(node, yaml.MappingNode):
+            raise RegistryFormatError(
+                f"expected a YAML mapping node, got {type(node).__name__}"
+            )
+        self.flatten_mapping(node)
+        mapping: dict[Any, Any] = {}
+        first_marks: dict[Any, yaml.error.Mark] = {}
+        for key_node, value_node in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            try:
+                duplicate = key in mapping
+            except TypeError as exc:
+                line = key_node.start_mark.line + 1
+                column = key_node.start_mark.column + 1
+                raise RegistryFormatError(
+                    f"unhashable YAML mapping key at line {line}, column {column}"
+                ) from exc
+            if duplicate:
+                first = first_marks[key]
+                line = key_node.start_mark.line + 1
+                column = key_node.start_mark.column + 1
+                raise RegistryFormatError(
+                    f"duplicate YAML key {key!r} at line {line}, column {column}; "
+                    f"first defined at line {first.line + 1}, column {first.column + 1}"
+                )
+            mapping[key] = self.construct_object(value_node, deep=deep)
+            first_marks[key] = key_node.start_mark
+        return mapping
 
 
 @dataclass
@@ -96,14 +136,21 @@ class Entry:
         return STATUS_DISPOSITIONS.get(self.status, "INVALID")
 
 
-def load_registry(path: str | Path) -> list[Entry]:
-    """Load a YAML registry while deferring structural errors to validation."""
+@dataclass(frozen=True)
+class RegistrySnapshot:
+    """Parsed registry entries bound to one immutable byte snapshot."""
 
-    registry_path = Path(path)
-    with registry_path.open(encoding="utf-8") as handle:
-        document = yaml.safe_load(handle) or {}
+    path: str
+    raw: bytes = field(repr=False)
+    sha256: str
+    size_bytes: int
+    entries: tuple[Entry, ...]
+    snapshot_method: str = REGISTRY_SNAPSHOT_METHOD
+
+
+def _entries_from_document(document: Any, registry_path: Path) -> list[Entry]:
     if not isinstance(document, dict):
-        raise ValueError(
+        raise RegistryFormatError(
             f"registry {registry_path} must be a top-level mapping of id -> entry, "
             f"got {type(document).__name__}"
         )
@@ -145,6 +192,43 @@ def load_registry(path: str | Path) -> list[Entry]:
             )
         )
     return entries
+
+
+def load_registry_snapshot(path: str | Path) -> RegistrySnapshot:
+    """Read once, decode strictly, reject duplicate keys, and parse the registry."""
+
+    registry_path = Path(path)
+    try:
+        raw = registry_path.read_bytes()
+    except OSError as exc:
+        raise RegistryFormatError(f"could not read registry {registry_path}: {exc}") from exc
+    try:
+        text = raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as exc:
+        raise RegistryFormatError(
+            f"registry {registry_path} is not strict UTF-8: {exc}"
+        ) from exc
+    try:
+        document = yaml.load(text, Loader=_UniqueKeySafeLoader) or {}
+    except RegistryFormatError as exc:
+        raise RegistryFormatError(f"registry {registry_path}: {exc}") from exc
+    except yaml.YAMLError as exc:
+        raise RegistryFormatError(f"registry {registry_path} is invalid YAML: {exc}") from exc
+
+    entries = _entries_from_document(document, registry_path)
+    return RegistrySnapshot(
+        path=str(registry_path),
+        raw=raw,
+        sha256=hashlib.sha256(raw).hexdigest(),
+        size_bytes=len(raw),
+        entries=tuple(entries),
+    )
+
+
+def load_registry(path: str | Path) -> list[Entry]:
+    """Load a duplicate-key-safe registry while preserving the public list API."""
+
+    return list(load_registry_snapshot(path).entries)
 
 
 def validate_registry(entries: list[Entry]) -> list[str]:

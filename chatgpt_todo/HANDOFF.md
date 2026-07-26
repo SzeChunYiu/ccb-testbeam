@@ -2,80 +2,103 @@
 
 ## Session
 
-- **Task ID:** `AUD-FIG-006`
-- **Stamp:** `2026-07-26T180117Z`
+- **Task ID:** `AUD-TIMING-003-R1`
+- **Stamp:** `2026-07-26T190253Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `8acfc727a1479ff5b616042e65743b0652900c25`
-- **Validated evidence/archive/active-task head:** `cdc2c0d204eced6ec012d6f8c2e8c946646bf130`
-- **Validated handoff commit:** `b13743b7f6084fee00848205e97364d51a845334`
-- **Destination:** authenticated sequential commits directly to `main`; no force-push, branch transport, or history rewrite.
-- **Push result:** GitHub contents writes returned successful commit SHAs. Post-write remote history confirmed the audit, tests, fixture, renderer, machine evidence, visual evidence, report, archive, active-task record, and handoff commit consecutively on `main`.
-- **Acceptance:** audit implementation/evidence `VALIDATED / COMPLETE`; production builder contract `FLAWED / PARTIAL`.
+- **Initial remote main:** `be97e1a1e77de3bba6305f28802d1c876d2d1605`
+- **Validated implementation/evidence/archive/active-task head:** `8ce582f25d497cb67df86a4a09f5634ca6fd5c51`
+- **Destination:** authenticated sequential commits directly to `main`; no force-push, branch transport, pull-request merge, or history rewrite.
+- **Push result:** GitHub contents writes returned successful commit SHAs. Post-write remote history confirmed the focused sequence through `8ce582f25d497cb67df86a4a09f5634ca6fd5c51` consecutively on `main`, with no concurrent interleaving after the PR #939 merge.
+- **Acceptance:** software remediation `VALIDATED / COMPLETE`; production physics result `PAIR_ONLY_PENDING_CONTENT_ADDRESSED_RERUN`.
 
-## Defect
+## Trigger and finding
 
-Policy: `FIGURE_REGISTRY_BUILD_MUST_NOT_LEAVE_STALE_ARTIFACTS`.
+PR #939 merged as `be97e1a1e77de3bba6305f28802d1c876d2d1605` after current-main audits had already demonstrated three defects in its producer:
 
-The current paper-figure builder can leave older managed outputs at their canonical paths when an entry becomes `BLOCKED` or `QUARANTINED`, raises a per-entry build failure, or disappears from the registry. The current `_process_entry` returns non-PASS records without cleanup, the `FigureRegistryError` handler records `FAIL` without cleanup, and `build` has no reconciliation step for removed IDs.
+1. multiple ROOT runs were selected and pivoted by `event_id` alone rather than `(run,event_id)`;
+2. residual PNGs displayed uncentered values only inside `[-10,10] ns`, while labels used complete-vector statistics whose medians were far outside that window;
+3. the B6-B8 pair `sigma68` was divided by `sqrt(2)` and published as a `0.635 ns` individual-stave estimate without validated equal variances, zero covariance, or a deconvolution law for the interquantile estimator.
 
-A deterministic control started with `Q.png` and `Q_source_data.csv`. Both files survived the BLOCKED, failed, and removed-entry current-contract models; the corrected cleanup model left zero files in every scenario. This proves a software/provenance gap, not that a specific committed figure is stale or a numerical value is false.
+The merged report/result bundle is now explicitly `FLAWED_LEGACY_OUTPUT_QUARANTINED`. Historical numbers remain visible for provenance but are unauthorized for pair or individual-stave acceptance. Existing residual PNGs are machine-readably unauthorized pending regeneration.
 
-## Files delivered
+## Remediation
 
-- `tools/audit/audit_figure_registry_stale_artifacts.py`
-- `tests/test_audit_figure_registry_stale_artifacts.py`
-- `docs/validation/fixtures/figure_registry_builder_stale_artifact_current.py`
-- `tools/audit/render_figure_registry_stale_artifact_evidence.py`
-- `docs/validation/figure_registry_stale_artifact_validation.json`
-- `docs/validation/figure_registry_stale_artifact.svg`
-- `docs/validation/figure_registry_stale_artifact_audit.md`
-- `chatgpt_todo/archive/2026-07-26T180117Z_AUD-FIG-006_STALE_ARTIFACTS.md`
-- updated `chatgpt_todo/ACTIVE_TASK.md`
+Policy: `REAL_DATA_CFD_REQUIRES_COMPOSITE_EVENT_KEYS_AND_PAIR_ONLY_INFERENCE`.
+
+Producer v2.0.0 now:
+
+- uses `(run,event_id)` for every selection and pivot;
+- rejects duplicate `(run,event_id,stave)` rows;
+- reports B6-B8 pair metrics only;
+- emits `single_stave_inference.authorized=false`;
+- centers residuals on their median;
+- produces complete-range and core panels with q16/q84 and displayed/underflow/overflow counts;
+- converts optional nonfinite fit diagnostics to JSON `null`, rejects nonfinite required metrics, uses `allow_nan=False`, and publishes JSON/Markdown atomically.
+
+## Reproducible controls
+
+- Same `event_id=7` in two runs: event-ID-only identity gives one value; `(run,event_id)` preserves two events and pair residuals `[1.0,1.0]`.
+- Residual vector `[-100,-2,-1,0,1,2,100] ns`: median `0`; q16/q84 `-5.9200000000000035/+5.9200000000000035 ns`; full underflow/overflow `0/0`; `[-5,5] ns` core underflow/overflow `1/1`.
+- Pair-only inference contract: authorization `false`; individual-stave acceptance requires multi-pair or external-reference deconvolution, explicit covariance/common-mode treatment, propagated uncertainty/sensitivity, and closure or injection recovery.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_figure_registry_stale_artifacts.py \
-  tests/test_audit_figure_registry_stale_artifacts.py \
-  tools/audit/render_figure_registry_stale_artifact_evidence.py
+  scripts/real_data_cfd_contract.py \
+  scripts/real_data_cfd_timing.py \
+  tests/test_real_data_cfd_production_safeguards.py \
+  tools/audit/render_real_data_cfd_production_safeguard_evidence.py
 
-PYTHONPATH=. pytest -q \
-  tests/test_audit_figure_registry_stale_artifacts.py
+PYTHONPATH=. pytest -q tests/test_real_data_cfd_production_safeguards.py
 
-6 passed in 0.05s
+8 passed in 0.05s
 ```
 
-Environment: Python 3.13.5, pytest 9.0.2.
+Additional checks:
 
-- current-like source fixture: `FLAWED`, four finding families;
-- corrected fixture: `VALIDATED`, zero findings;
-- invalid UTF-8 and destructive aliasing: controlled rejection;
-- injected JSON publication failure: prior target preserved and temporary removed;
-- validation JSON and SVG parsed successfully;
-- maximum changed Python line length: 93.
+- evidence JSON status `VALIDATED`, findings `[]`;
+- strict JSON parse and SVG XML parse passed;
+- changed Python lines are at most 95 characters;
+- environment: Python 3.13.5, NumPy 2.3.5, pandas 2.2.3, Matplotlib 3.10.8, pytest 9.0.2;
+- `uproot` and immutable ROOT data were unavailable; no producer execution or physics rerun is claimed.
 
-The inspected current builder blob is `39dcd3b13d3886c43f3e9111291d420f86cc7c85`. The fixture records the exact blob and relevant source range but is explicitly a semantic excerpt, not a byte-identical copy of the complete module.
+## Files and identities
+
+- `scripts/real_data_cfd_contract.py` — SHA-256 `ae1386a80389787e41620e9351c72a1d091e22bba6c8969636014f67ccd320bd`
+- `scripts/real_data_cfd_timing.py` — SHA-256 `83422ea881d34c777928d30b548ad553c25b0ace3a324d6204246ade9f96825e`
+- `tests/test_real_data_cfd_production_safeguards.py` — SHA-256 `e2306704e16ccf89a47a8f41d55902b48ff214d9e186cf8022b5015565415ef7`
+- `tools/audit/render_real_data_cfd_production_safeguard_evidence.py` — SHA-256 `2a0b9db4445c65a2e9b6283f89b3083b74e3f8cfa49776caa1801c1a3eec2aff`
+- `reports/real_data_cfd_timing/REPORT.md` — SHA-256 `79cbcb5bcb0cf480ed03bc52f7261bbd5f9d156c8d92ef78dfa722f89acef8c5`
+- `reports/real_data_cfd_timing/result.json` — SHA-256 `0eb33e7dd41f9a382aff3eacdf9f901de0c60f8c7301ef28cbac64c8ae1b6d02`
+- validation JSON — SHA-256 `cb93aa081cf08059bf551fa34943b90496e3ecf6611cd6ef15edb2ce2122e709`
+- deterministic SVG — SHA-256 `059254c36e2ff42171d3cbe16683feb8a0cbd75d2da30ac629094620818800af`
+- immutable record: `chatgpt_todo/archive/2026-07-26T190253Z_AUD-TIMING-003-R1_CFD_PRODUCTION_SAFEGUARDS.md`
 
 ## Direct-main sequence
 
-- `9e01ccea849e1a8d731a8a302785e8fdd1e220a5` — audit gate
-- `6b88476c722d1bd88bc619c373540e95796b4671` — focused regressions
-- `7974953481366cd82d5514c822b5d77c37065388` — current-source fixture
-- `6bec3d85e56605e68bf66834112992182d342a3f` — evidence renderer
-- `f6563409ffa6b2470135df21916b7e15d7a6cf11` — machine-readable evidence
-- `3dac03cca404ef934d1e5db0e6f07bce684ae1db` — visual evidence
-- `b7c037e08a65753f7913186030c24026974ee1a5` — audit report
-- `c151045a8f09c1dc1cf29d27a95dec711d47e29d` — immutable archive
-- `cdc2c0d204eced6ec012d6f8c2e8c946646bf130` — completed active task
-- `b13743b7f6084fee00848205e97364d51a845334` — validated handoff
+- `af20aef19fac1d8a6ad99932e9b06fcd8cdee5a4` — task claim
+- `609b3450888d508e14c9272deb8138f5ed233efd` — event/statistics contract
+- `b9e874a7ad2ca59a3f9199c46b12de420724c2f3` — initial producer remediation
+- `b3d6ad7791f96fa6fd74e408dbb7e5830e4e3cb2` — initial tests
+- `e2790c7227e309acef3a82d36094fdf9e089b544` — report quarantine
+- `0614ae1e2f535e60df7e614348ff12e85dca6b72` — final producer safeguards
+- `8e6af22c3981cd184787932852e6719cbc58fbdd` — final tests
+- `f0476141e50be1d7a26933d028316380505958f1` — result quarantine
+- `88114bb2d2d1110e10156c4ccc19e3f8588b6391` — initial renderer
+- `5e0a728bc8e445eb9d8a1d1e679f3044a975cd99` — validation JSON
+- `2ae162b24f42bc6807d8b80ffe25079f16554f5e` — deterministic renderer
+- `335c2e1bc25d5f856fc525838654cc93e8f5a0e6` — visual evidence
+- `84d49de5d6f141fcc6e94e354c212902efa4d9eb` — audit report
+- `0c8e02d3167ce238a18b5a7988584e7f3a0e0d64` — immutable archive
+- `8ce582f25d497cb67df86a4a09f5634ca6fd5c51` — active-task completion
 
-## Required remediation
+## Required next work
 
-Define the complete managed output inventory per entry, remove or quarantine prior outputs before any current non-PASS disposition, reconcile IDs removed from the registry, protect against path escape/aliasing, and publish the report plus managed artifact set as one coherent fail-closed state. Prefer a staged output directory and controlled directory swap. Add direct PASS-to-BLOCKED, PASS-to-FAIL, kind/suffix-change, and removed-ID regressions, then run the complete shipped-registry and paper build.
+Run producer v2.0.0 against immutable LUNARC ROOT files. Record every input path, size and SHA-256, exact producer commit and command, Python/uproot/NumPy versions, composite-key cardinalities, selections, regenerated JSON/Markdown/PNG hashes, and full/core diagnostic review. Pair-level acceptance may be considered only after that rerun. Do not infer B6 or B8 individually without validated deconvolution and covariance treatment.
 
-## Scientific boundary and limitations
+## Limitations
 
-No paper figure, registry entry, central value, uncertainty, calibration, timing result, PID result, stopping profile, pile-up rate, or detector-performance claim was regenerated or revalidated. Repository-wide pytest/ruff, complete registry build, paper build, link inventory, and GitHub Actions were not run.
+Repository-wide pytest/ruff, producer execution, ROOT hashing and processing, regeneration of the six study PNGs, complete link checking, and GitHub Actions were not run. No event count, pair width, individual-stave resolution, channel map, CFD performance, CL-002 state, or detector-performance result was accepted or changed.
 
-`SESSION_LOG.md` and long aggregate ledgers were not partially reconstructed because connector reads are paged while writes replace whole files. The immutable archive is the append-equivalent record; this mandatory synchronization gap is recorded rather than falsely claimed as complete.
+`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and the long aggregate matrices were reviewed but not safely replaced. Connector reads are paged/truncated while writes replace complete files; partial reconstruction could erase append-only or concurrent provenance. The immutable archive is the append-equivalent record, and this mandatory synchronization gap is explicit rather than reported as complete.

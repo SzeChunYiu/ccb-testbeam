@@ -321,3 +321,10 @@
 - All writes were direct sequential commits to remote `main`; no branch, pull request, force-push, or history rewrite was used.
 - Repository-wide pytest/ruff, downstream WIKI/claim validators, ROOT or simulation processing, link inventory, and GitHub Actions were not run. No broad CI or scientific-result claim is made.
 - Acceptance: focused output-publication remediation `VALIDATED / COMPLETE`; cumulative `AUD-LEDGER-001` remains `PARTIAL` for source-backed claim review. No claim value, uncertainty, calibration, PID, timing, pile-up, stopping, or detector-performance result was produced or authorized.
+
+### AUD-LEDGER-002 delivery confirmation
+
+- Validated delivery/handoff commit: `60fdeb3b1cb05bab91de88c3cdc3d9a60fa75728` (`docs(audit): hand off claim-ledger output-safety remediation`).
+- Remote `main` after validated delivery: `60fdeb3b1cb05bab91de88c3cdc3d9a60fa75728`.
+- GitHub contents writes returned successful direct-main commit SHAs rather than conventional terminal `git push` output; recent history confirmed the full focused sequence and handoff on remote `main`.
+- The confirmation preserves the initial/after SHA pair, commit message, publication result, and direct-main destination without claiming an unobserved terminal push transcript.

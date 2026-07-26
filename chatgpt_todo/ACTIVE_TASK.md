@@ -1,28 +1,24 @@
 # Active Task
 
-- **Task ID:** `AUD-DELTAE-007`
+- **Task ID:** `AUD-DELTAE-008`
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T050335Z`
-- **Initial remote main SHA:** `6c25424ae2507396d352d0b7e45d737752b2872d`
-- **Scope:** prevent present malformed, missing-value, NaN, or infinite DeltaE signal cells from being
-  silently converted to zero before stopping-layer, energy-sum, join, plotting, or result publication.
-- **Policy:** `DELTAE_PRESENT_SIGNAL_CELLS_MUST_BE_FINITE_NUMERIC`.
-- **Implementation:** every present data `amp_B2/B4/B6/B8` and every present MC `edep_B*` cell must
-  coerce to finite numeric input; only a wholly absent supported downstream column is zero-filled.
-  The strict functions replace the retained core's production hooks, and result/manifest contracts
-  publish both the signal-value and missing-layer policies.
-- **Validation:** exact proposed Python compiled; focused tests returned `19 passed in 3.06s`; exact
-  source audit returned `VALIDATED` with zero findings; malformed, NaN, both infinities, optional MC
-  layers, missing columns, metadata, UTF-8, atomic-output, and alias controls passed; JSON/SVG parsing
-  and line-length checks passed.
-- **Evidence:**
-  - `docs/validation/deltae_signal_value_contract_validation.json`
-  - `docs/validation/deltae_signal_value_contract.svg`
-  - `docs/validation/deltae_signal_value_contract_audit.md`
-  - `chatgpt_todo/archive/2026-07-26T050335Z_AUD-DELTAE-007_SIGNAL_VALUE_INTEGRITY.md`
-- **Focused acceptance:** canonical present-signal input boundary `VALIDATED / COMPLETE`.
-- **Scientific boundary:** no exact A-002 table, amplitude convention, pulse polarity, stopping
-  fraction, DeltaE-E PID, uncertainty, calibration, or detector-performance result is authorized.
-- **Next action:** resolve `AUD-DELTAE-001`, `AUD-DELTAE-002`, `AUD-AMP-009`, `AUD-AMP-010`, and
-  `BLK-AMP-001`, then run a content-addressed production table through the full scientific gate.
-- **Status:** `COMPLETE`
+- **Session stamp:** `2026-07-26T052912Z`
+- **Initial remote main SHA:** `ed3633055695184bd5ef68ab90bb6951e81d9354`
+- **Scope:** prevent the canonical DeltaE event-table writer from silently treating arbitrary Parquet
+  serialization failures as permission to publish a different CSV artifact, overwriting a validated
+  input path, or leaving stale alternate-format tables that can be mistaken for current output.
+- **Policy:** `DELTAE_EVENT_TABLE_OUTPUT_MUST_FAIL_CLOSED_AND_NOT_ALIAS_INPUT`.
+- **Repository facts under review:** `_deltaE_E_core._write_table()` catches every exception from
+  `DataFrame.to_parquet()` and falls back to `to_csv()`; output candidates are not compared with the
+  exact input snapshots; publication is not atomic and an old alternate format is not reconciled.
+- **Files in scope:** `scripts/single_stave/deltaE_E.py`, focused tests/audit tooling, validation
+  JSON/SVG/Markdown, and matching coordination records.
+- **Validation plan:** reproduce broad-exception fallback and input-alias behavior with deterministic
+  controls; implement explicit engine-unavailable fallback only; use same-directory temporary files,
+  flush/fsync, and `os.replace`; preserve previous final files on failure; remove only the stale
+  alternate table after successful publication; record output policy in result/manifest contracts;
+  run focused pytest, syntax, JSON/SVG, line-length, and exact-source audit checks.
+- **Scientific boundary:** this is artifact-integrity engineering. It does not authorize an A-002
+  amplitude convention, pulse polarity, stopping distribution, DeltaE-E PID result, calibration,
+  uncertainty budget, or detector-performance claim.
+- **Status:** `ACTIVE`

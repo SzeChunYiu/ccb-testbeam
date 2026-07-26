@@ -1,0 +1,124 @@
+{
+  "behavioral_controls": {
+    "duplicate_event_id": {
+      "composite_key_pair_count": 2,
+      "current_event_id_only_outcome": "ValueError",
+      "interpretation": "Two legitimate run-local pairs sharing EVENTNO cannot be pivoted by event_id alone."
+    },
+    "false_cross_run_pair": {
+      "composite_key_pair_count": 0,
+      "composite_key_selected_rows": 0,
+      "current_event_id_only_pair_count": 1,
+      "current_event_id_only_selected_rows": 2,
+      "interpretation": "The event_id-only contract pairs B6 from run 58 with B8 from run 59. The composite (run,event_id) contract rejects the pair."
+    }
+  },
+  "contract_observation": {
+    "event_id_only_filters": [
+      {
+        "function": "select_in_time",
+        "lineno": 20
+      }
+    ],
+    "input_rows_include_run_event_stave": true,
+    "pivot_calls": [
+      {
+        "function": "select_in_time",
+        "index": "event_id",
+        "lineno": 16
+      },
+      {
+        "function": "pair_analysis",
+        "index": "event_id",
+        "lineno": 25
+      },
+      {
+        "function": "make_figures",
+        "index": "event_id",
+        "lineno": 30
+      }
+    ],
+    "required_event_key": [
+      "run",
+      "event_id"
+    ]
+  },
+  "finding_count": 6,
+  "findings": [
+    {
+      "code": "RUN_DROPPED_FROM_PIVOT_KEY",
+      "detail": "Input rows carry run and event_id, but pivot uses event_id alone.",
+      "function": "select_in_time",
+      "line": 16
+    },
+    {
+      "code": "RUN_DROPPED_FROM_PIVOT_KEY",
+      "detail": "Input rows carry run and event_id, but pivot uses event_id alone.",
+      "function": "pair_analysis",
+      "line": 25
+    },
+    {
+      "code": "RUN_DROPPED_FROM_PIVOT_KEY",
+      "detail": "Input rows carry run and event_id, but pivot uses event_id alone.",
+      "function": "make_figures",
+      "line": 30
+    },
+    {
+      "code": "RUN_DROPPED_FROM_SELECTION_FILTER",
+      "detail": "Selected keys are reapplied through event_id.isin without run.",
+      "function": "select_in_time",
+      "line": 20
+    },
+    {
+      "code": "SYNTHETIC_FALSE_CROSS_RUN_PAIR",
+      "detail": "The event_id-only contract pairs B6 from run 58 with B8 from run 59. The composite (run,event_id) contract rejects the pair."
+    },
+    {
+      "code": "RUN_LOCAL_EVENT_ID_COLLISION_CAN_ABORT",
+      "detail": "Two legitimate run-local pairs sharing EVENTNO cannot be pivoted by event_id alone."
+    }
+  ],
+  "policy": "REAL_DATA_CFD_EVENTS_MUST_USE_RUN_AND_EVENT_ID_TOGETHER",
+  "repository_context": {
+    "initial_main": "a8c446732e9a73d6880b313939868162ec4e2d74",
+    "observed_concurrent_advance": {
+      "from": "bd0e9254f49f963da96fc0bbafd3c7620c743645",
+      "interpretation": "Claim-ledger output-safety confirmation commits landed before this audit wrote files; no audited PR source blob changed.",
+      "to": "a8c446732e9a73d6880b313939868162ec4e2d74"
+    },
+    "pull_request": 939,
+    "pull_request_head": "ce81f22ef57c5db0b658737c0d9ced4c7fc69949",
+    "pull_request_state": "open",
+    "repository": "SzeChunYiu/ccb-testbeam",
+    "source_path": "scripts/real_data_cfd_timing.py"
+  },
+  "schema": "ccb-real-data-cfd-event-identity-audit/1",
+  "scientific_boundary": "This audit tests event identity and pairing semantics. It does not validate waveform calibration, channel mapping, CFD bias, selection efficiency, timing resolution, or CL-002.",
+  "source": {
+    "bytes": 1055,
+    "git_blob": "ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7",
+    "path": "fixtures/pr939_relevant_source.py",
+    "repository_ref": "ce81f22ef57c5db0b658737c0d9ced4c7fc69949",
+    "scope": "CONNECTOR_INSPECTED_EXACT_RELEVANT_SOURCE_COPY",
+    "sha256": "6bcf0a8ff0f6cb947d6608eb9fbc5b4b77b1de8251018824f7dbf27813b50eb2",
+    "snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES"
+  },
+  "status": "FLAWED",
+  "validation": {
+    "audit_expected_exit": 1,
+    "audit_findings": 6,
+    "audit_status": "FLAWED",
+    "commands": [
+      "python -m py_compile tools/audit/audit_real_data_cfd_event_identity.py tests/test_audit_real_data_cfd_event_identity.py tools/audit/render_real_data_cfd_event_identity_evidence.py",
+      "PYTHONPATH=. pytest -q tests/test_audit_real_data_cfd_event_identity.py",
+      "PYTHONPATH=. python tools/audit/audit_real_data_cfd_event_identity.py fixtures/pr939_relevant_source.py --output docs/validation/real_data_cfd_event_identity_validation.json [...repository provenance flags...]",
+      "python tools/audit/render_real_data_cfd_event_identity_evidence.py docs/validation/real_data_cfd_event_identity_validation.json docs/validation/real_data_cfd_event_identity.svg"
+    ],
+    "focused_tests": "6 passed in 0.06s",
+    "pandas": "2.2.3",
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "source_note": "The audited local input is an exact copy of the connector-inspected relevant functions, not a byte-identical full checkout. The exact PR blob identity is recorded separately."
+  },
+  "version": "1.0.0"
+}

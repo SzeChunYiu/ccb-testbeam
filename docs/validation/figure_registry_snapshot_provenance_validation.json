@@ -1,70 +1,92 @@
 {
-  "behavioral_controls": {
+  "artifacts": {
+    "builder": {
+      "bytes": 16274,
+      "git_blob": "aca5e9225247b92ca0b4011f3ec37e61197d3bfd",
+      "path": "tools/figure_registry/builder.py",
+      "sha256": "27a6c833d1aafbbcbb51e6a879e04d8c8a8608681e3b198f21cf70404e5f8c18"
+    },
+    "renderer": {
+      "bytes": 4372,
+      "path": "tools/audit/render_figure_registry_snapshot_provenance_evidence.py",
+      "sha256": "5780a78ab354e2c57fa19fb460787858f94bdff786b6f65b0315e377ad79300d"
+    },
+    "test": {
+      "bytes": 5973,
+      "git_blob": "e187363c1f59134fbeddbf20363cb1b3d9859115",
+      "path": "tests/test_figure_registry_snapshot_remediation.py",
+      "sha256": "d4dc17a63d1e7ad4d3e622baef56d8c84d0e9b8fe66ce3eef9ff349d2198f065"
+    }
+  },
+  "controls": {
+    "alias_rejection": {
+      "source_bytes_preserved": true,
+      "source_output_alias_rejected": true
+    },
+    "publication_failure": {
+      "injected_failure": "os.replace raises OSError",
+      "previous_target_preserved": true,
+      "temporary_files_remaining": 0
+    },
     "result_path_replacement": {
-      "bytes_used_sha256": "33066bb044c6d3dc3c6afe6ca68d0104cf7f29a9735659cccf650018f5b24c78",
-      "corrected_hash_matches_used_bytes": true,
-      "corrected_numeric_value": 1.0,
-      "corrected_reported_sha256": "33066bb044c6d3dc3c6afe6ca68d0104cf7f29a9735659cccf650018f5b24c78",
-      "interpretation": "Reading JSON first and hashing the path later can pair a figure value with replacement bytes. Parsing and hashing one retained byte snapshot keeps the value and provenance identical.",
-      "later_hash_matches_used_bytes": false,
-      "later_reported_sha256": "3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7",
-      "numeric_value_used": 1.0
+      "central_value_used": 0.68,
+      "path_after_snapshot_contains_replacement": true,
+      "recorded_matches_snapshot": true,
+      "recorded_sha256": "880e5b3a422a0504eb35bf2918bd674cea0b38ae82805a60d6b48f5a248f4805",
+      "replacement_bytes": 46,
+      "replacement_sha256": "3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7",
+      "snapshot_bytes": 45,
+      "snapshot_sha256": "880e5b3a422a0504eb35bf2918bd674cea0b38ae82805a60d6b48f5a248f4805"
     },
     "source_artifact_replacement": {
-      "copied_target_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
-      "corrected_metadata_matches_target": true,
-      "corrected_reported_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
-      "corrected_target_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
-      "interpretation": "Copying a source path and hashing/statting it later can describe different bytes from the copied artifact. A single retained source snapshot avoids that time-of-check/time-of-use provenance split.",
-      "later_metadata_matches_copied_target": false,
-      "later_reported_source_sha256": "5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7",
-      "later_reported_source_size": 38
+      "path_after_snapshot_contains_replacement": true,
+      "published_matches_snapshot": true,
+      "published_target_bytes": 18,
+      "published_target_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
+      "replacement_bytes": 38,
+      "replacement_sha256": "5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7",
+      "snapshot_bytes": 18,
+      "snapshot_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3"
     }
   },
-  "finding_count": 3,
-  "findings": [
-    {
-      "code": "RESULT_VALUE_AND_HASH_CAN_REFERENCE_DIFFERENT_BYTES",
-      "detail": "The result JSON is parsed from one path read, but provenance is later computed by hashing the path again."
-    },
-    {
-      "code": "COPIED_SOURCE_AND_HASH_CAN_REFERENCE_DIFFERENT_BYTES",
-      "detail": "The source artifact is copied before the source path is hashed again."
-    },
-    {
-      "code": "COPIED_SOURCE_AND_SIZE_CAN_REFERENCE_DIFFERENT_BYTES",
-      "detail": "The copied artifact is produced before the source path is statted again."
-    }
-  ],
+  "current_audit": {
+    "auditor_version": "1.0.0",
+    "finding_count": 0,
+    "status": "VALIDATED"
+  },
+  "implementation_commit": "bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f",
+  "initial_main": "8b460728fce2f550d63bed078f17c2285e0c2b2a",
   "policy": "FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES",
-  "repository_context": {
-    "initial_main": "770fa6e8ba305b29c539e64f1f151c4cf5dc1053",
-    "repository": "SzeChunYiu/ccb-testbeam",
-    "source_path": "tools/figure_registry/builder.py"
+  "publication_contract": {
+    "result_json": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES",
+    "source_artifact": "SINGLE_READ_EXACT_BYTES",
+    "source_metadata_publication": "ATOMIC_EXACT_BYTES",
+    "target_publication": "SAME_DIRECTORY_TEMP_FLUSH_FSYNC_OS_REPLACE",
+    "target_verification": "INDEPENDENT_FINAL_TARGET_SHA256_AND_SIZE"
   },
-  "required_remediation": {
-    "publication": "Do not let a later path replacement alter metadata for an already rendered or copied artifact.",
-    "result_json": "Read exact bytes once, decode and parse those bytes, and record byte count and SHA-256 from the retained snapshot used for numeric extraction.",
-    "source_artifact": "Read exact bytes once, hash and size that snapshot, publish the target atomically from those bytes, and record the same snapshot provenance."
-  },
-  "schema": "ccb-figure-registry-snapshot-provenance-audit/1",
-  "scientific_boundary": "This audit validates paper-artifact byte provenance and publication semantics. It does not validate any underlying scientific value, uncertainty, calibration, PID, timing, stopping profile, or detector-performance claim.",
-  "source": {
-    "bytes": 614,
-    "git_blob": "ef6e11cfac3e9eacdabfb146ec7586e8764fceb1",
-    "path": "current_builder_excerpt.py",
-    "repository_ref": "770fa6e8ba305b29c539e64f1f151c4cf5dc1053",
-    "scope": "CONNECTOR_INSPECTED_EXACT_RELEVANT_SOURCE_EXCERPT",
-    "sha256": "04980f26aaaa7f53051fa71f6989e98301e3fc68a5303d9056d370abe11e0d5e",
-    "snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES"
-  },
-  "source_contract_observation": {
-    "load_result_reads_path": true,
-    "result_rehashed_later": true,
-    "source_copied_from_path": true,
-    "source_rehashed_later": true,
-    "source_restat_later": true
-  },
-  "status": "FLAWED",
-  "version": "1.0.0"
+  "schema": "ccb-figure-registry-snapshot-provenance-remediation/1",
+  "scientific_boundary": "Software/provenance validation only; no scientific value, uncertainty, calibration, PID, timing, stopping profile, pile-up rate, or detector-performance claim was validated or changed.",
+  "session_stamp": "2026-07-26T100542Z",
+  "status": "VALIDATED",
+  "task_id": "AUD-FIG-002-R1",
+  "test_commit": "5acba6b08620b587d0bd5b18229a032141d173ad",
+  "unrun_checks": [
+    "repository-wide pytest",
+    "ruff",
+    "complete paper build",
+    "repository-wide link inventory",
+    "GitHub Actions"
+  ],
+  "validation": {
+    "command": "PYTHONPATH=. pytest -q tests/test_figure_registry_snapshot_remediation.py",
+    "compile_command": "python -m py_compile tools/figure_registry/builder.py tests/test_figure_registry_snapshot_remediation.py tools/audit/render_figure_registry_snapshot_provenance_evidence.py",
+    "compile_result": "passed",
+    "matplotlib": "3.10.8",
+    "max_changed_python_line_length": 95,
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "pyyaml": "6.0.3",
+    "result": "5 passed in 0.39s"
+  }
 }

@@ -1,116 +1,95 @@
-# Figure-registry snapshot-provenance audit
+# Figure-registry snapshot-provenance remediation
 
-- **Task:** `AUD-FIG-002`
+- **Task:** `AUD-FIG-002-R1`
 - **Policy:** `FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES`
-- **Initial remote main:** `770fa6e8ba305b29c539e64f1f151c4cf5dc1053`
-- **Reviewed source:** `tools/figure_registry/builder.py`
-- **Reviewed Git blob:** `ef6e11cfac3e9eacdabfb146ec7586e8764fceb1`
-- **Audit status:** tooling `VALIDATED`; current builder contract `FLAWED`
+- **Initial remote main:** `8b460728fce2f550d63bed078f17c2285e0c2b2a`
+- **Former builder blob:** `ef6e11cfac3e9eacdabfb146ec7586e8764fceb1`
+- **Corrected builder blob:** `aca5e9225247b92ca0b4011f3ec37e61197d3bfd`
+- **Implementation commit:** `bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f`
+- **Status:** focused software/provenance remediation `VALIDATED`
 
-## Question
+## Defect remediated
 
-Does every rendered or copied paper artifact record byte count and SHA-256 for the exact bytes that were used, or can a later replacement of an input path change the reported provenance after the artifact has already been produced?
+The former quantitative path parsed result JSON from one path read but later reopened the path through `sha256_file(entry.result)`. A concurrent replacement could pair a plotted value with the digest of different bytes.
 
-## Confirmed source-contract defects
+The former source-artifact path copied with `shutil.copy2(source, target)` and only afterward hashed and statted the source path. A replacement could make metadata disagree with the artifact copied into the paper output.
 
-The current quantitative path parses a result with `path.read_text(...)`. After the figure has been rendered, `_emit_quantitative` calls `sha256_file(entry.result)` and records that later path hash in source data. If the path is replaced between those operations, the figure can contain values from one JSON object while its CSV cites another object's digest.
+## Corrected contract
 
-The current `figure_sourced` / `illustrative` path calls `shutil.copy2(source, target)` and only afterward calls `sha256_file(source)` and `source.stat().st_size`. A source replacement between copy and metadata generation can therefore make the metadata describe bytes and a size different from the copied target.
+`tools/figure_registry/builder.py` now:
 
-These are time-of-check/time-of-use provenance defects. They do not require malicious mutation: regenerated results, concurrent analysis publication, or a path swap can trigger the same mismatch.
+1. retains every result JSON as one `ByteSnapshot`;
+2. decodes strict UTF-8 and parses JSON from those retained bytes;
+3. records result SHA-256 and byte count from the same snapshot used for numeric extraction;
+4. retains each `figure_sourced` or illustrative artifact as one byte snapshot;
+5. publishes the target from those bytes using a same-directory temporary file, flush, `fsync`, and `os.replace`;
+6. independently re-reads the final target and requires its SHA-256 and byte count to match the retained snapshot;
+7. records source and published-target identities in the source-data CSV;
+8. publishes source-data CSV files atomically from retained encoded bytes;
+9. rejects resolved-path and existing-file aliases before source publication.
 
-## Independent behavioral controls
+The generated quantitative CSV also records the rendered figure's SHA-256 and byte count. This is output provenance and does not validate the underlying scientific number.
 
-Two deterministic synthetic controls were executed.
+## Deterministic replacement controls
 
-### Result JSON replacement
+### Result JSON
 
-1. JSON v1 with value `1.0` was read and parsed.
-2. The path was replaced with JSON v2 containing value `99.0`.
-3. The path was hashed afterward.
+The test retained 45 original bytes containing value `0.68`, then replaced the path with 46 bytes containing value `99.0` before rendering completed.
 
-The value used by the hypothetical figure remained `1.0`, but the later digest was for v2:
+- retained/original SHA-256: `880e5b3a422a0504eb35bf2918bd674cea0b38ae82805a60d6b48f5a248f4805`;
+- replacement SHA-256: `3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7`;
+- plotted/source-data central value: `0.68`;
+- recorded result SHA-256: the retained/original digest.
 
-- bytes used SHA-256: `33066bb044c6d3dc3c6afe6ca68d0104cf7f29a9735659cccf650018f5b24c78`;
-- later reported SHA-256: `3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7`.
+The later path replacement therefore cannot alter provenance for the value already extracted.
 
-The corrected single-read control parsed and hashed one retained byte snapshot and matched exactly.
+### Source artifact
 
-### Source-artifact replacement
+The test retained 18 original bytes, then replaced the source path with 38 different bytes after snapshot acquisition.
 
-1. source v1 was copied to the output target;
-2. the source path was replaced by longer v2 bytes;
-3. the source path was hashed and statted afterward.
+- retained/original SHA-256: `baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3`;
+- replacement SHA-256: `5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7`;
+- published target SHA-256: the retained/original digest;
+- published target byte count: `18`.
 
-The copied target digest was:
+An injected `os.replace` failure preserved the previous target and left no temporary file. A source/output alias was rejected without modifying source bytes.
 
-`baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3`
-
-but the later source metadata digest was:
-
-`5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7`
-
-and the later size was 38 bytes. The corrected control published the target from one retained byte snapshot and recorded the same digest.
-
-## Audit result
-
-The exact relevant current-source contract returns `FLAWED` with three findings:
-
-- `RESULT_VALUE_AND_HASH_CAN_REFERENCE_DIFFERENT_BYTES`;
-- `COPIED_SOURCE_AND_HASH_CAN_REFERENCE_DIFFERENT_BYTES`;
-- `COPIED_SOURCE_AND_SIZE_CAN_REFERENCE_DIFFERENT_BYTES`.
-
-Machine-readable and visual evidence:
-
-- `docs/validation/figure_registry_snapshot_provenance_validation.json`
-- `docs/validation/figure_registry_snapshot_provenance.svg`
-
-The SVG is synthetic software/provenance evidence, not a scientific paper figure.
-
-## Better method and required remediation
-
-1. Read each result JSON as exact bytes once.
-2. Decode and parse those retained bytes.
-3. Compute byte count and SHA-256 from the same retained bytes used for numeric extraction.
-4. Read each source artifact as exact bytes once.
-5. Compute size and SHA-256 from that retained snapshot.
-6. Publish the target atomically from those retained bytes.
-7. Record target digest as an independent post-publication check.
-8. Add replacement-race regressions that mutate the path after snapshot acquisition and require provenance to remain bound to the used bytes.
-
-The builder should not re-open an input path merely to produce provenance for an artifact already derived from an earlier read.
-
-## Reproducible validation
+## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_figure_registry_snapshot_provenance.py \
-  tests/test_audit_figure_registry_snapshot_provenance.py \
+  tools/figure_registry/builder.py \
+  tests/test_figure_registry_snapshot_remediation.py \
   tools/audit/render_figure_registry_snapshot_provenance_evidence.py
 
-PYTHONPATH=. pytest -q tests/test_audit_figure_registry_snapshot_provenance.py
+PYTHONPATH=. pytest -q \
+  tests/test_figure_registry_snapshot_remediation.py
 
-5 passed in 0.10s
+5 passed in 0.39s
 ```
 
-Additional checks:
+The existing exact-source auditor returned `VALIDATED` with zero findings. The validation JSON parsed, the SVG parsed as XML, and the maximum changed Python line length was 95 characters.
 
-- current-like fixture: `FLAWED`, three findings;
-- corrected single-snapshot fixture: `VALIDATED`, zero findings;
-- invalid UTF-8: controlled input error;
-- destructive output alias: rejected;
-- injected `os.replace` failure: previous JSON preserved and temporary file removed;
-- validation JSON parse: passed;
-- SVG XML parse: passed.
+Validated identities:
 
-Local validation environment used Python 3.13.5 and pytest 9.0.2.
+| Artifact | Git blob | Bytes | SHA-256 |
+|---|---|---:|---|
+| builder | `aca5e9225247b92ca0b4011f3ec37e61197d3bfd` | 16274 | `27a6c833d1aafbbcbb51e6a879e04d8c8a8608681e3b198f21cf70404e5f8c18` |
+| focused tests | `e187363c1f59134fbeddbf20363cb1b3d9859115` | 5973 | `d4dc17a63d1e7ad4d3e622baef56d8c84d0e9b8fe66ce3eef9ff349d2198f065` |
+| renderer | `15f29bfac9cc16265464bcb8ea0cd1e205cdaafa` | 4372 | `5780a78ab354e2c57fa19fb460787858f94bdff786b6f65b0315e377ad79300d` |
+| validation JSON | `654cd47e1ed32545791abc18bd12d35e1aabf286` | 3900 | `d1f6cd3f070a02e6ed6649642eff5788e91db707c121076ed73626d8f72c7c53` |
+| SVG | `80f566fdb19924c7967ca4ee4d07b50c76ed2f19` | 2466 | `e09c040c6dde91caaf67a7b535a296f5a9ae33df5383bf5427130847dc4bf1d9` |
 
-## Provenance boundary
+## Evidence
 
-The execution container could not resolve `github.com`. Repository inspection and writes used the authenticated GitHub connector. The exact current source blob and relevant lines were re-read at initial main; the local executable audit input is explicitly labelled `CONNECTOR_INSPECTED_EXACT_RELEVANT_SOURCE_EXCERPT`, not a byte-identical full checkout.
+- `docs/validation/figure_registry_snapshot_provenance_validation.json`
+- `docs/validation/figure_registry_snapshot_provenance.svg`
+- `tests/test_figure_registry_snapshot_remediation.py`
 
-## Scientific boundary
+The SVG is synthetic software/provenance evidence, not a scientific paper figure.
 
-This validates a software/provenance failure mode only. No result JSON, paper figure, uncertainty, source table, calibration, PID result, timing result, stopping profile, pile-up rate, or detector-performance claim was scientifically validated or changed.
+## Acceptance boundary
 
-`AUD-FIG-002` is `PARTIAL`: the defect and audit gate are validated, while the production builder remains non-accepting until the single-read remediation and direct builder regressions are delivered.
+The focused split-snapshot defect is corrected and `AUD-FIG-002-R1` is `COMPLETE`. Repository-wide pytest, ruff, the complete paper build, link inventory, and GitHub Actions were not run and are not claimed as passing.
+
+No paper scientific value, uncertainty, calibration, PID result, timing result, stopping profile, pile-up rate, or detector-performance claim was validated or changed.

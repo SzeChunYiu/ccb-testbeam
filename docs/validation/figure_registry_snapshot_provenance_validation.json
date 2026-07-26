@@ -1,21 +1,22 @@
 {
   "artifacts": {
     "builder": {
-      "bytes": 16274,
-      "git_blob": "aca5e9225247b92ca0b4011f3ec37e61197d3bfd",
+      "bytes": 16683,
+      "git_blob": "cc56e548b54fd8f2692182de6114ee3bcfe196c4",
       "path": "tools/figure_registry/builder.py",
-      "sha256": "27a6c833d1aafbbcbb51e6a879e04d8c8a8608681e3b198f21cf70404e5f8c18"
+      "sha256": "1a280ff20d54ae74ef4eda9e1b33065f3dc46a6d3bfffd777149b9eb4a63ce21"
     },
     "renderer": {
       "bytes": 4372,
+      "git_blob": "15f29bfac9cc16265464bcb8ea0cd1e205cdaafa",
       "path": "tools/audit/render_figure_registry_snapshot_provenance_evidence.py",
       "sha256": "5780a78ab354e2c57fa19fb460787858f94bdff786b6f65b0315e377ad79300d"
     },
     "test": {
-      "bytes": 5973,
-      "git_blob": "e187363c1f59134fbeddbf20363cb1b3d9859115",
+      "bytes": 5993,
+      "git_blob": "8550b37469278b708237d2a9ef181e24f608fda3",
       "path": "tests/test_figure_registry_snapshot_remediation.py",
-      "sha256": "d4dc17a63d1e7ad4d3e622baef56d8c84d0e9b8fe66ce3eef9ff349d2198f065"
+      "sha256": "eea7b91afd0f28cde7f128e0fdb5b2df092d73c34af368667c47b9017424d31a"
     }
   },
   "controls": {
@@ -24,6 +25,7 @@
       "source_output_alias_rejected": true
     },
     "publication_failure": {
+      "controlled_error_type": "FigureRegistryError",
       "injected_failure": "os.replace raises OSError",
       "previous_target_preserved": true,
       "temporary_files_remaining": 0
@@ -54,7 +56,10 @@
     "finding_count": 0,
     "status": "VALIDATED"
   },
-  "implementation_commit": "bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f",
+  "implementation_commits": [
+    "bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f",
+    "8f8f87ee669f7156231b6290b9366dd5969cda43"
+  ],
   "initial_main": "8b460728fce2f550d63bed078f17c2285e0c2b2a",
   "policy": "FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES",
   "publication_contract": {
@@ -69,7 +74,10 @@
   "session_stamp": "2026-07-26T100542Z",
   "status": "VALIDATED",
   "task_id": "AUD-FIG-002-R1",
-  "test_commit": "5acba6b08620b587d0bd5b18229a032141d173ad",
+  "test_commits": [
+    "5acba6b08620b587d0bd5b18229a032141d173ad",
+    "79a1064ccc6e0e1786a09d0283405ea91d01f496"
+  ],
   "unrun_checks": [
     "repository-wide pytest",
     "ruff",

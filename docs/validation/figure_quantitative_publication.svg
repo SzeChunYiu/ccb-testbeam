@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <rect width="1200" height="700" fill="white"/>
+  <text x="60" y="62" font-family="sans-serif" font-size="30" font-weight="bold">Quantitative figure publication integrity</text>
+  <text x="60" y="98" font-family="sans-serif" font-size="17">Policy: QUANTITATIVE_FIGURE_PUBLICATION_MUST_BE_ATOMIC_AND_FAILURE_SAFE</text>
+  <rect x="60" y="135" width="510" height="300" rx="14" fill="#f7e7e7" stroke="#7a2020" stroke-width="3"/>
+  <text x="90" y="180" font-family="sans-serif" font-size="25" font-weight="bold">Direct final-path render</text>
+  <text x="90" y="225" font-family="sans-serif" font-size="20">Injected render error</text>
+  <text x="90" y="268" font-family="sans-serif" font-size="20">Prior target preserved: NO</text>
+  <text x="90" y="311" font-family="sans-serif" font-size="20">Post-failure bytes: 14</text>
+  <text x="90" y="365" font-family="sans-serif" font-size="17">Failure can truncate previously validated evidence.</text>
+  <rect x="630" y="135" width="510" height="300" rx="14" fill="#e6f4e8" stroke="#1b6b35" stroke-width="3"/>
+  <text x="660" y="180" font-family="sans-serif" font-size="25" font-weight="bold">Temporary render + atomic replace</text>
+  <text x="660" y="225" font-family="sans-serif" font-size="20">Injected render error</text>
+  <text x="660" y="268" font-family="sans-serif" font-size="20">Prior target preserved: YES</text>
+  <text x="660" y="311" font-family="sans-serif" font-size="20">Temporary files remaining: 0</text>
+  <text x="660" y="365" font-family="sans-serif" font-size="17">Only complete retained bytes replace the final target.</text>
+  <rect x="60" y="485" width="1080" height="135" rx="12" fill="#f2f2f2" stroke="#444"/>
+  <text x="85" y="525" font-family="sans-serif" font-size="20" font-weight="bold">Current-source audit: FLAWED (3 findings)</text>
+  <text x="85" y="565" font-family="monospace" font-size="14">QUANTITATIVE_RENDER_WRITES_FINAL_PATH_DIRECTLY | QUANTITATIVE_FIGURE_HAS_NO_ATOMIC_PUBLICATION_BOUNDARY | QUANTITATIVE_FIGURE_NOT_CLOSED_ON_RENDER_FAILURE</text>
+  <text x="85" y="602" font-family="sans-serif" font-size="15">This evidence concerns publication integrity, not scientific correctness of plotted values.</text>
+</svg>

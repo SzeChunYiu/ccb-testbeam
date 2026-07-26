@@ -52,13 +52,12 @@ def _csv_row(path: Path) -> dict[str, str]:
         return next(csv.DictReader(handle))
 
 
-def test_savefig_failure_preserves_prior_target_and_closes_figure(
+def test_savefig_failure_removes_prior_target_and_closes_figure(
     tmp_path, monkeypatch
 ):
     registry, out = _fixture(tmp_path)
     target = out / "TIME-01.png"
-    previous = b"previous-validated-png"
-    target.write_bytes(previous)
+    target.write_bytes(b"previous-validated-png")
     closed = []
     real_close = builder.plt.close
 
@@ -75,21 +74,20 @@ def test_savefig_failure_preserves_prior_target_and_closes_figure(
     monkeypatch.setattr(builder.plt, "close", close_spy)
     monkeypatch.setattr(figure_type, "savefig", fail_savefig)
 
-    with pytest.raises(builder.FigureRegistryError, match="injected savefig failure"):
+    with pytest.raises(builder.FigureRegistryError, match="failed to build"):
         builder.build(registry, out)
 
-    assert target.read_bytes() == previous
+    assert not target.exists()
     assert closed
     assert not list(out.glob(".TIME-01.png.*.render.png"))
 
 
-def test_atomic_replace_failure_preserves_prior_target_and_cleans_temps(
+def test_atomic_replace_failure_removes_prior_target_and_cleans_temps(
     tmp_path, monkeypatch
 ):
     registry, out = _fixture(tmp_path)
     target = out / "TIME-01.png"
-    previous = b"previous-validated-png"
-    target.write_bytes(previous)
+    target.write_bytes(b"previous-validated-png")
     real_replace = os.replace
 
     def selective_replace(source, destination):
@@ -98,10 +96,10 @@ def test_atomic_replace_failure_preserves_prior_target_and_cleans_temps(
         return real_replace(source, destination)
 
     monkeypatch.setattr(builder.os, "replace", selective_replace)
-    with pytest.raises(builder.FigureRegistryError, match="injected publication failure"):
+    with pytest.raises(builder.FigureRegistryError, match="failed to build"):
         builder.build(registry, out)
 
-    assert target.read_bytes() == previous
+    assert not target.exists()
     assert not list(out.glob(".TIME-01.png.*"))
 
 

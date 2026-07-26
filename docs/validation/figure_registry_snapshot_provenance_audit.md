@@ -4,8 +4,8 @@
 - **Policy:** `FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES`
 - **Initial remote main:** `8b460728fce2f550d63bed078f17c2285e0c2b2a`
 - **Former builder blob:** `ef6e11cfac3e9eacdabfb146ec7586e8764fceb1`
-- **Corrected builder blob:** `aca5e9225247b92ca0b4011f3ec37e61197d3bfd`
-- **Implementation commit:** `bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f`
+- **Corrected builder blob:** `cc56e548b54fd8f2692182de6114ee3bcfe196c4`
+- **Implementation commits:** `bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f`, `8f8f87ee669f7156231b6290b9366dd5969cda43`
 - **Status:** focused software/provenance remediation `VALIDATED`
 
 ## Defect remediated
@@ -26,7 +26,8 @@ The former source-artifact path copied with `shutil.copy2(source, target)` and o
 6. independently re-reads the final target and requires its SHA-256 and byte count to match the retained snapshot;
 7. records source and published-target identities in the source-data CSV;
 8. publishes source-data CSV files atomically from retained encoded bytes;
-9. rejects resolved-path and existing-file aliases before source publication.
+9. rejects resolved-path and existing-file aliases before source publication;
+10. converts publication failures into controlled `FigureRegistryError` failures after temporary-file cleanup.
 
 The generated quantitative CSV also records the rendered figure's SHA-256 and byte count. This is output provenance and does not validate the underlying scientific number.
 
@@ -52,7 +53,7 @@ The test retained 18 original bytes, then replaced the source path with 38 diffe
 - published target SHA-256: the retained/original digest;
 - published target byte count: `18`.
 
-An injected `os.replace` failure preserved the previous target and left no temporary file. A source/output alias was rejected without modifying source bytes.
+An injected `os.replace` failure produced a controlled `FigureRegistryError`, preserved the previous target, and left no temporary file. A source/output alias was rejected without modifying source bytes.
 
 ## Validation
 
@@ -74,10 +75,10 @@ Validated identities:
 
 | Artifact | Git blob | Bytes | SHA-256 |
 |---|---|---:|---|
-| builder | `aca5e9225247b92ca0b4011f3ec37e61197d3bfd` | 16274 | `27a6c833d1aafbbcbb51e6a879e04d8c8a8608681e3b198f21cf70404e5f8c18` |
-| focused tests | `e187363c1f59134fbeddbf20363cb1b3d9859115` | 5973 | `d4dc17a63d1e7ad4d3e622baef56d8c84d0e9b8fe66ce3eef9ff349d2198f065` |
+| builder | `cc56e548b54fd8f2692182de6114ee3bcfe196c4` | 16683 | `1a280ff20d54ae74ef4eda9e1b33065f3dc46a6d3bfffd777149b9eb4a63ce21` |
+| focused tests | `8550b37469278b708237d2a9ef181e24f608fda3` | 5993 | `eea7b91afd0f28cde7f128e0fdb5b2df092d73c34af368667c47b9017424d31a` |
 | renderer | `15f29bfac9cc16265464bcb8ea0cd1e205cdaafa` | 4372 | `5780a78ab354e2c57fa19fb460787858f94bdff786b6f65b0315e377ad79300d` |
-| validation JSON | `654cd47e1ed32545791abc18bd12d35e1aabf286` | 3900 | `d1f6cd3f070a02e6ed6649642eff5788e91db707c121076ed73626d8f72c7c53` |
+| validation JSON | `c9b543797b620385c4599dcb245ef61f3eb512cd` | 4134 | `516146d2101ce422fb66c22b5198e25320ae9ea361339b56423ffcdce30c8976` |
 | SVG | `80f566fdb19924c7967ca4ee4d07b50c76ed2f19` | 2466 | `e09c040c6dde91caaf67a7b535a296f5a9ae33df5383bf5427130847dc4bf1d9` |
 
 ## Evidence

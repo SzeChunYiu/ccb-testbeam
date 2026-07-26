@@ -6,6 +6,8 @@ import sys
 import types
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "single_stave" / "compare_stopping_power.py"
 POLICY = "NO_CROSS_ENERGY_COMBINATION_WITHOUT_UNCERTAINTY_MODEL"
@@ -35,8 +37,24 @@ def load_module():
     return module
 
 
-def test_report_uses_descriptive_bounds_without_cross_energy_mean(tmp_path, capsys):
-    module = load_module()
+@pytest.fixture
+def stubbed_module():
+    # _install_validator_stubs() replaces the cached tools.audit.* modules in
+    # sys.modules with lightweight stubs. Without snapshot/restore this leaks
+    # into every later test that imports compare_stopping_power (the stub
+    # validators return ([], {}) -> empty summary -> KeyError on the next
+    # real compare). Snapshot sys.modules so the stubs cannot escape this
+    # fixture's scope.
+    saved = dict(sys.modules)
+    try:
+        yield load_module()
+    finally:
+        sys.modules.clear()
+        sys.modules.update(saved)
+
+
+def test_report_uses_descriptive_bounds_without_cross_energy_mean(stubbed_module, tmp_path, capsys):
+    module = stubbed_module
     module._read_reference_with_summary = lambda path: (
         [(1.0, 9.0, 1.0, 10.0), (2.0, 4.0, 1.0, 5.0)],
         {

@@ -115,7 +115,7 @@
 - Added regression coverage for default-all behavior, selected-path ordering/deduplication, and unknown-path rejection.
 - Local validation on exact temporary copies: `python -m py_compile` passed; `python -m pytest /tmp/test_sync_c12_public_claims.py -q` returned `9 passed in 0.06s`.
 - Direct-to-main commits before this log update: `35f59f22d46378782f9ae8bc5e8327caae782d7d`, `3bc3c3dfdeef1a84536053937f7590b97c55059e`.
-- Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector reads and direct-to-main writes were used.
+- Direct clone failed with `Could not resolve host: github.com`; authenticated GitHub connector writes were used.
 - No raw data, MC outputs, scientific numbers, plots, or generated artifacts changed.
 - Next: in a complete checkout, run `python scripts/sync_c12_public_claims.py --path WIKI.md`, review the WIKI-only diff, run `--check`, tests, and link checks, then commit the public wording directly to `main`.
 
@@ -290,5 +290,6 @@
 - Full retained-core CLI and exact-source repository tests were not executed locally because the networkless container could not materialize the retained core, although it is preserved by exact Git blob in the implementation commit. No Actions run or attached status check was available; repository-wide pytest/ruff are not claimed.
 - Direct-main implementation/evidence commits: `746789f640d9d066b9aa4749784073288ca1a248`, `0565f4bc29c5d8230cd84c767339105adc28e5d6`, `43e7181235864a7a7f93d920aee7ac04917f2528`.
 - Archive and active-task commit: `1ffddad85558e1008e5e7f61b3622b8121f8d78f`.
+- Validated delivery/handoff commit: `df3d3dd341fc16f925c3a3f8689aacb65cd74c66`; confirmation metadata commit `829c7d3c0602e39a8ea0369bc50290cbd2908ae1`; post-write history confirmed both on remote `main`.
 - Every `main` ref update used `force=false` and GitHub returned `success=true`; no branch or PR transport was used.
 - Acceptance: focused CSV reader/provenance remediation `VALIDATED / COMPLETE`. No exact A-002 table, amplitude convention, polarity, stopping fraction, PID, uncertainty, calibration, or detector-performance result was produced; `AUD-DELTAE-001`, `AUD-DELTAE-002`, and `BLK-AMP-001` remain open.

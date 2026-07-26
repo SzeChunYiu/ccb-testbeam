@@ -1,0 +1,52 @@
+{
+  "acceptance": {
+    "input_output_alias_rejected": true,
+    "previous_output_preserved_on_replace_failure": true,
+    "temporary_files_cleaned": true
+  },
+  "audit_id": "AUD-LEDGER-002",
+  "controls": {
+    "current_alias_control": {
+      "exit_status": 2,
+      "input_preserved": true,
+      "input_sha256_after": "8ac3fd4271ac5f74666ff705e06e01463e2884fdb61a02542697faa43884b9c7",
+      "input_sha256_before": "8ac3fd4271ac5f74666ff705e06e01463e2884fdb61a02542697faa43884b9c7",
+      "result": "FAIL_CLOSED_INPUT_PRESERVED"
+    },
+    "current_atomic_failure_control": {
+      "exit_status": 2,
+      "previous_output_preserved": true,
+      "result": "FAIL_CLOSED_PREVIOUS_OUTPUT_PRESERVED",
+      "temporary_files_remaining": 0
+    },
+    "former_algorithm_control": {
+      "classification": "INDEPENDENT_RECONSTRUCTION",
+      "input_preserved": false,
+      "input_sha256_after": "02256a1562f272f5010ea9418392880323338835e41adc729a0ef020c2ed902d",
+      "input_sha256_before": "8ac3fd4271ac5f74666ff705e06e01463e2884fdb61a02542697faa43884b9c7",
+      "result": "DESTRUCTIVE_OVERWRITE_REPRODUCED"
+    }
+  },
+  "current_source": {
+    "bytes": 11977,
+    "path": "tools/audit/validate_claim_ledger_schema.py",
+    "sha256": "ac4e9d2736a73592fb5f1d689c0613cd1435f0f075c6bf75402d7b4946bfadaf"
+  },
+  "focused_tests": {
+    "bytes": 3056,
+    "path": "tests/test_claim_ledger_schema_output_safety.py",
+    "sha256": "7ca9b3795cd6e6da553d4035f73ad06ddac5a4daa34e692477d2fbf824f9acf5"
+  },
+  "limitations": [
+    "The former behavior control reconstructs the exact former direct-write algorithm; it is not execution of the historical Git blob.",
+    "This evidence does not validate any claim value, uncertainty, source, simulation, calibration, or detector-performance result."
+  ],
+  "policy": "CLAIM_LEDGER_VALIDATION_OUTPUTS_MUST_BE_DISTINCT_AND_ATOMIC",
+  "repository_facts": {
+    "former_publication": "DIRECT_PATH_WRITE_TEXT_NO_ALIAS_GUARD",
+    "former_source_blob": "1961e63756b734db30a4a9a8037a756c291afe25",
+    "former_version": "1.0.0"
+  },
+  "scientific_class": "SOFTWARE_AND_PROVENANCE_VALIDATION_ONLY",
+  "status": "VALIDATED"
+}

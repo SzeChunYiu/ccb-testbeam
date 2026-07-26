@@ -5,11 +5,16 @@
 - **Task:** `AUD-MV3-SEL-003`
 - **Stamp:** `2026-07-26T002131Z`
 - **Initial remote main:** `54a899d82c1991747218a5b3a5a0835c51991420`
-- **Remote main after run:** unchanged at the initial SHA when last checked
-- **Transport PR:** `#933`
+- **Validated blocker/evidence commit on main:** `13ddd66f1b5280a960336d6f855631398d7db090`
+- **Remote-main confirmation:** the connector fast-forwarded `main` with `success=true`; recent history
+  must retain `13ddd66f1b5280a960336d6f855631398d7db090` before any later integration attempt.
+- **Commit message:** `docs(audit): record MV3 remediation CI blocker`
+- **Transport PR:** `#933` (draft, open, not merged)
 - **Transport branch:** `chatgpt/AUD-MV3-SEL-003-chi2-remediation-20260726T002131Z`
 - **Validated implementation head:** `c9b20d0707b675c134ce8e6b0e804a115b569ae4`
-- **Delivery:** `BLOCKED_NOT_ON_MAIN`
+- **Latest PR documentation head:** `d49f2844361263f2ee38c7c9abe5224a2a98c979`
+- **Delivery:** blocker documentation and evidence are on remote `main`; producer code remains
+  `BLOCKED_NOT_ON_MAIN`.
 - **Acceptance:** focused producer/statistical contract `VALIDATED`; repository-wide integration gate
   `FAILED`; production result and canonical closure `BLOCKED/PARTIAL`.
 
@@ -44,6 +49,7 @@ Candidate commits:
 - `5d5ad343df0b02965f226996bb924c8d29cff8d3` — dynamic-module registration fix
 - `e60b5c8d74a383c91df1b32536c3047e69f921bf` — nonzero summary fixture
 - `c9b20d0707b675c134ce8e6b0e804a115b569ae4` — focused Pearson CI gate
+- `d49f2844361263f2ee38c7c9abe5224a2a98c979` — blocked-delivery evidence and archive
 
 The corrected contract requires exact categories, finite nonnegative inputs, model normalization
 within `1e-12`, positive observations, rejection of observed mass outside model support, supported-bin
@@ -74,11 +80,12 @@ public WIKI synchronization.
 
 ## Delivery decision
 
-The failed repository-wide gate was not bypassed. PR #933 was not merged, no candidate commit was
-pushed to `main`, and no delivery to remote `main` is claimed. The PR remains transport only until
-the 42 failures are reconciled and both workflows pass on the exact updated candidate.
+The failed repository-wide gate was not bypassed. PR #933 was converted to draft and was not merged.
+No candidate producer code is on `main`, and no producer delivery is claimed. Accurate blocker
+documentation, machine-readable evidence, visual evidence, the active-task record and immutable
+archive were committed directly to `main` as `13ddd66f1b5280a960336d6f855631398d7db090`.
 
-## Evidence
+## Evidence on main
 
 - `docs/validation/mv3_chi2_producer_remediation_validation.json`
 - `docs/validation/mv3_chi2_producer_remediation.svg`
@@ -91,6 +98,12 @@ No production ROOT or beam-data file was rerun. No weighted stopping profile, co
 preregistered sensitivity scan, material/scattering correction, calibration, PID result, closure
 claim or detector-performance result was produced. Canonical `CL-021` remains `FLAWED` under
 `BLK-MV3-LEGACY-001`.
+
+## Next action
+
+Reconcile the 42 repository-wide failures without weakening the validation gate, update PR #933 onto
+latest `main`, rerun both exact-head workflows, and merge only when all required checks pass. After
+merge, record the resulting remote-main commit SHA and retire the transport branch.
 
 ## Coordination limitation
 

@@ -2,134 +2,126 @@
 
 ## Session
 
-- **Task ID:** `AUD-FIG-002-R1`
-- **Stamp:** `2026-07-26T100542Z`
+- **Task ID:** `AUD-FIG-003`
+- **Stamp:** `2026-07-26T110505Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `8b460728fce2f550d63bed078f17c2285e0c2b2a`
-- **Validated delivery/handoff commit:** `92c453723c3014621a63c00f0b4242d0b24a0ef9`
-- **Remote main after validated delivery:** `92c453723c3014621a63c00f0b4242d0b24a0ef9`
+- **Initial remote main:** `cc0f39560f7e98b1c1c130748d268103ea08754a`
+- **Validated delivery head before this handoff:** `f814ef01170dc76f11df122cd72c8334cd9782c8`
+- **Remote main after validated delivery:** `f814ef01170dc76f11df122cd72c8334cd9782c8`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
 - **Push result:** GitHub contents API returned a successful direct-main commit SHA for every write. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** implementation, tests, replacement controls, JSON, SVG, report, active-task completion, immutable archive, and handoff `VALIDATED / COMPLETE`.
-- **Scientific acceptance:** no scientific paper value, uncertainty, or detector-performance claim was authorized or changed.
+- **Focused acceptance:** audit gate, tests, JSON, SVG, report, active-task record, and immutable archive `VALIDATED`; production quantitative PNG publication remains `FLAWED / PARTIAL` and unchanged.
+- **Scientific acceptance:** no paper figure value, uncertainty, or detector-performance claim was authorized or changed.
 
-## Finding and correction
+## Finding
 
 Policy:
 
-`FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES`
+`QUANTITATIVE_FIGURE_PUBLICATION_MUST_BE_ATOMIC_AND_FAILURE_SAFE`
 
-Former builder blob `ef6e11cfac3e9eacdabfb146ec7586e8764fceb1` had two split-snapshot paths:
+Current builder blob `cc56e548b54fd8f2692182de6114ee3bcfe196c4` calls
+`fig.savefig(figure_path)` on the final PNG and calls `plt.close(fig)` only afterward.
+An injected partial-write failure changed a prior target from SHA-256
+`ecceab87413dd631c1fc00a41fba8604cfeb1effcbc20ec138839f035ea96099` to
+`e32e4ac9d2e88987ca18b1ffe3331c1e64ff326d7780f5da24a2c2b8865e241d`.
+The post-failure artifact contained 14 partial bytes.
 
-1. result JSON was parsed from one path read and later rehashed from `entry.result` after rendering;
-2. source artifacts were copied before the source path was rehashed and statted.
+The corrected temporary-render control preserved the prior target, left zero temporary
+files, and atomically published complete replacement bytes on success. The successful
+replacement and final-target SHA-256 were both
+`6dff689f32b725810bc49ca04fc688cbe2960613646c8060abb206209bdb0317`.
 
-A path replacement could therefore make provenance describe different bytes from those used. The final builder blob `cc56e548b54fd8f2692182de6114ee3bcfe196c4` now:
+## Audit result
 
-- retains result and source bytes once as immutable snapshots;
-- parses strict-UTF-8 JSON from retained bytes;
-- derives source hash and byte count from those same bytes;
-- publishes source artifacts atomically from the retained snapshot;
-- verifies the final target's SHA-256 and byte count independently;
-- records source and target identities;
-- publishes source-data CSV atomically;
-- rejects aliases;
-- cleans temporary files and reports publication errors through controlled `FigureRegistryError` failures.
+The current-like exact function excerpt returned `FLAWED` with:
 
-## Independent replacement controls
+1. `QUANTITATIVE_RENDER_WRITES_FINAL_PATH_DIRECTLY`;
+2. `QUANTITATIVE_FIGURE_HAS_NO_ATOMIC_PUBLICATION_BOUNDARY`;
+3. `QUANTITATIVE_FIGURE_NOT_CLOSED_ON_RENDER_FAILURE`.
 
-### Result JSON
-
-- retained bytes: `45`;
-- retained SHA-256: `880e5b3a422a0504eb35bf2918bd674cea0b38ae82805a60d6b48f5a248f4805`;
-- retained value: `0.68`;
-- later replacement bytes: `46`;
-- replacement SHA-256: `3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7`;
-- generated source data retained value `0.68`, original byte count, and original digest.
-
-### Source artifact
-
-- retained bytes: `18`;
-- retained SHA-256: `baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3`;
-- later replacement bytes: `38`;
-- replacement SHA-256: `5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7`;
-- published target remained the original 18 bytes with the original digest.
-
-Injected `os.replace` failure produced a controlled error, preserved the previous target, and left zero temporary files. Source/output aliasing was rejected without modifying source bytes.
-
-## Work delivered
-
-- `tools/figure_registry/builder.py`
-- `tests/test_figure_registry_snapshot_remediation.py`
-- `tools/audit/render_figure_registry_snapshot_provenance_evidence.py`
-- `docs/validation/figure_registry_snapshot_provenance_validation.json`
-- `docs/validation/figure_registry_snapshot_provenance.svg`
-- `docs/validation/figure_registry_snapshot_provenance_audit.md`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/archive/2026-07-26T100542Z_AUD-FIG-002-R1_SNAPSHOT_REMEDIATION.md`
-- this handoff.
+A corrected fixture returned `VALIDATED` with zero findings.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/figure_registry/builder.py \
-  tests/test_figure_registry_snapshot_remediation.py \
-  tools/audit/render_figure_registry_snapshot_provenance_evidence.py
+  tools/audit/audit_figure_quantitative_publication.py \
+  tests/test_audit_figure_quantitative_publication.py \
+  tools/audit/render_figure_quantitative_publication_evidence.py
 
-PYTHONPATH=. pytest -q \
-  tests/test_figure_registry_snapshot_remediation.py
+PYTHONPATH=. pytest -q tests/test_audit_figure_quantitative_publication.py
 
-5 passed in 0.39s
+7 passed in 1.38s
 ```
 
-Additional results:
+Additional checks:
 
-- existing exact-source auditor: `VALIDATED`, zero findings;
+- invalid UTF-8: controlled status 2;
+- source/output alias: rejected without source modification;
+- injected evidence `os.replace` failure: prior JSON preserved and temporary removed;
 - validation JSON parsed;
 - SVG parsed as XML;
-- maximum changed Python line length: 95;
-- environment: Python 3.13.5, pytest 9.0.2, matplotlib 3.10.8, PyYAML 6.0.3.
+- maximum changed Python line length: 96;
+- environment: Python 3.13.5, pytest 9.0.2.
 
-Validated identities:
+## Work delivered
 
-| Artifact | Git blob | Bytes | SHA-256 |
-|---|---|---:|---|
-| builder | `cc56e548b54fd8f2692182de6114ee3bcfe196c4` | 16683 | `1a280ff20d54ae74ef4eda9e1b33065f3dc46a6d3bfffd777149b9eb4a63ce21` |
-| focused tests | `8550b37469278b708237d2a9ef181e24f608fda3` | 5993 | `eea7b91afd0f28cde7f128e0fdb5b2df092d73c34af368667c47b9017424d31a` |
-| renderer | `15f29bfac9cc16265464bcb8ea0cd1e205cdaafa` | 4372 | `5780a78ab354e2c57fa19fb460787858f94bdff786b6f65b0315e377ad79300d` |
-| validation JSON | `c9b543797b620385c4599dcb245ef61f3eb512cd` | 4134 | `516146d2101ce422fb66c22b5198e25320ae9ea361339b56423ffcdce30c8976` |
-| SVG | `80f566fdb19924c7967ca4ee4d07b50c76ed2f19` | 2466 | `e09c040c6dde91caaf67a7b535a296f5a9ae33df5383bf5427130847dc4bf1d9` |
+- `tools/audit/audit_figure_quantitative_publication.py`
+- `tests/test_audit_figure_quantitative_publication.py`
+- `tools/audit/render_figure_quantitative_publication_evidence.py`
+- `docs/validation/figure_quantitative_publication_validation.json`
+- `docs/validation/figure_quantitative_publication.svg`
+- `docs/validation/figure_quantitative_publication_audit.md`
+- `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/archive/2026-07-26T110505Z_AUD-FIG-003_QUANTITATIVE_PUBLICATION.md`
+- this handoff.
+
+## Primary software sources
+
+- Python `tempfile.mkstemp`: secure creation and caller-managed cleanup.
+  https://docs.python.org/3/library/tempfile.html#tempfile.mkstemp
+- Python `os.replace`: successful same-filesystem replacement is atomic.
+  https://docs.python.org/3/library/os.html#os.replace
+- Matplotlib `Figure.savefig`: supplied path/file-like destination and explicit format.
+  https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.savefig.html
 
 ## Direct-main sequence
 
-- `bd1b34493f98dfa6b6cefedb736ce9a10f207538` — task claim;
-- `bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f` — exact-byte snapshot implementation;
-- `5acba6b08620b587d0bd5b18229a032141d173ad` — replacement-race tests;
-- `dee2eac70bda7e9fb3f0a8e9d4aa10c53041b19c` — evidence renderer;
-- `025efd86f9585801a7a92f0f3fd28eb9e211f2a0` — initial remediation record;
-- `c7086b77a38c1aed94c609d156ab70620ca2eae8` — visual evidence;
-- `592c310512d7009ab68ac832b23971c1ee7d2e04` — initial remediation report;
-- `8f8f87ee669f7156231b6290b9366dd5969cda43` — controlled publication failure;
-- `79a1064ccc6e0e1786a09d0283405ea91d01f496` — controlled-failure regression;
-- `2033c983de88c026b27e1b3e00b121bb9628e333` — synchronized final evidence;
-- `4858b5aa105927855ac4a59bd5e06038910b02aa` — finalized audit report;
-- `605866376ef1ac783da226d126df55ca2e082a50` — immutable archive;
-- `f3116cc6d21fbb714ffb4ad4d79cdf09cd073bf0` — active-task completion;
-- `92c453723c3014621a63c00f0b4242d0b24a0ef9` — validated delivery handoff.
+- `a2a6f49c23b3c3f3f7f00acb2cb40480969c618a` — audit gate;
+- `eb404a466de3b5c07ca199331dba95e6d637ccb8` — focused regressions;
+- `addb94fd51a5b494924a347baf9434b0a28ba353` — evidence renderer;
+- `12d083d6b89a2e7cc6a879c43ab2baeb74a21fc0` — machine-readable evidence;
+- `8950bf7df4e5e95314e7b89fdff486d7fa1d2291` — visual evidence;
+- `59b92d8726c0ae4591cb8465cdceb468094d45fd` — audit report;
+- `ebc5ce0b7457a462fd814332575296db016961b8` — immutable archive;
+- `f814ef01170dc76f11df122cd72c8334cd9782c8` — active-task update and validated delivery head.
 
 ## Unrun checks and unresolved coordination
 
-Repository-wide pytest, ruff, the complete paper build, the repository-wide link inventory, and GitHub Actions were not run and are not claimed as passing.
+Repository-wide pytest and ruff, the complete shipped figure-registry build, the paper
+build, repository-wide link inventory, and GitHub Actions were not run and are not
+claimed as passing. The initial main commit had no attached status checks.
 
-The execution container could not resolve `github.com`; repository reads and writes used the authenticated connector. Focused tests ran against the exact committed builder/test bytes reconstructed in the local validation subset, with Git blob identities confirmed after publication.
+The runtime could not resolve `github.com`; repository reads and direct-main writes used
+the authenticated connector. Focused tests ran on the committed new tool/test bytes and
+an exact connector-reconstructed current `_emit_quantitative` excerpt bound to the full
+builder Git blob.
 
-`SESSION_LOG.md` was not safely appended. The connector exposes whole-file replacement while the complete append-only file was available only through paged reads; reconstructing it by transcription risked corrupting historical provenance. The immutable archive and this handoff provide the complete append-equivalent record. Shared backlog/index/matrix files were not partially replaced for the same preservation reason.
+`SESSION_LOG.md` was reviewed but not safely appended. The connector writes complete
+file replacements while the append-only file is available only through paged reads; a
+partial transcription could erase historical provenance. The immutable archive and this
+handoff preserve the complete append-equivalent record. Shared backlog/index/matrix files
+were not partially replaced for the same reason.
 
-PR #939 remained open and unmerged. PR #868 remained closed and unmerged. Neither was modified.
+PR #939 remained open, non-mergeable, and unmerged. PR #868 remained closed,
+non-mergeable, and unmerged. Neither was modified.
 
 ## Scientific boundary and next action
 
-No paper scientific value, uncertainty, calibration, PID result, timing result, stopping profile, pile-up rate, or detector-performance claim was validated or changed.
+No paper figure was regenerated and no scientific value, uncertainty, calibration, PID,
+timing, stopping profile, pile-up rate, or detector-performance claim was changed.
 
-The focused split-snapshot remediation is complete. The next paper-figure unit should run the complete shipped registry and inspect all generated artifact identities before using those artifacts as scientific evidence.
+Next: render quantitative PNGs to a same-directory temporary path with explicit PNG
+format, close figures in `finally`, retain complete rendered bytes, publish through the
+existing atomic helper, verify the final target, and add direct production-path failure
+regressions before running the complete shipped registry.

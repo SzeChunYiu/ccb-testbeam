@@ -2,51 +2,125 @@
 
 ## Session
 
-- **Task ID:** `AUD-REP-001-R1`
-- **Stamp:** `2026-07-26T153018Z`
+- **Task ID:** `AUD-FIG-004`
+- **Stamp:** `2026-07-26T160640Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `f92e4a1187071a9871a73ae9b959d549f8a91223`
-- **Regeneration base:** `ca71b0f0b83f5bcd189c173cf7d8e28b287bc34f`
-- **Public bundle commit:** `268a033e8ff586878745a34f99e844b97523a437`
-- **Evidence and coordination commit / validated main after:** `5bcb95eb4b2042f4244989d31178fb4bdb70409c`
-- **Remote-main confirmation:** authenticated fast-forward update returned success and post-write history/file reads confirmed the commit on `main`.
-- **Destination:** sequential commits directly to `main`; no force-push, history rewrite, task branch, or PR transport.
-- **Push result:** authenticated GitHub ref updates returned success; the connector does not provide a conventional terminal `git push` transcript.
+- **Initial remote main:** `cd4c299dbd67e285950a69610e4b27caed4413e1`
+- **Validated implementation/evidence main after:** `2e9d6788b6854207ad041b344e9ea6d7e8d1e528`
+- **Destination:** sequential authenticated commits directly to `main`; no task branch, pull-request transport, force-push, or history rewrite.
+- **Push output:** each GitHub contents write returned a successful direct-main commit SHA; the connector does not provide a conventional terminal `git push` transcript.
+- **Remote-main confirmation:** post-write commit history and exact file reads confirmed the implementation, tests, evidence, archive, and completed active-task record on `main`.
+- **Acceptance:** focused software/schema remediation `VALIDATED / COMPLETE`.
 
-## Delivered result
+## Confirmed defect
 
-The public Cluster E dashboard, study summary, claims table, metrics, provenance, and SVG now bind the canonical ledger exactly. CL-013 is 92 ADC/MeV with a 28 ADC/MeV heuristic envelope and remains GATED. CL-021 is Pearson chi2/ndf 68269.40598948313 and remains FLAWED. CL-022 is 283/87555 = 0.003232254011764034 and remains TRUTH_LEVEL_MC_ONLY. The Cluster D MV3 rerun 86135.4707883642 is retained as a distinct diagnostic and explicitly does not supersede CL-021.
+The paper-figure registry loader used `yaml.safe_load`, which silently applies
+last-definition-wins semantics to duplicate YAML mapping keys. A duplicate top-level
+figure ID was therefore collapsed before the later duplicate-ID counter could see it.
+Duplicate nested fields such as `status`, `result`, `kind`, `caption`, or
+`source_figure` could likewise silently replace earlier scientific evidence or build
+dispositions.
 
-Schema-3 provenance binds all retained UTF-8 input bytes to `base_commit:path` with measured and expected Git blob IDs, commit equality, full SHA-256, byte count, snapshot policy, and authorization policy.
+Deterministic controls showed:
+
+- duplicate top-level `Q` retained only the later `BLOCKED` / `two.json` entry;
+- duplicate nested `status` retained only the later `BLOCKED` value;
+- the former `yaml.safe_load` raised no error for either input.
+
+## Remediation
+
+Policy:
+
+`FIGURE_REGISTRY_YAML_KEYS_MUST_BE_UNIQUE_AT_EVERY_MAPPING_DEPTH`
+
+`tools/figure_registry/registry.py` now reads registry bytes exactly once, decodes
+strict UTF-8, and parses with a SafeLoader mapping constructor that rejects duplicate
+keys at every mapping depth while reporting both source positions. `RegistrySnapshot`
+binds the exact bytes, SHA-256, byte count, entries, and snapshot method:
+
+`SINGLE_READ_STRICT_UTF8_DUPLICATE_KEY_REJECTING_YAML`
+
+The public `load_registry(path) -> list[Entry]` API is preserved, and the package
+exports the new snapshot and format-error contracts.
 
 ## Validation
 
 ```text
-python -m py_compile scripts/clusterE/clusterE_canonical_frontdoor.py tests/test_clusterE_canonical_frontdoor.py tools/audit/validate_clusterE_canonical_binding_v2.py tests/test_validate_clusterE_canonical_binding_v2.py
-PYTHONPATH=. pytest -q tests/test_clusterE_canonical_frontdoor.py tests/test_validate_clusterE_canonical_binding_v2.py
-11 passed in 0.20s
+python -m py_compile \
+  tools/figure_registry/registry.py \
+  tests/test_figure_registry_duplicate_keys.py \
+  tools/audit/render_figure_registry_duplicate_key_evidence.py
 
-source-faithful local reconstruction: 9 passed in 0.09s
-exact public bundle audit: VALIDATED: 0 finding(s)
+PYTHONPATH=. pytest -q tests/test_figure_registry_duplicate_keys.py
+
+6 passed in 0.07s
+final rerun: 6 passed in 0.04s
 ```
 
-JSON and SVG parsing passed. The exact producer is Git blob `b6d98f0040864ec6f0e46edfae9ea87005d1cfcd`, 13,910 bytes, SHA-256 `230df0122c6a56cdf6a6d99870cf16e254da7467580d630363b2eeb2f681fee8`.
+Additional results:
 
-## Delivery sequence
+- corrected duplicate controls: 2/2 rejected;
+- invalid UTF-8: controlled `RegistryFormatError`;
+- replacement-after-read control: entries, hash, and size remained bound to retained original bytes;
+- JSON parse: passed;
+- SVG XML parse: passed;
+- Python 3.13.5, PyYAML 6.0.3, pytest 9.0.2;
+- maximum changed Python line length: 94.
 
-- `d371f63976b323b7b79804c32bc0a061e1154840` — install canonical producer/front door;
-- `12b8aaaa6dd635be999fb5395cbe61f4f81dafde` — restore legacy validator and add v2 gate after an intermediate malformed replacement;
-- `d4ae31bbe2c5065b7904ee1c93273204240f7a3e` / `75144e43bd69040b80743bd29b787dd5a621f594` — bind retained input bytes to base commit and test;
-- `a77e1853c5658c62aa9dd4d7f13f5330d4e11584` / `0c084bb821a6c4e630068f1f7a22002fd168f487` — strengthen validator and tests;
-- `268a033e8ff586878745a34f99e844b97523a437` — regenerate all six public outputs under schema 3;
-- `5bcb95eb4b2042f4244989d31178fb4bdb70409c` — publish validation JSON, visual evidence, audit report, immutable archive, and completed active-task record.
+Exact published Git blobs include:
 
-The malformed intermediate validator was corrected before public output publication; no accepted validation depends on it.
+- registry implementation: `b1412b82219fd37649107fd4452e5f859450ca82`;
+- focused tests: `ed603890f0a503a44f75d7245e443ffccac9ac92`;
+- evidence renderer: `865adedabcf56436ac7aefda0b29079ed70e6b36`;
+- visual evidence: `789ca373c87e8ac43c537c050349b9d7be83c233`.
 
-## Limits and next action
+## Files delivered
 
-The execution container could not resolve `github.com`, so the full producer was not invoked in a complete checkout. Public bytes were rendered from a byte-exact reconstruction of the current producer and exact connector-inspected source identities, then passed the exact binding validator. Repository-wide pytest/ruff, Actions, ROOT processing, paper build, and link inventory were not run. No broad CI success is claimed.
+- `tools/figure_registry/registry.py`
+- `tools/figure_registry/__init__.py`
+- `tests/test_figure_registry_duplicate_keys.py`
+- `tools/audit/render_figure_registry_duplicate_key_evidence.py`
+- `docs/validation/figure_registry_duplicate_key_validation.json`
+- `docs/validation/figure_registry_duplicate_key.svg`
+- `docs/validation/figure_registry_duplicate_key_audit.md`
+- `chatgpt_todo/archive/2026-07-26T160640Z_AUD-FIG-004_DUPLICATE_KEYS.md`
+- `chatgpt_todo/ACTIVE_TASK.md`
+- this handoff.
 
-No calibration, accepted stopping-profile closure, C12 beam-data identity, PID/timing performance, uncertainty model, or detector-performance result was produced. Existing blockers remain in force.
+## Direct-main sequence
 
-`SESSION_LOG.md` was reviewed but not replaced because the connector exposes paged reads and whole-file replacement rather than a byte-safe append; partial reconstruction could erase append-only provenance. The immutable archive contains the complete append-equivalent record.
+- `5b93717cffd5763bd81608ac39fdd5f7cd258f25` — task claim;
+- `9ed2d099c2120be8d3ddf96885812591e999b88a` — duplicate-key-safe loader;
+- `dddab6968870f3f50c467fe93f375b2a6e697338` — package exports;
+- `bba1b581e490e852abe13a890cffc59ca6cfa158` — focused regressions;
+- `072540efb769f8e8f0f2f9a111e32a0999369633` — evidence renderer;
+- `caca15b2d46c9860a4b52c3762162e366bf60387` — deterministic evidence paths;
+- `6b48c35d77612268cf471c504c15138af1aff8c8` — machine-readable evidence;
+- `0b9c276d886be46a432822fd59f22634e0ebe7f0` — initial visual evidence;
+- `ff59e6616d319c1385aad233fe66dc0ac37fc0b5` — audit report;
+- `4340fb9c213f7f993c4f935a21300a82ee5c6836` — lint-clean renderer;
+- `4842a9fe29707838030e8e03f6d9b54195c82226` — refreshed visual evidence;
+- `4adbd8139f0b40718f9b3df614dc9ecb27e5cab1` — immutable archive;
+- `2e9d6788b6854207ad041b344e9ea6d7e8d1e528` — completed active-task record.
+
+## Scientific boundary and unresolved coordination
+
+This unit validates software/schema integrity only. No registry entry's scientific
+content, source result, input table, uncertainty, caption, or figure was independently
+validated. No paper figure or scientific quantity was regenerated. Repository-wide
+pytest/ruff, the complete shipped-registry build, paper build, link inventory, and
+GitHub Actions were not run and are not claimed as passing.
+
+`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and the long aggregate matrices were
+reviewed but not partially reconstructed. Connector reads are paged or truncated
+while writes replace the entire file; transcription could erase append-only or
+concurrent provenance. The immutable archive above contains the complete
+append-equivalent record. This unmet mandatory synchronization step is explicit and
+is not reported as completed.
+
+## Next action
+
+Integrate `RegistrySnapshot` provenance into `build_report.json`, convert registry
+format failures into a controlled `FigureRegistryError` CLI diagnostic, and run the
+complete shipped registry plus paper build in a clean checkout. Scientific acceptance
+of individual figures remains a separate item-level review.

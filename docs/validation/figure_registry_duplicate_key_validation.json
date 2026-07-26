@@ -1,0 +1,53 @@
+{
+  "base_main": "cd4c299dbd67e285950a69610e4b27caed4413e1",
+  "controls": [
+    {
+      "bytes": 159,
+      "corrected_error": "registry <tmp>/control-0.yaml: duplicate YAML key 'Q' at line 6, column 1; first defined at line 1, column 1",
+      "corrected_rejected": true,
+      "duplicate_key": "Q",
+      "legacy_safe_load_rejected": false,
+      "legacy_safe_load_result": {
+        "Q": {
+          "caption": "second",
+          "kind": "quantitative",
+          "result": "two.json",
+          "status": "BLOCKED"
+        }
+      },
+      "name": "duplicate_top_level_figure_id",
+      "sha256": "9d430f680000dbd8056d0258d30ba2f6c3f841545032ccc817be82f18c2321a7"
+    },
+    {
+      "bytes": 109,
+      "corrected_error": "registry <tmp>/control-1.yaml: duplicate YAML key 'status' at line 3, column 3; first defined at line 2, column 3",
+      "corrected_rejected": true,
+      "duplicate_key": "status",
+      "legacy_safe_load_rejected": false,
+      "legacy_safe_load_result": {
+        "Q": {
+          "caption": "ambiguous status",
+          "kind": "quantitative",
+          "result": "one.json",
+          "status": "BLOCKED"
+        }
+      },
+      "name": "duplicate_nested_status",
+      "sha256": "90887c5f20a0bc64f8db17d7755c84ad49f17c37794b5d45ea69bf026ffffcdd"
+    }
+  ],
+  "findings": [],
+  "former_registry_git_blob": "b1381ccc471eb4711251cb2d0471950f60610c68",
+  "policy": "FIGURE_REGISTRY_YAML_KEYS_MUST_BE_UNIQUE_AT_EVERY_MAPPING_DEPTH",
+  "schema": "ccb-figure-registry-duplicate-key-validation/1",
+  "scientific_boundary": "Software/schema integrity only; no paper figure or scientific quantity was regenerated or validated.",
+  "snapshot_method": "SINGLE_READ_STRICT_UTF8_DUPLICATE_KEY_REJECTING_YAML",
+  "status": "VALIDATED",
+  "task_id": "AUD-FIG-004",
+  "validation": {
+    "command": "PYTHONPATH=. pytest -q tests/test_figure_registry_duplicate_keys.py",
+    "pytest": "6 passed in 0.07s",
+    "python": "3.13.5",
+    "pyyaml": "6.0.3"
+  }
+}

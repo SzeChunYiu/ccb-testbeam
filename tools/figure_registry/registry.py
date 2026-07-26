@@ -6,6 +6,7 @@ never silently promoted merely because a result or image exists on disk.
 from __future__ import annotations
 
 import hashlib
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -63,6 +64,7 @@ _QUARANTINED_STATUSES: frozenset[str] = frozenset(
 
 DEFAULT_UNCERTAINTY_KEY = "uncertainty"
 REGISTRY_SNAPSHOT_METHOD = "SINGLE_READ_STRICT_UTF8_DUPLICATE_KEY_REJECTING_YAML"
+_SAFE_ENTRY_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*\Z")
 
 
 class RegistryFormatError(ValueError):
@@ -250,6 +252,10 @@ def validate_registry(entries: list[Entry]) -> list[str]:
         if entry.raw.get("_malformed") is not None:
             problems.append(f"{tag}: entry body is not a mapping")
             continue
+        if entry.id and not _SAFE_ENTRY_ID.fullmatch(entry.id):
+            problems.append(
+                f"{tag}: id must match {_SAFE_ENTRY_ID.pattern!r} for safe output paths"
+            )
         if not entry.caption:
             problems.append(f"{tag}: missing required 'caption'")
         if not entry.status:

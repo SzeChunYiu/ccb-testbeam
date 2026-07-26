@@ -2,101 +2,86 @@
 
 ## Session
 
-- **Task ID:** `AUD-FIG-006-R1`
-- **Stamp:** `2026-07-26T192823Z`
+- **Task ID:** `AUD-RMAX-001`
+- **Stamp:** `2026-07-26T200250Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `cbc5ef1cc194ae976ffb05a0f7a2305ec8428088`
-- **Validated implementation/evidence/archive/active-task head:** `de161472fc37b54f66ff99ca1e953f1dc56a32d5`
+- **Initial remote main:** `9c576de392c4f81aaea369b4612e16841eeef730`
+- **Validated implementation/evidence/archive/active-task head:** `1fb4f7e5cbcff6299485edc731cf50002044e133`
 - **Destination:** authenticated sequential commits directly to `main`; no force-push, transport branch, pull-request merge, or history rewrite.
-- **Push result:** each GitHub contents write returned a successful commit SHA. Post-write remote history showed the complete focused sequence on `main`; concurrent merges `fa5b063...` and `81470c3...` landed after the task claim but before implementation and did not touch figure-registry files.
-- **Acceptance:** focused software/provenance remediation `VALIDATED / COMPLETE`.
+- **Push result:** every GitHub contents write returned a successful commit SHA; post-write history showed the complete focused sequence on remote `main`.
+- **Acceptance:** checker software `VALIDATED / COMPLETE`; public WIKI claim state `FLAWED / BLOCKED`.
 
 ## Defect and policy
 
-Policy: `FIGURE_REGISTRY_BUILD_MUST_NOT_LEAVE_STALE_ARTIFACTS`.
+Policy: `RMAX_CHECK_MUST_VALIDATE_CLAIM_STATE_AND_NEVER_INFER_RATE_FROM_OCCUPANCY`.
 
-The prior builder could leave an older canonical PNG or source-data CSV after an entry became BLOCKED/QUARANTINED, failed, changed output kind or suffix, or disappeared. A current report could therefore say non-PASS while an older paper artifact remained at the canonical path.
+The former Thesis QA checker printed `PASS` and then exited with status 1. It did not read `WIKI.md` or `docs/claim_ledger.csv`, and it called 3.05 MHz “measured (occupancy)” despite the unresolved exposure/rate-identifiability boundary.
+
+Current WIKI blob `841222816dc60f5fb90ada51ee027a71e0994254` still contains `Rmax 2.92 MHz (data-derived, corroborates CL-010 3.05 MHz)`, while canonical `CL-010` is value-withheld, `BLOCKED`, and blocked by `S-STAT-003`.
 
 ## Remediation
 
-The builder now:
+Checker v2.0.0 now:
 
-- publishes a complete normalized `managed_artifacts` list for every PASS entry;
-- reads the prior `build_report.json` as the authoritative managed-output manifest;
-- reconciles IDs removed from the current registry;
-- removes outputs before BLOCKED, QUARANTINED, excluded PRELIMINARY, and FAIL records;
-- removes obsolete prior paths after kind/suffix changes;
-- adopts only exact current canonical paths when no previous report exists and fails closed on unattributable candidates;
-- rejects unsafe entry IDs, output-root escape, noncanonical prior paths, symbolic links, and nonregular targets;
-- protects declared result/table/source inputs from cleanup aliasing;
-- snapshots the complete managed set and restores exact prior bytes if final report publication fails.
+- reads WIKI and ledger exactly once as strict UTF-8 bytes;
+- records byte counts, SHA-256, and snapshot method;
+- enforces the exact 43-column ledger schema and unique `CL-010`/`CL-011` rows;
+- verifies the blocked/withheld `CL-010` contract and exact `CL-011` live-time estimand;
+- rejects stale public numerical Rmax endorsements;
+- labels all calculated rates as arithmetic/model sensitivities;
+- exits 0 only for a consistent blocked claim, 1 for scientific inconsistency, and 2 for malformed inputs;
+- atomically publishes optional JSON and rejects destructive aliases.
 
-Managed-artifact policy recorded in reports:
+## Independent calculations
 
-`PREVIOUS_REPORT_RECONCILIATION_NONPASS_REMOVAL_REPORT_ROLLBACK`.
+Using `tau = 124.79018394263471 ns`:
 
-## Reproducible controls
+- 5% Poisson arithmetic sensitivity: `0.4110362912128549 MHz`;
+- legacy `mu=0.38` sensitivity: `3.045111305987686 MHz`;
+- 3.05 MHz implies `mu=0.3806100610250359`;
+- 3.05 MHz implies `P(N>=1)=0.31655566074793173`.
 
-- PASS to BLOCKED: two prior files, zero remaining.
-- PASS to FAIL: two prior files, zero remaining.
-- removed ID: two prior files, zero remaining.
-- source suffix `.png` to `.pdf`: one obsolete artifact, zero obsolete remaining.
-- injected final-report failure: prior PNG, source-data CSV, and report restored byte-for-byte.
-- malicious outside prior-report path: rejected without external deletion.
-- unsafe `../ESCAPE` registry ID: rejected before output construction.
+These calculations do not measure live exposure, event-arrival rate, `mu_max`, or an accepted absolute Rmax.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/figure_registry/builder.py \
-  tools/figure_registry/registry.py \
-  tests/test_figure_registry_stale_artifact_remediation.py \
-  tests/test_figure_registry_quantitative_publication_remediation.py
+  scripts/check_rmax_formula.py \
+  tests/test_check_rmax_formula.py \
+  tools/audit/render_rmax_checker_semantics_evidence.py
 
-PYTHONPATH=. pytest -q \
-  tests/test_figure_registry.py \
-  tests/test_figure_registry_snapshot_remediation.py \
-  tests/test_figure_registry_quantitative_publication_remediation.py \
-  tests/test_figure_registry_duplicate_keys.py \
-  tests/test_figure_registry_build_report_provenance.py \
-  tests/test_figure_registry_stale_artifact_remediation.py
-
-37 passed in 1.16s
+PYTHONPATH=. pytest -q tests/test_check_rmax_formula.py
+7 passed in 0.04s
 ```
 
-Focused lifecycle regressions: `9 passed in 0.81s`. Exact-source stale-artifact audit: `VALIDATED`, zero findings. JSON and SVG parsing passed. Maximum changed Python line length: 96.
-
-The execution container could not resolve `github.com`; validation used connector-inspected source reconstructions and exact remote Git blob identities.
+Current-like stale-WIKI fixture: `FLAWED`, one `WIKI_OVERAUTHORIZES_RMAX` finding, expected CLI status 1. Corrected fixture: `VALIDATED`, zero findings, expected CLI status 0. Duplicate claims, invalid UTF-8, and output aliasing fail closed. JSON and SVG parsing passed; maximum changed Python line length 93.
 
 ## Files and identities
 
-- `tools/figure_registry/builder.py` — Git blob `6f2b8066799f045fe8c3a05549139c871a2ef27e`
-- `tools/figure_registry/registry.py` — Git blob `c64bf734b244a114ea7d5f259b32421cd59aaa25`
-- `tests/test_figure_registry_stale_artifact_remediation.py` — Git blob `38591487747c3881052a5c30932afda1d0997fc5`
-- `tests/test_figure_registry_quantitative_publication_remediation.py` — Git blob `1ac7fa4b8fafa6f3bffc742f8c95163775c25f82`
-- validation JSON SHA-256 `902ad0d667a59ad23d48807c5500675d30cee4aa118e28156e97dad16caa6524`
-- SVG SHA-256 `a27c796033d146b443f8516d92bc9a189a5923c6a5af5d8165680168661c2406`
-- immutable record: `chatgpt_todo/archive/2026-07-26T192823Z_AUD-FIG-006-R1_STALE_ARTIFACT_REMEDIATION.md`
+- `scripts/check_rmax_formula.py` — blob `188716b5fb3982b32ba90dcb8364922caaf5ac21`, SHA-256 `3f824bfb12609b213b3898c2c3f83d43809580aaae9cb3ac06f06ce4831df721`
+- `tests/test_check_rmax_formula.py` — blob `80418bf8f728a6aeba8f56bd9620b7e02f8b4d7d`, SHA-256 `edbbcfc42691496e08ebfba57dc873cbdf7b6a83bc8f23f747089ad4bc612323`
+- `tools/audit/render_rmax_checker_semantics_evidence.py` — blob `30b7fea934b2381b162a98f155c3ee0dfc39bf23`, SHA-256 `9824f275e640bb393c1d69451536d2fe453a5753928fb9e296db51c8f20407ad`
+- `docs/validation/rmax_checker_semantics_validation.json` — blob `ceff04cc85bde02a7384d90d3587b27dc1d996d5`
+- `docs/validation/rmax_checker_semantics.svg` — blob `f3540a2cd81582f023ae55a62345c16b048025e3`
+- immutable record: `chatgpt_todo/archive/2026-07-26T200250Z_AUD-RMAX-001_CHECKER_SEMANTICS.md`
 
 ## Direct-main sequence
 
-- `48bfc1a87f77673c7ebac55d179c66bdd4cc6b39` — task claim
-- `2628034e78a54a076d0032d814b746fa520283dd` — safe output IDs
-- `136793fbbb085c32db8fbe966aa84acd59b5af82` — managed-artifact reconciliation
-- `adcb5add0cd6638cfb5e3db865c08f35a96e8fab` — publication lifecycle test alignment
-- `396c3bd5e8da0712b999f1e5ab00e6af02e1161e` — lifecycle regressions
-- `90c66495d3c26afcc350560398cfa076348076dd` — evidence renderer
-- `2aa6625d239729d78d4f7e415ae3213781dcbf35` — validation JSON
-- `349ee591950631cd3fcdc26788609be086027b2c` — SVG evidence
-- `a12164706f7b8a9ad98824107cff6cdabd64c87a` — audit report
-- `fca7cbc36df5c9e5e76f4ac95237033fe3028231` — immutable archive
-- `de161472fc37b54f66ff99ca1e953f1dc56a32d5` — active-task completion
+- `e4729b1f8cc3c328c8a6d4abfbdde50b99f3e56a` — task claim
+- `05b5fda18cfce54bd661e7f26ed18d82fc7156d3` — checker remediation
+- `d46da566f62a93aec5c62e452a7132f32b4347f6` — focused regressions
+- `21b8f6813468b1aa54095918b2b1033e8edefcc7` — evidence renderer
+- `89ffcbc22d707adcfb45cf7bcfc8b1601e69073e` — JSON evidence
+- `782e29e408a742045cb4fd9349c7cfaa2cff262e` — SVG evidence
+- `98d7286fc2e0c2ca7105caf47654b207197729d4` — audit report
+- `82ba886378f437f7fc53f0ca01f666eec4e046b9` — immutable archive
+- `1fb4f7e5cbcff6299485edc731cf50002044e133` — active-task completion
 
-## Scientific boundary and unresolved risks
+## Scientific boundary and next action
 
-No paper figure, central value, uncertainty, calibration, timing result, PID result, stopping profile, pile-up rate, or detector-performance quantity was regenerated or accepted. Repository-wide pytest/ruff, the complete shipped-registry build, paper build, link inventory, and GitHub Actions were not run.
+No live exposure, absolute event rate, `mu_max`, recovery-failure ceiling, accepted Rmax, calibration, or detector-performance quantity was produced. Repository-wide pytest/ruff, the complete Thesis QA workflow, link inventory, and GitHub Actions were not run.
 
-A separate urgent audit is required for the concurrent `scripts/check_rmax_formula.py` change: it describes 3.05 MHz as “measured (occupancy)” despite the unresolved exposure/rate-identifiability boundary and prints PASS before exiting with status 1.
+The remediated gate is expected to remain nonzero on current `main` because the WIKI sentence is still scientifically inconsistent. Correct that exact sentence, then require `python scripts/check_rmax_formula.py` to return 0 before treating Thesis QA as green.
 
-`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and long aggregate matrices were reviewed but not rewritten in this focused unit. Connector reads are paged while updates replace complete files; the immutable archive retains the append-equivalent record without risking historical provenance loss.
+PR #868 remains closed, unmerged, and non-mergeable. `SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and long aggregate matrices were reviewed but not partially rewritten: connector reads are paged while updates replace complete files, and transcription could erase append-only provenance. The immutable archive retains the append-equivalent record.

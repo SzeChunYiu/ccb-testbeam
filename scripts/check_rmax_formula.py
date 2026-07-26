@@ -227,7 +227,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     print(json.dumps(payload, indent=2, sort_keys=True))
     if payload["status"] in ("VALIDATED", "BLOCKED"):
-        print("PASS: canonical Rmax is VALIDATED or correctly BLOCKED (withheld); public wording is consistent.")
+        print("PASS: canonical Rmax status is honest (VALIDATED/FLAWED/BLOCKED); public wording is consistent.")
         return 0
     print("FAIL: canonical Rmax gate found inconsistent or over-authorizing evidence.")
     return 1

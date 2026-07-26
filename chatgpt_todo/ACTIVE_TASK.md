@@ -6,8 +6,12 @@
 - **Initial remote main SHA:** `03851ff128a5a351f39c7754e47ac35fe80e0fa0`
 - **Scope:** bind every paper-figure `build_report.json` to the exact duplicate-key-safe registry byte snapshot used for parsing, and convert registry format failures into controlled CLI diagnostics.
 - **Policy:** `FIGURE_BUILD_REPORT_MUST_BIND_TO_EXACT_REGISTRY_SNAPSHOT`.
-- **Files:** `tools/figure_registry/builder.py`, focused regressions, JSON/SVG/Markdown validation evidence, immutable archive, and handoff.
-- **Assumptions:** registry scientific content is not revalidated by this task; build-report provenance and error-boundary integrity are the focused acceptance unit.
-- **Validation plan:** compile changed Python; run the new focused tests plus `tests/test_figure_registry_duplicate_keys.py`; verify exact SHA-256/byte-count binding, replacement-after-read stability, controlled duplicate-key and invalid-UTF8 CLI failures, structural-invalid report provenance, JSON/SVG parsing, and changed-line length.
-- **Progress:** task claimed on current remote `main`; implementation in progress.
-- **Status:** `ACTIVE`
+- **Delivered:** builder snapshot integration; five-field registry provenance; controlled format-error boundary; six focused regressions; JSON/SVG/Markdown evidence; immutable archive.
+- **Validation:** combined duplicate-key and report-provenance suites `12 passed in 0.28s`; exact remote builder/test blobs match locally validated bytes; replacement-after-read, duplicate-key, invalid-UTF8, structural-invalid, and one-read controls passed; JSON/SVG parsing passed; maximum implementation/test Python line length 93.
+- **Implementation commits:** `db1a05a5ce9003cd45e10df4f247c55733a06dc2`, `bd81bce0fa0714f7473ae946db221e3bbdb918a5`.
+- **Evidence through:** `d3b126961d32291f3756dfe3a1f4614e8f15815c`.
+- **Acceptance:** focused software/provenance remediation `VALIDATED / COMPLETE`.
+- **Scientific boundary:** no registry entry, paper figure, central value, uncertainty, calibration, timing, PID, stopping profile, pile-up rate, or detector-performance claim was revalidated.
+- **Unrun checks:** repository-wide pytest/ruff, complete shipped-registry build, paper build, link inventory, and GitHub Actions.
+- **Coordination limitation:** byte-safe append was unavailable, so `SESSION_LOG.md` and long aggregate matrices were not partially reconstructed; the immutable archive preserves the append-equivalent record.
+- **Status:** `COMPLETE`

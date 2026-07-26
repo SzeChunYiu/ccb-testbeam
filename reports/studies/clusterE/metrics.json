@@ -1,5 +1,5 @@
 {
-  "base_commit": "12b8aaaa6dd635be999fb5395cbe61f4f81dafde",
+  "base_commit": "ca71b0f0b83f5bcd189c173cf7d8e28b287bc34f",
   "canonical_claims": {
     "CL-013": {
       "allowed_status_validated": "NO",
@@ -143,6 +143,7 @@
       "interpretation": "does not supersede CL-021"
     }
   },
+  "input_authorization_policy": "INPUT_BYTES_MUST_MATCH_BASE_COMMIT_BLOBS",
   "policy": "CLUSTERE_HEADLINES_MUST_BIND_CANONICAL_LEDGER_AND_FULL_PROVENANCE",
-  "schema": "ccb-clusterE-canonical-frontdoor/2"
+  "schema": "ccb-clusterE-canonical-frontdoor/3"
 }

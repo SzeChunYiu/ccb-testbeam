@@ -14,6 +14,6 @@
 
 The later Cluster D MV3 rerun reports chi2/ndf = **86135.4707883642** and does **not supersede CL-021**. The former MV0 v1 value **110 ADC/MeV** does **not supersede CL-013**. Early-peak species composition does not replace CL-022 **283/87555** and does not identify beam data as C12.
 
-Generated at `2026-07-26T145950Z` from base commit `12b8aaaa6dd635be999fb5395cbe61f4f81dafde`. Full Git blob and SHA-256 identities are in `reports/studies/clusterE/provenance.json`. This validates claim binding only; no production calibration, accepted closure, C12 data identity, or detector performance is established.
+Generated at `2026-07-26T153018Z` from base commit `ca71b0f0b83f5bcd189c173cf7d8e28b287bc34f`. Full Git blob and SHA-256 identities are in `reports/studies/clusterE/provenance.json`. This validates claim binding only; no production calibration, accepted closure, C12 data identity, or detector performance is established.
 
 Historical Cluster E PNGs are diagnostics, not claim-authorizing artifacts.

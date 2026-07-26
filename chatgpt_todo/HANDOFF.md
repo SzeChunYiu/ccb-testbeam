@@ -2,126 +2,131 @@
 
 ## Session
 
-- **Task ID:** `AUD-LEDGER-004-R1`
-- **Stamp:** `2026-07-26T091312Z`
+- **Task ID:** `AUD-FIG-002`
+- **Stamp:** `2026-07-26T092835Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `a5d66f563029183e170c24f5412fffc4e336d602`
-- **Validated delivery/handoff commit:** `1c01dc385e75e1a74aa6b306384ee5715cc72177`
-- **Remote main after validated delivery:** `1c01dc385e75e1a74aa6b306384ee5715cc72177`
+- **Initial remote main:** `770fa6e8ba305b29c539e64f1f151c4cf5dc1053`
+- **Delivery head before this handoff:** `134670e02f2c7115af98a1fc9adb8011a1d50c0c`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
-- **Push result:** GitHub contents API returned successful direct-main commit SHAs for every write; recent history confirmed the consecutive sequence on remote `main`. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** producer/report/ledger remediation `VALIDATED / COMPLETE`.
-- **Scientific acceptance:** accepted absolute Rmax remains `BLOCKED` under `S-STAT-003`.
+- **Push result:** GitHub contents API returned a successful direct-main commit SHA for every write. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
+- **Focused acceptance:** audit implementation, tests, calculations, JSON, SVG, report, and immutable archive `VALIDATED`.
+- **Production acceptance:** paper-figure builder remains `FLAWED / PARTIAL` pending a single-read exact-byte remediation.
 
 ## Finding
 
 Policy:
 
-`OCCUPANCY_DOES_NOT_IDENTIFY_ABSOLUTE_RMAX_WITHOUT_RATE_EXPOSURE`
+`FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES`
 
-The selected table measures 640,737 selected B-stave pulses over 584,602 composite events, with mean selected multiplicity `1.0960225931488432`. It does not measure event-arrival exposure, luminosity, run live time, an accepted pile-up-quality ceiling, or a detector-wide live window.
+Current `tools/figure_registry/builder.py`, Git blob
+`ef6e11cfac3e9eacdabfb146ec7586e8764fceb1`, has two split-snapshot paths:
 
-The former producer nevertheless calculated `0.38 / 130 ns = 2.923076923076923 MHz`, labelled it data-derived, and the report said occupancy corroborated an accepted rate. Canonical `CL-010` then published `2.92 MHz`, unsupported `0.10` and `0.20 MHz` uncertainty components, status `DONE_DATA_ONLY`, and no blocker.
+1. `_load_result` parses JSON through `path.read_text(...)`, while `_emit_quantitative` later calls `sha256_file(entry.result)` after rendering.
+2. `_emit_existing_artifact` calls `shutil.copy2(source, target)`, then later calls `sha256_file(source)` and `source.stat().st_size`.
+
+A concurrent replacement of either input path can therefore make source-data metadata describe bytes different from those used to render or copy the published artifact.
+
+## Independent controls
+
+### Result JSON replacement
+
+- bytes used SHA-256: `33066bb044c6d3dc3c6afe6ca68d0104cf7f29a9735659cccf650018f5b24c78`;
+- later path SHA-256: `3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7`;
+- figure-side numeric value remained `1.0` from the first snapshot;
+- later provenance digest described the replacement JSON.
+
+### Source-artifact replacement
+
+- copied target SHA-256: `baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3`;
+- later source-path SHA-256: `5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7`;
+- later source size: 38 bytes;
+- later metadata did not match the copied target.
+
+Corrected controls retained one byte snapshot for parse/copy, hashing, and sizing and matched exactly.
 
 ## Work delivered
 
-Updated:
-
-- `scripts/studies/data_side_real_beam.py`
-  - occupancy is descriptive only;
-  - `rmax_authorized=false`;
-  - `rmax_status=BLOCKED`;
-  - `accepted_rmax_mhz=null`;
-  - exact `CL-011` value `124.79018394263471 ns`;
-  - `mu_max=0.38` labelled legacy convention;
-  - `3.045111305987686 MHz` labelled model sensitivity only;
-  - occupancy plot title states `Rmax withheld pending S-STAT-003`.
-- `reports/studies/data_side/REPORT.md`
-  - removes data-derived/corroboration wording;
-  - distinguishes measured occupancy from model assumptions;
-  - states `CL-010 remains BLOCKED`.
-- `docs/claim_ledger.csv`
-  - accepted value and uncertainty fields blank;
-  - `truth_type=derived_model_conflicted`;
-  - `status=BLOCKED`;
-  - `blocked_by=S-STAT-003`;
-  - source-conflict quarantine restored against tracked MV5 artifacts.
-- `chatgpt_todo/ACTIVE_TASK.md` — focused unit complete.
-
 Added:
 
-- `tests/test_data_side_rmax_quarantine.py`
-- `tools/audit/render_data_side_rmax_remediation_evidence.py`
-- `docs/validation/data_side_rmax_remediation_validation.json`
-- `docs/validation/data_side_rmax_remediation.svg`
-- `docs/validation/data_side_rmax_remediation_audit.md`
-- `chatgpt_todo/archive/2026-07-26T091312Z_AUD-LEDGER-004_RMAX_REMEDIATION.md`
+- `tools/audit/audit_figure_registry_snapshot_provenance.py`
+- `tests/test_audit_figure_registry_snapshot_provenance.py`
+- `tools/audit/render_figure_registry_snapshot_provenance_evidence.py`
+- `docs/validation/figure_registry_snapshot_provenance_validation.json`
+- `docs/validation/figure_registry_snapshot_provenance.svg`
+- `docs/validation/figure_registry_snapshot_provenance_audit.md`
+- `chatgpt_todo/archive/2026-07-26T092835Z_AUD-FIG-002_SNAPSHOT_PROVENANCE.md`
 
-## Independent calculations
+Updated:
 
-```text
-640737 / 584602 = 1.0960225931488432 selected pulses per composite event
-0.38 / 124.79018394263471 ns = 3.045111305987686 MHz
-0.38 / 130 ns = 2.923076923076923 MHz
-former minus exact = -0.1220343829107633 MHz
-```
-
-Both rates are convention/model sensitivities and are non-authorizing.
+- `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/HANDOFF.md`
 
 ## Validation
 
 ```text
 python -m py_compile \
-  scripts/studies/data_side_real_beam.py \
-  tests/test_data_side_rmax_quarantine.py
+  tools/audit/audit_figure_registry_snapshot_provenance.py \
+  tests/test_audit_figure_registry_snapshot_provenance.py \
+  tools/audit/render_figure_registry_snapshot_provenance_evidence.py
 
-pytest -q tests/test_data_side_rmax_quarantine.py
+PYTHONPATH=. pytest -q tests/test_audit_figure_registry_snapshot_provenance.py
 
-2 passed in 0.32s
+5 passed in 0.10s
 ```
 
 Additional results:
 
-- exact producer/report/ledger contract: `VALIDATED`, zero findings;
-- claim ledger: 26 records, every record exactly 43 columns;
-- exact local Git blob hashes matched remote content blobs;
+- current-like source contract: `FLAWED`, three findings;
+- corrected single-snapshot fixture: `VALIDATED`, zero findings;
+- invalid UTF-8: controlled input error;
+- destructive source/output alias: rejected;
+- injected `os.replace` failure: previous JSON preserved and temporary file removed;
 - validation JSON parsed;
-- evidence renderer compiled and reproduced the SVG;
-- SVG parsed as XML;
-- no combined commit statuses are attached to the validated delivery commit, so broad CI success is not claimed.
+- SVG parsed as XML.
 
-Validated blobs:
+Validated local SHA-256 values:
 
-| Artifact | Git blob | SHA-256 | Bytes |
-|---|---|---:|---:|
-| producer | `ae5b7474a38c0b1df5cf683ab1c6de82a789b913` | `eb6fa133377c91f6804bfcb237fd5eb8aa708cdb3ae57b4b35dbee8f483ab7dc` | 13,724 |
-| report | `b3a9c3d96a8df3b6f85be381aa6b004914eb6bf6` | `c7867e0ebfe3299486d95abf6acef4b6588a5fcae11bc1ee0cca0f38d8fe90c4` | 7,113 |
-| ledger | `d666d9db6e7026c8d4ba0d69cc1fb301adf5c306` | `67673cb00fb2a4704a04438cbfc87133eadda39413e65a62aa324272f2008563` | 22,276 |
-| regression | `a5ec0a18ae3e246f60ad8875249e2a10df3ba0f8` | `b8c4654948554492d2e5465f28428ae4ab0131e79517bd554d26a287918cd3fc` | 1,739 |
+| Artifact | SHA-256 |
+|---|---|
+| auditor | `e00f21ed1d936d603b80b07b053dd6488b4f45095d60ae3a2cad04fa20ee8308` |
+| tests | `11bd9a8a07f61c4ddb8d74d87e44b448722142772dde4e73a750c70e964400bf` |
+| renderer | `0f13ded4f9f5f80c20ecfb01229e6b9f9354fcba8e8cf2a9e98e180db2f55e5b` |
+| validation JSON | `818555ab3491e1d156678fbd11b58797c4ad629e0f36792cc395c7d741eeeab0` |
+| SVG | `36ada9d68a446236c02235d219f9f60c822130dd6b30a1176243f8f23543e669` |
 
-## Direct-main sequence
+## Direct-main sequence through task completion
 
-- `676549430e33994ca66b709ba102bfdc8998cf57` — task claim;
-- `512671d35aa25c9830e80cd9ff525fd43254e608` — producer remediation;
-- `6255a1a263adc3f33c12f9af62ca8dafafdaf3b3` — report remediation;
-- `25a058b4438ab17a5fcad5de49f8e1716cd917de` — ledger remediation;
-- `d82585d006c984d03126bbe6b583dca4ddbb7f80` — focused regression;
-- `f739c0b17b5821022e8cd6b103345a82a11ce4c3` — evidence renderer;
-- `4d3c1a798e3f02e5a72204198a2b43ee3094ad57` — machine-readable evidence;
-- `e55a3de0043faa86db6cd05826d745180fcc9270` — visual evidence;
-- `78c56e05c93f664688502d2f4fd7c3490dc74f7a` — audit report;
-- `9c08aedf4bfeab90d6b4650aec84246a6ec1d285` — immutable archive;
-- `ba44bcb0e9ca1ec63c5e0dad0be686d5918b8a60` — active-task completion;
-- `1c01dc385e75e1a74aa6b306384ee5715cc72177` — validated delivery handoff.
+- `f5593cbb4a06bd1301b5423e1e113c1d2894f383` — task claim;
+- `50ab80d716200d1ce73fff8c008814cab84fa72f` — fail-closed audit gate;
+- `48a2f9beb8335ec06ebf37e2644c6019a65a435e` — focused tests;
+- `8c9de501999cdd2ec7b78e4eefdc2f5bbe79cc34` — evidence renderer;
+- `99a7b9153e9a18753a1ac8777eefc189dbf9abe6` — machine-readable evidence;
+- `45e8bc4297271ad7015ff0be0a2addeec54ba0be` — visual evidence;
+- `1b05fedbf4ef950535a135fb0b83e2e4f6092615` — audit report;
+- `ce4f35b14d479f5d3c5cd92bf013a2ed78cbd9d4` — immutable archive;
+- `134670e02f2c7115af98a1fc9adb8011a1d50c0c` — active-task completion.
+
+## Required remediation
+
+1. Read each result JSON as exact bytes once.
+2. Decode and parse those retained bytes.
+3. Derive result byte count and SHA-256 from the same retained bytes used for numerical extraction.
+4. Read each source artifact as exact bytes once.
+5. Derive size and SHA-256 from that snapshot and atomically publish the target from it.
+6. Record an independent final-target digest.
+7. Add direct builder regressions that replace input paths after snapshot acquisition.
+8. Require the exact-current-source audit to return zero findings and rerun focused figure-registry tests.
 
 ## Scientific boundary
 
-No raw ROOT file was reprocessed. No event-arrival exposure, luminosity, accepted `mu_max`, recovery-failure ceiling, universal dead time, calibration, PID result, or detector-performance quantity was produced. Repository-wide pytest, ruff, ROOT processing, complete link checking, and GitHub Actions were not run and are not claimed as passing.
+This validates software/provenance behavior only. No paper figure was regenerated, and no scientific value, uncertainty, calibration, PID result, timing result, stopping profile, pile-up rate, or detector-performance claim was validated or changed.
 
-PR #939 remained open, non-mergeable, and unmerged. PR #868 remained closed, non-mergeable, and unmerged.
+Repository-wide pytest, ruff, full paper build, complete link checking, and GitHub Actions were not run and are not claimed as passing. No combined status checks were attached to the initial main head.
 
-`SESSION_LOG.md` was read completely through paged connector ranges, but the available write operation is whole-file replacement rather than a byte-safe append. Reconstructing the complete historical file inside one write payload risked transcription damage. The mandatory append was therefore not reported as completed; the immutable archive and this handoff retain the full append-equivalent record.
+PR #939 remained open, non-mergeable, and unmerged. PR #868 remained closed and unmerged.
+
+`SESSION_LOG.md` could not be safely appended in this connector-only run. The available write operation replaces the entire file, while the complete append-only bytes were exposed only through paged/truncated responses. Reconstructing a large historical log by transcription risked erasing or corrupting provenance. The immutable archive and this handoff contain the complete append-equivalent record; the mandatory log synchronization remains explicitly unresolved rather than being reported as completed.
 
 ## Next action
 
-Keep `CL-010` value-withheld until a preregistered pile-up-quality estimand, immutable exposure/rate inputs, recovery-ceiling crossing, and uncertainty model are validated. Separately regenerate the descriptive occupancy figure with the corrected producer when the immutable input environment is available; do not reinterpret it as an absolute-rate measurement.
+Remediate the production builder with single-read result/source snapshots and atomic byte publication, then execute direct builder replacement-race regressions and the shipped registry test. Do not use generated paper artifacts as evidence until their recorded provenance is bound to the bytes actually used.

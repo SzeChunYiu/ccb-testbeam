@@ -1,17 +1,14 @@
 # Active Task
 
-- **Task ID:** `AUD-TIMING-003-R1`
+- **Task ID:** `AUD-FIG-006-R1`
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T190253Z`
-- **Initial remote main SHA:** `be97e1a1e77de3bba6305f28802d1c876d2d1605`
-- **Trigger:** PR #939 merged after current-main audits had demonstrated event-identity, residual-visualization, and individual-stave-inference defects.
-- **Policy:** `REAL_DATA_CFD_REQUIRES_COMPOSITE_EVENT_KEYS_AND_PAIR_ONLY_INFERENCE`.
-- **Delivered:** collision-safe `(run,event_id)` contract; duplicate stave-row rejection; pair-only inference denial; median-centered full/core residual diagnostics with quantiles and tail counts; nonfinite JSON safeguards; atomic text publication; legacy report/result quarantine; eight regressions; JSON/SVG evidence; detailed audit; immutable archive.
-- **Deterministic results:** event-ID-only control identifies one value while the composite key preserves two events and residuals `[1.0,1.0]`; synthetic full-range underflow/overflow `0/0`, core underflow/overflow `1/1`; individual-stave authorization `false`.
-- **Validation:** Python compilation passed; focused pytest `8 passed in 0.05s`; evidence `VALIDATED` with zero findings; strict JSON and SVG parsing passed; maximum changed Python line length 95.
-- **Scientific boundary:** no ROOT file or beam event was processed; historical PR #939 metrics and PNGs are quarantined, not revalidated; a content-addressed rerun is required.
-- **Unrun:** repository-wide pytest/ruff, producer execution, ROOT hashing, figure regeneration, link inventory, GitHub Actions.
-- **Archive:** `chatgpt_todo/archive/2026-07-26T190253Z_AUD-TIMING-003-R1_CFD_PRODUCTION_SAFEGUARDS.md`.
-- **Acceptance:** software remediation `VALIDATED / COMPLETE`; production physics result `PAIR_ONLY_PENDING_CONTENT_ADDRESSED_RERUN`.
-- **Next:** execute producer v2.0.0 on immutable LUNARC ROOT bytes, review composite-key closure and regenerated diagnostics, then consider pair-level scientific acceptance; do not infer individual staves without validated deconvolution.
-- **Status:** `COMPLETE`
+- **Session stamp:** `2026-07-26T192823Z`
+- **Initial remote main SHA:** `cbc5ef1cc194ae976ffb05a0f7a2305ec8428088`
+- **Trigger:** `AUD-FIG-006` proved that BLOCKED, QUARANTINED, failed, removed, or kind-changed registry entries can leave older managed paper artifacts at canonical paths.
+- **Policy:** `FIGURE_REGISTRY_BUILD_MUST_NOT_LEAVE_STALE_ARTIFACTS`.
+- **Scope:** implement a complete per-entry managed-output inventory; reconcile previous report paths against the current registry; remove stale outputs for non-PASS, failed, removed, and kind/suffix-changed entries; reject path escape or unsafe prior-report paths; roll managed artifacts back if final report publication fails; add direct regressions and reproducible JSON/SVG evidence.
+- **Assumptions:** `build_report.json` is the authoritative prior managed-output manifest when present; no scientific value is authorized merely because an artifact exists; unrelated files beneath the output directory must be preserved.
+- **Files:** `tools/figure_registry/builder.py`, focused tests, remediation evidence/report, `chatgpt_todo/` archive/handoff/session records, and directly affected coordination indexes.
+- **Validation plan:** reconstruct exact current sources locally; compile changed Python; run existing figure-registry integrity suites plus new direct lifecycle regressions; run the exact-source stale-artifact auditor; parse JSON/SVG; inspect diffs and line lengths; verify remote-main delivery without force-push.
+- **Progress:** `ACTIVE`.
+- **Acceptance target:** focused software remediation `VALIDATED / COMPLETE`; no paper or detector-performance claim changed.

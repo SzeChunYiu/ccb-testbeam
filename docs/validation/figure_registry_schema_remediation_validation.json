@@ -1,0 +1,104 @@
+{
+  "acceptance_boundary": "Validates registry schema, disposition mapping, source-artifact handling, and focused builder behavior only. No figure value, uncertainty, or detector-performance claim is validated.",
+  "base_main": "67e019d5359d76cc82fa0634a8ae2161dd2a464c",
+  "changed_files": {
+    "tests/test_figure_registry.py": {
+      "sha256": "2214bdf9d7330a5506f7b640c49e3eacfb7211bd8f944f96f101abc34cb1e888",
+      "size_bytes": 10334
+    },
+    "tools/audit/render_figure_registry_schema_remediation_evidence.py": {
+      "sha256": "f6641b23d6bdaaa3e54c2d5271374d075dd14db933fa61558c9976a5d6d4379a",
+      "size_bytes": 2740
+    },
+    "tools/figure_registry/__init__.py": {
+      "sha256": "6a4e6b88e105a29e5546aa107156175a2949c989aba0ab1372d518824421dae0",
+      "size_bytes": 582
+    },
+    "tools/figure_registry/builder.py": {
+      "sha256": "50cbd6942472409398463de37d5f48dcb967c6739d2f957d282ab5a94baf3908",
+      "size_bytes": 13354
+    },
+    "tools/figure_registry/registry.py": {
+      "sha256": "31bacbfedc2e9fb2f9ce4e67f53d3b531eb3869b50c243719e373ee0775fcb7d",
+      "size_bytes": 6677
+    }
+  },
+  "committed_blobs": {
+    "tests/test_figure_registry.py": "1d0037ae33be3d6f56728682209dd41aa791c35e",
+    "tools/audit/render_figure_registry_schema_remediation_evidence.py": "a51193ed438ba20ac3c1aba9b64de6b0407ffc2a",
+    "tools/figure_registry/__init__.py": "5ae7cb1d3549216b510552b2d97a63450e9ce7dc",
+    "tools/figure_registry/builder.py": "ef6e11cfac3e9eacdabfb146ec7586e8764fceb1",
+    "tools/figure_registry/registry.py": "b1381ccc471eb4711251cb2d0471950f60610c68"
+  },
+  "implementation_commits": [
+    ["6b5b8d4d8262a9b0021b91908867cda96ccbd6dc", "registry schema"],
+    ["413c7d931fde80b65d587803dfab9181b8d5b507", "builder disposition map"],
+    ["bd7f41d9ed4e0d6b26fc4ddc500c9f68e79ec15d", "public exports"],
+    ["bd46218b36c1169bacdd904844edab7385693f40", "focused tests"],
+    ["d9b0637e734edf4ee5f7d00ced94adc114a18adb", "evidence renderer"]
+  ],
+  "inventory": {
+    "allowed_kinds": ["figure_sourced", "illustrative", "quantitative"],
+    "allowed_statuses": [
+      "BLOCKED", "EXTERNAL_BLOCKER", "GATED", "ILLUSTRATIVE",
+      "MC_METHOD_CLOSURE", "PARTIAL", "PRELIMINARY", "SIMULATION_RESULT",
+      "SUPERSEDED", "TENSION", "VALIDATED"
+    ],
+    "former_audit_findings": 9,
+    "n_allowed_statuses": 11,
+    "n_entries": 19,
+    "n_used_kinds": 3,
+    "n_used_statuses": 10,
+    "structural_findings_after_fix": [],
+    "used_kinds": ["figure_sourced", "illustrative", "quantitative"],
+    "used_statuses": [
+      "BLOCKED", "EXTERNAL_BLOCKER", "GATED", "ILLUSTRATIVE",
+      "MC_METHOD_CLOSURE", "PARTIAL", "SIMULATION_RESULT", "SUPERSEDED",
+      "TENSION", "VALIDATED"
+    ]
+  },
+  "policy": "FIGURE_REGISTRY_STATUS_MUST_MAP_EXPLICITLY_TO_BUILD_DISPOSITION",
+  "repository_inputs": {
+    "paper/figures.yaml": {
+      "git_blob": "5d03f284fd2e018fcda786313f46c64ea7a20105"
+    },
+    "tests/test_figure_registry.py": {
+      "git_blob_before": "60d6368e27a51ac6630b46d4a2333c55e961c3f9"
+    },
+    "tools/figure_registry/__init__.py": {
+      "git_blob_before": "3b918efcc9a7f9263cfc707eddeadfc64eaf5440"
+    },
+    "tools/figure_registry/builder.py": {
+      "git_blob_before": "de0a84ca4bde2c66f2482f1ff8ce2ffbdcbe95d2"
+    },
+    "tools/figure_registry/registry.py": {
+      "git_blob_before": "0828d42c50e697bdc793d46d8bd23c4a57e3054d"
+    }
+  },
+  "status": "VALIDATED",
+  "status_dispositions": [
+    ["BLOCKED", "QUARANTINED"],
+    ["EXTERNAL_BLOCKER", "BLOCKED"],
+    ["GATED", "QUARANTINED"],
+    ["ILLUSTRATIVE", "ILLUSTRATIVE"],
+    ["MC_METHOD_CLOSURE", "QUARANTINED"],
+    ["PARTIAL", "QUARANTINED"],
+    ["PRELIMINARY", "CONDITIONAL"],
+    ["SIMULATION_RESULT", "QUARANTINED"],
+    ["SUPERSEDED", "QUARANTINED"],
+    ["TENSION", "BUILD"],
+    ["VALIDATED", "BUILD"]
+  ],
+  "task_id": "AUD-FIG-002",
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/figure_registry/registry.py tools/figure_registry/builder.py tools/figure_registry/__init__.py tests/test_figure_registry.py tools/audit/render_figure_registry_schema_remediation_evidence.py",
+      "pytest -q tests/test_figure_registry.py"
+    ],
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest_result": "...........                                                              [100%]\n11 passed in 0.52s",
+    "python": "3.13.5",
+    "registry_snapshot_method": "CONNECTOR_INSPECTED_STRUCTURAL_FIELD_COPY",
+    "registry_snapshot_note": "The local validation fixture reproduces all 19 shipped entry IDs and every structural field consumed by validate_registry; paper/figures.yaml itself was not byte-downloaded because github.com DNS was unavailable in the execution container."
+  }
+}

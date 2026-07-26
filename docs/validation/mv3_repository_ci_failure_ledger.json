@@ -1,0 +1,76 @@
+{
+  "acceptance_boundary": "This ledger makes the blocker reproducible. It does not authorize merging while the repository-wide gate is red and does not label failures pre-existing without a paired baseline run.",
+  "candidate": {
+    "failure_count": 42,
+    "failure_messages_sha256": "ca0da09ce69fdfc08de9d563408578c6c15c2a4e00f0eaafb0625d2cb76760e5",
+    "failure_node_ids_sha256": "7dd27b3917ca032565082c130073cedfca3c6c536b9e8013487f2fce94e393ee",
+    "family_counts": {
+      "chapter8_claim_validator": 1,
+      "clusterd_claim_governance": 2,
+      "deltae_data_bridge": 1,
+      "figure_registry": 2,
+      "mv3_legacy_claim_rows": 1,
+      "mv4_legacy_claim_rows": 2,
+      "mv6_pca_claim_rows": 4,
+      "stopping_power_compare": 23,
+      "wiki_claim_binding": 6
+    },
+    "full_entries_retained_in_artifact": true,
+    "signature_counts": {
+      "CLI_EXIT_STATUS_MISMATCH": 2,
+      "CURRENT_ARTIFACT_FAILS_OWN_ACCEPTANCE_TEST": 4,
+      "EXPECTED_DIAGNOSTIC_TEXT_MISMATCH": 1,
+      "EXPECTED_FAIL_CLOSED_EXCEPTION_ABSENT": 6,
+      "MISSING_REFERENCE_SUMMARY_PROVENANCE": 1,
+      "MISSING_SIMULATION_SUMMARY_BASIS": 14,
+      "NONSTRICT_REGISTRY_EXIT_CONTRACT_MISMATCH": 1,
+      "OTHER_ASSERTION_OR_INPUT_MISMATCH": 5,
+      "PCA_SUMMARY_COMPONENT_MISMATCH": 2,
+      "VALIDATOR_FINDING_CODE_DRIFT": 1,
+      "VALIDATOR_RETURNED_EMPTY_ROWS": 2,
+      "WIKI_CANONICAL_SECTION_MISSING": 3
+    },
+    "source": {
+      "bytes": 85803,
+      "path": "artifact:8625795443/pytest.log",
+      "sha256": "c48e98e20e5606b0d98a41f03f586dc8d012338fc7cc7f7cffb1847155d707ae",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "summary": {
+      "duration": "60.43s (0:01:00)",
+      "failed": 42,
+      "passed": 775,
+      "skipped": 1,
+      "warnings": 6
+    }
+  },
+  "candidate_test_prefixes": [
+    "tests/test_mv3_chi2_producer_contract.py",
+    "tests/test_mv3_selection_weighted_contract.py",
+    "tests/test_audit_mv3_chi2_support.py"
+  ],
+  "causal_attribution": {
+    "introduced": null,
+    "mode": "UNRESOLVED_SINGLE_RUN",
+    "persistent": null,
+    "resolved": null,
+    "statement": "A single candidate log cannot establish that cross-area failures are pre-existing; an exact same-environment baseline run is required."
+  },
+  "direct_candidate_test_failure_count": 0,
+  "github_actions": {
+    "artifact_id": 8625795443,
+    "artifact_sha256": "d16b0db6177e79fb30bcc682160d5460c30ea17f685b4a709c454f6c565adafa",
+    "conclusion": "failure",
+    "job_id": 89739575939,
+    "pytest_log_sha256": "c48e98e20e5606b0d98a41f03f586dc8d012338fc7cc7f7cffb1847155d707ae",
+    "repository": "SzeChunYiu/ccb-testbeam",
+    "ruff_result": "All checks passed!",
+    "run_id": 30181818642,
+    "workflow": "MC Validation CI"
+  },
+  "policy": "REPOSITORY_CI_BLOCKER_MUST_HAVE_CONTENT_ADDRESSED_FAILURE_LEDGER",
+  "schema_version": 1,
+  "status": "VALIDATED",
+  "tool": "tools/audit/classify_ci_failure_log.py",
+  "tool_version": "1.0.0"
+}

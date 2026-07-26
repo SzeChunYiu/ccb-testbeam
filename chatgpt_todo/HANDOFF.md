@@ -6,7 +6,8 @@
 - **Stamp:** `2026-07-26T052912Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `ed3633055695184bd5ef68ab90bb6951e81d9354`
-- **Validated implementation/evidence head before handoff:** `122baac3bb3bb704a2ab97f5efd76843a24439b2`
+- **Validated delivery/handoff commit:** `e3fc7d944f2ef3b7e5798613a62efd7918ddd15e`
+- **Remote main after validated delivery:** `e3fc7d944f2ef3b7e5798613a62efd7918ddd15e`
 - **Destination:** direct commits to `main`; no task branch, force-push, history rewrite, PR merge, or deletion of unrelated work.
 - **Focused acceptance:** canonical event-table output boundary `VALIDATED / COMPLETE`.
 - **Scientific acceptance:** A-002 physics remains `PARTIAL / BLOCKED`.
@@ -134,7 +135,7 @@ would destroy unreviewed provenance. Explicit missing-engine fallback with fail-
 checks and atomic file publication was selected. Transactional whole-bundle publication remains a
 separate higher-level method already represented by the strict runner.
 
-## Direct-main commits before handoff
+## Direct-main commits
 
 - `80ec61f6de1187301a5205197b9dfe2ec63e3fc1` — task claim;
 - `4745faec729b35d7018c2df9ed39bedce72567c9` — implementation;
@@ -146,17 +147,19 @@ separate higher-level method already represented by the strict runner.
 - `3fe3acc179e49d44d36589c530a7113016af0847` — visual evidence;
 - `e24f7e6226bea22ac2ed7b8b5e56f7d2acf12f2b` — audit report;
 - `44aeef79cb928c3f2dd5f8438b399494c872453a` — immutable archive;
-- `122baac3bb3bb704a2ab97f5efd76843a24439b2` — active-task completion.
+- `122baac3bb3bb704a2ab97f5efd76843a24439b2` — active-task completion;
+- `e3fc7d944f2ef3b7e5798613a62efd7918ddd15e` — validated delivery handoff.
 
-GitHub returned successful direct-main commit SHAs for every write. No force update was used.
+GitHub returned successful direct-main commit SHAs for every write. Post-write history confirmed the
+validated handoff and all focused ancestors consecutively on remote `main`; no force update was used.
 
 ## Coordination limitation
 
-`BACKLOG.md`, `MASTER_INDEX.md`, and `SESSION_LOG.md` were reviewed but not replaced before this
-handoff. The connector exposes complete-file replacement rather than byte-safe patch/append, and the
-long shared files were available only in paged or truncated responses. Replacing a partial
-reconstruction could erase unrelated or append-only provenance. This unmet mandatory synchronization
-step is recorded explicitly here and in the immutable archive rather than reported as complete.
+`BACKLOG.md`, `MASTER_INDEX.md`, and `SESSION_LOG.md` were reviewed but not replaced during this run.
+The connector exposes complete-file replacement rather than byte-safe patch/append, and the long
+shared files were available only in paged or truncated responses. Replacing a partial reconstruction
+could erase unrelated or append-only provenance. This unmet mandatory synchronization step is
+recorded explicitly here and in the immutable archive rather than reported as complete.
 
 ## Scientific boundary and next action
 

@@ -1,0 +1,53 @@
+{
+  "acceptance": {
+    "physics_result": "NOT_AUTHORIZED",
+    "software_contract": "VALIDATED"
+  },
+  "audit_version": "1.0.0",
+  "finding_count": 0,
+  "findings": [],
+  "former_behavior_control": {
+    "csv_fallback_exists": true,
+    "demonstrates_broad_fallback": true,
+    "injected_failure": "PermissionError",
+    "parquet_partial_exists": true,
+    "published_path": "events.csv.gz",
+    "writer_calls": [
+      "parquet",
+      "csv"
+    ]
+  },
+  "limitations": [
+    "No exact A-002 production table was processed.",
+    "The full output directory remains non-transactional; this unit hardens event-table publication only.",
+    "Repository-wide pytest, ruff, ROOT processing, link checking, and GitHub Actions were not run."
+  ],
+  "policy": "DELTAE_EVENT_TABLE_OUTPUT_MUST_FAIL_CLOSED_AND_NOT_ALIAS_INPUT",
+  "repository_evidence": {
+    "former_core_lines": "_write_table catches Exception and falls back to CSV; main writes outputs directly",
+    "former_front_door_blob": "be00a58dbbc3c2b9de424c80bea3b5a4be6fe119",
+    "retained_core_blob": "fe5dd5e4673f32fa5a4b94776531f2b392e12414"
+  },
+  "schema": "ccb-deltae-table-output-audit/1",
+  "session": {
+    "initial_main_sha": "ed3633055695184bd5ef68ab90bb6951e81d9354",
+    "stamp": "2026-07-26T052912Z",
+    "task_id": "AUD-DELTAE-008"
+  },
+  "source": {
+    "bytes": 14703,
+    "path": "scripts/single_stave/deltaE_E.py",
+    "sha256": "a0ad0b288cd4b5494fa8461089d9a0d192049690a9b8bc15f0cd3036e61b876d"
+  },
+  "status": "VALIDATED",
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/single_stave/deltaE_E.py tools/audit/audit_deltae_table_output_contract.py tests/test_deltae_table_output_contract.py tests/test_audit_deltae_table_output_contract.py",
+      "PYTHONPATH=. pytest -q tests/test_deltae_table_output_contract.py tests/test_audit_deltae_table_output_contract.py"
+    ],
+    "pandas": "2.2.3",
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest": "14 passed in 0.06s",
+    "python": "3.13.5 (main, May  5 2026, 21:05:52) [GCC 14.2.0]"
+  }
+}

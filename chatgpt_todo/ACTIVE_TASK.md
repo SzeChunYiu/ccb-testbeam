@@ -1,20 +1,13 @@
 # Active Task
 
-- **Task ID:** `AUD-FIG-002`
+- **Task ID:** `AUD-LEDGER-002`
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T073041Z`
-- **Initial remote main SHA:** `67e019d5359d76cc82fa0634a8ae2161dd2a464c`
-- **Scope:** remediate the paper figure registry and builder so the shipped scientific evidence vocabulary is structurally valid while non-authorizing states cannot become paper figures merely because artifacts exist.
-- **Policy:** `FIGURE_REGISTRY_STATUS_MUST_MAP_EXPLICITLY_TO_BUILD_DISPOSITION`.
-- **Implementation:** the registry now accepts eleven controlled statuses and three kinds, maps every status explicitly to `BUILD`, `CONDITIONAL`, `BLOCKED`, `QUARANTINED`, or `ILLUSTRATIVE`, and applies path requirements by kind and authorization. The builder records scientific/runtime disposition, never reads numerical files for quarantined or blocked states, copies source-only/illustrative artifacts with byte/hash provenance, supports nested result keys, rejects nonfinite scalars, and publishes its report atomically.
-- **Validation:** `python -m py_compile ...` passed; `pytest -q tests/test_figure_registry.py` returned `11 passed in 0.52s`; validation JSON and SVG parsed; changed Python lines are at most 97 characters. The local shipped-registry fixture is explicitly a connector-inspected structural-field copy because the execution container could not resolve `github.com`; an exact shipped-file regression is committed for a complete checkout.
-- **Evidence:**
-  - `docs/validation/figure_registry_schema_remediation_validation.json`
-  - `docs/validation/figure_registry_schema_remediation.svg`
-  - `docs/validation/figure_registry_schema_remediation_audit.md`
-  - `chatgpt_todo/archive/2026-07-26T073041Z_AUD-FIG-002_SCHEMA_REMEDIATION.md`
-- **Core delivery through:** `ce9a647f93126aeb55545627ce98c86da16f9c8c`.
-- **Focused acceptance:** registry/builder remediation `VALIDATED / COMPLETE`.
-- **Repository acceptance:** cumulative paper-figure scientific review remains `PARTIAL`; production inputs and figures were not regenerated or scientifically revalidated.
-- **Scientific boundary:** no figure value, uncertainty, source result, calibration, PID, timing, stopping, pile-up, or detector-performance claim is validated by this task.
-- **Status:** `COMPLETE`
+- **Session stamp:** `2026-07-26T080450Z`
+- **Initial remote main SHA:** `f28b166c836b3055b2ff1e110c15767ba075e72b`
+- **Scope:** prevent the canonical claim-ledger schema validator from overwriting the ledger or publishing truncated validation artifacts when JSON/SVG destinations alias inputs, each other, or fail during replacement.
+- **Policy:** `CLAIM_LEDGER_VALIDATION_OUTPUTS_MUST_BE_DISTINCT_AND_ATOMIC`.
+- **Repository facts under review:** validator v1.0.0 Git blob `1961e63756b734db30a4a9a8037a756c291afe25` writes JSON and SVG directly to requested final paths and performs no output-alias check.
+- **Files:** `tools/audit/validate_claim_ledger_schema.py`; focused output-safety tests; deterministic JSON/SVG evidence; audit report; coordination records.
+- **Validation plan:** preserve existing schema behavior; reproduce the former destructive direct-write algorithm on a synthetic ledger; reject direct/symlink/hard-link aliases; inject `os.replace` failure; verify previous-output preservation, temporary cleanup, controlled status 2, compilation, focused pytest, JSON parse, SVG parse, and line-length limits.
+- **Scientific boundary:** software/provenance validation only; no claim value, uncertainty, source, simulation, calibration, or detector-performance result is authorized by this task.
+- **Status:** `ACTIVE`

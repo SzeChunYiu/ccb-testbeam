@@ -6,6 +6,9 @@
 - **Stamp:** `2026-07-26T083435Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `a8c446732e9a73d6880b313939868162ec4e2d74`
+- **Validated delivery/handoff commit:** `5defb96def46ed432260adf5322857c469f7074b`
+- **Study-ledger synchronization commit:** `f125e962d6c2b144a4ad29c555cc6a9b1a13524e`
+- **Remote main confirmed through:** `f125e962d6c2b144a4ad29c555cc6a9b1a13524e`
 - **Reviewed PR:** #939, head `ce81f22ef57c5db0b658737c0d9ced4c7fc69949`
 - **Reviewed source blob:** `ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
@@ -62,10 +65,12 @@ Added:
 Updated:
 
 - `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/STUDY_REVIEW_LEDGER.md`
 - `chatgpt_todo/HANDOFF.md`
 
 A review comment was posted on PR #939 with the exact defect, evidence paths, remediation conditions,
-and scientific boundary.
+and scientific boundary. A post-comment PR read confirmed it remained open, unmerged, head
+`ce81f22ef57c5db0b658737c0d9ced4c7fc69949`, and reported non-mergeable.
 
 ## Validation
 
@@ -97,7 +102,7 @@ The complete PR checkout could not be materialized because the execution contain
 `github.com`. The audit input is explicitly labelled
 `CONNECTOR_INSPECTED_EXACT_RELEVANT_SOURCE_COPY`; exact PR head and full source Git blob are recorded.
 
-## Direct-main sequence through this handoff
+## Direct-main sequence
 
 - `2c0165367f8567a03c629ff6926bac38442a9a5f` — task claim;
 - `c6c74990ac3f2e031a7d17320b58970b4518a7c1` — audit gate;
@@ -107,10 +112,13 @@ The complete PR checkout could not be materialized because the execution contain
 - `d52123f052c8fb4291aa0e2ed0cae81455b25a9d` — visual evidence;
 - `f9d26d018177bdf13f649edaa5338aca93c3e0eb` — audit report;
 - `60566b36f2fb931bdc47663d480142c1f837e420` — immutable archive;
-- `15bf294136c19d4b9fb0ac4a6c2ea0fa424c965e` — active-task completion.
+- `15bf294136c19d4b9fb0ac4a6c2ea0fa424c965e` — active-task completion;
+- `5defb96def46ed432260adf5322857c469f7074b` — validated delivery handoff;
+- `f125e962d6c2b144a4ad29c555cc6a9b1a13524e` — study-ledger synchronization.
 
-GitHub contents writes returned a successful direct-main commit SHA for each file. The connector does
-not return a conventional terminal `git push` transcript; none is claimed.
+GitHub contents writes returned a successful direct-main commit SHA for each file. Recent remote
+history confirmed the focused sequence through `f125e962d6c2b144a4ad29c555cc6a9b1a13524e` on `main`.
+The connector does not return a conventional terminal `git push` transcript; none is claimed.
 
 ## Required remediation
 
@@ -138,7 +146,9 @@ Repository-wide pytest/ruff, full PR tests, ROOT processing, result/figure regen
 inventory, and GitHub Actions were not run. PR #939 had no attached combined commit statuses at
 inspection time. PR #868 was not changed or merged.
 
-`SESSION_LOG.md` and aggregate ledgers still require a safe append/synchronization commit. Their
-complete append-only bytes are exposed through paged connector responses; partial whole-file
-replacement is prohibited. The immutable archive above preserves the complete session record until
-that synchronization is safely performed.
+`SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, `BLOCKERS.md`, `CLAIM_EVIDENCE_MATRIX.md`,
+`CODE_RESULT_MAP.md`, and `VISUALIZATION_MATRIX.md` were not replaced because their complete current
+bytes are available only through paged connector responses and the available write operation is
+whole-file replacement. Partial reconstruction could erase unrelated or append-only provenance. The
+immutable archive and this handoff retain the complete append-equivalent record; the focused study
+ledger was safely synchronized from a complete current read.

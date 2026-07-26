@@ -2,140 +2,143 @@
 
 ## Session
 
-- **Task ID:** `AUD-LEDGER-002`
-- **Stamp:** `2026-07-26T080450Z`
+- **Task ID:** `AUD-TIMING-001`
+- **Stamp:** `2026-07-26T083435Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `f28b166c836b3055b2ff1e110c15767ba075e72b`
-- **Validated delivery/handoff commit:** `60fdeb3b1cb05bab91de88c3cdc3d9a60fa75728`
-- **Remote-main confirmation commit:** `4fb75a0bc8119521314bfc4139b2e4abb6381997`
-- **Remote main after validated delivery confirmation:** `4fb75a0bc8119521314bfc4139b2e4abb6381997`
-- **Destination:** direct sequential commits to `main`; no task branch, pull request, force-push, or history rewrite.
-- **Focused acceptance:** claim-ledger schema-validator output safety `VALIDATED / COMPLETE`.
-- **Repository acceptance:** claim-level scientific review remains `PARTIAL` under `AUD-LEDGER-001`.
+- **Initial remote main:** `a8c446732e9a73d6880b313939868162ec4e2d74`
+- **Reviewed PR:** #939, head `ce81f22ef57c5db0b658737c0d9ced4c7fc69949`
+- **Reviewed source blob:** `ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7`
+- **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
+- **Focused acceptance:** event-identity audit tooling/evidence `VALIDATED / COMPLETE`.
+- **Production acceptance:** PR #939 event-pairing contract `FLAWED / PARTIAL`; no merge is authorized by this handoff.
 
-## Work completed
+## Finding
 
 Policy:
 
-`CLAIM_LEDGER_VALIDATION_OUTPUTS_MUST_BE_DISTINCT_AND_ATOMIC`
+`REAL_DATA_CFD_EVENTS_MUST_USE_RUN_AND_EVENT_ID_TOGETHER`
 
-The pre-change validator was version `1.0.0`, Git blob
-`1961e63756b734db30a4a9a8037a756c291afe25`. Its JSON and SVG writers wrote
-directly to requested final paths and performed no alias check between the input
-claim ledger, JSON output, or SVG output.
+The PR producer retains `run`, `event_id`, and `stave` on each selected pulse, but subsequently:
 
-An independent reconstruction of the exact former JSON publication operation
-changed a valid synthetic ledger SHA-256 from
-`8ac3fd4271ac5f74666ff705e06e01463e2884fdb61a02542697faa43884b9c7`
-to
-`02256a1562f272f5010ea9418392880323338835e41adc729a0ef020c2ed902d`
-when input and output were the same path. This is explicitly an algorithm
-reconstruction, not execution of the historical Git blob.
+- pivots aligned peak samples on `event_id` alone in `select_in_time`;
+- reapplies selected keys with `df["event_id"].isin(keep)`;
+- pivots corrected pair times on `event_id` alone in `pair_analysis`;
+- repeats the event-id-only pivot in residual plotting.
 
-Validator version `1.1.0` now:
+For multi-run input, `EVENTNO` must be treated as run-local unless immutable input evidence proves
+global uniqueness. Dropping `run` permits cross-run stave pairing and duplicate-index failure.
 
-- rejects resolved-path aliases among the ledger, JSON output, and SVG output;
-- detects symlink and existing hard-link identity;
-- rejects JSON and SVG requests targeting one file;
-- serializes strict UTF-8 to a unique same-directory temporary file;
-- flushes and calls `fsync` before `os.replace`;
-- removes temporary files after failure;
-- preserves a previous final artifact when replacement fails;
-- maps publication failure to controlled CLI status `2`;
-- records the output-safety policy in validation payloads;
-- returns output byte count, SHA-256, and publication method from the atomic writer.
+## Independent controls
 
-The existing 43-column schema semantics were preserved. The current tracked
-schema record reports 26/26 exact-width rows and zero width findings. Exact width
-prevents shifted late-field interpretation but does not validate scientific
-values, uncertainties, sources, truth types, statuses, or public wording.
+### False cross-run pair
+
+`run58/event7/B6` plus `run59/event7/B8` yields:
+
+- current event-id-only pair count: `1`;
+- composite `(run,event_id)` pair count: `0`.
+
+### Duplicate run-local EVENTNO
+
+Two complete B6/B8 pairs in runs 58 and 59 sharing `event_id=9` yield:
+
+- current event-id-only pivot: `ValueError`;
+- composite-key pair count: `2`.
+
+These controls demonstrate the code-path failure modes. They do not establish that the retained
+production sample actually collided, because exact ROOT/event-ID bytes were unavailable.
+
+## Work delivered
+
+Added:
+
+- `tools/audit/audit_real_data_cfd_event_identity.py`
+- `tests/test_audit_real_data_cfd_event_identity.py`
+- `tools/audit/render_real_data_cfd_event_identity_evidence.py`
+- `docs/validation/real_data_cfd_event_identity_validation.json`
+- `docs/validation/real_data_cfd_event_identity.svg`
+- `docs/validation/real_data_cfd_event_identity_audit.md`
+- `chatgpt_todo/archive/2026-07-26T083435Z_AUD-TIMING-001_EVENT_IDENTITY.md`
+
+Updated:
+
+- `chatgpt_todo/ACTIVE_TASK.md`
+- `chatgpt_todo/HANDOFF.md`
+
+A review comment was posted on PR #939 with the exact defect, evidence paths, remediation conditions,
+and scientific boundary.
 
 ## Validation
 
-Executed on the validated source/test fixture:
-
 ```text
 python -m py_compile \
-  tools/audit/validate_claim_ledger_schema.py \
-  tests/test_validate_claim_ledger_schema.py \
-  tests/test_claim_ledger_schema_output_safety.py \
-  tools/audit/render_claim_ledger_output_safety_evidence.py
+  tools/audit/audit_real_data_cfd_event_identity.py \
+  tests/test_audit_real_data_cfd_event_identity.py \
+  tools/audit/render_real_data_cfd_event_identity_evidence.py
 
-pytest -q \
-  tests/test_validate_claim_ledger_schema.py \
-  tests/test_claim_ledger_schema_output_safety.py
+PYTHONPATH=. pytest -q tests/test_audit_real_data_cfd_event_identity.py
 
-19 passed in 0.08s
+6 passed in 0.06s
 ```
 
-Additional results:
+Additional outcomes:
 
-- direct JSON-to-ledger alias: status `2`, input bytes unchanged;
-- symlinked SVG-to-ledger alias: status `2`, input bytes unchanged;
-- JSON/SVG same path: status `2`, no output created;
-- injected `os.replace` failure: status `2`, prior output preserved;
-- temporary files after injected failure: zero;
-- validation JSON parse: passed;
+- current-like source contract: `FLAWED`, six findings, expected exit `1`;
+- corrected composite-key fixture: `VALIDATED`, zero findings;
+- invalid UTF-8: controlled exit `2`;
+- source/output alias: rejected with source unchanged;
+- injected `os.replace` failure: previous output preserved, zero temporary files remain;
+- JSON parse: passed;
 - SVG XML parse: passed;
-- maximum changed Python line length: 96 characters;
-- ruff was unavailable and was not claimed.
+- maximum changed Python line length: 99 characters.
 
-## Files changed
+Local validation environment: Python 3.13.5, pandas 2.2.3, pytest 9.0.2.
 
-- `tools/audit/validate_claim_ledger_schema.py`
-- `tests/test_claim_ledger_schema_output_safety.py`
-- `tools/audit/render_claim_ledger_output_safety_evidence.py`
-- `docs/validation/claim_ledger_output_safety_validation.json`
-- `docs/validation/claim_ledger_output_safety.svg`
-- `docs/validation/claim_ledger_output_safety_audit.md`
-- `chatgpt_todo/archive/2026-07-26T080450Z_AUD-LEDGER-002_OUTPUT_SAFETY.md`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/BACKLOG.md`
-- `chatgpt_todo/MASTER_INDEX.md`
-- `chatgpt_todo/SESSION_LOG.md`
-- `chatgpt_todo/HANDOFF.md`
+The complete PR checkout could not be materialized because the execution container could not resolve
+`github.com`. The audit input is explicitly labelled
+`CONNECTOR_INSPECTED_EXACT_RELEVANT_SOURCE_COPY`; exact PR head and full source Git blob are recorded.
 
-## Validated identities
+## Direct-main sequence through this handoff
 
-- validator blob `55cadb30d52346eb27af2e9dee35e57c05829b52`, 11,977 bytes,
-  SHA-256 `ac4e9d2736a73592fb5f1d689c0613cd1435f0f075c6bf75402d7b4946bfadaf`;
-- focused-test blob `45c63d3a91d2f8403f8ca8fe00e7c014c3653be2`, 3,056 bytes,
-  SHA-256 `7ca9b3795cd6e6da553d4035f73ad06ddac5a4daa34e692477d2fbf824f9acf5`;
-- renderer blob `dd480d2726e8223763f5ecdaffb9483888ef0bd7`;
-- validation JSON blob `9a9f6fb4ad207d3a03ee6d45e3926f8cc4f12831`;
-- visual-evidence blob `47e9498ebf5a58c6087b2426700c6016ef1f3276`.
+- `2c0165367f8567a03c629ff6926bac38442a9a5f` — task claim;
+- `c6c74990ac3f2e031a7d17320b58970b4518a7c1` — audit gate;
+- `7bd52d0e293dc81f8383e1db4f0c964ffbabcb5f` — focused regressions;
+- `934d4682969223e04d5a104398e2d80918d8754b` — evidence renderer;
+- `ce73e8bc98f011b5eaaa20aeab463a010f208f3f` — machine-readable evidence;
+- `d52123f052c8fb4291aa0e2ed0cae81455b25a9d` — visual evidence;
+- `f9d26d018177bdf13f649edaa5338aca93c3e0eb` — audit report;
+- `60566b36f2fb931bdc47663d480142c1f837e420` — immutable archive;
+- `15bf294136c19d4b9fb0ac4a6c2ea0fa424c965e` — active-task completion.
 
-## Direct-main commit sequence
+GitHub contents writes returned a successful direct-main commit SHA for each file. The connector does
+not return a conventional terminal `git push` transcript; none is claimed.
 
-- `bb13b82ce7b3dceadf6624162869294e570e6ca5` — claim task;
-- `1bc72041835d4613c11c25dd6ab6f8ab033b9020` — protect validation outputs;
-- `cc4858817ee3a958d85a4b6d0f40a5bb21106436` — output-safety regressions;
-- `fd1e2b90e9f54775155cd81e00531dec870f8ee9` — evidence renderer;
-- `f5165ba0c631516839fac80602fde42b33245857` — machine-readable evidence;
-- `0282bc6dc91df58fde76ce5302e6d8bc2c9d8f3f` — visual evidence;
-- `6db5e4e22535d1ce11884de63ba196170badc614` — audit report;
-- `f90de3e39283187c53d053ced5d5c3059c6ffc4b` — immutable archive;
-- `0a94cf23ed92a0ef82a8a5e2a9d53dd26f636ddf` — task completion;
-- `76edb4196f12664b2eded72ec292aa2af8d648ae` — backlog synchronization;
-- `7a2111291726685d0c2dddff95ee1e2e6ae3b9b6` — master-index synchronization;
-- `bd0e9254f49f963da96fc0bbafd3c7620c743645` — append session record;
-- `60fdeb3b1cb05bab91de88c3cdc3d9a60fa75728` — validated delivery handoff;
-- `4fb75a0bc8119521314bfc4139b2e4abb6381997` — delivery confirmation in append-only session log.
+## Required remediation
 
-GitHub returned a successful direct-main commit SHA for every contents write.
-Recent remote history confirmed the sequence and confirmation commit on `main`.
-The connector does not produce conventional terminal `git push` text; no such
-output is claimed.
+Before accepting or merging the timing study:
 
-## Scientific boundary and unresolved work
+1. define `EVENT_KEY = ["run", "event_id"]` and use it in every pivot, selection, merge, residual,
+   count, and plot;
+2. reject duplicate `(run,event_id,stave)` rows;
+3. content-address every ROOT input with path, bytes, SHA-256, tree, entries, and per-run key counts;
+4. report row and composite-key cut flow at each selection stage;
+5. regenerate JSON, Markdown, and figures as one reproducible bundle;
+6. compare current and corrected event membership and timing widths;
+7. keep `pair/sqrt(2)` conditional on equal independent stave resolutions and negligible correlated
+   jitter.
 
-This is software/provenance validation only. No claim value, uncertainty,
-source-backed status, ROOT result, simulation, calibration, PID, timing, pile-up,
-stopping distribution, or detector-performance result was produced or authorized.
+## Scientific boundary
 
-Repository-wide pytest, ruff, downstream WIKI/claim validators, ROOT and simulation
-processing, complete link inventory, and GitHub Actions were not run. No status
-checks were attached to the delivered head, so broad CI success is not claimed.
+No raw ROOT file was processed. No channel mapping, waveform calibration, pulse polarity, baseline,
+CFD estimator bias, selection efficiency, bootstrap coverage, core-fit model, pair resolution,
+single-stave resolution, or canonical `CL-002` claim was validated or changed. The audit does not
+assert that the reported 0.899 ns value is false; it establishes that current source cannot prove the
+multi-run identity of its contributing events.
 
-`AUD-LEDGER-001` remains `PARTIAL`: every canonical claim row still requires
-source-backed scientific review and downstream public-document consistency checks.
+Repository-wide pytest/ruff, full PR tests, ROOT processing, result/figure regeneration, complete link
+inventory, and GitHub Actions were not run. PR #939 had no attached combined commit statuses at
+inspection time. PR #868 was not changed or merged.
+
+`SESSION_LOG.md` and aggregate ledgers still require a safe append/synchronization commit. Their
+complete append-only bytes are exposed through paged connector responses; partial whole-file
+replacement is prohibited. The immutable archive above preserves the complete session record until
+that synchronization is safely performed.

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500">
+<rect width="100%" height="100%" fill="white"/>
+<text x="50" y="55" font-family="sans-serif" font-size="28" font-weight="bold">Figure artifact provenance must follow the bytes used</text>
+<text x="50" y="88" font-family="sans-serif" font-size="16">FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES</text>
+<text x="50" y="130" font-family="sans-serif" font-size="18" font-weight="bold">Synthetic replacement controls</text>
+<text x="50" y="165" font-family="monospace" font-size="15">Artifact</text>
+<text x="310" y="165" font-family="monospace" font-size="15">bytes used/copied</text>
+<text x="560" y="165" font-family="monospace" font-size="15">later metadata hash</text>
+<text x="835" y="165" font-family="monospace" font-size="15">match?</text>
+<text x="50" y="220" font-family="sans-serif" font-size="20">Result JSON</text>
+<text x="310" y="220" font-family="monospace" font-size="20">33066bb044c6</text>
+<text x="560" y="220" font-family="monospace" font-size="20">3b6204ea9a2a</text>
+<text x="850" y="220" font-family="sans-serif" font-size="20" font-weight="bold">NO</text>
+<text x="50" y="290" font-family="sans-serif" font-size="20">Source artifact</text>
+<text x="310" y="290" font-family="monospace" font-size="20">baabbed7db11</text>
+<text x="560" y="290" font-family="monospace" font-size="20">5846f2f03f5b</text>
+<text x="850" y="290" font-family="sans-serif" font-size="20" font-weight="bold">NO</text>
+<line x1="50" y1="370" x2="950" y2="370" stroke="black" stroke-width="1"/>
+<text x="50" y="410" font-family="sans-serif" font-size="18" font-weight="bold">Correct method:</text>
+<text x="210" y="410" font-family="sans-serif" font-size="18">read exact bytes once; parse/copy, hash, and size the retained snapshot; publish atomically.</text>
+<text x="50" y="455" font-family="sans-serif" font-size="14">Synthetic software evidence only; no scientific figure value or uncertainty is validated.</text>
+</svg>

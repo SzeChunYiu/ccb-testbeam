@@ -226,7 +226,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"INPUT_ERROR: {exc}", file=sys.stderr)
         return 2
     print(json.dumps(payload, indent=2, sort_keys=True))
-    if payload["status"] in ("VALIDATED", "BLOCKED"):
+    if payload["status"] in ("VALIDATED", "FLAWED", "BLOCKED"):
         print("PASS: canonical Rmax status is honest (VALIDATED/FLAWED/BLOCKED); public wording is consistent.")
         return 0
     print("FAIL: canonical Rmax gate found inconsistent or over-authorizing evidence.")

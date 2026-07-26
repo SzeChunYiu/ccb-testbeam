@@ -2,68 +2,77 @@
 
 ## Session
 
-- **Task ID:** `AUD-FIG-005`
-- **Stamp:** `2026-07-26T170400Z`
+- **Task ID:** `AUD-FIG-006`
+- **Stamp:** `2026-07-26T180117Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `03851ff128a5a351f39c7754e47ac35fe80e0fa0`
-- **Validated implementation/test head:** `bd81bce0fa0714f7473ae946db221e3bbdb918a5`
-- **Validated evidence/archive/active-task head:** `987eea3cb0e5a0efd5259a1b216ca0467781cc01`
-- **Validated handoff commit:** `485ba1b8db2cb3302ccdd4b09e70440f9b40ff54`
-- **Destination:** authenticated sequential commits directly to `main`; no force-push or history rewrite.
-- **Push result:** GitHub contents writes returned successful commit SHAs. Post-write history confirmed the focused implementation, tests, evidence, archive, active-task record, and handoff commit on remote `main`.
-- **Acceptance:** focused software/provenance remediation `VALIDATED / COMPLETE`.
+- **Initial remote main:** `8acfc727a1479ff5b616042e65743b0652900c25`
+- **Validated evidence/archive/active-task head:** `cdc2c0d204eced6ec012d6f8c2e8c946646bf130`
+- **Destination:** authenticated sequential commits directly to `main`; no force-push, branch transport, or history rewrite.
+- **Acceptance:** audit implementation/evidence `VALIDATED / COMPLETE`; production builder contract `FLAWED / PARTIAL`.
 
-## Defect and remediation
+## Defect
 
-Policy: `FIGURE_BUILD_REPORT_MUST_BIND_TO_EXACT_REGISTRY_SNAPSHOT`.
+Policy: `FIGURE_REGISTRY_BUILD_MUST_NOT_LEAVE_STALE_ARTIFACTS`.
 
-The builder previously discarded the exact `RegistrySnapshot` identity and wrote only a registry path to `build_report.json`. Registry parsing errors also bypassed the controlled CLI error boundary.
+The current paper-figure builder can leave older managed outputs at their canonical paths when an entry becomes `BLOCKED` or `QUARANTINED`, raises a per-entry build failure, or disappears from the registry. The current `_process_entry` returns non-PASS records without cleanup, the `FigureRegistryError` handler records `FAIL` without cleanup, and `build` has no reconciliation step for removed IDs.
 
-The builder now reads the registry once through `load_registry_snapshot`, derives entries from those retained bytes, records path/SHA-256/byte count/snapshot method/entry count in every valid or structurally invalid report, preserves the compatibility path field, and converts registry-format failures to one controlled `FigureRegistryError` diagnostic without a traceback. Format-invalid input does not produce a misleading report.
+A deterministic control started with `Q.png` and `Q_source_data.csv`. Both files survived the BLOCKED, failed, and removed-entry current-contract models; the corrected cleanup model left zero files in every scenario. This proves a software/provenance gap, not that a specific committed figure is stale or a numerical value is false.
+
+## Files delivered
+
+- `tools/audit/audit_figure_registry_stale_artifacts.py`
+- `tests/test_audit_figure_registry_stale_artifacts.py`
+- `docs/validation/fixtures/figure_registry_builder_stale_artifact_current.py`
+- `tools/audit/render_figure_registry_stale_artifact_evidence.py`
+- `docs/validation/figure_registry_stale_artifact_validation.json`
+- `docs/validation/figure_registry_stale_artifact.svg`
+- `docs/validation/figure_registry_stale_artifact_audit.md`
+- `chatgpt_todo/archive/2026-07-26T180117Z_AUD-FIG-006_STALE_ARTIFACTS.md`
+- updated `chatgpt_todo/ACTIVE_TASK.md`
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/figure_registry/registry.py \
-  tools/figure_registry/builder.py \
-  tests/test_figure_registry_duplicate_keys.py \
-  tests/test_figure_registry_build_report_provenance.py
+  tools/audit/audit_figure_registry_stale_artifacts.py \
+  tests/test_audit_figure_registry_stale_artifacts.py \
+  tools/audit/render_figure_registry_stale_artifact_evidence.py
 
 PYTHONPATH=. pytest -q \
-  tests/test_figure_registry_duplicate_keys.py \
-  tests/test_figure_registry_build_report_provenance.py
+  tests/test_audit_figure_registry_stale_artifacts.py
 
-12 passed in 0.28s
+6 passed in 0.05s
 ```
 
-Environment: Python 3.13.5, pytest 9.0.2, Matplotlib 3.10.8, PyYAML 6.0.3.
+Environment: Python 3.13.5, pytest 9.0.2.
 
-- Builder blob: `39dcd3b13d3886c43f3e9111291d420f86cc7c85`; SHA-256 `78feca87c3693f4ccabc319043531b7b6b5d767f4270471d3d939a258d75ae76`; 18,264 bytes.
-- Test blob: `f242097b78f812327f846e942b8eb0f589675d4b`; SHA-256 `486abf6a3f7eabb4f4883515c3a9ac61db0a9f79ef0419a754486468cdfab046`; 4,779 bytes.
-- Renderer blob: `da2b4b44d067f7ebefd9aa058a5b3de9ecc9f54d`.
-- Exact snapshot, path-replacement, duplicate-key, invalid-UTF8, structural-invalid, and one-read controls passed.
-- Validation JSON and SVG parsed successfully.
+- current-like source fixture: `FLAWED`, four finding families;
+- corrected fixture: `VALIDATED`, zero findings;
+- invalid UTF-8 and destructive aliasing: controlled rejection;
+- injected JSON publication failure: prior target preserved and temporary removed;
+- validation JSON and SVG parsed successfully;
+- maximum changed Python line length: 93.
+
+The inspected current builder blob is `39dcd3b13d3886c43f3e9111291d420f86cc7c85`. The fixture records the exact blob and relevant source range but is explicitly a semantic excerpt, not a byte-identical copy of the complete module.
 
 ## Direct-main sequence
 
-- `d28b9ecb08df895f23c4585e120f01a07ec8b283` — task claim
-- `db1a05a5ce9003cd45e10df4f247c55733a06dc2` — implementation
-- `bd81bce0fa0714f7473ae946db221e3bbdb918a5` — regressions
-- `e021d194cd43c3efabe97d9d81293b69d464b5c2` — renderer
-- `e95a05eda5330053a3a54d931f953723e5c81418` — JSON evidence
-- `fc3c6f3dbd9e69da59fc098f8be7455d55c287e3` — SVG evidence
-- `e457f071796ca62cd68ac567354a72bbad1ba3ec` — audit report
-- `d3b126961d32291f3756dfe3a1f4614e8f15815c` — immutable archive
-- `987eea3cb0e5a0efd5259a1b216ca0467781cc01` — completed active task
-- `485ba1b8db2cb3302ccdd4b09e70440f9b40ff54` — validated handoff
+- `9e01ccea849e1a8d731a8a302785e8fdd1e220a5` — audit gate
+- `6b88476c722d1bd88bc619c373540e95796b4671` — focused regressions
+- `7974953481366cd82d5514c822b5d77c37065388` — current-source fixture
+- `6bec3d85e56605e68bf66834112992182d342a3f` — evidence renderer
+- `f6563409ffa6b2470135df21916b7e15d7a6cf11` — machine-readable evidence
+- `3dac03cca404ef934d1e5db0e6f07bce684ae1db` — visual evidence
+- `b7c037e08a65753f7913186030c24026974ee1a5` — audit report
+- `c151045a8f09c1dc1cf29d27a95dec711d47e29d` — immutable archive
+- `cdc2c0d204eced6ec012d6f8c2e8c946646bf130` — completed active task
+
+## Required remediation
+
+Define the complete managed output inventory per entry, remove or quarantine prior outputs before any current non-PASS disposition, reconcile IDs removed from the registry, protect against path escape/aliasing, and publish the report plus managed artifact set as one coherent fail-closed state. Prefer a staged output directory and controlled directory swap. Add direct PASS-to-BLOCKED, PASS-to-FAIL, kind/suffix-change, and removed-ID regressions, then run the complete shipped-registry and paper build.
 
 ## Scientific boundary and limitations
 
-No registry entry, paper figure, numerical result, uncertainty, calibration, timing, PID, stopping profile, pile-up rate, or detector-performance claim was revalidated. Repository-wide pytest/ruff, complete registry build, paper build, link inventory, and GitHub Actions were not run.
+No paper figure, registry entry, central value, uncertainty, calibration, timing result, PID result, stopping profile, pile-up rate, or detector-performance claim was regenerated or revalidated. Repository-wide pytest/ruff, complete registry build, paper build, link inventory, and GitHub Actions were not run.
 
-`SESSION_LOG.md` and the long aggregate ledgers were not partially reconstructed because connector reads are paged while writes replace whole files. The immutable archive is the append-equivalent record; this required synchronization gap remains explicit.
-
-## Next action
-
-Run the complete shipped registry and paper build in a clean checkout, then audit content-addressed consistency of report paths, source-data paths, and generated artifacts.
+`SESSION_LOG.md` and long aggregate ledgers were not partially reconstructed because connector reads are paged while writes replace whole files. The immutable archive is the append-equivalent record; this mandatory synchronization gap is recorded rather than falsely claimed as complete.

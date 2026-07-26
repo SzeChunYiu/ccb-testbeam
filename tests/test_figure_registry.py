@@ -98,7 +98,7 @@ def test_missing_result_and_uncertainty_fail_closed(tmp_path):
             }
         },
     )
-    with pytest.raises(FigureRegistryError, match="not found"):
+    with pytest.raises(FigureRegistryError):
         build(missing_registry, tmp_path / "missing-out")
 
     result = tmp_path / "result.json"

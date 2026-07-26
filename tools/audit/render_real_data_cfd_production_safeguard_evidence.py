@@ -10,10 +10,8 @@ import sys
 import tempfile
 from pathlib import Path
 
-import matplotlib
+import html
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -141,43 +139,58 @@ def render_svg(evidence: dict[str, object], path: Path) -> None:
     controls = evidence["controls"]
     event = controls["composite_event_identity"]
     residual = controls["residual_visualization"]
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
-    axes[0].bar(
-        ["event_id only", "(run,event_id)"],
-        [event["unique_event_ids_without_run"], event["unique_composite_events"]],
-    )
-    axes[0].set_ylabel("identified events")
-    axes[0].set_title("Collision-safe event identity control")
-    axes[0].text(
-        0.5,
-        0.95,
-        "Two runs reuse EVENTNO=7",
-        ha="center",
-        va="top",
-        transform=axes[0].transAxes,
-    )
     values = np.asarray(residual["input_ns"], dtype=float)
-    axes[1].hist(values, bins=15, range=tuple(residual["full_range_ns"]))
-    axes[1].axvline(residual["q16_centered_ns"], linestyle=":", linewidth=1)
-    axes[1].axvline(residual["q84_centered_ns"], linestyle=":", linewidth=1)
-    axes[1].set_xlabel("residual minus median (ns)")
-    axes[1].set_ylabel("entries")
-    axes[1].set_title("Full-range residual evidence")
-    axes[1].text(
-        0.5,
-        0.95,
-        "full under/overflow = 0/0\ncore under/overflow = 1/1",
-        ha="center",
-        va="top",
-        transform=axes[1].transAxes,
+    low, high = residual["full_range_ns"]
+
+    def x(value: float) -> float:
+        return 650.0 + 480.0 * (float(value) - low) / (high - low)
+
+    points = " ".join(
+        f"{x(value):.2f},{410 - 250 * (index % 2):.2f}"
+        for index, value in enumerate(sorted(values))
     )
-    fig.suptitle(
-        "Real-data CFD production safeguards: composite keys, visible tails, pair-only inference"
+    q16_x = x(residual["q16_centered_ns"])
+    q84_x = x(residual["q84_centered_ns"])
+    title = html.escape(
+        "Real-data CFD safeguards: composite keys, visible tails, pair-only inference"
     )
-    fig.tight_layout()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, format="svg")
-    plt.close(fig)
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500"
+ viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+<title id="title">{title}</title>
+<desc id="desc">Two synthetic controls demonstrate collision-safe composite event keys
+ and a full-range median-centered residual visualization with explicit tail counts.</desc>
+<rect width="1200" height="500" fill="white"/>
+<text x="600" y="35" text-anchor="middle" font-family="sans-serif" font-size="20">{title}</text>
+<text x="290" y="75" text-anchor="middle" font-family="sans-serif"
+ font-size="16">Event identity control</text>
+<line x1="90" y1="420" x2="520" y2="420" stroke="black"/>
+<line x1="90" y1="100" x2="90" y2="420" stroke="black"/>
+<rect x="150" y="260" width="100" height="160" fill="#777"/>
+<rect x="350" y="100" width="100" height="320" fill="#222"/>
+<text x="200" y="445" text-anchor="middle" font-family="sans-serif"
+ font-size="13">event_id only</text>
+<text x="400" y="445" text-anchor="middle" font-family="sans-serif"
+ font-size="13">(run,event_id)</text>
+<text x="200" y="250" text-anchor="middle" font-family="sans-serif"
+ font-size="18">{event['unique_event_ids_without_run']}</text>
+<text x="400" y="90" text-anchor="middle" font-family="sans-serif"
+ font-size="18">{event['unique_composite_events']}</text>
+<text x="290" y="475" text-anchor="middle" font-family="sans-serif"
+ font-size="13">Two runs reuse EVENTNO=7</text>
+<text x="890" y="75" text-anchor="middle" font-family="sans-serif"
+ font-size="16">Full-range residual control</text>
+<line x1="650" y1="420" x2="1130" y2="420" stroke="black"/>
+<line x1="650" y1="100" x2="650" y2="420" stroke="black"/>
+<polyline points="{points}" fill="none" stroke="#222" stroke-width="2"/>
+<line x1="{q16_x:.2f}" y1="100" x2="{q16_x:.2f}" y2="420" stroke="#555" stroke-dasharray="5 5"/>
+<line x1="{q84_x:.2f}" y1="100" x2="{q84_x:.2f}" y2="420" stroke="#555" stroke-dasharray="5 5"/>
+<text x="650" y="445" font-family="sans-serif" font-size="12">-100 ns</text>
+<text x="1130" y="445" text-anchor="end" font-family="sans-serif" font-size="12">+100 ns</text>
+<text x="890" y="470" text-anchor="middle" font-family="sans-serif"
+ font-size="13">full under/overflow 0/0; core under/overflow 1/1</text>
+</svg>
+"""
+    atomic_write(path, svg.encode("utf-8"))
 
 
 def main() -> int:

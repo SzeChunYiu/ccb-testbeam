@@ -1,15 +1,7 @@
-"""Result registry: load + validate the paper-figure YAML registry.
+"""Paper-figure registry schema and scientific build dispositions.
 
-The registry is the single source of truth that binds every quantitative paper
-figure to a *validated result file* (JSON) and, optionally, a source table with
-a recorded sha256.  No quantitative paper figure may read a hand-entered
-constant -- this module is what enforces that at build time (see ``builder``).
-
-Governance: KNOWN_CODE_DEFECTS.md + v2 governance finding #10 flagged
-``scripts/generate_publication_figures.py`` for (a) embedding headline values as
-Python constants and (b) mixing illustrative schematics with quantitative
-figures.  The registry fixes both: quantitative entries are driven only by
-result files, and illustrative schematics are a separate ``kind`` kept apart.
+The registry separates scientific evidence state from build behaviour.  A status
+is never silently promoted merely because a result or image exists on disk.
 """
 from __future__ import annotations
 
@@ -19,40 +11,68 @@ from typing import Any
 
 import yaml
 
-# ---------------------------------------------------------------------------
-# Status + kind vocabulary (explicit, per task spec)
-# ---------------------------------------------------------------------------
-
-#: Every status the registry recognises.  Anything outside this set is a hard
-#: error (the figure cannot be built or blocked -- the registry is malformed).
 ALLOWED_STATUSES: frozenset[str] = frozenset(
-    {"VALIDATED", "PRELIMINARY", "TENSION", "EXTERNAL_BLOCKER", "ILLUSTRATIVE"}
+    {
+        "VALIDATED",
+        "PRELIMINARY",
+        "TENSION",
+        "SIMULATION_RESULT",
+        "MC_METHOD_CLOSURE",
+        "PARTIAL",
+        "GATED",
+        "BLOCKED",
+        "SUPERSEDED",
+        "EXTERNAL_BLOCKER",
+        "ILLUSTRATIVE",
+    }
 )
 
-#: Quantitative statuses that render a real figure driven by a result file.
-#: PRELIMINARY only renders when ``--allow-preliminary`` is passed.
+ALLOWED_KINDS: frozenset[str] = frozenset(
+    {"quantitative", "figure_sourced", "illustrative"}
+)
+
+STATUS_DISPOSITIONS: dict[str, str] = {
+    "VALIDATED": "BUILD",
+    "TENSION": "BUILD",
+    "PRELIMINARY": "CONDITIONAL",
+    "SIMULATION_RESULT": "QUARANTINED",
+    "MC_METHOD_CLOSURE": "QUARANTINED",
+    "PARTIAL": "QUARANTINED",
+    "GATED": "QUARANTINED",
+    "BLOCKED": "QUARANTINED",
+    "SUPERSEDED": "QUARANTINED",
+    "EXTERNAL_BLOCKER": "BLOCKED",
+    "ILLUSTRATIVE": "ILLUSTRATIVE",
+}
+
 _PAPER_QUANTITATIVE_STATUSES: frozenset[str] = frozenset(
     {"VALIDATED", "TENSION", "PRELIMINARY"}
 )
-
-#: Statuses that are reported BLOCKED (not FAIL) -- results legitimately absent
-#: because an upstream compute step has not produced them yet.
 _BLOCKED_STATUSES: frozenset[str] = frozenset({"EXTERNAL_BLOCKER"})
-
-ALLOWED_KINDS: frozenset[str] = frozenset({"quantitative", "illustrative"})
+_QUARANTINED_STATUSES: frozenset[str] = frozenset(
+    {
+        "SIMULATION_RESULT",
+        "MC_METHOD_CLOSURE",
+        "PARTIAL",
+        "GATED",
+        "BLOCKED",
+        "SUPERSEDED",
+    }
+)
 
 DEFAULT_UNCERTAINTY_KEY = "uncertainty"
 
 
 @dataclass
 class Entry:
-    """A single registry entry (one paper figure)."""
+    """A single registry entry."""
 
     id: str
     result: str
     status: str
     kind: str
     caption: str
+    source_figure: str | None = None
     table: str | None = None
     input_sha256: str | None = None
     uncertainty_key: str = DEFAULT_UNCERTAINTY_KEY
@@ -64,33 +84,34 @@ class Entry:
         return self.kind == "quantitative"
 
     @property
+    def is_figure_sourced(self) -> bool:
+        return self.kind == "figure_sourced"
+
+    @property
     def is_illustrative(self) -> bool:
         return self.kind == "illustrative"
 
+    @property
+    def disposition(self) -> str:
+        return STATUS_DISPOSITIONS.get(self.status, "INVALID")
+
 
 def load_registry(path: str | Path) -> list[Entry]:
-    """Load a YAML registry file into a list of :class:`Entry`.
+    """Load a YAML registry while deferring structural errors to validation."""
 
-    The YAML top level is a mapping ``{id: {result, status, kind, ...}}``.
-    Missing structural keys are tolerated here (surfaced by
-    :func:`validate_registry`) so that validation reports *all* problems at
-    once rather than crashing on the first malformed row.
-    """
-    path = Path(path)
-    with open(path, encoding="utf-8") as fh:
-        doc = yaml.safe_load(fh) or {}
-
-    if not isinstance(doc, dict):
+    registry_path = Path(path)
+    with registry_path.open(encoding="utf-8") as handle:
+        document = yaml.safe_load(handle) or {}
+    if not isinstance(document, dict):
         raise ValueError(
-            f"registry {path} must be a top-level mapping of id -> entry, "
-            f"got {type(doc).__name__}"
+            f"registry {registry_path} must be a top-level mapping of id -> entry, "
+            f"got {type(document).__name__}"
         )
 
     entries: list[Entry] = []
-    for entry_id, body in doc.items():
+    for entry_id, body in document.items():
         body = body or {}
         if not isinstance(body, dict):
-            # Keep a placeholder so validate_registry can report it.
             entries.append(
                 Entry(
                     id=str(entry_id),
@@ -109,6 +130,9 @@ def load_registry(path: str | Path) -> list[Entry]:
                 status=str(body.get("status", "") or ""),
                 kind=str(body.get("kind", "") or ""),
                 caption=str(body.get("caption", "") or ""),
+                source_figure=(
+                    str(body["source_figure"]) if body.get("source_figure") else None
+                ),
                 table=(str(body["table"]) if body.get("table") else None),
                 input_sha256=(
                     str(body["input_sha256"]) if body.get("input_sha256") else None
@@ -124,69 +148,61 @@ def load_registry(path: str | Path) -> list[Entry]:
 
 
 def validate_registry(entries: list[Entry]) -> list[str]:
-    """Return a list of human-readable structural problems (empty == clean).
+    """Return structural problems; an empty list means the schema is clean."""
 
-    This checks *shape* only -- it does not touch the filesystem or the result
-    JSON.  Filesystem / value checks (missing result, missing uncertainty,
-    sha256 mismatch) happen in :func:`builder.build`.
-    """
     problems: list[str] = []
-
     seen: dict[str, int] = {}
-    for e in entries:
-        if not e.id:
+    for entry in entries:
+        if not entry.id:
             problems.append("entry with empty id")
             continue
-        seen[e.id] = seen.get(e.id, 0) + 1
-
-    for eid, count in seen.items():
+        seen[entry.id] = seen.get(entry.id, 0) + 1
+    for entry_id, count in seen.items():
         if count > 1:
-            problems.append(f"{eid}: duplicate id appears {count} times")
+            problems.append(f"{entry_id}: duplicate id appears {count} times")
 
-    for e in entries:
-        tag = e.id or "<no-id>"
-
-        if e.raw.get("_malformed") is not None:
+    for entry in entries:
+        tag = entry.id or "<no-id>"
+        if entry.raw.get("_malformed") is not None:
             problems.append(f"{tag}: entry body is not a mapping")
             continue
-
-        if not e.result:
-            problems.append(f"{tag}: missing required 'result' path")
-        if not e.caption:
+        if not entry.caption:
             problems.append(f"{tag}: missing required 'caption'")
-
-        if not e.status:
+        if not entry.status:
             problems.append(f"{tag}: missing required 'status'")
-        elif e.status not in ALLOWED_STATUSES:
+        elif entry.status not in ALLOWED_STATUSES:
             problems.append(
-                f"{tag}: status {e.status!r} not in allowed set "
+                f"{tag}: status {entry.status!r} not in allowed set "
                 f"{sorted(ALLOWED_STATUSES)}"
             )
-
-        if not e.kind:
+        if not entry.kind:
             problems.append(f"{tag}: missing required 'kind'")
-        elif e.kind not in ALLOWED_KINDS:
+        elif entry.kind not in ALLOWED_KINDS:
             problems.append(
-                f"{tag}: kind {e.kind!r} not in {sorted(ALLOWED_KINDS)}"
+                f"{tag}: kind {entry.kind!r} not in {sorted(ALLOWED_KINDS)}"
             )
 
-        # Separation invariant: schematic <-> illustrative, one implies the other.
-        if e.status == "ILLUSTRATIVE" and e.kind and e.kind != "illustrative":
+        if entry.status == "ILLUSTRATIVE" and entry.kind != "illustrative":
             problems.append(
-                f"{tag}: status ILLUSTRATIVE requires kind 'illustrative' "
-                f"(got {e.kind!r}) -- schematics must be kept separate from "
-                f"quantitative figures"
+                f"{tag}: status ILLUSTRATIVE requires kind 'illustrative'"
             )
-        if e.kind == "illustrative" and e.status and e.status != "ILLUSTRATIVE":
+        if entry.kind == "illustrative" and entry.status != "ILLUSTRATIVE":
             problems.append(
-                f"{tag}: kind 'illustrative' requires status ILLUSTRATIVE "
-                f"(got {e.status!r})"
+                f"{tag}: kind 'illustrative' requires status ILLUSTRATIVE"
             )
 
-        # A recorded input hash is meaningless without a table to hash.
-        if e.input_sha256 and not e.table:
-            problems.append(
-                f"{tag}: input_sha256 given but no 'table' to hash"
-            )
+        if entry.kind in {"illustrative", "figure_sourced"}:
+            if not entry.source_figure:
+                problems.append(
+                    f"{tag}: kind {entry.kind!r} requires 'source_figure' path"
+                )
+        elif entry.kind == "quantitative":
+            if entry.disposition in {"BUILD", "CONDITIONAL"} and not entry.result:
+                problems.append(
+                    f"{tag}: build-authorized quantitative entry requires 'result' path"
+                )
+
+        if entry.input_sha256 and not entry.table:
+            problems.append(f"{tag}: input_sha256 given but no 'table' to hash")
 
     return problems

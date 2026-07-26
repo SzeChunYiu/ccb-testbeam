@@ -2,112 +2,145 @@
 
 ## Session
 
-- **Task:** `AUD-MV3-SEL-003`
-- **Stamp:** `2026-07-26T002131Z`
-- **Initial remote main:** `54a899d82c1991747218a5b3a5a0835c51991420`
-- **Validated blocker/evidence commit on main:** `13ddd66f1b5280a960336d6f855631398d7db090`
-- **Remote-main confirmation:** the connector fast-forwarded `main` with `success=true`; recent history
-  must retain `13ddd66f1b5280a960336d6f855631398d7db090` before any later integration attempt.
-- **Commit message:** `docs(audit): record MV3 remediation CI blocker`
-- **Transport PR:** `#933` (draft, open, not merged)
-- **Transport branch:** `chatgpt/AUD-MV3-SEL-003-chi2-remediation-20260726T002131Z`
-- **Validated implementation head:** `c9b20d0707b675c134ce8e6b0e804a115b569ae4`
-- **Latest PR documentation head:** `d49f2844361263f2ee38c7c9abe5224a2a98c979`
-- **Delivery:** blocker documentation and evidence are on remote `main`; producer code remains
-  `BLOCKED_NOT_ON_MAIN`.
-- **Acceptance:** focused producer/statistical contract `VALIDATED`; repository-wide integration gate
-  `FAILED`; production result and canonical closure `BLOCKED/PARTIAL`.
+- **Task:** `AUD-CI-003`
+- **Stamp:** `2026-07-26T011234Z`
+- **Initial remote main:** `b969c0cef71bebbab71728d0dc278cb7e284ce59`
+- **Pre-handoff remote main:** `1c2788b99e6320739ba9937fd44c3abeb2cdcac9`
+- **Destination:** direct GitHub contents-API commits to `main`; no force-push or history rewrite.
+- **Acceptance:** CI failure-ledger implementation and evidence `VALIDATED`; PR #933 producer
+  integration remains `BLOCKED / PARTIAL`.
 
 ## Start-of-run review
 
-Fetched current `main`, recent history, open PRs, PR #868, workflow configuration, producer, audit,
-focused tests, and mandatory coordination records. No open pull request existed at task selection.
-PR #868 remained closed, unmerged and non-mergeable and was not changed.
+Fetched current `main`, recent history, PR #933, PR #868, mandatory coordination records, the
+repository-wide workflow/job, its exact artifact, and relevant stopping-power code/tests. PR #933
+remains draft and unmerged. PR #868 remains closed, unmerged, non-mergeable, and untouched.
 
-## Confirmed defect
+## Confirmed governance defect
 
-Former producer blob `cd787ab64408228d67536b88bcc617fe32d0ec5a` masked every zero-expected
-category before summing Pearson terms. It therefore returned finite `chi2/ndf=1.0` after discarding
-ten observed B6 counts assigned zero model probability. It also accepted model fractions summing to
-`0.95` and returned `chi2/ndf=2.5`.
+The previous handoff called the 42 repository-wide failures “pre-existing cross-area failures.” The
+available evidence contains only the candidate workflow run. Zero failures in the three named MV3
+candidate test modules is useful ownership evidence but does not prove that all other failures
+pre-date, or are causally independent of, the candidate.
 
 Policy:
 
-`PEARSON_CHI2_MUST_REJECT_OUT_OF_SUPPORT_DATA_AND_NONUNIT_PROFILES`
+`REPOSITORY_CI_BLOCKER_MUST_HAVE_CONTENT_ADDRESSED_FAILURE_LEDGER`
 
-## Candidate work
+The validated causal-attribution state is `UNRESOLVED_SINGLE_RUN`. Introduced, resolved, persistent,
+and changed-signature labels require exact same-environment base and candidate logs.
 
-- Canonical front-door blob: `91dc6d21e6c5ffa83fada4210456157d3bbee322`
-- Preserved implementation blob: `cd787ab64408228d67536b88bcc617fe32d0ec5a`
-- Direct producer-test blob: `92c28df965d544d3c0b3ce5de36681e3a029f0e7`
-- Focused workflow blob: `fcdbc661a91ef3d6c61011aafa8eb79211b05843`
-- Existing dynamic-loader fix blob: `701d85489c7f1bda832103ce6c7b6e2d3f776da2`
+## Exact evidence
 
-Candidate commits:
+- Workflow: `MC Validation CI`
+- Run: `30181818642`
+- Job: `89739575939`
+- Artifact: `8625795443`
+- Artifact SHA-256:
+  `d16b0db6177e79fb30bcc682160d5460c30ea17f685b4a709c454f6c565adafa`
+- Exact `pytest.log` bytes: `85803`
+- Exact `pytest.log` SHA-256:
+  `c48e98e20e5606b0d98a41f03f586dc8d012338fc7cc7f7cffb1847155d707ae`
+- Ruff: `All checks passed!`
+- Pytest: `42 failed, 775 passed, 1 skipped, 6 warnings in 60.43s`
 
-- `ba94808ebee8efe9fb5397c87ea24c07e2b6c379` — strict producer front door and tests
-- `5d5ad343df0b02965f226996bb924c8d29cff8d3` — dynamic-module registration fix
-- `e60b5c8d74a383c91df1b32536c3047e69f921bf` — nonzero summary fixture
-- `c9b20d0707b675c134ce8e6b0e804a115b569ae4` — focused Pearson CI gate
-- `d49f2844361263f2ee38c7c9abe5224a2a98c979` — blocked-delivery evidence and archive
+## Measured failure inventory
 
-The corrected contract requires exact categories, finite nonnegative inputs, model normalization
-within `1e-12`, positive observations, rejection of observed mass outside model support, supported-bin
-ndf and `math.fsum`. Generated summaries record both executable source snapshots and full SHA-256.
+The exact terminal summary contains 42 unique failing node IDs:
+
+- stopping-power comparison: 23
+- public WIKI claim binding: 6
+- MV6 PCA claim rows: 4
+- MV4 legacy claim rows: 2
+- figure registry: 2
+- Cluster D claim governance: 2
+- DeltaE bridge: 1
+- Chapter 8 claim validator: 1
+- MV3 legacy claim rows: 1
+
+None begins with:
+
+- `tests/test_mv3_chi2_producer_contract.py`
+- `tests/test_mv3_selection_weighted_contract.py`
+- `tests/test_audit_mv3_chi2_support.py`
+
+The ledger records `direct_candidate_test_failure_count=0` without converting that observation into an
+unsupported causal claim.
+
+## Work delivered
+
+- `tools/audit/classify_ci_failure_log.py`
+- `tests/test_classify_ci_failure_log.py`
+- `tools/audit/render_ci_failure_ledger_evidence.py`
+- `docs/validation/mv3_repository_ci_failure_ledger.json`
+- `docs/validation/mv3_repository_ci_failure_ledger.svg`
+- `docs/validation/mv3_repository_ci_failure_ledger_audit.md`
+- `chatgpt_todo/archive/2026-07-26T011234Z_AUD-CI-003_MV3_FAILURE_LEDGER.md`
+- `chatgpt_todo/ACTIVE_TASK.md`
+
+The classifier snapshots strict UTF-8 bytes once, verifies failed-count closure against unique
+`FAILED` node IDs, records full SHA-256 provenance, groups failure families/signatures, fails closed
+on malformed or duplicate diagnostics, publishes JSON atomically, and rejects input/output aliases.
+With paired logs it reports introduced, resolved, persistent, and changed-signature failures.
 
 ## Validation
 
-Focused workflow run `30181818650`, job `89739575951`, concluded `success`. Compilation, focused
-producer/audit tests, exact-source zero-finding audit and the focused 100-character line gate all
-passed.
-
-Repository-wide workflow run `30181818642`, job `89739575939`, concluded `failure`:
-
 ```text
-ruff: All checks passed!
-pytest: 42 failed, 775 passed, 1 skipped, 6 warnings in 60.43s
+python -m py_compile \
+  tools/audit/classify_ci_failure_log.py \
+  tests/test_classify_ci_failure_log.py \
+  tools/audit/render_ci_failure_ledger_evidence.py
+
+PYTHONPATH=. pytest -q tests/test_classify_ci_failure_log.py
+7 passed in 2.26s
 ```
 
-Artifact: `8625795443`
+Exact artifact result:
 
-Artifact digest:
+- status: `VALIDATED`
+- unique failures: `42`
+- direct candidate-test failures: `0`
+- attribution: `UNRESOLVED_SINGLE_RUN`
 
-`sha256:d16b0db6177e79fb30bcc682160d5460c30ea17f685b4a709c454f6c565adafa`
+JSON parsing and SVG XML parsing passed. Changed Python lines are at most 98 characters.
 
-No candidate test was present in the failure list. The failures span pre-existing cross-area contracts,
-including stopping-power parsing/reporting, figure registry, claim governance, PCA summaries and
-public WIKI synchronization.
+## Direct-main commits
 
-## Delivery decision
+- `84e8c31f4718433bef90288070286f069cbfe24c` — failure-ledger implementation
+- `069500f48caf1a07c5cc3601a4085e6fc00ca96f` — focused regressions
+- `b8e62b740bcfaa9cfb08f75ab1ea55d39a5982d3` — evidence renderer
+- `b587309b4bf11a099fffc55d616ab24c5eeae82c` — machine-readable ledger
+- `1e93620e9581015da2082ca539262920fbed9ea4` — visual evidence
+- `cca8a5d4972533889c09cd2fade1ace0b697b758` — audit report
+- `fc64a8a20cdd4cb93f3ecebe58047183a39ac018` — immutable archive
+- `1c2788b99e6320739ba9937fd44c3abeb2cdcac9` — active-task completion
 
-The failed repository-wide gate was not bypassed. PR #933 was converted to draft and was not merged.
-No candidate producer code is on `main`, and no producer delivery is claimed. Accurate blocker
-documentation, machine-readable evidence, visual evidence, the active-task record and immutable
-archive were committed directly to `main` as `13ddd66f1b5280a960336d6f855631398d7db090`.
+GitHub returned successful direct-main commit SHAs rather than conventional terminal `git push`
+stdout. Remote history must be re-read after this handoff commit before delivery is reported.
 
-## Evidence on main
+## PR #933 disposition
 
-- `docs/validation/mv3_chi2_producer_remediation_validation.json`
-- `docs/validation/mv3_chi2_producer_remediation.svg`
-- `docs/validation/mv3_chi2_producer_remediation_audit.md`
-- `chatgpt_todo/archive/2026-07-26T002131Z_AUD-MV3-SEL-003_CHI2_REMEDIATION_BLOCKED.md`
+The PR description was corrected to preserve the exact hashes and family counts while stating that
+causal attribution is unresolved. PR #933 remains draft transport only and must not be merged while
+the repository-wide gate is red. Its producer code is not delivered to `main` by this unit.
 
 ## Scientific boundary
 
-No production ROOT or beam-data file was rerun. No weighted stopping profile, covariance,
-preregistered sensitivity scan, material/scattering correction, calibration, PID result, closure
-claim or detector-performance result was produced. Canonical `CL-021` remains `FLAWED` under
-`BLK-MV3-LEGACY-001`.
+This is software and CI-governance validation. No production ROOT or beam-data file was rerun. No
+weighted stopping profile, covariance, sensitivity scan, material/scattering correction, calibration,
+PID, closure claim, or detector-performance result was produced. Canonical `CL-021` remains `FLAWED`
+under `BLK-MV3-LEGACY-001`.
 
 ## Next action
 
-Reconcile the 42 repository-wide failures without weakening the validation gate, update PR #933 onto
-latest `main`, rerun both exact-head workflows, and merge only when all required checks pass. After
-merge, record the resulting remote-main commit SHA and retire the transport branch.
+Run the exact merge-base/base SHA and updated PR candidate in the same workflow environment. Feed
+both exact content-addressed logs to the classifier, then remediate demonstrated introduced or
+persistent failures without weakening the gate. Merge only after all required focused and
+repository-wide checks pass on the exact integration head.
 
 ## Coordination limitation
 
 `SESSION_LOG.md` was not appended. The connector exposes whole-file replacement rather than a
-byte-safe append, while the complete append-only file was available only through paged/truncated
+byte-safe append, while the complete append-only file is available only through paged/truncated
 responses. Replacing a partial reconstruction could erase provenance. This mandatory step remains
-explicitly unmet rather than being fabricated.
+explicitly unmet rather than fabricated.

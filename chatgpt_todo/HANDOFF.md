@@ -6,11 +6,11 @@
 - **Stamp:** `2026-07-26T110505Z`
 - **Owner:** scheduled scientific-review session
 - **Initial remote main:** `cc0f39560f7e98b1c1c130748d268103ea08754a`
-- **Validated delivery head before this handoff:** `f814ef01170dc76f11df122cd72c8334cd9782c8`
-- **Remote main after validated delivery:** `f814ef01170dc76f11df122cd72c8334cd9782c8`
+- **Validated delivery/handoff commit:** `059a6b137b49fb3734e5941f4ba44be3a124d5f9`
+- **Remote main after validated delivery:** `059a6b137b49fb3734e5941f4ba44be3a124d5f9`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
 - **Push result:** GitHub contents API returned a successful direct-main commit SHA for every write. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** audit gate, tests, JSON, SVG, report, active-task record, and immutable archive `VALIDATED`; production quantitative PNG publication remains `FLAWED / PARTIAL` and unchanged.
+- **Focused acceptance:** audit gate, tests, JSON, SVG, report, active-task record, immutable archive, and handoff `VALIDATED`; production quantitative PNG publication remains `FLAWED / PARTIAL` and unchanged.
 - **Scientific acceptance:** no paper figure value, uncertainty, or detector-performance claim was authorized or changed.
 
 ## Finding
@@ -94,7 +94,8 @@ Additional checks:
 - `8950bf7df4e5e95314e7b89fdff486d7fa1d2291` — visual evidence;
 - `59b92d8726c0ae4591cb8465cdceb468094d45fd` — audit report;
 - `ebc5ce0b7457a462fd814332575296db016961b8` — immutable archive;
-- `f814ef01170dc76f11df122cd72c8334cd9782c8` — active-task update and validated delivery head.
+- `f814ef01170dc76f11df122cd72c8334cd9782c8` — active-task update;
+- `059a6b137b49fb3734e5941f4ba44be3a124d5f9` — validated delivery handoff.
 
 ## Unrun checks and unresolved coordination
 

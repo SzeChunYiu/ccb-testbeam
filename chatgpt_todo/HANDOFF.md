@@ -2,137 +2,132 @@
 
 ## Session
 
-- **Task ID:** `AUD-FIG-002`
-- **Stamp:** `2026-07-26T092835Z`
+- **Task ID:** `AUD-FIG-002-R1`
+- **Stamp:** `2026-07-26T100542Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `770fa6e8ba305b29c539e64f1f151c4cf5dc1053`
-- **Validated delivery/handoff commit:** `3b1de01862a68f15a8adfa8d31bf1c2a20580e4a`
-- **Remote main after validated delivery:** `72458c33e79df28a3f6684826a3dbaed77c37d72`
+- **Initial remote main:** `8b460728fce2f550d63bed078f17c2285e0c2b2a`
+- **Delivery head before this handoff:** `f3116cc6d21fbb714ffb4ad4d79cdf09cd073bf0`
 - **Destination:** direct sequential commits to `main`; no task branch, pull-request transport, force-push, or history rewrite.
 - **Push result:** GitHub contents API returned a successful direct-main commit SHA for every write. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** audit implementation, tests, calculations, JSON, SVG, report, archive, and hash-correction addendum `VALIDATED`.
-- **Production acceptance:** paper-figure builder remains `FLAWED / PARTIAL` pending a single-read exact-byte remediation.
+- **Focused acceptance:** implementation, tests, replacement controls, JSON, SVG, report, active-task completion, and immutable archive `VALIDATED / COMPLETE`.
+- **Scientific acceptance:** no scientific paper value, uncertainty, or detector-performance claim was authorized or changed.
 
-## Finding
+## Finding and correction
 
 Policy:
 
 `FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES`
 
-Current `tools/figure_registry/builder.py`, Git blob
-`ef6e11cfac3e9eacdabfb146ec7586e8764fceb1`, has two split-snapshot paths:
+Former builder blob `ef6e11cfac3e9eacdabfb146ec7586e8764fceb1` had two split-snapshot paths:
 
-1. `_load_result` parses JSON through `path.read_text(...)`, while `_emit_quantitative` later calls `sha256_file(entry.result)` after rendering.
-2. `_emit_existing_artifact` calls `shutil.copy2(source, target)`, then later calls `sha256_file(source)` and `source.stat().st_size`.
+1. result JSON was parsed from one path read and later rehashed from `entry.result` after rendering;
+2. source artifacts were copied before the source path was rehashed and statted.
 
-A concurrent replacement of either input path can therefore make source-data metadata describe bytes different from those used to render or copy the published artifact.
+A path replacement could therefore make provenance describe different bytes from those used. The final builder blob `cc56e548b54fd8f2692182de6114ee3bcfe196c4` now:
 
-## Independent controls
+- retains result and source bytes once as immutable snapshots;
+- parses strict-UTF-8 JSON from retained bytes;
+- derives source hash and byte count from those same bytes;
+- publishes source artifacts atomically from the retained snapshot;
+- verifies the final target's SHA-256 and byte count independently;
+- records source and target identities;
+- publishes source-data CSV atomically;
+- rejects aliases;
+- cleans temporary files and reports publication errors through controlled `FigureRegistryError` failures.
 
-### Result JSON replacement
+## Independent replacement controls
 
-- bytes used SHA-256: `33066bb044c6d3dc3c6afe6ca68d0104cf7f29a9735659cccf650018f5b24c78`;
-- later path SHA-256: `3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7`;
-- figure-side numeric value remained `1.0` from the first snapshot;
-- later provenance digest described the replacement JSON.
+### Result JSON
 
-### Source-artifact replacement
+- retained bytes: `45`;
+- retained SHA-256: `880e5b3a422a0504eb35bf2918bd674cea0b38ae82805a60d6b48f5a248f4805`;
+- retained value: `0.68`;
+- later replacement bytes: `46`;
+- replacement SHA-256: `3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7`;
+- generated source data retained value `0.68`, original byte count, and original digest.
 
-- copied target SHA-256: `baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3`;
-- later source-path SHA-256: `5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7`;
-- later source size: 38 bytes;
-- later metadata did not match the copied target.
+### Source artifact
 
-Corrected controls retained one byte snapshot for parse/copy, hashing, and sizing and matched exactly.
+- retained bytes: `18`;
+- retained SHA-256: `baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3`;
+- later replacement bytes: `38`;
+- replacement SHA-256: `5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7`;
+- published target remained the original 18 bytes with the original digest.
+
+Injected `os.replace` failure produced a controlled error, preserved the previous target, and left zero temporary files. Source/output aliasing was rejected without modifying source bytes.
 
 ## Work delivered
 
-Added:
-
-- `tools/audit/audit_figure_registry_snapshot_provenance.py`
-- `tests/test_audit_figure_registry_snapshot_provenance.py`
+- `tools/figure_registry/builder.py`
+- `tests/test_figure_registry_snapshot_remediation.py`
 - `tools/audit/render_figure_registry_snapshot_provenance_evidence.py`
 - `docs/validation/figure_registry_snapshot_provenance_validation.json`
 - `docs/validation/figure_registry_snapshot_provenance.svg`
 - `docs/validation/figure_registry_snapshot_provenance_audit.md`
-- `chatgpt_todo/archive/2026-07-26T092835Z_AUD-FIG-002_SNAPSHOT_PROVENANCE.md`
-- `chatgpt_todo/archive/2026-07-26T092835Z_AUD-FIG-002_HASH_CORRECTION.md`
-
-Updated:
-
 - `chatgpt_todo/ACTIVE_TASK.md`
-- `chatgpt_todo/HANDOFF.md`
+- `chatgpt_todo/archive/2026-07-26T100542Z_AUD-FIG-002-R1_SNAPSHOT_REMEDIATION.md`
+- this handoff.
 
 ## Validation
 
 ```text
 python -m py_compile \
-  tools/audit/audit_figure_registry_snapshot_provenance.py \
-  tests/test_audit_figure_registry_snapshot_provenance.py \
+  tools/figure_registry/builder.py \
+  tests/test_figure_registry_snapshot_remediation.py \
   tools/audit/render_figure_registry_snapshot_provenance_evidence.py
 
-PYTHONPATH=. pytest -q tests/test_audit_figure_registry_snapshot_provenance.py
+PYTHONPATH=. pytest -q \
+  tests/test_figure_registry_snapshot_remediation.py
 
-5 passed in 0.04s
+5 passed in 0.39s
 ```
 
 Additional results:
 
-- current-like source contract: `FLAWED`, three findings;
-- corrected single-snapshot fixture: `VALIDATED`, zero findings;
-- invalid UTF-8: controlled input error;
-- destructive source/output alias: rejected;
-- injected `os.replace` failure: previous JSON preserved and temporary file removed;
+- existing exact-source auditor: `VALIDATED`, zero findings;
 - validation JSON parsed;
-- SVG parsed as XML.
+- SVG parsed as XML;
+- maximum changed Python line length: 95;
+- environment: Python 3.13.5, pytest 9.0.2, matplotlib 3.10.8, PyYAML 6.0.3.
 
 Validated identities:
 
-| Artifact | Git blob | SHA-256 |
-|---|---|---|
-| auditor | `bb545abbfb52bfad680dcb4fa69fa177c1b025ee` | `e00f21ed1d936d603b80b07b053dd6488b4f45095d60ae3a2cad04fa20ee8308` |
-| tests | `88630c60e4fe7f5c6e16b4c52478c77969bf08e5` | `11bd9a8a07f61c4ddb8d74d87e44b448722142772dde4e73a750c70e964400bf` |
-| renderer | `4302d108a045afc043d267bd69a25546ba6e4126` | `0f13ded4f9f5f80c20ecfb01229e6b9f9354fcba8e8cf2a9e98e180db2f55e5b` |
-| validation JSON | `80dff731ac06cfcfd35e20623cee521ada778018` | `e42ddb438a3c97a9ef9c5fadef61e1a3563c41599a179a15b28e517eff45f9be` |
-| SVG | retained on `main` | `36ada9d68a446236c02235d219f9f60c822130dd6b30a1176243f8f23543e669` |
+| Artifact | Git blob | Bytes | SHA-256 |
+|---|---|---:|---|
+| builder | `cc56e548b54fd8f2692182de6114ee3bcfe196c4` | 16683 | `1a280ff20d54ae74ef4eda9e1b33065f3dc46a6d3bfffd777149b9eb4a63ce21` |
+| focused tests | `8550b37469278b708237d2a9ef181e24f608fda3` | 5993 | `eea7b91afd0f28cde7f128e0fdb5b2df092d73c34af368667c47b9017424d31a` |
+| renderer | `15f29bfac9cc16265464bcb8ea0cd1e205cdaafa` | 4372 | `5780a78ab354e2c57fa19fb460787858f94bdff786b6f65b0315e377ad79300d` |
+| validation JSON | `c9b543797b620385c4599dcb245ef61f3eb512cd` | 4134 | `516146d2101ce422fb66c22b5198e25320ae9ea361339b56423ffcdce30c8976` |
+| SVG | `80f566fdb19924c7967ca4ee4d07b50c76ed2f19` | 2466 | `e09c040c6dde91caaf67a7b535a296f5a9ae33df5383bf5427130847dc4bf1d9` |
 
-The immutable correction addendum records that an earlier archive entry contained an incorrect validation-JSON digest; no audit conclusion changed.
+## Direct-main sequence through active completion
 
-## Direct-main sequence
+- `bd1b34493f98dfa6b6cefedb736ce9a10f207538` — task claim;
+- `bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f` — exact-byte snapshot implementation;
+- `5acba6b08620b587d0bd5b18229a032141d173ad` — replacement-race tests;
+- `dee2eac70bda7e9fb3f0a8e9d4aa10c53041b19c` — evidence renderer;
+- `025efd86f9585801a7a92f0f3fd28eb9e211f2a0` — initial remediation record;
+- `c7086b77a38c1aed94c609d156ab70620ca2eae8` — visual evidence;
+- `592c310512d7009ab68ac832b23971c1ee7d2e04` — initial remediation report;
+- `8f8f87ee669f7156231b6290b9366dd5969cda43` — controlled publication failure;
+- `79a1064ccc6e0e1786a09d0283405ea91d01f496` — controlled-failure regression;
+- `2033c983de88c026b27e1b3e00b121bb9628e333` — synchronized final evidence;
+- `4858b5aa105927855ac4a59bd5e06038910b02aa` — finalized audit report;
+- `605866376ef1ac783da226d126df55ca2e082a50` — immutable archive;
+- `f3116cc6d21fbb714ffb4ad4d79cdf09cd073bf0` — active-task completion.
 
-- `f5593cbb4a06bd1301b5423e1e113c1d2894f383` — task claim;
-- `50ab80d716200d1ce73fff8c008814cab84fa72f` — fail-closed audit gate;
-- `48a2f9beb8335ec06ebf37e2644c6019a65a435e` — focused tests;
-- `8c9de501999cdd2ec7b78e4eefdc2f5bbe79cc34` — evidence renderer;
-- `99a7b9153e9a18753a1ac8777eefc189dbf9abe6` — machine-readable evidence;
-- `45e8bc4297271ad7015ff0be0a2addeec54ba0be` — visual evidence;
-- `1b05fedbf4ef950535a135fb0b83e2e4f6092615` — audit report;
-- `ce4f35b14d479f5d3c5cd92bf013a2ed78cbd9d4` — immutable archive;
-- `134670e02f2c7115af98a1fc9adb8011a1d50c0c` — active-task completion;
-- `3b1de01862a68f15a8adfa8d31bf1c2a20580e4a` — validated delivery handoff;
-- `72458c33e79df28a3f6684826a3dbaed77c37d72` — hash-correction addendum.
+## Unrun checks and unresolved coordination
 
-## Required remediation
+Repository-wide pytest, ruff, the complete paper build, the repository-wide link inventory, and GitHub Actions were not run and are not claimed as passing.
 
-1. Read each result JSON as exact bytes once.
-2. Decode and parse those retained bytes.
-3. Derive result byte count and SHA-256 from the same retained bytes used for numerical extraction.
-4. Read each source artifact as exact bytes once.
-5. Derive size and SHA-256 from that snapshot and atomically publish the target from it.
-6. Record an independent final-target digest.
-7. Add direct builder regressions that replace input paths after snapshot acquisition.
-8. Require the exact-current-source audit to return zero findings and rerun focused figure-registry tests.
+The execution container could not resolve `github.com`; repository reads and writes used the authenticated connector. Focused tests ran against the exact committed builder/test bytes reconstructed in the local validation subset, with Git blob identities confirmed after publication.
 
-## Scientific boundary
+`SESSION_LOG.md` was not safely appended. The connector exposes whole-file replacement while the complete append-only file was available only through paged reads; reconstructing it by transcription risked corrupting historical provenance. The immutable archive and this handoff provide the complete append-equivalent record. Shared backlog/index/matrix files were not partially replaced for the same preservation reason.
 
-This validates software/provenance behavior only. No paper figure was regenerated, and no scientific value, uncertainty, calibration, PID result, timing result, stopping profile, pile-up rate, or detector-performance claim was validated or changed.
+PR #939 remained open and unmerged. PR #868 remained closed and unmerged. Neither was modified.
 
-Repository-wide pytest, ruff, full paper build, complete link checking, and GitHub Actions were not run and are not claimed as passing. No combined status checks were attached to the initial main head.
+## Scientific boundary and next action
 
-PR #939 remained open, non-mergeable, and unmerged. PR #868 remained closed and unmerged.
+No paper scientific value, uncertainty, calibration, PID result, timing result, stopping profile, pile-up rate, or detector-performance claim was validated or changed.
 
-`SESSION_LOG.md` could not be safely appended in this connector-only run. The available write operation replaces the entire file, while the complete append-only bytes were exposed only through paged/truncated responses. Reconstructing a large historical log by transcription risked erasing or corrupting provenance. The immutable archive and this handoff contain the complete append-equivalent record; the mandatory log synchronization remains explicitly unresolved rather than being reported as completed.
-
-## Next action
-
-Remediate the production builder with single-read result/source snapshots and atomic byte publication, then execute direct builder replacement-race regressions and the shipped registry test. Do not use generated paper artifacts as evidence until their recorded provenance is bound to the bytes actually used.
+The focused split-snapshot remediation is complete. The next paper-figure unit should run the complete shipped registry and inspect all generated artifact identities before using those artifacts as scientific evidence.

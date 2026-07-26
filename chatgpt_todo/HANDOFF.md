@@ -2,155 +2,51 @@
 
 ## Session
 
-- **Task ID:** `AUD-REP-002`
-- **Stamp:** `2026-07-26T150519Z`
+- **Task ID:** `AUD-REP-001-R1`
+- **Stamp:** `2026-07-26T153018Z`
 - **Owner:** scheduled scientific-review session
-- **Initial remote main:** `f30ff1100592e06396598ebf6975afa88e84444f`
-- **Validated implementation/evidence through:** `0a6876829c51e59974588bf2c4a10748e5480376`
-- **Destination:** sequential commits directly to `main`; no task branch, pull-request transport, force-push, or history rewrite.
-- **Push result:** each authenticated GitHub contents write returned a successful direct-main commit SHA. The connector does not return a conventional terminal `git push` transcript, and none is claimed.
-- **Focused acceptance:** software/provenance remediation, regressions, machine-readable evidence, visual evidence, audit report, immutable archive, active-task record, and this handoff are `VALIDATED / COMPLETE`.
+- **Initial remote main:** `f92e4a1187071a9871a73ae9b959d549f8a91223`
+- **Regeneration base:** `ca71b0f0b83f5bcd189c173cf7d8e28b287bc34f`
+- **Public bundle commit:** `268a033e8ff586878745a34f99e844b97523a437`
+- **Evidence and coordination commit / validated main after:** `5bcb95eb4b2042f4244989d31178fb4bdb70409c`
+- **Remote-main confirmation:** authenticated fast-forward update returned success and post-write history/file reads confirmed the commit on `main`.
+- **Destination:** sequential commits directly to `main`; no force-push, history rewrite, task branch, or PR transport.
+- **Push result:** authenticated GitHub ref updates returned success; the connector does not provide a conventional terminal `git push` transcript.
 
-## Repository state and concurrent work
+## Delivered result
 
-At task selection, remote `main` had advanced from the previous timing-audit head to
-`f30ff1100592e06396598ebf6975afa88e84444f`, which published a new Cluster E
-canonical claim front door. That concurrent work was inspected rather than
-duplicated. PR #939 remained open and unmerged with the previously documented
-event-identity, residual-visualization, and single-stave-inference defects. PR #868
-remained closed and unmerged. No pull request was merged in this task.
+The public Cluster E dashboard, study summary, claims table, metrics, provenance, and SVG now bind the canonical ledger exactly. CL-013 is 92 ADC/MeV with a 28 ADC/MeV heuristic envelope and remains GATED. CL-021 is Pearson chi2/ndf 68269.40598948313 and remains FLAWED. CL-022 is 283/87555 = 0.003232254011764034 and remains TRUTH_LEVEL_MC_ONLY. The Cluster D MV3 rerun 86135.4707883642 is retained as a distinct diagnostic and explicitly does not supersede CL-021.
 
-## Confirmed defects
-
-The pre-remediation producer read each input path once for parsing and SHA-256, then
-separately ran `git hash-object --no-filters -- <path>` against the live path. A
-replacement between those operations could pair parsed bytes A with a Git blob
-identifier for bytes B.
-
-The producer checked that the requested base commit equalled `HEAD`, but did not
-require the retained worktree bytes to equal `base_commit:path`. Dirty but
-semantically valid source bytes could therefore be published while provenance
-claimed a clean base commit.
-
-The preceding provenance bundle recorded syntactically valid blob/SHA-256 values but
-had no per-input commit, expected commit-tree blob, equality state, or authorization
-policy. Validator v2.0.0 could not distinguish base-commit bytes from dirty or
-replacement bytes.
-
-## Policy and remediation
-
-Policy:
-
-`INPUT_BYTES_MUST_MATCH_BASE_COMMIT_BLOBS`
-
-The producer now:
-
-1. reads every UTF-8 input exactly once;
-2. calculates the Git blob SHA-1 directly from the retained bytes using
-   `blob <length>\0<bytes>`;
-3. resolves the expected identity with `git rev-parse <base_commit>:<path>`;
-4. rejects any mismatch as `INPUT_NOT_AT_BASE_COMMIT:<path>`;
-5. records the measured and commit-tree blobs, commit, equality state, SHA-256,
-   bytes, snapshot policy, and authorization policy;
-6. publishes schema-3 provenance and metrics.
-
-Validator v2.1.0 requires the same machine-readable contract and rejects legacy
-unbound identities or commit-blob mismatch.
-
-## Independent controls
-
-- Committed control Git blob: `f80f50c325b2c99bb467c4758a4c23535d133162`.
-- Dirty control Git blob after one uncommitted line:
-  `6a11afca199b1afb42510881f24df961e085ddf9`.
-- Expected result: dirty bytes fail with `INPUT_NOT_AT_BASE_COMMIT`.
-- A replacement-after-snapshot regression changes the path before the commit lookup;
-  the recorded digest remains the digest of the retained bytes, not later path
-  contents.
-
-## Files delivered
-
-- `scripts/clusterE/clusterE_canonical_frontdoor.py`
-- `tests/test_clusterE_canonical_frontdoor.py`
-- `tools/audit/validate_clusterE_canonical_binding_v2.py`
-- `tests/test_validate_clusterE_canonical_binding_v2.py`
-- `tools/audit/render_clusterE_input_commit_binding_evidence.py`
-- `docs/validation/clusterE_input_commit_binding_validation.json`
-- `docs/validation/clusterE_input_commit_binding.svg`
-- `docs/validation/clusterE_input_commit_binding_audit.md`
-- `chatgpt_todo/archive/2026-07-26T150519Z_AUD-REP-002_CLUSTERE_INPUT_COMMIT_BINDING.md`
-- `chatgpt_todo/ACTIVE_TASK.md`
-- this handoff.
+Schema-3 provenance binds all retained UTF-8 input bytes to `base_commit:path` with measured and expected Git blob IDs, commit equality, full SHA-256, byte count, snapshot policy, and authorization policy.
 
 ## Validation
 
 ```text
-python -m py_compile \
-  scripts/clusterE/clusterE_canonical_frontdoor.py \
-  tools/audit/validate_clusterE_canonical_binding_v2.py \
-  tests/test_clusterE_canonical_frontdoor.py \
-  tests/test_validate_clusterE_canonical_binding_v2.py \
-  tools/audit/render_clusterE_input_commit_binding_evidence.py
-
-PYTHONPATH=. pytest -q \
-  tests/test_clusterE_canonical_frontdoor.py \
-  tests/test_validate_clusterE_canonical_binding_v2.py
-
+python -m py_compile scripts/clusterE/clusterE_canonical_frontdoor.py tests/test_clusterE_canonical_frontdoor.py tools/audit/validate_clusterE_canonical_binding_v2.py tests/test_validate_clusterE_canonical_binding_v2.py
+PYTHONPATH=. pytest -q tests/test_clusterE_canonical_frontdoor.py tests/test_validate_clusterE_canonical_binding_v2.py
 11 passed in 0.20s
+
+source-faithful local reconstruction: 9 passed in 0.09s
+exact public bundle audit: VALIDATED: 0 finding(s)
 ```
 
-The evidence renderer returned `VALIDATED` with zero findings. The JSON parsed, the
-SVG parsed as XML, and changed Python lines are at most 100 characters.
+JSON and SVG parsing passed. The exact producer is Git blob `b6d98f0040864ec6f0e46edfae9ea87005d1cfcd`, 13,910 bytes, SHA-256 `230df0122c6a56cdf6a6d99870cf16e254da7467580d630363b2eeb2f681fee8`.
 
-SHA-256 identities:
+## Delivery sequence
 
-- producer `230df0122c6a56cdf6a6d99870cf16e254da7467580d630363b2eeb2f681fee8`;
-- producer tests `d11ade4f7b0de3596860f3af30c7b3df84ca28ef43147b23f7c840293ce47cf6`;
-- validator `42e9c6a676d215aa8f546bcd32bf9bb0617398eafcced2cdf76cd928a8530aa5`;
-- validator tests `85def154c01f8f77673c6ed20c6fb714d15f3dff60c0a07f3c12e49d9e47003c`;
-- renderer `102f508d09ea91399a8e783acda59e6f15d79a94a3677968b3ab8d2afd22116f`;
-- JSON `8477f037c289aad968d64ee323655cd07f113dc809228e8b2fc4de3b4002c4c5`;
-- SVG `fe3431a1c650eec3f79bf9efad4333ceabd824d74f6698b1fad694856a016639`.
+- `d371f63976b323b7b79804c32bc0a061e1154840` — install canonical producer/front door;
+- `12b8aaaa6dd635be999fb5395cbe61f4f81dafde` — restore legacy validator and add v2 gate after an intermediate malformed replacement;
+- `d4ae31bbe2c5065b7904ee1c93273204240f7a3e` / `75144e43bd69040b80743bd29b787dd5a621f594` — bind retained input bytes to base commit and test;
+- `a77e1853c5658c62aa9dd4d7f13f5330d4e11584` / `0c084bb821a6c4e630068f1f7a22002fd168f487` — strengthen validator and tests;
+- `268a033e8ff586878745a34f99e844b97523a437` — regenerate all six public outputs under schema 3;
+- `5bcb95eb4b2042f4244989d31178fb4bdb70409c` — publish validation JSON, visual evidence, audit report, immutable archive, and completed active-task record.
 
-## Direct-main sequence
+The malformed intermediate validator was corrected before public output publication; no accepted validation depends on it.
 
-- `d4ae31bbe2c5065b7904ee1c93273204240f7a3e` — bind retained input bytes to the base commit;
-- `75144e43bd69040b80743bd29b787dd5a621f594` — producer regressions;
-- `a77e1853c5658c62aa9dd4d7f13f5330d4e11584` — commit-bound validator gate;
-- `0c084bb821a6c4e630068f1f7a22002fd168f487` — validator regressions;
-- `bbfe1cb0b79f83bd2d334a2a987149ba5b1ed9eb` — evidence renderer;
-- `35340e6d8852f5f540b0dbe3ad3c1704d6d4438f` — validation JSON;
-- `dffcfd2c172a23edc20087f206ded7ddef22c593` — visual evidence;
-- `0938e1a907d37ae33a0dcce4dffc4d7481515f4f` — audit report;
-- `702163c3880638d501158577d94f6992b8575c1b` — immutable archive;
-- `0a6876829c51e59974588bf2c4a10748e5480376` — active-task completion;
-- this handoff commit.
+## Limits and next action
 
-## Scientific boundary and unrun checks
+The execution container could not resolve `github.com`, so the full producer was not invoked in a complete checkout. Public bytes were rendered from a byte-exact reconstruction of the current producer and exact connector-inspected source identities, then passed the exact binding validator. Repository-wide pytest/ruff, Actions, ROOT processing, paper build, and link inventory were not run. No broad CI success is claimed.
 
-No scientific central value, calibration, stopping-profile closure, C12 identity,
-data/MC transfer, uncertainty, ROOT output, or detector-performance result was
-recalculated or validated.
+No calibration, accepted stopping-profile closure, C12 beam-data identity, PID/timing performance, uncertainty model, or detector-performance result was produced. Existing blockers remain in force.
 
-The public canonical Cluster E outputs published immediately before this task remain
-claim-binding documentation rendered from connector-inspected exact identities, but
-they predate the new schema-3 machine-readable commit-binding contract. A future
-clean-checkout regeneration should use the corrected producer and validate the
-resulting schema-3 bundle before calling that generation independently reproduced.
-
-Repository-wide pytest, ruff, ROOT processing, the complete paper build, link
-inventory, and GitHub Actions were not run and are not claimed as passing. No status
-checks were attached to the implementation head when last queried.
-
-`SESSION_LOG.md` and the long aggregate ledgers were reviewed. The connector exposes
-paged reads but only whole-file replacement; complete append-only bytes were not
-safely reconstructable in this run without risking historical provenance. The
-immutable archive and this handoff retain the complete append-equivalent record. This
-unmet synchronization requirement is explicit and is not reported as completed.
-
-## Next action
-
-Run the corrected producer from a clean checkout whose `HEAD` is the declared base
-commit, regenerate all six Cluster E public outputs under schema 3, run both Cluster E
-validators and focused tests, and retain exact output hashes. Keep the result limited
-to canonical claim/provenance binding; do not strengthen calibration, closure, C12,
-or detector-performance claims without their separate scientific acceptance gates.
+`SESSION_LOG.md` was reviewed but not replaced because the connector exposes paged reads and whole-file replacement rather than a byte-safe append; partial reconstruction could erase append-only provenance. The immutable archive contains the complete append-equivalent record.

@@ -1,134 +1,71 @@
-# DeltaE CSV composite-key identity audit
+# DeltaE CSV composite-key identity remediation
 
-## Scope
+## Status
 
-Task `AUD-DELTAE-005` reviews the CSV input boundary in
-`scripts/single_stave/deltaE_E.py`. The canonical event key is
-`(source_file_id, run_id, event_id)`, so every key token must survive CSV parsing
-without numeric inference before uniqueness checks, sample bookkeeping, or data/MC
-joins.
+`VALIDATED` for the canonical CSV reader and same-snapshot provenance boundary.
 
-Policy:
+Policy: `DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT`.
 
-`DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT`
+## Confirmed former defect
 
-Initial remote `main`: `f1a615d5b591b63c91b03124d243daf8372b61cd`.
-Inspected source blob: `fe5dd5e4673f32fa5a4b94776531f2b392e12414`.
+The former canonical `read_table()` used default `pandas.read_csv(path)` inference. Exact
+`source_file_id` tokens `001` and `1` became the same integer token, collapsed two exact composite
+keys into one, and created one false data/MC inner-join match in the deterministic control.
+Post-read string conversion cannot restore leading zeros or undo a match already created during
+inference.
 
-## Demonstrated defect
+## Remediation
 
-The current CSV branch is equivalent to:
+The canonical front door now reads each CSV-like input exactly once as bytes, decodes strict UTF-8,
+and parses all three key columns as pandas strings:
 
-```python
-return pd.read_csv(path)
-```
+- `source_file_id`
+- `run_id`
+- `event_id`
 
-No dtype contract is applied to the three composite-key columns and the file is
-not snapshotted as one strict-UTF-8 byte sequence before parsing.
+The exact byte count and SHA-256 from that same snapshot are retained and reused in `manifest.json`.
+The reader policy and dtype map are also published in `result.json` and the manifest. The established
+761-line numerical/plotting implementation is retained byte-for-byte as
+`scripts/single_stave/_deltaE_E_core.py`; the front door patches only the reader, result metadata,
+and input-provenance boundary.
 
-A deterministic control used two exact source identifiers, `001` and `1`, with
-the same run and event tokens. Under pandas 2.2.3 default inference:
+## Reproducible controls
 
-- the parsed source identifiers became `1` and `1`;
-- two exact composite keys collapsed to one parsed key;
-- a data row from source `001` and an MC row from source `1` produced one false
-  inner-join match.
-
-With all three key columns loaded as text:
-
-- two exact keys remained two keys;
-- the false cross-file join count was zero.
-
-This is not cosmetic provenance loss. It can change event cardinality, create false
-duplicate-key rejection, or cross-contaminate data/MC rows before a stopping or
-DeltaE-E result is calculated.
-
-## Downstream review
-
-The strict bundle consumer introduced by `AUD-DELTAE-004` applies an explicit
-text contract to provenance columns. The Cluster A data-side reader uses a
-single strict-UTF-8 byte snapshot and `csv.DictReader`, preserving
-`source_file_id` as text. The vulnerable boundary identified in this unit is the
-generic canonical `deltaE_E.py` CSV input path.
-
-## Better-method comparison
-
-1. **Post-read string casting** is rejected because it cannot restore leading
-   zeros or undo an already-created false match.
-2. **Text dtype for only `source_file_id`** reduces the demonstrated failure but
-   leaves the other key tokens dependent on inference. The composite key should
-   have one explicit lossless contract.
-3. **Parquet-only input** supplies stronger typing but would remove the supported
-   CSV workflow and does not repair existing CSV artifacts.
-4. **Selected contract:** read CSV bytes once, decode strict UTF-8, and parse all
-   three key columns as text. Numeric physics columns remain explicitly
-   coercible and independently validated downstream.
-
-## Audit implementation
-
-Added:
-
-- `tools/audit/audit_deltae_csv_key_identity.py`
-- `tests/test_audit_deltae_csv_key_identity.py`
-- `tools/audit/render_deltae_csv_key_identity_evidence.py`
-- `docs/validation/deltae_csv_key_identity_validation.json`
-- `docs/validation/deltae_csv_key_identity.svg`
-
-The auditor snapshots source bytes once, parses the Python AST, checks the reader
-contract, runs the lossy and lossless controls, rejects invalid UTF-8 and
-input/output aliases, and publishes JSON atomically. CLI status is 0 for
-`VALIDATED`, 1 for a demonstrated `FLAWED` contract, and 2 for controlled input
-errors.
+- Raw exact identifiers: `001`, `1`.
+- Default inference: one distinct key and one false cross-file match.
+- Corrected reader: two distinct keys and zero false matches.
+- Invalid UTF-8: rejected before parsing.
+- Same-snapshot mutation control: after the file path was replaced, the manifest retained the byte
+  count and SHA-256 of the bytes actually parsed.
 
 ## Validation
 
-Executed:
+Executed locally against the exact committed front-door bytes:
 
 ```text
-python -m py_compile \
-  tools/audit/audit_deltae_csv_key_identity.py \
-  tests/test_audit_deltae_csv_key_identity.py \
-  tools/audit/render_deltae_csv_key_identity_evidence.py
-
-pytest -q tests/test_audit_deltae_csv_key_identity.py
-6 passed in 0.09s
+python -m py_compile deltaE_E.py test_deltae_csv_key_remediation.py
+PYTHONPATH=. pytest -q test_wrapper.py
+4 passed in 0.03s
 ```
 
-Environment:
+An AST-equivalent audit confirmed that `read_table()` itself contains the required `read_bytes`,
+strict `decode`, `pandas.read_csv(..., dtype=...)`, policy token, and all composite-key names.
+The committed repository regression additionally requires the exact current-source audit to return
+zero findings and performs a direct CSV-backed CLI run. Those two full-repository tests were not
+executed locally because the networkless container could not materialize the retained core, although
+its exact original Git blob is preserved in the implementation commit.
 
-- Python 3.13.5
-- pandas 2.2.3
+## Better-method comparison
 
-The JSON parsed successfully, the SVG parsed as XML, and changed Python lines are
-at most 100 characters. The executable control used the exact behavioral excerpt
-of the inspected current reader. The full repository source was not executed in
-the networkless container; that limitation is explicit in the JSON rather than
-concealed.
-
-## Findings
-
-Current status: `FLAWED`, five findings.
-
-- `CSV_KEY_DTYPE_MISSING`
-- `CSV_NOT_SINGLE_READ_STRICT_UTF8`
-- `CSV_KEY_POLICY_MISSING`
-- `DISTINCT_COMPOSITE_KEYS_COLLAPSE`
-- `FALSE_CROSS_FILE_MATCH`
-
-## Required remediation
-
-Before a CSV-backed canonical DeltaE-E run is accepted:
-
-1. `deltaE_E.py` must snapshot CSV bytes once and decode strict UTF-8.
-2. `source_file_id`, `run_id`, and `event_id` must be parsed as lossless text.
-3. Direct reader and CLI regressions must cover leading-zero distinctions,
-   invalid UTF-8, duplicate detection, and false-join prevention.
-4. Input byte size and SHA-256 must bind the parsed rows used by the analysis.
-5. The exact-source audit must return `VALIDATED` with zero findings.
+- Post-read string casting was rejected because it cannot recover lost leading zeros.
+- Protecting only `source_file_id` was rejected because all three columns define identity.
+- Reading the path again for provenance was rejected because the path can change after parsing.
+- Removing CSV support was rejected because it remains a documented workflow.
+- The selected front-door/core split preserves the reviewed numerical implementation byte-for-byte
+  while making the input contract small, explicit, and directly auditable.
 
 ## Scientific boundary
 
-This is software and event-identity validation. No exact A-002 pulse table was
-processed and no amplitude convention, stopping fraction, DeltaE-E PID result,
-uncertainty budget, calibration, or detector-performance result is established.
+No exact A-002 pulse table was processed. No amplitude convention, pulse polarity, stopping fraction,
+DeltaE-E PID result, uncertainty budget, calibration, or detector-performance claim is established.
 `AUD-DELTAE-001`, `AUD-DELTAE-002`, and `BLK-AMP-001` remain open.

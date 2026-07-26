@@ -7,7 +7,7 @@
 <text x="55" y="205" font-family="monospace" font-size="18">Lossless distinct keys       2</text>
 <text x="55" y="245" font-family="monospace" font-size="18">Default false joins          1</text>
 <text x="55" y="285" font-family="monospace" font-size="18">Lossless false joins         0</text>
-<text x="55" y="325" font-family="monospace" font-size="18">Audit status                 FLAWED</text>
-<text x="55" y="370" font-family="sans-serif" font-size="16">Findings: 5 — exact text identifiers must be preserved before joins.</text>
+<text x="55" y="325" font-family="monospace" font-size="18">Audit status                 VALIDATED</text>
+<text x="55" y="370" font-family="sans-serif" font-size="16">Findings: 0 — exact text identifiers are preserved before joins.</text>
 <text x="40" y="435" font-family="sans-serif" font-size="13">Policy: DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT</text>
 </svg>

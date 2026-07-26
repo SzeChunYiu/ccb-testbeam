@@ -1,30 +1,19 @@
 # Active Task
 
-- **Task ID:** `AUD-DELTAE-008`
+- **Task ID:** `AUD-FIG-001`
 - **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T052912Z`
-- **Initial remote main SHA:** `ed3633055695184bd5ef68ab90bb6951e81d9354`
-- **Scope:** prevent the canonical DeltaE event-table writer from silently treating arbitrary Parquet
-  serialization failures as permission to publish a different CSV artifact, overwriting a validated
-  input path, or leaving stale alternate-format tables that can be mistaken for current output.
-- **Policy:** `DELTAE_EVENT_TABLE_OUTPUT_MUST_FAIL_CLOSED_AND_NOT_ALIAS_INPUT`.
-- **Implementation:** both event-table output candidates are checked against retained exact input
-  snapshots; stale alternate formats fail closed; completed same-directory temporary artifacts are
-  fsynced and published with `os.replace`; failed temporaries are removed; CSV-gzip fallback is
-  permitted only for a recognized missing Parquet engine; result and manifest metadata record the
-  output contract.
-- **Validation:** syntax passed; focused tests returned `14 passed in 0.05s`; exact-source audit
-  returned `VALIDATED` with zero findings; arbitrary failure, engine-only fallback, prior-final
-  preservation, direct/symlink alias, stale alternate, replacement failure, malformed source,
-  invalid UTF-8, atomic audit JSON, JSON/SVG parsing, and line-length controls passed.
+- **Session stamp:** `2026-07-26T061216Z`
+- **Initial remote main SHA:** `d046259666a08dbf9188e8a80d5a3b0cbced5765`
+- **Scope:** determine whether the shipped paper figure registry can satisfy its own structural validator without erasing scientific evidence states or forcing source-figure-only entries into a false result-file contract.
+- **Policy:** `FIGURE_REGISTRY_SCHEMA_MUST_ACCEPT_ITS_SHIPPED_VOCABULARY`.
+- **Confirmed defect:** the implementation permits five statuses and two kinds, while `paper/figures.yaml` uses ten statuses and three kinds; five illustrative entries omit `result` by design but the validator requires it unconditionally; the test suite freezes the obsolete status set while asserting the shipped registry is valid.
+- **Validation:** focused syntax and pytest passed (`5 passed in 0.07s`); current-like semantic fixture returned `FLAWED` with nine findings; corrected fixture returned `VALIDATED` with zero findings; invalid UTF-8, destructive aliasing, atomic JSON, JSON parse, and SVG parse checks passed.
 - **Evidence:**
-  - `docs/validation/deltae_table_output_contract_validation.json`
-  - `docs/validation/deltae_table_output_contract.svg`
-  - `docs/validation/deltae_table_output_contract_audit.md`
-  - `chatgpt_todo/archive/2026-07-26T052912Z_AUD-DELTAE-008_TABLE_OUTPUT_INTEGRITY.md`
-- **Focused acceptance:** event-table output boundary `VALIDATED / COMPLETE`.
-- **Scientific boundary:** no exact A-002 table, amplitude convention, pulse polarity, stopping
-  fraction, DeltaE-E PID, uncertainty, calibration, or detector-performance result is authorized.
-- **Next action:** resolve `AUD-DELTAE-001`, `AUD-DELTAE-002`, `AUD-AMP-009`, `AUD-AMP-010`, and
-  `BLK-AMP-001`, then run the content-addressed production table through the full scientific gate.
-- **Status:** `COMPLETE`
+  - `docs/validation/figure_registry_schema_alignment_validation.json`
+  - `docs/validation/figure_registry_schema_alignment.svg`
+  - `docs/validation/figure_registry_schema_alignment_audit.md`
+  - `chatgpt_todo/archive/2026-07-26T061216Z_AUD-FIG-001_SCHEMA_ALIGNMENT.md`
+- **Focused acceptance:** audit tooling and evidence `VALIDATED / COMPLETE`.
+- **Repository acceptance:** figure-registry schema and builder remain `FLAWED / PARTIAL` pending a controlled vocabulary, explicit status-to-disposition map, conditional path requirements, exact shipped-registry regression, and focused builder tests.
+- **Scientific boundary:** no figure value, uncertainty, source result, calibration, PID, timing, stopping, pile-up, or detector-performance claim is validated by this task.
+- **Status:** `PARTIAL`

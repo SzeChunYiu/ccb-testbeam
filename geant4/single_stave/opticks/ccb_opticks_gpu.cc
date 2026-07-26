@@ -55,10 +55,14 @@ int main(int argc, char** argv) {
   // Input-photon running mode: SEvt will turn the captured scintillation
   // photons into the genstep source each event (createInputGenstep_simulate).
   SEventConfig::SetRunningMode("SRM_INPUT_PHOTON");
-  // Mirror CSGOptiXSimTest: gather+save the full component set so the
-  // default Minimal EventMode does not drop the hit/photon arrays.
-  SEventConfig::SetGatherComp("genstep,photon,hit,domain,record,rec,seq");
-  SEventConfig::SetSaveComp("genstep,photon,hit,domain,record,rec,seq");
+  // Hits are derived on HOST from the gathered photon array (QEvt::gatherHit
+  // runs count_if_sphoton over evt->photon), so the photon component MUST be
+  // gathered. SEventConfig::Initialize_Comp_Simulate_ recomputes the gather
+  // and save masks from EventMode during QSim::init, so SetGatherComp alone is
+  // overridden by the default Minimal EventMode (gather = HitComp only, no
+  // photon array, gatherHit returns null). HitPhoton makes the masks include
+  // PhotonComp, fixing the gather. (Equivalent: OPTICKS_EVENT_MODE=HitPhoton.)
+  SEventConfig::SetEventMode("HitPhoton");
 
   // (1) sensor annotation + (2) GDML -> CSGFoundry.
   G4CXOpticks::SetSensorIdentifier(new CCBSensorIdentifier());

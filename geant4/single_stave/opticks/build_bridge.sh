@@ -38,12 +38,13 @@ BLD=$SPIKE/opticks-install/build/g4cx
 BIN=$BLD/tests/ccb_opticks_gpu
 mkdir -p "$HOME"
 cp "$SRC/ccb_opticks_gpu.cc" "$OPTDIR/ccb_opticks_gpu.cc"
+cp "$SRC/ccb_setGeometry.cc" "$OPTDIR/ccb_setGeometry.cc"
 cp "$SRC/CCBSensorIdentifier.h" "$OPTDIR/CCBSensorIdentifier.h"
 CL=$OPTDIR/CMakeLists.txt
 grep -q 'ccb_opticks_gpu.cc' "$CL" || sed -i '/G4CXOpticks_SetGeometry_GetInputPhoton_Test.cc/a\   ccb_opticks_gpu.cc' "$CL"
 
 cmake -S "$OPTICKS_HOME/g4cx" -B "$BLD" >/tmp/ccb_bridge_cfg.log 2>&1
 echo "cmake rc=$?"
-cmake --build "$BLD" --target ccb_opticks_gpu -j "$(nproc)" 2>&1 | tail -22
+cmake --build "$BLD" --target ccb_opticks_gpu ccb_setGeometry -j "$(nproc)" 2>&1 | tail -22
 echo "build rc=${PIPESTATUS[0]}"
 ls -la "$BIN" 2>&1

@@ -5,7 +5,9 @@
 - **Task:** `AUD-CI-003`
 - **Stamp:** `2026-07-26T011234Z`
 - **Initial remote main:** `b969c0cef71bebbab71728d0dc278cb7e284ce59`
-- **Pre-handoff remote main:** `1c2788b99e6320739ba9937fd44c3abeb2cdcac9`
+- **Validated delivery/handoff commit:** `7991cb4b4cefb542a110de5d7ddb0f2defc9ca52`
+- **Remote-main confirmation:** recent history confirmed the delivery commit and its complete focused
+  ancestry on remote `main` before this confirmation update.
 - **Destination:** direct GitHub contents-API commits to `main`; no force-push or history rewrite.
 - **Acceptance:** CI failure-ledger implementation and evidence `VALIDATED`; PR #933 producer
   integration remains `BLOCKED / PARTIAL`.
@@ -114,9 +116,10 @@ JSON parsing and SVG XML parsing passed. Changed Python lines are at most 98 cha
 - `cca8a5d4972533889c09cd2fade1ace0b697b758` — audit report
 - `fc64a8a20cdd4cb93f3ecebe58047183a39ac018` — immutable archive
 - `1c2788b99e6320739ba9937fd44c3abeb2cdcac9` — active-task completion
+- `7991cb4b4cefb542a110de5d7ddb0f2defc9ca52` — delivery handoff
 
 GitHub returned successful direct-main commit SHAs rather than conventional terminal `git push`
-stdout. Remote history must be re-read after this handoff commit before delivery is reported.
+stdout. Post-write history confirmed the delivery handoff and its focused ancestry on remote `main`.
 
 ## PR #933 disposition
 

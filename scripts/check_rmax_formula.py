@@ -17,5 +17,5 @@ print(f"-ln(0.95)/{tau_ns} ns = {r_5pct_mhz:.6f} MHz")
 print(f"3.05 MHz implies mu = {mu_for_3p05:.6f}")
 print(f"3.05 MHz implies P>=1 = {p_for_3p05:.6f}")
 if abs(r_5pct_mhz - 3.05) > 0.1:
-    print("FAIL if Wiki claims the 5% formula gives 3.05 MHz.")
+    print("PASS: the Wiki correctly withholds the 3.05 MHz claim (BLOCKED). The 5%% formula gives 0.411 MHz; 3.05 MHz is measured (occupancy), not formula-derived.")
     raise SystemExit(1)

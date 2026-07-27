@@ -241,6 +241,7 @@ def _emit_quantitative(
     result_snapshot: ResultSnapshot,
     out_dir: Path,
 ) -> tuple[Path, Path]:
+    """Render one compact interval figure; keep all prose in the source table."""
     result = result_snapshot.payload
     value_name, value = _central_value(result, entry)
     found, uncertainty_value = _find_key(result, entry.uncertainty_key)
@@ -253,52 +254,84 @@ def _emit_quantitative(
 
     figure_path = out_dir / f"{entry.id}.png"
     render_path: Path | None = None
-    fig, axis = plt.subplots(figsize=(6.0, 4.0), dpi=150)
-    try:
-        axis.errorbar([0], [value], yerr=[uncertainty], fmt="o", capsize=4)
-        axis.set_xlim(-0.5, 0.5)
-        axis.set_xticks([0])
-        axis.set_xticklabels([entry.id])
-        axis.set_ylabel(value_name)
-        axis.set_title(f"{entry.id} [{entry.status}]")
-        axis.grid(True, linewidth=0.5)
-        fig.text(0.5, 0.01, entry.caption, ha="center", fontsize=7, wrap=True)
-        fig.tight_layout(rect=(0, 0.04, 1, 1))
+    width_mm, height_mm, dpi = 89.0, 50.0, 600
+    rc = {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["DejaVu Sans", "Arial", "Liberation Sans"],
+        "font.size": 7.0,
+        "axes.titlesize": 7.5,
+        "axes.labelsize": 7.0,
+        "axes.linewidth": 0.6,
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+        "xtick.labelsize": 6.0,
+        "ytick.labelsize": 6.0,
+        "xtick.major.width": 0.5,
+        "ytick.major.width": 0.5,
+        "lines.linewidth": 0.9,
+        "pdf.fonttype": 42,
+        "svg.fonttype": "none",
+    }
+    with plt.rc_context(rc):
+        fig, axis = plt.subplots(
+            figsize=(width_mm / 25.4, height_mm / 25.4),
+            dpi=dpi,
+            constrained_layout=True,
+        )
+        try:
+            span = max(abs(uncertainty), abs(value) * 0.04, 1e-12)
+            axis.errorbar(
+                [value],
+                [0.0],
+                xerr=[uncertainty],
+                fmt="o",
+                color="#0072B2",
+                ecolor="#4D4D4D",
+                capsize=2.0,
+            )
+            axis.set_xlim(value - 2.4 * span, value + 2.4 * span)
+            axis.set_ylim(-0.8, 0.8)
+            axis.set_yticks([])
+            axis.set_xlabel(value_name.replace("/", " / "))
+            axis.set_title(entry.id, loc="left", pad=5)
+            axis.xaxis.grid(True, color="#D8D8D8", linewidth=0.45, alpha=0.7)
+            axis.set_axisbelow(True)
 
-        figure_path.parent.mkdir(parents=True, exist_ok=True)
-        fd, render_name = tempfile.mkstemp(
-            prefix=f".{figure_path.name}.", suffix=".render.png", dir=figure_path.parent
-        )
-        os.close(fd)
-        render_path = Path(render_name)
-        fig.savefig(render_path, format="png")
-        rendered = _read_file_snapshot(
-            render_path, entry_id=entry.id, label="temporary rendered figure"
-        )
-        figure_snapshot = _atomic_publish_snapshot(
-            figure_path,
-            rendered,
-            entry_id=entry.id,
-            label="quantitative figure",
-        )
-    except FigureRegistryError:
-        raise
-    except Exception as exc:
-        raise FigureRegistryError(
-            f"{entry.id}: could not render quantitative figure {figure_path}: {exc}"
-        ) from exc
-    finally:
-        plt.close(fig)
-        if render_path is not None:
-            render_path.unlink(missing_ok=True)
+            figure_path.parent.mkdir(parents=True, exist_ok=True)
+            fd, render_name = tempfile.mkstemp(
+                prefix=f".{figure_path.name}.", suffix=".render.png", dir=figure_path.parent
+            )
+            os.close(fd)
+            render_path = Path(render_name)
+            fig.savefig(render_path, format="png", dpi=dpi, metadata={"Software": "ccb figure registry"})
+            rendered = _read_file_snapshot(
+                render_path, entry_id=entry.id, label="temporary rendered figure"
+            )
+            figure_snapshot = _atomic_publish_snapshot(
+                figure_path,
+                rendered,
+                entry_id=entry.id,
+                label="quantitative figure",
+            )
+        except FigureRegistryError:
+            raise
+        except Exception as exc:
+            raise FigureRegistryError(
+                f"{entry.id}: could not render quantitative figure {figure_path}: {exc}"
+            ) from exc
+        finally:
+            plt.close(fig)
+            if render_path is not None:
+                render_path.unlink(missing_ok=True)
 
     source_path = out_dir / f"{entry.id}_source_data.csv"
     _write_source_csv(
         source_path,
         {
             "figure_id": entry.id,
-            "status": entry.status,
-            "kind": entry.kind,
+            "figure_status": entry.status,
+            "figure_kind": entry.kind,
+            "caption": entry.caption,
             "value_name": value_name,
             "central_value": repr(value),
             "uncertainty_key": entry.uncertainty_key,
@@ -309,6 +342,9 @@ def _emit_quantitative(
             "result_snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES",
             "figure_sha256": figure_snapshot.sha256,
             "figure_size_bytes": figure_snapshot.size_bytes,
+            "figure_width_mm": width_mm,
+            "figure_height_mm": height_mm,
+            "figure_dpi": dpi,
             "figure_snapshot_method": "TEMP_RENDER_EXPLICIT_PNG_RETAINED_BYTES",
             "figure_publication": "SAME_DIRECTORY_TEMP_FLUSH_FSYNC_OS_REPLACE",
             "table_path": entry.table or "",

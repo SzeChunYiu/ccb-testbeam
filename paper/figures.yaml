@@ -1,7 +1,7 @@
 # CCB test-beam -- paper figure result registry
 # ============================================================================
 # Single source of truth binding every paper figure to its source artifact.
-# Regenerated 2026-07-25 from the cluster A-D + Opticks + E synthesis programme
+# Regenerated 2026-07-26 from the cluster A-D + Opticks + E synthesis programme
 # (canonical claim state: reports/studies/clusterE/claims_table.csv +
 # docs/claim_ledger.csv). No headline number is hand-entered: every quantitative
 # entry points `result:` at the on-disk cluster metrics/counts JSON and reads its
@@ -12,6 +12,7 @@
 #
 # Statuses (allowed):
 #   VALIDATED            data result + MC/truth or independent closure supports it
+#   PRELIMINARY          source-backed but not paper-authorizing without opt-in
 #   SIMULATION_RESULT    proven on Monte Carlo only (cluster MC closure)
 #   MC_METHOD_CLOSURE    analysis-chain closure on MC (strongest SIMULATION_RESULT)
 #   PARTIAL              proven up to a defined last-mile gap (e.g. Opticks gather)
@@ -38,7 +39,7 @@
 TIMING-MC:                   # clusterB #918, VIS-TIM-005 -- combined timing closure
   result: reports/studies/clusterB/metrics.json
   value_key: VIS-TIM-005/combined_sigma68_ns
-  source_figure: reports/studies/clusterB/VIS-TIM-005_combined_estimator.png
+  source_figure: docs/figures/paper/timing_mc_method_closure.png
   claim_id: clusterB/#918
   evidence_class: MC_METHOD_CLOSURE
   status: MC_METHOD_CLOSURE
@@ -51,7 +52,7 @@ TIMING-MC:                   # clusterB #918, VIS-TIM-005 -- combined timing clo
 PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
   result: reports/studies/clusterA/counts.json
   value_key: pid_full_auc
-  source_figure: reports/studies/clusterA/VIS-PID-001_roc_pr.png
+  source_figure: docs/figures/paper/pid_mc_validation.png
   claim_id: clusterA/#921
   evidence_class: SIMULATION_RESULT
   status: SIMULATION_RESULT
@@ -64,19 +65,20 @@ PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
 ADC-MC:                      # clusterC #917, VIS-ENE-001 -- digitizer gain
   result: reports/studies/clusterC/metrics.json
   value_key: VIS-ENE-001/proton/slope_adc_per_MeV
-  source_figure: reports/studies/clusterC/VIS-ENE-001_adc_calibration.png
+  source_figure: docs/figures/paper/adc_mc_calibration.png
   claim_id: clusterC/#917
   evidence_class: SIMULATION_RESULT
   status: SIMULATION_RESULT
   kind: quantitative
   caption: >-
     ADC calibration (digitizer gain) = 119.17 ADC/MeV (proton = deuteron;
-    pulls mu ~ 0). MC closure; the 110 ADC/MeV MV0 data/MC proxy is GATED (CL-013).
+    pulls mu ~ 0). MC closure; the 92 ADC/MeV MV0 data/MC proxy with a 28
+    ADC/MeV heuristic envelope is GATED (CL-013).
 
 BIRKS-MC:                    # clusterC #917, VIS-ENE-002 -- Birks quenching
   result: reports/studies/clusterC/metrics.json
   value_key: VIS-ENE-002/kB_best_per_track_dEdx
-  source_figure: reports/studies/clusterC/VIS-ENE-002_birks_quenching.png
+  source_figure: docs/figures/paper/birks_mc_comparison.png
   claim_id: clusterC/#917
   evidence_class: SIMULATION_RESULT
   status: SIMULATION_RESULT
@@ -88,21 +90,22 @@ BIRKS-MC:                    # clusterC #917, VIS-ENE-002 -- Birks quenching
 RMAX-MC:                     # clusterC #917, VIS-PU-002 -- digitizer-domain Rmax
   result: reports/studies/clusterC/metrics.json
   value_key: VIS-PU-002/Rmax_quality_Hz
-  source_figure: reports/studies/clusterC/VIS-PU-002_pileup_occupancy_rate.png
+  source_figure: docs/figures/paper/pileup_digitizer_mc.png
   claim_id: clusterC/#917
   evidence_class: SIMULATION_RESULT
   status: SIMULATION_RESULT
   kind: quantitative
   caption: >-
-    Digitizer-domain Rmax = 0.605 MHz at the 0% quality gate (0.289 MHz at 5%
-    overlap). SIMULATION_RESULT only; the canonical detector Rmax is BLOCKED
+    Digitizer-domain nearest scan points are 0.289 MHz at 5.06% overlap and
+    0.605 MHz at 10.31% overlap for the stored 180 ns window. SIMULATION_RESULT
+    only; the canonical detector Rmax is BLOCKED
     (CL-010/S-STAT-003) and the legacy 3.044 MHz is SUPERSEDED (CL-012).
 
 # === The single VALIDATED data row ===========================================
 
 S00-COUNT:                   # CL-001 -- S00 selected-pulse reproduction
   result: reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv
-  source_figure: reports/S00_data_integrity_pipeline_reproduction/REPORT.md
+  source_figure: docs/figures/paper/selected_pulse_inventory.png
   claim_id: CL-001
   evidence_class: DATA_MEASUREMENT
   status: VALIDATED
@@ -128,54 +131,55 @@ OPTICKS-PARITY:              # opticks #920 -- GPU/CPU optical-photon parity
     null (EventMode config point) -> 0 GPU hits. CPU ctest 9/9 PASS. NO GPU
     speedup is claimed (undefined with 0 gathered hits).
 
-# === BLOCKED_DATA -- raw beam ROOT not staged (no figure can be built) =======
+# === Data-side results withheld by format/transfer blockers ==================
 
 TIMING-DATA:                 # CL-002..006 -- detector timing on beam data
-  result: data/raw/hrdb_run_not_staged
+  result: reports/studies/data_side/REPORT.md
   claim_id: CL-002..006
-  evidence_class: BLOCKED_DATA
-  blocked_by: BLK-MV4-LEGACY-001
-  status: EXTERNAL_BLOCKER
+  evidence_class: DATA_FORMAT_LIMITED_MIXED_STATUS
+  blocked_by: DATA-FORMAT-LIMITED-001; BLK-MV4-LEGACY-001
+  status: BLOCKED
   kind: quantitative
   caption: >-
-    Detector timing resolution on beam data (B6 single-stave, combined 3-stave,
-    pair covariance). BLOCKED_DATA: raw hrdb_run_*.root waveforms are not staged
-    on LUNARC. Reported BLOCKED; no headline value.
+    Detector timing resolution on beam data is withheld. The staged raw 16-sample
+    format gives sampling-limited diagnostics, not a detector-resolution estimate;
+    no headline value is authorized.
 
 PID-DATA:                    # PID on beam data
-  result: data/raw/hrdb_run_not_staged
+  result: reports/studies/data_side/REPORT.md
   claim_id: PID-on-data
-  evidence_class: BLOCKED_DATA
-  blocked_by: raw_ROOT_not_staged
-  status: EXTERNAL_BLOCKER
+  evidence_class: BLOCKED
+  blocked_by: DATA_MC_TRANSFER_NOT_VALIDATED
+  status: BLOCKED
   kind: quantitative
   caption: >-
-    Proton/deuteron PID transferred onto beam data. BLOCKED_DATA: raw
-    hrdb_run_*.root not staged. Reported BLOCKED; no headline value.
+    Proton/deuteron PID transferred onto beam data is withheld. Group-disjoint
+    transfer, calibration and selection closure are absent; no headline value.
 
 # === GATED / TENSION / BLOCKED / SUPERSEDED ==================================
 
 MV0-GAIN:                    # CL-013 -- digitizer gain data/MC proxy
-  result: reports/studies/clusterE/systematic_budget.csv
-  source_figure: reports/studies/clusterE/VIS-SYS-001_systematic_budget.png
+  result: reports/mv0_calibration_1782677847/calibration.json
+  source_figure: docs/figures/paper/adc_mc_calibration.png
   claim_id: CL-013
   evidence_class: DATA_MC_PROXY
   blocked_by: BLK-MV0-001
   status: GATED
   kind: quantitative
   caption: >-
-    MV0 data/MC gain proxy = 110 ADC/MeV with a +-30% HEURISTIC envelope (NOT a
-    confidence interval). GATED pending operator-bench per-stave calibration.
+    MV0 data/MC gain proxy = 92 ADC/MeV with a rounded 28 ADC/MeV HEURISTIC
+    systematic envelope (NOT a confidence interval). GATED pending
+    operator-bench per-stave calibration.
 
 MV3-STOP:                    # CL-021 -- stopping-depth data/MC
   result: reports/studies/clusterA/counts.json
   value_key: termination_unweighted
-  source_figure: reports/studies/clusterA/VIS-STOP-001_geometry_material.png
+  source_figure: docs/figures/paper/stopping_b8_tension.png
   claim_id: CL-021
   evidence_class: MC_DIAGNOSTIC
   blocked_by: BLK-MV3-LEGACY-001
   status: TENSION
-  kind: quantitative
+  kind: figure_sourced
   caption: >-
     Stopping-depth data/MC profile disagrees at chi2/ndf ~ 6.8e4 (CL-021:
     68,269). TENSION: ~8-10 g/cm2 of upstream material budget missing from the
@@ -204,7 +208,7 @@ RMAX-LEGACY:                 # CL-012 -- superseded legacy Rmax
 
 SYST-BUDGET:                 # CL-026 -- systematic uncertainty budget
   result: reports/studies/clusterE/systematic_budget.csv
-  source_figure: reports/studies/clusterE/VIS-SYS-001_systematic_budget.png
+  source_figure: docs/figures/paper/systematic_sensitivity_inputs.png
   claim_id: CL-026
   evidence_class: BLOCKED
   blocked_by: BLK-SYST-001
@@ -218,14 +222,15 @@ SYST-BUDGET:                 # CL-026 -- systematic uncertainty budget
 # === Synthesis figures (cluster E) -- status mirrors the claim dashboard ======
 
 CLAIM-DASHBOARD:
-  source_figure: reports/studies/clusterE/VIS-CLAIM-001_claim_dashboard.png
-  claim_id: clusterE
-  status: ILLUSTRATIVE
-  kind: illustrative
+  source_figure: docs/figures/paper/claim_status_overview.png
+  claim_id: canonical-ledger
+  evidence_class: GOVERNANCE_LEDGER
+  status: PRELIMINARY
+  kind: figure_sourced
   caption: >-
-    The 16 headline claims with evidence class and status, colour-coded
-    PASS / GATED / BLOCKED / PARTIAL / SUPERSEDED. Machine-readable twin:
-    reports/studies/clusterE/claims_table.csv.
+    Exact status counts from the 26-row canonical claim ledger. This governance
+    view is source-backed but does not convert gated, blocked, flawed or
+    superseded physics claims into accepted results.
 
 DASHBOARD-OVERVIEW:
   source_figure: reports/studies/clusterE/PROJECT_DASHBOARD_OVERVIEW.png

@@ -9,14 +9,30 @@ import sys
 from pathlib import Path
 
 import matplotlib
+import pytest
 
 matplotlib.use("Agg")  # noqa: E402
+
+# ccb_figures.config mutates global rcParams at import time (font.family,
+# savefig.bbox='tight', ...). Snapshot the pre-import baseline so the mutation
+# can be reverted once this module's tests finish; the leaked savefig.bbox would
+# otherwise break figure-QA assertions (exact PNG pixel dimensions) in later
+# modules that rely on the matplotlib default (bbox=None).
+_RC_PARAMS_BASELINE = dict(matplotlib.rcParams)
 
 ROOT = Path(__file__).resolve().parents[1]
 FIG = ROOT / "src" / "ccb_figures" / "figures" / "fig20_key_results.py"
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 from ccb_figures.figures import fig20_key_results as mod  # noqa: E402
+
+
+@pytest.fixture(autouse=True, scope="module")
+def _restore_matplotlib_rcparams_after_module() -> None:
+    """Revert ccb_figures.config's import-time rcParams mutation once these
+    tests complete, so the side-effect cannot leak into later modules."""
+    yield
+    matplotlib.rcParams.update(_RC_PARAMS_BASELINE)
 
 # Banned scientific literals (the values previously hard-coded in the cards).
 # Layout coordinates (0.55 offsets, figure inches) are intentionally excluded —
